@@ -1149,7 +1149,7 @@ const EXPLORER_TREE = [
         ]
       }
     ]
-  }
+  },
   {
     id: "group_cooperativas",
     type: "group",
