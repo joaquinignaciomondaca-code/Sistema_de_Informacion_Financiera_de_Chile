@@ -1068,23 +1068,7 @@ const EXPLORER_TREE = [
               { label: "Sobrecolateral y Fondo de Reserva por Emisión", query: "SELECT codigo_emision, periodo, valor_activos_mclp, valor_pasivos_bonos_mclp, monto_sobrecolateral_mclp, sobrecolateral_pct, fondo_reserva_mclp FROM patrimonios_separados_nota_sobrecolateral_detalle ORDER BY monto_sobrecolateral_mclp DESC LIMIT 20;" }
             ],
             tables: [
-              { id: "patrimonios_separados_nota_sobrecolateral_detalle", name: "patrimonios.nota_sobrecolateral", rows: "316 filas", file: "outputs/securitizadoras/patrimonios_separados_nota_sobrecolateral_detalle.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_nota_saldo_precio",
-            type: "circular",
-            label: "Nota Saldo de Precio Subordinado",
-            badge: "13 Saldos",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            open: false,
-            chips: [
-              { label: "Obligaciones por Saldo de Precio Retenido", query: "SELECT codigo_emision, periodo, originador, saldo_precio_mclp, condicion_pago FROM patrimonios_separados_nota_saldo_precio_detalle ORDER BY saldo_precio_mclp DESC;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_nota_saldo_precio_detalle", name: "patrimonios.nota_saldo_precio", rows: "13 filas", file: "outputs/securitizadoras/patrimonios_separados_nota_saldo_precio_detalle.parquet" }
+              { id: "patrimonios_separados_nota_sobrecolateral_detalle", name: "patrimonios.nota_sobrecolateral", rows: "679 filas", file: "outputs/securitizadoras/patrimonios_separados_nota_sobrecolateral_detalle.parquet" }
             ]
           }
         ]
