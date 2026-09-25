@@ -52,6 +52,7 @@ class DuckDBClient {
       "patrimonios_separados_nota_bonos_detalle": "outputs/securitizadoras/patrimonios_separados_nota_bonos_detalle.json",
       "patrimonios_separados_nota_administracion_detalle": "outputs/securitizadoras/patrimonios_separados_nota_administracion_detalle.json",
       "patrimonios_separados_nota_sobrecolateral_detalle": "outputs/securitizadoras/patrimonios_separados_nota_sobrecolateral_detalle.json",
+      "patrimonios_separados_nota_efectivo_detalle": "outputs/securitizadoras/patrimonios_separados_nota_efectivo_detalle.json",
       "patrimonios_separados_maestro": "outputs/securitizadoras/patrimonios_separados_maestro.json",
       "patrimonios_separados_balance_resumen": "outputs/securitizadoras/patrimonios_separados_balance_resumen.json",
       "patrimonios_separados_repos_detalle": "outputs/securitizadoras/patrimonios_separados_repos_detalle.json",
@@ -213,6 +214,7 @@ class DuckDBClient {
       { name: "patrimonios_separados_nota_bonos_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_bonos_detalle.parquet" },
       { name: "patrimonios_separados_nota_administracion_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_administracion_detalle.parquet" },
       { name: "patrimonios_separados_nota_sobrecolateral_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_sobrecolateral_detalle.parquet" },
+      { name: "patrimonios_separados_nota_efectivo_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_efectivo_detalle.parquet" },
  
        // SECURITIZADORAS (CMF / Ley 18.045) - Gestoras & Resumen
        { name: "securitizadoras_maestro", file: "outputs/securitizadoras/securitizadoras_maestro.parquet" },
