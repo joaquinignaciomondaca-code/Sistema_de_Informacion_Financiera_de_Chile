@@ -39,6 +39,14 @@ def audit_html_assets(base_dir):
             errors += 1
         else:
             print(f"  [OK] Script: {clean_s} ({os.path.getsize(full_p)} bytes)")
+            # Validar sintaxis JS con Node si esta disponible
+            try:
+                import subprocess
+                subprocess.check_output(["node", "-c", full_p], stderr=subprocess.STDOUT)
+                print(f"       -> Sintaxis JS valida (V8/Node OK)")
+            except Exception as e:
+                print(f"Error Sintaxis JS en {clean_s}: {e}")
+                errors += 1
 
     for c in local_css:
         clean_c = c.split("?")[0]
@@ -49,8 +57,8 @@ def audit_html_assets(base_dir):
         else:
             print(f"  [OK] CSS: {clean_c} ({os.path.getsize(full_p)} bytes)")
 
-    assert errors == 0, f"Se encontraron {errors} assets locales rotos en index.html"
-    print("Resultado Assets HTML: 100% encontrados.")
+    assert errors == 0, f"Se encontraron {errors} assets locales rotos o con errores de sintaxis en index.html"
+    print("Resultado Assets HTML: 100% encontrados y sintacticamente validos.")
 
 def audit_duckdb_views(base_dir):
     print("\n--- 2. AUDITORIA: Vistas Semanticas DuckDB (duckdb_client.js) ---")
