@@ -1136,7 +1136,7 @@ const EXPLORER_TREE = [
           {
             id: "circ_ps_balance_resumen",
             type: "circular",
-            label: "Resumen Histórico y Desglose FSB",
+            label: "Resumen Histórico de Balances CMF",
             badge: "64 Balances",
             badgeType: "data",
             status: "active",

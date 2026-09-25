@@ -21,7 +21,7 @@ except ImportError:
 # Rutas de origen
 BASE_RESPALDO = r"C:\Users\joaqu\Desktop\Respaldo_BCCH"
 RUTA_SOCIEDADES = os.path.join(BASE_RESPALDO, "Factoring&Leasing", "Sociedades leasing y factoring.xlsx")
-RUTA_METRICAS = os.path.join(BASE_RESPALDO, "FSB", "Factoring_y_Leasing", "hoja_5_risk_metrics", "outputs", "Metricas_FSB_Finales_Entregable.xlsx")
+RUTA_METRICAS = os.path.join(BASE_RESPALDO, "Factoring_y_Leasing", "outputs", "Metricas_Finales_Entregable.xlsx") if os.path.exists(os.path.join(BASE_RESPALDO, "Factoring_y_Leasing", "outputs", "Metricas_Finales_Entregable.xlsx")) else os.path.join(BASE_RESPALDO, "FSB", "Factoring_y_Leasing", "hoja_5_risk_metrics", "outputs", "Metricas_FSB_Finales_Entregable.xlsx")
 
 # Rutas de salida
 OUT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "docs", "outputs", "factoring_leasing"))
