@@ -1,0 +1,276 @@
+
+================ PAGE 15 ================
+CAMPO DESCRIPCION PICTURE 
+TIPO Tipo de registro.  En este caso corresponde tipo "5". 
+ 
+9(01) 
+OBJETIVO_ 
+CONTRATO 
+Corresponde informar el objetivo del contrato derivado, de acuerdo 
+a lo señalado en la NCG N°200 de fecha 07.08.2006. Se señalará 
+de acuerdo a la siguiente codificación: 
+INV : Inversión 
+CBE : Cobertura de riesgos financieros 
+1512 : Cobertura1512, para aquellos contratos que apliquen lo 
+dispuesto en el Título VII de la Circular N°1512 del 2001 
+referida a calce. 
+ 
+X(05) 
+TIPO_OPERACION 
+ 
+Código que identifica las operaciones informadas por la compañía, 
+deben informarse todas las operaciones vigentes a la fecha de 
+presentación de la información. Se informará de acuerdo a la 
+codificación definida en la página web de esta Superintendencia en 
+el módulo SEIL, Codificación S.V.S., Instrumentos. 
+X(10) 
+FOLIO_ 
+OPERACION 
+Corresponde al número de la papeleta de la mesa de dinero de la 
+compañía, donde se registra la compra del instrumento derivad o. 
+En caso de no poder obtener este número se deberá asociar al 
+documento contable que respalda la compra del instrumento. 
+ 
+9(10) 
+ITEM_OPERACION Secuencia del instrumento derivado dentro del folio de la operación. 
+No pueden existir dos instrumentos derivados con igual folio e ítem 
+operación. 
+ 
+9(03) 
+FECHA_DE_LA_ 
+OPERACION 
+Corresponde informar la fecha de inicio del contrato con el 
+siguiente formato: AAAAMMDD. 
+ 
+9(08) 
+FECHA_DE_ 
+VENCIMIENTO_ 
+DEL_CONTRATO 
+Corresponde informar la fecha de vencimiento del contr ato con el 
+siguiente formato: AAAAMMDD. 
+9(08) 
+NOMBRE Corresponde informar el nombre o razón social de la contraparte de 
+la operación. 
+Para el caso de las operaciones realizadas con bancos 
+nacionales se informará de acuerdo a codificación definida en 
+SEIL, Codificación SVS, Códigos Circular 1835, Códigos de 
+Bancos, Nombre del Banco para C.1835 
+X(60) 
+NACIONALIDAD Corresponde informar la nacionalidad de la contraparte de la 
+operación, de acuerdo a la codificación definida SEIL, Codificación 
+SVS, Países. 
+X(02) 
+RELACIONADO Corresponde informar si la contraparte de la operación está 
+relacionada con la compañía de seguros, de acuerdo a lo 
+establecido en el artículo N°100 de la ley N°18.045  del 22.10.1981 
+y modificaciones. 
+Se señalará de acuerdo a la siguiente codificación: 
+RE     :    Relacionado 
+NR     :    No Relacionado 
+X(02) 
+CLASIFICACION_ 
+DE_RIESGO 
+Corresponde informar la menor clasificación de riesgo vigente, si 
+tuviere, de la contraparte de la operación. 
+Si la contraparte no contara con clasificación de riesgo se debe 
+informar S/C. 
+ 
+X(15) 
+ACTIVO_OBJETO_ 
+POSICION_LARGA 
+(monto) 
+Corresponde al Valor nocional establecido por contrato, que será 
+recibido en una fecha futura por la compañía. 
+ 
+9(13)V9(03) 
+ACTIVO_OBJETO_ 
+POSICION_CORTA 
+(monto) 
+Corresponde al Valor nocional establecido por contrato, que será 
+entregado en una fecha futura por la compañía. 
+ 
+9(13)V9(03) 
+MONEDA_ Corresponde a la moneda en la cual está expresada la posición X(06) 
+================ PAGE 16 ================
+POSICION_LARGA larga en el contrato swap, es decir la moneda en que está 
+denominada la tasa o el nocional, que debe ser recibido en una 
+fecha futura, cuando corresponda. Se informará de acuerdo a la 
+codificación definida en el sitio web de esta Superintendencia en el 
+módulo SEIL, Codificación SVS, Unidades Monetarias. De no 
+existir, se deberá consultar a esta Superintendencia. 
+ 
+MONEDA_ 
+POSICION_CORTA 
+Corresponde a la moneda en la cual está expresada la posición 
+corta en el contrato swap, es decir la moneda en que está 
+denominada la tasa o el nocional, que debe ser entregado en  una 
+fecha futura, cuando corresponda. Se informará de acuerdo a la 
+codificación definida en el sitio web de esta Superintendencia en el 
+módulo SEIL, Codificación SVS, Unidades Monetarias. De no 
+existir, se deberá consultar a esta Superintendencia. 
+ 
+X(06) 
+TASA_A_FUTURO_ 
+CONTRATO_ 
+POSICION_LARGA 
+Corresponde a la tasa a futuro establecida en el contrato swap la 
+cual generará los flujos a ser recibidos en una fecha futura, cuando 
+corresponda. Ej.: Fija 8,5%, Libor, etc. 
+ 
+X(30) 
+TASA_A_FUTURO_ 
+CONTRATO_ 
+POSICION_CORTA 
+Corresponde a la tasa a futuro establecida en el contrato swap la 
+cual generará los flujos a ser entregados en una fecha futura, 
+cuando corresponda. Ej: Fija 7,4%, Libor, etc. 
+ 
+X(30) 
+T. C._FUTURO_ 
+CONTRATO 
+Corresponde al tipo de cambio a futuro e stablecido en el contrato 
+swap y deberá ser expresado de acuerdo a la moneda extranjera 
+establecida por contrato a ser entregada o recibida en una fecha 
+futura. 
+ 
+9(10)V9(03) 
+TASA_A_FUTURO_ 
+MERCADO 
+POSICION_LARGA 
+Corresponde a la tasa de interés única, que  aplicada a cada flujo 
+del swap de la posición larga, genera el mismo valor presente que 
+al valorizar cada flujo usando la estructura cero cupón de mercado 
+a la fecha. 
+ 
+9(10)V9(03) 
+TASA_A_FUTURO_ 
+MERCADO_ 
+POSICION_CORTA 
+Corresponde a la tasa de interés ún ica, que aplicada a cada flujo 
+del swap de la posición corta, genera el mismo valor presente que 
+al valorizar cada flujo usando la estructura cero cupón de mercado 
+a la fecha. 
+ 
+9(10)V9(03) 
+TIPO_DE_CAMBIO_ME
+RCADO 
+Tipo de cambio spot de mercado a la fecha d e valorización 
+Corresponderá al informado por los mercados donde se transaron 
+los respectivos contratos, pudiendo ser obtenido desde medios de 
+información de reconocido prestigio internacional. 
+ 
+9(10)V9(03) 
+VALOR_ 
+PRESENTE_ 
+POSICION_LARGA (M$) 
+ 
+Corresponde al valor actual de los flujos a recibir descontados a la 
+tasa de mercado posición larga o a Tir de compra según 
+corresponda. 
+ 
+9(13) 
+VALOR_ 
+PRESENTE_ 
+POSICION_CORTA (M$) 
+ 
+Corresponde al valor actual de los flujos a entregar descontados a 
+la tasa de merca do posición corta o a Tir de compra según 
+corresponda. 
+ 
+9(13) 
+VALOR_RAZONABLE_ 
+DEL_ACTIVO_ 
+OBJETO_A_LA_ 
+FECHA_DE_LA_ 
+INFORMACION (M$) 
+Corresponde informar, en caso de: 
+Swaps de monedas: el valor de mercado de la moneda multiplicada 
+por los nominales del contrato 
+Swaps de tasa de interés: el valor presente del nocional o de 
+referencia del contrato 
+Swaps sobre instrumento de renta fija: el número de unidades del 
+instrumento o índice por el precio spot a la fecha de la información. 
+ 
+9(13) 
+VALOR_RAZONABLE_D
+EL_CONTRATO_A_LA_
+FECHA_DE_LA_ 
+Corresponde al valor razonable que presenta el contrato swap, o 
+uno de similares características, a la fecha de información. En el 
+caso de derivados que cubran activos acogidos a la Circular 
+-9(13) 
+================ PAGE 17 ================
+INFORMACION_(M$) N°1.512, corresponde al valor del contrato utilizando la TIR de 
+compra. 
+ORIGEN_DE_LA_ 
+INFORMACION 
+Corresponde a la fuente de donde se obtuvieron los datos para 
+valorizar el contrato. 
+ 
+X(30) 
+ACTIVO_ 
+RESPALDA_ 
+RESERVA_VALOR_DE_
+FONDO 
+Corresponde informar si uno o más tí tulos (en caso de haber 
+agrupado instrumentos con características idénticas) registrados, 
+se encuentran respaldando la reserva de valor del fondo señalada 
+en el DFL Nº251. 
+Se informará de acuerdo a la valorización que tengan los títulos, 
+según Circular N°1360 y posteriores modificaciones, con un código 
+de cinco letras formado de la siguiente manera: 
+ 
+Las tres primeras letras serán: 
+ 
+APV : si los instrumentos respaldan la reserva de valor del 
+fondo de seguros con ahorro previsional voluntario, o 
+ 
+OTR : si lo s instrumentos respaldan la reserva de valor del 
+fondo de seguros con ahorro, distinto a los seguros con ahorro 
+previsional voluntario 
+ 
+La cuarta letra será A, B, C o D dependiendo de la forma de 
+constitución de la reserva de descalce a que se refiere el N°4 de la 
+Norma de Carácter General N°132, de 13 de marzo de 2002 y sus 
+posteriores modificaciones. 
+ 
+La quinta letra será G si se garantiza la rentabilidad del valor de la 
+póliza en los casos B, C o D, si no corresponde se informará con 
+espacio. 
+ 
+Si el instrumento no respalda reserva de valor del fondo se 
+indicará: 
+ 
+VIDA: Para activos que NO estén asociados a fondos que 
+respalden seguros de vida con cuenta de inversión y correspondan 
+a inversiones de compañías del segundo grupo 
+ 
+ 
+GRAL: Para activos que correspondan a inversiones del primer 
+grupo. 
+X(05) 
+NOMBRE_DEL_ 
+FONDO 
+Para instrumentos que estén asociados a fondos que respalden 
+seguros de vida con cuenta de inversión, se debe informar el 
+nombre del Fondo al cual pertenece. Se entenderá por fondo al tipo 
+de plan o modalidades de inversión convenidos para los seguros 
+con cuentas de inversión. 
+ 
+Para instrumentos que no respalden seguros de vida con cuenta de 
+inversión, se debe informar “NO APLICA”. 
+ 
+X(30) 
+NOMBRE_CARTERA Para instrumentos que no respalden seguros de vida con cuenta de 
+inversión, se debe informar la sub cartera que respalda, si 
+corresponde. 
+Para instrumentos que no respalden una sub cartera, se debe 
+informar “NO APLICA” 
+ 
+X(30) 
+MONTO_ACTIVOS_EN_
+MARGEN 
+Se deberá informar el valor final, a la fech a de información, de los 
+activos entregados como margen en la operación, expresado en 
+miles de pesos (M$). 
+9(13) 

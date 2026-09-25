@@ -1,0 +1,230 @@
+480: Registro tipo 4 DETALLE INFORMACIÓN GENERAL DE IDENTIFICACIÓN DE LOS CONTRATOS DE
+481: FUTUROS
+482: CAMPO DESCRIPCION PICTURE
+483: TIPO Tipo de registro. En este caso corresponde tipo "4". 9(01)
+484: OBJETIVO_ Corresponde informar el objetivo del contrato derivado, de acuerdo X(3)
+485: CONTRATO a lo señalado en la NCG N°200 de fecha 07.08.2006. Se señalará
+486: de acuerdo a la siguiente codificación:
+487: INV : Inversión
+488: CBE : Cobertura de Riesgos Financieros
+489: TIPO_OPERACION Código que identifica las operaciones informadas por la compañía, X(10)
+490: deben informarse todas las operaciones vigentes a la fecha de
+491: presentación de la información. Se informará de acuerdo a la
+492: codificación definida en la página web de esta Superintendencia en
+493: el módulo SEIL, Codificación S.V.S., Instrumentos.
+494: FOLIO_ Corresponde al número de la papeleta de la mesa de dinero de la 9(10)
+495: OPERACION compañía, donde se registra la compra del instrumento derivado.
+496: En caso de no poder obtener este número se deberá asociar al
+497: documento contable que respalda la compra del instrumento.
+498: ITEM_OPERACION Secuencia del instrumento derivado dentro del folio de la operación. 9(03)
+499: No pueden existir dos instrumentos derivados con igual folio e ítem
+500: operación.
+501: FECHA_DE_LA_ Corresponde informar la fecha de compra de la operación con el 9(08)
+502: OPERACION siguiente formato: AAAAMMDD.
+503: FECHA_DE_ Corresponde informar la fecha de vencimiento del contrato con el 9(08)
+504: VENCIMIENTO_ siguiente formato: AAAAMMDD.
+505: DEL_CONTRATO
+506: NOMBRE Corresponde informar el nombre o razón social de la contraparte de X(60)
+507: la operación.
+508: Para el caso de las operaciones realizadas con bancos
+509: nacionales se informará de acuerdo a codificación definida en
+510: SEIL, Codificación SVS, Códigos Circular 1835, Códigos de
+511: Bancos, Nombre del Banco para C.1835
+512: NACIONALIDAD Corresponde informar la nacionalidad de la contraparte de la X(02)
+513: operación, de acuerdo a la codificación definida en SEIL,
+514: Codificación SVS, países.
+515: RELACIONADO Corresponde informar si la contraparte de la operación está X(02)
+516: relacionada con la compañía de seguros, de acuerdo a lo
+517: establecido en el artículo N°100 de la ley N°18.045 del 22.10.1981
+518: y modificaciones.
+519: Se señalará de acuerdo a la siguiente codificación:
+520: RE : Relacionado
+521: NR : No Relacionado
+522: CLASIFICACION_ Corresponde informar la menor clasificación de riesgo vigente de la X(15)
+523: DE_RIESGO contraparte de la operación.
+524: Si la contraparte no contara con clasificación de riesgo se debe
+525: informar S/C.
+526: ACTIVO_ Corresponde informar si uno o más títulos (en caso de haber X(05)
+527: RESPALDA_ agrupado instrumentos con características idénticas) registrados,
+528: RESERVA_VALOR_DE_ se encuentran respaldando la reserva de valor del fondo señalada
+529: FONDO en el DFL Nº251.
+530: Se informará de acuerdo a la valorización que tengan los títulos,
+531: según Circular N°1360 y posteriores modificaciones, con un código
+532: de cinco letras formado de la siguiente manera:
+533: Las tres primeras letras serán:
+534: APV : si los instrumentos respaldan la reserva de valor del
+535: fondo de seguros con ahorro previsional voluntario, o
+536: OTR : si los instrumentos respaldan la reserva de valor del
+537: fondo de seguros con ahorro, distinto a los seguros con ahorro
+538: previsional voluntario.
+539: La cuarta letra será A, B, C o D dependiendo de la forma de
+540: constitución de la reserva de descalce a que se refiere el N°4 de la
+541: Norma de Carácter General N°132, de 13 de marzo de 2002 y sus
+542: posteriores modificaciones.
+543: La quinta letra será G si se garantiza la rentabilidad del valor de la
+544: póliza en los casos B, C o D, si no corresponde se informará con
+545: espacio.
+546: Si el instrumento no respalda reserva de valor del fondo se
+547: indicará:
+548: VIDA: Para activos que NO estén asociados a fondos que
+549: respalden seguros de vida con cuenta de inversión y correspondan
+550: a inversiones de compañías del segundo grupo
+551: GRAL: Para activos que correspondan a inversiones del primer
+552: grupo.
+553: NOMBRE_DEL_ Para instrumentos que estén asociados a fondos que respalden X(30)
+554: FONDO seguros de vida con cuenta de inversión, se debe informar el
+555: nombre del Fondo al cual pertenece. Se entenderá por fondo al tipo
+556: de plan o modalidades de inversión convenidos para los seguros
+557: con cuentas de inversión.
+558: Para instrumentos que no respalden seguros de vida con cuenta de
+559: inversión, se debe informar “NO APLICA”.
+560: NOMBRE_CARTERA Para instrumentos que estén asociados a fondos que respalden X(30)
+561: seguros de vida con cuenta de inversión, se debe informar la sub
+562: cartera que respalda, si corresponde.
+563: Para instrumentos que no respalden seguros de vida con cuenta de
+564: inversión, se debe informar “NO APLICA”.
+565: ACTIVO_OBJETO_ Corresponde informar el activo objeto en la cual está expresada la X(30)
+566: POSICION_LARGA posición larga en el contrato futuro.
+567: (nombre) Se debe informar el código nemotécnico del instrumento, ya sea de
+568: acuerdo a lo instruido en la Circular 1085, o la que la reemplace, de
+569: esta Superintendencia o el código asignado según lo señalado en
+570: Anexo Nº 1 de la presente Circular o aquel asignado por las
+571: entidades bursátiles o el código universal “ISIN” (International
+572: Securities Identification Number), a falta de éste, el código “CUSIP”
+573: (Commitee On Uniform Securities Identification Procedures).
+574: Para el caso de una moneda como activo subyacente se debe
+575: informar el código definido en SEIL, codificación S.V.S., Unidades
+576: Monetarias.
+577: Si el activo subyacente es una tasa, si ésta es variable se informará
+578: la tasa de interés de referencia del instrumento, por ejemplo Libor
+579: 360. Si es un interés fijo se llenará con la tasa fijada.
+580: De no existir los anteriores, se deberá consultar a esta
+581: Superintendencia.
+582: ACTIVO_OBJETO_ Corresponde informar el activo objeto en la cual está expresada la X(30)
+583: POSICIÓN_CORTA_(no posición corta en el contrato futuro.
+584: mbre) Se debe informar el código nemotécnico del instrumento, ya sea de
+585: acuerdo a lo instruido en la Circular 1085, o la que la reemplace, de
+586: esta Superintendencia o el código asignado según lo señalado en
+587: Anexo Nº 1 de la presente Circular o aquel asignado por las
+588: entidades bursátiles o el código universal “ISIN” (International
+589: Securities Identification Number), a falta de éste, el código “CUSIP”
+590: (Commitee On Uniform Securities Identification Procedures).
+591: Para el caso de una moneda como activo subyacente se debe
+592: informar el código definido en SEIL, codificación S.V.S., Unidades
+593: Monetarias.
+594: Si el activo subyacente es una tasa, si ésta es variable se informará
+595: la tasa de interés de referencia del instrumento, por ejemplo Libor
+596: 360. Si es un interés fijo se llenará con la tasa fijada.
+597: De no existir los anteriores, se deberá consultar a esta
+598: Superintendencia.
+599: ACTIVO_OBJETO_ Co rresponde informar el número de unidades del activo subyacente 9(13)V9(03)
+600: POSICION_LARGA en el cual esta expresada la posición larga de cada contrato.
+601: (unidades) En caso de tratarse de un futuro de moneda, corresponde informar
+602: el monto en moneda extranjera establecido por contrato que debe
+603: ser intercambiado en una fecha futura de acuerdo a la posición en
+604: el contrato.
+605: Para futuro de tasa o renta fija corresponde informar el valor
+606: nocional o valor presente del instrumento de renta fija o el flujo,
+607: establecido por contrato a ser intercambiado en una fecha futura.
+608: Debe informarse en la moneda establecida en el contrato.
+609: En el caso de futuro de acción, corresponde informar la cantidad de
+610: acciones objeto del contrato. Para índices accionarios, corresponde
+611: informar el valor monetario de cada punto del índice objeto del
+612: contrato multiplicado por el número de unidades del índice que se
+613: intercambian, de acuerdo al número de contratos.
+614: ACTIVO_OBJETO_ Corresponde informar el número de unidades del activo subyacente 9(13)V9(03)
+615: POSICION_CORTA en el cual esta expresada la posición corta de cada contrato
+616: (unidades) En caso de tratarse de un futuro de moneda, corresponde informar
+617: el monto en moneda extranjera establecido por contrato que debe
+618: ser intercambiado en una fecha futura de acuerdo a la posición en
+619: el contrato.
+620: Para futuro de tasa o renta fija corresponde informar el valor
+621: nocional o valor presente del instrumento de renta fija o el flujo,
+622: establecido por contrato a ser intercambiado en una fecha futura.
+623: Debe informarse en la moneda establecida en el contrato.
+624: En el caso de futuro de acción, corresponde informar la cantidad de
+625: acciones objeto del contrato. Para índices accionarios, corresponde
+626: informar el valor monetario de cada punto del índice objeto del
+627: contrato multiplicado por el número de unidades del índice que se
+628: intercambian, de acuerdo al número de contratos.
+629: MONEDA Corresponde a la moneda en la cual está expresada la posición de X(06)
+630: la compañía en el contrato. Se informará de acuerdo a la
+631: codificación definida en el sitio web de esta Superintendencia en el
+632: módulo SEIL, Codificación SVS, Unidades Monetarias.
+633: De no existir, se deberá consultar a esta Superintendencia.
+634: NUMERO_DE_ Corresponde informar el número de contratos comprados o 9(06)
+635: CONTRATOS vendidos en cada operación.
+636: VALOR_DE_ Corresponde informar el valor de mercado del activo objeto a la 9(13)
+637: MERCADO fecha de información multiplicado por el número de unidades del
+638: DEL_ACTIVO_ activo subyacente de cada contrato, multiplicado por el número de
+639: OBJETO_A_LA_ contratos (M$).
+640: FECHA_DE_
+641: INFORMACION (monto)
+642: PRECIO_SPOT_ Corresponde al precio de cierre observado del activo subyacente al 9(10)V9(05)
+643: DEL_ACTIVO_ contrato, a la fecha de la información.
+644: SUBYACENTE
+645: En caso de futuro de moneda corresponde informar el valor de la
+646: moneda en el mercado contado a la fecha de información
+647: En caso de futuro de tasa o renta fija corresponde informar la tasa
+648: vigente en el mercado o al valor de mercado del instrumento de
+649: renta fija a la fecha de información.
+650: En caso de forward de acción e índice accionario corresponde
+651: informar el valor bursátil o contado de la acción o índice accionario,
+652: en el mercado contado a la fecha de información
+653: Debe ser expresado en la moneda en la cual está denominado el
+654: derivado.
+655: PRECIO_FUTURO_DE_ Corresponde al precio futuro de mercado del contrato a la fecha de 9(10)V9(05)
+656: MERCADO_AL_INICIO_ cierre del trimestre anterior; o bien, a la fecha de inicio de la
+657: DE_LA_ operación si es que ésta se efectúo durante el trimestre que se
+658: OPERACIÓN está informando.
+659: PRECIO_FUTURO_DE_ Corresponde al precio futuro de mercado a la fecha de información, 9(10)V9(05)
+660: MERCADO_A_LA_ para un contrato de idénticas características. Este debe ser
+661: FECHA_DE_ expresado de acuerdo a la moneda extranjera establecida por
+662: INFORMACION contrato a ser entregada o recibida en una fecha futura.
+663: Corresponderá al informado por los mercados donde se transaron
+664: los respectivos contratos, pudiendo ser obtenido desde medios de
+665: información de reconocido prestigio internacional. En caso de no
+666: existir dicho valor de mercado, corresponderá al Tipo de cambio
+667: spot o de mercado a la fecha de valorización.
+668: ORIGEN_DE_LA_ Corresponde a la fuente de donde se obtuvieron los datos para X(30)
+669: INFORMACION valorizar el contrato.
+670: MONTO_ACTIVOS_EN_ Se deberá informar el valor final, a la fecha de información, de los 9(13)
+671: MARGEN activos entregados como margen en la operación, expresado en
+672: miles de pesos (M$).
+673: Si para la operación no es necesario dejar activos en margen
+674: indicar cero.
+675: MONTO (activo) Corresponde informar el monto contabilizado en activos producto 9(13)
+676: de este contrato. Este monto se deberá expresar en miles de pesos
+677: (M$).
+678: MONTO (pasivo) Corresponde informar el monto contabilizado en pasivos producto 9(13)
+679: de este contrato. Este monto se deberá expresar en miles de pesos
+680: (M$).
+681: Para aquellos Futuros que no tengan compensación diaria se -9(13)
+682: VALOR_RAZONABLE_D debe informar el valor neto de la posición del futuro, el cual
+683: EL_CONTRATO_ corresponde a la diferencia entre los montos contabilizados en
+684: activos y pasivos producto de este contrato, a la fecha de cierre
+685: FUTURO_A_LA_
+686: de los estados financieros. Esta información deberá expresarse
+687: FECHA_DE_INFORMAC
+688: en miles de pesos (M$).
+689: ION
+690: TSA Corresponde informar si el instrumento está incluido en el Test de X(02)
+691: Suficiencia de Activos para el periodo informado, de acuerdo a la
+692: siguiente codificación:
+693: SI: el instrumento es utilizado para el análisis del Test de
+694: Suficiencia de Activos
+695: NO: el instrumento no es utilizado para el análisis del Test de
+696: Suficiencia de Activos.
+697: En periodos que no corresponde enviar el Test de Suficiencia de
+698: Activos
+699: METOD_CLASIF_VALO Corresponde informar la clasificación dada al instrumento en los X(6)
+700: RIZ_EEFF Estados de Situación Financiera, de acuerdo a lo siguiente:
+701: CA : Activos Financieros a Costo Amortizado (5.11.30.00).
+702: VR : Activos Financieros a Valor Razonable (5.11.20.00).
+703: EE : Efectivo Equivalente (5.11.10.00).
+704: CUI : Inversiones Seguros Cuenta Única de Inversión
+705: (5.11.50.00)
+706: OTRCLA: Otra clasificación dentro del Estado de Situación
+707: Financiera.
+708: FILLER Se deberá informar espacios. X(49)
+709: Registro tipo 5 DETALLE: INFORMACIÓN GENERAL DE IDENTIFICACIÓN DE LOS CONTRATOS SWAPS

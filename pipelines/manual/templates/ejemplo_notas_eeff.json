@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "titulo": "Plantilla Canónica para Extracción de Notas EEFF vía NotebookLM",
+  "campos_maestros": {
+    "entidad_rut": "96856000-8",
+    "entidad_nombre": "BANCO DE CHILE",
+    "sector": "bancos",
+    "periodo": "202512",
+    "nota_numero": 15,
+    "nota_titulo": "Colocaciones y Provisiones por Riesgo de Crédito",
+    "fuente_pdf": "Memoria_Anual_BancoChile_2025.pdf",
+    "operador_extraccion": "NotebookLM (Gemini Pro)",
+    "fecha_extraccion": "2026-09-23"
+  },
+  "tabla_desagregada": [
+    {
+      "concepto": "Créditos Comerciales en Moneda Nacional",
+      "cartera_bruta_m_clp": 15420100.5,
+      "provisiones_m_clp": -385500.2,
+      "cartera_neta_m_clp": 15034600.3,
+      "garantias_m_clp": 8200000.0,
+      "tasa_promedio_pct": 8.45
+    },
+    {
+      "concepto": "Créditos Hipotecarios para la Vivienda",
+      "cartera_bruta_m_clp": 12850400.0,
+      "provisiones_m_clp": -95000.0,
+      "cartera_neta_m_clp": 12755400.0,
+      "garantias_m_clp": 14200000.0,
+      "tasa_promedio_pct": 4.95
+    }
+  ]
+}
