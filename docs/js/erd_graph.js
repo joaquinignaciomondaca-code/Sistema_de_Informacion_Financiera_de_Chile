@@ -1227,13 +1227,32 @@ const ERD_TABLES = [
     y: 800,
     w: 260,
     h: 180,
-    rows: "316 filas",
+    rows: "679 filas",
     file: "outputs/securitizadoras/patrimonios_separados_nota_sobrecolateral_detalle.parquet",
     cols: [
       { name: "id_linea", pk: true, type: "VARCHAR" },
       { name: "id_patrimonio", fk: true, type: "VARCHAR" },
       { name: "monto_sobrecolateral_mclp", type: "DOUBLE" },
       { name: "sobrecolateral_pct", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "patrimonios_separados_nota_efectivo_detalle",
+    name: "patrimonios.nota_efectivo_detalle",
+    sector: "patrimonios_separados",
+    color: "#0369A1",
+    x: 5060,
+    y: 1040,
+    w: 260,
+    h: 190,
+    rows: "3,802 filas",
+    file: "outputs/securitizadoras/patrimonios_separados_nota_efectivo_detalle.parquet",
+    cols: [
+      { name: "id_linea", pk: true, type: "VARCHAR" },
+      { name: "id_patrimonio", fk: true, type: "VARCHAR" },
+      { name: "institucion", type: "VARCHAR" },
+      { name: "tipo_instrumento", type: "VARCHAR" },
+      { name: "saldo_mclp", type: "DOUBLE" }
     ]
   },
 {
@@ -1763,6 +1782,7 @@ const ERD_LINKS = [
   { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_bonos_detalle", key: "id_patrimonio, periodo" },
   { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_administracion_detalle", key: "id_patrimonio, periodo" },
   { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_sobrecolateral_detalle", key: "id_patrimonio, periodo" },
+  { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_efectivo_detalle", key: "id_patrimonio, periodo" },
   { from: "patrimonios_separados_balance_resumen", to: "patrimonios_separados_repos_detalle", key: "id_patrimonio, periodo" },
   { from: "patrimonios_separados_balance_resumen", to: "patrimonios_separados_cartera_morosidad_detalle", key: "id_patrimonio, periodo" },
   { from: "patrimonios_separados_repos_detalle", to: "bancos_maestro", key: "contraparte (bancos custodios y liquidez)" },
