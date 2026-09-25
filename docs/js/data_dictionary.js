@@ -2323,35 +2323,6 @@ const DATA_DICTIONARY = [
     ]
   },
   {
-    id: "patrimonios_separados_nota_efectivo_detalle",
-    name: "patrimonios.nota_efectivo_detalle",
-    viewName: "patrimonios_separados_nota_efectivo_detalle",
-    sector: "patrimonios_separados",
-    sectorLabel: "Patrimonios Separados (CMF / Ley 18.045)",
-    norma: "CMF Chile / Notas Explicativas a los Estados Financieros Auditados",
-    corte: "2022-12 a 2024-12",
-    frescura: "Anual Auditada",
-    modo: "Automático Streaming RAM CMF",
-    ultimaActualizacion: "2026-09-24",
-    registros: "74 notas de liquidez",
-    descripcion: "Desglose pormenorizado de las partidas de Efectivo, Disponible Bancario y Valores Negociables (fondos mutuos de liquidez) reportadas en notas explicativas auditadas, identificando explícitamente el número de nota contable de origen.",
-    origen: "Comisión para el Mercado Financiero (CMF) — Notas a los Estados Financieros Auditados de Patrimonios Separados.",
-    columnas: [
-      { name: "id_linea", type: "VARCHAR", role: "PK", significado: "Identificador único sintético de la línea contable.", contable: "Asiento Primario", interpretacion: "Clave primaria del registro de efectivo." },
-      { name: "id_patrimonio", type: "VARCHAR", role: "FK", significado: "Identificador único sintético del patrimonio separado.", contable: "No aplica", interpretacion: "Clave relacional del vehículo emisor." },
-      { name: "periodo", type: "VARCHAR", role: "Dimensión", significado: "Periodo anual de reporte contable (YYYY-MM).", contable: "Corte Anual", interpretacion: "Eje temporal del ejercicio financiero." },
-      { name: "fecha", type: "VARCHAR", role: "Dimensión", significado: "Fecha exacta de cierre de los estados financieros (YYYY-MM-DD).", contable: "Fecha Balance", interpretacion: "Cierre contable reportado." },
-      { name: "rut_administradora", type: "VARCHAR", role: "FK", significado: "RUT institucional de la sociedad securitizadora gestora.", contable: "No aplica", interpretacion: "Clave foránea hacia securitizadoras_maestro." },
-      { name: "nombre_administradora", type: "VARCHAR", role: "Dimensión", significado: "Razón social legal de la sociedad securitizadora.", contable: "No aplica", interpretacion: "Entidad fiduciaria administradora." },
-      { name: "codigo_emision", type: "VARCHAR", role: "Dimensión", significado: "Código nemotécnico o identificador de emisión.", contable: "No aplica", interpretacion: "Ticker de la serie o vehículo." },
-      { name: "institucion", type: "VARCHAR", role: "Dimensión", significado: "Entidad bancaria o administradora de fondos mutuos depositaria.", contable: "Contraparte Custodio", interpretacion: "Banco o institución financiera receptora." },
-      { name: "tipo_instrumento", type: "VARCHAR", role: "Dimensión", significado: "Clase o tipo de instrumento de liquidez (Cta Cte, Fondo Mutuo, DAP).", contable: "Clasificación Activo", interpretacion: "Vehículo o formato de inversión de caja." },
-      { name: "moneda", type: "VARCHAR", role: "Dimensión", significado: "Moneda de denominación original del saldo.", contable: "Moneda Funcional", interpretacion: "CLP, USD o UF." },
-      { name: "saldo_mclp", type: "DOUBLE", role: "Métrica", significado: "Saldo en miles de pesos chilenos (M$ CLP).", contable: "Saldo al Cierre", interpretacion: "Monto nominal reportado en la nota." },
-      { name: "saldo_mmclp", type: "DOUBLE", role: "Métrica", significado: "Saldo expresado en millones de pesos chilenos (MM$ CLP).", contable: "Saldo Normalizado", interpretacion: "Monto escalado para comparabilidad macrofinanciera." }
-    ]
-  },
-  {
     id: "patrimonios_separados_repos_detalle",
     name: "patrimonios.repos_detalle",
     viewName: "patrimonios_separados_repos_detalle",

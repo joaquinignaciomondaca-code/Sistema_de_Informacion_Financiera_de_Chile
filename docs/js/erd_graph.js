@@ -1236,24 +1236,6 @@ const ERD_TABLES = [
       { name: "sobrecolateral_pct", type: "DOUBLE" }
     ]
   },
-  {
-    id: "patrimonios_separados_nota_saldo_precio_detalle",
-    name: "patrimonios.nota_saldo_precio",
-    sector: "patrimonios_separados",
-    color: "#0284C7",
-    x: 5060,
-    y: 1040,
-    w: 260,
-    h: 170,
-    rows: "13 filas",
-    file: "outputs/securitizadoras/patrimonios_separados_nota_saldo_precio_detalle.parquet",
-    cols: [
-      { name: "id_linea", pk: true, type: "VARCHAR" },
-      { name: "id_patrimonio", fk: true, type: "VARCHAR" },
-      { name: "originador", type: "VARCHAR" },
-      { name: "saldo_precio_mclp", type: "DOUBLE" }
-    ]
-  },
 {
     id: "patrimonios_separados_maestro",
     name: "patrimonios.emisiones_lineas",
@@ -1297,27 +1279,6 @@ const ERD_TABLES = [
       { name: "total_pasivo_patrimonio_mclp", type: "DOUBLE" },
       { name: "deuda_bonos_largo_plazo_mclp", type: "DOUBLE" },
       { name: "cuadre_contable_ok", type: "BOOLEAN" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_nota_efectivo_detalle",
-    name: "patrimonios.nota_efectivo_detalle",
-    sector: "patrimonios_separados",
-    color: "#0369A1",
-    x: 4740,
-    y: 560,
-    w: 260,
-    h: 200,
-    rows: "74 notas",
-    file: "outputs/securitizadoras/patrimonios_separados_nota_efectivo_detalle.parquet",
-    cols: [
-      { name: "id_patrimonio", pk: true, fk: true, type: "VARCHAR" },
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "numero_nota", type: "VARCHAR" },
-      { name: "concepto_item", type: "VARCHAR" },
-      { name: "tipo_activo", type: "VARCHAR" },
-      { name: "moneda", type: "VARCHAR" },
-      { name: "monto_mclp", type: "DOUBLE" }
     ]
   },
   {
@@ -1802,8 +1763,6 @@ const ERD_LINKS = [
   { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_bonos_detalle", key: "id_patrimonio, periodo" },
   { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_administracion_detalle", key: "id_patrimonio, periodo" },
   { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_sobrecolateral_detalle", key: "id_patrimonio, periodo" },
-  { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_saldo_precio_detalle", key: "id_patrimonio, periodo" },
-{ from: "patrimonios_separados_balance_resumen", to: "patrimonios_separados_nota_efectivo_detalle", key: "id_patrimonio, periodo" },
   { from: "patrimonios_separados_balance_resumen", to: "patrimonios_separados_repos_detalle", key: "id_patrimonio, periodo" },
   { from: "patrimonios_separados_balance_resumen", to: "patrimonios_separados_cartera_morosidad_detalle", key: "id_patrimonio, periodo" },
   { from: "patrimonios_separados_repos_detalle", to: "bancos_maestro", key: "contraparte (bancos custodios y liquidez)" },
