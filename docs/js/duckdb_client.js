@@ -45,6 +45,14 @@ class DuckDBClient {
       "corredoras_repos_colaterales_detalle": "outputs/corredoras_bolsa/corredoras_repos_colaterales_detalle.json",
       "securitizadoras_maestro": "outputs/securitizadoras/securitizadoras_maestro.json",
       "securitizadoras_balance_resumen": "outputs/securitizadoras/securitizadoras_balance_resumen.json",
+            "patrimonios_separados_balance_lineas": "outputs/securitizadoras/patrimonios_separados_balance_lineas.json",
+      "patrimonios_separados_excedentes_lineas": "outputs/securitizadoras/patrimonios_separados_excedentes_lineas.json",
+      "patrimonios_separados_nota_cartera_detalle": "outputs/securitizadoras/patrimonios_separados_nota_cartera_detalle.json",
+      "patrimonios_separados_nota_morosidad_detalle": "outputs/securitizadoras/patrimonios_separados_nota_morosidad_detalle.json",
+      "patrimonios_separados_nota_bonos_detalle": "outputs/securitizadoras/patrimonios_separados_nota_bonos_detalle.json",
+      "patrimonios_separados_nota_administracion_detalle": "outputs/securitizadoras/patrimonios_separados_nota_administracion_detalle.json",
+      "patrimonios_separados_nota_sobrecolateral_detalle": "outputs/securitizadoras/patrimonios_separados_nota_sobrecolateral_detalle.json",
+      "patrimonios_separados_nota_saldo_precio_detalle": "outputs/securitizadoras/patrimonios_separados_nota_saldo_precio_detalle.json",
       "patrimonios_separados_maestro": "outputs/securitizadoras/patrimonios_separados_maestro.json",
       "patrimonios_separados_balance_resumen": "outputs/securitizadoras/patrimonios_separados_balance_resumen.json",
       "patrimonios_separados_nota_efectivo_detalle": "outputs/securitizadoras/patrimonios_separados_nota_efectivo_detalle.json",
@@ -199,7 +207,17 @@ class DuckDBClient {
       { name: "corredoras_repos_contrapartes_tasas", file: "outputs/corredoras_bolsa/corredoras_repos_contrapartes_tasas.parquet" },
       { name: "corredoras_repos_colaterales_detalle", file: "outputs/corredoras_bolsa/corredoras_repos_colaterales_detalle.parquet" },
 
-      // SECURITIZADORAS (CMF / Ley 18.045)
+            // SECURITIZADORAS (CMF / Ley 18.045) - Subsección EEFF & Notas Exhaustivas
+      { name: "patrimonios_separados_balance_lineas", file: "outputs/securitizadoras/patrimonios_separados_balance_lineas.parquet" },
+      { name: "patrimonios_separados_excedentes_lineas", file: "outputs/securitizadoras/patrimonios_separados_excedentes_lineas.parquet" },
+      { name: "patrimonios_separados_nota_cartera_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_cartera_detalle.parquet" },
+      { name: "patrimonios_separados_nota_morosidad_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_morosidad_detalle.parquet" },
+      { name: "patrimonios_separados_nota_bonos_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_bonos_detalle.parquet" },
+      { name: "patrimonios_separados_nota_administracion_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_administracion_detalle.parquet" },
+      { name: "patrimonios_separados_nota_sobrecolateral_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_sobrecolateral_detalle.parquet" },
+      { name: "patrimonios_separados_nota_saldo_precio_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_saldo_precio_detalle.parquet" },
+
+      // SECURITIZADORAS (CMF / Ley 18.045) - Gestoras & Resumen
       { name: "securitizadoras_maestro", file: "outputs/securitizadoras/securitizadoras_maestro.parquet" },
       { name: "securitizadoras_balance_resumen", file: "outputs/securitizadoras/securitizadoras_balance_resumen.parquet" },
       { name: "patrimonios_separados_maestro", file: "outputs/securitizadoras/patrimonios_separados_maestro.parquet" },
