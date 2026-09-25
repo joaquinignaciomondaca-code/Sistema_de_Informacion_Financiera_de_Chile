@@ -1081,7 +1081,9 @@ const EXPLORER_TREE = [
             sector: "patrimonios_separados",
             open: false,
             chips: [
-              { label: "Saldos de Caja por Institución y Tipo de Instrumento", query: "SELECT institucion, tipo_instrumento, count(*) as num_partidas, SUM(saldo_mclp) as total_mclp, SUM(saldo_mmclp) as total_mmclp FROM patrimonios_separados_nota_efectivo_detalle GROUP BY institucion, tipo_instrumento ORDER BY total_mclp DESC;" },
+              { label: "Efectivo y Equivalentes Estrictos (NIC 7 - Bancos, FFMM, DAP, Repos)", query: "SELECT institucion, tipo_instrumento, count(*) as num_partidas, SUM(saldo_mclp) as total_mclp, SUM(saldo_mmclp) as total_mmclp FROM patrimonios_separados_nota_efectivo_detalle WHERE tipo_instrumento NOT LIKE '%Mutuo%' GROUP BY institucion, tipo_instrumento ORDER BY total_mclp DESC;" },
+              { label: "Saldos Totales por Institución Depositaria", query: "SELECT institucion, tipo_instrumento, count(*) as num_partidas, SUM(saldo_mclp) as total_mclp, SUM(saldo_mmclp) as total_mmclp FROM patrimonios_separados_nota_efectivo_detalle GROUP BY institucion, tipo_instrumento ORDER BY total_mclp DESC;" },
+              { label: "Inversiones Transitorias de Caja en Mutuos Hipotecarios", query: "SELECT codigo_emision, periodo, institucion, tipo_instrumento, saldo_mclp, saldo_mmclp FROM patrimonios_separados_nota_efectivo_detalle WHERE tipo_instrumento LIKE '%Mutuo%' ORDER BY saldo_mclp DESC LIMIT 20;" },
               { label: "Top Posiciones de Liquidez y Depósitos", query: "SELECT codigo_emision, periodo, institucion, tipo_instrumento, saldo_mclp, saldo_mmclp FROM patrimonios_separados_nota_efectivo_detalle ORDER BY saldo_mclp DESC LIMIT 20;" }
             ],
             tables: [

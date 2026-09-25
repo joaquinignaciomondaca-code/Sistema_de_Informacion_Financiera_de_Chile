@@ -1482,7 +1482,7 @@ const DATA_DICTIONARY = [
     modo: "Automático PyMuPDF / OCR CMF",
     ultimaActualizacion: "2026-09-25",
     registros: "3,802 filas",
-    descripcion: "Desglose exhaustivo 100% real de las partidas de Efectivo, Disponible Bancario y Valores Negociables (fondos mutuos, depósitos a plazo, pactos de retroventa e inversiones de caja) reportadas en notas explicativas auditadas y balances de patrimonios separados.",
+    descripcion: "Desglose exhaustivo 100% real de las partidas de Efectivo, Disponible Bancario y Valores Negociables (fondos mutuos, depósitos a plazo, pactos de retroventa e inversiones de caja) reportadas en notas explicativas auditadas y balances de patrimonios separados. Nota metodológica: Preserva con estricta fidelidad documental la rendición literal de los EEFF, incluyendo los casos donde la administradora imputó a la nota de ingresos netos de caja inversiones transitorias en mutuos hipotecarios, permitiendo al analista discriminar mediante la columna 'tipo_instrumento' según su criterio contable (NIC 7 estricto vs contractual CMF).",
     origen: "Comisión para el Mercado Financiero (CMF) — Notas a los Estados Financieros Auditados de Patrimonios Separados.",
     columnas: [
       { name: "id_linea", type: "VARCHAR", role: "PK", significado: "Identificador único de la línea de liquidez.", contable: "Asiento Primario", interpretacion: "Clave primaria del registro de efectivo." },
@@ -1493,7 +1493,7 @@ const DATA_DICTIONARY = [
       { name: "nombre_administradora", type: "VARCHAR", role: "Dimensión", significado: "Razón social legal de la sociedad securitizadora.", contable: "No aplica", interpretacion: "Entidad fiduciaria administradora." },
       { name: "codigo_emision", type: "VARCHAR", role: "Dimensión", significado: "Código nemotécnico o identificador de emisión.", contable: "No aplica", interpretacion: "Ticker de la serie o vehículo." },
       { name: "institucion", type: "VARCHAR", role: "Dimensión", significado: "Entidad bancaria o administradora depositaria / contraparte de caja.", contable: "Contraparte Custodio", interpretacion: "Banco o institución financiera receptora." },
-      { name: "tipo_instrumento", type: "VARCHAR", role: "Dimensión", significado: "Clase o tipo de instrumento de liquidez (Cta Cte, Fondo Mutuo, DAP, Pactos, Valores Negociables).", contable: "Clasificación Activo", interpretacion: "Vehículo o formato de inversión de caja." },
+      { name: "tipo_instrumento", type: "VARCHAR", role: "Dimensión", significado: "Clase o tipo de instrumento de liquidez (Cta Cte, Fondo Mutuo, DAP, Pactos, Valores Negociables, Mutuos Hipotecarios de Caja).", contable: "Clasificación Activo", interpretacion: "Vehículo o formato de inversión de caja (permite filtrar mutuos si se aplica criterio estricto NIC 7)." },
       { name: "moneda", type: "VARCHAR", role: "Dimensión", significado: "Moneda de denominación original del saldo (CLP, UF, USD).", contable: "Moneda Funcional", interpretacion: "Divisa contable." },
       { name: "saldo_mclp", type: "DOUBLE", role: "Métrica", significado: "Saldo en miles de pesos chilenos (M$ CLP).", contable: "Saldo al Cierre", interpretacion: "Monto nominal reportado en la nota." },
       { name: "saldo_mmclp", type: "DOUBLE", role: "Métrica", significado: "Saldo expresado en millones de pesos chilenos (MM$ CLP).", contable: "Saldo Normalizado", interpretacion: "Monto escalado para comparabilidad macrofinanciera." }
