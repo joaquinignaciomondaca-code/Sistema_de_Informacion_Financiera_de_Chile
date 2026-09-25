@@ -1,0 +1,26 @@
+﻿# Python cache & virtual environments
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# Large raw CSV files (DuckDB-Wasm uses Parquets; CSVs exceed GitHub 100MB limit)
+*.csv
+docs/outputs/**/*.csv
+seguros/circular_1835_cartera/outputs/**/*.csv
+
+# Redundant duplicate local output folder
+seguros/circular_1835_cartera/outputs/
+
+# Large unpartitioned file > 100 MB (use partitioned cartera_bonos_2016_2020.parquet and cartera_bonos_2021_2024.parquet)
+docs/outputs/vida/cartera_bonos.parquet
+
+# Temporary files & agent logs
+*.tmp
+*.temp
+*.log
+.system_generated/
+.DS_Store
+Thumbs.db

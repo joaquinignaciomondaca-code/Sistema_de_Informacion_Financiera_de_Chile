@@ -1,0 +1,842 @@
+[
+  {
+    "rut":"96571220-8",
+    "nombre_empresa":"BANCHILE CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"BANCHILE",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Grupo Banco de Chile \/ Quinenco"
+  },
+  {
+    "rut":"96564330-3",
+    "nombre_empresa":"BANCOESTADO S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"BANCOESTADO",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"BancoEstado"
+  },
+  {
+    "rut":"96519800-8",
+    "nombre_empresa":"BCI CORREDOR DE BOLSA S.A.",
+    "nombre_fantasia":"BCI",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Grupo BCI \/ Yarur"
+  },
+  {
+    "rut":"79532990-0",
+    "nombre_empresa":"BICE INVERSIONES CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"BICE INVERSIONES",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Grupo BICE \/ Matte"
+  },
+  {
+    "rut":"84177300-4",
+    "nombre_empresa":"BTG PACTUAL CHILE S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"BTG PACTUAL CHILE",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"BTG Pactual"
+  },
+  {
+    "rut":"96772490-4",
+    "nombre_empresa":"CONSORCIO CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"CONSORCIO",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Grupo Consorcio"
+  },
+  {
+    "rut":"76011193-7",
+    "nombre_empresa":"CORREDORES DE BOLSA SURA S.A.",
+    "nombre_fantasia":"CORREDORES DE BOLSA SURA",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Grupo Sura"
+  },
+  {
+    "rut":"96489000-5",
+    "nombre_empresa":"CREDICORP CAPITAL CORREDORES DE BOLSA SPA",
+    "nombre_fantasia":"CREDICORP CAPITAL",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Credicorp Capital"
+  },
+  {
+    "rut":"96899230-9",
+    "nombre_empresa":"EUROAMERICA CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"EUROAMERICA",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"EuroAmerica"
+  },
+  {
+    "rut":"95319000-1",
+    "nombre_empresa":"FINANZAS Y NEGOCIOS S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"FINANZAS Y NEGOCIOS",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96665450-3",
+    "nombre_empresa":"ITAU CORREDORES DE BOLSA LIMITADA",
+    "nombre_fantasia":"ITAU",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Itau Corpbanca \/ Itau Unibanco"
+  },
+  {
+    "rut":"76109764-4",
+    "nombre_empresa":"J.P. MORGAN CORREDORES DE BOLSA SPA",
+    "nombre_fantasia":"J.P. MORGAN",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"J.P. Morgan"
+  },
+  {
+    "rut":"80537000-9",
+    "nombre_empresa":"LARRAIN VIAL S.A. CORREDORA DE BOLSA",
+    "nombre_fantasia":"LARRAIN VIAL",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"LarrainVial"
+  },
+  {
+    "rut":"96921130-0",
+    "nombre_empresa":"MBI CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"MBI",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"MBI Inversiones"
+  },
+  {
+    "rut":"80993900-6",
+    "nombre_empresa":"MERRILL LYNCH CORREDORES DE BOLSA SPA",
+    "nombre_fantasia":"MERRILL LYNCH",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Bank of America \/ Merrill Lynch"
+  },
+  {
+    "rut":"76615490-5",
+    "nombre_empresa":"MONEDA CORREDORES DE BOLSA LIMITADA",
+    "nombre_fantasia":"MONEDA",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Moneda Asset Management \/ Patria"
+  },
+  {
+    "rut":"96586750-3",
+    "nombre_empresa":"NEVASA S.A., CORREDORES DE BOLSA",
+    "nombre_fantasia":"NEVASA,",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Nevasa"
+  },
+  {
+    "rut":"76529250-6",
+    "nombre_empresa":"RENTA 4 CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"RENTA 4",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Renta 4 Espana"
+  },
+  {
+    "rut":"96683200-2",
+    "nombre_empresa":"SANTANDER CORREDORES DE BOLSA LIMITADA",
+    "nombre_fantasia":"SANTANDER",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Grupo Santander"
+  },
+  {
+    "rut":"96535720-3",
+    "nombre_empresa":"SCOTIA CORREDORA DE BOLSA CHILE LIMITADA",
+    "nombre_fantasia":"SCOTIA CHILE",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Scotiabank Chile"
+  },
+  {
+    "rut":"80962600-8",
+    "nombre_empresa":"TANNER CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"TANNER",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Tanner Servicios Financieros"
+  },
+  {
+    "rut":"96515580-5",
+    "nombre_empresa":"VALORES SECURITY S.A., CORREDORES DE BOLSA",
+    "nombre_fantasia":"VALORES SECURITY,",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Grupo Security"
+  },
+  {
+    "rut":"76547150-8",
+    "nombre_empresa":"VANTRUST CAPITAL CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"VANTRUST CAPITAL",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Vantrust Capital"
+  },
+  {
+    "rut":"76513680-6",
+    "nombre_empresa":"VECTOR CAPITAL CORREDORES DE BOLSA SPA",
+    "nombre_fantasia":"VECTOR CAPITAL",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Vector Capital"
+  },
+  {
+    "rut":"78705540-0",
+    "nombre_empresa":"ABN AMRO (CHILE) CORREDORES DE BOLSA LIMITADA",
+    "nombre_fantasia":"ABN AMRO (CHILE)",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"88191500-6",
+    "nombre_empresa":"ADMINISTRADORA NACIONAL DE INVERSIONES S.A. CORRED. DE BOLSA",
+    "nombre_fantasia":"ADMINISTRADORA NACIONAL DE INVERSIONES",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"79507160-1",
+    "nombre_empresa":"ALFA  CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"ALFA",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"84266300-8",
+    "nombre_empresa":"ALFREDO EYZAGUIRRE Y COMPAÃIA, CORREDORES DE BOLSA",
+    "nombre_fantasia":"ALFREDO EYZAGUIRRE Y COMPAÃIA,",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96502040-3",
+    "nombre_empresa":"B Y C  S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"B Y C",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96611310-3",
+    "nombre_empresa":"BANDESARROLLO S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"BANDESARROLLO",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"84341600-4",
+    "nombre_empresa":"BANEDWARDS S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"BANEDWARDS",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"76209873-3",
+    "nombre_empresa":"BANGLOBAL CORREDORES DE BOLSA SPA",
+    "nombre_fantasia":"BANGLOBAL",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96567480-2",
+    "nombre_empresa":"BANOSORNO CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"BANOSORNO",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"1347879-1",
+    "nombre_empresa":"BRANCHI BRANCHI PABLO",
+    "nombre_fantasia":"BRANCHI BRANCHI PABLO",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"80127000-K",
+    "nombre_empresa":"BRAUN , PASCAL Y COMPAÃIA  CORREDORES DE BOLSA",
+    "nombre_fantasia":"BRAUN , PASCAL Y COMPAÃIA",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96633530-0",
+    "nombre_empresa":"CARLOS ARENAS S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"CARLOS ARENAS",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"85646900-K",
+    "nombre_empresa":"CARLOS F. MARIN ORREGO S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"CARLOS F. MARIN ORREGO",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"85646901-8",
+    "nombre_empresa":"CARLOS F. MARIN ORREGO Y COMPAÃIA, CORR DE BOLSAS DE VALORES",
+    "nombre_fantasia":"CARLOS F. MARIN ORREGO Y COMPAÃIA, CORR DE BOLSAS DE VALORES",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96680820-9",
+    "nombre_empresa":"CB CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"CB",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96579230-9",
+    "nombre_empresa":"CELSIUS CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"CELSIUS",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"79561240-8",
+    "nombre_empresa":"CHASE MANHATTAN CORREDORA DE BOLSA LIMITADA",
+    "nombre_fantasia":"CHASE MANHATTAN",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96786720-9",
+    "nombre_empresa":"CHG CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"CHG",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"78124200-4",
+    "nombre_empresa":"CHICAGO CONTINENTAL CORREDORES DE BOLSA",
+    "nombre_fantasia":"CHICAGO CONTINENTAL",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96502820-K",
+    "nombre_empresa":"CHILE MARKET CORREDORES DE BOLSA SPA",
+    "nombre_fantasia":"CHILE MARKET",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96519810-5",
+    "nombre_empresa":"CHILE MARKET S.A CORREDORES DE BOLSA",
+    "nombre_fantasia":"CHILE MARKET S.A",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"95626000-0",
+    "nombre_empresa":"CITI ACCIVAL S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"CITI ACCIVAL",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96516900-8",
+    "nombre_empresa":"CITICORP CHILE CORREDORES DE BOLSA DE VALORES S.A.",
+    "nombre_fantasia":"CITICORP CHILE DE VALORES",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"87816500-4",
+    "nombre_empresa":"CLARO, OVALLE Y CIA CORREDORES DE BOLSA",
+    "nombre_fantasia":"CLARO, OVALLE Y CIA",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96522660-5",
+    "nombre_empresa":"CMB CHILE S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"CMB CHILE",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96565860-2",
+    "nombre_empresa":"COPINVEST S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"COPINVEST",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"81151300-8",
+    "nombre_empresa":"COVARRUBIAS Y COMPAÃIA, CORREDORES DE BOLSA LTDA.",
+    "nombre_fantasia":"COVARRUBIAS Y COMPAÃIA,",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96929300-5",
+    "nombre_empresa":"CRUZ DEL SUR CORREDORA DE BOLSA S.A.",
+    "nombre_fantasia":"CRUZ DEL SUR",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"84182100-9",
+    "nombre_empresa":"DE LA CERDA Y HATTON CORREDORES DE BOLSA S.A",
+    "nombre_fantasia":"DE LA CERDA Y HATTON S.A",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"78221830-1",
+    "nombre_empresa":"DEUTSCHE SECURITIES CORREDORES DE BOLSA SPA",
+    "nombre_fantasia":"DEUTSCHE SECURITIES",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96619500-2",
+    "nombre_empresa":"DRESDNER LATEINAMERIKA S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"DRESDNER LATEINAMERIKA",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96541320-0",
+    "nombre_empresa":"DUPOL S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"DUPOL",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"86337200-3",
+    "nombre_empresa":"EDWARDS, HEARN Y COMPAÃIA, CORREDORES DE BOLSA LTDA",
+    "nombre_fantasia":"EDWARDS, HEARN Y COMPAÃIA,",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"83650900-5",
+    "nombre_empresa":"ENRIQUE Y NELSON LAVIN Y COMPAÃIA, CORREDORES DE BOLSA LTDA",
+    "nombre_fantasia":"ENRIQUE Y NELSON LAVIN Y COMPAÃIA,",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"76043709-3",
+    "nombre_empresa":"ESSEX S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"ESSEX",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"1571295-3",
+    "nombre_empresa":"ETCHEGARAY GIL TOMAS",
+    "nombre_fantasia":"ETCHEGARAY GIL TOMAS",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96535530-8",
+    "nombre_empresa":"ETCHEGARAY S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"ETCHEGARAY",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"83139800-0",
+    "nombre_empresa":"EUGENIO BLANCO S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"EUGENIO BLANCO",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96505100-7",
+    "nombre_empresa":"EUROVALORES S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"EUROVALORES",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"3630451-0",
+    "nombre_empresa":"EYZAGUIRRE BALMACEDA RAFAEL GONZALO",
+    "nombre_fantasia":"EYZAGUIRRE BALMACEDA RAFAEL GONZALO",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96623520-9",
+    "nombre_empresa":"FINANZAS, INVERSIONES Y CORRETAJES S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"FINANZAS, INVERSIONES Y CORRETAJES",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"76907320-5",
+    "nombre_empresa":"FIT RESEARCH CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"FIT RESEARCH",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"82960900-2",
+    "nombre_empresa":"FORTEZA Y COMPAÃIA, CORREDORES DE BOLSA LTDA.",
+    "nombre_fantasia":"FORTEZA Y COMPAÃIA,",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"84754700-6",
+    "nombre_empresa":"GARCIA Y COMPAÃIA LIMITADA CORREDORES DE BOLSA",
+    "nombre_fantasia":"GARCIA Y COMPAÃIA",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"50115-8",
+    "nombre_empresa":"HERNAN SANCHEZ Y COMPAÃIA Y OSCAR MOORE CORREDORES DE BOLSA",
+    "nombre_fantasia":"HERNAN SANCHEZ Y COMPAÃIA Y OSCAR MOORE",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"1845035-6",
+    "nombre_empresa":"IGUALT PEREZ MARIO",
+    "nombre_fantasia":"IGUALT PEREZ MARIO",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"6828948-3",
+    "nombre_empresa":"IHNEN EBENSPERGER JORGE",
+    "nombre_fantasia":"IHNEN EBENSPERGER JORGE",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96622590-4",
+    "nombre_empresa":"INTERMARKETS S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"INTERMARKETS",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"79675630-6",
+    "nombre_empresa":"INTERNATIONALE NEDERLANDEN LIMITADA CORREDORES DE BOLSA",
+    "nombre_fantasia":"INTERNATIONALE NEDERLANDEN",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"79791930-6",
+    "nombre_empresa":"INTERVALORES CORREDORES DE BOLSA LIMITADA",
+    "nombre_fantasia":"INTERVALORES",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"89830400-0",
+    "nombre_empresa":"INVERCHILE CORREDORES DE BOLSA LIMITADA",
+    "nombre_fantasia":"INVERCHILE",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96598810-6",
+    "nombre_empresa":"INVERLINK CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"INVERLINK",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"79558200-2",
+    "nombre_empresa":"INVERSIONES OF AMERICA CORREDORES DE BOLSA LIMITADA",
+    "nombre_fantasia":"INVERSIONES OF AMERICA",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"79516570-3",
+    "nombre_empresa":"ITAU BBA CORREDOR DE BOLSA LIMITADA",
+    "nombre_fantasia":"ITAU BBA",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Itau Corpbanca \/ Itau Unibanco"
+  },
+  {
+    "rut":"84360700-4",
+    "nombre_empresa":"JAIME LARRAIN Y COMPAÃIA CORREDORES DE BOLSA LTDA",
+    "nombre_fantasia":"JAIME LARRAIN Y COMPAÃIA",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"LarrainVial"
+  },
+  {
+    "rut":"88007500-4",
+    "nombre_empresa":"JAIME VIAL ROZAS S. A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"JAIME VIAL ROZAS",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96531880-1",
+    "nombre_empresa":"JOSE HERNAN OVALLE S.A. CORREDORA DE BOLSA",
+    "nombre_fantasia":"JOSE HERNAN OVALLE",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"85075300-8",
+    "nombre_empresa":"JULIO URETA Y COMPAÃIA, CORREDORES DE BOLSA LIMITADA",
+    "nombre_fantasia":"JULIO URETA Y COMPAÃIA,",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96752790-4",
+    "nombre_empresa":"LAVIN S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"LAVIN",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"86759300-4",
+    "nombre_empresa":"LIRA Y CIA.,  CORREDORES DE BOLSA LIMITADA",
+    "nombre_fantasia":"LIRA Y CIA.,",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"89420200-9",
+    "nombre_empresa":"MCC S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"MCC",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96621490-2",
+    "nombre_empresa":"MIDWAY GUARANTY S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"MIDWAY GUARANTY",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96616160-4",
+    "nombre_empresa":"MIGUEL PRIETO S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"MIGUEL PRIETO",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"89312800-K",
+    "nombre_empresa":"MOLINA  Y SWETT  S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"MOLINA  Y SWETT",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"5190450-8",
+    "nombre_empresa":"MOLINA LEIVA ALFONSO",
+    "nombre_fantasia":"MOLINA LEIVA ALFONSO",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"85228800-0",
+    "nombre_empresa":"MOLINA Y CASTRO CORREDORES DE BOLSA",
+    "nombre_fantasia":"MOLINA Y CASTRO",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96619020-5",
+    "nombre_empresa":"NEXT S.A. CORREDOR DE BOLSA",
+    "nombre_fantasia":"NEXT",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"86861300-9",
+    "nombre_empresa":"OCHAGAVIA Y COMPAÃIA, CORREDORES DE BOLSA LIMITADA",
+    "nombre_fantasia":"OCHAGAVIA Y COMPAÃIA,",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96558760-8",
+    "nombre_empresa":"OHIGGINS CORREDORES DE BOLSA LIMITADA",
+    "nombre_fantasia":"OHIGGINS",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"4107007-2",
+    "nombre_empresa":"OVALLE NORDENFLYCHT JOSE HERNAN",
+    "nombre_fantasia":"OVALLE NORDENFLYCHT JOSE HERNAN",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96571270-4",
+    "nombre_empresa":"PALMA Y COMPAÃIA, CORRREDORES DE BOLSA LIMITADA",
+    "nombre_fantasia":"PALMA Y COMPAÃIA, CORRREDORES DE BOLSA",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"83186600-4",
+    "nombre_empresa":"PALMA Y SCHIFFRIN Y COMPAÃIA, CORREDORES DE BOLSA",
+    "nombre_fantasia":"PALMA Y SCHIFFRIN Y COMPAÃIA,",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"99555580-8",
+    "nombre_empresa":"PENTA CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"PENTA",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"85164500-4",
+    "nombre_empresa":"PRIETO,WALKER,NAVARRO S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"PRIETO,WALKER,NAVARRO",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"4104025-4",
+    "nombre_empresa":"RAIMUNDO SERRANO MC AULIFFE CORREDOR DE BOLSA S.A.",
+    "nombre_fantasia":"RAIMUNDO SERRANO MC AULIFFE",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"79626340-7",
+    "nombre_empresa":"RAIMUNDO SERRANO MC AULIFFE CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"RAIMUNDO SERRANO MC AULIFFE",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"688784-8",
+    "nombre_empresa":"ROMERO NEUMANN LAURA ALICIA",
+    "nombre_fantasia":"ROMERO NEUMANN LAURA ALICIA",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"80828800-1",
+    "nombre_empresa":"RUSSELL Y PEREZ CORREDORES DE BOLSA LIMITADA",
+    "nombre_fantasia":"RUSSELL Y PEREZ",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96531680-9",
+    "nombre_empresa":"SANTANDER INVESTMENT S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"SANTANDER INVESTMENT",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Grupo Santander"
+  },
+  {
+    "rut":"96524180-9",
+    "nombre_empresa":"SANTIAGO CORREDORES DE BOLSA LIMITADA",
+    "nombre_fantasia":"SANTIAGO",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Santander \/ Ex-Santiago"
+  },
+  {
+    "rut":"96568550-2",
+    "nombre_empresa":"SCOTIA CORREDORA DE BOLSA CHILE LIMITADA",
+    "nombre_fantasia":"SCOTIA CHILE",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Scotiabank Chile"
+  },
+  {
+    "rut":"87733300-0",
+    "nombre_empresa":"SERGIO CONTRERAS Y COMPAÃIA LIMITADA, CORREDORES DE BOLSA",
+    "nombre_fantasia":"SERGIO CONTRERAS Y COMPAÃIA,",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96409000-9",
+    "nombre_empresa":"SOCIMER CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"SOCIMER",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"76245069-0",
+    "nombre_empresa":"STF CAPITAL CORREDORES DE BOLSA SPA",
+    "nombre_fantasia":"STF CAPITAL",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"83147500-5",
+    "nombre_empresa":"TRANSCORP S.A., CORREDORES DE BOLSA",
+    "nombre_fantasia":"TRANSCORP,",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"85544000-8",
+    "nombre_empresa":"UGARTE Y COMPAÃIA CORREDORES DE BOLSA S.A.",
+    "nombre_fantasia":"UGARTE Y COMPAÃIA",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"1094953-K",
+    "nombre_empresa":"VALDES LARRAIN ANIBAL",
+    "nombre_fantasia":"VALDES LARRAIN ANIBAL",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"LarrainVial"
+  },
+  {
+    "rut":"84226600-9",
+    "nombre_empresa":"VALDIVIESO Y VALDIVIESO Y COMPAÃIA CORREDORES DE BOLSA LTDA",
+    "nombre_fantasia":"VALDIVIESO Y VALDIVIESO Y COMPAÃIA",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"1534338-9",
+    "nombre_empresa":"VALENZUELA LAFOURCADE LUIS ARTURO",
+    "nombre_fantasia":"VALENZUELA LAFOURCADE LUIS ARTURO",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96527210-0",
+    "nombre_empresa":"VALENZUELA LAFOURCADE S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"VALENZUELA LAFOURCADE",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"96556780-1",
+    "nombre_empresa":"VALORES BURSATILES CONCEPCION S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"VALORES BURSATILES CONCEPCION",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"95465000-6",
+    "nombre_empresa":"VALORES S.A. CORREDORES DE BOLSA",
+    "nombre_fantasia":"VALORES",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"1313831-1",
+    "nombre_empresa":"VARAS SERRANO DANIEL",
+    "nombre_fantasia":"VARAS SERRANO DANIEL",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"78708490-7",
+    "nombre_empresa":"VENTURA COLODRO Y COMPAÃIA, CORREDOES DE BOLSA LTDA.",
+    "nombre_fantasia":"VENTURA COLODRO Y COMPAÃIA, CORREDOES DE BOLSA",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"85598800-3",
+    "nombre_empresa":"YRARRAZAVAL Y COMPAÃIA, CORREDORES DE BOLSA LIMITADA",
+    "nombre_fantasia":"YRARRAZAVAL Y COMPAÃIA,",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  },
+  {
+    "rut":"76020595-8",
+    "nombre_empresa":"ZURICH CORREDORA DE BOLSA S.A.",
+    "nombre_fantasia":"ZURICH",
+    "tipo_intermediario":"CORREDOR DE BOLSA",
+    "grupo_financiero":"Independiente \/ No Conglomerado"
+  }
+]
