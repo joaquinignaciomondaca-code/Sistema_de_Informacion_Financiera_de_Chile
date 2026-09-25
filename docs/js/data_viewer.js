@@ -102,11 +102,27 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Securitizadoras (CMF Ley 18.045)",
+    group: "Securitizadoras (CMF Ley 18.045) - EEFF",
     tables: [
-      { id: "securitizadoras_maestro", name: "securitizadoras.maestro (9 entidades)" },
-      { id: "securitizadoras_balance_resumen", name: "securitizadoras.balance_resumen (165 balances IFRS)" },
-      { id: "patrimonios_separados_maestro", name: "securitizadoras.patrimonios_separados (161 patrimonios)" }
+      { id: "patrimonios_separados_balance_lineas", name: "patrimonios.balance_lineas (23,600 filas FECU)" },
+      { id: "patrimonios_separados_excedentes_lineas", name: "patrimonios.excedentes_lineas (16,312 filas)" },
+      { id: "patrimonios_separados_nota_cartera_detalle", name: "patrimonios.nota_cartera (808 filas)" },
+      { id: "patrimonios_separados_nota_morosidad_detalle", name: "patrimonios.nota_morosidad (1,242 filas)" },
+      { id: "patrimonios_separados_nota_bonos_detalle", name: "patrimonios.nota_bonos (498 filas)" },
+      { id: "patrimonios_separados_nota_administracion_detalle", name: "patrimonios.nota_administracion (325 filas)" },
+      { id: "patrimonios_separados_nota_sobrecolateral_detalle", name: "patrimonios.nota_sobrecolateral (316 filas)" },
+      { id: "patrimonios_separados_nota_saldo_precio_detalle", name: "patrimonios.nota_saldo_precio (13 filas)" }
+    ]
+  },
+  {
+    group: "Securitizadoras (CMF Ley 18.045) - Otros de Interés",
+    tables: [
+      { id: "securitizadoras_maestro", name: "securitizadoras.maestro (16 entidades)" },
+      { id: "securitizadoras_balance_resumen", name: "securitizadoras.balance_resumen (362 balances IFRS)" },
+      { id: "patrimonios_separados_maestro", name: "securitizadoras.patrimonios_separados (18 programas)" },
+      { id: "patrimonios_separados_balance_resumen", name: "securitizadoras.balance_resumen (64 balances)" },
+      { id: "patrimonios_separados_repos_detalle", name: "securitizadoras.repos_detalle (74 pactos)" },
+      { id: "patrimonios_separados_cartera_morosidad_detalle", name: "securitizadoras.cartera_morosidad (67 tramos)" }
     ]
   },
   {
