@@ -1,5 +1,7 @@
 # EEFF desde el PDF de Información Financiera
 
+La entrega de la industria está en `factoring_leasing/README.md`, con lo pendiente. Este archivo es el lector.
+
 El buscador de periodos ya estaba codificado y no se usaba.
 
 En `factoring_leasing/scripts/02_extract_factoring_leasing_notas_series.py`,
@@ -13,7 +15,7 @@ En `factoring_leasing/scripts/02_extract_factoring_leasing_notas_series.py`,
 
 `extract_all()` de ese script no llama a esa función. Reparte el total de
 efectivo y de cartera con porcentajes fijos. Eso no es una nota. Esas tablas
-siguen en el monitor bajo De Interés, marcadas para no usarlas como EEFF.
+quedan en disco y no se cargan en el monitor.
 
 ## Cómo corre, y cómo sigue si se corta
 
