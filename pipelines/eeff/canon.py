@@ -10,38 +10,6 @@ from __future__ import annotations
 import re
 import unicodedata
 
-FAMILIAS = (
-    "efectivo",
-    "cartera",
-    "morosidad",
-    "instrumentos",
-    "repos",
-    "financiamiento",
-    "patrimonio",
-    "ingresos",
-    "gastos",
-    "partes_relacionadas",
-    "contingencias",
-    "impuestos",
-    "otra",
-)
-
-_REGLAS = (
-    ("efectivo", ("efectivo", "equivalente", "caja", "banco", "deposito a plazo", "fondo mutuo")),
-    ("morosidad", ("morosidad", "deterioro", "provision", "perdida crediticia", "etapa 1", "etapa 2", "etapa 3", "tramo")),
-    ("cartera", ("deudor comercial", "colocacion", "cartera", "factoring", "leasing", "credito directo", "confirming")),
-    ("repos", ("pacto", "retroventa", "retrocompra", "repo")),
-    ("financiamiento", ("pasivo financiero", "prestamo", "bono", "efecto de comercio", "financiamiento", "deuda")),
-    ("instrumentos", ("instrumento financiero", "derivado", "forward", "swap", "otro activo financiero")),
-    ("patrimonio", ("patrimonio", "capital emitido", "dividendo", "ganancia acumulada")),
-    ("ingresos", ("ingreso de actividades", "composicion de resultado", "ingreso ordinario", "costo de venta")),
-    ("gastos", ("gasto de administracion", "remuneracion", "gasto por funcion")),
-    ("partes_relacionadas", ("entidad relacionada", "parte relacionada", "relacionada")),
-    ("contingencias", ("contingencia", "juicio", "caucion", "restriccion")),
-    ("impuestos", ("impuesto",)),
-)
-
-
 def _fold(text: str) -> str:
     raw = unicodedata.normalize("NFKD", str(text or ""))
     raw = "".join(ch for ch in raw if not unicodedata.combining(ch))
@@ -49,11 +17,10 @@ def _fold(text: str) -> str:
 
 
 def familia_nota(titulo: str) -> str:
-    blob = _fold(titulo)
-    for familia, claves in _REGLAS:
-        if any(clave in blob for clave in claves):
-            return familia
-    return "otra"
+    """Compatibilidad. El diccionario vive en alias.py: la llave no es el número."""
+    from pipelines.eeff.alias import familia_nota as _familia
+
+    return _familia(titulo)
 
 
 def clase_cuenta(nombre: str, estado: str) -> str:

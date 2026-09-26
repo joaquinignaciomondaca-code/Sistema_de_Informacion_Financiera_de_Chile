@@ -1053,22 +1053,39 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "factoring_leasing_nota_lineas",
-    name: "factoring_leasing.nota_lineas",
+    id: "factoring_leasing_nota_efectivo",
+    name: "factoring_leasing.nota_efectivo",
     sector: "factoring_leasing",
     color: "#92400E",
     x: 3880,
     y: 340,
     w: 250,
-    h: 180,
-    rows: "20 líneas Security",
-    file: "outputs/factoring_leasing/factoring_leasing_nota_lineas.parquet",
+    h: 160,
+    rows: "4 líneas Security",
+    file: "outputs/factoring_leasing/factoring_leasing_nota_efectivo.parquet",
     cols: [
       { name: "id_linea", pk: true, type: "VARCHAR" },
       { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "numero_nota", type: "INTEGER" },
       { name: "concepto", type: "VARCHAR" },
-      { name: "monto_miles_clp", type: "DOUBLE" }
+      { name: "saldo_miles", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "factoring_leasing_nota_deudores",
+    name: "factoring_leasing.nota_deudores",
+    sector: "factoring_leasing",
+    color: "#92400E",
+    x: 4160,
+    y: 340,
+    w: 250,
+    h: 170,
+    rows: "16 líneas Security",
+    file: "outputs/factoring_leasing/factoring_leasing_nota_deudores.parquet",
+    cols: [
+      { name: "id_linea", pk: true, type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "concepto", type: "VARCHAR" },
+      { name: "neto_miles", type: "DOUBLE" }
     ]
   },
   {
@@ -1846,7 +1863,8 @@ const ERD_LINKS = [
   { from: "securitizadoras_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "factoring_leasing_maestro", to: "factoring_leasing_eeff_documentos", key: "rut" },
   { from: "factoring_leasing_eeff_documentos", to: "factoring_leasing_balance_lineas", key: "rut, periodo" },
-  { from: "factoring_leasing_eeff_documentos", to: "factoring_leasing_nota_lineas", key: "rut, periodo" },
+  { from: "factoring_leasing_eeff_documentos", to: "factoring_leasing_nota_efectivo", key: "rut, periodo" },
+  { from: "factoring_leasing_eeff_documentos", to: "factoring_leasing_nota_deudores", key: "rut, periodo" },
   { from: "factoring_leasing_maestro", to: "factoring_leasing_balance_resumen", key: "rut" },
   { from: "factoring_leasing_maestro", to: "factoring_leasing_nota_efectivo_detalle", key: "rut" },
   { from: "factoring_leasing_maestro", to: "factoring_leasing_cartera_morosidad_detalle", key: "rut" },
