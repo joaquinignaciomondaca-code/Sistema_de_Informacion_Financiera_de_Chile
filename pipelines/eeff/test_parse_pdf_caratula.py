@@ -33,6 +33,65 @@ TABLA = [
 ]
 
 
+def test_el_salto_despues_del_monto_no_abre_otra_cuenta():
+    texto = """
+Estados de Situación Financiera
+Total de activos corrientes distintos de los activos o grupos
+133.642.225
+141.017.468
+de activos para su disposición clasificados como mantenidos para
+la venta o como mantenidos para distribuir a los propietarios
+Activos corrientes o grupos de activos para su disposición
+(10)
+293.797
+834.139
+clasificados como mantenidos para la venta
+Total activo corriente
+133.936.022
+141.851.607
+Patrimonio atribuible a los propietarios
+48.808.633
+47.530.732
+de la controladora
+Interés no controlador
+(16)
+377.704
+393.542
+"""
+    lineas = lineas_apiladas(texto, "balance", META)
+    nombres = [row["nombre_cuenta"] for row in lineas]
+    assert not any(nombre[:1].islower() for nombre in nombres), nombres
+    assert any(
+        nombre.startswith("Total de activos corrientes") and nombre.endswith("propietarios")
+        for nombre in nombres
+    )
+    venta = next(row for row in lineas if row["nombre_cuenta"].startswith("Activos corrientes o grupos"))
+    assert venta["nombre_cuenta"].endswith("venta")
+    assert venta["monto_miles_clp"] == 293797
+    assert venta["nota_ref"] == "10"
+    assert "Total activo corriente" in nombres
+    assert any(nombre.startswith("Patrimonio atribuible") and nombre.endswith("controladora") for nombre in nombres)
+    assert "Interés no controlador" in nombres
+
+
+def test_plusvalia_con_nota_en_el_nombre_no_es_caida():
+    elegidas = [{"nombre_cuenta": "Plusvalía", "monto_miles_clp": 1629466.0}]
+    otras = [{"nombre_cuenta": "Plusvalía (12)", "monto_miles_clp": 1629466.0}]
+    assert lineas_caidas(elegidas, otras) == []
+
+
+def test_la_nota_pegada_al_nombre_no_es_parte_de_la_cuenta():
+    lineas = lineas_de_tabla(
+        [["Activos por impuestos diferidos 17.1", "405.805", "468.707"]],
+        "balance",
+        META,
+        "corte_primero",
+    )
+    assert lineas[0]["nombre_cuenta"] == "Activos por impuestos diferidos"
+    assert lineas[0]["nota_ref"] == "17"
+    assert lineas[0]["monto_miles_clp"] == 405805
+
+
 def test_una_linea_de_indice_no_es_cara_caida():
     elegidas = [{"nombre_cuenta": "Efectivo y equivalentes al efectivo", "monto_miles_clp": 36.0}]
     otras = elegidas + [

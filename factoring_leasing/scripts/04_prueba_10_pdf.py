@@ -78,12 +78,32 @@ def _extraer(blob: bytes) -> dict:
             os.remove(path)
 
 
+def _nombres_sucios(lineas: list[dict]) -> int:
+    """Un nombre que parte en minúscula, o dos títulos pegados, no es la línea impresa."""
+    sucias = 0
+    for row in lineas:
+        nombre = (row.get("nombre_cuenta") or "").strip()
+        if nombre[:1].islower():
+            sucias += 1
+        if re.search(r"[a-záéíóúñ] Total\b", nombre):
+            sucias += 1
+        if re.search(r"\s\d{1,2}(?:\.\d{1,2})?$", nombre):
+            sucias += 1
+    return sucias
+
+
 def _puntaje_balance(lineas: list[dict]) -> int:
     if len(lineas) < 8:
         return 0
     cuadre = cuadratura_balance(lineas)
     detalle = cuadratura_detalle(lineas)
-    return (4 if cuadre.get("estado") == "OK" else 0) + (1 if detalle.get("estado") == "OK" else 0)
+    base = (4 if cuadre.get("estado") == "OK" else 0) + (1 if detalle.get("estado") == "OK" else 0)
+    if not base:
+        return 0
+    # Una cara con el nombre cortado no le gana a la que cierra y trae el nombre entero.
+    if _nombres_sucios(lineas):
+        return base
+    return base * 100
 
 
 def _puntaje_resultado(lineas: list[dict]) -> int:
