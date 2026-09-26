@@ -1,7 +1,8 @@
 """
 NO LEE EL PDF. Reparte totales de la API con porcentajes fijos.
 El EEFF real está en 03_eeff_desde_pdf.py. Este script queda solo como
-advertencia de lo que no debe publicarse como nota.
+advertencia de lo que no debe publicarse como nota. El monitor no carga
+estas tablas: no van al menú ni a DuckDB.
 Genera:
 1. factoring_leasing_nota_efectivo_detalle.parquet / .json
 2. factoring_leasing_cartera_morosidad_detalle.parquet / .json

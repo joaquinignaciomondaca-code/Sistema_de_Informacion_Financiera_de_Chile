@@ -133,8 +133,6 @@ class ExportModalController {
       factoring_leasing_nota_esquema_pendiente: 0,
       factoring_leasing_nota_lineas: 0,
       factoring_leasing_validacion_api: 60,
-      factoring_leasing_nota_efectivo_detalle: 2975,
-      factoring_leasing_cartera_morosidad_detalle: 17406,
       corredoras_bolsa_maestro: 47,
       corredoras_bolsa_balance_resumen: 1586
     };

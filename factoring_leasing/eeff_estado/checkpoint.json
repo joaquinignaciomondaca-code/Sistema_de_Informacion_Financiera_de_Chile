@@ -1,13 +1,13 @@
 {
   "version": 1,
-  "parser_version": 2,
+  "parser_version": 3,
   "documentos": {
     "76002293-4|2026-03|Individual": {
       "sha256": "d5cffd91486241bfc34c1bb6158136ee6a61e34e1920b5717c099a558aa67e87",
       "archivo": "76002293-4_2026-03.md",
       "estado": "ok",
-      "parser_version": 2,
-      "actualizado": "2026-09-26T01:58:31-03:00",
+      "parser_version": 3,
+      "actualizado": "2026-09-26T02:30:05-03:00",
       "error": "",
       "tablas_leidas": "",
       "estado_extraccion": "PDF_CARATULA"
@@ -16,8 +16,8 @@
       "sha256": "822f9801a53f0267ccba1d5af30fdcc0ed2fbd95f654c5eaee2b331dcdc14f7c",
       "archivo": "76139506-8_2026-03.md",
       "estado": "ok",
-      "parser_version": 2,
-      "actualizado": "2026-09-26T01:58:31-03:00",
+      "parser_version": 3,
+      "actualizado": "2026-09-26T02:30:05-03:00",
       "error": "",
       "tablas_leidas": "",
       "estado_extraccion": "PDF_CARATULA"
@@ -26,18 +26,18 @@
       "sha256": "2f239bdd5221f847195bdadb2654507774ccf0463de88c268d5a771863172b8b",
       "archivo": "76360977-4_2026-03.md",
       "estado": "ok",
-      "parser_version": 2,
-      "actualizado": "2026-09-26T01:58:31-03:00",
+      "parser_version": 3,
+      "actualizado": "2026-09-26T02:30:06-03:00",
       "error": "",
       "tablas_leidas": "",
-      "estado_extraccion": "PDF_CARATULA"
+      "estado_extraccion": "PDF_PARCIAL"
     },
     "76555835-2|2026-03|Individual": {
       "sha256": "03310ba68e6e1355486970da4d9fb3e91bad14fa44c9ee1f99777bc7418a9807",
       "archivo": "76555835-2_2026-03.md",
       "estado": "ok",
-      "parser_version": 2,
-      "actualizado": "2026-09-26T01:58:31-03:00",
+      "parser_version": 3,
+      "actualizado": "2026-09-26T02:30:06-03:00",
       "error": "",
       "tablas_leidas": "",
       "estado_extraccion": "PDF_CARATULA"
@@ -46,8 +46,8 @@
       "sha256": "2fba796556b484529cab7a699f11722ced1cf031ff2ee93a99b01a5e4f28614a",
       "archivo": "94050000-1_2026-03.md",
       "estado": "ok",
-      "parser_version": 2,
-      "actualizado": "2026-09-26T01:58:31-03:00",
+      "parser_version": 3,
+      "actualizado": "2026-09-26T02:30:06-03:00",
       "error": "",
       "tablas_leidas": "",
       "estado_extraccion": "PDF_CARATULA"
@@ -56,18 +56,18 @@
       "sha256": "68d268dcb615215aeb16581f1e1ed48fc3ed6d52cc29d82e0c26304793bb8b8e",
       "archivo": "96655860-1_2026-03.md",
       "estado": "ok",
-      "parser_version": 2,
-      "actualizado": "2026-09-26T01:58:31-03:00",
+      "parser_version": 3,
+      "actualizado": "2026-09-26T02:30:06-03:00",
       "error": "",
       "tablas_leidas": "deudores,efectivo",
-      "estado_extraccion": "PDF_CON_NOTAS"
+      "estado_extraccion": "PDF_PARCIAL_CON_NOTAS"
     },
     "96667560-8|2026-03|Consolidado": {
       "sha256": "1ffa286251886314807a28ba6e1dcacda149a274edb69797f59b204c2bd771d4",
       "archivo": "96667560-8_2026-03.md",
       "estado": "ok",
-      "parser_version": 2,
-      "actualizado": "2026-09-26T01:58:32-03:00",
+      "parser_version": 3,
+      "actualizado": "2026-09-26T02:30:06-03:00",
       "error": "",
       "tablas_leidas": "",
       "estado_extraccion": "PDF_PARCIAL"
@@ -76,8 +76,8 @@
       "sha256": "0d84b6efc7be260bd9e8259348429e48ea61b35c093ae47f79ee1d405b724392",
       "archivo": "96678790-2_2026-03.md",
       "estado": "ok",
-      "parser_version": 2,
-      "actualizado": "2026-09-26T01:58:32-03:00",
+      "parser_version": 3,
+      "actualizado": "2026-09-26T02:30:06-03:00",
       "error": "",
       "tablas_leidas": "",
       "estado_extraccion": "PDF_CARATULA"
@@ -86,8 +86,8 @@
       "sha256": "d361e9981d00e4de994774e62cc5a4499101e2fbb516b9e00fa5a0e3dfb3aefa",
       "archivo": "96861280-8_2026-03.md",
       "estado": "ok",
-      "parser_version": 2,
-      "actualizado": "2026-09-26T01:58:32-03:00",
+      "parser_version": 3,
+      "actualizado": "2026-09-26T02:30:06-03:00",
       "error": "",
       "tablas_leidas": "",
       "estado_extraccion": "PDF_PARCIAL"
@@ -96,12 +96,12 @@
       "sha256": "3275e3c5926886cf299ad41b220e9eb46324de937dd9ce8e89f987d10b6e8826",
       "archivo": "99501480-7_2026-03.md",
       "estado": "ok",
-      "parser_version": 2,
-      "actualizado": "2026-09-26T01:58:32-03:00",
+      "parser_version": 3,
+      "actualizado": "2026-09-26T02:30:06-03:00",
       "error": "",
       "tablas_leidas": "",
-      "estado_extraccion": "PDF_CARATULA"
+      "estado_extraccion": "PDF_PARCIAL"
     }
   },
-  "actualizado": "2026-09-26T01:58:32-03:00"
+  "actualizado": "2026-09-26T02:30:06-03:00"
 }

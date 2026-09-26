@@ -5,8 +5,9 @@ es la nota 13 en 2013 («Préstamos que devengan intereses») y otra nota 13
 en 2026 («Otros pasivos financieros corrientes»). Si el título de un año
 no aparece, no es que la nota no exista.
 
-PARSER_VERSION sube cuando cambia este diccionario o el lector de tablas.
-Una corrida no relee un archivo cuyo hash ya está ok con la misma versión.
+PARSER_VERSION sube cuando cambia este diccionario, el lector de tablas o el
+cuadre que se publica. Una corrida no relee un archivo cuyo hash ya está ok
+con la misma versión.
 """
 
 from __future__ import annotations
@@ -14,7 +15,7 @@ from __future__ import annotations
 import re
 import unicodedata
 
-PARSER_VERSION = 2
+PARSER_VERSION = 3
 
 TABLAS_COMUNES = (
     "efectivo",
