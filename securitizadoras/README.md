@@ -68,6 +68,7 @@ que pasen la auditoría.
 | 22 | El cuadro de la Nota 7 de EF trae `Total de Activo | 456` (nº de contratos) y pisaba `TOTAL ACTIVOS = 16.624.735`; tramos de mora en notas parseados como balance | Las páginas con encabezado `NOTA n -` y sin línea `TOTAL ACTIVOS` se excluyen del EEFF; el resumen toma la **primera** ocurrencia de cada cuenta (orden del PDF). |
 | 23 | La pestaña 18 lista también "A. Razonado" (reporte de cartera, no EEFF) | Excluido al listar, igual que las declaraciones de responsabilidad. |
 | 24 | Balances **embebidos como imagen** dentro de PDFs con texto (EF 06/2023, Security BSECS-6/10 06/2025): sin texto no hay líneas | OCR con Tesseract (`spa`, `--psm 6`, 300 dpi) sólo para páginas con imagen y < 300 caracteres; el workflow instala `tesseract-ocr-spa`. Las líneas quedan con `metodo = …+ocr_tesseract` y la cobertura registra `paginas_ocr`. Sin tesseract no se inventa nada. |
+| 12 | Dos auditorías legadas que ya fallaban y tablas fuera de `data_manifest.json` | Retiradas (`04_audit_patrimonios_separados.py`, `audit_securitizadoras.py`); también `stream_cmf_securitizadoras.py` y `03_extract_…` (reemplazados por el pipeline). `patrimonios_separados_balance_resumen` añadida al manifest; badges del sidebar con los conteos reales (18 líneas / 64 balances, antes "485 vehículos / 42.800+ líneas"). |
 
 Hallazgos de la **primera corrida completa 2010-2026** (2.727 PDF listados; 93,3 % cuadraba). Se revisaron uno a uno los volcados de páginas de los 272 PDF que no cuadraban:
 
@@ -85,7 +86,6 @@ Hallazgos de la **primera corrida completa 2010-2026** (2.727 PDF listados; 93,3
 | 34 | `paso gestoras` sin balances anteriores a 2017 y `ganancia` vacía | Timeout 60 s + reintento (la CMF tarda en períodos antiguos); en modo diagnóstico guarda hasta 3 FECU HTML sin ganancia para revisar el selector. |
 
 Resultado sobre los 272 volcados: 146 cuadran ya con el texto guardado; 109 son páginas escaneadas giradas/ilegibles (requieren la nueva pasada de OCR en Actions); 17 casos residuales (p. ej. Security PS-14 03/2022, cuyo propio PDF descuadra en 1,1 MM$).
-| 12 | Dos auditorías legadas que ya fallaban y tablas fuera de `data_manifest.json` | Retiradas (`04_audit_patrimonios_separados.py`, `audit_securitizadoras.py`); también `stream_cmf_securitizadoras.py` y `03_extract_…` (reemplazados por el pipeline). `patrimonios_separados_balance_resumen` añadida al manifest; badges del sidebar con los conteos reales (18 líneas / 64 balances, antes "485 vehículos / 42.800+ líneas"). |
 
 ## 3. Diccionario mínimo de las tablas publicadas
 
