@@ -281,10 +281,18 @@ def re_split_paginas(texto: str) -> list[str]:
     return [parte for parte in partes if parte.strip()]
 
 
-def correr(periodo: str) -> int:
-    dest = PRUEBA / periodo
+def _objetivos_lote(path: str, periodo: str) -> list[dict]:
+    filas = json.loads(Path(path).read_text(encoding="utf-8"))
+    for fila in filas:
+        fila.setdefault("periodo", periodo)
+        fila.setdefault("tipo_eeff", "")
+    return filas
+
+
+def correr(periodo: str, lote: str = "", dest_name: str = "") -> int:
+    dest = PRUEBA / (dest_name or periodo)
     (dest / "texto").mkdir(parents=True, exist_ok=True)
-    objetivos = _objetivos(periodo)
+    objetivos = _objetivos_lote(lote, periodo) if lote else _objetivos(periodo)
     print(f"[prueba] {len(objetivos)} sociedades de {periodo}")
     try:
         api = _api_periodo(periodo)
@@ -349,10 +357,14 @@ def correr(periodo: str) -> int:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Prueba de 10 PDF de factoring")
     parser.add_argument("--periodo", default="2026-03")
+    parser.add_argument("--lote", default="", help="JSON con rut y razon_social. No usa los Markdown ya leídos.")
+    parser.add_argument("--dest", default="", help="Carpeta bajo eeff_prueba. Vacío usa el periodo.")
     parser.add_argument("--reparse", action="store_true", help="Lee el texto ya guardado. No baja el PDF.")
     args = parser.parse_args()
     os.chdir(ROOT)
-    raise SystemExit(reparsear(args.periodo) if args.reparse else correr(args.periodo))
+    if args.reparse:
+        raise SystemExit(reparsear(args.periodo))
+    raise SystemExit(correr(args.periodo, args.lote, args.dest))
 
 
 if __name__ == "__main__":
