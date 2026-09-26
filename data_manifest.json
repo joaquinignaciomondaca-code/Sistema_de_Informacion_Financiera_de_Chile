@@ -517,7 +517,7 @@
       "ultima_actualizacion": "2026-09-26",
       "file_parquet": "outputs/factoring_leasing/factoring_leasing_eeff_documentos.parquet",
       "registros_reales": 10,
-      "descripcion": "Diez EEFF de factoring y leasing, marzo 2026, desde el PDF de Información Financiera. Tanner y Eurocapital parciales.",
+      "descripcion": "Diez EEFF de factoring y leasing, marzo 2026, desde el PDF. Tanner y Eurocapital parciales. Security, Penta y Primus tienen huecos marcados, no rellenados.",
       "origen": "PDF Estados financieros, entidad.php pestania=3, buscador de periodo."
     },
     {

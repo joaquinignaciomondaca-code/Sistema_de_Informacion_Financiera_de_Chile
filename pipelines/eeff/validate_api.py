@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import re
+import unicodedata
 
 TOLERANCIA_M_CLP = 1.0
 
@@ -102,6 +103,182 @@ def validar_documento(lineas_balance: list[dict], fila_api: dict | None) -> list
             "fuente_api": "CMF ver_archivo.php (solo validacion)",
         })
     return salida
+
+
+def _fold(text: str) -> str:
+    raw = unicodedata.normalize("NFKD", str(text or ""))
+    raw = "".join(ch for ch in raw if not unicodedata.combining(ch))
+    return re.sub(r"\s+", " ", re.sub(r"[^a-z0-9 ]", " ", raw.lower())).strip()
+
+
+def _fmt_miles(valor: float) -> str:
+    entero = int(round(valor))
+    signo = "-" if entero < 0 else ""
+    return signo + f"{abs(entero):,}".replace(",", ".")
+
+
+def _lado(nombre: str, clase: str) -> str:
+    n = _fold(nombre)
+    if "patrimonio" in n:
+        return "Patrimonio"
+    if "pasivo" in n:
+        return "Pasivo"
+    if "activo" in n:
+        return "Activo"
+    if clase in {"Activo", "Pasivo", "Patrimonio"}:
+        return clase
+    return ""
+
+
+def _es_total_caratula(nombre: str, clase: str) -> bool:
+    n = _fold(nombre)
+    if clase == "Total":
+        return True
+    if n.startswith("total ") or n.startswith("totales "):
+        return True
+    return n in {"patrimonio total", "patrimonio neto total"}
+
+
+def cuadratura_detalle(lineas: list[dict]) -> dict:
+    """El detalle publicado tiene que sumar el subtotal que el PDF sí trae.
+
+    No inventa la línea que falta. Una línea «atribuible» que ya es la suma
+    de las anteriores no se vuelve a sumar. Un total sin ninguna línea de
+    detalle no se denuncia aquí: eso lo ve la ecuación del balance.
+    """
+    huecos = []
+    estado_lado = {
+        "Activo": {"bucket": [], "stack": []},
+        "Pasivo": {"bucket": [], "stack": []},
+        "Patrimonio": {"bucket": [], "stack": []},
+    }
+    for row in lineas:
+        if row.get("monto_miles_clp") is None:
+            continue
+        lado = _lado(row.get("nombre_cuenta", ""), row.get("clase", ""))
+        if not lado:
+            continue
+        monto = float(row["monto_miles_clp"])
+        nombre = row.get("nombre_cuenta", "")
+        st = estado_lado[lado]
+        if not _es_total_caratula(nombre, row.get("clase", "")):
+            if (
+                "atribuible" in _fold(nombre)
+                and len(st["bucket"]) >= 2
+                and abs(round(sum(st["bucket"]), 2) - monto) <= 1
+            ):
+                continue
+            st["bucket"].append(monto)
+            continue
+        if st["bucket"]:
+            suma = round(sum(st["bucket"]), 2)
+            if abs(suma - monto) > 1:
+                huecos.append(
+                    f"{nombre}: detalle {_fmt_miles(suma)}, total {_fmt_miles(monto)}"
+                )
+            st["bucket"] = []
+            st["stack"].append(monto)
+            continue
+        if st["stack"]:
+            suma = round(sum(st["stack"]), 2)
+            if abs(suma - monto) > 1:
+                huecos.append(
+                    f"{nombre}: faltan líneas por {_fmt_miles(monto - suma)} entre el subtotal y el total"
+                )
+            st["stack"] = []
+    if not huecos:
+        return {"estado": "OK", "hueco": ""}
+    return {"estado": "FALTAN_LINEAS", "hueco": " | ".join(huecos[:4])}
+
+
+def _es_atribucion(nombre: str) -> bool:
+    n = _fold(nombre)
+    return (
+        "atribuible" in n
+        or "no controlad" in n
+        or n.startswith("propietarios")
+        or "participaciones no" in n
+    )
+
+
+def _es_subtotal_resultado(nombre: str) -> bool:
+    n = _fold(nombre)
+    if _es_atribucion(nombre):
+        return False
+    if n in {"ganancia", "utilidad", "resultado", "ganancia perdida", "utilidad perdida"}:
+        return True
+    claves = (
+        "ganancia bruta",
+        "ingreso neto",
+        "antes de impuesto",
+        "del periodo",
+        "del ejercicio",
+        "actividades operacionales",
+        "actividades de operacion",
+        "resultado de operaciones",
+        "ganancia perdida",
+        "utilidad perdida",
+    )
+    return any(clave in n for clave in claves)
+
+
+def _roll_resultado(lineas: list[dict], campo: str, etiqueta: str) -> str:
+    if not any(row.get(campo) is not None for row in lineas):
+        return ""
+    relevantes = [row for row in lineas if not _es_atribucion(row.get("nombre_cuenta", ""))]
+    if relevantes and any(row.get(campo) is None for row in relevantes):
+        return ""
+    running = 0.0
+    componentes = 0
+    vio_subtotal = False
+    neto = None
+    for row in lineas:
+        nombre = row.get("nombre_cuenta", "")
+        if _es_atribucion(nombre):
+            continue
+        monto = float(row[campo])
+        if _es_subtotal_resultado(nombre):
+            vio_subtotal = True
+            neto = monto
+            if componentes == 0:
+                return f"{etiqueta}: el resultado no trae las líneas que lo componen"
+            if abs(round(running - monto, 2)) > 1:
+                return (
+                    f"{etiqueta} {nombre}: suma {_fmt_miles(running)}, "
+                    f"línea {_fmt_miles(monto)}"
+                )
+            continue
+        running += monto
+        componentes += 1
+    if not vio_subtotal and componentes:
+        return f"{etiqueta}: no hay una línea de resultado para cerrar la suma"
+    atrib = [
+        float(row[campo])
+        for row in lineas
+        if _es_atribucion(row.get("nombre_cuenta", "")) and row.get(campo) is not None
+    ]
+    if atrib and neto is not None and abs(round(sum(atrib) - neto, 2)) > 1:
+        return (
+            f"{etiqueta}: la atribución suma {_fmt_miles(sum(atrib))} "
+            f"y el resultado es {_fmt_miles(neto)}"
+        )
+    return ""
+
+
+def cuadratura_resultados(lineas: list[dict]) -> dict:
+    """Suma las líneas que no son subtotal. No completa la que falta."""
+    if not lineas:
+        return {"estado": "INCOMPLETO", "hueco": "sin estado de resultados"}
+    corte = _roll_resultado(lineas, "monto_miles_clp", "corte")
+    comp = _roll_resultado(lineas, "monto_comparativo_miles_clp", "comparativo")
+    huecos = [texto for texto in (corte, comp) if texto]
+    if not huecos:
+        return {"estado": "OK", "hueco": ""}
+    incompleto = all("no trae las líneas" in texto or texto.startswith("sin ") for texto in huecos)
+    return {
+        "estado": "INCOMPLETO" if incompleto else "FALTAN_LINEAS",
+        "hueco": " | ".join(huecos),
+    }
 
 
 def cuadratura_balance(lineas: list[dict]) -> dict:

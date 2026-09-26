@@ -70,17 +70,24 @@ título no es el mismo entre sociedades.
 Diez PDF, transcritos en `factoring_leasing/eeff_fuentes/`. No se reemplazan
 con el HTML.
 
-Carátula que cuadra (activos = pasivos + patrimonio): Forum, Santander
+La ecuación activos = pasivos + patrimonio cierra en Forum, Santander
 Consumer, Autofin, Primus, ST Capital, GM Financial, Security y Penta.
+Eso no basta. `cuadre_caratula` y `cuadre_resultados` miran si el detalle
+publicado suma el subtotal. Si no suma, el estado baja a parcial y `hueco`
+dice la diferencia, en miles. No se inventa la línea.
 
-Parciales, a propósito:
+- Security: las notas 4 y 5 cuadran con su línea de la carátula. El detalle
+  de activos corrientes, el activo no corriente y los pasivos corrientes no
+  suman el subtotal. Queda `PDF_PARCIAL_CON_NOTAS`.
+- Penta: el balance cierra. El resultado no. Falta el tramo entre ganancia
+  bruta y ganancia antes de impuestos, corte y comparativo.
+- Primus: el corte del resultado cierra. El comparativo no, por 15.308 miles.
+
+Parciales de carátula, a propósito:
 
 - Tanner: la carátula leída no trae efectivo ni deudores. El índice sí.
 - Eurocapital: efectivo, deudores corrientes, total de activos y patrimonio.
   Sin pasivos en el recorte.
-
-Penta no trae el gasto de administración: el corte de página partió la cifra
-y no se completa a mano.
 
 ## Validación
 
@@ -122,4 +129,6 @@ pip install pyarrow
 ```
 
 El monitor separa Factoring en EEFF y De Interés. EEFF es el PDF.
-De Interés es el maestro, la serie API y las tablas de porcentajes.
+De Interés es el maestro y la serie API. Las tablas de porcentajes
+(`nota_efectivo_detalle`, `cartera_morosidad_detalle`) no se cargan:
+reparten un total de la API y no son la nota.

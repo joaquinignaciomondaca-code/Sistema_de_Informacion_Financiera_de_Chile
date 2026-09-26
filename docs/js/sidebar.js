@@ -729,7 +729,7 @@ const EXPLORER_TREE = [
             sector: "factoring_leasing",
             open: true,
             chips: [
-              { label: "Qué se extrajo del PDF y qué quedó parcial", query: "SELECT razon_social, tipo_eeff, lineas_balance, lineas_resultados, tablas_leidas, notas_en_indice, estado_extraccion, cuadre_efectivo, cuadre_deudores, estado_api FROM factoring_leasing_eeff_documentos ORDER BY razon_social;" },
+              { label: "Qué se extrajo del PDF y qué quedó parcial", query: "SELECT razon_social, tipo_eeff, estado_extraccion, cuadre_balance, cuadre_caratula, cuadre_resultados, hueco, tablas_leidas, estado_api FROM factoring_leasing_eeff_documentos ORDER BY razon_social;" },
               { label: "Total activos del PDF vs API (validación, no fuente)", query: "SELECT razon_social, tipo_eeff, monto_documento_m_clp, monto_api_m_clp, diff_m_clp, numeros, estado FROM factoring_leasing_validacion_api WHERE concepto = 'total_activos' ORDER BY monto_documento_m_clp DESC;" }
             ],
             tables: [
@@ -835,42 +835,6 @@ const EXPLORER_TREE = [
             ],
             tables: [
               { id: "factoring_leasing_balance_resumen", name: "factoring_leasing.balance_resumen", rows: "878 datos", file: "outputs/factoring_leasing/factoring_leasing_balance_resumen.parquet" }
-            ]
-          },
-          {
-            id: "circ_fl_nota_efectivo",
-            type: "circular",
-            label: "No usar: efectivo repartido por porcentajes, no es el PDF",
-            badge: "2.975 Datos",
-            badgeType: "data",
-            status: "active",
-            sector: "factoring_leasing",
-            open: false,
-            chips: [
-              { label: "Desglose de Efectivo por Divisas (CLP vs USD vs Otras)", query: "SELECT moneda_origen, count(*) as registros, round(sum(monto_mclp)/1000, 1) as total_mm_clp, round(sum(monto_musd)/1000, 1) as total_mm_usd FROM factoring_leasing_nota_efectivo_detalle WHERE periodo = (SELECT MAX(periodo) FROM factoring_leasing_nota_efectivo_detalle) GROUP BY moneda_origen ORDER BY total_mm_clp DESC;" },
-              { label: "Pactos de Liquidez (CRV) y Depósitos en el Sector", query: "SELECT periodo, razon_social, concepto, moneda_origen, monto_mclp, monto_musd FROM factoring_leasing_nota_efectivo_detalle WHERE concepto LIKE '%Pactos%' OR concepto LIKE '%Depositos%' ORDER BY periodo DESC, monto_mclp DESC LIMIT 15;" },
-              { label: "Ranking de Liquidez en Caja y Bancos por Entidad", query: "SELECT razon_social, round(sum(monto_mclp)/1000, 1) as liquidez_total_mm_clp, round(sum(monto_musd)/1000, 1) as liquidez_total_mm_usd FROM factoring_leasing_nota_efectivo_detalle WHERE periodo = (SELECT MAX(periodo) FROM factoring_leasing_nota_efectivo_detalle) GROUP BY razon_social ORDER BY liquidez_total_mm_clp DESC LIMIT 10;" }
-            ],
-            tables: [
-              { id: "factoring_leasing_nota_efectivo_detalle", name: "factoring_leasing.nota_efectivo_detalle", rows: "2.975 datos", file: "outputs/factoring_leasing/factoring_leasing_nota_efectivo_detalle.parquet" }
-            ]
-          },
-          {
-            id: "circ_fl_cartera_morosidad",
-            type: "circular",
-            label: "No usar: cartera repartida por porcentajes, no es el PDF",
-            badge: "17.406 Datos",
-            badgeType: "data",
-            status: "active",
-            sector: "factoring_leasing",
-            open: false,
-            chips: [
-              { label: "Cartera Total por Línea de Producto (Factoring vs Leasing vs Automotriz)", query: "SELECT linea_producto, round(sum(cartera_bruta_mclp)/1000, 1) as bruta_mm_clp, round(sum(provisiones_mclp)/1000, 1) as provisiones_mm_clp, round(sum(cartera_neta_mclp)/1000, 1) as neta_mm_clp, round(sum(provisiones_mclp)/NULLIF(sum(cartera_bruta_mclp), 0)*100, 2) as cobertura_pct FROM factoring_leasing_cartera_morosidad_detalle WHERE periodo = (SELECT MAX(periodo) FROM factoring_leasing_cartera_morosidad_detalle) GROUP BY linea_producto ORDER BY bruta_mm_clp DESC;" },
-              { label: "Estratificación de Morosidad por Tramos (1-30, 31-60, 61-90, >180 días)", query: "SELECT tramo_morosidad, etapa_ifrs9, round(sum(cartera_bruta_mclp)/1000, 1) as monto_mm_clp, round(sum(provisiones_mclp)/1000, 1) as prov_mm_clp, round(sum(provisiones_mclp)/NULLIF(sum(cartera_bruta_mclp), 0)*100, 1) as cobertura_pct FROM factoring_leasing_cartera_morosidad_detalle WHERE periodo = (SELECT MAX(periodo) FROM factoring_leasing_cartera_morosidad_detalle) GROUP BY tramo_morosidad, etapa_ifrs9 ORDER BY monto_mm_clp DESC;" },
-              { label: "Provisiones IFRS 9 por Etapas de Riesgo (Etapa 1, 2 y 3)", query: "SELECT etapa_ifrs9, round(sum(cartera_bruta_mclp)/1000, 1) as exposicion_mm_clp, round(sum(provisiones_mclp)/1000, 1) as provision_mm_clp, round(sum(provisiones_mclp)/NULLIF(sum(cartera_bruta_mclp), 0)*100, 2) as ratio_deterioro_pct FROM factoring_leasing_cartera_morosidad_detalle WHERE periodo = (SELECT MAX(periodo) FROM factoring_leasing_cartera_morosidad_detalle) GROUP BY etapa_ifrs9 ORDER BY etapa_ifrs9;" }
-            ],
-            tables: [
-              { id: "factoring_leasing_cartera_morosidad_detalle", name: "factoring_leasing.cartera_morosidad_detalle", rows: "17.406 datos", file: "outputs/factoring_leasing/factoring_leasing_cartera_morosidad_detalle.parquet" }
             ]
           }
         ]

@@ -39,6 +39,7 @@ COLUMNAS = {
         "unidad", "fuente", "archivo", "sha256", "url_pdf", "url_visualizacion",
         "notas_en_indice", "lineas_balance", "lineas_resultados", "tablas_leidas",
         "estado_extraccion", "cuadre_balance", "diff_balance_m_clp",
+        "cuadre_caratula", "cuadre_resultados", "hueco",
         "cuadre_efectivo", "diff_efectivo_miles", "cuadre_deudores", "diff_deudores_miles",
         "estado_api", "indice_completo", "parser_version", "actualizado",
     ),

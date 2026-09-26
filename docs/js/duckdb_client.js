@@ -35,8 +35,6 @@ class DuckDBClient {
       "macro_precios_actividad": "outputs/macro/macro_precios_actividad.json",
       "factoring_leasing_maestro": "outputs/factoring_leasing/factoring_leasing_maestro.json",
       "factoring_leasing_balance_resumen": "outputs/factoring_leasing/factoring_leasing_balance_resumen.json",
-      "factoring_leasing_nota_efectivo_detalle": "outputs/factoring_leasing/factoring_leasing_nota_efectivo_detalle.json",
-      "factoring_leasing_cartera_morosidad_detalle": "outputs/factoring_leasing/factoring_leasing_cartera_morosidad_detalle.json",
       "factoring_leasing_eeff_documentos": "outputs/factoring_leasing/factoring_leasing_eeff_documentos.json",
       "factoring_leasing_balance_lineas": "outputs/factoring_leasing/factoring_leasing_balance_lineas.json",
       "factoring_leasing_resultados_lineas": "outputs/factoring_leasing/factoring_leasing_resultados_lineas.json",
@@ -205,8 +203,6 @@ class DuckDBClient {
       // FACTORING & LEASING (CMF / NBFI)
       { name: "factoring_leasing_maestro", file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet" },
       { name: "factoring_leasing_balance_resumen", file: "outputs/factoring_leasing/factoring_leasing_balance_resumen.parquet" },
-      { name: "factoring_leasing_nota_efectivo_detalle", file: "outputs/factoring_leasing/factoring_leasing_nota_efectivo_detalle.parquet" },
-      { name: "factoring_leasing_cartera_morosidad_detalle", file: "outputs/factoring_leasing/factoring_leasing_cartera_morosidad_detalle.parquet" },
       { name: "factoring_leasing_eeff_documentos", file: "outputs/factoring_leasing/factoring_leasing_eeff_documentos.parquet" },
       { name: "factoring_leasing_balance_lineas", file: "outputs/factoring_leasing/factoring_leasing_balance_lineas.parquet" },
       { name: "factoring_leasing_resultados_lineas", file: "outputs/factoring_leasing/factoring_leasing_resultados_lineas.parquet" },
