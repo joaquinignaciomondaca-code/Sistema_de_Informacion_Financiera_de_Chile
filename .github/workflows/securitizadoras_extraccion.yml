@@ -3,6 +3,9 @@ name: Extracción CMF — Securitizadoras y Patrimonios Separados
 # Corre el pipeline en un runner de GitHub (con salida a internet) y deja los resultados en una rama
 # `actions/ps-extraccion-<run>` para integrarlos por PR. Lanzar con: gh workflow run securitizadoras_extraccion.yml -f desde=2010
 on:
+  # El push sólo registra el workflow en GitHub (el job se salta); la extracción real es siempre manual.
+  push:
+    paths: [".github/workflows/securitizadoras_extraccion.yml"]
   workflow_dispatch:
     inputs:
       desde:
@@ -23,6 +26,7 @@ permissions:
 
 jobs:
   extraer:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     timeout-minutes: 350
     steps:
