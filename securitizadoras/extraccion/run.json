@@ -1,7 +1,9 @@
 {
-  "desde": 2010,
-  "hasta": 2026,
-  "trimestres": "03,06,09,12",
-  "step": "todo",
-  "_nota": "Modificar y commitear este archivo lanza .github/workflows/securitizadoras_extraccion.yml; los resultados quedan en una rama actions/ps-extraccion-*"
+  "desde": 2023,
+  "hasta": 2025,
+  "trimestres": "06,12",
+  "step": "ps",
+  "ruts": "96971830,96765170,76965774,96972780,96847360",
+  "debug": "true",
+  "_nota": "Modificar y commitear este archivo lanza .github/workflows/securitizadoras_extraccion.yml; los resultados quedan en una rama actions/ps-extraccion-*. ruts (cuerpo, separados por coma) y debug=true son opcionales: debug vuelca el texto de los PDFs que no cuadran en docs/outputs/securitizadoras/_debug/ de la rama de resultados."
 }

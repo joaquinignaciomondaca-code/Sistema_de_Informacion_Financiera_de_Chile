@@ -39,12 +39,13 @@ jobs:
         run: |
           python - <<'EOF' >> "$GITHUB_OUTPUT"
           import json, os
-          d = {"desde": "2010", "hasta": "2026", "trimestres": "03,06,09,12", "step": "todo"}
+          d = {"desde": "2010", "hasta": "2026", "trimestres": "03,06,09,12", "step": "todo", "ruts": "", "debug": ""}
           if "${{ github.event_name }}" == "workflow_dispatch":
               d.update({"desde": "${{ inputs.desde }}", "hasta": "${{ inputs.hasta }}", "trimestres": "${{ inputs.trimestres }}", "step": "${{ inputs.step }}"})
           elif os.path.exists("securitizadoras/extraccion/run.json"):
               d.update(json.load(open("securitizadoras/extraccion/run.json")))
-          for k, v in d.items(): print(f"{k}={v}")
+          for k, v in d.items():
+              if not k.startswith("_"): print(f"{k}={v}")
           EOF
       - name: Dependencias
         run: pip install -q -r requirements.txt
@@ -59,6 +60,9 @@ jobs:
           assert h.count(b"RGSEC") > 0
           EOF
       - name: Pipeline
+        env:
+          MFC_PS_RUTS: ${{ steps.p.outputs.ruts }}
+          MFC_PS_DEBUG_DIR: ${{ steps.p.outputs.debug == 'true' && 'docs/outputs/securitizadoras/_debug' || '' }}
         run: |
           python securitizadoras/scripts/pipeline_securitizadoras.py --step "${{ steps.p.outputs.step }}" --desde "${{ steps.p.outputs.desde }}" --hasta "${{ steps.p.outputs.hasta }}" --trimestres "${{ steps.p.outputs.trimestres }}" 2>&1 | tee pipeline.log
           grep -c "lineas=" pipeline.log | xargs -I{} echo "PDFs con líneas extraídas: {}"
