@@ -706,12 +706,30 @@ def ocr_paginas_imagen(doc, paginas, max_paginas=16, dpi=300):
     except ImportError:
         fitz = None
 
-    def _ocr(page, rot, psm="6"):
-        mat = fitz.Matrix(dpi / 72, dpi / 72).prerotate(rot) if fitz is not None and hasattr(fitz, "Matrix") else None
-        pix = page.get_pixmap(matrix=mat) if mat is not None else page.get_pixmap(dpi=dpi)
+    def _ocr(page, rot, psm="6", dpi_=None, binarizar=False):
+        d = dpi_ or dpi
+        mat = fitz.Matrix(d / 72, d / 72).prerotate(rot) if fitz is not None and hasattr(fitz, "Matrix") else None
+        pix = page.get_pixmap(matrix=mat) if mat is not None else page.get_pixmap(dpi=d)
         with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as fh:
             pix.save(fh.name); png = fh.name
-        r = subprocess.run(["tesseract", png, "stdout", "-l", "spa", "--psm", psm], capture_output=True, text=True, timeout=180)
+        if binarizar:  # escaneos grises con bordes de tabla: escala de grises + umbral (Otsu) mejora mucho las cifras
+            try:
+                from PIL import Image
+                im = Image.open(png).convert("L"); h = im.histogram(); tot = sum(h)
+                # umbral de Otsu
+                sumB = wB = 0; sum1 = sum(i * h[i] for i in range(256)); mejor, thr = 0.0, 128
+                for t in range(256):
+                    wB += h[t]
+                    if wB == 0: continue
+                    wF = tot - wB
+                    if wF == 0: break
+                    sumB += t * h[t]; mB = sumB / wB; mF = (sum1 - sumB) / wF; var = wB * wF * (mB - mF) ** 2
+                    if var > mejor: mejor, thr = var, t
+                im.point(lambda v, thr=thr: 255 if v > thr else 0).save(png)
+            except Exception:
+                pass
+        cmd = ["tesseract", png, "stdout", "-l", "spa", "--psm", psm, "-c", "preserve_interword_spaces=1"]
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=180)
         os.unlink(png)
         return r.stdout if r.returncode == 0 else ""
 
@@ -726,10 +744,11 @@ def ocr_paginas_imagen(doc, paginas, max_paginas=16, dpi=300):
                     alt = _ocr(doc[i], rot)
                     if _calidad(alt) > _calidad(txt):
                         txt, mejor_rot = alt, rot
-            if 0 < _calidad(txt) < 60:  # calidad baja: segmentación por columnas (psm 4) suele leer mejor las tablas escaneadas
-                alt = _ocr(doc[i], mejor_rot, "4")
-                if _calidad(alt) > _calidad(txt):
-                    txt = alt
+            if 0 < _calidad(txt) < 60:  # calidad baja (escaneo gris con bordes de tabla): 400 dpi binarizado y segmentación por columnas
+                for psm, d, binz in (("6", 400, True), ("4", 400, True), ("4", None, False)):
+                    alt = _ocr(doc[i], mejor_rot, psm, d, binz)
+                    if _calidad(alt) > _calidad(txt):
+                        txt = alt
             if txt.strip():
                 out[i] = ("" if _ilegible(paginas[i]) else paginas[i]) + "\n" + txt; hechos.append(i + 1)
         except Exception as e:  # OCR fallido en una página: se deja el texto original
@@ -798,7 +817,7 @@ def paso_ps(op, secs, desde, hasta, trimestres):
                         efe = parse_nota_efectivo_ps(paginas); mor, desc = parse_nota_morosidad_ps(paginas)
                         for n in efe + mor:
                             notas.append({**meta, "periodo": periodo, **n, **prov})
-                    cobertura.append({**cob, **{k: meta[k] for k in ("id_patrimonio", "codigo_emision")}, "estado": "ok" if lin else "sin_lineas_eeff",
+                    cobertura.append({**cob, **{k: meta[k] for k in ("id_patrimonio", "codigo_emision")}, "estado": "ok" if lin else ("documento_no_eeff" if re.search(r"ANALISIS\s+RAZONADO|INFORME\s+DE\s+(CARTERA|GESTION)|SUSTITUCION\s+DE\s+ACTIVOS", _norm(" ".join(paginas[:3]))) else "sin_lineas_eeff"),
                                       "lineas_eeff": len(lin), "cuentas_reconocidas": sum(1 for l in lin if l["cuenta_canonica"]),
                                       "partidas_efectivo": len(efe), "tramos_mora": len(mor), "tramos_mora_descartados": desc, **prov})
                     print(f"  {sec['razon_social'][:26]:26} {meta['codigo_emision']:10} {periodo}: lineas={len(lin)}")
