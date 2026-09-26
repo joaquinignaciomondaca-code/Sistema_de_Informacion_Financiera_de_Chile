@@ -410,6 +410,21 @@ def test_la_nota_al_pie_no_abre_otra_nota():
     assert "5.790.928" in nota["texto"]
 
 
+def test_el_numero_de_pagina_no_es_otra_columna():
+    texto = """
+NOTA 14 ACTIVOS INTANGIBLES
+Importe neto al 31/03/2026
+968.758
+152.895
+1.121.653
+67
+"""
+    comp = composicion_que_calza(texto, 1121653)
+    assert comp is not None
+    partes = [f for f in comp["filas"] if not f["es_total"]]
+    assert [f["monto_miles"] for f in partes] == [968758, 152895]
+
+
 def test_las_clases_de_la_misma_fila_suman_el_neto():
     texto = """
 NOTA 14 ACTIVOS INTANGIBLES

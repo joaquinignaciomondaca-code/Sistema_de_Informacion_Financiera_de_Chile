@@ -352,6 +352,9 @@ def _es_linea_monto(line: str, siguiente: str = "", juntando: bool = False) -> b
     if _monto_menor(line) is None:
         return False
     if juntando:
+        # 67 suelto después de 1.121.653 es el número de página, no otra columna.
+        if abs(_monto_menor(line)) < 200:
+            return False
         return True
     sig = siguiente.strip()
     if _monto_menor(sig) is not None or bool(_montos(sig)) or sig in {"-", "–", "—"}:
