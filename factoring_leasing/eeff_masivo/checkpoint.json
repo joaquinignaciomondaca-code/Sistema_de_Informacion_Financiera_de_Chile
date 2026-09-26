@@ -6556,6 +6556,107 @@
         "OK",
         "SOLO_API"
       ]
+    },
+    "96626570-1|2021-12": {
+      "rut": "96626570-1",
+      "razon_social": "INCOFIN S.A.",
+      "periodo": "2021-12",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 13,
+      "notas_sin_leer": 0,
+      "lineas_balance": 31,
+      "lineas_resultados": 9,
+      "api": [
+        "OK"
+      ]
+    },
+    "94050000-1|2021-12": {
+      "rut": "94050000-1",
+      "razon_social": "GENERAL MOTORS FINANCIAL CHILE S.A.",
+      "periodo": "2021-12",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "OK",
+      "caidas": 3,
+      "notas_ok": 8,
+      "notas_sin_leer": 3,
+      "lineas_balance": 28,
+      "lineas_resultados": 14,
+      "api": [
+        "OK"
+      ]
+    },
+    "90146000-0|2021-12": {
+      "rut": "90146000-0",
+      "razon_social": "SERVICIOS FINANCIEROS PROGRESO S.A.",
+      "periodo": "2021-12",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 1,
+      "notas_ok": 15,
+      "notas_sin_leer": 1,
+      "lineas_balance": 32,
+      "lineas_resultados": 15,
+      "api": [
+        "OK"
+      ]
+    },
+    "77356020-K|2021-12": {
+      "rut": "77356020-K",
+      "razon_social": "COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA",
+      "periodo": "2021-12",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "INCOMPLETO",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 3,
+      "notas_ok": 12,
+      "notas_sin_leer": 4,
+      "lineas_balance": 28,
+      "lineas_resultados": 16,
+      "api": [
+        "OK",
+        "SOLO_API"
+      ]
+    },
+    "76381570-6|2021-12": {
+      "rut": "76381570-6",
+      "razon_social": "INTERFACTOR S.A.",
+      "periodo": "2021-12",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "SIN_PDF",
+      "cuadre_resultados": "SIN_PDF",
+      "cuadre_detalle": "SIN_PDF",
+      "caidas": 0,
+      "notas_ok": 0,
+      "notas_sin_leer": 0,
+      "lineas_balance": 0,
+      "lineas_resultados": 0,
+      "api": [
+        "SOLO_API"
+      ]
     }
   }
 }
