@@ -11,12 +11,13 @@ import json
 import os
 import sys
 import tempfile
+import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from pipelines.eeff.cmf_pdf import descargar_pdf
+from pipelines.eeff import cmf_pdf
 from pipelines.eeff.parse_pdf_notas import extraer_notas
 from pipelines.eeff.validate_api import cuadratura_balance, cuadratura_resultados
 
@@ -99,7 +100,13 @@ def correr(lote: list[dict], periodo: str, dest: Path) -> int:
             "tipo_eeff": item.get("tipo_eeff", ""),
         }
         print(f"[notas] {rut} {periodo}", flush=True)
-        blob, tipo, url = descargar_pdf(cuerpo, year, month, preferir="C")
+        blob, tipo, url = b"", "", ""
+        for intento in range(4):
+            blob, tipo, url = cmf_pdf.descargar_pdf(cuerpo, year, month, preferir="C")
+            if blob:
+                break
+            print(f"[notas] {rut} intento {intento + 1}: {cmf_pdf.ultimo_error}", flush=True)
+            time.sleep(8 * (intento + 1))
         if not blob:
             print(f"[notas] {rut} sin PDF")
             filas.append({"rut": rut, "error": "sin PDF", "ok": 0, "no_leida": 0})
