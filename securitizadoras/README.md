@@ -56,6 +56,11 @@ que pasen la auditoría.
 | 9 | `clase_colateral_subyacente` en el maestro de PS era una heurística por nombre de emisor | Columna eliminada (dato no publicado por CMF). Chip del sidebar reemplazado por "Líneas por Administradora". |
 | 10 | Sin columnas de procedencia | Todas las tablas llevan `fuente_url`, `metodo`, `fecha_extraccion`, `script_version` (y `pdf_sha256` en las de PDF). Los datos v1 reparados llevan `metodo = legacy_v1_*` y `script_version = …|reparar-legacy` hasta que se regeneren. |
 | 11 | Dos formatos de `periodo` (`202412` y `2024-12`) | Sólo queda `YYYY-MM`. |
+| 13 | (datos reales, corrida 2021–2026) la etiqueta web de CMF nombra al mismo PS de varias formas: `PATRIMONIO SEPARADO N°35`, `Patrimonio 10`, `PS7 firmadp`, `BVOLS3` / `BVOLS 3`, `V` | `canonizar_codigo()`: quita palabras genéricas y sufijos de archivo, número (con o sin `N°`/`PS`/`NA`) → `PS-n`, romanos → `PS-n`, letras+dígitos pegados → `BVOLS-3`. La etiqueta web es la fuente primaria del código; el texto del PDF sólo se usa si la web no trae código. Pruebas con 12 etiquetas reales. |
+| 14 | Glosas sin plazo (`Obligaciones por títulos de deuda de securitización`, `Otros acreedores`, `Activo securitizado`) aparecen tanto en pasivo circulante como en largo plazo | El parser sigue la **sección del balance** (encabezados `Pasivos circulantes`, `Pasivos largo plazo`, `Otros activos`…) y el catálogo tiene `regex_seccion`, que sólo aplica dentro de esa sección. La sección queda en `seccion_balance`. |
+| 15 | El estado de excedentes venía en la misma página que el pasivo y sus líneas se etiquetaban `BALANCE`; páginas de notas (tramos de mora `1 a 3`, `Totales`) se leían como balance | El estado cambia a `EXCEDENTES` al aparecer su encabezado dentro de la página; una página sólo se conserva si contiene al menos una línea de **total reconocida**; encabezados de columna (`ACTIVOS`, `Concepto`, `$REAJUSTABLES`, `MONEDA`…) están en `glosas_ignoradas`. |
+| 16 | Layout FECU con columnas `$ reajustables / $ no reajustables / total` | Se leen hasta 4 columnas (`monto_col3`, `monto_col4`) y la página se marca `layout_multicolumna` para poder revisar qué columna es el total; no se descarta ni se adivina. |
+| 17 | Ganancia de las gestoras seguía `NULL`: la fila `Ganancia (pérdida)` del estado de resultados `[310000]` no tiene la misma estructura HTML que el balance, y CMF escribe `p&eacute;rdida` | `html.unescape` + lectura genérica "glosa → primer número" excluyendo `[sinopsis]`, `, antes de impuestos`, `procedente de…`. La auditoría ahora **falla** si la columna queda nula/0 en ≥ 50 % (antes sólo miraba ceros). |
 | 12 | Dos auditorías legadas que ya fallaban y tablas fuera de `data_manifest.json` | Retiradas (`04_audit_patrimonios_separados.py`, `audit_securitizadoras.py`); también `stream_cmf_securitizadoras.py` y `03_extract_…` (reemplazados por el pipeline). `patrimonios_separados_balance_resumen` añadida al manifest; badges del sidebar con los conteos reales (18 líneas / 64 balances, antes "485 vehículos / 42.800+ líneas"). |
 
 ## 3. Diccionario mínimo de las tablas publicadas
@@ -65,26 +70,42 @@ que pasen la auditoría.
 - **patrimonios_separados_maestro** — clave `numero_inscripcion`; `rut_administradora` con DV; `monto_inscrito` en la `moneda` indicada; fechas ISO.
 - **patrimonios_separados_balance_resumen** — clave (`id_patrimonio`, `periodo`); `codigo_emision`, `nro_registro_cmf`; cuentas `_mclp` (miles de CLP) en `NULL` cuando no se leyeron; `cuadre_contable_ok`; `campos_extraidos` (v2) como medida de calidad de la lectura.
 
-## 4. Cómo regenerar (en tu equipo, con acceso a CMF)
+## 4. Cómo regenerar (sin instalar nada: GitHub Actions)
+
+El sandbox del agente no llega a CMF, así que la extracción corre en **GitHub Actions**
+(`.github/workflows/securitizadoras_extraccion.yml`), cuyos runners sí acceden a `cmfchile.cl`.
+
+1. Edita `securitizadoras/extraccion/run.json` (`desde`, `hasta`, `trimestres` = `"03,06,09,12"` o `"12"`, `step` =
+   `todo | maestro | gestoras | ps`) y haz commit/push (o usa *Run workflow* en la pestaña Actions).
+2. El job: pruebas del parser → prueba de conectividad CMF → pipeline → auditoría v2 (no bloqueante) → **commit de
+   `docs/outputs/securitizadoras/` en una rama `actions/ps-extraccion-<desde>-<hasta>-<run_id>`** + artefacto con
+   `pipeline.log` y el JSON de la auditoría. No toca `main` ni la rama de trabajo.
+3. Revisión antes de publicar (desde cualquier rama):
+   ```bash
+   git fetch origin actions/ps-extraccion-2010-2026-<run_id>:ext && mkdir -p /tmp/ext && git archive ext docs/outputs/securitizadoras | tar -x -C /tmp/ext
+   PS_OUT_DIR=/tmp/ext/docs/outputs/securitizadoras python securitizadoras/scripts/audit_patrimonios_separados_v2.py
+   ```
+   Se miran `patrimonios_separados_cobertura` (estados ≠ `ok`), `cuadre_contable_ok` y el check
+   `eeff_lineas_glosas_no_reconocidas_top`. Las glosas frecuentes sin cuenta canónica se agregan al catálogo
+   (`regex` / `regex_seccion` / `glosas_ignoradas`) subiendo `version`; **nunca** se editan los Parquet a mano.
+4. Si la auditoría da 0 FAIL, se copian las tablas a `docs/outputs/securitizadoras/` en la rama de trabajo, se
+   actualizan `data_manifest.json`, `duckdb_client.js`, sidebar y diccionario, y se abre/actualiza el PR.
+
+Tiempos observados: 72 PDFs (3 años, sólo diciembre) ≈ 8 min; 773 PDFs (2021–2026 trimestral) ≈ 35 min; la corrida
+completa 2010–2026 trimestral (~2.000 PDFs) toma 1,5–3 h (límite del job: 350 min; si se corta, partir en tramos de años).
+
+Alternativas equivalentes: el cuaderno `securitizadoras/colab/extraer_patrimonios_separados.ipynb` (misma
+lógica, entrega por rama o zip) o localmente:
 
 ```bash
 pip install -r requirements.txt
-# rápido (sólo cierres anuales recientes) para validar el parser contra PDFs reales:
-python securitizadoras/scripts/pipeline_securitizadoras.py --step ps --desde 2023 --trimestres 12
-# completo (todas las securitizadoras, trimestral 2010 → hoy; varias horas, ~3.000 PDFs):
-python securitizadoras/scripts/pipeline_securitizadoras.py --step todo --desde 2010
-# o por partes: --step maestro | gestoras | ps
-python securitizadoras/tests/test_pipeline_securitizadoras.py
-python securitizadoras/scripts/audit_patrimonios_separados_v2.py
+python securitizadoras/scripts/pipeline_securitizadoras.py --step ps --desde 2023 --trimestres 12   # rápido
+python securitizadoras/scripts/pipeline_securitizadoras.py --step todo --desde 2010                 # completo
+python securitizadoras/tests/test_pipeline_securitizadoras.py && python securitizadoras/scripts/audit_patrimonios_separados_v2.py
 ```
 
-Después de correr `ps`, revisa `patrimonios_separados_cobertura.parquet` (estados distintos de `ok`) y el check
-`eeff_lineas_glosas_no_reconocidas_top` de la auditoría: las glosas frecuentes sin cuenta canónica se agregan al
-catálogo (`regex`) y se sube `version`; nunca se corrigen a mano en los Parquet. Los PDFs anteriores a ~2012 suelen
-ser escaneados: quedan como `pdf_sin_texto_(escaneado)` y no se inventan. Sólo cuando la auditoría dé 0 FAIL conviene publicar `patrimonios_separados_notas_detalle`
-(añadir a manifest + `duckdb_client.js` + sidebar).
-
-Si CMF rechaza la conexión TLS en tu red: `MFC_CMF_INSECURE_TLS=1 python …` (queda en `metodo`; no lo uses en CI).
+Los PDFs anteriores a ~2012 suelen ser escaneados: quedan como `pdf_sin_texto_(escaneado)` y no se inventan. Si CMF
+rechaza la conexión TLS en tu red: `MFC_CMF_INSECURE_TLS=1 python …` (queda en `metodo`; no lo uses en CI).
 
 ## 5. Límites conocidos (WARN de la auditoría)
 
