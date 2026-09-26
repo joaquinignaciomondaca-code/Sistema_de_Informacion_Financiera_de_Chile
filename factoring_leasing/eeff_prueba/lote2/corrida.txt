@@ -1,0 +1,22 @@
+[prueba] 10 sociedades de 2026-03
+[prueba] API del trimestre: 314 rut|tipo
+[prueba] 76197101-8 CBP FINANCIA CAPITAL FACTORING S.A.
+warning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+[prueba] 76197101-8 tipo=Consolidado balance=25 resultados=11 PDF borrado
+Traceback (most recent call last):
+  File "/home/runner/work/monitor-financiero-chile/monitor-financiero-chile/factoring_leasing/scripts/04_prueba_10_pdf.py", line 373, in <module>
+    main()
+  File "/home/runner/work/monitor-financiero-chile/monitor-financiero-chile/factoring_leasing/scripts/04_prueba_10_pdf.py", line 369, in main
+    raise SystemExit(correr(args.periodo, args.lote, args.dest))
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/monitor-financiero-chile/monitor-financiero-chile/factoring_leasing/scripts/04_prueba_10_pdf.py", line 343, in correr
+    resumen.append(_resumen_fila(meta, caratula, fila, error))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/monitor-financiero-chile/monitor-financiero-chile/factoring_leasing/scripts/04_prueba_10_pdf.py", line 207, in _resumen_fila
+    chequeos = validar_documento(balance, api_fila) if balance else []
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/monitor-financiero-chile/monitor-financiero-chile/pipelines/eeff/validate_api.py", line 82, in validar_documento
+    api = None if fila_api is None or col_api not in fila_api else float(fila_api[col_api])
+                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: float() argument must be a string or a real number, not 'NoneType'
+exit=1
