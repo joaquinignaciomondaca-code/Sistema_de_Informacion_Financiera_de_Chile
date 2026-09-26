@@ -36,6 +36,15 @@ def _es_fecha(token: str) -> bool:
     return any(mes in bajo for mes in ("enero", "marzo", "junio", "septiembre", "diciembre"))
 
 
+def _tokens_monto(token: str) -> list[str]:
+    """324.875.184542.645 son dos saldos, no un número de billones."""
+    compacto = token.replace(" ", "")
+    hallados = list(re.finditer(r"\(?-?\d{1,3}(?:\.\d{3})+\)?", compacto))
+    if len(hallados) >= 2 and "".join(h.group() for h in hallados) == compacto:
+        return [h.group() for h in hallados]
+    return [token]
+
+
 def _monto(token: str):
     token = _limpiar_celda(token).replace("−", "-").replace("–", "-")
     if not token or _es_fecha(token):
@@ -112,7 +121,9 @@ def _montos_en_celda(celda: str) -> list[float]:
     uno = _monto(celda)
     if uno is not None:
         return [uno]
-    partes = celda.split()
+    partes = []
+    for parte in celda.split():
+        partes.extend(_tokens_monto(parte))
     if len(partes) >= 2 and all(_monto(parte) is not None for parte in partes):
         return [_monto(parte) for parte in partes]
     return []
@@ -276,7 +287,11 @@ def _montos_de_linea(linea: str) -> list[float] | None:
     linea = re.sub(r"\s+\)", ")", linea)
     if _NOTA_LINEA.fullmatch(linea):
         return None
-    partes = [parte for parte in linea.split() if not _NOTA_LINEA.fullmatch(parte)]
+    partes = []
+    for parte in linea.split():
+        if _NOTA_LINEA.fullmatch(parte):
+            continue
+        partes.extend(_tokens_monto(parte))
     if not partes:
         return None
     montos = []

@@ -398,6 +398,21 @@ Total
     assert sum(f["monto_miles"] for f in comp["filas"] if not f["es_total"]) == 5246994
 
 
+def test_una_llamada_no_corta_la_nota_antes_de_la_tabla():
+    from pipelines.eeff.parse_pdf_notas import secciones
+
+    secs = secciones([
+        "19.- Otros pasivos no financieros y Provisiones por beneficio a los empleados\nEl detalle.\n(2) Dividendos mínimos\n",
+        "20.- Arrendamiento\nProvisión Total, Saldo Inicial 01-01-2026\n574.657\nProvisiones nuevas\n87.864\nProvisión Utilizada\n(144.703)\nProvisión Total, Saldo Final 31-03-2026\n517.818\n",
+    ])
+    assert all(sec["numero"] != 2 for sec in secs)
+    nota = next(sec for sec in secs if sec["numero"] == 19)
+    assert "517.818" in nota["texto"]
+    comp = composicion_que_calza(nota["texto"], 517818)
+    assert comp is not None
+    assert sum(f["monto_miles"] for f in comp["filas"] if not f["es_total"]) == 517818
+
+
 def test_la_nota_al_pie_no_abre_otra_nota():
     from pipelines.eeff.parse_pdf_notas import secciones
 
@@ -525,6 +540,91 @@ Subtotal activos corrientes
         "Impuesto a la renta",
         "Pagos provisionales mensuales",
     ]
+
+
+def test_el_saldo_final_suma_el_movimiento_no_el_subtotal_dos_veces():
+    texto = """
+NOTA 19 - Provisiones por beneficios a los empleados
+Provisión Vacaciones personal
+517.817
+574.657
+Provisión Total, Saldo Inicial 01-01-2026
+574.657
+593.703
+Provisiones nuevas
+87.864
+366.888
+Provisión Utilizada
+(144.703)
+(385.934)
+Cambios en Provisiones , Total
+(56.839)
+(19.046)
+Provisión Total, Saldo Final 31-03-2026
+517.818
+574.657
+"""
+    comp = composicion_que_calza(texto, 517818)
+    assert comp is not None
+    partes = [f for f in comp["filas"] if not f["es_total"]]
+    assert [f["monto_miles"] for f in partes] == [574657, 87864, -144703]
+    assert sum(f["monto_miles"] for f in partes) == 517818
+
+
+def test_las_columnas_antes_del_total_suman_la_linea():
+    texto = """
+Nota 25 - Segmentos Operativos
+Factoring
+Leasing
+Créditos
+Eliminaciones
+/Otros
+Total
+Al 31 de marzo de 2026 y 31 de diciembre de 2025
+Otros pasivos financieros no corrientes
+55.477.352
+-
+1.751.870
+-
+57.229.222
+59.863.645
+"""
+    comp = composicion_que_calza(texto, 57229222)
+    assert comp is not None
+    partes = [f for f in comp["filas"] if not f["es_total"]]
+    assert [f["concepto"] for f in partes] == ["Factoring", "Leasing", "Créditos", "Eliminaciones/Otros"]
+    assert sum(f["monto_miles"] for f in partes) == 57229222
+
+
+def test_la_columna_corrida_por_un_cero_sigue_sumando():
+    texto = """
+NOTA 16 - Otros pasivos no financieros
+Fondo III cuota R
+-
+20.525.825
+20.528.176
+Fondo III cuota C
+-
+(811.095)
+(828.868)
+Fondo III cuota I
+-
+9.571.081
+9.572.272
+Provision Riesgo
+40.575
+33.119
+EF Securitizadora
+1.249.956
+887.168
+Total
+30.576.342
+30.065.113
+"""
+    comp = composicion_que_calza(texto, 30576342)
+    assert comp is not None
+    assert sum(f["monto_miles"] for f in comp["filas"] if not f["es_total"]) == 30576342
+    assert any(f["monto_miles"] == -811095 for f in comp["filas"])
 
 
 def test_extraer_marca_lo_que_no_lee():
