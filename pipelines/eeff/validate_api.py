@@ -59,6 +59,8 @@ def _buscar(lineas: list[dict], aliases: tuple[str, ...]) -> float | None:
             extra = nombre.replace(alias, " ", 1)
             if alias.startswith("total") and "corriente" in extra:
                 continue
+            if alias in {"total pasivos", "total de pasivos", "totales de pasivos"} and "patrimonio" in nombre:
+                continue
             clave = row.get("id_linea") or (nombre, row.get("monto_m_clp"))
             if clave in vistos:
                 continue
