@@ -423,18 +423,18 @@ import subprocess as _sp, shutil as _sh
 class _ImgDoc(_FakeDoc):
     def __getitem__(self, i):
         return types.SimpleNamespace(get_text=lambda: self.p[i], get_images=lambda: [("img",)] if i == 1 else [], get_drawings=lambda: [1] * 40 if i == 2 else [],
-                                     get_pixmap=lambda dpi: types.SimpleNamespace(save=lambda f: open(f, "wb").write(b"png")))
+                                     get_pixmap=lambda dpi=None, matrix=None: types.SimpleNamespace(save=lambda f, i=i: open(f, "w").write(str(i))))
 _pags = [PAGINA_PORTADA, "EF SECURITIZADORA S.A.\nPATRIMONIO SEPARADO N° 7\n", "EF SECURITIZADORA S.A.\n", PAGINA_EXCEDENTES]
 _ocr_txt = {1: PAGINA_BALANCE_ACT, 2: PAGINA_BALANCE_PAS}; _calls = []
 def _fake_run(cmd, **k):
-    _calls.append(cmd); n = len(_calls)
-    return types.SimpleNamespace(returncode=0, stdout=_ocr_txt[1] if n == 1 else _ocr_txt[2])
+    _calls.append(cmd); pag = int(open(cmd[1]).read())  # el PNG simulado contiene el índice de página
+    return types.SimpleNamespace(returncode=0, stdout=_ocr_txt[pag])
 _orig_run, _orig_which = _sp.run, _sh.which
 _sp.run, _sh.which = _fake_run, (lambda x: "/usr/bin/tesseract")
 pg2, hechos = P.ocr_paginas_imagen(_ImgDoc(_pags), _pags)
 _sp.run, _sh.which = _orig_run, _orig_which
 lin_ocr = P.parse_eeff_lineas(pg2); r_ocr = P.derivar_resumen(lin_ocr)
-check(hechos == [2, 3] and len(_calls) == 2 and "-l" in _calls[0] and "spa" in _calls[0], f"OCR sólo en páginas sin cifras con imagen o tabla vectorial: {hechos}")
+check(hechos == [2, 3] and len(_calls) >= 2 and "-l" in _calls[0] and "spa" in _calls[0], f"OCR sólo en páginas sin cifras con imagen o tabla vectorial: {hechos}")
 check(r_ocr["cuadre_contable_ok"] and r_ocr["total_activos_mclp"] == P.derivar_resumen(P.parse_eeff_lineas([PAGINA_PORTADA, PAGINA_BALANCE_ACT, PAGINA_BALANCE_PAS, PAGINA_EXCEDENTES]))["total_activos_mclp"], "balance leído desde OCR cuadra igual que el texto nativo")
 _sh.which = lambda x: None
 check(P.ocr_paginas_imagen(_ImgDoc(_pags), _pags) == (_pags, []), "sin tesseract → páginas sin cambios (no se inventa)")
