@@ -19,6 +19,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
+from pipelines.eeff import cmf_pdf
 from pipelines.eeff.cmf_pdf import descargar_pdf
 from pipelines.eeff.parse_md import cargar_md
 from pipelines.eeff.parse_pdf_caratula import (
@@ -312,7 +313,8 @@ def correr(periodo: str, lote: str = "", dest_name: str = "") -> int:
             preferir = "I" if meta.get("tipo_eeff") == "Individual" else "C"
             blob, tipo, url = descargar_pdf(cuerpo, year, month, preferir=preferir)
             if not blob:
-                error = "sin PDF"
+                error = cmf_pdf.ultimo_error or "sin PDF"
+                print(f"[prueba] {meta['rut']} {error}")
             else:
                 extraido = _extraer(blob)
                 del blob
