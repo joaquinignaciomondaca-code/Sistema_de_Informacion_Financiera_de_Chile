@@ -71,6 +71,22 @@ def cargar_api(periodo: str) -> dict:
     return {r["rut"]: r.to_dict() for _, r in df.iterrows()}
 
 
+def _objetivos_descarga(periodo: str) -> list[dict]:
+    """Las diez fichas. Si el piloto no trae filas, las saca de los Markdown ya guardados."""
+    try:
+        from factoring_leasing.eeff_fuentes.piloto_2026_03 import PILOTO
+    except Exception:
+        PILOTO = []
+    if PILOTO:
+        return PILOTO
+    objetivos = []
+    for path in sorted(FUENTES.glob(f"*_{periodo}.md")):
+        meta, _ = cargar_md(path)
+        if meta.get("rut"):
+            objetivos.append(meta)
+    return objetivos
+
+
 def construir(periodo: str = "2026-03", descargar: bool = False) -> None:
     import pandas as pd
 
@@ -78,15 +94,18 @@ def construir(periodo: str = "2026-03", descargar: bool = False) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
     if descargar:
         from pipelines.eeff.cmf_pdf import descargar_pdf, pdf_a_markdown
-        from factoring_leasing.eeff_fuentes.piloto_2026_03 import PILOTO
-        for doc in PILOTO:
+        objetivos = _objetivos_descarga(periodo)
+        print(f"[loop] {len(objetivos)} sociedades. Baja, convierte, borra el PDF, sigue.")
+        for doc in objetivos:
             cuerpo = doc["rut"].split("-")[0]
             year, month = int(periodo[:4]), int(periodo[5:7])
+            print(f"[loop] {doc['rut']} {doc['razon_social']}")
             blob, tipo, url = descargar_pdf(cuerpo, year, month)
             if not blob:
-                print(f"[descarga] sin PDF {doc['rut']} {periodo} (red o periodo)")
+                print(f"[loop] sin PDF {doc['rut']} (la red no llega a CMF). Sigue con la fuente ya guardada.")
                 continue
             md = pdf_a_markdown(blob)
+            del blob
             header = (
                 f"rut: {doc['rut']}\nrazon_social: {doc['razon_social']}\n"
                 f"periodo: {periodo}\nfecha_corte: {year}-{month:02d}-{calendar.monthrange(year, month)[1]:02d}\n"
@@ -94,7 +113,8 @@ def construir(periodo: str = "2026-03", descargar: bool = False) -> None:
             )
             path = FUENTES / f"{doc['rut']}_{periodo}.md"
             path.write_text(header + md, encoding="utf-8")
-            print(f"[descarga] {path.name} tipo={tipo} bytes={len(blob)}")
+            del md
+            print(f"[loop] {path.name} tipo={tipo} PDF borrado")
 
     if not any(FUENTES.glob("*.md")):
         from factoring_leasing.eeff_fuentes.piloto_2026_03 import escribir_fuentes
