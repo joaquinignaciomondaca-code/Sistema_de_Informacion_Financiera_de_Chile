@@ -7868,6 +7868,107 @@
       "api": [
         "OK"
       ]
+    },
+    "99595990-9|2020-12": {
+      "rut": "99595990-9",
+      "razon_social": "LATAM TRADE CAPITAL S.A.",
+      "periodo": "2020-12",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 8,
+      "notas_sin_leer": 4,
+      "lineas_balance": 28,
+      "lineas_resultados": 11,
+      "api": [
+        "OK"
+      ]
+    },
+    "99569200-7|2020-12": {
+      "rut": "99569200-7",
+      "razon_social": "FACTORING MERCANTIL S.A.",
+      "periodo": "2020-12",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "INCOMPLETO",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 6,
+      "notas_sin_leer": 2,
+      "lineas_balance": 20,
+      "lineas_resultados": 8,
+      "api": [
+        "OK",
+        "SOLO_API"
+      ]
+    },
+    "99566540-9|2020-12": {
+      "rut": "99566540-9",
+      "razon_social": "HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING)",
+      "periodo": "2020-12",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 13,
+      "notas_sin_leer": 4,
+      "lineas_balance": 32,
+      "lineas_resultados": 25,
+      "api": [
+        "OK"
+      ]
+    },
+    "99513410-1|2020-12": {
+      "rut": "99513410-1",
+      "razon_social": "SMB FACTORING S.A.",
+      "periodo": "2020-12",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 2,
+      "notas_sin_leer": 12,
+      "lineas_balance": 28,
+      "lineas_resultados": 10,
+      "api": [
+        "OK"
+      ]
+    },
+    "99501480-7|2020-12": {
+      "rut": "99501480-7",
+      "razon_social": "PENTA FINANCIERO S.A.",
+      "periodo": "2020-12",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 7,
+      "notas_sin_leer": 7,
+      "lineas_balance": 34,
+      "lineas_resultados": 22,
+      "api": [
+        "OK"
+      ]
     }
   }
 }
