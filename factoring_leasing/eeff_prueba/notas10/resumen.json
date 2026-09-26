@@ -1,0 +1,1021 @@
+[
+  {
+    "rut": "76197101-8",
+    "razon_social": "CBP FINANCIA CAPITAL FACTORING S.A.",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "indice": 25,
+    "ok": 8,
+    "no_leida": 1,
+    "cuadre_balance": "OK",
+    "cuadre_resultados": "OK",
+    "cuentas": [
+      {
+        "cuenta": "efectivo",
+        "estado": "OK",
+        "cara_miles": 1169285.0,
+        "nota_miles": 1169285.0,
+        "titulo_nota": "Efectivo y equivalentes al efectivo"
+      },
+      {
+        "cuenta": "otros_activos_no_financieros",
+        "estado": "OK",
+        "cara_miles": 409684.0,
+        "nota_miles": 409684.0,
+        "titulo_nota": "Otros activos no financieros, corrientes"
+      },
+      {
+        "cuenta": "deudores",
+        "estado": "OK",
+        "cara_miles": 46695797.0,
+        "nota_miles": 46695797.0,
+        "titulo_nota": "Deudores comerciales y otras cuentas por cobrar corrientes"
+      },
+      {
+        "cuenta": "intangibles",
+        "estado": "OK",
+        "cara_miles": 2134.0,
+        "nota_miles": 2134.0,
+        "titulo_nota": "Activos intangibles"
+      },
+      {
+        "cuenta": "ppe",
+        "estado": "OK",
+        "cara_miles": 130027.0,
+        "nota_miles": 130027.0,
+        "titulo_nota": "Propiedad, planta y equipo"
+      },
+      {
+        "cuenta": "impuestos_diferidos_activo",
+        "estado": "OK",
+        "cara_miles": 569065.0,
+        "nota_miles": 569065.0,
+        "titulo_nota": "Impuestos diferidos e impuesto a la renta"
+      },
+      {
+        "cuenta": "pasivos_financieros",
+        "estado": "OK",
+        "cara_miles": 30659565.0,
+        "nota_miles": 30659565.0,
+        "titulo_nota": "Otros pasivos financieros, corrientes y no corrientes"
+      },
+      {
+        "cuenta": "cuentas_por_pagar",
+        "estado": "OK",
+        "cara_miles": 1420305.0,
+        "nota_miles": 1420305.0,
+        "titulo_nota": "Cuentas por pagar comerciales y otras cuentas por pagar, corrientes"
+      },
+      {
+        "cuenta": "relacionadas_por_pagar",
+        "estado": "NO_LEIDA",
+        "cara_miles": 7160952.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      }
+    ]
+  },
+  {
+    "rut": "77356020-K",
+    "razon_social": "COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "indice": 31,
+    "ok": 9,
+    "no_leida": 9,
+    "cuadre_balance": "OK",
+    "cuadre_resultados": "OK",
+    "cuentas": [
+      {
+        "cuenta": "efectivo",
+        "estado": "OK",
+        "cara_miles": 14551120.0,
+        "nota_miles": 14551120.0,
+        "titulo_nota": "EFECTIVO Y EQUIVALENTES AL EFECTIVO"
+      },
+      {
+        "cuenta": "deudores",
+        "estado": "OK",
+        "cara_miles": 153157647.0,
+        "nota_miles": 153157647.0,
+        "titulo_nota": "DEUDORES COMERCIALES Y OTRAS CUENTAS POR COBRAR"
+      },
+      {
+        "cuenta": "relacionadas_por_cobrar",
+        "estado": "NO_LEIDA",
+        "cara_miles": 5790928.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "impuestos_corrientes_activo",
+        "estado": "NO_LEIDA",
+        "cara_miles": 1100827.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "otros_activos_no_financieros",
+        "estado": "OK",
+        "cara_miles": 251499.0,
+        "nota_miles": 251499.0,
+        "titulo_nota": "OTROS ACTIVOS NO FINANCIEROS"
+      },
+      {
+        "cuenta": "deudores_no_corriente",
+        "estado": "OK",
+        "cara_miles": 6324327.0,
+        "nota_miles": 6324327.0,
+        "titulo_nota": "DEUDORES COMERCIALES Y OTRAS CUENTAS POR COBRAR"
+      },
+      {
+        "cuenta": "relacionadas_por_cobrar_no_corriente",
+        "estado": "NO_LEIDA",
+        "cara_miles": 12249.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "ppe",
+        "estado": "OK",
+        "cara_miles": 294703.0,
+        "nota_miles": 294703.0,
+        "titulo_nota": "PROPIEDADES, PLANTA Y EQUIPOS"
+      },
+      {
+        "cuenta": "intangibles",
+        "estado": "NO_LEIDA",
+        "cara_miles": 1121653.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "impuestos_diferidos_activo",
+        "estado": "NO_LEIDA",
+        "cara_miles": 1069390.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "otros_activos_no_financieros_no_corriente",
+        "estado": "OK",
+        "cara_miles": 86563.0,
+        "nota_miles": 86563.0,
+        "titulo_nota": "OTROS ACTIVOS NO FINANCIEROS"
+      },
+      {
+        "cuenta": "pasivos_financieros",
+        "estado": "NO_LEIDA",
+        "cara_miles": 120026644.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "cuentas_por_pagar",
+        "estado": "OK",
+        "cara_miles": 6243615.0,
+        "nota_miles": 6243615.0,
+        "titulo_nota": "CUENTAS POR PAGAR COMERCIALES Y OTRAS CUENTAS POR PAGAR"
+      },
+      {
+        "cuenta": "provisiones_empleados",
+        "estado": "OK",
+        "cara_miles": 570430.0,
+        "nota_miles": 570430.0,
+        "titulo_nota": "PROVISIONES CORRIENTES POR BENEFICIOS A LOS EMPLEADOS"
+      },
+      {
+        "cuenta": "relacionadas_por_pagar",
+        "estado": "NO_LEIDA",
+        "cara_miles": 14305370.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "impuestos_corrientes_pasivo",
+        "estado": "NO_LEIDA",
+        "cara_miles": 437959.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "pasivos_financieros_no_corriente",
+        "estado": "OK",
+        "cara_miles": 2376773.0,
+        "nota_miles": 2376773.0,
+        "titulo_nota": "OTROS PASIVOS FINANCIEROS"
+      },
+      {
+        "cuenta": "impuestos_diferidos_pasivo",
+        "estado": "NO_LEIDA",
+        "cara_miles": 286722.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      }
+    ]
+  },
+  {
+    "rut": "96784400-4",
+    "razon_social": "CONCRECES LEASING S.A.",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "indice": 36,
+    "ok": 6,
+    "no_leida": 3,
+    "cuadre_balance": "OK",
+    "cuadre_resultados": "OK",
+    "cuentas": [
+      {
+        "cuenta": "efectivo",
+        "estado": "NO_LEIDA",
+        "cara_miles": 36070.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "deudores",
+        "estado": "OK",
+        "cara_miles": 3865155.0,
+        "nota_miles": 3865155.0,
+        "titulo_nota": "Deudores comerciales y otras cuentas por cobrar"
+      },
+      {
+        "cuenta": "relacionadas_por_cobrar",
+        "estado": "OK",
+        "cara_miles": 1880779.0,
+        "nota_miles": 1880779.0,
+        "titulo_nota": "Cuentas por cobrar y pagar con entidades relacionadas"
+      },
+      {
+        "cuenta": "intangibles",
+        "estado": "OK",
+        "cara_miles": 250531.0,
+        "nota_miles": 250531.0,
+        "titulo_nota": "Activos intangibles distintos de la plusvalía"
+      },
+      {
+        "cuenta": "ppe",
+        "estado": "OK",
+        "cara_miles": 22668.0,
+        "nota_miles": 22668.0,
+        "titulo_nota": "Propiedades, planta y equipos"
+      },
+      {
+        "cuenta": "impuestos_diferidos_activo",
+        "estado": "NO_LEIDA",
+        "cara_miles": 405805.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "pasivos_financieros",
+        "estado": "OK",
+        "cara_miles": 9703797.0,
+        "nota_miles": 9703797.0,
+        "titulo_nota": "Otros pasivos financieros"
+      },
+      {
+        "cuenta": "relacionadas_por_pagar",
+        "estado": "OK",
+        "cara_miles": 1773011.0,
+        "nota_miles": 1773011.0,
+        "titulo_nota": "Cuentas por cobrar y pagar con entidades relacionadas"
+      },
+      {
+        "cuenta": "otros_pasivos_no_financieros",
+        "estado": "NO_LEIDA",
+        "cara_miles": 71219.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      }
+    ]
+  },
+  {
+    "rut": "96660790-4",
+    "razon_social": "FACTOTAL S.A.",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "indice": 35,
+    "ok": 9,
+    "no_leida": 5,
+    "cuadre_balance": "OK",
+    "cuadre_resultados": "OK",
+    "cuentas": [
+      {
+        "cuenta": "efectivo",
+        "estado": "OK",
+        "cara_miles": 19107714.0,
+        "nota_miles": 19107714.0,
+        "titulo_nota": "Efectivo y Equivalentes al Efectivo"
+      },
+      {
+        "cuenta": "otros_activos_no_financieros",
+        "estado": "OK",
+        "cara_miles": 5167561.0,
+        "nota_miles": 5167561.0,
+        "titulo_nota": "Otros Activos no Financieros, Corriente"
+      },
+      {
+        "cuenta": "deudores",
+        "estado": "OK",
+        "cara_miles": 106689623.0,
+        "nota_miles": 106689623.0,
+        "titulo_nota": "Deudores Comerciales y otras Cuentas por Cobrar"
+      },
+      {
+        "cuenta": "relacionadas_por_cobrar",
+        "estado": "OK",
+        "cara_miles": 20856.0,
+        "nota_miles": 20856.0,
+        "titulo_nota": "Cuentas por Cobrar y Pagar con Entidades relacionadas"
+      },
+      {
+        "cuenta": "impuestos_corrientes_activo",
+        "estado": "OK",
+        "cara_miles": 2656471.0,
+        "nota_miles": 2656471.0,
+        "titulo_nota": "Impuestos a la Renta e Impuestos Diferidos"
+      },
+      {
+        "cuenta": "otros_activos_no_financieros_no_corriente",
+        "estado": "OK",
+        "cara_miles": 163266.0,
+        "nota_miles": 163266.0,
+        "titulo_nota": "Otros activos no financieros, no corrientes"
+      },
+      {
+        "cuenta": "intangibles",
+        "estado": "NO_LEIDA",
+        "cara_miles": 3300.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "ppe",
+        "estado": "NO_LEIDA",
+        "cara_miles": 14832257.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "pasivos_financieros",
+        "estado": "OK",
+        "cara_miles": 69717547.0,
+        "nota_miles": 69717547.0,
+        "titulo_nota": "Otros Pasivos Financieros Corrientes y no Corrientes"
+      },
+      {
+        "cuenta": "cuentas_por_pagar",
+        "estado": "OK",
+        "cara_miles": 16439182.0,
+        "nota_miles": 16439182.0,
+        "titulo_nota": "Cuentas por pagar Comerciales y otras Cuentas a Pagar"
+      },
+      {
+        "cuenta": "relacionadas_por_pagar",
+        "estado": "OK",
+        "cara_miles": 153013.0,
+        "nota_miles": 153013.0,
+        "titulo_nota": "Cuentas por Cobrar y Pagar con Entidades relacionadas"
+      },
+      {
+        "cuenta": "otros_pasivos_no_financieros",
+        "estado": "NO_LEIDA",
+        "cara_miles": 2854120.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "pasivos_financieros_no_corriente",
+        "estado": "NO_LEIDA",
+        "cara_miles": 57229222.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "impuestos_diferidos_pasivo",
+        "estado": "NO_LEIDA",
+        "cara_miles": 478460.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      }
+    ]
+  },
+  {
+    "rut": "76238714-K",
+    "razon_social": "GAMA SERVICIOS FINANCIEROS S.A.",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "indice": 39,
+    "ok": 9,
+    "no_leida": 5,
+    "cuadre_balance": "OK",
+    "cuadre_resultados": "OK",
+    "cuentas": [
+      {
+        "cuenta": "efectivo",
+        "estado": "OK",
+        "cara_miles": 4539942.0,
+        "nota_miles": 4539942.0,
+        "titulo_nota": "Efectivo y Equivalentes al Efectivo"
+      },
+      {
+        "cuenta": "deudores",
+        "estado": "OK",
+        "cara_miles": 22020099.0,
+        "nota_miles": 22020099.0,
+        "titulo_nota": "Deudores Comerciales y otras Cuentas por Cobrar"
+      },
+      {
+        "cuenta": "otros_activos_no_financieros",
+        "estado": "OK",
+        "cara_miles": 28833865.0,
+        "nota_miles": 28833865.0,
+        "titulo_nota": "Otros Activos no Financieros"
+      },
+      {
+        "cuenta": "impuestos_corrientes_activo",
+        "estado": "OK",
+        "cara_miles": 1829111.0,
+        "nota_miles": 1829111.0,
+        "titulo_nota": "Activos y Pasivos por Impuestos"
+      },
+      {
+        "cuenta": "intangibles",
+        "estado": "OK",
+        "cara_miles": 441897.0,
+        "nota_miles": 441897.0,
+        "titulo_nota": "Activos Intangibles distintos de la Plusvalía"
+      },
+      {
+        "cuenta": "ppe",
+        "estado": "OK",
+        "cara_miles": 173835560.0,
+        "nota_miles": 173835560.0,
+        "titulo_nota": "Propiedades, Plantas y Equipos"
+      },
+      {
+        "cuenta": "impuestos_diferidos_activo",
+        "estado": "NO_LEIDA",
+        "cara_miles": 2477882.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "pasivos_financieros",
+        "estado": "NO_LEIDA",
+        "cara_miles": 120700723.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "cuentas_por_pagar",
+        "estado": "OK",
+        "cara_miles": 30577218.0,
+        "nota_miles": 30577218.0,
+        "titulo_nota": "Cuentas Comerciales y otras Cuentas por Pagar, Corrientes"
+      },
+      {
+        "cuenta": "relacionadas_por_pagar",
+        "estado": "NO_LEIDA",
+        "cara_miles": 578502.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "provisiones",
+        "estado": "OK",
+        "cara_miles": 1072732.0,
+        "nota_miles": 1072732.0,
+        "titulo_nota": "Otras Provisiones, Corrientes"
+      },
+      {
+        "cuenta": "otros_pasivos_no_financieros",
+        "estado": "NO_LEIDA",
+        "cara_miles": 378622.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "impuestos_corrientes_pasivo",
+        "estado": "OK",
+        "cara_miles": 3668386.0,
+        "nota_miles": 3668386.0,
+        "titulo_nota": "Activos y Pasivos por Impuestos"
+      },
+      {
+        "cuenta": "impuestos_diferidos_pasivo",
+        "estado": "NO_LEIDA",
+        "cara_miles": 14713007.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      }
+    ]
+  },
+  {
+    "rut": "76120857-8",
+    "razon_social": "GLOBAL SOLUCIONES FINANCIERAS S.A.",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "indice": 34,
+    "ok": 6,
+    "no_leida": 7,
+    "cuadre_balance": "OK",
+    "cuadre_resultados": "OK",
+    "cuentas": [
+      {
+        "cuenta": "efectivo",
+        "estado": "OK",
+        "cara_miles": 13392928.0,
+        "nota_miles": 13392928.0,
+        "titulo_nota": "Efectivo y Equivalentes al Efectivo"
+      },
+      {
+        "cuenta": "otros_activos_no_financieros",
+        "estado": "OK",
+        "cara_miles": 518311.0,
+        "nota_miles": 518311.0,
+        "titulo_nota": "Otros Activos no financieros corrientes"
+      },
+      {
+        "cuenta": "deudores",
+        "estado": "NO_LEIDA",
+        "cara_miles": 165939042.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "relacionadas_por_cobrar",
+        "estado": "OK",
+        "cara_miles": 453503.0,
+        "nota_miles": 453503.0,
+        "titulo_nota": "Saldos y transacciones con partes relacionadas"
+      },
+      {
+        "cuenta": "impuestos_corrientes_activo",
+        "estado": "NO_LEIDA",
+        "cara_miles": 723397.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "ppe",
+        "estado": "NO_LEIDA",
+        "cara_miles": 1896784.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "intangibles",
+        "estado": "OK",
+        "cara_miles": 2148441.0,
+        "nota_miles": 2148441.0,
+        "titulo_nota": "Activos intangibles distintos de la plusvalía"
+      },
+      {
+        "cuenta": "impuestos_diferidos_activo",
+        "estado": "NO_LEIDA",
+        "cara_miles": 17260396.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "pasivos_financieros",
+        "estado": "OK",
+        "cara_miles": 129223545.0,
+        "nota_miles": 129223545.0,
+        "titulo_nota": "Otros pasivos financieros corrientes y no corrientes"
+      },
+      {
+        "cuenta": "relacionadas_por_pagar",
+        "estado": "OK",
+        "cara_miles": 11431517.0,
+        "nota_miles": 11431517.0,
+        "titulo_nota": "Saldos y transacciones con partes relacionadas"
+      },
+      {
+        "cuenta": "provisiones_empleados",
+        "estado": "NO_LEIDA",
+        "cara_miles": 495147.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "impuestos_diferidos_pasivo",
+        "estado": "NO_LEIDA",
+        "cara_miles": 43497.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "otros_pasivos_no_financieros",
+        "estado": "NO_LEIDA",
+        "cara_miles": 30576342.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      }
+    ]
+  },
+  {
+    "rut": "99566540-9",
+    "razon_social": "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+    "tipo_eeff": "Individual",
+    "error": "",
+    "indice": 34,
+    "ok": 10,
+    "no_leida": 1,
+    "cuadre_balance": "OK",
+    "cuadre_resultados": "OK",
+    "cuentas": [
+      {
+        "cuenta": "efectivo",
+        "estado": "OK",
+        "cara_miles": 47392.0,
+        "nota_miles": 47392.0,
+        "titulo_nota": "Efectivo y Equivalentes al Efectivo"
+      },
+      {
+        "cuenta": "otros_activos_no_financieros",
+        "estado": "OK",
+        "cara_miles": 94078.0,
+        "nota_miles": 94078.0,
+        "titulo_nota": "Otros Activos no Financieros - Contratos de Leasing"
+      },
+      {
+        "cuenta": "deudores",
+        "estado": "OK",
+        "cara_miles": 3229891.0,
+        "nota_miles": 3229891.0,
+        "titulo_nota": "Deudores Comerciales y otras Cuentas por Cobrar"
+      },
+      {
+        "cuenta": "impuestos_corrientes_activo",
+        "estado": "OK",
+        "cara_miles": 446.0,
+        "nota_miles": 446.0,
+        "titulo_nota": "Impuestos a las ganancias e impuestos diferidos"
+      },
+      {
+        "cuenta": "otros_activos_no_financieros_no_corriente",
+        "estado": "OK",
+        "cara_miles": 3189402.0,
+        "nota_miles": 3189402.0,
+        "titulo_nota": "Otros Activos no Financieros - Contratos de Leasing"
+      },
+      {
+        "cuenta": "impuestos_diferidos_activo",
+        "estado": "OK",
+        "cara_miles": 79291.0,
+        "nota_miles": 79291.0,
+        "titulo_nota": "Impuestos a las ganancias e impuestos diferidos"
+      },
+      {
+        "cuenta": "pasivos_financieros",
+        "estado": "OK",
+        "cara_miles": 2097770.0,
+        "nota_miles": 2097770.0,
+        "titulo_nota": "Otros pasivos financieros"
+      },
+      {
+        "cuenta": "cuentas_por_pagar",
+        "estado": "OK",
+        "cara_miles": 601185.0,
+        "nota_miles": 601185.0,
+        "titulo_nota": "Cuentas Comerciales y otras Cuentas por Pagar"
+      },
+      {
+        "cuenta": "provisiones",
+        "estado": "NO_LEIDA",
+        "cara_miles": 1923.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "otros_pasivos_no_financieros",
+        "estado": "OK",
+        "cara_miles": 1780348.0,
+        "nota_miles": 1780348.0,
+        "titulo_nota": "Otros Pasivos no Financieros"
+      },
+      {
+        "cuenta": "impuestos_diferidos_pasivo",
+        "estado": "OK",
+        "cara_miles": 112044.0,
+        "nota_miles": 112044.0,
+        "titulo_nota": "Impuestos a las ganancias e impuestos diferidos"
+      }
+    ]
+  },
+  {
+    "rut": "96626570-1",
+    "razon_social": "INCOFIN S.A.",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "indice": 30,
+    "ok": 7,
+    "no_leida": 5,
+    "cuadre_balance": "OK",
+    "cuadre_resultados": "OK",
+    "cuentas": [
+      {
+        "cuenta": "efectivo",
+        "estado": "OK",
+        "cara_miles": 1744000.0,
+        "nota_miles": 1744000.0,
+        "titulo_nota": "EFECTIVO Y EQUIVALENTES AL EFECTIVO"
+      },
+      {
+        "cuenta": "deudores",
+        "estado": "NO_LEIDA",
+        "cara_miles": 68743116.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "relacionadas_por_cobrar",
+        "estado": "OK",
+        "cara_miles": 3253.0,
+        "nota_miles": 3253.0,
+        "titulo_nota": "CUENTAS POR COBRAR Y PAGAR A ENTIDADES RELACIONADAS"
+      },
+      {
+        "cuenta": "impuestos_corrientes_activo",
+        "estado": "NO_LEIDA",
+        "cara_miles": 236.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "otros_activos_no_financieros",
+        "estado": "NO_LEIDA",
+        "cara_miles": 2654879.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "ppe",
+        "estado": "OK",
+        "cara_miles": 1703174.0,
+        "nota_miles": 1703174.0,
+        "titulo_nota": "PROPIEDADES, PLANTA Y EQUIPO"
+      },
+      {
+        "cuenta": "intangibles",
+        "estado": "OK",
+        "cara_miles": 1800.0,
+        "nota_miles": 1800.0,
+        "titulo_nota": "ACTIVOS INTANGIBLES, DISTINTOS DE LA PLUSVALÍA"
+      },
+      {
+        "cuenta": "impuestos_diferidos_activo",
+        "estado": "NO_LEIDA",
+        "cara_miles": 8981450.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "pasivos_financieros",
+        "estado": "OK",
+        "cara_miles": 36452771.0,
+        "nota_miles": 36452771.0,
+        "titulo_nota": "OTROS PASIVOS FINANCIEROS"
+      },
+      {
+        "cuenta": "relacionadas_por_pagar",
+        "estado": "NO_LEIDA",
+        "cara_miles": 7997364.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "pasivos_financieros_no_corriente",
+        "estado": "OK",
+        "cara_miles": 5370490.0,
+        "nota_miles": 5370490.0,
+        "titulo_nota": "OTROS PASIVOS FINANCIEROS"
+      },
+      {
+        "cuenta": "impuestos_diferidos_pasivo",
+        "estado": "OK",
+        "cara_miles": 62403.0,
+        "nota_miles": 62403.0,
+        "titulo_nota": "IMPUESTO A LAS GANANCIAS E IMPUESTO DIFERIDO"
+      }
+    ]
+  },
+  {
+    "rut": "90146000-0",
+    "razon_social": "SERVICIOS FINANCIEROS PROGRESO S.A.",
+    "tipo_eeff": "Individual",
+    "error": "",
+    "indice": 33,
+    "ok": 6,
+    "no_leida": 12,
+    "cuadre_balance": "OK",
+    "cuadre_resultados": "OK",
+    "cuentas": [
+      {
+        "cuenta": "efectivo",
+        "estado": "OK",
+        "cara_miles": 4620679.0,
+        "nota_miles": 4620679.0,
+        "titulo_nota": "Efectivo y equivalentes al efectivo"
+      },
+      {
+        "cuenta": "otros_activos_no_financieros",
+        "estado": "NO_LEIDA",
+        "cara_miles": 121671.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "deudores",
+        "estado": "NO_LEIDA",
+        "cara_miles": 80711902.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "relacionadas_por_cobrar",
+        "estado": "NO_LEIDA",
+        "cara_miles": 255339.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "impuestos_corrientes_activo",
+        "estado": "OK",
+        "cara_miles": 1175499.0,
+        "nota_miles": 1175499.0,
+        "titulo_nota": "Activos y Pasivos por impuestos corrientes"
+      },
+      {
+        "cuenta": "otros_activos_no_financieros_no_corriente",
+        "estado": "OK",
+        "cara_miles": 569616.0,
+        "nota_miles": 569616.0,
+        "titulo_nota": "Otros activos no financieros, corrientes y no corrientes"
+      },
+      {
+        "cuenta": "deudores_no_corriente",
+        "estado": "NO_LEIDA",
+        "cara_miles": 35739190.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "relacionadas_por_cobrar_no_corriente",
+        "estado": "NO_LEIDA",
+        "cara_miles": 262248.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "intangibles",
+        "estado": "NO_LEIDA",
+        "cara_miles": 3930934.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "pasivos_financieros",
+        "estado": "NO_LEIDA",
+        "cara_miles": 64269130.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "cuentas_por_pagar",
+        "estado": "OK",
+        "cara_miles": 7195075.0,
+        "nota_miles": 7195075.0,
+        "titulo_nota": "Cuentas por pagar comerciales y otras cuentas por pagar"
+      },
+      {
+        "cuenta": "relacionadas_por_pagar",
+        "estado": "NO_LEIDA",
+        "cara_miles": 19005.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "impuestos_corrientes_pasivo",
+        "estado": "OK",
+        "cara_miles": 179044.0,
+        "nota_miles": 179044.0,
+        "titulo_nota": "Activos y Pasivos por impuestos corrientes"
+      },
+      {
+        "cuenta": "provisiones",
+        "estado": "NO_LEIDA",
+        "cara_miles": 4390625.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "provisiones_empleados",
+        "estado": "NO_LEIDA",
+        "cara_miles": 517818.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "otros_pasivos_no_financieros",
+        "estado": "NO_LEIDA",
+        "cara_miles": 4296259.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "pasivos_financieros_no_corriente",
+        "estado": "OK",
+        "cara_miles": 24011026.0,
+        "nota_miles": 24011026.0,
+        "titulo_nota": "Otros pasivos financieros"
+      },
+      {
+        "cuenta": "impuestos_diferidos_pasivo",
+        "estado": "NO_LEIDA",
+        "cara_miles": 3302645.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      }
+    ]
+  },
+  {
+    "rut": "96809970-1",
+    "razon_social": "UNIDAD LEASING HABITACIONAL S.A.",
+    "tipo_eeff": "Individual",
+    "error": "",
+    "indice": 29,
+    "ok": 7,
+    "no_leida": 2,
+    "cuadre_balance": "OK",
+    "cuadre_resultados": "OK",
+    "cuentas": [
+      {
+        "cuenta": "efectivo",
+        "estado": "OK",
+        "cara_miles": 5879657.0,
+        "nota_miles": 5879657.0,
+        "titulo_nota": "Efectivo y Equivalente al Efectivo"
+      },
+      {
+        "cuenta": "deudores",
+        "estado": "OK",
+        "cara_miles": 9223135.0,
+        "nota_miles": 9223135.0,
+        "titulo_nota": "Deudores Comerciales y otras Cuentas por Cobrar"
+      },
+      {
+        "cuenta": "impuestos_corrientes_activo",
+        "estado": "OK",
+        "cara_miles": 76807.0,
+        "nota_miles": 76807.0,
+        "titulo_nota": "Activos por Impuestos Corrientes"
+      },
+      {
+        "cuenta": "ppe",
+        "estado": "NO_LEIDA",
+        "cara_miles": 395371.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "pasivos_financieros",
+        "estado": "OK",
+        "cara_miles": 17739788.0,
+        "nota_miles": 17739788.0,
+        "titulo_nota": "Otros Pasivos Financieros, Corrientes y No Corrientes"
+      },
+      {
+        "cuenta": "impuestos_corrientes_pasivo",
+        "estado": "OK",
+        "cara_miles": 815522.0,
+        "nota_miles": 815522.0,
+        "titulo_nota": "Impuestos Corrientes e Impuestos Diferidos"
+      },
+      {
+        "cuenta": "cuentas_por_pagar",
+        "estado": "OK",
+        "cara_miles": 12152011.0,
+        "nota_miles": 12152011.0,
+        "titulo_nota": "Cuentas Comerciales y otras Cuentas por Pagar"
+      },
+      {
+        "cuenta": "provisiones",
+        "estado": "NO_LEIDA",
+        "cara_miles": 800315.0,
+        "nota_miles": null,
+        "titulo_nota": ""
+      },
+      {
+        "cuenta": "impuestos_diferidos_pasivo",
+        "estado": "OK",
+        "cara_miles": 329666.0,
+        "nota_miles": 329666.0,
+        "titulo_nota": "Impuestos Corrientes e Impuestos Diferidos"
+      }
+    ]
+  }
+]
