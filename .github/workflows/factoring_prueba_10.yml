@@ -8,6 +8,7 @@ on:
     paths:
       - .github/workflows/factoring_prueba_10.yml
       - factoring_leasing/eeff_prueba/run.json
+      - factoring_leasing/eeff_prueba/lote2.json
   workflow_dispatch:
 
 permissions:
@@ -26,19 +27,19 @@ jobs:
         run: pip install -q pymupdf pdfplumber
       - name: Parser sin red
         run: python pipelines/eeff/test_parse_pdf_caratula.py
-      - name: Diez PDF
-        run: python factoring_leasing/scripts/04_prueba_10_pdf.py --periodo 2026-03
+      - name: Diez PDF, segundo lote
+        run: python factoring_leasing/scripts/04_prueba_10_pdf.py --periodo 2026-03 --lote factoring_leasing/eeff_prueba/lote2.json --dest lote2
       - name: Rama de revisión
         if: always()
         run: |
-          if [ ! -f factoring_leasing/eeff_prueba/2026-03/resumen.json ]; then
+          if [ ! -f factoring_leasing/eeff_prueba/lote2/resumen.json ]; then
             echo "sin resumen; no se publica"
             exit 1
           fi
-          RAMA="actions/fl-extraccion-2026-03-${{ github.run_id }}"
+          RAMA="actions/fl-extraccion-lote2-${{ github.run_id }}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$RAMA"
-          git add factoring_leasing/eeff_prueba/2026-03
+          git add factoring_leasing/eeff_prueba/lote2
           git commit -m "factoring: prueba 10 PDF 2026-03 run ${{ github.run_id }}" || echo "sin cambios"
           git push -u origin "$RAMA"
