@@ -209,6 +209,14 @@ Total activos
     assert any(row["concepto"] == "total_activos" and row["estado"] == "SIN_API" for row in vals)
 
 
+def test_dos_montos_pegados_no_son_un_numero():
+    from pipelines.eeff.parse_pdf_caratula import _montos_de_linea
+    from pipelines.eeff.canon import parse_monto_chileno
+
+    assert parse_monto_chileno("324.875.184542.645") is None
+    assert _montos_de_linea("324.875.184542.645") == [324875184.0, 542645.0]
+
+
 def test_nota_con_punto_y_parentesis_no_es_monto():
     comercial = """
 Estados de Resultados Integrales

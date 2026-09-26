@@ -166,13 +166,23 @@ def _familia(titulo: str) -> str:
 
 def secciones(paginas: list[str]) -> list[dict]:
     marcas = []
+    ultimo = None
     for n_pag, texto in enumerate(paginas):
         texto = _unir_titulos(texto)
         encabezados = []
+        visto = ultimo
         for i, line in enumerate(texto.splitlines()):
             enc = _es_encabezado(line)
-            if enc:
-                encabezados.append((i, enc[0], enc[1]))
+            if not enc:
+                continue
+            numero, titulo = enc
+            plano = re.sub(r"\s+", " ", line.strip())
+            # (2) después de la nota 19 es una llamada, no la nota 2.
+            # Un (12) o un (39) de otra tabla no se descarta: la llamada es chica.
+            if _HEAD_PAREN.match(plano) and visto is not None and numero <= 6 and numero + 8 <= visto:
+                continue
+            encabezados.append((i, numero, titulo))
+            visto = numero
         # El índice trae muchas notas en una página. Una nota con tres llamadas no.
         if len(encabezados) >= 8:
             continue
@@ -180,6 +190,7 @@ def secciones(paginas: list[str]) -> list[dict]:
             if _CONTINUA.search(titulo):
                 continue
             marcas.append((n_pag, pos, numero, titulo, texto))
+            ultimo = numero
     salida = []
     for i, (n_pag, pos, numero, titulo, texto) in enumerate(marcas):
         if i + 1 < len(marcas):
@@ -193,6 +204,9 @@ def secciones(paginas: list[str]) -> list[dict]:
         # No se corta lo que ya estaba en la página de esta nota.
         if fin_pag > n_pag and fin_texto and fin_pos:
             trozos.append(fin_texto.splitlines()[:fin_pos])
+        # Dos columnas: el saldo de esta nota puede quedar debajo del título siguiente.
+        if fin_pag == n_pag + 1 and fin_texto:
+            trozos.append(fin_texto.splitlines()[fin_pos:])
         salida.append({
             "numero": numero,
             "titulo": titulo,
@@ -245,7 +259,8 @@ def _concepto(line: str) -> str:
 
 def _es_total(concepto: str) -> bool:
     blob = fold(concepto)
-    return blob.startswith("total") or blob.startswith("subtotal")
+    # «Cambios en provisiones, total» cierra el movimiento aunque no empiece así.
+    return blob.startswith("total") or blob.startswith("subtotal") or blob.endswith(" total")
 
 
 def _es_cierre(concepto: str) -> bool:
@@ -255,7 +270,7 @@ def _es_cierre(concepto: str) -> bool:
         return True
     if blob.endswith((" neto", "(neto)", " netos")):
         return True
-    return blob == "saldo final" or blob.startswith("saldo final")
+    return "saldo final" in blob
 
 
 def _partes_utiles(filas: list[tuple], col: int) -> list[tuple]:
@@ -315,6 +330,86 @@ def _rollup(filas: list[tuple], corte: int, col: int, objetivo: float) -> list[t
         if _es_desglose(partes, objetivo):
             return list(reversed(partes))
     return None
+
+
+def _parte(fila: tuple, col: int) -> tuple:
+    concepto, montos = fila
+    comp = montos[col + 1] if col + 1 < len(montos) else None
+    return (concepto, montos[col], comp)
+
+
+def _movimiento(filas: list[tuple], corte: int, col: int, objetivo: float) -> list[tuple] | None:
+    """Saldo inicial más los movimientos, sin sumar dos veces el subtotal."""
+    if "saldo final" not in fold(filas[corte][0]):
+        return None
+    inicio = None
+    for k in range(corte - 1, -1, -1):
+        blob = fold(filas[k][0])
+        if "saldo inicial" in blob:
+            inicio = k
+            break
+        if "saldo final" in blob:
+            return None
+    if inicio is None or col >= len(filas[inicio][1]) or filas[inicio][1][col] is None:
+        return None
+    medio = filas[inicio + 1:corte]
+    ultimo = next((idx for idx in range(len(medio) - 1, -1, -1) if _es_total(medio[idx][0])), None)
+    if ultimo is None:
+        movs = [
+            _parte(fila, col)
+            for fila in medio
+            if _concepto_util(fila[0]) and col < len(fila[1]) and fila[1][col] is not None
+        ]
+    else:
+        sub = medio[ultimo]
+        if col >= len(sub[1]) or sub[1][col] is None:
+            return None
+        hijos = [
+            _parte(fila, col)
+            for fila in medio[:ultimo]
+            if not _es_total(fila[0]) and _concepto_util(fila[0]) and col < len(fila[1]) and fila[1][col] is not None
+        ]
+        if hijos and abs(sum(parte[1] for parte in hijos) - sub[1][col]) <= 1:
+            movs = hijos
+        else:
+            movs = [_parte(sub, col)]
+    partes = [_parte(filas[inicio], col)] + movs
+    if not _es_desglose(partes, objetivo):
+        return None
+    return partes
+
+
+def _desde_la_derecha(filas: list[tuple], corte: int, col: int, objetivo: float) -> list[tuple] | None:
+    """La misma columna del total, contada desde la derecha.
+
+    Un RUT o un guion a la izquierda corre el índice, no el saldo.
+    """
+    total = filas[corte][1]
+    if col >= len(total):
+        return None
+    desde_el_final = len(total) - col
+    prev = 0
+    for k in range(corte - 1, -1, -1):
+        if _es_total(filas[k][0]) or _es_cierre(filas[k][0]):
+            prev = k + 1
+            break
+    partes = []
+    movio = False
+    for concepto, montos in filas[prev:corte]:
+        if _es_total(concepto) or not _concepto_util(concepto):
+            continue
+        if len(montos) < desde_el_final:
+            continue
+        idx = len(montos) - desde_el_final
+        if montos[idx] is None:
+            continue
+        if idx != col:
+            movio = True
+        comp = montos[idx + 1] if idx + 1 < len(montos) else None
+        partes.append((concepto, montos[idx], comp))
+    if not movio or not _es_desglose(partes, objetivo):
+        return None
+    return partes
 
 
 def _prefijo(filas: list[tuple], col: int, objetivo: float) -> list[tuple] | None:
@@ -504,7 +599,36 @@ def _armar(partes: list[tuple], valor: float, comparativo, col: int) -> dict:
     return {"filas": rows, "total": valor, "columna": col}
 
 
-def _reconstruir(filas: list[tuple], objetivo: float) -> dict | None:
+def _rotulos_antes_de_total(texto: str) -> list[str]:
+    """Factoring / Leasing / Créditos, la fila de títulos que cierra en Total."""
+    lineas = [ln.strip() for ln in (texto or "").splitlines() if ln.strip()]
+    for i, ln in enumerate(lineas):
+        if fold(ln) != "total":
+            continue
+        prev = []
+        pendiente = ""
+        j = i - 1
+        while j >= 0 and len(prev) < 8:
+            blob = fold(lineas[j])
+            if not blob or _montos(lineas[j]) or len(lineas[j]) > 28:
+                break
+            if blob.startswith("al ") or blob in {"m", "ms", "pasivos", "activos"}:
+                break
+            if lineas[j].startswith("/"):
+                pendiente = lineas[j][1:].strip()
+                j -= 1
+                continue
+            nombre = f"{lineas[j]}/{pendiente}" if pendiente else lineas[j]
+            pendiente = ""
+            prev.append(nombre)
+            j -= 1
+        prev.reverse()
+        if len(prev) >= 2:
+            return prev
+    return []
+
+
+def _reconstruir(filas: list[tuple], objetivo: float, texto: str = "") -> dict | None:
     """Partidas que suman la cara, o los subtotales si el puente bruto/neto no suma."""
     if objetivo is None:
         return None
@@ -564,6 +688,10 @@ def _reconstruir(filas: list[tuple], objetivo: float) -> dict | None:
             if sufijo:
                 candidatos.append((i, len(sufijo), sufijo, valor, comparativo, col))
                 continue
+            alineado = _desde_la_derecha(filas, i, col, objetivo)
+            if alineado:
+                candidatos.append((i, len(alineado), alineado, valor, comparativo, col))
+                continue
             rollo = _rollup(filas, i, col, objetivo)
             if rollo:
                 candidatos.append((i, len(rollo), rollo, valor, comparativo, col))
@@ -584,10 +712,12 @@ def _reconstruir(filas: list[tuple], objetivo: float) -> dict | None:
                     prev = k + 1
                     break
             sufijo = _sufijo(filas[prev:i], col, objetivo)
-            if not sufijo:
+            mov = None if sufijo else _movimiento(filas, i, col, objetivo)
+            if not sufijo and not mov:
                 continue
+            partes = sufijo or mov
             comparativo = montos[col + 1] if col + 1 < len(montos) else None
-            candidatos.append((i, len(sufijo), sufijo, valor, comparativo, col))
+            candidatos.append((i, len(partes), partes, valor, comparativo, col))
     # «Activo por impuestos corrientes» cierra la composición aunque no diga total.
     for i, (concepto, montos) in enumerate(filas):
         if _es_total(concepto) or _es_cierre(concepto):
@@ -614,6 +744,22 @@ def _reconstruir(filas: list[tuple], objetivo: float) -> dict | None:
             for col, valor in enumerate(montos):
                 if valor is None or abs(valor - objetivo) > 1:
                     continue
+                if not _es_total(concepto):
+                    previos = [(k, monto) for k, monto in enumerate(montos[:col]) if monto is not None]
+                    if (
+                        len([monto for _, monto in previos if abs(monto) > 1]) >= 2
+                        and abs(sum(monto for _, monto in previos) - objetivo) <= 1
+                    ):
+                        rotulos = _rotulos_antes_de_total(texto)
+                        partes = []
+                        for k, monto in previos:
+                            if k < len(rotulos) and len(rotulos) == len(previos):
+                                nombre = rotulos[k]
+                            else:
+                                nombre = f"{concepto} — columna {k + 1}"
+                            partes.append((nombre, monto, None))
+                        comparativo = montos[col + 1] if col + 1 < len(montos) else None
+                        return _armar(partes, valor, comparativo, col)
                 otros = [
                     (k, monto)
                     for k, monto in enumerate(montos)
@@ -631,7 +777,7 @@ def _reconstruir(filas: list[tuple], objetivo: float) -> dict | None:
 
 def composicion_que_calza(texto: str, objetivo: float) -> dict | None:
     """La composición cuya fila total es el objetivo y cuyas partes suman eso."""
-    return _reconstruir(_filas_texto(texto), objetivo)
+    return _reconstruir(_filas_texto(texto), objetivo, texto)
 
 
 def _fila_tabla(row: list) -> tuple[str, list] | None:
