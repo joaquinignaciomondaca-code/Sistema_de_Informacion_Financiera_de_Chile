@@ -280,11 +280,13 @@ def _es_moneda(line: str) -> bool:
 
 
 def _es_ruido_etiqueta(line: str) -> bool:
-    """Moneda o sociedad entre el concepto y sus montos. No es una partida."""
+    """Moneda, signo peso o sociedad entre el concepto y sus montos. No es una partida."""
     if _montos(line):
         return False
+    if line.strip() in {"$", "US$", "USD", "UF"}:
+        return True
     blob = fold(line)
-    if _es_moneda(line) or blob in {"m", "ms", "sociedad", "concepto"}:
+    if not blob or _es_moneda(line) or blob in {"m", "ms", "sociedad", "concepto"}:
         return True
     return blob.endswith((" s a", " s a s", " ltda", " corp", " spa", " s a c v"))
 
@@ -307,8 +309,9 @@ def _filas_texto(texto: str) -> list[tuple[str, list[float]]]:
         if letras >= 3 and not montos and len(line) <= 80 and not _es_ruido_etiqueta(line):
             j = i + 1
             while j < len(lineas) and j <= i + 4 and _es_ruido_etiqueta(lineas[j]):
-                # La sociedad identifica la partida. M$, Sociedad y la moneda no.
-                if not _es_moneda(lineas[j]) and fold(lineas[j]) not in {"m", "ms", "sociedad", "concepto"}:
+                # La sociedad identifica la partida. El signo, M$ y la moneda no.
+                blob = fold(lineas[j])
+                if blob and not _es_moneda(lineas[j]) and blob not in {"m", "ms", "sociedad", "concepto", "uf"}:
                     concepto = f"{concepto} — {lineas[j]}"
                 j += 1
             if (
