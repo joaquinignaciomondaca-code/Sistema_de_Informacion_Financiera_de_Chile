@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Diez PDF: notas por nombre, y solo si el total es la línea de la cara.
+"""Diez PDF: cada línea de la cara, y la nota solo si suma esa línea.
 
-No publica al monitor. No inventa la diferencia. El PDF se borra.
+No publica al monitor. No inventa la diferencia. No es el masivo. El PDF se borra.
 """
 
 from __future__ import annotations
@@ -19,7 +19,7 @@ sys.path.insert(0, str(ROOT))
 
 from pipelines.eeff import cmf_pdf
 from pipelines.eeff.parse_pdf_notas import extraer_notas
-from pipelines.eeff.validate_api import cuadratura_balance, cuadratura_resultados
+from pipelines.eeff.validate_api import cuadratura_balance, cuadratura_detalle, cuadratura_resultados
 
 PRUEBA = ROOT / "factoring_leasing" / "eeff_prueba"
 
@@ -67,12 +67,24 @@ def _resumen(salida: dict, caratula: dict) -> dict:
     cuadre = salida["cuadre"]
     ok = sum(1 for fila in cuadre if fila["estado"] == "OK")
     no = sum(1 for fila in cuadre if fila["estado"] == "NO_LEIDA")
+    eq = cuadratura_balance(balance) if balance else {"estado": "SIN_PDF"}
+    det = cuadratura_detalle(balance) if balance else {"estado": "SIN_PDF", "hueco": ""}
+    res = cuadratura_resultados(resultados) if resultados else {"estado": "SIN_PDF", "hueco": ""}
+    caidas_b = caratula.get("balance", {}).get("caidas") or []
+    caidas_r = caratula.get("resultado", {}).get("caidas") or []
     return {
         "indice": len(salida["indice"]),
         "ok": ok,
         "no_leida": no,
-        "cuadre_balance": cuadratura_balance(balance).get("estado") if balance else "SIN_PDF",
-        "cuadre_resultados": cuadratura_resultados(resultados).get("estado") if resultados else "SIN_PDF",
+        "lineas_balance": len(balance),
+        "lineas_resultados": len(resultados),
+        "cuadre_balance": eq.get("estado"),
+        "cuadre_detalle": det.get("estado"),
+        "hueco_detalle": det.get("hueco", ""),
+        "cuadre_resultados": res.get("estado"),
+        "hueco_resultados": res.get("hueco", ""),
+        "caidas_balance": [fila.get("nombre_cuenta", "") for fila in caidas_b],
+        "caidas_resultados": [fila.get("nombre_cuenta", "") for fila in caidas_r],
         "cuentas": [
             {
                 "cuenta": fila["cuenta"],
@@ -129,35 +141,48 @@ def correr(lote: list[dict], periodo: str, dest: Path) -> int:
         (dest / f"{rut}_balance.json").write_text(
             json.dumps(caratula["balance"]["lineas"], ensure_ascii=False, indent=2), encoding="utf-8"
         )
+        (dest / f"{rut}_resultados.json").write_text(
+            json.dumps(caratula["resultado"]["lineas"], ensure_ascii=False, indent=2), encoding="utf-8"
+        )
         fila = {"rut": rut, "razon_social": meta["razon_social"], "tipo_eeff": tipo, "error": ""}
         fila.update(_resumen(notas, caratula))
         filas.append(fila)
         print(
             f"[notas] {rut} indice={fila['indice']} ok={fila['ok']} no_leida={fila['no_leida']} "
-            f"balance={fila['cuadre_balance']} PDF borrado",
+            f"balance={fila['lineas_balance']} {fila['cuadre_balance']} "
+            f"caidas={len(fila['caidas_balance'])}+{len(fila['caidas_resultados'])} "
+            f"resultados={fila['lineas_resultados']} {fila['cuadre_resultados']} PDF borrado",
             flush=True,
         )
     (dest / "resumen.json").write_text(json.dumps(filas, ensure_ascii=False, indent=2), encoding="utf-8")
-    lineas = ["# Notas, diez PDF", ""]
+    lineas = ["# Diez PDF: cada línea de la cara, y la nota si suma", ""]
+    caidas = 0
     for fila in filas:
+        caidas += len(fila.get("caidas_balance") or []) + len(fila.get("caidas_resultados") or [])
         lineas.append(
             f"- {fila.get('razon_social', '')} ({fila['rut']}): "
-            f"ok={fila.get('ok', 0)} no_leida={fila.get('no_leida', 0)} "
-            f"balance={fila.get('cuadre_balance', '')}"
+            f"balance={fila.get('lineas_balance', 0)} {fila.get('cuadre_balance', '')} "
+            f"resultados={fila.get('lineas_resultados', 0)} {fila.get('cuadre_resultados', '')} "
+            f"notas ok={fila.get('ok', 0)} no_leida={fila.get('no_leida', 0)} "
+            f"caidas={len(fila.get('caidas_balance') or [])}+{len(fila.get('caidas_resultados') or [])}"
             + (f" error={fila['error']}" if fila.get("error") else "")
         )
-    (dest / "resumen.md").write_text("\n".join(lineas) + "\n", encoding="utf-8")
+        for nombre in (fila.get("caidas_balance") or [])[:8]:
+            lineas.append(f"  - cara no guardada (balance): {nombre}")
+        for nombre in (fila.get("caidas_resultados") or [])[:8]:
+            lineas.append(f"  - cara no guardada (resultado): {nombre}")
     ok = sum(fila.get("ok", 0) for fila in filas)
     no = sum(fila.get("no_leida", 0) for fila in filas)
     lineas.append("")
     lineas.append(
-        f"CALIDAD: {ok} notas calzan con su línea, {no} no leídas. "
-        "No es el masivo. Solo se publica si no queda ninguna sin leer."
+        f"CALIDAD: {ok} notas calzan, {no} no leídas, {caidas} líneas de cara vistas por otra lectura y no guardadas. "
+        "No se inventa la que falta. No es el masivo."
     )
+    (dest / "resumen.md").write_text("\n".join(lineas) + "\n", encoding="utf-8")
     print("\n".join(lineas))
     if any(fila.get("error") for fila in filas) or not filas:
         return 1
-    return 0 if no == 0 else 1
+    return 0 if no == 0 and caidas == 0 else 1
 
 
 def main() -> None:

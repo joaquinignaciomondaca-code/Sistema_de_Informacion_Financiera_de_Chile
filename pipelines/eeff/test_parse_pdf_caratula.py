@@ -8,6 +8,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from pipelines.eeff.parse_pdf_caratula import (
     clasificar_pagina,
     lineas_apiladas,
+    lineas_caidas,
     lineas_de_tabla,
     lineas_de_texto,
     orden_montos,
@@ -30,6 +31,17 @@ TABLA = [
     ["Capital pagado", "20", "11.874.585", "11.874.586"],
     ["Total patrimonio", "", "54.119.443", "52.560.172"],
 ]
+
+
+def test_una_linea_de_indice_no_es_cara_caida():
+    elegidas = [{"nombre_cuenta": "Efectivo y equivalentes al efectivo", "monto_miles_clp": 36.0}]
+    otras = elegidas + [
+        {"nombre_cuenta": "Ingresos financieros", "monto_miles_clp": 21.0},
+        {"nombre_cuenta": "Nota 2 - Criterios contables aplicados", "monto_miles_clp": 3.0},
+        {"nombre_cuenta": "Índice Página", "monto_miles_clp": 1.0},
+    ]
+    caidas = lineas_caidas(elegidas, otras)
+    assert [fila["nombre_cuenta"] for fila in caidas] == ["Ingresos financieros"]
 
 
 def test_tabla_cierra_y_no_inventa():

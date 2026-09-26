@@ -201,6 +201,27 @@ Total Deudores y Cuentas por cobrar, Neto, Corriente
     ]
 
 
+def test_signo_peso_no_parte_la_fila():
+    texto = """
+(8) Efectivo y equivalentes al efectivo
+Bancos
+$
+36.070
+40.983
+Fondos Mutuos (a)
+$
+-
+7.023
+Total efectivo y equivalentes al efectivo
+36.070
+48.006
+"""
+    comp = composicion_que_calza(texto, 36070)
+    assert comp is not None
+    assert [f["concepto"] for f in comp["filas"] if not f["es_total"]] == ["Bancos", "Fondos Mutuos (a)"]
+    assert comp["filas"][0]["monto_miles"] == 36070
+
+
 def test_un_rut_no_es_un_miles():
     assert _montos("77.124.030-5 Inversiones Lauca Ltda. 2.632.619") == [2632619.0]
     assert 15642382.0 not in _montos("15.642.382-K")
