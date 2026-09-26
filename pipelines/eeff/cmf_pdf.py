@@ -81,12 +81,13 @@ def url_pdf_desde_html(html: str) -> str | None:
     return urllib.parse.urljoin("https://www.cmfchile.cl/institucional/mercados/", href)
 
 
-def descargar_pdf(rut_cuerpo: str, year: int, month: int, tipoentidad: str = "RVEMI") -> tuple[bytes | None, str, str]:
-    """Consolidado primero, individual si la sociedad no publica consolidado.
+def descargar_pdf(rut_cuerpo: str, year: int, month: int, tipoentidad: str = "RVEMI", preferir: str = "C") -> tuple[bytes | None, str, str]:
+    """Consolidado primero, salvo que la ficha ya conocida sea individual.
 
     Devuelve (bytes, tipo_usado, url_pdf).
     """
-    for tipo in ("C", "I"):
+    orden = ("I", "C") if preferir == "I" else ("C", "I")
+    for tipo in orden:
         html = buscar_periodo(rut_cuerpo, year, month, tipo, tipoentidad)
         if not html:
             continue
