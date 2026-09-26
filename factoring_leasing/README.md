@@ -102,6 +102,8 @@ Siguen en disco y no se cargan en el monitor:
 
 4. **Otros periodos y las sociedades sin PDF de marzo.** Security 2013 y 2018 entran con el mismo diccionario de nombres, no con los números de 2026. El resto, después de que las notas de marzo tengan forma.
 
+   El OCR de Security individual diciembre 2013 (56 páginas, Actions `36230125769`) ya se leyó. Ocho páginas quedaron en timeout (5, 17, 18, 24, 27, 31, 40 y 51): ahí faltan los cuerpos de relacionadas (nota 6) y de pasivos financieros corrientes (nota 13). Lo que sí se leyó confirma el diccionario, no un juego nuevo de notas. Efectivo es caja más bancos y cierra en 6.705.444. Deudores es el puente bruto menos provisión y cierra en 198.940.321. Intangibles y propiedades cierran en el neto (83.222 y 299.888). Cuentas por pagar cierra en 6.048.480. No hay activo a valor razonable. Capital y ganancias acumuladas no tienen nota. El préstamo corriente es la nota 13 en 2013 y otra nota en 2026: se sigue por el nombre.
+
 5. **La descarga.** El camino ya está: ficha CMF, pestaña Información Financiera, buscador de periodo, enlace `Estados financieros (PDF)`. Desde esta red el TLS a CMF se corta. No se simula el masivo. No se borra un Markdown si la descarga falla.
 
 ## Cómo correr
