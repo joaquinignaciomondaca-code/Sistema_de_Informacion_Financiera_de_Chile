@@ -100,6 +100,44 @@ Total patrimonio
     assert cuadratura_balance(lineas)["estado"] == "OK"
 
 
+def test_encabezado_notas_y_anio_no_es_linea():
+    texto = """
+Estados Intermedios de Situación Financiera Consolidados
+Activos
+Notas
+2026
+2025
+M$
+M$
+Activos corrientes:
+Efectivo y equivalentes al efectivo
+7
+1.169.285
+1.322.308
+Total activos corrientes
+48.332.431
+48.932.458
+"""
+    lineas = lineas_apiladas(texto, "balance", META)
+    assert [row["nombre_cuenta"] for row in lineas] == [
+        "Efectivo y equivalentes al efectivo",
+        "Total activos corrientes",
+    ]
+    assert lineas[0]["monto_miles_clp"] == 1169285
+
+
+def test_api_con_monto_vacio_no_revienta():
+    from pipelines.eeff.validate_api import validar_documento
+    lineas = lineas_apiladas("""
+Estados de Situación Financiera
+Total activos
+10.000
+9.000
+""", "balance", META)
+    vals = validar_documento(lineas, {"total_activos_m_clp": None, "rut": "1-9"})
+    assert any(row["concepto"] == "total_activos" and row["estado"] == "SIN_API" for row in vals)
+
+
 def test_resultado_no_suma_dos_veces_ni_se_come_el_cero():
     autofin = """
 Estados de Resultados Integrales
@@ -201,5 +239,8 @@ if __name__ == "__main__":
     test_tabla_cierra_y_no_inventa()
     test_comparativo_primero_no_se_deja_al_reves()
     test_apilado_como_sale_el_pdf()
+    test_encabezado_notas_y_anio_no_es_linea()
+    test_api_con_monto_vacio_no_revienta()
+    test_resultado_no_suma_dos_veces_ni_se_come_el_cero()
     test_texto_y_titulo()
     print("ok")

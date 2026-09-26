@@ -79,7 +79,11 @@ def validar_documento(lineas_balance: list[dict], fila_api: dict | None) -> list
     salida = []
     for concepto, aliases, col_api in _MAPA:
         doc = _buscar(lineas_balance, aliases)
-        api = None if fila_api is None or col_api not in fila_api else float(fila_api[col_api])
+        crudo = None if fila_api is None else fila_api.get(col_api)
+        try:
+            api = None if crudo is None or crudo == "" else float(crudo)
+        except (TypeError, ValueError):
+            api = None
         if doc is None and api is None:
             estado = "SIN_DATO"
             diff = None
@@ -157,7 +161,11 @@ def cuadratura_detalle(lineas: list[dict]) -> dict:
     for row in lineas:
         if row.get("monto_miles_clp") is None:
             continue
-        lado = _lado(row.get("nombre_cuenta", ""), row.get("clase", ""))
+        nombre_fila = row.get("nombre_cuenta", "")
+        # El total combinado lo cierra la ecuación, no el rollo de un solo lado.
+        if "pasivo" in _fold(nombre_fila) and "patrimonio" in _fold(nombre_fila) and _es_total_caratula(nombre_fila, row.get("clase", "")):
+            continue
+        lado = _lado(nombre_fila, row.get("clase", ""))
         if not lado:
             continue
         monto = float(row["monto_miles_clp"])
