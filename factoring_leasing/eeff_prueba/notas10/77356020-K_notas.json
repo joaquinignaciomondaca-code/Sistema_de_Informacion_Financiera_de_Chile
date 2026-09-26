@@ -1,0 +1,260 @@
+{
+  "indice": [
+    {
+      "numero": 1,
+      "titulo": "30 días",
+      "pagina": 44,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 2,
+      "titulo": "1 Declaración de cumplimiento con NIIF",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 3,
+      "titulo": "Con fecha de 26 de junio 2025 se suscribe un otro sí denominado AMENDMENT NO. 2 TO NOTE PURCHASE",
+      "pagina": 90,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 4,
+      "titulo": "Con fecha 11 de septiembre de 2025 se celebró Asamblea General de Accionistas de Comercial de Valores",
+      "pagina": 90,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 5,
+      "titulo": "Con fecha 27 de noviembre de 2025 se celebró sesión Extraordinaria de Directorio de Comercial de Valores",
+      "pagina": 90,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 6,
+      "titulo": "149.948 y M$ 6.798.409, respectivamente (como medida de la pérdida esperada) sobre la cartera de “Deudores",
+      "pagina": 20,
+      "en_indice": false,
+      "familia": "otra"
+    },
+    {
+      "numero": 7,
+      "titulo": "2.1 Cuentas por cobrar",
+      "pagina": 54,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 18,
+      "titulo": "3 Política de dividendos",
+      "pagina": 79,
+      "en_indice": false,
+      "familia": "politica"
+    },
+    {
+      "numero": 20,
+      "titulo": "569.030.000, mediante la emisión de 2.817.045 acciones ordinarias de pago, representativas de capital social,",
+      "pagina": 90,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 31,
+      "titulo": "60 días",
+      "pagina": 44,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 49,
+      "titulo": "000.000 sobre una cartera vigente de USD$ 60.000.000 y el monto que efectivamente se recupere, todo esto en el",
+      "pagina": 89,
+      "en_indice": false,
+      "familia": "otra"
+    },
+    {
+      "numero": 61,
+      "titulo": "90 días",
+      "pagina": 44,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 91,
+      "titulo": "120 días",
+      "pagina": 44,
+      "en_indice": true,
+      "familia": "otra"
+    }
+  ],
+  "tablas": {},
+  "cuadre": [
+    {
+      "cuenta": "efectivo",
+      "nombre_cara": "Efectivo y equivalentes al efectivo",
+      "nota_ref": "5",
+      "cara_miles": 14551120.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "deudores",
+      "nombre_cara": "Deudores comerciales y otras cuentas por cobrar corrientes",
+      "nota_ref": "6",
+      "cara_miles": 153157647.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "relacionadas_por_cobrar",
+      "nombre_cara": "Cuentas por cobrar a entidades relacionadas corrientes",
+      "nota_ref": "7",
+      "cara_miles": 5790928.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "impuestos_corrientes_activo",
+      "nombre_cara": "Activos por impuestos corrientes",
+      "nota_ref": "13",
+      "cara_miles": 1100827.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "otros_activos_no_financieros",
+      "nombre_cara": "Otros activos no financieros",
+      "nota_ref": "8",
+      "cara_miles": 251499.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "deudores_no_corriente",
+      "nombre_cara": "Deudores comerciales y otras cuentas por cobrar no corrientes",
+      "nota_ref": "6",
+      "cara_miles": 6324327.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "relacionadas_por_cobrar_no_corriente",
+      "nombre_cara": "Cuentas por cobrar a entidades relacionadas no corrientes",
+      "nota_ref": "7",
+      "cara_miles": 12249.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "ppe",
+      "nombre_cara": "Propiedades planta y equipos",
+      "nota_ref": "11",
+      "cara_miles": 294703.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "intangibles",
+      "nombre_cara": "Activos intangibles distintos de la plusvalía",
+      "nota_ref": "14",
+      "cara_miles": 1121653.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "impuestos_diferidos_activo",
+      "nombre_cara": "Activos por impuestos diferidos",
+      "nota_ref": "13",
+      "cara_miles": 1069390.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "otros_activos_no_financieros_no_corriente",
+      "nombre_cara": "Otros activos no financieros no corrientes",
+      "nota_ref": "8",
+      "cara_miles": 86563.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "pasivos_financieros",
+      "nombre_cara": "Otros pasivos financieros corrientes",
+      "nota_ref": "15",
+      "cara_miles": 120026644.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "cuentas_por_pagar",
+      "nombre_cara": "Cuentas por pagar comerciales y otras cuentas por pagar corrientes",
+      "nota_ref": "16",
+      "cara_miles": 6243615.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "provisiones_empleados",
+      "nombre_cara": "Provisiones corrientes por beneficios a empleados",
+      "nota_ref": "17",
+      "cara_miles": 570430.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "relacionadas_por_pagar",
+      "nombre_cara": "Cuentas por pagar a entidades relacionadas corrientes",
+      "nota_ref": "7",
+      "cara_miles": 14305370.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "impuestos_corrientes_pasivo",
+      "nombre_cara": "Pasivos por impuestos corrientes",
+      "nota_ref": "13",
+      "cara_miles": 437959.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "pasivos_financieros_no_corriente",
+      "nombre_cara": "Otros pasivos financieros no corrientes",
+      "nota_ref": "15",
+      "cara_miles": 2376773.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "impuestos_diferidos_pasivo",
+      "nombre_cara": "Pasivos por impuestos diferidos",
+      "nota_ref": "13",
+      "cara_miles": 286722.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    }
+  ]
+}

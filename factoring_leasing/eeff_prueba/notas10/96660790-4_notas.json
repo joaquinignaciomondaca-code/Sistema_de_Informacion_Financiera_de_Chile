@@ -1,0 +1,420 @@
+{
+  "indice": [
+    {
+      "numero": 1,
+      "titulo": "30 Días",
+      "pagina": 42,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 2,
+      "titulo": "Bonos Corporativos",
+      "pagina": 101,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 3,
+      "titulo": "5 Años",
+      "pagina": 101,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 4,
+      "titulo": "Crédito con CFSIT, Inc",
+      "pagina": 122,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 5,
+      "titulo": "Papeles Comerciales (Perú)",
+      "pagina": 105,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 6,
+      "titulo": "Intangibles",
+      "pagina": 65,
+      "en_indice": false,
+      "familia": "intangibles"
+    },
+    {
+      "numero": 7,
+      "titulo": "Propiedades, Planta y Equipo",
+      "pagina": 67,
+      "en_indice": false,
+      "familia": "ppe"
+    },
+    {
+      "numero": 8,
+      "titulo": "Impuestos a la Renta e Impuestos Diferidos",
+      "pagina": 70,
+      "en_indice": false,
+      "familia": "impuestos"
+    },
+    {
+      "numero": 9,
+      "titulo": "Otros Activos no Financieros, Corriente",
+      "pagina": 74,
+      "en_indice": false,
+      "familia": "otros_activos"
+    },
+    {
+      "numero": 10,
+      "titulo": "Activos corrientes mantenidos para la venta",
+      "pagina": 75,
+      "en_indice": false,
+      "familia": "mantenidos_venta"
+    },
+    {
+      "numero": 11,
+      "titulo": "Otros activos no financieros, no corrientes",
+      "pagina": 76,
+      "en_indice": false,
+      "familia": "otros_activos"
+    },
+    {
+      "numero": 12,
+      "titulo": "Plusvalía",
+      "pagina": 77,
+      "en_indice": false,
+      "familia": "intangibles"
+    },
+    {
+      "numero": 13,
+      "titulo": "Otros Pasivos Financieros Corrientes y no Corrientes",
+      "pagina": 78,
+      "en_indice": false,
+      "familia": "pasivos_financieros"
+    },
+    {
+      "numero": 14,
+      "titulo": "Cuentas por pagar Comerciales y otras Cuentas a Pagar",
+      "pagina": 109,
+      "en_indice": false,
+      "familia": "cuentas_por_pagar"
+    },
+    {
+      "numero": 15,
+      "titulo": "Otros pasivos no financieros, corrientes",
+      "pagina": 112,
+      "en_indice": false,
+      "familia": "otros_pasivos"
+    },
+    {
+      "numero": 16,
+      "titulo": "Patrimonio",
+      "pagina": 113,
+      "en_indice": false,
+      "familia": "patrimonio"
+    },
+    {
+      "numero": 17,
+      "titulo": "Beneficios y Gastos de Empleados",
+      "pagina": 118,
+      "en_indice": false,
+      "familia": "otra"
+    },
+    {
+      "numero": 18,
+      "titulo": "Contingencias y Restricciones",
+      "pagina": 119,
+      "en_indice": false,
+      "familia": "contingencias"
+    },
+    {
+      "numero": 19,
+      "titulo": "Cauciones Obtenidas de Terceros",
+      "pagina": 126,
+      "en_indice": true,
+      "familia": "cauciones"
+    },
+    {
+      "numero": 20,
+      "titulo": "Estimaciones y Juicios o Criterios Críticos de la Administración",
+      "pagina": 126,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 21,
+      "titulo": "Valor Razonable de Activos y Pasivos Financieros",
+      "pagina": 127,
+      "en_indice": false,
+      "familia": "instrumentos"
+    },
+    {
+      "numero": 22,
+      "titulo": "Administración de Riesgos",
+      "pagina": 128,
+      "en_indice": false,
+      "familia": "riesgos"
+    },
+    {
+      "numero": 23,
+      "titulo": "Medio Ambiente",
+      "pagina": 131,
+      "en_indice": false,
+      "familia": "medio_ambiente"
+    },
+    {
+      "numero": 24,
+      "titulo": "Ingresos de Actividades Ordinarias y Costos de Ventas",
+      "pagina": 132,
+      "en_indice": false,
+      "familia": "ingresos"
+    },
+    {
+      "numero": 25,
+      "titulo": "Segmentos Operativos",
+      "pagina": 133,
+      "en_indice": false,
+      "familia": "segmentos"
+    },
+    {
+      "numero": 26,
+      "titulo": "Información a Revelar sobre Filiales Consolidadas",
+      "pagina": 137,
+      "en_indice": false,
+      "familia": "otra"
+    },
+    {
+      "numero": 27,
+      "titulo": "Gastos de Administración",
+      "pagina": 139,
+      "en_indice": false,
+      "familia": "gastos"
+    },
+    {
+      "numero": 28,
+      "titulo": "Otros ingresos, por función y Otros gastos, por función",
+      "pagina": 141,
+      "en_indice": false,
+      "familia": "otra"
+    },
+    {
+      "numero": 29,
+      "titulo": "Otras ganancias (pérdidas)",
+      "pagina": 141,
+      "en_indice": false,
+      "familia": "otra"
+    },
+    {
+      "numero": 30,
+      "titulo": "04.2025 Préstamo",
+      "pagina": 60,
+      "en_indice": false,
+      "familia": "otra"
+    },
+    {
+      "numero": 31,
+      "titulo": "60 Días",
+      "pagina": 42,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 32,
+      "titulo": "Obligaciones por Contrato de Arrendamiento",
+      "pagina": 143,
+      "en_indice": true,
+      "familia": "arrendamientos"
+    },
+    {
+      "numero": 33,
+      "titulo": "Sanciones",
+      "pagina": 143,
+      "en_indice": true,
+      "familia": "sanciones"
+    },
+    {
+      "numero": 34,
+      "titulo": "Hechos Relevantes",
+      "pagina": 143,
+      "en_indice": true,
+      "familia": "hechos_relevantes"
+    },
+    {
+      "numero": 35,
+      "titulo": "Hechos Posteriores",
+      "pagina": 143,
+      "en_indice": true,
+      "familia": "hechos_posteriores"
+    },
+    {
+      "numero": 48,
+      "titulo": "702.273 acciones ordinarias, nominativas, de igual valor y sin valor nominal, mediante",
+      "pagina": 116,
+      "en_indice": false,
+      "familia": "otra"
+    },
+    {
+      "numero": 61,
+      "titulo": "90 Días",
+      "pagina": 42,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 91,
+      "titulo": "120 Días",
+      "pagina": 42,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 96,
+      "titulo": "966.250-7 BTG Pactual Chile S.A",
+      "pagina": 79,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 97,
+      "titulo": "030.000-7 Banco del Estado de Chile",
+      "pagina": 79,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 99,
+      "titulo": "500.410-0 Banco Consorcio",
+      "pagina": 80,
+      "en_indice": true,
+      "familia": "otra"
+    }
+  ],
+  "tablas": {},
+  "cuadre": [
+    {
+      "cuenta": "efectivo",
+      "nombre_cara": "Efectivo y equivalentes al efectivo",
+      "nota_ref": "3",
+      "cara_miles": 19107714.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "otros_activos_no_financieros",
+      "nombre_cara": "Otros activos no financieros, corriente",
+      "nota_ref": "9",
+      "cara_miles": 5167561.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "deudores",
+      "nombre_cara": "Deudores comerciales y otras cuentas por cobrar corrientes, neto",
+      "nota_ref": "4",
+      "cara_miles": 106689623.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "relacionadas_por_cobrar",
+      "nombre_cara": "Cuentas por cobrar a entidades relacionadas, corriente",
+      "nota_ref": "5",
+      "cara_miles": 20856.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "impuestos_corrientes_activo",
+      "nombre_cara": "Activos por impuestos corrientes",
+      "nota_ref": "8",
+      "cara_miles": 2656471.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "otros_activos_no_financieros_no_corriente",
+      "nombre_cara": "Otros activos no financieros no corrientes",
+      "nota_ref": "11",
+      "cara_miles": 163266.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "intangibles",
+      "nombre_cara": "Activos intangibles distintos de la plusvalía",
+      "nota_ref": "6",
+      "cara_miles": 3300.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "ppe",
+      "nombre_cara": "Propiedades, planta y equipo",
+      "nota_ref": "7",
+      "cara_miles": 14832257.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "pasivos_financieros",
+      "nombre_cara": "Otros pasivos financieros corrientes",
+      "nota_ref": "13",
+      "cara_miles": 69717547.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "cuentas_por_pagar",
+      "nombre_cara": "Cuentas por pagar comerciales y otras cuentas por pagar",
+      "nota_ref": "14",
+      "cara_miles": 16439182.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "relacionadas_por_pagar",
+      "nombre_cara": "Cuentas por Pagar a Entidades Relacionadas, corrientes",
+      "nota_ref": "5",
+      "cara_miles": 153013.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "otros_pasivos_no_financieros",
+      "nombre_cara": "Otros pasivos no financieros corrientes",
+      "nota_ref": "15",
+      "cara_miles": 2854120.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "pasivos_financieros_no_corriente",
+      "nombre_cara": "Otros pasivos financieros no corrientes",
+      "nota_ref": "13",
+      "cara_miles": 57229222.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "impuestos_diferidos_pasivo",
+      "nombre_cara": "Pasivos por impuestos diferidos",
+      "nota_ref": "8",
+      "cara_miles": 478460.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    }
+  ]
+}

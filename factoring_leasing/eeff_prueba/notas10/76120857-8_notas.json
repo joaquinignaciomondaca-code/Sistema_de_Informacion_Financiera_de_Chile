@@ -1,0 +1,571 @@
+{
+  "indice": [
+    {
+      "numero": 0,
+      "titulo": "6 Meses",
+      "pagina": 56,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 1,
+      "titulo": "Información General",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "antecedentes"
+    },
+    {
+      "numero": 2,
+      "titulo": "Bases de preparación de los estados financieros consolidados",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "politica"
+    },
+    {
+      "numero": 3,
+      "titulo": "Nuevos Pronunciamientos Contables",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "politica"
+    },
+    {
+      "numero": 4,
+      "titulo": "Políticas Contables Significativas",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "politica"
+    },
+    {
+      "numero": 5,
+      "titulo": "Determinación de Valores Razonables",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "instrumentos"
+    },
+    {
+      "numero": 6,
+      "titulo": "Gestión de Riesgo Financiero",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "riesgos"
+    },
+    {
+      "numero": 7,
+      "titulo": "Revelaciones de los juicios que la Gerencia haya realizado al aplicar las políticas contables de la",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "politica"
+    },
+    {
+      "numero": 8,
+      "titulo": "Efectivo y Equivalentes al Efectivo",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "efectivo"
+    },
+    {
+      "numero": 9,
+      "titulo": "Otros activos financieros corrientes",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "otros_activos"
+    },
+    {
+      "numero": 10,
+      "titulo": "Otros Activos no financieros corrientes",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "otros_activos"
+    },
+    {
+      "numero": 11,
+      "titulo": "Deudores comerciales y otras cuentas por cobrar corrientes y no corrientes",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "deudores"
+    },
+    {
+      "numero": 12,
+      "titulo": "Inventarios",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "inventario"
+    },
+    {
+      "numero": 13,
+      "titulo": "Saldos y transacciones con partes relacionadas",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "relacionadas"
+    },
+    {
+      "numero": 14,
+      "titulo": "Personal Clave de la Gerencia",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "personal"
+    },
+    {
+      "numero": 15,
+      "titulo": "Información de la Filial",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 16,
+      "titulo": "Propiedades, planta y equipo",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "ppe"
+    },
+    {
+      "numero": 17,
+      "titulo": "Activos intangibles distintos de la plusvalía",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "intangibles"
+    },
+    {
+      "numero": 18,
+      "titulo": "Activos/Pasivos por impuestos corrientes y diferidos",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "impuestos"
+    },
+    {
+      "numero": 19,
+      "titulo": "Otros pasivos financieros corrientes y no corrientes",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "pasivos_financieros"
+    },
+    {
+      "numero": 20,
+      "titulo": "Acreedores por Pagar Comerciales y Otras Cuentas por Pagar",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 21,
+      "titulo": "Activos por Derecho de Uso",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "arrendamientos"
+    },
+    {
+      "numero": 22,
+      "titulo": "Pasivos por arrendamientos",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "arrendamientos"
+    },
+    {
+      "numero": 23,
+      "titulo": "Otros pasivos no financieros no corrientes",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "otros_pasivos"
+    },
+    {
+      "numero": 24,
+      "titulo": "Patrimonio y Reservas",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "patrimonio"
+    },
+    {
+      "numero": 25,
+      "titulo": "Ingresos de Actividades Ordinarias",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "ingresos"
+    },
+    {
+      "numero": 26,
+      "titulo": "Costo de Ventas",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "costos"
+    },
+    {
+      "numero": 27,
+      "titulo": "Pérdidas por deterioro",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "deterioro"
+    },
+    {
+      "numero": 28,
+      "titulo": "Gastos de Administración",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "gastos"
+    },
+    {
+      "numero": 29,
+      "titulo": "Resultados por unidades de reajuste",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "reajuste"
+    },
+    {
+      "numero": 30,
+      "titulo": "Medio Ambiente",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "medio_ambiente"
+    },
+    {
+      "numero": 31,
+      "titulo": "Sanciones",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "sanciones"
+    },
+    {
+      "numero": 32,
+      "titulo": "Contingencias y Compromisos",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "contingencias"
+    },
+    {
+      "numero": 33,
+      "titulo": "Hechos Relevantes",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "hechos_relevantes"
+    },
+    {
+      "numero": 34,
+      "titulo": "Hechos Posteriores",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "hechos_posteriores"
+    },
+    {
+      "numero": 76,
+      "titulo": "217.859-1 Grupo Global Corredores de Seguros Ltda",
+      "pagina": 14,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 77,
+      "titulo": "384.098-9 Urban Mobility SpA (**)",
+      "pagina": 14,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 96,
+      "titulo": "971.830-8 EF Securitizadora S.A. (Patrimonio Separado N°14)",
+      "pagina": 14,
+      "en_indice": true,
+      "familia": "patrimonio"
+    }
+  ],
+  "tablas": {
+    "relacionadas_por_cobrar": [
+      {
+        "concepto": "Chile",
+        "monto_miles": 2358.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76120857-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_cobrar",
+        "numero_nota": 13,
+        "titulo_nota": "Saldos y transacciones con partes relacionadas"
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 41954.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76120857-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_cobrar",
+        "numero_nota": 13,
+        "titulo_nota": "Saldos y transacciones con partes relacionadas"
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 409191.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76120857-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_cobrar",
+        "numero_nota": 13,
+        "titulo_nota": "Saldos y transacciones con partes relacionadas"
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 453503.0,
+        "monto_comparativo_miles": 455447.0,
+        "es_total": 1,
+        "rut": "76120857-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_cobrar",
+        "numero_nota": 13,
+        "titulo_nota": "Saldos y transacciones con partes relacionadas"
+      }
+    ],
+    "intangibles": [
+      {
+        "concepto": "Software Computacional",
+        "monto_miles": 2148441.0,
+        "monto_comparativo_miles": 2103408.0,
+        "es_total": 0,
+        "rut": "76120857-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "intangibles",
+        "numero_nota": 17,
+        "titulo_nota": "Activos intangibles distintos de la plusvalía"
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 2148441.0,
+        "monto_comparativo_miles": 2103408.0,
+        "es_total": 1,
+        "rut": "76120857-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "intangibles",
+        "numero_nota": 17,
+        "titulo_nota": "Activos intangibles distintos de la plusvalía"
+      }
+    ],
+    "relacionadas_por_pagar": [
+      {
+        "concepto": "Chile",
+        "monto_miles": 18393.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76120857-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 13,
+        "titulo_nota": "Saldos y transacciones con partes relacionadas"
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 86564.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76120857-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 13,
+        "titulo_nota": "Saldos y transacciones con partes relacionadas"
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 0.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76120857-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 13,
+        "titulo_nota": "Saldos y transacciones con partes relacionadas"
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 8006560.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76120857-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 13,
+        "titulo_nota": "Saldos y transacciones con partes relacionadas"
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 200000.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76120857-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 13,
+        "titulo_nota": "Saldos y transacciones con partes relacionadas"
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 120000.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76120857-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 13,
+        "titulo_nota": "Saldos y transacciones con partes relacionadas"
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 3000000.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76120857-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 13,
+        "titulo_nota": "Saldos y transacciones con partes relacionadas"
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 11431517.0,
+        "monto_comparativo_miles": 179740.0,
+        "es_total": 1,
+        "rut": "76120857-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 13,
+        "titulo_nota": "Saldos y transacciones con partes relacionadas"
+      }
+    ]
+  },
+  "cuadre": [
+    {
+      "cuenta": "efectivo",
+      "nombre_cara": "Efectivo y equivalentes al efectivo",
+      "nota_ref": "8",
+      "cara_miles": 13392928.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "otros_activos_no_financieros",
+      "nombre_cara": "Otros activos no financieros",
+      "nota_ref": "10",
+      "cara_miles": 518311.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "deudores",
+      "nombre_cara": "Deudores comerciales y otras cuentas por cobrar",
+      "nota_ref": "11",
+      "cara_miles": 165939042.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "relacionadas_por_cobrar",
+      "nombre_cara": "Cuentas por cobrar a entidades relacionadas",
+      "nota_ref": "13",
+      "numero_nota": 13,
+      "titulo_nota": "Saldos y transacciones con partes relacionadas",
+      "cara_miles": 453503.0,
+      "nota_miles": 453503.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    },
+    {
+      "cuenta": "impuestos_corrientes_activo",
+      "nombre_cara": "Activos por impuestos corrientes",
+      "nota_ref": "18",
+      "cara_miles": 723397.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "ppe",
+      "nombre_cara": "Propiedades, planta y equipo",
+      "nota_ref": "16",
+      "cara_miles": 1896784.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "intangibles",
+      "nombre_cara": "Activos intangibles distintos de la plusvalía",
+      "nota_ref": "17",
+      "numero_nota": 17,
+      "titulo_nota": "Activos intangibles distintos de la plusvalía",
+      "cara_miles": 2148441.0,
+      "nota_miles": 2148441.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    },
+    {
+      "cuenta": "impuestos_diferidos_activo",
+      "nombre_cara": "Activos por impuestos diferidos",
+      "nota_ref": "18",
+      "cara_miles": 17260396.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "pasivos_financieros",
+      "nombre_cara": "Otros pasivos financieros",
+      "nota_ref": "19",
+      "cara_miles": 129223545.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "relacionadas_por_pagar",
+      "nombre_cara": "Cuentas por pagar a entidades relacionadas",
+      "nota_ref": "13",
+      "numero_nota": 13,
+      "titulo_nota": "Saldos y transacciones con partes relacionadas",
+      "cara_miles": 11431517.0,
+      "nota_miles": 11431517.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    },
+    {
+      "cuenta": "provisiones_empleados",
+      "nombre_cara": "Provisiones por beneficios a los empleados",
+      "nota_ref": "",
+      "cara_miles": 495147.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "impuestos_diferidos_pasivo",
+      "nombre_cara": "Pasivo por impuestos diferidos",
+      "nota_ref": "18",
+      "cara_miles": 43497.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "otros_pasivos_no_financieros",
+      "nombre_cara": "Otros pasivos no financieros",
+      "nota_ref": "23",
+      "cara_miles": 30576342.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    }
+  ]
+}

@@ -1,0 +1,420 @@
+{
+  "indice": [
+    {
+      "numero": 1,
+      "titulo": "Información General",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "antecedentes"
+    },
+    {
+      "numero": 2,
+      "titulo": "Bases de Presentación de los Estados Financieros Consolidados y Criterios Contables",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "politica"
+    },
+    {
+      "numero": 3,
+      "titulo": "Cambios en políticas contables y revelaciones",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "politica"
+    },
+    {
+      "numero": 4,
+      "titulo": "Revelaciones de los juicios que la Gerencia haya realizado al aplicar las Políticas",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 5,
+      "titulo": "Determinación de Valores Razonables",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "instrumentos"
+    },
+    {
+      "numero": 6,
+      "titulo": "Efectivo y Equivalentes al Efectivo",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "efectivo"
+    },
+    {
+      "numero": 7,
+      "titulo": "Deudores Comerciales y otras Cuentas por Cobrar",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "deudores"
+    },
+    {
+      "numero": 8,
+      "titulo": "Cuentas por Cobrar y Cuentas por Pagar Entidades relacionadas",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "relacionadas"
+    },
+    {
+      "numero": 9,
+      "titulo": "Activos y Pasivos por Impuestos",
+      "pagina": 2,
+      "en_indice": true,
+      "familia": "impuestos"
+    },
+    {
+      "numero": 10,
+      "titulo": "Otros Activos no Financieros",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "otros_activos"
+    },
+    {
+      "numero": 11,
+      "titulo": "Activos Intangibles distintos de la Plusvalía",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "intangibles"
+    },
+    {
+      "numero": 12,
+      "titulo": "Propiedades, Plantas y Equipos",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "ppe"
+    },
+    {
+      "numero": 13,
+      "titulo": "Activos por derechos de uso",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "arrendamientos"
+    },
+    {
+      "numero": 14,
+      "titulo": "Impuesto a las Ganancias e Impuestos Diferidos",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "impuestos"
+    },
+    {
+      "numero": 15,
+      "titulo": "Activos y Pasivos a Valor Razonable",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "instrumentos"
+    },
+    {
+      "numero": 16,
+      "titulo": "Inventarios",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "inventario"
+    },
+    {
+      "numero": 17,
+      "titulo": "Otros Pasivos Financieros Corrientes y no Corrientes",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "pasivos_financieros"
+    },
+    {
+      "numero": 18,
+      "titulo": "Otras Provisiones, Corrientes",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "provisiones"
+    },
+    {
+      "numero": 19,
+      "titulo": "Cuentas Comerciales y otras Cuentas por Pagar, Corrientes",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "cuentas_por_pagar"
+    },
+    {
+      "numero": 20,
+      "titulo": "Provisión por Beneficios a los Empleados, Corrientes",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "provisiones"
+    },
+    {
+      "numero": 21,
+      "titulo": "Otros pasivos no financieros Corrientes y no Corrientes",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "otros_pasivos"
+    },
+    {
+      "numero": 22,
+      "titulo": "Patrimonio",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "patrimonio"
+    },
+    {
+      "numero": 23,
+      "titulo": "Ingreso de Actividades ordinarias",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "ingresos"
+    },
+    {
+      "numero": 24,
+      "titulo": "Costo de ventas",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "costos"
+    },
+    {
+      "numero": 25,
+      "titulo": "Pérdidas por deterioro",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "deterioro"
+    },
+    {
+      "numero": 26,
+      "titulo": "Gastos de Administración",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "gastos"
+    },
+    {
+      "numero": 27,
+      "titulo": "Ingresos Financieros",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 28,
+      "titulo": "Costos Financieros",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 29,
+      "titulo": "Diferencia de Cambio",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "reajuste"
+    },
+    {
+      "numero": 30,
+      "titulo": "Otras Ganancias (Pérdidas)",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 31,
+      "titulo": "Resultados por Unidades de Reajuste",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "reajuste"
+    },
+    {
+      "numero": 32,
+      "titulo": "Información Financiera por Segmentos",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "segmentos"
+    },
+    {
+      "numero": 33,
+      "titulo": "Garantías Comprometidas con Terceros",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 34,
+      "titulo": "Moneda Extranjera",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "reajuste"
+    },
+    {
+      "numero": 35,
+      "titulo": "Administración del Riesgo",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "riesgos"
+    },
+    {
+      "numero": 36,
+      "titulo": "Juicios, Contingencias y Otros",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "contingencias"
+    },
+    {
+      "numero": 37,
+      "titulo": "Medio Ambiente",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "medio_ambiente"
+    },
+    {
+      "numero": 38,
+      "titulo": "Hechos Relevantes",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "hechos_relevantes"
+    },
+    {
+      "numero": 39,
+      "titulo": "Hechos Posteriores",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "hechos_posteriores"
+    },
+    {
+      "numero": 61,
+      "titulo": "90 días",
+      "pagina": 43,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 91,
+      "titulo": "120 días",
+      "pagina": 43,
+      "en_indice": true,
+      "familia": "otra"
+    }
+  ],
+  "tablas": {},
+  "cuadre": [
+    {
+      "cuenta": "efectivo",
+      "nombre_cara": "Efectivo y equivalentes al efectivo",
+      "nota_ref": "6",
+      "cara_miles": 4539942.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "deudores",
+      "nombre_cara": "Deudores comerciales y otras cuentas por cobrar",
+      "nota_ref": "7",
+      "cara_miles": 22020099.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "otros_activos_no_financieros",
+      "nombre_cara": "Otros activos no financieros, corriente",
+      "nota_ref": "10",
+      "cara_miles": 28833865.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "impuestos_corrientes_activo",
+      "nombre_cara": "Activos por impuestos corrientes",
+      "nota_ref": "9",
+      "cara_miles": 1829111.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "intangibles",
+      "nombre_cara": "Activos intangibles distintos de la plusvalía",
+      "nota_ref": "11",
+      "cara_miles": 441897.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "ppe",
+      "nombre_cara": "Propiedades, plantas y equipos",
+      "nota_ref": "12",
+      "cara_miles": 173835560.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "impuestos_diferidos_activo",
+      "nombre_cara": "Activos por impuestos diferidos",
+      "nota_ref": "14",
+      "cara_miles": 2477882.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "pasivos_financieros",
+      "nombre_cara": "Otros pasivos financieros",
+      "nota_ref": "17",
+      "cara_miles": 120700723.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "cuentas_por_pagar",
+      "nombre_cara": "Cuentas por pagar comerciales y otras cuentas por pagar",
+      "nota_ref": "19",
+      "cara_miles": 30577218.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "relacionadas_por_pagar",
+      "nombre_cara": "Cuentas por pagar a entidades relacionadas",
+      "nota_ref": "8",
+      "cara_miles": 578502.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "provisiones",
+      "nombre_cara": "Otras provisiones",
+      "nota_ref": "18",
+      "cara_miles": 1072732.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "otros_pasivos_no_financieros",
+      "nombre_cara": "Otros pasivos no financieros",
+      "nota_ref": "21",
+      "cara_miles": 378622.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "impuestos_corrientes_pasivo",
+      "nombre_cara": "Pasivos por impuestos corrientes",
+      "nota_ref": "9",
+      "cara_miles": 3668386.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "impuestos_diferidos_pasivo",
+      "nombre_cara": "Pasivo por impuestos diferidos",
+      "nota_ref": "14",
+      "cara_miles": 14713007.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    }
+  ]
+}
