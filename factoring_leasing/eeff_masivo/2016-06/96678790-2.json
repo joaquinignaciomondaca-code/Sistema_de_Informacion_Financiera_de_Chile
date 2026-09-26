@@ -1,0 +1,100 @@
+{
+  "rut": "96678790-2",
+  "razon_social": "FORUM SERVICIOS FINANCIEROS S.A.",
+  "periodo": "2016-06",
+  "tipo_eeff": "Consolidado",
+  "url_pdf": "https://www.cmfchile.cl/institucional/inc/inf_financiera/ifrs/safec_ifrs_verarchivo.php?auth=ZjAwMzU3MTdjMmVlOWFlNmQ5YjVlOWUwNTJjYmE1Yzg=&send=BSUej22Lb7PvBmwvqRc+PAEjl7NGW882G9oIbs/SDZegHtkA3g7rd9BZDRzL7BaymFBcu74lhS0BEyMu1BBx+eKv/Hcl2fGfDW0ptXKgJ5ywnrMRv4RBXbM++jVV/L94favnMxTFNMIBcDYeyDNrxyKHcIu9GKo4CSyVrcjLn7wUnUg=",
+  "balance": [],
+  "resultados": [],
+  "notas": [],
+  "indice": [],
+  "validacion_api": [
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "total_activos",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 1040681.27,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "efectivo",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 32197.52,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "deudores_corrientes",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 381976.28,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "pasivos_corrientes",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 499569.05,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "pasivos_no_corrientes",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 413879.48,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "patrimonio",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 127232.74,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    }
+  ],
+  "resumen": {
+    "indice": 0,
+    "ok": 0,
+    "no_leida": 0,
+    "lineas_balance": 0,
+    "lineas_resultados": 0,
+    "cuadre_balance": "SIN_PDF",
+    "cuadre_detalle": "SIN_PDF",
+    "hueco_detalle": "",
+    "cuadre_resultados": "SIN_PDF",
+    "hueco_resultados": "",
+    "caidas_balance": [],
+    "caidas_resultados": [],
+    "cuentas": []
+  }
+}
