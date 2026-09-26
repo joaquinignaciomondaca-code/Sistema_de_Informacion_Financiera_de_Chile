@@ -1,0 +1,609 @@
+[
+  {
+    "rut": "76197101-8",
+    "razon_social": "CBP FINANCIA CAPITAL FACTORING S.A.",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "paginas_balance": [
+      2,
+      3
+    ],
+    "paginas_resultados": [
+      4
+    ],
+    "metodo_balance": "apilado",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 24,
+    "lineas_resultados": 10,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": 0.0,
+    "cuadre_detalle": "OK",
+    "hueco_detalle": "",
+    "cuadre_resultados": "OK",
+    "hueco_resultados": "",
+    "total_activos_miles": 49090811.0,
+    "total_activos_fuente_previa": null,
+    "cruce_previo": "SIN_TOTAL",
+    "api": "CONSULTADA",
+    "chequeos_ok": 5,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      }
+    ]
+  },
+  {
+    "rut": "77356020-K",
+    "razon_social": "COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "paginas_balance": [
+      2,
+      3
+    ],
+    "paginas_resultados": [
+      4,
+      5
+    ],
+    "metodo_balance": "apilado",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 33,
+    "lineas_resultados": 19,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": 0.0,
+    "cuadre_detalle": "FALTAN_LINEAS",
+    "hueco_detalle": "Total de activos corrientes distintos de los activos o grupos de activos para su disposición clasificados como mantenidos para la venta o como mantenidos para distribuir a los propietarios: detalle 167.960.286, total 174.852.021 | TOTAL ACTIVOS CORRIENTES: detalle 1.229.131, total 176.081.152 | TOTAL ACTIVOS NO CORRIENTES: detalle 1.208.241, total 9.752.013 | TOTAL ACTIVOS: faltan líneas por -174.852.021 entre el subtotal y el total",
+    "cuadre_resultados": "FALTAN_LINEAS",
+    "hueco_resultados": "corte Ganancia bruta: suma 40, línea 5.238.432 | comparativo Ganancia bruta: suma 5.238.432, línea 3.405.044",
+    "total_activos_miles": 185833165.0,
+    "total_activos_fuente_previa": null,
+    "cruce_previo": "SIN_TOTAL",
+    "api": "CONSULTADA",
+    "chequeos_ok": 6,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      }
+    ]
+  },
+  {
+    "rut": "96784400-4",
+    "razon_social": "CONCRECES LEASING S.A.",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "paginas_balance": [
+      3,
+      4
+    ],
+    "paginas_resultados": [
+      5
+    ],
+    "metodo_balance": "tabla:corte_primero",
+    "metodo_resultados": "tabla:corte_primero",
+    "lineas_balance": 29,
+    "lineas_resultados": 14,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": 0.0,
+    "cuadre_detalle": "FALTAN_LINEAS",
+    "hueco_detalle": "Total de activos corrientes distintos de los activos o grupos de activos para su disposición clasificados como mantenidos para la venta o como mantenidos para distribuir a los propietarios: detalle 19.862.918, total 21.743.697 | TOTAL ACTIVOS CORRIENTES: detalle 1.450.444, total 23.194.141 | TOTAL DE ACTIVOS NO CORRIENTES: detalle 2.271.756, total 3.715.017 | TOTAL DE ACTIVOS: faltan líneas por -21.743.697 entre el subtotal y el total",
+    "cuadre_resultados": "FALTAN_LINEAS",
+    "hueco_resultados": "corte Ganancia bruta: suma 4.191.507, línea 1.192.649",
+    "total_activos_miles": 26909158.0,
+    "total_activos_fuente_previa": null,
+    "cruce_previo": "SIN_TOTAL",
+    "api": "CONSULTADA",
+    "chequeos_ok": 6,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      }
+    ]
+  },
+  {
+    "rut": "96660790-4",
+    "razon_social": "FACTOTAL S.A.",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "paginas_balance": [
+      3,
+      4
+    ],
+    "paginas_resultados": [
+      5,
+      6
+    ],
+    "metodo_balance": "tabla:corte_primero",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 35,
+    "lineas_resultados": 19,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": -0.01,
+    "cuadre_detalle": "FALTAN_LINEAS",
+    "hueco_detalle": "Total de activos corrientes distintos de los activos o grupos: detalle -42, total 133.642.225 | Total activo corriente: detalle -10, total 133.936.022 | Total activo no corriente: detalle -21, total 62.121.859 | Total Activos: faltan líneas por -133.642.225 entre el subtotal y el total",
+    "cuadre_resultados": "OK",
+    "hueco_resultados": "",
+    "total_activos_miles": 196057881.0,
+    "total_activos_fuente_previa": null,
+    "cruce_previo": "SIN_TOTAL",
+    "api": "CONSULTADA",
+    "chequeos_ok": 4,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "DIFIERE",
+        "diff_m_clp": -19107.71
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "DIFIERE",
+        "diff_m_clp": -106689.62
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      }
+    ]
+  },
+  {
+    "rut": "76238714-K",
+    "razon_social": "GAMA SERVICIOS FINANCIEROS S.A.",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "paginas_balance": [
+      4,
+      5
+    ],
+    "paginas_resultados": [
+      6,
+      7
+    ],
+    "metodo_balance": "apilado",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 32,
+    "lineas_resultados": 18,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": 0.0,
+    "cuadre_detalle": "OK",
+    "hueco_detalle": "",
+    "cuadre_resultados": "FALTAN_LINEAS",
+    "hueco_resultados": "corte Desde la nota 1 a la 39 forman parte integral de los Estados Financieros Consolidados Intermedios Consolidados Intermedios Utilidad del período: suma 3.404.561, línea 3.404.314 | comparativo Desde la nota 1 a la 39 forman parte integral de los Estados Financieros Consolidados Intermedios Consolidados Intermedios Utilidad del período: suma 2.708.567, línea 2.708.371",
+    "total_activos_miles": 237902894.0,
+    "total_activos_fuente_previa": null,
+    "cruce_previo": "SIN_TOTAL",
+    "api": "CONSULTADA",
+    "chequeos_ok": 6,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      }
+    ]
+  },
+  {
+    "rut": "76120857-8",
+    "razon_social": "GLOBAL SOLUCIONES FINANCIERAS S.A.",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "paginas_balance": [
+      2,
+      3
+    ],
+    "paginas_resultados": [
+      4,
+      5
+    ],
+    "metodo_balance": "apilado",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 34,
+    "lineas_resultados": 16,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": 0.01,
+    "cuadre_detalle": "OK",
+    "hueco_detalle": "",
+    "cuadre_resultados": "FALTAN_LINEAS",
+    "hueco_resultados": "corte: la atribución suma 757.588 y el resultado es 475.763 | comparativo: la atribución suma -741.424 y el resultado es -1.165.716",
+    "total_activos_miles": 207412609.0,
+    "total_activos_fuente_previa": null,
+    "cruce_previo": "SIN_TOTAL",
+    "api": "CONSULTADA",
+    "chequeos_ok": 6,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      }
+    ]
+  },
+  {
+    "rut": "99566540-9",
+    "razon_social": "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+    "tipo_eeff": "Individual",
+    "error": "",
+    "paginas_balance": [
+      4,
+      5
+    ],
+    "paginas_resultados": [
+      6,
+      7
+    ],
+    "metodo_balance": "apilado",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 28,
+    "lineas_resultados": 33,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": 0.0,
+    "cuadre_detalle": "FALTAN_LINEAS",
+    "hueco_detalle": "Total activo corriente: detalle 3.371.794, total 3.371.807 | Total de pasivos corrientes: detalle 4.481.213, total 4.481.226",
+    "cuadre_resultados": "FALTAN_LINEAS",
+    "hueco_resultados": "corte Ganancia bruta: suma -53.222, línea -26.611 | comparativo Ganancia bruta: suma -54.556, línea -27.278",
+    "total_activos_miles": 7422348.0,
+    "total_activos_fuente_previa": null,
+    "cruce_previo": "SIN_TOTAL",
+    "api": "CONSULTADA",
+    "chequeos_ok": 6,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      }
+    ]
+  },
+  {
+    "rut": "96626570-1",
+    "razon_social": "INCOFIN S.A.",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "paginas_balance": [
+      4,
+      5
+    ],
+    "paginas_resultados": [
+      6,
+      7
+    ],
+    "metodo_balance": "apilado",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 32,
+    "lineas_resultados": 10,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": 0.0,
+    "cuadre_detalle": "FALTAN_LINEAS",
+    "hueco_detalle": "Total activos no corrientes: detalle 24.562.422, total 26.265.596 | Total pasivos corrientes: detalle 36.503.849, total 49.588.528",
+    "cuadre_resultados": "OK",
+    "hueco_resultados": "",
+    "total_activos_miles": 87410880.0,
+    "total_activos_fuente_previa": null,
+    "cruce_previo": "SIN_TOTAL",
+    "api": "CONSULTADA",
+    "chequeos_ok": 6,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      }
+    ]
+  },
+  {
+    "rut": "90146000-0",
+    "razon_social": "SERVICIOS FINANCIEROS PROGRESO S.A.",
+    "tipo_eeff": "Individual",
+    "error": "",
+    "paginas_balance": [
+      3,
+      4
+    ],
+    "paginas_resultados": [
+      5,
+      6
+    ],
+    "metodo_balance": "apilado",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 37,
+    "lineas_resultados": 12,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": 0.0,
+    "cuadre_detalle": "FALTAN_LINEAS",
+    "hueco_detalle": "TOTAL DE ACTIVOS: detalle 185.644.086, total 136.264.588 | TOTAL PASIVOS: detalle 216.720.712, total 108.360.356",
+    "cuadre_resultados": "FALTAN_LINEAS",
+    "hueco_resultados": "corte Costo de ventas ( 1.948.722) ( 2.053.239) Ganancia bruta: suma 23, línea 5.104.985",
+    "total_activos_miles": 136264588.0,
+    "total_activos_fuente_previa": null,
+    "cruce_previo": "SIN_TOTAL",
+    "api": "CONSULTADA",
+    "chequeos_ok": 6,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      }
+    ]
+  },
+  {
+    "rut": "96809970-1",
+    "razon_social": "UNIDAD LEASING HABITACIONAL S.A.",
+    "tipo_eeff": "Individual",
+    "error": "",
+    "paginas_balance": [
+      3,
+      4
+    ],
+    "paginas_resultados": [
+      5
+    ],
+    "metodo_balance": "apilado",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 28,
+    "lineas_resultados": 14,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": 0.0,
+    "cuadre_detalle": "OK",
+    "hueco_detalle": "",
+    "cuadre_resultados": "FALTAN_LINEAS",
+    "hueco_resultados": "corte Ganancia (pérdida), antes de Impuestos: suma 21.577.478, línea 514.871 | comparativo Ganancia (pérdida), antes de Impuestos: suma -9.128.371, línea 449.744",
+    "total_activos_miles": 41104369.0,
+    "total_activos_fuente_previa": null,
+    "cruce_previo": "SIN_TOTAL",
+    "api": "CONSULTADA",
+    "chequeos_ok": 6,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "OK",
+        "diff_m_clp": 0.0
+      }
+    ]
+  }
+]
