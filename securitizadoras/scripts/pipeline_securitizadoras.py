@@ -114,13 +114,18 @@ def con_procedencia(rows, fuente_url, metodo, extra=None):
     return rows
 
 
-def guardar(nombre, rows_or_df, orden=None):
+def guardar(nombre, rows_or_df, orden=None, json_max_filas=60000):
+    """Parquet siempre; JSON sólo si la tabla es chica (el JSON de tablas largas superaría los límites de GitHub)."""
     df = rows_or_df if isinstance(rows_or_df, pd.DataFrame) else pd.DataFrame(rows_or_df)
     if orden and not df.empty:
         df = df.sort_values(orden).reset_index(drop=True)
     os.makedirs(OUT_DIR, exist_ok=True)
     df.to_parquet(os.path.join(OUT_DIR, f"{nombre}.parquet"), index=False)
-    df.to_json(os.path.join(OUT_DIR, f"{nombre}.json"), orient="records", indent=2, force_ascii=False)
+    pj = os.path.join(OUT_DIR, f"{nombre}.json")
+    if len(df) <= json_max_filas:
+        df.to_json(pj, orient="records", indent=2, force_ascii=False)
+    elif os.path.exists(pj):
+        os.remove(pj)
     print(f"  guardado {nombre}: {len(df)} filas")
     return df
 
