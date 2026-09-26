@@ -515,7 +515,7 @@
     }
   ],
   "glosas_ignoradas": [
-    "^N\\W{0,2}\\s*INSCRIPCI[OÓ]N.*",
+    "^N[O\\W]{0,2}\\s*INSCRIPCI[OÓ]N.*",
     "^\\d+\\s*(A|O\\s+M[AÁ]S)\\s*\\d*$",
     "^(AL\\s+)?D[IÍ]A$",
     "^\\$?\\s*(NO\\s+)?REAJUSTABLES$",
@@ -526,7 +526,7 @@
     "^ACTIVOS?\\s+CIRCULANTES?$",
     "^OTROS\\s+ACTIVOS$",
     "^A\\s?NTECEDENTES\\s+AL.*",
-    "^N\\W{0,2}\\s*INSCRIPCI[OÓ]N.*",
+    "^N[O\\W]{0,2}\\s*INSCRIPCI[OÓ]N.*",
     "^RUT\\.?:.*",
     "^RAZ[OÓ]N\\s+SOCIAL.*",
     "^PARA\\s+EL\\s+(EJERCICIO|PER[IÍ]ODO).*",
