@@ -64,6 +64,82 @@
       "api": [
         "OK"
       ]
+    },
+    "96861280-8|2026-03": {
+      "rut": "96861280-8",
+      "razon_social": "EUROCAPITAL S.A.",
+      "periodo": "2026-03",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 9,
+      "notas_sin_leer": 7,
+      "lineas_balance": 37,
+      "lineas_resultados": 17,
+      "api": [
+        "OK"
+      ]
+    },
+    "96809970-1|2026-03": {
+      "rut": "96809970-1",
+      "razon_social": "UNIDAD LEASING HABITACIONAL S.A.",
+      "periodo": "2026-03",
+      "tipo_eeff": "Individual",
+      "estado": "leido",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 9,
+      "notas_sin_leer": 0,
+      "lineas_balance": 28,
+      "lineas_resultados": 14,
+      "api": [
+        "OK"
+      ]
+    },
+    "96805850-9|2026-03": {
+      "rut": "96805850-9",
+      "razon_social": "SCOTIA AZUL SOCIEDAD DE LEASING INMOBILIARIO S.A.",
+      "periodo": "2026-03",
+      "estado": "marcado",
+      "error": "sin PDF",
+      "version": 1
+    },
+    "96784400-4|2026-03": {
+      "rut": "96784400-4",
+      "razon_social": "CONCRECES LEASING S.A.",
+      "periodo": "2026-03",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 9,
+      "notas_sin_leer": 1,
+      "lineas_balance": 29,
+      "lineas_resultados": 14,
+      "api": [
+        "OK"
+      ]
+    },
+    "96720830-2|2026-03": {
+      "rut": "96720830-2",
+      "razon_social": "BCI FACTORING S.A.",
+      "periodo": "2026-03",
+      "estado": "marcado",
+      "error": "sin PDF",
+      "version": 1
     }
   }
 }
