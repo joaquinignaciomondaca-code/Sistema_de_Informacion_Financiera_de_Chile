@@ -12,5 +12,5 @@
   "ruts": "96765170",
   "debug": "true",
   "_nota": "Modificar y commitear este archivo lanza .github/workflows/securitizadoras_extraccion.yml; cada tramo publica una rama actions/ps-extraccion-<desde>-<hasta>-<run_id>. ruts (cuerpos separados por coma) y debug=true son opcionales.",
-  "_lanzamiento": "2026-09-26 muestra OCR v4: quitar bordes de tabla (Transa 12/2015)"
+  "_lanzamiento": "2026-09-26 muestra OCR v5: sin bordes siempre, elección por filas glosa+monto (Transa 12/2015)"
 }
