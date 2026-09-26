@@ -1,10 +1,14 @@
 name: Extracción CMF — Securitizadoras y Patrimonios Separados
 
-# Corre el pipeline en un runner de GitHub (con salida a internet) y deja los resultados en una rama
-# `actions/ps-extraccion-<run>` para integrarlos por PR. Lanzar con: gh workflow run securitizadoras_extraccion.yml -f desde=2010
+# Corre el pipeline en runners de GitHub (con salida a internet) y deja los resultados en ramas
+# `actions/ps-extraccion-<desde>-<hasta>-<run>` para integrarlos por PR.
+# Dos formas de lanzarlo: (a) manual desde la pestaña Actions; (b) commit que modifique
+# securitizadoras/extraccion/run.json. Parámetros de run.json:
+#   desde, hasta, trimestres ("03,06,09,12" | "12"), step (todo | ps | maestro | gestoras),
+#   tramos  (opcional) lista de [desde, hasta] → un job paralelo por tramo (la historia completa en ~1 h en vez de 4-6 h),
+#   ruts    (opcional) cuerpos de RUT separados por coma → sólo esas administradoras (diagnóstico),
+#   debug   (opcional) "true" → texto de los PDFs que no cuadran en docs/outputs/securitizadoras/_debug/ de la rama de resultados.
 on:
-  # Dos formas de lanzarlo: (a) manual desde la pestaña Actions; (b) commit que modifique
-  # securitizadoras/extraccion/run.json (parámetros: desde, hasta, trimestres, step).
   push:
     paths: ["securitizadoras/extraccion/run.json"]
   workflow_dispatch:
@@ -26,27 +30,47 @@ permissions:
   contents: write
 
 jobs:
-  extraer:
+  params:
     runs-on: ubuntu-latest
-    timeout-minutes: 350
+    outputs:
+      matrix: ${{ steps.p.outputs.matrix }}
+      trimestres: ${{ steps.p.outputs.trimestres }}
+      step: ${{ steps.p.outputs.step }}
+      ruts: ${{ steps.p.outputs.ruts }}
+      debug: ${{ steps.p.outputs.debug }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
       - name: Parámetros (inputs manuales o securitizadoras/extraccion/run.json)
         id: p
         run: |
           python - <<'EOF' >> "$GITHUB_OUTPUT"
           import json, os
-          d = {"desde": "2010", "hasta": "2026", "trimestres": "03,06,09,12", "step": "todo", "ruts": "", "debug": ""}
+          d = {"desde": "2010", "hasta": "2026", "trimestres": "03,06,09,12", "step": "todo", "ruts": "", "debug": "", "tramos": None}
           if "${{ github.event_name }}" == "workflow_dispatch":
               d.update({"desde": "${{ inputs.desde }}", "hasta": "${{ inputs.hasta }}", "trimestres": "${{ inputs.trimestres }}", "step": "${{ inputs.step }}"})
           elif os.path.exists("securitizadoras/extraccion/run.json"):
-              d.update(json.load(open("securitizadoras/extraccion/run.json")))
-          for k, v in d.items():
-              if not k.startswith("_"): print(f"{k}={v}")
+              d.update({k: v for k, v in json.load(open("securitizadoras/extraccion/run.json")).items() if not k.startswith("_")})
+          tramos = d.get("tramos") or [[d["desde"], d["hasta"]]]
+          # con varios tramos, maestro/gestoras (no dependen del año) corren sólo en el primero; el resto hace 'ps'
+          inc = [{"desde": str(a), "hasta": str(b), "step": d["step"] if i == 0 or d["step"] != "todo" else "ps"} for i, (a, b) in enumerate(tramos)]
+          print("matrix=" + json.dumps({"include": inc}))
+          for k in ("trimestres", "step", "ruts", "debug"):
+              print(f"{k}={d.get(k) or ''}")
           EOF
+
+  extraer:
+    needs: params
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJSON(needs.params.outputs.matrix) }}
+    name: "${{ matrix.step }} ${{ matrix.desde }}-${{ matrix.hasta }}"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
       - name: Dependencias
         run: |
           pip install -q -r requirements.txt
@@ -64,28 +88,28 @@ jobs:
           EOF
       - name: Pipeline
         env:
-          MFC_PS_RUTS: ${{ steps.p.outputs.ruts }}
-          MFC_PS_DEBUG_DIR: ${{ steps.p.outputs.debug == 'true' && 'docs/outputs/securitizadoras/_debug' || '' }}
+          MFC_PS_RUTS: ${{ needs.params.outputs.ruts }}
+          MFC_PS_DEBUG_DIR: ${{ needs.params.outputs.debug == 'true' && 'docs/outputs/securitizadoras/_debug' || '' }}
         run: |
-          python securitizadoras/scripts/pipeline_securitizadoras.py --step "${{ steps.p.outputs.step }}" --desde "${{ steps.p.outputs.desde }}" --hasta "${{ steps.p.outputs.hasta }}" --trimestres "${{ steps.p.outputs.trimestres }}" 2>&1 | tee pipeline.log
+          python securitizadoras/scripts/pipeline_securitizadoras.py --step "${{ matrix.step }}" --desde "${{ matrix.desde }}" --hasta "${{ matrix.hasta }}" --trimestres "${{ needs.params.outputs.trimestres }}" 2>&1 | tee pipeline.log
           grep -c "lineas=" pipeline.log | xargs -I{} echo "PDFs con líneas extraídas: {}"
       - name: Auditoría (informativa; el veredicto se toma al integrar)
         run: python securitizadoras/scripts/audit_patrimonios_separados_v2.py --json audit_securitizadoras.json
         continue-on-error: true
       - name: Publicar rama con resultados
         run: |
-          RAMA="actions/ps-extraccion-${{ steps.p.outputs.desde }}-${{ steps.p.outputs.hasta }}-${{ github.run_id }}"
+          RAMA="actions/ps-extraccion-${{ matrix.desde }}-${{ matrix.hasta }}-${{ github.run_id }}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$RAMA"
           git add docs/outputs/securitizadoras/
-          git commit -m "securitizadoras: extracción CMF (${{ steps.p.outputs.step }} ${{ steps.p.outputs.desde }}-${{ steps.p.outputs.hasta }} trimestres ${{ steps.p.outputs.trimestres }}) run ${{ github.run_id }}" || echo "sin cambios"
+          git commit -m "securitizadoras: extracción CMF (${{ matrix.step }} ${{ matrix.desde }}-${{ matrix.hasta }} trimestres ${{ needs.params.outputs.trimestres }}) run ${{ github.run_id }}" || echo "sin cambios"
           git push -u origin "$RAMA"
           echo "RAMA=$RAMA" >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: extraccion-${{ github.run_id }}
+          name: extraccion-${{ github.run_id }}-${{ matrix.desde }}-${{ matrix.hasta }}
           path: |
             pipeline.log
             audit_securitizadoras.json

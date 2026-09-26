@@ -282,6 +282,10 @@ check(P.parse_num("(1.234,5)") == -1234.5 and P.parse_num("-") is None and P.par
 
 
 # ---- casos reales de la corrida de diagnóstico 2023-2025 (texto pymupdf tal cual) ----
+print("período según PDF")
+check(P.periodo_segun_pdf(["Estados financieros intermedios terminados\nal 30 de junio de 2026 y 2025", "Balance al 30 de junio de 2026", "31.12.2025"]) == "2026-06", "fecha de cierre más frecuente")
+check(P.periodo_segun_pdf(["sin fechas"]) is None, "sin fecha → None")
+
 print("layouts reales (diagnóstico)")
 PAG_EF_2COL = """RAZON SOCIAL: EF SECURITIZADORA S.A.
 BALANCE DEL PATRIMONIO SEPARADO
@@ -418,7 +422,7 @@ print("ocr páginas imagen")
 import subprocess as _sp, shutil as _sh
 class _ImgDoc(_FakeDoc):
     def __getitem__(self, i):
-        return types.SimpleNamespace(get_text=lambda: self.p[i], get_images=lambda: [("img",)] if i in (1, 2) else [],
+        return types.SimpleNamespace(get_text=lambda: self.p[i], get_images=lambda: [("img",)] if i == 1 else [], get_drawings=lambda: [1] * 40 if i == 2 else [],
                                      get_pixmap=lambda dpi: types.SimpleNamespace(save=lambda f: open(f, "wb").write(b"png")))
 _pags = [PAGINA_PORTADA, "EF SECURITIZADORA S.A.\nPATRIMONIO SEPARADO N° 7\n", "EF SECURITIZADORA S.A.\n", PAGINA_EXCEDENTES]
 _ocr_txt = {1: PAGINA_BALANCE_ACT, 2: PAGINA_BALANCE_PAS}; _calls = []
@@ -430,7 +434,7 @@ _sp.run, _sh.which = _fake_run, (lambda x: "/usr/bin/tesseract")
 pg2, hechos = P.ocr_paginas_imagen(_ImgDoc(_pags), _pags)
 _sp.run, _sh.which = _orig_run, _orig_which
 lin_ocr = P.parse_eeff_lineas(pg2); r_ocr = P.derivar_resumen(lin_ocr)
-check(hechos == [2, 3] and len(_calls) == 2 and "-l" in _calls[0] and "spa" in _calls[0], f"OCR aplicado sólo a páginas con imagen y sin texto: {hechos}")
+check(hechos == [2, 3] and len(_calls) == 2 and "-l" in _calls[0] and "spa" in _calls[0], f"OCR sólo en páginas sin cifras con imagen o tabla vectorial: {hechos}")
 check(r_ocr["cuadre_contable_ok"] and r_ocr["total_activos_mclp"] == P.derivar_resumen(P.parse_eeff_lineas([PAGINA_PORTADA, PAGINA_BALANCE_ACT, PAGINA_BALANCE_PAS, PAGINA_EXCEDENTES]))["total_activos_mclp"], "balance leído desde OCR cuadra igual que el texto nativo")
 _sh.which = lambda x: None
 check(P.ocr_paginas_imagen(_ImgDoc(_pags), _pags) == (_pags, []), "sin tesseract → páginas sin cambios (no se inventa)")

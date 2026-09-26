@@ -1,6 +1,6 @@
 {
   "_descripcion": "Catálogo de cuentas de los EEFF de Patrimonios Separados (formato FECU-PS, CMF). `codigo` es el código FECU cuando el PDF lo imprime; si el PDF sólo trae glosas se mapea por `regex` (mayúsculas, sin tildes). Cuentas no reconocidas se conservan con cuenta_canonica NULL. Versionar cualquier cambio en `version`.",
-  "version": "2026-09-26.4",
+  "version": "2026-09-26.5",
   "estados": {
     "BALANCE": [
       "BALANCE",
@@ -40,8 +40,8 @@
         "11.030",
         "11.100"
       ],
-      "regex": "^ACTIVOS?\\s+SECURT?ITIZADOS?\\s*\\(?\\s*(CORTO\\s+PLAZO|CIRCULANTE|C/P)",
-      "regex_seccion": "^ACTIVOS?\\s+SECURT?ITIZADOS?$"
+      "regex": "^ACTIVOS?\\s+SECUR[IT]{1,3}IZADOS?\\s*\\(?\\s*(CORTO\\s+PLAZO|CIRCULANTE|C/P)",
+      "regex_seccion": "^ACTIVOS?\\s+SECUR[IT]{1,3}IZADOS?$"
     },
     {
       "canonica": "PROVISION_ACTIVO_SECURITIZADO_CP",
@@ -50,8 +50,8 @@
       "codigos": [
         "11.120"
       ],
-      "regex": "^PROVISI[OÓ]N(ES)?\\s*(\\(CORTO PLAZO\\)\\s*)?(DEL\\s+|DE\\s+)?ACTIVOS?\\s+SECURITIZADOS?",
-      "regex_seccion": "^PROVISI[OÓ]N(ES)?\\s+(DEL?\\s+)?ACTIVOS?\\s+SECURITIZADOS?"
+      "regex": "^PROVISI[OÓ]N(ES)?\\s*(\\(CORTO PLAZO\\)\\s*)?(DEL\\s+|DE\\s+)?ACTIVOS?\\s+SECUR[IT]{1,3}IZADOS?",
+      "regex_seccion": "^PROVISI[OÓ]N(ES)?\\s+(DEL?\\s+)?ACTIVOS?\\s+SECUR[IT]{1,3}IZADOS?"
     },
     {
       "canonica": "OTROS_ACTIVOS_CIRCULANTES",
@@ -81,8 +81,8 @@
         "13.100",
         "13.110"
       ],
-      "regex": "^ACTIVOS?\\s+SECURT?ITIZADOS?\\s*\\(?\\s*(LARGO\\s+PLAZO|NO\\s+CIRCULANTE|L/P)",
-      "regex_seccion": "^ACTIVOS?\\s+SECURT?ITIZADOS?$"
+      "regex": "^ACTIVOS?\\s+SECUR[IT]{1,3}IZADOS?\\s*\\(?\\s*(LARGO\\s+PLAZO|NO\\s+CIRCULANTE|L/P)",
+      "regex_seccion": "^ACTIVOS?\\s+SECUR[IT]{1,3}IZADOS?$"
     },
     {
       "canonica": "MENOR_VALOR_COLOCACION",
@@ -245,7 +245,7 @@
       "codigos": [
         "23.010"
       ],
-      "regex": "^RESERVAS?\\s+DE\\s+(EXCEDENTES|EJERCICIOS?\\s+ANTERIORES)|^EXCEDENTES?\\s+(ACUMULADOS?\\s+)?(DE\\s+)?(EJERCICIOS?\\s+)?ANTERIORES|^EXCEDENTES?\\s+OBLIGATORIOS?\\s+FIN|^FONDOS?\\s+(DE\\s+)?EXCEDENTES\\s+VOLUNTARIOS"
+      "regex": "^RESERVAS?\\s+DE\\s+(EXCEDENTES|EJERCICIOS?\\s+ANTERIORES)|^EXCEDENTES?\\s+(ACUMULADOS?\\s+)?(DE\\s+)?(EJERCICIOS?\\s+)?ANTERIORES|^EXCEDENTES?\\s+OBLIGATORIOS?\\s+FIN|^FONDOS?\\s+(DE\\s+)?EXCEDENTES\\s+VOLUNTARIOS|^FONDOS?\\s+DE\\s+EXCEDENTES\\s+DEL\\s+EJERCICIO\\s+ANTERIOR"
     },
     {
       "canonica": "EXCEDENTE_DEL_EJERCICIO",
@@ -281,14 +281,14 @@
       "estado": "EXCEDENTES",
       "seccion": "INGRESOS",
       "codigos": [],
-      "regex": "^INTERESES\\s+(POR|DE|DEL)\\s+ACTIVOS?\\s+SECURITIZADOS?|^INTERESES\\s+(POR|DE)\\s+(MUTUOS|CONTRATOS|CARTERA)"
+      "regex": "^INTERESES\\s+(POR|DE|DEL)\\s+ACTIVOS?\\s+SECUR[IT]{1,3}IZADOS?|^INTERESES\\s+(POR|DE)\\s+(MUTUOS|CONTRATOS|CARTERA)"
     },
     {
       "canonica": "INGRESOS_REAJUSTES_ACTIVO_SECURITIZADO",
       "estado": "EXCEDENTES",
       "seccion": "INGRESOS",
       "codigos": [],
-      "regex": "^REAJUSTES?\\s+(POR|DE|DEL)\\s+ACTIVOS?\\s+SECURITIZADOS?"
+      "regex": "^REAJUSTES?\\s+(POR|DE|DEL)\\s+ACTIVOS?\\s+SECUR[IT]{1,3}IZADOS?"
     },
     {
       "canonica": "INGRESOS_INVERSIONES",
@@ -317,7 +317,7 @@
       "estado": "EXCEDENTES",
       "seccion": "GASTOS",
       "codigos": [],
-      "regex": "^REMUNERACI[OÓ]N(ES)?\\s+(POR\\s+PAGAR\\s+)?(POR\\s+)?(ADMINISTRACI[OÓ]N|CUSTODIA|ADM\\.)|^GASTOS?\\s+(POR\\s+)?ADMINISTRACI[OÓ]N|^REMUNERACI[OÓ]N(ES)?\\s+(DE\\s+)?(LA\\s+)?SOCIEDAD\\s+SECURITIZADORA"
+      "regex": "^REMUNERACI[OÓ]N(ES)?\\s+(POR\\s+PAGAR\\s+)?(POR\\s+)?(ADMINISTRACI[OÓ]N|CUSTODIA|ADM\\.)|^GASTOS?\\s+(POR\\s+)?ADMINISTRACI[OÓ]N|^REMUNERACI[OÓ]N(ES)?\\s+(DE\\s+)?(LA\\s+)?SOCIEDAD\\s+SECUR[IT]{1,3}IZADORA"
     },
     {
       "canonica": "GASTO_INTERESES_TITULOS_DEUDA",
@@ -412,8 +412,8 @@
       "codigos": [
         "13.120"
       ],
-      "regex": "^PROVISI[OÓ]N(ES)?\\s*\\(LARGO PLAZO\\)\\s*(DEL?\\s+)?ACTIVOS?\\s+SECURITIZADOS?|^PROVISI[OÓ]N(ES)?\\s+(DEL?\\s+)?ACTIVOS?\\s+SECURITIZADOS?.*LARGO",
-      "regex_seccion": "^PROVISI[OÓ]N(ES)?\\s+(DEL?\\s+)?ACTIVOS?\\s+SECURITIZADOS?"
+      "regex": "^PROVISI[OÓ]N(ES)?\\s*\\(LARGO PLAZO\\)\\s*(DEL?\\s+)?ACTIVOS?\\s+SECUR[IT]{1,3}IZADOS?|^PROVISI[OÓ]N(ES)?\\s+(DEL?\\s+)?ACTIVOS?\\s+SECUR[IT]{1,3}IZADOS?.*LARGO",
+      "regex_seccion": "^PROVISI[OÓ]N(ES)?\\s+(DEL?\\s+)?ACTIVOS?\\s+SECUR[IT]{1,3}IZADOS?"
     },
     {
       "canonica": "RETIROS_EXCEDENTES",
@@ -531,7 +531,8 @@
     "^RAZ[OÓ]N\\s+SOCIAL.*",
     "^PARA\\s+EL\\s+(EJERCICIO|PER[IÍ]ODO).*",
     "^PATRIMONIO\\s+SEPARADO.*",
-    "^(Y\\s+)?EL$"
+    "^(Y\\s+)?EL$",
+    "^RUBRO\\s+MONEDA$"
   ],
   "secciones": {
     "ACTIVO_CIRCULANTE": "^ACTIVOS?\\s+CIRCULANTES?$",

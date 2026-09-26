@@ -269,6 +269,25 @@ def codigo_desde_etiqueta_web(etiqueta):
     return canonizar_codigo(t)
 
 
+_MESES = {"ENERO": "01", "FEBRERO": "02", "MARZO": "03", "ABRIL": "04", "MAYO": "05", "JUNIO": "06", "JULIO": "07", "AGOSTO": "08",
+          "SEPTIEMBRE": "09", "OCTUBRE": "10", "NOVIEMBRE": "11", "DICIEMBRE": "12"}
+
+
+def periodo_segun_pdf(paginas):
+    """'YYYY-MM' más frecuente entre las fechas de cierre 'al 30 de junio de 2026' / '30.06.2026' / '30-06-2026' del inicio del PDF.
+    Sirve para detectar PDFs mal archivados en la web CMF (p. ej. EEFF 2026 colgados en el período 06/2025)."""
+    from collections import Counter
+    c = Counter()
+    for t in paginas[:8]:
+        u = _norm(t)
+        for d, m, a in re.findall(r"\bAL\s+(\d{1,2})\s+DE\s+([A-Z]+)\s+(?:DE\s+|DEL\s+)?(\d{4})", u):
+            if m in _MESES and d in ("30", "31", "28", "29"):
+                c[f"{a}-{_MESES[m]}"] += 1
+        for d, m, a in re.findall(r"\b(3[01]|2[89])[\.\-/](0[369]|12)[\.\-/](20\d{2})\b", u):
+            c[f"{a}-{m}"] += 1
+    return c.most_common(1)[0][0] if c else None
+
+
 def meta_desde_texto(texto_inicial, etiqueta_web, rut_body, nombre):
     """Identifica el PS: primero por la etiqueta oficial de la web CMF, luego por el texto del PDF. None si no hay código."""
     codigo = codigo_desde_etiqueta_web(etiqueta_web)
@@ -415,6 +434,8 @@ def parse_eeff_lineas(paginas, max_paginas=16):
             codigo = None
             if not nums or nums[0] is None and (len(nums) < 2 or nums[1] is None):
                 continue
+            if any(rx.fullmatch(_norm(glosa)) for rx in _RX_IGNORAR):
+                continue
             e = _mapear(estado, cod, glosa, seccion)
             key = (estado, seccion, cod, _norm(glosa))
             if key in vistos:  # misma glosa repetida (p. ej. subtotal duplicado) → se conserva la primera
@@ -555,7 +576,12 @@ def ocr_paginas_imagen(doc, paginas, max_paginas=16, dpi=300):
     import subprocess, tempfile
     def _sin_cifras(t):  # página "sólo encabezado": casi sin cifras con separador de miles y poco texto
         return len(re.findall(r"\d{1,3}(?:\.\d{3})+", t)) < 3 and len(t.strip()) < 1200
-    idx = [i for i in range(min(len(paginas), max_paginas)) if _sin_cifras(paginas[i]) and (doc[i].get_images() or _estado_de_pagina(paginas[i]))]
+    def _tiene_grafico(pg):  # imagen incrustada o tabla dibujada con vectores (muchos trazos)
+        try:
+            return bool(pg.get_images()) or len(pg.get_drawings()) > 20
+        except Exception:
+            return bool(pg.get_images())
+    idx = [i for i in range(min(len(paginas), max_paginas)) if _sin_cifras(paginas[i]) and _tiene_grafico(doc[i])]
     if not idx or not _tesseract_disponible():
         return paginas, []
     out = list(paginas); hechos = []
@@ -604,6 +630,8 @@ def paso_ps(op, secs, desde, hasta, trimestres):
                     except Exception as e:
                         cobertura.append({**cob, "estado": f"error_pdf:{e}"}); continue
                     cob["paginas_ocr"] = ",".join(map(str, pags_ocr)) if pags_ocr else None
+                    cob["periodo_segun_pdf"] = periodo_segun_pdf(paginas)
+                    cob["periodo_inconsistente"] = bool(cob["periodo_segun_pdf"] and cob["periodo_segun_pdf"] != periodo)
                     if len(paginas) <= 1 or "Archivo No Disponible" in paginas[0]:
                         cobertura.append({**cob, "estado": "pdf_no_disponible"}); continue
                     if sum(len(pg) for pg in paginas[:4]) < 200:
@@ -619,6 +647,7 @@ def paso_ps(op, secs, desde, hasta, trimestres):
                     if lin:
                         r = tc.get(periodo); fila = derivar_resumen(lin)
                         fila.update(meta); fila.update(prov); fila["periodo"] = periodo; fila["tipo_cambio_usd_clp"] = r
+                        fila["periodo_segun_pdf"] = cob["periodo_segun_pdf"]; fila["periodo_inconsistente"] = cob["periodo_inconsistente"]
                         fila["total_activos_musd"] = round(fila["total_activos_mclp"] / r, 2) if r and fila["total_activos_mclp"] is not None else None
                         balances.append(fila)
                     if debug_dir and (not lin or not fila.get("cuadre_contable_ok")):
