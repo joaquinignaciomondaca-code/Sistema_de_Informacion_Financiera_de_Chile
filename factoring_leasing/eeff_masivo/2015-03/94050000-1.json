@@ -1,0 +1,276 @@
+{
+  "rut": "94050000-1",
+  "razon_social": "GENERAL MOTORS FINANCIAL CHILE S.A.",
+  "periodo": "2015-03",
+  "tipo_eeff": "Consolidado",
+  "url_pdf": "https://www.cmfchile.cl/institucional/inc/inf_financiera/ifrs/safec_ifrs_verarchivo.php?auth=ZGQwN2YxZjk4ZDBkNzJlNjk0ZGFjOTg3Y2FlMmE3NjM=&send=LBaf6U3Xdv6ZeIc9B2P9nBH3kB0dPcyo2YFtuqhJ28Idw6gTOFnO5mJMWpMoBOhxWNMmDG0imsO4wlAo5ZilY208uFSSUQ75yWbAgeqvDbPwfE2dxgs47qa/9/lSpovyi19qIZJdyGaSZ6MGqzY9tQ/aCGJkF+YTt78WQ/eyULN3eBI=",
+  "balance": [],
+  "resultados": [],
+  "notas": [],
+  "indice": [
+    {
+      "numero": 1,
+      "titulo": "Entidad que reporta",
+      "pagina": 9,
+      "en_indice": false,
+      "familia": "antecedentes"
+    },
+    {
+      "numero": 2,
+      "titulo": "Bases de preparación",
+      "pagina": 9,
+      "en_indice": false,
+      "familia": "politica"
+    },
+    {
+      "numero": 3,
+      "titulo": "Políticas contables significativas",
+      "pagina": 10,
+      "en_indice": false,
+      "familia": "politica"
+    },
+    {
+      "numero": 4,
+      "titulo": "Determinación de valores razonables",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "instrumentos"
+    },
+    {
+      "numero": 5,
+      "titulo": "Administración de riesgo financiero",
+      "pagina": 21,
+      "en_indice": false,
+      "familia": "riesgos"
+    },
+    {
+      "numero": 6,
+      "titulo": "Efectivo y equivalentes al efectivo",
+      "pagina": 27,
+      "en_indice": false,
+      "familia": "efectivo"
+    },
+    {
+      "numero": 8,
+      "titulo": "Inventario",
+      "pagina": 29,
+      "en_indice": false,
+      "familia": "inventario"
+    },
+    {
+      "numero": 9,
+      "titulo": "Cuentas por cobrar y pagar a entidades relacionadas, corriente",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "relacionadas"
+    },
+    {
+      "numero": 10,
+      "titulo": "Transacciones con entidades relacionadas",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "relacionadas"
+    },
+    {
+      "numero": 11,
+      "titulo": "Personal clave de la gerencia",
+      "pagina": 32,
+      "en_indice": false,
+      "familia": "personal"
+    },
+    {
+      "numero": 12,
+      "titulo": "Información de la afiliada",
+      "pagina": 32,
+      "en_indice": false,
+      "familia": "otra"
+    },
+    {
+      "numero": 13,
+      "titulo": "Propiedades, planta y equipo",
+      "pagina": 33,
+      "en_indice": false,
+      "familia": "ppe"
+    },
+    {
+      "numero": 14,
+      "titulo": "Impuestos corrientes y diferidos",
+      "pagina": 34,
+      "en_indice": false,
+      "familia": "impuestos"
+    },
+    {
+      "numero": 15,
+      "titulo": "Otros pasivos financieros corrientes y no corrientes",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "pasivos_financieros"
+    },
+    {
+      "numero": 16,
+      "titulo": "Arrendamientos financieros",
+      "pagina": 38,
+      "en_indice": false,
+      "familia": "arrendamientos"
+    },
+    {
+      "numero": 17,
+      "titulo": "Cuentas por pagar comerciales y otras cuentas por pagar",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "cuentas_por_pagar"
+    },
+    {
+      "numero": 18,
+      "titulo": "Patrimonio y reservas",
+      "pagina": 39,
+      "en_indice": false,
+      "familia": "patrimonio"
+    },
+    {
+      "numero": 19,
+      "titulo": "Ingresos de actividades ordinarias",
+      "pagina": 41,
+      "en_indice": false,
+      "familia": "ingresos"
+    },
+    {
+      "numero": 20,
+      "titulo": "Costo de ventas",
+      "pagina": 41,
+      "en_indice": false,
+      "familia": "costos"
+    },
+    {
+      "numero": 21,
+      "titulo": "Gastos del personal",
+      "pagina": 41,
+      "en_indice": false,
+      "familia": "gastos"
+    },
+    {
+      "numero": 22,
+      "titulo": "Gastos de administración",
+      "pagina": 42,
+      "en_indice": true,
+      "familia": "gastos"
+    },
+    {
+      "numero": 23,
+      "titulo": "Activos y pasivos contingentes",
+      "pagina": 42,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 24,
+      "titulo": "Medio ambiente",
+      "pagina": 42,
+      "en_indice": true,
+      "familia": "medio_ambiente"
+    },
+    {
+      "numero": 25,
+      "titulo": "Hechos relevantes",
+      "pagina": 42,
+      "en_indice": true,
+      "familia": "hechos_relevantes"
+    },
+    {
+      "numero": 26,
+      "titulo": "Hechos posteriores",
+      "pagina": 42,
+      "en_indice": true,
+      "familia": "hechos_posteriores"
+    }
+  ],
+  "validacion_api": [
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "total_activos",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 209382.52,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "efectivo",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 14776.9,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "deudores_corrientes",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 68857.15,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "pasivos_corrientes",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 79835.12,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "pasivos_no_corrientes",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 34168.83,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "patrimonio",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 95378.57,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    }
+  ],
+  "resumen": {
+    "indice": 25,
+    "ok": 0,
+    "no_leida": 0,
+    "lineas_balance": 0,
+    "lineas_resultados": 0,
+    "cuadre_balance": "SIN_PDF",
+    "cuadre_detalle": "SIN_PDF",
+    "hueco_detalle": "",
+    "cuadre_resultados": "SIN_PDF",
+    "hueco_resultados": "",
+    "caidas_balance": [],
+    "caidas_resultados": [],
+    "cuentas": []
+  }
+}
