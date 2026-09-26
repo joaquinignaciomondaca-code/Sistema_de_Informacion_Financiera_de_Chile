@@ -490,3 +490,40 @@ def elegir(candidatos: list[tuple[str, list[dict]]], puntaje) -> tuple[str, list
         return "", []
     ordenados = sorted(candidatos, key=lambda item: (puntaje(item[1]), len(item[1])), reverse=True)
     return ordenados[0]
+
+
+_RUIDO_CARA = (
+    "notas a los", "indice pagina", "forman parte", "politicas contables",
+    "hechos relevantes", "presentacion de estados", "resumen de las principales",
+)
+
+
+def es_linea_de_cara(nombre: str) -> bool:
+    """Una cuenta del estado, no un título de nota ni una línea del índice."""
+    blob = fold(nombre)
+    if sum(ch.isalpha() for ch in nombre) < 4:
+        return False
+    if blob.startswith(("nota ", "notas ", "indice")):
+        return False
+    if any(frase in blob for frase in _RUIDO_CARA):
+        return False
+    if len(blob.split()) > 16 and not blob.startswith("total"):
+        return False
+    return True
+
+
+def lineas_caidas(elegidas: list[dict], otras: list[dict]) -> list[dict]:
+    """Líneas que otra lectura de la misma cara vio y la elegida no guardó."""
+    tienen = {fold(row.get("nombre_cuenta") or "") for row in elegidas}
+    caidas = []
+    vistos = set()
+    for row in otras:
+        nombre = row.get("nombre_cuenta") or ""
+        clave = fold(nombre)
+        if not clave or clave in tienen or clave in vistos or not es_linea_de_cara(nombre):
+            continue
+        if any(len(clave) > 10 and len(tengo) > 10 and (clave in tengo or tengo in clave) for tengo in tienen):
+            continue
+        vistos.add(clave)
+        caidas.append(row)
+    return caidas
