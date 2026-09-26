@@ -464,5 +464,11 @@ check(P._estado_de_pagina("| BCI SECURITIZADORA\n| ANO\n| a e ie\n" + "x\n" * 10
 for _et, _esp in [("Patrimonios Separados - PS 2 FINTESA SECURITIZADORA al 03/2012", "PS-2"), ("Patrimonios Separados - PRIMER PATRIMONIO SEPARADO al 03/2011", "PS-1"),
                   ("Patrimonios Separados - NA 16 JUNIO 2011", "PS-16"), ("Patrimonios Separados - BSECS 13 06 2013", "BSECS-13"), ("Patrimonios Separados - PATRIMONIO NÂ° al 12/2014", None)]:
     check(P.codigo_desde_etiqueta_web(_et) == _esp, f"etiqueta web {_et!r} → {_esp}")
+for _et, _esp in [("Patrimonios Separados - PATRIMONIO SEPARADO BTRA1-1 al 03/2012", "BTRA-1-1"), ("Patrimonios Separados - BTRA1 INFORMACION FINANCIERA al 03/2012", "BTRA-1"),
+                  ("Patrimonios Separados - Banchile Securitizadora PS12 EEFF Marzo 2020", "PS-12"), ("Patrimonios Separados - Patrimonio Separado BSECS-9 12.2012 al 12/2012", "BSECS-9"),
+                  ("Patrimonios Separados - Patrimonio Separado NÂ°13_0915 al 09/2015", "PS-13"), ("Patrimonios Separados - 201912 - Patrimonio Separado 5 al 12/2019", "PS-5"),
+                  ("Patrimonios Separados - PATRIMONIO SEPARADO DOS BSABN-ABH al 06/2012", "BSABN-ABH"), ("Patrimonios Separados - VBOLS-A1 al 03/2020", "VBOLS-A1"),
+                  ("Patrimonios Separados - BVOLS al 12/2024", "BVOLS"), ("Patrimonios Separados - Patrimonio Separado V al 09/2016", "PS-5"), ("Patrimonios Separados - PS 11 2 al 12/2013", "PS-11")]:
+    check(P.codigo_desde_etiqueta_web(_et) == _esp, f"etiqueta web {_et!r} → {_esp} (obtenido {P.codigo_desde_etiqueta_web(_et)})")
 check(P.meta_desde_texto("SUDAMERICANA\nPATRIMONIO SEPARADO N*2\n", "Patrimonios Separados - PATRIMONIO NÂ° al 12/2014", "96972780", "X")["codigo_emision"] == "PS-2", "sin código en la web se toma del PDF (N*2 OCR)")
 print(f"\n{len(fallos)} fallos"); sys.exit(1 if fallos else 0)

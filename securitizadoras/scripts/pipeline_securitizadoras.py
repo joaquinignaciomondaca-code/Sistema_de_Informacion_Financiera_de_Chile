@@ -254,31 +254,46 @@ def paso_gestoras(op, secs, desde=2014):
 _ROMANOS = {"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10, "XI": 11, "XII": 12}
 
 
+_ORDINALES = {"UNO": 1, "PRIMER": 1, "PRIMERO": 1, "1ER": 1, "1RO": 1, "DOS": 2, "SEGUNDO": 2, "2DO": 2, "TRES": 3, "TERCER": 3, "TERCERO": 3, "CUATRO": 4, "CUARTO": 4}
+_NO_SERIE = {"EEFF", "FECU", "ANEXO", "PAT", "SEP", "TRANSA", "FINAL", "ESTADO", "INFORME", "INF", "FIRMAD", "FIRMADP", "SEPRAD", "SEPRADOS",
+             "ENERO", "FEBRER", "MARZO", "ABRIL", "MAYO", "JUNIO", "JULIO", "AGOSTO", "SEPT", "OCTUBR", "NOVIEM", "DICIEM", "JUN", "DIC", "MAR",
+             "CHILE", "BICE", "PRIMER", "DOS", "TRES", "UNO", "MAE", "BCI", "NRO", "NUM", "NAO", "VERSIO", "CARTA", "TOTAL", "ANEXOS", "PLAN"}
+_PREFIJOS_PS = ("PS", "P", "N", "NA", "NAO", "NO", "NRO", "NUM", "NUMERO")
+
+
 def canonizar_codigo(txt):
-    """Normaliza el nombre de un PS a un código estable: 'PATRIMONIO SEPARADO N°35'/'Patrimonio 35'/'PS35' → 'PS-35';
-    'BVOLS3'/'BVOLS 3' → 'BVOLS-3'; 'PS7 firmadp' → 'PS-7'; 'V' → 'PS-5'. None si no queda nada útil."""
-    t = _norm(txt)
-    t = re.sub(r"\bAL\s+\d{2}/\d{4}.*$", "", t)
-    t = re.sub(r"\b(ENERO|FEBRERO|MARZO|ABRIL|MAYO|JUNIO|JULIO|AGOSTO|SEPTIEMBRE|OCTUBRE|NOVIEMBRE|DICIEMBRE)\b(\s+(DE\s+)?\d{4})?", " ", t)
-    t = re.sub(r"\b(PATRIMONIOS?|SEPARADOS?|EEFF|ESTADOS?|FINANCIEROS?|FIRMAD\w*|FINAL|DEFINITIVOS?|CORREGIDOS?|VERSION|DE|DEL|EL|LA|SECURITIZADORA|S\.?A\.?|"
-               r"FINTESA|SANTANDER|BICE|SECURITY|BCI|BANCHILE|VOLCOM|TRANSA|SUDAMERICANA|EF|CB|CHILE|MAE|CREDICORP|CAPITAL|EXPEDITA|AMERIS|CONSTRUCCION|LA)\b", " ", t)
-    t = re.sub(r"\b(PRIMERO?|1ER|1RO)\b", "1", t); t = re.sub(r"\b(SEGUNDO|2DO)\b", "2", t); t = re.sub(r"\bTERCERO?\b", "3", t); t = re.sub(r"\bCUARTO\b", "4", t)
-    t = re.sub(r"\b(\d{1,3})\s+\d{2}\s+\d{2,4}\b", r"\1", t); t = re.sub(r"\b(\d{1,3})\s+\d{4}\s*$", r"\1", t)  # fechas pegadas al código ("BSECS 13 06 2013", "NA 13 1216")
-    t = re.sub(r"[^A-Z0-9 ]+", " ", t.replace("°", " ").replace("º", " ")).strip()
-    t = re.sub(r"\s+", " ", t)
-    if not t or re.fullmatch(r"(?:PS|N|NA|NAO|NO|NRO|NUMERO|NUM)", t):  # 'Nº' mal codificado sin número: no identifica nada
-        return None
-    m = re.fullmatch(r"(?:PS|N|NA|NAO|NO|NRO|NUMERO|NUM)?\s*(\d{1,3})(?:\s+\d)?", t)  # 'PS 11 2' = versión 2 del archivo; 'NAO' = 'Nº' mal codificado
-    if m:
-        return f"PS-{int(m.group(1))}"
-    if t in _ROMANOS:
-        return f"PS-{_ROMANOS[t]}"
-    toks = t.split(" ")
-    if not re.fullmatch(r"[A-Z]{2,}[A-Z0-9]*", toks[0]):
-        return None
-    # letras+dígitos pegados al inicio: BVOLS3 → BVOLS 3
-    toks = re.sub(r"^([A-Z]{2,}?)(\d+)$", r"\1 \2", toks[0]).split(" ") + toks[1:]
-    return "-".join(toks)
+    """Normaliza el nombre de un PS a un código estable. Busca primero un código de serie (`BSECS-9`, `BBICS-A`, `BTRA1-1`,
+    `BVOLS 3`, `BSABN-ABH`, `VBOLS-A1`) y, si no hay, el primer número de 1-3 cifras (`PS12`, `Nº 8_0915`, `Patrimonio 5`,
+    `201912 - Patrimonio Separado 5`, `PS 11 2`) o un ordinal/romano (`V`, `DOS`, `PRIMER`). Todo lo demás (razón social,
+    meses, fechas pegadas, 'EEFF', 'FECU') se ignora porque nunca se consume. None si no queda nada identificable."""
+    t = _norm(txt).replace("°", " ").replace("º", " ")
+    t = re.sub(r"\bAL\s+\d{2}/\d{4}.*$", "", t); t = re.sub(r"\bDESCARGA\b.*$", "", t)
+    t = re.sub(r"\s*-\s*", "-", t)  # 'BSECS -9', 'BTRA1- 1', 'BSABN - ABH'
+    toks = [x.strip("-") for x in re.sub(r"[^A-Z0-9\-]+", " ", t).split() if x.strip("-")]
+    # 1) código de serie: 3-6 letras + identificador pegado ('BTRA1-1', 'BVOLS3') o con guion ('BSECS-9', 'BBICS-A',
+    #    'BSABN-ABH', 'VBOLS-A1'); también 'BSECS 9' / 'BVOLS 3' (sigla + número en el token siguiente)
+    for k, tok in enumerate(toks):
+        m = re.fullmatch(r"([A-Z]{3,6})(\d{1,3})(?:-([A-Z]?\d{1,3}|[A-Z]{1,4}))?", tok) or \
+            re.fullmatch(r"([A-Z]{3,6})-([A-Z]?\d{1,3}|[A-Z]{1,4})(?:-(\d{1,3}))?", tok)
+        if m and m.group(1) not in _NO_SERIE:
+            return "-".join(g for g in m.groups() if g)
+        if re.fullmatch(r"[A-Z]{4,6}", tok) and tok not in _NO_SERIE and re.search(r"[BCDFGHJKLMNPQRSTVWXZ]{2}", tok) \
+                and k + 1 < len(toks) and re.fullmatch(r"\d{1,3}", toks[k + 1]):
+            return f"{tok}-{int(toks[k + 1])}"
+    # 2) número de PS: 'PS12', 'N12', 'P12' o el primer token de 1-3 dígitos (los de 4+ son fechas: 2011, 0915, 201912)
+    for tok in toks:
+        m = re.fullmatch(r"(?:%s)?-?(\d{1,3})" % "|".join(_PREFIJOS_PS), tok)
+        if m:
+            return f"PS-{int(m.group(1))}"
+        if tok in _ORDINALES:
+            return f"PS-{_ORDINALES[tok]}"
+        if tok in _ROMANOS:
+            return f"PS-{_ROMANOS[tok]}"
+    # 3) serie sin identificador ('BVOLS' a secas, un solo PS): se acepta sólo si es una sigla de 4-6 letras que no es palabra común
+    for tok in toks:
+        if re.fullmatch(r"[A-Z]{4,6}", tok) and tok not in _NO_SERIE and re.search(r"[BCDFGHJKLMNPQRSTVWXZ]{2}", tok):
+            return tok
+    return None
 
 
 def codigo_desde_etiqueta_web(etiqueta):
@@ -655,7 +670,7 @@ def _listar_pdfs_ps(op, sec, anio, mm):
     out = []
     for tr in BeautifulSoup(html, "html.parser").find_all("tr"):
         txt = tr.get_text(" ", strip=True); tl = txt.lower()
-        if "patrimonios separados" not in tl or any(k in tl for k in ("analisis", "análisis", "razonado", "declaraci", "responsabilidad", "informe", "auditor", "hechos relevantes", "carta")):
+        if "patrimonios separados" not in tl or any(k in tl for k in ("analisis", "análisis", "razonado", "declaraci", "responsabilidad", "auditor", "hechos relevantes", "carta", "anexo")):  # 'INFORME PATRIMONIO SEPARADO Nº1' (Santander 2010-11) sí es el EEFF
             continue
         a = tr.find("a", href=lambda h: h and "ver_sgd.php" in h and "bitacora" not in h)
         if a:
@@ -787,13 +802,18 @@ def paso_ps(op, secs, desde, hasta, trimestres):
                                       "lineas_eeff": len(lin), "cuentas_reconocidas": sum(1 for l in lin if l["cuenta_canonica"]),
                                       "partidas_efectivo": len(efe), "tramos_mora": len(mor), "tramos_mora_descartados": desc, **prov})
                     print(f"  {sec['razon_social'][:26]:26} {meta['codigo_emision']:10} {periodo}: lineas={len(lin)}")
-    df_l = pd.DataFrame(lineas_all)
-    guardar("patrimonios_separados_eeff_lineas", df_l, ["id_patrimonio", "periodo", "estado", "pagina_pdf"])
-    df_b = pd.DataFrame(balances)
+    df_l = pd.DataFrame(lineas_all); df_b = pd.DataFrame(balances); df_n = pd.DataFrame(notas)
     if not df_b.empty:
-        df_b = df_b.sort_values("cuentas_reconocidas", ascending=False).drop_duplicates(["id_patrimonio", "periodo"])
+        # el mismo PS+período puede venir en dos PDF (p. ej. 'BTRA1-1 INFORMACION FINANCIERA' y 'PATRIMONIO SEPARADO BTRA1-1'):
+        # se conserva UN solo documento (el que cuadra y con más cuentas reconocidas) y sus líneas/notas, no una mezcla
+        df_b = df_b.sort_values(["cuadre_contable_ok", "cuentas_reconocidas"], ascending=False).drop_duplicates(["id_patrimonio", "periodo"])
+        ganadores = set(zip(df_b["id_patrimonio"], df_b["periodo"], df_b["fuente_url"]))
+        for d in (df_l, df_n):
+            if not d.empty:
+                d.drop(d.index[[k not in ganadores for k in zip(d["id_patrimonio"], d["periodo"], d["fuente_url"])]], inplace=True)
+    guardar("patrimonios_separados_eeff_lineas", df_l, ["id_patrimonio", "periodo", "estado", "pagina_pdf"])
     guardar("patrimonios_separados_balance_resumen", df_b, ["id_patrimonio", "periodo"])
-    guardar("patrimonios_separados_notas_detalle", notas, ["id_patrimonio", "periodo", "nota"])
+    guardar("patrimonios_separados_notas_detalle", df_n, ["id_patrimonio", "periodo", "nota"])
     guardar("patrimonios_separados_cobertura", cobertura, ["rut_administradora", "periodo"])
 
 
