@@ -148,9 +148,10 @@ def _es_total_caratula(nombre: str, clase: str) -> bool:
 def cuadratura_detalle(lineas: list[dict]) -> dict:
     """El detalle publicado tiene que sumar el subtotal que el PDF sí trae.
 
-    No inventa la línea que falta. Una línea «atribuible» que ya es la suma
-    de las anteriores no se vuelve a sumar. Un total sin ninguna línea de
-    detalle no se denuncia aquí: eso lo ve la ecuación del balance.
+    No inventa la línea que falta. Una línea que ya es la suma de las
+    anteriores no se vuelve a sumar. Una cuenta sin la palabra «activo» sigue
+    en el lado que ya venía. Un total sin ninguna línea de detalle no se
+    denuncia aquí: eso lo ve la ecuación del balance.
     """
     huecos = []
     estado_lado = {
@@ -158,6 +159,7 @@ def cuadratura_detalle(lineas: list[dict]) -> dict:
         "Pasivo": {"bucket": [], "stack": []},
         "Patrimonio": {"bucket": [], "stack": []},
     }
+    lado_actual = ""
     for row in lineas:
         if row.get("monto_miles_clp") is None:
             continue
@@ -165,18 +167,15 @@ def cuadratura_detalle(lineas: list[dict]) -> dict:
         # El total combinado lo cierra la ecuación, no el rollo de un solo lado.
         if "pasivo" in _fold(nombre_fila) and "patrimonio" in _fold(nombre_fila) and _es_total_caratula(nombre_fila, row.get("clase", "")):
             continue
-        lado = _lado(nombre_fila, row.get("clase", ""))
+        lado = _lado(nombre_fila, row.get("clase", "")) or lado_actual
         if not lado:
             continue
+        lado_actual = lado
         monto = float(row["monto_miles_clp"])
         nombre = row.get("nombre_cuenta", "")
         st = estado_lado[lado]
         if not _es_total_caratula(nombre, row.get("clase", "")):
-            if (
-                "atribuible" in _fold(nombre)
-                and len(st["bucket"]) >= 2
-                and abs(round(sum(st["bucket"]), 2) - monto) <= 1
-            ):
+            if len(st["bucket"]) >= 2 and abs(round(sum(st["bucket"]), 2) - monto) <= 1:
                 continue
             st["bucket"].append(monto)
             continue
@@ -199,6 +198,12 @@ def cuadratura_detalle(lineas: list[dict]) -> dict:
     if not huecos:
         return {"estado": "OK", "hueco": ""}
     return {"estado": "FALTAN_LINEAS", "hueco": " | ".join(huecos[:4])}
+
+
+def _es_linea_posterior(nombre: str) -> bool:
+    """Resultado integral y ganancia por acción van después de la utilidad. No se suman a ella."""
+    n = _fold(nombre)
+    return "por accion" in n or "resultado integral" in n or "cobertura de flujo" in n
 
 
 def _es_atribucion(nombre: str) -> bool:
@@ -285,7 +290,11 @@ def _indices_desglose(lineas: list[dict]) -> set[int]:
 def _roll_resultado(lineas: list[dict], campo: str, etiqueta: str) -> str:
     if not any(row.get(campo) is not None for row in lineas):
         return ""
-    relevantes = [row for row in lineas if not _es_atribucion(row.get("nombre_cuenta", ""))]
+    relevantes = [
+        row for row in lineas
+        if not _es_atribucion(row.get("nombre_cuenta", ""))
+        and not _es_linea_posterior(row.get("nombre_cuenta", ""))
+    ]
     if relevantes and any(row.get(campo) is None for row in relevantes):
         return ""
     running = 0.0
@@ -297,7 +306,7 @@ def _roll_resultado(lineas: list[dict], campo: str, etiqueta: str) -> str:
         if idx in desglose:
             continue
         nombre = row.get("nombre_cuenta", "")
-        if _es_atribucion(nombre):
+        if _es_atribucion(nombre) or _es_linea_posterior(nombre):
             continue
         monto = float(row[campo])
         if _es_subtotal_resultado(nombre):
@@ -318,7 +327,9 @@ def _roll_resultado(lineas: list[dict], campo: str, etiqueta: str) -> str:
     atrib = [
         float(row[campo])
         for row in lineas
-        if _es_atribucion(row.get("nombre_cuenta", "")) and row.get(campo) is not None
+        if _es_atribucion(row.get("nombre_cuenta", ""))
+        and not _es_linea_posterior(row.get("nombre_cuenta", ""))
+        and row.get(campo) is not None
     ]
     if atrib and neto is not None and abs(round(sum(atrib) - neto, 2)) > 1:
         return (
@@ -344,20 +355,55 @@ def cuadratura_resultados(lineas: list[dict]) -> dict:
     }
 
 
+def _totales_pasivo(lineas: list[dict]) -> list[float]:
+    """Cada «Total pasivos» impreso. No el corriente ni el de patrimonio."""
+    aliases = ("total de pasivos", "totales de pasivos", "total pasivos", "total pasivo")
+    salida = []
+    for row in lineas:
+        if row.get("monto_m_clp") is None:
+            continue
+        nombre = _norm(row["nombre_cuenta"])
+        if "patrimonio" in nombre or "corriente" in nombre:
+            continue
+        if not any(alias == nombre or alias in nombre for alias in aliases):
+            continue
+        salida.append(float(row["monto_m_clp"]))
+    return salida
+
+
+def _cierra_balance(activos, pasivos, patrimonio) -> bool:
+    if activos is None or pasivos is None or patrimonio is None:
+        return False
+    return abs(round(activos - (pasivos + patrimonio), 2)) <= TOLERANCIA_M_CLP
+
+
 def cuadratura_balance(lineas: list[dict]) -> dict:
     activos = _buscar(lineas, ("total de activos", "total activos", "totales de activos"))
-    pasivos = _buscar(lineas, ("total de pasivos", "total pasivos", "totales de pasivos", "total pasivo"))
+    patrimonio = _buscar(lineas, ("patrimonio total", "patrimonio neto total", "total patrimonio", "totales de patrimonio"))
+    impresos = _totales_pasivo(lineas)
+    corrientes = _buscar(lineas, ("total pasivos corrientes", "total de pasivos corrientes", "totales de pasivos corrientes", "total pasivo corriente"))
+    no_corrientes = _buscar(lineas, ("total pasivos no corrientes", "total de pasivos no corrientes", "totales de pasivos no corrientes", "total pasivo no corriente"))
+    pasivos = None
+    # El total que cierra activos = pasivos + patrimonio. No se inventa otro.
+    for monto in impresos:
+        if _cierra_balance(activos, monto, patrimonio):
+            pasivos = monto
+            break
+    # Security imprime «Total pasivos» por el tramo no corriente, sin un total no corriente aparte.
+    # No se cambia un total impreso que no coincide con sus dos subtotales: eso sigue siendo diferencia.
+    if pasivos is None and corrientes is not None and no_corrientes is None and impresos:
+        suma = round(corrientes + impresos[-1], 2)
+        if _cierra_balance(activos, suma, patrimonio):
+            pasivos = suma
     if pasivos is None:
-        corrientes = _buscar(lineas, ("total pasivos corrientes", "total de pasivos corrientes", "totales de pasivos corrientes", "total pasivo corriente"))
-        no_corrientes = _buscar(lineas, ("total pasivos no corrientes", "total de pasivos no corrientes", "totales de pasivos no corrientes", "total pasivo no corriente"))
-        if corrientes is not None and no_corrientes is not None:
+        pasivos = impresos[0] if impresos else None
+        if pasivos is None and corrientes is not None and no_corrientes is not None:
             pasivos = round(corrientes + no_corrientes, 2)
-        elif corrientes is not None and no_corrientes is None and not any(
+        elif pasivos is None and corrientes is not None and not any(
             "pasivo" in _norm(r["nombre_cuenta"]) and "no corriente" in _norm(r["nombre_cuenta"])
             for r in lineas
         ):
             pasivos = corrientes
-    patrimonio = _buscar(lineas, ("patrimonio total", "patrimonio neto total", "total patrimonio", "totales de patrimonio"))
     if activos is None or pasivos is None or patrimonio is None:
         return {"estado": "INCOMPLETO", "diff_m_clp": None}
     diff = round(activos - (pasivos + patrimonio), 2)

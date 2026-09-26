@@ -220,9 +220,6 @@ _NOTA_LINEA = re.compile(r"^\(?[1-9]\d?(?:[.\s]?[a-z]|\.\d{1,2})?\)?$")
 _CORTE_ESTADO = {
     "balance": ("estado de resultados", "estados de resultados", "estado de flujos", "estados de flujos"),
     "resultado": (
-        "otro resultado integral",
-        "otros resultados integrales",
-        "ganancia por accion",
         "estado de cambios",
         "estados de cambios",
         "cambios en patrimonio",
@@ -326,7 +323,8 @@ def lineas_apiladas(texto: str, estado: str, meta: dict, orden: str = "corte_pri
         nombre, nota, montos = [], "", []
         if not titulo or monto is None or len(titulo) < 3 or fold(titulo) in _SECCION:
             return
-        if any(marca in fold(titulo) for marca in ("por accion", "numero de acciones", "diluid")):
+        # El número de acciones no es un saldo. La ganancia por acción sí es una línea impresa.
+        if "numero de acciones" in fold(titulo):
             return
         if orden == "comparativo_primero" and comp is not None:
             monto, comp = comp, monto
