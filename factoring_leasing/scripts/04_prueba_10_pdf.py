@@ -340,7 +340,24 @@ def correr(periodo: str, lote: str = "", dest_name: str = "") -> int:
             print(f"[prueba] {meta['rut']} falló: {exc}")
         tipo_api = "C" if tipo_pdf == "Consolidado" else "I" if tipo_pdf == "Individual" else ""
         fila = _fila_api(api.get(f"{cuerpo}|{tipo_api}")) if tipo_api else None
-        resumen.append(_resumen_fila(meta, caratula, fila, error))
+        try:
+            resumen.append(_resumen_fila(meta, caratula, fila, error))
+        except Exception as exc:
+            print(f"[prueba] {meta['rut']} el resumen falló: {exc}")
+            resumen.append({
+                "rut": meta["rut"],
+                "razon_social": meta.get("razon_social", ""),
+                "tipo_eeff": tipo_pdf,
+                "error": error or str(exc),
+                "lineas_balance": len(caratula.get("balance", {}).get("lineas", [])),
+                "lineas_resultados": len(caratula.get("resultado", {}).get("lineas", [])),
+                "cuadre_balance": "ERROR",
+                "cuadre_detalle": "ERROR",
+                "cuadre_resultados": "ERROR",
+                "cruce_previo": "SIN_TOTAL",
+                "api": "ERROR",
+                "chequeos_ok": 0,
+            })
     (dest / "resumen.json").write_text(json.dumps(resumen, ensure_ascii=False, indent=2), encoding="utf-8")
     lineas = ["# Prueba 10 PDF " + periodo, ""]
     for row in resumen:
