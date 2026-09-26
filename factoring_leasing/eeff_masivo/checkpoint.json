@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "documentos": {
+    "99595990-9|2026-03": {
+      "rut": "99595990-9",
+      "razon_social": "LATAM TRADE CAPITAL S.A.",
+      "periodo": "2026-03",
+      "estado": "marcado",
+      "error": "sin PDF",
+      "version": 1
+    },
+    "99569200-7|2026-03": {
+      "rut": "99569200-7",
+      "razon_social": "FACTORING MERCANTIL S.A.",
+      "periodo": "2026-03",
+      "estado": "marcado",
+      "error": "sin PDF",
+      "version": 1
+    },
+    "99566540-9|2026-03": {
+      "rut": "99566540-9",
+      "razon_social": "HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING)",
+      "periodo": "2026-03",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 10,
+      "notas_sin_leer": 1,
+      "lineas_balance": 28,
+      "lineas_resultados": 24,
+      "api": [
+        "OK"
+      ]
+    },
+    "99513410-1|2026-03": {
+      "rut": "99513410-1",
+      "razon_social": "SMB FACTORING S.A.",
+      "periodo": "2026-03",
+      "estado": "marcado",
+      "error": "sin PDF",
+      "version": 1
+    },
+    "99501480-7|2026-03": {
+      "rut": "99501480-7",
+      "razon_social": "PENTA FINANCIERO S.A.",
+      "periodo": "2026-03",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 7,
+      "notas_sin_leer": 8,
+      "lineas_balance": 39,
+      "lineas_resultados": 18,
+      "api": [
+        "OK"
+      ]
+    }
+  }
+}
