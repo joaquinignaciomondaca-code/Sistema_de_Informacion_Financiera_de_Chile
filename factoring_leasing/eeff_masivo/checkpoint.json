@@ -9888,6 +9888,107 @@
       "api": [
         "OK"
       ]
+    },
+    "94050000-1|2019-09": {
+      "rut": "94050000-1",
+      "razon_social": "GENERAL MOTORS FINANCIAL CHILE S.A.",
+      "periodo": "2019-09",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "SIN_PDF",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "SIN_PDF",
+      "caidas": 0,
+      "notas_ok": 0,
+      "notas_sin_leer": 0,
+      "lineas_balance": 0,
+      "lineas_resultados": 8,
+      "api": [
+        "SOLO_API"
+      ]
+    },
+    "90146000-0|2019-09": {
+      "rut": "90146000-0",
+      "razon_social": "SERVICIOS FINANCIEROS PROGRESO S.A.",
+      "periodo": "2019-09",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 1,
+      "notas_ok": 11,
+      "notas_sin_leer": 6,
+      "lineas_balance": 33,
+      "lineas_resultados": 14,
+      "api": [
+        "DIFIERE",
+        "OK"
+      ]
+    },
+    "77356020-K|2019-09": {
+      "rut": "77356020-K",
+      "razon_social": "COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA",
+      "periodo": "2019-09",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 4,
+      "notas_ok": 9,
+      "notas_sin_leer": 4,
+      "lineas_balance": 23,
+      "lineas_resultados": 18,
+      "api": [
+        "OK"
+      ]
+    },
+    "76381570-6|2019-09": {
+      "rut": "76381570-6",
+      "razon_social": "INTERFACTOR S.A.",
+      "periodo": "2019-09",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "SIN_PDF",
+      "cuadre_resultados": "SIN_PDF",
+      "cuadre_detalle": "SIN_PDF",
+      "caidas": 0,
+      "notas_ok": 0,
+      "notas_sin_leer": 0,
+      "lineas_balance": 0,
+      "lineas_resultados": 0,
+      "api": [
+        "SOLO_API"
+      ]
+    },
+    "99566540-9|2019-06": {
+      "rut": "99566540-9",
+      "razon_social": "HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING)",
+      "periodo": "2019-06",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 12,
+      "notas_sin_leer": 1,
+      "lineas_balance": 29,
+      "lineas_resultados": 15,
+      "api": [
+        "OK"
+      ]
     }
   }
 }
