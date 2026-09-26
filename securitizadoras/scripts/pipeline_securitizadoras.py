@@ -289,12 +289,13 @@ def _numeros_siguientes(lineas, i, n=2, saltar_nota=True):
     for k, l in enumerate(lineas[i + 1:i + 9]):
         if saltar_nota and k == 0 and re.fullmatch(r"\d{1,2}", l):
             continue  # nº de nota inmediatamente después de la glosa del balance
-        if re.fullmatch(r"\(?-?[\d\.]+(,\d+)?\)?|[—–-]", l):
-            out.append(parse_num(l))
-            if len(out) == n: break
+        toks = l.split()
+        if toks and all(re.fullmatch(r"\(?-?[\d\.]+(,\d+)?\)?|[—–-]", x) for x in toks):
+            out.extend(parse_num(x) for x in toks)  # una celda por línea ó varias columnas en la misma línea ("5.762   5.750")
+            if len(out) >= n: break
         elif any(c.isalpha() for c in l):
             break
-    return out
+    return out[:n]
 
 
 CATALOGO_PATH = os.path.join(BASE_DIR, "securitizadoras", "data", "catalogo_fecu_ps.json")
@@ -318,9 +319,22 @@ _SECCIONES = [(k, re.compile(v)) for k, v in CATALOGO.get("secciones", {}).items
 _POR_REGEX_SECCION = [(e["seccion"], re.compile(e["regex_seccion"]), e) for e in CATALOGO["cuentas"] if e.get("regex_seccion")]
 
 
+def _sin_espacios(rx):
+    """Versión del regex para glosas con letras espaciadas ('T OT A L A C T IVOS'): se quitan los espacios del patrón."""
+    return re.compile(re.sub(r"\\s[+*]?|\\b| ", "", rx.pattern))
+
+
+_POR_REGEX_SE = [(est, _sin_espacios(rx), e) for est, rx, e in _POR_REGEX]
+
+
+def _espaciada(g):
+    toks = g.split()
+    return len(toks) >= 4 and sum(1 for t in toks if len(t) <= 2) >= len(toks) / 2
+
+
 def _mapear(estado, codigo, glosa, seccion=None):
-    if codigo and codigo in _POR_CODIGO:
-        return _POR_CODIGO[codigo]
+    """Prioridad: glosa (regex curada) → glosa dentro de la sección → código FECU impreso (los PDFs traen códigos
+    repetidos o equivocados, p. ej. '15.210' en todas las filas o '23.000' delante de TOTAL PASIVOS)."""
     g = _norm(glosa)
     for est, rx, e in _POR_REGEX:
         if est == estado and rx.search(g):
@@ -329,6 +343,13 @@ def _mapear(estado, codigo, glosa, seccion=None):
         for sec, rx, e in _POR_REGEX_SECCION:
             if sec == seccion and rx.search(g):
                 return e
+    if _espaciada(g):
+        gs = g.replace(" ", "")
+        for est, rx, e in _POR_REGEX_SE:
+            if est == estado and rx.search(gs):
+                return e
+    if codigo and codigo in _POR_CODIGO:
+        return _POR_CODIGO[codigo]
     return None
 
 
@@ -353,6 +374,8 @@ def parse_eeff_lineas(paginas, max_paginas=16):
         estado = _estado_de_pagina(t)
         if not estado:
             continue
+        if re.search(r"^[ \t]*NOTA[ \t]+\d+[ \t]*[-–\.:]", t, re.M | re.I) and not re.search(r"^[ \t]*(\d{2}\.\d{3}[ \t]+)?TOTAL[ \t]+(DE[ \t]+)?ACTIVOS[ \t]*$", t, re.M | re.I):
+            continue  # página de notas (cuadros con 'Total de Activo', tramos de mora, etc.)
         lineas = [l.strip() for l in t.split("\n") if l.strip()]
         if sum(1 for l in lineas if _RX_NUM.match(l) and any(ch.isdigit() for ch in l)) < 3 and not any(re.search(r"\d[\d\.]{3,}\s+\d", l) for l in lineas):
             continue
@@ -379,6 +402,9 @@ def parse_eeff_lineas(paginas, max_paginas=16):
                 nums = [parse_num(x) for x in toks[:4]]
             elif any(ch.isalpha() for ch in l) and not _norm(l).startswith(("M$", "NOTA", "AL 31", "AL 30", "POR EL", "POR LOS", "EN MILES", "(EN MILES")):
                 glosa = l; cod = codigo
+                mc = re.match(r"^(\d{2}\.\d{3})\s+(\S.*)$", l)  # '11.010 Disponible' (código y glosa en la misma línea)
+                if mc:
+                    cod, glosa = mc.group(1), mc.group(2).strip()
                 nums = _numeros_siguientes(lineas, i, 4 if multicol else 2, saltar_nota=True)
                 nota = lineas[i + 1] if i + 1 < len(lineas) and re.fullmatch(r"\d{1,2}", lineas[i + 1]) and nums else None
                 if not nums:
@@ -409,7 +435,10 @@ def parse_eeff_lineas(paginas, max_paginas=16):
 
 def conciliar(lineas):
     """Aplica las conciliaciones del catálogo sobre monto_mclp. Devuelve dict nombre→bool|None (None si faltan cuentas)."""
-    v = {l["cuenta_canonica"]: l["monto_mclp"] for l in lineas if l["cuenta_canonica"] and l["monto_mclp"] is not None}
+    v = {}
+    for l in lineas:
+        if l["cuenta_canonica"] and l["monto_mclp"] is not None and l["cuenta_canonica"] not in v:
+            v[l["cuenta_canonica"]] = l["monto_mclp"]
     out = {}
     for c in CATALOGO["conciliaciones"]:
         if not all(k in v for k in c["izq"] + c["der"]):
@@ -429,7 +458,10 @@ _RESUMEN = [("disponible", "DISPONIBLE"), ("valores_negociables", "VALORES_NEGOC
 
 
 def derivar_resumen(lineas):
-    v = {l["cuenta_canonica"]: l["monto_mclp"] for l in lineas if l["cuenta_canonica"]}
+    v = {}
+    for l in lineas:  # primera ocurrencia (orden del PDF): el balance va antes que cualquier cuadro de notas
+        if l["cuenta_canonica"] and l["cuenta_canonica"] not in v:
+            v[l["cuenta_canonica"]] = l["monto_mclp"]
     fila = {f"{k}_mclp": v.get(c) for k, c in _RESUMEN}
     conc = conciliar(lineas)
     fila["cuadre_contable_ok"] = bool(conc.get("activos_igual_pasivos"))
@@ -503,12 +535,39 @@ def _listar_pdfs_ps(op, sec, anio, mm):
     out = []
     for tr in BeautifulSoup(html, "html.parser").find_all("tr"):
         txt = tr.get_text(" ", strip=True); tl = txt.lower()
-        if "patrimonios separados" not in tl or any(k in tl for k in ("analisis", "análisis", "declaraci", "responsabilidad")):
+        if "patrimonios separados" not in tl or any(k in tl for k in ("analisis", "análisis", "razonado", "declaraci", "responsabilidad")):
             continue
         a = tr.find("a", href=lambda h: h and "ver_sgd.php" in h and "bitacora" not in h)
         if a:
             out.append((txt, CMF + a["href"] if a["href"].startswith("/") else a["href"]))
     return url_ent, out
+
+
+def _tesseract_disponible():
+    import shutil
+    return shutil.which("tesseract") is not None
+
+
+def ocr_paginas_imagen(doc, paginas, max_paginas=16, dpi=300):
+    """Páginas cuyo balance viene como imagen (texto < 300 caracteres pero con imágenes): se reemplaza su texto por el
+    OCR de Tesseract (idioma spa, psm 6 = bloque uniforme). Devuelve (paginas, indices_ocr). Sin tesseract → sin cambios."""
+    import subprocess, tempfile
+    idx = [i for i in range(min(len(paginas), max_paginas)) if len(paginas[i].strip()) < 300 and doc[i].get_images()]
+    if not idx or not _tesseract_disponible():
+        return paginas, []
+    out = list(paginas); hechos = []
+    for i in idx:
+        try:
+            pix = doc[i].get_pixmap(dpi=dpi)
+            with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as fh:
+                pix.save(fh.name); png = fh.name
+            r = subprocess.run(["tesseract", png, "stdout", "-l", "spa", "--psm", "6"], capture_output=True, text=True, timeout=180)
+            os.unlink(png)
+            if r.returncode == 0 and r.stdout.strip():
+                out[i] = paginas[i] + "\n" + r.stdout; hechos.append(i + 1)
+        except Exception as e:  # OCR fallido en una página: se deja el texto original
+            print(f"    ocr página {i + 1}: {e}")
+    return out, hechos
 
 
 def paso_ps(op, secs, desde, hasta, trimestres):
@@ -537,9 +596,11 @@ def paso_ps(op, secs, desde, hasta, trimestres):
                     try:
                         pdf = http_get(op, pdf_url, referer=url_ent, timeout=90)
                         doc = fitz.open(stream=pdf, filetype="pdf")
-                        paginas = [doc[i].get_text() for i in range(len(doc))]; doc.close()
+                        paginas = [doc[i].get_text() for i in range(len(doc))]
+                        paginas, pags_ocr = ocr_paginas_imagen(doc, paginas); doc.close()
                     except Exception as e:
                         cobertura.append({**cob, "estado": f"error_pdf:{e}"}); continue
+                    cob["paginas_ocr"] = ",".join(map(str, pags_ocr)) if pags_ocr else None
                     if len(paginas) <= 1 or "Archivo No Disponible" in paginas[0]:
                         cobertura.append({**cob, "estado": "pdf_no_disponible"}); continue
                     if sum(len(pg) for pg in paginas[:4]) < 200:
@@ -547,7 +608,7 @@ def paso_ps(op, secs, desde, hasta, trimestres):
                     meta = meta_desde_texto("\n".join(paginas[:5]), txt, sec["rut"], sec["razon_social"])
                     if not meta:
                         cobertura.append({**cob, "estado": "sin_codigo_emision"}); continue
-                    prov = {"fuente_url": pdf_url, "metodo": metodo_tag("pdf_texto_pymupdf|catalogo_" + CATALOGO["version"]), "fecha_extraccion": ahora(),
+                    prov = {"fuente_url": pdf_url, "metodo": metodo_tag(("pdf_texto_pymupdf+ocr_tesseract" if pags_ocr else "pdf_texto_pymupdf") + "|catalogo_" + CATALOGO["version"]), "fecha_extraccion": ahora(),
                             "script_version": SCRIPT_VERSION, "pdf_sha256": hashlib.sha256(pdf).hexdigest()}
                     lin = parse_eeff_lineas(paginas)
                     for l in lin:
