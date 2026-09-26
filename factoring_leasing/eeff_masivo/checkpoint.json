@@ -16354,6 +16354,66 @@
       "api": [
         "OK"
       ]
+    },
+    "94050000-1|2014-03": {
+      "rut": "94050000-1",
+      "razon_social": "GENERAL MOTORS FINANCIAL CHILE S.A.",
+      "periodo": "2014-03",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 9,
+      "notas_sin_leer": 2,
+      "lineas_balance": 25,
+      "lineas_resultados": 11,
+      "api": [
+        "OK"
+      ]
+    },
+    "90146000-0|2014-03": {
+      "rut": "90146000-0",
+      "razon_social": "SERVICIOS FINANCIEROS PROGRESO S.A.",
+      "periodo": "2014-03",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 1,
+      "notas_ok": 18,
+      "notas_sin_leer": 1,
+      "lineas_balance": 35,
+      "lineas_resultados": 15,
+      "api": [
+        "OK"
+      ]
+    },
+    "76381570-6|2014-03": {
+      "rut": "76381570-6",
+      "razon_social": "INTERFACTOR S.A.",
+      "periodo": "2014-03",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "SIN_PDF",
+      "cuadre_resultados": "SIN_PDF",
+      "cuadre_detalle": "SIN_PDF",
+      "caidas": 0,
+      "notas_ok": 0,
+      "notas_sin_leer": 0,
+      "lineas_balance": 0,
+      "lineas_resultados": 0,
+      "api": [
+        "SOLO_API"
+      ]
     }
   }
 }

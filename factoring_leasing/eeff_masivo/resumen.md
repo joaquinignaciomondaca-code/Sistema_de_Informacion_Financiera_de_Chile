@@ -1,0 +1,825 @@
+# Masivo factoring y leasing
+
+Misma lectura que la prueba: el PDF, no el texto convertido. Lo que no cierra queda marcado.
+
+Leídos en esta pasada: 818. Saltados: 0. En el checkpoint: 818.
+Marcados: 812. Sin PDF: 7.
+
+- LATAM TRADE CAPITAL S.A. (99595990-9 2026-03): balance=- resultados=- notas ok=0 sin leer=0 caidas=0 error=sin PDF
+- FACTORING MERCANTIL S.A. (99569200-7 2026-03): balance=- resultados=- notas ok=0 sin leer=0 caidas=0 error=sin PDF
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2026-03): balance=OK resultados=OK notas ok=10 sin leer=1 caidas=0
+- SMB FACTORING S.A. (99513410-1 2026-03): balance=- resultados=- notas ok=0 sin leer=0 caidas=0 error=sin PDF
+- PENTA FINANCIERO S.A. (99501480-7 2026-03): balance=OK resultados=FALTAN_LINEAS notas ok=7 sin leer=8 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2026-03): balance=OK resultados=OK notas ok=9 sin leer=7 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2026-03): balance=OK resultados=OK notas ok=9 sin leer=0 caidas=0
+- SCOTIA AZUL SOCIEDAD DE LEASING INMOBILIARIO S.A. (96805850-9 2026-03): balance=- resultados=- notas ok=0 sin leer=0 caidas=0 error=sin PDF
+- CONCRECES LEASING S.A. (96784400-4 2026-03): balance=OK resultados=OK notas ok=9 sin leer=1 caidas=0
+- BCI FACTORING S.A. (96720830-2 2026-03): balance=- resultados=- notas ok=0 sin leer=0 caidas=0 error=sin PDF
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2026-03): balance=OK resultados=OK notas ok=14 sin leer=1 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2026-03): balance=OK resultados=OK notas ok=15 sin leer=1 caidas=0
+- FACTOTAL S.A. (96660790-4 2026-03): balance=OK resultados=OK notas ok=12 sin leer=3 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2026-03): balance=OK resultados=OK notas ok=9 sin leer=6 caidas=1
+- INCOFIN S.A. (96626570-1 2026-03): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- BANDESARROLLO SOCIEDAD DE LEASING INMOBILIARIO S.A (96611310-3 2026-03): balance=- resultados=- notas ok=0 sin leer=0 caidas=0 error=sin PDF
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2026-03): balance=OK resultados=OK notas ok=9 sin leer=2 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2026-03): balance=OK resultados=OK notas ok=15 sin leer=4 caidas=0
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2026-03): balance=OK resultados=OK notas ok=16 sin leer=2 caidas=0
+- BICE FACTORING S.A. (76562786-9 2026-03): balance=- resultados=- notas ok=0 sin leer=0 caidas=0 error=sin PDF
+- ST CAPITAL SPA (76555835-2 2026-03): balance=OK resultados=OK notas ok=0 sin leer=14 caidas=0
+- INTERFACTOR S.A. (76381570-6 2026-03): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2026-03): balance=OK resultados=OK notas ok=14 sin leer=2 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2026-03): balance=OK resultados=OK notas ok=14 sin leer=2 caidas=0
+- CBP FINANCIA CAPITAL FACTORING S.A. (76197101-8 2026-03): balance=OK resultados=OK notas ok=9 sin leer=0 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2026-03): balance=OK resultados=OK notas ok=13 sin leer=2 caidas=0
+- FACTORING MERCANTIL S.A. (99569200-7 2025-12): balance=OK resultados=OK notas ok=7 sin leer=2 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2025-12): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=1 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2025-12): balance=OK resultados=OK notas ok=8 sin leer=7 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2025-12): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=6 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2025-12): balance=OK resultados=OK notas ok=8 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2025-12): balance=OK resultados=OK notas ok=10 sin leer=1 caidas=2
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2025-12): balance=OK resultados=OK notas ok=10 sin leer=5 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2025-12): balance=INCOMPLETO resultados=SIN_PDF notas ok=11 sin leer=0 caidas=0
+- FACTOTAL S.A. (96660790-4 2025-12): balance=OK resultados=OK notas ok=12 sin leer=3 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2025-12): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=6 caidas=1
+- INCOFIN S.A. (96626570-1 2025-12): balance=OK resultados=OK notas ok=12 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2025-12): balance=OK resultados=FALTAN_LINEAS notas ok=0 sin leer=12 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2025-12): balance=OK resultados=OK notas ok=12 sin leer=6 caidas=1
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2025-12): balance=OK resultados=OK notas ok=15 sin leer=3 caidas=0
+- INTERFACTOR S.A. (76381570-6 2025-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2025-12): balance=OK resultados=OK notas ok=16 sin leer=0 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2025-12): balance=OK resultados=OK notas ok=14 sin leer=2 caidas=0
+- CBP FINANCIA CAPITAL FACTORING S.A. (76197101-8 2025-12): balance=OK resultados=OK notas ok=9 sin leer=1 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2025-12): balance=OK resultados=OK notas ok=12 sin leer=3 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2025-09): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=3 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2025-09): balance=OK resultados=FALTAN_LINEAS notas ok=8 sin leer=6 caidas=1
+- EUROCAPITAL S.A. (96861280-8 2025-09): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=6 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2025-09): balance=OK resultados=OK notas ok=8 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2025-09): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=1 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2025-09): balance=OK resultados=OK notas ok=14 sin leer=1 caidas=14
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2025-09): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=0
+- FACTOTAL S.A. (96660790-4 2025-09): balance=OK resultados=OK notas ok=12 sin leer=2 caidas=7
+- FACTORING SECURITY S.A. (96655860-1 2025-09): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- INCOFIN S.A. (96626570-1 2025-09): balance=OK resultados=OK notas ok=12 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2025-09): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2025-09): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=6 caidas=0
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2025-09): balance=OK resultados=OK notas ok=14 sin leer=4 caidas=0
+- INTERFACTOR S.A. (76381570-6 2025-09): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2025-09): balance=OK resultados=OK notas ok=14 sin leer=2 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2025-09): balance=OK resultados=OK notas ok=14 sin leer=2 caidas=0
+- CBP FINANCIA CAPITAL FACTORING S.A. (76197101-8 2025-09): balance=OK resultados=OK notas ok=9 sin leer=1 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2025-09): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=3 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2025-06): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=3 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2025-06): balance=OK resultados=FALTAN_LINEAS notas ok=9 sin leer=6 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2025-06): balance=OK resultados=FALTAN_LINEAS notas ok=8 sin leer=8 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2025-06): balance=OK resultados=OK notas ok=8 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2025-06): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=1 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2025-06): balance=OK resultados=OK notas ok=15 sin leer=1 caidas=14
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2025-06): balance=OK resultados=OK notas ok=15 sin leer=2 caidas=0
+- FACTOTAL S.A. (96660790-4 2025-06): balance=OK resultados=OK notas ok=11 sin leer=3 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2025-06): balance=OK resultados=FALTAN_LINEAS notas ok=9 sin leer=5 caidas=1
+- INCOFIN S.A. (96626570-1 2025-06): balance=OK resultados=SIN_PDF notas ok=12 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2025-06): balance=OK resultados=OK notas ok=9 sin leer=2 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2025-06): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=6 caidas=0
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2025-06): balance=OK resultados=FALTAN_LINEAS notas ok=15 sin leer=3 caidas=0
+- INTERFACTOR S.A. (76381570-6 2025-06): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2025-06): balance=OK resultados=SIN_PDF notas ok=13 sin leer=2 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2025-06): balance=OK resultados=OK notas ok=14 sin leer=2 caidas=0
+- CBP FINANCIA CAPITAL FACTORING S.A. (76197101-8 2025-06): balance=OK resultados=OK notas ok=9 sin leer=1 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2025-06): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=2 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2025-03): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=7 sin leer=0 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2025-03): balance=OK resultados=FALTAN_LINEAS notas ok=9 sin leer=7 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2025-03): balance=OK resultados=OK notas ok=10 sin leer=6 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2025-03): balance=OK resultados=OK notas ok=8 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2025-03): balance=OK resultados=OK notas ok=10 sin leer=1 caidas=2
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2025-03): balance=OK resultados=OK notas ok=14 sin leer=2 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2025-03): balance=OK resultados=OK notas ok=15 sin leer=2 caidas=0
+- FACTOTAL S.A. (96660790-4 2025-03): balance=OK resultados=OK notas ok=11 sin leer=3 caidas=1
+- FACTORING SECURITY S.A. (96655860-1 2025-03): balance=OK resultados=OK notas ok=8 sin leer=5 caidas=1
+- INCOFIN S.A. (96626570-1 2025-03): balance=INCOMPLETO resultados=OK notas ok=4 sin leer=5 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2025-03): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=0 sin leer=4 caidas=1
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2025-03): balance=OK resultados=OK notas ok=12 sin leer=6 caidas=0
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2025-03): balance=OK resultados=OK notas ok=15 sin leer=2 caidas=0
+- INTERFACTOR S.A. (76381570-6 2025-03): balance=SIN_PDF resultados=OK notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2025-03): balance=OK resultados=OK notas ok=11 sin leer=5 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2025-03): balance=OK resultados=OK notas ok=13 sin leer=3 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2025-03): balance=OK resultados=OK notas ok=11 sin leer=3 caidas=0
+- FACTORING MERCANTIL S.A. (99569200-7 2024-12): balance=OK resultados=OK notas ok=7 sin leer=3 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2024-12): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=3 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2024-12): balance=OK resultados=OK notas ok=9 sin leer=7 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2024-12): balance=OK resultados=OK notas ok=6 sin leer=10 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2024-12): balance=OK resultados=SIN_PDF notas ok=8 sin leer=2 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2024-12): balance=OK resultados=OK notas ok=11 sin leer=1 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2024-12): balance=OK resultados=OK notas ok=13 sin leer=3 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2024-12): balance=OK resultados=OK notas ok=15 sin leer=2 caidas=0
+- FACTOTAL S.A. (96660790-4 2024-12): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2024-12): balance=OK resultados=OK notas ok=9 sin leer=5 caidas=1
+- INCOFIN S.A. (96626570-1 2024-12): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2024-12): balance=OK resultados=FALTAN_LINEAS notas ok=0 sin leer=13 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2024-12): balance=OK resultados=OK notas ok=11 sin leer=7 caidas=0
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2024-12): balance=OK resultados=OK notas ok=13 sin leer=4 caidas=0
+- INTERFACTOR S.A. (76381570-6 2024-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2024-12): balance=OK resultados=OK notas ok=14 sin leer=1 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2024-12): balance=OK resultados=OK notas ok=13 sin leer=3 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2024-12): balance=OK resultados=OK notas ok=10 sin leer=4 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2024-09): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=2 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2024-09): balance=OK resultados=OK notas ok=9 sin leer=6 caidas=1
+- EUROCAPITAL S.A. (96861280-8 2024-09): balance=OK resultados=OK notas ok=10 sin leer=6 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2024-09): balance=OK resultados=OK notas ok=8 sin leer=2 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2024-09): balance=OK resultados=OK notas ok=11 sin leer=1 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2024-09): balance=OK resultados=OK notas ok=12 sin leer=2 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2024-09): balance=OK resultados=OK notas ok=15 sin leer=2 caidas=0
+- FACTOTAL S.A. (96660790-4 2024-09): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=2 caidas=3
+- FACTORING SECURITY S.A. (96655860-1 2024-09): balance=OK resultados=OK notas ok=9 sin leer=5 caidas=2
+- INCOFIN S.A. (96626570-1 2024-09): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2024-09): balance=OK resultados=OK notas ok=8 sin leer=3 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2024-09): balance=OK resultados=OK notas ok=10 sin leer=7 caidas=0
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2024-09): balance=OK resultados=OK notas ok=14 sin leer=2 caidas=0
+- INTERFACTOR S.A. (76381570-6 2024-09): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2024-09): balance=OK resultados=FALTAN_LINEAS notas ok=14 sin leer=1 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2024-09): balance=OK resultados=OK notas ok=13 sin leer=3 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2024-09): balance=OK resultados=OK notas ok=10 sin leer=4 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2024-06): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=2 caidas=0
+- SMB FACTORING S.A. (99513410-1 2024-06): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=10 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2024-06): balance=OK resultados=OK notas ok=9 sin leer=6 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2024-06): balance=OK resultados=OK notas ok=10 sin leer=6 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2024-06): balance=OK resultados=OK notas ok=8 sin leer=2 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2024-06): balance=OK resultados=OK notas ok=11 sin leer=1 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2024-06): balance=OK resultados=OK notas ok=12 sin leer=2 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2024-06): balance=OK resultados=OK notas ok=15 sin leer=2 caidas=0
+- FACTOTAL S.A. (96660790-4 2024-06): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=9 sin leer=0 caidas=2
+- FACTORING SECURITY S.A. (96655860-1 2024-06): balance=OK resultados=OK notas ok=10 sin leer=4 caidas=1
+- INCOFIN S.A. (96626570-1 2024-06): balance=OK resultados=OK notas ok=12 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2024-06): balance=OK resultados=OK notas ok=9 sin leer=4 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2024-06): balance=OK resultados=OK notas ok=12 sin leer=5 caidas=0
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2024-06): balance=OK resultados=OK notas ok=14 sin leer=2 caidas=0
+- INTERFACTOR S.A. (76381570-6 2024-06): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2024-06): balance=OK resultados=OK notas ok=0 sin leer=16 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2024-06): balance=OK resultados=OK notas ok=13 sin leer=3 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2024-06): balance=OK resultados=OK notas ok=10 sin leer=4 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2024-03): balance=OK resultados=OK notas ok=12 sin leer=2 caidas=0
+- SMB FACTORING S.A. (99513410-1 2024-03): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=9 caidas=1
+- PENTA FINANCIERO S.A. (99501480-7 2024-03): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=5 caidas=1
+- EUROCAPITAL S.A. (96861280-8 2024-03): balance=OK resultados=OK notas ok=10 sin leer=6 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2024-03): balance=OK resultados=OK notas ok=9 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2024-03): balance=OK resultados=OK notas ok=11 sin leer=1 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2024-03): balance=OK resultados=OK notas ok=13 sin leer=2 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2024-03): balance=OK resultados=OK notas ok=15 sin leer=2 caidas=0
+- FACTOTAL S.A. (96660790-4 2024-03): balance=OK resultados=FALTAN_LINEAS notas ok=14 sin leer=1 caidas=1
+- FACTORING SECURITY S.A. (96655860-1 2024-03): balance=OK resultados=OK notas ok=11 sin leer=3 caidas=1
+- INCOFIN S.A. (96626570-1 2024-03): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2024-03): balance=OK resultados=OK notas ok=8 sin leer=4 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2024-03): balance=OK resultados=OK notas ok=11 sin leer=6 caidas=0
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2024-03): balance=OK resultados=FALTAN_LINEAS notas ok=14 sin leer=3 caidas=0
+- INTERFACTOR S.A. (76381570-6 2024-03): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2024-03): balance=OK resultados=OK notas ok=13 sin leer=3 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2024-03): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=3 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2024-03): balance=OK resultados=OK notas ok=6 sin leer=8 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2023-12): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=1 caidas=0
+- SMB FACTORING S.A. (99513410-1 2023-12): balance=OK resultados=OK notas ok=2 sin leer=10 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2023-12): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=5 caidas=1
+- EUROCAPITAL S.A. (96861280-8 2023-12): balance=OK resultados=OK notas ok=6 sin leer=10 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2023-12): balance=OK resultados=OK notas ok=9 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2023-12): balance=OK resultados=OK notas ok=11 sin leer=1 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2023-12): balance=OK resultados=OK notas ok=14 sin leer=1 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2023-12): balance=OK resultados=OK notas ok=15 sin leer=2 caidas=0
+- FACTOTAL S.A. (96660790-4 2023-12): balance=OK resultados=FALTAN_LINEAS notas ok=14 sin leer=1 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2023-12): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=4 caidas=0
+- INCOFIN S.A. (96626570-1 2023-12): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2023-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2023-12): balance=OK resultados=OK notas ok=9 sin leer=6 caidas=1
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2023-12): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=5 caidas=3
+- INTERFACTOR S.A. (76381570-6 2023-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2023-12): balance=OK resultados=OK notas ok=12 sin leer=5 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2023-12): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=3 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2023-12): balance=OK resultados=OK notas ok=8 sin leer=6 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2023-09): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=2 caidas=0
+- SMB FACTORING S.A. (99513410-1 2023-09): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=12 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2023-09): balance=OK resultados=OK notas ok=9 sin leer=5 caidas=1
+- EUROCAPITAL S.A. (96861280-8 2023-09): balance=OK resultados=FALTAN_LINEAS notas ok=4 sin leer=12 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2023-09): balance=OK resultados=OK notas ok=9 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2023-09): balance=OK resultados=OK notas ok=11 sin leer=1 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2023-09): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2023-09): balance=OK resultados=OK notas ok=15 sin leer=2 caidas=0
+- FACTOTAL S.A. (96660790-4 2023-09): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=1 caidas=1
+- FACTORING SECURITY S.A. (96655860-1 2023-09): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=3 caidas=0
+- INCOFIN S.A. (96626570-1 2023-09): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2023-09): balance=OK resultados=OK notas ok=7 sin leer=4 caidas=3
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2023-09): balance=OK resultados=OK notas ok=11 sin leer=4 caidas=1
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2023-09): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=5 caidas=3
+- INTERFACTOR S.A. (76381570-6 2023-09): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2023-09): balance=OK resultados=OK notas ok=14 sin leer=3 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2023-09): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=2 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2023-09): balance=OK resultados=OK notas ok=8 sin leer=6 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2023-06): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=2 caidas=0
+- SMB FACTORING S.A. (99513410-1 2023-06): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=12 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2023-06): balance=OK resultados=OK notas ok=11 sin leer=3 caidas=1
+- EUROCAPITAL S.A. (96861280-8 2023-06): balance=OK resultados=FALTAN_LINEAS notas ok=5 sin leer=11 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2023-06): balance=OK resultados=OK notas ok=9 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2023-06): balance=OK resultados=OK notas ok=11 sin leer=1 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2023-06): balance=OK resultados=OK notas ok=13 sin leer=2 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2023-06): balance=OK resultados=OK notas ok=14 sin leer=3 caidas=0
+- FACTOTAL S.A. (96660790-4 2023-06): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=1 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2023-06): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=3 caidas=0
+- INCOFIN S.A. (96626570-1 2023-06): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2023-06): balance=OK resultados=OK notas ok=7 sin leer=5 caidas=3
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2023-06): balance=OK resultados=OK notas ok=11 sin leer=4 caidas=1
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2023-06): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=6 caidas=2
+- INTERFACTOR S.A. (76381570-6 2023-06): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2023-06): balance=OK resultados=OK notas ok=14 sin leer=3 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2023-06): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=2 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2023-06): balance=OK resultados=OK notas ok=8 sin leer=6 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2023-03): balance=OK resultados=OK notas ok=8 sin leer=4 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2023-03): balance=OK resultados=OK notas ok=11 sin leer=2 caidas=0
+- SMB FACTORING S.A. (99513410-1 2023-03): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=12 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2023-03): balance=OK resultados=OK notas ok=8 sin leer=7 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2023-03): balance=OK resultados=OK notas ok=5 sin leer=11 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2023-03): balance=OK resultados=OK notas ok=8 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2023-03): balance=OK resultados=OK notas ok=11 sin leer=1 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2023-03): balance=OK resultados=OK notas ok=14 sin leer=3 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2023-03): balance=OK resultados=OK notas ok=14 sin leer=3 caidas=0
+- FACTOTAL S.A. (96660790-4 2023-03): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=1 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2023-03): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=3 caidas=0
+- INCOFIN S.A. (96626570-1 2023-03): balance=OK resultados=OK notas ok=11 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2023-03): balance=OK resultados=OK notas ok=7 sin leer=4 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2023-03): balance=OK resultados=OK notas ok=12 sin leer=4 caidas=0
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2023-03): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=3 caidas=2
+- INTERFACTOR S.A. (76381570-6 2023-03): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2023-03): balance=OK resultados=OK notas ok=13 sin leer=4 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2023-03): balance=OK resultados=OK notas ok=13 sin leer=2 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2023-03): balance=OK resultados=OK notas ok=8 sin leer=7 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2022-12): balance=OK resultados=OK notas ok=8 sin leer=4 caidas=0
+- FACTORING MERCANTIL S.A. (99569200-7 2022-12): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=6 sin leer=4 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2022-12): balance=OK resultados=OK notas ok=11 sin leer=6 caidas=0
+- SMB FACTORING S.A. (99513410-1 2022-12): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=12 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2022-12): balance=OK resultados=OK notas ok=10 sin leer=5 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2022-12): balance=OK resultados=OK notas ok=4 sin leer=12 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2022-12): balance=OK resultados=OK notas ok=8 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2022-12): balance=OK resultados=OK notas ok=11 sin leer=2 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2022-12): balance=OK resultados=OK notas ok=14 sin leer=2 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2022-12): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=0
+- FACTOTAL S.A. (96660790-4 2022-12): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=1 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2022-12): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=3 caidas=0
+- INCOFIN S.A. (96626570-1 2022-12): balance=OK resultados=OK notas ok=11 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2022-12): balance=OK resultados=OK notas ok=0 sin leer=11 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2022-12): balance=OK resultados=OK notas ok=12 sin leer=4 caidas=1
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2022-12): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=3 caidas=2
+- INTERFACTOR S.A. (76381570-6 2022-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2022-12): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=4 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2022-12): balance=OK resultados=OK notas ok=13 sin leer=2 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2022-12): balance=OK resultados=OK notas ok=8 sin leer=7 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2022-09): balance=OK resultados=FALTAN_LINEAS notas ok=7 sin leer=5 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2022-09): balance=OK resultados=OK notas ok=12 sin leer=4 caidas=0
+- SMB FACTORING S.A. (99513410-1 2022-09): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=12 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2022-09): balance=OK resultados=OK notas ok=9 sin leer=6 caidas=1
+- EUROCAPITAL S.A. (96861280-8 2022-09): balance=OK resultados=OK notas ok=5 sin leer=12 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2022-09): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2022-09): balance=OK resultados=OK notas ok=12 sin leer=1 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2022-09): balance=OK resultados=OK notas ok=14 sin leer=1 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2022-09): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=0
+- FACTOTAL S.A. (96660790-4 2022-09): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=1 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2022-09): balance=DIFIERE resultados=FALTAN_LINEAS notas ok=10 sin leer=5 caidas=0
+- INCOFIN S.A. (96626570-1 2022-09): balance=OK resultados=OK notas ok=12 sin leer=2 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2022-09): balance=OK resultados=OK notas ok=8 sin leer=3 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2022-09): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=4 caidas=0
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2022-09): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=1 caidas=2
+- INTERFACTOR S.A. (76381570-6 2022-09): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2022-09): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=12 sin leer=5 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2022-09): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=2 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2022-09): balance=OK resultados=OK notas ok=8 sin leer=7 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2022-06): balance=OK resultados=FALTAN_LINEAS notas ok=9 sin leer=3 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2022-06): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=5 caidas=0
+- SMB FACTORING S.A. (99513410-1 2022-06): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=12 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2022-06): balance=OK resultados=OK notas ok=8 sin leer=7 caidas=1
+- EUROCAPITAL S.A. (96861280-8 2022-06): balance=OK resultados=OK notas ok=4 sin leer=13 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2022-06): balance=OK resultados=OK notas ok=8 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2022-06): balance=OK resultados=OK notas ok=11 sin leer=2 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2022-06): balance=OK resultados=OK notas ok=14 sin leer=1 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2022-06): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=0
+- FACTOTAL S.A. (96660790-4 2022-06): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=1 caidas=1
+- FACTORING SECURITY S.A. (96655860-1 2022-06): balance=DIFIERE resultados=FALTAN_LINEAS notas ok=10 sin leer=5 caidas=0
+- INCOFIN S.A. (96626570-1 2022-06): balance=OK resultados=OK notas ok=12 sin leer=2 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2022-06): balance=OK resultados=OK notas ok=8 sin leer=3 caidas=4
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2022-06): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=4 caidas=0
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2022-06): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=1 caidas=2
+- INTERFACTOR S.A. (76381570-6 2022-06): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2022-06): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=12 sin leer=5 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2022-06): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=2 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2022-06): balance=OK resultados=OK notas ok=8 sin leer=7 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2022-03): balance=OK resultados=OK notas ok=9 sin leer=3 caidas=0
+- SMB FACTORING S.A. (99513410-1 2022-03): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=13 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2022-03): balance=OK resultados=OK notas ok=8 sin leer=7 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2022-03): balance=OK resultados=OK notas ok=5 sin leer=12 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2022-03): balance=OK resultados=FALTAN_LINEAS notas ok=7 sin leer=2 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2022-03): balance=OK resultados=OK notas ok=12 sin leer=1 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2022-03): balance=OK resultados=OK notas ok=14 sin leer=3 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2022-03): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=0
+- FACTOTAL S.A. (96660790-4 2022-03): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=2 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2022-03): balance=DIFIERE resultados=OK notas ok=11 sin leer=3 caidas=0
+- INCOFIN S.A. (96626570-1 2022-03): balance=OK resultados=OK notas ok=11 sin leer=2 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2022-03): balance=OK resultados=OK notas ok=7 sin leer=4 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2022-03): balance=OK resultados=OK notas ok=12 sin leer=4 caidas=0
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2022-03): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=3 caidas=2
+- INTERFACTOR S.A. (76381570-6 2022-03): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2022-03): balance=INCOMPLETO resultados=OK notas ok=15 sin leer=1 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2022-03): balance=OK resultados=OK notas ok=13 sin leer=2 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2022-03): balance=OK resultados=OK notas ok=8 sin leer=7 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2021-12): balance=OK resultados=OK notas ok=9 sin leer=3 caidas=0
+- FACTORING MERCANTIL S.A. (99569200-7 2021-12): balance=INCOMPLETO resultados=OK notas ok=7 sin leer=3 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2021-12): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=4 caidas=0
+- SMB FACTORING S.A. (99513410-1 2021-12): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=13 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2021-12): balance=OK resultados=FALTAN_LINEAS notas ok=8 sin leer=7 caidas=1
+- EUROCAPITAL S.A. (96861280-8 2021-12): balance=OK resultados=OK notas ok=10 sin leer=7 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2021-12): balance=OK resultados=FALTAN_LINEAS notas ok=7 sin leer=2 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2021-12): balance=OK resultados=OK notas ok=12 sin leer=1 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2021-12): balance=OK resultados=OK notas ok=13 sin leer=3 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2021-12): balance=OK resultados=FALTAN_LINEAS notas ok=16 sin leer=1 caidas=0
+- FACTOTAL S.A. (96660790-4 2021-12): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=2 caidas=1
+- FACTORING SECURITY S.A. (96655860-1 2021-12): balance=DIFIERE resultados=OK notas ok=11 sin leer=4 caidas=0
+- INCOFIN S.A. (96626570-1 2021-12): balance=OK resultados=OK notas ok=13 sin leer=0 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2021-12): balance=OK resultados=OK notas ok=8 sin leer=3 caidas=3
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2021-12): balance=OK resultados=OK notas ok=15 sin leer=1 caidas=1
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2021-12): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=12 sin leer=4 caidas=3
+- INTERFACTOR S.A. (76381570-6 2021-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2021-12): balance=INCOMPLETO resultados=OK notas ok=14 sin leer=1 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2021-12): balance=OK resultados=OK notas ok=13 sin leer=2 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2021-12): balance=OK resultados=OK notas ok=6 sin leer=9 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2021-09): balance=OK resultados=FALTAN_LINEAS notas ok=7 sin leer=5 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2021-09): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=5 caidas=0
+- SMB FACTORING S.A. (99513410-1 2021-09): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=13 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2021-09): balance=OK resultados=FALTAN_LINEAS notas ok=9 sin leer=5 caidas=1
+- EUROCAPITAL S.A. (96861280-8 2021-09): balance=OK resultados=FALTAN_LINEAS notas ok=5 sin leer=12 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2021-09): balance=OK resultados=OK notas ok=7 sin leer=2 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2021-09): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2021-09): balance=OK resultados=OK notas ok=13 sin leer=3 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2021-09): balance=OK resultados=OK notas ok=15 sin leer=1 caidas=0
+- FACTOTAL S.A. (96660790-4 2021-09): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=2 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2021-09): balance=INCOMPLETO resultados=OK notas ok=6 sin leer=2 caidas=0
+- INCOFIN S.A. (96626570-1 2021-09): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2021-09): balance=OK resultados=OK notas ok=9 sin leer=3 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2021-09): balance=OK resultados=OK notas ok=12 sin leer=5 caidas=0
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2021-09): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=2 caidas=4
+- INTERFACTOR S.A. (76381570-6 2021-09): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2021-09): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=14 sin leer=2 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2021-09): balance=OK resultados=OK notas ok=11 sin leer=2 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2021-09): balance=OK resultados=OK notas ok=5 sin leer=10 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2021-06): balance=OK resultados=FALTAN_LINEAS notas ok=6 sin leer=6 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2021-06): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=5 caidas=0
+- SMB FACTORING S.A. (99513410-1 2021-06): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=12 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2021-06): balance=OK resultados=FALTAN_LINEAS notas ok=8 sin leer=7 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2021-06): balance=OK resultados=OK notas ok=10 sin leer=7 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2021-06): balance=OK resultados=OK notas ok=7 sin leer=2 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2021-06): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2021-06): balance=OK resultados=OK notas ok=14 sin leer=2 caidas=12
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2021-06): balance=OK resultados=FALTAN_LINEAS notas ok=15 sin leer=2 caidas=0
+- FACTOTAL S.A. (96660790-4 2021-06): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=2 caidas=6
+- FACTORING SECURITY S.A. (96655860-1 2021-06): balance=DIFIERE resultados=OK notas ok=12 sin leer=3 caidas=0
+- INCOFIN S.A. (96626570-1 2021-06): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2021-06): balance=DIFIERE resultados=OK notas ok=9 sin leer=3 caidas=3
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2021-06): balance=OK resultados=OK notas ok=12 sin leer=5 caidas=0
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2021-06): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=2 caidas=2
+- INTERFACTOR S.A. (76381570-6 2021-06): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2021-06): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=14 sin leer=2 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2021-06): balance=OK resultados=OK notas ok=11 sin leer=2 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2021-06): balance=OK resultados=OK notas ok=5 sin leer=10 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2021-03): balance=OK resultados=FALTAN_LINEAS notas ok=7 sin leer=5 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2021-03): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=4 caidas=0
+- SMB FACTORING S.A. (99513410-1 2021-03): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=12 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2021-03): balance=OK resultados=OK notas ok=7 sin leer=7 caidas=1
+- EUROCAPITAL S.A. (96861280-8 2021-03): balance=OK resultados=FALTAN_LINEAS notas ok=6 sin leer=11 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2021-03): balance=OK resultados=FALTAN_LINEAS notas ok=9 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2021-03): balance=OK resultados=OK notas ok=11 sin leer=2 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2021-03): balance=OK resultados=OK notas ok=13 sin leer=3 caidas=12
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2021-03): balance=OK resultados=FALTAN_LINEAS notas ok=15 sin leer=2 caidas=2
+- FACTOTAL S.A. (96660790-4 2021-03): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=2 caidas=1
+- FACTORING SECURITY S.A. (96655860-1 2021-03): balance=DIFIERE resultados=OK notas ok=12 sin leer=3 caidas=0
+- INCOFIN S.A. (96626570-1 2021-03): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2021-03): balance=DIFIERE resultados=OK notas ok=8 sin leer=4 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2021-03): balance=OK resultados=OK notas ok=13 sin leer=4 caidas=1
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2021-03): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=2 caidas=4
+- INTERFACTOR S.A. (76381570-6 2021-03): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2021-03): balance=INCOMPLETO resultados=OK notas ok=14 sin leer=1 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2021-03): balance=OK resultados=OK notas ok=11 sin leer=2 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2021-03): balance=OK resultados=OK notas ok=4 sin leer=11 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2020-12): balance=OK resultados=OK notas ok=8 sin leer=4 caidas=0
+- FACTORING MERCANTIL S.A. (99569200-7 2020-12): balance=INCOMPLETO resultados=OK notas ok=6 sin leer=2 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2020-12): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=4 caidas=0
+- SMB FACTORING S.A. (99513410-1 2020-12): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=12 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2020-12): balance=OK resultados=FALTAN_LINEAS notas ok=7 sin leer=7 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2020-12): balance=OK resultados=FALTAN_LINEAS notas ok=4 sin leer=13 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2020-12): balance=OK resultados=FALTAN_LINEAS notas ok=8 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2020-12): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=2 caidas=4
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2020-12): balance=OK resultados=OK notas ok=13 sin leer=3 caidas=12
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2020-12): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=2
+- FACTOTAL S.A. (96660790-4 2020-12): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=2 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2020-12): balance=DIFIERE resultados=OK notas ok=12 sin leer=3 caidas=0
+- INCOFIN S.A. (96626570-1 2020-12): balance=OK resultados=OK notas ok=14 sin leer=0 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2020-12): balance=OK resultados=OK notas ok=9 sin leer=3 caidas=2
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2020-12): balance=OK resultados=OK notas ok=13 sin leer=4 caidas=1
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2020-12): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=2 caidas=5
+- INTERFACTOR S.A. (76381570-6 2020-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2020-12): balance=INCOMPLETO resultados=OK notas ok=14 sin leer=1 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2020-12): balance=OK resultados=OK notas ok=11 sin leer=2 caidas=0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8 2020-12): balance=OK resultados=OK notas ok=7 sin leer=8 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2020-09): balance=OK resultados=OK notas ok=8 sin leer=4 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2020-09): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=4 caidas=0
+- SMB FACTORING S.A. (99513410-1 2020-09): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=13 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2020-09): balance=OK resultados=FALTAN_LINEAS notas ok=7 sin leer=6 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2020-09): balance=OK resultados=FALTAN_LINEAS notas ok=6 sin leer=11 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2020-09): balance=OK resultados=OK notas ok=11 sin leer=0 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2020-09): balance=OK resultados=OK notas ok=11 sin leer=2 caidas=4
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2020-09): balance=OK resultados=OK notas ok=12 sin leer=3 caidas=11
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2020-09): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=2
+- FACTOTAL S.A. (96660790-4 2020-09): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=2 caidas=1
+- FACTORING SECURITY S.A. (96655860-1 2020-09): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=6 caidas=0
+- INCOFIN S.A. (96626570-1 2020-09): balance=OK resultados=OK notas ok=12 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2020-09): balance=OK resultados=OK notas ok=9 sin leer=3 caidas=1
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2020-09): balance=OK resultados=OK notas ok=15 sin leer=1 caidas=1
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2020-09): balance=OK resultados=FALTAN_LINEAS notas ok=8 sin leer=4 caidas=5
+- INTERFACTOR S.A. (76381570-6 2020-09): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2020-09): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=14 sin leer=1 caidas=0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K 2020-09): balance=OK resultados=OK notas ok=10 sin leer=2 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2020-06): balance=OK resultados=OK notas ok=7 sin leer=5 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2020-06): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=7 sin leer=1 caidas=0
+- SMB FACTORING S.A. (99513410-1 2020-06): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=12 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2020-06): balance=OK resultados=FALTAN_LINEAS notas ok=9 sin leer=5 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2020-06): balance=OK resultados=FALTAN_LINEAS notas ok=5 sin leer=12 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2020-06): balance=OK resultados=OK notas ok=11 sin leer=0 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2020-06): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=2 caidas=2
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2020-06): balance=OK resultados=OK notas ok=12 sin leer=3 caidas=11
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2020-06): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=2
+- FACTOTAL S.A. (96660790-4 2020-06): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=2 caidas=1
+- FACTORING SECURITY S.A. (96655860-1 2020-06): balance=OK resultados=OK notas ok=11 sin leer=5 caidas=0
+- INCOFIN S.A. (96626570-1 2020-06): balance=OK resultados=OK notas ok=12 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2020-06): balance=OK resultados=OK notas ok=9 sin leer=3 caidas=3
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2020-06): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=5 caidas=0
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2020-06): balance=OK resultados=FALTAN_LINEAS notas ok=8 sin leer=3 caidas=3
+- INTERFACTOR S.A. (76381570-6 2020-06): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2020-06): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=14 sin leer=1 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2020-03): balance=SIN_PDF resultados=FALTAN_LINEAS notas ok=0 sin leer=0 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2020-03): balance=OK resultados=FALTAN_LINEAS notas ok=15 sin leer=2 caidas=0
+- SMB FACTORING S.A. (99513410-1 2020-03): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=12 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2020-03): balance=OK resultados=OK notas ok=7 sin leer=7 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2020-03): balance=OK resultados=OK notas ok=5 sin leer=12 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2020-03): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2020-03): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=2 caidas=2
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2020-03): balance=OK resultados=OK notas ok=12 sin leer=4 caidas=11
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2020-03): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=2
+- FACTOTAL S.A. (96660790-4 2020-03): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=2 caidas=1
+- FACTORING SECURITY S.A. (96655860-1 2020-03): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- INCOFIN S.A. (96626570-1 2020-03): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2020-03): balance=OK resultados=SIN_PDF notas ok=8 sin leer=4 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2020-03): balance=OK resultados=OK notas ok=13 sin leer=4 caidas=1
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2020-03): balance=OK resultados=FALTAN_LINEAS notas ok=9 sin leer=3 caidas=4
+- INTERFACTOR S.A. (76381570-6 2020-03): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2020-03): balance=INCOMPLETO resultados=OK notas ok=14 sin leer=1 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2019-12): balance=SIN_PDF resultados=FALTAN_LINEAS notas ok=0 sin leer=0 caidas=0
+- FACTORING MERCANTIL S.A. (99569200-7 2019-12): balance=INCOMPLETO resultados=OK notas ok=7 sin leer=2 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2019-12): balance=OK resultados=FALTAN_LINEAS notas ok=15 sin leer=2 caidas=0
+- SMB FACTORING S.A. (99513410-1 2019-12): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=11 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2019-12): balance=OK resultados=OK notas ok=8 sin leer=5 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2019-12): balance=OK resultados=OK notas ok=10 sin leer=6 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2019-12): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2019-12): balance=OK resultados=OK notas ok=10 sin leer=3 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2019-12): balance=OK resultados=OK notas ok=12 sin leer=4 caidas=11
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2019-12): balance=OK resultados=OK notas ok=15 sin leer=2 caidas=2
+- FACTOTAL S.A. (96660790-4 2019-12): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=3 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2019-12): balance=INCOMPLETO resultados=OK notas ok=4 sin leer=4 caidas=0
+- INCOFIN S.A. (96626570-1 2019-12): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2019-12): balance=OK resultados=OK notas ok=7 sin leer=5 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2019-12): balance=OK resultados=OK notas ok=12 sin leer=5 caidas=1
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2019-12): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=3 caidas=5
+- INTERFACTOR S.A. (76381570-6 2019-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- PRIMUS CAPITAL S.A. (76360977-4 2019-12): balance=INCOMPLETO resultados=OK notas ok=11 sin leer=3 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2019-09): balance=OK resultados=OK notas ok=12 sin leer=1 caidas=0
+- SMB FACTORING S.A. (99513410-1 2019-09): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=12 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2019-09): balance=OK resultados=FALTAN_LINEAS notas ok=5 sin leer=11 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2019-09): balance=OK resultados=OK notas ok=11 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2019-09): balance=OK resultados=FALTAN_LINEAS notas ok=8 sin leer=5 caidas=3
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2019-09): balance=OK resultados=OK notas ok=12 sin leer=4 caidas=11
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2019-09): balance=OK resultados=FALTAN_LINEAS notas ok=16 sin leer=1 caidas=2
+- FACTOTAL S.A. (96660790-4 2019-09): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=2 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2019-09): balance=OK resultados=FALTAN_LINEAS notas ok=9 sin leer=6 caidas=0
+- INCOFIN S.A. (96626570-1 2019-09): balance=OK resultados=FALTAN_LINEAS notas ok=14 sin leer=0 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2019-09): balance=SIN_PDF resultados=FALTAN_LINEAS notas ok=0 sin leer=0 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2019-09): balance=OK resultados=OK notas ok=11 sin leer=6 caidas=1
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K 2019-09): balance=OK resultados=FALTAN_LINEAS notas ok=9 sin leer=4 caidas=4
+- INTERFACTOR S.A. (76381570-6 2019-09): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2019-06): balance=OK resultados=OK notas ok=12 sin leer=1 caidas=0
+- SMB FACTORING S.A. (99513410-1 2019-06): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=11 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2019-06): balance=OK resultados=FALTAN_LINEAS notas ok=3 sin leer=13 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2019-06): balance=OK resultados=OK notas ok=11 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2019-06): balance=OK resultados=OK notas ok=8 sin leer=4 caidas=1
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2019-06): balance=OK resultados=OK notas ok=12 sin leer=4 caidas=11
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2019-06): balance=OK resultados=FALTAN_LINEAS notas ok=16 sin leer=1 caidas=2
+- FACTOTAL S.A. (96660790-4 2019-06): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=2 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2019-06): balance=OK resultados=FALTAN_LINEAS notas ok=8 sin leer=8 caidas=0
+- INCOFIN S.A. (96626570-1 2019-06): balance=OK resultados=FALTAN_LINEAS notas ok=14 sin leer=0 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2019-06): balance=OK resultados=OK notas ok=8 sin leer=4 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2019-06): balance=OK resultados=OK notas ok=11 sin leer=5 caidas=1
+- INTERFACTOR S.A. (76381570-6 2019-06): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2019-03): balance=OK resultados=OK notas ok=12 sin leer=1 caidas=0
+- SMB FACTORING S.A. (99513410-1 2019-03): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=13 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2019-03): balance=OK resultados=OK notas ok=5 sin leer=13 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2019-03): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2019-03): balance=OK resultados=OK notas ok=8 sin leer=3 caidas=1
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2019-03): balance=OK resultados=OK notas ok=11 sin leer=4 caidas=11
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2019-03): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=2
+- FACTOTAL S.A. (96660790-4 2019-03): balance=OK resultados=SIN_PDF notas ok=11 sin leer=3 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2019-03): balance=OK resultados=OK notas ok=8 sin leer=8 caidas=0
+- INCOFIN S.A. (96626570-1 2019-03): balance=OK resultados=FALTAN_LINEAS notas ok=14 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2019-03): balance=OK resultados=OK notas ok=7 sin leer=5 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2019-03): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=6 caidas=0
+- INTERFACTOR S.A. (76381570-6 2019-03): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2018-12): balance=OK resultados=OK notas ok=6 sin leer=3 caidas=0
+- FACTORING MERCANTIL S.A. (99569200-7 2018-12): balance=INCOMPLETO resultados=OK notas ok=6 sin leer=4 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2018-12): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- SMB FACTORING S.A. (99513410-1 2018-12): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=13 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2018-12): balance=INCOMPLETO resultados=SIN_PDF notas ok=2 sin leer=7 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2018-12): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2018-12): balance=OK resultados=OK notas ok=8 sin leer=3 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2018-12): balance=OK resultados=OK notas ok=12 sin leer=3 caidas=12
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2018-12): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=0
+- FACTOTAL S.A. (96660790-4 2018-12): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=3 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2018-12): balance=OK resultados=OK notas ok=9 sin leer=7 caidas=0
+- INCOFIN S.A. (96626570-1 2018-12): balance=OK resultados=OK notas ok=14 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2018-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2018-12): balance=OK resultados=OK notas ok=11 sin leer=6 caidas=1
+- INTERFACTOR S.A. (76381570-6 2018-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2018-09): balance=SIN_PDF resultados=FALTAN_LINEAS notas ok=0 sin leer=0 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2018-09): balance=OK resultados=OK notas ok=11 sin leer=3 caidas=0
+- SMB FACTORING S.A. (99513410-1 2018-09): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=12 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2018-09): balance=OK resultados=FALTAN_LINEAS notas ok=5 sin leer=10 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2018-09): balance=OK resultados=OK notas ok=13 sin leer=0 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2018-09): balance=OK resultados=OK notas ok=9 sin leer=5 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2018-09): balance=OK resultados=OK notas ok=13 sin leer=2 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2018-09): balance=OK resultados=OK notas ok=15 sin leer=1 caidas=0
+- FACTOTAL S.A. (96660790-4 2018-09): balance=OK resultados=FALTAN_LINEAS notas ok=9 sin leer=3 caidas=2
+- FACTORING SECURITY S.A. (96655860-1 2018-09): balance=OK resultados=OK notas ok=8 sin leer=8 caidas=0
+- INCOFIN S.A. (96626570-1 2018-09): balance=OK resultados=FALTAN_LINEAS notas ok=14 sin leer=0 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2018-09): balance=OK resultados=OK notas ok=7 sin leer=5 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2018-09): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=7 caidas=0
+- INTERFACTOR S.A. (76381570-6 2018-09): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2018-06): balance=OK resultados=OK notas ok=7 sin leer=3 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2018-06): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=3 caidas=0
+- SMB FACTORING S.A. (99513410-1 2018-06): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=4 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2018-06): balance=OK resultados=FALTAN_LINEAS notas ok=4 sin leer=11 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2018-06): balance=OK resultados=OK notas ok=13 sin leer=0 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2018-06): balance=OK resultados=OK notas ok=9 sin leer=4 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2018-06): balance=OK resultados=OK notas ok=12 sin leer=3 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2018-06): balance=OK resultados=OK notas ok=14 sin leer=2 caidas=0
+- FACTOTAL S.A. (96660790-4 2018-06): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2018-06): balance=OK resultados=FALTAN_LINEAS notas ok=9 sin leer=7 caidas=0
+- INCOFIN S.A. (96626570-1 2018-06): balance=OK resultados=FALTAN_LINEAS notas ok=15 sin leer=0 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2018-06): balance=OK resultados=OK notas ok=9 sin leer=3 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2018-06): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=5 caidas=1
+- INTERFACTOR S.A. (76381570-6 2018-06): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2018-03): balance=OK resultados=OK notas ok=5 sin leer=5 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2018-03): balance=OK resultados=FALTAN_LINEAS notas ok=9 sin leer=5 caidas=0
+- SMB FACTORING S.A. (99513410-1 2018-03): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=12 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2018-03): balance=OK resultados=OK notas ok=4 sin leer=11 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2018-03): balance=OK resultados=OK notas ok=13 sin leer=0 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2018-03): balance=OK resultados=OK notas ok=9 sin leer=5 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2018-03): balance=OK resultados=OK notas ok=17 sin leer=0 caidas=13
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2018-03): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=5 caidas=0
+- FACTOTAL S.A. (96660790-4 2018-03): balance=OK resultados=OK notas ok=12 sin leer=2 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2018-03): balance=OK resultados=OK notas ok=8 sin leer=6 caidas=0
+- INCOFIN S.A. (96626570-1 2018-03): balance=OK resultados=OK notas ok=14 sin leer=2 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2018-03): balance=OK resultados=OK notas ok=9 sin leer=3 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2018-03): balance=OK resultados=OK notas ok=14 sin leer=3 caidas=1
+- INTERFACTOR S.A. (76381570-6 2018-03): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2017-12): balance=OK resultados=OK notas ok=7 sin leer=3 caidas=0
+- FACTORING MERCANTIL S.A. (99569200-7 2017-12): balance=INCOMPLETO resultados=OK notas ok=8 sin leer=3 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2017-12): balance=OK resultados=OK notas ok=10 sin leer=4 caidas=0
+- SMB FACTORING S.A. (99513410-1 2017-12): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=13 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2017-12): balance=OK resultados=OK notas ok=4 sin leer=11 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2017-12): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2017-12): balance=OK resultados=OK notas ok=10 sin leer=5 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2017-12): balance=OK resultados=OK notas ok=17 sin leer=0 caidas=12
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2017-12): balance=OK resultados=FALTAN_LINEAS notas ok=15 sin leer=3 caidas=1
+- FACTOTAL S.A. (96660790-4 2017-12): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=2 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2017-12): balance=OK resultados=OK notas ok=9 sin leer=6 caidas=0
+- INCOFIN S.A. (96626570-1 2017-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2017-12): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=2 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2017-12): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=1
+- INTERFACTOR S.A. (76381570-6 2017-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2017-09): balance=OK resultados=OK notas ok=5 sin leer=4 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2017-09): balance=OK resultados=OK notas ok=9 sin leer=5 caidas=0
+- SMB FACTORING S.A. (99513410-1 2017-09): balance=OK resultados=FALTAN_LINEAS notas ok=2 sin leer=13 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2017-09): balance=OK resultados=OK notas ok=7 sin leer=9 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2017-09): balance=OK resultados=FALTAN_LINEAS notas ok=12 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2017-09): balance=OK resultados=OK notas ok=10 sin leer=4 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2017-09): balance=OK resultados=OK notas ok=15 sin leer=1 caidas=0
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2017-09): balance=OK resultados=FALTAN_LINEAS notas ok=15 sin leer=2 caidas=1
+- FACTOTAL S.A. (96660790-4 2017-09): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2017-09): balance=OK resultados=SIN_PDF notas ok=10 sin leer=4 caidas=0
+- INCOFIN S.A. (96626570-1 2017-09): balance=OK resultados=FALTAN_LINEAS notas ok=14 sin leer=0 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2017-09): balance=OK resultados=OK notas ok=11 sin leer=1 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2017-09): balance=OK resultados=FALTAN_LINEAS notas ok=15 sin leer=1 caidas=1
+- INTERFACTOR S.A. (76381570-6 2017-09): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2017-06): balance=OK resultados=OK notas ok=6 sin leer=4 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2017-06): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=3 caidas=0
+- SMB FACTORING S.A. (99513410-1 2017-06): balance=OK resultados=FALTAN_LINEAS notas ok=1 sin leer=13 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2017-06): balance=OK resultados=FALTAN_LINEAS notas ok=6 sin leer=10 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2017-06): balance=OK resultados=OK notas ok=12 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2017-06): balance=OK resultados=OK notas ok=10 sin leer=4 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2017-06): balance=OK resultados=OK notas ok=15 sin leer=1 caidas=0
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2017-06): balance=OK resultados=FALTAN_LINEAS notas ok=15 sin leer=3 caidas=1
+- FACTOTAL S.A. (96660790-4 2017-06): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=3 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2017-06): balance=INCOMPLETO resultados=SIN_PDF notas ok=9 sin leer=4 caidas=0
+- INCOFIN S.A. (96626570-1 2017-06): balance=OK resultados=FALTAN_LINEAS notas ok=14 sin leer=0 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2017-06): balance=OK resultados=OK notas ok=10 sin leer=2 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2017-06): balance=OK resultados=FALTAN_LINEAS notas ok=16 sin leer=1 caidas=1
+- INTERFACTOR S.A. (76381570-6 2017-06): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2017-03): balance=OK resultados=OK notas ok=6 sin leer=4 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2017-03): balance=OK resultados=OK notas ok=11 sin leer=3 caidas=0
+- SMB FACTORING S.A. (99513410-1 2017-03): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=0 sin leer=14 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2017-03): balance=OK resultados=OK notas ok=7 sin leer=9 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2017-03): balance=DIFIERE resultados=OK notas ok=13 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2017-03): balance=OK resultados=OK notas ok=9 sin leer=5 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2017-03): balance=OK resultados=OK notas ok=15 sin leer=1 caidas=0
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2017-03): balance=OK resultados=OK notas ok=0 sin leer=0 caidas=35
+- FACTOTAL S.A. (96660790-4 2017-03): balance=OK resultados=OK notas ok=11 sin leer=3 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2017-03): balance=OK resultados=OK notas ok=9 sin leer=5 caidas=0
+- INCOFIN S.A. (96626570-1 2017-03): balance=OK resultados=FALTAN_LINEAS notas ok=14 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2017-03): balance=OK resultados=OK notas ok=7 sin leer=5 caidas=1
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2017-03): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=1
+- INTERFACTOR S.A. (76381570-6 2017-03): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2016-12): balance=OK resultados=OK notas ok=7 sin leer=4 caidas=0
+- FACTORING MERCANTIL S.A. (99569200-7 2016-12): balance=INCOMPLETO resultados=OK notas ok=8 sin leer=3 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2016-12): balance=OK resultados=OK notas ok=11 sin leer=3 caidas=0
+- SMB FACTORING S.A. (99513410-1 2016-12): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=0 sin leer=16 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2016-12): balance=OK resultados=OK notas ok=7 sin leer=9 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2016-12): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2016-12): balance=OK resultados=OK notas ok=10 sin leer=4 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2016-12): balance=OK resultados=OK notas ok=15 sin leer=1 caidas=0
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2016-12): balance=OK resultados=OK notas ok=0 sin leer=0 caidas=28
+- FACTOTAL S.A. (96660790-4 2016-12): balance=OK resultados=OK notas ok=11 sin leer=3 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2016-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- INCOFIN S.A. (96626570-1 2016-12): balance=OK resultados=FALTAN_LINEAS notas ok=13 sin leer=2 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2016-12): balance=OK resultados=OK notas ok=9 sin leer=3 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2016-12): balance=OK resultados=OK notas ok=15 sin leer=1 caidas=1
+- INTERFACTOR S.A. (76381570-6 2016-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2016-09): balance=OK resultados=OK notas ok=6 sin leer=4 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2016-09): balance=OK resultados=OK notas ok=8 sin leer=5 caidas=0
+- SMB FACTORING S.A. (99513410-1 2016-09): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=0 sin leer=16 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2016-09): balance=OK resultados=FALTAN_LINEAS notas ok=7 sin leer=9 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2016-09): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2016-09): balance=OK resultados=FALTAN_LINEAS notas ok=10 sin leer=2 caidas=3
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2016-09): balance=OK resultados=OK notas ok=15 sin leer=1 caidas=0
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2016-09): balance=OK resultados=FALTAN_LINEAS notas ok=0 sin leer=0 caidas=28
+- FACTOTAL S.A. (96660790-4 2016-09): balance=OK resultados=OK notas ok=10 sin leer=4 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2016-09): balance=INCOMPLETO resultados=OK notas ok=8 sin leer=7 caidas=0
+- INCOFIN S.A. (96626570-1 2016-09): balance=OK resultados=OK notas ok=14 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2016-09): balance=OK resultados=OK notas ok=7 sin leer=4 caidas=2
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2016-09): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=1
+- INTERFACTOR S.A. (76381570-6 2016-09): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2016-06): balance=OK resultados=OK notas ok=7 sin leer=3 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2016-06): balance=INCOMPLETO resultados=SIN_PDF notas ok=5 sin leer=3 caidas=0
+- SMB FACTORING S.A. (99513410-1 2016-06): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=0 sin leer=14 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2016-06): balance=OK resultados=FALTAN_LINEAS notas ok=7 sin leer=9 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2016-06): balance=OK resultados=OK notas ok=11 sin leer=3 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2016-06): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2016-06): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2016-06): balance=OK resultados=FALTAN_LINEAS notas ok=15 sin leer=3 caidas=0
+- FACTOTAL S.A. (96660790-4 2016-06): balance=OK resultados=OK notas ok=11 sin leer=4 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2016-06): balance=INCOMPLETO resultados=OK notas ok=8 sin leer=7 caidas=0
+- INCOFIN S.A. (96626570-1 2016-06): balance=OK resultados=OK notas ok=14 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2016-06): balance=OK resultados=OK notas ok=7 sin leer=4 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2016-06): balance=OK resultados=FALTAN_LINEAS notas ok=15 sin leer=1 caidas=1
+- INTERFACTOR S.A. (76381570-6 2016-06): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2016-03): balance=OK resultados=OK notas ok=7 sin leer=3 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2016-03): balance=OK resultados=OK notas ok=10 sin leer=3 caidas=0
+- SMB FACTORING S.A. (99513410-1 2016-03): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=0 sin leer=13 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2016-03): balance=OK resultados=FALTAN_LINEAS notas ok=7 sin leer=9 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2016-03): balance=OK resultados=OK notas ok=11 sin leer=2 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2016-03): balance=OK resultados=OK notas ok=9 sin leer=4 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2016-03): balance=OK resultados=OK notas ok=15 sin leer=1 caidas=0
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2016-03): balance=OK resultados=INCOMPLETO notas ok=14 sin leer=4 caidas=0
+- FACTOTAL S.A. (96660790-4 2016-03): balance=OK resultados=OK notas ok=11 sin leer=5 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2016-03): balance=INCOMPLETO resultados=OK notas ok=5 sin leer=4 caidas=0
+- INCOFIN S.A. (96626570-1 2016-03): balance=OK resultados=OK notas ok=15 sin leer=0 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2016-03): balance=OK resultados=OK notas ok=6 sin leer=5 caidas=1
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2016-03): balance=OK resultados=OK notas ok=15 sin leer=2 caidas=1
+- INTERFACTOR S.A. (76381570-6 2016-03): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2015-12): balance=OK resultados=OK notas ok=8 sin leer=3 caidas=0
+- FACTORING MERCANTIL S.A. (99569200-7 2015-12): balance=OK resultados=SIN_PDF notas ok=2 sin leer=10 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2015-12): balance=OK resultados=OK notas ok=10 sin leer=3 caidas=0
+- SMB FACTORING S.A. (99513410-1 2015-12): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=0 sin leer=14 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2015-12): balance=OK resultados=OK notas ok=5 sin leer=4 caidas=1
+- EUROCAPITAL S.A. (96861280-8 2015-12): balance=OK resultados=OK notas ok=11 sin leer=5 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2015-12): balance=OK resultados=OK notas ok=11 sin leer=2 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2015-12): balance=OK resultados=OK notas ok=11 sin leer=4 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2015-12): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=0
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2015-12): balance=OK resultados=OK notas ok=14 sin leer=4 caidas=0
+- FACTOTAL S.A. (96660790-4 2015-12): balance=OK resultados=OK notas ok=11 sin leer=5 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2015-12): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=9 sin leer=6 caidas=0
+- INCOFIN S.A. (96626570-1 2015-12): balance=OK resultados=OK notas ok=15 sin leer=0 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2015-12): balance=OK resultados=OK notas ok=6 sin leer=5 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2015-12): balance=OK resultados=OK notas ok=15 sin leer=2 caidas=1
+- INTERFACTOR S.A. (76381570-6 2015-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2015-09): balance=OK resultados=OK notas ok=8 sin leer=4 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2015-09): balance=OK resultados=OK notas ok=9 sin leer=5 caidas=0
+- SMB FACTORING S.A. (99513410-1 2015-09): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=0 sin leer=14 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2015-09): balance=OK resultados=OK notas ok=7 sin leer=3 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2015-09): balance=OK resultados=OK notas ok=6 sin leer=10 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2015-09): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2015-09): balance=OK resultados=OK notas ok=9 sin leer=6 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2015-09): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=0
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2015-09): balance=OK resultados=FALTAN_LINEAS notas ok=11 sin leer=7 caidas=0
+- FACTOTAL S.A. (96660790-4 2015-09): balance=OK resultados=OK notas ok=10 sin leer=5 caidas=0
+- FACTORING SECURITY S.A. (96655860-1 2015-09): balance=INCOMPLETO resultados=OK notas ok=5 sin leer=4 caidas=0
+- INCOFIN S.A. (96626570-1 2015-09): balance=OK resultados=OK notas ok=15 sin leer=0 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2015-09): balance=OK resultados=SIN_PDF notas ok=6 sin leer=5 caidas=2
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2015-09): balance=OK resultados=FALTAN_LINEAS notas ok=16 sin leer=2 caidas=1
+- INTERFACTOR S.A. (76381570-6 2015-09): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2015-06): balance=OK resultados=OK notas ok=9 sin leer=3 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2015-06): balance=OK resultados=OK notas ok=9 sin leer=5 caidas=0
+- SMB FACTORING S.A. (99513410-1 2015-06): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=0 sin leer=15 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2015-06): balance=OK resultados=OK notas ok=7 sin leer=3 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2015-06): balance=OK resultados=OK notas ok=5 sin leer=9 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2015-06): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2015-06): balance=OK resultados=OK notas ok=9 sin leer=6 caidas=1
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2015-06): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=0
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2015-06): balance=OK resultados=OK notas ok=13 sin leer=5 caidas=0
+- FACTOTAL S.A. (96660790-4 2015-06): balance=OK resultados=OK notas ok=10 sin leer=5 caidas=1
+- FACTORING SECURITY S.A. (96655860-1 2015-06): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- INCOFIN S.A. (96626570-1 2015-06): balance=OK resultados=OK notas ok=14 sin leer=1 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2015-06): balance=OK resultados=OK notas ok=6 sin leer=5 caidas=3
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2015-06): balance=OK resultados=FALTAN_LINEAS notas ok=16 sin leer=2 caidas=1
+- INTERFACTOR S.A. (76381570-6 2015-06): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2015-03): balance=OK resultados=OK notas ok=9 sin leer=3 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2015-03): balance=OK resultados=OK notas ok=7 sin leer=7 caidas=0
+- SMB FACTORING S.A. (99513410-1 2015-03): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=0 sin leer=15 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2015-03): balance=INCOMPLETO resultados=OK notas ok=8 sin leer=3 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2015-03): balance=OK resultados=OK notas ok=6 sin leer=9 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2015-03): balance=OK resultados=OK notas ok=13 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2015-03): balance=OK resultados=OK notas ok=10 sin leer=6 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2015-03): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=0
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2015-03): balance=INCOMPLETO resultados=OK notas ok=3 sin leer=4 caidas=0
+- FACTOTAL S.A. (96660790-4 2015-03): balance=OK resultados=OK notas ok=8 sin leer=7 caidas=4
+- FACTORING SECURITY S.A. (96655860-1 2015-03): balance=INCOMPLETO resultados=OK notas ok=4 sin leer=4 caidas=0
+- INCOFIN S.A. (96626570-1 2015-03): balance=OK resultados=OK notas ok=16 sin leer=0 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2015-03): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2015-03): balance=OK resultados=FALTAN_LINEAS notas ok=16 sin leer=3 caidas=0
+- INTERFACTOR S.A. (76381570-6 2015-03): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2014-12): balance=OK resultados=OK notas ok=8 sin leer=3 caidas=0
+- FACTORING MERCANTIL S.A. (99569200-7 2014-12): balance=OK resultados=OK notas ok=3 sin leer=8 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2014-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- SMB FACTORING S.A. (99513410-1 2014-12): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=0 sin leer=15 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2014-12): balance=INCOMPLETO resultados=OK notas ok=8 sin leer=2 caidas=6
+- EUROCAPITAL S.A. (96861280-8 2014-12): balance=OK resultados=FALTAN_LINEAS notas ok=5 sin leer=10 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2014-12): balance=OK resultados=OK notas ok=11 sin leer=2 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2014-12): balance=OK resultados=OK notas ok=10 sin leer=6 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2014-12): balance=OK resultados=OK notas ok=17 sin leer=1 caidas=0
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2014-12): balance=INCOMPLETO resultados=OK notas ok=4 sin leer=3 caidas=0
+- FACTOTAL S.A. (96660790-4 2014-12): balance=OK resultados=OK notas ok=10 sin leer=5 caidas=4
+- FACTORING SECURITY S.A. (96655860-1 2014-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- INCOFIN S.A. (96626570-1 2014-12): balance=OK resultados=OK notas ok=14 sin leer=2 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2014-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2014-12): balance=OK resultados=FALTAN_LINEAS notas ok=18 sin leer=1 caidas=2
+- INTERFACTOR S.A. (76381570-6 2014-12): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2014-09): balance=OK resultados=OK notas ok=10 sin leer=2 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2014-09): balance=OK resultados=OK notas ok=9 sin leer=5 caidas=0
+- SMB FACTORING S.A. (99513410-1 2014-09): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=0 sin leer=16 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2014-09): balance=INCOMPLETO resultados=OK notas ok=7 sin leer=3 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2014-09): balance=OK resultados=FALTAN_LINEAS notas ok=7 sin leer=12 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2014-09): balance=OK resultados=OK notas ok=9 sin leer=3 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2014-09): balance=OK resultados=OK notas ok=11 sin leer=5 caidas=0
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2014-09): balance=OK resultados=OK notas ok=17 sin leer=1 caidas=0
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2014-09): balance=INCOMPLETO resultados=OK notas ok=3 sin leer=4 caidas=0
+- FACTOTAL S.A. (96660790-4 2014-09): balance=OK resultados=OK notas ok=9 sin leer=6 caidas=2
+- FACTORING SECURITY S.A. (96655860-1 2014-09): balance=INCOMPLETO resultados=OK notas ok=6 sin leer=3 caidas=0
+- INCOFIN S.A. (96626570-1 2014-09): balance=OK resultados=OK notas ok=15 sin leer=1 caidas=2
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2014-09): balance=OK resultados=OK notas ok=9 sin leer=2 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2014-09): balance=OK resultados=FALTAN_LINEAS notas ok=17 sin leer=2 caidas=1
+- INTERFACTOR S.A. (76381570-6 2014-09): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2014-06): balance=OK resultados=OK notas ok=9 sin leer=3 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2014-06): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- SMB FACTORING S.A. (99513410-1 2014-06): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=0 sin leer=15 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2014-06): balance=INCOMPLETO resultados=OK notas ok=7 sin leer=3 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2014-06): balance=OK resultados=FALTAN_LINEAS notas ok=7 sin leer=9 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2014-06): balance=OK resultados=OK notas ok=11 sin leer=1 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2014-06): balance=OK resultados=OK notas ok=12 sin leer=4 caidas=1
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2014-06): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=0
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2014-06): balance=INCOMPLETO resultados=OK notas ok=4 sin leer=3 caidas=0
+- FACTOTAL S.A. (96660790-4 2014-06): balance=OK resultados=OK notas ok=10 sin leer=5 caidas=4
+- FACTORING SECURITY S.A. (96655860-1 2014-06): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- INCOFIN S.A. (96626570-1 2014-06): balance=OK resultados=OK notas ok=15 sin leer=1 caidas=2
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2014-06): balance=OK resultados=OK notas ok=8 sin leer=2 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2014-06): balance=OK resultados=OK notas ok=17 sin leer=1 caidas=45
+- INTERFACTOR S.A. (76381570-6 2014-06): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
+- LATAM TRADE CAPITAL S.A. (99595990-9 2014-03): balance=OK resultados=OK notas ok=10 sin leer=2 caidas=0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING) (99566540-9 2014-03): balance=OK resultados=FALTAN_LINEAS notas ok=1 sin leer=13 caidas=0
+- SMB FACTORING S.A. (99513410-1 2014-03): balance=INCOMPLETO resultados=FALTAN_LINEAS notas ok=0 sin leer=17 caidas=0
+- PENTA FINANCIERO S.A. (99501480-7 2014-03): balance=INCOMPLETO resultados=OK notas ok=5 sin leer=5 caidas=0
+- EUROCAPITAL S.A. (96861280-8 2014-03): balance=OK resultados=FALTAN_LINEAS notas ok=7 sin leer=10 caidas=0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1 2014-03): balance=OK resultados=FALTAN_LINEAS notas ok=7 sin leer=5 caidas=0
+- CONCRECES LEASING S.A. (96784400-4 2014-03): balance=OK resultados=OK notas ok=10 sin leer=5 caidas=3
+- FORUM SERVICIOS FINANCIEROS S.A. (96678790-2 2014-03): balance=OK resultados=OK notas ok=16 sin leer=1 caidas=0
+- TANNER SERVICIOS FINANCIEROS S.A. (96667560-8 2014-03): balance=INCOMPLETO resultados=OK notas ok=4 sin leer=3 caidas=0
+- FACTOTAL S.A. (96660790-4 2014-03): balance=OK resultados=OK notas ok=8 sin leer=7 caidas=3
+- FACTORING SECURITY S.A. (96655860-1 2014-03): balance=INCOMPLETO resultados=OK notas ok=6 sin leer=3 caidas=0
+- INCOFIN S.A. (96626570-1 2014-03): balance=OK resultados=FALTAN_LINEAS notas ok=15 sin leer=2 caidas=0
+- GENERAL MOTORS FINANCIAL CHILE S.A. (94050000-1 2014-03): balance=OK resultados=OK notas ok=9 sin leer=2 caidas=0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0 2014-03): balance=OK resultados=OK notas ok=18 sin leer=1 caidas=1
+- INTERFACTOR S.A. (76381570-6 2014-03): balance=SIN_PDF resultados=SIN_PDF notas ok=0 sin leer=0 caidas=0
