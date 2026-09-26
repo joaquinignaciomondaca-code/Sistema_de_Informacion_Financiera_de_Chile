@@ -1,28 +1,16 @@
 {
   "desde": 2010,
-  "hasta": 2026,
+  "hasta": 2013,
   "trimestres": "03,06,09,12",
-  "step": "todo",
+  "step": "ps",
   "tramos": [
     [
       2010,
       2013
-    ],
-    [
-      2014,
-      2017
-    ],
-    [
-      2018,
-      2021
-    ],
-    [
-      2022,
-      2026
     ]
   ],
-  "ruts": "",
+  "ruts": "96765170,96972780,96971830",
   "debug": "true",
   "_nota": "Modificar y commitear este archivo lanza .github/workflows/securitizadoras_extraccion.yml; cada tramo publica una rama actions/ps-extraccion-<desde>-<hasta>-<run_id>. ruts (cuerpos separados por coma) y debug=true son opcionales.",
-  "_lanzamiento": "2026-09-26 corrida 3 (fixes 25-34 + códigos)"
+  "_lanzamiento": "2026-09-26 muestra OCR girado/ilegible: Transa, Sudamericana, EF 2010-2013"
 }
