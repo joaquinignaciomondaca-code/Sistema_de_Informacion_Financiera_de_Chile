@@ -1,6 +1,6 @@
 {
   "_descripcion": "Catálogo de cuentas de los EEFF de Patrimonios Separados (formato FECU-PS, CMF). `codigo` es el código FECU cuando el PDF lo imprime; si el PDF sólo trae glosas se mapea por `regex` (mayúsculas, sin tildes). Cuentas no reconocidas se conservan con cuenta_canonica NULL. Versionar cualquier cambio en `version`.",
-  "version": "2026-09-26.5",
+  "version": "2026-09-26.6",
   "estados": {
     "BALANCE": [
       "BALANCE",
@@ -245,7 +245,7 @@
       "codigos": [
         "23.010"
       ],
-      "regex": "^RESERVAS?\\s+DE\\s+(EXCEDENTES|EJERCICIOS?\\s+ANTERIORES)|^EXCEDENTES?\\s+(ACUMULADOS?\\s+)?(DE\\s+)?(EJERCICIOS?\\s+)?ANTERIORES|^EXCEDENTES?\\s+OBLIGATORIOS?\\s+FIN|^FONDOS?\\s+(DE\\s+)?EXCEDENTES\\s+VOLUNTARIOS|^FONDOS?\\s+DE\\s+EXCEDENTES\\s+DEL\\s+EJERCICIO\\s+ANTERIOR"
+      "regex": "^RESERVAS?\\s+DE\\s+(EXCEDENTES|EJERCICIOS?\\s+ANTERIORES)|^EXCEDENTES?\\s+(ACUMULADOS?\\s+)?(DE\\s+)?(EJERCICIOS?\\s+)?ANTERIORES|^EXCEDENTES?\\s+OBLIGATORIOS?\\s+FIN|^FONDOS?\\s+(DE\\s+)?EXCEDENTES\\s+VOLUNTARIOS|^FONDOS?\\s+DE\\s+EXCEDENTES\\s+DEL\\s+EJERCICIO\\s+ANTERIOR|^FONDOS?\\s+DE\\s+(EXCEDENTES|D[EÉ]FICIT)\\s+VOLUNTARIOS"
     },
     {
       "canonica": "EXCEDENTE_DEL_EJERCICIO",
@@ -263,7 +263,7 @@
       "codigos": [
         "23.000"
       ],
-      "regex": "^TOTAL\\s+(PATRIMONIO|EXCEDENTES?|D[EÉ]FICIT)\\b|^(EXCEDENTES?|D[EÉ]FICIT)\\s*\\(?(D[EÉ]FICIT)?\\)?\\s+ACUMULADOS?$",
+      "regex": "^TOTAL\\s+(PATRIMONIO|EXCEDENTES?|D[EÉ]FICIT)\\b(?!.*PASIVOS)|^(EXCEDENTES?|D[EÉ]FICIT)\\s*\\(?(D[EÉ]FICIT)?\\)?\\s+ACUMULADOS?$",
       "total": true
     },
     {
@@ -273,7 +273,7 @@
       "codigos": [
         "20.000"
       ],
-      "regex": "^TOTAL\\s+(DE\\s+)?PASIVOS?(\\s+Y\\s+(PATRIMONIO|EXCEDENTES))?$",
+      "regex": "^TOTAL\\s+(DE\\s+)?PASIVOS?(\\s+Y\\s+(PATRIMONIO|EXCEDENTES).*)?$|^TOTAL\\s+(PATRIMONIO(\\s+NETO)?|EXCEDENTES?(\\s+ACUMULADOS?)?)\\s+Y\\s+PASIVOS?",
       "total": true
     },
     {
@@ -532,7 +532,10 @@
     "^PARA\\s+EL\\s+(EJERCICIO|PER[IÍ]ODO).*",
     "^PATRIMONIO\\s+SEPARADO.*",
     "^(Y\\s+)?EL$",
-    "^RUBRO\\s+MONEDA$"
+    "^RUBRO\\s+MONEDA$",
+    "^PASIVOS?\\s+Y\\s+PATRIMONIO$",
+    "^ACTIVOS?\\s+Y\\s+PASIVOS?$",
+    "^PATRIMONIO$"
   ],
   "secciones": {
     "ACTIVO_CIRCULANTE": "^ACTIVOS?\\s+CIRCULANTES?$",

@@ -68,6 +68,23 @@ que pasen la auditoría.
 | 22 | El cuadro de la Nota 7 de EF trae `Total de Activo | 456` (nº de contratos) y pisaba `TOTAL ACTIVOS = 16.624.735`; tramos de mora en notas parseados como balance | Las páginas con encabezado `NOTA n -` y sin línea `TOTAL ACTIVOS` se excluyen del EEFF; el resumen toma la **primera** ocurrencia de cada cuenta (orden del PDF). |
 | 23 | La pestaña 18 lista también "A. Razonado" (reporte de cartera, no EEFF) | Excluido al listar, igual que las declaraciones de responsabilidad. |
 | 24 | Balances **embebidos como imagen** dentro de PDFs con texto (EF 06/2023, Security BSECS-6/10 06/2025): sin texto no hay líneas | OCR con Tesseract (`spa`, `--psm 6`, 300 dpi) sólo para páginas con imagen y < 300 caracteres; el workflow instala `tesseract-ocr-spa`. Las líneas quedan con `metodo = …+ocr_tesseract` y la cobertura registra `paginas_ocr`. Sin tesseract no se inventa nada. |
+
+Hallazgos de la **primera corrida completa 2010-2026** (2.727 PDF listados; 93,3 % cuadraba). Se revisaron uno a uno los volcados de páginas de los 272 PDF que no cuadraban:
+
+| # | Hallazgo | Solución |
+|---|----------|----------|
+| 25 | PDFs antiguos con separadores mixtos (`5.155,432`, `3,549,070`) leídos como decimales | `parse_num`: un token `\d{1,3}([.,]\d{3})+` es siempre miles, sea cual sea el separador. |
+| 26 | OCR con basura en los bordes (`\| Total pasivo circulante …`, `: TOTAL ACTIVOS …;`) y códigos FECU mal leídos (`20. TOTAL PASIVOS`) | Limpieza de bordes por línea; el código se acepta sólo con forma `dd.ddd`. |
+| 27 | Sudamericana imprime **activos y pasivos lado a lado** en la misma línea | Cada línea con ≥ 2 pares (glosa + cifras) se separa en filas independientes. |
+| 28 | Encabezados `PASIVOS Y PATRIMONIO` seguidos de la fila de fechas `31.12.2013` tomaban la fecha como monto | `_numeros_siguientes` corta al encontrar filas de fecha/año; encabezados en `glosas_ignoradas`. |
+| 29 | Glosas truncadas por OCR (`AL OTROS ACTIVOS`, `RGO PLAZO`) o con erratas | Mapeo difuso (`_mapear_difuso`, difflib ≥ 0,86 o sufijo cortado a mitad de palabra) como **último** recurso; un total exige la palabra TOTAL. |
+| 30 | Security BSECS-3 2021-22 imprime `TOTAL PASIVOS (x)` entre paréntesis | Cuadra si `A + P = 0` y los subtotales de pasivo suman el total; flag `signo_total_pasivos_invertido`. |
+| 31 | Total impreso ausente o mal leído (`TOTALACTIVOS AR 000522`) mientras los subtotales de ese lado suman exactamente el total del otro | Se usa la suma de subtotales; el impreso queda en `total_*_impreso_mclp` y `total_corregido_por_componentes` indica el lado (`activos`, `pasivo_patrimonio`, `ambos`). Nunca se inventa: exige igualdad ≤ 0,1 % con el otro lado. |
+| 32 | Páginas escaneadas **giradas** (Transa 2010-17, Sudamericana 2010-12): el OCR devuelve basura; PDFs con fuente sin mapa Unicode (EF 2013) devuelven caracteres de control y no se hacía OCR | Se mide la calidad del OCR (cifras con miles + palabras); si es baja se reintenta a 90°/270° y con `--psm 4`; el texto ilegible se descarta y la página pasa a OCR. Encabezado ilegible → la página se clasifica por su contenido (`TOTAL PASIVOS`, `ACTIVO CIRCULANTE`). |
+| 33 | Etiquetas web sin código normalizable (`PS 2 FINTESA SECURITIZADORA`, `PRIMER PATRIMONIO SEPARADO`, `NA 16 JUNIO 2011`, `BSECS 13 06 2013`, `PATRIMONIO NÂ°`) creaban PS duplicados o sin código | `canonizar_codigo` quita razón social, meses, ordinales y fragmentos de fecha; `Nº` mojibake sin número devuelve `None` y el código se toma del PDF (`N*2`). |
+| 34 | `paso gestoras` sin balances anteriores a 2017 y `ganancia` vacía | Timeout 60 s + reintento (la CMF tarda en períodos antiguos); en modo diagnóstico guarda hasta 3 FECU HTML sin ganancia para revisar el selector. |
+
+Resultado sobre los 272 volcados: 146 cuadran ya con el texto guardado; 109 son páginas escaneadas giradas/ilegibles (requieren la nueva pasada de OCR en Actions); 17 casos residuales (p. ej. Security PS-14 03/2022, cuyo propio PDF descuadra en 1,1 MM$).
 | 12 | Dos auditorías legadas que ya fallaban y tablas fuera de `data_manifest.json` | Retiradas (`04_audit_patrimonios_separados.py`, `audit_securitizadoras.py`); también `stream_cmf_securitizadoras.py` y `03_extract_…` (reemplazados por el pipeline). `patrimonios_separados_balance_resumen` añadida al manifest; badges del sidebar con los conteos reales (18 líneas / 64 balances, antes "485 vehículos / 42.800+ líneas"). |
 
 ## 3. Diccionario mínimo de las tablas publicadas

@@ -99,7 +99,11 @@ def parse_num(txt):
     s = str(txt).strip().replace("$", "").replace("M", "").replace(" ", "")
     if s in ("", "-", "—", "–"): return None
     neg = s.startswith("(") and s.endswith(")") or s.startswith("-")
-    s = s.strip("()-").replace(".", "").replace(",", ".")
+    s = s.strip("()-")
+    if re.fullmatch(r"\d{1,3}([.,]\d{3})+", s):  # miles con separador '.' o ',' (OCR mezcla ambos)
+        s = s.replace(".", "").replace(",", "")
+    else:
+        s = s.replace(".", "").replace(",", ".")
     try:
         v = float(s)
     except ValueError:
@@ -203,17 +207,28 @@ def parse_fecu_gestora(html):
             "ganancia_perdida_ejercicio_m_clp": _celda(html, r"Ganancia\s+\(p[eé]rdida\)(?!\s*[\[,]|\s+(?:antes|procedente|acumulada|por|atribuible|que|de\s+actividades|bruta))")}
 
 
+_FECU_DEBUG = []
+
+
 def _fetch_gestora(args):
     op, sec, y, m, tc = args
     base = sec["cmf_url"].replace("pestania=1", "pestania=3")
     for tipo in ("I", "C"):
         url = f"{base}&mm={m}&aa={y}&tipo={tipo}&tipo_norma=IFRS"
-        try:
-            html = http_get(op, url, timeout=20).decode("iso-8859-1", errors="ignore")
-        except Exception:
+        html = None
+        for intento in range(2):  # CMF tarda en períodos antiguos: 60 s y un reintento
+            try:
+                html = http_get(op, url, timeout=60).decode("iso-8859-1", errors="ignore"); break
+            except Exception:
+                continue
+        if html is None:
             continue
         d = parse_fecu_gestora(html)
         if d:
+            dbg = os.environ.get("MFC_PS_DEBUG_DIR")
+            if dbg and d.get("ganancia_perdida_ejercicio_m_clp") is None and len(_FECU_DEBUG) < 3:
+                _FECU_DEBUG.append(url); os.makedirs(dbg, exist_ok=True)
+                with open(os.path.join(dbg, f"fecu_{sec['rut']}_{y}{m}.html"), "w", encoding="utf-8") as fh: fh.write(html)
             d.update({"periodo": f"{y}-{m}", "año": int(y), "trimestre": (int(m) - 1) // 3 + 1, "rut": sec["rut_completo"],
                       "razon_social": sec["razon_social"], "estado_vigencia": sec["estado_vigencia"], "tipo_estado": tipo,
                       "tipo_cambio_usd_clp": tc})
@@ -244,12 +259,16 @@ def canonizar_codigo(txt):
     'BVOLS3'/'BVOLS 3' → 'BVOLS-3'; 'PS7 firmadp' → 'PS-7'; 'V' → 'PS-5'. None si no queda nada útil."""
     t = _norm(txt)
     t = re.sub(r"\bAL\s+\d{2}/\d{4}.*$", "", t)
-    t = re.sub(r"\b(PATRIMONIOS?|SEPARADOS?|EEFF|ESTADOS?|FINANCIEROS?|FIRMAD\w*|FINAL|DEFINITIVOS?|CORREGIDOS?|VERSION|DE|DEL|EL)\b", " ", t)
+    t = re.sub(r"\b(ENERO|FEBRERO|MARZO|ABRIL|MAYO|JUNIO|JULIO|AGOSTO|SEPTIEMBRE|OCTUBRE|NOVIEMBRE|DICIEMBRE)\b(\s+(DE\s+)?\d{4})?", " ", t)
+    t = re.sub(r"\b(PATRIMONIOS?|SEPARADOS?|EEFF|ESTADOS?|FINANCIEROS?|FIRMAD\w*|FINAL|DEFINITIVOS?|CORREGIDOS?|VERSION|DE|DEL|EL|LA|SECURITIZADORA|S\.?A\.?|"
+               r"FINTESA|SANTANDER|BICE|SECURITY|BCI|BANCHILE|VOLCOM|TRANSA|SUDAMERICANA|EF|CB|CHILE|MAE|CREDICORP|CAPITAL|EXPEDITA|AMERIS|CONSTRUCCION|LA)\b", " ", t)
+    t = re.sub(r"\b(PRIMERO?|1ER|1RO)\b", "1", t); t = re.sub(r"\b(SEGUNDO|2DO)\b", "2", t); t = re.sub(r"\bTERCERO?\b", "3", t); t = re.sub(r"\bCUARTO\b", "4", t)
+    t = re.sub(r"\b(\d{1,3})\s+\d{2}\s+\d{2,4}\b", r"\1", t); t = re.sub(r"\b(\d{1,3})\s+\d{4}\s*$", r"\1", t)  # fechas pegadas al código ("BSECS 13 06 2013", "NA 13 1216")
     t = re.sub(r"[^A-Z0-9 ]+", " ", t.replace("°", " ").replace("º", " ")).strip()
     t = re.sub(r"\s+", " ", t)
-    if not t:
+    if not t or re.fullmatch(r"(?:PS|N|NA|NAO|NO|NRO|NUMERO|NUM)", t):  # 'Nº' mal codificado sin número: no identifica nada
         return None
-    m = re.fullmatch(r"(?:PS|N|NA|NO|NRO|NUMERO|NUM)?\s*(\d{1,3})(?:\s+\d)?", t)  # 'PS 11 2' = versión 2 del archivo
+    m = re.fullmatch(r"(?:PS|N|NA|NAO|NO|NRO|NUMERO|NUM)?\s*(\d{1,3})(?:\s+\d)?", t)  # 'PS 11 2' = versión 2 del archivo; 'NAO' = 'Nº' mal codificado
     if m:
         return f"PS-{int(m.group(1))}"
     if t in _ROMANOS:
@@ -292,7 +311,7 @@ def meta_desde_texto(texto_inicial, etiqueta_web, rut_body, nombre):
     """Identifica el PS: primero por la etiqueta oficial de la web CMF, luego por el texto del PDF. None si no hay código."""
     codigo = codigo_desde_etiqueta_web(etiqueta_web)
     if not codigo:
-        m = re.search(r"PATRIMONIO\s+SEPARADO\s+((?:N[°º\.\s]*|NUMERO\s*)?\d+|[A-Z]{2,}[A-Z0-9]*(?:[\s-][A-Z0-9]+)?)", texto_inicial, re.I)
+        m = re.search(r"PATRIMONIO\s+SEPARADO\s+((?:N[°º\*\?'’ro\.\s]*|NUMERO\s*)?\d+|[A-Z]{2,}[A-Z0-9]*(?:[\s-][A-Z0-9]+)?)", texto_inicial, re.I)
         codigo = canonizar_codigo(m.group(1)) if m else None
         if not codigo:
             return None
@@ -309,7 +328,9 @@ def _numeros_siguientes(lineas, i, n=2, saltar_nota=True):
         if saltar_nota and k == 0 and re.fullmatch(r"\d{1,2}", l):
             continue  # nº de nota inmediatamente después de la glosa del balance
         toks = l.split()
-        if toks and all(re.fullmatch(r"\(?-?[\d\.]+(,\d+)?\)?|[—–-]", x) for x in toks):
+        if any(re.fullmatch(r"\d{2}[\.\-/]\d{2}[\.\-/]\d{4}|\d{4}", x) for x in toks):
+            break  # fila de fechas/años (encabezado de columnas), no montos
+        if toks and all(re.fullmatch(r"\(?-?\d[\d\.,]*\)?|[—–-]", x) for x in toks):
             out.extend(parse_num(x) for x in toks)  # una celda por línea ó varias columnas en la misma línea ("5.762   5.750")
             if len(out) >= n: break
         elif any(c.isalpha() for c in l):
@@ -325,7 +346,7 @@ _POR_REGEX = [(e["estado"], re.compile(e["regex"]), e) for e in CATALOGO["cuenta
 _RX_CODIGO = re.compile(r"^\d{2}\.\d{3}$")
 _RX_IGNORAR = [re.compile(r) for r in CATALOGO.get("glosas_ignoradas", [])]
 _RX_EXC = re.compile("|".join(re.escape(k) for k in CATALOGO["estados"]["EXCEDENTES"]) + r"|^INGRESOS(\s+OPERACIONALES)?$")
-_RX_NUM = re.compile(r"^\(?-?[\d\.]+(,\d+)?\)?$|^[—–-]$")
+_RX_NUM = re.compile(r"^\(?-?\d[\d\.,]*\)?$|^[—–-]$")
 
 
 def _norm(txt):
@@ -351,6 +372,43 @@ def _espaciada(g):
     return len(toks) >= 4 and sum(1 for t in toks if len(t) <= 2) >= len(toks) / 2
 
 
+_EJEMPLOS = [  # (glosa canónica de ejemplo, cuenta) para glosas truncadas por el margen ("AL ACTIVOS") o erratas de OCR ("PATRIMINIO")
+    ("TOTAL ACTIVOS CIRCULANTES", "TOTAL_ACTIVOS_CIRCULANTES"), ("TOTAL ACTIVO CIRCULANTE", "TOTAL_ACTIVOS_CIRCULANTES"),
+    ("TOTAL OTROS ACTIVOS", "TOTAL_OTROS_ACTIVOS"), ("TOTAL ACTIVOS", "TOTAL_ACTIVOS"),
+    ("TOTAL PASIVOS CIRCULANTES", "TOTAL_PASIVOS_CIRCULANTES"), ("TOTAL PASIVO CIRCULANTE", "TOTAL_PASIVOS_CIRCULANTES"),
+    ("TOTAL PASIVOS LARGO PLAZO", "TOTAL_PASIVOS_LARGO_PLAZO"), ("TOTAL PASIVOS A LARGO PLAZO", "TOTAL_PASIVOS_LARGO_PLAZO"),
+    ("TOTAL EXCEDENTES ACUMULADOS", "TOTAL_EXCEDENTES_ACUMULADOS"), ("TOTAL EXCEDENTE ACUMULADO", "TOTAL_EXCEDENTES_ACUMULADOS"), ("TOTAL PATRIMONIO", "TOTAL_EXCEDENTES_ACUMULADOS"),
+    ("TOTAL PASIVOS", "TOTAL_PASIVOS_Y_PATRIMONIO"), ("TOTAL PASIVOS Y PATRIMONIO", "TOTAL_PASIVOS_Y_PATRIMONIO"),
+    ("TOTAL PATRIMONIO NETO Y PASIVOS", "TOTAL_PASIVOS_Y_PATRIMONIO"), ("TOTAL PATRIMONIO Y PASIVOS", "TOTAL_PASIVOS_Y_PATRIMONIO"), ("TOTAL PASIVOS Y EXCEDENTES", "TOTAL_PASIVOS_Y_PATRIMONIO"),
+    ("TOTAL INGRESOS", "TOTAL_INGRESOS"), ("TOTAL GASTOS", "TOTAL_GASTOS"), ("TOTAL DE GASTOS", "TOTAL_GASTOS"),
+    ("ACTIVO SECURITIZADO (LARGO PLAZO)", "ACTIVO_SECURITIZADO_LP"), ("ACTIVO SECURITIZADO (CORTO PLAZO)", "ACTIVO_SECURITIZADO_CP"),
+    ("MENOR VALOR EN COLOCACION TITULOS DE DEUDA", "MENOR_VALOR_COLOCACION"),
+    ("OBLIGACIONES POR TITULOS DE DEUDA DE SECURITIZACION (CORTO PLAZO)", "OBLIG_TITULOS_DEUDA_CP"),
+    ("OBLIGACIONES POR TITULOS DE DEUDA DE SECURITIZACION (LARGO PLAZO)", "OBLIG_TITULOS_DEUDA_LP"),
+]
+_POR_CANONICA = {e["canonica"]: e for e in CATALOGO["cuentas"]}
+
+
+def _mapear_difuso(estado, g):
+    import difflib
+    if len(g) < 8:
+        return None
+    mejor, ratio = None, 0.0
+    for ej, can in _EJEMPLOS:
+        e = _POR_CANONICA.get(can)
+        if not e or e["estado"] != estado:
+            continue
+        if ej.endswith(g) and len(g) >= 8 and not ej[:-len(g)].endswith(" "):  # truncada a mitad de palabra: "AL OTROS ACTIVOS" (no "PASIVOS Y PATRIMONIO")
+            r = 0.99
+        elif e.get("total") and not re.search(r"\bTOTA?L?E?S?\b|^T\s*O\s*T", g):
+            continue  # un total exige que la glosa traiga (aunque sea truncado) la palabra TOTAL; un encabezado nunca es un total
+        else:
+            r = difflib.SequenceMatcher(None, ej, g).ratio()
+        if r > ratio:
+            mejor, ratio = e, r
+    return mejor if ratio >= 0.86 else None
+
+
 def _mapear(estado, codigo, glosa, seccion=None):
     """Prioridad: glosa (regex curada) → glosa dentro de la sección → código FECU impreso (los PDFs traen códigos
     repetidos o equivocados, p. ej. '15.210' en todas las filas o '23.000' delante de TOTAL PASIVOS)."""
@@ -369,7 +427,7 @@ def _mapear(estado, codigo, glosa, seccion=None):
                 return e
     if codigo and codigo in _POR_CODIGO:
         return _POR_CODIGO[codigo]
-    return None
+    return _mapear_difuso(estado, g)
 
 
 def _estado_de_pagina(texto):
@@ -378,6 +436,12 @@ def _estado_de_pagina(texto):
         return "EXCEDENTES"
     if "BALANCE" in cab or ("ACTIVOS" in cab and "PASIVOS" in cab) or re.search(r"\bACTIVOS\b|\bPASIVOS\b", cab):
         return "BALANCE"
+    # encabezado ilegible (OCR) o muy largo: se decide por el contenido de la página
+    cuerpo = _norm(texto)
+    if re.search(r"TOTAL\s+(DE\s+)?(ACTIVOS?|PASIVOS?)\b|\b(ACTIVOS?|PASIVOS?)\s+CIRCULANTES?\b", cuerpo):
+        return "BALANCE"
+    if re.search(r"TOTAL\s+(DE\s+)?(INGRESOS|GASTOS)\b", cuerpo):
+        return "EXCEDENTES"
     return None
 
 
@@ -401,6 +465,20 @@ def parse_eeff_lineas(paginas, max_paginas=16):
             continue
         codigo = None; pagina_out = []; seccion = None
         multicol = any(re.search(r"\$?\s*NO\s+REAJUSTABLES", _norm(l)) for l in lineas)
+        limpias = []
+        for l in lineas:
+            l = re.sub(r"^[\|:;\.\-—–'\"´`»«_\s]+", "", l); l = re.sub(r"[\s;:,\|\]\}]+$", "", l)  # basura OCR en los bordes
+            if not re.match(r"^\d{2}\.\d{3}\s", l):  # código FECU mal leído por OCR ("20. TOTAL PASIVOS", "13000 TOTAL…") → se descarta el código
+                l = re.sub(r"^\d{1,2}[\.,]?\d{0,3}[\.,]?\s+(?=[A-Za-zÁÉÍÓÚÑáéíóúñ])", "", l)
+            if not l:
+                continue
+            # dos estados lado a lado: "Disponible 318.363 17.408 Otros acreedores 411.563 429.899" → dos filas
+            segs = re.findall(r"([A-Za-zÁÉÍÓÚÑáéíóúñ][^\d]*?)\s+((?:\(?-?[\d\.,]+\)?|[—–-])(?:\s+(?:\(?-?[\d\.,]+\)?|[—–-]))*)(?=\s+[A-Za-zÁÉÍÓÚÑáéíóúñ]|\s*$)", l)
+            if len(segs) >= 2 and all(len(g.strip()) > 3 for g, _ in segs):
+                limpias.extend(f"{g.strip()} {n}" for g, n in segs)
+            else:
+                limpias.append(l)
+        lineas = limpias
         for i, l in enumerate(lineas):
             if _RX_CODIGO.match(l):
                 codigo = l; continue
@@ -413,7 +491,7 @@ def parse_eeff_lineas(paginas, max_paginas=16):
             if any(rx.fullmatch(ln) for rx in _RX_IGNORAR):
                 codigo = None; continue
             # fila completa en una línea: "Disponible 5 119.969 15.615"  ó  "11.010 Disponible 119.969 15.615"
-            m = re.match(r"^(\d{2}\.\d{3})?\s*([A-Za-zÁÉÍÓÚÑáéíóúñ](?:[^\d\(]|\([^)\d]*\))*?)\s+((?:\(?-?[\d\.]+(?:,\d+)?\)?|[—–-])(?:\s+(?:\(?-?[\d\.]+(?:,\d+)?\)?|[—–-]))*)\s*$", l)
+            m = re.match(r"^(\d{2}\.\d{3})?\s*([A-Za-zÁÉÍÓÚÑáéíóúñ](?:[^\d\(]|\([^)\d]*\))*?)\s+((?:\(?-?\d[\d\.,]*\)?|[—–-])(?:\s+(?:\(?-?\d[\d\.,]*\)?|[—–-]))*)\s*$", l)
             if m and len(m.group(2).strip()) > 3 and not re.search(r"\d{2}\.\d{2}\.\d{4}|\d{2}-\d{2}-\d{4}", m.group(3)):  # fechas ≠ montos
                 cod = m.group(1) or codigo; glosa = m.group(2).strip(); toks = m.group(3).split()
                 nota = None
@@ -487,6 +565,26 @@ def derivar_resumen(lineas):
     fila = {f"{k}_mclp": v.get(c) for k, c in _RESUMEN}
     conc = conciliar(lineas)
     fila["cuadre_contable_ok"] = bool(conc.get("activos_igual_pasivos"))
+    fila["signo_total_pasivos_invertido"] = False
+    fila["total_activos_impreso_mclp"] = v.get("TOTAL_ACTIVOS"); fila["total_pasivo_patrimonio_impreso_mclp"] = v.get("TOTAL_PASIVOS_Y_PATRIMONIO")
+    fila["total_corregido_por_componentes"] = None
+    A, Pt = v.get("TOTAL_ACTIVOS"), v.get("TOTAL_PASIVOS_Y_PATRIMONIO")
+    if not fila["cuadre_contable_ok"] and A is not None and Pt is not None and abs(A + Pt) <= max(1.0, 0.001 * abs(A)) and conc.get("pasivos_igual_componentes"):
+        fila["cuadre_contable_ok"] = True; fila["signo_total_pasivos_invertido"] = True  # el PDF imprime el total entre paréntesis
+    if not fila["cuadre_contable_ok"]:
+        # el total impreso falta o está mal leído/impreso, pero los subtotales de un lado igualan al total del otro lado:
+        # se usa la suma de componentes (queda el impreso en *_impreso_mclp y el flag indica qué lado se corrigió)
+        def _suma(ks):
+            return sum(v[k] for k in ks) if all(k in v and v[k] is not None for k in ks) else None
+        sA = _suma(["TOTAL_ACTIVOS_CIRCULANTES", "TOTAL_OTROS_ACTIVOS"])
+        sP = _suma(["TOTAL_PASIVOS_CIRCULANTES", "TOTAL_PASIVOS_LARGO_PLAZO", "TOTAL_EXCEDENTES_ACUMULADOS"])
+        def _eq(x, y): return x is not None and y is not None and abs(x - y) <= max(1.0, 0.001 * abs(y))
+        if Pt is not None and sA is not None and _eq(sA, Pt) and not _eq(A, Pt):
+            fila["total_activos_mclp"] = sA; fila["total_corregido_por_componentes"] = "activos"; fila["cuadre_contable_ok"] = True; A = sA
+        elif A is not None and sP is not None and _eq(sP, A) and not _eq(Pt, A):
+            fila["total_pasivo_patrimonio_mclp"] = sP; fila["total_corregido_por_componentes"] = "pasivo_patrimonio"; fila["cuadre_contable_ok"] = True; Pt = sP
+        elif A is None and Pt is None and sA is not None and sP is not None and _eq(sA, sP):
+            fila["total_activos_mclp"] = sA; fila["total_pasivo_patrimonio_mclp"] = sP; fila["total_corregido_por_componentes"] = "ambos"; fila["cuadre_contable_ok"] = True; A, Pt = sA, sP
     fila["conciliacion_componentes_ok"] = (conc.get("activos_igual_componentes") is not False) and (conc.get("pasivos_igual_componentes") is not False)
     fila["cuentas_reconocidas"] = sum(1 for l in lineas if l["cuenta_canonica"])
     fila["cuentas_no_reconocidas"] = sum(1 for l in lineas if not l["cuenta_canonica"])
@@ -557,7 +655,7 @@ def _listar_pdfs_ps(op, sec, anio, mm):
     out = []
     for tr in BeautifulSoup(html, "html.parser").find_all("tr"):
         txt = tr.get_text(" ", strip=True); tl = txt.lower()
-        if "patrimonios separados" not in tl or any(k in tl for k in ("analisis", "análisis", "razonado", "declaraci", "responsabilidad")):
+        if "patrimonios separados" not in tl or any(k in tl for k in ("analisis", "análisis", "razonado", "declaraci", "responsabilidad", "informe", "auditor", "hechos relevantes", "carta")):
             continue
         a = tr.find("a", href=lambda h: h and "ver_sgd.php" in h and "bitacora" not in h)
         if a:
@@ -574,8 +672,11 @@ def ocr_paginas_imagen(doc, paginas, max_paginas=16, dpi=300):
     """Páginas cuyo balance viene como imagen (texto < 300 caracteres pero con imágenes): se reemplaza su texto por el
     OCR de Tesseract (idioma spa, psm 6 = bloque uniforme). Devuelve (paginas, indices_ocr). Sin tesseract → sin cambios."""
     import subprocess, tempfile
+    def _ilegible(t):  # fuente sin mapa Unicode: pymupdf devuelve caracteres de control
+        return len(t) > 50 and sum(1 for ch in t if ord(ch) < 32 and ch not in "\n\t\r") > 0.2 * len(t)
+
     def _sin_cifras(t):  # página "sólo encabezado": casi sin cifras con separador de miles y poco texto
-        return len(re.findall(r"\d{1,3}(?:\.\d{3})+", t)) < 3 and len(t.strip()) < 1200
+        return (len(re.findall(r"\d{1,3}(?:\.\d{3})+", t)) < 3 and len(t.strip()) < 1200) or _ilegible(t)
     def _tiene_grafico(pg):  # imagen incrustada o tabla dibujada con vectores (muchos trazos)
         try:
             return bool(pg.get_images()) or len(pg.get_drawings()) > 20
@@ -585,15 +686,37 @@ def ocr_paginas_imagen(doc, paginas, max_paginas=16, dpi=300):
     if not idx or not _tesseract_disponible():
         return paginas, []
     out = list(paginas); hechos = []
+    try:
+        import fitz
+    except ImportError:
+        fitz = None
+
+    def _ocr(page, rot, psm="6"):
+        mat = fitz.Matrix(dpi / 72, dpi / 72).prerotate(rot) if fitz is not None and hasattr(fitz, "Matrix") else None
+        pix = page.get_pixmap(matrix=mat) if mat is not None else page.get_pixmap(dpi=dpi)
+        with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as fh:
+            pix.save(fh.name); png = fh.name
+        r = subprocess.run(["tesseract", png, "stdout", "-l", "spa", "--psm", psm], capture_output=True, text=True, timeout=180)
+        os.unlink(png)
+        return r.stdout if r.returncode == 0 else ""
+
+    def _calidad(t):  # cifras con separador de miles + palabras largas reales
+        return len(re.findall(r"\d{1,3}(?:[\.,]\d{3})+", t)) * 3 + len(re.findall(r"[A-Za-zÁÉÍÓÚÑáéíóúñ]{5,}", t))
+
     for i in idx:
         try:
-            pix = doc[i].get_pixmap(dpi=dpi)
-            with tempfile.NamedTemporaryFile(suffix=".png", delete=False) as fh:
-                pix.save(fh.name); png = fh.name
-            r = subprocess.run(["tesseract", png, "stdout", "-l", "spa", "--psm", "6"], capture_output=True, text=True, timeout=180)
-            os.unlink(png)
-            if r.returncode == 0 and r.stdout.strip():
-                out[i] = paginas[i] + "\n" + r.stdout; hechos.append(i + 1)
+            txt = _ocr(doc[i], 0); mejor_rot = 0
+            if _calidad(txt) < 40:  # página escaneada girada (apaisada): probar las otras orientaciones
+                for rot in (90, 270):
+                    alt = _ocr(doc[i], rot)
+                    if _calidad(alt) > _calidad(txt):
+                        txt, mejor_rot = alt, rot
+            if 0 < _calidad(txt) < 60:  # calidad baja: segmentación por columnas (psm 4) suele leer mejor las tablas escaneadas
+                alt = _ocr(doc[i], mejor_rot, "4")
+                if _calidad(alt) > _calidad(txt):
+                    txt = alt
+            if txt.strip():
+                out[i] = ("" if _ilegible(paginas[i]) else paginas[i]) + "\n" + txt; hechos.append(i + 1)
         except Exception as e:  # OCR fallido en una página: se deja el texto original
             print(f"    ocr página {i + 1}: {e}")
     return out, hechos
