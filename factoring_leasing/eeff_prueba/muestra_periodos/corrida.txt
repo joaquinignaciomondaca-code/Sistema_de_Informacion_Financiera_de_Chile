@@ -1,0 +1,14 @@
+[muestra] 96655860-1 2013-12 I
+warning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+Traceback (most recent call last):
+  File "/home/runner/work/monitor-financiero-chile/monitor-financiero-chile/factoring_leasing/scripts/05_muestra_periodos.py", line 129, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/runner/work/monitor-financiero-chile/monitor-financiero-chile/factoring_leasing/scripts/05_muestra_periodos.py", line 113, in main
+    texto, ocr_paginas = _texto(blob)
+                         ^^^^^^^^^^^^
+  File "/home/runner/work/monitor-financiero-chile/monitor-financiero-chile/factoring_leasing/scripts/05_muestra_periodos.py", line 87, in _texto
+    for indice, texto in pool.imap_unordered(_ocr_una, [(blob, i) for i in ocr_idx], chunksize=1):
+                         ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'ProcessPoolExecutor' object has no attribute 'imap_unordered'
+exit=1
