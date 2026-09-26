@@ -733,14 +733,17 @@ def ocr_paginas_imagen(doc, paginas, max_paginas=16, dpi=300):
         os.unlink(png)
         return r.stdout if r.returncode == 0 else ""
 
-    def _calidad(t):  # cifras con separador de miles + palabras largas reales
-        return len(re.findall(r"\d{1,3}(?:[\.,]\d{3})+", t)) * 3 + len(re.findall(r"[A-Za-zÁÉÍÓÚÑáéíóúñ]{5,}", t))
+    _CLAVES = re.compile(r"\b(TOTAL|ACTIVOS?|PASIVOS?|CIRCULANTES?|PLAZO|OBLIGACIONES|EXCEDENTES?|PATRIMONIO|SEPARADO|SECURITIZAD[OA]S?|REMUNERACION(ES)?|"
+                         r"PROVISION(ES)?|DISPONIBLE|DEUDA|TITULOS|INGRESOS|GASTOS|VALORES|NOTAS?|ESTADOS?|FINANCIEROS?|MILES|PESOS|POR|PAGAR|DEL|LOS|LAS|CON|PARA)\b")
+
+    def _calidad(t):  # cifras con separador de miles + palabras castellanas reales (una página al revés da 'SOAISVd TVLOL', que no cuenta)
+        return len(re.findall(r"\d{1,3}(?:[\.,]\d{3})+", t)) * 3 + len(_CLAVES.findall(_norm(t))) * 2
 
     for i in idx:
         try:
             txt = _ocr(doc[i], 0); mejor_rot = 0
-            if _calidad(txt) < 40:  # página escaneada girada (apaisada): probar las otras orientaciones
-                for rot in (90, 270):
+            if _calidad(txt) < 40:  # página escaneada girada (apaisada o boca abajo): probar las otras orientaciones
+                for rot in (90, 180, 270):
                     alt = _ocr(doc[i], rot)
                     if _calidad(alt) > _calidad(txt):
                         txt, mejor_rot = alt, rot
@@ -812,6 +815,14 @@ def paso_ps(op, secs, desde, hasta, trimestres):
                             fh.write(f"# {txt} | {pdf_url}\n")
                             for i, pg in enumerate(paginas[:16]):
                                 fh.write(f"\n===== PAGINA {i + 1} =====\n{pg}")
+                        if pags_ocr:  # imagen (100 dpi) de las páginas OCR para revisar a ojo cómo se ve el escaneo
+                            try:
+                                d2 = fitz.open(stream=pdf, filetype="pdf")
+                                for i in pags_ocr[:3]:
+                                    d2[i - 1].get_pixmap(dpi=100).save(os.path.join(debug_dir, f"{meta['id_patrimonio']}_{periodo}_p{i}.png"))
+                                d2.close()
+                            except Exception as e:
+                                print(f"    debug png: {e}")
                     efe, mor, desc = [], [], 0
                     if mm == "12":
                         efe = parse_nota_efectivo_ps(paginas); mor, desc = parse_nota_morosidad_ps(paginas)
