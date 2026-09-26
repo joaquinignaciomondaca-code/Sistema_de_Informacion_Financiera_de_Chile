@@ -2527,6 +2527,106 @@
       "api": [
         "SOLO_API"
       ]
+    },
+    "76360977-4|2024-09": {
+      "rut": "76360977-4",
+      "razon_social": "PRIMUS CAPITAL S.A.",
+      "periodo": "2024-09",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 14,
+      "notas_sin_leer": 1,
+      "lineas_balance": 38,
+      "lineas_resultados": 18,
+      "api": [
+        "OK"
+      ]
+    },
+    "76238714-K|2024-09": {
+      "rut": "76238714-K",
+      "razon_social": "GAMA SERVICIOS FINANCIEROS S.A.",
+      "periodo": "2024-09",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 13,
+      "notas_sin_leer": 3,
+      "lineas_balance": 31,
+      "lineas_resultados": 17,
+      "api": [
+        "OK"
+      ]
+    },
+    "76120857-8|2024-09": {
+      "rut": "76120857-8",
+      "razon_social": "GLOBAL SOLUCIONES FINANCIERAS S.A.",
+      "periodo": "2024-09",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 10,
+      "notas_sin_leer": 4,
+      "lineas_balance": 34,
+      "lineas_resultados": 15,
+      "api": [
+        "OK"
+      ]
+    },
+    "99566540-9|2024-06": {
+      "rut": "99566540-9",
+      "razon_social": "HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING)",
+      "periodo": "2024-06",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 12,
+      "notas_sin_leer": 2,
+      "lineas_balance": 28,
+      "lineas_resultados": 24,
+      "api": [
+        "OK"
+      ]
+    },
+    "99513410-1|2024-06": {
+      "rut": "99513410-1",
+      "razon_social": "SMB FACTORING S.A.",
+      "periodo": "2024-06",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 2,
+      "notas_sin_leer": 10,
+      "lineas_balance": 28,
+      "lineas_resultados": 12,
+      "api": [
+        "OK"
+      ]
     }
   }
 }
