@@ -9,14 +9,16 @@ procedencia en todas las tablas, TLS verificado, sin rutas locales ni credencial
 Pasos (`--step`):
   maestro   → securitizadoras_maestro, patrimonios_separados_maestro           (HTML CMF)
   gestoras  → securitizadoras_balance_resumen                                   (FECU IFRS HTML CMF)
-  ps        → patrimonios_separados_balance_resumen, patrimonios_separados_notas_detalle,
-              patrimonios_separados_cobertura                                    (EEFF PDF anuales, pestaña 18)
+  ps        → patrimonios_separados_eeff_lineas (balance + excedentes línea a línea, trimestral),
+              patrimonios_separados_balance_resumen (pivot de las líneas), patrimonios_separados_notas_detalle
+              (sólo PDFs de diciembre), patrimonios_separados_cobertura        (EEFF PDF, pestaña 18)
   reparar-legacy → repara in-place las tablas ya publicadas (RUT con DV, procedencia, ceros→NULL) sin red
   todo      → maestro + gestoras + ps
 
 Salida: docs/outputs/securitizadoras/*.parquet + *.json. Requiere: pandas, pyarrow, beautifulsoup4, pymupdf (paso ps).
 Variables de entorno opcionales: MFC_CMF_INSECURE_TLS=1 (sólo si la cadena TLS de CMF falla en tu red; queda
-registrado en la columna `metodo`), MFC_PS_ANIOS="2024,2023" (años a descargar en el paso ps).
+registrado en la columna `metodo`). Rango del paso ps: --desde 2010 --hasta <año actual> --trimestres 03,06,09,12.
+Catálogo de cuentas: securitizadoras/data/catalogo_fecu_ps.json (versionado).
 """
 import os, re, sys, json, ssl, socket, hashlib, argparse, urllib.request, urllib.parse, http.cookiejar
 from datetime import datetime, timezone
@@ -241,22 +243,6 @@ def meta_desde_texto(texto_inicial, etiqueta_web, rut_body, nombre):
             "nro_registro_cmf": m_reg.group(1) if m_reg else None}
 
 
-_CUENTAS = [  # (clave, condición sobre la línea en mayúsculas)
-    ("disponible", lambda l: l.startswith("DISPONIBLE")),
-    ("valores_negociables", lambda l: "VALORES NEGOCIABLES" in l),
-    ("activo_securitizado_corto_plazo", lambda l: "ACTIVO SECURITIZADO" in l and ("CORTO" in l or "CIRCULANTE" in l)),
-    ("total_activo_circulante", lambda l: "TOTAL ACTIVO" in l and "CIRCULANTE" in l),
-    ("activo_securitizado_largo_plazo", lambda l: "ACTIVO SECURITIZADO" in l and ("LARGO" in l or "NO CIRCULANTE" in l)),
-    ("total_activos", lambda l: re.match(r"^TOTAL\s+ACTIVOS?\s*$", l) is not None),
-    ("deuda_bonos_corto_plazo", lambda l: ("OBLIGACIONES POR T" in l or "DEUDA CON EL P" in l) and "CORTO" in l),
-    ("total_pasivo_circulante", lambda l: "TOTAL PASIVO" in l and "CIRCULANTE" in l),
-    ("deuda_bonos_largo_plazo", lambda l: ("OBLIGACIONES POR T" in l or "DEUDA CON EL P" in l) and "LARGO" in l),
-    ("total_pasivo_largo_plazo", lambda l: "TOTAL PASIVO" in l and "LARGO" in l),
-    ("excedentes_acumulados", lambda l: ("EXCEDENTE" in l or "DEFICIT" in l or "DÉFICIT" in l or "PATRIMONIO" in l) and "ACUMULADO" in l),
-    ("total_pasivo_patrimonio", lambda l: re.match(r"^TOTAL\s+PASIVOS?(\s+Y\s+PATRIMONIO)?\s*$", l) is not None),
-]
-
-
 def _numeros_siguientes(lineas, i, n=2, saltar_nota=True):
     out = []
     for k, l in enumerate(lineas[i + 1:i + 9]):
@@ -270,38 +256,120 @@ def _numeros_siguientes(lineas, i, n=2, saltar_nota=True):
     return out
 
 
-def parse_balance_ps(paginas, base_year):
-    """paginas: lista de textos de página. Devuelve lista de dicts por año-columna (sin defaults; NULL si falta)."""
-    for t in paginas[:14]:
-        up = t.upper()
-        if "TOTAL ACTIVOS" not in up or not ("DISPONIBLE" in up or "CIRCULANTE" in up):
+CATALOGO_PATH = os.path.join(BASE_DIR, "securitizadoras", "data", "catalogo_fecu_ps.json")
+with open(CATALOGO_PATH, encoding="utf-8") as _f:
+    CATALOGO = json.load(_f)
+_POR_CODIGO = {c: e for e in CATALOGO["cuentas"] for c in e["codigos"]}
+_POR_REGEX = [(e["estado"], re.compile(e["regex"]), e) for e in CATALOGO["cuentas"]]
+_RX_CODIGO = re.compile(r"^\d{2}\.\d{3}$")
+_RX_NUM = re.compile(r"^\(?-?[\d\.]+(,\d+)?\)?$|^[—–-]$")
+
+
+def _norm(txt):
+    import unicodedata
+    t = unicodedata.normalize("NFKD", str(txt)).encode("ascii", "ignore").decode().upper()
+    return re.sub(r"\s+", " ", t).strip()
+
+
+def _mapear(estado, codigo, glosa):
+    if codigo and codigo in _POR_CODIGO:
+        return _POR_CODIGO[codigo]
+    g = _norm(glosa)
+    for est, rx, e in _POR_REGEX:
+        if est == estado and rx.search(g):
+            return e
+    return None
+
+
+def _estado_de_pagina(texto):
+    cab = _norm(texto[:600])
+    if any(k in cab for k in CATALOGO["estados"]["EXCEDENTES"]):
+        return "EXCEDENTES"
+    if "BALANCE" in cab or ("ACTIVOS" in cab and "PASIVOS" in cab) or re.search(r"\bACTIVOS\b|\bPASIVOS\b", cab):
+        return "BALANCE"
+    return None
+
+
+def parse_eeff_lineas(paginas, max_paginas=16):
+    """Balance general y estado de excedentes línea a línea, tal como vienen en el PDF (texto pymupdf, una celda por
+    línea o fila completa por línea). No inventa: glosas no reconocidas quedan con cuenta_canonica NULL.
+    Devuelve lista de dicts: estado, codigo_fecu, glosa, nota, monto_mclp, monto_anterior_mclp, cuenta_canonica, seccion, es_total."""
+    lineas_out, vistos = [], set()
+    for pno, t in enumerate(paginas[:max_paginas]):
+        cab = _norm(t[:400])
+        if "INDICE" in cab or "CONTENIDO" in cab or "INFORME DEL AUDITOR" in cab or "NOTA N" in cab[:120]:
+            continue
+        estado = _estado_de_pagina(t)
+        if not estado:
             continue
         lineas = [l.strip() for l in t.split("\n") if l.strip()]
-        anios = re.findall(r"(?:31[-/ ]12[-/ ]|AL\s+)(\d{4})", up)
-        cols = [int(anios[0]), int(anios[1])] if len(anios) >= 2 and anios[0] != anios[1] else [base_year, base_year - 1]
-        datos = [{}, {}]
+        if sum(1 for l in lineas if _RX_NUM.match(l) and any(ch.isdigit() for ch in l)) < 3 and not any(re.search(r"\d[\d\.]{3,}\s+\d", l) for l in lineas):
+            continue
+        codigo = None
         for i, l in enumerate(lineas):
-            lu = l.upper()
-            for clave, cond in _CUENTAS:
-                if clave not in datos[0] and cond(lu):
-                    nums = _numeros_siguientes(lineas, i)
-                    for k, v in enumerate(nums):
-                        datos[k][clave] = v
-                    break
-        salida = []
-        for k, anio in enumerate(cols):
-            d = datos[k]
-            if d.get("total_activos") is None and d.get("total_pasivo_patrimonio") is None:
+            if _RX_CODIGO.match(l):
+                codigo = l; continue
+            # fila completa en una línea: "Disponible 5 119.969 15.615"  ó  "11.010 Disponible 119.969 15.615"
+            m = re.match(r"^(\d{2}\.\d{3})?\s*([A-Za-zÁÉÍÓÚÑáéíóúñ](?:[^\d\(]|\([^)\d]*\))*?)\s+((?:\(?-?[\d\.]+(?:,\d+)?\)?|[—–-])(?:\s+(?:\(?-?[\d\.]+(?:,\d+)?\)?|[—–-]))*)\s*$", l)
+            if m and len(m.group(2).strip()) > 3:
+                cod = m.group(1) or codigo; glosa = m.group(2).strip(); toks = m.group(3).split()
+                nota = None
+                if len(toks) >= 2 and re.fullmatch(r"\d{1,2}", toks[0]):
+                    nota, toks = toks[0], toks[1:]
+                nums = [parse_num(x) for x in toks[:2]]
+            elif any(ch.isalpha() for ch in l) and not _norm(l).startswith(("M$", "NOTA", "AL 31", "AL 30", "POR EL", "POR LOS", "EN MILES", "(EN MILES")):
+                glosa = l; cod = codigo
+                nums = _numeros_siguientes(lineas, i, 2, saltar_nota=True)
+                nota = lineas[i + 1] if i + 1 < len(lineas) and re.fullmatch(r"\d{1,2}", lineas[i + 1]) and nums else None
+                if not nums:
+                    codigo = None; continue
+            else:
                 continue
-            fila = {"periodo": f"{anio}-12"}
-            for clave, _ in _CUENTAS:
-                fila[f"{clave}_mclp"] = d.get(clave)
-            a, p = d.get("total_activos"), d.get("total_pasivo_patrimonio")
-            fila["cuadre_contable_ok"] = (a is not None and p is not None and abs(a - p) <= max(1.0, 0.001 * abs(a)))
-            fila["campos_extraidos"] = sum(v is not None for v in d.values())
-            salida.append(fila)
-        return salida
-    return []
+            codigo = None
+            if not nums or nums[0] is None and (len(nums) < 2 or nums[1] is None):
+                continue
+            e = _mapear(estado, cod, glosa)
+            key = (estado, cod, _norm(glosa))
+            if key in vistos:  # misma glosa repetida (p. ej. subtotal duplicado) → se conserva la primera
+                continue
+            vistos.add(key)
+            lineas_out.append({"estado": estado, "pagina_pdf": pno + 1, "codigo_fecu": cod, "glosa": glosa, "nota": nota,
+                               "monto_mclp": nums[0], "monto_anterior_mclp": nums[1] if len(nums) > 1 else None,
+                               "cuenta_canonica": e["canonica"] if e else None, "seccion": e["seccion"] if e else None,
+                               "es_total": bool(e and e.get("total"))})
+    return lineas_out
+
+
+def conciliar(lineas):
+    """Aplica las conciliaciones del catálogo sobre monto_mclp. Devuelve dict nombre→bool|None (None si faltan cuentas)."""
+    v = {l["cuenta_canonica"]: l["monto_mclp"] for l in lineas if l["cuenta_canonica"] and l["monto_mclp"] is not None}
+    out = {}
+    for c in CATALOGO["conciliaciones"]:
+        if not all(k in v for k in c["izq"] + c["der"]):
+            out[c["nombre"]] = None; continue
+        izq = sum(v[k] for k in c["izq"]); der = sum(v[k] for k in c["der"])
+        out[c["nombre"]] = abs(izq - der) <= max(1.0, c["tolerancia_pct"] / 100 * abs(izq))
+    return out
+
+
+_RESUMEN = [("disponible", "DISPONIBLE"), ("valores_negociables", "VALORES_NEGOCIABLES"), ("activo_securitizado_corto_plazo", "ACTIVO_SECURITIZADO_CP"),
+            ("provision_activo_securitizado", "PROVISION_ACTIVO_SECURITIZADO_CP"), ("otros_activos_circulantes", "OTROS_ACTIVOS_CIRCULANTES"),
+            ("total_activo_circulante", "TOTAL_ACTIVOS_CIRCULANTES"), ("activo_securitizado_largo_plazo", "ACTIVO_SECURITIZADO_LP"),
+            ("total_otros_activos", "TOTAL_OTROS_ACTIVOS"), ("total_activos", "TOTAL_ACTIVOS"), ("deuda_bonos_corto_plazo", "OBLIG_TITULOS_DEUDA_CP"),
+            ("total_pasivo_circulante", "TOTAL_PASIVOS_CIRCULANTES"), ("deuda_bonos_largo_plazo", "OBLIG_TITULOS_DEUDA_LP"),
+            ("total_pasivo_largo_plazo", "TOTAL_PASIVOS_LARGO_PLAZO"), ("excedentes_acumulados", "TOTAL_EXCEDENTES_ACUMULADOS"),
+            ("total_pasivo_patrimonio", "TOTAL_PASIVOS_Y_PATRIMONIO"), ("excedente_neto_periodo", "EXCEDENTE_NETO_DEL_PERIODO")]
+
+
+def derivar_resumen(lineas):
+    v = {l["cuenta_canonica"]: l["monto_mclp"] for l in lineas if l["cuenta_canonica"]}
+    fila = {f"{k}_mclp": v.get(c) for k, c in _RESUMEN}
+    conc = conciliar(lineas)
+    fila["cuadre_contable_ok"] = bool(conc.get("activos_igual_pasivos"))
+    fila["conciliacion_componentes_ok"] = (conc.get("activos_igual_componentes") is not False) and (conc.get("pasivos_igual_componentes") is not False)
+    fila["cuentas_reconocidas"] = sum(1 for l in lineas if l["cuenta_canonica"])
+    fila["cuentas_no_reconocidas"] = sum(1 for l in lineas if not l["cuenta_canonica"])
+    return fila
 
 
 def parse_nota_efectivo_ps(paginas):
@@ -359,57 +427,78 @@ def parse_nota_morosidad_ps(paginas):
     return rows, descartados
 
 
-def paso_ps(op, secs, anios):
+def _listar_pdfs_ps(op, sec, anio, mm):
+    """Devuelve [(etiqueta, url_pdf)] de la pestaña 18 para un período. Incluye no vigentes (vig=NV)."""
+    from bs4 import BeautifulSoup
+    vig = "VI" if sec["estado_vigencia"] == "VIGENTE" else "NV"
+    url_ent = f"{CMF}/institucional/mercados/entidad.php?mercado=V&rut={sec['rut']}&tipoentidad=RGSEC&vig={vig}&control=svs&pestania=18"
+    html = http_get(op, url_ent, data=urllib.parse.urlencode({"mm": mm, "aa": str(anio)}).encode()).decode("latin1", errors="ignore")
+    out = []
+    for tr in BeautifulSoup(html, "html.parser").find_all("tr"):
+        txt = tr.get_text(" ", strip=True); tl = txt.lower()
+        if "patrimonios separados" not in tl or any(k in tl for k in ("analisis", "análisis", "declaraci", "responsabilidad")):
+            continue
+        a = tr.find("a", href=lambda h: h and "ver_sgd.php" in h and "bitacora" not in h)
+        if a:
+            out.append((txt, CMF + a["href"] if a["href"].startswith("/") else a["href"]))
+    return url_ent, out
+
+
+def paso_ps(op, secs, desde, hasta, trimestres):
     import fitz  # pymupdf
-    print(f"[ps] EEFF PDF de patrimonios separados, años {anios}")
-    tc = tc_map(); balances, notas, cobertura = [], [], []
+    print(f"[ps] EEFF PDF de patrimonios separados {desde}-{hasta}, trimestres {trimestres}")
+    tc = tc_map(); lineas_all, balances, notas, cobertura = [], [], [], []
+    hoy = datetime.now()
     for sec in secs.values():
-        if sec["estado_vigencia"] != "VIGENTE": continue
-        rut = sec["rut"]
-        for anio in anios:
-            url_ent = f"{CMF}/institucional/mercados/entidad.php?mercado=V&rut={rut}&tipoentidad=RGSEC&vig=VI&control=svs&pestania=18"
-            try:
-                html = http_get(op, url_ent, data=urllib.parse.urlencode({"mm": "12", "aa": str(anio)}).encode()).decode("latin1", errors="ignore")
-            except Exception as e:
-                cobertura.append({"rut_administradora": sec["rut_completo"], "periodo": f"{anio}-12", "etiqueta_web": None, "estado": f"error_entidad:{e}"}); continue
-            from bs4 import BeautifulSoup
-            for tr in BeautifulSoup(html, "html.parser").find_all("tr"):
-                txt = tr.get_text(" ", strip=True); tl = txt.lower()
-                if "patrimonios separados" not in tl or any(k in tl for k in ("analisis", "análisis", "declaraci", "responsabilidad")):
+        for anio in range(desde, hasta + 1):
+            for mm in trimestres:
+                if datetime(anio, int(mm), 1) > hoy:
                     continue
-                a = tr.find("a", href=lambda h: h and "ver_sgd.php" in h and "bitacora" not in h)
-                if not a: continue
-                pdf_url = CMF + a["href"] if a["href"].startswith("/") else a["href"]
-                cob = {"rut_administradora": sec["rut_completo"], "periodo": f"{anio}-12", "etiqueta_web": txt[:120], "fuente_url": pdf_url}
+                periodo = f"{anio}-{mm}"
                 try:
-                    pdf = http_get(op, pdf_url, referer=url_ent, timeout=60)
-                    doc = fitz.open(stream=pdf, filetype="pdf")
-                    paginas = [doc[i].get_text() for i in range(len(doc))]; doc.close()
+                    url_ent, pdfs = _listar_pdfs_ps(op, sec, anio, mm)
                 except Exception as e:
-                    cobertura.append({**cob, "estado": f"error_pdf:{e}"}); continue
-                if len(paginas) <= 2 or "Archivo No Disponible" in paginas[0]:
-                    cobertura.append({**cob, "estado": "pdf_no_disponible"}); continue
-                meta = meta_desde_texto("\n".join(paginas[:5]), txt, rut, sec["razon_social"])
-                if not meta:
-                    cobertura.append({**cob, "estado": "sin_codigo_emision"}); continue
-                prov = {"fuente_url": pdf_url, "metodo": metodo_tag("pdf_texto_pymupdf"), "fecha_extraccion": ahora(),
-                        "script_version": SCRIPT_VERSION, "pdf_sha256": hashlib.sha256(pdf).hexdigest()}
-                bal = parse_balance_ps(paginas, anio)
-                for b in bal:
-                    r = tc.get(b["periodo"])
-                    b.update(meta); b.update(prov); b["tipo_cambio_usd_clp"] = r
-                    b["total_activos_musd"] = round(b["total_activos_mclp"] / r, 2) if r and b["total_activos_mclp"] is not None else None
-                    balances.append(b)
-                efe = parse_nota_efectivo_ps(paginas); mor, desc = parse_nota_morosidad_ps(paginas)
-                for n in efe + mor:
-                    notas.append({**meta, "periodo": f"{anio}-12", **n, **prov})
-                cobertura.append({**cob, **{k: meta[k] for k in ("id_patrimonio", "codigo_emision")}, "estado": "ok",
-                                  "balances": len(bal), "partidas_efectivo": len(efe), "tramos_mora": len(mor), "tramos_mora_descartados": desc,
-                                  "campos_balance_extraidos": bal[0]["campos_extraidos"] if bal else 0, **prov})
-                print(f"  {sec['razon_social'][:28]:28} {meta['codigo_emision']:10} {anio}: bal={len(bal)} efe={len(efe)} mora={len(mor)}")
+                    cobertura.append({"rut_administradora": sec["rut_completo"], "periodo": periodo, "estado": f"error_entidad:{e}"}); continue
+                for txt, pdf_url in pdfs:
+                    cob = {"rut_administradora": sec["rut_completo"], "nombre_administradora": sec["razon_social"], "periodo": periodo,
+                           "etiqueta_web": txt[:120], "fuente_url": pdf_url}
+                    try:
+                        pdf = http_get(op, pdf_url, referer=url_ent, timeout=90)
+                        doc = fitz.open(stream=pdf, filetype="pdf")
+                        paginas = [doc[i].get_text() for i in range(len(doc))]; doc.close()
+                    except Exception as e:
+                        cobertura.append({**cob, "estado": f"error_pdf:{e}"}); continue
+                    if len(paginas) <= 1 or "Archivo No Disponible" in paginas[0]:
+                        cobertura.append({**cob, "estado": "pdf_no_disponible"}); continue
+                    if sum(len(pg) for pg in paginas[:4]) < 200:
+                        cobertura.append({**cob, "estado": "pdf_sin_texto_(escaneado)"}); continue
+                    meta = meta_desde_texto("\n".join(paginas[:5]), txt, sec["rut"], sec["razon_social"])
+                    if not meta:
+                        cobertura.append({**cob, "estado": "sin_codigo_emision"}); continue
+                    prov = {"fuente_url": pdf_url, "metodo": metodo_tag("pdf_texto_pymupdf|catalogo_" + CATALOGO["version"]), "fecha_extraccion": ahora(),
+                            "script_version": SCRIPT_VERSION, "pdf_sha256": hashlib.sha256(pdf).hexdigest()}
+                    lin = parse_eeff_lineas(paginas)
+                    for l in lin:
+                        lineas_all.append({**meta, "periodo": periodo, **l, **prov})
+                    if lin:
+                        r = tc.get(periodo); fila = derivar_resumen(lin)
+                        fila.update(meta); fila.update(prov); fila["periodo"] = periodo; fila["tipo_cambio_usd_clp"] = r
+                        fila["total_activos_musd"] = round(fila["total_activos_mclp"] / r, 2) if r and fila["total_activos_mclp"] is not None else None
+                        balances.append(fila)
+                    efe, mor, desc = [], [], 0
+                    if mm == "12":
+                        efe = parse_nota_efectivo_ps(paginas); mor, desc = parse_nota_morosidad_ps(paginas)
+                        for n in efe + mor:
+                            notas.append({**meta, "periodo": periodo, **n, **prov})
+                    cobertura.append({**cob, **{k: meta[k] for k in ("id_patrimonio", "codigo_emision")}, "estado": "ok" if lin else "sin_lineas_eeff",
+                                      "lineas_eeff": len(lin), "cuentas_reconocidas": sum(1 for l in lin if l["cuenta_canonica"]),
+                                      "partidas_efectivo": len(efe), "tramos_mora": len(mor), "tramos_mora_descartados": desc, **prov})
+                    print(f"  {sec['razon_social'][:26]:26} {meta['codigo_emision']:10} {periodo}: lineas={len(lin)}")
+    df_l = pd.DataFrame(lineas_all)
+    guardar("patrimonios_separados_eeff_lineas", df_l, ["id_patrimonio", "periodo", "estado", "pagina_pdf"])
     df_b = pd.DataFrame(balances)
     if not df_b.empty:
-        df_b = df_b.sort_values("campos_extraidos", ascending=False).drop_duplicates(["id_patrimonio", "periodo"])
+        df_b = df_b.sort_values("cuentas_reconocidas", ascending=False).drop_duplicates(["id_patrimonio", "periodo"])
     guardar("patrimonios_separados_balance_resumen", df_b, ["id_patrimonio", "periodo"])
     guardar("patrimonios_separados_notas_detalle", notas, ["id_patrimonio", "periodo", "nota"])
     guardar("patrimonios_separados_cobertura", cobertura, ["rut_administradora", "periodo"])
@@ -459,6 +548,9 @@ def paso_reparar_legacy():
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--step", choices=["maestro", "gestoras", "ps", "reparar-legacy", "todo"], default="todo")
+    ap.add_argument("--desde", type=int, default=2010, help="primer año del paso ps (CMF publica desde 2000)")
+    ap.add_argument("--hasta", type=int, default=datetime.now().year)
+    ap.add_argument("--trimestres", default="03,06,09,12", help="meses de cierre a descargar, p. ej. 12 para sólo anuales")
     a = ap.parse_args()
     if a.step == "reparar-legacy":
         paso_reparar_legacy(); return
@@ -467,8 +559,7 @@ def main():
     if a.step in ("gestoras", "todo"):
         paso_gestoras(op, secs)
     if a.step in ("ps", "todo"):
-        anios = [int(x) for x in os.environ.get("MFC_PS_ANIOS", f"{datetime.now().year - 1},{datetime.now().year - 2}").split(",")]
-        paso_ps(op, secs, anios)
+        paso_ps(op, secs, a.desde, a.hasta, [m.strip().zfill(2) for m in a.trimestres.split(",")])
     print("Listo. Ejecuta ahora: python securitizadoras/scripts/audit_patrimonios_separados_v2.py")
 
 

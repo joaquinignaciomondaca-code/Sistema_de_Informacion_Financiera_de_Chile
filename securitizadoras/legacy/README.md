@@ -17,7 +17,16 @@ para análisis** hasta que exista un pipeline que las regenere y pasen `audit_pa
 | patrimonios_separados_repos_detalle | 52 | 100 % defaults (plazo 0, tasa 0,39, "Cumple / SI") |
 | patrimonios_separados_cartera_morosidad_detalle | 67 | 27/67 con provisión > cartera |
 
-Las cuentas FECU-PS reales de `balance_lineas`/`excedentes_lineas` (plan 10.000…35.xxx, 2010–2026) sugieren que
-existió una fuente estructurada (FECU-PS HTML/XBRL de CMF). Si se recupera esa fuente, el camino correcto es
-implementarla como paso `fecu_ps` en `../scripts/pipeline_securitizadoras.py` (formato largo, clave
-`numero_inscripcion`, columnas de procedencia) y no rehabilitar estos archivos.
+**Fuente identificada (2026-09-26):** `balance_lineas`/`excedentes_lineas` salieron de los mismos PDFs trimestrales
+de la pestaña 18 de CMF (no de una fuente estructurada). Contraste con el PDF real de Volcom BVOLS al 12/2024:
+
+| Cuenta | v1 (cuarentena) | PDF CMF | Diagnóstico |
+|---|---|---|---|
+| 11.030 Activo securitizado CP | 94.335.870 | 4.335.870 | N° de nota "9" concatenado al monto |
+| 11.200 Otros activos circulantes | 116.488.572 | 6.488.572 | N° de nota "11" concatenado |
+| 13.010 Activo securitizado LP | 989.303.250 | 89.303.250 | N° de nota "9" concatenado |
+| 11.000 Total activos circulantes | 12.175.537 | 12.175.537 | correcto (sin nota) |
+
+Por eso el 75 % de los balances v1 no cuadraba. La reconstrucción reproducible es el paso `ps` de
+`../scripts/pipeline_securitizadoras.py` → `patrimonios_separados_eeff_lineas` (catálogo `../data/catalogo_fecu_ps.json`).
+Estos archivos pueden eliminarse una vez que la tabla nueva cubra 2010–hoy.
