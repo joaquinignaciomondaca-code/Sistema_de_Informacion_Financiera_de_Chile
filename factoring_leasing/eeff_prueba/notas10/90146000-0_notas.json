@@ -1,0 +1,741 @@
+{
+  "indice": [
+    {
+      "numero": 1,
+      "titulo": "Información General de Servicios Financieros Progreso S.A",
+      "pagina": 2,
+      "en_indice": false,
+      "familia": "antecedentes"
+    },
+    {
+      "numero": 2,
+      "titulo": "Bases de preparación y Políticas Contables",
+      "pagina": 12,
+      "en_indice": false,
+      "familia": "politica"
+    },
+    {
+      "numero": 3,
+      "titulo": "Nuevos pronunciamientos contables y cambios contables",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "politica"
+    },
+    {
+      "numero": 4,
+      "titulo": "Gestión de riesgo de la Sociedad",
+      "pagina": 33,
+      "en_indice": false,
+      "familia": "riesgos"
+    },
+    {
+      "numero": 5,
+      "titulo": "Revelaciones sobre las estimaciones y juicios realizados por la Administración al aplicar las políticas contables de la",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "politica"
+    },
+    {
+      "numero": 6,
+      "titulo": "Efectivo y equivalentes al efectivo",
+      "pagina": 38,
+      "en_indice": false,
+      "familia": "efectivo"
+    },
+    {
+      "numero": 7,
+      "titulo": "Deudores comerciales y otras cuentas por cobrar",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "deudores"
+    },
+    {
+      "numero": 8,
+      "titulo": "Activos financieros",
+      "pagina": 51,
+      "en_indice": false,
+      "familia": "otros_activos"
+    },
+    {
+      "numero": 9,
+      "titulo": "Información sobre partes relacionadas",
+      "pagina": 52,
+      "en_indice": false,
+      "familia": "relacionadas"
+    },
+    {
+      "numero": 10,
+      "titulo": "Activos y Pasivos por impuestos corrientes",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "impuestos"
+    },
+    {
+      "numero": 11,
+      "titulo": "Activos no corrientes mantenidos para la venta",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "mantenidos_venta"
+    },
+    {
+      "numero": 12,
+      "titulo": "Activos intangibles",
+      "pagina": 57,
+      "en_indice": false,
+      "familia": "intangibles"
+    },
+    {
+      "numero": 13,
+      "titulo": "Propiedades y equipos y bienes por derechos de uso",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "arrendamientos"
+    },
+    {
+      "numero": 14,
+      "titulo": "Propiedades de inversión",
+      "pagina": 60,
+      "en_indice": false,
+      "familia": "otra"
+    },
+    {
+      "numero": 15,
+      "titulo": "Impuestos a las ganancias",
+      "pagina": 60,
+      "en_indice": false,
+      "familia": "impuestos"
+    },
+    {
+      "numero": 16,
+      "titulo": "Otros pasivos financieros",
+      "pagina": 62,
+      "en_indice": false,
+      "familia": "pasivos_financieros"
+    },
+    {
+      "numero": 17,
+      "titulo": "Cuentas por pagar comerciales y otras cuentas por pagar",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "cuentas_por_pagar"
+    },
+    {
+      "numero": 18,
+      "titulo": "Provisiones, activos y pasivos contingentes",
+      "pagina": 67,
+      "en_indice": false,
+      "familia": "provisiones"
+    },
+    {
+      "numero": 19,
+      "titulo": "Otros pasivos no financieros y Provisiones por beneficio a los empleados",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "provisiones"
+    },
+    {
+      "numero": 20,
+      "titulo": "Arrendamiento (Servicios Financieros Progreso S.A. como arrendatario)",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "arrendamientos"
+    },
+    {
+      "numero": 21,
+      "titulo": "Información a revelar sobre patrimonio neto",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "patrimonio"
+    },
+    {
+      "numero": 22,
+      "titulo": "Otros activos no financieros, corrientes y no corrientes",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "otros_activos"
+    },
+    {
+      "numero": 23,
+      "titulo": "Ingresos de actividades ordinarias",
+      "pagina": 76,
+      "en_indice": false,
+      "familia": "ingresos"
+    },
+    {
+      "numero": 24,
+      "titulo": "Costo de venta",
+      "pagina": 78,
+      "en_indice": false,
+      "familia": "costos"
+    },
+    {
+      "numero": 25,
+      "titulo": "Gastos de administración",
+      "pagina": 80,
+      "en_indice": false,
+      "familia": "gastos"
+    },
+    {
+      "numero": 26,
+      "titulo": "Ganancias por acción",
+      "pagina": 80,
+      "en_indice": false,
+      "familia": "otra"
+    },
+    {
+      "numero": 27,
+      "titulo": "Operaciones por segmentos",
+      "pagina": 81,
+      "en_indice": false,
+      "familia": "segmentos"
+    },
+    {
+      "numero": 28,
+      "titulo": "Efecto de las variaciones en las tasas de cambio de la moneda extranjera e índices de reajustabilidad",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "reajuste"
+    },
+    {
+      "numero": 29,
+      "titulo": "Depreciación y amortización",
+      "pagina": 84,
+      "en_indice": false,
+      "familia": "otra"
+    },
+    {
+      "numero": 30,
+      "titulo": "Otras ganancias (pérdidas) netas",
+      "pagina": 85,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 31,
+      "titulo": "Medio ambiente",
+      "pagina": 85,
+      "en_indice": true,
+      "familia": "medio_ambiente"
+    },
+    {
+      "numero": 32,
+      "titulo": "Sanciones",
+      "pagina": 85,
+      "en_indice": true,
+      "familia": "sanciones"
+    },
+    {
+      "numero": 33,
+      "titulo": "Hechos ocurridos después de la fecha del balance",
+      "pagina": 3,
+      "en_indice": true,
+      "familia": "otra"
+    }
+  ],
+  "tablas": {
+    "efectivo": [
+      {
+        "concepto": "Saldos en bancos Pesos chilenos",
+        "monto_miles": 2838679.0,
+        "monto_comparativo_miles": 4680516.0,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "efectivo",
+        "numero_nota": 6,
+        "titulo_nota": "Efectivo y equivalentes al efectivo"
+      },
+      {
+        "concepto": "Fondos Mutuos (*) Pesos chilenos",
+        "monto_miles": 1782000.0,
+        "monto_comparativo_miles": 0.0,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "efectivo",
+        "numero_nota": 6,
+        "titulo_nota": "Efectivo y equivalentes al efectivo"
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 4620679.0,
+        "monto_comparativo_miles": 4680516.0,
+        "es_total": 1,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "efectivo",
+        "numero_nota": 6,
+        "titulo_nota": "Efectivo y equivalentes al efectivo"
+      }
+    ],
+    "impuestos_corrientes_activo": [
+      {
+        "concepto": "IVA crédito fiscal",
+        "monto_miles": 0.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "impuestos_corrientes_activo",
+        "numero_nota": 10,
+        "titulo_nota": "Activos y Pasivos por impuestos corrientes"
+      },
+      {
+        "concepto": "Crédito SENCE",
+        "monto_miles": 77308.0,
+        "monto_comparativo_miles": 74097.0,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "impuestos_corrientes_activo",
+        "numero_nota": 10,
+        "titulo_nota": "Activos y Pasivos por impuestos corrientes"
+      },
+      {
+        "concepto": "Pagos Provisionales Mensuales Netos de Impuesto renta",
+        "monto_miles": 1098191.0,
+        "monto_comparativo_miles": 593583.0,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "impuestos_corrientes_activo",
+        "numero_nota": 10,
+        "titulo_nota": "Activos y Pasivos por impuestos corrientes"
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 1175499.0,
+        "monto_comparativo_miles": 667680.0,
+        "es_total": 1,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "impuestos_corrientes_activo",
+        "numero_nota": 10,
+        "titulo_nota": "Activos y Pasivos por impuestos corrientes"
+      }
+    ],
+    "otros_activos_no_financieros_no_corriente": [
+      {
+        "concepto": "Inmuebles y otros bienes (1)",
+        "monto_miles": 569616.0,
+        "monto_comparativo_miles": 569250.0,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "otros_activos_no_financieros_no_corriente",
+        "numero_nota": 22,
+        "titulo_nota": "Otros activos no financieros, corrientes y no corrientes"
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 569616.0,
+        "monto_comparativo_miles": 569250.0,
+        "es_total": 1,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "otros_activos_no_financieros_no_corriente",
+        "numero_nota": 22,
+        "titulo_nota": "Otros activos no financieros, corrientes y no corrientes"
+      }
+    ],
+    "relacionadas_por_cobrar_no_corriente": [
+      {
+        "concepto": "Control Común",
+        "monto_miles": 27575.0,
+        "monto_comparativo_miles": 30254.0,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "relacionadas_por_cobrar_no_corriente",
+        "numero_nota": 9,
+        "titulo_nota": "Información sobre partes relacionadas"
+      },
+      {
+        "concepto": "Control Común",
+        "monto_miles": 24644.0,
+        "monto_comparativo_miles": 34912.0,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "relacionadas_por_cobrar_no_corriente",
+        "numero_nota": 9,
+        "titulo_nota": "Información sobre partes relacionadas"
+      },
+      {
+        "concepto": "Control Común",
+        "monto_miles": 210029.0,
+        "monto_comparativo_miles": 245183.0,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "relacionadas_por_cobrar_no_corriente",
+        "numero_nota": 9,
+        "titulo_nota": "Información sobre partes relacionadas"
+      },
+      {
+        "concepto": "Control Común",
+        "monto_miles": 0.0,
+        "monto_comparativo_miles": 0.0,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "relacionadas_por_cobrar_no_corriente",
+        "numero_nota": 9,
+        "titulo_nota": "Información sobre partes relacionadas"
+      },
+      {
+        "concepto": "Control Común 0",
+        "monto_miles": 0.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "relacionadas_por_cobrar_no_corriente",
+        "numero_nota": 9,
+        "titulo_nota": "Información sobre partes relacionadas"
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 262248.0,
+        "monto_comparativo_miles": 310349.0,
+        "es_total": 1,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "relacionadas_por_cobrar_no_corriente",
+        "numero_nota": 9,
+        "titulo_nota": "Información sobre partes relacionadas"
+      }
+    ],
+    "cuentas_por_pagar": [
+      {
+        "concepto": "Acreedores comerciales",
+        "monto_miles": 4819659.0,
+        "monto_comparativo_miles": 5627268.0,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "cuentas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Cuentas por pagar comerciales y otras cuentas por pagar"
+      },
+      {
+        "concepto": "Otras cuentas por pagar",
+        "monto_miles": 2375416.0,
+        "monto_comparativo_miles": 3370450.0,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "cuentas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Cuentas por pagar comerciales y otras cuentas por pagar"
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 7195075.0,
+        "monto_comparativo_miles": 8997718.0,
+        "es_total": 1,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "cuentas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Cuentas por pagar comerciales y otras cuentas por pagar"
+      }
+    ],
+    "impuestos_corrientes_pasivo": [
+      {
+        "concepto": "Pasivos por impuestos corrientes Provisión impuesto a la renta",
+        "monto_miles": 0.0,
+        "monto_comparativo_miles": 0.0,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "impuestos_corrientes_pasivo",
+        "numero_nota": 10,
+        "titulo_nota": "Activos y Pasivos por impuestos corrientes"
+      },
+      {
+        "concepto": "Pagos provisionales por pagar",
+        "monto_miles": 179044.0,
+        "monto_comparativo_miles": 193162.0,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "impuestos_corrientes_pasivo",
+        "numero_nota": 10,
+        "titulo_nota": "Activos y Pasivos por impuestos corrientes"
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 179044.0,
+        "monto_comparativo_miles": 193162.0,
+        "es_total": 1,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "impuestos_corrientes_pasivo",
+        "numero_nota": 10,
+        "titulo_nota": "Activos y Pasivos por impuestos corrientes"
+      }
+    ],
+    "pasivos_financieros_no_corriente": [
+      {
+        "concepto": "Préstamos Bancarios (*)",
+        "monto_miles": 24011026.0,
+        "monto_comparativo_miles": 18765603.0,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "pasivos_financieros_no_corriente",
+        "numero_nota": 16,
+        "titulo_nota": "Otros pasivos financieros"
+      },
+      {
+        "concepto": "Efectos de Comercio",
+        "monto_miles": 0.0,
+        "monto_comparativo_miles": 0.0,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "pasivos_financieros_no_corriente",
+        "numero_nota": 16,
+        "titulo_nota": "Otros pasivos financieros"
+      },
+      {
+        "concepto": "Derivado Swap MTM",
+        "monto_miles": 0.0,
+        "monto_comparativo_miles": 0.0,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "pasivos_financieros_no_corriente",
+        "numero_nota": 16,
+        "titulo_nota": "Otros pasivos financieros"
+      },
+      {
+        "concepto": "Otros pasivos financieros",
+        "monto_miles": 0.0,
+        "monto_comparativo_miles": 0.0,
+        "es_total": 0,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "pasivos_financieros_no_corriente",
+        "numero_nota": 16,
+        "titulo_nota": "Otros pasivos financieros"
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 24011026.0,
+        "monto_comparativo_miles": 18765603.0,
+        "es_total": 1,
+        "rut": "90146000-0",
+        "periodo": "2026-03",
+        "tipo_eeff": "Individual",
+        "cuenta": "pasivos_financieros_no_corriente",
+        "numero_nota": 16,
+        "titulo_nota": "Otros pasivos financieros"
+      }
+    ]
+  },
+  "cuadre": [
+    {
+      "cuenta": "efectivo",
+      "nombre_cara": "Efectivo y equivalentes al efectivo",
+      "nota_ref": "6",
+      "numero_nota": 6,
+      "titulo_nota": "Efectivo y equivalentes al efectivo",
+      "cara_miles": 4620679.0,
+      "nota_miles": 4620679.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    },
+    {
+      "cuenta": "otros_activos_no_financieros",
+      "nombre_cara": "Otros activos no financieros, corrientes",
+      "nota_ref": "22",
+      "cara_miles": 121671.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "deudores",
+      "nombre_cara": "Deudores comerciales y otras cuentas por cobrar, corrientes",
+      "nota_ref": "7",
+      "cara_miles": 80711902.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "relacionadas_por_cobrar",
+      "nombre_cara": "Cuentas por cobrar a entidades relacionadas, corrientes",
+      "nota_ref": "9",
+      "cara_miles": 255339.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "impuestos_corrientes_activo",
+      "nombre_cara": "Activos por impuestos, corrientes",
+      "nota_ref": "10",
+      "numero_nota": 10,
+      "titulo_nota": "Activos y Pasivos por impuestos corrientes",
+      "cara_miles": 1175499.0,
+      "nota_miles": 1175499.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    },
+    {
+      "cuenta": "otros_activos_no_financieros_no_corriente",
+      "nombre_cara": "Otros activos no financieros, no corrientes",
+      "nota_ref": "22",
+      "numero_nota": 22,
+      "titulo_nota": "Otros activos no financieros, corrientes y no corrientes",
+      "cara_miles": 569616.0,
+      "nota_miles": 569616.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    },
+    {
+      "cuenta": "deudores_no_corriente",
+      "nombre_cara": "Deudores comerciales y otras cuentas por cobrar, no corrientes",
+      "nota_ref": "7",
+      "cara_miles": 35739190.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "relacionadas_por_cobrar_no_corriente",
+      "nombre_cara": "Cuentas por cobrar a entidades relacionadas, no corrientes",
+      "nota_ref": "9",
+      "numero_nota": 9,
+      "titulo_nota": "Información sobre partes relacionadas",
+      "cara_miles": 262248.0,
+      "nota_miles": 262248.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    },
+    {
+      "cuenta": "intangibles",
+      "nombre_cara": "Activos intangibles distintos de la plusvalía",
+      "nota_ref": "12",
+      "cara_miles": 3930934.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "pasivos_financieros",
+      "nombre_cara": "Otros pasivos financieros, corrientes",
+      "nota_ref": "16",
+      "cara_miles": 64269130.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "cuentas_por_pagar",
+      "nombre_cara": "Cuentas por pagar comerciales y otras cuentas por pagar, corrientes",
+      "nota_ref": "17",
+      "numero_nota": 17,
+      "titulo_nota": "Cuentas por pagar comerciales y otras cuentas por pagar",
+      "cara_miles": 7195075.0,
+      "nota_miles": 7195075.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    },
+    {
+      "cuenta": "relacionadas_por_pagar",
+      "nombre_cara": "Cuentas por pagar a entidades relacionadas, corrientes",
+      "nota_ref": "9",
+      "cara_miles": 19005.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "impuestos_corrientes_pasivo",
+      "nombre_cara": "Pasivos por Impuestos Corrientes",
+      "nota_ref": "10",
+      "numero_nota": 10,
+      "titulo_nota": "Activos y Pasivos por impuestos corrientes",
+      "cara_miles": 179044.0,
+      "nota_miles": 179044.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    },
+    {
+      "cuenta": "provisiones",
+      "nombre_cara": "Otras provisiones, no corrientes",
+      "nota_ref": "18",
+      "cara_miles": 4390625.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "provisiones_empleados",
+      "nombre_cara": "Provisiones corrientes por beneficios a los empleados 19 (b)",
+      "nota_ref": "",
+      "cara_miles": 517818.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "otros_pasivos_no_financieros",
+      "nombre_cara": "Otros pasivos no financieros, corrientes 19 (a)",
+      "nota_ref": "",
+      "cara_miles": 4296259.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    },
+    {
+      "cuenta": "pasivos_financieros_no_corriente",
+      "nombre_cara": "Otros pasivos financieros, no corrientes",
+      "nota_ref": "16",
+      "numero_nota": 16,
+      "titulo_nota": "Otros pasivos financieros",
+      "cara_miles": 24011026.0,
+      "nota_miles": 24011026.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    },
+    {
+      "cuenta": "impuestos_diferidos_pasivo",
+      "nombre_cara": "Pasivo por Impuestos Diferidos",
+      "nota_ref": "15",
+      "cara_miles": 3302645.0,
+      "nota_miles": null,
+      "estado": "NO_LEIDA",
+      "diff_miles": null
+    }
+  ]
+}
