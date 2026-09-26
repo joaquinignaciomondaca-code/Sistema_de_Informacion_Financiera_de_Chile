@@ -23,7 +23,7 @@ Este directorio cataloga y documenta los flujos de extracción y procesamiento q
 | **Macroeconomía & Tasas** | BCCh (Base de Datos Estadísticos SIETE) | Mensual / Diario | `macro/scripts/pipeline_stream_macro_bcch.py` | `docs/outputs/macro/` |
 | **Factoring & Leasing** | CMF EEFF IFRS texto plano (`ver_archivo.php`) | Trimestral | `factoring_leasing/scripts/pipeline_factoring_leasing.py --step todo` (catálogo y mapeo de cuentas versionados en `factoring_leasing/data/`) | `docs/outputs/factoring_leasing/` (maestro, eeff_cuentas [largo], balance_resumen, cobertura) |
 | **Corredoras de Bolsa** | CMF Estados Financieros IFRS | Trimestral | `corredoras_bolsa/scripts/stream_cmf_corredoras.py` | `docs/outputs/corredoras_bolsa/` |
-| **Sociedades Securitizadoras** | CMF Balances IFRS y Ley 18.045 | Trimestral | `securitizadoras/scripts/stream_cmf_securitizadoras.py` | `docs/outputs/securitizadoras/` |
+| **Sociedades Securitizadoras** | CMF Balances IFRS y Ley 18.045 | Trimestral | `securitizadoras/scripts/pipeline_securitizadoras.py` | `docs/outputs/securitizadoras/` |
 | **Cajas de Compensación** | SUSESO / CMF Registro Oficial | Anual / Trimestral | `cajas_compensacion/scripts/stream_ccaf.py` | `docs/outputs/cajas_compensacion/` |
 | **Administradoras de Fondos (AGF)** | CMF Ley 20.712 Balances IFRS | Trimestral | `agf/scripts/stream_cmf_agf.py` | `docs/outputs/agf/` |
 | **Sistemas de Pago** | BCCh Tráfico LBTR/CCA y Balances CMF | Mensual / Trimestral | `sistemas_pago/scripts/stream_sistemas_pago.py` | `docs/outputs/sistemas_pago/` |

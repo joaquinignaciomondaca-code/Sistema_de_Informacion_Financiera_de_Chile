@@ -1050,160 +1050,14 @@ const ERD_TABLES = [
       { name: "total_activos_m_usd", type: "DOUBLE" }
     ]
   },
-    {
-    id: "patrimonios_separados_balance_lineas",
-    name: "patrimonios.balance_lineas",
-    sector: "patrimonios_separados",
-    color: "#0284C7",
-    x: 4460,
-    y: 200,
-    w: 270,
-    h: 220,
-    rows: "23,600 filas",
-    file: "outputs/securitizadoras/patrimonios_separados_balance_lineas.parquet",
-    cols: [
-      { name: "id_linea", pk: true, type: "VARCHAR" },
-      { name: "id_patrimonio", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "codigo_cuenta", type: "VARCHAR" },
-      { name: "nombre_cuenta", type: "VARCHAR" },
-      { name: "monto_m_clp", type: "DOUBLE" },
-      { name: "monto_mm_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_excedentes_lineas",
-    name: "patrimonios.excedentes_lineas",
-    sector: "patrimonios_separados",
-    color: "#0284C7",
-    x: 4760,
-    y: 200,
-    w: 270,
-    h: 220,
-    rows: "16,312 filas",
-    file: "outputs/securitizadoras/patrimonios_separados_excedentes_lineas.parquet",
-    cols: [
-      { name: "id_linea", pk: true, type: "VARCHAR" },
-      { name: "id_patrimonio", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "tipo_flujo", type: "VARCHAR" },
-      { name: "nombre_cuenta", type: "VARCHAR" },
-      { name: "monto_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_nota_cartera_detalle",
-    name: "patrimonios.nota_cartera",
-    sector: "patrimonios_separados",
-    color: "#0284C7",
-    x: 4460,
-    y: 800,
-    w: 260,
-    h: 200,
-    rows: "808 filas",
-    file: "outputs/securitizadoras/patrimonios_separados_nota_cartera_detalle.parquet",
-    cols: [
-      { name: "id_linea", pk: true, type: "VARCHAR" },
-      { name: "id_patrimonio", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "originador", type: "VARCHAR" },
-      { name: "valor_presente_mclp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_nota_morosidad_detalle",
-    name: "patrimonios.nota_morosidad",
-    sector: "patrimonios_separados",
-    color: "#0284C7",
-    x: 4760,
-    y: 800,
-    w: 260,
-    h: 200,
-    rows: "1,242 filas",
-    file: "outputs/securitizadoras/patrimonios_separados_nota_morosidad_detalle.parquet",
-    cols: [
-      { name: "id_linea", pk: true, type: "VARCHAR" },
-      { name: "id_patrimonio", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "tramo_mora", type: "VARCHAR" },
-      { name: "monto_cartera_mclp", type: "DOUBLE" },
-      { name: "monto_provision_mclp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_nota_bonos_detalle",
-    name: "patrimonios.nota_bonos",
-    sector: "patrimonios_separados",
-    color: "#0284C7",
-    x: 5060,
-    y: 200,
-    w: 260,
-    h: 200,
-    rows: "498 filas",
-    file: "outputs/securitizadoras/patrimonios_separados_nota_bonos_detalle.parquet",
-    cols: [
-      { name: "id_linea", pk: true, type: "VARCHAR" },
-      { name: "id_patrimonio", fk: true, type: "VARCHAR" },
-      { name: "serie", type: "VARCHAR" },
-      { name: "nemotecnico", type: "VARCHAR" },
-      { name: "saldo_insoluto_mclp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_nota_administracion_detalle",
-    name: "patrimonios.nota_administracion",
-    sector: "patrimonios_separados",
-    color: "#0284C7",
-    x: 5060,
-    y: 500,
-    w: 260,
-    h: 180,
-    rows: "325 filas",
-    file: "outputs/securitizadoras/patrimonios_separados_nota_administracion_detalle.parquet",
-    cols: [
-      { name: "id_linea", pk: true, type: "VARCHAR" },
-      { name: "id_patrimonio", fk: true, type: "VARCHAR" },
-      { name: "concepto_comision", type: "VARCHAR" },
-      { name: "gasto_periodo_mclp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_nota_sobrecolateral_detalle",
-    name: "patrimonios.nota_sobrecolateral",
-    sector: "patrimonios_separados",
-    color: "#0284C7",
-    x: 5060,
-    y: 800,
-    w: 260,
-    h: 180,
-    rows: "679 filas",
-    file: "outputs/securitizadoras/patrimonios_separados_nota_sobrecolateral_detalle.parquet",
-    cols: [
-      { name: "id_linea", pk: true, type: "VARCHAR" },
-      { name: "id_patrimonio", fk: true, type: "VARCHAR" },
-      { name: "monto_sobrecolateral_mclp", type: "DOUBLE" },
-      { name: "sobrecolateral_pct", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_nota_efectivo_detalle",
-    name: "patrimonios.nota_efectivo_detalle",
-    sector: "patrimonios_separados",
-    color: "#0369A1",
-    x: 5060,
-    y: 1040,
-    w: 260,
-    h: 190,
-    rows: "3,802 filas",
-    file: "outputs/securitizadoras/patrimonios_separados_nota_efectivo_detalle.parquet",
-    cols: [
-      { name: "id_linea", pk: true, type: "VARCHAR" },
-      { name: "id_patrimonio", fk: true, type: "VARCHAR" },
-      { name: "institucion", type: "VARCHAR" },
-      { name: "tipo_instrumento", type: "VARCHAR" },
-      { name: "saldo_mclp", type: "DOUBLE" }
-    ]
-  },
+
+
+
+
+
+
+
+
 {
     id: "patrimonios_separados_maestro",
     name: "patrimonios.emisiones_lineas",
@@ -1223,8 +1077,7 @@ const ERD_TABLES = [
       { name: "denominacion_emision", type: "VARCHAR" },
       { name: "tipo_emision", type: "VARCHAR" },
       { name: "moneda", type: "VARCHAR" },
-      { name: "monto_inscrito", type: "DOUBLE" },
-      { name: "clase_colateral_subyacente", type: "VARCHAR" }
+      { name: "monto_inscrito", type: "DOUBLE" }
     ]
   },
   {
@@ -1249,46 +1102,8 @@ const ERD_TABLES = [
       { name: "cuadre_contable_ok", type: "BOOLEAN" }
     ]
   },
-  {
-    id: "patrimonios_separados_repos_detalle",
-    name: "patrimonios.repos_detalle",
-    sector: "patrimonios_separados",
-    color: "#0284C7",
-    x: 4460,
-    y: 790,
-    w: 260,
-    h: 200,
-    rows: "74 pactos",
-    file: "outputs/securitizadoras/patrimonios_separados_repos_detalle.parquet",
-    cols: [
-      { name: "id_patrimonio", pk: true, fk: true, type: "VARCHAR" },
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "contraparte", type: "VARCHAR" },
-      { name: "instrumento_pacto", type: "VARCHAR" },
-      { name: "tasa_interes_anual_pct", type: "DOUBLE" },
-      { name: "monto_mclp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_cartera_morosidad_detalle",
-    name: "patrimonios.cartera_morosidad_detalle",
-    sector: "patrimonios_separados",
-    color: "#075985",
-    x: 4740,
-    y: 790,
-    w: 260,
-    h: 200,
-    rows: "67 tramos",
-    file: "outputs/securitizadoras/patrimonios_separados_cartera_morosidad_detalle.parquet",
-    cols: [
-      { name: "id_patrimonio", pk: true, fk: true, type: "VARCHAR" },
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "tramo_mora", type: "VARCHAR" },
-      { name: "numero_deudores", type: "BIGINT" },
-      { name: "monto_cartera_mclp", type: "DOUBLE" },
-      { name: "provision_mclp", type: "DOUBLE" }
-    ]
-  },
+
+
   {
     id: "cooperativas_maestro",
     name: "cooperativas.maestro",
@@ -1724,17 +1539,6 @@ const ERD_LINKS = [
   { from: "securitizadoras_maestro", to: "securitizadoras_balance_resumen", key: "rut" },
   { from: "securitizadoras_maestro", to: "patrimonios_separados_maestro", key: "rut_administradora (administración fiduciaria)" },
   { from: "securitizadoras_maestro", to: "patrimonios_separados_balance_resumen", key: "rut_administradora" },
-    { from: "patrimonios_separados_maestro", to: "patrimonios_separados_balance_lineas", key: "id_patrimonio (balance FECU)" },
-  { from: "patrimonios_separados_maestro", to: "patrimonios_separados_excedentes_lineas", key: "id_patrimonio (estado excedentes)" },
-  { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_cartera_detalle", key: "id_patrimonio, periodo" },
-  { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_morosidad_detalle", key: "id_patrimonio, periodo" },
-  { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_bonos_detalle", key: "id_patrimonio, periodo" },
-  { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_administracion_detalle", key: "id_patrimonio, periodo" },
-  { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_sobrecolateral_detalle", key: "id_patrimonio, periodo" },
-  { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_efectivo_detalle", key: "id_patrimonio, periodo" },
-  { from: "patrimonios_separados_balance_resumen", to: "patrimonios_separados_repos_detalle", key: "id_patrimonio, periodo" },
-  { from: "patrimonios_separados_balance_resumen", to: "patrimonios_separados_cartera_morosidad_detalle", key: "id_patrimonio, periodo" },
-  { from: "patrimonios_separados_repos_detalle", to: "bancos_maestro", key: "contraparte (bancos custodios y liquidez)" },
   { from: "securitizadoras_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "factoring_leasing_maestro", to: "factoring_leasing_balance_resumen", key: "rut" },
   { from: "factoring_leasing_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
