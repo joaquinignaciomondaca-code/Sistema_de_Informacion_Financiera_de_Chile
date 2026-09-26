@@ -4939,6 +4939,106 @@
       "api": [
         "OK"
       ]
+    },
+    "96678790-2|2022-12": {
+      "rut": "96678790-2",
+      "razon_social": "FORUM SERVICIOS FINANCIEROS S.A.",
+      "periodo": "2022-12",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 13,
+      "notas_ok": 14,
+      "notas_sin_leer": 2,
+      "lineas_balance": 55,
+      "lineas_resultados": 24,
+      "api": [
+        "OK"
+      ]
+    },
+    "96667560-8|2022-12": {
+      "rut": "96667560-8",
+      "razon_social": "TANNER SERVICIOS FINANCIEROS S.A.",
+      "periodo": "2022-12",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 16,
+      "notas_sin_leer": 1,
+      "lineas_balance": 39,
+      "lineas_resultados": 17,
+      "api": [
+        "OK"
+      ]
+    },
+    "96660790-4|2022-12": {
+      "rut": "96660790-4",
+      "razon_social": "FACTOTAL S.A.",
+      "periodo": "2022-12",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 12,
+      "notas_sin_leer": 1,
+      "lineas_balance": 34,
+      "lineas_resultados": 20,
+      "api": [
+        "OK"
+      ]
+    },
+    "96655860-1|2022-12": {
+      "rut": "96655860-1",
+      "razon_social": "FACTORING SECURITY S.A.",
+      "periodo": "2022-12",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 12,
+      "notas_sin_leer": 3,
+      "lineas_balance": 31,
+      "lineas_resultados": 13,
+      "api": [
+        "OK"
+      ]
+    },
+    "96626570-1|2022-12": {
+      "rut": "96626570-1",
+      "razon_social": "INCOFIN S.A.",
+      "periodo": "2022-12",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 11,
+      "notas_sin_leer": 1,
+      "lineas_balance": 33,
+      "lineas_resultados": 10,
+      "api": [
+        "OK"
+      ]
     }
   }
 }
