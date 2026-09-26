@@ -138,6 +138,87 @@ Total activos
     assert any(row["concepto"] == "total_activos" and row["estado"] == "SIN_API" for row in vals)
 
 
+def test_nota_con_punto_y_parentesis_no_es_monto():
+    comercial = """
+Estados de Resultados Integrales
+Ingresos de actividades ordinarias
+20.1
+8.169.520
+6.209.315
+Costo de ventas
+20.2
+(2.931.088)
+(2.804.271)
+Ganancia bruta
+5.238.432
+3.405.044
+"""
+    lineas = lineas_apiladas(comercial, "resultado", META)
+    assert lineas[0]["monto_miles_clp"] == 8169520
+    assert lineas[0]["nota_ref"] == "20"
+    assert cuadratura_resultados(lineas)["estado"] == "OK"
+
+    unidad = """
+Estados de Resultados Integrales
+Ingresos de actividades ordinarias
+21.062.625
+10.246.766
+Costo de ventas
+(18) (19.824.881)
+(9.115.872)
+Margen bruto
+1.237.744
+1.130.894
+"""
+    lineas = lineas_apiladas(unidad, "resultado", META)
+    assert lineas[1]["monto_miles_clp"] == -19824881
+    assert cuadratura_resultados(lineas)["estado"] == "OK"
+
+    progreso = """
+Estados de resultados
+Ingresos de actividades ordinarias
+23
+7.053.707
+7.135.080
+Costo de ventas
+( 1.948.722)
+( 2.053.239)
+Ganancia bruta
+5.104.985
+5.081.841
+"""
+    lineas = lineas_apiladas(progreso, "resultado", META)
+    assert lineas[0]["monto_miles_clp"] == 7053707
+    assert lineas[1]["monto_miles_clp"] == -1948722
+    assert cuadratura_resultados(lineas)["estado"] == "OK"
+
+
+def test_desglose_de_la_linea_padre_no_se_suma_dos_veces():
+    hlc = """
+Estados de Resultados Integrales
+Ingresos de actividades ordinarias
+9.091
+8.758
+Otros ingresos
+9.091
+8.758
+Costo de Ventas
+(35.702)
+(36.036)
+Remuneraciones
+(35.702)
+(33.602)
+Gastos por recaudación de arriendos
+0
+(2.434)
+Ganancia bruta
+(26.611)
+(27.278)
+"""
+    lineas = lineas_apiladas(hlc, "resultado", META)
+    assert cuadratura_resultados(lineas)["estado"] == "OK"
+
+
 def test_resultado_no_suma_dos_veces_ni_se_come_el_cero():
     autofin = """
 Estados de Resultados Integrales
@@ -241,6 +322,8 @@ if __name__ == "__main__":
     test_apilado_como_sale_el_pdf()
     test_encabezado_notas_y_anio_no_es_linea()
     test_api_con_monto_vacio_no_revienta()
+    test_nota_con_punto_y_parentesis_no_es_monto()
+    test_desglose_de_la_linea_padre_no_se_suma_dos_veces()
     test_resultado_no_suma_dos_veces_ni_se_come_el_cero()
     test_texto_y_titulo()
     print("ok")

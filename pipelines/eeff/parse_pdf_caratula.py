@@ -42,8 +42,8 @@ def _monto(token: str):
         return None
     if not re.search(r"\d", token):
         return None
-    # 6 es el número de la nota, no un saldo de 6 miles.
-    if re.fullmatch(r"[1-9]\d?", token):
+    # 6 y (18) son la nota, no un saldo.
+    if re.fullmatch(r"[1-9]\d?", token) or _NOTA_LINEA.fullmatch(token):
         return None
     return parse_monto_chileno(token)
 
@@ -75,7 +75,7 @@ def clasificar_pagina(texto: str) -> str:
         or "resultados integrales" in cabeza
         or "resultados consolidados por funcion" in cabeza
         or "resultados por funcion" in cabeza
-    ) and "otros resultados integrales" not in cabeza[:80]:
+    ) and "otros resultados integrales" not in cabeza and "otro resultado integral" not in cabeza:
         return "resultado"
     if montos < 8:
         return ""
@@ -200,7 +200,8 @@ _SECCION = {
     "activo corriente", "activos corrientes", "activo no corriente", "activos no corrientes",
     "pasivo corriente", "pasivos corrientes", "pasivo no corriente", "pasivos no corrientes",
 }
-_NOTA_LINEA = re.compile(r"^\(?[1-9]\d?(?:[.\s]?[a-z])?\)?$")
+# 20.a, 8j, (18) y 25.1 son la nota. 25.1 no es un saldo de 25 miles.
+_NOTA_LINEA = re.compile(r"^\(?[1-9]\d?(?:[.\s]?[a-z]|\.\d{1,2})?\)?$")
 _CORTE_ESTADO = {
     "balance": ("estado de resultados", "estados de resultados", "estado de flujos", "estados de flujos"),
     "resultado": (
@@ -209,6 +210,8 @@ _CORTE_ESTADO = {
         "ganancia por accion",
         "estado de cambios",
         "estados de cambios",
+        "cambios en patrimonio",
+        "saldo inicial",
         "estado de flujos",
         "estados de flujos",
     ),
@@ -224,13 +227,20 @@ def _es_ruido(linea: str) -> bool:
         return True
     if bajo.startswith("estado") or "expresado en" in bajo or "notas adjuntas" in bajo or "miles de pesos" in bajo:
         return True
+    if "forman parte integral" in bajo or "parte integral de" in bajo or "desde la nota" in bajo:
+        return True
+    if "@" in linea or re.fullmatch(r"pagina \d+", bajo):
+        return True
+    # 5.31.10.00 es código de taxonomía. 1.164.717 es un monto.
+    if re.fullmatch(r"\d+(?:\.\d+){2,}", linea.strip()) and not re.fullmatch(r"\d{1,3}(?:\.\d{3})+", linea.strip()):
+        return True
     if _es_fecha(linea) or re.fullmatch(r"(ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)\s+20\d{2}", bajo):
         return True
     if re.fullmatch(r"0?[1-9]\d?\.\d{2}\.20\d{2}", linea.replace(" ", "")):
         return True
     if re.search(r"\d{1,2}[-/](ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)[-/]\d{2,4}", bajo):
         return True
-    if bajo in {"n", "no", "nº", "no."}:
+    if bajo in {"n", "no", "nº", "n°", "no."}:
         return True
     if linea.isupper() and len(linea) > 4 and not bajo.startswith("total"):
         return True
@@ -247,9 +257,11 @@ def _es_guion(linea: str) -> bool:
 
 
 def _montos_de_linea(linea: str) -> list[float] | None:
-    if _NOTA_LINEA.fullmatch(linea.strip()):
+    linea = re.sub(r"\(\s+", "(", linea.strip())
+    linea = re.sub(r"\s+\)", ")", linea)
+    if _NOTA_LINEA.fullmatch(linea):
         return None
-    partes = linea.split()
+    partes = [parte for parte in linea.split() if not _NOTA_LINEA.fullmatch(parte)]
     if not partes:
         return None
     montos = []
@@ -284,7 +296,7 @@ def lineas_apiladas(texto: str, estado: str, meta: dict, orden: str = "corte_pri
         nombre, nota, montos = [], "", []
         if not titulo or monto is None or len(titulo) < 3 or fold(titulo) in _SECCION:
             return
-        if "por accion" in fold(titulo) or "numero de acciones" in fold(titulo):
+        if any(marca in fold(titulo) for marca in ("por accion", "numero de acciones", "diluid")):
             return
         if orden == "comparativo_primero" and comp is not None:
             monto, comp = comp, monto
@@ -306,6 +318,9 @@ def lineas_apiladas(texto: str, estado: str, meta: dict, orden: str = "corte_pri
     for linea in limpias:
         bajo = fold(linea)
         if any(marca in bajo for marca in cortes) and filas:
+            break
+        # La columna «Capital / emitido» abre el estado de cambios, no el resultado.
+        if estado == "resultado" and filas and bajo == "capital":
             break
         if _es_guion(linea):
             if guion and not montos:

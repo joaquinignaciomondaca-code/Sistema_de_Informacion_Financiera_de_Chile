@@ -59,7 +59,7 @@ def _buscar(lineas: list[dict], aliases: tuple[str, ...]) -> float | None:
             extra = nombre.replace(alias, " ", 1)
             if alias.startswith("total") and "corriente" in extra:
                 continue
-            if alias in {"total pasivos", "total de pasivos", "totales de pasivos"} and "patrimonio" in nombre:
+            if alias in {"total pasivos", "total de pasivos", "totales de pasivos", "total pasivo"} and "patrimonio" in nombre:
                 continue
             clave = row.get("id_linea") or (nombre, row.get("monto_m_clp"))
             if clave in vistos:
@@ -219,7 +219,7 @@ def _es_subtotal_resultado(nombre: str) -> bool:
     if "discontinuad" in n:
         return False
     limpio = re.sub(r"[^a-z ]", "", n).strip()
-    if limpio in {"ganancia", "utilidad", "resultado", "ganancia perdida", "utilidad perdida"}:
+    if limpio in {"ganancia", "utilidad", "resultado", "ganancia perdida", "utilidad perdida", "ganancias perdidas"}:
         return True
     if ("operaciones continuadas" in n or "operaciones continuas" in n) and (
         "procedente" in n or "despues de impuesto" in n
@@ -227,15 +227,59 @@ def _es_subtotal_resultado(nombre: str) -> bool:
         return True
     claves = (
         "ganancia bruta",
+        "margen bruto",
         "ingreso neto",
         "antes de impuesto",
         "del periodo",
         "del ejercicio",
+        "del ano",
         "actividades operacionales",
         "actividades de operacion",
         "resultado de operaciones",
     )
     return any(clave in n for clave in claves)
+
+
+def _indices_desglose(lineas: list[dict]) -> set[int]:
+    """El detalle que suma exactamente la línea anterior no se vuelve a sumar."""
+    skip: set[int] = set()
+    i = 0
+    while i < len(lineas):
+        nombre = lineas[i].get("nombre_cuenta", "")
+        if _es_subtotal_resultado(nombre) or _es_atribucion(nombre):
+            i += 1
+            continue
+        padre_c = lineas[i].get("monto_miles_clp")
+        padre_k = lineas[i].get("monto_comparativo_miles_clp")
+        if padre_c is None or padre_k is None:
+            i += 1
+            continue
+        acc_c = 0.0
+        acc_k = 0.0
+        found = 0
+        j = i + 1
+        while j < len(lineas):
+            hijo = lineas[j].get("nombre_cuenta", "")
+            if _es_subtotal_resultado(hijo) or _es_atribucion(hijo):
+                break
+            c = lineas[j].get("monto_miles_clp")
+            k = lineas[j].get("monto_comparativo_miles_clp")
+            if c is None or k is None:
+                break
+            acc_c += c
+            acc_k += k
+            if abs(acc_c - padre_c) <= 1 and abs(acc_k - padre_k) <= 1:
+                found = j
+                break
+            if abs(acc_c) > abs(padre_c) + 1 and abs(acc_k) > abs(padre_k) + 1:
+                break
+            j += 1
+        if found:
+            skip.update(range(i + 1, found + 1))
+            i = found + 1
+        else:
+            i += 1
+    return skip
 
 
 def _roll_resultado(lineas: list[dict], campo: str, etiqueta: str) -> str:
@@ -248,7 +292,10 @@ def _roll_resultado(lineas: list[dict], campo: str, etiqueta: str) -> str:
     componentes = 0
     vio_subtotal = False
     neto = None
-    for row in lineas:
+    desglose = _indices_desglose(lineas)
+    for idx, row in enumerate(lineas):
+        if idx in desglose:
+            continue
         nombre = row.get("nombre_cuenta", "")
         if _es_atribucion(nombre):
             continue
@@ -299,7 +346,7 @@ def cuadratura_resultados(lineas: list[dict]) -> dict:
 
 def cuadratura_balance(lineas: list[dict]) -> dict:
     activos = _buscar(lineas, ("total de activos", "total activos", "totales de activos"))
-    pasivos = _buscar(lineas, ("total de pasivos", "total pasivos", "totales de pasivos"))
+    pasivos = _buscar(lineas, ("total de pasivos", "total pasivos", "totales de pasivos", "total pasivo"))
     if pasivos is None:
         corrientes = _buscar(lineas, ("total pasivos corrientes", "total de pasivos corrientes", "totales de pasivos corrientes", "total pasivo corriente"))
         no_corrientes = _buscar(lineas, ("total pasivos no corrientes", "total de pasivos no corrientes", "totales de pasivos no corrientes", "total pasivo no corriente"))
