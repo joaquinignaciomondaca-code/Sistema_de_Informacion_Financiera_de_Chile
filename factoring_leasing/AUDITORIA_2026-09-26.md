@@ -38,7 +38,7 @@ autónomo del sector y es una buena base.
 
 `pipeline_stream_factoring_leasing.py:59`
 ```python
-siete = bcchapi.Siete("REMOVED_BCCH_EMAIL", "REMOVED_BCCH_PASSWORD")
+siete = bcchapi.Siete("<correo>", "<contraseña en texto plano>")   # redactado en este informe
 ```
 La misma contraseña aparece como `PASS_BCCH = "..."` en `bancos/scripts/pipeline_stream_derivados_bcch.py`,
 `macro/scripts/pipeline_stream_macro_bcch.py` y `sistemas_pago/scripts/stream_sistemas_pago.py`.

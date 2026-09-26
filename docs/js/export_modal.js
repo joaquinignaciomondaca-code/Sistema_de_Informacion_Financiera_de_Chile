@@ -113,8 +113,6 @@ class ExportModalController {
       bancos_repos_saldos_series: 2947,
       factoring_leasing_maestro: 28,
       factoring_leasing_balance_resumen: 878,
-      factoring_leasing_nota_efectivo_detalle: 2975,
-      factoring_leasing_cartera_morosidad_detalle: 17406,
       corredoras_bolsa_maestro: 47,
       corredoras_bolsa_balance_resumen: 1586
     };

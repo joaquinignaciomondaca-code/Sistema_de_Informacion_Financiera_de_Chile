@@ -19,8 +19,14 @@ try:
 except ImportError:
     raise ImportError("La librería 'bcchapi' es obligatoria. Instalar con 'pip install bcchapi'.")
 
-EMAIL_BCCH = "REMOVED_BCCH_EMAIL"
-PASS_BCCH = "REMOVED_BCCH_PASSWORD"
+import sys as _sys
+_sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+from mfc_common.credentials import bcch_credentials
+
+# Credenciales desde variables de entorno / .env (ver mfc_common/credentials.py). Se resuelven al usarlas.
+def _bcch_session():
+    email, password = bcch_credentials()
+    return bcchapi.Siete(email, password)
 
 FETCH_START_DATE = "2013-01-01"
 SERIES_START_PERIOD = "2014-01"
@@ -61,7 +67,7 @@ def fetch_single_series(item):
     sid = meta["sid"]
     for attempt in range(1, 4):
         try:
-            siete = bcchapi.Siete(EMAIL_BCCH, PASS_BCCH)
+            siete = _bcch_session()
             df = siete.cuadro(series=[sid], desde=FETCH_START_DATE, hasta=END_DATE)
             if df is not None and not df.empty:
                 df.columns = ["valor"]

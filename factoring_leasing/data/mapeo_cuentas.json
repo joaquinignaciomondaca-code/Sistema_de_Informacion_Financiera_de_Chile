@@ -1,0 +1,97 @@
+{
+  "_meta": {
+    "descripcion": "Mapeo explícito de cuentas de la taxonomía IFRS CMF (archivo texto ver_archivo.php) a las métricas del resumen del sector. Editar aquí para extender; el pipeline reporta en cuentas_no_mapeadas.json las cuentas relevantes que aún no calzan.",
+    "version": "2.0.0",
+    "reglas": "Cada métrica tiene 'exactas' (nombre completo, comparación insensible a mayúsculas/acentos) y 'patrones' (regex sobre el nombre normalizado). Una cuenta se suma a la métrica si calza con alguna exacta o algún patrón, salvo que calce con 'excluir'.",
+    "cartera_credito_definicion": "v2: deudores comerciales + cuentas por cobrar por arrendamiento financiero/leasing + colocaciones/créditos a clientes (corrientes y no corrientes), netas de deterioro cuando la taxonomía ya las entrega netas. v1 (pipeline anterior) sólo sumaba deudores comerciales y subestimaba leasing/automotriz."
+  },
+  "metricas": {
+    "total_activos": {
+      "exactas": ["Total de activos", "Activos, Total", "Total activos"],
+      "patrones": ["^total de activos$"]
+    },
+    "activos_corrientes": {
+      "exactas": ["Activos corrientes totales", "Total de activos corrientes"],
+      "patrones": []
+    },
+    "activos_no_corrientes": {
+      "exactas": ["Total de activos no corrientes", "Activos no corrientes totales"],
+      "patrones": []
+    },
+    "pasivos_corrientes": {
+      "exactas": ["Pasivos corrientes totales", "Total de pasivos corrientes"],
+      "patrones": []
+    },
+    "pasivos_no_corrientes": {
+      "exactas": ["Total de pasivos no corrientes", "Pasivos no corrientes totales"],
+      "patrones": []
+    },
+    "total_pasivos": {
+      "exactas": ["Total pasivos", "Total de pasivos", "Pasivos, Total"],
+      "patrones": ["^total (de )?pasivos$"]
+    },
+    "patrimonio_neto": {
+      "exactas": ["Patrimonio total", "Total patrimonio", "Patrimonio neto total"],
+      "patrones": ["^patrimonio total$"]
+    },
+    "patrimonio_atribuible_controladora": {
+      "exactas": ["Patrimonio atribuible a los propietarios de la controladora"],
+      "patrones": []
+    },
+    "activos_liquidos": {
+      "exactas": ["Efectivo y equivalentes al efectivo", "Efectivo y Equivalentes al Efectivo"],
+      "patrones": ["^efectivo y equivalentes al efectivo$"]
+    },
+    "cartera_deudores_comerciales": {
+      "exactas": [
+        "Deudores comerciales y otras cuentas por cobrar corrientes",
+        "Deudores comerciales y otras cuentas por cobrar no corrientes",
+        "Deudores comerciales y otras cuentas por cobrar",
+        "Deudores comerciales y otras cuentas por cobrar, neto, corrientes",
+        "Deudores comerciales y otras cuentas por cobrar, neto, no corrientes"
+      ],
+      "patrones": ["^deudores comerciales y otras cuentas por cobrar"]
+    },
+    "cartera_arrendamiento_financiero": {
+      "exactas": [],
+      "patrones": [
+        "arrendamiento(s)? financiero(s)?",
+        "\\bleasing\\b",
+        "cuentas por cobrar por arrendamiento"
+      ],
+      "excluir": ["pasivo", "por pagar", "obligacion", "activos por derecho de uso"]
+    },
+    "cartera_colocaciones": {
+      "exactas": [],
+      "patrones": [
+        "^colocaciones",
+        "creditos y cuentas por cobrar a clientes",
+        "^creditos (comerciales|de consumo|automotri)",
+        "operaciones de factoring",
+        "documentos por cobrar"
+      ],
+      "excluir": ["pasivo", "por pagar", "provision", "deterioro"]
+    },
+    "otros_activos_financieros": {
+      "exactas": ["Otros activos financieros corrientes", "Otros activos financieros no corrientes"],
+      "patrones": ["^otros activos financieros"]
+    },
+    "ingresos_actividades_ordinarias": {
+      "exactas": ["Ingresos de actividades ordinarias"],
+      "patrones": ["^ingresos de actividades ordinarias$"]
+    },
+    "ganancia_perdida": {
+      "exactas": ["Ganancia (pérdida)", "Ganancia (perdida)"],
+      "patrones": ["^ganancia \\(perdida\\)$"]
+    },
+    "deterioro_cartera": {
+      "exactas": [],
+      "patrones": ["deterioro de valor .*cuentas por cobrar", "provision(es)? por (riesgo de credito|incobrables|deterioro)"]
+    }
+  },
+  "cartera_credito_componentes": ["cartera_deudores_comerciales", "cartera_arrendamiento_financiero", "cartera_colocaciones"],
+  "cuentas_relevantes_para_reporte_no_mapeadas": {
+    "descripcion": "Patrones que marcan cuentas que probablemente deberían estar mapeadas a cartera si aparecen con monto relevante (>5% de activos).",
+    "patrones": ["cobrar", "colocacion", "credito", "leasing", "arrendamiento", "factoring", "financier"]
+  }
+}

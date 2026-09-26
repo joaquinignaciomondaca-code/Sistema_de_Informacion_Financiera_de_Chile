@@ -22,8 +22,14 @@ try:
 except ImportError:
     raise ImportError("La librería 'bcchapi' es obligatoria. Instalar con 'pip install bcchapi'.")
 
-EMAIL_BCCH = "REMOVED_BCCH_EMAIL"
-PASS_BCCH = "REMOVED_BCCH_PASSWORD"
+import sys as _sys
+_sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+from mfc_common.credentials import bcch_credentials
+
+# Credenciales desde variables de entorno / .env (ver mfc_common/credentials.py). Se resuelven al usarlas.
+def _bcch_session():
+    email, password = bcch_credentials()
+    return bcchapi.Siete(email, password)
 
 def classify_series(sid, title):
     """Clasifica los metadatos de una serie F099 en dimensiones estructuradas."""
@@ -118,7 +124,7 @@ def classify_series(sid, title):
 def fetch_single_series(sid):
     """Descarga una serie individual utilizando una sesión dedicada de bcchapi."""
     try:
-        siete = bcchapi.Siete(EMAIL_BCCH, PASS_BCCH)
+        siete = _bcch_session()
         df = siete.cuadro(series=[sid], desde="2010-01-01", hasta="2026-07-31")
         if df is not None and not df.empty:
             return sid, df
