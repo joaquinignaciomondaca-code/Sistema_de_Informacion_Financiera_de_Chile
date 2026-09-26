@@ -965,7 +965,7 @@ const ERD_TABLES = [
   },
   {
     id: "factoring_leasing_nota_efectivo_detalle",
-    name: "factoring_leasing.nota_efectivo_detalle",
+    name: "NO USAR porcentajes efectivo",
     sector: "factoring_leasing",
     color: "#D97706",
     x: 3600,
@@ -990,7 +990,7 @@ const ERD_TABLES = [
   },
   {
     id: "factoring_leasing_cartera_morosidad_detalle",
-    name: "factoring_leasing.cartera_morosidad_detalle",
+    name: "NO USAR porcentajes cartera",
     sector: "factoring_leasing",
     color: "#B45309",
     x: 3600,
@@ -1012,6 +1012,63 @@ const ERD_TABLES = [
       { name: "cartera_bruta_mclp", type: "DOUBLE" },
       { name: "provisiones_mclp", type: "DOUBLE" },
       { name: "cartera_neta_mclp", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "factoring_leasing_eeff_documentos",
+    name: "factoring_leasing.eeff_documentos",
+    sector: "factoring_leasing",
+    color: "#92400E",
+    x: 3880,
+    y: -80,
+    w: 250,
+    h: 160,
+    rows: "10 PDF marzo 2026",
+    file: "outputs/factoring_leasing/factoring_leasing_eeff_documentos.parquet",
+    cols: [
+      { name: "id_documento", pk: true, type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "tipo_eeff", type: "VARCHAR" },
+      { name: "estado_extraccion", type: "VARCHAR" }
+    ]
+  },
+  {
+    id: "factoring_leasing_balance_lineas",
+    name: "factoring_leasing.balance_lineas",
+    sector: "factoring_leasing",
+    color: "#92400E",
+    x: 3880,
+    y: 120,
+    w: 250,
+    h: 180,
+    rows: "223 líneas PDF",
+    file: "outputs/factoring_leasing/factoring_leasing_balance_lineas.parquet",
+    cols: [
+      { name: "id_linea", pk: true, type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "nombre_cuenta", type: "VARCHAR" },
+      { name: "nota_ref", type: "VARCHAR" },
+      { name: "monto_miles_clp", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "factoring_leasing_nota_lineas",
+    name: "factoring_leasing.nota_lineas",
+    sector: "factoring_leasing",
+    color: "#92400E",
+    x: 3880,
+    y: 340,
+    w: 250,
+    h: 180,
+    rows: "20 líneas Security",
+    file: "outputs/factoring_leasing/factoring_leasing_nota_lineas.parquet",
+    cols: [
+      { name: "id_linea", pk: true, type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "numero_nota", type: "INTEGER" },
+      { name: "concepto", type: "VARCHAR" },
+      { name: "monto_miles_clp", type: "DOUBLE" }
     ]
   },
   {
@@ -1787,6 +1844,9 @@ const ERD_LINKS = [
   { from: "patrimonios_separados_balance_resumen", to: "patrimonios_separados_cartera_morosidad_detalle", key: "id_patrimonio, periodo" },
   { from: "patrimonios_separados_repos_detalle", to: "bancos_maestro", key: "contraparte (bancos custodios y liquidez)" },
   { from: "securitizadoras_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
+  { from: "factoring_leasing_maestro", to: "factoring_leasing_eeff_documentos", key: "rut" },
+  { from: "factoring_leasing_eeff_documentos", to: "factoring_leasing_balance_lineas", key: "rut, periodo" },
+  { from: "factoring_leasing_eeff_documentos", to: "factoring_leasing_nota_lineas", key: "rut, periodo" },
   { from: "factoring_leasing_maestro", to: "factoring_leasing_balance_resumen", key: "rut" },
   { from: "factoring_leasing_maestro", to: "factoring_leasing_nota_efectivo_detalle", key: "rut" },
   { from: "factoring_leasing_maestro", to: "factoring_leasing_cartera_morosidad_detalle", key: "rut" },
