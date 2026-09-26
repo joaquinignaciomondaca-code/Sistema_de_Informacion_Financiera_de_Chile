@@ -7,6 +7,7 @@ on:
     branches: [arena/01a0db9a-monitor-financiero-chile]
     paths:
       - .github/workflows/factoring_muestra_periodos.yml
+      - factoring_leasing/scripts/05_muestra_periodos.py
       - factoring_leasing/eeff_prueba/muestra_periodos.json
   workflow_dispatch:
 
@@ -16,15 +17,21 @@ permissions:
 jobs:
   muestra:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
       - name: Dependencias
-        run: pip install -q pymupdf
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq tesseract-ocr tesseract-ocr-spa
+          tesseract --list-langs
+          pip install -q pymupdf
       - name: Tres cortes de Security
+        env:
+          MUESTRA_SOLO: "2013-12"
         run: |
           set +e
           mkdir -p factoring_leasing/eeff_prueba/muestra_periodos
