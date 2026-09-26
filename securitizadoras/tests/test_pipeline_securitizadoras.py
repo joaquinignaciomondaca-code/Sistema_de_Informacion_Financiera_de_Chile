@@ -471,4 +471,17 @@ for _et, _esp in [("Patrimonios Separados - PATRIMONIO SEPARADO BTRA1-1 al 03/20
                   ("Patrimonios Separados - BVOLS al 12/2024", "BVOLS"), ("Patrimonios Separados - Patrimonio Separado V al 09/2016", "PS-5"), ("Patrimonios Separados - PS 11 2 al 12/2013", "PS-11")]:
     check(P.codigo_desde_etiqueta_web(_et) == _esp, f"etiqueta web {_et!r} → {_esp} (obtenido {P.codigo_desde_etiqueta_web(_et)})")
 check(P.meta_desde_texto("SUDAMERICANA\nPATRIMONIO SEPARADO N*2\n", "Patrimonios Separados - PATRIMONIO NÂ° al 12/2014", "96972780", "X")["codigo_emision"] == "PS-2", "sin código en la web se toma del PDF (N*2 OCR)")
+
+# ---- correcciones manuales (cifras ilegibles para el OCR, leídas del PDF y citadas) ----
+print("correcciones manuales")
+import csv as _csv, tempfile as _tf
+_csvp = _tf.NamedTemporaryFile("w", suffix=".csv", delete=False, newline="", encoding="utf-8")
+_w = _csv.DictWriter(_csvp, fieldnames=["id_patrimonio", "periodo", "cuenta_canonica", "monto_mclp", "glosa", "fuente_url", "pagina_pdf", "justificacion", "autor", "fecha"]); _w.writeheader()
+_w.writerow({"id_patrimonio": "96765170_btra_1_2", "periodo": "2015-12", "cuenta_canonica": "TOTAL_PASIVOS_Y_PATRIMONIO", "monto_mclp": "825.802", "glosa": "TOTAL PASIVOS", "fuente_url": "u", "pagina_pdf": "3", "justificacion": "OCR leyó 828.802; el escaneo dice 825.802", "autor": "test", "fecha": "2026-09-26"})
+_csvp.close(); P.CORRECCIONES_PATH = _csvp.name; P._CORRECCIONES = None
+_mal = ["ACTIVOS\n", "Total activos circulantes 707.967\nTotal otros activos 117.835\nTOTAL ACTIVOS 825.802\nTotal pasivos circulantes 897.607\nTotal pasivo largo plazo 0\nTotal excedente acumulado (71.805)\nTOTAL PASIVOS 828.802\n"]
+_l0 = P.parse_eeff_lineas(_mal); _l1, _n = P.aplicar_correcciones_manuales(_l0, "96765170_btra_1_2", "2015-12"); _r1 = P.derivar_resumen(_l1)
+check(_n == 1 and _r1["cuadre_contable_ok"] and _r1["total_pasivo_patrimonio_mclp"] == 825802 and any(l.get("origen_monto") == "correccion_manual" and l.get("monto_leido_mclp") == 828802 for l in _l1), "corrección manual reemplaza el monto, guarda el leído y el balance cuadra")
+check(P.aplicar_correcciones_manuales(_l0, "otro", "2015-12")[1] == 0, "sin corrección para otro PS no cambia nada")
+P._CORRECCIONES = None
 print(f"\n{len(fallos)} fallos"); sys.exit(1 if fallos else 0)

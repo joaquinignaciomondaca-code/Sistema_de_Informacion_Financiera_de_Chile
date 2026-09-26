@@ -176,6 +176,24 @@ def audit_contable(con, T):
             report("eeff_cuadre_por_balance", "FAIL" if cu / bp < 0.5 else ("WARN" if cu / bp < 0.8 else "PASS"), f"{cu}/{bp} balances con activos = pasivos+excedentes")
         ps, per = q(con, f"select count(distinct id_patrimonio), count(distinct periodo) from '{f}'")[0]
         report("eeff_lineas_cobertura", "INFO", f"{ps} patrimonios separados, {per} períodos")
+    # correcciones manuales: cada fila debe citar PDF+página+justificación, corresponder a un balance publicado y dejarlo cuadrado
+    csvp = os.path.join(BASE_DIR, "securitizadoras", "data", "correcciones_manuales.csv")
+    if os.path.exists(csvp) and "patrimonios_separados_balance_resumen" in T:
+        import csv
+        rows = [r for r in csv.DictReader(open(csvp, encoding="utf-8")) if r.get("id_patrimonio") and not r["id_patrimonio"].startswith("#")]
+        incompletas = [f"{r['id_patrimonio']} {r['periodo']} {r['cuenta_canonica']}" for r in rows if not (r.get("fuente_url") and r.get("pagina_pdf") and r.get("justificacion") and r.get("autor"))]
+        fb = T["patrimonios_separados_balance_resumen"]
+        cols = [c[0] for c in q(con, f"describe select * from '{fb}'")]
+        if "correcciones_manuales" in cols:
+            mal = q(con, f"select id_patrimonio, periodo from '{fb}' where coalesce(correcciones_manuales,0) > 0 and not cuadre_contable_ok")
+            sin = q(con, f"select count(*) from '{fb}' where coalesce(correcciones_manuales,0) > 0")[0][0]
+        else:
+            mal, sin = [], 0
+        claves = {(r[0], r[1]) for r in q(con, f"select id_patrimonio, periodo from '{fb}'")}
+        huerfanas = [f"{r['id_patrimonio']} {r['periodo']}" for r in rows if (r["id_patrimonio"], r["periodo"]) not in claves]
+        report("correcciones_manuales", "FAIL" if (incompletas or mal) else ("WARN" if huerfanas else "PASS"),
+               f"{len(rows)} correcciones en CSV; {sin} balances las usan; {len(mal)} no cuadran tras aplicarlas; {len(incompletas)} sin cita completa; {len(huerfanas)} sin balance",
+               [f"no cuadra: {a} {b}" for a, b in mal] + [f"sin cita: {x}" for x in incompletas] + [f"sin balance: {x}" for x in huerfanas])
     if "securitizadoras_balance_resumen" in T:
         f = T["securitizadoras_balance_resumen"]
         n, d = q(con, f"select count(*), sum(case when abs(total_activos_m_clp-total_pasivos_m_clp-patrimonio_neto_m_clp)>0.01*total_activos_m_clp then 1 else 0 end) from '{f}'")[0]
