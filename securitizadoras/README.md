@@ -26,16 +26,26 @@ Publicado en la web (sidebar, diccionario, ERD, visor, manifest):
 | `patrimonios_separados_maestro` | 18 | Listado de títulos de deuda inscritos | `maestro` |
 | `patrimonios_separados_balance_resumen` | 64 | EEFF anuales de PS (PDF, pestaña 18) | `ps` |
 
-El paso `ps` además genera `patrimonios_separados_notas_detalle` (efectivo y morosidad, formato largo) y
-`patrimonios_separados_cobertura` (un registro por PDF: qué se extrajo y qué no). Ninguna de las dos existe todavía
+El paso `ps` (trimestral, 2010 → hoy, todas las securitizadoras incluidas las no vigentes) genera además:
+
+| Tabla (se crea al correr el pipeline) | Contenido |
+|---|---|
+| `patrimonios_separados_eeff_lineas` | **Balance general y estado de excedentes línea a línea** (formato largo: `estado`, `codigo_fecu` si el PDF lo trae, `glosa` original, `nota`, `monto_mclp`, `monto_anterior_mclp`, `cuenta_canonica`, `seccion`, `es_total`, `pagina_pdf`). Reemplaza a `balance_lineas` + `excedentes_lineas` de la cuarentena. |
+| `patrimonios_separados_balance_resumen` | Pivot de las líneas por cuenta canónica + `cuadre_contable_ok`, `conciliacion_componentes_ok`, `cuentas_reconocidas / no_reconocidas`. |
+| `patrimonios_separados_notas_detalle` | Efectivo y morosidad (sólo PDFs de diciembre), formato largo. |
+| `patrimonios_separados_cobertura` | Un registro por PDF: `ok`, `sin_codigo_emision`, `pdf_sin_texto_(escaneado)`, `pdf_no_disponible`, `error_*`, más nº de líneas y cuentas reconocidas. |
+
+El mapeo glosa/código → cuenta canónica está en `securitizadoras/data/catalogo_fecu_ps.json` (versionado; 40
+cuentas FECU-PS, 3 conciliaciones). Soporta los dos layouts reales encontrados en CMF: glosas sin código (p. ej.
+Volcom/KPMG) y FECU con códigos `11.010…` (p. ej. Security). Ninguna de estas tablas existe todavía en el repo
 porque en el sandbox no hay acceso a CMF; se crean al ejecutar el pipeline (§4) y quedan **fuera de la web** hasta
-que se revisen y pasen la auditoría.
+que pasen la auditoría.
 
 ## 2. Qué se arregló y cómo (hallazgo → solución)
 
 | # | Hallazgo de la auditoría | Solución aplicada |
 |---|---|---|
-| 1 | 8 tablas de PS (49.868 filas) sin script generador | **Despublicadas**: Parquet movido a `securitizadoras/legacy/` (JSON eliminado), quitadas de `sidebar.js`, `data_dictionary.js`, `erd_graph.js`, `duckdb_client.js`, `data_viewer.js`. Nada se borró del repositorio; `legacy/README.md` explica el motivo tabla por tabla y cómo rehabilitar la fuente FECU-PS si se recupera. |
+| 1 | 8 tablas de PS (49.868 filas) sin script generador | **Despublicadas**: Parquet movido a `securitizadoras/legacy/` (JSON eliminado), quitadas de `sidebar.js`, `data_dictionary.js`, `erd_graph.js`, `duckdb_client.js`, `data_viewer.js`. **Fuente identificada**: los mismos PDFs de la pestaña 18 de CMF pero trimestrales (03/06/09/12, disponibles desde 2000). Se implementó su reconstrucción reproducible como `patrimonios_separados_eeff_lineas` (paso `ps`, catálogo FECU-PS). Al contrastar con el PDF real de Volcom BVOLS 12/2024, la tabla v1 tenía montos corruptos (p. ej. `11.030 = 94.335.870` donde el PDF dice `4.335.870`: concatenó el N° de nota 9 con el monto), lo que confirma que no debía repararse sino regenerarse. |
 | 2 | Placeholders al 100 % (`nota_bonos`, `nota_sobrecolateral`, `repos_detalle`) y `cartera_morosidad` con provisión > cartera | Despublicadas (mismo mecanismo). El pipeline v2 **no** produce repos ni bonos: no había forma de extraerlos sin inventar plazo, tasa, emisor y cumplimiento. |
 | 3 | RUT de administradora truncado (`9676517-0` en vez de `96765170-2`) | `rut_completo()` con módulo 11 sobre el cuerpo íntegro. `reparar-legacy` recalculó los RUT de las 4 tablas publicadas (el cuerpo correcto estaba en `id_patrimonio` y en `rut`). `securitizadoras_balance_resumen.rut` y `patrimonios_separados_maestro.rut_administradora` ahora llevan DV y cruzan con `securitizadoras_maestro.rut_completo`. La auditoría valida DV en todas las tablas. |
 | 4 | `id_patrimonio` inestable (573 ids, 3 slugs por PS) y sin cruce entre tablas | Las tablas con slugs inestables están en cuarentena. En v2 el id es determinista: `{rut_cuerpo}_{codigo_emision}` con `codigo_emision` normalizado (`PS-12` → `ps_12`, nemotécnico en mayúsculas) y se captura `nro_registro_cmf` para cruzar con `patrimonios_separados_maestro.numero_inscripcion`. Si el PDF no permite identificar el PS, **no se emite fila** (`estado = sin_codigo_emision` en cobertura) en lugar de inventar `PS-GEN`. |
@@ -59,16 +69,19 @@ que se revisen y pasen la auditoría.
 
 ```bash
 pip install -r requirements.txt
-python securitizadoras/scripts/pipeline_securitizadoras.py --step todo        # ≈ 10-20 min (PDFs)
+# rápido (sólo cierres anuales recientes) para validar el parser contra PDFs reales:
+python securitizadoras/scripts/pipeline_securitizadoras.py --step ps --desde 2023 --trimestres 12
+# completo (todas las securitizadoras, trimestral 2010 → hoy; varias horas, ~3.000 PDFs):
+python securitizadoras/scripts/pipeline_securitizadoras.py --step todo --desde 2010
 # o por partes: --step maestro | gestoras | ps
-MFC_PS_ANIOS="2024,2023,2022" python securitizadoras/scripts/pipeline_securitizadoras.py --step ps   # más años
 python securitizadoras/tests/test_pipeline_securitizadoras.py
 python securitizadoras/scripts/audit_patrimonios_separados_v2.py
 ```
 
-Después de correr `ps`, revisa `patrimonios_separados_cobertura.parquet`: los estados `sin_codigo_emision`,
-`pdf_no_disponible` y `campos_balance_extraidos` bajos indican PDFs que el parser no lee (escaneados o con otra
-maquetación). Sólo cuando la auditoría dé 0 FAIL conviene publicar `patrimonios_separados_notas_detalle`
+Después de correr `ps`, revisa `patrimonios_separados_cobertura.parquet` (estados distintos de `ok`) y el check
+`eeff_lineas_glosas_no_reconocidas_top` de la auditoría: las glosas frecuentes sin cuenta canónica se agregan al
+catálogo (`regex`) y se sube `version`; nunca se corrigen a mano en los Parquet. Los PDFs anteriores a ~2012 suelen
+ser escaneados: quedan como `pdf_sin_texto_(escaneado)` y no se inventan. Sólo cuando la auditoría dé 0 FAIL conviene publicar `patrimonios_separados_notas_detalle`
 (añadir a manifest + `duckdb_client.js` + sidebar).
 
 Si CMF rechaza la conexión TLS en tu red: `MFC_CMF_INSECURE_TLS=1 python …` (queda en `metodo`; no lo uses en CI).

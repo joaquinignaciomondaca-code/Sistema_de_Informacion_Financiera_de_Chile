@@ -109,10 +109,11 @@ def audit_identidad(con, T):
         muchos = [f"{t}: {k} ids" for t, k in n.items() if k > 120]
         report("id_patrimonio_cardinalidad_plausible", "FAIL" if muchos else "PASS",
                "≈60 PS reales; tablas con >120 ids tienen claves inestables (mismo PS con varios slugs)", muchos)
-        if "patrimonios_separados_balance_resumen" in ids and "patrimonios_separados_balance_lineas" in ids:
-            inter = len(ids["patrimonios_separados_balance_resumen"] & ids["patrimonios_separados_balance_lineas"])
-            report("id_patrimonio_cruza_entre_tablas", "FAIL" if inter == 0 else "PASS",
-                   f"{inter} ids en común entre balance_resumen y balance_lineas")
+        for otra in ("patrimonios_separados_balance_lineas", "patrimonios_separados_eeff_lineas", "patrimonios_separados_notas_detalle"):
+            if "patrimonios_separados_balance_resumen" in ids and otra in ids:
+                inter = len(ids["patrimonios_separados_balance_resumen"] & ids[otra])
+                report(f"id_patrimonio_cruza:{otra[22:]}", "FAIL" if inter == 0 else "PASS",
+                       f"{inter} ids en común entre balance_resumen y {otra[22:]} ({len(ids[otra])} ids)")
 
 
 def audit_placeholders(con, T):
@@ -163,6 +164,18 @@ def audit_contable(con, T):
         cob = q(con, f"select substr(periodo,1,4), count(distinct periodo) from '{f}' group by 1 having count(distinct periodo) < 4 and substr(periodo,1,4) < '2026' order by 1")
         report("balance_lineas_cobertura_trimestral", "WARN" if cob else "PASS",
                f"{len(cob)} años con menos de 4 trimestres", [f"{y}: {k}" for y, k in cob])
+    if "patrimonios_separados_eeff_lineas" in T:
+        f = T["patrimonios_separados_eeff_lineas"]
+        n, rec = q(con, f"select count(*), sum(case when cuenta_canonica is not null then 1 else 0 end) from '{f}'")[0]
+        report("eeff_lineas_glosas_reconocidas", "FAIL" if rec / n < 0.5 else ("WARN" if rec / n < 0.8 else "PASS"),
+               f"{rec}/{n} líneas mapeadas al catálogo ({rec/n:.0%}); revisar glosas no reconocidas y ampliar catalogo_fecu_ps.json")
+        top = q(con, f"select glosa, count(*) c from '{f}' where cuenta_canonica is null group by 1 order by 2 desc limit 8")
+        if top: report("eeff_lineas_glosas_no_reconocidas_top", "INFO", "más frecuentes", [f"{g}: {c}" for g, c in top])
+        bp, cu = q(con, f"""select count(*), sum(case when cuadre_contable_ok then 1 else 0 end) from '{T.get("patrimonios_separados_balance_resumen", f)}'""")[0] if "patrimonios_separados_balance_resumen" in T else (0, 0)
+        if bp:
+            report("eeff_cuadre_por_balance", "FAIL" if cu / bp < 0.5 else ("WARN" if cu / bp < 0.8 else "PASS"), f"{cu}/{bp} balances con activos = pasivos+excedentes")
+        ps, per = q(con, f"select count(distinct id_patrimonio), count(distinct periodo) from '{f}'")[0]
+        report("eeff_lineas_cobertura", "INFO", f"{ps} patrimonios separados, {per} períodos")
     if "securitizadoras_balance_resumen" in T:
         f = T["securitizadoras_balance_resumen"]
         n, d = q(con, f"select count(*), sum(case when abs(total_activos_m_clp-total_pasivos_m_clp-patrimonio_neto_m_clp)>0.01*total_activos_m_clp then 1 else 0 end) from '{f}'")[0]
