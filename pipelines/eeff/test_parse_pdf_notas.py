@@ -354,6 +354,50 @@ Total
     assert composicion_que_calza(texto, 47392) is None
 
 
+def test_la_nota_al_pie_no_abre_otra_nota():
+    from pipelines.eeff.parse_pdf_notas import secciones
+
+    secs = secciones([
+        "NOTA 7 CUENTAS POR COBRAR Y POR PAGAR A ENTIDADES RELACIONADAS\nEl detalle.\n",
+        "Recfin SpA.\n5.790.928\nTotal\n5.790.928\n(2) Corresponde a cuentas por cobrar a ejecutivos principales de la compañía.\n",
+    ])
+    assert all(sec["numero"] != 2 for sec in secs)
+    nota = next(sec for sec in secs if sec["numero"] == 7)
+    assert "5.790.928" in nota["texto"]
+
+
+def test_las_clases_de_la_misma_fila_suman_el_neto():
+    texto = """
+NOTA 14 ACTIVOS INTANGIBLES
+Importe neto al 31/03/2026
+968.758
+152.895
+1.121.653
+"""
+    comp = composicion_que_calza(texto, 1121653)
+    assert comp is not None
+    partes = [f for f in comp["filas"] if not f["es_total"]]
+    assert len(partes) == 2
+    assert sum(f["monto_miles"] for f in partes) == 1121653
+
+
+def test_la_linea_de_la_cuenta_cierra_aunque_no_diga_total():
+    texto = """
+NOTA 13 - Impuesto a las ganancias
+Otros impuestos
+197.722
+Impuesto AT ejercicio anterior
+7.053
+Remanente
+896.052
+Activo por impuestos corrientes
+1.100.827
+"""
+    comp = composicion_que_calza(texto, 1100827)
+    assert comp is not None
+    assert sum(f["monto_miles"] for f in comp["filas"] if not f["es_total"]) == 1100827
+
+
 def test_el_ultimo_saldo_chico_antes_del_total_no_se_pierde():
     texto = """
 NOTA 17 - Cuentas por pagar a entidades relacionadas

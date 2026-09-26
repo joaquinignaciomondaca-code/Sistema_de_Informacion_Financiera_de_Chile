@@ -101,9 +101,10 @@ def _es_encabezado(line: str) -> tuple[int, str] | None:
     if blob.startswith("a los estados"):
         return None
     # Una oración de política o una llamada no es el título de la nota.
-    if blob.startswith(("con fecha", "al 31", "corresponden", "durante el", "incluye ", "esta partida")):
+    if blob.startswith(("con fecha", "al 31", "corresponde", "durante el", "incluye ", "esta partida", "se detalla")):
         return None
-    if match.re is _HEAD_PAREN and len(titulo.split()) > 12:
+    # (2) Corresponde a... termina en punto: es nota al pie, no el título de la nota 2.
+    if match.re is _HEAD_PAREN and (titulo.endswith(".") or len(titulo.split()) > 12):
         return None
     return int(match.group(1)), titulo
 
@@ -181,17 +182,26 @@ def secciones(paginas: list[str]) -> list[dict]:
             marcas.append((n_pag, pos, numero, titulo, texto))
     salida = []
     for i, (n_pag, pos, numero, titulo, texto) in enumerate(marcas):
-        fin_pag = marcas[i + 1][0] if i + 1 < len(marcas) else len(paginas)
+        if i + 1 < len(marcas):
+            fin_pag, fin_pos, _, _, fin_texto = marcas[i + 1]
+        else:
+            fin_pag, fin_pos, fin_texto = len(paginas), 0, ""
         trozos = [texto.splitlines()[pos:]]
         for siguiente in range(n_pag + 1, fin_pag):
             trozos.append(paginas[siguiente].splitlines())
+        # La tabla puede quedar arriba del próximo título, en esa misma página.
+        # No se corta lo que ya estaba en la página de esta nota.
+        if fin_pag > n_pag and fin_texto and fin_pos:
+            trozos.append(fin_texto.splitlines()[:fin_pos])
         salida.append({
             "numero": numero,
             "titulo": titulo,
             "pagina": n_pag + 1,
             "familia": _familia(titulo),
             "texto": "\n".join("\n".join(t) for t in trozos),
-            "paginas": list(range(n_pag, fin_pag)),
+            # La página del próximo título entra: en dos columnas la tabla de esta
+            # nota queda ahí. El texto de esa nota no se mezcla.
+            "paginas": list(range(n_pag, min(fin_pag, len(paginas) - 1) + 1)),
         })
     return salida
 
@@ -542,7 +552,42 @@ def _reconstruir(filas: list[tuple], objetivo: float) -> dict | None:
                 continue
             comparativo = montos[col + 1] if col + 1 < len(montos) else None
             candidatos.append((i, len(sufijo), sufijo, valor, comparativo, col))
+    # «Activo por impuestos corrientes» cierra la composición aunque no diga total.
+    for i, (concepto, montos) in enumerate(filas):
+        if _es_total(concepto) or _es_cierre(concepto):
+            continue
+        for col, valor in enumerate(montos):
+            if valor is None or abs(valor - objetivo) > 1:
+                continue
+            prev = 0
+            for k in range(i - 1, -1, -1):
+                if _es_total(filas[k][0]) or _es_cierre(filas[k][0]):
+                    prev = k + 1
+                    break
+            sufijo = _sufijo(filas[prev:i], col, objetivo)
+            if not sufijo:
+                continue
+            con_monto = [parte for parte in sufijo if abs(parte[1]) > 1]
+            if len(con_monto) < 2:
+                continue
+            comparativo = montos[col + 1] if col + 1 < len(montos) else None
+            candidatos.append((i, len(sufijo), sufijo, valor, comparativo, col))
     if not candidatos:
+        # 968.758 + 152.895 = 1.121.653 en la misma fila: las clases son columnas.
+        for i, (concepto, montos) in enumerate(filas):
+            for col, valor in enumerate(montos):
+                if valor is None or abs(valor - objetivo) > 1:
+                    continue
+                otros = [
+                    (k, monto)
+                    for k, monto in enumerate(montos)
+                    if k != col and monto is not None and abs(monto) > 1
+                ]
+                if len(otros) < 2 or abs(sum(monto for _, monto in otros) - objetivo) > 1:
+                    continue
+                partes = [(f"{concepto} — columna {k + 1}", monto, None) for k, monto in otros]
+                comparativo = montos[col + 1] if col + 1 < len(montos) else None
+                return _armar(partes, valor, comparativo, col)
         return None
     _i, _n, partes, valor, comparativo, col = min(candidatos, key=lambda item: (item[0], -item[1]))
     return _armar(partes, valor, comparativo, col)
@@ -619,11 +664,17 @@ def objetivos_cara(balance: list[dict]) -> list[dict]:
         monto = row.get("monto_miles_clp")
         if not cuenta or monto is None or abs(float(monto)) < 1:
             continue
+        nombre = row.get("nombre_cuenta") or ""
+        nota_ref = str(row.get("nota_ref") or "")
+        if not nota_ref:
+            pegada = re.search(r"(?:^|\s)(\d{1,2})(?:\.\d{1,2}|\s*\([a-z]\))?\s*$", nombre, re.I)
+            if pegada:
+                nota_ref = pegada.group(1)
         salida.append({
             "cuenta": cuenta,
             "monto_miles": float(monto),
-            "nota_ref": str(row.get("nota_ref") or ""),
-            "nombre": row.get("nombre_cuenta") or "",
+            "nota_ref": nota_ref,
+            "nombre": nombre,
         })
     return salida
 
