@@ -7,6 +7,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from pipelines.eeff.parse_pdf_caratula import (
     clasificar_pagina,
+    fold,
     lineas_apiladas,
     lineas_caidas,
     lineas_de_tabla,
@@ -378,6 +379,90 @@ Ganancia del periodo
         META,
     )
     assert cuadratura_resultados(security)["estado"] == "OK"
+
+
+def test_el_resultado_integral_se_guarda_y_no_rompe_la_utilidad():
+    texto = """
+Estados de Resultados Integrales
+Ingresos de actividades ordinarias
+10.000
+8.000
+Costo de ventas
+(4.000)
+(3.000)
+Ganancia bruta
+6.000
+5.000
+Ganancia del periodo
+6.000
+5.000
+Ganancias por acción
+1.500
+1.200
+Coberturas de flujo de efectivo
+100
+80
+Otro resultado integral
+100
+80
+Resultado integral total
+6.100
+5.080
+"""
+    lineas = lineas_apiladas(texto, "resultado", META)
+    nombres = [fold(row["nombre_cuenta"]) for row in lineas]
+    assert any("por accion" in nombre for nombre in nombres)
+    assert any("cobertura" in nombre for nombre in nombres)
+    assert any("resultado integral" in nombre for nombre in nombres)
+    assert cuadratura_resultados(lineas)["estado"] == "OK"
+
+
+def test_security_no_suma_el_subtotal_ni_toma_el_tramo_como_total():
+    from pipelines.eeff.validate_api import cuadratura_detalle
+
+    def fila(nombre, miles, clase="Cuenta"):
+        return {
+            "nombre_cuenta": nombre,
+            "clase": clase,
+            "monto_miles_clp": miles,
+            "monto_m_clp": miles / 1000.0,
+        }
+
+    lineas = [
+        fila("Efectivo y equivalentes al efectivo", 5200231, "Activo"),
+        fila("Otros activos no financieros", 355636),
+        fila("Deudores comerciales y otras cuentas por cobrar", 358043835, "Activo"),
+        fila("Cuentas por cobrar a entidades relacionadas", 5190984),
+        fila("Activos por impuestos", 592563),
+        fila("Activos distintos de los activos o grupos de activos para su disposición", 369383249),
+        fila("Activos no corrientes o grupos de activos para su disposición clasificados como mantenidos para la venta", 280961, "Activo no corriente"),
+        fila("Total activos corrientes", 369664210, "Activo"),
+        fila("Otros activos no financieros", 529255),
+        fila("Inversiones contabilizadas utilizando el método de la participación", 42),
+        fila("Activos intangibles distintos de la plusvalía", 1197853),
+        fila("Propiedades, planta y equipo", 246595),
+        fila("Activos por derecho de uso", 74821),
+        fila("Activos por impuestos diferidos", 2735441),
+        fila("Total activos no corrientes", 4784007, "Activo no corriente"),
+        fila("TOTAL ACTIVOS", 374448217, "Total"),
+        fila("Otros pasivos financieros", 221191991, "Pasivo"),
+        fila("Pasivos por arrendamientos corrientes", 77811, "Pasivo"),
+        fila("Cuentas por pagar comerciales y otras cuentas por pagar", 4811212),
+        fila("Otras provisiones", 1342058),
+        fila("Pasivos por impuestos corrientes", 0, "Pasivo"),
+        fila("Provisiones por beneficios a los empleados", 341995),
+        fila("Otros pasivos no financieros", 4026273, "Pasivo"),
+        fila("Total pasivos corrientes", 231791340, "Pasivo"),
+        fila("Otros pasivos financieros no corrientes", 84518970, "Pasivo"),
+        fila("Total pasivos", 84518970, "Total"),
+        fila("Capital emitido", 15217695, "Patrimonio"),
+        fila("Ganancias acumuladas", 42920212, "Patrimonio"),
+        fila("Otras reservas", 0, "Patrimonio"),
+        fila("Patrimonio neto total", 58137907, "Patrimonio"),
+        fila("TOTAL PATRIMONIO Y PASIVOS", 374448217, "Total"),
+    ]
+    assert cuadratura_detalle(lineas)["estado"] == "OK"
+    assert cuadratura_balance(lineas)["estado"] == "OK"
 
 
 def test_texto_y_titulo():
