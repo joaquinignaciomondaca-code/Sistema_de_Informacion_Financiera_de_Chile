@@ -94,6 +94,32 @@ Total Pasivos
 101.478.787
 65.294.160
 """
+PAGINA_PASIVO_SIN_PLAZO = """BALANCE GENERAL
+PASIVOS
+Pasivos circulantes
+Obligaciones por títulos de deuda de securitización
+1.000
+900
+Otros acreedores
+1.010
+909
+Total pasivos circulantes
+2.010
+1.809
+Pasivos largo plazo
+Obligaciones por títulos de deuda de securitización
+5.000
+6.000
+Otros acreedores
+2.020
+3.030
+Total pasivos largo plazo
+5.020
+6.030
+Total pasivos
+6.030
+6.939
+"""
 PAGINA_NOTA_MORA_TABLA = """Nota 7 - Activos securitizados en mora
 Cuotas
 1 a 3
@@ -192,7 +218,10 @@ check(P.meta_desde_texto("Texto sin identificación", "EEFF", "96765170", "X") i
 print("etiqueta web CMF")
 for et, esp in [("Patrimonios Separados - BVOLS 3 al 12/2024", "BVOLS-3"), ("Patrimonios Separados - BSECS 9 al 12/2025", "BSECS-9"),
                 ("Patrimonios Separados - N° 12 al 12/2024", "PS-12"), ("Patrimonios Separados - PS 35 al 12/2024", "PS-35"),
-                ("Patrimonios Separados al 12/2024", None), ("Patrimonios Separados - BBICS-U al 12/2023", "BBICS-U")]:
+                ("Patrimonios Separados al 12/2024", None), ("Patrimonios Separados - PATRIMONIO SEPARADO N°35 al 12/2024", "PS-35"),
+                ("Patrimonios Separados - Patrimonio 10 al 03/2022", "PS-10"), ("Patrimonios Separados - PS7 firmadp al 09/2023", "PS-7"),
+                ("Patrimonios Separados - BVOLS3 al 12/2025", "BVOLS-3"), ("Patrimonios Separados - V al 12/2021", "PS-5"),
+                ("Patrimonios Separados - Patrimonio Separado NA-2 al 06/2022", "PS-2"), ("Patrimonios Separados - BBICS-U al 12/2023", "BBICS-U")]:
     check(P.codigo_desde_etiqueta_web(et) == esp, f"{et!r} → {esp}")
 m2 = P.meta_desde_texto("N° INSCRIPCION DE LA EMISION EN EL REGISTRO: 1245\n", "Patrimonios Separados - BSECS 9 al 12/2025", "96847360", "SECURITY")
 check(m2["codigo_emision"] == "BSECS-9" and m2["nro_registro_cmf"] == "1245", "etiqueta web prevalece sobre typos del PDF; nº inscripción")
@@ -206,6 +235,10 @@ check(v["TOTAL_PASIVOS_Y_PATRIMONIO"]["monto_mclp"] == 101478787, "'Total Pasivo
 check(v["OTROS_PASIVOS_CIRCULANTES"]["monto_mclp"] == 6360033, "'Otros acreedores (corto plazo)' → 21.200")
 check(v["EXCEDENTE_DEL_EJERCICIO"]["estado"] == "BALANCE" and v["EXCEDENTE_NETO_DEL_PERIODO"]["estado"] == "EXCEDENTES", "misma glosa, distinto estado")
 check(v["GASTO_REMUNERACIONES_ADMINISTRACION"]["monto_mclp"] == -400000, "paréntesis → negativo")
+lsp = {(l["glosa"], l["monto_mclp"]): l["cuenta_canonica"] for l in P.parse_eeff_lineas([PAGINA_PORTADA, PAGINA_PASIVO_SIN_PLAZO])}
+check(lsp.get(("Obligaciones por títulos de deuda de securitización", 1000)) == "OBLIG_TITULOS_DEUDA_CP" and
+      lsp.get(("Obligaciones por títulos de deuda de securitización", 5000)) == "OBLIG_TITULOS_DEUDA_LP" and
+      lsp.get(("Otros acreedores", 2020)) == "OTROS_ACREEDORES_LP", f"glosas sin plazo se resuelven por sección: {lsp}")
 check(P.parse_eeff_lineas([PAGINA_PORTADA, PAGINA_NOTA_MORA_TABLA]) == [], "página de nota (sin línea de total reconocida) descartada")
 no_rec = [l["glosa"] for l in lin if not l["cuenta_canonica"]]
 check(no_rec == [], f"todas las glosas reconocidas: {no_rec}")
@@ -238,6 +271,8 @@ print("fecu gestora"); f = P.parse_fecu_gestora(FECU_HTML)
 check(f["total_activos_m_clp"] == 12345.678 and f["patrimonio_neto_m_clp"] == 10000 and f["patrimonio_neto_es_derivado"] is False, "totales en miles, patrimonio leído")
 check(f["ganancia_perdida_ejercicio_m_clp"] == -150, "ganancia (pérdida) negativa capturada")
 check(P.parse_fecu_gestora("<html>sin fecu</html>") is None, "html sin FECU → None")
+H310 = '<td><div>Ganancia (pérdida) [sinopsis]</div></td></tr><tr><td><div>Ganancia (pérdida), antes de impuestos</div></td><td class="x"><div>492.160</div></td></tr><tr><td><div>Ganancia (pérdida)</div></td><td class="x"><div>397.783</div></td>'
+check(P.parse_fecu_gestora(FECU_HTML.split("Ganancia")[0] + H310)["ganancia_perdida_ejercicio_m_clp"] == 397.783, "ganancia: estructura del estado de resultados [310000] (fallback genérico)")
 check(P.parse_fecu_gestora(FECU_HTML.replace("pérdida", "p&eacute;rdida"))["ganancia_perdida_ejercicio_m_clp"] == -150, "entidades HTML (p&eacute;rdida) resueltas")
 check(P.parse_fecu_gestora(FECU_HTML.replace("Ganancia (pérdida)", "Otra cosa"))["ganancia_perdida_ejercicio_m_clp"] is None, "ganancia ausente → NULL (no 0)")
 

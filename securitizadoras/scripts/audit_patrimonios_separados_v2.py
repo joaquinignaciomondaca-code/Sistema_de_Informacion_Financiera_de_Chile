@@ -4,7 +4,7 @@ Auditoría v2 — Securitizadoras y Patrimonios Separados (CMF).
 Valida sustancia (no sólo forma): procedencia, claves, RUT, cuadre, placeholders, plausibilidad y
 consistencia con la web. Exit 1 si hay FAIL.
 
-Uso: python securitizadoras/scripts/audit_patrimonios_separados_v2.py [--json salida.json]
+Uso: python securitizadoras/scripts/audit_patrimonios_separados_v2.py [--json salida.json]   (PS_OUT_DIR=<dir> para otro directorio)
 Dependencias: duckdb.
 """
 import os, re, sys, json, glob, argparse
@@ -15,7 +15,7 @@ except ImportError:
     print("Falta duckdb: pip install duckdb"); sys.exit(2)
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-OUT_DIR = os.path.join(BASE_DIR, "docs", "outputs", "securitizadoras")
+OUT_DIR = os.environ.get("PS_OUT_DIR") or os.path.join(BASE_DIR, "docs", "outputs", "securitizadoras")  # PS_OUT_DIR permite auditar una rama de resultados
 SCRIPTS_DIR = os.path.join(BASE_DIR, "securitizadoras", "scripts")
 RESULTS = []
 
@@ -125,7 +125,7 @@ def audit_placeholders(con, T):
         ("patrimonios_separados_repos_detalle", "plazo_dias = 0 or tasa_interes_anual_pct in (0, 0.39) or cumplimiento_calificacion = 'Cumple / SI'", "plazo/tasa/cumplimiento por defecto"),
         ("patrimonios_separados_cartera_morosidad_detalle", "porcentaje_provision_pct > 100", "provisión > 100 %"),
         ("patrimonios_separados_nota_morosidad_detalle", "porcentaje_provision_pct > 100", "provisión > 100 %"),
-        ("securitizadoras_balance_resumen", "ganancia_perdida_ejercicio_m_clp = 0", "ganancia/pérdida = 0 (columna vacía)"),
+        ("securitizadoras_balance_resumen", "coalesce(ganancia_perdida_ejercicio_m_clp, 0) = 0", "ganancia/pérdida nula o 0 (columna vacía)"),
     ]
     for t, cond, desc in checks:
         if t not in T:
