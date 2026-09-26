@@ -61,6 +61,13 @@ que pasen la auditoría.
 | 15 | El estado de excedentes venía en la misma página que el pasivo y sus líneas se etiquetaban `BALANCE`; páginas de notas (tramos de mora `1 a 3`, `Totales`) se leían como balance | El estado cambia a `EXCEDENTES` al aparecer su encabezado dentro de la página; una página sólo se conserva si contiene al menos una línea de **total reconocida**; encabezados de columna (`ACTIVOS`, `Concepto`, `$REAJUSTABLES`, `MONEDA`…) están en `glosas_ignoradas`. |
 | 16 | Layout FECU con columnas `$ reajustables / $ no reajustables / total` | Se leen hasta 4 columnas (`monto_col3`, `monto_col4`) y la página se marca `layout_multicolumna` para poder revisar qué columna es el total; no se descarta ni se adivina. |
 | 17 | Ganancia de las gestoras seguía `NULL`: la fila `Ganancia (pérdida)` del estado de resultados `[310000]` no tiene la misma estructura HTML que el balance, y CMF escribe `p&eacute;rdida` | `html.unescape` + lectura genérica "glosa → primer número" excluyendo `[sinopsis]`, `, antes de impuestos`, `procedente de…`. La auditoría ahora **falla** si la columna queda nula/0 en ≥ 50 % (antes sólo miraba ceros). |
+| 18 | (diagnóstico con texto real de 36 PDFs que no cuadraban) En EF los dos montos vienen en **una sola línea** (`5.762   5.750`) debajo de la glosa y el nº de nota; el lector sólo aceptaba una cifra por línea → páginas enteras de pasivo perdidas | `_numeros_siguientes` acepta líneas con varias cifras. Sólo este cambio recuperó 16 de los 36 casos. |
+| 19 | Códigos FECU impresos poco fiables: Security repite `15.210` en casi todas las filas y Transa pone `23.000` delante de `TOTAL PASIVOS`; el código mandaba sobre la glosa y el total quedaba mal clasificado | Prioridad invertida: glosa (regex curada) → glosa dentro de la sección → código FECU sólo como último recurso. |
+| 20 | Texto con letras espaciadas (`T OT A L A C T IVOS`) en PDFs de Security | Si la glosa tiene mayoría de tokens de 1–2 letras se compara sin espacios contra los mismos regex sin espacios. |
+| 21 | Sudamericana imprime `11.010 Disponible` (código y glosa en la misma línea) con los montos debajo | Se separa el código al inicio de la glosa. |
+| 22 | El cuadro de la Nota 7 de EF trae `Total de Activo | 456` (nº de contratos) y pisaba `TOTAL ACTIVOS = 16.624.735`; tramos de mora en notas parseados como balance | Las páginas con encabezado `NOTA n -` y sin línea `TOTAL ACTIVOS` se excluyen del EEFF; el resumen toma la **primera** ocurrencia de cada cuenta (orden del PDF). |
+| 23 | La pestaña 18 lista también "A. Razonado" (reporte de cartera, no EEFF) | Excluido al listar, igual que las declaraciones de responsabilidad. |
+| 24 | Balances **embebidos como imagen** dentro de PDFs con texto (EF 06/2023, Security BSECS-6/10 06/2025): sin texto no hay líneas | OCR con Tesseract (`spa`, `--psm 6`, 300 dpi) sólo para páginas con imagen y < 300 caracteres; el workflow instala `tesseract-ocr-spa`. Las líneas quedan con `metodo = …+ocr_tesseract` y la cobertura registra `paginas_ocr`. Sin tesseract no se inventa nada. |
 | 12 | Dos auditorías legadas que ya fallaban y tablas fuera de `data_manifest.json` | Retiradas (`04_audit_patrimonios_separados.py`, `audit_securitizadoras.py`); también `stream_cmf_securitizadoras.py` y `03_extract_…` (reemplazados por el pipeline). `patrimonios_separados_balance_resumen` añadida al manifest; badges del sidebar con los conteos reales (18 líneas / 64 balances, antes "485 vehículos / 42.800+ líneas"). |
 
 ## 3. Diccionario mínimo de las tablas publicadas
@@ -90,6 +97,11 @@ El sandbox del agente no llega a CMF, así que la extracción corre en **GitHub 
    (`regex` / `regex_seccion` / `glosas_ignoradas`) subiendo `version`; **nunca** se editan los Parquet a mano.
 4. Si la auditoría da 0 FAIL, se copian las tablas a `docs/outputs/securitizadoras/` en la rama de trabajo, se
    actualizan `data_manifest.json`, `duckdb_client.js`, sidebar y diccionario, y se abre/actualiza el PR.
+
+Modo diagnóstico: `run.json` acepta `"ruts": "96971830,…"` (sólo esas administradoras) y `"debug": "true"`, que vuelca el
+texto de cada PDF que no cuadra en `docs/outputs/securitizadoras/_debug/` de la rama de resultados; con esos textos se
+reproduce el caso en local (`parse_eeff_lineas`) y se agrega una prueba antes de tocar el parser. Así se resolvieron los
+arreglos 18–24: la muestra de 36 PDFs sin cuadre pasó a 29/29 con texto nativo + 5 por OCR.
 
 Tiempos observados: 72 PDFs (3 años, sólo diciembre) ≈ 8 min; 773 PDFs (2021–2026 trimestral) ≈ 35 min; la corrida
 completa 2010–2026 trimestral (~2.000 PDFs) toma 1,5–3 h (límite del job: 350 min; si se corta, partir en tramos de años).
