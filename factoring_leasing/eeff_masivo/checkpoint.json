@@ -11096,6 +11096,106 @@
       "api": [
         "OK"
       ]
+    },
+    "99566540-9|2018-06": {
+      "rut": "99566540-9",
+      "razon_social": "HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING)",
+      "periodo": "2018-06",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 11,
+      "notas_sin_leer": 3,
+      "lineas_balance": 29,
+      "lineas_resultados": 15,
+      "api": [
+        "OK"
+      ]
+    },
+    "99513410-1|2018-06": {
+      "rut": "99513410-1",
+      "razon_social": "SMB FACTORING S.A.",
+      "periodo": "2018-06",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 11,
+      "notas_sin_leer": 4,
+      "lineas_balance": 29,
+      "lineas_resultados": 9,
+      "api": [
+        "OK"
+      ]
+    },
+    "96861280-8|2018-06": {
+      "rut": "96861280-8",
+      "razon_social": "EUROCAPITAL S.A.",
+      "periodo": "2018-06",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 4,
+      "notas_sin_leer": 11,
+      "lineas_balance": 34,
+      "lineas_resultados": 15,
+      "api": [
+        "OK"
+      ]
+    },
+    "96809970-1|2018-06": {
+      "rut": "96809970-1",
+      "razon_social": "UNIDAD LEASING HABITACIONAL S.A.",
+      "periodo": "2018-06",
+      "tipo_eeff": "Individual",
+      "estado": "leido",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 13,
+      "notas_sin_leer": 0,
+      "lineas_balance": 27,
+      "lineas_resultados": 17,
+      "api": [
+        "OK"
+      ]
+    },
+    "96784400-4|2018-06": {
+      "rut": "96784400-4",
+      "razon_social": "CONCRECES LEASING S.A.",
+      "periodo": "2018-06",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 9,
+      "notas_sin_leer": 4,
+      "lineas_balance": 31,
+      "lineas_resultados": 13,
+      "api": [
+        "OK"
+      ]
     }
   }
 }
