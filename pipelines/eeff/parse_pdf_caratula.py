@@ -218,7 +218,7 @@ _ENCABEZADO = {"ganancia", "perdida", "utilidad", "ganancia perdida", "utilidad 
 
 def _es_ruido(linea: str) -> bool:
     bajo = fold(linea)
-    if not bajo or bajo in {"nota", "m$", "ms", "n", "activ", "numero"}:
+    if not bajo or bajo in {"nota", "notas", "m$", "ms", "n", "activ", "numero"}:
         return True
     if any(marca in bajo for marca in ("s.a.", "s.a ", " spa", "limitada", "subsidiaria", "y filiales", "y filial")):
         return True
@@ -272,6 +272,7 @@ def lineas_apiladas(texto: str, estado: str, meta: dict, orden: str = "corte_pri
     nombre: list[str] = []
     nota = ""
     montos: list[float] = []
+    lado = ""
     cortes = _CORTE_ESTADO.get(estado, ())
 
     def emitir():
@@ -291,7 +292,7 @@ def lineas_apiladas(texto: str, estado: str, meta: dict, orden: str = "corte_pri
         if clave in vistos:
             return
         vistos.add(clave)
-        filas.append(_linea(meta, estado, titulo, nota_emit, monto, comp))
+        filas.append(_linea(meta, estado, titulo, nota_emit, monto, comp, lado))
 
     utiles = [linea for cruda in (texto or "").splitlines() if (linea := _limpiar_celda(cruda)) and not _es_ruido(linea)]
     limpias = []
@@ -320,6 +321,9 @@ def lineas_apiladas(texto: str, estado: str, meta: dict, orden: str = "corte_pri
             guion = True
             continue
         if re.fullmatch(r"[1-9]\d?", linea) and not nombre and not montos and not nota:
+            continue
+        # 2026 y 2025 sueltos son el encabezado de columna, no un saldo.
+        if re.fullmatch(r"(19|20)\d{2}", linea) and not nombre and not montos and not nota:
             continue
         if _NOTA_LINEA.fullmatch(linea) and nombre and not nota and not montos:
             guion = False
@@ -350,7 +354,10 @@ def lineas_apiladas(texto: str, estado: str, meta: dict, orden: str = "corte_pri
         elif montos:
             emitir()
         guion = False
-        if fold(linea) in _SECCION:
+        seccion = _lado_seccion(linea)
+        if seccion or fold(linea).strip(" .:-") in _SECCION:
+            if seccion:
+                lado = seccion
             nombre = []
             nota = ""
             continue
@@ -427,7 +434,23 @@ def _fila_texto(linea: str) -> dict | None:
     }
 
 
-def _linea(meta, estado, nombre, nota, monto, comp) -> dict:
+def _lado_seccion(linea: str) -> str:
+    """El encabezado «Pasivos corrientes:» fija el lado. No es una cuenta."""
+    bajo = fold(linea).strip(" .:-")
+    if bajo not in _SECCION:
+        return ""
+    if "pasivo" in bajo and "patrimonio" in bajo:
+        return ""
+    if "pasivo" in bajo:
+        return "Pasivo"
+    if "patrimonio" in bajo:
+        return "Patrimonio"
+    if "activo" in bajo:
+        return "Activo"
+    return ""
+
+
+def _linea(meta, estado, nombre, nota, monto, comp, lado: str = "") -> dict:
     return {
         "rut": meta.get("rut", ""),
         "razon_social": meta.get("razon_social", ""),
@@ -438,7 +461,7 @@ def _linea(meta, estado, nombre, nota, monto, comp) -> dict:
         "nombre_cuenta": nombre,
         "cuenta_canonica": "",
         "nota_ref": nota,
-        "clase": clase_cuenta(nombre, estado),
+        "clase": lado if lado and estado != "resultado" and not fold(nombre).startswith("total") else clase_cuenta(nombre, estado),
         "monto_miles_clp": round(float(monto), 2),
         "monto_m_clp": round(float(monto) / 1000.0, 2),
         "monto_comparativo_miles_clp": None if comp is None else round(float(comp), 2),
