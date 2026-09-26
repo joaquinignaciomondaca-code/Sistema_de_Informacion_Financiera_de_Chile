@@ -1,0 +1,35 @@
+[notas] 76197101-8 2026-03
+warning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+[notas] 76197101-8 indice=25 ok=9 no_leida=0 balance=24 OK caidas=0+0 resultados=10 OK PDF borrado
+[notas] 77356020-K 2026-03
+[notas] 77356020-K indice=31 ok=11 no_leida=7 balance=33 OK caidas=0+0 resultados=18 OK PDF borrado
+[notas] 96784400-4 2026-03
+[notas] 96784400-4 indice=36 ok=9 no_leida=1 balance=29 OK caidas=0+0 resultados=14 OK PDF borrado
+[notas] 96660790-4 2026-03
+[notas] 96660790-4 indice=35 ok=12 no_leida=3 balance=35 OK caidas=0+0 resultados=16 OK PDF borrado
+[notas] 76238714-K 2026-03
+[notas] 76238714-K indice=39 ok=14 no_leida=2 balance=32 OK caidas=0+0 resultados=16 OK PDF borrado
+[notas] 76120857-8 2026-03
+[notas] 76120857-8 indice=34 ok=12 no_leida=3 balance=34 OK caidas=0+0 resultados=15 OK PDF borrado
+[notas] 99566540-9 2026-03
+[notas] 99566540-9 indice=34 ok=10 no_leida=1 balance=28 OK caidas=0+0 resultados=24 OK PDF borrado
+[notas] 96626570-1 2026-03
+[notas] 96626570-1 indice=30 ok=13 no_leida=1 balance=32 OK caidas=0+0 resultados=10 OK PDF borrado
+[notas] 90146000-0 2026-03
+[notas] 90146000-0 indice=33 ok=15 no_leida=4 balance=37 OK caidas=0+0 resultados=17 OK PDF borrado
+[notas] 96809970-1 2026-03
+[notas] 96809970-1 indice=29 ok=9 no_leida=0 balance=28 OK caidas=0+0 resultados=14 OK PDF borrado
+# Diez PDF: cada línea de la cara, y la nota si suma
+
+- CBP FINANCIA CAPITAL FACTORING S.A. (76197101-8): balance=24 OK resultados=10 OK notas ok=9 no_leida=0 caidas=0+0
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K): balance=33 OK resultados=18 OK notas ok=11 no_leida=7 caidas=0+0
+- CONCRECES LEASING S.A. (96784400-4): balance=29 OK resultados=14 OK notas ok=9 no_leida=1 caidas=0+0
+- FACTOTAL S.A. (96660790-4): balance=35 OK resultados=16 OK notas ok=12 no_leida=3 caidas=0+0
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K): balance=32 OK resultados=16 OK notas ok=14 no_leida=2 caidas=0+0
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8): balance=34 OK resultados=15 OK notas ok=12 no_leida=3 caidas=0+0
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (99566540-9): balance=28 OK resultados=24 OK notas ok=10 no_leida=1 caidas=0+0
+- INCOFIN S.A. (96626570-1): balance=32 OK resultados=10 OK notas ok=13 no_leida=1 caidas=0+0
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0): balance=37 OK resultados=17 OK notas ok=15 no_leida=4 caidas=0+0
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1): balance=28 OK resultados=14 OK notas ok=9 no_leida=0 caidas=0+0
+
+CALIDAD: 114 notas calzan, 22 no leídas, 0 líneas de cara vistas por otra lectura y no guardadas. No se inventa la que falta. No es el masivo.
