@@ -14323,6 +14323,109 @@
       "api": [
         "OK"
       ]
+    },
+    "99501480-7|2015-09": {
+      "rut": "99501480-7",
+      "razon_social": "PENTA FINANCIERO S.A.",
+      "periodo": "2015-09",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 7,
+      "notas_sin_leer": 3,
+      "lineas_balance": 22,
+      "lineas_resultados": 13,
+      "api": [
+        "DIFIERE",
+        "OK",
+        "SOLO_API"
+      ]
+    },
+    "96861280-8|2015-09": {
+      "rut": "96861280-8",
+      "razon_social": "EUROCAPITAL S.A.",
+      "periodo": "2015-09",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 6,
+      "notas_sin_leer": 10,
+      "lineas_balance": 31,
+      "lineas_resultados": 15,
+      "api": [
+        "OK"
+      ]
+    },
+    "96809970-1|2015-09": {
+      "rut": "96809970-1",
+      "razon_social": "UNIDAD LEASING HABITACIONAL S.A.",
+      "periodo": "2015-09",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 13,
+      "notas_sin_leer": 1,
+      "lineas_balance": 26,
+      "lineas_resultados": 15,
+      "api": [
+        "OK",
+        "SOLO_API"
+      ]
+    },
+    "96784400-4|2015-09": {
+      "rut": "96784400-4",
+      "razon_social": "CONCRECES LEASING S.A.",
+      "periodo": "2015-09",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 9,
+      "notas_sin_leer": 6,
+      "lineas_balance": 33,
+      "lineas_resultados": 13,
+      "api": [
+        "OK"
+      ]
+    },
+    "96678790-2|2015-09": {
+      "rut": "96678790-2",
+      "razon_social": "FORUM SERVICIOS FINANCIEROS S.A.",
+      "periodo": "2015-09",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 16,
+      "notas_sin_leer": 1,
+      "lineas_balance": 55,
+      "lineas_resultados": 26,
+      "api": [
+        "OK"
+      ]
     }
   }
 }
