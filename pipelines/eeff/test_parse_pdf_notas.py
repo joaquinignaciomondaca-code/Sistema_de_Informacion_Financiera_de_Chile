@@ -6,6 +6,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from pipelines.eeff.parse_pdf_notas import (
+    _montos,
     composicion_en_tablas,
     composicion_que_calza,
     extraer_notas,
@@ -198,6 +199,34 @@ Total Deudores y Cuentas por cobrar, Neto, Corriente
         "Total Deudores comerciales, Neto, Corriente",
         "Total Cuentas por cobrar comerciales",
     ]
+
+
+def test_un_rut_no_es_un_miles():
+    assert _montos("77.124.030-5 Inversiones Lauca Ltda. 2.632.619") == [2632619.0]
+    assert 15642382.0 not in _montos("15.642.382-K")
+
+
+def test_una_frase_con_monto_no_ensucia_la_composicion():
+    texto = """
+NOTA 5 - EFECTIVO Y EQUIVALENTES AL EFECTIVO
+El flujo alcanzó a M$41.636.806, en comparación con M$20.580.904 en igual período del año anterior.
+Saldos en bancos
+1.730.440
+2.817.192
+Fondos fijos
+3.082
+2.519
+Fondos mutuos
+10.478
+47.321
+Totales
+1.744.000
+2.867.032
+"""
+    comp = composicion_que_calza(texto, 1744000)
+    assert comp is not None
+    assert sum(f["monto_miles"] for f in comp["filas"] if not f["es_total"]) == 1744000
+    assert all("comparaci" not in f["concepto"].lower() for f in comp["filas"])
 
 
 def test_una_fecha_no_es_un_miles():
