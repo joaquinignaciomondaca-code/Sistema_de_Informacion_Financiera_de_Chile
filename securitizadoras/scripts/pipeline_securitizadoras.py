@@ -185,6 +185,8 @@ def _celda(html, etiqueta):
 
 def parse_fecu_gestora(html):
     """Extrae totales de la FECU IFRS (HTML CMF). Devuelve dict o None si no es una FECU."""
+    import html as _html
+    html = _html.unescape(html).replace("\xa0", " ")  # CMF escribe 'p&eacute;rdida'
     if "[210000]" not in html and "[220000]" not in html:
         return None
     act = _celda(html, r"Total\s+de\s+activos"); pas = _celda(html, r"Total\s+de\s+pasivos")
@@ -231,18 +233,36 @@ def paso_gestoras(op, secs, desde=2014):
 
 
 # ----------------------------------------------------------------------------- paso ps (PDF)
-def meta_desde_texto(texto_inicial, etiqueta_web, rut_body, nombre):
-    """Identifica el PS. Devuelve None si no se logra un código de emisión confiable (no se inventa)."""
-    t = texto_inicial + " " + etiqueta_web
-    m = re.search(r"PATRIMONIO\s+SEPARADO\s+(?:N[°º\.\s]*|NUMERO\s*)(\d+)", t, re.I)
+def codigo_desde_etiqueta_web(etiqueta):
+    """'Patrimonios Separados - BVOLS 3 al 12/2024' → 'BVOLS-3'; '… - N° 12 al …' / 'PS 12' → 'PS-12'. None si no hay código."""
+    t = _norm(etiqueta)
+    t = re.sub(r"\bAL\s+\d{2}/\d{4}.*$", "", t)
+    t = re.sub(r"^.*?PATRIMONIOS?\s+SEPARADOS?\s*[-–:]?\s*", "", t).strip(" -–:")
+    t = re.sub(r"^(EEFF|ESTADOS?\s+FINANCIEROS?)\s*[-–:]?\s*", "", t).strip(" -–:")
+    if not t:
+        return None
+    m = re.fullmatch(r"(?:PS|N[°º]?|NUMERO|NRO\.?)?\s*-?\s*(\d{1,3})", t)
     if m:
-        codigo = f"PS-{int(m.group(1))}"
-    else:
-        m = re.search(r"PATRIMONIO\s+SEPARADO\s+([A-Z]{2,}[A-Z0-9]*(?:-[A-Z0-9]+)?)", texto_inicial, re.I)
-        if not m or m.group(1).upper() in ("N", "NO", "TODOS", "DE", "DEL"):
-            return None
-        codigo = m.group(1).upper()
-    m_reg = re.search(r"(?:REGISTRO(?:\s+DE\s+VALORES)?|INSCRIPCI[OÓ]N)[^\n\d]{0,40}N[°º\.]?\s*(\d+)", texto_inicial, re.I)
+        return f"PS-{int(m.group(1))}"
+    if re.fullmatch(r"[A-Z]{2,}[A-Z0-9]*(?:[\s-]+[A-Z0-9]+)*", t):
+        return re.sub(r"[\s-]+", "-", t)
+    return None
+
+
+def meta_desde_texto(texto_inicial, etiqueta_web, rut_body, nombre):
+    """Identifica el PS: primero por la etiqueta oficial de la web CMF, luego por el texto del PDF. None si no hay código."""
+    codigo = codigo_desde_etiqueta_web(etiqueta_web)
+    if not codigo:
+        m = re.search(r"PATRIMONIO\s+SEPARADO\s+(?:N[°º\.\s]*|NUMERO\s*)(\d+)", texto_inicial, re.I)
+        if m:
+            codigo = f"PS-{int(m.group(1))}"
+        else:
+            m = re.search(r"PATRIMONIO\s+SEPARADO\s+([A-Z]{2,}[A-Z0-9]*(?:-[A-Z0-9]+)?)", texto_inicial, re.I)
+            if not m or m.group(1).upper() in ("N", "NO", "TODOS", "DE", "DEL"):
+                return None
+            codigo = m.group(1).upper()
+    m_reg = re.search(r"INSCRIPCI[OÓ]N\s+DE\s+LA\s+EMISI[OÓ]N\s+EN\s+EL\s+REGISTRO\s*:?\s*(\d+)", texto_inicial, re.I) or \
+        re.search(r"(?:REGISTRO(?:\s+DE\s+VALORES)?|INSCRIPCI[OÓ]N)[^\n\d]{0,40}N[°º\.]?\s*(\d+)", texto_inicial, re.I)
     return {"id_patrimonio": f"{rut_body}_{codigo.lower().replace('-', '_')}", "rut_administradora": rut_completo(rut_body),
             "nombre_administradora": nombre, "codigo_emision": codigo, "denominacion_ps": f"PATRIMONIO SEPARADO {codigo.replace('PS-', 'N°')}",
             "nro_registro_cmf": m_reg.group(1) if m_reg else None}
@@ -267,6 +287,8 @@ with open(CATALOGO_PATH, encoding="utf-8") as _f:
 _POR_CODIGO = {c: e for e in CATALOGO["cuentas"] for c in e["codigos"]}
 _POR_REGEX = [(e["estado"], re.compile(e["regex"]), e) for e in CATALOGO["cuentas"]]
 _RX_CODIGO = re.compile(r"^\d{2}\.\d{3}$")
+_RX_IGNORAR = [re.compile(r) for r in CATALOGO.get("glosas_ignoradas", [])]
+_RX_EXC = re.compile("|".join(re.escape(k) for k in CATALOGO["estados"]["EXCEDENTES"]) + r"|^INGRESOS(\s+OPERACIONALES)?$")
 _RX_NUM = re.compile(r"^\(?-?[\d\.]+(,\d+)?\)?$|^[—–-]$")
 
 
@@ -310,10 +332,15 @@ def parse_eeff_lineas(paginas, max_paginas=16):
         lineas = [l.strip() for l in t.split("\n") if l.strip()]
         if sum(1 for l in lineas if _RX_NUM.match(l) and any(ch.isdigit() for ch in l)) < 3 and not any(re.search(r"\d[\d\.]{3,}\s+\d", l) for l in lineas):
             continue
-        codigo = None
+        codigo = None; pagina_out = []
         for i, l in enumerate(lineas):
             if _RX_CODIGO.match(l):
                 codigo = l; continue
+            ln = _norm(l)
+            if _RX_EXC.search(ln) and not re.search(r"\d", ln):
+                estado = "EXCEDENTES"  # el estado de excedentes puede venir en la misma página que el pasivo
+            if any(rx.fullmatch(ln) for rx in _RX_IGNORAR):
+                codigo = None; continue
             # fila completa en una línea: "Disponible 5 119.969 15.615"  ó  "11.010 Disponible 119.969 15.615"
             m = re.match(r"^(\d{2}\.\d{3})?\s*([A-Za-zÁÉÍÓÚÑáéíóúñ](?:[^\d\(]|\([^)\d]*\))*?)\s+((?:\(?-?[\d\.]+(?:,\d+)?\)?|[—–-])(?:\s+(?:\(?-?[\d\.]+(?:,\d+)?\)?|[—–-]))*)\s*$", l)
             if m and len(m.group(2).strip()) > 3:
@@ -338,10 +365,15 @@ def parse_eeff_lineas(paginas, max_paginas=16):
             if key in vistos:  # misma glosa repetida (p. ej. subtotal duplicado) → se conserva la primera
                 continue
             vistos.add(key)
-            lineas_out.append({"estado": estado, "pagina_pdf": pno + 1, "codigo_fecu": cod, "glosa": glosa, "nota": nota,
+            pagina_out.append({"estado": estado, "pagina_pdf": pno + 1, "codigo_fecu": cod, "glosa": glosa, "nota": nota,
                                "monto_mclp": nums[0], "monto_anterior_mclp": nums[1] if len(nums) > 1 else None,
                                "cuenta_canonica": e["canonica"] if e else None, "seccion": e["seccion"] if e else None,
                                "es_total": bool(e and e.get("total"))})
+        # una página de estado financiero tiene al menos una línea de total reconocida; si no, es una nota u otra tabla
+        if any(l["es_total"] for l in pagina_out):
+            lineas_out.extend(pagina_out)
+        else:
+            for l in pagina_out: vistos.discard((l["estado"], l["codigo_fecu"], _norm(l["glosa"])))
     return lineas_out
 
 
