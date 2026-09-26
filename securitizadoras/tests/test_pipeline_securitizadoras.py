@@ -281,13 +281,124 @@ check(P.rut_completo("96765170") == "96765170-2" and P.rut_completo("76965774") 
 check(P.parse_num("(1.234,5)") == -1234.5 and P.parse_num("-") is None and P.parse_num("abc") is None, "parse_num")
 
 
+# ---- casos reales de la corrida de diagnóstico 2023-2025 (texto pymupdf tal cual) ----
+print("layouts reales (diagnóstico)")
+PAG_EF_2COL = """RAZON SOCIAL: EF SECURITIZADORA S.A.
+BALANCE DEL PATRIMONIO SEPARADO
+PASIVOS
+Nota
+Pasivo circulante
+Remuneraciones por pagar por auditoria externa
+11
+         14.503         11.020 
+Otros acreedores (corto plazo)
+14
+    6.528.686  10.982.312 
+Total pasivos circulantes
+   6.543.189  10.993.332 
+Pasivo largo plazo
+Obligaciones por títulos de deuda de securitización (largo plazo) 
+10
+  23.530.223  33.063.518 
+Total pasivo largo plazo
+  23.530.223  33.063.518 
+Excedente acumulado del patrimonio separado
+Reservas de excedentes anteriores
+-
+                   
+                  - 
+Excedente del período (déficit)
+         14.394         63.737 
+Total Excedente (Déficit) Acumulado
+      14.394         63.737 
+TOTAL PASIVOS
+   30.087.806  44.120.587 
+"""
+d = {l["glosa"]: (l["monto_mclp"], l["monto_anterior_mclp"], l["cuenta_canonica"]) for l in P.parse_eeff_lineas([PAGINA_PORTADA, PAG_EF_2COL])}
+check(d.get("Total pasivos circulantes") == (6543189, 10993332, "TOTAL_PASIVOS_CIRCULANTES") and d.get("TOTAL PASIVOS") == (30087806, 44120587, "TOTAL_PASIVOS_Y_PATRIMONIO")
+      and d.get("Remuneraciones por pagar por auditoria externa")[0] == 14503, f"dos columnas en la misma línea + nota intermedia (EF): {d.get('TOTAL PASIVOS')}")
+PAG_TRANSA = """PATRIMONIO SEPARADO BTRA 1-5
+ACTIVOS
+10.000
+TOTAL  ACTIVOS 
+429.477
+465.919
+PASIVOS
+21.000
+TOTAL PASIVOS CIRCULANTES
+19.065.103
+18.385.252
+23.000
+TOTAL EXCEDENTE ACUMULADO
+(18.635.626)
+(17.919.333)
+23.000
+TOTAL PASIVOS
+429.477
+465.919
+"""
+d = {l["glosa"]: l["cuenta_canonica"] for l in P.parse_eeff_lineas([PAGINA_PORTADA, PAG_TRANSA])}
+check(d.get("TOTAL PASIVOS") == "TOTAL_PASIVOS_Y_PATRIMONIO" and d.get("TOTAL EXCEDENTE ACUMULADO") == "TOTAL_EXCEDENTES_ACUMULADOS", f"glosa prevalece sobre código FECU repetido (Transa 23.000): {d}")
+PAG_SECURITY = """RAZON SOCIAL: SECURITIZADORA SECURITY S.A.
+BALANCE DEL PATRIMONIO SEPARADO BSECS-5
+A C T IVOS
+11.010
+Disponible
+11.212
+40.749
+15.210
+Otros activos circulantes
+19.718
+19.716
+11.000
+T OT A L A C T IVOS C IR C ULA N T ES
+30.930
+60.465
+15.210
+T OT A L A C T IVOS
+30.930
+60.465
+"""
+d = {l["glosa"]: l["cuenta_canonica"] for l in P.parse_eeff_lineas([PAGINA_PORTADA, PAG_SECURITY])}
+check(d.get("T OT A L A C T IVOS") == "TOTAL_ACTIVOS" and d.get("T OT A L A C T IVOS C IR C ULA N T ES") == "TOTAL_ACTIVOS_CIRCULANTES", f"glosas con letras espaciadas (Security): {d}")
+PAG_SUDAMERICANA = """SECURITIZADORA SUDAMERICANA S.A.
+BALANCES GENERALES DEL PATRIMONIO SEPARADO N°2
+ACTIVOS
+Nota
+31-12-2025
+31-12-2024
+11.010 Disponible
+5
+313.993
+89.515
+11.020 Valores negociables  
+6
+861.472
+1.273.686
+10.000 TOTAL ACTIVOS  
+1.175.465
+1.363.201
+"""
+d = {l["glosa"]: (l["codigo_fecu"], l["monto_mclp"], l["cuenta_canonica"]) for l in P.parse_eeff_lineas([PAGINA_PORTADA, PAG_SUDAMERICANA])}
+check(d.get("Disponible") == ("11.010", 313993, "DISPONIBLE") and d.get("TOTAL ACTIVOS") == ("10.000", 1175465, "TOTAL_ACTIVOS"), f"código y glosa en la misma línea (Sudamericana): {d}")
+PAG_NOTA7 = """EF SECURITIZADORA S.A.
+NOTA 7 - ACTIVOS SECURITIZADOS
+Concepto
+Total de Activo
+456
+3.549.603
+"""
+r7 = P.derivar_resumen(P.parse_eeff_lineas([PAGINA_PORTADA, PAGINA_BALANCE_ACT, PAGINA_BALANCE_PAS, PAG_NOTA7]))
+check(r7["total_activos_mclp"] != 456 and r7["cuadre_contable_ok"], "cuadro de nota ('Total de Activo' = nº de contratos) no pisa el total del balance")
+
+
 # ---- flujo completo del paso ps sin red (HTTP y PDF simulados) ----
 print("paso ps end-to-end (simulado)")
 import tempfile, types, pandas as pd
 class _FakeDoc:
     def __init__(self, pags): self.p = pags
     def __len__(self): return len(self.p)
-    def __getitem__(self, i): return types.SimpleNamespace(get_text=lambda: self.p[i])
+    def __getitem__(self, i): return types.SimpleNamespace(get_text=lambda: self.p[i], get_images=lambda: [])
     def close(self): pass
 sys.modules["fitz"] = types.SimpleNamespace(open=lambda stream, filetype: _FakeDoc([PAGINA_PORTADA, PAGINA_BALANCE_ACT, PAGINA_BALANCE_PAS, PAGINA_EXCEDENTES, PAGINA_EFECTIVO, PAGINA_MORA]))
 P._listar_pdfs_ps = lambda op, sec, anio, mm: ("http://cmf/entidad", [("Patrimonios Separados - N° 12 al %s/%s" % (mm, anio), "http://cmf/pdf/%s%s" % (anio, mm))])
@@ -300,6 +411,30 @@ res = pd.read_parquet(os.path.join(tmp, "patrimonios_separados_balance_resumen.p
 cob = pd.read_parquet(os.path.join(tmp, "patrimonios_separados_cobertura.parquet"))
 nts = pd.read_parquet(os.path.join(tmp, "patrimonios_separados_notas_detalle.parquet"))
 check(sorted(lin["periodo"].unique()) == ["2024-09", "2024-12"] and len(lin) == 2 * 23, f"líneas trimestrales: {len(lin)} filas")
+check(cob["estado"].tolist() == ["ok", "ok"] and "paginas_ocr" in cob.columns and cob["paginas_ocr"].isna().all(), "cobertura ok sin OCR")
+
+# ---- OCR: página de balance embebida como imagen (tesseract simulado) ----
+print("ocr páginas imagen")
+import subprocess as _sp, shutil as _sh
+class _ImgDoc(_FakeDoc):
+    def __getitem__(self, i):
+        return types.SimpleNamespace(get_text=lambda: self.p[i], get_images=lambda: [("img",)] if i in (1, 2) else [],
+                                     get_pixmap=lambda dpi: types.SimpleNamespace(save=lambda f: open(f, "wb").write(b"png")))
+_pags = [PAGINA_PORTADA, "EF SECURITIZADORA S.A.\nPATRIMONIO SEPARADO N° 7\n", "EF SECURITIZADORA S.A.\n", PAGINA_EXCEDENTES]
+_ocr_txt = {1: PAGINA_BALANCE_ACT, 2: PAGINA_BALANCE_PAS}; _calls = []
+def _fake_run(cmd, **k):
+    _calls.append(cmd); n = len(_calls)
+    return types.SimpleNamespace(returncode=0, stdout=_ocr_txt[1] if n == 1 else _ocr_txt[2])
+_orig_run, _orig_which = _sp.run, _sh.which
+_sp.run, _sh.which = _fake_run, (lambda x: "/usr/bin/tesseract")
+pg2, hechos = P.ocr_paginas_imagen(_ImgDoc(_pags), _pags)
+_sp.run, _sh.which = _orig_run, _orig_which
+lin_ocr = P.parse_eeff_lineas(pg2); r_ocr = P.derivar_resumen(lin_ocr)
+check(hechos == [2, 3] and len(_calls) == 2 and "-l" in _calls[0] and "spa" in _calls[0], f"OCR aplicado sólo a páginas con imagen y sin texto: {hechos}")
+check(r_ocr["cuadre_contable_ok"] and r_ocr["total_activos_mclp"] == P.derivar_resumen(P.parse_eeff_lineas([PAGINA_PORTADA, PAGINA_BALANCE_ACT, PAGINA_BALANCE_PAS, PAGINA_EXCEDENTES]))["total_activos_mclp"], "balance leído desde OCR cuadra igual que el texto nativo")
+_sh.which = lambda x: None
+check(P.ocr_paginas_imagen(_ImgDoc(_pags), _pags) == (_pags, []), "sin tesseract → páginas sin cambios (no se inventa)")
+_sh.which = _orig_which
 check(len(res) == 2 and bool(res["cuadre_contable_ok"].all()) and res["rut_administradora"].iloc[0] == "96765170-2", "resumen: 2 balances, cuadran, RUT con DV")
 check(set(["fuente_url", "metodo", "fecha_extraccion", "script_version", "pdf_sha256"]) <= set(lin.columns), "procedencia en líneas")
 check(list(cob["estado"]) == ["ok", "ok"] and cob["lineas_eeff"].iloc[0] == 23, "cobertura registra ok + nº de líneas")

@@ -48,7 +48,10 @@ jobs:
               if not k.startswith("_"): print(f"{k}={v}")
           EOF
       - name: Dependencias
-        run: pip install -q -r requirements.txt
+        run: |
+          pip install -q -r requirements.txt
+          sudo apt-get update -qq && sudo apt-get install -y -qq tesseract-ocr tesseract-ocr-spa >/dev/null
+          tesseract --version | head -1
       - name: Pruebas del parser (sin red)
         run: python securitizadoras/tests/test_pipeline_securitizadoras.py
       - name: Conectividad CMF
