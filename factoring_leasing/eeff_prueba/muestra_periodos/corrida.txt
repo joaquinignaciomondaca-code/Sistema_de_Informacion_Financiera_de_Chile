@@ -1,0 +1,43 @@
+[muestra] 96655860-1 2013-12 I
+warning: The `fitz` API is deprecated and will be removed in future. Use `import pymupdf` instead.
+[muestra] paginas=56 a_ocr=56
+[muestra] ocr pagina 1/56 chars=119
+[muestra] ocr pagina 3/56 chars=765
+[muestra] ocr pagina 4/56 chars=69
+[muestra] ocr pagina 2/56 chars=2917
+[muestra] ocr pagina 6/56 chars=1007
+[muestra] ocr pagina 7/56 chars=729
+[muestra] ocr pagina 8/56 chars=1136
+[muestra] ocr pagina 9/56 chars=806
+Traceback (most recent call last):
+  File "/home/runner/work/monitor-financiero-chile/monitor-financiero-chile/factoring_leasing/scripts/05_muestra_periodos.py", line 131, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/home/runner/work/monitor-financiero-chile/monitor-financiero-chile/factoring_leasing/scripts/05_muestra_periodos.py", line 115, in main
+    texto, ocr_paginas = _texto(blob)
+                         ^^^^^^^^^^^^
+  File "/home/runner/work/monitor-financiero-chile/monitor-financiero-chile/factoring_leasing/scripts/05_muestra_periodos.py", line 89, in _texto
+    indice, texto = fut.result()
+                    ^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/monitor-financiero-chile/monitor-financiero-chile/factoring_leasing/scripts/05_muestra_periodos.py", line 37, in _ocr_png
+    proc = subprocess.run(
+           ^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/subprocess.py", line 1209, in communicate
+    stdout, stderr = self._communicate(input, endtime, timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/subprocess.py", line 2116, in _communicate
+    self._check_timeout(endtime, orig_timeout, stdout, stderr)
+  File "/opt/hostedtoolcache/Python/3.11.16/x64/lib/python3.11/subprocess.py", line 1253, in _check_timeout
+    raise TimeoutExpired(
+subprocess.TimeoutExpired: Command '['tesseract', 'stdin', 'stdout', '-l', 'spa', '--oem', '1', '--psm', '6', '-c', 'preserve_interword_spaces=1']' timed out after 90 seconds
