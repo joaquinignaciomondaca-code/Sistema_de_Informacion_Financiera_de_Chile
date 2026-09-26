@@ -48,14 +48,44 @@ def _monto(token: str):
     return parse_monto_chileno(token)
 
 
+def _es_indice_o_nota(crudo: str, cabeza: str) -> bool:
+    # «Notas» a secas es el encabezado de la columna, no una nota.
+    if "notas a los estados" in cabeza or re.match(r"nota \d", cabeza):
+        return True
+    return "...." in crudo[:900]
+
+
 def clasificar_pagina(texto: str) -> str:
-    """El título manda. Una nota que cita el estado no abre la carátula."""
-    cabeza = fold("\n".join((texto or "").splitlines()[:8]))
-    if "nota " in cabeza[:40] or cabeza.startswith("notas "):
+    """El título manda. Si el PDF no lo repite, manda el contenido de la carátula."""
+    crudo = texto or ""
+    utiles = [linea.strip() for linea in crudo.splitlines() if linea.strip()]
+    cabeza = fold("\n".join(utiles[:28]))
+    if _es_indice_o_nota(crudo, cabeza):
         return ""
-    if "estado de situacion financiera" in cabeza or "estado de situacion" in cabeza:
+    montos = len(re.findall(r"\d{1,3}(?:\.\d{3})+", crudo))
+    if montos < 3:
+        return ""
+    if "flujo de efectivo" in cabeza or "flujos de efectivo" in cabeza or "cambios en el patrimonio" in cabeza:
+        return ""
+    if "situacion financiera" in cabeza:
         return "balance"
-    if "estado de resultados" in cabeza or "estado del resultado" in cabeza:
+    if (
+        "estado de resultados" in cabeza
+        or "estados de resultados" in cabeza
+        or "resultados integrales" in cabeza
+        or "resultados consolidados por funcion" in cabeza
+        or "resultados por funcion" in cabeza
+    ) and "otros resultados integrales" not in cabeza[:80]:
+        return "resultado"
+    if montos < 8:
+        return ""
+    if "efectivo y equivalentes" in cabeza and "activo" in cabeza:
+        return "balance"
+    if "pasivos corrientes" in cabeza and "ingresos de actividades" not in cabeza:
+        return "balance"
+    if "ingresos de actividades ordinarias" in cabeza or "ingreso de actividades ordinarias" in cabeza:
+        return "resultado"
+    if "ganancia bruta" in cabeza and "costo de ventas" in cabeza:
         return "resultado"
     return ""
 
@@ -162,6 +192,113 @@ def lineas_de_tabla(tabla: list[list], estado: str, meta: dict, orden: str) -> l
             continue
         vistos.add(clave)
         filas.append(_linea(meta, estado, parsed["nombre"], parsed["nota"], monto, comp))
+    return filas
+
+
+_SECCION = {
+    "activos", "pasivos", "patrimonio", "patrimonio neto", "pasivos y patrimonio",
+    "activo corriente", "activos corrientes", "activo no corriente", "activos no corrientes",
+    "pasivo corriente", "pasivos corrientes", "pasivo no corriente", "pasivos no corrientes",
+}
+_NOTA_LINEA = re.compile(r"^\(?\d{1,2}\)?$")
+_CORTE_ESTADO = {
+    "balance": ("estado de resultados", "estados de resultados", "estado de flujos", "estados de flujos"),
+    "resultado": ("otros resultados integrales", "estado de cambios", "estados de cambios", "estado de flujos", "estados de flujos"),
+}
+
+
+def _es_ruido(linea: str) -> bool:
+    bajo = fold(linea)
+    if not bajo or bajo in {"nota", "m$", "ms", "n", "activ"}:
+        return True
+    if bajo.startswith("estado") or "expresado en" in bajo or "notas adjuntas" in bajo:
+        return True
+    if _es_fecha(linea) or re.fullmatch(r"(ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)\s+20\d{2}", bajo):
+        return True
+    if re.fullmatch(r"0?[1-9]\d?\.\d{2}\.20\d{2}", linea.replace(" ", "")):
+        return True
+    if re.search(r"\d{1,2}[-/](ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)[-/]\d{2,4}", bajo):
+        return True
+    if bajo in {"n", "no", "nº", "no."}:
+        return True
+    if linea.isupper() and len(linea) > 4 and not bajo.startswith("total"):
+        return True
+    return False
+
+
+def _montos_de_linea(linea: str) -> list[float] | None:
+    if _NOTA_LINEA.fullmatch(linea.strip()):
+        return None
+    partes = linea.split()
+    if not partes:
+        return None
+    montos = []
+    for parte in partes:
+        limpio = parte.strip().replace("−", "-").replace("–", "-")
+        if limpio in {"-", "—"}:
+            montos.append(0.0)
+            continue
+        monto = _monto(limpio)
+        if monto is None:
+            return None
+        montos.append(monto)
+    return montos or None
+
+
+def lineas_apiladas(texto: str, estado: str, meta: dict, orden: str = "corte_primero") -> list[dict]:
+    """El PDF de la CMF deja el nombre, la nota y cada monto en su propia línea."""
+    filas = []
+    vistos = set()
+    nombre: list[str] = []
+    nota = ""
+    montos: list[float] = []
+    cortes = _CORTE_ESTADO.get(estado, ())
+
+    def emitir():
+        nonlocal nombre, nota, montos
+        titulo = re.sub(r"\s+", " ", " ".join(nombre)).strip(" .:-")
+        nota_emit = nota
+        monto = montos[0] if montos else None
+        comp = montos[1] if len(montos) > 1 else None
+        nombre, nota, montos = [], "", []
+        if not titulo or monto is None or len(titulo) < 3 or fold(titulo) in _SECCION:
+            return
+        if "por accion" in fold(titulo) or "numero de acciones" in fold(titulo):
+            return
+        if orden == "comparativo_primero" and comp is not None:
+            monto, comp = comp, monto
+        clave = (fold(titulo), monto, comp)
+        if clave in vistos:
+            return
+        vistos.add(clave)
+        filas.append(_linea(meta, estado, titulo, nota_emit, monto, comp))
+
+    for cruda in (texto or "").splitlines():
+        linea = _limpiar_celda(cruda)
+        if not linea or _es_ruido(linea):
+            continue
+        bajo = fold(linea)
+        if any(marca in bajo for marca in cortes) and filas:
+            break
+        if _NOTA_LINEA.fullmatch(linea):
+            if nombre:
+                nota = re.sub(r"\D", "", linea)
+            continue
+        encontrados = _montos_de_linea(linea)
+        if encontrados is not None:
+            montos.extend(encontrados)
+            if len(montos) >= 2:
+                emitir()
+            continue
+        if montos:
+            emitir()
+        if fold(linea) in _SECCION:
+            nombre = []
+            nota = ""
+            continue
+        nombre.append(linea)
+    if montos:
+        emitir()
     return filas
 
 

@@ -1,0 +1,604 @@
+[
+  {
+    "rut": "76002293-4",
+    "razon_social": "SANTANDER CONSUMER FINANCE LIMITADA",
+    "tipo_eeff": "Individual",
+    "error": "",
+    "paginas_balance": [
+      4,
+      5
+    ],
+    "paginas_resultados": [
+      6
+    ],
+    "metodo_balance": "apilado",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 33,
+    "lineas_resultados": 20,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": 0.0,
+    "cuadre_detalle": "FALTAN_LINEAS",
+    "hueco_detalle": "TOTAL ACTIVOS CORRIENTES: detalle 436.970.621, total 439.834.370 | TOTAL ACTIVOS NO CORRIENTES: detalle 2.142.442, total 623.668.169 | TOTAL PASIVOS CORRIENTES: detalle 36.134.219, total 167.265.217 | TOTAL PASIVOS NO CORRIENTES: detalle 2.598.449, total 731.581.949",
+    "cuadre_resultados": "FALTAN_LINEAS",
+    "hueco_resultados": "corte Ganancia (pérdida) procedente de operaciones discontinuadas: suma 17.678.600, línea 0 | comparativo Ganancia (pérdida) procedente de operaciones discontinuadas: suma 12.899.892, línea 0",
+    "total_activos_miles": 1063502539.0,
+    "total_activos_fuente_previa": 1063502539.0,
+    "cruce_previo": "IGUAL",
+    "api": "NO_REPETIDA",
+    "chequeos_ok": 0,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      }
+    ]
+  },
+  {
+    "rut": "76139506-8",
+    "razon_social": "AUTOFIN S.A.",
+    "tipo_eeff": "Individual",
+    "error": "",
+    "paginas_balance": [
+      5
+    ],
+    "paginas_resultados": [
+      6
+    ],
+    "metodo_balance": "apilado",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 22,
+    "lineas_resultados": 13,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": 0.0,
+    "cuadre_detalle": "FALTAN_LINEAS",
+    "hueco_detalle": "Total de activos: detalle 454.498.920, total 454.910.428 | Total de pasivos: detalle 64.150.719, total 414.314.501 | Total pasivos y patrimonio: faltan líneas por 414.314.501 entre el subtotal y el total",
+    "cuadre_resultados": "INCOMPLETO",
+    "hueco_resultados": "corte: el resultado no trae las líneas que lo componen | comparativo: el resultado no trae las líneas que lo componen",
+    "total_activos_miles": 454910428.0,
+    "total_activos_fuente_previa": 454910428.0,
+    "cruce_previo": "IGUAL",
+    "api": "NO_REPETIDA",
+    "chequeos_ok": 0,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "SIN_DATO",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "SIN_DATO",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      }
+    ]
+  },
+  {
+    "rut": "76360977-4",
+    "razon_social": "PRIMUS CAPITAL S.A.",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "paginas_balance": [
+      3,
+      4
+    ],
+    "paginas_resultados": [
+      5,
+      6
+    ],
+    "metodo_balance": "apilado",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 38,
+    "lineas_resultados": 28,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": 0.0,
+    "cuadre_detalle": "FALTAN_LINEAS",
+    "hueco_detalle": "Totales de activos corrientes: detalle 801.601, total 200.901.578 | Totales de activos no corrientes: detalle 38.201.679, total 43.237.952 | Totales de activos: faltan líneas por -200.099.977 entre el subtotal y el total | Totales de pasivos corrientes: detalle 135.029.046, total 154.287.572",
+    "cuadre_resultados": "FALTAN_LINEAS",
+    "hueco_resultados": "corte Ganancia del período: suma 3.877.562, línea 1.938.781 | comparativo Ganancia del período: suma 3.690.560, línea 1.845.280",
+    "total_activos_miles": 244139530.0,
+    "total_activos_fuente_previa": null,
+    "cruce_previo": "SIN_TOTAL",
+    "api": "NO_REPETIDA",
+    "chequeos_ok": 0,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      }
+    ]
+  },
+  {
+    "rut": "76555835-2",
+    "razon_social": "ST CAPITAL SPA",
+    "tipo_eeff": "Individual",
+    "error": "",
+    "paginas_balance": [
+      3,
+      4
+    ],
+    "paginas_resultados": [
+      5,
+      6
+    ],
+    "metodo_balance": "apilado",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 24,
+    "lineas_resultados": 14,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": -0.01,
+    "cuadre_detalle": "FALTAN_LINEAS",
+    "hueco_detalle": "Total activo no corriente: detalle 1.423.134, total 5.458.128 | Total pasivo corriente: detalle 174.413.392, total 251.489.578 | Total patrimonio: detalle 29.004.130, total 67.479.896 | Total patrimonio y pasivos: faltan líneas por 251.489.578 entre el subtotal y el total",
+    "cuadre_resultados": "OK",
+    "hueco_resultados": "",
+    "total_activos_miles": 318969474.0,
+    "total_activos_fuente_previa": 318969474.0,
+    "cruce_previo": "IGUAL",
+    "api": "NO_REPETIDA",
+    "chequeos_ok": 0,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "SIN_DATO",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      }
+    ]
+  },
+  {
+    "rut": "94050000-1",
+    "razon_social": "GENERAL MOTORS FINANCIAL CHILE S.A.",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "paginas_balance": [
+      4,
+      5
+    ],
+    "paginas_resultados": [
+      6
+    ],
+    "metodo_balance": "apilado",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 30,
+    "lineas_resultados": 11,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": 0.01,
+    "cuadre_detalle": "FALTAN_LINEAS",
+    "hueco_detalle": "Total activos corrientes: detalle 118.500.279, total 178.230.702 | Total activos no corrientes: detalle 17.130.490, total 167.257.755 | Total pasivos corrientes: detalle 94.240.542, total 107.935.271 | Total pasivos no corrientes: detalle 118.392.407, total 119.115.271",
+    "cuadre_resultados": "OK",
+    "hueco_resultados": "",
+    "total_activos_miles": 345488457.0,
+    "total_activos_fuente_previa": 345488457.0,
+    "cruce_previo": "IGUAL",
+    "api": "NO_REPETIDA",
+    "chequeos_ok": 0,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      }
+    ]
+  },
+  {
+    "rut": "96655860-1",
+    "razon_social": "FACTORING SECURITY S.A.",
+    "tipo_eeff": "Individual",
+    "error": "",
+    "paginas_balance": [
+      3,
+      4
+    ],
+    "paginas_resultados": [
+      5
+    ],
+    "metodo_balance": "apilado",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 28,
+    "lineas_resultados": 15,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": 0.0,
+    "cuadre_detalle": "FALTAN_LINEAS",
+    "hueco_detalle": "Total activos corrientes: detalle 1.321.950.700, total 661.672.969 | Total activos no corrientes: detalle 9.929.219, total 10.683.449 | Total pasivos corrientes: detalle 502.648.814, total 512.039.455 | TOTAL PATRIMONIO Y PASIVOS: faltan líneas por 551.969.169 entre el subtotal y el total",
+    "cuadre_resultados": "FALTAN_LINEAS",
+    "hueco_resultados": "corte Ganancia del periodo: suma 5.256.882, línea 2.628.441 | comparativo Ganancia del periodo: suma 6.904.702, línea 3.452.351",
+    "total_activos_miles": 672356418.0,
+    "total_activos_fuente_previa": 672356418.0,
+    "cruce_previo": "IGUAL",
+    "api": "NO_REPETIDA",
+    "chequeos_ok": 0,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      }
+    ]
+  },
+  {
+    "rut": "96667560-8",
+    "razon_social": "TANNER SERVICIOS FINANCIEROS S.A.",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "paginas_balance": [
+      5,
+      6
+    ],
+    "paginas_resultados": [
+      7
+    ],
+    "metodo_balance": "apilado",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 38,
+    "lineas_resultados": 17,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": 0.0,
+    "cuadre_detalle": "FALTAN_LINEAS",
+    "hueco_detalle": "Total Activos Corrientes: detalle 39.803.035, total 1.734.789.304 | Total Activos No Corrientes: detalle 169.054.795, total 797.592.910 | TOTAL ACTIVOS: faltan líneas por -1.694.986.269 entre el subtotal y el total | Total Pasivos Corrientes: detalle 1.342.160.727, total 1.749.924.354",
+    "cuadre_resultados": "FALTAN_LINEAS",
+    "hueco_resultados": "corte Utilidad antes de Impuesto: suma 228.751, línea 136.817 | comparativo Utilidad antes de Impuesto: suma 626.498, línea 629.396",
+    "total_activos_miles": 2532382214.0,
+    "total_activos_fuente_previa": 2532382214.0,
+    "cruce_previo": "IGUAL",
+    "api": "NO_REPETIDA",
+    "chequeos_ok": 0,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      }
+    ]
+  },
+  {
+    "rut": "96678790-2",
+    "razon_social": "FORUM SERVICIOS FINANCIEROS S.A.",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "paginas_balance": [
+      4,
+      5
+    ],
+    "paginas_resultados": [
+      6,
+      7
+    ],
+    "metodo_balance": "apilado",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 35,
+    "lineas_resultados": 19,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": 0.0,
+    "cuadre_detalle": "FALTAN_LINEAS",
+    "hueco_detalle": "Total de activos no corrientes: detalle 1.402.917.793, total 1.280.509.343 | Total pasivos: detalle 5.511.583.237, total 2.275.573.122 | Total patrimonio: detalle 254.292.635, total 320.580.299 | Total de pasivos y patrimonio: faltan líneas por 2.275.573.122 entre el subtotal y el total",
+    "cuadre_resultados": "FALTAN_LINEAS",
+    "hueco_resultados": "corte Ganancias (pérdidas) que surgen de la diferencia entre el valor libro anterior y el valor justo de activos financieros reclasificados medidos a valor razonable Ganancia (pérdida) antes de impuestos: suma 13.384.845, línea 13.417.421",
+    "total_activos_miles": 2596153421.0,
+    "total_activos_fuente_previa": 2596153421.0,
+    "cruce_previo": "IGUAL",
+    "api": "NO_REPETIDA",
+    "chequeos_ok": 0,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "SIN_DATO",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      }
+    ]
+  },
+  {
+    "rut": "96861280-8",
+    "razon_social": "EUROCAPITAL S.A.",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "paginas_balance": [
+      3,
+      4
+    ],
+    "paginas_resultados": [
+      5
+    ],
+    "metodo_balance": "apilado",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 37,
+    "lineas_resultados": 17,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": 0.0,
+    "cuadre_detalle": "FALTAN_LINEAS",
+    "hueco_detalle": "Total de activos corrientes distintos de los activos clasificados como: detalle 236.647.897, total 242.764.973 | Total de activos corrientes: detalle 1.194.727, total 243.959.700 | Total de activos no corrientes: detalle 1.754.229, total 46.227.912 | TOTAL ACTIVOS: faltan líneas por -242.764.973 entre el subtotal y el total",
+    "cuadre_resultados": "INCOMPLETO",
+    "hueco_resultados": "corte: el resultado no trae las líneas que lo componen | comparativo: el resultado no trae las líneas que lo componen",
+    "total_activos_miles": 290187612.0,
+    "total_activos_fuente_previa": 290187612.0,
+    "cruce_previo": "IGUAL",
+    "api": "NO_REPETIDA",
+    "chequeos_ok": 0,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      }
+    ]
+  },
+  {
+    "rut": "99501480-7",
+    "razon_social": "PENTA FINANCIERO S.A.",
+    "tipo_eeff": "Consolidado",
+    "error": "",
+    "paginas_balance": [
+      5,
+      6
+    ],
+    "paginas_resultados": [
+      7
+    ],
+    "metodo_balance": "apilado",
+    "metodo_resultados": "apilado",
+    "lineas_balance": 39,
+    "lineas_resultados": 18,
+    "cuadre_balance": "OK",
+    "diff_balance_m_clp": 0.01,
+    "cuadre_detalle": "FALTAN_LINEAS",
+    "hueco_detalle": "Total, activos corrientes: detalle 3.007.113, total 199.551.164 | Total, activos no corrientes: detalle 16.336.005, total 53.361.684 | Total, Activos: faltan líneas por -196.544.051 entre el subtotal y el total | Total, pasivos corrientes: detalle 189.280.706, total 191.485.053",
+    "cuadre_resultados": "FALTAN_LINEAS",
+    "hueco_resultados": "comparativo Ganancias antes de Impuestos: suma 2.151.291, línea 2.151.169",
+    "total_activos_miles": 252912848.0,
+    "total_activos_fuente_previa": 252912848.0,
+    "cruce_previo": "IGUAL",
+    "api": "NO_REPETIDA",
+    "chequeos_ok": 0,
+    "chequeos": [
+      {
+        "concepto": "total_activos",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "efectivo",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "deudores_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "pasivos_no_corrientes",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      },
+      {
+        "concepto": "patrimonio",
+        "estado": "SIN_API",
+        "diff_m_clp": null
+      }
+    ]
+  }
+]
