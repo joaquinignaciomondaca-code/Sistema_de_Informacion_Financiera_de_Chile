@@ -72,8 +72,11 @@ def parse_monto_chileno(token: str):
     elif "," in raw:
         raw = raw.replace(",", ".")
     else:
-        # 11.283.111 es miles, no decimal. 1.03 (una sola coma de miles de 3) en
-        # ganancias por acción se deja fuera: aquí solo entran enteros de M$.
+        # 11.283.111 es miles, no decimal. 324.875.184542.645 son dos montos pegados.
+        grupos = raw.lstrip("-").split(".")
+        miles_ok = len(grupos) >= 2 and 1 <= len(grupos[0]) <= 3 and all(len(g) == 3 for g in grupos[1:])
+        if "." in raw and not miles_ok:
+            return None
         if raw.count(".") > 1 or (raw.count(".") == 1 and len(raw.split(".")[-1]) == 3):
             raw = raw.replace(".", "")
     try:
