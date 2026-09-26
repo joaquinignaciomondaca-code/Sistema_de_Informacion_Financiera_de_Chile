@@ -5950,6 +5950,106 @@
       "api": [
         "OK"
       ]
+    },
+    "99595990-9|2022-03": {
+      "rut": "99595990-9",
+      "razon_social": "LATAM TRADE CAPITAL S.A.",
+      "periodo": "2022-03",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 9,
+      "notas_sin_leer": 3,
+      "lineas_balance": 28,
+      "lineas_resultados": 10,
+      "api": [
+        "OK"
+      ]
+    },
+    "99513410-1|2022-03": {
+      "rut": "99513410-1",
+      "razon_social": "SMB FACTORING S.A.",
+      "periodo": "2022-03",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 2,
+      "notas_sin_leer": 13,
+      "lineas_balance": 29,
+      "lineas_resultados": 8,
+      "api": [
+        "OK"
+      ]
+    },
+    "99501480-7|2022-03": {
+      "rut": "99501480-7",
+      "razon_social": "PENTA FINANCIERO S.A.",
+      "periodo": "2022-03",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 8,
+      "notas_sin_leer": 7,
+      "lineas_balance": 34,
+      "lineas_resultados": 19,
+      "api": [
+        "OK"
+      ]
+    },
+    "96861280-8|2022-03": {
+      "rut": "96861280-8",
+      "razon_social": "EUROCAPITAL S.A.",
+      "periodo": "2022-03",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 5,
+      "notas_sin_leer": 12,
+      "lineas_balance": 33,
+      "lineas_resultados": 16,
+      "api": [
+        "OK"
+      ]
+    },
+    "96809970-1|2022-03": {
+      "rut": "96809970-1",
+      "razon_social": "UNIDAD LEASING HABITACIONAL S.A.",
+      "periodo": "2022-03",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 7,
+      "notas_sin_leer": 2,
+      "lineas_balance": 28,
+      "lineas_resultados": 17,
+      "api": [
+        "OK"
+      ]
     }
   }
 }
