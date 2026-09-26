@@ -28,7 +28,7 @@ from pipelines.eeff.validate_api import validar_documento
 DEST = ROOT / "factoring_leasing" / "eeff_masivo"
 MAESTRO = ROOT / "docs" / "outputs" / "factoring_leasing" / "factoring_leasing_maestro.json"
 SERIE = ROOT / "docs" / "outputs" / "factoring_leasing" / "factoring_leasing_balance_resumen.json"
-VERSION = 1
+VERSION = 2
 
 
 def _modulo(nombre: str, path: Path):
