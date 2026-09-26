@@ -21,6 +21,10 @@ jobs:
         run: python scripts/scan_secrets.py
       - name: Auditoría Factoring & Leasing (v2)
         run: python factoring_leasing/scripts/audit_factoring_leasing_v2.py --json audit_factoring_leasing.json
+      - name: Pruebas parser Securitizadoras / Patrimonios Separados (sin red)
+        run: python securitizadoras/tests/test_pipeline_securitizadoras.py
+      - name: Auditoría Securitizadoras / Patrimonios Separados (v2)
+        run: python securitizadoras/scripts/audit_patrimonios_separados_v2.py --json audit_securitizadoras.json
       # No bloqueante todavía: falla por outputs/vida/cartera_bonos.parquet (git-ignorado, >100 MB; sector seguros).
       # Quitar continue-on-error cuando se corrija la vista vida_bonos en duckdb_client.js.
       - name: Auditoría integral de la web (enlaces, parquet, chips)
@@ -30,4 +34,6 @@ jobs:
         if: always()
         with:
           name: reportes-auditoria
-          path: audit_factoring_leasing.json
+          path: |
+            audit_factoring_leasing.json
+            audit_securitizadoras.json

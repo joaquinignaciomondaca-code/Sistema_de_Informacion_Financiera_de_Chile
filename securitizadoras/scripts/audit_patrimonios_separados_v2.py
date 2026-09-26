@@ -68,12 +68,13 @@ def audit_codigo(T):
     hits = []
     for f in scripts:
         for i, line in enumerate(open(f, encoding="utf-8", errors="ignore"), 1):
-            if re.search(r"""else\s+(0\.\d+|\d+|"[^"]*(Cumple|Banco Central|Soberana)[^"]*")""", line) or re.search(r'"cumplimiento_calificacion":\s*"Cumple', line):
+            # `else 0.39`, `else 974.15`, `else 30`, `else "Cumple / SI"`: valor de negocio inventado cuando falta el dato
+            if re.search(r"""else\s+(\d+\.\d+|[1-9]\d+|"[^"]*(Cumple|Banco Central|Soberana|Regulada)[^"]*")""", line) or re.search(r'"cumplimiento_calificacion":\s*"Cumple', line):
                 hits.append(f"{os.path.basename(f)}:{i}: {line.strip()[:90]}")
     report("defaults_inventados_en_parser", "FAIL" if hits else "PASS",
            f"{len(hits)} líneas que rellenan con valores por defecto cuando no se pudo extraer", hits)
-    tls = [f"{os.path.basename(f)}" for f in scripts if "CERT_NONE" in open(f, encoding="utf-8", errors="ignore").read()]
-    report("tls_deshabilitado", "WARN" if tls else "PASS", f"{len(tls)} scripts con ssl.CERT_NONE", tls)
+    tls = [os.path.basename(f) for f in scripts if "CERT_NONE" in (src := open(f, encoding="utf-8", errors="ignore").read()) and "MFC_CMF_INSECURE_TLS" not in src]
+    report("tls_deshabilitado", "WARN" if tls else "PASS", f"{len(tls)} scripts con ssl.CERT_NONE incondicional (permitido sólo tras opt-in MFC_CMF_INSECURE_TLS)", tls)
     sec = [f"{os.path.basename(f)}" for f in scripts if re.search(r"""(PASS|Siete\()\w*\s*[=(]\s*['"]""", open(f, encoding="utf-8", errors="ignore").read())]
     report("secretos_en_codigo", "FAIL" if sec else "PASS", f"{len(sec)} scripts con credenciales", sec)
 
