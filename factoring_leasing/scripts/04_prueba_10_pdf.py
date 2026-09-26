@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 import tempfile
 from pathlib import Path
@@ -23,6 +24,7 @@ from pipelines.eeff.parse_md import cargar_md
 from pipelines.eeff.parse_pdf_caratula import (
     elegir,
     fold,
+    lineas_apiladas,
     lineas_de_tabla,
     lineas_de_texto,
     orden_montos,
@@ -75,24 +77,31 @@ def _extraer(blob: bytes) -> dict:
 
 
 def _puntaje_balance(lineas: list[dict]) -> int:
+    if len(lineas) < 8:
+        return 0
     cuadre = cuadratura_balance(lineas)
     detalle = cuadratura_detalle(lineas)
-    return (2 if cuadre.get("estado") == "OK" else 0) + (1 if detalle.get("estado") == "OK" else 0)
+    return (4 if cuadre.get("estado") == "OK" else 0) + (1 if detalle.get("estado") == "OK" else 0)
 
 
 def _puntaje_resultado(lineas: list[dict]) -> int:
+    if not lineas:
+        return 0
     return 1 if cuadratura_resultados(lineas).get("estado") == "OK" else 0
 
 
 def _caratula(extraido: dict, meta: dict) -> dict:
-    indices = paginas_caratula(extraido["paginas"])
+    # La carátula está en las primeras páginas. Más atrás son notas que citan el estado.
+    paginas = extraido["paginas"][:12]
+    tablas_pdf = extraido["tablas"][:12]
+    indices = paginas_caratula(paginas)
     salida = {}
     for estado, puntaje in (("balance", _puntaje_balance), ("resultado", _puntaje_resultado)):
         candidatos = []
         tablas = []
         for idx in indices.get(estado, []):
-            if idx < len(extraido["tablas"]):
-                tablas.extend(extraido["tablas"][idx])
+            if idx < len(tablas_pdf):
+                tablas.extend(tablas_pdf[idx])
         if tablas:
             orden = orden_montos(tablas[0], meta["periodo"])
             por_tabla = []
@@ -102,6 +111,7 @@ def _caratula(extraido: dict, meta: dict) -> dict:
         texto = "\n".join(extraido["paginas"][idx] for idx in indices.get(estado, []) if idx < len(extraido["paginas"]))
         if texto:
             candidatos.append(("texto", lineas_de_texto(texto, estado, meta)))
+            candidatos.append(("apilado", lineas_apiladas(texto, estado, meta)))
         metodo, lineas = elegir(candidatos, puntaje)
         salida[estado] = {"metodo": metodo, "lineas": lineas, "paginas": indices.get(estado, [])}
     return salida
@@ -195,7 +205,13 @@ def _resumen_fila(meta, caratula, api_fila, error: str) -> dict:
     res = cuadratura_resultados(resultados) if resultados else {"estado": "SIN_PDF" if error else "INCOMPLETO", "hueco": error}
     chequeos = validar_documento(balance, api_fila) if balance else []
     previo = _total_previo(meta.get("fuente_previa", ""))
-    nuevo = next((row["monto_miles_clp"] for row in balance if fold(row["nombre_cuenta"]) in {"total activos", "total de activos"}), None)
+    def _clave(nombre: str) -> str:
+        return re.sub(r"[^a-z0-9 ]", "", fold(nombre))
+
+    nuevo = next((
+        row["monto_miles_clp"] for row in balance
+        if _clave(row["nombre_cuenta"]) in {"total activos", "total de activos", "totales de activos"}
+    ), None)
     return {
         "rut": meta["rut"],
         "razon_social": meta.get("razon_social", ""),
@@ -226,6 +242,43 @@ def _resumen_fila(meta, caratula, api_fila, error: str) -> dict:
             for row in chequeos
         ],
     }
+
+
+def reparsear(periodo: str) -> int:
+    """Lee el texto ya guardado. No vuelve a bajar el PDF."""
+    dest = PRUEBA / periodo
+    resumen = []
+    for path in sorted((dest / "texto").glob("*.txt")):
+        texto = path.read_text(encoding="utf-8")
+        meta = {"rut": path.stem, "periodo": periodo, "fuente": "CMF PDF Estados financieros"}
+        for linea in texto.splitlines()[:6]:
+            if linea.startswith("tipo_eeff:"):
+                meta["tipo_eeff"] = linea.split(":", 1)[1].strip()
+        paginas = re_split_paginas(texto)
+        caratula = _caratula({"paginas": paginas, "tablas": [[] for _ in paginas]}, meta)
+        previo = FUENTES / f"{meta['rut']}_{periodo}.md"
+        if previo.exists():
+            cab, _ = cargar_md(previo)
+            meta["razon_social"] = cab.get("razon_social", "")
+            meta["fuente_previa"] = str(previo)
+        (dest / f"{meta['rut']}_balance.json").write_text(
+            json.dumps(caratula["balance"]["lineas"], ensure_ascii=False, indent=2), encoding="utf-8")
+        (dest / f"{meta['rut']}_resultados.json").write_text(
+            json.dumps(caratula["resultado"]["lineas"], ensure_ascii=False, indent=2), encoding="utf-8")
+        fila = _resumen_fila(meta, caratula, None, "")
+        fila["api"] = "NO_REPETIDA"
+        resumen.append(fila)
+        print(
+            f"[reparse] {meta['rut']} balance={fila['lineas_balance']} {fila['cuadre_balance']}/{fila['cuadre_detalle']} "
+            f"resultados={fila['lineas_resultados']} {fila['cuadre_resultados']} previo={fila['cruce_previo']}"
+        )
+    (dest / "resumen.json").write_text(json.dumps(resumen, ensure_ascii=False, indent=2), encoding="utf-8")
+    return 0 if resumen else 1
+
+
+def re_split_paginas(texto: str) -> list[str]:
+    partes = re.split(r"--- pagina \d+ ---", texto)
+    return [parte for parte in partes if parte.strip()]
 
 
 def correr(periodo: str) -> int:
@@ -296,9 +349,10 @@ def correr(periodo: str) -> int:
 def main() -> None:
     parser = argparse.ArgumentParser(description="Prueba de 10 PDF de factoring")
     parser.add_argument("--periodo", default="2026-03")
+    parser.add_argument("--reparse", action="store_true", help="Lee el texto ya guardado. No baja el PDF.")
     args = parser.parse_args()
     os.chdir(ROOT)
-    raise SystemExit(correr(args.periodo))
+    raise SystemExit(reparsear(args.periodo) if args.reparse else correr(args.periodo))
 
 
 if __name__ == "__main__":
