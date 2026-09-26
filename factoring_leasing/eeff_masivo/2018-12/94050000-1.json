@@ -1,0 +1,100 @@
+{
+  "rut": "94050000-1",
+  "razon_social": "GENERAL MOTORS FINANCIAL CHILE S.A.",
+  "periodo": "2018-12",
+  "tipo_eeff": "Consolidado",
+  "url_pdf": "https://www.cmfchile.cl/institucional/inc/inf_financiera/ifrs/safec_ifrs_verarchivo.php?auth=YzEwMjFlY2RjMGI1ZmZmMDhlYjQ4MjcyNDQ3YTYyNDA=&send=7p2tK7JakTonx2h2W94mrRF8HxbmPCTjHg4RKaeJwd7V4HD+gtP34xLOzRNfKocKzll46GlRJFVwuj5YEOTEuT0KHpF+jiqU4UGFXOYllSabnpgFwxnUxmVxSbgXv05Kjk9/L5G+hhVN8gTbbsvH4ELXbSkCNzIueUdNmxKexYwWlYw=",
+  "balance": [],
+  "resultados": [],
+  "notas": [],
+  "indice": [],
+  "validacion_api": [
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "total_activos",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 275877.73,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "efectivo",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 11295.18,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "deudores_corrientes",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 74555.73,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "pasivos_corrientes",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 66686.36,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "pasivos_no_corrientes",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 87432.4,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "patrimonio",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 121758.97,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    }
+  ],
+  "resumen": {
+    "indice": 0,
+    "ok": 0,
+    "no_leida": 0,
+    "lineas_balance": 0,
+    "lineas_resultados": 0,
+    "cuadre_balance": "SIN_PDF",
+    "cuadre_detalle": "SIN_PDF",
+    "hueco_detalle": "",
+    "cuadre_resultados": "SIN_PDF",
+    "hueco_resultados": "",
+    "caidas_balance": [],
+    "caidas_resultados": [],
+    "cuentas": []
+  }
+}
