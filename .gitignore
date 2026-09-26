@@ -1,4 +1,4 @@
-﻿# Python cache & virtual environments
+# Python cache & virtual environments
 __pycache__/
 *.py[cod]
 *$py.class
@@ -21,6 +21,7 @@ docs/outputs/vida/cartera_bonos.parquet
 *.tmp
 *.temp
 *.log
+factoring_leasing/eeff_estado/LOCK
 .system_generated/
 .DS_Store
 Thumbs.db

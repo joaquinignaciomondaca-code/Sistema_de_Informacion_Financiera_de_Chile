@@ -729,8 +729,8 @@ const EXPLORER_TREE = [
             sector: "factoring_leasing",
             open: true,
             chips: [
-              { label: "Qué se extrajo del PDF y qué quedó parcial", query: "SELECT razon_social, tipo_eeff, lineas_balance, lineas_resultados, lineas_notas, notas_en_indice, estado_extraccion FROM factoring_leasing_eeff_documentos ORDER BY lineas_notas DESC, razon_social;" },
-              { label: "Total activos del PDF vs API (validación, no fuente)", query: "SELECT d.razon_social, d.tipo_eeff, v.monto_documento_m_clp, v.monto_api_m_clp, v.diff_m_clp, v.estado FROM factoring_leasing_validacion_api v JOIN factoring_leasing_eeff_documentos d ON d.rut = v.rut WHERE v.concepto = 'total_activos' ORDER BY v.monto_documento_m_clp DESC;" }
+              { label: "Qué se extrajo del PDF y qué quedó parcial", query: "SELECT razon_social, tipo_eeff, lineas_balance, lineas_resultados, tablas_leidas, notas_en_indice, estado_extraccion, cuadre_efectivo, cuadre_deudores, estado_api FROM factoring_leasing_eeff_documentos ORDER BY razon_social;" },
+              { label: "Total activos del PDF vs API (validación, no fuente)", query: "SELECT razon_social, tipo_eeff, monto_documento_m_clp, monto_api_m_clp, diff_m_clp, numeros, estado FROM factoring_leasing_validacion_api WHERE concepto = 'total_activos' ORDER BY monto_documento_m_clp DESC;" }
             ],
             tables: [
               { id: "factoring_leasing_eeff_documentos", name: "factoring_leasing.eeff_documentos", rows: "10 PDF", file: "outputs/factoring_leasing/factoring_leasing_eeff_documentos.parquet" },
@@ -773,19 +773,22 @@ const EXPLORER_TREE = [
           {
             id: "circ_fl_eeff_notas",
             type: "circular",
-            label: "Notas compartidas (índice y montos leídos)",
-            badge: "20 líneas",
+            label: "Notas comunes (cada una su tabla)",
+            badge: "2 leídas",
             badgeType: "data",
             status: "active",
             sector: "factoring_leasing",
             open: true,
             chips: [
-              { label: "Qué notas publica cada EEFF y si ya se extrajo el monto", query: "SELECT razon_social, numero_nota, titulo_nota, pagina, nota_canonica, extraida FROM factoring_leasing_notas_indice ORDER BY razon_social, numero_nota;" },
-              { label: "Security Nota 4 y Nota 5 (únicos montos de nota leídos)", query: "SELECT numero_nota, concepto, detalle, monto_miles_clp, monto_comparativo_miles_clp FROM factoring_leasing_nota_lineas WHERE rut = '96655860-1' ORDER BY numero_nota, id_linea;" }
+              { label: "Ocho notas comunes: leída, en el índice o índice cortado", query: "SELECT razon_social, tabla, estado, numeros_nota, titulo_nota, extraida, cuadre, diff_miles FROM factoring_leasing_notas_cobertura ORDER BY razon_social, tabla;" },
+              { label: "Security efectivo (concepto, saldo, comparativo)", query: "SELECT concepto, saldo_miles, saldo_comparativo_miles, es_total FROM factoring_leasing_nota_efectivo ORDER BY id_linea;" },
+              { label: "Security deudores (colocación, provisión, neto)", query: "SELECT concepto, colocacion_miles, provision_miles, neto_miles, es_total FROM factoring_leasing_nota_deudores ORDER BY id_linea;" }
             ],
             tables: [
               { id: "factoring_leasing_notas_indice", name: "factoring_leasing.notas_indice", rows: "273 notas", file: "outputs/factoring_leasing/factoring_leasing_notas_indice.parquet" },
-              { id: "factoring_leasing_nota_lineas", name: "factoring_leasing.nota_lineas", rows: "20 líneas", file: "outputs/factoring_leasing/factoring_leasing_nota_lineas.parquet" }
+              { id: "factoring_leasing_notas_cobertura", name: "factoring_leasing.notas_cobertura", rows: "80 marcas", file: "outputs/factoring_leasing/factoring_leasing_notas_cobertura.parquet" },
+              { id: "factoring_leasing_nota_efectivo", name: "factoring_leasing.nota_efectivo", rows: "4 líneas", file: "outputs/factoring_leasing/factoring_leasing_nota_efectivo.parquet" },
+              { id: "factoring_leasing_nota_deudores", name: "factoring_leasing.nota_deudores", rows: "16 líneas", file: "outputs/factoring_leasing/factoring_leasing_nota_deudores.parquet" }
             ]
           }
         ]

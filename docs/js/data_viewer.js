@@ -88,7 +88,9 @@ const DATA_VIEWER_CATALOG = [
       { id: "factoring_leasing_balance_lineas", name: "factoring_leasing.balance_lineas (223 líneas del PDF)" },
       { id: "factoring_leasing_resultados_lineas", name: "factoring_leasing.resultados_lineas (120 líneas del PDF)" },
       { id: "factoring_leasing_notas_indice", name: "factoring_leasing.notas_indice (273 notas)" },
-      { id: "factoring_leasing_nota_lineas", name: "factoring_leasing.nota_lineas (Security Nota 4 y 5)" },
+      { id: "factoring_leasing_notas_cobertura", name: "factoring_leasing.notas_cobertura (8 notas comunes x 10 PDF)" },
+      { id: "factoring_leasing_nota_efectivo", name: "factoring_leasing.nota_efectivo (Security, PDF)" },
+      { id: "factoring_leasing_nota_deudores", name: "factoring_leasing.nota_deudores (Security, PDF)" },
       { id: "factoring_leasing_validacion_api", name: "factoring_leasing.validacion_api (chequeo, no fuente)" }
     ]
   },

@@ -979,7 +979,9 @@ const DATA_DICTIONARY = [
       { name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Corte YYYY-MM.", contable: "No aplica", interpretacion: "2026-03." },
       { name: "tipo_eeff", type: "VARCHAR", role: "Atributo", significado: "Consolidado o Individual, el que publica el buscador.", contable: "No aplica", interpretacion: "No se compara un individual con un consolidado de la API." },
       { name: "url_pdf", type: "VARCHAR", role: "Atributo", significado: "Enlace Estados financieros (PDF).", contable: "No aplica", interpretacion: "Token de la CMF; puede expirar." },
-      { name: "estado_extraccion", type: "VARCHAR", role: "Atributo", significado: "PDF_CON_NOTAS, PDF_CARATULA o PDF_PARCIAL.", contable: "No aplica", interpretacion: "Parcial significa que faltan líneas, no que se inventaron." }
+      { name: "estado_extraccion", type: "VARCHAR", role: "Atributo", significado: "PDF_CON_NOTAS, PDF_CARATULA, PDF_PARCIAL o PDF_NOTA_DIFIERE.", contable: "No aplica", interpretacion: "Parcial significa que faltan líneas, no que se inventaron. La API no cambia este estado." },
+      { name: "tablas_leidas", type: "VARCHAR", role: "Atributo", significado: "Notas comunes cuya tabla de montos se leyó.", contable: "No aplica", interpretacion: "Vacío si solo está la carátula." },
+      { name: "estado_api", type: "VARCHAR", role: "Atributo", significado: "SIN_TIPO si los números calzan pero la API no trae tipo.", contable: "No aplica", interpretacion: "No es un rechazo del PDF." }
     ]
   },
   {
@@ -1037,13 +1039,14 @@ const DATA_DICTIONARY = [
     modo: "PDF",
     ultimaActualizacion: "2026-09-26",
     registros: "273 notas",
-    descripcion: "Índice de notas que cada PDF publica. La familia (efectivo, cartera, financiamiento, patrimonio) es la misma taxonomía para todas las industrias. extraida=1 solo si la tabla de montos se leyó. El resto existe en el PDF y todavía no está en nota_lineas.",
+    descripcion: "Índice de notas que cada PDF publica. La llave es el nombre, no el número: nota_canonica y tabla salen del diccionario de alias. extraida=1 solo si la tabla de montos se leyó. Un 0 no es un cero contable.",
     origen: "Índice del PDF Estados financieros.",
     columnas: [
       { name: "numero_nota", type: "INTEGER", role: "Atributo", significado: "Número de nota.", contable: "Nota", interpretacion: "El número cambia entre sociedades; la familia no." },
       { name: "titulo_nota", type: "VARCHAR", role: "Atributo", significado: "Título publicado.", contable: "Nota", interpretacion: "Texto del índice." },
       { name: "pagina", type: "VARCHAR", role: "Atributo", significado: "Página del PDF, si el índice la trae.", contable: "No aplica", interpretacion: "Vacío si el índice no numeró la página." },
-      { name: "nota_canonica", type: "VARCHAR", role: "Atributo", significado: "Familia compartida: efectivo, cartera, financiamiento, patrimonio, ingresos, impuestos u otra.", contable: "No aplica", interpretacion: "Permite cruzar industrias aunque el número de nota cambie." },
+      { name: "nota_canonica", type: "VARCHAR", role: "Atributo", significado: "Nombre económico del alias. Si es una de las ocho comunes, coincide con tabla.", contable: "No aplica", interpretacion: "Préstamos que devengan intereses y otros pasivos financieros son la misma tabla." },
+      { name: "tabla", type: "VARCHAR", role: "Atributo", significado: "Una de las ocho notas comunes, o vacío.", contable: "No aplica", interpretacion: "Vacío no significa que la nota no exista: no es de las ocho." },
       { name: "extraida", type: "INTEGER", role: "Métrica", significado: "1 si hay líneas de monto; 0 si solo se conoce el título.", contable: "No aplica", interpretacion: "0 no es un cero contable: es una nota no leída." }
     ]
   },
@@ -1053,13 +1056,13 @@ const DATA_DICTIONARY = [
     viewName: "factoring_leasing_nota_lineas",
     sector: "factoring_leasing",
     sectorLabel: "Factoring & Leasing — EEFF",
-    norma: "Notas 4 y 5 de Factoring Security, marzo 2026",
+    norma: "Retirada",
     corte: "2026-03",
     frescura: "Marzo 2026",
     modo: "PDF",
     ultimaActualizacion: "2026-09-26",
-    registros: "20 líneas",
-    descripcion: "Únicas tablas de nota con montos leídos del PDF: Factoring Security, Nota 4 (efectivo) y Nota 5 (deudores). El monto es el saldo o el neto, el que cuadra con el balance. Colocación y provisión quedan en detalle. No hay filas estimadas.",
+    registros: "0 — retirada",
+    descripcion: "Bolsa retirada. Ninguna nota vive aquí. El efectivo del PDF está en factoring_leasing.nota_efectivo y los deudores en factoring_leasing.nota_deudores. Las otras seis comunes están marcadas en notas_cobertura, sin columnas inventadas.",
     origen: "PDF individual de Factoring Security, páginas 24 y 26.",
     columnas: [
       { name: "numero_nota", type: "INTEGER", role: "Atributo", significado: "4 efectivo o 5 deudores.", contable: "Nota", interpretacion: "Cuadra con la carátula." },
@@ -1067,6 +1070,72 @@ const DATA_DICTIONARY = [
       { name: "detalle", type: "VARCHAR", role: "Atributo", significado: "Otras columnas numéricas, colocación y provisión en la Nota 5.", contable: "Desglose", interpretacion: "El neto está en monto_miles_clp." },
       { name: "monto_miles_clp", type: "DOUBLE", role: "Métrica", significado: "Saldo o neto del corte, en miles.", contable: "M$", interpretacion: "La suma de la Nota 4 cuadra con efectivo. La suma de netos de la Nota 5 cuadra con deudores." },
       { name: "calidad", type: "VARCHAR", role: "Atributo", significado: "extraida_documento.", contable: "No aplica", interpretacion: "No hay calidad estimada en esta tabla." }
+    ]
+  },
+
+  {
+    id: "factoring_leasing_notas_cobertura",
+    name: "factoring_leasing.notas_cobertura",
+    viewName: "factoring_leasing_notas_cobertura",
+    sector: "factoring_leasing",
+    sectorLabel: "Factoring & Leasing — EEFF",
+    norma: "Ocho notas comunes, por nombre",
+    corte: "2026-03",
+    frescura: "Marzo 2026",
+    modo: "PDF",
+    ultimaActualizacion: "2026-09-26",
+    registros: "80 marcas",
+    descripcion: "Una fila por PDF y por nota común. leida solo si la tabla de montos se leyó. en_indice_sin_tabla significa que el título está y la tabla no se leyó: no se inventan columnas. indice_incompleto (Eurocapital) no niega la nota. ausente solo si el índice parte en 1 y aun así no trae el título.",
+    origen: "Índice del PDF, clasificado por alias. No por número de nota.",
+    columnas: [
+      { name: "tabla", type: "VARCHAR", role: "Atributo", significado: "efectivo, deudores, pasivos_financieros, cuentas_por_pagar, relacionadas, impuestos, patrimonio o ppe.", contable: "Nota", interpretacion: "La misma tabla aunque el número cambie de año." },
+      { name: "numeros_nota", type: "VARCHAR", role: "Atributo", significado: "Números publicados, separados por coma si hay más de una nota.", contable: "Nota", interpretacion: "Security tiene dos notas de pasivos financieros y dos de impuestos." },
+      { name: "estado", type: "VARCHAR", role: "Atributo", significado: "leida, en_indice_sin_tabla, indice_incompleto, esquema_pendiente o ausente.", contable: "No aplica", interpretacion: "La marca de que no se leyó. No es un monto cero." },
+      { name: "cuadre", type: "VARCHAR", role: "Atributo", significado: "OK si el total de la nota cuadra con la carátula.", contable: "M$", interpretacion: "SIN_NOTA si la tabla no se leyó. No se ajusta." },
+      { name: "extraida", type: "INTEGER", role: "Métrica", significado: "1 si hay filas de monto.", contable: "No aplica", interpretacion: "Marzo 2026: solo Security, efectivo y deudores." }
+    ]
+  },
+  {
+    id: "factoring_leasing_nota_efectivo",
+    name: "factoring_leasing.nota_efectivo",
+    viewName: "factoring_leasing_nota_efectivo",
+    sector: "factoring_leasing",
+    sectorLabel: "Factoring & Leasing — EEFF",
+    norma: "Nota de efectivo y equivalentes, PDF",
+    corte: "2026-03",
+    frescura: "Marzo 2026",
+    modo: "PDF",
+    ultimaActualizacion: "2026-09-26",
+    registros: "4 líneas",
+    descripcion: "Nota de efectivo leída del PDF. Hoy solo Factoring Security, marzo 2026. concepto, saldo del corte y saldo comparativo. El total 11.283.111 cuadra con la carátula. Un guion del PDF es cero, no un hueco. No es la serie de porcentajes de De Interés.",
+    origen: "PDF individual de Factoring Security, nota de efectivo y equivalentes.",
+    columnas: [
+      { name: "concepto", type: "VARCHAR", role: "Atributo", significado: "Fila publicada: caja, fondos mutuos, bancos o total.", contable: "Efectivo", interpretacion: "Texto del PDF." },
+      { name: "saldo_miles", type: "DOUBLE", role: "Métrica", significado: "Saldo del corte, en miles.", contable: "M$", interpretacion: "La suma de las filas que no son total cuadra con la carátula." },
+      { name: "saldo_comparativo_miles", type: "DOUBLE", role: "Métrica", significado: "Saldo de la columna comparativa.", contable: "M$", interpretacion: "Vacío si el PDF no trae esa columna." },
+      { name: "es_total", type: "INTEGER", role: "Atributo", significado: "1 si la fila es el total del PDF.", contable: "No aplica", interpretacion: "No se suma dos veces." }
+    ]
+  },
+  {
+    id: "factoring_leasing_nota_deudores",
+    name: "factoring_leasing.nota_deudores",
+    viewName: "factoring_leasing_nota_deudores",
+    sector: "factoring_leasing",
+    sectorLabel: "Factoring & Leasing — EEFF",
+    norma: "Nota de deudores comerciales, PDF",
+    corte: "2026-03",
+    frescura: "Marzo 2026",
+    modo: "PDF",
+    ultimaActualizacion: "2026-09-26",
+    registros: "16 líneas",
+    descripcion: "Nota de deudores leída del PDF. Hoy solo Factoring Security, marzo 2026. producto, colocación, provisión y neto. El que cuadra con la carátula es el neto, 648.223.161. Colocación y provisión no se estiman si el PDF no las trae. No es la serie de morosidad de De Interés.",
+    origen: "PDF individual de Factoring Security, nota de deudores comerciales.",
+    columnas: [
+      { name: "concepto", type: "VARCHAR", role: "Atributo", significado: "Producto publicado: factura, confirming, crédito u otro.", contable: "Cartera", interpretacion: "Texto del PDF." },
+      { name: "colocacion_miles", type: "DOUBLE", role: "Métrica", significado: "Colocación del corte, en miles.", contable: "M$", interpretacion: "Vacío si esa columna no está." },
+      { name: "provision_miles", type: "DOUBLE", role: "Métrica", significado: "Provisión del corte, en miles, con el signo del PDF.", contable: "M$", interpretacion: "No se completa con un porcentaje." },
+      { name: "neto_miles", type: "DOUBLE", role: "Métrica", significado: "Neto del corte, en miles.", contable: "M$", interpretacion: "Es el monto que cuadra con deudores de la carátula." },
+      { name: "es_total", type: "INTEGER", role: "Atributo", significado: "1 si la fila es el total del PDF.", contable: "No aplica", interpretacion: "No se suma dos veces." }
     ]
   },
   {
@@ -1081,7 +1150,7 @@ const DATA_DICTIONARY = [
     modo: "Validación",
     ultimaActualizacion: "2026-09-26",
     registros: "60 chequeos",
-    descripcion: "Compara totales del PDF, en millones, con factoring_leasing.balance_resumen. Tolerancia 1 millón. OK no convierte a la API en fuente. SOLO_API significa que el PDF no publicó esa línea, no que haya que copiarla.",
+    descripcion: "Compara totales del PDF, en millones, con factoring_leasing.balance_resumen. Tolerancia 1 millón. La serie API no trae tipo consolidado o individual, así que un cuadre numérico queda SIN_TIPO y no OK: no se finge que el tipo coincidió. numeros=cuadra dice que las cifras calzan. SOLO_API significa que el PDF no publicó esa línea. La API no rellena.",
     origen: "PDF versus API ver_archivo.php, mismo tipo de estado.",
     columnas: [
       { name: "concepto", type: "VARCHAR", role: "Atributo", significado: "total_activos, efectivo, deudores_corrientes, pasivos o patrimonio.", contable: "Total", interpretacion: "Solo totales, nunca el desglose de la nota." },
@@ -1103,7 +1172,7 @@ const DATA_DICTIONARY = [
     modo: "Automático",
     ultimaActualizacion: "2026-09-25",
     registros: "2.975 datos",
-    descripcion: "NO ES EL PDF. Serie construida repartiendo el efectivo de la API con porcentajes fijos. No usar como nota auditada. La nota de efectivo leída del PDF está en factoring_leasing.nota_lineas (Factoring Security, Nota 4).",
+    descripcion: "NO ES EL PDF. Serie construida repartiendo el efectivo de la API con porcentajes fijos. No usar como nota auditada. La nota de efectivo leída del PDF está en factoring_leasing.nota_efectivo (Factoring Security).",
     origen: "Serie ilustrativa del script 02_extract_factoring_leasing_notas_series.py. No proviene del PDF de Información Financiera.",
     columnas: [
       { name: "id_efectivo", type: "VARCHAR", role: "PK", significado: "Clave primaria determinística del registro de efectivo (RUT_Periodo_CASH_XX).", contable: "No aplica", interpretacion: "Identificador único de la línea de desglose de efectivo." },
@@ -1131,7 +1200,7 @@ const DATA_DICTIONARY = [
     modo: "Automático",
     ultimaActualizacion: "2026-09-25",
     registros: "17.406 datos",
-    descripcion: "NO ES EL PDF. Serie construida repartiendo la cartera de la API con porcentajes fijos de producto, tramo y etapa. No usar como nota auditada. El único desglose de deudores leído del PDF está en factoring_leasing.nota_lineas (Factoring Security, Nota 5).",
+    descripcion: "NO ES EL PDF. Serie construida repartiendo la cartera de la API con porcentajes fijos de producto, tramo y etapa. No usar como nota auditada. El desglose de deudores leído del PDF está en factoring_leasing.nota_deudores (Factoring Security, el neto).",
     origen: "Serie ilustrativa del script 02_extract_factoring_leasing_notas_series.py. No proviene del PDF de Información Financiera.",
     columnas: [
       { name: "id_cartera", type: "VARCHAR", role: "PK", significado: "Clave primaria determinística de la posición de cartera (RUT_Periodo_PX_TX).", contable: "No aplica", interpretacion: "Identificador único del tramo de colocación y producto." },
