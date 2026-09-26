@@ -202,11 +202,16 @@ def _montos(line: str) -> list[float]:
     line = re.sub(r"\s+\)", ")", line)
     # El guion suelto es cero y va en su columna. (39.562) es negativo.
     # 31.03.2026 no es un miles: el monto no puede partir ni seguir en un dígito.
+    # 77.124.030-5 es un RUT, no un monto.
     patron = re.compile(
         r"(?<![\d.])\(?-?\d{1,3}(?:\.\d{3})+(?:,\d+)?\)?(?![\d.])|(?<![\w\d])-(?![\w\d])"
     )
     valores = []
-    for token in patron.findall(line):
+    for match in patron.finditer(line):
+        token = match.group()
+        resto = line[match.end():]
+        if re.match(r"-[0-9kK]", resto):
+            continue
         valor = parse_monto_chileno(token)
         if valor is not None:
             valores.append(valor)
@@ -256,11 +261,14 @@ def _concepto_util(concepto: str) -> bool:
     blob = fold(concepto)
     if len(blob.split()) > 10:
         return False
-    if blob in {"concepto", "sociedad", "m", "ms", "nota", "al efectivo"}:
+    if "$" in concepto or blob in {"concepto", "sociedad", "m", "ms", "nota", "al efectivo"}:
         return False
     return not any(
         frase in blob
-        for frase in ("se detalla", "a continuacion", "estados financieros", "notas a los")
+        for frase in (
+            "se detalla", "a continuacion", "estados financieros", "notas a los",
+            "comparacion con", "igual periodo", "se explica", "alcanzo a",
+        )
     )
 
 
