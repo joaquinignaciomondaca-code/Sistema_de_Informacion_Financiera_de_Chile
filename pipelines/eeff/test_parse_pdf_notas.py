@@ -354,6 +354,76 @@ Total
     assert composicion_que_calza(texto, 47392) is None
 
 
+def test_el_ultimo_saldo_chico_antes_del_total_no_se_pierde():
+    texto = """
+NOTA 17 - Cuentas por pagar a entidades relacionadas
+Inversiones Lauca Ltda.
+Chile
+7.160.848
+Matías Bonet Cabrera
+Chile
+104
+Total
+7.160.952
+"""
+    comp = composicion_que_calza(texto, 7160952)
+    assert comp is not None, "el 104 de la última fila tiene que entrar"
+    assert sum(f["monto_miles"] for f in comp["filas"] if not f["es_total"]) == 7160952
+
+
+def test_un_miles_chico_en_la_misma_linea_no_se_pierde():
+    texto = """
+NOTA 17 - Saldos con partes relacionadas
+Inversiones Lauca Ltda. Chile 2.632.619
+Matías Bonet Cabrera Chile 104
+Total 7.160.952
+"""
+    assert _montos("Matías Bonet Cabrera Chile 104") == [104.0]
+    assert _montos("77.124.030-5 Inversiones Lauca Ltda. 2.632.619") == [2632619.0]
+    comp = composicion_que_calza(
+        """
+NOTA 17 - Cuentas por pagar a entidades relacionadas
+Inversiones Lauca Ltda. Chile 7.160.848
+Matías Bonet Cabrera Chile 104
+Total 7.160.952
+""",
+        7160952,
+    )
+    assert comp is not None
+    assert sum(f["monto_miles"] for f in comp["filas"] if not f["es_total"]) == 7160952
+
+
+def test_dos_lineas_de_la_cara_no_se_suman():
+    from pipelines.eeff.parse_pdf_notas import objetivos_cara
+
+    balance = [
+        {"nombre_cuenta": "Deudores comerciales y otras cuentas por cobrar", "nota_ref": "11", "monto_miles_clp": 67134136, "clase": "Activo"},
+        {"nombre_cuenta": "Deudores comerciales y otras cuentas por cobrar", "nota_ref": "11", "monto_miles_clp": 98804906, "clase": "Activo"},
+    ]
+    objetivos = objetivos_cara(balance)
+    assert [fila["monto_miles"] for fila in objetivos] == [67134136, 98804906]
+
+
+def test_el_subtotal_toma_solo_las_partidas_de_arriba():
+    texto = """
+NOTA 18 - Impuestos
+Saldo final de otra tabla
+2.148.441
+Impuesto a la renta
+(167.516)
+Pagos provisionales mensuales
+890.913
+Subtotal activos corrientes
+723.397
+"""
+    comp = composicion_que_calza(texto, 723397)
+    assert comp is not None
+    assert [f["concepto"] for f in comp["filas"] if not f["es_total"]] == [
+        "Impuesto a la renta",
+        "Pagos provisionales mensuales",
+    ]
+
+
 def test_extraer_marca_lo_que_no_lee():
     balance = [
         {"nombre_cuenta": "Efectivo y equivalentes al efectivo", "nota_ref": "4", "monto_miles_clp": 11283111},

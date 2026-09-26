@@ -215,6 +215,12 @@ def _montos(line: str) -> list[float]:
         valor = parse_monto_chileno(token)
         if valor is not None:
             valores.append(valor)
+    # «Chile 104» es un miles. 2026 y 77.124.030-5 no: el número chico va solo al final.
+    if not valores and sum(ch.isalpha() for ch in line) >= 3:
+        cola = re.search(r"(?<![\d./-])(\d{1,3})\s*$", line)
+        blob = fold(line)
+        if cola and not blob.startswith(("nota ", "notas ", "pagina ", "indice ")):
+            valores.append(float(cola.group(1)))
     return valores
 
 
@@ -227,6 +233,94 @@ def _concepto(line: str) -> str:
 def _es_total(concepto: str) -> bool:
     blob = fold(concepto)
     return blob.startswith("total") or blob.startswith("subtotal")
+
+
+def _es_cierre(concepto: str) -> bool:
+    """El neto o el saldo final cierran la composición aunque no digan «total»."""
+    blob = fold(concepto)
+    if _es_total(concepto):
+        return True
+    if blob.endswith((" neto", "(neto)", " netos")):
+        return True
+    return blob == "saldo final" or blob.startswith("saldo final")
+
+
+def _partes_utiles(filas: list[tuple], col: int) -> list[tuple]:
+    partes = []
+    for concepto, montos in filas:
+        if _es_total(concepto) or not _concepto_util(concepto):
+            continue
+        if col >= len(montos) or montos[col] is None:
+            continue
+        comp = montos[col + 1] if col + 1 < len(montos) else None
+        partes.append((concepto, montos[col], comp))
+    return partes
+
+
+def _suma(partes: list[tuple], objetivo: float) -> bool:
+    return len(partes) >= 1 and abs(sum(monto for _, monto, _ in partes) - objetivo) <= 1
+
+
+def _es_desglose(partes: list[tuple], objetivo: float) -> bool:
+    """Dos partidas con monto, o una sola clase que es toda la línea. No un cero más la copia."""
+    if not _suma(partes, objetivo):
+        return False
+    con_monto = [parte for parte in partes if abs(parte[1]) > 1]
+    if len(con_monto) >= 2:
+        return True
+    return len(partes) == 1 and abs(partes[0][1] - objetivo) <= 1
+
+
+def _sufijo(filas: list[tuple], col: int, objetivo: float) -> list[tuple] | None:
+    """Las partidas pegadas al total, no toda la nota anterior."""
+    utiles = _partes_utiles(filas, col)
+    for inicio in range(len(utiles)):
+        trozo = utiles[inicio:]
+        if len(trozo) >= 2 and _es_desglose(trozo, objetivo):
+            return trozo
+    return None
+
+
+def _rollup(filas: list[tuple], corte: int, col: int, objetivo: float) -> list[tuple] | None:
+    """El subtotal reemplaza a sus hijas. El detalle suelto entre subtotales se suma."""
+    j = corte - 1
+    acc = 0.0
+    partes = []
+    while j >= 0 and len(partes) <= 16:
+        concepto, montos = filas[j]
+        if col >= len(montos) or montos[col] is None or not _concepto_util(concepto):
+            j -= 1
+            continue
+        valor = montos[col]
+        comp = montos[col + 1] if col + 1 < len(montos) else None
+        acc += valor
+        partes.append((concepto, valor, comp))
+        j -= 1
+        if _es_total(concepto):
+            while j >= 0 and not _es_total(filas[j][0]):
+                j -= 1
+        if _es_desglose(partes, objetivo):
+            return list(reversed(partes))
+    return None
+
+
+def _prefijo(filas: list[tuple], col: int, objetivo: float) -> list[tuple] | None:
+    """El total impreso arriba y las clases debajo, hasta que suman."""
+    acc = 0.0
+    partes = []
+    for concepto, montos in filas:
+        if _es_total(concepto):
+            break
+        if col >= len(montos) or montos[col] is None or not _concepto_util(concepto):
+            continue
+        comp = montos[col + 1] if col + 1 < len(montos) else None
+        acc += montos[col]
+        partes.append((concepto, montos[col], comp))
+        if len(partes) >= 2 and abs(acc - objetivo) <= 1:
+            return partes
+        if len(partes) > 12:
+            break
+    return None
 
 
 def _monto_menor(line: str) -> float | None:
@@ -247,7 +341,10 @@ def _es_linea_monto(line: str, siguiente: str = "", juntando: bool = False) -> b
     if juntando:
         return True
     sig = siguiente.strip()
-    return _monto_menor(sig) is not None or bool(_montos(sig)) or sig in {"-", "–", "—"}
+    if _monto_menor(sig) is not None or bool(_montos(sig)) or sig in {"-", "–", "—"}:
+        return True
+    # El último saldo chico queda justo antes del total, no antes de otro monto.
+    return fold(sig).startswith(("total", "subtotal"))
 
 
 def _concepto_util(concepto: str) -> bool:
@@ -317,6 +414,7 @@ def _filas_texto(texto: str) -> list[tuple[str, list[float]]]:
             if (
                 j < len(lineas)
                 and not _montos(lineas[j])
+                and _monto_menor(lineas[j]) is None
                 and not _es_encabezado(lineas[j])
                 and len(lineas[j]) <= 40
                 and j + 1 < len(lineas)
@@ -401,6 +499,7 @@ def _reconstruir(filas: list[tuple], objetivo: float) -> dict | None:
                 continue
             acc = 0.0
             subs = []
+            calzo = False
             for concepto_p, montos_p in reversed(filas[:i]):
                 if not _es_total(concepto_p) or col >= len(montos_p) or montos_p[col] is None:
                     continue
@@ -409,9 +508,40 @@ def _reconstruir(filas: list[tuple], objetivo: float) -> dict | None:
                 subs.append((concepto_p, montos_p[col], comp))
                 if abs(acc - objetivo) <= 1 and len(subs) >= 2:
                     candidatos.append((i, len(subs), list(reversed(subs)), valor, comparativo, col))
+                    calzo = True
                     break
                 if objetivo > 0 and acc > objetivo + 1:
                     break
+            if calzo:
+                continue
+            sufijo = _sufijo(filas[prev:i], col, objetivo)
+            if sufijo:
+                candidatos.append((i, len(sufijo), sufijo, valor, comparativo, col))
+                continue
+            rollo = _rollup(filas, i, col, objetivo)
+            if rollo:
+                candidatos.append((i, len(rollo), rollo, valor, comparativo, col))
+                continue
+            if i == 0 or not any(not _es_total(fila[0]) for fila in filas[:i]):
+                adelante = _prefijo(filas[i + 1:], col, objetivo)
+                if adelante:
+                    candidatos.append((i, len(adelante), adelante, valor, comparativo, col))
+    for i, (concepto, montos) in enumerate(filas):
+        if _es_total(concepto) or not _es_cierre(concepto):
+            continue
+        for col, valor in enumerate(montos):
+            if valor is None or abs(valor - objetivo) > 1:
+                continue
+            prev = 0
+            for k in range(i - 1, -1, -1):
+                if _es_total(filas[k][0]) or _es_cierre(filas[k][0]):
+                    prev = k + 1
+                    break
+            sufijo = _sufijo(filas[prev:i], col, objetivo)
+            if not sufijo:
+                continue
+            comparativo = montos[col + 1] if col + 1 < len(montos) else None
+            candidatos.append((i, len(sufijo), sufijo, valor, comparativo, col))
     if not candidatos:
         return None
     _i, _n, partes, valor, comparativo, col = min(candidatos, key=lambda item: (item[0], -item[1]))
@@ -471,24 +601,58 @@ def _sirve(titulo: str, cuenta: str) -> bool:
     return True
 
 
+def _cuenta_de_linea(row: dict) -> str:
+    """Una línea impresa, no la suma de corriente y no corriente."""
+    cuenta = cuenta_objetivo(row.get("nombre_cuenta") or "")
+    if not cuenta:
+        return ""
+    clase = fold(row.get("clase") or "")
+    if not cuenta.endswith("_no_corriente") and "no corriente" in clase:
+        return f"{cuenta}_no_corriente"
+    return cuenta
+
+
 def objetivos_cara(balance: list[dict]) -> list[dict]:
-    grupos: dict[str, dict] = {}
+    salida = []
     for row in balance:
-        cuenta = cuenta_objetivo(row.get("nombre_cuenta") or "")
+        cuenta = _cuenta_de_linea(row)
         monto = row.get("monto_miles_clp")
         if not cuenta or monto is None or abs(float(monto)) < 1:
             continue
-        slot = grupos.setdefault(cuenta, {
+        salida.append({
             "cuenta": cuenta,
-            "monto_miles": 0.0,
+            "monto_miles": float(monto),
             "nota_ref": str(row.get("nota_ref") or ""),
             "nombre": row.get("nombre_cuenta") or "",
         })
-        slot["monto_miles"] += float(monto)
-        if row.get("nota_ref"):
-            slot["nota_ref"] = str(row.get("nota_ref"))
-            slot["nombre"] = row.get("nombre_cuenta") or slot["nombre"]
-    return list(grupos.values())
+    return salida
+
+
+def _candidatas(secs: list[dict], objetivo: dict) -> list[dict]:
+    """Primero la nota que cita la cara, en este PDF. Después la familia, sin mezclar lados."""
+    cuenta = objetivo["cuenta"]
+    base = cuenta.replace("_no_corriente", "")
+    familia = [
+        sec for sec in secs
+        if cuenta in _FAMILIA_OBJETIVO.get(sec["familia"], ())
+        or base in _FAMILIA_OBJETIVO.get(sec["familia"], ())
+    ]
+    preferidas = [sec for sec in familia if _sirve(sec["titulo"], cuenta)]
+    otras = [sec for sec in familia if sec not in preferidas]
+    por_numero = []
+    ref = re.match(r"(\d{1,2})", str(objetivo.get("nota_ref") or ""))
+    if ref:
+        nref = int(ref.group(1))
+        por_numero = [sec for sec in secs if sec["numero"] == nref]
+    orden = []
+    vistos = set()
+    for sec in por_numero + preferidas + otras:
+        clave = (sec["numero"], sec["pagina"], sec["titulo"])
+        if clave in vistos:
+            continue
+        vistos.add(clave)
+        orden.append(sec)
+    return orden
 
 
 def extraer_notas(
@@ -507,24 +671,8 @@ def extraer_notas(
     cuadre = []
     for objetivo in objetivos:
         cuenta = objetivo["cuenta"]
-        base = cuenta.replace("_no_corriente", "")
-        candidatas = [
-            sec for sec in secs
-            if cuenta in _FAMILIA_OBJETIVO.get(sec["familia"], ())
-            or base in _FAMILIA_OBJETIVO.get(sec["familia"], ())
-        ]
-        candidatas = [sec for sec in candidatas if _sirve(sec["titulo"], cuenta)] or candidatas
-        if not candidatas:
-            # Dentro de este PDF el número de la cara sí apunta a su nota.
-            # No se usa ese número para cruzar periodos.
-            ref = re.match(r"(\d{1,2})", str(objetivo.get("nota_ref") or ""))
-            if ref:
-                nref = int(ref.group(1))
-                candidatas = [
-                    sec for sec in secs
-                    if sec["numero"] == nref and sec["familia"] in {"otra", ""}
-                    and _sirve(sec["titulo"], cuenta)
-                ]
+        # El número vale dentro de este PDF. No se usa para cruzar periodos.
+        candidatas = _candidatas(secs, objetivo)
         mejor = None
         for sec in candidatas:
             tomado = composicion_que_calza(sec["texto"], objetivo["monto_miles"])
@@ -538,8 +686,14 @@ def extraer_notas(
                 continue
             tomado["numero_nota"] = sec["numero"]
             tomado["titulo_nota"] = sec["titulo"]
-            if mejor is None or len(tomado["filas"]) > len(mejor["filas"]):
+            if mejor is None or (
+                sec["numero"] == mejor["numero_nota"] and len(tomado["filas"]) > len(mejor["filas"])
+            ):
                 mejor = tomado
+            # La nota que cita esta línea ya sumó. No se cambia por otra más larga.
+            citado = re.match(r"(\d{1,2})", str(objetivo.get("nota_ref") or ""))
+            if citado and sec["numero"] == int(citado.group(1)):
+                break
         if mejor is None:
             cuadre.append({
                 "cuenta": cuenta,
@@ -559,6 +713,7 @@ def extraer_notas(
                 "cuenta": cuenta,
                 "numero_nota": mejor["numero_nota"],
                 "titulo_nota": mejor["titulo_nota"],
+                "cara_miles": objetivo["monto_miles"],
             })
         tablas.setdefault(cuenta, []).extend(mejor["filas"])
         cuadre.append({
