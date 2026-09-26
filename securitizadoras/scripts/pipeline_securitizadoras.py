@@ -427,7 +427,7 @@ def _mapear_difuso(estado, g):
 def _mapear(estado, codigo, glosa, seccion=None):
     """Prioridad: glosa (regex curada) → glosa dentro de la sección → código FECU impreso (los PDFs traen códigos
     repetidos o equivocados, p. ej. '15.210' en todas las filas o '23.000' delante de TOTAL PASIVOS)."""
-    g = _norm(glosa)
+    g = _norm(glosa).strip(" .:;,-")  # 'TOTAL PASIVOS.' (OCR) debe casar con el regex antes de recurrir al código impreso
     for est, rx, e in _POR_REGEX:
         if est == estado and rx.search(g):
             return e
@@ -483,6 +483,14 @@ def parse_eeff_lineas(paginas, max_paginas=16):
         limpias = []
         for l in lineas:
             l = re.sub(r"^[\|:;\.\-—–'\"´`»«_\s]+", "", l); l = re.sub(r"[\s;:,\|\]\}]+$", "", l)  # basura OCR en los bordes
+            l = re.sub(r"\s+[\|\]\[l]{1,2}(?=\s|$)", " ", l)  # restos de bordes de celda entre glosa y cifras ('TOTAL PASIVOS ] - 828.802 | 1.312.589')
+            l = re.sub(r"(?<=\s)-\s+(?=\d)", "-", l)  # signo separado de la cifra ('-  40.836')
+            if re.search(r"\d{1,3}[\.,]\d{3}", l):
+                l = re.sub(r"(\d)\.(?=\s|$)", r"\1", l)  # punto final pegado a la cifra ('1.356.630.')
+                for _ in range(4):  # letras/dígitos sueltos entre la glosa y las cifras ('TOTAL PASIVOS g al 2 1.356.630')
+                    l2 = re.sub(r"^(.*?[A-Za-zÁÉÍÓÚÑáéíóúñ]{3,}.*?)\s+(?:[a-z]{1,4}|[A-Z]|\d)(?=\s+(?:[a-z]{1,4}|[A-Z]|\d|\(?-?\d{1,3}[\.,]\d{3})(?:\s|$))", r"\1", l)
+                    if l2 == l: break
+                    l = l2
             if not re.match(r"^\d{2}\.\d{3}\s", l):  # código FECU mal leído por OCR ("20. TOTAL PASIVOS", "13000 TOTAL…") → se descarta el código
                 l = re.sub(r"^\d{1,2}[\.,]?\d{0,3}[\.,]?\s+(?=[A-Za-zÁÉÍÓÚÑáéíóúñ])", "", l)
             if not l:
