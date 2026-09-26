@@ -1,19 +1,22 @@
 #!/usr/bin/env python3
-"""EEFF de factoring desde el PDF de Información Financiera.
+"""EEFF de factoring y leasing desde el PDF de Información Financiera.
 
-Usa el buscador que ya estaba en fetch_cmf_pdf_stream (POST pestania=3).
-Si CMF no responde desde esta red, lee los Markdown ya guardados en
-factoring_leasing/eeff_fuentes/ (transcripción del mismo PDF / de la
-visualización que publica esa ficha, no de ver_archivo.php).
+No parte de cero. Si el Markdown no cambió y el checkpoint está ok, no se
+relee. Si un documento falla, se anota y se sigue. El checkpoint se escribe
+después de cada sociedad.
 
-La API solo valida totales.
+La API solo valida totales. No escribe cifras en el estado. Las notas no
+van a una bolsa: efectivo y deudores tienen tabla propia; las otras seis
+comunes quedan marcadas como no leídas hasta que un PDF muestre la tabla.
+
+No reintenta el TLS de CMF salvo --descargar, y solo para un Markdown que
+todavía no existe (o --forzar).
 """
 
 from __future__ import annotations
 
 import argparse
 import calendar
-import json
 import os
 import sys
 from pathlib import Path
@@ -21,58 +24,17 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-from pipelines.eeff.canon import familia_nota
-from pipelines.eeff.parse_md import cargar_md, parse_documento
-from pipelines.eeff.validate_api import cuadratura_balance, validar_documento
+from pipelines.eeff.correr import correr, listar_fuentes
+from pipelines.eeff.estado import Store
+from pipelines.eeff.parse_md import cargar_md
 
 FUENTES = ROOT / "factoring_leasing" / "eeff_fuentes"
+ESTADO = ROOT / "factoring_leasing" / "eeff_estado"
 OUT = ROOT / "docs" / "outputs" / "factoring_leasing"
-API_PQ = OUT / "factoring_leasing_balance_resumen.parquet"
-
-
-def _id(rut, periodo, *parts):
-    slug = "_".join(str(p) for p in parts if p != "")
-    return f"{rut}_{periodo.replace('-', '')}_{slug}"[:180]
-
-
-def emitir_md(meta: dict, balance, resultados, indice, notas_md: str) -> str:
-    lineas = [
-        f"rut: {meta['rut']}",
-        f"razon_social: {meta['razon_social']}",
-        f"periodo: {meta['periodo']}",
-        f"fecha_corte: {meta['fecha_corte']}",
-        f"tipo_eeff: {meta['tipo_eeff']}",
-        f"fuente: {meta['fuente']}",
-        f"url_pdf: {meta.get('url_pdf', '')}",
-        f"url_visualizacion: {meta.get('url_visualizacion', '')}",
-        "",
-        "## BALANCE",
-        "nombre|nota|monto_miles|comparativo_miles|clase",
-    ]
-    for nombre, nota, monto, comp, clase in balance:
-        lineas.append(f"{nombre}|{nota}|{monto}|{comp}|{clase}")
-    lineas += ["", "## RESULTADOS", "nombre|nota|monto_miles|comparativo_miles|clase"]
-    for nombre, nota, monto, comp, clase in resultados:
-        lineas.append(f"{nombre}|{nota}|{monto}|{comp}|{clase}")
-    lineas += ["", "## NOTAS_INDICE", "numero|titulo|pagina"]
-    for numero, titulo, pagina in indice:
-        lineas.append(f"{numero}|{titulo}|{pagina}")
-    if notas_md:
-        lineas += ["", notas_md.strip(), ""]
-    return "\n".join(lineas) + "\n"
-
-
-def cargar_api(periodo: str) -> dict:
-    import pandas as pd
-    if not API_PQ.exists():
-        return {}
-    df = pd.read_parquet(API_PQ)
-    df = df[df["periodo"] == periodo]
-    return {r["rut"]: r.to_dict() for _, r in df.iterrows()}
+API_JSON = OUT / "factoring_leasing_balance_resumen.json"
 
 
 def _objetivos_descarga(periodo: str) -> list[dict]:
-    """Las diez fichas. Si el piloto no trae filas, las saca de los Markdown ya guardados."""
     try:
         from factoring_leasing.eeff_fuentes.piloto_2026_03 import PILOTO
     except Exception:
@@ -80,139 +42,69 @@ def _objetivos_descarga(periodo: str) -> list[dict]:
     if PILOTO:
         return PILOTO
     objetivos = []
-    for path in sorted(FUENTES.glob(f"*_{periodo}.md")):
+    for path in listar_fuentes(FUENTES, periodo):
         meta, _ = cargar_md(path)
         if meta.get("rut"):
             objetivos.append(meta)
     return objetivos
 
 
-def construir(periodo: str = "2026-03", descargar: bool = False) -> None:
-    import pandas as pd
+def descargar(periodo: str, forzar: bool) -> None:
+    """POST al buscador de Información Financiera. No borra un Markdown si la red falla."""
+    from pipelines.eeff.cmf_pdf import descargar_pdf, pdf_a_markdown
 
     FUENTES.mkdir(parents=True, exist_ok=True)
-    OUT.mkdir(parents=True, exist_ok=True)
-    if descargar:
-        from pipelines.eeff.cmf_pdf import descargar_pdf, pdf_a_markdown
-        objetivos = _objetivos_descarga(periodo)
-        print(f"[loop] {len(objetivos)} sociedades. Baja, convierte, borra el PDF, sigue.")
-        for doc in objetivos:
-            cuerpo = doc["rut"].split("-")[0]
-            year, month = int(periodo[:4]), int(periodo[5:7])
-            print(f"[loop] {doc['rut']} {doc['razon_social']}")
-            blob, tipo, url = descargar_pdf(cuerpo, year, month)
-            if not blob:
-                print(f"[loop] sin PDF {doc['rut']} (la red no llega a CMF). Sigue con la fuente ya guardada.")
-                continue
-            md = pdf_a_markdown(blob)
-            del blob
-            header = (
-                f"rut: {doc['rut']}\nrazon_social: {doc['razon_social']}\n"
-                f"periodo: {periodo}\nfecha_corte: {year}-{month:02d}-{calendar.monthrange(year, month)[1]:02d}\n"
-                f"tipo_eeff: {tipo}\nfuente: CMF PDF Estados financieros\nurl_pdf: {url}\n\n"
-            )
-            path = FUENTES / f"{doc['rut']}_{periodo}.md"
-            path.write_text(header + md, encoding="utf-8")
-            del md
-            print(f"[loop] {path.name} tipo={tipo} PDF borrado")
-
-    if not any(FUENTES.glob("*.md")):
-        from factoring_leasing.eeff_fuentes.piloto_2026_03 import escribir_fuentes
-        escribir_fuentes(FUENTES)
-
-    api = cargar_api(periodo)
-    docs, balances, resultados, indices, notas, validaciones = [], [], [], [], [], []
-
-    for path in sorted(FUENTES.glob("*.md")):
-        meta, text = cargar_md(path)
-        if meta.get("periodo") and meta["periodo"] != periodo:
+    objetivos = _objetivos_descarga(periodo)
+    print(f"[loop] {len(objetivos)} sociedades. Si el Markdown ya está, no se vuelve a bajar.")
+    year, month = int(periodo[:4]), int(periodo[5:7])
+    for doc in objetivos:
+        path = FUENTES / f"{doc['rut']}_{periodo}.md"
+        if path.exists() and not forzar:
+            print(f"[loop] {path.name} ya está. No se redescarga.")
             continue
-        parsed = parse_documento(text, meta)
-        if not parsed["balance"]:
-            print(f"[parse] sin balance {path.name}")
+        cuerpo = doc["rut"].split("-")[0]
+        print(f"[loop] {doc['rut']} {doc.get('razon_social', '')}")
+        blob, tipo, url = descargar_pdf(cuerpo, year, month)
+        if not blob:
+            print(f"[loop] sin PDF {doc['rut']}. Se sigue. La fuente ya guardada no se toca.")
             continue
-        extraidas = {(r["numero_nota"]) for r in parsed["notas"]}
-        for row in parsed["indice"]:
-            row["extraida"] = 1 if row["numero_nota"] in extraidas else 0
-            row["id_nota"] = _id(meta["rut"], meta["periodo"], "N", row["numero_nota"])
-            indices.append(row)
-        for i, row in enumerate(parsed["balance"], 1):
-            row["id_linea"] = _id(meta["rut"], meta["periodo"], "B", i)
-            balances.append(row)
-        for i, row in enumerate(parsed["resultados"], 1):
-            row["id_linea"] = _id(meta["rut"], meta["periodo"], "R", i)
-            resultados.append(row)
-        for i, row in enumerate(parsed["notas"], 1):
-            row["id_linea"] = _id(meta["rut"], meta["periodo"], "L", row["numero_nota"], i)
-            row["nota_canonica"] = row.get("nota_canonica") or familia_nota(row.get("titulo_nota", ""))
-            notas.append(row)
-        fila_api = api.get(meta["rut"])
-        vals = validar_documento(parsed["balance"], fila_api)
-        for v in vals:
-            v["id_validacion"] = _id(meta["rut"], meta["periodo"], "V", v["concepto"])
-            validaciones.append(v)
-        cuadre = cuadratura_balance(parsed["balance"])
-        estados_val = {v["estado"] for v in vals}
-        if "DIFIERE" in estados_val:
-            estado = "DIFIERE_API"
-        elif parsed["notas"] and cuadre["estado"] == "OK":
-            estado = "PDF_CON_NOTAS"
-        elif parsed["notas"]:
-            estado = "PDF_PARCIAL_CON_NOTAS"
-        elif cuadre["estado"] == "OK":
-            estado = "PDF_CARATULA"
-        else:
-            estado = "PDF_PARCIAL"
-        docs.append({
-            "id_documento": _id(meta["rut"], meta["periodo"], "DOC"),
-            "rut": meta["rut"],
-            "razon_social": meta.get("razon_social", ""),
-            "periodo": meta["periodo"],
-            "tipo_eeff": meta.get("tipo_eeff", ""),
-            "url_pdf": meta.get("url_pdf", ""),
-            "url_visualizacion": meta.get("url_visualizacion", ""),
-            "unidad": "M$ miles CLP",
-            "fuente": meta.get("fuente", "CMF PDF"),
-            "notas_en_indice": len(parsed["indice"]),
-            "lineas_balance": len(parsed["balance"]),
-            "lineas_resultados": len(parsed["resultados"]),
-            "lineas_notas": len(parsed["notas"]),
-            "estado_extraccion": estado,
-        })
-        print(f"[ok] {meta['rut']} {meta.get('tipo_eeff','')} balance={len(parsed['balance'])} notas={len(parsed['notas'])} {estado} cuadre={cuadre}")
+        md = pdf_a_markdown(blob)
+        del blob
+        header = (
+            f"rut: {doc['rut']}\nrazon_social: {doc.get('razon_social', '')}\n"
+            f"periodo: {periodo}\nfecha_corte: {year}-{month:02d}-{calendar.monthrange(year, month)[1]:02d}\n"
+            f"tipo_eeff: {tipo}\nfuente: CMF PDF Estados financieros\nurl_pdf: {url}\n\n"
+        )
+        path.write_text(header + md, encoding="utf-8")
+        del md
+        print(f"[loop] {path.name} tipo={tipo}. PDF borrado de memoria.")
 
-    tablas = {
-        "factoring_leasing_eeff_documentos": docs,
-        "factoring_leasing_balance_lineas": balances,
-        "factoring_leasing_resultados_lineas": resultados,
-        "factoring_leasing_notas_indice": indices,
-        "factoring_leasing_nota_lineas": notas,
-        "factoring_leasing_validacion_api": validaciones,
-    }
-    for nombre, filas in tablas.items():
-        df = pd.DataFrame(filas)
-        pq = OUT / f"{nombre}.parquet"
-        js = OUT / f"{nombre}.json"
-        df.to_parquet(pq, index=False)
-        df.to_json(js, orient="records", force_ascii=False, indent=2)
-        print(f"  {nombre}: {len(df)} filas")
-    resumen = {
-        "periodo": periodo,
-        "documentos": len(docs),
-        "validacion": {
-            estado: sum(1 for v in validaciones if v["estado"] == estado)
-            for estado in sorted({v["estado"] for v in validaciones})
-        },
-    }
-    (OUT / "factoring_leasing_eeff_resumen_validacion.json").write_text(
-        json.dumps(resumen, ensure_ascii=False, indent=2), encoding="utf-8"
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="EEFF factoring y leasing, incremental")
+    parser.add_argument("--periodo", default="", help="YYYY-MM. Vacío procesa todos los Markdown guardados.")
+    parser.add_argument("--rut", default="", help="Un RUT. El resto no se toca.")
+    parser.add_argument("--descargar", action="store_true", help="POST al buscador CMF solo si falta el Markdown")
+    parser.add_argument("--forzar", action="store_true", help="Relee aunque el hash coincida. Con --descargar, vuelve a bajar.")
+    parser.add_argument("--olvidar-ausentes", action="store_true", help="Quita del estado los documentos cuyo Markdown ya no está")
+    args = parser.parse_args()
+    os.chdir(ROOT)
+    if args.descargar:
+        if not args.periodo:
+            parser.error("--descargar necesita --periodo")
+        descargar(args.periodo, args.forzar)
+    store = Store(ESTADO)
+    correr(
+        FUENTES,
+        store,
+        OUT,
+        periodo=args.periodo,
+        rut=args.rut,
+        forzar=args.forzar,
+        api_json=API_JSON,
+        olvidar_ausentes=args.olvidar_ausentes,
     )
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--periodo", default="2026-03")
-    parser.add_argument("--descargar", action="store_true", help="POST al buscador CMF y baja el PDF")
-    args = parser.parse_args()
-    os.chdir(ROOT)
-    construir(args.periodo, args.descargar)
+    main()

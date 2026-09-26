@@ -1,0 +1,35 @@
+{
+  "parser_version": 2,
+  "cerrados": {
+    "efectivo": {
+      "columnas": [
+        "concepto",
+        "saldo_miles",
+        "saldo_comparativo_miles"
+      ],
+      "leido_en": "Factoring Security, marzo 2026. El saldo cuadra con la carátula."
+    },
+    "deudores": {
+      "columnas": [
+        "concepto",
+        "colocacion_miles",
+        "provision_miles",
+        "neto_miles",
+        "colocacion_comparativo_miles",
+        "provision_comparativo_miles",
+        "neto_comparativo_miles"
+      ],
+      "leido_en": "Factoring Security, marzo 2026. El que cuadra con la carátula es el neto.",
+      "comparativo": "Vacío si ese PDF no trae la columna. No se estima."
+    }
+  },
+  "sin_esquema": {
+    "pasivos_financieros": "Está en el índice cuando el PDF la trae. La tabla de montos no se leyó. No se inventan columnas.",
+    "cuentas_por_pagar": "Está en el índice cuando el PDF la trae. La tabla de montos no se leyó. No se inventan columnas.",
+    "relacionadas": "Está en el índice cuando el PDF la trae. La tabla de montos no se leyó. No se inventan columnas.",
+    "impuestos": "Está en el índice cuando el PDF la trae. La tabla de montos no se leyó. No se inventan columnas.",
+    "patrimonio": "Está en el índice cuando el PDF la trae. La tabla de montos no se leyó. No se inventan columnas.",
+    "ppe": "Está en el índice cuando el PDF la trae. La tabla de montos no se leyó. No se inventan columnas."
+  },
+  "nota_lineas": "Retirada. Ninguna nota vive en una bolsa."
+}
