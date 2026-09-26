@@ -1,6 +1,6 @@
 {
   "_descripcion": "Catálogo de cuentas de los EEFF de Patrimonios Separados (formato FECU-PS, CMF). `codigo` es el código FECU cuando el PDF lo imprime; si el PDF sólo trae glosas se mapea por `regex` (mayúsculas, sin tildes). Cuentas no reconocidas se conservan con cuenta_canonica NULL. Versionar cualquier cambio en `version`.",
-  "version": "2026-09-26.3",
+  "version": "2026-09-26.4",
   "estados": {
     "BALANCE": [
       "BALANCE",
@@ -40,8 +40,8 @@
         "11.030",
         "11.100"
       ],
-      "regex": "^ACTIVOS?\\s+SECURITIZADOS?\\s*\\(?\\s*(CORTO\\s+PLAZO|CIRCULANTE|C/P)",
-      "regex_seccion": "^ACTIVOS?\\s+SECURITIZADOS?$"
+      "regex": "^ACTIVOS?\\s+SECURT?ITIZADOS?\\s*\\(?\\s*(CORTO\\s+PLAZO|CIRCULANTE|C/P)",
+      "regex_seccion": "^ACTIVOS?\\s+SECURT?ITIZADOS?$"
     },
     {
       "canonica": "PROVISION_ACTIVO_SECURITIZADO_CP",
@@ -81,8 +81,8 @@
         "13.100",
         "13.110"
       ],
-      "regex": "^ACTIVOS?\\s+SECURITIZADOS?\\s*\\(?\\s*(LARGO\\s+PLAZO|NO\\s+CIRCULANTE|L/P)",
-      "regex_seccion": "^ACTIVOS?\\s+SECURITIZADOS?$"
+      "regex": "^ACTIVOS?\\s+SECURT?ITIZADOS?\\s*\\(?\\s*(LARGO\\s+PLAZO|NO\\s+CIRCULANTE|L/P)",
+      "regex_seccion": "^ACTIVOS?\\s+SECURT?ITIZADOS?$"
     },
     {
       "canonica": "MENOR_VALOR_COLOCACION",
@@ -91,7 +91,7 @@
       "codigos": [
         "13.140"
       ],
-      "regex": "^MENOR\\s+VALOR\\s+(EN\\s+(LA\\s+)?)?COLOCACI[OÓ]N(ES)?"
+      "regex": "^MENOR\\s+(\\(MAYOR\\)\\s+)?VALOR\\s+(EN\\s+(LA\\s+)?)?COLOCACI[OÓ]N(ES)?"
     },
     {
       "canonica": "MAYOR_VALOR_COLOCACION",
@@ -138,8 +138,8 @@
       "codigos": [
         "21.010"
       ],
-      "regex": "^OBLIGACIONES?\\s+POR\\s+T[IÍ]TULOS\\s+DE\\s+DEUDA.*(CORTO\\s+PLAZO|CIRCULANTE|C/P)",
-      "regex_seccion": "^OBLIGACIONES?\\s+POR\\s+T[IÍ]TULOS\\s+DE\\s+DEUDA"
+      "regex": "^OBLIGACIONES?\\s+POR\\s+T[IÍ]TULOS\\s+(DE\\s+)?DEUDA.*(CORTO\\s+PLAZO|CIRCULANTE|C/P)",
+      "regex_seccion": "^OBLIGACIONES?\\s+POR\\s+T[IÍ]TULOS\\s+(DE\\s+)?DEUDA"
     },
     {
       "canonica": "REMUNERACIONES_POR_PAGAR",
@@ -148,7 +148,7 @@
       "codigos": [
         "21.015"
       ],
-      "regex": "^REMUNERACI[OÓ]N(ES)?\\s+POR\\s+PAGAR"
+      "regex": "^REMUN(ERACI[OÓ]N(ES)?|\\.)\\s+POR\\s+PAGAR"
     },
     {
       "canonica": "OBLIG_SALDO_PRECIO_CP",
@@ -196,8 +196,8 @@
       "codigos": [
         "22.010"
       ],
-      "regex": "^OBLIGACIONES?\\s+POR\\s+T[IÍ]TULOS\\s+DE\\s+DEUDA.*(LARGO\\s+PLAZO|NO\\s+CIRCULANTE|L/P)",
-      "regex_seccion": "^OBLIGACIONES?\\s+POR\\s+T[IÍ]TULOS\\s+DE\\s+DEUDA"
+      "regex": "^OBLIGACIONES?\\s+POR\\s+T[IÍ]TULOS\\s+(DE\\s+)?DEUDA.*(LARGO\\s+PLAZO|NO\\s+CIRCULANTE|L/P)",
+      "regex_seccion": "^OBLIGACIONES?\\s+POR\\s+T[IÍ]TULOS\\s+(DE\\s+)?DEUDA"
     },
     {
       "canonica": "OBLIG_SALDO_PRECIO_LP",
@@ -245,7 +245,7 @@
       "codigos": [
         "23.010"
       ],
-      "regex": "^RESERVAS?\\s+DE\\s+(EXCEDENTES|EJERCICIOS?\\s+ANTERIORES)|^EXCEDENTES?\\s+(ACUMULADOS?\\s+)?(DE\\s+)?(EJERCICIOS?\\s+)?ANTERIORES|^EXCEDENTES?\\s+OBLIGATORIOS?\\s+FIN"
+      "regex": "^RESERVAS?\\s+DE\\s+(EXCEDENTES|EJERCICIOS?\\s+ANTERIORES)|^EXCEDENTES?\\s+(ACUMULADOS?\\s+)?(DE\\s+)?(EJERCICIOS?\\s+)?ANTERIORES|^EXCEDENTES?\\s+OBLIGATORIOS?\\s+FIN|^FONDOS?\\s+(DE\\s+)?EXCEDENTES\\s+VOLUNTARIOS"
     },
     {
       "canonica": "EXCEDENTE_DEL_EJERCICIO",
@@ -470,6 +470,13 @@
       "seccion": "INGRESOS",
       "codigos": [],
       "regex": "^INGRESOS?\\s+(PERCIBIDOS\\s+)?POR\\s+(ACTIVOS\\s+)?CASTIGADOS|^RECUPERACI[OÓ]N\\s+DE\\s+(ACTIVOS\\s+)?CASTIGADOS"
+    },
+    {
+      "canonica": "GASTOS_COLOCACION_DIFERIDOS",
+      "estado": "BALANCE",
+      "seccion": "OTROS_ACTIVOS",
+      "codigos": [],
+      "regex": "^GASTOS?\\s+DE\\s+COLOCACI[OÓ]N"
     }
   ],
   "conciliaciones": [
@@ -508,7 +515,7 @@
     }
   ],
   "glosas_ignoradas": [
-    "^(ACTIVOS?|PASIVOS?|INGRESOS|GASTOS|CONCEPTO|ANTECEDENTES\\s+AL|TOTALES?|VALOR\\s+PAR|TRANSFERENCIA|CUOTAS|UNIDAD\\s+DE\\s+FOMENTO.*|AJ\\.?\\s+TASA.*|N[°º]?\\s*INSCRIPCI[OÓ]N.*|NOTAS?)$",
+    "^N\\W{0,2}\\s*INSCRIPCI[OÓ]N.*",
     "^\\d+\\s*(A|O\\s+M[AÁ]S)\\s*\\d*$",
     "^(AL\\s+)?D[IÍ]A$",
     "^\\$?\\s*(NO\\s+)?REAJUSTABLES$",
@@ -517,7 +524,14 @@
     "^PASIVOS?\\s+(A\\s+)?LARGO\\s+PLAZO$",
     "^PASIVOS?\\s+CIRCULANTES?$",
     "^ACTIVOS?\\s+CIRCULANTES?$",
-    "^OTROS\\s+ACTIVOS$"
+    "^OTROS\\s+ACTIVOS$",
+    "^A\\s?NTECEDENTES\\s+AL.*",
+    "^N\\W{0,2}\\s*INSCRIPCI[OÓ]N.*",
+    "^RUT\\.?:.*",
+    "^RAZ[OÓ]N\\s+SOCIAL.*",
+    "^PARA\\s+EL\\s+(EJERCICIO|PER[IÍ]ODO).*",
+    "^PATRIMONIO\\s+SEPARADO.*",
+    "^(Y\\s+)?EL$"
   ],
   "secciones": {
     "ACTIVO_CIRCULANTE": "^ACTIVOS?\\s+CIRCULANTES?$",
