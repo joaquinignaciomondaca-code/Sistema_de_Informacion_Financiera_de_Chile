@@ -766,14 +766,14 @@ def ocr_paginas_imagen(doc, paginas, max_paginas=16, dpi=300):
                     alt = _ocr(doc[i], rot)
                     if _calidad(alt) > _calidad(txt):
                         txt, mejor_rot = alt, rot
-            def _cifras(t): return len(re.findall(r"\d{1,3}(?:[\.,]\d{3})+", t))
-            if 0 < _calidad(txt) < 60 or (_cifras(txt) < 8 and len(_CLAVES.findall(_norm(txt))) >= 10):
-                # calidad baja, o tabla con glosas legibles pero sin cifras (celdas con bordes: 'TOTAL ACTIVOS 2 or | too 03'):
-                # se prueba sin líneas de tabla, a 400 dpi binarizado y con segmentación por columnas; gana la lectura con más cifras
-                for psm, d, binz, ql in (("6", 400, False, True), ("4", 400, False, True), ("6", 400, True, False), ("4", 400, True, False)):
-                    alt = _ocr(doc[i], mejor_rot, psm, d, binz, ql)
-                    if (_cifras(alt), _calidad(alt)) > (_cifras(txt), _calidad(txt)):
-                        txt = alt
+            def _filas(t):  # filas 'glosa + monto' (lo que el parser necesita): 'TOTAL ACTIVOS CIRCULANTES 707.967 1.004.403'
+                return len(re.findall(r"^[^\n]*[A-Za-zÁÉÍÓÚÑáéíóúñ]{4,}[^\n]*?\s\(?-?\d{1,3}(?:[\.,]\d{3})+\)?(?:\s+\(?-?\d{1,3}(?:[\.,]\d{3})+\)?)?\s*$", t, re.M))
+            # escaneos con celdas bordeadas: tesseract confunde los bordes con dígitos ('TOTAL ACTIVOS 2 or | too 03'); se prueba
+            # siempre la variante sin líneas de tabla (400 dpi) y gana la lectura con más filas glosa+monto (empate: calidad)
+            for psm, ql in (("6", True), ("4", True)):
+                alt = _ocr(doc[i], mejor_rot, psm, 400, False, ql)
+                if (_filas(alt), _calidad(alt)) > (_filas(txt), _calidad(txt)):
+                    txt = alt
             if txt.strip():
                 out[i] = ("" if _ilegible(paginas[i]) else paginas[i]) + "\n" + txt; hechos.append(i + 1)
         except Exception as e:  # OCR fallido en una página: se deja el texto original
