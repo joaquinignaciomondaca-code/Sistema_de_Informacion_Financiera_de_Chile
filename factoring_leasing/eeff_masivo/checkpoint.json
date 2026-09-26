@@ -12806,6 +12806,108 @@
       "api": [
         "OK"
       ]
+    },
+    "99569200-7|2016-12": {
+      "rut": "99569200-7",
+      "razon_social": "FACTORING MERCANTIL S.A.",
+      "periodo": "2016-12",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "INCOMPLETO",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 8,
+      "notas_sin_leer": 3,
+      "lineas_balance": 26,
+      "lineas_resultados": 10,
+      "api": [
+        "OK",
+        "SOLO_API"
+      ]
+    },
+    "99566540-9|2016-12": {
+      "rut": "99566540-9",
+      "razon_social": "HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING)",
+      "periodo": "2016-12",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 11,
+      "notas_sin_leer": 3,
+      "lineas_balance": 29,
+      "lineas_resultados": 15,
+      "api": [
+        "DIFIERE",
+        "OK"
+      ]
+    },
+    "99513410-1|2016-12": {
+      "rut": "99513410-1",
+      "razon_social": "SMB FACTORING S.A.",
+      "periodo": "2016-12",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "INCOMPLETO",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 0,
+      "notas_sin_leer": 16,
+      "lineas_balance": 28,
+      "lineas_resultados": 8,
+      "api": [
+        "OK"
+      ]
+    },
+    "96861280-8|2016-12": {
+      "rut": "96861280-8",
+      "razon_social": "EUROCAPITAL S.A.",
+      "periodo": "2016-12",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 7,
+      "notas_sin_leer": 9,
+      "lineas_balance": 32,
+      "lineas_resultados": 15,
+      "api": [
+        "OK"
+      ]
+    },
+    "96809970-1|2016-12": {
+      "rut": "96809970-1",
+      "razon_social": "UNIDAD LEASING HABITACIONAL S.A.",
+      "periodo": "2016-12",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 13,
+      "notas_sin_leer": 1,
+      "lineas_balance": 29,
+      "lineas_resultados": 15,
+      "api": [
+        "OK"
+      ]
     }
   }
 }
