@@ -8069,6 +8069,108 @@
       "api": [
         "OK"
       ]
+    },
+    "96660790-4|2020-12": {
+      "rut": "96660790-4",
+      "razon_social": "FACTOTAL S.A.",
+      "periodo": "2020-12",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 11,
+      "notas_sin_leer": 2,
+      "lineas_balance": 38,
+      "lineas_resultados": 18,
+      "api": [
+        "OK"
+      ]
+    },
+    "96655860-1|2020-12": {
+      "rut": "96655860-1",
+      "razon_social": "FACTORING SECURITY S.A.",
+      "periodo": "2020-12",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "DIFIERE",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 12,
+      "notas_sin_leer": 3,
+      "lineas_balance": 31,
+      "lineas_resultados": 13,
+      "api": [
+        "OK",
+        "SOLO_API"
+      ]
+    },
+    "96626570-1|2020-12": {
+      "rut": "96626570-1",
+      "razon_social": "INCOFIN S.A.",
+      "periodo": "2020-12",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 14,
+      "notas_sin_leer": 0,
+      "lineas_balance": 30,
+      "lineas_resultados": 9,
+      "api": [
+        "OK"
+      ]
+    },
+    "94050000-1|2020-12": {
+      "rut": "94050000-1",
+      "razon_social": "GENERAL MOTORS FINANCIAL CHILE S.A.",
+      "periodo": "2020-12",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "OK",
+      "caidas": 2,
+      "notas_ok": 9,
+      "notas_sin_leer": 3,
+      "lineas_balance": 29,
+      "lineas_resultados": 11,
+      "api": [
+        "OK"
+      ]
+    },
+    "90146000-0|2020-12": {
+      "rut": "90146000-0",
+      "razon_social": "SERVICIOS FINANCIEROS PROGRESO S.A.",
+      "periodo": "2020-12",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 1,
+      "notas_ok": 13,
+      "notas_sin_leer": 4,
+      "lineas_balance": 33,
+      "lineas_resultados": 14,
+      "api": [
+        "DIFIERE",
+        "OK"
+      ]
     }
   }
 }
