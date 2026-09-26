@@ -23,6 +23,7 @@ import os
 import re
 import ssl
 import tempfile
+import time
 import urllib.parse
 import urllib.request
 
@@ -52,8 +53,29 @@ def url_informacion_financiera(rut_cuerpo: str, tipoentidad: str = "RVEMI") -> s
     )
 
 
+ultimo_error = ""
+
+
+def _leer(req: urllib.request.Request, timeout: int, intentos: int = 3) -> bytes | None:
+    """Reintenta un corte de TLS. CMF a veces cierra el primer intento."""
+    global ultimo_error
+    ultimo = ""
+    for n in range(intentos):
+        try:
+            with urllib.request.urlopen(req, context=_ssl_context(), timeout=timeout) as resp:
+                return resp.read()
+        except Exception as exc:
+            ultimo = f"{type(exc).__name__}: {exc}"
+            ultimo_error = ultimo
+            if n + 1 < intentos:
+                time.sleep(2 * (n + 1))
+    ultimo_error = ultimo or "sin respuesta"
+    return None
+
+
 def buscar_periodo(rut_cuerpo: str, year: int, month: int, tipo: str = "C", tipoentidad: str = "RVEMI") -> str | None:
     """Envía el buscador de periodos (Consolidado o Individual, IFRS)."""
+    global ultimo_error
     url = url_informacion_financiera(rut_cuerpo, tipoentidad)
     data = urllib.parse.urlencode({
         "forma": "F",
@@ -63,12 +85,12 @@ def buscar_periodo(rut_cuerpo: str, year: int, month: int, tipo: str = "C", tipo
         "tipo_norma": "IFRS",
     }).encode("utf-8")
     req = urllib.request.Request(url, data=data, headers=HEADERS)
-    try:
-        with urllib.request.urlopen(req, context=_ssl_context(), timeout=30) as resp:
-            html = resp.read().decode("latin-1", errors="ignore")
-    except Exception:
+    raw = _leer(req, timeout=30)
+    if raw is None:
         return None
+    html = raw.decode("latin-1", errors="ignore")
     if "No existe información" in html and "Estados financieros (PDF)" not in html:
+        ultimo_error = f"CMF sin información {year}-{int(month):02d} tipo {tipo}"
         return None
     return html
 
@@ -95,10 +117,8 @@ def descargar_pdf(rut_cuerpo: str, year: int, month: int, tipoentidad: str = "RV
         if not pdf_url:
             continue
         req = urllib.request.Request(pdf_url, headers={**HEADERS, "Referer": url_informacion_financiera(rut_cuerpo, tipoentidad)})
-        try:
-            with urllib.request.urlopen(req, context=_ssl_context(), timeout=60) as resp:
-                blob = resp.read()
-        except Exception:
+        blob = _leer(req, timeout=60)
+        if not blob:
             continue
         if blob[:4] == b"%PDF" or len(blob) > 1000:
             return blob, ("Consolidado" if tipo == "C" else "Individual"), pdf_url
