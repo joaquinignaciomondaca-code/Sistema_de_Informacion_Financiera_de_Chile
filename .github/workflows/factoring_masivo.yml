@@ -1,0 +1,50 @@
+name: EEFF factoring — masivo
+
+# Todas las sociedades de factoring y leasing. Abre el PDF, como la prueba.
+# Lo que no cierra queda marcado. No toca securitizadoras. No es el texto convertido.
+on:
+  push:
+    branches: [arena/01a0db9a-monitor-financiero-chile]
+    paths:
+      - .github/workflows/factoring_masivo.yml
+      - factoring_leasing/scripts/07_masivo_pdf.py
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  masivo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Dependencias
+        run: pip install -q pymupdf pdfplumber
+      - name: Pruebas
+        run: |
+          python factoring_leasing/scripts/test_masivo_pdf.py
+      - name: Retomar
+        run: |
+          git fetch origin actions/fl-masivo-2026 || true
+          git checkout origin/actions/fl-masivo-2026 -- factoring_leasing/eeff_masivo || true
+      - name: Leer PDFs
+        env:
+          PYTHONUNBUFFERED: "1"
+          MASIVO_RAMA: actions/fl-masivo-2026
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          python factoring_leasing/scripts/07_masivo_pdf.py --minutos 330
+      - name: Publicar
+        if: always()
+        run: |
+          RAMA="actions/fl-masivo-2026"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add factoring_leasing/eeff_masivo || true
+          git commit -m "factoring: masivo, run ${{ github.run_id }}" || echo "sin cambios"
+          git push origin "HEAD:${RAMA}"
