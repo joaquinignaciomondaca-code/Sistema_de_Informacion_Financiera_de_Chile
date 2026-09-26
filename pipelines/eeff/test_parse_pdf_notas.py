@@ -101,6 +101,209 @@ def test_tabla_pdf():
     assert len([f for f in comp["filas"] if not f["es_total"]]) == 2
 
 
+def test_nota_partida_en_dos_lineas():
+    indice = indice_notas([
+        "NOTA 5\nEFECTIVO Y EQUIVALENTES AL EFECTIVO\n"
+        "NOTA 6\nDEUDORES COMERCIALES Y OTRAS CUENTAS POR COBRAR\n"
+        "NOTA 7\nCUENTAS POR COBRAR A ENTIDADES RELACIONADAS\n"
+        "NOTA 8\nOTROS ACTIVOS NO FINANCIEROS\n"
+    ])
+    por_numero = {fila["numero"]: fila for fila in indice}
+    assert por_numero[5]["familia"] == "efectivo"
+    assert por_numero[6]["familia"] == "deudores"
+
+
+def test_una_oracion_no_es_titulo_de_nota():
+    indice = indice_notas([
+        "5. Con fecha 27 de noviembre de 2025 se celebró sesión Extraordinaria de Directorio\n"
+    ])
+    assert indice == []
+
+
+def test_no_toma_un_miles_como_nota():
+    indice = indice_notas([
+        "3.300 nuevas acciones de Factotal S.A. provenientes de la fusión por cada una\n"
+    ])
+    assert indice == []
+
+
+def test_subtotales_calzan_cuando_el_detalle_esta_anidado():
+    texto = """
+NOTA 3 - Efectivo y Equivalentes al Efectivo
+Efectivo en caja
+Factotal S.A.
+Pesos
+1.770
+1.770
+Efectivo en caja
+Procesos y Servicios Ltda.
+Pesos
+1.000
+1.000
+Subtotal Efectivo en Caja
+2.770
+2.770
+Bancos
+Factotal S.A.
+Pesos
+3.000
+3.000
+Subtotal Bancos
+3.000
+3.000
+Total
+5.770
+5.770
+"""
+    comp = composicion_que_calza(texto, 5770)
+    assert comp is not None
+    assert comp["total"] == 5770
+    conceptos = [f["concepto"] for f in comp["filas"] if not f["es_total"]]
+    assert conceptos == [
+        "Efectivo en caja — Factotal S.A.",
+        "Efectivo en caja — Procesos y Servicios Ltda.",
+        "Bancos — Factotal S.A.",
+    ]
+    assert sum(f["monto_miles"] for f in comp["filas"] if not f["es_total"]) == 5770
+
+
+def test_puente_bruto_neto_usa_los_subtotales():
+    texto = """
+NOTA 4 - Deudores Comerciales y otras Cuentas por Cobrar
+Deudores por operaciones de Factoring (bruto)
+78.451.176
+91.360.046
+Provisión por deterioro
+(5.850.051)
+(5.942.231)
+Deudores por operaciones de Factoring (neto)
+72.601.125
+85.417.815
+Total Deudores comerciales, Neto, Corriente
+72.601.125
+85.417.815
+Cuentas por cobrar comerciales
+2.205.914
+1.747.354
+Total Cuentas por cobrar comerciales
+2.205.914
+1.747.354
+Total Deudores y Cuentas por cobrar, Neto, Corriente
+74.807.039
+87.165.169
+"""
+    comp = composicion_que_calza(texto, 74807039)
+    assert comp is not None
+    assert [f["concepto"] for f in comp["filas"] if not f["es_total"]] == [
+        "Total Deudores comerciales, Neto, Corriente",
+        "Total Cuentas por cobrar comerciales",
+    ]
+
+
+def test_una_fecha_no_es_un_miles():
+    texto = """
+NOTA 6 - Efectivo y Equivalente al Efectivo
+Conceptos
+31.03.2026
+31.12.2025
+M$
+M$
+Cuentas Corrientes Bancarias
+938.680
+2.149.523
+Inversión en Fondos Mutuos
+4.940.977
+-
+Total
+5.879.657
+2.149.523
+"""
+    comp = composicion_que_calza(texto, 5879657)
+    assert comp is not None
+    assert [f["concepto"] for f in comp["filas"] if not f["es_total"]] == [
+        "Cuentas Corrientes Bancarias", "Inversión en Fondos Mutuos",
+    ]
+
+
+def test_monto_menor_a_mil_no_se_pierde():
+    texto = """
+NOTA 7 - Efectivo y equivalentes al efectivo
+Efectivo en caja
+350
+350
+Cuentas corrientes bancarias
+1.118.003
+1.271.026
+Fondos Mutuos
+50.932
+50.932
+Total, efectivo y equivalentes al efectivo
+1.169.285
+1.322.308
+"""
+    comp = composicion_que_calza(texto, 1169285)
+    assert comp is not None
+    assert [f["concepto"] for f in comp["filas"] if not f["es_total"]] == [
+        "Efectivo en caja", "Cuentas corrientes bancarias", "Fondos Mutuos",
+    ]
+    assert comp["filas"][0]["monto_miles"] == 350
+
+
+def test_parentesis_con_espacio_es_negativo():
+    texto = """
+NOTA 6 - Deudores Comerciales y otras Cuentas por Cobrar
+Documentos y otras cuentas por cobrar
+3.433.090
+3.355.211
+Provision Incobrable
+(203.199 )
+(203.199 )
+Total
+3.229.891
+3.152.012
+"""
+    comp = composicion_que_calza(texto, 3229891)
+    assert comp is not None
+    assert comp["filas"][1]["monto_miles"] == -203199
+    assert sum(f["monto_miles"] for f in comp["filas"] if not f["es_total"]) == 3229891
+
+
+def test_una_sola_clase_de_activo_calza():
+    texto = """
+NOTA 12 - Activos intangibles
+Programas informáticos
+30.482
+29.008
+28.348
+27.870
+2.134
+1.138
+Total activos intangibles
+30.482
+29.008
+28.348
+27.870
+2.134
+1.138
+"""
+    comp = composicion_que_calza(texto, 2134)
+    assert comp is not None
+    assert comp["filas"][0]["concepto"] == "Programas informáticos"
+    assert comp["filas"][0]["monto_miles"] == 2134
+
+
+def test_no_acepta_el_encabezado_como_unica_partida():
+    texto = """
+Concepto
+47.392
+47.392
+Total
+47.392
+47.392
+"""
+    assert composicion_que_calza(texto, 47392) is None
+
+
 def test_extraer_marca_lo_que_no_lee():
     balance = [
         {"nombre_cuenta": "Efectivo y equivalentes al efectivo", "nota_ref": "4", "monto_miles_clp": 11283111},
