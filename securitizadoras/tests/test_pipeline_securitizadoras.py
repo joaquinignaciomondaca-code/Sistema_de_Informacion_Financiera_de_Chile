@@ -94,6 +94,18 @@ Total Pasivos
 101.478.787
 65.294.160
 """
+PAGINA_NOTA_MORA_TABLA = """Nota 7 - Activos securitizados en mora
+Cuotas
+1 a 3
+120
+80.000
+4 o más
+15
+9.000
+Totales
+135
+89.000
+"""
 PAGINA_EXCEDENTES = """Estado de Determinación de Excedentes del Patrimonio Separado
 Por los años comprendidos entre el 01 de enero y el 31 de diciembre de 2024 y 2023
 Ingresos
@@ -177,6 +189,14 @@ check(m["rut_administradora"] == "96765170-2", "RUT con DV correcto (96765170-2)
 check(m["nro_registro_cmf"] == "345", "número de registro")
 check(P.meta_desde_texto("Texto sin identificación", "EEFF", "96765170", "X") is None, "sin código → None (no se inventa PS-GEN)")
 
+print("etiqueta web CMF")
+for et, esp in [("Patrimonios Separados - BVOLS 3 al 12/2024", "BVOLS-3"), ("Patrimonios Separados - BSECS 9 al 12/2025", "BSECS-9"),
+                ("Patrimonios Separados - N° 12 al 12/2024", "PS-12"), ("Patrimonios Separados - PS 35 al 12/2024", "PS-35"),
+                ("Patrimonios Separados al 12/2024", None), ("Patrimonios Separados - BBICS-U al 12/2023", "BBICS-U")]:
+    check(P.codigo_desde_etiqueta_web(et) == esp, f"{et!r} → {esp}")
+m2 = P.meta_desde_texto("N° INSCRIPCION DE LA EMISION EN EL REGISTRO: 1245\n", "Patrimonios Separados - BSECS 9 al 12/2025", "96847360", "SECURITY")
+check(m2["codigo_emision"] == "BSECS-9" and m2["nro_registro_cmf"] == "1245", "etiqueta web prevalece sobre typos del PDF; nº inscripción")
+
 print("eeff líneas — layout glosas (Volcom)")
 lin = P.parse_eeff_lineas([PAGINA_PORTADA, PAGINA_BALANCE_ACT, PAGINA_BALANCE_PAS, PAGINA_EXCEDENTES])
 v = {l["cuenta_canonica"]: l for l in lin if l["cuenta_canonica"]}
@@ -186,6 +206,7 @@ check(v["TOTAL_PASIVOS_Y_PATRIMONIO"]["monto_mclp"] == 101478787, "'Total Pasivo
 check(v["OTROS_PASIVOS_CIRCULANTES"]["monto_mclp"] == 6360033, "'Otros acreedores (corto plazo)' → 21.200")
 check(v["EXCEDENTE_DEL_EJERCICIO"]["estado"] == "BALANCE" and v["EXCEDENTE_NETO_DEL_PERIODO"]["estado"] == "EXCEDENTES", "misma glosa, distinto estado")
 check(v["GASTO_REMUNERACIONES_ADMINISTRACION"]["monto_mclp"] == -400000, "paréntesis → negativo")
+check(P.parse_eeff_lineas([PAGINA_PORTADA, PAGINA_NOTA_MORA_TABLA]) == [], "página de nota (sin línea de total reconocida) descartada")
 no_rec = [l["glosa"] for l in lin if not l["cuenta_canonica"]]
 check(no_rec == [], f"todas las glosas reconocidas: {no_rec}")
 conc = P.conciliar(lin)
@@ -217,6 +238,7 @@ print("fecu gestora"); f = P.parse_fecu_gestora(FECU_HTML)
 check(f["total_activos_m_clp"] == 12345.678 and f["patrimonio_neto_m_clp"] == 10000 and f["patrimonio_neto_es_derivado"] is False, "totales en miles, patrimonio leído")
 check(f["ganancia_perdida_ejercicio_m_clp"] == -150, "ganancia (pérdida) negativa capturada")
 check(P.parse_fecu_gestora("<html>sin fecu</html>") is None, "html sin FECU → None")
+check(P.parse_fecu_gestora(FECU_HTML.replace("pérdida", "p&eacute;rdida"))["ganancia_perdida_ejercicio_m_clp"] == -150, "entidades HTML (p&eacute;rdida) resueltas")
 check(P.parse_fecu_gestora(FECU_HTML.replace("Ganancia (pérdida)", "Otra cosa"))["ganancia_perdida_ejercicio_m_clp"] is None, "ganancia ausente → NULL (no 0)")
 
 print("utilidades")
