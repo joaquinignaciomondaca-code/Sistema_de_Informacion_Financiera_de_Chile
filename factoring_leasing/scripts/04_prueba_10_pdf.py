@@ -26,6 +26,7 @@ from pipelines.eeff.parse_pdf_caratula import (
     elegir,
     fold,
     lineas_apiladas,
+    lineas_caidas,
     lineas_de_tabla,
     lineas_de_texto,
     orden_montos,
@@ -114,7 +115,15 @@ def _caratula(extraido: dict, meta: dict) -> dict:
             candidatos.append(("texto", lineas_de_texto(texto, estado, meta)))
             candidatos.append(("apilado", lineas_apiladas(texto, estado, meta)))
         metodo, lineas = elegir(candidatos, puntaje)
-        salida[estado] = {"metodo": metodo, "lineas": lineas, "paginas": indices.get(estado, [])}
+        otras = []
+        for _nombre, candidata in candidatos:
+            otras.extend(candidata)
+        salida[estado] = {
+            "metodo": metodo,
+            "lineas": lineas,
+            "paginas": indices.get(estado, []),
+            "caidas": lineas_caidas(lineas, otras),
+        }
     return salida
 
 

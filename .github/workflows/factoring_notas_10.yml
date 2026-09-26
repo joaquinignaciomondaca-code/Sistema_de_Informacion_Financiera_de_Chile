@@ -1,6 +1,6 @@
 name: Notas EEFF factoring — 10 PDF
 
-# Diez PDF de marzo 2026. Cada nota entra solo si su total es la línea de la cara.
+# Diez PDF de marzo 2026. Cada línea de la cara, y la nota solo si suma esa línea.
 # No es el masivo y no toca securitizadoras.
 on:
   push:
@@ -8,7 +8,9 @@ on:
     paths:
       - .github/workflows/factoring_notas_10.yml
       - factoring_leasing/scripts/06_notas_10_pdf.py
+      - factoring_leasing/scripts/04_prueba_10_pdf.py
       - pipelines/eeff/parse_pdf_notas.py
+      - pipelines/eeff/parse_pdf_caratula.py
       - factoring_leasing/eeff_prueba/notas10.json
   workflow_dispatch:
 
@@ -27,7 +29,9 @@ jobs:
       - name: Dependencias
         run: pip install -q pymupdf pdfplumber
       - name: Pruebas del lector
-        run: python -c "import pipelines.eeff.test_parse_pdf_notas as t; [getattr(t,n)() for n in dir(t) if n.startswith('test_')]"
+        run: |
+          python -c "import pipelines.eeff.test_parse_pdf_notas as t; [getattr(t,n)() for n in dir(t) if n.startswith('test_')]"
+          python -c "import pipelines.eeff.test_parse_pdf_caratula as t; [getattr(t,n)() for n in dir(t) if n.startswith('test_')]"
       - name: Diez PDF
         env:
           PYTHONUNBUFFERED: "1"
