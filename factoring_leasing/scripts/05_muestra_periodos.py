@@ -1,7 +1,8 @@
 """Baja tres cortes de una misma sociedad para mirar las notas antes de extraerlas.
 
 No escribe carátula ni montos. Guarda el texto y borra el PDF.
-Si una página no trae texto seleccionable, la lee con Tesseract y la descarta.
+Si una página no trae texto seleccionable, la lee con Tesseract.
+El PDF se borra después de guardar el texto.
 """
 
 from __future__ import annotations
@@ -9,7 +10,7 @@ from __future__ import annotations
 import os
 import subprocess
 import sys
-from concurrent.futures import ProcessPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -31,16 +32,8 @@ def _alfanum(texto: str) -> int:
     return sum(ch.isalnum() for ch in texto)
 
 
-def _ocr_una(job: tuple[bytes, int]) -> tuple[int, str]:
-    blob, indice = job
-    import fitz
-
-    doc = fitz.open(stream=blob, filetype="pdf")
-    page = doc[indice]
-    pix = page.get_pixmap(matrix=fitz.Matrix(200 / 72, 200 / 72), colorspace=fitz.csGRAY, alpha=False)
-    pix.set_dpi(200, 200)
-    png = pix.tobytes("png")
-    doc.close()
+def _ocr_png(job: tuple[int, bytes]) -> tuple[int, str]:
+    indice, png = job
     proc = subprocess.run(
         [
             "tesseract",
@@ -79,12 +72,19 @@ def _texto(blob: bytes) -> tuple[str, int]:
         else:
             ocr_idx.append(i)
     n = doc.page_count
+    zoom = fitz.Matrix(200 / 72, 200 / 72)
+    pngs: list[tuple[int, bytes]] = []
+    for i in ocr_idx:
+        pix = doc[i].get_pixmap(matrix=zoom, colorspace=fitz.csGRAY, alpha=False)
+        pix.set_dpi(200, 200)
+        pngs.append((i, pix.tobytes("png")))
     doc.close()
+    print(f"[muestra] paginas={n} a_ocr={len(pngs)}", flush=True)
     ocr: dict[int, str] = {}
-    if ocr_idx:
-        workers = min(4, os.cpu_count() or 2, len(ocr_idx))
-        with ProcessPoolExecutor(max_workers=workers) as pool:
-            futuros = [pool.submit(_ocr_una, (blob, i)) for i in ocr_idx]
+    if pngs:
+        workers = min(2, os.cpu_count() or 2, len(pngs))
+        with ThreadPoolExecutor(max_workers=workers) as pool:
+            futuros = [pool.submit(_ocr_png, job) for job in pngs]
             for fut in as_completed(futuros):
                 indice, texto = fut.result()
                 ocr[indice] = texto

@@ -32,14 +32,11 @@ jobs:
       - name: Tres cortes de Security
         env:
           MUESTRA_SOLO: "2013-12"
+          PYTHONUNBUFFERED: "1"
         run: |
-          set +e
+          set -o pipefail
           mkdir -p factoring_leasing/eeff_prueba/muestra_periodos
-          python factoring_leasing/scripts/05_muestra_periodos.py > factoring_leasing/eeff_prueba/muestra_periodos/corrida.txt 2>&1
-          code=$?
-          echo "exit=$code" >> factoring_leasing/eeff_prueba/muestra_periodos/corrida.txt
-          tail -30 factoring_leasing/eeff_prueba/muestra_periodos/corrida.txt
-          exit $code
+          python factoring_leasing/scripts/05_muestra_periodos.py 2>&1 | tee factoring_leasing/eeff_prueba/muestra_periodos/corrida.txt
       - name: Rama de revisión
         if: always()
         run: |
