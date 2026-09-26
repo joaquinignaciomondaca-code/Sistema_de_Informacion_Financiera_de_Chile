@@ -38,20 +38,36 @@ def _norm(text: str) -> str:
 
 
 def _buscar(lineas: list[dict], aliases: tuple[str, ...]) -> float | None:
+    """El sufijo «corrientes» no esconde la línea. Un total genérico no se traga el corriente."""
     normas = [_norm(a) for a in aliases]
     for alias in normas:
         for row in lineas:
+            if row.get("monto_m_clp") is None:
+                continue
             if _norm(row["nombre_cuenta"]) == alias:
                 return float(row["monto_m_clp"])
+    candidatos = []
+    vistos = set()
     for alias in normas:
         for row in lineas:
+            if row.get("monto_m_clp") is None:
+                continue
             nombre = _norm(row["nombre_cuenta"])
             if alias not in nombre:
                 continue
-            extra = nombre.replace(alias, " ").strip()
-            if "corriente" in extra or "no corriente" in extra:
+            extra = nombre.replace(alias, " ", 1)
+            if alias.startswith("total") and "corriente" in extra:
                 continue
-            return float(row["monto_m_clp"])
+            clave = row.get("id_linea") or (nombre, row.get("monto_m_clp"))
+            if clave in vistos:
+                continue
+            vistos.add(clave)
+            candidatos.append(row)
+    preferidos = [row for row in candidatos if "no corriente" not in _norm(row["nombre_cuenta"])]
+    if len(preferidos) == 1:
+        return float(preferidos[0]["monto_m_clp"])
+    if len(candidatos) == 1 and "no corriente" not in _norm(candidatos[0]["nombre_cuenta"]):
+        return float(candidatos[0]["monto_m_clp"])
     return None
 
 
