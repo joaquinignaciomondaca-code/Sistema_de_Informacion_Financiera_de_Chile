@@ -707,17 +707,95 @@ const EXPLORER_TREE = [
     label: "FACTORING & LEASING (CMF / NBFI)",
     badges: [
       { type: "entities", text: "28 Entidades", title: "28 Empresas de Factoring y Leasing (22 Activas Vigentes + 6 Históricas CMF)" },
-      { type: "data", text: "21.2k Datos", title: "Balances IFRS, desglose de efectivo por monedas y morosidad de cartera (2014–2026)" }
+      { type: "data", text: "EEFF PDF", title: "Diez estados financieros marzo 2026 leídos del PDF de Información Financiera. La API solo valida totales." }
     ],
     status: "active",
     open: true,
     children: [
       {
-        id: "sector_factoring_leasing",
+        id: "sector_fl_eeff",
         type: "sector",
-        label: "Intermediación Financiera No Bancaria",
+        label: "EEFF",
         sector: "factoring_leasing",
         open: true,
+        children: [
+          {
+            id: "circ_fl_eeff_docs",
+            type: "circular",
+            label: "Diez EEFF marzo 2026 (PDF)",
+            badge: "10 PDF",
+            badgeType: "data",
+            status: "active",
+            sector: "factoring_leasing",
+            open: true,
+            chips: [
+              { label: "Qué se extrajo del PDF y qué quedó parcial", query: "SELECT razon_social, tipo_eeff, lineas_balance, lineas_resultados, lineas_notas, notas_en_indice, estado_extraccion FROM factoring_leasing_eeff_documentos ORDER BY lineas_notas DESC, razon_social;" },
+              { label: "Total activos del PDF vs API (validación, no fuente)", query: "SELECT d.razon_social, d.tipo_eeff, v.monto_documento_m_clp, v.monto_api_m_clp, v.diff_m_clp, v.estado FROM factoring_leasing_validacion_api v JOIN factoring_leasing_eeff_documentos d ON d.rut = v.rut WHERE v.concepto = 'total_activos' ORDER BY v.monto_documento_m_clp DESC;" }
+            ],
+            tables: [
+              { id: "factoring_leasing_eeff_documentos", name: "factoring_leasing.eeff_documentos", rows: "10 PDF", file: "outputs/factoring_leasing/factoring_leasing_eeff_documentos.parquet" },
+              { id: "factoring_leasing_validacion_api", name: "factoring_leasing.validacion_api", rows: "60 chequeos", file: "outputs/factoring_leasing/factoring_leasing_validacion_api.parquet" }
+            ]
+          },
+          {
+            id: "circ_fl_eeff_balance",
+            type: "circular",
+            label: "Balance (líneas del PDF)",
+            badge: "223 líneas",
+            badgeType: "data",
+            status: "active",
+            sector: "factoring_leasing",
+            open: true,
+            chips: [
+              { label: "Activos, pasivos y patrimonio marzo 2026", query: "SELECT razon_social, tipo_eeff, nombre_cuenta, nota_ref, monto_miles_clp, monto_comparativo_miles_clp FROM factoring_leasing_balance_lineas WHERE clase = 'Total' ORDER BY monto_miles_clp DESC;" },
+              { label: "Efectivo y deudores con nota de referencia", query: "SELECT razon_social, nombre_cuenta, nota_ref, monto_miles_clp FROM factoring_leasing_balance_lineas WHERE lower(nombre_cuenta) LIKE '%efectivo%' OR lower(nombre_cuenta) LIKE '%deudores comerciales%' ORDER BY monto_miles_clp DESC;" }
+            ],
+            tables: [
+              { id: "factoring_leasing_balance_lineas", name: "factoring_leasing.balance_lineas", rows: "223 líneas", file: "outputs/factoring_leasing/factoring_leasing_balance_lineas.parquet" }
+            ]
+          },
+          {
+            id: "circ_fl_eeff_resultados",
+            type: "circular",
+            label: "Estado de resultados (PDF)",
+            badge: "120 líneas",
+            badgeType: "data",
+            status: "active",
+            sector: "factoring_leasing",
+            open: false,
+            chips: [
+              { label: "Ganancia del periodo marzo 2026", query: "SELECT razon_social, nombre_cuenta, nota_ref, monto_miles_clp, monto_comparativo_miles_clp FROM factoring_leasing_resultados_lineas WHERE lower(nombre_cuenta) LIKE '%ganancia%' OR lower(nombre_cuenta) LIKE '%resultado del%' OR lower(nombre_cuenta) LIKE '%utilidad%' ORDER BY monto_miles_clp DESC;" }
+            ],
+            tables: [
+              { id: "factoring_leasing_resultados_lineas", name: "factoring_leasing.resultados_lineas", rows: "120 líneas", file: "outputs/factoring_leasing/factoring_leasing_resultados_lineas.parquet" }
+            ]
+          },
+          {
+            id: "circ_fl_eeff_notas",
+            type: "circular",
+            label: "Notas compartidas (índice y montos leídos)",
+            badge: "20 líneas",
+            badgeType: "data",
+            status: "active",
+            sector: "factoring_leasing",
+            open: true,
+            chips: [
+              { label: "Qué notas publica cada EEFF y si ya se extrajo el monto", query: "SELECT razon_social, numero_nota, titulo_nota, pagina, nota_canonica, extraida FROM factoring_leasing_notas_indice ORDER BY razon_social, numero_nota;" },
+              { label: "Security Nota 4 y Nota 5 (únicos montos de nota leídos)", query: "SELECT numero_nota, concepto, detalle, monto_miles_clp, monto_comparativo_miles_clp FROM factoring_leasing_nota_lineas WHERE rut = '96655860-1' ORDER BY numero_nota, id_linea;" }
+            ],
+            tables: [
+              { id: "factoring_leasing_notas_indice", name: "factoring_leasing.notas_indice", rows: "273 notas", file: "outputs/factoring_leasing/factoring_leasing_notas_indice.parquet" },
+              { id: "factoring_leasing_nota_lineas", name: "factoring_leasing.nota_lineas", rows: "20 líneas", file: "outputs/factoring_leasing/factoring_leasing_nota_lineas.parquet" }
+            ]
+          }
+        ]
+      },
+      {
+        id: "sector_fl_interes",
+        type: "sector",
+        label: "De Interés",
+        sector: "factoring_leasing",
+        open: false,
         children: [
           {
             id: "cat_fl_maestro",
@@ -741,7 +819,7 @@ const EXPLORER_TREE = [
           {
             id: "circ_fl_balances",
             type: "circular",
-            label: "Balances y Cartera de Crédito",
+            label: "Serie API de totales (validación, no es el PDF)",
             badge: "878 Datos",
             badgeType: "data",
             status: "active",
@@ -759,7 +837,7 @@ const EXPLORER_TREE = [
           {
             id: "circ_fl_nota_efectivo",
             type: "circular",
-            label: "Nota Efectivo y Equivalentes (Monedas y Bancos)",
+            label: "No usar: efectivo repartido por porcentajes, no es el PDF",
             badge: "2.975 Datos",
             badgeType: "data",
             status: "active",
@@ -777,7 +855,7 @@ const EXPLORER_TREE = [
           {
             id: "circ_fl_cartera_morosidad",
             type: "circular",
-            label: "Nota Cartera, Morosidad y Provisiones IFRS 9",
+            label: "No usar: cartera repartida por porcentajes, no es el PDF",
             badge: "17.406 Datos",
             badgeType: "data",
             status: "active",
