@@ -9,7 +9,7 @@ from __future__ import annotations
 import os
 import subprocess
 import sys
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -84,7 +84,9 @@ def _texto(blob: bytes) -> tuple[str, int]:
     if ocr_idx:
         workers = min(4, os.cpu_count() or 2, len(ocr_idx))
         with ProcessPoolExecutor(max_workers=workers) as pool:
-            for indice, texto in pool.imap_unordered(_ocr_una, [(blob, i) for i in ocr_idx], chunksize=1):
+            futuros = [pool.submit(_ocr_una, (blob, i)) for i in ocr_idx]
+            for fut in as_completed(futuros):
+                indice, texto = fut.result()
                 ocr[indice] = texto
                 print(
                     f"[muestra] ocr pagina {indice + 1}/{n} chars={_alfanum(texto)}",

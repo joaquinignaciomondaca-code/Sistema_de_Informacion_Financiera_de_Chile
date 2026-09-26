@@ -36,8 +36,10 @@ jobs:
           set +e
           mkdir -p factoring_leasing/eeff_prueba/muestra_periodos
           python factoring_leasing/scripts/05_muestra_periodos.py > factoring_leasing/eeff_prueba/muestra_periodos/corrida.txt 2>&1
-          echo "exit=$?" >> factoring_leasing/eeff_prueba/muestra_periodos/corrida.txt
-          tail -20 factoring_leasing/eeff_prueba/muestra_periodos/corrida.txt
+          code=$?
+          echo "exit=$code" >> factoring_leasing/eeff_prueba/muestra_periodos/corrida.txt
+          tail -30 factoring_leasing/eeff_prueba/muestra_periodos/corrida.txt
+          exit $code
       - name: Rama de revisión
         if: always()
         run: |
