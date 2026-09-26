@@ -964,57 +964,6 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "factoring_leasing_nota_efectivo_detalle",
-    name: "NO USAR porcentajes efectivo",
-    sector: "factoring_leasing",
-    color: "#D97706",
-    x: 3600,
-    y: 370,
-    w: 260,
-    h: 190,
-    rows: "2.975 datos",
-    file: "outputs/factoring_leasing/factoring_leasing_nota_efectivo_detalle.parquet",
-    cols: [
-      { name: "id_efectivo", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "fecha_corte", type: "DATE" },
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "razon_social", type: "VARCHAR" },
-      { name: "numero_nota", type: "VARCHAR" },
-      { name: "concepto", type: "VARCHAR" },
-      { name: "moneda_origen", type: "VARCHAR" },
-      { name: "monto_mclp", type: "DOUBLE" },
-      { name: "monto_musd", type: "DOUBLE" },
-      { name: "pct_total_efectivo", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "factoring_leasing_cartera_morosidad_detalle",
-    name: "NO USAR porcentajes cartera",
-    sector: "factoring_leasing",
-    color: "#B45309",
-    x: 3600,
-    y: 590,
-    w: 260,
-    h: 210,
-    rows: "17.406 datos",
-    file: "outputs/factoring_leasing/factoring_leasing_cartera_morosidad_detalle.parquet",
-    cols: [
-      { name: "id_cartera", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "fecha_corte", type: "DATE" },
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "razon_social", type: "VARCHAR" },
-      { name: "numero_nota", type: "VARCHAR" },
-      { name: "linea_producto", type: "VARCHAR" },
-      { name: "tramo_morosidad", type: "VARCHAR" },
-      { name: "etapa_ifrs9", type: "VARCHAR" },
-      { name: "cartera_bruta_mclp", type: "DOUBLE" },
-      { name: "provisiones_mclp", type: "DOUBLE" },
-      { name: "cartera_neta_mclp", type: "DOUBLE" }
-    ]
-  },
-  {
     id: "factoring_leasing_eeff_documentos",
     name: "factoring_leasing.eeff_documentos",
     sector: "factoring_leasing",
@@ -1030,7 +979,10 @@ const ERD_TABLES = [
       { name: "rut", fk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
       { name: "tipo_eeff", type: "VARCHAR" },
-      { name: "estado_extraccion", type: "VARCHAR" }
+      { name: "estado_extraccion", type: "VARCHAR" },
+      { name: "cuadre_caratula", type: "VARCHAR" },
+      { name: "cuadre_resultados", type: "VARCHAR" },
+      { name: "hueco", type: "VARCHAR" }
     ]
   },
   {
@@ -1866,10 +1818,7 @@ const ERD_LINKS = [
   { from: "factoring_leasing_eeff_documentos", to: "factoring_leasing_nota_efectivo", key: "rut, periodo" },
   { from: "factoring_leasing_eeff_documentos", to: "factoring_leasing_nota_deudores", key: "rut, periodo" },
   { from: "factoring_leasing_maestro", to: "factoring_leasing_balance_resumen", key: "rut" },
-  { from: "factoring_leasing_maestro", to: "factoring_leasing_nota_efectivo_detalle", key: "rut" },
-  { from: "factoring_leasing_maestro", to: "factoring_leasing_cartera_morosidad_detalle", key: "rut" },
-  { from: "factoring_leasing_balance_resumen", to: "factoring_leasing_nota_efectivo_detalle", key: "rut, periodo (efectivo)" },
-  { from: "factoring_leasing_balance_resumen", to: "factoring_leasing_cartera_morosidad_detalle", key: "rut, periodo (cartera)" },
+
   { from: "factoring_leasing_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "factoring_leasing_balance_resumen", to: "bancos_balance_resumen", key: "periodo, grupo_controlador (líneas fondeo)" },
   { from: "bancos_balance_resumen", to: "macro_tasas_rendimientos", key: "periodo (tasa de referencia / valorización)" },
