@@ -1,0 +1,116 @@
+"""Taxonomía de notas que comparten los EEFF IFRS chilenos.
+
+La misma familia se usa en factoring, bancos, corredoras, cooperativas, CCAF,
+AGF y securitizadoras. Si una industria no publica una nota, no se inventa
+la fila: simplemente no aparece.
+"""
+
+from __future__ import annotations
+
+import re
+import unicodedata
+
+FAMILIAS = (
+    "efectivo",
+    "cartera",
+    "morosidad",
+    "instrumentos",
+    "repos",
+    "financiamiento",
+    "patrimonio",
+    "ingresos",
+    "gastos",
+    "partes_relacionadas",
+    "contingencias",
+    "impuestos",
+    "otra",
+)
+
+_REGLAS = (
+    ("efectivo", ("efectivo", "equivalente", "caja", "banco", "deposito a plazo", "fondo mutuo")),
+    ("morosidad", ("morosidad", "deterioro", "provision", "perdida crediticia", "etapa 1", "etapa 2", "etapa 3", "tramo")),
+    ("cartera", ("deudor comercial", "colocacion", "cartera", "factoring", "leasing", "credito directo", "confirming")),
+    ("repos", ("pacto", "retroventa", "retrocompra", "repo")),
+    ("financiamiento", ("pasivo financiero", "prestamo", "bono", "efecto de comercio", "financiamiento", "deuda")),
+    ("instrumentos", ("instrumento financiero", "derivado", "forward", "swap", "otro activo financiero")),
+    ("patrimonio", ("patrimonio", "capital emitido", "dividendo", "ganancia acumulada")),
+    ("ingresos", ("ingreso de actividades", "composicion de resultado", "ingreso ordinario", "costo de venta")),
+    ("gastos", ("gasto de administracion", "remuneracion", "gasto por funcion")),
+    ("partes_relacionadas", ("entidad relacionada", "parte relacionada", "relacionada")),
+    ("contingencias", ("contingencia", "juicio", "caucion", "restriccion")),
+    ("impuestos", ("impuesto",)),
+)
+
+
+def _fold(text: str) -> str:
+    raw = unicodedata.normalize("NFKD", str(text or ""))
+    raw = "".join(ch for ch in raw if not unicodedata.combining(ch))
+    return raw.lower()
+
+
+def familia_nota(titulo: str) -> str:
+    blob = _fold(titulo)
+    for familia, claves in _REGLAS:
+        if any(clave in blob for clave in claves):
+            return familia
+    return "otra"
+
+
+def clase_cuenta(nombre: str, estado: str) -> str:
+    blob = _fold(nombre)
+    if estado == "resultado":
+        if "ingreso" in blob and "gasto" not in blob and "costo" not in blob:
+            return "Ingreso"
+        if "costo" in blob:
+            return "Costo"
+        if "gasto" in blob or "deterioro" in blob:
+            return "Gasto"
+        return "Resultado"
+    if "total de activos" == blob or blob == "total activos":
+        return "Total"
+    if "total de pasivos" == blob or blob == "total pasivos":
+        return "Total"
+    if "patrimonio total" in blob or "total patrimonio" in blob or "total de patrimonio y pasivos" in blob:
+        return "Total"
+    if "patrimonio" in blob or "capital" in blob or "ganancia" in blob or "reserva" in blob:
+        return "Patrimonio"
+    if "pasivo" in blob:
+        return "Pasivo"
+    if "no corriente" in blob:
+        return "Activo no corriente" if "pasivo" not in blob else "Pasivo"
+    if "corriente" in blob or "efectivo" in blob or "deudor" in blob:
+        return "Activo"
+    return "Cuenta"
+
+
+_NUM = re.compile(r"^-?\(?\d{1,3}(?:\.\d{3})+(?:,\d+)?\)?$|^-?\(?\d+(?:,\d+)?\)?$")
+
+
+def parse_monto_chileno(token: str):
+    """Miles de pesos como vienen en el EEFF: 11.283.111 o (4.876.622) o '-'."""
+    if token is None:
+        return None
+    raw = str(token).strip().replace("\\-", "-").replace("−", "-").replace("–", "-")
+    raw = raw.replace("M$", "").replace("$", "").replace(" ", "")
+    if raw == "" or raw.lower() in {"none", "nan"}:
+        return None
+    if raw in {"-", "—", "–", "n/a", "na"}:
+        return 0.0
+    negativo = raw.startswith("(") and raw.endswith(")")
+    raw = raw.strip("()")
+    if not _NUM.match(raw) and not re.fullmatch(r"-?\d[\d.]*(?:,\d+)?", raw):
+        return None
+    if "," in raw and "." in raw:
+        raw = raw.replace(".", "").replace(",", ".")
+    elif "," in raw:
+        raw = raw.replace(",", ".")
+    else:
+        # 11.283.111 es miles, no decimal. 1.03 (una sola coma de miles de 3) en
+        # ganancias por acción se deja fuera: aquí solo entran enteros de M$.
+        if raw.count(".") > 1 or (raw.count(".") == 1 and len(raw.split(".")[-1]) == 3):
+            raw = raw.replace(".", "")
+    try:
+        value = float(raw)
+    except ValueError:
+        return None
+    return -value if negativo else value

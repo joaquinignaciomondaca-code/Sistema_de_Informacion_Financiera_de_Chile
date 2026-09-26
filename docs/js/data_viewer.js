@@ -82,12 +82,23 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Factoring & Leasing (CMF / NBFI)",
+    group: "Factoring & Leasing — EEFF (PDF)",
+    tables: [
+      { id: "factoring_leasing_eeff_documentos", name: "factoring_leasing.eeff_documentos (10 PDF, marzo 2026)" },
+      { id: "factoring_leasing_balance_lineas", name: "factoring_leasing.balance_lineas (223 líneas del PDF)" },
+      { id: "factoring_leasing_resultados_lineas", name: "factoring_leasing.resultados_lineas (120 líneas del PDF)" },
+      { id: "factoring_leasing_notas_indice", name: "factoring_leasing.notas_indice (273 notas)" },
+      { id: "factoring_leasing_nota_lineas", name: "factoring_leasing.nota_lineas (Security Nota 4 y 5)" },
+      { id: "factoring_leasing_validacion_api", name: "factoring_leasing.validacion_api (chequeo, no fuente)" }
+    ]
+  },
+  {
+    group: "Factoring & Leasing — De Interés",
     tables: [
       { id: "factoring_leasing_maestro", name: "factoring_leasing.maestro (28 entidades CMF)" },
-      { id: "factoring_leasing_balance_resumen", name: "factoring_leasing.balance_resumen (878 balances IFRS)" },
-      { id: "factoring_leasing_nota_efectivo_detalle", name: "factoring_leasing.nota_efectivo_detalle (2.9k datos)" },
-      { id: "factoring_leasing_cartera_morosidad_detalle", name: "factoring_leasing.cartera_morosidad_detalle (17.4k datos)" }
+      { id: "factoring_leasing_balance_resumen", name: "factoring_leasing.balance_resumen API (validación, no es el PDF)" },
+      { id: "factoring_leasing_nota_efectivo_detalle", name: "NO USAR: efectivo por porcentajes, no es el PDF" },
+      { id: "factoring_leasing_cartera_morosidad_detalle", name: "NO USAR: cartera por porcentajes, no es el PDF" }
     ]
   },
   {

@@ -1,6 +1,7 @@
 """
-Pipeline de Extraccion de Notas Desagregadas: Factoring y Leasing Chile (CMF).
-Descarga directa en streaming 100% en RAM (cero residuos en disco).
+NO LEE EL PDF. Reparte totales de la API con porcentajes fijos.
+El EEFF real está en 03_eeff_desde_pdf.py. Este script queda solo como
+advertencia de lo que no debe publicarse como nota.
 Genera:
 1. factoring_leasing_nota_efectivo_detalle.parquet / .json
 2. factoring_leasing_cartera_morosidad_detalle.parquet / .json
@@ -103,7 +104,8 @@ def fetch_cmf_pdf_stream(rut_cuerpo, year, month, tipo="C"):
 
 def extract_all():
     print("=" * 70)
-    print("Iniciando Extraccion en Memoria: Notas Desagregadas Factoring & Leasing")
+    print("ESTE SCRIPT NO LEE EL PDF. Reparte totales de la API con porcentajes fijos.")
+    print("El EEFF real sale de factoring_leasing/scripts/03_eeff_desde_pdf.py")
     print("=" * 70)
 
     df_maestro = pd.read_parquet(MAESTRO_PARQUET)
