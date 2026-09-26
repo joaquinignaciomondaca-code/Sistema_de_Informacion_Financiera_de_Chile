@@ -377,7 +377,8 @@ def parse_eeff_lineas(paginas, max_paginas=16):
         if re.search(r"^[ \t]*NOTA[ \t]+\d+[ \t]*[-–\.:]", t, re.M | re.I) and not re.search(r"^[ \t]*(\d{2}\.\d{3}[ \t]+)?TOTAL[ \t]+(DE[ \t]+)?ACTIVOS[ \t]*$", t, re.M | re.I):
             continue  # página de notas (cuadros con 'Total de Activo', tramos de mora, etc.)
         lineas = [l.strip() for l in t.split("\n") if l.strip()]
-        if sum(1 for l in lineas if _RX_NUM.match(l) and any(ch.isdigit() for ch in l)) < 3 and not any(re.search(r"\d[\d\.]{3,}\s+\d", l) for l in lineas):
+        if sum(1 for l in lineas if _RX_NUM.match(l) and any(ch.isdigit() for ch in l)) < 3 and not any(re.search(r"\d[\d\.]{3,}\s+\d", l) for l in lineas) \
+                and len(re.findall(r"\d{1,3}(?:\.\d{3})+", t)) < 3:
             continue
         codigo = None; pagina_out = []; seccion = None
         multicol = any(re.search(r"\$?\s*NO\s+REAJUSTABLES", _norm(l)) for l in lineas)
@@ -394,11 +395,11 @@ def parse_eeff_lineas(paginas, max_paginas=16):
                 codigo = None; continue
             # fila completa en una línea: "Disponible 5 119.969 15.615"  ó  "11.010 Disponible 119.969 15.615"
             m = re.match(r"^(\d{2}\.\d{3})?\s*([A-Za-zÁÉÍÓÚÑáéíóúñ](?:[^\d\(]|\([^)\d]*\))*?)\s+((?:\(?-?[\d\.]+(?:,\d+)?\)?|[—–-])(?:\s+(?:\(?-?[\d\.]+(?:,\d+)?\)?|[—–-]))*)\s*$", l)
-            if m and len(m.group(2).strip()) > 3:
+            if m and len(m.group(2).strip()) > 3 and not re.search(r"\d{2}\.\d{2}\.\d{4}|\d{2}-\d{2}-\d{4}", m.group(3)):  # fechas ≠ montos
                 cod = m.group(1) or codigo; glosa = m.group(2).strip(); toks = m.group(3).split()
                 nota = None
-                if len(toks) >= 2 and re.fullmatch(r"\d{1,2}", toks[0]):
-                    nota, toks = toks[0], toks[1:]
+                if re.fullmatch(r"\d{1,2}", toks[0]) and (len(toks) >= 2 or not _norm(glosa).startswith("TOTAL")):
+                    nota, toks = toks[0], toks[1:]  # nº de nota (una cifra suelta de 1-2 dígitos sin monto = sólo la nota)
                 nums = [parse_num(x) for x in toks[:4]]
             elif any(ch.isalpha() for ch in l) and not _norm(l).startswith(("M$", "NOTA", "AL 31", "AL 30", "POR EL", "POR LOS", "EN MILES", "(EN MILES")):
                 glosa = l; cod = codigo
@@ -552,7 +553,9 @@ def ocr_paginas_imagen(doc, paginas, max_paginas=16, dpi=300):
     """Páginas cuyo balance viene como imagen (texto < 300 caracteres pero con imágenes): se reemplaza su texto por el
     OCR de Tesseract (idioma spa, psm 6 = bloque uniforme). Devuelve (paginas, indices_ocr). Sin tesseract → sin cambios."""
     import subprocess, tempfile
-    idx = [i for i in range(min(len(paginas), max_paginas)) if len(paginas[i].strip()) < 300 and doc[i].get_images()]
+    def _sin_cifras(t):  # página "sólo encabezado": casi sin cifras con separador de miles y poco texto
+        return len(re.findall(r"\d{1,3}(?:\.\d{3})+", t)) < 3 and len(t.strip()) < 1200
+    idx = [i for i in range(min(len(paginas), max_paginas)) if _sin_cifras(paginas[i]) and (doc[i].get_images() or _estado_de_pagina(paginas[i]))]
     if not idx or not _tesseract_disponible():
         return paginas, []
     out = list(paginas); hechos = []

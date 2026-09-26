@@ -6,5 +6,5 @@
   "ruts": "96971830,96765170,76965774,96972780,96847360",
   "debug": "true",
   "_nota": "Modificar y commitear este archivo lanza .github/workflows/securitizadoras_extraccion.yml; los resultados quedan en una rama actions/ps-extraccion-*. ruts (cuerpo, separados por coma) y debug=true son opcionales: debug vuelca el texto de los PDFs que no cuadran en docs/outputs/securitizadoras/_debug/ de la rama de resultados.",
-  "_nota2": "verificación tras arreglos 18-24 (misma muestra de diagnóstico)"
+  "_nota2": "verificación 2: OCR por criterio 'página sin cifras', fechas/nota suelta, catálogo v4"
 }
