@@ -7161,6 +7161,106 @@
       "api": [
         "OK"
       ]
+    },
+    "99501480-7|2021-06": {
+      "rut": "99501480-7",
+      "razon_social": "PENTA FINANCIERO S.A.",
+      "periodo": "2021-06",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 8,
+      "notas_sin_leer": 7,
+      "lineas_balance": 35,
+      "lineas_resultados": 23,
+      "api": [
+        "OK"
+      ]
+    },
+    "96861280-8|2021-06": {
+      "rut": "96861280-8",
+      "razon_social": "EUROCAPITAL S.A.",
+      "periodo": "2021-06",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 10,
+      "notas_sin_leer": 7,
+      "lineas_balance": 33,
+      "lineas_resultados": 16,
+      "api": [
+        "OK"
+      ]
+    },
+    "96809970-1|2021-06": {
+      "rut": "96809970-1",
+      "razon_social": "UNIDAD LEASING HABITACIONAL S.A.",
+      "periodo": "2021-06",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 7,
+      "notas_sin_leer": 2,
+      "lineas_balance": 27,
+      "lineas_resultados": 17,
+      "api": [
+        "OK"
+      ]
+    },
+    "96784400-4|2021-06": {
+      "rut": "96784400-4",
+      "razon_social": "CONCRECES LEASING S.A.",
+      "periodo": "2021-06",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 13,
+      "notas_sin_leer": 1,
+      "lineas_balance": 34,
+      "lineas_resultados": 14,
+      "api": [
+        "OK"
+      ]
+    },
+    "96678790-2|2021-06": {
+      "rut": "96678790-2",
+      "razon_social": "FORUM SERVICIOS FINANCIEROS S.A.",
+      "periodo": "2021-06",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 12,
+      "notas_ok": 14,
+      "notas_sin_leer": 2,
+      "lineas_balance": 55,
+      "lineas_resultados": 25,
+      "api": [
+        "OK"
+      ]
     }
   }
 }
