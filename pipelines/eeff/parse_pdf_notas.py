@@ -395,6 +395,12 @@ def _es_ruido_etiqueta(line: str) -> bool:
     blob = fold(line)
     if not blob or _es_moneda(line) or blob in {"m", "ms", "sociedad", "concepto"}:
         return True
+    # Bajo un concepto, la sociedad es el rótulo. Sola, delante de sus montos, es la partida.
+    return _es_sociedad(line)
+
+
+def _es_sociedad(line: str) -> bool:
+    blob = fold(line)
     return blob.endswith((" s a", " s a s", " ltda", " corp", " spa", " s a c v"))
 
 
@@ -407,6 +413,7 @@ def _filas_texto(texto: str) -> list[tuple[str, list[float]]]:
         line = lineas[i]
         if _es_encabezado(line) or line.endswith(":") or fold(line) in {
             "tipo de activo", "concepto", "conceptos", "detalle",
+            "corriente", "corrientes", "no corriente", "no corrientes",
         }:
             i += 1
             continue
@@ -445,6 +452,29 @@ def _filas_texto(texto: str) -> list[tuple[str, list[float]]]:
                 continue
         if montos and letras >= 3 and _concepto_util(concepto):
             filas.append((concepto, montos))
+            i += 1
+            continue
+        # Recfin SpA. no cuelga de «no corrientes»: la sociedad es la partida.
+        if _es_sociedad(line) and letras >= 3 and len(line) <= 80:
+            j = i + 1
+            while (
+                j < len(lineas)
+                and j <= i + 4
+                and _es_ruido_etiqueta(lineas[j])
+                and not _es_sociedad(lineas[j])
+            ):
+                j += 1
+            juntados = []
+            k = j
+            while k < len(lineas) and len(juntados) < 8 and _es_linea_monto(
+                lineas[k], lineas[k + 1] if k + 1 < len(lineas) else "", bool(juntados)
+            ):
+                juntados.extend(_montos(lineas[k]) or [(_monto_menor(lineas[k]) or 0)])
+                k += 1
+            if juntados and _concepto_util(line):
+                filas.append((line, juntados))
+                i = k
+                continue
         i += 1
     return filas
 

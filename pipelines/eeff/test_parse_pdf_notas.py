@@ -354,6 +354,32 @@ Total
     assert composicion_que_calza(texto, 47392) is None
 
 
+def test_la_sociedad_es_la_partida_de_relacionadas():
+    texto = """
+NOTA 7 CUENTAS POR COBRAR Y POR PAGAR A ENTIDADES RELACIONADAS
+Corrientes
+No corrientes
+Recfin SpA.
+1.689.086
+-
+Inmobiliaria IV Centenario S.A.
+440
+-
+Klym S.A.S (1)
+3.524.986
+-
+Otros (2)
+32.482
+-
+Total
+5.246.994
+12.249
+"""
+    comp = composicion_que_calza(texto, 5246994)
+    assert comp is not None
+    assert sum(f["monto_miles"] for f in comp["filas"] if not f["es_total"]) == 5246994
+
+
 def test_la_nota_al_pie_no_abre_otra_nota():
     from pipelines.eeff.parse_pdf_notas import secciones
 
