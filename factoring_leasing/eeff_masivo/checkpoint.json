@@ -8675,6 +8675,107 @@
         "OK",
         "SOLO_API"
       ]
+    },
+    "99513410-1|2020-06": {
+      "rut": "99513410-1",
+      "razon_social": "SMB FACTORING S.A.",
+      "periodo": "2020-06",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 2,
+      "notas_sin_leer": 12,
+      "lineas_balance": 26,
+      "lineas_resultados": 9,
+      "api": [
+        "OK"
+      ]
+    },
+    "99501480-7|2020-06": {
+      "rut": "99501480-7",
+      "razon_social": "PENTA FINANCIERO S.A.",
+      "periodo": "2020-06",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 9,
+      "notas_sin_leer": 5,
+      "lineas_balance": 34,
+      "lineas_resultados": 22,
+      "api": [
+        "OK"
+      ]
+    },
+    "96861280-8|2020-06": {
+      "rut": "96861280-8",
+      "razon_social": "EUROCAPITAL S.A.",
+      "periodo": "2020-06",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 5,
+      "notas_sin_leer": 12,
+      "lineas_balance": 33,
+      "lineas_resultados": 15,
+      "api": [
+        "OK"
+      ]
+    },
+    "96809970-1|2020-06": {
+      "rut": "96809970-1",
+      "razon_social": "UNIDAD LEASING HABITACIONAL S.A.",
+      "periodo": "2020-06",
+      "tipo_eeff": "Individual",
+      "estado": "leido",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 11,
+      "notas_sin_leer": 0,
+      "lineas_balance": 29,
+      "lineas_resultados": 17,
+      "api": [
+        "OK"
+      ]
+    },
+    "96784400-4|2020-06": {
+      "rut": "96784400-4",
+      "razon_social": "CONCRECES LEASING S.A.",
+      "periodo": "2020-06",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 2,
+      "notas_ok": 11,
+      "notas_sin_leer": 2,
+      "lineas_balance": 34,
+      "lineas_resultados": 15,
+      "api": [
+        "DIFIERE",
+        "OK"
+      ]
     }
   }
 }
