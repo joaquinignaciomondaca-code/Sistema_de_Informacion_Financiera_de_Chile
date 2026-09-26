@@ -98,9 +98,7 @@ const DATA_VIEWER_CATALOG = [
     group: "Factoring & Leasing — De Interés",
     tables: [
       { id: "factoring_leasing_maestro", name: "factoring_leasing.maestro (28 entidades CMF)" },
-      { id: "factoring_leasing_balance_resumen", name: "factoring_leasing.balance_resumen API (validación, no es el PDF)" },
-      { id: "factoring_leasing_nota_efectivo_detalle", name: "NO USAR: efectivo por porcentajes, no es el PDF" },
-      { id: "factoring_leasing_cartera_morosidad_detalle", name: "NO USAR: cartera por porcentajes, no es el PDF" }
+      { id: "factoring_leasing_balance_resumen", name: "factoring_leasing.balance_resumen API (validación, no es el PDF)" }
     ]
   },
   {

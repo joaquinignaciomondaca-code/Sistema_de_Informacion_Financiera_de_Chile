@@ -14,7 +14,12 @@ from pathlib import Path
 from pipelines.eeff import parse_md
 from pipelines.eeff.alias import ESQUEMAS_CERRADOS, PARSER_VERSION, TABLAS_COMUNES
 from pipelines.eeff.estado import Store, ahora, id_documento
-from pipelines.eeff.validate_api import cuadratura_balance, validar_documento
+from pipelines.eeff.validate_api import (
+    cuadratura_balance,
+    cuadratura_detalle,
+    cuadratura_resultados,
+    validar_documento,
+)
 
 TOLERANCIA_MILES = 1.0
 
@@ -165,16 +170,16 @@ def _estado_api(vals: list[dict]) -> str:
     return "PARCIAL"
 
 
-def _estado_extraccion(balance, tablas, cuadre_balance, cuadres_nota) -> str:
+def _estado_extraccion(balance, tablas, cuadre_balance, cuadres_nota, faltan_lineas: bool) -> str:
     if not balance:
         return "PDF_VACIO"
     if any(estado == "DIFIERE" for estado in cuadres_nota.values()):
         return "PDF_NOTA_DIFIERE"
     if any(tablas.values()):
-        if cuadre_balance.get("estado") == "OK":
+        if cuadre_balance.get("estado") == "OK" and not faltan_lineas:
             return "PDF_CON_NOTAS"
         return "PDF_PARCIAL_CON_NOTAS"
-    if cuadre_balance.get("estado") == "OK":
+    if cuadre_balance.get("estado") == "OK" and not faltan_lineas:
         return "PDF_CARATULA"
     if cuadre_balance.get("estado") == "DIFIERE":
         return "PDF_DESCUADRADO"
@@ -262,6 +267,15 @@ def _armar(meta: dict, parsed: dict, archivo: str, sha256: str, fila_api: dict |
             item["estado_tabla"] = "esquema_pendiente"
 
     cuadre_balance = cuadratura_balance(balance)
+    cara = cuadratura_detalle(balance)
+    if cara["estado"] == "OK" and cuadre_balance.get("estado") == "INCOMPLETO":
+        cara = {
+            "estado": "INCOMPLETO",
+            "hueco": "la carátula no trae los totales para cerrar activos = pasivos + patrimonio",
+        }
+    resultado = cuadratura_resultados(resultados)
+    faltan_lineas = cara["estado"] == "FALTAN_LINEAS" or resultado["estado"] == "FALTAN_LINEAS"
+    hueco = " | ".join(texto for texto in (cara.get("hueco"), resultado.get("hueco")) if texto)
     campos = {"efectivo": "saldo_miles", "deudores": "neto_miles"}
     cuentas = {"efectivo": "efectivo", "deudores": "deudores"}
     cuadres_nota = {}
@@ -360,9 +374,14 @@ def _armar(meta: dict, parsed: dict, archivo: str, sha256: str, fila_api: dict |
         "lineas_balance": len(balance),
         "lineas_resultados": len(resultados),
         "tablas_leidas": ",".join(leidas),
-        "estado_extraccion": _estado_extraccion(balance, tablas, cuadre_balance, cuadres_nota),
+        "estado_extraccion": _estado_extraccion(
+            balance, tablas, cuadre_balance, cuadres_nota, faltan_lineas
+        ),
         "cuadre_balance": cuadre_balance.get("estado", ""),
         "diff_balance_m_clp": _num(cuadre_balance.get("diff_m_clp")),
+        "cuadre_caratula": cara["estado"],
+        "cuadre_resultados": resultado["estado"],
+        "hueco": hueco,
         "cuadre_efectivo": cuadres_nota.get("efectivo", "SIN_NOTA"),
         "diff_efectivo_miles": diffs_nota.get("efectivo"),
         "cuadre_deudores": cuadres_nota.get("deudores", "SIN_NOTA"),
@@ -433,6 +452,7 @@ def procesar_uno(path: Path, store: Store, checkpoint: dict, forzar: bool, fila_
     print(
         f"[ok] {clave} {doc['estado_extraccion']} "
         f"balance={doc['lineas_balance']} notas={doc['tablas_leidas'] or '-'} "
+        f"caratula={doc['cuadre_caratula']} resultados={doc['cuadre_resultados']} "
         f"efectivo={doc['cuadre_efectivo']} deudores={doc['cuadre_deudores']} api={doc['estado_api']}"
     )
     return "ok"

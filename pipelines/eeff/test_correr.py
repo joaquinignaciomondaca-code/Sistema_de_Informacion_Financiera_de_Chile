@@ -125,6 +125,80 @@ def test_forzar_y_olvidar(tmp: Path):
     print("OK olvidar ausentes no toca al que sigue en disco")
 
 
+def test_no_marca_completa_una_caratula_o_un_resultado_que_no_suma(tmp: Path):
+    fuentes = tmp / "fuentes"
+    fuentes.mkdir(parents=True)
+    (fuentes / "3-5_2026-03.md").write_text(
+        """rut: 3-5
+razon_social: CARA
+periodo: 2026-03
+fecha_corte: 2026-03-31
+tipo_eeff: Individual
+fuente: test
+
+## BALANCE
+nombre|nota|monto_miles|comparativo_miles|clase
+Efectivo y equivalentes al efectivo|4|100|90|Activo
+Deudores comerciales y otras cuentas por cobrar|5|200|180|Activo
+Activos corrientes totales||400|300|Total
+Total de activos||400|300|Total
+Total de pasivos||150|100|Total
+Patrimonio total||250|200|Total
+
+## RESULTADOS
+nombre|nota|monto_miles|comparativo_miles|clase
+Ingresos de actividades ordinarias||10|9|Ingreso
+Ganancia bruta||10|9|Resultado
+Ganancia del periodo||10|9|Resultado
+
+## NOTAS_INDICE
+numero|titulo|pagina
+1|Antecedentes|1
+""",
+        encoding="utf-8",
+    )
+    (fuentes / "4-3_2026-03.md").write_text(
+        """rut: 4-3
+razon_social: RESULTADO
+periodo: 2026-03
+fecha_corte: 2026-03-31
+tipo_eeff: Individual
+fuente: test
+
+## BALANCE
+nombre|nota|monto_miles|comparativo_miles|clase
+Efectivo y equivalentes al efectivo|4|50|40|Activo
+Total de activos||50|40|Total
+Total de pasivos||20|10|Total
+Patrimonio total||30|30|Total
+
+## RESULTADOS
+nombre|nota|monto_miles|comparativo_miles|clase
+Ingresos de actividades ordinarias||10|8|Ingreso
+Ganancia bruta||10|8|Resultado
+Gastos de administración||-3|-1|Gasto
+Ganancia antes de impuestos||4|5|Resultado
+
+## NOTAS_INDICE
+numero|titulo|pagina
+1|Antecedentes|1
+""",
+        encoding="utf-8",
+    )
+    store = Store(tmp / "estado")
+    correr(fuentes, store, tmp / "out", publicar=False)
+    docs = {row["rut"]: row for row in store.leer_todo()["documentos"]}
+    assert docs["3-5"]["estado_extraccion"] == "PDF_PARCIAL", docs["3-5"]
+    assert docs["3-5"]["cuadre_balance"] == "OK"
+    assert docs["3-5"]["cuadre_caratula"] == "FALTAN_LINEAS"
+    assert "Activos corrientes totales" in docs["3-5"]["hueco"]
+    assert docs["4-3"]["estado_extraccion"] == "PDF_PARCIAL", docs["4-3"]
+    assert docs["4-3"]["cuadre_caratula"] == "OK"
+    assert docs["4-3"]["cuadre_resultados"] == "FALTAN_LINEAS"
+    assert "comparativo" in docs["4-3"]["hueco"]
+    print("OK una carátula o un resultado que no suma no queda como leído completo")
+
+
 def test_lock(tmp: Path):
     store = Store(tmp / "estado")
     lock = store.root / "LOCK"
@@ -142,5 +216,7 @@ if __name__ == "__main__":
         test_reanuda_y_no_se_cae_con_un_fallo(Path(tmp) / "a")
     with tempfile.TemporaryDirectory() as tmp:
         test_forzar_y_olvidar(Path(tmp) / "b")
+    with tempfile.TemporaryDirectory() as tmp:
+        test_no_marca_completa_una_caratula_o_un_resultado_que_no_suma(Path(tmp) / "d")
     with tempfile.TemporaryDirectory() as tmp:
         test_lock(Path(tmp) / "c")
