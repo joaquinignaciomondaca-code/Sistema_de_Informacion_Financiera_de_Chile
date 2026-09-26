@@ -200,18 +200,29 @@ _SECCION = {
     "activo corriente", "activos corrientes", "activo no corriente", "activos no corrientes",
     "pasivo corriente", "pasivos corrientes", "pasivo no corriente", "pasivos no corrientes",
 }
-_NOTA_LINEA = re.compile(r"^\(?\d{1,2}\)?$")
+_NOTA_LINEA = re.compile(r"^\(?[1-9]\d?(?:[.\s]?[a-z])?\)?$")
 _CORTE_ESTADO = {
     "balance": ("estado de resultados", "estados de resultados", "estado de flujos", "estados de flujos"),
-    "resultado": ("otros resultados integrales", "estado de cambios", "estados de cambios", "estado de flujos", "estados de flujos"),
+    "resultado": (
+        "otro resultado integral",
+        "otros resultados integrales",
+        "ganancia por accion",
+        "estado de cambios",
+        "estados de cambios",
+        "estado de flujos",
+        "estados de flujos",
+    ),
 }
+_ENCABEZADO = {"ganancia", "perdida", "utilidad", "ganancia perdida", "utilidad perdida", "al", "acumulado"}
 
 
 def _es_ruido(linea: str) -> bool:
     bajo = fold(linea)
-    if not bajo or bajo in {"nota", "m$", "ms", "n", "activ"}:
+    if not bajo or bajo in {"nota", "m$", "ms", "n", "activ", "numero"}:
         return True
-    if bajo.startswith("estado") or "expresado en" in bajo or "notas adjuntas" in bajo:
+    if any(marca in bajo for marca in ("s.a.", "s.a ", " spa", "limitada", "subsidiaria", "y filiales", "y filial")):
+        return True
+    if bajo.startswith("estado") or "expresado en" in bajo or "notas adjuntas" in bajo or "miles de pesos" in bajo:
         return True
     if _es_fecha(linea) or re.fullmatch(r"(ene|feb|mar|abr|may|jun|jul|ago|sep|oct|nov|dic)\s+20\d{2}", bajo):
         return True
@@ -224,6 +235,15 @@ def _es_ruido(linea: str) -> bool:
     if linea.isupper() and len(linea) > 4 and not bajo.startswith("total"):
         return True
     return False
+
+
+def _es_encabezado_columna(linea: str) -> bool:
+    limpio = re.sub(r"[^a-z ]", "", fold(linea)).strip()
+    return limpio in _ENCABEZADO
+
+
+def _es_guion(linea: str) -> bool:
+    return linea.strip() in {"-", "—", "–"}
 
 
 def _montos_de_linea(linea: str) -> list[float] | None:
@@ -273,25 +293,63 @@ def lineas_apiladas(texto: str, estado: str, meta: dict, orden: str = "corte_pri
         vistos.add(clave)
         filas.append(_linea(meta, estado, titulo, nota_emit, monto, comp))
 
-    for cruda in (texto or "").splitlines():
-        linea = _limpiar_celda(cruda)
-        if not linea or _es_ruido(linea):
-            continue
+    utiles = [linea for cruda in (texto or "").splitlines() if (linea := _limpiar_celda(cruda)) and not _es_ruido(linea)]
+    limpias = []
+    for idx, linea in enumerate(utiles):
+        if _es_encabezado_columna(linea):
+            siguiente = utiles[idx + 1] if idx + 1 < len(utiles) else ""
+            if siguiente and _montos_de_linea(siguiente) is None and not _es_guion(siguiente):
+                continue
+        limpias.append(linea)
+    guion = False
+    for linea in limpias:
         bajo = fold(linea)
         if any(marca in bajo for marca in cortes) and filas:
             break
-        if _NOTA_LINEA.fullmatch(linea):
-            if nombre:
-                nota = re.sub(r"\D", "", linea)
+        if _es_guion(linea):
+            if guion and not montos:
+                montos = [0.0, 0.0]
+                guion = False
+                emitir()
+                continue
+            if montos:
+                montos.append(0.0)
+                if len(montos) >= 2:
+                    emitir()
+                continue
+            guion = True
+            continue
+        if re.fullmatch(r"[1-9]\d?", linea) and not nombre and not montos and not nota:
+            continue
+        if _NOTA_LINEA.fullmatch(linea) and nombre and not nota and not montos:
+            guion = False
+            nota = re.sub(r"\D", "", linea.split(".")[0])
+            continue
+        if re.fullmatch(r"[1-9]\d?", linea) and (nota or montos):
+            montos.append(float(linea))
+            if len(montos) >= 2:
+                guion = False
+                emitir()
             continue
         encontrados = _montos_de_linea(linea)
         if encontrados is not None:
+            if guion and not montos and len(encontrados) >= 2:
+                guion = False
+                montos = list(encontrados[:2])
+                emitir()
+                continue
             montos.extend(encontrados)
             if len(montos) >= 2:
+                guion = False
                 emitir()
             continue
-        if montos:
+        if guion and len(montos) == 1:
+            montos = [0.0] + montos
+            guion = False
             emitir()
+        elif montos:
+            emitir()
+        guion = False
         if fold(linea) in _SECCION:
             nombre = []
             nota = ""
