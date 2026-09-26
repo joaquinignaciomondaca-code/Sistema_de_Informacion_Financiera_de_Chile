@@ -16150,6 +16150,108 @@
         "DIFIERE",
         "OK"
       ]
+    },
+    "99513410-1|2014-03": {
+      "rut": "99513410-1",
+      "razon_social": "SMB FACTORING S.A.",
+      "periodo": "2014-03",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "INCOMPLETO",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 0,
+      "notas_sin_leer": 17,
+      "lineas_balance": 29,
+      "lineas_resultados": 8,
+      "api": [
+        "OK"
+      ]
+    },
+    "99501480-7|2014-03": {
+      "rut": "99501480-7",
+      "razon_social": "PENTA FINANCIERO S.A.",
+      "periodo": "2014-03",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "INCOMPLETO",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 5,
+      "notas_sin_leer": 5,
+      "lineas_balance": 21,
+      "lineas_resultados": 12,
+      "api": [
+        "OK",
+        "SOLO_API"
+      ]
+    },
+    "96861280-8|2014-03": {
+      "rut": "96861280-8",
+      "razon_social": "EUROCAPITAL S.A.",
+      "periodo": "2014-03",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 7,
+      "notas_sin_leer": 10,
+      "lineas_balance": 31,
+      "lineas_resultados": 14,
+      "api": [
+        "OK"
+      ]
+    },
+    "96809970-1|2014-03": {
+      "rut": "96809970-1",
+      "razon_social": "UNIDAD LEASING HABITACIONAL S.A.",
+      "periodo": "2014-03",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 7,
+      "notas_sin_leer": 5,
+      "lineas_balance": 24,
+      "lineas_resultados": 15,
+      "api": [
+        "OK",
+        "SOLO_API"
+      ]
+    },
+    "96784400-4|2014-03": {
+      "rut": "96784400-4",
+      "razon_social": "CONCRECES LEASING S.A.",
+      "periodo": "2014-03",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 3,
+      "notas_ok": 10,
+      "notas_sin_leer": 5,
+      "lineas_balance": 33,
+      "lineas_resultados": 11,
+      "api": [
+        "OK"
+      ]
     }
   }
 }
