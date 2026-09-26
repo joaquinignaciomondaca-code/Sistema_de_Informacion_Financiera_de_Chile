@@ -26,4 +26,6 @@ factoring_leasing/eeff_estado/LOCK
 .DS_Store
 Thumbs.db
 
-.github/
+.github/*
+!.github/workflows/
+!.github/workflows/**
