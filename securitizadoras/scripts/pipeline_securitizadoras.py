@@ -177,7 +177,10 @@ def paso_maestro(op):
 
 # ----------------------------------------------------------------------------- paso gestoras
 def _celda(html, etiqueta):
-    m = re.search(etiqueta + r"\s*</div>\s*</td>\s*<td[^>]*derecha[^>]*>\s*<div[^>]*>([^<]+)</div>", html, re.I)
+    """Valor de la primera columna (período actual) de la fila cuya glosa coincide. Estructura conocida del balance
+    primero; si no, genérico: glosa seguida sólo de etiquetas/espacios hasta el primer número (excluye '[sinopsis]')."""
+    m = re.search(etiqueta + r"\s*</div>\s*</td>\s*<td[^>]*derecha[^>]*>\s*<div[^>]*>([^<]+)</div>", html, re.I) or \
+        re.search(etiqueta + r"\s*(?:<[^>]*>|\s)+?(\(?-?\d[\d\.]*\)?|-)\s*<", html, re.I)
     if not m: return None
     v = parse_num(m.group(1))
     return None if v is None else v / 1000.0  # CMF publica en pesos → miles
@@ -197,7 +200,7 @@ def parse_fecu_gestora(html):
             "patrimonio_neto_m_clp": pat if pat is not None else round(act - pas, 6),
             "patrimonio_neto_es_derivado": pat is None,
             "efectivo_y_equivalentes_m_clp": _celda(html, r"Efectivo\s+y\s+equivalentes\s+al\s+efectivo"),
-            "ganancia_perdida_ejercicio_m_clp": _celda(html, r"Ganancia\s+\(p[eé]rdida\)(?:\s+del\s+ejercicio|\s+atribuible[^<]*)?")}
+            "ganancia_perdida_ejercicio_m_clp": _celda(html, r"Ganancia\s+\(p[eé]rdida\)(?!\s*[\[,]|\s+(?:antes|procedente|acumulada|por|atribuible|que|de\s+actividades|bruta))")}
 
 
 def _fetch_gestora(args):
@@ -233,34 +236,47 @@ def paso_gestoras(op, secs, desde=2014):
 
 
 # ----------------------------------------------------------------------------- paso ps (PDF)
-def codigo_desde_etiqueta_web(etiqueta):
-    """'Patrimonios Separados - BVOLS 3 al 12/2024' → 'BVOLS-3'; '… - N° 12 al …' / 'PS 12' → 'PS-12'. None si no hay código."""
-    t = _norm(etiqueta)
+_ROMANOS = {"I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6, "VII": 7, "VIII": 8, "IX": 9, "X": 10, "XI": 11, "XII": 12}
+
+
+def canonizar_codigo(txt):
+    """Normaliza el nombre de un PS a un código estable: 'PATRIMONIO SEPARADO N°35'/'Patrimonio 35'/'PS35' → 'PS-35';
+    'BVOLS3'/'BVOLS 3' → 'BVOLS-3'; 'PS7 firmadp' → 'PS-7'; 'V' → 'PS-5'. None si no queda nada útil."""
+    t = _norm(txt)
     t = re.sub(r"\bAL\s+\d{2}/\d{4}.*$", "", t)
-    t = re.sub(r"^.*?PATRIMONIOS?\s+SEPARADOS?\s*[-–:]?\s*", "", t).strip(" -–:")
-    t = re.sub(r"^(EEFF|ESTADOS?\s+FINANCIEROS?)\s*[-–:]?\s*", "", t).strip(" -–:")
+    t = re.sub(r"\b(PATRIMONIOS?|SEPARADOS?|EEFF|ESTADOS?|FINANCIEROS?|FIRMAD\w*|FINAL|DEFINITIVOS?|CORREGIDOS?|VERSION|DE|DEL|EL)\b", " ", t)
+    t = re.sub(r"[^A-Z0-9 ]+", " ", t.replace("°", " ").replace("º", " ")).strip()
+    t = re.sub(r"\s+", " ", t)
     if not t:
         return None
-    m = re.fullmatch(r"(?:PS|N[°º]?|NUMERO|NRO\.?)?\s*-?\s*(\d{1,3})", t)
+    m = re.fullmatch(r"(?:PS|N|NA|NO|NRO|NUMERO|NUM)?\s*(\d{1,3})(?:\s+\d)?", t)  # 'PS 11 2' = versión 2 del archivo
     if m:
         return f"PS-{int(m.group(1))}"
-    if re.fullmatch(r"[A-Z]{2,}[A-Z0-9]*(?:[\s-]+[A-Z0-9]+)*", t):
-        return re.sub(r"[\s-]+", "-", t)
-    return None
+    if t in _ROMANOS:
+        return f"PS-{_ROMANOS[t]}"
+    toks = t.split(" ")
+    if not re.fullmatch(r"[A-Z]{2,}[A-Z0-9]*", toks[0]):
+        return None
+    # letras+dígitos pegados al inicio: BVOLS3 → BVOLS 3
+    toks = re.sub(r"^([A-Z]{2,}?)(\d+)$", r"\1 \2", toks[0]).split(" ") + toks[1:]
+    return "-".join(toks)
+
+
+def codigo_desde_etiqueta_web(etiqueta):
+    """'Patrimonios Separados - BVOLS 3 al 12/2024' → 'BVOLS-3'. Quita el prefijo genérico de la fila web y canoniza."""
+    t = _norm(etiqueta)
+    t = re.sub(r"^.*?PATRIMONIOS\s+SEPARADOS\s*[-–:]?\s*", "", t, count=1)
+    return canonizar_codigo(t)
 
 
 def meta_desde_texto(texto_inicial, etiqueta_web, rut_body, nombre):
     """Identifica el PS: primero por la etiqueta oficial de la web CMF, luego por el texto del PDF. None si no hay código."""
     codigo = codigo_desde_etiqueta_web(etiqueta_web)
     if not codigo:
-        m = re.search(r"PATRIMONIO\s+SEPARADO\s+(?:N[°º\.\s]*|NUMERO\s*)(\d+)", texto_inicial, re.I)
-        if m:
-            codigo = f"PS-{int(m.group(1))}"
-        else:
-            m = re.search(r"PATRIMONIO\s+SEPARADO\s+([A-Z]{2,}[A-Z0-9]*(?:-[A-Z0-9]+)?)", texto_inicial, re.I)
-            if not m or m.group(1).upper() in ("N", "NO", "TODOS", "DE", "DEL"):
-                return None
-            codigo = m.group(1).upper()
+        m = re.search(r"PATRIMONIO\s+SEPARADO\s+((?:N[°º\.\s]*|NUMERO\s*)?\d+|[A-Z]{2,}[A-Z0-9]*(?:[\s-][A-Z0-9]+)?)", texto_inicial, re.I)
+        codigo = canonizar_codigo(m.group(1)) if m else None
+        if not codigo:
+            return None
     m_reg = re.search(r"INSCRIPCI[OÓ]N\s+DE\s+LA\s+EMISI[OÓ]N\s+EN\s+EL\s+REGISTRO\s*:?\s*(\d+)", texto_inicial, re.I) or \
         re.search(r"(?:REGISTRO(?:\s+DE\s+VALORES)?|INSCRIPCI[OÓ]N)[^\n\d]{0,40}N[°º\.]?\s*(\d+)", texto_inicial, re.I)
     return {"id_patrimonio": f"{rut_body}_{codigo.lower().replace('-', '_')}", "rut_administradora": rut_completo(rut_body),
@@ -298,13 +314,21 @@ def _norm(txt):
     return re.sub(r"\s+", " ", t).strip()
 
 
-def _mapear(estado, codigo, glosa):
+_SECCIONES = [(k, re.compile(v)) for k, v in CATALOGO.get("secciones", {}).items()]
+_POR_REGEX_SECCION = [(e["seccion"], re.compile(e["regex_seccion"]), e) for e in CATALOGO["cuentas"] if e.get("regex_seccion")]
+
+
+def _mapear(estado, codigo, glosa, seccion=None):
     if codigo and codigo in _POR_CODIGO:
         return _POR_CODIGO[codigo]
     g = _norm(glosa)
     for est, rx, e in _POR_REGEX:
         if est == estado and rx.search(g):
             return e
+    if seccion:  # glosa sin plazo explícito: se resuelve por la sección del balance en que aparece
+        for sec, rx, e in _POR_REGEX_SECCION:
+            if sec == seccion and rx.search(g):
+                return e
     return None
 
 
@@ -332,13 +356,17 @@ def parse_eeff_lineas(paginas, max_paginas=16):
         lineas = [l.strip() for l in t.split("\n") if l.strip()]
         if sum(1 for l in lineas if _RX_NUM.match(l) and any(ch.isdigit() for ch in l)) < 3 and not any(re.search(r"\d[\d\.]{3,}\s+\d", l) for l in lineas):
             continue
-        codigo = None; pagina_out = []
+        codigo = None; pagina_out = []; seccion = None
+        multicol = any(re.search(r"\$?\s*NO\s+REAJUSTABLES", _norm(l)) for l in lineas)
         for i, l in enumerate(lineas):
             if _RX_CODIGO.match(l):
                 codigo = l; continue
             ln = _norm(l)
             if _RX_EXC.search(ln) and not re.search(r"\d", ln):
                 estado = "EXCEDENTES"  # el estado de excedentes puede venir en la misma página que el pasivo
+            for sec, rx in _SECCIONES:
+                if rx.fullmatch(ln):
+                    seccion = sec
             if any(rx.fullmatch(ln) for rx in _RX_IGNORAR):
                 codigo = None; continue
             # fila completa en una línea: "Disponible 5 119.969 15.615"  ó  "11.010 Disponible 119.969 15.615"
@@ -348,10 +376,10 @@ def parse_eeff_lineas(paginas, max_paginas=16):
                 nota = None
                 if len(toks) >= 2 and re.fullmatch(r"\d{1,2}", toks[0]):
                     nota, toks = toks[0], toks[1:]
-                nums = [parse_num(x) for x in toks[:2]]
+                nums = [parse_num(x) for x in toks[:4]]
             elif any(ch.isalpha() for ch in l) and not _norm(l).startswith(("M$", "NOTA", "AL 31", "AL 30", "POR EL", "POR LOS", "EN MILES", "(EN MILES")):
                 glosa = l; cod = codigo
-                nums = _numeros_siguientes(lineas, i, 2, saltar_nota=True)
+                nums = _numeros_siguientes(lineas, i, 4 if multicol else 2, saltar_nota=True)
                 nota = lineas[i + 1] if i + 1 < len(lineas) and re.fullmatch(r"\d{1,2}", lineas[i + 1]) and nums else None
                 if not nums:
                     codigo = None; continue
@@ -360,20 +388,22 @@ def parse_eeff_lineas(paginas, max_paginas=16):
             codigo = None
             if not nums or nums[0] is None and (len(nums) < 2 or nums[1] is None):
                 continue
-            e = _mapear(estado, cod, glosa)
-            key = (estado, cod, _norm(glosa))
+            e = _mapear(estado, cod, glosa, seccion)
+            key = (estado, seccion, cod, _norm(glosa))
             if key in vistos:  # misma glosa repetida (p. ej. subtotal duplicado) → se conserva la primera
                 continue
             vistos.add(key)
             pagina_out.append({"estado": estado, "pagina_pdf": pno + 1, "codigo_fecu": cod, "glosa": glosa, "nota": nota,
                                "monto_mclp": nums[0], "monto_anterior_mclp": nums[1] if len(nums) > 1 else None,
+                               "monto_col3": nums[2] if len(nums) > 2 else None, "monto_col4": nums[3] if len(nums) > 3 else None,
+                               "layout_multicolumna": multicol, "seccion_balance": seccion,
                                "cuenta_canonica": e["canonica"] if e else None, "seccion": e["seccion"] if e else None,
                                "es_total": bool(e and e.get("total"))})
         # una página de estado financiero tiene al menos una línea de total reconocida; si no, es una nota u otra tabla
         if any(l["es_total"] for l in pagina_out):
             lineas_out.extend(pagina_out)
         else:
-            for l in pagina_out: vistos.discard((l["estado"], l["codigo_fecu"], _norm(l["glosa"])))
+            for l in pagina_out: vistos.discard((l["estado"], l.get("seccion_balance"), l["codigo_fecu"], _norm(l["glosa"])))
     return lineas_out
 
 

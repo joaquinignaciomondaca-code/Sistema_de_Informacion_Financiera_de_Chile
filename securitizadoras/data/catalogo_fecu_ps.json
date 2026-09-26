@@ -1,6 +1,6 @@
 {
   "_descripcion": "Catálogo de cuentas de los EEFF de Patrimonios Separados (formato FECU-PS, CMF). `codigo` es el código FECU cuando el PDF lo imprime; si el PDF sólo trae glosas se mapea por `regex` (mayúsculas, sin tildes). Cuentas no reconocidas se conservan con cuenta_canonica NULL. Versionar cualquier cambio en `version`.",
-  "version": "2026-09-26.2",
+  "version": "2026-09-26.3",
   "estados": {
     "BALANCE": [
       "BALANCE",
@@ -40,7 +40,8 @@
         "11.030",
         "11.100"
       ],
-      "regex": "^ACTIVOS?\\s+SECURITIZADOS?\\s*\\(?\\s*(CORTO\\s+PLAZO|CIRCULANTE|C/P)"
+      "regex": "^ACTIVOS?\\s+SECURITIZADOS?\\s*\\(?\\s*(CORTO\\s+PLAZO|CIRCULANTE|C/P)",
+      "regex_seccion": "^ACTIVOS?\\s+SECURITIZADOS?$"
     },
     {
       "canonica": "PROVISION_ACTIVO_SECURITIZADO_CP",
@@ -49,7 +50,8 @@
       "codigos": [
         "11.120"
       ],
-      "regex": "^PROVISI[OÓ]N(ES)?\\s*(\\(CORTO PLAZO\\)\\s*)?(DEL\\s+|DE\\s+)?ACTIVOS?\\s+SECURITIZADOS?"
+      "regex": "^PROVISI[OÓ]N(ES)?\\s*(\\(CORTO PLAZO\\)\\s*)?(DEL\\s+|DE\\s+)?ACTIVOS?\\s+SECURITIZADOS?",
+      "regex_seccion": "^PROVISI[OÓ]N(ES)?\\s+(DEL?\\s+)?ACTIVOS?\\s+SECURITIZADOS?"
     },
     {
       "canonica": "OTROS_ACTIVOS_CIRCULANTES",
@@ -79,7 +81,8 @@
         "13.100",
         "13.110"
       ],
-      "regex": "^ACTIVOS?\\s+SECURITIZADOS?\\s*\\(?\\s*(LARGO\\s+PLAZO|NO\\s+CIRCULANTE|L/P)"
+      "regex": "^ACTIVOS?\\s+SECURITIZADOS?\\s*\\(?\\s*(LARGO\\s+PLAZO|NO\\s+CIRCULANTE|L/P)",
+      "regex_seccion": "^ACTIVOS?\\s+SECURITIZADOS?$"
     },
     {
       "canonica": "MENOR_VALOR_COLOCACION",
@@ -88,7 +91,7 @@
       "codigos": [
         "13.140"
       ],
-      "regex": "^MENOR\\s+VALOR\\s+(EN\\s+LA\\s+)?COLOCACI[OÓ]N"
+      "regex": "^MENOR\\s+VALOR\\s+(EN\\s+(LA\\s+)?)?COLOCACI[OÓ]N(ES)?"
     },
     {
       "canonica": "MAYOR_VALOR_COLOCACION",
@@ -97,7 +100,7 @@
       "codigos": [
         "13.150"
       ],
-      "regex": "^MAYOR\\s+VALOR\\s+(EN\\s+LA\\s+)?COLOCACI[OÓ]N"
+      "regex": "^MAYOR\\s+VALOR\\s+(EN\\s+(LA\\s+)?)?COLOCACI[OÓ]N(ES)?"
     },
     {
       "canonica": "OTROS_ACTIVOS_LP",
@@ -135,7 +138,8 @@
       "codigos": [
         "21.010"
       ],
-      "regex": "^OBLIGACIONES?\\s+POR\\s+T[IÍ]TULOS\\s+DE\\s+DEUDA.*(CORTO\\s+PLAZO|CIRCULANTE|C/P)"
+      "regex": "^OBLIGACIONES?\\s+POR\\s+T[IÍ]TULOS\\s+DE\\s+DEUDA.*(CORTO\\s+PLAZO|CIRCULANTE|C/P)",
+      "regex_seccion": "^OBLIGACIONES?\\s+POR\\s+T[IÍ]TULOS\\s+DE\\s+DEUDA"
     },
     {
       "canonica": "REMUNERACIONES_POR_PAGAR",
@@ -153,7 +157,8 @@
       "codigos": [
         "21.060"
       ],
-      "regex": "^OBLIGACIONES?\\s+POR\\s+SALDO\\s+(DE\\s+)?PRECIO.*(CORTO|C/P)"
+      "regex": "^OBLIGACIONES?\\s+POR\\s+SALDO\\s+(DE\\s+)?PRECIO.*(CORTO|C/P)",
+      "regex_seccion": "^OBLIGACIONES?\\s+POR\\s+SALDO\\s+(DE\\s+)?PRECIO"
     },
     {
       "canonica": "OBLIG_SOBRECOLATERAL_CP",
@@ -171,7 +176,8 @@
       "codigos": [
         "21.200"
       ],
-      "regex": "^OTROS\\s+(PASIVOS?\\s+CIRCULANTES?|ACREEDORES\\s*\\(?\\s*(CORTO\\s+PLAZO|C/P))|^OTROS\\s+PASIVOS?\\s*\\(CORTO"
+      "regex": "^OTROS\\s+(PASIVOS?\\s+CIRCULANTES?|ACREEDORES\\s*\\(?\\s*(CORTO\\s+PLAZO|C/P))|^OTROS\\s+PASIVOS?\\s*\\(CORTO",
+      "regex_seccion": "^OTROS\\s+(ACREEDORES|PASIVOS?)$"
     },
     {
       "canonica": "TOTAL_PASIVOS_CIRCULANTES",
@@ -190,7 +196,8 @@
       "codigos": [
         "22.010"
       ],
-      "regex": "^OBLIGACIONES?\\s+POR\\s+T[IÍ]TULOS\\s+DE\\s+DEUDA.*(LARGO\\s+PLAZO|NO\\s+CIRCULANTE|L/P)"
+      "regex": "^OBLIGACIONES?\\s+POR\\s+T[IÍ]TULOS\\s+DE\\s+DEUDA.*(LARGO\\s+PLAZO|NO\\s+CIRCULANTE|L/P)",
+      "regex_seccion": "^OBLIGACIONES?\\s+POR\\s+T[IÍ]TULOS\\s+DE\\s+DEUDA"
     },
     {
       "canonica": "OBLIG_SALDO_PRECIO_LP",
@@ -199,7 +206,8 @@
       "codigos": [
         "22.020"
       ],
-      "regex": "^OBLIGACIONES?\\s+POR\\s+SALDO\\s+(DE\\s+)?PRECIO.*(LARGO|L/P)"
+      "regex": "^OBLIGACIONES?\\s+POR\\s+SALDO\\s+(DE\\s+)?PRECIO.*(LARGO|L/P)",
+      "regex_seccion": "^OBLIGACIONES?\\s+POR\\s+SALDO\\s+(DE\\s+)?PRECIO"
     },
     {
       "canonica": "OBLIG_SOBRECOLATERAL_LP",
@@ -217,7 +225,8 @@
       "codigos": [
         "22.040"
       ],
-      "regex": "^OTROS\\s+(ACREEDORES|PASIVOS?)\\s*\\(?\\s*(LARGO\\s+PLAZO|L/P|NO\\s+CIRCULANTES?)"
+      "regex": "^OTROS\\s+(ACREEDORES|PASIVOS?)\\s*\\(?\\s*(LARGO\\s+PLAZO|L/P|NO\\s+CIRCULANTES?)",
+      "regex_seccion": "^OTROS\\s+(ACREEDORES|PASIVOS?)$"
     },
     {
       "canonica": "TOTAL_PASIVOS_LARGO_PLAZO",
@@ -236,7 +245,7 @@
       "codigos": [
         "23.010"
       ],
-      "regex": "^RESERVAS?\\s+DE\\s+EXCEDENTES|^EXCEDENTES?\\s+(ACUMULADOS?\\s+)?(DE\\s+)?(EJERCICIOS?\\s+)?ANTERIORES|^EXCEDENTES?\\s+OBLIGATORIOS?\\s+FIN"
+      "regex": "^RESERVAS?\\s+DE\\s+(EXCEDENTES|EJERCICIOS?\\s+ANTERIORES)|^EXCEDENTES?\\s+(ACUMULADOS?\\s+)?(DE\\s+)?(EJERCICIOS?\\s+)?ANTERIORES|^EXCEDENTES?\\s+OBLIGATORIOS?\\s+FIN"
     },
     {
       "canonica": "EXCEDENTE_DEL_EJERCICIO",
@@ -245,7 +254,7 @@
       "codigos": [
         "23.020"
       ],
-      "regex": "^EXCEDENTES?\\s*(\\(D[EÉ]FICIT\\))?\\s+DEL\\s+(EJERCICIO|PER[IÍ]ODO)\\s*(\\(D[EÉ]FICIT\\))?$"
+      "regex": "^(EXCEDENTES?|D[EÉ]FICIT)\\s*(\\(D[EÉ]FICIT\\))?\\s+DEL\\s+(EJERCICIO|PER[IÍ]ODO)\\s*(\\(D[EÉ]FICIT\\))?$"
     },
     {
       "canonica": "TOTAL_EXCEDENTES_ACUMULADOS",
@@ -254,7 +263,7 @@
       "codigos": [
         "23.000"
       ],
-      "regex": "^TOTAL\\s+(PATRIMONIO|EXCEDENTES?)\\b|^EXCEDENTES?\\s*\\(?(D[EÉ]FICIT)?\\)?\\s+ACUMULADOS?$",
+      "regex": "^TOTAL\\s+(PATRIMONIO|EXCEDENTES?|D[EÉ]FICIT)\\b|^(EXCEDENTES?|D[EÉ]FICIT)\\s*\\(?(D[EÉ]FICIT)?\\)?\\s+ACUMULADOS?$",
       "total": true
     },
     {
@@ -308,7 +317,7 @@
       "estado": "EXCEDENTES",
       "seccion": "GASTOS",
       "codigos": [],
-      "regex": "^REMUNERACI[OÓ]N(ES)?\\s+(POR\\s+)?(ADMINISTRACI[OÓ]N|CUSTODIA|ADM\\.)|^GASTOS?\\s+(POR\\s+)?ADMINISTRACI[OÓ]N|^REMUNERACI[OÓ]N(ES)?\\s+(DE\\s+)?(LA\\s+)?SOCIEDAD\\s+SECURITIZADORA"
+      "regex": "^REMUNERACI[OÓ]N(ES)?\\s+(POR\\s+PAGAR\\s+)?(POR\\s+)?(ADMINISTRACI[OÓ]N|CUSTODIA|ADM\\.)|^GASTOS?\\s+(POR\\s+)?ADMINISTRACI[OÓ]N|^REMUNERACI[OÓ]N(ES)?\\s+(DE\\s+)?(LA\\s+)?SOCIEDAD\\s+SECURITIZADORA"
     },
     {
       "canonica": "GASTO_INTERESES_TITULOS_DEUDA",
@@ -351,7 +360,7 @@
       "estado": "EXCEDENTES",
       "seccion": "RESULTADO",
       "codigos": [],
-      "regex": "^EXCEDENTES?\\s*\\(?(D[EÉ]FICIT)?\\)?\\s+(NETO\\s+)?DEL\\s+(EJERCICIO|PER[IÍ]ODO)|^RESULTADO\\s+DEL\\s+(EJERCICIO|PER[IÍ]ODO)",
+      "regex": "^(EXCEDENTES?|D[EÉ]FICIT)\\s*\\(?(D[EÉ]FICIT)?\\)?\\s+(NETO\\s+)?DEL\\s+(EJERCICIO|PER[IÍ]ODO)|^RESULTADO\\s+DEL\\s+(EJERCICIO|PER[IÍ]ODO)",
       "total": true
     },
     {
@@ -366,7 +375,7 @@
       "estado": "EXCEDENTES",
       "seccion": "GASTOS",
       "codigos": [],
-      "regex": "^REMUNERACI[OÓ]N(ES)?\\s+(POR\\s+|DEL?\\s+|AL\\s+)?(AUDITOR[IÍ]A|CLASIFICACI[OÓ]N|CLASIFICADORAS?|REPRESENTANTE|BANCO\\s+PAGADOR|CUSTODI[AO])"
+      "regex": "^REMUNERACI[OÓ]N(ES)?\\s+(POR\\s+PAGAR\\s+)?(POR\\s+|DEL?\\s+|AL\\s+)?(AUDITOR[IÍ]A|CLASIFICACI[OÓ]N|CLASIFICADOR(AS|ES)?|REPRESENTANTE|BANCO\\s+PAGADOR|CUSTODI[AO])"
     },
     {
       "canonica": "RESULTADO_CORRECCION_MONETARIA",
@@ -395,6 +404,72 @@
       "seccion": "INGRESOS",
       "codigos": [],
       "regex": "^REAJUSTES?\\s+(POR|DE)\\s+(INVERSIONES|VALORES)"
+    },
+    {
+      "canonica": "PROVISION_ACTIVO_SECURITIZADO_LP",
+      "estado": "BALANCE",
+      "seccion": "OTROS_ACTIVOS",
+      "codigos": [
+        "13.120"
+      ],
+      "regex": "^PROVISI[OÓ]N(ES)?\\s*\\(LARGO PLAZO\\)\\s*(DEL?\\s+)?ACTIVOS?\\s+SECURITIZADOS?|^PROVISI[OÓ]N(ES)?\\s+(DEL?\\s+)?ACTIVOS?\\s+SECURITIZADOS?.*LARGO",
+      "regex_seccion": "^PROVISI[OÓ]N(ES)?\\s+(DEL?\\s+)?ACTIVOS?\\s+SECURITIZADOS?"
+    },
+    {
+      "canonica": "RETIROS_EXCEDENTES",
+      "estado": "BALANCE",
+      "seccion": "EXCEDENTES_ACUMULADOS",
+      "codigos": [],
+      "regex": "^RETIROS?\\s+DE\\s+EXCEDENTES"
+    },
+    {
+      "canonica": "APORTES_ADICIONALES",
+      "estado": "BALANCE",
+      "seccion": "EXCEDENTES_ACUMULADOS",
+      "codigos": [],
+      "regex": "^APORTES?\\s+ADICIONALES"
+    },
+    {
+      "canonica": "EXCEDENTES_POR_PAGAR",
+      "estado": "BALANCE",
+      "seccion": "PASIVO_CIRCULANTE",
+      "codigos": [],
+      "regex": "^EXCEDENTES?\\s+POR\\s+PAGAR"
+    },
+    {
+      "canonica": "GASTO_PERDIDAS_LIQUIDACION_GARANTIAS",
+      "estado": "EXCEDENTES",
+      "seccion": "GASTOS",
+      "codigos": [],
+      "regex": "^P[EÉ]RDIDAS?\\s+EN\\s+LIQUIDACI[OÓ]N"
+    },
+    {
+      "canonica": "GASTO_AMORTIZACION_MENOR_VALOR",
+      "estado": "EXCEDENTES",
+      "seccion": "GASTOS",
+      "codigos": [],
+      "regex": "^AMORTIZACI[OÓ]N\\s+(DEL\\s+)?MENOR\\s+VALOR"
+    },
+    {
+      "canonica": "INGRESO_AMORTIZACION_MAYOR_VALOR",
+      "estado": "EXCEDENTES",
+      "seccion": "INGRESOS",
+      "codigos": [],
+      "regex": "^AMORTIZACI[OÓ]N\\s+(DEL\\s+)?MAYOR\\s+VALOR"
+    },
+    {
+      "canonica": "INGRESOS_PREPAGOS",
+      "estado": "EXCEDENTES",
+      "seccion": "INGRESOS",
+      "codigos": [],
+      "regex": "^INGRESOS?\\s+POR\\s+PREPAGOS?"
+    },
+    {
+      "canonica": "INGRESOS_RECUPERACION_CASTIGADOS",
+      "estado": "EXCEDENTES",
+      "seccion": "INGRESOS",
+      "codigos": [],
+      "regex": "^INGRESOS?\\s+(PERCIBIDOS\\s+)?POR\\s+(ACTIVOS\\s+)?CASTIGADOS|^RECUPERACI[OÓ]N\\s+DE\\s+(ACTIVOS\\s+)?CASTIGADOS"
     }
   ],
   "conciliaciones": [
@@ -435,6 +510,23 @@
   "glosas_ignoradas": [
     "^(ACTIVOS?|PASIVOS?|INGRESOS|GASTOS|CONCEPTO|ANTECEDENTES\\s+AL|TOTALES?|VALOR\\s+PAR|TRANSFERENCIA|CUOTAS|UNIDAD\\s+DE\\s+FOMENTO.*|AJ\\.?\\s+TASA.*|N[°º]?\\s*INSCRIPCI[OÓ]N.*|NOTAS?)$",
     "^\\d+\\s*(A|O\\s+M[AÁ]S)\\s*\\d*$",
-    "^(AL\\s+)?D[IÍ]A$"
-  ]
+    "^(AL\\s+)?D[IÍ]A$",
+    "^\\$?\\s*(NO\\s+)?REAJUSTABLES$",
+    "^MONEDA$",
+    "^TOTAL$",
+    "^PASIVOS?\\s+(A\\s+)?LARGO\\s+PLAZO$",
+    "^PASIVOS?\\s+CIRCULANTES?$",
+    "^ACTIVOS?\\s+CIRCULANTES?$",
+    "^OTROS\\s+ACTIVOS$"
+  ],
+  "secciones": {
+    "ACTIVO_CIRCULANTE": "^ACTIVOS?\\s+CIRCULANTES?$",
+    "OTROS_ACTIVOS": "^OTROS\\s+ACTIVOS$|^ACTIVOS?\\s+(NO\\s+CIRCULANTES?|(DE\\s+)?LARGO\\s+PLAZO)$",
+    "PASIVO_CIRCULANTE": "^PASIVOS?\\s+CIRCULANTES?$",
+    "PASIVO_LARGO_PLAZO": "^PASIVOS?\\s+(A\\s+)?(LARGO\\s+PLAZO|NO\\s+CIRCULANTES?)$",
+    "EXCEDENTES_ACUMULADOS": "^(EXCEDENTES?|D[EÉ]FICIT|PATRIMONIO)(\\s+ACUMULADOS?)?$",
+    "INGRESOS": "^INGRESOS(\\s+OPERACIONALES)?$",
+    "GASTOS": "^GASTOS(\\s+OPERACIONALES)?$|^EGRESOS$"
+  },
+  "_layout_multicolumna": "Si una página trae los encabezados $REAJUSTABLES / $NO REAJUSTABLES, la fila tiene más de dos columnas numéricas; se guardan hasta 4 en monto_col3/monto_col4 y la página se marca layout_multicolumna para revisión."
 }
