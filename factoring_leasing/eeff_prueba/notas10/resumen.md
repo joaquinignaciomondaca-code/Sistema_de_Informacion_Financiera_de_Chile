@@ -1,0 +1,12 @@
+# Notas, diez PDF
+
+- CBP FINANCIA CAPITAL FACTORING S.A. (76197101-8): ok=8 no_leida=1 balance=OK
+- COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA (77356020-K): ok=9 no_leida=9 balance=OK
+- CONCRECES LEASING S.A. (96784400-4): ok=6 no_leida=3 balance=OK
+- FACTOTAL S.A. (96660790-4): ok=9 no_leida=5 balance=OK
+- GAMA SERVICIOS FINANCIEROS S.A. (76238714-K): ok=9 no_leida=5 balance=OK
+- GLOBAL SOLUCIONES FINANCIERAS S.A. (76120857-8): ok=4 no_leida=9 balance=OK
+- HIPOTECARIA LA CONSTRUCCION LEASING S.A. (99566540-9): ok=9 no_leida=2 balance=OK
+- INCOFIN S.A. (96626570-1): ok=6 no_leida=6 balance=OK
+- SERVICIOS FINANCIEROS PROGRESO S.A. (90146000-0): ok=7 no_leida=11 balance=OK
+- UNIDAD LEASING HABITACIONAL S.A. (96809970-1): ok=7 no_leida=2 balance=OK
