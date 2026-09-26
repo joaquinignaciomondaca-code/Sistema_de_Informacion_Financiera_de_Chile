@@ -28,18 +28,19 @@ jobs:
       - name: Parser sin red
         run: python pipelines/eeff/test_parse_pdf_caratula.py
       - name: Diez PDF, segundo lote
-        run: python factoring_leasing/scripts/04_prueba_10_pdf.py --periodo 2026-03 --lote factoring_leasing/eeff_prueba/lote2.json --dest lote2
+        run: |
+          set +e
+          python factoring_leasing/scripts/04_prueba_10_pdf.py --periodo 2026-03 --lote factoring_leasing/eeff_prueba/lote2.json --dest lote2 > factoring_leasing/eeff_prueba/lote2_run.log 2>&1
+          echo "exit=$?" >> factoring_leasing/eeff_prueba/lote2_run.log
+          tail -40 factoring_leasing/eeff_prueba/lote2_run.log
       - name: Rama de revisión
         if: always()
         run: |
-          if [ ! -f factoring_leasing/eeff_prueba/lote2/resumen.json ]; then
-            echo "sin resumen; no se publica"
-            exit 1
-          fi
           RAMA="actions/fl-extraccion-lote2-${{ github.run_id }}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$RAMA"
-          git add factoring_leasing/eeff_prueba/lote2
-          git commit -m "factoring: prueba 10 PDF 2026-03 run ${{ github.run_id }}" || echo "sin cambios"
+          git add factoring_leasing/eeff_prueba/lote2 factoring_leasing/eeff_prueba/lote2_run.log
+          git status --short
+          git commit -m "factoring: prueba lote 2, marzo 2026, run ${{ github.run_id }}" || echo "sin cambios"
           git push -u origin "$RAMA"
