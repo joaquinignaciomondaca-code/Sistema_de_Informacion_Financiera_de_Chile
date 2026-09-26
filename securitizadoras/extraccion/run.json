@@ -1,16 +1,20 @@
 {
-  "desde": 2014,
+  "desde": 2010,
   "hasta": 2015,
-  "trimestres": "12",
+  "trimestres": "03,06,09,12",
   "step": "ps",
   "tramos": [
     [
-      2014,
+      2010,
+      2010
+    ],
+    [
+      2015,
       2015
     ]
   ],
   "ruts": "96765170,96972780",
   "debug": "true",
   "_nota": "Modificar y commitear este archivo lanza .github/workflows/securitizadoras_extraccion.yml; cada tramo publica una rama actions/ps-extraccion-<desde>-<hasta>-<run_id>. ruts (cuerpos separados por coma) y debug=true son opcionales.",
-  "_lanzamiento": "2026-09-26 muestra OCR binarizado 400dpi: Transa 12/2015, Sudamericana 12/2014"
+  "_lanzamiento": "2026-09-26 muestra OCR v3: rotación 180 + calidad por palabras clave + PNG debug (Transa/Sudamericana 2010 y 2015)"
 }
