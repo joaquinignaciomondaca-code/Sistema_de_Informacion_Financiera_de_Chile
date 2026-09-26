@@ -1,0 +1,1054 @@
+{
+  "indice": [
+    {
+      "numero": 1,
+      "titulo": "Entidad que reporta",
+      "pagina": 8,
+      "en_indice": true,
+      "familia": "antecedentes"
+    },
+    {
+      "numero": 2,
+      "titulo": "Bases de consolidación",
+      "pagina": 8,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 3,
+      "titulo": "Bases de preparación",
+      "pagina": 8,
+      "en_indice": true,
+      "familia": "politica"
+    },
+    {
+      "numero": 4,
+      "titulo": "Principales políticas contables",
+      "pagina": 8,
+      "en_indice": true,
+      "familia": "politica"
+    },
+    {
+      "numero": 5,
+      "titulo": "Cambios contables",
+      "pagina": 8,
+      "en_indice": true,
+      "familia": "politica"
+    },
+    {
+      "numero": 6,
+      "titulo": "Administración de riesgos",
+      "pagina": 8,
+      "en_indice": true,
+      "familia": "riesgos"
+    },
+    {
+      "numero": 7,
+      "titulo": "Efectivo y equivalentes al efectivo",
+      "pagina": 8,
+      "en_indice": true,
+      "familia": "efectivo"
+    },
+    {
+      "numero": 8,
+      "titulo": "Otros activos no financieros, corrientes",
+      "pagina": 8,
+      "en_indice": true,
+      "familia": "otros_activos"
+    },
+    {
+      "numero": 9,
+      "titulo": "Otros activos financieros, no corrientes",
+      "pagina": 8,
+      "en_indice": true,
+      "familia": "otros_activos"
+    },
+    {
+      "numero": 10,
+      "titulo": "Deudores comerciales y otras cuentas por cobrar corrientes",
+      "pagina": 9,
+      "en_indice": true,
+      "familia": "deudores"
+    },
+    {
+      "numero": 11,
+      "titulo": "Activos (y pasivos) por impuestos corrientes",
+      "pagina": 9,
+      "en_indice": true,
+      "familia": "impuestos"
+    },
+    {
+      "numero": 12,
+      "titulo": "Activos intangibles",
+      "pagina": 9,
+      "en_indice": true,
+      "familia": "intangibles"
+    },
+    {
+      "numero": 13,
+      "titulo": "Propiedad, planta y equipo",
+      "pagina": 9,
+      "en_indice": true,
+      "familia": "ppe"
+    },
+    {
+      "numero": 14,
+      "titulo": "Impuestos diferidos e impuesto a la renta",
+      "pagina": 9,
+      "en_indice": true,
+      "familia": "impuestos"
+    },
+    {
+      "numero": 15,
+      "titulo": "Beneficio a los empleados y cuentas por pagar a los empleados",
+      "pagina": 9,
+      "en_indice": true,
+      "familia": "provisiones"
+    },
+    {
+      "numero": 16,
+      "titulo": "Cuentas por pagar comerciales y otras cuentas por pagar, corrientes",
+      "pagina": 9,
+      "en_indice": true,
+      "familia": "cuentas_por_pagar"
+    },
+    {
+      "numero": 17,
+      "titulo": "Saldos con partes relacionadas",
+      "pagina": 9,
+      "en_indice": true,
+      "familia": "relacionadas"
+    },
+    {
+      "numero": 18,
+      "titulo": "Otros pasivos financieros, corrientes y no corrientes",
+      "pagina": 9,
+      "en_indice": true,
+      "familia": "pasivos_financieros"
+    },
+    {
+      "numero": 19,
+      "titulo": "Patrimonio",
+      "pagina": 9,
+      "en_indice": true,
+      "familia": "patrimonio"
+    },
+    {
+      "numero": 20,
+      "titulo": "Ingresos por actividades ordinarias",
+      "pagina": 9,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 21,
+      "titulo": "Costo de ventas",
+      "pagina": 9,
+      "en_indice": true,
+      "familia": "costos"
+    },
+    {
+      "numero": 22,
+      "titulo": "Gastos de administración",
+      "pagina": 9,
+      "en_indice": true,
+      "familia": "gastos"
+    },
+    {
+      "numero": 23,
+      "titulo": "Pérdidas por deterioro de cuentas por cobrar",
+      "pagina": 9,
+      "en_indice": true,
+      "familia": "deterioro"
+    },
+    {
+      "numero": 24,
+      "titulo": "Contingencias, juicios, restricciones y otros",
+      "pagina": 9,
+      "en_indice": true,
+      "familia": "contingencias"
+    },
+    {
+      "numero": 25,
+      "titulo": "Hechos posteriores",
+      "pagina": 9,
+      "en_indice": true,
+      "familia": "hechos_posteriores"
+    }
+  ],
+  "tablas": {
+    "efectivo": [
+      {
+        "concepto": "Efectivo en caja",
+        "monto_miles": 350.0,
+        "monto_comparativo_miles": 350.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "efectivo",
+        "numero_nota": 7,
+        "titulo_nota": "Efectivo y equivalentes al efectivo",
+        "cara_miles": 1169285.0
+      },
+      {
+        "concepto": "Cuentas corrientes bancarias",
+        "monto_miles": 1118003.0,
+        "monto_comparativo_miles": 1271026.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "efectivo",
+        "numero_nota": 7,
+        "titulo_nota": "Efectivo y equivalentes al efectivo",
+        "cara_miles": 1169285.0
+      },
+      {
+        "concepto": "Fondos Mutuos",
+        "monto_miles": 50932.0,
+        "monto_comparativo_miles": 50932.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "efectivo",
+        "numero_nota": 7,
+        "titulo_nota": "Efectivo y equivalentes al efectivo",
+        "cara_miles": 1169285.0
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 1169285.0,
+        "monto_comparativo_miles": 1322308.0,
+        "es_total": 1,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "efectivo",
+        "numero_nota": 7,
+        "titulo_nota": "Efectivo y equivalentes al efectivo",
+        "cara_miles": 1169285.0
+      }
+    ],
+    "otros_activos_no_financieros": [
+      {
+        "concepto": "Cuentas por cobrar",
+        "monto_miles": 73966.0,
+        "monto_comparativo_miles": 24804.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "otros_activos_no_financieros",
+        "numero_nota": 8,
+        "titulo_nota": "Otros activos no financieros, corrientes",
+        "cara_miles": 409684.0
+      },
+      {
+        "concepto": "Anticipos a proveedores",
+        "monto_miles": 330780.0,
+        "monto_comparativo_miles": 84499.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "otros_activos_no_financieros",
+        "numero_nota": 8,
+        "titulo_nota": "Otros activos no financieros, corrientes",
+        "cara_miles": 409684.0
+      },
+      {
+        "concepto": "Anticipos y préstamos al personal",
+        "monto_miles": 4938.0,
+        "monto_comparativo_miles": 2446.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "otros_activos_no_financieros",
+        "numero_nota": 8,
+        "titulo_nota": "Otros activos no financieros, corrientes",
+        "cara_miles": 409684.0
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 409684.0,
+        "monto_comparativo_miles": 111749.0,
+        "es_total": 1,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "otros_activos_no_financieros",
+        "numero_nota": 8,
+        "titulo_nota": "Otros activos no financieros, corrientes",
+        "cara_miles": 409684.0
+      }
+    ],
+    "deudores": [
+      {
+        "concepto": "Deudores por operaciones de factoring de facturas",
+        "monto_miles": 46874207.0,
+        "monto_comparativo_miles": 47800612.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "deudores",
+        "numero_nota": 10,
+        "titulo_nota": "Deudores comerciales y otras cuentas por cobrar corrientes",
+        "cara_miles": 46695797.0
+      },
+      {
+        "concepto": "Deudores por operaciones de factoring de cheques",
+        "monto_miles": 267097.0,
+        "monto_comparativo_miles": 283976.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "deudores",
+        "numero_nota": 10,
+        "titulo_nota": "Deudores comerciales y otras cuentas por cobrar corrientes",
+        "cara_miles": 46695797.0
+      },
+      {
+        "concepto": "Deudores por pagarés y otras operaciones de factoring (**)",
+        "monto_miles": 3084126.0,
+        "monto_comparativo_miles": 2691822.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "deudores",
+        "numero_nota": 10,
+        "titulo_nota": "Deudores comerciales y otras cuentas por cobrar corrientes",
+        "cara_miles": 46695797.0
+      },
+      {
+        "concepto": "Montos diferidos a girar",
+        "monto_miles": -1154385.0,
+        "monto_comparativo_miles": -1024992.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "deudores",
+        "numero_nota": 10,
+        "titulo_nota": "Deudores comerciales y otras cuentas por cobrar corrientes",
+        "cara_miles": 46695797.0
+      },
+      {
+        "concepto": "Provisión por pérdida de deterioro de valor (PCE)",
+        "monto_miles": -1844840.0,
+        "monto_comparativo_miles": -1803047.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "deudores",
+        "numero_nota": 10,
+        "titulo_nota": "Deudores comerciales y otras cuentas por cobrar corrientes",
+        "cara_miles": 46695797.0
+      },
+      {
+        "concepto": "Otras cuentas por cobrar deudores comerciales",
+        "monto_miles": 15591.0,
+        "monto_comparativo_miles": 15551.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "deudores",
+        "numero_nota": 10,
+        "titulo_nota": "Deudores comerciales y otras cuentas por cobrar corrientes",
+        "cara_miles": 46695797.0
+      },
+      {
+        "concepto": "Diferencias de precio por devengar",
+        "monto_miles": -545999.0,
+        "monto_comparativo_miles": -492776.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "deudores",
+        "numero_nota": 10,
+        "titulo_nota": "Deudores comerciales y otras cuentas por cobrar corrientes",
+        "cara_miles": 46695797.0
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 46695797.0,
+        "monto_comparativo_miles": 47471146.0,
+        "es_total": 1,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "deudores",
+        "numero_nota": 10,
+        "titulo_nota": "Deudores comerciales y otras cuentas por cobrar corrientes",
+        "cara_miles": 46695797.0
+      }
+    ],
+    "intangibles": [
+      {
+        "concepto": "Programas informáticos",
+        "monto_miles": 2134.0,
+        "monto_comparativo_miles": 1138.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "intangibles",
+        "numero_nota": 12,
+        "titulo_nota": "Activos intangibles",
+        "cara_miles": 2134.0
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 2134.0,
+        "monto_comparativo_miles": 1138.0,
+        "es_total": 1,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "intangibles",
+        "numero_nota": 12,
+        "titulo_nota": "Activos intangibles",
+        "cara_miles": 2134.0
+      }
+    ],
+    "ppe": [
+      {
+        "concepto": "Equipamiento de tecnología de información",
+        "monto_miles": 107536.0,
+        "monto_comparativo_miles": 101873.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "ppe",
+        "numero_nota": 13,
+        "titulo_nota": "Propiedad, planta y equipo",
+        "cara_miles": 130027.0
+      },
+      {
+        "concepto": "Instalaciones fijas y accesorios",
+        "monto_miles": 22491.0,
+        "monto_comparativo_miles": 21703.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "ppe",
+        "numero_nota": 13,
+        "titulo_nota": "Propiedad, planta y equipo",
+        "cara_miles": 130027.0
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 130027.0,
+        "monto_comparativo_miles": 123576.0,
+        "es_total": 1,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "ppe",
+        "numero_nota": 13,
+        "titulo_nota": "Propiedad, planta y equipo",
+        "cara_miles": 130027.0
+      }
+    ],
+    "impuestos_diferidos_activo": [
+      {
+        "concepto": "Provisiones Incobrables",
+        "monto_miles": 498107.0,
+        "monto_comparativo_miles": 0.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "impuestos_diferidos_activo",
+        "numero_nota": 14,
+        "titulo_nota": "Impuestos diferidos e impuesto a la renta",
+        "cara_miles": 569065.0
+      },
+      {
+        "concepto": "Vacaciones del personal",
+        "monto_miles": 42968.0,
+        "monto_comparativo_miles": 0.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "impuestos_diferidos_activo",
+        "numero_nota": 14,
+        "titulo_nota": "Impuestos diferidos e impuesto a la renta",
+        "cara_miles": 569065.0
+      },
+      {
+        "concepto": "Provisiones varias",
+        "monto_miles": 25552.0,
+        "monto_comparativo_miles": 0.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "impuestos_diferidos_activo",
+        "numero_nota": 14,
+        "titulo_nota": "Impuestos diferidos e impuesto a la renta",
+        "cara_miles": 569065.0
+      },
+      {
+        "concepto": "Pérdida tributaria filial",
+        "monto_miles": 0.0,
+        "monto_comparativo_miles": 0.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "impuestos_diferidos_activo",
+        "numero_nota": 14,
+        "titulo_nota": "Impuestos diferidos e impuesto a la renta",
+        "cara_miles": 569065.0
+      },
+      {
+        "concepto": "Activo fijo",
+        "monto_miles": 2438.0,
+        "monto_comparativo_miles": 0.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "impuestos_diferidos_activo",
+        "numero_nota": 14,
+        "titulo_nota": "Impuestos diferidos e impuesto a la renta",
+        "cara_miles": 569065.0
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 569065.0,
+        "monto_comparativo_miles": 0.0,
+        "es_total": 1,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "impuestos_diferidos_activo",
+        "numero_nota": 14,
+        "titulo_nota": "Impuestos diferidos e impuesto a la renta",
+        "cara_miles": 569065.0
+      }
+    ],
+    "pasivos_financieros": [
+      {
+        "concepto": "Créditos Bancarios",
+        "monto_miles": 8035467.0,
+        "monto_comparativo_miles": 8695838.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "pasivos_financieros",
+        "numero_nota": 18,
+        "titulo_nota": "Otros pasivos financieros, corrientes y no corrientes",
+        "cara_miles": 30659565.0
+      },
+      {
+        "concepto": "Fondos de Inversión",
+        "monto_miles": 14514032.0,
+        "monto_comparativo_miles": 16440092.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "pasivos_financieros",
+        "numero_nota": 18,
+        "titulo_nota": "Otros pasivos financieros, corrientes y no corrientes",
+        "cara_miles": 30659565.0
+      },
+      {
+        "concepto": "Pagarés con terceros",
+        "monto_miles": 1064816.0,
+        "monto_comparativo_miles": 1263659.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "pasivos_financieros",
+        "numero_nota": 18,
+        "titulo_nota": "Otros pasivos financieros, corrientes y no corrientes",
+        "cara_miles": 30659565.0
+      },
+      {
+        "concepto": "Efectos de Comercio",
+        "monto_miles": 3000000.0,
+        "monto_comparativo_miles": 1500000.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "pasivos_financieros",
+        "numero_nota": 18,
+        "titulo_nota": "Otros pasivos financieros, corrientes y no corrientes",
+        "cara_miles": 30659565.0
+      },
+      {
+        "concepto": "Financiamiento Corfo",
+        "monto_miles": 4045250.0,
+        "monto_comparativo_miles": 4052490.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "pasivos_financieros",
+        "numero_nota": 18,
+        "titulo_nota": "Otros pasivos financieros, corrientes y no corrientes",
+        "cara_miles": 30659565.0
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 30659565.0,
+        "monto_comparativo_miles": 31952079.0,
+        "es_total": 1,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "pasivos_financieros",
+        "numero_nota": 18,
+        "titulo_nota": "Otros pasivos financieros, corrientes y no corrientes",
+        "cara_miles": 30659565.0
+      }
+    ],
+    "cuentas_por_pagar": [
+      {
+        "concepto": "Cuenta a favor de cliente (a)",
+        "monto_miles": 305167.0,
+        "monto_comparativo_miles": 283310.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "cuentas_por_pagar",
+        "numero_nota": 16,
+        "titulo_nota": "Cuentas por pagar comerciales y otras cuentas por pagar, corrientes",
+        "cara_miles": 1420305.0
+      },
+      {
+        "concepto": "Documentos no cedidos (b)",
+        "monto_miles": 514132.0,
+        "monto_comparativo_miles": 455039.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "cuentas_por_pagar",
+        "numero_nota": 16,
+        "titulo_nota": "Cuentas por pagar comerciales y otras cuentas por pagar, corrientes",
+        "cara_miles": 1420305.0
+      },
+      {
+        "concepto": "Dividendos por pagar",
+        "monto_miles": 193716.0,
+        "monto_comparativo_miles": 52348.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "cuentas_por_pagar",
+        "numero_nota": 16,
+        "titulo_nota": "Cuentas por pagar comerciales y otras cuentas por pagar, corrientes",
+        "cara_miles": 1420305.0
+      },
+      {
+        "concepto": "Retenciones (c)",
+        "monto_miles": 171334.0,
+        "monto_comparativo_miles": 259928.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "cuentas_por_pagar",
+        "numero_nota": 16,
+        "titulo_nota": "Cuentas por pagar comerciales y otras cuentas por pagar, corrientes",
+        "cara_miles": 1420305.0
+      },
+      {
+        "concepto": "Cuentas por pagar",
+        "monto_miles": 235956.0,
+        "monto_comparativo_miles": 166205.0,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "cuentas_por_pagar",
+        "numero_nota": 16,
+        "titulo_nota": "Cuentas por pagar comerciales y otras cuentas por pagar, corrientes",
+        "cara_miles": 1420305.0
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 1420305.0,
+        "monto_comparativo_miles": 1216830.0,
+        "es_total": 1,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "cuentas_por_pagar",
+        "numero_nota": 16,
+        "titulo_nota": "Cuentas por pagar comerciales y otras cuentas por pagar, corrientes",
+        "cara_miles": 1420305.0
+      }
+    ],
+    "relacionadas_por_pagar": [
+      {
+        "concepto": "Chile",
+        "monto_miles": 2632619.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 1796482.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 1009928.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 508143.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 347589.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 246447.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 132863.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 122428.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 90609.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 72249.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 57320.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 54347.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 25958.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 25939.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 22734.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 12013.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 3180.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      },
+      {
+        "concepto": "Chile",
+        "monto_miles": 104.0,
+        "monto_comparativo_miles": null,
+        "es_total": 0,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      },
+      {
+        "concepto": "Totales",
+        "monto_miles": 7160952.0,
+        "monto_comparativo_miles": null,
+        "es_total": 1,
+        "rut": "76197101-8",
+        "periodo": "2026-03",
+        "tipo_eeff": "Consolidado",
+        "cuenta": "relacionadas_por_pagar",
+        "numero_nota": 17,
+        "titulo_nota": "Saldos con partes relacionadas",
+        "cara_miles": 7160952.0
+      }
+    ]
+  },
+  "cuadre": [
+    {
+      "cuenta": "efectivo",
+      "nombre_cara": "Efectivo y equivalentes al efectivo",
+      "nota_ref": "7",
+      "numero_nota": 7,
+      "titulo_nota": "Efectivo y equivalentes al efectivo",
+      "cara_miles": 1169285.0,
+      "nota_miles": 1169285.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    },
+    {
+      "cuenta": "otros_activos_no_financieros",
+      "nombre_cara": "Otros activos no financieros, corrientes",
+      "nota_ref": "8",
+      "numero_nota": 8,
+      "titulo_nota": "Otros activos no financieros, corrientes",
+      "cara_miles": 409684.0,
+      "nota_miles": 409684.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    },
+    {
+      "cuenta": "deudores",
+      "nombre_cara": "Deudores comerciales y otras cuentas por cobrar, corrientes",
+      "nota_ref": "10",
+      "numero_nota": 10,
+      "titulo_nota": "Deudores comerciales y otras cuentas por cobrar corrientes",
+      "cara_miles": 46695797.0,
+      "nota_miles": 46695797.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    },
+    {
+      "cuenta": "intangibles",
+      "nombre_cara": "Activos intangibles distintos de la plusvalía",
+      "nota_ref": "12",
+      "numero_nota": 12,
+      "titulo_nota": "Activos intangibles",
+      "cara_miles": 2134.0,
+      "nota_miles": 2134.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    },
+    {
+      "cuenta": "ppe",
+      "nombre_cara": "Propiedad, planta y equipo",
+      "nota_ref": "13",
+      "numero_nota": 13,
+      "titulo_nota": "Propiedad, planta y equipo",
+      "cara_miles": 130027.0,
+      "nota_miles": 130027.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    },
+    {
+      "cuenta": "impuestos_diferidos_activo",
+      "nombre_cara": "Activos por impuestos diferidos",
+      "nota_ref": "14",
+      "numero_nota": 14,
+      "titulo_nota": "Impuestos diferidos e impuesto a la renta",
+      "cara_miles": 569065.0,
+      "nota_miles": 569065.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    },
+    {
+      "cuenta": "pasivos_financieros",
+      "nombre_cara": "Otros pasivos financieros, corrientes",
+      "nota_ref": "18",
+      "numero_nota": 18,
+      "titulo_nota": "Otros pasivos financieros, corrientes y no corrientes",
+      "cara_miles": 30659565.0,
+      "nota_miles": 30659565.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    },
+    {
+      "cuenta": "cuentas_por_pagar",
+      "nombre_cara": "Cuentas por pagar comerciales y otras cuentas por pagar, corrientes",
+      "nota_ref": "16",
+      "numero_nota": 16,
+      "titulo_nota": "Cuentas por pagar comerciales y otras cuentas por pagar, corrientes",
+      "cara_miles": 1420305.0,
+      "nota_miles": 1420305.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    },
+    {
+      "cuenta": "relacionadas_por_pagar",
+      "nombre_cara": "Cuentas por pagar a entidades relacionadas, corrientes",
+      "nota_ref": "17",
+      "numero_nota": 17,
+      "titulo_nota": "Saldos con partes relacionadas",
+      "cara_miles": 7160952.0,
+      "nota_miles": 7160952.0,
+      "estado": "OK",
+      "diff_miles": 0.0
+    }
+  ]
+}
