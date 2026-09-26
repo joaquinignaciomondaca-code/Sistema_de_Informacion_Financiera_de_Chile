@@ -4034,6 +4034,106 @@
       "api": [
         "OK"
       ]
+    },
+    "99566540-9|2023-06": {
+      "rut": "99566540-9",
+      "razon_social": "HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING)",
+      "periodo": "2023-06",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 11,
+      "notas_sin_leer": 2,
+      "lineas_balance": 31,
+      "lineas_resultados": 24,
+      "api": [
+        "OK"
+      ]
+    },
+    "99513410-1|2023-06": {
+      "rut": "99513410-1",
+      "razon_social": "SMB FACTORING S.A.",
+      "periodo": "2023-06",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 2,
+      "notas_sin_leer": 12,
+      "lineas_balance": 27,
+      "lineas_resultados": 10,
+      "api": [
+        "OK"
+      ]
+    },
+    "99501480-7|2023-06": {
+      "rut": "99501480-7",
+      "razon_social": "PENTA FINANCIERO S.A.",
+      "periodo": "2023-06",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 1,
+      "notas_ok": 11,
+      "notas_sin_leer": 3,
+      "lineas_balance": 38,
+      "lineas_resultados": 19,
+      "api": [
+        "OK"
+      ]
+    },
+    "96861280-8|2023-06": {
+      "rut": "96861280-8",
+      "razon_social": "EUROCAPITAL S.A.",
+      "periodo": "2023-06",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 5,
+      "notas_sin_leer": 11,
+      "lineas_balance": 33,
+      "lineas_resultados": 16,
+      "api": [
+        "OK"
+      ]
+    },
+    "96809970-1|2023-06": {
+      "rut": "96809970-1",
+      "razon_social": "UNIDAD LEASING HABITACIONAL S.A.",
+      "periodo": "2023-06",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 9,
+      "notas_sin_leer": 1,
+      "lineas_balance": 29,
+      "lineas_resultados": 17,
+      "api": [
+        "OK"
+      ]
     }
   }
 }
