@@ -443,4 +443,26 @@ check(len(res) == 2 and bool(res["cuadre_contable_ok"].all()) and res["rut_admin
 check(set(["fuente_url", "metodo", "fecha_extraccion", "script_version", "pdf_sha256"]) <= set(lin.columns), "procedencia en líneas")
 check(list(cob["estado"]) == ["ok", "ok"] and cob["lineas_eeff"].iloc[0] == 23, "cobertura registra ok + nº de líneas")
 check(sorted(nts["periodo"].unique()) == ["2024-12"] and len(nts) == 6, "notas sólo en diciembre (2 efectivo + 4 mora)")
+
+# ---- arreglos 25-33 (corrida completa 2010-2026) ----
+print("corrida completa: OCR antiguo")
+check(P.parse_num("5.155,432") == 5155432 and P.parse_num("3,549,070") == 3549070 and P.parse_num("(1.234)") == -1234, "parse_num: separadores mixtos son miles")
+_dos_col = ["ACTIVOS\n", "Disponible 1.100 1.090 Obligaciones por pagar 1.060 1.050\nTotal activos circulantes 1.100 1.090 Total pasivos circulantes 1.060 1.050\n"
+            "Total otros activos 1.000 1.000 Total pasivo largo plazo 1.020 1.020\nTOTAL ACTIVOS 2.100 2.090 Total excedente acumulado 20 20\nTOTAL PASIVOS 2.100 2.090\n"]
+_r2 = P.derivar_resumen(P.parse_eeff_lineas(_dos_col))
+check(_r2["total_activos_mclp"] == 2100 and _r2["total_pasivo_patrimonio_mclp"] == 2100 and _r2["cuadre_contable_ok"], f"balance a dos columnas (Sudamericana) se separa en filas: {_r2['total_activos_mclp']}/{_r2['total_pasivo_patrimonio_mclp']}")
+check(P._mapear("BALANCE", None, "AL OTROS ACTIVOS")["canonica"] == "TOTAL_OTROS_ACTIVOS" and (P._mapear("BALANCE", None, "PASIVOS Y PATRIMONIO") or {}).get("canonica") != "TOTAL_PASIVOS_Y_PATRIMONIO", "mapeo difuso por sufijo truncado; encabezado no se confunde con total")
+_inv = ["ACTIVOS\n", "Total activos circulantes 1.100\nTotal otros activos 1.050\nTOTAL ACTIVOS 2.150\nTotal pasivos circulantes 1.080\nTotal pasivo largo plazo 1.060\nTotal excedente acumulado 10\nTOTAL PASIVOS (2.150)\n"]
+_ri = P.derivar_resumen(P.parse_eeff_lineas(_inv))
+check(_ri["cuadre_contable_ok"] and _ri["signo_total_pasivos_invertido"], "TOTAL PASIVOS impreso entre paréntesis: cuadra con flag")
+_mal = ["ACTIVOS\n", "Total activos circulantes 1.100\nTotal otros activos 1.050\nTOTAL ACTIVOS 9.999\nTotal pasivos circulantes 1.080\nTotal pasivo largo plazo 1.060\nTotal excedente acumulado 10\nTOTAL PASIVOS 2.150\n"]
+_rm = P.derivar_resumen(P.parse_eeff_lineas(_mal))
+check(_rm["cuadre_contable_ok"] and _rm["total_activos_mclp"] == 2150 and _rm["total_activos_impreso_mclp"] == 9999 and _rm["total_corregido_por_componentes"] == "activos", "total mal leído se reemplaza por la suma de subtotales (impreso conservado + flag)")
+_hd = ["ACTIVOS\n", "Total activos circulantes 1.100\nTotal otros activos 1.050\nTOTAL ACTIVOS 2.150\nPASIVOS Y PATRIMONIO\n31.12.2013\nTotal pasivos circulantes 1.080\nTotal pasivo largo plazo 1.060\nTotal excedente acumulado 10\nTOTAL PASIVOS 2.150\n"]
+check(P.derivar_resumen(P.parse_eeff_lineas(_hd))["cuadre_contable_ok"], "fila de fecha bajo un encabezado no se toma como monto")
+check(P._estado_de_pagina("| BCI SECURITIZADORA\n| ANO\n| a e ie\n" + "x\n" * 100 + "Total pasivo circulante 1\nTOTAL PASIVOS 2\n") == "BALANCE", "página con encabezado ilegible se clasifica por su contenido")
+for _et, _esp in [("Patrimonios Separados - PS 2 FINTESA SECURITIZADORA al 03/2012", "PS-2"), ("Patrimonios Separados - PRIMER PATRIMONIO SEPARADO al 03/2011", "PS-1"),
+                  ("Patrimonios Separados - NA 16 JUNIO 2011", "PS-16"), ("Patrimonios Separados - BSECS 13 06 2013", "BSECS-13"), ("Patrimonios Separados - PATRIMONIO NÂ° al 12/2014", None)]:
+    check(P.codigo_desde_etiqueta_web(_et) == _esp, f"etiqueta web {_et!r} → {_esp}")
+check(P.meta_desde_texto("SUDAMERICANA\nPATRIMONIO SEPARADO N*2\n", "Patrimonios Separados - PATRIMONIO NÂ° al 12/2014", "96972780", "X")["codigo_emision"] == "PS-2", "sin código en la web se toma del PDF (N*2 OCR)")
 print(f"\n{len(fallos)} fallos"); sys.exit(1 if fallos else 0)
