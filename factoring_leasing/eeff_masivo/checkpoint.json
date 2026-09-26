@@ -240,6 +240,82 @@
       "api": [
         "OK"
       ]
+    },
+    "96611310-3|2026-03": {
+      "rut": "96611310-3",
+      "razon_social": "BANDESARROLLO SOCIEDAD DE LEASING INMOBILIARIO S.A",
+      "periodo": "2026-03",
+      "estado": "marcado",
+      "error": "sin PDF",
+      "version": 1
+    },
+    "94050000-1|2026-03": {
+      "rut": "94050000-1",
+      "razon_social": "GENERAL MOTORS FINANCIAL CHILE S.A.",
+      "periodo": "2026-03",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 9,
+      "notas_sin_leer": 2,
+      "lineas_balance": 30,
+      "lineas_resultados": 14,
+      "api": [
+        "OK"
+      ]
+    },
+    "90146000-0|2026-03": {
+      "rut": "90146000-0",
+      "razon_social": "SERVICIOS FINANCIEROS PROGRESO S.A.",
+      "periodo": "2026-03",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 15,
+      "notas_sin_leer": 4,
+      "lineas_balance": 37,
+      "lineas_resultados": 17,
+      "api": [
+        "OK"
+      ]
+    },
+    "77356020-K|2026-03": {
+      "rut": "77356020-K",
+      "razon_social": "COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA",
+      "periodo": "2026-03",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 16,
+      "notas_sin_leer": 2,
+      "lineas_balance": 33,
+      "lineas_resultados": 18,
+      "api": [
+        "OK"
+      ]
+    },
+    "76562786-9|2026-03": {
+      "rut": "76562786-9",
+      "razon_social": "BICE FACTORING S.A.",
+      "periodo": "2026-03",
+      "estado": "marcado",
+      "error": "sin PDF",
+      "version": 1
     }
   }
 }
