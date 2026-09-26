@@ -580,6 +580,50 @@ _RESUMEN = [("disponible", "DISPONIBLE"), ("valores_negociables", "VALORES_NEGOC
             ("total_pasivo_patrimonio", "TOTAL_PASIVOS_Y_PATRIMONIO"), ("excedente_neto_periodo", "EXCEDENTE_NETO_DEL_PERIODO")]
 
 
+CORRECCIONES_PATH = os.path.join(BASE_DIR, "securitizadoras", "data", "correcciones_manuales.csv")
+_CORRECCIONES = None
+
+
+def cargar_correcciones():
+    """Lecturas manuales de cifras que el OCR no pudo leer (escaneos con dígitos ilegibles). Cada fila cita PDF y página.
+    Se aplican ANTES de conciliar: si el balance no cuadra después de aplicarlas, la auditoría falla (no hay cifras 'a ojo')."""
+    global _CORRECCIONES
+    if _CORRECCIONES is None:
+        _CORRECCIONES = {}
+        if os.path.exists(CORRECCIONES_PATH):
+            import csv
+            with open(CORRECCIONES_PATH, encoding="utf-8") as fh:
+                for r in csv.DictReader(fh):
+                    if not r.get("id_patrimonio") or r["id_patrimonio"].startswith("#"):
+                        continue
+                    _CORRECCIONES.setdefault((r["id_patrimonio"], r["periodo"]), []).append(r)
+    return _CORRECCIONES
+
+
+def aplicar_correcciones_manuales(lineas, id_patrimonio, periodo):
+    """Reemplaza (o agrega) el monto de una cuenta canónica según correcciones_manuales.csv. Devuelve (lineas, n_aplicadas).
+    Las líneas tocadas quedan con origen_monto='correccion_manual' y la cita (página) de donde se leyó."""
+    rows = cargar_correcciones().get((id_patrimonio, periodo))
+    if not rows:
+        return lineas, 0
+    n = 0
+    for r in rows:
+        cuenta = r["cuenta_canonica"].strip(); monto = float(str(r["monto_mclp"]).replace(".", "").replace(",", "."))
+        e = _POR_CANONICA.get(cuenta)
+        if not e:
+            print(f"    corrección manual ignorada: cuenta desconocida {cuenta}"); continue
+        hit = next((l for l in lineas if l["cuenta_canonica"] == cuenta), None)
+        if hit is None:
+            hit = {"estado": e["estado"], "pagina_pdf": int(r.get("pagina_pdf") or 0) or None, "codigo_fecu": (e.get("codigos") or [None])[0], "glosa": r.get("glosa") or cuenta,
+                   "nota": None, "monto_mclp": None, "monto_anterior_mclp": None, "monto_col3": None, "monto_col4": None, "layout_multicolumna": False,
+                   "seccion_balance": None, "cuenta_canonica": cuenta, "seccion": e.get("seccion"), "es_total": bool(e.get("total"))}
+            lineas = lineas + [hit]
+        hit["monto_leido_mclp"] = hit.get("monto_mclp"); hit["monto_mclp"] = monto; hit["origen_monto"] = "correccion_manual"
+        hit["correccion_ref"] = f"{r.get('autor', '')} {r.get('fecha', '')} p.{r.get('pagina_pdf', '')}: {r.get('justificacion', '')}".strip()
+        n += 1
+    return lineas, n
+
+
 def derivar_resumen(lineas):
     v = {}
     for l in lineas:  # primera ocurrencia (orden del PDF): el balance va antes que cualquier cuadro de notas
@@ -832,10 +876,13 @@ def paso_ps(op, secs, desde, hasta, trimestres):
                     prov = {"fuente_url": pdf_url, "metodo": metodo_tag(("pdf_texto_pymupdf+ocr_tesseract" if pags_ocr else "pdf_texto_pymupdf") + "|catalogo_" + CATALOGO["version"]), "fecha_extraccion": ahora(),
                             "script_version": SCRIPT_VERSION, "pdf_sha256": hashlib.sha256(pdf).hexdigest()}
                     lin = parse_eeff_lineas(paginas)
+                    lin, n_corr = aplicar_correcciones_manuales(lin, meta["id_patrimonio"], periodo)
+                    if n_corr:
+                        prov["metodo"] = prov["metodo"] + f"|correccion_manual({n_corr})"
                     for l in lin:
-                        lineas_all.append({**meta, "periodo": periodo, **l, **prov})
+                        lineas_all.append({**meta, "periodo": periodo, "origen_monto": "lectura_automatica", **l, **prov})
                     if lin:
-                        r = tc.get(periodo); fila = derivar_resumen(lin)
+                        r = tc.get(periodo); fila = derivar_resumen(lin); fila["correcciones_manuales"] = n_corr
                         fila.update(meta); fila.update(prov); fila["periodo"] = periodo; fila["tipo_cambio_usd_clp"] = r
                         fila["periodo_segun_pdf"] = cob["periodo_segun_pdf"]; fila["periodo_inconsistente"] = cob["periodo_inconsistente"]
                         fila["total_activos_musd"] = round(fila["total_activos_mclp"] / r, 2) if r and fila["total_activos_mclp"] is not None else None
