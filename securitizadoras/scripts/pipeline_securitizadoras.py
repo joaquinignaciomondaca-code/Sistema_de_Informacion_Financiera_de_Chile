@@ -706,7 +706,24 @@ def ocr_paginas_imagen(doc, paginas, max_paginas=16, dpi=300):
     except ImportError:
         fitz = None
 
-    def _ocr(page, rot, psm="6", dpi_=None, binarizar=False):
+    def _sin_lineas_tabla(png):  # borra los bordes de celdas (líneas largas) que tesseract confunde con dígitos: 'l', '|', '1'
+        try:
+            import cv2, numpy as np
+        except ImportError:
+            return False
+        im = cv2.imread(png, cv2.IMREAD_GRAYSCALE)
+        if im is None:
+            return False
+        bw = cv2.adaptiveThreshold(~im, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 15, -2)
+        h, w = bw.shape
+        horiz = cv2.morphologyEx(bw, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_RECT, (max(20, w // 40), 1)))
+        vert = cv2.morphologyEx(bw, cv2.MORPH_OPEN, cv2.getStructuringElement(cv2.MORPH_RECT, (1, max(20, h // 40))))
+        lineas = cv2.dilate(cv2.bitwise_or(horiz, vert), cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3)))
+        limpio = cv2.bitwise_or(im, lineas)  # las líneas pasan a blanco
+        cv2.imwrite(png, limpio)
+        return True
+
+    def _ocr(page, rot, psm="6", dpi_=None, binarizar=False, quitar_lineas=False):
         d = dpi_ or dpi
         mat = fitz.Matrix(d / 72, d / 72).prerotate(rot) if fitz is not None and hasattr(fitz, "Matrix") else None
         pix = page.get_pixmap(matrix=mat) if mat is not None else page.get_pixmap(dpi=d)
@@ -728,6 +745,8 @@ def ocr_paginas_imagen(doc, paginas, max_paginas=16, dpi=300):
                 im.point(lambda v, thr=thr: 255 if v > thr else 0).save(png)
             except Exception:
                 pass
+        if quitar_lineas:
+            _sin_lineas_tabla(png)
         cmd = ["tesseract", png, "stdout", "-l", "spa", "--psm", psm, "-c", "preserve_interword_spaces=1"]
         r = subprocess.run(cmd, capture_output=True, text=True, timeout=180)
         os.unlink(png)
@@ -747,10 +766,13 @@ def ocr_paginas_imagen(doc, paginas, max_paginas=16, dpi=300):
                     alt = _ocr(doc[i], rot)
                     if _calidad(alt) > _calidad(txt):
                         txt, mejor_rot = alt, rot
-            if 0 < _calidad(txt) < 60:  # calidad baja (escaneo gris con bordes de tabla): 400 dpi binarizado y segmentación por columnas
-                for psm, d, binz in (("6", 400, True), ("4", 400, True), ("4", None, False)):
-                    alt = _ocr(doc[i], mejor_rot, psm, d, binz)
-                    if _calidad(alt) > _calidad(txt):
+            def _cifras(t): return len(re.findall(r"\d{1,3}(?:[\.,]\d{3})+", t))
+            if 0 < _calidad(txt) < 60 or (_cifras(txt) < 8 and len(_CLAVES.findall(_norm(txt))) >= 10):
+                # calidad baja, o tabla con glosas legibles pero sin cifras (celdas con bordes: 'TOTAL ACTIVOS 2 or | too 03'):
+                # se prueba sin líneas de tabla, a 400 dpi binarizado y con segmentación por columnas; gana la lectura con más cifras
+                for psm, d, binz, ql in (("6", 400, False, True), ("4", 400, False, True), ("6", 400, True, False), ("4", 400, True, False)):
+                    alt = _ocr(doc[i], mejor_rot, psm, d, binz, ql)
+                    if (_cifras(alt), _calidad(alt)) > (_cifras(txt), _calidad(txt)):
                         txt = alt
             if txt.strip():
                 out[i] = ("" if _ilegible(paginas[i]) else paginas[i]) + "\n" + txt; hechos.append(i + 1)
