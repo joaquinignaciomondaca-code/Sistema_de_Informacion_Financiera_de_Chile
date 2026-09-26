@@ -137,6 +137,10 @@ def _fila(celdas: list[str]) -> dict | None:
         nota = previos[-1]
         previos = previos[:-1]
     nombre = " ".join(parte for parte in previos if parte).strip(" .:-")
+    pegada = re.search(r"\s(\d{1,2}(?:\.\d{1,2})?)$", nombre)
+    if pegada and not nota:
+        nota = pegada.group(1).split(".")[0]
+        nombre = nombre[: pegada.start()].strip(" .:-")
     if len(nombre) < 3 or fold(nombre) in {"activos", "pasivos", "patrimonio", "nota", "notas"}:
         return None
     if _es_fecha(nombre) or fold(nombre) in {"m$", "miles de pesos", "nota"}:
@@ -254,6 +258,17 @@ def _es_encabezado_columna(linea: str) -> bool:
 
 def _es_guion(linea: str) -> bool:
     return linea.strip() in {"-", "—", "–"}
+
+
+def _es_continuacion(linea: str) -> bool:
+    """Una línea que sigue el nombre ya cerrado, no una cuenta nueva."""
+    if not linea or not linea[0].islower():
+        return False
+    if _montos_de_linea(linea) is not None or _NOTA_LINEA.fullmatch(linea):
+        return False
+    if not re.search(r"[A-Za-zÁÉÍÓÚáéíóúñÑ]", linea):
+        return False
+    return True
 
 
 def _montos_de_linea(linea: str) -> list[float] | None:
@@ -375,6 +390,12 @@ def lineas_apiladas(texto: str, estado: str, meta: dict, orden: str = "corte_pri
                 lado = seccion
             nombre = []
             nota = ""
+            continue
+        # El monto queda en la primera línea y el resto del nombre, debajo.
+        # «de la controladora» cierra la fila ya emitida; no abre la siguiente.
+        if not nombre and not nota and not montos and filas and _es_continuacion(linea):
+            previa = filas[-1]["nombre_cuenta"]
+            filas[-1]["nombre_cuenta"] = re.sub(r"\s+", " ", f"{previa} {linea}").strip()
             continue
         nombre.append(linea)
     if montos:
@@ -512,17 +533,49 @@ def es_linea_de_cara(nombre: str) -> bool:
     return True
 
 
+def _nucleo(nombre: str) -> str:
+    return fold(re.sub(r"\(\s*\d{1,2}\s*\)", " ", nombre or ""))
+
+
+def _frase_comun(izquierda: str, derecha: str) -> int:
+    a, b = izquierda.split(), derecha.split()
+    mejor = 0
+    for i in range(len(a)):
+        for j in range(len(b)):
+            k = 0
+            while i + k < len(a) and j + k < len(b) and a[i + k] == b[j + k]:
+                k += 1
+            if k > mejor:
+                mejor = k
+    return mejor
+
+
+def _ya_guardada(row: dict, elegidas: list[dict]) -> bool:
+    clave = _nucleo(row.get("nombre_cuenta") or "")
+    monto = row.get("monto_miles_clp")
+    for elegida in elegidas:
+        otro = _nucleo(elegida.get("nombre_cuenta") or "")
+        if not clave or not otro:
+            continue
+        if clave == otro:
+            return True
+        if min(len(clave), len(otro)) >= 8 and (clave in otro or otro in clave):
+            return True
+        if monto is not None and monto == elegida.get("monto_miles_clp") and _frase_comun(clave, otro) >= 4:
+            return True
+    return False
+
+
 def lineas_caidas(elegidas: list[dict], otras: list[dict]) -> list[dict]:
     """Líneas que otra lectura de la misma cara vio y la elegida no guardó."""
-    tienen = {fold(row.get("nombre_cuenta") or "") for row in elegidas}
     caidas = []
     vistos = set()
     for row in otras:
         nombre = row.get("nombre_cuenta") or ""
-        clave = fold(nombre)
-        if not clave or clave in tienen or clave in vistos or not es_linea_de_cara(nombre):
+        clave = _nucleo(nombre)
+        if not clave or clave in vistos or not es_linea_de_cara(nombre):
             continue
-        if any(len(clave) > 10 and len(tengo) > 10 and (clave in tengo or tengo in clave) for tengo in tienen):
+        if _ya_guardada(row, elegidas):
             continue
         vistos.add(clave)
         caidas.append(row)
