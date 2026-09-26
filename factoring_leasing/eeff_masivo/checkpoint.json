@@ -3231,6 +3231,106 @@
       "api": [
         "OK"
       ]
+    },
+    "76381570-6|2024-03": {
+      "rut": "76381570-6",
+      "razon_social": "INTERFACTOR S.A.",
+      "periodo": "2024-03",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "SIN_PDF",
+      "cuadre_resultados": "SIN_PDF",
+      "cuadre_detalle": "SIN_PDF",
+      "caidas": 0,
+      "notas_ok": 0,
+      "notas_sin_leer": 0,
+      "lineas_balance": 0,
+      "lineas_resultados": 0,
+      "api": [
+        "SOLO_API"
+      ]
+    },
+    "76360977-4|2024-03": {
+      "rut": "76360977-4",
+      "razon_social": "PRIMUS CAPITAL S.A.",
+      "periodo": "2024-03",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 13,
+      "notas_sin_leer": 3,
+      "lineas_balance": 37,
+      "lineas_resultados": 17,
+      "api": [
+        "OK"
+      ]
+    },
+    "76238714-K|2024-03": {
+      "rut": "76238714-K",
+      "razon_social": "GAMA SERVICIOS FINANCIEROS S.A.",
+      "periodo": "2024-03",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 13,
+      "notas_sin_leer": 3,
+      "lineas_balance": 32,
+      "lineas_resultados": 15,
+      "api": [
+        "OK"
+      ]
+    },
+    "76120857-8|2024-03": {
+      "rut": "76120857-8",
+      "razon_social": "GLOBAL SOLUCIONES FINANCIERAS S.A.",
+      "periodo": "2024-03",
+      "tipo_eeff": "Consolidado",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "OK",
+      "cuadre_detalle": "FALTAN_LINEAS",
+      "caidas": 0,
+      "notas_ok": 6,
+      "notas_sin_leer": 8,
+      "lineas_balance": 34,
+      "lineas_resultados": 15,
+      "api": [
+        "OK"
+      ]
+    },
+    "99566540-9|2023-12": {
+      "rut": "99566540-9",
+      "razon_social": "HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING)",
+      "periodo": "2023-12",
+      "tipo_eeff": "Individual",
+      "estado": "marcado",
+      "error": "",
+      "version": 1,
+      "cuadre_balance": "OK",
+      "cuadre_resultados": "FALTAN_LINEAS",
+      "cuadre_detalle": "OK",
+      "caidas": 0,
+      "notas_ok": 12,
+      "notas_sin_leer": 1,
+      "lineas_balance": 29,
+      "lineas_resultados": 24,
+      "api": [
+        "OK"
+      ]
     }
   }
 }
