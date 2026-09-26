@@ -1,0 +1,68 @@
+name: Extracción CMF — Securitizadoras y Patrimonios Separados
+
+# Corre el pipeline en un runner de GitHub (con salida a internet) y deja los resultados en una rama
+# `actions/ps-extraccion-<run>` para integrarlos por PR. Lanzar con: gh workflow run securitizadoras_extraccion.yml -f desde=2010
+on:
+  workflow_dispatch:
+    inputs:
+      desde:
+        description: "Primer año del paso ps"
+        default: "2010"
+      hasta:
+        description: "Último año"
+        default: "2026"
+      trimestres:
+        description: "Meses de cierre (03,06,09,12)"
+        default: "03,06,09,12"
+      step:
+        description: "Paso del pipeline (todo | ps | maestro | gestoras)"
+        default: "todo"
+
+permissions:
+  contents: write
+
+jobs:
+  extraer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Dependencias
+        run: pip install -q -r requirements.txt
+      - name: Pruebas del parser (sin red)
+        run: python securitizadoras/tests/test_pipeline_securitizadoras.py
+      - name: Conectividad CMF
+        run: |
+          python - <<'EOF'
+          import urllib.request
+          h = urllib.request.urlopen(urllib.request.Request("https://www.cmfchile.cl/institucional/mercados/consulta_busqueda.php?valor=securitizadora", headers={"User-Agent": "Mozilla/5.0"}), timeout=60).read()
+          print("CMF OK:", len(h), "bytes;", h.count(b"RGSEC"), "enlaces RGSEC")
+          assert h.count(b"RGSEC") > 0
+          EOF
+      - name: Pipeline
+        run: |
+          python securitizadoras/scripts/pipeline_securitizadoras.py --step "${{ inputs.step }}" --desde "${{ inputs.desde }}" --hasta "${{ inputs.hasta }}" --trimestres "${{ inputs.trimestres }}" 2>&1 | tee pipeline.log
+          grep -c "lineas=" pipeline.log | xargs -I{} echo "PDFs con líneas extraídas: {}"
+      - name: Auditoría (informativa; el veredicto se toma al integrar)
+        run: python securitizadoras/scripts/audit_patrimonios_separados_v2.py --json audit_securitizadoras.json
+        continue-on-error: true
+      - name: Publicar rama con resultados
+        run: |
+          RAMA="actions/ps-extraccion-${{ inputs.desde }}-${{ inputs.hasta }}-${{ github.run_id }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$RAMA"
+          git add docs/outputs/securitizadoras/
+          git commit -m "securitizadoras: extracción CMF (${{ inputs.step }} ${{ inputs.desde }}-${{ inputs.hasta }} trimestres ${{ inputs.trimestres }}) run ${{ github.run_id }}" || echo "sin cambios"
+          git push -u origin "$RAMA"
+          echo "RAMA=$RAMA" >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: extraccion-${{ github.run_id }}
+          path: |
+            pipeline.log
+            audit_securitizadoras.json
