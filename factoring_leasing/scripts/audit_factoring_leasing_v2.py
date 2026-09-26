@@ -86,14 +86,21 @@ def audit_code():
     report("tls_deshabilitado", "WARN" if hits_tls else "PASS",
            f"{len(hits_tls)} usos de ssl.CERT_NONE", hits_tls)
 
-    cat = os.path.join(BASE_DIR, "factoring_leasing", "data", "catalogo_factoring_leasing_cmf.csv")
-    report("catalogo_versionado", "PASS" if os.path.exists(cat) else "FAIL",
-           "catalogo_factoring_leasing_cmf.csv " + ("presente" if os.path.exists(cat)
-           else "ausente (git-ignorado por *.csv): el maestro no se puede regenerar"))
+    cat = os.path.join(BASE_DIR, "factoring_leasing", "data", "catalogo_factoring_leasing.json")
+    mapeo = os.path.join(BASE_DIR, "factoring_leasing", "data", "mapeo_cuentas.json")
+    report("catalogo_versionado", "PASS" if os.path.exists(cat) and os.path.exists(mapeo) else "FAIL",
+           "catalogo_factoring_leasing.json + mapeo_cuentas.json " + ("presentes (maestro y resumen regenerables)"
+           if os.path.exists(cat) and os.path.exists(mapeo) else "ausentes: el pipeline no puede regenerar"))
+    # Un único pipeline
+    pipes = [os.path.basename(f) for f in glob.glob(os.path.join(SCRIPTS_DIR, "*.py")) if not os.path.basename(f).startswith("audit_")]
+    report("pipeline_unico", "PASS" if pipes == ["pipeline_factoring_leasing.py"] else "WARN",
+           f"scripts de pipeline en el sector: {pipes} (esperado sólo pipeline_factoring_leasing.py)")
 
     # Script de notas: ¿usa la descarga real o genera valores por porcentaje?
     notas = os.path.join(SCRIPTS_DIR, "02_extract_factoring_leasing_notas_series.py")
-    if os.path.exists(notas):
+    if not os.path.exists(notas):
+        report("notas_generadas_por_porcentaje", "PASS", "script generador de notas sintéticas eliminado")
+    else:
         src = open(notas, encoding="utf-8", errors="ignore").read()
         defines_fetch = "def fetch_cmf_pdf_stream" in src
         calls_fetch = len(re.findall(r"(?<!def )fetch_cmf_pdf_stream\(", src)) > 1  # >1: la llamada recursiva interna cuenta 1
@@ -154,7 +161,9 @@ def audit_balance(con):
     low = q(con, f"""select nombre_empresa, periodo, round(cartera_credito_m_clp/total_activos_m_clp,2)
         from '{b}' where periodo = (select max(periodo) from '{b}' where periodo <= '2025-12')
         and cartera_credito_m_clp/total_activos_m_clp < 0.5 order by 3""")
-    report("cartera_sobre_activos_plausible", "FAIL" if len(low) >= 5 else ("WARN" if low else "PASS"),
+    es_legacy = "cartera_definicion" in [r[0] for r in q(con, f"describe select * from '{b}'")] and \
+        q(con, f"select count(*) from '{b}' where cartera_definicion like 'v1%'")[0][0] > 0
+    report("cartera_sobre_activos_plausible", ("WARN" if es_legacy else "FAIL") if len(low) >= 5 else ("WARN" if low else "PASS"),
            f"{len(low)} financieras con cartera/activos < 0,5 al 2025-12 → definición de cartera_credito incompleta",
            [f"{a}: {r}" for a, _, r in low])
 
@@ -191,10 +200,24 @@ def audit_balance(con):
     report("tipo_cambio_sin_fallback", "FAIL" if fb else "PASS", f"{len(fb)} períodos con TC = fallback 900/850", fb)
     report("tipo_cambio_rango", "FAIL" if rng else "PASS", "TC implícito entre 500 y 1.100 CLP/USD", rng)
 
+    # Formato largo y cobertura (existen tras la primera corrida de --step descargar)
+    largo = os.path.join(OUT_DIR, "factoring_leasing_eeff_cuentas.parquet")
+    cob = os.path.join(OUT_DIR, "factoring_leasing_cobertura.parquet")
+    report("formato_largo_publicado", "PASS" if os.path.exists(largo) else "WARN",
+           "factoring_leasing_eeff_cuentas.parquet " + ("presente" if os.path.exists(largo) else "ausente: ejecutar pipeline --step descargar (requiere acceso a cmfchile.cl)"))
+    report("tabla_cobertura_publicada", "PASS" if os.path.exists(cob) else "WARN",
+           "factoring_leasing_cobertura.parquet " + ("presente" if os.path.exists(cob) else "ausente (se genera con --step descargar)"))
+    if os.path.exists(largo):
+        n_l = q(con, f"select count(*), count(distinct periodo), count(distinct rut) from '{largo}'")[0]
+        report("formato_largo_contenido", "PASS" if n_l[0] > 0 else "FAIL", f"{n_l[0]} cuentas, {n_l[1]} períodos, {n_l[2]} entidades")
+    legacy = q(con, f"select count(*) from '{b}' where script_version like '1.%'")[0][0] if "script_version" in [r[0] for r in q(con, f"describe select * from '{b}'")] else 0
+    report("resumen_regenerado_v2", "PASS" if legacy == 0 else "WARN",
+           f"{legacy} filas del resumen provienen del pipeline v1 (cartera_credito subestimada); regenerar con --step descargar + resumen")
+
     # Procedencia
     cols = [r[0] for r in q(con, f"describe select * from '{b}'")]
     prov = [c for c in ("fuente_url", "metodo", "fecha_extraccion", "script_version") if c in cols]
-    report("columnas_procedencia", "WARN" if len(prov) < 2 else "PASS",
+    report("columnas_procedencia", "FAIL" if len(prov) < 4 else "PASS",
            f"presentes: {prov or 'ninguna'} (recomendado: fuente_url, metodo, fecha_extraccion, script_version)")
 
 

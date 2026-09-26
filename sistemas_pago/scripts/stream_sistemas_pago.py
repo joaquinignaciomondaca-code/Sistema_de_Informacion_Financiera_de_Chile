@@ -28,8 +28,14 @@ try:
 except ImportError:
     bcchapi = None
 
-EMAIL_BCCH = "joaquinmondacaparada@gmail.com"
-PASS_BCCH = "#Mondaca2001c"
+import sys as _sys
+_sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+from mfc_common.credentials import bcch_credentials
+
+# Credenciales desde variables de entorno / .env (ver mfc_common/credentials.py). Se resuelven al usarlas.
+def _bcch_session():
+    email, password = bcch_credentials()
+    return bcchapi.Siete(email, password)
 
 def calcular_dv(rut_num: int) -> str:
     s = str(rut_num)
@@ -336,7 +342,7 @@ def extract_bcch_payment_stats(tc_map):
     rows = []
     if bcchapi:
         try:
-            siete = bcchapi.Siete(EMAIL_BCCH, PASS_BCCH)
+            siete = _bcch_session()
             sids = [
                 "F021.CIR.STO.N.CLP.5.M",  # Circulante fin de mes (miles de millones CLP)
                 "F021.CIR.PRO.N.CLP.5.M",  # Circulante promedio mensual (miles de millones CLP)

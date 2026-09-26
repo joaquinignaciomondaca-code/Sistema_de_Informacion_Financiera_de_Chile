@@ -1,4 +1,4 @@
-﻿# Python cache & virtual environments
+# Python cache & virtual environments
 __pycache__/
 *.py[cod]
 *$py.class
@@ -25,4 +25,9 @@ docs/outputs/vida/cartera_bonos.parquet
 .DS_Store
 Thumbs.db
 
-.github/
+
+# Credenciales locales
+.env
+
+# Excepción: catálogos versionados del sector (JSON, no CSV)
+!factoring_leasing/data/*.json

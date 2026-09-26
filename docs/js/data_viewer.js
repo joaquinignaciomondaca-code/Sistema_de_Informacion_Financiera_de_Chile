@@ -85,9 +85,7 @@ const DATA_VIEWER_CATALOG = [
     group: "Factoring & Leasing (CMF / NBFI)",
     tables: [
       { id: "factoring_leasing_maestro", name: "factoring_leasing.maestro (28 entidades CMF)" },
-      { id: "factoring_leasing_balance_resumen", name: "factoring_leasing.balance_resumen (878 balances IFRS)" },
-      { id: "factoring_leasing_nota_efectivo_detalle", name: "factoring_leasing.nota_efectivo_detalle (2.9k datos)" },
-      { id: "factoring_leasing_cartera_morosidad_detalle", name: "factoring_leasing.cartera_morosidad_detalle (17.4k datos)" }
+      { id: "factoring_leasing_balance_resumen", name: "factoring_leasing.balance_resumen (878 balances IFRS)" }
     ]
   },
   {

@@ -482,10 +482,10 @@
       "corte": "2026-03",
       "frescura": "Al día (2026-03)",
       "modo": "Automático",
-      "ultima_actualizacion": "2026-09-23",
+      "ultima_actualizacion": "2026-09-26",
       "file_parquet": "outputs/factoring_leasing/factoring_leasing_maestro.parquet",
       "registros_reales": 28,
-      "descripcion": "Catálogo maestro oficial y exhaustivo de intermediarios financieros no bancarios (Factoring, Leasing y Financiamiento Automotriz), auditado con Algoritmo Módulo 11, estado de vigencia registral, perímetro regulatorio CMF y grupo controlador.",
+      "descripcion": "Catálogo maestro de 28 sociedades de factoring, leasing y financiamiento automotriz (RUT módulo 11, segmento, licencia, grupo controlador). 24 con EEFF IFRS extraíbles desde CMF emisores; 4 filiales bancarias con extracción pendiente (campo fuente_eeff_pipeline). Fuente de verdad: factoring_leasing/data/catalogo_factoring_leasing.json.",
       "origen": "Comisión para el Mercado Financiero (CMF) — Nóminas Oficiales de Sociedades de Factoring (FASOC), Leasing Inmobiliario (LISOC) y Registro de Valores de Emisores (RVEMI)."
     },
     {
@@ -498,10 +498,10 @@
       "corte": "2014-03 a 2026-03",
       "frescura": "Al día (49 trimestres)",
       "modo": "Automático",
-      "ultima_actualizacion": "2026-09-23",
+      "ultima_actualizacion": "2026-09-26",
       "file_parquet": "outputs/factoring_leasing/factoring_leasing_balance_resumen.parquet",
       "registros_reales": 878,
-      "descripcion": "Balances trimestrales IFRS: activos totales, pasivos corrientes y no corrientes directos de cuentas CMF, patrimonio neto, cartera de crédito y activos líquidos en MM$ CLP y MM$ USD.",
+      "descripcion": "Balances trimestrales IFRS desde el archivo de EEFF de CMF: activos, pasivos corrientes/no corrientes, patrimonio, cartera de crédito, efectivo, en MM$ CLP y MM USD (dólar observado de cierre). Incluye columnas de trazabilidad (fuente_url, metodo, fecha_extraccion, script_version, tc_fuente, patrimonio_origen, cartera_definicion). Nota: filas con cartera_definicion 'v1' subestiman la cartera de leasing/automotriz hasta regenerar con pipeline v2.",
       "origen": "Comisión para el Mercado Financiero (CMF) — Estados Financieros FECU IFRS de Sociedades de Leasing y Factoring."
     },
     {

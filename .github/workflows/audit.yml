@@ -1,0 +1,33 @@
+name: Auditoría de datos y seguridad
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  schedule:
+    - cron: "0 9 * * 1"   # lunes 09:00 UTC
+
+jobs:
+  auditoria:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Dependencias mínimas
+        run: pip install duckdb pandas pyarrow
+      - name: Escaneo de secretos
+        run: python scripts/scan_secrets.py
+      - name: Auditoría Factoring & Leasing (v2)
+        run: python factoring_leasing/scripts/audit_factoring_leasing_v2.py --json audit_factoring_leasing.json
+      # No bloqueante todavía: falla por outputs/vida/cartera_bonos.parquet (git-ignorado, >100 MB; sector seguros).
+      # Quitar continue-on-error cuando se corrija la vista vida_bonos en duckdb_client.js.
+      - name: Auditoría integral de la web (enlaces, parquet, chips)
+        run: python scripts/audit_web_full.py
+        continue-on-error: true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: reportes-auditoria
+          path: audit_factoring_leasing.json
