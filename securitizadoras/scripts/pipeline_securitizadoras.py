@@ -516,7 +516,12 @@ def paso_ps(op, secs, desde, hasta, trimestres):
     print(f"[ps] EEFF PDF de patrimonios separados {desde}-{hasta}, trimestres {trimestres}")
     tc = tc_map(); lineas_all, balances, notas, cobertura = [], [], [], []
     hoy = datetime.now()
+    solo_ruts = {r.strip() for r in os.environ.get("MFC_PS_RUTS", "").split(",") if r.strip()}  # diagnóstico: sólo estas administradoras (cuerpo del RUT)
+    debug_dir = os.environ.get("MFC_PS_DEBUG_DIR")  # diagnóstico: texto de las páginas de los PDFs que no cuadran
+    if debug_dir: os.makedirs(debug_dir, exist_ok=True)
     for sec in secs.values():
+        if solo_ruts and str(sec["rut"]) not in solo_ruts:
+            continue
         for anio in range(desde, hasta + 1):
             for mm in trimestres:
                 if datetime(anio, int(mm), 1) > hoy:
@@ -552,6 +557,11 @@ def paso_ps(op, secs, desde, hasta, trimestres):
                         fila.update(meta); fila.update(prov); fila["periodo"] = periodo; fila["tipo_cambio_usd_clp"] = r
                         fila["total_activos_musd"] = round(fila["total_activos_mclp"] / r, 2) if r and fila["total_activos_mclp"] is not None else None
                         balances.append(fila)
+                    if debug_dir and (not lin or not fila.get("cuadre_contable_ok")):
+                        with open(os.path.join(debug_dir, f"{meta['id_patrimonio']}_{periodo}.txt"), "w", encoding="utf-8") as fh:
+                            fh.write(f"# {txt} | {pdf_url}\n")
+                            for i, pg in enumerate(paginas[:16]):
+                                fh.write(f"\n===== PAGINA {i + 1} =====\n{pg}")
                     efe, mor, desc = [], [], 0
                     if mm == "12":
                         efe = parse_nota_efectivo_ps(paginas); mor, desc = parse_nota_morosidad_ps(paginas)
