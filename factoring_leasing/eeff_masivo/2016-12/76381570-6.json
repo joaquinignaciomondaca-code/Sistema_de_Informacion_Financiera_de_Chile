@@ -1,0 +1,423 @@
+{
+  "rut": "76381570-6",
+  "razon_social": "INTERFACTOR S.A.",
+  "periodo": "2016-12",
+  "tipo_eeff": "Consolidado",
+  "url_pdf": "https://www.cmfchile.cl/institucional/inc/inf_financiera/ifrs/safec_ifrs_verarchivo.php?auth=Y2IwYjQ2Mzc1MGRmMDgwYzhhNWFkZmFhZDdkNzViYmY=&send=dlcRw+BHzI29iMDvYiL1uo78Ar9X8qowQ63IIVdsj3fS454WEWTw7GlT7fCuDCP98DztZ0PJncda1Ji7T573KivM1fyK75TqiXpUdte/hKZPsybNeDxbEQAjieOLGzKo9nWgfhfZMEG8KT5RWDPQWJObWjYKoTCZz+olBA3SgIPctJg=",
+  "balance": [],
+  "resultados": [],
+  "notas": [],
+  "indice": [
+    {
+      "numero": 1,
+      "titulo": "Información Corporativa y Consideraciones Generales",
+      "pagina": 10,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 2,
+      "titulo": "Criterios contables aplicados",
+      "pagina": 10,
+      "en_indice": true,
+      "familia": "politica"
+    },
+    {
+      "numero": 3,
+      "titulo": "Cambios contables",
+      "pagina": 10,
+      "en_indice": true,
+      "familia": "politica"
+    },
+    {
+      "numero": 4,
+      "titulo": "Administración de riesgos",
+      "pagina": 10,
+      "en_indice": true,
+      "familia": "riesgos"
+    },
+    {
+      "numero": 5,
+      "titulo": "Segmentos operativos",
+      "pagina": 11,
+      "en_indice": true,
+      "familia": "segmentos"
+    },
+    {
+      "numero": 6,
+      "titulo": "Efectivo y equivalentes al efectivo",
+      "pagina": 11,
+      "en_indice": true,
+      "familia": "efectivo"
+    },
+    {
+      "numero": 7,
+      "titulo": "Deudores comerciales y otras cuentas por cobrar",
+      "pagina": 11,
+      "en_indice": true,
+      "familia": "deudores"
+    },
+    {
+      "numero": 8,
+      "titulo": "Cuentas por cobrar con entidades relacionadas",
+      "pagina": 11,
+      "en_indice": true,
+      "familia": "relacionadas"
+    },
+    {
+      "numero": 9,
+      "titulo": "Activos mantenidos para la venta",
+      "pagina": 11,
+      "en_indice": true,
+      "familia": "mantenidos_venta"
+    },
+    {
+      "numero": 10,
+      "titulo": "Activos intangibles distintos de la plusvalía",
+      "pagina": 11,
+      "en_indice": true,
+      "familia": "intangibles"
+    },
+    {
+      "numero": 11,
+      "titulo": "Propiedades, plantas y equipos",
+      "pagina": 11,
+      "en_indice": true,
+      "familia": "ppe"
+    },
+    {
+      "numero": 12,
+      "titulo": "Impuestos a las ganancias e impuestos diferidos",
+      "pagina": 11,
+      "en_indice": true,
+      "familia": "impuestos"
+    },
+    {
+      "numero": 13,
+      "titulo": "Otros pasivos financieros corrientes y no corrientes",
+      "pagina": 12,
+      "en_indice": true,
+      "familia": "pasivos_financieros"
+    },
+    {
+      "numero": 14,
+      "titulo": "Cuentas por pagar comerciales y otras cuentas por pagar",
+      "pagina": 12,
+      "en_indice": true,
+      "familia": "cuentas_por_pagar"
+    },
+    {
+      "numero": 15,
+      "titulo": "Patrimonio",
+      "pagina": 12,
+      "en_indice": true,
+      "familia": "patrimonio"
+    },
+    {
+      "numero": 16,
+      "titulo": "Resultados retenidos",
+      "pagina": 12,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 17,
+      "titulo": "Ganancias por acción",
+      "pagina": 12,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 18,
+      "titulo": "Participaciones no controladoras",
+      "pagina": 12,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 19,
+      "titulo": "Ingresos de actividades ordinarias y costos de ventas",
+      "pagina": 12,
+      "en_indice": true,
+      "familia": "ingresos"
+    },
+    {
+      "numero": 20,
+      "titulo": "Gastos de administración",
+      "pagina": 12,
+      "en_indice": true,
+      "familia": "gastos"
+    },
+    {
+      "numero": 21,
+      "titulo": "Beneficios y gastos empleados",
+      "pagina": 12,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 22,
+      "titulo": "Contingencias y restricciones",
+      "pagina": 12,
+      "en_indice": true,
+      "familia": "contingencias"
+    },
+    {
+      "numero": 23,
+      "titulo": "Cauciones obtenidas de terceros",
+      "pagina": 12,
+      "en_indice": true,
+      "familia": "cauciones"
+    },
+    {
+      "numero": 24,
+      "titulo": "Medio ambiente",
+      "pagina": 12,
+      "en_indice": true,
+      "familia": "medio_ambiente"
+    },
+    {
+      "numero": 25,
+      "titulo": "Estimaciones y juicios o criterios críticos de la administración",
+      "pagina": 12,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 26,
+      "titulo": "Nota de cumplimiento",
+      "pagina": 12,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 27,
+      "titulo": "Sanciones",
+      "pagina": 12,
+      "en_indice": true,
+      "familia": "sanciones"
+    },
+    {
+      "numero": 28,
+      "titulo": "Hechos posteriores",
+      "pagina": 12,
+      "en_indice": true,
+      "familia": "hechos_posteriores"
+    },
+    {
+      "numero": 29,
+      "titulo": "Prenda sobre Rastrillo Patead Eurohit 790 N, avaluado en",
+      "pagina": 58,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 30,
+      "titulo": "Prenda sobre Rastrillo Europ 461 N, avaluado en $6.175.000",
+      "pagina": 59,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 31,
+      "titulo": "Prenda sobre Camioneta Chevrolet - Mod. S10 Apache doble cabina",
+      "pagina": 59,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 32,
+      "titulo": "Prenda sobre Maquinaria industrial marca JCB, año 2008, R.N.V.M:",
+      "pagina": 59,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 33,
+      "titulo": "Prenda sobre Camioneta Chevrolet - año 1998 - Mod. Corza Pick",
+      "pagina": 59,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 34,
+      "titulo": "Prenda sobre Camión Marca JMC, AÑO 2010, R.N.V.R.: CLWZ-45",
+      "pagina": 59,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 35,
+      "titulo": "Prenda sobre Camión Volvo, modelo FH 12, año 2005. R.N.V.M.:",
+      "pagina": 59,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 36,
+      "titulo": "Hipoteca sobre Retazo de terreno denominado Lote B), del plano de",
+      "pagina": 59,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 37,
+      "titulo": "Hipoteca sobre parte de la propiedad agrícola denominada Hijuela",
+      "pagina": 59,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 38,
+      "titulo": "Prenda sobre Camión marca Reichdrill, modelo T 650 B año 1987,",
+      "pagina": 59,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 39,
+      "titulo": "Semiremolque marca Jurmar, Mod. ESC33, año 2012, Nro",
+      "pagina": 59,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 40,
+      "titulo": "Prenda sobre Perforadora marca Driltech, modelo D 25 K, año 1991",
+      "pagina": 59,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 41,
+      "titulo": "Hipoteca sobre Sitio #26 del Condominio Industrial \"Plaza de",
+      "pagina": 59,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 42,
+      "titulo": "Prenda sobre CAMIÓN, marca RENAULT, modelo CBH 280, año",
+      "pagina": 59,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 43,
+      "titulo": "Prenda sobre STATION WAGON, marca CHEVROLET, modelo",
+      "pagina": 59,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 44,
+      "titulo": "Prenda sobre CAMIONETA, marca HYUNDAI, modelo PORTER HR",
+      "pagina": 59,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 45,
+      "titulo": "Prenda sobre Maquina Industrial, año 2002, Marca Grove, modelo",
+      "pagina": 59,
+      "en_indice": true,
+      "familia": "otra"
+    },
+    {
+      "numero": 46,
+      "titulo": "Prenda sobre Station Wagon Toyota - Mod. Cuatro Runner - año",
+      "pagina": 59,
+      "en_indice": true,
+      "familia": "otra"
+    }
+  ],
+  "validacion_api": [
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "total_activos",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 36329.94,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "efectivo",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 2122.53,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "deudores_corrientes",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 32799.46,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "pasivos_corrientes",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 24807.63,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "pasivos_no_corrientes",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 45.19,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    },
+    {
+      "rut": "",
+      "razon_social": "",
+      "periodo": "",
+      "concepto": "patrimonio",
+      "monto_documento_m_clp": null,
+      "monto_api_m_clp": 11477.12,
+      "diff_m_clp": null,
+      "estado": "SOLO_API",
+      "fuente_documento": "EEFF PDF/MD",
+      "fuente_api": "CMF ver_archivo.php (solo validacion)"
+    }
+  ],
+  "resumen": {
+    "indice": 46,
+    "ok": 0,
+    "no_leida": 0,
+    "lineas_balance": 0,
+    "lineas_resultados": 0,
+    "cuadre_balance": "SIN_PDF",
+    "cuadre_detalle": "SIN_PDF",
+    "hueco_detalle": "",
+    "cuadre_resultados": "SIN_PDF",
+    "hueco_resultados": "",
+    "caidas_balance": [],
+    "caidas_resultados": [],
+    "cuentas": []
+  }
+}
