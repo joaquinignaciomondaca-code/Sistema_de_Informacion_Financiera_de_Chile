@@ -147,8 +147,17 @@ def correr(lote: list[dict], periodo: str, dest: Path) -> int:
             + (f" error={fila['error']}" if fila.get("error") else "")
         )
     (dest / "resumen.md").write_text("\n".join(lineas) + "\n", encoding="utf-8")
+    ok = sum(fila.get("ok", 0) for fila in filas)
+    no = sum(fila.get("no_leida", 0) for fila in filas)
+    lineas.append("")
+    lineas.append(
+        f"CALIDAD: {ok} notas calzan con su línea, {no} no leídas. "
+        "No es el masivo. Solo se publica si no queda ninguna sin leer."
+    )
     print("\n".join(lineas))
-    return 0 if filas and all(not fila.get("error") and fila.get("no_leida") == 0 for fila in filas) else 1
+    if any(fila.get("error") for fila in filas) or not filas:
+        return 1
+    return 0 if no == 0 else 1
 
 
 def main() -> None:
