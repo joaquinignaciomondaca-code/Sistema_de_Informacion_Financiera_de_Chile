@@ -207,7 +207,15 @@ def _es_subtotal_resultado(nombre: str) -> bool:
     n = _fold(nombre)
     if _es_atribucion(nombre):
         return False
-    if n in {"ganancia", "utilidad", "resultado", "ganancia perdida", "utilidad perdida"}:
+    # La discontinuada es un componente, aunque el nombre diga ganancia (pérdida).
+    if "discontinuad" in n:
+        return False
+    limpio = re.sub(r"[^a-z ]", "", n).strip()
+    if limpio in {"ganancia", "utilidad", "resultado", "ganancia perdida", "utilidad perdida"}:
+        return True
+    if ("operaciones continuadas" in n or "operaciones continuas" in n) and (
+        "procedente" in n or "despues de impuesto" in n
+    ):
         return True
     claves = (
         "ganancia bruta",
@@ -218,8 +226,6 @@ def _es_subtotal_resultado(nombre: str) -> bool:
         "actividades operacionales",
         "actividades de operacion",
         "resultado de operaciones",
-        "ganancia perdida",
-        "utilidad perdida",
     )
     return any(clave in n for clave in claves)
 

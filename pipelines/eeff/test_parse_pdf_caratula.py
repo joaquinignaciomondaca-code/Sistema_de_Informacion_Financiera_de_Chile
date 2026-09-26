@@ -100,6 +100,88 @@ Total patrimonio
     assert cuadratura_balance(lineas)["estado"] == "OK"
 
 
+def test_resultado_no_suma_dos_veces_ni_se_come_el_cero():
+    autofin = """
+Estados de Resultados Integrales
+Utilidad (Pérdida)
+Ingresos
+20.a
+25.304.795
+20.706.428
+Gastos por intereses
+20.b
+(5.374.884)
+(4.366.281)
+Ingreso neto
+19.929.911
+16.340.147
+"""
+    lineas = lineas_apiladas(autofin, "resultado", META)
+    assert lineas[0]["nombre_cuenta"] == "Ingresos"
+
+    forum = """
+Estados de Resultados Integrales
+Ganancias que surgen de la baja en cuentas de activos financieros
+0
+0
+Gasto de administración
+21
+(19.788.099)
+(18.045.200)
+"""
+    forum_lineas = lineas_apiladas(forum, "resultado", META)
+    assert forum_lineas[0]["monto_miles_clp"] == 0
+    assert forum_lineas[1]["nombre_cuenta"] == "Gasto de administración"
+
+    tanner = """
+Estados de Resultados
+Pérdidas por deterioro
+29
+(5.635.331)
+(7.394.496)
+Costos financieros
+-
+(92.657)
+(89.839)
+Resultado por unidades de reajuste
+-
+723
+803
+Utilidad antes de Impuesto
+(5.727.265)
+(7.483.532)
+"""
+    tanner_lineas = lineas_apiladas(tanner, "resultado", META)
+    costos = next(row for row in tanner_lineas if row["nombre_cuenta"] == "Costos financieros")
+    assert costos["monto_miles_clp"] == -92657
+    assert costos["monto_comparativo_miles_clp"] == -89839
+    assert cuadratura_resultados(tanner_lineas)["estado"] == "OK"
+
+    security = lineas_apiladas(
+        """
+Estados de Resultados
+Ingresos de actividades ordinarias
+10.000
+8.000
+Costo de ventas
+(4.000)
+(3.000)
+Ganancia bruta
+6.000
+5.000
+Ganancia procedente de operaciones continuadas
+6.000
+5.000
+Ganancia del periodo
+6.000
+5.000
+""",
+        "resultado",
+        META,
+    )
+    assert cuadratura_resultados(security)["estado"] == "OK"
+
+
 def test_texto_y_titulo():
     assert clasificar_pagina("Nota 6 - Efectivo\nEstado de situación financiera\n1.164.717\n925.415\n252.912.848") == ""
     assert clasificar_pagina("Estado de Situación Financiera\nAl 31 de marzo de 2026") == ""

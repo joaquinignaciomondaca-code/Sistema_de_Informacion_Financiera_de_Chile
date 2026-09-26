@@ -6,7 +6,7 @@
     "fecha_corte": "",
     "tipo_eeff": "Consolidado",
     "estado": "resultado",
-    "nombre_cuenta": "al al Ganancia Ingresos de actividades ordinarias",
+    "nombre_cuenta": "Ingresos de actividades ordinarias",
     "cuenta_canonica": "",
     "nota_ref": "28",
     "clase": "Ingreso",
@@ -138,9 +138,9 @@
     "cuenta_canonica": "",
     "nota_ref": "",
     "clase": "Costo",
-    "monto_miles_clp": 0.0,
-    "monto_m_clp": 0.0,
-    "monto_comparativo_miles_clp": -92657.0,
+    "monto_miles_clp": -92657.0,
+    "monto_m_clp": -92.66,
+    "monto_comparativo_miles_clp": -89839.0,
     "fuente": "CMF PDF Estados financieros"
   },
   {
@@ -170,9 +170,9 @@
     "cuenta_canonica": "",
     "nota_ref": "",
     "clase": "Resultado",
-    "monto_miles_clp": 0.0,
-    "monto_m_clp": 0.0,
-    "monto_comparativo_miles_clp": 723.0,
+    "monto_miles_clp": 723.0,
+    "monto_m_clp": 0.72,
+    "monto_comparativo_miles_clp": 803.0,
     "fuente": "CMF PDF Estados financieros"
   },
   {
@@ -264,11 +264,11 @@
     "estado": "resultado",
     "nombre_cuenta": "Participaciones no controladoras",
     "cuenta_canonica": "",
-    "nota_ref": "59",
+    "nota_ref": "24",
     "clase": "Resultado",
-    "monto_miles_clp": 7359.0,
-    "monto_m_clp": 7.36,
-    "monto_comparativo_miles_clp": null,
+    "monto_miles_clp": 59.0,
+    "monto_m_clp": 0.06,
+    "monto_comparativo_miles_clp": 7359.0,
     "fuente": "CMF PDF Estados financieros"
   }
 ]
