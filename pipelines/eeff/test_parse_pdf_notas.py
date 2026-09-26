@@ -354,6 +354,24 @@ Total
     assert composicion_que_calza(texto, 47392) is None
 
 
+def test_el_guion_del_nombre_no_borra_el_monto():
+    texto = """
+NOTA 15 PASIVOS FINANCIEROS
+Préstamos bancarios
+66.724.259
+Emisión de Notas - Gramercy (*)
+39.485.866
+Obligaciones con el publico
+4.504.784
+Total
+110.714.909
+"""
+    comp = composicion_que_calza(texto, 110714909)
+    assert comp is not None
+    assert any("Gramercy" in f["concepto"] for f in comp["filas"])
+    assert sum(f["monto_miles"] for f in comp["filas"] if not f["es_total"]) == 110714909
+
+
 def test_la_sociedad_es_la_partida_de_relacionadas():
     texto = """
 NOTA 7 CUENTAS POR COBRAR Y POR PAGAR A ENTIDADES RELACIONADAS

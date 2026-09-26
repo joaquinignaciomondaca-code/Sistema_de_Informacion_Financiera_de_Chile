@@ -222,6 +222,9 @@ def _montos(line: str) -> list[float]:
         resto = line[match.end():]
         if re.match(r"-[0-9kK]", resto):
             continue
+        # «Notas - Gramercy» no es un cero. «Fondos Mutuos - 15.003.881» sí: ahí el guion es columna.
+        if token == "-" and sum(ch.isalpha() for ch in line) > 1 and not re.search(r"\d{1,3}(?:\.\d{3})+", line):
+            continue
         valor = parse_monto_chileno(token)
         if valor is not None:
             valores.append(valor)
