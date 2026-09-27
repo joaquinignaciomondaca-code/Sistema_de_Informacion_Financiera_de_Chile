@@ -70,6 +70,8 @@ const SEMANTIC_VIEWS = [
 
   // FACTORING & LEASING (CMF / NBFI)
   // BEGIN AUTO FL IFRS SERIES VIEWS
+  { name: "factoring_leasing_balance_serie_ifrs_cmf", file: "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet" },
+  { name: "factoring_leasing_resultados_serie_ifrs_cmf", file: "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet" },
   // END AUTO FL IFRS SERIES VIEWS
   { name: "factoring_leasing_maestro", file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet" },
   { name: "factoring_leasing_eeff_muestra_cmf", file: "outputs/factoring_leasing/factoring_leasing_eeff_muestra_cmf.parquet" },
