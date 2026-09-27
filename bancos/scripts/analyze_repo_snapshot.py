@@ -73,18 +73,22 @@ def analyze(snapshot: dict, legacy: list[dict]) -> dict:
                                  if code not in AGGREGATES | FOREIGN_AFFILIATES]
             exact_delta = tuple(exact_rows['999'][i] - sum((v[i] for v in exact_individuals), Decimal(0))
                                 for i in (0, 1))
-        if delta == (0, 0):
-            category = 'conciliado_exacto'
+        exact_residual = (tuple(exact_delta[i] + exact_rows.get('507', (Decimal(0), Decimal(0)))[i]
+                                for i in (0, 1)) if exact_delta is not None else None)
+        if exact_delta is not None and all(d == 0 for d in exact_delta):
+            category = 'conciliado_exacto_en_fuente'
+        elif exact_delta is not None and month < '2009-11' and exact_residual == (0, 0):
+            category = 'igual_saldo_507_pre_fusion_en_fuente'
+        elif delta == (0, 0):
+            category = 'conciliado_exacto_redondeado'
         elif month < '2009-11' and residual == (0, 0):
-            category = 'igual_saldo_507_pre_fusion'
-        elif exact_delta is not None and all(d == 0 for d in exact_delta):
-            category = 'descuadre_solo_redondeo_comprobado'
+            category = 'igual_saldo_507_pre_fusion_redondeado'
         elif month >= '2022-01' and all(abs(d) <= Decimal('0.02') for d in delta):
             category = 'diferencia_centésimas_mm_por_investigar'
         else:
             category = 'diferencia_material_sin_explicacion'
         classes[category] += 1
-        if category != 'conciliado_exacto':
+        if category not in ('conciliado_exacto_en_fuente', 'conciliado_exacto_redondeado'):
             details.append({'periodo': month, 'tipo': category,
                             'delta_mm_clp': [str(d) for d in delta],
                             'delta_exact_mm_clp': [str(d) for d in exact_delta] if exact_delta else None,

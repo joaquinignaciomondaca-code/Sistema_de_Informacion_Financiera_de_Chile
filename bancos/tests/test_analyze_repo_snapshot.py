@@ -19,7 +19,7 @@ class SnapshotTest(unittest.TestCase):
         data = snapshot('2008-01', [('507', '10.00', '2.00'), ('001', '100.00', '20.00'),
                                        ('999', '100.00', '20.00')])
         result = analyze(data, old)
-        self.assertEqual(result['categorias_total_sistema'], {'igual_saldo_507_pre_fusion': 1})
+        self.assertEqual(result['categorias_total_sistema'], {'igual_saldo_507_pre_fusion_redondeado': 1})
         self.assertEqual(result['estado'], 'NO_APROBADO')
         self.assertEqual(result['diferencias_legacy'], [])
 
@@ -38,7 +38,7 @@ class SnapshotTest(unittest.TestCase):
         data['meses'][0][2][0].extend(['1.004999', '2.000000'])
         data['meses'][0][2][1].extend(['1.004999', '2.000000'])
         report = analyze(data, [legacy('2022-01', '001', 1.01, 2)])
-        self.assertEqual(report['categorias_total_sistema'], {'descuadre_solo_redondeo_comprobado': 1})
+        self.assertEqual(report['categorias_total_sistema'], {'conciliado_exacto_en_fuente': 1})
 
     def test_incomplete_invalid_and_duplicate_fail_closed(self):
         data = snapshot('2022-01', [('001', '100.00', '0.00'), ('999', '100.00', '0.00')])
