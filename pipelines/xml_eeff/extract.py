@@ -30,6 +30,11 @@ CONFIG = {
     'agf': ('docs/outputs/agf/agf_maestro.json', 'RGAGF', '3', 'XBRL', 'rut', 'razon_social'),
     'retail': ('docs/outputs/retail_financiero/retail_financiero_maestro.json', 'RVEMI', '3', 'XBRL', 'rut', 'razon_social'),
 }
+# Periodicidad de reporte IFRS: los fondos mutuos publican anualmente (Circular 1997) y
+# AGF/retail cierran ejercicio en diciembre; corredoras y fondos de inversión tienen cortes
+# trimestrales. Consultar trimestres que no existen producía "sin_fuente" en masa.
+PERIODICIDAD = {'corredoras': 'trimestral', 'fi': 'trimestral', 'ffmm': 'anual',
+                'agf': 'anual', 'retail': 'anual'}
 BALANCE = {'corredoras': ('TotalActivos', 'TotalPasivos', 'TotalPatrimonio'),
            'ffmm': ('TotalActivo', 'TotalPasivo', 'ActivoNetoAtribuibleALosParticipes'),
            'fi': ('TotalActivo', 'TotalPasivo', 'TotalPatrimonioNeto')}
@@ -45,6 +50,21 @@ def read_url(url, limit=12_000_000):
     if len(raw) > limit:
         raise ValueError('Respuesta demasiado grande')
     return raw
+
+
+def desempaquetar_xbrl(raw):
+    """Si el archivo viene en ZIP, devolver la instancia XBRL de mayor tamaño del paquete."""
+    if not raw.startswith(b'PK\x03\x04'):
+        return raw, None
+    import io
+    import zipfile
+    with zipfile.ZipFile(io.BytesIO(raw)) as zf:
+        candidatos = [i for i in zf.infolist()
+                      if i.filename.lower().endswith(('.xbrl', '.xml')) and i.file_size > 0]
+        if not candidatos:
+            raise ValueError('ZIP sin instancia XBRL')
+        elegido = max(candidatos, key=lambda i: i.file_size)
+        return zf.read(elegido), elegido.filename
 
 
 def periodos_ultimo(anios=2):
@@ -67,6 +87,21 @@ def periodos_ultimo(anios=2):
             anio -= 1
             mes_cierre = 12
     return meses
+
+
+def periodos_para(sector, todos=False, desde=2011):
+    """Cierres a consultar según la periodicidad real de cada industria.
+
+    Diario: último cierre (y el previo cuando la industria informa trimestral).
+    Histórico: todos los cierres desde `desde`, ya cumplidos, sin fechas futuras.
+    """
+    ultimo = periodos_ultimo(1)[0]
+    if PERIODICIDAD[sector] == 'trimestral':
+        todos_los = [f'{y:04d}-{m:02d}' for y in range(desde, date.today().year + 1) for m in (3, 6, 9, 12)]
+    else:
+        todos_los = [f'{y:04d}-12' for y in range(desde, date.today().year + 1)]
+    vigentes = [p for p in todos_los if p <= ultimo]
+    return vigentes if todos else vigentes[-2:]
 
 
 def plan(sector, include_historical=False):
@@ -165,6 +200,7 @@ def parse_ifrs(raw, item, per, url):
 
 def parse_xbrl(raw, item, per, url):
     """XBRL: no homologar conceptos IFRS arbitrariamente. Guardar métricas solo si inequívocas."""
+    raw, contenido = desempaquetar_xbrl(raw)
     root = ET.fromstring(raw)
     if not root.tag.lower().endswith('xbrl'):
         raise ValueError(f'No es una instancia XBRL: {root.tag}')
@@ -176,7 +212,8 @@ def parse_xbrl(raw, item, per, url):
     return {'sector': item['sector'], 'rut': item['rut'], 'periodo': per,
             'tipo_entidad': item['tipo'], 'nombre_registro': item['nombre_registro'],
             'xbrl_contextos': contexts, 'xbrl_unidades': units, 'fuente_url': url,
-            'sha256_xbrl': hashlib.sha256(raw).hexdigest(), 'calidad': 'xbrl_pendiente_mapeo_taxonomia',
+            'sha256_xbrl': hashlib.sha256(raw).hexdigest(), 'contenido_en_zip': contenido,
+            'calidad': 'xbrl_pendiente_mapeo_taxonomia',
             'total_activo': None, 'resultado_ejercicio': None}
 
 
@@ -211,17 +248,16 @@ def main():
     sectors = args.sector or list(CONFIG)
     if args.start and not re.fullmatch(r'\d{4}-(03|06|09|12)', args.start): ap.error('--start inválido')
     if args.end and not re.fullmatch(r'\d{4}-(03|06|09|12)', args.end): ap.error('--end inválido')
-    if args.all_periods or args.start or args.end:
-        periods = [f'{y}-{m:02d}' for y in range(2011, date.today().year + 1) for m in (3, 6, 9, 12)]
-        periods = [p for p in periods if p <= periodos_ultimo(1)[0]]
-    else:
-        periods = periodos_ultimo(1)[:2]  # último cierre y previo; fechas pasadas sin repasar toda la historia
-    if args.start: periods = [p for p in periods if p >= args.start]
-    if args.end: periods = [p for p in periods if p <= args.end]
-    if not periods: ap.error('ventana vacía')
-    periods.sort()
+    tramo_historico = args.all_periods or bool(args.start) or bool(args.end)
     results = {}
     for sector in sectors:
+        periods = periodos_para(sector, todos=tramo_historico)
+        if args.start: periods = [p for p in periods if p >= args.start]
+        if args.end: periods = [p for p in periods if p <= args.end]
+        if not periods:
+            results[sector] = {'total': 0, 'procesadas': 0, 'estado': 'ventana_vacia'}
+            print(f'{sector}: ventana vacía con los filtros de fecha', flush=True)
+            continue
         pending = [(item, period) for item in plan(sector, args.historical or args.all_periods)
                    if int(hashlib.sha256((item['rut'] + item['tipo']).encode()).hexdigest(), 16) % args.shards == args.shard
                    for period in periods]
@@ -259,7 +295,22 @@ def main():
                 statepath.write_text(json.dumps(state, indent=2))
                 done += 1
                 time.sleep(.15)
-        results[sector] = {'total': len(pending), 'procesadas': done, 'cursor': state['cursor'], 'por_estado': stats}
+        muestras = {}
+        if ledgerpath.exists():
+            for linea in ledgerpath.read_text(encoding='utf8').splitlines()[-400:]:
+                try:
+                    fila = json.loads(linea)
+                except ValueError:
+                    continue
+                if fila.get('sector') != sector or not fila.get('error'):
+                    continue
+                clave = fila['error'][:150]
+                muestras.setdefault(clave, {'n': 0, 'ejemplo': f"{fila['rut']} {fila['periodo']}"})
+                muestras[clave]['n'] += 1
+        results[sector] = {'total': len(pending), 'procesadas': done, 'cursor': state['cursor'],
+                           'por_estado': stats,
+                           'errores_frecuentes': [{'error': k, 'casos': v['n'], 'ejemplo': v['ejemplo']}
+                                                  for k, v in sorted(muestras.items(), key=lambda kv: -kv[1]['n'])[:3]]}
         print(f'{sector}: {json.dumps(results[sector], ensure_ascii=False)}', flush=True)
     attempts = sum(sum(v.get('por_estado', {}).values()) for v in results.values())
     errors = sum(v.get('por_estado', {}).get('error', 0) for v in results.values())
