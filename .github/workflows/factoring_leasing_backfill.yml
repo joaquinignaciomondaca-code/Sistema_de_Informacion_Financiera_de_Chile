@@ -10,6 +10,8 @@ on:
       - 'factoring_leasing/scripts/publish_backfill.py'
       - 'factoring_leasing/tests/test_backfill_ifrs.py'
       - 'factoring_leasing/tests/test_publish_backfill.py'
+      - 'factoring_leasing/tests/test_publication.py'
+      - 'factoring_leasing/scripts/audit_factoring_leasing.py'
       - 'scripts/audit_navigation.py'
   workflow_dispatch:
     inputs:
@@ -80,7 +82,7 @@ jobs:
                   docs/outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet \
                   docs/outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf_metadata.json \
                   docs/js/duckdb_client.js docs/js/sidebar.js docs/js/data_viewer.js \
-                  docs/js/data_dictionary.js docs/index.html
+                  docs/js/data_dictionary.js docs/index.html data_manifest.json
           if ! git diff --cached --quiet; then
             git commit -m "Publicar serie completa IFRS de Factoring y Leasing desde Actions"
             git push origin "HEAD:${GITHUB_REF_NAME}"
@@ -95,11 +97,11 @@ jobs:
         with:
           path: .local-data/factoring_leasing_serie
           key: fl-ifrs-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
-      - name: Evidencia recuperable (no datos publicados)
+      - name: Artifact recuperable con particiones fuente y estado
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: factoring-leasing-serie-cuarentena
+          name: factoring-leasing-serie-cmf-periodos
           path: .local-data/factoring_leasing_serie/
           retention-days: 90
           if-no-files-found: warn

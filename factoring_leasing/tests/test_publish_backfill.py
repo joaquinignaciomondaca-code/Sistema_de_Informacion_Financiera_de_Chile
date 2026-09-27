@@ -44,6 +44,11 @@ def make_docs(root):
     (docs / 'index.html').write_text('\n'.join(
         f'<script src="js/{name}?v=old"></script>'
         for name in ('duckdb_client.js','sidebar.js','data_dictionary.js','data_viewer.js')))
+    (root / 'data_manifest.json').write_text(json.dumps({
+        'version':'1.0.0','updated_at':'2026-09-27','total_tables':3,'total_records':32,
+        'tables':[{'id':'factoring_leasing_maestro','registros_reales':28},
+                  {'id':'factoring_leasing_eeff_muestra_cmf','registros_reales':2},
+                  {'id':'factoring_leasing_resultados_muestra_cmf','registros_reales':2}]}))
     return docs
 
 
@@ -106,10 +111,17 @@ class PublishBackfillTests(unittest.TestCase):
             meta = json.loads((out/f'{publish.BALANCE}_metadata.json').read_text())
             self.assertTrue(meta['publicado_en_docs'])
             self.assertEqual(meta['run_actions'], '12345')
+            manifest = json.loads((root/'data_manifest.json').read_text())
+            sector_ids = [x['id'] for x in manifest['tables'] if x.get('sector') == 'factoring_leasing']
+            self.assertEqual(sector_ids, [publish.BALANCE, publish.RESULTS])
+            self.assertEqual(manifest['total_tables'], len(manifest['tables']))
+            self.assertEqual(manifest['total_records'], sum(x.get('registros_reales', 0) for x in manifest['tables']))
             for file in ['duckdb_client.js','sidebar.js','data_viewer.js','data_dictionary.js']:
                 text=(docs/'js'/file).read_text()
                 self.assertIn(publish.BALANCE, text)
                 self.assertIn(publish.RESULTS, text)
+            self.assertIn('2022-06–2022-09', (docs/'js/sidebar.js').read_text())
+            self.assertIn('2022-06 a 2022-09', (docs/'js/data_dictionary.js').read_text())
             index=(docs/'index.html').read_text()
             self.assertNotIn('?v=old', index)
             self.assertIn('fl-202209-', index)
@@ -117,6 +129,20 @@ class PublishBackfillTests(unittest.TestCase):
             import subprocess
             for file in ['duckdb_client.js','sidebar.js','data_viewer.js','data_dictionary.js']:
                 subprocess.run(['node','-c',str(docs/'js'/file)],check=True,capture_output=True,text=True)
+
+    def test_unchanged_daily_run_does_not_churn_publication_metadata(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root=Path(tmp); docs=make_docs(root); data,_=self.setup_data(root)
+            self.assertTrue(publish.publish(data,docs,'12345'))
+            meta_path=docs/'outputs/factoring_leasing'/f'{publish.BALANCE}_metadata.json'
+            manifest_path=root/'data_manifest.json'
+            first=meta_path.read_bytes()
+            first_manifest=manifest_path.read_bytes()
+            self.assertTrue(publish.publish(data,docs,'67890'))
+            current=json.loads(meta_path.read_text())
+            self.assertEqual(current['run_actions'],'12345')
+            self.assertEqual(meta_path.read_bytes(),first)
+            self.assertEqual(manifest_path.read_bytes(),first_manifest)
 
     def test_publisher_detects_missing_or_corrupted_period(self):
         with tempfile.TemporaryDirectory() as tmp:
