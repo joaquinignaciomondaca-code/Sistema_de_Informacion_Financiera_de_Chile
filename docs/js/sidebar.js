@@ -436,7 +436,7 @@ const EXPLORER_TREE = [
     label: "BANCA E INST. FINANCIERAS (CMF)",
     badges: [
       { type: "entities", text: "40 Códigos", title: "Catálogo local: incluye instituciones históricas, filiales y agregados; cotejo registral pendiente" },
-      { type: "pending", text: "⚠ REPO por auditar", title: "Única serie bancaria conservada; origen Excel sin conciliación CMF" }
+      { type: "pending", text: "⚠ REPO por auditar", title: "Auditoría parcial de estructura realizada; montos y RUT sin cotejo CMF" }
     ],
     status: "active",
     children: [
