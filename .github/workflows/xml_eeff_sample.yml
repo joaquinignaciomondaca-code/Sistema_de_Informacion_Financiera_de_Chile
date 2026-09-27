@@ -42,6 +42,19 @@ jobs:
         if: always()
         run: |
           cat .local-data/xml_eeff_muestra/cotejo_muestra.json || true
+          python - <<'PYNOTE'
+          import json
+          from pathlib import Path
+          p = Path('.local-data/xml_eeff_muestra/cotejo_muestra.json')
+          if not p.exists():
+              print('::error::No se generó cotejo_muestra.json')
+          else:
+              d = json.loads(p.read_text())
+              print('::notice::Muestra aprobada=' + str(d['aprobada_muestra']) + ', registros=' + str(len(d['registros'])))
+              for e in d['errores']:
+                  message = str(e['error']).replace('\n',' ')[:350]
+                  print('::error::' + e['sector'] + ' ' + e['rut'] + ' ' + e['periodo'] + ': ' + message)
+          PYNOTE
       - name: Publicar diagnóstico de cotejo en comentario del PR
         if: always()
         continue-on-error: true
