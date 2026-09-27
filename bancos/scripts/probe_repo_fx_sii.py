@@ -63,7 +63,9 @@ def main():
                         for t in tables[:2]],
             'sections': [re.sub(r'<[^>]+>', ' ', x)[:120] for x in re.findall(r'(?is)<h[1-5][^>]*>.*?(?:Diciembre|Noviembre|Enero).*?</h[1-5]>', data)[:3]],
             'html_start': re.sub(r'\s+', ' ', data[:700])[:400],
-            'diciembre_31_context': re.sub(r'\s+', ' ', data[max(0, data.lower().find('diciembre')):][:1800])[-1100:],
+            'table_2013': [{'rows': len(t), 'first': t[:3], 'last': t[-3:]}
+                           for t in tables if len(t) >= 25][:2],
+            'section_ids': re.findall(r"id=['\"](mes_[a-z]+)['\"]", data)[:14],
         }, ensure_ascii=False))
 
 
