@@ -2,7 +2,9 @@
 
 Usar sólo para análisis local cuando la descarga de artefactos Actions falla.
 Las anotaciones no son fuente primaria: conservan hashes ZIP de la corrida CMF.
-El límite de 50 anotaciones impide truncar silenciosamente el resultado.
+El límite práctico de 10 anotaciones por job exige ejecutar tres lotes; el lector
+local rechaza partes faltantes, duplicadas o mezcladas. Se conservan hashes ZIP,
+pero el transporte no verifica por sí solo el ZIP original.
 """
 from __future__ import annotations
 
@@ -17,9 +19,9 @@ from pathlib import Path
 
 from bancos.scripts.rebuild_repo_from_cmf import OUT
 
-PREFIX = 'REPO-REV-V2'
+PREFIX = 'REPO-REV-V3'
 CHUNK_SIZE = 2900
-MAX_CHUNKS = 45
+MAX_CHUNKS = 10
 
 
 def encode_review(folder: Path) -> list[str]:
@@ -34,7 +36,8 @@ def encode_review(folder: Path) -> list[str]:
         if doc['periodo'] != month or len(doc['filas']) == 0:
             raise ValueError(f'Mes inválido {month}')
         docs.append([month, doc['sha256_zip'], [
-            [r['codigo_institucion'], r['repo_activo_mm_clp'], r['repo_pasivo_mm_clp']]
+            [r['codigo_institucion'], r['repo_activo_mm_clp'], r['repo_pasivo_mm_clp'],
+             r['importe_exact_mm_clp']['activo'], r['importe_exact_mm_clp']['pasivo']]
             for r in doc['filas']
         ]])
     payload = {'estado': 'BORRADOR_NO_PUBLICAR', 'meses': docs}
@@ -43,7 +46,7 @@ def encode_review(folder: Path) -> list[str]:
     digest = hashlib.sha256(compressed).hexdigest()
     encoded = base64.b64encode(compressed).decode('ascii')
     pieces = [encoded[i:i + CHUNK_SIZE] for i in range(0, len(encoded), CHUNK_SIZE)]
-    if not pieces or len(pieces) > 10:
+    if not pieces or len(pieces) > MAX_CHUNKS:
         raise ValueError(f'{len(pieces)} anotaciones: supera tope; usar transporte por lotes')
     return [f'{PREFIX}:{digest}:{i + 1}/{len(pieces)}:{piece}'
             for i, piece in enumerate(pieces)]
