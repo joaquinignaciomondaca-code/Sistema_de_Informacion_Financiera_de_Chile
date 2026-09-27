@@ -5,10 +5,16 @@
  */
 
 (function () {
-  const STORAGE_KEY = "mfc_color_theme";
-  const DEFAULT_THEME = "swissborg";
+  // v2: la paleta predeterminada cambió a "dark-ide" (estilo IDE oscuro),
+  // por lo que se reinicia la preferencia guardada una única vez.
+  const STORAGE_KEY = "mfc_color_theme_v2";
+  const DEFAULT_THEME = "dark-ide";
 
   const PALETTES = [
+    {
+      id: "dark-ide",
+      colors: ["#121316", "#18191E", "#3B82F6", "#E5E7EB"]
+    },
     {
       id: "swissborg",
       colors: ["#191E29", "#132D46", "#01C38D", "#FFFFFF"]
