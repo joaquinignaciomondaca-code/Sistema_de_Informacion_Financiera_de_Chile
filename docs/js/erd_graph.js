@@ -8,7 +8,7 @@ const ERD_TABLES = [
     id: "vida_maestro",
     name: "vida.lista_entidades",
     sector: "vida",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 480,
     y: -80,
     w: 220,
@@ -28,7 +28,7 @@ const ERD_TABLES = [
     id: "vida_bonos",
     name: "vida.cartera_bonos",
     sector: "vida",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 480,
     y: 90,
     w: 220,
@@ -139,7 +139,7 @@ const ERD_TABLES = [
     id: "vida_solvencia",
     name: "vida.cartera_solvencia",
     sector: "vida",
-    color: "#132D46",
+    color: "var(--accent-contrast)",
     x: 770,
     y: 310,
     w: 220,
@@ -159,7 +159,7 @@ const ERD_TABLES = [
     id: "vida_forwards",
     name: "vida.derivados_forwards",
     sector: "vida",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 1060,
     y: 90,
     w: 220,
@@ -243,7 +243,7 @@ const ERD_TABLES = [
     id: "generales_maestro",
     name: "generales.lista_entidades",
     sector: "generales",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 480,
     y: 330,
     w: 220,
@@ -263,7 +263,7 @@ const ERD_TABLES = [
     id: "generales_bonos",
     name: "generales.cartera_bonos",
     sector: "generales",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 480,
     y: 490,
     w: 220,
@@ -364,7 +364,7 @@ const ERD_TABLES = [
     id: "generales_solvencia",
     name: "generales.cartera_solvencia",
     sector: "generales",
-    color: "#132D46",
+    color: "var(--accent-contrast)",
     x: 770,
     y: 660,
     w: 220,
@@ -383,7 +383,7 @@ const ERD_TABLES = [
     id: "generales_forwards",
     name: "generales.derivados_forwards",
     sector: "generales",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 1060,
     y: 490,
     w: 220,
@@ -442,7 +442,7 @@ const ERD_TABLES = [
     id: "ffmm_maestro",
     name: "ffmm.lista_entidades",
     sector: "ffmm",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 1340,
     y: -80,
     w: 220,
@@ -460,7 +460,7 @@ const ERD_TABLES = [
     id: "ffmm_futuros",
     name: "ffmm.circular_1333_futuros",
     sector: "ffmm",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 1340,
     y: 85,
     w: 220,
@@ -500,7 +500,7 @@ const ERD_TABLES = [
     id: "fi_maestro",
     name: "fi.lista_entidades",
     sector: "fi",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 1620,
     y: -80,
     w: 220,
@@ -518,7 +518,7 @@ const ERD_TABLES = [
     id: "fi_nacional",
     name: "fi.cartera_nacional",
     sector: "fi",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 1620,
     y: 85,
     w: 220,
@@ -539,7 +539,7 @@ const ERD_TABLES = [
     id: "fi_extranjera",
     name: "fi.cartera_extranjera",
     sector: "fi",
-    color: "#132D46",
+    color: "var(--accent-contrast)",
     x: 1620,
     y: 260,
     w: 220,
@@ -602,7 +602,7 @@ const ERD_TABLES = [
     id: "afp_maestro",
     name: "afp.lista_administradoras",
     sector: "pensiones",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 1900,
     y: -80,
     w: 230,
@@ -620,7 +620,7 @@ const ERD_TABLES = [
     id: "bancos_maestro",
     name: "bancos.lista_instituciones",
     sector: "bancos",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 2480,
     y: -80,
     w: 240,
@@ -1659,6 +1659,20 @@ const ERD_LINKS = [
 ];
 
 class ERDGraph {
+  /**
+   * Resuelve un color de la paleta activa. Acepta un valor CSS literal o
+   * var(--token), de modo que los nodos sigan el tema seleccionado.
+   */
+  resolveColor(value, fallback) {
+    if (!value) return fallback;
+    const match = /var\((--[a-z0-9-]+)\)/i.exec(value);
+    if (!match) return value;
+    const resolved = getComputedStyle(document.documentElement)
+      .getPropertyValue(match[1])
+      .trim();
+    return resolved || fallback;
+  }
+
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
     this.ctx = this.canvas.getContext("2d");
@@ -2008,7 +2022,7 @@ class ERDGraph {
 
       // Barra de Cabecera con Color Temático
       ctx.save();
-      ctx.fillStyle = t.color || "#01C38D";
+      ctx.fillStyle = this.resolveColor(t.color, accent);
       this.roundRectTop(ctx, t.x, t.y, t.w, 28, 8);
       ctx.fill();
 
@@ -2028,18 +2042,22 @@ class ERDGraph {
       // Columnas
       ctx.font = "10px monospace";
       let colY = t.y + 46;
+      const style = getComputedStyle(document.documentElement);
+      const teal = style.getPropertyValue("--accent-teal").trim() || "#06B6D4";
+      const textSecondary = style.getPropertyValue("--text-secondary").trim() || "#9CA3AF";
+      const textMuted = style.getPropertyValue("--text-muted").trim() || "#6B7280";
       t.cols.slice(0, 5).forEach((col) => {
-        ctx.fillStyle = col.pk ? "#01C38D" : col.fk ? "#00ADB5" : "#A6B1C2";
+        ctx.fillStyle = col.pk ? accent : col.fk ? teal : textSecondary;
         const prefix = col.pk ? "PK " : col.fk ? "FK " : "   ";
         ctx.fillText(prefix + col.name, t.x + 8, colY);
 
-        ctx.fillStyle = "#696E79";
+        ctx.fillStyle = textMuted;
         ctx.fillText(col.type, t.x + t.w - 55, colY);
         colY += 16;
       });
 
       if (t.cols.length > 5) {
-        ctx.fillStyle = "#01C38D";
+        ctx.fillStyle = accent;
         ctx.fillText(`+ ${t.cols.length - 5} columnas mas...`, t.x + 10, colY + 2);
       }
 
