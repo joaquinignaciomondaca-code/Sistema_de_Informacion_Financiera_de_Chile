@@ -44,6 +44,8 @@ const SEMANTIC_VIEWS = [
   { name: "fi_registro_fondos_universo", file: "outputs/fi/fi_registro_fondos_universo.parquet" },
   { name: "fi_repos_detalle_historico", file: "outputs/fi/fi_repos_detalle_historico.parquet" },
 
+  { name: "fi_eeff_xml_muestra_cmf", file: "outputs/fi/fi_eeff_xml_muestra_cmf.parquet" },
+
   // FONDOS MUTUOS
   { name: "ffmm_maestro", file: "outputs/ffmm/maestro_fondos_mutuos.parquet" },
   { name: "ffmm_futuros", file: "outputs/ffmm/ffmm_futu_normalizado.parquet" },
@@ -51,6 +53,8 @@ const SEMANTIC_VIEWS = [
   { name: "ffmm_opciones", file: "outputs/ffmm/ffmm_opci_normalizado.parquet" },
   { name: "ffmm_repos_detalle_historico", file: "outputs/ffmm/ffmm_repos_detalle_historico.parquet" },
   { name: "ffmm_registro_fondos_universo", file: "outputs/ffmm/ffmm_registro_fondos_universo.parquet" },
+
+  { name: "ffmm_eeff_xml_muestra_cmf", file: "outputs/ffmm/ffmm_eeff_xml_muestra_cmf.parquet" },
 
   // FONDOS DE PENSIONES (SPENSIONES)
   { name: "afp_maestro", file: "outputs/pensiones/afp_maestro_administradoras.parquet" },

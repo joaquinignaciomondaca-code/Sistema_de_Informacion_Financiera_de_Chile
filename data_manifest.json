@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-09-23",
-  "total_tables": 62,
-  "total_records": 13531255,
+  "updated_at": "2026-09-27",
+  "total_tables": 64,
+  "total_records": 13531257,
   "classification": {
     "automatico": "Extracción y procesamiento 100% por código autónomo (APIs, scrapers, normalizadores)",
     "manual": "Extracción asistida o transcripción de notas y reportes no estructurados (ej. NotebookLM)"
@@ -999,6 +999,38 @@
       "registros_reales": 158,
       "descripcion": "Detalle contrato por contrato de operaciones simultáneas y pactos de retroventa (Repos) con Corredoras de Bolsa en el mercado monetario institucional.",
       "origen": "Comisión para el Mercado Financiero (CMF) / SUSESO — Nota 8 (Efectivo y Equivalentes)."
+    },
+    {
+      "id": "ffmm_eeff_xml_muestra_cmf",
+      "name": "ffmm.eeff_xml_muestra_cmf",
+      "view_name": "ffmm_eeff_xml_muestra_cmf",
+      "sector": "ffmm",
+      "sector_label": "Fondos Mutuos",
+      "norma": "Estados financieros IFRS/XML CMF; muestra cotejada",
+      "corte": "2014-12",
+      "frescura": "Muestra histórica; no es serie completa",
+      "modo": "Cotejo XML y HTML oficial",
+      "ultima_actualizacion": "2026-09-27",
+      "file_parquet": "outputs/ffmm/ffmm_eeff_xml_muestra_cmf.parquet",
+      "registros_reales": 1,
+      "descripcion": "Una fila de prueba cotejada en CMF (activos, pasivo reportado, patrimonio/activo neto y resultado). No es el universo completo.",
+      "origen": "CMF ficha individual y XML del mismo cierre; run Actions 36332905593."
+    },
+    {
+      "id": "fi_eeff_xml_muestra_cmf",
+      "name": "fi.eeff_xml_muestra_cmf",
+      "view_name": "fi_eeff_xml_muestra_cmf",
+      "sector": "fi",
+      "sector_label": "Fondos de Inversión",
+      "norma": "Estados financieros IFRS/XML CMF; muestra cotejada",
+      "corte": "2021-12",
+      "frescura": "Muestra histórica; no es serie completa",
+      "modo": "Cotejo XML y HTML oficial",
+      "ultima_actualizacion": "2026-09-27",
+      "file_parquet": "outputs/fi/fi_eeff_xml_muestra_cmf.parquet",
+      "registros_reales": 1,
+      "descripcion": "Una fila de prueba cotejada en CMF (activos, pasivo reportado, patrimonio/activo neto y resultado). No es el universo completo.",
+      "origen": "CMF ficha individual y XML del mismo cierre; run Actions 36332905593."
     }
   ]
 }

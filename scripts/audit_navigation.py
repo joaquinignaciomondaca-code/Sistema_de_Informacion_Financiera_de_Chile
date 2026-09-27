@@ -58,7 +58,9 @@ assert.deepEqual(Array.from(bancos.children[0].children, c => c.id),
   ['cat_bancos_maestro', 'circ_bancos_repos']);
 assert.equal(pensiones.status, 'active');
 assert.equal(bancos.status, 'active');
-assert.equal(bancos.children[0].children[1].status, 'por_auditar');
+assert.equal(bancos.children[0].children[1].status, 'active');
+assert(bancos.children[0].children[1].label.includes('REPO'));
+// El componente de saldos cotejado sigue distinguiéndose de flujo/RUT no auditados.
 assert.deepEqual(Array.from(viewer.find(g => g.group.startsWith('Fondos de Pensiones')).tables, t => t.id), ['afp_maestro']);
 assert.deepEqual(Array.from(viewer.find(g => g.group.startsWith('Banca Comercial')).tables, t => t.id),
   ['bancos_maestro', 'bancos_repos_saldos_series']);
