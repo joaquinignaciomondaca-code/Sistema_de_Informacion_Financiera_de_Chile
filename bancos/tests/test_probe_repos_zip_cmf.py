@@ -34,6 +34,12 @@ class ProbeTests(unittest.TestCase):
                        strict=False, conflicts_out=conflicts)
         self.assertEqual(conflicts, {"2021-12"})
 
+    def test_empty_index_gives_safe_diagnostics(self):
+        with self.assertRaisesRegex(ValueError, r"ZIP=0") as error:
+            probe.discover("<html><title>Página temporal</title><body>Sin enlaces</body></html>")
+        self.assertIn("Página temporal", str(error.exception))
+        self.assertNotIn("<html>", str(error.exception))
+
     def test_incremental_and_manual(self):
         found = {p: URL for p in ("2026-04", "2026-05", "2026-06", "2026-07")}
         self.assertEqual(probe.select(found, "2026-04", "2026-06", date(2026, 9, 27), None), ["2026-06", "2026-07"])
