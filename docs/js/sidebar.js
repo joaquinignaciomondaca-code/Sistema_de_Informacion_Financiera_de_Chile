@@ -213,20 +213,65 @@ const EXPLORER_TREE = [
     ]
   },
   {
-    id: "group_ffmm",
+    id: "group_administracion_fondos",
     type: "group",
-    label: "FONDOS MUTUOS (CMF)",
+    label: "ADMINISTRACIÓN DE FONDOS (CMF / LEY 20.712)",
     badges: [
-      { type: "entities", text: "1.156 Entidades", title: "1.156 Fondos Mutuos (AGF) registrados ante la CMF" },
-      { type: "data", text: "15k Datos", title: "15k Contratos normalizados de derivados CMF Circular 1333" }
+      { type: "entities", text: "AGF · FFMM · FI", title: "Sociedades administradoras y fondos son unidades jurídicas y contables distintas" }
     ],
     status: "active",
     open: false,
     children: [
       {
+        id: "sector_agf",
+        type: "sector",
+        label: "Administradoras Generales de Fondos (AGF)",
+        sector: "agf",
+        open: true,
+        children: [
+          {
+            id: "cat_agf_maestro",
+            type: "circular",
+            label: "Lista de Administradoras Generales de Fondos",
+            badge: "68 Entidades",
+            badgeType: "entities",
+            status: "active",
+            sector: "agf",
+            open: true,
+            chips: [
+              { label: "Catálogo de AGF (Vigentes vs Canceladas)", query: "SELECT rut_completo, razon_social, estado_vigencia, grupo_controlador, fondos_inversion_administrados FROM agf_maestro ORDER BY estado_vigencia, razon_social;" },
+              { label: "Ranking de AGF por Fondos de Inversión Administrados", query: "SELECT razon_social, grupo_controlador, fondos_inversion_administrados, cmf_url FROM agf_maestro WHERE fondos_inversion_administrados > 0 ORDER BY fondos_inversion_administrados DESC LIMIT 15;" },
+              { label: "AGF por Grupo Financiero Controlador", query: "SELECT grupo_controlador, count(*) as cantidad_agf, sum(fondos_inversion_administrados) as total_fondos FROM agf_maestro WHERE estado_vigencia = 'Vigente' GROUP BY grupo_controlador ORDER BY total_fondos DESC;" }
+            ],
+            tables: [
+              { id: "agf_maestro", name: "agf.maestro", rows: "68 entidades", file: "outputs/agf/agf_maestro.parquet" }
+            ]
+          },
+          {
+            id: "circ_agf_balances",
+            type: "circular",
+            label: "Balances y Resultados IFRS de las Gestoras",
+            badge: "1.6k Datos",
+            badgeType: "data",
+            status: "active",
+            sector: "agf",
+            open: true,
+            chips: [
+              { label: "Ranking Activos Propios de las Gestoras (MM$ CLP)", query: "SELECT periodo, razon_social, total_activos_m_clp, patrimonio_neto_m_clp, efectivo_y_equivalentes_m_clp, cartera_propia_inversiones_m_clp FROM agf_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM agf_balance_resumen) ORDER BY total_activos_m_clp DESC LIMIT 15;" },
+              { label: "Ingresos por Comisiones de Administración (Top 10 AGF)", query: "SELECT periodo, razon_social, ingresos_comisiones_m_clp, ganancia_perdida_ejercicio_m_clp, patrimonio_neto_m_clp FROM agf_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM agf_balance_resumen) ORDER BY ingresos_comisiones_m_clp DESC LIMIT 10;" },
+              { label: "Cartera Propia de Inversión (Coinversión AGF)", query: "SELECT periodo, razon_social, cartera_propia_inversiones_m_clp, total_activos_m_clp, round(cartera_propia_inversiones_m_clp / NULLIF(total_activos_m_clp, 0) * 100, 1) as pct_cartera_propia FROM agf_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM agf_balance_resumen) AND cartera_propia_inversiones_m_clp > 0 ORDER BY cartera_propia_inversiones_m_clp DESC LIMIT 15;" },
+              { label: "Utilidad Neta del Ejercicio: Banchile vs Santander vs LarrainVial", query: "SELECT periodo, razon_social, ganancia_perdida_ejercicio_m_clp, ingresos_comisiones_m_clp, total_activos_m_usd FROM agf_balance_resumen WHERE razon_social LIKE '%BANCHILE%' OR razon_social LIKE '%SANTANDER%' OR razon_social LIKE '%LARRAIN%' ORDER BY periodo DESC, ingresos_comisiones_m_clp DESC LIMIT 15;" }
+            ],
+            tables: [
+              { id: "agf_balance_resumen", name: "agf.balance_resumen", rows: "1.6k datos", file: "outputs/agf/agf_balance_resumen.parquet" }
+            ]
+          }
+        ]
+      },
+      {
         id: "sector_ffmm",
         type: "sector",
-        label: "Fondos Mutuos (AGF)",
+        label: "Fondos Mutuos (FFMM)",
         sector: "ffmm",
         open: false,
         children: [
@@ -337,20 +382,7 @@ const EXPLORER_TREE = [
             ]
           }
         ]
-      }
-    ]
-  },
-  {
-    id: "group_fi",
-    type: "group",
-    label: "FONDOS DE INVERSION (CMF)",
-    badges: [
-      { type: "entities", text: "1.677 Entidades", title: "1.677 Fondos de Inversión registrados CMF (990 vigentes, 687 liquidados)" },
-      { type: "data", text: "1.8M Datos", title: "Carteras, balances EEFF históricos y operaciones REPO VRC/CRV" }
-    ],
-    status: "active",
-    open: false,
-    children: [
+      },
       {
         id: "sector_fi",
         type: "sector",
@@ -878,12 +910,12 @@ const EXPLORER_TREE = [
     ]
   },
   {
-    id: "group_securitizadoras",
+    id: "group_securitizacion",
     type: "group",
-    label: "SOCIEDADES SECURITIZADORAS (CMF)",
+    label: "SECURITIZACIÓN (CMF / LEY 18.045)",
     badges: [
-      { type: "entities", text: "16 Entidades", title: "Sociedades anónimas especiales registradas ante la CMF (9 vigentes + 7 históricas)" },
-      { type: "data", text: "362 Datos", title: "Balances IFRS corporativos de las gestoras (2014 a 2026)" }
+      { type: "entities", text: "16 Gestoras", title: "Sociedades securitizadoras y sus patrimonios separados son entidades distintas" },
+      { type: "data", text: "2.086 PDF", title: "Balances de patrimonios separados leídos de PDF; los balances de las gestoras son otra serie" }
     ],
     status: "active",
     open: true,
@@ -891,7 +923,7 @@ const EXPLORER_TREE = [
       {
         id: "sector_securitizadoras",
         type: "sector",
-        label: "Sociedades Gestoras de Titulización",
+        label: "Sociedades Securitizadoras",
         sector: "securitizadoras",
         open: true,
         children: [
@@ -931,31 +963,18 @@ const EXPLORER_TREE = [
             ]
           }
         ]
-      }
-    ]
-  },
-  {
-    id: "group_patrimonios_separados",
-    type: "group",
-    label: "PATRIMONIOS SEPARADOS (CMF / Ley 18.045)",
-    badges: [
-      { type: "entities", text: "2,086 PDF", title: "Documentos del balance leído del PDF. Las 573 id del balance anterior son otra serie." },
-      { type: "data", text: "46,502 cuentas", title: "Cuentas del balance, en miles de pesos. Las tablas anteriores siguen en el menú." }
-    ],
-    status: "active",
-    open: true,
-    children: [
+      },
       {
-        id: "sector_ps_balance_pdf",
+        id: "sector_patrimonios_separados",
         type: "sector",
-        label: "Balance del PDF",
+        label: "Patrimonios Separados",
         sector: "patrimonios_separados",
-        open: true,
+        open: false,
         children: [
           {
             id: "circ_ps_balance_pdf",
             type: "circular",
-            label: "Cuentas del balance",
+            label: "Balance del PDF · Cuentas del balance",
             badge: "46,502 filas",
             badgeType: "data",
             status: "active",
@@ -970,20 +989,11 @@ const EXPLORER_TREE = [
             tables: [
               { id: "patrimonios_separados_balance_pdf", name: "patrimonios.balance_pdf", rows: "46,502 filas", file: "outputs/securitizadoras/patrimonios_separados_balance_pdf.parquet" }
             ]
-          }
-        ]
-      },
-      {
-        id: "sector_ps_catalogo",
-        type: "sector",
-        label: "Catálogo",
-        sector: "patrimonios_separados",
-        open: true,
-        children: [
+          },
           {
             id: "circ_ps_emisiones",
             type: "circular",
-            label: "Líneas de inscripción CMF",
+            label: "Catálogo · Líneas de inscripción CMF",
             badge: "18 líneas",
             badgeType: "entities",
             status: "active",
@@ -996,20 +1006,11 @@ const EXPLORER_TREE = [
             tables: [
               { id: "patrimonios_separados_maestro", name: "patrimonios.emisiones_lineas", rows: "18 líneas", file: "outputs/securitizadoras/patrimonios_separados_maestro.parquet" }
             ]
-          }
-        ]
-      },
-      {
-        id: "sector_ps_eeff",
-        type: "sector",
-        label: "Estados financieros",
-        sector: "patrimonios_separados",
-        open: true,
-        children: [
+          },
           {
             id: "circ_ps_balance_resumen",
             type: "circular",
-            label: "Resumen anual de balances",
+            label: "EEFF · Resumen anual de balances",
             badge: "64 balances",
             badgeType: "data",
             status: "active",
@@ -1026,7 +1027,7 @@ const EXPLORER_TREE = [
           {
             id: "circ_ps_balance_lineas",
             type: "circular",
-            label: "Balance general, línea a línea",
+            label: "EEFF · Balance general, línea a línea",
             badge: "16,842 líneas",
             badgeType: "data",
             status: "active",
@@ -1044,7 +1045,7 @@ const EXPLORER_TREE = [
           {
             id: "circ_ps_excedentes_lineas",
             type: "circular",
-            label: "Estado de Determinación de Excedentes / Resultados",
+            label: "EEFF · Estado de excedentes / resultados",
             badge: "11,157 Líneas",
             badgeType: "data",
             status: "active",
@@ -1058,20 +1059,11 @@ const EXPLORER_TREE = [
             tables: [
               { id: "patrimonios_separados_excedentes_lineas", name: "patrimonios.excedentes_lineas", rows: "11,157 filas", file: "outputs/securitizadoras/patrimonios_separados_excedentes_lineas.parquet" }
             ]
-          }
-        ]
-      },
-      {
-        id: "sector_ps_notas",
-        type: "sector",
-        label: "Notas",
-        sector: "patrimonios_separados",
-        open: true,
-        children: [
+          },
           {
             id: "circ_ps_nota_cartera",
             type: "circular",
-            label: "Nota Cartera Securitizada (Mutuos y Leasing)",
+            label: "Notas · Cartera securitizada (mutuos y leasing)",
             badge: "796 Registros",
             badgeType: "data",
             status: "active",
@@ -1088,7 +1080,7 @@ const EXPLORER_TREE = [
           {
             id: "circ_ps_nota_morosidad",
             type: "circular",
-            label: "Nota Morosidad y Provisiones por Tramo",
+            label: "Notas · Morosidad",
             badge: "6,632 Tramos",
             badgeType: "data",
             status: "active",
@@ -1105,7 +1097,7 @@ const EXPLORER_TREE = [
           {
             id: "circ_ps_nota_bonos",
             type: "circular",
-            label: "Nota Bonos y Títulos de Deuda Emitidos",
+            label: "Notas · Bonos",
             badge: "8,001 Series",
             badgeType: "data",
             status: "active",
@@ -1122,7 +1114,7 @@ const EXPLORER_TREE = [
           {
             id: "circ_ps_nota_administracion",
             type: "circular",
-            label: "Nota Gastos de Administración y Custodia",
+            label: "Notas · Administración",
             badge: "2,153 Gastos",
             badgeType: "data",
             status: "active",
@@ -1138,7 +1130,7 @@ const EXPLORER_TREE = [
           {
             id: "circ_ps_nota_sobrecolateral",
             type: "circular",
-            label: "Nota Sobrecolateral y Reservas",
+            label: "Notas · Sobrecolateral y reservas",
             badge: "679 Garantías",
             badgeType: "data",
             status: "active",
@@ -1154,7 +1146,7 @@ const EXPLORER_TREE = [
           {
             id: "circ_ps_nota_efectivo",
             type: "circular",
-            label: "Nota Efectivo y Valores Negociables (Liquidez)",
+            label: "Notas · Efectivo y valores negociables",
             badge: "3,802 Registros",
             badgeType: "data",
             status: "active",
@@ -1173,7 +1165,7 @@ const EXPLORER_TREE = [
           {
             id: "circ_ps_cartera_morosidad",
             type: "circular",
-            label: "Extracto corto de mora",
+            label: "Notas · Extracto corto de mora",
             badge: "67 filas",
             badgeType: "data",
             status: "active",
@@ -1185,20 +1177,11 @@ const EXPLORER_TREE = [
             tables: [
               { id: "patrimonios_separados_cartera_morosidad_detalle", name: "patrimonios.cartera_morosidad", rows: "67 filas", file: "outputs/securitizadoras/patrimonios_separados_cartera_morosidad_detalle.parquet" }
             ]
-          }
-        ]
-      },
-      {
-        id: "sector_ps_operaciones",
-        type: "sector",
-        label: "Operaciones",
-        sector: "patrimonios_separados",
-        open: false,
-        children: [
+          },
           {
             id: "circ_ps_repos",
             type: "circular",
-            label: "Pactos de retroventa",
+            label: "Operaciones · Pactos de retroventa",
             badge: "52 pactos",
             badgeType: "data",
             status: "active",
@@ -1385,65 +1368,6 @@ const EXPLORER_TREE = [
               { id: "ccaf_nota8_efectivo_resumen", name: "ccaf.nota8_efectivo_resumen", rows: "213 componentes (2019-2026)", file: "outputs/cajas_compensacion/ccaf_nota8_efectivo_resumen.parquet" },
               { id: "ccaf_nota8_dap_detalle", name: "ccaf.nota8_dap_detalle", rows: "52 contratos DAP", file: "outputs/cajas_compensacion/ccaf_nota8_dap_detalle.parquet" },
               { id: "ccaf_nota8_repos_detalle", name: "ccaf.nota8_repos_detalle", rows: "158 operaciones Repos (2018-2024)", file: "outputs/cajas_compensacion/ccaf_nota8_repos_detalle.parquet" }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: "group_agf",
-    type: "group",
-    label: "ADMINISTRADORAS GENERALES DE FONDOS (AGF / LEY 20.712)",
-    badges: [
-      { type: "entities", text: "68 Entidades", title: "Sociedades gestoras fiduciarias autorizadas bajo la Ley N° 20.712 (LUF)" },
-      { type: "data", text: "1.6k Datos", title: "Solvencia, patrimonio regulatorio, cartera propia y comisiones de gestión" }
-    ],
-    status: "active",
-    open: true,
-    children: [
-      {
-        id: "sector_agf",
-        type: "sector",
-        label: "Sociedades Gestoras de Activos de Terceros",
-        sector: "agf",
-        open: true,
-        children: [
-          {
-            id: "cat_agf_maestro",
-            type: "circular",
-            label: "Lista de Administradoras Generales de Fondos",
-            badge: "68 Entidades",
-            badgeType: "entities",
-            status: "active",
-            sector: "agf",
-            open: true,
-            chips: [
-              { label: "Catálogo de AGF (Vigentes vs Canceladas)", query: "SELECT rut_completo, razon_social, estado_vigencia, grupo_controlador, fondos_inversion_administrados FROM agf_maestro ORDER BY estado_vigencia, razon_social;" },
-              { label: "Ranking de AGF por Fondos de Inversión Administrados", query: "SELECT razon_social, grupo_controlador, fondos_inversion_administrados, cmf_url FROM agf_maestro WHERE fondos_inversion_administrados > 0 ORDER BY fondos_inversion_administrados DESC LIMIT 15;" },
-              { label: "AGF por Grupo Financiero Controlador", query: "SELECT grupo_controlador, count(*) as cantidad_agf, sum(fondos_inversion_administrados) as total_fondos FROM agf_maestro WHERE estado_vigencia = 'Vigente' GROUP BY grupo_controlador ORDER BY total_fondos DESC;" }
-            ],
-            tables: [
-              { id: "agf_maestro", name: "agf.maestro", rows: "68 entidades", file: "outputs/agf/agf_maestro.parquet" }
-            ]
-          },
-          {
-            id: "circ_agf_balances",
-            type: "circular",
-            label: "Balances y Resultados IFRS de las Gestoras",
-            badge: "1.6k Datos",
-            badgeType: "data",
-            status: "active",
-            sector: "agf",
-            open: true,
-            chips: [
-              { label: "Ranking Activos Propios de las Gestoras (MM$ CLP)", query: "SELECT periodo, razon_social, total_activos_m_clp, patrimonio_neto_m_clp, efectivo_y_equivalentes_m_clp, cartera_propia_inversiones_m_clp FROM agf_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM agf_balance_resumen) ORDER BY total_activos_m_clp DESC LIMIT 15;" },
-              { label: "Ingresos por Comisiones de Administración (Top 10 AGF)", query: "SELECT periodo, razon_social, ingresos_comisiones_m_clp, ganancia_perdida_ejercicio_m_clp, patrimonio_neto_m_clp FROM agf_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM agf_balance_resumen) ORDER BY ingresos_comisiones_m_clp DESC LIMIT 10;" },
-              { label: "Cartera Propia de Inversión (Coinversión AGF)", query: "SELECT periodo, razon_social, cartera_propia_inversiones_m_clp, total_activos_m_clp, round(cartera_propia_inversiones_m_clp / NULLIF(total_activos_m_clp, 0) * 100, 1) as pct_cartera_propia FROM agf_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM agf_balance_resumen) AND cartera_propia_inversiones_m_clp > 0 ORDER BY cartera_propia_inversiones_m_clp DESC LIMIT 15;" },
-              { label: "Utilidad Neta del Ejercicio: Banchile vs Santander vs LarrainVial", query: "SELECT periodo, razon_social, ganancia_perdida_ejercicio_m_clp, ingresos_comisiones_m_clp, total_activos_m_usd FROM agf_balance_resumen WHERE razon_social LIKE '%BANCHILE%' OR razon_social LIKE '%SANTANDER%' OR razon_social LIKE '%LARRAIN%' ORDER BY periodo DESC, ingresos_comisiones_m_clp DESC LIMIT 15;" }
-            ],
-            tables: [
-              { id: "agf_balance_resumen", name: "agf.balance_resumen", rows: "1.6k datos", file: "outputs/agf/agf_balance_resumen.parquet" }
             ]
           }
         ]
@@ -2107,6 +2031,9 @@ class SidebarController {
 
           const circTitle = circNode.querySelector(".tree-circular .tree-label").textContent.toLowerCase();
           if (circHasMatch || circTitle.includes(query)) {
+            if (circTitle.includes(query)) {
+              circNode.querySelectorAll(".tree-table").forEach((table) => { table.style.display = "flex"; });
+            }
             circNode.style.display = "block";
             circNode.classList.add("open");
             const arrow = circNode.querySelector(".tree-circular .arrow-slot");
@@ -2118,6 +2045,16 @@ class SidebarController {
         });
 
         const sectorTitle = sectorNode.querySelector(".tree-sector .tree-label").textContent.toLowerCase();
+        if (sectorTitle.includes(query)) {
+          sectorNode.querySelectorAll(".circular-node, .tree-table").forEach((node) => {
+            node.style.display = node.classList.contains("tree-table") ? "flex" : "";
+          });
+          sectorNode.querySelectorAll(".circular-node").forEach((node) => {
+            node.classList.add("open");
+            const arrow = node.querySelector(".arrow-slot");
+            if (arrow) arrow.innerHTML = ICONS.chevronDown;
+          });
+        }
         if (sectorHasMatch || sectorTitle.includes(query)) {
           sectorNode.style.display = "block";
           sectorNode.classList.add("open");
@@ -2130,6 +2067,17 @@ class SidebarController {
       });
 
       const groupTitle = group.querySelector(".group-title").textContent.toLowerCase();
+      if (groupTitle.includes(query)) {
+        // Si se busca la familia, mostrar todos sus subsectores y categorías.
+        group.querySelectorAll(".sector-node, .circular-node, .tree-table").forEach((node) => {
+          node.style.display = node.classList.contains("tree-table") ? "flex" : "";
+        });
+        group.querySelectorAll(".sector-node, .circular-node").forEach((node) => {
+          node.classList.add("open");
+          const arrow = node.querySelector(".arrow-slot");
+          if (arrow) arrow.innerHTML = ICONS.chevronDown;
+        });
+      }
       if (groupHasMatch || groupTitle.includes(query)) {
         group.style.display = "block";
         group.classList.add("open");
