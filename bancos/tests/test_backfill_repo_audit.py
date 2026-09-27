@@ -59,8 +59,10 @@ class BackfillTests(unittest.TestCase):
                                           "repo_activo_mm_clp": 35, "repo_pasivo_mm_clp": 75}]))
             with patch.object(probe, "resolve_links", return_value=({}, {"2008-12"})), \
                  patch.object(probe, "LEGACY", legacy):
-                with self.assertRaisesRegex(ValueError, "sin ZIP inequívoco"):
-                    backfill.run(Path(tmp) / "out", 2008, 2008)
+                result = backfill.run(Path(tmp) / "out", 2008, 2008)
+            self.assertEqual(result["estado"], "auditoria_historica_incompleta_no_publicada")
+            self.assertEqual(result["errores"], [{"periodo": "2008-12", "causa": "ZIP ambiguo"}])
+            self.assertEqual(result["resumen"]["meses_cotejados"], 0)
 
 
 if __name__ == "__main__":

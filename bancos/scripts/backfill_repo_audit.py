@@ -77,12 +77,15 @@ def run(output: Path = OUT, from_year: int = 2008, through_year: int = 2026) -> 
     if not periods:
         raise ValueError("Rango sin filas legacy")
     unavailable = [p for p in periods if p not in found or p in unresolved]
-    if unavailable:
-        raise ValueError(f"Meses sin ZIP inequívoco: {unavailable}")
     collected: list[dict] = []
-    error = None
+    errors: list[dict] = []
     for p in periods:
         year_path = output / f"{p[:4]}.json"
+        if p in unavailable:
+            issue = {"periodo": p, "causa": "ZIP ambiguo" if p in unresolved else "ZIP ausente"}
+            errors.append(issue)
+            print(f"{p} pendiente: {issue['causa']}", flush=True)
+            continue
         try:
             legacy = {(p, code): values for code, values in period_rows[p].items()}
             month = audit.inspect_all(probe.read_public(found[p], probe.MAX_ZIP), p, found[p], legacy)
@@ -96,13 +99,15 @@ def run(output: Path = OUT, from_year: int = 2008, through_year: int = 2026) -> 
             print(f"{p} cotejado: {result['lados_cotejados']} lados, "
                   f"{len(result['discrepancias'])} discrepancias", flush=True)
         except (ValueError, RuntimeError, OSError) as exc:
-            error = {"periodo": p, "causa": str(exc)}
-            break
+            issue = {"periodo": p, "causa": str(exc)}
+            errors.append(issue)
+            print(f"{p} pendiente: {issue['causa']}", flush=True)
+            continue
     summary = rollup(collected)
-    doc = {"estado": "auditoria_historica_incompleta_no_publicada" if error else
+    doc = {"estado": "auditoria_historica_incompleta_no_publicada" if errors else
                      "auditoria_historica_exploratoria_no_publicada",
            "fuente": probe.INDEX, "primer_periodo": periods[0], "ultimo_periodo": periods[-1],
-           "meses_esperados": len(periods), "resumen": summary, "error": error,
+           "meses_esperados": len(periods), "resumen": summary, "errores": errors,
            "nota": "Coincidencia con legacy no certifica rubro contable, columnas, RUT ni cobertura del universo."}
     save(output / "resumen.json", doc)
     return doc
@@ -122,11 +127,13 @@ def main() -> int:
     print(f"::notice title=REPO histórico sin publicar::{result['estado']} "
           f"meses={summary['meses_cotejados']}/{result['meses_esperados']} "
           f"lados={summary['lados_cotejados']} discrepancias={summary['discrepancias']} "
-          f"error={result['error']}")
+          f"pendientes={len(result['errores'])}")
+    for issue in result["errores"][:20]:
+        print(f"::warning title=REPO mes pendiente::{issue}")
     if summary["detalle_discrepancias"]:
         for item in summary["detalle_discrepancias"][:20]:
             print(f"::warning title=REPO discrepancia histórica::{item}")
-    return 1 if result["error"] or summary["discrepancias"] else 0
+    return 1 if result["errores"] or summary["discrepancias"] else 0
 
 
 if __name__ == "__main__":
