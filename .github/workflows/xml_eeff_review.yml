@@ -24,6 +24,10 @@ on:
 
 permissions:
   contents: read
+  # Solo para publicar el resumen del shard como comentario y poder leerlo desde la API
+  # cuando no hay acceso a logs/artifacts (no escribe datos ni commit).
+  pull-requests: write
+  issues: write
 
 concurrency:
   group: xml-eeff-review-${{ github.ref }}
@@ -74,6 +78,26 @@ jobs:
           path: .local-data/xml_eeff/
           retention-days: 30
           if-no-files-found: warn
+      - name: Publicar resumen del shard como comentario (visible y verificable)
+        if: always()
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SHARD: ${{ matrix.shard }}
+        run: |
+          PR=$(gh pr list --head "$GITHUB_REF_NAME" --state open --json number --jq '.[0].number // empty')
+          if [ -z "$PR" ]; then echo "Sin PR abierto para $GITHUB_REF_NAME"; exit 0; fi
+          MARK="<!-- xml-eeff-shard-$SHARD -->"
+          RESUMEN=$(cat ".local-data/xml_eeff/resumen_shard${SHARD}of4.json" 2>/dev/null || echo '{}')
+          BODY=$(printf '%s\n**Laboratorio XML/XBRL — shard %s** (sin publicación)\n\n```json\n%s\n```\n' "$MARK" "$SHARD" "$RESUMEN")
+          ID=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR/comments" --paginate \
+                 --jq ".[] | select(.body | contains(\"$MARK\")) | .id" | head -1)
+          if [ -n "$ID" ]; then
+            gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$ID" -f body="$BODY" > /dev/null
+          else
+            gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR/comments" -f body="$BODY" > /dev/null
+          fi
+
       - name: Resumen visible del shard
         if: always()
         env:
