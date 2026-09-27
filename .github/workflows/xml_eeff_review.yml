@@ -46,8 +46,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Tests de parsing y control de errores
-        run: python -m unittest discover -s pipelines/xml_eeff/tests -v
+      - name: Tests de parsing y control de errores (sin dependencias de publicación)
+        run: python -m unittest discover -s pipelines/xml_eeff/tests -p test_extract.py -v
       - name: Recuperar cursor y ledger de la rama (solo para este shard)
         uses: actions/cache@v4
         with:
