@@ -40,9 +40,11 @@ def summarize(report: dict, limit: int = LIMIT) -> str:
         for bank in banks[:BANKS_PER_MONTH]:
             parts = []
             for side, data in bank.get("hipotesis_escala", {}).items():
+                matches = data.get("coincidencias_legacy") or []
+                hit = f" MATCH {matches}" if matches else ""
                 parts.append(
                     f"{side}({data.get('cuenta')})={data.get('campos_crudos') or data.get('estado')}"
-                    f"{'/match' + str(data.get('coincidencias_legacy')) if data.get('coincidencias_legacy') else ''}"
+                    f" suma={data.get('suma_columnas')} MM={data.get('suma_con_divisor')}{hit}"
                 )
             lines.append(f"  {bank.get('codigo_banco')} legacy={bank.get('referencia_legacy_mm_clp')} " + " ".join(parts))
     return "\n".join(lines)[:limit]

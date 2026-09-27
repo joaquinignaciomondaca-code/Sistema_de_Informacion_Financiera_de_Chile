@@ -32,6 +32,22 @@ class AuditTests(unittest.TestCase):
         self.assertEqual(rows["bancos"][0]["hipotesis_escala"]["activo"]["coincidencias_legacy"][0]["divisor"], 1000)
         self.assertEqual(rows["bancos"][1]["hipotesis_escala"]["pasivo"]["campos_crudos"], ["0"])
 
+    def test_real_2021_format_sums_columns_in_mm_without_divisor(self):
+        """Formato real del B1 2021-12: rubro ya en MM CLP y varias columnas."""
+        out = io.BytesIO()
+        with zipfile.ZipFile(out, "w") as z:
+            z.writestr("b1202112014.txt",
+                       "1160000\t0000000120796,00\t0000000000000,00\t0,00\t0000000000000,00\n"
+                       "2160000\t0000000379967,00\t0000000000000,00\t0,00\t0000000000003,00\n")
+        rows = audit.inspect_all(out.getvalue(), "2021-12", URL,
+                                 {("2021-12", "014"): {"activo": 120796, "pasivo": 379970}})
+        side = rows["bancos"][0]["hipotesis_escala"]["pasivo"]
+        self.assertEqual(side["suma_columnas"], "379970")
+        self.assertEqual(side["suma_con_divisor"]["1"], "379970")
+        self.assertIn({"origen": "suma_columnas", "divisor": 1, "valor_mm_clp": "379970"},
+                      side["coincidencias_legacy"])
+        self.assertEqual(rows["filas_con_alguna_coincidencia"], 2)
+
     def test_missing_candidates_and_duplicate_balance_fail_closed(self):
         empty = io.BytesIO()
         with zipfile.ZipFile(empty, "w") as z:
@@ -106,17 +122,21 @@ class SummaryTests(unittest.TestCase):
                 "bancos": [{
                     "codigo_banco": "001", "referencia_legacy_mm_clp": {"activo": 64365, "pasivo": 95009},
                     "hipotesis_escala": {
-                        "activo": {"cuenta": "1160000", "campos_crudos": ["64.365.000"],
-                                   "coincidencias_legacy": [{"columna_1_based": 1, "divisor": 1000}]},
-                        "pasivo": {"cuenta": "2160000", "campos_crudos": ["95.009.000"]},
+                        "activo": {"cuenta": "1160000", "campos_crudos": ["0000000064365,00"],
+                                   "suma_columnas": "64365",
+                                   "suma_con_divisor": {"1": "64365", "1000": "64.365"},
+                                   "coincidencias_legacy": [{"origen": "suma_columnas", "divisor": 1}]},
+                        "pasivo": {"cuenta": "2160000", "campos_crudos": ["0000000087671,00"],
+                                   "suma_columnas": "95009", "suma_con_divisor": {"1": "95009"}},
                     },
                 }],
             }],
         }
         text = summary.summarize(report)
         self.assertIn("2021-12: bancos=1 con_cuentas_candidatas=1", text)
-        self.assertIn("activo(1160000)=['64.365.000']/match", text)
-        self.assertIn("pasivo(2160000)=['95.009.000']", text)
+        self.assertIn("activo(1160000)=['0000000064365,00'] suma=64365 MM={'1': '64365'", text)
+        self.assertIn("'divisor': 1}]", text)
+        self.assertIn("pasivo(2160000)=['0000000087671,00'] suma=95009", text)
         self.assertLessEqual(len(summary.summarize(report, limit=60)), 60)
         self.assertIn("FALLO en 2021-12",
                       summary.summarize({"estado": "cotejo_incompleto_no_publicado",
