@@ -1078,7 +1078,7 @@
       "file_parquet": "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
       "registros_reales": 28938,
       "descripcion": "28,938 filas de cuentas ESF; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
-      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 36340541773. 24/28 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
+      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 36340943560. 24/28 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
     },
     {
       "id": "factoring_leasing_resultados_serie_ifrs_cmf",
@@ -1094,7 +1094,7 @@
       "file_parquet": "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
       "registros_reales": 21464,
       "descripcion": "21,464 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
-      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 36340541773. 24/28 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
+      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 36340943560. 24/28 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
     }
   ]
 }
