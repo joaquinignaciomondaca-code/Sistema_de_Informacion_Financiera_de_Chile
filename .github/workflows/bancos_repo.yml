@@ -58,6 +58,7 @@ jobs:
                                        for r in doc['comparaciones'] if r.get('solo_cmf')][:5],
                   'muestras_diferencias': [{'mes': r['periodo'], 'valores': r['diferencias'][:2]}
                                           for r in doc['comparaciones'] if r.get('diferencias')][:5],
+                  'codigos_cmf_fuera_legacy': doc['codigos_cmf_fuera_legacy'],
               }, ensure_ascii=False))
           PY
       - name: Conservar revisión temporal (nunca publicada)
