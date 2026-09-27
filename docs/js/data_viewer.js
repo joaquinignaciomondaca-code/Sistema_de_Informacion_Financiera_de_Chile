@@ -87,7 +87,8 @@ const DATA_VIEWER_CATALOG = [
     group: "Factoring & Leasing (CMF / NBFI)",
     tables: [
       { id: "factoring_leasing_maestro", name: "factoring_leasing.lista_entidades (28 entidades)" }
-      ,{ id: "factoring_leasing_eeff_muestra_cmf", name: "factoring_leasing.eeff_muestra_cmf (2 filas cotejadas; no es el sector)" }
+      ,{ id: "factoring_leasing_eeff_muestra_cmf", name: "factoring_leasing.eeff_muestra_cmf (2 filas cotejadas; no es el sector)" },
+      { id: "factoring_leasing_resultados_muestra_cmf", name: "factoring_leasing.resultados_muestra_cmf (2 filas; acumulado del ejercicio)" }
     ]
   },
   {

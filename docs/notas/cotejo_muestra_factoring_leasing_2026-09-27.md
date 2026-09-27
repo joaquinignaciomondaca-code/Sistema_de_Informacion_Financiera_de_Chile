@@ -30,3 +30,14 @@ cuenta sin duplicados en el archivo, coincidencia exacta y cuadre contable.
   redondeaban a millones, rellenaban faltantes con cero, calculaban el DV en vez de contrastarlo y usaban tipo de
   cambio de respaldo. La publicación usa un camino distinto y verificado.
 * La unidad publicada es la de la ficha; no se convierte a unidades ni a USD.
+
+## Ampliación: estado de resultado separado
+
+Tras la observación de que balance y resultados deben tener tablas separadas, se realizó un nuevo cotejo en [Actions 36337715177](https://github.com/joaquinignaciomondaca-code/monitor-financiero-chile/actions/runs/36337715177), commit `1b80e2b`, usando el mismo par de entidades, cierres y fuente estructurada. Se contrastaron **dos cuentas del estado de resultado** contra sus etiquetas exactas en el estado HTML `[310000]` y su valor actual (columna **acumulado desde enero hasta el cierre**, no el trimestre aislado). La muestra del balance sigue en su archivo con cuatro cuentas y su propia evidencia del run 36337279448.
+
+| Segmento | Período | Resultado antes de impuestos | Resultado operaciones continuadas |
+| :--- | :--- | ---: | ---: |
+| Factoring Security | 2022-06 | 8.148.312 | 7.204.369 |
+| Unidad Leasing Habitacional | 2022-09 | 665.671 | 408.471 |
+
+Unidad en ambos casos: **miles de CLP**. Se publican en `factoring_leasing.resultados_muestra_cmf` (dos filas). El publicador verifica que la segunda extracción **no altera** las cuatro cifras del balance previo. No se declara cotejado el estado de resultado completo, los XBRL ni los PDF.

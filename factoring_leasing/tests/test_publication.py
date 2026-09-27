@@ -16,7 +16,8 @@ class PublicationTests(unittest.TestCase):
         # La lista de entidades y, aparte, la muestra de dos filas cotejadas con
         # CMF. Ningún otro balance puede reaparecer sin una auditoría propia.
         self.assertEqual(files, {'factoring_leasing_maestro.json', 'factoring_leasing_maestro.parquet',
-                                 'factoring_leasing_eeff_muestra_cmf.parquet'})
+                                 'factoring_leasing_eeff_muestra_cmf.parquet',
+                                 'factoring_leasing_resultados_muestra_cmf.parquet'})
         self.assertFalse(files.intersection({f'{name}.{ext}' for name in RETIRED for ext in ('json', 'parquet')}))
 
     def test_old_files_cannot_pass_audit(self):
@@ -56,7 +57,8 @@ class PublicationTests(unittest.TestCase):
         manifest = json.loads((ROOT / 'data_manifest.json').read_text(encoding='utf-8'))
         sector = [entry['id'] for entry in manifest['tables']
                   if entry.get('sector') == 'factoring_leasing']
-        self.assertEqual(sector, ['factoring_leasing_maestro', 'factoring_leasing_eeff_muestra_cmf'])
+        self.assertEqual(sector, ['factoring_leasing_maestro', 'factoring_leasing_eeff_muestra_cmf',
+                                  'factoring_leasing_resultados_muestra_cmf'])
         self.assertEqual(manifest['total_tables'], len(manifest['tables']))
         self.assertEqual(manifest['total_records'],
                          sum(t.get('registros_reales', 0) for t in manifest['tables']))
