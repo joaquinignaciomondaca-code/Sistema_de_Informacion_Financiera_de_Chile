@@ -1,4 +1,4 @@
-"""La lista es la única salida pública de Factoring y Leasing."""
+"""Las muestras cotejadas y la serie CMF automática coexisten con el maestro."""
 import json
 import shutil
 import tempfile
@@ -13,11 +13,17 @@ class PublicationTests(unittest.TestCase):
     def test_only_entity_list_is_published(self):
         self.assertEqual(run_audit(), 28)
         files = {p.name for p in OUTPUT.iterdir() if p.is_file()}
-        # La lista de entidades y, aparte, la muestra de dos filas cotejadas con
-        # CMF. Ningún otro balance puede reaparecer sin una auditoría propia.
-        self.assertEqual(files, {'factoring_leasing_maestro.json', 'factoring_leasing_maestro.parquet',
-                                 'factoring_leasing_eeff_muestra_cmf.parquet',
-                                 'factoring_leasing_resultados_muestra_cmf.parquet'})
+        # El backfill completo se publica como dos Parquets separados y con
+        # metadata/advertencia, sin reemplazar las muestras previamente cotejadas.
+        expected = {'factoring_leasing_maestro.json', 'factoring_leasing_maestro.parquet',
+                    'factoring_leasing_eeff_muestra_cmf.parquet',
+                    'factoring_leasing_resultados_muestra_cmf.parquet'}
+        series = {'factoring_leasing_balance_serie_ifrs_cmf.parquet',
+                  'factoring_leasing_resultados_serie_ifrs_cmf.parquet',
+                  'factoring_leasing_balance_serie_ifrs_cmf_metadata.json'}
+        if (OUTPUT / 'factoring_leasing_balance_serie_ifrs_cmf.parquet').exists():
+            expected |= series
+        self.assertEqual(files, expected)
         self.assertFalse(files.intersection({f'{name}.{ext}' for name in RETIRED for ext in ('json', 'parquet')}))
 
     def test_old_files_cannot_pass_audit(self):
@@ -41,7 +47,7 @@ class PublicationTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'Valores JSON/Parquet'):
                 run_audit(folder)
 
-    def test_site_catalogs_and_manifest_expose_only_entity_list(self):
+    def test_site_catalogs_and_manifest_expose_series_with_caveats(self):
         site_files = ('sidebar.js', 'data_viewer.js', 'data_dictionary.js',
                       'erd_graph.js', 'duckdb_client.js', 'export_modal.js')
         for file in site_files:
@@ -57,8 +63,16 @@ class PublicationTests(unittest.TestCase):
         manifest = json.loads((ROOT / 'data_manifest.json').read_text(encoding='utf-8'))
         sector = [entry['id'] for entry in manifest['tables']
                   if entry.get('sector') == 'factoring_leasing']
-        self.assertEqual(sector, ['factoring_leasing_maestro', 'factoring_leasing_eeff_muestra_cmf',
-                                  'factoring_leasing_resultados_muestra_cmf'])
+        expected = ['factoring_leasing_maestro', 'factoring_leasing_eeff_muestra_cmf',
+                    'factoring_leasing_resultados_muestra_cmf']
+        full_ids = ['factoring_leasing_balance_serie_ifrs_cmf',
+                    'factoring_leasing_resultados_serie_ifrs_cmf']
+        if (OUTPUT / f'{full_ids[0]}.parquet').exists():
+            expected.extend(full_ids)
+            for table_id in full_ids:
+                entry = next(x for x in manifest['tables'] if x['id'] == table_id)
+                self.assertIn('no cotejadas', entry['descripcion'])
+        self.assertEqual(sector, expected)
         self.assertEqual(manifest['total_tables'], len(manifest['tables']))
         self.assertEqual(manifest['total_records'],
                          sum(t.get('registros_reales', 0) for t in manifest['tables']))

@@ -52,6 +52,14 @@ TABLE_COLUMNS = [
 ]
 
 
+def file_sha256(path):
+    digest = hashlib.sha256()
+    with Path(path).open('rb') as stream:
+        for chunk in iter(lambda: stream.read(1024 * 1024), b''):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
 def atomic_parquet(frame, path):
     path.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(dir=path.parent, suffix='.parquet', delete=False) as tmp:
@@ -63,7 +71,10 @@ def atomic_parquet(frame, path):
             raise ValueError(f'Roundtrip Parquet/schema no coincide: {path.name}')
         if len(frame) and check['valor_texto_original'].tolist() != frame['valor_texto_original'].tolist():
             raise ValueError(f'Roundtrip no conserva el importe literal: {path.name}')
-        temp.replace(path)
+        if path.is_file() and file_sha256(path) == file_sha256(temp):
+            temp.unlink()
+        else:
+            temp.replace(path)
     finally:
         temp.unlink(missing_ok=True)
 
@@ -90,7 +101,7 @@ def query(name):
 
 
 def sidebar_block(meta):
-    period = f"{meta['primer_periodo']}–{meta['ultimo_periodo']}"
+    period = f"{meta['primer_periodo'][:4]}-{meta['primer_periodo'][4:]}–{meta['ultimo_periodo'][:4]}-{meta['ultimo_periodo'][4:]}"
     badge = f"{meta['periodos_indice']} cierres · {len(meta['ruts_con_datos_total'])} RUT"
     entries = []
     for cid, label, table_id, table_name, rows, file, sql_label in [
@@ -151,11 +162,12 @@ def dictionary_block(meta, run_id):
     for name, typ, desc in TABLE_COLUMNS:
         columns.append({'name': name, 'type': typ, 'role': 'Métrica' if name in ('valor_archivo', 'valor_texto_original') else 'Dimensión',
                         'significado': descriptions.get(name, desc), 'contable': 'No aplica'})
-    created = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    created = meta['fecha_actualizacion_utc'][:10]
+    period_range = f"{meta['primer_periodo'][:4]}-{meta['primer_periodo'][4:]} a {meta['ultimo_periodo'][:4]}-{meta['ultimo_periodo'][4:]}"
     common = {
         'sector': 'factoring_leasing', 'sectorLabel': 'Factoring & Leasing',
         'norma': 'CMF IFRS TXT · extracción automática de cuentas ESF/ER',
-        'corte': f"{meta['primer_periodo']} a {meta['ultimo_periodo']} · {meta['periodos_indice']} cierres",
+        'corte': f"{period_range} · {meta['periodos_indice']} cierres",
         'frescura': 'Serie de la fuente CMF; valores crudos, no validación integral',
         'modo': 'Actions: descarga histórica incremental y publicación automática al completarse',
         'ultimaActualizacion': created,
@@ -172,7 +184,7 @@ def dictionary_block(meta, run_id):
             'id': table_id, 'name': 'factoring_leasing.' + table_id.removeprefix('factoring_leasing_'), 'viewName': view_name,
             'registros': f"{rows:,} cuentas · {len(meta['ruts_con_datos_total'])}/28 RUT con datos",
             'descripcion': (f"{title}. {rows:,} filas de cuentas de estados {statement} entre "
-                            f"{meta['primer_periodo']} y {meta['ultimo_periodo']}; no son estados agregados. "
+                            f"{period_range}; no son estados agregados. "
                             f"Incluye {meta['importes_no_enteros_total']:,} importes no enteros preservados como texto/null y "
                             f"{meta['cuentas_contexto_repetidas_total']:,} repeticiones de contexto conservadas. "
                             'Monedas, taxonomías y tipos I/C permanecen separados; sin conversión, deduplicación ni suma. Cifras no cotejadas en su totalidad.'),
@@ -211,7 +223,7 @@ def load_complete(out=DATA):
         return None, 'No existe resumen de extracción.'
     summary = json.loads(summary_path.read_text(encoding='utf-8'))
     periods = summary.get('periodos_indice_lista', [])
-    if summary.get('estado_global') not in ('completo_sin_publicar', 'completo_publicado'):
+    if summary.get('estado_global') not in ('completo_sin_publicar', 'completo_publicado', 'completo_incluido_en_docs'):
         return None, f"Extracción no completa: estado={summary.get('estado_global')}"
     if (not periods or len(periods) != summary.get('periodos_indice') or
             len(set(periods)) != len(periods) or summary.get('pendientes') or summary.get('errores')):
@@ -257,6 +269,47 @@ def load_complete(out=DATA):
     return (summary, balance, results), None
 
 
+def update_root_manifest(meta, run_id, docs=DOCS):
+    """Mantiene el inventario JSON del repo sincronizado con los Parquets públicos."""
+    path = docs.parent / 'data_manifest.json'
+    manifest = json.loads(path.read_text(encoding='utf-8'))
+    tables = manifest.get('tables')
+    if not isinstance(tables, list):
+        raise ValueError('data_manifest.json no tiene una lista tables')
+    ids = {BALANCE, RESULTS}
+    tables = [item for item in tables if item.get('id') not in ids]
+    generated = []
+    for table_id, suffix, rows, statement in [
+        (BALANCE, 'balance', meta['filas_balance_total'], 'ESF'),
+        (RESULTS, 'resultados', meta['filas_resultados_total'], 'ER'),
+    ]:
+        generated.append({
+            'id': table_id,
+            'name': 'factoring_leasing.' + suffix + '_serie_ifrs_cmf',
+            'view_name': table_id,
+            'sector': 'factoring_leasing',
+            'sector_label': 'Factoring & Leasing',
+            'norma': 'CMF IFRS TXT · extracción de cuentas ESF/ER',
+            'corte': f"{meta['primer_periodo'][:4]}-{meta['primer_periodo'][4:]} a {meta['ultimo_periodo'][:4]}-{meta['ultimo_periodo'][4:]}",
+            'frescura': 'Serie completa del índice consultado; extracción literal, no cotejo integral',
+            'modo': 'Automático · Actions publica solo al completar todos los cierres CMF',
+            'ultima_actualizacion': meta['fecha_actualizacion_utc'][:10],
+            'file_parquet': f'outputs/factoring_leasing/{table_id}.parquet',
+            'registros_reales': int(rows),
+            'descripcion': (f"{rows:,} filas de cuentas {statement}; no son estados agregados. "
+                            'Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.'),
+            'origen': (f"CMF {meta['fuente_indice']}; corrida Actions {run_id}. "
+                       f"{len(meta['ruts_con_datos_total'])}/28 RUT del catálogo con datos; "
+                       'revisar metadata JSON acompañante para faltantes y advertencias.'),
+        })
+    tables.extend(generated)
+    manifest['tables'] = tables
+    manifest['updated_at'] = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    manifest['total_tables'] = len(tables)
+    manifest['total_records'] = sum(int(item.get('registros_reales', 0)) for item in tables)
+    path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+
+
 def publish(out=DATA, docs=DOCS, run_id='local'):
     loaded, reason = load_complete(out)
     if loaded is None:
@@ -281,15 +334,36 @@ def publish(out=DATA, docs=DOCS, run_id='local'):
         'ruts_con_datos': summary['ruts_con_datos_total'],
         'ruts_sin_filas_en_fuente': summary.get('ruts_sin_datos_hasta_ahora', []),
         'filas_balance': len(balance), 'filas_resultados': len(results),
+        'filas_balance_total': len(balance), 'filas_resultados_total': len(results),
+        'ruts_con_datos_total': summary['ruts_con_datos_total'],
         'importes_no_enteros': summary.get('importes_no_enteros_total', 0),
+        'importes_no_enteros_total': summary.get('importes_no_enteros_total', 0),
         'cuentas_contexto_repetidas': summary.get('cuentas_contexto_repetidas_total', 0),
+        'cuentas_contexto_repetidas_total': summary.get('cuentas_contexto_repetidas_total', 0),
         'advertencia': ('Extracción literal del TXT IFRS CMF. No es un cotejo integral de estados; '
                         'no convertir monedas, sumar balances individual/consolidado, deduplicar etiquetas, '
                         'ni interpretar valores no enteros como cero. Filas y faltantes según fuente disponible.'),
     }
+    meta['sha256_balance_parquet'] = file_sha256(balance_path)
+    meta['sha256_resultados_parquet'] = file_sha256(results_path)
     meta_path = docs / 'outputs' / 'factoring_leasing' / f'{BALANCE}_metadata.json'
+    if meta_path.is_file():
+        previous = json.loads(meta_path.read_text(encoding='utf-8'))
+        stable_fields = ('sha256_balance_parquet', 'sha256_resultados_parquet',
+                         'primer_periodo', 'ultimo_periodo', 'periodos_indice',
+                         'ruts_con_datos', 'ruts_sin_filas_en_fuente',
+                         'filas_balance', 'filas_resultados',
+                         'importes_no_enteros', 'cuentas_contexto_repetidas')
+        unchanged = all(previous.get(key) == meta.get(key) for key in stable_fields)
+        if unchanged:
+            # No crear un commit diario solo por cambiar timestamp/corrida cuando
+            # los datos públicos no cambiaron.
+            meta['run_actions'] = previous['run_actions']
+            meta['fecha_actualizacion_utc'] = previous['fecha_actualizacion_utc']
     meta_path.write_text(json.dumps(meta, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    apply_catalogs(summary, run_id, docs)
+    effective_run_id = meta['run_actions']
+    apply_catalogs(meta, effective_run_id, docs)
+    update_root_manifest(meta, effective_run_id, docs)
     summary['publicado_en_docs'] = True
     summary['estado_global'] = 'completo_incluido_en_docs'
     summary['parquets_docs'] = [balance_path.relative_to(docs).as_posix(), results_path.relative_to(docs).as_posix()]
