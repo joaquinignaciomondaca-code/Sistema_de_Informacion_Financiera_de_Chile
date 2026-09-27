@@ -58,15 +58,17 @@ def read_b1(content: bytes, period: str, bank: str) -> dict:
     if set(found) != set(accounts):
         raise ValueError(f'Cuentas faltantes {set(accounts) - set(found)} en {bank}/{period}')
     values = {}
+    nonzero_raw = {}
     for side, account in zip(('activo', 'pasivo'), accounts):
         components = [amount(c, old) for c in found[account]]
         value = sum(components, Decimal(0)) / (1 if old else 1_000_000)
+        nonzero_raw[side] = any(c != 0 for c in components)
         values[side] = str(value.quantize(QUANT, rounding=ROUND_HALF_UP))
     return {'codigo_institucion': bank, 'periodo': period,
             'nombre_encabezado_b1': lines[0].split('\t', 1)[1].strip(),
             'cuenta_activo': accounts[0],
             'cuenta_pasivo': accounts[1], 'repo_activo_mm_clp': values['activo'],
-            'repo_pasivo_mm_clp': values['pasivo'],
+            'repo_pasivo_mm_clp': values['pasivo'], 'importe_crudo_no_cero': nonzero_raw,
             'sha256_b1': hashlib.sha256(content).hexdigest(),
             'clase_para_revision': ('agregado' if bank in AGGREGATES else
                                    'filial_extranjera' if bank in FOREIGN_AFFILIATES else
@@ -134,7 +136,7 @@ def run(out: Path = OUT, periods: list[str] | None = None) -> dict:
                 names_by_code.setdefault(code, set()).add(row['nombre_encabezado_b1'])
                 if code in comparison['solo_cmf']:
                     extra_codes[code] += 1
-                    if any(Decimal(row[k]) != 0 for k in ('repo_activo_mm_clp', 'repo_pasivo_mm_clp')):
+                    if any(row['importe_crudo_no_cero'].values()):
                         extra_nonzero[code] += 1
             (out / f'{p}.json').write_text(json.dumps(doc, ensure_ascii=False) + '\n', encoding='utf-8')
             reports.append(comparison)

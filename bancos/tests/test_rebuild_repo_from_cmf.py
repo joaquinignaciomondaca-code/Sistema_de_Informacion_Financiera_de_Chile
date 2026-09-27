@@ -59,6 +59,11 @@ class RebuildTest(unittest.TestCase):
         self.assertEqual(comparison['solo_cmf'], ['012'])
         self.assertEqual(comparison['solo_legacy'], ['001'])
 
+    def test_total_sistema_is_aggregate_even_if_not_in_legacy(self):
+        raw = b1(('141000000', '243000000'), ['1']+['0']*3, ['2']+['0']*3, '999')
+        row = read_b1(raw, '2022-06', '999')
+        self.assertEqual(row['clase_para_revision'], 'agregado')
+
     def test_invalid_cell(self):
         with self.assertRaises(ValueError):
             amount('invalid', False)
