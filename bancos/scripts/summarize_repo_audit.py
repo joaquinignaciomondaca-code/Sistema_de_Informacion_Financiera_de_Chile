@@ -53,11 +53,19 @@ def summarize(report: dict, limit: int = LIMIT) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--report", type=Path, default=REPORT)
+    parser.add_argument("--glob", default="repo_zip_audit*.json",
+                        help="Todos los meses calibrados en el directorio de evidencia")
     args = parser.parse_args()
-    if not args.report.exists():
+    if args.report.exists():
+        reports = [args.report]
+    else:
+        reports = sorted(args.report.parent.glob(args.glob))
+    if not reports:
         print("Sin JSON de evidencia; revisar el paso de cotejo", file=sys.stderr)
         return 0
-    text = summarize(json.loads(args.report.read_text(encoding="utf-8")))
+    text = summarize(json.loads(reports[0].read_text(encoding="utf-8")))
+    for extra in reports[1:]:
+        text += "\n" + summarize(json.loads(extra.read_text(encoding="utf-8")))
     body = text.replace("\n", " | ")
     print(text)
     print(f"::notice title=Cotejo REPO ZIP CMF (sin publicar)::{body}")
