@@ -108,7 +108,7 @@ jobs:
       - name: Verificar disposición física de TXT B1 en muestras por vigencia
         if: ${{ github.event_name == 'push' }}
         run: |
-          python -m bancos.scripts.inspect_repo_source_layout 2021-12 2022-06 2026-04 \
+          python -m bancos.scripts.inspect_repo_source_layout 2021-12 2022-06 2024-06 2024-07 2025-01 2026-04 \
             | tee .local-data/review/bancos/disposicion_b1.jsonl
           python - <<'PY'
           import json
