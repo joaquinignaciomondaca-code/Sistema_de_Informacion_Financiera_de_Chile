@@ -18,7 +18,9 @@ class ExportModalController {
 
     // Mapeo directo a archivos Parquet físicos en docs/outputs/
     this.parquetMap = {
-      vida_bonos: "outputs/vida/cartera_bonos.parquet",
+      // vida_bonos no tiene Parquet consolidado publicado (supera los 100 MB de
+      // GitHub): se omite aquí para que la descarga use la vista SQL que une las
+      // dos particiones, en lugar de servir un archivo inexistente.
       vida_acciones: "outputs/vida/cartera_acciones.parquet",
       vida_bienes_raices: "outputs/vida/cartera_bienes_raices.parquet",
       vida_fondos: "outputs/vida/cartera_fondos.parquet",
@@ -43,8 +45,9 @@ class ExportModalController {
       fi_nacional: "outputs/fi/fi_cartera_nacional.parquet",
       fi_extranjera: "outputs/fi/fi_cartera_extranjera.parquet",
       fi_maestro: "outputs/fi/maestro_fondos_inversion.parquet",
+      ffmm_futuros: "outputs/ffmm/ffmm_futu_normalizado.parquet",
+      ffmm_opciones: "outputs/ffmm/ffmm_opci_normalizado.parquet",
       ffmm_inversiones_nac: "outputs/ffmm/ffmm_futu_normalizado.parquet",
-      ffmm_derivados: "outputs/ffmm/ffmm_opci_normalizado.parquet",
       ffmm_maestro: "outputs/ffmm/maestro_fondos_mutuos.parquet",
       afp_maestro: "outputs/pensiones/afp_maestro_administradoras.parquet",
       afp_derivados_forwards: "outputs/pensiones/afp_derivados_forwards.parquet",
@@ -532,13 +535,17 @@ class ExportModalController {
           sql += ` WHERE periodo >= '${this.fromYear}-01' AND periodo <= '${this.toYear}-12'`;
         }
 
-        if (window.DuckDBClient) {
-          const res = await window.DuckDBClient.query(sql);
-          if (res && res.success) {
-            rowsToExport = res.rows || [];
-            colsToExport = res.columns || colsToExport;
-          }
+        if (!window.DuckDBClient) {
+          throw new Error("DuckDB-Wasm no está disponible en esta página: no es posible exportar datos reales.");
         }
+        const res = await window.DuckDBClient.query(sql);
+        // Un fallo del motor no puede confundirse con "no hay filas": se propaga
+        // el error real para que el usuario sepa que la exportación no ocurrió.
+        if (!res || !res.success) {
+          throw new Error(`No se pudo consultar la vista ${view}: ${(res && res.error) || "respuesta inválida del motor DuckDB"}`);
+        }
+        rowsToExport = res.rows || [];
+        colsToExport = res.columns || colsToExport;
       }
 
       if (!rowsToExport.length) {

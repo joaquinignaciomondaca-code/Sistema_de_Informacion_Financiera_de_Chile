@@ -275,4 +275,13 @@ def main():
         print(f"  JSON:    {json_path} ({len(df_out)} registros, {os.path.getsize(json_path)/1024:.1f} KB)")
 
 if __name__ == '__main__':
+    # RETIRADO DEL SITIO (2026-09-26): su salida (fi_caratula_eeff_historico) se sacó
+    # del visor por no estar conciliada contra la CMF. Se conserva el script y su
+    # checkpoint para poder auditarla. Para volver a generarla:
+    #   FI_PUBLICAR_RETIRADOS=1 python 03_extract_fi_eeff_historico.py
+    if os.environ.get("FI_PUBLICAR_RETIRADOS") != "1":
+        raise SystemExit(
+            "Script retirado del flujo publicado: la carátula EEFF de fondos de inversión "
+            "ya no se publica. Usa FI_PUBLICAR_RETIRADOS=1 para re-generarla de forma manual."
+        )
     main()
