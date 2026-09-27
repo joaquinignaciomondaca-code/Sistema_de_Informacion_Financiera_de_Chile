@@ -296,6 +296,21 @@ const EXPLORER_TREE = [
             ]
           },
           {
+            id: "ffmm_eeff_xml_muestra_cmf_folder",
+            type: "circular",
+            label: "Estados financieros XML · Muestra cotejada CMF",
+            badge: "1 fondo · 2014-12",
+            badgeType: "data",
+            status: "active",
+            sector: "ffmm",
+            chips: [
+              { label: "Ver balance y resultado cotejados (miles de pesos)", query: "SELECT run_fondo, periodo, nombre_xml_historico, nombre_registro_actual, unidad_segun_ficha_cmf, total_activo, pasivo_sin_patrimonio, patrimonio_o_activo_neto, resultado_ejercicio, fuente_ficha_cmf FROM ffmm_eeff_xml_muestra_cmf;" }
+            ],
+            tables: [
+              { id: "ffmm_eeff_xml_muestra_cmf", name: "ffmm.eeff_xml_muestra_cmf", rows: "1 fila cotejada · no es histórico", file: "outputs/ffmm/ffmm_eeff_xml_muestra_cmf.parquet" }
+            ]
+          },
+          {
             id: "repos_ffmm_historico",
             type: "circular",
             label: "Operaciones REPO · Muestra en revisión",
@@ -351,6 +366,21 @@ const EXPLORER_TREE = [
             ],
             tables: [
               { id: "fi_registro_fondos_universo", name: "fi.universo_fondos", rows: "1.677 fondos", file: "outputs/fi/fi_registro_fondos_universo.parquet" }
+            ]
+          },
+          {
+            id: "fi_eeff_xml_muestra_cmf_folder",
+            type: "circular",
+            label: "Estados financieros XML · Muestra cotejada CMF",
+            badge: "1 fondo · 2021-12",
+            badgeType: "data",
+            status: "active",
+            sector: "fi",
+            chips: [
+              { label: "Ver balance y resultado cotejados (miles de dólares)", query: "SELECT run_fondo, periodo, nombre_xml_historico, nombre_registro_actual, unidad_segun_ficha_cmf, total_activo, pasivo_sin_patrimonio, patrimonio_o_activo_neto, resultado_ejercicio, fuente_ficha_cmf FROM fi_eeff_xml_muestra_cmf;" }
+            ],
+            tables: [
+              { id: "fi_eeff_xml_muestra_cmf", name: "fi.eeff_xml_muestra_cmf", rows: "1 fila cotejada · no es histórico", file: "outputs/fi/fi_eeff_xml_muestra_cmf.parquet" }
             ]
           },
           {
