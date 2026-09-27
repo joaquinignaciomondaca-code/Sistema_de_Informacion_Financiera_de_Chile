@@ -58,7 +58,7 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Fondos de Inversión (CMF)",
+    group: "Administración de fondos · Fondos de Inversión (FI)",
     tables: [
       { id: "fi_caratula_eeff_historico", name: "fi.caratula_eeff_historico (Panel Histórico CMF)" },
       { id: "fi_repos_detalle_historico", name: "fi.repos_detalle_historico (2.95k contratos 2010-2026)" },
@@ -70,7 +70,7 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Fondos Mutuos (CMF)",
+    group: "Administración de fondos · Fondos Mutuos (FFMM)",
     tables: [
       { id: "ffmm_caratula_eeff_2024", name: "ffmm.caratula_eeff_2024 (376 fondos auditados)" },
       { id: "ffmm_repos_detalle_2024", name: "ffmm.repos_detalle_2024 (Contratos literales CMF)" },
@@ -102,30 +102,20 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Sociedades securitizadoras (CMF)",
+    group: "Securitización · Sociedades Securitizadoras (CMF)",
     tables: [
       { id: "securitizadoras_maestro", name: "securitizadoras.maestro (16 entidades)" },
       { id: "securitizadoras_balance_resumen", name: "securitizadoras.balance_resumen (362 balances IFRS)" }
     ]
   },
   {
-    group: "Patrimonios separados — balance del PDF",
+    group: "Securitización · Patrimonios Separados (CMF / Ley 18.045)",
     tables: [
-      { id: "patrimonios_separados_balance_pdf", name: "patrimonios.balance_pdf (46,502 cuentas, 2,086 PDF)" }
-    ]
-  },
-  {
-    group: "Patrimonios separados — catálogo y estados",
-    tables: [
+      { id: "patrimonios_separados_balance_pdf", name: "patrimonios.balance_pdf (46,502 cuentas, 2,086 PDF)" },
       { id: "patrimonios_separados_maestro", name: "patrimonios.emisiones_lineas (18 líneas de inscripción)" },
       { id: "patrimonios_separados_balance_resumen", name: "patrimonios.balance_resumen (64 balances, 2022-12 a 2024-12)" },
       { id: "patrimonios_separados_balance_lineas", name: "patrimonios.balance_lineas (16,842 filas)" },
-      { id: "patrimonios_separados_excedentes_lineas", name: "patrimonios.excedentes_lineas (11,157 filas)" }
-    ]
-  },
-  {
-    group: "Patrimonios separados — notas y operaciones",
-    tables: [
+      { id: "patrimonios_separados_excedentes_lineas", name: "patrimonios.excedentes_lineas (11,157 filas)" },
       { id: "patrimonios_separados_nota_cartera_detalle", name: "patrimonios.nota_cartera (796 filas)" },
       { id: "patrimonios_separados_nota_morosidad_detalle", name: "patrimonios.nota_morosidad (6,632 filas, tramo sin normalizar)" },
       { id: "patrimonios_separados_nota_bonos_detalle", name: "patrimonios.nota_bonos (8,001 filas)" },
@@ -156,7 +146,7 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Administradoras Generales de Fondos (AGF)",
+    group: "Administración de fondos · AGF (sociedades gestoras)",
     tables: [
       { id: "agf_maestro", name: "agf.maestro (68 gestoras)" },
       { id: "agf_balance_resumen", name: "agf.balance_resumen (1.572 balances IFRS)" }
