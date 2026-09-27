@@ -59,9 +59,12 @@ class BackfillTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'duplicado'):
             b.parse_period(fixture() + duplicate + b'\n', '202206', CATALOG)
 
-    def test_corrupt_target_amount_not_zero(self):
-        with self.assertRaisesRegex(ValueError, 'importe'):
-            b.parse_period(fixture().replace(b'435359519000', b'NO_APLICA'), '202206', CATALOG)
+    def test_noninteger_kept_as_text_not_zero(self):
+        balance, _, stats = b.parse_period(fixture().replace(b'435359519000', b'NO_APLICA'), '202206', CATALOG)
+        self.assertEqual(stats['importes_no_enteros'], 2)  # individual y consolidado
+        self.assertIsNone(balance[0]['valor_archivo'])
+        self.assertEqual(balance[0]['valor_texto_original'], 'NO_APLICA')
+        self.assertFalse(balance[0]['valor_es_entero'])
         with self.assertRaisesRegex(ValueError, 'no es el archivo'):
             b.parse_period(b'<html>error</html>', '202206', CATALOG)
 
