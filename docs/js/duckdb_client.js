@@ -57,6 +57,9 @@ class DuckDBClient {
       "patrimonios_separados_balance_resumen": "outputs/securitizadoras/patrimonios_separados_balance_resumen.json",
       "patrimonios_separados_repos_detalle": "outputs/securitizadoras/patrimonios_separados_repos_detalle.json",
       "patrimonios_separados_cartera_morosidad_detalle": "outputs/securitizadoras/patrimonios_separados_cartera_morosidad_detalle.json",
+      "patrimonios_separados_notebooklm_cuentas": "outputs/securitizadoras/patrimonios_separados_notebooklm_cuentas.json",
+      "patrimonios_separados_notebooklm_vehiculos": "outputs/securitizadoras/patrimonios_separados_notebooklm_vehiculos.json",
+      "patrimonios_separados_notebooklm_periodos": "outputs/securitizadoras/patrimonios_separados_notebooklm_periodos.json",
       "cooperativas_maestro": "outputs/cooperativas/cooperativas_maestro.json",
       "cooperativas_balance_resumen": "outputs/cooperativas/cooperativas_balance_resumen.json",
       "cooperativas_nota_efectivo_detalle": "outputs/cooperativas/cooperativas_nota_efectivo_detalle.json",
@@ -223,6 +226,9 @@ class DuckDBClient {
        { name: "patrimonios_separados_balance_resumen", file: "outputs/securitizadoras/patrimonios_separados_balance_resumen.parquet" },
        { name: "patrimonios_separados_repos_detalle", file: "outputs/securitizadoras/patrimonios_separados_repos_detalle.parquet" },
        { name: "patrimonios_separados_cartera_morosidad_detalle", file: "outputs/securitizadoras/patrimonios_separados_cartera_morosidad_detalle.parquet" },
+       { name: "patrimonios_separados_notebooklm_cuentas", file: "outputs/securitizadoras/patrimonios_separados_notebooklm_cuentas.parquet" },
+       { name: "patrimonios_separados_notebooklm_vehiculos", file: "outputs/securitizadoras/patrimonios_separados_notebooklm_vehiculos.parquet" },
+       { name: "patrimonios_separados_notebooklm_periodos", file: "outputs/securitizadoras/patrimonios_separados_notebooklm_periodos.parquet" },
 
       // COOPERATIVAS DE AHORRO Y CRÉDITO (CMF)
       { name: "cooperativas_maestro", file: "outputs/cooperativas/cooperativas_maestro.parquet" },

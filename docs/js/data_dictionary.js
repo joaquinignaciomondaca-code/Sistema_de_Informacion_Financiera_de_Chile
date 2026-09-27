@@ -2384,6 +2384,92 @@ const DATA_DICTIONARY = [
       { name: "provision_mclp", type: "DOUBLE", role: "Métrica", significado: "Monto de provisiones de deterioro constituidas para el tramo (M$ CLP).", contable: "Provisión Deterioro Cartera", interpretacion: "Castigo o cobertura de pérdida esperada." },
       { name: "porcentaje_provision_pct", type: "DOUBLE", role: "Métrica", significado: "Columna publicada. No tratarla como tasa: el archivo trae valores que no son un porcentaje.", contable: "No usar como tasa", interpretacion: "Se deja el número del archivo y no se interpreta." }
     ]
+  },
+  {
+    id: "patrimonios_separados_notebooklm_cuentas",
+    name: "patrimonios.notebooklm_cuentas",
+    viewName: "patrimonios_separados_notebooklm_cuentas",
+    sector: "patrimonios_separados",
+    sectorLabel: "Patrimonios Separados (CMF / Ley 18.045)",
+    norma: "Balance del patrimonio separado, PDF CMF",
+    corte: "2010-03 a 2026-03",
+    frescura: "46,515 filas del archivo subido",
+    modo: "NotebookLM",
+    ultimaActualizacion: "2026-09-26",
+    registros: "46,515 filas",
+    descripcion: "Balance impreso, cuenta por cuenta, extraído con NotebookLM. Montos en miles de pesos, como vienen en el PDF. Son 2,086 documentos y 789 códigos de patrimonio. El glosario del mismo libro dice 11,086 filas y 497 documentos: eso no coincide con la hoja. Ocho filas traen la categoría rota y se dejaron. monto_normalizado se publicó igual que en el archivo.",
+    origen: "PDF de la CMF leído con NotebookLM. Archivo en DATA_NUEVA.",
+    columnas: [
+      { name: "id_linea", type: "VARCHAR", role: "PK", significado: "Clave técnica documento_id más el orden de la fila. No viene en el Excel.", contable: "No aplica", interpretacion: "Solo sirve para no repetir filas." },
+      { name: "documento_id", type: "BIGINT", role: "FK", significado: "Número de documento del archivo.", contable: "No aplica", interpretacion: "Enlace con la hoja de vehículos cuando el PDF está en ambas." },
+      { name: "archivo", type: "VARCHAR", role: "Dimensión", significado: "Nombre del PDF fuente.", contable: "No aplica", interpretacion: "Permite volver al documento." },
+      { name: "entidad_rut", type: "VARCHAR", role: "Dimensión", significado: "RUT de la securitizadora, sin dígito verificador.", contable: "No aplica", interpretacion: "No es el mismo formato que el maestro anterior." },
+      { name: "entidad_nombre", type: "VARCHAR", role: "Dimensión", significado: "Nombre de la securitizadora, como viene en el archivo.", contable: "No aplica", interpretacion: "Gestora." },
+      { name: "patrimonio_codigo", type: "VARCHAR", role: "Dimensión", significado: "Código del patrimonio separado en el nombre del PDF.", contable: "No aplica", interpretacion: "No es el id_patrimonio de las tablas anteriores." },
+      { name: "periodo", type: "VARCHAR", role: "Dimensión", significado: "Periodo AAAAMM.", contable: "Corte", interpretacion: "Cierre del balance." },
+      { name: "categoria", type: "VARCHAR", role: "Dimensión", significado: "Rubro amplio del balance.", contable: "Clasificación", interpretacion: "Ocho filas no traen un rubro usable." },
+      { name: "asiento", type: "VARCHAR", role: "Dimensión", significado: "Nombre de la cuenta, copiado del balance.", contable: "Glosa", interpretacion: "No se renombró." },
+      { name: "monto", type: "DOUBLE", role: "Métrica", significado: "Monto leído del balance, en miles de pesos, con su signo.", contable: "M$", interpretacion: "Cifra impresa." },
+      { name: "categoria_fsb", type: "VARCHAR", role: "Dimensión", significado: "Cruces que el archivo trae hacia seis totales. La mayoría de las filas queda vacía.", contable: "No aplica", interpretacion: "No se completó lo que venía vacío." },
+      { name: "monto_normalizado", type: "DOUBLE", role: "Métrica", significado: "Columna del archivo. El glosario dice que el pasivo va en valor absoluto. No se rehízo.", contable: "M$", interpretacion: "Usar monto si importa el signo." }
+    ]
+  },
+  {
+    id: "patrimonios_separados_notebooklm_vehiculos",
+    name: "patrimonios.notebooklm_vehiculos",
+    viewName: "patrimonios_separados_notebooklm_vehiculos",
+    sector: "patrimonios_separados",
+    sectorLabel: "Patrimonios Separados (CMF / Ley 18.045)",
+    norma: "Seis totales y tres ratios del mismo libro",
+    corte: "2010-03 a 2026-03",
+    frescura: "2,067 PDF",
+    modo: "NotebookLM",
+    ultimaActualizacion: "2026-09-26",
+    registros: "2,067 filas",
+    descripcion: "Una fila por PDF, con seis totales y tres ratios. No se recalcularon. Contra la hoja de cuentas, 4 totales de activos no calzan, 10 pasivos de corto plazo no calzan y 66 carteras no calzan con la suma de sus componentes. Ocho PDF de esta hoja no están en las cuentas; 27 PDF de las cuentas no están aquí.",
+    origen: "PDF de la CMF leído con NotebookLM. Archivo en DATA_NUEVA.",
+    columnas: [
+      { name: "documento_id", type: "BIGINT", role: "PK", significado: "Número de documento del archivo.", contable: "No aplica", interpretacion: "Una fila por PDF." },
+      { name: "archivo", type: "VARCHAR", role: "Dimensión", significado: "Nombre del PDF fuente.", contable: "No aplica", interpretacion: "Llave hacia las cuentas." },
+      { name: "entidad_rut", type: "VARCHAR", role: "Dimensión", significado: "RUT de la securitizadora, sin dígito verificador.", contable: "No aplica", interpretacion: "Gestora." },
+      { name: "entidad_nombre", type: "VARCHAR", role: "Dimensión", significado: "Nombre de la securitizadora.", contable: "No aplica", interpretacion: "Gestora." },
+      { name: "patrimonio_codigo", type: "VARCHAR", role: "Dimensión", significado: "Código del patrimonio en el nombre del PDF.", contable: "No aplica", interpretacion: "Vehículo." },
+      { name: "periodo", type: "VARCHAR", role: "Dimensión", significado: "Periodo AAAAMM.", contable: "Corte", interpretacion: "Cierre." },
+      { name: "total_financial_assets", type: "DOUBLE", role: "Métrica", significado: "Total de activos, en miles de pesos, como viene en esta hoja.", contable: "M$", interpretacion: "No reemplaza la línea TOTAL ACTIVOS si difieren." },
+      { name: "loans", type: "DOUBLE", role: "Métrica", significado: "Cartera securitizada de esta hoja, en miles de pesos.", contable: "M$", interpretacion: "66 filas no suman los componentes de la hoja de cuentas." },
+      { name: "short_term_assets", type: "DOUBLE", role: "Métrica", significado: "Activos de corto plazo, en miles de pesos.", contable: "M$", interpretacion: "Total de la hoja, no una suma nueva." },
+      { name: "short_term_liabilities", type: "DOUBLE", role: "Métrica", significado: "Pasivos de corto plazo, en miles de pesos.", contable: "M$", interpretacion: "10 filas no calzan con la hoja de cuentas." },
+      { name: "long_term_liabilities", type: "DOUBLE", role: "Métrica", significado: "Pasivos de largo plazo, en miles de pesos.", contable: "M$", interpretacion: "Total de la hoja." },
+      { name: "equity", type: "DOUBLE", role: "Métrica", significado: "Excedente o déficit acumulado, en miles de pesos. Puede ser negativo.", contable: "M$", interpretacion: "El signo se dejó." },
+      { name: "ci2", type: "DOUBLE", role: "Métrica", significado: "Cartera / activos, como viene en el archivo.", contable: "Ratio", interpretacion: "No se recalculó." },
+      { name: "mt2", type: "DOUBLE", role: "Métrica", significado: "Pasivo corto / activo corto, como viene en el archivo.", contable: "Ratio", interpretacion: "No se recalculó." },
+      { name: "l5", type: "DOUBLE", role: "Métrica", significado: "Apalancamiento, como viene en el archivo.", contable: "Ratio", interpretacion: "No se recalculó." }
+    ]
+  },
+  {
+    id: "patrimonios_separados_notebooklm_periodos",
+    name: "patrimonios.notebooklm_periodos",
+    viewName: "patrimonios_separados_notebooklm_periodos",
+    sector: "patrimonios_separados",
+    sectorLabel: "Patrimonios Separados (CMF / Ley 18.045)",
+    norma: "Suma por periodo del mismo libro",
+    corte: "2010-03 a 2026-03",
+    frescura: "61 periodos",
+    modo: "NotebookLM",
+    ultimaActualizacion: "2026-09-26",
+    registros: "61 filas",
+    descripcion: "Una fila por periodo, con la suma nacional y los percentiles que trae el archivo. No se rehicieron. El número de patrimonios de cada fila es el del archivo, no un censo.",
+    origen: "PDF de la CMF leído con NotebookLM. Archivo en DATA_NUEVA.",
+    columnas: [
+      { name: "periodo", type: "VARCHAR", role: "PK", significado: "Periodo AAAAMM.", contable: "Corte", interpretacion: "Una fila por cierre." },
+      { name: "n_patrimonios", type: "BIGINT", role: "Métrica", significado: "Cuántos patrimonios sumó el archivo en ese periodo.", contable: "Conteo", interpretacion: "No es el universo CMF." },
+      { name: "total_financial_assets", type: "DOUBLE", role: "Métrica", significado: "Suma de activos, en miles de pesos.", contable: "M$", interpretacion: "Total del archivo." },
+      { name: "loans", type: "DOUBLE", role: "Métrica", significado: "Suma de cartera, en miles de pesos.", contable: "M$", interpretacion: "Total del archivo." },
+      { name: "equity", type: "DOUBLE", role: "Métrica", significado: "Suma del excedente o déficit, en miles de pesos.", contable: "M$", interpretacion: "Puede ser negativa." },
+      { name: "ci2_agregado", type: "DOUBLE", role: "Métrica", significado: "Ratio agregado del archivo.", contable: "Ratio", interpretacion: "No se recalculó." },
+      { name: "mt2_agregado", type: "DOUBLE", role: "Métrica", significado: "Ratio agregado del archivo.", contable: "Ratio", interpretacion: "No se recalculó." },
+      { name: "l5_agregado", type: "DOUBLE", role: "Métrica", significado: "Ratio agregado del archivo.", contable: "Ratio", interpretacion: "No se recalculó." }
+    ]
   }
 ];
 

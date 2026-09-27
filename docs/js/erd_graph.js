@@ -1256,6 +1256,63 @@ const ERD_TABLES = [
     ]
   },
 {
+    id: "patrimonios_separados_notebooklm_cuentas",
+    name: "patrimonios.notebooklm_cuentas",
+    sector: "patrimonios_separados",
+    color: "#0F766E",
+    x: 5360,
+    y: 200,
+    w: 270,
+    h: 220,
+    rows: "46,515 filas",
+    file: "outputs/securitizadoras/patrimonios_separados_notebooklm_cuentas.parquet",
+    cols: [
+      { name: "id_linea", pk: true, type: "VARCHAR" },
+      { name: "archivo", fk: true, type: "VARCHAR" },
+      { name: "patrimonio_codigo", type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "asiento", type: "VARCHAR" },
+      { name: "monto", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "patrimonios_separados_notebooklm_vehiculos",
+    name: "patrimonios.notebooklm_vehiculos",
+    sector: "patrimonios_separados",
+    color: "#0F766E",
+    x: 5660,
+    y: 200,
+    w: 270,
+    h: 200,
+    rows: "2,067 PDF",
+    file: "outputs/securitizadoras/patrimonios_separados_notebooklm_vehiculos.parquet",
+    cols: [
+      { name: "documento_id", pk: true, type: "BIGINT" },
+      { name: "archivo", type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "total_financial_assets", type: "DOUBLE" },
+      { name: "loans", type: "DOUBLE" },
+      { name: "ci2", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "patrimonios_separados_notebooklm_periodos",
+    name: "patrimonios.notebooklm_periodos",
+    sector: "patrimonios_separados",
+    color: "#0F766E",
+    x: 5360,
+    y: 480,
+    w: 260,
+    h: 160,
+    rows: "61 periodos",
+    file: "outputs/securitizadoras/patrimonios_separados_notebooklm_periodos.parquet",
+    cols: [
+      { name: "periodo", pk: true, type: "VARCHAR" },
+      { name: "n_patrimonios", type: "BIGINT" },
+      { name: "total_financial_assets", type: "DOUBLE" }
+    ]
+  },
+  {
     id: "patrimonios_separados_maestro",
     name: "patrimonios.emisiones_lineas",
     sector: "patrimonios_separados",
@@ -1773,6 +1830,7 @@ const ERD_LINKS = [
   { from: "agf_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "agf_maestro", to: "fi_maestro", key: "rut_administradora (gestión fiduciaria LUF)" },
   { from: "securitizadoras_maestro", to: "securitizadoras_balance_resumen", key: "rut" },
+  { from: "patrimonios_separados_notebooklm_vehiculos", to: "patrimonios_separados_notebooklm_cuentas", key: "archivo" },
   { from: "securitizadoras_maestro", to: "patrimonios_separados_maestro", key: "rut_administradora (administración fiduciaria)" },
   { from: "securitizadoras_maestro", to: "patrimonios_separados_balance_resumen", key: "rut_administradora" },
     { from: "patrimonios_separados_maestro", to: "patrimonios_separados_balance_lineas", key: "id_patrimonio (balance FECU)" },
