@@ -59,16 +59,13 @@ class Rows(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
         self.rows = []
-        self.depth = 0
+        self.stack = []
         self.cell = None
-        self.cells = []
 
     def handle_starttag(self, tag, attrs):
         if tag == 'tr':
-            self.depth += 1
-            if self.depth == 1:
-                self.cells = []
-        elif tag in ('td', 'th') and self.depth == 1:
+            self.stack.append([])
+        elif tag in ('td', 'th') and self.stack:
             self.cell = []
 
     def handle_data(self, data):
@@ -76,13 +73,13 @@ class Rows(HTMLParser):
             self.cell.append(data)
 
     def handle_endtag(self, tag):
-        if tag in ('td', 'th') and self.cell is not None:
-            self.cells.append(' '.join(' '.join(self.cell).split()))
+        if tag in ('td', 'th') and self.cell is not None and self.stack:
+            self.stack[-1].append(' '.join(' '.join(self.cell).split()))
             self.cell = None
-        elif tag == 'tr':
-            if self.depth == 1 and self.cells:
-                self.rows.append(self.cells)
-            self.depth = max(0, self.depth - 1)
+        elif tag == 'tr' and self.stack:
+            row = self.stack.pop()
+            if row:
+                self.rows.append(row)
 
 
 def html_amounts(data, sample):
@@ -103,21 +100,14 @@ def html_amounts(data, sample):
     parser = Rows()
     parser.feed(page)
     # Aislar el estado de situación: la etiqueta Efectivo también aparece en flujos.
-    active = False
     found = {v: [] for v in FIELDS.values()}
     for cells in parser.rows:
-        text = ' '.join(cells)
-        if '[210000]' in text or 'Estado de situación financiera, corriente/no corriente' in text:
-            active = True
-        if active and ('[310000]' in text or 'Estado del resultado' in text):
-            break
-        if not active:
+        if not cells or cells[0].strip() not in found:
             continue
-        if cells and cells[0].strip() in found:
-            vals = [c for c in cells[1:] if re.fullmatch(r'-?\d[\d.]*', c.strip())]
-            if not vals:
-                raise ValueError('No hay importe actual para ' + cells[0])
-            found[cells[0]].append(int(vals[0].replace('.', '')))
+        vals = [c for c in cells[1:] if re.fullmatch(r'-?\d[\d.]*', c.strip())]
+        if len(vals) < 2:
+            continue  # no es la tabla comparativa de situación financiera
+        found[cells[0]].append(int(vals[0].replace('.', '')))
     if any(len(v) != 1 for v in found.values()):
         raise ValueError(f'Etiquetas HTML ausentes/duplicadas: { {k: len(v) for k, v in found.items()} }')
     return {col: found[label][0] for col, label in FIELDS.items()}
