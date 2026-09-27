@@ -46,13 +46,14 @@ CMF pero sin probar la descarga; **No aplica** = no existe ese formato en esa fu
 
 | Industria | Fuente / módulo | Formato confirmado | Estado |
 | :--- | :--- | :--- | :--- |
-| Corredoras de bolsa (`COBOL`) | `pestania=3` Información Financiera | **XML IFRS** (`ifrs_xml_verarchivo.php?archivo=IVEF…`) | Verificado y en uso |
-| Fondos mutuos (`RGFMU`) | `pestania=3` con `tipo_norma=IFRS` | **XML IFRS** (`archivo=FMEF…`) | Verificado (hoy se lee HTML/PDF) |
+| Corredoras de bolsa (`COBOL`) | `pestania=3` Información Financiera | **XML IFRS** (`ifrs_xml_verarchivo.php?archivo=IVEF…`, ruta `/web/ifrs_xml/ivifr/xml/`) | Verificado y en uso |
+| Fondos mutuos (`RGFMU`) | `pestania=3` con `tipo_norma=IFRS` | **XML IFRS** (`archivo=FMEF…`, ruta `/web/ifrs_xml/fmifr/xml/`) | Verificado (hoy se lee HTML/PDF) |
+| Fondos de inversión rescatables (`FIRES`) | `pestania=29` Información Financiera (IFRS) | **XML IFRS** (`archivo=FIEF…`, ruta `/web/ifrs_xml/fiifr/xml/`) | Verificado (hoy se lee PDF de `pestania=62`) |
 | Emisores de valores (`RVEMI`, incluye retail financiero y CCAF inscritas) | `pestania=3` con `tipo=I|C&tipo_norma=IFRS` | **XBRL + PDF** ("Estados financieros (XBRL)") | Verificado |
 | AGF (`RGAGF`) | `pestania=3` con `tipo_norma=IFRS` | **XBRL + PDF**; CMF advierte "contenido de los archivos XBRL está en revisión" | Verificado |
 | Cajas de compensación (CCAF) | Listado CMF de envíos IFRS (`novedades_envio_sa_ifrs.php`) | **XBRL** | Verificado y en uso |
 | Compañías de seguros (vida y generales) | Módulos CMF "IFRS Mercado de Seguros" / "XBRL Mercado de Seguros" (taxonomías CL-HS, CL-BS) | **XBRL + PDF** | Referenciado (falta probar la descarga por entidad) |
-| Fondos de inversión (`FINRE`, `FIRES`) | `pestania=29` Información Financiera (y `59` Cartera, `62` Publicación EEFF) | Módulo IFRS existe; formato XML por confirmar con un fondo de período antiguo | Parcial (hoy se lee PDF de `pestania=62`) |
+| Fondos de inversión no rescatables (`FINRE`) | `pestania=29` Información Financiera | Mismo módulo IFRS; XML por confirmar con un fondo de período antiguo | Parcial (hoy se lee PDF de `pestania=62`) |
 | Cooperativas de ahorro y crédito | Portal CMF de estadísticas `626` (serie mensual) | Planilla/serie, no IFRS XML identificado | No aplica por ahora |
 | Bancos | Módulo bancos: PDF de EEFF + reportes mensuales/ZIP (no IFRS XML) | PDF/ZIP | No aplica |
 | Sistemas de pago / FinTech | Ficha de identificación CMF | Sin módulo de EEFF | No aplica |
@@ -63,12 +64,51 @@ Taxonomías XBRL vigentes publicadas por CMF: `CL-CI` (emisores de valores), `CL
 `CL-HS` (holding seguros), `CL-CC` (cajas de compensación), `CL-EI` (entidades informantes),
 `CL-BS` (holding bancos y seguros).
 
-## 4. Prioridad sugerida de incorporación
+### 3.1 Esquema del XML de fondos mutuos (`FMEF`, verificado)
 
-1. **Fondos mutuos**: cambiar la lectura de HTML/PDF por el XML `FMEF` ya verificado.
-2. **AGF**: incorporar XBRL (con cotejo contra el PDF, por la advertencia de CMF).
-3. **Fondos de inversión**: probar si `pestania=29` entrega XML para las series anuales.
-4. **Seguros**: probar descarga XBRL por entidad y comparar con los PDF actuales.
+```xml
+<IFRS>
+  <Identificacion>
+    <RUTFondoInforma>8490</RUTFondoInforma><DVFondoInforma>5</DVFondoInforma>
+    <NombreEntidadInforma>Fondo Mutuo Cruz del Sur Selectivo</NombreEntidadInforma>
+    <RUTAdministradora>96639280</RUTAdministradora>
+  </Identificacion>
+  <DatosPeriodo><MonedaPresentacionEstadosFinancieros>$$</MonedaPresentacionEstadosFinancieros>
+    <PeriodoPresentacionEstadosFinancieros><Mes>12</Mes><Anio>2014</Anio></PeriodoPresentacionEstadosFinancieros>
+    <NombreAuditoresExternos>Deloitte</NombreAuditoresExternos>
+    <EstadoFlujoEfectivoMetodoDirecto>S</EstadoFlujoEfectivoMetodoDirecto>
+  </DatosPeriodo>
+  <Contextos><PeriodoActual>…</PeriodoActual><PeriodoAnterior>…</PeriodoAnterior></Contextos>
+  <Cuenta CodigoCuenta="TotalActivo" Context="PeriodoActual" Nota="…">2957448</Cuenta>
+</IFRS>
+```
+
+Ventajas frente a la ruta actual (HTML + PDF de notas): cuentas con código estable, nota asociada
+por cuenta, período actual y anterior en el mismo archivo, moneda de presentación declarada,
+auditores externos y contador de notas informadas. Mismo patrón de lectura que ya usa Corredoras.
+
+## 4. Sonda automática (`scripts/probe_xml_sources.py`)
+
+Para no depender de revisar esto a mano, el repositorio incluye una sonda de solo lectura:
+
+* `python scripts/probe_xml_sources.py` recorre las industrias, abre la ficha CMF de cada muestra,
+  detecta el enlace XML/XBRL, descarga el archivo cuando existe y valida: raíz del XML, número de
+  cuentas, presencia de `TotalActivos`/`TotalActivo` y la unidad declarada ("miles de Pesos"/"miles de Dolar").
+* Salida: `.local-data/xml_probe/xml_sources_<fecha>.{json,md}` (carpeta ignorada por git). No escribe
+  Parquet del sitio, no publica y no hace commit.
+* `--fail-on-missing` sirve para CI cuando queramos alertar si una fuente estructurada desaparece.
+* Workflow `.github/workflows/probe_xml_sources.yml`: corre a diario (y a mano con `workflow_dispatch`),
+  sube el informe como artifact y deja el resumen en el log. No necesita credenciales.
+
+Nota de este entorno: la sonda no pudo alcanzar `www.cmfchile.cl` desde el sandbox (TLS cerrado por el
+proxy local); sus resultados quedan como `error_ficha` localmente y se obtienen reales al correr en Actions.
+
+## 5. Prioridad sugerida de incorporación
+
+1. **Fondos mutuos**: cambiar la lectura de HTML/PDF por el XML `FMEF` ya verificado (mayor volumen y menos riesgo).
+2. **Fondos de inversión**: usar el XML `FIEF` de `pestania=29` en lugar del PDF de `pestania=62`.
+3. **AGF**: incorporar XBRL (con cotejo contra el PDF, por la advertencia de CMF).
+4. **Seguros**: identificar `tipoentidad` de la ficha y probar el XBRL de los módulos CL-HS/CL-BS.
 5. **Cooperativas**: confirmar si existe envío IFRS/XBRL (como CCAF) antes de reemplazar la serie.
 
 Ninguna de estas incorporaciones publica datos hasta pasar el mismo cotejo de muestra aplicado en Corredoras.
