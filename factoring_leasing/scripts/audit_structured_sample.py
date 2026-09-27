@@ -46,6 +46,15 @@ def urls(sample):
     return ficha, archivo
 
 
+class VisibleText(HTMLParser):
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.parts = []
+
+    def handle_data(self, data):
+        self.parts.append(data)
+
+
 class Rows(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
@@ -80,13 +89,16 @@ def html_amounts(data, sample):
     page = data.decode('utf-8', errors='replace')
     if '\ufffd' in page:
         page = data.decode('latin-1')
-    if sample['nombre'] not in page.upper() or not re.search(r'RUT\s*:?\s*' + sample['rut'] + r'\s*-\s*' + sample['dv'], page, re.I):
+    visible = VisibleText()
+    visible.feed(page)
+    text = ' '.join(' '.join(visible.parts).split())
+    if sample['nombre'] not in text.upper() or not re.search(r'RUT\s*:?\s*' + sample['rut'] + r'\s*-\s*' + sample['dv'], text, re.I):
         raise ValueError('Identidad (nombre/RUT/DV) no coincide con ficha CMF')
-    if not re.search(r'Tipo de Balance\s*:?\s*<[^>]*>\s*INDIVIDUAL', page, re.I):
+    if not re.search(r'Tipo de Balance\s*:?\s*INDIVIDUAL', text, re.I):
         raise ValueError('Ficha no declara balance individual')
-    if not re.search(r'CLP\s*-\s*Peso chileno\s*\(Miles\)', page, re.I):
+    if not re.search(r'CLP\s*-\s*Peso chileno\s*\(Miles\)', text, re.I):
         raise ValueError('Ficha sin unidad CLP (miles)')
-    if f'{sample["periodo"][:4]}-{sample["periodo"][4:]}-' not in page:
+    if f'{sample["periodo"][:4]}-{sample["periodo"][4:]}-' not in text:
         raise ValueError('Cierre no encontrado en visualización de ficha')
     parser = Rows()
     parser.feed(page)
