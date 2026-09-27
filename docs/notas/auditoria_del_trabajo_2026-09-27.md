@@ -71,3 +71,43 @@ encontrados fueron de cálculo de fechas, de semántica de éxito en CI y de una
 exagerada; los tres quedaron corregidos y con prueba. Lo que **no** puedo afirmar todavía es que la
 extracción masiva haya producido datos: eso sigue pendiente de revisar los artifacts en la interfaz
 de Actions y de cotejar una muestra XML contra la ficha CMF, como se hizo en Corredoras.
+
+## 5. Segunda revisión tras observar los resúmenes reales de Actions
+
+La corrida `36329495131` produjo (cuatro shards, combinaciones evaluadas esa corrida):
+46 `ok_xml` Corredoras, 335 FFMM y 335 FI; 0 XBRL AGF/RVEMI.
+La siguiente corrida `36330191580` registró 46/289/348 respectivamente;
+**son muestras de diferentes posiciones del cursor**, no una comparación A/B de calidad.
+
+Al continuar la revisión se corrigieron otras afirmaciones y controles:
+
+* La ficha CMF de AGF Security `96639280` ofrece XBRL para **2026-03 y 2026-06**;
+  por tanto mi generalización de AGF/retail como exclusivamente anual era errónea.
+  Se vuelven a consultar cortes trimestrales para ambos; para FFMM sí se confirma
+  periodicidad anual explícita en la ficha del fondo RUN 8490.
+* Se quitó la lógica que borraba **cualquier** carácter no numérico de un monto al reparar
+  XML. Un `2&957448` no es prueba de que el monto original sea `2957448`:
+  ahora esa cuenta se rechaza. Reparar codificación o un `&` en el **nombre** queda marcado
+  `revisar_xml`, y no cuenta como `ok_xml`. Igual para DV del archivo incorrecto.
+* Los enlaces `safec_ifrs_verarchivo.php?auth=...&send=...` pueden responder HTML;
+  eso se informa como `xbrl_descarga_html`, **no** se declara XBRL extraído.
+  Los tokens efímeros se quitan de la URL escrita al artifact. Cookies/referer no
+  resolvieron esta descarga en la corrida anterior; sigue pendiente hallar una vía oficial.
+* La cache ledger se acota a las últimas 500 filas por sector/shard; el cursor queda aparte.
+  Esto reduce el crecimiento de los artifacts/cachés; no constituye un histórico completo.
+
+Cotejo puntual contra fichas CMF: fondo mutuo RUN 8490, diciembre 2014,
+activos 2.957.448 = pasivos 5.947 + activo neto 2.951.501, y utilidad tras
+impuestos 3.470 (miles de pesos). FIRES RUN 7064, diciembre 2021: activos
+24.887, patrimonio 24.826, pasivos corrientes 61, resultado -122; la ficha
+indica **miles de dólares**, y `TotalPasivo=24.887` XML incluye patrimonio.
+Estos ejemplos no demuestran cobertura universal ni certifican cada JSONL.
+
+Fuente de cotejo:
+* [FFMM CMF RUN 8490, 2014-12](https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=8490&tipoentidad=RGFMU&vig=VI&control=svs&pestania=3&mm=12&aa=2014&tipo=I&tipo_norma=IFRS).
+* [FIRES CMF RUN 7064, 2021-12](https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=7064&tipoentidad=FIRES&vig=VI&control=svs&pestania=29&mm=12&aa=2021&tipo=I&tipo_norma=IFRS).
+* [AGF Security CMF 2026-06](https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=96639280&tipoentidad=RGAGF&vig=VI&control=svs&pestania=3&mm=06&aa=2026&tipo=I&tipo_norma=IFRS).
+
+**Persistencia del schedule:** `schedule` solo se ejecuta desde la rama por defecto de
+GitHub; estos workflows aún están en el PR y no se han fusionado a `main`.
+Los `push` de esta rama sí los prueban; no afirmar automatización diaria activa todavía.
