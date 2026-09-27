@@ -28,7 +28,7 @@ LABELS = {
         'total_activo': 'total activo',
         'total_pasivo_reportado': 'total pasivo (excluido el activo neto',
         'patrimonio_o_activo_neto': 'activo neto atribuible a los participes',
-        'resultado_ejercicio': 'utilidad/(perdida) de la operacion despues de impuesto',
+        'resultado_ejercicio': 'de la operacion despues de impuesto',
     },
     'fi': {
         'total_activo': 'total activo',
@@ -81,8 +81,12 @@ def html_values(page, sector):
             # Etiqueta en celda propia; descartar subtotales que solo contienen el texto.
             def matches(cell):
                 value = plain(cell)
-                if sector == 'fi' and field == 'total_pasivo_reportado':
-                    return value == label or value.startswith(label + ' (')
+                if field == 'resultado_ejercicio' and sector == 'ffmm':
+                    return label in value and ('utilidad' in value or 'perdida' in value)
+                # No confundir Total Activo Corriente/No Corriente ni
+                # Total Pasivo Corriente con el total del balance.
+                if field in ('total_activo', 'total_pasivo_reportado'):
+                    return value == label or bool(re.fullmatch(re.escape(label) + r' \([^)]*\)', value))
                 return value.startswith(label)
             if not any(matches(cell) for cell in cells): continue
             # La ficha presenta Nota, período actual y período anterior. Los dos
@@ -94,7 +98,7 @@ def html_values(page, sector):
             if len(nums) >= 2:
                 candidates.append(nums[-2])
         if not candidates:
-            raise ValueError(f'Fila HTML sin dos períodos: {sector}.{field} ({label})')
+            raise ValueError(f'Fila HTML sin dos períodos: {sector}.{field} ({label}); candidatas={[[c[:65] for c in row] for row in parser.rows if any(label in plain(c) for c in row)][:4]}')
         if len(set(candidates)) != 1:
             raise ValueError(f'Fila HTML ambigua: {sector}.{field}: {candidates}')
         found[field] = candidates[0]
