@@ -1,0 +1,41 @@
+# Barrido de una sola vez para auditoría histórica; NO publicar datos.
+name: Barrido histórico REPO bancario (sin publicación)
+
+on:
+  push:
+    branches: [arena/01a0e08b-monitor-financiero-chile]
+    paths:
+      - '.github/workflows/bancos_repo_historico.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bancos-repo-historico
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Barrer solo los períodos legacy (sin modificar datos publicados)
+        run: |
+          mkdir -p .local-data/review/bancos/historico
+          python -m bancos.scripts.backfill_repo_audit \
+            > .local-data/review/bancos/historico/ejecucion.txt 2>&1 || {
+              tail -n 100 .local-data/review/bancos/historico/ejecucion.txt
+              echo "::error::$(tail -n 1 .local-data/review/bancos/historico/ejecucion.txt)"
+              exit 1
+            }
+          tail -n 100 .local-data/review/bancos/historico/ejecucion.txt
+      - name: Conservar evidencia histórica por año para revisión
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cotejo-repo-historico-no-publicado
+          path: .local-data/review/bancos/historico/
+          retention-days: 30
+          if-no-files-found: warn
