@@ -27,7 +27,7 @@ concurrency:
 
 jobs:
   rebuild_review:
-    if: ${{ github.event_name == 'workflow_dispatch' && !inputs.period }}
+    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !inputs.period) }}
     runs-on: ubuntu-latest
     timeout-minutes: 50
     steps:
@@ -42,6 +42,9 @@ jobs:
               exit 1
             }
           tail -n 30 .local-data/review/bancos/reconstruccion_cmf/ejecucion.txt
+      - name: Transferir revisión compacta para análisis local (no publicación)
+        if: ${{ github.event_name == 'push' && hashFiles('bancos/scripts/transfer_repo_review.py') != '' }}
+        run: python -m bancos.scripts.transfer_repo_review
       - name: Mostrar totales y meses con diferencias sin depender del artefacto
         if: always()
         run: |
