@@ -614,6 +614,22 @@ const EXPLORER_TREE = [
               { id: "factoring_leasing_maestro", name: "factoring_leasing.lista_entidades", rows: "28 entidades", file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet" }
             ]
           }
+          ,
+          {
+            id: "fl_eeff_muestra_cmf_folder",
+            type: "circular",
+            label: "Estados financieros · Muestra cotejada CMF",
+            badge: "2 entidades · 2022",
+            badgeType: "data",
+            status: "active",
+            sector: "factoring_leasing",
+            chips: [
+              { label: "Balance y efectivo cotejados (miles de pesos)", query: "SELECT segmento, rut, nombre_en_archivo_y_ficha, periodo, total_activos_miles_clp, total_pasivos_miles_clp, patrimonio_miles_clp, efectivo_miles_clp, fuente_ficha_cmf FROM factoring_leasing_eeff_muestra_cmf ORDER BY segmento;" }
+            ],
+            tables: [
+              { id: "factoring_leasing_eeff_muestra_cmf", name: "factoring_leasing.eeff_muestra_cmf", rows: "2 filas cotejadas · no es el sector", file: "outputs/factoring_leasing/factoring_leasing_eeff_muestra_cmf.parquet" }
+            ]
+          }
         ]
       }
     ]
