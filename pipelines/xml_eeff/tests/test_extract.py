@@ -119,16 +119,40 @@ class ZipTest(unittest.TestCase):
         self.assertEqual((raw, nombre), (b'<xbrl/>', None))
 
 
+class DuplicadosYDvTest(unittest.TestCase):
+    def test_serie_repetida_no_rompe(self):
+        raw = xml().replace(b'</IFRS>', b'<Cuenta CodigoCuenta="ActivoNetoAtribuibleALosParticipesAl01DeEneroPorSerie" Context="PeriodoActual">10</Cuenta>'
+                                        b'<Cuenta CodigoCuenta="ActivoNetoAtribuibleALosParticipesAl01DeEneroPorSerie" Context="PeriodoActual">20</Cuenta></IFRS>')
+        fila = x.parse_ifrs(raw, ITEM, '2014-12', 'url')
+        self.assertEqual(fila['codigos_repetidos_por_serie'], 1)
+
+    def test_total_repetido_con_valores_distintos_falla(self):
+        raw = xml().replace(b'</IFRS>', b'<Cuenta CodigoCuenta="TotalActivo" Context="PeriodoActual">1</Cuenta></IFRS>')
+        with self.assertRaisesRegex(ValueError, 'Total exigido'): x.parse_ifrs(raw, ITEM, '2014-12', 'url')
+
+    def test_dv_distinto_queda_como_marca(self):
+        raw = xml().replace(b'<DVFondoInforma>5</DVFondoInforma>', b'<DVFondoInforma>9</DVFondoInforma>')
+        fila = x.parse_ifrs(raw, ITEM, '2014-12', 'url')
+        self.assertFalse(fila['dv_xml_coincide'])
+
+    def test_html_en_lugar_de_xml_se_diagnostica(self):
+        with patch.object(x, 'read_url', lambda url, limit=0, referer=None:
+                          b'<html><body>error</body></html>' if 'ifrs_xml' in url else
+                          b'<a href="https://c/inc/inf_financiera/ifrs_xml/ifrs_xml_verarchivo.php?archivo=FMEF1_8490.xml">x</a>'):
+            with self.assertRaisesRegex(ValueError, 'contenido=html'):
+                x.process(ITEM, '2014-12')
+
+
 class FlujoTest(unittest.TestCase):
     def test_sin_enlace_es_sin_fuente(self):
-        with patch.object(x, 'read_url', lambda url, limit=0: b'<html>sin enlaces</html>'):
+        with patch.object(x, 'read_url', lambda url, limit=0, referer=None: b'<html>sin enlaces</html>'):
             self.assertEqual(x.process(ITEM, '2014-12')[0], 'sin_fuente')
 
     def test_xbrl_no_inventa_cifras(self):
         raw = b'<html><a href="https://x/safec_ifrs_verarchivo.php?auth=1">Estados financieros (XBRL)</a></html>'
         instancia = b'<xbrl xmlns="http://www.xbrl.org/2003/instance"><context id="c"/><unit id="u"/></xbrl>'
         # La ficha se sirve como HTML; el enlace XBRL (safec_ifrs) devuelve la instancia.
-        with patch.object(x, 'read_url', lambda url, limit=0: instancia if 'safec_ifrs' in url else raw):
+        with patch.object(x, 'read_url', lambda url, limit=0, referer=None: instancia if 'safec_ifrs' in url else raw):
             estado, fila = x.process({**ITEM, 'sector': 'agf', 'tipo': 'RGAGF', 'marker': 'XBRL'}, '2014-12')
         self.assertEqual(estado, 'pendiente_taxonomia')
         self.assertIsNone(fila['total_activo'])
