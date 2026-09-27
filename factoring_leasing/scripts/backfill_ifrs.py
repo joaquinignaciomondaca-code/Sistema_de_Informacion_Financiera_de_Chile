@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Serie completa de cuentas IFRS CMF para los 28 RUT del catálogo FL.
 
+La primera extracción completa del índice quedó registrada en Actions 36339078376;
+los Parquets por período son recuperables desde su artifact de workflow.
+
 Un pedido por trimestre disponible del índice CMF (2009-03..último cierre
 publicado); cada respuesta contiene muchas sociedades. Retiene TODAS las
 cuentas ESF*/ER* y ambos tipos de balance (I/C) en dos tablas detalladas,
