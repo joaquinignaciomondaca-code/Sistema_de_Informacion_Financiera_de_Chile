@@ -40,15 +40,20 @@ jobs:
             bancos-repo-audit-
       - name: Cotejar balances B1/B2 de todos los bancos contra referencia REPO
         env:
-          PERIOD: ${{ github.event_name == 'push' && '2021-12' || inputs.period }}
+          # La muestra de push cubre los dos planes contables (antes y desde 2022).
+          PERIOD: ${{ github.event_name == 'push' && '2021-12 2026-04' || inputs.period }}
         run: |
           mkdir -p .local-data/review/bancos
           if [ -n "$PERIOD" ]; then
-            python -m bancos.scripts.audit_repos_zip_cmf --period "$PERIOD" > .local-data/review/bancos/ejecucion.txt 2>&1 || {
-              cat .local-data/review/bancos/ejecucion.txt
-              echo "::error::$(tail -n 1 .local-data/review/bancos/ejecucion.txt)"
-              exit 1
-            }
+            for month in $PERIOD; do
+              python -m bancos.scripts.audit_repos_zip_cmf --period "$month" \
+                --report ".local-data/review/bancos/repo_zip_audit_$month.json" \
+                >> .local-data/review/bancos/ejecucion.txt 2>&1 || {
+                cat .local-data/review/bancos/ejecucion.txt
+                echo "::error::$(tail -n 1 .local-data/review/bancos/ejecucion.txt)"
+                exit 1
+              }
+            done
           else
             python -m bancos.scripts.audit_repos_zip_cmf > .local-data/review/bancos/ejecucion.txt 2>&1 || {
               cat .local-data/review/bancos/ejecucion.txt
