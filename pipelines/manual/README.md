@@ -1,6 +1,8 @@
 # Pipelines Manuales y Extracción Asistida (NotebookLM / LLM)
 
-El lector automático de PDF de factoring (`pipelines/eeff`) se retiró. Las notas que se quieran publicar entran por este flujo. Esta sesión no tiene el MCP de NotebookLM: el archivo se carga y se revisa fuera del repositorio, y acá solo entra el JSON ya revisado.
+El lector automático de PDF de factoring (`pipelines/eeff`) se retiró. Las notas que se quieran publicar entran por este flujo.
+
+El balance de patrimonios separados que llegó por el MCP de NotebookLM está en `DATA_NUEVA/`. No se reescriben los montos. La publicación al monitor es `python pipelines/manual/publicar_patrimonios_notebooklm.py`.
 
 Este directorio gestiona los flujos de extracción y normalización de información que **requieren intervención humana previa o procesamiento asistido por IA**, tales como el análisis de notas explicativas en memorias anuales y estados financieros en PDF.
 

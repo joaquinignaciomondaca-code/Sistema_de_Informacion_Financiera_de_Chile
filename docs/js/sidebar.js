@@ -939,12 +939,72 @@ const EXPLORER_TREE = [
     type: "group",
     label: "PATRIMONIOS SEPARADOS (CMF / Ley 18.045)",
     badges: [
-      { type: "entities", text: "573 con balance", title: "id_patrimonio distintos en el balance línea a línea. No es un censo de la CMF." },
-      { type: "data", text: "50,263 filas", title: "Suma de las 12 tablas publicadas. El maestro son 18 líneas de inscripción, no 18 vehículos." }
+      { type: "entities", text: "2,086 PDF", title: "Documentos del balance NotebookLM. Las 573 id del balance anterior son otra serie." },
+      { type: "data", text: "46,515 cuentas", title: "Hoja de cuentas del archivo subido. Las tablas anteriores siguen en el menú." }
     ],
     status: "active",
     open: true,
     children: [
+      {
+        id: "sector_ps_notebooklm",
+        type: "sector",
+        label: "Balance NotebookLM",
+        sector: "patrimonios_separados",
+        open: true,
+        children: [
+          {
+            id: "circ_ps_nl_cuentas",
+            type: "circular",
+            label: "Cuentas del balance",
+            badge: "46,515 filas",
+            badgeType: "data",
+            status: "active",
+            sector: "patrimonios_separados",
+            open: true,
+            chips: [
+              { label: "Total activos de marzo 2026", query: "SELECT entidad_nombre, patrimonio_codigo, asiento, monto FROM patrimonios_separados_notebooklm_cuentas WHERE asiento = 'TOTAL ACTIVOS' AND periodo = '202603' ORDER BY monto DESC;" },
+              { label: "Cuentas de un PDF, tal como vienen", query: "SELECT categoria, asiento, monto, monto_normalizado, categoria_fsb FROM patrimonios_separados_notebooklm_cuentas WHERE archivo = '201003_96765170_TRANSA_SECURITIZADORA_TRANSA_PATRIMONIO_SEPARADO_BTRA1.pdf' ORDER BY id_linea;" },
+              { label: "Filas con categoría rota", query: "SELECT archivo, periodo, categoria, asiento, monto FROM patrimonios_separados_notebooklm_cuentas WHERE categoria IS NULL OR (categoria NOT LIKE 'Activo%' AND categoria NOT LIKE 'Pasivo%' AND categoria NOT LIKE 'Patrimonio%' AND categoria NOT LIKE 'Total%');" }
+            ],
+            tables: [
+              { id: "patrimonios_separados_notebooklm_cuentas", name: "patrimonios.notebooklm_cuentas", rows: "46,515 filas", file: "outputs/securitizadoras/patrimonios_separados_notebooklm_cuentas.parquet" }
+            ]
+          },
+          {
+            id: "circ_ps_nl_vehiculos",
+            type: "circular",
+            label: "Totales y ratios por vehículo",
+            badge: "2,067 PDF",
+            badgeType: "data",
+            status: "active",
+            sector: "patrimonios_separados",
+            open: false,
+            chips: [
+              { label: "Ratios de marzo 2026, como vienen", query: "SELECT patrimonio_codigo, total_financial_assets, loans, equity, ci2, mt2, l5 FROM patrimonios_separados_notebooklm_vehiculos WHERE periodo = '202603' ORDER BY total_financial_assets DESC;" },
+              { label: "Total de activos que no calza con la hoja de cuentas", query: "SELECT v.archivo, v.total_financial_assets, c.monto AS total_en_cuentas FROM patrimonios_separados_notebooklm_vehiculos v LEFT JOIN patrimonios_separados_notebooklm_cuentas c ON v.archivo = c.archivo AND c.categoria_fsb = 'Total financial assets' WHERE v.total_financial_assets IS DISTINCT FROM c.monto;" }
+            ],
+            tables: [
+              { id: "patrimonios_separados_notebooklm_vehiculos", name: "patrimonios.notebooklm_vehiculos", rows: "2,067 filas", file: "outputs/securitizadoras/patrimonios_separados_notebooklm_vehiculos.parquet" }
+            ]
+          },
+          {
+            id: "circ_ps_nl_periodos",
+            type: "circular",
+            label: "Suma por periodo",
+            badge: "61 periodos",
+            badgeType: "data",
+            status: "active",
+            sector: "patrimonios_separados",
+            open: false,
+            chips: [
+              { label: "Totales nacionales del archivo", query: "SELECT periodo, n_patrimonios, total_financial_assets, loans, short_term_liabilities, equity FROM patrimonios_separados_notebooklm_periodos ORDER BY periodo DESC;" }
+            ],
+            tables: [
+              { id: "patrimonios_separados_notebooklm_periodos", name: "patrimonios.notebooklm_periodos", rows: "61 filas", file: "outputs/securitizadoras/patrimonios_separados_notebooklm_periodos.parquet" }
+            ]
+          }
+        ]
+      },
       {
         id: "sector_ps_catalogo",
         type: "sector",
