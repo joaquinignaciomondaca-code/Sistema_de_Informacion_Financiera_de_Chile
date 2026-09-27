@@ -25,7 +25,7 @@ CLAVES = {
     "patrimonios_separados_balance_resumen": ["id_patrimonio", "periodo"],
     "patrimonios_separados_eeff_lineas": ["id_patrimonio", "periodo"],
     "patrimonios_separados_notas_detalle": ["id_patrimonio", "periodo"],
-    "patrimonios_separados_cobertura": ["fuente_url", "periodo"],
+    "patrimonios_separados_cobertura": ["rut_administradora", "periodo", "etiqueta_web"],
     "securitizadoras_balance_resumen": ["rut", "periodo"],
 }
 MAESTROS = ["securitizadoras_maestro", "patrimonios_separados_maestro"]
