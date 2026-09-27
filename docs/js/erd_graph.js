@@ -1110,7 +1110,7 @@ const ERD_TABLES = [
     y: 200,
     w: 270,
     h: 220,
-    rows: "23,600 filas",
+    rows: "16,842 filas",
     file: "outputs/securitizadoras/patrimonios_separados_balance_lineas.parquet",
     cols: [
       { name: "id_linea", pk: true, type: "VARCHAR" },
@@ -1131,7 +1131,7 @@ const ERD_TABLES = [
     y: 200,
     w: 270,
     h: 220,
-    rows: "16,312 filas",
+    rows: "11,157 filas",
     file: "outputs/securitizadoras/patrimonios_separados_excedentes_lineas.parquet",
     cols: [
       { name: "id_linea", pk: true, type: "VARCHAR" },
@@ -1151,7 +1151,7 @@ const ERD_TABLES = [
     y: 800,
     w: 260,
     h: 200,
-    rows: "808 filas",
+    rows: "796 filas",
     file: "outputs/securitizadoras/patrimonios_separados_nota_cartera_detalle.parquet",
     cols: [
       { name: "id_linea", pk: true, type: "VARCHAR" },
@@ -1170,7 +1170,7 @@ const ERD_TABLES = [
     y: 800,
     w: 260,
     h: 200,
-    rows: "1,242 filas",
+    rows: "6,632 filas",
     file: "outputs/securitizadoras/patrimonios_separados_nota_morosidad_detalle.parquet",
     cols: [
       { name: "id_linea", pk: true, type: "VARCHAR" },
@@ -1190,7 +1190,7 @@ const ERD_TABLES = [
     y: 200,
     w: 260,
     h: 200,
-    rows: "498 filas",
+    rows: "8,001 filas",
     file: "outputs/securitizadoras/patrimonios_separados_nota_bonos_detalle.parquet",
     cols: [
       { name: "id_linea", pk: true, type: "VARCHAR" },
@@ -1209,7 +1209,7 @@ const ERD_TABLES = [
     y: 500,
     w: 260,
     h: 180,
-    rows: "325 filas",
+    rows: "2,153 filas",
     file: "outputs/securitizadoras/patrimonios_separados_nota_administracion_detalle.parquet",
     cols: [
       { name: "id_linea", pk: true, type: "VARCHAR" },
@@ -1256,6 +1256,26 @@ const ERD_TABLES = [
     ]
   },
 {
+    id: "patrimonios_separados_balance_pdf",
+    name: "patrimonios.balance_pdf",
+    sector: "patrimonios_separados",
+    color: "#0F766E",
+    x: 5360,
+    y: 200,
+    w: 270,
+    h: 220,
+    rows: "46,502 filas",
+    file: "outputs/securitizadoras/patrimonios_separados_balance_pdf.parquet",
+    cols: [
+      { name: "id_linea", pk: true, type: "VARCHAR" },
+      { name: "rut_administradora", fk: true, type: "VARCHAR" },
+      { name: "codigo_patrimonio", type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "nombre_cuenta", type: "VARCHAR" },
+      { name: "monto_m_clp", type: "DOUBLE" }
+    ]
+  },
+  {
     id: "patrimonios_separados_maestro",
     name: "patrimonios.emisiones_lineas",
     sector: "patrimonios_separados",
@@ -1309,7 +1329,7 @@ const ERD_TABLES = [
     y: 790,
     w: 260,
     h: 200,
-    rows: "74 pactos",
+    rows: "52 pactos",
     file: "outputs/securitizadoras/patrimonios_separados_repos_detalle.parquet",
     cols: [
       { name: "id_patrimonio", pk: true, fk: true, type: "VARCHAR" },
@@ -1774,6 +1794,7 @@ const ERD_LINKS = [
   { from: "agf_maestro", to: "fi_maestro", key: "rut_administradora (gestión fiduciaria LUF)" },
   { from: "securitizadoras_maestro", to: "securitizadoras_balance_resumen", key: "rut" },
   { from: "securitizadoras_maestro", to: "patrimonios_separados_maestro", key: "rut_administradora (administración fiduciaria)" },
+  { from: "securitizadoras_maestro", to: "patrimonios_separados_balance_pdf", key: "rut = rut_administradora (cuerpo, sin dígito verificador)" },
   { from: "securitizadoras_maestro", to: "patrimonios_separados_balance_resumen", key: "rut_administradora" },
     { from: "patrimonios_separados_maestro", to: "patrimonios_separados_balance_lineas", key: "id_patrimonio (balance FECU)" },
   { from: "patrimonios_separados_maestro", to: "patrimonios_separados_excedentes_lineas", key: "id_patrimonio (estado excedentes)" },

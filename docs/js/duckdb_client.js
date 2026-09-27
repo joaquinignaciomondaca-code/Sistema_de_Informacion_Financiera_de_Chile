@@ -45,7 +45,7 @@ class DuckDBClient {
       "corredoras_repos_colaterales_detalle": "outputs/corredoras_bolsa/corredoras_repos_colaterales_detalle.json",
       "securitizadoras_maestro": "outputs/securitizadoras/securitizadoras_maestro.json",
       "securitizadoras_balance_resumen": "outputs/securitizadoras/securitizadoras_balance_resumen.json",
-            "patrimonios_separados_balance_lineas": "outputs/securitizadoras/patrimonios_separados_balance_lineas.json",
+      "patrimonios_separados_balance_lineas": "outputs/securitizadoras/patrimonios_separados_balance_lineas.json",
       "patrimonios_separados_excedentes_lineas": "outputs/securitizadoras/patrimonios_separados_excedentes_lineas.json",
       "patrimonios_separados_nota_cartera_detalle": "outputs/securitizadoras/patrimonios_separados_nota_cartera_detalle.json",
       "patrimonios_separados_nota_morosidad_detalle": "outputs/securitizadoras/patrimonios_separados_nota_morosidad_detalle.json",
@@ -57,6 +57,7 @@ class DuckDBClient {
       "patrimonios_separados_balance_resumen": "outputs/securitizadoras/patrimonios_separados_balance_resumen.json",
       "patrimonios_separados_repos_detalle": "outputs/securitizadoras/patrimonios_separados_repos_detalle.json",
       "patrimonios_separados_cartera_morosidad_detalle": "outputs/securitizadoras/patrimonios_separados_cartera_morosidad_detalle.json",
+      "patrimonios_separados_balance_pdf": "outputs/securitizadoras/patrimonios_separados_balance_pdf.json",
       "cooperativas_maestro": "outputs/cooperativas/cooperativas_maestro.json",
       "cooperativas_balance_resumen": "outputs/cooperativas/cooperativas_balance_resumen.json",
       "cooperativas_nota_efectivo_detalle": "outputs/cooperativas/cooperativas_nota_efectivo_detalle.json",
@@ -223,6 +224,7 @@ class DuckDBClient {
        { name: "patrimonios_separados_balance_resumen", file: "outputs/securitizadoras/patrimonios_separados_balance_resumen.parquet" },
        { name: "patrimonios_separados_repos_detalle", file: "outputs/securitizadoras/patrimonios_separados_repos_detalle.parquet" },
        { name: "patrimonios_separados_cartera_morosidad_detalle", file: "outputs/securitizadoras/patrimonios_separados_cartera_morosidad_detalle.parquet" },
+       { name: "patrimonios_separados_balance_pdf", file: "outputs/securitizadoras/patrimonios_separados_balance_pdf.parquet" },
 
       // COOPERATIVAS DE AHORRO Y CRÉDITO (CMF)
       { name: "cooperativas_maestro", file: "outputs/cooperativas/cooperativas_maestro.parquet" },
