@@ -61,6 +61,14 @@ jobs:
             }
       - name: Transferir el tercio compacto verificable como anotaciones
         run: python -m bancos.scripts.transfer_repo_review
+  fx_sii_probe:
+    if: ${{ github.event_name == 'push' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Inspeccionar fuente SII de dólar observado 2008 y 2013 sin publicar
+        run: python -m bancos.scripts.probe_repo_fx_sii
   rebuild_review:
     if: ${{ github.event_name == 'workflow_dispatch' && !inputs.period }}
     runs-on: ubuntu-latest
