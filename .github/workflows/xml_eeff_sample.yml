@@ -1,0 +1,79 @@
+name: Cotejo muestra EEFF XML vs ficha CMF (sin publicación)
+
+on:
+  push:
+    branches: [arena/01a0e08b-monitor-financiero-chile]
+    paths:
+      - 'pipelines/xml_eeff/**'
+      - '.github/workflows/xml_eeff_sample.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  cotejo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependencias y pruebas
+        run: |
+          python -m pip install 'pandas>=2.2,<4' 'pyarrow>=17,<26'
+          python -m unittest discover -s pipelines/xml_eeff/tests -v
+      - name: Descargar dos XML y sus fichas HTML; cotejar cuatro cuentas y escribir Parquet de muestra
+        id: muestra
+        continue-on-error: true
+        run: python pipelines/xml_eeff/audit_sample.py
+      - name: Subir evidencia privada de revisión (NO publicarla en docs/outputs)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cotejo-xml-cmf-muestra
+          path: .local-data/xml_eeff_muestra/
+          retention-days: 30
+          if-no-files-found: error
+      - name: Resumen del cotejo accesible sin descargar el artifact
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR=$(gh pr list --head "$GITHUB_REF_NAME" --state open --json number --jq '.[0].number // empty')
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          report = Path('.local-data/xml_eeff_muestra/cotejo_muestra.json')
+          if not report.exists():
+              body = 'No se generó reporte de muestra; revisar logs del job.'
+          else:
+              data = json.loads(report.read_text())
+              body = 'APROBADA (muestra; no el universo)' if data['aprobada_muestra'] else 'NO APROBADA'
+              for r in data['registros']:
+                  body += (f"\n- {r['sector']} RUN {r['rut']} {r['periodo']}, moneda XML {r['moneda_original']}: "
+                           f"activos {r['total_activo']}, pasivo reportado {r['total_pasivo_reportado']}, "
+                           f"patrimonio/activo neto {r['patrimonio_o_activo_neto']}, "
+                           f"resultado {r['resultado_ejercicio']}; XML SHA256 `{r['sha256_xml']}`. "
+                           f"[Ficha CMF]({r['fuente_ficha']}).")
+              for e in data['errores']:
+                  body += f"\n- {e['sector']} RUN {e['rut']} {e['periodo']}: {e['error']}"
+          message = f"<!-- cotejo-eeff-xml-muestra -->\n**Muestra XML CMF vs HTML oficial**, commit `{os.environ['GITHUB_SHA'][:12]}`, [run]({os.environ['GITHUB_SERVER_URL']}/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}): {body}"
+          Path('/tmp/muestra-comment.md').write_text(message)
+          with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a') as f:
+              f.write(message)
+          PY
+          if [ -n "$PR" ]; then
+            ID=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR/comments" --paginate \
+              --jq '.[] | select(.body | contains("<!-- cotejo-eeff-xml-muestra -->")) | .id' | head -1)
+            if [ -n "$ID" ]; then
+              gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$ID" -F body=@/tmp/muestra-comment.md >/dev/null
+            else
+              gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR/comments" -F body=@/tmp/muestra-comment.md >/dev/null
+            fi
+          fi
+      - name: Fallar si no coincide la muestra
+        if: steps.muestra.outcome != 'success'
+        run: exit 1
