@@ -41,6 +41,7 @@ La interfaz opera como una aplicación web estática de alto rendimiento, ejecut
 - **Diccionario de Datos & Contabilidad Regulatoria (js/data_dictionary.js)**: Especificación campo por campo de roles (PK, FK, Dimensión, Métrica), definiciones funcionales y criterios contables (MtM, Costo Amortizado, Tasación).
 - **Mapa Relacional ERD (js/erd_graph.js)**: Diagrama interactivo de Entidad-Relación renderizado en Canvas con zoom, pan y enlaces de integridad referencial.
 - **Terminal SQL Interactiva (js/chat_terminal.js)**: Consola de ejecución de queries SQL ad-hoc sobre archivos Parquet locales.
+- **Selector de Paletas (js/theme_switcher.js + css/app.css)**: Seis paletas conmutables desde el encabezado. La predeterminada es `dark-ide` (estilo IDE/editor oscuro: fondos casi negros `#121316`, paneles `#18191E` y acento azul `#3B82F6`), junto a `swissborg`, `bloomberg`, `nord`, `midnight` e `informe` (modo claro). Los gráficos y el diagrama ERD leen los colores de la paleta activa mediante variables CSS (`--accent-rgb`, `--tint-rgb`, `--neutral-rgb`, `--panel-elevated`), por lo que no requieren ajustes por tema.
 
 ---
 

@@ -1,7 +1,8 @@
 /**
  * ChartRenderer (Motor de Visualización Gráfica Canvas 2D)
  * Monitor Financiero Chile
- * Renderiza gráficos de barras y líneas interactivos con paleta Swissborg.
+ * Renderiza gráficos de barras y líneas interactivos tomando los colores de la
+ * paleta activa (variables CSS), por lo que siguen el tema seleccionado.
  * Cero emojis y cero dependencias externas.
  */
 
@@ -10,12 +11,14 @@ class ChartRenderer {
     this.container = typeof canvasContainerId === "string" 
       ? document.getElementById(canvasContainerId) 
       : canvasContainerId;
+    // Colores: por defecto se leen de la paleta activa (variables CSS).
+    const theme = ChartRenderer.readThemeColors();
     this.options = Object.assign({
-      barColor: "#01C38D",
-      barHoverColor: "#00ADB5",
-      gridColor: "rgba(105, 110, 121, 0.25)",
-      textColor: "#A6B1C2",
-      titleColor: "#FFFFFF",
+      barColor: theme.barColor,
+      barHoverColor: theme.barHoverColor,
+      gridColor: theme.gridColor,
+      textColor: theme.textColor,
+      titleColor: theme.titleColor,
       fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
       monoFont: "JetBrains Mono, monospace"
     }, options);
@@ -31,6 +34,22 @@ class ChartRenderer {
     this.initEvents();
   }
 
+  /** Lee los colores del tema activo desde las variables CSS. */
+  static readThemeColors() {
+    const style = getComputedStyle(document.documentElement);
+    const read = (token, fallback) => style.getPropertyValue(token).trim() || fallback;
+    return {
+      barColor: read("--accent-mint", "#3B82F6"),
+      barHoverColor: read("--accent-mint-hover", "#60A5FA"),
+      gridColor: `rgba(${read("--neutral-rgb", "148, 155, 168")}, 0.25)`,
+      textColor: read("--text-secondary", "#9CA3AF"),
+      titleColor: read("--text-bright", "#FFFFFF"),
+      tooltipBg: read("--bg-primary", "#121316"),
+      accentTint: `rgba(${read("--accent-rgb", "59, 130, 246")}, 0.45)`,
+      shadowTint: `rgba(${read("--accent-rgb", "59, 130, 246")}, 0.6)`
+    };
+  }
+
   initEvents() {
     this.canvas.addEventListener("mousemove", (e) => this.onMouseMove(e));
     this.canvas.addEventListener("mouseleave", () => {
@@ -38,6 +57,16 @@ class ChartRenderer {
       this.render();
     });
     window.addEventListener("resize", () => this.resize());
+    window.addEventListener("mfc:themechange", () => {
+      // Al cambiar la paleta se releen los colores del tema activo
+      const theme = ChartRenderer.readThemeColors();
+      this.options.barColor = theme.barColor;
+      this.options.barHoverColor = theme.barHoverColor;
+      this.options.gridColor = theme.gridColor;
+      this.options.textColor = theme.textColor;
+      this.options.titleColor = theme.titleColor;
+      this.render();
+    });
   }
 
   resize() {
@@ -122,6 +151,7 @@ class ChartRenderer {
   }
 
   render() {
+    const theme = ChartRenderer.readThemeColors();
     const ctx = this.ctx;
     const w = this.width;
     const h = this.height;
@@ -193,14 +223,14 @@ class ChartRenderer {
       // Sombra
       ctx.save();
       if (isHov) {
-        ctx.shadowColor = "rgba(1, 195, 141, 0.6)";
+        ctx.shadowColor = theme.shadowTint;
         ctx.shadowBlur = 12;
       }
 
       // Gradiente de Barra
       const grad = ctx.createLinearGradient(x, y, x, y + barH);
       grad.addColorStop(0, isHov ? this.options.barHoverColor : this.options.barColor);
-      grad.addColorStop(1, "rgba(1, 195, 141, 0.45)");
+      grad.addColorStop(1, theme.accentTint);
 
       ctx.fillStyle = grad;
       this.roundRect(ctx, x, y, barWidth, Math.max(barH, 2), 4);
@@ -209,7 +239,7 @@ class ChartRenderer {
 
       // Etiqueta del Eje X
       ctx.save();
-      ctx.fillStyle = isHov ? "#FFFFFF" : this.options.textColor;
+      ctx.fillStyle = isHov ? theme.titleColor : this.options.textColor;
       ctx.font = `${isHov ? "bold " : ""}9.5px ${this.options.fontFamily}`;
       ctx.textAlign = "center";
       const shortLabel = d.label.length > 8 ? d.label.substring(0, 7) + "…" : d.label;
@@ -231,14 +261,14 @@ class ChartRenderer {
       tipX = Math.max(padding.left, Math.min(tipX, w - padding.right - tipW));
       const tipY = Math.max(b.y - tipH - 8, padding.top);
 
-      ctx.fillStyle = "#191E29";
+      ctx.fillStyle = theme.tooltipBg;
       ctx.strokeStyle = this.options.barColor;
       ctx.lineWidth = 1;
       this.roundRect(ctx, tipX, tipY, tipW, tipH, 5);
       ctx.fill();
       ctx.stroke();
 
-      ctx.fillStyle = "#FFFFFF";
+      ctx.fillStyle = theme.titleColor;
       ctx.textAlign = "center";
       ctx.fillText(tipText, tipX + tipW / 2, tipY + 16);
       ctx.restore();
