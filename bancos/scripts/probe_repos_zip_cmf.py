@@ -84,10 +84,11 @@ def read_public(url: str, limit: int) -> bytes:
     return data
 
 
-def discover(html: str) -> dict[str, str]:
+def discover(html: str, strict: bool = True, conflicts_out: set[str] | None = None) -> dict[str, str]:
     parser = ZipLinks()
     parser.feed(html)
     found: dict[str, str] = {}
+    conflicts: set[str] = set()
     for href, text in parser.links:
         url = urllib.parse.urljoin(INDEX, href)
         if not trusted_zip(url):
@@ -96,8 +97,14 @@ def discover(html: str) -> dict[str, str]:
         if match:
             period = f"{int(match.group(2)):04d}-{MONTHS[match.group(1).lower()]:02d}"
             if period in found and found[period] != url:
-                raise ValueError(f"Dos ZIP diferentes para {period}; requiere revisión")
-            found[period] = url
+                conflicts.add(period)
+                found.pop(period)
+            elif period not in conflicts:
+                found[period] = url
+    if conflicts_out is not None:
+        conflicts_out.update(conflicts)
+    if conflicts and strict:
+        raise ValueError(f"Dos ZIP diferentes para {sorted(conflicts)}; requiere revisión")
     if not found:
         raise ValueError("No se pudieron descubrir ZIP mensuales en índice CMF")
     return found
@@ -197,9 +204,13 @@ def resolve_links() -> tuple[dict[str, str], set[str]]:
             found.pop(period)
         elif period not in ambiguous:
             found[period] = x["url"]
-    current = discover(read_public(INDEX, 4_000_000).decode("utf-8", errors="replace"))
+    index_conflicts: set[str] = set()
+    current = discover(read_public(INDEX, 4_000_000).decode("utf-8", errors="replace"),
+                       strict=False, conflicts_out=index_conflicts)
+    for conflict in index_conflicts:
+        found.pop(conflict, None)
     found.update(current)
-    unresolved = ambiguous - current.keys()
+    unresolved = (ambiguous - current.keys()) | index_conflicts
     return found, unresolved
 
 
