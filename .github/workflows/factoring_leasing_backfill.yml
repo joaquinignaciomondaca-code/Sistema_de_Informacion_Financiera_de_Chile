@@ -1,0 +1,74 @@
+# Laboratorio masivo en Actions. Nunca escribe docs/outputs, commits ni push.
+name: Factoring y Leasing - serie IFRS CMF (cuarentena)
+
+on:
+  push:
+    branches: [arena/01a0e08b-monitor-financiero-chile]
+    paths:
+      - '.github/workflows/factoring_leasing_backfill.yml'
+      - 'factoring_leasing/scripts/backfill_ifrs.py'
+      - 'factoring_leasing/tests/test_backfill_ifrs.py'
+  workflow_dispatch:
+    inputs:
+      batch:
+        description: 'Cantidad máxima de períodos pendientes en esta corrida (default 100)'
+        required: false
+        default: '100'
+        type: string
+  schedule:
+    - cron: '20 12 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: factoring-leasing-ifrs-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  extraer:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Dependencias y pruebas independientes de la CMF
+        run: |
+          python -m pip install 'pandas>=2.2,<4' 'pyarrow>=17,<26'
+          python -m unittest discover -s factoring_leasing/tests -p test_backfill_ifrs.py -v
+      - name: Recuperar períodos ya descargados (solo esta rama)
+        uses: actions/cache/restore@v4
+        with:
+          path: .local-data/factoring_leasing_serie
+          key: fl-ifrs-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            fl-ifrs-${{ github.ref_name }}-
+      - name: Continuar historia y revisar si apareció un trimestre nuevo
+        env:
+          BATCH: ${{ inputs.batch }}
+        run: python factoring_leasing/scripts/backfill_ifrs.py --batch "${BATCH:-100}"
+      - name: Conservar progreso para próxima corrida aun si falló la CMF
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .local-data/factoring_leasing_serie
+          key: fl-ifrs-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Evidencia recuperable (no datos publicados)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: factoring-leasing-serie-cuarentena
+          path: .local-data/factoring_leasing_serie/
+          retention-days: 30
+          if-no-files-found: warn
+      - name: Resumen visible sin publicar balances
+        if: always()
+        run: |
+          if [ -f .local-data/factoring_leasing_serie/resumen.json ]; then
+            cat .local-data/factoring_leasing_serie/resumen.json
+            cat .local-data/factoring_leasing_serie/resumen.json >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Sin resumen: falló antes de consultar el índice CMF.' >> "$GITHUB_STEP_SUMMARY"
+          fi
