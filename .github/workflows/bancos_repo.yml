@@ -27,7 +27,7 @@ concurrency:
 
 jobs:
   transfer_review:
-    if: ${{ github.event_name == 'push' && hashFiles('bancos/scripts/transfer_repo_review.py') != '' }}
+    if: ${{ github.event_name == 'push' }}
     strategy:
       fail-fast: false
       matrix:
