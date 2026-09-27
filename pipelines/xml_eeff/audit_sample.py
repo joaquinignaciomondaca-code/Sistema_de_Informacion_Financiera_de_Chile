@@ -85,7 +85,10 @@ def html_values(page, sector):
                     return label in value and ('utilidad' in value or 'perdida' in value)
                 # No confundir Total Activo Corriente/No Corriente ni
                 # Total Pasivo Corriente con el total del balance.
-                if field in ('total_activo', 'total_pasivo_reportado'):
+                if field == 'total_activo':
+                    return value == label or bool(re.fullmatch(re.escape(label) + r' \([^)]*\)', value))
+                if field == 'total_pasivo_reportado':
+                    if sector == 'ffmm': return value.startswith(label)
                     return value == label or bool(re.fullmatch(re.escape(label) + r' \([^)]*\)', value))
                 return value.startswith(label)
             if not any(matches(cell) for cell in cells): continue
