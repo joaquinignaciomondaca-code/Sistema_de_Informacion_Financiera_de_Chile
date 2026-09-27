@@ -1,7 +1,7 @@
 import io
 import unittest
 import zipfile
-from bancos.scripts.rebuild_repo_from_cmf import amount, read_b1, extract, compare
+from bancos.scripts.rebuild_repo_from_cmf import amount, read_b1, extract, compare, reconcile_system_total
 
 URL = 'https://www.cmfchile.cl/portal/estadisticas/626/articles-51912_recurso_1.zip'
 
@@ -63,6 +63,15 @@ class RebuildTest(unittest.TestCase):
         raw = b1(('141000000', '243000000'), ['1']+['0']*3, ['2']+['0']*3, '999')
         row = read_b1(raw, '2022-06', '999')
         self.assertEqual(row['clase_para_revision'], 'agregado')
+
+    def test_total_system_excludes_aggregates(self):
+        raw = b1(('141000000', '243000000'), ['1']+['0']*3, ['2']+['0']*3)
+        bank = read_b1(raw, '2022-06', '012')
+        total = read_b1(raw.replace(b'012\t', b'999\t', 1), '2022-06', '999')
+        doc = {'periodo': '2022-06', 'filas': [bank, total]}
+        self.assertEqual(reconcile_system_total(doc)['activo']['diferencia_mm_clp'], '0.00')
+        with self.assertRaises(ValueError):
+            reconcile_system_total({'periodo': '2022-06', 'filas': [bank]})
 
     def test_invalid_cell(self):
         with self.assertRaises(ValueError):
