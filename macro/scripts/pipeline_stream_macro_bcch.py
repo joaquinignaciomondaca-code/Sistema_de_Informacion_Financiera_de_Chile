@@ -7,7 +7,6 @@ Descarga streaming concurrente y consolidación de 23 series canónicas (2020 a 
 """
 
 import os
-import json
 import time
 import numpy as np
 import pandas as pd
@@ -19,8 +18,8 @@ try:
 except ImportError:
     raise ImportError("La librería 'bcchapi' es obligatoria. Instalar con 'pip install bcchapi'.")
 
-EMAIL_BCCH = "REMOVED_BCCH_EMAIL"
-PASS_BCCH = "REMOVED_BCCH_PASSWORD"
+EMAIL_BCCH = os.environ.get("BCCH_EMAIL", "")
+PASS_BCCH = os.environ.get("BCCH_PASSWORD", "")
 
 FETCH_START_DATE = "2013-01-01"
 SERIES_START_PERIOD = "2014-01"
@@ -71,14 +70,17 @@ def fetch_single_series(item):
                 return key, df
             else:
                 return key, pd.DataFrame()
-        except Exception as e:
+        except Exception:
             if attempt == 3:
-                print(f"Error persistente en {key} ({sid}): {e}")
+                # La excepción de la API podría incluir parámetros sensibles.
+                print(f"Error persistente en {key} ({sid}); se omiten detalles de autenticación.")
                 return key, pd.DataFrame()
             time.sleep(1.0)
     return key, pd.DataFrame()
 
-def run_macro_pipeline():
+def run_macro_pipeline(output_dir=None):
+    if not EMAIL_BCCH or not PASS_BCCH:
+        raise RuntimeError("Faltan BCCH_EMAIL y BCCH_PASSWORD en el entorno; no se ejecutó la descarga.")
     print("=" * 70)
     print("Iniciando Pipeline de Macroeconomía y Tasas (BCCh SIETE)")
     print(f"Rango temporal: {FETCH_START_DATE} a {END_DATE} (Series finales desde {SERIES_START_PERIOD})")
@@ -95,6 +97,9 @@ def run_macro_pipeline():
             print(f"  OK: {key:15s} [{SERIES_CATALOG[key]['sid']}] -> {len(df):4d} observaciones")
 
     elapsed = time.time() - t0
+    missing = [key for key, df in raw_series.items() if df.empty]
+    if missing:
+        raise RuntimeError(f"Descarga incompleta: {len(missing)} series vacías ({', '.join(missing)}). No se escribieron salidas.")
     print(f"Descarga completada en {elapsed:.2f} segundos.")
     print("-" * 70)
 
@@ -309,7 +314,7 @@ def run_macro_pipeline():
     # =========================================================================
     # EXPORTACIÓN PARQUET Y JSON
     # =========================================================================
-    out_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "docs", "outputs", "macro"))
+    out_dir = os.path.abspath(output_dir or os.path.join(os.path.dirname(__file__), "..", "..", ".local-data", "macro"))
     os.makedirs(out_dir, exist_ok=True)
 
     tables = {

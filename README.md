@@ -4,6 +4,12 @@ Plataforma analítica y motor de datos para el procesamiento, normalización y e
 
 ---
 
+## Operación de datos: PC + GitHub Actions
+
+El código de los métodos se conserva en el repositorio. Las extracciones complejas pueden ejecutarse en PC; los flujos maduros y pequeños pueden correr automáticamente en Actions. El piloto macro BCCh guarda resultados en staging, audita y entrega un artifact para revisión antes de publicar en la web. **Antes de habilitarlo, rotar las credenciales BCCh expuestas anteriormente en Git.** Instrucciones: [`pipelines/README.md`](pipelines/README.md).
+
+---
+
 ## 1. Alcance y Perímetro Regulatorio (15 Sectores Supervisados)
 
 El repositorio consolida fuentes oficiales emitidas por la **Comisión para el Mercado Financiero (CMF)**, la **Superintendencia de Pensiones (SPensiones)**, la **Superintendencia de Seguridad Social (SUSESO)** y el **Banco Central de Chile (BCCh)**:
