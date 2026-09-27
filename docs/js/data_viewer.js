@@ -82,23 +82,12 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Factoring & Leasing — EEFF (PDF)",
-    tables: [
-      { id: "factoring_leasing_eeff_documentos", name: "factoring_leasing.eeff_documentos (10 PDF, marzo 2026)" },
-      { id: "factoring_leasing_balance_lineas", name: "factoring_leasing.balance_lineas (223 líneas del PDF)" },
-      { id: "factoring_leasing_resultados_lineas", name: "factoring_leasing.resultados_lineas (120 líneas del PDF)" },
-      { id: "factoring_leasing_notas_indice", name: "factoring_leasing.notas_indice (273 notas)" },
-      { id: "factoring_leasing_notas_cobertura", name: "factoring_leasing.notas_cobertura (8 notas comunes x 10 PDF)" },
-      { id: "factoring_leasing_nota_efectivo", name: "factoring_leasing.nota_efectivo (Security, PDF)" },
-      { id: "factoring_leasing_nota_deudores", name: "factoring_leasing.nota_deudores (Security, PDF)" },
-      { id: "factoring_leasing_validacion_api", name: "factoring_leasing.validacion_api (chequeo, no fuente)" }
-    ]
-  },
-  {
-    group: "Factoring & Leasing — De Interés",
+    group: "Factoring & Leasing (CMF / NBFI)",
     tables: [
       { id: "factoring_leasing_maestro", name: "factoring_leasing.maestro (28 entidades CMF)" },
-      { id: "factoring_leasing_balance_resumen", name: "factoring_leasing.balance_resumen API (validación, no es el PDF)" }
+      { id: "factoring_leasing_balance_resumen", name: "factoring_leasing.balance_resumen (878 balances IFRS)" },
+      { id: "factoring_leasing_nota_efectivo_detalle", name: "factoring_leasing.nota_efectivo_detalle (2.9k datos)" },
+      { id: "factoring_leasing_cartera_morosidad_detalle", name: "factoring_leasing.cartera_morosidad_detalle (17.4k datos)" }
     ]
   },
   {
@@ -113,27 +102,32 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Securitizadoras (CMF Ley 18.045) - EEFF",
+    group: "Sociedades securitizadoras (CMF)",
     tables: [
-      { id: "patrimonios_separados_balance_lineas", name: "patrimonios.balance_lineas (16,842 filas FECU)" },
-      { id: "patrimonios_separados_excedentes_lineas", name: "patrimonios.excedentes_lineas (11,157 filas)" },
-      { id: "patrimonios_separados_nota_cartera_detalle", name: "patrimonios.nota_cartera (796 filas)" },
-      { id: "patrimonios_separados_nota_morosidad_detalle", name: "patrimonios.nota_morosidad (6,632 filas)" },
-      { id: "patrimonios_separados_nota_bonos_detalle", name: "patrimonios.nota_bonos (8,001 filas)" },
-      { id: "patrimonios_separados_nota_administracion_detalle", name: "patrimonios.nota_administracion (2,153 filas)" },
-      { id: "patrimonios_separados_nota_sobrecolateral_detalle", name: "patrimonios.nota_sobrecolateral (679 filas)" },
-      { id: "patrimonios_separados_nota_efectivo_detalle", name: "patrimonios.nota_efectivo_detalle (3,802 filas)" }
+      { id: "securitizadoras_maestro", name: "securitizadoras.maestro (16 entidades)" },
+      { id: "securitizadoras_balance_resumen", name: "securitizadoras.balance_resumen (362 balances IFRS)" }
     ]
   },
   {
-    group: "Securitizadoras (CMF Ley 18.045) - Otros de Interés",
+    group: "Patrimonios separados — catálogo y estados",
     tables: [
-      { id: "securitizadoras_maestro", name: "securitizadoras.maestro (16 entidades)" },
-      { id: "securitizadoras_balance_resumen", name: "securitizadoras.balance_resumen (362 balances IFRS)" },
-      { id: "patrimonios_separados_maestro", name: "securitizadoras.patrimonios_separados (18 programas)" },
-      { id: "patrimonios_separados_balance_resumen", name: "securitizadoras.balance_resumen (64 balances)" },
-      { id: "patrimonios_separados_repos_detalle", name: "securitizadoras.repos_detalle (52 pactos)" },
-      { id: "patrimonios_separados_cartera_morosidad_detalle", name: "securitizadoras.cartera_morosidad (67 tramos)" }
+      { id: "patrimonios_separados_maestro", name: "patrimonios.emisiones_lineas (18 líneas de inscripción)" },
+      { id: "patrimonios_separados_balance_resumen", name: "patrimonios.balance_resumen (64 balances, 2022-12 a 2024-12)" },
+      { id: "patrimonios_separados_balance_lineas", name: "patrimonios.balance_lineas (16,842 filas)" },
+      { id: "patrimonios_separados_excedentes_lineas", name: "patrimonios.excedentes_lineas (11,157 filas)" }
+    ]
+  },
+  {
+    group: "Patrimonios separados — notas y operaciones",
+    tables: [
+      { id: "patrimonios_separados_nota_cartera_detalle", name: "patrimonios.nota_cartera (796 filas)" },
+      { id: "patrimonios_separados_nota_morosidad_detalle", name: "patrimonios.nota_morosidad (6,632 filas, tramo sin normalizar)" },
+      { id: "patrimonios_separados_nota_bonos_detalle", name: "patrimonios.nota_bonos (8,001 filas)" },
+      { id: "patrimonios_separados_nota_administracion_detalle", name: "patrimonios.nota_administracion (2,153 filas)" },
+      { id: "patrimonios_separados_nota_sobrecolateral_detalle", name: "patrimonios.nota_sobrecolateral (679 filas)" },
+      { id: "patrimonios_separados_nota_efectivo_detalle", name: "patrimonios.nota_efectivo_detalle (3,802 filas)" },
+      { id: "patrimonios_separados_cartera_morosidad_detalle", name: "patrimonios.cartera_morosidad (67 filas, extracto corto)" },
+      { id: "patrimonios_separados_repos_detalle", name: "patrimonios.repos_detalle (52 pactos)" }
     ]
   },
   {
