@@ -58,7 +58,13 @@ jobs:
                                        for r in doc['comparaciones'] if r.get('solo_cmf')][:5],
                   'muestras_diferencias': [{'mes': r['periodo'], 'valores': r['diferencias'][:2]}
                                           for r in doc['comparaciones'] if r.get('diferencias')][:5],
-                  'codigos_cmf_fuera_legacy': doc['codigos_cmf_fuera_legacy'],
+                  'codigos_cmf_fuera_legacy': {
+                      'codigos': len(doc['codigos_cmf_fuera_legacy']),
+                      'meses_con_importe_crudo_no_cero': {
+                          k: v['meses_no_cero'] for k, v in doc['codigos_cmf_fuera_legacy'].items()
+                          if v['meses_no_cero']
+                      },
+                  },
                   'control_total_sistema': {
                       'meses_diferencia': {s: sum(float(c[s]['diferencia_mm_clp']) != 0
                                                  for c in doc['conciliacion_total_sistema'])
