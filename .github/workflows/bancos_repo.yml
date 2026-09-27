@@ -26,6 +26,47 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  rebuild_review:
+    if: ${{ github.event_name == 'workflow_dispatch' && !inputs.period }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reextraer historia B1 desde CMF sin publicar
+        run: |
+          mkdir -p .local-data/review/bancos/reconstruccion_cmf
+          python -m bancos.scripts.rebuild_repo_from_cmf \
+            > .local-data/review/bancos/reconstruccion_cmf/ejecucion.txt 2>&1 || {
+              tail -n 30 .local-data/review/bancos/reconstruccion_cmf/ejecucion.txt
+              exit 1
+            }
+          tail -n 30 .local-data/review/bancos/reconstruccion_cmf/ejecucion.txt
+      - name: Mostrar totales y meses con diferencias sin depender del artefacto
+        if: always()
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('.local-data/review/bancos/reconstruccion_cmf/resumen.json')
+          if p.exists():
+              doc = json.loads(p.read_text())
+              print('::notice title=REPO B1 recálculo::' + json.dumps({
+                  'meses': doc['meses_descargados'], 'esperados': len(doc['meses_solicitados']),
+                  'totales': doc['totales'], 'errores': doc['errores'][:5],
+                  'muestras_solo_cmf': [{'mes': r['periodo'], 'codigos': r['solo_cmf']}
+                                       for r in doc['comparaciones'] if r.get('solo_cmf')][:5],
+                  'muestras_diferencias': [{'mes': r['periodo'], 'valores': r['diferencias'][:2]}
+                                          for r in doc['comparaciones'] if r.get('diferencias')][:5],
+              }, ensure_ascii=False))
+          PY
+      - name: Conservar revisión temporal (nunca publicada)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: repo-b1-reconstruccion-no-publicada
+          path: .local-data/review/bancos/reconstruccion_cmf/
+          retention-days: 30
+          if-no-files-found: warn
   probe:
     runs-on: ubuntu-latest
     timeout-minutes: 20
