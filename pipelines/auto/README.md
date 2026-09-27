@@ -21,7 +21,7 @@ Este directorio cataloga y documenta los flujos de extracción y procesamiento q
 | **Fondos de Pensiones** | SPensiones (Archivos ZIP históricos y mensuales) | Mensual | `pensiones/scripts/pipeline_stream_history.py` | `docs/outputs/pensiones/` |
 | **Banca Comercial** | CMF Balances y BCCh Derivados F099 | Mensual | `bancos/scripts/process_bancos.py` | `docs/outputs/bancos/` |
 | **Macroeconomía & Tasas** | BCCh (Base de Datos Estadísticos SIETE) | Mensual / Diario | `macro/scripts/pipeline_stream_macro_bcch.py` | `docs/outputs/macro/` |
-| **Factoring & Leasing** | CMF Balances IFRS | Trimestral | `factoring_leasing/scripts/stream_cmf_factoring_leasing.py` | `docs/outputs/factoring_leasing/` |
+| **Factoring & Leasing** | Solo lista de entidades; extracción de balances y notas suspendida | Bajo revisión | `factoring_leasing/scripts/` (laboratorio, publicación bloqueada) | `docs/outputs/factoring_leasing/factoring_leasing_maestro.*` |
 | **Corredoras de Bolsa** | CMF Estados Financieros IFRS | Trimestral | `corredoras_bolsa/scripts/stream_cmf_corredoras.py` | `docs/outputs/corredoras_bolsa/` |
 | **Sociedades Securitizadoras** | CMF Balances IFRS y Ley 18.045 | Trimestral | `securitizadoras/scripts/stream_cmf_securitizadoras.py` | `docs/outputs/securitizadoras/` |
 | **Cajas de Compensación** | SUSESO / CMF Registro Oficial | Anual / Trimestral | `cajas_compensacion/scripts/stream_ccaf.py` | `docs/outputs/cajas_compensacion/` |
