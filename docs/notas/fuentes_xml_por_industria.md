@@ -34,7 +34,10 @@ Riesgos detectados en el código de extracción (pendientes de corrección, no c
 
 ## 2. Estado de los pactos REPO de corredoras
 
-Retirados de publicación (Parquet, JSON, explorador, diccionario, visor y ERD). El pipeline queda con
+Retirados de publicación: los cuatro archivos (Parquet y JSON) y sus accesos en el explorador
+lateral, el visor de datos, el diccionario y el cliente SQL. **Corrección (auditoría 2026-09-27):**
+`data_manifest.json` y `erd_graph.js` nunca referenciaban esas tablas, así que no hubo nada que
+quitar allí; una versión anterior de este texto lo afirmaba de más. El pipeline queda con
 `PUBLICAR_PACTOS_REPOS = False`, de modo que **sigue extrayendo y publicando solo las carátulas XML**.
 Motivo: los niveles 2 y 3 se derivan de texto de PDF con heurísticas (contrapartes, plazos, colaterales),
 sin cotejo por fila contra el documento fuente, y con `valor_mercado_m_clp = monto_pactado_m_clp`.
