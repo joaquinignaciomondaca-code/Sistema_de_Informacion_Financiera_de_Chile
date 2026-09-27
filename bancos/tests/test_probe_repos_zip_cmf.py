@@ -34,11 +34,42 @@ class ProbeTests(unittest.TestCase):
                        strict=False, conflicts_out=conflicts)
         self.assertEqual(conflicts, {"2021-12"})
 
+    def test_discover_real_cmf_structure(self):
+        """El índice real rotula el mes fuera del texto del ancla."""
+        href = "articles-113067_recurso_1.zip?ts=1787944720"
+        # (a) mes en el encabezado que acompaña al enlace de descarga
+        heading = (f'<a href="{href}"><span class="ico"></span></a>'
+                   '<h3><a href="w4-article-113067.html">Balance y Estado de Situación Bancos Julio 2026</a></h3>'
+                   '31/07/2026')
+        self.assertEqual(probe.discover(heading)["2026-07"],
+                         "https://www.cmfchile.cl/portal/estadisticas/626/" + href)
+        # (b) mes en un atributo del ancla o en el alt de su ícono
+        with_title = f'<a href="{href}" title="Descargar Julio 2026"><img alt="zip"/></a>'
+        self.assertEqual(probe.discover(with_title)["2026-07"],
+                         "https://www.cmfchile.cl/portal/estadisticas/626/" + href)
+        # (c) el id del artículo por sí solo NO puede adjudicar un mes
+        with self.assertRaises(ValueError):
+            probe.discover('<a href="articles-113067_recurso_1.zip"></a>')
+
     def test_empty_index_gives_safe_diagnostics(self):
         with self.assertRaisesRegex(ValueError, r"ZIP=0") as error:
             probe.discover("<html><title>Página temporal</title><body>Sin enlaces</body></html>")
         self.assertIn("Página temporal", str(error.exception))
         self.assertNotIn("<html>", str(error.exception))
+
+    def test_diagnostics_show_clean_signals(self):
+        html = ('<html><title>Índice</title><body>'
+                '<a href="articles-113067_recurso_1.zip"><img alt="zip"/></a>'
+                '<h3>Balance y Estado de Situación Bancos Julio 2026</h3></body></html>')
+        # Con encabezado válido sí se resuelve; forzamos el caso sin señales
+        # quitando el encabezado para revisar que el mensaje sea útil y limpio.
+        with self.assertRaises(ValueError) as error:
+            probe.discover(html.replace("<h3>Balance y Estado de Situación Bancos Julio 2026</h3>", ""))
+        message = str(error.exception)
+        self.assertIn("muestra=", message)
+        self.assertIn("articles-113067_recurso_1.zip", message)
+        self.assertNotIn("<a ", message)
+        self.assertNotIn("<img", message)
 
     def test_incremental_and_manual(self):
         found = {p: URL for p in ("2026-04", "2026-05", "2026-06", "2026-07")}
