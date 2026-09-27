@@ -124,6 +124,43 @@ class BackfillTests(unittest.TestCase):
             self.assertEqual(downloads, ['202203'])
             self.assertEqual(json.loads((out/'resumen.json').read_text())['completados_total'], 2)
 
+    def test_annual_fallback_only_selected_quarter(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            args = SimpleNamespace(out=out, catalog=out/'catalog.json', batch=1)
+            args.catalog.write_text(json.dumps([{'rut':'96655860-1','segmento':'Factoring','razon_social':'FACTORING SECURITY S.A.'}]))
+            index = b'<html><a href="ver_archivo.php?inicio=200903&termino=200912">2009</a></html>'
+            requests = []
+            def fetch(url):
+                requests.append(url)
+                if url == b.INDEX:
+                    return index
+                if url.endswith('inicio=200912&termino=200912'):
+                    return fixture(period='200912')
+                if url.endswith('inicio=200909&termino=200909'):
+                    return fixture(period='200909')
+                if url.endswith('inicio=200906&termino=200906'):
+                    return fixture(period='200906')
+                if url.endswith('inicio=200903&termino=200903'):
+                    return b'<html>CMF 500</html>'
+                if url.endswith('inicio=200903&termino=200912'):
+                    return fixture(period='200903') + fixture(period='200906')
+                raise AssertionError(url)
+            # Saltar primero 3 períodos para probar respaldo directo.
+            catalog_hash = b.hashlib.sha256(args.catalog.read_bytes()).hexdigest()
+            for period in ('200912', '200909', '200906'):
+                bal, inc, stats = b.parse_period(fixture(period=period), period, CATALOG)
+                stats.update(periodo=period, sha256_catalogo=catalog_hash,
+                             filas_balance=len(bal), filas_resultados=len(inc))
+                b.save_period(out, period, bal, inc, stats)
+            self.assertEqual(b.run(args, fetch), 0)
+            report = json.loads((out/'periodos/200903/_complete.json').read_text())
+            self.assertTrue(report['respaldo_anual'])
+            self.assertEqual(report['fuente_archivo'].split('inicio=')[1], '200903&termino=200912')
+            rows = b.pd.read_parquet(out/'periodos/200903/balance.parquet')
+            self.assertEqual(set(rows['periodo']), {'2009-03'})
+            self.assertEqual(json.loads((out/'resumen.json').read_text())['completados_total'], 4)
+
     def test_broken_cache_is_not_treated_as_completed(self):
         with tempfile.TemporaryDirectory() as tmp:
             out = Path(tmp)
