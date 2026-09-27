@@ -111,36 +111,34 @@ class AuditTests(unittest.TestCase):
 
 
 class SummaryTests(unittest.TestCase):
-    def test_summary_reports_counts_and_failure(self):
+    def test_summary_compares_column_sum_per_month(self):
         from bancos.scripts import summarize_repo_audit as summary
-        report = {
-            "estado": "cotejo_exploratorio_no_publicado",
-            "periodos": [{
-                "periodo": "2021-12", "sha256_zip": "ab" * 32, "advertencia": None,
-                "candidatos_del_script_v2": {"activo": "1160000", "pasivo": "2160000"},
-                "filas_con_referencia_legacy": 1, "filas_con_alguna_coincidencia": 2,
-                "bancos": [{
-                    "codigo_banco": "001", "referencia_legacy_mm_clp": {"activo": 64365, "pasivo": 95009},
-                    "hipotesis_escala": {
-                        "activo": {"cuenta": "1160000", "campos_crudos": ["0000000064365,00"],
-                                   "suma_columnas": "64365",
-                                   "suma_con_divisor": {"1": "64365", "1000": "64.365"},
-                                   "coincidencias_legacy": [{"origen": "suma_columnas", "divisor": 1}]},
-                        "pasivo": {"cuenta": "2160000", "campos_crudos": ["0000000087671,00"],
-                                   "suma_columnas": "95009", "suma_con_divisor": {"1": "95009"}},
-                    },
-                }],
-            }],
+        month = {
+            "periodo": "2021-12", "sha256_zip": "ab" * 32, "advertencia": None,
+            "candidatos_del_script_v2": {"activo": "1160000", "pasivo": "2160000"},
+            "bancos": [
+                {"codigo_banco": "001", "referencia_legacy_mm_clp": {"activo": 64365, "pasivo": 95009},
+                 "hipotesis_escala": {"activo": {"suma_columnas": "64365"},
+                                      "pasivo": {"suma_columnas": "95009"}}},
+                {"codigo_banco": "016", "referencia_legacy_mm_clp": {"activo": 186753, "pasivo": 141178},
+                 "hipotesis_escala": {"activo": {"suma_columnas": "186753"},
+                                      "pasivo": {"suma_columnas": "141128"}}},
+                {"codigo_banco": "031", "referencia_legacy_mm_clp": None,
+                 "hipotesis_escala": {"activo": {"suma_columnas": "0"}, "pasivo": {"suma_columnas": "0"}}},
+            ],
         }
-        text = summary.summarize(report)
-        self.assertIn("2021-12: bancos=1 con_cuentas_candidatas=1", text)
-        self.assertIn("activo(1160000)=['0000000064365,00'] suma=64365 MM={'1': '64365'", text)
-        self.assertIn("'divisor': 1}]", text)
-        self.assertIn("pasivo(2160000)=['0000000087671,00'] suma=95009", text)
-        self.assertLessEqual(len(summary.summarize(report, limit=60)), 60)
-        self.assertIn("FALLO en 2021-12",
-                      summary.summarize({"estado": "cotejo_incompleto_no_publicado",
-                                         "periodo_fallido": "2021-12", "error": "ZIP inválido"}))
+        text = summary.summarize_month(month)
+        self.assertIn("2021-12 bancos=3 cotejados=2 ambos_lados_ok=1", text)
+        self.assertIn("001 a✓ p✓", text)
+        self.assertIn("016 a✓ p✗(141128≠141178)", text)
+        self.assertIn("sin_cuenta=[]", text)
+        self.assertLessEqual(len(summary.summarize_month(month, limit=40)), 40)
+        self.assertIn("sin_cuenta", summary.summarize_month(
+            {"periodo": "2026-04", "bancos": [{"codigo_banco": "001", "referencia_legacy_mm_clp": None,
+                                               "hipotesis_escala": {"activo": {"cuenta": "141000000",
+                                                                               "estado": "ausente"}}}]}))
+        self.assertIn("FALLO en 2021-12", summary.summarize(
+            {"estado": "cotejo_incompleto_no_publicado", "periodo_fallido": "2021-12", "error": "ZIP inválido"}))
 
 
 if __name__ == "__main__":
