@@ -48,7 +48,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (2026-03)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "9.09M registros",
+    registros: "9,09 M registros",
     descripcion: "Tenencias de renta fija soberana y corporativa (bonos de tesorería, bancarios y de empresas) mantenidas por aseguradoras de vida.",
     origen: "CMF — Circular N° 1835 (Anexo Cartera de Inversiones de Aseguradoras de Vida, Sección Bonos Nacionales y Soberanos).",
     columnas: [
@@ -74,7 +74,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (2026-03)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "143k registros",
+    registros: "142.944 registros",
     descripcion: "Cartera de renta variable nacional mantenida por compañías de seguros de vida (acciones IPSA y fuera de índice).",
     origen: "CMF — Circular N° 1835 (Anexo Cartera de Inversiones de Aseguradoras de Vida, Sección Renta Variable Nacional y Presencia Bursátil).",
     columnas: [
@@ -98,7 +98,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (2026-03)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "2.01M registros",
+    registros: "2,01 M registros",
     descripcion: "Bienes raíces urbanos y comerciales de aseguradoras de vida para respaldo de reservas técnicas.",
     origen: "CMF — Circular N° 1835 (Anexo Cartera de Bienes Raíces Urbanos y Comerciales, respaldo de Reservas Técnicas).",
     columnas: [
@@ -113,7 +113,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "vida_forwards",
-    name: "vida.b7_forwards",
+    name: "vida.derivados_forwards",
     viewName: "vida_forwards",
     sector: "vida",
     sectorLabel: "Seguros de Vida",
@@ -122,7 +122,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (2026-03)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "165k contratos",
+    registros: "165.354 registros",
     descripcion: "Contratos forward sobre tipo de cambio (USD/CLP, UF/CLP) y tasas para cobertura de pasivos en pólizas.",
     origen: "CMF — Ficha B7 de Derivados (Contratos Forward sobre tipo de cambio USD/CLP y UF/CLP reportados trimestralmente por Aseguradoras de Vida).",
     columnas: [
@@ -137,7 +137,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "vida_swaps",
-    name: "vida.b7_swaps",
+    name: "vida.derivados_swaps",
     viewName: "vida_swaps",
     sector: "vida",
     sectorLabel: "Seguros de Vida",
@@ -146,7 +146,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (2026-03)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "314k contratos",
+    registros: "314.683 registros",
     descripcion: "Swaps de tasas de interés (IRS) y swaps de monedas cruzadas (Cross-Currency) para calce de duración.",
     origen: "CMF — Ficha B7 de Derivados (Contratos Swaps de tasa de interés y monedas cruzadas de Aseguradoras de Vida).",
     columnas: [
@@ -160,7 +160,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "vida_repos",
-    name: "vida.b7_repos",
+    name: "vida.pactos_repos",
     viewName: "vida_repos",
     sector: "vida",
     sectorLabel: "Seguros de Vida",
@@ -169,7 +169,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (2026-03)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "19.4k pactos",
+    registros: "19.408 registros",
     descripcion: "Operaciones de pactos activos y pasivos sobre bonos e instrumentos de renta fija por parte de aseguradoras de vida.",
     origen: "CMF — Ficha B7 de Pactos (Operaciones de Venta con Retrocompra y Compra con Retroventa de Aseguradoras de Vida).",
     columnas: [
@@ -215,7 +215,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (2026-03)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "287k registros",
+    registros: "287.214 registros",
     descripcion: "Cartera de renta fija nacional (bonos bancarios, corporativos y de tesorería) de aseguradoras generales.",
     origen: "CMF — Circular N° 1835 (Anexo Cartera de Inversiones de Aseguradoras Generales, Sección Renta Fija Nacional).",
     columnas: [
@@ -238,7 +238,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (2026-03)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "38k registros",
+    registros: "38.257 registros",
     descripcion: "Inmuebles y bienes raíces urbanos de aseguradoras generales para respaldo de obligaciones técnicas.",
     origen: "CMF — Circular N° 1835 (Anexo Cartera de Bienes Raíces de Compañías de Seguros Generales).",
     columnas: [
@@ -260,7 +260,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (2026-03)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "17k registros",
+    registros: "17.457 registros",
     descripcion: "Cartera de acciones nacionales y presencia bursátil mantenidas por aseguradoras generales.",
     origen: "CMF — Circular N° 1835 (Anexo Cartera de Inversiones de Aseguradoras Generales, Sección Renta Variable).",
     columnas: [
@@ -282,7 +282,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (2026-03)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "1.129 fondos",
+    registros: "1.129 entidades",
     descripcion: "Maestro de Fondos de Inversión públicos y privados (FINRE y FIRES).",
     origen: "CMF — Registro Público de Fondos de Inversión Públicos y Privados (FINRE y FIRES) y Sociedades Administradoras Generales de Fondos (AGF).",
     columnas: [
@@ -303,7 +303,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (2026-03)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "834k activos",
+    registros: "833.584 registros",
     descripcion: "Detalle de cartera de instrumentos nacionales en fondos de inversión bajo normas contables IFRS.",
     origen: "CMF — Carteras Trimestrales de Fondos de Inversión (Reporte normativo de títulos de deuda y capital nacional bajo IFRS).",
     columnas: [
@@ -327,7 +327,8 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (2014-03 a 2026-03)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "2.66k pactos",
+    advertencia: "Falta auditar la cobertura, los montos y la unidad de esta tabla contra los informes originales de la CMF. Pertenece a la misma tarjeta en revisión que la muestra de contratos, así que sus saldos no deben sumarse ni publicarse como cifra de mercado.",
+    registros: "1.366 pactos",
     descripcion: "Operaciones de Venta con Compromiso de Retrocompra (VRC) y Compra con Retroventa (CRV) de 37 fondos de inversión.",
     origen: "CMF — Registro de Operaciones con Pacto de Fondos de Inversión (Reportes de operaciones VRC y CRV a través de AGFs).",
     columnas: [
@@ -348,17 +349,17 @@ const DATA_DICTIONARY = [
   },
   {
     id: "fi_registro_fondos_universo",
-    name: "fi.registro_fondos_universo",
+    name: "fi.universo_fondos",
     viewName: "fi_registro_fondos_universo",
     sector: "fi",
     sectorLabel: "Fondos de Inversión",
     norma: "Ley Única de Fondos (LUF N° 20.712)",
     corte: "2026-03",
-    frescura: "Censo CMF Completo",
+    frescura: "Registro CMF completo",
     modo: "Automático Streaming CMF",
     ultimaActualizacion: "2026-09-24",
     registros: "1.677 fondos",
-    descripcion: "Censo y registro oficial completo de todos los fondos de inversión chilenos supervisados por la CMF (FINRE y FIRES), distinguiendo fondos vigentes y liquidados con sus respectivas fechas de inicio registral.",
+    descripcion: "Registro oficial completo de todos los fondos de inversión chilenos supervisados por la CMF (FINRE y FIRES), distinguiendo fondos vigentes y liquidados con sus respectivas fechas de inicio registral.",
     origen: "Comisión para el Mercado Financiero (CMF) — Nómina y Registro Público de Fondos de Inversión (Pestaña 1 y 2).",
     columnas: [
       { name: "run_fondo", type: "BIGINT", role: "PK", significado: "RUN numérico oficial del fondo de inversión ante la CMF.", contable: "No aplica" },
@@ -370,47 +371,19 @@ const DATA_DICTIONARY = [
     ]
   },
   {
-    id: "fi_caratula_eeff_historico",
-    name: "fi.caratula_eeff_historico",
-    viewName: "fi_caratula_eeff_historico",
-    sector: "fi",
-    sectorLabel: "Fondos de Inversión",
-    norma: "IFRS / CMF Ley 20.712",
-    corte: "2010-2026",
-    frescura: "Panel Histórico Completo",
-    modo: "Automático Streaming RAM CMF",
-    ultimaActualizacion: "2026-09-24",
-    registros: "Panel Histórico Auditado",
-    descripcion: "Carátula histórica de balances generales y estados de resultados de fondos de inversión auditados bajo IFRS por la CMF. Incluye desglose esencial de activo total, patrimonio total, resultado del ejercicio, efectivo y equivalentes, cartera a valor razonable y cartera a costo amortizado.",
-    origen: "Comisión para el Mercado Financiero (CMF) — Estados Financieros Auditados de Fondos de Inversión (FIEST / PDF).",
-    columnas: [
-      { name: "run_fondo", type: "BIGINT", role: "PK", significado: "RUN numérico oficial del fondo de inversión ante la CMF.", contable: "No aplica" },
-      { name: "nombre_fondo", type: "VARCHAR", role: "Atributo", significado: "Razón social del fondo de inversión auditado.", contable: "No aplica" },
-      { name: "administradora", type: "VARCHAR", role: "Dimensión", significado: "Nombre de la Administradora General de Fondos (AGF).", contable: "No aplica" },
-      { name: "periodo", type: "VARCHAR", role: "Dimensión", significado: "Periodo contable de reporte en formato YYYYMM.", contable: "No aplica" },
-      { name: "anio", type: "BIGINT", role: "Dimensión", significado: "Año calendario del ejercicio contable.", contable: "No aplica" },
-      { name: "mes", type: "BIGINT", role: "Dimensión", significado: "Mes de corte de balance general auditado (12 para anual).", contable: "No aplica" },
-      { name: "efectivo_y_equivalentes_m_clp", type: "DOUBLE", role: "Métrica", significado: "Saldo de caja, bancos y equivalentes de efectivo en millones de CLP.", contable: "Efectivo y Eq." },
-      { name: "activos_financieros_vr_m_clp", type: "DOUBLE", role: "Métrica", significado: "Cartera de activos financieros a valor razonable (FVTPL / FVOCI) en millones de CLP.", contable: "Valor Razonable / MtM" },
-      { name: "activos_financieros_amortizado_m_clp", type: "DOUBLE", role: "Métrica", significado: "Cartera de instrumentos de inversión medidos a costo amortizado en millones de CLP.", contable: "Costo Amortizado" },
-      { name: "activo_total_m_clp", type: "DOUBLE", role: "Métrica", significado: "Total de activos auditados del fondo en millones de CLP.", contable: "Activo Bruto" },
-      { name: "patrimonio_total_m_clp", type: "DOUBLE", role: "Métrica", significado: "Patrimonio neto atribuible a los aportantes / cuotapartícipes en millones de CLP.", contable: "Patrimonio Neto" },
-      { name: "utilidad_ejercicio_m_clp", type: "DOUBLE", role: "Métrica", significado: "Resultado integral neto del ejercicio en millones de CLP.", contable: "Resultado Neto" }
-    ]
-  },
-  {
     id: "fi_repos_detalle_historico",
-    name: "fi.repos_detalle_historico",
+    name: "fi.repos_contratos",
     viewName: "fi_repos_detalle_historico",
     sector: "fi",
     sectorLabel: "Fondos de Inversión",
     norma: "CMF VRC / CRV IFRS",
     corte: "2010-2026",
-    frescura: "Panel Histórico 2010-2026",
-    modo: "Automático Streaming CMF",
-    ultimaActualizacion: "2026-09-24",
-    registros: "2.95k contratos literales",
-    descripcion: "Detalle contractual exhaustivo de todas las operaciones de compra con retroventa (CRV - Activo) y venta con retrocompra (VRC - Pasivo) pactadas por fondos de inversión chilenos ante la CMF entre 2010 y 2026.",
+    frescura: "Muestra 2010-2026 · sin auditar",
+    modo: "Experimental (extracción en revisión)",
+    ultimaActualizacion: "2026-09-26",
+    registros: "2.946 contratos",
+    descripcion: "Extracción preliminar, contrato por contrato, de las operaciones con pacto de retroventa (CRV activo y VRC pasivo) informadas por fondos de inversión chilenos en 16 cierres anuales entre 2010 y 2026. Cada fila pretende representar un contrato: contraparte, tasa, montos y garantía colateral.",
+    advertencia: "Falta auditar contra los informes originales de la CMF. No implica cobertura exhaustiva del mercado de pactos ni confiabilidad de montos y unidades. No usar totales, rankings de contrapartes ni cifras de mercado derivados de esta muestra. Una valorización de cierre no es el portafolio ni el pasivo total de un fondo.",
     origen: "Comisión para el Mercado Financiero (CMF) — Pestaña 15 (Informe Trimestral de Operaciones con Pacto VRC/CRV).",
     columnas: [
       { name: "run_fondo", type: "BIGINT", role: "PK", significado: "RUN del fondo de inversión titular del contrato.", contable: "No aplica" },
@@ -440,7 +413,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (2026-03)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "1.156 fondos",
+    registros: "1.156 entidades",
     descripcion: "Catálogo oficial de los 1.156 fondos mutuos administrados por las Administradoras Generales de Fondos (AGF).",
     origen: "Comisión para el Mercado Financiero (CMF) — Catastro Oficial de Fondos Mutuos y Series de Cuotas (Portal Estadístico CMF).",
     columnas: [
@@ -461,7 +434,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (2026-03)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "11k contratos",
+    registros: "280.494 registros",
     descripcion: "Posiciones en contratos de futuros financieros sobre índices, monedas y commodities de fondos mutuos.",
     origen: "CMF — Circular N° 1333 (Cartera Mensual de Operaciones con Instrumentos Derivados y Futuros de Fondos Mutuos).",
     columnas: [
@@ -484,7 +457,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (2026-03)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "7 administradoras",
+    registros: "7 entidades",
     descripcion: "Catálogo maestro oficial de las 7 Administradoras de Fondos de Pensiones (AFP) activas en Chile, con AUM administrado, encaje legal del 1% y afiliados.",
     origen: "Superintendencia de Pensiones (SPensiones) — Nómina Oficial de Administradoras y Ficha Estadística (FEE) CMF.",
     columnas: [
@@ -513,7 +486,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (2023-12 a 2026-03)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "560 contratos",
+    registros: "560 registros",
     descripcion: "Contratos de derivados Forward OTC suscritos por los Multifondos A al E para cobertura cambiaria de sus carteras internacionales (USD/CLP, EUR, UF).",
     origen: "Superintendencia de Pensiones — Carteras de Inversión Desagregadas Mensuales y Banco Central de Chile (BCCh).",
     columnas: [
@@ -544,7 +517,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (139 meses consecutivos)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "6.6k contratos",
+    registros: "6.666 registros",
     descripcion: "Contratos de Swaps OTC de tasa de interés y monedas (Cross Currency Swaps UF vs USD) suscritos por las Administradoras de Fondos de Pensiones.",
     origen: "Superintendencia de Pensiones (SPensiones) — Carteras Desagregadas Mensuales de Inversión y Derivados.",
     columnas: [
@@ -571,7 +544,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (139 meses consecutivos)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "168k tenencias",
+    registros: "168.182 registros",
     descripcion: "Cartera desagregada de renta fija soberana y corporativa (Bonos de Tesorería BTP/BTU, Banco Central BCU/BCP, Bonos Bancarios y Corporativos) de los Fondos de Pensiones.",
     origen: "Superintendencia de Pensiones (SPensiones) — Portafolios Desagregados Mensuales de Inversiones.",
     columnas: [
@@ -598,7 +571,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (139 meses consecutivos)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "39.8k tenencias",
+    registros: "39.835 registros",
     descripcion: "Cartera desagregada de renta variable nacional (acciones de sociedades anónimas abiertas chilenas) mantenida por los Fondos de Pensiones.",
     origen: "Superintendencia de Pensiones (SPensiones) — Portafolios Desagregados Mensuales de Inversiones en Acciones.",
     columnas: [
@@ -626,7 +599,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (40 instituciones historicas)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "40 instituciones",
+    registros: "40 entidades",
     descripcion: "Catalogo exhaustivo de bancos comerciales, agencias extranjeras y filiales bancarias supervisadas por la CMF.",
     origen: "Comision para el Mercado Financiero (CMF) — Nomina Oficial de Entidades Bancarias y Grupos Financieros.",
     columnas: [
@@ -649,7 +622,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (223 meses consecutivos)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "5.1k balances",
+    registros: "5.095 balances",
     descripcion: "Balance general mensual consolidado: total activos, total pasivos y patrimonio neto en MM$ CLP y MM$ USD.",
     origen: "CMF — Estados de Situacion Financiera B1 (Modelo MB1 del Compendio de Normas Contables Bancarias).",
     columnas: [
@@ -677,7 +650,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (223 meses consecutivos)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "5.1k estados de resultados",
+    registros: "5.095 registros",
     descripcion: "Estado de resultados mensual consolidado: utilidad neta del ejercicio en MM$ CLP y MM$ USD.",
     origen: "CMF — Estados de Resultados Consolidados R1 (Modelo MR1).",
     columnas: [
@@ -701,7 +674,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (220 meses consecutivos)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-25",
-    registros: "2.9k pactos y repos",
+    registros: "2.947 registros",
     descripcion: "Serie mensual histórica de operaciones de pacto de retroventa (activo / reverse repo) y retrocompra (pasivo / repo) banco por banco de toda la banca comercial en Chile.",
     origen: "Comisión para el Mercado Financiero (CMF) — Estados de Situación Financiera MB1 y Balances Históricos SBIF.",
     columnas: [
@@ -734,7 +707,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (Mensual)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "Series de Stock F099",
+    registros: "2.860 registros",
     descripcion: "Stock nocional de posiciones abiertas en derivados financieros (Forwards USD/CLP, Forwards UF/CLP, NDF, Swaps Promedio Camara SPC, Cross-Currency Swaps CCS) mantenidas por la banca residente con contrapartes no residentes, empresas y AFPs.",
     origen: "Banco Central de Chile — Base de Datos Estadisticos (BDE SIETE, Capitulo F099 Derivados Bancarios).",
     columnas: [
@@ -765,7 +738,7 @@ const DATA_DICTIONARY = [
     frescura: "Al dia (Mensual)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "Series de Flujo F099",
+    registros: "2.860 registros",
     descripcion: "Volumenes y montos brutos/netos mensuales transados en el mercado de derivados por la banca residente con agentes externos, corporativos y multifondos.",
     origen: "Banco Central de Chile — Base de Datos Estadisticos (BDE SIETE, Capitulo F099 Derivados Bancarios).",
     columnas: [
@@ -800,7 +773,7 @@ const DATA_DICTIONARY = [
     frescura: "Al día (Mensual)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "153 periodos",
+    registros: "153 registros",
     descripcion: "Tasas de política monetaria (TPM), costo de fondeo interbancario (TIB / ICP), curvas de rendimiento soberanas BCP (pesos 2Y, 5Y, 10Y) y BCU (UF 5Y, 10Y, 20Y), swaps promedio cámara (SPC), pendiente de curva y breakeven de inflación implícita.",
     origen: "Banco Central de Chile — Base de Datos Estadísticos (BDE SIETE, Mercado Financiero y Tasas de Interés).",
     columnas: [
@@ -832,7 +805,7 @@ const DATA_DICTIONARY = [
     frescura: "Al día (Mensual)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "153 periodos",
+    registros: "153 registros",
     descripcion: "Tipo de cambio nominal oficial USD/CLP (promedio mensual, cierre de mes, mínimos, máximos y volatilidad mensual anualizada), Euro Observado (EUR/CLP) e índices de Tipo de Cambio Real multilateral (TCR y TCR-5).",
     origen: "Banco Central de Chile — Estadísticas Cambiarias y de Comercio Exterior (SIETE F073 / F072).",
     columnas: [
@@ -862,7 +835,7 @@ const DATA_DICTIONARY = [
     frescura: "Al día (Mensual)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "153 periodos",
+    registros: "153 registros",
     descripcion: "Unidad de Fomento (UF cierre y promedio), Índice de Precios al Consumidor (IPC índice, variación mensual y anual), IMACEC Total y No Minero, Precio spot del Cobre BML y Expectativas de Inflación EEE a 11 y 23 meses.",
     origen: "Banco Central de Chile e Instituto Nacional de Estadísticas (INE) — SIETE Precios, Cuentas Nacionales y Encuestas.",
     columnas: [
@@ -885,7 +858,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "factoring_leasing_maestro",
-    name: "factoring_leasing.maestro",
+    name: "factoring_leasing.lista_entidades",
     viewName: "factoring_leasing_maestro",
     sector: "factoring_leasing",
     sectorLabel: "Factoring & Leasing",
@@ -894,7 +867,7 @@ const DATA_DICTIONARY = [
     frescura: "Al día (2026-03)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "28 entidades (22 Activas Vigentes + 6 Históricas CMF)",
+    registros: "28 entidades",
     descripcion: "Catálogo maestro oficial y exhaustivo de intermediarios financieros no bancarios (Factoring, Leasing y Financiamiento Automotriz), auditado con Algoritmo Módulo 11, estado de vigencia registral, perímetro regulatorio CMF y grupo controlador.",
     origen: "Comisión para el Mercado Financiero (CMF) — Nóminas Oficiales de Sociedades de Factoring (FASOC), Leasing Inmobiliario (LISOC) y Registro de Valores de Emisores (RVEMI).",
     columnas: [
@@ -935,7 +908,7 @@ const DATA_DICTIONARY = [
     frescura: "Al día (49 trimestres)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "878 balances IFRS",
+    registros: "878 balances",
     descripcion: "Balances trimestrales IFRS: activos totales, pasivos corrientes y no corrientes directos de cuentas CMF, patrimonio neto, cartera de crédito y activos líquidos en MM$ CLP y MM$ USD.",
     origen: "Comisión para el Mercado Financiero (CMF) — Estados Financieros FECU IFRS de Sociedades de Leasing y Factoring.",
     columnas: [
@@ -960,7 +933,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "factoring_leasing_nota_efectivo_detalle",
-    name: "factoring_leasing.nota_efectivo_detalle",
+    name: "factoring_leasing.nota_efectivo",
     viewName: "factoring_leasing_nota_efectivo_detalle",
     sector: "factoring_leasing",
     sectorLabel: "Factoring & Leasing",
@@ -969,7 +942,7 @@ const DATA_DICTIONARY = [
     frescura: "Al día (49 trimestres)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-25",
-    registros: "2.975 datos",
+    registros: "2.975 registros",
     descripcion: "Desglose granular de notas a los estados financieros: cuentas corrientes bancarias en moneda nacional y extranjera (USD, EUR, GBP), depósitos a plazo, fondos mutuos e inversiones en pactos de retrocompra de liquidez (CRV).",
     origen: "Comisión para el Mercado Financiero (CMF) — Notas a los Estados Financieros de Sociedades de Factoring y Leasing.",
     columnas: [
@@ -988,7 +961,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "factoring_leasing_cartera_morosidad_detalle",
-    name: "factoring_leasing.cartera_morosidad_detalle",
+    name: "factoring_leasing.nota_cartera_morosidad",
     viewName: "factoring_leasing_cartera_morosidad_detalle",
     sector: "factoring_leasing",
     sectorLabel: "Factoring & Leasing",
@@ -997,7 +970,7 @@ const DATA_DICTIONARY = [
     frescura: "Al día (49 trimestres)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-25",
-    registros: "17.406 datos",
+    registros: "17.406 registros",
     descripcion: "Estratificación granular de la cartera de colocaciones por línea de producto (Factoring con/sin recurso, Leasing mobiliario/inmobiliario, Automotriz), tramos de morosidad (Vigente a >180 días) y provisiones por pérdida esperada IFRS 9.",
     origen: "Comisión para el Mercado Financiero (CMF) — Notas a los Estados Financieros de Sociedades de Factoring y Leasing.",
     columnas: [
@@ -1023,7 +996,7 @@ const DATA_DICTIONARY = [
   // =========================================================================
   {
     id: "corredoras_bolsa_maestro",
-    name: "corredoras.maestro",
+    name: "corredoras.lista_entidades",
     viewName: "corredoras_bolsa_maestro",
     sector: "corredoras_bolsa",
     sectorLabel: "Corredoras de Bolsa",
@@ -1032,7 +1005,7 @@ const DATA_DICTIONARY = [
     frescura: "Al día (Trimestral)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "47 entidades",
+    registros: "120 entidades",
     descripcion: "Directorio oficial de entidades autorizadas e inscritas ante la CMF para intermediar valores de oferta pública, con validación de RUT bajo Módulo 11 y clasificación por conglomerado financiero.",
     origen: "Comisión para el Mercado Financiero (CMF) — Registro de Intermediarios de Valores.",
     columnas: [
@@ -1054,7 +1027,7 @@ const DATA_DICTIONARY = [
     frescura: "Al día (Trimestral)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "1.586 balances",
+    registros: "621 balances",
     descripcion: "Estados Financieros IFRS trimestrales de los intermediarios bursátiles: masa total de activos, pasivos exigibles, patrimonio neto, activos líquidos y utilidad neta del ejercicio.",
     origen: "Comisión para el Mercado Financiero (CMF) — Estadísticas del Mercado de Valores.",
     columnas: [
@@ -1077,7 +1050,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "corredoras_bolsa_registro_universo",
-    name: "corredoras.universo",
+    name: "corredoras.registro_unico",
     viewName: "corredoras_bolsa_registro_universo",
     sector: "corredoras_bolsa",
     sectorLabel: "Corredoras de Bolsa",
@@ -1105,7 +1078,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "corredoras_bolsa_caratula_eeff_historico",
-    name: "corredoras.caratula_eeff",
+    name: "corredoras.estados_financieros",
     viewName: "corredoras_bolsa_caratula_eeff_historico",
     sector: "corredoras_bolsa",
     sectorLabel: "Corredoras de Bolsa",
@@ -1153,7 +1126,7 @@ const DATA_DICTIONARY = [
     frescura: "Al día (Trimestral)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-24",
-    registros: "2.6k contratos",
+    registros: "2.577 contratos",
     descripcion: "Desglose Nivel 2 del mercado REPO: segmentación por contraparte (institucionales, intermediarios, empresas, personas), tasas ponderadas y vencimiento (hasta 7 días vs más de 7 días).",
     origen: "Comisión para el Mercado Financiero (CMF) — Notas a los Estados Financieros de Corredoras.",
     columnas: [
@@ -1184,7 +1157,7 @@ const DATA_DICTIONARY = [
     frescura: "Al día (Trimestral)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-24",
-    registros: "2.6k colaterales",
+    registros: "2.631 colaterales",
     descripcion: "Detalle Nivel 3 de colaterales: nemotécnicos de acciones (BCI, BSANTANDER, SQM-B, FALABELLA, etc.), cuotas de fondos de inversión y bonos recibidos o entregados en garantía para operaciones simultáneas y de retroventa.",
     origen: "Comisión para el Mercado Financiero (CMF) — Detalle de Títulos en Garantía bajo IFRS.",
     columnas: [
@@ -1207,7 +1180,7 @@ const DATA_DICTIONARY = [
   // =========================================================================
   {
     id: "securitizadoras_maestro",
-    name: "securitizadoras.maestro",
+    name: "securitizadoras.lista_entidades",
     viewName: "securitizadoras_maestro",
     sector: "securitizadoras",
     sectorLabel: "Securitizadoras",
@@ -1264,7 +1237,7 @@ const DATA_DICTIONARY = [
   },
     {
     id: "patrimonios_separados_balance_lineas",
-    name: "patrimonios.balance_lineas",
+    name: "patrimonios_separados.balance_lineas",
     viewName: "patrimonios_separados_balance_lineas",
     sector: "patrimonios_separados",
     sectorLabel: "Patrimonios Separados (CMF / Ley 18.045)",
@@ -1273,7 +1246,7 @@ const DATA_DICTIONARY = [
     frescura: "Trimestral FECU Oficial",
     modo: "Automático PyMuPDF / OCR CMF",
     ultimaActualizacion: "2026-09-25",
-    registros: "16,842 filas",
+    registros: "16.842 registros",
     descripcion: "Balance general línea a línea de patrimonios separados, publicado en el archivo. Cubre disponible, activo securitizado, provisiones, pasivos y la línea 20.000 de total pasivo y patrimonio. Esta ficha no certifica un cuadre al peso.",
     origen: "Comisión para el Mercado Financiero (CMF) - Balances FECU Oficiales.",
     columnas: [
@@ -1293,7 +1266,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "patrimonios_separados_excedentes_lineas",
-    name: "patrimonios.excedentes_lineas",
+    name: "patrimonios_separados.excedentes",
     viewName: "patrimonios_separados_excedentes_lineas",
     sector: "patrimonios_separados",
     sectorLabel: "Patrimonios Separados (CMF / Ley 18.045)",
@@ -1302,7 +1275,7 @@ const DATA_DICTIONARY = [
     frescura: "Trimestral FECU Oficial",
     modo: "Automático PyMuPDF / OCR CMF",
     ultimaActualizacion: "2026-09-25",
-    registros: "11,157 filas",
+    registros: "11.157 registros",
     descripcion: "Estado de Determinación de Excedentes / Resultados completo cuenta por cuenta de Patrimonios Separados. Contiene el desglose exhaustivo de ingresos operacionales (intereses y reajustes del activo securitizado), ingresos financieros (inversiones y pactos), gastos operacionales (remuneraciones de administración, custodia, auditoría, clasificación de riesgo) y gastos financieros por bonos emitidos.",
     origen: "Comisión para el Mercado Financiero (CMF) - Estados de Determinación de Excedentes FECU.",
     columnas: [
@@ -1322,7 +1295,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "patrimonios_separados_nota_cartera_detalle",
-    name: "patrimonios.nota_cartera",
+    name: "patrimonios_separados.nota_cartera",
     viewName: "patrimonios_separados_nota_cartera_detalle",
     sector: "patrimonios_separados",
     sectorLabel: "Patrimonios Separados (CMF / Ley 18.045)",
@@ -1331,7 +1304,7 @@ const DATA_DICTIONARY = [
     frescura: "Trimestral Oficial",
     modo: "Automático PyMuPDF / OCR CMF",
     ultimaActualizacion: "2026-09-25",
-    registros: "796 filas",
+    registros: "796 registros",
     descripcion: "Detalle relacional de la Nota Explicativa de Cartera Securitizada. Especifica los activos subyacentes aportados (mutuos hipotecarios, contratos de leasing habitacional, créditos comerciales), originador acreedor, número de deudores, tasa de interés promedio ponderada, plazo residual promedio y valor presente de los contratos.",
     origen: "Comisión para el Mercado Financiero (CMF) - Notas a los Estados Financieros.",
     columnas: [
@@ -1353,7 +1326,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "patrimonios_separados_nota_morosidad_detalle",
-    name: "patrimonios.nota_morosidad",
+    name: "patrimonios_separados.nota_morosidad",
     viewName: "patrimonios_separados_nota_morosidad_detalle",
     sector: "patrimonios_separados",
     sectorLabel: "Patrimonios Separados (CMF / Ley 18.045)",
@@ -1362,7 +1335,7 @@ const DATA_DICTIONARY = [
     frescura: "Trimestral Oficial",
     modo: "Automático PyMuPDF / OCR CMF",
     ultimaActualizacion: "2026-09-25",
-    registros: "6,632 filas",
+    registros: "6.632 registros",
     descripcion: "Nota de morosidad publicada. El texto de tramo_mora quedó como vino en el archivo: hay etiquetas repetidas con espacios distintos y filas Total o Totales. No está normalizado a una escala única de días.",
     origen: "Comisión para el Mercado Financiero (CMF) - Notas a los Estados Financieros.",
     columnas: [
@@ -1382,7 +1355,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "patrimonios_separados_nota_bonos_detalle",
-    name: "patrimonios.nota_bonos",
+    name: "patrimonios_separados.nota_bonos",
     viewName: "patrimonios_separados_nota_bonos_detalle",
     sector: "patrimonios_separados",
     sectorLabel: "Patrimonios Separados (CMF / Ley 18.045)",
@@ -1391,7 +1364,7 @@ const DATA_DICTIONARY = [
     frescura: "Trimestral Oficial",
     modo: "Automático PyMuPDF / OCR CMF",
     ultimaActualizacion: "2026-09-25",
-    registros: "8,001 filas",
+    registros: "8.001 registros",
     descripcion: "Detalle relacional de la Nota Explicativa de Bonos y Títulos de Deuda de Securitización Emitidos. Contiene las series emitidas (Serie A preferente, Serie B subordinada), nemotécnicos de mercado, moneda/unidad (UF, CLP, USD), tasa de carátula anual pactada, monto colocado original, saldo insoluto en miles de pesos y en UF, y fecha de vencimiento final.",
     origen: "Comisión para el Mercado Financiero (CMF) - Notas a los Estados Financieros.",
     columnas: [
@@ -1414,7 +1387,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "patrimonios_separados_nota_administracion_detalle",
-    name: "patrimonios.nota_administracion",
+    name: "patrimonios_separados.nota_administracion",
     viewName: "patrimonios_separados_nota_administracion_detalle",
     sector: "patrimonios_separados",
     sectorLabel: "Patrimonios Separados (CMF / Ley 18.045)",
@@ -1423,7 +1396,7 @@ const DATA_DICTIONARY = [
     frescura: "Trimestral Oficial",
     modo: "Automático PyMuPDF / OCR CMF",
     ultimaActualizacion: "2026-09-25",
-    registros: "2,153 filas",
+    registros: "2.153 registros",
     descripcion: "Detalle relacional de la Nota Explicativa de Remuneraciones por Administración, Custodia y Agencias de Pago. Registra las comisiones fijas y variables cobradas por la securitizadora gestora, bases de cálculo contractuales, tasas anuales y saldos por pagar devengados al cierre del ejercicio.",
     origen: "Comisión para el Mercado Financiero (CMF) - Notas a los Estados Financieros.",
     columnas: [
@@ -1443,7 +1416,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "patrimonios_separados_nota_sobrecolateral_detalle",
-    name: "patrimonios.nota_sobrecolateral",
+    name: "patrimonios_separados.nota_sobrecolateral",
     viewName: "patrimonios_separados_nota_sobrecolateral_detalle",
     sector: "patrimonios_separados",
     sectorLabel: "Patrimonios Separados (CMF / Ley 18.045)",
@@ -1452,7 +1425,7 @@ const DATA_DICTIONARY = [
     frescura: "Trimestral Oficial",
     modo: "Automático PyMuPDF / OCR CMF",
     ultimaActualizacion: "2026-09-25",
-    registros: "679 filas",
+    registros: "679 registros",
     descripcion: "Detalle relacional de la Nota Explicativa de Sobrecolateralización y Fondos de Reserva. Cuantifica el exceso de activos colaterales sobre el pasivo de bonos emitidos, el ratio o porcentaje de sobrecolateral real vs contractualmente requerido y los fondos de reserva líquidos de liquidez y prepagos.",
     origen: "Comisión para el Mercado Financiero (CMF) - Notas a los Estados Financieros.",
     columnas: [
@@ -1472,7 +1445,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "patrimonios_separados_nota_efectivo_detalle",
-    name: "patrimonios.nota_efectivo_detalle",
+    name: "patrimonios_separados.nota_efectivo",
     viewName: "patrimonios_separados_nota_efectivo_detalle",
     sector: "patrimonios_separados",
     sectorLabel: "Patrimonios Separados (CMF / Ley 18.045)",
@@ -1481,7 +1454,7 @@ const DATA_DICTIONARY = [
     frescura: "Trimestral Oficial",
     modo: "Automático PyMuPDF / OCR CMF",
     ultimaActualizacion: "2026-09-25",
-    registros: "3,802 filas",
+    registros: "3.802 registros",
     descripcion: "Partidas de efectivo, depósitos y valores negociables publicadas en la nota. El tipo de instrumento queda como está en el archivo, incluidos los casos en que la nota trae mutuos hipotecarios. No se reclasifican.",
     origen: "Comisión para el Mercado Financiero (CMF) — Notas a los Estados Financieros Auditados de Patrimonios Separados.",
     columnas: [
@@ -1501,7 +1474,7 @@ const DATA_DICTIONARY = [
   },
 {
     id: "patrimonios_separados_maestro",
-    name: "patrimonios.emisiones_lineas",
+    name: "patrimonios_separados.lista_emisiones",
     viewName: "patrimonios_separados_maestro",
     sector: "patrimonios_separados",
     sectorLabel: "Patrimonios Separados",
@@ -1531,7 +1504,7 @@ const DATA_DICTIONARY = [
   // =========================================================================
   {
     id: "ccaf_maestro",
-    name: "ccaf.maestro",
+    name: "ccaf.lista_entidades",
     viewName: "ccaf_maestro",
     sector: "cajas_compensacion",
     sectorLabel: "Cajas de Compensación",
@@ -1573,7 +1546,7 @@ const DATA_DICTIONARY = [
   // =========================================================================
   {
     id: "agf_maestro",
-    name: "agf.maestro",
+    name: "agf.lista_administradoras",
     viewName: "agf_maestro",
     sector: "agf",
     sectorLabel: "Administradoras Generales de Fondos",
@@ -1616,7 +1589,7 @@ const DATA_DICTIONARY = [
     frescura: "Actualización Trimestral CMF",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "Balances IFRS",
+    registros: "1.572 balances",
     descripcion: "Serie histórica de balances y estados de resultados bajo norma IFRS correspondientes al patrimonio corporativo propio de las Administradoras Generales de Fondos (AGF). Monitorea solvencia, capital mínimo regulatorio, efectivo, cartera propia de inversión fiduciaria y comisiones operacionales.",
     origen: "Comisión para el Mercado Financiero (CMF) — Estados Financieros IFRS Trimestrales de Entidades Supervisadas.",
     columnas: [
@@ -1640,7 +1613,7 @@ const DATA_DICTIONARY = [
   // =========================================================================
   {
     id: "sistemas_pago_maestro",
-    name: "pagos.maestro_infraestructuras",
+    name: "sistemas_pago.lista_entidades",
     viewName: "sistemas_pago_maestro",
     sector: "sistemas_pago",
     sectorLabel: "Sistemas de Pago",
@@ -1671,7 +1644,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "sistemas_pago_balances",
-    name: "pagos.balances_ifrs",
+    name: "sistemas_pago.balances",
     viewName: "sistemas_pago_balances",
     sector: "sistemas_pago",
     sectorLabel: "Sistemas de Pago",
@@ -1680,7 +1653,7 @@ const DATA_DICTIONARY = [
     frescura: "Trimestral",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "82 balances",
+    registros: "82 registros",
     descripcion: "Estados de situación financiera consolidados bajo estándar IFRS para cámaras de contraparte central y redes adquirentes supervisadas (ComDer, CCLV, Transbank). Permite auditar la solvencia patrimonial, garantías de compensación, fondos de reserva y resultados operacionales.",
     origen: "Comisión para el Mercado Financiero (CMF) - FECU IFRS.",
     columnas: [
@@ -1698,7 +1671,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "sistemas_pago_estadisticas_bcch",
-    name: "pagos.estadisticas_bcch",
+    name: "sistemas_pago.estadisticas_bcch",
     viewName: "sistemas_pago_estadisticas_bcch",
     sector: "sistemas_pago",
     sectorLabel: "Sistemas de Pago",
@@ -1707,7 +1680,7 @@ const DATA_DICTIONARY = [
     frescura: "Mensual",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "102 observaciones",
+    registros: "102 registros",
     descripcion: "Series estadísticas agregadas de medios y sistemas de pago chilenos: liquidez en efectivo (circulante M0 stock y promedio), flujo mensual bruto liquidado en el sistema LBTR (millones de USD), compensación minorista de transferencias electrónicas de fondos (CCA TEF en millones de CLP) y tasas de interés de colocación con tarjetas de crédito.",
     origen: "Banco Central de Chile (BCCh) - Base de Datos Estadísticos (SIETE) e ISiP.",
     columnas: [
@@ -1728,7 +1701,7 @@ const DATA_DICTIONARY = [
   // =========================================================================
   {
     id: "retail_financiero_maestro",
-    name: "retail.maestro",
+    name: "retail_financiero.lista_entidades",
     viewName: "retail_financiero_maestro",
     sector: "retail_financiero",
     sectorLabel: "Retail Financiero",
@@ -1758,7 +1731,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "retail_financiero_balances",
-    name: "retail.balances",
+    name: "retail_financiero.balances",
     viewName: "retail_financiero_balances",
     sector: "retail_financiero",
     sectorLabel: "Retail Financiero",
@@ -1767,7 +1740,7 @@ const DATA_DICTIONARY = [
     frescura: "Actualización Trimestral CMF",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "190 balances",
+    registros: "190 registros",
     descripcion: "Serie histórica de balances consolidados y estados de resultados bajo norma IFRS correspondientes a las matrices cotizadas de retail financiero (Falabella, Cencosud, Ripley, Hites, Tricot, ABC). Monitorea solvencia, dimensión de activos, efectivo y caja disponible, endeudamiento total y utilidad neta con identidad contable 100% exacta.",
     origen: "Comisión para el Mercado Financiero (CMF) — Estados Financieros Consolidados IFRS Trimestrales.",
     columnas: [
@@ -1788,7 +1761,7 @@ const DATA_DICTIONARY = [
   // =========================================================================
   {
     id: "fintech_rpsf_maestro",
-    name: "fintech.rpsf_maestro",
+    name: "fintech.lista_entidades",
     viewName: "fintech_rpsf_maestro",
     sector: "fintech",
     sectorLabel: "FinTech",
@@ -1831,7 +1804,7 @@ const DATA_DICTIONARY = [
     frescura: "Actualización Continua",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "262 licencias",
+    registros: "262 registros",
     descripcion: "Matriz desagregada de licencias y autorizaciones operativas por servicio financiero tipificado bajo la Ley Fintec (PFC, SAT, AC, AI, CIF, EO, IIF). Detalla la condición regulatoria de cada servicio (Autorizado, Eximido de solicitar autorización, Cancelado) para cada entidad inscrita.",
     origen: "Comisión para el Mercado Financiero (CMF) — RPSF.",
     columnas: [
@@ -1858,7 +1831,7 @@ const DATA_DICTIONARY = [
     frescura: "Vigente",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "262 roles",
+    registros: "262 registros",
     descripcion: "Mapeo y taxonomía de roles de los prestadores en el Sistema de Finanzas Abiertas (SFA / Open Finance) de Chile. Clasifica a las entidades en Instituciones Proveedoras de Servicios Basados en Información (IPSI), Iniciadoras de Pagos o Enrutadoras (IIP) y Proveedoras de Cuentas (IPC), especificando requisitos de consentimiento de clientes y garantías líquidas exigidas.",
     origen: "Comisión para el Mercado Financiero (CMF) — Marco Open Finance Ley N° 21.521.",
     columnas: [
@@ -1874,7 +1847,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "ccaf_maestro",
-    name: "ccaf.maestro",
+    name: "ccaf.lista_entidades",
     viewName: "ccaf_maestro",
     sector: "cajas_compensacion",
     sectorLabel: "Cajas de Compensación",
@@ -1913,7 +1886,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "ccaf_caratula_totales",
-    name: "ccaf.caratula_totales",
+    name: "ccaf.balances",
     viewName: "ccaf_caratula_totales",
     sector: "cajas_compensacion",
     sectorLabel: "Cajas de Compensación",
@@ -1922,7 +1895,7 @@ const DATA_DICTIONARY = [
     frescura: "Serie Histórica 2010-2025",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "266 balances",
+    registros: "288 balances",
     descripcion: "Serie histórica oficial de carátula de balances (2010-2025) para las Cajas de Compensación chilenas bajo norma IFRS. Comprende los 4 asientos de cierre: Activo Total (10000), Pasivo Total (20000), Patrimonio Total (23000) y Utilidad Neta / Excedente (23050), con distinción estricta de alcance contable Consolidado vs Individual.",
     origen: "SUSESO & CMF — Balances FECU y Estados Financieros Auditados.",
     columnas: [
@@ -1950,7 +1923,7 @@ const DATA_DICTIONARY = [
     frescura: "Serie Histórica 2012-2024",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "189 componentes",
+    registros: "213 registros",
     descripcion: "Desglose contable de los componentes analíticos puros de Efectivo y Equivalentes al Efectivo (Nota 8 de los EEFF auditados) entre 2012 y 2024. Excluye deliberadamente la fila de Total general para evitar agregación duplicada, abarcando saldos en Caja, Bancos, Depósitos a Plazo e inversiones de corto plazo / Pactos de retroventa.",
     origen: "SUSESO & CMF — Notas explicativas a los Estados Financieros Auditados.",
     columnas: [
@@ -1977,7 +1950,7 @@ const DATA_DICTIONARY = [
     frescura: "Serie Histórica 2020-2024",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "52 depósitos",
+    registros: "52 registros",
     descripcion: "Detalle pormenorizado instrumento por instrumento de las colocaciones en Depósitos a Plazo (DAP) mantenidas por las Cajas de Compensación en el sistema bancario comercial chileno.",
     origen: "SUSESO & CMF — Subtablas analíticas de colocaciones bancarias Nota 8.",
     columnas: [
@@ -2006,7 +1979,7 @@ const DATA_DICTIONARY = [
     frescura: "Serie Histórica 2018-2024",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "158 pactos auditados",
+    registros: "158 operaciones",
     descripcion: "Detalle contrato a contrato de las operaciones de compra con retroventa (Pactos de Retroventa / Repos) suscritas por las Cajas de Compensación con corredoras de bolsa institucionales en el mercado monetario chileno, con plazos en días y tasas estandarizadas.",
     origen: "CMF Chile & SUSESO — Subtablas analíticas de pactos y repos de la Nota 8 (Efectivo y Equivalentes).",
     columnas: [
@@ -2041,7 +2014,7 @@ const DATA_DICTIONARY = [
     frescura: "2019-2026 (Trimestral y Anual)",
     modo: "Automático XBRL",
     ultimaActualizacion: "2026-09-23",
-    registros: "268 componentes atómicos",
+    registros: "268 registros",
     descripcion: "Cartera oficial de colocaciones atómicas de Crédito Social y provisiones de deterioro para las Cajas de Compensación chilenas extraída directamente desde los hechos XBRL de la CMF. Excluye estrictamente filas redundantes de totales y subtotales para garantizar aditividad perfecta sin doble contabilización. Desglosa los montos vigentes corrientes, no corrientes, provisiones de incobrabilidad y valor neto por tipo de afiliado (Trabajadores y Pensionados) y destino del crédito (Consumo, Educación, Hipotecario, Microempresarios).",
     origen: "Comisión para el Mercado Financiero (CMF) — Instancias XBRL oficiales con taxonomía sectorial cl-cc.",
     columnas: [
@@ -2063,137 +2036,44 @@ const DATA_DICTIONARY = [
     ]
   },
   {
-    id: "ffmm_caratula_eeff_2024",
-    name: "ffmm.caratula_eeff_2024",
-    viewName: "ffmm_caratula_eeff_2024",
-    sector: "ffmm",
-    sectorLabel: "Fondos Mutuos",
-    norma: "IFRS / CMF Ley 20.712",
-    corte: "2024-12",
-    frescura: "Cierre 2024 Auditado",
-    modo: "Automático PyMuPDF Solver",
-    ultimaActualizacion: "2026-09-24",
-    registros: "376 fondos auditados",
-    descripcion: "Carátula de balance y estado de resultados auditados al cierre 2024 para fondos mutuos supervisados por la CMF. Incluye activos totales, pasivos de liquidación, patrimonio / AUM atribuible a partícipes, utilidad del ejercicio y desglose de notas de efectivo, valor razonable, costo amortizado y operaciones REPO.",
-    origen: "Comisión para el Mercado Financiero (CMF) — Estados Financieros Anuales Auditados (Pestaña 62 de Fondos Mutuos).",
-    columnas: [
-      { name: "run_fondo", type: "VARCHAR", role: "PK", significado: "RUN identificador único del fondo mutuo ante la CMF.", contable: "No aplica" },
-      { name: "nombre_fondo", type: "VARCHAR", role: "Atributo", significado: "Razón social completa y oficial del fondo mutuo.", contable: "No aplica" },
-      { name: "rut_agf", type: "VARCHAR", role: "FK", significado: "RUT institucional de la Administradora General de Fondos gestora.", contable: "No aplica" },
-      { name: "razon_social_agf", type: "VARCHAR", role: "Dimensión", significado: "Nombre de la Administradora General de Fondos (AGF).", contable: "No aplica" },
-      { name: "moneda_fondo", type: "VARCHAR", role: "Atributo", significado: "Moneda de denominación de las cuotas del fondo.", contable: "No aplica" },
-      { name: "moneda_eeff", type: "VARCHAR", role: "Atributo", significado: "Moneda en que se emitieron y auditaron los estados financieros (CLP o USD).", contable: "No aplica" },
-      { name: "factor_tc_usd_clp", type: "DOUBLE", role: "Métrica", significado: "Tipo de cambio de cierre utilizado para conversión a moneda homogénea.", contable: "No aplica" },
-      { name: "total_activos_m_clp", type: "DOUBLE", role: "Métrica", significado: "Total de activos mantenidos por el fondo mutuo en millones de CLP.", contable: "Valor de Mercado Bruto" },
-      { name: "total_pasivos_m_clp", type: "DOUBLE", role: "Métrica", significado: "Total de pasivos operacionales (rescates por pagar, liquidaciones T+1/T+2 y comisiones devengadas) en millones de CLP.", contable: "Costo Amortizado / Devengado" },
-      { name: "patrimonio_aum_m_clp", type: "DOUBLE", role: "Métrica", significado: "Activo neto atribuible a los partícipes (AUM) en millones de CLP.", contable: "Valor de Mercado Neto" },
-      { name: "utilidad_ejercicio_m_clp", type: "DOUBLE", role: "Métrica", significado: "Aumento o disminución de activo neto por operaciones del ejercicio anual en millones de CLP.", contable: "Resultado IFRS" },
-      { name: "saldo_repos_m_clp", type: "DOUBLE", role: "Métrica", significado: "Saldo de operaciones de compra con retroventa al 31 de diciembre en millones de CLP.", contable: "Pacto Activo (CRV)" },
-      { name: "costo_amortizado_m_clp", type: "DOUBLE", role: "Métrica", significado: "Activos financieros valorizados a costo amortizado en millones de CLP.", contable: "Costo Amortizado" },
-      { name: "fvtpl_m_clp", type: "DOUBLE", role: "Métrica", significado: "Activos financieros medidos a valor razonable con cambios en resultados en millones de CLP.", contable: "Valor Razonable / MtM" },
-      { name: "efectivo_m_clp", type: "DOUBLE", role: "Métrica", significado: "Saldo de efectivo y equivalentes al efectivo al 31 de diciembre en millones de CLP.", contable: "Costo Amortizado" },
-      { name: "tiene_repos", type: "BOOLEAN", role: "Dimensión", significado: "Flag que indica si el fondo mutuo mantiene contratos de compra con retroventa al cierre.", contable: "No aplica" }
-    ]
-  },
-  {
-    id: "ffmm_repos_detalle_2024",
-    name: "ffmm.repos_detalle_2024",
-    viewName: "ffmm_repos_detalle_2024",
-    sector: "ffmm",
-    sectorLabel: "Fondos Mutuos",
-    norma: "IFRS / CMF Ley 20.712 (Nota Compra con Retroventa)",
-    corte: "2024-12",
-    frescura: "Cierre 2024 Auditado",
-    modo: "Automático PyMuPDF TableFinder",
-    ultimaActualizacion: "2026-09-24",
-    registros: "Contratos REPO Literales",
-    descripcion: "Desglose literal de 11 columnas de todos los contratos individuales de operaciones de compra con retroventa (REPOs activos) de fondos mutuos chilenos al cierre de 2024, extraídos desde las notas a los estados financieros auditados.",
-    origen: "Comisión para el Mercado Financiero (CMF) — Notas explicativas a los EEFF Auditados de Fondos Mutuos.",
-    columnas: [
-      { name: "run_fondo", type: "VARCHAR", role: "FK", significado: "RUN identificador único del fondo mutuo ante la CMF.", contable: "No aplica" },
-      { name: "nombre_fondo", type: "VARCHAR", role: "Atributo", significado: "Razón social oficial del fondo mutuo.", contable: "No aplica" },
-      { name: "rut_agf", type: "VARCHAR", role: "FK", significado: "RUT institucional de la Administradora General de Fondos gestora.", contable: "No aplica" },
-      { name: "razon_social_agf", type: "VARCHAR", role: "Dimensión", significado: "Nombre de la Administradora General de Fondos (AGF).", contable: "No aplica" },
-      { name: "fecha_compra", type: "VARCHAR", role: "Fecha", significado: "Fecha original de suscripción de la compra con pacto de retroventa.", contable: "No aplica" },
-      { name: "rut_contraparte", type: "VARCHAR", role: "FK", significado: "RUT oficial de la institución financiera o corredora contraparte.", contable: "No aplica" },
-      { name: "nombre_contraparte", type: "VARCHAR", role: "Dimensión", significado: "Razón social o denominación de la contraparte dealer del contrato REPO.", contable: "No aplica" },
-      { name: "clasificacion_riesgo", type: "VARCHAR", role: "Atributo", significado: "Clasificación de riesgo de crédito de la contraparte o instrumento.", contable: "No aplica" },
-      { name: "nemotecnico", type: "VARCHAR", role: "Dimensión", significado: "Código nemotécnico del instrumento financiero entregado en garantía/pacto.", contable: "No aplica" },
-      { name: "tipo_instrumento", type: "VARCHAR", role: "Dimensión", significado: "Tipo de instrumento subyacente (BTP, BTU, PDBC, Depósito, etc.).", contable: "No aplica" },
-      { name: "unidades_nominales", type: "DOUBLE", role: "Métrica", significado: "Cantidad o unidades nominales del instrumento transado.", contable: "No aplica" },
-      { name: "total_transado_m_clp", type: "DOUBLE", role: "Métrica", significado: "Monto total transado al inicio del contrato en millones de CLP.", contable: "Pacto Activo (CRV)" },
-      { name: "fecha_vencimiento", type: "VARCHAR", role: "Fecha", significado: "Fecha acordada para la retroventa o vencimiento del contrato.", contable: "No aplica" },
-      { name: "precio_pactado_tasa", type: "VARCHAR", role: "Métrica", significado: "Tasa de interés o precio pactado para la retroventa.", contable: "No aplica" },
-      { name: "saldo_al_cierre_m_clp", type: "DOUBLE", role: "Métrica", significado: "Saldo contable valorizado al 31/12/2024 en millones de CLP.", contable: "Pacto Activo (CRV)" },
-      { name: "pagina_pdf", type: "BIGINT", role: "Atributo", significado: "Número de página dentro del PDF oficial del estado financiero auditado.", contable: "No aplica" }
-    ]
-  },
-  {
-    id: "ffmm_caratula_eeff_historico",
-    name: "ffmm.caratula_eeff_historico",
-    viewName: "ffmm_caratula_eeff_historico",
-    sector: "ffmm",
-    sectorLabel: "Fondos Mutuos",
-    norma: "IFRS / CMF Ley 20.712",
-    corte: "2015-2025",
-    frescura: "Panel Anual 2015-2025",
-    modo: "Automático Streaming RAM CMF",
-    ultimaActualizacion: "2026-09-24",
-    registros: "Panel Histórico Completo",
-    descripcion: "Carátula histórica de balances generales y estados de resultados auditados (2015-2025) para todo el mercado de fondos mutuos chilenos supervisados por la CMF. Incluye activos totales, pasivos totales, patrimonio / AUM neto atribuible a partícipes, utilidad del ejercicio, efectivo y equivalentes, cartera a valor razonable y cartera a costo amortizado con validación de identidad contable exacta.",
-    origen: "Comisión para el Mercado Financiero (CMF) — Pestaña 3 (Información Financiera Histórica).",
-    columnas: [
-      { name: "run_fondo", type: "BIGINT", role: "PK", significado: "RUN numérico único del fondo mutuo ante la CMF.", contable: "No aplica" },
-      { name: "nombre_fondo", type: "VARCHAR", role: "Atributo", significado: "Razón social oficial del fondo mutuo.", contable: "No aplica" },
-      { name: "rut_agf", type: "VARCHAR", role: "FK", significado: "RUT de la Administradora General de Fondos gestora.", contable: "No aplica" },
-      { name: "razon_social_agf", type: "VARCHAR", role: "Dimensión", significado: "Nombre de la Administradora General de Fondos (AGF).", contable: "No aplica" },
-      { name: "periodo", type: "VARCHAR", role: "Dimensión", significado: "Periodo de reporte anual en formato YYYYMM (ej. 202412).", contable: "No aplica" },
-      { name: "anio", type: "BIGINT", role: "Dimensión", significado: "Año calendario del ejercicio financiero auditado.", contable: "No aplica" },
-      { name: "fecha_cierre", type: "VARCHAR", role: "Fecha", significado: "Fecha de cierre contable (31 de diciembre de cada año).", contable: "No aplica" },
-      { name: "total_activos_m_clp", type: "DOUBLE", role: "Métrica", significado: "Activos totales auditados del fondo mutuo en millones de CLP.", contable: "Activo Bruto" },
-      { name: "total_pasivos_m_clp", type: "DOUBLE", role: "Métrica", significado: "Pasivos totales excluyendo el patrimonio atribuible a partícipes en millones de CLP.", contable: "Pasivo Exigible" },
-      { name: "patrimonio_activo_neto_m_clp", type: "DOUBLE", role: "Métrica", significado: "Activo neto atribuible a los partícipes (AUM / Patrimonio) en millones de CLP.", contable: "Patrimonio Neto" },
-      { name: "utilidad_neta_ejercicio_m_clp", type: "DOUBLE", role: "Métrica", significado: "Resultado neto del ejercicio después de impuestos en millones de CLP.", contable: "Resultado Neto" },
-      { name: "efectivo_y_equivalentes_m_clp", type: "DOUBLE", role: "Métrica", significado: "Saldo de caja, bancos e inversiones a la vista de muy corto plazo en millones de CLP.", contable: "Efectivo y Eq." },
-      { name: "activos_financieros_vr_m_clp", type: "DOUBLE", role: "Métrica", significado: "Cartera de activos financieros medidos a valor razonable con cambios en resultados.", contable: "Valor Razonable / MtM" },
-      { name: "activos_financieros_amortizado_m_clp", type: "DOUBLE", role: "Métrica", significado: "Cartera de instrumentos de deuda mantenidos a costo amortizado en millones de CLP.", contable: "Costo Amortizado" },
-      { name: "cuadre_activo_pasivo_patrimonio", type: "BOOLEAN", role: "Atributo", significado: "Indicador booleano que certifica que Activo = Pasivo + Patrimonio.", contable: "Ecuación Contable" }
-    ]
-  },
-  {
     id: "ffmm_repos_detalle_historico",
-    name: "ffmm.repos_detalle_historico",
+    name: "ffmm.repos_contratos",
     viewName: "ffmm_repos_detalle_historico",
     sector: "ffmm",
     sectorLabel: "Fondos Mutuos",
     norma: "IFRS / CMF Ley 20.712",
-    corte: "2015-2025",
-    frescura: "Panel Anual 2015-2025",
-    modo: "Automático Streaming RAM CMF",
-    ultimaActualizacion: "2026-09-24",
-    registros: "Contratos Literales Históricos",
-    descripcion: "Detalle contractual literal de 11 columnas de todas las operaciones de compra con retroventa (REPO / SFT) declaradas en la Nota 25 de los estados financieros de fondos mutuos chilenos entre 2015 y 2025.",
-    origen: "Comisión para el Mercado Financiero (CMF) — Nota 25 de Estados Financieros Auditados (FMNO...pdf).",
+    corte: "2010-2025",
+    frescura: "Muestra 2010-2025 · sin auditar",
+    modo: "Experimental (extracción en revisión)",
+    ultimaActualizacion: "2026-09-26",
+    registros: "388 contratos",
+    descripcion: "Extracción preliminar, contrato por contrato, de operaciones de compra con retroventa (REPO / SFT) en notas de estados financieros de fondos mutuos, en 16 cierres anuales de diciembre entre 2010 y 2025. Cada fila pretende representar un contrato: contraparte, instrumento, fechas, monto transado y saldo al cierre. Los montos se rotulan provisionalmente en miles de pesos (M$), pero su escala todavía debe verificarse contra cada documento original.",
+    advertencia: "Falta auditar contra los PDF originales de la CMF. No implica cobertura exhaustiva ni confiabilidad de montos/unidades. Hay campos incompletos (por ejemplo, 70 de 388 contratos sin fecha de vencimiento y 133 sin nemotécnico) y al menos un saldo de 40.090.000.000 unidades registradas en 2022 que requiere verificación. No usar totales, rankings ni cifras de mercado derivados de esta muestra. Un saldo de repo no es el portafolio ni el pasivo total de un fondo.",
+    origen: "Comisión para el Mercado Financiero (CMF) — nota de pactos de retroventa de los estados financieros de fondos mutuos (PDF), complementada con la información financiera histórica de la CMF.",
     columnas: [
       { name: "run_fondo", type: "BIGINT", role: "PK", significado: "RUN del fondo mutuo comprador en el pacto de retroventa.", contable: "No aplica" },
       { name: "nombre_fondo", type: "VARCHAR", role: "Atributo", significado: "Razón social del fondo mutuo tenedor del contrato REPO.", contable: "No aplica" },
+      { name: "rut_agf", type: "VARCHAR", role: "FK", significado: "RUT de la Administradora General de Fondos que gestiona el fondo comprador.", contable: "No aplica" },
+      { name: "razon_social_agf", type: "VARCHAR", role: "Dimensión", significado: "Nombre de la Administradora General de Fondos (AGF).", contable: "No aplica" },
       { name: "periodo", type: "VARCHAR", role: "Dimensión", significado: "Periodo anual de reporte contable (YYYYMM).", contable: "No aplica" },
       { name: "anio", type: "BIGINT", role: "Dimensión", significado: "Año calendario del cierre contable.", contable: "No aplica" },
       { name: "fecha_compra", type: "VARCHAR", role: "Fecha", significado: "Fecha original de compra del instrumento financiero bajo pacto.", contable: "No aplica" },
       { name: "rut_contraparte", type: "VARCHAR", role: "FK", significado: "RUT institucional de la contraparte financiera vendedora.", contable: "No aplica" },
       { name: "nombre_contraparte", type: "VARCHAR", role: "Dimensión", significado: "Razón social de la institución financiera contraparte (Banco / Corredora).", contable: "No aplica" },
+      { name: "clasificacion_riesgo", type: "VARCHAR", role: "Atributo", significado: "Clasificación de riesgo del instrumento o contraparte cuando el documento la declara (puede venir como NA).", contable: "No aplica" },
       { name: "nemotecnico", type: "VARCHAR", role: "Dimensión", significado: "Nemotécnico oficial del instrumento subyacente transado.", contable: "No aplica" },
       { name: "tipo_instrumento", type: "VARCHAR", role: "Dimensión", significado: "Tipo de instrumento subyacente (BTP, BTU, PDBC, BCU, BCP, DP).", contable: "No aplica" },
       { name: "unidades_nominales", type: "DOUBLE", role: "Métrica", significado: "Cantidad nominal comprometida en el contrato de retroventa.", contable: "No aplica" },
-      { name: "total_transado_m_clp", type: "DOUBLE", role: "Métrica", significado: "Monto total transado al inicio del contrato en millones de CLP.", contable: "Pacto Activo (CRV)" },
+      { name: "total_transado_m_clp", type: "DOUBLE", role: "Métrica", significado: "Monto transado al inicio del contrato. Rotulado provisionalmente como miles de pesos (M$); aún falta validar la unidad y el número contra el PDF original. Puede venir en cero.", contable: "Pacto Activo (CRV)" },
       { name: "fecha_vencimiento", type: "VARCHAR", role: "Fecha", significado: "Fecha acordada de vencimiento de la promesa de venta.", contable: "No aplica" },
-      { name: "precio_pactado_tasa", type: "VARCHAR", role: "Métrica", significado: "Precio pactado o tasa de interés de la operación.", contable: "No aplica" },
-      { name: "saldo_al_cierre_m_clp", type: "DOUBLE", role: "Métrica", significado: "Saldo contable valorizado al cierre del ejercicio en millones de CLP.", contable: "Pacto Activo (CRV)" }
+      { name: "precio_pactado_tasa", type: "VARCHAR", role: "Métrica", significado: "Precio pactado o tasa de interés de la operación, tal como aparece en el documento (texto).", contable: "No aplica" },
+      { name: "saldo_al_cierre_m_clp", type: "DOUBLE", role: "Métrica", significado: "Saldo del contrato al cierre del ejercicio. Rotulado provisionalmente como miles de pesos (M$); aún falta verificar el monto y la escala contra el PDF. No equivale al patrimonio o pasivo total del fondo.", contable: "Pacto Activo (CRV)" },
+      { name: "pagina_pdf", type: "BIGINT", role: "Atributo", significado: "Página del PDF de la CMF de donde se leyó el contrato. Permite volver al documento para auditarlo.", contable: "No aplica" }
     ]
   },
   {
     id: "cooperativas_maestro",
-    name: "cooperativas.maestro",
+    name: "cooperativas.lista_entidades",
     viewName: "cooperativas_maestro",
     sector: "cooperativas",
     sectorLabel: "Cooperativas de Ahorro y Crédito",
@@ -2202,7 +2082,7 @@ const DATA_DICTIONARY = [
     frescura: "Al día (7 entidades sistémicas)",
     modo: "Automático Streaming RAM CMF",
     ultimaActualizacion: "2026-09-24",
-    registros: "7 cooperativas fiscalizadas",
+    registros: "7 entidades",
     descripcion: "Catastro maestro y directorio institucional de las Cooperativas de Ahorro y Crédito (CAC) de importancia sistémica supervisadas por la CMF. Incluye Coopeuch, Oriencoop, Capual, Ahorrocoop, Detacoop, Coonfia y Coocretal con RUT canónico validado bajo Módulo 11.",
     origen: "Comisión para el Mercado Financiero (CMF) — Nómina de Cooperativas de Ahorro y Crédito Fiscalizadas.",
     columnas: [
@@ -2231,7 +2111,7 @@ const DATA_DICTIONARY = [
     frescura: "Mensual (103 periodos consecutivos)",
     modo: "Automático Streaming RAM CMF",
     ultimaActualizacion: "2026-09-24",
-    registros: "700+ balances mensuales",
+    registros: "294 balances",
     descripcion: "Panel mensual estandarizado de Estados Financieros IFRS, Colocaciones de Crédito y Captaciones en Depósitos a Plazo (DAP) para las Cooperativas de Ahorro y Crédito supervisadas por la CMF. Incorpora la identidad contable fundamental Activos = Pasivos + Patrimonio con conversión multimoneda (CLP y USD).",
     origen: "Comisión para el Mercado Financiero (CMF) — Reportes Financieros Mensuales de Cooperativas de Ahorro y Crédito.",
     columnas: [
@@ -2253,7 +2133,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "cooperativas_nota_efectivo_detalle",
-    name: "cooperativas.nota_efectivo_detalle",
+    name: "cooperativas.nota_efectivo",
     viewName: "cooperativas_nota_efectivo_detalle",
     sector: "cooperativas",
     sectorLabel: "Cooperativas de Ahorro y Crédito",
@@ -2262,7 +2142,7 @@ const DATA_DICTIONARY = [
     frescura: "Anual Auditada (4 periodos comparativos)",
     modo: "Automático Streaming RAM CMF",
     ultimaActualizacion: "2026-09-24",
-    registros: "122 registros atómicos",
+    registros: "122 registros",
     descripcion: "Desglose granular y auditado de Efectivo y Depósitos en Bancos (Nota 5 y Nota 6 de los EEFF auditados) para las 7 Cooperativas fiscalizadas por la CMF. Incluye efectivo en caja y sucursales, canje / clearing interbancario de valores en cobro, cuentas corrientes comerciales en bancos locales (desglosado por banco en Detacoop y Coopeuch), y total de liquidez inmediata reconciliado matemáticamente con el balance.",
     origen: "Comisión para el Mercado Financiero (CMF) — Notas a los Estados Financieros Anuales Auditados de Cooperativas de Ahorro y Crédito.",
     columnas: [
@@ -2284,7 +2164,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "patrimonios_separados_balance_resumen",
-    name: "patrimonios.balance_resumen",
+    name: "patrimonios_separados.balance_resumen",
     viewName: "patrimonios_separados_balance_resumen",
     sector: "patrimonios_separados",
     sectorLabel: "Patrimonios Separados (CMF / Ley 18.045)",
@@ -2293,7 +2173,7 @@ const DATA_DICTIONARY = [
     frescura: "Anual Auditada",
     modo: "Automático Streaming RAM CMF",
     ultimaActualizacion: "2026-09-24",
-    registros: "64 balances clasificados",
+    registros: "64 balances",
     descripcion: "Estados Financieros estandarizados de Patrimonios Separados administrados por Sociedades Securitizadoras reguladas. Incluye la identidad contable fundamental Activos = Pasivos + Excedentes/Deficit Acumulado, segregación de activos securitizados (corto y largo plazo) y pasivos por títulos de deuda emitidos.",
     origen: "Comisión para el Mercado Financiero (CMF) — Balances FECU y Estados Financieros Auditados.",
     columnas: [
@@ -2326,7 +2206,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "patrimonios_separados_repos_detalle",
-    name: "patrimonios.repos_detalle",
+    name: "patrimonios_separados.repos_contratos",
     viewName: "patrimonios_separados_repos_detalle",
     sector: "patrimonios_separados",
     sectorLabel: "Patrimonios Separados (CMF / Ley 18.045)",
@@ -2359,7 +2239,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "patrimonios_separados_cartera_morosidad_detalle",
-    name: "patrimonios.cartera_morosidad_detalle",
+    name: "patrimonios_separados.cartera_morosidad_detalle",
     viewName: "patrimonios_separados_cartera_morosidad_detalle",
     sector: "patrimonios_separados",
     sectorLabel: "Patrimonios Separados (CMF / Ley 18.045)",
@@ -2368,7 +2248,7 @@ const DATA_DICTIONARY = [
     frescura: "Extracto corto",
     modo: "Automático Streaming RAM CMF",
     ultimaActualizacion: "2026-09-24",
-    registros: "67 filas",
+    registros: "67 registros",
     descripcion: "Extracto corto, distinto de la nota de 6,632 filas. Cubre 7 vehículos en 2023-12 y 2024-12. La columna porcentaje_provision_pct no se usa como tasa: hay valores que no son un porcentaje.",
     origen: "Comisión para el Mercado Financiero (CMF) — Notas a los Estados Financieros de Patrimonios Separados.",
     columnas: [
@@ -2387,7 +2267,7 @@ const DATA_DICTIONARY = [
   },
   {
     id: "patrimonios_separados_balance_pdf",
-    name: "patrimonios.balance_pdf",
+    name: "patrimonios_separados.balance_cuentas",
     viewName: "patrimonios_separados_balance_pdf",
     sector: "patrimonios_separados",
     sectorLabel: "Patrimonios Separados (CMF / Ley 18.045)",
@@ -2396,7 +2276,7 @@ const DATA_DICTIONARY = [
     frescura: "46,502 cuentas",
     modo: "Lectura del PDF",
     ultimaActualizacion: "2026-09-26",
-    registros: "46,502 filas",
+    registros: "46.502 registros",
     descripcion: "Cuentas del balance impreso, en miles de pesos, con su signo. Son 2,086 PDF y 789 códigos. No hay códigos de cuenta inventados. Se sacaron 13 filas sin cuenta usable: ocho con el rubro roto y cinco sin nombre y en cero. El Excel no se guarda.",
     origen: "PDF del patrimonio separado publicado por la CMF.",
     columnas: [
@@ -2520,6 +2400,12 @@ class DataDictionaryController {
                 </div>
               </div>
               <p class="dict-table-desc">${table.descripcion}</p>
+              ${table.advertencia ? `
+                <div class="dict-warning-box">
+                  <span class="dict-warning-badge">Sin auditar</span>
+                  <span class="dict-warning-text">${table.advertencia}</span>
+                </div>
+              ` : ''}
               ${table.origen ? `
                 <div class="dict-table-source">
                   <span class="source-badge">Origen de Datos</span>

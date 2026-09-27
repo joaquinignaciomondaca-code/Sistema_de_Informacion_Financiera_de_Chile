@@ -6,6 +6,8 @@ Pipeline Step 4B: Auditoria Contable y Validacion Cruzada Historica de EEFF y RE
 3. Genera metricas macrofinancieras anuales (AUM total, Activos totales, REPO total M CLP, fondos activos).
 """
 
+# RETIRADO DEL SITIO (2026-09-26): audita la carátula histórica, retirada del visor; se mantiene
+# como herramienta de laboratorio para la auditoría pendiente contra la CMF.
 import os
 import sys
 import json

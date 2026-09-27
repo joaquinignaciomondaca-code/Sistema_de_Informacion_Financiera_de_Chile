@@ -33,11 +33,13 @@ for (const group of tree) for (const sector of group.children) {
     circularIds.add(category.id);
     for (const table of category.tables) {
       assert(!expected.has(table.id), 'tabla duplicada: ' + table.id);
-      expected.set(table.id, table.file);
-      // Incidencia previa a esta reorganización: vida_bonos apunta al Parquet
-      // consolidado excluido por .gitignore; el sidebar ofrece sus particiones.
-      if (table.file !== '#' && table.id !== 'vida_bonos') {
-        assert(fs.existsSync('docs/' + table.file), 'archivo ausente: ' + table.file);
+      expected.set(table.id, table.file || table.files);
+      // Una tabla puede publicarse como particiones (varias rutas) cuando el
+      // Parquet consolidado supera el límite de GitHub: todas deben existir.
+      for (const file of [table.file, ...(table.files || [])]) {
+        if (file && file !== '#') {
+          assert(fs.existsSync('docs/' + file), 'archivo ausente: ' + file);
+        }
       }
     }
   }
@@ -45,7 +47,38 @@ for (const group of tree) for (const sector of group.children) {
 const options = viewer.flatMap(group => group.tables.map(table => table.id));
 assert.equal(new Set(options).size, options.length, 'opciones duplicadas en visor');
 for (const id of options) assert(expected.has(id), 'opción no encontrada en sidebar: ' + id);
+
+// --- Normalización del catálogo de entidades ---------------------------------
+// Estándar: cada sector abre con una carpeta "Lista de Entidades" (badge de tipo
+// entities) que contiene sólo la tabla maestra del sector. Las excepciones son
+// sectores sin maestra propia: macro (series estadísticas) y las carteras de
+// AFP, cuya maestra vive en "Administradoras (AFP como Empresas)".
+const SIN_MAESTRA = ['macro', 'afp_carteras'];
+const BADGE_TYPES = ['entities', 'data', 'roadmap'];
+for (const group of tree) for (const sector of group.children) {
+  for (const category of sector.children) {
+    assert(BADGE_TYPES.includes(category.badgeType),
+      'badgeType no soportado por el render: ' + category.id + ' -> ' + category.badgeType);
+  }
+  const carpetasEntidades = sector.children.filter(c => c.label === 'Lista de Entidades');
+  if (SIN_MAESTRA.includes(sector.sector)) {
+    assert.equal(carpetasEntidades.length, 0,
+      'sector sin tabla maestra no debe declarar Lista de Entidades: ' + sector.sector);
+    continue;
+  }
+  assert.equal(carpetasEntidades.length, 1,
+    'el sector debe tener exactamente una carpeta Lista de Entidades: ' + sector.sector);
+  const entidades = sector.children[0];
+  assert.equal(entidades.label, 'Lista de Entidades',
+    'Lista de Entidades debe ser el primer nodo del sector: ' + sector.sector);
+  assert.equal(entidades.badgeType, 'entities', 'badge incorrecto en ' + sector.sector);
+  assert.equal(entidades.tables.length, 1,
+    'Lista de Entidades debe contener sólo la tabla maestra: ' + sector.sector);
+  assert(/_maestro$/.test(entidades.tables[0].id),
+    'Lista de Entidades debe apuntar a la tabla maestra: ' + sector.sector + ' -> ' + entidades.tables[0].id);
+}
 console.log(`Navegación OK: ${tree.length} familias, ${expected.size} tablas, ${options.length} opciones del visor.`);
+console.log(`Catálogo de entidades normalizado en ${tree.reduce((n, g) => n + g.children.length, 0) - SIN_MAESTRA.length} sectores.`);
 """
 
 
