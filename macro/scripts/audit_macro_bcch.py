@@ -9,12 +9,12 @@ Valida:
 """
 
 import os
-import sys
+import argparse
 import pandas as pd
 import numpy as np
 
-def run_audit():
-    macro_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "docs", "outputs", "macro"))
+def run_audit(macro_dir=None):
+    macro_dir = os.path.abspath(macro_dir or os.path.join(os.path.dirname(__file__), "..", "..", ".local-data", "macro"))
     print("=" * 70)
     print("Iniciando Auditoría de Integridad: Macroeconomía & Tasas (BCCh SIETE)")
     print(f"Directorio de datos: {macro_dir}")
@@ -60,6 +60,12 @@ def run_audit():
             continue
 
         df = pd.read_parquet(pq_path)
+        if df.empty:
+            errors.append(f"[{name}] Tabla vacía")
+            continue
+        if "periodo" not in df.columns:
+            errors.append(f"[{name}] Falta periodo")
+            continue
         print(f"\nAuditando: {name} ({len(df)} filas, {len(df.columns)} columnas)")
 
         # 1. Columnas esperadas
@@ -85,6 +91,9 @@ def run_audit():
             errors.append(f"[{name}] Lagunas cronológicas: {sorted(list(missing_periods))}")
         else:
             print(f"  [PASS] Continuidad mensual completa sin lagunas ({start_p} a {end_p}).")
+
+    if errors:
+        raise ValueError("Auditoría estructural fallida: " + "; ".join(errors))
 
     # 4. Validaciones de negocio específicas
     print("\nValidaciones de Negocio y Coherencia Financiera:")
@@ -125,10 +134,13 @@ def run_audit():
         print(f"AUDITORIA FALLIDA con {len(errors)} errores:")
         for e in errors:
             print(f"  - {e}")
-        sys.exit(1)
+        raise ValueError("Auditoría macro fallida")
     else:
         print("AUDITORIA 100% EXITOSA. Todos los datasets macro cumplen con los estándares de calidad.")
         print("=" * 70)
 
 if __name__ == "__main__":
-    run_audit()
+    parser = argparse.ArgumentParser(description="Audita un directorio de salidas macro")
+    parser.add_argument("--input-dir", default=None, help="Directorio con los tres Parquet (por defecto .local-data/macro)")
+    args = parser.parse_args()
+    run_audit(args.input_dir)

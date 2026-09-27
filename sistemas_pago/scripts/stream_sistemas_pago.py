@@ -28,8 +28,8 @@ try:
 except ImportError:
     bcchapi = None
 
-EMAIL_BCCH = "joaquinmondacaparada@gmail.com"
-PASS_BCCH = "#Mondaca2001c"
+EMAIL_BCCH = os.environ.get("BCCH_EMAIL", "")
+PASS_BCCH = os.environ.get("BCCH_PASSWORD", "")
 
 def calcular_dv(rut_num: int) -> str:
     s = str(rut_num)
@@ -334,7 +334,7 @@ def fetch_infra_balance_task(task):
 def extract_bcch_payment_stats(tc_map):
     print("3. Extrayendo series estadísticas oficiales de medios de pago BCCh SIETE...", flush=True)
     rows = []
-    if bcchapi:
+    if bcchapi and EMAIL_BCCH and PASS_BCCH:
         try:
             siete = bcchapi.Siete(EMAIL_BCCH, PASS_BCCH)
             sids = [

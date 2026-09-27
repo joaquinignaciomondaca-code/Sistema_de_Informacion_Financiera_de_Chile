@@ -54,9 +54,9 @@ def get_usd_rates_map():
 
     # 2. Descargar 2018-2019 desde bcchapi si faltan
     missing_2018_2019 = [p for p in ["2018-03", "2018-06", "2018-09", "2018-12", "2019-03", "2019-06", "2019-09", "2019-12"] if p not in rates]
-    if missing_2018_2019 and bcchapi:
+    if missing_2018_2019 and bcchapi and os.environ.get("BCCH_EMAIL") and os.environ.get("BCCH_PASSWORD"):
         try:
-            siete = bcchapi.Siete("joaquinmondacaparada@gmail.com", "#Mondaca2001c")
+            siete = bcchapi.Siete(os.environ["BCCH_EMAIL"], os.environ["BCCH_PASSWORD"])
             df_usd = siete.cuadro(series=["F073.TCO.PRE.Z.D"], desde="2018-01-01", hasta="2020-01-05")
             df_usd.columns = ["val"]
             df_usd["val"] = pd.to_numeric(df_usd["val"], errors="coerce")
