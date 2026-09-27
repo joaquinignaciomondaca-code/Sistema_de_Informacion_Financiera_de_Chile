@@ -18,7 +18,8 @@ class TransferReviewTest(unittest.TestCase):
                 (folder / f'{m}.json').write_text(json.dumps({
                     'periodo': m, 'sha256_zip': 'a'*64,
                     'filas': [{'codigo_institucion': '001', 'repo_activo_mm_clp': '1.00',
-                               'repo_pasivo_mm_clp': '2.00', 'nombre_encabezado_b1': 'BANCO'}]}))
+                               'repo_pasivo_mm_clp': '2.00', 'nombre_encabezado_b1': 'BANCO',
+                               'importe_exact_mm_clp': {'activo': '1.000001', 'pasivo': '2.000002'}}]}))
             parts = encode_review(folder)
             self.assertTrue(all(len(s) < 3100 for s in parts))
             doc = decode_review(parts[::-1])

@@ -19,6 +19,7 @@ class RebuildTest(unittest.TestCase):
         row = read_b1(raw, '2022-06', '012')
         self.assertEqual(row['repo_activo_mm_clp'], '13249.01')
         self.assertEqual(row['repo_pasivo_mm_clp'], '1557788.71')
+        self.assertEqual(row['importe_exact_mm_clp']['pasivo'], '1557788.706536')
         self.assertEqual(row['clase_para_revision'], 'codigo_sin_identidad_certificada')
 
     def test_2024_header_without_leading_zeros_and_integer_pesos(self):
@@ -70,6 +71,7 @@ class RebuildTest(unittest.TestCase):
         total = read_b1(raw.replace(b'012\t', b'999\t', 1), '2022-06', '999')
         doc = {'periodo': '2022-06', 'filas': [bank, total]}
         self.assertEqual(reconcile_system_total(doc)['activo']['diferencia_mm_clp'], '0.00')
+        self.assertEqual(reconcile_system_total(doc)['activo']['diferencia_exact_mm_clp'], '0')
         larger = dict(total, repo_activo_mm_clp='0.00', repo_pasivo_mm_clp='0.00')
         result = reconcile_system_total({'periodo': '2022-06', 'filas': [bank, larger]})
         self.assertEqual(result['exclusion_individual_que_concilia_ambos_lados'], ['012'])
