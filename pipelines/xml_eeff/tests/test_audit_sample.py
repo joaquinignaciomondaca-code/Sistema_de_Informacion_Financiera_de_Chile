@@ -18,7 +18,10 @@ FI = '''<table>
 <tr><td>Total Pasivo Corriente (+)</td><td>61</td><td>32</td></tr>
 <tr><td>Total Patrimonio Neto (+ ó -)</td><td>24.826</td><td>27.998</td></tr>
 <tr><td>Total Pasivo (+)</td><td>24.887</td><td>28.030</td></tr>
-<tr><td>Resultado del ejercicio (+ ó -)</td><td>-122</td><td>-647</td></tr></table>'''.encode('latin-1')
+<tr><th>ESTADO DE RESULTADOS INTEGRALES (Expresado en miles de Dolar)</th></tr>
+<tr><td>Resultado del ejercicio (+ ó -)</td><td>-122</td><td>-647</td></tr>
+<tr><th>ESTADO DE CAMBIOS EN EL PATRIMONIO NETO</th></tr>
+<tr><td>Resultado del ejercicio (+ ó -)</td><td>0</td><td>-122</td></tr></table>'''.encode('latin-1')
 
 
 class AuditSampleTests(unittest.TestCase):
