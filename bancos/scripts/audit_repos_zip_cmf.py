@@ -72,8 +72,10 @@ def inspect_all(blob: bytes, period: str, url: str, legacy: dict) -> dict:
     with z:
         for info in z.infolist():
             match = probe.BALANCE_TXT.fullmatch(Path(info.filename).name)
-            if not match or f"{match[2]}-{match[3]}" != period:
+            if not match:
                 continue
+            if f"{match[2]}-{match[3]}" != period:
+                raise ValueError(f"Balance {info.filename} corresponde a otro mes; esperado {period}")
             kind, bank = match[1].upper(), match[4]
             if info.file_size == 0 or info.file_size > probe.MAX_TXT:
                 raise ValueError(f"Balance {period}/{bank} vacío o excesivo")
@@ -109,7 +111,15 @@ def inspect_all(blob: bytes, period: str, url: str, legacy: dict) -> dict:
                 continue
             kind, raw = matched[0]
             numbers = [money(v) for v in raw]
-            total = sum((n for n in numbers if n is not None), Decimal(0))
+            # Un guion/celda ausente o un token ilegible NO equivale a cero.
+            # Mantener la evidencia cruda, sin fabricar una suma parcial.
+            if not raw or any(n is None for n in numbers):
+                row["hipotesis_escala"][side] = {
+                    "cuenta": account, "archivo": kind, "campos_crudos": raw,
+                    "estado": "campos_ausentes_o_ilegibles", "coincidencias_legacy": [],
+                }
+                continue
+            total = sum(numbers, Decimal(0))
             origins = [("suma_columnas", total)] + [
                 (f"columna_{i}", n) for i, n in enumerate(numbers, start=1) if n is not None]
             possibilities = []

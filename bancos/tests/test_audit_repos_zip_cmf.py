@@ -48,6 +48,15 @@ class AuditTests(unittest.TestCase):
                       side["coincidencias_legacy"])
         self.assertEqual(rows["filas_con_alguna_coincidencia"], 2)
 
+    def test_wrong_month_and_invalid_amount_fail_closed(self):
+        with self.assertRaisesRegex(ValueError, "otro mes"):
+            audit.inspect_all(zip_data("202111"), "2021-12", URL, {})
+        rows = audit.inspect_all(zip_data(a="12\t-", b="ilegible"), "2021-12", URL, {})
+        sides = rows["bancos"][0]["hipotesis_escala"]
+        self.assertEqual(sides["activo"]["estado"], "campos_ausentes_o_ilegibles")
+        self.assertEqual(sides["pasivo"]["estado"], "campos_ausentes_o_ilegibles")
+        self.assertNotIn("suma_columnas", sides["activo"])
+
     def test_missing_candidates_and_duplicate_balance_fail_closed(self):
         empty = io.BytesIO()
         with zipfile.ZipFile(empty, "w") as z:

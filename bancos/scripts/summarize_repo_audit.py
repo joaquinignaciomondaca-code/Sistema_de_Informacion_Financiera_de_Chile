@@ -88,7 +88,14 @@ def main() -> int:
     months = []
     for path in reports:
         data = json.loads(path.read_text(encoding="utf-8"))
-        months.extend(data.get("periodos") or [data])
+        if data.get("estado") == "cotejo_incompleto_no_publicado":
+            for month in data.get("periodos_completos", []):
+                months.append(month)
+            text = summarize(data)
+            print(text)
+            print(f"::warning title=Cotejo REPO ZIP CMF incompleto::{text}")
+        else:
+            months.extend(data.get("periodos") or [data])
     for month in months:
         text = summarize_month(month)
         print(text)
