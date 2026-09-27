@@ -7,6 +7,7 @@ Páginas nuevas sin la tabla antigua se reportan como SIN_VERIFICAR, no como OK.
 """
 from __future__ import annotations
 
+import argparse
 import hashlib
 import json
 import re
@@ -17,7 +18,6 @@ from pathlib import Path
 from bancos.scripts import probe_repos_zip_cmf as probe
 from bancos.scripts.probe_repo_fx_sii import Tables, URL
 
-YEARS = range(2008, 2027)
 OUT = probe.ROOT / '.local-data/review/bancos/fx_sii_historico.json'
 HEADER = ['Día', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
 NUMBER = re.compile(r'\d+(?:[.,]\d{1,2})?\Z')
@@ -65,6 +65,12 @@ def compare_year(year: int, html: str, published: dict[str, Decimal]) -> dict:
 
 
 def main() -> None:
+    cli = argparse.ArgumentParser(description=__doc__)
+    cli.add_argument('--from-year', type=int, default=2008)
+    cli.add_argument('--through-year', type=int, default=2026)
+    args = cli.parse_args()
+    if not (2008 <= args.from_year <= args.through_year <= 2026):
+        raise ValueError('Rango anual inválido')
     legacy = json.loads(probe.LEGACY.read_text(encoding='utf-8'))
     by_month: dict[str, Decimal] = {}
     for row in legacy:
@@ -73,7 +79,7 @@ def main() -> None:
             raise ValueError(f'FX legacy diferente entre bancos para {p}')
         by_month[p] = value
     reports = []
-    for year in YEARS:
+    for year in range(args.from_year, args.through_year + 1):
         # 2013+ usa la vista SII actual: la URL histórica entrega solo un JS
         # de redirección; ir directamente a la URL institucional conocida.
         url = (f'https://www.sii.cl/valores_y_fechas/dolar/dolar{year}.htm'
