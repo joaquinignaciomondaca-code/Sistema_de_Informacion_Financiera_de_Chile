@@ -184,8 +184,10 @@ def main():
     parser.add_argument('--output-dir', type=Path, default=OUT)
     args = parser.parse_args()
     records, errors = [], []
+    source_report = None
     if args.from_report:
         report = json.loads(args.from_report.read_text(encoding='utf8'))
+        source_report = report
         if not report.get('aprobada_muestra') or len(report.get('registros', [])) != len(SAMPLE):
             parser.error('Reporte incompleto o no aprobado: no crear Parquet')
         if {(r['sector'], r['rut'], r['periodo']) for r in report['registros']} != set(SAMPLE):
@@ -208,6 +210,8 @@ def main():
     report = {'aprobada_muestra': approved, 'criterio': 'cuatro campos XML contra tabla HTML CMF; RUT, período y DV',
               'alcance': 'dos entidad/período; no valida el universo ni la moneda de otros registros',
               'registros': records, 'errores': errors}
+    if source_report is not None:
+        report.update({k: source_report[k] for k in ('acciones_run', 'head_sha') if k in source_report})
     args.output_dir.mkdir(parents=True, exist_ok=True)
     (args.output_dir / 'cotejo_muestra.json').write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding='utf8')
     if approved:
