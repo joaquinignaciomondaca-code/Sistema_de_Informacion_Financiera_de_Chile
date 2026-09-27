@@ -28,6 +28,11 @@ class ProbeTests(unittest.TestCase):
         self.assertEqual(probe.discover(html + html), {"2021-12": URL})
         with self.assertRaises(ValueError):
             probe.discover(html + html.replace("50166", "50167"))
+        conflicts = set()
+        probe.discover(html + html.replace("50166", "50167") +
+                       '<a href="https://www.cmfchile.cl/portal/estadisticas/626/articles-999_recurso_1.zip">Descargar junio 2020</a>',
+                       strict=False, conflicts_out=conflicts)
+        self.assertEqual(conflicts, {"2021-12"})
 
     def test_incremental_and_manual(self):
         found = {p: URL for p in ("2026-04", "2026-05", "2026-06", "2026-07")}
