@@ -11,6 +11,7 @@ on:
 permissions:
   contents: read
   issues: write
+  pull-requests: read
 
 jobs:
   cotejo:
@@ -37,13 +38,17 @@ jobs:
           path: .local-data/xml_eeff_muestra/
           retention-days: 30
           if-no-files-found: error
+      - name: Diagnóstico cotejo (JSON textual sin enlaces efímeros)
+        if: always()
+        run: |
+          cat .local-data/xml_eeff_muestra/cotejo_muestra.json || true
       - name: Resumen del cotejo accesible sin descargar el artifact
         if: always()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_REPO: ${{ github.repository }}
         run: |
-          PR=$(gh pr list --head "$GITHUB_REF_NAME" --state open --json number --jq '.[0].number // empty' 2>/dev/null || true)
+          PR=3  # PR abierto de esta rama de sesión (solo laboratorio)
           python - <<'PY'
           import json, os
           from pathlib import Path
@@ -77,5 +82,5 @@ jobs:
             fi
           fi
       - name: Fallar si no coincide la muestra
-        if: steps.muestra.outcome != 'success'
+        if: always() && steps.muestra.outcome != 'success'
         run: exit 1
