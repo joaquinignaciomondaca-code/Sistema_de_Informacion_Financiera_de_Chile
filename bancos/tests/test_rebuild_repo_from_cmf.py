@@ -65,11 +65,14 @@ class RebuildTest(unittest.TestCase):
         self.assertEqual(row['clase_para_revision'], 'agregado')
 
     def test_total_system_excludes_aggregates(self):
-        raw = b1(('141000000', '243000000'), ['1']+['0']*3, ['2']+['0']*3)
+        raw = b1(('141000000', '243000000'), ['1000000']+['0']*3, ['2000000']+['0']*3)
         bank = read_b1(raw, '2022-06', '012')
         total = read_b1(raw.replace(b'012\t', b'999\t', 1), '2022-06', '999')
         doc = {'periodo': '2022-06', 'filas': [bank, total]}
         self.assertEqual(reconcile_system_total(doc)['activo']['diferencia_mm_clp'], '0.00')
+        larger = dict(total, repo_activo_mm_clp='0.00', repo_pasivo_mm_clp='0.00')
+        result = reconcile_system_total({'periodo': '2022-06', 'filas': [bank, larger]})
+        self.assertEqual(result['exclusion_individual_que_concilia_ambos_lados'], ['012'])
         with self.assertRaises(ValueError):
             reconcile_system_total({'periodo': '2022-06', 'filas': [bank]})
 

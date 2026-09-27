@@ -64,6 +64,12 @@ jobs:
                                            for s in ('activo', 'pasivo')},
                       'muestras': [{k: v for k, v in c.items() if k != 'filas_no_cero'}
                                    for c in doc['conciliacion_total_sistema'][:3]],
+                      'exclusiones_conciliadoras': {
+                          code: sum(code in c.get('exclusion_individual_que_concilia_ambos_lados', [])
+                                    for c in doc['conciliacion_total_sistema'])
+                          for code in sorted({code for c in doc['conciliacion_total_sistema']
+                                              for code in c.get('exclusion_individual_que_concilia_ambos_lados', [])})
+                      },
                   },
               }, ensure_ascii=False))
           PY
