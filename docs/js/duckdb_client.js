@@ -72,8 +72,6 @@ const SEMANTIC_VIEWS = [
   { name: "corredoras_bolsa_maestro", file: "outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet" },
   { name: "corredoras_bolsa_balance_resumen", file: "outputs/corredoras_bolsa/corredoras_bolsa_balance_resumen.parquet" },
   { name: "corredoras_bolsa_caratula_eeff_historico", file: "outputs/corredoras_bolsa/corredoras_bolsa_caratula_eeff_historico.parquet" },
-  { name: "corredoras_repos_contrapartes_tasas", file: "outputs/corredoras_bolsa/corredoras_repos_contrapartes_tasas.parquet" },
-  { name: "corredoras_repos_colaterales_detalle", file: "outputs/corredoras_bolsa/corredoras_repos_colaterales_detalle.parquet" },
 
         // SECURITIZADORAS (CMF / Ley 18.045) - Subsección EEFF & Notas Exhaustivas
   { name: "patrimonios_separados_balance_lineas", file: "outputs/securitizadoras/patrimonios_separados_balance_lineas.parquet" },
