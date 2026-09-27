@@ -613,23 +613,35 @@ const EXPLORER_TREE = [
             tables: [
               { id: "factoring_leasing_maestro", name: "factoring_leasing.lista_entidades", rows: "28 entidades", file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet" }
             ]
-          }
-          ,
+          },
           {
-            id: "fl_eeff_muestra_cmf_folder",
+            id: "fl_balance_muestra_cmf_folder",
             type: "circular",
-            label: "Balance y resultados · Muestra cotejada CMF",
+            label: "Balance · Muestra cotejada CMF (2 filas)",
             badge: "2 entidades · 2022",
             badgeType: "data",
             status: "active",
             sector: "factoring_leasing",
             chips: [
-              { label: "Balance cotejado (miles de pesos)", query: "SELECT segmento, rut, nombre_en_archivo_y_ficha, periodo, total_activos_miles_clp, total_pasivos_miles_clp, patrimonio_miles_clp, efectivo_miles_clp, fuente_ficha_cmf FROM factoring_leasing_eeff_muestra_cmf ORDER BY segmento;" },
-              { label: "Resultados acumulados cotejados (miles de pesos)", query: "SELECT segmento, rut, periodo, resultado_antes_impuestos_miles_clp, resultado_operaciones_continuadas_miles_clp, definicion_periodo_resultado, fuente_ficha_cmf FROM factoring_leasing_resultados_muestra_cmf ORDER BY segmento;" }
+              { label: "Balance cotejado (miles de pesos)", query: "SELECT segmento, rut, nombre_en_archivo_y_ficha, periodo, total_activos_miles_clp, total_pasivos_miles_clp, patrimonio_miles_clp, efectivo_miles_clp, fuente_ficha_cmf FROM factoring_leasing_eeff_muestra_cmf ORDER BY segmento;" }
             ],
             tables: [
-              { id: "factoring_leasing_eeff_muestra_cmf", name: "factoring_leasing.eeff_muestra_cmf", rows: "2 filas cotejadas · no es el sector", file: "outputs/factoring_leasing/factoring_leasing_eeff_muestra_cmf.parquet" },
-              { id: "factoring_leasing_resultados_muestra_cmf", name: "factoring_leasing.resultados_muestra_cmf", rows: "2 filas cotejadas · resultado acumulado", file: "outputs/factoring_leasing/factoring_leasing_resultados_muestra_cmf.parquet" }
+              { id: "factoring_leasing_eeff_muestra_cmf", name: "factoring_leasing.balance_muestra_cmf", rows: "2 filas cotejadas · no es el sector", file: "outputs/factoring_leasing/factoring_leasing_eeff_muestra_cmf.parquet" }
+            ]
+          },
+          {
+            id: "fl_resultados_muestra_cmf_folder",
+            type: "circular",
+            label: "Estado de resultados · Muestra cotejada CMF (2 filas)",
+            badge: "2 entidades · 2022",
+            badgeType: "data",
+            status: "active",
+            sector: "factoring_leasing",
+            chips: [
+              { label: "Resultados acumulados desde enero (miles de pesos)", query: "SELECT segmento, rut, periodo, resultado_antes_impuestos_miles_clp, resultado_operaciones_continuadas_miles_clp, definicion_periodo_resultado, fuente_ficha_cmf FROM factoring_leasing_resultados_muestra_cmf ORDER BY segmento;" }
+            ],
+            tables: [
+              { id: "factoring_leasing_resultados_muestra_cmf", name: "factoring_leasing.resultados_muestra_cmf", rows: "2 filas cotejadas · acumulado desde enero", file: "outputs/factoring_leasing/factoring_leasing_resultados_muestra_cmf.parquet" }
             ]
           }
         ]
