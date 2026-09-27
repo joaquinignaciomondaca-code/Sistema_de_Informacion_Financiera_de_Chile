@@ -62,10 +62,8 @@ jobs:
                       'meses_diferencia': {s: sum(float(c[s]['diferencia_mm_clp']) != 0
                                                  for c in doc['conciliacion_total_sistema'])
                                            for s in ('activo', 'pasivo')},
-                      'muestras': doc['conciliacion_total_sistema'][:3],
-                      'codigos_muestras': [{
-                          'mes': c['periodo'], 'filas': c.get('filas_no_cero', [])
-                      } for c in doc['conciliacion_total_sistema'][:3]],
+                      'muestras': [{k: v for k, v in c.items() if k != 'filas_no_cero'}
+                                   for c in doc['conciliacion_total_sistema'][:3]],
                   },
               }, ensure_ascii=False))
           PY
