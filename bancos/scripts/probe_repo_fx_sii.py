@@ -45,8 +45,8 @@ class Tables(HTMLParser):
 
 
 def main():
-    for year in (2008, 2013):
-        with urllib.request.urlopen(urllib.request.Request(URL.format(year), headers={'User-Agent': 'Mozilla/5.0'}), timeout=25) as response:
+    for year in (2022, 2025, 2026):
+        with urllib.request.urlopen(urllib.request.Request(f'https://www.sii.cl/valores_y_fechas/dolar/dolar{year}.htm', headers={'User-Agent': 'Mozilla/5.0'}), timeout=25) as response:
             url = response.url
             data = response.read(1_000_000).decode('utf-8', errors='replace')
         if year == 2013 and re.search(r'window.location.replace\(', data):
@@ -63,8 +63,10 @@ def main():
                         for t in tables[:2]],
             'sections': [re.sub(r'<[^>]+>', ' ', x)[:120] for x in re.findall(r'(?is)<h[1-5][^>]*>.*?(?:Diciembre|Noviembre|Enero).*?</h[1-5]>', data)[:3]],
             'html_start': re.sub(r'\s+', ' ', data[:700])[:400],
-            'table_2013': [{'rows': len(t), 'first': t[:3], 'last': t[-3:]}
-                           for t in tables if len(t) >= 25][:2],
+            'table_2013': [{'rows': len(t), 'first': t[:3], 'last': t[-4:],
+                            'suspect_cells': {str(m): [t[d][m] for d in (27, 28, 29, 30, 31)]
+                                              for m in ([1, 7, 10] if year != 2022 else [1, 7, 8])}}
+                           for t in tables if len(t) >= 33 and len(t[0]) == 13][:1],
             'section_ids': re.findall(r"id=['\"](mes_[a-z]+)['\"]", data)[:14],
         }, ensure_ascii=False))
 
