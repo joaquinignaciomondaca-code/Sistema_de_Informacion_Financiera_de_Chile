@@ -13,6 +13,8 @@
  */
 
 const DATA_DICTIONARY = [
+  // BEGIN AUTO FL IFRS SERIES DICTIONARY
+  // END AUTO FL IFRS SERIES DICTIONARY
   {
     id: "factoring_leasing_resultados_muestra_cmf",
     name: "factoring_leasing.resultados_muestra_cmf",

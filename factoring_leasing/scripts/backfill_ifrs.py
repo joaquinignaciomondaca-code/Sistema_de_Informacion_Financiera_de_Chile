@@ -282,7 +282,9 @@ def run(args, fetcher=fetch):
     periods = periods_from_index(index_data)
     out.mkdir(parents=True, exist_ok=True)
     summary = {'fuente_indice': INDEX, 'generado_utc': datetime.now(timezone.utc).isoformat(),
-               'publicado_en_web': False, 'rut_catalogo': len(catalog), 'periodos_indice': len(periods),
+               'publicado_en_web': False, 'sha256_catalogo': catalog_digest,
+               'rut_catalogo': len(catalog), 'periodos_indice': len(periods),
+               'periodos_indice_lista': periods,
                'primer_periodo': periods[0], 'ultimo_periodo': periods[-1],
                'procesados_esta_corrida': [], 'pendientes': [], 'errores': [],
                'nota': 'Cuarentena: cuentas ESF/ER literales por RUT; escala, cobertura y nombres históricos por auditar'}
