@@ -145,7 +145,7 @@ class DuplicadosYDvTest(unittest.TestCase):
 
 class ParseoToleranteTest(unittest.TestCase):
     def test_xml_con_caracter_invalido_se_repara_y_marca(self):
-        crudo = xml().replace(b'2957448', b'2&amp;957448')
+        crudo = xml().replace(b'2957448', b'2&957448')  # & sin escapar: XML inválido real
         fila = x.parse_ifrs(crudo, ITEM, '2014-12', 'url')
         self.assertTrue(fila['parseo_reparado'])
         self.assertEqual(fila['calidad'], 'revisar_parseo_reparado')
@@ -153,6 +153,16 @@ class ParseoToleranteTest(unittest.TestCase):
 
     def test_xml_valido_no_se_marca(self):
         self.assertFalse(x.parse_ifrs(xml(), ITEM, '2014-12', 'url')['parseo_reparado'])
+
+    def test_no_se_inventa_numero_si_no_se_puede_leer(self):
+        crudo = xml().replace(b'2957448', b'2&abc')
+        with self.assertRaisesRegex(ValueError, 'Total exigido con valores distintos|Cuenta no numerica|no cuadra'):
+            x.parse_ifrs(crudo, ITEM, '2014-12', 'url')
+
+    def test_saneo_escapa_ampersand_y_saca_controles(self):
+        self.assertEqual(x.sanear_xml(b'<a>2&3</a>'), b'<a>2&amp;3</a>')
+        self.assertNotIn(b'\x0b', x.sanear_xml(b'<a>1\x0b2</a>'))
+        self.assertEqual(x.sanear_xml(b'<a>&amp;</a>'), b'<a>&amp;</a>')
 
 
 class FlujoTest(unittest.TestCase):

@@ -160,17 +160,26 @@ def signed_rut_ok(body, dv):
     return ('0' if n == 11 else 'K' if n == 10 else str(n)) == str(dv).upper()
 
 
+def sanear_xml(raw):
+    """Repara defectos mínimos de XML oficial: caracteres de control y `&` sin escapar.
+
+    Se usa solo como segundo intento; la fila resultante queda marcada para revisión.
+    """
+    limpio = re.sub(rb'[\x00-\x08\x0b\x0c\x0e-\x1f]', b'', raw)
+    limpio = re.sub(rb'&(?!(?:amp|lt|gt|quot|apos|#\d+|#x[0-9A-Fa-f]+);)', b'&amp;', limpio)
+    return limpio
+
+
 def parse_ifrs(raw, item, per, url):
     reparado = False
     try:
         root = ET.fromstring(raw)
     except ET.ParseError:
-        # El archivo es XML oficial: se reintenta en modo tolerante y la fila queda marcada.
-        parser = ET.XMLParser(recover=True)
-        root = ET.fromstring(raw, parser=parser)
+        # Segundo intento sobre una copia saneada; la fila se marca y no sustituye al original.
+        root = ET.fromstring(sanear_xml(raw))
         reparado = True
-        if root is None or root.tag != 'IFRS':
-            raise ValueError('XML irreconocible incluso en modo tolerante')
+        if root.tag != 'IFRS':
+            raise ValueError('XML irreconocible incluso tras saneo')
     if root.tag != 'IFRS': raise ValueError(f'Raiz no IFRS: {root.tag}')
     ident = root.find('Identificacion')
     datos = root.find('DatosPeriodo')
