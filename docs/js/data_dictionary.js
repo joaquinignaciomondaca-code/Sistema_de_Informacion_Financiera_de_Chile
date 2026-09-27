@@ -502,7 +502,7 @@ const DATA_DICTIONARY = [
     modo: "Cotejo numérico CMF; validación contable pendiente",
     ultimaActualizacion: "2026-09-25",
     registros: "2.947 registros",
-    descripcion: "Saldos REPO mensuales desde Excel local no conservado en el repositorio. Se cotejaron 5.894 saldos de 220 meses con ZIP CMF sin discrepancias numéricas bajo una hipótesis de cuenta, suma de columnas y escala. No certifica la glosa contable, las columnas B1, identidades RUT ni cobertura; hay agregados mezclados. Son saldos, no operaciones individuales; total_transado_mm_usd suma saldos activo y pasivo, NO volumen del mes.",
+    descripcion: "Saldos REPO mensuales desde Excel local no conservado en el repositorio. Se cotejaron 5.894 saldos de 220 meses con ZIP CMF sin discrepancias numéricas bajo una hipótesis de cuenta, suma de columnas y escala. No certifica la glosa contable, las columnas B1, identidades RUT ni cobertura; hay agregados y filiales extranjeras mezclados. Son saldos, no operaciones individuales; total_transado_mm_usd suma saldos activo y pasivo, NO volumen del mes. No unir por RUT ni sumar conjuntamente códigos de bancos y agregados. Existe un borrador segregado sin columnas de identidad no certificada en .local-data/review/bancos/repo_correcciones (no publicado).",
     origen: "repo_banco.xlsx en equipo local; extracción bancos/scripts/02_extract_bancos_repos_series.py. Cotejo numérico con ZIP CMF documentado en bancos/AUDITORIA_REPO_BANCOS_2026-09-27.md; publicación incremental no aprobada.",
     columnas: [
       { name: "id_repo", type: "VARCHAR", role: "PK", significado: "ID local código-período.", contable: "No aplica" },

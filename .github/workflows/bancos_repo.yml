@@ -63,6 +63,11 @@ jobs:
             }
           fi
           cat .local-data/review/bancos/ejecucion.txt
+      - name: Verificar disposición física de TXT B1 en muestras por vigencia
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          python -m bancos.scripts.inspect_repo_source_layout 2021-12 2022-06 2026-04 \
+            | tee .local-data/review/bancos/disposicion_b1.jsonl
       - name: Guardar avance (solo si diagnóstico incremental completo)
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.period) }}
         uses: actions/cache/save@v4
