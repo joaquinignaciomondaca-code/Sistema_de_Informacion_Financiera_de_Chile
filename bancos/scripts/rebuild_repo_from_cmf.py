@@ -96,6 +96,24 @@ def extract(blob: bytes, period: str, url: str) -> dict:
             'filas': sorted(banks, key=lambda r: r['codigo_institucion'])}
 
 
+def reconcile_system_total(month: dict) -> dict:
+    """Control exploratorio: no presuponer que B1 individual suma el total consolidado."""
+    rows = month['filas']
+    system = [r for r in rows if r['codigo_institucion'] == '999']
+    if len(system) != 1:
+        raise ValueError(f"Total sistema 999 ausente/duplicado en {month['periodo']}")
+    individuals = [r for r in rows if r['codigo_institucion'] not in AGGREGATES |
+                   FOREIGN_AFFILIATES and r['codigo_institucion'] != '999']
+    result = {'periodo': month['periodo'], 'instituciones': len(individuals)}
+    for side in ('activo', 'pasivo'):
+        key = f'repo_{side}_mm_clp'
+        total = Decimal(system[0][key])
+        added = sum((Decimal(r[key]) for r in individuals), Decimal(0))
+        result[side] = {'sistema': str(total), 'individuales': str(added),
+                        'diferencia_mm_clp': str(total - added)}
+    return result
+
+
 def compare(month: dict, old: dict) -> dict:
     period = month['periodo']
     actual = {r['codigo_institucion']: r for r in month['filas']}
@@ -126,11 +144,13 @@ def run(out: Path = OUT, periods: list[str] | None = None) -> dict:
     extra_codes = Counter()
     extra_nonzero = Counter()
     names_by_code: dict[str, set[str]] = {}
+    total_checks = []
     for p in requested:
         # Siempre se deja constancia del error, sin confundirlo con un mes sin datos.
         try:
             doc = extract(probe.read_public(found[p], probe.MAX_ZIP), p, found[p])
             comparison = compare(doc, old)
+            total_checks.append(reconcile_system_total(doc))
             for row in doc['filas']:
                 code = row['codigo_institucion']
                 names_by_code.setdefault(code, set()).add(row['nombre_encabezado_b1'])
@@ -154,6 +174,7 @@ def run(out: Path = OUT, periods: list[str] | None = None) -> dict:
         totals['solo_cmf'] += len(r.get('solo_cmf', []))
         totals['solo_legacy'] += len(r.get('solo_legacy', []))
     summary = {'estado': 'BORRADOR_NO_PUBLICAR',
+               'conciliacion_total_sistema': total_checks,
                'codigos_cmf_fuera_legacy': {code: {'meses': count, 'meses_no_cero': extra_nonzero[code],
                                                    'nombres_b1': sorted(names_by_code[code])}
                                              for code, count in sorted(extra_codes.items())},
