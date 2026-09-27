@@ -54,17 +54,9 @@ const SEMANTIC_VIEWS = [
 
   // FONDOS DE PENSIONES (SPENSIONES)
   { name: "afp_maestro", file: "outputs/pensiones/afp_maestro_administradoras.parquet" },
-  { name: "afp_derivados_forwards", file: "outputs/pensiones/afp_derivados_forwards.parquet" },
-  { name: "afp_derivados_swaps", file: "outputs/pensiones/afp_derivados_swaps.parquet" },
-  { name: "afp_cartera_bonos", file: "outputs/pensiones/afp_cartera_bonos.parquet" },
-  { name: "afp_cartera_acciones", file: "outputs/pensiones/afp_cartera_acciones.parquet" },
 
   // BANCA E INST. FINANCIERAS (CMF / BCCh)
   { name: "bancos_maestro", file: "outputs/bancos/bancos_maestro.parquet" },
-  { name: "bancos_balance_resumen", file: "outputs/bancos/bancos_balance_resumen.parquet" },
-  { name: "bancos_estado_resultados", file: "outputs/bancos/bancos_estado_resultados.parquet" },
-  { name: "bancos_derivados_posicion_vigente", file: "outputs/bancos/bancos_derivados_posicion_vigente.parquet" },
-  { name: "bancos_derivados_flujos_transados", file: "outputs/bancos/bancos_derivados_flujos_transados.parquet" },
   { name: "bancos_repos_saldos_series", file: "outputs/bancos/bancos_repos_saldos_series.parquet" },
 
   // MACROECONOMIA & TASAS (BCCh SIETE)

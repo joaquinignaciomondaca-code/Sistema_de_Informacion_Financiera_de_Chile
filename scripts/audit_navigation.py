@@ -48,36 +48,49 @@ const options = viewer.flatMap(group => group.tables.map(table => table.id));
 assert.equal(new Set(options).size, options.length, 'opciones duplicadas en visor');
 for (const id of options) assert(expected.has(id), 'opción no encontrada en sidebar: ' + id);
 
-// El material AFP no debe volver a presentarse como verificado: hay cifras
-// generadas y errores materiales de clasificación documentados en pensiones/.
+// AFP: sólo identidad sin métricas generadas. Bancos: identidad y REPO,
+// mantenido expresamente como excepción con advertencia de auditoría.
 const pensiones = byGroup.group_pensiones;
-assert.equal(pensiones.status, 'por_auditar');
-assert(pensiones.badges.some(b => b.text.includes('Falta validar')));
-for (const sector of pensiones.children) for (const category of sector.children) {
-  assert.equal(category.status, 'por_auditar', category.id);
-  assert(category.badge.includes('Falta validar'), category.id);
-}
-const afpViewer = viewer.find(g => g.group.startsWith('Fondos de Pensiones'));
-assert(afpViewer && afpViewer.group.includes('Falta validar'));
-assert(afpViewer.tables.every(t => t.name.includes('⚠')));
-
 const bancos = byGroup.group_bancos;
-assert.equal(bancos.status, 'por_auditar');
-assert(bancos.badges.some(b => b.text.includes('Falta validar')));
-for (const sector of bancos.children) for (const category of sector.children) {
-  assert.equal(category.status, 'por_auditar', category.id);
-  assert(category.badge.includes('Falta validar'), category.id);
+assert.deepEqual(Array.from(pensiones.children, s => s.sector), ['afp_corporativo']);
+assert.deepEqual(Array.from(pensiones.children[0].children, c => c.id), ['cat_afp_maestro']);
+assert.deepEqual(Array.from(bancos.children[0].children, c => c.id),
+  ['cat_bancos_maestro', 'circ_bancos_repos']);
+assert.equal(pensiones.status, 'active');
+assert.equal(bancos.status, 'active');
+assert.equal(bancos.children[0].children[1].status, 'por_auditar');
+assert.deepEqual(Array.from(viewer.find(g => g.group.startsWith('Fondos de Pensiones')).tables, t => t.id), ['afp_maestro']);
+assert.deepEqual(Array.from(viewer.find(g => g.group.startsWith('Banca Comercial')).tables, t => t.id),
+  ['bancos_maestro', 'bancos_repos_saldos_series']);
+assert(!pensiones.badges.some(b => b.text.includes('Falta validar')));
+for (const id of ['afp_cartera_bonos','afp_cartera_acciones','afp_derivados_swaps','afp_derivados_forwards',
+                 'bancos_balance_resumen','bancos_estado_resultados','bancos_derivados_posicion_vigente',
+                 'bancos_derivados_flujos_transados']) {
+  assert(!expected.has(id), 'tabla retirada todavía visible: ' + id);
 }
-const bancosViewer = viewer.find(g => g.group.startsWith('Banca Comercial'));
-assert(bancosViewer && bancosViewer.group.includes('Falta validar'));
-assert(bancosViewer.tables.every(t => t.name.includes('⚠')));
+const restrictedFiles = ['duckdb_client.js', 'export_modal.js', 'data_dictionary.js', 'erd_graph.js', 'index.html'];
+for (const file of restrictedFiles) {
+  const text = fs.readFileSync('docs/' + (file.endsWith('.js') ? 'js/' : '') + file, 'utf8');
+  for (const id of ['afp_cartera_bonos','afp_cartera_acciones','afp_derivados_swaps','afp_derivados_forwards',
+                    'bancos_balance_resumen','bancos_estado_resultados','bancos_derivados_posicion_vigente',
+                    'bancos_derivados_flujos_transados','bancos_colocaciones']) {
+    assert(!text.includes(id), file + ' expone tabla retirada: ' + id);
+  }
+}
+const bundleContext = { window: {} };
+vm.createContext(bundleContext);
+vm.runInContext(fs.readFileSync('docs/js/data_bundles.js', 'utf8'), bundleContext);
+assert.deepEqual(Array.from(Object.keys(bundleContext.window.DATA_BUNDLES)
+  .filter(k => k.startsWith('afp_') || k.startsWith('bancos_')).sort()),
+  ['afp_maestro', 'bancos_maestro']);
+const afpKeys = Object.keys(bundleContext.window.DATA_BUNDLES.afp_maestro[0]).sort();
+assert.deepEqual(afpKeys, ['id', 'nombre_administradora', 'nombre_fantasia', 'rut_administradora']);
 
 // --- Normalización del catálogo de entidades ---------------------------------
 // Estándar: cada sector abre con una carpeta "Lista de Entidades" (badge de tipo
 // entities) que contiene sólo la tabla maestra del sector. Las excepciones son
-// sectores sin maestra propia: macro (series estadísticas) y las carteras de
-// AFP, cuya maestra vive en "Administradoras (AFP como Empresas)".
-const SIN_MAESTRA = ['macro', 'afp_carteras'];
+// sectores sin maestra propia: macro (series estadísticas).
+const SIN_MAESTRA = ['macro'];
 const BADGE_TYPES = ['entities', 'data', 'roadmap'];
 for (const group of tree) for (const sector of group.children) {
   for (const category of sector.children) {
