@@ -1,14 +1,20 @@
-﻿"""
-Extractor y Procesador Canonico de Series de Repos Bancarios CMF MB1.
-Genera docs/outputs/bancos/bancos_repos_saldos_series.parquet y .json.
-Cubre 33 bancos comerciales en Chile desde 2008-01 hasta 2026-04.
+"""
+Extractor LEGACY deshabilitado: no usar como pipeline de publicación.
+Lee un Excel ausente del PC, mezcla bancos y agregados, copia RUT actuales
+al pasado y confunde suma de saldos con volumen transado. Ver auditoría REPO.
+La preparación no publicadora está en prepare_repo_corrections.py.
 """
 
 import os
 import json
-import pandas as pd
 
 def extract_bancos_repos_series():
+    raise RuntimeError(
+        "Extractor legacy bloqueado: identidad histórica y 'total_transado' "
+        "no verificados. Usar prepare_repo_corrections.py sólo para revisión; "
+        "ningún script está autorizado todavía a publicar REPO."
+    )
+    import pandas as pd  # sólo para conservar referencia histórica; inalcanzable
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
     excel_path = r"C:\Users\joaqu\Desktop\Respaldo_BCCH\Bancos\REPO_BANCO\REPO_BANCOS_CMF\repo_banco.xlsx"
     maestro_path = os.path.join(base_dir, "docs", "outputs", "bancos", "bancos_maestro.parquet")
