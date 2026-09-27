@@ -47,10 +47,11 @@ class BackfillTests(unittest.TestCase):
                                            "pasivo": {"estado": "ausente", "cuenta": "2160000"}}},
                      {"codigo_banco": "002", "referencia_legacy_mm_clp": None, "hipotesis_escala": {}},
                  ]}
-        result = backfill.comparisons(month)
+        result = backfill.comparisons(month, {"001", "003"})
         self.assertEqual(result["lados_cotejados"], 0)
-        self.assertEqual(len(result["discrepancias"]), 2)
+        self.assertEqual(len(result["discrepancias"]), 4)
         self.assertEqual(result["bancos_sin_fila_legacy"], ["002"])
+        self.assertEqual(result["filas_legacy_sin_banco_zip"], ["003"])
 
     def test_no_silent_skip_ambiguous_month(self):
         with tempfile.TemporaryDirectory() as tmp:
