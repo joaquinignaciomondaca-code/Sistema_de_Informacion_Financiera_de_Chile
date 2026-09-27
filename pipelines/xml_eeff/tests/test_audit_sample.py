@@ -30,6 +30,10 @@ class AuditSampleTests(unittest.TestCase):
             total_pasivo_reportado=5947, patrimonio_o_activo_neto=2951501,
             resultado_ejercicio=3470))
 
+    def test_html_utf8_accented_labels(self):
+        text = FFMM.decode('latin-1').encode('utf-8')
+        self.assertEqual(a.html_values(text, 'ffmm')['resultado_ejercicio'], 3470)
+
     def test_fi_total_pasivo_includes_equity(self):
         self.assertEqual(a.html_values(FI, 'fi'), dict(total_activo=24887,
             total_pasivo_reportado=24887, patrimonio_o_activo_neto=24826,
