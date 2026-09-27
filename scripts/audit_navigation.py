@@ -48,6 +48,41 @@ const options = viewer.flatMap(group => group.tables.map(table => table.id));
 assert.equal(new Set(options).size, options.length, 'opciones duplicadas en visor');
 for (const id of options) assert(expected.has(id), 'opción no encontrada en sidebar: ' + id);
 
+// Factoring y Leasing: las dos tablas financieras NO deben ocultarse dentro
+// de una única carpeta que carga automáticamente sólo la primera tabla.
+const fl = byGroup.group_factoring_leasing.children[0];
+assert.deepEqual(Array.from(fl.children, c => c.id),
+  ['cat_fl_maestro', 'fl_balance_muestra_cmf_folder', 'fl_resultados_muestra_cmf_folder']);
+assert.deepEqual(Array.from(fl.children.slice(1), c => c.tables.length), [1, 1]);
+assert.deepEqual(Array.from(fl.children.slice(1), c => c.tables[0].id),
+  ['factoring_leasing_eeff_muestra_cmf', 'factoring_leasing_resultados_muestra_cmf']);
+assert(fl.children[1].label.startsWith('Balance · Muestra'));
+assert(fl.children[2].label.startsWith('Estado de resultados · Muestra'));
+assert.deepEqual(Array.from(viewer.find(g => g.group.startsWith('Factoring & Leasing')).tables, t => t.id),
+  ['factoring_leasing_maestro', 'factoring_leasing_eeff_muestra_cmf', 'factoring_leasing_resultados_muestra_cmf']);
+// Verificar el HTML real del explorador y qué tabla se abre al pulsar cada
+// carpeta (no basta con que el catálogo mencione ambas tablas).
+const SidebarController = vm.runInContext('SidebarController', context);
+const sidebar = Object.create(SidebarController.prototype);
+sidebar.treeContainer = { innerHTML: '' };
+sidebar.selectedTableId = null;
+sidebar.expandedNodes = new Set();
+sidebar.bindTreeEvents = () => {};
+sidebar.render();
+const flHtml = sidebar.treeContainer.innerHTML.split('data-group-id="group_factoring_leasing"')[1]
+  .split('data-group-id="group_corredoras_bolsa"')[0];
+for (const id of ['fl_balance_muestra_cmf_folder', 'fl_resultados_muestra_cmf_folder']) {
+  assert(flHtml.includes(`data-node-id="${id}"`), 'carpeta invisible: ' + id);
+}
+for (const id of ['factoring_leasing_eeff_muestra_cmf', 'factoring_leasing_resultados_muestra_cmf']) {
+  assert(flHtml.includes(`data-table-id="${id}"`), 'tabla invisible: ' + id);
+}
+const opened = [];
+sidebar.onTableSelect = (id) => opened.push(id);
+sidebar.onCircularSelect('fl_balance_muestra_cmf_folder', 'factoring_leasing');
+sidebar.onCircularSelect('fl_resultados_muestra_cmf_folder', 'factoring_leasing');
+assert.deepEqual(opened, ['factoring_leasing_eeff_muestra_cmf', 'factoring_leasing_resultados_muestra_cmf']);
+
 // AFP: sólo identidad sin métricas generadas. Bancos: identidad y REPO,
 // mantenido expresamente como excepción con advertencia de auditoría.
 const pensiones = byGroup.group_pensiones;
