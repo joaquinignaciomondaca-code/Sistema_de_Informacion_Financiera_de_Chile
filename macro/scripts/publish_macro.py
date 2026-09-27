@@ -36,6 +36,16 @@ def validate(stage: Path, published: Path):
         periods = df["periodo"].tolist()
         if [row.get("periodo") for row in rows] != periods:
             raise ValueError(f"Periodos JSON/Parquet distintos en {name}")
+        # El navegador puede consumir JSON mientras DuckDB lee Parquet:
+        # ambos deben representar los mismos valores, no sólo los mismos meses.
+        if any(not isinstance(row, dict) or set(row) != set(df.columns) for row in rows):
+            raise ValueError(f"Columnas JSON/Parquet distintas en {name}")
+        for col in df.columns.drop("periodo"):
+            left = pd.to_numeric(df[col], errors="raise")
+            right = pd.to_numeric(pd.Series([row[col] for row in rows]), errors="raise")
+            if not (left.isna().equals(right.isna()) and
+                    ((left - right).abs().fillna(0) <= 1e-8).all()):
+                raise ValueError(f"Valores JSON/Parquet distintos en {name}.{col}")
         if periods[-1] > date.today().strftime("%Y-%m"):
             raise ValueError(f"Periodo futuro en {name}: {periods[-1]}")
         core = {
