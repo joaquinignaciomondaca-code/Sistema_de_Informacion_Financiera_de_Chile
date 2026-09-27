@@ -48,17 +48,24 @@ def read_url(url, limit=12_000_000):
 
 
 def periodos_ultimo(anios=2):
+    """Cierres trimestrales ya cumplidos, del más reciente al más antiguo.
+
+    Para febrero y marzo el último cierre cumplido es diciembre del año anterior:
+    antes se devolvía un trimestre del futuro (regresión cubierta por tests).
+    """
     hoy = date.today()
-    # Ventana pequeña con solapamiento para declaraciones tardías o correcciones.
-    cierre = ((hoy.month - 1) // 3) * 3 or 12
-    anio = hoy.year if cierre != 12 or hoy.month != 1 else hoy.year - 1
+    mes_cierre = 3 * ((hoy.month - 1) // 3)  # 0, 3, 6, 9, 12 sin desbordar
+    if mes_cierre == 0:
+        anio, mes_cierre = hoy.year - 1, 12
+    else:
+        anio = hoy.year
     meses = []
     for _ in range(anios * 4):
-        meses.append(f'{anio:04d}-{cierre:02d}')
-        cierre -= 3
-        if cierre == 0:
+        meses.append(f'{anio:04d}-{mes_cierre:02d}')
+        mes_cierre -= 3
+        if mes_cierre == 0:
             anio -= 1
-            cierre = 12
+            mes_cierre = 12
     return meses
 
 
@@ -195,6 +202,8 @@ def main():
     ap.add_argument('--reset', action='store_true', help='descartar cursor y estado de una ventana nueva')
     ap.add_argument('--historical', action='store_true', help='incluye entidades no vigentes; para backfill manual')
     ap.add_argument('--all-periods', action='store_true', help='backfill trimestral desde 2011, en lotes')
+    ap.add_argument('--fail-if-sin-datos', action='store_true',
+                    help='terminar con error si no se validó ninguna fila (usar en backfill manual)')
     args = ap.parse_args()
     if args.batch < 1: ap.error('--batch debe ser positivo')
     if args.shards < 1 or not 0 <= args.shard < args.shards: ap.error('shard fuera de rango')
@@ -252,12 +261,25 @@ def main():
                 time.sleep(.15)
         results[sector] = {'total': len(pending), 'procesadas': done, 'cursor': state['cursor'], 'por_estado': stats}
         print(f'{sector}: {json.dumps(results[sector], ensure_ascii=False)}', flush=True)
-    (OUT / f'resumen_shard{args.shard}of{args.shards}.json').write_text(json.dumps({'generado_utc': datetime.now(timezone.utc).isoformat(),
-                                                    'solo_revision': True, 'sectores': results}, indent=2, ensure_ascii=False))
-    # Fail closed if *every* attempt is a transport/parse error. An empty result is NOT success.
     attempts = sum(sum(v.get('por_estado', {}).values()) for v in results.values())
     errors = sum(v.get('por_estado', {}).get('error', 0) for v in results.values())
+    verificadas = sum(v.get('por_estado', {}).get('ok_xml', 0) for v in results.values())
+    # Un job en verde NO significa que existan datos: se declara el estado explícitamente.
+    if attempts == 0:
+        estado = 'sin_intentos'
+    elif attempts == errors:
+        estado = 'falla_red_o_parseo'
+    elif verificadas == 0:
+        estado = 'sin_datos_verificados'
+    else:
+        estado = 'con_datos_verificados'
+    (OUT / f'resumen_shard{args.shard}of{args.shards}.json').write_text(json.dumps(
+        {'generado_utc': datetime.now(timezone.utc).isoformat(), 'solo_revision': True,
+         'estado_global': estado, 'filas_verificadas': verificadas, 'intentos': attempts,
+         'errores': errors, 'sectores': results}, indent=2, ensure_ascii=False))
+    print(f'ESTADO GLOBAL: {estado} (verificadas={verificadas} intentos={attempts} errores={errors})', flush=True)
     if attempts == 0 or attempts == errors: return 2
+    if args.fail_if_sin_datos and verificadas == 0: return 3
     return 0
 
 
