@@ -30,7 +30,7 @@ class AuditTests(unittest.TestCase):
         self.assertEqual(len(rows["bancos"]), 2)
         self.assertEqual(rows["filas_con_alguna_coincidencia"], 2)
         self.assertEqual(rows["bancos"][0]["hipotesis_escala"]["activo"]["coincidencias_legacy"][0]["divisor"], 1000)
-        self.assertEqual(rows["bancos"][1]["hipotesis_escala"]["pasivo"]["estado"] if "estado" in rows["bancos"][1]["hipotesis_escala"]["pasivo"] else "presente", "presente")
+        self.assertEqual(rows["bancos"][1]["hipotesis_escala"]["pasivo"]["campos_crudos"], ["0"])
 
     def test_missing_candidates_and_duplicate_balance_fail_closed(self):
         empty = io.BytesIO()
