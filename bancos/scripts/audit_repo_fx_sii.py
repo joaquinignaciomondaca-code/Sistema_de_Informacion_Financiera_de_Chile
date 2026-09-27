@@ -20,7 +20,7 @@ from bancos.scripts.probe_repo_fx_sii import Tables, URL
 
 OUT = probe.ROOT / '.local-data/review/bancos/fx_sii_historico.json'
 HEADER = ['Día', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
-NUMBER = re.compile(r'\d+(?:[.,]\d{1,2})?\Z')
+NUMBER = re.compile(r'(?:\d{1,3}(?:\.\d{3})+|\d+)(?:,\d{1,2})?\Z|\d+(?:\.\d{1,2})?\Z')
 
 
 def parse_old_table(html: str, year: int) -> dict[str, Decimal]:
@@ -46,7 +46,8 @@ def parse_old_table(html: str, year: int) -> dict[str, Decimal]:
         if any(not NUMBER.fullmatch(v) for v in values):
             invalid = sorted({v for v in values if not NUMBER.fullmatch(v)})
             raise ValueError(f'{year}-{month:02d}: valor SII ilegible {invalid[:3]!r}')
-        latest[f'{year}-{month:02d}'] = Decimal(values[-1].replace(',', '.'))
+        latest[f'{year}-{month:02d}'] = Decimal(
+            values[-1].replace('.', '').replace(',', '.') if ',' in values[-1] else values[-1])
     return latest
 
 
