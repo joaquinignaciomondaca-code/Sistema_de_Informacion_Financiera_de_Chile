@@ -1,6 +1,6 @@
 """
 Pipeline de Macroeconomía y Tasas de Interés - Banco Central de Chile (BCCh SIETE).
-Descarga streaming concurrente y consolidación de 23 series canónicas (2020 a 2026):
+Descarga incremental concurrente y consolidación de 23 series canónicas (2014 en adelante):
 1. macro_tasas_rendimientos: TPM, TIB/ICP, Curva BCP (2y, 5y, 10y), Curva BCU (5y, 10y, 20y), SPC (CLP 2y, UF 1y), Slopes y Breakeven Inflation.
 2. macro_divisas_mercado: USD/CLP (promedio, cierre, min, max, volatilidad), EUR/CLP (promedio, cierre), TCR Multilateral, TCR-5 y variaciones.
 3. macro_precios_actividad: UF (cierre, promedio), IPC (índice, mensual, anual), IMACEC (total, no minero), Cobre BML (USD/lb), Expectativas EEE (11m, 23m).
@@ -141,8 +141,39 @@ def merge_incremental(fresh, baseline, start_period):
     return merged
 
 
+# Campos mensuales publicados con rezago: su último dato puede ser anterior
+# al último mes de la tabla. Reconsultar sólo esa cola, no el histórico completo.
+MONTHLY_COLUMNS = {
+    "tpm_m": (TABLES[0], "tpm"), "tib_m": (TABLES[0], "tib_promedio"),
+    "tcr_m": (TABLES[1], "tcr_general"), "tcr_5_m": (TABLES[1], "tcr_5monedas"),
+    "ipc_idx_m": (TABLES[2], "ipc_indice"), "ipc_var_m": (TABLES[2], "ipc_var_mensual"),
+    "ipc_v12_m": (TABLES[2], "ipc_var_anual"),
+    "imacec_m": (TABLES[2], "imacec_empalmado"),
+    "imacec_nm_m": (TABLES[2], "imacec_no_minero"),
+    "cobre_m": (TABLES[2], "cobre_spot_usd_lb"),
+    "eee_11m": (TABLES[2], "eee_ipc_11m"), "eee_23m": (TABLES[2], "eee_ipc_23m"),
+}
+
+
+def query_starts(baseline):
+    """Cola mensual rezagada por serie; máximo tres meses antes del último corte."""
+    if not baseline:
+        return {key: FETCH_START_DATE for key in SERIES_CATALOG}
+    latest = baseline[TABLES[0]]["periodo"].iloc[-1]
+    floor = (pd.Period(latest, freq="M") - 3).strftime("%Y-%m")
+    starts = {}
+    for key, meta in SERIES_CATALOG.items():
+        period = latest
+        if meta["freq"] == "M":
+            table, column = MONTHLY_COLUMNS[key]
+            valid = baseline[table].loc[baseline[table][column].notna(), "periodo"]
+            period = max(floor, valid.iloc[-1]) if len(valid) else floor
+        starts[key] = period + "-01"
+    return starts
+
+
 def run_macro_pipeline(output_dir=None, baseline_dir=None):
-    """Consulta desde el primer día del último mes disponible, nunca todo el histórico."""
+    """Consulta sólo meses recientes y reintenta la cola de publicaciones rezagadas."""
     if not EMAIL_BCCH or not PASS_BCCH:
         raise RuntimeError("Faltan BCCH_EMAIL y BCCH_PASSWORD en el entorno; no se ejecutó la descarga.")
     published = ROOT / "docs" / "outputs" / "macro"
@@ -150,17 +181,18 @@ def run_macro_pipeline(output_dir=None, baseline_dir=None):
     # En un primer arranque sin Parquets previos se hace un backfill completo.
     # Consultar el mes inclusivo permite completar datos diarios y publicaciones
     # mensuales con retraso; el histórico anterior se lee solo del baseline.
-    start_date = f"{next(iter(baseline.values()))['periodo'].iloc[-1]}-01" if baseline else FETCH_START_DATE
+    starts = query_starts(baseline)
+    start_date = min(starts.values())
     end_date = date.today().isoformat()
     if start_date > end_date:
         raise ValueError("Baseline macro posterior a la fecha actual")
     print("=" * 70)
-    print(f"BCCh SIETE: consultando {len(SERIES_CATALOG)} series desde {start_date} hasta {end_date}")
+    print(f"BCCh SIETE: {len(SERIES_CATALOG)} series desde cola reciente {start_date} hasta {end_date}")
     print("=" * 70)
     t0 = time.time()
     raw_series = {}
     with ThreadPoolExecutor(max_workers=8) as executor:
-        results = executor.map(lambda item: fetch_single_series(item, start_date, end_date), SERIES_CATALOG.items())
+        results = executor.map(lambda item: fetch_single_series(item, starts[item[0]], end_date), SERIES_CATALOG.items())
         for key, df in results:
             raw_series[key] = df
             print(f"  {key:15s}: {len(df):4d} observaciones")

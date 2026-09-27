@@ -39,7 +39,11 @@ class IncrementalTests(unittest.TestCase):
     def test_queries_only_latest_month_and_preserves_history(self):
         macro.run_macro_pipeline(output_dir=self.out)
         assert len(FakeSiete.calls) == len(macro.SERIES_CATALOG)
-        assert {c[1] for c in FakeSiete.calls} == {'2026-09-01'}
+        starts = {sid: start for sid, start, _ in FakeSiete.calls}
+        assert starts[macro.SERIES_CATALOG['usd_clp_d']['sid']] == '2026-09-01'
+        assert starts[macro.SERIES_CATALOG['imacec_m']['sid']] == '2026-07-01'
+        assert starts[macro.SERIES_CATALOG['tcr_m']['sid']] == '2026-07-01'
+        assert min(starts.values()) >= '2026-06-01'  # cola acotada, nunca backfill diario
         pub = macro.ROOT / 'docs/outputs/macro'
         for name in macro.TABLES:
             old = pd.read_parquet(pub / f'{name}.parquet')
@@ -70,6 +74,18 @@ class IncrementalTests(unittest.TestCase):
         fx = merged['macro_divisas_mercado']
         prior = fx.iloc[-2]['usd_clp_cierre']
         self.assertAlmostEqual(fx.iloc[-1]['var_mensual_usd_pct'], round((1000. / prior - 1) * 100, 2))
+
+    def test_lagged_series_retries_last_observed_month_with_bounded_lookback(self):
+        baseline = macro.load_baseline(macro.ROOT / 'docs/outputs/macro')
+        starts = macro.query_starts(baseline)
+        self.assertEqual(starts['usd_clp_d'], '2026-09-01')
+        self.assertEqual(starts['imacec_m'], '2026-07-01')
+        self.assertEqual(starts['tcr_5_m'], '2026-07-01')
+        self.assertEqual(starts['ipc_idx_m'], '2026-08-01')
+        # Serie mensual permanentemente vacía: no retroceder ilimitadamente.
+        baseline['macro_precios_actividad']['cobre_spot_usd_lb'] = float('nan')
+        self.assertEqual(macro.query_starts(baseline)['cobre_m'], '2026-06-01')
+        self.assertEqual(macro.query_starts({})['cobre_m'], macro.FETCH_START_DATE)
 
     @patch.object(macro, 'EMAIL_BCCH', 'test-user')
     @patch.object(macro, 'PASS_BCCH', 'test-password')

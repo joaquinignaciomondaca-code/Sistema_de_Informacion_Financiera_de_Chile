@@ -1626,7 +1626,7 @@ const ERD_LINKS = [
   { from: "factoring_leasing_balance_resumen", to: "factoring_leasing_cartera_morosidad_detalle", key: "rut, periodo (cartera)" },
   { from: "factoring_leasing_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "macro_tasas_rendimientos", to: "macro_precios_actividad", key: "periodo (expectativas e inflación)" },
-  { from: "bancos_maestro", to: "bancos_repos_saldos_series", key: "codigo_institucion, rut" },
+  { from: "bancos_maestro", to: "bancos_repos_saldos_series", key: "codigo_institucion (RUT histórico no validado)" },
   { from: "bancos_repos_saldos_series", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "vida_maestro", to: "vida_solvencia", key: "rut_aseguradora" },
   { from: "vida_maestro", to: "vida_bonos", key: "rut_aseguradora" },
