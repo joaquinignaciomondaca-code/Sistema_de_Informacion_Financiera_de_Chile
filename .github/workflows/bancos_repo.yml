@@ -42,11 +42,19 @@ jobs:
         env:
           PERIOD: ${{ github.event_name == 'push' && '2021-12' || inputs.period }}
         run: |
+          mkdir -p .local-data/review/bancos
           if [ -n "$PERIOD" ]; then
-            python -m bancos.scripts.audit_repos_zip_cmf --period "$PERIOD"
+            python -m bancos.scripts.audit_repos_zip_cmf --period "$PERIOD" > .local-data/review/bancos/ejecucion.txt 2>&1 || {
+              cat .local-data/review/bancos/ejecucion.txt
+              exit 1
+            }
           else
-            python -m bancos.scripts.audit_repos_zip_cmf
+            python -m bancos.scripts.audit_repos_zip_cmf > .local-data/review/bancos/ejecucion.txt 2>&1 || {
+              cat .local-data/review/bancos/ejecucion.txt
+              exit 1
+            }
           fi
+          cat .local-data/review/bancos/ejecucion.txt
       - name: Guardar avance (solo si diagnóstico incremental completo)
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.period) }}
         uses: actions/cache/save@v4
@@ -54,9 +62,10 @@ jobs:
           path: .local-data/checkpoint/bancos-repo-audit
           key: bancos-repo-audit-${{ github.run_id }}
       - name: Entregar diagnóstico para revisión humana
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: cotejo-repo-zip-cmf
-          path: .local-data/review/bancos/repo_zip_audit.json
+          path: .local-data/review/bancos/
           retention-days: 30
-          if-no-files-found: error
+          if-no-files-found: warn
