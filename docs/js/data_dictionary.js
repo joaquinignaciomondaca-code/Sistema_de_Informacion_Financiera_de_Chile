@@ -2402,7 +2402,7 @@ const DATA_DICTIONARY = [
     columnas: [
       { name: "id_linea", type: "VARCHAR", role: "PK", significado: "Clave de la fila.", contable: "No aplica", interpretacion: "Solo identifica la línea." },
       { name: "archivo", type: "VARCHAR", role: "Dimensión", significado: "Nombre del PDF de donde salió la cuenta.", contable: "No aplica", interpretacion: "Permite volver al documento." },
-      { name: "rut_administradora", type: "VARCHAR", role: "Dimensión", significado: "RUT de la securitizadora, sin dígito verificador.", contable: "No aplica", interpretacion: "No se completó el dígito." },
+      { name: "rut_administradora", type: "VARCHAR", role: "FK", significado: "Cuerpo del RUT de la securitizadora, sin dígito verificador.", contable: "No aplica", interpretacion: "Calza con securitizadoras_maestro.rut. No se completó el dígito." },
       { name: "nombre_administradora", type: "VARCHAR", role: "Dimensión", significado: "Nombre de la securitizadora, como viene en el PDF.", contable: "No aplica", interpretacion: "Gestora." },
       { name: "codigo_patrimonio", type: "VARCHAR", role: "Dimensión", significado: "Código del patrimonio separado en el nombre del PDF.", contable: "No aplica", interpretacion: "No es el id de las tablas anteriores." },
       { name: "periodo", type: "VARCHAR", role: "Dimensión", significado: "Periodo AAAAMM.", contable: "Corte", interpretacion: "Cierre del balance." },
