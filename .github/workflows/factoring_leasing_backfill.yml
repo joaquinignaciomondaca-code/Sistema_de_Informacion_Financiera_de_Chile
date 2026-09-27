@@ -67,8 +67,18 @@ jobs:
         if: always()
         run: |
           if [ -f .local-data/factoring_leasing_serie/resumen.json ]; then
-            cat .local-data/factoring_leasing_serie/resumen.json
             cat .local-data/factoring_leasing_serie/resumen.json >> "$GITHUB_STEP_SUMMARY"
+            python - <<'PY'
+          import json
+          from pathlib import Path
+          r = json.loads(Path('.local-data/factoring_leasing_serie/resumen.json').read_text())
+          fields = ('estado_global', 'rut_catalogo', 'periodos_indice', 'completados_total',
+                    'filas_balance_total', 'filas_resultados_total', 'importes_no_enteros_total',
+                    'cuentas_contexto_repetidas_total', 'ruts_con_datos_total',
+                    'ruts_sin_datos_hasta_ahora', 'pendientes', 'errores')
+          concise = {k: r.get(k) for k in fields}
+          print('::notice::FL_BACKFILL_PROGRESS=' + json.dumps(concise, ensure_ascii=False))
+          PY
           else
             echo 'Sin resumen: falló antes de consultar el índice CMF.' >> "$GITHUB_STEP_SUMMARY"
           fi
