@@ -60,6 +60,26 @@ class AuditTests(unittest.TestCase):
             self.assertEqual(json.loads(cp.read_text())["periodo"], "2021-12")
             self.assertEqual(legacy.read_bytes(), before)
 
+    def test_failure_after_one_month_keeps_partial_evidence_without_checkpoint(self):
+        with tempfile.TemporaryDirectory() as d:
+            tmp = Path(d)
+            legacy = tmp / "legacy.json"
+            cp = tmp / "cp.json"
+            out = tmp / "report.json"
+            legacy.write_text(json.dumps([{"periodo": "2021-12", "codigo_institucion": "001",
+                                           "repo_activo_mm_clp": 64365, "repo_pasivo_mm_clp": 95009}]))
+            links = {"2021-12": URL, "2022-01": URL}
+            with patch.object(probe, "resolve_links", return_value=(links, set())), \
+                 patch.object(probe, "read_public", side_effect=[zip_data(), RuntimeError("CMF HTTP 503")]), \
+                 patch.object(probe, "LEGACY", legacy):
+                with self.assertRaises(RuntimeError):
+                    audit.run(output=out, checkpoint=cp, today=date(2022, 2, 15))
+            self.assertFalse(cp.exists())
+            saved = json.loads(out.read_text())
+            self.assertEqual(saved["estado"], "cotejo_incompleto_no_publicado")
+            self.assertEqual(saved["periodo_fallido"], "2022-01")
+            self.assertEqual(len(saved["periodos_completos"]), 1)
+
     def test_manual_does_not_move_checkpoint(self):
         with tempfile.TemporaryDirectory() as d:
             tmp = Path(d)
