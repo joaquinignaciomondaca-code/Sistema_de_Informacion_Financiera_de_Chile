@@ -170,16 +170,33 @@ def sanear_xml(raw):
     return limpio
 
 
+def reencodear_xml(raw):
+    """Normaliza archivos cuya declaración de codificación no coincide con los bytes.
+
+    Caso típico en los XML oficiales: se declara UTF-8 pero vienen en latin-1, y el acento
+    produce "invalid token". Se decodifica tolerante y se reescribe como UTF-8 sin declaración.
+    """
+    texto = raw.decode('latin-1', errors='replace')
+    texto = re.sub(r'^\s*<\?xml[^>]*\?>', '', texto, count=1)
+    return texto.encode('utf-8')
+
+
 def parse_ifrs(raw, item, per, url):
     reparado = False
-    try:
-        root = ET.fromstring(raw)
-    except ET.ParseError:
-        # Segundo intento sobre una copia saneada; la fila se marca y no sustituye al original.
-        root = ET.fromstring(sanear_xml(raw))
-        reparado = True
-        if root.tag != 'IFRS':
-            raise ValueError('XML irreconocible incluso tras saneo')
+    intentos = [raw, sanear_xml(raw), reencodear_xml(sanear_xml(raw))]
+    ultimo_error = None
+    root = None
+    for indice, candidato in enumerate(intentos):
+        try:
+            root = ET.fromstring(candidato)
+            reparado = indice > 0
+            break
+        except ET.ParseError as exc:
+            ultimo_error = exc
+    if root is None:
+        raise ValueError(f'XML irreconocible: {type(ultimo_error).__name__}: {ultimo_error}')
+    if root.tag != 'IFRS':
+        raise ValueError(f'Raiz no IFRS: {root.tag}')
     if root.tag != 'IFRS': raise ValueError(f'Raiz no IFRS: {root.tag}')
     ident = root.find('Identificacion')
     datos = root.find('DatosPeriodo')
