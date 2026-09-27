@@ -46,11 +46,13 @@ jobs:
           if [ -n "$PERIOD" ]; then
             python -m bancos.scripts.audit_repos_zip_cmf --period "$PERIOD" > .local-data/review/bancos/ejecucion.txt 2>&1 || {
               cat .local-data/review/bancos/ejecucion.txt
+              echo "::error::$(tail -n 1 .local-data/review/bancos/ejecucion.txt)"
               exit 1
             }
           else
             python -m bancos.scripts.audit_repos_zip_cmf > .local-data/review/bancos/ejecucion.txt 2>&1 || {
               cat .local-data/review/bancos/ejecucion.txt
+              echo "::error::$(tail -n 1 .local-data/review/bancos/ejecucion.txt)"
               exit 1
             }
           fi
