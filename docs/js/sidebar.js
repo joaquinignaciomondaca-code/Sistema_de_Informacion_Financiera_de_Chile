@@ -556,8 +556,7 @@ const EXPLORER_TREE = [
     type: "group",
     label: "FACTORING & LEASING (CMF / NBFI)",
     badges: [
-      { type: "entities", text: "28 Entidades", title: "28 Empresas de Factoring y Leasing (22 Activas Vigentes + 6 Históricas CMF)" },
-      { type: "data", text: "21.2k Datos", title: "Balances IFRS, desglose de efectivo por monedas y morosidad de cartera (2014–2026)" }
+      { type: "entities", text: "28 Entidades", title: "Lista de 28 entidades de Factoring y Leasing" }
     ],
     status: "active",
     children: [
@@ -576,64 +575,13 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "factoring_leasing",
             chips: [
-              { label: "Catálogo Oficial por Segmento y Licencia", query: "SELECT rut, razon_social, nombre_fantasia, segmento, tipo_licencia, grupo_controlador, vigente FROM factoring_leasing_maestro ORDER BY vigente DESC, segmento, razon_social;" },
-              { label: "Entidades Activas CMF vs Históricas / Canceladas", query: "SELECT vigente, estado, count(*) as total_entidades, string_agg(nombre_fantasia, ', ') as instituciones FROM factoring_leasing_maestro GROUP BY vigente, estado ORDER BY vigente DESC;" },
-              { label: "Filiales Bancarias LGB vs Emisores Independientes RVEMI", query: "SELECT tipo_licencia, count(*) as total, string_agg(nombre_fantasia, ', ') as instituciones FROM factoring_leasing_maestro WHERE vigente = 1 GROUP BY tipo_licencia;" },
+              { label: "Lista por segmento y licencia (catálogo local)", query: "SELECT rut, razon_social, nombre_fantasia, segmento, tipo_licencia, grupo_controlador, vigente FROM factoring_leasing_maestro ORDER BY vigente DESC, segmento, razon_social;" },
+              { label: "Estado consignado en la lista", query: "SELECT vigente, estado, count(*) as total_entidades, string_agg(nombre_fantasia, ', ') as instituciones FROM factoring_leasing_maestro GROUP BY vigente, estado ORDER BY vigente DESC;" },
+              { label: "Tipos de licencia consignados", query: "SELECT tipo_licencia, count(*) as total, string_agg(nombre_fantasia, ', ') as instituciones FROM factoring_leasing_maestro WHERE vigente = 1 GROUP BY tipo_licencia;" },
               { label: "Segmentación por Línea de Negocio", query: "SELECT segmento, count(*) as entidades, sum(es_factoring) as con_factoring, sum(es_leasing_financiero) as con_leasing, sum(es_automotriz) as con_automotriz FROM factoring_leasing_maestro WHERE vigente = 1 GROUP BY segmento;" }
             ],
             tables: [
               { id: "factoring_leasing_maestro", name: "factoring_leasing.lista_entidades", rows: "28 entidades", file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet" }
-            ]
-          },
-          {
-            id: "circ_fl_balances",
-            type: "circular",
-            label: "Balances y Cartera de Crédito",
-            badge: "878 Balances",
-            badgeType: "data",
-            status: "active",
-            sector: "factoring_leasing",
-            chips: [
-              { label: "Ranking Cartera de Crédito (Factoring y Leasing)", query: "SELECT nombre_empresa, cartera_credito_m_clp, cartera_credito_m_usd, total_activos_m_clp, total_pasivos_m_clp, patrimonio_neto_m_clp FROM factoring_leasing_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM factoring_leasing_balance_resumen) ORDER BY cartera_credito_m_clp DESC LIMIT 10;" },
-              { label: "Perfil de Deuda: Pasivos Corto vs Largo Plazo", query: "SELECT nombre_empresa, pasivos_corrientes_m_clp, pasivos_no_corrientes_m_clp, total_pasivos_m_clp, round(pasivos_corrientes_m_clp / NULLIF(total_pasivos_m_clp, 0) * 100, 1) as deuda_corto_plazo_pct FROM factoring_leasing_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM factoring_leasing_balance_resumen) ORDER BY total_pasivos_m_clp DESC LIMIT 10;" },
-              { label: "Evolución Histórica Cartera (Tanner vs Forum vs Santander)", query: "SELECT periodo, nombre_empresa, cartera_credito_m_clp, cartera_credito_m_usd, total_activos_m_clp FROM factoring_leasing_balance_resumen WHERE nombre_empresa IN ('TANNER SERVICIOS FINANCIEROS S.A.', 'FORUM SERVICIOS FINANCIEROS S.A.', 'SANTANDER CONSUMER FINANCE LIMITADA') ORDER BY periodo DESC, cartera_credito_m_clp DESC LIMIT 15;" }
-            ],
-            tables: [
-              { id: "factoring_leasing_balance_resumen", name: "factoring_leasing.balance_resumen", rows: "878 balances", file: "outputs/factoring_leasing/factoring_leasing_balance_resumen.parquet" }
-            ]
-          },
-          {
-            id: "circ_fl_nota_efectivo",
-            type: "circular",
-            label: "Nota · Efectivo y Equivalentes por Moneda",
-            badge: "2.975 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "factoring_leasing",
-            chips: [
-              { label: "Desglose de Efectivo por Divisas (CLP vs USD vs Otras)", query: "SELECT moneda_origen, count(*) as registros, round(sum(monto_mclp)/1000, 1) as total_mm_clp, round(sum(monto_musd)/1000, 1) as total_mm_usd FROM factoring_leasing_nota_efectivo_detalle WHERE periodo = (SELECT MAX(periodo) FROM factoring_leasing_nota_efectivo_detalle) GROUP BY moneda_origen ORDER BY total_mm_clp DESC;" },
-              { label: "Pactos de Liquidez (CRV) y Depósitos en el Sector", query: "SELECT periodo, razon_social, concepto, moneda_origen, monto_mclp, monto_musd FROM factoring_leasing_nota_efectivo_detalle WHERE concepto LIKE '%Pactos%' OR concepto LIKE '%Depositos%' ORDER BY periodo DESC, monto_mclp DESC LIMIT 15;" },
-              { label: "Ranking de Liquidez en Caja y Bancos por Entidad", query: "SELECT razon_social, round(sum(monto_mclp)/1000, 1) as liquidez_total_mm_clp, round(sum(monto_musd)/1000, 1) as liquidez_total_mm_usd FROM factoring_leasing_nota_efectivo_detalle WHERE periodo = (SELECT MAX(periodo) FROM factoring_leasing_nota_efectivo_detalle) GROUP BY razon_social ORDER BY liquidez_total_mm_clp DESC LIMIT 10;" }
-            ],
-            tables: [
-              { id: "factoring_leasing_nota_efectivo_detalle", name: "factoring_leasing.nota_efectivo", rows: "2.975 registros", file: "outputs/factoring_leasing/factoring_leasing_nota_efectivo_detalle.parquet" }
-            ]
-          },
-          {
-            id: "circ_fl_cartera_morosidad",
-            type: "circular",
-            label: "Nota · Cartera, Morosidad y Provisiones (IFRS 9)",
-            badge: "17.406 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "factoring_leasing",
-            chips: [
-              { label: "Cartera Total por Línea de Producto (Factoring vs Leasing vs Automotriz)", query: "SELECT linea_producto, round(sum(cartera_bruta_mclp)/1000, 1) as bruta_mm_clp, round(sum(provisiones_mclp)/1000, 1) as provisiones_mm_clp, round(sum(cartera_neta_mclp)/1000, 1) as neta_mm_clp, round(sum(provisiones_mclp)/NULLIF(sum(cartera_bruta_mclp), 0)*100, 2) as cobertura_pct FROM factoring_leasing_cartera_morosidad_detalle WHERE periodo = (SELECT MAX(periodo) FROM factoring_leasing_cartera_morosidad_detalle) GROUP BY linea_producto ORDER BY bruta_mm_clp DESC;" },
-              { label: "Estratificación de Morosidad por Tramos (1-30, 31-60, 61-90, >180 días)", query: "SELECT tramo_morosidad, etapa_ifrs9, round(sum(cartera_bruta_mclp)/1000, 1) as monto_mm_clp, round(sum(provisiones_mclp)/1000, 1) as prov_mm_clp, round(sum(provisiones_mclp)/NULLIF(sum(cartera_bruta_mclp), 0)*100, 1) as cobertura_pct FROM factoring_leasing_cartera_morosidad_detalle WHERE periodo = (SELECT MAX(periodo) FROM factoring_leasing_cartera_morosidad_detalle) GROUP BY tramo_morosidad, etapa_ifrs9 ORDER BY monto_mm_clp DESC;" },
-              { label: "Provisiones IFRS 9 por Etapas de Riesgo (Etapa 1, 2 y 3)", query: "SELECT etapa_ifrs9, round(sum(cartera_bruta_mclp)/1000, 1) as exposicion_mm_clp, round(sum(provisiones_mclp)/1000, 1) as provision_mm_clp, round(sum(provisiones_mclp)/NULLIF(sum(cartera_bruta_mclp), 0)*100, 2) as ratio_deterioro_pct FROM factoring_leasing_cartera_morosidad_detalle WHERE periodo = (SELECT MAX(periodo) FROM factoring_leasing_cartera_morosidad_detalle) GROUP BY etapa_ifrs9 ORDER BY etapa_ifrs9;" }
-            ],
-            tables: [
-              { id: "factoring_leasing_cartera_morosidad_detalle", name: "factoring_leasing.nota_cartera_morosidad", rows: "17.406 registros", file: "outputs/factoring_leasing/factoring_leasing_cartera_morosidad_detalle.parquet" }
             ]
           }
         ]

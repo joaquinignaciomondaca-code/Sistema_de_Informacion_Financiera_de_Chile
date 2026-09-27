@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
   "updated_at": "2026-09-23",
-  "total_tables": 51,
-  "total_records": 13435145,
+  "total_tables": 62,
+  "total_records": 13531255,
   "classification": {
     "automatico": "Extracción y procesamiento 100% por código autónomo (APIs, scrapers, normalizadores)",
     "manual": "Extracción asistida o transcripción de notas y reportes no estructurados (ej. NotebookLM)"
@@ -474,7 +474,7 @@
     },
     {
       "id": "factoring_leasing_maestro",
-      "name": "factoring_leasing.maestro",
+      "name": "factoring_leasing.lista_entidades",
       "view_name": "factoring_leasing_maestro",
       "sector": "factoring_leasing",
       "sector_label": "Factoring & Leasing",
@@ -485,24 +485,8 @@
       "ultima_actualizacion": "2026-09-23",
       "file_parquet": "outputs/factoring_leasing/factoring_leasing_maestro.parquet",
       "registros_reales": 28,
-      "descripcion": "Catálogo maestro oficial y exhaustivo de intermediarios financieros no bancarios (Factoring, Leasing y Financiamiento Automotriz), auditado con Algoritmo Módulo 11, estado de vigencia registral, perímetro regulatorio CMF y grupo controlador.",
-      "origen": "Comisión para el Mercado Financiero (CMF) — Nóminas Oficiales de Sociedades de Factoring (FASOC), Leasing Inmobiliario (LISOC) y Registro de Valores de Emisores (RVEMI)."
-    },
-    {
-      "id": "factoring_leasing_balance_resumen",
-      "name": "factoring_leasing.balance_resumen",
-      "view_name": "factoring_leasing_balance_resumen",
-      "sector": "factoring_leasing",
-      "sector_label": "Factoring & Leasing",
-      "norma": "CMF FECU IFRS Trimestral",
-      "corte": "2014-03 a 2026-03",
-      "frescura": "Al día (49 trimestres)",
-      "modo": "Automático",
-      "ultima_actualizacion": "2026-09-23",
-      "file_parquet": "outputs/factoring_leasing/factoring_leasing_balance_resumen.parquet",
-      "registros_reales": 878,
-      "descripcion": "Balances trimestrales IFRS: activos totales, pasivos corrientes y no corrientes directos de cuentas CMF, patrimonio neto, cartera de crédito y activos líquidos en MM$ CLP y MM$ USD.",
-      "origen": "Comisión para el Mercado Financiero (CMF) — Estados Financieros FECU IFRS de Sociedades de Leasing y Factoring."
+      "descripcion": "Lista local de 28 entidades de Factoring, Leasing y financiamiento automotriz. RUT únicos con dígito verificador válido; identidad, vigencia y exhaustividad registral no certificadas. Balances y notas retirados por ahora.",
+      "origen": "Catálogo local con referencias declaradas a registros CMF FASOC, LISOC y RVEMI; pendiente cotejo registral independiente."
     },
     {
       "id": "corredoras_bolsa_maestro",
