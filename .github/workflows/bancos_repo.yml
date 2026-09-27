@@ -9,7 +9,6 @@ on:
       - '.github/workflows/bancos_repo.yml'
       - 'bancos/scripts/**'
       - 'bancos/tests/**'
-      - '.github/workflows/bancos_repo_rebuild_review.yml'
   workflow_dispatch:
     inputs:
       period:
@@ -28,7 +27,7 @@ concurrency:
 
 jobs:
   rebuild_review:
-    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !inputs.period) }}
+    if: ${{ github.event_name == 'workflow_dispatch' && !inputs.period }}
     runs-on: ubuntu-latest
     timeout-minutes: 50
     steps:
