@@ -436,7 +436,7 @@ const EXPLORER_TREE = [
     label: "BANCA E INST. FINANCIERAS (CMF)",
     badges: [
       { type: "entities", text: "40 Códigos", title: "Catálogo local: incluye instituciones históricas, filiales y agregados; cotejo registral pendiente" },
-      { type: "pending", text: "⚠ REPO por auditar", title: "Auditoría parcial de estructura realizada; montos y RUT sin cotejo CMF" }
+      { type: "pending", text: "⚠ REPO · Auditoría parcial", title: "5.894 saldos cotejados numéricamente con ZIP CMF (220 meses); glosa de cuentas, columnas, RUT y cobertura aún por validar" }
     ],
     status: "active",
     children: [
@@ -464,8 +464,8 @@ const EXPLORER_TREE = [
           {
             id: "circ_bancos_repos",
             type: "circular",
-            label: "Saldos REPO · Origen en revisión",
-            badge: "⚠ Falta auditar",
+            label: "Saldos REPO · Cotejo CMF parcial",
+            badge: "⚠ Auditoría parcial",
             badgeType: "data",
             status: "por_auditar",
             sector: "bancos",
