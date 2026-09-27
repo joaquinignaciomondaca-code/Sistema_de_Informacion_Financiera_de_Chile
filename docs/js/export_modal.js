@@ -78,9 +78,7 @@ class ExportModalController {
       patrimonios_separados_nota_efectivo_detalle: "outputs/securitizadoras/patrimonios_separados_nota_efectivo_detalle.parquet",
       patrimonios_separados_cartera_morosidad_detalle: "outputs/securitizadoras/patrimonios_separados_cartera_morosidad_detalle.parquet",
       patrimonios_separados_repos_detalle: "outputs/securitizadoras/patrimonios_separados_repos_detalle.parquet",
-      patrimonios_separados_notebooklm_cuentas: "outputs/securitizadoras/patrimonios_separados_notebooklm_cuentas.parquet",
-      patrimonios_separados_notebooklm_vehiculos: "outputs/securitizadoras/patrimonios_separados_notebooklm_vehiculos.parquet",
-      patrimonios_separados_notebooklm_periodos: "outputs/securitizadoras/patrimonios_separados_notebooklm_periodos.parquet",
+      patrimonios_separados_balance_pdf: "outputs/securitizadoras/patrimonios_separados_balance_pdf.parquet",
       ccaf_maestro: "outputs/cajas_compensacion/ccaf_maestro.parquet",
       ccaf_caratula_totales: "outputs/cajas_compensacion/ccaf_caratula_totales.parquet",
       ccaf_nota8_efectivo_resumen: "outputs/cajas_compensacion/ccaf_nota8_efectivo_resumen.parquet",
@@ -141,9 +139,7 @@ class ExportModalController {
       patrimonios_separados_nota_efectivo_detalle: 3802,
       patrimonios_separados_cartera_morosidad_detalle: 67,
       patrimonios_separados_repos_detalle: 52,
-      patrimonios_separados_notebooklm_cuentas: 46515,
-      patrimonios_separados_notebooklm_vehiculos: 2067,
-      patrimonios_separados_notebooklm_periodos: 61,
+      patrimonios_separados_balance_pdf: 46502,
       corredoras_bolsa_maestro: 47,
       corredoras_bolsa_balance_resumen: 1586
     };
