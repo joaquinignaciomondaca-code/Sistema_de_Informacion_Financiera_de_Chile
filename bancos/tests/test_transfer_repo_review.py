@@ -20,7 +20,7 @@ class TransferReviewTest(unittest.TestCase):
                     'filas': [{'codigo_institucion': '001', 'repo_activo_mm_clp': '1.00',
                                'repo_pasivo_mm_clp': '2.00', 'nombre_encabezado_b1': 'BANCO'}]}))
             parts = encode_review(folder)
-            self.assertTrue(all(len(s) < 3000 for s in parts))
+            self.assertTrue(all(len(s) < 3100 for s in parts))
             doc = decode_review(parts[::-1])
             self.assertEqual(len(doc['meses']), 3)
             self.assertEqual(doc['estado'], 'BORRADOR_NO_PUBLICAR')

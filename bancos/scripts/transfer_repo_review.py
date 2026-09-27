@@ -10,15 +10,15 @@ import argparse
 import base64
 import hashlib
 import json
+import lzma
 import re
 import sys
-import zlib
 from pathlib import Path
 
 from bancos.scripts.rebuild_repo_from_cmf import OUT
 
-PREFIX = 'REPO-REV-V1'
-CHUNK_SIZE = 2700
+PREFIX = 'REPO-REV-V2'
+CHUNK_SIZE = 2900
 MAX_CHUNKS = 45
 
 
@@ -34,17 +34,16 @@ def encode_review(folder: Path) -> list[str]:
         if doc['periodo'] != month or len(doc['filas']) == 0:
             raise ValueError(f'Mes inválido {month}')
         docs.append([month, doc['sha256_zip'], [
-            [r['codigo_institucion'], r['repo_activo_mm_clp'], r['repo_pasivo_mm_clp'],
-             r['nombre_encabezado_b1']]
+            [r['codigo_institucion'], r['repo_activo_mm_clp'], r['repo_pasivo_mm_clp']]
             for r in doc['filas']
         ]])
     payload = {'estado': 'BORRADOR_NO_PUBLICAR', 'meses': docs}
-    compressed = zlib.compress(json.dumps(payload, ensure_ascii=False,
-                                          separators=(',', ':')).encode('utf-8'), level=9)
+    compressed = lzma.compress(json.dumps(payload, ensure_ascii=False,
+                                          separators=(',', ':')).encode('utf-8'), preset=9)
     digest = hashlib.sha256(compressed).hexdigest()
     encoded = base64.b64encode(compressed).decode('ascii')
     pieces = [encoded[i:i + CHUNK_SIZE] for i in range(0, len(encoded), CHUNK_SIZE)]
-    if not pieces or len(pieces) > MAX_CHUNKS:
+    if not pieces or len(pieces) > 10:
         raise ValueError(f'{len(pieces)} anotaciones: supera tope; usar transporte por lotes')
     return [f'{PREFIX}:{digest}:{i + 1}/{len(pieces)}:{piece}'
             for i, piece in enumerate(pieces)]
@@ -72,7 +71,7 @@ def decode_review(messages: list[str]) -> dict:
     blob = base64.b64decode(''.join(items[i] for i in range(1, count + 1)), validate=True)
     if hashlib.sha256(blob).hexdigest() != digest:
         raise ValueError('SHA-256 de revisión no coincide')
-    doc = json.loads(zlib.decompress(blob))
+    doc = json.loads(lzma.decompress(blob))
     if doc.get('estado') != 'BORRADOR_NO_PUBLICAR' or not isinstance(doc.get('meses'), list):
         raise ValueError('Revisión incompleta o no segregada')
     return doc
