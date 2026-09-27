@@ -144,7 +144,20 @@ def run(manual: str | None = None, output: Path = REPORT, checkpoint: Path = CHE
     legacy = {(row["periodo"], row["codigo_institucion"]):
               {"activo": row["repo_activo_mm_clp"], "pasivo": row["repo_pasivo_mm_clp"]}
               for row in baseline}
-    reports = [inspect_all(probe.read_public(found[p], probe.MAX_ZIP), p, found[p], legacy) for p in periods]
+    reports = []
+    for p in periods:
+        try:
+            reports.append(inspect_all(probe.read_public(found[p], probe.MAX_ZIP), p, found[p], legacy))
+        except (ValueError, RuntimeError) as exc:
+            # Un error después de descargar meses previos no debe avanzar el
+            # checkpoint ni hacer pasar el lote por íntegro. Conservar evidencia
+            # parcial únicamente en el directorio de revisión (no publicado).
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_text(json.dumps({
+                "estado": "cotejo_incompleto_no_publicado", "fuente": probe.INDEX,
+                "periodos_completos": reports, "periodo_fallido": p, "error": str(exc),
+            }, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+            raise
     document = {"estado": "cotejo_exploratorio_no_publicado", "fuente": probe.INDEX,
                 "advertencia": "Coincidencias numéricas no certifican cuenta, columna, unidad, vigencia ni RUT.",
                 "periodos": reports}

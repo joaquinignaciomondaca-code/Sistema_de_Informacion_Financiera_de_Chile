@@ -218,8 +218,14 @@ def resolve_links() -> tuple[dict[str, str], set[str]]:
         elif period not in ambiguous:
             found[period] = x["url"]
     index_conflicts: set[str] = set()
-    current = discover(read_public(INDEX, 4_000_000).decode("utf-8", errors="replace"),
-                       strict=False, conflicts_out=index_conflicts)
+    html = read_public(INDEX, 4_000_000).decode("utf-8", errors="replace")
+    try:
+        current = discover(html, strict=False, conflicts_out=index_conflicts)
+    except ValueError as exc:
+        # Página CMF pudo cambiar, responder una portada vacía, o renderizar
+        # enlaces sólo con JS. No sustituir por URL supuesta ni marcar mes vacío.
+        raise ValueError("Índice CMF accesible pero sin enlaces ZIP reconocibles; "
+                         "revisar estructura HTML antes de consultar catálogo") from exc
     for conflict in index_conflicts:
         found.pop(conflict, None)
     found.update(current)
