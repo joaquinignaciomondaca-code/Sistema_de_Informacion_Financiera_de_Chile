@@ -41,8 +41,8 @@ jobs:
             bancos-repo-audit-
       - name: Cotejar balances B1/B2 de todos los bancos contra referencia REPO
         env:
-          # Calibración acotada alrededor del cambio de plan y en años recientes.
-          PERIOD: ${{ github.event_name == 'push' && '2020-12 2021-12 2022-01 2024-12 2025-12 2026-04' || inputs.period }}
+          # Calibración histórica, cambio de plan y años recientes; nunca publica.
+          PERIOD: ${{ github.event_name == 'push' && '2008-01 2014-12 2019-12 2020-12 2021-12 2022-01 2023-06 2024-12 2025-12 2026-04' || inputs.period }}
         run: |
           mkdir -p .local-data/review/bancos
           if [ -n "$PERIOD" ]; then
