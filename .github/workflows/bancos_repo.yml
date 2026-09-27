@@ -63,13 +63,20 @@ jobs:
         run: python -m bancos.scripts.transfer_repo_review
   fx_sii_probe:
     if: ${{ github.event_name == 'push' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        years: ['2008 2017', '2018 2026']
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
       - name: Cotejar FX de toda la serie REPO con fuente pública SII sin publicar
+        env:
+          YEARS: ${{ matrix.years }}
         run: |
-          python -m bancos.scripts.audit_repo_fx_sii
+          read -r from_year through_year <<< "$YEARS"
+          python -m bancos.scripts.audit_repo_fx_sii --from-year "$from_year" --through-year "$through_year"
   rebuild_review:
     if: ${{ github.event_name == 'workflow_dispatch' && !inputs.period }}
     runs-on: ubuntu-latest
