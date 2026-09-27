@@ -63,6 +63,9 @@ jobs:
         with:
           path: .local-data/checkpoint/bancos-repo-audit
           key: bancos-repo-audit-${{ github.run_id }}
+      - name: Resumen de evidencia en la anotación del run (sin publicar)
+        if: always()
+        run: python -m bancos.scripts.summarize_repo_audit || true
       - name: Entregar diagnóstico para revisión humana
         if: always()
         uses: actions/upload-artifact@v4

@@ -94,5 +94,34 @@ class AuditTests(unittest.TestCase):
             self.assertFalse(cp.exists())
 
 
+class SummaryTests(unittest.TestCase):
+    def test_summary_reports_counts_and_failure(self):
+        from bancos.scripts import summarize_repo_audit as summary
+        report = {
+            "estado": "cotejo_exploratorio_no_publicado",
+            "periodos": [{
+                "periodo": "2021-12", "sha256_zip": "ab" * 32, "advertencia": None,
+                "candidatos_del_script_v2": {"activo": "1160000", "pasivo": "2160000"},
+                "filas_con_referencia_legacy": 1, "filas_con_alguna_coincidencia": 2,
+                "bancos": [{
+                    "codigo_banco": "001", "referencia_legacy_mm_clp": {"activo": 64365, "pasivo": 95009},
+                    "hipotesis_escala": {
+                        "activo": {"cuenta": "1160000", "campos_crudos": ["64.365.000"],
+                                   "coincidencias_legacy": [{"columna_1_based": 1, "divisor": 1000}]},
+                        "pasivo": {"cuenta": "2160000", "campos_crudos": ["95.009.000"]},
+                    },
+                }],
+            }],
+        }
+        text = summary.summarize(report)
+        self.assertIn("2021-12: bancos=1 con_cuentas_candidatas=1", text)
+        self.assertIn("activo(1160000)=['64.365.000']/match", text)
+        self.assertIn("pasivo(2160000)=['95.009.000']", text)
+        self.assertLessEqual(len(summary.summarize(report, limit=60)), 60)
+        self.assertIn("FALLO en 2021-12",
+                      summary.summarize({"estado": "cotejo_incompleto_no_publicado",
+                                         "periodo_fallido": "2021-12", "error": "ZIP inválido"}))
+
+
 if __name__ == "__main__":
     unittest.main()
