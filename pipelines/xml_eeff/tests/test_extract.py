@@ -143,6 +143,18 @@ class DuplicadosYDvTest(unittest.TestCase):
                 x.process(ITEM, '2014-12')
 
 
+class ParseoToleranteTest(unittest.TestCase):
+    def test_xml_con_caracter_invalido_se_repara_y_marca(self):
+        crudo = xml().replace(b'2957448', b'2&amp;957448')
+        fila = x.parse_ifrs(crudo, ITEM, '2014-12', 'url')
+        self.assertTrue(fila['parseo_reparado'])
+        self.assertEqual(fila['calidad'], 'revisar_parseo_reparado')
+        self.assertEqual(fila['total_activo'], 2957448.0)  # cifra recuperada y marcada
+
+    def test_xml_valido_no_se_marca(self):
+        self.assertFalse(x.parse_ifrs(xml(), ITEM, '2014-12', 'url')['parseo_reparado'])
+
+
 class FlujoTest(unittest.TestCase):
     def test_sin_enlace_es_sin_fuente(self):
         with patch.object(x, 'read_url', lambda url, limit=0, referer=None: b'<html>sin enlaces</html>'):
