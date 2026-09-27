@@ -1,0 +1,79 @@
+# Extracción masiva en cuarentena. NO modifica ni publica docs/outputs.
+name: EEFF XML/XBRL CMF - laboratorio masivo (sin publicación)
+
+on:
+  push:
+    branches: [arena/01a0e08b-monitor-financiero-chile]
+    paths:
+      - 'pipelines/xml_eeff/**'
+      - '.github/workflows/xml_eeff_review.yml'
+  workflow_dispatch:
+    inputs:
+      all_periods:
+        description: 'Backfill histórico (2011 a hoy); no publica datos'
+        required: false
+        default: false
+        type: boolean
+      batch:
+        description: 'Máximo de consultas por industria y shard (default 90)'
+        required: false
+        default: '90'
+        type: string
+  schedule:
+    - cron: '30 11 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: xml-eeff-review-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  xml:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Tests de parsing y control de errores
+        run: python -m unittest discover -s pipelines/xml_eeff/tests -v
+      - name: Recuperar cursor y ledger de la rama (solo para este shard)
+        uses: actions/cache@v4
+        with:
+          path: .local-data/xml_eeff
+          key: xml-review-${{ github.ref_name }}-${{ matrix.shard }}-${{ github.run_id }}
+          restore-keys: |
+            xml-review-${{ github.ref_name }}-${{ matrix.shard }}-
+      - name: Extraer sin escribir datos publicados
+        env:
+          ALL_PERIODS: ${{ inputs.all_periods }}
+          BATCH: ${{ inputs.batch }}
+          SHARD: ${{ matrix.shard }}
+        run: |
+          if [ "$ALL_PERIODS" = 'true' ]; then
+            python pipelines/xml_eeff/extract.py --all-periods --historical --batch "${BATCH:-90}" --shard "$SHARD" --shards 4
+          else
+            python pipelines/xml_eeff/extract.py --batch "${BATCH:-90}" --shard "$SHARD" --shards 4
+          fi
+      - name: Artifact de auditoría (no datos de la web)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: xml-eeff-shard-${{ matrix.shard }}
+          path: .local-data/xml_eeff/
+          retention-days: 30
+          if-no-files-found: warn
+      - name: Resumen visible del shard
+        if: always()
+        env:
+          SHARD: ${{ matrix.shard }}
+        run: |
+          echo "### Sonda XML/XBRL (shard $SHARD; no publicación)" >> "$GITHUB_STEP_SUMMARY"
+          cat ".local-data/xml_eeff/resumen_shard${SHARD}of4.json" >> "$GITHUB_STEP_SUMMARY" 2>/dev/null || true

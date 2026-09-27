@@ -1,0 +1,55 @@
+import importlib.util
+import unittest
+from pathlib import Path
+from unittest.mock import patch
+
+spec = importlib.util.spec_from_file_location('extract', Path(__file__).resolve().parents[1] / 'extract.py')
+x = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(x)
+ITEM = {'sector': 'ffmm', 'rut': '8490', 'tipo': 'RGFMU', 'nombre_registro': 'Fondo', 'tab': '3', 'marker': 'FMEF'}
+
+
+def xml(rut='8490', periodo='2014', activo='2957448', pasivo='5947', neto='2951501'):
+    return f'''<IFRS><Identificacion><RUTFondoInforma>{rut}</RUTFondoInforma><DVFondoInforma>5</DVFondoInforma></Identificacion>
+<DatosPeriodo><MonedaPresentacionEstadosFinancieros>$$</MonedaPresentacionEstadosFinancieros><PeriodoPresentacionEstadosFinancieros>
+<Mes>12</Mes><Anio>{periodo}</Anio></PeriodoPresentacionEstadosFinancieros></DatosPeriodo>
+<Cuenta CodigoCuenta="TotalActivo" Context="PeriodoActual">{activo}</Cuenta>
+<Cuenta CodigoCuenta="TotalPasivo" Context="PeriodoActual">{pasivo}</Cuenta>
+<Cuenta CodigoCuenta="ActivoNetoAtribuibleALosParticipes" Context="PeriodoActual">{neto}</Cuenta>
+<Cuenta CodigoCuenta="UtilidadPerdidaDeLaOperacionDespuesDeImpuesto" Context="PeriodoActual">3470</Cuenta>
+</IFRS>'''.encode()
+
+
+class XmlTest(unittest.TestCase):
+    def test_valid(self):
+        row = x.parse_ifrs(xml(), ITEM, '2014-12', 'https://www.cmfchile.cl/test')
+        self.assertEqual(row['total_activo'], 2957448)
+        self.assertEqual(row['resultado_ejercicio'], 3470)
+        self.assertEqual(row['escala'], 'miles')
+
+    def test_wrong_rut(self):
+        with self.assertRaisesRegex(ValueError, 'RUT'): x.parse_ifrs(xml(rut='8001'), ITEM, '2014-12', 'url')
+
+    def test_wrong_date(self):
+        with self.assertRaisesRegex(ValueError, 'Periodo'): x.parse_ifrs(xml(periodo='2021'), ITEM, '2014-12', 'url')
+
+    def test_unbalanced(self):
+        with self.assertRaisesRegex(ValueError, 'no cuadra'): x.parse_ifrs(xml(activo='9'), ITEM, '2014-12', 'url')
+
+    def test_no_income_not_zero(self):
+        raw = xml().replace(b'<Cuenta CodigoCuenta="UtilidadPerdidaDeLaOperacionDespuesDeImpuesto" Context="PeriodoActual">3470</Cuenta>', b'')
+        with self.assertRaisesRegex(ValueError, 'resultado'): x.parse_ifrs(raw, ITEM, '2014-12', 'url')
+
+    def test_urls(self):
+        page = b'<a href="../inc/inf_financiera/ifrs_xml/ifrs_xml_verarchivo.php?archivo=FMEF_8490.xml&amp;rut=8490">Descarga</a>'
+        self.assertIn('archivo=FMEF_8490.xml&rut=8490', x.link_from_html(page, ITEM))
+        self.assertIn('pestania=29', x.ficha_url({**ITEM, 'sector':'fi', 'tab':'29', 'tipo':'FIRES'}, '2021-12'))
+
+    def test_xbrl_no_guess(self):
+        raw = b'<xbrl xmlns="http://www.xbrl.org/2003/instance"><context id="c"/><unit id="u"/></xbrl>'
+        row = x.parse_xbrl(raw, {**ITEM,'sector':'agf'}, '2021-12', 'url')
+        self.assertIsNone(row['resultado_ejercicio'])
+        self.assertEqual(row['calidad'], 'xbrl_pendiente_mapeo_taxonomia')
+
+
+if __name__ == '__main__': unittest.main()
