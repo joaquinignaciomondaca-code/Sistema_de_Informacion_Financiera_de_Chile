@@ -36,7 +36,7 @@ HEADERS = {'User-Agent': 'Mozilla/5.0 (compatible; MonitorFinancieroChile/1.0)',
 COLUMNS = ['periodo', 'rut_cuerpo', 'rut', 'nombre_reportado', 'segmento_catalogo',
            'nombre_catalogo', 'tipo_balance', 'moneda_archivo', 'cuenta',
            'valor_archivo', 'valor_texto_original', 'valor_es_entero',
-           'taxonomia', 'estado_financiero', 'fuente_archivo',
+           'taxonomia', 'estado_financiero', 'repeticion_contexto', 'fuente_archivo',
            'sha256_archivo', 'identidad_nombre_coincide_catalogo']
 
 
@@ -139,6 +139,8 @@ def parse_period(raw, period, catalog, url=None):
     balance, income = [], []
     selected = 0
     noninteger = []
+    repetitions = {}
+    duplicates = []
     for number, cells in enumerate(csv.reader(io.StringIO(decode(raw)), delimiter=';', strict=True), start=1):
         if not cells or all(not c.strip() for c in cells):
             continue
@@ -160,25 +162,30 @@ def parse_period(raw, period, catalog, url=None):
             # Nunca convertir silenciosamente a 0, ni inferir separador decimal.
             noninteger.append({'linea': number, 'rut': body, 'cuenta': account,
                                'valor_original': amount[:120]})
+        if not state.startswith(('ESF', 'ER')):
+            continue
+        key = (p, body, kind, currency, tax, state, account)
+        repetitions[key] = repetitions.get(key, 0) + 1
+        if repetitions[key] > 1 and len(duplicates) < 20:
+            duplicates.append({'linea': number, 'rut': body, 'cuenta': account,
+                               'tipo_balance': kind, 'moneda': currency, 'estado': state,
+                               'valor_original': amount[:120]})
         row = dict(zip(COLUMNS, [f'{p[:4]}-{p[4:]}', body, catalog[body]['rut'], name,
                                  catalog[body]['segmento'], catalog[body]['nombre'], kind,
                                  currency, account, int(amount) if integer else None,
-                                 amount, integer, tax, state, url, digest,
+                                 amount, integer, tax, state, repetitions[key], url, digest,
                                  normalize_name(name) == normalize_name(catalog[body]['nombre'])]))
         if state.startswith('ESF'):
             balance.append(row)
-        elif state.startswith('ER'):
+        else:
             income.append(row)
         # Otros estados en el TXT no se confunden con balance/resultados.
     if selected == 0:
         return balance, income, {'estado': 'sin_rut_catalogo', 'filas_objetivo': 0}
     if not balance and not income:
         raise ValueError('Archivo contiene RUT objetivo pero no estados ESF/ER')
-    for name, rows in [('balance', balance), ('resultados', income)]:
-        keys = [(r['periodo'], r['rut_cuerpo'], r['tipo_balance'], r['moneda_archivo'],
-                 r['taxonomia'], r['estado_financiero'], r['cuenta']) for r in rows]
-        if len(keys) != len(set(keys)):
-            raise ValueError('Cuenta/contexto duplicado en ' + name + ': no sumar')
+    # Contextos repetidos conservados con ordinal; su semántica no es evidente
+    # (acumulado vs trimestre, reexpresiones, taxonomías) y NO se suman.
     by_rut = {r['rut'] for r in balance + income}
     return balance, income, {'estado': 'extraido', 'filas_objetivo': selected,
         'entidades': len(by_rut), 'ruts_con_datos': sorted(by_rut),
@@ -186,6 +193,8 @@ def parse_period(raw, period, catalog, url=None):
         'nombres_distintos_catalogo': len({r['rut'] for r in balance + income if not r['identidad_nombre_coincide_catalogo']}),
         'importes_no_enteros': sum(not r['valor_es_entero'] for r in balance + income),
         'ejemplos_importes_no_enteros': noninteger,
+        'cuentas_contexto_repetidas': sum(v - 1 for v in repetitions.values()),
+        'ejemplos_repeticiones': duplicates,
         'monedas': sorted({r['moneda_archivo'] for r in balance + income}),
         'tipos_balance': sorted({r['tipo_balance'] for r in balance + income})}
 
@@ -276,6 +285,7 @@ def run(args, fetcher=fetch):
     summary['filas_balance_total'] = sum(item['filas_balance'] for item in completed)
     summary['filas_resultados_total'] = sum(item['filas_resultados'] for item in completed)
     summary['importes_no_enteros_total'] = sum(item.get('importes_no_enteros', 0) for item in completed)
+    summary['cuentas_contexto_repetidas_total'] = sum(item.get('cuentas_contexto_repetidas', 0) for item in completed)
     summary['periodos_sin_rut_catalogo'] = [item['periodo'] for item in completed if item['estado'] == 'sin_rut_catalogo']
     summary['estado_global'] = ('error' if summary['errores'] else
                                'completo_sin_publicar' if not summary['pendientes'] else 'en_progreso_sin_publicar')
