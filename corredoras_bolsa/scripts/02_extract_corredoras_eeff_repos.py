@@ -30,6 +30,10 @@ DATA_DIR = os.path.join(BASE_DIR, "corredoras_bolsa", "data")
 MACRO_PARQUET = os.path.join(BASE_DIR, "docs", "outputs", "macro", "macro_divisas_mercado.parquet")
 CHECKPOINT_FILE = os.path.join(DATA_DIR, "checkpoint_corredoras_repos.json")
 
+# Pactos/colaterales de notas PDF retirados de publicación (auditoría pendiente).
+# Con False el pipeline solo extrae y publica las carátulas XML (Nivel 1).
+PUBLICAR_PACTOS_REPOS = False
+
 os.makedirs(OUT_DIR, exist_ok=True)
 os.makedirs(DATA_DIR, exist_ok=True)
 
@@ -373,8 +377,8 @@ def run_extraction():
                 except Exception as e:
                     pass
 
-            # Nivel 2 y 3: Descargar PDF en RAM y parsear
-            if pdf_url:
+            # Nivel 2 y 3: Descargar PDF en RAM y parsear (desactivado: PUBLICAR_PACTOS_REPOS)
+            if pdf_url and PUBLICAR_PACTOS_REPOS:
                 try:
                     req_p = urllib.request.Request(pdf_url, headers=HEADERS)
                     with urllib.request.urlopen(req_p, context=ssl_ctx, timeout=30) as resp:

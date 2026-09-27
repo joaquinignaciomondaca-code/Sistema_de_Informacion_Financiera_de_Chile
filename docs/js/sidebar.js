@@ -594,7 +594,7 @@ const EXPLORER_TREE = [
     label: "CORREDORAS DE BOLSA (CMF)",
     badges: [
       { type: "entities", text: "120 Entidades", title: "Intermediarios de valores supervisados por la CMF (24 vigentes + 96 históricas)" },
-      { type: "data", text: "5.8k Datos", title: "Balances IFRS, Pactos REPO por contraparte y colaterales (2018 a 2026)" }
+      { type: "data", text: "621 Balances", title: "Carátulas XML CMF y resumen derivado; cotejo independiente de fuente en curso" }
     ],
     status: "active",
     children: [
@@ -625,7 +625,7 @@ const EXPLORER_TREE = [
             type: "circular",
             label: "Registro Único de Corredoras",
             badge: "120 Entidades",
-            badgeType: "data",
+            badgeType: "entities",
             status: "active",
             sector: "corredoras_bolsa",
             chips: [
@@ -639,8 +639,8 @@ const EXPLORER_TREE = [
           {
             id: "circ_cb_balances",
             type: "circular",
-            label: "Balances y Resultados Financieros",
-            badge: "1.242 Balances",
+            label: "Estados Financieros · XML CMF (en auditoría)",
+            badge: "621 Balances · 2 vistas",
             badgeType: "data",
             status: "active",
             sector: "corredoras_bolsa",
@@ -655,26 +655,6 @@ const EXPLORER_TREE = [
               { id: "corredoras_bolsa_balance_resumen", name: "corredoras.balance_resumen", rows: "621 balances", file: "outputs/corredoras_bolsa/corredoras_bolsa_balance_resumen.parquet" }
             ]
           },
-          {
-            id: "circ_cb_repos",
-            type: "circular",
-            label: "Mercado REPO · Pactos y Colaterales",
-            badge: "5.208 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "corredoras_bolsa",
-            chips: [
-              { label: "Pactos REPO por Tipo de Contraparte y Plazo (Nivel 2)", query: "SELECT periodo, nombre_empresa, tipo_operacion, segmento_contraparte, tasa_promedio_pct, monto_hasta_7d_m_clp, monto_mas_7d_m_clp, monto_total_m_clp, valor_razonable_garantia_m_clp FROM corredoras_repos_contrapartes_tasas ORDER BY periodo DESC, monto_total_m_clp DESC LIMIT 20;" },
-              { label: "Tasa Ponderada REPO por Segmento Institucional", query: "SELECT segmento_contraparte, round(avg(tasa_promedio_pct), 2) as tasa_promedio_anual, round(sum(monto_total_m_clp)/1000, 2) as total_pactado_mm_clp FROM corredoras_repos_contrapartes_tasas WHERE tasa_promedio_pct > 0 GROUP BY segmento_contraparte ORDER BY total_pactado_mm_clp DESC;" },
-              { label: "Colaterales y Nemotécnicos Bajo Pacto (Nivel 3)", query: "SELECT periodo, nombre_empresa, nemotecnico, tipo_instrumento, unidades_pactadas, monto_pactado_m_clp, valor_mercado_m_clp FROM corredoras_repos_colaterales_detalle ORDER BY periodo DESC, monto_pactado_m_clp DESC LIMIT 25;" },
-              { label: "Top Acciones Chilenas Más Utilizadas como Garantía REPO", query: "SELECT nemotecnico, round(sum(monto_pactado_m_clp)/1000, 2) as total_pactado_mm_clp, round(sum(unidades_pactadas), 0) as total_unidades, count(distinct nombre_empresa) as corredoras_activas FROM corredoras_repos_colaterales_detalle GROUP BY nemotecnico ORDER BY total_pactado_mm_clp DESC LIMIT 15;" },
-              { label: "Volumen REPO por Corredora Líder (Banchile vs BTG vs LarrainVial)", query: "SELECT nombre_empresa, round(sum(monto_total_m_clp)/1000, 2) as volumen_total_mm_clp, count(*) as num_contratos FROM corredoras_repos_contrapartes_tasas GROUP BY nombre_empresa ORDER BY volumen_total_mm_clp DESC LIMIT 10;" }
-            ],
-            tables: [
-              { id: "corredoras_repos_contrapartes_tasas", name: "corredoras.repos_contrapartes", rows: "2.577 contratos", file: "outputs/corredoras_bolsa/corredoras_repos_contrapartes_tasas.parquet" },
-              { id: "corredoras_repos_colaterales_detalle", name: "corredoras.repos_colaterales", rows: "2.631 colaterales", file: "outputs/corredoras_bolsa/corredoras_repos_colaterales_detalle.parquet" }
-            ]
-          }
         ]
       }
     ]

@@ -770,69 +770,6 @@ const DATA_DICTIONARY = [
     ]
   },
   {
-    id: "corredoras_repos_contrapartes_tasas",
-    name: "corredoras.repos_contrapartes",
-    viewName: "corredoras_repos_contrapartes_tasas",
-    sector: "corredoras_bolsa",
-    sectorLabel: "Corredoras de Bolsa",
-    norma: "CMF Chile — Notas Explicativas EEFF (Nota 12/20/23 - Pactos REPO)",
-    corte: "2018-12 a 2026-06",
-    frescura: "Al día (Trimestral)",
-    modo: "Automático",
-    ultimaActualizacion: "2026-09-24",
-    registros: "2.577 contratos",
-    descripcion: "Desglose Nivel 2 del mercado REPO: segmentación por contraparte (institucionales, intermediarios, empresas, personas), tasas ponderadas y vencimiento (hasta 7 días vs más de 7 días).",
-    origen: "Comisión para el Mercado Financiero (CMF) — Notas a los Estados Financieros de Corredoras.",
-    columnas: [
-      { name: "id_pacto", type: "VARCHAR", role: "PK", significado: "Identificador del registro de pacto {periodo}_{rut}_{segmento}_{tipo}.", contable: "No aplica", interpretacion: "Identificador primario de la fila segmentada." },
-      { name: "periodo", type: "VARCHAR", role: "Dimensión", significado: "Periodo trimestral YYYY-MM.", contable: "No aplica", interpretacion: "Eje temporal del contrato." },
-      { name: "fecha_corte", type: "DATE", role: "Dimensión", significado: "Fecha de corte del trimestre.", contable: "No aplica", interpretacion: "Fecha de cálculo de tasas y saldos." },
-      { name: "rut", type: "VARCHAR", role: "FK", significado: "RUT oficial de la corredora de bolsa.", contable: "No aplica", interpretacion: "Vínculo a maestro." },
-      { name: "nombre_empresa", type: "VARCHAR", role: "Dimensión", significado: "Razón social de la corredora.", contable: "No aplica", interpretacion: "Entidad intermediaria." },
-      { name: "tipo_operacion", type: "VARCHAR", role: "Dimensión", significado: "Tipo de pacto ('Simultánea / Retroventa (CRV)' o 'Retrocompra (VRC)').", contable: "Clasificación Operativa", interpretacion: "Distingue operaciones activas (préstamo con colateral) de pasivas (fondeo)." },
-      { name: "segmento_contraparte", type: "VARCHAR", role: "Dimensión", significado: "Tipo de contraparte regulada ('Personas naturales', 'Personas jurídicas', 'Intermediarios de valores', 'Inversionistas institucionales', 'Partes relacionadas', 'Totales').", contable: "Segmentación CMF", interpretacion: "Identifica el sector económico que provee o demanda liquidez." },
-      { name: "tasa_promedio_pct", type: "DOUBLE", role: "Métrica", significado: "Tasa de interés promedio ponderada de la operación (%).", contable: "Tasa Ponderada", interpretacion: "Costo financiero o rendimiento del pacto a la fecha de corte." },
-      { name: "monto_hasta_7d_m_clp", type: "DOUBLE", role: "Métrica", significado: "Monto pactado con vencimiento menor o igual a 7 días en miles de CLP.", contable: "Liquidez Ultracorta", interpretacion: "Pactos a plazo ultracorto (overnight y 7 días)." },
-      { name: "monto_mas_7d_m_clp", type: "DOUBLE", role: "Métrica", significado: "Monto pactado con vencimiento mayor a 7 días en miles de CLP.", contable: "Plazo Corto", interpretacion: "Pactos a plazos superiores a una semana." },
-      { name: "monto_total_m_clp", type: "DOUBLE", role: "Métrica", significado: "Monto total pactado en miles de CLP.", contable: "Principal Pactado", interpretacion: "Volumen de financiamiento total pactado con la contraparte." },
-      { name: "monto_total_m_usd", type: "DOUBLE", role: "Métrica", significado: "Monto total pactado en millones de USD.", contable: "Principal Pactado", interpretacion: "Volumen expresado en divisa internacional." },
-      { name: "valor_razonable_garantia_m_clp", type: "DOUBLE", role: "Métrica", significado: "Valor razonable del activo subyacente / colateral en miles de CLP.", contable: "Valor de Mercado", interpretacion: "Valor de mercado de los instrumentos entregados/recibidos en garantía." },
-      { name: "valor_razonable_garantia_m_usd", type: "DOUBLE", role: "Métrica", significado: "Valor del subyacente en millones de USD.", contable: "Valor de Mercado", interpretacion: "Cobertura de colateral en moneda extranjera." }
-    ]
-  },
-  {
-    id: "corredoras_repos_colaterales_detalle",
-    name: "corredoras.repos_colaterales",
-    viewName: "corredoras_repos_colaterales_detalle",
-    sector: "corredoras_bolsa",
-    sectorLabel: "Corredoras de Bolsa",
-    norma: "CMF Chile — Notas Explicativas EEFF (Nota 19.b / 22.b / 30 - Colaterales)",
-    corte: "2018-12 a 2026-06",
-    frescura: "Al día (Trimestral)",
-    modo: "Automático",
-    ultimaActualizacion: "2026-09-24",
-    registros: "2.631 colaterales",
-    descripcion: "Detalle Nivel 3 de colaterales: nemotécnicos de acciones (BCI, BSANTANDER, SQM-B, FALABELLA, etc.), cuotas de fondos de inversión y bonos recibidos o entregados en garantía para operaciones simultáneas y de retroventa.",
-    origen: "Comisión para el Mercado Financiero (CMF) — Detalle de Títulos en Garantía bajo IFRS.",
-    columnas: [
-      { name: "id_colateral", type: "VARCHAR", role: "PK", significado: "Identificador del colateral {periodo}_{rut}_{nemotecnico}_{indice}.", contable: "No aplica", interpretacion: "Clave única del título bajo pacto." },
-      { name: "periodo", type: "VARCHAR", role: "Dimensión", significado: "Periodo trimestral contable YYYY-MM.", contable: "No aplica", interpretacion: "Eje temporal del balance." },
-      { name: "fecha_corte", type: "DATE", role: "Dimensión", significado: "Fecha de corte del reporte.", contable: "No aplica", interpretacion: "Fecha de valoración del activo colateral." },
-      { name: "rut", type: "VARCHAR", role: "FK", significado: "RUT oficial de la corredora de bolsa.", contable: "No aplica", interpretacion: "Enlace al maestro." },
-      { name: "nombre_empresa", type: "VARCHAR", role: "Dimensión", significado: "Razón social oficial de la corredora.", contable: "No aplica", interpretacion: "Entidad intermediaria custodia de la garantía." },
-      { name: "nemotecnico", type: "VARCHAR", role: "Dimensión", significado: "Nemotécnico bursátil oficial del instrumento subyacente (ej. SQM-B, BCI, BSANTANDER, CENCOSUD, LTM, IRFEIIF).", contable: "Identificador de Activo", interpretacion: "Símbolo de la acción o valor objeto de la simultánea o pacto." },
-      { name: "tipo_instrumento", type: "VARCHAR", role: "Dimensión", significado: "Tipo de instrumento ('Acción Nacional (IRV)' o 'Cuota de Fondo de Inversión (CFI)').", contable: "Clasificación de Activo", interpretacion: "Familia de activo financiero utilizada como colateral." },
-      { name: "unidades_pactadas", type: "DOUBLE", role: "Métrica", significado: "Cantidad física de acciones o títulos entregados/recibidos en garantía.", contable: "Unidades Físicas", interpretacion: "Número de acciones bajo compromiso de retrocompra o retroventa." },
-      { name: "monto_pactado_m_clp", type: "DOUBLE", role: "Métrica", significado: "Monto pactado total valorizado en miles de CLP.", contable: "Monto Nominal / Liquidación", interpretacion: "Monto del compromiso financiero respaldado por el nemotécnico." },
-      { name: "monto_pactado_m_usd", type: "DOUBLE", role: "Métrica", significado: "Monto pactado en millones de USD.", contable: "Monto Nominal", interpretacion: "Valorización del compromiso en divisa." },
-      { name: "valor_mercado_m_clp", type: "DOUBLE", role: "Métrica", significado: "Valor de mercado corriente del colateral en miles de CLP.", contable: "Mark-to-Market", interpretacion: "Valor de tasación de mercado de los títulos en custodia." },
-      { name: "valor_mercado_m_usd", type: "DOUBLE", role: "Métrica", significado: "Valor de mercado en millones de USD.", contable: "Mark-to-Market", interpretacion: "Cobertura de mercado en divisa internacional." }
-    ]
-  },
-  // =========================================================================
-  // SECURITIZADORAS (CMF / Ley 18.045 Título XVIII)
-  // =========================================================================
-  {
     id: "securitizadoras_maestro",
     name: "securitizadoras.lista_entidades",
     viewName: "securitizadoras_maestro",
