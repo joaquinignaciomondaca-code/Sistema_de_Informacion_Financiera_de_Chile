@@ -1,6 +1,6 @@
 # Auditoría de saldos REPO bancarios — 27-09-2026
 
-**Dictamen: auditoría parcial realizada; NO se aprueba aún como dato bancario oficial ni se quita «REPO por auditar».** La consistencia interna de los 2.947 registros y la conversión de divisas pasa los controles, pero el origen de los saldos (cuentas CMF, selección y unidades) no puede cotejarse porque falta el Excel original `repo_banco.xlsx` y no hay extracción trazable y reproducible desde CMF. Además existen conflictos de identidad y una columna rotulada «transado» que realmente suma saldos. Se conservaron los archivos sin modificarlos, según la decisión de mantener REPO durante la reextracción de las demás tablas bancarias.
+**Dictamen: auditoría parcial realizada; NO se aprueba aún como dato bancario oficial ni se quita «REPO por auditar».** La consistencia interna de los 2.947 registros y la conversión de divisas pasa los controles. Se cotejaron directamente seis ZIP mensuales CMF con la serie legacy (resultados abajo), pero faltan los demás períodos, la verificación independiente del significado de las cuentas y sus columnas y el Excel original `repo_banco.xlsx`; todavía no existe un extractor de publicación validado. Además existen conflictos de identidad y una columna rotulada «transado» que realmente suma saldos. Se conservaron los archivos sin modificarlos.
 
 ## Qué se ejecutó y qué demuestra
 
