@@ -23,14 +23,14 @@ from bancos.scripts.audit_repo_release_gate import AGGREGATES, FOREIGN_AFFILIATE
 
 OUT = probe.ROOT / '.local-data/review/bancos/reconstruccion_cmf'
 ACCOUNTS = {'2021': ('1160000', '2160000'), '2022': ('141000000', '243000000')}
-CELL = re.compile(r'\s*([+-]?)(\d{1,14})(?:,(\d{2}))?\s*\Z')
+CELL = re.compile(r'\s*([+-]?)(\d{1,15})(?:,(\d{2}))?\s*\Z')
 QUANT = Decimal('0.01')
 
 
 def amount(cell: str, old: bool) -> Decimal:
     match = CELL.fullmatch(cell)
-    if not match or (old and match[3] is None):
-        raise ValueError(f'Celda B1 ilegible o sin decimales: {cell!r}')
+    if not match or (old and match[3] is None) or (not old and match[3] not in (None, '00')):
+        raise ValueError(f'Celda B1 ilegible o unidad ambigua: {cell!r}')
     value = Decimal(match[2]) + Decimal(match[3] or '0') / 100
     return -value if match[1] == '-' else value
 
@@ -41,7 +41,7 @@ def read_b1(content: bytes, period: str, bank: str) -> dict:
         lines = content.decode('latin-1').splitlines()
     except UnicodeError as exc:
         raise ValueError('B1 no decodificable') from exc
-    if not lines or not re.fullmatch(rf'{re.escape(bank)}\t[^\t\r\n]+', lines[0]):
+    if not lines or not re.fullmatch(r'\d{1,3}\t[^\t\r\n]+', lines[0]) or int(lines[0].split('\t', 1)[0]) != int(bank):
         raise ValueError(f'Encabezado B1 distinto del código {bank}')
     old = period < '2022-01'
     accounts = ACCOUNTS['2021' if old else '2022']

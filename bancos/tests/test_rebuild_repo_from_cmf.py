@@ -21,6 +21,14 @@ class RebuildTest(unittest.TestCase):
         self.assertEqual(row['repo_pasivo_mm_clp'], '1557788.71')
         self.assertEqual(row['clase_para_revision'], 'codigo_sin_identidad_certificada')
 
+    def test_2024_header_without_leading_zeros_and_integer_pesos(self):
+        raw = b1(('141000000', '243000000'),
+                 ['000073814715285'] + ['0']*3,
+                 ['000199328917335', '0', '0', '000015087973691'], '1')
+        row = read_b1(raw, '2024-06', '001')
+        self.assertEqual(row['repo_activo_mm_clp'], '73814.72')
+        self.assertEqual(row['repo_pasivo_mm_clp'], '214416.89')
+
     def test_2021_units_and_no_fabricated_zero(self):
         raw = b1(('1160000', '2160000'), ['64365,00'] + ['0,00']*3,
                  ['87671,00', '0,00', '0,00', '7338,00'], '001')
