@@ -49,6 +49,11 @@ def main():
         with urllib.request.urlopen(urllib.request.Request(URL.format(year), headers={'User-Agent': 'Mozilla/5.0'}), timeout=25) as response:
             url = response.url
             data = response.read(1_000_000).decode('utf-8', errors='replace')
+        if year == 2013 and re.search(r'window.location.replace\(', data):
+            redirect = 'https://www.sii.cl/valores_y_fechas/dolar/dolar2013.htm'
+            with urllib.request.urlopen(redirect, timeout=25) as response:
+                data = response.read(1_000_000).decode('utf-8', errors='replace')
+                url = response.url
         parser = Tables()
         parser.feed(data)
         tables = sorted(parser.tables, key=len, reverse=True)
@@ -56,8 +61,9 @@ def main():
             'year': year, 'url': url, 'tables': len(tables),
             'samples': [{'rows': len(t), 'first': t[:2], 'last': t[-3:]}
                         for t in tables[:2]],
-            'sections': re.findall(r'(?is)<h[1-5][^>]*>.*?(?:Diciembre|Noviembre|Enero).*?</h[1-5]>', data)[:3],
+            'sections': [re.sub(r'<[^>]+>', ' ', x)[:120] for x in re.findall(r'(?is)<h[1-5][^>]*>.*?(?:Diciembre|Noviembre|Enero).*?</h[1-5]>', data)[:3]],
             'html_start': re.sub(r'\s+', ' ', data[:700])[:400],
+            'diciembre_31_context': re.sub(r'\s+', ' ', data[max(0, data.lower().find('diciembre')):][:1800])[-1100:],
         }, ensure_ascii=False))
 
 
