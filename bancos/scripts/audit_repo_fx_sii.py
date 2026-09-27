@@ -1,4 +1,4 @@
-"""Coteja FX REPO 2008–2013 con tablas históricas del SII (NO publica).
+"""Coteja FX REPO 2008–2026 con tablas diarias oficiales del SII (NO publica).
 
 El HTML viejo del SII lista observaciones diarias; para cada mes se usa la
 última cotización diaria publicada, que puede ser anterior al fin calendario.
@@ -17,7 +17,7 @@ from pathlib import Path
 from bancos.scripts import probe_repos_zip_cmf as probe
 from bancos.scripts.probe_repo_fx_sii import Tables, URL
 
-YEARS = range(2008, 2014)
+YEARS = range(2008, 2027)
 OUT = probe.ROOT / '.local-data/review/bancos/fx_sii_historico.json'
 HEADER = ['Día', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
 NUMBER = re.compile(r'\d+(?:[.,]\d{1,2})?\Z')
@@ -54,11 +54,14 @@ def compare_year(year: int, html: str, published: dict[str, Decimal]) -> dict:
         return {'anio': year, 'estado': 'SIN_VERIFICAR', 'motivo': str(exc)}
     if set(values) != {f'{year}-{m:02d}' for m in range(1, 13)}:
         raise ValueError('Cobertura anual incompleta')
+    relevant = {p: v for p, v in values.items() if p in published}
+    if not relevant:
+        return {'anio': year, 'estado': 'SIN_VERIFICAR', 'motivo': 'Año sin meses publicados en REPO'}
     diffs = [{'mes': p, 'sii': str(value), 'repo': str(published[p])}
-             for p, value in sorted(values.items()) if p not in published or value != published[p]]
+             for p, value in sorted(relevant.items()) if value != published[p]]
     return {'anio': year, 'estado': 'DIFERENCIA' if diffs else 'COINCIDE',
-            'meses': len(values), 'discrepancias': diffs,
-            'ultimas_cotizaciones': {p: str(v) for p, v in sorted(values.items())}}
+            'meses': len(relevant), 'discrepancias': diffs,
+            'ultimas_cotizaciones': {p: str(v) for p, v in sorted(relevant.items())}}
 
 
 def main() -> None:
@@ -71,10 +74,10 @@ def main() -> None:
         by_month[p] = value
     reports = []
     for year in YEARS:
-        # 2013 usa la vista SII actual: la URL histórica entrega solo un JS
+        # 2013+ usa la vista SII actual: la URL histórica entrega solo un JS
         # de redirección; ir directamente a la URL institucional conocida.
-        url = ('https://www.sii.cl/valores_y_fechas/dolar/dolar2013.htm'
-               if year == 2013 else URL.format(year))
+        url = (f'https://www.sii.cl/valores_y_fechas/dolar/dolar{year}.htm'
+               if year >= 2013 else URL.format(year))
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
         try:
             with urllib.request.urlopen(req, timeout=25) as res:
