@@ -26,8 +26,38 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  transfer_review:
+    if: ${{ github.event_name == 'push' && hashFiles('bancos/scripts/transfer_repo_review.py') != '' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reextraer sólo un tercio de los meses CMF (no publica)
+        env:
+          SHARD: ${{ matrix.shard }}
+        run: |
+          mkdir -p .local-data/review/bancos/reconstruccion_cmf
+          python - <<'PY' > .local-data/review/bancos/reconstruccion_cmf/meses.txt
+          import json, os
+          months = sorted({r['periodo'] for r in json.load(open('docs/outputs/bancos/bancos_repos_saldos_series.json'))})
+          chosen = months[int(os.environ['SHARD'])::3]
+          assert len(months) == 220 and len(chosen) > 70
+          print(*chosen)
+          PY
+          read -r -a months < .local-data/review/bancos/reconstruccion_cmf/meses.txt
+          python -m bancos.scripts.rebuild_repo_from_cmf "${months[@]}" \
+            > .local-data/review/bancos/reconstruccion_cmf/ejecucion.txt 2>&1 || {
+              echo "::error title=Reextracción B1 incompleta::$(tail -n 1 .local-data/review/bancos/reconstruccion_cmf/ejecucion.txt)"
+              exit 1
+            }
+      - name: Transferir el tercio compacto verificable como anotaciones
+        run: python -m bancos.scripts.transfer_repo_review
   rebuild_review:
-    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !inputs.period) }}
+    if: ${{ github.event_name == 'workflow_dispatch' && !inputs.period }}
     runs-on: ubuntu-latest
     timeout-minutes: 50
     steps:
@@ -42,9 +72,6 @@ jobs:
               exit 1
             }
           tail -n 30 .local-data/review/bancos/reconstruccion_cmf/ejecucion.txt
-      - name: Transferir revisión compacta para análisis local (no publicación)
-        if: ${{ github.event_name == 'push' && hashFiles('bancos/scripts/transfer_repo_review.py') != '' }}
-        run: python -m bancos.scripts.transfer_repo_review
       - name: Mostrar totales y meses con diferencias sin depender del artefacto
         if: always()
         run: |
