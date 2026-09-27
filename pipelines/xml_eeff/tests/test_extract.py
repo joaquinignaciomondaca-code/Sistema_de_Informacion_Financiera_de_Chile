@@ -80,9 +80,14 @@ class FechasTest(unittest.TestCase):
 
 class PeriodicidadTest(unittest.TestCase):
     def test_anuales_solo_diciembre(self):
-        for sector in ('ffmm', 'agf', 'retail'):
+        for sector in ('ffmm',):
             for periodo in x.periodos_para(sector, todos=True):
                 self.assertTrue(periodo.endswith('-12'), f'{sector} devolvio {periodo}')
+
+    def test_agf_y_retail_trimestrales(self):
+        for sector in ('agf', 'retail'):
+            self.assertIn('2026-06', x.periodos_para(sector))
+            self.assertIn('2026-03', x.periodos_para(sector))
 
     def test_historicos_desde_2011_y_sin_futuro(self):
         historico = x.periodos_para('corredoras', todos=True)
@@ -93,6 +98,23 @@ class PeriodicidadTest(unittest.TestCase):
     def test_diario_acotado(self):
         self.assertLessEqual(len(x.periodos_para('ffmm')), 2)
         self.assertLessEqual(len(x.periodos_para('fi')), 2)
+
+
+class FuentesSegurasTest(unittest.TestCase):
+    def test_no_guardar_tokens_en_artifacts(self):
+        url = 'https://www.cmfchile.cl/inc/safec_ifrs_verarchivo.php?auth=SECRETO&send=TOKEN&tipo=xbrl'
+        limpio = x.url_fuente_segura(url)
+        self.assertNotIn('SECRETO', limpio)
+        self.assertNotIn('TOKEN', limpio)
+        self.assertIn('tipo=xbrl', limpio)
+
+    def test_descarga_html_se_reporta_no_se_extrae(self):
+        item = {**ITEM, 'sector': 'agf', 'marker': 'XBRL'}
+        ficha = b'<a href="https://www.cmfchile.cl/inc/safec_ifrs_verarchivo.php?auth=SECRET">Estados financieros (XBRL)</a>'
+        with patch.object(x, 'read_url', side_effect=[ficha, b'<!DOCTYPE HTML><html>Denegado</html>']):
+            estado, datos = x.process(item, '2026-06')
+        self.assertEqual(estado, 'xbrl_descarga_html')
+        self.assertIsNone(datos)
 
 
 class ZipTest(unittest.TestCase):
@@ -146,10 +168,16 @@ class DuplicadosYDvTest(unittest.TestCase):
 class ParseoToleranteTest(unittest.TestCase):
     def test_xml_con_caracter_invalido_se_repara_y_marca(self):
         crudo = xml().replace(b'2957448', b'2&957448')  # & sin escapar: XML inválido real
+        # No borrar & de una cuenta para fabricar un monto: debe quedar rechazado.
+        with self.assertRaisesRegex(ValueError, 'Cuenta no numerica'):
+            x.parse_ifrs(crudo, ITEM, '2014-12', 'url')
+
+    def test_caracter_invalido_fuera_de_montos_se_repara_y_marca(self):
+        crudo = xml().replace(b'</Identificacion>', b'<Nombre>Fondo A & B</Nombre></Identificacion>')
         fila = x.parse_ifrs(crudo, ITEM, '2014-12', 'url')
         self.assertTrue(fila['parseo_reparado'])
         self.assertEqual(fila['calidad'], 'revisar_parseo_reparado')
-        self.assertEqual(fila['total_activo'], 2957448.0)  # cifra recuperada y marcada
+        self.assertEqual(fila['total_activo'], 2957448.0)
 
     def test_xml_valido_no_se_marca(self):
         self.assertFalse(x.parse_ifrs(xml(), ITEM, '2014-12', 'url')['parseo_reparado'])
@@ -173,6 +201,29 @@ class ParseoToleranteTest(unittest.TestCase):
         self.assertEqual(x.sanear_xml(b'<a>2&3</a>'), b'<a>2&amp;3</a>')
         self.assertNotIn(b'\x0b', x.sanear_xml(b'<a>1\x0b2</a>'))
         self.assertEqual(x.sanear_xml(b'<a>&amp;</a>'), b'<a>&amp;</a>')
+
+
+class CalificacionTest(unittest.TestCase):
+    def test_xml_reparado_no_cuenta_como_verificado(self):
+        item = ITEM
+        ficha = b'<a href="https://www.cmfchile.cl/inc/ifrs_xml_verarchivo.php?archivo=FMEF1.xml">XML</a>'
+        crudo = xml().replace(b'</Identificacion>', b'<Nombre>Fondo A & B</Nombre></Identificacion>')
+        with patch.object(x, 'read_url', side_effect=[ficha, crudo]):
+            estado, fila = x.process(item, '2014-12')
+        self.assertEqual(estado, 'revisar_xml')
+        self.assertTrue(fila['parseo_reparado'])
+
+    def test_dv_distinto_no_cuenta_como_verificado(self):
+        ficha = b'<a href="https://www.cmfchile.cl/inc/ifrs_xml_verarchivo.php?archivo=FMEF1.xml">XML</a>'
+        crudo = xml().replace(b'<DVFondoInforma>5</DVFondoInforma>', b'<DVFondoInforma>9</DVFondoInforma>')
+        with patch.object(x, 'read_url', side_effect=[ficha, crudo]):
+            estado, fila = x.process(ITEM, '2014-12')
+        self.assertEqual(estado, 'revisar_xml')
+        self.assertFalse(fila['dv_xml_coincide'])
+
+    def test_rut_ausente_es_error(self):
+        with self.assertRaisesRegex(ValueError, 'RUT XML ausente'):
+            x.parse_ifrs(xml().replace(b'<RUTFondoInforma>8490</RUTFondoInforma>', b''), ITEM, '2014-12', 'url')
 
 
 class FlujoTest(unittest.TestCase):

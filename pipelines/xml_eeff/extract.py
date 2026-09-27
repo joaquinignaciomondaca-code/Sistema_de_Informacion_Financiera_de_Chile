@@ -23,8 +23,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / '.local-data/xml_eeff'
 BASE = 'https://www.cmfchile.cl'
-# CMF ata los enlaces con token `auth=` a la sesión: hay que conservar cookies entre la
-# ficha y la descarga del archivo, si no el servidor devuelve HTML en lugar del XBRL.
+# Mantener cookies de la ficha entre peticiones; esto no garantiza acceso al XBRL.
+# Actions aún recibe HTML en la descarga XBRL: reportarlo explícitamente.
 COOKIES = http.cookiejar.CookieJar()
 OPENER = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(COOKIES))
 
@@ -36,11 +36,10 @@ CONFIG = {
     'agf': ('docs/outputs/agf/agf_maestro.json', 'RGAGF', '3', 'XBRL', 'rut', 'razon_social'),
     'retail': ('docs/outputs/retail_financiero/retail_financiero_maestro.json', 'RVEMI', '3', 'XBRL', 'rut', 'razon_social'),
 }
-# Periodicidad de reporte IFRS: los fondos mutuos publican anualmente (Circular 1997) y
-# AGF/retail cierran ejercicio en diciembre; corredoras y fondos de inversión tienen cortes
-# trimestrales. Consultar trimestres que no existen producía "sin_fuente" en masa.
+# Fondos mutuos: XML anual. AGF y emisores presentan también períodos trimestrales
+# (comprobado en fichas CMF 2026-03 y 2026-06); no suponer periodicidad anual.
 PERIODICIDAD = {'corredoras': 'trimestral', 'fi': 'trimestral', 'ffmm': 'anual',
-                'agf': 'anual', 'retail': 'anual'}
+                'agf': 'trimestral', 'retail': 'trimestral'}
 BALANCE = {'corredoras': ('TotalActivos', 'TotalPasivos', 'TotalPatrimonio'),
            'ffmm': ('TotalActivo', 'TotalPasivo', 'ActivoNetoAtribuibleALosParticipes'),
            'fi': ('TotalActivo', 'TotalPasivo', 'TotalPatrimonioNeto')}
@@ -59,6 +58,14 @@ def read_url(url, limit=12_000_000, referer=None):
     if len(raw) > limit:
         raise ValueError('Respuesta demasiado grande')
     return raw
+
+
+def url_fuente_segura(url):
+    """Eliminar tokens efímeros `auth`/`send` antes de escribir un artifact público."""
+    u = urllib.parse.urlsplit(url)
+    params = urllib.parse.parse_qsl(u.query, keep_blank_values=True)
+    return urllib.parse.urlunsplit((u.scheme, u.netloc, u.path,
+        urllib.parse.urlencode([(k, v) for k, v in params if k.lower() not in ('auth', 'send')]), ''))
 
 
 def desempaquetar_xbrl(raw):
@@ -197,7 +204,6 @@ def parse_ifrs(raw, item, per, url):
         raise ValueError(f'XML irreconocible: {type(ultimo_error).__name__}: {ultimo_error}')
     if root.tag != 'IFRS':
         raise ValueError(f'Raiz no IFRS: {root.tag}')
-    if root.tag != 'IFRS': raise ValueError(f'Raiz no IFRS: {root.tag}')
     ident = root.find('Identificacion')
     datos = root.find('DatosPeriodo')
     if ident is None or datos is None: raise ValueError('Sin Identificacion/DatosPeriodo')
@@ -206,7 +212,8 @@ def parse_ifrs(raw, item, per, url):
     dv_key = 'DVFondoInforma' if fondo else 'DVEntidadInforma'
     rut_xml = ident.findtext(body_key)
     dv_xml = ident.findtext(dv_key)
-    if rut_xml and rut_xml != item['rut']: raise ValueError('RUT XML no corresponde al registro')
+    if not rut_xml or rut_xml.lstrip('0') != item['rut'].lstrip('0'):
+        raise ValueError('RUT XML ausente o distinto al registro')
     dv_coincide = (signed_rut_ok(rut_xml, dv_xml) if rut_xml and dv_xml else None)
     fecha = datos.find('PeriodoPresentacionEstadosFinancieros')
     if fecha is None: raise ValueError('Periodo no declarado')
@@ -220,10 +227,6 @@ def parse_ifrs(raw, item, per, url):
         if node.get('Context') != 'PeriodoActual' or not node.get('CodigoCuenta'): continue
         code = node.get('CodigoCuenta')
         text = (node.text or '').strip()
-        if reparado:
-            # En modo tolerante el texto puede arrastrar un carácter inválido (&, <) que no es
-            # parte del número; se limpia solo para leer la cifra y la fila queda marcada.
-            text = re.sub(r'[^0-9.\-]', '', text)
         if not re.fullmatch(r'-?\d+(?:\.\d+)?', text): raise ValueError(f'Cuenta no numerica: {code}')
         number = float(text)
         if code in facts:
@@ -249,7 +252,7 @@ def parse_ifrs(raw, item, per, url):
             'definicion_total_pasivo': 'incluye_patrimonio' if item['sector'] == 'fi' else 'excluye_patrimonio',
             'resultado_ejercicio': facts[result_code], 'codigo_resultado': result_code,
             'balance_cuadra': True, 'cuentas': len(facts), 'codigos_repetidos_por_serie': repetidos,
-            'parseo_reparado': reparado, 'fuente_url': url,
+            'parseo_reparado': reparado, 'fuente_url': url_fuente_segura(url),
             'sha256_xml': hashlib.sha256(raw).hexdigest(),
             'calidad': 'revisar_parseo_reparado' if reparado else 'revisar_antes_de_publicar'}
 
@@ -258,7 +261,7 @@ def parse_xbrl(raw, item, per, url):
     """XBRL: no homologar conceptos IFRS arbitrariamente. Guardar métricas solo si inequívocas."""
     raw, contenido = desempaquetar_xbrl(raw)
     root = ET.fromstring(raw)
-    if not root.tag.lower().endswith('xbrl'):
+    if root.tag != '{http://www.xbrl.org/2003/instance}xbrl':
         raise ValueError(f'No es una instancia XBRL: {root.tag}')
     # XBRL permite múltiples dimensiones, segmentos, contextos y unidades; no inferir
     # totales en masa sin resolver moneda, base de consolidación y contexto del período.
@@ -267,7 +270,7 @@ def parse_xbrl(raw, item, per, url):
     if not contexts or not units: raise ValueError('XBRL sin contextos o unidades')
     return {'sector': item['sector'], 'rut': item['rut'], 'periodo': per,
             'tipo_entidad': item['tipo'], 'nombre_registro': item['nombre_registro'],
-            'xbrl_contextos': contexts, 'xbrl_unidades': units, 'fuente_url': url,
+            'xbrl_contextos': contexts, 'xbrl_unidades': units, 'fuente_url': url_fuente_segura(url),
             'sha256_xbrl': hashlib.sha256(raw).hexdigest(), 'contenido_en_zip': contenido,
             'calidad': 'xbrl_pendiente_mapeo_taxonomia',
             'total_activo': None, 'resultado_ejercicio': None}
@@ -282,12 +285,18 @@ def process(item, per):
     # CMF puede devolver HTML (sesión vencida, sin información) en lugar del archivo pedido:
     # se detecta de inmediato para no confundirlo con un XML inválido.
     if re.match(r'\s*(<\?xml[^>]*>\s*)?(<!doctype\s+html|<html)', raw[:400].decode('utf-8', errors='replace'), re.I):
-        pista = re.sub(r'\s+', ' ', raw[:160].decode('utf-8', errors='replace'))
-        raise ValueError(f'contenido=html en lugar de archivo | inicio={pista[:90]!r}')
+        if item['marker'] == 'XBRL':
+            # HTML no es una instancia; no repetirlo como excepción de parseo genérica.
+            return 'xbrl_descarga_html', None
+        raise ValueError('contenido=html en lugar de XML IFRS')
     try:
         if item['marker'] == 'XBRL':
             return 'pendiente_taxonomia', parse_xbrl(raw, item, per, link)
-        return 'ok_xml', parse_ifrs(raw, item, per, link)
+        fila = parse_ifrs(raw, item, per, link)
+        if fila['parseo_reparado'] or fila['dv_xml_coincide'] is False:
+            fila['calidad'] = 'revisar_parseo_o_dv'
+            return 'revisar_xml', fila
+        return 'ok_xml', fila
     except ET.ParseError as exc:
         pista = re.sub(r'\s+', ' ', raw[:120].decode('utf-8', errors='replace'))
         tipo = 'html' if pista.lstrip().lower().startswith(('<', '<!doctype')) and '<html' in pista.lower() else 'desconocido'
@@ -368,6 +377,10 @@ def main():
                 done += 1
                 time.sleep(.15)
         muestras = errores_corrida.get(sector, {})
+        # El ledger en la caché no es un archivo histórico: conservar solo la corrida
+        # reciente para evitar crecer indefinidamente. El artifact de esta corrida
+        # sigue conteniendo sus filas y el cursor se preserva por separado.
+        ledgerpath.write_text(''.join(ledgerpath.read_text(encoding='utf8').splitlines(keepends=True)[-500:]), encoding='utf8')
         results[sector] = {'total': len(pending), 'procesadas': done, 'cursor': state['cursor'],
                            'por_estado': stats,
                            'errores_frecuentes': [{'error': k, 'casos': v['n'], 'ejemplo': v['ejemplo']}
@@ -376,6 +389,7 @@ def main():
     attempts = sum(sum(v.get('por_estado', {}).values()) for v in results.values())
     errors = sum(v.get('por_estado', {}).get('error', 0) for v in results.values())
     verificadas = sum(v.get('por_estado', {}).get('ok_xml', 0) for v in results.values())
+    en_revision = sum(v.get('por_estado', {}).get('revisar_xml', 0) for v in results.values())
     # Un job en verde NO significa que existan datos: se declara el estado explícitamente.
     if attempts == 0:
         estado = 'sin_intentos'
@@ -387,7 +401,8 @@ def main():
         estado = 'con_datos_verificados'
     (OUT / f'resumen_shard{args.shard}of{args.shards}.json').write_text(json.dumps(
         {'generado_utc': datetime.now(timezone.utc).isoformat(), 'solo_revision': True,
-         'estado_global': estado, 'filas_verificadas': verificadas, 'intentos': attempts,
+         'estado_global': estado, 'filas_verificadas': verificadas,
+         'filas_requieren_revision': en_revision, 'intentos': attempts,
          'errores': errors, 'sectores': results}, indent=2, ensure_ascii=False))
     print(f'ESTADO GLOBAL: {estado} (verificadas={verificadas} intentos={attempts} errores={errors})', flush=True)
     if attempts == 0 or attempts == errors: return 2
