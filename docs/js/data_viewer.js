@@ -93,9 +93,7 @@ const DATA_VIEWER_CATALOG = [
       { id: "corredoras_bolsa_registro_universo", name: "corredoras.registro_unico (120 entidades)" },
       { id: "corredoras_bolsa_maestro", name: "corredoras.lista_entidades (120 entidades)" },
       { id: "corredoras_bolsa_caratula_eeff_historico", name: "corredoras.estados_financieros (621 balances)" },
-      { id: "corredoras_bolsa_balance_resumen", name: "corredoras.balance_resumen (621 balances)" },
-      { id: "corredoras_repos_contrapartes_tasas", name: "corredoras.repos_contrapartes (2.577 contratos)" },
-      { id: "corredoras_repos_colaterales_detalle", name: "corredoras.repos_colaterales (2.631 colaterales)" }
+      { id: "corredoras_bolsa_balance_resumen", name: "corredoras.balance_resumen (621 balances)" }
     ]
   },
   {
