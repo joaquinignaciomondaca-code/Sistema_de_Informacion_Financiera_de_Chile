@@ -1,28 +1,20 @@
 {
   "desde": 2010,
-  "hasta": 2026,
+  "hasta": 2013,
   "trimestres": "03,06,09,12",
   "step": "todo",
   "tramos": [
     [
       2010,
+      2011
+    ],
+    [
+      2012,
       2013
-    ],
-    [
-      2014,
-      2017
-    ],
-    [
-      2018,
-      2021
-    ],
-    [
-      2022,
-      2026
     ]
   ],
   "ruts": "",
   "debug": "true",
   "_nota": "Modificar y commitear este archivo lanza .github/workflows/securitizadoras_extraccion.yml; cada tramo publica una rama actions/ps-extraccion-<desde>-<hasta>-<run_id>. ruts (cuerpos separados por coma) y debug=true son opcionales.",
-  "_lanzamiento": "2026-09-26 corrida 4 masiva (OCR v5 + limpieza OCR)"
+  "_lanzamiento": "2026-09-27 corrida 4b: 2010-2013 partido en dos (el job único superó 350 min por el OCR)"
 }
