@@ -57,9 +57,13 @@ jobs:
           BATCH: ${{ inputs.batch }}
           SHARD: ${{ matrix.shard }}
         run: |
+          # En backfill manual sí esperamos datos: si no se valida ninguna fila, el job falla.
           if [ "$ALL_PERIODS" = 'true' ]; then
-            python pipelines/xml_eeff/extract.py --all-periods --historical --batch "${BATCH:-90}" --shard "$SHARD" --shards 4
+            python pipelines/xml_eeff/extract.py --all-periods --historical --fail-if-sin-datos \
+              --batch "${BATCH:-90}" --shard "$SHARD" --shards 4
           else
+            # En el barrido diario puede no haber declaraciones nuevas todavía: no se falla,
+            # pero el resumen declara estado_global=sin_datos_verificados.
             python pipelines/xml_eeff/extract.py --batch "${BATCH:-90}" --shard "$SHARD" --shards 4
           fi
       - name: Artifact de auditoría (no datos de la web)
