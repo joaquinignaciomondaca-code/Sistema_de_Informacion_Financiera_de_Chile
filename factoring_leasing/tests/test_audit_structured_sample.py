@@ -13,10 +13,16 @@ FICHA = b'''<html><h1>FACTORING SECURITY S.A.</h1><p>RUT:96655860-1</p>
 <tr><td>Total de activos</td><td>10.000</td><td>9.999</td></tr>
 <tr><td>Total de pasivos</td><td>8.000</td><td>8.999</td></tr>
 <tr><td>Patrimonio total</td><td>2.000</td><td>1.000</td></tr>
-<tr><th>[310000] Estado del resultado</th></tr>
+<tr><th>[310000] Estado del resultado, por funcion de gasto</th></tr>
+<tr><td>Ganancia (p\xe9rdida), antes de impuestos</td><td>700</td><td>600</td><td>500</td><td>400</td></tr>
+<tr><td>Ganancia (p\xe9rdida) procedente de operaciones continuadas</td><td>500</td><td>450</td></tr>
+<tr><th>[410000] Estado de flujos de efectivo</th></tr>
 <tr><td>Efectivo y equivalentes al efectivo</td><td>99.999</td></tr></table></html>'''
-ARCHIVO = '\n'.join(f'202206;96655860;FACTORING SECURITY S.A.;I;CLP;{label};{amount}000;TAX CI;ESF C/NC'
-                    for label, amount in [('Total de activos',10000),('Total de pasivos',8000),('Patrimonio total',2000),('Efectivo y equivalentes al efectivo',1000)]).encode()
+ARCHIVO = '\n'.join(
+    [f'202206;96655860;FACTORING SECURITY S.A.;I;CLP;{label};{amount}000;TAX CI;ESF C/NC'
+     for label, amount in [('Total de activos',10000),('Total de pasivos',8000),('Patrimonio total',2000),('Efectivo y equivalentes al efectivo',1000)]]
+    + [f'202206;96655860;FACTORING SECURITY S.A.;I;CLP;{label};{amount}000;TAX CI;ERFG'
+       for label, amount in [('Ganancia (pérdida), antes de impuestos',700),('Ganancia (pérdida) procedente de operaciones continuadas',500)]]).encode()
 
 
 class CotejoTests(unittest.TestCase):
@@ -24,6 +30,8 @@ class CotejoTests(unittest.TestCase):
         r = a.audit_one(SAMPLE, FICHA, ARCHIVO)
         self.assertEqual(r['total_activos_miles_clp'], 10000)
         self.assertEqual(r['unidad'], 'miles de pesos chilenos (CLP)')
+        self.assertEqual(r['resultado_antes_impuestos_miles_clp'], 700)
+        self.assertEqual(r['resultado_operaciones_continuadas_miles_clp'], 500)
         self.assertEqual(r['tipo_balance'], 'I')
 
     def test_rechaza_otro_rut(self):
@@ -36,7 +44,7 @@ class CotejoTests(unittest.TestCase):
 
     def test_rechaza_diferencia(self):
         with self.assertRaisesRegex(ValueError, 'Diferencias'):
-            a.audit_one(SAMPLE, FICHA, ARCHIVO.replace(b'10000000', b'10001000'))
+            a.audit_one(SAMPLE, FICHA, ARCHIVO.replace(b';10000000;', b';10001000;'))
 
     def test_rechaza_cuenta_duplicada(self):
         with self.assertRaisesRegex(ValueError, 'duplicadas'):
