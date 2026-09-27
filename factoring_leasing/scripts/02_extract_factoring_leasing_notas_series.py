@@ -102,6 +102,7 @@ def fetch_cmf_pdf_stream(rut_cuerpo, year, month, tipo="C"):
     return None
 
 def extract_all():
+    raise RuntimeError("Publicación de EEFF Factoring/Leasing suspendida: solo se conserva Lista de Entidades. Reextraer y auditar antes de publicar.")
     print("=" * 70)
     print("Iniciando Extraccion en Memoria: Notas Desagregadas Factoring & Leasing")
     print("=" * 70)

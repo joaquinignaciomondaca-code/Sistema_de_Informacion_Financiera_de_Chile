@@ -80,6 +80,7 @@ def get_usd_rates_map():
     return rates
 
 def run_factoring_leasing_pipeline():
+    raise RuntimeError("Publicación de EEFF Factoring/Leasing suspendida: solo se conserva Lista de Entidades. Reextraer y auditar antes de publicar.")
     print("=" * 70)
     print("Iniciando Pipeline de Factoring & Leasing (CMF Chile / Data Pura)")
     print(f"Salida en: {OUT_DIR}")
