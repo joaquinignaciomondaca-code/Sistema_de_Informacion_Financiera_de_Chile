@@ -9,6 +9,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import audit_sample as a
 
 FFMM = '''<html><table>
+<tr><th>ESTADO DE SITUACION FINANCIERA</th></tr>
 <tr><td>Total Activo (+)</td><td></td><td>2.957.448</td><td>4.191.714</td></tr>
 <tr><td>Total Pasivo (excluido el activo neto atribuible a partícipes) (+)</td><td></td><td>5.947</td><td>64.811</td></tr>
 <tr><td>Activo neto atribuible a los participes (+)</td><td></td><td>2.951.501</td><td>4.126.903</td></tr>

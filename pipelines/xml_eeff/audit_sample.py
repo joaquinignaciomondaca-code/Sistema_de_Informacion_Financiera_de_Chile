@@ -85,6 +85,12 @@ def html_values(page, sector):
         candidates = []
         start = False
         for cells in parser.rows:
+            if sector == 'ffmm' and field == 'patrimonio_o_activo_neto':
+                title = ' '.join(plain(c) for c in cells)
+                if 'estado de situacion financiera' in title: start = True
+                elif start and ('estado de resultados integrales' in title or
+                                'estado de cambios en el activo neto' in title): break
+                if not start: continue
             if sector == 'fi' and field == 'resultado_ejercicio':
                 title = ' '.join(plain(c) for c in cells)
                 if 'estado de resultados integrales' in title: start = True
