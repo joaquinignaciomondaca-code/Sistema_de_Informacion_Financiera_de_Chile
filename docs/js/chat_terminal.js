@@ -326,11 +326,11 @@ class ChatTerminalController {
       if (result.success) {
         this.renderQueryResult(text, result);
       } else {
-        this.addBotMessage(`<div style="color: var(--accent-red);">[Error SQL] ${result.error}</div>`);
+        this.addBotMessage(`<div style="color: var(--accent-red);">[Error SQL] ${this.escapeHtml(String(result.error || "error desconocido del motor DuckDB"))}</div>`);
       }
     } catch (err) {
       this.removeMessage(loadingId);
-      this.addBotMessage(`<div style="color: var(--accent-red);">[Excepción] ${err.message}</div>`);
+      this.addBotMessage(`<div style="color: var(--accent-red);">[Excepción] ${this.escapeHtml(err && err.message ? err.message : String(err))}</div>`);
     } finally {
       this.sendBtn.disabled = false;
       this.input.focus();

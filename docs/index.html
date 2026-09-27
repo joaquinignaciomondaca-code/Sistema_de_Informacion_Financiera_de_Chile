@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/app.css?v=3.2">
+  <link rel="stylesheet" href="css/app.css?v=3.7">
 </head>
 <body>
 
@@ -31,7 +31,7 @@
         </svg>
         <span>Descargar Base de Datos</span>
       </button>
-      <div class="badge live">DuckDB-Wasm Activo</div>
+      <div class="badge" id="engine-badge" title="Estado del motor SQL en el navegador">Inicializando DuckDB…</div>
       <div class="theme-dropdown-container" id="theme-dropdown-container">
         <button type="button" class="theme-dropdown-btn" id="theme-dropdown-btn" aria-expanded="false" title="Seleccionar paleta de colores">
           <span class="theme-palette-icon">
@@ -111,6 +111,11 @@
             <button class="filter-btn" data-filter="securitizadoras">Securitizadoras</button>
             <button class="filter-btn" data-filter="patrimonios_separados">Patrimonios Separados</button>
             <button class="filter-btn" data-filter="cajas_compensacion">Cajas de Compensación</button>
+            <button class="filter-btn" data-filter="cooperativas">Cooperativas</button>
+            <button class="filter-btn" data-filter="agf">AGF</button>
+            <button class="filter-btn" data-filter="sistemas_pago">Sistemas de Pago</button>
+            <button class="filter-btn" data-filter="retail_financiero">Retail Financiero</button>
+            <button class="filter-btn" data-filter="fintech">Fintech</button>
             <button class="filter-btn" data-filter="todos">Todos</button>
           </div>
         </div>
@@ -215,16 +220,16 @@
   <!-- Scripts de la Aplicación -->
   <script src="js/data_bundles.js?v=3.0"></script>
   <script src="js/chart_renderer.js?v=3.0"></script>
-  <script src="js/erd_graph.js?v=3.0"></script>
-  <script src="js/duckdb_client.js?v=3.0"></script>
-  <script src="js/chat_terminal.js?v=3.0"></script>
-  <script src="js/sidebar.js?v=3.3"></script>
+  <script src="js/erd_graph.js?v=3.7"></script>
+  <script src="js/duckdb_client.js?v=3.7"></script>
+  <script src="js/chat_terminal.js?v=3.4"></script>
+  <script src="js/sidebar.js?v=3.7"></script>
   <script src="js/theme_switcher.js?v=3.0"></script>
-  <script src="js/data_dictionary.js?v=3.1"></script>
-  <script src="js/data_viewer.js?v=3.3"></script>
+  <script src="js/data_dictionary.js?v=3.7"></script>
+  <script src="js/data_viewer.js?v=3.7"></script>
   <script src="js/jszip.min.js"></script>
   <script src="js/xlsx.full.min.js"></script>
-  <script src="js/export_modal.js?v=3.0"></script>
+  <script src="js/export_modal.js?v=3.7"></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
