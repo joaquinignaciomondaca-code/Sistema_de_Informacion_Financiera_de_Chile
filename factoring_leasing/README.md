@@ -1,18 +1,26 @@
-# Factoring y Leasing — publicación limitada
+# Factoring y Leasing — catálogo, muestras y serie IFRS CMF
 
-Por decisión editorial, **únicamente se conserva la Lista de Entidades**: `docs/outputs/factoring_leasing/factoring_leasing_maestro.{json,parquet}` (28 registros). Se retiraron los balances trimestrales, la nota de efectivo y la nota de cartera/morosidad, tanto JSON como Parquet, del sitio y del repositorio de datos publicados. Se eliminaron sus accesos del explorador, visor, diccionario, diagrama, exportador, vistas DuckDB y manifiesto. No presentar esos datos como disponibles.
+## Datos de entidades y muestras cotejadas
 
-Los scripts históricos se mantienen solo para investigación, pero sus funciones de publicación fallan explícitamente. Una reextracción futura requiere auditoría y decisión de publicación propia; no se reponen automáticamente los archivos retirados. `python factoring_leasing/scripts/audit_factoring_leasing.py` comprueba unicidad, módulo 11 y equivalencia JSON/Parquet del listado, **no** certifica por sí mismo que la identidad, el estado o el universo estén verificados frente al padrón CMF vigente. La lista existente no fue alterada.
+`docs/outputs/factoring_leasing/factoring_leasing_maestro.{json,parquet}` contiene 28 registros del catálogo local. Su dígito verificador no certifica que la identidad/vigencia esté cotejada contra el padrón CMF.
 
-## Nueva revisión estructurada (sin publicación)
+Las muestras previas se mantienen separadas:
 
-`python factoring_leasing/scripts/audit_structured_sample.py` compara dos muestras (un factoring y un leasing) del archivo público de texto delimitado de CMF con sus fichas HTML, y ya fue **aprobado** en la corrida Actions 36337279448. Rechaza falta de RUT/DV, nombre, período, tipo de balance, unidad, cuentas únicas, coincidencia exacta y cuadre. El informe queda en `.local-data/factoring_leasing_muestra/` y el workflow `factoring_leasing_sample.yml` lo sube como artifact privado; jamás modifica `docs/outputs`. Las fichas ofrecen además XBRL y PDF, cuyo contenido **no** está todavía cotejado. Solo después de una muestra aprobada podrá proponerse una publicación limitada.
+- `factoring_leasing_eeff_muestra_cmf.parquet`: cuatro cuentas de balance cotejadas para dos entidades y sus cierres 2022.
+- `factoring_leasing_resultados_muestra_cmf.parquet`: dos cuentas de resultados acumulados desde enero, cotejadas para las mismas entidades/períodos.
 
-## Publicación acotada vigente
+La muestra prueba que esas filas coinciden con el archivo CMF; no valida todos los períodos o entidades.
 
-`python factoring_leasing/scripts/publish_structured_sample.py --report .local-data/factoring_leasing_muestra/cotejo.json`
-escribe `docs/outputs/factoring_leasing/factoring_leasing_eeff_muestra_cmf.parquet` con **dos filas** y falla si el reporte no proviene del run aprobado, si cambia cualquier cifra, si aparece una tercera fila, si la unidad no es miles de CLP, si el balance no cuadra o si falta la advertencia de alcance. Esa muestra se presenta en el sitio como «muestra cotejada CMF», no como el sector. El resto de los balances sigue retirado y los XBRL/PDF siguen sin cotejar.
+## Serie histórica IFRS completa de la fuente TXT
 
-## Estado de resultados (tabla separada)
+El workflow `.github/workflows/factoring_leasing_backfill.yml` obtiene los cierres publicados por CMF, mantiene caché por período y, al completarse **todos** los períodos del índice, arma y publica dos archivos distintos:
 
-A solicitud del usuario, `factoring_leasing.resultados_muestra_cmf` contiene solamente dos cuentas de resultados **acumulados desde enero**, cotejadas en [Actions 36337715177](https://github.com/joaquinignaciomondaca-code/monitor-financiero-chile/actions/runs/36337715177) para las mismas dos entidades y períodos. El balance permanece aparte en `factoring_leasing.eeff_muestra_cmf`, con sus cuatro cuentas y su cotejo original. `python factoring_leasing/scripts/publish_income_sample.py --report .local-data/factoring_leasing_muestra/cotejo_resultados.json` exige valores exactos, unidad, identidades, advertencia, corrida y coherencia de las cuatro cifras del balance original. No es el estado de resultado completo ni el sector.
+- `factoring_leasing_balance_serie_ifrs_cmf.parquet`: todas las filas `ESF*` del TXT para los RUT del catálogo.
+- `factoring_leasing_resultados_serie_ifrs_cmf.parquet`: todas las filas `ER*`.
+- `factoring_leasing_balance_serie_ifrs_cmf_metadata.json`: cobertura, faltantes, corrida y advertencias.
+
+El publicador actualiza automáticamente DuckDB, el explorador (una carpeta independiente por tabla), el selector, diccionario, `data_manifest.json` y cache-busting de la interfaz; corre auditorías y comitea los cambios a la rama que ejecutó Actions. No publica si falta un cierre, error o partición. La programación diaria solo corre cuando el workflow está en la rama por defecto `main`; el PR abierto puede ejecutarse por cambio de código o `workflow_dispatch`.
+
+La extracción conserva las cuentas tal como llegan: tipo individual/consolidado, moneda, taxonomía y texto original. Los importes no enteros permanecen como texto con `valor_archivo = NULL`; las repeticiones llevan ordinal. No hay conversión de moneda/unidades, agregación, deduplicación ni suma. La serie representa lo que se encontró en el TXT para **24 de 28 RUT del catálogo**, no necesariamente todos los EEFF disponibles de cada entidad. El DV se asocia desde el catálogo actual; no es una validación histórica completa. La etiqueta de la web advierte que no se cotejó integralmente cada cifra.
+
+Los extractores y publicadores heredados de otros balances/notas retirados siguen bloqueados; la serie nueva es una ruta de publicación independiente, en dos tablas crudas con sus límites declarados.

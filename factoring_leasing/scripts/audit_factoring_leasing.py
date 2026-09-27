@@ -1,7 +1,8 @@
-"""Audita únicamente la Lista de Entidades publicada de Factoring y Leasing.
+"""Audita la Lista de Entidades de Factoring y Leasing.
 
-La validez del dígito verificador no certifica la identidad ni la vigencia CMF.
-Los balances y notas anteriores fueron retirados del sitio; no se auditan como publicados.
+El backfill IFRS de cuentas ESF/ER se publica por otro proceso y conserva
+advertencias de alcance; este auditor no coteja ni certifica esa serie.
+La validez del dígito verificador no certifica identidad ni vigencia CMF.
 """
 
 import json
