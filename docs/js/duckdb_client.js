@@ -70,6 +70,7 @@ const SEMANTIC_VIEWS = [
 
   // FACTORING & LEASING (CMF / NBFI)
   { name: "factoring_leasing_maestro", file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet" },
+  { name: "factoring_leasing_eeff_muestra_cmf", file: "outputs/factoring_leasing/factoring_leasing_eeff_muestra_cmf.parquet" },
 
   // CORREDORAS DE BOLSA (CMF)
   { name: "corredoras_bolsa_registro_universo", file: "outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet" },

@@ -13,7 +13,10 @@ class PublicationTests(unittest.TestCase):
     def test_only_entity_list_is_published(self):
         self.assertEqual(run_audit(), 28)
         files = {p.name for p in OUTPUT.iterdir() if p.is_file()}
-        self.assertEqual(files, {'factoring_leasing_maestro.json', 'factoring_leasing_maestro.parquet'})
+        # La lista de entidades y, aparte, la muestra de dos filas cotejadas con
+        # CMF. Ningún otro balance puede reaparecer sin una auditoría propia.
+        self.assertEqual(files, {'factoring_leasing_maestro.json', 'factoring_leasing_maestro.parquet',
+                                 'factoring_leasing_eeff_muestra_cmf.parquet'})
         self.assertFalse(files.intersection({f'{name}.{ext}' for name in RETIRED for ext in ('json', 'parquet')}))
 
     def test_old_files_cannot_pass_audit(self):
@@ -42,13 +45,18 @@ class PublicationTests(unittest.TestCase):
                       'erd_graph.js', 'duckdb_client.js', 'export_modal.js')
         for file in site_files:
             source = (ROOT / 'docs/js' / file).read_text(encoding='utf-8')
-            self.assertIn('factoring_leasing_maestro', source, file)
+            if file == 'export_modal.js':
+                # El exportador no expone la muestra, pero tampoco la lista; se
+                # comprueba aparte que no reaparezcan los archivos retirados.
+                pass
+            else:
+                self.assertIn('factoring_leasing_maestro', source, file)
             for name in RETIRED:
                 self.assertNotIn(name, source, file)
         manifest = json.loads((ROOT / 'data_manifest.json').read_text(encoding='utf-8'))
         sector = [entry['id'] for entry in manifest['tables']
                   if entry.get('sector') == 'factoring_leasing']
-        self.assertEqual(sector, ['factoring_leasing_maestro'])
+        self.assertEqual(sector, ['factoring_leasing_maestro', 'factoring_leasing_eeff_muestra_cmf'])
         self.assertEqual(manifest['total_tables'], len(manifest['tables']))
         self.assertEqual(manifest['total_records'],
                          sum(t.get('registros_reales', 0) for t in manifest['tables']))
