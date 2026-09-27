@@ -62,7 +62,9 @@ def read_b1(content: bytes, period: str, bank: str) -> dict:
         components = [amount(c, old) for c in found[account]]
         value = sum(components, Decimal(0)) / (1 if old else 1_000_000)
         values[side] = str(value.quantize(QUANT, rounding=ROUND_HALF_UP))
-    return {'codigo_institucion': bank, 'periodo': period, 'cuenta_activo': accounts[0],
+    return {'codigo_institucion': bank, 'periodo': period,
+            'nombre_encabezado_b1': lines[0].split('\t', 1)[1].strip(),
+            'cuenta_activo': accounts[0],
             'cuenta_pasivo': accounts[1], 'repo_activo_mm_clp': values['activo'],
             'repo_pasivo_mm_clp': values['pasivo'],
             'sha256_b1': hashlib.sha256(content).hexdigest(),
@@ -119,11 +121,21 @@ def run(out: Path = OUT, periods: list[str] | None = None) -> dict:
         raise ValueError('Mes requerido sin ZIP inequívoco')
     out.mkdir(parents=True, exist_ok=True)
     reports = []
+    extra_codes = Counter()
+    extra_nonzero = Counter()
+    names_by_code: dict[str, set[str]] = {}
     for p in requested:
         # Siempre se deja constancia del error, sin confundirlo con un mes sin datos.
         try:
             doc = extract(probe.read_public(found[p], probe.MAX_ZIP), p, found[p])
             comparison = compare(doc, old)
+            for row in doc['filas']:
+                code = row['codigo_institucion']
+                names_by_code.setdefault(code, set()).add(row['nombre_encabezado_b1'])
+                if code in comparison['solo_cmf']:
+                    extra_codes[code] += 1
+                    if any(Decimal(row[k]) != 0 for k in ('repo_activo_mm_clp', 'repo_pasivo_mm_clp')):
+                        extra_nonzero[code] += 1
             (out / f'{p}.json').write_text(json.dumps(doc, ensure_ascii=False) + '\n', encoding='utf-8')
             reports.append(comparison)
             print(f'{p}: B1={comparison["filas_cmf"]} legacy={comparison["filas_legacy"]} '
@@ -139,7 +151,12 @@ def run(out: Path = OUT, periods: list[str] | None = None) -> dict:
         totals['diferencias'] += len(r.get('diferencias', []))
         totals['solo_cmf'] += len(r.get('solo_cmf', []))
         totals['solo_legacy'] += len(r.get('solo_legacy', []))
-    summary = {'estado': 'BORRADOR_NO_PUBLICAR', 'meses_solicitados': requested,
+    summary = {'estado': 'BORRADOR_NO_PUBLICAR',
+               'codigos_cmf_fuera_legacy': {code: {'meses': count, 'meses_no_cero': extra_nonzero[code],
+                                                   'nombres_b1': sorted(names_by_code[code])}
+                                             for code, count in sorted(extra_codes.items())},
+               'codigos_cmf_todos': {code: sorted(names) for code, names in sorted(names_by_code.items())},
+               'meses_solicitados': requested,
                'meses_descargados': len(reports) - len(errors), 'totales': dict(totals),
                'errores': errors, 'comparaciones': reports,
                'pendiente': ['identidad legal y vigencia por código-mes',
