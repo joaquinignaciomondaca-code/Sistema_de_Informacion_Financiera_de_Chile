@@ -29,6 +29,15 @@ FIELDS = {
     'patrimonio_miles_clp': 'Patrimonio total',
     'efectivo_miles_clp': 'Efectivo y equivalentes al efectivo',
 }
+# El estado de resultado es un estado aparte del balance y se publica en su
+# propia tabla; sus importes son acumulados del ejercicio (desde el 1 de enero),
+# no del trimestre. Se cotejan dos cuentas de cierre, no el detalle completo.
+INCOME_FIELDS = {
+    'resultado_antes_impuestos_miles_clp': 'Ganancia (pérdida), antes de impuestos',
+    'resultado_operaciones_continuadas_miles_clp': 'Ganancia (pérdida) procedente de operaciones continuadas',
+}
+ESTADOS_BALANCE = ('ESF',)
+ESTADOS_RESULTADO = ('ER',)
 
 
 def fetch(url):
@@ -97,37 +106,60 @@ def html_amounts(data, sample):
         raise ValueError('Ficha sin unidad CLP (miles)')
     if f'{sample["periodo"][:4]}-{sample["periodo"][4:]}-' not in text:
         raise ValueError('Cierre no encontrado en visualización de ficha')
-    # La CMF emite tr mal formados: algunas cuentas vienen como td hermanos sin
-    # <tr> de apertura. No confiar en el árbol de filas del parser HTML.
-    start = page.find('[210000]')
-    end = page.find('[310000]', start)
-    if start < 0 or end <= start:
-        raise ValueError('No se pudieron delimitar los estados CMF 210000 y 310000')
-    balance = page[start:end]
-    found = {v: [] for v in FIELDS.values()}
+    balance, income = _sections(page)
+    found = {v: [] for v in list(FIELDS.values()) + list(INCOME_FIELDS.values())}
     for label in found:
-        # Etiqueta de celda independiente, seguida de dos celdas numéricas
-        # consecutivas (valor actual y comparativo). No casar subtotales.
-        fragments = re.findall(r'<td\b[^>]*>(.*?)</td>', balance, re.I | re.S)
-        for i, fragment in enumerate(fragments):
-            label_parser = VisibleText()
-            label_parser.feed(fragment)
-            if ' '.join(' '.join(label_parser.parts).split()) != label:
-                continue
-            if i + 2 >= len(fragments):
-                raise ValueError('Fila truncada para ' + label)
-            nums = []
-            for value_html in fragments[i+1:i+3]:
-                value_parser = VisibleText()
-                value_parser.feed(value_html)
-                value = ' '.join(' '.join(value_parser.parts).split())
-                if not re.fullmatch(r'-?\d[\d.]*', value):
-                    raise ValueError('Comparativo no numérico para ' + label)
-                nums.append(int(value.replace('.', '')))
-            found[label].append(nums[0])
+        section = balance if label in FIELDS.values() else income
+        found[label] = _label_values(section, label)
     if any(len(v) != 1 for v in found.values()):
         raise ValueError(f'Etiquetas HTML ausentes/duplicadas: { {k: len(v) for k, v in found.items()} }')
-    return {col: found[label][0] for col, label in FIELDS.items()}
+    values = {col: found[label][0] for col, label in FIELDS.items()}
+    values.update({col: found[label][0] for col, label in INCOME_FIELDS.items()})
+    return values
+
+
+def _sections(page):
+    """Separa el estado de situación financiera del estado de resultado."""
+    start = page.find('[210000]')
+    income_start = page.find('[310000]', start)
+    if start < 0 or income_start <= start:
+        raise ValueError('No se pudieron delimitar los estados CMF 210000 y 310000')
+    siguiente = re.search(r'\[\d{6}\]', page[income_start + 1:])
+    income_end = income_start + 1 + siguiente.start() if siguiente else len(page)
+    return page[start:income_start], page[income_start:income_end]
+
+
+def _label_values(section, label):
+    """Valores de una etiqueta de cuenta exacta, exigiendo comparativo numérico.
+
+    La CMF emite tr mal formados: las celdas llegan como td hermanos sin <tr> de
+    apertura, así que no se puede confiar en el árbol de filas del parser HTML.
+    """
+    fragments = re.findall(r'<td\b[^>]*>(.*?)</td>', section, re.I | re.S)
+    encontrados = []
+    for i, fragment in enumerate(fragments):
+        label_parser = VisibleText()
+        label_parser.feed(fragment)
+        if ' '.join(' '.join(label_parser.parts).split()) != label:
+            continue
+        nums = []
+        for value_html in fragments[i+1:]:
+            value = _text(value_html)
+            if not re.fullmatch(r'-?\d[\d.]*', value):
+                break
+            nums.append(int(value.replace('.', '')))
+            if len(nums) == 2:
+                break
+        if len(nums) < 2:
+            raise ValueError('Fila sin comparativo numérico para ' + label)
+        encontrados.append(nums[0])
+    return encontrados
+
+
+def _text(fragment):
+    parser = VisibleText()
+    parser.feed(fragment)
+    return ' '.join(' '.join(parser.parts).split())
 
 
 def stream_amounts(data, sample):
@@ -136,14 +168,17 @@ def stream_amounts(data, sample):
     text = data.decode('utf-8', errors='replace')
     if '\ufffd' in text:
         text = data.decode('latin-1')
-    found = {v: [] for v in FIELDS.values()}
+    found = {v: [] for v in list(FIELDS.values()) + list(INCOME_FIELDS.values())}
     names = set()
     rows = 0
     for cells in csv.reader(text.splitlines(), delimiter=';'):
         if len(cells) < 9 or cells[0] != sample['periodo'] or cells[1] != sample['rut'] or cells[3] != 'I' or cells[4] != 'CLP':
             continue
         names.add(cells[2].strip().upper())
-        if cells[5] not in found or not cells[8].startswith('ESF'):
+        if cells[5] not in found:
+            continue
+        esperado = ESTADOS_BALANCE if cells[5] in FIELDS.values() else ESTADOS_RESULTADO
+        if not cells[8].startswith(esperado):
             continue
         if not re.fullmatch(r'-?\d+', cells[6].strip()):
             raise ValueError('Importe estructurado no entero: ' + cells[5])
@@ -156,9 +191,11 @@ def stream_amounts(data, sample):
         raise ValueError(f'Nombre del archivo no coincide con identidad esperada: {names}')
     if any(len(v) != 1 for v in found.values()):
         raise ValueError(f'Cuentas ausentes/duplicadas en archivo: { {k: len(v) for k, v in found.items()} }')
-    if rows != 4:
-        raise ValueError('No hay exactamente cuatro cuentas para muestra')
-    return {col: found[label][0] for col, label in FIELDS.items()}
+    if rows != len(FIELDS) + len(INCOME_FIELDS):
+        raise ValueError('No están todas las cuentas de balance y resultado para la muestra')
+    values = {col: found[label][0] for col, label in FIELDS.items()}
+    values.update({col: found[label][0] for col, label in INCOME_FIELDS.items()})
+    return values
 
 
 def audit_one(sample, ficha_data, archivo_data):
@@ -166,7 +203,7 @@ def audit_one(sample, ficha_data, archivo_data):
     html = html_amounts(ficha_data, sample)
     stream = stream_amounts(archivo_data, sample)
     if stream != html:
-        raise ValueError(f'Diferencias fuente estructurada vs ficha CMF: { {k: (stream[k], html[k]) for k in FIELDS if stream[k] != html[k]} }')
+        raise ValueError(f'Diferencias fuente estructurada vs ficha CMF: { {k: (stream[k], html[k]) for k in stream if stream[k] != html[k]} }')
     if stream['total_activos_miles_clp'] <= 0 or stream['total_activos_miles_clp'] != stream['total_pasivos_miles_clp'] + stream['patrimonio_miles_clp']:
         raise ValueError('Balance no cuadra: activo != pasivo + patrimonio')
     return {'segmento': sample['segmento'], 'rut': sample['rut'] + '-' + sample['dv'],
@@ -175,7 +212,7 @@ def audit_one(sample, ficha_data, archivo_data):
             'unidad': 'miles de pesos chilenos (CLP)', **stream, 'fuente_ficha_cmf': ficha,
             'fuente_archivo_cmf': archivo, 'sha256_ficha': hashlib.sha256(ficha_data).hexdigest(),
             'sha256_archivo': hashlib.sha256(archivo_data).hexdigest(),
-            'alcance_validacion': 'cuatro cuentas del balance, esta entidad y este período solamente; PDF/XBRL no cotejados'}
+            'alcance_validacion': 'cuatro cuentas de balance y dos de resultado acumulado, esta entidad y este período solamente; PDF/XBRL no cotejados'}
 
 
 def main():
@@ -193,7 +230,7 @@ def main():
             errors.append(error)
             print(f'::error::{json.dumps(error, ensure_ascii=False)}', flush=True)
     report = {'aprobada_muestra': len(records) == len(SAMPLES) and not errors,
-              'criterio': 'cuatro cuentas del balance, identidad, período, I, CLP miles y cuadre; no valida resultados ni PDF/XBRL',
+              'criterio': 'cuatro cuentas de balance y dos de resultado, identidad, período, I, CLP miles y cuadre del balance; no valida el detalle del resultado ni PDF/XBRL',
               'registros': records, 'errores': errors}
     OUT.mkdir(parents=True, exist_ok=True)
     (OUT / 'cotejo.json').write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
