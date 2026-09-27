@@ -73,7 +73,13 @@ class Tables(HTMLParser):
 
 def html_values(page, sector):
     parser = Tables()
-    parser.feed(page.decode('latin-1', errors='replace'))
+    # CMF alterna UTF-8/latin-1 según ficha. Decodificar en UTF-8 cuando sea válido:
+    # forzar latin-1 transforma 'pérdida' en 'pÃ©rdida' y rompe el cotejo.
+    try:
+        decoded = page.decode('utf-8')
+    except UnicodeDecodeError:
+        decoded = page.decode('latin-1')
+    parser.feed(decoded)
     found = {}
     for field, label in LABELS[sector].items():
         candidates = []
