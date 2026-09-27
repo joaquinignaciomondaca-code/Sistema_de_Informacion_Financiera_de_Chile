@@ -42,45 +42,29 @@ jobs:
         if: always()
         run: |
           cat .local-data/xml_eeff_muestra/cotejo_muestra.json || true
-      - name: Resumen del cotejo accesible sin descargar el artifact
+      - name: Publicar diagnóstico de cotejo en comentario del PR
         if: always()
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }}
         run: |
-          PR=3  # PR abierto de esta rama de sesión (solo laboratorio)
-          python - <<'PY'
-          import json, os
+          python - <<'PYREPORT'
+          import json, os, urllib.request
           from pathlib import Path
-          report = Path('.local-data/xml_eeff_muestra/cotejo_muestra.json')
-          if not report.exists():
-              body = 'No se generó reporte de muestra; revisar logs del job.'
-          else:
-              data = json.loads(report.read_text())
-              body = 'APROBADA (muestra; no el universo)' if data['aprobada_muestra'] else 'NO APROBADA'
-              for r in data['registros']:
-                  body += (f"\n- {r['sector']} RUN {r['rut']} {r['periodo']}, moneda XML {r['moneda_original']}: "
-                           f"activos {r['total_activo']}, pasivo reportado {r['total_pasivo_reportado']}, "
-                           f"patrimonio/activo neto {r['patrimonio_o_activo_neto']}, "
-                           f"resultado {r['resultado_ejercicio']}; XML SHA256 `{r['sha256_xml']}`. "
-                           f"[Ficha CMF]({r['fuente_ficha']}).")
-              for e in data['errores']:
-                  body += f"\n- {e['sector']} RUN {e['rut']} {e['periodo']}: {e['error']}"
-          message = f"<!-- cotejo-eeff-xml-muestra -->\n**Muestra XML CMF vs HTML oficial**, commit `{os.environ['GITHUB_SHA'][:12]}`, [run]({os.environ['GITHUB_SERVER_URL']}/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}): {body}"
-          Path('/tmp/muestra-comment.md').write_text(message)
-          print(message)
-          with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a') as f:
-              f.write(message)
-          PY
-          if [ -n "$PR" ]; then
-            ID=$(gh api "repos/$GITHUB_REPOSITORY/issues/$PR/comments" --paginate \
-              --jq '.[] | select(.body | contains("<!-- cotejo-eeff-xml-muestra -->")) | .id' | head -1)
-            if [ -n "$ID" ]; then
-              gh api -X PATCH "repos/$GITHUB_REPOSITORY/issues/comments/$ID" -F body=@/tmp/muestra-comment.md >/dev/null
-            else
-              gh api -X POST "repos/$GITHUB_REPOSITORY/issues/$PR/comments" -F body=@/tmp/muestra-comment.md >/dev/null
-            fi
-          fi
+          p = Path('.local-data/xml_eeff_muestra/cotejo_muestra.json')
+          data = json.loads(p.read_text()) if p.exists() else {'aprobada_muestra': False, 'errores': [{'error': 'Reporte no producido'}]}
+          body = (f"<!-- cotejo-eeff-xml-muestra -->\n**Cotejo XML vs ficha CMF** "
+                  f"run {os.environ['GITHUB_RUN_ID']} (commit {os.environ['GITHUB_SHA'][:12]}): "
+                  f"{'MUESTRA APROBADA' if data['aprobada_muestra'] else 'NO APROBADA'}\n\n"
+                  f"```json\n{json.dumps(data, ensure_ascii=False, indent=2)}\n```")
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as f: f.write(body)
+          url = f"https://api.github.com/repos/{os.environ['GITHUB_REPOSITORY']}/issues/3/comments"
+          req = urllib.request.Request(url, json.dumps({'body': body}).encode(),
+              headers={'Authorization': 'Bearer ' + os.environ['GH_TOKEN'],
+                       'Accept': 'application/vnd.github+json', 'User-Agent': 'eeff-audit'}, method='POST')
+          with urllib.request.urlopen(req, timeout=15) as response:
+              print('Comentario del PR:', response.status)
+          PYREPORT
       - name: Fallar si no coincide la muestra
         if: always() && steps.muestra.outcome != 'success'
         run: exit 1
