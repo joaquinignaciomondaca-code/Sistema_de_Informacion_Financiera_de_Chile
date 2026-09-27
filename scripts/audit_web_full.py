@@ -66,10 +66,20 @@ def audit_duckdb_views(base_dir):
     with open(duckdb_js, "r", encoding="utf-8") as f:
         code = f.read()
 
-    # Extraer { name: "...", file: "..." }
-    views = re.findall(r'\{\s*name:\s*["\']([^"\']+)["\'],\s*file:\s*["\']([^"\']+)["\']\s*\}', code)
-    print(f"Total vistas registradas en duckdb_client.js: {len(views)}")
-    
+    # Extraer { name: "...", file: "..." } y también las vistas que unen varias
+    # particiones { name: "...", file: ["...", "..."] }, ya que el visor las lee
+    # como una sola tabla (p. ej. vida_bonos con sus dos cortes).
+    matches = re.findall(
+        r'\{\s*name:\s*["\']([^"\']+)["\'],\s*file:\s*(?:["\']([^"\']+)["\']|\[([^\]]*)\])',
+        code)
+    views = []
+    for name, single, multi in matches:
+        files = [single] if single else re.findall(r'["\']([^"\']+)["\']', multi)
+        for rel_file in files:
+            views.append((name, rel_file))
+    print(f"Total vistas registradas en duckdb_client.js: {len(matches)} "
+          f"({len(views)} archivos Parquet)")
+
     errors = 0
     total_filas = 0
     for name, rel_file in views:
@@ -79,19 +89,18 @@ def audit_duckdb_views(base_dir):
             errors += 1
             continue
 
-        size = os.path.getsize(full_path)
         try:
             tab = pq.read_table(full_path)
             cnt = tab.num_rows
             total_filas += cnt
-            # print(f"  [OK] Vista '{name}' -> {cnt:,} filas, {tab.num_columns} cols ({size:,} bytes)")
         except Exception as e:
             print(f"Error leyendo Parquet para vista {name}: {e}")
             errors += 1
 
     assert errors == 0, f"Se encontraron {errors} errores en vistas de DuckDB"
     print(f"Resultado Vistas DuckDB: {len(views)}/{len(views)} archivos Parquet validados ({total_filas:,} filas totales en base de datos).")
-    return {name: rel_file for name, rel_file in views}
+    return {name: ([single] if single else re.findall(r'["\']([^"\']+)["\']', multi))
+            for name, single, multi in matches}
 
 def audit_sidebar(base_dir, registered_views):
     print("\n--- 3. AUDITORIA: Estructura Lateral de Navegacion (sidebar.js) ---")
@@ -164,10 +173,11 @@ def audit_data_viewer(base_dir, registered_views):
             print(f"Error: Tabla del visor '{tid}' no registrada en duckdb_client.js")
             errors += 1
         else:
-            full_p = os.path.join(base_dir, "docs", registered_views[tid])
-            if not os.path.exists(full_p):
-                print(f"Error: Archivo no existe para tabla del visor '{tid}': {registered_views[tid]}")
-                errors += 1
+            for rel_file in registered_views[tid]:
+                full_p = os.path.join(base_dir, "docs", rel_file)
+                if not os.path.exists(full_p):
+                    print(f"Error: Archivo no existe para tabla del visor '{tid}': {rel_file}")
+                    errors += 1
 
     assert errors == 0, f"Se encontraron {errors} inconsistencias en DATA_VIEWER_CATALOG"
     print(f"Resultado Visor de Datos: 100% de las {len(dv_tables)} tablas enlazadas correctamente a archivos y vistas.")
@@ -189,15 +199,16 @@ def audit_data_dictionary(base_dir, registered_views):
         
         # Verificar contra Parquet fisico si la vista existe
         if viewName in registered_views:
-            pq_path = os.path.join(base_dir, "docs", registered_views[viewName])
-            if os.path.exists(pq_path):
-                schema = pq.read_schema(pq_path)
-                physical_cols = set(schema.names)
-                for col in col_names:
-                    total_cols_audited += 1
-                    if col not in physical_cols:
-                        print(f"Inconsistencia en diccionario: Columna '{col}' en tabla '{tid}' no existe en Parquet {registered_views[viewName]}")
-                        errors += 1
+            physical_cols = set()
+            for rel_file in registered_views[viewName]:
+                pq_path = os.path.join(base_dir, "docs", rel_file)
+                if os.path.exists(pq_path):
+                    physical_cols.update(pq.read_schema(pq_path).names)
+            for col in col_names:
+                total_cols_audited += 1
+                if col not in physical_cols:
+                    print(f"Inconsistencia en diccionario: Columna '{col}' en tabla '{tid}' no existe en Parquet de {viewName}")
+                    errors += 1
 
     assert errors == 0, f"Se encontraron {errors} inconsistencias de columnas en el diccionario de datos"
     print(f"Resultado Diccionario de Datos: {total_cols_audited} columnas auditadas contra archivos Parquet reales con 100% de coincidencia.")
@@ -218,10 +229,15 @@ def audit_erd_graph(base_dir, registered_views):
     for nid, nname, sec, rel_file in nodes:
         node_ids.add(nid)
         if rel_file != "#":
-            full_path = os.path.join(base_dir, "docs", rel_file)
-            if not os.path.exists(full_path):
-                print(f"Error ERD: Archivo no existe para nodo '{nid}': {rel_file}")
-                node_errors += 1
+            # El ERD puede tener un nombre de archivo representativo no publicado
+            # (p. ej. vida_bonos); en ese caso se valida la vista semántica real,
+            # que une las particiones versionadas en el repositorio.
+            rel_files = registered_views.get(nid, [rel_file])
+            for published_file in rel_files:
+                full_path = os.path.join(base_dir, "docs", published_file)
+                if not os.path.exists(full_path):
+                    print(f"Error ERD: Archivo no existe para nodo '{nid}': {published_file}")
+                    node_errors += 1
 
     assert node_errors == 0, f"Se encontraron {node_errors} archivos rotos en nodos ERD"
 
