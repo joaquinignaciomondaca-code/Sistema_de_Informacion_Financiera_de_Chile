@@ -35,7 +35,8 @@ HEADERS = {'User-Agent': 'Mozilla/5.0 (compatible; MonitorFinancieroChile/1.0)',
 # No asignar un tipo de balance o unidad no informada por el archivo.
 COLUMNS = ['periodo', 'rut_cuerpo', 'rut', 'nombre_reportado', 'segmento_catalogo',
            'nombre_catalogo', 'tipo_balance', 'moneda_archivo', 'cuenta',
-           'valor_archivo', 'taxonomia', 'estado_financiero', 'fuente_archivo',
+           'valor_archivo', 'valor_texto_original', 'valor_es_entero',
+           'taxonomia', 'estado_financiero', 'fuente_archivo',
            'sha256_archivo', 'identidad_nombre_coincide_catalogo']
 
 
@@ -137,6 +138,7 @@ def parse_period(raw, period, catalog, url=None):
     digest = hashlib.sha256(raw).hexdigest()
     balance, income = [], []
     selected = 0
+    noninteger = []
     for number, cells in enumerate(csv.reader(io.StringIO(decode(raw)), delimiter=';', strict=True), start=1):
         if not cells or all(not c.strip() for c in cells):
             continue
@@ -153,11 +155,15 @@ def parse_period(raw, period, catalog, url=None):
             raise ValueError(f'Línea {number}: período {p} distinto al solicitado {period}')
         if len(cells) != 9 or not account or not name or not currency or not tax or not state or kind not in ('I', 'C'):
             raise ValueError(f'Línea {number}: esquema/identidad/tipo incompleto')
-        if not re.fullmatch(r'-?\d+', amount):
-            raise ValueError(f'Línea {number}: importe no entero')
+        integer = bool(re.fullmatch(r'-?\d+', amount))
+        if not integer and len(noninteger) < 20:
+            # Nunca convertir silenciosamente a 0, ni inferir separador decimal.
+            noninteger.append({'linea': number, 'rut': body, 'cuenta': account,
+                               'valor_original': amount[:120]})
         row = dict(zip(COLUMNS, [f'{p[:4]}-{p[4:]}', body, catalog[body]['rut'], name,
                                  catalog[body]['segmento'], catalog[body]['nombre'], kind,
-                                 currency, account, int(amount), tax, state, url, digest,
+                                 currency, account, int(amount) if integer else None,
+                                 amount, integer, tax, state, url, digest,
                                  normalize_name(name) == normalize_name(catalog[body]['nombre'])]))
         if state.startswith('ESF'):
             balance.append(row)
@@ -178,6 +184,8 @@ def parse_period(raw, period, catalog, url=None):
         'entidades': len(by_rut), 'ruts_con_datos': sorted(by_rut),
         'filas_balance': len(balance), 'filas_resultados': len(income),
         'nombres_distintos_catalogo': len({r['rut'] for r in balance + income if not r['identidad_nombre_coincide_catalogo']}),
+        'importes_no_enteros': sum(not r['valor_es_entero'] for r in balance + income),
+        'ejemplos_importes_no_enteros': noninteger,
         'monedas': sorted({r['moneda_archivo'] for r in balance + income}),
         'tipos_balance': sorted({r['tipo_balance'] for r in balance + income})}
 
@@ -219,7 +227,7 @@ def save_period(out, period, balance, income, stats):
         try:
             pd.DataFrame.from_records(rows, columns=COLUMNS).to_parquet(temporary, index=False)
             back = pd.read_parquet(temporary)
-            if len(back) != len(rows) or (len(rows) and back['valor_archivo'].tolist() != [r['valor_archivo'] for r in rows]):
+            if len(back) != len(rows) or (len(rows) and back['valor_texto_original'].tolist() != [r['valor_texto_original'] for r in rows]):
                 raise ValueError('Roundtrip Parquet distinto al TXT')
             temporary.replace(path)
         finally:
@@ -267,6 +275,7 @@ def run(args, fetcher=fetch):
     summary['ruts_sin_datos_hasta_ahora'] = sorted({meta['rut'] for meta in catalog.values()} - set(summary['ruts_con_datos_total']))
     summary['filas_balance_total'] = sum(item['filas_balance'] for item in completed)
     summary['filas_resultados_total'] = sum(item['filas_resultados'] for item in completed)
+    summary['importes_no_enteros_total'] = sum(item.get('importes_no_enteros', 0) for item in completed)
     summary['periodos_sin_rut_catalogo'] = [item['periodo'] for item in completed if item['estado'] == 'sin_rut_catalogo']
     summary['estado_global'] = ('error' if summary['errores'] else
                                'completo_sin_publicar' if not summary['pendientes'] else 'en_progreso_sin_publicar')
