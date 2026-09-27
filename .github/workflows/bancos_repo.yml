@@ -32,7 +32,7 @@ concurrency:
 
 jobs:
   transfer_review:
-    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.transfer_snapshot) }}
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.transfer_snapshot }}
     strategy:
       fail-fast: false
       matrix:
