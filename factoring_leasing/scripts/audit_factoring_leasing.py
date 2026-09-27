@@ -1,12 +1,10 @@
-"""
-Auditoria de la serie vieja de Factoring y Leasing. No cubre el EEFF del PDF.
-
+﻿"""
+Suite de Auditoria y Verificacion de Integridad de Datos: Factoring & Leasing.
+Valida los 4 Datasets:
 1. factoring_leasing_maestro
 2. factoring_leasing_balance_resumen
-3. factoring_leasing_nota_efectivo_detalle (porcentajes, no es el PDF)
-4. factoring_leasing_cartera_morosidad_detalle (porcentajes, no es el PDF)
-
-El estado financiero está en factoring_leasing/README.md.
+3. factoring_leasing_nota_efectivo_detalle
+4. factoring_leasing_cartera_morosidad_detalle
 """
 
 import os
