@@ -40,27 +40,79 @@ BALANCE_TXT = re.compile(r"^(b[12])(\d{4})(\d{2})(\d{3})\.txt$", re.I)
 CANDIDATES = {"1160000", "2160000", "141000000", "243000000"}
 
 
+CONTEXT_CHARS = 300
+
+
+def clean(value: str) -> str:
+    """Colapsa espacios y elimina etiquetas/entidades antes de cualquier salida."""
+    text = re.sub(r"<[^>]*>", " ", value)
+    text = text.replace("&nbsp;", " ").replace("&#160;", " ")
+    return re.sub(r"\s+", " ", text).strip()
+
+
 class ZipLinks(HTMLParser):
+    """Recolecta anclas con varias señales de período, en orden documental.
+
+    La página CMF real no siempre rotula el mes dentro del `<a>` del ZIP: puede
+    dejarlo en el atributo `title`, en el `alt` de un ícono anidado, o sólo en
+    el encabezado que acompaña al enlace (a menudo dentro de otra ancla). Por
+    eso se conserva un flujo ordenado de anclas y textos, y el período se
+    resuelve después sin inventarlo a partir del id del artículo.
+    """
+
     def __init__(self):
         super().__init__()
-        self.links: list[tuple[str, str]] = []
-        self.href: str | None = None
-        self.text: list[str] = []
+        self.links: list[dict[str, str]] = []
+        self.stream: list[tuple[str, object]] = []
+        self.current: dict[str, str] | None = None
 
     def handle_starttag(self, tag, attrs):
+        attributes = dict(attrs)
         if tag == "a":
-            self.href = dict(attrs).get("href")
-            self.text = []
+            self.current = {"href": attributes.get("href") or "", "texto": "", "atributos": ""}
+            parts = [attributes[key] for key in ("title", "aria-label", "aria-labelledby") if attributes.get(key)]
+            self.current["atributos"] = " ".join(parts)
+        elif self.current is not None and tag in ("img", "span", "svg", "use"):
+            parts = [attributes[key] for key in ("alt", "title", "aria-label") if attributes.get(key)]
+            if parts:
+                self.current["atributos"] = " ".join([self.current["atributos"], *parts]).strip()
 
     def handle_data(self, data):
-        if self.href is not None:
-            self.text.append(data)
+        if self.current is not None:
+            self.current["texto"] = " ".join([self.current["texto"], data]).strip()
+        else:
+            self.stream.append(("t", data))
 
     def handle_endtag(self, tag):
-        if tag == "a" and self.href is not None:
-            self.links.append((self.href, " ".join(self.text)))
-            self.href = None
-            self.text = []
+        if tag == "a" and self.current is not None:
+            self.links.append(self.current)
+            self.stream.append(("a", self.current))
+            self.current = None
+
+
+def context_for(stream: list[tuple[str, object]], anchor: dict, limit: int = CONTEXT_CHARS) -> str:
+    """Texto posterior al enlace hasta el próximo enlace ZIP (su encabezado)."""
+    start = next((i for i, (kind, item) in enumerate(stream) if kind == "a" and item is anchor), None)
+    if start is None:
+        return ""
+    parts: list[str] = []
+    size = 0
+    for kind, item in stream[start + 1:]:
+        if kind == "a":
+            other = item
+            assert isinstance(other, dict)
+            if trusted_zip(urllib.parse.urljoin(INDEX, str(other.get("href") or ""))):
+                break
+            text = clean(f"{other.get('texto') or ''} {other.get('atributos') or ''}")
+        else:
+            text = clean(str(item))
+        if not text:
+            continue
+        parts.append(text)
+        size += len(text)
+        if size >= limit:
+            break
+    return " ".join(parts)[:limit]
 
 
 def trusted_zip(url: str) -> bool:
@@ -97,23 +149,57 @@ def read_public(url: str, limit: int) -> bytes:
     raise RuntimeError("Descarga CMF inconclusa")
 
 
+MONTH_PATTERN = re.compile(r"(" + "|".join(MONTHS) + r")\.?\s*(?:de\s+)?(20\d{2})", re.I)
+
+
+def period_of(link: dict, stream: list[tuple[str, object]]) -> tuple[str, str] | None:
+    """Devuelve (período, señal usada) sin inventar meses.
+
+    Orden de precedencia: rótulo del enlace -> atributos (`title`, `alt`) del
+    ancla o de su ícono -> encabezado que sigue al enlace. Nunca se deduce el
+    mes desde el id del artículo, la fecha de publicación ni el nombre del
+    archivo del href.
+    """
+    for signal in ("texto", "atributos"):
+        raw = link.get(signal)
+        if not raw:
+            continue
+        match = MONTH_PATTERN.search(clean(str(raw)))
+        if match:
+            return f"{int(match.group(2)):04d}-{MONTHS[match.group(1).lower()]:02d}", signal
+    for signal in ("contexto",):
+        raw = context_for(stream, link)
+        if not raw:
+            continue
+        match = MONTH_PATTERN.search(clean(str(raw)))
+        if match:
+            return f"{int(match.group(2)):04d}-{MONTHS[match.group(1).lower()]:02d}", signal
+    return None
+
+
 def discover(html: str, strict: bool = True, conflicts_out: set[str] | None = None) -> dict[str, str]:
     parser = ZipLinks()
     parser.feed(html)
     found: dict[str, str] = {}
     conflicts: set[str] = set()
-    for href, text in parser.links:
-        url = urllib.parse.urljoin(INDEX, href)
+    zip_links = []
+    for link in parser.links:
+        href = link.get("href")
+        if not href:
+            continue
+        url = urllib.parse.urljoin(INDEX, str(href))
         if not trusted_zip(url):
             continue
-        match = re.search(r"(?:Descargar\s+)?(" + "|".join(MONTHS) + r")\s+(20\d{2})", text, re.I)
-        if match:
-            period = f"{int(match.group(2)):04d}-{MONTHS[match.group(1).lower()]:02d}"
-            if period in found and found[period] != url:
-                conflicts.add(period)
-                found.pop(period)
-            elif period not in conflicts:
-                found[period] = url
+        zip_links.append((url, link))
+        resolved = period_of(link, parser.stream)
+        if not resolved:
+            continue
+        period = resolved[0]
+        if period in found and found[period] != url:
+            conflicts.add(period)
+            found.pop(period)
+        elif period not in conflicts:
+            found[period] = url
     if conflicts_out is not None:
         conflicts_out.update(conflicts)
     if conflicts and strict:
@@ -123,11 +209,18 @@ def discover(html: str, strict: bool = True, conflicts_out: set[str] | None = No
         # Puede ser una página de protección, un redirect, o un cambio de
         # formato. Sólo registrar metadatos estructurales para revisar la causa.
         title = re.search(r"<title[^>]*>(.*?)</title>", html, re.I | re.S)
-        clean_title = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", title.group(1)))[:100] if title else "(sin título)"
-        zip_links = sum(trusted_zip(urllib.parse.urljoin(INDEX, href)) for href, _ in parser.links)
+        clean_title = clean(title.group(1))[:100] if title else "(sin título)"
+        # Señales ya limpias (sin etiquetas) de algunas anclas ZIP: permiten
+        # corregir el parser sin descargar el HTML ni publicar datos.
+        muestra = [{"ruta": urllib.parse.urlsplit(url).path,
+                    "texto": clean(str(link.get("texto") or ""))[:80],
+                    "atributos": clean(str(link.get("atributos") or ""))[:80],
+                    "contexto": context_for(parser.stream, link)[:120]}
+                   for url, link in zip_links[:5]]
         raise ValueError(f"No se pudieron descubrir ZIP mensuales en índice CMF; "
                          f"título={clean_title!r}, caracteres={len(html)}, "
-                         f"enlaces={len(parser.links)}, ZIP={zip_links}, "
+                         f"enlaces={len(parser.links)}, ZIP={len(zip_links)}, "
+                         f"muestra={json.dumps(muestra, ensure_ascii=False)}, "
                          f"sha256={hashlib.sha256(html.encode('utf-8')).hexdigest()[:16]}")
     return found
 
