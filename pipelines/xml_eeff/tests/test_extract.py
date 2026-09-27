@@ -159,6 +159,16 @@ class ParseoToleranteTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Total exigido con valores distintos|Cuenta no numerica|no cuadra'):
             x.parse_ifrs(crudo, ITEM, '2014-12', 'url')
 
+    def test_encoding_declarado_distinto_a_los_bytes(self):
+        # Declara UTF-8 pero el acento viene en latin-1: el parseo estricto falla.
+        crudo = xml().replace(b'<IFRS>', b'<IFRS>').replace(
+            b'<NombreEntidadInforma>', b'')
+        crudo = crudo.replace(b'</Identificacion>', b'<Nombre>SE\xf1AL</Nombre></Identificacion>')
+        fila = x.parse_ifrs(crudo, ITEM, '2014-12', 'url')
+        self.assertTrue(fila['parseo_reparado'])
+        self.assertEqual(fila['calidad'], 'revisar_parseo_reparado')
+        self.assertEqual(fila['total_activo'], 2957448.0)
+
     def test_saneo_escapa_ampersand_y_saca_controles(self):
         self.assertEqual(x.sanear_xml(b'<a>2&3</a>'), b'<a>2&amp;3</a>')
         self.assertNotIn(b'\x0b', x.sanear_xml(b'<a>1\x0b2</a>'))
