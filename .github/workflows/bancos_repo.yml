@@ -7,7 +7,8 @@ on:
     branches: [arena/01a0e08b-monitor-financiero-chile]
     paths:
       - '.github/workflows/bancos_repo.yml'
-      - 'bancos/scripts/*repo*cmf.py'
+      - 'bancos/scripts/**'
+      - 'bancos/tests/**'
   workflow_dispatch:
     inputs:
       period:
