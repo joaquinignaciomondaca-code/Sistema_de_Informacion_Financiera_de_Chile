@@ -61,6 +61,17 @@ const afpViewer = viewer.find(g => g.group.startsWith('Fondos de Pensiones'));
 assert(afpViewer && afpViewer.group.includes('Falta validar'));
 assert(afpViewer.tables.every(t => t.name.includes('⚠')));
 
+const bancos = byGroup.group_bancos;
+assert.equal(bancos.status, 'por_auditar');
+assert(bancos.badges.some(b => b.text.includes('Falta validar')));
+for (const sector of bancos.children) for (const category of sector.children) {
+  assert.equal(category.status, 'por_auditar', category.id);
+  assert(category.badge.includes('Falta validar'), category.id);
+}
+const bancosViewer = viewer.find(g => g.group.startsWith('Banca Comercial'));
+assert(bancosViewer && bancosViewer.group.includes('Falta validar'));
+assert(bancosViewer.tables.every(t => t.name.includes('⚠')));
+
 // --- Normalización del catálogo de entidades ---------------------------------
 // Estándar: cada sector abre con una carpeta "Lista de Entidades" (badge de tipo
 // entities) que contiene sólo la tabla maestra del sector. Las excepciones son

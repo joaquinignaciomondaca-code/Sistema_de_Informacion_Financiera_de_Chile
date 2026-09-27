@@ -481,10 +481,10 @@ const EXPLORER_TREE = [
     type: "group",
     label: "BANCA E INST. FINANCIERAS (CMF)",
     badges: [
-      { type: "entities", text: "18 Entidades", title: "18 Bancos comerciales fiscalizados por la CMF (40 entidades históricas)" },
-      { type: "data", text: "19k Datos", title: "Balances, Derivados y Repos Bancarios CMF (2008–2026)" }
+      { type: "entities", text: "40 Códigos", title: "Catálogo local de 40 códigos: incluye bancos históricos, filiales extranjeras y agregados; no son 40 bancos activos" },
+      { type: "pending", text: "⚠ Falta validar", title: "Balance con rupturas de escala, repos sin fuente reproducible y derivados por contrastar" }
     ],
-    status: "active",
+    status: "por_auditar",
     children: [
       {
         id: "sector_bancos_comercial",
@@ -496,30 +496,29 @@ const EXPLORER_TREE = [
             id: "cat_bancos_maestro",
             type: "circular",
             label: "Lista de Entidades",
-            badge: "40 Entidades",
+            badge: "⚠ Falta validar",
             badgeType: "entities",
-            status: "active",
+            status: "por_auditar",
             sector: "bancos",
             chips: [
-              { label: "Bancos Comerciales Activos", query: "SELECT codigo_institucion, rut, nombre_fantasia, tipo_licencia, estado FROM bancos_maestro WHERE estado = 'Activo' ORDER BY codigo_institucion;" },
-              { label: "Historial de Bancos Fusionados / Cerrados", query: "SELECT codigo_institucion, nombre_fantasia, razon_social, estado FROM bancos_maestro WHERE estado != 'Activo' ORDER BY estado, nombre_fantasia;" }
+              { label: "Entradas con estado activo (catálogo manual sin validar)", query: "SELECT codigo_institucion, rut, nombre_fantasia, tipo_licencia, estado FROM bancos_maestro WHERE estado = 'Activo' ORDER BY codigo_institucion;" },
+              { label: "Entradas históricas (estado sin validar)", query: "SELECT codigo_institucion, nombre_fantasia, razon_social, estado FROM bancos_maestro WHERE estado != 'Activo' ORDER BY estado, nombre_fantasia;" }
             ],
             tables: [
-              { id: "bancos_maestro", name: "bancos.lista_instituciones", rows: "40 entidades", file: "outputs/bancos/bancos_maestro.parquet" }
+              { id: "bancos_maestro", name: "bancos.lista_instituciones", rows: "40 códigos", file: "outputs/bancos/bancos_maestro.parquet" }
             ]
           },
           {
             id: "circ_bancos_asientos",
             type: "circular",
-            label: "Estados Financieros · Balance y Resultados",
-            badge: "10.190 Registros",
+            label: "Estados Financieros · Escalas en revisión",
+            badge: "⚠ Falta validar",
             badgeType: "data",
-            status: "active",
+            status: "por_auditar",
             sector: "bancos",
             chips: [
-              { label: "Ranking Activos Totales (MM$)", query: "SELECT nombre_banco, total_activos_m_clp, total_pasivos_m_clp, patrimonio_neto_m_clp, activos_m_usd FROM bancos_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM bancos_balance_resumen) AND codigo_institucion != '999' ORDER BY total_activos_m_clp DESC LIMIT 10;" },
-              { label: "Ranking Utilidad Neta por Banco", query: "SELECT nombre_banco, utilidad_neta_m_clp, utilidad_m_usd FROM bancos_estado_resultados WHERE periodo = (SELECT MAX(periodo) FROM bancos_estado_resultados) AND codigo_institucion != '999' ORDER BY utilidad_neta_m_clp DESC LIMIT 10;" },
-              { label: "ROE y Apalancamiento Financiero", query: "SELECT b.nombre_banco, round(r.utilidad_neta_m_clp / NULLIF(b.patrimonio_neto_m_clp, 0) * 100, 2) as roe_pct, round(b.total_activos_m_clp / NULLIF(b.patrimonio_neto_m_clp, 0), 1) as apalancamiento_x, b.total_activos_m_clp, r.utilidad_neta_m_clp FROM bancos_balance_resumen b JOIN bancos_estado_resultados r ON b.codigo_institucion = r.codigo_institucion AND b.periodo = r.periodo WHERE b.periodo = (SELECT MAX(periodo) FROM bancos_balance_resumen) AND b.codigo_institucion != '999' ORDER BY roe_pct DESC LIMIT 10;" }
+              { label: "Muestra de balance (escalas sin validar)", query: "SELECT periodo, codigo_institucion, nombre_banco, total_activos_m_clp, total_pasivos_m_clp, patrimonio_neto_m_clp FROM bancos_balance_resumen ORDER BY periodo DESC LIMIT 25;" },
+              { label: "Muestra de resultados (escalas sin validar)", query: "SELECT periodo, codigo_institucion, nombre_banco, utilidad_neta_m_clp FROM bancos_estado_resultados ORDER BY periodo DESC LIMIT 25;" }
             ],
             tables: [
               { id: "bancos_balance_resumen", name: "bancos.balance_general", rows: "5.095 balances", file: "outputs/bancos/bancos_balance_resumen.parquet" },
@@ -529,15 +528,14 @@ const EXPLORER_TREE = [
           {
             id: "circ_bancos_derivados",
             type: "circular",
-            label: "Derivados OTC · Banco Central",
-            badge: "5.720 Registros",
+            label: "Derivados BCCh · Clasificación en revisión",
+            badge: "⚠ Falta validar",
             badgeType: "data",
-            status: "active",
+            status: "por_auditar",
             sector: "bancos",
             chips: [
-              { label: "Posición Neta Forward por Contraparte (USD M)", query: "SELECT periodo, contraparte, round(sum(CASE WHEN direccion = 'Compra' THEN monto WHEN direccion = 'Venta' THEN -monto ELSE monto END), 1) as posicion_neta_usd_m FROM bancos_derivados_posicion_vigente WHERE instrumento LIKE '%Forward%' AND moneda = 'USD' GROUP BY periodo, contraparte ORDER BY periodo DESC LIMIT 15;" },
-              { label: "Swaps Cámara Promedio (SPC) por Plazo", query: "SELECT periodo, plazo_contractual, round(sum(monto), 1) as nocional_total FROM bancos_derivados_posicion_vigente WHERE instrumento LIKE '%Camara%' GROUP BY periodo, plazo_contractual ORDER BY periodo DESC LIMIT 15;" },
-              { label: "Volumen Mensual Transado por Instrumento", query: "SELECT periodo, instrumento, moneda, round(sum(monto), 1) as volumen_transado FROM bancos_derivados_flujos_transados GROUP BY periodo, instrumento, moneda ORDER BY periodo DESC LIMIT 15;" }
+              { label: "Series BCCh vigentes (unidades mixtas; sin sumar)", query: "SELECT periodo, series_id, instrumento, glosa_serie, unidad_medida, direccion, monto FROM bancos_derivados_posicion_vigente ORDER BY periodo DESC LIMIT 25;" },
+              { label: "Series BCCh transadas (unidades mixtas; sin sumar)", query: "SELECT periodo, series_id, instrumento, glosa_serie, unidad_medida, direccion, monto FROM bancos_derivados_flujos_transados ORDER BY periodo DESC LIMIT 25;" }
             ],
             tables: [
               { id: "bancos_derivados_posicion_vigente", name: "bancos.derivados_posicion_vigente", rows: "2.860 registros", file: "outputs/bancos/bancos_derivados_posicion_vigente.parquet" },
@@ -547,15 +545,13 @@ const EXPLORER_TREE = [
           {
             id: "circ_bancos_repos",
             type: "circular",
-            label: "Pactos y Repos de Liquidez · MB1",
-            badge: "2.947 Registros",
+            label: "Saldos REPO · Origen en revisión",
+            badge: "⚠ Falta validar",
             badgeType: "data",
-            status: "active",
+            status: "por_auditar",
             sector: "bancos",
             chips: [
-              { label: "Top Prestamistas Netos de Liquidez (Activo Repo MM$)", query: "SELECT periodo, nombre_fantasia, repo_activo_mm_clp, repo_pasivo_mm_clp, repo_neto_mm_clp, repo_activo_mm_usd, posicion_relativa FROM bancos_repos_saldos_series WHERE periodo = (SELECT MAX(periodo) FROM bancos_repos_saldos_series) ORDER BY repo_activo_mm_clp DESC LIMIT 10;" },
-              { label: "Top Tomadores de Fondeo Mayorista (Pasivo Repo MM$)", query: "SELECT periodo, nombre_fantasia, repo_activo_mm_clp, repo_pasivo_mm_clp, repo_neto_mm_clp, repo_pasivo_mm_usd, posicion_relativa FROM bancos_repos_saldos_series WHERE periodo = (SELECT MAX(periodo) FROM bancos_repos_saldos_series) ORDER BY repo_pasivo_mm_clp DESC LIMIT 10;" },
-              { label: "Evolución de Fondeo Repos por Banco (Últimos 12M)", query: "SELECT periodo, nombre_fantasia, repo_activo_mm_clp, repo_pasivo_mm_clp, repo_neto_mm_clp, total_transado_mm_usd FROM bancos_repos_saldos_series WHERE nombre_fantasia = 'BANCO SANTANDER-CHILE' ORDER BY periodo DESC LIMIT 12;" }
+              { label: "Muestra de saldos REPO (no volumen operado)", query: "SELECT periodo, codigo_institucion, nombre_fantasia, repo_activo_mm_clp, repo_pasivo_mm_clp, repo_neto_mm_clp FROM bancos_repos_saldos_series ORDER BY periodo DESC LIMIT 25;" }
             ],
             tables: [
               { id: "bancos_repos_saldos_series", name: "bancos.repos_saldos_series", rows: "2.947 registros", file: "outputs/bancos/bancos_repos_saldos_series.parquet" }
