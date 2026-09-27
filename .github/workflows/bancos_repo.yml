@@ -38,6 +38,7 @@ jobs:
           python -m bancos.scripts.rebuild_repo_from_cmf \
             > .local-data/review/bancos/reconstruccion_cmf/ejecucion.txt 2>&1 || {
               tail -n 30 .local-data/review/bancos/reconstruccion_cmf/ejecucion.txt
+              echo "::error title=Reextracción B1 incompleta::$(tail -n 1 .local-data/review/bancos/reconstruccion_cmf/ejecucion.txt)"
               exit 1
             }
           tail -n 30 .local-data/review/bancos/reconstruccion_cmf/ejecucion.txt
