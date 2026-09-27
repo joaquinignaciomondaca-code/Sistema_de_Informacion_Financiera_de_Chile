@@ -15,14 +15,14 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Banca Comercial (CMF / BCCh)",
+    group: "Banca Comercial (CMF / BCCh) · ⚠ Falta validar",
     tables: [
-      { id: "bancos_maestro", name: "bancos.lista_instituciones (40 entidades)" },
-      { id: "bancos_balance_resumen", name: "bancos.balance_general (5.095 balances)" },
-      { id: "bancos_estado_resultados", name: "bancos.estado_resultados (5.095 registros)" },
-      { id: "bancos_repos_saldos_series", name: "bancos.repos_saldos_series (2.947 registros)" },
-      { id: "bancos_derivados_posicion_vigente", name: "bancos.derivados_posicion_vigente (2.860 registros)" },
-      { id: "bancos_derivados_flujos_transados", name: "bancos.derivados_flujos_transados (2.860 registros)" }
+      { id: "bancos_maestro", name: "bancos.lista_instituciones (⚠ falta validar)" },
+      { id: "bancos_balance_resumen", name: "bancos.balance_general (⚠ falta validar)" },
+      { id: "bancos_estado_resultados", name: "bancos.estado_resultados (⚠ falta validar)" },
+      { id: "bancos_repos_saldos_series", name: "bancos.repos_saldos_series (⚠ falta validar)" },
+      { id: "bancos_derivados_posicion_vigente", name: "bancos.derivados_posicion_vigente (⚠ falta validar)" },
+      { id: "bancos_derivados_flujos_transados", name: "bancos.derivados_flujos_transados (⚠ falta validar)" }
     ]
   },
   {
