@@ -53,6 +53,8 @@ CMF pero sin probar la descarga; **No aplica** = no existe ese formato en esa fu
 | Fondos mutuos (`RGFMU`) | `pestania=3` con `tipo_norma=IFRS` | **XML IFRS** (`archivo=FMEF…`, ruta `/web/ifrs_xml/fmifr/xml/`) | Verificado (hoy se lee HTML/PDF) |
 | Fondos de inversión rescatables (`FIRES`) | `pestania=29` Información Financiera (IFRS) | **XML IFRS** (`archivo=FIEF…`, ruta `/web/ifrs_xml/fiifr/xml/`) | Verificado (hoy se lee PDF de `pestania=62`) |
 | Emisores de valores (`RVEMI`, incluye retail financiero y CCAF inscritas) | `pestania=3` con `tipo=I|C&tipo_norma=IFRS` | **XBRL + PDF** ("Estados financieros (XBRL)") | Verificado |
+| Factoring (muestra: Factoring Security S.A., `RVEMI`) | `pestania=3`, balance individual 2022-06 | **XBRL + PDF + tabla HTML CMF**; también existe archivo masivo estructurado delimitado por `;` en `estadisticas/ver_archivo.php` (no es XML) | Enlaces y tabla HTML confirmados; **cotejo archivo vs ficha en curso, no publicar** |
+| Leasing (muestra: Unidad Leasing Habitacional S.A., `RGEIN`) | `pestania=3`, balance individual 2022-09 | **XBRL + PDF + tabla HTML CMF**; mismo archivo masivo estructurado delimitado por `;` | Enlaces y tabla HTML confirmados; **cotejo archivo vs ficha en curso, no publicar** |
 | AGF (`RGAGF`) | `pestania=3` con `tipo_norma=IFRS` | **XBRL + PDF**; CMF advierte "contenido de los archivos XBRL está en revisión" | Verificado |
 | Cajas de compensación (CCAF) | Listado CMF de envíos IFRS (`novedades_envio_sa_ifrs.php`) | **XBRL** | Verificado y en uso |
 | Compañías de seguros (vida y generales) | Módulos CMF "IFRS Mercado de Seguros" / "XBRL Mercado de Seguros" (taxonomías CL-HS, CL-BS) | **XBRL + PDF** | Referenciado (falta probar la descarga por entidad) |
@@ -115,3 +117,7 @@ proxy local); sus resultados quedan como `error_ficha` localmente y se obtienen 
 5. **Cooperativas**: confirmar si existe envío IFRS/XBRL (como CCAF) antes de reemplazar la serie.
 
 Ninguna de estas incorporaciones publica datos hasta pasar el mismo cotejo de muestra aplicado en Corredoras.
+
+## Factoring y Leasing: evaluación acotada (2026-09-27)
+
+Las fichas [Factoring Security, 2022-06](https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=96655860&tipoentidad=RVEMI&vig=VI&control=svs&pestania=3&mm=06&aa=2022&tipo=I&tipo_norma=IFRS) y [Unidad Leasing Habitacional, 2022-09](https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=96809970&tipoentidad=RGEIN&vig=VI&control=svs&pestania=3&mm=09&aa=2022&tipo=I&tipo_norma=IFRS) exhiben XBRL, PDF y un balance visible (miles de CLP). CMF advierte que los XBRL están en revisión; no se ha validado el contenido de los ZIP/XBRL contra los PDF. El archivo `ver_archivo.php?inicio=AAAAMM&termino=AAAAMM` da filas `periodo;rut;nombre;I|C;moneda;cuenta;valor;taxonomia;estado`; es **texto delimitado, no XML**. Deben cotejarse entidad, nombre, período, balance individual, unidad, cuatro cuentas y cuadre antes de publicar, sin asumir que los 28 miembros del catálogo tengan EEFF disponibles ni homologar nombre registral sin prueba. El sandbox no accede directamente a CMF (TLS EOF); el workflow `factoring_leasing_sample.yml` ejecuta la sonda en Actions y guarda informe en cuarentena. Hasta aprobar ambos casos la web conserva solamente la lista de entidades. Los scripts históricos siguen bloqueados.

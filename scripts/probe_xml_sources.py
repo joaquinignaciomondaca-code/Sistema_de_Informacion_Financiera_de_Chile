@@ -112,6 +112,20 @@ PROBES = [
         "extra": "&tipo=I&tipo_norma=IFRS",
         "muestras": [("90749000", "2014-12"), ("81826800", "2016-12")],
     },
+    {
+        "id": "factoring",
+        "sector": "Factoring (muestra: Factoring Security)",
+        "entidad": "RVEMI", "pestania": "3", "mercado": "V", "formato": "xbrl",
+        "extra": "&tipo=I&tipo_norma=IFRS",
+        "muestras": [("96655860", "2022-06")],
+    },
+    {
+        "id": "leasing",
+        "sector": "Leasing (muestra: Unidad Leasing Habitacional)",
+        "entidad": "RGEIN", "pestania": "3", "mercado": "V", "formato": "xbrl",
+        "extra": "&tipo=I&tipo_norma=IFRS",
+        "muestras": [("96809970", "2022-09")],
+    },
     # Pendientes: requieren definir el tipoentidad/módulo correcto antes de sondear.
     {"id": "seguros", "sector": "Companias de seguros", "formato": "xbrl", "pendiente": True,
      "nota": "CMF publica modulos 'IFRS/XBRL Mercado de Seguros' (taxonomias CL-HS y CL-BS); "
