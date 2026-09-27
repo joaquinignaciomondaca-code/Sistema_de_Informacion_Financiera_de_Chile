@@ -101,7 +101,7 @@ class BackfillTests(unittest.TestCase):
                 return b'<html><a href="ver_archivo.php?inicio=202206&termino=202206">1</a></html>'
             self.assertEqual(b.run(args, fetch), 1)
             self.assertFalse((out/'periodos/202206/_complete.json').exists())
-            self.assertEqual(json.loads((out/'resumen.json').read_text())['estado_global'], 'error')
+            self.assertEqual(json.loads((out/'resumen.json').read_text())['estado_global'], 'parcial_con_errores_sin_publicar')
 
 if __name__ == '__main__':
     unittest.main()
