@@ -103,5 +103,41 @@ class BackfillTests(unittest.TestCase):
             self.assertFalse((out/'periodos/202206/_complete.json').exists())
             self.assertEqual(json.loads((out/'resumen.json').read_text())['estado_global'], 'parcial_con_errores_sin_publicar')
 
+    def test_failed_old_period_does_not_block_new_and_resume_retries_only_gap(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            args = SimpleNamespace(out=out, catalog=Path(tmp)/'catalog.json', batch=3)
+            args.catalog.write_text(json.dumps([{'rut':'96655860-1','segmento':'Factoring','razon_social':'FACTORING SECURITY S.A.'}]))
+            index = b'<html><a href="ver_archivo.php?inicio=202203&termino=202209">2022</a></html>'
+            downloads = []
+            def fetch(url):
+                if url == b.INDEX:
+                    return index
+                period = url.split('inicio=')[1][:6]
+                downloads.append(period)
+                return b'<html>CMF 500</html>' if period == '202203' else fixture(period=period)
+            self.assertEqual(b.run(args, fetch), 0)
+            self.assertEqual(downloads, ['202209', '202206', '202203'])
+            self.assertEqual(json.loads((out/'resumen.json').read_text())['pendientes'], ['202203'])
+            downloads.clear()
+            self.assertEqual(b.run(args, fetch), 0)
+            self.assertEqual(downloads, ['202203'])
+            self.assertEqual(json.loads((out/'resumen.json').read_text())['completados_total'], 2)
+
+    def test_broken_cache_is_not_treated_as_completed(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            args = SimpleNamespace(out=out, catalog=Path(tmp)/'catalog.json', batch=1)
+            args.catalog.write_text(json.dumps([{'rut':'96655860-1','segmento':'Factoring','razon_social':'FACTORING SECURITY S.A.'}]))
+            index = b'<html><a href="ver_archivo.php?inicio=202206&termino=202206">2022</a></html>'
+            def fetch(url):
+                return index if url == b.INDEX else fixture()
+            self.assertEqual(b.run(args, fetch), 0)
+            self.assertTrue(b.valid_cached(out, '202206', b.hashlib.sha256(args.catalog.read_bytes()).hexdigest()))
+            (out/'periodos/202206/resultados.parquet').unlink()
+            self.assertFalse(b.valid_cached(out, '202206', b.hashlib.sha256(args.catalog.read_bytes()).hexdigest()))
+            self.assertEqual(b.run(args, fetch), 0)
+            self.assertTrue((out/'periodos/202206/resultados.parquet').exists())
+
 if __name__ == '__main__':
     unittest.main()
