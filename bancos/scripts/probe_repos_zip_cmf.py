@@ -194,6 +194,17 @@ def discover(html: str, strict: bool = True, conflicts_out: set[str] | None = No
         resolved = period_of(link, parser.stream)
         if not resolved:
             continue
+        # El índice CMF contiene un enlace de marzo 2019 cuyo atributo de
+        # descarga dice erróneamente «Marzo 2020». Si el encabezado de la ficha
+        # contradice el rótulo, NO asignar este ZIP a ninguno de los dos meses.
+        # Una fecha de publicación puede diferir del período y no se usa aquí.
+        heading = re.search(r"Balance y Estado de (?:Situaci[oó]n|Resultados) Bancos\s+"
+                            r"(" + "|".join(MONTHS) + r")\s+(20\d{2})",
+                            context_for(parser.stream, link), re.I)
+        if heading:
+            heading_period = f"{int(heading.group(2)):04d}-{MONTHS[heading.group(1).lower()]:02d}"
+            if heading_period != resolved[0]:
+                continue
         period = resolved[0]
         if period in found and found[period] != url:
             conflicts.add(period)
