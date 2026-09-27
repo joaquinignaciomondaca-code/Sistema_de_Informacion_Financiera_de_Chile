@@ -52,12 +52,15 @@ class BackfillTests(unittest.TestCase):
         balance, income, stats = b.parse_period(fixture(rut='12345678'), '202206', CATALOG)
         self.assertEqual((balance, income, stats['estado']), ([], [], 'sin_rut_catalogo'))
 
-    def test_wrong_period_and_duplicate_fail_closed(self):
+    def test_wrong_period_and_duplicate_kept_not_summed(self):
         with self.assertRaisesRegex(ValueError, 'período'):
             b.parse_period(fixture(period='202209'), '202206', CATALOG)
         duplicate = fixture().splitlines()[0]
-        with self.assertRaisesRegex(ValueError, 'duplicado'):
-            b.parse_period(fixture() + duplicate + b'\n', '202206', CATALOG)
+        balance, income, stats = b.parse_period(fixture() + duplicate + b'\n', '202206', CATALOG)
+        self.assertEqual(stats['cuentas_contexto_repetidas'], 1)
+        self.assertEqual((len(balance), len(income)), (7, 1))
+        self.assertEqual(balance[-1]['repeticion_contexto'], 2)
+        self.assertEqual(balance[-1]['valor_archivo'], 435359519000)
 
     def test_noninteger_kept_as_text_not_zero(self):
         balance, _, stats = b.parse_period(fixture().replace(b'435359519000', b'NO_APLICA'), '202206', CATALOG)
