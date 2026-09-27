@@ -129,8 +129,11 @@ class SummaryTests(unittest.TestCase):
         }
         text = summary.summarize_month(month)
         self.assertIn("2021-12 bancos=3 cotejados=2 ambos_lados_ok=1", text)
-        self.assertIn("001 a✓ p✓", text)
-        self.assertIn("016 a✓ p✗(141128≠141178)", text)
+        self.assertIn("001 a✓/1 p✓/1", text)
+        self.assertIn("016 a✓/1 p✗(141128≠141178)", text)
+        self.assertEqual(summary.side_status({"suma_columnas": "136409879738"}, 136409.88), "✓/1000000")
+        self.assertEqual(summary.side_status({"suma_columnas": "0"}, 0), "✓/1,1000,1000000")
+        self.assertEqual(summary.side_status({"suma_columnas": "99999"}, 1), "✗(99999≠1)")
         self.assertIn("sin_cuenta=[]", text)
         self.assertLessEqual(len(summary.summarize_month(month, limit=40)), 40)
         self.assertIn("sin_cuenta", summary.summarize_month(
