@@ -15,24 +15,16 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Banca Comercial (CMF / BCCh) · ⚠ Falta validar",
+    group: "Banca Comercial (CMF) · REPO pendiente de auditoría",
     tables: [
-      { id: "bancos_maestro", name: "bancos.lista_instituciones (⚠ falta validar)" },
-      { id: "bancos_balance_resumen", name: "bancos.balance_general (⚠ falta validar)" },
-      { id: "bancos_estado_resultados", name: "bancos.estado_resultados (⚠ falta validar)" },
-      { id: "bancos_repos_saldos_series", name: "bancos.repos_saldos_series (⚠ falta validar)" },
-      { id: "bancos_derivados_posicion_vigente", name: "bancos.derivados_posicion_vigente (⚠ falta validar)" },
-      { id: "bancos_derivados_flujos_transados", name: "bancos.derivados_flujos_transados (⚠ falta validar)" }
+      { id: "bancos_maestro", name: "bancos.lista_instituciones (40 códigos)" },
+      { id: "bancos_repos_saldos_series", name: "bancos.repos_saldos_series (⚠ falta auditar)" }
     ]
   },
   {
-    group: "Fondos de Pensiones (SPensiones) · ⚠ Falta validar",
+    group: "Fondos de Pensiones (SPensiones)",
     tables: [
-      { id: "afp_cartera_bonos", name: "afp.cartera_bonos (⚠ falta validar)" },
-      { id: "afp_cartera_acciones", name: "afp.cartera_acciones (⚠ falta validar)" },
-      { id: "afp_derivados_swaps", name: "afp.derivados_swaps (⚠ falta validar)" },
-      { id: "afp_derivados_forwards", name: "afp.derivados_forwards (⚠ datos generados)" },
-      { id: "afp_maestro", name: "afp.lista_administradoras (⚠ cifras generadas)" }
+      { id: "afp_maestro", name: "afp.lista_administradoras (7 entidades)" }
     ]
   },
   {
@@ -188,8 +180,8 @@ const DATA_VIEWER_CATALOG = [
 class DataViewerController {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
-    this.currentView = "afp_cartera_bonos";
-    this.currentDisplayName = "afp.cartera_bonos (⚠ falta validar)";
+    this.currentView = "afp_maestro";
+    this.currentDisplayName = "afp.lista_administradoras";
     this.currentLimit = 100;
     this.currentRows = [];
     this.currentColumns = [];
