@@ -26,13 +26,13 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Fondos de Pensiones (SPensiones)",
+    group: "Fondos de Pensiones (SPensiones) · ⚠ Falta validar",
     tables: [
-      { id: "afp_cartera_bonos", name: "afp.cartera_bonos (168.182 registros)" },
-      { id: "afp_cartera_acciones", name: "afp.cartera_acciones (39.835 registros)" },
-      { id: "afp_derivados_swaps", name: "afp.derivados_swaps (6.666 registros)" },
-      { id: "afp_derivados_forwards", name: "afp.derivados_forwards (560 registros)" },
-      { id: "afp_maestro", name: "afp.lista_administradoras (7 entidades)" }
+      { id: "afp_cartera_bonos", name: "afp.cartera_bonos (⚠ falta validar)" },
+      { id: "afp_cartera_acciones", name: "afp.cartera_acciones (⚠ falta validar)" },
+      { id: "afp_derivados_swaps", name: "afp.derivados_swaps (⚠ falta validar)" },
+      { id: "afp_derivados_forwards", name: "afp.derivados_forwards (⚠ datos generados)" },
+      { id: "afp_maestro", name: "afp.lista_administradoras (⚠ cifras generadas)" }
     ]
   },
   {
@@ -189,7 +189,7 @@ class DataViewerController {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
     this.currentView = "afp_cartera_bonos";
-    this.currentDisplayName = "afp.cartera_bonos";
+    this.currentDisplayName = "afp.cartera_bonos (⚠ falta validar)";
     this.currentLimit = 100;
     this.currentRows = [];
     this.currentColumns = [];

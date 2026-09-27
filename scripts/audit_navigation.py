@@ -48,6 +48,19 @@ const options = viewer.flatMap(group => group.tables.map(table => table.id));
 assert.equal(new Set(options).size, options.length, 'opciones duplicadas en visor');
 for (const id of options) assert(expected.has(id), 'opción no encontrada en sidebar: ' + id);
 
+// El material AFP no debe volver a presentarse como verificado: hay cifras
+// generadas y errores materiales de clasificación documentados en pensiones/.
+const pensiones = byGroup.group_pensiones;
+assert.equal(pensiones.status, 'por_auditar');
+assert(pensiones.badges.some(b => b.text.includes('Falta validar')));
+for (const sector of pensiones.children) for (const category of sector.children) {
+  assert.equal(category.status, 'por_auditar', category.id);
+  assert(category.badge.includes('Falta validar'), category.id);
+}
+const afpViewer = viewer.find(g => g.group.startsWith('Fondos de Pensiones'));
+assert(afpViewer && afpViewer.group.includes('Falta validar'));
+assert(afpViewer.tables.every(t => t.name.includes('⚠')));
+
 // --- Normalización del catálogo de entidades ---------------------------------
 // Estándar: cada sector abre con una carpeta "Lista de Entidades" (badge de tipo
 // entities) que contiene sólo la tabla maestra del sector. Las excepciones son
