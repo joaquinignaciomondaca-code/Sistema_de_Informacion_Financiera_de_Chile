@@ -150,6 +150,7 @@ def parse_ifrs(raw, item, per, url):
     return {'sector': item['sector'], 'rut': item['rut'], 'tipo_entidad': item['tipo'], 'nombre_registro': item['nombre_registro'],
             'periodo': per, 'moneda_original': moneda, 'escala': 'miles',
             'total_activo': activo, 'total_pasivo_reportado': pasivo, 'patrimonio_o_activo_neto': patrimonio,
+            'definicion_total_pasivo': 'incluye_patrimonio' if item['sector'] == 'fi' else 'excluye_patrimonio',
             'resultado_ejercicio': facts[result_code], 'codigo_resultado': result_code,
             'balance_cuadra': True, 'cuentas': len(facts), 'fuente_url': url,
             'sha256_xml': hashlib.sha256(raw).hexdigest(), 'calidad': 'revisar_antes_de_publicar'}
