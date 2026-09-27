@@ -15,10 +15,10 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Banca Comercial (CMF) · REPO pendiente de auditoría",
+    group: "Banca Comercial (CMF) · REPO con auditoría parcial",
     tables: [
       { id: "bancos_maestro", name: "bancos.lista_instituciones (40 códigos)" },
-      { id: "bancos_repos_saldos_series", name: "bancos.repos_saldos_series (⚠ falta auditar)" }
+      { id: "bancos_repos_saldos_series", name: "bancos.repos_saldos_series (⚠ cotejo numérico CMF; validación pendiente)" }
     ]
   },
   {
