@@ -93,6 +93,32 @@ def periods_from_index(raw):
     return sorted(periods)
 
 
+def annual_fallback(raw_index, period, fetcher):
+    """Si un corte aislado falla, usar SOLO el enlace anual anunciado por CMF.
+
+    Preservar exclusivamente las líneas del trimestre solicitado. No aceptar
+    otro año, HTML de error, archivo vacío ni períodos de otros trimestres como
+    si fueran datos de ese corte.
+    """
+    parser = Links()
+    parser.feed(decode(raw_index))
+    year = period[:4]
+    annual = f'{year}03'
+    end = f'{year}12'
+    if not any(re.search(rf'[?&]inicio={annual}&(?:amp;)?termino={end}(?:\D|$)',
+                         link.replace('&amp;', '&')) for link in parser.links):
+        raise ValueError(f'No existe enlace anual CMF para {year}')
+    url = f'https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio={annual}&termino={end}'
+    raw = fetcher(url)
+    if not raw or b'<html' in raw[:500].lower() or b'ACCION NO PERMITIDA' in raw[:1000].upper():
+        raise ValueError('Archivo anual CMF no es TXT')
+    lines = [line for line in raw.splitlines(keepends=True)
+             if line.split(b';', 1)[0].strip() == period.encode('ascii')]
+    if not lines:
+        raise ValueError(f'Archivo anual CMF sin filas para {period}')
+    return b''.join(line.rstrip(b'\r\n') + b'\n' for line in lines), url
+
+
 def load_catalog(path=CATALOG):
     rows = json.loads(Path(path).read_text(encoding='utf-8'))
     catalog = {}
@@ -249,7 +275,8 @@ def run(args, fetcher=fetch):
     out = args.out
     catalog = load_catalog(args.catalog)
     catalog_digest = hashlib.sha256(Path(args.catalog).read_bytes()).hexdigest()
-    periods = periods_from_index(fetcher(INDEX))
+    index_data = fetcher(INDEX)
+    periods = periods_from_index(index_data)
     out.mkdir(parents=True, exist_ok=True)
     summary = {'fuente_indice': INDEX, 'generado_utc': datetime.now(timezone.utc).isoformat(),
                'publicado_en_web': False, 'rut_catalogo': len(catalog), 'periodos_indice': len(periods),
@@ -272,8 +299,17 @@ def run(args, fetcher=fetch):
     for period in planned:
         try:
             url = ARCHIVE.format(period)
-            raw = fetcher(url)
-            balance, income, stats = parse_period(raw, period, catalog, url)
+            try:
+                raw = fetcher(url)
+                balance, income, stats = parse_period(raw, period, catalog, url)
+            except (ValueError, OSError) as direct_error:
+                try:
+                    raw, url = annual_fallback(index_data, period, fetcher)
+                    balance, income, stats = parse_period(raw, period, catalog, url)
+                    stats['respaldo_anual'] = True
+                    stats['error_consulta_trimestre'] = f'{type(direct_error).__name__}: {direct_error}'
+                except (ValueError, OSError) as annual_error:
+                    raise ValueError(f'corte individual: {direct_error}; respaldo anual: {annual_error}') from annual_error
             stats.update(periodo=period, sha256_archivo=hashlib.sha256(raw).hexdigest(),
                          sha256_catalogo=catalog_digest, filas_balance=len(balance),
                          filas_resultados=len(income),
