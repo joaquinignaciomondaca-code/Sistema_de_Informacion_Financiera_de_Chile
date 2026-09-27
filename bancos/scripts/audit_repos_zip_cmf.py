@@ -187,9 +187,11 @@ def run(manual: str | None = None, output: Path = REPORT, checkpoint: Path = CHE
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--period", help="Mes de calibración AAAA-MM, p. ej. 2021-12")
+    parser.add_argument("--report", type=Path, default=REPORT,
+                        help="JSON de evidencia del mes calibrado (no se publica)")
     args = parser.parse_args()
     try:
-        report = run(manual=args.period)
+        report = run(manual=args.period, output=args.report)
     except (ValueError, RuntimeError, OSError, KeyError, json.JSONDecodeError) as exc:
         print(f"Cotejo ZIP CMF incompleto: {exc}", file=sys.stderr)
         return 1
