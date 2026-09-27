@@ -12,7 +12,7 @@ from collections import defaultdict
 from pathlib import Path
 
 LEGACY = Path(__file__).resolve().parents[2] / "docs/outputs/bancos/bancos_repos_saldos_series.json"
-AGGREGATES = {"900", "950", "960", "970", "980", "998"}
+AGGREGATES = {"900", "950", "960", "970", "980", "998", "999"}
 FOREIGN_AFFILIATES = {"816", "916", "927"}
 
 
