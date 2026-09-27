@@ -111,6 +111,13 @@ def reconcile_system_total(month: dict) -> dict:
         added = sum((Decimal(r[key]) for r in individuals), Decimal(0))
         result[side] = {'sistema': str(total), 'individuales': str(added),
                         'diferencia_mm_clp': str(total - added)}
+    if any(Decimal(result[side]['diferencia_mm_clp']) != 0 for side in ('activo', 'pasivo')):
+        result['filas_no_cero'] = [
+            {'codigo': r['codigo_institucion'], 'nombre_b1': r['nombre_encabezado_b1'],
+             'activo': r['repo_activo_mm_clp'], 'pasivo': r['repo_pasivo_mm_clp']}
+            for r in rows if any(Decimal(r[f'repo_{side}_mm_clp']) != 0
+                                 for side in ('activo', 'pasivo'))
+        ]
     return result
 
 
