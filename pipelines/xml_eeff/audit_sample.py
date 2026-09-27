@@ -28,7 +28,7 @@ LABELS = {
         'total_activo': 'total activo',
         'total_pasivo_reportado': 'total pasivo (excluido el activo neto',
         'patrimonio_o_activo_neto': 'activo neto atribuible a los participes',
-        'resultado_ejercicio': 'de la operacion despues de impuesto',
+        'resultado_ejercicio': 'utilidad/',
     },
     'fi': {
         'total_activo': 'total activo',
@@ -77,12 +77,25 @@ def html_values(page, sector):
     found = {}
     for field, label in LABELS[sector].items():
         candidates = []
+        start = False
         for cells in parser.rows:
+            if sector == 'fi' and field == 'resultado_ejercicio':
+                title = ' '.join(plain(c) for c in cells)
+                if 'estado de resultados integrales' in title: start = True
+                elif start and ('estado de cambios en el patrimonio' in title or
+                                'estado de flujos de efectivo' in title): break
+                if not start: continue
             # Etiqueta en celda propia; descartar subtotales que solo contienen el texto.
             def matches(cell):
                 value = plain(cell)
                 if field == 'resultado_ejercicio' and sector == 'ffmm':
-                    return label in value and ('utilidad' in value or 'perdida' in value)
+                    # La etiqueta usa barra: Utilidad/(pérdida) de la operación después de impuesto.
+                    return ('de la operacion despues de impuesto' in value and
+                            ('utilidad' in value or 'perdida' in value))
+                if field == 'resultado_ejercicio' and sector == 'fi':
+                    # En cambios patrimoniales también aparece "Resultado del ejercicio":
+                    # cotejar solo contra el estado de resultados integrales.
+                    return value.startswith('resultado del ejercicio')
                 # No confundir Total Activo Corriente/No Corriente ni
                 # Total Pasivo Corriente con el total del balance.
                 if field == 'total_activo':
