@@ -1,0 +1,40 @@
+# Reextracción para auditoría, NO PUBLICA datos ni cambia docs/outputs.
+name: REPO CMF reconstrucción para revisión (sin publicación)
+on:
+  workflow_dispatch:
+    inputs:
+      periods:
+        description: 'Meses separados por espacio AAAA-MM; vacío = todos los meses legacy'
+        required: false
+        type: string
+permissions:
+  contents: read
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pruebas de lectores CMF
+        run: python -m unittest discover -s bancos/tests -q
+      - name: Reconstruir desde CMF, separando ausentes
+        env:
+          PERIODS: ${{ inputs.periods }}
+        run: |
+          mkdir -p .local-data/review/bancos/reconstruccion_cmf
+          # Globbing deshabilitado; validar los períodos antes de descargar.
+          read -r -a months <<< "$PERIODS"
+          python -m bancos.scripts.rebuild_repo_from_cmf "${months[@]}" \
+            > .local-data/review/bancos/reconstruccion_cmf/ejecucion.txt 2>&1 || {
+              tail -n 100 .local-data/review/bancos/reconstruccion_cmf/ejecucion.txt
+              exit 1
+            }
+          tail -n 100 .local-data/review/bancos/reconstruccion_cmf/ejecucion.txt
+      - name: Conservar informe temporal para inspección (no publicar)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: repo-b1-reconstruccion-no-publicada
+          path: .local-data/review/bancos/reconstruccion_cmf/
+          retention-days: 30
+          if-no-files-found: warn
