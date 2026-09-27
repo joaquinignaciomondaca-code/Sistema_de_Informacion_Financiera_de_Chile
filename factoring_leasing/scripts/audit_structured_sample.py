@@ -97,22 +97,36 @@ def html_amounts(data, sample):
         raise ValueError('Ficha sin unidad CLP (miles)')
     if f'{sample["periodo"][:4]}-{sample["periodo"][4:]}-' not in text:
         raise ValueError('Cierre no encontrado en visualización de ficha')
-    parser = Rows()
-    parser.feed(page)
-    # Aislar el estado de situación: la etiqueta Efectivo también aparece en flujos.
+    # La CMF emite tr mal formados: algunas cuentas vienen como td hermanos sin
+    # <tr> de apertura. No confiar en el árbol de filas del parser HTML.
+    start = page.find('[210000]')
+    end = page.find('[310000]', start)
+    if start < 0 or end <= start:
+        raise ValueError('No se pudieron delimitar los estados CMF 210000 y 310000')
+    balance = page[start:end]
     found = {v: [] for v in FIELDS.values()}
-    for cells in parser.rows:
-        if not cells or cells[0].strip() not in found:
-            continue
-        vals = [c for c in cells[1:] if re.fullmatch(r'-?\d[\d.]*', c.strip())]
-        if len(vals) < 2:
-            continue  # no es la tabla comparativa de situación financiera
-        found[cells[0]].append(int(vals[0].replace('.', '')))
+    for label in found:
+        # Etiqueta de celda independiente, seguida de dos celdas numéricas
+        # consecutivas (valor actual y comparativo). No casar subtotales.
+        fragments = re.findall(r'<td\b[^>]*>(.*?)</td>', balance, re.I | re.S)
+        for i, fragment in enumerate(fragments):
+            label_parser = VisibleText()
+            label_parser.feed(fragment)
+            if ' '.join(' '.join(label_parser.parts).split()) != label:
+                continue
+            if i + 2 >= len(fragments):
+                raise ValueError('Fila truncada para ' + label)
+            nums = []
+            for value_html in fragments[i+1:i+3]:
+                value_parser = VisibleText()
+                value_parser.feed(value_html)
+                value = ' '.join(' '.join(value_parser.parts).split())
+                if not re.fullmatch(r'-?\d[\d.]*', value):
+                    raise ValueError('Comparativo no numérico para ' + label)
+                nums.append(int(value.replace('.', '')))
+            found[label].append(nums[0])
     if any(len(v) != 1 for v in found.values()):
-        samples = [(row[:4]) for row in parser.rows if any(label.lower() in ' '.join(row).lower() for label in found)][:6]
-        clues = [(m.group(0)[:190]) for m in list(re.finditer(r'.{0,80}(?:VISUALIZACION ESTADOS FINANCIEROS|Total de activos|iframe|210000).{0,100}', page, re.I))[:5]]
-        vicinity = re.search(r'<td class="nivel4 [^"]*">\s*<div[^>]*>Total de activos </div>.{0,550}', page, re.S)
-        raise ValueError(f'Etiquetas HTML ausentes/duplicadas: { {k: len(v) for k, v in found.items()} }; filas={len(parser.rows)}; muestras={samples}; fragmento={vicinity.group(0)[:500] if vicinity else clues}')
+        raise ValueError(f'Etiquetas HTML ausentes/duplicadas: { {k: len(v) for k, v in found.items()} }')
     return {col: found[label][0] for col, label in FIELDS.items()}
 
 
