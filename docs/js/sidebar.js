@@ -436,7 +436,7 @@ const EXPLORER_TREE = [
     label: "BANCA E INST. FINANCIERAS (CMF)",
     badges: [
       { type: "entities", text: "40 Códigos", title: "Catálogo local: incluye instituciones históricas, filiales y agregados; cotejo registral pendiente" },
-      { type: "pending", text: "⚠ REPO · Auditoría parcial", title: "5.894 saldos cotejados numéricamente con ZIP CMF (220 meses); glosa de cuentas, columnas, RUT y cobertura aún por validar" }
+      { type: "data", text: "REPO · Saldos cotejados", title: "Saldos CLP: 2.947 filas y 220 meses cotejados con B1 CMF; FX 220/220 con SII. RUT, nombres, perímetro y total_transado no están aprobados." }
     ],
     status: "active",
     children: [
@@ -464,13 +464,13 @@ const EXPLORER_TREE = [
           {
             id: "circ_bancos_repos",
             type: "circular",
-            label: "Saldos REPO · Cotejo CMF parcial",
-            badge: "⚠ Auditoría parcial",
+            label: "Saldos REPO · Cotejados con CMF",
+            badge: "Saldos cotejados",
             badgeType: "data",
-            status: "por_auditar",
+            status: "active",
             sector: "bancos",
             chips: [
-              { label: "Muestra de saldos REPO (no volumen operado)", query: "SELECT periodo, codigo_institucion, nombre_fantasia, repo_activo_mm_clp, repo_pasivo_mm_clp, repo_neto_mm_clp FROM bancos_repos_saldos_series ORDER BY periodo DESC LIMIT 25;" }
+              { label: "Muestra de saldos (no flujo ni RUT histórico)", query: "SELECT periodo, codigo_institucion, repo_activo_mm_clp, repo_pasivo_mm_clp, repo_neto_mm_clp FROM bancos_repos_saldos_series ORDER BY periodo DESC LIMIT 25;" }
             ],
             tables: [
               { id: "bancos_repos_saldos_series", name: "bancos.repos_saldos_series", rows: "2.947 registros", file: "outputs/bancos/bancos_repos_saldos_series.parquet" }

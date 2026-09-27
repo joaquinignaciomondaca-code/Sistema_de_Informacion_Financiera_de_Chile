@@ -42,6 +42,16 @@ class PublishMacroTests(unittest.TestCase):
             publish(self.stage, self.published, self.manifest)
         self.assertEqual(old, (self.published / target.name).read_bytes())
 
+    def test_value_mismatch_keeps_published_files(self):
+        target = self.stage / f"{NAMES[1]}.json"
+        rows = json.loads(target.read_text(encoding="utf-8"))
+        rows[0]["usd_clp_cierre"] += 1
+        target.write_text(json.dumps(rows), encoding="utf-8")
+        old = (self.published / target.name).read_bytes()
+        with self.assertRaisesRegex(ValueError, "Valores JSON/Parquet"):
+            publish(self.stage, self.published, self.manifest)
+        self.assertEqual(old, (self.published / target.name).read_bytes())
+
     def test_null_regression_keeps_published_files(self):
         name = NAMES[1]
         path = self.stage / f"{name}.parquet"
@@ -49,7 +59,7 @@ class PublishMacroTests(unittest.TestCase):
         df.loc[0, "usd_clp_cierre"] = None
         df.to_parquet(path, index=False)
         old = (self.published / path.name).read_bytes()
-        with self.assertRaisesRegex(ValueError, "Regresión de datos no nulos"):
+        with self.assertRaisesRegex(ValueError, "Valores JSON/Parquet|Regresión de datos no nulos"):
             publish(self.stage, self.published, self.manifest)
         self.assertEqual(old, (self.published / path.name).read_bytes())
 
