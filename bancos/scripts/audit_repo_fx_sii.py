@@ -3,7 +3,7 @@
 El HTML viejo del SII lista observaciones diarias; para cada mes se usa la
 última cotización diaria publicada, que puede ser anterior al fin calendario.
 No se interpreta un blanco como cero ni se sustituye por un promedio mensual.
-Páginas nuevas sin la tabla antigua se reportan como SIN_VERIFICAR, no como OK.
+Páginas sin la tabla anual íntegra se reportan como SIN_VERIFICAR, no como OK.
 """
 from __future__ import annotations
 
