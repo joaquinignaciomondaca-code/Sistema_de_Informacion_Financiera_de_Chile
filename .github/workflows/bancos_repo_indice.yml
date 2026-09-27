@@ -1,0 +1,15 @@
+name: Diagnóstico índice CMF marzo 2020 (sin ZIP)
+on:
+  push:
+    branches: [arena/01a0e08b-monitor-financiero-chile]
+    paths:
+      - '.github/workflows/bancos_repo_indice.yml'
+permissions:
+  contents: read
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - run: python -m bancos.scripts.diagnose_repo_index
