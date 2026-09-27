@@ -67,8 +67,8 @@ jobs:
     timeout-minutes: 8
     steps:
       - uses: actions/checkout@v4
-      - name: Inspeccionar fuente SII de dólar observado 2008 y 2013 sin publicar
-        run: python -m bancos.scripts.probe_repo_fx_sii
+      - name: Cotejar FX 2008–2013 con fuente pública SII sin publicar
+        run: python -m bancos.scripts.audit_repo_fx_sii
   rebuild_review:
     if: ${{ github.event_name == 'workflow_dispatch' && !inputs.period }}
     runs-on: ubuntu-latest
