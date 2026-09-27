@@ -13,6 +13,8 @@ import io
 import json
 import re
 import sys
+import time
+import urllib.error
 import urllib.parse
 import urllib.request
 import zipfile
@@ -70,18 +72,29 @@ def read_public(url: str, limit: int) -> bytes:
     p = urllib.parse.urlsplit(url)
     if p.scheme != "https" or p.hostname != "www.cmfchile.cl":
         raise ValueError("Enlace fuera del dominio CMF permitido")
-    req = urllib.request.Request(url, headers={"User-Agent": "MonitorFinancieroChile/1.0", "Accept": "text/html,application/zip"})
-    try:
-        with urllib.request.urlopen(req, timeout=30) as response:
-            if response.status != 200:
-                raise RuntimeError(f"CMF HTTP {response.status}")
-            data = response.read(limit + 1)
-    except Exception as exc:
-        # No hay credenciales en estas URLs; evitar logs extensos del servidor.
-        raise RuntimeError(f"Error al descargar desde CMF ({type(exc).__name__})") from None
-    if len(data) > limit:
-        raise ValueError("Respuesta excede el límite de tamaño permitido")
-    return data
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0 MonitorFinancieroChile/1.0", "Accept": "text/html,application/zip"})
+    for attempt in range(3):
+        try:
+            with urllib.request.urlopen(req, timeout=30) as response:
+                if response.status != 200:
+                    raise RuntimeError(f"CMF HTTP {response.status}")
+                data = response.read(limit + 1)
+            if len(data) > limit:
+                raise ValueError("Respuesta excede el límite de tamaño permitido")
+            return data
+        except urllib.error.HTTPError as exc:
+            if exc.code in (429, 500, 502, 503, 504) and attempt < 2:
+                time.sleep(2 ** attempt)
+                continue
+            raise RuntimeError(f"CMF HTTP {exc.code}; URL {p.path}") from None
+        except (urllib.error.URLError, TimeoutError, ConnectionError) as exc:
+            if attempt < 2:
+                time.sleep(2 ** attempt)
+                continue
+            # Nunca tratar un error de red como mes sin datos ni escribir un
+            # checkpoint de éxito. No hay credenciales en estas URLs.
+            raise RuntimeError(f"Error de conexión CMF ({type(exc).__name__}); URL {p.path}") from None
+    raise RuntimeError("Descarga CMF inconclusa")
 
 
 def discover(html: str, strict: bool = True, conflicts_out: set[str] | None = None) -> dict[str, str]:
