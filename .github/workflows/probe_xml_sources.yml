@@ -6,6 +6,12 @@
 name: Sonda XML/XBRL por industria (sin publicación)
 
 on:
+  # Disparo de prueba en la rama de sesión (workflow_dispatch exige estar en la rama por defecto).
+  push:
+    branches: [arena/01a0e08b-monitor-financiero-chile]
+    paths:
+      - '.github/workflows/probe_xml_sources.yml'
+      - 'scripts/probe_xml_sources.py'
   workflow_dispatch:
     inputs:
       sector:
