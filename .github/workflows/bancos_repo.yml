@@ -68,6 +68,20 @@ jobs:
         run: |
           python -m bancos.scripts.inspect_repo_source_layout 2021-12 2022-06 2026-04 \
             | tee .local-data/review/bancos/disposicion_b1.jsonl
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for line in Path('.local-data/review/bancos/disposicion_b1.jsonl').read_text().splitlines():
+              doc = json.loads(line)
+              for item in doc['archivos']:
+                  if item['nombre'].lower().startswith('b1'):
+                      print('::notice title=B1-layout::' + json.dumps({
+                          'mes': doc['periodo'], 'sha_zip': doc['sha256'],
+                          'archivo': item['nombre'], 'sha_txt': item['sha256'],
+                          'primera': item['primeras_lineas'][:1],
+                          'cuentas': item['filas_repo'], 'anchos': item['anchos_campos'],
+                      }, ensure_ascii=False))
+          PY
       - name: Guardar avance (solo si diagnóstico incremental completo)
         if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.period) }}
         uses: actions/cache/save@v4
