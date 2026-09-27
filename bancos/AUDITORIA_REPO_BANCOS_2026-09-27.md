@@ -9,6 +9,10 @@
 - El tipo de cambio `tc_usd_cierre` coincide exactamente en los **148 meses comunes** (2014-01 a 2026-04) con `usd_clp_cierre` del **módulo macro del mismo repositorio**, que usa otro pipeline. Los 72 meses 2008-01 a 2013-12 carecen de esa comparación. La coincidencia de FX **no verifica la fuente de los saldos REPO** ni constituye cotejo directo de FX con BCCh independiente del proyecto.
 - No se comparó fila a fila con libros de cuenta, estados mensuales CMF ni el Excel fuente: desde este entorno no se dispone del archivo local `C:\Users\joaqu\Desktop\Respaldo_BCCH\Bancos\REPO_BANCO\REPO_BANCOS_CMF\repo_banco.xlsx`. Tampoco se preservó su hash, fecha de descarga, pestañas, fórmulas ni un mapa de cuentas CMF. El script `bancos/scripts/02_extract_bancos_repos_series.py` lee ese archivo local y no proporciona extracción diaria autónoma.
 
+## Cotejo puntual con estados financieros oficiales (añadido)
+
+Los [estados financieros anuales 2021 de Banco de Chile publicados por la CMF](https://www.cmfchile.cl/bancos/estados_anuales/2021/Bancos_202112/202112_001.pdf) muestran «Contratos de retrocompra y préstamos de valores» por **64.365** (activo) y **95.009** (pasivo) en 2021, y **76.407** / **288.917** en 2020, en MM$. La tabla publicada tiene exactamente esos valores para `001` en 2021-12 y 2020-12. Los [estados 2021 de BTG Pactual](https://www.cmfchile.cl/bancos/estados_anuales/2021/Bancos_202112/202112_059.pdf) muestran pasivo «-» en 2021 y **1.000** en 2020; la tabla tiene 0 y 1.000. Esto indica que el Excel se construyó con el rubro contable CMF de retrocompra, pero son **4 observaciones de 2.947**: no reemplaza el cotejo completo.
+
 ## Hallazgos que impiden retirar la advertencia
 
 1. **Definición financiera incorrecta de «transado» (confirmada por código y por cálculo).** `total_transado_mm_usd = repo_activo_mm_usd + repo_pasivo_mm_usd` para todas las filas, **no es flujo de operaciones del mes**. Tampoco son 2.947 transacciones: cada fila es un banco/código-mes. Sólo es apropiado describir la serie como *saldos de pactos* mientras se valida su definición precisa. Evitar sumarla como volumen negociado.
