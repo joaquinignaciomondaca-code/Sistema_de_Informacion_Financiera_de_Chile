@@ -6,6 +6,7 @@ on:
     branches: [arena/01a0e08b-monitor-financiero-chile]
     paths:
       - '.github/workflows/bancos_repo_historico.yml'
+      - 'bancos/scripts/backfill_repo_audit.py'
   workflow_dispatch:
 
 permissions:
