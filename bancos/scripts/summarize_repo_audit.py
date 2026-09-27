@@ -10,7 +10,10 @@ from __future__ import annotations
 import argparse
 import json
 import sys
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal, InvalidOperation, ROUND_HALF_UP
+
+# Hipótesis comparativas, no reglas de transformación aprobadas.
+DIVISORS = (1, 1000, 1000000)
 from pathlib import Path
 
 REPORT = Path(__file__).resolve().parents[2] / ".local-data/review/bancos/repo_zip_audit.json"
@@ -18,17 +21,25 @@ LIMIT = 3500
 
 
 def side_status(data: dict, legacy: float | None) -> str:
-    """`✓` si la suma de columnas iguala la referencia; `✗` con ambos valores."""
+    """Compara suma/divisor con legado a dos decimales; no certifica unidad.
+
+    Los datos publicados tienen dos decimales. Una igualdad después de redondear
+    es sólo una coincidencia exploratoria; un cero no identifica divisor.
+    """
     if not isinstance(data, dict) or data.get("estado"):
         return "sin_cuenta"
     total = data.get("suma_columnas")
     if total is None or legacy is None:
         return "sin_referencia"
     try:
-        equal = Decimal(total) == Decimal(str(legacy))
-    except InvalidOperation:
+        raw, reference = Decimal(str(total)), Decimal(str(legacy))
+        hits = [divisor for divisor in DIVISORS
+                if (raw / divisor).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP) == reference]
+    except (InvalidOperation, ValueError):
         return "ilegible"
-    return "✓" if equal else f"✗({total}≠{legacy})"
+    if not hits:
+        return f"✗({total}≠{legacy})"
+    return "✓/" + ",".join(str(divisor) for divisor in hits)
 
 
 def summarize_month(month: dict, limit: int = LIMIT) -> str:
@@ -41,13 +52,14 @@ def summarize_month(month: dict, limit: int = LIMIT) -> str:
         legacy = bank["referencia_legacy_mm_clp"]
         left = side_status(sides.get("activo", {}), legacy.get("activo"))
         right = side_status(sides.get("pasivo", {}), legacy.get("pasivo"))
-        hits += left == "✓" and right == "✓"
+        hits += left.startswith("✓/") and right.startswith("✓/")
         details.append(f"{bank.get('codigo_banco')} a{left} p{right}")
     missing = [b["codigo_banco"] for b in banks
                if all(s.get("estado") for s in b.get("hipotesis_escala", {}).values())]
     head = (f"{month.get('periodo')} bancos={len(banks)} cotejados={len(compared)} "
             f"ambos_lados_ok={hits} cuentas={month.get('candidatos_del_script_v2')} "
-            f"suma_columnas=MM_CLP_sin_divisor sha={str(month.get('sha256_zip'))[:12]} "
+            f"hipotesis=suma_columnas/divisor(1,1000,1000000)_redondeo_2_decimales "
+            f"sha={str(month.get('sha256_zip'))[:12]} "
             f"adv={month.get('advertencia')} sin_cuenta={missing}")
     return (head + " || " + " ".join(details))[:limit]
 
