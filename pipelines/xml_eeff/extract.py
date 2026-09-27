@@ -36,8 +36,9 @@ CONFIG = {
     'agf': ('docs/outputs/agf/agf_maestro.json', 'RGAGF', '3', 'XBRL', 'rut', 'razon_social'),
     'retail': ('docs/outputs/retail_financiero/retail_financiero_maestro.json', 'RVEMI', '3', 'XBRL', 'rut', 'razon_social'),
 }
-# Fondos mutuos: XML anual. AGF y emisores presentan también períodos trimestrales
-# (comprobado en fichas CMF 2026-03 y 2026-06); no suponer periodicidad anual.
+# Fondos mutuos: XML anual. AGF presenta períodos trimestrales (ficha CMF
+# 2026-03/06). Para RVEMI se consultan cortes trimestrales de forma exploratoria;
+# no hay aún cotejo por entidad que pruebe su cobertura.
 PERIODICIDAD = {'corredoras': 'trimestral', 'fi': 'trimestral', 'ffmm': 'anual',
                 'agf': 'trimestral', 'retail': 'trimestral'}
 BALANCE = {'corredoras': ('TotalActivos', 'TotalPasivos', 'TotalPatrimonio'),

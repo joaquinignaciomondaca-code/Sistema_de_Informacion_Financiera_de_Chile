@@ -82,8 +82,9 @@ La siguiente corrida `36330191580` registró 46/289/348 respectivamente;
 Al continuar la revisión se corrigieron otras afirmaciones y controles:
 
 * La ficha CMF de AGF Security `96639280` ofrece XBRL para **2026-03 y 2026-06**;
-  por tanto mi generalización de AGF/retail como exclusivamente anual era errónea.
-  Se vuelven a consultar cortes trimestrales para ambos; para FFMM sí se confirma
+  por tanto mi generalización de AGF como exclusivamente anual era errónea.
+  Se consultan cortes trimestrales para AGF; para RVEMI/retail se consultan también
+  pero **su cobertura trimestral aún no está cotejada por entidad**. Para FFMM sí se confirma
   periodicidad anual explícita en la ficha del fondo RUN 8490.
 * Se quitó la lógica que borraba **cualquier** carácter no numérico de un monto al reparar
   XML. Un `2&957448` no es prueba de que el monto original sea `2957448`:
