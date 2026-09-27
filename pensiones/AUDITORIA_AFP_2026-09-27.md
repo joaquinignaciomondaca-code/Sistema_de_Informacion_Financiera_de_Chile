@@ -1,5 +1,7 @@
 # Auditoría independiente de datos AFP — 2026-09-27
 
+> **Estado posterior (27-09-2026):** las tablas históricas cuestionadas descritas abajo fueron retiradas del sitio y del checkout de datos publicados para reconstrucción desde cero. Se conservaron sólo listas de entidades (AFP sin métricas) y, en bancos, la tabla REPO aún pendiente de auditoría. Las cifras de este informe son evidencia histórica, **no describen archivos aún publicados**.
+
 **Dictamen: NO VALIDADOS.** Mantener los archivos publicados sólo como muestras de trabajo, no como estadísticas oficiales de cartera, contratos o participación. El estado del explorador y el diccionario se cambió a «Falta validar»; no se reemplazaron los Parquet ni se ejecutaron generadores. La presencia de `fuente = Superintendencia de Pensiones` en una fila es texto asignado por el parser, no certificación de sus métricas.
 
 ## Alcance y método

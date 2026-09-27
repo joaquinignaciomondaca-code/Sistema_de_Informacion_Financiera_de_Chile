@@ -1,5 +1,7 @@
 # Auditoría independiente del módulo bancario — 2026-09-27
 
+> **Estado posterior (27-09-2026):** las tablas históricas cuestionadas descritas abajo fueron retiradas del sitio y del checkout de datos publicados para reconstrucción desde cero. Se conservaron sólo listas de entidades (AFP sin métricas) y, en bancos, la tabla REPO aún pendiente de auditoría. Las cifras de este informe son evidencia histórica, **no describen archivos aún publicados**.
+
 **Dictamen: datos publicados NO VALIDADOS.** Se marcaron todas las carpetas bancarias, las seis tablas del visor y sus fichas como «Falta validar». No se alteraron los Parquet/JSON originales: no sería responsable ajustar sus montos sin comparación a nivel de cuenta/serie contra fuentes primarias. Se eliminaron consultas sugeridas que sumaban series heterogéneas o calculaban ROE incorrectamente.
 
 ## Método, límites y fuentes externas
