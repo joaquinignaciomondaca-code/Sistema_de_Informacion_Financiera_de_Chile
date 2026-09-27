@@ -1268,7 +1268,7 @@ const ERD_TABLES = [
     file: "outputs/securitizadoras/patrimonios_separados_balance_pdf.parquet",
     cols: [
       { name: "id_linea", pk: true, type: "VARCHAR" },
-      { name: "archivo", type: "VARCHAR" },
+      { name: "rut_administradora", fk: true, type: "VARCHAR" },
       { name: "codigo_patrimonio", type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
       { name: "nombre_cuenta", type: "VARCHAR" },
@@ -1794,6 +1794,7 @@ const ERD_LINKS = [
   { from: "agf_maestro", to: "fi_maestro", key: "rut_administradora (gestión fiduciaria LUF)" },
   { from: "securitizadoras_maestro", to: "securitizadoras_balance_resumen", key: "rut" },
   { from: "securitizadoras_maestro", to: "patrimonios_separados_maestro", key: "rut_administradora (administración fiduciaria)" },
+  { from: "securitizadoras_maestro", to: "patrimonios_separados_balance_pdf", key: "rut = rut_administradora (cuerpo, sin dígito verificador)" },
   { from: "securitizadoras_maestro", to: "patrimonios_separados_balance_resumen", key: "rut_administradora" },
     { from: "patrimonios_separados_maestro", to: "patrimonios_separados_balance_lineas", key: "id_patrimonio (balance FECU)" },
   { from: "patrimonios_separados_maestro", to: "patrimonios_separados_excedentes_lineas", key: "id_patrimonio (estado excedentes)" },
