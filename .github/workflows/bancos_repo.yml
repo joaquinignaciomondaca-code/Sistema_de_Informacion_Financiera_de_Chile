@@ -15,6 +15,11 @@ on:
         description: 'Mes puntual opcional AAAA-MM para calibración (ej. 2021-12)'
         required: false
         type: string
+      transfer_snapshot:
+        description: 'Reextracción histórica en tres lotes, solo para revisión local (no publica)'
+        required: false
+        default: false
+        type: boolean
   schedule:
     - cron: '0 11 * * *'
 
@@ -27,7 +32,7 @@ concurrency:
 
 jobs:
   transfer_review:
-    if: ${{ github.event_name == 'push' }}
+    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.transfer_snapshot) }}
     strategy:
       fail-fast: false
       matrix:
