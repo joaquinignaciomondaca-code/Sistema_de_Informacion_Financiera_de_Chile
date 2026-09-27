@@ -1,5 +1,9 @@
 # Pipelines Manuales y Extracción Asistida (NotebookLM / LLM)
 
+El lector automático de PDF de factoring (`pipelines/eeff`) se retiró. Las notas que se quieran publicar entran por este flujo.
+
+El balance de patrimonios separados leído del PDF está en `patrimonios_separados_balance_pdf`. El Excel no se guarda.
+
 Este directorio gestiona los flujos de extracción y normalización de información que **requieren intervención humana previa o procesamiento asistido por IA**, tales como el análisis de notas explicativas en memorias anuales y estados financieros en PDF.
 
 ---
