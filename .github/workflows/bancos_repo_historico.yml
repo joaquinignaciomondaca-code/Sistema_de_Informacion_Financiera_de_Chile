@@ -7,6 +7,7 @@ on:
     paths:
       - '.github/workflows/bancos_repo_historico.yml'
       - 'bancos/scripts/backfill_repo_audit.py'
+      - 'bancos/scripts/probe_repos_zip_cmf.py'
   workflow_dispatch:
 
 permissions:

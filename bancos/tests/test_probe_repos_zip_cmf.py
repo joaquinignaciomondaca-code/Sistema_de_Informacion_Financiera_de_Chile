@@ -51,6 +51,16 @@ class ProbeTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             probe.discover('<a href="articles-113067_recurso_1.zip"></a>')
 
+    def test_conflicting_heading_does_not_create_false_month(self):
+        good = ('<a href="articles-28704_recurso_1.zip" title="Descargar Marzo 2020"></a>'
+                '<h3>Balance y Estado de Situación Bancos marzo 2020</h3>')
+        wrong = ('<a href="articles-39990_recurso_1.zip" title="Descargar Marzo 2020"></a>'
+                 '<h3>Balance y Estado de Situación Bancos marzo 2019</h3>')
+        found = probe.discover(good + wrong)
+        self.assertEqual(found, {"2020-03": "https://www.cmfchile.cl/portal/estadisticas/626/articles-28704_recurso_1.zip"})
+        self.assertNotIn("2020-03", probe.discover(wrong +
+            '<a href="articles-50166_recurso_1.zip">Descargar diciembre 2021</a>'))
+
     def test_empty_index_gives_safe_diagnostics(self):
         with self.assertRaisesRegex(ValueError, r"ZIP=0") as error:
             probe.discover("<html><title>Página temporal</title><body>Sin enlaces</body></html>")
