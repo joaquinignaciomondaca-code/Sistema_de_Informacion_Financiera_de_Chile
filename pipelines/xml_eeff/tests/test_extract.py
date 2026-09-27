@@ -78,6 +78,47 @@ class FechasTest(unittest.TestCase):
                 self.assertLessEqual(periodo, '2026-09', f'mes {mes} devolvio {periodo}')
 
 
+class PeriodicidadTest(unittest.TestCase):
+    def test_anuales_solo_diciembre(self):
+        for sector in ('ffmm', 'agf', 'retail'):
+            for periodo in x.periodos_para(sector, todos=True):
+                self.assertTrue(periodo.endswith('-12'), f'{sector} devolvio {periodo}')
+
+    def test_historicos_desde_2011_y_sin_futuro(self):
+        historico = x.periodos_para('corredoras', todos=True)
+        self.assertEqual(historico[0], '2011-03')
+        self.assertTrue(all(p <= '2026-06' for p in historico))
+        self.assertGreater(len(historico), 50)
+
+    def test_diario_acotado(self):
+        self.assertLessEqual(len(x.periodos_para('ffmm')), 2)
+        self.assertLessEqual(len(x.periodos_para('fi')), 2)
+
+
+class ZipTest(unittest.TestCase):
+    def test_xbrl_dentro_de_zip(self):
+        import io, zipfile
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, 'w') as zf:
+            zf.writestr('leeme.txt', 'no es instancia')
+            zf.writestr('instancia.xbrl', '<xbrl xmlns="http://www.xbrl.org/2003/instance"><context id="c"/><unit id="u"/></xbrl>')
+        raw, nombre = x.desempaquetar_xbrl(buffer.getvalue())
+        self.assertEqual(nombre, 'instancia.xbrl')
+        self.assertTrue(raw.startswith(b'<xbrl'))
+
+    def test_zip_sin_instancia_falla(self):
+        import io, zipfile
+        buffer = io.BytesIO()
+        with zipfile.ZipFile(buffer, 'w') as zf:
+            zf.writestr('leeme.txt', 'x')
+        with self.assertRaisesRegex(ValueError, 'ZIP sin instancia'):
+            x.desempaquetar_xbrl(buffer.getvalue())
+
+    def test_payload_plano_pasa_igual(self):
+        raw, nombre = x.desempaquetar_xbrl(b'<xbrl/>')
+        self.assertEqual((raw, nombre), (b'<xbrl/>', None))
+
+
 class FlujoTest(unittest.TestCase):
     def test_sin_enlace_es_sin_fuente(self):
         with patch.object(x, 'read_url', lambda url, limit=0: b'<html>sin enlaces</html>'):
