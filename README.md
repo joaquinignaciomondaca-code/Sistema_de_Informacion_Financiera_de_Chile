@@ -14,7 +14,7 @@ El repositorio consolida fuentes oficiales emitidas por la **Comisión para el M
 4. **Fondos de Pensiones** (pensiones/): Sistema Previsional D.L. 3.500 (Cartera de Renta Fija, Variable, Forwards y Swaps).
 5. **Banca e Instituciones Financieras** (ancos/): Balances C1, Estados de Resultados y Derivados OTC vigentes y transados.
 6. **Macroeconomía & Tasas** (macro/): Estadísticas BCCh (TPM, Tipos de Cambio, Curvas de Rendimiento BCP/BCU e Inflación).
-7. **Factoring & Leasing** (actoring_leasing/): ver `factoring_leasing/README.md`. EEFF de marzo 2026 desde el PDF de Información Financiera. La API solo valida totales.
+7. **Factoring & Leasing** (actoring_leasing/): Entidades registradas CMF y balances financieros bajo norma IFRS.
 8. **Corredoras de Bolsa** (corredoras_bolsa/): Intermediarios de valores, balances patrimoniales y solvencia.
 9. **Sociedades Securitizadoras** (securitizadoras/): Emisoras de títulos de deuda y balances IFRS.
 10. **Patrimonios Separados** (securitizadoras/): Vehículos de propósito especial y carteras de activos securitizados (Ley 18.045).
