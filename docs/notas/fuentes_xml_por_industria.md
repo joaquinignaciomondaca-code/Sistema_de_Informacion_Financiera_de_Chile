@@ -125,3 +125,5 @@ Las fichas [Factoring Security, 2022-06](https://www.cmfchile.cl/institucional/m
 ## Factoring y Leasing: resultado del cotejo (2026-09-27)
 
 Para Factoring Security S.A. (2022-06, individual) y Unidad Leasing Habitacional S.A. (2022-09, individual) el archivo estructurado de CMF y la tabla HTML de la ficha coinciden en activos, pasivos, patrimonio y efectivo, en miles de pesos y con activos = pasivos + patrimonio. Solo esas dos filas, con advertencia visible de alcance, entraron al sitio (`factoring_leasing.eeff_muestra_cmf`). No hay aprobación para el resto del sector, otros períodos, consolidados ni XBRL/PDF. La lista de 28 entidades sigue publicada aparte y sin certificación registral. Detalle en `docs/notas/cotejo_muestra_factoring_leasing_2026-09-27.md`.
+
+**Ampliación solicitada:** además del balance de dos filas, se cotejaron dos cuentas del estado de resultado acumulado contra el archivo estructurado y la ficha CMF en la corrida 36337715177. Se publican en una segunda tabla separada `factoring_leasing.resultados_muestra_cmf` (dos filas). No es el estado de resultado completo.
