@@ -41,8 +41,9 @@ jobs:
         if: always()
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
         run: |
-          PR=$(gh pr list --head "$GITHUB_REF_NAME" --state open --json number --jq '.[0].number // empty')
+          PR=$(gh pr list --head "$GITHUB_REF_NAME" --state open --json number --jq '.[0].number // empty' 2>/dev/null || true)
           python - <<'PY'
           import json, os
           from pathlib import Path
@@ -62,6 +63,7 @@ jobs:
                   body += f"\n- {e['sector']} RUN {e['rut']} {e['periodo']}: {e['error']}"
           message = f"<!-- cotejo-eeff-xml-muestra -->\n**Muestra XML CMF vs HTML oficial**, commit `{os.environ['GITHUB_SHA'][:12]}`, [run]({os.environ['GITHUB_SERVER_URL']}/{os.environ['GITHUB_REPOSITORY']}/actions/runs/{os.environ['GITHUB_RUN_ID']}): {body}"
           Path('/tmp/muestra-comment.md').write_text(message)
+          print(message)
           with Path(os.environ['GITHUB_STEP_SUMMARY']).open('a') as f:
               f.write(message)
           PY
