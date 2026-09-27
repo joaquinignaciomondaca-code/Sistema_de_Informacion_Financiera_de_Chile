@@ -27,7 +27,7 @@ concurrency:
 
 jobs:
   rebuild_review:
-    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && !inputs.period) }}
+    if: ${{ github.event_name == 'workflow_dispatch' && !inputs.period }}
     runs-on: ubuntu-latest
     timeout-minutes: 50
     steps:
