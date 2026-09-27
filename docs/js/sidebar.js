@@ -402,9 +402,9 @@ const EXPLORER_TREE = [
     label: "FONDOS DE PENSIONES (SPENSIONES)",
     badges: [
       { type: "entities", text: "7 Entidades", title: "7 Administradoras de Fondos de Pensiones reguladas por la SPensiones" },
-      { type: "data", text: "214k Datos", title: "214.683 registros históricos de inversiones SPensiones" }
+      { type: "pending", text: "⚠ Falta validar", title: "Tablas AFP sin validación de cifras; maestro y forwards generados" }
     ],
-    status: "active",
+    status: "por_auditar",
     children: [
       // MÓDULO 1: CARTERAS DE INVERSIÓN MULTIFONDOS (Patrimonios Autónomos)
       {
@@ -416,15 +416,14 @@ const EXPLORER_TREE = [
           {
             id: "cat_afp_cartera_activos",
             type: "circular",
-            label: "Portafolios Desagregados · Fondos A a E",
-            badge: "208.017 Registros",
+            label: "Carteras agregadas por AFP · Muestra en revisión",
+            badge: "⚠ Falta validar",
             badgeType: "data",
-            status: "active",
+            status: "por_auditar",
             sector: "afp_carteras",
             chips: [
-              { label: "Tenencia Bonos Soberanos (BTP / BTU)", query: "SELECT nemotecnico, emisor, sum(monto_usd_millones) as total_usd_m FROM afp_cartera_bonos WHERE emisor LIKE '%TESORERIA%' GROUP BY nemotecnico, emisor ORDER BY total_usd_m DESC LIMIT 10;" },
-              { label: "Posiciones en Acciones por Emisor", query: "SELECT nemotecnico, emisor, sum(monto_usd_millones) as total_usd_m FROM afp_cartera_acciones GROUP BY nemotecnico, emisor ORDER BY total_usd_m DESC LIMIT 10;" },
-              { label: "Inversión por AFP en Bonos (M$ USD)", query: "SELECT nombre_administradora, sum(monto_usd_millones) as total_bonos_usd FROM afp_cartera_bonos GROUP BY nombre_administradora ORDER BY total_bonos_usd DESC;" }
+              { label: "Muestra de bonos (clasificación sin validar)", query: "SELECT periodo, nombre_administradora, tipo_instrumento, nemotecnico, emisor, monto_usd_millones FROM afp_cartera_bonos ORDER BY periodo DESC LIMIT 25;" },
+              { label: "Muestra de acciones (porcentajes sin validar)", query: "SELECT periodo, nombre_administradora, nemotecnico, pct_emisor, monto_usd_millones FROM afp_cartera_acciones ORDER BY periodo DESC LIMIT 25;" }
             ],
             tables: [
               { id: "afp_cartera_bonos", name: "afp.cartera_bonos", rows: "168.182 registros", file: "outputs/pensiones/afp_cartera_bonos.parquet" },
@@ -434,15 +433,14 @@ const EXPLORER_TREE = [
           {
             id: "cat_afp_derivados",
             type: "circular",
-            label: "Derivados OTC · SPensiones",
-            badge: "7.226 Registros",
+            label: "Derivados · Muestra en revisión",
+            badge: "⚠ Falta validar",
             badgeType: "data",
-            status: "active",
+            status: "por_auditar",
             sector: "afp_carteras",
             chips: [
-              { label: "Swaps por Contraparte Bancaria", query: "SELECT contraparte, count(*) as n_swaps, sum(nocional_usd_millones) as nocional_total_usd_m FROM afp_derivados_swaps GROUP BY contraparte ORDER BY nocional_total_usd_m DESC LIMIT 10;" },
-              { label: "Swaps por Tipo y Moneda Indexada", query: "SELECT tipo_derivado, unidad_indexada, count(*) as operaciones, sum(nocional_usd_millones) as total_usd_m FROM afp_derivados_swaps GROUP BY tipo_derivado, unidad_indexada ORDER BY total_usd_m DESC;" },
-              { label: "Forwards por Contraparte", query: "SELECT nombre_contraparte, direccion, count(*) as operaciones, sum(nocional_m_usd) as nocional_total_usd FROM afp_derivados_forwards GROUP BY nombre_contraparte, direccion ORDER BY nocional_total_usd DESC LIMIT 10;" }
+              { label: "Muestra de swaps (nocional sin validar)", query: "SELECT periodo, nombre_administradora, tipo_derivado, contraparte, nocional_usd_millones FROM afp_derivados_swaps ORDER BY periodo DESC LIMIT 25;" },
+              { label: "Muestra de forwards (datos generados, no observados)", query: "SELECT periodo, afp, tipo_de_fondo, nombre_contraparte, nocional_m_usd FROM afp_derivados_forwards ORDER BY periodo DESC LIMIT 25;" }
             ],
             tables: [
               { id: "afp_derivados_swaps", name: "afp.derivados_swaps", rows: "6.666 registros", file: "outputs/pensiones/afp_derivados_swaps.parquet" },
@@ -463,14 +461,12 @@ const EXPLORER_TREE = [
             id: "cat_afp_maestro",
             type: "circular",
             label: "Lista de Entidades",
-            badge: "7 Entidades",
+            badge: "⚠ Falta validar",
             badgeType: "entities",
-            status: "active",
+            status: "por_auditar",
             sector: "afp_corporativo",
             chips: [
-              { label: "Ranking AUM Administrado (USD)", query: "SELECT nombre_fantasia, aum_total_m_usd, participacion_mercado_pct, encaje_requerido_m_usd FROM afp_maestro ORDER BY aum_total_m_usd DESC;" },
-              { label: "Afiliados y Comisiones por AFP", query: "SELECT nombre_fantasia, total_afiliados, comision_flujo_pct, grupo_controlador FROM afp_maestro ORDER BY total_afiliados DESC;" },
-              { label: "Encaje Obligatorio 1% (M$ USD)", query: "SELECT nombre_fantasia, encaje_requerido_m_usd, aum_total_m_usd FROM afp_maestro ORDER BY encaje_requerido_m_usd DESC;" }
+              { label: "Maestro generado (cifras sin validar)", query: "SELECT nombre_fantasia, rut_administradora, aum_total_m_usd, total_afiliados FROM afp_maestro LIMIT 10;" }
             ],
             tables: [
               { id: "afp_maestro", name: "afp.lista_administradoras", rows: "7 entidades", file: "outputs/pensiones/afp_maestro_administradoras.parquet" }
@@ -1653,7 +1649,7 @@ class SidebarController {
       let badgesHtml = "";
       if (group.badges && group.badges.length > 0) {
         badgesHtml = group.badges.map((b) => {
-          const bClass = b.type === "entities" ? "badge-entities" : (b.type === "data" ? "badge-data" : "badge-roadmap");
+          const bClass = b.type === "pending" ? "badge-por-auditar" : (b.type === "entities" ? "badge-entities" : (b.type === "data" ? "badge-data" : "badge-roadmap"));
           return `<span class="group-badge node-badge ${bClass}" title="${b.title || b.text}">${b.text}</span>`;
         }).join("");
       } else if (group.badge) {
