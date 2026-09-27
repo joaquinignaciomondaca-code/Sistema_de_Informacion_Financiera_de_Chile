@@ -401,72 +401,26 @@ const EXPLORER_TREE = [
     type: "group",
     label: "FONDOS DE PENSIONES (SPENSIONES)",
     badges: [
-      { type: "entities", text: "7 Entidades", title: "7 Administradoras de Fondos de Pensiones reguladas por la SPensiones" },
-      { type: "pending", text: "⚠ Falta validar", title: "Tablas AFP sin validación de cifras; maestro y forwards generados" }
+      { type: "entities", text: "7 Entidades", title: "Lista local de AFP; verificar identidad y vigencia contra la SP" }
     ],
-    status: "por_auditar",
+    status: "active",
     children: [
-      // MÓDULO 1: CARTERAS DE INVERSIÓN MULTIFONDOS (Patrimonios Autónomos)
-      {
-        id: "sector_carteras_afp",
-        type: "sector",
-        label: "Carteras de Inversión Multifondos",
-        sector: "afp_carteras",
-        children: [
-          {
-            id: "cat_afp_cartera_activos",
-            type: "circular",
-            label: "Carteras agregadas por AFP · Muestra en revisión",
-            badge: "⚠ Falta validar",
-            badgeType: "data",
-            status: "por_auditar",
-            sector: "afp_carteras",
-            chips: [
-              { label: "Muestra de bonos (clasificación sin validar)", query: "SELECT periodo, nombre_administradora, tipo_instrumento, nemotecnico, emisor, monto_usd_millones FROM afp_cartera_bonos ORDER BY periodo DESC LIMIT 25;" },
-              { label: "Muestra de acciones (porcentajes sin validar)", query: "SELECT periodo, nombre_administradora, nemotecnico, pct_emisor, monto_usd_millones FROM afp_cartera_acciones ORDER BY periodo DESC LIMIT 25;" }
-            ],
-            tables: [
-              { id: "afp_cartera_bonos", name: "afp.cartera_bonos", rows: "168.182 registros", file: "outputs/pensiones/afp_cartera_bonos.parquet" },
-              { id: "afp_cartera_acciones", name: "afp.cartera_acciones", rows: "39.835 registros", file: "outputs/pensiones/afp_cartera_acciones.parquet" }
-            ]
-          },
-          {
-            id: "cat_afp_derivados",
-            type: "circular",
-            label: "Derivados · Muestra en revisión",
-            badge: "⚠ Falta validar",
-            badgeType: "data",
-            status: "por_auditar",
-            sector: "afp_carteras",
-            chips: [
-              { label: "Muestra de swaps (nocional sin validar)", query: "SELECT periodo, nombre_administradora, tipo_derivado, contraparte, nocional_usd_millones FROM afp_derivados_swaps ORDER BY periodo DESC LIMIT 25;" },
-              { label: "Muestra de forwards (datos generados, no observados)", query: "SELECT periodo, afp, tipo_de_fondo, nombre_contraparte, nocional_m_usd FROM afp_derivados_forwards ORDER BY periodo DESC LIMIT 25;" }
-            ],
-            tables: [
-              { id: "afp_derivados_swaps", name: "afp.derivados_swaps", rows: "6.666 registros", file: "outputs/pensiones/afp_derivados_swaps.parquet" },
-              { id: "afp_derivados_forwards", name: "afp.derivados_forwards", rows: "560 registros", file: "outputs/pensiones/afp_derivados_forwards.parquet" }
-            ]
-          }
-        ]
-      },
-
-      // MÓDULO 2: ADMINISTRADORAS (AFP como Empresas)
       {
         id: "sector_afp_corporativo",
         type: "sector",
-        label: "Administradoras (AFP como Empresas)",
+        label: "Administradoras de Fondos de Pensiones",
         sector: "afp_corporativo",
         children: [
           {
             id: "cat_afp_maestro",
             type: "circular",
             label: "Lista de Entidades",
-            badge: "⚠ Falta validar",
+            badge: "7 Entidades",
             badgeType: "entities",
-            status: "por_auditar",
+            status: "active",
             sector: "afp_corporativo",
             chips: [
-              { label: "Maestro generado (cifras sin validar)", query: "SELECT nombre_fantasia, rut_administradora, aum_total_m_usd, total_afiliados FROM afp_maestro LIMIT 10;" }
+              { label: "Identificación de administradoras", query: "SELECT rut_administradora, nombre_administradora, nombre_fantasia FROM afp_maestro ORDER BY nombre_fantasia;" }
             ],
             tables: [
               { id: "afp_maestro", name: "afp.lista_administradoras", rows: "7 entidades", file: "outputs/pensiones/afp_maestro_administradoras.parquet" }
@@ -481,10 +435,10 @@ const EXPLORER_TREE = [
     type: "group",
     label: "BANCA E INST. FINANCIERAS (CMF)",
     badges: [
-      { type: "entities", text: "40 Códigos", title: "Catálogo local de 40 códigos: incluye bancos históricos, filiales extranjeras y agregados; no son 40 bancos activos" },
-      { type: "pending", text: "⚠ Falta validar", title: "Balance con rupturas de escala, repos sin fuente reproducible y derivados por contrastar" }
+      { type: "entities", text: "40 Códigos", title: "Catálogo local: incluye instituciones históricas, filiales y agregados; cotejo registral pendiente" },
+      { type: "pending", text: "⚠ REPO por auditar", title: "Única serie bancaria conservada; origen Excel sin conciliación CMF" }
     ],
-    status: "por_auditar",
+    status: "active",
     children: [
       {
         id: "sector_bancos_comercial",
@@ -496,57 +450,22 @@ const EXPLORER_TREE = [
             id: "cat_bancos_maestro",
             type: "circular",
             label: "Lista de Entidades",
-            badge: "⚠ Falta validar",
+            badge: "40 Códigos",
             badgeType: "entities",
-            status: "por_auditar",
+            status: "active",
             sector: "bancos",
             chips: [
-              { label: "Entradas con estado activo (catálogo manual sin validar)", query: "SELECT codigo_institucion, rut, nombre_fantasia, tipo_licencia, estado FROM bancos_maestro WHERE estado = 'Activo' ORDER BY codigo_institucion;" },
-              { label: "Entradas históricas (estado sin validar)", query: "SELECT codigo_institucion, nombre_fantasia, razon_social, estado FROM bancos_maestro WHERE estado != 'Activo' ORDER BY estado, nombre_fantasia;" }
+              { label: "Identificación de instituciones", query: "SELECT codigo_institucion, rut, razon_social, nombre_fantasia FROM bancos_maestro ORDER BY codigo_institucion;" }
             ],
             tables: [
               { id: "bancos_maestro", name: "bancos.lista_instituciones", rows: "40 códigos", file: "outputs/bancos/bancos_maestro.parquet" }
             ]
           },
           {
-            id: "circ_bancos_asientos",
-            type: "circular",
-            label: "Estados Financieros · Escalas en revisión",
-            badge: "⚠ Falta validar",
-            badgeType: "data",
-            status: "por_auditar",
-            sector: "bancos",
-            chips: [
-              { label: "Muestra de balance (escalas sin validar)", query: "SELECT periodo, codigo_institucion, nombre_banco, total_activos_m_clp, total_pasivos_m_clp, patrimonio_neto_m_clp FROM bancos_balance_resumen ORDER BY periodo DESC LIMIT 25;" },
-              { label: "Muestra de resultados (escalas sin validar)", query: "SELECT periodo, codigo_institucion, nombre_banco, utilidad_neta_m_clp FROM bancos_estado_resultados ORDER BY periodo DESC LIMIT 25;" }
-            ],
-            tables: [
-              { id: "bancos_balance_resumen", name: "bancos.balance_general", rows: "5.095 balances", file: "outputs/bancos/bancos_balance_resumen.parquet" },
-              { id: "bancos_estado_resultados", name: "bancos.estado_resultados", rows: "5.095 registros", file: "outputs/bancos/bancos_estado_resultados.parquet" }
-            ]
-          },
-          {
-            id: "circ_bancos_derivados",
-            type: "circular",
-            label: "Derivados BCCh · Clasificación en revisión",
-            badge: "⚠ Falta validar",
-            badgeType: "data",
-            status: "por_auditar",
-            sector: "bancos",
-            chips: [
-              { label: "Series BCCh vigentes (unidades mixtas; sin sumar)", query: "SELECT periodo, series_id, instrumento, glosa_serie, unidad_medida, direccion, monto FROM bancos_derivados_posicion_vigente ORDER BY periodo DESC LIMIT 25;" },
-              { label: "Series BCCh transadas (unidades mixtas; sin sumar)", query: "SELECT periodo, series_id, instrumento, glosa_serie, unidad_medida, direccion, monto FROM bancos_derivados_flujos_transados ORDER BY periodo DESC LIMIT 25;" }
-            ],
-            tables: [
-              { id: "bancos_derivados_posicion_vigente", name: "bancos.derivados_posicion_vigente", rows: "2.860 registros", file: "outputs/bancos/bancos_derivados_posicion_vigente.parquet" },
-              { id: "bancos_derivados_flujos_transados", name: "bancos.derivados_flujos_transados", rows: "2.860 registros", file: "outputs/bancos/bancos_derivados_flujos_transados.parquet" }
-            ]
-          },
-          {
             id: "circ_bancos_repos",
             type: "circular",
             label: "Saldos REPO · Origen en revisión",
-            badge: "⚠ Falta validar",
+            badge: "⚠ Falta auditar",
             badgeType: "data",
             status: "por_auditar",
             sector: "bancos",
