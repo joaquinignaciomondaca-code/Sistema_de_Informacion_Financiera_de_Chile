@@ -111,7 +111,8 @@ def html_amounts(data, sample):
     if any(len(v) != 1 for v in found.values()):
         samples = [(row[:4]) for row in parser.rows if any(label.lower() in ' '.join(row).lower() for label in found)][:6]
         clues = [(m.group(0)[:190]) for m in list(re.finditer(r'.{0,80}(?:VISUALIZACION ESTADOS FINANCIEROS|Total de activos|iframe|210000).{0,100}', page, re.I))[:5]]
-        raise ValueError(f'Etiquetas HTML ausentes/duplicadas: { {k: len(v) for k, v in found.items()} }; filas={len(parser.rows)}; muestras={samples}; primeras={parser.rows[:3]}; clues={clues}')
+        vicinity = re.search(r'<td class="nivel4 [^"]*">\s*<div[^>]*>Total de activos </div>.{0,550}', page, re.S)
+        raise ValueError(f'Etiquetas HTML ausentes/duplicadas: { {k: len(v) for k, v in found.items()} }; filas={len(parser.rows)}; muestras={samples}; fragmento={vicinity.group(0)[:500] if vicinity else clues}')
     return {col: found[label][0] for col, label in FIELDS.items()}
 
 
