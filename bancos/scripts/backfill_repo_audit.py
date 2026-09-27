@@ -19,8 +19,12 @@ from bancos.scripts import probe_repos_zip_cmf as probe
 OUT = probe.ROOT / ".local-data/review/bancos/historico"
 
 
-def comparisons(month: dict) -> dict:
-    """Verifica la hipótesis específica por plan; nunca confunde ausencia con 0."""
+def comparisons(month: dict, expected_codes: set[str] | None = None) -> dict:
+    """Verifica la hipótesis específica por plan; nunca confunde ausencia con 0.
+
+    También registra códigos legacy ausentes del ZIP: de otro modo un cotejo
+    sin diferencias podría esconder bancos omitidos al cargar el balance.
+    """
     period = month["periodo"]
     divisor = Decimal(1 if period < "2022-01" else 1000000)
     mismatches = []
@@ -44,9 +48,16 @@ def comparisons(month: dict) -> dict:
                 mismatches.append({"banco": bank["codigo_banco"], "lado": side,
                                    "cuenta": data.get("cuenta"), "crudo": raw,
                                    "referencia": reference.get(side), "causa": str(exc)})
-    missing_legacy = sorted(set(bank["codigo_banco"] for bank in month["bancos"]
-                                if bank["referencia_legacy_mm_clp"] is None))
+    zip_codes = {bank["codigo_banco"] for bank in month["bancos"]}
+    legacy_not_in_zip = sorted((expected_codes or set()) - zip_codes)
+    for code in legacy_not_in_zip:
+        for side in ("activo", "pasivo"):
+            mismatches.append({"banco": code, "lado": side, "causa": "fila_legacy_sin_banco_en_zip"})
+    missing_legacy = sorted(bank["codigo_banco"] for bank in month["bancos"]
+                            if bank["referencia_legacy_mm_clp"] is None)
     return {"periodo": period, "url_zip": month.get("url_zip"),
+            "filas_legacy_esperadas": len(expected_codes) if expected_codes is not None else None,
+            "filas_legacy_sin_banco_zip": legacy_not_in_zip,
             "sha256_zip": month["sha256_zip"], "divisor_hipotesis": int(divisor),
             "bancos_zip": len(month["bancos"]), "bancos_sin_fila_legacy": missing_legacy,
             "lados_cotejados": checked, "discrepancias": mismatches,
@@ -89,7 +100,7 @@ def run(output: Path = OUT, from_year: int = 2008, through_year: int = 2026) -> 
         try:
             legacy = {(p, code): values for code, values in period_rows[p].items()}
             month = audit.inspect_all(probe.read_public(found[p], probe.MAX_ZIP), p, found[p], legacy)
-            result = comparisons(month)
+            result = comparisons(month, set(period_rows[p]))
             collected.append(result)
             # Guardar después de cada mes: conserva evidencia parcial ante
             # errores de red y evita que un timeout pierda años ya cotejados.
