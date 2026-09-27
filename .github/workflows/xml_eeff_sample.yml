@@ -51,6 +51,10 @@ jobs:
           else:
               d = json.loads(p.read_text())
               print('::notice::Muestra aprobada=' + str(d['aprobada_muestra']) + ', registros=' + str(len(d['registros'])))
+              # La descarga del artifact no es accesible desde algunos entornos;
+              # un registro compacto por anotación permite reconstruir el Parquet.
+              for r in d['registros']:
+                  print('::notice::MUESTRA_JSON=' + json.dumps(r, ensure_ascii=True, separators=(',', ':')))
               for e in d['errores']:
                   message = str(e['error']).replace('\n',' ')[:350]
                   print('::error::' + e['sector'] + ' ' + e['rut'] + ' ' + e['periodo'] + ': ' + message)
