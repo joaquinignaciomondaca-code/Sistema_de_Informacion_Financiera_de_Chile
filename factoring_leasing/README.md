@@ -12,3 +12,7 @@ Los scripts históricos se mantienen solo para investigación, pero sus funcione
 
 `python factoring_leasing/scripts/publish_structured_sample.py --report .local-data/factoring_leasing_muestra/cotejo.json`
 escribe `docs/outputs/factoring_leasing/factoring_leasing_eeff_muestra_cmf.parquet` con **dos filas** y falla si el reporte no proviene del run aprobado, si cambia cualquier cifra, si aparece una tercera fila, si la unidad no es miles de CLP, si el balance no cuadra o si falta la advertencia de alcance. Esa muestra se presenta en el sitio como «muestra cotejada CMF», no como el sector. El resto de los balances sigue retirado y los XBRL/PDF siguen sin cotejar.
+
+## Estado de resultados (tabla separada)
+
+A solicitud del usuario, `factoring_leasing.resultados_muestra_cmf` contiene solamente dos cuentas de resultados **acumulados desde enero**, cotejadas en [Actions 36337715177](https://github.com/joaquinignaciomondaca-code/monitor-financiero-chile/actions/runs/36337715177) para las mismas dos entidades y períodos. El balance permanece aparte en `factoring_leasing.eeff_muestra_cmf`, con sus cuatro cuentas y su cotejo original. `python factoring_leasing/scripts/publish_income_sample.py --report .local-data/factoring_leasing_muestra/cotejo_resultados.json` exige valores exactos, unidad, identidades, advertencia, corrida y coherencia de las cuatro cifras del balance original. No es el estado de resultado completo ni el sector.
