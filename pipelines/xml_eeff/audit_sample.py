@@ -152,7 +152,14 @@ def sample_once(sector, rut, period):
         'moneda_original', 'escala', 'total_activo', 'total_pasivo_reportado',
         'definicion_total_pasivo', 'patrimonio_o_activo_neto', 'resultado_ejercicio',
         'codigo_resultado', 'dv_xml_coincide', 'parseo_reparado', 'sha256_xml')}
-    record.update(fuente_ficha=ficha, fuente_xml=extract.url_fuente_segura(link),
+    # El nombre del registro es actual y puede diferir del nombre informado en 2014.
+    # Conservar ambos en vez de atribuir retroactivamente la razón social actual al XML.
+    import xml.etree.ElementTree as ET
+    root = ET.fromstring(raw_xml)
+    nombre_historico = root.findtext('./Identificacion/NombreEntidadInforma') or root.findtext('./Identificacion/NombreFondoInforma')
+    record.update(nombre_xml_historico=nombre_historico,
+                  nombre_registro_actual=record['nombre_registro'],
+                  fuente_ficha=ficha, fuente_xml=extract.url_fuente_segura(link),
                   sha256_html=hashlib.sha256(raw_html).hexdigest(),
                   calidad='muestra_cotejada_xml_vs_html_cmf')
     return record
