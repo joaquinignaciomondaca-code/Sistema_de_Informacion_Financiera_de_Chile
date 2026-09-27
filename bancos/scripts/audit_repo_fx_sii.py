@@ -44,7 +44,8 @@ def parse_old_table(html: str, year: int) -> dict[str, Decimal]:
         if not values:
             continue  # mes futuro aún sin publicación: no inventar un saldo
         if any(not NUMBER.fullmatch(v) for v in values):
-            raise ValueError(f'{year}-{month:02d}: valor SII ilegible')
+            invalid = sorted({v for v in values if not NUMBER.fullmatch(v)})
+            raise ValueError(f'{year}-{month:02d}: valor SII ilegible {invalid[:3]!r}')
         latest[f'{year}-{month:02d}'] = Decimal(values[-1].replace(',', '.'))
     return latest
 
