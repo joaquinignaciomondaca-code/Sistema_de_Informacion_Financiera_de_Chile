@@ -21,6 +21,12 @@ class SiiFxTest(unittest.TestCase):
         report = compare_year(2008, table(), values)
         self.assertEqual(report['estado'], 'COINCIDE')
 
+    def test_chilean_thousands_separator(self):
+        html = table().replace('<td>32,20</td>', '<td>1.032,20</td>')
+        self.assertEqual(parse_old_table(html, 2008)['2008-02'], Decimal('1032.20'))
+        bad = table().replace('<td>32,20</td>', '<td>1.32,20</td>')
+        self.assertEqual(compare_year(2008, bad, {})['estado'], 'SIN_VERIFICAR')
+
     def test_changed_or_missing_table_never_counts_as_match(self):
         self.assertEqual(compare_year(2013, '<html></html>', {})['estado'], 'SIN_VERIFICAR')
         self.assertEqual(compare_year(2008, table().replace('Promedio', 'Total'), {})['estado'], 'SIN_VERIFICAR')
