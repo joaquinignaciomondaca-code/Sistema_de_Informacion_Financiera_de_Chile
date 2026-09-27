@@ -52,4 +52,45 @@ class XmlTest(unittest.TestCase):
         self.assertEqual(row['calidad'], 'xbrl_pendiente_mapeo_taxonomia')
 
 
+class FechasTest(unittest.TestCase):
+    def _periodos(self, mes):
+        original = x.date
+        class Falso(x.date):
+            @classmethod
+            def today(cls): return cls(2026, mes, 15)
+        x.date = Falso
+        try:
+            return x.periodos_ultimo(1)[:2]
+        finally:
+            x.date = original
+
+    def test_cierres_cumplidos_todos_los_meses(self):
+        esperado = {1: ['2025-12', '2025-09'], 2: ['2025-12', '2025-09'], 3: ['2025-12', '2025-09'],
+                    4: ['2026-03', '2025-12'], 5: ['2026-03', '2025-12'], 6: ['2026-03', '2025-12'],
+                    7: ['2026-06', '2026-03'], 8: ['2026-06', '2026-03'], 9: ['2026-06', '2026-03'],
+                    10: ['2026-09', '2026-06'], 11: ['2026-09', '2026-06'], 12: ['2026-09', '2026-06']}
+        for mes, exp in esperado.items():
+            self.assertEqual(self._periodos(mes), exp, f'mes {mes}')
+
+    def test_nunca_devuelve_trimestre_futuro(self):
+        for mes in range(1, 13):
+            for periodo in self._periodos(mes):
+                self.assertLessEqual(periodo, '2026-09', f'mes {mes} devolvio {periodo}')
+
+
+class FlujoTest(unittest.TestCase):
+    def test_sin_enlace_es_sin_fuente(self):
+        with patch.object(x, 'read_url', lambda url, limit=0: b'<html>sin enlaces</html>'):
+            self.assertEqual(x.process(ITEM, '2014-12')[0], 'sin_fuente')
+
+    def test_xbrl_no_inventa_cifras(self):
+        raw = b'<html><a href="https://x/safec_ifrs_verarchivo.php?auth=1">Estados financieros (XBRL)</a></html>'
+        instancia = b'<xbrl xmlns="http://www.xbrl.org/2003/instance"><context id="c"/><unit id="u"/></xbrl>'
+        # La ficha se sirve como HTML; el enlace XBRL (safec_ifrs) devuelve la instancia.
+        with patch.object(x, 'read_url', lambda url, limit=0: instancia if 'safec_ifrs' in url else raw):
+            estado, fila = x.process({**ITEM, 'sector': 'agf', 'tipo': 'RGAGF', 'marker': 'XBRL'}, '2014-12')
+        self.assertEqual(estado, 'pendiente_taxonomia')
+        self.assertIsNone(fila['total_activo'])
+
+
 if __name__ == '__main__': unittest.main()
