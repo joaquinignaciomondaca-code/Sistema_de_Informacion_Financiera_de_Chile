@@ -501,13 +501,17 @@ def parse_eeff_lineas(paginas, max_paginas=16):
                 limpias.extend(f"{g.strip()} {n}" for g, n in segs)
             else:
                 limpias.append(l)
-        lineas = limpias
+        lineas = [re.sub(r"^(\d{2}),(\d{3})$", r"\1.\2", l) if (k + 1 < len(limpias) and re.match(r"^[A-Za-zÁÉÍÓÚÑáéíóúñ]", limpias[k + 1])
+                                                                  and re.fullmatch(r"(1[0-9]|2[0-9]|3[0-5]),\d{3}", l)) else l
+                  for k, l in enumerate(limpias)]  # código FECU con coma en línea propia ('11,010' seguido de la glosa) → '11.010'
         for i, l in enumerate(lineas):
             if _RX_CODIGO.match(l):
                 codigo = l; continue
             ln = _norm(l)
             if _RX_EXC.search(ln) and not re.search(r"\d", ln):
                 estado = "EXCEDENTES"  # el estado de excedentes puede venir en la misma página que el pasivo
+            elif estado == "EXCEDENTES" and re.search(r"^BALANCE(\s+GENERAL)?(\s+DEL?\s+PATRIMONIO)?|^ACTIVOS?$", ln):
+                estado = "BALANCE"  # ...y el balance puede venir después del estado de excedentes en la misma página (Transa 2017)
             for sec, rx in _SECCIONES:
                 if rx.fullmatch(ln):
                     seccion = sec
