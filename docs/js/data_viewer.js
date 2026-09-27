@@ -109,11 +109,9 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Patrimonios separados — balance NotebookLM",
+    group: "Patrimonios separados — balance del PDF",
     tables: [
-      { id: "patrimonios_separados_notebooklm_cuentas", name: "patrimonios.notebooklm_cuentas (46,515 filas, 2,086 PDF)" },
-      { id: "patrimonios_separados_notebooklm_vehiculos", name: "patrimonios.notebooklm_vehiculos (2,067 PDF, ratios como vienen)" },
-      { id: "patrimonios_separados_notebooklm_periodos", name: "patrimonios.notebooklm_periodos (61 periodos)" }
+      { id: "patrimonios_separados_balance_pdf", name: "patrimonios.balance_pdf (46,502 cuentas, 2,086 PDF)" }
     ]
   },
   {
