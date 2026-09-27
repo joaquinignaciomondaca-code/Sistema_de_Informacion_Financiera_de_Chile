@@ -27,8 +27,10 @@ def parse_old_table(html: str, year: int) -> dict[str, Decimal]:
     parser = Tables()
     parser.feed(html)
     candidates = [t for t in parser.tables if t and t[0] == HEADER]
+    # La versión nueva del SII incluye la misma tabla anual más 12 tablas
+    # mensuales; seleccionar la única tabla con encabezado de 13 columnas.
     if len(candidates) != 1:
-        raise ValueError(f'{year}: no hay exactamente una tabla histórica completa SII')
+        raise ValueError(f'{year}: no hay exactamente una tabla anual completa SII')
     table = candidates[0]
     if len(table) != 33 or any(len(row) != 13 for row in table):
         raise ValueError(f'{year}: tabla SII truncada o alterada')
@@ -69,7 +71,10 @@ def main() -> None:
         by_month[p] = value
     reports = []
     for year in YEARS:
-        url = URL.format(year)
+        # 2013 usa la vista SII actual: la URL histórica entrega solo un JS
+        # de redirección; ir directamente a la URL institucional conocida.
+        url = ('https://www.sii.cl/valores_y_fechas/dolar/dolar2013.htm'
+               if year == 2013 else URL.format(year))
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
         try:
             with urllib.request.urlopen(req, timeout=25) as res:
