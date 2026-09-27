@@ -72,7 +72,7 @@ PROBES = [
     },
     {
         "id": "fi_rescatables",
-        "sector": "Fondos de inversion (FIRES)",
+        "sector": "Fondos de inversion rescatables (FIRES)",
         "entidad": "FIRES",
         "pestania": "29",
         "mercado": "V",
@@ -80,6 +80,17 @@ PROBES = [
         "marcador_xml": "archivo=FIEF",
         "extra": "&tipo=I&tipo_norma=IFRS",
         "muestras": [("7064", "2021-12")],
+    },
+    {
+        "id": "fi_no_rescatables",
+        "sector": "Fondos de inversion no rescatables (FINRE)",
+        "entidad": "FINRE",
+        "pestania": "29",
+        "mercado": "V",
+        "formato": "xml_ifrs",
+        "marcador_xml": "archivo=FIEF",
+        "extra": "&tipo=I&tipo_norma=IFRS",
+        "muestras": [("10001", "2021-12")],
     },
     {
         "id": "agf",
