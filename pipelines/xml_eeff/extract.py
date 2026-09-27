@@ -7,6 +7,7 @@ Las salidas son JSONL y manifiesto en .local-data/xml_eeff/, para artifact priva
 """
 import argparse
 import hashlib
+import http.cookiejar
 import html
 import json
 import os
@@ -22,6 +23,11 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / '.local-data/xml_eeff'
 BASE = 'https://www.cmfchile.cl'
+# CMF ata los enlaces con token `auth=` a la sesión: hay que conservar cookies entre la
+# ficha y la descarga del archivo, si no el servidor devuelve HTML en lugar del XBRL.
+COOKIES = http.cookiejar.CookieJar()
+OPENER = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(COOKIES))
+
 HEADERS = {'User-Agent': 'Mozilla/5.0 (compatible; MonitorFinancieroChile/1.0; financial-research)', 'Accept': 'text/html,application/xml,*/*'}
 CONFIG = {
     'corredoras': ('docs/outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.json', 'COBOL', '3', 'IVEF', 'rut_cuerpo', 'nombre_empresa'),
@@ -43,9 +49,12 @@ RESULT = {'corredoras': ('UtilidadPerdidaDelEjercicio', 'ResultadoDelEjercicioPa
           'fi': ('ResultadoDelEjercicio',)}
 
 
-def read_url(url, limit=12_000_000):
-    req = urllib.request.Request(url, headers=HEADERS)
-    with urllib.request.urlopen(req, timeout=25) as resp:
+def read_url(url, limit=12_000_000, referer=None):
+    headers = dict(HEADERS)
+    if referer:
+        headers['Referer'] = referer
+    req = urllib.request.Request(url, headers=headers)
+    with OPENER.open(req, timeout=25) as resp:
         raw = resp.read(limit + 1)
     if len(raw) > limit:
         raise ValueError('Respuesta demasiado grande')
@@ -163,22 +172,28 @@ def parse_ifrs(raw, item, per, url):
     rut_xml = ident.findtext(body_key)
     dv_xml = ident.findtext(dv_key)
     if rut_xml and rut_xml != item['rut']: raise ValueError('RUT XML no corresponde al registro')
-    if rut_xml and dv_xml and not signed_rut_ok(rut_xml, dv_xml): raise ValueError('DV XML invalido')
+    dv_coincide = (signed_rut_ok(rut_xml, dv_xml) if rut_xml and dv_xml else None)
     fecha = datos.find('PeriodoPresentacionEstadosFinancieros')
     if fecha is None: raise ValueError('Periodo no declarado')
     informado = f"{int(fecha.findtext('Anio')):04d}-{int(fecha.findtext('Mes')):02d}"
     if informado != per: raise ValueError(f'Periodo XML {informado} != consulta {per}')
     moneda = datos.findtext('MonedaPresentacionEstadosFinancieros')
     if not moneda: raise ValueError('Moneda no declarada')
-    facts = {}
+    criticos = set(BALANCE[item['sector']]) | set(RESULT[item['sector']])
+    facts, repetidos = {}, 0
     for node in root.iter('Cuenta'):
         if node.get('Context') != 'PeriodoActual' or not node.get('CodigoCuenta'): continue
         code = node.get('CodigoCuenta')
         text = (node.text or '').strip()
         if not re.fullmatch(r'-?\d+(?:\.\d+)?', text): raise ValueError(f'Cuenta no numerica: {code}')
         number = float(text)
-        # Repeated codes are acceptable only if their value is identical.
-        if code in facts and facts[code] != number: raise ValueError(f'Codigo duplicado con valores distintos: {code}')
+        if code in facts:
+            # Los totales exigidos deben ser inequívocos; otros códigos se repiten legítimamente
+            # por serie (p. ej. activo neto por serie en fondos mutuos).
+            if code in criticos and facts[code] != number:
+                raise ValueError(f'Total exigido con valores distintos: {code}')
+            repetidos += 1
+            continue
         facts[code] = number
     codes = BALANCE[item['sector']]
     if not all(k in facts for k in codes): raise ValueError('Faltan totales de balance')
@@ -190,11 +205,11 @@ def parse_ifrs(raw, item, per, url):
     result_code = next((k for k in RESULT[item['sector']] if k in facts), None)
     if not result_code: raise ValueError('Falta resultado del ejercicio (no inventar cero)')
     return {'sector': item['sector'], 'rut': item['rut'], 'tipo_entidad': item['tipo'], 'nombre_registro': item['nombre_registro'],
-            'periodo': per, 'moneda_original': moneda, 'escala': 'miles',
+            'periodo': per, 'moneda_original': moneda, 'escala': 'miles', 'dv_xml_coincide': dv_coincide,
             'total_activo': activo, 'total_pasivo_reportado': pasivo, 'patrimonio_o_activo_neto': patrimonio,
             'definicion_total_pasivo': 'incluye_patrimonio' if item['sector'] == 'fi' else 'excluye_patrimonio',
             'resultado_ejercicio': facts[result_code], 'codigo_resultado': result_code,
-            'balance_cuadra': True, 'cuentas': len(facts), 'fuente_url': url,
+            'balance_cuadra': True, 'cuentas': len(facts), 'codigos_repetidos_por_serie': repetidos, 'fuente_url': url,
             'sha256_xml': hashlib.sha256(raw).hexdigest(), 'calidad': 'revisar_antes_de_publicar'}
 
 
@@ -222,10 +237,20 @@ def process(item, per):
     raw_ficha = read_url(url)
     link = link_from_html(raw_ficha, item)
     if not link: return 'sin_fuente', None
-    raw = read_url(link)
-    if item['marker'] == 'XBRL':
-        return 'pendiente_taxonomia', parse_xbrl(raw, item, per, link)
-    return 'ok_xml', parse_ifrs(raw, item, per, link)
+    raw = read_url(link, referer=url)
+    # CMF puede devolver HTML (sesión vencida, sin información) en lugar del archivo pedido:
+    # se detecta de inmediato para no confundirlo con un XML inválido.
+    if re.match(r'\s*(<\?xml[^>]*>\s*)?(<!doctype\s+html|<html)', raw[:400].decode('utf-8', errors='replace'), re.I):
+        pista = re.sub(r'\s+', ' ', raw[:160].decode('utf-8', errors='replace'))
+        raise ValueError(f'contenido=html en lugar de archivo | inicio={pista[:90]!r}')
+    try:
+        if item['marker'] == 'XBRL':
+            return 'pendiente_taxonomia', parse_xbrl(raw, item, per, link)
+        return 'ok_xml', parse_ifrs(raw, item, per, link)
+    except ET.ParseError as exc:
+        pista = re.sub(r'\s+', ' ', raw[:120].decode('utf-8', errors='replace'))
+        tipo = 'html' if pista.lstrip().lower().startswith(('<', '<!doctype')) and '<html' in pista.lower() else 'desconocido'
+        raise ValueError(f'{type(exc).__name__}: {exc} | contenido={tipo} | inicio={pista[:90]!r}')
 
 
 def main():
