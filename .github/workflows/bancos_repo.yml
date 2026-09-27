@@ -1,7 +1,13 @@
-# Solo diagnóstico de ZIP CMF: NO publica ni reemplaza el REPO existente.
-name: Diagnóstico ZIP CMF — REPO bancario (sin publicación)
+# Cotejo de ZIP CMF: NO publica ni reemplaza el REPO existente.
+name: Cotejo ZIP CMF — REPO bancario (sin publicación)
 
 on:
+  # Prueba de conectividad en la rama de sesión; sin publicar ni credenciales.
+  push:
+    branches: [arena/01a0e08b-monitor-financiero-chile]
+    paths:
+      - '.github/workflows/bancos_repo.yml'
+      - 'bancos/scripts/*repo*cmf.py'
   workflow_dispatch:
     inputs:
       period:
@@ -25,32 +31,32 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Recuperar avance del diagnóstico (sin datos publicados)
-        if: ${{ !inputs.period }}
+        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.period) }}
         uses: actions/cache/restore@v4
         with:
-          path: .local-data/checkpoint/bancos-repo-probe
-          key: bancos-repo-probe-${{ github.run_id }}
+          path: .local-data/checkpoint/bancos-repo-audit
+          key: bancos-repo-audit-${{ github.run_id }}
           restore-keys: |
-            bancos-repo-probe-
-      - name: Inspeccionar ZIP públicos de CMF
+            bancos-repo-audit-
+      - name: Cotejar balances B1/B2 de todos los bancos contra referencia REPO
         env:
-          PERIOD: ${{ inputs.period }}
+          PERIOD: ${{ github.event_name == 'push' && '2021-12' || inputs.period }}
         run: |
           if [ -n "$PERIOD" ]; then
-            python -m bancos.scripts.probe_repos_zip_cmf --period "$PERIOD"
+            python -m bancos.scripts.audit_repos_zip_cmf --period "$PERIOD"
           else
-            python -m bancos.scripts.probe_repos_zip_cmf
+            python -m bancos.scripts.audit_repos_zip_cmf
           fi
       - name: Guardar avance (solo si diagnóstico incremental completo)
-        if: ${{ !inputs.period }}
+        if: ${{ github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && !inputs.period) }}
         uses: actions/cache/save@v4
         with:
-          path: .local-data/checkpoint/bancos-repo-probe
-          key: bancos-repo-probe-${{ github.run_id }}
+          path: .local-data/checkpoint/bancos-repo-audit
+          key: bancos-repo-audit-${{ github.run_id }}
       - name: Entregar diagnóstico para revisión humana
         uses: actions/upload-artifact@v4
         with:
-          name: diagnostico-repo-zip-cmf
-          path: .local-data/review/bancos/repo_zip_probe.json
+          name: cotejo-repo-zip-cmf
+          path: .local-data/review/bancos/repo_zip_audit.json
           retention-days: 30
           if-no-files-found: error

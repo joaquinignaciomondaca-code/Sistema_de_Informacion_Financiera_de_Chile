@@ -181,9 +181,8 @@ def inspect_zip(blob: bytes, period: str, bank: str, url: str) -> dict:
             "archivos_balance": sorted(files, key=lambda f: f["archivo"])}
 
 
-def run(manual: str | None = None, bank: str = "001", output: Path = REPORT, checkpoint: Path = CHECKPOINT, today: date | None = None) -> list[dict]:
-    today = today or date.today()
-    # El catálogo histórico está versionado; la web es autoritativa para ZIP nuevos.
+def resolve_links() -> tuple[dict[str, str], set[str]]:
+    """Cruza índice actual y catálogo histórico; no decide entre versiones dudosas."""
     catalog = json.loads(CATALOG.read_text(encoding="utf-8"))
     found = {}
     ambiguous = set()
@@ -201,6 +200,12 @@ def run(manual: str | None = None, bank: str = "001", output: Path = REPORT, che
     current = discover(read_public(INDEX, 4_000_000).decode("utf-8", errors="replace"))
     found.update(current)
     unresolved = ambiguous - current.keys()
+    return found, unresolved
+
+
+def run(manual: str | None = None, bank: str = "001", output: Path = REPORT, checkpoint: Path = CHECKPOINT, today: date | None = None) -> list[dict]:
+    today = today or date.today()
+    found, unresolved = resolve_links()
     published = json.loads(LEGACY.read_text(encoding="utf-8"))
     latest = max(r["periodo"] for r in published)
     saved = json.loads(checkpoint.read_text(encoding="utf-8"))["periodo"] if checkpoint.exists() else None
