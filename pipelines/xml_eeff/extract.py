@@ -161,7 +161,16 @@ def signed_rut_ok(body, dv):
 
 
 def parse_ifrs(raw, item, per, url):
-    root = ET.fromstring(raw)
+    reparado = False
+    try:
+        root = ET.fromstring(raw)
+    except ET.ParseError:
+        # El archivo es XML oficial: se reintenta en modo tolerante y la fila queda marcada.
+        parser = ET.XMLParser(recover=True)
+        root = ET.fromstring(raw, parser=parser)
+        reparado = True
+        if root is None or root.tag != 'IFRS':
+            raise ValueError('XML irreconocible incluso en modo tolerante')
     if root.tag != 'IFRS': raise ValueError(f'Raiz no IFRS: {root.tag}')
     ident = root.find('Identificacion')
     datos = root.find('DatosPeriodo')
@@ -185,6 +194,10 @@ def parse_ifrs(raw, item, per, url):
         if node.get('Context') != 'PeriodoActual' or not node.get('CodigoCuenta'): continue
         code = node.get('CodigoCuenta')
         text = (node.text or '').strip()
+        if reparado:
+            # En modo tolerante el texto puede arrastrar un carácter inválido (&, <) que no es
+            # parte del número; se limpia solo para leer la cifra y la fila queda marcada.
+            text = re.sub(r'[^0-9.\-]', '', text)
         if not re.fullmatch(r'-?\d+(?:\.\d+)?', text): raise ValueError(f'Cuenta no numerica: {code}')
         number = float(text)
         if code in facts:
@@ -209,8 +222,10 @@ def parse_ifrs(raw, item, per, url):
             'total_activo': activo, 'total_pasivo_reportado': pasivo, 'patrimonio_o_activo_neto': patrimonio,
             'definicion_total_pasivo': 'incluye_patrimonio' if item['sector'] == 'fi' else 'excluye_patrimonio',
             'resultado_ejercicio': facts[result_code], 'codigo_resultado': result_code,
-            'balance_cuadra': True, 'cuentas': len(facts), 'codigos_repetidos_por_serie': repetidos, 'fuente_url': url,
-            'sha256_xml': hashlib.sha256(raw).hexdigest(), 'calidad': 'revisar_antes_de_publicar'}
+            'balance_cuadra': True, 'cuentas': len(facts), 'codigos_repetidos_por_serie': repetidos,
+            'parseo_reparado': reparado, 'fuente_url': url,
+            'sha256_xml': hashlib.sha256(raw).hexdigest(),
+            'calidad': 'revisar_parseo_reparado' if reparado else 'revisar_antes_de_publicar'}
 
 
 def parse_xbrl(raw, item, per, url):
@@ -275,6 +290,7 @@ def main():
     if args.end and not re.fullmatch(r'\d{4}-(03|06|09|12)', args.end): ap.error('--end inválido')
     tramo_historico = args.all_periods or bool(args.start) or bool(args.end)
     results = {}
+    errores_corrida = {}
     for sector in sectors:
         periods = periodos_para(sector, todos=tramo_historico)
         if args.start: periods = [p for p in periods if p >= args.start]
@@ -310,6 +326,11 @@ def main():
                 except Exception as exc:
                     status, data, error = 'error', None, f'{type(exc).__name__}: {exc}'
                 stats[status] = stats.get(status, 0) + 1
+                if error:
+                    clave = error[:150]
+                    errores_corrida.setdefault(sector, {})
+                    errores_corrida[sector].setdefault(clave, {'n': 0, 'ejemplo': f"{item['rut']} {per}"})
+                    errores_corrida[sector][clave]['n'] += 1
                 row = {'sector': sector, 'rut': item['rut'], 'periodo': per, 'status': status,
                        'consulta': ficha_url(item, per), 'error': error, 'registro': data,
                        'consultado_utc': datetime.now(timezone.utc).isoformat()}
@@ -320,18 +341,7 @@ def main():
                 statepath.write_text(json.dumps(state, indent=2))
                 done += 1
                 time.sleep(.15)
-        muestras = {}
-        if ledgerpath.exists():
-            for linea in ledgerpath.read_text(encoding='utf8').splitlines()[-400:]:
-                try:
-                    fila = json.loads(linea)
-                except ValueError:
-                    continue
-                if fila.get('sector') != sector or not fila.get('error'):
-                    continue
-                clave = fila['error'][:150]
-                muestras.setdefault(clave, {'n': 0, 'ejemplo': f"{fila['rut']} {fila['periodo']}"})
-                muestras[clave]['n'] += 1
+        muestras = errores_corrida.get(sector, {})
         results[sector] = {'total': len(pending), 'procesadas': done, 'cursor': state['cursor'],
                            'por_estado': stats,
                            'errores_frecuentes': [{'error': k, 'casos': v['n'], 'ejemplo': v['ejemplo']}
