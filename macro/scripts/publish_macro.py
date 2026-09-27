@@ -39,14 +39,13 @@ def validate(stage: Path, published: Path):
         if periods[-1] > date.today().strftime("%Y-%m"):
             raise ValueError(f"Periodo futuro en {name}: {periods[-1]}")
         core = {
-            "macro_tasas_rendimientos": "tpm",
             "macro_divisas_mercado": "usd_clp_cierre",
             "macro_precios_actividad": "uf_cierre",
-        }[name]
+        }.get(name)
         previous = published / f"{name}.parquet"
         # Si aparece un mes nuevo, no publicar hasta que exista su dato central.
         # Un mes incompleto ya publicado no debe romper la validación histórica.
-        if pd.isna(df.iloc[-1][core]) and (not previous.exists() or periods[-1] > pd.read_parquet(previous, columns=["periodo"])["periodo"].max()):
+        if core and pd.isna(df.iloc[-1][core]) and (not previous.exists() or periods[-1] > pd.read_parquet(previous, columns=["periodo"])["periodo"].max()):
             raise ValueError(f"Falta dato esencial en nuevo periodo: {name}.{core}")
         if previous.exists():
             old = pd.read_parquet(previous)

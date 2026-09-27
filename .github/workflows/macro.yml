@@ -1,10 +1,10 @@
-name: Actualización macro (staging para revisión)
+name: Actualización macro (incremental diaria)
 
 on:
   workflow_dispatch:
   schedule:
-    # Día 8 de cada mes, 10:00 UTC (fuera del horario de cierre de la fuente).
-    - cron: '0 10 8 * *'
+    # Diario 10:00 UTC. Solo consulta desde el inicio del último mes guardado.
+    - cron: '0 10 * * *'
 
 permissions:
   contents: read
@@ -15,8 +15,6 @@ concurrency:
 
 jobs:
   update:
-    # Manual: prueba puntual. Solo el cron requiere habilitación explícita.
-    if: github.event_name == 'workflow_dispatch' || vars.ENABLE_MACRO_AUTOMATION == 'true'
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -28,21 +26,37 @@ jobs:
           cache-dependency-path: macro/requirements.txt
       - name: Instalar dependencias macro
         run: python -m pip install -r macro/requirements.txt
-      - name: Generar staging y validar
+      # Cada runner es efímero. Recuperar el último estado VALIDADO de Actions;
+      # si el cache expiró, el script usa los Parquet publicados del checkout.
+      - name: Recuperar checkpoint incremental
+        uses: actions/cache/restore@v4
+        with:
+          path: .local-data/checkpoint/macro
+          key: macro-checkpoint-${{ github.run_id }}
+          restore-keys: |
+            macro-checkpoint-
+      - name: Descargar desde el último período y auditar
+        id: update
         env:
           BCCH_EMAIL: ${{ secrets.USER_BCCH }}
           BCCH_PASSWORD: ${{ secrets.PASSWORD_BCCH }}
         run: |
           test -n "$BCCH_EMAIL" && test -n "$BCCH_PASSWORD" || { echo 'Faltan secrets USER_BCCH o PASSWORD_BCCH'; exit 1; }
-          python -c 'from macro.scripts.pipeline_stream_macro_bcch import run_macro_pipeline; run_macro_pipeline()'
-          python -m macro.scripts.publish_macro
+          python -m macro.scripts.daily_macro
+      - name: Guardar checkpoint validado (sin publicar)
+        if: steps.update.outputs.checkpoint_changed == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .local-data/checkpoint/macro
+          key: macro-checkpoint-${{ github.run_id }}
       - name: Preparar paquete de datos para revisión humana
-        if: success()
+        if: steps.update.outputs.published_changed == 'true'
         run: |
           mkdir -p .local-data/review/docs/outputs/macro
           cp docs/outputs/macro/*.parquet docs/outputs/macro/*.json .local-data/review/docs/outputs/macro/
           cp data_manifest.json .local-data/review/
       - name: Guardar resultado validado (sin commits ni publicación directa)
+        if: steps.update.outputs.published_changed == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: macro-validada
