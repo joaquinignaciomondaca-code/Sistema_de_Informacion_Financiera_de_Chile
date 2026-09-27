@@ -962,7 +962,7 @@ const EXPLORER_TREE = [
             sector: "patrimonios_separados",
             open: true,
             chips: [
-              { label: "Total activos de marzo 2026", query: "SELECT nombre_administradora, codigo_patrimonio, nombre_cuenta, monto_m_clp FROM patrimonios_separados_balance_pdf WHERE nombre_cuenta = 'TOTAL ACTIVOS' AND periodo = '202603' ORDER BY monto_m_clp DESC;" },
+              { label: "Total activos de marzo 2026", query: "SELECT nombre_administradora, codigo_patrimonio, nombre_cuenta, monto_m_clp FROM patrimonios_separados_balance_pdf WHERE categoria = 'Total Activos' AND periodo = '202603' ORDER BY monto_m_clp DESC;" },
               { label: "Cuentas de un PDF", query: "SELECT categoria, nombre_cuenta, monto_m_clp FROM patrimonios_separados_balance_pdf WHERE archivo = '201003_96765170_TRANSA_SECURITIZADORA_TRANSA_PATRIMONIO_SEPARADO_BTRA1.pdf' ORDER BY id_linea;" },
               { label: "Rubros del balance", query: "SELECT categoria, count(*) AS filas FROM patrimonios_separados_balance_pdf GROUP BY categoria ORDER BY filas DESC;" },
               { label: "PDF por securitizadora del catálogo", query: "SELECT s.razon_social, count(DISTINCT p.archivo) AS pdfs FROM patrimonios_separados_balance_pdf p JOIN securitizadoras_maestro s ON s.rut = p.rut_administradora GROUP BY s.razon_social ORDER BY pdfs DESC;" }
