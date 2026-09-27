@@ -41,8 +41,10 @@ def parse_old_table(html: str, year: int) -> dict[str, Decimal]:
     latest = {}
     for month in range(1, 13):
         values = [r[month] for r in table[1:32] if r[month]]
-        if not values or any(not NUMBER.fullmatch(v) for v in values):
-            raise ValueError(f'{year}-{month:02d}: sin última observación SII o monto inválido')
+        if not values:
+            continue  # mes futuro aún sin publicación: no inventar un saldo
+        if any(not NUMBER.fullmatch(v) for v in values):
+            raise ValueError(f'{year}-{month:02d}: valor SII ilegible')
         latest[f'{year}-{month:02d}'] = Decimal(values[-1].replace(',', '.'))
     return latest
 
@@ -52,11 +54,13 @@ def compare_year(year: int, html: str, published: dict[str, Decimal]) -> dict:
         values = parse_old_table(html, year)
     except ValueError as exc:
         return {'anio': year, 'estado': 'SIN_VERIFICAR', 'motivo': str(exc)}
-    if set(values) != {f'{year}-{m:02d}' for m in range(1, 13)}:
-        raise ValueError('Cobertura anual incompleta')
-    relevant = {p: v for p, v in values.items() if p in published}
-    if not relevant:
+    expected = {p for p in published if p.startswith(f'{year}-')}
+    if not expected:
         return {'anio': year, 'estado': 'SIN_VERIFICAR', 'motivo': 'Año sin meses publicados en REPO'}
+    if not expected.issubset(values):
+        return {'anio': year, 'estado': 'SIN_VERIFICAR',
+                'motivo': f'Meses REPO sin observación diaria SII: {sorted(expected - values.keys())}'}
+    relevant = {p: values[p] for p in sorted(expected)}
     diffs = [{'mes': p, 'sii': str(value), 'repo': str(published[p])}
              for p, value in sorted(relevant.items()) if value != published[p]]
     return {'anio': year, 'estado': 'DIFERENCIA' if diffs else 'COINCIDE',
