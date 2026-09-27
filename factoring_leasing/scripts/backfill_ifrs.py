@@ -256,9 +256,20 @@ def run(args, fetcher=fetch):
                'primer_periodo': periods[0], 'ultimo_periodo': periods[-1],
                'procesados_esta_corrida': [], 'pendientes': [], 'errores': [],
                'nota': 'Cuarentena: cuentas ESF/ER literales por RUT; escala, cobertura y nombres históricos por auditar'}
-    # Cobertura incremental: prioridad al último período y continuación hacia atrás.
+    # Después de un barrido, no reconsultar toda la historia en cada corrida.
+    # El backlog histórico avanza por índice; el ciclo siguiente reintenta errores.
+    # Si el índice añade cortes, éstos se toman antes del backlog.
+    progress_path = out / 'progreso.json'
+    progress = json.loads(progress_path.read_text(encoding='utf-8')) if progress_path.is_file() else {}
+    if progress.get('sha256_catalogo') != catalog_digest:
+        progress = {'sha256_catalogo': catalog_digest, 'fallidos': []}
     pending = [p for p in reversed(periods) if not valid_cached(out, p, catalog_digest)]
-    for period in pending[:args.batch]:
+    # Evitar que un solo corte que falla persistentemente monopolice el batch.
+    failures = set(progress.get('fallidos', []))
+    fresh = [p for p in pending if p not in failures]
+    retry = [p for p in pending if p in failures]
+    planned = (fresh + retry)[:args.batch]
+    for period in planned:
         try:
             url = ARCHIVE.format(period)
             raw = fetcher(url)
@@ -268,15 +279,21 @@ def run(args, fetcher=fetch):
                          filas_resultados=len(income),
                          fuente_archivo=url, fecha_descarga_utc=datetime.now(timezone.utc).isoformat())
             save_period(out, period, balance, income, stats)
+            failures.discard(period)
             summary['procesados_esta_corrida'].append({'periodo': period, **stats})
             print(f"[{period}] {stats['estado']}: entidades={stats.get('entidades', 0)} "
                   f"balance={len(balance)} resultado={len(income)}", flush=True)
         except Exception as exc:
             summary['errores'].append({'periodo': period, 'error': f'{type(exc).__name__}: {exc}'})
-            print(f'::error::[{period}] {type(exc).__name__}: {exc}', flush=True)
-            # No marcar período como completo ni perder el trabajo ya confirmado.
-            break
+            failures.add(period)
+            print(f'::warning::[{period}] {type(exc).__name__}: {exc}', flush=True)
+            # No marcar el período como completo; continuar otros trimestres.
+            # Un corte antiguo puede devolver 500/HTML aunque los demás funcionen.
+            # Se reintentará en la próxima corrida sin bloquear el backfill.
+            continue
     summary['pendientes'] = [p for p in reversed(periods) if not valid_cached(out, p, catalog_digest)]
+    atomic_json(progress_path, {'sha256_catalogo': catalog_digest,
+                                'fallidos': sorted(failures & set(summary['pendientes']))})
     summary['completados_total'] = len(periods) - len(summary['pendientes'])
     completed = [json.loads((out / 'periodos' / p / '_complete.json').read_text(encoding='utf-8'))
                  for p in periods if valid_cached(out, p, catalog_digest)]
@@ -287,12 +304,15 @@ def run(args, fetcher=fetch):
     summary['importes_no_enteros_total'] = sum(item.get('importes_no_enteros', 0) for item in completed)
     summary['cuentas_contexto_repetidas_total'] = sum(item.get('cuentas_contexto_repetidas', 0) for item in completed)
     summary['periodos_sin_rut_catalogo'] = [item['periodo'] for item in completed if item['estado'] == 'sin_rut_catalogo']
-    summary['estado_global'] = ('error' if summary['errores'] else
-                               'completo_sin_publicar' if not summary['pendientes'] else 'en_progreso_sin_publicar')
+    summary['estado_global'] = ('completo_sin_publicar' if not summary['pendientes'] else
+                               'parcial_con_errores_sin_publicar' if summary['errores'] else
+                               'en_progreso_sin_publicar')
     atomic_json(out / 'resumen.json', summary)
     print(f"PROGRESO {summary['completados_total']}/{len(periods)} períodos; "
           f"pendientes={len(summary['pendientes'])}; estado={summary['estado_global']}", flush=True)
-    return 1 if summary['errores'] else 0
+    # Incompleto o con errores se comunica en resumen, pero no se simula
+    # completitud: el job conserva progreso y el próximo disparo continúa.
+    return 0 if summary['completados_total'] > 0 else 1
 
 
 def main():
