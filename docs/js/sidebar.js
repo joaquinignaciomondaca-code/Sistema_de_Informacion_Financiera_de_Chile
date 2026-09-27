@@ -615,7 +615,25 @@ const EXPLORER_TREE = [
             ]
           },
           // BEGIN AUTO FL IFRS SERIES NAVIGATION
-          // END AUTO FL IFRS SERIES NAVIGATION
+          {
+            id: "fl_balance_serie_ifrs_cmf_folder", type: "circular",
+            label: "Balance · Serie CMF (200903–202606)", badge: "70 cierres · 24 RUT", badgeType: "data", status: "active",
+            sector: "factoring_leasing",
+            chips: [{ label: "Cuentas de balance CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_balance_serie_ifrs_cmf ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;" }],
+            tables: [{ id: "factoring_leasing_balance_serie_ifrs_cmf", name: "factoring_leasing.balance_serie_ifrs_cmf (28,938 cuentas; no cotejo integral)",
+                       rows: "28,938 cuentas · 70 cierres · extracción sin cotejo integral",
+                       file: "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet" }]
+          },
+          {
+            id: "fl_resultados_serie_ifrs_cmf_folder", type: "circular",
+            label: "Resultados · Serie CMF (200903–202606)", badge: "70 cierres · 24 RUT", badgeType: "data", status: "active",
+            sector: "factoring_leasing",
+            chips: [{ label: "Cuentas de resultados CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_resultados_serie_ifrs_cmf ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;" }],
+            tables: [{ id: "factoring_leasing_resultados_serie_ifrs_cmf", name: "factoring_leasing.resultados_serie_ifrs_cmf (21,464 cuentas; no cotejo integral)",
+                       rows: "21,464 cuentas · 70 cierres · extracción sin cotejo integral",
+                       file: "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet" }]
+          },
+  // END AUTO FL IFRS SERIES NAVIGATION
           {
             id: "fl_balance_muestra_cmf_folder",
             type: "circular",
