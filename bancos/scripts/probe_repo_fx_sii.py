@@ -5,6 +5,7 @@ filas de tabla de 2008 y 2013 en una anotación Actions (no requiere credenciale
 """
 from __future__ import annotations
 import json
+import re
 import urllib.request
 from html.parser import HTMLParser
 
@@ -55,6 +56,8 @@ def main():
             'year': year, 'url': url, 'tables': len(tables),
             'samples': [{'rows': len(t), 'first': t[:2], 'last': t[-3:]}
                         for t in tables[:2]],
+            'sections': re.findall(r'(?is)<h[1-5][^>]*>.*?(?:Diciembre|Noviembre|Enero).*?</h[1-5]>', data)[:3],
+            'html_start': re.sub(r'\s+', ' ', data[:700])[:400],
         }, ensure_ascii=False))
 
 

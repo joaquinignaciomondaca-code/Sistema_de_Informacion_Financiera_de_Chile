@@ -68,7 +68,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Cotejar FX 2008–2013 con fuente pública SII sin publicar
-        run: python -m bancos.scripts.audit_repo_fx_sii
+        run: |
+          python -m bancos.scripts.audit_repo_fx_sii
+          python -m bancos.scripts.probe_repo_fx_sii
   rebuild_review:
     if: ${{ github.event_name == 'workflow_dispatch' && !inputs.period }}
     runs-on: ubuntu-latest
