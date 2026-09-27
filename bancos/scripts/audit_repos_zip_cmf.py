@@ -26,6 +26,10 @@ from bancos.scripts import probe_repos_zip_cmf as probe
 
 REPORT = probe.ROOT / ".local-data/review/bancos/repo_zip_audit.json"
 CHECKPOINT = probe.ROOT / ".local-data/checkpoint/bancos-repo-audit/last_period.json"
+# Divisores probados contra la referencia legacy. El 1 (valor ya en MM CLP) es
+# una hipótesis más: el script V2 del usuario dividía por 1.000 antes de 2022,
+# pero los ZIP reales de 2021-12 traen el rubro ya en MM CLP.
+DIVISORS = (Decimal(1), Decimal(1000), Decimal(1000000))
 CODE_HINTS = {
     "pre_2022": {"activo": "1160000", "pasivo": "2160000"},
     "post_2022": {"activo": "141000000", "pasivo": "243000000"},
@@ -49,6 +53,11 @@ def money(raw: str) -> Decimal | None:
         return Decimal(value)
     except InvalidOperation:
         return None
+
+
+def fmt(value: Decimal) -> str:
+    """Decimal a texto plano (evita notación científica de normalize())."""
+    return format(value.normalize(), "f")
 
 
 def inspect_all(blob: bytes, period: str, url: str, legacy: dict) -> dict:
@@ -100,19 +109,25 @@ def inspect_all(blob: bytes, period: str, url: str, legacy: dict) -> dict:
                 continue
             kind, raw = matched[0]
             numbers = [money(v) for v in raw]
+            total = sum((n for n in numbers if n is not None), Decimal(0))
+            origins = [("suma_columnas", total)] + [
+                (f"columna_{i}", n) for i, n in enumerate(numbers, start=1) if n is not None]
             possibilities = []
             if old is not None:
-                for col, num in enumerate(numbers, start=1):
-                    if num is None:
-                        continue
-                    for divisor in (Decimal(1000), Decimal(1000000)):
-                        # Comparación exploratoria, no selección automática de columna o plan.
+                reference = Decimal(str(old[side]))
+                for origin, num in origins:
+                    for divisor in DIVISORS:
+                        # Comparación exploratoria, no selección automática de columna, plan ni unidad.
                         calc = num / divisor
-                        if abs(calc - Decimal(str(old[side]))) <= Decimal("0.02"):
-                            possibilities.append({"columna_1_based": col, "divisor": int(divisor),
-                                                  "valor_mm_clp": float(calc)})
-            row["hipotesis_escala"][side] = {"cuenta": account, "archivo": kind,
-                                               "campos_crudos": raw, "coincidencias_legacy": possibilities}
+                        if abs(calc - reference) <= Decimal("0.02"):
+                            possibilities.append({"origen": origin, "divisor": int(divisor),
+                                                  "valor_mm_clp": fmt(calc)})
+            row["hipotesis_escala"][side] = {
+                "cuenta": account, "archivo": kind, "campos_crudos": raw,
+                "suma_columnas": fmt(total),
+                "suma_con_divisor": {str(int(d)): fmt(total / d) for d in DIVISORS},
+                "coincidencias_legacy": possibilities,
+            }
         results.append(row)
     if not any(bank["hipotesis_escala"][side].get("campos_crudos")
                for bank in results for side in ("activo", "pasivo")):
