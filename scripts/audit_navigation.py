@@ -48,18 +48,33 @@ const options = viewer.flatMap(group => group.tables.map(table => table.id));
 assert.equal(new Set(options).size, options.length, 'opciones duplicadas en visor');
 for (const id of options) assert(expected.has(id), 'opción no encontrada en sidebar: ' + id);
 
-// Factoring y Leasing: las dos tablas financieras NO deben ocultarse dentro
-// de una única carpeta que carga automáticamente sólo la primera tabla.
+// Factoring/Leasing: balance y resultados son carpetas separadas, tanto
+// en muestra como en serie completa automatizada si ya fue generada.
 const fl = byGroup.group_factoring_leasing.children[0];
-assert.deepEqual(Array.from(fl.children, c => c.id),
-  ['cat_fl_maestro', 'fl_balance_muestra_cmf_folder', 'fl_resultados_muestra_cmf_folder']);
-assert.deepEqual(Array.from(fl.children.slice(1), c => c.tables.length), [1, 1]);
-assert.deepEqual(Array.from(fl.children.slice(1), c => c.tables[0].id),
-  ['factoring_leasing_eeff_muestra_cmf', 'factoring_leasing_resultados_muestra_cmf']);
-assert(fl.children[1].label.startsWith('Balance · Muestra'));
-assert(fl.children[2].label.startsWith('Estado de resultados · Muestra'));
-assert.deepEqual(Array.from(viewer.find(g => g.group.startsWith('Factoring & Leasing')).tables, t => t.id),
-  ['factoring_leasing_maestro', 'factoring_leasing_eeff_muestra_cmf', 'factoring_leasing_resultados_muestra_cmf']);
+const hasFullSeries = fs.existsSync('docs/outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet') &&
+  fs.existsSync('docs/outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet');
+const expectedFolders = ['cat_fl_maestro'];
+const expectedSeriesTables = [];
+if (hasFullSeries) {
+  expectedFolders.push('fl_balance_serie_ifrs_cmf_folder', 'fl_resultados_serie_ifrs_cmf_folder');
+  expectedSeriesTables.push('factoring_leasing_balance_serie_ifrs_cmf', 'factoring_leasing_resultados_serie_ifrs_cmf');
+}
+expectedFolders.push('fl_balance_muestra_cmf_folder', 'fl_resultados_muestra_cmf_folder');
+assert.deepEqual(Array.from(fl.children, c => c.id), expectedFolders);
+const tableForFolder = Object.fromEntries(fl.children.filter(c => c.type === 'circular')
+  .map(c => [c.id, c.tables[0].id]));
+assert.equal(Object.keys(tableForFolder).length, fl.children.length);
+assert.deepEqual(tableForFolder.fl_balance_muestra_cmf_folder, 'factoring_leasing_eeff_muestra_cmf');
+assert.deepEqual(tableForFolder.fl_resultados_muestra_cmf_folder, 'factoring_leasing_resultados_muestra_cmf');
+if (hasFullSeries) {
+  assert.deepEqual(tableForFolder.fl_balance_serie_ifrs_cmf_folder, 'factoring_leasing_balance_serie_ifrs_cmf');
+  assert.deepEqual(tableForFolder.fl_resultados_serie_ifrs_cmf_folder, 'factoring_leasing_resultados_serie_ifrs_cmf');
+}
+assert(fl.children.find(c => c.id === 'fl_balance_muestra_cmf_folder').label.startsWith('Balance · Muestra'));
+assert(fl.children.find(c => c.id === 'fl_resultados_muestra_cmf_folder').label.startsWith('Estado de resultados · Muestra'));
+const expectedViewerTables = ['factoring_leasing_maestro', ...expectedSeriesTables,
+  'factoring_leasing_eeff_muestra_cmf', 'factoring_leasing_resultados_muestra_cmf'];
+assert.deepEqual(Array.from(viewer.find(g => g.group.startsWith('Factoring & Leasing')).tables, t => t.id), expectedViewerTables);
 // Verificar el HTML real del explorador y qué tabla se abre al pulsar cada
 // carpeta (no basta con que el catálogo mencione ambas tablas).
 const SidebarController = vm.runInContext('SidebarController', context);
@@ -81,7 +96,14 @@ const opened = [];
 sidebar.onTableSelect = (id) => opened.push(id);
 sidebar.onCircularSelect('fl_balance_muestra_cmf_folder', 'factoring_leasing');
 sidebar.onCircularSelect('fl_resultados_muestra_cmf_folder', 'factoring_leasing');
-assert.deepEqual(opened, ['factoring_leasing_eeff_muestra_cmf', 'factoring_leasing_resultados_muestra_cmf']);
+if (hasFullSeries) {
+  sidebar.onCircularSelect('fl_balance_serie_ifrs_cmf_folder', 'factoring_leasing');
+  sidebar.onCircularSelect('fl_resultados_serie_ifrs_cmf_folder', 'factoring_leasing');
+}
+assert.deepEqual(opened, hasFullSeries
+  ? ['factoring_leasing_eeff_muestra_cmf', 'factoring_leasing_resultados_muestra_cmf',
+     'factoring_leasing_balance_serie_ifrs_cmf', 'factoring_leasing_resultados_serie_ifrs_cmf']
+  : ['factoring_leasing_eeff_muestra_cmf', 'factoring_leasing_resultados_muestra_cmf']);
 
 // AFP: sólo identidad sin métricas generadas. Bancos: identidad y REPO,
 // mantenido expresamente como excepción con advertencia de auditoría.

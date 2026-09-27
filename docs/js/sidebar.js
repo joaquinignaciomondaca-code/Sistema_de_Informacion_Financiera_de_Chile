@@ -614,6 +614,8 @@ const EXPLORER_TREE = [
               { id: "factoring_leasing_maestro", name: "factoring_leasing.lista_entidades", rows: "28 entidades", file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet" }
             ]
           },
+          // BEGIN AUTO FL IFRS SERIES NAVIGATION
+          // END AUTO FL IFRS SERIES NAVIGATION
           {
             id: "fl_balance_muestra_cmf_folder",
             type: "circular",

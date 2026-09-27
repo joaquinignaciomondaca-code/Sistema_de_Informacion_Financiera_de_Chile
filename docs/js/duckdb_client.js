@@ -69,6 +69,8 @@ const SEMANTIC_VIEWS = [
   { name: "macro_precios_actividad", file: "outputs/macro/macro_precios_actividad.parquet" },
 
   // FACTORING & LEASING (CMF / NBFI)
+  // BEGIN AUTO FL IFRS SERIES VIEWS
+  // END AUTO FL IFRS SERIES VIEWS
   { name: "factoring_leasing_maestro", file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet" },
   { name: "factoring_leasing_eeff_muestra_cmf", file: "outputs/factoring_leasing/factoring_leasing_eeff_muestra_cmf.parquet" },
   { name: "factoring_leasing_resultados_muestra_cmf", file: "outputs/factoring_leasing/factoring_leasing_resultados_muestra_cmf.parquet" },
