@@ -119,7 +119,16 @@ def discover(html: str, strict: bool = True, conflicts_out: set[str] | None = No
     if conflicts and strict:
         raise ValueError(f"Dos ZIP diferentes para {sorted(conflicts)}; requiere revisión")
     if not found:
-        raise ValueError("No se pudieron descubrir ZIP mensuales en índice CMF")
+        # Diagnóstico sin volcar HTML potencialmente dinámico ni URLs externas.
+        # Puede ser una página de protección, un redirect, o un cambio de
+        # formato. Sólo registrar metadatos estructurales para revisar la causa.
+        title = re.search(r"<title[^>]*>(.*?)</title>", html, re.I | re.S)
+        clean_title = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", title.group(1)))[:100] if title else "(sin título)"
+        zip_links = sum(trusted_zip(urllib.parse.urljoin(INDEX, href)) for href, _ in parser.links)
+        raise ValueError(f"No se pudieron descubrir ZIP mensuales en índice CMF; "
+                         f"título={clean_title!r}, caracteres={len(html)}, "
+                         f"enlaces={len(parser.links)}, ZIP={zip_links}, "
+                         f"sha256={hashlib.sha256(html.encode('utf-8')).hexdigest()[:16]}")
     return found
 
 
