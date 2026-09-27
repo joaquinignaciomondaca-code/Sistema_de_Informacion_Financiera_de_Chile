@@ -109,7 +109,8 @@ def html_amounts(data, sample):
             continue  # no es la tabla comparativa de situación financiera
         found[cells[0]].append(int(vals[0].replace('.', '')))
     if any(len(v) != 1 for v in found.values()):
-        raise ValueError(f'Etiquetas HTML ausentes/duplicadas: { {k: len(v) for k, v in found.items()} }')
+        samples = [(row[:4]) for row in parser.rows if any(label.lower() in ' '.join(row).lower() for label in found)][:6]
+        raise ValueError(f'Etiquetas HTML ausentes/duplicadas: { {k: len(v) for k, v in found.items()} }; filas={len(parser.rows)}; muestras={samples}')
     return {col: found[label][0] for col, label in FIELDS.items()}
 
 
