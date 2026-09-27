@@ -102,27 +102,38 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Securitizadoras (CMF Ley 18.045) - EEFF",
+    group: "Sociedades securitizadoras (CMF)",
     tables: [
-      { id: "patrimonios_separados_balance_lineas", name: "patrimonios.balance_lineas (16,842 filas FECU)" },
-      { id: "patrimonios_separados_excedentes_lineas", name: "patrimonios.excedentes_lineas (11,157 filas)" },
-      { id: "patrimonios_separados_nota_cartera_detalle", name: "patrimonios.nota_cartera (796 filas)" },
-      { id: "patrimonios_separados_nota_morosidad_detalle", name: "patrimonios.nota_morosidad (6,632 filas)" },
-      { id: "patrimonios_separados_nota_bonos_detalle", name: "patrimonios.nota_bonos (8,001 filas)" },
-      { id: "patrimonios_separados_nota_administracion_detalle", name: "patrimonios.nota_administracion (2,153 filas)" },
-      { id: "patrimonios_separados_nota_sobrecolateral_detalle", name: "patrimonios.nota_sobrecolateral (679 filas)" },
-      { id: "patrimonios_separados_nota_efectivo_detalle", name: "patrimonios.nota_efectivo_detalle (3,802 filas)" }
+      { id: "securitizadoras_maestro", name: "securitizadoras.maestro (16 entidades)" },
+      { id: "securitizadoras_balance_resumen", name: "securitizadoras.balance_resumen (362 balances IFRS)" }
     ]
   },
   {
-    group: "Securitizadoras (CMF Ley 18.045) - Otros de Interés",
+    group: "Patrimonios separados — balance del PDF",
     tables: [
-      { id: "securitizadoras_maestro", name: "securitizadoras.maestro (16 entidades)" },
-      { id: "securitizadoras_balance_resumen", name: "securitizadoras.balance_resumen (362 balances IFRS)" },
-      { id: "patrimonios_separados_maestro", name: "securitizadoras.patrimonios_separados (18 programas)" },
-      { id: "patrimonios_separados_balance_resumen", name: "securitizadoras.balance_resumen (64 balances)" },
-      { id: "patrimonios_separados_repos_detalle", name: "securitizadoras.repos_detalle (52 pactos)" },
-      { id: "patrimonios_separados_cartera_morosidad_detalle", name: "securitizadoras.cartera_morosidad (67 tramos)" }
+      { id: "patrimonios_separados_balance_pdf", name: "patrimonios.balance_pdf (46,502 cuentas, 2,086 PDF)" }
+    ]
+  },
+  {
+    group: "Patrimonios separados — catálogo y estados",
+    tables: [
+      { id: "patrimonios_separados_maestro", name: "patrimonios.emisiones_lineas (18 líneas de inscripción)" },
+      { id: "patrimonios_separados_balance_resumen", name: "patrimonios.balance_resumen (64 balances, 2022-12 a 2024-12)" },
+      { id: "patrimonios_separados_balance_lineas", name: "patrimonios.balance_lineas (16,842 filas)" },
+      { id: "patrimonios_separados_excedentes_lineas", name: "patrimonios.excedentes_lineas (11,157 filas)" }
+    ]
+  },
+  {
+    group: "Patrimonios separados — notas y operaciones",
+    tables: [
+      { id: "patrimonios_separados_nota_cartera_detalle", name: "patrimonios.nota_cartera (796 filas)" },
+      { id: "patrimonios_separados_nota_morosidad_detalle", name: "patrimonios.nota_morosidad (6,632 filas, tramo sin normalizar)" },
+      { id: "patrimonios_separados_nota_bonos_detalle", name: "patrimonios.nota_bonos (8,001 filas)" },
+      { id: "patrimonios_separados_nota_administracion_detalle", name: "patrimonios.nota_administracion (2,153 filas)" },
+      { id: "patrimonios_separados_nota_sobrecolateral_detalle", name: "patrimonios.nota_sobrecolateral (679 filas)" },
+      { id: "patrimonios_separados_nota_efectivo_detalle", name: "patrimonios.nota_efectivo_detalle (3,802 filas)" },
+      { id: "patrimonios_separados_cartera_morosidad_detalle", name: "patrimonios.cartera_morosidad (67 filas, extracto corto)" },
+      { id: "patrimonios_separados_repos_detalle", name: "patrimonios.repos_detalle (52 pactos)" }
     ]
   },
   {
