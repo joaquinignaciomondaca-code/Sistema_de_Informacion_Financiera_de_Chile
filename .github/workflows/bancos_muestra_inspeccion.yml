@@ -1,0 +1,83 @@
+name: Inspección muestra bancaria CMF (sin publicación)
+
+on:
+  push:
+    branches: [arena/01a0e08b-monitor-financiero-chile]
+    paths:
+      - '.github/workflows/bancos_muestra_inspeccion.yml'
+      - 'bancos/scripts/inspect_cmf_bank_sample.py'
+      - 'bancos/scripts/extract_cmf_bank_lines.py'
+      - 'bancos/tests/test_extract_cmf_bank_lines.py'
+  workflow_dispatch:
+    inputs:
+      period:
+        description: 'Período CMF AAAA-MM'
+        required: true
+        default: '2026-07'
+        type: string
+      bank_code:
+        description: 'Código CMF de institución (tres dígitos)'
+        required: true
+        default: '001'
+        type: string
+      bank_name:
+        description: 'Nombre del banco en el reporte Excel'
+        required: true
+        default: 'Banco de Chile'
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bancos-muestra-cmf-inspeccion
+  cancel-in-progress: false
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Instalar lector XLSX
+        run: python -m pip install --disable-pip-version-check openpyxl==3.1.5
+      - name: Probar extractor B1/B2/R1
+        run: python -m unittest bancos.tests.test_inspect_cmf_bank_sample bancos.tests.test_extract_cmf_bank_lines -v
+      - name: Descargar e inspeccionar ZIP y Excel oficial CMF (sin publicar)
+        env:
+          PERIOD: ${{ github.event.inputs.period || '2026-07' }}
+          BANK_CODE: ${{ github.event.inputs.bank_code || '001' }}
+          BANK_NAME: ${{ github.event.inputs.bank_name || 'Banco de Chile' }}
+        run: |
+          mkdir -p .local-data/review/bancos/sample_inspection
+          set +e
+          python -u -m bancos.scripts.inspect_cmf_bank_sample \
+            --period "$PERIOD" \
+            --bank-code "$BANK_CODE" \
+            --bank-name "$BANK_NAME" \
+            --output .local-data/review/bancos/sample_inspection \
+            2>&1 | tee .local-data/review/bancos/sample_inspection/run.log
+          result=${PIPESTATUS[0]}
+          if [ "$result" -ne 0 ]; then
+            exit "$result"
+          fi
+      - name: Extraer líneas CMF B1/B2/R1 en staging de revisión
+        env:
+          PERIOD: ${{ github.event.inputs.period || '2026-07' }}
+        run: |
+          python -u -m bancos.scripts.extract_cmf_bank_lines \
+            --period "$PERIOD" \
+            --zip-path ".local-data/review/bancos/sample_inspection/cmf_bancos_${PERIOD}.zip" \
+            --inspection-json ".local-data/review/bancos/sample_inspection/inspection.json" \
+            --output ".local-data/review/bancos/sample_inspection/extracted_lines"
+      - name: Adjuntar fuentes CMF y resumen estructural para revisión humana
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: muestra-bancaria-cmf-sin-publicar
+          path: .local-data/review/bancos/sample_inspection/
+          retention-days: 30
+          if-no-files-found: error

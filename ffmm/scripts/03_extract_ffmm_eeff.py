@@ -552,4 +552,17 @@ def main():
         print(f"  Total REPOs detectados: ${total_repo:,.0f} M CLP")
 
 if __name__ == '__main__':
+    # RETIRADO DEL SITIO (2026-09-26): sus dos salidas (ffmm_caratula_eeff_2024 y
+    # ffmm_repos_detalle_2024) se sacaron del visor porque el mismo cierre 2024
+    # no cuadra con el panel histórico y hay filas que no cumplen
+    # Activo = Pasivo + Patrimonio. Se conserva el script y su insumo de URLs
+    # (ffmm_eeff_urls_2024.parquet) para poder auditarlos contra la CMF.
+    # Para forzar la extracción y volver a publicarlos:
+    #   FFMM_PUBLICAR_RETIRADOS=1 python 03_extract_ffmm_eeff.py
+    if os.environ.get("FFMM_PUBLICAR_RETIRADOS") != "1":
+        raise SystemExit(
+            "Script retirado del flujo publicado: la carátula EEFF 2024 y el detalle "
+            "de repos 2024 ya no se publican. Usa FFMM_PUBLICAR_RETIRADOS=1 para "
+            "re-generarlos de forma manual."
+        )
     main()

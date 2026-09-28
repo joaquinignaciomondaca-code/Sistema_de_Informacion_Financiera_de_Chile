@@ -22,8 +22,8 @@ try:
 except ImportError:
     raise ImportError("La librería 'bcchapi' es obligatoria. Instalar con 'pip install bcchapi'.")
 
-EMAIL_BCCH = "joaquinmondacaparada@gmail.com"
-PASS_BCCH = "#Mondaca2001c"
+EMAIL_BCCH = os.environ.get("BCCH_EMAIL", "")
+PASS_BCCH = os.environ.get("BCCH_PASSWORD", "")
 
 def classify_series(sid, title):
     """Clasifica los metadatos de una serie F099 en dimensiones estructuradas."""
@@ -127,6 +127,8 @@ def fetch_single_series(sid):
     return sid, None
 
 def run_pipeline():
+    if not EMAIL_BCCH or not PASS_BCCH:
+        raise RuntimeError("Faltan BCCH_EMAIL y BCCH_PASSWORD para consultar BCCh SIETE.")
     print("=" * 60, flush=True)
     print("INICIANDO PIPELINE DERIVADOS OTC BANCARIOS (BCCh F099)", flush=True)
     print("=" * 60, flush=True)

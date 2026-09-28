@@ -1,50 +1,17 @@
-# Modulo Bancos e Instituciones Financieras (CMF Bancos & BCCh Derivados)
+# Bancos — estado de publicación
 
-## Alcance Normativo y Fuentes
-Este modulo consolida la informacion de la banca comercial e instituciones financieras fiscalizadas por la Comision para el Mercado Financiero (CMF) y el Banco Central de Chile (BCCh):
+**Publicado en el sitio:** `bancos_maestro` (40 códigos de un catálogo local, entre instituciones históricas, filiales y agregados) y `bancos_repos_saldos_series` (saldos CMF de pactos y préstamos de valores: **cotejo numérico aprobado**, metadatos no aprobados). Los nombres, RUT y estados del catálogo todavía requieren cotejo registral con CMF. REPO no es volumen transado del mes: `total_transado_mm_usd` es la suma de dos saldos.
 
-1. **Catalogo Maestro Institucional (CMF)**:
-   - 40 entidades bancarias (18 bancos comerciales activos + bancos historicos fusionados/cerrados, filiales extranjeras BCI/CorpBanca y agregados sectoriales).
-   - RUTs verificados 100% con Algoritmo Modulo 11.
-2. **Asientos Contables Generales (CMF MB1 / MR1)**:
-   - **Balance General**: Total Activos, Total Pasivos y Patrimonio Neto (en MM$ CLP y MM$ USD).
-   - **Estado de Resultados**: Utilidad Neta del ejercicio (en MM$ CLP y MM$ USD).
-3. **Mercado de Derivados OTC Bancarios (BCCh SIETE F099)**:
-   - **Posicion Vigente (Stock Nocional)**: Saldos abiertos al cierre de mes en Forwards (USD/CLP, UF/CLP, NDF) y Swaps (Promedio Camara SPC, Cross Currency Swaps CCS) por contraparte (No Residentes, Empresas Sector Real, AFPs, Residentes No Bancos) y plazo contractual.
-   - **Montos Transados (Flujo Mensual)**: Volumen mensual de compras, ventas y monto neto operado.
+El 27-09-2026 se retiraron del sitio y del repositorio de datos publicados los balances, estados de resultados y derivados anteriores para extraerlos nuevamente desde cero. **No volver a publicarlos con los extractores actuales sin revisión:** los balances presentan rupturas de escala, conversiones USD con tipos de cambio fijos, y los derivados mezclan dimensiones/unidades de series BCCh. Los scripts y catálogos en `bancos/scripts/` y `bancos/derivados_otc/` quedan sólo como material de investigación; no constituyen una extracción validada ni un flujo automatizado incremental. Véase [auditoría bancaria](AUDITORIA_BANCOS_2026-09-27.md) para las comprobaciones, fuentes y criterios de nueva publicación.
 
----
+El Excel `repo_banco.xlsx` que usa `02_extract_bancos_repos_series.py` no está en el repositorio. No regenerar REPO sin el archivo, su procedencia y cotejo con las cuentas CMF.
 
-## Estructura de Directorios
-```
-bancos/
-├── scripts/
-│   ├── pipeline_stream_bancos.py          # Pipeline streaming de balances y resultados CMF
-│   ├── audit_bancos_data.py               # Auditoria de balances CMF
-│   ├── pipeline_stream_derivados_bcch.py  # Pipeline concurrente de derivados BCCh F099
-│   ├── audit_derivados_bcch.py            # Auditoria de derivados BCCh F099
-│   └── cmf_bancos_packages.json           # Catalogo indexado de paquetes mensuales
-├── derivados_otc/
-│   └── catalog_f099.json                  # Catalogo completo de 1,314 series F099 BCCh
-└── README.md
-```
+La [auditoría de REPO](AUDITORIA_REPO_BANCOS_2026-09-27.md) incluyó un barrido de los 220 ZIP mensuales CMF: **5.894 saldos cotejados numéricamente, sin discrepancias** con la tabla publicada bajo una hipótesis de cuentas, suma de columnas y escala. Esto corrige la antigua descripción «sin cotejo CMF», pero **no certifica toda la tabla**: faltan la interpretación independiente de las cuentas y de las columnas B1, la identidad/vigencia de los RUT, la cobertura de bancos ausentes, los agregados y el Excel fuente. Además, `total_transado_mm_usd` suma saldos y no representa flujo negociado. El sitio indica «saldos cotejados» y detalla los campos no aprobados; no se ha aprobado un extractor incremental de publicación ni cambiado el Parquet. Para revisar una corrección sin reemplazar datos publicados: `python -m bancos.scripts.prepare_repo_corrections` produce borradores separados de bancos (2.779 filas), agregados (155) y filiales extranjeras (13), sin RUT/nombres retrospectivos ni falso volumen, sólo en `.local-data/review/bancos/repo_correcciones/`. El extractor legacy de Excel está bloqueado para evitar republicar errores. Este borrador tampoco se aprueba hasta cotejar glosas, columnas, cobertura e identidad por código-mes.
 
-## Salidas Canonicas (docs/outputs/bancos/)
-- `bancos_maestro.parquet` (y `.json`): 40 instituciones con RUT verificado, tipo de licencia y estado.
-- `bancos_balance_resumen.parquet` (y `.json`): 5,095 balances mensuales (Total Activos, Total Pasivos, Patrimonio Neto).
-- `bancos_estado_resultados.parquet` (y `.json`): 5,095 estados de resultados mensuales (Utilidad Neta).
-- `bancos_derivados_posicion_vigente.parquet` (y `.json`): 2,860 observaciones mensuales de stock nocional abierto.
-- `bancos_derivados_flujos_transados.parquet` (y `.json`): 2,860 observaciones mensuales de volumen transado.
+**Reextracción de revisión CMF B1 (27-09-2026):** se procesaron los 220 meses directamente desde ZIP con hashes y parser tabulado de cuatro monedas; los 2.947 saldos publicados coinciden, pero aparecieron 1.874 filas adicionales de importe crudo cero y 220 registros `999` del total del sistema (no bancos). La suma ingenua de importes **redondeados** no concilia con `999` en 42 meses del activo y 30 del pasivo; a precisión de fuente, **204 meses concilian** y **16 concilian únicamente al excluir aritméticamente `507`** (no se le elimina de los datos ni se conoce aún el motivo oficial). Ver [dictamen y límites](AUDITORIA_REPO_BANCOS_2026-09-27.md). El job `rebuild_review` en el workflow `bancos_repo.yml` es manual; **no publica** ni autoriza actualizar el Parquet.
 
-## Auditoria de Calidad
-Ejecutar las suites de verificacion:
-```bash
-python bancos/scripts/audit_bancos_data.py
-python bancos/scripts/audit_derivados_bcch.py
-```
-- Unicidad de Primary Keys: 100%.
-- Ausencia de nulos inesperados: 0 nulos.
-- Validacion Modulo 11: 100% de RUTs conformes.
-- Integridad referencial: 100% contra bancos_maestro.
-- Cobertura temporal continua sin lagunas.
-- Residuos en disco: 0 bytes.
+**Análisis local sin repetir descargas:** `python -m bancos.scripts.hydrate_repo_review 36302817104` recupera los tres lotes verificables de anotaciones de Actions y escribe únicamente en `.local-data/review/bancos/reconstruccion_cmf/snapshot_hidratado.json`. Luego `python -m bancos.scripts.analyze_repo_snapshot --snapshot .local-data/review/bancos/reconstruccion_cmf/snapshot_hidratado.json` compara 220 meses con legacy y el total `999` a precisión cruda. `gh` debe tener acceso de solo lectura a los runs; si el run/las anotaciones expiran, el lector falla cerrado, no fabrica datos. Los hashes de transporte garantizan integridad de los mensajes, **no sustituyen verificar los ZIP originales CMF**. El procesamiento histórico por Actions es manual; la revisión diaria continúa incremental y no publica.
+
+**FX externo 220/220 verificado:** la [corrida `36304337121`](https://github.com/joaquinignaciomondaca-code/monitor-financiero-chile/actions/runs/36304337121) contrastó sin diferencias la última cotización diaria SII de cada mes publicado entre 2008-01 y 2026-04 contra `tc_usd_cierre`. En 2026 se cotejaron únicamente enero–abril. Esto valida la conversión, **no** los saldos, identidades, perímetro o el supuesto volumen transado. Véase [dictamen y fuentes](AUDITORIA_REPO_BANCOS_2026-09-27.md).
+
+**Decisión por componente (27-09-2026):** quedan aprobados el cotejo numérico de saldos CLP publicados con B1 CMF y el FX mensual con SII; no se aprueba el dataset como registro de transacciones ni como nómina con RUT históricos. El nombre de columna `total_transado_mm_usd` es engañoso y no debe usarse como volumen. El extractor automático sigue bloqueado. La sección «Origen de los Datos» del diccionario web detalla fuentes, cuentas, unidades y límites.
