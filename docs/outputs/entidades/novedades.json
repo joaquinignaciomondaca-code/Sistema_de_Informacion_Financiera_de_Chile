@@ -39,9 +39,19 @@
       "evento": "alta",
       "antes": null,
       "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-09-28",
+      "sector": "fintech",
+      "lista": "fintech/fintech_rpsf_maestro",
+      "rut": "76108994-3",
+      "razon_social": "ASESORIAS PROFESIONALES STELLA LIMITADA",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Vigente"
     }
   ],
-  "ultima_revision_utc": "2026-09-28T08:15:10+00:00",
+  "ultima_revision_utc": "2026-09-28T16:39:48+00:00",
   "sectores_revisados": [
     "agf",
     "securitizadoras",
