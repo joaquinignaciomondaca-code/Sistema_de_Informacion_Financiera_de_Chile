@@ -34,7 +34,7 @@ KNOWN_SOURCES = {
 MAX_PAGE = 3_000_000
 MAX_FILE = 15_000_000
 MAX_ZIP_TOTAL = 80_000_000
-MEMBER_RE = re.compile(r"(?:^|/)b([12])(20\d{2})(\d{2})(\d{3})\.txt$", re.I)
+MEMBER_RE = re.compile(r"(?:^|/)([brc])([12])(20\d{2})(\d{2})(\d{3})\.txt$", re.I)
 MONTHS = {
     1: "enero", 2: "febrero", 3: "marzo", 4: "abril", 5: "mayo", 6: "junio",
     7: "julio", 8: "agosto", 9: "septiembre", 10: "octubre", 11: "noviembre", 12: "diciembre",
@@ -192,28 +192,31 @@ def inspect_zip(blob: bytes, period: str, bank_code: str) -> dict:
         if any(item.file_size > MAX_FILE for item in infos):
             raise ValueError("ZIP contains an oversized member")
         members = []
-        bank_files = {"1": [], "2": []}
+        bank_files: dict[str, list[zipfile.ZipInfo]] = {}
         for info in infos:
             match = MEMBER_RE.search(info.filename)
-            if match and f"{match.group(2)}-{match.group(3)}" == period:
-                members.append(info.filename)
-                if match.group(4) == bank_code:
-                    bank_files[match.group(1)].append(info)
+            if not match or f"{match.group(3)}-{match.group(4)}" != period:
+                continue
+            members.append(info.filename)
+            if match.group(5) == bank_code:
+                file_type = f"{match.group(1).upper()}{match.group(2)}"
+                bank_files.setdefault(file_type, []).append(info)
         if not members:
-            raise RuntimeError(f"No B1/B2 TXT members found for {period}")
-        missing = [kind for kind, files in bank_files.items() if len(files) != 1]
-        if missing:
+            raise RuntimeError(f"No B/R/C TXT members found for {period}")
+        duplicates = {kind: len(files) for kind, files in bank_files.items() if len(files) != 1}
+        missing_core = sorted({"B1", "R1"} - set(bank_files))
+        if duplicates or missing_core:
             raise RuntimeError(
-                f"Expected one B{','.join(missing)} file for bank {bank_code}/{period}; "
-                f"found {[len(bank_files[k]) for k in missing]}"
+                f"Incomplete or duplicate bank files for {bank_code}/{period}; "
+                f"missing_core={missing_core}; duplicates={duplicates}; found={sorted(bank_files)}"
             )
         return {
             "archive_member_count": len(infos),
-            "matching_period_b1_b2_count": len(members),
-            "matching_period_b1_b2_names": sorted(members),
+            "matching_period_financial_file_count": len(members),
+            "matching_period_financial_file_names": sorted(members),
             "bank_code": bank_code,
             "bank_files": {
-                f"B{kind}": safe_txt_summary(zf, files[0])
+                kind: safe_txt_summary(zf, files[0])
                 for kind, files in sorted(bank_files.items())
             },
         }
@@ -295,12 +298,16 @@ def run(period: str, bank_code: str, bank_name: str, output: Path) -> dict:
         "bank": f"{bank_code} {bank_name}",
         "zip_members": zip_inspection["archive_member_count"],
         "txt_names": zip_inspection["matching_period_b1_b2_names"],
-        "b1_rows": zip_inspection["bank_files"]["B1"]["nonempty_lines"],
-        "b1_fields": zip_inspection["bank_files"]["B1"]["tab_field_counts"],
-        "b2_rows": zip_inspection["bank_files"]["B2"]["nonempty_lines"],
-        "b2_fields": zip_inspection["bank_files"]["B2"]["tab_field_counts"],
-        "b1_preview": zip_inspection["bank_files"]["B1"]["preview_lines"],
-        "b2_preview": zip_inspection["bank_files"]["B2"]["preview_lines"],
+        "financial_file_names": zip_inspection["matching_period_financial_file_names"],
+        "bank_file_shapes": {
+            kind: {"rows": info["nonempty_lines"], "fields": info["tab_field_counts"]}
+            for kind, info in zip_inspection["bank_files"].items()
+        },
+        "bank_file_previews": {
+            kind: info["preview_lines"]
+            for kind, info in zip_inspection["bank_files"].items()
+            if kind in {"B1", "R1", "B2", "R2"}
+        },
         "xlsx_sheet_names": [sheet["name"] for sheet in workbook_inspection["sheets"]],
         "xlsx_bank_rows": len(workbook_inspection["bank_rows"]),
         "xlsx_bank_rows_preview": workbook_inspection["bank_rows"][:6],
