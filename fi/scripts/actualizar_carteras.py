@@ -24,7 +24,7 @@ Salida (docs/outputs/fi/):
   <tabla>/manifest.json, manifest.json (control)
   maestro_fondos_inversion.parquet       registro CMF (vigentes y no vigentes) + primer/último
                                          trimestre con cartera + moneda funcional
-  fi_registro_fondos_universo.json       el mismo registro, formato que usa pipelines/xml_eeff
+  fi_registro_fondos_universo.json       el mismo registro en formato JSON (universo vigentes + históricos)
 """
 from __future__ import annotations
 

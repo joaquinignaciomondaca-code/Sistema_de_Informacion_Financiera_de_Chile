@@ -51,3 +51,8 @@ Auditoría de la web completa:
 ```bash
 python scripts/audit_navigation.py && python scripts/audit_web_full.py
 ```
+
+**Sin sondas ni laboratorios (2026-09-28):** en `.github/workflows/` sólo quedan workflows que publican
+(o `pages` / `web_audit`). Las sondas bancarias, el laboratorio REPO, el laboratorio XML/XBRL, la sonda
+retail y los cotejos de muestra se eliminaron; si hace falta investigar algo, hacerlo en una rama y no
+dejar workflows sin publicación en la rama principal.
