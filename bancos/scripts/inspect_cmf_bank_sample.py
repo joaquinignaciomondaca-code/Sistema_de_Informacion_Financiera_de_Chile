@@ -204,7 +204,7 @@ def inspect_zip(blob: bytes, period: str, bank_code: str) -> dict:
         if not members:
             raise RuntimeError(f"No B/R/C TXT members found for {period}")
         duplicates = {kind: len(files) for kind, files in bank_files.items() if len(files) != 1}
-        missing_core = sorted({"B1", "R1"} - set(bank_files))
+        missing_core = sorted({"B1"} - set(bank_files))
         if duplicates or missing_core:
             raise RuntimeError(
                 f"Incomplete or duplicate bank files for {bank_code}/{period}; "
