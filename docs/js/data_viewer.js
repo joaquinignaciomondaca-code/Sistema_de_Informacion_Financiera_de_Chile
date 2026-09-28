@@ -114,8 +114,8 @@ const DATA_VIEWER_CATALOG = [
     group: "Securitización · Patrimonios Separados (CMF / Ley 18.045)",
     tables: [
       { id: "patrimonios_separados_maestro", name: "patrimonios_separados.lista_emisiones (18 emisiones)" },
-      { id: "patrimonios_separados_balance_fsb", name: "patrimonios_separados.balance_fsb (497 balances)" },
-      { id: "patrimonios_separados_balance_cuentas", name: "patrimonios_separados.balance_cuentas (11.082 cuentas)" }
+      { id: "patrimonios_separados_balance_fsb", name: "patrimonios_separados.balance_fsb (358 balances, 2014–2025)" },
+      { id: "patrimonios_separados_balance_cuentas", name: "patrimonios_separados.balance_cuentas (7.962 cuentas, 2014–2025)" }
     ]
   },
   {

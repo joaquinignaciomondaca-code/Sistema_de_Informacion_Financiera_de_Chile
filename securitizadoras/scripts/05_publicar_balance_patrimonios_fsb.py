@@ -2,8 +2,11 @@
 
 Fuente: securitizadoras/fuentes/FSB_Patrimonio_Separado_v4.xlsx
     Balances de los PDF de EEFF de cada patrimonio separado publicados en la CMF, leídos con
-    NotebookLM (ver hoja Glosario_y_Metodologia). Cierres de diciembre 2010–2025 (sin 2013).
-    Montos en miles de pesos (M$), con el signo impreso en el PDF.
+    NotebookLM (ver hoja Glosario_y_Metodologia). Montos en miles de pesos (M$), con el signo impreso.
+
+Cobertura publicada: cierres de diciembre 2014–2025 (ANIO_DESDE). El Excel trae 2010, 2011 y 2012
+pero no 2013; para no dejar un hueco en la serie se publica desde 2014. Esos años eran además los
+más dudosos (Transa 2010–2011 no calza con otra lectura de los mismos PDF).
 
 Qué se publica (docs/outputs/securitizadoras/):
     patrimonios_separados_balance_cuentas.parquet  una fila por cuenta impresa (hoja Detalle_de_Cuentas)
@@ -42,6 +45,7 @@ OUT = ROOT / "docs" / "outputs" / "securitizadoras"
 CUENTAS = "patrimonios_separados_balance_cuentas"
 FSB = "patrimonios_separados_balance_fsb"
 TOL = 2  # M$: redondeo impreso en los PDF
+ANIO_DESDE = 2014  # 2013 no está en el Excel; ver docstring
 
 DETALLE = {"Activo Circulante": "Total Activo Circulante",
            "Activo No Circulante": "Total Activo No Circulante",
@@ -50,6 +54,8 @@ DETALLE = {"Activo Circulante": "Total Activo Circulante",
            "Patrimonio (Excedente Acumulado)": "Total Patrimonio (Excedente Acumulado)"}
 CATEGORIAS = set(DETALLE) | set(DETALLE.values()) | {"Total Activos", "Total Pasivos"}
 
+# (Con ANIO_DESDE = 2014 estos 8 documentos, todos de 2010–2011, quedan fuera de la publicación;
+# la lista se conserva por si se vuelve a publicar desde 2010.)
 # Documentos cuyo total no coincide con una lectura independiente previa de los mismos PDF
 # (tabla patrimonios_separados_balance_pdf, retirada el 2026-09-28; ver git 6fb6285). En los otros
 # 489 documentos ambas lecturas coinciden al peso en los 7 totales del balance.
@@ -217,6 +223,10 @@ def main() -> None:
     args = ap.parse_args()
     cuentas, resumen = leer(args.xlsx)
     cuentas, descartadas = limpiar_cuentas(cuentas)
+    anios_excel = sorted(int(a) for a in cuentas["periodo"].str[:4].unique())
+    cuentas = cuentas[cuentas["periodo"].str[:4].astype(int) >= ANIO_DESDE]
+    resumen = resumen[resumen["periodo"].astype(str).str[:4].astype(int) >= ANIO_DESDE]
+    print(f"Años en el Excel: {anios_excel}; se publica desde {ANIO_DESDE}.")
     salida, fsb = construir(cuentas, resumen)
     sha = hashlib.sha256(args.xlsx.read_bytes()).hexdigest()[:12]
     print(f"Excel {args.xlsx.name} (sha256 {sha}…): {len(salida)} cuentas, {len(fsb)} balances, "

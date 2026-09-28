@@ -892,7 +892,7 @@ const ERD_TABLES = [
     y: 580,
     w: 270,
     h: 230,
-    rows: "497 balances",
+    rows: "358 balances",
     file: "outputs/securitizadoras/patrimonios_separados_balance_fsb.parquet",
     cols: [
       { name: "archivo", pk: true, type: "VARCHAR" },
@@ -917,7 +917,7 @@ const ERD_TABLES = [
     y: 860,
     w: 270,
     h: 200,
-    rows: "11.082 cuentas",
+    rows: "7.962 cuentas",
     file: "outputs/securitizadoras/patrimonios_separados_balance_cuentas.parquet",
     cols: [
       { name: "archivo", fk: true, type: "VARCHAR" },
