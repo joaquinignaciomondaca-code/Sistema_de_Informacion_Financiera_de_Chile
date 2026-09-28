@@ -1,6 +1,8 @@
 {
   "tabla": "bienes_raices",
-  "files": [],
+  "files": [
+    "outputs/fi/bienes_raices/_vacio.parquet"
+  ],
   "total_records": 0,
   "periodos": [
     "2020-03",
