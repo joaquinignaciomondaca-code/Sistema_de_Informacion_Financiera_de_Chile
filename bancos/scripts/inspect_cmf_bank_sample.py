@@ -302,28 +302,42 @@ def run(period: str, bank_code: str, bank_name: str, output: Path) -> dict:
         ],
     }
     (output / "inspection.json").write_text(json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    compact = {
+    file_type_counts = Counter(
+        match.group(1).upper() + match.group(2)
+        for name in zip_inspection["matching_period_financial_file_names"]
+        if (match := MEMBER_RE.search(name)) is not None
+    )
+    core_rows = [
+        {"sheet": row["sheet"].strip(), "row_number": row["row_number"], "values": row["values"][:14]}
+        for row in workbook_inspection["bank_rows"]
+        if row["sheet"].strip() in {"Est. Situación Financ. Bancos", "Est. del Resultado Bancos"}
+    ]
+    summary = {
         "period": period,
         "bank": f"{bank_code} {bank_name}",
-        "zip_members": zip_inspection["archive_member_count"],
-        "unclassified_members": zip_inspection["unclassified_archive_member_names"],
-        "financial_file_names": zip_inspection["matching_period_financial_file_names"],
+        "zip_members_total": zip_inspection["archive_member_count"],
+        "zip_data_file_counts": dict(sorted(file_type_counts.items())),
+        "zip_metadata_members": zip_inspection["unclassified_archive_member_names"],
         "bank_file_shapes": {
-            kind: {"rows": info["nonempty_lines"], "fields": info["tab_field_counts"]}
+            kind: {"rows": info["nonempty_lines"], "tab_field_counts": info["tab_field_counts"]}
             for kind, info in zip_inspection["bank_files"].items()
         },
-        "bank_file_previews": {
-            kind: info["preview_lines"]
-            for kind, info in zip_inspection["bank_files"].items()
-            if kind in {"B1", "R1", "B2", "R2"}
-        },
-        "xlsx_sheet_names": [sheet["name"] for sheet in workbook_inspection["sheets"]],
-        "xlsx_bank_rows": len(workbook_inspection["bank_rows"]),
-        "xlsx_bank_rows_preview": workbook_inspection["bank_rows"][:6],
+        "xlsx_sheet_count": workbook_inspection["sheet_count"],
+        "xlsx_bank_row_matches": len(workbook_inspection["bank_rows"]),
         "published": False,
     }
-    print("::notice title=CMF bank sample inspection::" + json.dumps(compact, ensure_ascii=False, separators=(",", ":")))
-    print(json.dumps(compact, ensure_ascii=False))
+    txt_previews = {
+        kind: info["preview_lines"][:3]
+        for kind, info in zip_inspection["bank_files"].items()
+        if kind in {"B1", "B2", "R1", "R2"}
+    }
+    excel_sheets = [sheet["name"].strip() for sheet in workbook_inspection["sheets"]]
+    for title, payload in (
+        ("CMF sample structure", summary),
+        ("CMF bank TXT previews", txt_previews),
+        ("CMF bank workbook core rows", {"sheets": excel_sheets, "rows": core_rows}),
+    ):
+        print("::notice title=" + title + "::" + json.dumps(payload, ensure_ascii=False, separators=(",", ":")), flush=True)
     return report
 
 
