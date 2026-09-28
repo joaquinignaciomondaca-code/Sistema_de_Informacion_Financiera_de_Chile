@@ -58,7 +58,6 @@ jobs:
             2>&1 | tee .local-data/review/bancos/sample_inspection/run.log
           result=${PIPESTATUS[0]}
           if [ "$result" -ne 0 ]; then
-            tail -n 1 .local-data/review/bancos/sample_inspection/run.log | sed 's/^/::error title=CMF sample inspection failed::/'
             exit "$result"
           fi
       - name: Adjuntar fuentes CMF y resumen estructural para revisión humana
