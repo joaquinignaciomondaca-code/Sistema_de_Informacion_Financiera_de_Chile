@@ -11,7 +11,9 @@ const DATA_VIEWER_CATALOG = [
     tables: [
       { id: "macro_tasas_rendimientos", name: "macro.tasas_rendimientos (153 registros)" },
       { id: "macro_divisas_mercado", name: "macro.divisas_mercado (153 registros)" },
-      { id: "macro_precios_actividad", name: "macro.precios_actividad (153 registros)" }
+      { id: "macro_precios_actividad", name: "macro.precios_actividad (153 registros)" },
+      { id: "macro_series", name: "macro.series (51 series BCCh, una fila por serie y fecha)" },
+      { id: "macro_series_catalogo", name: "macro.series_catalogo (código, nombre, frecuencia y cobertura)" }
     ]
   },
   {
@@ -29,59 +31,40 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Seguros de Vida (CMF Circular 1835)",
+    group: "Seguros de Vida y Generales (CMF Circular 1835)",
     tables: [
-      { id: "vida_bonos", name: "vida.cartera_bonos (9,09 M registros)" },
-      { id: "vida_acciones", name: "vida.cartera_acciones (142.944 registros)" },
-      { id: "vida_bienes_raices", name: "vida.cartera_bienes_raices (2,01 M registros)" },
-      { id: "vida_forwards", name: "vida.derivados_forwards (165.354 registros)" },
-      { id: "vida_swaps", name: "vida.derivados_swaps (314.683 registros)" },
-      { id: "vida_repos", name: "vida.pactos_repos (19.408 registros)" },
-      { id: "vida_opciones", name: "vida.derivados_opciones (2.673 registros)" },
-      { id: "vida_fondos", name: "vida.cartera_fondos (76.902 registros)" },
-      { id: "vida_solvencia", name: "vida.cartera_solvencia (126.586 registros)" },
-      { id: "vida_extranjeros", name: "vida.cartera_extranjeros (146.365 registros)" },
-      { id: "vida_maestro", name: "vida.lista_entidades (61 entidades)" }
-    ]
-  },
-  {
-    group: "Seguros Generales (CMF Circular 1835)",
-    tables: [
-      { id: "generales_bonos", name: "generales.cartera_bonos (287.214 registros)" },
-      { id: "generales_acciones", name: "generales.cartera_acciones (17.457 registros)" },
-      { id: "generales_bienes_raices", name: "generales.cartera_bienes_raices (38.257 registros)" },
-      { id: "generales_repos", name: "generales.pactos_repos (275 registros)" },
-      { id: "generales_swaps", name: "generales.derivados_swaps (1.423 registros)" },
-      { id: "generales_forwards", name: "generales.derivados_forwards (2.847 registros)" },
-      { id: "generales_fondos", name: "generales.cartera_fondos (8.935 registros)" },
-      { id: "generales_extranjeros", name: "generales.cartera_extranjeros (5.590 registros)" },
-      { id: "generales_solvencia", name: "generales.cartera_solvencia (59.850 registros)" },
-      { id: "generales_maestro", name: "generales.lista_entidades (42 entidades)" }
+      { id: "seguros_maestro", name: "seguros.lista_entidades (compañías que reportan)" },
+      { id: "seguros_renta_fija", name: "seguros.renta_fija (bonos y depósitos por instrumento)" },
+      { id: "seguros_acciones", name: "seguros.acciones (acciones y cuotas de fondos de inversión)" },
+      { id: "seguros_fondos_mutuos", name: "seguros.fondos_mutuos (cuotas de fondos mutuos)" },
+      { id: "seguros_bienes_raices", name: "seguros.bienes_raices (inmuebles por rol)" },
+      { id: "seguros_extranjeros", name: "seguros.extranjeros (deuda, acciones y fondos en el exterior)" },
+      { id: "seguros_derivados", name: "seguros.derivados (opciones, forwards, futuros y swaps)" },
+      { id: "seguros_pactos", name: "seguros.pactos (compras y ventas con pacto)" },
+      { id: "seguros_control_inversiones", name: "seguros.control_inversiones (totales por tipo de inversión)" }
     ]
   },
   {
     group: "Administración de fondos · Fondos de Inversión (FI)",
     tables: [
-      { id: "fi_eeff_xml_muestra_cmf", name: "fi.eeff_xml_muestra_cmf (1 fila cotejada; no es histórico)" },
-      { id: "fi_repos_detalle_historico", name: "fi.repos_contratos (2.946 contratos)" },
-      { id: "fi_registro_fondos_universo", name: "fi.universo_fondos (1.677 fondos)" },
-      { id: "fi_repos", name: "fi.repos_vrc_crv (1.366 pactos)" },
-      { id: "fi_nacional", name: "fi.cartera_nacional (833.584 registros)" },
-      { id: "fi_extranjera", name: "fi.cartera_extranjera (67.371 registros)" },
-      { id: "fi_derivados", name: "fi.derivados_futuros (3.611 registros)" },
-      { id: "fi_metodo_part", name: "fi.metodo_participacion (14.401 registros)" },
-      { id: "fi_opciones", name: "fi.derivados_opciones (1.447 registros)" },
-      { id: "fi_maestro", name: "fi.lista_entidades (1.129 entidades)" }
+      { id: "fi_maestro", name: "fi.lista_entidades (registro CMF de fondos)" },
+      { id: "fi_cartera_nacional", name: "fi.cartera_nacional (trimestral desde 2020-03)" },
+      { id: "fi_cartera_extranjera", name: "fi.cartera_extranjera (trimestral desde 2020-03)" },
+      { id: "fi_metodo_participacion", name: "fi.metodo_participacion (trimestral desde 2020-03)" },
+      { id: "fi_bienes_raices", name: "fi.bienes_raices (trimestral desde 2020-03)" },
+      { id: "fi_futuros", name: "fi.futuros_forwards (trimestral desde 2020-03)" },
+      { id: "fi_opciones", name: "fi.opciones (trimestral desde 2020-03)" },
+      { id: "fi_pactos", name: "fi.pactos (trimestral desde 2020-03)" }
     ]
   },
   {
     group: "Administración de fondos · Fondos Mutuos (FFMM)",
     tables: [
-      { id: "ffmm_eeff_xml_muestra_cmf", name: "ffmm.eeff_xml_muestra_cmf (1 fila cotejada; no es histórico)" },
-      { id: "ffmm_repos_detalle_historico", name: "ffmm.repos_contratos (388 contratos)" },
-      { id: "ffmm_maestro", name: "ffmm.lista_entidades (1.156 entidades)" },
-      { id: "ffmm_futuros", name: "ffmm.derivados_futuros (280.494 registros)" },
-      { id: "ffmm_opciones", name: "ffmm.derivados_opciones (5.347 registros)" }
+      { id: "ffmm_maestro", name: "ffmm.lista_entidades (fondos que reportan cartera)" },
+      { id: "ffmm_cartera_nacional", name: "ffmm.cartera_nacional (mensual desde 2022-01)" },
+      { id: "ffmm_cartera_extranjera", name: "ffmm.cartera_extranjera (mensual desde 2001)" },
+      { id: "ffmm_futuros", name: "ffmm.futuros_forwards (mensual desde 2001)" },
+      { id: "ffmm_opciones", name: "ffmm.opciones (mensual desde 2001)" }
     ]
   },
   {
@@ -89,11 +72,9 @@ const DATA_VIEWER_CATALOG = [
     tables: [
       { id: "factoring_leasing_maestro", name: "factoring_leasing.lista_entidades (28 entidades)" },
       // BEGIN AUTO FL IFRS SERIES VIEWER
-      { id: "factoring_leasing_balance_serie_ifrs_cmf", name: "factoring_leasing.balance_serie_ifrs_cmf (28,938 cuentas; no cotejo integral)" },
-      { id: "factoring_leasing_resultados_serie_ifrs_cmf", name: "factoring_leasing.resultados_serie_ifrs_cmf (21,464 cuentas; no cotejo integral)" },
+      { id: "factoring_leasing_balance_serie_ifrs_cmf", name: "factoring_leasing.balance_serie_ifrs_cmf (30,046 cuentas; no cotejo integral)" },
+      { id: "factoring_leasing_resultados_serie_ifrs_cmf", name: "factoring_leasing.resultados_serie_ifrs_cmf (22,368 cuentas; no cotejo integral)" },
   // END AUTO FL IFRS SERIES VIEWER
-      { id: "factoring_leasing_eeff_muestra_cmf", name: "factoring_leasing.balance_muestra_cmf (2 filas cotejadas; no es el sector)" },
-      { id: "factoring_leasing_resultados_muestra_cmf", name: "factoring_leasing.resultados_muestra_cmf (2 filas cotejadas; acumulado desde enero)" }
     ]
   },
   {
@@ -101,77 +82,57 @@ const DATA_VIEWER_CATALOG = [
     tables: [
       { id: "corredoras_bolsa_registro_universo", name: "corredoras.registro_unico (120 entidades)" },
       { id: "corredoras_bolsa_maestro", name: "corredoras.lista_entidades (120 entidades)" },
-      { id: "corredoras_bolsa_caratula_eeff_historico", name: "corredoras.estados_financieros (621 balances)" },
-      { id: "corredoras_bolsa_balance_resumen", name: "corredoras.balance_resumen (621 balances)" }
+      { id: "corredoras_bolsa_balance", name: "corredoras.balance (2010-12–2026-06)" },
+      { id: "corredoras_bolsa_resultados", name: "corredoras.resultados (2010-12–2026-06)" }
     ]
   },
   {
     group: "Securitización · Sociedades Securitizadoras (CMF)",
     tables: [
       { id: "securitizadoras_maestro", name: "securitizadoras.lista_entidades (16 entidades)" },
-      { id: "securitizadoras_balance_resumen", name: "securitizadoras.balance_resumen (362 balances)" }
+      { id: "securitizadoras_balance", name: "securitizadoras.balance (2009-12–2026-06)" },
+      { id: "securitizadoras_resultados", name: "securitizadoras.resultados (2009-12–2026-06)" }
     ]
   },
   {
     group: "Securitización · Patrimonios Separados (CMF / Ley 18.045)",
     tables: [
-      { id: "patrimonios_separados_balance_pdf", name: "patrimonios_separados.balance_cuentas (46.502 registros)" },
       { id: "patrimonios_separados_maestro", name: "patrimonios_separados.lista_emisiones (18 emisiones)" },
-      { id: "patrimonios_separados_balance_resumen", name: "patrimonios_separados.balance_resumen (64 balances)" },
-      { id: "patrimonios_separados_balance_lineas", name: "patrimonios_separados.balance_lineas (16.842 registros)" },
-      { id: "patrimonios_separados_excedentes_lineas", name: "patrimonios_separados.excedentes (11.157 registros)" },
-      { id: "patrimonios_separados_nota_cartera_detalle", name: "patrimonios_separados.nota_cartera (796 registros)" },
-      { id: "patrimonios_separados_nota_morosidad_detalle", name: "patrimonios_separados.nota_morosidad (6.632 registros)" },
-      { id: "patrimonios_separados_nota_bonos_detalle", name: "patrimonios_separados.nota_bonos (8.001 registros)" },
-      { id: "patrimonios_separados_nota_administracion_detalle", name: "patrimonios_separados.nota_administracion (2.153 registros)" },
-      { id: "patrimonios_separados_nota_sobrecolateral_detalle", name: "patrimonios_separados.nota_sobrecolateral (679 registros)" },
-      { id: "patrimonios_separados_nota_efectivo_detalle", name: "patrimonios_separados.nota_efectivo (3.802 registros)" },
-      { id: "patrimonios_separados_cartera_morosidad_detalle", name: "patrimonios_separados.cartera_morosidad (67 registros)" },
-      { id: "patrimonios_separados_repos_detalle", name: "patrimonios_separados.repos_contratos (52 pactos)" }
+      { id: "patrimonios_separados_balance", name: "patrimonios_separados.balance (358 balances · 7.962 cuentas, 2014–2025)" }
     ]
   },
   {
     group: "Cooperativas de Ahorro y Crédito (CMF)",
     tables: [
-      { id: "cooperativas_maestro", name: "cooperativas.lista_entidades (7 entidades)" },
-      { id: "cooperativas_balance_resumen", name: "cooperativas.balance_resumen (294 balances)" },
-      { id: "cooperativas_nota_efectivo_detalle", name: "cooperativas.nota_efectivo (122 registros)" },
-      { id: "cooperativas_cmf_balance", name: "cooperativas.cmf_balance (activos y pasivos por cuenta · 23.345 registros)" },
-      { id: "cooperativas_cmf_resultados", name: "cooperativas.cmf_resultados (resultados y margen por cuenta · 28.980 registros)" }
+      { id: "cooperativas_maestro", name: "cooperativas.lista_entidades (7 entidades)" }
     ]
   },
   {
     group: "Cajas de Compensación (CCAF / CMF - SUSESO)",
     tables: [
       { id: "ccaf_maestro", name: "ccaf.lista_entidades (6 entidades)" },
-      { id: "ccaf_caratula_totales", name: "ccaf.balances (288 balances)" },
-      { id: "ccaf_nota8_efectivo_resumen", name: "ccaf.nota8_efectivo_resumen (213 registros)" },
-      { id: "ccaf_colocaciones_credito_social", name: "ccaf.colocaciones_credito_social (268 registros)" },
-      { id: "ccaf_nota8_dap_detalle", name: "ccaf.nota8_dap_detalle (52 registros)" },
-      { id: "ccaf_nota8_repos_detalle", name: "ccaf.nota8_repos_detalle (158 operaciones)" }
+      { id: "ccaf_balance", name: "ccaf.balance (2010-06–2026-06)" },
+      { id: "ccaf_resultados", name: "ccaf.resultados (2010-06–2026-06)" }
     ]
   },
   {
     group: "Administración de fondos · AGF (sociedades gestoras)",
     tables: [
       { id: "agf_maestro", name: "agf.lista_administradoras (68 entidades)" },
-      { id: "agf_balance_resumen", name: "agf.balance_resumen (1.572 balances)" }
+      { id: "agf_balance", name: "agf.balance (2010-06–2026-06)" },
+      { id: "agf_resultados", name: "agf.resultados (2010-06–2026-06)" }
     ]
   },
   {
     group: "Sistemas de Pago (BCCh / CMF)",
     tables: [
-      { id: "sistemas_pago_maestro", name: "sistemas_pago.lista_entidades (12 entidades)" },
-      { id: "sistemas_pago_balances", name: "sistemas_pago.balances (82 registros)" },
-      { id: "sistemas_pago_estadisticas_bcch", name: "sistemas_pago.estadisticas_bcch (102 registros)" }
+      { id: "sistemas_pago_maestro", name: "sistemas_pago.lista_entidades (12 entidades)" }
     ]
   },
   {
     group: "FinTech & Finanzas Abiertas (Ley 21.521 / CMF)",
     tables: [
-      { id: "fintech_rpsf_maestro", name: "fintech.lista_entidades (262 entidades)" },
-      { id: "fintech_servicios_acreditados", name: "fintech.servicios_acreditados (262 registros)" },
-      { id: "fintech_finanzas_abiertas_roles", name: "fintech.finanzas_abiertas_roles (262 registros)" }
+      { id: "fintech_rpsf_maestro", name: "fintech.lista_entidades (262 entidades)" }
     ]
   }
 ];

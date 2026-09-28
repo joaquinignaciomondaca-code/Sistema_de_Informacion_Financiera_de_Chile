@@ -48,8 +48,9 @@ const options = viewer.flatMap(group => group.tables.map(table => table.id));
 assert.equal(new Set(options).size, options.length, 'opciones duplicadas en visor');
 for (const id of options) assert(expected.has(id), 'opción no encontrada en sidebar: ' + id);
 
-// Factoring/Leasing: balance y resultados son carpetas separadas, tanto
-// en muestra como en serie completa automatizada si ya fue generada.
+// Factoring/Leasing: lista de entidades + serie completa (balance y resultados en
+// carpetas separadas). Las muestras cotejadas de 2 filas repetían cifras de la
+// serie y se retiraron de la web (sus Parquet quedan como respaldo de auditoría).
 const fl = byGroup.group_factoring_leasing.children[0];
 const hasFullSeries = fs.existsSync('docs/outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet') &&
   fs.existsSync('docs/outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet');
@@ -59,24 +60,21 @@ if (hasFullSeries) {
   expectedFolders.push('fl_balance_serie_ifrs_cmf_folder', 'fl_resultados_serie_ifrs_cmf_folder');
   expectedSeriesTables.push('factoring_leasing_balance_serie_ifrs_cmf', 'factoring_leasing_resultados_serie_ifrs_cmf');
 }
-expectedFolders.push('fl_balance_muestra_cmf_folder', 'fl_resultados_muestra_cmf_folder');
 assert.deepEqual(Array.from(fl.children, c => c.id), expectedFolders);
 const tableForFolder = Object.fromEntries(fl.children.filter(c => c.type === 'circular')
   .map(c => [c.id, c.tables[0].id]));
 assert.equal(Object.keys(tableForFolder).length, fl.children.length);
-assert.deepEqual(tableForFolder.fl_balance_muestra_cmf_folder, 'factoring_leasing_eeff_muestra_cmf');
-assert.deepEqual(tableForFolder.fl_resultados_muestra_cmf_folder, 'factoring_leasing_resultados_muestra_cmf');
 if (hasFullSeries) {
   assert.deepEqual(tableForFolder.fl_balance_serie_ifrs_cmf_folder, 'factoring_leasing_balance_serie_ifrs_cmf');
   assert.deepEqual(tableForFolder.fl_resultados_serie_ifrs_cmf_folder, 'factoring_leasing_resultados_serie_ifrs_cmf');
+  // "Ganancia (pérdida)" se repite hasta 3 veces por estado: debe existir el chip que elige una fila.
+  const flResults = fl.children.find(c => c.id === 'fl_resultados_serie_ifrs_cmf_folder');
+  assert(flResults.chips.some(c => /repeticion_contexto = 1/.test(c.query) && /'ERFG', 'ERNG'/.test(c.query)),
+    'falta chip de utilidad del período sin repeticiones');
 }
-assert(fl.children.find(c => c.id === 'fl_balance_muestra_cmf_folder').label.startsWith('Balance · Muestra'));
-assert(fl.children.find(c => c.id === 'fl_resultados_muestra_cmf_folder').label.startsWith('Estado de resultados · Muestra'));
-const expectedViewerTables = ['factoring_leasing_maestro', ...expectedSeriesTables,
-  'factoring_leasing_eeff_muestra_cmf', 'factoring_leasing_resultados_muestra_cmf'];
+const expectedViewerTables = ['factoring_leasing_maestro', ...expectedSeriesTables];
 assert.deepEqual(Array.from(viewer.find(g => g.group.startsWith('Factoring & Leasing')).tables, t => t.id), expectedViewerTables);
-// Verificar el HTML real del explorador y qué tabla se abre al pulsar cada
-// carpeta (no basta con que el catálogo mencione ambas tablas).
+// Verificar el HTML real del explorador y qué tabla se abre al pulsar cada carpeta.
 const SidebarController = vm.runInContext('SidebarController', context);
 const sidebar = Object.create(SidebarController.prototype);
 sidebar.treeContainer = { innerHTML: '' };
@@ -86,24 +84,17 @@ sidebar.bindTreeEvents = () => {};
 sidebar.render();
 const flHtml = sidebar.treeContainer.innerHTML.split('data-group-id="group_factoring_leasing"')[1]
   .split('data-group-id="group_corredoras_bolsa"')[0];
-for (const id of ['fl_balance_muestra_cmf_folder', 'fl_resultados_muestra_cmf_folder']) {
+for (const id of expectedFolders) {
   assert(flHtml.includes(`data-node-id="${id}"`), 'carpeta invisible: ' + id);
 }
-for (const id of ['factoring_leasing_eeff_muestra_cmf', 'factoring_leasing_resultados_muestra_cmf']) {
-  assert(flHtml.includes(`data-table-id="${id}"`), 'tabla invisible: ' + id);
+for (const id of ['fl_balance_muestra_cmf_folder', 'fl_resultados_muestra_cmf_folder',
+                  'factoring_leasing_eeff_muestra_cmf', 'factoring_leasing_resultados_muestra_cmf']) {
+  assert(!flHtml.includes(id), 'muestra retirada reaparece: ' + id);
 }
 const opened = [];
 sidebar.onTableSelect = (id) => opened.push(id);
-sidebar.onCircularSelect('fl_balance_muestra_cmf_folder', 'factoring_leasing');
-sidebar.onCircularSelect('fl_resultados_muestra_cmf_folder', 'factoring_leasing');
-if (hasFullSeries) {
-  sidebar.onCircularSelect('fl_balance_serie_ifrs_cmf_folder', 'factoring_leasing');
-  sidebar.onCircularSelect('fl_resultados_serie_ifrs_cmf_folder', 'factoring_leasing');
-}
-assert.deepEqual(opened, hasFullSeries
-  ? ['factoring_leasing_eeff_muestra_cmf', 'factoring_leasing_resultados_muestra_cmf',
-     'factoring_leasing_balance_serie_ifrs_cmf', 'factoring_leasing_resultados_serie_ifrs_cmf']
-  : ['factoring_leasing_eeff_muestra_cmf', 'factoring_leasing_resultados_muestra_cmf']);
+for (const id of expectedFolders) sidebar.onCircularSelect(id, 'factoring_leasing');
+assert.deepEqual(opened, ['factoring_leasing_maestro', ...expectedSeriesTables]);
 
 // AFP: sólo identidad sin métricas generadas. Bancos: identidad + líneas
 // CMF B1/B2 y R1 publicadas por partición mensual validada. El REPO legado
@@ -134,7 +125,14 @@ for (const file of restrictedFiles) {
   const text = fs.readFileSync('docs/' + (file.endsWith('.js') ? 'js/' : '') + file, 'utf8');
   for (const id of ['afp_cartera_bonos','afp_cartera_acciones','afp_derivados_swaps','afp_derivados_forwards',
                     'bancos_balance_resumen','bancos_estado_resultados','bancos_derivados_posicion_vigente',
-                    'bancos_derivados_flujos_transados','bancos_colocaciones']) {
+                    'bancos_derivados_flujos_transados','bancos_colocaciones',
+                    'vida_bonos','vida_acciones','vida_maestro','vida_forwards','vida_swaps','vida_repos','vida_solvencia',
+                    'generales_bonos','generales_acciones','generales_maestro','generales_repos','generales_solvencia',
+                    'outputs/vida/','outputs/generales/',
+                    'ffmm_futu_normalizado','ffmm_opci_normalizado','ffmm_inversiones_nac','ffmm_repos_detalle_historico',
+                    'ffmm_eeff_xml_muestra_cmf','fi_eeff_xml_muestra_cmf','ffmm_registro_fondos_universo',
+                    'fi_nacional','fi_extranjera','fi_derivados','fi_metodo_part"','fi_repos','fi_registro_fondos_universo"',
+                    'fi_cartera_nacional.parquet','fi_futuros_forward']) {
     assert(!text.includes(id), file + ' expone tabla retirada: ' + id);
   }
 }

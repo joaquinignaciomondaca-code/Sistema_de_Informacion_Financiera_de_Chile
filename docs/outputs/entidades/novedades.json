@@ -1,0 +1,166 @@
+{
+  "eventos": [
+    {
+      "fecha": "2026-09-28",
+      "sector": "agf",
+      "lista": "agf/agf_maestro",
+      "rut": "96960970-3",
+      "razon_social": "AMICORP ADMINISTRADORA GENERAL DE FONDOS S.A.",
+      "evento": "cambio_vigencia",
+      "antes": "No Vigente / Cancelada",
+      "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-09-28",
+      "sector": "agf",
+      "lista": "agf/agf_maestro",
+      "rut": "76576607-9",
+      "razon_social": "SARTOR ADMINISTRADORA GENERAL DE FONDOS S.A.",
+      "evento": "cambio_vigencia",
+      "antes": "No Vigente / Cancelada",
+      "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-09-28",
+      "sector": "agf",
+      "lista": "agf/agf_maestro",
+      "rut": "96530900-4",
+      "razon_social": "BCI ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-09-28",
+      "sector": "agf",
+      "lista": "agf/agf_maestro",
+      "rut": "96836390-5",
+      "razon_social": "BANCOESTADO S.A. ADMINISTRADORA GENERAL DE FONDOS",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-09-28",
+      "sector": "fintech",
+      "lista": "fintech/fintech_rpsf_maestro",
+      "rut": "76108994-3",
+      "razon_social": "ASESORIAS PROFESIONALES STELLA LIMITADA",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-09-28",
+      "sector": "bancos",
+      "lista": "bancos/bancos_maestro",
+      "rut": "76632789-3",
+      "razon_social": "TENPO BANK CHILE",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Activo"
+    },
+    {
+      "fecha": "2026-09-28",
+      "sector": "sistemas_pago",
+      "lista": "sistemas_pago/sistemas_pago_maestro",
+      "rut": "96815280-7",
+      "razon_social": "OPERADORA DE TARJETAS DE CREDITO NEXUS S.A.",
+      "evento": "cambio_vigencia",
+      "antes": "Vigente",
+      "ahora": "No Vigente"
+    },
+    {
+      "fecha": "2026-09-28",
+      "sector": "sistemas_pago",
+      "lista": "sistemas_pago/sistemas_pago_maestro",
+      "rut": "76516950-K",
+      "razon_social": "MERCADO PAGO OPERADORA S.A.",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-09-28",
+      "sector": "sistemas_pago",
+      "lista": "sistemas_pago/sistemas_pago_maestro",
+      "rut": "76625125-0",
+      "razon_social": "BAASKIT PAGOS S.A.",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-09-28",
+      "sector": "sistemas_pago",
+      "lista": "sistemas_pago/sistemas_pago_maestro",
+      "rut": "76693183-9",
+      "razon_social": "RED GLOBAL S.A.",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-09-28",
+      "sector": "sistemas_pago",
+      "lista": "sistemas_pago/sistemas_pago_maestro",
+      "rut": "77101928-5",
+      "razon_social": "SUMUP CHILE PAYMENTS S.A.",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-09-28",
+      "sector": "sistemas_pago",
+      "lista": "sistemas_pago/sistemas_pago_maestro",
+      "rut": "77190661-3",
+      "razon_social": "PAGOS Y SERVICIOS S.A.",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-09-28",
+      "sector": "sistemas_pago",
+      "lista": "sistemas_pago/sistemas_pago_maestro",
+      "rut": "77597984-4",
+      "razon_social": "KUSHKI OPERADORA S.A.",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-09-28",
+      "sector": "sistemas_pago",
+      "lista": "sistemas_pago/sistemas_pago_maestro",
+      "rut": "99546900-6",
+      "razon_social": "ISWITCH S.A.",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-09-28",
+      "sector": "patrimonios_separados",
+      "lista": "securitizadoras/patrimonios_separados_maestro",
+      "rut": "96847360",
+      "razon_social": "N° 1278 SECURITIZADORA SECURITY S.A.",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "inscrita 2026-09-24"
+    }
+  ],
+  "ultima_revision_utc": "2026-09-28T17:59:09+00:00",
+  "sectores_revisados": [
+    "agf",
+    "securitizadoras",
+    "corredoras_bolsa",
+    "fintech",
+    "cooperativas",
+    "bancos",
+    "sistemas_pago",
+    "afp",
+    "patrimonios_separados"
+  ]
+}

@@ -143,6 +143,10 @@ def resolve_resource_from_article_links(links: list[dict[str, str]], index_url: 
     return None
 
 
+class SourceNotPublished(RuntimeError):
+    """El índice oficial no tiene ningún enlace para el período: la CMF aún no lo publica."""
+
+
 def find_source(index_url: str, period: str, suffix: str) -> tuple[str, str]:
     label = period_label(period).casefold()
     page = fetch(index_url, MAX_PAGE).decode("utf-8", errors="replace")
@@ -175,12 +179,13 @@ def find_source(index_url: str, period: str, suffix: str) -> tuple[str, str]:
             print("::notice title=CMF sample source fallback::" + json.dumps({"period": period, "suffix": suffix, "url": url}, ensure_ascii=False))
             return url, f"official-index-url-fallback:{period}{suffix}"
     if len(matches) != 1:
+        exc_type = SourceNotPublished if not matches else RuntimeError
         candidates = [
             {"url": urllib.parse.urljoin(index_url, item["href"].strip()), "text": re.sub(r"\s+", " ", item["text"]).strip()[:120]}
             for item in parser.links
             if urllib.parse.urlsplit(urllib.parse.urljoin(index_url, item["href"].strip())).path.lower().endswith(suffix)
         ]
-        raise RuntimeError(
+        raise exc_type(
             f"Expected one CMF {suffix} link for {period}; found {len(matches)}; "
             f"candidate_links={json.dumps(candidates, ensure_ascii=False)}"
         )

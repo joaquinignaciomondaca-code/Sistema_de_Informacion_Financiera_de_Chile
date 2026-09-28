@@ -1,8 +1,8 @@
 # Dependencias del monitor financiero (Python 3.11).
 #
 # Refleja lo que importan los scripts del repositorio y las versiones que fijan
-# los flujos de GitHub Actions (por ejemplo, pyarrow/openpyxl/xlrd en
-# .github/workflows/cooperativas_cmf_mensual.yml). Si un flujo instala una
+# los flujos de GitHub Actions (por ejemplo, pyarrow/openpyxl en
+# .github/workflows/bancos_cmf_mensual.yml). Si un flujo instala una
 # versión distinta, mantén acá la misma para no tener dos entornos distintos.
 
 # Datos y Parquet (extracción, validación y publicación)
@@ -10,9 +10,8 @@ pandas>=2.2,<4
 numpy>=1.26,<3
 pyarrow==21.0.0
 
-# Planillas Excel de la CMF (formato nuevo .xlsx y formato antiguo .xls)
+# Planillas Excel de la CMF (.xlsx)
 openpyxl==3.1.5
-xlrd==2.0.1
 
 # Series del Banco Central (la macro la usa en Actions)
 bcchapi==1.3.0

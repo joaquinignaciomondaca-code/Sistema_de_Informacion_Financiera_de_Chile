@@ -1,0 +1,128 @@
+   B.8                                  INFORMACION DE CONTROL
+
+   La información presentada deberá corresponder al total de inversiones que tiene la compañía en
+   cartera, informadas en los archivos anteriores de esta Circular. Además, deberá informar los avances a
+   tenedores de pólizas que sirven para respaldar las reservas técnicas y patrimonio de riesgo de la
+   compañía.
+
+   La información vendrá totalizada por tipo de inversión, es decir, el orden a colocar las inversiones será
+   el que se describe en el campo TIPO_DE_INVERSION.
+
+
+   Formato de Registro                     : El archivo CaammddG.TXT deberá contener la siguiente
+                                             estructura:
+
+   Identificación (registro tipo 1)        : contendrá información que permite identificar la compañía y
+                                             período informado. Cabe señalar que sólo se informará un
+                                             registro de este tipo y deberá ser el primero del archivo.
+
+   Detalle (registro tipo 2)     :         contendrá información de control, con los totales de todas las
+                                             inversiones de la compañía, más los créditos que ésta posea y
+                                             los avances a tenedores de pólizas.
+
+   Totales (registro tipo 3)     :         contendrá cuadratura de los registros de detalle informados. Cabe
+                                             señalar que sólo se informará un registro de este tipo y deberá
+                                             ser el último del archivo.
+
+Registro Tipo 1 de IDENTIFICACION
+
+
+CAMPO                          DESCRIPCION                                                            PICTURE
+TIPO                           Tipo de registro. En este caso corresponde "1".                        9(01)
+
+RUT                            RUT de la compañía informante.         Es obligatorio y no puede       9(09)
+                               informarse en ceros.
+
+VERIFICADOR                    Dígito verificador del RUT de la compañía informante.                  X(01)
+
+NOMBRE                         Nombre o razón social de la compañía informante.                       X(60)
+
+PERIODO                        Período a que corresponde la información.         El formato de esta   9(06)
+                               fecha será AAAAMM.
+
+FILLER                         Se deberá informar espacios.                                           X(61)
+
+
+
+
+Registro Tipo 2 de DETALLE
+Este registro se informará sólo cuando tenga información, por ej.: si la compañía no posee letras de crédito como
+inversión el registro C no debe ser informado.
+
+CAMPO                          DESCRIPCION                                                            PICTURE
+TIPO                           Tipo de registro. En este caso corresponde "2".                        9(01)
+
+TIPO_DE_                       Corresponderá a la letra con la cual se clasifica la inversión. Se     X(03)
+INVERSION                      informará de acuerdo a la codificación definida en SEIL,
+                               Codificación S.V.S., Tipo de Inversión.
+VALOR_FINAL                    Corresponde al valor que tienen los instrumentos a la fecha de         9(12)
+                               cierre del mes a que se refiere la información, según lo establecido
+                               en Circular de Valorización de Inversiones vigente.
+                         Este monto se deberá expresar en miles de pesos (M$).
+
+INVERSIONES_             Corresponde al valor de las inversiones que la Compañía            -9(11)
+REPRESENTATIVAS_D        considera para respaldar reservas técnicas y patrimonio de
+E_(RT_+_PR)              riesgo, de acuerdo a los límites señalados en el DFL N°251
+                         expresados en miles de pesos (M$).
+                         Al respecto, sólo para los derivados pasivos la información debe
+                         presentarse con signo negativo.
+
+INVERSIONES_ NO_         Corresponde al valor de las inversiones que la Compañía no         -9(11)
+REPRESENTATIVAS_D        considera para respaldar reservas técnicas y patrimonio de
+E_(RT_+_PR)              riesgo, expresados en miles de pesos (M$).
+                         Al respecto, sólo para los derivados pasivos la información debe
+                         presentarse con signo negativo.
+TOTAL_COSTO_AMOR         Corresponde al valor que tienen los instrumentos a la fecha del    -9(13)
+TIZADO                   cierre del mes a que se refiere la información, y que están
+                         clasificados como “CA” (Costo Amortizado) en el campo
+                         METOD_CLASIF_VALORIZ_EEFF de los archivos anteriores de
+                         esta circular. Este monto deberá expresarse en miles de pesos
+                         (M$).
+TOTAL_VALOR_RAZON        Corresponde al valor que tienen los instrumentos a la fecha del    -9(13)
+ABLE                     cierre del mes a que se refiere la información, y que están
+                         clasificados como “VR” (Valor Razonable) en el campo
+                         METOD_CLASIF_VALORIZ_EEFF de los archivos anteriores de
+                         esta circular. Este monto deberá expresarse en miles de pesos
+                         (M$).
+TOTAL_EFECTIVO_EQ        Corresponde al valor que tienen los instrumentos a la fecha del    -9(13)
+UIVALENTE                cierre del mes a que se refiere la información, y que están
+                         clasificados como “EE” (Efectivo Equivalente) en el campo
+                         METOD_CLASIF_VALORIZ_EEFF de los archivos anteriores de
+                         esta circular. Este monto deberá expresarse en miles de pesos
+                         (M$).
+TOTAL_INSTRUMENTO        Corresponde al valor que tienen los instrumentos a la fecha del    -9(13)
+S_CUI_APV                cierre del mes a que se refiere la información, y que NO están
+                         clasificados como “VIDA” o “GRAL” en el campo
+                         ACTIVO_RESPALDA_RESERVA_VALOR_DEL_FONDO de los
+                         archivos anteriores de esta circular. Este monto deberá
+                         expresarse en miles de pesos (M$).
+TOTAL_INST_OTRAS_C       Corresponde al valor que tienen los instrumentos a la fecha del    -9(13)
+LASIF                    cierre del mes a que se refiere la información, y que están
+                         clasificados como “OTRCLA” (Otra Clasificación dentro de los
+                         Estados      de    Situación    Financiera)    en    el    campo
+                         METOD_CLASIF_VALORIZ_EEFF de los archivos anteriores de
+                         esta circular. Este monto deberá expresarse en miles de pesos
+                         (M$).
+TOTAL_SOC_FILIALES       Corresponde informar el monto que tiene invertido a la fecha del   -9(13)
+                         cierre del mes a que se refiere la información y que corresponde
+                         a las Participaciones y Acciones en Sociedades Filiales.
+                         Adicionalmente, se deberá incluir en este campo el monto final
+                         invertido en acciones de Sociedades Filiales. Este monto deberá
+                         expresarse en miles de pesos (M$).
+TOTAL_COLIGADAS          Corresponde informar el monto que tiene invertido a la fecha del   -9(13)
+                         cierre del mes a que se refiere la información y que corresponde
+                         a las Participaciones y Acciones en Sociedades Coligadas.
+                         Adicionalmente, se deberá incluir en este campo el monto final
+                         invertido en acciones de Sociedades Coligadas. Este monto
+                         deberá expresarse en miles de pesos (M$).
+
+
+Registro Tipo 3 de TOTALES
+CAMPO       DESCRIPCION                                                           PICTURE
+TIPO        Tipo de registro. En este caso corresponde "3".                       9(01)
+
+TOTAL_      Corresponde al número total de registros informados incluidos el de   9(06)
+REGISTROS   IDENTIFICACION y el de TOTALES.
+
+FILLER      Se deberá informar espacios.                                          X(131)
+
