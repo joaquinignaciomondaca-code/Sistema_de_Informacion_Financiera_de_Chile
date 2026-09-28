@@ -440,12 +440,16 @@ def write_review_outputs(rows: list[dict], report: dict, output: Path) -> None:
         "institutions": report["institution_count"],
         "files": report["file_count"],
         "account_rows_by_family": counts,
+        "account_model_line_type_counts": {
+            kind: stats["line_types"] for kind, stats in report["account_model_stats"].items()
+        },
         "b1_status": reconciliation.get("b1_status", "not_compared"),
+        "b1_asset_check": reconciliation.get("b1_total_assets_account", []),
         "r1_status": reconciliation.get("r1_status", "not_compared"),
         "r1_exact_xlsx_match_count": len(reconciliation.get("r1_exact_account_matches_in_xlsx", [])),
         "r1_exact_xlsx_matches_preview": [
             {"codigo_cuenta": item["codigo_cuenta"], "glosa_cuenta": item["glosa_cuenta"], "importe_pesos": item["importe_pesos"]}
-            for item in reconciliation.get("r1_exact_account_matches_in_xlsx", [])[:8]
+            for item in reconciliation.get("r1_exact_account_matches_in_xlsx", [])[:20]
         ],
         "source_sha256": report["source_sha256"],
         "published": False,
