@@ -20,17 +20,17 @@ for arg in sys.argv[1:]:
         p = n.split("/")[-1][0].lower()
         if not L or p not in "afxibpc":
             continue
-        cuerpo = [l for l in L[1:] if l[:1] != "3"]
-        # por compañía: encabezado, hasta 4 líneas de cada tipo de registro y el total
         vistos = collections.Counter(); sel = [L[0]]
-        for l in cuerpo:
-            if vistos[l[:1]] < 4:
+        for l in L[1:]:
+            if vistos[l[:1]] < 3:
                 sel.append(l); vistos[l[:1]] += 1
-        sel += [l for l in L[1:] if l[:1] == "3"][:1]
         por_tipo[p].append((n, sel))
     for p, arch in por_tipo.items():
+        cuenta = collections.Counter()
         with open(f"{OUT}/{ent}_{peri}_{p}.txt", "w", encoding="latin-1") as f:
-            for n, sel in arch[:12]:
+            for n, sel in arch:
                 for l in sel:
-                    f.write(f"{n}|{l}\n")
+                    t = "H" if l is sel[0] else l[:1]
+                    if cuenta[t] < 40:
+                        f.write(f"{n}|{l}\n"); cuenta[t] += 1
     print(arg, {p: len(a) for p, a in por_tipo.items()})
