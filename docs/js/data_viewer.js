@@ -15,10 +15,11 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Banca Comercial (CMF) · líneas B1/B2/R1 con gate mensual",
+    group: "Banca Comercial (CMF) · estados financieros validados",
     tables: [
-      { id: "bancos_maestro", name: "bancos.lista_instituciones (⚠ catálogo pendiente de validar)" },
-      { id: "bancos_cmf_lineas", name: "bancos.cmf_lineas_b1_b2_r1 (importes fuente, sin reinterpretar)" }
+      { id: "bancos_maestro", name: "bancos.lista_instituciones (catálogo institucional)" },
+      { id: "bancos_cmf_balance", name: "bancos.cmf_balance_b1_b2 (Balance B1/B2 · importes fuente)" },
+      { id: "bancos_cmf_resultados", name: "bancos.cmf_resultados_r1 (Estado de Resultados R1 · importes fuente)" }
     ]
   },
   {
