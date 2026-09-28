@@ -11,7 +11,9 @@ const DATA_VIEWER_CATALOG = [
     tables: [
       { id: "macro_tasas_rendimientos", name: "macro.tasas_rendimientos (153 registros)" },
       { id: "macro_divisas_mercado", name: "macro.divisas_mercado (153 registros)" },
-      { id: "macro_precios_actividad", name: "macro.precios_actividad (153 registros)" }
+      { id: "macro_precios_actividad", name: "macro.precios_actividad (153 registros)" },
+      { id: "macro_series", name: "macro.series (53 series BCCh, una fila por serie y fecha)" },
+      { id: "macro_series_catalogo", name: "macro.series_catalogo (código, nombre, frecuencia y cobertura)" }
     ]
   },
   {

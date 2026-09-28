@@ -14,6 +14,57 @@
 
 const DATA_DICTIONARY = [
   {
+    id: "macro_series",
+    name: "macro.series",
+    viewName: "macro_series",
+    sector: "macro",
+    sectorLabel: "Macroeconomía (BCCh)",
+    norma: "Estadísticas oficiales BCCh",
+    corte: "Desde 2014",
+    frescura: "Se actualiza sola a diario",
+    modo: "Automático · diario, incremental (cada serie desde su último dato)",
+    ultimaActualizacion: "2026-09-28",
+    registros: "Ver data_manifest.json",
+    origen: "Banco Central de Chile — Base de Datos Estadísticos, API REST SIETE (si3.bcentral.cl/SieteRestWS).",
+    descripcion: "Observaciones de las 53 series del catálogo, una fila por serie y fecha, en su frecuencia original (diaria, mensual o trimestral). El nombre, la unidad y el grupo de cada serie están en macro.series_catalogo (unir por clave).",
+    columnas: [
+      { name: "fecha", type: "VARCHAR", role: "Fecha", significado: "Fecha de la observación (AAAA-MM-DD). En series mensuales y trimestrales es el primer día del período.", contable: "No aplica" },
+      { name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Mes de la observación (AAAA-MM), útil para promediar series diarias por mes.", contable: "No aplica" },
+      { name: "clave", type: "VARCHAR", role: "FK", significado: "Clave corta de la serie (por ejemplo usd_clp, ipsa, desocupacion); ver macro.series_catalogo.", contable: "No aplica" },
+      { name: "serie_id", type: "VARCHAR", role: "Atributo", significado: "Código oficial de la serie en la Base de Datos Estadísticos del BCCh.", contable: "No aplica" },
+      { name: "valor", type: "DOUBLE", role: "Métrica", significado: "Valor publicado por el BCCh, en la unidad indicada en el catálogo.", contable: "No aplica" }
+    ]
+  },
+  {
+    id: "macro_series_catalogo",
+    name: "macro.series_catalogo",
+    viewName: "macro_series_catalogo",
+    sector: "macro",
+    sectorLabel: "Macroeconomía (BCCh)",
+    norma: "Estadísticas oficiales BCCh",
+    corte: "Desde 2014",
+    frescura: "Se actualiza sola a diario",
+    modo: "Automático · diario, incremental (cada serie desde su último dato)",
+    ultimaActualizacion: "2026-09-28",
+    registros: "Ver data_manifest.json",
+    origen: "Banco Central de Chile — Base de Datos Estadísticos, API REST SIETE (si3.bcentral.cl/SieteRestWS).",
+    descripcion: "Una fila por serie publicada: código SIETE, nombre, grupo, frecuencia, unidad, título oficial del BCCh, cobertura y estado de la última consulta.",
+    columnas: [
+      { name: "clave", type: "VARCHAR", role: "PK", significado: "Clave corta de la serie.", contable: "No aplica" },
+      { name: "serie_id", type: "VARCHAR", role: "Atributo", significado: "Código oficial SIETE.", contable: "No aplica" },
+      { name: "nombre", type: "VARCHAR", role: "Atributo", significado: "Nombre descriptivo.", contable: "No aplica" },
+      { name: "grupo", type: "VARCHAR", role: "Atributo", significado: "Tasas, Tipo de cambio, Precios y reajustes, Actividad, Mercado laboral, Commodities, Bolsa, Sector externo, Fiscal o Expectativas.", contable: "No aplica" },
+      { name: "unidad", type: "VARCHAR", role: "Atributo", significado: "Unidad de medida del valor.", contable: "No aplica" },
+      { name: "frecuencia", type: "VARCHAR", role: "Atributo", significado: "Diaria, Mensual o Trimestral.", contable: "No aplica" },
+      { name: "titulo_bcch", type: "VARCHAR", role: "Atributo", significado: "Título oficial entregado por la API del BCCh.", contable: "No aplica" },
+      { name: "primera_fecha", type: "VARCHAR", role: "Fecha", significado: "Primera observación publicada.", contable: "No aplica" },
+      { name: "ultima_fecha", type: "VARCHAR", role: "Fecha", significado: "Última observación publicada.", contable: "No aplica" },
+      { name: "observaciones", type: "BIGINT", role: "Métrica", significado: "Número de observaciones publicadas.", contable: "No aplica" },
+      { name: "estado", type: "VARCHAR", role: "Atributo", significado: "ok, sin datos en el BCCh o el error de la última consulta.", contable: "No aplica" },
+      { name: "ultima_consulta_utc", type: "VARCHAR", role: "Fecha", significado: "Momento de la última consulta a la API (UTC).", contable: "No aplica" }
+    ]
+  },
+  {
     id: "seguros_maestro",
     name: "seguros.lista_entidades",
     viewName: "seguros_maestro",

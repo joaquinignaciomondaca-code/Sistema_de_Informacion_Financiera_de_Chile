@@ -88,5 +88,23 @@ class Pruebas(Base):
         self.assertEqual(sb.cargar()["fecha"].tolist(), ["2020-01-01"])
 
 
+class Decodificacion(unittest.TestCase):
+    def test_respuesta_cp1252(self):
+        cuerpo = json.dumps({"Codigo": 0, "Descripcion": "Success", "Series": {
+            "descripEsp": "Tasa de política monetaria", "Obs": [
+                {"indexDateString": "02-01-2020", "value": "1.75", "statusCode": "OK"},
+                {"indexDateString": "03-01-2020", "value": "NaN", "statusCode": "ND"}]}},
+            ensure_ascii=False).encode("cp1252")
+
+        class R:
+            def __enter__(s): return s
+            def __exit__(s, *a): return False
+            def read(s): return cuerpo
+        with patch.object(sb.urllib.request, "urlopen", return_value=R()):
+            titulo, obs = sb.consultar("X", "2020-01-01", "2020-02-01", "u", "p")
+        self.assertEqual(titulo, "Tasa de política monetaria")
+        self.assertEqual(obs, [("2020-01-02", 1.75)])
+
+
 if __name__ == "__main__":
     unittest.main()
