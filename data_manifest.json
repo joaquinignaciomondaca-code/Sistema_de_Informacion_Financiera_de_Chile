@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "updated_at": "2026-09-28",
   "total_tables": 33,
-  "total_records": 6484952,
+  "total_records": 6485027,
   "classification": {
     "automatico": "Extracción y procesamiento 100% por código autónomo (APIs, scrapers, normalizadores)",
     "manual": "Extracción asistida o transcripción de notas y reportes no estructurados (ej. NotebookLM)"
@@ -244,7 +244,7 @@
       "modo": "Automático",
       "ultima_actualizacion": "2026-09-23",
       "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet",
-      "registros_reales": 47,
+      "registros_reales": 120,
       "descripcion": "Directorio oficial de entidades autorizadas e inscritas ante la CMF para intermediar valores de oferta pública, con validación de RUT bajo Módulo 11 y clasificación por conglomerado financiero.",
       "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Intermediarios de Valores."
     },
@@ -324,7 +324,7 @@
       "modo": "Automático",
       "ultima_actualizacion": "2026-09-23",
       "file_parquet": "outputs/agf/agf_maestro.parquet",
-      "registros_reales": 68,
+      "registros_reales": 70,
       "descripcion": "Catálogo oficial de Administradoras Generales de Fondos (AGF) autorizadas por la Comisión para el Mercado Financiero (CMF) bajo la Ley N° 20.712. Incluye 52 gestoras vigentes y 16 no vigentes/canceladas, junto con su grupo financiero controlador y el número de fondos de inversión administrados.",
       "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Administradoras Generales de Fondos (RGAGF / RACRT)."
     },
