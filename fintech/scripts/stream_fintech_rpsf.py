@@ -4,8 +4,6 @@
 stream_fintech_rpsf.py
 Pipeline de extracción, procesamiento y generación de datasets para:
   1. fintech_rpsf_maestro (Parquet y JSON)
-  2. fintech_servicios_acreditados (Parquet y JSON)
-  3. fintech_finanzas_abiertas_roles (Parquet y JSON)
 Fuente oficial: Comisión para el Mercado Financiero (CMF)
 Registro de Prestadores de Servicios Financieros (RPSF) bajo Ley N° 21.521 (Ley Fintec) y NCG N° 502.
 """
@@ -276,24 +274,7 @@ def main():
     df_maestro.to_json(js_maestro, orient="records", indent=2, force_ascii=False)
     print(f"[OK] fintech_rpsf_maestro guardado: {pq_maestro} ({len(df_maestro)} prestadores)", flush=True)
 
-    # Guardar fintech_servicios_acreditados
-    df_serv = pd.DataFrame(servicios_rows).sort_values(["rut", "servicio_codigo"], ascending=[True, True])
-    pq_serv = os.path.join(out_dir, "fintech_servicios_acreditados.parquet")
-    js_serv = os.path.join(out_dir, "fintech_servicios_acreditados.json")
-    table_s = pa.Table.from_pandas(df_serv)
-    pq.write_table(table_s, pq_serv, compression="snappy")
-    df_serv.to_json(js_serv, orient="records", indent=2, force_ascii=False)
-    print(f"[OK] fintech_servicios_acreditados guardado: {pq_serv} ({len(df_serv)} acreditaciones)", flush=True)
-
-    # Guardar fintech_finanzas_abiertas_roles
-    # Remover duplicados de mismo rol para misma entidad
-    df_sfa = pd.DataFrame(roles_sfa_rows).drop_duplicates(subset=["rut", "rol_sfa"]).sort_values(["rut", "rol_sfa"])
-    pq_sfa = os.path.join(out_dir, "fintech_finanzas_abiertas_roles.parquet")
-    js_sfa = os.path.join(out_dir, "fintech_finanzas_abiertas_roles.json")
-    table_r = pa.Table.from_pandas(df_sfa)
-    pq.write_table(table_r, pq_sfa, compression="snappy")
-    df_sfa.to_json(js_sfa, orient="records", indent=2, force_ascii=False)
-    print(f"[OK] fintech_finanzas_abiertas_roles guardado: {pq_sfa} ({len(df_sfa)} roles SFA)", flush=True)
+    # (2026-09-28) Solo se publica la lista de entidades; las demás tablas se retiraron de la web.
 
     print("=== PIPELINE FINTECH FINALIZADO EXITOSAMENTE ===", flush=True)
 

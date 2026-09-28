@@ -4,8 +4,6 @@
 stream_sistemas_pago.py
 Pipeline de extracción, procesamiento y generación de datasets para:
   1. sistemas_pago_maestro (Parquet y JSON)
-  2. sistemas_pago_balances (Parquet y JSON)
-  3. sistemas_pago_estadisticas_bcch (Parquet y JSON)
 Fuentes: Registros CMF (RGCCO, DCVAL, BCSAG, RVEMI, TPOPE), Balances IFRS y BCCh SIETE.
 """
 
@@ -472,63 +470,7 @@ def main():
     df_maestro.to_json(js_maestro, orient="records", indent=2, force_ascii=False)
     print(f"[OK] sistemas_pago_maestro guardado: {pq_maestro} ({len(df_maestro)} infraestructuras)", flush=True)
 
-    # 2. Balances IFRS Trimestrales de las Cámaras e Infraestructuras
-    pq_bal = os.path.join(out_dir, "sistemas_pago_balances.parquet")
-    js_bal = os.path.join(out_dir, "sistemas_pago_balances.json")
-    if os.path.exists(pq_bal):
-        print(f"[CACHE] Balances ya existentes en {pq_bal}. Conservando 82 balances.", flush=True)
-    else:
-        print("2. Descargando Balances IFRS trimestrales de cámaras (ComDer, CCLV, Transbank)...", flush=True)
-        ifrs_ents = [e for e in SISTEMAS_PAGO_CONFIG if e.get("tiene_ifrs_cmf")]
-        tasks = []
-        for y in range(2018, 2027):
-            for m in [3, 6, 9, 12]:
-                if y == 2026 and m > 6:
-                    continue
-                periodo = f"{y}-{m:02d}"
-                tc = tc_map.get(periodo, 900.0)
-                for ent in ifrs_ents:
-                    tasks.append((ent, y, m, periodo, tc))
-
-        print(f"Total consultas de balance a ejecutar: {len(tasks)}", flush=True)
-        balances_rows = []
-        with ThreadPoolExecutor(max_workers=6) as ex:
-            futs = {ex.submit(fetch_infra_balance_task, t): t for t in tasks}
-            completed = 0
-            for fut in as_completed(futs):
-                res = fut.result()
-                if res:
-                    balances_rows.append(res)
-                completed += 1
-                if completed % 25 == 0:
-                    print(f"  [{completed}/{len(tasks)}] balances consultados... encontrados: {len(balances_rows)}", flush=True)
-
-        print(f"Total balances IFRS extraídos exitosamente: {len(balances_rows)}", flush=True)
-
-        if balances_rows:
-            df_bal = pd.DataFrame(balances_rows)
-            cols_b = [
-                "rut", "periodo", "razon_social",
-                "total_activos_m_clp", "total_pasivos_m_clp", "patrimonio_neto_m_clp",
-                "efectivo_y_equivalentes_m_clp", "ganancia_perdida_ejercicio_m_clp",
-                "total_activos_m_usd", "patrimonio_neto_m_usd"
-            ]
-            df_bal = df_bal[cols_b].sort_values(["periodo", "total_activos_m_clp"], ascending=[False, False])
-            table_b = pa.Table.from_pandas(df_bal)
-            pq.write_table(table_b, pq_bal, compression="snappy")
-            df_bal.to_json(js_bal, orient="records", indent=2, force_ascii=False)
-            print(f"[OK] sistemas_pago_balances guardado: {pq_bal} ({len(df_bal)} balances trimestrales)", flush=True)
-
-    # 3. Estadísticas BCCh de Medios de Pago y Tráfico
-    stats_rows = extract_bcch_payment_stats(tc_map)
-    if stats_rows:
-        df_stats = pd.DataFrame(stats_rows).sort_values("periodo", ascending=False)
-        pq_stats = os.path.join(out_dir, "sistemas_pago_estadisticas_bcch.parquet")
-        js_stats = os.path.join(out_dir, "sistemas_pago_estadisticas_bcch.json")
-        table_s = pa.Table.from_pandas(df_stats)
-        pq.write_table(table_s, pq_stats, compression="snappy")
-        df_stats.to_json(js_stats, orient="records", indent=2, force_ascii=False)
-        print(f"[OK] sistemas_pago_estadisticas_bcch guardado: {pq_stats} ({len(df_stats)} periodos mensuales)", flush=True)
+    # (2026-09-28) Solo se publica la lista de entidades; las demás tablas se retiraron de la web.
 
     print("=== PIPELINE SISTEMAS DE PAGO FINALIZADO EXITOSAMENTE ===", flush=True)
 

@@ -64,19 +64,11 @@ class ExportModalController {
       patrimonios_separados_balance_cuentas: "outputs/securitizadoras/patrimonios_separados_balance_cuentas.parquet",
       ccaf_maestro: "outputs/cajas_compensacion/ccaf_maestro.parquet",
       ccaf_caratula_totales: "outputs/cajas_compensacion/ccaf_caratula_totales.parquet",
-      ccaf_nota8_efectivo_resumen: "outputs/cajas_compensacion/ccaf_nota8_efectivo_resumen.parquet",
-      ccaf_nota8_dap_detalle: "outputs/cajas_compensacion/ccaf_nota8_dap_detalle.parquet",
-      ccaf_nota8_repos_detalle: "outputs/cajas_compensacion/ccaf_nota8_repos_detalle.parquet",
-      ccaf_colocaciones_credito_social: "outputs/cajas_compensacion/ccaf_colocaciones_credito_social.parquet",
       agf_maestro: "outputs/agf/agf_maestro.parquet",
       agf_balance: "outputs/agf/agf_balance.parquet",
       agf_resultados: "outputs/agf/agf_resultados.parquet",
       sistemas_pago_maestro: "outputs/sistemas_pago/sistemas_pago_maestro.parquet",
-      sistemas_pago_balances: "outputs/sistemas_pago/sistemas_pago_balances.parquet",
-      sistemas_pago_estadisticas_bcch: "outputs/sistemas_pago/sistemas_pago_estadisticas_bcch.parquet",
       fintech_rpsf_maestro: "outputs/fintech/fintech_rpsf_maestro.parquet",
-      fintech_servicios_acreditados: "outputs/fintech/fintech_servicios_acreditados.parquet",
-      fintech_finanzas_abiertas_roles: "outputs/fintech/fintech_finanzas_abiertas_roles.parquet"
     };
 
     // Estimaciones históricas de filas por tabla
