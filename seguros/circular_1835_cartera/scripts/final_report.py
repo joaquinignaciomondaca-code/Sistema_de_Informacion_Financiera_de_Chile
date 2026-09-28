@@ -1,9 +1,10 @@
+from pathlib import Path
 import os
 import shutil
 import pandas as pd
 
 ctrl = pd.read_csv(r'seguros/circular_1835_cartera/control_descargas_activos.csv')
-total, used, free = shutil.disk_usage('C:/')
+total, used, free = shutil.disk_usage(Path(__file__).resolve().anchor)
 
 print('=' * 85)
 print('BALANCE FINAL: HISTORIA COMPLETA CIRCULAR 1835 CMF (2007 - PRESENTE)')
