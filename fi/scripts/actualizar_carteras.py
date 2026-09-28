@@ -213,10 +213,16 @@ def fecha(txt: str):
     s = txt.strip()
     if s in ("", "NA", "-", "99999999") or s.endswith("9999"):
         return None
-    m = re.fullmatch(r"(\d{1,2})/(\d{1,2})/(\d{4})", s)
-    if not m:
-        raise ValueError(f"fecha {txt!r}")
-    d, mth, y = int(m.group(1)), int(m.group(2)), int(m.group(3))
+    # Desde 2024-06 algunas páginas traen la hora ("24/01/2019 00:00:00"); se descarta.
+    hora = r"(?:\s+\d{1,2}:\d{2}(?::\d{2})?(?:\s*[AaPp]\.?\s*[Mm]\.?)?)?"
+    m = re.fullmatch(r"(\d{1,2})/(\d{1,2})/(\d{4})" + hora, s)
+    if m:
+        d, mth, y = int(m.group(1)), int(m.group(2)), int(m.group(3))
+    else:
+        m = re.fullmatch(r"(\d{4})-(\d{2})-(\d{2})" + hora, s)
+        if not m:
+            raise ValueError(f"fecha {txt!r}")
+        y, mth, d = int(m.group(1)), int(m.group(2)), int(m.group(3))
     datetime(y, mth, d)
     return f"{y:04d}-{mth:02d}-{d:02d}"
 
