@@ -1,0 +1,56 @@
+name: Sonda temporal fuentes masivas IFRS (AGF, securitizadoras, CCAF, cooperativas, corredoras)
+on:
+  push:
+    branches: [arena/01a0e680-monitor-financiero-chile]
+    paths: [.github/workflows/sonda_ifrs.yml]
+permissions:
+  contents: write
+jobs:
+  sonda:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Descargar y cruzar
+        run: |
+          mkdir -p scratch/sonda_ifrs && cd scratch/sonda_ifrs
+          UA='Mozilla/5.0 (compatible; MonitorFinancieroChile/1.0)'
+          curl -s -A "$UA" --max-time 120 'https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php' -o indice.html
+          curl -s -A "$UA" --max-time 300 'https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202512&termino=202512' -o ifrs_202512.txt
+          curl -s -A "$UA" --max-time 300 'https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/intermediarios_ifrs1.php?lang=es&sociedad%5B%5D=0&ag=0&indcon=0&xls=y&tiposociedad=1&cuenta=&estimado=2&vsn=2' -o intermediarios.xls
+          ls -la
+          python3 - <<'PY'
+          import json, csv, io, collections
+          raw=open('ifrs_202512.txt','rb').read()
+          try: t=raw.decode('utf-8')
+          except: t=raw.decode('latin-1')
+          ents=collections.OrderedDict(); estados=collections.Counter(); monedas=collections.Counter()
+          for c in csv.reader(io.StringIO(t), delimiter=';'):
+              if len(c)>=9:
+                  ents.setdefault(c[1].strip(), (c[2].strip(), set()))[1].add(c[3].strip()); estados[c[8].strip()]+=1; monedas[c[4].strip()]+=1
+          out=open('resumen.txt','w')
+          print('lineas', t.count('\n'), 'entidades', len(ents), file=out)
+          print('estados', estados.most_common(40), file=out); print('monedas', monedas.most_common(), file=out)
+          print('primeras lineas:', t[:1500], file=out)
+          for nombre, f, key in [('agf','docs/outputs/agf/agf_maestro.json','rut'),('securitizadoras','docs/outputs/securitizadoras/securitizadoras_maestro.json','rut'),('ccaf','docs/outputs/cajas_compensacion/ccaf_maestro.json','rut'),('cooperativas','docs/outputs/cooperativas/cooperativas_maestro.json','rut_cuerpo'),('corredoras','docs/outputs/corredoras_bolsa/corredoras_bolsa_maestro.json','rut')]:
+              d=json.load(open('../../'+f)); ruts={str(x[key]).split('-')[0].replace('.','') for x in d}
+              hit=sorted(r for r in ruts if r in ents)
+              print(f'\n== {nombre}: {len(hit)} de {len(ruts)} en el TXT IFRS', file=out)
+              for r in hit: print('  ', r, ents[r][0], sorted(ents[r][1]), file=out)
+          # entidades con palabras clave
+          for kw in ['ADMINISTRADORA GENERAL','SECURITIZADORA','COMPENSACION','COOPERATIVA','CORREDOR']:
+              print(f'\n== nombre contiene {kw}:', file=out)
+              for r,(n,k) in ents.items():
+                  if kw in n.upper(): print('  ', r, n, sorted(k), file=out)
+          PY
+          head -c 400 intermediarios.xls > intermediarios_inicio.txt || true
+          python3 -c "
+          b=open('intermediarios.xls','rb').read(); print(len(b)); print(b[:3000].decode('utf-8','replace'))" > intermediarios_resumen.txt
+          head -c 20000 indice.html > indice_inicio.html
+          rm -f ifrs_202512.txt intermediarios.xls indice.html
+      - name: Guardar
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scratch/sonda_ifrs
+          git commit -m "Sonda fuentes IFRS" && for i in 1 2 3; do git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && break; sleep 10; done
