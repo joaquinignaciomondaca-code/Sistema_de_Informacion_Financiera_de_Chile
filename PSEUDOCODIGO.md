@@ -194,6 +194,9 @@ publish_backfill.publish():
     luego workflow corre scripts/audit_navigation.py + audit_web_full.py
 audit_structured_sample : coteja archivo plano vs ficha HTML (2 entidades)
 publish_structured_sample / publish_income_sample : publican SOLO filas aprobadas (run id + valores fijos)
+    → sus Parquet ya NO se muestran en la web (2026-09-28): repetían cifras de la serie IFRS. Quedan como evidencia.
+Resultados IFRS: "Ganancia (pérdida)" aparece 3 veces por estado (ERFG/ERNG ordinal 1 y 2 + ERI), mismo valor.
+    utilidad del período = estado IN (ERFG, ERNG) AND repeticion_contexto = 1   → chip generado por profit_queries()
 Legado: pipeline_stream_factoring_leasing (rutas C:\), stream_cmf_eeff_series, 02_extract_…_notas (PDF)
 ```
 

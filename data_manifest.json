@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
   "updated_at": "2026-09-28",
-  "total_tables": 63,
-  "total_records": 15493510,
+  "total_tables": 61,
+  "total_records": 15493506,
   "classification": {
     "automatico": "Extracción y procesamiento 100% por código autónomo (APIs, scrapers, normalizadores)",
     "manual": "Extracción asistida o transcripción de notas y reportes no estructurados (ej. NotebookLM)"
@@ -935,38 +935,6 @@
       "registros_reales": 1,
       "descripcion": "Una fila de prueba cotejada en CMF (activos, pasivo reportado, patrimonio/activo neto y resultado). No es el universo completo.",
       "origen": "CMF ficha individual y XML del mismo cierre; run Actions 36332905593."
-    },
-    {
-      "id": "factoring_leasing_eeff_muestra_cmf",
-      "name": "factoring_leasing.eeff_muestra_cmf",
-      "view_name": "factoring_leasing_eeff_muestra_cmf",
-      "sector": "factoring_leasing",
-      "sector_label": "Factoring & Leasing",
-      "norma": "Estados financieros IFRS CMF; muestra cotejada",
-      "corte": "2022-06 y 2022-09",
-      "frescura": "Muestra de 2 filas; no es serie del sector",
-      "modo": "Archivo estructurado cotejado contra ficha CMF",
-      "ultima_actualizacion": "2026-09-27",
-      "file_parquet": "outputs/factoring_leasing/factoring_leasing_eeff_muestra_cmf.parquet",
-      "registros_reales": 2,
-      "descripcion": "Una entidad de factoring y una de leasing con activos, pasivos, patrimonio y efectivo cotejados contra la ficha CMF del mismo período. No representa al resto del sector ni valida XBRL/PDF.",
-      "origen": "CMF ficha de información financiera + archivo estructurado; corrida Actions 36337279448."
-    },
-    {
-      "id": "factoring_leasing_resultados_muestra_cmf",
-      "name": "factoring_leasing.resultados_muestra_cmf",
-      "view_name": "factoring_leasing_resultados_muestra_cmf",
-      "sector": "factoring_leasing",
-      "sector_label": "Factoring & Leasing",
-      "norma": "Resultados IFRS CMF; muestra cotejada",
-      "corte": "2022-06 y 2022-09",
-      "frescura": "Muestra de 2 filas; no es serie completa",
-      "modo": "Archivo estructurado cotejado contra ficha CMF",
-      "ultima_actualizacion": "2026-09-27",
-      "file_parquet": "outputs/factoring_leasing/factoring_leasing_resultados_muestra_cmf.parquet",
-      "registros_reales": 2,
-      "descripcion": "Dos cuentas de resultado acumulado del ejercicio cotejadas para un factoring y un leasing. No es el estado completo ni el sector.",
-      "origen": "CMF ficha y archivo estructurado TXT; Actions 36337715177."
     },
     {
       "id": "factoring_leasing_balance_serie_ifrs_cmf",

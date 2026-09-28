@@ -651,42 +651,14 @@ const EXPLORER_TREE = [
             id: "fl_resultados_serie_ifrs_cmf_folder", type: "circular",
             label: "Resultados · Serie CMF (2009-03–2026-06)", badge: "70 cierres · 24 RUT", badgeType: "data", status: "active",
             sector: "factoring_leasing",
-            chips: [{ label: "Cuentas de resultados CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_resultados_serie_ifrs_cmf ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;" }],
+            chips: [{ label: "Cuentas de resultados CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_resultados_serie_ifrs_cmf ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;" },
+                    { label: "Utilidad del período · 1 fila por estado", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, estado_financiero, valor_archivo AS ganancia_perdida FROM factoring_leasing_resultados_serie_ifrs_cmf WHERE lower(cuenta) = 'ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion_contexto = 1 ORDER BY periodo DESC, rut;" },
+                    { label: "Dónde se repite 'Ganancia (pérdida)'", query: "SELECT estado_financiero, repeticion_contexto, count(*) AS filas, count(DISTINCT (periodo, rut, tipo_balance)) AS estados FROM factoring_leasing_resultados_serie_ifrs_cmf WHERE lower(cuenta) = 'ganancia (pérdida)' GROUP BY ALL ORDER BY estado_financiero, repeticion_contexto;" }],
             tables: [{ id: "factoring_leasing_resultados_serie_ifrs_cmf", name: "factoring_leasing.resultados_serie_ifrs_cmf (21,464 cuentas; no cotejo integral)",
                        rows: "21,464 cuentas · 70 cierres · extracción sin cotejo integral",
                        file: "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet" }]
           },
   // END AUTO FL IFRS SERIES NAVIGATION
-          {
-            id: "fl_balance_muestra_cmf_folder",
-            type: "circular",
-            label: "Balance · Muestra cotejada CMF (2 filas)",
-            badge: "2 entidades · 2022",
-            badgeType: "data",
-            status: "active",
-            sector: "factoring_leasing",
-            chips: [
-              { label: "Balance cotejado (miles de pesos)", query: "SELECT segmento, rut, nombre_en_archivo_y_ficha, periodo, total_activos_miles_clp, total_pasivos_miles_clp, patrimonio_miles_clp, efectivo_miles_clp, fuente_ficha_cmf FROM factoring_leasing_eeff_muestra_cmf ORDER BY segmento;" }
-            ],
-            tables: [
-              { id: "factoring_leasing_eeff_muestra_cmf", name: "factoring_leasing.balance_muestra_cmf", rows: "2 filas cotejadas · no es el sector", file: "outputs/factoring_leasing/factoring_leasing_eeff_muestra_cmf.parquet" }
-            ]
-          },
-          {
-            id: "fl_resultados_muestra_cmf_folder",
-            type: "circular",
-            label: "Estado de resultados · Muestra cotejada CMF (2 filas)",
-            badge: "2 entidades · 2022",
-            badgeType: "data",
-            status: "active",
-            sector: "factoring_leasing",
-            chips: [
-              { label: "Resultados acumulados desde enero (miles de pesos)", query: "SELECT segmento, rut, periodo, resultado_antes_impuestos_miles_clp, resultado_operaciones_continuadas_miles_clp, definicion_periodo_resultado, fuente_ficha_cmf FROM factoring_leasing_resultados_muestra_cmf ORDER BY segmento;" }
-            ],
-            tables: [
-              { id: "factoring_leasing_resultados_muestra_cmf", name: "factoring_leasing.resultados_muestra_cmf", rows: "2 filas cotejadas · acumulado desde enero", file: "outputs/factoring_leasing/factoring_leasing_resultados_muestra_cmf.parquet" }
-            ]
-          }
         ]
       }
     ]

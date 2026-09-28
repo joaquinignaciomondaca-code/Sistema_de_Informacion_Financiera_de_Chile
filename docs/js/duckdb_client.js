@@ -75,8 +75,6 @@ const SEMANTIC_VIEWS = [
   { name: "factoring_leasing_resultados_serie_ifrs_cmf", file: "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet" },
   // END AUTO FL IFRS SERIES VIEWS
   { name: "factoring_leasing_maestro", file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet" },
-  { name: "factoring_leasing_eeff_muestra_cmf", file: "outputs/factoring_leasing/factoring_leasing_eeff_muestra_cmf.parquet" },
-  { name: "factoring_leasing_resultados_muestra_cmf", file: "outputs/factoring_leasing/factoring_leasing_resultados_muestra_cmf.parquet" },
 
   // CORREDORAS DE BOLSA (CMF)
   { name: "corredoras_bolsa_registro_universo", file: "outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet" },
