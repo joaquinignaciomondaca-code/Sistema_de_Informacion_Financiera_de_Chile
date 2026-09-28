@@ -21,7 +21,8 @@ on:
         default: false
         type: boolean
   schedule:
-    - cron: '0 11 * * *'
+    # 3 veces al mes (los ZIP CMF son mensuales); laboratorio sin publicación.
+    - cron: '0 11 4,14,24 * *'
 
 permissions:
   contents: read
