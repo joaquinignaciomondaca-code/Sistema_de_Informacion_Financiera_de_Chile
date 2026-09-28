@@ -1040,7 +1040,7 @@ const EXPLORER_TREE = [
     label: "COOPERATIVAS DE AHORRO Y CRÉDITO (CMF)",
     badges: [
       { type: "entities", text: "7 Entidades", title: "Cooperativas de ahorro y crédito supervisadas por la CMF" },
-      { type: "data", text: "700+ Datos", title: "Balances IFRS mensuales y colocaciones (2018 a 2026)" }
+      { type: "data", text: "52.000+ Datos", title: "Balances IFRS mensuales, notas y Reporte Financiero CMF por cuenta (2017 a 2026)" }
     ],
     status: "active",
     children: [
@@ -1082,6 +1082,27 @@ const EXPLORER_TREE = [
             ],
             tables: [
               { id: "cooperativas_balance_resumen", name: "cooperativas.balance_resumen", rows: "294 balances", file: "outputs/cooperativas/cooperativas_balance_resumen.parquet" }
+            ]
+          },
+          {
+            id: "circ_coop_cmf_reporte",
+            type: "circular",
+            label: "Balance y Resultados CMF · por cuenta (2017+)",
+            badge: "115 Meses",
+            badgeType: "data",
+            status: "active",
+            sector: "cooperativas",
+            chips: [
+              { label: "Activos totales por cooperativa (último mes)", query: "SELECT periodo, cooperativa, monto_mm_clp AS activos_mm_clp FROM cooperativas_cmf_balance WHERE seccion = 'activos' AND codigo_concepto = 'activos_totales' AND periodo = (SELECT MAX(periodo) FROM cooperativas_cmf_balance) ORDER BY activos_mm_clp DESC;" },
+              { label: "Evolución de los activos del sistema (2017-2026)", query: "SELECT periodo, SUM(monto_mm_clp) AS activos_mm_clp FROM cooperativas_cmf_balance WHERE codigo_concepto = 'activos_totales' GROUP BY periodo ORDER BY periodo;" },
+              { label: "Cartera de colocaciones por tipo (último mes)", query: "SELECT cooperativa, codigo_concepto, monto_mm_clp FROM cooperativas_cmf_balance WHERE seccion = 'activos' AND codigo_concepto IN ('colocaciones_comerciales', 'colocaciones_consumo', 'colocaciones_vivienda') AND periodo = (SELECT MAX(periodo) FROM cooperativas_cmf_balance) ORDER BY cooperativa, codigo_concepto;" },
+              { label: "Excedentes del ejercicio por cooperativa (últimos diciembres)", query: "SELECT periodo, cooperativa, monto_mm_clp FROM cooperativas_cmf_resultados WHERE codigo_concepto = 'resultado_ejercicio' AND periodo LIKE '%-12' ORDER BY periodo DESC, monto_mm_clp DESC LIMIT 21;" },
+              { label: "Margen de intereses y gasto en provisiones (año en curso)", query: "SELECT periodo, cooperativa, SUM(CASE WHEN codigo_concepto = 'margen_intereses' THEN monto_mm_clp END) AS margen_intereses_mm_clp, SUM(CASE WHEN codigo_concepto = 'gasto_provisiones' THEN monto_mm_clp END) AS gasto_provisiones_mm_clp FROM cooperativas_cmf_resultados WHERE periodo >= '2026-01' GROUP BY periodo, cooperativa ORDER BY cooperativa, periodo;" },
+              { label: "Depósitos y captaciones del sistema (2017-2026)", query: "SELECT periodo, SUM(monto_mm_clp) AS depositos_mm_clp FROM cooperativas_cmf_balance WHERE codigo_concepto = 'depositos_captaciones' GROUP BY periodo ORDER BY periodo;" }
+            ],
+            tables: [
+              { id: "cooperativas_cmf_balance", name: "cooperativas.cmf_balance", rows: "Activos y pasivos · 2017-01 a 2026-07", file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet" },
+              { id: "cooperativas_cmf_resultados", name: "cooperativas.cmf_resultados", rows: "Resultados y margen · 2017-01 a 2026-07", file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet" }
             ]
           },
           {

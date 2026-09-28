@@ -107,6 +107,11 @@ const SEMANTIC_VIEWS = [
   { name: "cooperativas_maestro", file: "outputs/cooperativas/cooperativas_maestro.parquet" },
   { name: "cooperativas_balance_resumen", file: "outputs/cooperativas/cooperativas_balance_resumen.parquet" },
   { name: "cooperativas_nota_efectivo_detalle", file: "outputs/cooperativas/cooperativas_nota_efectivo_detalle.parquet" },
+  // Reporte Financiero CMF por cooperativa (2017-01+): la misma planilla trae balance y
+  // resultados, separados aquí por el campo `estado`. La serie se publica en bloque: si un
+  // período no pasa la validación, no se publica ninguno (no hay particiones a medias).
+  { name: "cooperativas_cmf_balance", file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet", where: "estado = 'balance'" },
+  { name: "cooperativas_cmf_resultados", file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet", where: "estado = 'resultados'" },
 
   // CAJAS DE COMPENSACION (CCAF / SUSESO - Ley 18.833 / CMF)
   { name: "ccaf_maestro", file: "outputs/cajas_compensacion/ccaf_maestro.parquet" },
