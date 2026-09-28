@@ -3317,32 +3317,831 @@
         "generales f202504g.77096952: el total declara 4 líneas y el archivo tiene 5",
         "generales x202504g.96573590: el total declara 5 líneas y el archivo tiene 6"
       ]
+    },
+    "2025-05": {
+      "formato": "v2024",
+      "companias": {
+        "vida": 35,
+        "generales": 33
+      },
+      "registros": {
+        "renta_fija": 105009,
+        "acciones": 913,
+        "fondos_mutuos": 803,
+        "bienes_raices": 34209,
+        "extranjeros": 5547,
+        "derivados": 4622,
+        "pactos": 127,
+        "control_inversiones": 885
+      },
+      "avisos": 31,
+      "detalle_avisos": [
+        "vida a202505v.76263414: el total declara 8 líneas y el archivo tiene 2",
+        "vida a202505v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida a202505v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-05",
+        "vida a202505v.96549050: 0 registros de totales",
+        "vida a202505v.99185000: el total declara 13 líneas y el archivo tiene 12",
+        "vida a202505v.99301000: el total declara 73 líneas y el archivo tiene 80",
+        "vida c202505v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c202505v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c202505v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c202505v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-05",
+        "vida c202505v.96549050: 0 registros de totales",
+        "vida c202505v.99185000: el total declara 23 líneas y el archivo tiene 27",
+        "vida c202505v.99289000: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c202505v.99289000: el encabezado dice 202025 pero la CMF lo publica en 2025-05",
+        "vida c202505v.99301000: el total declara 30 líneas y el archivo tiene 37",
+        "vida c202505v.99588060: el total declara 7 líneas y el archivo tiene 8",
+        "vida f202505v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida f202505v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-05",
+        "vida f202505v.96549050: 0 registros de totales",
+        "vida p202505v.99279000: el total declara 39 líneas y el archivo tiene 44",
+        "vida x202505v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida x202505v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-05",
+        "vida x202505v.96549050: 0 registros de totales",
+        "vida x202505v.99289000: el total declara 634 líneas y el archivo tiene 626",
+        "vida ARCHIVO EXCLUIDO · c202505v.99289000: tipo de registro 'x' desconocido (línea 2)",
+        "generales b202505g.99225000: el total declara 4 líneas y el archivo tiene 3",
+        "generales c202505g.76042965: el total declara 3 líneas y el archivo tiene 11",
+        "generales c202505g.77591207: el total declara 2 líneas y el archivo tiene 10",
+        "generales c202505g.99017000: el total declara 13 líneas y el archivo tiene 16",
+        "generales c202505g.99288000: el total declara 13 líneas y el archivo tiene 14",
+        "generales ARCHIVO EXCLUIDO · a202505g.99017000: 1 líneas con largo distinto de 572 (p. ej. línea 2 con 571)"
+      ],
+      "archivos_excluidos": [
+        "vida c202505v.99289000: tipo de registro 'x' desconocido (línea 2)",
+        "generales a202505g.99017000: 1 líneas con largo distinto de 572 (p. ej. línea 2 con 571)"
+      ]
+    },
+    "2025-06": {
+      "formato": "v2024",
+      "companias": {
+        "vida": 35,
+        "generales": 32
+      },
+      "registros": {
+        "renta_fija": 105565,
+        "acciones": 920,
+        "fondos_mutuos": 785,
+        "bienes_raices": 34191,
+        "extranjeros": 5512,
+        "derivados": 4678,
+        "pactos": 113,
+        "control_inversiones": 918
+      },
+      "avisos": 27,
+      "detalle_avisos": [
+        "vida a202506v.76263414: el total declara 8 líneas y el archivo tiene 2",
+        "vida a202506v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida a202506v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-06",
+        "vida a202506v.96549050: 0 registros de totales",
+        "vida a202506v.99185000: el total declara 13 líneas y el archivo tiene 12",
+        "vida a202506v.99301000: el total declara 72 líneas y el archivo tiene 79",
+        "vida c202506v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c202506v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c202506v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c202506v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-06",
+        "vida c202506v.96549050: 0 registros de totales",
+        "vida c202506v.99301000: el total declara 30 líneas y el archivo tiene 37",
+        "vida c202506v.99588060: el total declara 7 líneas y el archivo tiene 8",
+        "vida f202506v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida f202506v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-06",
+        "vida f202506v.96549050: 0 registros de totales",
+        "vida p202506v.96571890: el total declara 440 líneas y el archivo tiene 494",
+        "vida x202506v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida x202506v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-06",
+        "vida x202506v.96549050: 0 registros de totales",
+        "generales b202506g.99225000: el total declara 4 líneas y el archivo tiene 3",
+        "generales c202506g.76042965: el total declara 3 líneas y el archivo tiene 11",
+        "generales c202506g.77591207: el total declara 2 líneas y el archivo tiene 10",
+        "generales c202506g.99017000: el total declara 14 líneas y el archivo tiene 17",
+        "generales c202506g.99288000: el total declara 13 líneas y el archivo tiene 14",
+        "generales f202506g.76620932: el total declara 9 líneas y el archivo tiene 7",
+        "generales f202506g.96573590: el total declara 3 líneas y el archivo tiene 4"
+      ]
+    },
+    "2025-07": {
+      "formato": "v2024",
+      "companias": {
+        "vida": 35,
+        "generales": 32
+      },
+      "registros": {
+        "renta_fija": 105660,
+        "acciones": 910,
+        "fondos_mutuos": 747,
+        "bienes_raices": 34361,
+        "extranjeros": 5523,
+        "derivados": 4662,
+        "pactos": 85,
+        "control_inversiones": 920
+      },
+      "avisos": 27,
+      "detalle_avisos": [
+        "vida a202507v.76263414: el total declara 8 líneas y el archivo tiene 2",
+        "vida a202507v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida a202507v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-07",
+        "vida a202507v.96549050: 0 registros de totales",
+        "vida a202507v.99301000: el total declara 72 líneas y el archivo tiene 79",
+        "vida c202507v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c202507v.76282191: el total declara 12 líneas y el archivo tiene 9",
+        "vida c202507v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c202507v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c202507v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-07",
+        "vida c202507v.96549050: 0 registros de totales",
+        "vida c202507v.96837630: el total declara 13 líneas y el archivo tiene 14",
+        "vida c202507v.99301000: el total declara 30 líneas y el archivo tiene 37",
+        "vida f202507v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida f202507v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-07",
+        "vida f202507v.96549050: 0 registros de totales",
+        "vida x202507v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida x202507v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-07",
+        "vida x202507v.96549050: 0 registros de totales",
+        "generales a202507g.99037000: el total declara 12 líneas y el archivo tiene 11",
+        "generales b202507g.96573590: el total declara 126 líneas y el archivo tiene 125",
+        "generales c202507g.76042965: el total declara 3 líneas y el archivo tiene 11",
+        "generales c202507g.77591207: el total declara 2 líneas y el archivo tiene 10",
+        "generales c202507g.99017000: el total declara 13 líneas y el archivo tiene 16",
+        "generales c202507g.99288000: el total declara 13 líneas y el archivo tiene 14",
+        "generales f202507g.76620932: el total declara 9 líneas y el archivo tiene 7",
+        "generales f202507g.96573590: el total declara 3 líneas y el archivo tiene 4"
+      ]
+    },
+    "2025-08": {
+      "formato": "v2024",
+      "companias": {
+        "vida": 33,
+        "generales": 32
+      },
+      "registros": {
+        "renta_fija": 105623,
+        "acciones": 905,
+        "fondos_mutuos": 755,
+        "bienes_raices": 34741,
+        "extranjeros": 5515,
+        "derivados": 4693,
+        "pactos": 110,
+        "control_inversiones": 903
+      },
+      "avisos": 33,
+      "detalle_avisos": [
+        "vida a202508v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida a202508v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-08",
+        "vida a202508v.96549050: 0 registros de totales",
+        "vida a202508v.99301000: el total declara 72 líneas y el archivo tiene 79",
+        "vida c202508v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c202508v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c202508v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c202508v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-08",
+        "vida c202508v.96549050: 0 registros de totales",
+        "vida c202508v.99301000: el total declara 30 líneas y el archivo tiene 37",
+        "vida f202508v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida f202508v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-08",
+        "vida f202508v.96549050: 0 registros de totales",
+        "vida p202508v.99279000: el total declara 81 líneas y el archivo tiene 88",
+        "vida x202508v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida x202508v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-08",
+        "vida x202508v.96549050: 0 registros de totales",
+        "vida x202508v.99012000: el total declara 530 líneas y el archivo tiene 531",
+        "vida x202508v.99289000: el total declara 596 líneas y el archivo tiene 595",
+        "generales b202508g.96573590: el total declara 126 líneas y el archivo tiene 125",
+        "generales c202508g.76042965: el total declara 3 líneas y el archivo tiene 11",
+        "generales c202508g.76173258: el total declara 8 líneas y el archivo tiene 9",
+        "generales c202508g.76844788: el total declara 8 líneas y el archivo tiene 6",
+        "generales c202508g.77591207: el total declara 2 líneas y el archivo tiene 10",
+        "generales c202508g.99017000: el total declara 13 líneas y el archivo tiene 16",
+        "generales c202508g.99288000: el total declara 13 líneas y el archivo tiene 14",
+        "generales f202508g.76039758: el encabezado dice 202507 pero la CMF lo publica en 2025-08",
+        "generales f202508g.76620932: el total declara 9 líneas y el archivo tiene 7",
+        "generales f202508g.76810563: el total declara 9 líneas y el archivo tiene 10",
+        "generales f202508g.96573590: el total declara 3 líneas y el archivo tiene 4",
+        "renta_fija: campo ilegible, queda vacío · generales i202508g.76212519 línea 5: tasa_emision_pct (número '########')",
+        "renta_fija: campo ilegible, queda vacío · generales i202508g.76212519 línea 6: tasa_emision_pct (número '########')",
+        "renta_fija: campo ilegible, queda vacío · generales i202508g.76212519 línea 7: tasa_emision_pct (número '########')"
+      ]
+    },
+    "2025-09": {
+      "formato": "v2024",
+      "companias": {
+        "vida": 33,
+        "generales": 32
+      },
+      "registros": {
+        "renta_fija": 105653,
+        "acciones": 908,
+        "fondos_mutuos": 760,
+        "bienes_raices": 34925,
+        "extranjeros": 5493,
+        "derivados": 4844,
+        "pactos": 142,
+        "control_inversiones": 903
+      },
+      "avisos": 32,
+      "detalle_avisos": [
+        "vida a202509v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida a202509v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-09",
+        "vida a202509v.96549050: 0 registros de totales",
+        "vida a202509v.99185000: el total declara 13 líneas y el archivo tiene 12",
+        "vida a202509v.99301000: el total declara 70 líneas y el archivo tiene 77",
+        "vida c202509v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c202509v.76511423: el total declara 11 líneas y el archivo tiene 10",
+        "vida c202509v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c202509v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c202509v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-09",
+        "vida c202509v.96549050: 0 registros de totales",
+        "vida c202509v.96588080: el encabezado dice 202508 pero la CMF lo publica en 2025-09",
+        "vida c202509v.99301000: el total declara 30 líneas y el archivo tiene 37",
+        "vida c202509v.99588060: el total declara 10 líneas y el archivo tiene 9",
+        "vida f202509v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida f202509v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-09",
+        "vida f202509v.96549050: 0 registros de totales",
+        "vida x202509v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida x202509v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-09",
+        "vida x202509v.96549050: 0 registros de totales",
+        "generales b202509g.96573590: el total declara 126 líneas y el archivo tiene 125",
+        "generales c202509g.76042965: el total declara 3 líneas y el archivo tiene 10",
+        "generales c202509g.76844788: el total declara 8 líneas y el archivo tiene 6",
+        "generales c202509g.77591207: el total declara 2 líneas y el archivo tiene 10",
+        "generales c202509g.96837640: el total declara 14 líneas y el archivo tiene 15",
+        "generales c202509g.99017000: el total declara 13 líneas y el archivo tiene 16",
+        "generales c202509g.99288000: el total declara 13 líneas y el archivo tiene 14",
+        "generales f202509g.76620932: el total declara 9 líneas y el archivo tiene 7",
+        "generales f202509g.96573590: el total declara 2 líneas y el archivo tiene 3",
+        "renta_fija: campo ilegible, queda vacío · generales i202509g.76212519 línea 5: tasa_emision_pct (número '########')",
+        "renta_fija: campo ilegible, queda vacío · generales i202509g.76212519 línea 6: tasa_emision_pct (número '########')",
+        "renta_fija: campo ilegible, queda vacío · generales i202509g.76212519 línea 7: tasa_emision_pct (número '########')"
+      ]
+    },
+    "2025-10": {
+      "formato": "v2024",
+      "companias": {
+        "vida": 33,
+        "generales": 32
+      },
+      "registros": {
+        "renta_fija": 105663,
+        "acciones": 911,
+        "fondos_mutuos": 740,
+        "bienes_raices": 34628,
+        "extranjeros": 5455,
+        "derivados": 4806,
+        "pactos": 176,
+        "control_inversiones": 902
+      },
+      "avisos": 31,
+      "detalle_avisos": [
+        "vida a202510v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida a202510v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-10",
+        "vida a202510v.96549050: 0 registros de totales",
+        "vida a202510v.99301000: el total declara 70 líneas y el archivo tiene 77",
+        "vida c202510v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c202510v.76632384: el total declara 29 líneas y el archivo tiene 30",
+        "vida c202510v.77205281: el total declara 7 líneas y el archivo tiene 6",
+        "vida c202510v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c202510v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c202510v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-10",
+        "vida c202510v.96549050: 0 registros de totales",
+        "vida c202510v.99185000: el total declara 23 líneas y el archivo tiene 27",
+        "vida c202510v.99301000: el total declara 31 líneas y el archivo tiene 37",
+        "vida f202510v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida f202510v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-10",
+        "vida f202510v.96549050: 0 registros de totales",
+        "vida x202510v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida x202510v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-10",
+        "vida x202510v.96549050: 0 registros de totales",
+        "vida x202510v.99003000: el encabezado dice 202508 pero la CMF lo publica en 2025-10",
+        "generales a202510g.76015592: el encabezado dice 202509 pero la CMF lo publica en 2025-10",
+        "generales b202510g.96573590: el total declara 126 líneas y el archivo tiene 125",
+        "generales c202510g.76042965: el total declara 3 líneas y el archivo tiene 10",
+        "generales c202510g.76844788: el total declara 8 líneas y el archivo tiene 6",
+        "generales c202510g.77591207: el total declara 2 líneas y el archivo tiene 10",
+        "generales c202510g.99017000: el total declara 13 líneas y el archivo tiene 16",
+        "generales c202510g.99288000: el total declara 13 líneas y el archivo tiene 14",
+        "generales f202510g.76620932: el total declara 9 líneas y el archivo tiene 7",
+        "generales f202510g.96573590: el total declara 2 líneas y el archivo tiene 3",
+        "generales p202510g.99017000: el encabezado dice 202509 pero la CMF lo publica en 2025-10",
+        "renta_fija: campo ilegible, queda vacío · generales i202510g.76212519 línea 8: tasa_emision_pct (número '########')"
+      ]
+    },
+    "2025-11": {
+      "formato": "v2024",
+      "companias": {
+        "vida": 33,
+        "generales": 33
+      },
+      "registros": {
+        "renta_fija": 106116,
+        "acciones": 917,
+        "fondos_mutuos": 730,
+        "bienes_raices": 34577,
+        "extranjeros": 5468,
+        "derivados": 4838,
+        "pactos": 142,
+        "control_inversiones": 905
+      },
+      "avisos": 29,
+      "detalle_avisos": [
+        "vida a202511v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida a202511v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-11",
+        "vida a202511v.96549050: 0 registros de totales",
+        "vida a202511v.96656410: el total declara 106 líneas y el archivo tiene 105",
+        "vida a202511v.99185000: el total declara 13 líneas y el archivo tiene 12",
+        "vida a202511v.99301000: el total declara 70 líneas y el archivo tiene 77",
+        "vida c202511v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c202511v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c202511v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c202511v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-11",
+        "vida c202511v.96549050: 0 registros de totales",
+        "vida c202511v.99301000: el total declara 30 líneas y el archivo tiene 37",
+        "vida f202511v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida f202511v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-11",
+        "vida f202511v.96549050: 0 registros de totales",
+        "vida p202511v.99279000: el total declara 98 líneas y el archivo tiene 93",
+        "vida x202511v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida x202511v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-11",
+        "vida x202511v.96549050: 0 registros de totales",
+        "generales a202511g.99037000: el total declara 12 líneas y el archivo tiene 11",
+        "generales b202511g.96573590: el total declara 126 líneas y el archivo tiene 125",
+        "generales c202511g.76042965: el total declara 3 líneas y el archivo tiene 10",
+        "generales c202511g.76844788: el total declara 8 líneas y el archivo tiene 5",
+        "generales c202511g.77591207: el total declara 2 líneas y el archivo tiene 10",
+        "generales c202511g.78027718: el total declara 4 líneas y el archivo tiene 7",
+        "generales c202511g.99017000: el total declara 13 líneas y el archivo tiene 16",
+        "generales f202511g.96573590: el total declara 2 líneas y el archivo tiene 3",
+        "generales x202511g.76844788: el encabezado dice 202510 pero la CMF lo publica en 2025-11",
+        "renta_fija: campo ilegible, queda vacío · generales i202511g.76212519 línea 8: tasa_emision_pct (número '########')"
+      ]
+    },
+    "2025-12": {
+      "formato": "v2024",
+      "companias": {
+        "vida": 33,
+        "generales": 32
+      },
+      "registros": {
+        "renta_fija": 106402,
+        "acciones": 919,
+        "fondos_mutuos": 723,
+        "bienes_raices": 34600,
+        "extranjeros": 5446,
+        "derivados": 4708,
+        "pactos": 154,
+        "control_inversiones": 906
+      },
+      "avisos": 25,
+      "detalle_avisos": [
+        "vida a202512v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida a202512v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-12",
+        "vida a202512v.96549050: 0 registros de totales",
+        "vida a202512v.99301000: el total declara 66 líneas y el archivo tiene 73",
+        "vida c202512v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c202512v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c202512v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c202512v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-12",
+        "vida c202512v.96549050: 0 registros de totales",
+        "vida c202512v.99301000: el total declara 27 líneas y el archivo tiene 37",
+        "vida f202512v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida f202512v.96549050: el encabezado dice 202025 pero la CMF lo publica en 2025-12",
+        "vida f202512v.96549050: 0 registros de totales",
+        "vida p202512v.96588080: el total declara 131 líneas y el archivo tiene 122",
+        "vida x202512v.96549050: el total declara 272 líneas y el archivo tiene 255",
+        "generales b202512g.96573590: el total declara 126 líneas y el archivo tiene 125",
+        "generales c202512g.76042965: el total declara 3 líneas y el archivo tiene 11",
+        "generales c202512g.76844788: el total declara 8 líneas y el archivo tiene 5",
+        "generales c202512g.77591207: el total declara 2 líneas y el archivo tiene 10",
+        "generales c202512g.78027718: el total declara 4 líneas y el archivo tiene 7",
+        "generales c202512g.96831690: el total declara 8 líneas y el archivo tiene 9",
+        "generales c202512g.99017000: el total declara 13 líneas y el archivo tiene 16",
+        "generales f202512g.76810563: el total declara 8 líneas y el archivo tiene 6",
+        "generales f202512g.96573590: el total declara 2 líneas y el archivo tiene 3",
+        "renta_fija: campo ilegible, queda vacío · generales i202512g.76212519 línea 5: tasa_emision_pct (número '########')"
+      ]
+    },
+    "2026-01": {
+      "formato": "v2024",
+      "companias": {
+        "vida": 32,
+        "generales": 32
+      },
+      "registros": {
+        "renta_fija": 106354,
+        "acciones": 920,
+        "fondos_mutuos": 613,
+        "bienes_raices": 34642,
+        "extranjeros": 5385,
+        "derivados": 4762,
+        "pactos": 164,
+        "control_inversiones": 873
+      },
+      "avisos": 27,
+      "detalle_avisos": [
+        "vida a202601v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida a202601v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-01",
+        "vida a202601v.96549050: 0 registros de totales",
+        "vida a202601v.99185000: el total declara 13 líneas y el archivo tiene 12",
+        "vida c202601v.76263414: el total declara 11 líneas y el archivo tiene 12",
+        "vida c202601v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c202601v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c202601v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-01",
+        "vida c202601v.96549050: 0 registros de totales",
+        "vida c202601v.99185000: el total declara 26 líneas y el archivo tiene 27",
+        "vida c202601v.99588060: el total declara 10 líneas y el archivo tiene 9",
+        "vida f202601v.96549050: el total declara 40 líneas y el archivo tiene 38",
+        "vida x202601v.96549050: el encabezado dice 202512 pero la CMF lo publica en 2026-01",
+        "generales a202601g.76590840: el encabezado dice 202512 pero la CMF lo publica en 2026-01",
+        "generales a202601g.99037000: el total declara 13 líneas y el archivo tiene 12",
+        "generales b202601g.96573590: el total declara 126 líneas y el archivo tiene 125",
+        "generales c202601g.76042965: el total declara 3 líneas y el archivo tiene 11",
+        "generales c202601g.76844788: el total declara 8 líneas y el archivo tiene 5",
+        "generales c202601g.77591207: el total declara 2 líneas y el archivo tiene 10",
+        "generales c202601g.78027718: el total declara 4 líneas y el archivo tiene 7",
+        "generales c202601g.99017000: el total declara 13 líneas y el archivo tiene 16",
+        "generales c202601g.99225000: el total declara 11 líneas y el archivo tiene 12",
+        "generales c202601g.99288000: el total declara 13 líneas y el archivo tiene 14",
+        "generales f202601g.76810563: el total declara 8 líneas y el archivo tiene 6",
+        "generales f202601g.96573590: el total declara 2 líneas y el archivo tiene 3",
+        "generales x202601g.99225000: el encabezado dice 202501 pero la CMF lo publica en 2026-01",
+        "renta_fija: campo ilegible, queda vacío · generales i202601g.76212519 línea 5: tasa_emision_pct (número '########')"
+      ]
+    },
+    "2026-02": {
+      "formato": "v2024",
+      "companias": {
+        "vida": 32,
+        "generales": 32
+      },
+      "registros": {
+        "renta_fija": 106349,
+        "acciones": 914,
+        "fondos_mutuos": 610,
+        "bienes_raices": 34654,
+        "extranjeros": 5425,
+        "derivados": 4970,
+        "pactos": 180,
+        "control_inversiones": 878
+      },
+      "avisos": 30,
+      "detalle_avisos": [
+        "vida a202602v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida a202602v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-02",
+        "vida a202602v.96549050: 0 registros de totales",
+        "vida c202602v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c202602v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c202602v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c202602v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-02",
+        "vida c202602v.96549050: 0 registros de totales",
+        "vida c202602v.99588060: el total declara 8 líneas y el archivo tiene 9",
+        "vida f202602v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida f202602v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-02",
+        "vida f202602v.96549050: 0 registros de totales",
+        "vida f202602v.96588080: el total declara 41 líneas y el archivo tiene 42",
+        "vida p202602v.99279000: el total declara 100 líneas y el archivo tiene 101",
+        "vida x202602v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida x202602v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-02",
+        "vida x202602v.96549050: 0 registros de totales",
+        "vida x202602v.96812960: el total declara 2154 líneas y el archivo tiene 2158",
+        "vida x202602v.99289000: el total declara 637 líneas y el archivo tiene 626",
+        "generales b202602g.96573590: el total declara 126 líneas y el archivo tiene 125",
+        "generales c202602g.76042965: el total declara 3 líneas y el archivo tiene 11",
+        "generales c202602g.76173258: el total declara 8 líneas y el archivo tiene 9",
+        "generales c202602g.76844788: el total declara 8 líneas y el archivo tiene 5",
+        "generales c202602g.77591207: el total declara 2 líneas y el archivo tiene 10",
+        "generales c202602g.78027718: el total declara 4 líneas y el archivo tiene 7",
+        "generales c202602g.99017000: el total declara 13 líneas y el archivo tiene 16",
+        "generales c202602g.99288000: el total declara 13 líneas y el archivo tiene 14",
+        "generales f202602g.96573590: el total declara 2 líneas y el archivo tiene 3",
+        "generales f202602g.99225000: el encabezado dice 202601 pero la CMF lo publica en 2026-02",
+        "generales x202602g.99225000: el encabezado dice 202502 pero la CMF lo publica en 2026-02"
+      ]
+    },
+    "2026-03": {
+      "formato": "v2024",
+      "companias": {
+        "vida": 33,
+        "generales": 32
+      },
+      "registros": {
+        "renta_fija": 106334,
+        "acciones": 911,
+        "fondos_mutuos": 615,
+        "bienes_raices": 35048,
+        "extranjeros": 5634,
+        "derivados": 5111,
+        "pactos": 122,
+        "control_inversiones": 873
+      },
+      "avisos": 28,
+      "detalle_avisos": [
+        "vida a202603v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida a202603v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-03",
+        "vida a202603v.96549050: 0 registros de totales",
+        "vida a202603v.99185000: el total declara 13 líneas y el archivo tiene 12",
+        "vida c202603v.76263414: el total declara 11 líneas y el archivo tiene 12",
+        "vida c202603v.94716000: el total declara 18 líneas y el archivo tiene 19",
+        "vida c202603v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c202603v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-03",
+        "vida c202603v.96549050: 0 registros de totales",
+        "vida f202603v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida f202603v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-03",
+        "vida f202603v.96549050: 0 registros de totales",
+        "vida p202603v.99279000: el total declara 91 líneas y el archivo tiene 99",
+        "vida x202603v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida x202603v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-03",
+        "vida x202603v.96549050: 0 registros de totales",
+        "vida x202603v.96812960: el total declara 2307 líneas y el archivo tiene 2311",
+        "generales a202603g.99037000: el total declara 13 líneas y el archivo tiene 12",
+        "generales b202603g.96573590: el total declara 126 líneas y el archivo tiene 125",
+        "generales c202603g.76042965: el total declara 3 líneas y el archivo tiene 11",
+        "generales c202603g.76844788: el total declara 8 líneas y el archivo tiene 5",
+        "generales c202603g.77591207: el total declara 2 líneas y el archivo tiene 10",
+        "generales c202603g.78027718: el total declara 4 líneas y el archivo tiene 7",
+        "generales c202603g.96831690: el total declara 8 líneas y el archivo tiene 9",
+        "generales c202603g.99017000: el total declara 13 líneas y el archivo tiene 16",
+        "generales c202603g.99288000: el total declara 13 líneas y el archivo tiene 14",
+        "generales f202603g.96573590: el total declara 2 líneas y el archivo tiene 3",
+        "generales x202603g.99225000: el encabezado dice 202503 pero la CMF lo publica en 2026-03"
+      ]
+    },
+    "2026-04": {
+      "formato": "v2024",
+      "companias": {
+        "vida": 34,
+        "generales": 31
+      },
+      "registros": {
+        "renta_fija": 106287,
+        "acciones": 919,
+        "fondos_mutuos": 622,
+        "bienes_raices": 34999,
+        "extranjeros": 5643,
+        "derivados": 5177,
+        "pactos": 129,
+        "control_inversiones": 874
+      },
+      "avisos": 31,
+      "detalle_avisos": [
+        "vida a202604v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida a202604v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-04",
+        "vida a202604v.96549050: 0 registros de totales",
+        "vida a202604v.99185000: el total declara 13 líneas y el archivo tiene 12",
+        "vida c202604v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c202604v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c202604v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c202604v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-04",
+        "vida c202604v.96549050: 0 registros de totales",
+        "vida c202604v.99185000: el total declara 25 líneas y el archivo tiene 26",
+        "vida c202604v.99588060: el total declara 9 líneas y el archivo tiene 10",
+        "vida f202604v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida f202604v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-04",
+        "vida f202604v.96549050: 0 registros de totales",
+        "vida x202604v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida x202604v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-04",
+        "vida x202604v.96549050: 0 registros de totales",
+        "vida x202604v.96812960: el total declara 2327 líneas y el archivo tiene 2331",
+        "vida x202604v.99289000: el total declara 658 líneas y el archivo tiene 647",
+        "vida x202604v.99588060: el encabezado dice 202603 pero la CMF lo publica en 2026-04",
+        "generales a202604g.99037000: el total declara 13 líneas y el archivo tiene 12",
+        "generales b202604g.96573590: el total declara 126 líneas y el archivo tiene 125",
+        "generales c202604g.76042965: el total declara 3 líneas y el archivo tiene 10",
+        "generales c202604g.77591207: el total declara 2 líneas y el archivo tiene 10",
+        "generales c202604g.78027718: el total declara 4 líneas y el archivo tiene 7",
+        "generales c202604g.99017000: el total declara 13 líneas y el archivo tiene 16",
+        "generales c202604g.99225000: el total declara 11 líneas y el archivo tiene 12",
+        "generales c202604g.99288000: el total declara 14 líneas y el archivo tiene 15",
+        "generales f202604g.77096952: el total declara 3 líneas y el archivo tiene 4",
+        "generales f202604g.96573590: el total declara 2 líneas y el archivo tiene 3",
+        "generales x202604g.99225000: el encabezado dice 202504 pero la CMF lo publica en 2026-04"
+      ]
+    },
+    "2026-05": {
+      "formato": "v2024",
+      "companias": {
+        "vida": 34,
+        "generales": 31
+      },
+      "registros": {
+        "renta_fija": 106247,
+        "acciones": 918,
+        "fondos_mutuos": 610,
+        "bienes_raices": 34992,
+        "extranjeros": 5775,
+        "derivados": 5279,
+        "pactos": 147,
+        "control_inversiones": 879
+      },
+      "avisos": 31,
+      "detalle_avisos": [
+        "vida a202605v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida a202605v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-05",
+        "vida a202605v.96549050: 0 registros de totales",
+        "vida a202605v.99185000: el total declara 13 líneas y el archivo tiene 12",
+        "vida c202605v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c202605v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c202605v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c202605v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-05",
+        "vida c202605v.96549050: 0 registros de totales",
+        "vida c202605v.96837630: el total declara 14 líneas y el archivo tiene 12",
+        "vida c202605v.99588060: el total declara 9 líneas y el archivo tiene 10",
+        "vida f202605v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida f202605v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-05",
+        "vida f202605v.96549050: 0 registros de totales",
+        "vida x202605v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida x202605v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-05",
+        "vida x202605v.96549050: 0 registros de totales",
+        "vida x202605v.96812960: el total declara 2461 líneas y el archivo tiene 2462",
+        "vida x202605v.99289000: el total declara 660 líneas y el archivo tiene 661",
+        "vida x202605v.99588060: el encabezado dice 202603 pero la CMF lo publica en 2026-05",
+        "generales a202605g.99037000: el total declara 13 líneas y el archivo tiene 12",
+        "generales b202605g.96573590: el total declara 126 líneas y el archivo tiene 125",
+        "generales c202605g.76042965: el total declara 3 líneas y el archivo tiene 10",
+        "generales c202605g.76061223: el total declara 10 líneas y el archivo tiene 11",
+        "generales c202605g.76173258: el total declara 8 líneas y el archivo tiene 9",
+        "generales c202605g.77591207: el total declara 2 líneas y el archivo tiene 10",
+        "generales c202605g.78027718: el total declara 4 líneas y el archivo tiene 7",
+        "generales c202605g.99017000: el total declara 13 líneas y el archivo tiene 16",
+        "generales c202605g.99288000: el total declara 13 líneas y el archivo tiene 14",
+        "generales f202605g.96573590: el total declara 2 líneas y el archivo tiene 3",
+        "generales x202605g.99225000: el encabezado dice 202505 pero la CMF lo publica en 2026-05"
+      ]
+    },
+    "2026-06": {
+      "formato": "v2024",
+      "companias": {
+        "vida": 34,
+        "generales": 32
+      },
+      "registros": {
+        "renta_fija": 106088,
+        "acciones": 924,
+        "fondos_mutuos": 619,
+        "bienes_raices": 34984,
+        "extranjeros": 5829,
+        "derivados": 5553,
+        "pactos": 155,
+        "control_inversiones": 880
+      },
+      "avisos": 28,
+      "detalle_avisos": [
+        "vida a202606v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida a202606v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-06",
+        "vida a202606v.96549050: 0 registros de totales",
+        "vida c202606v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c202606v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c202606v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c202606v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-06",
+        "vida c202606v.96549050: 0 registros de totales",
+        "vida c202606v.96588080: el encabezado dice 202605 pero la CMF lo publica en 2026-06",
+        "vida f202606v.76511423: el total declara 3 líneas y el archivo tiene 4",
+        "vida f202606v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida f202606v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-06",
+        "vida f202606v.96549050: 0 registros de totales",
+        "vida x202606v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida x202606v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-06",
+        "vida x202606v.96549050: 0 registros de totales",
+        "vida x202606v.99289000: el total declara 688 líneas y el archivo tiene 677",
+        "generales b202606g.96573590: el total declara 126 líneas y el archivo tiene 125",
+        "generales c202606g.76042965: el total declara 3 líneas y el archivo tiene 10",
+        "generales c202606g.76844788: el total declara 8 líneas y el archivo tiene 5",
+        "generales c202606g.77591207: el total declara 2 líneas y el archivo tiene 10",
+        "generales c202606g.78027718: el total declara 4 líneas y el archivo tiene 7",
+        "generales c202606g.99017000: el total declara 13 líneas y el archivo tiene 16",
+        "generales c202606g.99037000: el total declara 14 líneas y el archivo tiene 18",
+        "generales c202606g.99288000: el total declara 13 líneas y el archivo tiene 14",
+        "generales f202606g.76844788: el encabezado dice 202603 pero la CMF lo publica en 2026-06",
+        "generales f202606g.96573590: el total declara 2 líneas y el archivo tiene 3",
+        "generales x202606g.99225000: el encabezado dice 202506 pero la CMF lo publica en 2026-06"
+      ]
+    },
+    "2026-07": {
+      "formato": "v2024",
+      "companias": {
+        "vida": 34,
+        "generales": 31
+      },
+      "registros": {
+        "renta_fija": 105981,
+        "acciones": 925,
+        "fondos_mutuos": 613,
+        "bienes_raices": 35987,
+        "extranjeros": 6037,
+        "derivados": 5831,
+        "pactos": 193,
+        "control_inversiones": 881
+      },
+      "avisos": 34,
+      "detalle_avisos": [
+        "vida a202607v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida a202607v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-07",
+        "vida a202607v.96549050: 0 registros de totales",
+        "vida a202607v.99185000: el total declara 14 líneas y el archivo tiene 13",
+        "vida c202607v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c202607v.77205281: el total declara 7 líneas y el archivo tiene 6",
+        "vida c202607v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c202607v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c202607v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-07",
+        "vida c202607v.96549050: 0 registros de totales",
+        "vida c202607v.96588080: el encabezado dice 202606 pero la CMF lo publica en 2026-07",
+        "vida c202607v.96656410: el encabezado dice 202606 pero la CMF lo publica en 2026-07",
+        "vida c202607v.99588060: el total declara 11 líneas y el archivo tiene 10",
+        "vida f202607v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida f202607v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-07",
+        "vida f202607v.96549050: 0 registros de totales",
+        "vida x202607v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida x202607v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-07",
+        "vida x202607v.96549050: 0 registros de totales",
+        "vida x202607v.99289000: el total declara 696 líneas y el archivo tiene 685",
+        "generales a202607g.76094234: el encabezado dice 202605 pero la CMF lo publica en 2026-07",
+        "generales b202607g.96573590: el total declara 126 líneas y el archivo tiene 125",
+        "generales c202607g.76042965: el total declara 3 líneas y el archivo tiene 10",
+        "generales c202607g.76094234: el encabezado dice 202605 pero la CMF lo publica en 2026-07",
+        "generales c202607g.77591207: el total declara 2 líneas y el archivo tiene 10",
+        "generales c202607g.78027718: el total declara 4 líneas y el archivo tiene 7",
+        "generales c202607g.99017000: el total declara 13 líneas y el archivo tiene 16",
+        "generales c202607g.99225000: el total declara 11 líneas y el archivo tiene 12",
+        "generales c202607g.99288000: el total declara 14 líneas y el archivo tiene 15",
+        "generales f202607g.76094234: el encabezado dice 202605 pero la CMF lo publica en 2026-07",
+        "generales f202607g.96573590: el total declara 2 líneas y el archivo tiene 3",
+        "generales p202607g.76094234: el encabezado dice 202605 pero la CMF lo publica en 2026-07",
+        "generales x202607g.76094234: el encabezado dice 202605 pero la CMF lo publica en 2026-07",
+        "generales x202607g.99225000: el encabezado dice 202507 pero la CMF lo publica en 2026-07"
+      ]
+    },
+    "2026-08": {
+      "formato": "v2024",
+      "companias": {
+        "vida": 34,
+        "generales": 31
+      },
+      "registros": {
+        "renta_fija": 105800,
+        "acciones": 932,
+        "fondos_mutuos": 659,
+        "bienes_raices": 35878,
+        "extranjeros": 6193,
+        "derivados": 6037,
+        "pactos": 155,
+        "control_inversiones": 887
+      },
+      "avisos": 31,
+      "detalle_avisos": [
+        "vida a202608v.76034737: el total declara 7 líneas y el archivo tiene 6",
+        "vida a202608v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida a202608v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-08",
+        "vida a202608v.96549050: 0 registros de totales",
+        "vida a202608v.99185000: el total declara 14 líneas y el archivo tiene 13",
+        "vida c202608v.76034737: el total declara 13 líneas y el archivo tiene 14",
+        "vida c202608v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c202608v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c202608v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c202608v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-08",
+        "vida c202608v.96549050: 0 registros de totales",
+        "vida c202608v.96588080: el encabezado dice 202606 pero la CMF lo publica en 2026-08",
+        "vida c202608v.99185000: el total declara 23 líneas y el archivo tiene 27",
+        "vida c202608v.99588060: el total declara 9 líneas y el archivo tiene 10",
+        "vida f202608v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida f202608v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-08",
+        "vida f202608v.96549050: 0 registros de totales",
+        "vida x202608v.96549050: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida x202608v.96549050: el encabezado dice 202026 pero la CMF lo publica en 2026-08",
+        "vida x202608v.96549050: 0 registros de totales",
+        "generales a202608g.76015592: el total declara 3 líneas y el archivo tiene 2",
+        "generales a202608g.99037000: el total declara 14 líneas y el archivo tiene 13",
+        "generales b202608g.96573590: el total declara 126 líneas y el archivo tiene 125",
+        "generales c202608g.76042965: el total declara 3 líneas y el archivo tiene 10",
+        "generales c202608g.77591207: el total declara 2 líneas y el archivo tiene 10",
+        "generales c202608g.78027718: el total declara 4 líneas y el archivo tiene 7",
+        "generales c202608g.99037000: el total declara 13 líneas y el archivo tiene 18",
+        "generales c202608g.99225000: el total declara 10 líneas y el archivo tiene 11",
+        "generales c202608g.99288000: el total declara 14 líneas y el archivo tiene 15",
+        "generales f202608g.96573590: el total declara 2 líneas y el archivo tiene 3",
+        "generales x202608g.99225000: el encabezado dice 202508 pero la CMF lo publica en 2026-08"
+      ]
     }
   },
   "aseguradoras": {
     "generales|76015592-6": {
       "nombre": "CESCE CHILE ASEGURADORA S.A",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|76039758-K": {
       "nombre": "Compañia de Seguros Generales Continental S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|76042965-1": {
       "nombre": "ORION SEGUROS GENERALES S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|76061223-5": {
       "nombre": "ZENIT SEGUROS GENERALES S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|76079624-7": {
       "nombre": "HDI GARANTIA Y CREDITO",
@@ -3353,32 +4152,32 @@
     "generales|76094234-0": {
       "nombre": "SOLUNION CHILE SEGUROS DE CREDITO S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|76173258-7": {
       "nombre": "UNNIO SEGUROS GENERALES S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|76212519-6": {
       "nombre": "ASSURANT CHILE COMPANIA DE SEGUROS GENERALES S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|76328793-9": {
       "nombre": "METLIFE CHILE SEGUROS GENERALES S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|76363534-1": {
       "nombre": "AVLA SEGUROS DE CREDITO Y GARANTIA S.A",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|76479498-2": {
       "nombre": "BBVA SEGUROS GENERALES S.A.",
@@ -3387,16 +4186,16 @@
       "meses": 5
     },
     "generales|76590840-K": {
-      "nombre": "Zurich-Santander Seguros Generales S.A.",
+      "nombre": "ZSGI ZURICH SANTANDER SEGUROS GENERALES S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|76598625-7": {
       "nombre": "ASEGURADORA PORVENIR   S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|76620816-9": {
       "nombre": "SEGCHILE SEGUROS GENERALES S.A.",
@@ -3407,68 +4206,68 @@
     "generales|76620932-7": {
       "nombre": "STARR INTERNACIONAL SEGUROS GENERALES S.A.",
       "primer": "2016-12",
-      "ultimo": "2025-04",
-      "meses": 101
+      "ultimo": "2026-08",
+      "meses": 117
     },
     "generales|76743492-8": {
       "nombre": "REALE CHILE SEGUROS GENERALES S.A.",
       "primer": "2017-05",
-      "ultimo": "2025-04",
-      "meses": 96
+      "ultimo": "2026-08",
+      "meses": 112
     },
     "generales|76810563-4": {
       "nombre": "ORSAN SEGUROS DE CREDITO Y GARANTIA S.A.",
       "primer": "2017-12",
-      "ultimo": "2025-04",
-      "meses": 89
+      "ultimo": "2026-08",
+      "meses": 105
     },
     "generales|76844788-8": {
       "nombre": "SUAVAL COMPANIA DE SEGUROS DE GARANTIA Y CREDITOS S.A",
       "primer": "2018-03",
-      "ultimo": "2025-04",
-      "meses": 86
+      "ultimo": "2026-06",
+      "meses": 98
     },
     "generales|76981875-8": {
       "nombre": "CONTEMPORA COMPANIA DE SEGUROS GENERALES S.A.",
       "primer": "2019-03",
-      "ultimo": "2025-04",
-      "meses": 74
+      "ultimo": "2026-08",
+      "meses": 90
     },
     "generales|77096952-2": {
       "nombre": "FID CHILE SEGUROS GENERALES S.A.",
       "primer": "2019-12",
-      "ultimo": "2025-04",
-      "meses": 65
+      "ultimo": "2026-08",
+      "meses": 81
     },
     "generales|77591207-3": {
       "nombre": "EVEREST",
       "primer": "2022-06",
-      "ultimo": "2025-04",
-      "meses": 35
+      "ultimo": "2026-08",
+      "meses": 51
     },
     "generales|78027718-1": {
       "nombre": "LIBERTY MUTUAL SURETY SEGUROS CHILE S.A.",
       "primer": "2024-12",
-      "ultimo": "2025-04",
-      "meses": 5
+      "ultimo": "2026-08",
+      "meses": 21
     },
     "generales|94510000-1": {
       "nombre": "RENTA NACIONAL COMPA#IA DE SEGUROS GENERALES S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|96508210-7": {
       "nombre": "MAPFRE COMPANIA DE SEGUROS GENERALES DE CHILE SA",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|96573590-9": {
       "nombre": "Compa#ia de Seguros de Credito Continental S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|96642610-1": {
       "nombre": "CHUBB DE CHILE COMPANIA DE SEGUROS GENERALES S.A.",
@@ -3479,8 +4278,8 @@
     "generales|96654180-6": {
       "nombre": "CIA DE SEGUROS GENERALES CONSORCIO NACIONAL DE SEGUROS SA.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|96683120-0": {
       "nombre": "CIA. DE SEGUROS GENERALES PENTA SEGUROS S.A.",
@@ -3491,14 +4290,14 @@
     "generales|96831690-7": {
       "nombre": "COMPANIA DE SEGUROS DE CREDITO COFACE CHILE S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|96837640-3": {
       "nombre": "BNP PARIBAS CARDIF SEGUROS GENERALES S.A",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|96917990-3": {
       "nombre": "BANCHILE SEGUROS DE VIDA S.A.",
@@ -3515,32 +4314,32 @@
     "generales|99017000-2": {
       "nombre": "SEGUROS GENERALES SURAMERICANA S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|99024000-0": {
       "nombre": "MUTUALIDAD DE CARABINEROS SEGUROS GENERALES",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|99037000-1": {
       "nombre": "CHILENA CONSOLIDADA SEGUROS GENERALES S.A",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|99061000-2": {
       "nombre": "HDI SEGUROS S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|99147000-K": {
       "nombre": "BCI SEGUROS GENERALES",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|99196000-7": {
       "nombre": "COMPA#IA DE SEGUROS DE GENERALES HUELEN S.A.",
@@ -3551,8 +4350,8 @@
     "generales|99225000-3": {
       "nombre": "Chubb Seguros Chile S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "generales|99231000-6": {
       "nombre": "HDI SEGUROS S.A.",
@@ -3563,8 +4362,14 @@
     "generales|99288000-7": {
       "nombre": "SOUTHBRIDGE COMPANIA DE SEGUROS GENERALES S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
+    },
+    "generales|99588060-1": {
+      "nombre": "Chubb Seguros de Vida Chile S.A.",
+      "primer": "2025-05",
+      "ultimo": "2025-11",
+      "meses": 2
     },
     "vida|109681296-0": {
       "nombre": "0PENTA VIDA",
@@ -3575,14 +4380,14 @@
     "vida|70015730-K": {
       "nombre": "MUTUAL DE SEGUROS DE CHILE",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|76034737-K": {
       "nombre": "SAVE BCJ SEGUROS DE VIDA S.A",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|76072304-5": {
       "nombre": "CompaNia de Seguros Corpseguros S.A.",
@@ -3599,62 +4404,62 @@
     "vida|76213329-6": {
       "nombre": "HELP SEGUROS DE VIDA S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|76263414-7": {
       "nombre": "SEGUROS DE VIDA SURAMERICANA S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|76282191-5": {
       "nombre": "BUPA COMPA#IA DE SEGUROS DE VIDA S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|76408757-7": {
       "nombre": "COLMENA COMPANIA DE SEGUROS DE VIDA S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|76418751-2": {
       "nombre": "4 LIFE SEGUROS DE VIDA S.A",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|76477116-8": {
       "nombre": "CF SEGUROS DE VIDA S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|76511423-3": {
       "nombre": "ALEMANA SEGUROS S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|76573480-0": {
       "nombre": "SEGUROS CLC S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|76632384-7": {
       "nombre": "AUGUSTAR SEGUROS DE VIDA S.A.",
       "primer": "2024-09",
-      "ultimo": "2025-04",
-      "meses": 8
+      "ultimo": "2026-08",
+      "meses": 24
     },
     "vida|76632553-K": {
       "nombre": "UCCHRISTUS SEGUROS DE VIDA Y SALUD S.A",
       "primer": "2024-09",
-      "ultimo": "2025-04",
-      "meses": 8
+      "ultimo": "2026-08",
+      "meses": 24
     },
     "vida|76948367-5": {
       "nombre": "BICE SEGUROS DE VIDA S.A.",
@@ -3665,74 +4470,80 @@
     "vida|77205281-2": {
       "nombre": "DIVINA PASTORA SEGUROS DE VIDA S.A.",
       "primer": "2020-06",
-      "ultimo": "2025-04",
-      "meses": 59
+      "ultimo": "2026-08",
+      "meses": 75
+    },
+    "vida|78340993-3": {
+      "nombre": "PRINCIPAL SEGUROS DE VIDA S.A.",
+      "primer": "2026-04",
+      "ultimo": "2026-08",
+      "meses": 5
     },
     "vida|94716000-1": {
       "nombre": "RENTA NACIONAL  SEGUROS DE VIDA SA",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|96549050-7": {
       "nombre": "SEGUROS DE VIDA SURA SA",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|96571890-7": {
       "nombre": "COMPANIA SEGUROS CONFUTURO S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|96573600-K": {
       "nombre": "BCIVIDA",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|96579280-5": {
       "nombre": "CN LIFE COMPAÑIA DE SEGUROS DE VIDA S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|96588080-1": {
-      "nombre": "PRINCIPAL CIA DE SEG DE VIDA CHILE S.A.",
+      "nombre": "PRINCIPAL COMPANIA DE SEGUROS DE VIDA CHILE S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|96656410-5": {
       "nombre": "BICE VIDA CIA SEGUROS S. A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|96687900-9": {
       "nombre": "OHIO NATIONAL SEGUROS DE VIDA S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2025-07",
+      "meses": 105
     },
     "vida|96812960-0": {
       "nombre": "PENTA VIDA",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|96819630-8": {
-      "nombre": "Zurich-Santander Seguros de Vida S.A.",
+      "nombre": "ZSLI ZURICH SANTANDER SEGUROS DE VIDA S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|96837630-6": {
       "nombre": "BNP PARIBAS CARDIF SEGUROS DE VIDA S.A",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|96917990-3": {
       "nombre": "BANCHILE SEGUROS DE VIDA S.A.",
@@ -3743,8 +4554,8 @@
     "vida|96933030-K": {
       "nombre": "MAPFRE COMPANIA DE SEGUROS DE VIDA DE CHILE SA",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|96933770-3": {
       "nombre": "CARDIF SEGUROS RENTAS VITALICIAS S.A.",
@@ -3755,32 +4566,32 @@
     "vida|99003000-6": {
       "nombre": "COMPANIA DE SEGUROS DE VIDA CAMARA S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|99012000-5": {
       "nombre": "CONSORCIO NACIONAL DE SEGUROS VIDA S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|99017000-2": {
       "nombre": "SEGUROS DE VIDA SURAMERICANA S.A.",
       "primer": "2024-12",
-      "ultimo": "2025-04",
-      "meses": 5
+      "ultimo": "2025-07",
+      "meses": 8
     },
     "vida|99024000-0": {
       "nombre": "MUTUALIDAD DE CARABINEROS SEGUROS DE VIDA",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|99025000-6": {
       "nombre": "MUTUALIDAD DEL EJERCITO Y AVIACION",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|99027000-7": {
       "nombre": "CAJA REASEGURADORA DE CHILE S.A.",
@@ -3791,8 +4602,8 @@
     "vida|99185000-7": {
       "nombre": "CHILENA CONSOLIDADA SEGUROS DE VIDA S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|99196000-7": {
       "nombre": "COMPA#IA DE SEGUROS DE VIDA HUELEN S.A.",
@@ -3800,29 +4611,35 @@
       "ultimo": "2022-12",
       "meses": 74
     },
+    "vida|99225000-3": {
+      "nombre": "Chubb Seguros Chile S.A.",
+      "primer": "2026-03",
+      "ultimo": "2026-08",
+      "meses": 6
+    },
     "vida|99279000-8": {
       "nombre": "EUROAMERICA SEGUROS DE VIDA S.A",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|99289000-2": {
       "nombre": "033 METLIFE CHILE SEGUROS DE VIDA S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     },
     "vida|99301000-6": {
       "nombre": "SEGUROS VIDA SECURITY PREVISION S.A",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2025-12",
+      "meses": 110
     },
     "vida|99588060-1": {
       "nombre": "Chubb Seguros de Vida Chile S.A.",
       "primer": "2016-11",
-      "ultimo": "2025-04",
-      "meses": 102
+      "ultimo": "2026-08",
+      "meses": 118
     }
   },
   "desde": {
@@ -3835,5 +4652,5 @@
     "pactos": "2016-11",
     "control_inversiones": "2016-11"
   },
-  "updated_at": "2026-09-28T16:35:57+00:00"
+  "updated_at": "2026-09-28T17:19:17+00:00"
 }
