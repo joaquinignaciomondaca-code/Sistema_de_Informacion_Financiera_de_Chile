@@ -299,8 +299,11 @@ def run(period: str, bank_code: str, bank_name: str, output: Path) -> dict:
         "b1_fields": zip_inspection["bank_files"]["B1"]["tab_field_counts"],
         "b2_rows": zip_inspection["bank_files"]["B2"]["nonempty_lines"],
         "b2_fields": zip_inspection["bank_files"]["B2"]["tab_field_counts"],
-        "xlsx_sheets": workbook_inspection["sheet_count"],
+        "b1_preview": zip_inspection["bank_files"]["B1"]["preview_lines"],
+        "b2_preview": zip_inspection["bank_files"]["B2"]["preview_lines"],
+        "xlsx_sheet_names": [sheet["name"] for sheet in workbook_inspection["sheets"]],
         "xlsx_bank_rows": len(workbook_inspection["bank_rows"]),
+        "xlsx_bank_rows_preview": workbook_inspection["bank_rows"][:6],
         "published": False,
     }
     print("::notice title=CMF bank sample inspection::" + json.dumps(compact, ensure_ascii=False, separators=(",", ":")))
