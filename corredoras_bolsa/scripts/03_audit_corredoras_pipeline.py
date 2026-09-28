@@ -1,4 +1,4 @@
-﻿"""
+"""
 Auditoria Integral de Integridad y Consistencia para Corredoras de Bolsa (CMF Chile).
 Valida:
 1. Universo y Maestro: 100% RUTs validos bajo Modulo 11, 0 duplicados.
