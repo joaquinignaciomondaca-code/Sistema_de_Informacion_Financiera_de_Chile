@@ -1,0 +1,1208 @@
+{
+  "period": "2024-01",
+  "status": "passed",
+  "sources": {
+    "zip_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-78637_recurso_1.zip?ts=1709128099",
+    "zip_sha256": "3a7b2ee998022d46a3c945bae186046d839fefa97f0393c11e815a363ebfea25",
+    "xlsx_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-78626_recurso_1.xlsx?ts=1709126098",
+    "xlsx_sha256": "a9474d41bbc61dd1969bbad48f4197aaa42a29b65e82de8cdaa3950515588143"
+  },
+  "extraction": {
+    "status": "validated_and_published",
+    "period": "2024-01",
+    "fecha_corte": "2024-01-31",
+    "source_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-78637_recurso_1.zip?ts=1709128099",
+    "source_sha256": "3a7b2ee998022d46a3c945bae186046d839fefa97f0393c11e815a363ebfea25",
+    "source_zip_bytes": 327926,
+    "institution_count": 18,
+    "institution_codes": [
+      "001",
+      "009",
+      "012",
+      "014",
+      "016",
+      "028",
+      "031",
+      "037",
+      "039",
+      "041",
+      "049",
+      "051",
+      "053",
+      "055",
+      "059",
+      "060",
+      "061",
+      "999"
+    ],
+    "file_count": 54,
+    "account_rows_by_family": {
+      "B1": 12762,
+      "B2": 126,
+      "R1": 22122
+    },
+    "account_model_stats": {
+      "B1": {
+        "account_definitions": 709,
+        "line_types": {
+          "detalle": 524,
+          "subtotal": 180,
+          "total": 5
+        }
+      },
+      "B2": {
+        "account_definitions": 8,
+        "line_types": {
+          "detalle": 5,
+          "subtotal": 1,
+          "total": 2
+        }
+      },
+      "R1": {
+        "account_definitions": 1229,
+        "line_types": {
+          "detalle": 933,
+          "subtotal": 292,
+          "total": 4
+        }
+      }
+    },
+    "review_account_samples": [
+      {
+        "codigo_institucion": "001",
+        "familia_archivo_fuente": "B1",
+        "codigo_cuenta": "100000000",
+        "numero_fila_fuente": 2,
+        "importes_fuente_raw": [
+          "29291135666660,00",
+          "21218317898008,00",
+          "0168492336275,00",
+          "6413258583577,00"
+        ],
+        "suma_campos_fuente_decimal": "57091204484520.00"
+      },
+      {
+        "codigo_institucion": "001",
+        "familia_archivo_fuente": "R1",
+        "codigo_cuenta": "411000000",
+        "numero_fila_fuente": 2,
+        "importes_fuente_raw": [
+          "0271290550663,00"
+        ],
+        "suma_campos_fuente_decimal": "271290550663.00"
+      }
+    ],
+    "file_reports": [
+      {
+        "source_member": "202401/b1202401001.txt",
+        "codigo_institucion": "001",
+        "nombre_institucion_fuente": "BANCO DE CHILE",
+        "familia_archivo_fuente": "B1",
+        "modelo_cmf": "MB1",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 710,
+        "account_rows": 709,
+        "field_count_distribution": {
+          "5": 709
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/b2202401001.txt",
+        "codigo_institucion": "001",
+        "nombre_institucion_fuente": "BANCO DE CHILE",
+        "familia_archivo_fuente": "B2",
+        "modelo_cmf": "MB2",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "individual",
+        "nonempty_source_lines": 8,
+        "account_rows": 7,
+        "field_count_distribution": {
+          "5": 7
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/r1202401001.txt",
+        "codigo_institucion": "001",
+        "nombre_institucion_fuente": "BANCO DE CHILE",
+        "familia_archivo_fuente": "R1",
+        "modelo_cmf": "MR1",
+        "tipo_estado": "resultados",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 1230,
+        "account_rows": 1229,
+        "field_count_distribution": {
+          "2": 1229
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 1
+      },
+      {
+        "source_member": "202401/b1202401009.txt",
+        "codigo_institucion": "009",
+        "nombre_institucion_fuente": "BANCO INTERNACIONAL",
+        "familia_archivo_fuente": "B1",
+        "modelo_cmf": "MB1",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 710,
+        "account_rows": 709,
+        "field_count_distribution": {
+          "5": 709
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/b2202401009.txt",
+        "codigo_institucion": "009",
+        "nombre_institucion_fuente": "BANCO INTERNACIONAL",
+        "familia_archivo_fuente": "B2",
+        "modelo_cmf": "MB2",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "individual",
+        "nonempty_source_lines": 8,
+        "account_rows": 7,
+        "field_count_distribution": {
+          "5": 7
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/r1202401009.txt",
+        "codigo_institucion": "009",
+        "nombre_institucion_fuente": "BANCO INTERNACIONAL",
+        "familia_archivo_fuente": "R1",
+        "modelo_cmf": "MR1",
+        "tipo_estado": "resultados",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 1230,
+        "account_rows": 1229,
+        "field_count_distribution": {
+          "2": 1229
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 1
+      },
+      {
+        "source_member": "202401/b1202401012.txt",
+        "codigo_institucion": "012",
+        "nombre_institucion_fuente": "BANCO DEL ESTADO DE CHILE",
+        "familia_archivo_fuente": "B1",
+        "modelo_cmf": "MB1",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 710,
+        "account_rows": 709,
+        "field_count_distribution": {
+          "5": 709
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/b2202401012.txt",
+        "codigo_institucion": "012",
+        "nombre_institucion_fuente": "BANCO DEL ESTADO DE CHILE",
+        "familia_archivo_fuente": "B2",
+        "modelo_cmf": "MB2",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "individual",
+        "nonempty_source_lines": 8,
+        "account_rows": 7,
+        "field_count_distribution": {
+          "5": 7
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/r1202401012.txt",
+        "codigo_institucion": "012",
+        "nombre_institucion_fuente": "BANCO DEL ESTADO DE CHILE",
+        "familia_archivo_fuente": "R1",
+        "modelo_cmf": "MR1",
+        "tipo_estado": "resultados",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 1230,
+        "account_rows": 1229,
+        "field_count_distribution": {
+          "2": 1229
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 1
+      },
+      {
+        "source_member": "202401/b1202401014.txt",
+        "codigo_institucion": "014",
+        "nombre_institucion_fuente": "SCOTIABANK CHILE",
+        "familia_archivo_fuente": "B1",
+        "modelo_cmf": "MB1",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 710,
+        "account_rows": 709,
+        "field_count_distribution": {
+          "5": 709
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/b2202401014.txt",
+        "codigo_institucion": "014",
+        "nombre_institucion_fuente": "SCOTIABANK CHILE",
+        "familia_archivo_fuente": "B2",
+        "modelo_cmf": "MB2",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "individual",
+        "nonempty_source_lines": 8,
+        "account_rows": 7,
+        "field_count_distribution": {
+          "5": 7
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/r1202401014.txt",
+        "codigo_institucion": "014",
+        "nombre_institucion_fuente": "SCOTIABANK CHILE",
+        "familia_archivo_fuente": "R1",
+        "modelo_cmf": "MR1",
+        "tipo_estado": "resultados",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 1230,
+        "account_rows": 1229,
+        "field_count_distribution": {
+          "2": 1229
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 1
+      },
+      {
+        "source_member": "202401/b1202401016.txt",
+        "codigo_institucion": "016",
+        "nombre_institucion_fuente": "BANCO DE CRÉDITO E INVERSIONES",
+        "familia_archivo_fuente": "B1",
+        "modelo_cmf": "MB1",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 710,
+        "account_rows": 709,
+        "field_count_distribution": {
+          "5": 709
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/b2202401016.txt",
+        "codigo_institucion": "016",
+        "nombre_institucion_fuente": "BANCO DE CRÉDITO E INVERSIONES",
+        "familia_archivo_fuente": "B2",
+        "modelo_cmf": "MB2",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "individual",
+        "nonempty_source_lines": 8,
+        "account_rows": 7,
+        "field_count_distribution": {
+          "5": 7
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/r1202401016.txt",
+        "codigo_institucion": "016",
+        "nombre_institucion_fuente": "BANCO DE CRÉDITO E INVERSIONES",
+        "familia_archivo_fuente": "R1",
+        "modelo_cmf": "MR1",
+        "tipo_estado": "resultados",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 1230,
+        "account_rows": 1229,
+        "field_count_distribution": {
+          "2": 1229
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 1
+      },
+      {
+        "source_member": "202401/b1202401028.txt",
+        "codigo_institucion": "028",
+        "nombre_institucion_fuente": "BANCO BICE",
+        "familia_archivo_fuente": "B1",
+        "modelo_cmf": "MB1",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 710,
+        "account_rows": 709,
+        "field_count_distribution": {
+          "5": 709
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/b2202401028.txt",
+        "codigo_institucion": "028",
+        "nombre_institucion_fuente": "BANCO BICE",
+        "familia_archivo_fuente": "B2",
+        "modelo_cmf": "MB2",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "individual",
+        "nonempty_source_lines": 8,
+        "account_rows": 7,
+        "field_count_distribution": {
+          "5": 7
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/r1202401028.txt",
+        "codigo_institucion": "028",
+        "nombre_institucion_fuente": "BANCO BICE",
+        "familia_archivo_fuente": "R1",
+        "modelo_cmf": "MR1",
+        "tipo_estado": "resultados",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 1230,
+        "account_rows": 1229,
+        "field_count_distribution": {
+          "2": 1229
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 1
+      },
+      {
+        "source_member": "202401/b1202401031.txt",
+        "codigo_institucion": "031",
+        "nombre_institucion_fuente": "HSBC BANK (CHILE)",
+        "familia_archivo_fuente": "B1",
+        "modelo_cmf": "MB1",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 710,
+        "account_rows": 709,
+        "field_count_distribution": {
+          "5": 709
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/b2202401031.txt",
+        "codigo_institucion": "031",
+        "nombre_institucion_fuente": "HSBC BANK (CHILE)",
+        "familia_archivo_fuente": "B2",
+        "modelo_cmf": "MB2",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "individual",
+        "nonempty_source_lines": 8,
+        "account_rows": 7,
+        "field_count_distribution": {
+          "5": 7
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/r1202401031.txt",
+        "codigo_institucion": "031",
+        "nombre_institucion_fuente": "HSBC BANK (CHILE)",
+        "familia_archivo_fuente": "R1",
+        "modelo_cmf": "MR1",
+        "tipo_estado": "resultados",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 1230,
+        "account_rows": 1229,
+        "field_count_distribution": {
+          "2": 1229
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 1
+      },
+      {
+        "source_member": "202401/b1202401037.txt",
+        "codigo_institucion": "037",
+        "nombre_institucion_fuente": "BANCO SANTANDER-CHILE",
+        "familia_archivo_fuente": "B1",
+        "modelo_cmf": "MB1",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 710,
+        "account_rows": 709,
+        "field_count_distribution": {
+          "5": 709
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/b2202401037.txt",
+        "codigo_institucion": "037",
+        "nombre_institucion_fuente": "BANCO SANTANDER-CHILE",
+        "familia_archivo_fuente": "B2",
+        "modelo_cmf": "MB2",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "individual",
+        "nonempty_source_lines": 8,
+        "account_rows": 7,
+        "field_count_distribution": {
+          "5": 7
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/r1202401037.txt",
+        "codigo_institucion": "037",
+        "nombre_institucion_fuente": "BANCO SANTANDER-CHILE",
+        "familia_archivo_fuente": "R1",
+        "modelo_cmf": "MR1",
+        "tipo_estado": "resultados",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 1230,
+        "account_rows": 1229,
+        "field_count_distribution": {
+          "2": 1229
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 1
+      },
+      {
+        "source_member": "202401/b1202401039.txt",
+        "codigo_institucion": "039",
+        "nombre_institucion_fuente": "BANCO ITAÚ CHILE",
+        "familia_archivo_fuente": "B1",
+        "modelo_cmf": "MB1",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 710,
+        "account_rows": 709,
+        "field_count_distribution": {
+          "5": 709
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/b2202401039.txt",
+        "codigo_institucion": "039",
+        "nombre_institucion_fuente": "BANCO ITAÚ CHILE",
+        "familia_archivo_fuente": "B2",
+        "modelo_cmf": "MB2",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "individual",
+        "nonempty_source_lines": 8,
+        "account_rows": 7,
+        "field_count_distribution": {
+          "5": 7
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/r1202401039.txt",
+        "codigo_institucion": "039",
+        "nombre_institucion_fuente": "BANCO ITAÚ CHILE",
+        "familia_archivo_fuente": "R1",
+        "modelo_cmf": "MR1",
+        "tipo_estado": "resultados",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 1230,
+        "account_rows": 1229,
+        "field_count_distribution": {
+          "2": 1229
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 1
+      },
+      {
+        "source_member": "202401/b1202401041.txt",
+        "codigo_institucion": "041",
+        "nombre_institucion_fuente": "JP MORGAN CHASE BANK N.A.",
+        "familia_archivo_fuente": "B1",
+        "modelo_cmf": "MB1",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 710,
+        "account_rows": 709,
+        "field_count_distribution": {
+          "5": 709
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/b2202401041.txt",
+        "codigo_institucion": "041",
+        "nombre_institucion_fuente": "JP MORGAN CHASE BANK N.A.",
+        "familia_archivo_fuente": "B2",
+        "modelo_cmf": "MB2",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "individual",
+        "nonempty_source_lines": 8,
+        "account_rows": 7,
+        "field_count_distribution": {
+          "5": 7
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/r1202401041.txt",
+        "codigo_institucion": "041",
+        "nombre_institucion_fuente": "JP MORGAN CHASE BANK N.A.",
+        "familia_archivo_fuente": "R1",
+        "modelo_cmf": "MR1",
+        "tipo_estado": "resultados",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 1230,
+        "account_rows": 1229,
+        "field_count_distribution": {
+          "2": 1229
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 1
+      },
+      {
+        "source_member": "202401/b1202401049.txt",
+        "codigo_institucion": "049",
+        "nombre_institucion_fuente": "BANCO SECURITY",
+        "familia_archivo_fuente": "B1",
+        "modelo_cmf": "MB1",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 710,
+        "account_rows": 709,
+        "field_count_distribution": {
+          "5": 709
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/b2202401049.txt",
+        "codigo_institucion": "049",
+        "nombre_institucion_fuente": "BANCO SECURITY",
+        "familia_archivo_fuente": "B2",
+        "modelo_cmf": "MB2",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "individual",
+        "nonempty_source_lines": 8,
+        "account_rows": 7,
+        "field_count_distribution": {
+          "5": 7
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/r1202401049.txt",
+        "codigo_institucion": "049",
+        "nombre_institucion_fuente": "BANCO SECURITY",
+        "familia_archivo_fuente": "R1",
+        "modelo_cmf": "MR1",
+        "tipo_estado": "resultados",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 1230,
+        "account_rows": 1229,
+        "field_count_distribution": {
+          "2": 1229
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 1
+      },
+      {
+        "source_member": "202401/b1202401051.txt",
+        "codigo_institucion": "051",
+        "nombre_institucion_fuente": "BANCO FALABELLA",
+        "familia_archivo_fuente": "B1",
+        "modelo_cmf": "MB1",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 710,
+        "account_rows": 709,
+        "field_count_distribution": {
+          "5": 709
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/b2202401051.txt",
+        "codigo_institucion": "051",
+        "nombre_institucion_fuente": "BANCO FALABELLA",
+        "familia_archivo_fuente": "B2",
+        "modelo_cmf": "MB2",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "individual",
+        "nonempty_source_lines": 8,
+        "account_rows": 7,
+        "field_count_distribution": {
+          "5": 7
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/r1202401051.txt",
+        "codigo_institucion": "051",
+        "nombre_institucion_fuente": "BANCO FALABELLA",
+        "familia_archivo_fuente": "R1",
+        "modelo_cmf": "MR1",
+        "tipo_estado": "resultados",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 1230,
+        "account_rows": 1229,
+        "field_count_distribution": {
+          "2": 1229
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 1
+      },
+      {
+        "source_member": "202401/b1202401053.txt",
+        "codigo_institucion": "053",
+        "nombre_institucion_fuente": "BANCO RIPLEY",
+        "familia_archivo_fuente": "B1",
+        "modelo_cmf": "MB1",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 710,
+        "account_rows": 709,
+        "field_count_distribution": {
+          "5": 709
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/b2202401053.txt",
+        "codigo_institucion": "053",
+        "nombre_institucion_fuente": "BANCO RIPLEY",
+        "familia_archivo_fuente": "B2",
+        "modelo_cmf": "MB2",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "individual",
+        "nonempty_source_lines": 8,
+        "account_rows": 7,
+        "field_count_distribution": {
+          "5": 7
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/r1202401053.txt",
+        "codigo_institucion": "053",
+        "nombre_institucion_fuente": "BANCO RIPLEY",
+        "familia_archivo_fuente": "R1",
+        "modelo_cmf": "MR1",
+        "tipo_estado": "resultados",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 1230,
+        "account_rows": 1229,
+        "field_count_distribution": {
+          "2": 1229
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 1
+      },
+      {
+        "source_member": "202401/b1202401055.txt",
+        "codigo_institucion": "055",
+        "nombre_institucion_fuente": "BANCO CONSORCIO",
+        "familia_archivo_fuente": "B1",
+        "modelo_cmf": "MB1",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 710,
+        "account_rows": 709,
+        "field_count_distribution": {
+          "5": 709
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/b2202401055.txt",
+        "codigo_institucion": "055",
+        "nombre_institucion_fuente": "BANCO CONSORCIO",
+        "familia_archivo_fuente": "B2",
+        "modelo_cmf": "MB2",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "individual",
+        "nonempty_source_lines": 8,
+        "account_rows": 7,
+        "field_count_distribution": {
+          "5": 7
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/r1202401055.txt",
+        "codigo_institucion": "055",
+        "nombre_institucion_fuente": "BANCO CONSORCIO",
+        "familia_archivo_fuente": "R1",
+        "modelo_cmf": "MR1",
+        "tipo_estado": "resultados",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 1230,
+        "account_rows": 1229,
+        "field_count_distribution": {
+          "2": 1229
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 1
+      },
+      {
+        "source_member": "202401/b1202401059.txt",
+        "codigo_institucion": "059",
+        "nombre_institucion_fuente": "BANCO BTG PACTUAL CHILE",
+        "familia_archivo_fuente": "B1",
+        "modelo_cmf": "MB1",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 710,
+        "account_rows": 709,
+        "field_count_distribution": {
+          "5": 709
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/b2202401059.txt",
+        "codigo_institucion": "059",
+        "nombre_institucion_fuente": "BANCO BTG PACTUAL CHILE",
+        "familia_archivo_fuente": "B2",
+        "modelo_cmf": "MB2",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "individual",
+        "nonempty_source_lines": 8,
+        "account_rows": 7,
+        "field_count_distribution": {
+          "5": 7
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/r1202401059.txt",
+        "codigo_institucion": "059",
+        "nombre_institucion_fuente": "BANCO BTG PACTUAL CHILE",
+        "familia_archivo_fuente": "R1",
+        "modelo_cmf": "MR1",
+        "tipo_estado": "resultados",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 1230,
+        "account_rows": 1229,
+        "field_count_distribution": {
+          "2": 1229
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 1
+      },
+      {
+        "source_member": "202401/b1202401060.txt",
+        "codigo_institucion": "060",
+        "nombre_institucion_fuente": "CHINA CONSTRUCTION BANK - AGENCIA EN CHILE",
+        "familia_archivo_fuente": "B1",
+        "modelo_cmf": "MB1",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 710,
+        "account_rows": 709,
+        "field_count_distribution": {
+          "5": 709
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/b2202401060.txt",
+        "codigo_institucion": "060",
+        "nombre_institucion_fuente": "CHINA CONSTRUCTION BANK - AGENCIA EN CHILE",
+        "familia_archivo_fuente": "B2",
+        "modelo_cmf": "MB2",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "individual",
+        "nonempty_source_lines": 8,
+        "account_rows": 7,
+        "field_count_distribution": {
+          "5": 7
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/r1202401060.txt",
+        "codigo_institucion": "060",
+        "nombre_institucion_fuente": "CHINA CONSTRUCTION BANK - AGENCIA EN CHILE",
+        "familia_archivo_fuente": "R1",
+        "modelo_cmf": "MR1",
+        "tipo_estado": "resultados",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 1230,
+        "account_rows": 1229,
+        "field_count_distribution": {
+          "2": 1229
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 1
+      },
+      {
+        "source_member": "202401/b1202401061.txt",
+        "codigo_institucion": "061",
+        "nombre_institucion_fuente": "BANK OF CHINA - AGENCIA EN CHILE",
+        "familia_archivo_fuente": "B1",
+        "modelo_cmf": "MB1",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 710,
+        "account_rows": 709,
+        "field_count_distribution": {
+          "5": 709
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/b2202401061.txt",
+        "codigo_institucion": "061",
+        "nombre_institucion_fuente": "BANK OF CHINA - AGENCIA EN CHILE",
+        "familia_archivo_fuente": "B2",
+        "modelo_cmf": "MB2",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "individual",
+        "nonempty_source_lines": 8,
+        "account_rows": 7,
+        "field_count_distribution": {
+          "5": 7
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/r1202401061.txt",
+        "codigo_institucion": "061",
+        "nombre_institucion_fuente": "BANK OF CHINA - AGENCIA EN CHILE",
+        "familia_archivo_fuente": "R1",
+        "modelo_cmf": "MR1",
+        "tipo_estado": "resultados",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 1230,
+        "account_rows": 1229,
+        "field_count_distribution": {
+          "2": 1229
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 1
+      },
+      {
+        "source_member": "202401/b1202401999.txt",
+        "codigo_institucion": "999",
+        "nombre_institucion_fuente": "SISTEMA FINANCIERO",
+        "familia_archivo_fuente": "B1",
+        "modelo_cmf": "MB1",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 710,
+        "account_rows": 709,
+        "field_count_distribution": {
+          "5": 709
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/b2202401999.txt",
+        "codigo_institucion": "999",
+        "nombre_institucion_fuente": "SISTEMA FINANCIERO",
+        "familia_archivo_fuente": "B2",
+        "modelo_cmf": "MB2",
+        "tipo_estado": "balance",
+        "nivel_consolidacion": "individual",
+        "nonempty_source_lines": 8,
+        "account_rows": 7,
+        "field_count_distribution": {
+          "5": 7
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 4
+      },
+      {
+        "source_member": "202401/r1202401999.txt",
+        "codigo_institucion": "999",
+        "nombre_institucion_fuente": "SISTEMA FINANCIERO",
+        "familia_archivo_fuente": "R1",
+        "modelo_cmf": "MR1",
+        "tipo_estado": "resultados",
+        "nivel_consolidacion": "consolidado_global",
+        "nonempty_source_lines": 1230,
+        "account_rows": 1229,
+        "field_count_distribution": {
+          "2": 1229
+        },
+        "duplicate_account_codes": 0,
+        "amount_field_count": 1
+      }
+    ],
+    "field_semantics": {
+      "B1_B2": "Importes fuente se preservan sin nombres de moneda hasta cotejar el esquema TXT vigente con la definición normativa.",
+      "R1": "Un campo de importe por cuenta; clasificación temporal acumulada/mensual queda pendiente de cotejo.",
+      "account_hierarchy": "Glosa y códigos rubro/línea/ítem se leen del modelo CMF correspondiente; tipo_linea se deriva de TOTAL explícito o de la jerarquía de descendientes del mismo modelo.",
+      "institution_identity": "El código y nombre se leen del encabezado CMF; RUT se deja nulo hasta validar el cruce con el maestro."
+    },
+    "validation": {
+      "all_required_statement_files_present": true,
+      "all_data_rows_have_expected_shape": true,
+      "duplicate_account_codes_retained_with_occurrence": true,
+      "published": true
+    }
+  },
+  "validation": {
+    "status": "passed",
+    "period": "2024-01",
+    "institution_count": 18,
+    "individual_institutions_tied_out": 17,
+    "file_count": 54,
+    "account_rows_by_family": {
+      "B1": 12762,
+      "B2": 126,
+      "R1": 22122
+    },
+    "total_account_rows": 35010,
+    "b2_validation": "estructura, forma, códigos y cobertura CMF; el XLSX de resumen no publica B2 individual",
+    "amounts_policy": "se conserva el dato de origen sin renombrar los cuatro campos B1/B2 ni calcular métricas",
+    "institution_checks": [
+      {
+        "codigo_institucion": "001",
+        "nombre_institucion_fuente": "BANCO DE CHILE",
+        "es_agregado_sistema": false,
+        "b1_total_activos": "passed",
+        "r1_cuentas_clave_coincidentes": [
+          "590000000",
+          "594000000"
+        ],
+        "r1_exact_account_match_count": 11,
+        "status": "passed"
+      },
+      {
+        "codigo_institucion": "009",
+        "nombre_institucion_fuente": "BANCO INTERNACIONAL",
+        "es_agregado_sistema": false,
+        "b1_total_activos": "passed",
+        "r1_cuentas_clave_coincidentes": [
+          "590000000",
+          "594000000"
+        ],
+        "r1_exact_account_match_count": 11,
+        "status": "passed"
+      },
+      {
+        "codigo_institucion": "012",
+        "nombre_institucion_fuente": "BANCO DEL ESTADO DE CHILE",
+        "es_agregado_sistema": false,
+        "b1_total_activos": "passed",
+        "r1_cuentas_clave_coincidentes": [
+          "590000000",
+          "594000000"
+        ],
+        "r1_exact_account_match_count": 11,
+        "status": "passed"
+      },
+      {
+        "codigo_institucion": "014",
+        "nombre_institucion_fuente": "SCOTIABANK CHILE",
+        "es_agregado_sistema": false,
+        "b1_total_activos": "passed",
+        "r1_cuentas_clave_coincidentes": [
+          "590000000",
+          "594000000"
+        ],
+        "r1_exact_account_match_count": 11,
+        "status": "passed"
+      },
+      {
+        "codigo_institucion": "016",
+        "nombre_institucion_fuente": "BANCO DE CRÉDITO E INVERSIONES",
+        "es_agregado_sistema": false,
+        "b1_total_activos": "passed",
+        "r1_cuentas_clave_coincidentes": [
+          "590000000",
+          "594000000"
+        ],
+        "r1_exact_account_match_count": 11,
+        "status": "passed"
+      },
+      {
+        "codigo_institucion": "028",
+        "nombre_institucion_fuente": "BANCO BICE",
+        "es_agregado_sistema": false,
+        "b1_total_activos": "passed",
+        "r1_cuentas_clave_coincidentes": [
+          "590000000",
+          "594000000"
+        ],
+        "r1_exact_account_match_count": 11,
+        "status": "passed"
+      },
+      {
+        "codigo_institucion": "031",
+        "nombre_institucion_fuente": "HSBC BANK (CHILE)",
+        "es_agregado_sistema": false,
+        "b1_total_activos": "passed",
+        "r1_cuentas_clave_coincidentes": [
+          "590000000",
+          "594000000"
+        ],
+        "r1_exact_account_match_count": 13,
+        "status": "passed"
+      },
+      {
+        "codigo_institucion": "037",
+        "nombre_institucion_fuente": "BANCO SANTANDER-CHILE",
+        "es_agregado_sistema": false,
+        "b1_total_activos": "passed",
+        "r1_cuentas_clave_coincidentes": [
+          "590000000",
+          "594000000"
+        ],
+        "r1_exact_account_match_count": 11,
+        "status": "passed"
+      },
+      {
+        "codigo_institucion": "039",
+        "nombre_institucion_fuente": "BANCO ITAÚ CHILE",
+        "es_agregado_sistema": false,
+        "b1_total_activos": "passed",
+        "r1_cuentas_clave_coincidentes": [
+          "590000000",
+          "594000000"
+        ],
+        "r1_exact_account_match_count": 11,
+        "status": "passed"
+      },
+      {
+        "codigo_institucion": "041",
+        "nombre_institucion_fuente": "JP MORGAN CHASE BANK N.A.",
+        "es_agregado_sistema": false,
+        "b1_total_activos": "passed",
+        "r1_cuentas_clave_coincidentes": [
+          "590000000",
+          "594000000"
+        ],
+        "r1_exact_account_match_count": 13,
+        "status": "passed"
+      },
+      {
+        "codigo_institucion": "049",
+        "nombre_institucion_fuente": "BANCO SECURITY",
+        "es_agregado_sistema": false,
+        "b1_total_activos": "passed",
+        "r1_cuentas_clave_coincidentes": [
+          "590000000",
+          "594000000"
+        ],
+        "r1_exact_account_match_count": 11,
+        "status": "passed"
+      },
+      {
+        "codigo_institucion": "051",
+        "nombre_institucion_fuente": "BANCO FALABELLA",
+        "es_agregado_sistema": false,
+        "b1_total_activos": "passed",
+        "r1_cuentas_clave_coincidentes": [
+          "590000000",
+          "594000000"
+        ],
+        "r1_exact_account_match_count": 11,
+        "status": "passed"
+      },
+      {
+        "codigo_institucion": "053",
+        "nombre_institucion_fuente": "BANCO RIPLEY",
+        "es_agregado_sistema": false,
+        "b1_total_activos": "passed",
+        "r1_cuentas_clave_coincidentes": [
+          "590000000",
+          "594000000"
+        ],
+        "r1_exact_account_match_count": 11,
+        "status": "passed"
+      },
+      {
+        "codigo_institucion": "055",
+        "nombre_institucion_fuente": "BANCO CONSORCIO",
+        "es_agregado_sistema": false,
+        "b1_total_activos": "passed",
+        "r1_cuentas_clave_coincidentes": [
+          "590000000",
+          "594000000"
+        ],
+        "r1_exact_account_match_count": 11,
+        "status": "passed"
+      },
+      {
+        "codigo_institucion": "059",
+        "nombre_institucion_fuente": "BANCO BTG PACTUAL CHILE",
+        "es_agregado_sistema": false,
+        "b1_total_activos": "passed",
+        "r1_cuentas_clave_coincidentes": [
+          "590000000",
+          "594000000"
+        ],
+        "r1_exact_account_match_count": 11,
+        "status": "passed"
+      },
+      {
+        "codigo_institucion": "060",
+        "nombre_institucion_fuente": "CHINA CONSTRUCTION BANK - AGENCIA EN CHILE",
+        "es_agregado_sistema": false,
+        "b1_total_activos": "passed",
+        "r1_cuentas_clave_coincidentes": [
+          "590000000",
+          "594000000"
+        ],
+        "r1_exact_account_match_count": 13,
+        "status": "passed"
+      },
+      {
+        "codigo_institucion": "061",
+        "nombre_institucion_fuente": "BANK OF CHINA - AGENCIA EN CHILE",
+        "es_agregado_sistema": false,
+        "b1_total_activos": "passed",
+        "r1_cuentas_clave_coincidentes": [
+          "590000000",
+          "594000000"
+        ],
+        "r1_exact_account_match_count": 17,
+        "status": "passed"
+      },
+      {
+        "codigo_institucion": "999",
+        "nombre_institucion_fuente": "SISTEMA FINANCIERO",
+        "es_agregado_sistema": true,
+        "b1_total_activos": "passed",
+        "r1_cuentas_clave_coincidentes": [
+          "590000000",
+          "594000000"
+        ],
+        "r1_exact_account_match_count": 11,
+        "status": "passed"
+      }
+    ]
+  },
+  "published_at": "2026-09-28"
+}
