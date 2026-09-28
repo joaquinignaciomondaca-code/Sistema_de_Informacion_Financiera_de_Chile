@@ -526,7 +526,7 @@ const EXPLORER_TREE = [
               { label: "Segmentación por Línea de Negocio", query: "SELECT segmento, count(*) as entidades, sum(es_factoring) as con_factoring, sum(es_leasing_financiero) as con_leasing, sum(es_automotriz) as con_automotriz FROM factoring_leasing_maestro WHERE vigente = 1 GROUP BY segmento;" }
             ],
             tables: [
-              { id: "factoring_leasing_maestro", name: "factoring_leasing.lista_entidades", rows: "28 entidades", file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet" }
+              { id: "factoring_leasing_maestro", name: "factoring_leasing.lista_entidades", rows: "32 entidades", file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet" }
             ]
           },
           // BEGIN AUTO FL IFRS SERIES NAVIGATION
