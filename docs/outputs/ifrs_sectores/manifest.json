@@ -2558,7 +2558,7 @@
     },
     "202606": {
       "cerrado": false,
-      "leido_utc": "2026-09-28T08:02:43+00:00",
+      "leido_utc": "2026-09-28T08:17:26+00:00",
       "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202606&termino=202606",
       "sha256": "fa873d0d485b1395937927ac14c3f80524f0b95ba848b21df5f47a779af96379",
       "lineas": 30213,
@@ -2592,19 +2592,10 @@
       "avisos": []
     }
   },
-  "updated_at": "2026-09-28T08:16:03+00:00",
+  "updated_at": "2026-09-28T08:17:26+00:00",
   "entidades_fuera_de_lista_ultimo_trimestre": {
     "periodo": "202606",
-    "agf": [
-      {
-        "rut": "96530900-4",
-        "razon_social": "BCI ASSET MANAGEMENT ADMINISTRADORA  GENERAL DE FONDOS S.A."
-      },
-      {
-        "rut": "96836390-5",
-        "razon_social": "BANCOESTADO S.A. ADMINISTRADORA  GENERAL DE FONDOS"
-      }
-    ],
+    "agf": [],
     "securitizadoras": [],
     "cajas_compensacion": []
   }
