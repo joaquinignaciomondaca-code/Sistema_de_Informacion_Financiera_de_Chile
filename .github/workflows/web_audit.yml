@@ -6,7 +6,7 @@ name: Auditoría de la web (catálogo vs Parquet)
 # pueden descargar desde el entorno de trabajo).
 on:
   push:
-    branches: [main, arena/01a0e66e-monitor-financiero-chile]
+    branches: [main, arena/01a0e680-monitor-financiero-chile]
     paths:
       - 'docs/**'
       - 'scripts/audit_navigation.py'

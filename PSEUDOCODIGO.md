@@ -216,7 +216,8 @@ extract.main(--sector --batch --shard):
         url_fuente_segura (quita tokens auth/send)
     → .local-data (cuarentena), nunca docs/outputs
 audit_sample           : XML vs tabla HTML CMF
-scripts/probe_xml_sources.py : sonda diaria de disponibilidad de fuentes XML por industria
+(scripts/probe_xml_sources.py y su workflow diario: eliminados el 2026-09-28; las fuentes que vigilaban se
+ automatizaron por otras vías: TXT IFRS CMF, carteras FFMM/FI y Excel FECU de corredoras)
 ```
 
 ---
@@ -417,7 +418,11 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 | factoring_leasing_sample.yml | manual | no | cotejo muestra |
 | xml_eeff_review.yml | días 5, 15, 25 11:30 | no | extract.py en 4 shards |
 | xml_eeff_sample.yml | manual | no | audit_sample |
-| probe_xml_sources.yml | diario 12:00 | no | sonda fuentes |
+| ifrs_sectores.yml | días 2, 12, 22 13:30 | **sí** (commit + Pages) | estados IFRS de AGF, securitizadoras y CCAF (§8a) |
+| corredoras_eeff.yml | días 6, 16, 26 13:45 | **sí** (commit + Pages) | estados FECU IFRS de corredores y agentes (§8a) |
+| seguros_carteras.yml | días 7, 17, 27 14:00 | **sí** (commit + Pages) | cartera de inversiones de aseguradoras (§6) |
+| ffmm_carteras.yml | días 8, 18, 28 14:00 | **sí** (commit + Pages) | cartera de fondos mutuos, Circular 1333 (§7) |
+| fi_carteras.yml | días 9, 19, 29 15:00 | **sí** (commit + Pages) | cartera y pactos de fondos de inversión (§7) |
 
 ---
 
@@ -429,7 +434,7 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 - ✅ `data_manifest.json` decía `total_tables: 65` con 63 entradas (fallaba `test_publication`). Causa: `update_data_manifest` sumaba incrementos. Ahora recalcula desde la lista; `file_parquet` de bancos apunta al último período (2026-07, antes 2026-06).
 - ✅ `preview_no_cache.py` sin soporte HTTP Range → agregado.
 - ✅ (2026-09-28) Se quitaron de `data_manifest.json` las 4 tablas AFP retiradas cuyos Parquet ya no existían.
-- ⚠️ `web_audit.yml` se dispara en push a `arena/01a0e66e-…` (rama de una sesión anterior); conviene dejar solo `main` + `pull_request`.
+- ✅ `web_audit.yml` y `factoring_leasing_backfill.yml` se disparaban en push a ramas de sesiones anteriores; ahora `main` + rama de trabajo actual.
 - Muchas vistas del visor no tienen entrada en `data_manifest.json` (vida_fondos, fi_*, bancos_cmf_balance/resultados agrupadas como `bancos_cmf_lineas`…): el manifiesto es un catálogo parcial, no la fuente de verdad de la web (esa es `SEMANTIC_VIEWS`).
 
 **1ª pasada**
