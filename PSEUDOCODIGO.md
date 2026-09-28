@@ -216,7 +216,6 @@ extract.main(--sector --batch --shard):
         url_fuente_segura (quita tokens auth/send)
     → .local-data (cuarentena), nunca docs/outputs
 audit_sample           : XML vs tabla HTML CMF
-publish_approved_sample: publica SOLO las 2 filas cotejadas (fi/ffmm _eeff_xml_muestra_cmf)
 scripts/probe_xml_sources.py : sonda diaria de disponibilidad de fuentes XML por industria
 ```
 
@@ -246,16 +245,20 @@ tests/test_formato_1835.py: lee las muestras de ambos formatos; cuadratura de bo
 
 ## 7. Fondos Mutuos (`ffmm/`) y Fondos de Inversión (`fi/`)
 ```
-FFMM
-  circular_1333_cartera/update_pipeline(months_back): descarga FUTU/OPCI mensuales si faltan → normalize → parquet
-      (run_update.bat lo lanza en Windows)
+FFMM  scripts/actualizar_carteras.py  (workflow ffmm_carteras.yml: días 8, 18 y 28; incremental)
+  para cada mes pendiente según docs/outputs/ffmm/manifest.json (desde 2001-01; nacional desde 2022-01):
+      POST ffm_download.php aa, mm, cartera ∈ {NACI, EXTR, FUTU, OPCI}   (OPLA viene siempre vacía)
+      leer CSV ";": encabezado idéntico al de la Circular 1333 (FFM_60xxxxx) o error
+          números con punto decimal (".019"), fechas DD/MM/AAAA, sin rellenar con ceros
+          > 1 % de filas ilegibles → el mes no se publica (error)
+      completitud: NACI con datos y ≥ 90 % de los fondos del mes anterior; si no → esperar
+          (en meses antiguos esto es error, no espera)
+      escribir: cartera_nacional un archivo por mes, resto uno por año; montos en miles de la
+                moneda funcional del fondo (_miles_mf)
+      lista de fondos (maestro_fondos_mutuos.parquet): primer/último mes informado, reporta_ultimo_mes
+      manifiestos por tabla + data_manifest.json (entradas del sector, recalculadas tras el pull)
   01  registro fondos activos (fm_ident2.php)          → ffmm_registro_fondos
-  01b universo vigentes + históricos                   → ffmm_registro_fondos_universo
-  02  resolver URLs EEFF (pestaña 62)                  → ffmm_eeff_urls_2024
-  03  extraer carátula + tabla REPO 11 columnas (PDF)  → ffmm_caratula_eeff_2024 / repos_detalle_2024  (checkpoint JSON)
-  03b histórico 2015–2025 (HTML + PDF en RAM)          → *_historico  (checkpoint atómico)
-  04/04b auditoría (04b usa benchmark en ruta C:\)
-  sync_checkpoint_to_parquet: vuelca checkpoint → parquet en caliente
+  01b universo vigentes + históricos                   → ffmm_registro_fondos_universo (lo usa pipelines/xml_eeff)
 
 FI
   cartera_inversiones/extract_cartera_fi.FIIExtractor: XML IFRS CMF N/E/M/… → fi_cartera_nacional/extranjera/derivados/...

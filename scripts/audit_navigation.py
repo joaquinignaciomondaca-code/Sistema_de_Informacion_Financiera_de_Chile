@@ -128,7 +128,9 @@ for (const file of restrictedFiles) {
                     'bancos_derivados_flujos_transados','bancos_colocaciones',
                     'vida_bonos','vida_acciones','vida_maestro','vida_forwards','vida_swaps','vida_repos','vida_solvencia',
                     'generales_bonos','generales_acciones','generales_maestro','generales_repos','generales_solvencia',
-                    'outputs/vida/','outputs/generales/']) {
+                    'outputs/vida/','outputs/generales/',
+                    'ffmm_futu_normalizado','ffmm_opci_normalizado','ffmm_inversiones_nac','ffmm_repos_detalle_historico',
+                    'ffmm_eeff_xml_muestra_cmf','fi_eeff_xml_muestra_cmf','ffmm_registro_fondos_universo']) {
     assert(!text.includes(id), file + ' expone tabla retirada: ' + id);
   }
 }

@@ -178,64 +178,55 @@ const EXPLORER_TREE = [
             id: "c1333_ffmm_cat",
             type: "circular",
             label: "Lista de Entidades",
-            badge: "1.156 Entidades",
+            badge: "Desde los reportes",
             badgeType: "entities",
             status: "active",
             sector: "ffmm",
             chips: [
-              { label: "Listado de Fondos Mutuos", query: "SELECT run_fondo, nombre_fondo, sector FROM ffmm_maestro ORDER BY nombre_fondo LIMIT 10;" }
+              { label: "Fondos que reportan en el último mes", query: "SELECT run_fondo, nombre_fondo, primer_periodo, meses_reportados FROM ffmm_maestro WHERE reporta_ultimo_mes ORDER BY nombre_fondo;" },
+              { label: "Fondos nuevos (primer reporte más reciente)", query: "SELECT run_fondo, nombre_fondo, primer_periodo FROM ffmm_maestro ORDER BY primer_periodo DESC, nombre_fondo LIMIT 20;" },
+              { label: "Fondos que dejaron de reportar", query: "SELECT run_fondo, nombre_fondo, primer_periodo, ultimo_periodo FROM ffmm_maestro WHERE NOT reporta_ultimo_mes ORDER BY ultimo_periodo DESC LIMIT 20;" }
             ],
             tables: [
-              { id: "ffmm_maestro", name: "ffmm.lista_entidades", rows: "1.156 entidades", file: "outputs/ffmm/maestro_fondos_mutuos.parquet" }
+              { id: "ffmm_maestro", name: "ffmm.lista_entidades", rows: "Una fila por fondo", file: "outputs/ffmm/maestro_fondos_mutuos.parquet" }
+            ]
+          },
+          {
+            id: "c1333_ffmm_cartera",
+            type: "circular",
+            label: "Circular 1333 · Cartera de inversiones",
+            badge: "Mensual validada",
+            badgeType: "data",
+            status: "active",
+            sector: "ffmm",
+            chips: [
+              { label: "Cartera nacional por tipo de instrumento, último mes", query: "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional) GROUP BY tipo_instrumento ORDER BY valorizacion_miles_mf DESC LIMIT 15;" },
+              { label: "Mayores emisores nacionales, último mes", query: "SELECT rut_emisor, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional) GROUP BY rut_emisor ORDER BY valorizacion_miles_mf DESC LIMIT 10;" },
+              { label: "Instrumentos con compromiso o en garantía, último mes", query: "SELECT situacion_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional) GROUP BY situacion_instrumento ORDER BY situacion_instrumento;" },
+              { label: "Cartera extranjera por país emisor, último mes", query: "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;" },
+              { label: "Fondos con inversión extranjera por mes", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, count(*) AS posiciones FROM ffmm_cartera_extranjera GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" }
+            ],
+            tables: [
+              { id: "ffmm_cartera_nacional", name: "ffmm.cartera_nacional", rows: "Un archivo por mes · desde 2022-01", file: "", files: ["outputs/ffmm/cartera_nacional/manifest.json"] },
+              { id: "ffmm_cartera_extranjera", name: "ffmm.cartera_extranjera", rows: "Un archivo por año · desde 2001", file: "", files: ["outputs/ffmm/cartera_extranjera/manifest.json"] }
             ]
           },
           {
             id: "c1333_ffmm",
             type: "circular",
             label: "Circular 1333 · Derivados",
-            badge: "285.841 Registros",
+            badge: "Mensual validada",
             badgeType: "data",
             status: "active",
             sector: "ffmm",
             chips: [
-              { label: "Futuros Circular 1333", query: "SELECT * FROM ffmm_futuros LIMIT 10;" },
-              { label: "Opciones Circular 1333", query: "SELECT * FROM ffmm_opciones LIMIT 10;" }
+              { label: "Forwards y futuros por activo objeto, último mes", query: "SELECT activo_objeto, posicion, count(*) AS contratos, SUM(monto_comprometido_miles_mf) AS monto_comprometido_miles_mf FROM ffmm_futuros WHERE periodo = (SELECT max(periodo) FROM ffmm_futuros) GROUP BY activo_objeto, posicion ORDER BY contratos DESC LIMIT 15;" },
+              { label: "Contratos vigentes por mes", query: "SELECT periodo, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM ffmm_futuros GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
+              { label: "Opciones del último mes", query: "SELECT run_fondo, nombre_fondo, activo_objeto, nemotecnico, tipo_opcion, fecha_expiracion, numero_contratos, precio_ejercicio, inversion_primas_miles_mf FROM ffmm_opciones WHERE periodo = (SELECT max(periodo) FROM ffmm_opciones) ORDER BY run_fondo;" }
             ],
             tables: [
-              { id: "ffmm_futuros", name: "ffmm.derivados_futuros", rows: "280.494 registros", file: "outputs/ffmm/ffmm_futu_normalizado.parquet" },
-              { id: "ffmm_opciones", name: "ffmm.derivados_opciones", rows: "5.347 registros", file: "outputs/ffmm/ffmm_opci_normalizado.parquet" }
-            ]
-          },
-          {
-            id: "ffmm_eeff_xml_muestra_cmf_folder",
-            type: "circular",
-            label: "Estados financieros XML · Muestra cotejada CMF",
-            badge: "1 fondo · 2014-12",
-            badgeType: "data",
-            status: "active",
-            sector: "ffmm",
-            chips: [
-              { label: "Ver balance y resultado cotejados (miles de pesos)", query: "SELECT run_fondo, periodo, nombre_xml_historico, nombre_registro_actual, unidad_segun_ficha_cmf, total_activo, pasivo_sin_patrimonio, patrimonio_o_activo_neto, resultado_ejercicio, fuente_ficha_cmf FROM ffmm_eeff_xml_muestra_cmf;" }
-            ],
-            tables: [
-              { id: "ffmm_eeff_xml_muestra_cmf", name: "ffmm.eeff_xml_muestra_cmf", rows: "1 fila cotejada · no es histórico", file: "outputs/ffmm/ffmm_eeff_xml_muestra_cmf.parquet" }
-            ]
-          },
-          {
-            id: "repos_ffmm_historico",
-            type: "circular",
-            label: "Operaciones REPO · Muestra en revisión",
-            badge: "⚠ Falta auditar",
-            badgeType: "data",
-            status: "por_auditar",
-            sector: "ffmm",
-            chips: [
-              { label: "Registros Extraídos por Año (muestra sin auditar)", query: "SELECT periodo, count(*) as registros, count(distinct run_fondo) as fondos FROM ffmm_repos_detalle_historico GROUP BY periodo ORDER BY periodo DESC;" },
-              { label: "Campos Incompletos de la Extracción", query: "SELECT periodo, count(*) as registros, count(*) FILTER (WHERE fecha_vencimiento IS NULL OR fecha_vencimiento IN ('', 'NA')) as sin_vencimiento, count(*) FILTER (WHERE nemotecnico IS NULL OR nemotecnico IN ('', 'NA')) as sin_nemotecnico FROM ffmm_repos_detalle_historico GROUP BY periodo ORDER BY periodo DESC;" },
-              { label: "Detalle de Contratos (muestra sin auditar)", query: "SELECT periodo, run_fondo, nombre_fondo, fecha_compra, nombre_contraparte, nemotecnico, total_transado_m_clp, fecha_vencimiento, saldo_al_cierre_m_clp, pagina_pdf FROM ffmm_repos_detalle_historico ORDER BY periodo DESC, run_fondo LIMIT 25;" }
-            ],
-            tables: [
-              { id: "ffmm_repos_detalle_historico", name: "ffmm.repos_contratos", rows: "388 contratos", file: "outputs/ffmm/ffmm_repos_detalle_historico.parquet" }
+              { id: "ffmm_futuros", name: "ffmm.futuros_forwards", rows: "Un archivo por año · desde 2001", file: "", files: ["outputs/ffmm/futuros_forwards/manifest.json"] },
+              { id: "ffmm_opciones", name: "ffmm.opciones", rows: "Un archivo por año · desde 2001", file: "", files: ["outputs/ffmm/opciones/manifest.json"] }
             ]
           }
         ]
@@ -277,21 +268,6 @@ const EXPLORER_TREE = [
             ],
             tables: [
               { id: "fi_registro_fondos_universo", name: "fi.universo_fondos", rows: "1.677 fondos", file: "outputs/fi/fi_registro_fondos_universo.parquet" }
-            ]
-          },
-          {
-            id: "fi_eeff_xml_muestra_cmf_folder",
-            type: "circular",
-            label: "Estados financieros XML · Muestra cotejada CMF",
-            badge: "1 fondo · 2021-12",
-            badgeType: "data",
-            status: "active",
-            sector: "fi",
-            chips: [
-              { label: "Ver balance y resultado cotejados (miles de dólares)", query: "SELECT run_fondo, periodo, nombre_xml_historico, nombre_registro_actual, unidad_segun_ficha_cmf, total_activo, pasivo_sin_patrimonio, patrimonio_o_activo_neto, resultado_ejercicio, fuente_ficha_cmf FROM fi_eeff_xml_muestra_cmf;" }
-            ],
-            tables: [
-              { id: "fi_eeff_xml_muestra_cmf", name: "fi.eeff_xml_muestra_cmf", rows: "1 fila cotejada · no es histórico", file: "outputs/fi/fi_eeff_xml_muestra_cmf.parquet" }
             ]
           },
           {
