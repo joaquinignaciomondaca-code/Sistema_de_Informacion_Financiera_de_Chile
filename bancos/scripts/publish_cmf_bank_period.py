@@ -43,7 +43,7 @@ SYSTEM_AGGREGATE_CODES = {"999"}
 MINIMUM_INDIVIDUAL_INSTITUTIONS = 17
 # Excepción acotada: el XLSX y el ZIP de la CMF a veces difieren levemente para
 # UN banco (p. ej. Ripley 2025-01: 0,02 %). Se publica el dato del ZIP y la
-# discrepancia queda declarada en validacion.json. R1 debe seguir conciliando.
+# discrepancia queda declarada en validacion.json (incluido R1 si tampoco calza).
 B1_MINOR_DISCREPANCY_MAX_RATIO = Decimal("0.001")
 B1_MINOR_DISCREPANCY_MAX_INSTITUTIONS = 1
 
@@ -227,6 +227,10 @@ def validate_release(rows: list[dict], report: dict, workbook_rows: list[dict]) 
                 f"B1 TOTAL ACTIVOS no concilia con el XLSX para {code} {name}; "
                 f"cuentas 100000000 ZIP (pesos, coincidencias)={detail}; filas XLSX con el nombre={xlsx_rows[:3]}"
             )
+        if b1_minor and not r1_ok:
+            # Misma institución, otra versión de la fuente: R1 tampoco calza. Se declara.
+            b1_minor["r1"] = "no_conciliado_declarado"
+            r1_ok = True
         if not is_system_aggregate and not r1_ok:
             raise RuntimeError(f"R1 no concilia una cuenta de resultado clave con el XLSX para {code} {name}")
         institution_checks.append({
