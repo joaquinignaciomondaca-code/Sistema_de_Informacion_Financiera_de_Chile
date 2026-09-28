@@ -130,7 +130,9 @@ for (const file of restrictedFiles) {
                     'generales_bonos','generales_acciones','generales_maestro','generales_repos','generales_solvencia',
                     'outputs/vida/','outputs/generales/',
                     'ffmm_futu_normalizado','ffmm_opci_normalizado','ffmm_inversiones_nac','ffmm_repos_detalle_historico',
-                    'ffmm_eeff_xml_muestra_cmf','fi_eeff_xml_muestra_cmf','ffmm_registro_fondos_universo']) {
+                    'ffmm_eeff_xml_muestra_cmf','fi_eeff_xml_muestra_cmf','ffmm_registro_fondos_universo',
+                    'fi_nacional','fi_extranjera','fi_derivados','fi_metodo_part"','fi_repos','fi_registro_fondos_universo"',
+                    'fi_cartera_nacional.parquet','fi_futuros_forward']) {
     assert(!text.includes(id), file + ' expone tabla retirada: ' + id);
   }
 }
