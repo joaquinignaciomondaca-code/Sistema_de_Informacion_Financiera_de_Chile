@@ -2,7 +2,7 @@ name: Sonda Reporte Financiero Cooperativas CMF (sin publicación)
 
 on:
   push:
-    branches: [arena/01a0e5fb-monitor-financiero-chile]
+    branches: [arena/01a0e66e-monitor-financiero-chile]
     paths:
       - cooperativas/scripts/probe_coop_layout.py
       - .github/workflows/coop_probe.yml
@@ -23,5 +23,5 @@ jobs:
       - run: python -m pip install --disable-pip-version-check openpyxl==3.1.5
       - run: python -m pip install --disable-pip-version-check xlrd==2.0.1
       - run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
-      - name: celdas 2019-11
-        run: python -m cooperativas.scripts.probe_coop_layout cells 2019-11 "^activos cooperativas"
+      - name: Huecos y bloques por fila (2019-11)
+        run: python -m cooperativas.scripts.probe_coop_layout blocks 2019-11
