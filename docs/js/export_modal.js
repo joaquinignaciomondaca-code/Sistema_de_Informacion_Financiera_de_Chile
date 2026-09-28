@@ -60,8 +60,7 @@ class ExportModalController {
       securitizadoras_maestro: "outputs/securitizadoras/securitizadoras_maestro.parquet",
       securitizadoras_balance_resumen: "outputs/securitizadoras/securitizadoras_balance_resumen.parquet",
       patrimonios_separados_maestro: "outputs/securitizadoras/patrimonios_separados_maestro.parquet",
-      patrimonios_separados_balance_fsb: "outputs/securitizadoras/patrimonios_separados_balance_fsb.parquet",
-      patrimonios_separados_balance_cuentas: "outputs/securitizadoras/patrimonios_separados_balance_cuentas.parquet",
+      patrimonios_separados_balance: "outputs/securitizadoras/patrimonios_separados_balance.parquet",
       ccaf_maestro: "outputs/cajas_compensacion/ccaf_maestro.parquet",
       ccaf_caratula_totales: "outputs/cajas_compensacion/ccaf_caratula_totales.parquet",
       agf_maestro: "outputs/agf/agf_maestro.parquet",
@@ -90,8 +89,7 @@ class ExportModalController {
       bancos_maestro: 40,
       factoring_leasing_maestro: 28,
       patrimonios_separados_maestro: 18,
-      patrimonios_separados_balance_fsb: 358,
-      patrimonios_separados_balance_cuentas: 7962,
+      patrimonios_separados_balance: 7962,
       corredoras_bolsa_maestro: 47,
       corredoras_bolsa_balance_resumen: 1586
     };

@@ -5,7 +5,7 @@ Suite integral de auditoría y verificación de calidad y consistencia contable 
   1. securitizadoras_maestro (parquet/json)
   2. securitizadoras_balance_resumen (parquet/json)
   3. patrimonios_separados_maestro (parquet/json)
-  4. patrimonios_separados_balance_fsb + patrimonios_separados_balance_cuentas (parquet)
+  4. patrimonios_separados_balance (parquet)
 """
 
 import os
@@ -110,51 +110,38 @@ def main():
         if len(df_ps) != len(js_ps):
             errores.append("Discrepancia Parquet vs JSON en patrimonios_separados_maestro")
 
-    # 4. Balance de patrimonios separados (Excel FSB -> 05_publicar_balance_patrimonios_fsb.py)
-    print("\n--- 4. AUDITORIA: patrimonios_separados_balance_fsb / _balance_cuentas ---")
-    fsb_pq = os.path.join(base_dir, "patrimonios_separados_balance_fsb.parquet")
-    cta_pq = os.path.join(base_dir, "patrimonios_separados_balance_cuentas.parquet")
-    if not os.path.exists(fsb_pq) or not os.path.exists(cta_pq):
-        errores.append("Archivos del balance de patrimonios separados faltantes.")
+    # 4. Balance de patrimonios separados (05_publicar_balance_patrimonios.py)
+    print("\n--- 4. AUDITORIA: patrimonios_separados_balance ---")
+    bal_pq = os.path.join(base_dir, "patrimonios_separados_balance.parquet")
+    if not os.path.exists(bal_pq):
+        errores.append("Falta patrimonios_separados_balance.parquet")
     else:
-        fsb = pd.read_parquet(fsb_pq)
-        cta = pd.read_parquet(cta_pq)
-        print(f"Balances: {len(fsb)} | Cuentas: {len(cta)} | Cierres: {fsb['periodo'].nunique()} | Revisar: {int(fsb['revisar'].sum())}")
-        if fsb["archivo"].duplicated().any():
-            errores.append("balance_fsb: archivo duplicado")
-        if set(fsb["archivo"]) != set(cta["archivo"]):
-            errores.append("balance_fsb y balance_cuentas no cubren los mismos documentos")
-        gap = (fsb["total_activos_m_clp"] - fsb["pasivos_corto_plazo_m_clp"]
-               - fsb["pasivos_largo_plazo_m_clp"] - fsb["patrimonio_m_clp"]).abs()
-        print(f"Cuadre activos = pasivos + patrimonio: {int((gap <= 2).sum())}/{len(fsb)}")
+        cta = pd.read_parquet(bal_pq)
+        t = cta.pivot_table(index="archivo", columns="categoria", values="monto_m_clp", aggfunc="sum").fillna(0)
+        print(f"Cuentas: {len(cta)} | Balances: {len(t)} | Cierres: {cta['periodo'].nunique()} "
+              f"({cta['periodo'].min()}–{cta['periodo'].max()})")
+        if cta.duplicated(["archivo", "orden_en_balance"]).any():
+            errores.append("balance: (archivo, orden_en_balance) duplicado")
+        if cta.drop_duplicates("archivo").duplicated(["rut_administradora", "codigo_patrimonio", "periodo"]).any():
+            errores.append("balance: patrimonio y cierre repetidos en documentos distintos")
+        gap = (t["Total Activos"] - t["Total Pasivo Circulante"] - t["Total Pasivo No Circulante"]
+               - t["Total Patrimonio (Excedente Acumulado)"]).abs()
+        print(f"Cuadre activos = pasivos + patrimonio: {int((gap <= 2).sum())}/{len(t)}")
         if (gap > 2).any():
-            errores.append(f"balance_fsb: {int((gap > 2).sum())} balances no cuadran")
-        tot = cta[cta["categoria"] == "Total Activos"].groupby("archivo")["monto_m_clp"].sum()
-        car = cta[cta["categoria_fsb"] == "Loans"].groupby("archivo")["monto_m_clp"].sum()
-        f = fsb.set_index("archivo")
-        if not (tot.reindex(f.index).fillna(0) == f["total_activos_m_clp"]).all():
-            errores.append("balance_fsb.total_activos no coincide con las cuentas")
-        if not (car.reindex(f.index).fillna(0) == f["cartera_securitizada_m_clp"]).all():
-            errores.append("balance_fsb.cartera_securitizada no coincide con las cuentas Loans")
-        if (cta.loc[cta["categoria_fsb"] == "Loans", "cuenta"].str.contains("rovisi")
-                & (cta["monto_m_clp"] > 0)).any():
-            errores.append("Hay provisiones con signo positivo (inflarían la cartera)")
+            errores.append(f"balance: {int((gap > 2).sum())} balances no cuadran")
+        for det in ["Activo Circulante", "Activo No Circulante", "Pasivo Circulante", "Pasivo No Circulante",
+                    "Patrimonio (Excedente Acumulado)"]:
+            if det in t and ((t[det] - t[f"Total {det}"]).abs() > 2).any():
+                errores.append(f"balance: las cuentas de '{det}' no suman su total")
         if "df_m" in locals():
-            sin_gestora = set(fsb["rut_administradora"]) - set(df_m["rut"].astype(str))
+            sin_gestora = set(cta["rut_administradora"]) - set(df_m["rut"].astype(str))
             print(f"RUT sin gestora en securitizadoras_maestro: {sorted(sin_gestora) or 'ninguno'}")
             if sin_gestora:
-                errores.append(f"balance_fsb: RUT sin gestora {sorted(sin_gestora)}")
-        motivo_ok = (fsb["revisar"] == fsb["motivo_revision"].notna()).all()
-        if not motivo_ok:
-            errores.append("balance_fsb: revisar y motivo_revision no son coherentes")
-        fuera = fsb[(fsb["ci2_intermediacion_credito"] < 0) | (fsb["ci2_intermediacion_credito"] > 1.0001)]
-        # Informativo, no es error: CI2 > 1 cuando una cuenta de activo negativa ("mayor valor en
-        # colocación") reduce el total de activos; CI2 < 0 cuando las provisiones superan la cartera.
-        print(f"CI2 fuera de [0, 1] (informativo): {len(fuera)} balances")
+                errores.append(f"balance: RUT sin gestora {sorted(sin_gestora)}")
 
     print("\n" + "=" * 75)
     if not errores:
-        print("RESULTADO DE AUDITORIA: 100% EXITOSA - 5 DATASETS VERIFICADOS")
+        print("RESULTADO DE AUDITORIA: 100% EXITOSA - 4 DATASETS VERIFICADOS")
         print("=" * 75)
         return 0
     else:

@@ -884,49 +884,25 @@ const ERD_TABLES = [
 
 
   {
-    id: "patrimonios_separados_balance_fsb",
-    name: "patrimonios_separados.balance_fsb",
+    id: "patrimonios_separados_balance",
+    name: "patrimonios_separados.balance",
     sector: "patrimonios_separados",
     color: "#0F766E",
     x: 4460,
     y: 580,
     w: 270,
     h: 230,
-    rows: "358 balances",
-    file: "outputs/securitizadoras/patrimonios_separados_balance_fsb.parquet",
+    rows: "358 balances · 7.962 cuentas",
+    file: "outputs/securitizadoras/patrimonios_separados_balance.parquet",
     cols: [
       { name: "archivo", pk: true, type: "VARCHAR" },
       { name: "rut_administradora", fk: true, type: "VARCHAR" },
       { name: "codigo_patrimonio", type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
-      { name: "total_activos_m_clp", type: "BIGINT" },
-      { name: "cartera_securitizada_m_clp", type: "BIGINT" },
-      { name: "patrimonio_m_clp", type: "BIGINT" },
-      { name: "ci2_intermediacion_credito", type: "DOUBLE" },
-      { name: "mt2_transformacion_plazos", type: "DOUBLE" },
-      { name: "l5_apalancamiento", type: "DOUBLE" },
-      { name: "revisar", type: "BOOLEAN" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_balance_cuentas",
-    name: "patrimonios_separados.balance_cuentas",
-    sector: "patrimonios_separados",
-    color: "#0F766E",
-    x: 4460,
-    y: 860,
-    w: 270,
-    h: 200,
-    rows: "7.962 cuentas",
-    file: "outputs/securitizadoras/patrimonios_separados_balance_cuentas.parquet",
-    cols: [
-      { name: "archivo", fk: true, type: "VARCHAR" },
-      { name: "rut_administradora", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
+      { name: "orden_en_balance", type: "BIGINT" },
       { name: "categoria", type: "VARCHAR" },
       { name: "cuenta", type: "VARCHAR" },
-      { name: "monto_m_clp", type: "BIGINT" },
-      { name: "categoria_fsb", type: "VARCHAR" }
+      { name: "monto_m_clp", type: "BIGINT" }
     ]
   },
   {
@@ -1150,8 +1126,7 @@ const ERD_LINKS = [
   { from: "agf_maestro", to: "fi_maestro", key: "rut_administradora (gestión fiduciaria LUF)" },
   { from: "securitizadoras_maestro", to: "securitizadoras_balance_resumen", key: "rut" },
   { from: "securitizadoras_maestro", to: "patrimonios_separados_maestro", key: "rut_administradora (administración fiduciaria)" },
-  { from: "securitizadoras_maestro", to: "patrimonios_separados_balance_fsb", key: "rut = rut_administradora (cuerpo, sin dígito verificador)" },
-  { from: "patrimonios_separados_balance_fsb", to: "patrimonios_separados_balance_cuentas", key: "archivo" },
+  { from: "securitizadoras_maestro", to: "patrimonios_separados_balance", key: "rut = rut_administradora (cuerpo, sin dígito verificador)" },
   { from: "securitizadoras_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "macro_tasas_rendimientos", to: "macro_precios_actividad", key: "periodo (expectativas e inflación)" },
   { from: "bancos_maestro", to: "bancos_cmf_balance", key: "codigo_institucion (código fuente CMF)" },
