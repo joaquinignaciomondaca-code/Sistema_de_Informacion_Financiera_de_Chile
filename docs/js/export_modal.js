@@ -33,16 +33,11 @@ class ExportModalController {
       macro_precios_actividad: "outputs/macro/macro_precios_actividad.parquet",
       factoring_leasing_maestro: "outputs/factoring_leasing/factoring_leasing_maestro.parquet",
       corredoras_bolsa_maestro: "outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet",
-      corredoras_bolsa_balance_resumen: "outputs/corredoras_bolsa/corredoras_bolsa_balance_resumen.parquet",
       securitizadoras_maestro: "outputs/securitizadoras/securitizadoras_maestro.parquet",
-      securitizadoras_balance_resumen: "outputs/securitizadoras/securitizadoras_balance_resumen.parquet",
       patrimonios_separados_maestro: "outputs/securitizadoras/patrimonios_separados_maestro.parquet",
       patrimonios_separados_balance: "outputs/securitizadoras/patrimonios_separados_balance.parquet",
       ccaf_maestro: "outputs/cajas_compensacion/ccaf_maestro.parquet",
-      ccaf_caratula_totales: "outputs/cajas_compensacion/ccaf_caratula_totales.parquet",
       agf_maestro: "outputs/agf/agf_maestro.parquet",
-      agf_balance: "outputs/agf/agf_balance.parquet",
-      agf_resultados: "outputs/agf/agf_resultados.parquet",
       sistemas_pago_maestro: "outputs/sistemas_pago/sistemas_pago_maestro.parquet",
       fintech_rpsf_maestro: "outputs/fintech/fintech_rpsf_maestro.parquet",
     };
@@ -63,7 +58,6 @@ class ExportModalController {
       patrimonios_separados_maestro: 18,
       patrimonios_separados_balance: 7962,
       corredoras_bolsa_maestro: 47,
-      corredoras_bolsa_balance_resumen: 1586
     };
 
     this.selectedFormat = "csv"; // 'csv' | 'xlsx' | 'parquet'

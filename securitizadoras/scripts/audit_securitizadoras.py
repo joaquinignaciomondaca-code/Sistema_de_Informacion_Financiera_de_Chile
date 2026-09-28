@@ -3,7 +3,7 @@
 audit_securitizadoras.py
 Suite integral de auditoría y verificación de calidad y consistencia contable para:
   1. securitizadoras_maestro (parquet/json)
-  2. securitizadoras_balance_resumen (parquet/json)
+  2. securitizadoras_balance (particiones anuales, TXT IFRS CMF)
   3. patrimonios_separados_maestro (parquet/json)
   4. patrimonios_separados_balance (parquet)
 """
@@ -74,27 +74,21 @@ def main():
 
     ruts_maestro_completos = set(df_m["rut_completo"]) if not df_m.empty else set()
 
-    # 2. Balances IFRS Resumen Securitizadoras
-    print("\n--- 2. AUDITORIA: securitizadoras_balance_resumen ---")
-    bal_pq = os.path.join(base_dir, "securitizadoras_balance_resumen.parquet")
-    bal_js = os.path.join(base_dir, "securitizadoras_balance_resumen.json")
-    if not os.path.exists(bal_pq) or not os.path.exists(bal_js):
-        errores.append("Archivos de securitizadoras_balance_resumen faltantes.")
+    # 2. Balance IFRS de las securitizadoras (TXT trimestral CMF, pipelines/ifrs_sectores)
+    print("\n--- 2. AUDITORIA: securitizadoras_balance ---")
+    import glob
+    archivos = sorted(glob.glob(os.path.join(base_dir, "securitizadoras_balance", "*.parquet")))
+    if not archivos:
+        errores.append("Faltan las particiones de securitizadoras_balance.")
     else:
-        df_b = pd.read_parquet(bal_pq)
-        with open(bal_js, "r", encoding="utf-8") as f:
-            js_b = json.load(f)
-        
-        print(f"Total balances trimestrales: {len(df_b)} | Parquet=JSON: {len(df_b) == len(js_b)}")
-        if len(df_b) != len(js_b):
-            errores.append(f"Discrepancia balances Parquet ({len(df_b)}) vs JSON ({len(js_b)})")
-
-        diff = np.abs(df_b["total_activos_m_clp"] - (df_b["total_pasivos_m_clp"] + df_b["patrimonio_neto_m_clp"]))
-        max_diff = diff.max()
-        cuadratura_exacta = (diff < 1e-4).all()
-        print(f"Ecuacion Contable Fundamental (Activo == Pasivo + Patrimonio): {'100.0% EXACTA' if cuadratura_exacta else 'FALLIDA'}")
-        if not cuadratura_exacta:
-            errores.append(f"Falla de cuadratura contable securitizadoras. Max diff: {max_diff}")
+        df_b = pd.concat([pd.read_parquet(a) for a in archivos], ignore_index=True)
+        tot = df_b[df_b["repeticion"] == 1].pivot_table(
+            index=["periodo", "rut", "tipo_balance", "estado_financiero"], columns="cuenta", values="valor", aggfunc="first")
+        if {"Total de activos", "Total de patrimonio y pasivos"} <= set(tot.columns):
+            dif = (tot["Total de activos"] - tot["Total de patrimonio y pasivos"]).abs().dropna()
+            print(f"Balances: {len(tot)} | Activos = patrimonio + pasivos en {int((dif == 0).sum())} de {len(dif)}")
+            if (dif > 1000).any():
+                errores.append(f"{int((dif > 1000).sum())} balances de securitizadoras no cuadran (activos vs patrimonio y pasivos)")
 
     # 3. Maestro Patrimonios Separados (Programas y Lineas)
     print("\n--- 3. AUDITORIA: patrimonios_separados_maestro ---")

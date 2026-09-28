@@ -641,30 +641,7 @@ const ERD_TABLES = [
       { name: "grupo_financiero", type: "VARCHAR" }
     ]
   },
-  {
-    id: "corredoras_bolsa_balance_resumen",
-    name: "corredoras.balance_resumen",
-    sector: "corredoras_bolsa",
-    color: "#7C3AED",
-    x: 4180,
-    y: 110,
-    w: 250,
-    h: 210,
-    rows: "1.586 balances IFRS",
-    file: "outputs/corredoras_bolsa/corredoras_bolsa_balance_resumen.parquet",
-    cols: [
-      { name: "id_balance", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "fecha_corte", type: "DATE" },
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "nombre_empresa", type: "VARCHAR" },
-      { name: "total_activos_m_clp", type: "DOUBLE" },
-      { name: "total_pasivos_m_clp", type: "DOUBLE" },
-      { name: "patrimonio_neto_m_clp", type: "DOUBLE" },
-      { name: "efectivo_equivalentes_m_clp", type: "DOUBLE" },
-      { name: "utilidad_ejercicio_m_clp", type: "DOUBLE" }
-    ]
-  },
+
   {
     id: "securitizadoras_maestro",
     name: "securitizadoras.lista_entidades",
@@ -686,29 +663,7 @@ const ERD_TABLES = [
       { name: "lineas_deuda_registradas", type: "BIGINT" }
     ]
   },
-  {
-    id: "securitizadoras_balance_resumen",
-    name: "securitizadoras.balance_resumen",
-    sector: "securitizadoras",
-    color: "#0369A1",
-    x: 4180,
-    y: 340,
-    w: 250,
-    h: 210,
-    rows: "362 balances IFRS",
-    file: "outputs/securitizadoras/securitizadoras_balance_resumen.parquet",
-    cols: [
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "rut", pk: true, fk: true, type: "VARCHAR" },
-      { name: "razon_social", type: "VARCHAR" },
-      { name: "total_activos_m_clp", type: "DOUBLE" },
-      { name: "total_pasivos_m_clp", type: "DOUBLE" },
-      { name: "patrimonio_neto_m_clp", type: "DOUBLE" },
-      { name: "efectivo_y_equivalentes_m_clp", type: "DOUBLE" },
-      { name: "ganancia_perdida_ejercicio_m_clp", type: "DOUBLE" },
-      { name: "total_activos_m_usd", type: "DOUBLE" }
-    ]
-  },
+
 
 
 
@@ -835,41 +790,185 @@ const ERD_TABLES = [
     id: "agf_balance",
     name: "agf.balance",
     sector: "agf",
-    color: "#4F46E5",
+    color: "#6366F1",
     x: 5040,
-    y: 400,
+    y: 460,
     w: 260,
-    h: 190,
-    rows: "1.572 balances",
-    file: "outputs/agf/agf_balance.parquet",
+    h: 222,
+    rows: "71.423 cuentas",
+    file: "outputs/agf/agf_balance/manifest.json",
     cols: [
-      { name: "rut", fk: true, type: "BIGINT" },
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "total_activos_mm_clp", type: "DOUBLE" },
-      { name: "total_pasivos_mm_clp", type: "DOUBLE" },
-      { name: "patrimonio_mm_clp", type: "DOUBLE" },
-      { name: "efectivo_equivalentes_mm_clp", type: "DOUBLE" }
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "razon_social", type: "VARCHAR" },
+      { name: "tipo_balance", type: "VARCHAR" },
+      { name: "moneda", type: "VARCHAR" },
+      { name: "estado_financiero", type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "valor", type: "BIGINT" },
+      { name: "repeticion", type: "SMALLINT" }
     ]
   },
   {
     id: "agf_resultados",
     name: "agf.resultados",
     sector: "agf",
-    color: "#4F46E5",
+    color: "#6366F1",
     x: 5040,
-    y: 620,
+    y: 720,
     w: 260,
-    h: 170,
-    rows: "1.572 trimestres",
-    file: "outputs/agf/agf_resultados.parquet",
+    h: 222,
+    rows: "58.216 cuentas",
+    file: "outputs/agf/agf_resultados/manifest.json",
     cols: [
-      { name: "rut", fk: true, type: "BIGINT" },
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "meses_acumulados", type: "BIGINT" },
-      { name: "ingresos_ordinarios_acum_mm_clp", type: "DOUBLE" },
-      { name: "ingresos_ordinarios_trimestre_mm_clp", type: "DOUBLE" }
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "razon_social", type: "VARCHAR" },
+      { name: "tipo_balance", type: "VARCHAR" },
+      { name: "moneda", type: "VARCHAR" },
+      { name: "estado_financiero", type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "valor", type: "BIGINT" },
+      { name: "repeticion", type: "SMALLINT" }
     ]
   },
+  {
+    id: "securitizadoras_balance",
+    name: "securitizadoras.balance",
+    sector: "securitizadoras",
+    color: "#0284C7",
+    x: 3900,
+    y: 600,
+    w: 260,
+    h: 222,
+    rows: "13.679 cuentas",
+    file: "outputs/securitizadoras/securitizadoras_balance/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "razon_social", type: "VARCHAR" },
+      { name: "tipo_balance", type: "VARCHAR" },
+      { name: "moneda", type: "VARCHAR" },
+      { name: "estado_financiero", type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "valor", type: "BIGINT" },
+      { name: "repeticion", type: "SMALLINT" }
+    ]
+  },
+  {
+    id: "securitizadoras_resultados",
+    name: "securitizadoras.resultados",
+    sector: "securitizadoras",
+    color: "#0284C7",
+    x: 3900,
+    y: 860,
+    w: 260,
+    h: 222,
+    rows: "12.290 cuentas",
+    file: "outputs/securitizadoras/securitizadoras_resultados/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "razon_social", type: "VARCHAR" },
+      { name: "tipo_balance", type: "VARCHAR" },
+      { name: "moneda", type: "VARCHAR" },
+      { name: "estado_financiero", type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "valor", type: "BIGINT" },
+      { name: "repeticion", type: "SMALLINT" }
+    ]
+  },
+  {
+    id: "ccaf_balance",
+    name: "ccaf.balance",
+    sector: "cajas_compensacion",
+    color: "#D97706",
+    x: 4750,
+    y: 600,
+    w: 260,
+    h: 222,
+    rows: "8.043 cuentas",
+    file: "outputs/cajas_compensacion/ccaf_balance/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "razon_social", type: "VARCHAR" },
+      { name: "tipo_balance", type: "VARCHAR" },
+      { name: "moneda", type: "VARCHAR" },
+      { name: "estado_financiero", type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "valor", type: "BIGINT" },
+      { name: "repeticion", type: "SMALLINT" }
+    ]
+  },
+  {
+    id: "ccaf_resultados",
+    name: "ccaf.resultados",
+    sector: "cajas_compensacion",
+    color: "#D97706",
+    x: 4750,
+    y: 860,
+    w: 260,
+    h: 222,
+    rows: "5.506 cuentas",
+    file: "outputs/cajas_compensacion/ccaf_resultados/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "razon_social", type: "VARCHAR" },
+      { name: "tipo_balance", type: "VARCHAR" },
+      { name: "moneda", type: "VARCHAR" },
+      { name: "estado_financiero", type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "valor", type: "BIGINT" },
+      { name: "repeticion", type: "SMALLINT" }
+    ]
+  },
+  {
+    id: "corredoras_bolsa_balance",
+    name: "corredoras.balance",
+    sector: "corredoras_bolsa",
+    color: "#8B5CF6",
+    x: 3900,
+    y: 370,
+    w: 260,
+    h: 204,
+    rows: "107.976 cuentas",
+    file: "outputs/corredoras_bolsa/corredoras_bolsa_balance/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "razon_social", type: "VARCHAR" },
+      { name: "tipo_intermediario", type: "VARCHAR" },
+      { name: "seccion", type: "VARCHAR" },
+      { name: "codigo_fecu", pk: true, type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "valor_miles_clp", type: "BIGINT" }
+    ]
+  },
+  {
+    id: "corredoras_bolsa_resultados",
+    name: "corredoras.resultados",
+    sector: "corredoras_bolsa",
+    color: "#8B5CF6",
+    x: 3900,
+    y: 630,
+    w: 260,
+    h: 204,
+    rows: "77.705 cuentas",
+    file: "outputs/corredoras_bolsa/corredoras_bolsa_resultados/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "razon_social", type: "VARCHAR" },
+      { name: "tipo_intermediario", type: "VARCHAR" },
+      { name: "seccion", type: "VARCHAR" },
+      { name: "codigo_fecu", pk: true, type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "valor_miles_clp", type: "BIGINT" }
+    ]
+  },
+
 
   {
     id: "sistemas_pago_maestro",
@@ -929,26 +1028,7 @@ const ERD_TABLES = [
       { name: "emisor_valores_cmf", type: "BOOLEAN" }
     ]
   },
-  {
-    id: "ccaf_caratula_totales",
-    name: "ccaf.balances",
-    sector: "cajas_compensacion",
-    color: "#059669",
-    x: 6300,
-    y: 320,
-    w: 260,
-    h: 185,
-    rows: "266 balances",
-    file: "outputs/cajas_compensacion/ccaf_caratula_totales.parquet",
-    cols: [
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "ccaf", type: "VARCHAR" },
-      { name: "ano", type: "BIGINT" },
-      { name: "tipo_eeff", type: "VARCHAR" },
-      { name: "asiento_contable", type: "VARCHAR" },
-      { name: "monto_m_clp", type: "DOUBLE" }
-    ]
-  }
+
 ];
 
 // Relaciones entre tablas (Claves Foráneas lógicas)
@@ -961,19 +1041,20 @@ const ERD_LINKS = [
   { from: "seguros_maestro", to: "seguros_derivados", key: "sector, rut_aseguradora" },
   { from: "seguros_maestro", to: "seguros_pactos", key: "sector, rut_aseguradora" },
   { from: "seguros_maestro", to: "seguros_control_inversiones", key: "sector, rut_aseguradora" },
-  { from: "ccaf_maestro", to: "ccaf_caratula_totales", key: "rut, ccaf" },
-  { from: "agf_maestro", to: "agf_balance", key: "rut" },
-  { from: "agf_maestro", to: "agf_resultados", key: "rut" },
-  { from: "agf_balance", to: "agf_resultados", key: "rut, periodo" },
-  { from: "agf_balance", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "agf_maestro", to: "fi_maestro", key: "rut_administradora (gestión fiduciaria LUF)" },
-  { from: "securitizadoras_maestro", to: "securitizadoras_balance_resumen", key: "rut" },
   { from: "securitizadoras_maestro", to: "patrimonios_separados_maestro", key: "rut_administradora (administración fiduciaria)" },
   { from: "securitizadoras_maestro", to: "patrimonios_separados_balance", key: "rut = rut_administradora (cuerpo, sin dígito verificador)" },
-  { from: "securitizadoras_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "macro_tasas_rendimientos", to: "macro_precios_actividad", key: "periodo (expectativas e inflación)" },
   { from: "bancos_maestro", to: "bancos_cmf_balance", key: "codigo_institucion (código fuente CMF)" },
   { from: "bancos_maestro", to: "bancos_cmf_resultados", key: "codigo_institucion (código fuente CMF)" },
+  { from: "agf_maestro", to: "agf_balance", key: "rut" },
+  { from: "agf_maestro", to: "agf_resultados", key: "rut" },
+  { from: "securitizadoras_maestro", to: "securitizadoras_balance", key: "rut" },
+  { from: "securitizadoras_maestro", to: "securitizadoras_resultados", key: "rut" },
+  { from: "ccaf_maestro", to: "ccaf_balance", key: "rut" },
+  { from: "ccaf_maestro", to: "ccaf_resultados", key: "rut" },
+  { from: "corredoras_bolsa_maestro", to: "corredoras_bolsa_balance", key: "rut" },
+  { from: "corredoras_bolsa_maestro", to: "corredoras_bolsa_resultados", key: "rut" },
   { from: "ffmm_maestro", to: "ffmm_cartera_nacional", key: "run_fondo" },
   { from: "ffmm_maestro", to: "ffmm_cartera_extranjera", key: "run_fondo" },
   { from: "ffmm_maestro", to: "ffmm_futuros", key: "run_fondo" },
