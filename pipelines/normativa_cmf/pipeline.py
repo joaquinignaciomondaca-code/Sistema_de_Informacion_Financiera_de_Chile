@@ -571,6 +571,10 @@ def _call_gemini(api_key: str, model: str, prompt: str) -> dict[str, Any]:
         parsed = json.loads(text)
         if not isinstance(parsed, dict):
             raise ValueError("La respuesta no es un objeto JSON")
+        response_model = body.get("model")
+        if not isinstance(response_model, str) or not re.fullmatch(r"[A-Za-z0-9._-]{1,120}", response_model):
+            response_model = model
+        parsed["_response_model"] = response_model
         return parsed
     except GeminiError:
         raise
@@ -682,6 +686,9 @@ def _validate_analysis(raw: dict[str, Any], pages: list[dict[str, Any]], model: 
         flags.append("pdf_sin_texto_nativo_o_no_disponible")
     if not sectors:
         flags.append("sin_industria_asignada")
+    response_model = raw.get("_response_model")
+    if not isinstance(response_model, str) or not re.fullmatch(r"[A-Za-z0-9._-]{1,120}", response_model):
+        response_model = model
 
     return {
         "event_type": event_type,
@@ -699,7 +706,8 @@ def _validate_analysis(raw: dict[str, Any], pages: list[dict[str, Any]], model: 
         "confidence": confidence,
         "needs_human_review": needs_human_review,
         "review_flags": list(dict.fromkeys(flags)),
-        "ai_model": model,
+        "ai_model": response_model,
+        "ai_model_requested": model,
         "analysis_version": ANALYSIS_VERSION,
         "analysis_status": "complete" if summary else "pendiente",
         "analyzed_at": iso_utc(),
@@ -876,7 +884,7 @@ def _safe_existing_event(event: dict[str, Any]) -> dict[str, Any]:
         "summary_evidence_page", "sectors", "sector_evidence", "affected_norms",
         "norm_evidence", "effective_date", "effective_date_precision",
         "effective_date_evidence", "effective_date_page", "confidence",
-        "needs_human_review", "review_flags", "ai_model", "analysis_version",
+        "needs_human_review", "review_flags", "ai_model", "ai_model_requested", "analysis_version",
         "analysis_status", "analyzed_at",
     }
     return {key: value for key, value in event.items() if key in allowed}
