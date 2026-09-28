@@ -113,19 +113,9 @@ const DATA_VIEWER_CATALOG = [
   {
     group: "Securitización · Patrimonios Separados (CMF / Ley 18.045)",
     tables: [
-      { id: "patrimonios_separados_balance_pdf", name: "patrimonios_separados.balance_cuentas (46.502 registros)" },
       { id: "patrimonios_separados_maestro", name: "patrimonios_separados.lista_emisiones (18 emisiones)" },
-      { id: "patrimonios_separados_balance_resumen", name: "patrimonios_separados.balance_resumen (64 balances)" },
-      { id: "patrimonios_separados_balance_lineas", name: "patrimonios_separados.balance_lineas (16.842 registros)" },
-      { id: "patrimonios_separados_excedentes_lineas", name: "patrimonios_separados.excedentes (11.157 registros)" },
-      { id: "patrimonios_separados_nota_cartera_detalle", name: "patrimonios_separados.nota_cartera (796 registros)" },
-      { id: "patrimonios_separados_nota_morosidad_detalle", name: "patrimonios_separados.nota_morosidad (6.632 registros)" },
-      { id: "patrimonios_separados_nota_bonos_detalle", name: "patrimonios_separados.nota_bonos (8.001 registros)" },
-      { id: "patrimonios_separados_nota_administracion_detalle", name: "patrimonios_separados.nota_administracion (2.153 registros)" },
-      { id: "patrimonios_separados_nota_sobrecolateral_detalle", name: "patrimonios_separados.nota_sobrecolateral (679 registros)" },
-      { id: "patrimonios_separados_nota_efectivo_detalle", name: "patrimonios_separados.nota_efectivo (3.802 registros)" },
-      { id: "patrimonios_separados_cartera_morosidad_detalle", name: "patrimonios_separados.cartera_morosidad (67 registros)" },
-      { id: "patrimonios_separados_repos_detalle", name: "patrimonios_separados.repos_contratos (52 pactos)" }
+      { id: "patrimonios_separados_balance_fsb", name: "patrimonios_separados.balance_fsb (497 balances)" },
+      { id: "patrimonios_separados_balance_cuentas", name: "patrimonios_separados.balance_cuentas (11.082 cuentas)" }
     ]
   },
   {
