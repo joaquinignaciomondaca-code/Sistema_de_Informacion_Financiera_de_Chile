@@ -1,4 +1,4 @@
-﻿"""
+"""
 Construccion del Universo Completo de Corredoras de Bolsa (COBOL) - CMF Chile.
 Scraping de consulta oficial CMF: Vigentes (VI) y No Vigentes (NV).
 Valida RUTs mediante Algoritmo Modulo 11 canonico.
