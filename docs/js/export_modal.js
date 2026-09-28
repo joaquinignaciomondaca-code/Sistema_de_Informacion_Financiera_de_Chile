@@ -18,16 +18,13 @@ class ExportModalController {
 
     // Mapeo directo a archivos Parquet físicos en docs/outputs/
     this.parquetMap = {
-      // Las tablas de cartera de seguros se publican en varios archivos (manifiesto):
+      // Las tablas de cartera de seguros y FFMM se publican en varios archivos (manifiesto):
       // no van aquí, así la descarga usa la vista SQL que los une.
       seguros_maestro: "outputs/seguros/aseguradoras.parquet",
       fi_repos: "outputs/fi/fi_repos_vrc_crv.parquet",
       fi_nacional: "outputs/fi/fi_cartera_nacional.parquet",
       fi_extranjera: "outputs/fi/fi_cartera_extranjera.parquet",
       fi_maestro: "outputs/fi/maestro_fondos_inversion.parquet",
-      ffmm_futuros: "outputs/ffmm/ffmm_futu_normalizado.parquet",
-      ffmm_opciones: "outputs/ffmm/ffmm_opci_normalizado.parquet",
-      ffmm_inversiones_nac: "outputs/ffmm/ffmm_futu_normalizado.parquet",
       ffmm_maestro: "outputs/ffmm/maestro_fondos_mutuos.parquet",
       afp_maestro: "outputs/pensiones/afp_maestro_administradoras.parquet",
       bancos_maestro: "outputs/bancos/bancos_maestro.parquet",
@@ -57,7 +54,9 @@ class ExportModalController {
       seguros_acciones: 100000,
       fi_nacional: 834000,
       fi_repos: 2654,
-      ffmm_inversiones_nac: 125000,
+      ffmm_cartera_nacional: 1500000,
+      ffmm_cartera_extranjera: 900000,
+      ffmm_futuros: 300000,
       afp_maestro: 7,
       bancos_maestro: 40,
       factoring_leasing_maestro: 28,

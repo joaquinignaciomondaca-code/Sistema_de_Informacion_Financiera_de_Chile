@@ -28,17 +28,13 @@ const SEMANTIC_VIEWS = [
   { name: "fi_registro_fondos_universo", file: "outputs/fi/fi_registro_fondos_universo.parquet" },
   { name: "fi_repos_detalle_historico", file: "outputs/fi/fi_repos_detalle_historico.parquet" },
 
-  { name: "fi_eeff_xml_muestra_cmf", file: "outputs/fi/fi_eeff_xml_muestra_cmf.parquet" },
-
-  // FONDOS MUTUOS
+  // FONDOS MUTUOS. Cartera de inversiones de la Circular 1333 (archivo mensual CMF); se actualiza
+  // sola 3 veces al mes. Montos en miles de la moneda funcional de cada fondo.
   { name: "ffmm_maestro", file: "outputs/ffmm/maestro_fondos_mutuos.parquet" },
-  { name: "ffmm_futuros", file: "outputs/ffmm/ffmm_futu_normalizado.parquet" },
-  { name: "ffmm_inversiones_nac", file: "outputs/ffmm/ffmm_futu_normalizado.parquet" },
-  { name: "ffmm_opciones", file: "outputs/ffmm/ffmm_opci_normalizado.parquet" },
-  { name: "ffmm_repos_detalle_historico", file: "outputs/ffmm/ffmm_repos_detalle_historico.parquet" },
-  { name: "ffmm_registro_fondos_universo", file: "outputs/ffmm/ffmm_registro_fondos_universo.parquet" },
-
-  { name: "ffmm_eeff_xml_muestra_cmf", file: "outputs/ffmm/ffmm_eeff_xml_muestra_cmf.parquet" },
+  { name: "ffmm_cartera_nacional", manifest: "outputs/ffmm/cartera_nacional/manifest.json" },
+  { name: "ffmm_cartera_extranjera", manifest: "outputs/ffmm/cartera_extranjera/manifest.json" },
+  { name: "ffmm_futuros", manifest: "outputs/ffmm/futuros_forwards/manifest.json" },
+  { name: "ffmm_opciones", manifest: "outputs/ffmm/opciones/manifest.json" },
 
   // FONDOS DE PENSIONES (SPENSIONES)
   { name: "afp_maestro", file: "outputs/pensiones/afp_maestro_administradoras.parquet" },

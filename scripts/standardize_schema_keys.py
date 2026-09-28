@@ -60,9 +60,6 @@ def main():
     process_file("fi/cartera_inversiones/outputs/fi_opciones.parquet", "FI_OPC", ffii_rename, entity_col="run_fondo")
 
     # --- FONDOS MUTUOS (FFMM) ---
-    process_file("ffmm/circular_1333_cartera/outputs/maestro_fondos_mutuos.parquet", "FFMM", entity_col="run_fondo")
-    process_file("ffmm/circular_1333_cartera/outputs/ffmm_futu_normalizado.parquet", "FFMM_FUTU", entity_col="run_fondo")
-    process_file("ffmm/circular_1333_cartera/outputs/ffmm_opci_normalizado.parquet", "FFMM_OPCI", entity_col="run_fondo")
 
     # Seguros: las tablas se generan con seguros/scripts/actualizar_carteras.py (ya estandarizadas).
 
