@@ -24,6 +24,13 @@ from pathlib import Path
 HOST = "www.cmfchile.cl"
 ZIP_INDEX = "https://www.cmfchile.cl/portal/estadisticas/626/w4-propertyvalue-30250.html"
 XLSX_INDEX = "https://www.cmfchile.cl/portal/estadisticas/626/w4-propertyvalue-28911.html"
+# The CMF July-2026 resource anchors have no accessible text in raw HTML; these
+# exact URLs were resolved from the official index page and are a bounded
+# fallback for the default one-off sample.
+KNOWN_SOURCES = {
+    ("2026-07", ".zip"): "https://www.cmfchile.cl/portal/estadisticas/626/articles-113067_recurso_1.zip?ts=1787944720",
+    ("2026-07", ".xlsx"): "https://www.cmfchile.cl/portal/estadisticas/626/articles-113057_recurso_1.xlsx?ts=1787943075",
+}
 MAX_PAGE = 3_000_000
 MAX_FILE = 15_000_000
 MAX_ZIP_TOTAL = 80_000_000
@@ -123,6 +130,12 @@ def find_source(index_url: str, period: str, suffix: str) -> tuple[str, str]:
             and label in text
         ):
             matches[href] = text
+    if len(matches) != 1 and (period, suffix) in KNOWN_SOURCES:
+        url = KNOWN_SOURCES[(period, suffix)]
+        parsed = urllib.parse.urlsplit(url)
+        if parsed.scheme == "https" and parsed.hostname == HOST and parsed.path.startswith("/portal/estadisticas/626/") and parsed.path.lower().endswith(suffix):
+            print("::notice title=CMF sample source fallback::" + json.dumps({"period": period, "suffix": suffix, "url": url}, ensure_ascii=False))
+            return url, f"official-index-url-fallback:{period}{suffix}"
     if len(matches) != 1:
         candidates = [
             {"url": urllib.parse.urljoin(index_url, item["href"].strip()), "text": re.sub(r"\s+", " ", item["text"]).strip()[:120]}
