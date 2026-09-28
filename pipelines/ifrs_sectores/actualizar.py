@@ -271,6 +271,33 @@ def escribir(sec: str, tabla: str, periodo: str, filas: list[dict]) -> None:
     os.replace(tmp, ruta)
 
 
+def refrescar_marcas(listas: dict[str, dict[str, str]], control: dict) -> int:
+    """Recalcula en_lista_entidades de todo lo publicado contra la lista vigente (la lista crece
+    con pipelines/entidades); reescribe solo los años que cambian. Devuelve archivos reescritos."""
+    cambios = 0
+    for sec in SECTORES:
+        for tabla in TABLAS:
+            for ruta in sorted(ruta_tabla(sec, tabla).glob("*.parquet")):
+                t = pq.read_table(ruta)
+                ruts = t.column("rut").to_pylist()
+                nueva = [r in listas[sec] for r in ruts]
+                if nueva == t.column("en_lista_entidades").to_pylist():
+                    continue
+                t = t.set_column(t.schema.get_field_index("en_lista_entidades"), "en_lista_entidades",
+                                 pa.array(nueva, pa.bool_()))
+                tmp = ruta.with_suffix(".tmp")
+                pq.write_table(t, tmp, compression="zstd", compression_level=9)
+                os.replace(tmp, ruta)
+                cambios += 1
+    for per in control["periodos"].values():
+        for sec, r in per.get("sectores", {}).items():
+            if "fuera_de_lista" in r:
+                r["fuera_de_lista"] = [e for e in r["fuera_de_lista"] if e["rut"].split("-")[0] not in listas[sec]]
+    if cambios:
+        print(f"Marca en_lista_entidades actualizada en {cambios} archivos")
+    return cambios
+
+
 def escribir_manifiestos(control: dict) -> None:
     periodos = sorted(control["periodos"])
     for sec, cfg in SECTORES.items():
@@ -414,6 +441,7 @@ def main(argv=None) -> int:
         print(f"{periodo}: {est['sociedades']} sociedades · " +
               " · ".join(f"{s} {r['entidades']} ent. ({r['filas']['balance']}+{r['filas']['resultados']} filas)"
                          for s, r in resumen.items()) + (f" · {len(avisos)} avisos" if avisos else ""))
+    hechos += refrescar_marcas(listas, control)
     # Entidades del sector presentes en el último trimestre que no están en la lista.
     if control["periodos"]:
         ult = max(control["periodos"])

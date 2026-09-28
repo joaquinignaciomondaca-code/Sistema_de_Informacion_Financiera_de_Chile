@@ -210,6 +210,20 @@ def procesar(sector: str, cfg: dict, hoy: str) -> list[dict]:
     return eventos
 
 
+def actualizar_conteos_web() -> None:
+    """Conteo «N entidades» del menú lateral y del diccionario para cada lista modificada."""
+    for nombre, patron in (("sidebar.js", r'(\{{ id: "{id}",[^}}]*?rows: ")\d+( entidades")'),
+                           ("data_dictionary.js", r'(id: "{id}",(?:(?!\n  \}}).)*?registros: ")\d+( entidades")')):
+        ruta = RAIZ / "docs" / "js" / nombre
+        s = ruta.read_text(encoding="utf-8")
+        for cfg in SECTORES.values():
+            for base in cfg["archivos"]:
+                n = pq.ParquetFile(DOCS / f"{base}.parquet").metadata.num_rows
+                vid = base.split("/")[-1]
+                s = re.sub(patron.format(id=re.escape(vid)), rf"\g<1>{n}\g<2>", s, count=1, flags=re.S)
+        ruta.write_text(s, encoding="utf-8")
+
+
 def actualizar_data_manifest() -> None:
     ruta = RAIZ / "data_manifest.json"
     if not ruta.exists():
@@ -248,6 +262,7 @@ def main(argv=None) -> int:
     hist["sectores_revisados"] = a.sectores
     NOVEDADES.write_text(json.dumps(hist, ensure_ascii=False, indent=2) + "\n")
     actualizar_data_manifest()
+    actualizar_conteos_web()
     gh = os.environ.get("GITHUB_OUTPUT")
     if gh:
         with open(gh, "a") as f:
