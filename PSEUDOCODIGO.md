@@ -79,7 +79,7 @@ daily_macro.run():                                   # Actions diario 10:00 UTC
     # Workflow: commit de lo validado (reintento con cherry-pick) y, en main, redespliegue del sitio.
 
 series_bcch.main():                                  # mismo workflow, después de daily_macro
-    CATALOGO = 53 series (clave, código SIETE, grupo, unidad; frecuencia = sufijo D/M/T)
+    CATALOGO = 51 series (clave, código SIETE, grupo, unidad; frecuencia = sufijo D/M/T)
     previo = docs/outputs/macro/series/*.parquet
     por serie (6 hilos): desde = última fecha − ventana (D 10 días · M 6 meses · T 13 meses), o 2014-01-01
         GetSeries (API REST SIETE) → [(fecha, valor)]; descarta NaN y fechas futuras
@@ -431,7 +431,7 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 
 | Workflow | Cron (UTC) | Publica | Qué hace |
 |---|---|---|---|
-| macro.yml | diario 10:00 | commit automático | daily_macro (3 tablas mensuales) + series_bcch (53 series, formato largo) |
+| macro.yml | diario 10:00 | commit automático | daily_macro (3 tablas mensuales) + series_bcch (51 series, formato largo) |
 | bancos_cmf_mensual.yml | días 1, 11, 21 13:00 | **sí** (commit + Pages) | tests + publish_cmf_bank_period --catch-up (incremental) |
 | web_audit.yml | push a docs/** | no | audit_navigation + audit_web_full (anotaciones) |
 | bancos_probe_historia.yml / retail_probe_ifrs.yml | manual | no | sondas de formato |

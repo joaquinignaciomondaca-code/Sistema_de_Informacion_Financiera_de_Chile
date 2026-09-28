@@ -252,21 +252,11 @@
       "estado": "ok",
       "titulo_bcch": "Precios de productos básicos / Onza troy de plata. Dólares / oz"
     },
-    "ipsa": {
-      "serie_id": "F013.IBC.IND.N.7.LAC.CL.CLP.BLO.D",
-      "ultima_consulta_utc": "2026-09-28T16:57:19+00:00",
-      "estado": "error: BCCh código -50: An internal error has occurred, information is not available."
-    },
     "reservas": {
       "serie_id": "F062.A5.STO.PF.USD.M",
       "ultima_consulta_utc": "2026-09-28T16:57:19+00:00",
       "estado": "ok",
       "titulo_bcch": "Reservas internacionales del Banco Central de Chile, Activos de reserva (millones de dólares)"
-    },
-    "treasury_10y": {
-      "serie_id": "F019.TBG.TAS.10.D",
-      "ultima_consulta_utc": "2026-09-28T16:57:19+00:00",
-      "estado": "error: BCCh código -50: An internal error has occurred, information is not available."
     },
     "fed_funds": {
       "serie_id": "F019.TPM.TIN.10.D",
@@ -333,6 +323,6 @@
     "outputs/macro/series/2026.parquet"
   ],
   "total_records": 79844,
-  "series_en_catalogo": 53,
+  "series_en_catalogo": 51,
   "updated_at": "2026-09-28T16:57:19+00:00"
 }

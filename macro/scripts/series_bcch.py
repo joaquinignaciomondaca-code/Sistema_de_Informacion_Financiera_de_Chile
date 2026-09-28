@@ -2,7 +2,7 @@
 """Series del Banco Central (API REST SIETE) en formato largo: una fila por serie y fecha.
 
 Complementa las tres tablas mensuales de macro con un catálogo amplio de series (tasas, tipo de
-cambio, precios, actividad, empleo, commodities, bolsa, sector externo, fiscal y expectativas),
+cambio, precios, actividad, empleo, commodities, sector externo, fiscal y expectativas),
 cada una con su frecuencia original (diaria, mensual o trimestral). Agregar una serie = sumar una
 línea a CATALOGO.
 
@@ -12,6 +12,8 @@ revisión (10 días en diarias, 6 meses en mensuales, 13 meses en trimestrales).
   - una serie que falla o no existe en el BCCh no bloquea a las demás: queda con su estado en el
     catálogo y se avisa en Actions; si fallan todas (credenciales o API caída) no se escribe nada,
   - solo valores numéricos; fechas futuras se descartan.
+IPSA (F013.IBC…BLO.D) y Treasury 10 años (F019.TBG.TAS.10.D) no se incluyen: la API responde
+"código -50, information is not available" (datos de proveedores externos no distribuidos por API).
 
 Salida (docs/outputs/macro/):
   series/<AAAA>.parquet + series/manifest.json   observaciones (fecha, periodo, clave, valor)
@@ -97,11 +99,8 @@ _C = [
     ("cobre_mensual", "F019.PPB.PRE.40.M", "Commodities", "USD por libra", "Cobre refinado BML (mensual)"),
     ("oro", "F019.PPB.PRE.44.D", "Commodities", "USD por onza troy", "Oro"),
     ("plata", "F019.PPB.PRE.45.D", "Commodities", "USD por onza troy", "Plata"),
-    # Bolsa
-    ("ipsa", "F013.IBC.IND.N.7.LAC.CL.CLP.BLO.D", "Bolsa", "Índice", "IPSA"),
     # Sector externo
     ("reservas", "F062.A5.STO.PF.USD.M", "Sector externo", "Millones de USD", "Reservas internacionales"),
-    ("treasury_10y", "F019.TBG.TAS.10.D", "Sector externo", "%", "Bono del Tesoro de EE.UU. 10 años"),
     ("fed_funds", "F019.TPM.TIN.10.D", "Sector externo", "%", "Tasa de política monetaria de EE.UU."),
     # Fiscal
     ("deuda_publica_pib", "F051.D7.PPB.C.Z.Z.T", "Fiscal", "% del PIB", "Deuda bruta del Gobierno Central"),

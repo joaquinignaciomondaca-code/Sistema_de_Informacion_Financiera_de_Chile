@@ -410,7 +410,7 @@ const EXPLORER_TREE = [
     label: "MACROECONOMIA & TASAS (BCCh)",
     badges: [
       { type: "entities", text: "1 Entidad", title: "Series canónicas oficiales del Banco Central de Chile" },
-      { type: "data", text: "53 series", title: "Tablas mensuales consolidadas y catálogo amplio de series diarias, mensuales y trimestrales (2014 en adelante)" }
+      { type: "data", text: "51 series", title: "Tablas mensuales consolidadas y catálogo amplio de series diarias, mensuales y trimestrales (2014 en adelante)" }
     ],
     status: "active",
     children: [
@@ -475,21 +475,21 @@ const EXPLORER_TREE = [
             id: "circ_macro_series",
             type: "circular",
             label: "Catálogo amplio de series BCCh (diarias, mensuales y trimestrales)",
-            badge: "53 series",
+            badge: "51 series",
             badgeType: "data",
             status: "active",
             sector: "macro",
             chips: [
               { label: "Catálogo: series, frecuencia y última fecha", query: "SELECT grupo, clave, nombre, frecuencia, unidad, ultima_fecha, observaciones, estado FROM macro_series_catalogo ORDER BY grupo, clave;" },
-              { label: "IPSA, dólar y cobre: últimos 30 días hábiles", query: "SELECT fecha, max(valor) FILTER (WHERE clave = 'ipsa') AS ipsa, max(valor) FILTER (WHERE clave = 'usd_clp') AS dolar, max(valor) FILTER (WHERE clave = 'cobre_diario') AS cobre_usd_lb FROM macro_series WHERE clave IN ('ipsa', 'usd_clp', 'cobre_diario') GROUP BY fecha ORDER BY fecha DESC LIMIT 30;" },
+              { label: "Dólar, cobre y oro: últimos 30 días hábiles", query: "SELECT fecha, max(valor) FILTER (WHERE clave = 'usd_clp') AS dolar, max(valor) FILTER (WHERE clave = 'cobre_diario') AS cobre_usd_lb, max(valor) FILTER (WHERE clave = 'oro') AS oro_usd_oz FROM macro_series WHERE clave IN ('usd_clp', 'cobre_diario', 'oro') GROUP BY fecha ORDER BY fecha DESC LIMIT 30;" },
               { label: "Curva swap pesos (SPC 90d, 180d, 360d, 2 años), promedio mensual", query: "SELECT periodo, round(avg(valor) FILTER (WHERE clave = 'spc_clp_90d'), 3) AS spc_90d, round(avg(valor) FILTER (WHERE clave = 'spc_clp_180d'), 3) AS spc_180d, round(avg(valor) FILTER (WHERE clave = 'spc_clp_360d'), 3) AS spc_360d, round(avg(valor) FILTER (WHERE clave = 'spc_clp_2y'), 3) AS spc_2y FROM macro_series WHERE clave LIKE 'spc_clp_%' GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
               { label: "Mercado laboral: desocupación, ocupados y fuerza de trabajo", query: "SELECT periodo, max(valor) FILTER (WHERE clave = 'desocupacion') AS desocupacion_pct, max(valor) FILTER (WHERE clave = 'ocupados') AS ocupados_miles, max(valor) FILTER (WHERE clave = 'fuerza_trabajo') AS fuerza_trabajo_miles FROM macro_series WHERE clave IN ('desocupacion', 'ocupados', 'fuerza_trabajo') GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
               { label: "Expectativas de TPM e inflación (EEE y EOF) vs TPM", query: "SELECT periodo, round(avg(valor) FILTER (WHERE clave = 'tpm'), 2) AS tpm, max(valor) FILTER (WHERE clave = 'eee_tpm_11m') AS eee_tpm_11m, round(avg(valor) FILTER (WHERE clave = 'eof_tpm_12m'), 2) AS eof_tpm_12m, max(valor) FILTER (WHERE clave = 'eee_ipc_11m') AS eee_ipc_11m, round(avg(valor) FILTER (WHERE clave = 'eof_ipc_12m'), 2) AS eof_ipc_12m FROM macro_series WHERE clave IN ('tpm', 'eee_tpm_11m', 'eof_tpm_12m', 'eee_ipc_11m', 'eof_ipc_12m') GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
-              { label: "Tasas de EE.UU. vs Chile (Fed, Treasury 10Y, TPM, BCP 10Y)", query: "SELECT periodo, round(avg(valor) FILTER (WHERE clave = 'fed_funds'), 2) AS fed_funds, round(avg(valor) FILTER (WHERE clave = 'treasury_10y'), 2) AS treasury_10y, round(avg(valor) FILTER (WHERE clave = 'tpm'), 2) AS tpm, round(avg(valor) FILTER (WHERE clave = 'bcp_10y'), 2) AS bcp_10y FROM macro_series WHERE clave IN ('fed_funds', 'treasury_10y', 'tpm', 'bcp_10y') GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" }
+              { label: "Tasas de EE.UU. vs Chile (Fed, TPM, BCP 10 años)", query: "SELECT periodo, round(avg(valor) FILTER (WHERE clave = 'fed_funds'), 2) AS fed_funds, round(avg(valor) FILTER (WHERE clave = 'tpm'), 2) AS tpm, round(avg(valor) FILTER (WHERE clave = 'bcp_10y'), 2) AS bcp_10y FROM macro_series WHERE clave IN ('fed_funds', 'tpm', 'bcp_10y') GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" }
             ],
             tables: [
               { id: "macro_series", name: "macro.series", rows: "Una fila por serie y fecha · desde 2014", file: "", files: ["outputs/macro/series/manifest.json"] },
-              { id: "macro_series_catalogo", name: "macro.series_catalogo", rows: "53 series", file: "outputs/macro/macro_series_catalogo.parquet" }
+              { id: "macro_series_catalogo", name: "macro.series_catalogo", rows: "51 series", file: "outputs/macro/macro_series_catalogo.parquet" }
             ]
           }
         ]
