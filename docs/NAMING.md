@@ -10,7 +10,7 @@ Formato: `sector.tabla_en_minúsculas_con_guion_bajo`
 * `sector` es el prefijo corto y estable del sector: `vida`, `generales`, `agf`,
   `ffmm`, `fi`, `afp`, `bancos`, `macro`, `factoring_leasing`, `corredoras`,
   `securitizadoras`, `patrimonios`, `cooperativas`, `ccaf`, `sistemas_pago`,
-  `retail_financiero`, `fintech`.
+  `fintech`.
 * `tabla` describe el contenido en español, sin abreviaturas internas del pipeline
   (`b7_`, `censo`, `eeff` suelto) ni años repetidos.
 * El nombre visible **no es** el identificador SQL de la vista. Los identificadores

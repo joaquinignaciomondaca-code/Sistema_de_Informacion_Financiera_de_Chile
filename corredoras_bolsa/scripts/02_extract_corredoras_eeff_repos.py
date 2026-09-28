@@ -1,4 +1,4 @@
-﻿"""
+"""
 Pipeline de Extraccion Streaming de EEFF y Mercado REPO para Corredoras de Bolsa - CMF Chile.
 Descarga efimera en memoria RAM (0 bytes residuales en disco):
 1. Nivel 1: Caratula EEFF y Balance General IFRS (desde XML).

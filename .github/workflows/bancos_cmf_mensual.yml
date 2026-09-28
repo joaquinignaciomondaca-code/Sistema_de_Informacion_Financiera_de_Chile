@@ -4,6 +4,17 @@ on:
   schedule:
     # Una ejecución al mes, el día 15 para dar plazo de publicación a la CMF.
     - cron: '0 13 15 * *'
+  # Primera carga automática: al fusionar/subir cambios del publicador se ejecuta
+  # una vez y pone al día todos los meses cerrados pendientes desde 2026-07.
+  push:
+    branches:
+      - main
+      - arena/01a0e5fb-monitor-financiero-chile
+    paths:
+      - .github/workflows/bancos_cmf_mensual.yml
+      - bancos/scripts/publish_cmf_bank_period.py
+      - bancos/scripts/extract_cmf_bank_lines.py
+      - bancos/scripts/inspect_cmf_bank_sample.py
   workflow_dispatch:
     inputs:
       period:
@@ -24,7 +35,7 @@ concurrency:
 jobs:
   validate-and-publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 180
     outputs:
       published_changed: ${{ steps.publish.outputs.published_changed }}
       period: ${{ steps.publish.outputs.period }}
@@ -51,9 +62,12 @@ jobs:
         id: publish
         env:
           PERIOD: ${{ github.event_name == 'workflow_dispatch' && inputs.period || '' }}
+          # Historia completa desde el plan de cuentas CMF de 9 dígitos; los meses
+          # ya publicados se saltan, así que la corrida mensual solo agrega lo nuevo.
+          HISTORY_START: '2022-01'
         run: |
           args=()
-          if [ -n "$PERIOD" ]; then args+=(--period "$PERIOD"); fi
+          if [ -n "$PERIOD" ]; then args+=(--period "$PERIOD"); else args+=(--catch-up --desde "$HISTORY_START" --max-periods 120); fi
           python -m bancos.scripts.publish_cmf_bank_period "${args[@]}"
 
       - name: Confirmar el período validado para que la web recoja los cambios
@@ -67,6 +81,8 @@ jobs:
             exit 0
           fi
           git commit -m "Publica período CMF bancario ${{ steps.publish.outputs.period }}"
+          # Otra corrida pudo avanzar la rama mientras tanto: rebase antes de empujar.
+          git pull --rebase origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
 
   deploy-page:
@@ -86,6 +102,9 @@ jobs:
         with:
           ref: ${{ github.ref_name }}
           fetch-depth: 1
+      # Tras el commit del job anterior, asegurar la última revisión de la rama.
+      - name: Actualizar a la revisión con el período publicado
+        run: git pull --ff-only origin "${GITHUB_REF_NAME}" || true
 
       - name: Configurar GitHub Pages
         uses: actions/configure-pages@v5

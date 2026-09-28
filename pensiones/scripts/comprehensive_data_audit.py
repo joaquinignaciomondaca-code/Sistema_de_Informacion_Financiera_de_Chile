@@ -10,6 +10,10 @@ import urllib.request
 from pathlib import Path
 import pandas as pd
 import numpy as np
+from pathlib import Path as _Path
+import os as _os
+_ROOT = _Path(__file__).resolve().parents[2]  # raíz del repo
+_RESPALDO = _Path(_os.environ.get('MFC_RESPALDO_DIR', _Path.home().joinpath('Desktop', 'Respaldo_BCCH')))
 
 def validate_rut_dv(rut_str: str) -> bool:
     if not rut_str or '-' not in str(rut_str):
@@ -36,7 +40,7 @@ def run_comprehensive_audit():
     print("INDUSTRIA: FONDOS DE PENSIONES (SPENSIONES / D.L. 3.500)")
     print("=" * 80)
 
-    base_dir = Path(r"C:\Users\joaqu\.gemini\antigravity\scratch\bcch_market_monitor")
+    base_dir = _ROOT
     docs_dir = base_dir / "docs" / "outputs" / "pensiones"
     raw_dir = base_dir / "pensiones" / "raw"
 

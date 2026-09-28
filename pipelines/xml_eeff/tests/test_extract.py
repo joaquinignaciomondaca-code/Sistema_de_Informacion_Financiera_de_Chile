@@ -84,8 +84,8 @@ class PeriodicidadTest(unittest.TestCase):
             for periodo in x.periodos_para(sector, todos=True):
                 self.assertTrue(periodo.endswith('-12'), f'{sector} devolvio {periodo}')
 
-    def test_agf_y_retail_trimestrales(self):
-        for sector in ('agf', 'retail'):
+    def test_agf_trimestral(self):
+        for sector in ('agf',):
             self.assertIn('2026-06', x.periodos_para(sector))
             self.assertIn('2026-03', x.periodos_para(sector))
 

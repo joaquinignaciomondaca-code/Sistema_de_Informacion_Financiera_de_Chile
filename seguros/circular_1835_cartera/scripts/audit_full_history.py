@@ -13,8 +13,12 @@ Examina minuciosamente los ~12 millones de registros consolidados:
 import os
 import pandas as pd
 import numpy as np
+from pathlib import Path as _Path
+import os as _os
+_ROOT = _Path(__file__).resolve().parents[3]  # raíz del repo
+_RESPALDO = _Path(_os.environ.get('MFC_RESPALDO_DIR', _Path.home().joinpath('Desktop', 'Respaldo_BCCH')))
 
-OUTPUTS_DIR = r"C:\Users\joaqu\.gemini\antigravity\scratch\bcch_market_monitor\seguros\circular_1835_cartera\outputs"
+OUTPUTS_DIR = str(_ROOT.joinpath('seguros', 'circular_1835_cartera', 'outputs'))
 
 
 def audit_acciones(sector):
