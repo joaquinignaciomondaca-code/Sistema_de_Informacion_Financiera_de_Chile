@@ -50,13 +50,14 @@ class Sheet:
     key: str
     estado: str           # balance | resultados
     sheet_pattern: str    # regex sobre el nombre de hoja
+    sheet_exact: str      # nombre normalizado de la hoja de la tabla buena
     header_keys: tuple    # frases que deben aparecer en la cabecera
     concepts: tuple       # (codigo, glosa, nivel)
     identities: tuple     # (total_idx, (sumandos_idx...)) 0-based
 
 
 ACTIVOS = Sheet(
-    "activos", "balance", r"^activos\s+cooperativas", ("efectivo", "instrumentos", "colocaciones", "provisiones", "activos totales"),
+    "activos", "balance", r"^activos\s+cooperativas", "activos cooperativas", ("efectivo", "instrumentos", "colocaciones", "provisiones", "activos totales"),
     (
         ("efectivo_depositos_bancos", "Efectivo y depósitos en bancos", 1),
         ("instrumentos_no_derivados", "Instrumentos financieros no derivados — total", 1),
@@ -78,7 +79,7 @@ ACTIVOS = Sheet(
     ((1, (2, 3, 4)), (5, (6, 7)), (7, (8, 13)), (8, (9, 10, 11, 12))),
 )
 PASIVOS = Sheet(
-    "pasivos", "balance", r"^pasivos\s+cooperativas", ("pasivos", "patrimonio", "dep", "capital pagado"),
+    "pasivos", "balance", r"^pasivos\s+cooperativas", "pasivos cooperativas", ("pasivos", "patrimonio", "dep", "capital pagado"),
     (
         ("pasivos_totales", "Pasivos totales", 0),
         ("depositos_captaciones", "Depósitos y captaciones — total", 1),
@@ -97,7 +98,7 @@ PASIVOS = Sheet(
     ((1, (2, 3, 4)), (5, (6, 7))),
 )
 RESULTADOS = Sheet(
-    "resultados", "resultados", r"^estado\s+resultados\s+coop", ("margen de intereses", "comisiones", "provisiones", "impuesto", "castigos"),
+    "resultados", "resultados", r"^estado\s+resultados\s+coop", "estado resultados coop", ("margen de intereses", "comisiones", "provisiones", "impuesto", "castigos"),
     (
         ("margen_intereses", "Margen de intereses", 1),
         ("comisiones_netas", "Comisiones netas", 1),
@@ -122,7 +123,7 @@ RESULTADOS = Sheet(
     ((5, (0, 1, 2, 3, 4)), (6, (7, 8, 9)), (11, (5, 6, 10)), (13, (11, 12)), (15, (13, 14)), (15, (16, 17))),
 )
 MARGEN = Sheet(
-    "margen", "resultados", r"^margen\s+inter", ("margen de intereses", "ingresos por intereses", "gastos por intereses", "comisiones"),
+    "margen", "resultados", r"^margen\s+inter", "margen interes - comisiones", ("margen de intereses", "ingresos por intereses", "gastos por intereses", "comisiones"),
     (
         ("margen_intereses_total", "Margen de intereses (desglose)", 1),
         ("ingresos_intereses_reajustes", "Ingresos por intereses y reajustes — total", 2),
@@ -193,7 +194,10 @@ def row_block(r: list, width: int | None = None) -> list:
     start = next(i for i, v in enumerate(r) if v not in (None, "")) + 1
     cells = list(r[start:])
     if width:
-        for min_gap in (3, 2):
+        # De mayor a menor: primero se intenta tratar los huecos cortos como separadores internos
+        # de la tabla; el 1 sólo se usa como último recurso (2019-11: la tabla de Pasivos queda
+        # pegada al área de trabajo con un solo espacio en blanco entre ambas).
+        for min_gap in (3, 2, 1):
             acc = []
             for blk in _blocks(cells, min_gap):
                 acc.extend(blk)
@@ -264,9 +268,10 @@ def check_identities(spec: Sheet, name: str, vals: list[int], declared: list) ->
 def validate_period(parsed: dict[str, tuple[dict, list[int]]]) -> dict:
     coops = set(parsed["activos"][0])
     declared: list[dict] = []
-    for key, (data, _) in parsed.items():
+    for spec in SHEETS:
+        data = parsed[spec.key][0]
         if set(data) != coops:
-            raise ValueError(f"{key}: cooperativas {sorted(data)} ≠ activos {sorted(coops)}")
+            raise ValueError(f"{spec.key}: cooperativas {sorted(data)} ≠ activos {sorted(coops)}")
     for spec in SHEETS:
         data, total = parsed[spec.key]
         for name, vals in data.items():
@@ -349,13 +354,31 @@ def read_workbook(blob: bytes, url: str) -> dict[str, list[list]]:
     return {sh.name: [sh.row_values(i) for i in range(sh.nrows)] for sh in bk.sheets()}
 
 
+def elegir_hoja(spec: Sheet, names: list[str]) -> tuple[str, list[str]]:
+    """Hoja de la tabla buena y hojas parecidas que se descartan.
+
+    Algunos meses (2019-11) traen dos hojas con nombre parecido: "Estado Resultados Coop" (la
+    tabla que se publica) y "Estado Resultados Coop 2" (un resumen con otras columnas). Se elige
+    la de nombre exacto; si no hay exacta y hay una sola candidata, se usa esa; si hay varias y
+    ninguna exacta, se detiene el período (fail-closed).
+    """
+    exact = [n for n in names if norm(n) == spec.sheet_exact]
+    if len(exact) == 1:
+        return exact[0], [n for n in names if n != exact[0]]
+    if len(names) == 1:
+        return names[0], []
+    if not names:
+        raise ValueError(f"hoja {spec.key}: no se encontró (se esperaba {spec.sheet_exact!r})")
+    raise ValueError(f"hoja {spec.key}: varias candidatas y ninguna se llama {spec.sheet_exact!r}: {names}")
+
+
 def parse_workbook(sheets: dict[str, list[list]]) -> dict:
-    parsed = {}
+    parsed = {"_hojas_ignoradas": []}
     for spec in SHEETS:
         names = [n for n in sheets if re.search(spec.sheet_pattern, norm(n))]
-        if len(names) != 1:
-            raise ValueError(f"hoja {spec.key}: se esperaba 1, hay {names}")
-        parsed[spec.key] = parse_sheet(spec, sheets[names[0]])
+        name, ignoradas = elegir_hoja(spec, names)
+        parsed["_hojas_ignoradas"].extend(ignoradas)
+        parsed[spec.key] = parse_sheet(spec, sheets[name])
     return parsed
 
 
@@ -374,6 +397,8 @@ def run(publish: bool, desde: str, hasta: str | None) -> int:
             info = validate_period(parsed)
             rows = to_rows(period, parsed, url.split("?")[0], hashlib.sha256(blob).hexdigest())
             all_rows.extend(rows)
+            if parsed["_hojas_ignoradas"]:
+                info["hojas_ignoradas"] = parsed["_hojas_ignoradas"]
             report.append({"periodo": period, "status": "passed", "registros": len(rows), **info})
         except Exception as exc:  # fail-closed por período, se reporta todo
             failures.append({"periodo": period, "error": f"{type(exc).__name__}: {exc}"[:400]})

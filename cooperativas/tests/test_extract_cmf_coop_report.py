@@ -120,6 +120,44 @@ class DeclaredDifferenceTests(unittest.TestCase):
                          [("CAPUAL", "resultado_operacional_neto", -4)])
 
 
+class RowBlockTests(unittest.TestCase):
+    """2019-11: la tabla y el área de trabajo de la derecha (datos repetidos) según la sonda."""
+
+    def test_table_separated_by_a_single_blank_column(self):
+        # Pasivos Cooperativas, fila real de Ahorrocoop: 13 montos contiguos, UNA columna vacía
+        # y a continuación el área de trabajo (marcador, nombre y los mismos montos repetidos).
+        tabla = [41831, 40157, 2209, 24897, 13051, 45, 45, 0, 0, 15, 0, 8373, 10820]
+        fila = ["Ahorrocoop", *tabla, None, 674, "Ahorrocoop", *tabla, None, None, 5]
+        self.assertEqual(x.row_block(fila, 13), tabla)
+
+    def test_table_with_internal_blank_columns(self):
+        # Estado Resultados Coop, fila real de Ahorrocoop: 19 montos con separadores vacíos
+        # internos (tras el 16º y el 18º monto) y el área de trabajo a la derecha.
+        tabla = [6377, 1300, 141, 796, 69, 8683, -2324, -2324, 0, 0, -4438, 1921, 0, 1921, 0,
+                 1921, 1921, 0, 2093]
+        fila = ["Ahorrocoop", *tabla[:16], None, tabla[16], tabla[17], None, tabla[18],
+                None, None, 676, "Ahorrocoop", *tabla]
+        self.assertEqual(x.row_block(fila, 19), tabla)
+
+
+class SheetChoiceTests(unittest.TestCase):
+    def test_duplicate_resultados_sheet_picks_the_exact_name(self):
+        # 2019-11 trae "Estado Resultados Coop" (la tabla buena) y "Estado Resultados Coop 2".
+        wb = workbook()
+        wb["Estado Resultados Coop 2"] = [["RESULTADO DEL EJERCICIO"], [None, "Coopeuch", None, 1, 2]]
+        parsed = x.parse_workbook(wb)
+        self.assertEqual(parsed["_hojas_ignoradas"], ["Estado Resultados Coop 2"])
+        self.assertEqual(len(parsed["resultados"][0]), 2)
+
+    def test_two_candidates_without_exact_name_stop_the_period(self):
+        wb = workbook()
+        del wb["Estado Resultados Coop"]
+        wb["Estado Resultados Coop A"] = [["x"]]
+        wb["Estado Resultados Coop B"] = [["y"]]
+        with self.assertRaisesRegex(ValueError, "candidatas"):
+            x.parse_workbook(wb)
+
+
 class WorkAreaTests(unittest.TestCase):
     def test_2019_11_work_area_to_the_right_is_ignored(self):
         rows = sheet("activos")
