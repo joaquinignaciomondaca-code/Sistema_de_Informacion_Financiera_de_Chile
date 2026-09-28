@@ -35,6 +35,12 @@ class PublishCmfBankPeriodTests(unittest.TestCase):
         self.assertTrue(result["published_changed"])
         self.assertEqual(result["period"], "2026-09")
 
+    def test_catch_up_backfills_history_from_start_and_skips_published(self):
+        manifest = {"periods": [{"period": "2026-07"}]}
+        with mock.patch.object(mod, "load_manifest", lambda: manifest):
+            result = catch_up(False, 24, date(2026, 10, 15), self._fake_publisher(manifest), start="2026-04")
+        self.assertEqual(result["periods"], ["2026-04", "2026-05", "2026-06", "2026-08", "2026-09"])
+
     def test_catch_up_keeps_validated_months_when_a_later_one_fails(self):
         manifest = {"periods": []}
         with mock.patch.object(mod, "load_manifest", lambda: manifest):

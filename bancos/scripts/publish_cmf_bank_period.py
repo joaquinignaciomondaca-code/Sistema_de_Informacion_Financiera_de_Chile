@@ -57,10 +57,14 @@ def next_month(period: str) -> str:
     return f"{year:04d}-{month + 1:02d}"
 
 
-def next_unpublished_period(manifest: dict[str, Any], today: date) -> str | None:
-    """Pick only the first missing month, so a late CMF release cannot create gaps."""
+def next_unpublished_period(manifest: dict[str, Any], today: date, start: str | None = None) -> str | None:
+    """Pick only the first missing month, so a late CMF release cannot create gaps.
+
+    `start` permite cargar historia (p. ej. 2022-01, inicio del plan de cuentas
+    CMF de 9 dígitos); por defecto se usa SEED_PERIOD.
+    """
     published = {str(item["period"]) for item in manifest.get("periods", [])}
-    candidate = SEED_PERIOD
+    candidate = start or SEED_PERIOD
     while candidate in published:
         candidate = next_month(candidate)
     return candidate if candidate <= previous_month(today) else None
@@ -399,7 +403,8 @@ def load_manifest() -> dict:
     return json.loads(PARTITION_MANIFEST.read_text(encoding="utf-8")) if PARTITION_MANIFEST.exists() else {"periods": []}
 
 
-def catch_up(dry_run: bool, max_periods: int, today: date | None = None, publisher=None) -> dict:
+def catch_up(dry_run: bool, max_periods: int, today: date | None = None, publisher=None,
+             start: str | None = None) -> dict:
     """Publica en orden todos los meses cerrados pendientes (uno a uno, cada uno con su gate).
 
     Si un mes falla después de haber publicado otros, se detiene ahí y conserva
@@ -410,7 +415,7 @@ def catch_up(dry_run: bool, max_periods: int, today: date | None = None, publish
     published: list[str] = []
     stopped_error = ""
     for _ in range(max_periods):
-        period = next_unpublished_period(load_manifest(), today)
+        period = next_unpublished_period(load_manifest(), today, start)
         if period is None:
             break
         try:
@@ -439,11 +444,14 @@ def main() -> int:
     parser.add_argument("--dry-run", action="store_true", help="Validar sin escribir archivos de publicación")
     parser.add_argument("--catch-up", action="store_true",
                         help="Publicar en orden todos los meses cerrados pendientes (cada uno con su propio gate)")
+    parser.add_argument("--desde", default="", help="Con --catch-up: primer período de la historia a completar (YYYY-MM)")
     parser.add_argument("--max-periods", type=int, default=24, help="Tope de meses por corrida con --catch-up")
     args = parser.parse_args()
     try:
         if args.catch_up and not args.period:
-            result = catch_up(args.dry_run, args.max_periods)
+            if args.desde:
+                period_label(args.desde)
+            result = catch_up(args.dry_run, args.max_periods, start=args.desde or None)
             if not result["periods"]:
                 print("No hay un período CMF cerrado pendiente; no se modifica la web.")
             else:
