@@ -1,0 +1,888 @@
+{
+  "periodos": {
+    "2010-12": {
+      "cerrado": true,
+      "sociedades": 59,
+      "por_tipo": {
+        "corredor de bolsa": 46,
+        "agente de valores": 13
+      },
+      "filas": {
+        "balance": 2092,
+        "resultados": 2689
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2011-03": {
+      "cerrado": true,
+      "sociedades": 59,
+      "por_tipo": {
+        "corredor de bolsa": 46,
+        "agente de valores": 13
+      },
+      "filas": {
+        "balance": 2044,
+        "resultados": 2455
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2011-06": {
+      "cerrado": true,
+      "sociedades": 59,
+      "por_tipo": {
+        "corredor de bolsa": 46,
+        "agente de valores": 13
+      },
+      "filas": {
+        "balance": 2086,
+        "resultados": 2593
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2011-09": {
+      "cerrado": true,
+      "sociedades": 61,
+      "por_tipo": {
+        "corredor de bolsa": 46,
+        "agente de valores": 15
+      },
+      "filas": {
+        "balance": 2131,
+        "resultados": 2632
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2011-12": {
+      "cerrado": true,
+      "sociedades": 63,
+      "por_tipo": {
+        "corredor de bolsa": 47,
+        "agente de valores": 16
+      },
+      "filas": {
+        "balance": 2251,
+        "resultados": 2965
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2012-03": {
+      "cerrado": true,
+      "sociedades": 62,
+      "por_tipo": {
+        "corredor de bolsa": 46,
+        "agente de valores": 16
+      },
+      "filas": {
+        "balance": 2239,
+        "resultados": 2822
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2012-06": {
+      "cerrado": true,
+      "sociedades": 62,
+      "por_tipo": {
+        "corredor de bolsa": 46,
+        "agente de valores": 16
+      },
+      "filas": {
+        "balance": 2247,
+        "resultados": 2880
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2012-09": {
+      "cerrado": true,
+      "sociedades": 61,
+      "por_tipo": {
+        "corredor de bolsa": 46,
+        "agente de valores": 15
+      },
+      "filas": {
+        "balance": 2224,
+        "resultados": 2818
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2012-12": {
+      "cerrado": true,
+      "sociedades": 60,
+      "por_tipo": {
+        "corredor de bolsa": 46,
+        "agente de valores": 14
+      },
+      "filas": {
+        "balance": 2227,
+        "resultados": 2839
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2013-03": {
+      "cerrado": true,
+      "sociedades": 60,
+      "por_tipo": {
+        "corredor de bolsa": 46,
+        "agente de valores": 14
+      },
+      "filas": {
+        "balance": 2274,
+        "resultados": 2798
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2013-06": {
+      "cerrado": true,
+      "sociedades": 60,
+      "por_tipo": {
+        "corredor de bolsa": 46,
+        "agente de valores": 14
+      },
+      "filas": {
+        "balance": 2247,
+        "resultados": 2844
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2013-09": {
+      "cerrado": true,
+      "sociedades": 59,
+      "por_tipo": {
+        "corredor de bolsa": 46,
+        "agente de valores": 13
+      },
+      "filas": {
+        "balance": 2252,
+        "resultados": 2851
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2013-12": {
+      "cerrado": true,
+      "sociedades": 59,
+      "por_tipo": {
+        "corredor de bolsa": 46,
+        "agente de valores": 13
+      },
+      "filas": {
+        "balance": 2283,
+        "resultados": 2926
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2014-03": {
+      "cerrado": true,
+      "sociedades": 59,
+      "por_tipo": {
+        "corredor de bolsa": 46,
+        "agente de valores": 13
+      },
+      "filas": {
+        "balance": 2260,
+        "resultados": 2751
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2014-06": {
+      "cerrado": true,
+      "sociedades": 56,
+      "por_tipo": {
+        "corredor de bolsa": 44,
+        "agente de valores": 12
+      },
+      "filas": {
+        "balance": 2085,
+        "resultados": 2628
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2014-09": {
+      "cerrado": true,
+      "sociedades": 55,
+      "por_tipo": {
+        "corredor de bolsa": 43,
+        "agente de valores": 12
+      },
+      "filas": {
+        "balance": 2063,
+        "resultados": 2638
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2014-12": {
+      "cerrado": true,
+      "sociedades": 52,
+      "por_tipo": {
+        "corredor de bolsa": 41,
+        "agente de valores": 11
+      },
+      "filas": {
+        "balance": 1979,
+        "resultados": 2549
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2015-03": {
+      "cerrado": true,
+      "sociedades": 52,
+      "por_tipo": {
+        "corredor de bolsa": 40,
+        "agente de valores": 12
+      },
+      "filas": {
+        "balance": 1963,
+        "resultados": 2448
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2015-06": {
+      "cerrado": true,
+      "sociedades": 52,
+      "por_tipo": {
+        "corredor de bolsa": 40,
+        "agente de valores": 12
+      },
+      "filas": {
+        "balance": 1934,
+        "resultados": 2492
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2015-09": {
+      "cerrado": true,
+      "sociedades": 52,
+      "por_tipo": {
+        "corredor de bolsa": 40,
+        "agente de valores": 12
+      },
+      "filas": {
+        "balance": 1938,
+        "resultados": 2490
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2015-12": {
+      "cerrado": true,
+      "sociedades": 54,
+      "por_tipo": {
+        "corredor de bolsa": 40,
+        "agente de valores": 14
+      },
+      "filas": {
+        "balance": 2007,
+        "resultados": 2627
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2016-03": {
+      "cerrado": true,
+      "sociedades": 52,
+      "por_tipo": {
+        "corredor de bolsa": 38,
+        "agente de valores": 14
+      },
+      "filas": {
+        "balance": 1956,
+        "resultados": 2482
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2016-06": {
+      "cerrado": true,
+      "sociedades": 51,
+      "por_tipo": {
+        "corredor de bolsa": 38,
+        "agente de valores": 13
+      },
+      "filas": {
+        "balance": 1915,
+        "resultados": 2514
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2016-09": {
+      "cerrado": true,
+      "sociedades": 49,
+      "por_tipo": {
+        "corredor de bolsa": 36,
+        "agente de valores": 13
+      },
+      "filas": {
+        "balance": 1826,
+        "resultados": 2397
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2016-12": {
+      "cerrado": true,
+      "sociedades": 48,
+      "por_tipo": {
+        "corredor de bolsa": 35,
+        "agente de valores": 13
+      },
+      "filas": {
+        "balance": 1782,
+        "resultados": 2358
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2017-03": {
+      "cerrado": true,
+      "sociedades": 46,
+      "por_tipo": {
+        "corredor de bolsa": 33,
+        "agente de valores": 13
+      },
+      "filas": {
+        "balance": 1691,
+        "resultados": 2170
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2017-06": {
+      "cerrado": true,
+      "sociedades": 46,
+      "por_tipo": {
+        "corredor de bolsa": 33,
+        "agente de valores": 13
+      },
+      "filas": {
+        "balance": 1689,
+        "resultados": 2243
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2017-09": {
+      "cerrado": true,
+      "sociedades": 46,
+      "por_tipo": {
+        "corredor de bolsa": 33,
+        "agente de valores": 13
+      },
+      "filas": {
+        "balance": 1666,
+        "resultados": 2233
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2017-12": {
+      "cerrado": true,
+      "sociedades": 46,
+      "por_tipo": {
+        "corredor de bolsa": 33,
+        "agente de valores": 13
+      },
+      "filas": {
+        "balance": 1701,
+        "resultados": 2270
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2018-03": {
+      "cerrado": true,
+      "sociedades": 45,
+      "por_tipo": {
+        "corredor de bolsa": 33,
+        "agente de valores": 12
+      },
+      "filas": {
+        "balance": 1659,
+        "resultados": 2125
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2018-06": {
+      "cerrado": true,
+      "sociedades": 42,
+      "por_tipo": {
+        "corredor de bolsa": 32,
+        "agente de valores": 10
+      },
+      "filas": {
+        "balance": 1580,
+        "resultados": 2064
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2018-09": {
+      "cerrado": true,
+      "sociedades": 41,
+      "por_tipo": {
+        "corredor de bolsa": 31,
+        "agente de valores": 10
+      },
+      "filas": {
+        "balance": 1525,
+        "resultados": 2013
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2018-12": {
+      "cerrado": true,
+      "sociedades": 42,
+      "por_tipo": {
+        "corredor de bolsa": 31,
+        "agente de valores": 11
+      },
+      "filas": {
+        "balance": 1566,
+        "resultados": 2078
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2019-03": {
+      "cerrado": true,
+      "sociedades": 41,
+      "por_tipo": {
+        "corredor de bolsa": 31,
+        "agente de valores": 10
+      },
+      "filas": {
+        "balance": 1535,
+        "resultados": 1909
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2019-06": {
+      "cerrado": true,
+      "sociedades": 40,
+      "por_tipo": {
+        "corredor de bolsa": 30,
+        "agente de valores": 10
+      },
+      "filas": {
+        "balance": 1506,
+        "resultados": 1965
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2019-09": {
+      "cerrado": true,
+      "sociedades": 40,
+      "por_tipo": {
+        "corredor de bolsa": 30,
+        "agente de valores": 10
+      },
+      "filas": {
+        "balance": 1515,
+        "resultados": 1984
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2019-12": {
+      "cerrado": true,
+      "sociedades": 38,
+      "por_tipo": {
+        "corredor de bolsa": 30,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1464,
+        "resultados": 1930
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2020-03": {
+      "cerrado": true,
+      "sociedades": 38,
+      "por_tipo": {
+        "corredor de bolsa": 30,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1470,
+        "resultados": 1896
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2020-06": {
+      "cerrado": true,
+      "sociedades": 38,
+      "por_tipo": {
+        "corredor de bolsa": 30,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1467,
+        "resultados": 1972
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2020-09": {
+      "cerrado": true,
+      "sociedades": 38,
+      "por_tipo": {
+        "corredor de bolsa": 30,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1482,
+        "resultados": 2000
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2020-12": {
+      "cerrado": true,
+      "sociedades": 38,
+      "por_tipo": {
+        "corredor de bolsa": 30,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1473,
+        "resultados": 1970
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2021-03": {
+      "cerrado": true,
+      "sociedades": 38,
+      "por_tipo": {
+        "corredor de bolsa": 30,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1443,
+        "resultados": 1858
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2021-06": {
+      "cerrado": true,
+      "sociedades": 38,
+      "por_tipo": {
+        "corredor de bolsa": 30,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1466,
+        "resultados": 1968
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2021-09": {
+      "cerrado": true,
+      "sociedades": 38,
+      "por_tipo": {
+        "corredor de bolsa": 30,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1458,
+        "resultados": 1956
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2021-12": {
+      "cerrado": true,
+      "sociedades": 38,
+      "por_tipo": {
+        "corredor de bolsa": 30,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1464,
+        "resultados": 1971
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2022-03": {
+      "cerrado": true,
+      "sociedades": 38,
+      "por_tipo": {
+        "corredor de bolsa": 30,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1460,
+        "resultados": 1884
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2022-06": {
+      "cerrado": true,
+      "sociedades": 37,
+      "por_tipo": {
+        "corredor de bolsa": 29,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1456,
+        "resultados": 1932
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2022-09": {
+      "cerrado": true,
+      "sociedades": 37,
+      "por_tipo": {
+        "corredor de bolsa": 29,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1466,
+        "resultados": 1934
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2022-12": {
+      "cerrado": true,
+      "sociedades": 37,
+      "por_tipo": {
+        "corredor de bolsa": 29,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1409,
+        "resultados": 1892
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2023-03": {
+      "cerrado": true,
+      "sociedades": 37,
+      "por_tipo": {
+        "corredor de bolsa": 29,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1403,
+        "resultados": 1837
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2023-06": {
+      "cerrado": true,
+      "sociedades": 36,
+      "por_tipo": {
+        "corredor de bolsa": 28,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1381,
+        "resultados": 1819
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2023-09": {
+      "cerrado": true,
+      "sociedades": 36,
+      "por_tipo": {
+        "corredor de bolsa": 28,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1385,
+        "resultados": 1834
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2023-12": {
+      "cerrado": true,
+      "sociedades": 35,
+      "por_tipo": {
+        "corredor de bolsa": 27,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1360,
+        "resultados": 1797
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2024-03": {
+      "cerrado": true,
+      "sociedades": 35,
+      "por_tipo": {
+        "corredor de bolsa": 27,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1364,
+        "resultados": 1779
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2024-06": {
+      "cerrado": true,
+      "sociedades": 35,
+      "por_tipo": {
+        "corredor de bolsa": 27,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1391,
+        "resultados": 1810
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2024-09": {
+      "cerrado": true,
+      "sociedades": 33,
+      "por_tipo": {
+        "corredor de bolsa": 26,
+        "agente de valores": 7
+      },
+      "filas": {
+        "balance": 1305,
+        "resultados": 1720
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2024-12": {
+      "cerrado": true,
+      "sociedades": 33,
+      "por_tipo": {
+        "corredor de bolsa": 26,
+        "agente de valores": 7
+      },
+      "filas": {
+        "balance": 1333,
+        "resultados": 1747
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2025-03": {
+      "cerrado": true,
+      "sociedades": 34,
+      "por_tipo": {
+        "corredor de bolsa": 26,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1387,
+        "resultados": 1778
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2025-06": {
+      "cerrado": true,
+      "sociedades": 34,
+      "por_tipo": {
+        "corredor de bolsa": 26,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1384,
+        "resultados": 1789
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2025-09": {
+      "cerrado": true,
+      "sociedades": 33,
+      "por_tipo": {
+        "corredor de bolsa": 25,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1359,
+        "resultados": 1788
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2025-12": {
+      "cerrado": true,
+      "sociedades": 33,
+      "por_tipo": {
+        "corredor de bolsa": 25,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1323,
+        "resultados": 1778
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2026-03": {
+      "cerrado": true,
+      "sociedades": 32,
+      "por_tipo": {
+        "corredor de bolsa": 24,
+        "agente de valores": 8
+      },
+      "filas": {
+        "balance": 1331,
+        "resultados": 1744
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    },
+    "2026-06": {
+      "cerrado": false,
+      "sociedades": 33,
+      "por_tipo": {
+        "corredor de bolsa": 24,
+        "agente de valores": 9
+      },
+      "filas": {
+        "balance": 1354,
+        "resultados": 1799
+      },
+      "corredores_fuera_de_lista": [],
+      "avisos": []
+    }
+  },
+  "desde": "2010-12",
+  "updated_at": "2026-09-28T08:08:32+00:00"
+}
