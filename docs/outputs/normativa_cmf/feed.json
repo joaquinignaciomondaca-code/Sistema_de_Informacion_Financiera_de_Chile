@@ -3,8 +3,8 @@
   "status": "ok",
   "source": "CMF · Legislación y normativa",
   "source_url": "https://www.cmfchile.cl/institucional/legislacion_normativa/normativa2.php",
-  "generated_at": "2026-09-28T21:30:30Z",
-  "last_checked_at": "2026-09-28T21:30:30Z",
+  "generated_at": "2026-09-28T22:23:52Z",
+  "last_checked_at": "2026-09-28T22:23:52Z",
   "last_detected_at": "2026-09-28T20:15:14Z",
   "history_days": 365,
   "sector_labels": {
@@ -27,10 +27,10 @@
   "run_summary": {
     "listed_records": 78,
     "new_or_changed_records": 0,
-    "pdf_checks": 5,
-    "gemini_calls": 10,
-    "pending_analysis": 68,
-    "unassigned_records": 67
+    "pdf_checks": 35,
+    "gemini_calls": 63,
+    "pending_analysis": 44,
+    "unassigned_records": 40
   },
   "events": [
     {
@@ -51,7 +51,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 23 Sep 2026 20:09:18 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -108,7 +108,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 15 Sep 2026 12:19:22 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -195,7 +195,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 11 Sep 2026 18:40:42 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -261,7 +261,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 08 Sep 2026 14:41:59 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -313,7 +313,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 08 Sep 2026 14:30:24 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -370,7 +370,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 02 Sep 2026 20:47:16 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -441,7 +441,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 25 Aug 2026 13:41:50 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -506,7 +506,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 20 Aug 2026 15:40:36 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -565,63 +565,57 @@
       "source_fingerprint": "282e8396b8282d5ff72f31da9ad4776db9a19f8cbd972235580c0ac736a17612",
       "document_sha256": "08bf83a8d39c1ebdf2f8402545894748bac305690e32689b4d80bff5dd29546b",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T21:30:30Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 19 Aug 2026 16:34:51 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "resumen_sin_evidencia_verificable"
+        "sector_sin_evidencia_verificable"
       ],
       "event_type": "modificacion",
-      "summary": "",
+      "summary": "La CMF introduce ajustes al Capítulo 2-13 de la Recopilación Actualizada de Normas para bancos y a la Circular N°1 para empresas emisoras de tarjetas de pago no bancarias. Las modificaciones regulan el traspaso de acreencias caducadas a la Junta Nacional de Cuerpos de Bomberos de Chile y al Fisco. Asimismo, se actualizan las instrucciones relativas al reporte del archivo E30 sobre acreencias afectas a caducidad.",
       "sectors": [
-        "bancos",
         "sistemas_pago"
       ],
       "affected_norms": [
-        "Capítulo 2-13 de la Recopilación Actualizada de Normas de Bancos",
-        "Circular N°1 de Empresas Emisoras de Tarjetas de Pago No Bancarias"
+        "Capítulo 2-13 de la Recopilación Actualizada de Normas",
+        "Circular N°1 de Empresas Emisoras de Tarjetas de Pago no Bancarias"
       ],
       "effective_date": "",
       "effective_date_precision": "sin_fecha",
-      "summary_evidence": "",
-      "summary_evidence_page": 0,
+      "summary_evidence": "REF: ESTABLECE AJUSTES EN EL CAPÍTULO 2–13 DE LA RECOPILACIÓN ACTUALIZADA DE NORMAS PARA BANCOS Y LA CIRCULAR N°1 DE EMPRESAS EMISORAS DE TARJETAS DE PAGO NO BANCARIAS.",
+      "summary_evidence_page": 1,
       "sector_evidence": [
         {
-          "sector": "bancos",
-          "quote": "ESTABLECE AJUSTES EN EL CAPÍTULO 2–13 DE LA RECOPILACIÓN ACTUALIZADA DE NORMAS PARA BANCOS",
-          "page": 1
-        },
-        {
           "sector": "sistemas_pago",
-          "quote": "Y LA CIRCULAR N°1 DE EMPRESAS EMISORAS DE TARJETAS DE PAGO NO BANCARIAS.",
+          "quote": "Empresas emisores de Tarjetas de Pago No Bancarias",
           "page": 1
         }
       ],
       "norm_evidence": [
         {
-          "norm": "Capítulo 2-13 de la Recopilación Actualizada de Normas de Bancos",
-          "quote": "I. Se introducen ajustes al Capítulo 2-13 de la Recopilación Actualizada de Normas en los siguientes términos:",
+          "norm": "Capítulo 2-13 de la Recopilación Actualizada de Normas",
+          "quote": "Se introducen ajustes al Capítulo 2-13 de la Recopilación Actualizada de Normas en los siguientes términos:",
           "page": 1
         },
         {
-          "norm": "Circular N°1 de Empresas Emisoras de Tarjetas de Pago No Bancarias",
-          "quote": "II. Se introducen ajustes a la Circular N°1 de Empresas Emisoras de Tarjetas de Pago no Bancarias en los siguientes términos:",
+          "norm": "Circular N°1 de Empresas Emisoras de Tarjetas de Pago no Bancarias",
+          "quote": "Se introducen ajustes a la Circular N°1 de Empresas Emisoras de Tarjetas de Pago no Bancarias en los siguientes términos:",
           "page": 2
         }
       ],
       "effective_date_evidence": "",
       "effective_date_page": 0,
       "confidence": "alta",
-      "ai_model": "gemini-flash-lite-latest",
-      "analyzed_at": "2026-09-28T21:31:11Z",
-      "ai_model_requested": "gemini-flash-lite-latest"
+      "ai_model": "gemini-flash-latest",
+      "analyzed_at": "2026-09-28T22:24:19Z",
+      "ai_model_requested": "gemini-flash-latest"
     },
     {
       "id": "cmf-015ae4611b41c632754e",
@@ -641,7 +635,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 12 Aug 2026 14:27:08 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -692,7 +686,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 27 Jul 2026 20:30:21 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -740,35 +734,25 @@
       "source_fingerprint": "d89d40f9e67f2f2717ca96e85d3bf45ac7856cb35bac939e0e7f48437f0b0b6c",
       "document_sha256": "cefca02476a8291cfb1f79b7194c1baf5abafeca434b47b10c03c659a4deef0d",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T21:30:30Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 27 Jul 2026 20:25:56 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "resumen_sin_evidencia_verificable",
-        "norma_sin_evidencia_verificable",
-        "norma_afectada_sin_respaldo"
+        "resumen_sin_evidencia_verificable"
       ],
       "event_type": "nueva_norma",
       "summary": "",
       "sectors": [
         "corredoras_bolsa"
       ],
-      "affected_norms": [
-        "Norma de Carácter General N°467",
-        "Norma de Carácter General N°502",
-        "Norma de Carácter General N°424",
-        "Norma de Carácter General N°510",
-        "Norma de Carácter General N°30",
-        "Norma de Carácter General N°271",
-        "Norma de Carácter General N°16"
-      ],
+      "affected_norms": [],
       "effective_date": "",
       "effective_date_precision": "sin_fecha",
       "summary_evidence": "",
@@ -780,48 +764,12 @@
           "page": 1
         }
       ],
-      "norm_evidence": [
-        {
-          "norm": "Norma de Carácter General N°467",
-          "quote": "las bolsas deberán constituirse como Sociedades Anónimas Especiales. Esas entidades deberán solicitar a esta Comisión su autorización de existencia de acuerdo con las instrucciones impartidas para tal efecto en la Norma de Carácter General N°467",
-          "page": 4
-        },
-        {
-          "norm": "Norma de Carácter General N°502",
-          "quote": "copia de la reglamentación interna que contiene las normas a las que se refiere la letra f) del literal D de la Sección II de la NCG N°502",
-          "page": 5
-        },
-        {
-          "norm": "Norma de Carácter General N°424",
-          "quote": "deberán presentar un Código de Autorregulación ordenado bajo la estructura a la que se refiere la Norma de Carácter General N°424",
-          "page": 8
-        },
-        {
-          "norm": "Norma de Carácter General N°510",
-          "quote": "En materia de gestión de riesgo operacional las bolsas deberán cumplir con las instrucciones de la Norma de Carácter General N°510",
-          "page": 8
-        },
-        {
-          "norm": "Norma de Carácter General N°30",
-          "quote": "quedarán sujetas a las instrucciones de los Títulos I.2 y I.3 de la Sección II de la Norma de Carácter General N°30",
-          "page": 8
-        },
-        {
-          "norm": "Norma de Carácter General N°271",
-          "quote": "las bolsas de valores deberán mantener un registro de instrucciones en los términos regulados por la Norma de Carácter General N°271",
-          "page": 8
-        },
-        {
-          "norm": "Norma de Carácter General N°16",
-          "quote": "Los intermediarios a efectos de solicitar su inscripción en el Registro de Corredores de Bolsa o Agentes de Valores deberán cumplir con las instrucciones de la Norma de Carácter General N°16",
-          "page": 12
-        }
-      ],
+      "norm_evidence": [],
       "effective_date_evidence": "",
       "effective_date_page": 0,
       "confidence": "alta",
       "ai_model": "gemini-flash-lite-latest",
-      "analyzed_at": "2026-09-28T21:31:25Z",
+      "analyzed_at": "2026-09-28T22:24:24Z",
       "ai_model_requested": "gemini-flash-lite-latest"
     },
     {
@@ -838,27 +786,28 @@
       "source_fingerprint": "74592c156319cdbc5d33244f877b237d17eef0dc52945944e13da08db66c34be",
       "document_sha256": "3f814c856d611ce3b5af1b5de68a0fab5eb380d67e865c4fe9de9d94c7da732d",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T21:30:30Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 15 Jul 2026 14:13:08 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "resumen_sin_evidencia_verificable"
+        "resumen_sin_evidencia_verificable",
+        "norma_sin_evidencia_verificable",
+        "norma_afectada_sin_respaldo"
       ],
-      "event_type": "nueva_norma",
+      "event_type": "modificacion",
       "summary": "",
       "sectors": [
         "bancos"
       ],
       "affected_norms": [
-        "Recopilación Actualizada de Normas de Bancos (Capítulo 21-10, Capítulo 1-13, Capítulo 12-3)",
-        "Compendio de Normas Contables para Bancos (Capítulo B-1)",
+        "Compendio de Normas Contables para Bancos (CNC), Capítulo B-1",
         "Manual de Sistemas de Información de Bancos"
       ],
       "effective_date": "",
@@ -874,18 +823,13 @@
       ],
       "norm_evidence": [
         {
-          "norm": "Recopilación Actualizada de Normas de Bancos (Capítulo 21-10, Capítulo 1-13, Capítulo 12-3)",
-          "quote": "Introduce nuevo Capítulo 21- 10 a la Recopilación Actualizada de Normas de bancos, sobre requisitos y condiciones mínimas que deben cumplir las garantías constituidas a favor del banco para ser aceptadas y utilizadas como mitigadores de riesgo de crédito, y modifica los Capítulos 1-13 y 12-3 de la misma Recopilación",
-          "page": 1
-        },
-        {
-          "norm": "Compendio de Normas Contables para Bancos (Capítulo B-1)",
+          "norm": "Compendio de Normas Contables para Bancos (CNC), Capítulo B-1",
           "quote": "el Capítulo B-1 del Compendio Normas Contables de bancos",
           "page": 1
         },
         {
           "norm": "Manual de Sistemas de Información de Bancos",
-          "quote": "el Sistema Contable, de Deudores y Sistema Tablas del Manual de Sistemas de Información de bancos.",
+          "quote": "Sistema Contable, de Deudores y Sistema Tablas del Manual de Sistemas de Información de bancos",
           "page": 1
         }
       ],
@@ -894,7 +838,7 @@
       "confidence": "alta",
       "ai_model": "gemini-flash-lite-latest",
       "ai_model_requested": "gemini-flash-lite-latest",
-      "analyzed_at": "2026-09-28T21:31:57Z"
+      "analyzed_at": "2026-09-28T22:24:28Z"
     },
     {
       "id": "cmf-c1611d9fbdb8360d3e34",
@@ -910,25 +854,49 @@
       "source_fingerprint": "cf16310d1d8f952bb61dca8383f2781f82e2637f332cfe3af212c1294c80179f",
       "document_sha256": "575bfaca8eaba68350af337ff1b2fee3a01a40b5104ebddaf3da098640b575e4",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 14 Jul 2026 15:06:00 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
-      "needs_human_review": true,
-      "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+      "needs_human_review": false,
+      "review_flags": [],
+      "event_type": "circular_instruccion",
+      "summary": "Se informa la tasa de descuento (T.M.) del 2,53% que debe ser utilizada por las entidades aseguradoras y reaseguradoras para valorizar los pasivos de seguros correspondientes al mes de junio de 2026, de acuerdo con la Circular N°1512.",
+      "sectors": [
+        "seguros"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "affected_norms": [
+        "Circular N°1512"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "la tasa de descuento (T.M.) que deberá ser utilizada para valorizar los pasivos de seguros correspondientes al mes de junio de 2026 es de 2,53%.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "seguros",
+          "quote": "A todas las entidades aseguradoras y reaseguradoras",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "Circular N°1512",
+          "quote": "De acuerdo a lo establecido en Circular N°1512 de 2 de enero de 2001",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:24:46Z"
     },
     {
       "id": "cmf-ab8252d65f174327b419",
@@ -944,25 +912,41 @@
       "source_fingerprint": "7bb49d025a05c9153168ca8f65b08d5d7d42492f735bd2bdbfe7dc3d31ce27bc",
       "document_sha256": "31faec05abeda4dd025ee39eff5d808c0cb35026677ce31231e9e3e20f36febe",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 14 Jul 2026 16:32:40 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
-      "needs_human_review": true,
-      "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+      "needs_human_review": false,
+      "review_flags": [],
+      "event_type": "circular_instruccion",
+      "summary": "La CMF comunica la fijación del valor de la Unidad de Seguro Reajustable Mensual (U.S.R.M.) en $299,49. Dicho valor regirá durante el mes de agosto de 2026 para todo el mercado asegurador del segundo grupo.",
+      "sectors": [
+        "seguros"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
       "affected_norms": [],
-      "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date": "2026-08",
+      "effective_date_precision": "mes",
+      "summary_evidence": "Esta Comisión, en uso de sus facultades, ha fijado en $299,49 el valor de la Unidad de Seguro Reajustable Mensual (U.S.R.M.), que regirá durante el mes de agosto de 2026.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "seguros",
+          "quote": "A todo el mercado asegurador del segundo grupo",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [],
+      "effective_date_evidence": "que regirá durante el mes de agosto de 2026.",
+      "effective_date_page": 1,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-latest",
+      "ai_model_requested": "gemini-flash-latest",
+      "analyzed_at": "2026-09-28T22:24:40Z"
     },
     {
       "id": "cmf-8fb80f1bd236c905a9b5",
@@ -978,25 +962,57 @@
       "source_fingerprint": "39346caa8e6c47790f4274f0d0607e29132466838e5dec6e5cadc3df70eca98a",
       "document_sha256": "049fc17e94ad1a1d97cc3b6bedbab5ac51651c4e8854be2b5789c39beed62cd6",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 14 Jul 2026 15:18:39 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "event_type": "circular_instruccion",
+      "summary": "La Comisión comunica la tasa de interés de actualización aplicable para el cálculo de capitales que financian pensiones de referencia por invalidez o sobrevivencia en agosto de 2026, fijándola en 2,91% real anual.",
+      "sectors": [
+        "seguros",
+        "pensiones"
+      ],
+      "affected_norms": [
+        "D.L. Nº 3.500, de 1980"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "Al respecto, cumplo con informar que la tasa de interés de actualización aplicable a los siniestros de los afiliados, cuya fecha de fallecimiento o aquella en que quede ejecutoriado el único o segundo dictamen de invalidez, según corresponda, ocurra en el mes de agosto 2026, es 2,91% real anual.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "seguros",
+          "quote": "A todas las entidades de seguros del segundo grupo",
+          "page": 1
+        },
+        {
+          "sector": "pensiones",
+          "quote": "El artículo 55º del D.L. Nº 3.500, de 1980, establece que la Comisión para el Mercado Financiero debe señalar la tasa de interés de actualización que se utilizará para el cálculo de los capitales que financien las pensiones de referencia de los afiliados al sistema previsional",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "D.L. Nº 3.500, de 1980",
+          "quote": "El artículo 55º del D.L. Nº 3.500, de 1980, establece que la Comisión para el Mercado Financiero debe señalar la tasa de interés de actualización",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:24:32Z"
     },
     {
       "id": "cmf-2ef0120867e4da0b2e03",
@@ -1012,25 +1028,70 @@
       "source_fingerprint": "b1e408bac7b138fc428067e119c0a4d0607b3472fa9988f034dfa74c4d4b0251",
       "document_sha256": "a138652fd9f43f49b74e175616b53a36bbfd2e44930794057d77a504631466cc",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 23 Jun 2026 19:43:01 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "resumen_sin_evidencia_verificable",
+        "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
+      "event_type": "modificacion",
       "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "sectors": [
+        "seguros"
+      ],
+      "affected_norms": [
+        "Norma de Carácter General N°139",
+        "Norma de Carácter General N°209",
+        "Norma de Carácter General N°318",
+        "Circular N°1677"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "",
+      "summary_evidence_page": 0,
+      "sector_evidence": [
+        {
+          "sector": "seguros",
+          "quote": "A todo el mercado asegurador",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "Norma de Carácter General N°139",
+          "quote": "Norma de Carácter General N°139:",
+          "page": 1
+        },
+        {
+          "norm": "Norma de Carácter General N°209",
+          "quote": "Norma de Carácter General N°209:",
+          "page": 2
+        },
+        {
+          "norm": "Norma de Carácter General N°318",
+          "quote": "Norma de Carácter General N°318:",
+          "page": 2
+        },
+        {
+          "norm": "Circular N°1677",
+          "quote": "Circular N°1677: • Deróguese la Circular N°1677 de 2003.",
+          "page": 2
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:24:50Z"
     },
     {
       "id": "cmf-875e5371629ea44e7089",
@@ -1046,25 +1107,45 @@
       "source_fingerprint": "8f25f6200f7a669fe80235f11b36db248080144aca78e4ff7333e4378cf6764e",
       "document_sha256": "64f86b7d734da293a58b27adca49438993602ea447cfc232e62b664379e0eef8",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 22 Jun 2026 20:43:43 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "sector_sin_evidencia_verificable",
+        "vigencia_sin_evidencia_verificable",
+        "sin_industria_asignada"
       ],
-      "event_type": "otro",
-      "summary": "",
+      "event_type": "modificacion",
+      "summary": "Se introducen modificaciones al Capítulo 18-5 de la Recopilación Actualizada de Normas para bancos en relación con la información sobre deudores de las instituciones financieras, incorporando referencias a la Ley N°21.680 y ajustando aspectos de seguridad y manejo de información.",
       "sectors": [],
-      "affected_norms": [],
+      "affected_norms": [
+        "Recopilación Actualizada de Normas para Bancos, Capítulo 18-5"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "Introduce modificaciones al Capítulo 18-5 de la Recopilación Actualizada de Normas para bancos, respecto a la información sobre deudores de las instituciones financieras.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [],
+      "norm_evidence": [
+        {
+          "norm": "Recopilación Actualizada de Normas para Bancos, Capítulo 18-5",
+          "quote": "Introduce modificaciones al Capítulo 18-5 de la Recopilación Actualizada de Normas para bancos",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:24:54Z"
     },
     {
       "id": "cmf-9a273f44cadfee6b6df5",
@@ -1080,25 +1161,51 @@
       "source_fingerprint": "4927523a32d0abe0f3b7b73741a151ce7e8cdcbbc6d0b2128a4f541002a95c1d",
       "document_sha256": "61a332e9fe4475098c0f1c76e2ef8fe5796160dd368cb1357ab3c6b509442c57",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 15 Jun 2026 18:17:09 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "event_type": "prorroga_o_aclaracion",
+      "summary": "Se modifica la Circular N°2.364 para bancos con el fin de postergar su vigencia, estableciendo que las instrucciones entrarán en vigor en el plazo de 18 meses a partir de su emisión.",
+      "sectors": [
+        "bancos"
+      ],
+      "affected_norms": [
+        "Circular N° 2.364"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "Atendidos los costos regulatorios involucrados en la implementación de lo dispuesto en la de la Circular N°2.364 para bancos – la cual introdujo modificaciones al Capítulo 12- 12 de la Recopilación Actualizada de Normas para bancos sobre prohibición a otorgar créditos a directores, apoderados y personas relacionadas con ellos; e introduce ajustes de concorda",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "bancos",
+          "quote": "REF: Modifica la Circular N°2.364 para bancos.",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "Circular N° 2.364",
+          "quote": "Atendidos los costos regulatorios involucrados en la implementación de lo dispuesto en la de la Circular N°2.364 para bancos – la cual introdujo modificaciones al Capítulo 12- 12 de la Recopilación Actualizada de Normas para bancos sobre prohibición a otorgar créditos a directores, apoderados y personas relacionadas con ellos; e introduce ajustes de concorda",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:24:58Z"
     },
     {
       "id": "cmf-f998f2212ddf90a4a3cc",
@@ -1114,25 +1221,57 @@
       "source_fingerprint": "5d923105f13f01756093681fbd9fc2d2ba3891fead803fcffc24f895c60fc24c",
       "document_sha256": "577718011f166a795bf84f2539789815e20e655169a9cdf0b34298f25e8aeedd",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 11 Jun 2026 20:40:22 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "event_type": "circular_instruccion",
+      "summary": "La CMF comunica que la tasa de interés de actualización aplicable para el cálculo de los capitales que financien pensiones de referencia por invalidez o sobrevivencia en julio de 2026 es 2,91% real anual.",
+      "sectors": [
+        "seguros",
+        "pensiones"
+      ],
+      "affected_norms": [
+        "D.L. Nº 3.500, de 1980"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "Al respecto, cumplo con informar que la tasa de interés de actualización aplicable a los siniestros de los afiliados, cuya fecha de fallecimiento o aquella en que quede ejecutoriado el único o segundo dictamen de invalidez, según corresponda, ocurra en el mes de julio 2026, es 2,91% real anual.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "seguros",
+          "quote": "A todas las entidades de seguros del segundo grupo",
+          "page": 1
+        },
+        {
+          "sector": "pensiones",
+          "quote": "El artículo 55º del D.L. Nº 3.500, de 1980, establece que la Comisión para el Mercado Financiero debe señalar la tasa de interés de actualización que se utilizará para el cálculo de los capitales que financien las pensiones de referencia de los afiliados al sistema previsional",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "D.L. Nº 3.500, de 1980",
+          "quote": "El artículo 55º del D.L. Nº 3.500, de 1980, establece que la Comisión para el Mercado Financiero debe señalar la tasa de interés de actualización",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:25:24Z"
     },
     {
       "id": "cmf-b67759ef12c502e01c39",
@@ -1148,25 +1287,51 @@
       "source_fingerprint": "344d8aec4ebf667a259cb2c07c6fe8c351b0b3db2733d4ba42fd8e079cc96e34",
       "document_sha256": "538a75ea47f163e4f63a310cc33abf2ad4b5979715c3394344badc7df4df3d54",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 11 Jun 2026 20:39:45 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "event_type": "circular_instruccion",
+      "summary": "La CMF informa a las entidades aseguradoras y reaseguradoras la tasa de descuento (T.M.) del 2,36% que se debe utilizar para la valorización de pasivos de seguros correspondientes al mes de mayo de 2026.",
+      "sectors": [
+        "seguros"
+      ],
+      "affected_norms": [
+        "Circular N°1512"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "la tasa de descuento (T.M.) que deberá ser utilizada para valorizar los pasivos de seguros correspondientes al mes de mayo de 2026 es de 2,36%.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "seguros",
+          "quote": "A todas las entidades aseguradoras y reaseguradoras",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "Circular N°1512",
+          "quote": "De acuerdo a lo establecido en Circular N°1512 de 2 de enero de 2001",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:25:20Z"
     },
     {
       "id": "cmf-7ab496a0afbcc5c5ee05",
@@ -1182,25 +1347,43 @@
       "source_fingerprint": "5098691306ac1bf4d5f49c560349f51a665f2b33ddcbd4abb6a6b862ea7d4ad7",
       "document_sha256": "17d6db1b3e649283a665053fa8cedf03c38badcc1dfa1b4d6305c0f444e9cf8e",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 11 Jun 2026 20:40:05 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
+      "event_type": "circular_instruccion",
+      "summary": "La Comisión comunica el nuevo valor de la Unidad de Seguro Reajustable Mensual (U.S.R.M.) fijado en $299,54, el cual regirá durante el mes de julio de 2026.",
+      "sectors": [
+        "seguros"
+      ],
       "affected_norms": [],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "ha fijado en $299,54 el valor de la Unidad de Seguro Reajustable Mensual (U.S.R.M.), que regirá durante el mes de julio de 2026.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "seguros",
+          "quote": "A todo el mercado asegurador del segundo grupo",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:25:02Z"
     },
     {
       "id": "cmf-435be5c4e37ff7d7b749",
@@ -1216,25 +1399,71 @@
       "source_fingerprint": "4761bf4677a21eae95ae81745329cb8f4c46c7c14716a9b9728b0f0dbe50d409",
       "document_sha256": "8e3bed9162ac26bb6e1123951311978c4a501b95d7e7fd0191746ddce97e24f3",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 01 Jun 2026 16:42:07 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "resumen_sin_evidencia_verificable",
+        "sector_sin_evidencia_verificable",
+        "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
+      "event_type": "modificacion",
       "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "sectors": [
+        "bancos",
+        "cooperativas",
+        "cajas_compensacion",
+        "sistemas_pago"
+      ],
+      "affected_norms": [
+        "Norma de Carácter General N°514"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "",
+      "summary_evidence_page": 0,
+      "sector_evidence": [
+        {
+          "sector": "bancos",
+          "quote": "Todas las entidades consideradas como IPI e IPC de conformidad con el artículo 18 de la Ley Fintec, tendrán que presentar los antecedentes...",
+          "page": 12
+        },
+        {
+          "sector": "cooperativas",
+          "quote": "Todas las entidades consideradas como IPI e IPC de conformidad con el artículo 18 de la Ley Fintec...",
+          "page": 12
+        },
+        {
+          "sector": "cajas_compensacion",
+          "quote": "Todas las entidades consideradas como IPI e IPC de conformidad con el artículo 18 de la Ley Fintec...",
+          "page": 12
+        },
+        {
+          "sector": "sistemas_pago",
+          "quote": "SECCIÓN I: PERÍMETRO DEL SISTEMA DE FINANZAS ABIERTAS D. Registro de Proveedores de Servicios de Iniciación de Pagos Los PSIP son aquellas entidades que pueden instruir...",
+          "page": 6
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "Norma de Carácter General N°514",
+          "quote": "instrucciones que modifican la Norma de Carácter General N°514 que regula el Sistema de Finanzas Abiertas (SFA)",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:25:33Z"
     },
     {
       "id": "cmf-1b5787628878d91d8b8d",
@@ -1250,25 +1479,51 @@
       "source_fingerprint": "b92ae5b5efad503b6116ebacab6803949ff27c0901aabc964118eab7a136acf5",
       "document_sha256": "556d052b115e6344e1dc66c7c25ecba999a6dcb26a8a7ce7670f711c78fd65d0",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 01 Jun 2026 16:39:17 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "resumen_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
+      "event_type": "modificacion",
       "summary": "",
-      "sectors": [],
-      "affected_norms": [],
-      "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "sectors": [
+        "bancos"
+      ],
+      "affected_norms": [
+        "Norma de Carácter General N° 538"
+      ],
+      "effective_date": "2026-08-01",
+      "effective_date_precision": "dia",
+      "summary_evidence": "",
+      "summary_evidence_page": 0,
+      "sector_evidence": [
+        {
+          "sector": "bancos",
+          "quote": "operaciones sometidas a la Ley N°20.009",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "Norma de Carácter General N° 538",
+          "quote": "modifican la Norma de Carácter General N°538, sobre estándares mínimos de seguridad y de autenticación",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "La presente norma entra en vigor a partir del 1 de agosto de 2025, excepto los casos de ARC obligatoria y la exigencia de eliminación del uso de mecanismos que incorporen conjuntos de datos impresos utilizados para la autenticación, cuya vigencia comenzará el 1 de agosto de 2026.",
+      "effective_date_page": 2,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:25:28Z"
     },
     {
       "id": "cmf-74c24c0e7694ac7c10a7",
@@ -1284,25 +1539,99 @@
       "source_fingerprint": "93596756e766d3ae98763f06fa5b3d860ca9a6f4449153b82ada5432d7f50abd",
       "document_sha256": "9f4728f9a15b64b03058973fe2b2fc6d21ae7b05cb60a029ea1e55ae7f86cd67",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 28 May 2026 13:57:40 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "event_type": "nueva_norma",
+      "summary": "Se crea la Recopilación Actualizada de Normas para Cooperativas de Ahorro y Crédito (RAN CACs) y el Manual de Sistema de Información para Cooperativas de Ahorro y Crédito (MSI CACs), estableciendo un nuevo ordenamiento normativo y derogando diversas circulares anteriores.",
+      "sectors": [
+        "cooperativas"
+      ],
+      "affected_norms": [
+        "Circular N° 98",
+        "Circular N° 100",
+        "Circular N° 108",
+        "Circular N° 112",
+        "Circular N° 116",
+        "Circular N° 123",
+        "Circular N° 126",
+        "Circular N° 134",
+        "Circular N° 142"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "Crea la Recopilación Actualizada de Normas para Cooperativas de Ahorro y Crédito (RAN CACs), el Manual de Sistema de Información para Cooperativas de Ahorro y Crédito (MSI CACs), y deroga Circulares en concordancia.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "cooperativas",
+          "quote": "Norma de Carácter General N°567 Cooperativas de ahorro y crédito",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "Circular N° 98",
+          "quote": "se derogan las circulares N°98, 100, 112, 116, 123, 126, 134, 142 aplicables a las cooperativas. También, se deroga la Circular N°108 de Cooperativas",
+          "page": 3
+        },
+        {
+          "norm": "Circular N° 100",
+          "quote": "se derogan las circulares N°98, 100, 112, 116, 123, 126, 134, 142 aplicables a las cooperativas.",
+          "page": 3
+        },
+        {
+          "norm": "Circular N° 108",
+          "quote": "También, se deroga la Circular N°108 de Cooperativas",
+          "page": 3
+        },
+        {
+          "norm": "Circular N° 112",
+          "quote": "se derogan las circulares N°98, 100, 112, 116, 123, 126, 134, 142 aplicables a las cooperativas.",
+          "page": 3
+        },
+        {
+          "norm": "Circular N° 116",
+          "quote": "se derogan las circulares N°98, 100, 112, 116, 123, 126, 134, 142 aplicables a las cooperativas.",
+          "page": 3
+        },
+        {
+          "norm": "Circular N° 123",
+          "quote": "se derogan las circulares N°98, 100, 112, 116, 123, 126, 134, 142 aplicables a las cooperativas.",
+          "page": 3
+        },
+        {
+          "norm": "Circular N° 126",
+          "quote": "se derogan las circulares N°98, 100, 112, 116, 123, 126, 134, 142 aplicables a las cooperativas.",
+          "page": 3
+        },
+        {
+          "norm": "Circular N° 134",
+          "quote": "se derogan las circulares N°98, 100, 112, 116, 123, 126, 134, 142 aplicables a las cooperativas.",
+          "page": 3
+        },
+        {
+          "norm": "Circular N° 142",
+          "quote": "se derogan las circulares N°98, 100, 112, 116, 123, 126, 134, 142 aplicables a las cooperativas.",
+          "page": 3
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:25:39Z"
     },
     {
       "id": "cmf-9073b11c95bce7690cc8",
@@ -1318,18 +1647,18 @@
       "source_fingerprint": "3036e0a99b9e0a3bb02a50c7dd773d15f781b5f7e029b635e224c671d924cd21",
       "document_sha256": "67fd4e6121e9adfb27525b26144d68452f5327b27234a391cae68be344830ef1",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 19 May 2026 14:34:59 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Estado de interacción no completado: incomplete"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1352,25 +1681,44 @@
       "source_fingerprint": "8bb60e1ad8180101a19494f1d5dea41224b6dc0a79bf919bd130d6e6c73b1773",
       "document_sha256": "ea064d647b7045005a739e363aab83f3e5d0e34285b371b2e485367850e58f33",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 19 May 2026 14:34:46 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "vigencia_sin_evidencia_verificable",
+        "sin_industria_asignada"
       ],
-      "event_type": "otro",
-      "summary": "",
+      "event_type": "modificacion",
+      "summary": "Se modifica la Norma de Carácter General N°30 de 1989 incorporando una nueva sección relativa a las obligaciones de las sociedades anónimas abiertas y especiales respecto a la designación de empresas de auditoría externa. Se establecen los procedimientos y requisitos que debe cumplir el directorio al proponer la empresa de auditoría en la junta ordinaria de accionistas.",
       "sectors": [],
-      "affected_norms": [],
+      "affected_norms": [
+        "Norma de Carácter General N°30 de 1989"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "MODIFICA LA NORMA DE CARÁCTER GENERAL N°30 DE 1989. ____________________________ NORMA DE CARÁCTER GENERAL N°566",
+      "summary_evidence_page": 1,
+      "sector_evidence": [],
+      "norm_evidence": [
+        {
+          "norm": "Norma de Carácter General N°30 de 1989",
+          "quote": "MODIFICA LA NORMA DE CARÁCTER GENERAL N°30 DE 1989.",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:25:43Z"
     },
     {
       "id": "cmf-eecada4dd80aed76d9df",
@@ -1386,25 +1734,43 @@
       "source_fingerprint": "bc903f2d9b1390fbfddb42c7beb4d76dc2dc4242f40902aefeeb85d540c1a591",
       "document_sha256": "abd70150aa14b6f562145d2d7bb8941252e4b9965dd8f292ca29674aea2eb38c",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 14 May 2026 13:30:20 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
+      "event_type": "circular_instruccion",
+      "summary": "La Comisión comunica el nuevo valor de la Unidad de Seguro Reajustable Trimestral (U.S.R.T.) para los meses de julio, agosto y septiembre de 2026, y el de la Unidad de Seguro Reajustable Mensual (U.S.R.M.) para el mes de junio de 2026. Asimismo, se informa que a contar de junio de 2026 se dejará de emitir este oficio circular para el valor mensual, el cual deberá consultarse directamente en el sitio web de la CMF.",
+      "sectors": [
+        "seguros"
+      ],
       "affected_norms": [],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "Esta Comisión, en uso de sus facultades, ha fijado en $295,22 el valor de la Unidad de Seguro Reajustable Trimestral (U.S.R.T.), que se utilizará durante el período comprendido por los meses de julio, agosto y septiembre de 2026. De igual manera, esta Comisión ha fijado en $299,04 el valor de la Unidad de Seguro Reajustable Mensual (U.S.R.M.), que regirá dur",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "seguros",
+          "quote": "A todo el mercado asegurador del segundo grupo",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:26:02Z"
     },
     {
       "id": "cmf-a50ab66f817a6c71143e",
@@ -1420,25 +1786,49 @@
       "source_fingerprint": "dfb2d7cca50c0e157e6e96d761ac9ca94eafdd1025da372deb36c08992ed91c8",
       "document_sha256": "a72635f787bdd56d6abc97febdd2280d4bbeb3c6a48d7b6313dd52c3906cf5a8",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 14 May 2026 13:29:54 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
-      "needs_human_review": true,
-      "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+      "needs_human_review": false,
+      "review_flags": [],
+      "event_type": "circular_instruccion",
+      "summary": "Se informa la tasa de valorización de pasivos (T.M.) correspondiente al mes de abril de 2026 en 2,16% para las entidades aseguradoras y reaseguradoras. Asimismo, se comunica que a contar de junio de 2026 la CMF dejará de emitir este oficio circular y la información se publicará en su sitio web.",
+      "sectors": [
+        "seguros"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "affected_norms": [
+        "Circular N°1512"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "la tasa de descuento (T.M.) que deberá ser utilizada para valorizar los pasivos de seguros correspondientes al mes de abril de 2026 es de 2,16%. Cabe señalar que, a contar del mes de junio de 2026, esta Comisión dejará de emitir el presente Oficio Circular para informar el valor de la Tasa de Valorización de Pasivos.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "seguros",
+          "quote": "A todas las entidades aseguradoras y reaseguradoras",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "Circular N°1512",
+          "quote": "De acuerdo a lo establecido en Circular N°1512 de 2 de enero de 2001",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:25:59Z"
     },
     {
       "id": "cmf-919b92e39974cc903474",
@@ -1454,25 +1844,57 @@
       "source_fingerprint": "a8164f3b6de44c01a7d755ac681838bbcea7115d06424f33e502cd518844ccdc",
       "document_sha256": "16a3c37dc4f3b1da18499c4d8ec8b166e9de4dbfbe70e022dd76a4997595dc12",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 14 May 2026 13:29:30 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "event_type": "circular_instruccion",
+      "summary": "La CMF comunica la tasa de interés de actualización del 2,89% real anual aplicable para el mes de junio de 2026 a las entidades de seguros del segundo grupo. Asimismo, informa que a contar de junio de 2026 dejará de emitir este oficio circular y la información deberá consultarse en su sitio web.",
+      "sectors": [
+        "seguros",
+        "pensiones"
+      ],
+      "affected_norms": [
+        "D.L. Nº 3.500 de 1980"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "Al respecto, cumplo con informar que la tasa de interés de actualización aplicable a los siniestros de los afiliados, cuya fecha de fallecimiento o aquella en que quede ejecutoriado el único o segundo dictamen de invalidez, según corresponda, ocurra en el mes de junio 2026, es 2,89% real anual.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "seguros",
+          "quote": "A todas las entidades de seguros del segundo grupo",
+          "page": 1
+        },
+        {
+          "sector": "pensiones",
+          "quote": "El artículo 55º del D.L. Nº 3.500, de 1980, establece que la Comisión para el Mercado Financiero debe señalar la tasa de interés de actualización que se utilizará para el cálculo de los capitales que financien las pensiones de referencia de los afiliados al sistema previsional",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "D.L. Nº 3.500 de 1980",
+          "quote": "El artículo 55º del D.L. Nº 3.500, de 1980, establece que la Comisión para el Mercado Financiero debe señalar la tasa de interés de actualización",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:25:55Z"
     },
     {
       "id": "cmf-d42607ffebae93e350b7",
@@ -1488,25 +1910,51 @@
       "source_fingerprint": "822f5abd30db8e5cd284c222b071560e451a279c0e3170605428c7774412ebcd",
       "document_sha256": "da70bcd9e9ad19c8bfff32dee7e31034ad54295882dae4f2af23b698d3257a57",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 30 Apr 2026 18:59:08 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "event_type": "circular_instruccion",
+      "summary": "Se deja sin efecto el Oficio Circular N° 1412 y se comunica la tasa de interés de actualización aplicable para el mes de mayo de 2026, fijándola en 2,87% real anual para las entidades de seguros del segundo grupo.",
+      "sectors": [
+        "seguros"
+      ],
+      "affected_norms": [
+        "Oficio Circular N° 1412"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "REF: Deja sin efecto oficio circular N°1412 del 14 de abril del 2026 y comunica tasa de interés de actualización – mayo 2026. _________________________________ OFICIO CIRCULAR Nº1414 30 de abril de 2026 A todas las entidades de seguros del segundo grupo",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "seguros",
+          "quote": "A todas las entidades de seguros del segundo grupo",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "Oficio Circular N° 1412",
+          "quote": "REF: Deja sin efecto oficio circular N°1412 del 14 de abril del 2026",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:26:06Z"
     },
     {
       "id": "cmf-d4032107b6f261ba6be7",
@@ -1522,25 +1970,52 @@
       "source_fingerprint": "cb6f852c3461ac01ce22f3df9a14627df9325fb77da16e61ad87a6571e818ae1",
       "document_sha256": "cf158737dcba2a333f642b695197be9a555481093a76de2fa26517d38db85b9b",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 20 Apr 2026 15:32:09 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "resumen_sin_evidencia_verificable",
+        "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
+      "event_type": "modificacion",
       "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "sectors": [
+        "corredoras_bolsa"
+      ],
+      "affected_norms": [
+        "Norma de Carácter General N°550"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "",
+      "summary_evidence_page": 0,
+      "sector_evidence": [
+        {
+          "sector": "corredoras_bolsa",
+          "quote": "Los corredores de bolsa de productos que a dicha fecha se encuentren inscritos en el Registro de Corredores de Bolsa de Productos deberán remitir por “CMF Supervisa” los antecedentes",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "Norma de Carácter General N°550",
+          "quote": "MODIFICA NORMA DE CARÁCTER GENERAL N°550.",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:26:18Z"
     },
     {
       "id": "cmf-4d4a5664f677706f3055",
@@ -1556,25 +2031,52 @@
       "source_fingerprint": "a02fbecece41b4571ccdef6f1566625a6ef9deb19ada6f3870f67c6463fc1c9c",
       "document_sha256": "9018c7c7d7d071570ae111d70f7a73a2bcd5174e6d7cbc48dcd71a48d5c99c46",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 20 Apr 2026 15:32:26 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "resumen_sin_evidencia_verificable",
+        "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
+      "event_type": "modificacion",
       "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "sectors": [
+        "corredoras_bolsa"
+      ],
+      "affected_norms": [
+        "Norma de Carácter General N°549"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "",
+      "summary_evidence_page": 0,
+      "sector_evidence": [
+        {
+          "sector": "corredoras_bolsa",
+          "quote": "Los intermediarios de valores que a dicha fecha se encuentren inscritos en el Registro de Corredores de Bolsa y Agentes de Valores deberán remitir por “CMF Supervisa” los antecedentes indicados...",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "Norma de Carácter General N°549",
+          "quote": "MODIFICA NORMA DE CARÁCTER GENERAL N°549. _________________________________ NORMA DE CARÁCTER GENERAL N°563",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:26:14Z"
     },
     {
       "id": "cmf-3d50fd3da7c1940e29ca",
@@ -1590,25 +2092,63 @@
       "source_fingerprint": "20149cf04846fa563bc72fbd34be91e6306b34a494ced37651bf02f3a12859b3",
       "document_sha256": "37f7e357a87800350c427c56c059f764d4b18bc4c898dec02046e4b8a01a3a70",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 20 Apr 2026 15:32:31 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "resumen_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
+      "event_type": "nueva_norma",
       "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "sectors": [
+        "corredoras_bolsa"
+      ],
+      "affected_norms": [
+        "Norma de Carácter General N°18",
+        "Circular N°632 de 1986",
+        "Circular N°695 de 1987"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "",
+      "summary_evidence_page": 0,
+      "sector_evidence": [
+        {
+          "sector": "corredoras_bolsa",
+          "quote": "ESTABLECE NORMA SOBRE REQUISITOS DE PATRIMONIO MÍNIMO, GARANTÍAS, LIQUIDEZ Y ENDEUDAMIENTO PARA INTERMEDIARIOS DE VALORES Y CORREDORES DE BOLSA DE PRODUCTOS.",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "Norma de Carácter General N°18",
+          "quote": "DEROGA NORMA DE CARACTER GENERAL N°18, CIRCULAR N°632 Y CIRCULAR N°695.",
+          "page": 1
+        },
+        {
+          "norm": "Circular N°632 de 1986",
+          "quote": "DEROGA NORMA DE CARACTER GENERAL N°18, CIRCULAR N°632 Y CIRCULAR N°695.",
+          "page": 1
+        },
+        {
+          "norm": "Circular N°695 de 1987",
+          "quote": "DEROGA NORMA DE CARACTER GENERAL N°18, CIRCULAR N°632 Y CIRCULAR N°695.",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:26:10Z"
     },
     {
       "id": "cmf-eb8e9e684ae5afac0aa8",
@@ -1624,25 +2164,51 @@
       "source_fingerprint": "95a7c0dabe6b5b416884dc2c209cf27ee7a50f7336963421296f3c311b8bf3e8",
       "document_sha256": "86ba8eb688826042cdf298b92f7f7b429a73436e91da0ae77d16d3d6b37eb09b",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 15 Apr 2026 13:44:49 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "event_type": "circular_instruccion",
+      "summary": "La CMF informa a las entidades aseguradoras y reaseguradoras la tasa de descuento (T.M.) que debe utilizarse para valorizar los pasivos de seguros correspondientes al mes de marzo de 2026, fijándola en un 2,20%.",
+      "sectors": [
+        "seguros"
+      ],
+      "affected_norms": [
+        "Circular N°1512"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "la tasa de descuento (T.M.) que deberá ser utilizada para valorizar los pasivos de seguros correspondientes al mes de marzo de 2026 es de 2,20%.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "seguros",
+          "quote": "A todas las entidades aseguradoras y reaseguradoras",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "Circular N°1512",
+          "quote": "De acuerdo a lo establecido en Circular N°1512 de 2 de enero de 2001",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:26:27Z"
     },
     {
       "id": "cmf-756cb6ab74d29b6909ba",
@@ -1658,25 +2224,43 @@
       "source_fingerprint": "c8f4bee3330132756c2ec7bd76667303df89097b080bdaa40659891b0eec5e3f",
       "document_sha256": "3588c0dc54ed327e96b84c7fcad810dc892bb1c587a0e6baea6e2a9a263650ac",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 15 Apr 2026 13:40:31 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
+      "event_type": "circular_instruccion",
+      "summary": "La Comisión comunica el nuevo valor de la Unidad de Seguro Reajustable Mensual (U.S.R.M.) en $295,22 para el mes de mayo de 2026, dirigido al mercado asegurador del segundo grupo.",
+      "sectors": [
+        "seguros"
+      ],
       "affected_norms": [],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "Esta Comisión, en uso de sus facultades, ha fijado en $295,22 el valor de la Unidad de Seguro Reajustable Mensual (U.S.R.M.), que regirá durante el mes de mayo de 2026.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "seguros",
+          "quote": "A todo el mercado asegurador del segundo grupo",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:26:24Z"
     },
     {
       "id": "cmf-007039d5646dbd35140c",
@@ -1692,25 +2276,49 @@
       "source_fingerprint": "468c851440f080d67b6a6750d8452e9fd175620b8eeba8ac20c901a51c1905f5",
       "document_sha256": "edab030603de43f2712902f89c676280c42900d88a41183ee2abfd7546d2b162",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 15 Apr 2026 13:43:46 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
-      "needs_human_review": true,
-      "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+      "needs_human_review": false,
+      "review_flags": [],
+      "event_type": "circular_instruccion",
+      "summary": "La Comisión para el Mercado Financiero comunica la tasa de interés de actualización aplicable para el cálculo de los capitales que financian pensiones de referencia en el mes de mayo de 2026, fijándola en 2,85% real anual para el segundo grupo de entidades de seguros.",
+      "sectors": [
+        "seguros"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "affected_norms": [
+        "D.L. Nº 3.500, de 1980"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "Al respecto, cumplo con informar que la tasa de interés de actualización aplicable a los siniestros de los afiliados, cuya fecha de fallecimiento o aquella en que quede ejecutoriado el único o segundo dictamen de invalidez, según corresponda, ocurra en el mes de mayo 2026, es 2,85% real anual.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "seguros",
+          "quote": "A todas las entidades de seguros del segundo grupo",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "D.L. Nº 3.500, de 1980",
+          "quote": "El artículo 55º del D.L. Nº 3.500, de 1980, establece que la Comisión para el Mercado Financiero debe señalar la tasa de interés de actualización",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:26:21Z"
     },
     {
       "id": "cmf-69d0dde7aecd475124ba",
@@ -1726,25 +2334,65 @@
       "source_fingerprint": "6288acd8d2faeb789b22c11dffee0a0e2d028cc0abb386d9caa4496d30bc59cb",
       "document_sha256": "12066883e588c99254cc603f4aafea8e1c581a11f64847cfaddd13f7fa92a21c",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 13 Apr 2026 13:06:35 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "resumen_sin_evidencia_verificable",
+        "norma_sin_evidencia_verificable",
+        "norma_afectada_sin_respaldo"
       ],
-      "event_type": "otro",
+      "event_type": "modificacion",
       "summary": "",
-      "sectors": [],
-      "affected_norms": [],
-      "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "sectors": [
+        "bancos"
+      ],
+      "affected_norms": [
+        "Recopilación Actualizada de Normas de Bancos (Capítulos 8-4, 8-40, 12-3, 21-1, 21-6, 21-7 y 21-30)",
+        "Compendio de Normas Contables de Bancos (Capítulos B-6 y B-7)",
+        "Manual de Sistemas de Información de Bancos (Archivos R06, R07 y Sistema de Tablas)"
+      ],
+      "effective_date": "2026-07-01",
+      "effective_date_precision": "dia",
+      "summary_evidence": "",
+      "summary_evidence_page": 0,
+      "sector_evidence": [
+        {
+          "sector": "bancos",
+          "quote": "CIRCULAR N°2.370 Bancos",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "Recopilación Actualizada de Normas de Bancos (Capítulos 8-4, 8-40, 12-3, 21-1, 21-6, 21-7 y 21-30)",
+          "quote": "modificar los Capítulos 8-4, 8-40, 12-3, 21-1, 21-6, 21-7 y 21-30 de la Recopilación Actualizada de Normas de bancos (RAN)",
+          "page": 1
+        },
+        {
+          "norm": "Compendio de Normas Contables de Bancos (Capítulos B-6 y B-7)",
+          "quote": "los Capítulos B-6 y B-7 del Compendio de Normas Contables de bancos (CNC)",
+          "page": 1
+        },
+        {
+          "norm": "Manual de Sistemas de Información de Bancos (Archivos R06, R07 y Sistema de Tablas)",
+          "quote": "los archivos normativos R06 y R07 del Sistema de Riesgos y el Sistema de Tablas del Manual de Sistemas de Información de bancos (MSI).",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "• Los ajustes a los Capítulos 12-3, 21-1, 21-6, 21-7 y 21-30, así como a los archivos normativos R06 y R07 del Sistema de Riesgos y al Sistema de Tablas del MSI serán aplicables desde el 1° de julio de 2026.",
+      "effective_date_page": 15,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:26:36Z"
     },
     {
       "id": "cmf-19f730625222a8da1208",
@@ -1760,25 +2408,58 @@
       "source_fingerprint": "999514dcd8e75df9276e5b0fcd1fa494aba2ce84035c77fc27041422679f6773",
       "document_sha256": "92d18005a0dabb87886bb4c57b98e7ba0b2b49a2822ac55fb164fdfb4c08e9d0",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 13 Apr 2026 13:11:15 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "sector_sin_evidencia_verificable",
+        "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "event_type": "modificacion",
+      "summary": "Se modifica la Norma de Carácter General N°303 y la Norma de Carácter General N°451 incorporando exigencias relativas a securitizaciones retenidas o autosecuritizaciones conforme al Compendio de Normas Financieras del Banco Central de Chile.",
+      "sectors": [
+        "bancos"
+      ],
+      "affected_norms": [
+        "Norma de Carácter General N°303",
+        "Norma de Carácter General N°451"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "MODIFICA LAS NORMAS DE CARÁCTER GENERAL N°303 Y N° 451 EN LOS TÉRMINOS QUE INDICA.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "bancos",
+          "quote": "Tratándose de una securitización retenida o autosecuritización, declaración del banco interesado en estructurar dicha operación",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "Norma de Carácter General N°303",
+          "quote": "MODIFICACIONES NORMA DE CARÁCTER GENERAL N°303",
+          "page": 1
+        },
+        {
+          "norm": "Norma de Carácter General N°451",
+          "quote": "MODIFICACIONES NORMA DE CARÁCTER GENERAL N°451",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:26:32Z"
     },
     {
       "id": "cmf-e98c99ed590fa70f360b",
@@ -1794,25 +2475,44 @@
       "source_fingerprint": "269700980985b6dec56f85d165544c36d4a0ddf1d6552129e780061ab09d2eb7",
       "document_sha256": "975ba702956fa9346f18d5814041a279f7001a37d960bc5bbaadc155d26bba40",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 16 Mar 2026 12:30:57 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "vigencia_sin_evidencia_verificable",
+        "sin_industria_asignada"
       ],
-      "event_type": "otro",
-      "summary": "",
+      "event_type": "modificacion",
+      "summary": "Modifica la Norma de Carácter General N°275 de 2010 sobre el Registro de Empresas de Auditoría Externa, reemplazando la fecha límite del 31 de marzo por el 30 de abril en el párrafo segundo de la letra F de la Sección II.",
       "sectors": [],
-      "affected_norms": [],
+      "affected_norms": [
+        "NCG N°275"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "Reemplácese en el párrafo segundo de la letra F de la Sección II de la Norma de Carácter General N°275 el texto “31 de marzo” por “30 de abril”.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [],
+      "norm_evidence": [
+        {
+          "norm": "NCG N°275",
+          "quote": "MODIFICA NCG N°275 DE 2010 REFERIDA A LAS NORMAS DE INSCRIPCIÓN Y FUNCIONAMIENTO DEL REGISTRO DE EMPRESAS DE AUDITORÍA EXTERNA",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:26:40Z"
     },
     {
       "id": "cmf-72cf694a4176557337cf",
@@ -1828,25 +2528,49 @@
       "source_fingerprint": "75923380c95a18cb59d39361456f95876abf2c7ac84f3f26def476f118c002b4",
       "document_sha256": "fb823f40b007be6155fb7f12e0b7999d551c489d9bce9147faede700c469c146",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 11 Mar 2026 15:17:29 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
-      "needs_human_review": true,
-      "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+      "needs_human_review": false,
+      "review_flags": [],
+      "event_type": "circular_instruccion",
+      "summary": "La CMF informa a las entidades aseguradoras y reaseguradoras que la tasa de descuento (T.M.) para valorizar pasivos de seguros del mes de febrero de 2026 es de 2,35%.",
+      "sectors": [
+        "seguros"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "affected_norms": [
+        "Circular N°1512"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "la tasa de descuento (T.M.) que deberá ser utilizada para valorizar los pasivos de seguros correspondientes al mes de febrero de 2026 es de 2,35%.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "seguros",
+          "quote": "A todas las entidades aseguradoras y reaseguradoras",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "Circular N°1512",
+          "quote": "De acuerdo a lo establecido en Circular N°1512 de 2 de enero de 2001",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:26:50Z"
     },
     {
       "id": "cmf-715c848401df127ab969",
@@ -1862,25 +2586,57 @@
       "source_fingerprint": "84fb6087fd157ea8f3ea0f4d7aa934795baa7e19360a44ddd7e1d6a6b4d924b0",
       "document_sha256": "910ece0a33ab03d67c0f6757294bbdffa123c3e9ff152e1f58e3a8927506f098",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 11 Mar 2026 15:19:38 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "event_type": "circular_instruccion",
+      "summary": "La CMF comunica la tasa de interés de actualización del 2,87% real anual aplicable para el mes de abril de 2026, utilizada en el cálculo de capitales que financian pensiones de referencia por invalidez o sobrevivencia.",
+      "sectors": [
+        "seguros",
+        "pensiones"
+      ],
+      "affected_norms": [
+        "D.L. Nº 3.500, de 1980"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "Al respecto, cumplo con informar que la tasa de interés de actualización aplicable a los siniestros de los afiliados, cuya fecha de fallecimiento o aquella en que quede ejecutoriado el único o segundo dictamen de invalidez, según corresponda, ocurra en el mes de abril 2026, es 2,87% real anual.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "seguros",
+          "quote": "A todas las entidades de seguros del segundo grupo",
+          "page": 1
+        },
+        {
+          "sector": "pensiones",
+          "quote": "capitales que financien las pensiones de referencia de los afiliados al sistema previsional",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "D.L. Nº 3.500, de 1980",
+          "quote": "El artículo 55º del D.L. Nº 3.500, de 1980, establece que la Comisión para el Mercado Financiero debe señalar la tasa de interés de actualización",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:26:47Z"
     },
     {
       "id": "cmf-5b80131a5c50e198dd83",
@@ -1896,25 +2652,51 @@
       "source_fingerprint": "29361da60af6da5ff7adea94534086914af97c498184399ebf63a5c9a6b18bc4",
       "document_sha256": "73954b85053c6cbd72b31392b97c568d43e0a7596fdc941d0c035d2ea96b9572",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 11 Mar 2026 15:17:06 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "event_type": "circular_instruccion",
+      "summary": "La Comisión comunica el nuevo valor de la Unidad de Seguro Reajustable Trimestral (U.S.R.T.) en $291,25 para el período de abril a junio de 2026, y el valor de la Unidad de Seguro Reajustable Mensual (U.S.R.M.) en $292,42 para el mes de abril de 2026.",
+      "sectors": [
+        "seguros"
+      ],
+      "affected_norms": [
+        "Oficio N°845"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "Esta Comisión, en uso de sus facultades, ha fijado en $291,25 el valor de la Unidad de Seguro Reajustable Trimestral (U.S.R.T.), que se utilizará durante el período comprendido por los meses de abril, mayo y junio de 2026.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "seguros",
+          "quote": "A todo el mercado asegurador del segundo grupo",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "Oficio N°845",
+          "quote": "Las compañías que ocupen la Unidad de Seguro Reajustable Mensual (U.S.R.M.), de acuerdo con el Oficio N°845, de 29 de abril de 1977",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:26:43Z"
     },
     {
       "id": "cmf-87159aaa814a2c2eaecb",
@@ -1930,25 +2712,49 @@
       "source_fingerprint": "b0e9d679026ddf85c19bdd321a4bcd0bd930b5313a6dfb6299ffacfaea5cc8b4",
       "document_sha256": "3785539ed19067f547dedb84cf8c791098e5c8ca412e6d2bf2d9c478860d8067",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 27 Feb 2026 15:00:15 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
-      "needs_human_review": true,
-      "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+      "needs_human_review": false,
+      "review_flags": [],
+      "event_type": "modificacion",
+      "summary": "La CMF introduce un ajuste al Capítulo C-3 del Compendio de Normas Contables para Bancos, corrigiendo un código contable asociado a la cuenta “Interés devengado y pagadero por el fisco”.",
+      "sectors": [
+        "bancos"
       ],
-      "event_type": "otro",
-      "summary": "",
-      "sectors": [],
-      "affected_norms": [],
+      "affected_norms": [
+        "Capítulo C-3 del Compendio de Normas Contables para Bancos"
+      ],
       "effective_date": "",
-      "effective_date_precision": "sin_fecha"
+      "effective_date_precision": "sin_fecha",
+      "summary_evidence": "La modificación, consiste en lo siguiente: - Se corrige el código contable asociado a la cuenta “Interés devengado y pagadero por el fisco”, reemplazándose el código “88470.01.00” por “84470.01.00”.",
+      "summary_evidence_page": 1,
+      "sector_evidence": [
+        {
+          "sector": "bancos",
+          "quote": "A todas las entidades bancarias a las que les resulten aplicables las instrucciones contables impartidas por este Organismo, contenidas en el “Compendio de Normas Contables” para bancos",
+          "page": 1
+        }
+      ],
+      "norm_evidence": [
+        {
+          "norm": "Capítulo C-3 del Compendio de Normas Contables para Bancos",
+          "quote": "ha resuelto ajustar el Capítulo C-3 del referido Compendio.",
+          "page": 1
+        }
+      ],
+      "effective_date_evidence": "",
+      "effective_date_page": 0,
+      "confidence": "alta",
+      "ai_model": "gemini-flash-lite-latest",
+      "ai_model_requested": "gemini-flash-lite-latest",
+      "analyzed_at": "2026-09-28T22:26:53Z"
     },
     {
       "id": "cmf-fd7379a2ea42188a32f2",
@@ -1968,14 +2774,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 10 Feb 2026 20:29:51 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2002,14 +2808,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 10 Feb 2026 18:52:29 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2032,18 +2838,18 @@
       "source_fingerprint": "0b85f238b24c371f650d41d84e305db29ee1e42d3a81f402e6fd28b6fa91eb99",
       "document_sha256": "f0832fa0f56fded03b42fc0b78803c52e361266f1f0e449357252173c4e0e276",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T22:23:52Z",
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 10 Feb 2026 18:52:43 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "HTTP 429"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2070,14 +2876,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 09 Feb 2026 15:16:17 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2104,14 +2910,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 09 Feb 2026 16:17:11 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2138,14 +2944,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 02 Feb 2026 12:06:19 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2172,14 +2978,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 22 Jan 2026 21:09:36 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2206,14 +3012,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 22 Jan 2026 21:08:34 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2240,14 +3046,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 14 Jan 2026 19:32:28 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2274,14 +3080,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 14 Jan 2026 19:32:52 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2308,14 +3114,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 14 Jan 2026 19:33:13 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2342,14 +3148,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 07 Jan 2026 20:14:46 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2376,14 +3182,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 22 Dec 2025 19:54:12 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2410,14 +3216,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 12 Dec 2025 12:12:56 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2444,14 +3250,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 10 Dec 2025 20:58:21 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2478,14 +3284,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 10 Dec 2025 20:58:16 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2512,14 +3318,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 10 Dec 2025 20:58:11 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2546,14 +3352,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 12 Dec 2025 12:12:36 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2580,14 +3386,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 01 Dec 2025 19:35:33 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2614,14 +3420,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 25 Nov 2025 12:41:28 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2648,14 +3454,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 21 Nov 2025 18:06:16 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2682,14 +3488,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 11 Nov 2025 18:38:13 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2716,14 +3522,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 11 Nov 2025 18:38:19 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2750,14 +3556,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 11 Nov 2025 18:38:25 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2784,14 +3590,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 11 Nov 2025 12:15:22 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2818,14 +3624,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 07 Nov 2025 13:35:10 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2852,14 +3658,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 07 Nov 2025 13:34:55 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2886,14 +3692,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 27 Oct 2025 12:05:31 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2920,14 +3726,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 27 Oct 2025 12:02:03 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2954,14 +3760,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 21 Oct 2025 18:39:16 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2988,14 +3794,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 10 Oct 2025 12:05:57 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -3022,14 +3828,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 10 Oct 2025 12:06:09 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -3056,14 +3862,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 10 Oct 2025 12:06:05 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -3090,14 +3896,14 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 03 Oct 2025 18:49:50 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T21:30:30Z",
+      "last_seen_at": "2026-09-28T22:23:52Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "API de análisis suspendida tras HTTP 429 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
