@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "updated_at": "2026-09-28",
   "total_tables": 33,
-  "total_records": 6546969,
+  "total_records": 6484952,
   "classification": {
     "automatico": "Extracción y procesamiento 100% por código autónomo (APIs, scrapers, normalizadores)",
     "manual": "Extracción asistida o transcripción de notas y reportes no estructurados (ej. NotebookLM)"
@@ -533,7 +533,7 @@
       "modo": "Automático · 3 veces al mes, incremental",
       "ultima_actualizacion": "2026-09-28",
       "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/manifest.json",
-      "registros_reales": 139722,
+      "registros_reales": 77705,
       "descripcion": "Estado de resultados y resultados integrales de cada corredor de bolsa y agente de valores, acumulados del ejercicio al cierre de cada trimestre, cuenta FECU por cuenta. Miles de pesos.",
       "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/"
     }

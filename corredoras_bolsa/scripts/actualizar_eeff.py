@@ -4,7 +4,8 @@
 Fuente: estadística CMF «Estados financieros de intermediarios de valores»
 (intermediarios_ifrs1.php con xls=y). Un Excel por trimestre y tipo de intermediario
 (1 = corredores, 2 = agentes) con una fila por sociedad y una columna por cuenta
-FECU IFRS (código «11.01.00» + nombre). Cifras en miles de pesos, moneda corriente
+FECU IFRS (código «11.01.00» + nombre). Se publican balance (1x, 2x) y resultados
+(30 estado de resultados; 31-32 otros resultados integrales); el flujo de efectivo (5x) no. Cifras en miles de pesos, moneda corriente
 del cierre. Los datos parten en 2010-12.
 
 Incremental (docs/outputs/corredoras_bolsa/manifest.json):
@@ -170,21 +171,27 @@ def leer_excel(raw: bytes, periodo: str, tipo: int, lista: set[str],
         return vals
     estados = extender(fila_enc - 2) if fila_enc >= 2 else [""] * x.shape[1]
     secciones = extender(fila_enc - 1)
-    columnas = []
+    columnas, vistos = [], set()
     for j, h in enumerate(x.iloc[fila_enc].tolist()):
         h = arreglar(h)
         m = re.match(r"^(\d{2}\.\d{2}\.\d{2})\s*(.*)$", h)
         if not m:
             continue
         cod = m.group(1)
-        # Plan FECU IFRS: 1x activos, 2x pasivos y patrimonio, 3x en adelante resultados.
+        # Plan FECU IFRS: 1x activos, 2x pasivos y patrimonio, 30 resultados, 31-32 otros resultados
+        # integrales, 5x flujo de efectivo (no se publica, igual que en los demás sectores).
+        # 30.00.00 (utilidad del ejercicio) se repite al inicio de los resultados integrales: solo
+        # se toma la primera aparición de cada código.
+        if cod[0] not in "123" or cod in vistos:
+            continue
+        vistos.add(cod)
         tabla = "balance" if cod[0] in "12" else "resultados"
         est = ("Estado de situación financiera" if tabla == "balance" else
-               estados[j] if "resultado" in estados[j].lower() else "Estado de resultados")
+               "Estado de resultados" if cod.startswith("30") else "Estado de otros resultados integrales")
         nombre, nivel = (nombres or {}).get(cod, (separar_palabras(m.group(2)), 0))
         columnas.append((j, tabla, separar_palabras(est), separar_palabras(secciones[j]),
                          cod, nombre, nivel))
-    if len(columnas) < 50:
+    if len(columnas) < 40:
         raise ErrorFuente(f"solo {len(columnas)} cuentas FECU en el Excel")
     esperado = f"{periodo[5:]} / {periodo[:4]}"
     datos = {t: [] for t in TABLAS}

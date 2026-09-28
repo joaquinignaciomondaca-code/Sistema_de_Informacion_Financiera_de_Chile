@@ -274,7 +274,7 @@
       const tabBtnExport = document.getElementById("tab-btn-export");
       const openGlobalExport = () => {
         if (window.ExportModal) {
-          const v = (window.DataViewer && window.DataViewer.currentView) ? window.DataViewer.currentView : "ccaf_caratula_totales";
+          const v = (window.DataViewer && window.DataViewer.currentView) ? window.DataViewer.currentView : "agf_maestro";
           const d = (window.DataViewer && window.DataViewer.currentDisplayName) ? window.DataViewer.currentDisplayName : "ccaf.caratula_totales";
           const r = (window.DataViewer && window.DataViewer.currentView === v) ? window.DataViewer.getFilteredRows() : [];
           const c = (window.DataViewer && window.DataViewer.currentView === v) ? window.DataViewer.currentColumns : [];
