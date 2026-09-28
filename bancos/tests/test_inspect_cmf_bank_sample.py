@@ -2,7 +2,7 @@ import unittest
 import zipfile
 from io import BytesIO
 
-from bancos.scripts.inspect_cmf_bank_sample import inspect_zip
+from bancos.scripts.inspect_cmf_bank_sample import inspect_zip, resolve_resource_from_article_links
 
 
 class InspectCmfBankSampleTests(unittest.TestCase):
@@ -24,6 +24,24 @@ class InspectCmfBankSampleTests(unittest.TestCase):
         self.assertEqual(report["bank_files"]["B1"]["nonempty_lines"], 2)
         self.assertEqual(report["bank_files"]["R1"]["tab_field_counts"], {2: 1, 5: 1})
         self.assertEqual(report["bank_files"]["B1"]["encoding"], "ascii-compatible (UTF-8/Latin-1 indistinguishable)")
+
+    def test_resolves_blank_resource_anchor_by_matching_article_id_and_period(self):
+        links = [
+            {"href": "/portal/estadisticas/626/w4-article-123.html", "text": "Balance y Estado de Situación Bancos Agosto 2026"},
+            {"href": "/portal/estadisticas/626/articles-123_recurso_1.zip?ts=123", "text": ""},
+            {"href": "/portal/estadisticas/626/w4-article-456.html", "text": "Balance y Estado de Situación Bancos Julio 2026"},
+            {"href": "/portal/estadisticas/626/articles-456_recurso_1.zip?ts=456", "text": ""},
+        ]
+        result = resolve_resource_from_article_links(links, "https://www.cmfchile.cl/portal/estadisticas/626/index.html", "2026-08", ".zip")
+        self.assertEqual(result, ("https://www.cmfchile.cl/portal/estadisticas/626/articles-123_recurso_1.zip?ts=123", ""))
+
+    def test_resolves_bank_workbook_resource_by_article_id(self):
+        links = [
+            {"href": "/portal/estadisticas/626/w4-article-789.html", "text": "Reporte Mensual Bancario Agosto 2026"},
+            {"href": "/portal/estadisticas/626/articles-789_recurso_1.xlsx?ts=789", "text": ""},
+        ]
+        result = resolve_resource_from_article_links(links, "https://www.cmfchile.cl/portal/estadisticas/626/index.html", "2026-08", ".xlsx")
+        self.assertEqual(result[0], "https://www.cmfchile.cl/portal/estadisticas/626/articles-789_recurso_1.xlsx?ts=789")
 
     def test_fails_if_balance_file_is_missing(self):
         out = BytesIO()
