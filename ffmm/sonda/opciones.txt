@@ -1,0 +1,14 @@
+<option value="2006">2006
+<option value="2005">2005
+<option value="2004">2004
+<option value="2003">2003
+<option value="2002">2002
+<option value="2001">2001
+<option value="###" selected="selected">Seleccione Cartera
+<option value="NACI">Cartera de Inversiones Nacionales
+<option value="EXTR">Cartera de Inversiones Extranjeras
+<option value="OPCI">Cartera de Inversiones en Opciones
+<option value="FUTU">Cartera de Inversiones en Futuro
+<option value="OPLA">Cartera de Inversiones en Opciones Lanzador
+<form action="" name="form1" method="post">
+<form name="encuesta_satisfaccion_2022" id="encuesta_satisfaccion_2022" style="margin-bottom:0;" onsubmit="return false" class="ntg-formulario d-print-none ntg-formulario-evaluar-sitio" method="get" action="https://www.cmfchile.cl/portal/principal/form.php">
