@@ -64,13 +64,7 @@ def main():
     process_file("ffmm/circular_1333_cartera/outputs/ffmm_futu_normalizado.parquet", "FFMM_FUTU", entity_col="run_fondo")
     process_file("ffmm/circular_1333_cartera/outputs/ffmm_opci_normalizado.parquet", "FFMM_OPCI", entity_col="run_fondo")
 
-    # --- SEGUROS (VIDA Y GENERALES) MAESTROS ---
-    process_file("docs/outputs/vida/maestro_aseguradoras_vida.parquet", "VIDA", entity_col="rut_aseguradora")
-    process_file("docs/outputs/generales/maestro_aseguradoras_generales.parquet", "GEN", entity_col="rut_aseguradora")
-    
-    # También en carpeta origen seguros
-    process_file("seguros/circular_1835_cartera/outputs/vida/maestro_aseguradoras_vida.parquet", "VIDA", entity_col="rut_aseguradora")
-    process_file("seguros/circular_1835_cartera/outputs/generales/maestro_aseguradoras_generales.parquet", "GEN", entity_col="rut_aseguradora")
+    # Seguros: las tablas se generan con seguros/scripts/actualizar_carteras.py (ya estandarizadas).
 
     print("\n=== TODAS LAS TABLAS HAN SIDO ESTANDARIZADAS CON EXITO ===")
 

@@ -125,7 +125,10 @@ for (const file of restrictedFiles) {
   const text = fs.readFileSync('docs/' + (file.endsWith('.js') ? 'js/' : '') + file, 'utf8');
   for (const id of ['afp_cartera_bonos','afp_cartera_acciones','afp_derivados_swaps','afp_derivados_forwards',
                     'bancos_balance_resumen','bancos_estado_resultados','bancos_derivados_posicion_vigente',
-                    'bancos_derivados_flujos_transados','bancos_colocaciones']) {
+                    'bancos_derivados_flujos_transados','bancos_colocaciones',
+                    'vida_bonos','vida_acciones','vida_maestro','vida_forwards','vida_swaps','vida_repos','vida_solvencia',
+                    'generales_bonos','generales_acciones','generales_maestro','generales_repos','generales_solvencia',
+                    'outputs/vida/','outputs/generales/']) {
     assert(!text.includes(id), file + ' expone tabla retirada: ' + id);
   }
 }

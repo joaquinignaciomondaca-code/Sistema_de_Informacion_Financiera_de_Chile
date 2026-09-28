@@ -29,34 +29,17 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Seguros de Vida (CMF Circular 1835)",
+    group: "Seguros de Vida y Generales (CMF Circular 1835)",
     tables: [
-      { id: "vida_bonos", name: "vida.cartera_bonos (9,09 M registros)" },
-      { id: "vida_acciones", name: "vida.cartera_acciones (142.944 registros)" },
-      { id: "vida_bienes_raices", name: "vida.cartera_bienes_raices (2,01 M registros)" },
-      { id: "vida_forwards", name: "vida.derivados_forwards (165.354 registros)" },
-      { id: "vida_swaps", name: "vida.derivados_swaps (314.683 registros)" },
-      { id: "vida_repos", name: "vida.pactos_repos (19.408 registros)" },
-      { id: "vida_opciones", name: "vida.derivados_opciones (2.673 registros)" },
-      { id: "vida_fondos", name: "vida.cartera_fondos (76.902 registros)" },
-      { id: "vida_solvencia", name: "vida.cartera_solvencia (126.586 registros)" },
-      { id: "vida_extranjeros", name: "vida.cartera_extranjeros (146.365 registros)" },
-      { id: "vida_maestro", name: "vida.lista_entidades (61 entidades)" }
-    ]
-  },
-  {
-    group: "Seguros Generales (CMF Circular 1835)",
-    tables: [
-      { id: "generales_bonos", name: "generales.cartera_bonos (287.214 registros)" },
-      { id: "generales_acciones", name: "generales.cartera_acciones (17.457 registros)" },
-      { id: "generales_bienes_raices", name: "generales.cartera_bienes_raices (38.257 registros)" },
-      { id: "generales_repos", name: "generales.pactos_repos (275 registros)" },
-      { id: "generales_swaps", name: "generales.derivados_swaps (1.423 registros)" },
-      { id: "generales_forwards", name: "generales.derivados_forwards (2.847 registros)" },
-      { id: "generales_fondos", name: "generales.cartera_fondos (8.935 registros)" },
-      { id: "generales_extranjeros", name: "generales.cartera_extranjeros (5.590 registros)" },
-      { id: "generales_solvencia", name: "generales.cartera_solvencia (59.850 registros)" },
-      { id: "generales_maestro", name: "generales.lista_entidades (42 entidades)" }
+      { id: "seguros_maestro", name: "seguros.lista_entidades (compañías que reportan)" },
+      { id: "seguros_renta_fija", name: "seguros.renta_fija (bonos y depósitos por instrumento)" },
+      { id: "seguros_acciones", name: "seguros.acciones (acciones y cuotas de fondos de inversión)" },
+      { id: "seguros_fondos_mutuos", name: "seguros.fondos_mutuos (cuotas de fondos mutuos)" },
+      { id: "seguros_bienes_raices", name: "seguros.bienes_raices (inmuebles por rol)" },
+      { id: "seguros_extranjeros", name: "seguros.extranjeros (deuda, acciones y fondos en el exterior)" },
+      { id: "seguros_derivados", name: "seguros.derivados (opciones, forwards, futuros y swaps)" },
+      { id: "seguros_pactos", name: "seguros.pactos (compras y ventas con pacto)" },
+      { id: "seguros_control_inversiones", name: "seguros.control_inversiones (totales por tipo de inversión)" }
     ]
   },
   {

@@ -31,7 +31,7 @@ Dos tipos de flujo (ver `pipelines/README.md`):
 | Tipo | Dónde corre | Cómo publica |
 |---|---|---|
 | **Maduro/automático** (macro, bancos B1/B2/R1, factoring-leasing IFRS) | GitHub Actions + PC | staging → validación → artifact o commit controlado |
-| **Manual/experimental** (PDFs, notas, seguros, FFMM, FI, AFP, CCAF…) | PC | escritura directa a `docs/outputs/` tras auditoría sectorial |
+| **Manual/experimental** (PDFs, notas, FFMM, FI, AFP, CCAF…) | PC | escritura directa a `docs/outputs/` tras auditoría sectorial |
 | **Laboratorio** (bancos REPO, XML/XBRL, sondas) | Actions | **nunca publica**; deja reportes en `.local-data/review/` o artifacts |
 
 ---
@@ -222,22 +222,24 @@ scripts/probe_xml_sources.py : sonda diaria de disponibilidad de fuentes XML por
 
 ---
 
-## 6. Seguros (`seguros/circular_1835_cartera/`) — manual
+## 6. Seguros (`seguros/scripts/`) — automático, 3 veces al mes (días 7, 17, 27)
 ```
-download_seguros / orchestrate_activos(_batch) / orchestrate_seguros:
-    por período × sector (vida=CSVID, generales=CSGEN):
-        si control_descargas*.csv dice procesado y !forzar → saltar
-        check_availability(url CMF) → descargar ZIP (RAM/BytesIO)
-        process_cartera_activos.extract_all_assets_from_zip:
-            por archivo de ancho fijo: parse_{acciones,fondos,extranjeros,bonos,bienes_raices,caratula}
-        process_b7_derivatives.extract_contracts_from_zip:
-            parse_{forward(3),swap(5),repo(6),opcion(2)}_row con "anclaje dinámico" de signos
-        consolidate_*: merge incremental + dedup por DEDUP_KEYS → outputs/<sector>/*.parquet
-        record_status en CSV de control
-split_bonos_parquet: parte vida/cartera_bonos (148 MB) en 2016_2020 + 2021_2024 (<100 MB GitHub)
-build_maestro_aseguradoras: maestro desde cartera_solvencia
-reprocess_history: reproceso paralelo B.7
-test_* / audit_full_history / check_health / final_report: calibración y auditoría (algunos con rutas C:\)
+formato_1835.py: posiciones oficiales de cada archivo (I renta fija, A acciones, F fondos mutuos,
+    B bienes raíces, X extranjero, P derivados y pactos, C control) en los dos formatos:
+    v2016 (hasta 2024-11) y v2024 (desde 2024-12, Circular 2354). Verificadas contra líneas reales
+    (seguros/fuentes/muestras_1835) y la ficha técnica (seguros/fuentes/fichas_tecnicas_1835).
+actualizar_carteras.py (workflow seguros_carteras.yml):
+    meses pendientes = meses desde DESDE_TABLA (2016-11; renta_fija y bienes_raices 2024-12)
+                       cuyas tablas no están en docs/outputs/seguros/manifest.json
+    diagnóstico: lee todos los pendientes sin escribir y anota los que tienen problemas
+    por mes, en orden:
+        descargar ZIP de vida (CSVID) y generales (CSGEN); si no está publicado → terminar sin cambios
+        por archivo: decodificar (UTF-8 o Latin-1 según el largo), largo exacto de cada línea,
+                     encabezado (o RUT/mes desde el nombre si falta), totales y mes → avisos
+                     campos numéricos y fechas: ilegibles > 1 % de las filas de una tabla → no publicar (fail-closed)
+        escribir: renta_fija y bienes_raices un archivo por mes; resto un archivo por año
+                  (esquema fijo por tabla); manifiesto por tabla, aseguradoras.parquet, data_manifest.json
+tests/test_formato_1835.py: lee las muestras de ambos formatos; cuadratura de bonos y fechas válidas
 ```
 
 ---
@@ -416,12 +418,12 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 
 **Deuda técnica / riesgos**
 1. ✅ **Rutas `C:\Users\joaqu\…` eliminadas** (32 scripts): la raíz vieja `bcch_market_monitor` → `_ROOT` relativo al repo; `Desktop\Respaldo_BCCH` → `_RESPALDO` (variable `MFC_RESPALDO_DIR`, por defecto `~/Desktop/Respaldo_BCCH`); otros archivos del Escritorio → `Path.home()/'Desktop'/…`.
-2. ✅ `docs/ffmm/` y `docs/fi/` eliminados (624 archivos idénticos); sidebar y ERD leen ahora `outputs/ffmm|fi/…`. Pendiente: `docs/outputs/b7_*.parquet` (versión antigua distinta de `vida/b7_*`, solo usada por `feedback_review/`). Ojo: los pipelines FFMM/FI escriben en `ffmm/…/outputs` y `fi/…/outputs`; hay que copiar a `docs/outputs/` al publicar.
+2. ✅ `docs/ffmm/` y `docs/fi/` eliminados (624 archivos idénticos); sidebar y ERD leen ahora `outputs/ffmm|fi/…`. ✅ `docs/outputs/b7_*.parquet` y todo lo antiguo de seguros eliminados (2026-09-28). Ojo: los pipelines FFMM/FI escriben en `ffmm/…/outputs` y `fi/…/outputs`; hay que copiar a `docs/outputs/` al publicar.
 3. Utilidades (DV, parse_num, tc_map) repetidas en ~15 archivos.
 4. ✅ `fintech/scripts/explore.py` corregido (compilaba solo en Python ≥ 3.12).
 5. ✅ BOM UTF-8 eliminado de 9 scripts.
 6. Credenciales: README pide rotar la contraseña BCCh expuesta en el historial Git — sigue pendiente de confirmar. (`ccaf/scripts/legacy` se eliminó.)
-7. `.git` pesa ~237 MB; binarios en Git (`scratch/sample_202406_vida.zip`, Parquet grandes). Considerar Git LFS o releases.
+7. `.git` pesa ~270 MB por el historial (los Parquet antiguos de seguros siguen en commits viejos). Considerar Git LFS o releases.
 8. ✅ Ya existe `requirements.txt` global (Python 3.11, pyarrow/openpyxl/xlrd fijados igual que en Actions).
 9. Muchos scripts exploratorios (`pensiones/inspect_*`, `test_*` que no son tests) mezclados con pipelines productivos.
 

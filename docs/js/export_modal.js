@@ -9,8 +9,8 @@ class ExportModalController {
     this.modalEl = null;
     this.backdropEl = null;
     this.currentContext = {
-      viewName: "vida_bonos",
-      displayName: "vida.cartera_bonos",
+      viewName: "seguros_maestro",
+      displayName: "seguros.lista_entidades",
       currentRows: [],
       currentColumns: [],
       totalCount: 100
@@ -18,29 +18,9 @@ class ExportModalController {
 
     // Mapeo directo a archivos Parquet físicos en docs/outputs/
     this.parquetMap = {
-      // vida_bonos no tiene Parquet consolidado publicado (supera los 100 MB de
-      // GitHub): se omite aquí para que la descarga use la vista SQL que une las
-      // dos particiones, en lugar de servir un archivo inexistente.
-      vida_acciones: "outputs/vida/cartera_acciones.parquet",
-      vida_bienes_raices: "outputs/vida/cartera_bienes_raices.parquet",
-      vida_fondos: "outputs/vida/cartera_fondos.parquet",
-      vida_extranjeros: "outputs/vida/cartera_extranjeros.parquet",
-      vida_solvencia: "outputs/vida/cartera_solvencia.parquet",
-      vida_repos: "outputs/vida/b7_repos.parquet",
-      vida_forwards: "outputs/vida/b7_forwards.parquet",
-      vida_swaps: "outputs/vida/b7_swaps.parquet",
-      vida_opciones: "outputs/vida/b7_opciones.parquet",
-      vida_maestro: "outputs/vida/maestro_aseguradoras_vida.parquet",
-      generales_bonos: "outputs/generales/cartera_bonos.parquet",
-      generales_acciones: "outputs/generales/cartera_acciones.parquet",
-      generales_bienes_raices: "outputs/generales/cartera_bienes_raices.parquet",
-      generales_fondos: "outputs/generales/cartera_fondos.parquet",
-      generales_extranjeros: "outputs/generales/cartera_extranjeros.parquet",
-      generales_solvencia: "outputs/generales/cartera_solvencia.parquet",
-      generales_repos: "outputs/generales/b7_repos.parquet",
-      generales_forwards: "outputs/generales/b7_forwards.parquet",
-      generales_swaps: "outputs/generales/b7_swaps.parquet",
-      generales_maestro: "outputs/generales/maestro_aseguradoras_generales.parquet",
+      // Las tablas de cartera de seguros se publican en varios archivos (manifiesto):
+      // no van aquí, así la descarga usa la vista SQL que los une.
+      seguros_maestro: "outputs/seguros/aseguradoras.parquet",
       fi_repos: "outputs/fi/fi_repos_vrc_crv.parquet",
       fi_nacional: "outputs/fi/fi_cartera_nacional.parquet",
       fi_extranjera: "outputs/fi/fi_cartera_extranjera.parquet",
@@ -72,16 +52,9 @@ class ExportModalController {
 
     // Estimaciones históricas de filas por tabla
     this.rowEstimates = {
-      vida_bonos: 710000,
-      vida_bienes_raices: 154000,
-      vida_acciones: 65000,
-      vida_fondos: 32000,
-      vida_extranjeros: 24000,
-      vida_solvencia: 180000,
-      vida_repos: 19400,
-      generales_bonos: 287000,
-      generales_bienes_raices: 38000,
-      generales_acciones: 17000,
+      seguros_renta_fija: 1500000,
+      seguros_bienes_raices: 400000,
+      seguros_acciones: 100000,
       fi_nacional: 834000,
       fi_repos: 2654,
       ffmm_inversiones_nac: 125000,
@@ -141,7 +114,7 @@ class ExportModalController {
             <h3 class="export-modal-title">Centro de Exportación & Descarga</h3>
             <select id="export-modal-table-select" class="export-modal-table-select" title="Seleccionar tabla del sistema a exportar">
             </select>
-            <span class="export-table-tag" id="export-table-badge" style="display: none;">vida.cartera_bonos</span>
+            <span class="export-table-tag" id="export-table-badge" style="display: none;">seguros.lista_entidades</span>
           </div>
           <button class="export-close-btn" id="export-close-btn" title="Cerrar">&times;</button>
         </div>

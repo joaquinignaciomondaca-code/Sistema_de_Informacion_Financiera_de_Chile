@@ -29,7 +29,6 @@ _RESPALDO = _Path(_os.environ.get('MFC_RESPALDO_DIR', _Path.home().joinpath('Des
 BASE_DIR = str(_ROOT)
 OUT_DIRS = [
     os.path.join(BASE_DIR, "docs", "outputs", "cajas_compensacion"),
-    os.path.join(BASE_DIR, "seguros", "circular_1835_cartera", "outputs", "cajas_compensacion")
 ]
 
 CCAF_ENTITIES = {
