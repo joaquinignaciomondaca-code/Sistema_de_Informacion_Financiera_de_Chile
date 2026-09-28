@@ -344,6 +344,8 @@ pipelines/ifrs_sectores/actualizar.py   (ifrs_sectores.yml, días 2, 12, 22)
     vuelve a pedir; los recientes se releen (presentaciones tardías) y nunca pierden entidades ya publicadas
   → docs/outputs/{agf,securitizadoras,cajas_compensacion}/<prefijo>_{balance,resultados}/<AAAA>.parquet + manifest
   entidades del sector que reportan y no están en la lista → ::notice + manifest (entidades_fuera_de_lista_…)
+  último trimestre: CCAF y sociedades FACTORING|LEASING (no bancos) fuera de su lista → alta en ccaf_maestro /
+    factoring_leasing_maestro (máx. 10 por corrida; si calzan más, el patrón es sospechoso y no se agrega nada)
 
 corredoras_bolsa/scripts/actualizar_eeff.py   (corredoras_eeff.yml, días 6, 16, 26)
   intermediarios_ifrs1.php?xls=y&tiposociedad={1 corredores, 2 agentes}&mes1=MM&anno1=AAAA → Excel trimestral
@@ -354,6 +356,26 @@ corredoras_bolsa/scripts/actualizar_eeff.py   (corredoras_eeff.yml, días 6, 16,
   mismo esquema incremental (manifest.json del sector, cerrado a 150 días)
   controles: DV mód.11, fecha de cada fila = trimestre pedido, valores enteros; activos = pasivos + patrimonio
     cuadra en 2.860 de 2.861 balances (el TXT IFRS: 2.934/2.935 AGF, 223/223 CCAF, 645/645 securitizadoras)
+```
+
+## 8c. Listas de entidades y guardián de automatización
+```
+pipelines/entidades/actualizar_listas.py   (entidades.yml, días 10, 20, 28)
+  por sector: registros CMF consulta.php?mercado=M&Estado={VI,NV}&entidad=CÓDIGO (uno o varios)
+    RUT vigente fuera de la lista → alta (solo registros marcados «altas»; BCSAG y DCVAL solo vigencia)
+    RUT de la lista en NV y no en VI → no vigente ; vuelve a VI → vigente ; nunca baja por ausencia
+    bancos: solo Activo → No vigente (fusionados comparten RUT con el banco que los absorbió)
+    resguardo: VI con menos de la mitad de los vigentes ya listados → no se toca ese sector
+  patrimonios separados: listado_titulos_deuda.php (todas las inscripciones por registro automático)
+    → emisor securitizadora (RUT en la lista o nombre) con número nuevo → alta (colateral vacío)
+  AFP: vcfAFP.php (valor cuota por AFP) → nombre nuevo → alta con RUT de RVEMI
+  → novedades.json + conteos del menú y del diccionario + registros_reales de data_manifest
+
+scripts/audit_automatizacion.py   (web_audit.yml: en cada push; --frescura cada lunes)
+  inventario pipelines/auto/inventario.json: cada tabla de data_manifest y cada vista SEMANTIC_VIEWS
+    → {workflow} o {manual: motivo}
+  push: workflow existe + cron + ejecuta su script + el script nombra el archivo (o «marca») + modo coherente
+  lunes: última corrida exitosa en la rama por defecto ≤ max_dias (16; macro 3) → si no, issue
 ```
 
 ## 8b. Cooperativas, CCAF, Sistemas de Pago y FinTech — recorte 2026-09-28
@@ -449,7 +471,7 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 | seguros_carteras.yml | días 7, 17, 27 14:00 | **sí** (commit + Pages) | cartera de inversiones de aseguradoras (§6) |
 | ffmm_carteras.yml | días 8, 18, 28 14:00 | **sí** (commit + Pages) | cartera de fondos mutuos, Circular 1333 (§7) |
 | fi_carteras.yml | días 9, 19, 29 15:00 | **sí** (commit + Pages) | cartera y pactos de fondos de inversión (§7) |
-| entidades.yml | días 10, 20, 28 12:30 | **sí** (commit + Pages) | altas y vigencia de las listas de AGF, securitizadoras, corredores y fintech desde los registros CMF |
+| entidades.yml | días 10, 20, 28 12:30 | **sí** (commit + Pages) | altas y vigencia de las listas de AGF, securitizadoras, corredores, fintech, bancos, cooperativas y sistemas de pago (registros CMF), patrimonios separados (inscripciones por registro automático) y AFP (Superintendencia de Pensiones) (§8c) |
 
 ---
 
