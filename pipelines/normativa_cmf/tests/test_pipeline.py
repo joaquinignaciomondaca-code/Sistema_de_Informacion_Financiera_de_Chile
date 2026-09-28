@@ -279,24 +279,33 @@ class GeminiInteractionsApiTests(unittest.TestCase):
         response.status_code = 200
         response.json.return_value = {
             "status": "completed",
+            "model": "gemini-3.6-flash",
             "steps": [{
                 "type": "model_output",
                 "content": [{"type": "text", "text": '{"event_type":"otro"}'}],
             }],
         }
         with patch("pipelines.normativa_cmf.pipeline.requests.post", return_value=response) as post:
-            result = pipeline._call_gemini("test-key", "gemini-3.5-flash-lite", "prompt de prueba")
+            result = pipeline._call_gemini("test-key", "gemini-flash-lite-latest", "prompt de prueba")
 
-        self.assertEqual(result, {"event_type": "otro"})
+        self.assertEqual(result, {"event_type": "otro", "_response_model": "gemini-3.6-flash"})
+        recorded = pipeline._validate_analysis(
+            result,
+            [],
+            "gemini-flash-lite-latest",
+            pdf_text_available=False,
+        )
+        self.assertEqual(recorded["ai_model"], "gemini-3.6-flash")
+        self.assertEqual(recorded["ai_model_requested"], "gemini-flash-lite-latest")
         self.assertEqual(pipeline.GEMINI_INTERACTIONS_URL, "https://generativelanguage.googleapis.com/v1beta/interactions")
         self.assertEqual(post.call_args.args[0], pipeline.GEMINI_INTERACTIONS_URL)
         self.assertEqual(pipeline.GEMINI_API_REVISION, "2026-05-20")
         self.assertEqual(post.call_args.kwargs["headers"]["Api-Revision"], pipeline.GEMINI_API_REVISION)
         self.assertEqual(post.call_args.kwargs["headers"]["x-goog-api-key"], "test-key")
         payload = post.call_args.kwargs["json"]
-        self.assertEqual(payload["model"], "gemini-3.5-flash-lite")
-        self.assertEqual(pipeline.DEFAULT_MODEL_FLASH_LITE, "gemini-3.5-flash-lite")
-        self.assertEqual(pipeline.DEFAULT_MODEL_FLASH, "gemini-3.8-flash")
+        self.assertEqual(payload["model"], "gemini-flash-lite-latest")
+        self.assertEqual(pipeline.DEFAULT_MODEL_FLASH_LITE, "gemini-flash-lite-latest")
+        self.assertEqual(pipeline.DEFAULT_MODEL_FLASH, "gemini-flash-latest")
         self.assertEqual(payload["input"], "prompt de prueba")
         self.assertIs(payload["store"], False)
         self.assertEqual(payload["generation_config"], {"max_output_tokens": 2400})
@@ -333,10 +342,8 @@ class GeminiInteractionsApiTests(unittest.TestCase):
                 response = Mock(status_code=200)
                 response.json.return_value = body
                 with patch("pipelines.normativa_cmf.pipeline.requests.post", return_value=response):
-                    self.assertEqual(
-                        pipeline._call_gemini("test-key", "gemini-3.8-flash", "prompt"),
-                        {"event_type": "otro"},
-                    )
+                    result = pipeline._call_gemini("test-key", "gemini-3.8-flash", "prompt")
+                    self.assertEqual(result["event_type"], "otro")
 
     def test_incomplete_interaction_is_not_accepted_as_a_classification(self):
         response = Mock(status_code=200)

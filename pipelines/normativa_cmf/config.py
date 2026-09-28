@@ -53,8 +53,8 @@ EVENT_TYPES = (
 
 EFFECTIVE_DATE_PRECISIONS = ("dia", "mes", "inmediata", "sin_fecha")
 
-DEFAULT_MODEL_FLASH_LITE = "gemini-3.5-flash-lite"
-DEFAULT_MODEL_FLASH = "gemini-3.8-flash"
+DEFAULT_MODEL_FLASH_LITE = "gemini-flash-lite-latest"
+DEFAULT_MODEL_FLASH = "gemini-flash-latest"
 GEMINI_INTERACTIONS_URL = "https://generativelanguage.googleapis.com/v1beta/interactions"
 GEMINI_API_REVISION = "2026-05-20"
 
