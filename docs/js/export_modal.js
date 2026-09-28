@@ -9,8 +9,8 @@ class ExportModalController {
     this.modalEl = null;
     this.backdropEl = null;
     this.currentContext = {
-      viewName: "vida_bonos",
-      displayName: "vida.cartera_bonos",
+      viewName: "seguros_maestro",
+      displayName: "seguros.lista_entidades",
       currentRows: [],
       currentColumns: [],
       totalCount: 100
@@ -18,109 +18,45 @@ class ExportModalController {
 
     // Mapeo directo a archivos Parquet físicos en docs/outputs/
     this.parquetMap = {
-      // vida_bonos no tiene Parquet consolidado publicado (supera los 100 MB de
-      // GitHub): se omite aquí para que la descarga use la vista SQL que une las
-      // dos particiones, en lugar de servir un archivo inexistente.
-      vida_acciones: "outputs/vida/cartera_acciones.parquet",
-      vida_bienes_raices: "outputs/vida/cartera_bienes_raices.parquet",
-      vida_fondos: "outputs/vida/cartera_fondos.parquet",
-      vida_extranjeros: "outputs/vida/cartera_extranjeros.parquet",
-      vida_solvencia: "outputs/vida/cartera_solvencia.parquet",
-      vida_repos: "outputs/vida/b7_repos.parquet",
-      vida_forwards: "outputs/vida/b7_forwards.parquet",
-      vida_swaps: "outputs/vida/b7_swaps.parquet",
-      vida_opciones: "outputs/vida/b7_opciones.parquet",
-      vida_maestro: "outputs/vida/maestro_aseguradoras_vida.parquet",
-      generales_bonos: "outputs/generales/cartera_bonos.parquet",
-      generales_acciones: "outputs/generales/cartera_acciones.parquet",
-      generales_bienes_raices: "outputs/generales/cartera_bienes_raices.parquet",
-      generales_fondos: "outputs/generales/cartera_fondos.parquet",
-      generales_extranjeros: "outputs/generales/cartera_extranjeros.parquet",
-      generales_solvencia: "outputs/generales/cartera_solvencia.parquet",
-      generales_repos: "outputs/generales/b7_repos.parquet",
-      generales_forwards: "outputs/generales/b7_forwards.parquet",
-      generales_swaps: "outputs/generales/b7_swaps.parquet",
-      generales_maestro: "outputs/generales/maestro_aseguradoras_generales.parquet",
-      fi_repos: "outputs/fi/fi_repos_vrc_crv.parquet",
-      fi_nacional: "outputs/fi/fi_cartera_nacional.parquet",
-      fi_extranjera: "outputs/fi/fi_cartera_extranjera.parquet",
+      // Las tablas de cartera de seguros, FFMM y FI se publican en varios archivos (manifiesto):
+      // no van aquí, así la descarga usa la vista SQL que los une.
+      seguros_maestro: "outputs/seguros/aseguradoras.parquet",
       fi_maestro: "outputs/fi/maestro_fondos_inversion.parquet",
-      ffmm_futuros: "outputs/ffmm/ffmm_futu_normalizado.parquet",
-      ffmm_opciones: "outputs/ffmm/ffmm_opci_normalizado.parquet",
-      ffmm_inversiones_nac: "outputs/ffmm/ffmm_futu_normalizado.parquet",
       ffmm_maestro: "outputs/ffmm/maestro_fondos_mutuos.parquet",
       afp_maestro: "outputs/pensiones/afp_maestro_administradoras.parquet",
       bancos_maestro: "outputs/bancos/bancos_maestro.parquet",
       macro_tasas_rendimientos: "outputs/macro/macro_tasas_rendimientos.parquet",
       macro_divisas_mercado: "outputs/macro/macro_divisas_mercado.parquet",
       macro_precios_actividad: "outputs/macro/macro_precios_actividad.parquet",
+      macro_series_catalogo: "outputs/macro/macro_series_catalogo.parquet",
       factoring_leasing_maestro: "outputs/factoring_leasing/factoring_leasing_maestro.parquet",
       corredoras_bolsa_maestro: "outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet",
-      corredoras_bolsa_balance_resumen: "outputs/corredoras_bolsa/corredoras_bolsa_balance_resumen.parquet",
       securitizadoras_maestro: "outputs/securitizadoras/securitizadoras_maestro.parquet",
-      securitizadoras_balance_resumen: "outputs/securitizadoras/securitizadoras_balance_resumen.parquet",
       patrimonios_separados_maestro: "outputs/securitizadoras/patrimonios_separados_maestro.parquet",
-      patrimonios_separados_balance_resumen: "outputs/securitizadoras/patrimonios_separados_balance_resumen.parquet",
-      patrimonios_separados_balance_lineas: "outputs/securitizadoras/patrimonios_separados_balance_lineas.parquet",
-      patrimonios_separados_excedentes_lineas: "outputs/securitizadoras/patrimonios_separados_excedentes_lineas.parquet",
-      patrimonios_separados_nota_cartera_detalle: "outputs/securitizadoras/patrimonios_separados_nota_cartera_detalle.parquet",
-      patrimonios_separados_nota_morosidad_detalle: "outputs/securitizadoras/patrimonios_separados_nota_morosidad_detalle.parquet",
-      patrimonios_separados_nota_bonos_detalle: "outputs/securitizadoras/patrimonios_separados_nota_bonos_detalle.parquet",
-      patrimonios_separados_nota_administracion_detalle: "outputs/securitizadoras/patrimonios_separados_nota_administracion_detalle.parquet",
-      patrimonios_separados_nota_sobrecolateral_detalle: "outputs/securitizadoras/patrimonios_separados_nota_sobrecolateral_detalle.parquet",
-      patrimonios_separados_nota_efectivo_detalle: "outputs/securitizadoras/patrimonios_separados_nota_efectivo_detalle.parquet",
-      patrimonios_separados_cartera_morosidad_detalle: "outputs/securitizadoras/patrimonios_separados_cartera_morosidad_detalle.parquet",
-      patrimonios_separados_repos_detalle: "outputs/securitizadoras/patrimonios_separados_repos_detalle.parquet",
-      patrimonios_separados_balance_pdf: "outputs/securitizadoras/patrimonios_separados_balance_pdf.parquet",
+      patrimonios_separados_balance: "outputs/securitizadoras/patrimonios_separados_balance.parquet",
       ccaf_maestro: "outputs/cajas_compensacion/ccaf_maestro.parquet",
-      ccaf_caratula_totales: "outputs/cajas_compensacion/ccaf_caratula_totales.parquet",
-      ccaf_nota8_efectivo_resumen: "outputs/cajas_compensacion/ccaf_nota8_efectivo_resumen.parquet",
-      ccaf_nota8_dap_detalle: "outputs/cajas_compensacion/ccaf_nota8_dap_detalle.parquet",
-      ccaf_nota8_repos_detalle: "outputs/cajas_compensacion/ccaf_nota8_repos_detalle.parquet",
-      ccaf_colocaciones_credito_social: "outputs/cajas_compensacion/ccaf_colocaciones_credito_social.parquet",
       agf_maestro: "outputs/agf/agf_maestro.parquet",
-      agf_balance_resumen: "outputs/agf/agf_balance_resumen.parquet",
       sistemas_pago_maestro: "outputs/sistemas_pago/sistemas_pago_maestro.parquet",
-      sistemas_pago_balances: "outputs/sistemas_pago/sistemas_pago_balances.parquet",
-      sistemas_pago_estadisticas_bcch: "outputs/sistemas_pago/sistemas_pago_estadisticas_bcch.parquet",
       fintech_rpsf_maestro: "outputs/fintech/fintech_rpsf_maestro.parquet",
-      fintech_servicios_acreditados: "outputs/fintech/fintech_servicios_acreditados.parquet",
-      fintech_finanzas_abiertas_roles: "outputs/fintech/fintech_finanzas_abiertas_roles.parquet"
     };
 
     // Estimaciones históricas de filas por tabla
     this.rowEstimates = {
-      vida_bonos: 710000,
-      vida_bienes_raices: 154000,
-      vida_acciones: 65000,
-      vida_fondos: 32000,
-      vida_extranjeros: 24000,
-      vida_solvencia: 180000,
-      vida_repos: 19400,
-      generales_bonos: 287000,
-      generales_bienes_raices: 38000,
-      generales_acciones: 17000,
-      fi_nacional: 834000,
-      fi_repos: 2654,
-      ffmm_inversiones_nac: 125000,
+      seguros_renta_fija: 1500000,
+      macro_series: 150000,
+      seguros_bienes_raices: 400000,
+      seguros_acciones: 100000,
+      fi_cartera_nacional: 250000,
+      fi_pactos: 20000,
+      ffmm_cartera_nacional: 1500000,
+      ffmm_cartera_extranjera: 900000,
+      ffmm_futuros: 300000,
       afp_maestro: 7,
       bancos_maestro: 40,
       factoring_leasing_maestro: 28,
       patrimonios_separados_maestro: 18,
-      patrimonios_separados_balance_resumen: 64,
-      patrimonios_separados_balance_lineas: 16842,
-      patrimonios_separados_excedentes_lineas: 11157,
-      patrimonios_separados_nota_cartera_detalle: 796,
-      patrimonios_separados_nota_morosidad_detalle: 6632,
-      patrimonios_separados_nota_bonos_detalle: 8001,
-      patrimonios_separados_nota_administracion_detalle: 2153,
-      patrimonios_separados_nota_sobrecolateral_detalle: 679,
-      patrimonios_separados_nota_efectivo_detalle: 3802,
-      patrimonios_separados_cartera_morosidad_detalle: 67,
-      patrimonios_separados_repos_detalle: 52,
-      patrimonios_separados_balance_pdf: 46502,
+      patrimonios_separados_balance: 7962,
       corredoras_bolsa_maestro: 47,
-      corredoras_bolsa_balance_resumen: 1586
     };
 
     this.selectedFormat = "csv"; // 'csv' | 'xlsx' | 'parquet'
@@ -170,7 +106,7 @@ class ExportModalController {
             <h3 class="export-modal-title">Centro de Exportación & Descarga</h3>
             <select id="export-modal-table-select" class="export-modal-table-select" title="Seleccionar tabla del sistema a exportar">
             </select>
-            <span class="export-table-tag" id="export-table-badge" style="display: none;">vida.cartera_bonos</span>
+            <span class="export-table-tag" id="export-table-badge" style="display: none;">seguros.lista_entidades</span>
           </div>
           <button class="export-close-btn" id="export-close-btn" title="Cerrar">&times;</button>
         </div>

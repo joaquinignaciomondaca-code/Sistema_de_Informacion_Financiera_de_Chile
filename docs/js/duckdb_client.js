@@ -2,59 +2,37 @@ const DUCKDB_WASM_URL = "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.28.0
 
 // Vistas semánticas disponibles para el chat SQL, el explorador y las exportaciones.
 const SEMANTIC_VIEWS = [
-  // SEGUROS DE VIDA
-  { name: "vida_maestro", file: "outputs/vida/maestro_aseguradoras_vida.parquet" },
-  // El Parquet consolidado (9,09M filas) supera el límite de 100 MB de GitHub y no
-  // está versionado; la vista une las dos particiones publicadas en docs/outputs/vida.
-  { name: "vida_bonos", file: ["outputs/vida/cartera_bonos_2021_2024.parquet", "outputs/vida/cartera_bonos_2016_2020.parquet"] },
-  { name: "vida_acciones", file: "outputs/vida/cartera_acciones.parquet" },
-  { name: "vida_bienes_raices", file: "outputs/vida/cartera_bienes_raices.parquet" },
-  { name: "vida_fondos", file: "outputs/vida/cartera_fondos.parquet" },
-  { name: "vida_extranjeros", file: "outputs/vida/cartera_extranjeros.parquet" },
-  { name: "vida_solvencia", file: "outputs/vida/cartera_solvencia.parquet" },
-  { name: "vida_forwards", file: "outputs/vida/b7_forwards.parquet" },
-  { name: "vida_swaps", file: "outputs/vida/b7_swaps.parquet" },
-  { name: "vida_repos", file: "outputs/vida/b7_repos.parquet" },
-  { name: "vida_opciones", file: "outputs/vida/b7_opciones.parquet" },
-  { name: "vida_bonos_reciente", file: "outputs/vida/cartera_bonos_2021_2024.parquet" },
-  { name: "vida_bonos_historico", file: "outputs/vida/cartera_bonos_2016_2020.parquet" },
+  // SEGUROS (vida y generales en las mismas tablas, columna "sector"). Cartera de inversiones
+  // de la Circular 1835 leída con la ficha técnica oficial; se actualiza sola 3 veces al mes y
+  // cada tabla se publica en archivos por año o por mes listados en su manifiesto.
+  { name: "seguros_maestro", file: "outputs/seguros/aseguradoras.parquet" },
+  { name: "seguros_renta_fija", manifest: "outputs/seguros/renta_fija/manifest.json" },
+  { name: "seguros_acciones", manifest: "outputs/seguros/acciones/manifest.json" },
+  { name: "seguros_fondos_mutuos", manifest: "outputs/seguros/fondos_mutuos/manifest.json" },
+  { name: "seguros_bienes_raices", manifest: "outputs/seguros/bienes_raices/manifest.json" },
+  { name: "seguros_extranjeros", manifest: "outputs/seguros/extranjeros/manifest.json" },
+  { name: "seguros_derivados", manifest: "outputs/seguros/derivados/manifest.json" },
+  { name: "seguros_pactos", manifest: "outputs/seguros/pactos/manifest.json" },
+  { name: "seguros_control_inversiones", manifest: "outputs/seguros/control_inversiones/manifest.json" },
 
-  // SEGUROS GENERALES
-  { name: "generales_maestro", file: "outputs/generales/maestro_aseguradoras_generales.parquet" },
-  { name: "generales_bonos", file: "outputs/generales/cartera_bonos.parquet" },
-  { name: "generales_acciones", file: "outputs/generales/cartera_acciones.parquet" },
-  { name: "generales_bienes_raices", file: "outputs/generales/cartera_bienes_raices.parquet" },
-  { name: "generales_fondos", file: "outputs/generales/cartera_fondos.parquet" },
-  { name: "generales_extranjeros", file: "outputs/generales/cartera_extranjeros.parquet" },
-  { name: "generales_solvencia", file: "outputs/generales/cartera_solvencia.parquet" },
-  { name: "generales_forwards", file: "outputs/generales/b7_forwards.parquet" },
-  { name: "generales_swaps", file: "outputs/generales/b7_swaps.parquet" },
-  { name: "generales_repos", file: "outputs/generales/b7_repos.parquet" },
-
-  // FONDOS DE INVERSION
+  // FONDOS DE INVERSIÓN. Cartera y pactos de los informes IFRS trimestrales de cada fondo (CMF);
+  // se actualiza sola 3 veces al mes. Montos en miles de la moneda funcional de cada fondo.
   { name: "fi_maestro", file: "outputs/fi/maestro_fondos_inversion.parquet" },
-  { name: "fi_nacional", file: "outputs/fi/fi_cartera_nacional.parquet" },
-  { name: "fi_cartera_nac", file: "outputs/fi/fi_cartera_nacional.parquet" },
-  { name: "fi_extranjera", file: "outputs/fi/fi_cartera_extranjera.parquet" },
-  { name: "fi_cartera_ext", file: "outputs/fi/fi_cartera_extranjera.parquet" },
-  { name: "fi_derivados", file: "outputs/fi/fi_futuros_forward.parquet" },
-  { name: "fi_metodo_part", file: "outputs/fi/fi_metodo_participacion.parquet" },
-  { name: "fi_opciones", file: "outputs/fi/fi_opciones.parquet" },
-  { name: "fi_repos", file: "outputs/fi/fi_repos_vrc_crv.parquet" },
-  { name: "fi_registro_fondos_universo", file: "outputs/fi/fi_registro_fondos_universo.parquet" },
-  { name: "fi_repos_detalle_historico", file: "outputs/fi/fi_repos_detalle_historico.parquet" },
+  { name: "fi_cartera_nacional", manifest: "outputs/fi/cartera_nacional/manifest.json" },
+  { name: "fi_cartera_extranjera", manifest: "outputs/fi/cartera_extranjera/manifest.json" },
+  { name: "fi_metodo_participacion", manifest: "outputs/fi/metodo_participacion/manifest.json" },
+  { name: "fi_bienes_raices", manifest: "outputs/fi/bienes_raices/manifest.json" },
+  { name: "fi_futuros", manifest: "outputs/fi/futuros_forwards/manifest.json" },
+  { name: "fi_opciones", manifest: "outputs/fi/opciones/manifest.json" },
+  { name: "fi_pactos", manifest: "outputs/fi/pactos/manifest.json" },
 
-  { name: "fi_eeff_xml_muestra_cmf", file: "outputs/fi/fi_eeff_xml_muestra_cmf.parquet" },
-
-  // FONDOS MUTUOS
+  // FONDOS MUTUOS. Cartera de inversiones de la Circular 1333 (archivo mensual CMF); se actualiza
+  // sola 3 veces al mes. Montos en miles de la moneda funcional de cada fondo.
   { name: "ffmm_maestro", file: "outputs/ffmm/maestro_fondos_mutuos.parquet" },
-  { name: "ffmm_futuros", file: "outputs/ffmm/ffmm_futu_normalizado.parquet" },
-  { name: "ffmm_inversiones_nac", file: "outputs/ffmm/ffmm_futu_normalizado.parquet" },
-  { name: "ffmm_opciones", file: "outputs/ffmm/ffmm_opci_normalizado.parquet" },
-  { name: "ffmm_repos_detalle_historico", file: "outputs/ffmm/ffmm_repos_detalle_historico.parquet" },
-  { name: "ffmm_registro_fondos_universo", file: "outputs/ffmm/ffmm_registro_fondos_universo.parquet" },
-
-  { name: "ffmm_eeff_xml_muestra_cmf", file: "outputs/ffmm/ffmm_eeff_xml_muestra_cmf.parquet" },
+  { name: "ffmm_cartera_nacional", manifest: "outputs/ffmm/cartera_nacional/manifest.json" },
+  { name: "ffmm_cartera_extranjera", manifest: "outputs/ffmm/cartera_extranjera/manifest.json" },
+  { name: "ffmm_futuros", manifest: "outputs/ffmm/futuros_forwards/manifest.json" },
+  { name: "ffmm_opciones", manifest: "outputs/ffmm/opciones/manifest.json" },
 
   // FONDOS DE PENSIONES (SPENSIONES)
   { name: "afp_maestro", file: "outputs/pensiones/afp_maestro_administradoras.parquet" },
@@ -68,6 +46,8 @@ const SEMANTIC_VIEWS = [
   { name: "macro_tasas_rendimientos", file: "outputs/macro/macro_tasas_rendimientos.parquet" },
   { name: "macro_divisas_mercado", file: "outputs/macro/macro_divisas_mercado.parquet" },
   { name: "macro_precios_actividad", file: "outputs/macro/macro_precios_actividad.parquet" },
+  { name: "macro_series", manifest: "outputs/macro/series/manifest.json" },
+  { name: "macro_series_catalogo", file: "outputs/macro/macro_series_catalogo.parquet" },
 
   // FACTORING & LEASING (CMF / NBFI)
   // BEGIN AUTO FL IFRS SERIES VIEWS
@@ -75,65 +55,39 @@ const SEMANTIC_VIEWS = [
   { name: "factoring_leasing_resultados_serie_ifrs_cmf", file: "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet" },
   // END AUTO FL IFRS SERIES VIEWS
   { name: "factoring_leasing_maestro", file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet" },
-  { name: "factoring_leasing_eeff_muestra_cmf", file: "outputs/factoring_leasing/factoring_leasing_eeff_muestra_cmf.parquet" },
-  { name: "factoring_leasing_resultados_muestra_cmf", file: "outputs/factoring_leasing/factoring_leasing_resultados_muestra_cmf.parquet" },
 
   // CORREDORAS DE BOLSA (CMF)
   { name: "corredoras_bolsa_registro_universo", file: "outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet" },
   { name: "corredoras_bolsa_maestro", file: "outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet" },
-  { name: "corredoras_bolsa_balance_resumen", file: "outputs/corredoras_bolsa/corredoras_bolsa_balance_resumen.parquet" },
-  { name: "corredoras_bolsa_caratula_eeff_historico", file: "outputs/corredoras_bolsa/corredoras_bolsa_caratula_eeff_historico.parquet" },
 
-        // SECURITIZADORAS (CMF / Ley 18.045) - Subsección EEFF & Notas Exhaustivas
-  { name: "patrimonios_separados_balance_lineas", file: "outputs/securitizadoras/patrimonios_separados_balance_lineas.parquet" },
-  { name: "patrimonios_separados_excedentes_lineas", file: "outputs/securitizadoras/patrimonios_separados_excedentes_lineas.parquet" },
-  { name: "patrimonios_separados_nota_cartera_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_cartera_detalle.parquet" },
-  { name: "patrimonios_separados_nota_morosidad_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_morosidad_detalle.parquet" },
-  { name: "patrimonios_separados_nota_bonos_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_bonos_detalle.parquet" },
-  { name: "patrimonios_separados_nota_administracion_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_administracion_detalle.parquet" },
-  { name: "patrimonios_separados_nota_sobrecolateral_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_sobrecolateral_detalle.parquet" },
-  { name: "patrimonios_separados_nota_efectivo_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_efectivo_detalle.parquet" },
 
    // SECURITIZADORAS (CMF / Ley 18.045) - Gestoras & Resumen
    { name: "securitizadoras_maestro", file: "outputs/securitizadoras/securitizadoras_maestro.parquet" },
-   { name: "securitizadoras_balance_resumen", file: "outputs/securitizadoras/securitizadoras_balance_resumen.parquet" },
    { name: "patrimonios_separados_maestro", file: "outputs/securitizadoras/patrimonios_separados_maestro.parquet" },
-   { name: "patrimonios_separados_balance_resumen", file: "outputs/securitizadoras/patrimonios_separados_balance_resumen.parquet" },
-   { name: "patrimonios_separados_repos_detalle", file: "outputs/securitizadoras/patrimonios_separados_repos_detalle.parquet" },
-   { name: "patrimonios_separados_cartera_morosidad_detalle", file: "outputs/securitizadoras/patrimonios_separados_cartera_morosidad_detalle.parquet" },
-   { name: "patrimonios_separados_balance_pdf", file: "outputs/securitizadoras/patrimonios_separados_balance_pdf.parquet" },
+   { name: "patrimonios_separados_balance", file: "outputs/securitizadoras/patrimonios_separados_balance.parquet" },
 
   // COOPERATIVAS DE AHORRO Y CRÉDITO (CMF)
   { name: "cooperativas_maestro", file: "outputs/cooperativas/cooperativas_maestro.parquet" },
-  { name: "cooperativas_balance_resumen", file: "outputs/cooperativas/cooperativas_balance_resumen.parquet" },
-  { name: "cooperativas_nota_efectivo_detalle", file: "outputs/cooperativas/cooperativas_nota_efectivo_detalle.parquet" },
-  // Reporte Financiero CMF por cooperativa (2017-01+): la misma planilla trae balance y
-  // resultados, separados aquí por el campo `estado`. La serie se publica en bloque: si un
-  // período no pasa la validación, no se publica ninguno (no hay particiones a medias).
-  { name: "cooperativas_cmf_balance", file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet", where: "estado = 'balance'" },
-  { name: "cooperativas_cmf_resultados", file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet", where: "estado = 'resultados'" },
 
   // CAJAS DE COMPENSACION (CCAF / SUSESO - Ley 18.833 / CMF)
   { name: "ccaf_maestro", file: "outputs/cajas_compensacion/ccaf_maestro.parquet" },
-  { name: "ccaf_caratula_totales", file: "outputs/cajas_compensacion/ccaf_caratula_totales.parquet" },
-  { name: "ccaf_nota8_efectivo_resumen", file: "outputs/cajas_compensacion/ccaf_nota8_efectivo_resumen.parquet" },
-  { name: "ccaf_nota8_dap_detalle", file: "outputs/cajas_compensacion/ccaf_nota8_dap_detalle.parquet" },
-  { name: "ccaf_nota8_repos_detalle", file: "outputs/cajas_compensacion/ccaf_nota8_repos_detalle.parquet" },
-  { name: "ccaf_colocaciones_credito_social", file: "outputs/cajas_compensacion/ccaf_colocaciones_credito_social.parquet" },
 
   // ADMINISTRADORAS GENERALES DE FONDOS (AGF / Ley 20.712)
   { name: "agf_maestro", file: "outputs/agf/agf_maestro.parquet" },
-  { name: "agf_balance_resumen", file: "outputs/agf/agf_balance_resumen.parquet" },
+  { name: "agf_balance", manifest: "outputs/agf/agf_balance/manifest.json" },
+  { name: "agf_resultados", manifest: "outputs/agf/agf_resultados/manifest.json" },
+  { name: "securitizadoras_balance", manifest: "outputs/securitizadoras/securitizadoras_balance/manifest.json" },
+  { name: "securitizadoras_resultados", manifest: "outputs/securitizadoras/securitizadoras_resultados/manifest.json" },
+  { name: "ccaf_balance", manifest: "outputs/cajas_compensacion/ccaf_balance/manifest.json" },
+  { name: "ccaf_resultados", manifest: "outputs/cajas_compensacion/ccaf_resultados/manifest.json" },
+  { name: "corredoras_bolsa_balance", manifest: "outputs/corredoras_bolsa/corredoras_bolsa_balance/manifest.json" },
+  { name: "corredoras_bolsa_resultados", manifest: "outputs/corredoras_bolsa/corredoras_bolsa_resultados/manifest.json" },
 
   // SISTEMAS DE PAGO (BCCh / CMF)
   { name: "sistemas_pago_maestro", file: "outputs/sistemas_pago/sistemas_pago_maestro.parquet" },
-  { name: "sistemas_pago_balances", file: "outputs/sistemas_pago/sistemas_pago_balances.parquet" },
-  { name: "sistemas_pago_estadisticas_bcch", file: "outputs/sistemas_pago/sistemas_pago_estadisticas_bcch.parquet" },
 
   // FINTECH & FINANZAS ABIERTAS (LEY N° 21.521 / CMF)
   { name: "fintech_rpsf_maestro", file: "outputs/fintech/fintech_rpsf_maestro.parquet" },
-  { name: "fintech_servicios_acreditados", file: "outputs/fintech/fintech_servicios_acreditados.parquet" },
-  { name: "fintech_finanzas_abiertas_roles", file: "outputs/fintech/fintech_finanzas_abiertas_roles.parquet" }
 ];
 
 class DuckDBClient {
@@ -237,7 +191,7 @@ class DuckDBClient {
           const manifest = await response.json();
           files = manifest.files;
           if (!Array.isArray(files) || files.length === 0) {
-            throw new Error(`No hay particiones CMF publicadas para ${view.name}`);
+            throw new Error(`No hay particiones publicadas para ${view.name}`);
           }
         } else {
           files = Array.isArray(view.file) ? view.file : [view.file];

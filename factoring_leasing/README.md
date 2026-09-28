@@ -11,6 +11,8 @@ Las muestras previas se mantienen separadas:
 
 La muestra prueba que esas filas coinciden con el archivo CMF; no valida todos los períodos o entidades.
 
+**Retiradas de la web (2026-09-28):** sus cifras son idénticas a las de la serie IFRS (misma entidad y período; la muestra en miles de pesos, la serie en pesos), por lo que aparecían como tablas duplicadas. Los Parquet y los scripts de cotejo se conservan como evidencia de auditoría, pero ya no tienen vista DuckDB, carpeta en el explorador, entrada en el visor/diccionario ni en `data_manifest.json`.
+
 ## Serie histórica IFRS completa de la fuente TXT
 
 El workflow `.github/workflows/factoring_leasing_backfill.yml` obtiene los cierres publicados por CMF, mantiene caché por período y, al completarse **todos** los períodos del índice, arma y publica dos archivos distintos:
@@ -20,6 +22,18 @@ El workflow `.github/workflows/factoring_leasing_backfill.yml` obtiene los cierr
 - `factoring_leasing_balance_serie_ifrs_cmf_metadata.json`: cobertura, faltantes, corrida y advertencias.
 
 El publicador actualiza automáticamente DuckDB, el explorador (una carpeta independiente por tabla), el selector, diccionario, `data_manifest.json` y cache-busting de la interfaz; corre auditorías y comitea los cambios a la rama que ejecutó Actions. No publica si falta un cierre, error o partición. La programación diaria solo corre cuando el workflow está en la rama por defecto `main`; el PR abierto puede ejecutarse por cambio de código o `workflow_dispatch`.
+
+### "Ganancia (pérdida)" repetida en resultados
+
+No es un duplicado del extractor: el formato IFRS de la CMF trae esa etiqueta hasta 3 veces por estado, siempre con el mismo valor.
+
+| estado_financiero | repeticion_contexto | dónde |
+|---|---|---|
+| ERFG (por función) / ERNG (por naturaleza) | 1 | resultado tras operaciones continuadas |
+| ERFG / ERNG | 2 | total de la atribución controladora + no controladora |
+| ERI (resultado integral) | 1 | línea inicial del resultado integral |
+
+Hay 900 estados (899 ERFG + 1 ERNG: Tanner 2021-03 reportó por naturaleza). En 2009-03 Interfactor usa la taxonomía antigua ("Ganancia (Pérdida)", hasta 3 repeticiones y sin ERI). Sumar la cuenta sin filtrar triplica la utilidad. Para una fila por estado: `lower(cuenta) = 'ganancia (pérdida)' AND estado_financiero IN ('ERFG','ERNG') AND repeticion_contexto = 1`. Esa consulta está como chip en la web y la genera `publish_backfill.profit_queries`.
 
 La extracción conserva las cuentas tal como llegan: tipo individual/consolidado, moneda, taxonomía y texto original. Los importes no enteros permanecen como texto con `valor_archivo = NULL`; las repeticiones llevan ordinal. No hay conversión de moneda/unidades, agregación, deduplicación ni suma. La serie representa lo que se encontró en el TXT para **24 de 28 RUT del catálogo**, no necesariamente todos los EEFF disponibles de cada entidad. El DV se asocia desde el catálogo actual; no es una validación histórica completa. La etiqueta de la web advierte que no se cotejó integralmente cada cifra.
 

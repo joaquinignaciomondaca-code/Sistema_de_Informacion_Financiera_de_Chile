@@ -3,7 +3,7 @@ name: Factoring y Leasing - serie IFRS CMF y publicación automática
 
 on:
   push:
-    branches: [arena/01a0e08b-monitor-financiero-chile]
+    branches: [main, arena/01a0e680-monitor-financiero-chile]
     paths:
       - '.github/workflows/factoring_leasing_backfill.yml'
       - 'factoring_leasing/scripts/backfill_ifrs.py'
@@ -21,7 +21,8 @@ on:
         default: '100'
         type: string
   schedule:
-    - cron: '20 12 * * *'
+    # 3 veces al mes (la fuente IFRS CMF es trimestral). Los trimestres ya descargados se saltan.
+    - cron: '20 12 3,13,23 * *'
 
 permissions:
   contents: write
@@ -85,8 +86,17 @@ jobs:
                   docs/js/data_dictionary.js docs/index.html data_manifest.json
           if ! git diff --cached --quiet; then
             git commit -m "Publicar serie completa IFRS de Factoring y Leasing desde Actions"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
-            echo "pushed=true" >> "$GITHUB_OUTPUT"
+            # Otros bots publican en la misma rama: sincronizar y reintentar en vez de fallar.
+            for i in 1 2 3 4 5; do
+              if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+                echo "pushed=true" >> "$GITHUB_OUTPUT"
+                exit 0
+              fi
+              git fetch origin "${GITHUB_REF_NAME}"
+              git rebase FETCH_HEAD || { git rebase --abort; sleep 20; git fetch origin "${GITHUB_REF_NAME}"; git rebase FETCH_HEAD || { git rebase --abort; exit 1; }; }
+              sleep 5
+            done
+            exit 1
           else
             echo "La web ya está al día; no hay archivos nuevos que publicar."
             echo "pushed=true" >> "$GITHUB_OUTPUT"

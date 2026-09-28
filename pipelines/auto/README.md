@@ -1,38 +1,58 @@
-# Pipelines Automáticos (ETL / Autonomous Scrapers)
+# Publicaciones automáticas (GitHub Actions)
 
-Este directorio cataloga y documenta los flujos de extracción y procesamiento que se ejecutan **100% de manera autónoma por código**, sin requerir intervención manual ni descargas asistidas.
+Inventario de todo lo que se actualiza solo. Regla común: cada workflow corre **3 veces al mes**
+(salvo macro, que es diario), es **incremental** (lo ya publicado y cerrado no se vuelve a
+descargar) y **fail-closed** (un período que no pasa la validación no se publica; se reintenta en
+la corrida siguiente). Tras publicar en `main`, el mismo workflow despliega GitHub Pages.
 
----
-
-## 1. Principio Metodológico
-- **Autonomía**: Cada script se conecta a un endpoint público, API REST/SOAP o repositorio de archivos estructurados (CSV, TXT, XML, ZIP de CMF/BCCh/SPensiones) y genera tablas Parquet normalizadas.
-- **Reproducibilidad**: Se pueden programar mediante cron jobs o GitHub Actions con variables de entorno estándar.
-- **Validación Automática**: Todos los pipelines aplican control de tipos, validación de RUTs (Módulo 11) y cuadratura contable.
-
----
-
-## 2. Inventario de Sectores y Pipelines Autónomos
-
-| Sector / Cobertura | Archivo de Origen | Frecuencia | Script Principal | Salida Canónica |
+| Sector | Fuente | Días (UTC) | Script | Salida |
 | :--- | :--- | :--- | :--- | :--- |
-| **Compañías de Seguros (Vida y Generales)** | CMF Circular 1835 (Cartera e Inversiones) | Trimestral | `seguros/circular_1835_cartera/scripts/orchestrate_seguros.py` | `docs/outputs/vida/`, `docs/outputs/generales/` |
-| **Fondos Mutuos** | CMF Circular 1333 (Derivados y Futuros) | Mensual | `ffmm/circular_1333_cartera/scripts/process_circular_1333.py` | `docs/ffmm/circular_1333_cartera/outputs/` |
-| **Fondos de Inversión** | CMF Circular 1835 (Activos y Repos) | Trimestral / Mensual | `fi/cartera_inversiones/scripts/process_fi.py` | `docs/fi/cartera_inversiones/outputs/` |
-| **Fondos de Pensiones** | SPensiones (Archivos ZIP históricos y mensuales) | Mensual | `pensiones/scripts/pipeline_stream_history.py` | `docs/outputs/pensiones/` |
-| **Banca Comercial** | CMF Balances y BCCh Derivados F099 | Mensual | `bancos/scripts/process_bancos.py` | `docs/outputs/bancos/` |
-| **Macroeconomía & Tasas** | BCCh (Base de Datos Estadísticos SIETE) | Mensual / Diario | `macro/scripts/pipeline_stream_macro_bcch.py` | `docs/outputs/macro/` |
-| **Factoring & Leasing** | Solo lista de entidades; extracción de balances y notas suspendida | Bajo revisión | `factoring_leasing/scripts/` (laboratorio, publicación bloqueada) | `docs/outputs/factoring_leasing/factoring_leasing_maestro.*` |
-| **Corredoras de Bolsa** | CMF Estados Financieros IFRS | Trimestral | `corredoras_bolsa/scripts/stream_cmf_corredoras.py` | `docs/outputs/corredoras_bolsa/` |
-| **Sociedades Securitizadoras** | CMF Balances IFRS y Ley 18.045 | Trimestral | `securitizadoras/scripts/stream_cmf_securitizadoras.py` | `docs/outputs/securitizadoras/` |
-| **Cajas de Compensación** | SUSESO / CMF Registro Oficial | Anual / Trimestral | `cajas_compensacion/scripts/stream_ccaf.py` | `docs/outputs/cajas_compensacion/` |
-| **Administradoras de Fondos (AGF)** | CMF Ley 20.712 Balances IFRS | Trimestral | `agf/scripts/stream_cmf_agf.py` | `docs/outputs/agf/` |
-| **Sistemas de Pago** | BCCh Tráfico LBTR/CCA y Balances CMF | Mensual / Trimestral | `sistemas_pago/scripts/stream_sistemas_pago.py` | `docs/outputs/sistemas_pago/` |
-| **FinTech** | CMF Registro RPSF (Ley 21.521) | Mensual | `fintech/scripts/stream_cmf_fintech.py` | `docs/outputs/fintech/` |
+| Bancos | CMF, archivos mensuales B1/B2/R1 | 1, 11, 21 | `bancos/scripts/publish_cmf_bank_period.py` (`bancos_cmf_mensual.yml`) | `docs/outputs/bancos/` |
+| AGF, securitizadoras, CCAF (+ altas de las listas de CCAF y factoring/leasing) | CMF, TXT trimestral de estados IFRS de todas las sociedades | 2, 12, 22 | `pipelines/ifrs_sectores/actualizar.py` (`ifrs_sectores.yml`) | `docs/outputs/{agf,securitizadoras,cajas_compensacion}/`, `ccaf_maestro`, `factoring_leasing_maestro`, `docs/outputs/entidades/novedades_ifrs.json` |
+| Factoring y leasing | CMF, TXT trimestral de estados IFRS | 3, 13, 23 | `factoring_leasing/scripts/backfill_ifrs.py` + `publish_backfill.py` (`factoring_leasing_backfill.yml`) | `docs/outputs/factoring_leasing/` |
+| Corredores de bolsa y agentes de valores | CMF, Excel FECU IFRS trimestral de intermediarios | 6, 16, 26 | `corredoras_bolsa/scripts/actualizar_eeff.py` (`corredoras_eeff.yml`) | `docs/outputs/corredoras_bolsa/` |
+| Seguros (vida y generales) | CMF, Circular 1835 (cartera de inversiones, archivo mensual) | 7, 17, 27 | `seguros/scripts/actualizar_carteras.py` (`seguros_carteras.yml`) | `docs/outputs/seguros/` |
+| Fondos mutuos | CMF, Circular 1333 (cartera mensual) | 8, 18, 28 | `ffmm/scripts/actualizar_carteras.py` (`ffmm_carteras.yml`) | `docs/outputs/ffmm/` |
+| Fondos de inversión | CMF, informes IFRS trimestrales de cartera y pactos de cada fondo | 9, 19, 29 | `fi/scripts/actualizar_carteras.py` (`fi_carteras.yml`) | `docs/outputs/fi/` |
+| Listas de entidades: AGF, securitizadoras, corredores, fintech, bancos, cooperativas, sistemas de pago | Registros públicos CMF (consulta.php: RGAGF, RGSEC, COBOL, RGPSF, BANCO, BCCOO, TPOPE, RGCCO, BCSAG, DCVAL) | 10, 20, 28 | `pipelines/entidades/actualizar_listas.py` (`entidades.yml`) | listas `*_maestro` + `docs/outputs/entidades/novedades.json` |
+| Lista de patrimonios separados | CMF, inscripciones de títulos de deuda por registro automático (`listado_titulos_deuda.php`) | 10, 20, 28 | ídem | `patrimonios_separados_maestro` |
+| Lista de AFP | Superintendencia de Pensiones, valor cuota diario por AFP (RUT desde el Registro de Valores CMF) | 10, 20, 28 | ídem | `afp_maestro_administradoras` |
+| Macro | Banco Central (API SIETE) | diario | `macro/scripts/daily_macro.py` + `macro/scripts/series_bcch.py` (`macro.yml`) | `docs/outputs/macro/` (3 tablas mensuales + `series/` y catálogo de 51 series) |
 
----
+Entidades nuevas: todas las listas se completan solas. `entidades.yml` agrega y actualiza la
+vigencia desde los registros públicos; FI regenera su registro completo en cada corrida; FFMM y
+seguros construyen su lista con los fondos / compañías que reportan; el actualizador IFRS agrega
+las CCAF y sociedades de factoring/leasing que reportan y avisa (`::notice::`) de las AGF y
+securitizadoras que reportan sin estar en la lista. Nunca se da de baja por simple ausencia.
 
-## 3. Ejecución y Auditoría
-Para validar la totalidad de las bases generadas automáticamente:
+Única tabla manual: el balance de patrimonios separados (planilla entregada, 2014-12 a 2025-12;
+la CMF solo publica esos estados como PDF).
+
+## Guardián: que ninguna tabla vuelva a quedar como foto fija
+
+`pipelines/auto/inventario.json` declara, para cada tabla de `data_manifest.json`, el workflow que
+la actualiza (o el motivo por el que es manual). `scripts/audit_automatizacion.py` lo revisa:
+
+* **en cada push** (`web_audit.yml`, job `automatizacion`): una tabla sin inventario, un workflow
+  sin horario o que no ejecuta su script, un script que no nombra el archivo de la tabla, o una
+  etiqueta «modo» que no calza, hacen fallar la auditoría;
+* **cada lunes** (job `frescura`, rama por defecto): cada workflow debe tener una corrida exitosa
+  dentro de su plazo (`max_dias`: 16 para los de 3 veces al mes, 3 para macro). Si no, se abre un
+  issue «Automatización: hay tablas que no se están actualizando» (o se comenta el abierto).
+
+Al agregar una tabla: sumarla al inventario con su workflow, o con `{"manual": "motivo"}`.
+
 ```bash
-python scripts/audit_web_full.py
+python scripts/audit_automatizacion.py                 # revisión estática
+GH_TOKEN=... python scripts/audit_automatizacion.py --frescura --repo dueño/repo --rama main
 ```
+
+Auditoría de la web completa:
+```bash
+python scripts/audit_navigation.py && python scripts/audit_web_full.py
+```
+
+**Sin sondas ni laboratorios (2026-09-28):** en `.github/workflows/` sólo quedan workflows que publican
+(o `pages` / `web_audit`). Las sondas bancarias, el laboratorio REPO, el laboratorio XML/XBRL, la sonda
+retail y los cotejos de muestra se eliminaron; si hace falta investigar algo, hacerlo en una rama y no
+dejar workflows sin publicación en la rama principal.

@@ -25,6 +25,7 @@ from bancos.scripts.inspect_cmf_bank_sample import (
     MAX_FILE,
     XLSX_INDEX,
     ZIP_INDEX,
+    SourceNotPublished,
     fetch,
     find_source,
     period_label,
@@ -405,6 +406,9 @@ def update_data_manifest(period_manifest: dict, latest: dict) -> None:
     entry = next((item for item in tables if item.get("id") == DATASET_ID), None)
     total = int(period_manifest["total_records"])
     start, end = period_manifest["periods"][0]["period"], period_manifest["periods"][-1]["period"]
+    # El archivo de referencia es siempre el período más reciente del manifiesto, no
+    # necesariamente el recién publicado (p. ej. si se corrige un mes intermedio).
+    latest = {**latest, "file": period_manifest["periods"][-1]["file"]}
     if entry is None:
         entry = {
             "id": DATASET_ID,
@@ -424,7 +428,6 @@ def update_data_manifest(period_manifest: dict, latest: dict) -> None:
             "origen": latest["zip_url"],
         }
         tables.append(entry)
-        catalog["total_tables"] = int(catalog.get("total_tables", len(tables) - 1)) + 1
     else:
         entry.update({
             "corte": f"{start} a {end}",
@@ -434,7 +437,9 @@ def update_data_manifest(period_manifest: dict, latest: dict) -> None:
             "registros_reales": total,
             "origen": latest["zip_url"],
         })
-    catalog["total_records"] = int(catalog.get("total_records", 0)) + int(latest["records"])
+    # Totales recalculados desde la lista: sumar incrementos hacía derivar el contador.
+    catalog["total_tables"] = len(tables)
+    catalog["total_records"] = sum(int(item.get("registros_reales") or 0) for item in tables)
     catalog["updated_at"] = date.today().isoformat()
     atomic_json(DATA_MANIFEST, catalog)
 
@@ -451,6 +456,16 @@ def load_manifest() -> dict:
     return json.loads(PARTITION_MANIFEST.read_text(encoding="utf-8")) if PARTITION_MANIFEST.exists() else {"periods": []}
 
 
+# La CMF publica el mes M hacia fines de M+1. Si un mes cerrado sigue sin aparecer en el índice
+# pasado este plazo desde su cierre, se falla en vez de esperar: probablemente cambió la página.
+DIAS_MAX_ESPERA = 75
+
+
+def dias_desde_cierre(period: str, today: date) -> int:
+    fin = date.fromisoformat(next_month(period) + "-01")
+    return (today - fin).days
+
+
 def catch_up(dry_run: bool, max_periods: int, today: date | None = None, publisher=None,
              start: str | None = None) -> dict:
     """Publica en orden todos los meses cerrados pendientes (uno a uno, cada uno con su gate).
@@ -462,12 +477,22 @@ def catch_up(dry_run: bool, max_periods: int, today: date | None = None, publish
     publisher = publisher or publish_period
     published: list[str] = []
     stopped_error = ""
+    waiting = ""
     for _ in range(max_periods):
         period = next_unpublished_period(load_manifest(), today, start)
         if period is None:
             break
         try:
             result = publisher(period, dry_run=dry_run)
+        except SourceNotPublished as exc:
+            atraso = dias_desde_cierre(period, today)
+            if atraso > DIAS_MAX_ESPERA:
+                raise RuntimeError(f"{period} lleva {atraso} días cerrado y no aparece en el índice CMF "
+                                   f"(máximo {DIAS_MAX_ESPERA}); revisar la página: {exc}") from exc
+            waiting = period
+            print(f"::notice title=CMF B1/B2/R1::{period} aún no está publicado en la CMF "
+                  f"({atraso} días desde el cierre); se reintenta en la próxima corrida.", flush=True)
+            break
         except Exception as exc:  # noqa: BLE001 - se reporta y decide abajo
             if not published:
                 raise
@@ -483,6 +508,7 @@ def catch_up(dry_run: bool, max_periods: int, today: date | None = None, publish
         "periods": published,
         "published_changed": bool(published),
         "stopped_error": stopped_error,
+        "waiting_for": waiting,
     }
 
 
@@ -501,7 +527,10 @@ def main() -> int:
                 period_label(args.desde)
             result = catch_up(args.dry_run, args.max_periods, start=args.desde or None)
             if not result["periods"]:
-                print("No hay un período CMF cerrado pendiente; no se modifica la web.")
+                if result.get("waiting_for"):
+                    print(f"Nada nuevo: {result['waiting_for']} aún no está en la CMF; no se modifica la web.")
+                else:
+                    print("No hay un período CMF cerrado pendiente; no se modifica la web.")
             else:
                 print(f"Períodos publicados: {', '.join(result['periods'])}")
         else:

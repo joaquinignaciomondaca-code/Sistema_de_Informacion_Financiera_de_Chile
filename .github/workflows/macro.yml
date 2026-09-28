@@ -1,13 +1,23 @@
 name: Actualización macro (incremental diaria)
 
 on:
-  workflow_dispatch:
   schedule:
-    # Diario 10:00 UTC. Solo consulta desde el inicio del último mes guardado.
+    # Diario 10:00 UTC. Cada serie se consulta solo desde su último dato (más una ventana corta
+    # de revisión); lo ya publicado nunca se borra.
     - cron: '0 10 * * *'
+  push:
+    branches:
+      - main
+      - arena/01a0e680-monitor-financiero-chile
+    paths:
+      - .github/workflows/macro.yml
+      - macro/scripts/series_bcch.py
+  workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+  pages: write
+  id-token: write
 
 concurrency:
   group: macro-update
@@ -16,9 +26,14 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
+    outputs:
+      publicado: ${{ steps.commit.outputs.publicado }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -26,8 +41,8 @@ jobs:
           cache-dependency-path: macro/requirements.txt
       - name: Instalar dependencias macro
         run: python -m pip install -r macro/requirements.txt
-      # Cada runner es efímero. Recuperar el último estado VALIDADO de Actions;
-      # si el cache expiró, el script usa los Parquet publicados del checkout.
+      # Estado validado de corridas anteriores que aún no llegó al repositorio (si el cache
+      # expiró, el script parte de los Parquet publicados del checkout).
       - name: Recuperar checkpoint incremental
         uses: actions/cache/restore@v4
         with:
@@ -35,7 +50,7 @@ jobs:
           key: macro-checkpoint-${{ github.run_id }}
           restore-keys: |
             macro-checkpoint-
-      - name: Descargar desde el último período y auditar
+      - name: Tablas mensuales (tasas, divisas, precios y actividad)
         id: update
         env:
           BCCH_EMAIL: ${{ secrets.USER_BCCH }}
@@ -43,23 +58,62 @@ jobs:
         run: |
           test -n "$BCCH_EMAIL" && test -n "$BCCH_PASSWORD" || { echo 'Faltan secrets USER_BCCH o PASSWORD_BCCH'; exit 1; }
           python -m macro.scripts.daily_macro
-      - name: Guardar checkpoint validado (sin publicar)
+      - name: Guardar checkpoint validado
         if: steps.update.outputs.checkpoint_changed == 'true'
         uses: actions/cache/save@v4
         with:
           path: .local-data/checkpoint/macro
           key: macro-checkpoint-${{ github.run_id }}
-      - name: Preparar paquete de datos para revisión humana
-        if: steps.update.outputs.published_changed == 'true'
+      - name: Catálogo amplio de series (formato largo)
+        # Una serie que falla no bloquea a las demás ni a las tablas mensuales ya validadas.
+        if: always()
+        env:
+          BCCH_EMAIL: ${{ secrets.USER_BCCH }}
+          BCCH_PASSWORD: ${{ secrets.PASSWORD_BCCH }}
+        run: python -m macro.scripts.series_bcch
+      - name: Publicar en el repositorio
+        id: commit
+        if: always()
         run: |
-          mkdir -p .local-data/review/docs/outputs/macro
-          cp docs/outputs/macro/*.parquet docs/outputs/macro/*.json .local-data/review/docs/outputs/macro/
-          cp data_manifest.json .local-data/review/
-      - name: Guardar resultado validado (sin commits ni publicación directa)
-        if: steps.update.outputs.published_changed == 'true'
-        uses: actions/upload-artifact@v4
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/outputs/macro
+          if git diff --cached --quiet; then echo 'Sin cambios.'; echo "publicado=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          git commit -m "Macro BCCh: actualización diaria $(date -u +%F)"
+          git checkout -- data_manifest.json
+          datos=$(git rev-parse HEAD)
+          for i in 1 2 3 4 5; do
+            git fetch origin "${GITHUB_REF_NAME}"
+            git reset --hard FETCH_HEAD
+            git cherry-pick "$datos"
+            python -m macro.scripts.series_bcch --solo-data-manifest
+            git add data_manifest.json
+            git diff --cached --quiet || git commit -m "Macro BCCh: data_manifest"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then echo "publicado=true" >> "$GITHUB_OUTPUT"; exit 0; fi
+            sleep 20
+          done
+          exit 1
+
+  desplegar-sitio:
+    needs: update
+    if: needs.update.outputs.publicado == 'true' && github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
         with:
-          name: macro-validada
-          path: .local-data/review/
-          retention-days: 30
-          if-no-files-found: error
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+      - run: git pull --ff-only origin "${GITHUB_REF_NAME}" || true
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,2467 @@
+{
+  "periodos": {
+    "200903": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:22+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=200903&termino=200912",
+      "sha256": "55e5072e052389d9c939e2f63c9e0ab5c39b80741a5ec7bfbfe50e2b271eb1a2",
+      "lineas": 10605,
+      "sociedades": 86,
+      "sectores": {
+        "agf": {
+          "entidades": 0,
+          "filas": {
+            "balance": 0,
+            "resultados": 0
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 0,
+          "filas": {
+            "balance": 0,
+            "resultados": 0
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 0,
+          "filas": {
+            "balance": 0,
+            "resultados": 0
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (la descarga no es el TXT de la CMF)"
+      ]
+    },
+    "200906": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:23+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=200903&termino=200912",
+      "sha256": "55e5072e052389d9c939e2f63c9e0ab5c39b80741a5ec7bfbfe50e2b271eb1a2",
+      "lineas": 10803,
+      "sociedades": 89,
+      "sectores": {
+        "agf": {
+          "entidades": 0,
+          "filas": {
+            "balance": 0,
+            "resultados": 0
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 0,
+          "filas": {
+            "balance": 0,
+            "resultados": 0
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 0,
+          "filas": {
+            "balance": 0,
+            "resultados": 0
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (el archivo no trae filas de 200906)"
+      ]
+    },
+    "200909": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:23+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=200903&termino=200912",
+      "sha256": "55e5072e052389d9c939e2f63c9e0ab5c39b80741a5ec7bfbfe50e2b271eb1a2",
+      "lineas": 11281,
+      "sociedades": 93,
+      "sectores": {
+        "agf": {
+          "entidades": 0,
+          "filas": {
+            "balance": 0,
+            "resultados": 0
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 0,
+          "filas": {
+            "balance": 0,
+            "resultados": 0
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 0,
+          "filas": {
+            "balance": 0,
+            "resultados": 0
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (el archivo no trae filas de 200909)"
+      ]
+    },
+    "200912": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:24+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=200903&termino=200912",
+      "sha256": "55e5072e052389d9c939e2f63c9e0ab5c39b80741a5ec7bfbfe50e2b271eb1a2",
+      "lineas": 24294,
+      "sociedades": 199,
+      "sectores": {
+        "agf": {
+          "entidades": 0,
+          "filas": {
+            "balance": 0,
+            "resultados": 0
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 1,
+          "filas": {
+            "balance": 41,
+            "resultados": 24
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 0,
+          "filas": {
+            "balance": 0,
+            "resultados": 0
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (el archivo no trae filas de 200912)"
+      ]
+    },
+    "201006": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:29+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201003&termino=201012",
+      "sha256": "a3c6e902364e9de2c76ea4ed46566c16f2b7432112698cbec241ac2c93790b20",
+      "lineas": 34159,
+      "sociedades": 320,
+      "sectores": {
+        "agf": {
+          "entidades": 1,
+          "filas": {
+            "balance": 29,
+            "resultados": 18
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 11,
+          "filas": {
+            "balance": 335,
+            "resultados": 305
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 143,
+            "resultados": 100
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (el archivo no trae filas de 201006)"
+      ]
+    },
+    "201009": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:31+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201003&termino=201012",
+      "sha256": "a3c6e902364e9de2c76ea4ed46566c16f2b7432112698cbec241ac2c93790b20",
+      "lineas": 34641,
+      "sociedades": 320,
+      "sectores": {
+        "agf": {
+          "entidades": 1,
+          "filas": {
+            "balance": 29,
+            "resultados": 20
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 11,
+          "filas": {
+            "balance": 325,
+            "resultados": 324
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 130,
+            "resultados": 94
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (el archivo no trae filas de 201009)"
+      ]
+    },
+    "201012": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:32+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201003&termino=201012",
+      "sha256": "a3c6e902364e9de2c76ea4ed46566c16f2b7432112698cbec241ac2c93790b20",
+      "lineas": 45135,
+      "sociedades": 426,
+      "sectores": {
+        "agf": {
+          "entidades": 31,
+          "filas": {
+            "balance": 854,
+            "resultados": 785
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 11,
+          "filas": {
+            "balance": 303,
+            "resultados": 286
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 111,
+            "resultados": 92
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (el archivo no trae filas de 201012)"
+      ]
+    },
+    "201103": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:37+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201103&termino=201112",
+      "sha256": "c46bc51fcbb2ae0e9e63f6ca5c9dc0b6fcd97d28b92a7ce893ae8ed708318ca2",
+      "lineas": 38709,
+      "sociedades": 395,
+      "sectores": {
+        "agf": {
+          "entidades": 31,
+          "filas": {
+            "balance": 912,
+            "resultados": 796
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 11,
+          "filas": {
+            "balance": 256,
+            "resultados": 259
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 126,
+            "resultados": 91
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (el archivo no trae filas de 201103)"
+      ]
+    },
+    "201106": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:38+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201103&termino=201112",
+      "sha256": "c46bc51fcbb2ae0e9e63f6ca5c9dc0b6fcd97d28b92a7ce893ae8ed708318ca2",
+      "lineas": 38646,
+      "sociedades": 394,
+      "sectores": {
+        "agf": {
+          "entidades": 32,
+          "filas": {
+            "balance": 889,
+            "resultados": 814
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 11,
+          "filas": {
+            "balance": 241,
+            "resultados": 254
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 127,
+            "resultados": 92
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (el archivo no trae filas de 201106)"
+      ]
+    },
+    "201109": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:39+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201103&termino=201112",
+      "sha256": "c46bc51fcbb2ae0e9e63f6ca5c9dc0b6fcd97d28b92a7ce893ae8ed708318ca2",
+      "lineas": 39075,
+      "sociedades": 394,
+      "sectores": {
+        "agf": {
+          "entidades": 33,
+          "filas": {
+            "balance": 977,
+            "resultados": 858
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 11,
+          "filas": {
+            "balance": 246,
+            "resultados": 252
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 130,
+            "resultados": 93
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (el archivo no trae filas de 201109)"
+      ]
+    },
+    "201112": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:40+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201103&termino=201112",
+      "sha256": "c46bc51fcbb2ae0e9e63f6ca5c9dc0b6fcd97d28b92a7ce893ae8ed708318ca2",
+      "lineas": 57764,
+      "sociedades": 589,
+      "sectores": {
+        "agf": {
+          "entidades": 33,
+          "filas": {
+            "balance": 961,
+            "resultados": 829
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 217,
+            "resultados": 242
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 128,
+            "resultados": 92
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (el archivo no trae filas de 201112)"
+      ]
+    },
+    "201203": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:45+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201203&termino=201212",
+      "sha256": "a3e90773432d3d7188e74548260089bd841b059db5e1b5408fcc495012cb4fba",
+      "lineas": 32160,
+      "sociedades": 394,
+      "sectores": {
+        "agf": {
+          "entidades": 32,
+          "filas": {
+            "balance": 837,
+            "resultados": 707
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 223,
+            "resultados": 189
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 105,
+            "resultados": 72
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (el archivo no trae filas de 201203)"
+      ]
+    },
+    "201206": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:46+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201203&termino=201212",
+      "sha256": "a3e90773432d3d7188e74548260089bd841b059db5e1b5408fcc495012cb4fba",
+      "lineas": 32665,
+      "sociedades": 390,
+      "sectores": {
+        "agf": {
+          "entidades": 34,
+          "filas": {
+            "balance": 904,
+            "resultados": 769
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 240,
+            "resultados": 222
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 105,
+            "resultados": 71
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (el archivo no trae filas de 201206)"
+      ]
+    },
+    "201209": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:47+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201203&termino=201212",
+      "sha256": "a3e90773432d3d7188e74548260089bd841b059db5e1b5408fcc495012cb4fba",
+      "lineas": 31935,
+      "sociedades": 388,
+      "sectores": {
+        "agf": {
+          "entidades": 34,
+          "filas": {
+            "balance": 875,
+            "resultados": 739
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 212,
+            "resultados": 197
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 105,
+            "resultados": 71
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (el archivo no trae filas de 201209)"
+      ]
+    },
+    "201212": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:48+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201203&termino=201212",
+      "sha256": "a3e90773432d3d7188e74548260089bd841b059db5e1b5408fcc495012cb4fba",
+      "lineas": 44689,
+      "sociedades": 576,
+      "sectores": {
+        "agf": {
+          "entidades": 34,
+          "filas": {
+            "balance": 816,
+            "resultados": 685
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 200,
+            "resultados": 191
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 106,
+            "resultados": 75
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (el archivo no trae filas de 201212)"
+      ]
+    },
+    "201303": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:52+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201303&termino=201312",
+      "sha256": "f061ec46790947d6eefe22159afd43cf1a393f0c9a229fc7baef17425d7a868a",
+      "lineas": 29075,
+      "sociedades": 385,
+      "sectores": {
+        "agf": {
+          "entidades": 33,
+          "filas": {
+            "balance": 796,
+            "resultados": 612
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 196,
+            "resultados": 174
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 106,
+            "resultados": 69
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (el archivo no trae filas de 201303)"
+      ]
+    },
+    "201306": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:53+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201303&termino=201312",
+      "sha256": "f061ec46790947d6eefe22159afd43cf1a393f0c9a229fc7baef17425d7a868a",
+      "lineas": 30613,
+      "sociedades": 385,
+      "sectores": {
+        "agf": {
+          "entidades": 33,
+          "filas": {
+            "balance": 796,
+            "resultados": 636
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 199,
+            "resultados": 181
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 107,
+            "resultados": 69
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (el archivo no trae filas de 201306)"
+      ]
+    },
+    "201309": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:54+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201303&termino=201312",
+      "sha256": "f061ec46790947d6eefe22159afd43cf1a393f0c9a229fc7baef17425d7a868a",
+      "lineas": 30990,
+      "sociedades": 388,
+      "sectores": {
+        "agf": {
+          "entidades": 33,
+          "filas": {
+            "balance": 800,
+            "resultados": 641
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 198,
+            "resultados": 181
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 106,
+            "resultados": 69
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (el archivo no trae filas de 201309)"
+      ]
+    },
+    "201312": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:54+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201303&termino=201312",
+      "sha256": "f061ec46790947d6eefe22159afd43cf1a393f0c9a229fc7baef17425d7a868a",
+      "lineas": 45147,
+      "sociedades": 591,
+      "sectores": {
+        "agf": {
+          "entidades": 34,
+          "filas": {
+            "balance": 819,
+            "resultados": 664
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 202,
+            "resultados": 180
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 105,
+            "resultados": 71
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": [
+        "trimestre leído del archivo anual (el archivo no trae filas de 201312)"
+      ]
+    },
+    "201403": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:56+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201403&termino=201403",
+      "sha256": "bb45a3edd720fc4289e7d949fba798c95850287787cfc2b70e23f9bf67338cc9",
+      "lineas": 30386,
+      "sociedades": 396,
+      "sectores": {
+        "agf": {
+          "entidades": 35,
+          "filas": {
+            "balance": 841,
+            "resultados": 665
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 200,
+            "resultados": 172
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 101,
+            "resultados": 74
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201406": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:00:59+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201406&termino=201406",
+      "sha256": "38361ab4205f188e7be650bc5f5db97d1bdb0391dcd6f33d34fd98c7719aff06",
+      "lineas": 30761,
+      "sociedades": 392,
+      "sectores": {
+        "agf": {
+          "entidades": 35,
+          "filas": {
+            "balance": 844,
+            "resultados": 672
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 199,
+            "resultados": 177
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 103,
+            "resultados": 73
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201409": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:01+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201409&termino=201409",
+      "sha256": "9f0860e0da17da70b9d87471d1f2d9bc9a0c2196002d8ad78bd8d9209d9706a9",
+      "lineas": 31107,
+      "sociedades": 390,
+      "sectores": {
+        "agf": {
+          "entidades": 35,
+          "filas": {
+            "balance": 845,
+            "resultados": 682
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 197,
+            "resultados": 176
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 102,
+            "resultados": 74
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201412": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:03+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201412&termino=201412",
+      "sha256": "6b48aaf9dd0fb86bdf4349a22a2a1da9c4d4c4214afea8473d578aab4d459227",
+      "lineas": 44294,
+      "sociedades": 581,
+      "sectores": {
+        "agf": {
+          "entidades": 34,
+          "filas": {
+            "balance": 823,
+            "resultados": 663
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 199,
+            "resultados": 180
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 104,
+            "resultados": 78
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201503": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:05+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201503&termino=201503",
+      "sha256": "c39b764702cad74cba4e7a176946bd892fca06f775664b503c5cf1cba3305ffc",
+      "lineas": 29990,
+      "sociedades": 392,
+      "sectores": {
+        "agf": {
+          "entidades": 37,
+          "filas": {
+            "balance": 837,
+            "resultados": 685
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 199,
+            "resultados": 172
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 103,
+            "resultados": 72
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201506": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:07+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201506&termino=201506",
+      "sha256": "844b080973e42563ae4b62087ca80935515126b66bb8a43773f1b2256b8e8db0",
+      "lineas": 30526,
+      "sociedades": 390,
+      "sectores": {
+        "agf": {
+          "entidades": 38,
+          "filas": {
+            "balance": 904,
+            "resultados": 727
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 197,
+            "resultados": 181
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 105,
+            "resultados": 72
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201509": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:09+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201509&termino=201509",
+      "sha256": "e3b21e2847389cf619b982b8ff7a06e9b017c32caee498f48268f6eb10e26632",
+      "lineas": 30839,
+      "sociedades": 392,
+      "sectores": {
+        "agf": {
+          "entidades": 42,
+          "filas": {
+            "balance": 955,
+            "resultados": 786
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 197,
+            "resultados": 177
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 107,
+            "resultados": 73
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201512": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:12+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201512&termino=201512",
+      "sha256": "b82674b1534387a800d90bf704713bfea38fb705b02df4a8a5c9351d9987b6ac",
+      "lineas": 42442,
+      "sociedades": 580,
+      "sectores": {
+        "agf": {
+          "entidades": 44,
+          "filas": {
+            "balance": 1021,
+            "resultados": 822
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 196,
+            "resultados": 175
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 108,
+            "resultados": 72
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201603": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:14+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201603&termino=201603",
+      "sha256": "6b960e14db58cec4936bdda3fb99c66e77b974f1cc22d96666009b7f4bba5a04",
+      "lineas": 29715,
+      "sociedades": 390,
+      "sectores": {
+        "agf": {
+          "entidades": 44,
+          "filas": {
+            "balance": 1006,
+            "resultados": 812
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 195,
+            "resultados": 172
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 108,
+            "resultados": 75
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201606": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:16+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201606&termino=201606",
+      "sha256": "e214231c4129e77e9dfea11e7b11dc6746d829d510f1359ca6f124cc5145a00d",
+      "lineas": 30798,
+      "sociedades": 391,
+      "sectores": {
+        "agf": {
+          "entidades": 47,
+          "filas": {
+            "balance": 1044,
+            "resultados": 877
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 198,
+            "resultados": 177
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 108,
+            "resultados": 75
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201609": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:18+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201609&termino=201609",
+      "sha256": "13cc3ffc5f6688d44ebc1aa47705a579a7131c18c62b29d4b5f0acb1fb0458a5",
+      "lineas": 30587,
+      "sociedades": 385,
+      "sectores": {
+        "agf": {
+          "entidades": 47,
+          "filas": {
+            "balance": 1060,
+            "resultados": 883
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 225,
+            "resultados": 194
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 108,
+            "resultados": 75
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201612": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:21+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201612&termino=201612",
+      "sha256": "f3570968d416d656a9eb38fa66a542559427389e080fda57c7695df5499bfd6d",
+      "lineas": 42031,
+      "sociedades": 566,
+      "sectores": {
+        "agf": {
+          "entidades": 49,
+          "filas": {
+            "balance": 1127,
+            "resultados": 945
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 221,
+            "resultados": 191
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 106,
+            "resultados": 77
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201703": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:23+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201703&termino=201703",
+      "sha256": "28329497e3c56f3c6dec499548ba68f67b335598da2ded7aec1eec03d8a622f0",
+      "lineas": 29089,
+      "sociedades": 379,
+      "sectores": {
+        "agf": {
+          "entidades": 49,
+          "filas": {
+            "balance": 1143,
+            "resultados": 918
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 227,
+            "resultados": 198
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 106,
+            "resultados": 74
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201706": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:25+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201706&termino=201706",
+      "sha256": "990562a343fed0c4a0ca8f04893c5b27178cba095c45b902ff34ab93500939ed",
+      "lineas": 29963,
+      "sociedades": 378,
+      "sectores": {
+        "agf": {
+          "entidades": 49,
+          "filas": {
+            "balance": 1144,
+            "resultados": 938
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 192,
+            "resultados": 181
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 105,
+            "resultados": 74
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201709": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:27+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201709&termino=201709",
+      "sha256": "b7f8c8fa3c06d3eaced4f2cabde793bbecf8a3d58203755415a16402f07b820f",
+      "lineas": 30175,
+      "sociedades": 377,
+      "sectores": {
+        "agf": {
+          "entidades": 48,
+          "filas": {
+            "balance": 1131,
+            "resultados": 931
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 195,
+            "resultados": 179
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 104,
+            "resultados": 74
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201712": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:29+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201712&termino=201712",
+      "sha256": "bf1244861bb6abd023c712ae6ac2ba962e4d12cf2ed5f690fa7b0f0b73a5bb63",
+      "lineas": 41623,
+      "sociedades": 563,
+      "sectores": {
+        "agf": {
+          "entidades": 47,
+          "filas": {
+            "balance": 1082,
+            "resultados": 911
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 9,
+          "filas": {
+            "balance": 181,
+            "resultados": 166
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 104,
+            "resultados": 74
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201803": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:31+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201803&termino=201803",
+      "sha256": "ef069050794f6b2a412ff322dc6a8ea662ec07535f4964867100eec458a43cc5",
+      "lineas": 29152,
+      "sociedades": 379,
+      "sectores": {
+        "agf": {
+          "entidades": 48,
+          "filas": {
+            "balance": 1113,
+            "resultados": 893
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 9,
+          "filas": {
+            "balance": 179,
+            "resultados": 162
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 104,
+            "resultados": 74
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201806": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:33+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201806&termino=201806",
+      "sha256": "b9dc9d77afa4d89e47220bbb461c20d815ee570a99fe2611a0b482093c5d40b8",
+      "lineas": 29587,
+      "sociedades": 373,
+      "sectores": {
+        "agf": {
+          "entidades": 48,
+          "filas": {
+            "balance": 1118,
+            "resultados": 920
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 9,
+          "filas": {
+            "balance": 181,
+            "resultados": 169
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 106,
+            "resultados": 74
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201809": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:36+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201809&termino=201809",
+      "sha256": "dda869606117f099a05754d55c4a8a1816c262d585e72bb75157b8826b48167d",
+      "lineas": 29625,
+      "sociedades": 372,
+      "sectores": {
+        "agf": {
+          "entidades": 49,
+          "filas": {
+            "balance": 1132,
+            "resultados": 919
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 9,
+          "filas": {
+            "balance": 184,
+            "resultados": 164
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 107,
+            "resultados": 74
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201812": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:38+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201812&termino=201812",
+      "sha256": "b3472bba149d2be5825edd5c64038269ebea554033538c6e079ce71bcd68e180",
+      "lineas": 41418,
+      "sociedades": 567,
+      "sectores": {
+        "agf": {
+          "entidades": 53,
+          "filas": {
+            "balance": 1185,
+            "resultados": 1000
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 190,
+            "resultados": 180
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 106,
+            "resultados": 74
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201903": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:40+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201903&termino=201903",
+      "sha256": "63e506a39e262699193f815b51b31b890275f4bfef11f63697506f738a4aaf1c",
+      "lineas": 29052,
+      "sociedades": 377,
+      "sectores": {
+        "agf": {
+          "entidades": 52,
+          "filas": {
+            "balance": 1223,
+            "resultados": 957
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 197,
+            "resultados": 178
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 3,
+          "filas": {
+            "balance": 106,
+            "resultados": 73
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201906": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:42+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201906&termino=201906",
+      "sha256": "193bc6826f749eb6684feed8f8183d4678d67ce10b3a5883a4bdbf25c9cc38fa",
+      "lineas": 30106,
+      "sociedades": 379,
+      "sectores": {
+        "agf": {
+          "entidades": 53,
+          "filas": {
+            "balance": 1261,
+            "resultados": 997
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 200,
+            "resultados": 182
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 133,
+            "resultados": 96
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201909": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:44+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201909&termino=201909",
+      "sha256": "a65e93b8298ac491ffcb8dceb51bc26e9a65bea3c57802d11bbf53bb460a579c",
+      "lineas": 30538,
+      "sociedades": 380,
+      "sectores": {
+        "agf": {
+          "entidades": 53,
+          "filas": {
+            "balance": 1265,
+            "resultados": 1027
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 204,
+            "resultados": 183
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 132,
+            "resultados": 96
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "201912": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:47+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=201912&termino=201912",
+      "sha256": "e38fb664619a105b4262d9d318983f3b862e6a9474aef8181fca6b105d8c6f5f",
+      "lineas": 42980,
+      "sociedades": 574,
+      "sectores": {
+        "agf": {
+          "entidades": 52,
+          "filas": {
+            "balance": 1243,
+            "resultados": 1013
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 212,
+            "resultados": 186
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 131,
+            "resultados": 99
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202003": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:49+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202003&termino=202003",
+      "sha256": "425f7f743b61e0cdb29043fdee313562e95a061bea6f36edccdd7374da81d35f",
+      "lineas": 30575,
+      "sociedades": 388,
+      "sectores": {
+        "agf": {
+          "entidades": 51,
+          "filas": {
+            "balance": 1238,
+            "resultados": 969
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 216,
+            "resultados": 185
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 139,
+            "resultados": 86
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202006": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:51+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202006&termino=202006",
+      "sha256": "847b9acd66a6a36e3303c73d880dfc2ce7a910690a9b102057946d36675f0f70",
+      "lineas": 31961,
+      "sociedades": 394,
+      "sectores": {
+        "agf": {
+          "entidades": 52,
+          "filas": {
+            "balance": 1262,
+            "resultados": 1010
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 213,
+            "resultados": 183
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 142,
+            "resultados": 85
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202009": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:53+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202009&termino=202009",
+      "sha256": "cb105df497671518665f6a48b8d07f5a615bc3e95b04a38298f006eabff441c8",
+      "lineas": 32172,
+      "sociedades": 393,
+      "sectores": {
+        "agf": {
+          "entidades": 52,
+          "filas": {
+            "balance": 1262,
+            "resultados": 1010
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 209,
+            "resultados": 187
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 141,
+            "resultados": 85
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202012": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:55+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202012&termino=202012",
+      "sha256": "68b8aaab644c24a4dbfd5377fbccd220c335a216c7f461369b96016c5ff96c55",
+      "lineas": 43962,
+      "sociedades": 579,
+      "sectores": {
+        "agf": {
+          "entidades": 54,
+          "filas": {
+            "balance": 1300,
+            "resultados": 1060
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 207,
+            "resultados": 190
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 143,
+            "resultados": 88
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202103": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:57+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202103&termino=202103",
+      "sha256": "d1459bc1f1df612cde3069c356f9f027c1614f3f9c9a234bb08a72000f7c538a",
+      "lineas": 30834,
+      "sociedades": 395,
+      "sectores": {
+        "agf": {
+          "entidades": 55,
+          "filas": {
+            "balance": 1313,
+            "resultados": 1052
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 205,
+            "resultados": 182
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 142,
+            "resultados": 85
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202106": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:01:59+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202106&termino=202106",
+      "sha256": "3f0edf04d12e56f54c6352fd87b9747a442c0f546800971eff43569420ac341b",
+      "lineas": 32008,
+      "sociedades": 399,
+      "sectores": {
+        "agf": {
+          "entidades": 55,
+          "filas": {
+            "balance": 1322,
+            "resultados": 1067
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 203,
+            "resultados": 179
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 141,
+            "resultados": 97
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202109": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:02+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202109&termino=202109",
+      "sha256": "6970bbb83ecc7453d9facea397f27c9c74a77124de9a9bc17a257135bac74c6f",
+      "lineas": 32613,
+      "sociedades": 402,
+      "sectores": {
+        "agf": {
+          "entidades": 55,
+          "filas": {
+            "balance": 1317,
+            "resultados": 1069
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 200,
+            "resultados": 185
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 141,
+            "resultados": 97
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202112": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:04+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202112&termino=202112",
+      "sha256": "58d73c1a469f674cf74a586b8f7ccfa47f0b74e89b03abf1f7faa46baff02db8",
+      "lineas": 43929,
+      "sociedades": 574,
+      "sectores": {
+        "agf": {
+          "entidades": 55,
+          "filas": {
+            "balance": 1342,
+            "resultados": 1083
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 203,
+            "resultados": 187
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 143,
+            "resultados": 101
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202203": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:06+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202203&termino=202203",
+      "sha256": "300cd1e7d5a25e3ecdeab32109dbef680ed55b6db6eadca0df3764d7c6b28038",
+      "lineas": 31221,
+      "sociedades": 395,
+      "sectores": {
+        "agf": {
+          "entidades": 54,
+          "filas": {
+            "balance": 1328,
+            "resultados": 1036
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 205,
+            "resultados": 182
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 144,
+            "resultados": 95
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202206": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:08+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202206&termino=202206",
+      "sha256": "97b6d8ba7000b31ffbca8ee6195726be7eb2e3c24fae74095205442fa29652fc",
+      "lineas": 31938,
+      "sociedades": 391,
+      "sectores": {
+        "agf": {
+          "entidades": 55,
+          "filas": {
+            "balance": 1361,
+            "resultados": 1099
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 199,
+            "resultados": 181
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 146,
+            "resultados": 95
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202209": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:10+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202209&termino=202209",
+      "sha256": "b20cd84591fe9764aa0412812e593369b4178e1568750b4cafadf0000bc431e3",
+      "lineas": 32238,
+      "sociedades": 391,
+      "sectores": {
+        "agf": {
+          "entidades": 55,
+          "filas": {
+            "balance": 1348,
+            "resultados": 1087
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 9,
+          "filas": {
+            "balance": 193,
+            "resultados": 164
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 145,
+            "resultados": 95
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202212": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:13+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202212&termino=202212",
+      "sha256": "0dd5cd86dff4eb798b3ea1ccf8cd4edc937c20a26ebb88e233baf0a78ff7baf9",
+      "lineas": 44479,
+      "sociedades": 579,
+      "sectores": {
+        "agf": {
+          "entidades": 57,
+          "filas": {
+            "balance": 1361,
+            "resultados": 1127
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 207,
+            "resultados": 184
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 145,
+            "resultados": 95
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202303": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:15+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202303&termino=202303",
+      "sha256": "5308e48ce6a2e65af57ce8733cc34e939ae90aa0af35f81efbe43b540b17a061",
+      "lineas": 30695,
+      "sociedades": 387,
+      "sectores": {
+        "agf": {
+          "entidades": 57,
+          "filas": {
+            "balance": 1380,
+            "resultados": 1089
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 9,
+          "filas": {
+            "balance": 198,
+            "resultados": 159
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 143,
+            "resultados": 93
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202306": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:17+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202306&termino=202306",
+      "sha256": "c956c9d8341beff3149ee5f423ea3d3170099c4b1c9b135cf7ba407591f431bd",
+      "lineas": 31358,
+      "sociedades": 385,
+      "sectores": {
+        "agf": {
+          "entidades": 56,
+          "filas": {
+            "balance": 1372,
+            "resultados": 1108
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 9,
+          "filas": {
+            "balance": 194,
+            "resultados": 165
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 143,
+            "resultados": 94
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202309": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:19+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202309&termino=202309",
+      "sha256": "9cbc0b5f3f93ec4ae83d8c1004fa9dada75db2de65fb59e73aa2ac6e655cbd21",
+      "lineas": 31603,
+      "sociedades": 385,
+      "sectores": {
+        "agf": {
+          "entidades": 56,
+          "filas": {
+            "balance": 1366,
+            "resultados": 1115
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 9,
+          "filas": {
+            "balance": 196,
+            "resultados": 164
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 142,
+            "resultados": 94
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202312": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:22+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202312&termino=202312",
+      "sha256": "65b84924ac1fd9442580551389164e92c5d29e2f866c26e1d887bedf343274ca",
+      "lineas": 44409,
+      "sociedades": 583,
+      "sectores": {
+        "agf": {
+          "entidades": 56,
+          "filas": {
+            "balance": 1380,
+            "resultados": 1136
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 213,
+            "resultados": 185
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 144,
+            "resultados": 95
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202403": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:24+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202403&termino=202403",
+      "sha256": "cf01be63d25ab7b46dda58c48b5df41099d36e29b50e9e3503f39153b84e0426",
+      "lineas": 30469,
+      "sociedades": 385,
+      "sectores": {
+        "agf": {
+          "entidades": 56,
+          "filas": {
+            "balance": 1385,
+            "resultados": 1111
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 217,
+            "resultados": 174
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 143,
+            "resultados": 91
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202406": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:26+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202406&termino=202406",
+      "sha256": "6268d9b630f025a19929206dd8ec9250d627f11d2674167406f81acc2f9d0495",
+      "lineas": 31268,
+      "sociedades": 384,
+      "sectores": {
+        "agf": {
+          "entidades": 55,
+          "filas": {
+            "balance": 1360,
+            "resultados": 1101
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 213,
+            "resultados": 186
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 142,
+            "resultados": 91
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202409": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:28+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202409&termino=202409",
+      "sha256": "d7657b91091e2f3e98a3bc401c58278e79d6a2ca3958c9f8f0d8e042ccff9016",
+      "lineas": 31115,
+      "sociedades": 380,
+      "sectores": {
+        "agf": {
+          "entidades": 56,
+          "filas": {
+            "balance": 1378,
+            "resultados": 1123
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 209,
+            "resultados": 186
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 142,
+            "resultados": 94
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202412": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:30+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202412&termino=202412",
+      "sha256": "0fc4a339b384d045ed3efe02e3e7618210607ab2529f5813638054920e7da8fa",
+      "lineas": 44010,
+      "sociedades": 579,
+      "sectores": {
+        "agf": {
+          "entidades": 56,
+          "filas": {
+            "balance": 1375,
+            "resultados": 1137
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 10,
+          "filas": {
+            "balance": 209,
+            "resultados": 186
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 141,
+            "resultados": 101
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202503": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:33+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202503&termino=202503",
+      "sha256": "bb7c825b321b61e70e6243e576e47c91417acc0fb4f3aaf6706ca0e69bdec778",
+      "lineas": 29940,
+      "sociedades": 377,
+      "sectores": {
+        "agf": {
+          "entidades": 54,
+          "filas": {
+            "balance": 1338,
+            "resultados": 1063
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 9,
+          "filas": {
+            "balance": 197,
+            "resultados": 161
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 140,
+            "resultados": 100
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202506": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:35+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202506&termino=202506",
+      "sha256": "ac9ec5bee45d44844b4791394a2c25a1d9c2ad4ff9bb315cc392c8112bb0478e",
+      "lineas": 30841,
+      "sociedades": 378,
+      "sectores": {
+        "agf": {
+          "entidades": 55,
+          "filas": {
+            "balance": 1368,
+            "resultados": 1100
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 9,
+          "filas": {
+            "balance": 196,
+            "resultados": 165
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 140,
+            "resultados": 98
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202509": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:37+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202509&termino=202509",
+      "sha256": "9e52e14b86c8a0023fdf8a53724b1ae6439b5f48c2047c89b5f2e5415cf1175d",
+      "lineas": 30829,
+      "sociedades": 376,
+      "sectores": {
+        "agf": {
+          "entidades": 54,
+          "filas": {
+            "balance": 1341,
+            "resultados": 1095
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 9,
+          "filas": {
+            "balance": 197,
+            "resultados": 166
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 141,
+            "resultados": 98
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202512": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:39+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202512&termino=202512",
+      "sha256": "3a64949c793b667734e7c23a78843ba9c97121b364b2f5ca376ee8fe2a447ffd",
+      "lineas": 43335,
+      "sociedades": 565,
+      "sectores": {
+        "agf": {
+          "entidades": 53,
+          "filas": {
+            "balance": 1321,
+            "resultados": 1068
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 9,
+          "filas": {
+            "balance": 195,
+            "resultados": 161
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 141,
+            "resultados": 98
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202603": {
+      "cerrado": true,
+      "leido_utc": "2026-09-28T08:02:41+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202603&termino=202603",
+      "sha256": "eb9d919027b9512bcfa804b92c0fcdd40d11a7066d92af18b7acb70bee9b2c4b",
+      "lineas": 29510,
+      "sociedades": 368,
+      "sectores": {
+        "agf": {
+          "entidades": 53,
+          "filas": {
+            "balance": 1327,
+            "resultados": 1031
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 9,
+          "filas": {
+            "balance": 191,
+            "resultados": 153
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 141,
+            "resultados": 94
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    },
+    "202606": {
+      "cerrado": false,
+      "leido_utc": "2026-09-28T18:01:47+00:00",
+      "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202606&termino=202606",
+      "sha256": "2a62ffc2eb7e4a07384b68994d34662b6368be1c3a1243fec50647d4ffc8dd30",
+      "lineas": 30213,
+      "sociedades": 368,
+      "solo_lista_fuera": {
+        "factoring_leasing": []
+      },
+      "sectores": {
+        "agf": {
+          "entidades": 53,
+          "filas": {
+            "balance": 1337,
+            "resultados": 1054
+          },
+          "fuera_de_lista": []
+        },
+        "securitizadoras": {
+          "entidades": 9,
+          "filas": {
+            "balance": 195,
+            "resultados": 157
+          },
+          "fuera_de_lista": []
+        },
+        "cajas_compensacion": {
+          "entidades": 4,
+          "filas": {
+            "balance": 141,
+            "resultados": 94
+          },
+          "fuera_de_lista": []
+        }
+      },
+      "avisos": []
+    }
+  },
+  "updated_at": "2026-09-28T18:29:29+00:00",
+  "entidades_fuera_de_lista_ultimo_trimestre": {
+    "periodo": "202606",
+    "agf": [],
+    "securitizadoras": [],
+    "cajas_compensacion": []
+  }
+}

@@ -21,184 +21,76 @@ const EXPLORER_TREE = [
     type: "group",
     label: "COMPAÑIAS DE SEGUROS (CMF)",
     badges: [
-      { type: "entities", text: "103 Entidades", title: "103 Compañías de Seguros reguladas (61 Vida + 42 Generales)" },
-      { type: "data", text: "12.5M Datos", title: "12.5M Registros históricos de carteras e inversiones CMF 1835" }
+      { type: "entities", text: "Vida y Generales", title: "Compañías de seguros de vida y generales que informan su cartera a la CMF (Circular 1835)" },
+      { type: "data", text: "Actualización automática", title: "Se actualiza sola 3 veces al mes; cada mes se valida antes de publicarse" }
     ],
     status: "active",
     children: [
       {
-        id: "sector_vida",
+        id: "sector_seguros",
         type: "sector",
-        label: "Seguros de Vida",
-        sector: "vida",
+        label: "Seguros de Vida y Generales",
+        sector: "seguros",
         children: [
           {
-            id: "cat_vida_aseguradoras",
+            id: "cat_seguros_maestro",
             type: "circular",
             label: "Lista de Entidades",
-            badge: "61 Entidades",
+            badge: "Desde los reportes",
             badgeType: "entities",
             status: "active",
-            sector: "vida",
+            sector: "seguros",
             chips: [
-              { label: "Aseguradoras de Vida Activas", query: "SELECT rut_aseguradora, nombre_aseguradora, ultimo_periodo, inversion_ultimo_reporte_m_clp FROM vida_maestro WHERE estado = 'Activa' ORDER BY inversion_ultimo_reporte_m_clp DESC;" },
-              { label: "Ranking Inversiones Vida (M$)", query: "SELECT nombre_aseguradora, inversion_ultimo_reporte_m_clp, patrimonio_ultimo_reporte_m_clp FROM vida_maestro ORDER BY inversion_ultimo_reporte_m_clp DESC LIMIT 10;" },
-              { label: "Historial de Reportes por Aseguradora", query: "SELECT nombre_aseguradora, primer_periodo, ultimo_periodo, periodos_reportados, estado FROM vida_maestro ORDER BY periodos_reportados DESC LIMIT 10;" }
+              { label: "Compañías que reportan en el último mes", query: "SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo, meses_reportados FROM seguros_maestro WHERE reporta_ultimo_mes ORDER BY sector, nombre_aseguradora;" },
+              { label: "Compañías que dejaron de reportar", query: "SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo, ultimo_periodo FROM seguros_maestro WHERE NOT reporta_ultimo_mes ORDER BY ultimo_periodo DESC;" },
+              { label: "Compañías que empezaron a reportar más recientemente", query: "SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo FROM seguros_maestro ORDER BY primer_periodo DESC, nombre_aseguradora LIMIT 10;" }
             ],
             tables: [
-              { id: "vida_maestro", name: "vida.lista_entidades", rows: "61 entidades", file: "outputs/vida/maestro_aseguradoras_vida.parquet" }
+              { id: "seguros_maestro", name: "seguros.lista_entidades", rows: "Una fila por compañía y sector", file: "outputs/seguros/aseguradoras.parquet" }
             ]
           },
           {
-            id: "c1835_vida_cartera",
+            id: "c1835_seguros_cartera",
             type: "circular",
-            label: "Circular 1835 · Cartera",
-            badge: "11,59 M Registros",
+            label: "Circular 1835 · Cartera de inversiones",
+            badge: "Mensual validada",
             badgeType: "data",
             status: "active",
-            sector: "vida",
+            sector: "seguros",
             chips: [
-              { label: "Top 5 Bonos Vida", query: "SELECT nemotecnico, tipo_bono, AVG(tir_mercado_pct) as tir_prom, count(*) as tenencias FROM vida_bonos GROUP BY nemotecnico, tipo_bono ORDER BY tenencias DESC LIMIT 5;" },
-              { label: "Inmuebles por Comuna (Vida)", query: "SELECT comuna, count(*) as propiedades, SUM(tasacion_comercial_m_clp) as tasacion_total_m FROM vida_bienes_raices GROUP BY comuna ORDER BY propiedades DESC LIMIT 5;" },
-              { label: "Acciones IPSA en Vida", query: "SELECT nemotecnico, AVG(precio_cierre_clp) as precio_promedio, AVG(presencia_pct) as presencia FROM vida_acciones WHERE nemotecnico IN ('CHILE', 'BCI', 'BSANTANDER', 'SQM-B', 'CMPC') GROUP BY nemotecnico;" },
-              { label: "Activos Extranjeros (Vida)", query: "SELECT gestora_fondo, moneda, count(*) as fondos FROM vida_extranjeros GROUP BY gestora_fondo, moneda ORDER BY fondos DESC LIMIT 5;" }
+              { label: "Renta fija por tipo de instrumento, último mes (M$)", query: "SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija) GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 15;" },
+              { label: "Mayores emisores de renta fija, último mes (M$)", query: "SELECT rut_emisor, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija) GROUP BY rut_emisor ORDER BY valor_final_m_clp DESC LIMIT 10;" },
+              { label: "Acciones con mayor inversión, último mes (M$)", query: "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(unidades) AS unidades, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = (SELECT max(periodo) FROM seguros_acciones) GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;" },
+              { label: "Evolución de la inversión en acciones por sector (M$)", query: "SELECT periodo, sector, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones GROUP BY periodo, sector ORDER BY periodo DESC, sector LIMIT 24;" },
+              { label: "Fondos mutuos por administradora, último mes (M$)", query: "SELECT rut_administradora, count(DISTINCT run_fondo) AS fondos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_fondos_mutuos WHERE periodo = (SELECT max(periodo) FROM seguros_fondos_mutuos) GROUP BY rut_administradora ORDER BY valor_final_m_clp DESC LIMIT 10;" },
+              { label: "Bienes raíces por ciudad, último mes (M$)", query: "SELECT ciudad, count(*) AS inmuebles, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_bienes_raices WHERE periodo = (SELECT max(periodo) FROM seguros_bienes_raices) GROUP BY ciudad ORDER BY valor_final_m_clp DESC LIMIT 10;" },
+              { label: "Inversiones en el extranjero por país, último mes (M$)", query: "SELECT pais, tipo_registro, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_extranjeros WHERE periodo = (SELECT max(periodo) FROM seguros_extranjeros) GROUP BY pais, tipo_registro ORDER BY valor_final_m_clp DESC LIMIT 10;" }
             ],
             tables: [
-              {
-                id: "vida_bonos",
-                name: "vida.cartera_bonos",
-                rows: "9,09 M registros",
-                // El Parquet consolidado (9,09M filas) supera el límite de 100 MB de GitHub
-                // y no está versionado: la vista vida_bonos se arma con las dos particiones.
-                files: [
-                  "outputs/vida/cartera_bonos_2021_2024.parquet",
-                  "outputs/vida/cartera_bonos_2016_2020.parquet"
-                ],
-                partitions: [
-                  { id: "vida_bonos_reciente", name: "2021-2026 · Tramo reciente", rows: "4,00 M registros", file: "outputs/vida/cartera_bonos_2021_2024.parquet" },
-                  { id: "vida_bonos_historico", name: "2016-2020 · Tramo histórico", rows: "5,08 M registros", file: "outputs/vida/cartera_bonos_2016_2020.parquet" }
-                ]
-              },
-              { id: "vida_bienes_raices", name: "vida.cartera_bienes_raices", rows: "2,01 M registros", file: "outputs/vida/cartera_bienes_raices.parquet" },
-              { id: "vida_extranjeros", name: "vida.cartera_extranjeros", rows: "146.365 registros", file: "outputs/vida/cartera_extranjeros.parquet" },
-              { id: "vida_acciones", name: "vida.cartera_acciones", rows: "142.944 registros", file: "outputs/vida/cartera_acciones.parquet" },
-              { id: "vida_fondos", name: "vida.cartera_fondos", rows: "76.902 registros", file: "outputs/vida/cartera_fondos.parquet" },
-              { id: "vida_solvencia", name: "vida.cartera_solvencia", rows: "126.586 registros", file: "outputs/vida/cartera_solvencia.parquet" }
+              { id: "seguros_renta_fija", name: "seguros.renta_fija", rows: "Un archivo por mes · desde 2024-12", file: "", files: ["outputs/seguros/renta_fija/manifest.json"] },
+              { id: "seguros_acciones", name: "seguros.acciones", rows: "Un archivo por año", file: "", files: ["outputs/seguros/acciones/manifest.json"] },
+              { id: "seguros_fondos_mutuos", name: "seguros.fondos_mutuos", rows: "Un archivo por año", file: "", files: ["outputs/seguros/fondos_mutuos/manifest.json"] },
+              { id: "seguros_bienes_raices", name: "seguros.bienes_raices", rows: "Un archivo por mes · desde 2024-12", file: "", files: ["outputs/seguros/bienes_raices/manifest.json"] },
+              { id: "seguros_extranjeros", name: "seguros.extranjeros", rows: "Un archivo por año", file: "", files: ["outputs/seguros/extranjeros/manifest.json"] },
+              { id: "seguros_control_inversiones", name: "seguros.control_inversiones", rows: "Un archivo por año", file: "", files: ["outputs/seguros/control_inversiones/manifest.json"] }
             ]
           },
           {
-            id: "c1835_vida_derivados",
+            id: "c1835_seguros_derivados",
             type: "circular",
-            label: "Circular 1835 · Derivados",
-            badge: "482.710 Registros",
+            label: "Circular 1835 · Derivados y pactos",
+            badge: "Mensual validada",
             badgeType: "data",
             status: "active",
-            sector: "vida",
+            sector: "seguros",
             chips: [
-              { label: "Forwards Vida: Contrapartes", query: "SELECT nombre_contraparte, count(*) as contratos, AVG(precio_forward_pactado) as fwd_pactado FROM vida_forwards GROUP BY nombre_contraparte ORDER BY contratos DESC LIMIT 5;" },
-              { label: "Swaps Vida: Tasas y MtM", query: "SELECT nombre_contraparte, count(*) as operaciones, AVG(tasa_contrato_larga) as tasa_larga, AVG(valor_razonable_mtm_m_clp) as mtm_prom FROM vida_swaps GROUP BY nombre_contraparte ORDER BY operaciones DESC LIMIT 5;" },
-              { label: "Opciones Financieras Vida", query: "SELECT tipo_opcion, count(*) as contratos, AVG(precio_ejercicio) as precio_ejercicio_prom FROM vida_opciones GROUP BY tipo_opcion;" }
+              { label: "Derivados por tipo y sector, último mes", query: "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;" },
+              { label: "Principales contrapartes de derivados, último mes", query: "SELECT contraparte, count(*) AS contratos, count(DISTINCT rut_aseguradora) AS aseguradoras FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY contraparte ORDER BY contratos DESC LIMIT 10;" },
+              { label: "Pactos: contrapartes y tasa promedio, último mes", query: "SELECT contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_pacto_prom_pct, SUM(valor_contable_m_clp) AS valor_contable_m_clp FROM seguros_pactos WHERE periodo = (SELECT max(periodo) FROM seguros_pactos) GROUP BY contraparte ORDER BY valor_contable_m_clp DESC LIMIT 10;" }
             ],
             tables: [
-              { id: "vida_swaps", name: "vida.derivados_swaps", rows: "314.683 registros", file: "outputs/vida/b7_swaps.parquet" },
-              { id: "vida_forwards", name: "vida.derivados_forwards", rows: "165.354 registros", file: "outputs/vida/b7_forwards.parquet" },
-              { id: "vida_opciones", name: "vida.derivados_opciones", rows: "2.673 registros", file: "outputs/vida/b7_opciones.parquet" }
-            ]
-          },
-          {
-            id: "c1835_vida_repos",
-            type: "circular",
-            label: "Circular 1835 · Pactos y Repos",
-            badge: "19.408 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "vida",
-            chips: [
-              { label: "Repos Vida: Tasas y Contrapartes", query: "SELECT nombre_contraparte, count(*) as pactos, AVG(tasa_pacto) as tasa_prom, SUM(monto_pacto_m_clp) as monto_total_m FROM vida_repos GROUP BY nombre_contraparte ORDER BY pactos DESC LIMIT 5;" },
-              { label: "Repos Vida: Tasa Pacto vs Mercado", query: "SELECT periodo, AVG(tasa_pacto) as tasa_pacto_prom, AVG(tasa_mercado) as tasa_mercado_prom FROM vida_repos GROUP BY periodo ORDER BY periodo DESC LIMIT 5;" }
-            ],
-            tables: [
-              { id: "vida_repos", name: "vida.pactos_repos", rows: "19.408 registros", file: "outputs/vida/b7_repos.parquet" }
-            ]
-          }
-        ]
-      },
-      {
-        id: "sector_generales",
-        type: "sector",
-        label: "Seguros Generales",
-        sector: "generales",
-        children: [
-          {
-            id: "cat_gen_aseguradoras",
-            type: "circular",
-            label: "Lista de Entidades",
-            badge: "42 Entidades",
-            badgeType: "entities",
-            status: "active",
-            sector: "generales",
-            chips: [
-              { label: "Aseguradoras Generales Activas", query: "SELECT rut_aseguradora, nombre_aseguradora, ultimo_periodo, inversion_ultimo_reporte_m_clp FROM generales_maestro WHERE estado = 'Activa' ORDER BY inversion_ultimo_reporte_m_clp DESC;" },
-              { label: "Ranking Inversiones Generales (M$)", query: "SELECT nombre_aseguradora, inversion_ultimo_reporte_m_clp, patrimonio_ultimo_reporte_m_clp FROM generales_maestro ORDER BY inversion_ultimo_reporte_m_clp DESC LIMIT 10;" },
-              { label: "Historial de Reportes Generales", query: "SELECT nombre_aseguradora, primer_periodo, ultimo_periodo, periodos_reportados, estado FROM generales_maestro ORDER BY periodos_reportados DESC LIMIT 10;" }
-            ],
-            tables: [
-              { id: "generales_maestro", name: "generales.lista_entidades", rows: "42 entidades", file: "outputs/generales/maestro_aseguradoras_generales.parquet" }
-            ]
-          },
-          {
-            id: "c1835_gen_cartera",
-            type: "circular",
-            label: "Circular 1835 · Cartera",
-            badge: "417.303 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "generales",
-            chips: [
-              { label: "Bonos Seguros Generales", query: "SELECT tipo_bono, count(*) as tenencias, AVG(tir_mercado_pct) as tir_prom FROM generales_bonos GROUP BY tipo_bono ORDER BY tenencias DESC LIMIT 5;" },
-              { label: "Inmuebles Seguros Generales", query: "SELECT comuna, count(*) as inmuebles, SUM(tasacion_comercial_m_clp) as tasacion_m FROM generales_bienes_raices GROUP BY comuna ORDER BY inmuebles DESC LIMIT 5;" },
-              { label: "Acciones Seguros Generales", query: "SELECT nemotecnico, count(*) as tenencias, AVG(precio_cierre_clp) as precio_prom FROM generales_acciones GROUP BY nemotecnico ORDER BY tenencias DESC LIMIT 5;" },
-              { label: "Solvencia y Balance Generales", query: "SELECT periodo, SUM(total_inversion_m_clp) as total_inversion_m FROM generales_solvencia GROUP BY periodo ORDER BY periodo DESC LIMIT 5;" }
-            ],
-            tables: [
-              { id: "generales_bonos", name: "generales.cartera_bonos", rows: "287.214 registros", file: "outputs/generales/cartera_bonos.parquet" },
-              { id: "generales_bienes_raices", name: "generales.cartera_bienes_raices", rows: "38.257 registros", file: "outputs/generales/cartera_bienes_raices.parquet" },
-              { id: "generales_acciones", name: "generales.cartera_acciones", rows: "17.457 registros", file: "outputs/generales/cartera_acciones.parquet" },
-              { id: "generales_fondos", name: "generales.cartera_fondos", rows: "8.935 registros", file: "outputs/generales/cartera_fondos.parquet" },
-              { id: "generales_extranjeros", name: "generales.cartera_extranjeros", rows: "5.590 registros", file: "outputs/generales/cartera_extranjeros.parquet" },
-              { id: "generales_solvencia", name: "generales.cartera_solvencia", rows: "59.850 registros", file: "outputs/generales/cartera_solvencia.parquet" }
-            ]
-          },
-          {
-            id: "c1835_gen_derivados",
-            type: "circular",
-            label: "Circular 1835 · Derivados",
-            badge: "4.270 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "generales",
-            chips: [
-              { label: "Forwards Generales: Contrapartes", query: "SELECT nombre_contraparte, count(*) as contratos, AVG(precio_forward_pactado) as fwd_pactado FROM generales_forwards GROUP BY nombre_contraparte ORDER BY contratos DESC LIMIT 5;" },
-              { label: "Swaps Generales: Tasas y MtM", query: "SELECT nombre_contraparte, count(*) as operaciones, AVG(tasa_contrato_larga) as tasa_larga FROM generales_swaps GROUP BY nombre_contraparte ORDER BY operaciones DESC LIMIT 5;" }
-            ],
-            tables: [
-              { id: "generales_forwards", name: "generales.derivados_forwards", rows: "2.847 registros", file: "outputs/generales/b7_forwards.parquet" },
-              { id: "generales_swaps", name: "generales.derivados_swaps", rows: "1.423 registros", file: "outputs/generales/b7_swaps.parquet" }
-            ]
-          },
-          {
-            id: "c1835_gen_repos",
-            type: "circular",
-            label: "Circular 1835 · Pactos y Repos",
-            badge: "275 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "generales",
-            chips: [
-              { label: "Repos Generales: Pactos y Tasas", query: "SELECT nombre_contraparte, count(*) as pactos, AVG(tasa_pacto) as tasa_prom FROM generales_repos GROUP BY nombre_contraparte ORDER BY pactos DESC LIMIT 5;" }
-            ],
-            tables: [
-              { id: "generales_repos", name: "generales.pactos_repos", rows: "275 registros", file: "outputs/generales/b7_repos.parquet" }
+              { id: "seguros_derivados", name: "seguros.derivados", rows: "Un archivo por año", file: "", files: ["outputs/seguros/derivados/manifest.json"] },
+              { id: "seguros_pactos", name: "seguros.pactos", rows: "Un archivo por año", file: "", files: ["outputs/seguros/pactos/manifest.json"] }
             ]
           }
         ]
@@ -234,25 +126,41 @@ const EXPLORER_TREE = [
               { label: "AGF por Grupo Financiero Controlador", query: "SELECT grupo_controlador, count(*) as cantidad_agf, sum(fondos_inversion_administrados) as total_fondos FROM agf_maestro WHERE estado_vigencia = 'Vigente' GROUP BY grupo_controlador ORDER BY total_fondos DESC;" }
             ],
             tables: [
-              { id: "agf_maestro", name: "agf.lista_administradoras", rows: "68 entidades", file: "outputs/agf/agf_maestro.parquet" }
+              { id: "agf_maestro", name: "agf.lista_administradoras", rows: "72 entidades", file: "outputs/agf/agf_maestro.parquet" }
             ]
           },
           {
-            id: "circ_agf_balances",
+            id: "cat_agf_balance",
             type: "circular",
-            label: "Balances y Resultados (IFRS)",
-            badge: "1.572 Balances",
+            label: "Balance IFRS · CMF (2010-06–2026-06)",
+            badge: "65 trimestres",
             badgeType: "data",
             status: "active",
             sector: "agf",
             chips: [
-              { label: "Ranking Activos Propios de las Gestoras (MM$ CLP)", query: "SELECT periodo, razon_social, total_activos_m_clp, patrimonio_neto_m_clp, efectivo_y_equivalentes_m_clp, cartera_propia_inversiones_m_clp FROM agf_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM agf_balance_resumen) ORDER BY total_activos_m_clp DESC LIMIT 15;" },
-              { label: "Ingresos por Comisiones de Administración (Top 10 AGF)", query: "SELECT periodo, razon_social, ingresos_comisiones_m_clp, ganancia_perdida_ejercicio_m_clp, patrimonio_neto_m_clp FROM agf_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM agf_balance_resumen) ORDER BY ingresos_comisiones_m_clp DESC LIMIT 10;" },
-              { label: "Cartera Propia de Inversión (Coinversión AGF)", query: "SELECT periodo, razon_social, cartera_propia_inversiones_m_clp, total_activos_m_clp, round(cartera_propia_inversiones_m_clp / NULLIF(total_activos_m_clp, 0) * 100, 1) as pct_cartera_propia FROM agf_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM agf_balance_resumen) AND cartera_propia_inversiones_m_clp > 0 ORDER BY cartera_propia_inversiones_m_clp DESC LIMIT 15;" },
-              { label: "Utilidad Neta del Ejercicio: Banchile vs Santander vs LarrainVial", query: "SELECT periodo, razon_social, ganancia_perdida_ejercicio_m_clp, ingresos_comisiones_m_clp, total_activos_m_usd FROM agf_balance_resumen WHERE razon_social LIKE '%BANCHILE%' OR razon_social LIKE '%SANTANDER%' OR razon_social LIKE '%LARRAIN%' ORDER BY periodo DESC, ingresos_comisiones_m_clp DESC LIMIT 15;" }
+              { label: "Activos, pasivos y patrimonio por AGF, último trimestre (MM$)", query: "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM agf_balance WHERE periodo = (SELECT max(periodo) FROM agf_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;" },
+              { label: "Evolución del sector: activos totales por trimestre (MM$, CLP)", query: "SELECT periodo, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS activos_mm_clp FROM agf_balance WHERE cuenta = 'Total de activos' AND moneda = 'CLP' AND repeticion = 1 GROUP BY periodo ORDER BY periodo;" },
+              { label: "Balance completo de Banchile AGF, último trimestre", query: "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM agf_balance WHERE rut = '96767630' AND periodo = (SELECT max(periodo) FROM agf_balance WHERE rut = '96767630') ORDER BY tipo_balance, estado_financiero, orden;" }
             ],
             tables: [
-              { id: "agf_balance_resumen", name: "agf.balance_resumen", rows: "1.572 balances", file: "outputs/agf/agf_balance_resumen.parquet" }
+              { id: "agf_balance", name: "agf.balance", rows: "71.423 cuentas · un archivo por año", file: "", files: ["outputs/agf/agf_balance/manifest.json"] }
+            ]
+          },
+          {
+            id: "cat_agf_resultados",
+            type: "circular",
+            label: "Estado de Resultados IFRS · CMF (2010-06–2026-06)",
+            badge: "65 trimestres",
+            badgeType: "data",
+            status: "active",
+            sector: "agf",
+            chips: [
+              { label: "Ingresos y utilidad por AGF, ejercicio 2025 (MM$)", query: "SELECT razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Ingresos de actividades ordinarias') / 1e6, 1) AS ingresos_mm, round(max(valor) FILTER (WHERE cuenta = 'Ganancia (pérdida)') / 1e6, 1) AS ganancia_mm FROM agf_resultados WHERE periodo = '2025-12' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 GROUP BY ALL ORDER BY ganancia_mm DESC NULLS LAST;" },
+              { label: "Utilidad del sector por año (cierres de diciembre, MM$, CLP)", query: "SELECT left(periodo, 4) AS anio, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS ganancia_mm_clp FROM agf_resultados WHERE periodo LIKE '%-12' AND cuenta = 'Ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 AND moneda = 'CLP' GROUP BY 1 ORDER BY 1;" },
+              { label: "Estado de resultados completo de Banchile AGF, ejercicio 2025", query: "SELECT tipo_balance, estado_financiero, orden, cuenta, valor FROM agf_resultados WHERE rut = '96767630' AND periodo = '2025-12' ORDER BY tipo_balance, estado_financiero, orden;" }
+            ],
+            tables: [
+              { id: "agf_resultados", name: "agf.resultados", rows: "58.216 cuentas · un archivo por año", file: "", files: ["outputs/agf/agf_resultados/manifest.json"] }
             ]
           }
         ]
@@ -267,64 +175,55 @@ const EXPLORER_TREE = [
             id: "c1333_ffmm_cat",
             type: "circular",
             label: "Lista de Entidades",
-            badge: "1.156 Entidades",
+            badge: "Desde los reportes",
             badgeType: "entities",
             status: "active",
             sector: "ffmm",
             chips: [
-              { label: "Listado de Fondos Mutuos", query: "SELECT run_fondo, nombre_fondo, sector FROM ffmm_maestro ORDER BY nombre_fondo LIMIT 10;" }
+              { label: "Fondos que reportan en el último mes", query: "SELECT run_fondo, nombre_fondo, primer_periodo, meses_reportados FROM ffmm_maestro WHERE reporta_ultimo_mes ORDER BY nombre_fondo;" },
+              { label: "Fondos nuevos (primer reporte más reciente)", query: "SELECT run_fondo, nombre_fondo, primer_periodo FROM ffmm_maestro ORDER BY primer_periodo DESC, nombre_fondo LIMIT 20;" },
+              { label: "Fondos que dejaron de reportar", query: "SELECT run_fondo, nombre_fondo, primer_periodo, ultimo_periodo FROM ffmm_maestro WHERE NOT reporta_ultimo_mes ORDER BY ultimo_periodo DESC LIMIT 20;" }
             ],
             tables: [
-              { id: "ffmm_maestro", name: "ffmm.lista_entidades", rows: "1.156 entidades", file: "outputs/ffmm/maestro_fondos_mutuos.parquet" }
+              { id: "ffmm_maestro", name: "ffmm.lista_entidades", rows: "Una fila por fondo", file: "outputs/ffmm/maestro_fondos_mutuos.parquet" }
+            ]
+          },
+          {
+            id: "c1333_ffmm_cartera",
+            type: "circular",
+            label: "Circular 1333 · Cartera de inversiones",
+            badge: "Mensual validada",
+            badgeType: "data",
+            status: "active",
+            sector: "ffmm",
+            chips: [
+              { label: "Cartera nacional por tipo de instrumento, último mes", query: "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional) GROUP BY tipo_instrumento ORDER BY valorizacion_miles_mf DESC LIMIT 15;" },
+              { label: "Mayores emisores nacionales, último mes", query: "SELECT rut_emisor, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional) GROUP BY rut_emisor ORDER BY valorizacion_miles_mf DESC LIMIT 10;" },
+              { label: "Instrumentos con compromiso o en garantía, último mes", query: "SELECT situacion_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional) GROUP BY situacion_instrumento ORDER BY situacion_instrumento;" },
+              { label: "Cartera extranjera por país emisor, último mes", query: "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;" },
+              { label: "Fondos con inversión extranjera por mes", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, count(*) AS posiciones FROM ffmm_cartera_extranjera GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" }
+            ],
+            tables: [
+              { id: "ffmm_cartera_nacional", name: "ffmm.cartera_nacional", rows: "Un archivo por mes · desde 2022-01", file: "", files: ["outputs/ffmm/cartera_nacional/manifest.json"] },
+              { id: "ffmm_cartera_extranjera", name: "ffmm.cartera_extranjera", rows: "Un archivo por año · desde 2001", file: "", files: ["outputs/ffmm/cartera_extranjera/manifest.json"] }
             ]
           },
           {
             id: "c1333_ffmm",
             type: "circular",
             label: "Circular 1333 · Derivados",
-            badge: "285.841 Registros",
+            badge: "Mensual validada",
             badgeType: "data",
             status: "active",
             sector: "ffmm",
             chips: [
-              { label: "Futuros Circular 1333", query: "SELECT * FROM ffmm_futuros LIMIT 10;" },
-              { label: "Opciones Circular 1333", query: "SELECT * FROM ffmm_opciones LIMIT 10;" }
+              { label: "Forwards y futuros por activo objeto, último mes", query: "SELECT activo_objeto, posicion, count(*) AS contratos, SUM(monto_comprometido_miles_mf) AS monto_comprometido_miles_mf FROM ffmm_futuros WHERE periodo = (SELECT max(periodo) FROM ffmm_futuros) GROUP BY activo_objeto, posicion ORDER BY contratos DESC LIMIT 15;" },
+              { label: "Contratos vigentes por mes", query: "SELECT periodo, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM ffmm_futuros GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
+              { label: "Opciones del último mes", query: "SELECT run_fondo, nombre_fondo, activo_objeto, nemotecnico, tipo_opcion, fecha_expiracion, numero_contratos, precio_ejercicio, inversion_primas_miles_mf FROM ffmm_opciones WHERE periodo = (SELECT max(periodo) FROM ffmm_opciones) ORDER BY run_fondo;" }
             ],
             tables: [
-              { id: "ffmm_futuros", name: "ffmm.derivados_futuros", rows: "280.494 registros", file: "outputs/ffmm/ffmm_futu_normalizado.parquet" },
-              { id: "ffmm_opciones", name: "ffmm.derivados_opciones", rows: "5.347 registros", file: "outputs/ffmm/ffmm_opci_normalizado.parquet" }
-            ]
-          },
-          {
-            id: "ffmm_eeff_xml_muestra_cmf_folder",
-            type: "circular",
-            label: "Estados financieros XML · Muestra cotejada CMF",
-            badge: "1 fondo · 2014-12",
-            badgeType: "data",
-            status: "active",
-            sector: "ffmm",
-            chips: [
-              { label: "Ver balance y resultado cotejados (miles de pesos)", query: "SELECT run_fondo, periodo, nombre_xml_historico, nombre_registro_actual, unidad_segun_ficha_cmf, total_activo, pasivo_sin_patrimonio, patrimonio_o_activo_neto, resultado_ejercicio, fuente_ficha_cmf FROM ffmm_eeff_xml_muestra_cmf;" }
-            ],
-            tables: [
-              { id: "ffmm_eeff_xml_muestra_cmf", name: "ffmm.eeff_xml_muestra_cmf", rows: "1 fila cotejada · no es histórico", file: "outputs/ffmm/ffmm_eeff_xml_muestra_cmf.parquet" }
-            ]
-          },
-          {
-            id: "repos_ffmm_historico",
-            type: "circular",
-            label: "Operaciones REPO · Muestra en revisión",
-            badge: "⚠ Falta auditar",
-            badgeType: "data",
-            status: "por_auditar",
-            sector: "ffmm",
-            chips: [
-              { label: "Registros Extraídos por Año (muestra sin auditar)", query: "SELECT periodo, count(*) as registros, count(distinct run_fondo) as fondos FROM ffmm_repos_detalle_historico GROUP BY periodo ORDER BY periodo DESC;" },
-              { label: "Campos Incompletos de la Extracción", query: "SELECT periodo, count(*) as registros, count(*) FILTER (WHERE fecha_vencimiento IS NULL OR fecha_vencimiento IN ('', 'NA')) as sin_vencimiento, count(*) FILTER (WHERE nemotecnico IS NULL OR nemotecnico IN ('', 'NA')) as sin_nemotecnico FROM ffmm_repos_detalle_historico GROUP BY periodo ORDER BY periodo DESC;" },
-              { label: "Detalle de Contratos (muestra sin auditar)", query: "SELECT periodo, run_fondo, nombre_fondo, fecha_compra, nombre_contraparte, nemotecnico, total_transado_m_clp, fecha_vencimiento, saldo_al_cierre_m_clp, pagina_pdf FROM ffmm_repos_detalle_historico ORDER BY periodo DESC, run_fondo LIMIT 25;" }
-            ],
-            tables: [
-              { id: "ffmm_repos_detalle_historico", name: "ffmm.repos_contratos", rows: "388 contratos", file: "outputs/ffmm/ffmm_repos_detalle_historico.parquet" }
+              { id: "ffmm_futuros", name: "ffmm.futuros_forwards", rows: "Un archivo por año · desde 2001", file: "", files: ["outputs/ffmm/futuros_forwards/manifest.json"] },
+              { id: "ffmm_opciones", name: "ffmm.opciones", rows: "Un archivo por año · desde 2001", file: "", files: ["outputs/ffmm/opciones/manifest.json"] }
             ]
           }
         ]
@@ -339,87 +238,59 @@ const EXPLORER_TREE = [
             id: "fi_cat_entidades",
             type: "circular",
             label: "Lista de Entidades",
-            badge: "1.129 Entidades",
+            badge: "Registro CMF",
             badgeType: "entities",
             status: "active",
             sector: "fi",
             chips: [
-              { label: "Listado de Fondos de Inversión", query: "SELECT run_fondo, nombre_fondo, tipo_entidad_desc, administradora FROM fi_maestro ORDER BY nombre_fondo LIMIT 15;" },
-              { label: "Fondos por Administradora", query: "SELECT administradora, count(*) as total_fondos FROM fi_maestro GROUP BY administradora ORDER BY total_fondos DESC LIMIT 10;" }
+              { label: "Fondos que reportan cartera en el último trimestre", query: "SELECT run_fondo, nombre_fondo, administradora, moneda_funcional, trimestres_con_cartera FROM fi_maestro WHERE reporta_ultimo_periodo ORDER BY administradora, nombre_fondo;" },
+              { label: "Fondos por administradora (vigentes)", query: "SELECT administradora, count(*) AS fondos FROM fi_maestro WHERE estado_vigencia = 'Vigente' GROUP BY administradora ORDER BY fondos DESC LIMIT 20;" },
+              { label: "Fondos por moneda funcional", query: "SELECT moneda_funcional, count(*) AS fondos FROM fi_maestro WHERE reporta_ultimo_periodo GROUP BY moneda_funcional ORDER BY fondos DESC;" }
             ],
             tables: [
-              { id: "fi_maestro", name: "fi.lista_entidades", rows: "1.129 entidades", file: "outputs/fi/maestro_fondos_inversion.parquet" }
+              { id: "fi_maestro", name: "fi.lista_entidades", rows: "Una fila por fondo", file: "outputs/fi/maestro_fondos_inversion.parquet" }
             ]
           },
           {
-            id: "fi_cat_censo",
+            id: "fi_cartera",
             type: "circular",
-            label: "Universo de Fondos · Registro CMF",
-            badge: "1.677 Fondos",
+            label: "Cartera de Inversiones · Informes IFRS",
+            badge: "Trimestral desde 2020-03",
             badgeType: "data",
             status: "active",
             sector: "fi",
             chips: [
-              { label: "Vigentes vs Liquidados (Registro CMF)", query: "SELECT estado_vigencia, tipo_entidad_desc, count(*) as total_fondos FROM fi_registro_fondos_universo GROUP BY estado_vigencia, tipo_entidad_desc;" },
-              { label: "Fondos Rescatables vs No Rescatables", query: "SELECT tipo_entidad_desc, count(*) as total FROM fi_registro_fondos_universo GROUP BY tipo_entidad_desc;" },
-              { label: "Directorio de Fondos Vigentes", query: "SELECT run_fondo, nombre_fondo, tipo_entidad_desc, administradora FROM fi_registro_fondos_universo WHERE estado_vigencia = 'Vigente' ORDER BY nombre_fondo LIMIT 15;" }
+              { label: "Cartera nacional por tipo de instrumento, último trimestre", query: "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM fi_cartera_nacional) GROUP BY tipo_instrumento ORDER BY posiciones DESC;" },
+              { label: "Mayores emisores nacionales, último trimestre", query: "SELECT rut_emisor, count(DISTINCT run_fondo) AS fondos, count(*) AS posiciones FROM fi_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM fi_cartera_nacional) GROUP BY rut_emisor ORDER BY fondos DESC LIMIT 20;" },
+              { label: "Cartera extranjera por país emisor, último trimestre", query: "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM fi_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM fi_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC;" },
+              { label: "Filiales y coligadas (método de la participación)", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, count(*) AS inversiones FROM fi_metodo_participacion GROUP BY periodo ORDER BY periodo DESC LIMIT 12;" },
+              { label: "Bienes raíces por comuna, último trimestre", query: "SELECT comuna, count(*) AS inmuebles, count(DISTINCT run_fondo) AS fondos FROM fi_bienes_raices WHERE periodo = (SELECT max(periodo) FROM fi_bienes_raices) GROUP BY comuna ORDER BY inmuebles DESC LIMIT 20;" }
             ],
             tables: [
-              { id: "fi_registro_fondos_universo", name: "fi.universo_fondos", rows: "1.677 fondos", file: "outputs/fi/fi_registro_fondos_universo.parquet" }
+              { id: "fi_cartera_nacional", name: "fi.cartera_nacional", rows: "Un archivo por trimestre · desde 2020-03", file: "", files: ["outputs/fi/cartera_nacional/manifest.json"] },
+              { id: "fi_cartera_extranjera", name: "fi.cartera_extranjera", rows: "Un archivo por año · desde 2020-03", file: "", files: ["outputs/fi/cartera_extranjera/manifest.json"] },
+              { id: "fi_metodo_participacion", name: "fi.metodo_participacion", rows: "Un archivo por año · desde 2020-03", file: "", files: ["outputs/fi/metodo_participacion/manifest.json"] },
+              { id: "fi_bienes_raices", name: "fi.bienes_raices", rows: "Un archivo por año · desde 2020-03", file: "", files: ["outputs/fi/bienes_raices/manifest.json"] }
             ]
           },
           {
-            id: "fi_eeff_xml_muestra_cmf_folder",
+            id: "fi_derivados_pactos",
             type: "circular",
-            label: "Estados financieros XML · Muestra cotejada CMF",
-            badge: "1 fondo · 2021-12",
+            label: "Derivados y Pactos · Informes IFRS",
+            badge: "Trimestral desde 2020-03",
             badgeType: "data",
             status: "active",
             sector: "fi",
             chips: [
-              { label: "Ver balance y resultado cotejados (miles de dólares)", query: "SELECT run_fondo, periodo, nombre_xml_historico, nombre_registro_actual, unidad_segun_ficha_cmf, total_activo, pasivo_sin_patrimonio, patrimonio_o_activo_neto, resultado_ejercicio, fuente_ficha_cmf FROM fi_eeff_xml_muestra_cmf;" }
+              { label: "Forwards y futuros por activo objeto, último trimestre", query: "SELECT activo_objeto, posicion, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM fi_futuros WHERE periodo = (SELECT max(periodo) FROM fi_futuros) GROUP BY activo_objeto, posicion ORDER BY contratos DESC LIMIT 20;" },
+              { label: "Contrapartes de derivados, último trimestre", query: "SELECT contraparte, count(*) AS contratos FROM fi_futuros WHERE periodo = (SELECT max(periodo) FROM fi_futuros) GROUP BY contraparte ORDER BY contratos DESC LIMIT 15;" },
+              { label: "Opciones por trimestre", query: "SELECT periodo, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM fi_opciones GROUP BY periodo ORDER BY periodo DESC LIMIT 12;" },
+              { label: "Pactos por tipo de operación y contraparte, último trimestre", query: "SELECT tipo_operacion, contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_prom_pct FROM fi_pactos WHERE periodo = (SELECT max(periodo) FROM fi_pactos) GROUP BY tipo_operacion, contraparte ORDER BY pactos DESC LIMIT 20;" }
             ],
             tables: [
-              { id: "fi_eeff_xml_muestra_cmf", name: "fi.eeff_xml_muestra_cmf", rows: "1 fila cotejada · no es histórico", file: "outputs/fi/fi_eeff_xml_muestra_cmf.parquet" }
-            ]
-          },
-          {
-            id: "fi_repos_historico",
-            type: "circular",
-            label: "Operaciones REPO · Muestra en revisión",
-            badge: "⚠ Falta auditar",
-            badgeType: "data",
-            status: "por_auditar",
-            sector: "fi",
-            chips: [
-              { label: "Operaciones REPO por Tipo (VRC vs CRV)", query: "SELECT codigo_operacion, tipo_operacion_desc, count(*) as contratos, round(sum(valorizacion_cierre_m_moneda), 2) as saldo_cierre FROM fi_repos_detalle_historico GROUP BY codigo_operacion, tipo_operacion_desc;" },
-              { label: "Registros Extraídos por Año (muestra sin auditar)", query: "SELECT anio, count(*) as registros, count(distinct run_fondo) as fondos FROM fi_repos_detalle_historico GROUP BY anio ORDER BY anio DESC;" },
-              { label: "Campos Incompletos de la Extracción", query: "SELECT anio, count(*) as registros, count(*) FILTER (WHERE tasa_pct IS NULL) as sin_tasa, count(*) FILTER (WHERE nombre_contraparte IS NULL OR nombre_contraparte IN ('', 'NA')) as sin_contraparte FROM fi_repos_detalle_historico GROUP BY anio ORDER BY anio DESC;" }
-            ],
-            tables: [
-              { id: "fi_repos_detalle_historico", name: "fi.repos_contratos", rows: "2.946 contratos", file: "outputs/fi/fi_repos_detalle_historico.parquet" },
-              { id: "fi_repos", name: "fi.repos_vrc_crv", rows: "1.366 pactos", file: "outputs/fi/fi_repos_vrc_crv.parquet" }
-            ]
-          },
-          {
-            id: "luf_cartera_fi",
-            type: "circular",
-            label: "Cartera de Inversión",
-            badge: "920.414 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "fi",
-            chips: [
-              { label: "Top Inversiones Nacionales", query: "SELECT nemotecnico, rut_emisor, sum(valolizacion_al_cierre) as total_m FROM fi_nacional GROUP BY nemotecnico, rut_emisor ORDER BY total_m DESC LIMIT 10;" },
-              { label: "Top Inversiones Extranjeras", query: "SELECT nemotecnico, nombre_del_emisor, sum(valolizacion_al_cierre) as total_m FROM fi_extranjera GROUP BY nemotecnico, nombre_del_emisor ORDER BY total_m DESC LIMIT 10;" },
-              { label: "Derivados Forwards FFII", query: "SELECT nombre_contraparte, count(*) as contratos FROM fi_derivados GROUP BY nombre_contraparte ORDER BY contratos DESC LIMIT 10;" }
-            ],
-            tables: [
-              { id: "fi_nacional", name: "fi.cartera_nacional", rows: "833.584 registros", file: "outputs/fi/fi_cartera_nacional.parquet" },
-              { id: "fi_extranjera", name: "fi.cartera_extranjera", rows: "67.371 registros", file: "outputs/fi/fi_cartera_extranjera.parquet" },
-              { id: "fi_derivados", name: "fi.derivados_futuros", rows: "3.611 registros", file: "outputs/fi/fi_futuros_forward.parquet" },
-              { id: "fi_metodo_part", name: "fi.metodo_participacion", rows: "14.401 registros", file: "outputs/fi/fi_metodo_participacion.parquet" },
-              { id: "fi_opciones", name: "fi.derivados_opciones", rows: "1.447 registros", file: "outputs/fi/fi_opciones.parquet" }
+              { id: "fi_futuros", name: "fi.futuros_forwards", rows: "Un archivo por año · desde 2020-03", file: "", files: ["outputs/fi/futuros_forwards/manifest.json"] },
+              { id: "fi_opciones", name: "fi.opciones", rows: "Un archivo por año · desde 2020-03", file: "", files: ["outputs/fi/opciones/manifest.json"] },
+              { id: "fi_pactos", name: "fi.pactos", rows: "Un archivo por año · desde 2020-03", file: "", files: ["outputs/fi/pactos/manifest.json"] }
             ]
           }
         ]
@@ -492,7 +363,7 @@ const EXPLORER_TREE = [
               { label: "Historial de Bancos Fusionados / Cerrados", query: "SELECT codigo_institucion, nombre_fantasia, razon_social, estado FROM bancos_maestro WHERE estado != 'Activo' ORDER BY estado, nombre_fantasia;" }
             ],
             tables: [
-              { id: "bancos_maestro", name: "bancos.lista_instituciones", rows: "40 códigos", file: "outputs/bancos/bancos_maestro.parquet" }
+              { id: "bancos_maestro", name: "bancos.lista_instituciones", rows: "41 códigos", file: "outputs/bancos/bancos_maestro.parquet" }
             ]
           },
           {
@@ -539,7 +410,7 @@ const EXPLORER_TREE = [
     label: "MACROECONOMIA & TASAS (BCCh)",
     badges: [
       { type: "entities", text: "1 Entidad", title: "Series canónicas oficiales del Banco Central de Chile" },
-      { type: "data", text: "459 Datos", title: "Historial mensual y métricas consolidadas (2014 a 2026)" }
+      { type: "data", text: "51 series", title: "Tablas mensuales consolidadas y catálogo amplio de series diarias, mensuales y trimestrales (2014 en adelante)" }
     ],
     status: "active",
     children: [
@@ -599,6 +470,27 @@ const EXPLORER_TREE = [
             tables: [
               { id: "macro_precios_actividad", name: "macro.precios_actividad", rows: "153 registros", file: "outputs/macro/macro_precios_actividad.parquet" }
             ]
+          },
+          {
+            id: "circ_macro_series",
+            type: "circular",
+            label: "Catálogo amplio de series BCCh (diarias, mensuales y trimestrales)",
+            badge: "51 series",
+            badgeType: "data",
+            status: "active",
+            sector: "macro",
+            chips: [
+              { label: "Catálogo: series, frecuencia y última fecha", query: "SELECT grupo, clave, nombre, frecuencia, unidad, ultima_fecha, observaciones, estado FROM macro_series_catalogo ORDER BY grupo, clave;" },
+              { label: "Dólar, cobre y oro: últimos 30 días hábiles", query: "SELECT fecha, max(valor) FILTER (WHERE clave = 'usd_clp') AS dolar, max(valor) FILTER (WHERE clave = 'cobre_diario') AS cobre_usd_lb, max(valor) FILTER (WHERE clave = 'oro') AS oro_usd_oz FROM macro_series WHERE clave IN ('usd_clp', 'cobre_diario', 'oro') GROUP BY fecha ORDER BY fecha DESC LIMIT 30;" },
+              { label: "Curva swap pesos (SPC 90d, 180d, 360d, 2 años), promedio mensual", query: "SELECT periodo, round(avg(valor) FILTER (WHERE clave = 'spc_clp_90d'), 3) AS spc_90d, round(avg(valor) FILTER (WHERE clave = 'spc_clp_180d'), 3) AS spc_180d, round(avg(valor) FILTER (WHERE clave = 'spc_clp_360d'), 3) AS spc_360d, round(avg(valor) FILTER (WHERE clave = 'spc_clp_2y'), 3) AS spc_2y FROM macro_series WHERE clave LIKE 'spc_clp_%' GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
+              { label: "Mercado laboral: desocupación, ocupados y fuerza de trabajo", query: "SELECT periodo, max(valor) FILTER (WHERE clave = 'desocupacion') AS desocupacion_pct, max(valor) FILTER (WHERE clave = 'ocupados') AS ocupados_miles, max(valor) FILTER (WHERE clave = 'fuerza_trabajo') AS fuerza_trabajo_miles FROM macro_series WHERE clave IN ('desocupacion', 'ocupados', 'fuerza_trabajo') GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
+              { label: "Expectativas de TPM e inflación (EEE y EOF) vs TPM", query: "SELECT periodo, round(avg(valor) FILTER (WHERE clave = 'tpm'), 2) AS tpm, max(valor) FILTER (WHERE clave = 'eee_tpm_11m') AS eee_tpm_11m, round(avg(valor) FILTER (WHERE clave = 'eof_tpm_12m'), 2) AS eof_tpm_12m, max(valor) FILTER (WHERE clave = 'eee_ipc_11m') AS eee_ipc_11m, round(avg(valor) FILTER (WHERE clave = 'eof_ipc_12m'), 2) AS eof_ipc_12m FROM macro_series WHERE clave IN ('tpm', 'eee_tpm_11m', 'eof_tpm_12m', 'eee_ipc_11m', 'eof_ipc_12m') GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
+              { label: "Tasas de EE.UU. vs Chile (Fed, TPM, BCP 10 años)", query: "SELECT periodo, round(avg(valor) FILTER (WHERE clave = 'fed_funds'), 2) AS fed_funds, round(avg(valor) FILTER (WHERE clave = 'tpm'), 2) AS tpm, round(avg(valor) FILTER (WHERE clave = 'bcp_10y'), 2) AS bcp_10y FROM macro_series WHERE clave IN ('fed_funds', 'tpm', 'bcp_10y') GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" }
+            ],
+            tables: [
+              { id: "macro_series", name: "macro.series", rows: "Una fila por serie y fecha · desde 2014", file: "", files: ["outputs/macro/series/manifest.json"] },
+              { id: "macro_series_catalogo", name: "macro.series_catalogo", rows: "51 series", file: "outputs/macro/macro_series_catalogo.parquet" }
+            ]
           }
         ]
       }
@@ -634,59 +526,31 @@ const EXPLORER_TREE = [
               { label: "Segmentación por Línea de Negocio", query: "SELECT segmento, count(*) as entidades, sum(es_factoring) as con_factoring, sum(es_leasing_financiero) as con_leasing, sum(es_automotriz) as con_automotriz FROM factoring_leasing_maestro WHERE vigente = 1 GROUP BY segmento;" }
             ],
             tables: [
-              { id: "factoring_leasing_maestro", name: "factoring_leasing.lista_entidades", rows: "28 entidades", file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet" }
+              { id: "factoring_leasing_maestro", name: "factoring_leasing.lista_entidades", rows: "32 entidades", file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet" }
             ]
           },
           // BEGIN AUTO FL IFRS SERIES NAVIGATION
           {
             id: "fl_balance_serie_ifrs_cmf_folder", type: "circular",
-            label: "Balance · Serie CMF (2009-03–2026-06)", badge: "70 cierres · 24 RUT", badgeType: "data", status: "active",
+            label: "Balance · Serie CMF (2009-03–2026-06)", badge: "70 cierres · 28 RUT", badgeType: "data", status: "active",
             sector: "factoring_leasing",
             chips: [{ label: "Cuentas de balance CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_balance_serie_ifrs_cmf ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;" }],
-            tables: [{ id: "factoring_leasing_balance_serie_ifrs_cmf", name: "factoring_leasing.balance_serie_ifrs_cmf (28,938 cuentas; no cotejo integral)",
-                       rows: "28,938 cuentas · 70 cierres · extracción sin cotejo integral",
+            tables: [{ id: "factoring_leasing_balance_serie_ifrs_cmf", name: "factoring_leasing.balance_serie_ifrs_cmf (30,046 cuentas; no cotejo integral)",
+                       rows: "30,046 cuentas · 70 cierres · extracción sin cotejo integral",
                        file: "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet" }]
           },
           {
             id: "fl_resultados_serie_ifrs_cmf_folder", type: "circular",
-            label: "Resultados · Serie CMF (2009-03–2026-06)", badge: "70 cierres · 24 RUT", badgeType: "data", status: "active",
+            label: "Resultados · Serie CMF (2009-03–2026-06)", badge: "70 cierres · 28 RUT", badgeType: "data", status: "active",
             sector: "factoring_leasing",
-            chips: [{ label: "Cuentas de resultados CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_resultados_serie_ifrs_cmf ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;" }],
-            tables: [{ id: "factoring_leasing_resultados_serie_ifrs_cmf", name: "factoring_leasing.resultados_serie_ifrs_cmf (21,464 cuentas; no cotejo integral)",
-                       rows: "21,464 cuentas · 70 cierres · extracción sin cotejo integral",
+            chips: [{ label: "Cuentas de resultados CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_resultados_serie_ifrs_cmf ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;" },
+                    { label: "Utilidad del período · 1 fila por estado", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, estado_financiero, valor_archivo AS ganancia_perdida FROM factoring_leasing_resultados_serie_ifrs_cmf WHERE lower(cuenta) = 'ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion_contexto = 1 ORDER BY periodo DESC, rut;" },
+                    { label: "Dónde se repite 'Ganancia (pérdida)'", query: "SELECT estado_financiero, repeticion_contexto, count(*) AS filas, count(DISTINCT (periodo, rut, tipo_balance)) AS estados FROM factoring_leasing_resultados_serie_ifrs_cmf WHERE lower(cuenta) = 'ganancia (pérdida)' GROUP BY ALL ORDER BY estado_financiero, repeticion_contexto;" }],
+            tables: [{ id: "factoring_leasing_resultados_serie_ifrs_cmf", name: "factoring_leasing.resultados_serie_ifrs_cmf (22,368 cuentas; no cotejo integral)",
+                       rows: "22,368 cuentas · 70 cierres · extracción sin cotejo integral",
                        file: "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet" }]
           },
   // END AUTO FL IFRS SERIES NAVIGATION
-          {
-            id: "fl_balance_muestra_cmf_folder",
-            type: "circular",
-            label: "Balance · Muestra cotejada CMF (2 filas)",
-            badge: "2 entidades · 2022",
-            badgeType: "data",
-            status: "active",
-            sector: "factoring_leasing",
-            chips: [
-              { label: "Balance cotejado (miles de pesos)", query: "SELECT segmento, rut, nombre_en_archivo_y_ficha, periodo, total_activos_miles_clp, total_pasivos_miles_clp, patrimonio_miles_clp, efectivo_miles_clp, fuente_ficha_cmf FROM factoring_leasing_eeff_muestra_cmf ORDER BY segmento;" }
-            ],
-            tables: [
-              { id: "factoring_leasing_eeff_muestra_cmf", name: "factoring_leasing.balance_muestra_cmf", rows: "2 filas cotejadas · no es el sector", file: "outputs/factoring_leasing/factoring_leasing_eeff_muestra_cmf.parquet" }
-            ]
-          },
-          {
-            id: "fl_resultados_muestra_cmf_folder",
-            type: "circular",
-            label: "Estado de resultados · Muestra cotejada CMF (2 filas)",
-            badge: "2 entidades · 2022",
-            badgeType: "data",
-            status: "active",
-            sector: "factoring_leasing",
-            chips: [
-              { label: "Resultados acumulados desde enero (miles de pesos)", query: "SELECT segmento, rut, periodo, resultado_antes_impuestos_miles_clp, resultado_operaciones_continuadas_miles_clp, definicion_periodo_resultado, fuente_ficha_cmf FROM factoring_leasing_resultados_muestra_cmf ORDER BY segmento;" }
-            ],
-            tables: [
-              { id: "factoring_leasing_resultados_muestra_cmf", name: "factoring_leasing.resultados_muestra_cmf", rows: "2 filas cotejadas · acumulado desde enero", file: "outputs/factoring_leasing/factoring_leasing_resultados_muestra_cmf.parquet" }
-            ]
-          }
         ]
       }
     ]
@@ -697,7 +561,7 @@ const EXPLORER_TREE = [
     label: "CORREDORAS DE BOLSA (CMF)",
     badges: [
       { type: "entities", text: "120 Entidades", title: "Intermediarios de valores supervisados por la CMF (24 vigentes + 96 históricas)" },
-      { type: "data", text: "621 Balances", title: "Carátulas XML CMF y resumen derivado; cotejo independiente de fuente en curso" }
+      { type: "data", text: "63 trimestres", title: "Balance y resultados FECU IFRS de corredores de bolsa y agentes de valores, archivo trimestral CMF. Se actualiza solo 3 veces al mes" }
     ],
     status: "active",
     children: [
@@ -740,24 +604,39 @@ const EXPLORER_TREE = [
             ]
           },
           {
-            id: "circ_cb_balances",
+            id: "cat_cb_balance",
             type: "circular",
-            label: "Estados Financieros · XML CMF (en auditoría)",
-            badge: "621 Balances · 2 vistas",
+            label: "Balance FECU IFRS · CMF (2010-12–2026-06)",
+            badge: "63 trimestres",
             badgeType: "data",
             status: "active",
             sector: "corredoras_bolsa",
             chips: [
-              { label: "Ranking por Activos Totales (MM$ USD)", query: "SELECT b.periodo, m.nombre_fantasia, b.total_activos_m_usd, b.total_pasivos_m_usd, b.patrimonio_m_usd, b.utilidad_ejercicio_m_usd, m.grupo_financiero FROM corredoras_bolsa_caratula_eeff_historico b JOIN corredoras_bolsa_maestro m ON b.rut = m.rut WHERE b.periodo = (SELECT MAX(periodo) FROM corredoras_bolsa_caratula_eeff_historico) ORDER BY b.total_activos_m_usd DESC LIMIT 15;" },
-              { label: "Utilidad Neta del Ejercicio (Líderes Bursátiles)", query: "SELECT b.periodo, m.nombre_fantasia, b.utilidad_ejercicio_m_clp, b.utilidad_ejercicio_m_usd, b.total_activos_m_usd FROM corredoras_bolsa_caratula_eeff_historico b JOIN corredoras_bolsa_maestro m ON b.rut = m.rut WHERE b.periodo = (SELECT MAX(periodo) FROM corredoras_bolsa_caratula_eeff_historico) ORDER BY b.utilidad_ejercicio_m_usd DESC LIMIT 15;" },
-              { label: "Cartera Comprometida vs Disponible en Corredoras", query: "SELECT b.periodo, m.nombre_fantasia, b.cartera_vr_comprometida_m_clp, b.cartera_vr_disponible_m_clp, b.operaciones_financiamiento_crv_m_clp, b.obligaciones_retrocompra_vrc_m_clp FROM corredoras_bolsa_caratula_eeff_historico b JOIN corredoras_bolsa_maestro m ON b.rut = m.rut WHERE b.periodo = (SELECT MAX(periodo) FROM corredoras_bolsa_caratula_eeff_historico) ORDER BY b.cartera_vr_comprometida_m_clp DESC LIMIT 15;" },
-              { label: "Liquidez: Proporción de Caja sobre Activos (%)", query: "SELECT b.periodo, m.nombre_fantasia, b.efectivo_equivalentes_m_usd, b.total_activos_m_usd, round(b.efectivo_equivalentes_m_usd / NULLIF(b.total_activos_m_usd, 0) * 100, 2) as pct_caja_activos FROM corredoras_bolsa_caratula_eeff_historico b JOIN corredoras_bolsa_maestro m ON b.rut = m.rut WHERE b.periodo = (SELECT MAX(periodo) FROM corredoras_bolsa_caratula_eeff_historico) ORDER BY b.efectivo_equivalentes_m_usd DESC LIMIT 15;" }
+              { label: "Activos, pasivos y patrimonio por intermediario, último trimestre (MM$)", query: "SELECT periodo, razon_social, tipo_intermediario, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '10.00.00') / 1e3, 1) AS activos_mm, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '21.00.00') / 1e3, 1) AS pasivos_mm, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '22.00.00') / 1e3, 1) AS patrimonio_mm FROM corredoras_bolsa_balance WHERE periodo = (SELECT max(periodo) FROM corredoras_bolsa_balance) GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;" },
+              { label: "Evolución de los corredores de bolsa: activos totales por trimestre (MM$)", query: "SELECT periodo, count(DISTINCT rut) AS corredores, round(sum(valor_miles_clp) / 1e3, 1) AS activos_mm FROM corredoras_bolsa_balance WHERE codigo_fecu = '10.00.00' AND tipo_intermediario = 'corredor de bolsa' GROUP BY periodo ORDER BY periodo;" },
+              { label: "Balance completo de Banchile Corredores, último trimestre", query: "SELECT periodo, seccion, codigo_fecu, nivel, cuenta, valor_miles_clp FROM corredoras_bolsa_balance WHERE rut = '96571220' AND periodo = (SELECT max(periodo) FROM corredoras_bolsa_balance) ORDER BY codigo_fecu;" }
             ],
             tables: [
-              { id: "corredoras_bolsa_caratula_eeff_historico", name: "corredoras.estados_financieros", rows: "621 balances", file: "outputs/corredoras_bolsa/corredoras_bolsa_caratula_eeff_historico.parquet" },
-              { id: "corredoras_bolsa_balance_resumen", name: "corredoras.balance_resumen", rows: "621 balances", file: "outputs/corredoras_bolsa/corredoras_bolsa_balance_resumen.parquet" }
+              { id: "corredoras_bolsa_balance", name: "corredoras.balance", rows: "107.976 cuentas · un archivo por año", file: "", files: ["outputs/corredoras_bolsa/corredoras_bolsa_balance/manifest.json"] }
             ]
           },
+          {
+            id: "cat_cb_resultados",
+            type: "circular",
+            label: "Estado de Resultados FECU IFRS · CMF (2010-12–2026-06)",
+            badge: "63 trimestres",
+            badgeType: "data",
+            status: "active",
+            sector: "corredoras_bolsa",
+            chips: [
+              { label: "Resultado del ejercicio por intermediario, 2025 (MM$)", query: "SELECT razon_social, tipo_intermediario, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '30.00.00') / 1e3, 1) AS resultado_ejercicio_mm FROM corredoras_bolsa_resultados WHERE periodo = '2025-12' GROUP BY ALL ORDER BY resultado_ejercicio_mm DESC NULLS LAST;" },
+              { label: "Estructura de resultados de Banchile Corredores, 2025", query: "SELECT estado_financiero, seccion, codigo_fecu, nivel, cuenta, valor_miles_clp FROM corredoras_bolsa_resultados WHERE rut = '96571220' AND periodo = '2025-12' ORDER BY codigo_fecu;" },
+              { label: "Catálogo de cuentas FECU de resultados", query: "SELECT codigo_fecu, any_value(cuenta) AS cuenta, any_value(seccion) AS seccion, count(*) AS filas FROM corredoras_bolsa_resultados GROUP BY codigo_fecu ORDER BY codigo_fecu;" }
+            ],
+            tables: [
+              { id: "corredoras_bolsa_resultados", name: "corredoras.resultados", rows: "77.705 cuentas · un archivo por año", file: "", files: ["outputs/corredoras_bolsa/corredoras_bolsa_resultados/manifest.json"] }
+            ]
+          }
         ]
       }
     ]
@@ -768,7 +647,7 @@ const EXPLORER_TREE = [
     label: "SECURITIZACIÓN (CMF / LEY 18.045)",
     badges: [
       { type: "entities", text: "16 Gestoras", title: "Sociedades securitizadoras y sus patrimonios separados son entidades distintas" },
-      { type: "data", text: "2.086 PDF", title: "Balances de patrimonios separados leídos de PDF; los balances de las gestoras son otra serie" }
+      { type: "data", text: "358 balances", title: "Balances de diciembre 2014–2025 de patrimonios separados. De 2010 a 2013 no hay datos. Los balances de las gestoras son otra serie" }
     ],
     status: "active",
     children: [
@@ -795,20 +674,37 @@ const EXPLORER_TREE = [
             ]
           },
           {
-            id: "circ_sec_balances",
+            id: "cat_securitizadoras_balance",
             type: "circular",
-            label: "Balances IFRS de Sociedades Gestoras",
-            badge: "362 Balances",
+            label: "Balance IFRS · CMF (2009-12–2026-06)",
+            badge: "66 trimestres",
             badgeType: "data",
             status: "active",
             sector: "securitizadoras",
             chips: [
-              { label: "Ranking por Activos de la Sociedad Gestora (MM$)", query: "SELECT periodo, razon_social, total_activos_m_clp, total_pasivos_m_clp, patrimonio_neto_m_clp, efectivo_y_equivalentes_m_clp FROM securitizadoras_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM securitizadoras_balance_resumen) ORDER BY total_activos_m_clp DESC;" },
-              { label: "Utilidad Neta de las Gestoras por Comisiones", query: "SELECT periodo, razon_social, ganancia_perdida_ejercicio_m_clp, total_activos_m_usd, patrimonio_neto_m_usd FROM securitizadoras_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM securitizadoras_balance_resumen) ORDER BY ganancia_perdida_ejercicio_m_clp DESC;" },
-              { label: "Evolución Activos Gestora: BCI vs Santander vs BICE", query: "SELECT periodo, razon_social, total_activos_m_clp, patrimonio_neto_m_clp, efectivo_y_equivalentes_m_clp FROM securitizadoras_balance_resumen WHERE razon_social IN ('BCI SECURITIZADORA S.A.', 'SANTANDER S.A. SOCIEDAD SECURITIZADORA', 'SECURITIZADORA BICE S.A.') ORDER BY periodo DESC, total_activos_m_clp DESC LIMIT 15;" }
+              { label: "Activos, pasivos y patrimonio por securitizadora, último trimestre (MM$)", query: "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM securitizadoras_balance WHERE periodo = (SELECT max(periodo) FROM securitizadoras_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;" },
+              { label: "Evolución del sector: activos totales por trimestre (MM$, CLP)", query: "SELECT periodo, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS activos_mm_clp FROM securitizadoras_balance WHERE cuenta = 'Total de activos' AND moneda = 'CLP' AND repeticion = 1 GROUP BY periodo ORDER BY periodo;" },
+              { label: "Balance completo de BCI Securitizadora, último trimestre", query: "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM securitizadoras_balance WHERE rut = '96948880' AND periodo = (SELECT max(periodo) FROM securitizadoras_balance WHERE rut = '96948880') ORDER BY tipo_balance, estado_financiero, orden;" }
             ],
             tables: [
-              { id: "securitizadoras_balance_resumen", name: "securitizadoras.balance_resumen", rows: "362 balances", file: "outputs/securitizadoras/securitizadoras_balance_resumen.parquet" }
+              { id: "securitizadoras_balance", name: "securitizadoras.balance", rows: "13.679 cuentas · un archivo por año", file: "", files: ["outputs/securitizadoras/securitizadoras_balance/manifest.json"] }
+            ]
+          },
+          {
+            id: "cat_securitizadoras_resultados",
+            type: "circular",
+            label: "Estado de Resultados IFRS · CMF (2009-12–2026-06)",
+            badge: "66 trimestres",
+            badgeType: "data",
+            status: "active",
+            sector: "securitizadoras",
+            chips: [
+              { label: "Ingresos y utilidad por securitizadora, ejercicio 2025 (MM$)", query: "SELECT razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Ingresos de actividades ordinarias') / 1e6, 1) AS ingresos_mm, round(max(valor) FILTER (WHERE cuenta = 'Ganancia (pérdida)') / 1e6, 1) AS ganancia_mm FROM securitizadoras_resultados WHERE periodo = '2025-12' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 GROUP BY ALL ORDER BY ganancia_mm DESC NULLS LAST;" },
+              { label: "Utilidad del sector por año (cierres de diciembre, MM$, CLP)", query: "SELECT left(periodo, 4) AS anio, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS ganancia_mm_clp FROM securitizadoras_resultados WHERE periodo LIKE '%-12' AND cuenta = 'Ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 AND moneda = 'CLP' GROUP BY 1 ORDER BY 1;" },
+              { label: "Estado de resultados completo de BCI Securitizadora, ejercicio 2025", query: "SELECT tipo_balance, estado_financiero, orden, cuenta, valor FROM securitizadoras_resultados WHERE rut = '96948880' AND periodo = '2025-12' ORDER BY tipo_balance, estado_financiero, orden;" }
+            ],
+            tables: [
+              { id: "securitizadoras_resultados", name: "securitizadoras.resultados", rows: "12.290 cuentas · un archivo por año", file: "", files: ["outputs/securitizadoras/securitizadoras_resultados/manifest.json"] }
             ]
           }
         ]
@@ -832,202 +728,28 @@ const EXPLORER_TREE = [
               { label: "Inscripciones por moneda y monto", query: "SELECT numero_inscripcion, fecha_inscripcion, razon_social_administradora, denominacion_emision, moneda, monto_inscrito, clase_colateral_subyacente FROM patrimonios_separados_maestro ORDER BY fecha_inscripcion DESC;" }
             ],
             tables: [
-              { id: "patrimonios_separados_maestro", name: "patrimonios_separados.lista_emisiones", rows: "18 emisiones", file: "outputs/securitizadoras/patrimonios_separados_maestro.parquet" }
+              { id: "patrimonios_separados_maestro", name: "patrimonios_separados.lista_emisiones", rows: "19 emisiones", file: "outputs/securitizadoras/patrimonios_separados_maestro.parquet" }
             ]
           },
           {
-            id: "circ_ps_balance_pdf",
+            id: "circ_ps_balance",
             type: "circular",
-            label: "Balances · Cuentas por Línea",
-            badge: "46.502 Registros",
+            label: "Balance General (diciembre 2014–2025; 2010–2013 sin datos)",
+            badge: "358 Balances",
             badgeType: "data",
             status: "active",
             sector: "patrimonios_separados",
             chips: [
-              { label: "Total activos de marzo 2026", query: "SELECT nombre_administradora, codigo_patrimonio, nombre_cuenta, monto_m_clp FROM patrimonios_separados_balance_pdf WHERE categoria = 'Total Activos' AND periodo = '202603' ORDER BY monto_m_clp DESC;" },
-              { label: "Cuentas de un PDF", query: "SELECT categoria, nombre_cuenta, monto_m_clp FROM patrimonios_separados_balance_pdf WHERE archivo = '201003_96765170_TRANSA_SECURITIZADORA_TRANSA_PATRIMONIO_SEPARADO_BTRA1.pdf' ORDER BY id_linea;" },
-              { label: "Rubros del balance", query: "SELECT categoria, count(*) AS filas FROM patrimonios_separados_balance_pdf GROUP BY categoria ORDER BY filas DESC;" },
-              { label: "PDF por securitizadora del catálogo", query: "SELECT s.razon_social, count(DISTINCT p.archivo) AS pdfs FROM patrimonios_separados_balance_pdf p JOIN securitizadoras_maestro s ON s.rut = p.rut_administradora GROUP BY s.razon_social ORDER BY pdfs DESC;" }
+              { label: "Cobertura por año (2010–2013 sin datos)", query: "SELECT a.anio, count(DISTINCT b.archivo) AS balances, CASE WHEN a.anio < 2014 THEN 'Sin datos: la serie parte en diciembre de 2014' ELSE 'Cierre de diciembre' END AS nota FROM range(2010, 2026) a(anio) LEFT JOIN patrimonios_separados_balance b ON b.anio = a.anio GROUP BY a.anio ORDER BY a.anio;" },
+              { label: "Totales por patrimonio, diciembre 2025", query: "SELECT nombre_administradora, codigo_patrimonio, activos_m_clp, pasivos_m_clp, patrimonio_m_clp FROM (SELECT periodo, rut_administradora, nombre_administradora, codigo_patrimonio, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Activos') AS activos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria IN ('Total Pasivo Circulante', 'Total Pasivo No Circulante')) AS pasivos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Patrimonio (Excedente Acumulado)') AS patrimonio_m_clp FROM patrimonios_separados_balance GROUP BY ALL) WHERE periodo = '2025-12' ORDER BY activos_m_clp DESC;" },
+              { label: "Agregado del sector por cierre", query: "SELECT periodo, count(*) AS patrimonios, sum(activos_m_clp) AS activos_m_clp, sum(pasivos_m_clp) AS pasivos_m_clp, sum(patrimonio_m_clp) AS patrimonio_m_clp FROM (SELECT periodo, rut_administradora, nombre_administradora, codigo_patrimonio, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Activos') AS activos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria IN ('Total Pasivo Circulante', 'Total Pasivo No Circulante')) AS pasivos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Patrimonio (Excedente Acumulado)') AS patrimonio_m_clp FROM patrimonios_separados_balance GROUP BY ALL) GROUP BY periodo ORDER BY periodo;" },
+              { label: "Por securitizadora, diciembre 2025", query: "SELECT coalesce(s.razon_social, t.nombre_administradora) AS securitizadora, count(*) AS patrimonios, sum(t.activos_m_clp) AS activos_m_clp, sum(t.pasivos_m_clp) AS pasivos_m_clp, sum(t.patrimonio_m_clp) AS patrimonio_m_clp FROM (SELECT periodo, rut_administradora, nombre_administradora, codigo_patrimonio, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Activos') AS activos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria IN ('Total Pasivo Circulante', 'Total Pasivo No Circulante')) AS pasivos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Patrimonio (Excedente Acumulado)') AS patrimonio_m_clp FROM patrimonios_separados_balance GROUP BY ALL) t LEFT JOIN securitizadoras_maestro s ON s.rut = t.rut_administradora WHERE t.periodo = '2025-12' GROUP BY ALL ORDER BY activos_m_clp DESC;" },
+              { label: "Balance completo de un patrimonio", query: "SELECT orden_en_balance, categoria, cuenta, monto_m_clp FROM patrimonios_separados_balance WHERE periodo = '2025-12' AND nombre_administradora = 'SECURITIZADORA SECURITY' AND codigo_patrimonio = (SELECT min(codigo_patrimonio) FROM patrimonios_separados_balance WHERE periodo = '2025-12' AND nombre_administradora = 'SECURITIZADORA SECURITY') ORDER BY orden_en_balance;" },
+              { label: "Pasivos de diciembre 2025 por cuenta", query: "SELECT categoria, cuenta, sum(monto_m_clp) AS monto_m_clp, count(*) AS patrimonios FROM patrimonios_separados_balance WHERE categoria IN ('Pasivo Circulante', 'Pasivo No Circulante') AND periodo = '2025-12' GROUP BY ALL ORDER BY monto_m_clp DESC;" },
+              { label: "Cuentas más frecuentes por rubro", query: "SELECT categoria, cuenta, count(*) AS balances, sum(monto_m_clp) AS suma_m_clp FROM patrimonios_separados_balance WHERE categoria NOT LIKE 'Total%' GROUP BY ALL ORDER BY balances DESC LIMIT 30;" }
             ],
             tables: [
-              { id: "patrimonios_separados_balance_pdf", name: "patrimonios_separados.balance_cuentas", rows: "46.502 registros", file: "outputs/securitizadoras/patrimonios_separados_balance_pdf.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_balance_resumen",
-            type: "circular",
-            label: "Estados Financieros · Resumen Anual",
-            badge: "64 Balances",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Mayores activos del resumen", query: "SELECT codigo_emision, denominacion_ps, nombre_administradora, periodo, total_activos_mclp, deuda_bonos_largo_plazo_mclp, cuadre_contable_ok FROM patrimonios_separados_balance_resumen ORDER BY total_activos_mclp DESC LIMIT 15;" },
-              { label: "Marca de cuadre que trae el archivo", query: "SELECT periodo, count(*) as balances, SUM(CASE WHEN cuadre_contable_ok THEN 1 ELSE 0 END) as marca_cuadre FROM patrimonios_separados_balance_resumen GROUP BY periodo ORDER BY periodo;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_balance_resumen", name: "patrimonios_separados.balance_resumen", rows: "64 balances", file: "outputs/securitizadoras/patrimonios_separados_balance_resumen.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_balance_lineas",
-            type: "circular",
-            label: "Estados Financieros · Balance Línea a Línea",
-            badge: "16.842 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Activos contra pasivo y patrimonio", query: "SELECT id_patrimonio, periodo, MAX(CASE WHEN codigo_cuenta = '10.000' THEN monto_m_clp END) as total_activos_mclp, MAX(CASE WHEN codigo_cuenta = '20.000' THEN monto_m_clp END) as total_pasivo_y_patrimonio_mclp, MAX(CASE WHEN codigo_cuenta = '21.000' THEN monto_m_clp END) as pasivos_circulantes_mclp, MAX(CASE WHEN codigo_cuenta = '22.000' THEN monto_m_clp END) as pasivos_largo_plazo_mclp FROM patrimonios_separados_balance_lineas GROUP BY id_patrimonio, periodo ORDER BY periodo DESC, total_activos_mclp DESC LIMIT 20;" },
-              { label: "Activo securitizado y su provisión", query: "SELECT id_patrimonio, periodo, codigo_cuenta, nombre_cuenta, monto_m_clp FROM patrimonios_separados_balance_lineas WHERE codigo_cuenta IN ('11.030', '11.120', '13.010') ORDER BY periodo DESC, monto_m_clp DESC LIMIT 20;" },
-              { label: "Disponible y valores negociables", query: "SELECT id_patrimonio, periodo, nombre_cuenta, monto_m_clp FROM patrimonios_separados_balance_lineas WHERE codigo_cuenta IN ('11.010', '11.020') AND monto_m_clp > 0 ORDER BY periodo DESC, monto_m_clp DESC LIMIT 20;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_balance_lineas", name: "patrimonios_separados.balance_lineas", rows: "16.842 registros", file: "outputs/securitizadoras/patrimonios_separados_balance_lineas.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_excedentes_lineas",
-            type: "circular",
-            label: "Estados Financieros · Excedentes y Resultados",
-            badge: "11.157 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Ingresos del estado de excedentes", query: "SELECT id_patrimonio, periodo, codigo_cuenta, nombre_cuenta, monto_m_clp FROM patrimonios_separados_excedentes_lineas WHERE codigo_cuenta IN ('31.000', '31.030', '31.040') ORDER BY periodo DESC, monto_m_clp DESC LIMIT 20;" },
-              { label: "Remuneraciones de administración y servicios", query: "SELECT id_patrimonio, periodo, codigo_cuenta, nombre_cuenta, monto_m_clp FROM patrimonios_separados_excedentes_lineas WHERE codigo_cuenta IN ('35.210', '35.215', '35.220', '35.230') ORDER BY periodo DESC, monto_m_clp DESC LIMIT 20;" },
-              { label: "Excedente o déficit del ejercicio", query: "SELECT id_patrimonio, periodo, nombre_cuenta, monto_m_clp FROM patrimonios_separados_excedentes_lineas WHERE codigo_cuenta = '30.000' ORDER BY periodo DESC, monto_m_clp DESC LIMIT 20;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_excedentes_lineas", name: "patrimonios_separados.excedentes", rows: "11.157 registros", file: "outputs/securitizadoras/patrimonios_separados_excedentes_lineas.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_nota_cartera",
-            type: "circular",
-            label: "Notas · Cartera Securitizada",
-            badge: "796 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Cartera por Originador y Tipo de Activo", query: "SELECT originador, tipo_activo, count(*) as emisiones, SUM(valor_presente_mclp) as valor_total_mclp FROM patrimonios_separados_nota_cartera_detalle GROUP BY originador, tipo_activo ORDER BY valor_total_mclp DESC;" },
-              { label: "Tasas Promedio y Plazos Residuales", query: "SELECT codigo_emision, periodo, originador, tasa_interes_promedio_pct, plazo_promedio_residual_meses, valor_presente_mclp FROM patrimonios_separados_nota_cartera_detalle ORDER BY valor_presente_mclp DESC LIMIT 20;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_nota_cartera_detalle", name: "patrimonios_separados.nota_cartera", rows: "796 registros", file: "outputs/securitizadoras/patrimonios_separados_nota_cartera_detalle.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_nota_morosidad",
-            type: "circular",
-            label: "Notas · Morosidad",
-            badge: "6.632 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Distribución de Cartera y Provisiones por Tramo", query: "SELECT tramo_mora, SUM(numero_deudores) as deudores, SUM(monto_cartera_mclp) as cartera_mclp, SUM(monto_provision_mclp) as provision_mclp FROM patrimonios_separados_nota_morosidad_detalle GROUP BY tramo_mora ORDER BY cartera_mclp DESC;" },
-              { label: "Etiquetas de tramo tal como están guardadas", query: "SELECT tramo_mora, count(*) as filas FROM patrimonios_separados_nota_morosidad_detalle GROUP BY tramo_mora ORDER BY filas DESC;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_nota_morosidad_detalle", name: "patrimonios_separados.nota_morosidad", rows: "6.632 registros", file: "outputs/securitizadoras/patrimonios_separados_nota_morosidad_detalle.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_nota_bonos",
-            type: "circular",
-            label: "Notas · Bonos",
-            badge: "8.001 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Series Emitidas por Moneda y Tasa Carátula", query: "SELECT serie, moneda, AVG(tasa_caratula_pct) as tasa_prom, SUM(saldo_insoluto_mclp) as saldo_total_mclp FROM patrimonios_separados_nota_bonos_detalle GROUP BY serie, moneda ORDER BY saldo_total_mclp DESC;" },
-              { label: "Vencimientos y Saldo Insoluto de Bonos", query: "SELECT codigo_emision, serie, nemotecnico, fecha_vencimiento, tasa_caratula_pct, saldo_insoluto_mclp FROM patrimonios_separados_nota_bonos_detalle ORDER BY saldo_insoluto_mclp DESC LIMIT 20;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_nota_bonos_detalle", name: "patrimonios_separados.nota_bonos", rows: "8.001 registros", file: "outputs/securitizadoras/patrimonios_separados_nota_bonos_detalle.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_nota_administracion",
-            type: "circular",
-            label: "Notas · Administración",
-            badge: "2.153 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Comisiones de Administración por Concepto", query: "SELECT nombre_administradora, concepto_comision, SUM(gasto_periodo_mclp) as gasto_total_mclp FROM patrimonios_separados_nota_administracion_detalle GROUP BY nombre_administradora, concepto_comision ORDER BY gasto_total_mclp DESC;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_nota_administracion_detalle", name: "patrimonios_separados.nota_administracion", rows: "2.153 registros", file: "outputs/securitizadoras/patrimonios_separados_nota_administracion_detalle.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_nota_sobrecolateral",
-            type: "circular",
-            label: "Notas · Sobrecolateral y Reservas",
-            badge: "679 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Sobrecolateral y Fondo de Reserva por Emisión", query: "SELECT codigo_emision, periodo, valor_activos_mclp, valor_pasivos_bonos_mclp, monto_sobrecolateral_mclp, sobrecolateral_pct, fondo_reserva_mclp FROM patrimonios_separados_nota_sobrecolateral_detalle ORDER BY monto_sobrecolateral_mclp DESC LIMIT 20;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_nota_sobrecolateral_detalle", name: "patrimonios_separados.nota_sobrecolateral", rows: "679 registros", file: "outputs/securitizadoras/patrimonios_separados_nota_sobrecolateral_detalle.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_nota_efectivo",
-            type: "circular",
-            label: "Notas · Efectivo y Valores Negociables",
-            badge: "3.802 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Efectivo y Equivalentes Estrictos (NIC 7 - Bancos, FFMM, DAP, Repos)", query: "SELECT institucion, tipo_instrumento, count(*) as num_partidas, SUM(saldo_mclp) as total_mclp, SUM(saldo_mmclp) as total_mmclp FROM patrimonios_separados_nota_efectivo_detalle WHERE tipo_instrumento NOT LIKE '%Mutuo%' GROUP BY institucion, tipo_instrumento ORDER BY total_mclp DESC;" },
-              { label: "Saldos Totales por Institución Depositaria", query: "SELECT institucion, tipo_instrumento, count(*) as num_partidas, SUM(saldo_mclp) as total_mclp, SUM(saldo_mmclp) as total_mmclp FROM patrimonios_separados_nota_efectivo_detalle GROUP BY institucion, tipo_instrumento ORDER BY total_mclp DESC;" },
-              { label: "Inversiones Transitorias de Caja en Mutuos Hipotecarios", query: "SELECT codigo_emision, periodo, institucion, tipo_instrumento, saldo_mclp, saldo_mmclp FROM patrimonios_separados_nota_efectivo_detalle WHERE tipo_instrumento LIKE '%Mutuo%' ORDER BY saldo_mclp DESC LIMIT 20;" },
-              { label: "Top Posiciones de Liquidez y Depósitos", query: "SELECT codigo_emision, periodo, institucion, tipo_instrumento, saldo_mclp, saldo_mmclp FROM patrimonios_separados_nota_efectivo_detalle ORDER BY saldo_mclp DESC LIMIT 20;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_nota_efectivo_detalle", name: "patrimonios_separados.nota_efectivo", rows: "3.802 registros", file: "outputs/securitizadoras/patrimonios_separados_nota_efectivo_detalle.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_cartera_morosidad",
-            type: "circular",
-            label: "Notas · Extracto de Mora",
-            badge: "67 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Tramos del extracto, sin la columna de porcentaje", query: "SELECT codigo_emision, periodo, tramo_mora, numero_deudores, monto_cartera_mclp, provision_mclp FROM patrimonios_separados_cartera_morosidad_detalle WHERE tramo_mora <> 'Total' ORDER BY periodo DESC, monto_cartera_mclp DESC LIMIT 20;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_cartera_morosidad_detalle", name: "patrimonios_separados.cartera_morosidad", rows: "67 registros", file: "outputs/securitizadoras/patrimonios_separados_cartera_morosidad_detalle.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_repos",
-            type: "circular",
-            label: "Operaciones · Pactos de Retroventa",
-            badge: "52 Pactos",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Pactos por contraparte", query: "SELECT contraparte, count(*) as pactos, ROUND(SUM(monto_mclp)/1000, 1) as monto_mm_clp, ROUND(AVG(tasa_interes_anual_pct), 2) as tasa_prom_pct FROM patrimonios_separados_repos_detalle GROUP BY contraparte ORDER BY monto_mm_clp DESC;" },
-              { label: "Instrumentos de los pactos", query: "SELECT instrumento_pacto, emisor_subyacente, count(*) as operaciones, ROUND(SUM(monto_mclp)/1000, 1) as monto_mm_clp FROM patrimonios_separados_repos_detalle GROUP BY instrumento_pacto, emisor_subyacente ORDER BY monto_mm_clp DESC;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_repos_detalle", name: "patrimonios_separados.repos_contratos", rows: "52 pactos", file: "outputs/securitizadoras/patrimonios_separados_repos_detalle.parquet" }
+              { id: "patrimonios_separados_balance", name: "patrimonios_separados.balance", rows: "358 balances · 7.962 cuentas", file: "outputs/securitizadoras/patrimonios_separados_balance.parquet" }
             ]
           }
         ]
@@ -1039,8 +761,7 @@ const EXPLORER_TREE = [
     type: "group",
     label: "COOPERATIVAS DE AHORRO Y CRÉDITO (CMF)",
     badges: [
-      { type: "entities", text: "7 Entidades", title: "Cooperativas de ahorro y crédito supervisadas por la CMF" },
-      { type: "data", text: "52.000+ Datos", title: "Balances IFRS mensuales, notas y Reporte Financiero CMF por cuenta (2017 a 2026)" }
+      { type: "entities", text: "7 Entidades", title: "Cooperativas de ahorro y crédito supervisadas por la CMF" }
     ],
     status: "active",
     children: [
@@ -1065,63 +786,6 @@ const EXPLORER_TREE = [
             tables: [
               { id: "cooperativas_maestro", name: "cooperativas.lista_entidades", rows: "7 entidades", file: "outputs/cooperativas/cooperativas_maestro.parquet" }
             ]
-          },
-          {
-            id: "circ_coop_balances",
-            type: "circular",
-            label: "Estados Financieros · IFRS y Solvencia",
-            badge: "294 Balances",
-            badgeType: "data",
-            status: "active",
-            sector: "cooperativas",
-            chips: [
-              { label: "Ranking de Cooperativas por Activos Totales (MM$ USD)", query: "SELECT periodo, nombre_fantasia, total_activos_m_usd, total_pasivos_m_usd, patrimonio_m_usd, utilidad_ejercicio_m_usd FROM cooperativas_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM cooperativas_balance_resumen) ORDER BY total_activos_m_usd DESC;" },
-              { label: "Solvencia Patrimonial (Patrimonio / Activos %)", query: "SELECT periodo, nombre_fantasia, total_activos_m_usd, patrimonio_m_usd, round(patrimonio_m_usd / NULLIF(total_activos_m_usd, 0) * 100, 2) as ratio_patrimonio_activos_pct FROM cooperativas_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM cooperativas_balance_resumen) ORDER BY ratio_patrimonio_activos_pct DESC;" },
-              { label: "Estructura de Apalancamiento (Pasivos / Patrimonio)", query: "SELECT periodo, nombre_fantasia, total_activos_m_clp, total_pasivos_m_clp, patrimonio_neto_m_clp, round(total_pasivos_m_clp / NULLIF(patrimonio_neto_m_clp, 0), 2) as leverage_contable FROM cooperativas_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM cooperativas_balance_resumen) ORDER BY total_activos_m_clp DESC;" },
-              { label: "Evolución de Excedentes Netos (Coopeuch vs Sistema)", query: "SELECT periodo, nombre_fantasia, utilidad_ejercicio_m_clp, utilidad_ejercicio_m_usd FROM cooperativas_balance_resumen WHERE nombre_fantasia IN ('COOPEUCH', 'ORIENCOOP', 'CAPUAL') ORDER BY periodo DESC, utilidad_ejercicio_m_clp DESC LIMIT 20;" }
-            ],
-            tables: [
-              { id: "cooperativas_balance_resumen", name: "cooperativas.balance_resumen", rows: "294 balances", file: "outputs/cooperativas/cooperativas_balance_resumen.parquet" }
-            ]
-          },
-          {
-            id: "circ_coop_cmf_reporte",
-            type: "circular",
-            label: "Balance y Resultados CMF · por cuenta (2017+)",
-            badge: "115 Meses",
-            badgeType: "data",
-            status: "active",
-            sector: "cooperativas",
-            chips: [
-              { label: "Activos totales por cooperativa (último mes)", query: "SELECT periodo, cooperativa, monto_mm_clp AS activos_mm_clp FROM cooperativas_cmf_balance WHERE seccion = 'activos' AND codigo_concepto = 'activos_totales' AND periodo = (SELECT MAX(periodo) FROM cooperativas_cmf_balance) ORDER BY activos_mm_clp DESC;" },
-              { label: "Evolución de los activos del sistema (2017-2026)", query: "SELECT periodo, SUM(monto_mm_clp) AS activos_mm_clp FROM cooperativas_cmf_balance WHERE codigo_concepto = 'activos_totales' GROUP BY periodo ORDER BY periodo;" },
-              { label: "Cartera de colocaciones por tipo (último mes)", query: "SELECT cooperativa, codigo_concepto, monto_mm_clp FROM cooperativas_cmf_balance WHERE seccion = 'activos' AND codigo_concepto IN ('colocaciones_comerciales', 'colocaciones_consumo', 'colocaciones_vivienda') AND periodo = (SELECT MAX(periodo) FROM cooperativas_cmf_balance) ORDER BY cooperativa, codigo_concepto;" },
-              { label: "Excedentes del ejercicio por cooperativa (últimos diciembres)", query: "SELECT periodo, cooperativa, monto_mm_clp FROM cooperativas_cmf_resultados WHERE codigo_concepto = 'resultado_ejercicio' AND periodo LIKE '%-12' ORDER BY periodo DESC, monto_mm_clp DESC LIMIT 21;" },
-              { label: "Margen de intereses y gasto en provisiones (año en curso)", query: "SELECT periodo, cooperativa, SUM(CASE WHEN codigo_concepto = 'margen_intereses' THEN monto_mm_clp END) AS margen_intereses_mm_clp, SUM(CASE WHEN codigo_concepto = 'gasto_provisiones' THEN monto_mm_clp END) AS gasto_provisiones_mm_clp FROM cooperativas_cmf_resultados WHERE periodo >= '2026-01' GROUP BY periodo, cooperativa ORDER BY cooperativa, periodo;" },
-              { label: "Depósitos y captaciones del sistema (2017-2026)", query: "SELECT periodo, SUM(monto_mm_clp) AS depositos_mm_clp FROM cooperativas_cmf_balance WHERE codigo_concepto = 'depositos_captaciones' GROUP BY periodo ORDER BY periodo;" }
-            ],
-            tables: [
-              { id: "cooperativas_cmf_balance", name: "cooperativas.cmf_balance", rows: "Activos y pasivos · 2017-01 a 2026-07", file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet" },
-              { id: "cooperativas_cmf_resultados", name: "cooperativas.cmf_resultados", rows: "Resultados y margen · 2017-01 a 2026-07", file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet" }
-            ]
-          },
-          {
-            id: "circ_coop_efectivo_bancos",
-            type: "circular",
-            label: "Notas · Efectivo y Depósitos en Bancos",
-            badge: "122 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "cooperativas",
-            chips: [
-              { label: "Composición de Liquidez: Caja vs Cuentas Bancarias (2025)", query: "SELECT periodo, nombre_fantasia, categoria_efectivo, round(sum(monto_m_clp), 1) as total_m_clp, round(sum(monto_m_usd), 2) as total_m_usd FROM cooperativas_nota_efectivo_detalle WHERE periodo = '2025-12' AND categoria_efectivo != 'total_efectivo_bancos' GROUP BY periodo, nombre_fantasia, categoria_efectivo ORDER BY nombre_fantasia, total_m_clp DESC;" },
-              { label: "Exposición a Bancos Comerciales Locales (Detacoop)", query: "SELECT periodo, concepto_literal, institucion_contraparte, monto_m_clp, monto_m_usd FROM cooperativas_nota_efectivo_detalle WHERE rut = '70017860-9' AND categoria_efectivo = 'depositos_bancos_locales' ORDER BY periodo DESC, monto_m_clp DESC;" },
-              { label: "Evolución de Fondos Disponibles en Coopeuch (2022-2025)", query: "SELECT periodo, concepto_literal, monto_m_clp, monto_m_usd FROM cooperativas_nota_efectivo_detalle WHERE rut = '82878900-7' ORDER BY periodo ASC, monto_m_clp DESC;" },
-              { label: "Cheques en Canje y Valores en Cobro del Sector", query: "SELECT periodo, nombre_fantasia, concepto_literal, monto_m_clp, monto_m_usd FROM cooperativas_nota_efectivo_detalle WHERE categoria_efectivo = 'valores_en_cobro' ORDER BY periodo DESC, monto_m_clp DESC;" }
-            ],
-            tables: [
-              { id: "cooperativas_nota_efectivo_detalle", name: "cooperativas.nota_efectivo", rows: "122 registros", file: "outputs/cooperativas/cooperativas_nota_efectivo_detalle.parquet" }
-            ]
           }
         ]
       }
@@ -1133,7 +797,7 @@ const EXPLORER_TREE = [
     label: "CAJAS DE COMPENSACION (CCAF / SUSESO - CMF)",
     badges: [
       { type: "entities", text: "6 Entidades", title: "Los Andes, La Araucana, Los Héroes, Caja 18 (y 2 históricas)" },
-      { type: "data", text: "6 Datos", title: "Entidades de previsión y bienestar social reguladas por la Ley 18.833" }
+      { type: "data", text: "65 trimestres", title: "Balance y resultados IFRS de las cajas que envían estados financieros XBRL a la CMF (archivo TXT trimestral CMF). Se actualiza solo 3 veces al mes" }
     ],
     status: "active",
     children: [
@@ -1161,58 +825,37 @@ const EXPLORER_TREE = [
             ]
           },
           {
-            id: "cat_ccaf_caratula",
+            id: "cat_ccaf_balance",
             type: "circular",
-            label: "Balances y Situación Financiera · XBRL (2019-2026)",
-            badge: "288 Balances",
+            label: "Balance IFRS · CMF (2010-06–2026-06)",
+            badge: "65 trimestres",
             badgeType: "data",
             status: "active",
             sector: "cajas_compensacion",
             chips: [
-              { label: "Totales Cierre 2024 por CCAF y Alcance", query: "SELECT ccaf, tipo_eeff, asiento_contable, monto_m_clp FROM ccaf_caratula_totales WHERE ano = 2024 AND mes = 12 ORDER BY ccaf, tipo_eeff, asiento_contable;" },
-              { label: "Evolución Activos Totales (2019-2026)", query: "SELECT ano, mes, ccaf, tipo_eeff, monto_m_clp FROM ccaf_caratula_totales WHERE asiento_contable = 'Total de activos' ORDER BY ano DESC, mes DESC, ccaf;" },
-              { label: "Utilidad Neta del Sistema (Últimos Años)", query: "SELECT ano, ccaf, tipo_eeff, monto_m_clp FROM ccaf_caratula_totales WHERE asiento_contable = 'Utilidad neta' AND mes = 12 ORDER BY ano DESC, monto_m_clp DESC;" }
+              { label: "Activos, pasivos y patrimonio por CCAF, último trimestre (MM$)", query: "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM ccaf_balance WHERE periodo = (SELECT max(periodo) FROM ccaf_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;" },
+              { label: "Evolución del sector: activos totales por trimestre (MM$, CLP)", query: "SELECT periodo, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS activos_mm_clp FROM ccaf_balance WHERE cuenta = 'Total de activos' AND moneda = 'CLP' AND repeticion = 1 GROUP BY periodo ORDER BY periodo;" },
+              { label: "Balance completo de CCAF Los Andes, último trimestre", query: "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM ccaf_balance WHERE rut = '81826800' AND periodo = (SELECT max(periodo) FROM ccaf_balance WHERE rut = '81826800') ORDER BY tipo_balance, estado_financiero, orden;" }
             ],
             tables: [
-              { id: "ccaf_caratula_totales", name: "ccaf.balances", rows: "288 balances", file: "outputs/cajas_compensacion/ccaf_caratula_totales.parquet" }
+              { id: "ccaf_balance", name: "ccaf.balance", rows: "8.043 cuentas · un archivo por año", file: "", files: ["outputs/cajas_compensacion/ccaf_balance/manifest.json"] }
             ]
           },
           {
-            id: "cat_ccaf_credito_social",
+            id: "cat_ccaf_resultados",
             type: "circular",
-            label: "Colocaciones de Crédito Social y Provisiones (2019-2026)",
-            badge: "268 Registros",
+            label: "Estado de Resultados IFRS · CMF (2010-06–2026-06)",
+            badge: "65 trimestres",
             badgeType: "data",
             status: "active",
             sector: "cajas_compensacion",
             chips: [
-              { label: "Cartera Crédito Social Total por CCAF (Último Corte)", query: "SELECT ccaf, tipo_eeff, ROUND(SUM(monto_neto_miles_clp) / 1e3, 1) as total_neto_m_clp, ROUND(SUM(deterioro_provision_miles_clp) / 1e3, 1) as provision_m_clp FROM ccaf_colocaciones_credito_social WHERE periodo = '2026-06' GROUP BY ccaf, tipo_eeff ORDER BY total_neto_m_clp DESC;" },
-              { label: "Trabajadores vs Pensionados (Consumo Cierre 2024)", query: "SELECT ccaf, tipo_afiliado, tipo_credito, ROUND(monto_neto_miles_clp / 1e3, 1) as neto_m_clp, ROUND(deterioro_provision_miles_clp / 1e3, 1) as provision_m_clp FROM ccaf_colocaciones_credito_social WHERE periodo = '2024-12' AND tipo_credito = 'Consumo' ORDER BY ccaf, tipo_afiliado;" },
-              { label: "Evolución Cartera Total del Sistema (2019-2026)", query: "SELECT periodo, ROUND(SUM(monto_neto_miles_clp) / 1e6, 2) as cartera_neta_mm_clp, ROUND(SUM(deterioro_provision_miles_clp) / 1e6, 2) as provisiones_mm_clp FROM ccaf_colocaciones_credito_social GROUP BY periodo ORDER BY periodo;" },
-              { label: "Provisión sobre Cartera Bruta por CCAF (2025-12)", query: "SELECT ccaf, ROUND(SUM(monto_neto_miles_clp)/1e3, 1) as colocaciones_netas_m_clp, ROUND(SUM(deterioro_provision_miles_clp)/1e3, 1) as provisiones_m_clp, ROUND(SUM(deterioro_provision_miles_clp) * 100.0 / NULLIF(SUM(monto_neto_miles_clp + deterioro_provision_miles_clp), 0), 2) as cobertura_pct FROM ccaf_colocaciones_credito_social WHERE periodo = '2025-12' GROUP BY ccaf ORDER BY colocaciones_netas_m_clp DESC;" }
+              { label: "Ingresos y utilidad por CCAF, ejercicio 2025 (MM$)", query: "SELECT razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Ingresos de actividades ordinarias') / 1e6, 1) AS ingresos_mm, round(max(valor) FILTER (WHERE cuenta = 'Ganancia (pérdida)') / 1e6, 1) AS ganancia_mm FROM ccaf_resultados WHERE periodo = '2025-12' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 GROUP BY ALL ORDER BY ganancia_mm DESC NULLS LAST;" },
+              { label: "Utilidad del sector por año (cierres de diciembre, MM$, CLP)", query: "SELECT left(periodo, 4) AS anio, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS ganancia_mm_clp FROM ccaf_resultados WHERE periodo LIKE '%-12' AND cuenta = 'Ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 AND moneda = 'CLP' GROUP BY 1 ORDER BY 1;" },
+              { label: "Estado de resultados completo de CCAF Los Andes, ejercicio 2025", query: "SELECT tipo_balance, estado_financiero, orden, cuenta, valor FROM ccaf_resultados WHERE rut = '81826800' AND periodo = '2025-12' ORDER BY tipo_balance, estado_financiero, orden;" }
             ],
             tables: [
-              { id: "ccaf_colocaciones_credito_social", name: "ccaf.colocaciones_credito_social", rows: "268 registros", file: "outputs/cajas_compensacion/ccaf_colocaciones_credito_social.parquet" }
-            ]
-          },
-          {
-            id: "cat_ccaf_nota8_efectivo",
-            type: "circular",
-            label: "Nota 8 · Efectivo y Equivalentes (2019-2026)",
-            badge: "423 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "cajas_compensacion",
-            chips: [
-              { label: "Desglose Liquidez Cierre 2024", query: "SELECT ccaf, tipo_eeff, concepto, monto_m_clp FROM ccaf_nota8_efectivo_resumen WHERE ano = 2024 AND mes = 12 ORDER BY ccaf, monto_m_clp DESC;" },
-              { label: "Ranking Cajas por Inversiones Corto Plazo (2024)", query: "SELECT ccaf, tipo_eeff, monto_m_clp FROM ccaf_nota8_efectivo_resumen WHERE ano = 2024 AND mes = 12 AND concepto LIKE '%Inversiones%' ORDER BY monto_m_clp DESC;" },
-              { label: "Top Repos por Corredora 2024", query: "SELECT ccaf, broker_estandarizado, plazo_dias, tasa_anual_pct, valor_contable_m_clp FROM ccaf_nota8_repos_detalle WHERE ano = 2024 ORDER BY valor_contable_m_clp DESC LIMIT 10;" },
-              { label: "Ranking Histórico Corredoras en Repos CCAF", query: "SELECT broker_estandarizado, count(*) AS contratos, round(sum(valor_contable_m_clp), 1) AS total_mm_clp, round(avg(plazo_dias), 1) AS plazo_prom_dias, round(avg(tasa_anual_pct), 2) AS tasa_prom_pct FROM ccaf_nota8_repos_detalle GROUP BY broker_estandarizado ORDER BY total_mm_clp DESC;" }
-            ],
-            tables: [
-              { id: "ccaf_nota8_efectivo_resumen", name: "ccaf.nota8_efectivo_resumen", rows: "213 registros", file: "outputs/cajas_compensacion/ccaf_nota8_efectivo_resumen.parquet" },
-              { id: "ccaf_nota8_dap_detalle", name: "ccaf.nota8_dap_detalle", rows: "52 registros", file: "outputs/cajas_compensacion/ccaf_nota8_dap_detalle.parquet" },
-              { id: "ccaf_nota8_repos_detalle", name: "ccaf.nota8_repos_detalle", rows: "158 operaciones", file: "outputs/cajas_compensacion/ccaf_nota8_repos_detalle.parquet" }
+              { id: "ccaf_resultados", name: "ccaf.resultados", rows: "5.506 cuentas · un archivo por año", file: "", files: ["outputs/cajas_compensacion/ccaf_resultados/manifest.json"] }
             ]
           }
         ]
@@ -1224,8 +867,7 @@ const EXPLORER_TREE = [
     type: "group",
     label: "SISTEMAS DE PAGO (BCCh / CMF)",
     badges: [
-      { type: "entities", text: "12 Entidades", title: "Infraestructuras críticas de liquidación, custodia, compensación y adquirencia" },
-      { type: "data", text: "196 Datos", title: "82 balances trimestrales IFRS y 102 meses de tráfico LBTR/CCA" }
+      { type: "entities", text: "12 Entidades", title: "Infraestructuras críticas de liquidación, custodia, compensación y adquirencia" }
     ],
     status: "active",
     children: [
@@ -1248,39 +890,7 @@ const EXPLORER_TREE = [
               { label: "Cámaras y Contrapartes Centrales", query: "SELECT codigo_sistema, razon_social, marco_legal FROM sistemas_pago_maestro WHERE tipo_sistema LIKE '%Cámara%' OR tipo_sistema LIKE '%Contraparte%';" }
             ],
             tables: [
-              { id: "sistemas_pago_maestro", name: "sistemas_pago.lista_entidades", rows: "12 entidades", file: "outputs/sistemas_pago/sistemas_pago_maestro.parquet" }
-            ]
-          },
-          {
-            id: "cat_pagos_balances",
-            type: "circular",
-            label: "Balances IFRS de Cámaras y Adquirentes",
-            badge: "82 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "sistemas_pago",
-            chips: [
-              { label: "Último Cierre IFRS (2026-06)", query: "SELECT periodo, razon_social, total_activos_m_clp, patrimonio_neto_m_clp, total_activos_m_usd FROM sistemas_pago_balances WHERE periodo = '2026-06';" },
-              { label: "Evolución Patrimonial Cámaras", query: "SELECT periodo, razon_social, total_activos_m_clp, total_pasivos_m_clp, patrimonio_neto_m_clp FROM sistemas_pago_balances ORDER BY periodo DESC, total_activos_m_clp DESC LIMIT 15;" }
-            ],
-            tables: [
-              { id: "sistemas_pago_balances", name: "sistemas_pago.balances", rows: "82 registros", file: "outputs/sistemas_pago/sistemas_pago_balances.parquet" }
-            ]
-          },
-          {
-            id: "cat_pagos_estadisticas",
-            type: "circular",
-            label: "Estadísticas de Liquidación y Tráfico · BCCh",
-            badge: "102 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "sistemas_pago",
-            chips: [
-              { label: "Volumen LBTR y TEF CCA", query: "SELECT periodo, monto_liquidado_lbtr_m_usd, monto_compensado_cca_tef_m_clp, circulante_stock_m_clp FROM sistemas_pago_estadisticas_bcch ORDER BY periodo DESC LIMIT 12;" },
-              { label: "Tasas de Tarjetas vs TC", query: "SELECT periodo, tasa_tarjetas_consumo_pct, tasa_tarjetas_comercial_pct, tipo_cambio_usd_clp FROM sistemas_pago_estadisticas_bcch ORDER BY periodo DESC LIMIT 12;" }
-            ],
-            tables: [
-              { id: "sistemas_pago_estadisticas_bcch", name: "sistemas_pago.estadisticas_bcch", rows: "102 registros", file: "outputs/sistemas_pago/sistemas_pago_estadisticas_bcch.parquet" }
+              { id: "sistemas_pago_maestro", name: "sistemas_pago.lista_entidades", rows: "19 entidades", file: "outputs/sistemas_pago/sistemas_pago_maestro.parquet" }
             ]
           }
         ]
@@ -1292,8 +902,7 @@ const EXPLORER_TREE = [
     type: "group",
     label: "FINTECH & FINANZAS ABIERTAS (LEY N° 21.521 / CMF)",
     badges: [
-      { type: "entities", text: "262 Entidades", title: "Entidades inscritas en el Registro de Prestadores de Servicios Financieros CMF" },
-      { type: "data", text: "786 Datos", title: "Acreditaciones de 7 servicios FinTech y roles de Finanzas Abiertas" }
+      { type: "entities", text: "262 Entidades", title: "Entidades inscritas en el Registro de Prestadores de Servicios Financieros CMF" }
     ],
     status: "active",
     children: [
@@ -1316,39 +925,7 @@ const EXPLORER_TREE = [
               { label: "Distribución Regional", query: "SELECT region, COUNT(*) AS total_entidades FROM fintech_rpsf_maestro WHERE region != '' GROUP BY region ORDER BY total_entidades DESC;" }
             ],
             tables: [
-              { id: "fintech_rpsf_maestro", name: "fintech.lista_entidades", rows: "262 entidades", file: "outputs/fintech/fintech_rpsf_maestro.parquet" }
-            ]
-          },
-          {
-            id: "cat_fintech_servicios",
-            type: "circular",
-            label: "Servicios Acreditados · CMF",
-            badge: "262 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "fintech",
-            chips: [
-              { label: "Servicios por Categoría", query: "SELECT servicio_nombre, estado_autorizacion, COUNT(*) AS entidades FROM fintech_servicios_acreditados GROUP BY servicio_nombre, estado_autorizacion ORDER BY entidades DESC;" },
-              { label: "Plataformas Transaccionales (SAT / EO)", query: "SELECT rut_completo, razon_social, servicio_nombre, estado_autorizacion FROM fintech_servicios_acreditados WHERE servicio_sigla IN ('SAT', 'EO', 'IIF', 'CIF') ORDER BY servicio_sigla;" }
-            ],
-            tables: [
-              { id: "fintech_servicios_acreditados", name: "fintech.servicios_acreditados", rows: "262 registros", file: "outputs/fintech/fintech_servicios_acreditados.parquet" }
-            ]
-          },
-          {
-            id: "cat_fintech_sfa",
-            type: "circular",
-            label: "Taxonomía de Finanzas Abiertas",
-            badge: "262 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "fintech",
-            chips: [
-              { label: "Distribución Roles SFA", query: "SELECT rol_sfa, COUNT(*) AS total_entidades, descripcion_rol FROM fintech_finanzas_abiertas_roles GROUP BY rol_sfa, descripcion_rol ORDER BY total_entidades DESC;" },
-              { label: "Iniciadores de Pagos (IIP)", query: "SELECT rut, razon_social, rol_sfa, estandar_interfaz FROM fintech_finanzas_abiertas_roles WHERE rol_sfa = 'IIP';" }
-            ],
-            tables: [
-              { id: "fintech_finanzas_abiertas_roles", name: "fintech.finanzas_abiertas_roles", rows: "262 registros", file: "outputs/fintech/fintech_finanzas_abiertas_roles.parquet" }
+              { id: "fintech_rpsf_maestro", name: "fintech.lista_entidades", rows: "263 entidades", file: "outputs/fintech/fintech_rpsf_maestro.parquet" }
             ]
           }
         ]
@@ -1365,8 +942,8 @@ class SidebarController {
     this.toggleBtn = document.getElementById("toggle-sidebar");
     this.breadcrumbEl = document.getElementById("erd-breadcrumb");
 
-    this.selectedTableId = "vida_bonos";
-    this.activeSector = "vida";
+    this.selectedTableId = "seguros_maestro";
+    this.activeSector = "seguros";
     // El explorador se muestra colapsado al cargar: el usuario decide qué abrir.
     // Los identificadores son group.id, sector/circular id y "part_<tabla>" para particiones.
     this.expandedNodes = new Set();

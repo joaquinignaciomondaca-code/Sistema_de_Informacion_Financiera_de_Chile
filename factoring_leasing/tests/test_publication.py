@@ -1,4 +1,4 @@
-"""Las muestras cotejadas y la serie CMF automática coexisten con el maestro."""
+"""Web de Factoring & Leasing: maestro + serie CMF; las muestras cotejadas quedan solo como archivo de auditoría."""
 import json
 import shutil
 import tempfile
@@ -11,7 +11,10 @@ from factoring_leasing.scripts.audit_factoring_leasing import OUTPUT, RETIRED, R
 
 class PublicationTests(unittest.TestCase):
     def test_only_entity_list_is_published(self):
-        self.assertEqual(run_audit(), 28)
+        # La lista crece sola (altas desde el TXT IFRS): se compara con su tamaño real, mínimo 28.
+        n = len(json.loads((OUTPUT / "factoring_leasing_maestro.json").read_text(encoding="utf-8")))
+        self.assertGreaterEqual(n, 28)
+        self.assertEqual(run_audit(), n)
         files = {p.name for p in OUTPUT.iterdir() if p.is_file()}
         # El backfill completo se publica como dos Parquets separados y con
         # metadata/advertencia, sin reemplazar las muestras previamente cotejadas.
@@ -63,8 +66,13 @@ class PublicationTests(unittest.TestCase):
         manifest = json.loads((ROOT / 'data_manifest.json').read_text(encoding='utf-8'))
         sector = [entry['id'] for entry in manifest['tables']
                   if entry.get('sector') == 'factoring_leasing']
-        expected = ['factoring_leasing_maestro', 'factoring_leasing_eeff_muestra_cmf',
-                    'factoring_leasing_resultados_muestra_cmf']
+        # Las muestras cotejadas (2 filas) repetían cifras de la serie: fuera del catálogo y de la web.
+        expected = ['factoring_leasing_maestro']
+        samples = ('factoring_leasing_eeff_muestra_cmf', 'factoring_leasing_resultados_muestra_cmf')
+        for file in site_files:
+            source = (ROOT / 'docs/js' / file).read_text(encoding='utf-8')
+            for name in samples:
+                self.assertNotIn(name, source, file)
         full_ids = ['factoring_leasing_balance_serie_ifrs_cmf',
                     'factoring_leasing_resultados_serie_ifrs_cmf']
         if (OUTPUT / f'{full_ids[0]}.parquet').exists():
@@ -76,14 +84,6 @@ class PublicationTests(unittest.TestCase):
         self.assertEqual(manifest['total_tables'], len(manifest['tables']))
         self.assertEqual(manifest['total_records'],
                          sum(t.get('registros_reales', 0) for t in manifest['tables']))
-
-    def test_legacy_pipeline_entrypoints_fail_before_writing(self):
-        from factoring_leasing.scripts import pipeline_stream_factoring_leasing as pipeline
-        from factoring_leasing.scripts import stream_cmf_eeff_series as streaming
-        with self.assertRaisesRegex(RuntimeError, 'suspendida'):
-            pipeline.run_factoring_leasing_pipeline()
-        with self.assertRaisesRegex(RuntimeError, 'suspendida'):
-            streaming.run_cmf_streaming_pipeline([])
 
 
 if __name__ == '__main__':

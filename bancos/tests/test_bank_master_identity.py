@@ -28,10 +28,10 @@ def valid_rut(value: str) -> bool:
 
 
 class BankMasterIdentityTests(unittest.TestCase):
-    def test_master_has_40_unique_codes_and_valid_rut_checksums(self):
+    def test_master_unique_codes_and_valid_rut_checksums(self):
         rows = json.loads(MASTER.read_text(encoding="utf-8"))
         codes = [row["codigo_institucion"] for row in rows]
-        self.assertEqual(len(rows), 40)
+        self.assertGreaterEqual(len(rows), 40)  # la lista crece sola (entidades.yml)
         self.assertEqual(len(codes), len(set(codes)))
         self.assertTrue(all(valid_rut(row["rut"]) for row in rows))
 
