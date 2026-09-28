@@ -17,20 +17,24 @@ jobs:
           mkdir -p scratch/sonda_corredoras && cd scratch/sonda_corredoras
           UA='Mozilla/5.0 (compatible; MonitorFinancieroChile/1.0)'
           B='https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/intermediarios_ifrs1.php?lang=es&sociedad%5B%5D=0&ag=0&indcon=0&xls=y&tiposociedad=1&cuenta=&estimado=2&vsn=2'
-          for p in "12 2025" "06 2026" "03 2014"; do set -- $p
-            curl -s -A "$UA" --max-time 300 "$B&mes1=$1&anno1=$2&mes2=$1&anno2=$2" -o "c_$2$1.bin"; done
+          for p in "1 06 2026" "1 05 2026" "1 12 2009" "1 12 2011" "2 06 2026" "3 06 2026"; do set -- $p
+            curl -s -A "$UA" --max-time 300 "${B/tiposociedad=1/tiposociedad=$1}&mes1=$2&anno1=$3&mes2=$2&anno2=$3" -o "c_t$1_$3$2.bin"; done
           ls -la
-          python3 - <<'PY' > resumen.txt 2>&1
+          python3 - <<'PY' > resumen2.txt 2>&1
           import pandas as pd, glob, io
           for f in sorted(glob.glob('c_*.bin')):
-              b=open(f,'rb').read(); print('=====',f,len(b),b[:8])
-              for motor in ('openpyxl','xlrd',None):
-                  try:
-                      x=pd.read_excel(io.BytesIO(b),header=None,engine=motor) if motor else pd.read_html(io.BytesIO(b))[0]
-                      print('motor',motor,x.shape); pd.set_option('display.width',250); pd.set_option('display.max_columns',30)
-                      print(x.head(12).to_string()[:6000]); print(x.iloc[:,0].astype(str).tolist()[:80]); break
-                  except Exception as e: print('fallo',motor,str(e)[:200])
-              if not b.startswith(b'PK'): print(b[:1500].decode('utf-8','replace'))
+              b=open(f,'rb').read(); print('=====',f,len(b),b[:4])
+              try:
+                  x=pd.read_excel(io.BytesIO(b),header=None,dtype=str)
+              except Exception as e:
+                  print('fallo', e, b[:300]); continue
+              print(x.shape)
+              for r in range(min(len(x), 12)):
+                  print(r, [v for v in x.iloc[r].tolist()][:6])
+              if f.endswith('t1_202606.bin'):
+                  for r in range(4, 9):
+                      print('FILA', r, x.iloc[r].tolist())
+              print('col1-2:', x.iloc[:, 1:3].values.tolist())
           PY
           rm -f c_*.bin
       - name: Guardar
