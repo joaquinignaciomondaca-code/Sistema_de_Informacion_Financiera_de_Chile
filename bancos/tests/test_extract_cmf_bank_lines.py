@@ -133,3 +133,12 @@ class ExtractCmfBankLinesTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class NormalizeNameAccentTests(unittest.TestCase):
+    def test_accented_workbook_name_matches_plain_zip_name(self):
+        from bancos.scripts.extract_cmf_bank_lines import normalize_name
+        from bancos.scripts.inspect_cmf_bank_sample import norm
+        for f in (normalize_name, norm):
+            self.assertEqual(f("Banco de Crédito e Inversiones"), f("BANCO DE CREDITO E INVERSIONES"))
+            self.assertEqual(f("Itaú Corpbanca"), "ITAUCORPBANCA")
