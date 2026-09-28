@@ -124,8 +124,17 @@ def find_source(index_url: str, period: str, suffix: str) -> tuple[str, str]:
         ):
             matches[href] = text
     if len(matches) != 1:
-        raise RuntimeError(f"Expected one CMF {suffix} link for {period}; found {len(matches)}")
+        candidates = [
+            {"url": urllib.parse.urljoin(index_url, item["href"].strip()), "text": re.sub(r"\s+", " ", item["text"]).strip()[:120]}
+            for item in parser.links
+            if urllib.parse.urlsplit(urllib.parse.urljoin(index_url, item["href"].strip())).path.lower().endswith(suffix)
+        ]
+        raise RuntimeError(
+            f"Expected one CMF {suffix} link for {period}; found {len(matches)}; "
+            f"candidate_links={json.dumps(candidates, ensure_ascii=False)}"
+        )
     url, text = next(iter(matches.items()))
+    print("::notice title=CMF sample source::" + json.dumps({"period": period, "suffix": suffix, "url": url}, ensure_ascii=False))
     return url, text
 
 
@@ -296,7 +305,9 @@ def main() -> int:
     try:
         run(args.period, args.bank_code, args.bank_name, args.output)
     except (OSError, ValueError, RuntimeError, zipfile.BadZipFile) as exc:
-        print(f"CMF sample inspection failed safely: {exc}", file=sys.stderr)
+        message = f"CMF sample inspection failed safely: {exc}"
+        print(message, file=sys.stderr)
+        print("::error title=CMF sample inspection failed::" + message.replace("\\n", " ").replace("%", "%25").replace("\r", "%0D"))
         return 1
     return 0
 
