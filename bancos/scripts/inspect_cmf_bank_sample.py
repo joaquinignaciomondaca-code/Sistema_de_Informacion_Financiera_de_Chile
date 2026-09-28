@@ -203,6 +203,12 @@ def inspect_zip(blob: bytes, period: str, bank_code: str) -> dict:
                 bank_files.setdefault(file_type, []).append(info)
         if not members:
             raise RuntimeError(f"No B/R/C TXT members found for {period}")
+        print("::notice title=CMF ZIP member scan::" + json.dumps({
+            "period": period,
+            "member_count": len(members),
+            "file_type_counts": dict(sorted(Counter(MEMBER_RE.search(name).group(1).upper() + MEMBER_RE.search(name).group(2) for name in members).items())),
+            "requested_bank_files": sorted(bank_files),
+        }, ensure_ascii=False))
         duplicates = {kind: len(files) for kind, files in bank_files.items() if len(files) != 1}
         missing_core = sorted({"B1"} - set(bank_files))
         if duplicates or missing_core:
@@ -327,10 +333,10 @@ def main() -> int:
     args = parser.parse_args()
     try:
         run(args.period, args.bank_code, args.bank_name, args.output)
-    except (OSError, ValueError, RuntimeError, zipfile.BadZipFile) as exc:
-        message = f"CMF sample inspection failed safely: {exc}"
-        print(message, file=sys.stderr)
-        print("::error title=CMF sample inspection failed::" + message.replace("\\n", " ").replace("%", "%25").replace("\r", "%0D"))
+    except Exception as exc:
+        message = f"CMF sample inspection failed safely: {type(exc).__name__}: {exc}"
+        print(message, file=sys.stderr, flush=True)
+        print("::error title=CMF sample inspection failed::" + message.replace("\\n", " ").replace("%", "%25").replace("\r", "%0D"), flush=True)
         return 1
     return 0
 
