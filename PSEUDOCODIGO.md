@@ -30,7 +30,7 @@ Dos tipos de flujo (ver `pipelines/README.md`):
 
 | Tipo | Dónde corre | Cómo publica |
 |---|---|---|
-| **Maduro/automático** (macro, bancos B1/B2/R1, cooperativas CMF, factoring-leasing IFRS) | GitHub Actions + PC | staging → validación → artifact o commit controlado |
+| **Maduro/automático** (macro, bancos B1/B2/R1, factoring-leasing IFRS) | GitHub Actions + PC | staging → validación → artifact o commit controlado |
 | **Manual/experimental** (PDFs, notas, seguros, FFMM, FI, AFP, CCAF…) | PC | escritura directa a `docs/outputs/` tras auditoría sectorial |
 | **Laboratorio** (bancos REPO, XML/XBRL, sondas) | Actions | **nunca publica**; deja reportes en `.local-data/review/` o artifacts |
 
@@ -288,13 +288,12 @@ securitizadoras/    stream_cmf_securitizadoras (gestoras + lista de patrimonios 
                       revisar = detalle≠subtotal ∪ lectura independiente distinta (8 docs fijos) ∪ hoja resumen distinta
                       → patrimonios_separados_balance_cuentas.parquet (7.962) + _balance_fsb.parquet (358)
                     audit_securitizadoras (gestoras, lista y balance FSB)
-cooperativas/       01 maestro → 02 series (Excel CMF) → 03 audit → 04 nota efectivo (RAW_NOTE_DATA transcrito)
-                    + flujo automático CMF (ver §8b)
-ccaf/               build_ccaf_maestro ; pipeline_extract_ccaf_xbrl (XBRL SUSESO/CMF) ; build_ccaf_repos_enriquecido ; audit
-                    legacy/: extracción PDF con LLM (DeepSeek) — obsoleto
+cooperativas/       01 maestro → 03 audit (solo lista de entidades)
+                    (balances CMF en Excel retirados, ver §8b)
+ccaf/               build_ccaf_maestro ; pipeline_extract_ccaf_xbrl (XBRL CMF → solo ccaf_caratula_totales) ; audit
 retail_financiero/  stream_cmf_retail_financiero + audit
-sistemas_pago/      stream_sistemas_pago (balances CMF + estadísticas BCCh) + audit
-fintech/            stream_fintech_rpsf (registro RPSF Ley 21.521) + audit ; explore.py (roto, ver §11)
+sistemas_pago/      stream_sistemas_pago (solo maestro) + audit
+fintech/            stream_fintech_rpsf (registro RPSF Ley 21.521, solo maestro) + audit ; explore.py (roto, ver §11)
 pensiones/          pipeline_stream_history(_parallel): Playwright descarga ZIP SP → parse → particiones → consolidate
                     generate_afp_maestro (única tabla AFP publicada); cartera/derivados AFP RETIRADOS de la web
                     ~25 scripts inspect_*/test_*/sample_* = exploración ad-hoc (rutas C:\)
@@ -303,40 +302,18 @@ pipelines/manual/   ingest_manual_notes: plantillas CSV de notas transcritas →
 
 ---
 
-## 8b. Cooperativas — Reporte Financiero CMF (automático, `extract_cmf_coop_report.py`)
+## 8b. Cooperativas, CCAF, Sistemas de Pago y FinTech — recorte 2026-09-28
 ```
-Workflow cooperativas_cmf_mensual.yml: días 2, 12 y 22 14:00 UTC → tests → extract --publicar (incremental)
-         → commit solo si hay meses nuevos → deploy Pages (commits de GITHUB_TOKEN no disparan pages.yml)
-Fuente: índice CMF w4-propertyvalue-28918 (una planilla xls/xlsx por mes). Formato 2017-01+ (antes: otro plan de cuentas → excluido)
-
-Sheet(spec): hoja + frases clave de cabecera + N columnas numéricas + identidades internas
-   hojas: "Activos Cooperativas", "Pasivos Cooperativas", "Estado Resultados Coop", "Margen Interes - Comisiones"
-
-run(publicar, desde=2017-01, hasta?, completo=False):
-    sources = discover(índice)                   # {AAAA-MM: url}
-    ya      = periodos_publicados()              # en estados.parquet Y 'passed' en validacion.json
-    periods = pendientes(sources, ya, desde, hasta, completo)   # --completo = reconstrucción total
-    si no hay periods → "Nada nuevo", salida 0 (no escribe)
-    por período pendiente:
-        blob   = fetch(url, MAX_FILE)
-        sheets = read_workbook(blob)             # openpyxl (.xlsx) | xlrd (.xls)
-        parsed = parse_workbook(sheets):
-            elegir_hoja(spec, nombres)           # tolera variaciones de nombre; registra hojas ignoradas
-            parse_sheet: fila → coop_key(etiqueta); ✗ si la fila no trae exactamente N montos
-        validate_period(parsed):
-            ✗ cabecera sin frases clave
-            ✗ subtotales internos (tolerancia ±2 MM$, hasta ±5 MM$ aceptado y declarado)
-            ✗ activos ≠ pasivos + patrimonio      ✗ Σ cooperativas ≠ "Total Cooperativas"
-            ✗ margen/comisiones distintos entre hojas
-        rows = to_rows(period, parsed, url, sha256)  # 1 fila por (periodo, cooperativa, estado, cuenta)
-        si error → failures (se sigue para reportar todo)
-    ✗ si hay CUALQUIER período fallido → no publica nada (sin escrituras a medias)
-    incremental: tabla vieja + filas nuevas (cast al esquema viejo), ✗ ids duplicados, ordenar, tmp → replace;
-                 validacion.json fusiona los períodos nuevos y recalcula cobertura
-    → docs/outputs/cooperativas/cmf_reporte_financiero/estados.parquet (zstd) + validacion.json
-       Estado: 115 períodos 2017-01 → 2026-07, 52.325 registros, MM$
-Web: vistas cooperativas_cmf_balance (estado='balance') y cooperativas_cmf_resultados (estado='resultados')
-probe_coop_layout: sonda (index / xlsx / layouts / blocks / check / cells) → anotaciones ::warning
+Criterio: balances/resultados solo si salen de XML o XBRL oficial; si no, solo la lista de entidades.
+cooperativas : balances venían de planillas Excel CMF (Reporte Financiero y 02_extract) → RETIRADOS.
+               Se borraron extract_cmf_coop_report, 02_extract, 04 nota efectivo, probe_coop_layout,
+               sus tests y los workflows cooperativas_cmf_mensual.yml y coop_probe.yml. Queda cooperativas_maestro.
+ccaf         : ccaf_caratula_totales sale del XBRL CMF (safec_ifrs_verarchivo → .xbrl) → SE QUEDA (72 balances,
+               2019-12..2026-06). Nota 8 (efectivo, DAP, repos) y colocaciones de crédito social → RETIRADAS.
+               Se borraron build_ccaf_repos_enriquecido y ccaf/scripts/legacy.
+sistemas_pago: solo sistemas_pago_maestro (balances y estadísticas BCCh retirados).
+fintech      : solo fintech_rpsf_maestro (servicios acreditados y roles de finanzas abiertas retirados).
+Los extractores que quedan ya no escriben las tablas retiradas; las auditorías sectoriales solo revisan lo publicado.
 ```
 
 ### Otras sondas nuevas
@@ -405,9 +382,8 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 |---|---|---|---|
 | macro.yml | diario 10:00 | artifact (PR humano) | daily_macro con cache checkpoint |
 | bancos_cmf_mensual.yml | días 1, 11, 21 13:00 | **sí** (commit + Pages) | tests + publish_cmf_bank_period --catch-up (incremental) |
-| cooperativas_cmf_mensual.yml | días 2, 12, 22 14:00 | **sí** (commit + Pages) | tests + extract_cmf_coop_report --publicar (incremental) |
 | web_audit.yml | push a docs/** | no | audit_navigation + audit_web_full (anotaciones) |
-| bancos_probe_historia.yml / coop_probe.yml / retail_probe_ifrs.yml | manual | no | sondas de formato |
+| bancos_probe_historia.yml / retail_probe_ifrs.yml | manual | no | sondas de formato |
 | bancos_repo.yml | días 4, 14, 24 11:00 | no | laboratorio REPO |
 | bancos_repo_historico.yml / bancos_muestra_inspeccion.yml | manual | no | barridos / inspección |
 | factoring_leasing_backfill.yml | días 3, 13, 23 12:20 | **sí** | backfill_ifrs + publish_backfill + auditorías web |
@@ -421,13 +397,13 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 ## 11. Hallazgos de la revisión (estado al 2026-09-28)
 
 **2ª pasada (sobre `df3e26c`)**
-- Tests: `bancos` 81 OK · `factoring_leasing` 42 OK (tras corregir el manifiesto) · `cooperativas` 19 OK · `xml_eeff` 44 OK · `macro` requiere `bcchapi`.
+- Tests: `bancos` 81 OK · `factoring_leasing` 42 OK (tras corregir el manifiesto) · `xml_eeff` 44 OK · `macro` requiere `bcchapi`.
 - `audit_navigation.py`: 12 familias, 86 tablas, 86 opciones del visor ✅ · `audit_web_full.py`: 100% (831 columnas del diccionario, 74 nodos / 69 enlaces ERD) ✅.
 - ✅ `data_manifest.json` decía `total_tables: 65` con 63 entradas (fallaba `test_publication`). Causa: `update_data_manifest` sumaba incrementos. Ahora recalcula desde la lista; `file_parquet` de bancos apunta al último período (2026-07, antes 2026-06).
 - ✅ `preview_no_cache.py` sin soporte HTTP Range → agregado.
-- ⚠️ `data_manifest.json` todavía lista 4 tablas AFP retiradas (`afp_cartera_bonos/acciones`, `afp_derivados_forwards/swaps`) cuyos Parquet ya no existen. No lo usa la web; decidir si se eliminan.
+- ✅ (2026-09-28) Se quitaron de `data_manifest.json` las 4 tablas AFP retiradas cuyos Parquet ya no existían.
 - ⚠️ `web_audit.yml` se dispara en push a `arena/01a0e66e-…` (rama de una sesión anterior); conviene dejar solo `main` + `pull_request`.
-- Muchas vistas del visor no tienen entrada en `data_manifest.json` (vida_fondos, fi_*, cooperativas_cmf_*, bancos_cmf_balance/resultados agrupadas como `bancos_cmf_lineas`…): el manifiesto es un catálogo parcial, no la fuente de verdad de la web (esa es `SEMANTIC_VIEWS`).
+- Muchas vistas del visor no tienen entrada en `data_manifest.json` (vida_fondos, fi_*, bancos_cmf_balance/resultados agrupadas como `bancos_cmf_lineas`…): el manifiesto es un catálogo parcial, no la fuente de verdad de la web (esa es `SEMANTIC_VIEWS`).
 
 **1ª pasada**
 
@@ -444,7 +420,7 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 3. Utilidades (DV, parse_num, tc_map) repetidas en ~15 archivos.
 4. ✅ `fintech/scripts/explore.py` corregido (compilaba solo en Python ≥ 3.12).
 5. ✅ BOM UTF-8 eliminado de 9 scripts.
-6. Credenciales: README pide rotar la contraseña BCCh expuesta en el historial Git — sigue pendiente de confirmar. `ccaf/legacy` usa endpoint LLM con token ficticio.
+6. Credenciales: README pide rotar la contraseña BCCh expuesta en el historial Git — sigue pendiente de confirmar. (`ccaf/scripts/legacy` se eliminó.)
 7. `.git` pesa ~237 MB; binarios en Git (`scratch/sample_202406_vida.zip`, Parquet grandes). Considerar Git LFS o releases.
 8. ✅ Ya existe `requirements.txt` global (Python 3.11, pyarrow/openpyxl/xlrd fijados igual que en Actions).
 9. Muchos scripts exploratorios (`pensiones/inspect_*`, `test_*` que no son tests) mezclados con pipelines productivos.

@@ -873,8 +873,7 @@ const EXPLORER_TREE = [
     type: "group",
     label: "COOPERATIVAS DE AHORRO Y CRÉDITO (CMF)",
     badges: [
-      { type: "entities", text: "7 Entidades", title: "Cooperativas de ahorro y crédito supervisadas por la CMF" },
-      { type: "data", text: "52.000+ Datos", title: "Balances IFRS mensuales, notas y Reporte Financiero CMF por cuenta (2017 a 2026)" }
+      { type: "entities", text: "7 Entidades", title: "Cooperativas de ahorro y crédito supervisadas por la CMF" }
     ],
     status: "active",
     children: [
@@ -899,63 +898,6 @@ const EXPLORER_TREE = [
             tables: [
               { id: "cooperativas_maestro", name: "cooperativas.lista_entidades", rows: "7 entidades", file: "outputs/cooperativas/cooperativas_maestro.parquet" }
             ]
-          },
-          {
-            id: "circ_coop_balances",
-            type: "circular",
-            label: "Estados Financieros · IFRS y Solvencia",
-            badge: "294 Balances",
-            badgeType: "data",
-            status: "active",
-            sector: "cooperativas",
-            chips: [
-              { label: "Ranking de Cooperativas por Activos Totales (MM$ USD)", query: "SELECT periodo, nombre_fantasia, total_activos_m_usd, total_pasivos_m_usd, patrimonio_m_usd, utilidad_ejercicio_m_usd FROM cooperativas_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM cooperativas_balance_resumen) ORDER BY total_activos_m_usd DESC;" },
-              { label: "Solvencia Patrimonial (Patrimonio / Activos %)", query: "SELECT periodo, nombre_fantasia, total_activos_m_usd, patrimonio_m_usd, round(patrimonio_m_usd / NULLIF(total_activos_m_usd, 0) * 100, 2) as ratio_patrimonio_activos_pct FROM cooperativas_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM cooperativas_balance_resumen) ORDER BY ratio_patrimonio_activos_pct DESC;" },
-              { label: "Estructura de Apalancamiento (Pasivos / Patrimonio)", query: "SELECT periodo, nombre_fantasia, total_activos_m_clp, total_pasivos_m_clp, patrimonio_neto_m_clp, round(total_pasivos_m_clp / NULLIF(patrimonio_neto_m_clp, 0), 2) as leverage_contable FROM cooperativas_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM cooperativas_balance_resumen) ORDER BY total_activos_m_clp DESC;" },
-              { label: "Evolución de Excedentes Netos (Coopeuch vs Sistema)", query: "SELECT periodo, nombre_fantasia, utilidad_ejercicio_m_clp, utilidad_ejercicio_m_usd FROM cooperativas_balance_resumen WHERE nombre_fantasia IN ('COOPEUCH', 'ORIENCOOP', 'CAPUAL') ORDER BY periodo DESC, utilidad_ejercicio_m_clp DESC LIMIT 20;" }
-            ],
-            tables: [
-              { id: "cooperativas_balance_resumen", name: "cooperativas.balance_resumen", rows: "294 balances", file: "outputs/cooperativas/cooperativas_balance_resumen.parquet" }
-            ]
-          },
-          {
-            id: "circ_coop_cmf_reporte",
-            type: "circular",
-            label: "Balance y Resultados CMF · por cuenta (2017+)",
-            badge: "115 Meses",
-            badgeType: "data",
-            status: "active",
-            sector: "cooperativas",
-            chips: [
-              { label: "Activos totales por cooperativa (último mes)", query: "SELECT periodo, cooperativa, monto_mm_clp AS activos_mm_clp FROM cooperativas_cmf_balance WHERE seccion = 'activos' AND codigo_concepto = 'activos_totales' AND periodo = (SELECT MAX(periodo) FROM cooperativas_cmf_balance) ORDER BY activos_mm_clp DESC;" },
-              { label: "Evolución de los activos del sistema (2017-2026)", query: "SELECT periodo, SUM(monto_mm_clp) AS activos_mm_clp FROM cooperativas_cmf_balance WHERE codigo_concepto = 'activos_totales' GROUP BY periodo ORDER BY periodo;" },
-              { label: "Cartera de colocaciones por tipo (último mes)", query: "SELECT cooperativa, codigo_concepto, monto_mm_clp FROM cooperativas_cmf_balance WHERE seccion = 'activos' AND codigo_concepto IN ('colocaciones_comerciales', 'colocaciones_consumo', 'colocaciones_vivienda') AND periodo = (SELECT MAX(periodo) FROM cooperativas_cmf_balance) ORDER BY cooperativa, codigo_concepto;" },
-              { label: "Excedentes del ejercicio por cooperativa (últimos diciembres)", query: "SELECT periodo, cooperativa, monto_mm_clp FROM cooperativas_cmf_resultados WHERE codigo_concepto = 'resultado_ejercicio' AND periodo LIKE '%-12' ORDER BY periodo DESC, monto_mm_clp DESC LIMIT 21;" },
-              { label: "Margen de intereses y gasto en provisiones (año en curso)", query: "SELECT periodo, cooperativa, SUM(CASE WHEN codigo_concepto = 'margen_intereses' THEN monto_mm_clp END) AS margen_intereses_mm_clp, SUM(CASE WHEN codigo_concepto = 'gasto_provisiones' THEN monto_mm_clp END) AS gasto_provisiones_mm_clp FROM cooperativas_cmf_resultados WHERE periodo >= '2026-01' GROUP BY periodo, cooperativa ORDER BY cooperativa, periodo;" },
-              { label: "Depósitos y captaciones del sistema (2017-2026)", query: "SELECT periodo, SUM(monto_mm_clp) AS depositos_mm_clp FROM cooperativas_cmf_balance WHERE codigo_concepto = 'depositos_captaciones' GROUP BY periodo ORDER BY periodo;" }
-            ],
-            tables: [
-              { id: "cooperativas_cmf_balance", name: "cooperativas.cmf_balance", rows: "Activos y pasivos · 2017-01 a 2026-07", file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet" },
-              { id: "cooperativas_cmf_resultados", name: "cooperativas.cmf_resultados", rows: "Resultados y margen · 2017-01 a 2026-07", file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet" }
-            ]
-          },
-          {
-            id: "circ_coop_efectivo_bancos",
-            type: "circular",
-            label: "Notas · Efectivo y Depósitos en Bancos",
-            badge: "122 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "cooperativas",
-            chips: [
-              { label: "Composición de Liquidez: Caja vs Cuentas Bancarias (2025)", query: "SELECT periodo, nombre_fantasia, categoria_efectivo, round(sum(monto_m_clp), 1) as total_m_clp, round(sum(monto_m_usd), 2) as total_m_usd FROM cooperativas_nota_efectivo_detalle WHERE periodo = '2025-12' AND categoria_efectivo != 'total_efectivo_bancos' GROUP BY periodo, nombre_fantasia, categoria_efectivo ORDER BY nombre_fantasia, total_m_clp DESC;" },
-              { label: "Exposición a Bancos Comerciales Locales (Detacoop)", query: "SELECT periodo, concepto_literal, institucion_contraparte, monto_m_clp, monto_m_usd FROM cooperativas_nota_efectivo_detalle WHERE rut = '70017860-9' AND categoria_efectivo = 'depositos_bancos_locales' ORDER BY periodo DESC, monto_m_clp DESC;" },
-              { label: "Evolución de Fondos Disponibles en Coopeuch (2022-2025)", query: "SELECT periodo, concepto_literal, monto_m_clp, monto_m_usd FROM cooperativas_nota_efectivo_detalle WHERE rut = '82878900-7' ORDER BY periodo ASC, monto_m_clp DESC;" },
-              { label: "Cheques en Canje y Valores en Cobro del Sector", query: "SELECT periodo, nombre_fantasia, concepto_literal, monto_m_clp, monto_m_usd FROM cooperativas_nota_efectivo_detalle WHERE categoria_efectivo = 'valores_en_cobro' ORDER BY periodo DESC, monto_m_clp DESC;" }
-            ],
-            tables: [
-              { id: "cooperativas_nota_efectivo_detalle", name: "cooperativas.nota_efectivo", rows: "122 registros", file: "outputs/cooperativas/cooperativas_nota_efectivo_detalle.parquet" }
-            ]
           }
         ]
       }
@@ -967,7 +909,7 @@ const EXPLORER_TREE = [
     label: "CAJAS DE COMPENSACION (CCAF / SUSESO - CMF)",
     badges: [
       { type: "entities", text: "6 Entidades", title: "Los Andes, La Araucana, Los Héroes, Caja 18 (y 2 históricas)" },
-      { type: "data", text: "6 Datos", title: "Entidades de previsión y bienestar social reguladas por la Ley 18.833" }
+      { type: "data", text: "288 Datos", title: "Balances desde el XBRL oficial de la CMF (activos, pasivos, patrimonio y utilidad)" }
     ],
     status: "active",
     children: [
@@ -998,7 +940,7 @@ const EXPLORER_TREE = [
             id: "cat_ccaf_caratula",
             type: "circular",
             label: "Balances y Situación Financiera · XBRL (2019-2026)",
-            badge: "288 Balances",
+            badge: "72 Balances",
             badgeType: "data",
             status: "active",
             sector: "cajas_compensacion",
@@ -1008,45 +950,7 @@ const EXPLORER_TREE = [
               { label: "Utilidad Neta del Sistema (Últimos Años)", query: "SELECT ano, ccaf, tipo_eeff, monto_m_clp FROM ccaf_caratula_totales WHERE asiento_contable = 'Utilidad neta' AND mes = 12 ORDER BY ano DESC, monto_m_clp DESC;" }
             ],
             tables: [
-              { id: "ccaf_caratula_totales", name: "ccaf.balances", rows: "288 balances", file: "outputs/cajas_compensacion/ccaf_caratula_totales.parquet" }
-            ]
-          },
-          {
-            id: "cat_ccaf_credito_social",
-            type: "circular",
-            label: "Colocaciones de Crédito Social y Provisiones (2019-2026)",
-            badge: "268 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "cajas_compensacion",
-            chips: [
-              { label: "Cartera Crédito Social Total por CCAF (Último Corte)", query: "SELECT ccaf, tipo_eeff, ROUND(SUM(monto_neto_miles_clp) / 1e3, 1) as total_neto_m_clp, ROUND(SUM(deterioro_provision_miles_clp) / 1e3, 1) as provision_m_clp FROM ccaf_colocaciones_credito_social WHERE periodo = '2026-06' GROUP BY ccaf, tipo_eeff ORDER BY total_neto_m_clp DESC;" },
-              { label: "Trabajadores vs Pensionados (Consumo Cierre 2024)", query: "SELECT ccaf, tipo_afiliado, tipo_credito, ROUND(monto_neto_miles_clp / 1e3, 1) as neto_m_clp, ROUND(deterioro_provision_miles_clp / 1e3, 1) as provision_m_clp FROM ccaf_colocaciones_credito_social WHERE periodo = '2024-12' AND tipo_credito = 'Consumo' ORDER BY ccaf, tipo_afiliado;" },
-              { label: "Evolución Cartera Total del Sistema (2019-2026)", query: "SELECT periodo, ROUND(SUM(monto_neto_miles_clp) / 1e6, 2) as cartera_neta_mm_clp, ROUND(SUM(deterioro_provision_miles_clp) / 1e6, 2) as provisiones_mm_clp FROM ccaf_colocaciones_credito_social GROUP BY periodo ORDER BY periodo;" },
-              { label: "Provisión sobre Cartera Bruta por CCAF (2025-12)", query: "SELECT ccaf, ROUND(SUM(monto_neto_miles_clp)/1e3, 1) as colocaciones_netas_m_clp, ROUND(SUM(deterioro_provision_miles_clp)/1e3, 1) as provisiones_m_clp, ROUND(SUM(deterioro_provision_miles_clp) * 100.0 / NULLIF(SUM(monto_neto_miles_clp + deterioro_provision_miles_clp), 0), 2) as cobertura_pct FROM ccaf_colocaciones_credito_social WHERE periodo = '2025-12' GROUP BY ccaf ORDER BY colocaciones_netas_m_clp DESC;" }
-            ],
-            tables: [
-              { id: "ccaf_colocaciones_credito_social", name: "ccaf.colocaciones_credito_social", rows: "268 registros", file: "outputs/cajas_compensacion/ccaf_colocaciones_credito_social.parquet" }
-            ]
-          },
-          {
-            id: "cat_ccaf_nota8_efectivo",
-            type: "circular",
-            label: "Nota 8 · Efectivo y Equivalentes (2019-2026)",
-            badge: "423 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "cajas_compensacion",
-            chips: [
-              { label: "Desglose Liquidez Cierre 2024", query: "SELECT ccaf, tipo_eeff, concepto, monto_m_clp FROM ccaf_nota8_efectivo_resumen WHERE ano = 2024 AND mes = 12 ORDER BY ccaf, monto_m_clp DESC;" },
-              { label: "Ranking Cajas por Inversiones Corto Plazo (2024)", query: "SELECT ccaf, tipo_eeff, monto_m_clp FROM ccaf_nota8_efectivo_resumen WHERE ano = 2024 AND mes = 12 AND concepto LIKE '%Inversiones%' ORDER BY monto_m_clp DESC;" },
-              { label: "Top Repos por Corredora 2024", query: "SELECT ccaf, broker_estandarizado, plazo_dias, tasa_anual_pct, valor_contable_m_clp FROM ccaf_nota8_repos_detalle WHERE ano = 2024 ORDER BY valor_contable_m_clp DESC LIMIT 10;" },
-              { label: "Ranking Histórico Corredoras en Repos CCAF", query: "SELECT broker_estandarizado, count(*) AS contratos, round(sum(valor_contable_m_clp), 1) AS total_mm_clp, round(avg(plazo_dias), 1) AS plazo_prom_dias, round(avg(tasa_anual_pct), 2) AS tasa_prom_pct FROM ccaf_nota8_repos_detalle GROUP BY broker_estandarizado ORDER BY total_mm_clp DESC;" }
-            ],
-            tables: [
-              { id: "ccaf_nota8_efectivo_resumen", name: "ccaf.nota8_efectivo_resumen", rows: "213 registros", file: "outputs/cajas_compensacion/ccaf_nota8_efectivo_resumen.parquet" },
-              { id: "ccaf_nota8_dap_detalle", name: "ccaf.nota8_dap_detalle", rows: "52 registros", file: "outputs/cajas_compensacion/ccaf_nota8_dap_detalle.parquet" },
-              { id: "ccaf_nota8_repos_detalle", name: "ccaf.nota8_repos_detalle", rows: "158 operaciones", file: "outputs/cajas_compensacion/ccaf_nota8_repos_detalle.parquet" }
+              { id: "ccaf_caratula_totales", name: "ccaf.balances", rows: "72 balances · 288 filas", file: "outputs/cajas_compensacion/ccaf_caratula_totales.parquet" }
             ]
           }
         ]
@@ -1058,8 +962,7 @@ const EXPLORER_TREE = [
     type: "group",
     label: "SISTEMAS DE PAGO (BCCh / CMF)",
     badges: [
-      { type: "entities", text: "12 Entidades", title: "Infraestructuras críticas de liquidación, custodia, compensación y adquirencia" },
-      { type: "data", text: "196 Datos", title: "82 balances trimestrales IFRS y 102 meses de tráfico LBTR/CCA" }
+      { type: "entities", text: "12 Entidades", title: "Infraestructuras críticas de liquidación, custodia, compensación y adquirencia" }
     ],
     status: "active",
     children: [
@@ -1084,38 +987,6 @@ const EXPLORER_TREE = [
             tables: [
               { id: "sistemas_pago_maestro", name: "sistemas_pago.lista_entidades", rows: "12 entidades", file: "outputs/sistemas_pago/sistemas_pago_maestro.parquet" }
             ]
-          },
-          {
-            id: "cat_pagos_balances",
-            type: "circular",
-            label: "Balances IFRS de Cámaras y Adquirentes",
-            badge: "82 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "sistemas_pago",
-            chips: [
-              { label: "Último Cierre IFRS (2026-06)", query: "SELECT periodo, razon_social, total_activos_m_clp, patrimonio_neto_m_clp, total_activos_m_usd FROM sistemas_pago_balances WHERE periodo = '2026-06';" },
-              { label: "Evolución Patrimonial Cámaras", query: "SELECT periodo, razon_social, total_activos_m_clp, total_pasivos_m_clp, patrimonio_neto_m_clp FROM sistemas_pago_balances ORDER BY periodo DESC, total_activos_m_clp DESC LIMIT 15;" }
-            ],
-            tables: [
-              { id: "sistemas_pago_balances", name: "sistemas_pago.balances", rows: "82 registros", file: "outputs/sistemas_pago/sistemas_pago_balances.parquet" }
-            ]
-          },
-          {
-            id: "cat_pagos_estadisticas",
-            type: "circular",
-            label: "Estadísticas de Liquidación y Tráfico · BCCh",
-            badge: "102 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "sistemas_pago",
-            chips: [
-              { label: "Volumen LBTR y TEF CCA", query: "SELECT periodo, monto_liquidado_lbtr_m_usd, monto_compensado_cca_tef_m_clp, circulante_stock_m_clp FROM sistemas_pago_estadisticas_bcch ORDER BY periodo DESC LIMIT 12;" },
-              { label: "Tasas de Tarjetas vs TC", query: "SELECT periodo, tasa_tarjetas_consumo_pct, tasa_tarjetas_comercial_pct, tipo_cambio_usd_clp FROM sistemas_pago_estadisticas_bcch ORDER BY periodo DESC LIMIT 12;" }
-            ],
-            tables: [
-              { id: "sistemas_pago_estadisticas_bcch", name: "sistemas_pago.estadisticas_bcch", rows: "102 registros", file: "outputs/sistemas_pago/sistemas_pago_estadisticas_bcch.parquet" }
-            ]
           }
         ]
       }
@@ -1126,8 +997,7 @@ const EXPLORER_TREE = [
     type: "group",
     label: "FINTECH & FINANZAS ABIERTAS (LEY N° 21.521 / CMF)",
     badges: [
-      { type: "entities", text: "262 Entidades", title: "Entidades inscritas en el Registro de Prestadores de Servicios Financieros CMF" },
-      { type: "data", text: "786 Datos", title: "Acreditaciones de 7 servicios FinTech y roles de Finanzas Abiertas" }
+      { type: "entities", text: "262 Entidades", title: "Entidades inscritas en el Registro de Prestadores de Servicios Financieros CMF" }
     ],
     status: "active",
     children: [
@@ -1151,38 +1021,6 @@ const EXPLORER_TREE = [
             ],
             tables: [
               { id: "fintech_rpsf_maestro", name: "fintech.lista_entidades", rows: "262 entidades", file: "outputs/fintech/fintech_rpsf_maestro.parquet" }
-            ]
-          },
-          {
-            id: "cat_fintech_servicios",
-            type: "circular",
-            label: "Servicios Acreditados · CMF",
-            badge: "262 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "fintech",
-            chips: [
-              { label: "Servicios por Categoría", query: "SELECT servicio_nombre, estado_autorizacion, COUNT(*) AS entidades FROM fintech_servicios_acreditados GROUP BY servicio_nombre, estado_autorizacion ORDER BY entidades DESC;" },
-              { label: "Plataformas Transaccionales (SAT / EO)", query: "SELECT rut_completo, razon_social, servicio_nombre, estado_autorizacion FROM fintech_servicios_acreditados WHERE servicio_sigla IN ('SAT', 'EO', 'IIF', 'CIF') ORDER BY servicio_sigla;" }
-            ],
-            tables: [
-              { id: "fintech_servicios_acreditados", name: "fintech.servicios_acreditados", rows: "262 registros", file: "outputs/fintech/fintech_servicios_acreditados.parquet" }
-            ]
-          },
-          {
-            id: "cat_fintech_sfa",
-            type: "circular",
-            label: "Taxonomía de Finanzas Abiertas",
-            badge: "262 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "fintech",
-            chips: [
-              { label: "Distribución Roles SFA", query: "SELECT rol_sfa, COUNT(*) AS total_entidades, descripcion_rol FROM fintech_finanzas_abiertas_roles GROUP BY rol_sfa, descripcion_rol ORDER BY total_entidades DESC;" },
-              { label: "Iniciadores de Pagos (IIP)", query: "SELECT rut, razon_social, rol_sfa, estandar_interfaz FROM fintech_finanzas_abiertas_roles WHERE rol_sfa = 'IIP';" }
-            ],
-            tables: [
-              { id: "fintech_finanzas_abiertas_roles", name: "fintech.finanzas_abiertas_roles", rows: "262 registros", file: "outputs/fintech/fintech_finanzas_abiertas_roles.parquet" }
             ]
           }
         ]
