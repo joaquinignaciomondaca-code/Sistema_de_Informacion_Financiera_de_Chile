@@ -1,0 +1,33 @@
+name: Sonda temporal FI carteras
+on:
+  push:
+    branches: [arena/01a0e680-monitor-financiero-chile]
+    paths: [.github/workflows/fi_sonda.yml]
+permissions:
+  contents: write
+jobs:
+  sonda:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Descargar muestras
+        run: |
+          mkdir -p fi/sonda
+          UA='Mozilla/5.0 (monitor-financiero-chile)'
+          B=https://www.cmfchile.cl/sitio/inc/inf_financiera/ifrs_xml
+          declare -A EP=([N]=ifrs_cartera_nac [E]=ifrs_cartera_ext [M]=ifrs_cartera_met_part [B]=ifrs_cartera_bie_rai [O]=ifrs_cartera_op [F]=ifrs_cartera_fut_fw)
+          for rut in 9970 7147 10612 9396 9602; do for per in 202512 202606 202003; do for c in N E M B O F; do
+            curl -s -A "$UA" --max-time 60 "$B/${EP[$c]}.php?rut=$rut&periodo=$per&tipo=fi&cartera=$c" -o "fi/sonda/${rut}_${per}_${c}.html" || echo "fallo $rut $per $c"
+          done; done; done
+          for e in FIRES FINRE; do for s in VI NV; do
+            curl -s -A "$UA" --max-time 90 "https://www.cmfchile.cl/institucional/mercados/consulta.php?mercado=V&Estado=$s&entidad=$e" -o "fi/sonda/lista_${e}_${s}.html"
+          done; done
+          curl -s -A "$UA" --max-time 60 "https://www.cmfchile.cl/institucional/inc/inf_financiera/ifrs_xml/ifrs_informe_vrc_crv.php?rut=7182&periodo=202512" -o fi/sonda/vrc_7182_202512.html
+          ls -la fi/sonda | head -120
+      - name: Guardar
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add fi/sonda
+          git commit -m "Sonda FI carteras" && for i in 1 2 3; do git pull --rebase origin "${GITHUB_REF_NAME}" && git push origin "HEAD:${GITHUB_REF_NAME}" && break; sleep 10; done
