@@ -106,7 +106,22 @@ def _layout_one(period: str, out: list) -> None:
 
 
 
+def cells(period: str, sheet_pat: str) -> None:
+    from cooperativas.scripts.extract_cmf_coop_report import discover, read_workbook
+    url = discover(fetch(INDEX, MAX_PAGE).decode("utf-8", "replace"))[period]
+    wb = read_workbook(fetch(url, MAX_FILE), url)
+    name = next(n for n in wb if re.search(sheet_pat, n, re.I))
+    out = [f"{period} {name}"]
+    for n, r in enumerate(wb[name][:30], 1):
+        cells_ = [(i, v) for i, v in enumerate(r) if v not in (None, "")]
+        if cells_:
+            out.append(f"{n}: n={len(cells_)} " + " ".join(f"[{i}]{str(v)[:18]}" for i, v in cells_[:40]))
+    annotate("COOP cells", "\n".join(out))
+
+
 if __name__ == "__main__":
+    if sys.argv[1] == "cells":
+        cells(sys.argv[2], sys.argv[3]); raise SystemExit
     if sys.argv[1] == "layouts":
         layouts(sys.argv[2].split(","))
         raise SystemExit
