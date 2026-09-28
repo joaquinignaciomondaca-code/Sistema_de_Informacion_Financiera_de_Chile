@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
   "updated_at": "2026-09-28",
-  "total_tables": 32,
-  "total_records": 6135496,
+  "total_tables": 30,
+  "total_records": 6135494,
   "classification": {
     "automatico": "Extracción y procesamiento 100% por código autónomo (APIs, scrapers, normalizadores)",
     "manual": "Extracción asistida o transcripción de notas y reportes no estructurados (ej. NotebookLM)"
@@ -439,38 +439,6 @@
       "registros_reales": 288,
       "descripcion": "Totales de situación financiera auditados (Activos, Pasivos, Patrimonio y Utilidad neta) de las 4 CCAF de Chile discriminados por tipo de estado financiero (Consolidado vs Individual).",
       "origen": "CMF — Estados financieros IFRS en formato XBRL (instancia .xbrl de cada envío)."
-    },
-    {
-      "id": "ffmm_eeff_xml_muestra_cmf",
-      "name": "ffmm.eeff_xml_muestra_cmf",
-      "view_name": "ffmm_eeff_xml_muestra_cmf",
-      "sector": "ffmm",
-      "sector_label": "Fondos Mutuos",
-      "norma": "Estados financieros IFRS/XML CMF; muestra cotejada",
-      "corte": "2014-12",
-      "frescura": "Muestra histórica; no es serie completa",
-      "modo": "Cotejo XML y HTML oficial",
-      "ultima_actualizacion": "2026-09-27",
-      "file_parquet": "outputs/ffmm/ffmm_eeff_xml_muestra_cmf.parquet",
-      "registros_reales": 1,
-      "descripcion": "Una fila de prueba cotejada en CMF (activos, pasivo reportado, patrimonio/activo neto y resultado). No es el universo completo.",
-      "origen": "CMF ficha individual y XML del mismo cierre; run Actions 36332905593."
-    },
-    {
-      "id": "fi_eeff_xml_muestra_cmf",
-      "name": "fi.eeff_xml_muestra_cmf",
-      "view_name": "fi_eeff_xml_muestra_cmf",
-      "sector": "fi",
-      "sector_label": "Fondos de Inversión",
-      "norma": "Estados financieros IFRS/XML CMF; muestra cotejada",
-      "corte": "2021-12",
-      "frescura": "Muestra histórica; no es serie completa",
-      "modo": "Cotejo XML y HTML oficial",
-      "ultima_actualizacion": "2026-09-27",
-      "file_parquet": "outputs/fi/fi_eeff_xml_muestra_cmf.parquet",
-      "registros_reales": 1,
-      "descripcion": "Una fila de prueba cotejada en CMF (activos, pasivo reportado, patrimonio/activo neto y resultado). No es el universo completo.",
-      "origen": "CMF ficha individual y XML del mismo cierre; run Actions 36332905593."
     },
     {
       "id": "factoring_leasing_balance_serie_ifrs_cmf",

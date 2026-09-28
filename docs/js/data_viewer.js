@@ -45,7 +45,6 @@ const DATA_VIEWER_CATALOG = [
   {
     group: "Administración de fondos · Fondos de Inversión (FI)",
     tables: [
-      { id: "fi_eeff_xml_muestra_cmf", name: "fi.eeff_xml_muestra_cmf (1 fila cotejada; no es histórico)" },
       { id: "fi_repos_detalle_historico", name: "fi.repos_contratos (2.946 contratos)" },
       { id: "fi_registro_fondos_universo", name: "fi.universo_fondos (1.677 fondos)" },
       { id: "fi_repos", name: "fi.repos_vrc_crv (1.366 pactos)" },
@@ -60,11 +59,11 @@ const DATA_VIEWER_CATALOG = [
   {
     group: "Administración de fondos · Fondos Mutuos (FFMM)",
     tables: [
-      { id: "ffmm_eeff_xml_muestra_cmf", name: "ffmm.eeff_xml_muestra_cmf (1 fila cotejada; no es histórico)" },
-      { id: "ffmm_repos_detalle_historico", name: "ffmm.repos_contratos (388 contratos)" },
-      { id: "ffmm_maestro", name: "ffmm.lista_entidades (1.156 entidades)" },
-      { id: "ffmm_futuros", name: "ffmm.derivados_futuros (280.494 registros)" },
-      { id: "ffmm_opciones", name: "ffmm.derivados_opciones (5.347 registros)" }
+      { id: "ffmm_maestro", name: "ffmm.lista_entidades (fondos que reportan cartera)" },
+      { id: "ffmm_cartera_nacional", name: "ffmm.cartera_nacional (mensual desde 2022-01)" },
+      { id: "ffmm_cartera_extranjera", name: "ffmm.cartera_extranjera (mensual desde 2001)" },
+      { id: "ffmm_futuros", name: "ffmm.futuros_forwards (mensual desde 2001)" },
+      { id: "ffmm_opciones", name: "ffmm.opciones (mensual desde 2001)" }
     ]
   },
   {
