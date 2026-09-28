@@ -2,34 +2,18 @@ const DUCKDB_WASM_URL = "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.28.0
 
 // Vistas semánticas disponibles para el chat SQL, el explorador y las exportaciones.
 const SEMANTIC_VIEWS = [
-  // SEGUROS DE VIDA
-  { name: "vida_maestro", file: "outputs/vida/maestro_aseguradoras_vida.parquet" },
-  // El Parquet consolidado (9,09M filas) supera el límite de 100 MB de GitHub y no
-  // está versionado; la vista une las dos particiones publicadas en docs/outputs/vida.
-  { name: "vida_bonos", file: ["outputs/vida/cartera_bonos_2021_2024.parquet", "outputs/vida/cartera_bonos_2016_2020.parquet"] },
-  { name: "vida_acciones", file: "outputs/vida/cartera_acciones.parquet" },
-  { name: "vida_bienes_raices", file: "outputs/vida/cartera_bienes_raices.parquet" },
-  { name: "vida_fondos", file: "outputs/vida/cartera_fondos.parquet" },
-  { name: "vida_extranjeros", file: "outputs/vida/cartera_extranjeros.parquet" },
-  { name: "vida_solvencia", file: "outputs/vida/cartera_solvencia.parquet" },
-  { name: "vida_forwards", file: "outputs/vida/b7_forwards.parquet" },
-  { name: "vida_swaps", file: "outputs/vida/b7_swaps.parquet" },
-  { name: "vida_repos", file: "outputs/vida/b7_repos.parquet" },
-  { name: "vida_opciones", file: "outputs/vida/b7_opciones.parquet" },
-  { name: "vida_bonos_reciente", file: "outputs/vida/cartera_bonos_2021_2024.parquet" },
-  { name: "vida_bonos_historico", file: "outputs/vida/cartera_bonos_2016_2020.parquet" },
-
-  // SEGUROS GENERALES
-  { name: "generales_maestro", file: "outputs/generales/maestro_aseguradoras_generales.parquet" },
-  { name: "generales_bonos", file: "outputs/generales/cartera_bonos.parquet" },
-  { name: "generales_acciones", file: "outputs/generales/cartera_acciones.parquet" },
-  { name: "generales_bienes_raices", file: "outputs/generales/cartera_bienes_raices.parquet" },
-  { name: "generales_fondos", file: "outputs/generales/cartera_fondos.parquet" },
-  { name: "generales_extranjeros", file: "outputs/generales/cartera_extranjeros.parquet" },
-  { name: "generales_solvencia", file: "outputs/generales/cartera_solvencia.parquet" },
-  { name: "generales_forwards", file: "outputs/generales/b7_forwards.parquet" },
-  { name: "generales_swaps", file: "outputs/generales/b7_swaps.parquet" },
-  { name: "generales_repos", file: "outputs/generales/b7_repos.parquet" },
+  // SEGUROS (vida y generales en las mismas tablas, columna "sector"). Cartera de inversiones
+  // de la Circular 1835 leída con la ficha técnica oficial; se actualiza sola 3 veces al mes y
+  // cada tabla se publica en archivos por año o por mes listados en su manifiesto.
+  { name: "seguros_maestro", file: "outputs/seguros/aseguradoras.parquet" },
+  { name: "seguros_renta_fija", manifest: "outputs/seguros/renta_fija/manifest.json" },
+  { name: "seguros_acciones", manifest: "outputs/seguros/acciones/manifest.json" },
+  { name: "seguros_fondos_mutuos", manifest: "outputs/seguros/fondos_mutuos/manifest.json" },
+  { name: "seguros_bienes_raices", manifest: "outputs/seguros/bienes_raices/manifest.json" },
+  { name: "seguros_extranjeros", manifest: "outputs/seguros/extranjeros/manifest.json" },
+  { name: "seguros_derivados", manifest: "outputs/seguros/derivados/manifest.json" },
+  { name: "seguros_pactos", manifest: "outputs/seguros/pactos/manifest.json" },
+  { name: "seguros_control_inversiones", manifest: "outputs/seguros/control_inversiones/manifest.json" },
 
   // FONDOS DE INVERSION
   { name: "fi_maestro", file: "outputs/fi/maestro_fondos_inversion.parquet" },
@@ -209,7 +193,7 @@ class DuckDBClient {
           const manifest = await response.json();
           files = manifest.files;
           if (!Array.isArray(files) || files.length === 0) {
-            throw new Error(`No hay particiones CMF publicadas para ${view.name}`);
+            throw new Error(`No hay particiones publicadas para ${view.name}`);
           }
         } else {
           files = Array.isArray(view.file) ? view.file : [view.file];
