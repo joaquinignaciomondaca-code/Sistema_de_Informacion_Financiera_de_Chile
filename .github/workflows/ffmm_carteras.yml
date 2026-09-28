@@ -10,7 +10,7 @@ on:
   push:
     branches:
       - main
-      - arena/01a0e680-monitor-financiero-chile
+      - arena/01a0e952-monitor-financiero-chile
     paths:
       - .github/workflows/ffmm_carteras.yml
       - ffmm/scripts/actualizar_carteras.py
