@@ -2,7 +2,7 @@
 
 Fuente: `ver_archivo.php?inicio=202606&termino=202606` (CMF, actualizado 27/09/2026).
 Sonda sin publicación: `retail_financiero/scripts/probe_ifrs_rut_cross.py` (workflow `retail_probe_ifrs.yml`).
-Lista completa: `ifrs_202606_ruts.csv` (367 de 368 RUT; uno se perdió en el corte de anotaciones).
+Lista completa: `ifrs_202606_ruts.csv` (364 de 368 RUT; 4 líneas se cortaron al leer las anotaciones de Actions, ninguna de retail).
 
 Formato: `periodo;rut;razon_social;consolidacion(C/I);moneda;cuenta;monto;taxonomia;tipo_informe`,
 ~30.200 filas, montos en unidades de la moneda, todo en TAX CI.
