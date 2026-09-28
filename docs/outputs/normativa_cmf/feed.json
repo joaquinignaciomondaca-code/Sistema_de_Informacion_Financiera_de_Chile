@@ -3,8 +3,8 @@
   "status": "ok",
   "source": "CMF · Legislación y normativa",
   "source_url": "https://www.cmfchile.cl/institucional/legislacion_normativa/normativa2.php",
-  "generated_at": "2026-09-28T22:29:34Z",
-  "last_checked_at": "2026-09-28T22:29:34Z",
+  "generated_at": "2026-09-28T22:44:58Z",
+  "last_checked_at": "2026-09-28T22:44:58Z",
   "last_detected_at": "2026-09-28T20:15:14Z",
   "history_days": 365,
   "sector_labels": {
@@ -27,9 +27,9 @@
   "run_summary": {
     "listed_records": 78,
     "new_or_changed_records": 0,
-    "pdf_checks": 44,
-    "gemini_calls": 79,
-    "pending_analysis": 7,
+    "pdf_checks": 7,
+    "gemini_calls": 10,
+    "pending_analysis": 1,
     "unassigned_records": 7
   },
   "events": [
@@ -51,7 +51,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 23 Sep 2026 20:09:18 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -108,7 +108,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 15 Sep 2026 12:19:22 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -195,7 +195,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 11 Sep 2026 18:40:42 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -261,7 +261,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 08 Sep 2026 14:41:59 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -313,7 +313,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 08 Sep 2026 14:30:24 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -370,7 +370,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 02 Sep 2026 20:47:16 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -441,7 +441,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 25 Aug 2026 13:41:50 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -506,7 +506,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 20 Aug 2026 15:40:36 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -569,7 +569,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 19 Aug 2026 16:34:51 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -635,7 +635,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 12 Aug 2026 14:27:08 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -686,7 +686,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 27 Jul 2026 20:30:21 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -734,28 +734,26 @@
       "source_fingerprint": "d89d40f9e67f2f2717ca96e85d3bf45ac7856cb35bac939e0e7f48437f0b0b6c",
       "document_sha256": "cefca02476a8291cfb1f79b7194c1baf5abafeca434b47b10c03c659a4deef0d",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T22:29:34Z",
+      "pdf_checked_at": "2026-09-28T22:44:58Z",
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 27 Jul 2026 20:25:56 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
-      "needs_human_review": true,
-      "review_flags": [
-        "resumen_sin_evidencia_verificable"
-      ],
+      "needs_human_review": false,
+      "review_flags": [],
       "event_type": "nueva_norma",
-      "summary": "",
+      "summary": "La Comisión para el Mercado Financiero aprueba la normativa que crea el Compendio Normativo de Bolsas e Intermediarios, fijando instrucciones de carácter general aplicables a bolsas de valores, bolsas de productos, corredores de bolsa, agentes de valores y corredores de bolsas de productos.",
       "sectors": [
         "corredoras_bolsa"
       ],
       "affected_norms": [],
       "effective_date": "",
       "effective_date_precision": "sin_fecha",
-      "summary_evidence": "",
+      "summary_evidence": "EJECUTA ACUERDO DEL CONSEJO DE LA COMISIÓN PARA EL MERCADO FINANCIERO QUE APRUEBA NORMATIVA QUE CREA EL COMPENDIO NORMATIVO DE BOLSAS E INTERMEDIARIOS",
       "summary_evidence_page": 0,
       "sector_evidence": [
         {
@@ -767,9 +765,9 @@
       "norm_evidence": [],
       "effective_date_evidence": "",
       "effective_date_page": 0,
-      "confidence": "media",
+      "confidence": "alta",
       "ai_model": "gemini-flash-lite-latest",
-      "analyzed_at": "2026-09-28T22:29:40Z",
+      "analyzed_at": "2026-09-28T22:45:11Z",
       "ai_model_requested": "gemini-flash-lite-latest"
     },
     {
@@ -786,33 +784,31 @@
       "source_fingerprint": "74592c156319cdbc5d33244f877b237d17eef0dc52945944e13da08db66c34be",
       "document_sha256": "3f814c856d611ce3b5af1b5de68a0fab5eb380d67e865c4fe9de9d94c7da732d",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T22:29:34Z",
+      "pdf_checked_at": "2026-09-28T22:44:58Z",
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 15 Jul 2026 14:13:08 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "resumen_sin_evidencia_verificable"
+        "norma_sin_evidencia_verificable",
+        "norma_afectada_sin_respaldo"
       ],
       "event_type": "modificacion",
-      "summary": "",
+      "summary": "La CMF introduce el nuevo Capítulo 21-10 a la Recopilación Actualizada de Normas de Bancos sobre requisitos y condiciones mínimas para garantías como mitigadores de riesgo de crédito. Asimismo, incorpora modificaciones concordantes a los Capítulos 1-13 y 12-3 de la misma recopilación, al Capítulo B-1 del Compendio de Normas Contables para Bancos y al Manual de Sistemas de Información.",
       "sectors": [
         "bancos"
       ],
       "affected_norms": [
-        "Capítulo 21-10 de la Recopilación Actualizada de Normas de Bancos",
-        "Capítulo 1-13 de la Recopilación Actualizada de Normas de Bancos",
-        "Capítulo 12-3 de la Recopilación Actualizada de Normas de Bancos",
-        "Capítulo B-1 del Compendio de Normas Contables para Bancos"
+        "Manual de Sistemas de Información de Bancos"
       ],
       "effective_date": "",
       "effective_date_precision": "sin_fecha",
-      "summary_evidence": "",
+      "summary_evidence": "EJECUTA ACUERDO DEL CONSEJO DE LA COMISIÓN PARA EL MERCADO FINANCIERO QUE APRUEBA CIRCULAR QUE INTRODUCE EL NUEVO CAPÍTULO 21-10 A LA RECOPILACIÓN ACTUALIZADA DE NORMAS DE BANCOS, SOBRE LOS REQUISITOS Y CONDICIONES MÍNIMAS QUE DEBEN CUMPLIR LAS GARANTÍAS PARA SER ACEPTADAS Y UTILIZADAS COMO MITIGADORES DE RIESGO DE CRÉDITO; E INCORPORA MODIFICACIONES A LOS C",
       "summary_evidence_page": 0,
       "sector_evidence": [
         {
@@ -823,23 +819,8 @@
       ],
       "norm_evidence": [
         {
-          "norm": "Capítulo 21-10 de la Recopilación Actualizada de Normas de Bancos",
-          "quote": "Introduce nuevo Capítulo 21- 10 a la Recopilación Actualizada de Normas de bancos",
-          "page": 1
-        },
-        {
-          "norm": "Capítulo 1-13 de la Recopilación Actualizada de Normas de Bancos",
-          "quote": "modifica los Capítulos 1-13 y 12-3 de la misma Recopilación",
-          "page": 1
-        },
-        {
-          "norm": "Capítulo 12-3 de la Recopilación Actualizada de Normas de Bancos",
-          "quote": "modifica los Capítulos 1-13 y 12-3 de la misma Recopilación",
-          "page": 1
-        },
-        {
-          "norm": "Capítulo B-1 del Compendio de Normas Contables para Bancos",
-          "quote": "el Capítulo B-1 del Compendio Normas Contables de bancos",
+          "norm": "Manual de Sistemas de Información de bancos",
+          "quote": "el Sistema Contable, de Deudores y Sistema Tablas del Manual de Sistemas de Información de bancos.",
           "page": 1
         }
       ],
@@ -848,7 +829,7 @@
       "confidence": "alta",
       "ai_model": "gemini-flash-lite-latest",
       "ai_model_requested": "gemini-flash-lite-latest",
-      "analyzed_at": "2026-09-28T22:29:53Z"
+      "analyzed_at": "2026-09-28T22:45:29Z"
     },
     {
       "id": "cmf-c1611d9fbdb8360d3e34",
@@ -868,7 +849,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 14 Jul 2026 15:06:00 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -926,7 +907,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 14 Jul 2026 16:32:40 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -976,7 +957,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 14 Jul 2026 15:18:39 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -1042,7 +1023,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 23 Jun 2026 19:43:01 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -1120,7 +1101,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 22 Jun 2026 20:43:43 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -1174,7 +1155,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 15 Jun 2026 18:17:09 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -1234,7 +1215,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 11 Jun 2026 20:40:22 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -1300,7 +1281,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 11 Jun 2026 20:39:45 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -1360,7 +1341,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 11 Jun 2026 20:40:05 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -1412,7 +1393,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 01 Jun 2026 16:42:07 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -1481,21 +1462,19 @@
       "source_fingerprint": "b92ae5b5efad503b6116ebacab6803949ff27c0901aabc964118eab7a136acf5",
       "document_sha256": "556d052b115e6344e1dc66c7c25ecba999a6dcb26a8a7ce7670f711c78fd65d0",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T22:29:34Z",
+      "pdf_checked_at": "2026-09-28T22:44:58Z",
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 01 Jun 2026 16:39:17 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
-      "needs_human_review": true,
-      "review_flags": [
-        "resumen_sin_evidencia_verificable"
-      ],
+      "needs_human_review": false,
+      "review_flags": [],
       "event_type": "modificacion",
-      "summary": "",
+      "summary": "La CMF emite la Norma de Carácter General N° 568 para modificar la NCG N° 538 sobre estándares mínimos de seguridad y autenticación en operaciones de la Ley N° 20.009, ajustando los supuestos de uso de Autenticación Reforzada de Clientes (ARC) en transferencias y su vigencia.",
       "sectors": [
         "bancos"
       ],
@@ -1504,12 +1483,12 @@
       ],
       "effective_date": "2026-08-01",
       "effective_date_precision": "dia",
-      "summary_evidence": "",
+      "summary_evidence": "EJECUTA ACUERDO DEL CONSEJO PARA LA COMISION PARA EL MERCADO FINANCIERO QUE APRUEBA NORMA QUE MODIFICA N.C.G. N°538.",
       "summary_evidence_page": 0,
       "sector_evidence": [
         {
           "sector": "bancos",
-          "quote": "REF.: MODIFICA NCG 538 SOBRE MEDIDAS SEGURIDAD Y AUTENTICACIÓN DE OPERACIONES SOMETIDAS A LA LEY N°20.009.",
+          "quote": "modifican la Norma de Carácter General N°538, sobre estándares mínimos de seguridad y de autenticación",
           "page": 1
         }
       ],
@@ -1520,12 +1499,12 @@
           "page": 1
         }
       ],
-      "effective_date_evidence": "La presente norma entra en vigor a partir del 1 de agosto de 2025, excepto los casos de ARC obligatoria y la exigencia de eliminación del uso de mecanismos que incorporen conjuntos de datos impresos utilizados para la autenticación, cuya vigencia comenzará el 1 de agosto de 2026.",
+      "effective_date_evidence": "cuya vigencia comenzará el 1 de agosto de 2026",
       "effective_date_page": 2,
       "confidence": "alta",
       "ai_model": "gemini-flash-lite-latest",
       "ai_model_requested": "gemini-flash-lite-latest",
-      "analyzed_at": "2026-09-28T22:30:21Z"
+      "analyzed_at": "2026-09-28T22:45:44Z"
     },
     {
       "id": "cmf-74c24c0e7694ac7c10a7",
@@ -1545,7 +1524,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 28 May 2026 13:57:40 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -1649,25 +1628,24 @@
       "source_fingerprint": "3036e0a99b9e0a3bb02a50c7dd773d15f781b5f7e029b635e224c671d924cd21",
       "document_sha256": "67fd4e6121e9adfb27525b26144d68452f5327b27234a391cae68be344830ef1",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T22:29:34Z",
+      "pdf_checked_at": "2026-09-28T22:44:58Z",
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 19 May 2026 14:34:59 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "resumen_sin_evidencia_verificable",
         "sector_sin_evidencia_verificable",
         "norma_sin_evidencia_verificable",
         "norma_afectada_sin_respaldo",
         "vigencia_sin_evidencia_verificable"
       ],
       "event_type": "nueva_norma",
-      "summary": "",
+      "summary": "Se crea el Compendio Normativo de Empresas de Auditoría Externa y se modifica la Norma de Carácter General N°30 de 1989.",
       "sectors": [
         "seguros",
         "agf",
@@ -1678,53 +1656,53 @@
         "sistemas_pago"
       ],
       "affected_norms": [
-        "Normas de Carácter General N°275 de 2010"
+        "Norma de Carácter General N° 275 de 2010"
       ],
       "effective_date": "",
       "effective_date_precision": "sin_fecha",
-      "summary_evidence": "",
+      "summary_evidence": "EJECUTA ACUERDO DEL CONSEJO DE LA COMISIÓN PARA EL MERCADO FINANCIERO QUE APRUEBA NORMATIVA QUE CREA EL COMPENDIO NORMATIVO DE EMPRESAS DE AUDITORÍA EXTERNA Y NORMATIVA QUE MODIFICA LA NORMA DE CARÁCTER GENERAL N°30 DE 1989.",
       "summary_evidence_page": 0,
       "sector_evidence": [
         {
-          "sector": "bancos",
-          "quote": "Sin perjuicio de lo anterior, las EAE que presten servicios de auditoría externa a bancos, compañías de seguros, intermediarios de valores, administradoras generales de fondos o sus fondos, entidades de contraparte central, cámaras de compensación, empresas de depósito de valores, emisores y operadores de medios de pago, cooperativas de ahorro y crédito, soc",
+          "sector": "seguros",
+          "quote": "Sin perjuicio de lo anterior, las EAE que presten servicios de auditoría externa a bancos, compañías de seguros, intermediarios de valores, administradoras generales de fondos o sus fondos...",
           "page": 5
         },
         {
-          "sector": "seguros",
-          "quote": "Sin perjuicio de lo anterior, las EAE que presten servicios de auditoría externa a bancos, compañías de seguros, intermediarios de valores, administradoras generales de fondos o sus fondos, entidades de contraparte central, cámaras de compensación, empresas de depósito de valores, emisores y operadores de medios de pago, cooperativas de ahorro y crédito, soc",
+          "sector": "bancos",
+          "quote": "Sin perjuicio de lo anterior, las EAE que presten servicios de auditoría externa a bancos, compañías de seguros, intermediarios de valores, administradoras generales de fondos o sus fondos...",
           "page": 5
         },
         {
           "sector": "agf",
-          "quote": "Sin perjuicio de lo anterior, las EAE que presten servicios de auditoría externa a bancos, compañías de seguros, intermediarios de valores, administradoras generales de fondos o sus fondos, entidades de contraparte central, cámaras de compensación, empresas de depósito de valores, emisores y operadores de medios de pago, cooperativas de ahorro y crédito, soc",
+          "quote": "Sin perjuicio de lo anterior, las EAE que presten servicios de auditoría externa a bancos, compañías de seguros, intermediarios de valores, administradoras generales de fondos o sus fondos...",
           "page": 5
         },
         {
           "sector": "ffmm",
-          "quote": "Sin perjuicio de lo anterior, las EAE que presten servicios de auditoría externa a bancos, compañías de seguros, intermediarios de valores, administradoras generales de fondos o sus fondos, entidades de contraparte central, cámaras de compensación, empresas de depósito de valores, emisores y operadores de medios de pago, cooperativas de ahorro y crédito, soc",
+          "quote": "Sin perjuicio de lo anterior, las EAE que presten servicios de auditoría externa a bancos, compañías de seguros, intermediarios de valores, administradoras generales de fondos o sus fondos...",
           "page": 5
         },
         {
           "sector": "corredoras_bolsa",
-          "quote": "Sin perjuicio de lo anterior, las EAE que presten servicios de auditoría externa a bancos, compañías de seguros, intermediarios de valores, administradoras generales de fondos o sus fondos, entidades de contraparte central, cámaras de compensación, empresas de depósito de valores, emisores y operadores de medios de pago, cooperativas de ahorro y crédito, soc",
-          "page": 5
-        },
-        {
-          "sector": "sistemas_pago",
-          "quote": "Sin perjuicio de lo anterior, las EAE que presten servicios de auditoría externa a bancos, compañías de seguros, intermediarios de valores, administradoras generales de fondos o sus fondos, entidades de contraparte central, cámaras de compensación, empresas de depósito de valores, emisores y operadores de medios de pago, cooperativas de ahorro y crédito, soc",
+          "quote": "Sin perjuicio de lo anterior, las EAE que presten servicios de auditoría externa a bancos, compañías de seguros, intermediarios de valores, administradoras generales de fondos o sus fondos...",
           "page": 5
         },
         {
           "sector": "cooperativas",
-          "quote": "Sin perjuicio de lo anterior, las EAE que presten servicios de auditoría externa a bancos, compañías de seguros, intermediarios de valores, administradoras generales de fondos o sus fondos, entidades de contraparte central, cámaras de compensación, empresas de depósito de valores, emisores y operadores de medios de pago, cooperativas de ahorro y crédito, soc",
+          "quote": "entidades de contraparte central, cámaras de compensación, empresas de depósito de valores, emisores y operadores de medios de pago, cooperativas de ahorro y crédito, sociedades de apoyo al giro bancario...",
+          "page": 5
+        },
+        {
+          "sector": "sistemas_pago",
+          "quote": "entidades de contraparte central, cámaras de compensación, empresas de depósito de valores, emisores y operadores de medios de pago...",
           "page": 5
         }
       ],
       "norm_evidence": [
         {
-          "norm": "Normas de Carácter General N°275 de 2010, N°302 de 2011, N°355 de 2013, N°534 de 2025",
-          "quote": "Deróguese las Normas de Carácter General N°275 de 2010, N°302 de 2011, N°355 de 2013, N°534 de 2025",
+          "norm": "Norma de Carácter General N° 275 de 2010",
+          "quote": "Deróguese las Normas de Carácter General N°275 de 2010, N°302 de 2011, N°355 de 2013, N°534 de 2025...",
           "page": 14
         }
       ],
@@ -1733,7 +1711,7 @@
       "confidence": "alta",
       "ai_model": "gemini-flash-lite-latest",
       "ai_model_requested": "gemini-flash-lite-latest",
-      "analyzed_at": "2026-09-28T22:30:47Z"
+      "analyzed_at": "2026-09-28T22:45:59Z"
     },
     {
       "id": "cmf-138776aefb225ef8ec5a",
@@ -1753,7 +1731,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 19 May 2026 14:34:46 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -1806,7 +1784,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 14 May 2026 13:30:20 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -1858,7 +1836,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 14 May 2026 13:29:54 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -1916,7 +1894,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 14 May 2026 13:29:30 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -1982,7 +1960,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 30 Apr 2026 18:59:08 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -2042,7 +2020,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 20 Apr 2026 15:32:09 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -2102,7 +2080,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 20 Apr 2026 15:32:26 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -2174,32 +2152,30 @@
       "source_fingerprint": "20149cf04846fa563bc72fbd34be91e6306b34a494ced37651bf02f3a12859b3",
       "document_sha256": "37f7e357a87800350c427c56c059f764d4b18bc4c898dec02046e4b8a01a3a70",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T22:29:34Z",
+      "pdf_checked_at": "2026-09-28T22:44:58Z",
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 20 Apr 2026 15:32:31 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
-      "needs_human_review": true,
-      "review_flags": [
-        "resumen_sin_evidencia_verificable"
-      ],
+      "needs_human_review": false,
+      "review_flags": [],
       "event_type": "nueva_norma",
-      "summary": "",
+      "summary": "Establece una nueva normativa sobre requisitos de patrimonio mínimo, garantías, liquidez y endeudamiento para intermediarios de valores y corredores de bolsa de productos. Deroga la Norma de Carácter General N°18, la Circular N°632 de 1986 y la Circular N°695 de 1987.",
       "sectors": [
         "corredoras_bolsa"
       ],
       "affected_norms": [
-        "NCG N°18",
-        "Circular N°632 de 1986",
-        "Circular N°695 de 1987"
+        "Norma de Carácter General N°18",
+        "Circular N° 632 de 1986",
+        "Circular N° 695 de 1987"
       ],
       "effective_date": "",
       "effective_date_precision": "sin_fecha",
-      "summary_evidence": "",
+      "summary_evidence": "EJECUTA ACUERDO DEL CONSEJO DE LA COMISIÓN PARA EL MERCADO FINANCIERO QUE APRUEBA NUEVA NORMATIVA QUE IMPARTE INSTRUCCIONES SOBRE PATRIMONIO MÍNIMO, GARANTÍAS, LIQUIDEZ Y ENDEUDAMIENTO PARA INTERMEDIARIOS DE VALORES Y CORREDORES DE BOLSA DE PRODUCTOS Y QUE DEROGA LA NCG N°18, LA CIRCULAR N° 632 DE 1986 Y LA CIRCULAR N° 695 DE 1987.",
       "summary_evidence_page": 0,
       "sector_evidence": [
         {
@@ -2210,17 +2186,17 @@
       ],
       "norm_evidence": [
         {
-          "norm": "NCG N°18",
+          "norm": "Norma de Carácter General N°18",
           "quote": "DEROGA NORMA DE CARACTER GENERAL N°18, CIRCULAR N°632 Y CIRCULAR N°695.",
           "page": 1
         },
         {
-          "norm": "Circular N°632 de 1986",
+          "norm": "Circular N° 632 de 1986",
           "quote": "DEROGA NORMA DE CARACTER GENERAL N°18, CIRCULAR N°632 Y CIRCULAR N°695.",
           "page": 1
         },
         {
-          "norm": "Circular N°695 de 1987",
+          "norm": "Circular N° 695 de 1987",
           "quote": "DEROGA NORMA DE CARACTER GENERAL N°18, CIRCULAR N°632 Y CIRCULAR N°695.",
           "page": 1
         }
@@ -2230,7 +2206,7 @@
       "confidence": "alta",
       "ai_model": "gemini-flash-lite-latest",
       "ai_model_requested": "gemini-flash-lite-latest",
-      "analyzed_at": "2026-09-28T22:30:57Z"
+      "analyzed_at": "2026-09-28T22:46:07Z"
     },
     {
       "id": "cmf-eb8e9e684ae5afac0aa8",
@@ -2250,7 +2226,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 15 Apr 2026 13:44:49 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -2310,7 +2286,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 15 Apr 2026 13:40:31 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -2362,7 +2338,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 15 Apr 2026 13:43:46 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -2420,7 +2396,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 13 Apr 2026 13:06:35 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -2490,7 +2466,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 13 Apr 2026 13:11:15 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -2557,7 +2533,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 16 Mar 2026 12:30:57 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -2610,7 +2586,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 11 Mar 2026 15:17:29 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -2668,7 +2644,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 11 Mar 2026 15:19:38 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -2734,7 +2710,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 11 Mar 2026 15:17:06 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -2794,7 +2770,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 27 Feb 2026 15:00:15 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -2852,7 +2828,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 10 Feb 2026 20:29:51 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -2912,7 +2888,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 10 Feb 2026 18:52:29 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -2972,7 +2948,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 10 Feb 2026 18:52:43 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -3030,7 +3006,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 09 Feb 2026 15:16:17 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -3114,7 +3090,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 09 Feb 2026 16:17:11 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -3194,11 +3170,11 @@
       "source_fingerprint": "f3ea3ca15ea0119fbafe37532eb08ff09c15400bc4c3c21bb9e74738eca07be4",
       "document_sha256": "a5ffa373b7a75996ff281f790c9c63ba584b882bed339f4f84ed17659374b27b",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T22:29:34Z",
+      "pdf_checked_at": "2026-09-28T22:44:58Z",
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 02 Feb 2026 12:06:19 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
@@ -3206,17 +3182,17 @@
       "needs_human_review": true,
       "review_flags": [
         "resumen_sin_evidencia_verificable",
-        "sector_sin_evidencia_verificable",
         "vigencia_sin_evidencia_verificable"
       ],
-      "event_type": "modificacion",
+      "event_type": "circular_instruccion",
       "summary": "",
       "sectors": [
+        "bancos",
         "cooperativas",
         "sistemas_pago"
       ],
       "affected_norms": [
-        "Recopilación Actualizada de Normas para Bancos Capítulos 1-7, 1-13, 1-14, 1-16",
+        "Capítulos 1-7, 1-13, 1-14, 1-16 de la Recopilación Actualizada de Normas para Bancos",
         "Circular N°1 para Emisores de Tarjetas de Pago no bancarias",
         "Circular N°123 para Cooperativas"
       ],
@@ -3226,30 +3202,35 @@
       "summary_evidence_page": 0,
       "sector_evidence": [
         {
+          "sector": "bancos",
+          "quote": "CIRCULAR N°2.368 Bancos Cooperativas Emisores de Tarjetas de Pago no Bancarias",
+          "page": 1
+        },
+        {
           "sector": "cooperativas",
-          "quote": "Cooperativas",
+          "quote": "CIRCULAR N°2.368 Bancos Cooperativas Emisores de Tarjetas de Pago no Bancarias",
           "page": 1
         },
         {
           "sector": "sistemas_pago",
-          "quote": "Emisores de Tarjetas de Pago no Bancarias",
+          "quote": "CIRCULAR N°2.368 Bancos Cooperativas Emisores de Tarjetas de Pago no Bancarias",
           "page": 1
         }
       ],
       "norm_evidence": [
         {
-          "norm": "Recopilación Actualizada de Normas para Bancos Capítulos 1-7, 1-13, 1-14, 1-16",
-          "quote": "se modifican los Capítulos 1-7, 1-13, 1-14, 1- 16 de la Recopilación Actualizada de Normas para Bancos",
+          "norm": "Capítulos 1-7, 1-13, 1-14, 1-16 de la Recopilación Actualizada de Normas para Bancos",
+          "quote": "se modifican los Capítulos 1-7, 1-13, 1-14, 1- 16 de la Recopilación Actualizada de Normas para Bancos, la Circular N°1 para Emisores de Tarjetas de Pago no bancarias y la Circular N°123 para Cooperativas.",
           "page": 1
         },
         {
           "norm": "Circular N°1 para Emisores de Tarjetas de Pago no bancarias",
-          "quote": "la Circular N°1 para Emisores de Tarjetas de Pago no bancarias",
+          "quote": "se modifican los Capítulos 1-7, 1-13, 1-14, 1- 16 de la Recopilación Actualizada de Normas para Bancos, la Circular N°1 para Emisores de Tarjetas de Pago no bancarias y la Circular N°123 para Cooperativas.",
           "page": 1
         },
         {
           "norm": "Circular N°123 para Cooperativas",
-          "quote": "la Circular N°123 para Cooperativas.",
+          "quote": "se modifican los Capítulos 1-7, 1-13, 1-14, 1- 16 de la Recopilación Actualizada de Normas para Bancos, la Circular N°1 para Emisores de Tarjetas de Pago no bancarias y la Circular N°123 para Cooperativas.",
           "page": 1
         }
       ],
@@ -3258,7 +3239,7 @@
       "confidence": "alta",
       "ai_model": "gemini-flash-lite-latest",
       "ai_model_requested": "gemini-flash-lite-latest",
-      "analyzed_at": "2026-09-28T22:32:54Z"
+      "analyzed_at": "2026-09-28T22:46:13Z"
     },
     {
       "id": "cmf-785671c04563a19b7863",
@@ -3278,7 +3259,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 22 Jan 2026 21:09:36 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -3344,7 +3325,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 22 Jan 2026 21:08:34 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -3396,7 +3377,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 14 Jan 2026 19:32:28 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -3462,7 +3443,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 14 Jan 2026 19:32:52 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -3520,7 +3501,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 14 Jan 2026 19:33:13 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -3572,7 +3553,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 07 Jan 2026 20:14:46 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -3632,7 +3613,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 22 Dec 2025 19:54:12 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -3690,7 +3671,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 12 Dec 2025 12:12:56 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -3770,7 +3751,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 10 Dec 2025 20:58:21 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -3830,7 +3811,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 10 Dec 2025 20:58:16 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -3888,7 +3869,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 10 Dec 2025 20:58:11 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -3940,7 +3921,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 12 Dec 2025 12:12:36 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -4006,7 +3987,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 01 Dec 2025 19:35:33 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -4059,7 +4040,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 25 Nov 2025 12:41:28 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -4117,7 +4098,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 21 Nov 2025 18:06:16 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -4182,7 +4163,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 11 Nov 2025 18:38:13 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -4242,7 +4223,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 11 Nov 2025 18:38:19 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -4302,7 +4283,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 11 Nov 2025 18:38:25 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -4362,7 +4343,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 11 Nov 2025 12:15:22 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -4430,21 +4411,19 @@
       "source_fingerprint": "977ab31bac6590f1c9a66cfcb9c005f3a49321ba37c0770451153d61bf18d241",
       "document_sha256": "23dea9624d5a9f10935062d2d544684e9c2de5e9d3c2afeb87d8aad3dce3bb9d",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T22:29:34Z",
+      "pdf_checked_at": "2026-09-28T22:44:58Z",
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 07 Nov 2025 13:35:10 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
-      "analysis_status": "pendiente",
+      "analysis_status": "complete",
       "analysis_version": "2026-09-28.3",
-      "needs_human_review": true,
-      "review_flags": [
-        "resumen_sin_evidencia_verificable"
-      ],
-      "event_type": "nueva_norma",
-      "summary": "",
+      "needs_human_review": false,
+      "review_flags": [],
+      "event_type": "modificacion",
+      "summary": "La CMF aprueba una norma que incorpora nuevos archivos y anexos al Manual de Sistemas de Información de Fondos relativos a volumen de negocios, patrimonio mínimo, activos ponderados por riesgo y criptoactivos de administradoras generales de fondos.",
       "sectors": [
         "agf",
         "ffmm",
@@ -4453,12 +4432,11 @@
       "affected_norms": [
         "Norma de Carácter General N°526",
         "Norma de Carácter General N°515",
-        "Decreto Ley N°3.538",
-        "Ley N°20.712"
+        "Norma de Carácter General N°551"
       ],
       "effective_date": "2026-07-01",
       "effective_date_precision": "dia",
-      "summary_evidence": "",
+      "summary_evidence": "EJECUTA ACUERDO DEL CONSEJO DE LA COMISIÓN PARA EL MERCADO FINANCIERO QUE APRUEBA NORMA DE CARÁCTER GENERAL QUE INCORPORA AL MANUAL DE SISTEMAS DE INFORMACIÓN DE FONDOS NUEVOS ARCHIVOS DE VOLUMEN DE NEGOCIOS Y NÚMERO DE CLIENTES...",
       "summary_evidence_page": 0,
       "sector_evidence": [
         {
@@ -4480,7 +4458,7 @@
       "norm_evidence": [
         {
           "norm": "Norma de Carácter General N°526",
-          "quote": "según lo dispuesto en la Norma de Carácter General N°526:",
+          "quote": "según lo dispuesto en la Norma de Carácter General N°526",
           "page": 1
         },
         {
@@ -4489,22 +4467,17 @@
           "page": 23
         },
         {
-          "norm": "Decreto Ley N°3.538",
-          "quote": "artículos 1, 3, 5 en sus numerales 1y 20 en su numeral 3 del Decreto Ley N°3.538",
-          "page": 1
-        },
-        {
-          "norm": "Ley N°20.712",
-          "quote": "artículo 2 de la Ley Única de Fondos, aprobada por el artículo primero de la Ley N°20.712",
+          "norm": "Norma de Carácter General N°551",
+          "quote": "NORMA DE CARÁCTER GENERAL N°551",
           "page": 1
         }
       ],
-      "effective_date_evidence": "III. VIGENCIA Las instrucciones establecidas en la presente Norma de Carácter General rigen a contar del 1 de julio de 2026.",
+      "effective_date_evidence": "Las instrucciones establecidas en la presente Norma de Carácter General rigen a contar del 1 de julio de 2026.",
       "effective_date_page": 3,
       "confidence": "alta",
       "ai_model": "gemini-flash-lite-latest",
       "ai_model_requested": "gemini-flash-lite-latest",
-      "analyzed_at": "2026-09-28T22:38:23Z"
+      "analyzed_at": "2026-09-28T22:46:25Z"
     },
     {
       "id": "cmf-2268013d00a15d959756",
@@ -4524,7 +4497,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 07 Nov 2025 13:34:55 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -4582,7 +4555,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 27 Oct 2025 12:05:31 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -4642,7 +4615,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 27 Oct 2025 12:02:03 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -4702,7 +4675,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 21 Oct 2025 18:39:16 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -4774,7 +4747,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 10 Oct 2025 12:05:57 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -4826,7 +4799,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 10 Oct 2025 12:06:09 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -4892,7 +4865,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 10 Oct 2025 12:06:05 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
@@ -4950,7 +4923,7 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 03 Oct 2025 18:49:50 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T22:29:34Z",
+      "last_seen_at": "2026-09-28T22:44:58Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "complete",
