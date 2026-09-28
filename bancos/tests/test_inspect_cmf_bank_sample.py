@@ -25,11 +25,11 @@ class InspectCmfBankSampleTests(unittest.TestCase):
         self.assertEqual(report["bank_files"]["R1"]["tab_field_counts"], {2: 1, 5: 1})
         self.assertEqual(report["bank_files"]["B1"]["encoding"], "ascii-compatible (UTF-8/Latin-1 indistinguishable)")
 
-    def test_fails_if_required_results_file_is_missing(self):
+    def test_fails_if_balance_file_is_missing(self):
         out = BytesIO()
         with zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as zf:
-            zf.writestr("b1202607001.txt", "001\tBANCO DE CHILE\n")
-        with self.assertRaisesRegex(RuntimeError, "missing_core=.*R1"):
+            zf.writestr("r1202607001.txt", "001\tBANCO DE CHILE\n")
+        with self.assertRaisesRegex(RuntimeError, "missing_core=.*B1"):
             inspect_zip(out.getvalue(), "2026-07", "001")
 
 
