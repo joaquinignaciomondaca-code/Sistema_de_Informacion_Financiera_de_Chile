@@ -275,7 +275,7 @@ const EXPLORER_TREE = [
               { label: "Listado de Fondos Mutuos", query: "SELECT run_fondo, nombre_fondo, sector FROM ffmm_maestro ORDER BY nombre_fondo LIMIT 10;" }
             ],
             tables: [
-              { id: "ffmm_maestro", name: "ffmm.lista_entidades", rows: "1.156 entidades", file: "ffmm/circular_1333_cartera/outputs/maestro_fondos_mutuos.parquet" }
+              { id: "ffmm_maestro", name: "ffmm.lista_entidades", rows: "1.156 entidades", file: "outputs/ffmm/maestro_fondos_mutuos.parquet" }
             ]
           },
           {
@@ -291,8 +291,8 @@ const EXPLORER_TREE = [
               { label: "Opciones Circular 1333", query: "SELECT * FROM ffmm_opciones LIMIT 10;" }
             ],
             tables: [
-              { id: "ffmm_futuros", name: "ffmm.derivados_futuros", rows: "280.494 registros", file: "ffmm/circular_1333_cartera/outputs/ffmm_futu_normalizado.parquet" },
-              { id: "ffmm_opciones", name: "ffmm.derivados_opciones", rows: "5.347 registros", file: "ffmm/circular_1333_cartera/outputs/ffmm_opci_normalizado.parquet" }
+              { id: "ffmm_futuros", name: "ffmm.derivados_futuros", rows: "280.494 registros", file: "outputs/ffmm/ffmm_futu_normalizado.parquet" },
+              { id: "ffmm_opciones", name: "ffmm.derivados_opciones", rows: "5.347 registros", file: "outputs/ffmm/ffmm_opci_normalizado.parquet" }
             ]
           },
           {
@@ -348,7 +348,7 @@ const EXPLORER_TREE = [
               { label: "Fondos por Administradora", query: "SELECT administradora, count(*) as total_fondos FROM fi_maestro GROUP BY administradora ORDER BY total_fondos DESC LIMIT 10;" }
             ],
             tables: [
-              { id: "fi_maestro", name: "fi.lista_entidades", rows: "1.129 entidades", file: "fi/cartera_inversiones/outputs/maestro_fondos_inversion.parquet" }
+              { id: "fi_maestro", name: "fi.lista_entidades", rows: "1.129 entidades", file: "outputs/fi/maestro_fondos_inversion.parquet" }
             ]
           },
           {
@@ -398,7 +398,7 @@ const EXPLORER_TREE = [
             ],
             tables: [
               { id: "fi_repos_detalle_historico", name: "fi.repos_contratos", rows: "2.946 contratos", file: "outputs/fi/fi_repos_detalle_historico.parquet" },
-              { id: "fi_repos", name: "fi.repos_vrc_crv", rows: "1.366 pactos", file: "fi/repos/outputs/fi_repos_vrc_crv.parquet" }
+              { id: "fi_repos", name: "fi.repos_vrc_crv", rows: "1.366 pactos", file: "outputs/fi/fi_repos_vrc_crv.parquet" }
             ]
           },
           {
@@ -415,11 +415,11 @@ const EXPLORER_TREE = [
               { label: "Derivados Forwards FFII", query: "SELECT nombre_contraparte, count(*) as contratos FROM fi_derivados GROUP BY nombre_contraparte ORDER BY contratos DESC LIMIT 10;" }
             ],
             tables: [
-              { id: "fi_nacional", name: "fi.cartera_nacional", rows: "833.584 registros", file: "fi/cartera_inversiones/outputs/fi_cartera_nacional.parquet" },
-              { id: "fi_extranjera", name: "fi.cartera_extranjera", rows: "67.371 registros", file: "fi/cartera_inversiones/outputs/fi_cartera_extranjera.parquet" },
-              { id: "fi_derivados", name: "fi.derivados_futuros", rows: "3.611 registros", file: "fi/cartera_inversiones/outputs/fi_futuros_forward.parquet" },
-              { id: "fi_metodo_part", name: "fi.metodo_participacion", rows: "14.401 registros", file: "fi/cartera_inversiones/outputs/fi_metodo_participacion.parquet" },
-              { id: "fi_opciones", name: "fi.derivados_opciones", rows: "1.447 registros", file: "fi/cartera_inversiones/outputs/fi_opciones.parquet" }
+              { id: "fi_nacional", name: "fi.cartera_nacional", rows: "833.584 registros", file: "outputs/fi/fi_cartera_nacional.parquet" },
+              { id: "fi_extranjera", name: "fi.cartera_extranjera", rows: "67.371 registros", file: "outputs/fi/fi_cartera_extranjera.parquet" },
+              { id: "fi_derivados", name: "fi.derivados_futuros", rows: "3.611 registros", file: "outputs/fi/fi_futuros_forward.parquet" },
+              { id: "fi_metodo_part", name: "fi.metodo_participacion", rows: "14.401 registros", file: "outputs/fi/fi_metodo_participacion.parquet" },
+              { id: "fi_opciones", name: "fi.derivados_opciones", rows: "1.447 registros", file: "outputs/fi/fi_opciones.parquet" }
             ]
           }
         ]
@@ -1040,7 +1040,7 @@ const EXPLORER_TREE = [
     label: "COOPERATIVAS DE AHORRO Y CRÉDITO (CMF)",
     badges: [
       { type: "entities", text: "7 Entidades", title: "Cooperativas de ahorro y crédito supervisadas por la CMF" },
-      { type: "data", text: "700+ Datos", title: "Balances IFRS mensuales y colocaciones (2018 a 2026)" }
+      { type: "data", text: "52.000+ Datos", title: "Balances IFRS mensuales, notas y Reporte Financiero CMF por cuenta (2017 a 2026)" }
     ],
     status: "active",
     children: [
@@ -1082,6 +1082,27 @@ const EXPLORER_TREE = [
             ],
             tables: [
               { id: "cooperativas_balance_resumen", name: "cooperativas.balance_resumen", rows: "294 balances", file: "outputs/cooperativas/cooperativas_balance_resumen.parquet" }
+            ]
+          },
+          {
+            id: "circ_coop_cmf_reporte",
+            type: "circular",
+            label: "Balance y Resultados CMF · por cuenta (2017+)",
+            badge: "115 Meses",
+            badgeType: "data",
+            status: "active",
+            sector: "cooperativas",
+            chips: [
+              { label: "Activos totales por cooperativa (último mes)", query: "SELECT periodo, cooperativa, monto_mm_clp AS activos_mm_clp FROM cooperativas_cmf_balance WHERE seccion = 'activos' AND codigo_concepto = 'activos_totales' AND periodo = (SELECT MAX(periodo) FROM cooperativas_cmf_balance) ORDER BY activos_mm_clp DESC;" },
+              { label: "Evolución de los activos del sistema (2017-2026)", query: "SELECT periodo, SUM(monto_mm_clp) AS activos_mm_clp FROM cooperativas_cmf_balance WHERE codigo_concepto = 'activos_totales' GROUP BY periodo ORDER BY periodo;" },
+              { label: "Cartera de colocaciones por tipo (último mes)", query: "SELECT cooperativa, codigo_concepto, monto_mm_clp FROM cooperativas_cmf_balance WHERE seccion = 'activos' AND codigo_concepto IN ('colocaciones_comerciales', 'colocaciones_consumo', 'colocaciones_vivienda') AND periodo = (SELECT MAX(periodo) FROM cooperativas_cmf_balance) ORDER BY cooperativa, codigo_concepto;" },
+              { label: "Excedentes del ejercicio por cooperativa (últimos diciembres)", query: "SELECT periodo, cooperativa, monto_mm_clp FROM cooperativas_cmf_resultados WHERE codigo_concepto = 'resultado_ejercicio' AND periodo LIKE '%-12' ORDER BY periodo DESC, monto_mm_clp DESC LIMIT 21;" },
+              { label: "Margen de intereses y gasto en provisiones (año en curso)", query: "SELECT periodo, cooperativa, SUM(CASE WHEN codigo_concepto = 'margen_intereses' THEN monto_mm_clp END) AS margen_intereses_mm_clp, SUM(CASE WHEN codigo_concepto = 'gasto_provisiones' THEN monto_mm_clp END) AS gasto_provisiones_mm_clp FROM cooperativas_cmf_resultados WHERE periodo >= '2026-01' GROUP BY periodo, cooperativa ORDER BY cooperativa, periodo;" },
+              { label: "Depósitos y captaciones del sistema (2017-2026)", query: "SELECT periodo, SUM(monto_mm_clp) AS depositos_mm_clp FROM cooperativas_cmf_balance WHERE codigo_concepto = 'depositos_captaciones' GROUP BY periodo ORDER BY periodo;" }
+            ],
+            tables: [
+              { id: "cooperativas_cmf_balance", name: "cooperativas.cmf_balance", rows: "Activos y pasivos · 2017-01 a 2026-07", file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet" },
+              { id: "cooperativas_cmf_resultados", name: "cooperativas.cmf_resultados", rows: "Resultados y margen · 2017-01 a 2026-07", file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet" }
             ]
           },
           {
@@ -1260,61 +1281,6 @@ const EXPLORER_TREE = [
             ],
             tables: [
               { id: "sistemas_pago_estadisticas_bcch", name: "sistemas_pago.estadisticas_bcch", rows: "102 registros", file: "outputs/sistemas_pago/sistemas_pago_estadisticas_bcch.parquet" }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: "group_retail_financiero",
-    type: "group",
-    label: "RETAIL FINANCIERO (CREDITO NO BANCARIO / CMF)",
-    badges: [
-      { type: "entities", text: "17 Entidades", title: "Emisores de tarjetas no bancarias, prepago y matrices de retail cotizadas" },
-      { type: "data", text: "207 Datos", title: "Solvencia patrimonial, activos, efectivo y resultados de matrices de retail" }
-    ],
-    status: "active",
-    children: [
-      {
-        id: "sector_retail_financiero",
-        type: "sector",
-        label: "Tarjetas Comerciales, Prepago y Matrices de Retail",
-        sector: "retail_financiero",
-        children: [
-          {
-            id: "cat_retail_maestro",
-            type: "circular",
-            label: "Lista de Entidades",
-            badge: "17 Entidades",
-            badgeType: "entities",
-            status: "active",
-            sector: "retail_financiero",
-            chips: [
-              { label: "Catálogo Emisores y Matrices de Retail", query: "SELECT rut_completo, razon_social, nombre_comercial, tipo_entidad_cmf, grupo_controlador FROM retail_financiero_maestro ORDER BY segmento_mercado, razon_social;" },
-              { label: "Emisores por Segmento de Mercado", query: "SELECT segmento_mercado, count(*) as total_entidades FROM retail_financiero_maestro GROUP BY segmento_mercado ORDER BY total_entidades DESC;" },
-              { label: "Emisores de Prepago y Crédito Digital", query: "SELECT rut_completo, razon_social, nombre_comercial, tipo_entidad_cmf, comuna FROM retail_financiero_maestro WHERE tipo_entidad_cmf IN ('TCEEM', 'TPEEM');" }
-            ],
-            tables: [
-              { id: "retail_financiero_maestro", name: "retail_financiero.lista_entidades", rows: "17 entidades", file: "outputs/retail_financiero/retail_financiero_maestro.parquet" }
-            ]
-          },
-          {
-            id: "circ_retail_balances",
-            type: "circular",
-            label: "Balances y Solvencia · IFRS Trimestral",
-            badge: "190 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "retail_financiero",
-            chips: [
-              { label: "Ranking Activos Totales Cierre Reciente", query: "SELECT periodo, razon_social, total_activos_m_clp, patrimonio_neto_m_clp, total_activos_m_usd FROM retail_financiero_balances WHERE periodo = (SELECT MAX(periodo) FROM retail_financiero_balances) ORDER BY total_activos_m_clp DESC;" },
-              { label: "Utilidad Neta del Ejercicio: Falabella vs Cencosud vs Ripley", query: "SELECT periodo, razon_social, ganancia_perdida_ejercicio_m_clp, total_activos_m_clp FROM retail_financiero_balances WHERE razon_social LIKE '%FALABELLA%' OR razon_social LIKE '%CENCOSUD%' OR razon_social LIKE '%RIPLEY%' ORDER BY periodo DESC, total_activos_m_clp DESC LIMIT 15;" },
-              { label: "Efectivo y Caja Disponible (MM$ CLP)", query: "SELECT periodo, razon_social, efectivo_y_equivalentes_m_clp, total_activos_m_clp, round(efectivo_y_equivalentes_m_clp / NULLIF(total_activos_m_clp, 0) * 100, 1) as pct_caja FROM retail_financiero_balances WHERE periodo = (SELECT MAX(periodo) FROM retail_financiero_balances) ORDER BY efectivo_y_equivalentes_m_clp DESC;" },
-              { label: "Evolución Trimestral Patrimonio Neto (Hites vs Tricot vs ABC)", query: "SELECT periodo, razon_social, patrimonio_neto_m_clp, ganancia_perdida_ejercicio_m_clp FROM retail_financiero_balances WHERE razon_social LIKE '%HITES%' OR razon_social LIKE '%TRICOT%' OR razon_social LIKE '%ABC%' ORDER BY periodo DESC, razon_social LIMIT 18;" }
-            ],
-            tables: [
-              { id: "retail_financiero_balances", name: "retail_financiero.balances", rows: "190 registros", file: "outputs/retail_financiero/retail_financiero_balances.parquet" }
             ]
           }
         ]
