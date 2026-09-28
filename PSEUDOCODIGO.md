@@ -32,7 +32,7 @@ Dos tipos de flujo (ver `pipelines/README.md`):
 |---|---|---|
 | **Maduro/automático** (macro, bancos B1/B2/R1, factoring-leasing IFRS) | GitHub Actions + PC | staging → validación → artifact o commit controlado |
 | **Manual/experimental** (PDFs, notas, FFMM, FI, AFP, CCAF…) | PC | escritura directa a `docs/outputs/` tras auditoría sectorial |
-| **Laboratorio** (bancos REPO, XML/XBRL, sondas) | Actions | **nunca publica**; deja reportes en `.local-data/review/` o artifacts |
+| ~~Laboratorio~~ (bancos REPO, XML/XBRL, sondas) | — | **eliminado el 2026-09-28** (no publicaban; quedan en el historial de Git) |
 
 ---
 
@@ -161,31 +161,13 @@ main(period?):
 #     total_records = Σ registros_reales de todas las tablas   # antes: += records del mes
 ```
 
-### 3.1b Sondas bancarias nuevas (no publican)
+### 3.1b Sondas, laboratorio REPO y legado bancos
 ```
-probe_history_layout      : por mes 2022→hoy: ¿hay ZIP/XLSX?, miembros b1/b2/r1/c*, modelos de cuentas, hojas exigidas → ::notice
-parse_mb1_fixed.parse_record(line, period): MB1 de longitud fija: cuenta 7/9 dígitos + total + 4 desgloses s9(14) con signo
-                            unidad = MM CLP antes de 2022, pesos desde 2022   (no extrapolar a TXT B1 tabulado)
-inspect_repo_source_layout: muestra encabezado + cuentas REPO (1160000/2160000/141000000/243000000) de 2 bancos por período
-```
-
-### 3.2 REPO bancario (laboratorio, NUNCA publica)
-```
-probe_repos_zip_cmf     : descubre ZIP por mes (índice + catálogo cmf_bancos_packages.json), inspecciona cuentas candidatas
-                          pre-2022: 1160000/2160000 ; post-2022: 141000000/243000000
-audit_repos_zip_cmf     : compara ZIP vs JSON legado probando divisores 1/1000/1e6 (sin asumir unidad)
-rebuild_repo_from_cmf   : reextrae B1 → informe .local-data/review/bancos/reconstruccion_cmf
-backfill_repo_audit     : barrido histórico por años
-audit_repo_fx_sii       : coteja FX usado vs tablas diarias SII
-transfer/hydrate_repo_review : empaqueta la revisión en anotaciones de Actions (chunks) y la reconstruye local
-summarize_repo_audit, analyze_repo_snapshot, prepare_repo_corrections : resúmenes y propuestas (no publican)
-audit_repo_release_gate : puerta de aprobación de la tabla legada bancos_repos_saldos_series
-```
-### 3.3 Legado bancos
-```
-pipeline_stream_bancos.py      : paquetes mensuales CMF → balance/resultados (MAESTRO_BANCOS hardcodeado) — tablas RETIRADAS de la web
-pipeline_stream_derivados_bcch : BCCh F099 derivados OTC — RETIRADO de la web
-02_extract_bancos_repos_series : LEGACY deshabilitado
+Eliminados el 2026-09-28 (no publicaban): probe_history_layout, parse_mb1_fixed, laboratorio REPO completo
+(probe/audit/rebuild/backfill/fx_sii/transfer/hydrate/summarize/analyze/prepare/release_gate), pipeline_stream_bancos,
+pipeline_stream_derivados_bcch + catálogo derivados_otc, 02_extract_bancos_repos_series, audit_bancos_data/repos,
+y los workflows bancos_repo, bancos_repo_historico, bancos_probe_historia, bancos_muestra_inspeccion.
+Queda: publish_cmf_bank_period + extract_cmf_bank_lines + inspect_cmf_bank_sample (+ tests).
 ```
 
 ---
@@ -207,28 +189,21 @@ publish_backfill.publish():
     reescribe bloques entre marcadores "// BEGIN AUTO …" en duckdb_client.js, sidebar.js, data_viewer.js, data_dictionary.js
     update_root_manifest
     luego workflow corre scripts/audit_navigation.py + audit_web_full.py
-audit_structured_sample : coteja archivo plano vs ficha HTML (2 entidades)
+audit_structured_sample : coteja archivo plano vs ficha HTML (2 entidades; su workflow manual factoring_leasing_sample se eliminó el 2026-09-28)
 publish_structured_sample / publish_income_sample : publican SOLO filas aprobadas (run id + valores fijos)
     → sus Parquet ya NO se muestran en la web (2026-09-28): repetían cifras de la serie IFRS. Quedan como evidencia.
 Resultados IFRS: "Ganancia (pérdida)" aparece 3 veces por estado (ERFG/ERNG ordinal 1 y 2 + ERI), mismo valor.
     utilidad del período = estado IN (ERFG, ERNG) AND repeticion_contexto = 1   → chip generado por profit_queries()
-Legado: pipeline_stream_factoring_leasing (rutas C:\), stream_cmf_eeff_series, 02_extract_…_notas (PDF)
+Legado (pipeline_stream_factoring_leasing, stream_cmf_eeff_series, 02_extract_…_notas PDF): eliminado 2026-09-28
 ```
 
 ---
 
-## 5. EEFF XML/XBRL CMF (`pipelines/xml_eeff/`, laboratorio)
+## 5. EEFF XML/XBRL CMF (laboratorio eliminado)
 ```
-extract.main(--sector --batch --shard):
-    plan(sector) = entidades × periodos_para(sector)   # periodicidad real por industria
-    por (entidad, período):
-        html ficha → link_from_html → read_url
-        raw = desempaquetar_xbrl (ZIP → instancia mayor) → sanear_xml → reencodear_xml
-        parse_ifrs | parse_xbrl  (solo métricas inequívocas, sin homologar conceptos)
-        url_fuente_segura (quita tokens auth/send)
-    → .local-data (cuarentena), nunca docs/outputs
-audit_sample           : XML vs tabla HTML CMF
-(scripts/probe_xml_sources.py y su workflow diario: eliminados el 2026-09-28; las fuentes que vigilaban se
+pipelines/xml_eeff/ (extract en cuarentena + audit_sample) y sus workflows xml_eeff_review / xml_eeff_sample:
+eliminados el 2026-09-28. Nunca publicaron: desde Actions la descarga XBRL de la CMF devuelve HTML.
+(scripts/probe_xml_sources.py y su workflow diario: eliminados antes; las fuentes que vigilaban se
  automatizaron por otras vías: TXT IFRS CMF, carteras FFMM/FI y Excel FECU de corredoras)
 ```
 
@@ -274,7 +249,7 @@ FFMM  scripts/actualizar_carteras.py  (workflow ffmm_carteras.yml: días 8, 18 y
       lista de fondos (maestro_fondos_mutuos.parquet): primer/último mes informado, reporta_ultimo_mes
       manifiestos por tabla + data_manifest.json (entradas del sector, recalculadas tras el pull)
   01  registro fondos activos (fm_ident2.php)          → ffmm_registro_fondos
-  01b universo vigentes + históricos                   → ffmm_registro_fondos_universo (lo usa pipelines/xml_eeff)
+  01b universo vigentes + históricos                   → ffmm_registro_fondos_universo
 
 FI    scripts/actualizar_carteras.py  (workflow fi_carteras.yml: días 9, 19 y 29; incremental, --minutos 270)
   registro CMF (consulta.php FINRE + FIRES, vigentes y no vigentes) en cada corrida
@@ -289,7 +264,7 @@ FI    scripts/actualizar_carteras.py  (workflow fi_carteras.yml: días 9, 19 y 2
       escribir: cartera_nacional un archivo por trimestre, resto uno por año (_miles_mf = miles de la
                 moneda funcional, leída del informe de pactos)
       maestro_fondos_inversion.parquet (registro + moneda + primer/último trimestre con cartera)
-      fi_registro_fondos_universo.json (lo usa pipelines/xml_eeff)
+      fi_registro_fondos_universo.json
       confirmación: commit de datos, cherry-pick sobre la rama al día + --solo-data-manifest
 ```
 
@@ -319,7 +294,6 @@ securitizadoras/    balance y resultados de las gestoras: ver §8a (automático)
 cooperativas/       01 maestro → 03 audit (solo lista de entidades)
                     (balances CMF en Excel retirados, ver §8b)
 ccaf/               build_ccaf_maestro (lista) ; balance y resultados: ver §8a (automático)
-retail_financiero/  stream_cmf_retail_financiero + audit
 sistemas_pago/      stream_sistemas_pago (solo maestro) + audit
 fintech/            stream_fintech_rpsf (registro RPSF Ley 21.521, solo maestro) + audit ; explore.py (roto, ver §11)
 pensiones/          pipeline_stream_history(_parallel): Playwright descarga ZIP SP → parse → particiones → consolidate
@@ -392,11 +366,6 @@ fintech      : solo fintech_rpsf_maestro (servicios acreditados y roles de finan
 Los extractores que quedan ya no escriben las tablas retiradas; las auditorías sectoriales solo revisan lo publicado.
 ```
 
-### Otras sondas nuevas
-```
-retail_financiero/probe_ifrs_rut_cross.py PERIODO: TXT IFRS CMF → RUT únicos × maestro retail (EN_MAESTRO / CANDIDATO) → CSV + ::warning
-```
-
 ---
 
 ## 9. Web estática (`docs/`)
@@ -459,13 +428,7 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 | macro.yml | diario 10:00 | commit automático | daily_macro (3 tablas mensuales) + series_bcch (51 series, formato largo) |
 | bancos_cmf_mensual.yml | días 1, 11, 21 13:00 | **sí** (commit + Pages) | tests + publish_cmf_bank_period --catch-up (incremental) |
 | web_audit.yml | push a docs/** | no | audit_navigation + audit_web_full (anotaciones) |
-| bancos_probe_historia.yml / retail_probe_ifrs.yml | manual | no | sondas de formato |
-| bancos_repo.yml | días 4, 14, 24 11:00 | no | laboratorio REPO |
-| bancos_repo_historico.yml / bancos_muestra_inspeccion.yml | manual | no | barridos / inspección |
 | factoring_leasing_backfill.yml | días 3, 13, 23 12:20 | **sí** | backfill_ifrs + publish_backfill + auditorías web |
-| factoring_leasing_sample.yml | manual | no | cotejo muestra |
-| xml_eeff_review.yml | días 5, 15, 25 11:30 | no | extract.py en 4 shards |
-| xml_eeff_sample.yml | manual | no | audit_sample |
 | ifrs_sectores.yml | días 2, 12, 22 13:30 | **sí** (commit + Pages) | estados IFRS de AGF, securitizadoras y CCAF (§8a) |
 | corredoras_eeff.yml | días 6, 16, 26 13:45 | **sí** (commit + Pages) | estados FECU IFRS de corredores y agentes (§8a) |
 | seguros_carteras.yml | días 7, 17, 27 14:00 | **sí** (commit + Pages) | cartera de inversiones de aseguradoras (§6) |
