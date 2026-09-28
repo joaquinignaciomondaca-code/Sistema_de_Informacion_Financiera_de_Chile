@@ -141,35 +141,41 @@ SECTORES["patrimonios_separados"] = {"archivos": [PS_BASE], "fuente": "registro_
 
 
 class _Tablas(HTMLParser):
+    """Tablas HTML (admite tablas anidadas): th = filas solo de <th>, filas = el resto, todas = en orden."""
+
     def __init__(self):
         super().__init__()
-        self.tablas, self._t, self._f, self._c = [], None, None, None
+        self.tablas, self._pila = [], []  # pila de [tabla, fila, celda]
 
     def handle_starttag(self, tag, attrs):
         if tag == "table":
-            self._t = {"th": [], "filas": []}
-        elif tag == "tr" and self._t is not None:
-            self._f = []
-        elif tag in ("td", "th") and self._f is not None:
-            self._c = [tag, ""]
+            self._pila.append([{"th": [], "filas": [], "todas": []}, None, None])
+        elif not self._pila:
+            return
+        elif tag == "tr":
+            self._pila[-1][1] = []
+        elif tag in ("td", "th") and self._pila[-1][1] is not None:
+            self._pila[-1][2] = [tag, ""]
 
     def handle_endtag(self, tag):
-        if tag in ("td", "th") and self._c is not None and self._f is not None:
-            self._f.append((self._c[0], " ".join(self._c[1].split())))
-            self._c = None
-        elif tag == "tr" and self._f is not None and self._t is not None:
-            if self._f and all(t == "th" for t, _ in self._f):
-                self._t["th"].append([v for _, v in self._f])
-            elif self._f:
-                self._t["filas"].append([v for _, v in self._f])
-            self._f = None
-        elif tag == "table" and self._t is not None:
-            self.tablas.append(self._t)
-            self._t = None
+        if not self._pila:
+            return
+        t, f, c = self._pila[-1]
+        if tag in ("td", "th") and c is not None and f is not None:
+            f.append((c[0], " ".join(c[1].split())))
+            self._pila[-1][2] = None
+        elif tag == "tr" and f is not None:
+            if f:
+                t["todas"].append([v for _, v in f])
+                (t["th"] if all(x == "th" for x, _ in f) else t["filas"]).append([v for _, v in f])
+            self._pila[-1][1] = None
+        elif tag == "table":
+            self.tablas.append(self._pila.pop()[0])
 
     def handle_data(self, data):
-        if self._c is not None:
-            self._c[1] += data
+        for nivel in self._pila[-1:]:
+            if nivel[2] is not None:
+                nivel[2][1] += data
 
 
 def _get(url: str) -> bytes:
@@ -292,18 +298,26 @@ def _norm(s: str) -> str:
     return " ".join(re.sub(r"[^A-Z0-9 ]", " ", s).split())
 
 
-def afp_publicadas() -> list[str]:
-    """Nombres cortos de las AFP con valor cuota publicado hoy por la Superintendencia de Pensiones."""
+def afp_publicadas(raw: bytes | None = None) -> list[str]:
+    """Nombres cortos de las AFP con valor cuota publicado por la Superintendencia de Pensiones.
+
+    La página es una tabla de diseño: las AFP son las filas entre «A.F.P. | Valor Cuota | …» y «TOTAL».
+    """
     p = _Tablas()
-    p.feed(_get(AFP_SP).decode("latin-1", errors="replace"))
+    p.feed((raw if raw is not None else _get(AFP_SP)).decode("latin-1", errors="replace"))
     nombres = []
     for t in p.tablas:
-        cab = " ".join(" ".join(x) for x in t["th"]) + " " + " ".join(t["filas"][0] if t["filas"] else [])
-        if "A.F.P" not in cab.upper() or "CUOTA" not in cab.upper():
-            continue
-        for f in t["filas"]:
+        dentro = False
+        for f in t["todas"]:
             n = _norm(f[0]) if f else ""
-            if n and n not in ("A F P", "AFP", "TOTAL") and len(f) >= 2 and re.search(r"\d", f[1]):
+            if n in ("A F P", "AFP") and len(f) >= 2 and "CUOTA" in _norm(f[1]):
+                dentro = True
+                continue
+            if not dentro:
+                continue
+            if n == "TOTAL" or len(f) < 2:
+                break
+            if n and re.search(r"\d", f[1]):
                 nombres.append(n)
     return nombres
 

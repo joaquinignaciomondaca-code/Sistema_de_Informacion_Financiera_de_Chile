@@ -94,7 +94,9 @@ SOLO_LISTA = {
             "nombre_fantasia": nombre, "tipo_sociedad": "Factoring" if "FACTORING" in nombre.upper() else "Leasing",
             "segmento": "Factoring" if "FACTORING" in nombre.upper() else "Leasing",
             "registro_cmf": "Estados financieros IFRS (CMF)", "vigencia_cmf": "Vigente", "vigente": 1, "estado": "Activo",
-            "es_factoring": int("FACTORING" in nombre.upper()), "es_leasing_financiero": int("LEASING" in nombre.upper()),
+            "es_factoring": int("FACTORING" in nombre.upper()),
+            # El nombre no dice si el leasing es financiero u habitacional: solo se marca lo explícito.
+            "es_leasing_habitacional": 1 if "HABITACIONAL" in nombre.upper() else None,
             "eeff_ifrs_en_cmf": "Sí (IFRS)", "fuente_eeff": "CMF > Estados financieros IFRS (TXT)",
             "observaciones": "Agregada automáticamente: reporta estados financieros IFRS a la CMF con giro factoring/leasing."},
     },
