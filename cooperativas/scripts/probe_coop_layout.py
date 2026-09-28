@@ -215,6 +215,25 @@ def coop_sheet(periods: list[str], sheet_regex: str) -> None:
     annotate("COOP sheet", "\n".join(out))
 
 
+def check(periods: list[str]) -> None:
+    """Ensaya el camino real (descarga + parseo + validación) sin publicar nada."""
+    from cooperativas.scripts.extract_cmf_coop_report import discover, parse_workbook
+    from cooperativas.scripts.extract_cmf_coop_report import read_workbook, validate_period
+    out = []
+    for period in periods:
+        try:
+            url = discover(fetch(INDEX, MAX_PAGE).decode("utf-8", "replace"))[period]
+            parsed = parse_workbook(read_workbook(fetch(url, MAX_FILE), url))
+            info = validate_period(parsed)
+            out.append(f"OK {period} coops={info['n_cooperativas']} declaradas={len(info['diferencias_fuente_declaradas'])} "
+                       f"ignoradas={parsed['_hojas_ignoradas']}")
+        except Exception as exc:
+            import traceback
+            out.append(f"FALLA {period} {type(exc).__name__}: {exc}")
+            out.append(traceback.format_exc()[-900:])
+    annotate("COOP check", "\n".join(out))
+
+
 def cells(period: str, sheet_pat: str) -> None:
     from cooperativas.scripts.extract_cmf_coop_report import discover, read_workbook
     url = discover(fetch(INDEX, MAX_PAGE).decode("utf-8", "replace"))[period]
@@ -233,6 +252,9 @@ if __name__ == "__main__":
         cells(sys.argv[2], sys.argv[3]); raise SystemExit
     if sys.argv[1] == "blocks":
         blocks(sys.argv[2], sys.argv[3] if len(sys.argv) > 3 and sys.argv[3] else None)
+        raise SystemExit
+    if sys.argv[1] == "check":
+        check(sys.argv[2].split(","))
         raise SystemExit
     if sys.argv[1] == "coop_sheet":
         coop_sheet(sys.argv[2].split(","), sys.argv[3])
