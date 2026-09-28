@@ -18,21 +18,13 @@ jobs:
           UA='Mozilla/5.0 (compatible; MonitorFinancieroChile/1.0)'
           B='https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/intermediarios_ifrs1.php?lang=es&sociedad%5B%5D=0&ag=0&indcon=0&xls=y&tiposociedad=1&cuenta=&estimado=2&vsn=2'
           curl -s -A "$UA" --max-time 300 "${B/xls=y/xls=n}&mes1=06&anno1=2026&mes2=06&anno2=2026" -o html_202606.html
-          for p in "03 2010" "12 2010" "03 2011" "06 2011"; do set -- $p
-            curl -s -A "$UA" --max-time 300 "$B&mes1=$1&anno1=$2&mes2=$1&anno2=$2" -o "c_$2$1.bin"; done
-          ls -la
-          python3 - <<'PY' > resumen3.txt 2>&1
-          import re, glob
+          python3 - <<'PY' > resumen4.txt 2>&1
           h=open('html_202606.html','rb').read().decode('utf-8','replace')
-          print('html bytes', len(h))
-          ths=re.findall(r'<t[hd][^>]*>(.*?)</t[hd]>', h, re.S)
-          ths=[re.sub(r'<[^>]+>','',t).strip() for t in ths]
-          print([t for t in ths if re.match(r'\d\d\.\d\d\.\d\d', t)][:200])
-          print(ths[:40])
-          for f in sorted(glob.glob('c_*.bin')):
-              print(f, open(f,'rb').read()[:4])
+          k=h.find('11.01.00'); print(k); print(h[max(0,k-3000):k+3000])
+          k=h.find('Efectivo'); print(k); print(h[max(0,k-500):k+1500])
           PY
-          rm -f c_*.bin
+          rm -f html_202606.html
+          rm -f c_*.bin; true
       - name: Guardar
         run: |
           git config user.name "github-actions[bot]"
