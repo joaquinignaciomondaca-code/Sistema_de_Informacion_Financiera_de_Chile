@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "updated_at": "2026-09-28",
   "total_tables": 49,
-  "total_records": 6988721,
+  "total_records": 6988719,
   "classification": {
     "automatico": "Extracción y procesamiento 100% por código autónomo (APIs, scrapers, normalizadores)",
     "manual": "Extracción asistida o transcripción de notas y reportes no estructurados (ej. NotebookLM)"
@@ -790,7 +790,7 @@
       "ultima_actualizacion": "2026-09-28",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
       "file_parquet": "outputs/macro/macro_series_catalogo.parquet",
-      "registros_reales": 53,
+      "registros_reales": 51,
       "descripcion": "Catálogo de series del Banco Central publicadas: código SIETE, nombre, grupo, frecuencia, unidad, título oficial, cobertura y estado."
     }
   ]

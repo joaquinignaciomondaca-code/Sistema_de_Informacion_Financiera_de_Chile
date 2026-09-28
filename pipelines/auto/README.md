@@ -15,7 +15,7 @@ la corrida siguiente). Tras publicar en `main`, el mismo workflow despliega GitH
 | Fondos mutuos | CMF, Circular 1333 (cartera mensual) | 8, 18, 28 | `ffmm/scripts/actualizar_carteras.py` (`ffmm_carteras.yml`) | `docs/outputs/ffmm/` |
 | Fondos de inversión | CMF, informes IFRS trimestrales de cartera y pactos de cada fondo | 9, 19, 29 | `fi/scripts/actualizar_carteras.py` (`fi_carteras.yml`) | `docs/outputs/fi/` |
 | Listas de entidades (AGF, securitizadoras, corredores, fintech) | Registros públicos CMF (consulta.php) | 10, 20, 28 | `pipelines/entidades/actualizar_listas.py` (`entidades.yml`) | listas `*_maestro` + `docs/outputs/entidades/novedades.json` |
-| Macro | Banco Central (API SIETE) | diario | `macro/scripts/daily_macro.py` + `macro/scripts/series_bcch.py` (`macro.yml`) | `docs/outputs/macro/` (3 tablas mensuales + `series/` y catálogo de 53 series) |
+| Macro | Banco Central (API SIETE) | diario | `macro/scripts/daily_macro.py` + `macro/scripts/series_bcch.py` (`macro.yml`) | `docs/outputs/macro/` (3 tablas mensuales + `series/` y catálogo de 51 series) |
 
 Entidades nuevas: además de `entidades.yml`, FI regenera su registro completo en cada corrida;
 FFMM y seguros construyen su lista con los fondos / compañías que reportan; los actualizadores
