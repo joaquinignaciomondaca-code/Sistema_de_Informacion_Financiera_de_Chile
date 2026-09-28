@@ -21,12 +21,13 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip install --disable-pip-version-check openpyxl==3.1.5
-      - name: indice
-        run: python -m cooperativas.scripts.probe_coop_layout index
+      - run: python -m pip install --disable-pip-version-check xlrd==2.0.1
+      - name: layouts A
+        run: python -m cooperativas.scripts.probe_coop_layout layouts 2008-03,2010-01,2013-01,2016-12
         continue-on-error: true
-      - name: xlsx 2026-07
-        run: python -m cooperativas.scripts.probe_coop_layout xlsx 2026-07
+      - name: layouts B
+        run: python -m cooperativas.scripts.probe_coop_layout layouts 2017-01,2019-06,2020-07,2020-08
         continue-on-error: true
-      - name: xlsx 2022-01
-        run: python -m cooperativas.scripts.probe_coop_layout xlsx 2022-01
+      - name: layouts C
+        run: python -m cooperativas.scripts.probe_coop_layout layouts 2021-06,2023-06,2025-01,2026-07
         continue-on-error: true

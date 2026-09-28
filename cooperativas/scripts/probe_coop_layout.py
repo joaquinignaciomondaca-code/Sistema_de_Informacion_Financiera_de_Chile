@@ -52,5 +52,52 @@ def xlsx(period: str) -> None:
     annotate(f"COOP {period}", "\n".join(out))
 
 
+def layouts(periods: list[str]) -> None:
+    """Resumen compacto por período: hojas, y cabeceras de las hojas por cooperativa."""
+    import xlrd  # noqa: F401  (xls antiguos)
+    out = []
+    for period in periods:
+        try:
+            url, _ = find_source(INDEX, period, ".xlsx")
+        except Exception:
+            try:
+                url, _ = find_source(INDEX, period, ".xls")
+            except Exception as exc:
+                out.append(f"## {period} ERROR {exc}"[:300]); continue
+        blob = fetch(url, MAX_FILE)
+        out.append(f"## {period} {url.rsplit('/',1)[-1]} bytes={len(blob)}")
+        sheets = []
+        if url.endswith(".xlsx"):
+            from openpyxl import load_workbook
+            wb = load_workbook(BytesIO(blob), read_only=True, data_only=True)
+            for ws in wb.worksheets:
+                sheets.append((ws.title, [list(r) for r in ws.iter_rows(values_only=True)]))
+        else:
+            import xlrd
+            bk = xlrd.open_workbook(file_contents=blob)
+            for sh in bk.sheets():
+                sheets.append((sh.name, [sh.row_values(i) for i in range(sh.nrows)]))
+        out.append("hojas=" + str([t for t, _ in sheets]))
+        for title, rows in sheets:
+            if not re.search(r"coop|anexo|activ|pasiv|result", title, re.I) or re.search(r"indic|defin|sistema", title, re.I):
+                continue
+            first = None
+            for n, r in enumerate(rows, 1):
+                vals = [v for v in r if v not in (None, "")]
+                if vals and isinstance(vals[0], str) and re.search(r"coopeuch", vals[0], re.I):
+                    first = n; break
+            out.append(f"= {title} filas={len(rows)} primera_coop={first}")
+            if first:
+                for r in rows[max(0, first - 9):first]:
+                    vals = [str(v)[:28] for v in r if v not in (None, "")]
+                    if vals:
+                        out.append("  " + " | ".join(vals[:22]))
+                out.append("  >> " + " | ".join(str(v)[:12] for v in rows[first - 1] if v not in (None, ""))[:400])
+    annotate("COOP layouts", "\n".join(out))
+
+
 if __name__ == "__main__":
+    if sys.argv[1] == "layouts":
+        layouts(sys.argv[2].split(","))
+        raise SystemExit
     {"index": lambda: index(), "xlsx": lambda: xlsx(sys.argv[2])}[sys.argv[1]]()
