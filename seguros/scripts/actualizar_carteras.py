@@ -468,6 +468,14 @@ def diagnostico(periodos: list[str], a) -> int:
     return 0
 
 
+def meses_atras(periodo: str, n: int) -> str:
+    y, m = int(periodo[:4]), int(periodo[5:])
+    m -= n
+    while m < 1:
+        y, m = y - 1, m + 12
+    return f"{y:04d}-{m:02d}"
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--desde", default=DESDE)
@@ -505,8 +513,13 @@ def main(argv=None) -> int:
         try:
             datos = {s: descargar(s, periodo, a.zip_dir, a.cache) for s in SECTORES}
         except NoPublicado as e:
-            print(f"{periodo}: sin publicar todavía ({e}). Se retoma en la próxima corrida.")
-            break
+            if periodo >= meses_atras(hasta, 3):
+                print(f"{periodo}: sin publicar todavía ({e}). Se retoma en la próxima corrida.")
+                break
+            # Mes antiguo que no se pudo bajar: se deja pendiente (se reintenta en la próxima
+            # corrida) y se sigue con los demás, para que un hueco no frene toda la carga.
+            print(f"::warning::{periodo}: no se pudo descargar ({e}); queda pendiente")
+            continue
         filas = {t: [] for t in TABLAS}
         companias = {}
         avisos = []
