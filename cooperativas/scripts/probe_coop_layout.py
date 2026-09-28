@@ -57,17 +57,27 @@ def layouts(periods: list[str]) -> None:
     import xlrd  # noqa: F401  (xls antiguos)
     out = []
     for period in periods:
+      try:
+        _layout_one(period, out)
+      except Exception:
+        import traceback
+        out.append(f"## {period} EXC " + traceback.format_exc()[-1200:])
+    annotate("COOP layouts", "\n".join(out))
+
+
+def _layout_one(period: str, out: list) -> None:
+    if True:
         try:
             url, _ = find_source(INDEX, period, ".xlsx")
         except Exception:
             try:
                 url, _ = find_source(INDEX, period, ".xls")
             except Exception as exc:
-                out.append(f"## {period} ERROR {exc}"[:300]); continue
+                out.append(f"## {period} ERROR {exc}"[:300]); return
         blob = fetch(url, MAX_FILE)
         out.append(f"## {period} {url.rsplit('/',1)[-1]} bytes={len(blob)}")
         sheets = []
-        if url.endswith(".xlsx"):
+        if url.split("?")[0].endswith(".xlsx"):
             from openpyxl import load_workbook
             wb = load_workbook(BytesIO(blob), read_only=True, data_only=True)
             for ws in wb.worksheets:
@@ -93,7 +103,7 @@ def layouts(periods: list[str]) -> None:
                     if vals:
                         out.append("  " + " | ".join(vals[:22]))
                 out.append("  >> " + " | ".join(str(v)[:12] for v in rows[first - 1] if v not in (None, ""))[:400])
-    annotate("COOP layouts", "\n".join(out))
+
 
 
 if __name__ == "__main__":
