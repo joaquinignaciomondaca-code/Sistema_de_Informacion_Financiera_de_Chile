@@ -59,9 +59,9 @@ const SEMANTIC_VIEWS = [
   // FONDOS DE PENSIONES (SPENSIONES)
   { name: "afp_maestro", file: "outputs/pensiones/afp_maestro_administradoras.parquet" },
 
-  // BANCA E INST. FINANCIERAS (CMF / BCCh)
+  // BANCA: catálogo institucional y líneas CMF publicadas solo tras pasar el gate mensual.
   { name: "bancos_maestro", file: "outputs/bancos/bancos_maestro.parquet" },
-  { name: "bancos_repos_saldos_series", file: "outputs/bancos/bancos_repos_saldos_series.parquet" },
+  { name: "bancos_cmf_lineas", manifest: "outputs/bancos/cmf_b1_b2_r1/manifest.json" },
 
   // MACROECONOMIA & TASAS (BCCh SIETE)
   { name: "macro_tasas_rendimientos", file: "outputs/macro/macro_tasas_rendimientos.parquet" },
@@ -227,14 +227,29 @@ class DuckDBClient {
     if (!this.conn) return;
 
     for (const view of SEMANTIC_VIEWS) {
-      const files = Array.isArray(view.file) ? view.file : [view.file];
       try {
+        let files;
+        if (view.manifest) {
+          const response = await fetch(this.absoluteUrl(view.manifest), { cache: "no-store" });
+          if (!response.ok) throw new Error(`Manifiesto HTTP ${response.status}: ${view.manifest}`);
+          const manifest = await response.json();
+          files = manifest.files;
+          if (!Array.isArray(files) || files.length === 0) {
+            throw new Error(`No hay particiones CMF publicadas para ${view.name}`);
+          }
+        } else {
+          files = Array.isArray(view.file) ? view.file : [view.file];
+        }
+        if (files.some((file) => typeof file !== "string" || file.startsWith("/") || file.split("/").includes(".."))) {
+          throw new Error(`Ruta de partición no válida en ${view.name}`);
+        }
         for (const file of files) {
           await this.registerFile(file);
         }
+        const safePath = (file) => file.replace(/'/g, "''");
         const source = files.length === 1
-          ? `read_parquet('${files[0]}')`
-          : `read_parquet([${files.map((f) => `'${f}'`).join(", ")}])`;
+          ? `read_parquet('${safePath(files[0])}')`
+          : `read_parquet([${files.map((f) => `'${safePath(f)}'`).join(", ")}])`;
         await this.conn.query(`CREATE OR REPLACE VIEW ${view.name} AS SELECT * FROM ${source};`);
       } catch (err) {
         // Una vista rota se declara como no disponible: la consulta que la use

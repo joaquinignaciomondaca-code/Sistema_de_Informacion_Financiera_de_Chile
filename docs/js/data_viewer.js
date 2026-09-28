@@ -15,10 +15,10 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Banca Comercial (CMF) · REPO: saldos cotejados",
+    group: "Banca Comercial (CMF) · líneas B1/B2/R1 con gate mensual",
     tables: [
-      { id: "bancos_maestro", name: "bancos.lista_instituciones (40 códigos)" },
-      { id: "bancos_repos_saldos_series", name: "bancos.repos_saldos_series (saldos cotejados; identidad y flujo no aprobados)" }
+      { id: "bancos_maestro", name: "bancos.lista_instituciones (⚠ catálogo pendiente de validar)" },
+      { id: "bancos_cmf_lineas", name: "bancos.cmf_lineas_b1_b2_r1 (importes fuente, sin reinterpretar)" }
     ]
   },
   {
