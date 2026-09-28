@@ -60,12 +60,50 @@ def probe(period: str) -> str:
     return " | ".join(parts)
 
 
+def dump_models(period: str) -> str:
+    url, _ = find_source(ZIP_INDEX, period, ".zip")
+    blob = fetch(url, MAX_FILE)
+    out = [period]
+    with zipfile.ZipFile(BytesIO(blob)) as z:
+        for info in z.infolist():
+            low = info.filename.lower()
+            base = low.rsplit("/", 1)[-1]
+            want = base.replace("-", "_") in {"modelo_mb1.txt", "modelo_mb2.txt", "modelo_mr1.txt"} or base in {"leame.txt"}
+            m = MEMBER.search(info.filename)
+            if m and m.group(1).lower() == "r" and m.group(5) == "001":
+                want = True
+            if want:
+                raw = z.read(info)
+                enc = "utf8" if not raw.startswith(b"\xef\xbb\xbf") else "utf8-bom"
+                try:
+                    raw.decode("utf-8")
+                except UnicodeDecodeError:
+                    enc = "latin1"
+                lines = raw.decode("latin-1", "replace").splitlines()
+                out.append(f"[{info.filename} enc={enc} n={len(lines)}] " + " ¶ ".join(repr(l[:110]) for l in lines[:4]))
+    return "\n".join(out)
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--desde", default="2022-01")
     ap.add_argument("--hasta", default="2026-07")
     ap.add_argument("--paso", type=int, default=1)
+    ap.add_argument("--modelos", default="", help="Períodos separados por coma: volcar modelos de cuentas")
     a = ap.parse_args()
+    if a.modelos:
+        lines = []
+        for per in a.modelos.split(","):
+            try:
+                lines.append(dump_models(per.strip()))
+            except Exception as exc:  # noqa: BLE001
+                lines.append(f"{per} ERR {exc}")
+            print(lines[-1], flush=True)
+        text = "\n".join(lines).replace("%", "%25").replace("\r", "")
+        chunks = [text[i:i + CHUNK] for i in range(0, len(text), CHUNK)][:10]
+        for i, c in enumerate(chunks, 1):
+            print(f"::warning title=MOD {i}/{len(chunks)}::" + c.replace("\n", "%0A"), flush=True)
+        return
     lines, p = [], a.desde
     while p <= a.hasta:
         lines.append(probe(p))
