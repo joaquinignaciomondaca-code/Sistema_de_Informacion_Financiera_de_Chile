@@ -2,10 +2,10 @@ name: Listas de entidades (altas y vigencia desde los registros CMF), 3 veces al
 
 on:
   schedule:
-    # Días 10, 20 y 30 (12:30 UTC). Compara las listas de AGF, securitizadoras, corredores de
+    # Días 10, 20 y 28 (12:30 UTC). Compara las listas de AGF, securitizadoras, corredores de
     # bolsa y fintech con los registros públicos CMF: agrega entidades nuevas y actualiza la
-    # vigencia. Solo escribe si hay cambios (en febrero corre dos veces).
-    - cron: '30 12 10,20,30 * *'
+    # vigencia. Solo escribe si hay cambios.
+    - cron: '30 12 10,20,28 * *'
   push:
     branches:
       - main
