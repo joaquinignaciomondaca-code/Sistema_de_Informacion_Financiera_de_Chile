@@ -505,12 +505,12 @@ class PersistenceTests(unittest.TestCase):
                     "error": None,
                 }),
                 patch("pipelines.normativa_cmf.pipeline.extract_pdf_pages", return_value=[{"page": 1, "text": "texto documental suficiente para analizar"}]),
-                patch("pipelines.normativa_cmf.pipeline._call_gemini", side_effect=pipeline.GeminiError("HTTP 429")) as gemini_call,
+                patch("pipelines.normativa_cmf.pipeline._call_gemini", side_effect=pipeline.GeminiError("HTTP 403", status_code=403)) as gemini_call,
                 patch("pipelines.normativa_cmf.pipeline.time.sleep", return_value=None),
             ):
                 feed = pipeline.run_pipeline(
                     api_key="test-key",
-                    max_ai_calls=1,
+                    max_ai_calls=10,
                     max_pdf_checks=2,
                     state_path=state_path,
                     feed_path=feed_path,
@@ -521,9 +521,9 @@ class PersistenceTests(unittest.TestCase):
             self.assertEqual(feed["run_summary"]["pending_analysis"], 2)
             events = {event["id"]: event for event in feed["events"]}
             self.assertTrue(all(event["analysis_status"] == "pendiente" for event in events.values()))
-            self.assertTrue(any("HTTP 429" in event["review_flags"] for event in events.values()))
+            self.assertTrue(any("HTTP 403" in event["review_flags"] for event in events.values()))
             self.assertTrue(any(
-                "Límite de llamadas de análisis alcanzado en esta ejecución" in event["review_flags"]
+                "API de análisis suspendida tras HTTP 403 en esta ejecución" in event["review_flags"]
                 for event in events.values()
             ))
             audit_cmf(feed_path, state_path, require_run=True)

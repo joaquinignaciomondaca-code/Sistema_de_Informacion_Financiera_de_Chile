@@ -81,9 +81,16 @@ class SourceUnavailable(RuntimeError):
 class GeminiError(RuntimeError):
     """Respuesta no utilizable de Gemini, sin incluir secretos en el mensaje."""
 
-    def __init__(self, message: str, *, calls_used: int = 0) -> None:
+    def __init__(
+        self,
+        message: str,
+        *,
+        calls_used: int = 0,
+        status_code: int | None = None,
+    ) -> None:
         super().__init__(message)
         self.calls_used = max(0, int(calls_used))
+        self.status_code = status_code
 
 
 def utc_now() -> datetime:
@@ -476,7 +483,7 @@ def _call_gemini(api_key: str, model: str, prompt: str) -> dict[str, Any]:
         )
         if response.status_code >= 400:
             # Nunca registrar URL con credenciales ni el cuerpo completo del error.
-            raise GeminiError(f"HTTP {response.status_code}")
+            raise GeminiError(f"HTTP {response.status_code}", status_code=response.status_code)
         body = response.json()
         text = body["candidates"][0]["content"]["parts"][0]["text"]
         parsed = json.loads(text)
@@ -716,7 +723,7 @@ def analyze_document(
     try:
         first_raw = _call_gemini(api_key, model_flash_lite, _gemini_prompt(event, input_pages))
     except GeminiError as exc:
-        raise GeminiError(str(exc), calls_used=1) from None
+        raise GeminiError(str(exc), calls_used=1, status_code=exc.status_code) from None
     first = _validate_analysis(first_raw, input_pages, model_flash_lite, pdf_text_available=pdf_text_available)
     calls_used = 1
     # Flash puede resolver casos que Flash-Lite dejó con baja confianza o
@@ -851,10 +858,11 @@ def run_pipeline(
     new_or_changed = 0
     pdf_checks = 0
     errors: list[str] = []
+    gemini_circuit_open = False
+    gemini_circuit_reason = ""
     for item in listed_items:
         event_id = item["id"]
         previous = event_map.get(event_id)
-        previous_state = state_items.get(event_id, {}) if isinstance(state_items.get(event_id), dict) else {}
         source_changed = not previous or previous.get("source_fingerprint") != item["source_fingerprint"]
         previous_date = _try_iso_date(previous.get("publication_date")) if previous else None
         recent_for_pdf = previous_date is None or previous_date >= pdf_recheck_cutoff
@@ -866,7 +874,7 @@ def run_pipeline(
         )
         previous_pdf_status = (previous or {}).get("pdf_status", "pendiente")
         pdf_needs_retry = bool(previous and previous_pdf_status not in {"texto_extraible", "pdf_sin_texto", "sin_cambios"})
-        analysis_call_available = bool(api_key and api_calls < max_ai_calls)
+        analysis_call_available = bool(api_key and not gemini_circuit_open and api_calls < max_ai_calls)
         should_fetch_pdf = source_changed or (
             analysis_needs_retry and analysis_call_available
         ) or (
@@ -953,7 +961,7 @@ def run_pipeline(
             pending_reason = None
             if pdf_deferred:
                 pending_reason = "Límite de descargas PDF alcanzado en esta ejecución"
-            elif api_key and api_calls < max_ai_calls:
+            elif analysis_call_available:
                 if not pages and pdf_result and pdf_result.get("content"):
                     pages = extract_pdf_pages(pdf_result["content"])
                 try:
@@ -971,8 +979,13 @@ def run_pipeline(
                     api_calls += exc.calls_used
                     pending_reason = str(exc)
                     errors.append(f"{event_id}: análisis {str(exc)}")
+                    if exc.status_code in {400, 401, 403, 404, 429}:
+                        gemini_circuit_open = True
+                        gemini_circuit_reason = f"API de análisis suspendida tras HTTP {exc.status_code} en esta ejecución"
             elif not api_key:
                 pending_reason = "API de análisis no disponible en esta ejecución"
+            elif gemini_circuit_open:
+                pending_reason = gemini_circuit_reason or "API de análisis suspendida por un error anterior"
             else:
                 pending_reason = "Límite de llamadas de análisis alcanzado en esta ejecución"
 
