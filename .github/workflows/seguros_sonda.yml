@@ -13,4 +13,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: '3.11'}
-      - run: python seguros/scripts/sonda_formato_1835.py CSVID:202411 CSVID:202412 CSVID:202608 CSGEN:202412 CSVID:202609
+      - run: python seguros/scripts/sonda_formato_1835.py CSVID:202411 CSVID:202412 CSVID:202608 CSGEN:202412 CSVID:202609 > sonda.txt 2>&1 || true
+      - name: Publicar salida como anotaciones
+        run: |
+          split -b 30000 sonda.txt parte_
+          for f in parte_*; do
+            msg=$(python3 -c "import sys;print(open(sys.argv[1],encoding='latin-1').read().replace('%','%25').replace('\r','').replace('\n','%0A'))" "$f")
+            echo "::notice title=$f::$msg"
+          done
