@@ -1,0 +1,38 @@
+name: Auditoría de la web (catálogo vs Parquet)
+
+# Comprueba que el explorador, el visor, el diccionario y el ERD apunten a
+# Parquet reales y a vistas semánticas registradas en duckdb_client.js.
+# Los resultados se publican como anotaciones (los logs de Actions no se
+# pueden descargar desde el entorno de trabajo).
+on:
+  push:
+    branches: [main, arena/01a0e66e-monitor-financiero-chile]
+    paths:
+      - 'docs/**'
+      - 'scripts/audit_navigation.py'
+      - 'scripts/audit_web_full.py'
+      - '.github/workflows/web_audit.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
+      - name: Auditar navegación y catálogo web
+        run: |
+          set +e
+          python scripts/audit_navigation.py > nav.log 2>&1; n1=$?
+          python scripts/audit_web_full.py > web.log 2>&1; n2=$?
+          grep -h -E "^(Error|Inconsistencia|Advertencia)|AssertionError" nav.log web.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Auditoria web::$linea"; done
+          tail -n 3 nav.log web.log | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::warning title=Auditoria web (cola)::$linea"; done
+          echo "::notice title=Auditoria web::navigation=$n1 audit_full=$n2 (0 = sin hallazgos)"
+          exit $(( n1 || n2 ))
