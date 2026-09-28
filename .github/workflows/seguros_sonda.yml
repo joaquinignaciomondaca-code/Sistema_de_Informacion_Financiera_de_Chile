@@ -12,14 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: {ref: '${{ github.ref_name }}'}
-      - run: sudo apt-get install -y -qq poppler-utils >/dev/null
-      - name: Descargar fichas técnicas y pasarlas a texto
-        run: |
-          d=seguros/fuentes/fichas_tecnicas_1835; mkdir -p $d; cd $d
-          B=https://www.cmfchile.cl/sitio/seil/software-manual/sgsci
-          for f in Anexos_Tecnicos_Circular_N1835 B.1_Instrumentos_de_Renta_Fija B.2_Acciones_S.A._abiertas_Acc_S.A_cerradas_y_cuotas_FFII B.3_Cuotas_de_Fondos_Mutuos B.4_Bienes_Raices B.5_Inversiones_en_el_Extranjero B.7_Inversiones_e_Instrumentos_derivados_y_pactos B.8_Informacion_de_Control; do
-            curl -sSf -A "Mozilla/5.0" -o /tmp/$f.pdf "$B/$f.pdf" && pdftotext -layout /tmp/$f.pdf "$f.txt" && echo "OK $f $(wc -l < $f.txt)"
-          done
+      - run: echo muestras
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: python seguros/scripts/sonda_formato_1835.py CSVID:202411 CSGEN:202411 CSVID:202608 CSGEN:202608
       - run: |
           git config user.name "github-actions[bot]"; git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add seguros/fuentes/fichas_tecnicas_1835 && git commit -m "Fichas técnicas CMF Circular 1835 en texto" && git pull --rebase origin "$GITHUB_REF_NAME" && git push origin "HEAD:$GITHUB_REF_NAME"
+          git add seguros/fuentes/muestras_1835 && git commit -m "Muestras de líneas reales Circular 1835" && git pull --rebase origin "$GITHUB_REF_NAME" && git push origin "HEAD:$GITHUB_REF_NAME"
