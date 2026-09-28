@@ -5,9 +5,11 @@
     "outputs/fi/metodo_participacion/2021.parquet",
     "outputs/fi/metodo_participacion/2022.parquet",
     "outputs/fi/metodo_participacion/2023.parquet",
-    "outputs/fi/metodo_participacion/2024.parquet"
+    "outputs/fi/metodo_participacion/2024.parquet",
+    "outputs/fi/metodo_participacion/2025.parquet",
+    "outputs/fi/metodo_participacion/2026.parquet"
   ],
-  "total_records": 5976,
+  "total_records": 10038,
   "periodos": [
     "2020-03",
     "2020-06",
@@ -25,7 +27,16 @@
     "2023-06",
     "2023-09",
     "2023-12",
-    "2024-03"
+    "2024-03",
+    "2024-06",
+    "2024-09",
+    "2024-12",
+    "2025-03",
+    "2025-06",
+    "2025-09",
+    "2025-12",
+    "2026-03",
+    "2026-06"
   ],
-  "updated_at": "2026-09-28T10:20:14+00:00"
+  "updated_at": "2026-09-28T17:20:36+00:00"
 }

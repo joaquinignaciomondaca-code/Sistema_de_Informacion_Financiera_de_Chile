@@ -9110,21 +9110,21 @@
   "tipo_entidad_desc": "Fondo de Inversión No Rescatable"
  },
  {
-  "id": "FI_7071",
-  "run_fondo": "7071",
-  "rut_fondo_dv": "7071-8",
-  "nombre_fondo": "COMPASS CAPITAL FONDO DE INVERSION",
-  "administradora": "COMPASS CAPITAL S.A. ADMINISTRADORA DE FONDOS DE INVERSION",
-  "estado_vigencia": "No Vigente",
-  "tipo_entidad": "FINRE",
-  "tipo_entidad_desc": "Fondo de Inversión No Rescatable"
- },
- {
   "id": "FI_7144",
   "run_fondo": "7144",
   "rut_fondo_dv": "7144-7",
   "nombre_fondo": "COMPASS CAPITAL FONDO DE INVERSION",
   "administradora": "VINCI COMPASS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+  "estado_vigencia": "No Vigente",
+  "tipo_entidad": "FINRE",
+  "tipo_entidad_desc": "Fondo de Inversión No Rescatable"
+ },
+ {
+  "id": "FI_7071",
+  "run_fondo": "7071",
+  "rut_fondo_dv": "7071-8",
+  "nombre_fondo": "COMPASS CAPITAL FONDO DE INVERSION",
+  "administradora": "COMPASS CAPITAL S.A. ADMINISTRADORA DE FONDOS DE INVERSION",
   "estado_vigencia": "No Vigente",
   "tipo_entidad": "FINRE",
   "tipo_entidad_desc": "Fondo de Inversión No Rescatable"
@@ -15054,6 +15054,16 @@
   "run_fondo": "9522",
   "rut_fondo_dv": "9522-2",
   "nombre_fondo": "VINCI COMPASS LATIN AMERICA EQUITY FONDO DE INVERSIÓN",
+  "administradora": "VINCI COMPASS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+  "estado_vigencia": "Vigente",
+  "tipo_entidad": "FIRES",
+  "tipo_entidad_desc": "Fondo de Inversión Rescatable"
+ },
+ {
+  "id": "FI_10782",
+  "run_fondo": "10782",
+  "rut_fondo_dv": "10782-4",
+  "nombre_fondo": "VINCI COMPASS RENDIMIENTO CONSERVADOR FONDO DE INVERSIÓN",
   "administradora": "VINCI COMPASS S.A. ADMINISTRADORA GENERAL DE FONDOS",
   "estado_vigencia": "Vigente",
   "tipo_entidad": "FIRES",
