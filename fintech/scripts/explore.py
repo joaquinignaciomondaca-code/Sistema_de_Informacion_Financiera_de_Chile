@@ -29,7 +29,10 @@ def test():
                     tds = [td.get_text().strip() for td in tr.find_all(["th", "td"])]
                     if len(tds) == 2:
                         data_dict[tds[0]] = tds[1]
-                print(f"RUT {rut}: {data_dict.get('Raz\xf3n Social', '')} | Inscripcion: {data_dict.get('N\xfamerodeInscripci\xf3n', data_dict.get('N\xfamero de Inscripci\xf3n', ''))} | Fecha: {data_dict.get('Fecha de Inscripci\xf3n', '')}")
+                razon = data_dict.get('Raz\xf3n Social', '')
+                inscripcion = data_dict.get('N\xfamerodeInscripci\xf3n', data_dict.get('N\xfamero de Inscripci\xf3n', ''))
+                fecha = data_dict.get('Fecha de Inscripci\xf3n', '')
+                print(f"RUT {rut}: {razon} | Inscripcion: {inscripcion} | Fecha: {fecha}")
         except Exception as e:
             print(f"Error {rut}: {e}")
 

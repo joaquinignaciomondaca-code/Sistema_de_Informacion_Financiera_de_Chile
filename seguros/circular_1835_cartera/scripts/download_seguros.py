@@ -1,4 +1,4 @@
-﻿# -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
 descargar_carteras.py — Descarga mensual de carteras B.7 (seguros generales y vida).
 

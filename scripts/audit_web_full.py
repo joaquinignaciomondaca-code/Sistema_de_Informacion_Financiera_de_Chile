@@ -72,12 +72,24 @@ def audit_duckdb_views(base_dir):
     matches = re.findall(
         r'\{\s*name:\s*["\']([^"\']+)["\'],\s*file:\s*(?:["\']([^"\']+)["\']|\[([^\]]*)\])',
         code)
+    registered = {name: ([single] if single else re.findall(r'["\']([^"\']+)["\']', multi))
+                  for name, single, multi in matches}
+    # Vistas particionadas por manifiesto { name, manifest: "...json" }: los
+    # Parquet reales se listan en manifest.files (p. ej. bancos CMF B1/B2/R1).
+    for name, manifest in re.findall(
+            r'\{\s*name:\s*["\']([^"\']+)["\'],\s*manifest:\s*["\']([^"\']+)["\']', code):
+        with open(os.path.join(base_dir, "docs", manifest), encoding="utf-8") as mf:
+            files = json.load(mf).get("files") or []
+        if not files:
+            # Aún sin período validado: la web la marca "no disponible" (diseño
+            # fail-closed de publish_cmf_bank_period); no es un error de catálogo.
+            print(f"Aviso: vista {name} sin particiones publicadas todavía ({manifest})")
+        registered[name] = files
     views = []
-    for name, single, multi in matches:
-        files = [single] if single else re.findall(r'["\']([^"\']+)["\']', multi)
+    for name, files in registered.items():
         for rel_file in files:
             views.append((name, rel_file))
-    print(f"Total vistas registradas en duckdb_client.js: {len(matches)} "
+    print(f"Total vistas registradas en duckdb_client.js: {len(registered)} "
           f"({len(views)} archivos Parquet)")
 
     errors = 0
@@ -99,8 +111,7 @@ def audit_duckdb_views(base_dir):
 
     assert errors == 0, f"Se encontraron {errors} errores en vistas de DuckDB"
     print(f"Resultado Vistas DuckDB: {len(views)}/{len(views)} archivos Parquet validados ({total_filas:,} filas totales en base de datos).")
-    return {name: ([single] if single else re.findall(r'["\']([^"\']+)["\']', multi))
-            for name, single, multi in matches}
+    return registered
 
 def audit_sidebar(base_dir, registered_views):
     print("\n--- 3. AUDITORIA: Estructura Lateral de Navegacion (sidebar.js) ---")
@@ -204,6 +215,8 @@ def audit_data_dictionary(base_dir, registered_views):
                 pq_path = os.path.join(base_dir, "docs", rel_file)
                 if os.path.exists(pq_path):
                     physical_cols.update(pq.read_schema(pq_path).names)
+            if not registered_views[viewName]:
+                continue  # vista por manifiesto aún sin particiones: nada físico que cotejar
             for col in col_names:
                 total_cols_audited += 1
                 if col not in physical_cols:
