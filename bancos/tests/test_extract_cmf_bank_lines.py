@@ -211,3 +211,29 @@ class RenamedBankFallbackTests(unittest.TestCase):
         insp = self.inspection([(10, ["A", 40897890.105783]), (11, ["B", 40897890.105783])], [])
         out = reconcile_to_inspection(self.rows(), insp, bank_code="039", bank_name="BANCO ITAÚ CHILE")
         self.assertNotEqual(out["b1_status"], "passed")
+
+
+class Plan2024June(unittest.TestCase):
+    def test_single_plan_de_cuentas_and_unpadded_bank_code(self):
+        out = BytesIO()
+        with zipfile.ZipFile(out, "w") as z:
+            for bank, code, name in (("001", "1", "BANCO DE CHILE"), ("009", "9", "BANCO INTERNACIONAL")):
+                z.writestr(f"202406/b1202406{bank}.txt", f"{code}\t{name}\n100000000\t000000000000010\t000000000000000\t000000000000000\t000000000000000\n")
+                z.writestr(f"202406/b2202406{bank}.txt", f"{code}\t{name}\n143000000\t000000000000001\t000000000000000\t000000000000000\t000000000000000\n")
+                z.writestr(f"202406/r1202406{bank}.txt", f"{code}\t{name}\n411000000\t000000000000005\n")
+            z.writestr("202406/metadata/plan_de_cuentas.txt",
+                       "CUENTA\tDESCRIPCION\n100000000\tTOTAL ACTIVOS\n143000000\tAdeudado por bancos\n"
+                       "143000000\tAdeudado por bancos\n411000000\tINGRESOS POR INTERESES\n".encode("latin-1"))
+        rows, report = extract_archive(out.getvalue(), "2024-06", "https://cmf.example/2024-06.zip")
+        self.assertEqual(report["account_rows_by_family"], {"B1": 2, "B2": 2, "R1": 2})
+        self.assertEqual({r["codigo_institucion"] for r in rows}, {"001", "009"})
+
+    def test_bank_header_must_still_match_file_code(self):
+        out = BytesIO()
+        with zipfile.ZipFile(out, "w") as z:
+            z.writestr("b1202406001.txt", "2\tOTRO\n100000000\t1\t0\t0\t0\n")
+            z.writestr("b2202406001.txt", "1\tX\n143000000\t1\t0\t0\t0\n")
+            z.writestr("r1202406001.txt", "1\tX\n411000000\t1\n")
+            z.writestr("metadata/plan_de_cuentas.txt", "CUENTA\tDESCRIPCION\n100000000\tTOTAL ACTIVOS\n143000000\tA\n411000000\tI\n")
+        with self.assertRaisesRegex(RuntimeError, "Malformed institution header"):
+            extract_archive(out.getvalue(), "2024-06")

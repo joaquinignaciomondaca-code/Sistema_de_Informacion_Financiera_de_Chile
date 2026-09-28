@@ -109,7 +109,10 @@ def _parse_legacy_account_model(rows: list[list[str]], member_name: str) -> dict
     son posiciones fijas del código de 9 dígitos (igual que el modelo 2024-07+:
     105000100 -> 10500 / 01 / 00).
     """
-    start = next((i for i, r in enumerate(rows) if [v.strip().upper() for v in r[:2]] == ["CUENTA", "GLOSA"]), None)
+    # CUENTA/GLOSA (Modelo-MB1.txt 2022-01..2024-04) o CUENTA/DESCRIPCION
+    # (plan_de_cuentas.txt único de 2024-06, que cubre B1, B2 y R1).
+    start = next((i for i, r in enumerate(rows)
+                  if [v.strip().upper() for v in r[:2]] in (["CUENTA", "GLOSA"], ["CUENTA", "DESCRIPCION"])), None)
     if start is None:
         return None
     model: dict[str, dict[str, str]] = {}
@@ -121,6 +124,8 @@ def _parse_legacy_account_model(rows: list[list[str]], member_name: str) -> dict
         if not description:
             raise RuntimeError(f"Incomplete account definition in {member_name}:{line_no}")
         if account in model:
+            if model[account]["glosa_cuenta"].casefold() == description.casefold():
+                continue  # el plan único repite cuentas compartidas entre familias
             raise RuntimeError(f"Duplicate account definition {account} in {member_name}")
         model[account] = {"rubro": account[:5], "linea": account[5:7], "item": account[7:9], "glosa_cuenta": description}
     if not model:
@@ -182,6 +187,9 @@ def extract_archive(blob: bytes, period: str, source_url: str = "") -> tuple[lis
                 info for info in infos
                 if info.filename.rsplit("/", 1)[-1].casefold().replace("-", "_") == model_name
             ]
+            if not model_infos:
+                # 2024-06: un único metadata/plan_de_cuentas.txt para todas las familias.
+                model_infos = [info for info in infos if info.filename.rsplit("/", 1)[-1].casefold() == "plan_de_cuentas.txt"]
             if len(model_infos) != 1:
                 raise RuntimeError(f"Expected exactly one metadata/{model_name}; found {len(model_infos)}")
             account_models[kind] = parse_account_model(decode_text(archive.read(model_infos[0])), model_infos[0].filename)
@@ -207,7 +215,8 @@ def extract_archive(blob: bytes, period: str, source_url: str = "") -> tuple[lis
                 raise RuntimeError(f"Empty CMF file: {info.filename}")
             header_no, header_line = lines[0]
             header = header_line.split("\t")
-            if len(header) != 2 or header[0].strip() != bank_code or not header[1].strip():
+            # 2024-06 informa el código sin ceros a la izquierda ("1" = "001").
+            if len(header) != 2 or not header[0].strip().isdigit() or header[0].strip().zfill(3) != bank_code or not header[1].strip():
                 raise RuntimeError(f"Malformed institution header in {info.filename}: {header_line!r}")
             institution_name = header[1].strip()
             source_names_by_code[bank_code].add(institution_name)
