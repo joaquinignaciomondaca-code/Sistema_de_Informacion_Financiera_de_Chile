@@ -8,7 +8,7 @@ const ERD_TABLES = [
     id: "vida_maestro",
     name: "vida.lista_entidades",
     sector: "vida",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 480,
     y: -80,
     w: 220,
@@ -28,7 +28,7 @@ const ERD_TABLES = [
     id: "vida_bonos",
     name: "vida.cartera_bonos",
     sector: "vida",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 480,
     y: 90,
     w: 220,
@@ -139,7 +139,7 @@ const ERD_TABLES = [
     id: "vida_solvencia",
     name: "vida.cartera_solvencia",
     sector: "vida",
-    color: "#132D46",
+    color: "var(--accent-contrast)",
     x: 770,
     y: 310,
     w: 220,
@@ -157,9 +157,9 @@ const ERD_TABLES = [
   },
   {
     id: "vida_forwards",
-    name: "vida.b7_forwards",
+    name: "vida.derivados_forwards",
     sector: "vida",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 1060,
     y: 90,
     w: 220,
@@ -179,7 +179,7 @@ const ERD_TABLES = [
   },
   {
     id: "vida_swaps",
-    name: "vida.b7_swaps",
+    name: "vida.derivados_swaps",
     sector: "vida",
     color: "#1F4E78",
     x: 1060,
@@ -200,7 +200,7 @@ const ERD_TABLES = [
   },
   {
     id: "vida_repos",
-    name: "vida.b7_repos",
+    name: "vida.pactos_repos",
     sector: "vida",
     color: "#00ADB5",
     x: 1060,
@@ -221,7 +221,7 @@ const ERD_TABLES = [
   },
   {
     id: "vida_opciones",
-    name: "vida.b7_opciones",
+    name: "vida.derivados_opciones",
     sector: "vida",
     color: "#696E79",
     x: 1060,
@@ -243,7 +243,7 @@ const ERD_TABLES = [
     id: "generales_maestro",
     name: "generales.lista_entidades",
     sector: "generales",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 480,
     y: 330,
     w: 220,
@@ -263,7 +263,7 @@ const ERD_TABLES = [
     id: "generales_bonos",
     name: "generales.cartera_bonos",
     sector: "generales",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 480,
     y: 490,
     w: 220,
@@ -364,7 +364,7 @@ const ERD_TABLES = [
     id: "generales_solvencia",
     name: "generales.cartera_solvencia",
     sector: "generales",
-    color: "#132D46",
+    color: "var(--accent-contrast)",
     x: 770,
     y: 660,
     w: 220,
@@ -381,9 +381,9 @@ const ERD_TABLES = [
   },
   {
     id: "generales_forwards",
-    name: "generales.b7_forwards",
+    name: "generales.derivados_forwards",
     sector: "generales",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 1060,
     y: 490,
     w: 220,
@@ -402,7 +402,7 @@ const ERD_TABLES = [
   },
   {
     id: "generales_swaps",
-    name: "generales.b7_swaps",
+    name: "generales.derivados_swaps",
     sector: "generales",
     color: "#1F4E78",
     x: 1060,
@@ -421,7 +421,7 @@ const ERD_TABLES = [
   },
   {
     id: "generales_repos",
-    name: "generales.b7_repos",
+    name: "generales.pactos_repos",
     sector: "generales",
     color: "#00ADB5",
     x: 1060,
@@ -442,7 +442,7 @@ const ERD_TABLES = [
     id: "ffmm_maestro",
     name: "ffmm.lista_entidades",
     sector: "ffmm",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 1340,
     y: -80,
     w: 220,
@@ -460,7 +460,7 @@ const ERD_TABLES = [
     id: "ffmm_futuros",
     name: "ffmm.circular_1333_futuros",
     sector: "ffmm",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 1340,
     y: 85,
     w: 220,
@@ -500,7 +500,7 @@ const ERD_TABLES = [
     id: "fi_maestro",
     name: "fi.lista_entidades",
     sector: "fi",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 1620,
     y: -80,
     w: 220,
@@ -518,7 +518,7 @@ const ERD_TABLES = [
     id: "fi_nacional",
     name: "fi.cartera_nacional",
     sector: "fi",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 1620,
     y: 85,
     w: 220,
@@ -539,7 +539,7 @@ const ERD_TABLES = [
     id: "fi_extranjera",
     name: "fi.cartera_extranjera",
     sector: "fi",
-    color: "#132D46",
+    color: "var(--accent-contrast)",
     x: 1620,
     y: 260,
     w: 220,
@@ -558,7 +558,7 @@ const ERD_TABLES = [
   },
   {
     id: "fi_derivados",
-    name: "fi.futuros_forward",
+    name: "fi.derivados_futuros",
     sector: "fi",
     color: "#696E79",
     x: 1620,
@@ -602,7 +602,7 @@ const ERD_TABLES = [
     id: "afp_maestro",
     name: "afp.lista_administradoras",
     sector: "pensiones",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 1900,
     y: -80,
     w: 230,
@@ -613,113 +613,14 @@ const ERD_TABLES = [
       { name: "id", pk: true, type: "VARCHAR" },
       { name: "rut_administradora", type: "VARCHAR" },
       { name: "nombre_administradora", type: "VARCHAR" },
-      { name: "nombre_fantasia", type: "VARCHAR" },
-      { name: "aum_total_m_usd", type: "DOUBLE" },
-      { name: "encaje_requerido_m_usd", type: "DOUBLE" },
-      { name: "participacion_mercado_pct", type: "DOUBLE" },
-      { name: "estado", type: "VARCHAR" }
-    ]
-  },
-  {
-    id: "afp_cartera_bonos",
-    name: "afp.cartera_bonos",
-    sector: "pensiones",
-    color: "#01C38D",
-    x: 1900,
-    y: 110,
-    w: 230,
-    h: 165,
-    rows: "168k tenencias",
-    file: "outputs/pensiones/afp_cartera_bonos.parquet",
-    cols: [
-      { name: "id_posicion", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "fecha_corte", type: "DATE" },
-      { name: "rut_administradora", fk: true, type: "VARCHAR" },
-      { name: "nombre_administradora", type: "VARCHAR" },
-      { name: "tipo_instrumento", type: "VARCHAR" },
-      { name: "nemotecnico", type: "VARCHAR" },
-      { name: "emisor", type: "VARCHAR" },
-      { name: "monto_usd_millones", type: "DOUBLE" },
-      { name: "fuente", type: "VARCHAR" }
-    ]
-  },
-  {
-    id: "afp_cartera_acciones",
-    name: "afp.cartera_acciones",
-    sector: "pensiones",
-    color: "#00ADB5",
-    x: 2180,
-    y: 110,
-    w: 230,
-    h: 165,
-    rows: "39.8k tenencias",
-    file: "outputs/pensiones/afp_cartera_acciones.parquet",
-    cols: [
-      { name: "id_posicion", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "fecha_corte", type: "DATE" },
-      { name: "rut_administradora", fk: true, type: "VARCHAR" },
-      { name: "nombre_administradora", type: "VARCHAR" },
-      { name: "nemotecnico", type: "VARCHAR" },
-      { name: "emisor", type: "VARCHAR" },
-      { name: "tipo_accion", type: "VARCHAR" },
-      { name: "monto_usd_millones", type: "DOUBLE" },
-      { name: "pct_emisor", type: "DOUBLE" },
-      { name: "fuente", type: "VARCHAR" }
-    ]
-  },
-  {
-    id: "afp_derivados_forwards",
-    name: "afp.derivados_forwards",
-    sector: "pensiones",
-    color: "#1F4E78",
-    x: 1900,
-    y: 310,
-    w: 230,
-    h: 160,
-    rows: "560 contratos",
-    file: "outputs/pensiones/afp_derivados_forwards.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "rut_administradora", fk: true, type: "VARCHAR" },
-      { name: "afp", type: "VARCHAR" },
-      { name: "direccion", type: "VARCHAR" },
-      { name: "nombre_contraparte", type: "VARCHAR" },
-      { name: "nocional_m_usd", type: "DOUBLE" },
-      { name: "inversion_mtm_m_usd", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "afp_derivados_swaps",
-    name: "afp.derivados_swaps",
-    sector: "pensiones",
-    color: "#696E79",
-    x: 2180,
-    y: 310,
-    w: 230,
-    h: 160,
-    rows: "6.6k contratos",
-    file: "outputs/pensiones/afp_derivados_swaps.parquet",
-    cols: [
-      { name: "id_posicion", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "fecha_corte", type: "DATE" },
-      { name: "rut_administradora", fk: true, type: "VARCHAR" },
-      { name: "nombre_administradora", type: "VARCHAR" },
-      { name: "tipo_derivado", type: "VARCHAR" },
-      { name: "contraparte", type: "VARCHAR" },
-      { name: "unidad_indexada", type: "VARCHAR" },
-      { name: "nocional_usd_millones", type: "DOUBLE" },
-      { name: "fuente", type: "VARCHAR" }
+      { name: "nombre_fantasia", type: "VARCHAR" }
     ]
   },
   {
     id: "bancos_maestro",
     name: "bancos.lista_instituciones",
     sector: "bancos",
-    color: "#01C38D",
+    color: "var(--accent-mint)",
     x: 2480,
     y: -80,
     w: 240,
@@ -736,116 +637,65 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "bancos_balance_resumen",
-    name: "bancos.balance_general",
-    sector: "bancos",
-    color: "#1F4E78",
-    x: 2480,
-    y: 110,
-    w: 240,
-    h: 180,
-    rows: "5.1k balances",
-    file: "outputs/bancos/bancos_balance_resumen.parquet",
-    cols: [
-      { name: "id_balance", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "fecha_corte", type: "DATE" },
-      { name: "codigo_institucion", fk: true, type: "VARCHAR" },
-      { name: "nombre_banco", type: "VARCHAR" },
-      { name: "total_activos_m_clp", type: "DOUBLE" },
-      { name: "total_pasivos_m_clp", type: "DOUBLE" },
-      { name: "patrimonio_neto_m_clp", type: "DOUBLE" },
-      { name: "activos_m_usd", type: "DOUBLE" },
-      { name: "pasivos_m_usd", type: "DOUBLE" },
-      { name: "patrimonio_m_usd", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "bancos_estado_resultados",
-    name: "bancos.estado_resultados",
-    sector: "bancos",
-    color: "#696E79",
-    x: 2760,
-    y: 110,
-    w: 240,
-    h: 175,
-    rows: "5.1k resultados",
-    file: "outputs/bancos/bancos_estado_resultados.parquet",
-    cols: [
-      { name: "id_resultado", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "fecha_corte", type: "DATE" },
-      { name: "codigo_institucion", fk: true, type: "VARCHAR" },
-      { name: "nombre_banco", type: "VARCHAR" },
-      { name: "utilidad_neta_m_clp", type: "DOUBLE" },
-      { name: "utilidad_m_usd", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "bancos_derivados_posicion_vigente",
-    name: "bancos.derivados_posicion_vigente",
+    id: "bancos_cmf_balance",
+    name: "bancos.cmf_balance_b1_b2",
     sector: "bancos",
     color: "#2E7D32",
-    x: 2480,
-    y: 320,
-    w: 240,
-    h: 180,
-    rows: "Stocks F099",
-    file: "outputs/bancos/bancos_derivados_posicion_vigente.parquet",
-    cols: [
-      { name: "id_registro", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "instrumento", type: "VARCHAR" },
-      { name: "contraparte", type: "VARCHAR" },
-      { name: "plazo_contractual", type: "VARCHAR" },
-      { name: "moneda", type: "VARCHAR" },
-      { name: "monto", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "bancos_derivados_flujos_transados",
-    name: "bancos.derivados_flujos_transados",
-    sector: "bancos",
-    color: "#43A047",
     x: 2760,
     y: 320,
-    w: 240,
-    h: 180,
-    rows: "Flujos F099",
-    file: "outputs/bancos/bancos_derivados_flujos_transados.parquet",
+    w: 280,
+    h: 250,
+    rows: "CMF B1/B2 validados",
+    file: "outputs/bancos/cmf_b1_b2_r1/manifest.json",
     cols: [
-      { name: "id_registro", pk: true, type: "VARCHAR" },
+      { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
-      { name: "instrumento", type: "VARCHAR" },
-      { name: "contraparte", type: "VARCHAR" },
-      { name: "moneda", type: "VARCHAR" },
-      { name: "direccion", type: "VARCHAR" },
-      { name: "monto", type: "DOUBLE" }
+      { name: "codigo_institucion", type: "VARCHAR" },
+      { name: "nombre_institucion_fuente", type: "VARCHAR" },
+      { name: "familia_archivo_fuente", type: "VARCHAR" },
+      { name: "modelo_cmf", type: "VARCHAR" },
+      { name: "nivel_consolidacion", type: "VARCHAR" },
+      { name: "codigo_cuenta", type: "VARCHAR" },
+      { name: "rubro", type: "VARCHAR" },
+      { name: "linea", type: "VARCHAR" },
+      { name: "item", type: "VARCHAR" },
+      { name: "glosa_cuenta", type: "VARCHAR" },
+      { name: "numero_fila_fuente", type: "INTEGER" },
+      { name: "importes_fuente_raw", type: "VARCHAR[]" },
+      { name: "importes_fuente_decimal", type: "VARCHAR[]" },
+      { name: "fuente_url_zip", type: "VARCHAR" },
+      { name: "sha256_zip", type: "VARCHAR" }
     ]
   },
   {
-    id: "bancos_repos_saldos_series",
-    name: "bancos.repos_saldos_series",
+    id: "bancos_cmf_resultados",
+    name: "bancos.cmf_resultados_r1",
     sector: "bancos",
-    color: "#0D47A1",
-    x: 2480,
-    y: 530,
-    w: 240,
-    h: 190,
-    rows: "2.9k repos",
-    file: "outputs/bancos/bancos_repos_saldos_series.parquet",
+    color: "#2E7D32",
+    x: 2760,
+    y: 590,
+    w: 280,
+    h: 250,
+    rows: "CMF R1 validado",
+    file: "outputs/bancos/cmf_b1_b2_r1/manifest.json",
     cols: [
-      { name: "id_repo", pk: true, type: "VARCHAR" },
+      { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
-      { name: "fecha_corte", type: "DATE" },
-      { name: "codigo_institucion", fk: true, type: "VARCHAR" },
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "repo_activo_mm_clp", type: "DOUBLE" },
-      { name: "repo_pasivo_mm_clp", type: "DOUBLE" },
-      { name: "repo_neto_mm_clp", type: "DOUBLE" },
-      { name: "repo_activo_mm_usd", type: "DOUBLE" },
-      { name: "repo_pasivo_mm_usd", type: "DOUBLE" },
-      { name: "posicion_relativa", type: "VARCHAR" }
+      { name: "codigo_institucion", type: "VARCHAR" },
+      { name: "nombre_institucion_fuente", type: "VARCHAR" },
+      { name: "familia_archivo_fuente", type: "VARCHAR" },
+      { name: "modelo_cmf", type: "VARCHAR" },
+      { name: "nivel_consolidacion", type: "VARCHAR" },
+      { name: "codigo_cuenta", type: "VARCHAR" },
+      { name: "rubro", type: "VARCHAR" },
+      { name: "linea", type: "VARCHAR" },
+      { name: "item", type: "VARCHAR" },
+      { name: "glosa_cuenta", type: "VARCHAR" },
+      { name: "numero_fila_fuente", type: "INTEGER" },
+      { name: "importes_fuente_raw", type: "VARCHAR[]" },
+      { name: "importes_fuente_decimal", type: "VARCHAR[]" },
+      { name: "fuente_url_zip", type: "VARCHAR" },
+      { name: "sha256_zip", type: "VARCHAR" }
     ]
   },
   {
@@ -917,14 +767,14 @@ const ERD_TABLES = [
   },
   {
     id: "factoring_leasing_maestro",
-    name: "factoring_leasing.maestro",
+    name: "factoring_leasing.lista_entidades",
     sector: "factoring_leasing",
     color: "#D97706",
     x: 3600,
     y: -80,
     w: 240,
     h: 180,
-    rows: "28 entidades (22 activas)",
+    rows: "28 entidades",
     file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet",
     cols: [
       { name: "rut", pk: true, type: "VARCHAR" },
@@ -938,85 +788,8 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "factoring_leasing_balance_resumen",
-    name: "factoring_leasing.balance_resumen",
-    sector: "factoring_leasing",
-    color: "#B45309",
-    x: 3600,
-    y: 130,
-    w: 250,
-    h: 210,
-    rows: "878 balances IFRS",
-    file: "outputs/factoring_leasing/factoring_leasing_balance_resumen.parquet",
-    cols: [
-      { name: "id_balance", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "fecha_corte", type: "DATE" },
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "nombre_empresa", type: "VARCHAR" },
-      { name: "total_activos_m_clp", type: "DOUBLE" },
-      { name: "pasivos_corrientes_m_clp", type: "DOUBLE" },
-      { name: "pasivos_no_corrientes_m_clp", type: "DOUBLE" },
-      { name: "total_pasivos_m_clp", type: "DOUBLE" },
-      { name: "patrimonio_neto_m_clp", type: "DOUBLE" },
-      { name: "cartera_credito_m_clp", type: "DOUBLE" },
-      { name: "activos_liquidos_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "factoring_leasing_nota_efectivo_detalle",
-    name: "factoring_leasing.nota_efectivo_detalle",
-    sector: "factoring_leasing",
-    color: "#D97706",
-    x: 3600,
-    y: 370,
-    w: 260,
-    h: 190,
-    rows: "2.975 datos",
-    file: "outputs/factoring_leasing/factoring_leasing_nota_efectivo_detalle.parquet",
-    cols: [
-      { name: "id_efectivo", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "fecha_corte", type: "DATE" },
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "razon_social", type: "VARCHAR" },
-      { name: "numero_nota", type: "VARCHAR" },
-      { name: "concepto", type: "VARCHAR" },
-      { name: "moneda_origen", type: "VARCHAR" },
-      { name: "monto_mclp", type: "DOUBLE" },
-      { name: "monto_musd", type: "DOUBLE" },
-      { name: "pct_total_efectivo", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "factoring_leasing_cartera_morosidad_detalle",
-    name: "factoring_leasing.cartera_morosidad_detalle",
-    sector: "factoring_leasing",
-    color: "#B45309",
-    x: 3600,
-    y: 590,
-    w: 260,
-    h: 210,
-    rows: "17.406 datos",
-    file: "outputs/factoring_leasing/factoring_leasing_cartera_morosidad_detalle.parquet",
-    cols: [
-      { name: "id_cartera", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "fecha_corte", type: "DATE" },
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "razon_social", type: "VARCHAR" },
-      { name: "numero_nota", type: "VARCHAR" },
-      { name: "linea_producto", type: "VARCHAR" },
-      { name: "tramo_morosidad", type: "VARCHAR" },
-      { name: "etapa_ifrs9", type: "VARCHAR" },
-      { name: "cartera_bruta_mclp", type: "DOUBLE" },
-      { name: "provisiones_mclp", type: "DOUBLE" },
-      { name: "cartera_neta_mclp", type: "DOUBLE" }
-    ]
-  },
-  {
     id: "corredoras_bolsa_maestro",
-    name: "corredoras.maestro",
+    name: "corredoras.lista_entidades",
     sector: "corredoras_bolsa",
     color: "#8B5CF6",
     x: 3900,
@@ -1059,7 +832,7 @@ const ERD_TABLES = [
   },
   {
     id: "securitizadoras_maestro",
-    name: "securitizadoras.maestro",
+    name: "securitizadoras.lista_entidades",
     sector: "securitizadoras",
     color: "#0284C7",
     x: 3900,
@@ -1103,7 +876,7 @@ const ERD_TABLES = [
   },
     {
     id: "patrimonios_separados_balance_lineas",
-    name: "patrimonios.balance_lineas",
+    name: "patrimonios_separados.balance_lineas",
     sector: "patrimonios_separados",
     color: "#0284C7",
     x: 4460,
@@ -1124,7 +897,7 @@ const ERD_TABLES = [
   },
   {
     id: "patrimonios_separados_excedentes_lineas",
-    name: "patrimonios.excedentes_lineas",
+    name: "patrimonios_separados.excedentes",
     sector: "patrimonios_separados",
     color: "#0284C7",
     x: 4760,
@@ -1144,7 +917,7 @@ const ERD_TABLES = [
   },
   {
     id: "patrimonios_separados_nota_cartera_detalle",
-    name: "patrimonios.nota_cartera",
+    name: "patrimonios_separados.nota_cartera",
     sector: "patrimonios_separados",
     color: "#0284C7",
     x: 4460,
@@ -1163,7 +936,7 @@ const ERD_TABLES = [
   },
   {
     id: "patrimonios_separados_nota_morosidad_detalle",
-    name: "patrimonios.nota_morosidad",
+    name: "patrimonios_separados.nota_morosidad",
     sector: "patrimonios_separados",
     color: "#0284C7",
     x: 4760,
@@ -1183,7 +956,7 @@ const ERD_TABLES = [
   },
   {
     id: "patrimonios_separados_nota_bonos_detalle",
-    name: "patrimonios.nota_bonos",
+    name: "patrimonios_separados.nota_bonos",
     sector: "patrimonios_separados",
     color: "#0284C7",
     x: 5060,
@@ -1202,7 +975,7 @@ const ERD_TABLES = [
   },
   {
     id: "patrimonios_separados_nota_administracion_detalle",
-    name: "patrimonios.nota_administracion",
+    name: "patrimonios_separados.nota_administracion",
     sector: "patrimonios_separados",
     color: "#0284C7",
     x: 5060,
@@ -1220,7 +993,7 @@ const ERD_TABLES = [
   },
   {
     id: "patrimonios_separados_nota_sobrecolateral_detalle",
-    name: "patrimonios.nota_sobrecolateral",
+    name: "patrimonios_separados.nota_sobrecolateral",
     sector: "patrimonios_separados",
     color: "#0284C7",
     x: 5060,
@@ -1238,7 +1011,7 @@ const ERD_TABLES = [
   },
   {
     id: "patrimonios_separados_nota_efectivo_detalle",
-    name: "patrimonios.nota_efectivo_detalle",
+    name: "patrimonios_separados.nota_efectivo",
     sector: "patrimonios_separados",
     color: "#0369A1",
     x: 5060,
@@ -1257,7 +1030,7 @@ const ERD_TABLES = [
   },
 {
     id: "patrimonios_separados_balance_pdf",
-    name: "patrimonios.balance_pdf",
+    name: "patrimonios_separados.balance_cuentas",
     sector: "patrimonios_separados",
     color: "#0F766E",
     x: 5360,
@@ -1277,7 +1050,7 @@ const ERD_TABLES = [
   },
   {
     id: "patrimonios_separados_maestro",
-    name: "patrimonios.emisiones_lineas",
+    name: "patrimonios_separados.lista_emisiones",
     sector: "patrimonios_separados",
     color: "#075985",
     x: 4460,
@@ -1300,7 +1073,7 @@ const ERD_TABLES = [
   },
   {
     id: "patrimonios_separados_balance_resumen",
-    name: "patrimonios.balance_resumen",
+    name: "patrimonios_separados.balance_resumen",
     sector: "patrimonios_separados",
     color: "#0284C7",
     x: 4460,
@@ -1322,7 +1095,7 @@ const ERD_TABLES = [
   },
   {
     id: "patrimonios_separados_repos_detalle",
-    name: "patrimonios.repos_detalle",
+    name: "patrimonios_separados.repos_contratos",
     sector: "patrimonios_separados",
     color: "#0284C7",
     x: 4460,
@@ -1342,7 +1115,7 @@ const ERD_TABLES = [
   },
   {
     id: "patrimonios_separados_cartera_morosidad_detalle",
-    name: "patrimonios.cartera_morosidad_detalle",
+    name: "patrimonios_separados.cartera_morosidad_detalle",
     sector: "patrimonios_separados",
     color: "#075985",
     x: 4740,
@@ -1362,7 +1135,7 @@ const ERD_TABLES = [
   },
   {
     id: "cooperativas_maestro",
-    name: "cooperativas.maestro",
+    name: "cooperativas.lista_entidades",
     sector: "cooperativas",
     color: "#16A34A",
     x: 4750,
@@ -1408,7 +1181,7 @@ const ERD_TABLES = [
   },
   {
     id: "cooperativas_nota_efectivo_detalle",
-    name: "cooperativas.nota_efectivo_detalle",
+    name: "cooperativas.nota_efectivo",
     sector: "cooperativas",
     color: "#15803D",
     x: 5040,
@@ -1432,7 +1205,7 @@ const ERD_TABLES = [
   },
   {
     id: "ccaf_maestro",
-    name: "ccaf.maestro",
+    name: "ccaf.lista_entidades",
     sector: "cajas_compensacion",
     color: "#D97706",
     x: 4750,
@@ -1455,7 +1228,7 @@ const ERD_TABLES = [
   },
   {
     id: "agf_maestro",
-    name: "agf.maestro",
+    name: "agf.lista_administradoras",
     sector: "agf",
     color: "#6366F1",
     x: 5040,
@@ -1552,7 +1325,7 @@ const ERD_TABLES = [
   },
   {
     id: "retail_financiero_maestro",
-    name: "retail.maestro",
+    name: "retail_financiero.lista_entidades",
     sector: "retail_financiero",
     color: "#BE185D",
     x: 5630,
@@ -1572,7 +1345,7 @@ const ERD_TABLES = [
   },
   {
     id: "retail_financiero_balances",
-    name: "retail.balances",
+    name: "retail_financiero.balances",
     sector: "retail_financiero",
     color: "#9D174D",
     x: 5630,
@@ -1592,7 +1365,7 @@ const ERD_TABLES = [
   },
   {
     id: "fintech_rpsf_maestro",
-    name: "fintech.rpsf_maestro",
+    name: "fintech.lista_entidades",
     sector: "fintech",
     color: "#D97706",
     x: 5920,
@@ -1650,7 +1423,7 @@ const ERD_TABLES = [
   },
   {
     id: "ccaf_maestro",
-    name: "ccaf.maestro",
+    name: "ccaf.lista_entidades",
     sector: "cajas_compensacion",
     color: "#10B981",
     x: 6300,
@@ -1669,7 +1442,7 @@ const ERD_TABLES = [
   },
   {
     id: "ccaf_caratula_totales",
-    name: "ccaf.caratula_totales",
+    name: "ccaf.balances",
     sector: "cajas_compensacion",
     color: "#059669",
     x: 6300,
@@ -1772,7 +1545,6 @@ const ERD_LINKS = [
   { from: "cooperativas_maestro", to: "cooperativas_nota_efectivo_detalle", key: "rut" },
   { from: "cooperativas_nota_efectivo_detalle", to: "bancos_maestro", key: "institucion_contraparte (cuentas corrientes bancarias)" },
   { from: "cooperativas_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
-  { from: "cooperativas_balance_resumen", to: "bancos_balance_resumen", key: "periodo (captaciones y liquidez interbancaria)" },
   { from: "ccaf_maestro", to: "ccaf_caratula_totales", key: "rut, ccaf" },
   { from: "ccaf_caratula_totales", to: "ccaf_colocaciones_credito_social", key: "ano, mes, rut, tipo_eeff" },
   { from: "ccaf_caratula_totales", to: "ccaf_nota8_efectivo_resumen", key: "ano, mes, ccaf, tipo_eeff" },
@@ -1785,7 +1557,6 @@ const ERD_LINKS = [
   { from: "sistemas_pago_maestro", to: "sistemas_pago_balances", key: "rut" },
   { from: "sistemas_pago_balances", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "sistemas_pago_estadisticas_bcch", to: "macro_tasas_rendimientos", key: "periodo (tasas de referencia)" },
-  { from: "sistemas_pago_estadisticas_bcch", to: "bancos_balance_resumen", key: "periodo (liquidez y encaje LBTR)" },
   { from: "retail_financiero_maestro", to: "retail_financiero_balances", key: "rut" },
   { from: "retail_financiero_balances", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "retail_financiero_balances", to: "macro_precios_actividad", key: "periodo (consumo privado)" },
@@ -1808,28 +1579,9 @@ const ERD_LINKS = [
   { from: "patrimonios_separados_balance_resumen", to: "patrimonios_separados_cartera_morosidad_detalle", key: "id_patrimonio, periodo" },
   { from: "patrimonios_separados_repos_detalle", to: "bancos_maestro", key: "contraparte (bancos custodios y liquidez)" },
   { from: "securitizadoras_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
-  { from: "factoring_leasing_maestro", to: "factoring_leasing_balance_resumen", key: "rut" },
-  { from: "factoring_leasing_maestro", to: "factoring_leasing_nota_efectivo_detalle", key: "rut" },
-  { from: "factoring_leasing_maestro", to: "factoring_leasing_cartera_morosidad_detalle", key: "rut" },
-  { from: "factoring_leasing_balance_resumen", to: "factoring_leasing_nota_efectivo_detalle", key: "rut, periodo (efectivo)" },
-  { from: "factoring_leasing_balance_resumen", to: "factoring_leasing_cartera_morosidad_detalle", key: "rut, periodo (cartera)" },
-  { from: "factoring_leasing_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
-  { from: "factoring_leasing_balance_resumen", to: "bancos_balance_resumen", key: "periodo, grupo_controlador (líneas fondeo)" },
-  { from: "bancos_balance_resumen", to: "macro_tasas_rendimientos", key: "periodo (tasa de referencia / valorización)" },
-  { from: "bancos_derivados_posicion_vigente", to: "macro_divisas_mercado", key: "periodo (tipo de cambio USD/CLP)" },
   { from: "macro_tasas_rendimientos", to: "macro_precios_actividad", key: "periodo (expectativas e inflación)" },
-  { from: "bancos_maestro", to: "bancos_balance_resumen", key: "codigo_institucion" },
-  { from: "bancos_maestro", to: "bancos_estado_resultados", key: "codigo_institucion" },
-  { from: "bancos_maestro", to: "bancos_repos_saldos_series", key: "codigo_institucion, rut" },
-  { from: "bancos_repos_saldos_series", to: "bancos_balance_resumen", key: "codigo_institucion, periodo" },
-  { from: "bancos_repos_saldos_series", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
-  { from: "bancos_balance_resumen", to: "bancos_estado_resultados", key: "codigo_institucion, periodo" },
-  { from: "bancos_derivados_posicion_vigente", to: "bancos_derivados_flujos_transados", key: "periodo, instrumento, contraparte" },
-  { from: "afp_derivados_forwards", to: "bancos_derivados_posicion_vigente", key: "contraparte institucional (triangulación AFPs)" },
-  { from: "afp_maestro", to: "afp_cartera_bonos", key: "rut_administradora" },
-  { from: "afp_maestro", to: "afp_cartera_acciones", key: "rut_administradora" },
-  { from: "afp_maestro", to: "afp_derivados_swaps", key: "rut_administradora" },
-  { from: "afp_maestro", to: "afp_derivados_forwards", key: "rut_administradora" },
+  { from: "bancos_maestro", to: "bancos_cmf_balance", key: "codigo_institucion (código fuente CMF)" },
+  { from: "bancos_maestro", to: "bancos_cmf_resultados", key: "codigo_institucion (código fuente CMF)" },
   { from: "vida_maestro", to: "vida_solvencia", key: "rut_aseguradora" },
   { from: "vida_maestro", to: "vida_bonos", key: "rut_aseguradora" },
   { from: "generales_maestro", to: "generales_solvencia", key: "rut_aseguradora" },
@@ -1858,15 +1610,23 @@ const ERD_LINKS = [
   { from: "fi_nacional", to: "fi_extranjera", key: "run_fondo, periodo" },
   { from: "fi_nacional", to: "fi_derivados", key: "run_fondo (cobertura)" },
   { from: "fi_nacional", to: "fi_repos", key: "run_fondo (liquidez pactos)" },
-  { from: "afp_maestro", to: "afp_cartera_bonos", key: "rut_administradora" },
-  { from: "afp_maestro", to: "afp_cartera_acciones", key: "rut_administradora" },
-  { from: "afp_cartera_bonos", to: "afp_cartera_acciones", key: "rut_administradora, tipo_de_fondo, periodo" },
-  { from: "afp_cartera_bonos", to: "afp_derivados_forwards", key: "rut_administradora, tipo_de_fondo (cobertura FX)" },
-  { from: "afp_cartera_bonos", to: "afp_derivados_swaps", key: "rut_administradora, tipo_de_fondo (calce duracion)" },
-  { from: "afp_derivados_forwards", to: "afp_derivados_swaps", key: "rut_administradora, tipo_de_fondo, periodo" }
 ];
 
 class ERDGraph {
+  /**
+   * Resuelve un color de la paleta activa. Acepta un valor CSS literal o
+   * var(--token), de modo que los nodos sigan el tema seleccionado.
+   */
+  resolveColor(value, fallback) {
+    if (!value) return fallback;
+    const match = /var\((--[a-z0-9-]+)\)/i.exec(value);
+    if (!match) return value;
+    const resolved = getComputedStyle(document.documentElement)
+      .getPropertyValue(match[1])
+      .trim();
+    return resolved || fallback;
+  }
+
   constructor(canvasId) {
     this.canvas = document.getElementById(canvasId);
     this.ctx = this.canvas.getContext("2d");
@@ -2216,7 +1976,7 @@ class ERDGraph {
 
       // Barra de Cabecera con Color Temático
       ctx.save();
-      ctx.fillStyle = t.color || "#01C38D";
+      ctx.fillStyle = this.resolveColor(t.color, accent);
       this.roundRectTop(ctx, t.x, t.y, t.w, 28, 8);
       ctx.fill();
 
@@ -2236,18 +1996,22 @@ class ERDGraph {
       // Columnas
       ctx.font = "10px monospace";
       let colY = t.y + 46;
+      const style = getComputedStyle(document.documentElement);
+      const teal = style.getPropertyValue("--accent-teal").trim() || "#06B6D4";
+      const textSecondary = style.getPropertyValue("--text-secondary").trim() || "#9CA3AF";
+      const textMuted = style.getPropertyValue("--text-muted").trim() || "#6B7280";
       t.cols.slice(0, 5).forEach((col) => {
-        ctx.fillStyle = col.pk ? "#01C38D" : col.fk ? "#00ADB5" : "#A6B1C2";
+        ctx.fillStyle = col.pk ? accent : col.fk ? teal : textSecondary;
         const prefix = col.pk ? "PK " : col.fk ? "FK " : "   ";
         ctx.fillText(prefix + col.name, t.x + 8, colY);
 
-        ctx.fillStyle = "#696E79";
+        ctx.fillStyle = textMuted;
         ctx.fillText(col.type, t.x + t.w - 55, colY);
         colY += 16;
       });
 
       if (t.cols.length > 5) {
-        ctx.fillStyle = "#01C38D";
+        ctx.fillStyle = accent;
         ctx.fillText(`+ ${t.cols.length - 5} columnas mas...`, t.x + 10, colY + 2);
       }
 
@@ -2265,13 +2029,20 @@ class ERDGraph {
     ctx.closePath();
   }
 
+  // Barra de cabecera: sólo se redondean las dos esquinas superiores, con el
+  // mismo radio de la tarjeta. El trazado anterior arrancaba en (x + r, y) sin
+  // unir la esquina superior izquierda y remataba con un chaflán en la inferior
+  // izquierda, lo que dejaba la cabecera "cortada" en esa esquina.
   roundRectTop(ctx, x, y, w, h, r) {
+    const rad = Math.min(r, w / 2, h / 2);
     ctx.beginPath();
-    ctx.moveTo(x + r, y);
-    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.moveTo(x + rad, y);
+    ctx.lineTo(x + w - rad, y);
+    ctx.arcTo(x + w, y, x + w, y + h, rad); // esquina superior derecha
     ctx.lineTo(x + w, y + h);
     ctx.lineTo(x, y + h);
-    ctx.arcTo(x, y + h, x, y, r);
+    ctx.lineTo(x, y + rad);
+    ctx.arcTo(x, y, x + w, y, rad); // esquina superior izquierda
     ctx.closePath();
   }
 }

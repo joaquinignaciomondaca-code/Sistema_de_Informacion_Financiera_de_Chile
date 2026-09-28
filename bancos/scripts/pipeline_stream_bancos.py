@@ -34,8 +34,8 @@ HEADERS = {
 # Maestro Institucional con RUTs 100% verificados bajo Algoritmo Modulo 11
 MAESTRO_BANCOS = {
     "001": {"rut": "97.004.000-5", "razon_social": "Banco de Chile", "nombre_fantasia": "BANCO DE CHILE", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
-    "009": {"rut": "97.008.000-7", "razon_social": "Banco Internacional", "nombre_fantasia": "BANCO INTERNACIONAL", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
-    "012": {"rut": "60.910.000-1", "razon_social": "Banco del Estado de Chile", "nombre_fantasia": "BANCOESTADO", "tipo_licencia": "Banca Estatal", "estado": "Activo"},
+    "009": {"rut": "97.011.000-3", "razon_social": "Banco Internacional", "nombre_fantasia": "BANCO INTERNACIONAL", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
+    "012": {"rut": "97.030.000-7", "razon_social": "Banco del Estado de Chile", "nombre_fantasia": "BANCOESTADO", "tipo_licencia": "Banca Estatal", "estado": "Activo"},
     "014": {"rut": "97.018.000-1", "razon_social": "Scotiabank Chile", "nombre_fantasia": "SCOTIABANK CHILE", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
     "016": {"rut": "97.006.000-6", "razon_social": "Banco de Credito e Inversiones", "nombre_fantasia": "BCI", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
     "017": {"rut": "59.015.000-2", "razon_social": "Banco do Brasil S.A.", "nombre_fantasia": "BANCO DO BRASIL", "tipo_licencia": "Agencia Bancaria Extranjera", "estado": "Cerrado"},
@@ -61,8 +61,8 @@ MAESTRO_BANCOS = {
     "060": {"rut": "59.278.400-9", "razon_social": "China Construction Bank", "nombre_fantasia": "CHINA CONSTRUCTION BANK", "tipo_licencia": "Agencia Bancaria Extranjera", "estado": "Activo"},
     "061": {"rut": "59.300.900-9", "razon_social": "Bank of China, Agencia en Chile", "nombre_fantasia": "BANK OF CHINA", "tipo_licencia": "Agencia Bancaria Extranjera", "estado": "Activo"},
     "062": {"rut": "77.892.484-6", "razon_social": "Tanner Banco Digital", "nombre_fantasia": "TANNER BANCO DIGITAL", "tipo_licencia": "Banca Digital", "estado": "Activo"},
-    "504": {"rut": "97.018.000-1", "razon_social": "Banco Bilbao Vizcaya Argentaria (BBVA)", "nombre_fantasia": "BBVA CHILE", "tipo_licencia": "Banca Comercial", "estado": "Fusionado"},
-    "507": {"rut": "97.018.000-1", "razon_social": "Banco del Desarrollo", "nombre_fantasia": "BANCO DEL DESARROLLO", "tipo_licencia": "Banca Comercial", "estado": "Fusionado"},
+    "504": {"rut": "97.032.000-8", "razon_social": "Banco Bilbao Vizcaya Argentaria (BBVA)", "nombre_fantasia": "BBVA CHILE", "tipo_licencia": "Banca Comercial", "estado": "Fusionado"},
+    "507": {"rut": "97.051.000-1", "razon_social": "Banco del Desarrollo", "nombre_fantasia": "BANCO DEL DESARROLLO", "tipo_licencia": "Banca Comercial", "estado": "Fusionado"},
     "816": {"rut": "97.006.816-3", "razon_social": "BCI Financial Group Inc and Subsidiaries", "nombre_fantasia": "BCI USA / MIAMI", "tipo_licencia": "Filial Bancaria Extranjera", "estado": "Activo"},
     "916": {"rut": "97.006.916-K", "razon_social": "City National Bank of Florida", "nombre_fantasia": "CITY NATIONAL BANK", "tipo_licencia": "Filial Bancaria Extranjera", "estado": "Activo"},
     "927": {"rut": "97.022.927-2", "razon_social": "CorpBanca Colombia", "nombre_fantasia": "CORPBANCA COLOMBIA", "tipo_licencia": "Filial Bancaria Extranjera", "estado": "Fusionado"},

@@ -1,0 +1,69 @@
+# Sonda automática de fuentes XML/XBRL por industria (solo lectura, no publica).
+#
+# Revisa a diario si las industrias siguen ofreciendo archivos estructurados (XML IFRS / XBRL)
+# en las fichas públicas de la CMF, para saber dónde hay salto de calidad de datos.
+# No modifica el sitio, no escribe Parquet del sitio y no hace commit.
+name: Sonda XML/XBRL por industria (sin publicación)
+
+on:
+  # Disparo de prueba en la rama de sesión (workflow_dispatch exige estar en la rama por defecto).
+  push:
+    branches: [arena/01a0e08b-monitor-financiero-chile]
+    paths:
+      - '.github/workflows/probe_xml_sources.yml'
+      - 'scripts/probe_xml_sources.py'
+  workflow_dispatch:
+    inputs:
+      sector:
+        description: 'ID de industria a sondear (vacío = todas)'
+        required: false
+        type: string
+      muestras:
+        description: 'Muestras por industria'
+        required: false
+        default: '1'
+        type: string
+  schedule:
+    - cron: '0 12 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: probe-xml-sources
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Sondear fuentes estructuradas por industria
+        env:
+          SECTOR: ${{ inputs.sector }}
+          MUESTRAS: ${{ inputs.muestras }}
+        run: |
+          ARGS="--muestras ${MUESTRAS:-1}"
+          if [ -n "$SECTOR" ]; then ARGS="$ARGS --sector $SECTOR"; fi
+          python scripts/probe_xml_sources.py $ARGS | tee .local-data/xml_probe/resumen.txt || true
+
+      - name: Publicar informe como artifact (nunca como datos del sitio)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonda-xml-xbrl
+          path: .local-data/xml_probe/
+          retention-days: 30
+          if-no-files-found: warn
+
+      - name: Resumen en el log del workflow
+        if: always()
+        run: |
+          LATEST=$(ls -1t .local-data/xml_probe/*.md 2>/dev/null | head -1 || true)
+          if [ -n "$LATEST" ]; then cat "$LATEST" >> "$GITHUB_STEP_SUMMARY"; fi

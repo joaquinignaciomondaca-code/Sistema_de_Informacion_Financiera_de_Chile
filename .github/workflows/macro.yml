@@ -1,0 +1,65 @@
+name: Actualización macro (incremental diaria)
+
+on:
+  workflow_dispatch:
+  schedule:
+    # Diario 10:00 UTC. Solo consulta desde el inicio del último mes guardado.
+    - cron: '0 10 * * *'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: macro-update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: macro/requirements.txt
+      - name: Instalar dependencias macro
+        run: python -m pip install -r macro/requirements.txt
+      # Cada runner es efímero. Recuperar el último estado VALIDADO de Actions;
+      # si el cache expiró, el script usa los Parquet publicados del checkout.
+      - name: Recuperar checkpoint incremental
+        uses: actions/cache/restore@v4
+        with:
+          path: .local-data/checkpoint/macro
+          key: macro-checkpoint-${{ github.run_id }}
+          restore-keys: |
+            macro-checkpoint-
+      - name: Descargar desde el último período y auditar
+        id: update
+        env:
+          BCCH_EMAIL: ${{ secrets.USER_BCCH }}
+          BCCH_PASSWORD: ${{ secrets.PASSWORD_BCCH }}
+        run: |
+          test -n "$BCCH_EMAIL" && test -n "$BCCH_PASSWORD" || { echo 'Faltan secrets USER_BCCH o PASSWORD_BCCH'; exit 1; }
+          python -m macro.scripts.daily_macro
+      - name: Guardar checkpoint validado (sin publicar)
+        if: steps.update.outputs.checkpoint_changed == 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: .local-data/checkpoint/macro
+          key: macro-checkpoint-${{ github.run_id }}
+      - name: Preparar paquete de datos para revisión humana
+        if: steps.update.outputs.published_changed == 'true'
+        run: |
+          mkdir -p .local-data/review/docs/outputs/macro
+          cp docs/outputs/macro/*.parquet docs/outputs/macro/*.json .local-data/review/docs/outputs/macro/
+          cp data_manifest.json .local-data/review/
+      - name: Guardar resultado validado (sin commits ni publicación directa)
+        if: steps.update.outputs.published_changed == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: macro-validada
+          path: .local-data/review/
+          retention-days: 30
+          if-no-files-found: error
