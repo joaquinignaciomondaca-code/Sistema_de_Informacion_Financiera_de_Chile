@@ -31,8 +31,9 @@ El primer artefacto de extracción produce ambas familias en un JSONL común de 
 | `tipo_estado` | `balance` o `resultados`. |
 | `familia_archivo_fuente`, `modelo_cmf` | B1/MB1, B2/MB2 o R1/MR1. |
 | `nivel_consolidacion` | `consolidado_global` o `individual`. |
-| `codigo_cuenta`, `glosa_cuenta` | Código CMF y glosa obtenida del plan/modelo correspondiente. |
-| `tipo_linea` | `detalle`, `subtotal` o `total`, solo cuando se haya mapeado desde las definiciones CMF. Conservar todas las filas fuente aunque siga sin clasificar. |
+| `codigo_cuenta`, `glosa_cuenta` | Código CMF y glosa obtenida del modelo correspondiente dentro del ZIP. |
+| `rubro`, `linea`, `item` | Códigos jerárquicos del modelo CMF; `linea` no es la posición de la fila en el TXT. |
+| `tipo_linea` | Se conserva la fila fuente; el prototipo etiqueta `total` ante glosa explícita `TOTAL`, `subtotal` cuando el modelo tiene descendientes de esa cuenta y `detalle` en los demás casos. |
 | `numero_fila_fuente` | Posición física original en el TXT, separada de la jerarquía de cuentas. |
 | `fuente_url`, `sha256`, `archivo_fuente` | Procedencia y reproducibilidad del dato. |
 
@@ -48,4 +49,4 @@ No descartar las cuentas que representan totales o subtotales. Clasificarlas con
 
 ## Estado de validación y publicación
 
-`bancos/scripts/extract_cmf_bank_lines.py` valida que cada institución incluida tenga un B1, B2 y R1 único, conserva todas las filas y sus campos originales, y guarda resultados en `.local-data/review/`. No escribe en `docs/outputs/`, no actualiza el manifest ni publica cifras. Antes del backfill se deben terminar: (1) mapeo de importes de B1/B2, (2) jerarquía/glosas y total-subtotal-detalle, (3) cruce validado a RUT/razón social, y (4) cotejo de R1 contra el XLSX CMF, incluyendo su base temporal.
+`bancos/scripts/extract_cmf_bank_lines.py` valida que cada institución incluida tenga un B1, B2 y R1 único, conserva todas las filas y sus campos originales, y guarda resultados en `.local-data/review/`. No escribe en `docs/outputs/`, no actualiza el manifest ni publica cifras. El extractor ya mapea glosas y rubro/línea/ítem desde los tres modelos del ZIP y conserva todos los registros. Antes del backfill se deben terminar: (1) asignar significado oficial a los campos monetarios B1/B2, (2) revisar la regla derivada de total/subtotal/detalle contra el plan CMF, (3) validar el cruce a RUT/razón social, y (4) cotejar R1 contra el XLSX CMF, incluyendo su base temporal.
