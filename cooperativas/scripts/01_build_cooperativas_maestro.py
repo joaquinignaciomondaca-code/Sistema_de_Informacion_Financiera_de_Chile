@@ -1,4 +1,4 @@
-﻿"""
+"""
 Catastro Maestro de Cooperativas de Ahorro y Credito (CAC) - CMF Chile / MinEconomia.
 Entidades fiscalizadas de importancia sistemica bajo la Ley General de Cooperativas y normativa CMF.
 Valida 100% RUTs con Modulo 11 canonico.

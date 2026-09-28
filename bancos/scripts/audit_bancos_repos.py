@@ -1,4 +1,4 @@
-﻿"""
+"""
 Auditoria Canonica de Datos para el Dataset de Repos Bancarios CMF MB1.
 Valida:
 1. Existencia e integridad de Parquet y JSON de bancos_repos_saldos_series.
