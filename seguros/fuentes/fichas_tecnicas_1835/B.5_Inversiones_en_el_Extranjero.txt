@@ -1,0 +1,1003 @@
+B.5      INVERSIONES EN EL EXTRANJERO
+
+
+         El archivo XaammddG.TX T deberá contener la siguiente estructura:
+
+
+         Identificación (registro tipo 1)        : contendrá información que permite identificar a la compañía y
+                                                   período informado. Cabe señalar que sólo se informará un
+                                                   registro de este tipo y deberá ser el primero del archivo.
+
+         Detalle (registro tipo 2)     :         contendrá información de los instrumentos de deuda con tasa fija
+                                                   y variable, que formen parte de las inversiones que la compañía
+                                                   mantiene en el extranjero.
+
+         Detalle (registro tipo 3)     :         contendrá información de las acciones de sociedades o
+                                                   corporaciones extranjeras, cuotas de fondos constituidos fuera
+                                                   del país, cuotas de fondos de inversión y cuotas de fondos
+                                                   mutuos cuyos activos estén invertidos en valores extranjeros;
+                                                   que mantiene la compañía.
+
+         Detalle (registro tipo 4)     :         contendrá información de los bienes raíces que la compañía
+                                                   mantiene en el extranjero.
+
+         Detalle (registro tipo 5)     :         contendrá información de las sociedades filiales que la compañía
+                                                   tiene en el extranjero.
+
+
+         Totales (registro tipo 6)     :         contendrá cuadratura de los registros de detalle informados.
+                                                   Cabe señalar que sólo se informará un registro de este tipo y
+                                                   deberá ser el último del archivo.
+
+         Los registros antes mencionados deberán tener la siguiente estructura:
+
+      Registro Tipo 1 de IDENTIFICACION
+
+      CAMPO                          DESCRIPCION                                                         PICTURE
+
+      TIPO                           Tipo de registro. En este caso corresponde "1".                     9(01)
+
+      RUT                            RUT de la compañía informante. Es obligatorio y no puede            9(09)
+                                     informarse en ceros.
+
+      VERIFICADOR                    Dígito verificador del RUT de la compañía informante.               X(01)
+
+      NOMBRE                         Nombre o razón social de la compañía informante.                    X(60)
+
+      PERIODO                        Período a que corresponde la información. El formato de esta        9(06)
+                                     fecha será AAAAMM. Este deberá coincidir con lo informado en el
+                                     nombre del archivo que contiene la información.
+
+      FILLER                         Se deberá informar espacios.                                        X(436)
+
+
+
+      Registro Tipo 2 de DETALLE: INSTRUMENTOS DE DEUDA CON TASA FIJA Y VARIABLE
+
+      CAMPO                          DESCRIPCION                                                         PICTURE
+
+      TIPO                           Tipo de registro. En este caso corresponde "2".                     9(01)
+FOLIO_                Corresponde al número de la papeleta de la mesa de dinero de la          9(10)
+OPERACION             compañía, donde se registra la compra del instrumento. En caso de
+                      no poder obtener este número se deberá asociar al documento
+                      contable que respalda la compra del instrumento.
+
+ITEM_OPERACION        Secuencia del instrumento dentro del folio de la operación. No           9(03)
+                      pueden existir dos instrumentos con igual folio e ítem operación.
+
+TIPO_                 Este campo es obligatorio y se informará de acuerdo a la                 X(10)
+INSTRUMENTO           codificación definida en SEIL, Codificación S.V.S., Instrumentos.
+
+VALOR_NOMINAL         Corresponde informar el valor nominal vigente del instrumento a la       9(11)V9(04)
+                      fecha de cierre del mes a que se refiere la información. Es decir, los
+                      nominales comprados originalmente menos las ventas realizadas
+                      sobre el mismo título.
+                      No se deberán rebajar las amortizaciones del instrumento a la
+                      fecha de valorización.
+                      Cabe señalar que cuando se hayan agrupado títulos con idénticas
+                      características en un folio de operación, corresponderá informar en
+                      este campo la suma de sus respectivos valores nominales,
+                      debiéndose anotar el monto exacto hasta con 4 decimales.
+
+PAIS                  Corresponde señalar el país donde se emitió el instrumento. Se           X(02)
+                      informará de acuerdo a la codificación definida en SEIL,
+                      Codificación S.V.S., Países.
+
+ESTADO_               Corresponde señalar el estado u organismo garante del título. Este       X(02)
+GARANTE               campo se llenará para el caso de instrumentos, como los Bonos
+                      Brady. Se informará de acuerdo a la codificación definida en SEIL,
+                      Codificación S.V.S., Países.
+
+NOMBRE_DEL_           Corresponde informar la razón social o el nombre del emisor de           X(40)
+EMISOR                cada título que forma parte de las inversiones de la compañía.
+
+
+CODIGO_               Corresponde obligatoriamente informar el código universal “ISIN”         X(30)
+INDIVIDUALIZACION_O   (International Securities Identification Number), a falta de éste, el
+_NEMOTECNICO          código “CUSIP” (Commitee On Uniform Securities Identification
+                      Procedures). De no existir los anteriores, se deberá consultar a
+                      esta Superintendencia.
+
+MONEDA                Corresponde señalar la moneda en la cual está expresado el valor         X(06)
+                      nominal. Se informara de acuerdo a la codificación definida en
+                      SEIL, Codificación S.V.S., Unidades Monetarias.
+
+FECHA_EMISION         Corresponde a la expresión numérica de la fecha desde la cual se         9(08)
+                      inicia el devengamiento de intereses.
+                      Se deberá informar con el siguiente formato: AAAAMMDD.
+
+FECHA_COMPRA          Corresponde a la fecha en la cual la entidad aseguradora o               9(08)
+                      reaseguradora adquirió el instrumento. Se deberá informar con el
+                      siguiente formato: AAAAMMDD.
+
+FECHA_                Corresponde a la fecha de vencimiento del instrumento. Se deberá         9(08)
+VENCIMIENTO           informar con el siguiente formato: AAAAMMDD.
+TIPO_NOMINALES   Corresponde a si las unidades nominales están expresadas a fecha        X(01)
+                 de emisión o a fecha de vencimiento. Esto especifica la forma de
+                 obtener un valor par o presente (descontando o capitalizando). Se
+                 informará de acuerdo a la siguiente codificación:
+
+                 I    :    a fecha de emisión
+                 F    :    a fecha de vencimiento
+
+TRATAMIENTO      Corresponde a la forma de descuento del valor de los flujos futuros     X(02)
+                 (interés más amortización). Se deberá codificar de la siguiente
+                 manera:
+
+                 CC       : Con cupones. Indica que se trata de un instrumento con
+                            flujos de vencimiento regulares.
+
+                 SC       : Sin cupones.
+
+                 CV    : Cupones variables. Indica que se trata de un instrumento
+                         con flujos de vencimientos variables y están especificados
+                         por una fecha predefinida pudiendo no ser la misma para
+                         cada flujo.
+TASA_EMISION     Corresponde a la tasa con la cual fue emitido el instrumento de         9(03)V9(04)
+                 deuda de tasa fija y con la cual se construyen los flujos de la tabla
+                 de desarrollo. Para el caso de instrumentos de intermediación
+                 financiera como por ejemplo: depósitos, pagarés, u otros, se
+                 deberá informar la tasa que paga el instrumento.
+
+TASA_DE_         Corresponde señalar para los instrumentos de deuda de interés           X(20)
+INTERES          variable la tasa de interés de referencia del instrumento. Por
+                 ejemplo Libor 360
+                 Para los instrumentos de interés fijo se llenará con la tasa fijada.
+
+TASA_BASE        Corresponde informar la forma de cálculo de intereses del título. Se    X(12)
+                 informará de acuerdo a la codificación definida en SEIL,
+                 codificación SVS, Circular 1835, Forma de cálculo de intereses.
+
+VALOR_COMPRA     Corresponde informar el valor al cual la entidad aseguradora o          9(13)
+                 reaseguradora adquirió el instrumento. Este monto deberá
+                 expresarse en pesos ($) a la paridad del tipo de cambio de cierre
+                 de la moneda de emisión.
+
+TIR_DE_COMPRA    Corresponde a la tasa de descuento utilizada para determinar el         9(03)V9(04)
+                 precio del instrumento al momento de la compra. Esta información
+                 será llenada para los instrumentos de deuda con tasa de interés
+                 fija, para los de interés variable se llenará con ceros (0).
+
+VALOR_           Corresponde al valor presente de los flujos futuros del instrumento     9(13)
+PRESENTE_        actualizados a la TIR de compra. Este monto deberá expresarse en
+TIR_DE_COMPRA    miles de pesos (M$) a la paridad del tipo de cambio de cierre de la
+                 moneda de emisión. Esta información será llenada para los
+                 instrumentos de deuda con tasa de interés fija, para los de interés
+                 variable se llenará con ceros (0).
+
+TIR_MERCADO      Corresponde a la tasa de mercado, a la fecha de información,            -9(03)V9(04)
+                 para un contrato de similares características. Según lo indicado
+                 en circular de valorización.
+VALOR RAZONABLE     Corresponde al valor total de los flujos futuros del instrumento       9(13)
+                    actualizados a la TIR de mercado. Este monto deberá expresarse
+                    en miles de pesos (M$) a la paridad del tipo de cambio de cierre de
+                    la moneda de emisión.
+
+                    Corresponde al deterioro de la inversión, según lo señalado en la      -9(13)
+DETERIORO           Norma de Carácter General N°311, del 28.06.2011. Este monto
+                    deberá expresarse en miles de pesos (M$).
+
+
+
+VALOR_FINAL         Corresponde al valor que tiene el instrumento a la fecha de cierre     9(12)
+                    del mes a que se refiere la información, según lo establecido en
+                    Circular de Valorización de Inversiones vigente. Este monto se
+                    deberá expresar en miles de pesos (M$) a la paridad del tipo de
+                    cambio de cierre de la moneda de emisión.
+
+PROHIBICION         Se deberá informar si uno o más títulos (en caso de haber              X(01)
+                    agrupados instrumentos con características idénticas) registrados
+                    se encuentran afectos a prohibiciones, gravámenes u otros
+                    impedimentos señalados en el DFL Nº251. Se informará de
+                    acuerdo a la siguiente codificación:
+
+                    S        :        Si tiene prohibición.
+                    N        :        No tiene prohibición.
+
+CLASIFICACION_      Se deberá informar la menor clasificación de riesgo vigente del        X(15)
+DE_RIESGO           instrumento a la fecha de cierre del mes a que se refiere la
+                    información.
+                    Si el instrumento no contara con clasificación de riesgo se debe
+                    informar S/C.
+
+ACTIVO_EN_          Corresponde informar si uno o más títulos registrados (en caso de      X(10)
+MARGEN_O_           haber agrupado instrumentos con características idénticas) se
+SUJETO_A            encuentran otorgados como margen de las operaciones de
+_PACTO              derivados señaladas en el DFL Nº251 o si se encuentran sujetos
+                    a pacto, de acuerdo a lo señalado en la Circular de Valorización
+                    de Inversiones.
+                    Se informará el tipo de contrato al cual está asociado utilizando la
+                    codificación definida en SEIL, Codificación S.V.S., Instrumentos
+                    Derivados y Pactos. Si no está en margen se informara N.
+
+ACTIVO_             Se deberá informar si uno o más títulos (en caso de haber              X(03)
+COMPRADO_A_         agrupado instrumentos con características idénticas) se
+TRAVES_DE_CDV       adquirieron a través de CDV (Certificados de Depósito de
+                    Valores).
+                    Se informará de acuerdo a la siguiente codificación:
+
+                    CDV     : inversión adquirida a través de CDV.
+
+                    Si no corresponde informar, se llenará con espacios.
+
+ACTIVO_             Corresponde informar si uno o más títulos (en caso de haber            X(05)
+RESPALDA_           agrupado instrumentos con características idénticas) registrados,
+RESERVA_VALOR_DE_   se encuentran respaldando la reserva de valor del fondo señalada
+FONDO               en el DFL Nº251.
+                    Se informará de acuerdo a la valorización que tengan los títulos,
+                    según Circular N°1360 y posteriores modificaciones, con un código
+                    de cinco letras formado de la siguiente manera:
+
+                    Las tres primeras letras serán:
+                 APV :      si los instrumentos respaldan la reserva de valor del
+                 fondo de seguros con ahorro previsional voluntario, o
+
+                 OTR :       si los instrumentos respaldan la reserva de valor del
+                 fondo de seguros con ahorro, distinto a los seguros con ahorro
+                 previsional voluntario.
+                 La cuarta letra será A, B, C o D dependiendo de la forma de
+                 constitución de la reserva de descalce a que se refiere el N°4 de la
+                 Norma de Carácter General N°132, de 13 de marzo de 2002 y sus
+                 posteriores modificaciones.
+
+
+                 La quinta letra será G sí se garantiza la rentabilidad del valor de la
+                 póliza en los casos B, C o D, si no corresponde se informará con
+                 espacio.
+
+                 Si el Instrumento no respalda reserva de valor de fondo se indicará:
+
+                 VIDA: Para activos que NO estén asociados a fondos que
+                 respalden seguros de vida con cuenta de inversión y correspondan
+                 a inversiones de compañías del segundo grupo
+
+                 GRAL: Para activos que correspondan a inversiones del primer
+                 grupo.
+
+NOMBRE_DEL_      Para instrumentos que estén asociados a fondos que respalden             X(30)
+FONDO            seguros de vida con cuenta de inversión, se debe informar el
+                 nombre del Fondo al cual pertenece.
+
+                 Se entenderá por fondo al tipo de plan o modalidades de inversión
+                 convenidos para los seguros con cuentas de inversión.
+
+                 Para instrumentos que no respalden seguros de vida con cuenta de
+                 inversión, se debe informar “NO APLICA”.
+
+NOMBRE_CARTERA   Para instrumentos que no respalden seguros de vida con cuenta de         X(30)
+                 inversión, se debe informar la sub cartera que respalda, si
+                 corresponde.
+                 Para instrumentos que no respalden una sub cartera, se debe
+                 informar “NO APLICA”
+
+RELACIONADO      Corresponde informar si el emisor del instrumento está relacionado       X(02)
+                 con la compañía de seguros, de acuerdo a lo establecido en el
+                 artículo N°100 de la ley N°18.045 del 22.10.1981 y sus
+                 modificaciones.
+
+                 Se señalará de acuerdo a la siguiente codificación:
+                 RE : Relacionado
+                 NR : No Relacionado
+
+CLASIFICACION_   Corresponde informar la clasificación de la inversión, de acuerdo a      X(01)
+INVERSION        la siguiente codificación:
+                 D: Disponible para la venta.
+                 M: Mantenida hasta el vencimiento.
+
+TSA              Corresponde informar si el instrumento está incluido en el Test de       X(02)
+                 Suficiencia de Activos para el periodo informado, de acuerdo a la
+                 siguiente codificación:
+                 SI: el instrumento es utilizado para el análisis del Test de
+                 Suficiencia de Activos
+                 NO: el instrumento no es utilizado para el análisis del Test de
+                 Suficiencia de Activos.
+                    En periodos que no corresponde enviar el Test de Suficiencia de
+                    Activos
+
+
+COBERTURA           Corresponde indicar si el instrumento está cubierto por un          X (05)
+                    Derivado y qué tipo de operación de acuerdo a la siguiente
+                    Codificación
+
+                    En el primer carácter de este campo se debe indicar:
+
+                    S, si el instrumento está cubierto por un Derivado
+                    N, si el instrumento no está cubierto
+
+                    En los caracteres 2 al 5 deberá indicar el código de operación de
+                    Derivado de acuerdo a la Codificación de Instrumentos vigente en
+                    el sitio web de la SVS
+
+                    Por ejemplo,
+                    si el instrumento está cubierto por un swap se debe ingresar: SS
+                    si el instrumento está cubierto por un forward de venta se debe
+                    ingresar: SFWV
+
+                    Si el instrumento está cubierto por más de una operación de
+                    derivado se debe informar SMIX
+METOD_CLASIF_VALO   Corresponde informar la clasificación dada al instrumento en los    X(6)
+RIZ_EEFF            Estados de Situación Financiera, de acuerdo a lo siguiente:
+                    CA : Activos Financieros a Costo Amortizado (5.11.30.00).
+                    VR : Activos Financieros a Valor Razonable (5.11.20.00).
+                    EE : Efectivo Equivalente (5.11.10.00).
+                    CUI : Inversiones Seguros Cuenta Única de Inversión (5.11.50.00)
+                    OTRCLA: Otra clasificación dentro del Estado de Situación
+                    Financiera.
+CRITERIO_VALORIZ    Corresponde indicar si la inversión está valorizada a Valor         X (02)
+ACION               Razonable o a Costo Amortizado, utilizando la metodología
+                    definida en la NCG N° 311, del 28.06.2011 o la que la reemplace.
+                    Se informará de acuerdo a la siguiente codificación:
+                    VR: Valor Razonable.
+                    CA: Costo Amortizado.
+MODELO_VALORACIO    Corresponde indicar si la inversión está valorizada por la          X (02)
+N                   Compañía utilizando un Modelo Propio de valorización de
+                    acuerdo a la siguiente codificación:
+                    SI : Utiliza Modelo Propio.
+                    NO: No utiliza Modelo Propio.
+MODELO_PROPIO_DE    Corresponde indicar si el Deterioro de la inversión se determinó    X(02)
+TERIORO             usando una metodología propia o es una aplicación de la
+                    metodología definida en la NCG N° 311.
+
+                    Se informará de acuerdo a la siguiente codificación:
+
+                    SI : Método propio para estimar el deterioro.
+                    NO : Aplicación de la NCG N°311.
+CUSTODIADO          Se deberá informar si el instrumento se encuentra o no              X(01)
+                    custodiado, de acuerdo a la siguiente codificación:
+                    S: Está custodiado
+                    N: No está custodiado
+NOMBRE_CUSTODI                Corresponde informar el nombre de la entidad que custodia la          X(60)
+O                             inversión, en el evento que se informe “S” en el campo
+                              “CUSTODIADO”.
+                              En el caso que no corresponda informar, se deberá llenar con
+                              espacios este campo.
+CLASIFICACIÓN_DE_             Las inversiones extranjeras del N°7 de la NCG 152, deberán            X(4)
+RIESGO_PAIS                   indicar la clasificación de riesgo del país donde se encuentra el
+                              activo o donde se encuentra registrado el instrumento financiero
+                              correspondiente.
+                              Si no corresponde informar se llenará con espacios.
+REGULADOR                     Las inversiones extranjeras del N°7 de la NCG 152, deberán indicar    X (40)
+                              organismo supervisor del mercado financiero del emisor o
+                              administrador de la inversión del N°7 de la NCG 152.
+                              Si no corresponde informar, se llenará con espacios.
+
+FILLER                        Se deberá informar espacios                                           X(27)
+
+
+
+Registro tipo 3 de DETALLE:
+
+ACCIONES DE SOCIEDADES O CORPORACIONES EXTRANJERAS, CUOTAS DE FONDOS CONSTITUIDOS
+FUERA DEL PAIS, CUOTAS DE FONDOS DE INVERSION Y CUOTAS DE FONDOS MUTUOS CUYOS
+ACTIVOS ESTEN INVERTIDOS EN VALORES EXTRANJEROS.
+
+CAMPO                         DESCRIPCION                                                           PICTURE
+
+TIPO                          Tipo de registro. En este caso corresponde "3".                       9(01)
+
+TIPO_                         Este campo es obligatorio y se informará de acuerdo a la              X(10)
+INSTRUMENTO                   codificación definida en SEIL, Codificación S.V.S., Instrumentos.
+
+PAIS                          En el caso de las acciones extranjeras, corresponde señalar el país   X(02)
+                              donde se emitió el instrumento.
+                              En el caso de cuotas de fondos mutuos o de inversión, se debe
+                              informar el país de registro del fondo.
+
+                              Se informará de acuerdo a la codificación definida en SEIL,
+                              Codificación S.V.S., Países.
+
+BOLSA                         Corresponde informar la Bolsa de Valores en la cual se adquirió el    X(20)
+                              instrumento. Para aquellos que no se transen en Bolsa, se deberá
+                              colocar NT (no transa).
+
+RUT_                          Se deberá informar el RUT de la administradora del fondo en caso      9(09)
+ADMINISTRADORA                que corresponda.
+                              Si no corresponde informar, se llenará con ceros.
+
+VERIFICADOR                   Dígito verificador del RUT de la administradora del fondo.            X(01)
+                              Si no corresponde informar, se llenará con espacios.
+
+RUN                           Se deberá informar el RUN de cada fondo que forma parte de las        9(09)
+                              inversiones de la compañía, de acuerdo a codificación definida en
+                              SEIL, Codificación S.V.S., Fondos de Inversión o Fondos Mutuos.
+                              Si no corresponde informar, se llenará con ceros.
+
+VERIFICADOR_                  Dígito verificador del RUN del fondo.                                 X(01)
+RUN                           Si no corresponde informar, se llenará con espacios.
+NOMBRE_EMISOR         Corresponde informar la razón social o el nombre del emisor de             X(60)
+                      cada título que forme parte de las inversiones de la compañía. De
+                      acuerdo a lo indicado en Anexo N° 6
+
+CODIGO_               Corresponde informar el código nemotécnico, de acuerdo a las               X(30)
+INDIVIDUALIZACION_O   instrucciones impartidas por Circular N° 1085 o la que la
+_NEMOTECNICO          reemplace, para fondos emitidos en el país cuyos activos estén
+                      invertidos en valores extranjeros.
+                      En el caso de instrumentos financieros emitidos en el extranjero,
+                      corresponde obligatoriamente informar el código universal “ISIN”
+                      (International Securities Identificación Number). A falta de éste, el
+                      código “CUSIP” (Commitee On Uniform Securities Identificación
+                      Procedures). De no existir los anteriores, se deberá consultar a
+                      esta Superintendencia.
+
+SERIE                 Se deberá informar la serie del instrumento cuando corresponda.            X(10)
+
+MONEDA                Corresponde señalar la moneda de emisión en que está expresado             X(06)
+                      el instrumento. Se informará de acuerdo a la codificación definida
+                      en SEIL, Codificación S.V.S., Unidades Monetarias.
+
+TIPO_FONDO            Para los fondos mutuos y fondos de inversiones se debe informar            X(02)
+                      el tipo de fondo según la siguiente clasificación:
+
+                      IN : Inmobiliario.
+                      CR : Capital de Riesgo.
+                      IE : Infraestructura
+                      OT : Otros.
+
+                      Para las acciones se deberá informar: AC
+
+UNIDADES              Corresponde al número de acciones o cuotas de propiedad de la              9(13)V9(04)
+                      entidad a la fecha de cierre del mes a que se refiere la información.
+
+REQUISITO_            Corresponde indicar si el instrumento cumple con los requisitos de         X(10)
+PRESENCIA             presencia indicados en la normativa vigente. Se informará de
+                      acuerdo a la codificación definida en SEIL, codificación SVS,
+                      Circular 1835, Requisito presencia.
+
+VALOR_BURSATIL_       Corresponde al valor bolsa de la cuota o de la acción definido en          9(11)V9(04)
+UNITARIO              Circular de Valorización, observado en la Bolsa de Valores donde
+                      se adquirió el título; y deberá expresarse en moneda de emisión del
+                      instrumento.
+
+                      Si no corresponde, esta información será llenada con ceros (0).
+
+VALOR LIBRO           Para el caso de las cuotas de fondos de inversión nacionales cuyos         9(11)
+                      activos estén invertidos en el extranjero, se indicará el valor libro de
+                      la cuota. El valor libro corresponde al patrimonio del fondo dividido
+                      por el número total de cuotas pagadas a la fecha de cierre del mes
+                      a que se refiere la información por el número de unidades, este
+                      monto se deberá expresar en (M$).
+
+                      Este campo se informará con ceros, si el instrumento informado es
+                      distinto al indicado.
+
+VALOR_BURSATIL        Corresponde al valor bursátil unitario, multiplicado por el número de      9(11)
+                      unidades de propiedad de la compañía; deberá expresarse en
+                      miles de pesos (M$).
+
+                      Si no corresponde, esta información será llenada con ceros (0).
+COSTO_            Corresponde al valor de compra promedio ponderado de las               9(11)
+HISTORICO         acciones, expresado en miles de pesos (M$).
+
+                  Esta información para las cuotas de fondos será llenada con ceros
+                  (0).
+VALOR_CUOTA       Corresponde al valor de cierre de la cuota del fondo del último día    9(11)V9(02)
+                  hábil bursátil del mes a que se refiere la información, expresados
+                  en moneda de emisión de la cuota.
+
+                  Esta información para las acciones será llenada con ceros (0).
+
+                  Corresponde al valor de mercado del instrumento a la fecha de la       9(13)
+VALOR RAZONABLE   información. Se debe presentar en M$.
+
+                  Para las inversiones que no se transen en un mercado primario o
+                  secundario, se deberá informar una estimación del valor de
+                  mercado realizada por la compañía.
+
+VALOR_FINAL       Corresponde al valor que tiene el instrumento a la fecha de cierre     9(12)
+                  del mes a que se refiere la información, según lo establecido en
+                  Circular de Valorización de Inversiones vigente.
+                  Este monto se deberá expresar en miles de pesos (M$), según la
+                  paridad cambiaria al último día hábil del mes a que se refiere la
+                  información.
+
+PROHIBICION       Se deberá informar si los títulos registrados se encuentran            X(01)
+                  afectos a prohibiciones, gravámenes u otros impedimentos
+                  señalados en el DFL Nº251. Se informará de acuerdo a la
+                  siguiente codificación:
+
+                  S        :        Si tiene prohibición.
+                  N        :        No tiene prohibición.
+
+CLASIFICACION_    Se deberá informar la menor clasificación de riesgo vigente del        X(15)
+DE_RIESGO         instrumento a la fecha de cierre del mes a que se refiere la
+                  información.
+                  Si el instrumento no contara con clasificación de riesgo se debe
+                  informar S/C.
+ACTIVO_EN_        Corresponde informar si uno o más títulos registrados (en caso de      X(10)
+MARGEN_O_         haber agrupado instrumentos con características idénticas) se
+SUJETO_           encuentran otorgados como margen de las operaciones de
+A_PACTO           derivados señaladas en el DFL Nº251 o si se encuentran sujetos
+                  a pacto, de acuerdo a lo señalado en la Circular de Valorización
+                  de Inversiones.
+                  Se informará el tipo de contrato al cual está asociado utilizando la
+                  codificación definida en SEIL, Codificación S.V.S., Instrumentos
+                  Derivados y Pactos. Si no está en margen se informara N.
+UNIDADES_EN_      Corresponde informar el número de acciones o de cuotas de              9(13)V9(3)
+MARGEN            fondos que se encuentran otorgados como margen de las
+                  operaciones de derivados señaladas en el DFL Nº251, o sujeto a
+                  pacto.
+ACTIVO_           Se deberá informar si uno o más títulos (en caso de haber              X(03)
+COMPRADO_A_       agrupado instrumentos con características idénticas) se
+TRAVES_DE _CDV    adquirieron a través de CDV (Certificados de Depósito de
+                  Valores).
+              Se informará de acuerdo a la siguiente codificación:
+              CDV : inversión adquirida a través de CDV.
+
+              Si no corresponde informar, se llenará con espacios.
+ACTIVO_       Corresponde informar si uno o más títulos (en caso de haber            X(05)
+RESPALDA_     agrupado instrumentos con características idénticas) registrados,
+RESERVA_      se encuentran respaldando la reserva de valor del fondo señalada
+VALOR_        en el DFL Nº251.
+DE_FONDO      Se informará de acuerdo a la valorización que tengan los títulos,
+              según Circular N°1360 y posteriores modificaciones, con un código
+              de cinco letras formado de la siguiente manera:
+
+              Las tres primeras letras serán:
+
+              APV :      si los instrumentos respaldan la reserva de valor del
+              fondo de seguros con ahorro previsional voluntario, o
+
+              OTR :       si los instrumentos respaldan la reserva de valor del
+              fondo de seguros con ahorro, distinto a los seguros con ahorro
+              previsional voluntario
+
+              La cuarta letra será A, B, C o D dependiendo de la forma de
+              constitución de la reserva de descalce a que se refiere el N°4 de la
+              Norma de Carácter General N°132, de 13 de marzo de 2002 y sus
+              posteriores modificaciones.
+
+              Para las Cuotas de Fondos constituidos fuera del país, Cuota de
+              Fondos de Inversión y Cuotas de Fondos Mutuos cuyos activos
+              estén invertidos en valores extranjeros, la quita letra será:
+
+              S: si la inversión está respaldando reserva de valor del fondo de
+              seguros que cumplan con lo señalado en el inciso segundo del
+              punto 9.4 de la Norma de Carácter General N°152 (actualizada por
+              la NCG N°317)
+
+              N: si no cumple con lo señalado en el inciso segundo del punto 9.4
+              de la Norma de Carácter General N° 152 (actualizada por la NCG
+              N°317).
+
+              Para las Acciones de Sociedades o Corporaciones Extranjeras, se
+              deberá informar con espacio.
+
+              Si el instrumento no respalda reserva de valor del fondo se
+              indicará:
+
+              VIDA: Para activos que NO estén asociados a fondos que
+              respalden seguros de vida con cuenta de inversión y correspondan
+              a inversiones de compañías del segundo grupo
+
+              GRAL: Para activos que correspondan a inversiones del primer
+              grupo.
+NOMBRE_DEL_   Para instrumentos que estén asociados a fondos que respalden           X(30)
+FONDO         seguros de vida con cuenta de inversión, se debe informar el
+              nombre del Fondo al cual pertenece.
+
+              Se entenderá por fondo al tipo de plan o modalidades de inversión
+              convenidos para los seguros con cuentas de inversión.
+
+              Para instrumentos que no respalden seguros de vida con cuenta de
+              inversión, se debe informar “NO APLICA”.
+NOMBRE_CARTERA    Para instrumentos que no respalden seguros de vida con cuenta de      X(30)
+                  inversión, se debe informar la sub cartera que respalda, si
+                  corresponde.
+                  Para instrumentos que no respalden una sub cartera, se debe
+                  informar “NO APLICA”
+RELACIONADO        Corresponde informar si el emisor del instrumento está relacionado   X(02)
+                   con la compañía de seguros, de acuerdo a lo establecido en el
+                   artículo N°100 de la ley N°18.045 del 22.10.1981 y sus
+                   modificaciones.
+
+                  Se señalará de acuerdo a la siguiente codificación:
+
+                  RE    :   Relacionado
+                  NR    :   No Relacionado
+
+FILIAL_COLIGADA   Se debe informar si la inversión informada corresponde a una          X(2)
+                  empresa Filial o Coligada de acuerdo a la circular 2022, utilizando
+                  la siguiente codificación:
+                  FI: Empresa Filial
+                  CO: Empresa Coligada
+                  NA: Empresa que no es Filial o Coligada.
+
+
+CLASIFICACION_    Corresponde informar la clasificación de la inversión, de acuerdo a   X(01)
+INVERSION         la siguiente codificación:
+                  D: Disponible para la venta.
+                  M: Mantenida hasta el vencimiento.
+
+TSA               Corresponde informar si el instrumento está incluido en el Test de    X(02)
+                  Suficiencia de Activos para el periodo informado, de acuerdo a la
+                  siguiente codificación:
+                  SI: el instrumento es utilizado para el análisis del Test de
+                  Suficiencia de Activos
+                  NO: el instrumento no es utilizado para el análisis del Test de
+                  Suficiencia de Activos.
+
+                  En periodos que no corresponde enviar el Test de Suficiencia de
+                  Activos
+COBERTURA         Corresponde indicar si el instrumento está cubierto por un            X (05)
+                  Derivado y qué tipo de operación de acuerdo a la siguiente
+                  Codificación
+
+                  En el primer carácter de este campo se debe indicar:
+
+                  S, si el instrumento está cubierto por un Derivado
+                  N, si el instrumento no está cubierto
+
+                  En los caracteres 2 al 5 deberá indicar el código de operación de
+                  Derivado de acuerdo a la Codificación de Instrumentos vigente en
+                  el sitio web de la SVS
+
+                  Por ejemplo,
+                  si el instrumento está cubierto por un swap se debe ingresar: SS
+                  si el instrumento está cubierto por un forward de venta se debe
+                  ingresar: SFWV
+
+                  Si el instrumento está cubierto por más de una operación de
+                  derivado se debe informar SMIX
+METOD_CLASIF_VALO             Corresponde informar la clasificación dada al instrumento en los     X(6)
+RIZ_EEFF                      Estados de Situación Financiera, de acuerdo a lo siguiente:
+                              CA : Activos Financieros a Costo Amortizado (5.11.30.00).
+                              VR : Activos Financieros a Valor Razonable (5.11.20.00).
+                              EE : Efectivo Equivalente (5.11.10.00).
+                              CUI : Inversiones Seguros Cuenta Única de Inversión
+                              (5.11.50.00)
+                              OTRCLA: Otra clasificación dentro del Estado de Situación
+                              Financiera.
+CRITERIO_VALORIZACI           Corresponde indicar si la inversión está valorizada a Valor          X (02)
+ON                            Razonable o a Costo Amortizado, utilizando la metodología
+                              definida en la NCG N° 311, del 28.06.2011 o la que la reemplace.
+                              Se informará de acuerdo a la siguiente codificación:
+                              VR: Valor Razonable.
+                              CA: Costo Amortizado.
+MODELO_VALORACIO              Corresponde indicar si la inversión está valorizada por la           X (02)
+N                             Compañía utilizando un Modelo Propio de valorización de
+                              acuerdo a la siguiente codificación:
+                              SI : Utiliza Modelo Propio.
+                              NO: No utiliza Modelo Propio.
+MODELO_PROPIO_DE              Corresponde indicar si el Deterioro de la inversión se determinó     X(02)
+TERIORO                       usando una metodología propia o es una aplicación de la
+                              metodología definida en la NCG N° 311.
+
+                              Se informará de acuerdo a la siguiente codificación:
+
+                              SI : Método propio para estimar el deterioro.
+                              NO : Aplicación de la NCG N°311.
+CUSTODIADO                    Se deberá informar si el instrumento se encuentra o no               X(01)
+                              custodiado, de acuerdo a la siguiente codificación:
+                              S: Está custodiado
+                              N: No está custodiado
+
+NOMBRE_CUSTODI                Corresponde informar el nombre de la entidad que custodia la         X(60)
+O                             inversión, en el evento que se informe “S” en el campo
+                              “CUSTODIADO”.
+                              En el caso que no corresponda informar, se deberá llenar con
+                              espacios este campo.
+CLASIFICACIÓN_DE_             Las inversiones extranjeras del N°7 de la NCG 152, deberán           X(4)
+RIESGO_PAIS                   indicar la clasificación de riesgo del país donde se encuentra el
+                              activo o donde se encuentra registrado el instrumento financiero
+                              correspondiente.
+                              Si no corresponde informar se llenará con espacios.
+REGULADOR                     Las inversiones extranjeras del N°7 de la NCG 152, deberán indicar   X (40)
+                              organismo supervisor del mercado financiero del emisor o
+                              administrador de la inversión del N°7 de la NCG 152.
+                              Si no corresponde informar, se llenará con espacios.
+
+
+
+Registro tipo 4 de DETALLE:          BIENES RAICES EN EL EXTRANJERO
+
+CAMPO                         DESCRIPCION                                                          PICTURE
+TIPO                          Tipo de registro. En este caso corresponde "4".                      9(01)
+
+TIPO_                         Este campo es obligatorio y se informará de acuerdo a la             X(10)
+INSTRUMENTO                   codificación definida SEIL, Codificación S.V.S., Instrumentos.
+PAIS                  Corresponde señalar el país de origen en que se ubica el bien raíz.       X(02)
+                      Se deberá informar de acuerdo a la codificación definida en SEIL,
+                      Codificación S.V.S., Países.
+
+CLASIFICACIÓN_DE_RI   Las inversiones extranjeras del N°7 de la NCG 152, deberán indicar        X(4)
+ESGO_PAIS             la clasificación de riesgo del país donde se encuentra el activo o
+                      donde se encuentra registrado el instrumento financiero
+                      correspondiente.
+                      Si no corresponde informar se llenará con espacios.
+REGULADOR             Las inversiones extranjeras del N°7 de la NCG 152, deberán indicar        X(40)
+                      organismo supervisor del mercado financiero del emisor o
+                      administrador de la inversión del N°7 de la NCG 152.
+                      Si no corresponde informar, se llenará con espacios.
+
+DESCRIPCION_          Se deberá señalar si las combinaciones que forman un bien raíz
+DEL_                  corresponden a casa, departamento, oficina, pisos completos de
+INMUEBLE              edificios, terreno, local comercial, etc. Se indicará con una S (Si) el
+                      tipo de bien raíz que corresponda; con una N (No) lo que no
+                      corresponda al bien raíz que se informa.
+
+                      Local : Se indicará si es un local.                                       X(01)
+
+                      S         :        Si
+                      N         :        No
+                      Oficina : Se indicará si es una oficina.                                  X(01)
+                      S         :        Si
+                      N         :        No
+                      Bodega: Se indicará si es una bodega.                                     X(01)
+                      S         :        Si
+                      N         :        No
+                      Estacionamiento: Se indicará si es un estacionamiento.                    X(01)
+                      S         :         Si
+                      N         :         No
+                      Terreno: Se indicará si es un terreno.                                    X(01)
+                      S         :         Si
+                      N         :         No
+                      Casa : Se indicará si es una casa.                                        X(01)
+                      S         :         Si
+                      N         :         No
+                      Edificio: Se indicará si es un edificio.                                  X(01)
+                      S         :         Si
+                      N         :         No
+                      Piso completo de edificio: Se indicará si es un piso completo del         X(01)
+                      edificio.
+                      S         :      Si
+                      N         :      No
+                      Piso incompleto de edificio: Se indicará si es un piso incompleto del     X(01)
+                      edificio.
+                      S         :      Si
+                      N         :      No
+
+                      Departamento: Se indicará si es un departamento.                          X(01)
+                      S       :       Si
+                      N       :       No
+
+                      Obra en construcción: Se indicará si es una obra en construcción.         X(01)
+                      S       :        Si
+                      N       :        No
+                 Otros: Se indicará si es otros.                                       X(01)
+                 S        :         Si
+                 N        :         No
+
+
+                 Ejemplos:
+
+                 1.   Si el bien raíz es una casa, se informará con una S en el
+                      campo CASA, y todos los otros campos deberán informarse
+                      con una N.
+
+                 2.   En caso que la compañía tenga contabilizado un local, una
+                      oficina y una bodega con un mismo rol, se deberá informar de
+                      la siguiente manera:
+
+                 Local                                  : S
+                 Oficina                                : S
+                 Bodega                                 : S
+                 Estacionamiento                        : N
+                 Terreno                                : N
+                 Casa                                   : N
+                 Edificio                               : N
+                 Piso completo de edificio              : N
+                 Piso incompleto de edificio            : N
+                 Departamento                           : N
+                 Obras en construcción                  : N
+                 Otros    :       N
+TIPO_DE_         Corresponde señalar si el bien raíz es urbano o no urbano. Se         X(02)
+INMUEBLE         informará de acuerdo a la siguiente codificación:
+
+                 UR       :         Urbano
+                 UN       :         No urbano
+
+DESTINO          Corresponde indicar si el bien raíz es "Habitacional" o "No           X(02)
+                 Habitacional". Se informara de acuerdo a la siguiente codificación:
+
+                 HA       :         Habitacional
+                 NH       :         No habitacional
+
+USO              Corresponde indicar el uso que se le da al bien raíz, es decir si     X(01)
+                 se arrienda con el fin de obtener una renta o es ocupado para
+                 desarrollar la actividad de seguros. En caso que una compañía
+                 tenga un bien raíz y una parte esté dada en arriendo y otra para
+                 uso propio y contablemente esté registrado como un sólo bien,
+                 se deberá informar como uso mixto. Se informará de acuerdo a
+                 la codificación definida en SEIL, codificación S.V.S.
+
+PORCENTAJE_      Corresponde informar cuando el uso es mixto, qué porcentaje del       9(3)V9(02)
+USO_PROPIO       bien raíz está destinado para uso propio.
+
+UBICACIÓN        Corresponde señalar la dirección exacta del bien raíz.                X(40)
+
+SALDO_PLAZO_     Se deberá informar los meses restantes del contrato de arriendo       9(03)
+ARRIENDO         a contar de la fecha de información.
+                 En el caso de los bienes raíces de uso propio se debe informar en
+                 cero (0).
+MONTO_ARRIENDO   Para los bienes raíces en arriendo, corresponde informar el           9(04)V9(02)
+                 monto de arriendo mensual expresado en UF.
+                 En el caso de los bienes raíces de uso propio y de los leasing se
+                 debe informar en cero (0)
+FECHA_COMPRA        Corresponde señalar la fecha de adquisición por la compañía del          9(08)
+                    bien raíz. Se deberá informar con el siguiente formato:
+                    AAAAMMDD.
+
+MONEDA              Corresponde señalar la moneda de origen en que esta expresado            X(06)
+                    el precio del bien raíz. Se informará de acuerdo a codificación
+                    definida en SEIL, Codificación S.V.S., Unidades Monetarias.
+
+                    Corresponde señalar el valor de adquisición del bien raíz                9(11)
+COSTO_HISTORICO_C   expresado en miles de pesos (M$)
+ORREGIDO
+DEPRECIACION_       Corresponde señalar el monto de depreciación acumulada del bien          9(11)
+ACUMULADA           raíz a la fecha de cierre del mes a que se refiere la información,
+                    expresada en miles de pesos (M$).
+
+VALOR_              Corresponde al costo histórico menos depreciación acumulada, en          9(11)
+CONTABLE            miles de pesos (M$).
+
+VALOR_TASACION      Corresponde al valor, en miles de pesos (M$), de la última               9(11)
+                    tasación efectuada, conforme a lo señalado en Norma de
+                    Carácter General Nº42 o la que la reemplace.
+
+FECHA_DE_           Corresponde señalar la fecha en que se efectuó la tasación. Se           9(08)
+TASACION            deberá informar en el siguiente formato: AAAAMMDD.
+
+                    Corresponde al deterioro de la inversión, según lo señalado en la        -9(11)
+DETERIORO           Norma de Carácter General N°311, del 28.06.2011. Este monto
+                    deberá expresarse en miles de pesos (M$)
+
+
+VALOR_FINAL         Corresponde al valor que tiene el bien raíz a la fecha de cierre del     9(12)
+                    mes a que se refiere la información, según lo establecido en
+                    Circular de Valorización de Inversiones vigente, expresado en
+                    miles de pesos (M$), según la paridad cambiaria a la misma
+                    fecha.
+ACTIVO_             Corresponde informar si uno o más títulos (en caso de haber              X(05)
+RESPALDA_           agrupado instrumentos con características idénticas) registrados,
+RESERVA_VALOR_DE_   se encuentran respaldando la reserva de valor del fondo señalada
+FONDO               en el DFL Nº251.
+                    Se informará de acuerdo a la valorización que tengan los títulos,
+                    según Circular N°1360 y posteriores modificaciones, con un código
+                    de cinco letras formado de la siguiente manera:
+                    Las tres primeras letras serán:
+
+                    APV :      si los instrumentos respaldan la reserva de valor del
+                    fondo de seguros con ahorro previsional voluntario, o
+
+                    OTR :       si los instrumentos respaldan la reserva de valor del
+                    fondo de seguros con ahorro, distinto a los seguros con ahorro
+                    previsional voluntario.
+
+                    La cuarta letra será A, B, C o D dependiendo de la forma de
+                    constitución de la reserva de descalce a que se refiere el N°4 de la
+                    Norma de Carácter General N°132, de 13 de marzo de 2002 y sus
+                    posteriores modificaciones.
+
+                    La quinta letra será G si se garantiza la rentabilidad del valor de la
+                    póliza en los casos B, C o D, si no corresponde se informará con
+                    espacio.
+
+                    Si el instrumento no respalda reserva de valor del fondo se
+                              indicará:
+
+                              VIDA: Para activos que NO estén asociados a fondos que
+                              respalden seguros de vida con cuenta de inversión y correspondan
+                              a inversiones de compañías del segundo grupo
+
+                              GRAL: Para activos que correspondan a inversiones del primer
+                              grupo.
+
+NOMBRE_DEL_                   Para instrumentos que estén asociados a fondos que respalden         X(30)
+FONDO                         seguros de vida con cuenta de inversión, se debe informar el
+                              nombre del Fondo al cual pertenece. Se entenderá por fondo al tipo
+                              de plan o modalidades de inversión convenidos para los seguros
+                              con cuentas de inversión.
+
+                              Para instrumentos que no respalden seguros de vida con cuenta de
+                              inversión, se debe informar “NO APLICA”.
+
+NOMBRE_CARTERA                Para instrumentos que no respalden seguros de vida con cuenta de     X(30)
+                              inversión, se debe informar la sub cartera que respalda, si
+                              corresponde.
+                              Para instrumentos que no respalden una sub cartera, se debe
+                              informar “NO APLICA”
+
+TSA                           Corresponde informar si el instrumento está incluido en el Test de   X(02)
+                              Suficiencia de Activos para el periodo informado, de acuerdo a la
+                              siguiente codificación:
+                              SI: el instrumento es utilizado para el análisis del Test de
+                              Suficiencia de Activos
+                              NO: el instrumento no es utilizado para el análisis del Test de
+                              Suficiencia de Activos.
+
+                              En periodos que no corresponde enviar el Test de Suficiencia de
+                              Activos
+FILLER                        Se deberá informar espacios.                                         X(228)
+
+
+Registro tipo 5 de DETALLE:          FILIALES EN EL EXTRANJERO
+
+
+CAMPO                         DESCRIPCION                                                          PICTURE
+
+TIPO                          Tipo de registro. En este caso corresponde "5".                      9(01)
+
+TIPO_                         Este campo es obligatorio y se informará de acuerdo a la             X(10)
+INSTRUMENTO                   codificación definida en SEIL, Codificación S.V.S., Instrumentos.
+
+PAIS                          Corresponde señalar el país de destino de la inversión. Se           X(02)
+                              informará de acuerdo a la codificación definida en SEIL,
+                              Codificación S.V.S., Países.
+
+
+CLASIFICACIÓN_DE_RI           Las inversiones extranjeras del N°7 de la NCG 152, deberán indicar   X(4)
+ESGO_PAIS                     la clasificación de riesgo del país donde se encuentra el activo o
+                              donde se encuentra registrado el instrumento financiero
+                              correspondiente.
+                              Si no corresponde informar se llenará con espacios.
+REGULADOR                     Las inversiones extranjeras del N°7 de la NCG 152, deberán indicar   X (40)
+                              organismo supervisor del mercado financiero del emisor o
+                              administrador de la inversión del N°7 de la NCG 152.
+                              Si no corresponde informar, se llenará con espacios.
+NOMBRE_FILIAL            Corresponde señalar el nombre de la sociedad filial.                     X(30)
+
+FECHA_COMPRA             Corresponde señalar la fecha en que se materializó la inversión          9(08)
+                         inicial. Se deberá informar con el siguiente formato: AAAAMMDD.
+
+PARTICIPACION_           Corresponde señalar el porcentaje de participación del inversionista     9(03)V9(02)
+PORCENTUAL               en la sociedad filial a la fecha de cierre del mes a que se refiere la
+                         información.
+
+PATRIMONIO FILIAL        Corresponde informar el patrimonio contable de la filial a la fecha      -9(13)
+                         de cierre de los estados financieros para los meses de marzo,
+                         junio, septiembre y diciembre. Para los otros períodos se debe
+                         informar el patrimonio contable de la filial del trimestre anterior al
+                         período informado. Esta información deberá expresarse en miles
+                         de pesos (M$).
+RESULTADO DE LA          Corresponde informar el resultado (utilidad o pérdida) contable de       -9(13)
+SOCIEDAD FILIAL          la filial a la fecha de cierre de los estados financieros para los
+                         meses de marzo, junio, septiembre y diciembre. Para los otros
+                         períodos se debe informar el resultado contable de la filial del
+                         trimestre anterior al período informado. Esta información deberá
+                         expresarse en miles de pesos (M$).
+FECHA_ESTADOS_           Corresponde señalar la fecha de cierre de los últimos estados            9(08)
+FINANCIEROS              financieros de la filial, utilizados para determinar el Valor
+                         Patrimonial Proporcional, VPP. Se deberá informar con el siguiente
+                         formato: AAAAMMDD.
+
+VALOR_DE_ MERCADO        Corresponde al valor de mercado del instrumento a la fecha de la         9(13)
+                         información. Se debe presentar en M$.
+
+                         Para las inversiones que no se transen en un mercado primario o
+                         secundario, se deberá informar una estimación del valor de
+                         mercado realizada por la compañía.
+MAYOR_O_                 Corresponde al mayor o menor valor determinado entre el costo de         -9(11)
+MENOR_                   adquisición y su VPP, ambos conceptos definidos en la Circular de
+VALOR_DE_                Valorización de Inversiones, en miles de pesos (M$). Cuando
+INVERSIONES              corresponda a un menor valor de inversiones, la cantidad se
+                         colocará negativa y si es un mayor valor, se colocará positiva.
+
+VALOR_FINAL              Corresponde señalar el valor patrimonial proporcional (VPP)              9(12)
+                         determinado en miles de pesos (M$) a la fecha de cierre del mes a
+                         que se refiere la información, a la paridad del tipo de cambio de
+                         cierre.
+
+TSA                      Corresponde informar si el instrumento está incluido en el Test de       X(02)
+                         Suficiencia de Activos para el periodo informado, de acuerdo a la
+                         siguiente codificación:
+                         SI: el instrumento es utilizado para el análisis del Test de
+                         Suficiencia de Activos
+                         NO: el instrumento no es utilizado para el análisis del Test de
+                         Suficiencia de Activos.
+
+                         En periodos que no corresponde enviar el Test de Suficiencia de
+                         Activos
+FILLER                   Se deberá informar espacios.                                             X(338)
+
+
+Registro Tipo 6 de TOTALES
+
+CAMPO                    DESCRIPCION                                                              PICTURE
+TIPO        Tipo de registro. En este caso corresponde "6".                       9(01)
+
+TOTAL_      Corresponde al número total de registros informados incluidos el de   9(06)
+REGISTROS   IDENTIFICACION y el de TOTALES.
+
+FILLER      Se deberá informar espacios.                                          X(506)
+
