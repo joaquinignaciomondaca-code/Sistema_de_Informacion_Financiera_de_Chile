@@ -83,9 +83,10 @@ def parse_account_model(text: str, member_name: str) -> dict[str, dict[str, str]
     for line_no, values in enumerate(rows[1:], start=2):
         if not values or not any(value.strip() for value in values):
             continue
-        if len(values) != 5:
-            raise RuntimeError(f"Malformed account definition in {member_name}:{line_no}")
-        account, rubro, linea, item, description = [value.strip() for value in values]
+        if len(values) < 5:
+            raise RuntimeError(f"Malformed account definition in {member_name}:{line_no}: {values!r}")
+        account, rubro, linea, item = [value.strip() for value in values[:4]]
+        description = "\t".join(values[4:]).strip()
         if not CODE_RE.fullmatch(account) or not rubro or not linea or not item or not description:
             raise RuntimeError(f"Incomplete account definition in {member_name}:{line_no}")
         if account in model:
