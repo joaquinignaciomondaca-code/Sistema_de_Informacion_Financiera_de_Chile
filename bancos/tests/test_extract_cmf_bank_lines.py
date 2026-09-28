@@ -184,3 +184,30 @@ class LegacyFormatTests(unittest.TestCase):
         model = parse_account_model(text, "Modelo-MB1.txt")
         self.assertEqual(set(model), {"100000000", "105000100"})
         self.assertEqual(model["105000100"], {"rubro": "10500", "linea": "01", "item": "00", "glosa_cuenta": "Efectivo", "tipo_linea": "detalle"})
+
+
+class RenamedBankFallbackTests(unittest.TestCase):
+    def rows(self, total="40897890105783.00", r1="1000000.00"):
+        base = {"codigo_institucion": "039", "numero_fila_fuente": 2, "glosa_cuenta": "x"}
+        return [
+            {**base, "familia_archivo_fuente": "B1", "codigo_cuenta": "100000000", "importes_fuente_decimal": [total, "0", "0", "0"]},
+            {**base, "familia_archivo_fuente": "R1", "codigo_cuenta": "590000000", "importes_fuente_decimal": [r1]},
+        ]
+
+    def inspection(self, cells_bal, cells_res):
+        rows = [{"sheet": "Est. Situación Financ. Bancos", "row_number": n, "values": v} for n, v in cells_bal]
+        rows += [{"sheet": "Est. del Resultado Bancos ", "row_number": n, "values": v} for n, v in cells_res]
+        return {"workbook": {"bank_rows": rows}}
+
+    def test_renamed_bank_matches_by_unique_amount(self):
+        insp = self.inspection([(10, ["Itaú Corpbanca", 40897890.105783]), (11, ["Otro", 5.0])],
+                               [(10, ["Itaú Corpbanca", 1.0])])
+        out = reconcile_to_inspection(self.rows(), insp, bank_code="039", bank_name="BANCO ITAÚ CHILE")
+        self.assertEqual(out["match_mode"], "amount_only")
+        self.assertEqual(out["b1_status"], "passed")
+        self.assertEqual(len(out["r1_exact_account_matches_in_xlsx"]), 1)
+
+    def test_amount_only_rejects_ambiguous_rows(self):
+        insp = self.inspection([(10, ["A", 40897890.105783]), (11, ["B", 40897890.105783])], [])
+        out = reconcile_to_inspection(self.rows(), insp, bank_code="039", bank_name="BANCO ITAÚ CHILE")
+        self.assertNotEqual(out["b1_status"], "passed")

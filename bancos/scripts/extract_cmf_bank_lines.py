@@ -368,7 +368,17 @@ def reconcile_to_inspection(rows: list[dict], inspection: dict, bank_code: str =
                     result.append({"sheet": sheet_row.get("sheet"), "row_number": sheet_row.get("row_number"), "column_index": index, "value_mm_clp": format(number, "f")})
         return result
 
+    def all_sheet_rows(title: str) -> list[dict]:
+        return [row for row in workbook.get("bank_rows", []) if normalize_name(row.get("sheet")) == normalize_name(title)]
+
+    # Respaldo ante renombres/fusiones (p. ej. "Itaú Corpbanca" -> "Banco Itaú Chile"):
+    # si el nombre del ZIP no aparece en el XLSX, se busca el importe exacto en
+    # toda la hoja y se exige que coincida en UNA sola fila.
     balance_rows = sheet_values("Est. Situación Financ. Bancos")
+    match_mode = "name"
+    if not balance_rows:
+        balance_rows = all_sheet_rows("Est. Situación Financ. Bancos")
+        match_mode = "amount_only"
     balance_cells = numeric_cells(balance_rows)
     asset_lines = [
         row for row in rows
@@ -383,7 +393,10 @@ def reconcile_to_inspection(rows: list[dict], inspection: dict, bank_code: str =
             cell for cell in balance_cells
             if abs(Decimal(cell["value_mm_clp"]) * Decimal(1_000_000) - candidate_pesos) <= Decimal(1)
         ]
+        if match_mode == "amount_only" and len({cell["row_number"] for cell in matches}) != 1:
+            matches = []  # sin nombre, solo se acepta una fila inequívoca
         asset_checks.append({
+            "match_mode": match_mode,
             "codigo_cuenta": line["codigo_cuenta"],
             "glosa_cuenta": line["glosa_cuenta"],
             "source_row": line["numero_fila_fuente"],
@@ -393,6 +406,8 @@ def reconcile_to_inspection(rows: list[dict], inspection: dict, bank_code: str =
         })
 
     result_rows = sheet_values("Est. del Resultado Bancos")
+    if not result_rows:
+        result_rows = all_sheet_rows("Est. del Resultado Bancos")
     result_cells = numeric_cells(result_rows)
     result_matches = []
     for line in rows:
@@ -405,6 +420,8 @@ def reconcile_to_inspection(rows: list[dict], inspection: dict, bank_code: str =
             cell for cell in result_cells
             if abs(Decimal(cell["value_mm_clp"]) * Decimal(1_000_000) - pesos) <= Decimal(1)
         ]
+        if match_mode == "amount_only" and len({cell["row_number"] for cell in matches}) != 1:
+            matches = []
         if matches:
             result_matches.append({
                 "codigo_cuenta": line["codigo_cuenta"],
@@ -416,6 +433,7 @@ def reconcile_to_inspection(rows: list[dict], inspection: dict, bank_code: str =
     return {
         "bank_code": bank_code,
         "bank_name": bank_name,
+        "match_mode": match_mode,
         "balance_sheet": "Est. Situación Financ. Bancos",
         "b1_total_assets_account": asset_checks,
         "b1_status": "passed" if asset_checks and all(item["status"] == "passed" for item in asset_checks) else "failed_or_unavailable",
