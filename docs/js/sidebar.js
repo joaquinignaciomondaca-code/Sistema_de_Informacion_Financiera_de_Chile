@@ -759,7 +759,7 @@ const EXPLORER_TREE = [
     label: "SECURITIZACIÓN (CMF / LEY 18.045)",
     badges: [
       { type: "entities", text: "16 Gestoras", title: "Sociedades securitizadoras y sus patrimonios separados son entidades distintas" },
-      { type: "data", text: "358 balances", title: "Balances de diciembre 2014–2025 de patrimonios separados (Excel FSB). De 2010 a 2013 no hay datos. Los balances de las gestoras son otra serie" }
+      { type: "data", text: "358 balances", title: "Balances de diciembre 2014–2025 de patrimonios separados. De 2010 a 2013 no hay datos. Los balances de las gestoras son otra serie" }
     ],
     status: "active",
     children: [
@@ -827,41 +827,24 @@ const EXPLORER_TREE = [
             ]
           },
           {
-            id: "circ_ps_balance_fsb",
+            id: "circ_ps_balance",
             type: "circular",
-            label: "Balance · Métricas FSB (desde 2014; 2010–2013 sin datos)",
+            label: "Balance General (diciembre 2014–2025; 2010–2013 sin datos)",
             badge: "358 Balances",
             badgeType: "data",
             status: "active",
             sector: "patrimonios_separados",
             chips: [
-              { label: "Cobertura por año (2010–2013 sin datos)", query: "SELECT a.anio, count(b.archivo) AS balances, CASE WHEN a.anio < 2014 THEN 'Sin datos: la serie parte en diciembre de 2014 (2013 no está en la fuente; 2010–2012 se dejaron fuera para no cortar la serie)' ELSE 'Cierre de diciembre' END AS nota FROM range(2010, 2026) a(anio) LEFT JOIN patrimonios_separados_balance_fsb b ON b.anio = a.anio GROUP BY a.anio ORDER BY a.anio;" },
-              { label: "Agregado del sector por cierre", query: "SELECT periodo, count(*) AS patrimonios, sum(total_activos_m_clp) AS activos_m_clp, sum(cartera_securitizada_m_clp) AS cartera_m_clp, sum(activos_corto_plazo_m_clp) AS activos_cp_m_clp, sum(pasivos_corto_plazo_m_clp) AS pasivos_cp_m_clp, sum(pasivos_largo_plazo_m_clp) AS pasivos_lp_m_clp, sum(patrimonio_m_clp) AS patrimonio_m_clp, round(sum(cartera_securitizada_m_clp) / sum(total_activos_m_clp), 4) AS ci2_agregado, round(sum(pasivos_corto_plazo_m_clp) / sum(activos_corto_plazo_m_clp), 4) AS mt2_agregado, round((sum(total_activos_m_clp) - sum(patrimonio_m_clp)) / sum(total_activos_m_clp), 4) AS l5_agregado FROM patrimonios_separados_balance_fsb GROUP BY periodo ORDER BY periodo;" },
-              { label: "Percentiles CI2 · MT2 · L5 por cierre", query: "SELECT periodo, count(*) AS patrimonios, round(quantile_cont(ci2_intermediacion_credito, 0.25), 3) AS ci2_p25, round(quantile_cont(ci2_intermediacion_credito, 0.5), 3) AS ci2_p50, round(quantile_cont(ci2_intermediacion_credito, 0.75), 3) AS ci2_p75, round(quantile_cont(mt2_transformacion_plazos, 0.25), 3) AS mt2_p25, round(quantile_cont(mt2_transformacion_plazos, 0.5), 3) AS mt2_p50, round(quantile_cont(mt2_transformacion_plazos, 0.75), 3) AS mt2_p75, round(quantile_cont(l5_apalancamiento, 0.25), 3) AS l5_p25, round(quantile_cont(l5_apalancamiento, 0.5), 3) AS l5_p50, round(quantile_cont(l5_apalancamiento, 0.75), 3) AS l5_p75 FROM patrimonios_separados_balance_fsb GROUP BY periodo ORDER BY periodo;" },
-              { label: "Agregado sin balances dudosos", query: "SELECT periodo, count(*) AS patrimonios, sum(total_activos_m_clp) AS activos_m_clp, sum(cartera_securitizada_m_clp) AS cartera_m_clp, sum(patrimonio_m_clp) AS patrimonio_m_clp, round(sum(cartera_securitizada_m_clp) / sum(total_activos_m_clp), 4) AS ci2_agregado, round((sum(total_activos_m_clp) - sum(patrimonio_m_clp)) / sum(total_activos_m_clp), 4) AS l5_agregado FROM patrimonios_separados_balance_fsb WHERE NOT revisar GROUP BY periodo ORDER BY periodo;" },
-              { label: "Por securitizadora, diciembre 2025", query: "SELECT s.razon_social, count(*) AS patrimonios, sum(b.total_activos_m_clp) AS activos_m_clp, sum(b.cartera_securitizada_m_clp) AS cartera_m_clp, sum(b.patrimonio_m_clp) AS patrimonio_m_clp FROM patrimonios_separados_balance_fsb b LEFT JOIN securitizadoras_maestro s ON s.rut = b.rut_administradora WHERE b.periodo = '2025-12' GROUP BY s.razon_social ORDER BY activos_m_clp DESC;" },
-              { label: "Balances marcados para revisar", query: "SELECT periodo, nombre_administradora, codigo_patrimonio, total_activos_m_clp, patrimonio_m_clp, motivo_revision FROM patrimonios_separados_balance_fsb WHERE revisar ORDER BY periodo, nombre_administradora, codigo_patrimonio;" }
+              { label: "Cobertura por año (2010–2013 sin datos)", query: "SELECT a.anio, count(DISTINCT b.archivo) AS balances, CASE WHEN a.anio < 2014 THEN 'Sin datos: la serie parte en diciembre de 2014' ELSE 'Cierre de diciembre' END AS nota FROM range(2010, 2026) a(anio) LEFT JOIN patrimonios_separados_balance b ON b.anio = a.anio GROUP BY a.anio ORDER BY a.anio;" },
+              { label: "Totales por patrimonio, diciembre 2025", query: "SELECT nombre_administradora, codigo_patrimonio, activos_m_clp, pasivos_m_clp, patrimonio_m_clp FROM (SELECT periodo, rut_administradora, nombre_administradora, codigo_patrimonio, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Activos') AS activos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria IN ('Total Pasivo Circulante', 'Total Pasivo No Circulante')) AS pasivos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Patrimonio (Excedente Acumulado)') AS patrimonio_m_clp FROM patrimonios_separados_balance GROUP BY ALL) WHERE periodo = '2025-12' ORDER BY activos_m_clp DESC;" },
+              { label: "Agregado del sector por cierre", query: "SELECT periodo, count(*) AS patrimonios, sum(activos_m_clp) AS activos_m_clp, sum(pasivos_m_clp) AS pasivos_m_clp, sum(patrimonio_m_clp) AS patrimonio_m_clp FROM (SELECT periodo, rut_administradora, nombre_administradora, codigo_patrimonio, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Activos') AS activos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria IN ('Total Pasivo Circulante', 'Total Pasivo No Circulante')) AS pasivos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Patrimonio (Excedente Acumulado)') AS patrimonio_m_clp FROM patrimonios_separados_balance GROUP BY ALL) GROUP BY periodo ORDER BY periodo;" },
+              { label: "Por securitizadora, diciembre 2025", query: "SELECT coalesce(s.razon_social, t.nombre_administradora) AS securitizadora, count(*) AS patrimonios, sum(t.activos_m_clp) AS activos_m_clp, sum(t.pasivos_m_clp) AS pasivos_m_clp, sum(t.patrimonio_m_clp) AS patrimonio_m_clp FROM (SELECT periodo, rut_administradora, nombre_administradora, codigo_patrimonio, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Activos') AS activos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria IN ('Total Pasivo Circulante', 'Total Pasivo No Circulante')) AS pasivos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Patrimonio (Excedente Acumulado)') AS patrimonio_m_clp FROM patrimonios_separados_balance GROUP BY ALL) t LEFT JOIN securitizadoras_maestro s ON s.rut = t.rut_administradora WHERE t.periodo = '2025-12' GROUP BY ALL ORDER BY activos_m_clp DESC;" },
+              { label: "Balance completo de un patrimonio", query: "SELECT orden_en_balance, categoria, cuenta, monto_m_clp FROM patrimonios_separados_balance WHERE periodo = '2025-12' AND nombre_administradora = 'SECURITIZADORA SECURITY' AND codigo_patrimonio = (SELECT min(codigo_patrimonio) FROM patrimonios_separados_balance WHERE periodo = '2025-12' AND nombre_administradora = 'SECURITIZADORA SECURITY') ORDER BY orden_en_balance;" },
+              { label: "Pasivos de diciembre 2025 por cuenta", query: "SELECT categoria, cuenta, sum(monto_m_clp) AS monto_m_clp, count(*) AS patrimonios FROM patrimonios_separados_balance WHERE categoria IN ('Pasivo Circulante', 'Pasivo No Circulante') AND periodo = '2025-12' GROUP BY ALL ORDER BY monto_m_clp DESC;" },
+              { label: "Cuentas más frecuentes por rubro", query: "SELECT categoria, cuenta, count(*) AS balances, sum(monto_m_clp) AS suma_m_clp FROM patrimonios_separados_balance WHERE categoria NOT LIKE 'Total%' GROUP BY ALL ORDER BY balances DESC LIMIT 30;" }
             ],
             tables: [
-              { id: "patrimonios_separados_balance_fsb", name: "patrimonios_separados.balance_fsb", rows: "358 balances", file: "outputs/securitizadoras/patrimonios_separados_balance_fsb.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_balance_cuentas",
-            type: "circular",
-            label: "Balance · Cuentas Impresas (desde 2014)",
-            badge: "7.962 Cuentas",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Balance completo de un patrimonio", query: "SELECT orden_en_balance, categoria, cuenta, monto_m_clp, categoria_fsb FROM patrimonios_separados_balance_cuentas WHERE periodo = '2025-12' AND nombre_administradora = 'SECURITIZADORA SECURITY' AND codigo_patrimonio = (SELECT min(codigo_patrimonio) FROM patrimonios_separados_balance_cuentas WHERE periodo = '2025-12' AND nombre_administradora = 'SECURITIZADORA SECURITY') ORDER BY orden_en_balance;" },
-              { label: "Cartera securitizada y provisiones por cierre", query: "SELECT periodo, sum(CASE WHEN monto_m_clp > 0 THEN monto_m_clp ELSE 0 END) AS activo_securitizado_m_clp, sum(CASE WHEN monto_m_clp < 0 THEN monto_m_clp ELSE 0 END) AS provisiones_m_clp, sum(monto_m_clp) AS cartera_neta_m_clp, round(-sum(CASE WHEN monto_m_clp < 0 THEN monto_m_clp ELSE 0 END) / sum(CASE WHEN monto_m_clp > 0 THEN monto_m_clp ELSE 0 END), 4) AS cobertura_provisiones FROM patrimonios_separados_balance_cuentas WHERE categoria_fsb = 'Loans' GROUP BY periodo ORDER BY periodo;" },
-              { label: "Pasivos de diciembre 2025 por cuenta", query: "SELECT periodo, categoria, cuenta, sum(monto_m_clp) AS monto_m_clp, count(*) AS patrimonios FROM patrimonios_separados_balance_cuentas WHERE categoria IN ('Pasivo Circulante', 'Pasivo No Circulante') AND periodo = '2025-12' GROUP BY periodo, categoria, cuenta ORDER BY monto_m_clp DESC;" },
-              { label: "Cuentas más frecuentes por rubro", query: "SELECT categoria, cuenta, count(*) AS balances, sum(monto_m_clp) AS suma_m_clp FROM patrimonios_separados_balance_cuentas WHERE categoria NOT LIKE 'Total%' GROUP BY categoria, cuenta ORDER BY balances DESC LIMIT 30;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_balance_cuentas", name: "patrimonios_separados.balance_cuentas", rows: "7.962 cuentas", file: "outputs/securitizadoras/patrimonios_separados_balance_cuentas.parquet" }
+              { id: "patrimonios_separados_balance", name: "patrimonios_separados.balance", rows: "358 balances · 7.962 cuentas", file: "outputs/securitizadoras/patrimonios_separados_balance.parquet" }
             ]
           }
         ]
