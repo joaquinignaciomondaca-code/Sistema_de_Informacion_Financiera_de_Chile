@@ -18,7 +18,7 @@ from typing import Any
 
 from bancos.scripts.extract_cmf_bank_lines import (
     extract_archive,
-    reconcile_to_inspection,
+    normalize_name, reconcile_to_inspection,
 )
 from bancos.scripts.inspect_cmf_bank_sample import (
     MAX_FILE,
@@ -170,7 +170,17 @@ def validate_release(rows: list[dict], report: dict, workbook_rows: list[dict]) 
         # The CMF workbook may publish an aggregate under a different label.
         # Such a row is informational; independent named institutions are mandatory.
         if not is_system_aggregate and not b1_ok:
-            raise RuntimeError(f"B1 TOTAL ACTIVOS no concilia con el XLSX para {code} {name}")
+            detail = [(c.get("sum_of_source_fields_pesos"), len(c.get("matches_xlsx", [])))
+                      for c in tieout.get("b1_total_assets_account", [])]
+            xlsx_rows = [
+                r.get("row_number") for r in workbook_rows
+                if normalize_name(r.get("sheet")) == normalize_name(BALANCE_SHEET)
+                and any(normalize_name(name) in normalize_name(v) for v in r.get("values", []) if isinstance(v, str))
+            ]
+            raise RuntimeError(
+                f"B1 TOTAL ACTIVOS no concilia con el XLSX para {code} {name}; "
+                f"cuentas 100000000 ZIP (pesos, coincidencias)={detail}; filas XLSX con el nombre={xlsx_rows[:5]}"
+            )
         if not is_system_aggregate and not r1_ok:
             raise RuntimeError(f"R1 no concilia una cuenta de resultado clave con el XLSX para {code} {name}")
         institution_checks.append({
