@@ -100,8 +100,16 @@ def main() -> None:
     ap.add_argument("--desde", default="2022-01")
     ap.add_argument("--hasta", default="2026-07")
     ap.add_argument("--paso", type=int, default=1)
+    ap.add_argument("--xlsx", default="", help="PERIODO:NOMBRE para volcar filas del Excel")
     ap.add_argument("--modelos", default="", help="Períodos separados por coma: volcar modelos de cuentas")
     a = ap.parse_args()
+    if a.xlsx:
+        per, name = a.xlsx.split(":", 1)
+        text = dump_xlsx_rows(per, name).replace("%", "%25")
+        print(text)
+        for i in range(0, min(len(text), 28000), CHUNK):
+            print(f"::warning title=XLSX::" + text[i:i + CHUNK].replace("\n", "%0A"), flush=True)
+        return
     if a.modelos:
         lines = []
         for per in a.modelos.split(","):
@@ -127,5 +135,25 @@ def main() -> None:
         print(f"::warning title=HIST {i}/{len(chunks)}::" + c.replace("\n", "%0A"), flush=True)
 
 
+def dump_xlsx_rows(period: str, needle: str) -> str:
+    """Filas del Excel CMF que contienen `needle` (hojas de balance y resultados)."""
+    from openpyxl import load_workbook
+    from bancos.scripts.extract_cmf_bank_lines import normalize_name
+    url, _ = find_source(XLSX_INDEX, period, ".xlsx")
+    wb = load_workbook(BytesIO(fetch(url, MAX_FILE)), read_only=True, data_only=True)
+    out = [period]
+    for ws in wb.worksheets:
+        if "bancos" not in ws.title.lower():
+            continue
+        for n, row in enumerate(ws.iter_rows(values_only=True), start=1):
+            vals = [v for v in row if v is not None]
+            if n <= 6 or any(normalize_name(needle) in normalize_name(v) for v in vals if isinstance(v, str)):
+                out.append(f"{ws.title.strip()}#{n}: {vals[:10]}")
+    wb.close()
+    return "\n".join(out)
+
+
 if __name__ == "__main__":
     main()
+
+
