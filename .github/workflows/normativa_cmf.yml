@@ -78,7 +78,17 @@ jobs:
             echo 'Feed y estado sin cambios.'
           else
             git commit -m "CMF: actualizar novedades normativas"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
+            # Otros workflows actualizan esta misma rama; rebasar la salida
+            # sobre el último tip evita perder el feed por una carrera de push.
+            for intento in 1 2 3; do
+              git fetch --deepen=50 origin "${GITHUB_REF_NAME}"
+              git rebase FETCH_HEAD
+              if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+                exit 0
+              fi
+              echo "Push concurrente rechazado (intento ${intento}/3)."
+            done
+            exit 1
           fi
 
 
