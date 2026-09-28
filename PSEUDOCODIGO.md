@@ -261,10 +261,21 @@ FFMM  scripts/actualizar_carteras.py  (workflow ffmm_carteras.yml: días 8, 18 y
   01  registro fondos activos (fm_ident2.php)          → ffmm_registro_fondos
   01b universo vigentes + históricos                   → ffmm_registro_fondos_universo (lo usa pipelines/xml_eeff)
 
-FI
-  cartera_inversiones/extract_cartera_fi.FIIExtractor: XML IFRS CMF N/E/M/… → fi_cartera_nacional/extranjera/derivados/...
-  repos/scrape_repos_fi_cmf → normalize_repos_fi (RUT_MAP contrapartes, ISIN/nemo, fechas) → export (parquet+json+data_bundles.js)
-  01 universo FI  → 02 REPO histórico (VRC/CRV)  → 03 EEFF desde PDF → 04 auditoría
+FI    scripts/actualizar_carteras.py  (workflow fi_carteras.yml: días 9, 19 y 29; incremental, --minutos 270)
+  registro CMF (consulta.php FINRE + FIRES, vigentes y no vigentes) en cada corrida
+  para cada trimestre pendiente según docs/outputs/fi/manifest.json (desde 2020-03; espera 75 días,
+  100 en diciembre):
+      por fondo: ifrs_cartera_{nac,ext,met_part,bie_rai,fut_fw,op}.php + ifrs_informe_vrc_crv.php
+          (12 hilos; trimestres recientes: vigentes + los que reportaron el anterior)
+      encabezado exacto o error; números 1.234.567,89 y fechas DD/MM/AAAA; nada se rellena con ceros
+      suma de cada columna de montos = fila TOTAL de la CMF (descuadre en > 2 % de los fondos → no publica)
+      > 1 % de filas ilegibles o páginas inesperadas → no publica
+      completitud: fondos con cartera ≥ 90 % del trimestre anterior; si no → esperar
+      escribir: cartera_nacional un archivo por trimestre, resto uno por año (_miles_mf = miles de la
+                moneda funcional, leída del informe de pactos)
+      maestro_fondos_inversion.parquet (registro + moneda + primer/último trimestre con cartera)
+      fi_registro_fondos_universo.json (lo usa pipelines/xml_eeff)
+      confirmación: commit de datos, cherry-pick sobre la rama al día + --solo-data-manifest
 ```
 
 ---
@@ -400,7 +411,7 @@ python -m scripts.preview_no_cache --port 8000      # sirve docs/ en 0.0.0.0:800
 requisitos del navegador: acceso a cdn.jsdelivr.net (DuckDB-Wasm 1.28.0) y fonts.googleapis.com
 ```
 
-Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local), `standardize_schema_keys.py` (PK/FK/IDs), `verify_joins.py`, `orchestrate_overnight_market_pipeline.py` (FFMM+FI nocturno).
+Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local). (`standardize_schema_keys.py`, `verify_joins.py` y `orchestrate_overnight_market_pipeline.py` se eliminaron con los pipelines antiguos de FFMM y FI.)
 
 ---
 

@@ -1,38 +1,31 @@
-# Pipelines Automáticos (ETL / Autonomous Scrapers)
+# Publicaciones automáticas (GitHub Actions)
 
-Este directorio cataloga y documenta los flujos de extracción y procesamiento que se ejecutan **100% de manera autónoma por código**, sin requerir intervención manual ni descargas asistidas.
+Inventario de todo lo que se actualiza solo. Regla común: cada workflow corre **3 veces al mes**
+(salvo macro, que es diario), es **incremental** (lo ya publicado y cerrado no se vuelve a
+descargar) y **fail-closed** (un período que no pasa la validación no se publica; se reintenta en
+la corrida siguiente). Tras publicar en `main`, el mismo workflow despliega GitHub Pages.
 
----
-
-## 1. Principio Metodológico
-- **Autonomía**: Cada script se conecta a un endpoint público, API REST/SOAP o repositorio de archivos estructurados (CSV, TXT, XML, ZIP de CMF/BCCh/SPensiones) y genera tablas Parquet normalizadas.
-- **Reproducibilidad**: Se pueden programar mediante cron jobs o GitHub Actions con variables de entorno estándar.
-- **Validación Automática**: Todos los pipelines aplican control de tipos, validación de RUTs (Módulo 11) y cuadratura contable.
-
----
-
-## 2. Inventario de Sectores y Pipelines Autónomos
-
-| Sector / Cobertura | Archivo de Origen | Frecuencia | Script Principal | Salida Canónica |
+| Sector | Fuente | Días (UTC) | Script | Salida |
 | :--- | :--- | :--- | :--- | :--- |
-| **Compañías de Seguros (Vida y Generales)** | CMF Circular 1835 (cartera de inversiones, ficha técnica oficial) | Mensual · workflow `seguros_carteras.yml` 3 veces al mes, incremental | `seguros/scripts/actualizar_carteras.py` | `docs/outputs/seguros/` |
-| **Fondos Mutuos** | CMF Circular 1333 (cartera nacional, extranjera, futuros/forwards y opciones) | 3 veces al mes (8, 18, 28), incremental | `ffmm/scripts/actualizar_carteras.py` (workflow `ffmm_carteras.yml`) | `docs/outputs/ffmm/` |
-| **Fondos de Inversión** | CMF Circular 1835 (Activos y Repos) | Trimestral / Mensual | `fi/cartera_inversiones/scripts/process_fi.py` | `docs/fi/cartera_inversiones/outputs/` |
-| **Fondos de Pensiones** | SPensiones (Archivos ZIP históricos y mensuales) | Mensual | `pensiones/scripts/pipeline_stream_history.py` | `docs/outputs/pensiones/` |
-| **Banca Comercial** | CMF Balances y BCCh Derivados F099 | Mensual | `bancos/scripts/process_bancos.py` | `docs/outputs/bancos/` |
-| **Macroeconomía & Tasas** | BCCh (Base de Datos Estadísticos SIETE) | Mensual / Diario | `macro/scripts/pipeline_stream_macro_bcch.py` | `docs/outputs/macro/` |
-| **Factoring & Leasing** | Solo lista de entidades; extracción de balances y notas suspendida | Bajo revisión | `factoring_leasing/scripts/` (laboratorio, publicación bloqueada) | `docs/outputs/factoring_leasing/factoring_leasing_maestro.*` |
-| **Corredoras de Bolsa** | CMF Estados Financieros IFRS | Trimestral | `corredoras_bolsa/scripts/stream_cmf_corredoras.py` | `docs/outputs/corredoras_bolsa/` |
-| **Sociedades Securitizadoras** | CMF Balances IFRS y Ley 18.045 | Trimestral | `securitizadoras/scripts/stream_cmf_securitizadoras.py` | `docs/outputs/securitizadoras/` |
-| **Cajas de Compensación** | SUSESO / CMF Registro Oficial | Anual / Trimestral | `cajas_compensacion/scripts/stream_ccaf.py` | `docs/outputs/cajas_compensacion/` |
-| **Administradoras de Fondos (AGF)** | CMF Ley 20.712 Balances IFRS | Trimestral | `agf/scripts/stream_cmf_agf.py` | `docs/outputs/agf/` |
-| **Sistemas de Pago** | BCCh Tráfico LBTR/CCA y Balances CMF | Mensual / Trimestral | `sistemas_pago/scripts/stream_sistemas_pago.py` | `docs/outputs/sistemas_pago/` |
-| **FinTech** | CMF Registro RPSF (Ley 21.521) | Mensual | `fintech/scripts/stream_cmf_fintech.py` | `docs/outputs/fintech/` |
+| Bancos | CMF, archivos mensuales B1/B2/R1 | 1, 11, 21 | `bancos/scripts/publish_cmf_bank_period.py` (`bancos_cmf_mensual.yml`) | `docs/outputs/bancos/` |
+| AGF, securitizadoras, CCAF | CMF, TXT trimestral de estados IFRS de todas las sociedades | 2, 12, 22 | `pipelines/ifrs_sectores/actualizar.py` (`ifrs_sectores.yml`) | `docs/outputs/{agf,securitizadoras,cajas_compensacion}/` |
+| Factoring y leasing | CMF, TXT trimestral de estados IFRS | 3, 13, 23 | `factoring_leasing/scripts/backfill_ifrs.py` + `publish_backfill.py` (`factoring_leasing_backfill.yml`) | `docs/outputs/factoring_leasing/` |
+| Corredores de bolsa y agentes de valores | CMF, Excel FECU IFRS trimestral de intermediarios | 6, 16, 26 | `corredoras_bolsa/scripts/actualizar_eeff.py` (`corredoras_eeff.yml`) | `docs/outputs/corredoras_bolsa/` |
+| Seguros (vida y generales) | CMF, Circular 1835 (cartera de inversiones, archivo mensual) | 7, 17, 27 | `seguros/scripts/actualizar_carteras.py` (`seguros_carteras.yml`) | `docs/outputs/seguros/` |
+| Fondos mutuos | CMF, Circular 1333 (cartera mensual) | 8, 18, 28 | `ffmm/scripts/actualizar_carteras.py` (`ffmm_carteras.yml`) | `docs/outputs/ffmm/` |
+| Fondos de inversión | CMF, informes IFRS trimestrales de cartera y pactos de cada fondo | 9, 19, 29 | `fi/scripts/actualizar_carteras.py` (`fi_carteras.yml`) | `docs/outputs/fi/` |
+| Listas de entidades (AGF, securitizadoras, corredores, fintech) | Registros públicos CMF (consulta.php) | 10, 20, 30 | `pipelines/entidades/actualizar_listas.py` (`entidades.yml`) | listas `*_maestro` + `docs/outputs/entidades/novedades.json` |
+| Macro | Banco Central (API SIETE) | diario | `macro/scripts/daily_macro.py` (`macro.yml`) | `docs/outputs/macro/` |
 
----
+Entidades nuevas: además de `entidades.yml`, FI regenera su registro completo en cada corrida;
+FFMM y seguros construyen su lista con los fondos / compañías que reportan; los actualizadores
+IFRS y de corredores avisan (`::notice::`) de quien reporta sin estar en la lista.
 
-## 3. Ejecución y Auditoría
-Para validar la totalidad de las bases generadas automáticamente:
+Sin actualización periódica (solo lista de entidades u otra razón): pensiones (lista de AFP),
+cooperativas, fintech (solo lista, vía `entidades.yml`), sistemas de pago, patrimonios separados
+(balance desde planilla manual, 2014–2025).
+
+Auditoría de la web completa:
 ```bash
-python scripts/audit_web_full.py
+python scripts/audit_navigation.py && python scripts/audit_web_full.py
 ```

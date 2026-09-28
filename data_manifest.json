@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
   "updated_at": "2026-09-28",
-  "total_tables": 33,
-  "total_records": 6485027,
+  "total_tables": 31,
+  "total_records": 5650077,
   "classification": {
     "automatico": "Extracción y procesamiento 100% por código autónomo (APIs, scrapers, normalizadores)",
     "manual": "Extracción asistida o transcripción de notas y reportes no estructurados (ej. NotebookLM)"
@@ -103,38 +103,6 @@
       "registros_reales": 1129,
       "descripcion": "Maestro de Fondos de Inversión públicos y privados (FINRE y FIRES).",
       "origen": "CMF — Registro Público de Fondos de Inversión Públicos y Privados (FINRE y FIRES) y Sociedades Administradoras Generales de Fondos (AGF)."
-    },
-    {
-      "id": "fi_nacional",
-      "name": "fi.cartera_nacional",
-      "view_name": "fi_nacional",
-      "sector": "fi",
-      "sector_label": "Fondos de Inversión",
-      "norma": "Cartera de Inversión / IFRS CMF",
-      "corte": "2026-03",
-      "frescura": "Al dia (2026-03)",
-      "modo": "Automático",
-      "ultima_actualizacion": "2026-09-23",
-      "file_parquet": "outputs/fi/fi_cartera_nacional.parquet",
-      "registros_reales": 833584,
-      "descripcion": "Detalle de cartera de instrumentos nacionales en fondos de inversión bajo normas contables IFRS.",
-      "origen": "CMF — Carteras Trimestrales de Fondos de Inversión (Reporte normativo de títulos de deuda y capital nacional bajo IFRS)."
-    },
-    {
-      "id": "fi_repos",
-      "name": "fi.repos_vrc_crv",
-      "view_name": "fi_repos",
-      "sector": "fi",
-      "sector_label": "Fondos de Inversión",
-      "norma": "CMF VRC / CRV IFRS",
-      "corte": "2026-03",
-      "frescura": "Al dia (2014-03 a 2026-03)",
-      "modo": "Automático",
-      "ultima_actualizacion": "2026-09-23",
-      "file_parquet": "outputs/fi/fi_repos_vrc_crv.parquet",
-      "registros_reales": 1366,
-      "descripcion": "Operaciones de Venta con Compromiso de Retrocompra (VRC) y Compra con Retroventa (CRV) de 37 fondos de inversión.",
-      "origen": "CMF — Registro de Operaciones con Pacto de Fondos de Inversión (Reportes de operaciones VRC y CRV a través de AGFs)."
     },
     {
       "id": "afp_maestro",
