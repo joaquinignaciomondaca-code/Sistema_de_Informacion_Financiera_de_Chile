@@ -1267,61 +1267,6 @@ const EXPLORER_TREE = [
     ]
   },
   {
-    id: "group_retail_financiero",
-    type: "group",
-    label: "RETAIL FINANCIERO (CREDITO NO BANCARIO / CMF)",
-    badges: [
-      { type: "entities", text: "17 Entidades", title: "Emisores de tarjetas no bancarias, prepago y matrices de retail cotizadas" },
-      { type: "data", text: "207 Datos", title: "Solvencia patrimonial, activos, efectivo y resultados de matrices de retail" }
-    ],
-    status: "active",
-    children: [
-      {
-        id: "sector_retail_financiero",
-        type: "sector",
-        label: "Tarjetas Comerciales, Prepago y Matrices de Retail",
-        sector: "retail_financiero",
-        children: [
-          {
-            id: "cat_retail_maestro",
-            type: "circular",
-            label: "Lista de Entidades",
-            badge: "17 Entidades",
-            badgeType: "entities",
-            status: "active",
-            sector: "retail_financiero",
-            chips: [
-              { label: "Catálogo Emisores y Matrices de Retail", query: "SELECT rut_completo, razon_social, nombre_comercial, tipo_entidad_cmf, grupo_controlador FROM retail_financiero_maestro ORDER BY segmento_mercado, razon_social;" },
-              { label: "Emisores por Segmento de Mercado", query: "SELECT segmento_mercado, count(*) as total_entidades FROM retail_financiero_maestro GROUP BY segmento_mercado ORDER BY total_entidades DESC;" },
-              { label: "Emisores de Prepago y Crédito Digital", query: "SELECT rut_completo, razon_social, nombre_comercial, tipo_entidad_cmf, comuna FROM retail_financiero_maestro WHERE tipo_entidad_cmf IN ('TCEEM', 'TPEEM');" }
-            ],
-            tables: [
-              { id: "retail_financiero_maestro", name: "retail_financiero.lista_entidades", rows: "17 entidades", file: "outputs/retail_financiero/retail_financiero_maestro.parquet" }
-            ]
-          },
-          {
-            id: "circ_retail_balances",
-            type: "circular",
-            label: "Balances y Solvencia · IFRS Trimestral",
-            badge: "190 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "retail_financiero",
-            chips: [
-              { label: "Ranking Activos Totales Cierre Reciente", query: "SELECT periodo, razon_social, total_activos_m_clp, patrimonio_neto_m_clp, total_activos_m_usd FROM retail_financiero_balances WHERE periodo = (SELECT MAX(periodo) FROM retail_financiero_balances) ORDER BY total_activos_m_clp DESC;" },
-              { label: "Utilidad Neta del Ejercicio: Falabella vs Cencosud vs Ripley", query: "SELECT periodo, razon_social, ganancia_perdida_ejercicio_m_clp, total_activos_m_clp FROM retail_financiero_balances WHERE razon_social LIKE '%FALABELLA%' OR razon_social LIKE '%CENCOSUD%' OR razon_social LIKE '%RIPLEY%' ORDER BY periodo DESC, total_activos_m_clp DESC LIMIT 15;" },
-              { label: "Efectivo y Caja Disponible (MM$ CLP)", query: "SELECT periodo, razon_social, efectivo_y_equivalentes_m_clp, total_activos_m_clp, round(efectivo_y_equivalentes_m_clp / NULLIF(total_activos_m_clp, 0) * 100, 1) as pct_caja FROM retail_financiero_balances WHERE periodo = (SELECT MAX(periodo) FROM retail_financiero_balances) ORDER BY efectivo_y_equivalentes_m_clp DESC;" },
-              { label: "Evolución Trimestral Patrimonio Neto (Hites vs Tricot vs ABC)", query: "SELECT periodo, razon_social, patrimonio_neto_m_clp, ganancia_perdida_ejercicio_m_clp FROM retail_financiero_balances WHERE razon_social LIKE '%HITES%' OR razon_social LIKE '%TRICOT%' OR razon_social LIKE '%ABC%' ORDER BY periodo DESC, razon_social LIMIT 18;" }
-            ],
-            tables: [
-              { id: "retail_financiero_balances", name: "retail_financiero.balances", rows: "190 registros", file: "outputs/retail_financiero/retail_financiero_balances.parquet" }
-            ]
-          }
-        ]
-      }
-    ]
-  },
-  {
     id: "group_fintech",
     type: "group",
     label: "FINTECH & FINANZAS ABIERTAS (LEY N° 21.521 / CMF)",

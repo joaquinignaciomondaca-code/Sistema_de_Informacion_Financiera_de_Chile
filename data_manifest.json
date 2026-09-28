@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "updated_at": "2026-09-28",
   "total_tables": 65,
-  "total_records": 13600781,
+  "total_records": 15493717,
   "classification": {
     "automatico": "Extracción y procesamiento 100% por código autónomo (APIs, scrapers, normalizadores)",
     "manual": "Extracción asistida o transcripción de notas y reportes no estructurados (ej. NotebookLM)"
@@ -793,38 +793,6 @@
       "origen": "Banco Central de Chile (BCCh) - Base de Datos Estadísticos (SIETE) e ISiP."
     },
     {
-      "id": "retail_financiero_maestro",
-      "name": "retail.maestro",
-      "view_name": "retail_financiero_maestro",
-      "sector": "retail_financiero",
-      "sector_label": "Retail Financiero",
-      "norma": "CMF (Registros RVEMI, TCEEM, TPEEM, BCSAG)",
-      "corte": "Oficial CMF 2026",
-      "frescura": "Catálogo Vigente",
-      "modo": "Automático",
-      "ultima_actualizacion": "2026-09-23",
-      "file_parquet": "outputs/retail_financiero/retail_financiero_maestro.parquet",
-      "registros_reales": 17,
-      "descripcion": "Catálogo maestro oficial de los emisores no bancarios de tarjetas de crédito y prepago, sociedades de apoyo al giro y matrices cotizadas de retail financiero supervisadas por la CMF. Incluye Falabella, Cencosud, Ripley, Hites, Tricot, abcvisa, Tenpo, Tapp Los Andes y Prepago Los Héroes.",
-      "origen": "Comisión para el Mercado Financiero (CMF) — Registros de Entidades Supervisadas."
-    },
-    {
-      "id": "retail_financiero_balances",
-      "name": "retail.balances",
-      "view_name": "retail_financiero_balances",
-      "sector": "retail_financiero",
-      "sector_label": "Retail Financiero",
-      "norma": "Norma Internacional de Información Financiera (IFRS) / CMF",
-      "corte": "Serie Trimestral Histórica (2018-2026)",
-      "frescura": "Actualización Trimestral CMF",
-      "modo": "Automático",
-      "ultima_actualizacion": "2026-09-23",
-      "file_parquet": "outputs/retail_financiero/retail_financiero_balances.parquet",
-      "registros_reales": 190,
-      "descripcion": "Serie histórica de balances consolidados y estados de resultados bajo norma IFRS correspondientes a las matrices cotizadas de retail financiero (Falabella, Cencosud, Ripley, Hites, Tricot, ABC). Monitorea solvencia, dimensión de activos, efectivo y caja disponible, endeudamiento total y utilidad neta con identidad contable 100% exacta.",
-      "origen": "Comisión para el Mercado Financiero (CMF) — Estados Financieros Consolidados IFRS Trimestrales."
-    },
-    {
       "id": "fintech_rpsf_maestro",
       "name": "fintech.rpsf_maestro",
       "view_name": "fintech_rpsf_maestro",
@@ -1039,15 +1007,15 @@
       "sector": "bancos",
       "sector_label": "Banca Comercial",
       "norma": "CMF — Manual del Sistema de Información para bancos (B1/MB1, B2/MB2, R1/MR1)",
-      "corte": "2026-07 a 2026-07",
+      "corte": "2022-01 a 2026-07",
       "frescura": "Actualización mensual validada contra reporte CMF",
       "modo": "Automático con gate de publicación",
       "ultima_actualizacion": "2026-09-28",
-      "file_parquet": "outputs/bancos/cmf_b1_b2_r1/2026-07/lineas.parquet",
+      "file_parquet": "outputs/bancos/cmf_b1_b2_r1/2026-06/lineas.parquet",
       "files_manifest": "outputs/bancos/cmf_b1_b2_r1/manifest.json",
-      "registros_reales": 35028,
+      "registros_reales": 1927964,
       "descripcion": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Campos monetarios originales sin reinterpretación; revisar tipo_linea antes de agregar cuentas jerárquicas.",
-      "origen": "https://www.cmfchile.cl/portal/estadisticas/626/articles-113067_recurso_1.zip?ts=1787944720"
+      "origen": "https://www.cmfchile.cl/portal/estadisticas/626/articles-112240_recurso_1.zip?ts=1785448346"
     }
   ]
 }
