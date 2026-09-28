@@ -80,7 +80,13 @@ def dump_models(period: str) -> str:
                 except UnicodeDecodeError:
                     enc = "latin1"
                 lines = raw.decode("latin-1", "replace").splitlines()
-                out.append(f"[{info.filename} enc={enc} n={len(lines)}] " + " ¶ ".join(repr(l[:110]) for l in lines[:4]))
+                if "leame" in base:
+                    sel = [l for l in lines if l.strip()][:45]
+                elif base.startswith("modelo"):
+                    sel = lines[3:16] + ["…"] + lines[-3:]
+                else:
+                    sel = lines[:3]
+                out.append(f"[{info.filename} enc={enc} n={len(lines)}] " + " ¶ ".join(repr(l[:100]) for l in sel))
     return "\n".join(out)
 
 
