@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "updated_at": "2026-09-28",
   "total_tables": 65,
-  "total_records": 14616071,
+  "total_records": 14861267,
   "classification": {
     "automatico": "Extracción y procesamiento 100% por código autónomo (APIs, scrapers, normalizadores)",
     "manual": "Extracción asistida o transcripción de notas y reportes no estructurados (ej. NotebookLM)"
@@ -1043,11 +1043,11 @@
       "frescura": "Actualización mensual validada contra reporte CMF",
       "modo": "Automático con gate de publicación",
       "ultima_actualizacion": "2026-09-28",
-      "file_parquet": "outputs/bancos/cmf_b1_b2_r1/2024-05/lineas.parquet",
+      "file_parquet": "outputs/bancos/cmf_b1_b2_r1/2024-12/lineas.parquet",
       "files_manifest": "outputs/bancos/cmf_b1_b2_r1/manifest.json",
-      "registros_reales": 1050318,
+      "registros_reales": 1295514,
       "descripcion": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Campos monetarios originales sin reinterpretación; revisar tipo_linea antes de agregar cuentas jerárquicas.",
-      "origen": "https://www.cmfchile.cl/portal/estadisticas/626/articles-82604_recurso_1.zip?ts=1719521742"
+      "origen": "https://www.cmfchile.cl/portal/estadisticas/626/articles-90160_recurso_1.zip?ts=1738273645"
     }
   ]
 }
