@@ -92,8 +92,6 @@ const DATA_VIEWER_CATALOG = [
       { id: "factoring_leasing_balance_serie_ifrs_cmf", name: "factoring_leasing.balance_serie_ifrs_cmf (28,938 cuentas; no cotejo integral)" },
       { id: "factoring_leasing_resultados_serie_ifrs_cmf", name: "factoring_leasing.resultados_serie_ifrs_cmf (21,464 cuentas; no cotejo integral)" },
   // END AUTO FL IFRS SERIES VIEWER
-      { id: "factoring_leasing_eeff_muestra_cmf", name: "factoring_leasing.balance_muestra_cmf (2 filas cotejadas; no es el sector)" },
-      { id: "factoring_leasing_resultados_muestra_cmf", name: "factoring_leasing.resultados_muestra_cmf (2 filas cotejadas; acumulado desde enero)" }
     ]
   },
   {

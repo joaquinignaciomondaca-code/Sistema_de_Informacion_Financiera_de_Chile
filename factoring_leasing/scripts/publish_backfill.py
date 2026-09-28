@@ -100,6 +100,26 @@ def query(name):
             'ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;')
 
 
+# En los resultados IFRS la etiqueta "Ganancia (pérdida)" aparece hasta 3 veces por estado, siempre
+# con el mismo valor: en ERFG/ERNG tras operaciones continuadas (repeticion_contexto = 1) y otra vez
+# como total de la atribución controladora/no controladora (= 2); y en ERI como línea inicial del
+# resultado integral. Sumarla sin filtrar triplica la utilidad. Se conserva literal (no se deduplica)
+# y se entregan consultas que eligen una sola fila por estado.
+PROFIT_LABEL = 'ganancia (pérdida)'
+
+
+def profit_queries(name):
+    return [
+        ('Utilidad del período · 1 fila por estado',
+         f"SELECT periodo, rut, nombre_reportado, tipo_balance, estado_financiero, valor_archivo AS ganancia_perdida "
+         f"FROM {name} WHERE lower(cuenta) = '{PROFIT_LABEL}' AND estado_financiero IN ('ERFG', 'ERNG') "
+         "AND repeticion_contexto = 1 ORDER BY periodo DESC, rut;"),
+        ("Dónde se repite 'Ganancia (pérdida)'",
+         f"SELECT estado_financiero, repeticion_contexto, count(*) AS filas, count(DISTINCT (periodo, rut, tipo_balance)) AS estados "
+         f"FROM {name} WHERE lower(cuenta) = '{PROFIT_LABEL}' GROUP BY ALL ORDER BY estado_financiero, repeticion_contexto;"),
+    ]
+
+
 def sidebar_block(meta):
     period = f"{meta['primer_periodo'][:4]}-{meta['primer_periodo'][4:]}–{meta['ultimo_periodo'][:4]}-{meta['ultimo_periodo'][4:]}"
     badge = f"{meta['periodos_indice']} cierres · {len(meta['ruts_con_datos_total'])} RUT"
@@ -111,11 +131,15 @@ def sidebar_block(meta):
         ('fl_resultados_serie_ifrs_cmf_folder', f'Resultados · Serie CMF ({period})', RESULTS,
          'factoring_leasing.resultados_serie_ifrs_cmf', meta['filas_resultados_total'],
          f'outputs/factoring_leasing/{RESULTS}.parquet', 'Cuentas de resultados CMF')]:
+        chip_list = [(sql_label + ' · primeros 500', query(table_id))]
+        if table_id == RESULTS:
+            chip_list += profit_queries(table_id)
+        chips = ',\n                    '.join(f'{{ label: {js(lbl)}, query: {js(sql)} }}' for lbl, sql in chip_list)
         entries.append(f'''          {{
             id: "{cid}", type: "circular",
             label: {js(label)}, badge: {js(badge)}, badgeType: "data", status: "active",
             sector: "factoring_leasing",
-            chips: [{{ label: {js(sql_label + ' · primeros 500')}, query: {js(query(table_id))} }}],
+            chips: [{chips}],
             tables: [{{ id: "{table_id}", name: {js(f'{table_name} ({rows:,} cuentas; no cotejo integral)')},
                        rows: {js(f'{rows:,} cuentas · {meta["periodos_indice"]} cierres · extracción sin cotejo integral')},
                        file: {js(file)} }}]
@@ -152,8 +176,11 @@ def dictionary_block(meta, run_id):
         'valor_texto_original': 'Texto literal de la cifra, preservado siempre.',
         'valor_es_entero': 'Control de interpretación numérica; false no significa cero.',
         'taxonomia': 'Código literal de taxonomía CMF.',
-        'estado_financiero': 'Prefijo ESF para balance y ER para resultados.',
-        'repeticion_contexto': 'Ordinal para conservar etiquetas/contextos repetidos, sin sumarlos.',
+        'estado_financiero': ('Código CMF del estado: ESF C/NC = situación financiera; ERFG = resultados por función; '
+                              'ERNG = resultados por naturaleza; ERI = resultado integral.'),
+        'repeticion_contexto': ('Ordinal de la misma etiqueta dentro del estado; se conserva sin sumar. En resultados, '
+                                '"Ganancia (pérdida)" aparece en ERFG/ERNG con ordinal 1 y 2 y otra vez al inicio de ERI, '
+                                'con el mismo valor: para la utilidad del período usar estado ERFG/ERNG y ordinal 1.'),
         'fuente_archivo': 'URL pública CMF que originó la fila.',
         'sha256_archivo': 'Huella de la descarga usada.',
         'identidad_nombre_coincide_catalogo': 'Coincidencia de nombre normalizada; señal, no auditoría histórica.',

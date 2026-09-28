@@ -1,4 +1,4 @@
-"""Las muestras cotejadas y la serie CMF automática coexisten con el maestro."""
+"""Web de Factoring & Leasing: maestro + serie CMF; las muestras cotejadas quedan solo como archivo de auditoría."""
 import json
 import shutil
 import tempfile
@@ -63,8 +63,13 @@ class PublicationTests(unittest.TestCase):
         manifest = json.loads((ROOT / 'data_manifest.json').read_text(encoding='utf-8'))
         sector = [entry['id'] for entry in manifest['tables']
                   if entry.get('sector') == 'factoring_leasing']
-        expected = ['factoring_leasing_maestro', 'factoring_leasing_eeff_muestra_cmf',
-                    'factoring_leasing_resultados_muestra_cmf']
+        # Las muestras cotejadas (2 filas) repetían cifras de la serie: fuera del catálogo y de la web.
+        expected = ['factoring_leasing_maestro']
+        samples = ('factoring_leasing_eeff_muestra_cmf', 'factoring_leasing_resultados_muestra_cmf')
+        for file in site_files:
+            source = (ROOT / 'docs/js' / file).read_text(encoding='utf-8')
+            for name in samples:
+                self.assertNotIn(name, source, file)
         full_ids = ['factoring_leasing_balance_serie_ifrs_cmf',
                     'factoring_leasing_resultados_serie_ifrs_cmf']
         if (OUTPUT / f'{full_ids[0]}.parquet').exists():
