@@ -279,13 +279,9 @@ patrón:
       → docs/outputs/<sector>/*_balance_resumen.parquet + .json (+ maestro)
   audit_*.run_audit(): DV mód.11, PK únicas, nulos, activos = pasivos + patrimonio, cobertura temporal
 
-agf/                stream_cmf_agf (manual, sin Actions): lista AGF + EEFF IFRS trimestrales → agf/fuentes/agf_eeff_cmf.parquet
-                    publicar_agf_balance_resultados: valida (A = P + Pat, sin duplicados, RUT en maestro) y separa
-                      → agf_balance (activos, pasivos, patrimonio, efectivo…) + agf_resultados (ingresos acum. y del trimestre;
-                        gastos y ganancia NULL hasta la próxima corrida: antes no se capturaban por las tildes)
-                    audit_agf
-corredoras_bolsa/   01 universo → 02 EEFF + REPO → 03 audit ; stream_cmf_corredoras_series (50 trimestres 2014-03..2026-06)
-securitizadoras/    stream_cmf_securitizadoras (gestoras + lista de patrimonios separados)
+agf/                balance y resultados: ver §8a (automático). audit/lista: agf_maestro
+corredoras_bolsa/   01 universo (lista) ; balance y resultados: ver §8a (automático)
+securitizadoras/    balance y resultados de las gestoras: ver §8a (automático)
                     05_publicar_balance_patrimonios:
                       leer fuentes/balances_patrimonios_separados.xlsx (hoja Balance_por_cuenta)
                       descartar filas vacías y años < 2014 (2013 no está; 2010–2013 sin datos)
@@ -295,7 +291,7 @@ securitizadoras/    stream_cmf_securitizadoras (gestoras + lista de patrimonios 
                     audit_securitizadoras (gestoras, lista y balance de patrimonios separados)
 cooperativas/       01 maestro → 03 audit (solo lista de entidades)
                     (balances CMF en Excel retirados, ver §8b)
-ccaf/               build_ccaf_maestro ; pipeline_extract_ccaf_xbrl (XBRL CMF → solo ccaf_caratula_totales) ; audit
+ccaf/               build_ccaf_maestro (lista) ; balance y resultados: ver §8a (automático)
 retail_financiero/  stream_cmf_retail_financiero + audit
 sistemas_pago/      stream_sistemas_pago (solo maestro) + audit
 fintech/            stream_fintech_rpsf (registro RPSF Ley 21.521, solo maestro) + audit ; explore.py (roto, ver §11)
@@ -307,15 +303,41 @@ pipelines/manual/   ingest_manual_notes: plantillas CSV de notas transcritas →
 
 ---
 
+## 8a. Estados IFRS de AGF, securitizadoras, CCAF y corredoras — automático, 3 veces al mes
+```
+pipelines/ifrs_sectores/actualizar.py   (ifrs_sectores.yml, días 2, 12, 22)
+  índice estadisticas_ifrs.php → trimestres (2009-03..último); ver_archivo.php?inicio=P&termino=P = TXT con
+    TODAS las sociedades que envían EEFF XBRL: periodo;rut;nombre;I|C;moneda;cuenta;valor;taxonomía;estado
+  si el trimestre falla → mismo trimestre desde el archivo anual del índice
+  por línea: sector = RUT en la lista de entidades (agf, securitizadoras, ccaf) o nombre que calza
+             (ADMINISTRADORA GENERAL DE FONDOS | SECURITIZADORA | CAJA DE COMPENSACI) → en_lista_entidades=false
+  ESF* → <prefijo>_balance ; ER* → <prefijo>_resultados ; flujos (EFM*) no se publican
+  valor = entero literal en pesos (o USD); no entero → nulo + valor_no_numerico; repeticion = n-ésima vez de la cuenta
+  incremental: docs/outputs/ifrs_sectores/manifest.json. Trimestre > 150 días desde el cierre = cerrado, no se
+    vuelve a pedir; los recientes se releen (presentaciones tardías) y nunca pierden entidades ya publicadas
+  → docs/outputs/{agf,securitizadoras,cajas_compensacion}/<prefijo>_{balance,resultados}/<AAAA>.parquet + manifest
+  entidades del sector que reportan y no están en la lista → ::notice + manifest (entidades_fuera_de_lista_…)
+
+corredoras_bolsa/scripts/actualizar_eeff.py   (corredoras_eeff.yml, días 6, 16, 26)
+  intermediarios_ifrs1.php?xls=y&tiposociedad={1 corredores, 2 agentes}&mes1=MM&anno1=AAAA → Excel trimestral
+    (desde 2010-12): fila por sociedad, columna por cuenta FECU «11.01.00Nombre» (sin espacios, UTF-8 mal leído)
+  nombres legibles y nivel: versión HTML del mismo informe (xls=n), una vez por corrida
+  1x-2x → corredoras_bolsa_balance ; 30 → resultados ; 31-32 → otros resultados integrales ; 5x (flujo) no
+  30.00.00 se repite en el Excel → solo la primera aparición ; miles de pesos
+  mismo esquema incremental (manifest.json del sector, cerrado a 150 días)
+  controles: DV mód.11, fecha de cada fila = trimestre pedido, valores enteros; activos = pasivos + patrimonio
+    cuadra en 2.860 de 2.861 balances (el TXT IFRS: 2.934/2.935 AGF, 223/223 CCAF, 645/645 securitizadoras)
+```
+
 ## 8b. Cooperativas, CCAF, Sistemas de Pago y FinTech — recorte 2026-09-28
 ```
 Criterio: balances/resultados solo si salen de XML o XBRL oficial; si no, solo la lista de entidades.
 cooperativas : balances venían de planillas Excel CMF (Reporte Financiero y 02_extract) → RETIRADOS.
                Se borraron extract_cmf_coop_report, 02_extract, 04 nota efectivo, probe_coop_layout,
                sus tests y los workflows cooperativas_cmf_mensual.yml y coop_probe.yml. Queda cooperativas_maestro.
-ccaf         : ccaf_caratula_totales sale del XBRL CMF (safec_ifrs_verarchivo → .xbrl) → SE QUEDA (72 balances,
-               2019-12..2026-06). Nota 8 (efectivo, DAP, repos) y colocaciones de crédito social → RETIRADAS.
-               Se borraron build_ccaf_repos_enriquecido y ccaf/scripts/legacy.
+ccaf         : balance y resultados salen del TXT IFRS CMF, que es la exportación de los estados XBRL enviados
+               por las cajas (ver §8a); reemplazan a ccaf_caratula_totales (XBRL bajado a mano, retirado).
+               Nota 8 (efectivo, DAP, repos) y colocaciones de crédito social → RETIRADAS.
 sistemas_pago: solo sistemas_pago_maestro (balances y estadísticas BCCh retirados).
 fintech      : solo fintech_rpsf_maestro (servicios acreditados y roles de finanzas abiertas retirados).
 Los extractores que quedan ya no escriben las tablas retiradas; las auditorías sectoriales solo revisan lo publicado.

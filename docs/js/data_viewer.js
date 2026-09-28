@@ -81,15 +81,16 @@ const DATA_VIEWER_CATALOG = [
     tables: [
       { id: "corredoras_bolsa_registro_universo", name: "corredoras.registro_unico (120 entidades)" },
       { id: "corredoras_bolsa_maestro", name: "corredoras.lista_entidades (120 entidades)" },
-      { id: "corredoras_bolsa_caratula_eeff_historico", name: "corredoras.estados_financieros (621 balances)" },
-      { id: "corredoras_bolsa_balance_resumen", name: "corredoras.balance_resumen (621 balances)" }
+      { id: "corredoras_bolsa_balance", name: "corredoras.balance (2010-12–2026-06)" },
+      { id: "corredoras_bolsa_resultados", name: "corredoras.resultados (2010-12–2026-06)" }
     ]
   },
   {
     group: "Securitización · Sociedades Securitizadoras (CMF)",
     tables: [
       { id: "securitizadoras_maestro", name: "securitizadoras.lista_entidades (16 entidades)" },
-      { id: "securitizadoras_balance_resumen", name: "securitizadoras.balance_resumen (362 balances)" }
+      { id: "securitizadoras_balance", name: "securitizadoras.balance (2009-12–2026-06)" },
+      { id: "securitizadoras_resultados", name: "securitizadoras.resultados (2009-12–2026-06)" }
     ]
   },
   {
@@ -102,34 +103,35 @@ const DATA_VIEWER_CATALOG = [
   {
     group: "Cooperativas de Ahorro y Crédito (CMF)",
     tables: [
-      { id: "cooperativas_maestro", name: "cooperativas.lista_entidades (7 entidades)" },
+      { id: "cooperativas_maestro", name: "cooperativas.lista_entidades (7 entidades)" }
     ]
   },
   {
     group: "Cajas de Compensación (CCAF / CMF - SUSESO)",
     tables: [
       { id: "ccaf_maestro", name: "ccaf.lista_entidades (6 entidades)" },
-      { id: "ccaf_caratula_totales", name: "ccaf.balances (72 balances · 288 filas)" },
+      { id: "ccaf_balance", name: "ccaf.balance (2010-06–2026-06)" },
+      { id: "ccaf_resultados", name: "ccaf.resultados (2010-06–2026-06)" }
     ]
   },
   {
     group: "Administración de fondos · AGF (sociedades gestoras)",
     tables: [
       { id: "agf_maestro", name: "agf.lista_administradoras (68 entidades)" },
-      { id: "agf_balance", name: "agf.balance (1.572 balances)" },
-      { id: "agf_resultados", name: "agf.resultados (1.572 trimestres)" }
+      { id: "agf_balance", name: "agf.balance (2010-06–2026-06)" },
+      { id: "agf_resultados", name: "agf.resultados (2010-06–2026-06)" }
     ]
   },
   {
     group: "Sistemas de Pago (BCCh / CMF)",
     tables: [
-      { id: "sistemas_pago_maestro", name: "sistemas_pago.lista_entidades (12 entidades)" },
+      { id: "sistemas_pago_maestro", name: "sistemas_pago.lista_entidades (12 entidades)" }
     ]
   },
   {
     group: "FinTech & Finanzas Abiertas (Ley 21.521 / CMF)",
     tables: [
-      { id: "fintech_rpsf_maestro", name: "fintech.lista_entidades (262 entidades)" },
+      { id: "fintech_rpsf_maestro", name: "fintech.lista_entidades (262 entidades)" }
     ]
   }
 ];

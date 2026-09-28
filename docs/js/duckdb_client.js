@@ -59,13 +59,10 @@ const SEMANTIC_VIEWS = [
   // CORREDORAS DE BOLSA (CMF)
   { name: "corredoras_bolsa_registro_universo", file: "outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet" },
   { name: "corredoras_bolsa_maestro", file: "outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet" },
-  { name: "corredoras_bolsa_balance_resumen", file: "outputs/corredoras_bolsa/corredoras_bolsa_balance_resumen.parquet" },
-  { name: "corredoras_bolsa_caratula_eeff_historico", file: "outputs/corredoras_bolsa/corredoras_bolsa_caratula_eeff_historico.parquet" },
 
 
    // SECURITIZADORAS (CMF / Ley 18.045) - Gestoras & Resumen
    { name: "securitizadoras_maestro", file: "outputs/securitizadoras/securitizadoras_maestro.parquet" },
-   { name: "securitizadoras_balance_resumen", file: "outputs/securitizadoras/securitizadoras_balance_resumen.parquet" },
    { name: "patrimonios_separados_maestro", file: "outputs/securitizadoras/patrimonios_separados_maestro.parquet" },
    { name: "patrimonios_separados_balance", file: "outputs/securitizadoras/patrimonios_separados_balance.parquet" },
 
@@ -74,12 +71,17 @@ const SEMANTIC_VIEWS = [
 
   // CAJAS DE COMPENSACION (CCAF / SUSESO - Ley 18.833 / CMF)
   { name: "ccaf_maestro", file: "outputs/cajas_compensacion/ccaf_maestro.parquet" },
-  { name: "ccaf_caratula_totales", file: "outputs/cajas_compensacion/ccaf_caratula_totales.parquet" },
 
   // ADMINISTRADORAS GENERALES DE FONDOS (AGF / Ley 20.712)
   { name: "agf_maestro", file: "outputs/agf/agf_maestro.parquet" },
-  { name: "agf_balance", file: "outputs/agf/agf_balance.parquet" },
-  { name: "agf_resultados", file: "outputs/agf/agf_resultados.parquet" },
+  { name: "agf_balance", manifest: "outputs/agf/agf_balance/manifest.json" },
+  { name: "agf_resultados", manifest: "outputs/agf/agf_resultados/manifest.json" },
+  { name: "securitizadoras_balance", manifest: "outputs/securitizadoras/securitizadoras_balance/manifest.json" },
+  { name: "securitizadoras_resultados", manifest: "outputs/securitizadoras/securitizadoras_resultados/manifest.json" },
+  { name: "ccaf_balance", manifest: "outputs/cajas_compensacion/ccaf_balance/manifest.json" },
+  { name: "ccaf_resultados", manifest: "outputs/cajas_compensacion/ccaf_resultados/manifest.json" },
+  { name: "corredoras_bolsa_balance", manifest: "outputs/corredoras_bolsa/corredoras_bolsa_balance/manifest.json" },
+  { name: "corredoras_bolsa_resultados", manifest: "outputs/corredoras_bolsa/corredoras_bolsa_resultados/manifest.json" },
 
   // SISTEMAS DE PAGO (BCCh / CMF)
   { name: "sistemas_pago_maestro", file: "outputs/sistemas_pago/sistemas_pago_maestro.parquet" },

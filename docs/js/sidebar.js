@@ -130,40 +130,37 @@ const EXPLORER_TREE = [
             ]
           },
           {
-            id: "circ_agf_balance",
+            id: "cat_agf_balance",
             type: "circular",
-            label: "Balance (IFRS individual)",
-            badge: "1.572 Balances",
+            label: "Balance IFRS · CMF (2010-06–2026-06)",
+            badge: "65 trimestres",
             badgeType: "data",
             status: "active",
             sector: "agf",
             chips: [
-              { label: "Ranking por activos propios, último trimestre (MM$)", query: "SELECT periodo, razon_social, total_activos_mm_clp, total_pasivos_mm_clp, patrimonio_mm_clp, efectivo_equivalentes_mm_clp, otros_activos_financieros_mm_clp FROM agf_balance WHERE periodo = (SELECT max(periodo) FROM agf_balance) ORDER BY total_activos_mm_clp DESC LIMIT 15;" },
-              { label: "Evolución del sector por trimestre", query: "SELECT periodo, count(*) AS agf, round(sum(total_activos_mm_clp), 1) AS activos_mm_clp, round(sum(patrimonio_mm_clp), 1) AS patrimonio_mm_clp, round(sum(total_pasivos_mm_clp) / sum(patrimonio_mm_clp), 3) AS pasivo_sobre_patrimonio, round(sum(total_activos_mm_usd), 1) AS activos_mm_usd FROM agf_balance GROUP BY periodo ORDER BY periodo;" },
-              { label: "Liquidez: efectivo sobre activos, último trimestre", query: "SELECT razon_social, efectivo_equivalentes_mm_clp, total_activos_mm_clp, round(efectivo_equivalentes_mm_clp / NULLIF(total_activos_mm_clp, 0) * 100, 1) AS pct_efectivo FROM agf_balance WHERE periodo = (SELECT max(periodo) FROM agf_balance) ORDER BY total_activos_mm_clp DESC;" },
-              { label: "Otros activos financieros (coinversión en fondos propios)", query: "SELECT periodo, razon_social, otros_activos_financieros_mm_clp, total_activos_mm_clp, round(otros_activos_financieros_mm_clp / NULLIF(total_activos_mm_clp, 0) * 100, 1) AS pct_activos FROM agf_balance WHERE periodo = (SELECT max(periodo) FROM agf_balance) AND otros_activos_financieros_mm_clp > 0 ORDER BY otros_activos_financieros_mm_clp DESC;" }
+              { label: "Activos, pasivos y patrimonio por AGF, último trimestre (MM$)", query: "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM agf_balance WHERE periodo = (SELECT max(periodo) FROM agf_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;" },
+              { label: "Evolución del sector: activos totales por trimestre (MM$, CLP)", query: "SELECT periodo, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS activos_mm_clp FROM agf_balance WHERE cuenta = 'Total de activos' AND moneda = 'CLP' AND repeticion = 1 GROUP BY periodo ORDER BY periodo;" },
+              { label: "Balance completo de Banchile AGF, último trimestre", query: "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM agf_balance WHERE rut = '96767630' AND periodo = (SELECT max(periodo) FROM agf_balance WHERE rut = '96767630') ORDER BY tipo_balance, estado_financiero, orden;" }
             ],
             tables: [
-              { id: "agf_balance", name: "agf.balance", rows: "1.572 balances", file: "outputs/agf/agf_balance.parquet" }
+              { id: "agf_balance", name: "agf.balance", rows: "71.423 cuentas · un archivo por año", file: "", files: ["outputs/agf/agf_balance/manifest.json"] }
             ]
           },
           {
-            id: "circ_agf_resultados",
+            id: "cat_agf_resultados",
             type: "circular",
-            label: "Estado de Resultados (ingresos)",
-            badge: "1.572 Trimestres",
+            label: "Estado de Resultados IFRS · CMF (2010-06–2026-06)",
+            badge: "65 trimestres",
             badgeType: "data",
             status: "active",
             sector: "agf",
             chips: [
-              { label: "Ingresos anuales por AGF, 2025 (MM$)", query: "SELECT razon_social, ingresos_ordinarios_acum_mm_clp AS ingresos_2025_mm_clp, round(ingresos_ordinarios_acum_mm_clp / sum(ingresos_ordinarios_acum_mm_clp) OVER () * 100, 2) AS participacion_pct FROM agf_resultados WHERE periodo = '2025-12' ORDER BY ingresos_2025_mm_clp DESC LIMIT 20;" },
-              { label: "Ingresos del sector por año (cierres de diciembre)", query: "SELECT left(periodo, 4) AS anio, count(*) AS agf, round(sum(ingresos_ordinarios_acum_mm_clp), 1) AS ingresos_mm_clp FROM agf_resultados WHERE meses_acumulados = 12 GROUP BY anio ORDER BY anio;" },
-              { label: "Ingresos del trimestre, top 10 del último período", query: "SELECT periodo, razon_social, ingresos_ordinarios_trimestre_mm_clp, ingresos_ordinarios_acum_mm_clp, meses_acumulados FROM agf_resultados WHERE periodo = (SELECT max(periodo) FROM agf_resultados) ORDER BY ingresos_ordinarios_trimestre_mm_clp DESC NULLS LAST LIMIT 10;" },
-              { label: "Ingresos anuales sobre patrimonio, 2025", query: "SELECT r.razon_social, r.ingresos_ordinarios_acum_mm_clp AS ingresos_mm_clp, b.patrimonio_mm_clp, round(r.ingresos_ordinarios_acum_mm_clp / NULLIF(b.patrimonio_mm_clp, 0), 2) AS ingresos_sobre_patrimonio FROM agf_resultados r JOIN agf_balance b USING (rut, periodo) WHERE r.periodo = '2025-12' ORDER BY r.ingresos_ordinarios_acum_mm_clp DESC LIMIT 15;" },
-              { label: "Evolución de ingresos: Banchile, BTG, LarrainVial, Santander", query: "SELECT periodo, razon_social, ingresos_ordinarios_trimestre_mm_clp, ingresos_ordinarios_acum_mm_clp FROM agf_resultados WHERE razon_social LIKE '%BANCHILE%' OR razon_social LIKE '%BTG%' OR razon_social LIKE '%LARRAIN%' OR razon_social LIKE '%SANTANDER%' ORDER BY periodo DESC, ingresos_ordinarios_acum_mm_clp DESC LIMIT 40;" }
+              { label: "Ingresos y utilidad por AGF, ejercicio 2025 (MM$)", query: "SELECT razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Ingresos de actividades ordinarias') / 1e6, 1) AS ingresos_mm, round(max(valor) FILTER (WHERE cuenta = 'Ganancia (pérdida)') / 1e6, 1) AS ganancia_mm FROM agf_resultados WHERE periodo = '2025-12' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 GROUP BY ALL ORDER BY ganancia_mm DESC NULLS LAST;" },
+              { label: "Utilidad del sector por año (cierres de diciembre, MM$, CLP)", query: "SELECT left(periodo, 4) AS anio, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS ganancia_mm_clp FROM agf_resultados WHERE periodo LIKE '%-12' AND cuenta = 'Ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 AND moneda = 'CLP' GROUP BY 1 ORDER BY 1;" },
+              { label: "Estado de resultados completo de Banchile AGF, ejercicio 2025", query: "SELECT tipo_balance, estado_financiero, orden, cuenta, valor FROM agf_resultados WHERE rut = '96767630' AND periodo = '2025-12' ORDER BY tipo_balance, estado_financiero, orden;" }
             ],
             tables: [
-              { id: "agf_resultados", name: "agf.resultados", rows: "1.572 trimestres", file: "outputs/agf/agf_resultados.parquet" }
+              { id: "agf_resultados", name: "agf.resultados", rows: "58.216 cuentas · un archivo por año", file: "", files: ["outputs/agf/agf_resultados/manifest.json"] }
             ]
           }
         ]
@@ -556,7 +553,7 @@ const EXPLORER_TREE = [
     label: "CORREDORAS DE BOLSA (CMF)",
     badges: [
       { type: "entities", text: "120 Entidades", title: "Intermediarios de valores supervisados por la CMF (24 vigentes + 96 históricas)" },
-      { type: "data", text: "621 Balances", title: "Carátulas XML CMF y resumen derivado; cotejo independiente de fuente en curso" }
+      { type: "data", text: "63 trimestres", title: "Balance y resultados FECU IFRS de corredores de bolsa y agentes de valores, archivo trimestral CMF. Se actualiza solo 3 veces al mes" }
     ],
     status: "active",
     children: [
@@ -599,24 +596,39 @@ const EXPLORER_TREE = [
             ]
           },
           {
-            id: "circ_cb_balances",
+            id: "cat_cb_balance",
             type: "circular",
-            label: "Estados Financieros · XML CMF (en auditoría)",
-            badge: "621 Balances · 2 vistas",
+            label: "Balance FECU IFRS · CMF (2010-12–2026-06)",
+            badge: "63 trimestres",
             badgeType: "data",
             status: "active",
             sector: "corredoras_bolsa",
             chips: [
-              { label: "Ranking por Activos Totales (MM$ USD)", query: "SELECT b.periodo, m.nombre_fantasia, b.total_activos_m_usd, b.total_pasivos_m_usd, b.patrimonio_m_usd, b.utilidad_ejercicio_m_usd, m.grupo_financiero FROM corredoras_bolsa_caratula_eeff_historico b JOIN corredoras_bolsa_maestro m ON b.rut = m.rut WHERE b.periodo = (SELECT MAX(periodo) FROM corredoras_bolsa_caratula_eeff_historico) ORDER BY b.total_activos_m_usd DESC LIMIT 15;" },
-              { label: "Utilidad Neta del Ejercicio (Líderes Bursátiles)", query: "SELECT b.periodo, m.nombre_fantasia, b.utilidad_ejercicio_m_clp, b.utilidad_ejercicio_m_usd, b.total_activos_m_usd FROM corredoras_bolsa_caratula_eeff_historico b JOIN corredoras_bolsa_maestro m ON b.rut = m.rut WHERE b.periodo = (SELECT MAX(periodo) FROM corredoras_bolsa_caratula_eeff_historico) ORDER BY b.utilidad_ejercicio_m_usd DESC LIMIT 15;" },
-              { label: "Cartera Comprometida vs Disponible en Corredoras", query: "SELECT b.periodo, m.nombre_fantasia, b.cartera_vr_comprometida_m_clp, b.cartera_vr_disponible_m_clp, b.operaciones_financiamiento_crv_m_clp, b.obligaciones_retrocompra_vrc_m_clp FROM corredoras_bolsa_caratula_eeff_historico b JOIN corredoras_bolsa_maestro m ON b.rut = m.rut WHERE b.periodo = (SELECT MAX(periodo) FROM corredoras_bolsa_caratula_eeff_historico) ORDER BY b.cartera_vr_comprometida_m_clp DESC LIMIT 15;" },
-              { label: "Liquidez: Proporción de Caja sobre Activos (%)", query: "SELECT b.periodo, m.nombre_fantasia, b.efectivo_equivalentes_m_usd, b.total_activos_m_usd, round(b.efectivo_equivalentes_m_usd / NULLIF(b.total_activos_m_usd, 0) * 100, 2) as pct_caja_activos FROM corredoras_bolsa_caratula_eeff_historico b JOIN corredoras_bolsa_maestro m ON b.rut = m.rut WHERE b.periodo = (SELECT MAX(periodo) FROM corredoras_bolsa_caratula_eeff_historico) ORDER BY b.efectivo_equivalentes_m_usd DESC LIMIT 15;" }
+              { label: "Activos, pasivos y patrimonio por intermediario, último trimestre (MM$)", query: "SELECT periodo, razon_social, tipo_intermediario, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '10.00.00') / 1e3, 1) AS activos_mm, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '21.00.00') / 1e3, 1) AS pasivos_mm, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '22.00.00') / 1e3, 1) AS patrimonio_mm FROM corredoras_bolsa_balance WHERE periodo = (SELECT max(periodo) FROM corredoras_bolsa_balance) GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;" },
+              { label: "Evolución de los corredores de bolsa: activos totales por trimestre (MM$)", query: "SELECT periodo, count(DISTINCT rut) AS corredores, round(sum(valor_miles_clp) / 1e3, 1) AS activos_mm FROM corredoras_bolsa_balance WHERE codigo_fecu = '10.00.00' AND tipo_intermediario = 'corredor de bolsa' GROUP BY periodo ORDER BY periodo;" },
+              { label: "Balance completo de Banchile Corredores, último trimestre", query: "SELECT periodo, seccion, codigo_fecu, nivel, cuenta, valor_miles_clp FROM corredoras_bolsa_balance WHERE rut = '96571220' AND periodo = (SELECT max(periodo) FROM corredoras_bolsa_balance) ORDER BY codigo_fecu;" }
             ],
             tables: [
-              { id: "corredoras_bolsa_caratula_eeff_historico", name: "corredoras.estados_financieros", rows: "621 balances", file: "outputs/corredoras_bolsa/corredoras_bolsa_caratula_eeff_historico.parquet" },
-              { id: "corredoras_bolsa_balance_resumen", name: "corredoras.balance_resumen", rows: "621 balances", file: "outputs/corredoras_bolsa/corredoras_bolsa_balance_resumen.parquet" }
+              { id: "corredoras_bolsa_balance", name: "corredoras.balance", rows: "107.976 cuentas · un archivo por año", file: "", files: ["outputs/corredoras_bolsa/corredoras_bolsa_balance/manifest.json"] }
             ]
           },
+          {
+            id: "cat_cb_resultados",
+            type: "circular",
+            label: "Estado de Resultados FECU IFRS · CMF (2010-12–2026-06)",
+            badge: "63 trimestres",
+            badgeType: "data",
+            status: "active",
+            sector: "corredoras_bolsa",
+            chips: [
+              { label: "Resultado del ejercicio por intermediario, 2025 (MM$)", query: "SELECT razon_social, tipo_intermediario, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '30.00.00') / 1e3, 1) AS resultado_ejercicio_mm FROM corredoras_bolsa_resultados WHERE periodo = '2025-12' GROUP BY ALL ORDER BY resultado_ejercicio_mm DESC NULLS LAST;" },
+              { label: "Estructura de resultados de Banchile Corredores, 2025", query: "SELECT estado_financiero, seccion, codigo_fecu, nivel, cuenta, valor_miles_clp FROM corredoras_bolsa_resultados WHERE rut = '96571220' AND periodo = '2025-12' ORDER BY codigo_fecu;" },
+              { label: "Catálogo de cuentas FECU de resultados", query: "SELECT codigo_fecu, any_value(cuenta) AS cuenta, any_value(seccion) AS seccion, count(*) AS filas FROM corredoras_bolsa_resultados GROUP BY codigo_fecu ORDER BY codigo_fecu;" }
+            ],
+            tables: [
+              { id: "corredoras_bolsa_resultados", name: "corredoras.resultados", rows: "77.705 cuentas · un archivo por año", file: "", files: ["outputs/corredoras_bolsa/corredoras_bolsa_resultados/manifest.json"] }
+            ]
+          }
         ]
       }
     ]
@@ -654,20 +666,37 @@ const EXPLORER_TREE = [
             ]
           },
           {
-            id: "circ_sec_balances",
+            id: "cat_securitizadoras_balance",
             type: "circular",
-            label: "Balances IFRS de Sociedades Gestoras",
-            badge: "362 Balances",
+            label: "Balance IFRS · CMF (2009-12–2026-06)",
+            badge: "66 trimestres",
             badgeType: "data",
             status: "active",
             sector: "securitizadoras",
             chips: [
-              { label: "Ranking por Activos de la Sociedad Gestora (MM$)", query: "SELECT periodo, razon_social, total_activos_m_clp, total_pasivos_m_clp, patrimonio_neto_m_clp, efectivo_y_equivalentes_m_clp FROM securitizadoras_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM securitizadoras_balance_resumen) ORDER BY total_activos_m_clp DESC;" },
-              { label: "Utilidad Neta de las Gestoras por Comisiones", query: "SELECT periodo, razon_social, ganancia_perdida_ejercicio_m_clp, total_activos_m_usd, patrimonio_neto_m_usd FROM securitizadoras_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM securitizadoras_balance_resumen) ORDER BY ganancia_perdida_ejercicio_m_clp DESC;" },
-              { label: "Evolución Activos Gestora: BCI vs Santander vs BICE", query: "SELECT periodo, razon_social, total_activos_m_clp, patrimonio_neto_m_clp, efectivo_y_equivalentes_m_clp FROM securitizadoras_balance_resumen WHERE razon_social IN ('BCI SECURITIZADORA S.A.', 'SANTANDER S.A. SOCIEDAD SECURITIZADORA', 'SECURITIZADORA BICE S.A.') ORDER BY periodo DESC, total_activos_m_clp DESC LIMIT 15;" }
+              { label: "Activos, pasivos y patrimonio por securitizadora, último trimestre (MM$)", query: "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM securitizadoras_balance WHERE periodo = (SELECT max(periodo) FROM securitizadoras_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;" },
+              { label: "Evolución del sector: activos totales por trimestre (MM$, CLP)", query: "SELECT periodo, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS activos_mm_clp FROM securitizadoras_balance WHERE cuenta = 'Total de activos' AND moneda = 'CLP' AND repeticion = 1 GROUP BY periodo ORDER BY periodo;" },
+              { label: "Balance completo de BCI Securitizadora, último trimestre", query: "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM securitizadoras_balance WHERE rut = '96948880' AND periodo = (SELECT max(periodo) FROM securitizadoras_balance WHERE rut = '96948880') ORDER BY tipo_balance, estado_financiero, orden;" }
             ],
             tables: [
-              { id: "securitizadoras_balance_resumen", name: "securitizadoras.balance_resumen", rows: "362 balances", file: "outputs/securitizadoras/securitizadoras_balance_resumen.parquet" }
+              { id: "securitizadoras_balance", name: "securitizadoras.balance", rows: "13.679 cuentas · un archivo por año", file: "", files: ["outputs/securitizadoras/securitizadoras_balance/manifest.json"] }
+            ]
+          },
+          {
+            id: "cat_securitizadoras_resultados",
+            type: "circular",
+            label: "Estado de Resultados IFRS · CMF (2009-12–2026-06)",
+            badge: "66 trimestres",
+            badgeType: "data",
+            status: "active",
+            sector: "securitizadoras",
+            chips: [
+              { label: "Ingresos y utilidad por securitizadora, ejercicio 2025 (MM$)", query: "SELECT razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Ingresos de actividades ordinarias') / 1e6, 1) AS ingresos_mm, round(max(valor) FILTER (WHERE cuenta = 'Ganancia (pérdida)') / 1e6, 1) AS ganancia_mm FROM securitizadoras_resultados WHERE periodo = '2025-12' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 GROUP BY ALL ORDER BY ganancia_mm DESC NULLS LAST;" },
+              { label: "Utilidad del sector por año (cierres de diciembre, MM$, CLP)", query: "SELECT left(periodo, 4) AS anio, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS ganancia_mm_clp FROM securitizadoras_resultados WHERE periodo LIKE '%-12' AND cuenta = 'Ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 AND moneda = 'CLP' GROUP BY 1 ORDER BY 1;" },
+              { label: "Estado de resultados completo de BCI Securitizadora, ejercicio 2025", query: "SELECT tipo_balance, estado_financiero, orden, cuenta, valor FROM securitizadoras_resultados WHERE rut = '96948880' AND periodo = '2025-12' ORDER BY tipo_balance, estado_financiero, orden;" }
+            ],
+            tables: [
+              { id: "securitizadoras_resultados", name: "securitizadoras.resultados", rows: "12.290 cuentas · un archivo por año", file: "", files: ["outputs/securitizadoras/securitizadoras_resultados/manifest.json"] }
             ]
           }
         ]
@@ -760,7 +789,7 @@ const EXPLORER_TREE = [
     label: "CAJAS DE COMPENSACION (CCAF / SUSESO - CMF)",
     badges: [
       { type: "entities", text: "6 Entidades", title: "Los Andes, La Araucana, Los Héroes, Caja 18 (y 2 históricas)" },
-      { type: "data", text: "288 Datos", title: "Balances desde el XBRL oficial de la CMF (activos, pasivos, patrimonio y utilidad)" }
+      { type: "data", text: "65 trimestres", title: "Balance y resultados IFRS de las cajas que envían estados financieros XBRL a la CMF (archivo TXT trimestral CMF). Se actualiza solo 3 veces al mes" }
     ],
     status: "active",
     children: [
@@ -788,20 +817,37 @@ const EXPLORER_TREE = [
             ]
           },
           {
-            id: "cat_ccaf_caratula",
+            id: "cat_ccaf_balance",
             type: "circular",
-            label: "Balances y Situación Financiera · XBRL (2019-2026)",
-            badge: "72 Balances",
+            label: "Balance IFRS · CMF (2010-06–2026-06)",
+            badge: "65 trimestres",
             badgeType: "data",
             status: "active",
             sector: "cajas_compensacion",
             chips: [
-              { label: "Totales Cierre 2024 por CCAF y Alcance", query: "SELECT ccaf, tipo_eeff, asiento_contable, monto_m_clp FROM ccaf_caratula_totales WHERE ano = 2024 AND mes = 12 ORDER BY ccaf, tipo_eeff, asiento_contable;" },
-              { label: "Evolución Activos Totales (2019-2026)", query: "SELECT ano, mes, ccaf, tipo_eeff, monto_m_clp FROM ccaf_caratula_totales WHERE asiento_contable = 'Total de activos' ORDER BY ano DESC, mes DESC, ccaf;" },
-              { label: "Utilidad Neta del Sistema (Últimos Años)", query: "SELECT ano, ccaf, tipo_eeff, monto_m_clp FROM ccaf_caratula_totales WHERE asiento_contable = 'Utilidad neta' AND mes = 12 ORDER BY ano DESC, monto_m_clp DESC;" }
+              { label: "Activos, pasivos y patrimonio por CCAF, último trimestre (MM$)", query: "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM ccaf_balance WHERE periodo = (SELECT max(periodo) FROM ccaf_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;" },
+              { label: "Evolución del sector: activos totales por trimestre (MM$, CLP)", query: "SELECT periodo, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS activos_mm_clp FROM ccaf_balance WHERE cuenta = 'Total de activos' AND moneda = 'CLP' AND repeticion = 1 GROUP BY periodo ORDER BY periodo;" },
+              { label: "Balance completo de CCAF Los Andes, último trimestre", query: "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM ccaf_balance WHERE rut = '81826800' AND periodo = (SELECT max(periodo) FROM ccaf_balance WHERE rut = '81826800') ORDER BY tipo_balance, estado_financiero, orden;" }
             ],
             tables: [
-              { id: "ccaf_caratula_totales", name: "ccaf.balances", rows: "72 balances · 288 filas", file: "outputs/cajas_compensacion/ccaf_caratula_totales.parquet" }
+              { id: "ccaf_balance", name: "ccaf.balance", rows: "8.043 cuentas · un archivo por año", file: "", files: ["outputs/cajas_compensacion/ccaf_balance/manifest.json"] }
+            ]
+          },
+          {
+            id: "cat_ccaf_resultados",
+            type: "circular",
+            label: "Estado de Resultados IFRS · CMF (2010-06–2026-06)",
+            badge: "65 trimestres",
+            badgeType: "data",
+            status: "active",
+            sector: "cajas_compensacion",
+            chips: [
+              { label: "Ingresos y utilidad por CCAF, ejercicio 2025 (MM$)", query: "SELECT razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Ingresos de actividades ordinarias') / 1e6, 1) AS ingresos_mm, round(max(valor) FILTER (WHERE cuenta = 'Ganancia (pérdida)') / 1e6, 1) AS ganancia_mm FROM ccaf_resultados WHERE periodo = '2025-12' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 GROUP BY ALL ORDER BY ganancia_mm DESC NULLS LAST;" },
+              { label: "Utilidad del sector por año (cierres de diciembre, MM$, CLP)", query: "SELECT left(periodo, 4) AS anio, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS ganancia_mm_clp FROM ccaf_resultados WHERE periodo LIKE '%-12' AND cuenta = 'Ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 AND moneda = 'CLP' GROUP BY 1 ORDER BY 1;" },
+              { label: "Estado de resultados completo de CCAF Los Andes, ejercicio 2025", query: "SELECT tipo_balance, estado_financiero, orden, cuenta, valor FROM ccaf_resultados WHERE rut = '81826800' AND periodo = '2025-12' ORDER BY tipo_balance, estado_financiero, orden;" }
+            ],
+            tables: [
+              { id: "ccaf_resultados", name: "ccaf.resultados", rows: "5.506 cuentas · un archivo por año", file: "", files: ["outputs/cajas_compensacion/ccaf_resultados/manifest.json"] }
             ]
           }
         ]
