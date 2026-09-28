@@ -58,8 +58,9 @@ jobs:
       - name: Actualizar publicaciones CMF y análisis respaldado
         env:
           API_GOOGLE_AI_STUDIO: ${{ secrets.API_GOOGLE_AI_STUDIO }}
-          GEMINI_MODEL_FLASH_LITE: ${{ vars.GEMINI_MODEL_FLASH_LITE }}
-          GEMINI_MODEL_FLASH: ${{ vars.GEMINI_MODEL_FLASH }}
+          # IDs estables documentados; no permitir overrides por variables antiguas.
+          GEMINI_MODEL_FLASH_LITE: gemini-3.5-flash-lite
+          GEMINI_MODEL_FLASH: gemini-3.8-flash
           NORMATIVA_LOOKBACK_DAYS: '365'
           NORMATIVA_PDF_RECHECK_DAYS: '45'
           NORMATIVA_MAX_AI_CALLS: '10'
