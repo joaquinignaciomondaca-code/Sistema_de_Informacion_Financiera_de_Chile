@@ -52,7 +52,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          rutas="docs/outputs/entidades docs/outputs/agf/agf_maestro.json docs/outputs/agf/agf_maestro.parquet docs/outputs/securitizadoras/securitizadoras_maestro.json docs/outputs/securitizadoras/securitizadoras_maestro.parquet docs/outputs/corredoras_bolsa/corredoras_bolsa_maestro.json docs/outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet docs/outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.json docs/outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet docs/outputs/fintech/fintech_rpsf_maestro.json docs/outputs/fintech/fintech_rpsf_maestro.parquet"
+          rutas="docs/outputs/entidades docs/outputs/agf/agf_maestro.json docs/outputs/agf/agf_maestro.parquet docs/outputs/securitizadoras/securitizadoras_maestro.json docs/outputs/securitizadoras/securitizadoras_maestro.parquet docs/outputs/corredoras_bolsa/corredoras_bolsa_maestro.json docs/outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet docs/outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.json docs/outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet docs/outputs/fintech/fintech_rpsf_maestro.json docs/outputs/fintech/fintech_rpsf_maestro.parquet docs/js/sidebar.js docs/js/data_dictionary.js"
           git add $rutas
           if git diff --cached --quiet; then echo 'Sin cambios.'; exit 0; fi
           git commit -m "Listas de entidades: ${{ steps.revisar.outputs.cambios }} cambios desde los registros CMF"

@@ -126,7 +126,7 @@ const EXPLORER_TREE = [
               { label: "AGF por Grupo Financiero Controlador", query: "SELECT grupo_controlador, count(*) as cantidad_agf, sum(fondos_inversion_administrados) as total_fondos FROM agf_maestro WHERE estado_vigencia = 'Vigente' GROUP BY grupo_controlador ORDER BY total_fondos DESC;" }
             ],
             tables: [
-              { id: "agf_maestro", name: "agf.lista_administradoras", rows: "68 entidades", file: "outputs/agf/agf_maestro.parquet" }
+              { id: "agf_maestro", name: "agf.lista_administradoras", rows: "70 entidades", file: "outputs/agf/agf_maestro.parquet" }
             ]
           },
           {

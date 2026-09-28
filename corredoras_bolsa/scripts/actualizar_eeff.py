@@ -309,6 +309,31 @@ def actualizar_data_manifest() -> None:
     ruta.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n")
 
 
+def refrescar_marcas(lista: set[str], c: dict) -> int:
+    """Recalcula en_lista_entidades de todo lo publicado contra la lista vigente (la lista crece
+    con pipelines/entidades); reescribe solo los años que cambian."""
+    cambios = 0
+    for tabla in TABLAS:
+        for ruta in sorted((SALIDA / f"corredoras_bolsa_{tabla}").glob("*.parquet")):
+            t = pq.read_table(ruta)
+            nueva = [r in lista for r in t.column("rut").to_pylist()]
+            if nueva == t.column("en_lista_entidades").to_pylist():
+                continue
+            t = t.set_column(t.schema.get_field_index("en_lista_entidades"), "en_lista_entidades",
+                             pa.array(nueva, pa.bool_()))
+            tmp = ruta.with_suffix(".tmp")
+            pq.write_table(t, tmp, compression="zstd", compression_level=9)
+            os.replace(tmp, ruta)
+            cambios += 1
+    for per in c["periodos"].values():
+        if "corredores_fuera_de_lista" in per:
+            per["corredores_fuera_de_lista"] = [e for e in per["corredores_fuera_de_lista"]
+                                                if e["rut"].split("-")[0] not in lista]
+    if cambios:
+        print(f"Marca en_lista_entidades actualizada en {cambios} archivos")
+    return cambios
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--minutos", type=float, default=40)
@@ -368,6 +393,8 @@ def main(argv=None) -> int:
         hechos += 1
         print(f"{periodo}: {por_tipo} · balance {len(datos['balance'])} · resultados {len(datos['resultados'])}"
               + (f" · avisos: {avisos}" if avisos else ""))
+    hechos += refrescar_marcas(lista, c)
+    guardar_control(c)
     con = [p for p, v in c["periodos"].items() if v.get("sociedades")]
     if con:
         ult = max(con)
