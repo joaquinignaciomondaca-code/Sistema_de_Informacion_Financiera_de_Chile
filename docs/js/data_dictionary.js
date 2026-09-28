@@ -544,7 +544,7 @@ const DATA_DICTIONARY = [
     frescura: "Se actualiza sola 3 veces al mes (días 2, 12 y 22)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-28",
-    registros: "28 entidades",
+    registros: "32 entidades",
     descripcion: "Sociedades de factoring, leasing y financiamiento automotriz. Las sociedades nuevas se agregan cuando reportan estados financieros IFRS a la CMF con giro factoring o leasing; sus estados se publican desde entonces.",
     origen: "Lista original (referencias CMF FASOC, LISOC y RVEMI) + altas automáticas desde el TXT IFRS de la CMF (pipelines/ifrs_sectores/actualizar.py).",
     columnas: [
