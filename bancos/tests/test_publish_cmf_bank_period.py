@@ -3,7 +3,11 @@ import unittest
 from datetime import date
 from pathlib import Path
 
+from unittest import mock
+
+import bancos.scripts.publish_cmf_bank_period as mod
 from bancos.scripts.publish_cmf_bank_period import (
+    catch_up,
     is_period_published,
     next_unpublished_period,
     previous_month,
@@ -13,6 +17,41 @@ from bancos.scripts.publish_cmf_bank_period import (
 
 
 class PublishCmfBankPeriodTests(unittest.TestCase):
+    def _fake_publisher(self, manifest, fail_on=()):
+        def publisher(period, dry_run=False):
+            if period in fail_on:
+                raise RuntimeError("CMF aún no publica " + period)
+            if dry_run:
+                return {"published_changed": False}
+            manifest["periods"].append({"period": period})
+            return {"published_changed": True, "period": period}
+        return publisher
+
+    def test_catch_up_publishes_all_pending_closed_months_in_order(self):
+        manifest = {"periods": []}
+        with mock.patch.object(mod, "load_manifest", lambda: manifest):
+            result = catch_up(False, 24, date(2026, 10, 15), self._fake_publisher(manifest))
+        self.assertEqual(result["periods"], ["2026-07", "2026-08", "2026-09"])
+        self.assertTrue(result["published_changed"])
+        self.assertEqual(result["period"], "2026-09")
+
+    def test_catch_up_keeps_validated_months_when_a_later_one_fails(self):
+        manifest = {"periods": []}
+        with mock.patch.object(mod, "load_manifest", lambda: manifest):
+            result = catch_up(False, 24, date(2026, 10, 15), self._fake_publisher(manifest, fail_on={"2026-09"}))
+        self.assertEqual(result["periods"], ["2026-07", "2026-08"])
+        self.assertEqual(result["status"], "partial")
+        self.assertIn("2026-09", result["stopped_error"])
+
+    def test_catch_up_first_failure_is_an_error_and_dry_run_does_not_loop(self):
+        manifest = {"periods": []}
+        with mock.patch.object(mod, "load_manifest", lambda: manifest):
+            with self.assertRaises(RuntimeError):
+                catch_up(False, 24, date(2026, 10, 15), self._fake_publisher(manifest, fail_on={"2026-07"}))
+            result = catch_up(True, 24, date(2026, 10, 15), self._fake_publisher(manifest))
+        self.assertEqual(result["periods"], [])
+        self.assertFalse(result["published_changed"])
+
     def test_previous_month_handles_year_boundary(self):
         self.assertEqual(previous_month(date(2027, 1, 15)), "2026-12")
         self.assertEqual(previous_month(date(2026, 10, 15)), "2026-09")
