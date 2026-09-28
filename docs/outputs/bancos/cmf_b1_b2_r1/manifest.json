@@ -4,6 +4,160 @@
   "updated_at": "2026-09-28",
   "periods": [
     {
+      "period": "2022-01",
+      "file": "outputs/bancos/cmf_b1_b2_r1/2022-01/lineas.parquet",
+      "validation_file": "outputs/bancos/cmf_b1_b2_r1/2022-01/validacion.json",
+      "records": 35010,
+      "sha256_zip": "e371e7c5b7a75269b413d2a155a85f0c32df77c96d7259b168d4cbabaeb58ef1",
+      "sha256_xlsx": "b4a8fe30c3f38b4e00889d32484d23b8e1fd4bf31608f97c80d00b05a90402fb",
+      "zip_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-50291_recurso_1.zip?ts=1674052724",
+      "xlsx_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-50286_recurso_1.xlsx?ts=1674057697",
+      "validated_at": "2026-09-28"
+    },
+    {
+      "period": "2022-02",
+      "file": "outputs/bancos/cmf_b1_b2_r1/2022-02/lineas.parquet",
+      "validation_file": "outputs/bancos/cmf_b1_b2_r1/2022-02/validacion.json",
+      "records": 35010,
+      "sha256_zip": "811ff55064e07b26fbdabd601ff3117506924158809a9f6415e50a53e2bd5b10",
+      "sha256_xlsx": "3cecdbd2d4d32dd16ec66083923135e07751cdc6ba162630395adc51c92cf835",
+      "zip_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-50479_recurso_1.zip?ts=1674052745",
+      "xlsx_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-50474_recurso_1.xlsx?ts=1674058029",
+      "validated_at": "2026-09-28"
+    },
+    {
+      "period": "2022-03",
+      "file": "outputs/bancos/cmf_b1_b2_r1/2022-03/lineas.parquet",
+      "validation_file": "outputs/bancos/cmf_b1_b2_r1/2022-03/validacion.json",
+      "records": 35010,
+      "sha256_zip": "e4c41cb00f45a6c75bdff618a645ca139a09b2a1aced95eab249020c031b6c84",
+      "sha256_xlsx": "b50fb9c3f05356cc56998764b267c1b841815e255c9e9d151352ef279e170f3e",
+      "zip_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-50902_recurso_1.zip?ts=1674052772",
+      "xlsx_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-50897_recurso_1.xlsx?ts=1674058120",
+      "validated_at": "2026-09-28"
+    },
+    {
+      "period": "2022-04",
+      "file": "outputs/bancos/cmf_b1_b2_r1/2022-04/lineas.parquet",
+      "validation_file": "outputs/bancos/cmf_b1_b2_r1/2022-04/validacion.json",
+      "records": 35010,
+      "sha256_zip": "728c3decdff74d538eb415e8b0794d566c14d34127dd23dd304cc0990a6d6d58",
+      "sha256_xlsx": "fbf8439a877f2816e67429a7a9eb53d9146e0bb95756d59ec3a3f3d997d4f024",
+      "zip_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-51107_recurso_1.zip?ts=1674052814",
+      "xlsx_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-51102_recurso_1.xlsx?ts=1674058598",
+      "validated_at": "2026-09-28"
+    },
+    {
+      "period": "2022-05",
+      "file": "outputs/bancos/cmf_b1_b2_r1/2022-05/lineas.parquet",
+      "validation_file": "outputs/bancos/cmf_b1_b2_r1/2022-05/validacion.json",
+      "records": 35010,
+      "sha256_zip": "c879f34edaa7ecc1b814d879159d824e81c135f141cf3ec4c6ced845406309ff",
+      "sha256_xlsx": "1cdcb7752ae1a77208a7e0583e7ff6aaf51153df9c7492466c4acf5b063c1e58",
+      "zip_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-51383_recurso_1.zip?ts=1674052832",
+      "xlsx_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-51378_recurso_1.xlsx?ts=1674058627",
+      "validated_at": "2026-09-28"
+    },
+    {
+      "period": "2022-06",
+      "file": "outputs/bancos/cmf_b1_b2_r1/2022-06/lineas.parquet",
+      "validation_file": "outputs/bancos/cmf_b1_b2_r1/2022-06/validacion.json",
+      "records": 35010,
+      "sha256_zip": "e68014d131ff7de33db8aeb62a9aa10c10ff83fea63682237f462dd4f829b05d",
+      "sha256_xlsx": "a5a456f4c2a98b37f0b6efa39e1e6a2297006ae33c9a1f33370505b984e295e0",
+      "zip_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-51912_recurso_1.zip?ts=1674052867",
+      "xlsx_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-51907_recurso_1.xlsx?ts=1674059035",
+      "validated_at": "2026-09-28"
+    },
+    {
+      "period": "2022-07",
+      "file": "outputs/bancos/cmf_b1_b2_r1/2022-07/lineas.parquet",
+      "validation_file": "outputs/bancos/cmf_b1_b2_r1/2022-07/validacion.json",
+      "records": 35010,
+      "sha256_zip": "c2f8493fdeaeb6366f53e631276fd96d1745137a4852a0ae3fbeb72e9d5e2543",
+      "sha256_xlsx": "e2f75a9dd05fd4332c9f901222fe2bfb0ac803eb85786d664869815f3201ca3d",
+      "zip_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-52710_recurso_1.zip?ts=1674052900",
+      "xlsx_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-52702_recurso_1.xlsx?ts=1674059061",
+      "validated_at": "2026-09-28"
+    },
+    {
+      "period": "2022-08",
+      "file": "outputs/bancos/cmf_b1_b2_r1/2022-08/lineas.parquet",
+      "validation_file": "outputs/bancos/cmf_b1_b2_r1/2022-08/validacion.json",
+      "records": 35010,
+      "sha256_zip": "d5947b79cf935deee518a5a817f6ddac548c8b0eaf33c239f42b847801e58fd4",
+      "sha256_xlsx": "02baa424074709d71b664fd639a05a4cdf516ddbcf08a994cd2de3f6da21deb3",
+      "zip_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-53539_recurso_1.zip?ts=1674052929",
+      "xlsx_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-53532_recurso_1.xlsx?ts=1674059098",
+      "validated_at": "2026-09-28"
+    },
+    {
+      "period": "2022-09",
+      "file": "outputs/bancos/cmf_b1_b2_r1/2022-09/lineas.parquet",
+      "validation_file": "outputs/bancos/cmf_b1_b2_r1/2022-09/validacion.json",
+      "records": 35010,
+      "sha256_zip": "18e03c73b5d0dc11cdae944525b7cb5402cedd04911b6fbe20dbc4d30438ff7e",
+      "sha256_xlsx": "313e2e53b0f6212375c88b945bb52c73ea9ab17d7da44456930ddd6c9c6f3138",
+      "zip_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-54314_recurso_1.zip?ts=1674053032",
+      "xlsx_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-54308_recurso_1.xlsx?ts=1674059152",
+      "validated_at": "2026-09-28"
+    },
+    {
+      "period": "2022-10",
+      "file": "outputs/bancos/cmf_b1_b2_r1/2022-10/lineas.parquet",
+      "validation_file": "outputs/bancos/cmf_b1_b2_r1/2022-10/validacion.json",
+      "records": 35010,
+      "sha256_zip": "5681ea980076161662c71da91fd95855c2bd5f568ac734f4e7f173f2ac41b65d",
+      "sha256_xlsx": "f5ff9a901a116bd31b64b7cb371d60b2bce64a8ae4a91522113e4e38225155bf",
+      "zip_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-55409_recurso_1.zip?ts=1674053061",
+      "xlsx_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-55404_recurso_1.xlsx?ts=1674059194",
+      "validated_at": "2026-09-28"
+    },
+    {
+      "period": "2022-11",
+      "file": "outputs/bancos/cmf_b1_b2_r1/2022-11/lineas.parquet",
+      "validation_file": "outputs/bancos/cmf_b1_b2_r1/2022-11/validacion.json",
+      "records": 35010,
+      "sha256_zip": "776021bccb7f47ac567168b89865c859c5ab7b67533a018f297618db3288fc36",
+      "sha256_xlsx": "22de3e62fe5d2c0d6b12dc2092b0edea7515e7f209aceb656fd8e682f6b87207",
+      "zip_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-59684_recurso_1.zip?ts=1674053087",
+      "xlsx_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-59679_recurso_1.xlsx?ts=1674059224",
+      "validated_at": "2026-09-28"
+    },
+    {
+      "period": "2022-12",
+      "file": "outputs/bancos/cmf_b1_b2_r1/2022-12/lineas.parquet",
+      "validation_file": "outputs/bancos/cmf_b1_b2_r1/2022-12/validacion.json",
+      "records": 35010,
+      "sha256_zip": "44fb4d3f710a7b70edeb8625c0a9a550b06c89598dc48ed2a3653978a35177f8",
+      "sha256_xlsx": "bb9416f54ef9b24add795d701b7cd6ed5bb75578546d19c1eb58fcbc0ad74211",
+      "zip_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-60721_recurso_1.zip?ts=1675111422",
+      "xlsx_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-60716_recurso_1.xlsx?ts=1675110937",
+      "validated_at": "2026-09-28"
+    },
+    {
+      "period": "2023-01",
+      "file": "outputs/bancos/cmf_b1_b2_r1/2023-01/lineas.parquet",
+      "validation_file": "outputs/bancos/cmf_b1_b2_r1/2023-01/validacion.json",
+      "records": 35010,
+      "sha256_zip": "d437a32c7a3b33b27d401ce955e85ac273cd78a291270da7bda4e22c81e340ca",
+      "sha256_xlsx": "763afe138ac28442849689ad1610f5f8d027071bab120fa6efa86e484f71aa1e",
+      "zip_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-63031_recurso_1.zip?ts=1677588755",
+      "xlsx_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-63026_recurso_1.xlsx?ts=1677587864",
+      "validated_at": "2026-09-28"
+    },
+    {
+      "period": "2023-02",
+      "file": "outputs/bancos/cmf_b1_b2_r1/2023-02/lineas.parquet",
+      "validation_file": "outputs/bancos/cmf_b1_b2_r1/2023-02/validacion.json",
+      "records": 35010,
+      "sha256_zip": "09384a4365a8a5fc8614287d81b87d2f5463e8ae6490269738d2d4c7d37146a4",
+      "sha256_xlsx": "2c727142ac72a9c0b9b63f6f4449eabad1b2e793b790dba7e99fe6df7a0f9f49",
+      "zip_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-68382_recurso_1.zip?ts=1680288214",
+      "xlsx_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-68373_recurso_1.xlsx?ts=1680184760",
+      "validated_at": "2026-09-28"
+    },
+    {
       "period": "2026-07",
       "file": "outputs/bancos/cmf_b1_b2_r1/2026-07/lineas.parquet",
       "validation_file": "outputs/bancos/cmf_b1_b2_r1/2026-07/validacion.json",
@@ -16,7 +170,21 @@
     }
   ],
   "files": [
+    "outputs/bancos/cmf_b1_b2_r1/2022-01/lineas.parquet",
+    "outputs/bancos/cmf_b1_b2_r1/2022-02/lineas.parquet",
+    "outputs/bancos/cmf_b1_b2_r1/2022-03/lineas.parquet",
+    "outputs/bancos/cmf_b1_b2_r1/2022-04/lineas.parquet",
+    "outputs/bancos/cmf_b1_b2_r1/2022-05/lineas.parquet",
+    "outputs/bancos/cmf_b1_b2_r1/2022-06/lineas.parquet",
+    "outputs/bancos/cmf_b1_b2_r1/2022-07/lineas.parquet",
+    "outputs/bancos/cmf_b1_b2_r1/2022-08/lineas.parquet",
+    "outputs/bancos/cmf_b1_b2_r1/2022-09/lineas.parquet",
+    "outputs/bancos/cmf_b1_b2_r1/2022-10/lineas.parquet",
+    "outputs/bancos/cmf_b1_b2_r1/2022-11/lineas.parquet",
+    "outputs/bancos/cmf_b1_b2_r1/2022-12/lineas.parquet",
+    "outputs/bancos/cmf_b1_b2_r1/2023-01/lineas.parquet",
+    "outputs/bancos/cmf_b1_b2_r1/2023-02/lineas.parquet",
     "outputs/bancos/cmf_b1_b2_r1/2026-07/lineas.parquet"
   ],
-  "total_records": 35028
+  "total_records": 525168
 }

@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "updated_at": "2026-09-28",
   "total_tables": 65,
-  "total_records": 13600781,
+  "total_records": 14090921,
   "classification": {
     "automatico": "Extracción y procesamiento 100% por código autónomo (APIs, scrapers, normalizadores)",
     "manual": "Extracción asistida o transcripción de notas y reportes no estructurados (ej. NotebookLM)"
@@ -1039,15 +1039,15 @@
       "sector": "bancos",
       "sector_label": "Banca Comercial",
       "norma": "CMF — Manual del Sistema de Información para bancos (B1/MB1, B2/MB2, R1/MR1)",
-      "corte": "2026-07 a 2026-07",
+      "corte": "2022-01 a 2026-07",
       "frescura": "Actualización mensual validada contra reporte CMF",
       "modo": "Automático con gate de publicación",
       "ultima_actualizacion": "2026-09-28",
-      "file_parquet": "outputs/bancos/cmf_b1_b2_r1/2026-07/lineas.parquet",
+      "file_parquet": "outputs/bancos/cmf_b1_b2_r1/2023-02/lineas.parquet",
       "files_manifest": "outputs/bancos/cmf_b1_b2_r1/manifest.json",
-      "registros_reales": 35028,
+      "registros_reales": 525168,
       "descripcion": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Campos monetarios originales sin reinterpretación; revisar tipo_linea antes de agregar cuentas jerárquicas.",
-      "origen": "https://www.cmfchile.cl/portal/estadisticas/626/articles-113067_recurso_1.zip?ts=1787944720"
+      "origen": "https://www.cmfchile.cl/portal/estadisticas/626/articles-68382_recurso_1.zip?ts=1680288214"
     }
   ]
 }
