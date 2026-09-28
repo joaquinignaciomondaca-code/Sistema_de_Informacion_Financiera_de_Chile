@@ -19,7 +19,7 @@ for arg in sys.argv[1:]:
     print(f"bytes={len(data)} zip={data[:2] == b'PK'}")
     z = zipfile.ZipFile(io.BytesIO(data))
     names = z.namelist()
-    print("archivos:", len(names), names[:4])
+    print("archivos:", len(names), names[:2])
     cnt = collections.defaultdict(collections.Counter)
     ej = {}
     for n in names:
@@ -34,4 +34,5 @@ for arg in sys.argv[1:]:
     for p, c in sorted(cnt.items()):
         print(p, c.most_common(6))
     for (p, ln), (n, h, l) in ej.items():
-        print(f"--- ejemplo {p} largo {ln} ({n})\nH: {h!r}\n2: {l!r}")
+        if ln not in (930, 477):
+            print(f"--- ejemplo {p} largo {ln} ({n})\n2: {l.rstrip()!r}")
