@@ -8,6 +8,7 @@ the CMF model. This tool writes only to a review directory.
 from __future__ import annotations
 
 import argparse
+import csv
 import hashlib
 import json
 import os
@@ -69,6 +70,43 @@ def decode_text(data: bytes) -> str:
         return data.decode("latin-1")
 
 
+def parse_account_model(text: str, member_name: str) -> dict[str, dict[str, str]]:
+    reader = csv.reader(text.splitlines(), delimiter="\t")
+    rows = list(reader)
+    if not rows:
+        raise RuntimeError(f"Empty CMF account model: {member_name}")
+    headers = [value.strip().upper() for value in rows[0]]
+    expected_headers = ["CUENTA", "RUBRO", "LINEA", "ITEM", "GLOSA"]
+    if headers != expected_headers:
+        raise RuntimeError(f"Unexpected columns in {member_name}: {headers!r}")
+    model: dict[str, dict[str, str]] = {}
+    for line_no, values in enumerate(rows[1:], start=2):
+        if not values or not any(value.strip() for value in values):
+            continue
+        if len(values) != 5:
+            raise RuntimeError(f"Malformed account definition in {member_name}:{line_no}")
+        account, rubro, linea, item, description = [value.strip() for value in values]
+        if not CODE_RE.fullmatch(account) or not rubro or not linea or not item or not description:
+            raise RuntimeError(f"Incomplete account definition in {member_name}:{line_no}")
+        if account in model:
+            raise RuntimeError(f"Duplicate account definition {account} in {member_name}")
+        model[account] = {"rubro": rubro, "linea": linea, "item": item, "glosa_cuenta": description}
+    if not model:
+        raise RuntimeError(f"No account definitions in {member_name}")
+
+    account_codes = set(model)
+    for account, definition in model.items():
+        if definition["glosa_cuenta"].strip().upper().startswith("TOTAL "):
+            definition["tipo_linea"] = "total"
+            continue
+        prefix = account.rstrip("0")
+        has_children = bool(prefix) and any(
+            other != account and other.startswith(prefix) for other in account_codes
+        )
+        definition["tipo_linea"] = "subtotal" if has_children else "detalle"
+    return model
+
+
 def _file_kind_and_bank(filename: str, period: str) -> tuple[str, str] | None:
     match = MEMBER_RE.search(filename)
     if not match or f"{match.group(3)}-{match.group(4)}" != period:
@@ -102,6 +140,12 @@ def extract_archive(blob: bytes, period: str, source_url: str = "") -> tuple[lis
 
         if not institution_codes:
             raise RuntimeError(f"No CMF bank TXT files found for {period}")
+        account_models: dict[str, dict[str, dict[str, str]]] = {}
+        for kind, model_name in (("B1", "modelo_mb1.txt"), ("B2", "modelo_mb2.txt"), ("R1", "modelo_mr1.txt")):
+            model_infos = [info for info in infos if info.filename.casefold().endswith("/" + model_name)]
+            if len(model_infos) != 1:
+                raise RuntimeError(f"Expected exactly one metadata/{model_name}; found {len(model_infos)}")
+            account_models[kind] = parse_account_model(decode_text(archive.read(model_infos[0])), model_infos[0].filename)
         duplicate_sources = {f"{bank}/{kind}": len(items) for (bank, kind), items in selected.items() if len(items) != 1}
         missing_sources = [f"{bank}/{kind}" for bank in sorted(institution_codes) for kind in TARGETS if len(selected.get((bank, kind), [])) == 0]
         if duplicate_sources or missing_sources:
@@ -146,6 +190,9 @@ def extract_archive(blob: bytes, period: str, source_url: str = "") -> tuple[lis
                     raise RuntimeError(f"Invalid account code in {info.filename}:{line_no}: {account_code!r}")
                 raw_amounts = [value.strip() for value in fields[1:]]
                 exact_amounts = [parse_amount(value) for value in raw_amounts]
+                account_definition = account_models[kind].get(account_code)
+                if account_definition is None:
+                    raise RuntimeError(f"Account {account_code} is absent from {kind} model metadata")
                 account_occurrences[(bank_code, kind, account_code)] += 1
                 occurrence = account_occurrences[(bank_code, kind, account_code)]
                 model = TARGETS[kind]
@@ -162,8 +209,11 @@ def extract_archive(blob: bytes, period: str, source_url: str = "") -> tuple[lis
                     "modelo_cmf": model["modelo_cmf"],
                     "nivel_consolidacion": model["nivel_consolidacion"],
                     "codigo_cuenta": account_code,
-                    "glosa_cuenta": None,
-                    "tipo_linea": "sin_clasificar",
+                    "rubro": account_definition["rubro"],
+                    "linea": account_definition["linea"],
+                    "item": account_definition["item"],
+                    "glosa_cuenta": account_definition["glosa_cuenta"],
+                    "tipo_linea": account_definition["tipo_linea"],
                     "numero_fila_fuente": line_no,
                     "ocurrencia_codigo_cuenta": occurrence,
                     "unidad_monto": "pesos_clp",
@@ -223,12 +273,19 @@ def extract_archive(blob: bytes, period: str, source_url: str = "") -> tuple[lis
         "institution_codes": sorted(institution_codes),
         "file_count": len(file_reports),
         "account_rows_by_family": dict(sorted(total_data_rows.items())),
+        "account_model_stats": {
+            kind: {
+                "account_definitions": len(model),
+                "line_types": dict(sorted(Counter(definition["tipo_linea"] for definition in model.values()).items())),
+            }
+            for kind, model in sorted(account_models.items())
+        },
         "review_account_samples": review_accounts,
         "file_reports": file_reports,
         "field_semantics": {
             "B1_B2": "Importes fuente se preservan sin nombres de moneda hasta cotejar el esquema TXT vigente con la definición normativa.",
             "R1": "Un campo de importe por cuenta; clasificación temporal acumulada/mensual queda pendiente de cotejo.",
-            "account_hierarchy": "Glosa, rubro/línea/ítem y tipo total/subtotal/detalle quedan sin clasificar hasta mapear el plan de cuentas.",
+            "account_hierarchy": "Glosa y códigos rubro/línea/ítem se leen del modelo CMF correspondiente; tipo_linea se deriva de TOTAL explícito o de la jerarquía de descendientes del mismo modelo.",
             "institution_identity": "El código y nombre se leen del encabezado CMF; RUT se deja nulo hasta validar el cruce con el maestro.",
         },
         "validation": {
@@ -239,6 +296,91 @@ def extract_archive(blob: bytes, period: str, source_url: str = "") -> tuple[lis
         },
     }
     return rows, report
+
+
+def normalize_name(value: object) -> str:
+    return re.sub(r"[^A-Z0-9]", "", str(value or "").upper())
+
+
+def reconcile_to_inspection(rows: list[dict], inspection: dict, bank_code: str = "001", bank_name: str = "Banco de Chile") -> dict:
+    """Compare CMF account amounts with the matching bank rows cached by the XLSX inspector."""
+    workbook = inspection.get("workbook", {})
+    target_name = normalize_name(bank_name)
+
+    def sheet_values(title: str) -> list[dict]:
+        return [
+            row for row in workbook.get("bank_rows", [])
+            if normalize_name(row.get("sheet")) == normalize_name(title)
+            and any(target_name in normalize_name(value) for value in row.get("values", []) if isinstance(value, str))
+        ]
+
+    def numeric_cells(sheet_rows: list[dict]) -> list[dict]:
+        result = []
+        for sheet_row in sheet_rows:
+            for index, value in enumerate(sheet_row.get("values", [])):
+                if isinstance(value, bool) or not isinstance(value, (int, float, Decimal)):
+                    continue
+                number = Decimal(str(value))
+                if number.is_finite():
+                    result.append({"sheet": sheet_row.get("sheet"), "row_number": sheet_row.get("row_number"), "column_index": index, "value_mm_clp": format(number, "f")})
+        return result
+
+    balance_rows = sheet_values("Est. Situación Financ. Bancos")
+    balance_cells = numeric_cells(balance_rows)
+    asset_lines = [
+        row for row in rows
+        if row["codigo_institucion"] == bank_code
+        and row["familia_archivo_fuente"] == "B1"
+        and row["codigo_cuenta"] == "100000000"
+    ]
+    asset_checks = []
+    for line in asset_lines:
+        candidate_pesos = sum(Decimal(value) for value in line["importes_fuente_decimal"])
+        matches = [
+            cell for cell in balance_cells
+            if abs(Decimal(cell["value_mm_clp"]) * Decimal(1_000_000) - candidate_pesos) <= Decimal(1)
+        ]
+        asset_checks.append({
+            "codigo_cuenta": line["codigo_cuenta"],
+            "glosa_cuenta": line["glosa_cuenta"],
+            "source_row": line["numero_fila_fuente"],
+            "sum_of_source_fields_pesos": format(candidate_pesos, "f"),
+            "matches_xlsx": matches,
+            "status": "passed" if matches else "failed",
+        })
+
+    result_rows = sheet_values("Est. del Resultado Bancos")
+    result_cells = numeric_cells(result_rows)
+    result_matches = []
+    for line in rows:
+        if line["codigo_institucion"] != bank_code or line["familia_archivo_fuente"] != "R1":
+            continue
+        pesos = Decimal(line["importes_fuente_decimal"][0])
+        if pesos == 0:
+            continue
+        matches = [
+            cell for cell in result_cells
+            if abs(Decimal(cell["value_mm_clp"]) * Decimal(1_000_000) - pesos) <= Decimal(1)
+        ]
+        if matches:
+            result_matches.append({
+                "codigo_cuenta": line["codigo_cuenta"],
+                "glosa_cuenta": line["glosa_cuenta"],
+                "source_row": line["numero_fila_fuente"],
+                "importe_pesos": format(pesos, "f"),
+                "matches_xlsx": matches,
+            })
+    return {
+        "bank_code": bank_code,
+        "bank_name": bank_name,
+        "balance_sheet": "Est. Situación Financ. Bancos",
+        "b1_total_assets_account": asset_checks,
+        "b1_status": "passed" if asset_checks and all(item["status"] == "passed" for item in asset_checks) else "failed_or_unavailable",
+        "results_sheet": "Est. del Resultado Bancos",
+        "r1_exact_account_matches_in_xlsx": result_matches,
+        "r1_status": "matched" if result_matches else "pending_no_exact_account_match",
+        "amount_comparison": "source fields are pesos; workbook comparisons convert MM$ to pesos with tolerance of 1 peso",
+    }
 
 
 def write_review_outputs(rows: list[dict], report: dict, output: Path) -> None:
@@ -261,6 +403,18 @@ def write_review_outputs(rows: list[dict], report: dict, output: Path) -> None:
         "### Filas de referencia para cotejo",
         "",
     ]
+    reconciliation = report.get("reconciliation")
+    if reconciliation:
+        markdown.extend([
+            f"- Cotejo B1 TOTAL ACTIVOS vs Excel: **{reconciliation['b1_status']}**",
+            f"- Cotejos exactos de cuentas R1 vs hoja Excel: **{len(reconciliation['r1_exact_account_matches_in_xlsx'])}** (estado: `{reconciliation['r1_status']}`)",
+            "",
+        ])
+        for match in reconciliation["r1_exact_account_matches_in_xlsx"]:
+            markdown.append(
+                f"  - R1 `{match['codigo_cuenta']} {match['glosa_cuenta']}` = {match['importe_pesos']} pesos "
+                f"(fila TXT {match['source_row']}; Excel {match['matches_xlsx']})"
+            )
     if report["review_account_samples"]:
         markdown.extend(["| Código | Familia | Cuenta | Fila fuente | Importes fuente | Suma de campos (diagnóstico) |", "|---|---|---:|---:|---|---:|"])
         for sample in report["review_account_samples"]:
@@ -273,23 +427,32 @@ def write_review_outputs(rows: list[dict], report: dict, output: Path) -> None:
     else:
         markdown.append("No aparecieron las cuentas de referencia configuradas para Banco de Chile.")
     markdown.extend(["", "> La suma mostrada es diagnóstica; no implica que los campos representen componentes sumables.", ""])
-    summary_text = "\\n".join(markdown)
+    summary_text = "\n".join(markdown)
     (output / "extraction_summary.md").write_text(summary_text, encoding="utf-8")
     github_summary = os.environ.get("GITHUB_STEP_SUMMARY")
     if github_summary:
         with open(github_summary, "a", encoding="utf-8") as summary_file:
-            summary_file.write(summary_text + "\\n")
+            summary_file.write(summary_text + "\n")
+    reconciliation = report.get("reconciliation", {})
     print("::notice title=CMF B1/B2/R1 extracted for review::" + json.dumps({
         "period": report["period"],
         "institutions": report["institution_count"],
         "files": report["file_count"],
         "account_rows_by_family": counts,
+        "b1_status": reconciliation.get("b1_status", "not_compared"),
+        "r1_status": reconciliation.get("r1_status", "not_compared"),
+        "r1_exact_xlsx_match_count": len(reconciliation.get("r1_exact_account_matches_in_xlsx", [])),
+        "r1_exact_xlsx_matches_preview": [
+            {"codigo_cuenta": item["codigo_cuenta"], "glosa_cuenta": item["glosa_cuenta"], "importe_pesos": item["importe_pesos"]}
+            for item in reconciliation.get("r1_exact_account_matches_in_xlsx", [])[:8]
+        ],
         "source_sha256": report["source_sha256"],
         "published": False,
     }, ensure_ascii=False, separators=(",", ":")), flush=True)
 
 
 def run(period: str, output: Path, zip_path: Path | None = None, inspection_json: Path | None = None, source_url: str = "") -> dict:
+    inspection = None
     if zip_path is None:
         source_url, _ = find_source(ZIP_INDEX, period, ".zip")
         blob = fetch(source_url, MAX_FILE)
@@ -305,7 +468,11 @@ def run(period: str, output: Path, zip_path: Path | None = None, inspection_json
                 raise ValueError("ZIP bytes do not match the SHA-256 in the inspection report")
             source_url = source.get("url", source_url)
     rows, report = extract_archive(blob, period, source_url)
+    if inspection is not None:
+        report["reconciliation"] = reconcile_to_inspection(rows, inspection)
     write_review_outputs(rows, report, output)
+    if inspection is not None and report["reconciliation"]["b1_status"] != "passed":
+        raise RuntimeError("B1 TOTAL ACTIVOS did not reconcile to the CMF XLSX review row")
     return report
 
 

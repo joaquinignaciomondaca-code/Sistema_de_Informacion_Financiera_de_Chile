@@ -5,7 +5,7 @@ import zipfile
 from io import BytesIO
 from pathlib import Path
 
-from bancos.scripts.extract_cmf_bank_lines import extract_archive, parse_amount, write_review_outputs
+from bancos.scripts.extract_cmf_bank_lines import extract_archive, parse_account_model, parse_amount, reconcile_to_inspection, write_review_outputs
 
 
 class ExtractCmfBankLinesTests(unittest.TestCase):
@@ -32,6 +32,25 @@ class ExtractCmfBankLinesTests(unittest.TestCase):
                     if key in duplicate:
                         archive.writestr(f"copia/{member}", f"{bank}\t{header_name}\n{body}")
             archive.writestr("c1202607001.txt", "001\tBANCO DE CHILE\n")
+            archive.writestr(
+                "metadata/modelo_mb1.txt",
+                "CUENTA\tRUBRO\tLINEA\tITEM\tGLOSA\n"
+                "100000000\t10000\t00\t00\tTOTAL ACTIVOS\n"
+                "105000000\t10500\t00\t00\tEFECTIVO\n"
+                "105000100\t10500\t01\t00\tEfectivo disponible\n"
+                "105000101\t10500\t01\t01\tCaja\n",
+            )
+            archive.writestr(
+                "metadata/modelo_mb2.txt",
+                "CUENTA\tRUBRO\tLINEA\tITEM\tGLOSA\n"
+                "143000000\t14300\t00\t00\tAdeudado por bancos\n",
+            )
+            archive.writestr(
+                "metadata/modelo_mr1.txt",
+                "CUENTA\tRUBRO\tLINEA\tITEM\tGLOSA\n"
+                "411000000\t41100\t00\t00\tINGRESOS POR INTERESES\n"
+                "411100000\t41110\t00\t00\tIntereses activos\n",
+            )
         return output.getvalue()
 
     def test_extracts_three_families_and_keeps_row_order_separate(self):
@@ -48,7 +67,9 @@ class ExtractCmfBankLinesTests(unittest.TestCase):
         self.assertIsNone(row["rut"])
         self.assertIsNone(row["razon_social"])
         self.assertEqual(row["nombre_institucion_fuente"], "BANCO DE CHILE")
-        self.assertIsNone(row["glosa_cuenta"])
+        self.assertEqual((row["rubro"], row["linea"], row["item"]), ("10000", "00", "00"))
+        self.assertEqual(row["glosa_cuenta"], "TOTAL ACTIVOS")
+        self.assertEqual(row["tipo_linea"], "total")
         result = next(row for row in rows if row["codigo_institucion"] == "001" and row["modelo_cmf"] == "MR1")
         self.assertEqual(result["nivel_consolidacion"], "consolidado_global")
         self.assertEqual(result["tipo_estado"], "resultados")
@@ -66,10 +87,38 @@ class ExtractCmfBankLinesTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "header names differ"):
             extract_archive(self.make_zip(inconsistent_header=True), "2026-07")
 
+    def test_account_model_maps_hierarchy_and_line_type(self):
+        model = parse_account_model(
+            "CUENTA\tRUBRO\tLINEA\tITEM\tGLOSA\n"
+            "100000000\t10000\t00\t00\tTOTAL ACTIVOS\n"
+            "105000000\t10500\t00\t00\tEfectivo\n"
+            "105000100\t10500\t01\t00\tCaja y bancos\n"
+            "105000101\t10500\t01\t01\tCaja\n",
+            "metadata/modelo_mb1.txt",
+        )
+        self.assertEqual(model["100000000"]["tipo_linea"], "total")
+        self.assertEqual(model["105000000"]["tipo_linea"], "subtotal")
+        self.assertEqual(model["105000101"]["tipo_linea"], "detalle")
+
     def test_amounts_are_exact_and_fail_closed(self):
         self.assertEqual(parse_amount("-00000123,450"), "-123.450")
         with self.assertRaisesRegex(ValueError, "Invalid CMF amount"):
             parse_amount("1.234,56")
+
+    def test_reconciles_b1_total_and_r1_accounts_to_xlsx_rows(self):
+        rows, _ = extract_archive(self.make_zip(), "2026-07")
+        inspection = {
+            "workbook": {
+                "bank_rows": [
+                    {"sheet": "Est. Situación Financ. Bancos", "row_number": 17, "values": [None, "Banco de Chile", 0.00001]},
+                    {"sheet": "Est. del Resultado Bancos", "row_number": 17, "values": [None, "Banco de Chile", 0.000009]},
+                ]
+            }
+        }
+        result = reconcile_to_inspection(rows, inspection)
+        self.assertEqual(result["b1_status"], "passed")
+        self.assertEqual(result["r1_status"], "matched")
+        self.assertEqual(result["r1_exact_account_matches_in_xlsx"][0]["codigo_cuenta"], "411000000")
 
     def test_writes_review_jsonl_and_report_without_publication(self):
         rows, report = extract_archive(self.make_zip(), "2026-07")
