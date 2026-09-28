@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
   "updated_at": "2026-09-28",
-  "total_tables": 51,
-  "total_records": 15405079,
+  "total_tables": 52,
+  "total_records": 15406651,
   "classification": {
     "automatico": "Extracción y procesamiento 100% por código autónomo (APIs, scrapers, normalizadores)",
     "manual": "Extracción asistida o transcripción de notas y reportes no estructurados (ej. NotebookLM)"
@@ -569,20 +569,36 @@
       "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Administradoras Generales de Fondos (RGAGF / RACRT)."
     },
     {
-      "id": "agf_balance_resumen",
-      "name": "agf.balance_resumen",
-      "view_name": "agf_balance_resumen",
+      "id": "agf_balance",
+      "name": "agf.balance",
+      "view_name": "agf_balance",
+      "norma": "IFRS, estado de situación financiera individual (CMF)",
+      "file_parquet": "outputs/agf/agf_balance.parquet",
+      "descripcion": "Balance propio de cada AGF vigente por trimestre, en MM$: activos, pasivos, patrimonio, efectivo y otros activos financieros. Todos cuadran; cotejado contra la CMF.",
       "sector": "agf",
       "sector_label": "Administradoras Generales de Fondos",
-      "norma": "Norma Internacional de Información Financiera (IFRS) / CMF",
-      "corte": "Serie Trimestral Histórica",
-      "frescura": "Actualización Trimestral CMF",
+      "corte": "2018-03 a 2026-06 (trimestral)",
+      "frescura": "Corrida manual del 2026-09-23",
       "modo": "Automático",
-      "ultima_actualizacion": "2026-09-23",
-      "file_parquet": "outputs/agf/agf_balance_resumen.parquet",
+      "ultima_actualizacion": "2026-09-28",
       "registros_reales": 1572,
-      "descripcion": "Serie histórica de balances y estados de resultados bajo norma IFRS correspondientes al patrimonio corporativo propio de las Administradoras Generales de Fondos (AGF). Monitorea solvencia, capital mínimo regulatorio, efectivo, cartera propia de inversión fiduciaria y comisiones operacionales.",
-      "origen": "Comisión para el Mercado Financiero (CMF) — Estados Financieros IFRS Trimestrales de Entidades Supervisadas."
+      "origen": "cmfchile.cl → agf/scripts/stream_cmf_agf.py → agf/fuentes/agf_eeff_cmf.parquet → agf/scripts/publicar_agf_balance_resultados.py"
+    },
+    {
+      "id": "agf_resultados",
+      "name": "agf.resultados",
+      "view_name": "agf_resultados",
+      "norma": "IFRS, estado de resultados por función, individual (CMF)",
+      "file_parquet": "outputs/agf/agf_resultados.parquet",
+      "descripcion": "Ingresos de actividades ordinarias acumulados en el año y del trimestre, en MM$. Gastos de administración y ganancia vienen NULL (no capturados por un problema de tildes ya corregido; se llenarán en la próxima corrida).",
+      "sector": "agf",
+      "sector_label": "Administradoras Generales de Fondos",
+      "corte": "2018-03 a 2026-06 (trimestral)",
+      "frescura": "Corrida manual del 2026-09-23",
+      "modo": "Automático",
+      "ultima_actualizacion": "2026-09-28",
+      "registros_reales": 1572,
+      "origen": "cmfchile.cl → agf/scripts/stream_cmf_agf.py → agf/fuentes/agf_eeff_cmf.parquet → agf/scripts/publicar_agf_balance_resultados.py"
     },
     {
       "id": "sistemas_pago_maestro",

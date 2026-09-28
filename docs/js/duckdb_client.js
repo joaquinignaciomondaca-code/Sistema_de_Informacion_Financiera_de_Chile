@@ -110,7 +110,8 @@ const SEMANTIC_VIEWS = [
 
   // ADMINISTRADORAS GENERALES DE FONDOS (AGF / Ley 20.712)
   { name: "agf_maestro", file: "outputs/agf/agf_maestro.parquet" },
-  { name: "agf_balance_resumen", file: "outputs/agf/agf_balance_resumen.parquet" },
+  { name: "agf_balance", file: "outputs/agf/agf_balance.parquet" },
+  { name: "agf_resultados", file: "outputs/agf/agf_resultados.parquet" },
 
   // SISTEMAS DE PAGO (BCCh / CMF)
   { name: "sistemas_pago_maestro", file: "outputs/sistemas_pago/sistemas_pago_maestro.parquet" },
