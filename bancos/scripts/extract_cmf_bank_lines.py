@@ -13,6 +13,7 @@ import hashlib
 import json
 import os
 import re
+import unicodedata
 import sys
 import zipfile
 from collections import Counter, defaultdict
@@ -300,7 +301,9 @@ def extract_archive(blob: bytes, period: str, source_url: str = "") -> tuple[lis
 
 
 def normalize_name(value: object) -> str:
-    return re.sub(r"[^A-Z0-9]", "", str(value or "").upper())
+    # Quitar tildes antes de filtrar: "Crédito" (XLSX) debe igualar "CREDITO" (ZIP).
+    text = unicodedata.normalize("NFKD", str(value or "")).encode("ascii", "ignore").decode("ascii")
+    return re.sub(r"[^A-Z0-9]", "", text.upper())
 
 
 def reconcile_to_inspection(rows: list[dict], inspection: dict, bank_code: str = "001", bank_name: str = "Banco de Chile") -> dict:
