@@ -98,9 +98,8 @@
             </button>
           </div>
           <div class="erd-controls-group" id="erd-controls-group">
-            <span class="erd-breadcrumb" id="erd-breadcrumb">Seguros de Vida > Circular 1835</span>
-            <button class="filter-btn active" data-filter="vida">Vida</button>
-            <button class="filter-btn" data-filter="generales">Generales</button>
+            <span class="erd-breadcrumb" id="erd-breadcrumb">Seguros > Circular 1835</span>
+            <button class="filter-btn active" data-filter="seguros">Seguros</button>
             <button class="filter-btn" data-filter="ffmm">FFMM</button>
             <button class="filter-btn" data-filter="fi">FFII</button>
             <button class="filter-btn" data-filter="pensiones">Pensiones</button>
@@ -163,26 +162,26 @@
 
       <!-- Chips de Consultas Rápidas Sugeridas -->
       <div class="quick-chips">
-        <div class="chip" data-query="SELECT nemotecnico, tipo_bono, AVG(tir_mercado_pct) as tir_promedio, count(*) as tenencias FROM vida_bonos GROUP BY nemotecnico, tipo_bono ORDER BY tenencias DESC LIMIT 5;">
-          Top 5 Bonos en Vida
+        <div class="chip" data-query="SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija) GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 10;">
+          Renta fija de seguros por tipo
         </div>
-        <div class="chip" data-query="SELECT nemotecnico, AVG(precio_cierre_clp) as precio_promedio, AVG(presencia_pct) as presencia FROM vida_acciones WHERE nemotecnico IN ('CHILE', 'BCI', 'BSANTANDER', 'SQM-B', 'CMPC') GROUP BY nemotecnico;">
-          Precios Acciones IPSA
+        <div class="chip" data-query="SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = (SELECT max(periodo) FROM seguros_acciones) GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;">
+          Acciones en seguros
         </div>
-        <div class="chip" data-query="SELECT comuna, count(*) as propiedades, SUM(tasacion_comercial_m_clp) as tasacion_total_m_clp FROM vida_bienes_raices GROUP BY comuna ORDER BY propiedades DESC LIMIT 5;">
-          Bienes Raíces por Comuna
+        <div class="chip" data-query="SELECT ciudad, count(*) AS inmuebles, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_bienes_raices WHERE periodo = (SELECT max(periodo) FROM seguros_bienes_raices) GROUP BY ciudad ORDER BY valor_final_m_clp DESC LIMIT 10;">
+          Bienes raíces por ciudad
         </div>
-        <div class="chip" data-query="SELECT nombre_contraparte, count(*) as contratos, AVG(precio_forward_pactado) as fwd_pactado FROM vida_forwards GROUP BY nombre_contraparte ORDER BY contratos DESC LIMIT 5;">
-          Forwards: Contrapartes
+        <div class="chip" data-query="SELECT contraparte, count(*) AS contratos, count(DISTINCT rut_aseguradora) AS aseguradoras FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY contraparte ORDER BY contratos DESC LIMIT 10;">
+          Derivados: contrapartes
         </div>
-        <div class="chip" data-query="SELECT periodo, rubro_caratula, SUM(total_inversion_m_clp) as inversion_total_m FROM vida_solvencia GROUP BY periodo, rubro_caratula ORDER BY periodo DESC LIMIT 5;">
-          Solvencia y Balance
+        <div class="chip" data-query="SELECT contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_pacto_prom_pct, SUM(valor_contable_m_clp) AS valor_contable_m_clp FROM seguros_pactos WHERE periodo = (SELECT max(periodo) FROM seguros_pactos) GROUP BY contraparte ORDER BY valor_contable_m_clp DESC LIMIT 10;">
+          Pactos de seguros
         </div>
-        <div class="chip" data-query="SELECT codigo_operacion, nombre_contraparte, count(*) as operaciones, ROUND(AVG(tasa_pct), 2) as tasa_media, SUM(valorizacion_cierre) as total_m_clp FROM fi_repos GROUP BY codigo_operacion, nombre_contraparte ORDER BY total_m_clp DESC LIMIT 5;">
-          Repos FFII: Contrapartes & Tasas
+        <div class="chip" data-query="SELECT tipo_operacion, contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_prom_pct FROM fi_pactos WHERE periodo = (SELECT max(periodo) FROM fi_pactos) GROUP BY tipo_operacion, contraparte ORDER BY pactos DESC LIMIT 15;">
+          Pactos FI: contrapartes y tasas
         </div>
-        <div class="chip" data-query="SELECT rut_aseguradora, nombre_aseguradora, ultimo_periodo, inversion_ultimo_reporte_m_clp, periodos_reportados FROM vida_maestro WHERE estado = 'Activa' ORDER BY inversion_ultimo_reporte_m_clp DESC LIMIT 5;">
-          Ranking Aseguradoras Vida
+        <div class="chip" data-query="SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo, meses_reportados FROM seguros_maestro WHERE reporta_ultimo_mes ORDER BY sector, nombre_aseguradora;">
+          Aseguradoras que reportan
         </div>
       </div>
 
@@ -207,16 +206,16 @@
   <!-- Scripts de la Aplicación -->
   <script src="js/data_bundles.js?v=3.0"></script>
   <script src="js/chart_renderer.js?v=3.0"></script>
-  <script src="js/erd_graph.js?v=20260927-fl-lista"></script>
-  <script src="js/duckdb_client.js?v=fl-202606-28938-21464"></script>
+  <script src="js/erd_graph.js?v=20260928-agf-split"></script>
+  <script src="js/duckdb_client.js?v=fl-202606-30046-22368"></script>
   <script src="js/chat_terminal.js?v=3.4"></script>
-  <script src="js/sidebar.js?v=fl-202606-28938-21464"></script>
+  <script src="js/sidebar.js?v=fl-202606-30046-22368"></script>
   <script src="js/theme_switcher.js?v=3.1"></script>
-  <script src="js/data_dictionary.js?v=fl-202606-28938-21464"></script>
-  <script src="js/data_viewer.js?v=fl-202606-28938-21464"></script>
+  <script src="js/data_dictionary.js?v=fl-202606-30046-22368"></script>
+  <script src="js/data_viewer.js?v=fl-202606-30046-22368"></script>
   <script src="js/jszip.min.js"></script>
   <script src="js/xlsx.full.min.js"></script>
-  <script src="js/export_modal.js?v=20260927-fl-lista"></script>
+  <script src="js/export_modal.js?v=20260928-agf-split"></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -275,7 +274,7 @@
       const tabBtnExport = document.getElementById("tab-btn-export");
       const openGlobalExport = () => {
         if (window.ExportModal) {
-          const v = (window.DataViewer && window.DataViewer.currentView) ? window.DataViewer.currentView : "ccaf_caratula_totales";
+          const v = (window.DataViewer && window.DataViewer.currentView) ? window.DataViewer.currentView : "agf_maestro";
           const d = (window.DataViewer && window.DataViewer.currentDisplayName) ? window.DataViewer.currentDisplayName : "ccaf.caratula_totales";
           const r = (window.DataViewer && window.DataViewer.currentView === v) ? window.DataViewer.getFilteredRows() : [];
           const c = (window.DataViewer && window.DataViewer.currentView === v) ? window.DataViewer.currentColumns : [];

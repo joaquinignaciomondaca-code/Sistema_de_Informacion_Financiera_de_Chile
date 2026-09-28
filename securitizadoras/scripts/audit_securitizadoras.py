@@ -3,12 +3,9 @@
 audit_securitizadoras.py
 Suite integral de auditoría y verificación de calidad y consistencia contable para:
   1. securitizadoras_maestro (parquet/json)
-  2. securitizadoras_balance_resumen (parquet/json)
+  2. securitizadoras_balance (particiones anuales, TXT IFRS CMF)
   3. patrimonios_separados_maestro (parquet/json)
-  4. patrimonios_separados_balance_resumen (parquet/json)
-  5. patrimonios_separados_nota_efectivo_detalle (parquet/json)
-  6. patrimonios_separados_repos_detalle (parquet/json)
-  7. patrimonios_separados_cartera_morosidad_detalle (parquet/json)
+  4. patrimonios_separados_balance (parquet)
 """
 
 import os
@@ -77,27 +74,21 @@ def main():
 
     ruts_maestro_completos = set(df_m["rut_completo"]) if not df_m.empty else set()
 
-    # 2. Balances IFRS Resumen Securitizadoras
-    print("\n--- 2. AUDITORIA: securitizadoras_balance_resumen ---")
-    bal_pq = os.path.join(base_dir, "securitizadoras_balance_resumen.parquet")
-    bal_js = os.path.join(base_dir, "securitizadoras_balance_resumen.json")
-    if not os.path.exists(bal_pq) or not os.path.exists(bal_js):
-        errores.append("Archivos de securitizadoras_balance_resumen faltantes.")
+    # 2. Balance IFRS de las securitizadoras (TXT trimestral CMF, pipelines/ifrs_sectores)
+    print("\n--- 2. AUDITORIA: securitizadoras_balance ---")
+    import glob
+    archivos = sorted(glob.glob(os.path.join(base_dir, "securitizadoras_balance", "*.parquet")))
+    if not archivos:
+        errores.append("Faltan las particiones de securitizadoras_balance.")
     else:
-        df_b = pd.read_parquet(bal_pq)
-        with open(bal_js, "r", encoding="utf-8") as f:
-            js_b = json.load(f)
-        
-        print(f"Total balances trimestrales: {len(df_b)} | Parquet=JSON: {len(df_b) == len(js_b)}")
-        if len(df_b) != len(js_b):
-            errores.append(f"Discrepancia balances Parquet ({len(df_b)}) vs JSON ({len(js_b)})")
-
-        diff = np.abs(df_b["total_activos_m_clp"] - (df_b["total_pasivos_m_clp"] + df_b["patrimonio_neto_m_clp"]))
-        max_diff = diff.max()
-        cuadratura_exacta = (diff < 1e-4).all()
-        print(f"Ecuacion Contable Fundamental (Activo == Pasivo + Patrimonio): {'100.0% EXACTA' if cuadratura_exacta else 'FALLIDA'}")
-        if not cuadratura_exacta:
-            errores.append(f"Falla de cuadratura contable securitizadoras. Max diff: {max_diff}")
+        df_b = pd.concat([pd.read_parquet(a) for a in archivos], ignore_index=True)
+        tot = df_b[df_b["repeticion"] == 1].pivot_table(
+            index=["periodo", "rut", "tipo_balance", "estado_financiero"], columns="cuenta", values="valor", aggfunc="first")
+        if {"Total de activos", "Total de patrimonio y pasivos"} <= set(tot.columns):
+            dif = (tot["Total de activos"] - tot["Total de patrimonio y pasivos"]).abs().dropna()
+            print(f"Balances: {len(tot)} | Activos = patrimonio + pasivos en {int((dif == 0).sum())} de {len(dif)}")
+            if (dif > 1000).any():
+                errores.append(f"{int((dif > 1000).sum())} balances de securitizadoras no cuadran (activos vs patrimonio y pasivos)")
 
     # 3. Maestro Patrimonios Separados (Programas y Lineas)
     print("\n--- 3. AUDITORIA: patrimonios_separados_maestro ---")
@@ -113,89 +104,38 @@ def main():
         if len(df_ps) != len(js_ps):
             errores.append("Discrepancia Parquet vs JSON en patrimonios_separados_maestro")
 
-    # 4. Balances Clasificados Patrimonios Separados
-    print("\n--- 4. AUDITORIA: patrimonios_separados_balance_resumen ---")
-    ps_bal_pq = os.path.join(base_dir, "patrimonios_separados_balance_resumen.parquet")
-    ps_bal_js = os.path.join(base_dir, "patrimonios_separados_balance_resumen.json")
-    if not os.path.exists(ps_bal_pq) or not os.path.exists(ps_bal_js):
-        errores.append("Archivos de patrimonios_separados_balance_resumen faltantes.")
+    # 4. Balance de patrimonios separados (05_publicar_balance_patrimonios.py)
+    print("\n--- 4. AUDITORIA: patrimonios_separados_balance ---")
+    bal_pq = os.path.join(base_dir, "patrimonios_separados_balance.parquet")
+    if not os.path.exists(bal_pq):
+        errores.append("Falta patrimonios_separados_balance.parquet")
     else:
-        df_ps_bal = pd.read_parquet(ps_bal_pq)
-        with open(ps_bal_js, "r", encoding="utf-8") as f:
-            js_ps_bal = json.load(f)
-        print(f"Total balances auditados: {len(df_ps_bal)} | Parquet=JSON: {len(df_ps_bal) == len(js_ps_bal)}")
-        if len(df_ps_bal) != len(js_ps_bal):
-            errores.append("Discrepancia Parquet vs JSON en patrimonios_separados_balance_resumen")
-        
-        cuadres_ok = df_ps_bal["cuadre_contable_ok"].sum()
-        print(f"Cuadre Contable Exacto (Activos == Pasivos + Excedentes): {cuadres_ok}/{len(df_ps_bal)} ({cuadres_ok/len(df_ps_bal)*100:.1f}%)")
-        if cuadres_ok != len(df_ps_bal):
-            errores.append("Balances de patrimonios separados con desbalance contable")
-
-        # Integridad referencial con administradoras
-        ruts_ps_b = set(df_ps_bal["rut_administradora"])
-        invalidos = ruts_ps_b - ruts_maestro_completos
-        print(f"Integridad referencial con gestoras: {len(ruts_ps_b - invalidos)}/{len(ruts_ps_b)} validos")
-        if invalidos:
-            errores.append(f"RUTs de gestoras no encontrados en maestro: {invalidos}")
-
-    # 5. Nota Efectivo Detalle Patrimonios Separados
-    print("\n--- 5. AUDITORIA: patrimonios_separados_nota_efectivo_detalle ---")
-    ps_efe_pq = os.path.join(base_dir, "patrimonios_separados_nota_efectivo_detalle.parquet")
-    ps_efe_js = os.path.join(base_dir, "patrimonios_separados_nota_efectivo_detalle.json")
-    if not os.path.exists(ps_efe_pq) or not os.path.exists(ps_efe_js):
-        errores.append("Archivos de patrimonios_separados_nota_efectivo_detalle faltantes.")
-    else:
-        df_ps_efe = pd.read_parquet(ps_efe_pq)
-        with open(ps_efe_js, "r", encoding="utf-8") as f:
-            js_ps_efe = json.load(f)
-        print(f"Total partidas de efectivo: {len(df_ps_efe)} | Parquet=JSON: {len(df_ps_efe) == len(js_ps_efe)}")
-        if len(df_ps_efe) != len(js_ps_efe):
-            errores.append("Discrepancia Parquet vs JSON en patrimonios_separados_nota_efectivo_detalle")
-
-        if "numero_nota" not in df_ps_efe.columns:
-            errores.append("Falta columna 'numero_nota' en efectivo detalle.")
-        else:
-            notas_dist = df_ps_efe["numero_nota"].nunique()
-            print(f"Columna 'numero_nota' verificada: {notas_dist} notas contables distintas identificadas.")
-
-    # 6. Repos Detalle Patrimonios Separados
-    print("\n--- 6. AUDITORIA: patrimonios_separados_repos_detalle ---")
-    ps_rep_pq = os.path.join(base_dir, "patrimonios_separados_repos_detalle.parquet")
-    ps_rep_js = os.path.join(base_dir, "patrimonios_separados_repos_detalle.json")
-    if not os.path.exists(ps_rep_pq) or not os.path.exists(ps_rep_js):
-        errores.append("Archivos de patrimonios_separados_repos_detalle faltantes.")
-    else:
-        df_ps_rep = pd.read_parquet(ps_rep_pq)
-        with open(ps_rep_js, "r", encoding="utf-8") as f:
-            js_ps_rep = json.load(f)
-        print(f"Total operaciones repo: {len(df_ps_rep)} | Parquet=JSON: {len(df_ps_rep) == len(js_ps_rep)}")
-        if len(df_ps_rep) != len(js_ps_rep):
-            errores.append("Discrepancia Parquet vs JSON en patrimonios_separados_repos_detalle")
-
-        contrapartes = df_ps_rep["contraparte"].nunique()
-        print(f"Contrapartes financieras registradas: {contrapartes}")
-
-    # 7. Cartera Morosidad Detalle Patrimonios Separados
-    print("\n--- 7. AUDITORIA: patrimonios_separados_cartera_morosidad_detalle ---")
-    ps_mor_pq = os.path.join(base_dir, "patrimonios_separados_cartera_morosidad_detalle.parquet")
-    ps_mor_js = os.path.join(base_dir, "patrimonios_separados_cartera_morosidad_detalle.json")
-    if not os.path.exists(ps_mor_pq) or not os.path.exists(ps_mor_js):
-        errores.append("Archivos de patrimonios_separados_cartera_morosidad_detalle faltantes.")
-    else:
-        df_ps_mor = pd.read_parquet(ps_mor_pq)
-        with open(ps_mor_js, "r", encoding="utf-8") as f:
-            js_ps_mor = json.load(f)
-        print(f"Total tramos de morosidad: {len(df_ps_mor)} | Parquet=JSON: {len(df_ps_mor) == len(js_ps_mor)}")
-        if len(df_ps_mor) != len(js_ps_mor):
-            errores.append("Discrepancia Parquet vs JSON en patrimonios_separados_cartera_morosidad_detalle")
-
-        tramos = df_ps_mor["tramo_mora"].nunique()
-        print(f"Tramos de mora auditados: {tramos}")
+        cta = pd.read_parquet(bal_pq)
+        t = cta.pivot_table(index="archivo", columns="categoria", values="monto_m_clp", aggfunc="sum").fillna(0)
+        print(f"Cuentas: {len(cta)} | Balances: {len(t)} | Cierres: {cta['periodo'].nunique()} "
+              f"({cta['periodo'].min()}–{cta['periodo'].max()})")
+        if cta.duplicated(["archivo", "orden_en_balance"]).any():
+            errores.append("balance: (archivo, orden_en_balance) duplicado")
+        if cta.drop_duplicates("archivo").duplicated(["rut_administradora", "codigo_patrimonio", "periodo"]).any():
+            errores.append("balance: patrimonio y cierre repetidos en documentos distintos")
+        gap = (t["Total Activos"] - t["Total Pasivo Circulante"] - t["Total Pasivo No Circulante"]
+               - t["Total Patrimonio (Excedente Acumulado)"]).abs()
+        print(f"Cuadre activos = pasivos + patrimonio: {int((gap <= 2).sum())}/{len(t)}")
+        if (gap > 2).any():
+            errores.append(f"balance: {int((gap > 2).sum())} balances no cuadran")
+        for det in ["Activo Circulante", "Activo No Circulante", "Pasivo Circulante", "Pasivo No Circulante",
+                    "Patrimonio (Excedente Acumulado)"]:
+            if det in t and ((t[det] - t[f"Total {det}"]).abs() > 2).any():
+                errores.append(f"balance: las cuentas de '{det}' no suman su total")
+        if "df_m" in locals():
+            sin_gestora = set(cta["rut_administradora"]) - set(df_m["rut"].astype(str))
+            print(f"RUT sin gestora en securitizadoras_maestro: {sorted(sin_gestora) or 'ninguno'}")
+            if sin_gestora:
+                errores.append(f"balance: RUT sin gestora {sorted(sin_gestora)}")
 
     print("\n" + "=" * 75)
     if not errores:
-        print("RESULTADO DE AUDITORIA: 100% EXITOSA - 7 DATASETS CERTIFICADOS AL 100%")
+        print("RESULTADO DE AUDITORIA: 100% EXITOSA - 4 DATASETS VERIFICADOS")
         print("=" * 75)
         return 0
     else:

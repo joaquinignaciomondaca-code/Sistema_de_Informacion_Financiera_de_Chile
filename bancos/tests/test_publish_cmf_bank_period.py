@@ -58,6 +58,25 @@ class PublishCmfBankPeriodTests(unittest.TestCase):
         self.assertEqual(result["periods"], [])
         self.assertFalse(result["published_changed"])
 
+    def _not_published_publisher(self, missing):
+        def publisher(period, dry_run=False):
+            raise mod.SourceNotPublished("Expected one CMF .zip link for " + period + "; found 0")
+        return publisher
+
+    def test_catch_up_waits_quietly_when_next_month_is_not_yet_published(self):
+        manifest = {"periods": [{"period": "2026-07"}]}
+        with mock.patch.object(mod, "load_manifest", lambda: manifest):
+            result = catch_up(False, 24, date(2026, 9, 28), self._not_published_publisher("2026-08"), start="2026-07")
+        self.assertEqual(result["periods"], [])
+        self.assertFalse(result["published_changed"])
+        self.assertEqual(result["waiting_for"], "2026-08")
+
+    def test_catch_up_fails_if_a_closed_month_is_missing_for_too_long(self):
+        manifest = {"periods": [{"period": "2026-07"}]}
+        with mock.patch.object(mod, "load_manifest", lambda: manifest):
+            with self.assertRaisesRegex(RuntimeError, "días cerrado"):
+                catch_up(False, 24, date(2026, 12, 1), self._not_published_publisher("2026-08"), start="2026-07")
+
     def test_previous_month_handles_year_boundary(self):
         self.assertEqual(previous_month(date(2027, 1, 15)), "2026-12")
         self.assertEqual(previous_month(date(2026, 10, 15)), "2026-09")

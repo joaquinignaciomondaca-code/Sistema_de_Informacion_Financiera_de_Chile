@@ -31,9 +31,8 @@ def run():
         (STAGE / f"{name}.{ext}").read_bytes() != (source / f"{name}.{ext}").read_bytes()
         for name in TABLES for ext in ("parquet", "json")
     )
-    # El repo nunca recibe commits automáticos. Publicar en la copia de trabajo
-    # solo si pasa la comparación contra los datos públicos; Actions empaqueta
-    # los archivos cambiados en artifact para revisión humana.
+    # Publicar en la copia de trabajo solo si pasa la comparación contra los datos
+    # públicos; el workflow hace el commit de lo validado.
     published_changed = publish(STAGE, PUBLISHED, ROOT / "data_manifest.json")
     if checkpoint_changed:
         CHECKPOINT.mkdir(parents=True, exist_ok=True)

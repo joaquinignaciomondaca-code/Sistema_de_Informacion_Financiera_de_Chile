@@ -5,437 +5,224 @@
 
 const ERD_TABLES = [
   {
-    id: "vida_maestro",
-    name: "vida.lista_entidades",
-    sector: "vida",
+    id: "seguros_maestro",
+    name: "seguros.lista_entidades",
+    sector: "seguros",
     color: "var(--accent-mint)",
     x: 480,
     y: -80,
-    w: 220,
-    h: 140,
-    rows: "61 entidades",
-    file: "outputs/vida/maestro_aseguradoras_vida.parquet",
+    w: 240,
+    h: 152,
+    rows: "Compañías",
+    file: "outputs/seguros/aseguradoras.parquet",
     cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", type: "VARCHAR" },
+      { name: "sector", type: "VARCHAR" },
+      { name: "rut_aseguradora", pk: true, type: "VARCHAR" },
       { name: "nombre_aseguradora", type: "VARCHAR" },
-      { name: "estado", type: "VARCHAR" },
-      { name: "inversion_ultimo_reporte_m_clp", type: "DOUBLE" },
-      { name: "periodos_reportados", type: "BIGINT" }
+      { name: "primer_periodo", type: "VARCHAR" },
+      { name: "ultimo_periodo", type: "VARCHAR" },
+      { name: "meses_reportados", type: "BIGINT" },
+      { name: "reporta_ultimo_mes", type: "BOOLEAN" }
     ]
   },
   {
-    id: "vida_bonos",
-    name: "vida.cartera_bonos",
-    sector: "vida",
+    id: "seguros_renta_fija",
+    name: "seguros.renta_fija",
+    sector: "seguros",
     color: "var(--accent-mint)",
-    x: 480,
-    y: 90,
-    w: 220,
-    h: 155,
-    rows: "9.09M filas",
-    file: "outputs/vida/cartera_bonos.parquet",
+    x: 80,
+    y: 160,
+    w: 240,
+    h: 216,
+    rows: "Mensual",
+    file: "outputs/seguros/renta_fija/manifest.json",
     cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
-      { name: "nemotecnico", type: "VARCHAR" },
-      { name: "tir_compra_pct", type: "DOUBLE" },
-      { name: "tir_mercado_pct", type: "DOUBLE" },
-      { name: "tasa_emision_pct", type: "DOUBLE" },
-      { name: "valor_mercado_m_clp", type: "DOUBLE" },
-      { name: "fecha_vencimiento", type: "DATE" }
-    ]
-  },
-  {
-    id: "vida_acciones",
-    name: "vida.cartera_acciones",
-    sector: "vida",
-    color: "#00ADB5",
-    x: 180,
-    y: 80,
-    w: 210,
-    h: 140,
-    rows: "124k filas",
-    file: "outputs/vida/cartera_acciones.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
+      { name: "sector", type: "VARCHAR" },
       { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "nemotecnico", type: "VARCHAR" },
-      { name: "precio_cierre_clp", type: "DOUBLE" },
-      { name: "presencia_pct", type: "DOUBLE" },
-      { name: "cantidad_acciones", type: "DOUBLE" },
-      { name: "valor_mercado_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "vida_bienes_raices",
-    name: "vida.cartera_bienes_raices",
-    sector: "vida",
-    color: "#1F4E78",
-    x: 770,
-    y: 110,
-    w: 220,
-    h: 140,
-    rows: "1.88M filas",
-    file: "outputs/vida/cartera_bienes_raices.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "rol_avaluo", type: "VARCHAR" },
-      { name: "comuna", type: "VARCHAR" },
-      { name: "avaluo_fiscal_m_clp", type: "DOUBLE" },
-      { name: "tasacion_comercial_m_clp", type: "DOUBLE" },
-      { name: "fecha_tasacion", type: "DATE" }
-    ]
-  },
-  {
-    id: "vida_fondos",
-    name: "vida.cartera_fondos",
-    sector: "vida",
-    color: "#22577A",
-    x: 180,
-    y: 270,
-    w: 210,
-    h: 135,
-    rows: "68k filas",
-    file: "outputs/vida/cartera_fondos.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "run_fondo", fk: true, type: "VARCHAR" },
-      { name: "nemotecnico", type: "VARCHAR" },
-      { name: "cuotas_cartera", type: "DOUBLE" },
-      { name: "valor_cuota", type: "DOUBLE" },
-      { name: "valor_mercado_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "vida_extranjeros",
-    name: "vida.cartera_extranjeros",
-    sector: "vida",
-    color: "#696E79",
-    x: 480,
-    y: 310,
-    w: 220,
-    h: 135,
-    rows: "140k filas",
-    file: "outputs/vida/cartera_extranjeros.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "gestora_fondo", type: "VARCHAR" },
-      { name: "nemotecnico", type: "VARCHAR" },
-      { name: "moneda", type: "VARCHAR" },
-      { name: "valor_moneda_origen", type: "DOUBLE" },
-      { name: "valor_mercado_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "vida_solvencia",
-    name: "vida.cartera_solvencia",
-    sector: "vida",
-    color: "var(--accent-contrast)",
-    x: 770,
-    y: 310,
-    w: 220,
-    h: 120,
-    rows: "111k filas",
-    file: "outputs/vida/cartera_solvencia.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "rubro_caratula", type: "VARCHAR" },
-      { name: "total_inversion_m_clp", type: "DOUBLE" },
-      { name: "patrimonio_comprometido", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "vida_forwards",
-    name: "vida.derivados_forwards",
-    sector: "vida",
-    color: "var(--accent-mint)",
-    x: 1060,
-    y: 90,
-    w: 220,
-    h: 145,
-    rows: "165k contratos",
-    file: "outputs/vida/b7_forwards.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "tipo_operacion", type: "VARCHAR" },
-      { name: "nombre_contraparte", type: "VARCHAR" },
-      { name: "precio_forward_pactado", type: "DOUBLE" },
-      { name: "valor_razonable_mtm_m_clp", type: "DOUBLE" },
-      { name: "fecha_vencimiento", type: "DATE" }
-    ]
-  },
-  {
-    id: "vida_swaps",
-    name: "vida.derivados_swaps",
-    sector: "vida",
-    color: "#1F4E78",
-    x: 1060,
-    y: 260,
-    w: 220,
-    h: 140,
-    rows: "314k contratos",
-    file: "outputs/vida/b7_swaps.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "nombre_contraparte", type: "VARCHAR" },
-      { name: "tasa_contrato_larga", type: "DOUBLE" },
-      { name: "tasa_contrato_corta", type: "DOUBLE" },
-      { name: "valor_razonable_mtm_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "vida_repos",
-    name: "vida.pactos_repos",
-    sector: "vida",
-    color: "#00ADB5",
-    x: 1060,
-    y: 420,
-    w: 220,
-    h: 135,
-    rows: "19.4k pactos",
-    file: "outputs/vida/b7_repos.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "nombre_contraparte", type: "VARCHAR" },
-      { name: "tasa_pacto", type: "DOUBLE" },
-      { name: "tasa_mercado", type: "DOUBLE" },
-      { name: "monto_pacto_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "vida_opciones",
-    name: "vida.derivados_opciones",
-    sector: "vida",
-    color: "#696E79",
-    x: 1060,
-    y: 575,
-    w: 220,
-    h: 130,
-    rows: "2.6k contratos",
-    file: "outputs/vida/b7_opciones.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "tipo_opcion", type: "VARCHAR" },
-      { name: "precio_ejercicio", type: "DOUBLE" },
-      { name: "prima_pagada", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "generales_maestro",
-    name: "generales.lista_entidades",
-    sector: "generales",
-    color: "var(--accent-mint)",
-    x: 480,
-    y: 330,
-    w: 220,
-    h: 140,
-    rows: "42 entidades",
-    file: "outputs/generales/maestro_aseguradoras_generales.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", type: "VARCHAR" },
       { name: "nombre_aseguradora", type: "VARCHAR" },
-      { name: "estado", type: "VARCHAR" },
-      { name: "inversion_ultimo_reporte_m_clp", type: "DOUBLE" },
-      { name: "periodos_reportados", type: "BIGINT" }
+      { name: "tipo_instrumento", type: "VARCHAR" },
+      { name: "nemotecnico", type: "VARCHAR" },
+      { name: "serie", type: "VARCHAR" },
+      { name: "rut_emisor", type: "VARCHAR" },
+      { name: "pais", type: "VARCHAR" },
+      { name: "fecha_compra", type: "VARCHAR" },
+      { name: "fecha_emision", type: "VARCHAR" }
     ]
   },
   {
-    id: "generales_bonos",
-    name: "generales.cartera_bonos",
-    sector: "generales",
+    id: "seguros_acciones",
+    name: "seguros.acciones",
+    sector: "seguros",
     color: "var(--accent-mint)",
-    x: 480,
-    y: 490,
-    w: 220,
-    h: 155,
-    rows: "287k filas",
-    file: "outputs/generales/cartera_bonos.parquet",
+    x: 380,
+    y: 160,
+    w: 240,
+    h: 216,
+    rows: "Mensual",
+    file: "outputs/seguros/acciones/manifest.json",
     cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
+      { name: "sector", type: "VARCHAR" },
+      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
+      { name: "nombre_aseguradora", type: "VARCHAR" },
+      { name: "tipo_instrumento", type: "VARCHAR" },
+      { name: "rut_emisor", type: "VARCHAR" },
+      { name: "run_fondo", type: "VARCHAR" },
       { name: "nemotecnico", type: "VARCHAR" },
-      { name: "tipo_bono", type: "VARCHAR" },
-      { name: "tir_mercado_pct", type: "DOUBLE" },
-      { name: "tir_compra_pct", type: "DOUBLE" },
-      { name: "valor_mercado_m_clp", type: "DOUBLE" }
+      { name: "serie", type: "VARCHAR" },
+      { name: "unidades", type: "DOUBLE" },
+      { name: "presencia_bursatil_pct", type: "DOUBLE" }
     ]
   },
   {
-    id: "generales_acciones",
-    name: "generales.cartera_acciones",
-    sector: "generales",
-    color: "#00ADB5",
-    x: 180,
-    y: 490,
-    w: 210,
-    h: 140,
-    rows: "15k filas",
-    file: "outputs/generales/cartera_acciones.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "nemotecnico", type: "VARCHAR" },
-      { name: "precio_cierre_clp", type: "DOUBLE" },
-      { name: "valor_mercado_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "generales_bienes_raices",
-    name: "generales.cartera_bienes_raices",
-    sector: "generales",
-    color: "#1F4E78",
-    x: 770,
-    y: 490,
-    w: 220,
-    h: 140,
-    rows: "36k filas",
-    file: "outputs/generales/cartera_bienes_raices.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "rol_avaluo", type: "VARCHAR" },
-      { name: "comuna", type: "VARCHAR" },
-      { name: "tasacion_comercial_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "generales_fondos",
-    name: "generales.cartera_fondos",
-    sector: "generales",
-    color: "#22577A",
-    x: 180,
-    y: 660,
-    w: 210,
-    h: 130,
-    rows: "7.6k filas",
-    file: "outputs/generales/cartera_fondos.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "run_fondo", fk: true, type: "VARCHAR" },
-      { name: "nemotecnico", type: "VARCHAR" },
-      { name: "valor_mercado_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "generales_extranjeros",
-    name: "generales.cartera_extranjeros",
-    sector: "generales",
-    color: "#696E79",
-    x: 480,
-    y: 670,
-    w: 220,
-    h: 130,
-    rows: "5.4k filas",
-    file: "outputs/generales/cartera_extranjeros.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "gestora_fondo", type: "VARCHAR" },
-      { name: "valor_mercado_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "generales_solvencia",
-    name: "generales.cartera_solvencia",
-    sector: "generales",
-    color: "var(--accent-contrast)",
-    x: 770,
-    y: 660,
-    w: 220,
-    h: 120,
-    rows: "52k filas",
-    file: "outputs/generales/cartera_solvencia.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "rubro_caratula", type: "VARCHAR" },
-      { name: "total_inversion_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "generales_forwards",
-    name: "generales.derivados_forwards",
-    sector: "generales",
+    id: "seguros_fondos_mutuos",
+    name: "seguros.fondos_mutuos",
+    sector: "seguros",
     color: "var(--accent-mint)",
-    x: 1060,
-    y: 490,
-    w: 220,
-    h: 145,
-    rows: "2.8k contratos",
-    file: "outputs/generales/b7_forwards.parquet",
+    x: 680,
+    y: 160,
+    w: 240,
+    h: 216,
+    rows: "Mensual",
+    file: "outputs/seguros/fondos_mutuos/manifest.json",
     cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
+      { name: "sector", type: "VARCHAR" },
+      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
+      { name: "nombre_aseguradora", type: "VARCHAR" },
+      { name: "tipo_instrumento", type: "VARCHAR" },
+      { name: "rut_administradora", type: "VARCHAR" },
+      { name: "run_fondo", type: "VARCHAR" },
+      { name: "nemotecnico", type: "VARCHAR" },
+      { name: "tipo_fondo", type: "VARCHAR" },
+      { name: "serie", type: "VARCHAR" },
+      { name: "unidades", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "seguros_bienes_raices",
+    name: "seguros.bienes_raices",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 980,
+    y: 160,
+    w: 240,
+    h: 216,
+    rows: "Mensual",
+    file: "outputs/seguros/bienes_raices/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "sector", type: "VARCHAR" },
+      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
+      { name: "nombre_aseguradora", type: "VARCHAR" },
+      { name: "rol", type: "VARCHAR" },
+      { name: "tipo_instrumento", type: "VARCHAR" },
+      { name: "nemotecnico", type: "VARCHAR" },
+      { name: "direccion", type: "VARCHAR" },
+      { name: "codigo_comuna", type: "VARCHAR" },
+      { name: "ciudad", type: "VARCHAR" },
+      { name: "monto_arriendo_uf", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "seguros_extranjeros",
+    name: "seguros.extranjeros",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 80,
+    y: 490,
+    w: 240,
+    h: 216,
+    rows: "Mensual",
+    file: "outputs/seguros/extranjeros/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "sector", type: "VARCHAR" },
+      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
+      { name: "nombre_aseguradora", type: "VARCHAR" },
+      { name: "tipo_registro", type: "VARCHAR" },
+      { name: "tipo_instrumento", type: "VARCHAR" },
+      { name: "valor_nominal", type: "DOUBLE" },
+      { name: "pais", type: "VARCHAR" },
+      { name: "emisor", type: "VARCHAR" },
+      { name: "codigo", type: "VARCHAR" },
+      { name: "moneda", type: "VARCHAR" }
+    ]
+  },
+  {
+    id: "seguros_derivados",
+    name: "seguros.derivados",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 380,
+    y: 490,
+    w: 240,
+    h: 216,
+    rows: "Mensual",
+    file: "outputs/seguros/derivados/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "sector", type: "VARCHAR" },
+      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
+      { name: "nombre_aseguradora", type: "VARCHAR" },
+      { name: "tipo_registro", type: "VARCHAR" },
+      { name: "objetivo", type: "VARCHAR" },
       { name: "tipo_operacion", type: "VARCHAR" },
-      { name: "nombre_contraparte", type: "VARCHAR" },
-      { name: "precio_forward_pactado", type: "DOUBLE" },
-      { name: "fecha_vencimiento", type: "DATE" }
+      { name: "folio", type: "VARCHAR" },
+      { name: "item", type: "VARCHAR" },
+      { name: "fecha_operacion", type: "VARCHAR" },
+      { name: "fecha_vencimiento", type: "VARCHAR" }
     ]
   },
   {
-    id: "generales_swaps",
-    name: "generales.derivados_swaps",
-    sector: "generales",
-    color: "#1F4E78",
-    x: 1060,
-    y: 650,
-    w: 220,
-    h: 140,
-    rows: "1.4k contratos",
-    file: "outputs/generales/b7_swaps.parquet",
+    id: "seguros_pactos",
+    name: "seguros.pactos",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 680,
+    y: 490,
+    w: 240,
+    h: 216,
+    rows: "Mensual",
+    file: "outputs/seguros/pactos/manifest.json",
     cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
-      { name: "nombre_contraparte", type: "VARCHAR" },
-      { name: "tasa_contrato_larga", type: "DOUBLE" }
+      { name: "sector", type: "VARCHAR" },
+      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
+      { name: "nombre_aseguradora", type: "VARCHAR" },
+      { name: "tipo_operacion", type: "VARCHAR" },
+      { name: "folio", type: "VARCHAR" },
+      { name: "item", type: "VARCHAR" },
+      { name: "fecha_operacion", type: "VARCHAR" },
+      { name: "fecha_vencimiento", type: "VARCHAR" },
+      { name: "tasa_pacto_pct", type: "DOUBLE" },
+      { name: "contraparte", type: "VARCHAR" }
     ]
   },
   {
-    id: "generales_repos",
-    name: "generales.pactos_repos",
-    sector: "generales",
-    color: "#00ADB5",
-    x: 1060,
-    y: 805,
-    w: 220,
-    h: 135,
-    rows: "275 pactos",
-    file: "outputs/generales/b7_repos.parquet",
+    id: "seguros_control_inversiones",
+    name: "seguros.control_inversiones",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 980,
+    y: 490,
+    w: 240,
+    h: 216,
+    rows: "Mensual",
+    file: "outputs/seguros/control_inversiones/manifest.json",
     cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
-      { name: "nombre_contraparte", type: "VARCHAR" },
-      { name: "tasa_pacto", type: "DOUBLE" }
+      { name: "sector", type: "VARCHAR" },
+      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
+      { name: "nombre_aseguradora", type: "VARCHAR" },
+      { name: "tipo_inversion", type: "VARCHAR" },
+      { name: "valor_final_m_clp", type: "BIGINT" },
+      { name: "inversiones_representativas_m_clp", type: "BIGINT" },
+      { name: "inversiones_no_representativas_m_clp", type: "BIGINT" },
+      { name: "total_costo_amortizado_m_clp", type: "BIGINT" },
+      { name: "total_valor_razonable_m_clp", type: "BIGINT" },
+      { name: "total_efectivo_equivalente_m_clp", type: "BIGINT" }
     ]
   },
   {
@@ -445,55 +232,103 @@ const ERD_TABLES = [
     color: "var(--accent-mint)",
     x: 1340,
     y: -80,
-    w: 220,
-    h: 145,
-    rows: "1.156 fondos",
+    w: 240,
+    h: 148,
+    rows: "Fondos",
     file: "outputs/ffmm/maestro_fondos_mutuos.parquet",
     cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "run_fondo", type: "VARCHAR" },
+      { name: "run_fondo", pk: true, type: "VARCHAR" },
       { name: "nombre_fondo", type: "VARCHAR" },
-      { name: "sector", type: "VARCHAR" }
+      { name: "primer_periodo", type: "VARCHAR" },
+      { name: "ultimo_periodo", type: "VARCHAR" },
+      { name: "meses_reportados", type: "BIGINT" },
+      { name: "reporta_ultimo_mes", type: "BOOLEAN" }
+    ]
+  },
+  {
+    id: "ffmm_cartera_nacional",
+    name: "ffmm.cartera_nacional",
+    sector: "ffmm",
+    color: "var(--accent-mint)",
+    x: 1340,
+    y: 90,
+    w: 240,
+    h: 184,
+    rows: "Un archivo por mes",
+    file: "outputs/ffmm/cartera_nacional/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "run_fondo", fk: true, type: "VARCHAR" },
+      { name: "nemotecnico", type: "VARCHAR" },
+      { name: "rut_emisor", type: "VARCHAR" },
+      { name: "tipo_instrumento", type: "VARCHAR" },
+      { name: "situacion_instrumento", type: "VARCHAR" },
+      { name: "valorizacion_miles_mf", type: "DOUBLE" },
+      { name: "pct_activo_fondo", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "ffmm_cartera_extranjera",
+    name: "ffmm.cartera_extranjera",
+    sector: "ffmm",
+    color: "var(--accent-mint)",
+    x: 1340,
+    y: 299,
+    w: 240,
+    h: 166,
+    rows: "Un archivo por año",
+    file: "outputs/ffmm/cartera_extranjera/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "run_fondo", fk: true, type: "VARCHAR" },
+      { name: "nemotecnico", type: "VARCHAR" },
+      { name: "nombre_emisor", type: "VARCHAR" },
+      { name: "pais_emisor", type: "VARCHAR" },
+      { name: "tipo_instrumento", type: "VARCHAR" },
+      { name: "valorizacion_miles_mf", type: "DOUBLE" }
     ]
   },
   {
     id: "ffmm_futuros",
-    name: "ffmm.circular_1333_futuros",
+    name: "ffmm.futuros_forwards",
     sector: "ffmm",
-    color: "var(--accent-mint)",
+    color: "#22577A",
     x: 1340,
-    y: 85,
-    w: 220,
-    h: 150,
-    rows: "Futuros FFMM",
-    file: "outputs/ffmm/ffmm_futu_normalizado.parquet",
+    y: 490,
+    w: 240,
+    h: 184,
+    rows: "Un archivo por año",
+    file: "outputs/ffmm/futuros_forwards/manifest.json",
     cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
       { name: "run_fondo", fk: true, type: "VARCHAR" },
+      { name: "activo_objeto", type: "VARCHAR" },
       { name: "nemotecnico", type: "VARCHAR" },
       { name: "posicion", type: "VARCHAR" },
-      { name: "monto_contratado_m_clp", type: "DOUBLE" }
+      { name: "fecha_vencimiento", type: "VARCHAR" },
+      { name: "monto_comprometido_miles_mf", type: "DOUBLE" },
+      { name: "valorizacion_mercado_miles_mf", type: "DOUBLE" }
     ]
   },
   {
     id: "ffmm_opciones",
-    name: "ffmm.circular_1333_opciones",
+    name: "ffmm.opciones",
     sector: "ffmm",
     color: "#22577A",
     x: 1340,
-    y: 255,
-    w: 220,
-    h: 150,
-    rows: "Opciones FFMM",
-    file: "outputs/ffmm/ffmm_opci_normalizado.parquet",
+    y: 699,
+    w: 240,
+    h: 166,
+    rows: "Un archivo por año",
+    file: "outputs/ffmm/opciones/manifest.json",
     cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
       { name: "run_fondo", fk: true, type: "VARCHAR" },
+      { name: "activo_objeto", type: "VARCHAR" },
       { name: "nemotecnico", type: "VARCHAR" },
       { name: "tipo_opcion", type: "VARCHAR" },
-      { name: "prima_m_clp", type: "DOUBLE" }
+      { name: "numero_contratos", type: "DOUBLE" },
+      { name: "inversion_primas_miles_mf", type: "DOUBLE" }
     ]
   },
   {
@@ -503,99 +338,95 @@ const ERD_TABLES = [
     color: "var(--accent-mint)",
     x: 1620,
     y: -80,
-    w: 220,
-    h: 145,
-    rows: "1.129 fondos",
+    w: 240,
+    h: 148,
+    rows: "Fondos",
     file: "outputs/fi/maestro_fondos_inversion.parquet",
     cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "run_fondo", type: "VARCHAR" },
+      { name: "run_fondo", pk: true, type: "VARCHAR" },
       { name: "nombre_fondo", type: "VARCHAR" },
-      { name: "categoria_fondo", type: "VARCHAR" }
+      { name: "administradora", type: "VARCHAR" },
+      { name: "moneda_funcional", type: "VARCHAR" },
+      { name: "ultimo_periodo_cartera", type: "VARCHAR" }
     ]
   },
   {
-    id: "fi_nacional",
+    id: "fi_cartera_nacional",
     name: "fi.cartera_nacional",
     sector: "fi",
     color: "var(--accent-mint)",
     x: 1620,
-    y: 85,
-    w: 220,
-    h: 155,
-    rows: "834k activos",
-    file: "outputs/fi/fi_cartera_nacional.parquet",
+    y: 90,
+    w: 240,
+    h: 166,
+    rows: "Un archivo por trimestre",
+    file: "outputs/fi/cartera_nacional/manifest.json",
     cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
       { name: "run_fondo", fk: true, type: "VARCHAR" },
       { name: "nemotecnico", type: "VARCHAR" },
       { name: "rut_emisor", type: "VARCHAR" },
       { name: "tipo_instrumento", type: "VARCHAR" },
-      { name: "valolizacion_al_cierre", type: "DOUBLE" }
+      { name: "valorizacion_miles_mf", type: "DOUBLE" }
     ]
   },
   {
-    id: "fi_extranjera",
+    id: "fi_cartera_extranjera",
     name: "fi.cartera_extranjera",
     sector: "fi",
     color: "var(--accent-contrast)",
     x: 1620,
-    y: 260,
-    w: 220,
-    h: 155,
-    rows: "67.4k activos",
-    file: "outputs/fi/fi_cartera_extranjera.parquet",
+    y: 280,
+    w: 240,
+    h: 166,
+    rows: "Un archivo por año",
+    file: "outputs/fi/cartera_extranjera/manifest.json",
     cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
       { name: "run_fondo", fk: true, type: "VARCHAR" },
-      { name: "nemotecnico", type: "VARCHAR" },
-      { name: "nombre_del_emisor", type: "VARCHAR" },
-      { name: "tipo_instrumento", type: "VARCHAR" },
-      { name: "valolizacion_al_cierre", type: "DOUBLE" }
+      { name: "isin", type: "VARCHAR" },
+      { name: "nombre_emisor", type: "VARCHAR" },
+      { name: "pais_emisor", type: "VARCHAR" },
+      { name: "valorizacion_miles_mf", type: "DOUBLE" }
     ]
   },
   {
-    id: "fi_derivados",
-    name: "fi.derivados_futuros",
+    id: "fi_futuros",
+    name: "fi.futuros_forwards",
     sector: "fi",
     color: "#696E79",
     x: 1620,
-    y: 435,
-    w: 220,
-    h: 145,
-    rows: "3.6k contratos",
-    file: "outputs/fi/fi_futuros_forward.parquet",
+    y: 470,
+    w: 240,
+    h: 148,
+    rows: "Un archivo por año",
+    file: "outputs/fi/futuros_forwards/manifest.json",
     cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
       { name: "run_fondo", fk: true, type: "VARCHAR" },
-      { name: "nemotecnico", type: "VARCHAR" },
-      { name: "nombre_contraparte", type: "VARCHAR" },
-      { name: "val_merc_contrato", type: "DOUBLE" }
+      { name: "activo_objeto", type: "VARCHAR" },
+      { name: "contraparte", type: "VARCHAR" },
+      { name: "valor_mercado_miles_mf", type: "DOUBLE" }
     ]
   },
   {
-    id: "fi_repos",
-    name: "fi.repos_vrc_crv",
+    id: "fi_pactos",
+    name: "fi.pactos",
     sector: "fi",
     color: "#00ADB5",
     x: 1620,
-    y: 600,
-    w: 220,
-    h: 165,
-    rows: "Pactos CMF",
-    file: "outputs/fi/fi_repos_vrc_crv.parquet",
+    y: 640,
+    w: 240,
+    h: 166,
+    rows: "Un archivo por año",
+    file: "outputs/fi/pactos/manifest.json",
     cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
       { name: "run_fondo", fk: true, type: "VARCHAR" },
-      { name: "codigo_operacion", type: "VARCHAR" },
-      { name: "nombre_contraparte", type: "VARCHAR" },
-      { name: "tasa_pct", type: "DOUBLE" },
-      { name: "valorizacion_cierre", type: "DOUBLE" },
-      { name: "emisor_garantia", type: "VARCHAR" }
+      { name: "tipo_operacion", type: "VARCHAR" },
+      { name: "contraparte", type: "VARCHAR" },
+      { name: "tasa_pacto_pct", type: "DOUBLE" },
+      { name: "valorizacion_cierre_miles_mf", type: "DOUBLE" }
     ]
   },
   {
@@ -766,6 +597,46 @@ const ERD_TABLES = [
     ]
   },
   {
+    id: "macro_series_catalogo",
+    name: "macro.series_catalogo",
+    sector: "macro",
+    color: "#FF9800",
+    x: 3040,
+    y: 560,
+    w: 240,
+    h: 180,
+    rows: "51 series",
+    file: "outputs/macro/macro_series_catalogo.parquet",
+    cols: [
+      { name: "clave", pk: true, type: "VARCHAR" },
+      { name: "serie_id", type: "VARCHAR" },
+      { name: "nombre", type: "VARCHAR" },
+      { name: "grupo", type: "VARCHAR" },
+      { name: "frecuencia", type: "VARCHAR" },
+      { name: "unidad", type: "VARCHAR" },
+      { name: "ultima_fecha", type: "VARCHAR" }
+    ]
+  },
+  {
+    id: "macro_series",
+    name: "macro.series",
+    sector: "macro",
+    color: "#FF9800",
+    x: 3040,
+    y: 800,
+    w: 240,
+    h: 160,
+    rows: "Diaria / mensual / trimestral",
+    file: "outputs/macro/series/manifest.json",
+    cols: [
+      { name: "fecha", type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "clave", fk: true, type: "VARCHAR" },
+      { name: "serie_id", type: "VARCHAR" },
+      { name: "valor", type: "DOUBLE" }
+    ]
+  },
+  {
     id: "factoring_leasing_maestro",
     name: "factoring_leasing.lista_entidades",
     sector: "factoring_leasing",
@@ -806,30 +677,7 @@ const ERD_TABLES = [
       { name: "grupo_financiero", type: "VARCHAR" }
     ]
   },
-  {
-    id: "corredoras_bolsa_balance_resumen",
-    name: "corredoras.balance_resumen",
-    sector: "corredoras_bolsa",
-    color: "#7C3AED",
-    x: 4180,
-    y: 110,
-    w: 250,
-    h: 210,
-    rows: "1.586 balances IFRS",
-    file: "outputs/corredoras_bolsa/corredoras_bolsa_balance_resumen.parquet",
-    cols: [
-      { name: "id_balance", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "fecha_corte", type: "DATE" },
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "nombre_empresa", type: "VARCHAR" },
-      { name: "total_activos_m_clp", type: "DOUBLE" },
-      { name: "total_pasivos_m_clp", type: "DOUBLE" },
-      { name: "patrimonio_neto_m_clp", type: "DOUBLE" },
-      { name: "efectivo_equivalentes_m_clp", type: "DOUBLE" },
-      { name: "utilidad_ejercicio_m_clp", type: "DOUBLE" }
-    ]
-  },
+
   {
     id: "securitizadoras_maestro",
     name: "securitizadoras.lista_entidades",
@@ -851,201 +699,36 @@ const ERD_TABLES = [
       { name: "lineas_deuda_registradas", type: "BIGINT" }
     ]
   },
+
+
+
+
+
+
+
+
+
+
   {
-    id: "securitizadoras_balance_resumen",
-    name: "securitizadoras.balance_resumen",
-    sector: "securitizadoras",
-    color: "#0369A1",
-    x: 4180,
-    y: 340,
-    w: 250,
-    h: 210,
-    rows: "362 balances IFRS",
-    file: "outputs/securitizadoras/securitizadoras_balance_resumen.parquet",
-    cols: [
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "rut", pk: true, fk: true, type: "VARCHAR" },
-      { name: "razon_social", type: "VARCHAR" },
-      { name: "total_activos_m_clp", type: "DOUBLE" },
-      { name: "total_pasivos_m_clp", type: "DOUBLE" },
-      { name: "patrimonio_neto_m_clp", type: "DOUBLE" },
-      { name: "efectivo_y_equivalentes_m_clp", type: "DOUBLE" },
-      { name: "ganancia_perdida_ejercicio_m_clp", type: "DOUBLE" },
-      { name: "total_activos_m_usd", type: "DOUBLE" }
-    ]
-  },
-    {
-    id: "patrimonios_separados_balance_lineas",
-    name: "patrimonios_separados.balance_lineas",
-    sector: "patrimonios_separados",
-    color: "#0284C7",
-    x: 4460,
-    y: 200,
-    w: 270,
-    h: 220,
-    rows: "16,842 filas",
-    file: "outputs/securitizadoras/patrimonios_separados_balance_lineas.parquet",
-    cols: [
-      { name: "id_linea", pk: true, type: "VARCHAR" },
-      { name: "id_patrimonio", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "codigo_cuenta", type: "VARCHAR" },
-      { name: "nombre_cuenta", type: "VARCHAR" },
-      { name: "monto_m_clp", type: "DOUBLE" },
-      { name: "monto_mm_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_excedentes_lineas",
-    name: "patrimonios_separados.excedentes",
-    sector: "patrimonios_separados",
-    color: "#0284C7",
-    x: 4760,
-    y: 200,
-    w: 270,
-    h: 220,
-    rows: "11,157 filas",
-    file: "outputs/securitizadoras/patrimonios_separados_excedentes_lineas.parquet",
-    cols: [
-      { name: "id_linea", pk: true, type: "VARCHAR" },
-      { name: "id_patrimonio", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "tipo_flujo", type: "VARCHAR" },
-      { name: "nombre_cuenta", type: "VARCHAR" },
-      { name: "monto_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_nota_cartera_detalle",
-    name: "patrimonios_separados.nota_cartera",
-    sector: "patrimonios_separados",
-    color: "#0284C7",
-    x: 4460,
-    y: 800,
-    w: 260,
-    h: 200,
-    rows: "796 filas",
-    file: "outputs/securitizadoras/patrimonios_separados_nota_cartera_detalle.parquet",
-    cols: [
-      { name: "id_linea", pk: true, type: "VARCHAR" },
-      { name: "id_patrimonio", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "originador", type: "VARCHAR" },
-      { name: "valor_presente_mclp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_nota_morosidad_detalle",
-    name: "patrimonios_separados.nota_morosidad",
-    sector: "patrimonios_separados",
-    color: "#0284C7",
-    x: 4760,
-    y: 800,
-    w: 260,
-    h: 200,
-    rows: "6,632 filas",
-    file: "outputs/securitizadoras/patrimonios_separados_nota_morosidad_detalle.parquet",
-    cols: [
-      { name: "id_linea", pk: true, type: "VARCHAR" },
-      { name: "id_patrimonio", fk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "tramo_mora", type: "VARCHAR" },
-      { name: "monto_cartera_mclp", type: "DOUBLE" },
-      { name: "monto_provision_mclp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_nota_bonos_detalle",
-    name: "patrimonios_separados.nota_bonos",
-    sector: "patrimonios_separados",
-    color: "#0284C7",
-    x: 5060,
-    y: 200,
-    w: 260,
-    h: 200,
-    rows: "8,001 filas",
-    file: "outputs/securitizadoras/patrimonios_separados_nota_bonos_detalle.parquet",
-    cols: [
-      { name: "id_linea", pk: true, type: "VARCHAR" },
-      { name: "id_patrimonio", fk: true, type: "VARCHAR" },
-      { name: "serie", type: "VARCHAR" },
-      { name: "nemotecnico", type: "VARCHAR" },
-      { name: "saldo_insoluto_mclp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_nota_administracion_detalle",
-    name: "patrimonios_separados.nota_administracion",
-    sector: "patrimonios_separados",
-    color: "#0284C7",
-    x: 5060,
-    y: 500,
-    w: 260,
-    h: 180,
-    rows: "2,153 filas",
-    file: "outputs/securitizadoras/patrimonios_separados_nota_administracion_detalle.parquet",
-    cols: [
-      { name: "id_linea", pk: true, type: "VARCHAR" },
-      { name: "id_patrimonio", fk: true, type: "VARCHAR" },
-      { name: "concepto_comision", type: "VARCHAR" },
-      { name: "gasto_periodo_mclp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_nota_sobrecolateral_detalle",
-    name: "patrimonios_separados.nota_sobrecolateral",
-    sector: "patrimonios_separados",
-    color: "#0284C7",
-    x: 5060,
-    y: 800,
-    w: 260,
-    h: 180,
-    rows: "679 filas",
-    file: "outputs/securitizadoras/patrimonios_separados_nota_sobrecolateral_detalle.parquet",
-    cols: [
-      { name: "id_linea", pk: true, type: "VARCHAR" },
-      { name: "id_patrimonio", fk: true, type: "VARCHAR" },
-      { name: "monto_sobrecolateral_mclp", type: "DOUBLE" },
-      { name: "sobrecolateral_pct", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_nota_efectivo_detalle",
-    name: "patrimonios_separados.nota_efectivo",
-    sector: "patrimonios_separados",
-    color: "#0369A1",
-    x: 5060,
-    y: 1040,
-    w: 260,
-    h: 190,
-    rows: "3,802 filas",
-    file: "outputs/securitizadoras/patrimonios_separados_nota_efectivo_detalle.parquet",
-    cols: [
-      { name: "id_linea", pk: true, type: "VARCHAR" },
-      { name: "id_patrimonio", fk: true, type: "VARCHAR" },
-      { name: "institucion", type: "VARCHAR" },
-      { name: "tipo_instrumento", type: "VARCHAR" },
-      { name: "saldo_mclp", type: "DOUBLE" }
-    ]
-  },
-{
-    id: "patrimonios_separados_balance_pdf",
-    name: "patrimonios_separados.balance_cuentas",
+    id: "patrimonios_separados_balance",
+    name: "patrimonios_separados.balance",
     sector: "patrimonios_separados",
     color: "#0F766E",
-    x: 5360,
-    y: 200,
+    x: 4460,
+    y: 580,
     w: 270,
-    h: 220,
-    rows: "46,502 filas",
-    file: "outputs/securitizadoras/patrimonios_separados_balance_pdf.parquet",
+    h: 230,
+    rows: "358 balances · 7.962 cuentas",
+    file: "outputs/securitizadoras/patrimonios_separados_balance.parquet",
     cols: [
-      { name: "id_linea", pk: true, type: "VARCHAR" },
+      { name: "archivo", pk: true, type: "VARCHAR" },
       { name: "rut_administradora", fk: true, type: "VARCHAR" },
       { name: "codigo_patrimonio", type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
-      { name: "nombre_cuenta", type: "VARCHAR" },
-      { name: "monto_m_clp", type: "DOUBLE" }
+      { name: "orden_en_balance", type: "BIGINT" },
+      { name: "categoria", type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "monto_m_clp", type: "BIGINT" }
     ]
   },
   {
@@ -1071,68 +754,9 @@ const ERD_TABLES = [
       { name: "clase_colateral_subyacente", type: "VARCHAR" }
     ]
   },
-  {
-    id: "patrimonios_separados_balance_resumen",
-    name: "patrimonios_separados.balance_resumen",
-    sector: "patrimonios_separados",
-    color: "#0284C7",
-    x: 4460,
-    y: 560,
-    w: 260,
-    h: 210,
-    rows: "64 balances",
-    file: "outputs/securitizadoras/patrimonios_separados_balance_resumen.parquet",
-    cols: [
-      { name: "id_patrimonio", pk: true, type: "VARCHAR" },
-      { name: "rut_administradora", fk: true, type: "VARCHAR" },
-      { name: "codigo_emision", type: "VARCHAR" },
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "total_activos_mclp", type: "DOUBLE" },
-      { name: "total_pasivo_patrimonio_mclp", type: "DOUBLE" },
-      { name: "deuda_bonos_largo_plazo_mclp", type: "DOUBLE" },
-      { name: "cuadre_contable_ok", type: "BOOLEAN" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_repos_detalle",
-    name: "patrimonios_separados.repos_contratos",
-    sector: "patrimonios_separados",
-    color: "#0284C7",
-    x: 4460,
-    y: 790,
-    w: 260,
-    h: 200,
-    rows: "52 pactos",
-    file: "outputs/securitizadoras/patrimonios_separados_repos_detalle.parquet",
-    cols: [
-      { name: "id_patrimonio", pk: true, fk: true, type: "VARCHAR" },
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "contraparte", type: "VARCHAR" },
-      { name: "instrumento_pacto", type: "VARCHAR" },
-      { name: "tasa_interes_anual_pct", type: "DOUBLE" },
-      { name: "monto_mclp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "patrimonios_separados_cartera_morosidad_detalle",
-    name: "patrimonios_separados.cartera_morosidad_detalle",
-    sector: "patrimonios_separados",
-    color: "#075985",
-    x: 4740,
-    y: 790,
-    w: 260,
-    h: 200,
-    rows: "67 tramos",
-    file: "outputs/securitizadoras/patrimonios_separados_cartera_morosidad_detalle.parquet",
-    cols: [
-      { name: "id_patrimonio", pk: true, fk: true, type: "VARCHAR" },
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "tramo_mora", type: "VARCHAR" },
-      { name: "numero_deudores", type: "BIGINT" },
-      { name: "monto_cartera_mclp", type: "DOUBLE" },
-      { name: "provision_mclp", type: "DOUBLE" }
-    ]
-  },
+
+
+
   {
     id: "cooperativas_maestro",
     name: "cooperativas.lista_entidades",
@@ -1153,102 +777,6 @@ const ERD_TABLES = [
       { name: "sede_matriz", type: "VARCHAR" },
       { name: "region", type: "VARCHAR" },
       { name: "estado_vigencia", type: "VARCHAR" }
-    ]
-  },
-  {
-    id: "cooperativas_balance_resumen",
-    name: "cooperativas.balance_resumen",
-    sector: "cooperativas",
-    color: "#15803D",
-    x: 5040,
-    y: 620,
-    w: 260,
-    h: 210,
-    rows: "700+ balances IFRS",
-    file: "outputs/cooperativas/cooperativas_balance_resumen.parquet",
-    cols: [
-      { name: "id_balance", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "nombre_fantasia", type: "VARCHAR" },
-      { name: "total_activos_m_clp", type: "DOUBLE" },
-      { name: "total_pasivos_m_clp", type: "DOUBLE" },
-      { name: "patrimonio_neto_m_clp", type: "DOUBLE" },
-      { name: "utilidad_ejercicio_m_clp", type: "DOUBLE" },
-      { name: "total_activos_m_usd", type: "DOUBLE" },
-      { name: "patrimonio_m_usd", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "cooperativas_nota_efectivo_detalle",
-    name: "cooperativas.nota_efectivo",
-    sector: "cooperativas",
-    color: "#15803D",
-    x: 5040,
-    y: 860,
-    w: 260,
-    h: 210,
-    rows: "122 registros Notas 5/6",
-    file: "outputs/cooperativas/cooperativas_nota_efectivo_detalle.parquet",
-    cols: [
-      { name: "id_registro", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "nombre_fantasia", type: "VARCHAR" },
-      { name: "numero_nota", type: "VARCHAR" },
-      { name: "categoria_efectivo", type: "VARCHAR" },
-      { name: "concepto_literal", type: "VARCHAR" },
-      { name: "institucion_contraparte", type: "VARCHAR" },
-      { name: "monto_m_clp", type: "DOUBLE" },
-      { name: "monto_m_usd", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "cooperativas_cmf_balance",
-    name: "cooperativas.cmf_balance",
-    sector: "cooperativas",
-    color: "#0E7490",
-    x: 5040,
-    y: 1100,
-    w: 260,
-    h: 210,
-    rows: "23.345 registros · 115 meses",
-    file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "cooperativa", type: "VARCHAR" },
-      { name: "seccion", type: "VARCHAR" },
-      { name: "codigo_concepto", type: "VARCHAR" },
-      { name: "glosa", type: "VARCHAR" },
-      { name: "nivel", type: "INTEGER" },
-      { name: "monto_mm_clp", type: "BIGINT" },
-      { name: "base_monto", type: "VARCHAR" }
-    ]
-  },
-  {
-    id: "cooperativas_cmf_resultados",
-    name: "cooperativas.cmf_resultados",
-    sector: "cooperativas",
-    color: "#0E7490",
-    x: 5040,
-    y: 1340,
-    w: 260,
-    h: 210,
-    rows: "28.980 registros · 115 meses",
-    file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "cooperativa", type: "VARCHAR" },
-      { name: "seccion", type: "VARCHAR" },
-      { name: "codigo_concepto", type: "VARCHAR" },
-      { name: "glosa", type: "VARCHAR" },
-      { name: "nivel", type: "INTEGER" },
-      { name: "monto_mm_clp", type: "BIGINT" },
-      { name: "base_monto", type: "VARCHAR" }
     ]
   },
   {
@@ -1295,25 +823,189 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "agf_balance_resumen",
-    name: "agf.balance_resumen",
+    id: "agf_balance",
+    name: "agf.balance",
     sector: "agf",
-    color: "#4F46E5",
+    color: "#6366F1",
     x: 5040,
-    y: 400,
+    y: 460,
     w: 260,
-    h: 190,
-    rows: "Balances IFRS",
-    file: "outputs/agf/agf_balance_resumen.parquet",
+    h: 222,
+    rows: "71.423 cuentas",
+    file: "outputs/agf/agf_balance/manifest.json",
     cols: [
-      { name: "rut", fk: true, type: "BIGINT" },
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "total_activos_m_clp", type: "DOUBLE" },
-      { name: "patrimonio_neto_m_clp", type: "DOUBLE" },
-      { name: "cartera_propia_inversiones_m_clp", type: "DOUBLE" },
-      { name: "ingresos_comisiones_m_clp", type: "DOUBLE" }
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "razon_social", type: "VARCHAR" },
+      { name: "tipo_balance", type: "VARCHAR" },
+      { name: "moneda", type: "VARCHAR" },
+      { name: "estado_financiero", type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "valor", type: "BIGINT" },
+      { name: "repeticion", type: "SMALLINT" }
     ]
   },
+  {
+    id: "agf_resultados",
+    name: "agf.resultados",
+    sector: "agf",
+    color: "#6366F1",
+    x: 5040,
+    y: 720,
+    w: 260,
+    h: 222,
+    rows: "58.216 cuentas",
+    file: "outputs/agf/agf_resultados/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "razon_social", type: "VARCHAR" },
+      { name: "tipo_balance", type: "VARCHAR" },
+      { name: "moneda", type: "VARCHAR" },
+      { name: "estado_financiero", type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "valor", type: "BIGINT" },
+      { name: "repeticion", type: "SMALLINT" }
+    ]
+  },
+  {
+    id: "securitizadoras_balance",
+    name: "securitizadoras.balance",
+    sector: "securitizadoras",
+    color: "#0284C7",
+    x: 3900,
+    y: 600,
+    w: 260,
+    h: 222,
+    rows: "13.679 cuentas",
+    file: "outputs/securitizadoras/securitizadoras_balance/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "razon_social", type: "VARCHAR" },
+      { name: "tipo_balance", type: "VARCHAR" },
+      { name: "moneda", type: "VARCHAR" },
+      { name: "estado_financiero", type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "valor", type: "BIGINT" },
+      { name: "repeticion", type: "SMALLINT" }
+    ]
+  },
+  {
+    id: "securitizadoras_resultados",
+    name: "securitizadoras.resultados",
+    sector: "securitizadoras",
+    color: "#0284C7",
+    x: 3900,
+    y: 860,
+    w: 260,
+    h: 222,
+    rows: "12.290 cuentas",
+    file: "outputs/securitizadoras/securitizadoras_resultados/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "razon_social", type: "VARCHAR" },
+      { name: "tipo_balance", type: "VARCHAR" },
+      { name: "moneda", type: "VARCHAR" },
+      { name: "estado_financiero", type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "valor", type: "BIGINT" },
+      { name: "repeticion", type: "SMALLINT" }
+    ]
+  },
+  {
+    id: "ccaf_balance",
+    name: "ccaf.balance",
+    sector: "cajas_compensacion",
+    color: "#D97706",
+    x: 4750,
+    y: 600,
+    w: 260,
+    h: 222,
+    rows: "8.043 cuentas",
+    file: "outputs/cajas_compensacion/ccaf_balance/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "razon_social", type: "VARCHAR" },
+      { name: "tipo_balance", type: "VARCHAR" },
+      { name: "moneda", type: "VARCHAR" },
+      { name: "estado_financiero", type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "valor", type: "BIGINT" },
+      { name: "repeticion", type: "SMALLINT" }
+    ]
+  },
+  {
+    id: "ccaf_resultados",
+    name: "ccaf.resultados",
+    sector: "cajas_compensacion",
+    color: "#D97706",
+    x: 4750,
+    y: 860,
+    w: 260,
+    h: 222,
+    rows: "5.506 cuentas",
+    file: "outputs/cajas_compensacion/ccaf_resultados/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "razon_social", type: "VARCHAR" },
+      { name: "tipo_balance", type: "VARCHAR" },
+      { name: "moneda", type: "VARCHAR" },
+      { name: "estado_financiero", type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "valor", type: "BIGINT" },
+      { name: "repeticion", type: "SMALLINT" }
+    ]
+  },
+  {
+    id: "corredoras_bolsa_balance",
+    name: "corredoras.balance",
+    sector: "corredoras_bolsa",
+    color: "#8B5CF6",
+    x: 3900,
+    y: 370,
+    w: 260,
+    h: 204,
+    rows: "107.976 cuentas",
+    file: "outputs/corredoras_bolsa/corredoras_bolsa_balance/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "razon_social", type: "VARCHAR" },
+      { name: "tipo_intermediario", type: "VARCHAR" },
+      { name: "seccion", type: "VARCHAR" },
+      { name: "codigo_fecu", pk: true, type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "valor_miles_clp", type: "BIGINT" }
+    ]
+  },
+  {
+    id: "corredoras_bolsa_resultados",
+    name: "corredoras.resultados",
+    sector: "corredoras_bolsa",
+    color: "#8B5CF6",
+    x: 3900,
+    y: 630,
+    w: 260,
+    h: 204,
+    rows: "77.705 cuentas",
+    file: "outputs/corredoras_bolsa/corredoras_bolsa_resultados/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "razon_social", type: "VARCHAR" },
+      { name: "tipo_intermediario", type: "VARCHAR" },
+      { name: "seccion", type: "VARCHAR" },
+      { name: "codigo_fecu", pk: true, type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "valor_miles_clp", type: "BIGINT" }
+    ]
+  },
+
+
   {
     id: "sistemas_pago_maestro",
     name: "pagos.maestro",
@@ -1331,44 +1023,6 @@ const ERD_TABLES = [
       { name: "razon_social", type: "VARCHAR" },
       { name: "tipo_sistema", type: "VARCHAR" },
       { name: "supervisor", type: "VARCHAR" }
-    ]
-  },
-  {
-    id: "sistemas_pago_balances",
-    name: "pagos.balances",
-    sector: "sistemas_pago",
-    color: "#0D9488",
-    x: 5340,
-    y: 360,
-    w: 260,
-    h: 185,
-    rows: "82 balances",
-    file: "outputs/sistemas_pago/sistemas_pago_balances.parquet",
-    cols: [
-      { name: "rut", fk: true, type: "BIGINT" },
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "razon_social", type: "VARCHAR" },
-      { name: "total_activos_m_clp", type: "DOUBLE" },
-      { name: "patrimonio_neto_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "sistemas_pago_estadisticas_bcch",
-    name: "pagos.estadisticas",
-    sector: "sistemas_pago",
-    color: "#14B8A6",
-    x: 5340,
-    y: 575,
-    w: 260,
-    h: 185,
-    rows: "102 meses",
-    file: "outputs/sistemas_pago/sistemas_pago_estadisticas_bcch.parquet",
-    cols: [
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "monto_liquidado_lbtr_m_usd", type: "DOUBLE" },
-      { name: "monto_compensado_cca_tef_m_clp", type: "DOUBLE" },
-      { name: "circulante_stock_m_clp", type: "DOUBLE" },
-      { name: "tasa_tarjetas_consumo_pct", type: "DOUBLE" }
     ]
   },
   {
@@ -1392,44 +1046,6 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "fintech_servicios_acreditados",
-    name: "fintech.servicios",
-    sector: "fintech",
-    color: "#B45309",
-    x: 5920,
-    y: 360,
-    w: 260,
-    h: 185,
-    rows: "262 licencias",
-    file: "outputs/fintech/fintech_servicios_acreditados.parquet",
-    cols: [
-      { name: "rut", fk: true, type: "BIGINT" },
-      { name: "servicio_codigo", pk: true, type: "VARCHAR" },
-      { name: "razon_social", type: "VARCHAR" },
-      { name: "servicio_sigla", type: "VARCHAR" },
-      { name: "estado_autorizacion", type: "VARCHAR" }
-    ]
-  },
-  {
-    id: "fintech_finanzas_abiertas_roles",
-    name: "fintech.open_finance",
-    sector: "fintech",
-    color: "#F59E0B",
-    x: 5920,
-    y: 575,
-    w: 260,
-    h: 185,
-    rows: "262 roles",
-    file: "outputs/fintech/fintech_finanzas_abiertas_roles.parquet",
-    cols: [
-      { name: "rut", fk: true, type: "BIGINT" },
-      { name: "rol_sfa", pk: true, type: "VARCHAR" },
-      { name: "razon_social", type: "VARCHAR" },
-      { name: "estandar_interfaz", type: "VARCHAR" },
-      { name: "requisito_consentimiento", type: "VARCHAR" }
-    ]
-  },
-  {
     id: "ccaf_maestro",
     name: "ccaf.lista_entidades",
     sector: "cajas_compensacion",
@@ -1448,176 +1064,42 @@ const ERD_TABLES = [
       { name: "emisor_valores_cmf", type: "BOOLEAN" }
     ]
   },
-  {
-    id: "ccaf_caratula_totales",
-    name: "ccaf.balances",
-    sector: "cajas_compensacion",
-    color: "#059669",
-    x: 6300,
-    y: 320,
-    w: 260,
-    h: 185,
-    rows: "266 balances",
-    file: "outputs/cajas_compensacion/ccaf_caratula_totales.parquet",
-    cols: [
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "ccaf", type: "VARCHAR" },
-      { name: "ano", type: "BIGINT" },
-      { name: "tipo_eeff", type: "VARCHAR" },
-      { name: "asiento_contable", type: "VARCHAR" },
-      { name: "monto_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "ccaf_nota8_efectivo_resumen",
-    name: "ccaf.nota8_efectivo_resumen",
-    sector: "cajas_compensacion",
-    color: "#047857",
-    x: 6300,
-    y: 540,
-    w: 260,
-    h: 185,
-    rows: "189 componentes",
-    file: "outputs/cajas_compensacion/ccaf_nota8_efectivo_resumen.parquet",
-    cols: [
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "ccaf", type: "VARCHAR" },
-      { name: "ano", type: "BIGINT" },
-      { name: "tipo_eeff", type: "VARCHAR" },
-      { name: "concepto", type: "VARCHAR" },
-      { name: "monto_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "ccaf_nota8_dap_detalle",
-    name: "ccaf.nota8_dap_detalle",
-    sector: "cajas_compensacion",
-    color: "#065F46",
-    x: 6620,
-    y: 430,
-    w: 260,
-    h: 170,
-    rows: "52 depósitos",
-    file: "outputs/cajas_compensacion/ccaf_nota8_dap_detalle.parquet",
-    cols: [
-      { name: "ccaf", type: "VARCHAR" },
-      { name: "ano", type: "BIGINT" },
-      { name: "tipo_eeff", type: "VARCHAR" },
-      { name: "tipo_inversion", type: "VARCHAR" },
-      { name: "valor_contable_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "ccaf_nota8_repos_detalle",
-    name: "ccaf.nota8_repos_detalle",
-    sector: "cajas_compensacion",
-    color: "#064E3B",
-    x: 6620,
-    y: 650,
-    w: 260,
-    h: 170,
-    rows: "158 pactos",
-    file: "outputs/cajas_compensacion/ccaf_nota8_repos_detalle.parquet",
-    cols: [
-      { name: "ccaf", type: "VARCHAR" },
-      { name: "ano", type: "BIGINT" },
-      { name: "tipo_eeff", type: "VARCHAR" },
-      { name: "broker_estandarizado", type: "VARCHAR" },
-      { name: "valor_contable_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "ccaf_colocaciones_credito_social",
-    name: "ccaf.colocaciones_credito_social",
-    sector: "cajas_compensacion",
-    color: "#047857",
-    x: 6320,
-    y: 650,
-    w: 260,
-    h: 190,
-    rows: "268 líneas",
-    file: "outputs/cajas_compensacion/ccaf_colocaciones_credito_social.parquet",
-    cols: [
-      { name: "rut", type: "VARCHAR", key: true },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "tipo_afiliado", type: "VARCHAR" },
-      { name: "tipo_credito", type: "VARCHAR" },
-      { name: "monto_neto_miles_clp", type: "DOUBLE" }
-    ]
-  }
+
 ];
 
 // Relaciones entre tablas (Claves Foráneas lógicas)
 const ERD_LINKS = [
-  { from: "cooperativas_maestro", to: "cooperativas_balance_resumen", key: "rut" },
-  { from: "cooperativas_maestro", to: "cooperativas_nota_efectivo_detalle", key: "rut" },
-  { from: "cooperativas_maestro", to: "cooperativas_cmf_balance", key: "rut" },
-  { from: "cooperativas_maestro", to: "cooperativas_cmf_resultados", key: "rut" },
-  { from: "cooperativas_cmf_balance", to: "cooperativas_cmf_resultados", key: "periodo, rut (misma planilla CMF)" },
-  { from: "cooperativas_nota_efectivo_detalle", to: "bancos_maestro", key: "institucion_contraparte (cuentas corrientes bancarias)" },
-  { from: "cooperativas_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
-  { from: "ccaf_maestro", to: "ccaf_caratula_totales", key: "rut, ccaf" },
-  { from: "ccaf_caratula_totales", to: "ccaf_colocaciones_credito_social", key: "ano, mes, rut, tipo_eeff" },
-  { from: "ccaf_caratula_totales", to: "ccaf_nota8_efectivo_resumen", key: "ano, mes, ccaf, tipo_eeff" },
-  { from: "ccaf_nota8_efectivo_resumen", to: "ccaf_nota8_dap_detalle", key: "ano, mes, ccaf, tipo_eeff (DAP)" },
-  { from: "ccaf_nota8_efectivo_resumen", to: "ccaf_nota8_repos_detalle", key: "ano, mes, ccaf, tipo_eeff (Pactos)" },
-  { from: "fintech_rpsf_maestro", to: "fintech_servicios_acreditados", key: "rut" },
-  { from: "fintech_rpsf_maestro", to: "fintech_finanzas_abiertas_roles", key: "rut" },
-  { from: "fintech_finanzas_abiertas_roles", to: "bancos_maestro", key: "APIs Open Finance (IPI / IPSI)" },
-  { from: "fintech_servicios_acreditados", to: "sistemas_pago_maestro", key: "interconexión transaccional y custodia" },
-  { from: "sistemas_pago_maestro", to: "sistemas_pago_balances", key: "rut" },
-  { from: "sistemas_pago_balances", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
-  { from: "sistemas_pago_estadisticas_bcch", to: "macro_tasas_rendimientos", key: "periodo (tasas de referencia)" },
-  { from: "agf_maestro", to: "agf_balance_resumen", key: "rut" },
-  { from: "agf_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
+  { from: "seguros_maestro", to: "seguros_renta_fija", key: "sector, rut_aseguradora" },
+  { from: "seguros_maestro", to: "seguros_acciones", key: "sector, rut_aseguradora" },
+  { from: "seguros_maestro", to: "seguros_fondos_mutuos", key: "sector, rut_aseguradora" },
+  { from: "seguros_maestro", to: "seguros_bienes_raices", key: "sector, rut_aseguradora" },
+  { from: "seguros_maestro", to: "seguros_extranjeros", key: "sector, rut_aseguradora" },
+  { from: "seguros_maestro", to: "seguros_derivados", key: "sector, rut_aseguradora" },
+  { from: "seguros_maestro", to: "seguros_pactos", key: "sector, rut_aseguradora" },
+  { from: "seguros_maestro", to: "seguros_control_inversiones", key: "sector, rut_aseguradora" },
   { from: "agf_maestro", to: "fi_maestro", key: "rut_administradora (gestión fiduciaria LUF)" },
-  { from: "securitizadoras_maestro", to: "securitizadoras_balance_resumen", key: "rut" },
+  { from: "fi_maestro", to: "fi_cartera_nacional", key: "run_fondo" },
+  { from: "fi_maestro", to: "fi_cartera_extranjera", key: "run_fondo" },
+  { from: "fi_maestro", to: "fi_futuros", key: "run_fondo" },
+  { from: "fi_maestro", to: "fi_pactos", key: "run_fondo" },
   { from: "securitizadoras_maestro", to: "patrimonios_separados_maestro", key: "rut_administradora (administración fiduciaria)" },
-  { from: "securitizadoras_maestro", to: "patrimonios_separados_balance_pdf", key: "rut = rut_administradora (cuerpo, sin dígito verificador)" },
-  { from: "securitizadoras_maestro", to: "patrimonios_separados_balance_resumen", key: "rut_administradora" },
-    { from: "patrimonios_separados_maestro", to: "patrimonios_separados_balance_lineas", key: "id_patrimonio (balance FECU)" },
-  { from: "patrimonios_separados_maestro", to: "patrimonios_separados_excedentes_lineas", key: "id_patrimonio (estado excedentes)" },
-  { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_cartera_detalle", key: "id_patrimonio, periodo" },
-  { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_morosidad_detalle", key: "id_patrimonio, periodo" },
-  { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_bonos_detalle", key: "id_patrimonio, periodo" },
-  { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_administracion_detalle", key: "id_patrimonio, periodo" },
-  { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_sobrecolateral_detalle", key: "id_patrimonio, periodo" },
-  { from: "patrimonios_separados_balance_lineas", to: "patrimonios_separados_nota_efectivo_detalle", key: "id_patrimonio, periodo" },
-  { from: "patrimonios_separados_balance_resumen", to: "patrimonios_separados_repos_detalle", key: "id_patrimonio, periodo" },
-  { from: "patrimonios_separados_balance_resumen", to: "patrimonios_separados_cartera_morosidad_detalle", key: "id_patrimonio, periodo" },
-  { from: "patrimonios_separados_repos_detalle", to: "bancos_maestro", key: "contraparte (bancos custodios y liquidez)" },
-  { from: "securitizadoras_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
+  { from: "securitizadoras_maestro", to: "patrimonios_separados_balance", key: "rut = rut_administradora (cuerpo, sin dígito verificador)" },
   { from: "macro_tasas_rendimientos", to: "macro_precios_actividad", key: "periodo (expectativas e inflación)" },
+  { from: "macro_series_catalogo", to: "macro_series", key: "clave" },
   { from: "bancos_maestro", to: "bancos_cmf_balance", key: "codigo_institucion (código fuente CMF)" },
   { from: "bancos_maestro", to: "bancos_cmf_resultados", key: "codigo_institucion (código fuente CMF)" },
-  { from: "vida_maestro", to: "vida_solvencia", key: "rut_aseguradora" },
-  { from: "vida_maestro", to: "vida_bonos", key: "rut_aseguradora" },
-  { from: "generales_maestro", to: "generales_solvencia", key: "rut_aseguradora" },
-  { from: "generales_maestro", to: "generales_bonos", key: "rut_aseguradora" },
-  { from: "vida_solvencia", to: "vida_bonos", key: "rut_aseguradora, periodo" },
-  { from: "vida_solvencia", to: "vida_acciones", key: "rut_aseguradora, periodo" },
-  { from: "vida_solvencia", to: "vida_bienes_raices", key: "rut_aseguradora, periodo" },
-  { from: "vida_solvencia", to: "vida_extranjeros", key: "rut_aseguradora, periodo" },
-  { from: "vida_solvencia", to: "vida_fondos", key: "rut_aseguradora, periodo" },
-  { from: "vida_bonos", to: "vida_forwards", key: "rut_aseguradora (cobertura FX)" },
-  { from: "vida_bonos", to: "vida_swaps", key: "rut_aseguradora (calce tasa)" },
-  { from: "vida_bonos", to: "vida_repos", key: "rut_aseguradora (liquidez)" },
-  { from: "generales_solvencia", to: "generales_bonos", key: "rut_aseguradora, periodo" },
-  { from: "generales_solvencia", to: "generales_acciones", key: "rut_aseguradora, periodo" },
-  { from: "generales_solvencia", to: "generales_bienes_raices", key: "rut_aseguradora, periodo" },
-  { from: "generales_bonos", to: "generales_forwards", key: "rut_aseguradora (cobertura FX)" },
-  { from: "generales_bonos", to: "generales_swaps", key: "rut_aseguradora (tasa)" },
-  { from: "generales_bonos", to: "generales_repos", key: "rut_aseguradora (liquidez)" },
+  { from: "agf_maestro", to: "agf_balance", key: "rut" },
+  { from: "agf_maestro", to: "agf_resultados", key: "rut" },
+  { from: "securitizadoras_maestro", to: "securitizadoras_balance", key: "rut" },
+  { from: "securitizadoras_maestro", to: "securitizadoras_resultados", key: "rut" },
+  { from: "ccaf_maestro", to: "ccaf_balance", key: "rut" },
+  { from: "ccaf_maestro", to: "ccaf_resultados", key: "rut" },
+  { from: "corredoras_bolsa_maestro", to: "corredoras_bolsa_balance", key: "rut" },
+  { from: "corredoras_bolsa_maestro", to: "corredoras_bolsa_resultados", key: "rut" },
+  { from: "ffmm_maestro", to: "ffmm_cartera_nacional", key: "run_fondo" },
+  { from: "ffmm_maestro", to: "ffmm_cartera_extranjera", key: "run_fondo" },
   { from: "ffmm_maestro", to: "ffmm_futuros", key: "run_fondo" },
   { from: "ffmm_maestro", to: "ffmm_opciones", key: "run_fondo" },
-  { from: "ffmm_futuros", to: "ffmm_opciones", key: "run_fondo, periodo" },
-  { from: "fi_maestro", to: "fi_nacional", key: "run_fondo" },
-  { from: "fi_maestro", to: "fi_extranjera", key: "run_fondo" },
-  { from: "fi_maestro", to: "fi_derivados", key: "run_fondo" },
-  { from: "fi_maestro", to: "fi_repos", key: "run_fondo" },
-  { from: "fi_nacional", to: "fi_extranjera", key: "run_fondo, periodo" },
-  { from: "fi_nacional", to: "fi_derivados", key: "run_fondo (cobertura)" },
-  { from: "fi_nacional", to: "fi_repos", key: "run_fondo (liquidez pactos)" },
 ];
 
 class ERDGraph {
@@ -1651,7 +1133,7 @@ class ERDGraph {
     this.hoveredNode = null;
     
     this.tables = JSON.parse(JSON.stringify(ERD_TABLES));
-    this.filter = "vida";
+    this.filter = "seguros";
     
     this.initEvents();
     this.resize();
@@ -1775,7 +1257,7 @@ class ERDGraph {
   }
 
   focusSector(sectorKey) {
-    this.filter = sectorKey || "vida";
+    this.filter = sectorKey || "seguros";
     document.querySelectorAll(".filter-btn").forEach((b) => {
       b.classList.toggle("active", b.dataset.filter === this.filter);
     });

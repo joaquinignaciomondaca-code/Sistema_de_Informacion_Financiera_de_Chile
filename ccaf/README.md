@@ -1,5 +1,12 @@
 # Módulo Cajas de Compensación de Asignación Familiar (CCAF)
 
+> **Estado al 2026-09-28:** en la web quedan `ccaf_maestro` (lista de entidades) y `ccaf_balance` / `ccaf_resultados`,
+> que publica automáticamente `pipelines/ifrs_sectores/actualizar.py` (workflow `ifrs_sectores.yml`, 3 veces al mes)
+> desde el TXT IFRS trimestral de la CMF, la exportación de los estados financieros XBRL que envían las cajas
+> (Los Andes, La Araucana, Los Héroes y 18 de Septiembre, desde 2010-06). Se retiraron `ccaf_caratula_totales` y su
+> extractor manual, la Nota 8 (efectivo, DAP, repos) y las colocaciones de crédito social.
+> Las secciones de abajo describen el trabajo histórico.
+
 ## 1. Alcance Normativo y Universo de Entidades
 Las Cajas de Compensación de Asignación Familiar (CCAF) están reguladas primariamente por la **Superintendencia de Seguridad Social (SUSESO)** bajo la Ley N° 18.833, y secundariamente por la **Comisión para el Mercado Financiero (CMF)** en su calidad de emisores de bonos y efectos de comercio de oferta pública.
 
