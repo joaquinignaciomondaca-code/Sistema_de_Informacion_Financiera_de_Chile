@@ -75,7 +75,7 @@ def main() -> None:
     text = "\n".join(lines).replace("%", "%25").replace("\r", "")
     chunks = [text[i:i + CHUNK] for i in range(0, len(text), CHUNK)][:10]
     for i, c in enumerate(chunks, 1):
-        print(f"::notice title=HIST {i}/{len(chunks)}::" + c.replace("\n", "%0A"), flush=True)
+        print(f"::warning title=HIST {i}/{len(chunks)}::" + c.replace("\n", "%0A"), flush=True)
 
 
 if __name__ == "__main__":
