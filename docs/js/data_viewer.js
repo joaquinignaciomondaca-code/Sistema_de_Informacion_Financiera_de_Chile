@@ -135,7 +135,9 @@ const DATA_VIEWER_CATALOG = [
     tables: [
       { id: "cooperativas_maestro", name: "cooperativas.lista_entidades (7 entidades)" },
       { id: "cooperativas_balance_resumen", name: "cooperativas.balance_resumen (294 balances)" },
-      { id: "cooperativas_nota_efectivo_detalle", name: "cooperativas.nota_efectivo (122 registros)" }
+      { id: "cooperativas_nota_efectivo_detalle", name: "cooperativas.nota_efectivo (122 registros)" },
+      { id: "cooperativas_cmf_balance", name: "cooperativas.cmf_balance (activos y pasivos por cuenta · 23.345 registros)" },
+      { id: "cooperativas_cmf_resultados", name: "cooperativas.cmf_resultados (resultados y margen por cuenta · 28.980 registros)" }
     ]
   },
   {

@@ -1204,6 +1204,54 @@ const ERD_TABLES = [
     ]
   },
   {
+    id: "cooperativas_cmf_balance",
+    name: "cooperativas.cmf_balance",
+    sector: "cooperativas",
+    color: "#0E7490",
+    x: 5040,
+    y: 1100,
+    w: 260,
+    h: 210,
+    rows: "23.345 registros · 115 meses",
+    file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet",
+    cols: [
+      { name: "id", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "cooperativa", type: "VARCHAR" },
+      { name: "seccion", type: "VARCHAR" },
+      { name: "codigo_concepto", type: "VARCHAR" },
+      { name: "glosa", type: "VARCHAR" },
+      { name: "nivel", type: "INTEGER" },
+      { name: "monto_mm_clp", type: "BIGINT" },
+      { name: "base_monto", type: "VARCHAR" }
+    ]
+  },
+  {
+    id: "cooperativas_cmf_resultados",
+    name: "cooperativas.cmf_resultados",
+    sector: "cooperativas",
+    color: "#0E7490",
+    x: 5040,
+    y: 1340,
+    w: 260,
+    h: 210,
+    rows: "28.980 registros · 115 meses",
+    file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet",
+    cols: [
+      { name: "id", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "cooperativa", type: "VARCHAR" },
+      { name: "seccion", type: "VARCHAR" },
+      { name: "codigo_concepto", type: "VARCHAR" },
+      { name: "glosa", type: "VARCHAR" },
+      { name: "nivel", type: "INTEGER" },
+      { name: "monto_mm_clp", type: "BIGINT" },
+      { name: "base_monto", type: "VARCHAR" }
+    ]
+  },
+  {
     id: "ccaf_maestro",
     name: "ccaf.lista_entidades",
     sector: "cajas_compensacion",
@@ -1503,6 +1551,9 @@ const ERD_TABLES = [
 const ERD_LINKS = [
   { from: "cooperativas_maestro", to: "cooperativas_balance_resumen", key: "rut" },
   { from: "cooperativas_maestro", to: "cooperativas_nota_efectivo_detalle", key: "rut" },
+  { from: "cooperativas_maestro", to: "cooperativas_cmf_balance", key: "rut" },
+  { from: "cooperativas_maestro", to: "cooperativas_cmf_resultados", key: "rut" },
+  { from: "cooperativas_cmf_balance", to: "cooperativas_cmf_resultados", key: "periodo, rut (misma planilla CMF)" },
   { from: "cooperativas_nota_efectivo_detalle", to: "bancos_maestro", key: "institucion_contraparte (cuentas corrientes bancarias)" },
   { from: "cooperativas_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "ccaf_maestro", to: "ccaf_caratula_totales", key: "rut, ccaf" },
