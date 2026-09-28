@@ -4,7 +4,7 @@
 audit_agf.py
 Suite de auditoría matemática, contable y referencial para:
   1. agf_maestro (Parquet y JSON)
-  2. agf_balance_resumen (Parquet y JSON)
+  2. agf_balance y agf_resultados (Parquet)
 """
 
 import os
@@ -37,13 +37,13 @@ def run_audit():
 
     pq_maestro = os.path.join(out_dir, "agf_maestro.parquet")
     js_maestro = os.path.join(out_dir, "agf_maestro.json")
-    pq_bal = os.path.join(out_dir, "agf_balance_resumen.parquet")
-    js_bal = os.path.join(out_dir, "agf_balance_resumen.json")
+    pq_bal = os.path.join(out_dir, "agf_balance.parquet")
+    pq_res = os.path.join(out_dir, "agf_resultados.parquet")
 
     errors = []
 
     # 1. Existencia
-    for p in [pq_maestro, js_maestro, pq_bal, js_bal]:
+    for p in [pq_maestro, js_maestro, pq_bal, pq_res]:
         if not os.path.exists(p):
             errors.append(f"Falta archivo: {p}")
     if errors:
@@ -57,8 +57,7 @@ def run_audit():
         df_m_js = pd.DataFrame(json.load(f))
 
     df_b_pq = pd.read_parquet(pq_bal)
-    with open(js_bal, "r", encoding="utf-8") as f:
-        df_b_js = pd.DataFrame(json.load(f))
+    df_r_pq = pd.read_parquet(pq_res)
 
     print("\n--- 1. AUDITORÍA: agf_maestro ---")
     print(f"Total entidades registradas: {len(df_m_pq)} (Parquet: {os.path.getsize(pq_maestro)} bytes, JSON: {os.path.getsize(js_maestro)} bytes)")
@@ -88,11 +87,23 @@ def run_audit():
     vig_counts = df_m_pq["estado_vigencia"].value_counts().to_dict()
     print(f"Distribución vigencia: {vig_counts}")
 
-    print("\n--- 2. AUDITORÍA: agf_balance_resumen ---")
-    print(f"Total balances trimestrales: {len(df_b_pq)} (Parquet: {os.path.getsize(pq_bal)} bytes, JSON: {os.path.getsize(js_bal)} bytes)")
-
-    if len(df_b_pq) != len(df_b_js):
-        errors.append(f"Discrepancia de filas en balances: Parquet {len(df_b_pq)} vs JSON {len(df_b_js)}")
+    print("\n--- 2. AUDITORÍA: agf_balance / agf_resultados ---")
+    print(f"Balances: {len(df_b_pq)} | Resultados: {len(df_r_pq)}")
+    if set(zip(df_b_pq["rut"], df_b_pq["periodo"])) != set(zip(df_r_pq["rut"], df_r_pq["periodo"])):
+        errors.append("agf_balance y agf_resultados no cubren los mismos (rut, periodo)")
+    if df_r_pq.duplicated(subset=["rut", "periodo"]).any():
+        errors.append("agf_resultados tiene (rut, periodo) duplicados")
+    meses_ok = (df_r_pq["meses_acumulados"] == df_r_pq["periodo"].str[5:].astype(int)).all()
+    if not meses_ok:
+        errors.append("agf_resultados.meses_acumulados no coincide con el mes del periodo")
+    marzo = df_r_pq[df_r_pq["meses_acumulados"] == 3]
+    if not (marzo["ingresos_ordinarios_trimestre_mm_clp"].fillna(-1) == marzo["ingresos_ordinarios_acum_mm_clp"].fillna(-1)).all():
+        errors.append("agf_resultados: en marzo el ingreso del trimestre debe igualar el acumulado")
+    for col in ["gastos_administracion_acum_mm_clp", "ganancia_perdida_acum_mm_clp"]:
+        n = int(df_r_pq[col].notna().sum())
+        print(f"{col}: {n}/{len(df_r_pq)} con dato" + (" (no capturado en la fuente)" if n == 0 else ""))
+        if n and (df_r_pq[col].fillna(0) == 0).all():
+            errors.append(f"{col}: todo en cero; revisar el scraper")
 
     # Duplicados (rut, periodo)
     if df_b_pq.duplicated(subset=["rut", "periodo"]).any():
@@ -111,7 +122,7 @@ def run_audit():
         print(f"Integridad referencial: 100.0% ({len(ruts_bal)}/{len(ruts_bal)} entidades con balances vinculadas)")
 
     # Ecuación Contable Fundamental: Activo == Pasivo + Patrimonio
-    diffs = (df_b_pq["total_activos_m_clp"] - (df_b_pq["total_pasivos_m_clp"] + df_b_pq["patrimonio_neto_m_clp"])).abs()
+    diffs = (df_b_pq["total_activos_mm_clp"] - (df_b_pq["total_pasivos_mm_clp"] + df_b_pq["patrimonio_mm_clp"])).abs()
     # Permitir tolerancia de redondeo de 0.002 MM$ (por aproximación de miles)
     cuadre_exacto = (diffs <= 0.005).sum()
     pct_cuadre = (cuadre_exacto / len(df_b_pq)) * 100.0
@@ -122,7 +133,7 @@ def run_audit():
         errors.append(f"Descuadre contable excesivo: {pct_cuadre:.1f}% de cuadre")
 
     # Nulos en columnas clave
-    cols_core = ["rut", "periodo", "razon_social", "total_activos_m_clp", "total_pasivos_m_clp", "patrimonio_neto_m_clp"]
+    cols_core = ["rut", "periodo", "razon_social", "total_activos_mm_clp", "total_pasivos_mm_clp", "patrimonio_mm_clp"]
     nulos = df_b_pq[cols_core].isna().sum().sum()
     print(f"Valores nulos en columnas core: {nulos}")
     if nulos > 0:
@@ -131,9 +142,9 @@ def run_audit():
     # Top AGFs por activos propios
     max_periodo = df_b_pq["periodo"].max()
     print(f"\nTOP 5 GESTORAS POR ACTIVOS PROPIOS ({max_periodo}):")
-    df_top = df_b_pq[df_b_pq["periodo"] == max_periodo].sort_values("total_activos_m_clp", ascending=False).head(5)
+    df_top = df_b_pq[df_b_pq["periodo"] == max_periodo].sort_values("total_activos_mm_clp", ascending=False).head(5)
     for _, r in df_top.iterrows():
-        print(f"  - {r['razon_social']:<50} | Activos: {r['total_activos_m_clp']:>10.1f} MM$ | Patrimonio: {r['patrimonio_neto_m_clp']:>10.1f} MM$")
+        print(f"  - {r['razon_social']:<50} | Activos: {r['total_activos_mm_clp']:>10.1f} MM$ | Patrimonio: {r['patrimonio_mm_clp']:>10.1f} MM$")
 
     print("\n" + "=" * 70)
     if errors:

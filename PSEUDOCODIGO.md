@@ -271,7 +271,11 @@ patrón:
       → docs/outputs/<sector>/*_balance_resumen.parquet + .json (+ maestro)
   audit_*.run_audit(): DV mód.11, PK únicas, nulos, activos = pasivos + patrimonio, cobertura temporal
 
-agf/                stream_cmf_agf (balances AGF + conteo fondos)                     + audit_agf
+agf/                stream_cmf_agf (manual, sin Actions): lista AGF + EEFF IFRS trimestrales → agf/fuentes/agf_eeff_cmf.parquet
+                    publicar_agf_balance_resultados: valida (A = P + Pat, sin duplicados, RUT en maestro) y separa
+                      → agf_balance (activos, pasivos, patrimonio, efectivo…) + agf_resultados (ingresos acum. y del trimestre;
+                        gastos y ganancia NULL hasta la próxima corrida: antes no se capturaban por las tildes)
+                    audit_agf
 corredoras_bolsa/   01 universo → 02 EEFF + REPO → 03 audit ; stream_cmf_corredoras_series (50 trimestres 2014-03..2026-06)
 securitizadoras/    stream_cmf_securitizadoras (gestoras + lista de patrimonios separados)
                     05_publicar_balance_patrimonios_fsb:
