@@ -634,38 +634,6 @@
       "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 36462765917. 28/28 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
     },
     {
-      "id": "macro_series",
-      "name": "macro.series",
-      "view_name": "macro_series",
-      "sector": "macro",
-      "sector_label": "Macroeconomía (BCCh)",
-      "norma": "Estadísticas oficiales BCCh",
-      "corte": "2014-01-01 a 2026-09-28",
-      "frescura": "Se actualiza sola a diario",
-      "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-09-28",
-      "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "file_parquet": "outputs/macro/series/manifest.json",
-      "registros_reales": 79844,
-      "descripcion": "Observaciones de todas las series del catálogo, una fila por serie y fecha, en su frecuencia original (diaria, mensual o trimestral)."
-    },
-    {
-      "id": "macro_series_catalogo",
-      "name": "macro.series_catalogo",
-      "view_name": "macro_series_catalogo",
-      "sector": "macro",
-      "sector_label": "Macroeconomía (BCCh)",
-      "norma": "Estadísticas oficiales BCCh",
-      "corte": "2014-01-01 a 2026-09-28",
-      "frescura": "Se actualiza sola a diario",
-      "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-09-28",
-      "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "file_parquet": "outputs/macro/macro_series_catalogo.parquet",
-      "registros_reales": 51,
-      "descripcion": "Catálogo de series del Banco Central publicadas: código SIETE, nombre, grupo, frecuencia, unidad, título oficial, cobertura y estado."
-    },
-    {
       "id": "corredoras_bolsa_balance",
       "name": "corredoras.balance",
       "view_name": "corredoras_bolsa_balance",
@@ -792,6 +760,38 @@
       "registros_reales": 5506,
       "descripcion": "Estado de resultados (ER, por función o naturaleza e integral) de cada caja de compensación de asignación familiar, cuenta por cuenta. Montos acumulados del ejercicio a la fecha del trimestre, en unidades de la moneda informada.",
       "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+    },
+    {
+      "id": "macro_series",
+      "name": "macro.series",
+      "view_name": "macro_series",
+      "sector": "macro",
+      "sector_label": "Macroeconomía (BCCh)",
+      "norma": "Estadísticas oficiales BCCh",
+      "corte": "2014-01-01 a 2026-09-28",
+      "frescura": "Se actualiza sola a diario",
+      "modo": "Automático · diario, incremental",
+      "ultima_actualizacion": "2026-09-28",
+      "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
+      "file_parquet": "outputs/macro/series/manifest.json",
+      "registros_reales": 79844,
+      "descripcion": "Observaciones de todas las series del catálogo, una fila por serie y fecha, en su frecuencia original (diaria, mensual o trimestral)."
+    },
+    {
+      "id": "macro_series_catalogo",
+      "name": "macro.series_catalogo",
+      "view_name": "macro_series_catalogo",
+      "sector": "macro",
+      "sector_label": "Macroeconomía (BCCh)",
+      "norma": "Estadísticas oficiales BCCh",
+      "corte": "2014-01-01 a 2026-09-28",
+      "frescura": "Se actualiza sola a diario",
+      "modo": "Automático · diario, incremental",
+      "ultima_actualizacion": "2026-09-28",
+      "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
+      "file_parquet": "outputs/macro/macro_series_catalogo.parquet",
+      "registros_reales": 51,
+      "descripcion": "Catálogo de series del Banco Central publicadas: código SIETE, nombre, grupo, frecuencia, unidad, título oficial, cobertura y estado."
     }
   ]
 }
