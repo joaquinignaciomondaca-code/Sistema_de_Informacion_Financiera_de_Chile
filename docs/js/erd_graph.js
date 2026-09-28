@@ -597,6 +597,46 @@ const ERD_TABLES = [
     ]
   },
   {
+    id: "macro_series_catalogo",
+    name: "macro.series_catalogo",
+    sector: "macro",
+    color: "#FF9800",
+    x: 3040,
+    y: 560,
+    w: 240,
+    h: 180,
+    rows: "53 series",
+    file: "outputs/macro/macro_series_catalogo.parquet",
+    cols: [
+      { name: "clave", pk: true, type: "VARCHAR" },
+      { name: "serie_id", type: "VARCHAR" },
+      { name: "nombre", type: "VARCHAR" },
+      { name: "grupo", type: "VARCHAR" },
+      { name: "frecuencia", type: "VARCHAR" },
+      { name: "unidad", type: "VARCHAR" },
+      { name: "ultima_fecha", type: "VARCHAR" }
+    ]
+  },
+  {
+    id: "macro_series",
+    name: "macro.series",
+    sector: "macro",
+    color: "#FF9800",
+    x: 3040,
+    y: 800,
+    w: 240,
+    h: 160,
+    rows: "Diaria / mensual / trimestral",
+    file: "outputs/macro/series/manifest.json",
+    cols: [
+      { name: "fecha", type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "clave", fk: true, type: "VARCHAR" },
+      { name: "serie_id", type: "VARCHAR" },
+      { name: "valor", type: "DOUBLE" }
+    ]
+  },
+  {
     id: "factoring_leasing_maestro",
     name: "factoring_leasing.lista_entidades",
     sector: "factoring_leasing",
@@ -1045,6 +1085,7 @@ const ERD_LINKS = [
   { from: "securitizadoras_maestro", to: "patrimonios_separados_maestro", key: "rut_administradora (administración fiduciaria)" },
   { from: "securitizadoras_maestro", to: "patrimonios_separados_balance", key: "rut = rut_administradora (cuerpo, sin dígito verificador)" },
   { from: "macro_tasas_rendimientos", to: "macro_precios_actividad", key: "periodo (expectativas e inflación)" },
+  { from: "macro_series_catalogo", to: "macro_series", key: "clave" },
   { from: "bancos_maestro", to: "bancos_cmf_balance", key: "codigo_institucion (código fuente CMF)" },
   { from: "bancos_maestro", to: "bancos_cmf_resultados", key: "codigo_institucion (código fuente CMF)" },
   { from: "agf_maestro", to: "agf_balance", key: "rut" },
