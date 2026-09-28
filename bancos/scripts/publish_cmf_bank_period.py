@@ -385,19 +385,66 @@ def write_github_output(result: dict) -> None:
             handle.write(f"period={result.get('period', '')}\n")
 
 
+def load_manifest() -> dict:
+    return json.loads(PARTITION_MANIFEST.read_text(encoding="utf-8")) if PARTITION_MANIFEST.exists() else {"periods": []}
+
+
+def catch_up(dry_run: bool, max_periods: int, today: date | None = None, publisher=None) -> dict:
+    """Publica en orden todos los meses cerrados pendientes (uno a uno, cada uno con su gate).
+
+    Si un mes falla después de haber publicado otros, se detiene ahí y conserva
+    los ya validados: la siguiente corrida retoma desde el mes que falló.
+    """
+    today = today or date.today()
+    publisher = publisher or publish_period
+    published: list[str] = []
+    stopped_error = ""
+    for _ in range(max_periods):
+        period = next_unpublished_period(load_manifest(), today)
+        if period is None:
+            break
+        try:
+            result = publisher(period, dry_run=dry_run)
+        except Exception as exc:  # noqa: BLE001 - se reporta y decide abajo
+            if not published:
+                raise
+            stopped_error = f"{period}: {type(exc).__name__}: {exc}"
+            print(f"::warning title=Gate CMF B1/B2/R1::Se detiene la puesta al día en {stopped_error}", flush=True)
+            break
+        if not result.get("published_changed"):
+            break  # dry-run o ya publicado: no hay avance que encadenar
+        published.append(period)
+    return {
+        "status": "caught_up" if not stopped_error else "partial",
+        "period": published[-1] if published else "",
+        "periods": published,
+        "published_changed": bool(published),
+        "stopped_error": stopped_error,
+    }
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--period", default="", help="Período YYYY-MM; por defecto siguiente mes pendiente desde 2026-07")
+    parser.add_argument("--period", default="", help="Período YYYY-MM opcional; por defecto siguiente mes pendiente desde 2026-07")
     parser.add_argument("--dry-run", action="store_true", help="Validar sin escribir archivos de publicación")
+    parser.add_argument("--catch-up", action="store_true",
+                        help="Publicar en orden todos los meses cerrados pendientes (cada uno con su propio gate)")
+    parser.add_argument("--max-periods", type=int, default=24, help="Tope de meses por corrida con --catch-up")
     args = parser.parse_args()
     try:
-        manifest = json.loads(PARTITION_MANIFEST.read_text(encoding="utf-8")) if PARTITION_MANIFEST.exists() else {"periods": []}
-        period = select_period(args.period, manifest, date.today())
-        if period is None:
-            result = {"status": "up_to_date", "period": "", "published_changed": False}
-            print("No hay un período CMF cerrado pendiente; no se modifica la web.")
+        if args.catch_up and not args.period:
+            result = catch_up(args.dry_run, args.max_periods)
+            if not result["periods"]:
+                print("No hay un período CMF cerrado pendiente; no se modifica la web.")
+            else:
+                print(f"Períodos publicados: {', '.join(result['periods'])}")
         else:
-            result = publish_period(period, dry_run=args.dry_run)
+            period = select_period(args.period, load_manifest(), date.today())
+            if period is None:
+                result = {"status": "up_to_date", "period": "", "published_changed": False}
+                print("No hay un período CMF cerrado pendiente; no se modifica la web.")
+            else:
+                result = publish_period(period, dry_run=args.dry_run)
         write_github_output(result)
     except Exception as exc:
         message = f"Publicación CMF bancaria detenida de forma segura: {type(exc).__name__}: {exc}"
