@@ -21,184 +21,76 @@ const EXPLORER_TREE = [
     type: "group",
     label: "COMPAÑIAS DE SEGUROS (CMF)",
     badges: [
-      { type: "entities", text: "103 Entidades", title: "103 Compañías de Seguros reguladas (61 Vida + 42 Generales)" },
-      { type: "data", text: "12.5M Datos", title: "12.5M Registros históricos de carteras e inversiones CMF 1835" }
+      { type: "entities", text: "Vida y Generales", title: "Compañías de seguros de vida y generales que informan su cartera a la CMF (Circular 1835)" },
+      { type: "data", text: "Actualización automática", title: "Se actualiza sola 3 veces al mes; cada mes se valida antes de publicarse" }
     ],
     status: "active",
     children: [
       {
-        id: "sector_vida",
+        id: "sector_seguros",
         type: "sector",
-        label: "Seguros de Vida",
-        sector: "vida",
+        label: "Seguros de Vida y Generales",
+        sector: "seguros",
         children: [
           {
-            id: "cat_vida_aseguradoras",
+            id: "cat_seguros_maestro",
             type: "circular",
             label: "Lista de Entidades",
-            badge: "61 Entidades",
+            badge: "Desde los reportes",
             badgeType: "entities",
             status: "active",
-            sector: "vida",
+            sector: "seguros",
             chips: [
-              { label: "Aseguradoras de Vida Activas", query: "SELECT rut_aseguradora, nombre_aseguradora, ultimo_periodo, inversion_ultimo_reporte_m_clp FROM vida_maestro WHERE estado = 'Activa' ORDER BY inversion_ultimo_reporte_m_clp DESC;" },
-              { label: "Ranking Inversiones Vida (M$)", query: "SELECT nombre_aseguradora, inversion_ultimo_reporte_m_clp, patrimonio_ultimo_reporte_m_clp FROM vida_maestro ORDER BY inversion_ultimo_reporte_m_clp DESC LIMIT 10;" },
-              { label: "Historial de Reportes por Aseguradora", query: "SELECT nombre_aseguradora, primer_periodo, ultimo_periodo, periodos_reportados, estado FROM vida_maestro ORDER BY periodos_reportados DESC LIMIT 10;" }
+              { label: "Compañías que reportan en el último mes", query: "SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo, meses_reportados FROM seguros_maestro WHERE reporta_ultimo_mes ORDER BY sector, nombre_aseguradora;" },
+              { label: "Compañías que dejaron de reportar", query: "SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo, ultimo_periodo FROM seguros_maestro WHERE NOT reporta_ultimo_mes ORDER BY ultimo_periodo DESC;" },
+              { label: "Compañías que empezaron a reportar más recientemente", query: "SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo FROM seguros_maestro ORDER BY primer_periodo DESC, nombre_aseguradora LIMIT 10;" }
             ],
             tables: [
-              { id: "vida_maestro", name: "vida.lista_entidades", rows: "61 entidades", file: "outputs/vida/maestro_aseguradoras_vida.parquet" }
+              { id: "seguros_maestro", name: "seguros.lista_entidades", rows: "Una fila por compañía y sector", file: "outputs/seguros/aseguradoras.parquet" }
             ]
           },
           {
-            id: "c1835_vida_cartera",
+            id: "c1835_seguros_cartera",
             type: "circular",
-            label: "Circular 1835 · Cartera",
-            badge: "11,59 M Registros",
+            label: "Circular 1835 · Cartera de inversiones",
+            badge: "Mensual validada",
             badgeType: "data",
             status: "active",
-            sector: "vida",
+            sector: "seguros",
             chips: [
-              { label: "Top 5 Bonos Vida", query: "SELECT nemotecnico, tipo_bono, AVG(tir_mercado_pct) as tir_prom, count(*) as tenencias FROM vida_bonos GROUP BY nemotecnico, tipo_bono ORDER BY tenencias DESC LIMIT 5;" },
-              { label: "Inmuebles por Comuna (Vida)", query: "SELECT comuna, count(*) as propiedades, SUM(tasacion_comercial_m_clp) as tasacion_total_m FROM vida_bienes_raices GROUP BY comuna ORDER BY propiedades DESC LIMIT 5;" },
-              { label: "Acciones IPSA en Vida", query: "SELECT nemotecnico, AVG(precio_cierre_clp) as precio_promedio, AVG(presencia_pct) as presencia FROM vida_acciones WHERE nemotecnico IN ('CHILE', 'BCI', 'BSANTANDER', 'SQM-B', 'CMPC') GROUP BY nemotecnico;" },
-              { label: "Activos Extranjeros (Vida)", query: "SELECT gestora_fondo, moneda, count(*) as fondos FROM vida_extranjeros GROUP BY gestora_fondo, moneda ORDER BY fondos DESC LIMIT 5;" }
+              { label: "Renta fija por tipo de instrumento, último mes (M$)", query: "SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija) GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 15;" },
+              { label: "Mayores emisores de renta fija, último mes (M$)", query: "SELECT rut_emisor, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija) GROUP BY rut_emisor ORDER BY valor_final_m_clp DESC LIMIT 10;" },
+              { label: "Acciones con mayor inversión, último mes (M$)", query: "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(unidades) AS unidades, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = (SELECT max(periodo) FROM seguros_acciones) GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;" },
+              { label: "Evolución de la inversión en acciones por sector (M$)", query: "SELECT periodo, sector, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones GROUP BY periodo, sector ORDER BY periodo DESC, sector LIMIT 24;" },
+              { label: "Fondos mutuos por administradora, último mes (M$)", query: "SELECT rut_administradora, count(DISTINCT run_fondo) AS fondos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_fondos_mutuos WHERE periodo = (SELECT max(periodo) FROM seguros_fondos_mutuos) GROUP BY rut_administradora ORDER BY valor_final_m_clp DESC LIMIT 10;" },
+              { label: "Bienes raíces por ciudad, último mes (M$)", query: "SELECT ciudad, count(*) AS inmuebles, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_bienes_raices WHERE periodo = (SELECT max(periodo) FROM seguros_bienes_raices) GROUP BY ciudad ORDER BY valor_final_m_clp DESC LIMIT 10;" },
+              { label: "Inversiones en el extranjero por país, último mes (M$)", query: "SELECT pais, tipo_registro, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_extranjeros WHERE periodo = (SELECT max(periodo) FROM seguros_extranjeros) GROUP BY pais, tipo_registro ORDER BY valor_final_m_clp DESC LIMIT 10;" }
             ],
             tables: [
-              {
-                id: "vida_bonos",
-                name: "vida.cartera_bonos",
-                rows: "9,09 M registros",
-                // El Parquet consolidado (9,09M filas) supera el límite de 100 MB de GitHub
-                // y no está versionado: la vista vida_bonos se arma con las dos particiones.
-                files: [
-                  "outputs/vida/cartera_bonos_2021_2024.parquet",
-                  "outputs/vida/cartera_bonos_2016_2020.parquet"
-                ],
-                partitions: [
-                  { id: "vida_bonos_reciente", name: "2021-2026 · Tramo reciente", rows: "4,00 M registros", file: "outputs/vida/cartera_bonos_2021_2024.parquet" },
-                  { id: "vida_bonos_historico", name: "2016-2020 · Tramo histórico", rows: "5,08 M registros", file: "outputs/vida/cartera_bonos_2016_2020.parquet" }
-                ]
-              },
-              { id: "vida_bienes_raices", name: "vida.cartera_bienes_raices", rows: "2,01 M registros", file: "outputs/vida/cartera_bienes_raices.parquet" },
-              { id: "vida_extranjeros", name: "vida.cartera_extranjeros", rows: "146.365 registros", file: "outputs/vida/cartera_extranjeros.parquet" },
-              { id: "vida_acciones", name: "vida.cartera_acciones", rows: "142.944 registros", file: "outputs/vida/cartera_acciones.parquet" },
-              { id: "vida_fondos", name: "vida.cartera_fondos", rows: "76.902 registros", file: "outputs/vida/cartera_fondos.parquet" },
-              { id: "vida_solvencia", name: "vida.cartera_solvencia", rows: "126.586 registros", file: "outputs/vida/cartera_solvencia.parquet" }
+              { id: "seguros_renta_fija", name: "seguros.renta_fija", rows: "Un archivo por mes · desde 2024-12", file: "", files: ["outputs/seguros/renta_fija/manifest.json"] },
+              { id: "seguros_acciones", name: "seguros.acciones", rows: "Un archivo por año", file: "", files: ["outputs/seguros/acciones/manifest.json"] },
+              { id: "seguros_fondos_mutuos", name: "seguros.fondos_mutuos", rows: "Un archivo por año", file: "", files: ["outputs/seguros/fondos_mutuos/manifest.json"] },
+              { id: "seguros_bienes_raices", name: "seguros.bienes_raices", rows: "Un archivo por mes · desde 2024-12", file: "", files: ["outputs/seguros/bienes_raices/manifest.json"] },
+              { id: "seguros_extranjeros", name: "seguros.extranjeros", rows: "Un archivo por año", file: "", files: ["outputs/seguros/extranjeros/manifest.json"] },
+              { id: "seguros_control_inversiones", name: "seguros.control_inversiones", rows: "Un archivo por año", file: "", files: ["outputs/seguros/control_inversiones/manifest.json"] }
             ]
           },
           {
-            id: "c1835_vida_derivados",
+            id: "c1835_seguros_derivados",
             type: "circular",
-            label: "Circular 1835 · Derivados",
-            badge: "482.710 Registros",
+            label: "Circular 1835 · Derivados y pactos",
+            badge: "Mensual validada",
             badgeType: "data",
             status: "active",
-            sector: "vida",
+            sector: "seguros",
             chips: [
-              { label: "Forwards Vida: Contrapartes", query: "SELECT nombre_contraparte, count(*) as contratos, AVG(precio_forward_pactado) as fwd_pactado FROM vida_forwards GROUP BY nombre_contraparte ORDER BY contratos DESC LIMIT 5;" },
-              { label: "Swaps Vida: Tasas y MtM", query: "SELECT nombre_contraparte, count(*) as operaciones, AVG(tasa_contrato_larga) as tasa_larga, AVG(valor_razonable_mtm_m_clp) as mtm_prom FROM vida_swaps GROUP BY nombre_contraparte ORDER BY operaciones DESC LIMIT 5;" },
-              { label: "Opciones Financieras Vida", query: "SELECT tipo_opcion, count(*) as contratos, AVG(precio_ejercicio) as precio_ejercicio_prom FROM vida_opciones GROUP BY tipo_opcion;" }
+              { label: "Derivados por tipo y sector, último mes", query: "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;" },
+              { label: "Principales contrapartes de derivados, último mes", query: "SELECT contraparte, count(*) AS contratos, count(DISTINCT rut_aseguradora) AS aseguradoras FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY contraparte ORDER BY contratos DESC LIMIT 10;" },
+              { label: "Pactos: contrapartes y tasa promedio, último mes", query: "SELECT contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_pacto_prom_pct, SUM(valor_contable_m_clp) AS valor_contable_m_clp FROM seguros_pactos WHERE periodo = (SELECT max(periodo) FROM seguros_pactos) GROUP BY contraparte ORDER BY valor_contable_m_clp DESC LIMIT 10;" }
             ],
             tables: [
-              { id: "vida_swaps", name: "vida.derivados_swaps", rows: "314.683 registros", file: "outputs/vida/b7_swaps.parquet" },
-              { id: "vida_forwards", name: "vida.derivados_forwards", rows: "165.354 registros", file: "outputs/vida/b7_forwards.parquet" },
-              { id: "vida_opciones", name: "vida.derivados_opciones", rows: "2.673 registros", file: "outputs/vida/b7_opciones.parquet" }
-            ]
-          },
-          {
-            id: "c1835_vida_repos",
-            type: "circular",
-            label: "Circular 1835 · Pactos y Repos",
-            badge: "19.408 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "vida",
-            chips: [
-              { label: "Repos Vida: Tasas y Contrapartes", query: "SELECT nombre_contraparte, count(*) as pactos, AVG(tasa_pacto) as tasa_prom, SUM(monto_pacto_m_clp) as monto_total_m FROM vida_repos GROUP BY nombre_contraparte ORDER BY pactos DESC LIMIT 5;" },
-              { label: "Repos Vida: Tasa Pacto vs Mercado", query: "SELECT periodo, AVG(tasa_pacto) as tasa_pacto_prom, AVG(tasa_mercado) as tasa_mercado_prom FROM vida_repos GROUP BY periodo ORDER BY periodo DESC LIMIT 5;" }
-            ],
-            tables: [
-              { id: "vida_repos", name: "vida.pactos_repos", rows: "19.408 registros", file: "outputs/vida/b7_repos.parquet" }
-            ]
-          }
-        ]
-      },
-      {
-        id: "sector_generales",
-        type: "sector",
-        label: "Seguros Generales",
-        sector: "generales",
-        children: [
-          {
-            id: "cat_gen_aseguradoras",
-            type: "circular",
-            label: "Lista de Entidades",
-            badge: "42 Entidades",
-            badgeType: "entities",
-            status: "active",
-            sector: "generales",
-            chips: [
-              { label: "Aseguradoras Generales Activas", query: "SELECT rut_aseguradora, nombre_aseguradora, ultimo_periodo, inversion_ultimo_reporte_m_clp FROM generales_maestro WHERE estado = 'Activa' ORDER BY inversion_ultimo_reporte_m_clp DESC;" },
-              { label: "Ranking Inversiones Generales (M$)", query: "SELECT nombre_aseguradora, inversion_ultimo_reporte_m_clp, patrimonio_ultimo_reporte_m_clp FROM generales_maestro ORDER BY inversion_ultimo_reporte_m_clp DESC LIMIT 10;" },
-              { label: "Historial de Reportes Generales", query: "SELECT nombre_aseguradora, primer_periodo, ultimo_periodo, periodos_reportados, estado FROM generales_maestro ORDER BY periodos_reportados DESC LIMIT 10;" }
-            ],
-            tables: [
-              { id: "generales_maestro", name: "generales.lista_entidades", rows: "42 entidades", file: "outputs/generales/maestro_aseguradoras_generales.parquet" }
-            ]
-          },
-          {
-            id: "c1835_gen_cartera",
-            type: "circular",
-            label: "Circular 1835 · Cartera",
-            badge: "417.303 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "generales",
-            chips: [
-              { label: "Bonos Seguros Generales", query: "SELECT tipo_bono, count(*) as tenencias, AVG(tir_mercado_pct) as tir_prom FROM generales_bonos GROUP BY tipo_bono ORDER BY tenencias DESC LIMIT 5;" },
-              { label: "Inmuebles Seguros Generales", query: "SELECT comuna, count(*) as inmuebles, SUM(tasacion_comercial_m_clp) as tasacion_m FROM generales_bienes_raices GROUP BY comuna ORDER BY inmuebles DESC LIMIT 5;" },
-              { label: "Acciones Seguros Generales", query: "SELECT nemotecnico, count(*) as tenencias, AVG(precio_cierre_clp) as precio_prom FROM generales_acciones GROUP BY nemotecnico ORDER BY tenencias DESC LIMIT 5;" },
-              { label: "Solvencia y Balance Generales", query: "SELECT periodo, SUM(total_inversion_m_clp) as total_inversion_m FROM generales_solvencia GROUP BY periodo ORDER BY periodo DESC LIMIT 5;" }
-            ],
-            tables: [
-              { id: "generales_bonos", name: "generales.cartera_bonos", rows: "287.214 registros", file: "outputs/generales/cartera_bonos.parquet" },
-              { id: "generales_bienes_raices", name: "generales.cartera_bienes_raices", rows: "38.257 registros", file: "outputs/generales/cartera_bienes_raices.parquet" },
-              { id: "generales_acciones", name: "generales.cartera_acciones", rows: "17.457 registros", file: "outputs/generales/cartera_acciones.parquet" },
-              { id: "generales_fondos", name: "generales.cartera_fondos", rows: "8.935 registros", file: "outputs/generales/cartera_fondos.parquet" },
-              { id: "generales_extranjeros", name: "generales.cartera_extranjeros", rows: "5.590 registros", file: "outputs/generales/cartera_extranjeros.parquet" },
-              { id: "generales_solvencia", name: "generales.cartera_solvencia", rows: "59.850 registros", file: "outputs/generales/cartera_solvencia.parquet" }
-            ]
-          },
-          {
-            id: "c1835_gen_derivados",
-            type: "circular",
-            label: "Circular 1835 · Derivados",
-            badge: "4.270 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "generales",
-            chips: [
-              { label: "Forwards Generales: Contrapartes", query: "SELECT nombre_contraparte, count(*) as contratos, AVG(precio_forward_pactado) as fwd_pactado FROM generales_forwards GROUP BY nombre_contraparte ORDER BY contratos DESC LIMIT 5;" },
-              { label: "Swaps Generales: Tasas y MtM", query: "SELECT nombre_contraparte, count(*) as operaciones, AVG(tasa_contrato_larga) as tasa_larga FROM generales_swaps GROUP BY nombre_contraparte ORDER BY operaciones DESC LIMIT 5;" }
-            ],
-            tables: [
-              { id: "generales_forwards", name: "generales.derivados_forwards", rows: "2.847 registros", file: "outputs/generales/b7_forwards.parquet" },
-              { id: "generales_swaps", name: "generales.derivados_swaps", rows: "1.423 registros", file: "outputs/generales/b7_swaps.parquet" }
-            ]
-          },
-          {
-            id: "c1835_gen_repos",
-            type: "circular",
-            label: "Circular 1835 · Pactos y Repos",
-            badge: "275 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "generales",
-            chips: [
-              { label: "Repos Generales: Pactos y Tasas", query: "SELECT nombre_contraparte, count(*) as pactos, AVG(tasa_pacto) as tasa_prom FROM generales_repos GROUP BY nombre_contraparte ORDER BY pactos DESC LIMIT 5;" }
-            ],
-            tables: [
-              { id: "generales_repos", name: "generales.pactos_repos", rows: "275 registros", file: "outputs/generales/b7_repos.parquet" }
+              { id: "seguros_derivados", name: "seguros.derivados", rows: "Un archivo por año", file: "", files: ["outputs/seguros/derivados/manifest.json"] },
+              { id: "seguros_pactos", name: "seguros.pactos", rows: "Un archivo por año", file: "", files: ["outputs/seguros/pactos/manifest.json"] }
             ]
           }
         ]
@@ -1020,8 +912,8 @@ class SidebarController {
     this.toggleBtn = document.getElementById("toggle-sidebar");
     this.breadcrumbEl = document.getElementById("erd-breadcrumb");
 
-    this.selectedTableId = "vida_bonos";
-    this.activeSector = "vida";
+    this.selectedTableId = "seguros_maestro";
+    this.activeSector = "seguros";
     // El explorador se muestra colapsado al cargar: el usuario decide qué abrir.
     // Los identificadores son group.id, sector/circular id y "part_<tabla>" para particiones.
     this.expandedNodes = new Set();

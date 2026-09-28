@@ -5,7 +5,7 @@ ORIGEN = ("CMF — Cartera de inversiones de las compañías de seguros (Circula
           "(formato vigente hasta 2024-11 y formato desde 2024-12).")
 
 TABLAS = {
-    "aseguradoras": ("seguros.aseguradoras",
+    "aseguradoras": ("seguros.lista_entidades",
                      "Compañías de seguros de vida y generales que envían su cartera a la CMF, con el primer y el "
                      "último mes informado. Sirve para detectar compañías nuevas y las que dejan de reportar."),
     "renta_fija": ("seguros.renta_fija",

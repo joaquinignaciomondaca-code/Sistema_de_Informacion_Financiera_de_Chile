@@ -15,7 +15,7 @@ Este directorio cataloga y documenta los flujos de extracción y procesamiento q
 
 | Sector / Cobertura | Archivo de Origen | Frecuencia | Script Principal | Salida Canónica |
 | :--- | :--- | :--- | :--- | :--- |
-| **Compañías de Seguros (Vida y Generales)** | CMF Circular 1835 (Cartera e Inversiones) | Trimestral | `seguros/circular_1835_cartera/scripts/orchestrate_seguros.py` | `docs/outputs/vida/`, `docs/outputs/generales/` |
+| **Compañías de Seguros (Vida y Generales)** | CMF Circular 1835 (cartera de inversiones, ficha técnica oficial) | Mensual · workflow `seguros_carteras.yml` 3 veces al mes, incremental | `seguros/scripts/actualizar_carteras.py` | `docs/outputs/seguros/` |
 | **Fondos Mutuos** | CMF Circular 1333 (Derivados y Futuros) | Mensual | `ffmm/circular_1333_cartera/scripts/process_circular_1333.py` | `docs/ffmm/circular_1333_cartera/outputs/` |
 | **Fondos de Inversión** | CMF Circular 1835 (Activos y Repos) | Trimestral / Mensual | `fi/cartera_inversiones/scripts/process_fi.py` | `docs/fi/cartera_inversiones/outputs/` |
 | **Fondos de Pensiones** | SPensiones (Archivos ZIP históricos y mensuales) | Mensual | `pensiones/scripts/pipeline_stream_history.py` | `docs/outputs/pensiones/` |

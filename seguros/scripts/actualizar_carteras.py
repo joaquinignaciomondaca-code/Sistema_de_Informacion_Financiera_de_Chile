@@ -389,8 +389,9 @@ def actualizar_data_manifest(control: dict) -> None:
             m = json.loads((SALIDA / tabla / "manifest.json").read_text())
             registros, periodos = m["total_records"], m["periodos"]
         corte = f"{periodos[0]} a {periodos[-1]}" if periodos else "sin meses publicados"
+        vista = "seguros_maestro" if tabla == "aseguradoras" else f"seguros_{tabla}"
         entradas.append({
-            "id": f"seguros_{tabla}", "name": nombre, "view_name": f"seguros_{tabla}",
+            "id": vista, "name": nombre, "view_name": vista,
             "sector": "seguros", "sector_label": "Seguros de Vida y Generales", "norma": "Circular CMF 1835",
             "corte": corte, "frescura": f"Último mes publicado: {periodos[-1]}" if periodos else "",
             "modo": "Automático · 3 veces al mes, incremental", "ultima_actualizacion": hoy,
