@@ -65,8 +65,8 @@ jobs:
           NORMATIVA_PDF_RECHECK_DAYS: '45'
           # Una pausa de 6 s limita las solicitudes a un máximo aproximado de 10 por minuto.
           NORMATIVA_GEMINI_MIN_INTERVAL_SECONDS: '6'
-          # 68 publicaciones pendientes pueden consumir hasta dos llamadas cada una.
-          NORMATIVA_MAX_AI_CALLS: '150'
+          # Hasta dos llamadas por publicación, con margen para el backlog residual.
+          NORMATIVA_MAX_AI_CALLS: '20'
           NORMATIVA_MAX_PDF_CHECKS: '120'
         run: python -m pipelines.normativa_cmf.pipeline
 

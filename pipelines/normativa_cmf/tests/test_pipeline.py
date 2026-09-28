@@ -86,6 +86,65 @@ class ParseListingTests(unittest.TestCase):
 
 
 class EvidenceValidationTests(unittest.TestCase):
+    def test_summary_can_cite_official_listing_description_as_page_zero(self):
+        description = "APRUEBA NORMATIVA QUE CREA EL COMPENDIO NORMATIVO DE BOLSAS E INTERMEDIARIOS."
+        raw = {
+            "event_type": "nueva_norma",
+            "summary": "La CMF aprueba la creación del Compendio Normativo de Bolsas e Intermediarios.",
+            "summary_evidence": "APRUEBA NORMATIVA QUE CREA EL COMPENDIO NORMATIVO DE BOLSAS E INTERMEDIARIOS",
+            "summary_evidence_page": 0,
+            "sectors": [],
+            "sector_evidence": [],
+            "affected_norms": [],
+            "norm_evidence": [],
+            "effective_date": "",
+            "effective_date_precision": "sin_fecha",
+            "effective_date_evidence": "",
+            "effective_date_page": 0,
+            "confidence": "media",
+            "needs_human_review": True,
+        }
+        clean = pipeline._validate_analysis(
+            raw,
+            [{"page": 1, "text": "Texto del PDF sin la descripción del listado."}],
+            "mock-model",
+            pdf_text_available=True,
+            listing_description=description,
+        )
+        self.assertEqual(clean["summary"], raw["summary"])
+        self.assertEqual(clean["summary_evidence_page"], 0)
+        self.assertEqual(clean["analysis_status"], "complete")
+        self.assertNotIn("resumen_sin_evidencia_verificable", clean["review_flags"])
+        self.assertIn("sin_industria_asignada", clean["review_flags"])
+
+    def test_page_zero_summary_citation_must_match_official_listing(self):
+        raw = {
+            "event_type": "nueva_norma",
+            "summary": "La CMF crea una norma nueva.",
+            "summary_evidence": "La presente norma entra en vigencia el 1 de enero de 2027",
+            "summary_evidence_page": 0,
+            "sectors": [],
+            "sector_evidence": [],
+            "affected_norms": [],
+            "norm_evidence": [],
+            "effective_date": "",
+            "effective_date_precision": "sin_fecha",
+            "effective_date_evidence": "",
+            "effective_date_page": 0,
+            "confidence": "media",
+            "needs_human_review": True,
+        }
+        clean = pipeline._validate_analysis(
+            raw,
+            [{"page": 1, "text": "La presente norma entra en vigencia el 1 de enero de 2027."}],
+            "mock-model",
+            pdf_text_available=True,
+            listing_description="Descripción CMF distinta.",
+        )
+        self.assertEqual(clean["summary"], "")
+        self.assertEqual(clean["analysis_status"], "pendiente")
+        self.assertIn("resumen_sin_evidencia_verificable", clean["review_flags"])
+
     def test_only_supported_sector_and_effective_date_are_kept(self):
         pages = [
             {"page": 1, "text": "La presente norma se aplica a los fondos mutuos y sus administradoras."},

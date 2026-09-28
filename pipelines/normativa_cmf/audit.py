@@ -204,6 +204,11 @@ def validate_feed(feed: dict[str, Any], *, require_run: bool = False) -> list[st
             page = event.get("summary_evidence_page")
             if not isinstance(page, int) or isinstance(page, bool) or page < 0:
                 errors.append(f"{prefix}.summary_evidence_page debe ser un entero no negativo.")
+            elif page == 0:
+                quote_key = _evidence_key(event.get("summary_evidence"))
+                description_key = _evidence_key(event.get("description_cmf"))
+                if len(quote_key) < 12 or quote_key not in description_key:
+                    errors.append(f"{prefix} usa página 0 para el resumen sin cita literal del listado CMF.")
             confidence = event.get("confidence")
             if not isinstance(confidence, str) or confidence not in {"alta", "media", "baja"}:
                 errors.append(f"{prefix}.confidence no es una categoría válida.")
