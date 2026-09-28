@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "updated_at": "2026-09-28",
   "total_tables": 49,
-  "total_records": 10868586,
+  "total_records": 10868595,
   "classification": {
     "automatico": "Extracción y procesamiento 100% por código autónomo (APIs, scrapers, normalizadores)",
     "manual": "Extracción asistida o transcripción de notas y reportes no estructurados (ej. NotebookLM)"
@@ -388,7 +388,7 @@
       "modo": "Automático",
       "ultima_actualizacion": "2026-09-28",
       "file_parquet": "outputs/bancos/bancos_maestro.parquet",
-      "registros_reales": 40,
+      "registros_reales": 41,
       "descripcion": "Códigos de institución de los archivos bancarios CMF: bancos vigentes, históricos (fusionados o cerrados), filiales en el exterior y agregados del sistema. No equivale al número de bancos activos. RUT de los bancos activos cotejados con el registro CMF.",
       "origen": "Registro CMF de bancos (consulta.php?mercado=B&entidad=BANCO): alta de bancos nuevos y paso de «Activo» a «No vigente». Códigos históricos y agregados: lista original. pipelines/entidades/actualizar_listas.py."
     },
@@ -500,7 +500,7 @@
       "modo": "Automático",
       "ultima_actualizacion": "2026-09-28",
       "file_parquet": "outputs/securitizadoras/patrimonios_separados_maestro.parquet",
-      "registros_reales": 18,
+      "registros_reales": 19,
       "descripcion": "Inscripciones de títulos de deuda de securitización (patrimonios separados) por registro automático: número, fecha, securitizadora, tipo, moneda, monto inscrito y vencimiento. La clase de colateral no está en el listado CMF: queda vacía en las inscripciones agregadas automáticamente.",
       "origen": "CMF — Inscripciones de títulos de deuda mediante modalidad de registro automático (listado_titulos_deuda.php), filtrado a securitizadoras. pipelines/entidades/actualizar_listas.py."
     },
@@ -564,7 +564,7 @@
       "modo": "Automático",
       "ultima_actualizacion": "2026-09-28",
       "file_parquet": "outputs/sistemas_pago/sistemas_pago_maestro.parquet",
-      "registros_reales": 12,
+      "registros_reales": 19,
       "descripcion": "Infraestructuras del sistema de pagos: LBTR del Banco Central, cámaras de compensación, depósito de valores, contrapartes centrales y operadores de tarjetas de pago.",
       "origen": "Registros públicos CMF: altas desde operadores de tarjetas de pago (TPOPE) y entidades de contraparte central (RGCCO); vigencia también desde sociedades de apoyo al giro (BCSAG) y depósito de valores (DCVAL). El LBTR (BCCh) no tiene registro CMF y no se modifica. pipelines/entidades/actualizar_listas.py."
     },

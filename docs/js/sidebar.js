@@ -363,7 +363,7 @@ const EXPLORER_TREE = [
               { label: "Historial de Bancos Fusionados / Cerrados", query: "SELECT codigo_institucion, nombre_fantasia, razon_social, estado FROM bancos_maestro WHERE estado != 'Activo' ORDER BY estado, nombre_fantasia;" }
             ],
             tables: [
-              { id: "bancos_maestro", name: "bancos.lista_instituciones", rows: "40 códigos", file: "outputs/bancos/bancos_maestro.parquet" }
+              { id: "bancos_maestro", name: "bancos.lista_instituciones", rows: "41 códigos", file: "outputs/bancos/bancos_maestro.parquet" }
             ]
           },
           {
@@ -728,7 +728,7 @@ const EXPLORER_TREE = [
               { label: "Inscripciones por moneda y monto", query: "SELECT numero_inscripcion, fecha_inscripcion, razon_social_administradora, denominacion_emision, moneda, monto_inscrito, clase_colateral_subyacente FROM patrimonios_separados_maestro ORDER BY fecha_inscripcion DESC;" }
             ],
             tables: [
-              { id: "patrimonios_separados_maestro", name: "patrimonios_separados.lista_emisiones", rows: "18 emisiones", file: "outputs/securitizadoras/patrimonios_separados_maestro.parquet" }
+              { id: "patrimonios_separados_maestro", name: "patrimonios_separados.lista_emisiones", rows: "19 emisiones", file: "outputs/securitizadoras/patrimonios_separados_maestro.parquet" }
             ]
           },
           {
@@ -890,7 +890,7 @@ const EXPLORER_TREE = [
               { label: "Cámaras y Contrapartes Centrales", query: "SELECT codigo_sistema, razon_social, marco_legal FROM sistemas_pago_maestro WHERE tipo_sistema LIKE '%Cámara%' OR tipo_sistema LIKE '%Contraparte%';" }
             ],
             tables: [
-              { id: "sistemas_pago_maestro", name: "sistemas_pago.lista_entidades", rows: "12 entidades", file: "outputs/sistemas_pago/sistemas_pago_maestro.parquet" }
+              { id: "sistemas_pago_maestro", name: "sistemas_pago.lista_entidades", rows: "19 entidades", file: "outputs/sistemas_pago/sistemas_pago_maestro.parquet" }
             ]
           }
         ]
