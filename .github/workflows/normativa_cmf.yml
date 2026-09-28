@@ -63,7 +63,8 @@ jobs:
           GEMINI_MODEL_FLASH: gemini-flash-latest
           NORMATIVA_LOOKBACK_DAYS: '365'
           NORMATIVA_PDF_RECHECK_DAYS: '45'
-          NORMATIVA_MAX_AI_CALLS: '10'
+          # 68 publicaciones pendientes pueden consumir hasta dos llamadas cada una.
+          NORMATIVA_MAX_AI_CALLS: '150'
           NORMATIVA_MAX_PDF_CHECKS: '120'
         run: python -m pipelines.normativa_cmf.pipeline
 
