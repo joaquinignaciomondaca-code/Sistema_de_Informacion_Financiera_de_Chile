@@ -9,7 +9,10 @@ oficiales (formato_1835.py) y valida antes de escribir nada:
   - el registro de totales cuenta exactamente las líneas de detalle,
   - todos los campos numéricos y fechas se pueden leer.
 
-Si algo falla, el mes no se publica y la corrida termina con error (fail-closed).
+Si algo falla, el mes no se publica y la corrida termina con error (fail-closed). Excepción: un
+archivo defectuoso de UNA compañía (p. ej. a202505g.99017000 con una línea truncada) se excluye solo
+a él, con aviso y registro en el manifiesto; si hay más de 2 archivos así y más del 5 % de los del
+sector, se asume una lectura mal hecha y el mes no se publica.
 Si el mes todavía no está en la CMF, la corrida termina sin cambios.
 
 Salida (un archivo por tabla y año, así la web carga pocos archivos):
@@ -259,10 +262,32 @@ def leer_zip(data: bytes, periodo: str, sector: str):
         z = zipfile.ZipFile(io.BytesIO(data))
     except zipfile.BadZipFile as e:
         raise ErrorValidacion(f"{sector} {periodo}: ZIP inválido ({e})")
+    excluidos: list[str] = []
+    leidos = 0
     for nombre in sorted(z.namelist()):
         if nombre.endswith("/"):
             continue
-        leer_archivo(nombre, z.read(nombre), formato, periodo, sector, mapa, filas, errores, compania, avisos, ilegibles)
+        # Cada archivo se lee aparte: un archivo defectuoso de UNA compañía (línea truncada, tipo
+        # de registro inválido) se excluye solo a él y el resto del mes se publica.
+        propias = {t: [] for t in TABLAS}
+        errs: list[str] = []
+        ileg: dict[str, list[str]] = {}
+        leer_archivo(nombre, z.read(nombre), formato, periodo, sector, mapa, propias, errs, compania, avisos, ileg)
+        if os.path.basename(nombre)[:1].lower() in ARCHIVOS:
+            leidos += 1
+        if errs:
+            excluidos += errs
+            continue
+        for t in TABLAS:
+            filas[t].extend(propias[t])
+        for t, lista in ileg.items():
+            ilegibles.setdefault(t, []).extend(lista)
+    # Tope: muchos archivos defectuosos a la vez indican una lectura mal hecha (no errores de las
+    # compañías), así que el mes no se publica.
+    if len(excluidos) > max(2, 0.05 * leidos):
+        errores += [f"{len(excluidos)} de {leidos} archivos con problemas (tope: 2 o 5 %)"] + excluidos
+    else:
+        avisos += [f"{sector} ARCHIVO EXCLUIDO · {x}" for x in excluidos]
     for t in TABLAS:  # filas de archivos sin encabezado: nombre de la compañía desde sus otros archivos
         for fila in filas[t]:
             if fila["nombre_aseguradora"] is None:
@@ -281,7 +306,7 @@ def leer_zip(data: bytes, periodo: str, sector: str):
         raise ErrorValidacion(f"{sector} {periodo}: el ZIP no trae archivos de cartera")
     if not filas["control_inversiones"]:
         raise ErrorValidacion(f"{sector} {periodo}: falta la información de control (archivos C)")
-    return filas, compania, avisos
+    return filas, compania, avisos, excluidos
 
 
 # ---------------------------------------------------------------------------
@@ -454,7 +479,7 @@ def diagnostico(periodos: list[str], a) -> int:
             break
         for sector, data in datos.items():
             try:
-                filas, comp, avisos = leer_zip(data, periodo, sector)
+                filas, comp, avisos, _exc = leer_zip(data, periodo, sector)
                 print(f"{periodo} {sector}: OK · {len(comp)} compañías · {sum(map(len, filas.values()))} filas"
                       f" · {len(avisos)} avisos")
             except ErrorValidacion as e:
@@ -523,9 +548,13 @@ def main(argv=None) -> int:
         filas = {t: [] for t in TABLAS}
         companias = {}
         avisos = []
+        excluidos = []
         for sector, data in datos.items():
-            f, comp, av = leer_zip(data, periodo, sector)  # ErrorValidacion corta la corrida
+            f, comp, av, exc = leer_zip(data, periodo, sector)  # ErrorValidacion corta la corrida
             avisos += av
+            excluidos += [f"{sector} {x}" for x in exc]
+            for x in exc:
+                print(f"::warning title=Seguros {periodo}: archivo excluido::{sector} {x}")
             for t in TABLAS:
                 filas[t].extend(f[t])
             companias[sector] = comp
@@ -542,6 +571,8 @@ def main(argv=None) -> int:
                         info["ultimo"], info["nombre"] = periodo, nombre
             previo = {"formato": formato_de(periodo), "companias": {s: len(c) for s, c in companias.items()},
                       "registros": {}, "avisos": len(avisos), "detalle_avisos": avisos[:40]}
+            if excluidos:
+                previo["archivos_excluidos"] = excluidos
         previo["registros"].update(conteo)
         control["periodos"][periodo] = previo
         guardar_control(control)

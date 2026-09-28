@@ -14,7 +14,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from seguros.scripts.actualizar_carteras import SECTORES, leer_zip
+from seguros.scripts.actualizar_carteras import SECTORES, ErrorValidacion, leer_zip
 
 MUESTRAS = Path(__file__).resolve().parents[1] / "fuentes" / "muestras_1835"
 SECTOR = {v: k for k, v in SECTORES.items()}
@@ -39,7 +39,7 @@ def zips():
 def main():
     fallas = 0
     for sector, periodo, data in zips():
-        filas, comp, avisos = leer_zip(data, periodo, sector)
+        filas, comp, avisos, _exc = leer_zip(data, periodo, sector)
         n = {t: len(v) for t, v in filas.items() if v}
         print(f"{sector:9} {periodo}: {len(comp)} compañías · " + ", ".join(f"{t} {k}" for t, k in n.items()))
         rf = pd.DataFrame(filas["renta_fija"])
@@ -60,7 +60,39 @@ def main():
                     print(f"          FALLA {t}.{c}: {f[~f.str.match(r'(19|20|21)').fillna(False)].head(3).tolist()}")
                     fallas += 1
     assert fallas == 0, f"{fallas} fallas"
+    exclusion()
     print("OK")
+
+
+def exclusion():
+    """Un archivo defectuoso de una compañía se excluye solo; más de 2 o del 5 % bloquean el mes."""
+    sector, periodo, data = next(zips())
+    base, _, _, exc = leer_zip(data, periodo, sector)
+    assert exc == []
+    z = zipfile.ZipFile(io.BytesIO(data))
+    nombre = next(n for n in z.namelist() if n[:1].lower() == "a")
+    lineas = z.read(nombre).split(b"\r\n")
+
+    def con_malos(k):
+        buf = io.BytesIO()
+        with zipfile.ZipFile(buf, "w") as out:
+            for n in z.namelist():
+                out.writestr(n, z.read(n))
+            for i in range(k):  # línea truncada en un carácter, como a202505g.99017000
+                out.writestr(f"a_malo{i}.9900000{i}", b"\r\n".join([lineas[0], lineas[1][:-1]]) + b"\r\n")
+        return buf.getvalue()
+
+    filas, _, avisos, exc = leer_zip(con_malos(1), periodo, sector)
+    assert len(exc) == 1 and "largo distinto" in exc[0], exc
+    assert {t: len(v) for t, v in filas.items()} == {t: len(v) for t, v in base.items()}
+    assert any("ARCHIVO EXCLUIDO" in a for a in avisos)
+    try:
+        leer_zip(con_malos(len(z.namelist()) // 10 + 3), periodo, sector)
+    except ErrorValidacion as e:
+        assert "tope" in str(e)
+    else:
+        raise AssertionError("muchos archivos defectuosos debían bloquear el mes")
+    print("exclusión de archivos defectuosos: OK")
 
 
 if __name__ == "__main__":
