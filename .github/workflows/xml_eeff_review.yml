@@ -20,7 +20,8 @@ on:
         default: '90'
         type: string
   schedule:
-    - cron: '30 11 * * *'
+    # 3 veces al mes (EEFF XML trimestrales); laboratorio sin publicación.
+    - cron: '30 11 5,15,25 * *'
 
 permissions:
   contents: read

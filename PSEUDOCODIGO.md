@@ -408,11 +408,11 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 | cooperativas_cmf_mensual.yml | días 2, 12, 22 14:00 | **sí** (commit + Pages) | tests + extract_cmf_coop_report --publicar (incremental) |
 | web_audit.yml | push a docs/** | no | audit_navigation + audit_web_full (anotaciones) |
 | bancos_probe_historia.yml / coop_probe.yml / retail_probe_ifrs.yml | manual | no | sondas de formato |
-| bancos_repo.yml | diario 11:00 | no | laboratorio REPO |
+| bancos_repo.yml | días 4, 14, 24 11:00 | no | laboratorio REPO |
 | bancos_repo_historico.yml / bancos_muestra_inspeccion.yml | manual | no | barridos / inspección |
-| factoring_leasing_backfill.yml | diario 12:20 | **sí** | backfill_ifrs + publish_backfill + auditorías web |
+| factoring_leasing_backfill.yml | días 3, 13, 23 12:20 | **sí** | backfill_ifrs + publish_backfill + auditorías web |
 | factoring_leasing_sample.yml | manual | no | cotejo muestra |
-| xml_eeff_review.yml | diario 11:30 | no | extract.py en 4 shards |
+| xml_eeff_review.yml | días 5, 15, 25 11:30 | no | extract.py en 4 shards |
 | xml_eeff_sample.yml | manual | no | audit_sample |
 | probe_xml_sources.yml | diario 12:00 | no | sonda fuentes |
 
