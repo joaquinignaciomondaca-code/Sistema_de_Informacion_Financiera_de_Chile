@@ -10,6 +10,7 @@ import argparse
 import hashlib
 import json
 import re
+import unicodedata
 import sys
 import time
 import urllib.error
@@ -292,7 +293,9 @@ def inspect_zip(blob: bytes, period: str, bank_code: str) -> dict:
 
 
 def norm(value: object) -> str:
-    return re.sub(r"[^A-Z0-9]", "", str(value or "").upper())
+    # Quitar tildes antes de filtrar: "Crédito" (XLSX) debe igualar "CREDITO" (ZIP).
+    text = unicodedata.normalize("NFKD", str(value or "")).encode("ascii", "ignore").decode("ascii")
+    return re.sub(r"[^A-Z0-9]", "", text.upper())
 
 
 def inspect_workbook(path: Path, bank_name: str) -> dict:
