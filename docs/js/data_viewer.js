@@ -45,15 +45,14 @@ const DATA_VIEWER_CATALOG = [
   {
     group: "Administración de fondos · Fondos de Inversión (FI)",
     tables: [
-      { id: "fi_repos_detalle_historico", name: "fi.repos_contratos (2.946 contratos)" },
-      { id: "fi_registro_fondos_universo", name: "fi.universo_fondos (1.677 fondos)" },
-      { id: "fi_repos", name: "fi.repos_vrc_crv (1.366 pactos)" },
-      { id: "fi_nacional", name: "fi.cartera_nacional (833.584 registros)" },
-      { id: "fi_extranjera", name: "fi.cartera_extranjera (67.371 registros)" },
-      { id: "fi_derivados", name: "fi.derivados_futuros (3.611 registros)" },
-      { id: "fi_metodo_part", name: "fi.metodo_participacion (14.401 registros)" },
-      { id: "fi_opciones", name: "fi.derivados_opciones (1.447 registros)" },
-      { id: "fi_maestro", name: "fi.lista_entidades (1.129 entidades)" }
+      { id: "fi_maestro", name: "fi.lista_entidades (registro CMF de fondos)" },
+      { id: "fi_cartera_nacional", name: "fi.cartera_nacional (trimestral desde 2020-03)" },
+      { id: "fi_cartera_extranjera", name: "fi.cartera_extranjera (trimestral desde 2020-03)" },
+      { id: "fi_metodo_participacion", name: "fi.metodo_participacion (trimestral desde 2020-03)" },
+      { id: "fi_bienes_raices", name: "fi.bienes_raices (trimestral desde 2020-03)" },
+      { id: "fi_futuros", name: "fi.futuros_forwards (trimestral desde 2020-03)" },
+      { id: "fi_opciones", name: "fi.opciones (trimestral desde 2020-03)" },
+      { id: "fi_pactos", name: "fi.pactos (trimestral desde 2020-03)" }
     ]
   },
   {

@@ -15,18 +15,16 @@ const SEMANTIC_VIEWS = [
   { name: "seguros_pactos", manifest: "outputs/seguros/pactos/manifest.json" },
   { name: "seguros_control_inversiones", manifest: "outputs/seguros/control_inversiones/manifest.json" },
 
-  // FONDOS DE INVERSION
+  // FONDOS DE INVERSIÓN. Cartera y pactos de los informes IFRS trimestrales de cada fondo (CMF);
+  // se actualiza sola 3 veces al mes. Montos en miles de la moneda funcional de cada fondo.
   { name: "fi_maestro", file: "outputs/fi/maestro_fondos_inversion.parquet" },
-  { name: "fi_nacional", file: "outputs/fi/fi_cartera_nacional.parquet" },
-  { name: "fi_cartera_nac", file: "outputs/fi/fi_cartera_nacional.parquet" },
-  { name: "fi_extranjera", file: "outputs/fi/fi_cartera_extranjera.parquet" },
-  { name: "fi_cartera_ext", file: "outputs/fi/fi_cartera_extranjera.parquet" },
-  { name: "fi_derivados", file: "outputs/fi/fi_futuros_forward.parquet" },
-  { name: "fi_metodo_part", file: "outputs/fi/fi_metodo_participacion.parquet" },
-  { name: "fi_opciones", file: "outputs/fi/fi_opciones.parquet" },
-  { name: "fi_repos", file: "outputs/fi/fi_repos_vrc_crv.parquet" },
-  { name: "fi_registro_fondos_universo", file: "outputs/fi/fi_registro_fondos_universo.parquet" },
-  { name: "fi_repos_detalle_historico", file: "outputs/fi/fi_repos_detalle_historico.parquet" },
+  { name: "fi_cartera_nacional", manifest: "outputs/fi/cartera_nacional/manifest.json" },
+  { name: "fi_cartera_extranjera", manifest: "outputs/fi/cartera_extranjera/manifest.json" },
+  { name: "fi_metodo_participacion", manifest: "outputs/fi/metodo_participacion/manifest.json" },
+  { name: "fi_bienes_raices", manifest: "outputs/fi/bienes_raices/manifest.json" },
+  { name: "fi_futuros", manifest: "outputs/fi/futuros_forwards/manifest.json" },
+  { name: "fi_opciones", manifest: "outputs/fi/opciones/manifest.json" },
+  { name: "fi_pactos", manifest: "outputs/fi/pactos/manifest.json" },
 
   // FONDOS MUTUOS. Cartera de inversiones de la Circular 1333 (archivo mensual CMF); se actualiza
   // sola 3 veces al mes. Montos en miles de la moneda funcional de cada fondo.

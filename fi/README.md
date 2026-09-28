@@ -1,23 +1,24 @@
-# Módulo Fondos de Inversión (CMF - Ley Única de Fondos)
+# Fondos de Inversión (CMF — Ley Única de Fondos)
 
-## Marco Normativo y Régimen de Información
-A diferencia de los Fondos Mutuos (que cuentan con descarga mensual masiva en TXT vía Circular 1333), los **Fondos de Inversión (FI)** chilenos (Ley N° 20.712 - Ley Única de Fondos) reportan su información y carteras mediante:
+La CMF no publica un archivo masivo de carteras de fondos de inversión (a diferencia de la
+Circular 1333 de fondos mutuos): cada fondo tiene, por trimestre, una página por tipo de cartera
+de sus informes IFRS y una de pactos. `scripts/actualizar_carteras.py` las recorre todas.
 
-1. **Estados Financieros IFRS (Circular N° 1.998 / NCG N° 365)**:
-   - Envío de información financiera trimestral y anual bajo taxonomía IFRS (archivos XML / PDF vía módulo SEIL de la CMF).
-   - Incluye notas explicativas con el inventario de activos, contratos derivados de cobertura y valorización de inversiones.
-2. **Sistema de Información de Fondos (NCG N° 532 / Manual de Fondos)**:
-   - Reporte periódico estandarizado para fiscalización directa de carteras de inversión (`FONDOS01`).
+- Workflow: `.github/workflows/fi_carteras.yml`, días 9, 19 y 29; incremental (solo trimestres
+  que faltan en `docs/outputs/fi/manifest.json`), desde 2020-03.
+- Validación fail-closed: encabezados exactos, cuadratura de cada columna de montos contra la
+  fila TOTAL que publica la CMF, ≤ 1 % de filas ilegibles, completitud ≥ 90 % de los fondos del
+  trimestre anterior.
+- Montos en miles de la moneda funcional de cada fondo (`_miles_mf`); la moneda está en la lista
+  de fondos (`maestro_fondos_inversion.parquet`).
 
----
+Salidas (`docs/outputs/fi/`): `cartera_nacional/` (un archivo por trimestre),
+`cartera_extranjera/`, `metodo_participacion/`, `bienes_raices/`, `futuros_forwards/`,
+`opciones/`, `pactos/` (uno por año), `maestro_fondos_inversion.parquet` y
+`fi_registro_fondos_universo.json`.
 
-## Estructura del Módulo
+Vistas web: `fi_maestro`, `fi_cartera_nacional`, `fi_cartera_extranjera`,
+`fi_metodo_participacion`, `fi_bienes_raices`, `fi_futuros`, `fi_opciones`, `fi_pactos`.
 
-```
-fi/
-└── cartera_inversiones/
-    ├── inputs/
-    ├── outputs/
-    ├── scripts/
-    └── README.md
-```
+El extractor y los REPO antiguos (`cartera_inversiones/`, `repos/`, scripts 01–04) se eliminaron
+el 2026-09-28: mezclaban columnas y dañaban los acentos.

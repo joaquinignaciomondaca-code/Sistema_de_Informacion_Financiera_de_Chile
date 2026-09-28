@@ -238,72 +238,59 @@ const EXPLORER_TREE = [
             id: "fi_cat_entidades",
             type: "circular",
             label: "Lista de Entidades",
-            badge: "1.129 Entidades",
+            badge: "Registro CMF",
             badgeType: "entities",
             status: "active",
             sector: "fi",
             chips: [
-              { label: "Listado de Fondos de Inversión", query: "SELECT run_fondo, nombre_fondo, tipo_entidad_desc, administradora FROM fi_maestro ORDER BY nombre_fondo LIMIT 15;" },
-              { label: "Fondos por Administradora", query: "SELECT administradora, count(*) as total_fondos FROM fi_maestro GROUP BY administradora ORDER BY total_fondos DESC LIMIT 10;" }
+              { label: "Fondos que reportan cartera en el último trimestre", query: "SELECT run_fondo, nombre_fondo, administradora, moneda_funcional, trimestres_con_cartera FROM fi_maestro WHERE reporta_ultimo_periodo ORDER BY administradora, nombre_fondo;" },
+              { label: "Fondos por administradora (vigentes)", query: "SELECT administradora, count(*) AS fondos FROM fi_maestro WHERE estado_vigencia = 'Vigente' GROUP BY administradora ORDER BY fondos DESC LIMIT 20;" },
+              { label: "Fondos por moneda funcional", query: "SELECT moneda_funcional, count(*) AS fondos FROM fi_maestro WHERE reporta_ultimo_periodo GROUP BY moneda_funcional ORDER BY fondos DESC;" }
             ],
             tables: [
-              { id: "fi_maestro", name: "fi.lista_entidades", rows: "1.129 entidades", file: "outputs/fi/maestro_fondos_inversion.parquet" }
+              { id: "fi_maestro", name: "fi.lista_entidades", rows: "Una fila por fondo", file: "outputs/fi/maestro_fondos_inversion.parquet" }
             ]
           },
           {
-            id: "fi_cat_censo",
+            id: "fi_cartera",
             type: "circular",
-            label: "Universo de Fondos · Registro CMF",
-            badge: "1.677 Fondos",
+            label: "Cartera de Inversiones · Informes IFRS",
+            badge: "Trimestral desde 2020-03",
             badgeType: "data",
             status: "active",
             sector: "fi",
             chips: [
-              { label: "Vigentes vs Liquidados (Registro CMF)", query: "SELECT estado_vigencia, tipo_entidad_desc, count(*) as total_fondos FROM fi_registro_fondos_universo GROUP BY estado_vigencia, tipo_entidad_desc;" },
-              { label: "Fondos Rescatables vs No Rescatables", query: "SELECT tipo_entidad_desc, count(*) as total FROM fi_registro_fondos_universo GROUP BY tipo_entidad_desc;" },
-              { label: "Directorio de Fondos Vigentes", query: "SELECT run_fondo, nombre_fondo, tipo_entidad_desc, administradora FROM fi_registro_fondos_universo WHERE estado_vigencia = 'Vigente' ORDER BY nombre_fondo LIMIT 15;" }
+              { label: "Cartera nacional por tipo de instrumento, último trimestre", query: "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM fi_cartera_nacional) GROUP BY tipo_instrumento ORDER BY posiciones DESC;" },
+              { label: "Mayores emisores nacionales, último trimestre", query: "SELECT rut_emisor, count(DISTINCT run_fondo) AS fondos, count(*) AS posiciones FROM fi_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM fi_cartera_nacional) GROUP BY rut_emisor ORDER BY fondos DESC LIMIT 20;" },
+              { label: "Cartera extranjera por país emisor, último trimestre", query: "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM fi_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM fi_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC;" },
+              { label: "Filiales y coligadas (método de la participación)", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, count(*) AS inversiones FROM fi_metodo_participacion GROUP BY periodo ORDER BY periodo DESC LIMIT 12;" },
+              { label: "Bienes raíces por comuna, último trimestre", query: "SELECT comuna, count(*) AS inmuebles, count(DISTINCT run_fondo) AS fondos FROM fi_bienes_raices WHERE periodo = (SELECT max(periodo) FROM fi_bienes_raices) GROUP BY comuna ORDER BY inmuebles DESC LIMIT 20;" }
             ],
             tables: [
-              { id: "fi_registro_fondos_universo", name: "fi.universo_fondos", rows: "1.677 fondos", file: "outputs/fi/fi_registro_fondos_universo.parquet" }
+              { id: "fi_cartera_nacional", name: "fi.cartera_nacional", rows: "Un archivo por trimestre · desde 2020-03", file: "", files: ["outputs/fi/cartera_nacional/manifest.json"] },
+              { id: "fi_cartera_extranjera", name: "fi.cartera_extranjera", rows: "Un archivo por año · desde 2020-03", file: "", files: ["outputs/fi/cartera_extranjera/manifest.json"] },
+              { id: "fi_metodo_participacion", name: "fi.metodo_participacion", rows: "Un archivo por año · desde 2020-03", file: "", files: ["outputs/fi/metodo_participacion/manifest.json"] },
+              { id: "fi_bienes_raices", name: "fi.bienes_raices", rows: "Un archivo por año · desde 2020-03", file: "", files: ["outputs/fi/bienes_raices/manifest.json"] }
             ]
           },
           {
-            id: "fi_repos_historico",
+            id: "fi_derivados_pactos",
             type: "circular",
-            label: "Operaciones REPO · Muestra en revisión",
-            badge: "⚠ Falta auditar",
-            badgeType: "data",
-            status: "por_auditar",
-            sector: "fi",
-            chips: [
-              { label: "Operaciones REPO por Tipo (VRC vs CRV)", query: "SELECT codigo_operacion, tipo_operacion_desc, count(*) as contratos, round(sum(valorizacion_cierre_m_moneda), 2) as saldo_cierre FROM fi_repos_detalle_historico GROUP BY codigo_operacion, tipo_operacion_desc;" },
-              { label: "Registros Extraídos por Año (muestra sin auditar)", query: "SELECT anio, count(*) as registros, count(distinct run_fondo) as fondos FROM fi_repos_detalle_historico GROUP BY anio ORDER BY anio DESC;" },
-              { label: "Campos Incompletos de la Extracción", query: "SELECT anio, count(*) as registros, count(*) FILTER (WHERE tasa_pct IS NULL) as sin_tasa, count(*) FILTER (WHERE nombre_contraparte IS NULL OR nombre_contraparte IN ('', 'NA')) as sin_contraparte FROM fi_repos_detalle_historico GROUP BY anio ORDER BY anio DESC;" }
-            ],
-            tables: [
-              { id: "fi_repos_detalle_historico", name: "fi.repos_contratos", rows: "2.946 contratos", file: "outputs/fi/fi_repos_detalle_historico.parquet" },
-              { id: "fi_repos", name: "fi.repos_vrc_crv", rows: "1.366 pactos", file: "outputs/fi/fi_repos_vrc_crv.parquet" }
-            ]
-          },
-          {
-            id: "luf_cartera_fi",
-            type: "circular",
-            label: "Cartera de Inversión",
-            badge: "920.414 Registros",
+            label: "Derivados y Pactos · Informes IFRS",
+            badge: "Trimestral desde 2020-03",
             badgeType: "data",
             status: "active",
             sector: "fi",
             chips: [
-              { label: "Top Inversiones Nacionales", query: "SELECT nemotecnico, rut_emisor, sum(valolizacion_al_cierre) as total_m FROM fi_nacional GROUP BY nemotecnico, rut_emisor ORDER BY total_m DESC LIMIT 10;" },
-              { label: "Top Inversiones Extranjeras", query: "SELECT nemotecnico, nombre_del_emisor, sum(valolizacion_al_cierre) as total_m FROM fi_extranjera GROUP BY nemotecnico, nombre_del_emisor ORDER BY total_m DESC LIMIT 10;" },
-              { label: "Derivados Forwards FFII", query: "SELECT nombre_contraparte, count(*) as contratos FROM fi_derivados GROUP BY nombre_contraparte ORDER BY contratos DESC LIMIT 10;" }
+              { label: "Forwards y futuros por activo objeto, último trimestre", query: "SELECT activo_objeto, posicion, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM fi_futuros WHERE periodo = (SELECT max(periodo) FROM fi_futuros) GROUP BY activo_objeto, posicion ORDER BY contratos DESC LIMIT 20;" },
+              { label: "Contrapartes de derivados, último trimestre", query: "SELECT contraparte, count(*) AS contratos FROM fi_futuros WHERE periodo = (SELECT max(periodo) FROM fi_futuros) GROUP BY contraparte ORDER BY contratos DESC LIMIT 15;" },
+              { label: "Opciones por trimestre", query: "SELECT periodo, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM fi_opciones GROUP BY periodo ORDER BY periodo DESC LIMIT 12;" },
+              { label: "Pactos por tipo de operación y contraparte, último trimestre", query: "SELECT tipo_operacion, contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_prom_pct FROM fi_pactos WHERE periodo = (SELECT max(periodo) FROM fi_pactos) GROUP BY tipo_operacion, contraparte ORDER BY pactos DESC LIMIT 20;" }
             ],
             tables: [
-              { id: "fi_nacional", name: "fi.cartera_nacional", rows: "833.584 registros", file: "outputs/fi/fi_cartera_nacional.parquet" },
-              { id: "fi_extranjera", name: "fi.cartera_extranjera", rows: "67.371 registros", file: "outputs/fi/fi_cartera_extranjera.parquet" },
-              { id: "fi_derivados", name: "fi.derivados_futuros", rows: "3.611 registros", file: "outputs/fi/fi_futuros_forward.parquet" },
-              { id: "fi_metodo_part", name: "fi.metodo_participacion", rows: "14.401 registros", file: "outputs/fi/fi_metodo_participacion.parquet" },
-              { id: "fi_opciones", name: "fi.derivados_opciones", rows: "1.447 registros", file: "outputs/fi/fi_opciones.parquet" }
+              { id: "fi_futuros", name: "fi.futuros_forwards", rows: "Un archivo por año · desde 2020-03", file: "", files: ["outputs/fi/futuros_forwards/manifest.json"] },
+              { id: "fi_opciones", name: "fi.opciones", rows: "Un archivo por año · desde 2020-03", file: "", files: ["outputs/fi/opciones/manifest.json"] },
+              { id: "fi_pactos", name: "fi.pactos", rows: "Un archivo por año · desde 2020-03", file: "", files: ["outputs/fi/pactos/manifest.json"] }
             ]
           }
         ]
