@@ -126,6 +126,16 @@ class DeclaredDifferenceTests(unittest.TestCase):
         x.validate_period(x.parse_workbook(workbook(activos=rows)))
 
 
+class WorkAreaTests(unittest.TestCase):
+    def test_2019_11_work_area_to_the_right_is_ignored(self):
+        rows = sheet("activos")
+        rows[1] = rows[1] + [None] * 30 + ["VARIACIÓN MENSUAL"]  # cabecera que se extiende a la derecha
+        for r in rows[4:]:
+            if len(r) > 2 and r[1] in ("Coopeuch", "Capual", "Total Cooperativas"):
+                r.extend([None] * 8 + [672, r[1], *r[3:]])
+        x.validate_period(x.parse_workbook(workbook(activos=rows)))
+
+
 class DiscoverTests(unittest.TestCase):
     def test_pairs_resource_with_article_label(self):
         page = ('<a href="articles-113058_recurso_1.xlsx?ts=1"></a>'

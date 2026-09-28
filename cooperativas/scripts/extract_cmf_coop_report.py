@@ -167,6 +167,21 @@ def is_number(v) -> bool:
     return isinstance(v, (int, float)) and not isinstance(v, bool)
 
 
+def row_block(r: list) -> list:
+    """Celdas tras la etiqueta hasta un hueco de ≥3 columnas vacías (área de trabajo a la derecha)."""
+    start = next(i for i, v in enumerate(r) if v not in (None, "")) + 1
+    out, gap = [], 0
+    for v in r[start:]:
+        if v in (None, ""):
+            gap += 1
+            if gap >= 3 and out:
+                break
+            continue
+        gap = 0
+        out.append(v)
+    return out
+
+
 def parse_sheet(spec: Sheet, rows: list[list]) -> tuple[dict, list[int]]:
     """Devuelve ({clave_coop: [montos]}, fila_total) o lanza ValueError con el motivo."""
     first = None
@@ -193,7 +208,7 @@ def parse_sheet(spec: Sheet, rows: list[list]) -> tuple[dict, list[int]]:
         if not vals or not isinstance(vals[0], str):
             continue
         label = vals[0]
-        nums = [v for v in vals[1:] if is_number(v) or (isinstance(v, str) and v.strip() in ("---", "-"))]
+        nums = [v for v in row_block(r) if is_number(v) or (isinstance(v, str) and v.strip() in ("---", "-"))]
         nums = [0 if isinstance(v, str) else v for v in nums]
         if norm(label).startswith("total cooperativas"):
             if len(nums) != width:
