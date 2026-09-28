@@ -463,47 +463,53 @@ const EXPLORER_TREE = [
   {
     id: "group_bancos",
     type: "group",
-    label: "BANCA E INST. FINANCIERAS (CMF)",
+    label: "BANCA Y ESTADOS FINANCIEROS CMF",
     badges: [
-      { type: "entities", text: "40 Códigos", title: "Catálogo local: incluye instituciones históricas, filiales y agregados; cotejo registral pendiente" },
-      { type: "data", text: "REPO · Saldos cotejados", title: "Saldos CLP: 2.947 filas y 220 meses cotejados con B1 CMF; FX 220/220 con SII. RUT, nombres, perímetro y total_transado no están aprobados." }
+      { type: "entities", text: "40 códigos", title: "Catálogo histórico de instituciones; requiere validación independiente" },
+      { type: "data", text: "B1/B2/R1 mensual", title: "Cada período se incorpora solo si el gate de validación CMF pasa" }
     ],
-    status: "active",
+    status: "por_auditar",
+    open: true,
     children: [
       {
         id: "sector_bancos_comercial",
         type: "sector",
-        label: "Banca Comercial e Instituciones Supervisadas",
+        label: "Instituciones y reportes bancarios",
         sector: "bancos",
+        open: true,
         children: [
           {
             id: "cat_bancos_maestro",
             type: "circular",
             label: "Lista de Entidades",
-            badge: "40 Códigos",
+            badge: "40 códigos · Falta validar",
             badgeType: "entities",
-            status: "active",
+            status: "por_auditar",
             sector: "bancos",
+            open: false,
             chips: [
-              { label: "Identificación de instituciones", query: "SELECT codigo_institucion, rut, razon_social, nombre_fantasia FROM bancos_maestro ORDER BY codigo_institucion;" }
+              { label: "Bancos Comerciales Activos", query: "SELECT codigo_institucion, rut, nombre_fantasia, tipo_licencia, estado FROM bancos_maestro WHERE estado = 'Activo' ORDER BY codigo_institucion;" },
+              { label: "Historial de Bancos Fusionados / Cerrados", query: "SELECT codigo_institucion, nombre_fantasia, razon_social, estado FROM bancos_maestro WHERE estado != 'Activo' ORDER BY estado, nombre_fantasia;" }
             ],
             tables: [
               { id: "bancos_maestro", name: "bancos.lista_instituciones", rows: "40 códigos", file: "outputs/bancos/bancos_maestro.parquet" }
             ]
           },
           {
-            id: "circ_bancos_repos",
+            id: "cat_bancos_cmf_lineas",
             type: "circular",
-            label: "Saldos REPO · Cotejados con CMF",
-            badge: "Saldos cotejados",
+            label: "Estados Financieros CMF · B1/B2/R1",
+            badge: "Validación automática mensual",
             badgeType: "data",
             status: "active",
             sector: "bancos",
+            open: false,
             chips: [
-              { label: "Muestra de saldos (no flujo ni RUT histórico)", query: "SELECT periodo, codigo_institucion, repo_activo_mm_clp, repo_pasivo_mm_clp, repo_neto_mm_clp FROM bancos_repos_saldos_series ORDER BY periodo DESC LIMIT 25;" }
+              { label: "Muestra de líneas CMF (sin sumar importes)", query: "SELECT periodo, codigo_institucion, nombre_institucion_fuente, modelo_cmf, codigo_cuenta, glosa_cuenta, numero_fila_fuente, importes_fuente_raw FROM bancos_cmf_lineas ORDER BY periodo DESC, codigo_institucion, modelo_cmf, numero_fila_fuente LIMIT 100;" },
+              { label: "Cobertura publicada por período y modelo", query: "SELECT periodo, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_cmf_lineas GROUP BY periodo, modelo_cmf ORDER BY periodo DESC, modelo_cmf;" }
             ],
             tables: [
-              { id: "bancos_repos_saldos_series", name: "bancos.repos_saldos_series", rows: "2.947 registros", file: "outputs/bancos/bancos_repos_saldos_series.parquet" }
+              { id: "bancos_cmf_lineas", name: "bancos.cmf_lineas_b1_b2_r1", rows: "Períodos validados · actualización mensual", file: "", files: ["outputs/bancos/cmf_b1_b2_r1/manifest.json"] }
             ]
           }
         ]
