@@ -496,20 +496,37 @@ const EXPLORER_TREE = [
             ]
           },
           {
-            id: "cat_bancos_cmf_lineas",
+            id: "cat_bancos_cmf_balance",
             type: "circular",
-            label: "Estados Financieros CMF · B1/B2/R1",
-            badge: "Validación automática mensual",
+            label: "Estados de Situación Financiera CMF · B1/B2",
+            badge: "Publicación mensual validada",
             badgeType: "data",
             status: "active",
             sector: "bancos",
             open: false,
             chips: [
-              { label: "Muestra de líneas CMF (sin sumar importes)", query: "SELECT periodo, codigo_institucion, nombre_institucion_fuente, modelo_cmf, codigo_cuenta, glosa_cuenta, numero_fila_fuente, importes_fuente_raw FROM bancos_cmf_lineas ORDER BY periodo DESC, codigo_institucion, modelo_cmf, numero_fila_fuente LIMIT 100;" },
-              { label: "Cobertura publicada por período y modelo", query: "SELECT periodo, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_cmf_lineas GROUP BY periodo, modelo_cmf ORDER BY periodo DESC, modelo_cmf;" }
+              { label: "Muestra de líneas de balance B1/B2 (sin sumar importes)", query: "SELECT periodo, codigo_institucion, nombre_institucion_fuente, familia_archivo_fuente, modelo_cmf, codigo_cuenta, glosa_cuenta, rubro, linea, item, numero_fila_fuente, importes_fuente_raw FROM bancos_cmf_balance ORDER BY periodo DESC, codigo_institucion, familia_archivo_fuente, numero_fila_fuente LIMIT 100;" },
+              { label: "Cobertura de balance por período y modelo", query: "SELECT periodo, familia_archivo_fuente, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_cmf_balance GROUP BY periodo, familia_archivo_fuente, modelo_cmf ORDER BY periodo DESC, familia_archivo_fuente;" }
             ],
             tables: [
-              { id: "bancos_cmf_lineas", name: "bancos.cmf_lineas_b1_b2_r1", rows: "Períodos validados · actualización mensual", file: "", files: ["outputs/bancos/cmf_b1_b2_r1/manifest.json"] }
+              { id: "bancos_cmf_balance", name: "bancos.cmf_balance_b1_b2", rows: "Particiones validadas · B1/B2", file: "", files: ["outputs/bancos/cmf_b1_b2_r1/manifest.json"] }
+            ]
+          },
+          {
+            id: "cat_bancos_cmf_resultados",
+            type: "circular",
+            label: "Estado de Resultados CMF · R1",
+            badge: "Publicación mensual validada",
+            badgeType: "data",
+            status: "active",
+            sector: "bancos",
+            open: false,
+            chips: [
+              { label: "Muestra de líneas de resultados R1 (sin sumar importes)", query: "SELECT periodo, codigo_institucion, nombre_institucion_fuente, familia_archivo_fuente, modelo_cmf, codigo_cuenta, glosa_cuenta, rubro, linea, item, numero_fila_fuente, importes_fuente_raw FROM bancos_cmf_resultados ORDER BY periodo DESC, codigo_institucion, numero_fila_fuente LIMIT 100;" },
+              { label: "Cobertura de resultados por período", query: "SELECT periodo, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_cmf_resultados GROUP BY periodo, modelo_cmf ORDER BY periodo DESC;" }
+            ],
+            tables: [
+              { id: "bancos_cmf_resultados", name: "bancos.cmf_resultados_r1", rows: "Particiones validadas · R1", file: "", files: ["outputs/bancos/cmf_b1_b2_r1/manifest.json"] }
             ]
           }
         ]

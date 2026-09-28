@@ -61,7 +61,8 @@ const SEMANTIC_VIEWS = [
 
   // BANCA: catálogo institucional y líneas CMF publicadas solo tras pasar el gate mensual.
   { name: "bancos_maestro", file: "outputs/bancos/bancos_maestro.parquet" },
-  { name: "bancos_cmf_lineas", manifest: "outputs/bancos/cmf_b1_b2_r1/manifest.json" },
+  { name: "bancos_cmf_balance", manifest: "outputs/bancos/cmf_b1_b2_r1/manifest.json", where: "familia_archivo_fuente IN ('B1', 'B2')" },
+  { name: "bancos_cmf_resultados", manifest: "outputs/bancos/cmf_b1_b2_r1/manifest.json", where: "familia_archivo_fuente = 'R1'" },
 
   // MACROECONOMIA & TASAS (BCCh SIETE)
   { name: "macro_tasas_rendimientos", file: "outputs/macro/macro_tasas_rendimientos.parquet" },
@@ -250,7 +251,8 @@ class DuckDBClient {
         const source = files.length === 1
           ? `read_parquet('${safePath(files[0])}')`
           : `read_parquet([${files.map((f) => `'${safePath(f)}'`).join(", ")}])`;
-        await this.conn.query(`CREATE OR REPLACE VIEW ${view.name} AS SELECT * FROM ${source};`);
+        const filter = view.where ? ` WHERE ${view.where}` : "";
+        await this.conn.query(`CREATE OR REPLACE VIEW ${view.name} AS SELECT * FROM ${source}${filter};`);
       } catch (err) {
         // Una vista rota se declara como no disponible: la consulta que la use
         // fallará visiblemente en lugar de devolver datos inventados.
