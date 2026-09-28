@@ -157,13 +157,6 @@ const DATA_VIEWER_CATALOG = [
     ]
   },
   {
-    group: "Retail Financiero (CMF)",
-    tables: [
-      { id: "retail_financiero_maestro", name: "retail_financiero.lista_entidades (17 entidades)" },
-      { id: "retail_financiero_balances", name: "retail_financiero.balances (190 registros)" }
-    ]
-  },
-  {
     group: "Sistemas de Pago (BCCh / CMF)",
     tables: [
       { id: "sistemas_pago_maestro", name: "sistemas_pago.lista_entidades (12 entidades)" },

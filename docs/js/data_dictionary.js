@@ -1400,66 +1400,6 @@ const DATA_DICTIONARY = [
     ]
   },
   // =========================================================================
-  // RETAIL FINANCIERO Y EMISORES NO BANCARIOS (CMF)
-  // =========================================================================
-  {
-    id: "retail_financiero_maestro",
-    name: "retail_financiero.lista_entidades",
-    viewName: "retail_financiero_maestro",
-    sector: "retail_financiero",
-    sectorLabel: "Retail Financiero",
-    norma: "CMF (Registros RVEMI, TCEEM, TPEEM, BCSAG)",
-    corte: "Oficial CMF 2026",
-    frescura: "Catálogo Vigente",
-    modo: "Automático",
-    ultimaActualizacion: "2026-09-23",
-    registros: "17 entidades",
-    descripcion: "Catálogo maestro oficial de los emisores no bancarios de tarjetas de crédito y prepago, sociedades de apoyo al giro y matrices cotizadas de retail financiero supervisadas por la CMF. Incluye Falabella, Cencosud, Ripley, Hites, Tricot, abcvisa, Tenpo, Tapp Los Andes y Prepago Los Héroes.",
-    origen: "Comisión para el Mercado Financiero (CMF) — Registros de Entidades Supervisadas.",
-    columnas: [
-      { name: "rut", type: "BIGINT", role: "PK", significado: "Rol Único Tributario numérico de la sociedad.", contable: "No aplica", interpretacion: "Identificador tributario corporativo único del emisor/matriz." },
-      { name: "dv", type: "VARCHAR", role: "Dimensión", significado: "Dígito verificador calculado bajo algoritmo Módulo 11.", contable: "No aplica", interpretacion: "Control de integridad tributaria." },
-      { name: "rut_completo", type: "VARCHAR", role: "Dimensión", significado: "RUT estándar con puntos y guion (ej: 90.749.000-9).", contable: "No aplica", interpretacion: "Formato oficial para consultas regulatorias." },
-      { name: "razon_social", type: "VARCHAR", role: "Dimensión", significado: "Nombre legal formal de la corporación o sociedad anónima.", contable: "No aplica", interpretacion: "Denominación legal inscrita en el registro público de la CMF." },
-      { name: "nombre_comercial", type: "VARCHAR", role: "Dimensión", significado: "Marca comercial o nombre de fantasía ante clientes e inversionistas.", contable: "No aplica", interpretacion: "Identidad comercial del negocio de retail y tarjetas." },
-      { name: "tipo_entidad_cmf", type: "VARCHAR", role: "Dimensión", significado: "Tipo de registro en CMF: RVEMI (Emisores de Valores), TCEEM (Emisor Tarjetas Crédito), TPEEM (Emisor Prepago), BCSAG (Apoyo Giro), TPOPE (Operador Tarjetas).", contable: "No aplica", interpretacion: "Marco regulatorio y habilitación operativa conferida por el supervisor." },
-      { name: "segmento_mercado", type: "VARCHAR", role: "Dimensión", significado: "Clasificación de industria: Retail Departamental y Financiero, Especialistas en Prepago Digital, Farmacias/Especialistas.", contable: "No aplica", interpretacion: "Agrupación analítica del modelo de negocio." },
-      { name: "grupo_controlador", type: "VARCHAR", role: "Dimensión", significado: "Conglomerado económico o grupo empresarial controlador.", contable: "No aplica", interpretacion: "Vínculo de propiedad y control societario." },
-      { name: "estado_vigencia", type: "VARCHAR", role: "Dimensión", significado: "Condición en el registro oficial CMF: 'Vigente'.", contable: "No aplica", interpretacion: "Filtro para entidades activas en el mercado financiero." },
-      { name: "domicilio_casa_matriz", type: "VARCHAR", role: "Dimensión", significado: "Dirección de la sede corporativa central.", contable: "No aplica", interpretacion: "Ubicación del domicilio legal corporativo." },
-      { name: "comuna", type: "VARCHAR", role: "Dimensión", significado: "Comuna de la casa matriz.", contable: "No aplica", interpretacion: "Localización geográfica de la sede." },
-      { name: "region", type: "VARCHAR", role: "Dimensión", significado: "Región político-administrativa chilena.", contable: "No aplica", interpretacion: "Jurisdicción regional." },
-      { name: "cmf_url", type: "VARCHAR", role: "Dimensión", significado: "Enlace directo al expediente institucional en el portal de la CMF.", contable: "No aplica", interpretacion: "Ficha oficial de fiscalizado en el regulador." }
-    ]
-  },
-  {
-    id: "retail_financiero_balances",
-    name: "retail_financiero.balances",
-    viewName: "retail_financiero_balances",
-    sector: "retail_financiero",
-    sectorLabel: "Retail Financiero",
-    norma: "Norma Internacional de Información Financiera (IFRS) / CMF",
-    corte: "Serie Trimestral Histórica (2018-2026)",
-    frescura: "Actualización Trimestral CMF",
-    modo: "Automático",
-    ultimaActualizacion: "2026-09-23",
-    registros: "190 registros",
-    descripcion: "Serie histórica de balances consolidados y estados de resultados bajo norma IFRS correspondientes a las matrices cotizadas de retail financiero (Falabella, Cencosud, Ripley, Hites, Tricot, ABC). Monitorea solvencia, dimensión de activos, efectivo y caja disponible, endeudamiento total y utilidad neta con identidad contable 100% exacta.",
-    origen: "Comisión para el Mercado Financiero (CMF) — Estados Financieros Consolidados IFRS Trimestrales.",
-    columnas: [
-      { name: "rut", type: "BIGINT", role: "FK", significado: "RUT de la matriz de retail financiero.", contable: "No aplica", interpretacion: "Llave foránea vinculada a retail_financiero_maestro." },
-      { name: "periodo", type: "VARCHAR", role: "Dimensión", significado: "Periodo contable trimestral en formato AAAA-MM.", contable: "No aplica", interpretacion: "Fecha de corte del reporte financiero IFRS." },
-      { name: "razon_social", type: "VARCHAR", role: "Dimensión", significado: "Razón social formal de la compañía informante.", contable: "No aplica", interpretacion: "Entidad corporativa matriz." },
-      { name: "total_activos_m_clp", type: "DOUBLE", role: "Métrica", significado: "Total de activos consolidados de la compañía en millones de CLP.", contable: "Total Activos IFRS", interpretacion: "Dimensión patrimonial total de la corporación de retail y financiero." },
-      { name: "total_pasivos_m_clp", type: "DOUBLE", role: "Métrica", significado: "Total de pasivos y obligaciones financieras consolidadas en millones de CLP.", contable: "Total Pasivos IFRS", interpretacion: "Nivel de apalancamiento y endeudamiento total." },
-      { name: "patrimonio_neto_m_clp", type: "DOUBLE", role: "Métrica", significado: "Patrimonio neto total atribuible a los accionistas en millones de CLP.", contable: "Patrimonio Neto IFRS", interpretacion: "Base de solvencia patrimonial corporativa." },
-      { name: "efectivo_y_equivalentes_m_clp", type: "DOUBLE", role: "Métrica", significado: "Caja, depósitos líquidos y equivalentes al efectivo en millones de CLP.", contable: "Efectivo y Equivalentes", interpretacion: "Colchón de liquidez disponible para operaciones y vencimientos." },
-      { name: "ganancia_perdida_ejercicio_m_clp", type: "DOUBLE", role: "Métrica", significado: "Resultado neto del periodo (ganancia o pérdida consolidada) en millones de CLP.", contable: "Utilidad Neta IFRS", interpretacion: "Rentabilidad contable final generada por la operación global." },
-      { name: "total_activos_m_usd", type: "DOUBLE", role: "Métrica", significado: "Total de activos convertido a millones de USD según tipo de cambio de cierre BCCh.", contable: "Activos USD", interpretacion: "Comparabilidad internacional del tamaño corporativo." },
-      { name: "patrimonio_neto_m_usd", type: "DOUBLE", role: "Métrica", significado: "Patrimonio neto convertido a millones de USD.", contable: "Patrimonio USD", interpretacion: "Solvencia en divisa dura para inversionistas extranjeros." }
-    ]
-  },
-  // =========================================================================
   // FINTECH & FINANZAS ABIERTAS (Ley N° 21.521 / CMF)
   // =========================================================================
   {
@@ -1786,7 +1726,7 @@ const DATA_DICTIONARY = [
     modo: "Automático Streaming RAM CMF",
     ultimaActualizacion: "2026-09-24",
     registros: "7 entidades",
-    descripcion: "Catastro maestro y directorio institucional de las Cooperativas de Ahorro y Crédito (CAC) de importancia sistémica supervisadas por la CMF. Incluye Coopeuch, Oriencoop, Capual, Ahorrocoop, Detacoop, Coonfia y Coocretal con RUT canónico validado bajo Módulo 11.",
+    descripcion: "Catastro maestro y directorio institucional de las Cooperativas de Ahorro y Crédito (CAC) de importancia sistémica supervisadas por la CMF. Incluye Coopeuch, Oriencoop, Capual, Ahorrocoop, Detacoop, Coonfia y Coocretal con RUT canónico validado bajo Módulo 11. Criterio de inclusión: cooperativas fiscalizadas por la CMF (art. 87 Ley General de Cooperativas, patrimonio sobre UF 400.000), según la nómina vigente CMF. Cooperativas bajo supervisión DAES (p. ej. Norte Grande, Financoop) no se incluyen porque no reportan estados financieros comparables a la CMF.",
     origen: "Comisión para el Mercado Financiero (CMF) — Nómina de Cooperativas de Ahorro y Crédito Fiscalizadas.",
     columnas: [
       { name: "rut", type: "VARCHAR", role: "PK", significado: "Rol Único Tributario canónico con guión y dígito verificador.", contable: "No aplica", interpretacion: "Identificador institucional único para interoperabilidad con el sistema financiero." },
@@ -2077,7 +2017,6 @@ class DataDictionaryController {
             <button class="dict-filter-btn ${this.currentSector === 'cajas_compensacion' ? 'active' : ''}" data-sec="cajas_compensacion">Cajas de Compensación</button>
             <button class="dict-filter-btn ${this.currentSector === 'agf' ? 'active' : ''}" data-sec="agf">AGF</button>
             <button class="dict-filter-btn ${this.currentSector === 'sistemas_pago' ? 'active' : ''}" data-sec="sistemas_pago">Sistemas de Pago</button>
-            <button class="dict-filter-btn ${this.currentSector === 'retail_financiero' ? 'active' : ''}" data-sec="retail_financiero">Retail Financiero</button>
             <button class="dict-filter-btn ${this.currentSector === 'fintech' ? 'active' : ''}" data-sec="fintech">FinTech</button>
           </div>
         </div>

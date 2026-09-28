@@ -80,8 +80,6 @@ class ExportModalController {
       ccaf_colocaciones_credito_social: "outputs/cajas_compensacion/ccaf_colocaciones_credito_social.parquet",
       agf_maestro: "outputs/agf/agf_maestro.parquet",
       agf_balance_resumen: "outputs/agf/agf_balance_resumen.parquet",
-      retail_financiero_maestro: "outputs/retail_financiero/retail_financiero_maestro.parquet",
-      retail_financiero_balances: "outputs/retail_financiero/retail_financiero_balances.parquet",
       sistemas_pago_maestro: "outputs/sistemas_pago/sistemas_pago_maestro.parquet",
       sistemas_pago_balances: "outputs/sistemas_pago/sistemas_pago_balances.parquet",
       sistemas_pago_estadisticas_bcch: "outputs/sistemas_pago/sistemas_pago_estadisticas_bcch.parquet",
