@@ -195,5 +195,60 @@ class DiscoverTests(unittest.TestCase):
         self.assertTrue(got["2017-01"].endswith("articles-44433_recurso_1.xls?ts=2"))
 
 
+class IncrementalTests(unittest.TestCase):
+    def test_pendientes_skips_published_unless_completo(self):
+        disp = ["2026-05", "2026-06", "2026-07", "2026-08"]
+        self.assertEqual(x.pendientes(disp, {"2026-05", "2026-06", "2026-07"}, "2017-01", None, False), ["2026-08"])
+        self.assertEqual(x.pendientes(disp, {"2026-05", "2026-06", "2026-07", "2026-08"}, "2017-01", None, False), [])
+        self.assertEqual(x.pendientes(disp, {"2026-05"}, "2017-01", None, True), disp)
+
+    def _fake_rows(self, period, n=2):
+        return [{"id": f"{period}:1-9:activos:{i}", "periodo": period, "fecha_corte": period + "-28", "rut": "1-9",
+                 "cooperativa": "X", "estado": "balance", "seccion": "activos", "orden": i, "codigo_concepto": str(i),
+                 "glosa": "g", "nivel": 1, "monto_mm_clp": i, "base_monto": "saldo al cierre",
+                 "fuente_url": "u", "sha256_fuente": "s"} for i in range(1, n + 1)]
+
+    def test_run_downloads_only_new_months_and_appends(self):
+        import json, tempfile
+        from pathlib import Path
+        from unittest import mock
+        import pyarrow as pa, pyarrow.parquet as pq
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            pq.write_table(pa.Table.from_pylist(self._fake_rows("2026-06") + self._fake_rows("2026-07")), out / "estados.parquet")
+            (out / "validacion.json").write_text(json.dumps({"periodos": [
+                {"periodo": "2026-06", "status": "passed", "registros": 2},
+                {"periodo": "2026-07", "status": "passed", "registros": 2}]}))
+            descargados = []
+            sources = {p: "https://cmf/" + p for p in ("2026-06", "2026-07", "2026-08")}
+            import bancos.scripts.inspect_cmf_bank_sample as insp
+            with mock.patch.object(x, "OUT_DIR", out), \
+                 mock.patch.object(x, "periodos_publicados", lambda original=x.periodos_publicados: original(out)), \
+                 mock.patch.object(x, "discover", lambda page: sources), \
+                 mock.patch.object(insp, "fetch", lambda url, limit: descargados.append(url) or b"x"), \
+                 mock.patch.object(x, "read_workbook", lambda blob, url: {}), \
+                 mock.patch.object(x, "parse_workbook", lambda sheets: {"_hojas_ignoradas": []}), \
+                 mock.patch.object(x, "validate_period", lambda parsed: {}), \
+                 mock.patch.object(x, "to_rows", lambda period, parsed, url, sha: self._fake_rows(period)):
+                self.assertEqual(x.run(True, "2017-01", None), 0)
+            self.assertEqual(descargados, [x.INDEX, "https://cmf/2026-08"])
+            t = pq.read_table(out / "estados.parquet")
+            self.assertEqual(sorted(set(t.column("periodo").to_pylist())), ["2026-06", "2026-07", "2026-08"])
+            self.assertEqual(t.num_rows, 6)
+            val = json.loads((out / "validacion.json").read_text())
+            self.assertEqual(val["cobertura"], {"desde": "2026-06", "hasta": "2026-08", "periodos": 3})
+
+    def test_periodos_publicados_reads_parquet_and_validation(self):
+        import json, tempfile
+        from pathlib import Path
+        import pyarrow as pa, pyarrow.parquet as pq
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            self.assertEqual(x.periodos_publicados(out), set())
+            pq.write_table(pa.Table.from_pylist(self._fake_rows("2026-06") + self._fake_rows("2026-07")), out / "estados.parquet")
+            (out / "validacion.json").write_text(json.dumps({"periodos": [{"periodo": "2026-06", "status": "passed"}]}))
+            self.assertEqual(x.periodos_publicados(out), {"2026-06"})
+
+
 if __name__ == "__main__":
     unittest.main()

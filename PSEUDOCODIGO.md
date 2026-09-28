@@ -108,9 +108,12 @@ publish(): copiar solo si difiere + actualizar data_manifest.json
 
 ## 3. Bancos (`bancos/`)
 
-### 3.1 Publicación mensual B1/B2/R1 (automático, `publish_cmf_bank_period.py`)
+### 3.1 Publicación incremental B1/B2/R1 (automático, `publish_cmf_bank_period.py`)
 ```
-Workflow bancos_cmf_mensual.yml: día 15 de cada mes 13:00 UTC → tests → publish
+Workflow bancos_cmf_mensual.yml: días 1, 11 y 21 13:00 UTC → tests → publish --catch-up (incremental)
+# Meses ya en manifest se saltan sin descargar. find_source lanza SourceNotPublished si la CMF aún no
+# publica el mes pendiente: si han pasado ≤ DIAS_MAX_ESPERA (75) días desde el cierre → aviso y salida 0
+# ("Nada nuevo"); si pasaron más → error (la CMF cambió el índice o el mes se perdió).
 
 main(period?):
     period = select_period(pedido, manifest, hoy)
@@ -302,15 +305,19 @@ pipelines/manual/   ingest_manual_notes: plantillas CSV de notas transcritas →
 
 ## 8b. Cooperativas — Reporte Financiero CMF (automático, `extract_cmf_coop_report.py`)
 ```
-Workflow cooperativas_cmf_mensual.yml: día 16 14:00 UTC → tests → extract --publicar → commit
+Workflow cooperativas_cmf_mensual.yml: días 2, 12 y 22 14:00 UTC → tests → extract --publicar (incremental)
+         → commit solo si hay meses nuevos → deploy Pages (commits de GITHUB_TOKEN no disparan pages.yml)
 Fuente: índice CMF w4-propertyvalue-28918 (una planilla xls/xlsx por mes). Formato 2017-01+ (antes: otro plan de cuentas → excluido)
 
 Sheet(spec): hoja + frases clave de cabecera + N columnas numéricas + identidades internas
    hojas: "Activos Cooperativas", "Pasivos Cooperativas", "Estado Resultados Coop", "Margen Interes - Comisiones"
 
-run(publicar, desde=2017-01, hasta?):
+run(publicar, desde=2017-01, hasta?, completo=False):
     sources = discover(índice)                   # {AAAA-MM: url}
-    por período:
+    ya      = periodos_publicados()              # en estados.parquet Y 'passed' en validacion.json
+    periods = pendientes(sources, ya, desde, hasta, completo)   # --completo = reconstrucción total
+    si no hay periods → "Nada nuevo", salida 0 (no escribe)
+    por período pendiente:
         blob   = fetch(url, MAX_FILE)
         sheets = read_workbook(blob)             # openpyxl (.xlsx) | xlrd (.xls)
         parsed = parse_workbook(sheets):
@@ -323,7 +330,9 @@ run(publicar, desde=2017-01, hasta?):
             ✗ margen/comisiones distintos entre hojas
         rows = to_rows(period, parsed, url, sha256)  # 1 fila por (periodo, cooperativa, estado, cuenta)
         si error → failures (se sigue para reportar todo)
-    ✗ si hay CUALQUIER período fallido → no publica nada (serie en bloque, sin particiones a medias)
+    ✗ si hay CUALQUIER período fallido → no publica nada (sin escrituras a medias)
+    incremental: tabla vieja + filas nuevas (cast al esquema viejo), ✗ ids duplicados, ordenar, tmp → replace;
+                 validacion.json fusiona los períodos nuevos y recalcula cobertura
     → docs/outputs/cooperativas/cmf_reporte_financiero/estados.parquet (zstd) + validacion.json
        Estado: 115 períodos 2017-01 → 2026-07, 52.325 registros, MM$
 Web: vistas cooperativas_cmf_balance (estado='balance') y cooperativas_cmf_resultados (estado='resultados')
@@ -395,8 +404,8 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 | Workflow | Cron (UTC) | Publica | Qué hace |
 |---|---|---|---|
 | macro.yml | diario 10:00 | artifact (PR humano) | daily_macro con cache checkpoint |
-| bancos_cmf_mensual.yml | día 15 13:00 | **sí** (commit) | tests + publish_cmf_bank_period |
-| cooperativas_cmf_mensual.yml | día 16 14:00 | **sí** (commit) | tests + extract_cmf_coop_report --publicar |
+| bancos_cmf_mensual.yml | días 1, 11, 21 13:00 | **sí** (commit + Pages) | tests + publish_cmf_bank_period --catch-up (incremental) |
+| cooperativas_cmf_mensual.yml | días 2, 12, 22 14:00 | **sí** (commit + Pages) | tests + extract_cmf_coop_report --publicar (incremental) |
 | web_audit.yml | push a docs/** | no | audit_navigation + audit_web_full (anotaciones) |
 | bancos_probe_historia.yml / coop_probe.yml / retail_probe_ifrs.yml | manual | no | sondas de formato |
 | bancos_repo.yml | diario 11:00 | no | laboratorio REPO |
