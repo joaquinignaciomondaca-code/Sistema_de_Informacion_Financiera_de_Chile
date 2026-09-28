@@ -21,7 +21,8 @@ on:
         default: '100'
         type: string
   schedule:
-    - cron: '20 12 * * *'
+    # 3 veces al mes (la fuente IFRS CMF es trimestral). Los trimestres ya descargados se saltan.
+    - cron: '20 12 3,13,23 * *'
 
 permissions:
   contents: write
