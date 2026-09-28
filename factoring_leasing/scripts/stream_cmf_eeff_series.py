@@ -298,6 +298,7 @@ def process_quarter_ephemeral(quarter_str, target_entities, rates_map):
     return extracted_records
 
 def run_cmf_streaming_pipeline(quarters_list=None):
+    raise RuntimeError("Publicación de EEFF Factoring/Leasing suspendida: solo se conserva Lista de Entidades. Reextraer y auditar antes de publicar.")
     """
     Ejecuta el pipeline de streaming para la lista de trimestres especificados
     y realiza el merge / upsert en factoring_leasing_balance_resumen.

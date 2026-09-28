@@ -1,8 +1,10 @@
 """
-Sincronizador en caliente: vuelca el estado actual del checkpoint a los Parquets y JSONs finales.
-Permite visualizar y consultar en DuckDB/Web los datos que ya van siendo extraidos en vivo.
+Sincronizador en caliente: vuelca los contratos REPO históricos del checkpoint
+a Parquet y JSON publicados. La carátula histórica se omite por defecto.
 """
 
+# La carátula histórica se retiró del sitio el 2026-09-26; sólo se exporta
+# en uso de laboratorio con FFMM_PUBLICAR_CARATULA_HISTORICO=1.
 import os
 import json
 import pandas as pd
@@ -13,6 +15,7 @@ DATA_DIR = os.path.join(BASE_DIR, "ffmm", "data")
 CHECKPOINT_PATH = os.path.join(DATA_DIR, "checkpoint_historico_eeff.json")
 
 def sync():
+    publicar_caratula = os.environ.get("FFMM_PUBLICAR_CARATULA_HISTORICO") == "1"
     if not os.path.exists(CHECKPOINT_PATH):
         print("No se encontro checkpoint.")
         return
@@ -28,9 +31,11 @@ def sync():
     repos_all = d.get('repos', [])
     processed_count = len(d.get('processed_keys', []))
 
+    if not publicar_caratula:
+        print("  (Carátula histórica omitida: retirada del sitio el 2026-09-26.)")
     print(f"Sincronizando estado: {processed_count} tareas, {len(eeff_all)} EEFF, {len(repos_all)} REPOs.")
 
-    if eeff_all:
+    if eeff_all and publicar_caratula:
         df_eeff = pd.DataFrame(eeff_all).drop_duplicates(subset=['run_fondo', 'periodo'])
         df_eeff = df_eeff.sort_values(['anio', 'run_fondo']).reset_index(drop=True)
         eeff_parquet = os.path.join(OUTPUT_DIR, "ffmm_caratula_eeff_historico.parquet")

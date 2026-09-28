@@ -4,6 +4,8 @@
 ==============================================================================================
 """
 
+# RETIRADO DEL SITIO (2026-09-26): la carátula EEFF de FI salió del visor y ya no se publica;
+# el bloque de auditoría contable queda como herramienta de laboratorio.
 import os
 import sys
 import pandas as pd

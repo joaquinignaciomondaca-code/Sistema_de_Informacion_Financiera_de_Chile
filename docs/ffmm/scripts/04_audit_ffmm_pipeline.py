@@ -9,6 +9,8 @@ Salida:
   - Reporte consolidado de auditoria
 """
 
+# RETIRADO DEL SITIO (2026-09-26): audita las salidas 2024 (carátula y repos) ya retiradas
+# del visor; se mantiene como herramienta de laboratorio para la auditoría pendiente contra la CMF.
 import os
 import sys
 import pandas as pd

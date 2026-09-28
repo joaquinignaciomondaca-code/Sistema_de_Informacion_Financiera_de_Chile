@@ -433,16 +433,26 @@ def main():
 
     print("\nProcesamiento masivo finalizado. Generando Parquets y JSONs finales...")
 
+    # La carátula histórica se retiró del sitio el 2026-09-26 (no se reconcilió
+    # contra la fuente y discrepaba con la extracción 2024). Se sigue calculando
+    # para el resumen en pantalla, pero no se publica. Para volver a exportarla:
+    #   FFMM_PUBLICAR_CARATULA_HISTORICO=1 python 03b_extract_ffmm_historico.py
+    publicar_caratula = os.environ.get("FFMM_PUBLICAR_CARATULA_HISTORICO") == "1"
+
+    df_eeff = None
     if eeff_all:
         df_eeff = pd.DataFrame(eeff_all).drop_duplicates(subset=['run_fondo', 'periodo'])
         df_eeff = df_eeff.sort_values(['anio', 'run_fondo']).reset_index(drop=True)
-        eeff_parquet = os.path.join(OUTPUT_DIR, "ffmm_caratula_eeff_historico.parquet")
-        df_eeff.to_parquet(eeff_parquet, index=False)
-        print(f"Guardado Parquet EEFF Historico: {eeff_parquet} ({len(df_eeff)} registros, {os.path.getsize(eeff_parquet)/1024:.1f} KB)")
-        eeff_json = os.path.join(OUTPUT_DIR, "ffmm_caratula_eeff_historico.json")
-        with open(eeff_json, 'w', encoding='utf-8') as f:
-            json.dump(df_eeff.to_dict(orient='records'), f, ensure_ascii=False, indent=2)
-        print(f"Guardado JSON EEFF Historico: {eeff_json} ({os.path.getsize(eeff_json)/1024:.1f} KB)")
+        if publicar_caratula:
+            eeff_parquet = os.path.join(OUTPUT_DIR, "ffmm_caratula_eeff_historico.parquet")
+            df_eeff.to_parquet(eeff_parquet, index=False)
+            print(f"Guardado Parquet EEFF Historico: {eeff_parquet} ({len(df_eeff)} registros, {os.path.getsize(eeff_parquet)/1024:.1f} KB)")
+            eeff_json = os.path.join(OUTPUT_DIR, "ffmm_caratula_eeff_historico.json")
+            with open(eeff_json, 'w', encoding='utf-8') as f:
+                json.dump(df_eeff.to_dict(orient='records'), f, ensure_ascii=False, indent=2)
+            print(f"Guardado JSON EEFF Historico: {eeff_json} ({os.path.getsize(eeff_json)/1024:.1f} KB)")
+        else:
+            print("Carátula histórica calculada pero NO publicada (retirada del sitio; ver comentario arriba).")
 
     if repos_all:
         df_repos = pd.DataFrame(repos_all).drop_duplicates(subset=['run_fondo', 'periodo', 'nemotecnico', 'saldo_al_cierre_m_clp', 'fecha_compra'])
