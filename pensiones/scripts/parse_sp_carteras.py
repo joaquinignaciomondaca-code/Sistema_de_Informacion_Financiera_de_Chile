@@ -18,10 +18,14 @@ import xml.etree.ElementTree as ET
 from concurrent.futures import ProcessPoolExecutor
 import pandas as pd
 import numpy as np
+from pathlib import Path as _Path
+import os as _os
+_ROOT = _Path(__file__).resolve().parents[2]  # raíz del repo
+_RESPALDO = _Path(_os.environ.get('MFC_RESPALDO_DIR', _Path.home().joinpath('Desktop', 'Respaldo_BCCH')))
 
-RAW_DIR = r"C:\Users\joaqu\.gemini\antigravity\scratch\bcch_market_monitor\pensiones\raw"
-OUTPUT_DIR = r"C:\Users\joaqu\.gemini\antigravity\scratch\bcch_market_monitor\pensiones\outputs"
-DOCS_OUTPUT_DIR = r"C:\Users\joaqu\.gemini\antigravity\scratch\bcch_market_monitor\docs\outputs\pensiones"
+RAW_DIR = str(_ROOT.joinpath('pensiones', 'raw'))
+OUTPUT_DIR = str(_ROOT.joinpath('pensiones', 'outputs'))
+DOCS_OUTPUT_DIR = str(_ROOT.joinpath('docs', 'outputs', 'pensiones'))
 
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 os.makedirs(DOCS_OUTPUT_DIR, exist_ok=True)

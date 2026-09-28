@@ -448,7 +448,7 @@ const ERD_TABLES = [
     w: 220,
     h: 145,
     rows: "1.156 fondos",
-    file: "ffmm/circular_1333_cartera/outputs/maestro_fondos_mutuos.parquet",
+    file: "outputs/ffmm/maestro_fondos_mutuos.parquet",
     cols: [
       { name: "id", pk: true, type: "VARCHAR" },
       { name: "run_fondo", type: "VARCHAR" },
@@ -466,7 +466,7 @@ const ERD_TABLES = [
     w: 220,
     h: 150,
     rows: "Futuros FFMM",
-    file: "ffmm/circular_1333_cartera/outputs/ffmm_futu_normalizado.parquet",
+    file: "outputs/ffmm/ffmm_futu_normalizado.parquet",
     cols: [
       { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
@@ -486,7 +486,7 @@ const ERD_TABLES = [
     w: 220,
     h: 150,
     rows: "Opciones FFMM",
-    file: "ffmm/circular_1333_cartera/outputs/ffmm_opci_normalizado.parquet",
+    file: "outputs/ffmm/ffmm_opci_normalizado.parquet",
     cols: [
       { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
@@ -506,7 +506,7 @@ const ERD_TABLES = [
     w: 220,
     h: 145,
     rows: "1.129 fondos",
-    file: "fi/cartera_inversiones/outputs/maestro_fondos_inversion.parquet",
+    file: "outputs/fi/maestro_fondos_inversion.parquet",
     cols: [
       { name: "id", pk: true, type: "VARCHAR" },
       { name: "run_fondo", type: "VARCHAR" },
@@ -524,7 +524,7 @@ const ERD_TABLES = [
     w: 220,
     h: 155,
     rows: "834k activos",
-    file: "fi/cartera_inversiones/outputs/fi_cartera_nacional.parquet",
+    file: "outputs/fi/fi_cartera_nacional.parquet",
     cols: [
       { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
@@ -545,7 +545,7 @@ const ERD_TABLES = [
     w: 220,
     h: 155,
     rows: "67.4k activos",
-    file: "fi/cartera_inversiones/outputs/fi_cartera_extranjera.parquet",
+    file: "outputs/fi/fi_cartera_extranjera.parquet",
     cols: [
       { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
@@ -566,7 +566,7 @@ const ERD_TABLES = [
     w: 220,
     h: 145,
     rows: "3.6k contratos",
-    file: "fi/cartera_inversiones/outputs/fi_futuros_forward.parquet",
+    file: "outputs/fi/fi_futuros_forward.parquet",
     cols: [
       { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
@@ -586,7 +586,7 @@ const ERD_TABLES = [
     w: 220,
     h: 165,
     rows: "Pactos CMF",
-    file: "fi/repos/outputs/fi_repos_vrc_crv.parquet",
+    file: "outputs/fi/fi_repos_vrc_crv.parquet",
     cols: [
       { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },

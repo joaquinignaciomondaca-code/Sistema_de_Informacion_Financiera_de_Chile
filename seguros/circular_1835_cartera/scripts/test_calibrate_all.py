@@ -2,8 +2,12 @@
 import os, zipfile, re
 import pandas as pd
 import numpy as np
+from pathlib import Path as _Path
+import os as _os
+_ROOT = _Path(__file__).resolve().parents[3]  # raíz del repo
+_RESPALDO = _Path(_os.environ.get('MFC_RESPALDO_DIR', _Path.home().joinpath('Desktop', 'Respaldo_BCCH')))
 
-SAMPLE_ZIP = r'C:\Users\joaqu\.gemini\antigravity\scratch\bcch_market_monitor\seguros\circular_1835_cartera\scratch\sample_202406_vida.zip'
+SAMPLE_ZIP = str(_ROOT.joinpath('seguros', 'circular_1835_cartera', 'scratch', 'sample_202406_vida.zip'))
 DOLLAR_2 = chr(36) * 2
 
 def audit_acciones(z):
