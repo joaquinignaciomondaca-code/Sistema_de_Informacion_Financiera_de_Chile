@@ -3,8 +3,8 @@
   "status": "ok",
   "source": "CMF · Legislación y normativa",
   "source_url": "https://www.cmfchile.cl/institucional/legislacion_normativa/normativa2.php",
-  "generated_at": "2026-09-28T20:15:14Z",
-  "last_checked_at": "2026-09-28T20:15:14Z",
+  "generated_at": "2026-09-28T20:21:39Z",
+  "last_checked_at": "2026-09-28T20:21:39Z",
   "last_detected_at": "2026-09-28T20:15:14Z",
   "history_days": 365,
   "sector_labels": {
@@ -26,9 +26,9 @@
   },
   "run_summary": {
     "listed_records": 78,
-    "new_or_changed_records": 78,
-    "pdf_checks": 78,
-    "gemini_calls": 10,
+    "new_or_changed_records": 0,
+    "pdf_checks": 1,
+    "gemini_calls": 1,
     "pending_analysis": 78,
     "unassigned_records": 78
   },
@@ -47,15 +47,15 @@
       "source_fingerprint": "6249373902ca2c4f1d7d97821cc4c93f1ae26b40731a8f733d03d5a30d99f99f",
       "document_sha256": "04e64240b840bcc9080d609f14ca57ced8d079c1d461bd179886025f1a7066e4",
       "pdf_status": "texto_extraible",
-      "pdf_checked_at": "2026-09-28T20:15:14Z",
+      "pdf_checked_at": "2026-09-28T20:21:39Z",
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 23 Sep 2026 20:09:18 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
         "HTTP 403"
@@ -85,14 +85,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 15 Sep 2026 12:19:22 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "HTTP 403"
+        "HTTP 403",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -119,14 +120,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 11 Sep 2026 18:40:42 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "HTTP 403"
+        "HTTP 403",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -153,14 +155,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 08 Sep 2026 14:41:59 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "HTTP 403"
+        "HTTP 403",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -187,14 +190,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 08 Sep 2026 14:30:24 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "HTTP 403"
+        "HTTP 403",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -221,14 +225,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 02 Sep 2026 20:47:16 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "HTTP 403"
+        "HTTP 403",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -255,14 +260,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 25 Aug 2026 13:41:50 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "HTTP 403"
+        "HTTP 403",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -289,14 +295,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 20 Aug 2026 15:40:36 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "HTTP 403"
+        "HTTP 403",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -323,14 +330,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 19 Aug 2026 16:34:51 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "HTTP 403"
+        "HTTP 403",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -357,14 +365,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 12 Aug 2026 14:27:08 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "HTTP 403"
+        "HTTP 403",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -391,14 +400,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 27 Jul 2026 20:30:21 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -425,14 +435,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 27 Jul 2026 20:25:56 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -459,14 +470,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 15 Jul 2026 14:13:08 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -493,14 +505,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 14 Jul 2026 15:06:00 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -527,14 +540,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 14 Jul 2026 16:32:40 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -561,14 +575,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 14 Jul 2026 15:18:39 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -595,14 +610,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 23 Jun 2026 19:43:01 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -629,14 +645,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 22 Jun 2026 20:43:43 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -663,14 +680,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 15 Jun 2026 18:17:09 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -697,14 +715,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 11 Jun 2026 20:40:22 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -731,14 +750,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 11 Jun 2026 20:39:45 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -765,14 +785,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 11 Jun 2026 20:40:05 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -799,14 +820,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 01 Jun 2026 16:42:07 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -833,14 +855,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 01 Jun 2026 16:39:17 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -867,14 +890,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 28 May 2026 13:57:40 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -901,14 +925,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 19 May 2026 14:34:59 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -935,14 +960,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 19 May 2026 14:34:46 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -969,14 +995,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 14 May 2026 13:30:20 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1003,14 +1030,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 14 May 2026 13:29:54 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1037,14 +1065,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 14 May 2026 13:29:30 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1071,14 +1100,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 30 Apr 2026 18:59:08 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1105,14 +1135,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 20 Apr 2026 15:32:09 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1139,14 +1170,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 20 Apr 2026 15:32:26 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1173,14 +1205,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 20 Apr 2026 15:32:31 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1207,14 +1240,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 15 Apr 2026 13:44:49 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1241,14 +1275,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 15 Apr 2026 13:40:31 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1275,14 +1310,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 15 Apr 2026 13:43:46 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1309,14 +1345,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 13 Apr 2026 13:06:35 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1343,14 +1380,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 13 Apr 2026 13:11:15 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1377,14 +1415,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 16 Mar 2026 12:30:57 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1411,14 +1450,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 11 Mar 2026 15:17:29 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1445,14 +1485,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 11 Mar 2026 15:19:38 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1479,14 +1520,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 11 Mar 2026 15:17:06 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1513,14 +1555,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 27 Feb 2026 15:00:15 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1547,14 +1590,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 10 Feb 2026 20:29:51 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1581,14 +1625,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 10 Feb 2026 18:52:29 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1615,14 +1660,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 10 Feb 2026 18:52:43 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1649,14 +1695,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 09 Feb 2026 15:16:17 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1683,14 +1730,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 09 Feb 2026 16:17:11 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1717,14 +1765,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 02 Feb 2026 12:06:19 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1751,14 +1800,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 22 Jan 2026 21:09:36 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1785,14 +1835,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Thu, 22 Jan 2026 21:08:34 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1819,14 +1870,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 14 Jan 2026 19:32:28 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1853,14 +1905,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 14 Jan 2026 19:32:52 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1887,14 +1940,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 14 Jan 2026 19:33:13 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1921,14 +1975,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 07 Jan 2026 20:14:46 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1955,14 +2010,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 22 Dec 2025 19:54:12 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -1989,14 +2045,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 12 Dec 2025 12:12:56 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2023,14 +2080,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 10 Dec 2025 20:58:21 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2057,14 +2115,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 10 Dec 2025 20:58:16 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2091,14 +2150,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Wed, 10 Dec 2025 20:58:11 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2125,14 +2185,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 12 Dec 2025 12:12:36 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2159,14 +2220,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 01 Dec 2025 19:35:33 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2193,14 +2255,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 25 Nov 2025 12:41:28 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2227,14 +2290,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 21 Nov 2025 18:06:16 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2261,14 +2325,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 11 Nov 2025 18:38:13 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2295,14 +2360,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 11 Nov 2025 18:38:19 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2329,14 +2395,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 11 Nov 2025 18:38:25 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2363,14 +2430,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 11 Nov 2025 12:15:22 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2397,14 +2465,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 07 Nov 2025 13:35:10 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2431,14 +2500,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 07 Nov 2025 13:34:55 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2465,14 +2535,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 27 Oct 2025 12:05:31 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2499,14 +2570,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Mon, 27 Oct 2025 12:02:03 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2533,14 +2605,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Tue, 21 Oct 2025 18:39:16 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2567,14 +2640,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 10 Oct 2025 12:05:57 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2601,14 +2675,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 10 Oct 2025 12:06:09 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2635,14 +2710,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 10 Oct 2025 12:06:05 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
@@ -2669,14 +2745,15 @@
       "pdf_etag": null,
       "pdf_last_modified": "Fri, 03 Oct 2025 18:49:50 GMT",
       "first_seen_at": "2026-09-28T20:15:14Z",
-      "last_seen_at": "2026-09-28T20:15:14Z",
+      "last_seen_at": "2026-09-28T20:21:39Z",
       "last_detected_at": "2026-09-28T20:15:14Z",
       "revisions": [],
       "analysis_status": "pendiente",
-      "analysis_version": "2026-09-28.1",
+      "analysis_version": "2026-09-28.2",
       "needs_human_review": true,
       "review_flags": [
-        "Límite de llamadas de análisis alcanzado en esta ejecución"
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "API de análisis suspendida tras HTTP 403 en esta ejecución"
       ],
       "event_type": "otro",
       "summary": "",
