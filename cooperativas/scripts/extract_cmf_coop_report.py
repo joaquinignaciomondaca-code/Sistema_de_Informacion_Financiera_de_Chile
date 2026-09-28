@@ -168,16 +168,18 @@ def is_number(v) -> bool:
 
 
 def row_block(r: list) -> list:
-    """Celdas tras la etiqueta hasta un hueco de ≥3 columnas vacías (área de trabajo a la derecha)."""
+    """Bloque contiguo de celdas tras la etiqueta (salta separadores iniciales).
+
+    Algunas planillas (2019-11) traen a la derecha, tras columnas vacías, un área de trabajo
+    con los mismos datos: se corta en la primera columna vacía después de empezar el bloque.
+    """
     start = next(i for i, v in enumerate(r) if v not in (None, "")) + 1
-    out, gap = [], 0
+    out = []
     for v in r[start:]:
         if v in (None, ""):
-            gap += 1
-            if gap >= 3 and out:
+            if out:
                 break
             continue
-        gap = 0
         out.append(v)
     return out
 
