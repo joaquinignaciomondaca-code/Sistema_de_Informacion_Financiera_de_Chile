@@ -405,6 +405,9 @@ def update_data_manifest(period_manifest: dict, latest: dict) -> None:
     entry = next((item for item in tables if item.get("id") == DATASET_ID), None)
     total = int(period_manifest["total_records"])
     start, end = period_manifest["periods"][0]["period"], period_manifest["periods"][-1]["period"]
+    # El archivo de referencia es siempre el período más reciente del manifiesto, no
+    # necesariamente el recién publicado (p. ej. si se corrige un mes intermedio).
+    latest = {**latest, "file": period_manifest["periods"][-1]["file"]}
     if entry is None:
         entry = {
             "id": DATASET_ID,
@@ -424,7 +427,6 @@ def update_data_manifest(period_manifest: dict, latest: dict) -> None:
             "origen": latest["zip_url"],
         }
         tables.append(entry)
-        catalog["total_tables"] = int(catalog.get("total_tables", len(tables) - 1)) + 1
     else:
         entry.update({
             "corte": f"{start} a {end}",
@@ -434,7 +436,9 @@ def update_data_manifest(period_manifest: dict, latest: dict) -> None:
             "registros_reales": total,
             "origen": latest["zip_url"],
         })
-    catalog["total_records"] = int(catalog.get("total_records", 0)) + int(latest["records"])
+    # Totales recalculados desde la lista: sumar incrementos hacía derivar el contador.
+    catalog["total_tables"] = len(tables)
+    catalog["total_records"] = sum(int(item.get("registros_reales") or 0) for item in tables)
     catalog["updated_at"] = date.today().isoformat()
     atomic_json(DATA_MANIFEST, catalog)
 

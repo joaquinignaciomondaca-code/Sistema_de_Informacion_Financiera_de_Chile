@@ -2,6 +2,7 @@
 
 > Mapa de referencia interno. Resume **qué hace cada pieza y en qué orden**, no reemplaza al código.
 > Generado a partir de una revisión completa del repo (commit `37f7cea`, 2026-09-28).
+> **Revisado y actualizado** sobre `df3e26c` (2026-09-28, 2ª pasada): bancos B1/B2/R1 publicado 2022-01→2026-07, nuevo flujo mensual de Cooperativas CMF, `requirements.txt` global, nuevas sondas y `web_audit.yml`.
 > Convención: `→` = produce / escribe, `⟵` = lee, `✗` = aborta (fail-closed).
 
 ---
@@ -29,7 +30,7 @@ Dos tipos de flujo (ver `pipelines/README.md`):
 
 | Tipo | Dónde corre | Cómo publica |
 |---|---|---|
-| **Maduro/automático** (macro, bancos B1/B2/R1, factoring-leasing IFRS) | GitHub Actions + PC | staging → validación → artifact o commit controlado |
+| **Maduro/automático** (macro, bancos B1/B2/R1, cooperativas CMF, factoring-leasing IFRS) | GitHub Actions + PC | staging → validación → artifact o commit controlado |
 | **Manual/experimental** (PDFs, notas, seguros, FFMM, FI, AFP, CCAF…) | PC | escritura directa a `docs/outputs/` tras auditoría sectorial |
 | **Laboratorio** (bancos REPO, XML/XBRL, sondas) | Actions | **nunca publica**; deja reportes en `.local-data/review/` o artifacts |
 
@@ -132,6 +133,25 @@ main(period?):
         actualizar manifest.json de particiones + data_manifest.json (rollback si falla)
     → GITHUB_OUTPUT
 # La web lee estas particiones vía `manifest` en SEMANTIC_VIEWS.
+#
+# Estado publicado: 55 particiones 2022-01 → 2026-07 (1.927.964 filas). SEED_PERIOD = 2026-07, así que
+# next_unpublished_period() arranca desde ahí y avanza mes a mes (2026-08, …). El histórico 2022–2026-06
+# se cargó con `--start` (umbral de cuentas de 9 dígitos de 2022).
+# manifest.json de particiones: { periods:[{period,file,validation_file,records,sha256_zip,sha256_xlsx,zip_url,xlsx_url,…}],
+#                                 files:[…lineas.parquet], total_records }   ← la web usa `files`
+#
+# update_data_manifest(period_manifest, latest):        (corregido 2026-09-28)
+#     entrada bancos_cmf_lineas: corte = primer..último período; file_parquet = ÚLTIMO período del manifiesto
+#     total_tables  = len(tables)                          # antes: +1 incremental → derivaba (65 vs 63)
+#     total_records = Σ registros_reales de todas las tablas   # antes: += records del mes
+```
+
+### 3.1b Sondas bancarias nuevas (no publican)
+```
+probe_history_layout      : por mes 2022→hoy: ¿hay ZIP/XLSX?, miembros b1/b2/r1/c*, modelos de cuentas, hojas exigidas → ::notice
+parse_mb1_fixed.parse_record(line, period): MB1 de longitud fija: cuenta 7/9 dígitos + total + 4 desgloses s9(14) con signo
+                            unidad = MM CLP antes de 2022, pesos desde 2022   (no extrapolar a TXT B1 tabulado)
+inspect_repo_source_layout: muestra encabezado + cuentas REPO (1160000/2160000/141000000/243000000) de 2 bancos por período
 ```
 
 ### 3.2 REPO bancario (laboratorio, NUNCA publica)
@@ -252,6 +272,7 @@ agf/                stream_cmf_agf (balances AGF + conteo fondos)               
 corredoras_bolsa/   01 universo → 02 EEFF + REPO → 03 audit ; stream_cmf_corredoras_series (50 trimestres 2014-03..2026-06)
 securitizadoras/    stream_cmf_securitizadoras ; 03 patrimonios separados (PDF: balance, notas efectivo/repos/morosidad…) ; 04 audit
 cooperativas/       01 maestro → 02 series (Excel CMF) → 03 audit → 04 nota efectivo (RAW_NOTE_DATA transcrito)
+                    + flujo automático CMF (ver §8b)
 ccaf/               build_ccaf_maestro ; pipeline_extract_ccaf_xbrl (XBRL SUSESO/CMF) ; build_ccaf_repos_enriquecido ; audit
                     legacy/: extracción PDF con LLM (DeepSeek) — obsoleto
 retail_financiero/  stream_cmf_retail_financiero + audit
@@ -261,6 +282,43 @@ pensiones/          pipeline_stream_history(_parallel): Playwright descarga ZIP 
                     generate_afp_maestro (única tabla AFP publicada); cartera/derivados AFP RETIRADOS de la web
                     ~25 scripts inspect_*/test_*/sample_* = exploración ad-hoc (rutas C:\)
 pipelines/manual/   ingest_manual_notes: plantillas CSV de notas transcritas → valida RUT → parquet
+```
+
+---
+
+## 8b. Cooperativas — Reporte Financiero CMF (automático, `extract_cmf_coop_report.py`)
+```
+Workflow cooperativas_cmf_mensual.yml: día 16 14:00 UTC → tests → extract --publicar → commit
+Fuente: índice CMF w4-propertyvalue-28918 (una planilla xls/xlsx por mes). Formato 2017-01+ (antes: otro plan de cuentas → excluido)
+
+Sheet(spec): hoja + frases clave de cabecera + N columnas numéricas + identidades internas
+   hojas: "Activos Cooperativas", "Pasivos Cooperativas", "Estado Resultados Coop", "Margen Interes - Comisiones"
+
+run(publicar, desde=2017-01, hasta?):
+    sources = discover(índice)                   # {AAAA-MM: url}
+    por período:
+        blob   = fetch(url, MAX_FILE)
+        sheets = read_workbook(blob)             # openpyxl (.xlsx) | xlrd (.xls)
+        parsed = parse_workbook(sheets):
+            elegir_hoja(spec, nombres)           # tolera variaciones de nombre; registra hojas ignoradas
+            parse_sheet: fila → coop_key(etiqueta); ✗ si la fila no trae exactamente N montos
+        validate_period(parsed):
+            ✗ cabecera sin frases clave
+            ✗ subtotales internos (tolerancia ±2 MM$, hasta ±5 MM$ aceptado y declarado)
+            ✗ activos ≠ pasivos + patrimonio      ✗ Σ cooperativas ≠ "Total Cooperativas"
+            ✗ margen/comisiones distintos entre hojas
+        rows = to_rows(period, parsed, url, sha256)  # 1 fila por (periodo, cooperativa, estado, cuenta)
+        si error → failures (se sigue para reportar todo)
+    ✗ si hay CUALQUIER período fallido → no publica nada (serie en bloque, sin particiones a medias)
+    → docs/outputs/cooperativas/cmf_reporte_financiero/estados.parquet (zstd) + validacion.json
+       Estado: 115 períodos 2017-01 → 2026-07, 52.325 registros, MM$
+Web: vistas cooperativas_cmf_balance (estado='balance') y cooperativas_cmf_resultados (estado='resultados')
+probe_coop_layout: sonda (index / xlsx / layouts / blocks / check / cells) → anotaciones ::warning
+```
+
+### Otras sondas nuevas
+```
+retail_financiero/probe_ifrs_rut_cross.py PERIODO: TXT IFRS CMF → RUT únicos × maestro retail (EN_MAESTRO / CANDIDATO) → CSV + ::warning
 ```
 
 ---
@@ -306,6 +364,14 @@ Contrato de coherencia (lo verifica scripts/audit_navigation.py y audit_web_full
   tablas retiradas (afp_cartera_*, bancos_balance_resumen, derivados…) no deben aparecer en ningún JS
 ```
 
+Cómo levantarla en local:
+```
+python -m scripts.preview_no_cache --port 8000      # sirve docs/ en 0.0.0.0:8000, sin caché
+    soporta HTTP Range (206 Partial Content) igual que GitHub Pages → DuckDB-Wasm lee solo pie + row groups
+    (antes devolvía 200 con el archivo completo: 71 MB para leer 100 bytes)
+requisitos del navegador: acceso a cdn.jsdelivr.net (DuckDB-Wasm 1.28.0) y fonts.googleapis.com
+```
+
 Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local), `standardize_schema_keys.py` (PK/FK/IDs), `verify_joins.py`, `orchestrate_overnight_market_pipeline.py` (FFMM+FI nocturno).
 
 ---
@@ -316,6 +382,9 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 |---|---|---|---|
 | macro.yml | diario 10:00 | artifact (PR humano) | daily_macro con cache checkpoint |
 | bancos_cmf_mensual.yml | día 15 13:00 | **sí** (commit) | tests + publish_cmf_bank_period |
+| cooperativas_cmf_mensual.yml | día 16 14:00 | **sí** (commit) | tests + extract_cmf_coop_report --publicar |
+| web_audit.yml | push a docs/** | no | audit_navigation + audit_web_full (anotaciones) |
+| bancos_probe_historia.yml / coop_probe.yml / retail_probe_ifrs.yml | manual | no | sondas de formato |
 | bancos_repo.yml | diario 11:00 | no | laboratorio REPO |
 | bancos_repo_historico.yml / bancos_muestra_inspeccion.yml | manual | no | barridos / inspección |
 | factoring_leasing_backfill.yml | diario 12:20 | **sí** | backfill_ifrs + publish_backfill + auditorías web |
@@ -327,6 +396,17 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 ---
 
 ## 11. Hallazgos de la revisión (estado al 2026-09-28)
+
+**2ª pasada (sobre `df3e26c`)**
+- Tests: `bancos` 81 OK · `factoring_leasing` 42 OK (tras corregir el manifiesto) · `cooperativas` 19 OK · `xml_eeff` 44 OK · `macro` requiere `bcchapi`.
+- `audit_navigation.py`: 12 familias, 86 tablas, 86 opciones del visor ✅ · `audit_web_full.py`: 100% (831 columnas del diccionario, 74 nodos / 69 enlaces ERD) ✅.
+- ✅ `data_manifest.json` decía `total_tables: 65` con 63 entradas (fallaba `test_publication`). Causa: `update_data_manifest` sumaba incrementos. Ahora recalcula desde la lista; `file_parquet` de bancos apunta al último período (2026-07, antes 2026-06).
+- ✅ `preview_no_cache.py` sin soporte HTTP Range → agregado.
+- ⚠️ `data_manifest.json` todavía lista 4 tablas AFP retiradas (`afp_cartera_bonos/acciones`, `afp_derivados_forwards/swaps`) cuyos Parquet ya no existen. No lo usa la web; decidir si se eliminan.
+- ⚠️ `web_audit.yml` se dispara en push a `arena/01a0e66e-…` (rama de una sesión anterior); conviene dejar solo `main` + `pull_request`.
+- Muchas vistas del visor no tienen entrada en `data_manifest.json` (vida_fondos, fi_*, cooperativas_cmf_*, bancos_cmf_balance/resultados agrupadas como `bancos_cmf_lineas`…): el manifiesto es un catálogo parcial, no la fuente de verdad de la web (esa es `SEMANTIC_VIEWS`).
+
+**1ª pasada**
 
 **Tests** (tras las correcciones del 2026-09-28)
 - `bancos/tests` 68 OK · `factoring_leasing/tests` 42 OK · `pipelines/xml_eeff/tests` 44 OK · `macro/tests` 9 OK (requiere `bcchapi`).
@@ -343,7 +423,7 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 5. ✅ BOM UTF-8 eliminado de 9 scripts.
 6. Credenciales: README pide rotar la contraseña BCCh expuesta en el historial Git — sigue pendiente de confirmar. `ccaf/legacy` usa endpoint LLM con token ficticio.
 7. `.git` pesa ~237 MB; binarios en Git (`scratch/sample_202406_vida.zip`, Parquet grandes). Considerar Git LFS o releases.
-8. No hay `requirements.txt` global (solo `macro/requirements.txt`); dependencias sin fijar en la mayoría de sectores.
+8. ✅ Ya existe `requirements.txt` global (Python 3.11, pyarrow/openpyxl/xlrd fijados igual que en Actions).
 9. Muchos scripts exploratorios (`pensiones/inspect_*`, `test_*` que no son tests) mezclados con pipelines productivos.
 
 **Siguientes pasos sugeridos (por prioridad)**
@@ -351,4 +431,4 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 2. ✅ ~~Duplicados docs/ffmm, docs/fi~~ y ✅ ~~rutas C:\~~.
 3. Crear `common/` con utilidades chilenas (DV, parse_num, tc_map).
 4. Mover exploratorios a `*/scratch/` o `archive/`; (`__init__.py` en `tests/` ✅).
-5. `requirements.txt` por sector o global con versiones fijadas.
+5. ✅ ~~`requirements.txt` global~~ (hecho).
