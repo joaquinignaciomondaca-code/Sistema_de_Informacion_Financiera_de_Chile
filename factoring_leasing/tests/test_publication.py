@@ -11,7 +11,10 @@ from factoring_leasing.scripts.audit_factoring_leasing import OUTPUT, RETIRED, R
 
 class PublicationTests(unittest.TestCase):
     def test_only_entity_list_is_published(self):
-        self.assertEqual(run_audit(), 28)
+        # La lista crece sola (altas desde el TXT IFRS): se compara con su tamaño real, mínimo 28.
+        n = len(json.loads((OUTPUT / "factoring_leasing_maestro.json").read_text(encoding="utf-8")))
+        self.assertGreaterEqual(n, 28)
+        self.assertEqual(run_audit(), n)
         files = {p.name for p in OUTPUT.iterdir() if p.is_file()}
         # El backfill completo se publica como dos Parquets separados y con
         # metadata/advertencia, sin reemplazar las muestras previamente cotejadas.
