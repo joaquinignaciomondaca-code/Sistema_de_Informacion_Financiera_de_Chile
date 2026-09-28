@@ -69,7 +69,7 @@ def dump_models(period: str) -> str:
         for info in z.infolist():
             low = info.filename.lower()
             base = low.rsplit("/", 1)[-1]
-            want = ("mb1" in base or "mr1" in base) and not MEMBER.search(info.filename)
+            want = ("mb1" in base or "mr1" in base or "plan_de_cuentas" in base) and not MEMBER.search(info.filename)
             m = MEMBER.search(info.filename)
             if m and m.group(1).lower() == "r" and m.group(5) == "001":
                 want = True
@@ -83,6 +83,10 @@ def dump_models(period: str) -> str:
                 lines = raw.decode("latin-1", "replace").splitlines()
                 if "leame" in base:
                     sel = [l for l in lines if l.strip()][:45]
+                elif "plan_de_cuentas" in base:
+                    import collections
+                    heads = collections.Counter(l.split("\t")[0][:1] for l in lines[1:] if l.strip())
+                    sel = lines[:12] + ["…"] + lines[-4:] + [f"primer_digito={dict(heads)}", f"cols={collections.Counter(len(l.split(chr(9))) for l in lines)}"]
                 elif base.startswith("modelo"):
                     sel = lines[3:16] + ["…"] + lines[-3:]
                 else:
