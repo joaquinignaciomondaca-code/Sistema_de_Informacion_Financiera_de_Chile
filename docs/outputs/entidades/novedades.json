@@ -1,0 +1,51 @@
+{
+  "eventos": [
+    {
+      "fecha": "2026-09-28",
+      "sector": "agf",
+      "lista": "agf/agf_maestro",
+      "rut": "96960970-3",
+      "razon_social": "AMICORP ADMINISTRADORA GENERAL DE FONDOS S.A.",
+      "evento": "cambio_vigencia",
+      "antes": "No Vigente / Cancelada",
+      "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-09-28",
+      "sector": "agf",
+      "lista": "agf/agf_maestro",
+      "rut": "76576607-9",
+      "razon_social": "SARTOR ADMINISTRADORA GENERAL DE FONDOS S.A.",
+      "evento": "cambio_vigencia",
+      "antes": "No Vigente / Cancelada",
+      "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-09-28",
+      "sector": "agf",
+      "lista": "agf/agf_maestro",
+      "rut": "96530900-4",
+      "razon_social": "BCI ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Vigente"
+    },
+    {
+      "fecha": "2026-09-28",
+      "sector": "agf",
+      "lista": "agf/agf_maestro",
+      "rut": "96836390-5",
+      "razon_social": "BANCOESTADO S.A. ADMINISTRADORA GENERAL DE FONDOS",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Vigente"
+    }
+  ],
+  "ultima_revision_utc": "2026-09-28T08:15:10+00:00",
+  "sectores_revisados": [
+    "agf",
+    "securitizadoras",
+    "corredoras_bolsa",
+    "fintech"
+  ]
+}
