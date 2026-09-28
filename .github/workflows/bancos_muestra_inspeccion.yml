@@ -6,6 +6,8 @@ on:
     paths:
       - '.github/workflows/bancos_muestra_inspeccion.yml'
       - 'bancos/scripts/inspect_cmf_bank_sample.py'
+      - 'bancos/scripts/extract_cmf_bank_lines.py'
+      - 'bancos/tests/test_extract_cmf_bank_lines.py'
   workflow_dispatch:
     inputs:
       period:
@@ -42,6 +44,8 @@ jobs:
           python-version: '3.11'
       - name: Instalar lector XLSX
         run: python -m pip install --disable-pip-version-check openpyxl==3.1.5
+      - name: Probar extractor B1/B2/R1
+        run: python -m unittest bancos.tests.test_inspect_cmf_bank_sample bancos.tests.test_extract_cmf_bank_lines -v
       - name: Descargar e inspeccionar ZIP y Excel oficial CMF (sin publicar)
         env:
           PERIOD: ${{ github.event.inputs.period || '2026-07' }}
@@ -60,6 +64,15 @@ jobs:
           if [ "$result" -ne 0 ]; then
             exit "$result"
           fi
+      - name: Extraer líneas CMF B1/B2/R1 en staging de revisión
+        env:
+          PERIOD: ${{ github.event.inputs.period || '2026-07' }}
+        run: |
+          python -u -m bancos.scripts.extract_cmf_bank_lines \
+            --period "$PERIOD" \
+            --zip-path ".local-data/review/bancos/sample_inspection/cmf_bancos_${PERIOD}.zip" \
+            --inspection-json ".local-data/review/bancos/sample_inspection/inspection.json" \
+            --output ".local-data/review/bancos/sample_inspection/extracted_lines"
       - name: Adjuntar fuentes CMF y resumen estructural para revisión humana
         if: always()
         uses: actions/upload-artifact@v4
