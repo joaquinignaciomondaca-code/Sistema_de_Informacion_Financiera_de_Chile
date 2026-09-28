@@ -54,9 +54,15 @@ jobs:
       - name: Probar el lector con líneas reales de ambos formatos
         run: python -m seguros.tests.test_formato_1835
 
+      # Revisa todos los meses pendientes sin escribir y anota los que tienen problemas, para
+      # corregirlos juntos. Las descargas quedan en /tmp/cmf1835 y la publicación las reutiliza.
+      - name: Diagnóstico de los meses pendientes (no escribe)
+        continue-on-error: true
+        run: python -m seguros.scripts.actualizar_carteras --diagnostico --cache /tmp/cmf1835 --max-periodos "${{ inputs.max_periodos || '240' }}"
+
       - name: Descargar, validar y publicar los meses pendientes
         id: publicar
-        run: python -m seguros.scripts.actualizar_carteras --max-periodos "${{ inputs.max_periodos || '240' }}"
+        run: python -m seguros.scripts.actualizar_carteras --cache /tmp/cmf1835 --max-periodos "${{ inputs.max_periodos || '240' }}"
 
       # Se confirma también si un mes posterior falló la validación: los meses anteriores ya
       # quedaron validados y escritos; el mes con problemas no se publica y la corrida queda en rojo.
@@ -65,7 +71,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/outputs/seguros
+          git add docs/outputs/seguros data_manifest.json
           if git diff --cached --quiet; then echo 'Sin cambios.'; exit 0; fi
           ultimo=$(python -c "import json;print(max(json.load(open('docs/outputs/seguros/manifest.json'))['periodos']))")
           git commit -m "Seguros: cartera de inversiones hasta ${ultimo}"

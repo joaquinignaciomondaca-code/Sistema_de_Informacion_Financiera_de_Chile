@@ -41,6 +41,7 @@ import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
 
+from seguros.scripts import metadatos_web
 from seguros.scripts.formato_1835 import ENCABEZADO, LARGO, TIPO_TOTAL, campos, formato_de
 
 RAIZ = Path(__file__).resolve().parents[2]
@@ -82,8 +83,10 @@ def _get(url: str, timeout: int) -> bytes:
         return r.read()
 
 
-def descargar(sector: str, periodo: str, zip_dir: Path | None) -> bytes:
+def descargar(sector: str, periodo: str, zip_dir: Path | None, cache: Path | None = None) -> bytes:
     yyyymm = periodo.replace("-", "")
+    if cache is not None and (cache / f"{SECTORES[sector]}_{yyyymm}.zip").exists():
+        return (cache / f"{SECTORES[sector]}_{yyyymm}.zip").read_bytes()
     if zip_dir is not None:
         ruta = zip_dir / f"{SECTORES[sector]}_{yyyymm}.zip"
         if not ruta.exists():
@@ -98,6 +101,9 @@ def descargar(sector: str, periodo: str, zip_dir: Path | None) -> bytes:
             data = _get(f"{URL}?tipoentidad={ent}&fnAjax=descarga&peri={yyyymm}", 300)
             if not data.startswith(b"PK"):
                 raise ErrorValidacion(f"{sector} {periodo}: la descarga no es un ZIP ({len(data)} bytes)")
+            if cache is not None:
+                cache.mkdir(parents=True, exist_ok=True)
+                (cache / f"{ent}_{yyyymm}.zip").write_bytes(data)
             return data
         except (NoPublicado, ErrorValidacion):
             raise
@@ -143,7 +149,12 @@ def _valor(txt: str, tipo: str, dec: int):
     # ceros de relleno ("00-15500"); ambas formas se aceptan. Cualquier otro carácter es error.
     m = re.fullmatch(r"([ 0]*)([+-]?)(\d*) *", txt)
     if not m:
-        raise ValueError(f"número {txt!r}")
+        # Algunas compañías escriben el punto decimal ("0379.2"): se toma el valor literal.
+        d = re.fullmatch(r" *([+-]?) *(\d*)[.,](\d+) *", txt)
+        if not d:
+            raise ValueError(f"número {txt!r}")
+        v = float(f"{d.group(2) or 0}.{d.group(3)}") * (-1 if d.group(1) == "-" else 1)
+        return v if dec else int(round(v))
     if not (m.group(1) + m.group(3)).strip():
         return None
     v = int(m.group(3) or 0) * (-1 if m.group(2) == "-" else 1)
@@ -169,7 +180,7 @@ def _encabezado_desde_nombre(nombre: str):
 
 
 def leer_archivo(nombre: str, raw: bytes, formato: str, periodo: str, sector: str, mapa: dict, filas: dict,
-                 errores: list, compania: dict, avisos: list) -> None:
+                 errores: list, compania: dict, avisos: list, ilegibles: dict) -> None:
     letra = os.path.basename(nombre)[:1].lower()
     if letra not in ARCHIVOS:
         return
@@ -224,14 +235,15 @@ def leer_archivo(nombre: str, raw: bytes, formato: str, periodo: str, sector: st
                 "nombre_aseguradora": enc["nombre_aseguradora"]}
         if subtipo:
             fila["tipo_registro"] = subtipo
-        try:
-            for c, i, largo_c, t, d in cols:
+        malo = None
+        for c, i, largo_c, t, d in cols:
+            try:
                 fila[c] = _valor(ln[i:i + largo_c], t, d)
-        except ValueError as e:
-            errores.append(f"{nombre} línea {n}: {c} ilegible ({e})")
-            if len(errores) > 50:
-                return
-            continue
+            except ValueError as e:
+                fila[c] = None
+                malo = malo or f"{c} ({e})"
+        if malo:
+            ilegibles.setdefault(tabla, []).append(f"{sector} {nombre} línea {n}: {malo}")
         filas[tabla].append(fila)
 
 
@@ -241,6 +253,7 @@ def leer_zip(data: bytes, periodo: str, sector: str):
     filas = {t: [] for t in TABLAS}
     errores: list[str] = []
     avisos: list[str] = []
+    ilegibles: dict[str, list[str]] = {}
     compania: dict[str, str] = {}
     try:
         z = zipfile.ZipFile(io.BytesIO(data))
@@ -249,11 +262,18 @@ def leer_zip(data: bytes, periodo: str, sector: str):
     for nombre in sorted(z.namelist()):
         if nombre.endswith("/"):
             continue
-        leer_archivo(nombre, z.read(nombre), formato, periodo, sector, mapa, filas, errores, compania, avisos)
+        leer_archivo(nombre, z.read(nombre), formato, periodo, sector, mapa, filas, errores, compania, avisos, ilegibles)
     for t in TABLAS:  # filas de archivos sin encabezado: nombre de la compañía desde sus otros archivos
         for fila in filas[t]:
             if fila["nombre_aseguradora"] is None:
                 fila["nombre_aseguradora"] = compania.get(fila["rut_aseguradora"])
+    # Campos ilegibles: quedan vacíos y se avisan; si superan el 1 % de las filas de una tabla,
+    # lo más probable es que la lectura esté corrida y el mes no se publica.
+    for tabla, lista in ilegibles.items():
+        if len(lista) > max(0.01 * len(filas[tabla]), 0):
+            errores += [f"{tabla}: {len(lista)} de {len(filas[tabla])} filas con campos ilegibles (más del 1 %)"] + lista[:10]
+        else:
+            avisos += [f"{tabla}: campo ilegible, queda vacío · {x}" for x in lista]
     if errores:
         raise ErrorValidacion(f"{sector} {periodo} ({formato}): {len(errores)} problemas:\n  - " +
                               "\n  - ".join(errores[:20]))
@@ -350,6 +370,42 @@ def escribir_manifiestos(control: dict) -> None:
         pq.write_table(_tabla_arrow(df), SALIDA / "aseguradoras.parquet", compression="zstd")
 
 
+def actualizar_data_manifest(control: dict) -> None:
+    """Mantiene al día las entradas de seguros en data_manifest.json (registros, último mes, fecha)."""
+    ruta = RAIZ / "data_manifest.json"
+    if not ruta.exists():
+        return
+    man = json.loads(ruta.read_text())
+    hoy = date.today().isoformat()
+    entradas = []
+    for tabla, (nombre, descripcion) in metadatos_web.TABLAS.items():
+        if tabla == "aseguradoras":
+            archivo = "outputs/seguros/aseguradoras.parquet"
+            registros = pq.ParquetFile(SALIDA / "aseguradoras.parquet").metadata.num_rows \
+                if (SALIDA / "aseguradoras.parquet").exists() else 0
+            periodos = sorted(control["periodos"])
+        else:
+            archivo = f"outputs/seguros/{tabla}/manifest.json"
+            m = json.loads((SALIDA / tabla / "manifest.json").read_text())
+            registros, periodos = m["total_records"], m["periodos"]
+        corte = f"{periodos[0]} a {periodos[-1]}" if periodos else "sin meses publicados"
+        entradas.append({
+            "id": f"seguros_{tabla}", "name": nombre, "view_name": f"seguros_{tabla}",
+            "sector": "seguros", "sector_label": "Seguros de Vida y Generales", "norma": "Circular CMF 1835",
+            "corte": corte, "frescura": f"Último mes publicado: {periodos[-1]}" if periodos else "",
+            "modo": "Automático · 3 veces al mes, incremental", "ultima_actualizacion": hoy,
+            "file_parquet": archivo, "registros_reales": registros, "descripcion": descripcion,
+            "origen": metadatos_web.ORIGEN,
+        })
+    ids = {e["id"] for e in entradas}
+    resto = [t for t in man["tables"] if t["id"] not in ids]
+    man["tables"] = entradas + resto
+    man["total_tables"] = len(man["tables"])
+    man["total_records"] = sum(int(t.get("registros_reales") or 0) for t in man["tables"])
+    man["updated_at"] = hoy
+    ruta.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n")
+
+
 def cargar_control() -> dict:
     ruta = SALIDA / "manifest.json"
     if ruta.exists():
@@ -387,12 +443,39 @@ def ultimo_mes_cerrado(hoy: date | None = None) -> str:
     return f"{y}-{m:02d}"
 
 
+def diagnostico(periodos: list[str], a) -> int:
+    """Lee todos los meses sin escribir; informa cada mes con problemas y sus avisos."""
+    malos, gha = 0, bool(os.environ.get("GITHUB_ACTIONS"))
+    for periodo in periodos:
+        try:
+            datos = {s: descargar(s, periodo, a.zip_dir, a.cache) for s in SECTORES}
+        except NoPublicado:
+            break
+        for sector, data in datos.items():
+            try:
+                filas, comp, avisos = leer_zip(data, periodo, sector)
+                print(f"{periodo} {sector}: OK · {len(comp)} compañías · {sum(map(len, filas.values()))} filas"
+                      f" · {len(avisos)} avisos")
+            except ErrorValidacion as e:
+                malos += 1
+                print(f"{periodo} {sector}: PROBLEMA · {e}")
+                if gha:
+                    print(f"::warning title=Diagnóstico {periodo} {sector}::" + str(e).replace("\n", "%0A")[:1500])
+    print(f"Diagnóstico: {len(periodos)} meses revisados, {malos} archivos de sector con problemas.")
+    if gha:
+        print(f"::notice title=Diagnóstico seguros::{len(periodos)} meses revisados, {malos} con problemas")
+    return 0
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--desde", default=DESDE)
     ap.add_argument("--hasta", default=None, help="último mes a considerar (por defecto, el último mes cerrado)")
     ap.add_argument("--max-periodos", type=int, default=240)
-    ap.add_argument("--zip-dir", type=Path, default=None)
+    ap.add_argument("--zip-dir", type=Path, default=None, help="leer ZIP locales en vez de descargar (pruebas)")
+    ap.add_argument("--cache", type=Path, default=None, help="guardar/reusar las descargas en esta carpeta")
+    ap.add_argument("--diagnostico", action="store_true",
+                    help="revisar todos los meses pendientes sin escribir nada y listar los problemas")
     ap.add_argument("--salida-github", default=os.environ.get("GITHUB_OUTPUT"))
     a = ap.parse_args(argv)
 
@@ -408,11 +491,13 @@ def main(argv=None) -> int:
             pendientes.append((p, faltan))
     print(f"Meses publicados: {len(control['periodos'])}. Meses con tablas pendientes: {len(pendientes)}"
           + (f" ({pendientes[0][0]} .. {pendientes[-1][0]})" if pendientes else ""))
+    if a.diagnostico:
+        return diagnostico([p for p, _ in pendientes[:a.max_periodos]], a)
     hechos = []
     for periodo, faltan in pendientes[:a.max_periodos]:
         t0 = time.time()
         try:
-            datos = {s: descargar(s, periodo, a.zip_dir) for s in SECTORES}
+            datos = {s: descargar(s, periodo, a.zip_dir, a.cache) for s in SECTORES}
         except NoPublicado as e:
             print(f"{periodo}: sin publicar todavía ({e}). Se retoma en la próxima corrida.")
             break
@@ -444,8 +529,11 @@ def main(argv=None) -> int:
         hechos.append(periodo)
         print(f"{periodo} ({formato_de(periodo)}): " + ", ".join(f"{t} {n}" for t, n in conteo.items())
               + f" [{time.time() - t0:.0f}s]" + (f" · {len(avisos)} avisos de las compañías" if avisos else ""))
-    if hechos:
+    dm = RAIZ / "data_manifest.json"
+    falta_en_web = dm.exists() and '"seguros_renta_fija"' not in dm.read_text()
+    if control["periodos"] and (hechos or falta_en_web):
         escribir_manifiestos(control)
+        actualizar_data_manifest(control)
     if a.salida_github:
         with open(a.salida_github, "a") as fh:
             fh.write(f"publicados={len(hechos)}\n")
