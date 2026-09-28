@@ -50,7 +50,7 @@ jobs:
         run: |
           mkdir -p .local-data/review/bancos/sample_inspection
           set +e
-          python -m bancos.scripts.inspect_cmf_bank_sample \
+          python -u -m bancos.scripts.inspect_cmf_bank_sample \
             --period "$PERIOD" \
             --bank-code "$BANK_CODE" \
             --bank-name "$BANK_NAME" \
