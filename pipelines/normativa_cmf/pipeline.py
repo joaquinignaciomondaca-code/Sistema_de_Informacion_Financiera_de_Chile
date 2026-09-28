@@ -451,7 +451,8 @@ REGLAS DE EXACTITUD:
 - `sectors` solo puede contener códigos de la lista siguiente cuando el documento aplique expresamente a esa industria. No asignes un sector por una mención incidental o cita histórica.
 - Cada sector debe tener una `sector_evidence` con cita literal breve y número de página PDF (usa 0 si la única evidencia es la descripción del listado).
 - Cada norma afectada debe tener una `norm_evidence` con cita literal. Si no está identificable, deja ambas listas vacías.
-- Cada resumen debe incluir `summary_evidence` como cita literal que lo respalde. Las citas deben copiarse del texto, no parafrasearse.
+- Cada resumen debe incluir `summary_evidence` como cita literal que lo respalde. Las citas deben copiarse del texto, no parafrasearse. Puede citarse literalmente `Descripción CMF` con página 0 incluso si hay texto PDF; si la cita proviene del PDF, indica su página.
+- La excepción de página 0 para el resumen no respalda vigencias. Las fechas de vigencia deben citar el PDF y pasar la validación correspondiente.
 - Si la vigencia no es explícita, usa `effective_date` vacío, `effective_date_precision` `sin_fecha`, página 0 y evidencia vacía.
 - Para una vigencia inmediata explícita, usa `effective_date` `inmediata`, precisión `inmediata` y su cita.
 - `confidence` es una señal cualitativa del análisis, no una probabilidad calibrada. Marca `needs_human_review` si la evidencia es incompleta o hay ambigüedad.
@@ -606,13 +607,34 @@ def _quote_is_supported(quote: str, page_number: int, pages: list[dict[str, Any]
     normalized_quote = _normalize_evidence(quote)
     if len(normalized_quote) < 12:
         return False
-    # La página 0 se reserva para la descripción del listado CMF cuando no hay
-    # texto nativo del PDF; nunca debe validar una cita PDF sin página concreta.
+    # Para sectores, normas y vigencias la cita se valida contra la página exacta;
+    # una cita de PDF nunca se acepta sin número de página concreto.
     candidates = [page for page in pages if page.get("page") == page_number]
     return any(normalized_quote in _normalize_evidence(page.get("text", "")) for page in candidates)
 
 
-def _validate_analysis(raw: dict[str, Any], pages: list[dict[str, Any]], model: str, *, pdf_text_available: bool) -> dict[str, Any]:
+def _summary_quote_is_supported(
+    quote: str,
+    page_number: int,
+    pages: list[dict[str, Any]],
+    listing_description: str,
+) -> bool:
+    if page_number == 0:
+        normalized_quote = _normalize_evidence(quote)
+        normalized_description = _normalize_evidence(listing_description)
+        return len(normalized_quote) >= 12 and normalized_quote in normalized_description
+    return _quote_is_supported(quote, page_number, pages)
+
+
+def _validate_analysis(
+    raw: dict[str, Any],
+    pages: list[dict[str, Any]],
+    model: str,
+    *,
+    pdf_text_available: bool,
+    listing_description: str = "",
+) -> dict[str, Any]:
+
     flags: list[str] = []
     event_type = raw.get("event_type")
     if event_type not in EVENT_TYPES:
@@ -622,7 +644,12 @@ def _validate_analysis(raw: dict[str, Any], pages: list[dict[str, Any]], model: 
     summary = _normalize_space(str(raw.get("summary", "")))[:MAX_SUMMARY_CHARS]
     summary_quote = _normalize_space(str(raw.get("summary_evidence", "")))
     summary_page = _safe_int(raw.get("summary_evidence_page"))
-    if not summary or not _quote_is_supported(summary_quote, summary_page, pages):
+    if not summary or not _summary_quote_is_supported(
+        summary_quote,
+        summary_page,
+        pages,
+        listing_description,
+    ):
         summary = ""
         flags.append("resumen_sin_evidencia_verificable")
 
@@ -834,7 +861,14 @@ def analyze_document(
         first_raw = _call_gemini(api_key, model_flash_lite, _gemini_prompt(event, input_pages))
     except GeminiError as exc:
         raise GeminiError(str(exc), calls_used=1, status_code=exc.status_code) from None
-    first = _validate_analysis(first_raw, input_pages, model_flash_lite, pdf_text_available=pdf_text_available)
+    listing_description = str(event.get("description_cmf") or "")
+    first = _validate_analysis(
+        first_raw,
+        input_pages,
+        model_flash_lite,
+        pdf_text_available=pdf_text_available,
+        listing_description=listing_description,
+    )
     calls_used = 1
     # Flash puede resolver casos que Flash-Lite dejó con baja confianza o
     # evidencia ambigua. No se escala una extracción sin texto documental salvo
@@ -846,7 +880,13 @@ def analyze_document(
         calls_used += 1
         try:
             second_raw = _call_gemini(api_key, model_flash, _gemini_prompt(event, input_pages))
-            second = _validate_analysis(second_raw, input_pages, model_flash, pdf_text_available=pdf_text_available)
+            second = _validate_analysis(
+                second_raw,
+                input_pages,
+                model_flash,
+                pdf_text_available=pdf_text_available,
+                listing_description=listing_description,
+            )
             if _analysis_quality(second) > _analysis_quality(first):
                 first = second
         except GeminiError as exc:

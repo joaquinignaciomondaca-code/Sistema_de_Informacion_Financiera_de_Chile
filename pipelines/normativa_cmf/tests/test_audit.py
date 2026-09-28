@@ -57,6 +57,22 @@ class FeedAuditTests(unittest.TestCase):
     def test_validates_complete_evidence_backed_event(self):
         self.assertEqual(validate_feed(self._feed(), require_run=True), [])
 
+    def test_accepts_summary_page_zero_only_when_quoted_from_cmf_listing(self):
+        feed = self._feed()
+        event = feed["events"][0]
+        event["description_cmf"] = "La CMF modifica las obligaciones para fondos mutuos."
+        event["summary_evidence"] = "modifica las obligaciones para fondos mutuos"
+        event["summary_evidence_page"] = 0
+        self.assertEqual(validate_feed(feed), [])
+
+    def test_rejects_summary_page_zero_quote_missing_from_cmf_listing(self):
+        feed = self._feed()
+        event = feed["events"][0]
+        event["description_cmf"] = "La CMF publica una instrucción distinta."
+        event["summary_evidence_page"] = 0
+        errors = validate_feed(feed)
+        self.assertTrue(any("página 0 para el resumen sin cita literal" in error for error in errors))
+
     def test_rejects_sector_assignment_without_matching_evidence(self):
         feed = self._feed()
         feed["events"][0]["sector_evidence"] = []
