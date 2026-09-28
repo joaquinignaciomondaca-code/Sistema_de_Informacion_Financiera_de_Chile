@@ -111,6 +111,37 @@ def period_label(period: str) -> str:
     return f"{MONTHS[month]} {year}"
 
 
+def resolve_resource_from_article_links(links: list[dict[str, str]], index_url: str, period: str, suffix: str) -> tuple[str, str] | None:
+    """Match a download URL to the period-bearing article even if its anchor is blank."""
+    label = period_label(period).casefold()
+    article_ids = set()
+    for item in links:
+        href = urllib.parse.urljoin(index_url, item.get("href", "").strip())
+        parsed = urllib.parse.urlsplit(href)
+        text = re.sub(r"\s+", " ", item.get("text", "")).strip().casefold()
+        article = re.search(r"/w4-article-(\d+)\.html$", parsed.path, re.I)
+        if not article or parsed.hostname != HOST or label not in text:
+            continue
+        if suffix == ".zip" and ("banco" not in text or "balance" not in text):
+            continue
+        article_ids.add(article.group(1))
+
+    candidates = {}
+    for item in links:
+        href = urllib.parse.urljoin(index_url, item.get("href", "").strip())
+        parsed = urllib.parse.urlsplit(href)
+        resource = re.search(r"/articles-(\d+)_recurso_1" + re.escape(suffix) + r"$", parsed.path, re.I)
+        if (
+            resource and parsed.scheme == "https" and parsed.hostname == HOST
+            and parsed.path.startswith("/portal/estadisticas/626/")
+            and resource.group(1) in article_ids
+        ):
+            candidates[href] = item.get("text", "")
+    if len(candidates) == 1:
+        return next(iter(candidates.items()))
+    return None
+
+
 def find_source(index_url: str, period: str, suffix: str) -> tuple[str, str]:
     label = period_label(period).casefold()
     page = fetch(index_url, MAX_PAGE).decode("utf-8", errors="replace")
@@ -130,6 +161,12 @@ def find_source(index_url: str, period: str, suffix: str) -> tuple[str, str]:
             and label in text
         ):
             matches[href] = text
+    if len(matches) != 1:
+        article_match = resolve_resource_from_article_links(parser.links, index_url, period, suffix)
+        if article_match is not None:
+            url, text = article_match
+            print("::notice title=CMF source resolved by article id::" + json.dumps({"period": period, "suffix": suffix, "url": url}, ensure_ascii=False))
+            return url, text
     if len(matches) != 1 and (period, suffix) in KNOWN_SOURCES:
         url = KNOWN_SOURCES[(period, suffix)]
         parsed = urllib.parse.urlsplit(url)
