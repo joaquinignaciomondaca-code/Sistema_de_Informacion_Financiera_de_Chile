@@ -1,0 +1,2799 @@
+{
+  "periodos": {
+    "2016-11": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 31
+      },
+      "registros": {
+        "acciones": 970,
+        "fondos_mutuos": 762,
+        "extranjeros": 2830,
+        "derivados": 2564,
+        "pactos": 86,
+        "control_inversiones": 946
+      },
+      "avisos": 8,
+      "detalle_avisos": [
+        "vida a161130v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida c161130v.99003000: el total declara 8 líneas y el archivo tiene 11",
+        "vida f161130v.99025000: el total declara 5 líneas y el archivo tiene 6",
+        "vida p161130v.96656410: el total declara 433 líneas y el archivo tiene 458",
+        "vida x161130v.96571890: el total declara -1 líneas y el archivo tiene 325",
+        "vida x161130v.99289000: el total declara 308 líneas y el archivo tiene 321",
+        "generales c161130g.96683120: el total declara 12 líneas y el archivo tiene 13",
+        "generales c161130g.96994700: el encabezado dice 2 pero la CMF lo publica en 2016-11"
+      ]
+    },
+    "2016-12": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 949,
+        "fondos_mutuos": 763,
+        "extranjeros": 2846,
+        "derivados": 2556,
+        "pactos": 69,
+        "control_inversiones": 954
+      },
+      "avisos": 11,
+      "detalle_avisos": [
+        "vida a161231v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida c161231v.96588080: el total declara 32 líneas y el archivo tiene 31",
+        "vida c161231v.96656410: el encabezado dice 201610 pero la CMF lo publica en 2016-12",
+        "vida c161231v.96819630: el total declara 16 líneas y el archivo tiene 17",
+        "vida x161231v.96571890: el total declara -1 líneas y el archivo tiene 319",
+        "vida x161231v.99289000: el total declara 308 líneas y el archivo tiene 321",
+        "generales a161231g.96573590: el total declara 16 líneas y el archivo tiene 15",
+        "generales c161231g.76590840: el total declara 10 líneas y el archivo tiene 11",
+        "generales c161231g.96994700: el encabezado dice 2 pero la CMF lo publica en 2016-12",
+        "generales c161231g.99225000: el total declara 11 líneas y el archivo tiene 12",
+        "generales f161231g.99288000: el total declara -1 líneas y el archivo tiene 9"
+      ]
+    },
+    "2017-01": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 988,
+        "fondos_mutuos": 767,
+        "extranjeros": 2889,
+        "derivados": 2529,
+        "pactos": 74,
+        "control_inversiones": 936
+      },
+      "avisos": 11,
+      "detalle_avisos": [
+        "vida a170131v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a170131v.76072304: el total declara 35 líneas y el archivo tiene 31",
+        "vida a170131v.99185000: el total declara 49 líneas y el archivo tiene 48",
+        "vida a170131v.99301000: el total declara 56 líneas y el archivo tiene 57",
+        "vida p170131v.99301000: el total declara 118 líneas y el archivo tiene 112",
+        "vida x170131v.96571890: el total declara -1 líneas y el archivo tiene 324",
+        "vida x170131v.99289000: el total declara 308 líneas y el archivo tiene 321",
+        "generales c170131g.96994700: el encabezado dice 2 pero la CMF lo publica en 2017-01",
+        "generales c170131g.99225000: el total declara 11 líneas y el archivo tiene 12",
+        "generales f170131g.99288000: el total declara -1 líneas y el archivo tiene 10",
+        "generales x170131g.76620816: el encabezado dice 201702 pero la CMF lo publica en 2017-01"
+      ]
+    },
+    "2017-02": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 988,
+        "fondos_mutuos": 797,
+        "extranjeros": 2938,
+        "derivados": 2518,
+        "pactos": 67,
+        "control_inversiones": 938
+      },
+      "avisos": 13,
+      "detalle_avisos": [
+        "vida a170228v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a170228v.76072304: el total declara 32 líneas y el archivo tiene 31",
+        "vida c170228v.99301000: el total declara 35 líneas y el archivo tiene 38",
+        "vida x170228v.96571890: el encabezado dice 201612 pero la CMF lo publica en 2017-02",
+        "vida x170228v.96571890: el total declara -1 líneas y el archivo tiene 339",
+        "vida x170228v.99289000: el total declara 326 líneas y el archivo tiene 325",
+        "generales c170228g.76015592: el total declara 15 líneas y el archivo tiene 16",
+        "generales c170228g.76328793: el total declara 6 líneas y el archivo tiene 7",
+        "generales c170228g.96831690: el total declara 10 líneas y el archivo tiene 11",
+        "generales c170228g.96994700: el encabezado dice 2 pero la CMF lo publica en 2017-02",
+        "generales c170228g.99024000: el total declara 9 líneas y el archivo tiene 7",
+        "generales c170228g.99225000: el total declara 11 líneas y el archivo tiene 12",
+        "generales f170228g.99288000: el total declara -1 líneas y el archivo tiene 10"
+      ]
+    },
+    "2017-03": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 34
+      },
+      "registros": {
+        "acciones": 951,
+        "fondos_mutuos": 786,
+        "extranjeros": 2979,
+        "derivados": 2553,
+        "pactos": 109,
+        "control_inversiones": 949
+      },
+      "avisos": 12,
+      "detalle_avisos": [
+        "vida a170331v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a170331v.99301000: el total declara 53 líneas y el archivo tiene 57",
+        "vida c170331v.96549050: el total declara 24 líneas y el archivo tiene 25",
+        "vida c170331v.96819630: el total declara 17 líneas y el archivo tiene 18",
+        "vida c170331v.99301000: el total declara 28 líneas y el archivo tiene 40",
+        "vida f170331v.99289000: el total declara 15 líneas y el archivo tiene 29",
+        "vida x170331v.96571890: el encabezado dice 201613 pero la CMF lo publica en 2017-03",
+        "vida x170331v.96571890: el total declara -1 líneas y el archivo tiene 337",
+        "generales c170331g.96994700: el encabezado dice 2 pero la CMF lo publica en 2017-03",
+        "generales c170331g.99037000: el total declara 15 líneas y el archivo tiene 16",
+        "generales f170331g.99288000: el total declara -1 líneas y el archivo tiene 10",
+        "generales x170331g.76620932: el encabezado dice 201603 pero la CMF lo publica en 2017-03"
+      ]
+    },
+    "2017-04": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 32
+      },
+      "registros": {
+        "acciones": 965,
+        "fondos_mutuos": 802,
+        "extranjeros": 2951,
+        "derivados": 2523,
+        "pactos": 92,
+        "control_inversiones": 944
+      },
+      "avisos": 12,
+      "detalle_avisos": [
+        "vida a170430v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a170430v.76072304: el total declara 27 líneas y el archivo tiene 26",
+        "vida c170430v.76072304: el total declara 28 líneas y el archivo tiene 29",
+        "vida c170430v.96549050: el total declara 24 líneas y el archivo tiene 25",
+        "vida c170430v.96656410: el total declara 38 líneas y el archivo tiene 39",
+        "vida c170430v.99301000: el total declara 27 líneas y el archivo tiene 40",
+        "vida x170430v.96571890: el encabezado dice 201614 pero la CMF lo publica en 2017-04",
+        "vida x170430v.96571890: el total declara -1 líneas y el archivo tiene 339",
+        "vida x170430v.99301000: el total declara 363 líneas y el archivo tiene 364",
+        "generales c170430g.76363534: el total declara 13 líneas y el archivo tiene 12",
+        "generales c170430g.96994700: el encabezado dice 2 pero la CMF lo publica en 2017-04",
+        "generales f170430g.99288000: el total declara -1 líneas y el archivo tiene 10"
+      ]
+    },
+    "2017-05": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 958,
+        "fondos_mutuos": 802,
+        "extranjeros": 3002,
+        "derivados": 2571,
+        "pactos": 92,
+        "control_inversiones": 956
+      },
+      "avisos": 6,
+      "detalle_avisos": [
+        "vida a170531v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a170531v.76072304: el total declara 25 líneas y el archivo tiene 24",
+        "vida c170531v.96549050: el total declara 24 líneas y el archivo tiene 25",
+        "vida x170531v.96571890: el total declara -1 líneas y el archivo tiene 347",
+        "generales c170531g.96994700: el encabezado dice 2 pero la CMF lo publica en 2017-05",
+        "generales f170531g.99288000: el total declara -1 líneas y el archivo tiene 10"
+      ]
+    },
+    "2017-06": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 969,
+        "fondos_mutuos": 781,
+        "extranjeros": 2992,
+        "derivados": 2514,
+        "pactos": 53,
+        "control_inversiones": 958
+      },
+      "avisos": 9,
+      "detalle_avisos": [
+        "vida a170630v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida c170630v.76263414: el total declara 5 líneas y el archivo tiene 6",
+        "vida c170630v.96549050: el total declara 25 líneas y el archivo tiene 26",
+        "vida f170630v.76282191: el total declara 6 líneas y el archivo tiene 3",
+        "vida f170630v.99289000: el total declara 26 líneas y el archivo tiene 40",
+        "vida x170630v.96571890: el total declara -1 líneas y el archivo tiene 352",
+        "vida x170630v.99289000: el total declara 331 líneas y el archivo tiene 344",
+        "generales c170630g.96994700: el encabezado dice 2 pero la CMF lo publica en 2017-06",
+        "generales f170630g.99288000: el total declara -1 líneas y el archivo tiene 10"
+      ]
+    },
+    "2017-07": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 32
+      },
+      "registros": {
+        "acciones": 979,
+        "fondos_mutuos": 872,
+        "extranjeros": 3003,
+        "derivados": 2484,
+        "pactos": 43,
+        "control_inversiones": 947
+      },
+      "avisos": 10,
+      "detalle_avisos": [
+        "vida a170731v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a170731v.76072304: el total declara 25 líneas y el archivo tiene 24",
+        "vida f170731v.76282191: el total declara 6 líneas y el archivo tiene 3",
+        "vida x170731v.99289000: el total declara 333 líneas y el archivo tiene 349",
+        "generales c170731g.76039758: el encabezado dice 201706 pero la CMF lo publica en 2017-07",
+        "generales c170731g.76328793: el total declara 6 líneas y el archivo tiene 7",
+        "generales c170731g.76590840: el total declara 13 líneas y el archivo tiene 14",
+        "generales c170731g.96994700: el encabezado dice 2 pero la CMF lo publica en 2017-07",
+        "generales c170731g.99225000: el total declara 11 líneas y el archivo tiene 12",
+        "generales f170731g.99288000: el total declara -1 líneas y el archivo tiene 8"
+      ]
+    },
+    "2017-08": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 32
+      },
+      "registros": {
+        "acciones": 986,
+        "fondos_mutuos": 865,
+        "extranjeros": 3025,
+        "derivados": 2529,
+        "pactos": 59,
+        "control_inversiones": 953
+      },
+      "avisos": 11,
+      "detalle_avisos": [
+        "vida a170831v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a170831v.99024000: el total declara 7 líneas y el archivo tiene 6",
+        "vida c170831v.96819630: el total declara 20 líneas y el archivo tiene 21",
+        "vida f170831v.76282191: el total declara 6 líneas y el archivo tiene 3",
+        "vida x170831v.96571890: el total declara 356 líneas y el archivo tiene 357",
+        "vida x170831v.99289000: el total declara 345 líneas y el archivo tiene 363",
+        "generales c170831g.76328793: el total declara 6 líneas y el archivo tiene 7",
+        "generales c170831g.76590840: el total declara 13 líneas y el archivo tiene 14",
+        "generales c170831g.96994700: el encabezado dice 2 pero la CMF lo publica en 2017-08",
+        "generales c170831g.99037000: el total declara 17 líneas y el archivo tiene 18",
+        "generales f170831g.99288000: el total declara -1 líneas y el archivo tiene 10"
+      ]
+    },
+    "2017-09": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 32
+      },
+      "registros": {
+        "acciones": 988,
+        "fondos_mutuos": 875,
+        "extranjeros": 3070,
+        "derivados": 2541,
+        "pactos": 82,
+        "control_inversiones": 962
+      },
+      "avisos": 7,
+      "detalle_avisos": [
+        "vida a170930v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a170930v.99301000: el total declara 51 líneas y el archivo tiene 55",
+        "vida c170930v.96571890: el total declara 35 líneas y el archivo tiene 36",
+        "vida c170930v.99301000: el total declara 30 líneas y el archivo tiene 40",
+        "vida f170930v.76282191: el total declara 6 líneas y el archivo tiene 3",
+        "generales c170930g.96994700: el encabezado dice 2 pero la CMF lo publica en 2017-09",
+        "generales f170930g.99288000: el total declara -1 líneas y el archivo tiene 7"
+      ]
+    },
+    "2017-10": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 32
+      },
+      "registros": {
+        "acciones": 980,
+        "fondos_mutuos": 895,
+        "extranjeros": 3096,
+        "derivados": 2518,
+        "pactos": 54,
+        "control_inversiones": 952
+      },
+      "avisos": 6,
+      "detalle_avisos": [
+        "vida a171031v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida c171031v.99301000: el total declara 26 líneas y el archivo tiene 40",
+        "vida f171031v.76282191: el total declara 6 líneas y el archivo tiene 3",
+        "generales c171031g.96994700: el encabezado dice 2 pero la CMF lo publica en 2017-10",
+        "generales p171031g.99288000: el encabezado dice 201709 pero la CMF lo publica en 2017-10",
+        "generales x171031g.99288000: el encabezado dice 201709 pero la CMF lo publica en 2017-10"
+      ]
+    },
+    "2017-11": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 32
+      },
+      "registros": {
+        "acciones": 979,
+        "fondos_mutuos": 862,
+        "extranjeros": 3092,
+        "derivados": 2496,
+        "pactos": 76,
+        "control_inversiones": 952
+      },
+      "avisos": 11,
+      "detalle_avisos": [
+        "vida a171130v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a171130v.76072304: el encabezado dice 201611 pero la CMF lo publica en 2017-11",
+        "vida c171130v.96812960: el encabezado dice 201710 pero la CMF lo publica en 2017-11",
+        "vida c171130v.99185000: el total declara 31 líneas y el archivo tiene 32",
+        "vida c171130v.99301000: el total declara 28 líneas y el archivo tiene 40",
+        "vida c171130v.99588060: el total declara 7 líneas y el archivo tiene 10",
+        "vida f171130v.76282191: el total declara 6 líneas y el archivo tiene 3",
+        "vida x171130v.99301000: el total declara 411 líneas y el archivo tiene 412",
+        "generales c171130g.96994700: el encabezado dice 2 pero la CMF lo publica en 2017-11",
+        "generales c171130g.99225000: el total declara 8 líneas y el archivo tiene 12",
+        "generales c171130g.99288000: el total declara 15 líneas y el archivo tiene 16"
+      ]
+    },
+    "2017-12": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 970,
+        "fondos_mutuos": 923,
+        "extranjeros": 3068,
+        "derivados": 2527,
+        "pactos": 62,
+        "control_inversiones": 962
+      },
+      "avisos": 14,
+      "detalle_avisos": [
+        "vida a171231v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a171231v.99024000: el total declara 7 líneas y el archivo tiene 6",
+        "vida a171231v.99301000: el total declara 48 líneas y el archivo tiene 52",
+        "vida c171231v.96571890: el total declara 35 líneas y el archivo tiene 36",
+        "vida c171231v.99003000: el total declara 10 líneas y el archivo tiene 11",
+        "vida c171231v.99301000: el total declara 29 líneas y el archivo tiene 39",
+        "vida c171231v.99588060: el total declara 7 líneas y el archivo tiene 10",
+        "generales a171231g.76810563: el total declara -1 líneas y el archivo tiene 2",
+        "generales c171231g.76743492: el total declara 6 líneas y el archivo tiene 7",
+        "generales c171231g.76810563: el total declara -1 líneas y el archivo tiene 3",
+        "generales c171231g.96994700: el encabezado dice 2 pero la CMF lo publica en 2017-12",
+        "generales p171231g.76810563: el total declara -1 líneas y el archivo tiene 2",
+        "generales x171231g.76810563: el total declara -1 líneas y el archivo tiene 2",
+        "generales x171231g.99225000: el encabezado dice 201711 pero la CMF lo publica en 2017-12"
+      ]
+    },
+    "2018-01": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 38,
+        "generales": 32
+      },
+      "registros": {
+        "acciones": 974,
+        "fondos_mutuos": 864,
+        "extranjeros": 3056,
+        "derivados": 2472,
+        "pactos": 39,
+        "control_inversiones": 945
+      },
+      "avisos": 8,
+      "detalle_avisos": [
+        "vida a180131v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a180131v.99301000: el total declara 48 líneas y el archivo tiene 52",
+        "vida c180131v.96656410: el total declara 37 líneas y el archivo tiene 38",
+        "vida c180131v.96812960: el encabezado dice 20180 pero la CMF lo publica en 2018-01",
+        "vida c180131v.99185000: el total declara 31 líneas y el archivo tiene 32",
+        "vida c180131v.99301000: el total declara 25 líneas y el archivo tiene 39",
+        "vida c180131v.99588060: el total declara 7 líneas y el archivo tiene 10",
+        "generales c180131g.96994700: el encabezado dice 2 pero la CMF lo publica en 2018-01"
+      ]
+    },
+    "2018-02": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 1011,
+        "fondos_mutuos": 937,
+        "extranjeros": 3133,
+        "derivados": 2543,
+        "pactos": 53,
+        "control_inversiones": 953
+      },
+      "avisos": 8,
+      "detalle_avisos": [
+        "vida a180228v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a180228v.99301000: el total declara 49 líneas y el archivo tiene 53",
+        "vida c180228v.99301000: el total declara 25 líneas y el archivo tiene 40",
+        "vida c180228v.99588060: el total declara 7 líneas y el archivo tiene 10",
+        "vida p180228v.96588080: el total declara -1 líneas y el archivo tiene 127",
+        "vida x180228v.99301000: el total declara 430 líneas y el archivo tiene 431",
+        "generales c180228g.76328793: el total declara 6 líneas y el archivo tiene 7",
+        "generales c180228g.96994700: el encabezado dice 2 pero la CMF lo publica en 2018-02"
+      ]
+    },
+    "2018-03": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 992,
+        "fondos_mutuos": 931,
+        "extranjeros": 3238,
+        "derivados": 2607,
+        "pactos": 66,
+        "control_inversiones": 967
+      },
+      "avisos": 14,
+      "detalle_avisos": [
+        "vida a180331v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a180331v.99301000: el total declara 50 líneas y el archivo tiene 54",
+        "vida c180331v.76263414: el total declara 7 líneas y el archivo tiene 8",
+        "vida c180331v.96549050: el total declara 24 líneas y el archivo tiene 25",
+        "vida c180331v.96819630: el total declara 20 líneas y el archivo tiene 21",
+        "vida c180331v.99301000: el total declara 29 líneas y el archivo tiene 39",
+        "vida c180331v.99588060: el total declara 7 líneas y el archivo tiene 10",
+        "vida p180331v.76263414: el encabezado dice 201801 pero la CMF lo publica en 2018-03",
+        "vida x180331v.99301000: el total declara 432 líneas y el archivo tiene 433",
+        "generales c180331g.76590840: el total declara 14 líneas y el archivo tiene 15",
+        "generales c180331g.76743492: el total declara 6 líneas y el archivo tiene 7",
+        "generales c180331g.96994700: el encabezado dice 2 pero la CMF lo publica en 2018-03",
+        "generales c180331g.99147000: el total declara 13 líneas y el archivo tiene 14",
+        "generales c180331g.99288000: el total declara 15 líneas y el archivo tiene 16"
+      ]
+    },
+    "2018-04": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 34
+      },
+      "registros": {
+        "acciones": 989,
+        "fondos_mutuos": 954,
+        "extranjeros": 3273,
+        "derivados": 2627,
+        "pactos": 68,
+        "control_inversiones": 958
+      },
+      "avisos": 16,
+      "detalle_avisos": [
+        "vida a180430v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a180430v.76072304: el total declara 23 líneas y el archivo tiene 22",
+        "vida a180430v.99301000: el total declara 50 líneas y el archivo tiene 54",
+        "vida c180430v.96549050: el total declara 24 líneas y el archivo tiene 25",
+        "vida c180430v.96819630: el total declara 20 líneas y el archivo tiene 21",
+        "vida c180430v.99301000: el total declara 30 líneas y el archivo tiene 40",
+        "vida c180430v.99588060: el total declara 7 líneas y el archivo tiene 10",
+        "vida x180430v.96571890: el total declara 415 líneas y el archivo tiene 414",
+        "vida x180430v.99301000: el total declara 434 líneas y el archivo tiene 435",
+        "generales a180430g.99288000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c180430g.76328793: el total declara 6 líneas y el archivo tiene 7",
+        "generales c180430g.76743492: el encabezado dice 201803 pero la CMF lo publica en 2018-04",
+        "generales c180430g.76810563: el encabezado dice 201803 pero la CMF lo publica en 2018-04",
+        "generales c180430g.76810563: el total declara 8 líneas y el archivo tiene 9",
+        "generales c180430g.96994700: el encabezado dice 2 pero la CMF lo publica en 2018-04",
+        "generales c180430g.99288000: el total declara 15 líneas y el archivo tiene 16"
+      ]
+    },
+    "2018-05": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 955,
+        "fondos_mutuos": 932,
+        "extranjeros": 3336,
+        "derivados": 2657,
+        "pactos": 69,
+        "control_inversiones": 966
+      },
+      "avisos": 10,
+      "detalle_avisos": [
+        "vida a180531v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a180531v.96571890: el total declara 44 líneas y el archivo tiene 45",
+        "vida c180531v.96549050: el encabezado dice 201804 pero la CMF lo publica en 2018-05",
+        "vida c180531v.96819630: el total declara 20 líneas y el archivo tiene 21",
+        "vida c180531v.99301000: el total declara 30 líneas y el archivo tiene 40",
+        "vida c180531v.99588060: el total declara 7 líneas y el archivo tiene 10",
+        "vida f180531v.96687900: el total declara 28 líneas y el archivo tiene 29",
+        "generales a180531g.99288000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c180531g.96994700: el encabezado dice 2 pero la CMF lo publica en 2018-05",
+        "generales c180531g.99288000: el total declara 15 líneas y el archivo tiene 16"
+      ]
+    },
+    "2018-06": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 940,
+        "fondos_mutuos": 999,
+        "extranjeros": 3359,
+        "derivados": 2634,
+        "pactos": 54,
+        "control_inversiones": 969
+      },
+      "avisos": 10,
+      "detalle_avisos": [
+        "vida a180630v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a180630v.99289000: el total declara 31 líneas y el archivo tiene 32",
+        "vida a180630v.99301000: el total declara 49 líneas y el archivo tiene 53",
+        "vida c180630v.76263414: el total declara 7 líneas y el archivo tiene 8",
+        "vida c180630v.99301000: el total declara 30 líneas y el archivo tiene 39",
+        "vida c180630v.99588060: el total declara 8 líneas y el archivo tiene 11",
+        "vida x180630v.96571890: el total declara 415 líneas y el archivo tiene 406",
+        "vida x180630v.99301000: el total declara 439 líneas y el archivo tiene 440",
+        "generales c180630g.96994700: el encabezado dice 2 pero la CMF lo publica en 2018-06",
+        "generales c180630g.99288000: el total declara 15 líneas y el archivo tiene 16"
+      ]
+    },
+    "2018-07": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 954,
+        "fondos_mutuos": 1016,
+        "extranjeros": 3379,
+        "derivados": 2603,
+        "pactos": 62,
+        "control_inversiones": 966
+      },
+      "avisos": 12,
+      "detalle_avisos": [
+        "vida a180731v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a180731v.96571890: el total declara 50 líneas y el archivo tiene 49",
+        "vida a180731v.99301000: el total declara 52 líneas y el archivo tiene 56",
+        "vida c180731v.96573600: el total declara 18 líneas y el archivo tiene 17",
+        "vida c180731v.99301000: el total declara 30 líneas y el archivo tiene 39",
+        "vida c180731v.99588060: el total declara 8 líneas y el archivo tiene 11",
+        "vida x180731v.96571890: el total declara 415 líneas y el archivo tiene 394",
+        "vida x180731v.99301000: el total declara 437 líneas y el archivo tiene 438",
+        "generales c180731g.76844788: el total declara 7 líneas y el archivo tiene 8",
+        "generales c180731g.96994700: el encabezado dice 2 pero la CMF lo publica en 2018-07",
+        "generales c180731g.99288000: el total declara 15 líneas y el archivo tiene 16",
+        "generales f180731g.76039758: el encabezado dice 201806 pero la CMF lo publica en 2018-07"
+      ]
+    },
+    "2018-08": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 868,
+        "fondos_mutuos": 962,
+        "extranjeros": 3342,
+        "derivados": 2637,
+        "pactos": 84,
+        "control_inversiones": 965
+      },
+      "avisos": 5,
+      "detalle_avisos": [
+        "vida a180831v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida c180831v.99301000: el total declara 28 líneas y el archivo tiene 38",
+        "vida x180831v.99301000: el total declara 421 líneas y el archivo tiene 422",
+        "generales c180831g.96994700: el encabezado dice 2 pero la CMF lo publica en 2018-08",
+        "generales c180831g.99288000: el total declara 15 líneas y el archivo tiene 16"
+      ]
+    },
+    "2018-09": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 834,
+        "fondos_mutuos": 1025,
+        "extranjeros": 3363,
+        "derivados": 2587,
+        "pactos": 42,
+        "control_inversiones": 963
+      },
+      "avisos": 13,
+      "detalle_avisos": [
+        "vida a180930v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a180930v.76072304: el total declara 19 líneas y el archivo tiene 18",
+        "vida a180930v.99289000: el total declara 32 líneas y el archivo tiene 33",
+        "vida a180930v.99301000: el total declara 50 líneas y el archivo tiene 54",
+        "vida c180930v.96571890: 0 registros de totales",
+        "vida c180930v.99301000: el total declara 24 líneas y el archivo tiene 38",
+        "vida x180930v.96571890: el total declara 392 líneas y el archivo tiene 390",
+        "vida x180930v.96812960: el total declara 415 líneas y el archivo tiene 416",
+        "vida x180930v.99301000: el total declara 425 líneas y el archivo tiene 426",
+        "generales a180930g.99017000: el encabezado dice 201808 pero la CMF lo publica en 2018-09",
+        "generales c180930g.76620816: el total declara 9 líneas y el archivo tiene 10",
+        "generales c180930g.96994700: el encabezado dice 2 pero la CMF lo publica en 2018-09",
+        "generales c180930g.99288000: el total declara 15 líneas y el archivo tiene 16"
+      ]
+    },
+    "2018-10": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 839,
+        "fondos_mutuos": 984,
+        "extranjeros": 3323,
+        "derivados": 2612,
+        "pactos": 67,
+        "control_inversiones": 964
+      },
+      "avisos": 10,
+      "detalle_avisos": [
+        "vida a181031v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a181031v.99301000: el total declara 47 líneas y el archivo tiene 51",
+        "vida c181031v.96656410: el encabezado dice None pero la CMF lo publica en 2018-10",
+        "vida c181031v.99301000: el total declara 24 líneas y el archivo tiene 38",
+        "vida p181031v.96917990: el encabezado dice 201809 pero la CMF lo publica en 2018-10",
+        "vida x181031v.96571890: el encabezado dice 201809 pero la CMF lo publica en 2018-10",
+        "vida x181031v.96571890: el total declara 392 líneas y el archivo tiene 404",
+        "generales c181031g.76620816: el total declara 9 líneas y el archivo tiene 10",
+        "generales c181031g.96994700: el encabezado dice 2 pero la CMF lo publica en 2018-10",
+        "generales c181031g.99288000: el total declara 15 líneas y el archivo tiene 16"
+      ]
+    },
+    "2018-11": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 754,
+        "fondos_mutuos": 893,
+        "extranjeros": 3326,
+        "derivados": 2691,
+        "pactos": 71,
+        "control_inversiones": 961
+      },
+      "avisos": 13,
+      "detalle_avisos": [
+        "vida a181130v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a181130v.96571890: el total declara 51 líneas y el archivo tiene 56",
+        "vida a181130v.99301000: el total declara 46 líneas y el archivo tiene 50",
+        "vida c181130v.76263414: el total declara 8 líneas y el archivo tiene 9",
+        "vida c181130v.96588080: el encabezado dice 201810 pero la CMF lo publica en 2018-11",
+        "vida c181130v.96819630: el total declara 20 líneas y el archivo tiene 21",
+        "vida c181130v.99003000: el total declara 9 líneas y el archivo tiene 10",
+        "vida c181130v.99279000: el total declara 33 líneas y el archivo tiene 32",
+        "vida c181130v.99301000: el total declara 28 líneas y el archivo tiene 37",
+        "vida f181130v.99024000: el total declara 5 líneas y el archivo tiene 4",
+        "vida x181130v.96571890: el total declara 392 líneas y el archivo tiene 413",
+        "generales c181130g.76620816: el total declara 9 líneas y el archivo tiene 10",
+        "generales c181130g.96994700: el encabezado dice 2 pero la CMF lo publica en 2018-11"
+      ]
+    },
+    "2018-12": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 38,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 733,
+        "fondos_mutuos": 914,
+        "extranjeros": 3365,
+        "derivados": 2690,
+        "pactos": 37,
+        "control_inversiones": 968
+      },
+      "avisos": 11,
+      "detalle_avisos": [
+        "vida a181231v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a181231v.96571890: el total declara 51 líneas y el archivo tiene 44",
+        "vida c181231v.96571890: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c181231v.96571890: 0 registros de totales",
+        "vida c181231v.99279000: el total declara 30 líneas y el archivo tiene 31",
+        "vida c181231v.99301000: el total declara 28 líneas y el archivo tiene 36",
+        "vida x181231v.96571890: 0 registros de totales",
+        "generales c181231g.76620816: el total declara 9 líneas y el archivo tiene 10",
+        "generales c181231g.96994700: el encabezado dice 2 pero la CMF lo publica en 2018-12",
+        "generales c181231g.99024000: el total declara 9 líneas y el archivo tiene 7",
+        "generales c181231g.99288000: el total declara 15 líneas y el archivo tiene 16"
+      ]
+    },
+    "2019-01": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 38,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 742,
+        "fondos_mutuos": 889,
+        "extranjeros": 3397,
+        "derivados": 2740,
+        "pactos": 30,
+        "control_inversiones": 963
+      },
+      "avisos": 12,
+      "detalle_avisos": [
+        "vida a190131v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a190131v.96571890: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida a190131v.96571890: 0 registros de totales",
+        "vida a190131v.99301000: el total declara 44 líneas y el archivo tiene 48",
+        "vida c190131v.96571890: 0 registros de totales",
+        "vida c190131v.99289000: el total declara 36 líneas y el archivo tiene 35",
+        "vida c190131v.99301000: el total declara 26 líneas y el archivo tiene 36",
+        "vida f190131v.99588060: el encabezado dice 201801 pero la CMF lo publica en 2019-01",
+        "vida x190131v.96571890: el total declara 409 líneas y el archivo tiene 408",
+        "vida x190131v.99024000: el encabezado dice 201931 pero la CMF lo publica en 2019-01",
+        "generales c190131g.76620816: el total declara 8 líneas y el archivo tiene 9",
+        "generales c190131g.96994700: el encabezado dice 2 pero la CMF lo publica en 2019-01"
+      ]
+    },
+    "2019-02": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 38,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 818,
+        "fondos_mutuos": 911,
+        "extranjeros": 3430,
+        "derivados": 2711,
+        "pactos": 35,
+        "control_inversiones": 963
+      },
+      "avisos": 15,
+      "detalle_avisos": [
+        "vida a190228v.76034737: el encabezado dice 201811 pero la CMF lo publica en 2019-02",
+        "vida a190228v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a190228v.96571890: el total declara 112 líneas y el archivo tiene 107",
+        "vida a190228v.99024000: el total declara 7 líneas y el archivo tiene 6",
+        "vida a190228v.99289000: el total declara 33 líneas y el archivo tiene 32",
+        "vida a190228v.99301000: el total declara 49 líneas y el archivo tiene 53",
+        "vida c190228v.76948367: el encabezado dice 2019 pero la CMF lo publica en 2019-02",
+        "vida c190228v.96571890: 0 registros de totales",
+        "vida c190228v.99301000: el total declara 29 líneas y el archivo tiene 37",
+        "vida f190228v.99588060: el encabezado dice 201802 pero la CMF lo publica en 2019-02",
+        "vida x190228v.96571890: el total declara 401 líneas y el archivo tiene 402",
+        "generales a190228g.99037000: el total declara 9 líneas y el archivo tiene 8",
+        "generales c190228g.76620816: el total declara 9 líneas y el archivo tiene 10",
+        "generales c190228g.96994700: el encabezado dice 2 pero la CMF lo publica en 2019-02",
+        "generales c190228g.99288000: el total declara 15 líneas y el archivo tiene 16"
+      ]
+    },
+    "2019-03": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 38,
+        "generales": 34
+      },
+      "registros": {
+        "acciones": 816,
+        "fondos_mutuos": 928,
+        "extranjeros": 3523,
+        "derivados": 2792,
+        "pactos": 45,
+        "control_inversiones": 978
+      },
+      "avisos": 12,
+      "detalle_avisos": [
+        "vida a190331v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a190331v.76072304: el total declara 19 líneas y el archivo tiene 18",
+        "vida a190331v.99301000: el total declara 45 líneas y el archivo tiene 49",
+        "vida c190331v.76948367: el encabezado dice 2019 pero la CMF lo publica en 2019-03",
+        "vida c190331v.96571890: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c190331v.96571890: 0 registros de totales",
+        "vida c190331v.99279000: el total declara 31 líneas y el archivo tiene 30",
+        "vida f190331v.99588060: el encabezado dice 201803 pero la CMF lo publica en 2019-03",
+        "generales c190331g.76620816: el total declara 9 líneas y el archivo tiene 10",
+        "generales c190331g.96994700: el encabezado dice 2 pero la CMF lo publica en 2019-03",
+        "generales c190331g.99288000: el total declara 15 líneas y el archivo tiene 16",
+        "generales x190331g.76363534: el encabezado dice 201906 pero la CMF lo publica en 2019-03"
+      ]
+    },
+    "2019-04": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 38,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 812,
+        "fondos_mutuos": 889,
+        "extranjeros": 3484,
+        "derivados": 2744,
+        "pactos": 35,
+        "control_inversiones": 969
+      },
+      "avisos": 16,
+      "detalle_avisos": [
+        "vida a190430v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a190430v.76072304: el total declara 18 líneas y el archivo tiene 17",
+        "vida a190430v.99301000: el total declara 43 líneas y el archivo tiene 47",
+        "vida c190430v.76418751: el total declara 26 líneas y el archivo tiene 27",
+        "vida c190430v.76948367: el encabezado dice 2019 pero la CMF lo publica en 2019-04",
+        "vida c190430v.96571890: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c190430v.96571890: 0 registros de totales",
+        "vida c190430v.99301000: el total declara 29 líneas y el archivo tiene 37",
+        "vida f190430v.99588060: el encabezado dice 201804 pero la CMF lo publica en 2019-04",
+        "vida p190430v.96573600: el encabezado dice 201903 pero la CMF lo publica en 2019-04",
+        "vida x190430v.76034737: el encabezado dice 201903 pero la CMF lo publica en 2019-04",
+        "vida x190430v.99289000: el total declara 391 líneas y el archivo tiene 392",
+        "generales c190430g.76620816: el total declara 9 líneas y el archivo tiene 10",
+        "generales c190430g.96994700: el encabezado dice 2 pero la CMF lo publica en 2019-04",
+        "generales c190430g.99288000: el total declara 15 líneas y el archivo tiene 16",
+        "generales x190430g.76363534: el encabezado dice 201906 pero la CMF lo publica en 2019-04"
+      ]
+    },
+    "2019-05": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 38,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 813,
+        "fondos_mutuos": 897,
+        "extranjeros": 3488,
+        "derivados": 2810,
+        "pactos": 36,
+        "control_inversiones": 964
+      },
+      "avisos": 14,
+      "detalle_avisos": [
+        "vida a190531v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a190531v.99301000: el total declara 43 líneas y el archivo tiene 47",
+        "vida c190531v.76072304: el total declara 27 líneas y el archivo tiene 26",
+        "vida c190531v.76263414: el total declara 7 líneas y el archivo tiene 8",
+        "vida c190531v.96571890: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c190531v.96571890: 0 registros de totales",
+        "vida c190531v.99301000: el total declara 30 líneas y el archivo tiene 38",
+        "vida f190531v.94716000: el total declara 5 líneas y el archivo tiene 4",
+        "vida f190531v.99588060: el encabezado dice 201805 pero la CMF lo publica en 2019-05",
+        "vida x190531v.96571890: el total declara 398 líneas y el archivo tiene 404",
+        "generales c190531g.76620816: el total declara 9 líneas y el archivo tiene 10",
+        "generales c190531g.96508210: el total declara 12 líneas y el archivo tiene 13",
+        "generales c190531g.96994700: el encabezado dice 2 pero la CMF lo publica en 2019-05",
+        "generales c190531g.99288000: el total declara 15 líneas y el archivo tiene 16"
+      ]
+    },
+    "2019-06": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 843,
+        "fondos_mutuos": 962,
+        "extranjeros": 3568,
+        "derivados": 2761,
+        "pactos": 17,
+        "control_inversiones": 960
+      },
+      "avisos": 13,
+      "detalle_avisos": [
+        "vida a190630v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida c190630v.76034737: el total declara 8 líneas y el archivo tiene 9",
+        "vida c190630v.76263414: el total declara 8 líneas y el archivo tiene 9",
+        "vida c190630v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida c190630v.96933030: el total declara 10 líneas y el archivo tiene 13",
+        "vida c190630v.99003000: el total declara 9 líneas y el archivo tiene 10",
+        "vida f190630v.96549050: el total declara 178 líneas y el archivo tiene 177",
+        "vida f190630v.96571890: el total declara 13 líneas y el archivo tiene 12",
+        "vida f190630v.99588060: el encabezado dice 201806 pero la CMF lo publica en 2019-06",
+        "vida x190630v.96571890: el total declara 542 líneas y el archivo tiene 551",
+        "generales c190630g.76620816: el total declara 9 líneas y el archivo tiene 10",
+        "generales c190630g.96994700: el encabezado dice 2 pero la CMF lo publica en 2019-06",
+        "generales c190630g.99288000: el total declara 14 líneas y el archivo tiene 15"
+      ]
+    },
+    "2019-07": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 839,
+        "fondos_mutuos": 950,
+        "extranjeros": 3514,
+        "derivados": 2747,
+        "pactos": 5,
+        "control_inversiones": 946
+      },
+      "avisos": 18,
+      "detalle_avisos": [
+        "vida a190731v.70015730: el total declara 17 líneas y el archivo tiene 23",
+        "vida a190731v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida a190731v.99024000: el total declara 7 líneas y el archivo tiene 6",
+        "vida c190731v.76034737: el total declara 5 líneas y el archivo tiene 6",
+        "vida c190731v.96571890: sin encabezado (RUT tomado del nombre del archivo)",
+        "vida c190731v.96571890: 0 registros de totales",
+        "vida c190731v.99588060: el encabezado dice 201906 pero la CMF lo publica en 2019-07",
+        "vida f190731v.96549050: el total declara 179 líneas y el archivo tiene 178",
+        "vida f190731v.96571890: el total declara 16 líneas y el archivo tiene 15",
+        "vida f190731v.99024000: el total declara 5 líneas y el archivo tiene 3",
+        "vida f190731v.99289000: el total declara 37 líneas y el archivo tiene 34",
+        "vida f190731v.99588060: el encabezado dice 201807 pero la CMF lo publica en 2019-07",
+        "vida x190731v.96571890: 0 registros de totales",
+        "generales c190731g.76620816: el total declara 9 líneas y el archivo tiene 10",
+        "generales c190731g.96508210: el total declara 13 líneas y el archivo tiene 14",
+        "generales c190731g.96994700: el encabezado dice 2 pero la CMF lo publica en 2019-07",
+        "generales c190731g.99288000: el total declara 14 líneas y el archivo tiene 15",
+        "generales f190731g.96508210: el encabezado dice 201906 pero la CMF lo publica en 2019-07"
+      ]
+    },
+    "2019-08": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 853,
+        "fondos_mutuos": 929,
+        "extranjeros": 3519,
+        "derivados": 2776,
+        "pactos": 41,
+        "control_inversiones": 954
+      },
+      "avisos": 10,
+      "detalle_avisos": [
+        "vida a190831v.76034737: el total declara 8 líneas y el archivo tiene 2",
+        "vida c190831v.76034737: el total declara 8 líneas y el archivo tiene 9",
+        "vida c190831v.99289000: el total declara 30 líneas y el archivo tiene 35",
+        "vida f190831v.94716000: el total declara 5 líneas y el archivo tiene 4",
+        "vida p190831v.96656410: el total declara 96 líneas y el archivo tiene 369",
+        "generales c190831g.96508210: el total declara 10 líneas y el archivo tiene 14",
+        "generales c190831g.96994700: el encabezado dice 2 pero la CMF lo publica en 2019-08",
+        "generales c190831g.99288000: el total declara 14 líneas y el archivo tiene 15",
+        "generales p190831g.76981875: el encabezado dice 201907 pero la CMF lo publica en 2019-08",
+        "generales x190831g.76981875: el encabezado dice 201907 pero la CMF lo publica en 2019-08"
+      ]
+    },
+    "2019-09": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 858,
+        "fondos_mutuos": 976,
+        "extranjeros": 3542,
+        "derivados": 2740,
+        "pactos": 23,
+        "control_inversiones": 972
+      },
+      "avisos": 8,
+      "detalle_avisos": [
+        "vida a190930v.70015730: el total declara 20 líneas y el archivo tiene 26",
+        "vida c190930v.76034737: el total declara 8 líneas y el archivo tiene 9",
+        "vida c190930v.76263414: el total declara 9 líneas y el archivo tiene 10",
+        "vida c190930v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "generales c190930g.76620816: el total declara 9 líneas y el archivo tiene 10",
+        "generales c190930g.96994700: el encabezado dice 2 pero la CMF lo publica en 2019-09",
+        "generales c190930g.99037000: el total declara 17 líneas y el archivo tiene 18",
+        "generales c190930g.99288000: el total declara 14 líneas y el archivo tiene 15"
+      ]
+    },
+    "2019-10": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 847,
+        "fondos_mutuos": 944,
+        "extranjeros": 3479,
+        "derivados": 2719,
+        "pactos": 38,
+        "control_inversiones": 953
+      },
+      "avisos": 11,
+      "detalle_avisos": [
+        "vida a191031v.70015730: el total declara 16 líneas y el archivo tiene 26",
+        "vida c191031v.76034737: el total declara 8 líneas y el archivo tiene 9",
+        "vida c191031v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida c191031v.96933030: el total declara 14 líneas y el archivo tiene 13",
+        "vida c191031v.99003000: el total declara 9 líneas y el archivo tiene 10",
+        "vida c191031v.99279000: el total declara 27 líneas y el archivo tiene 30",
+        "vida x191031v.99003000: el encabezado dice 201909 pero la CMF lo publica en 2019-10",
+        "vida x191031v.99289000: el total declara 406 líneas y el archivo tiene 410",
+        "generales c191031g.96994700: el encabezado dice 2 pero la CMF lo publica en 2019-10",
+        "generales c191031g.99288000: el total declara 14 líneas y el archivo tiene 15",
+        "generales f191031g.99017000: el total declara 4 líneas y el archivo tiene 3"
+      ]
+    },
+    "2019-11": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 34
+      },
+      "registros": {
+        "acciones": 824,
+        "fondos_mutuos": 910,
+        "extranjeros": 3288,
+        "derivados": 2707,
+        "pactos": 38,
+        "control_inversiones": 956
+      },
+      "avisos": 12,
+      "detalle_avisos": [
+        "vida a191130v.76282191: el encabezado dice 201910 pero la CMF lo publica en 2019-11",
+        "vida a191130v.96588080: el total declara 20 líneas y el archivo tiene 21",
+        "vida c191130v.76034737: el total declara 8 líneas y el archivo tiene 9",
+        "vida c191130v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida c191130v.96819630: el total declara 19 líneas y el archivo tiene 20",
+        "vida c191130v.96933030: el total declara 13 líneas y el archivo tiene 14",
+        "vida c191130v.99301000: el total declara 36 líneas y el archivo tiene 37",
+        "vida f191130v.96933030: el total declara 4 líneas y el archivo tiene 5",
+        "generales c191130g.96508210: el total declara 10 líneas y el archivo tiene 14",
+        "generales c191130g.96994700: el encabezado dice 2 pero la CMF lo publica en 2019-11",
+        "generales c191130g.99288000: el total declara 14 líneas y el archivo tiene 15",
+        "generales f191130g.96508210: el total declara 10 líneas y el archivo tiene 9"
+      ]
+    },
+    "2019-12": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 862,
+        "fondos_mutuos": 941,
+        "extranjeros": 3269,
+        "derivados": 2512,
+        "pactos": 39,
+        "control_inversiones": 967
+      },
+      "avisos": 15,
+      "detalle_avisos": [
+        "vida a191231v.96588080: el total declara 20 líneas y el archivo tiene 21",
+        "vida a191231v.99301000: el total declara 40 líneas y el archivo tiene 44",
+        "vida c191231v.76034737: el total declara 8 líneas y el archivo tiene 9",
+        "vida c191231v.76263414: el total declara 9 líneas y el archivo tiene 10",
+        "vida c191231v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida c191231v.96933030: el total declara 10 líneas y el archivo tiene 13",
+        "vida c191231v.99024000: el total declara 13 líneas y el archivo tiene 14",
+        "vida x191231v.99185000: el total declara 213 líneas y el archivo tiene 214",
+        "generales a191231g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c191231g.76620816: el total declara 8 líneas y el archivo tiene 9",
+        "generales c191231g.96508210: el total declara 10 líneas y el archivo tiene 14",
+        "generales c191231g.96994700: el encabezado dice 2 pero la CMF lo publica en 2019-12",
+        "generales c191231g.99017000: el total declara 14 líneas y el archivo tiene 15",
+        "generales c191231g.99288000: el total declara 13 líneas y el archivo tiene 14",
+        "generales f191231g.96508210: el total declara 10 líneas y el archivo tiene 9"
+      ]
+    },
+    "2020-01": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 881,
+        "fondos_mutuos": 894,
+        "extranjeros": 3269,
+        "derivados": 2563,
+        "pactos": 31,
+        "control_inversiones": 957
+      },
+      "avisos": 16,
+      "detalle_avisos": [
+        "vida a200131v.70015730: el total declara 24 líneas y el archivo tiene 25",
+        "vida a200131v.99289000: el total declara 35 líneas y el archivo tiene 36",
+        "vida c200131v.76034737: el total declara 8 líneas y el archivo tiene 9",
+        "vida c200131v.76263414: el total declara 9 líneas y el archivo tiene 10",
+        "vida c200131v.96933030: el total declara 10 líneas y el archivo tiene 13",
+        "vida c200131v.99024000: el total declara 13 líneas y el archivo tiene 12",
+        "vida f200131v.99289000: el total declara 36 líneas y el archivo tiene 33",
+        "vida x200131v.70015730: el total declara 4 líneas y el archivo tiene 5",
+        "generales a200131g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c200131g.76620816: el total declara 8 líneas y el archivo tiene 9",
+        "generales c200131g.94510000: el total declara 13 líneas y el archivo tiene 14",
+        "generales c200131g.96508210: el total declara 10 líneas y el archivo tiene 14",
+        "generales c200131g.96994700: el encabezado dice 2 pero la CMF lo publica en 2020-01",
+        "generales c200131g.99017000: el total declara 11 líneas y el archivo tiene 15",
+        "generales c200131g.99288000: el total declara 14 líneas y el archivo tiene 15",
+        "generales f200131g.76328793: el total declara 5 líneas y el archivo tiene 4"
+      ]
+    },
+    "2020-02": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 36,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 871,
+        "fondos_mutuos": 889,
+        "extranjeros": 3267,
+        "derivados": 2582,
+        "pactos": 64,
+        "control_inversiones": 951
+      },
+      "avisos": 14,
+      "detalle_avisos": [
+        "vida a200229v.96933030: el encabezado dice 202001 pero la CMF lo publica en 2020-02",
+        "vida a200229v.99301000: el total declara 40 líneas y el archivo tiene 44",
+        "vida c200229v.76034737: el total declara 8 líneas y el archivo tiene 9",
+        "vida c200229v.76263414: el total declara 9 líneas y el archivo tiene 10",
+        "vida c200229v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida c200229v.96933030: el total declara 10 líneas y el archivo tiene 13",
+        "vida p200229v.99301000: el total declara 10 líneas y el archivo tiene 103",
+        "vida x200229v.96588080: el total declara 218 líneas y el archivo tiene 243",
+        "generales a200229g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c200229g.76620816: el total declara 8 líneas y el archivo tiene 9",
+        "generales c200229g.76981875: el total declara 9 líneas y el archivo tiene 10",
+        "generales c200229g.96508210: el total declara 10 líneas y el archivo tiene 14",
+        "generales c200229g.96994700: el encabezado dice 2 pero la CMF lo publica en 2020-02",
+        "generales c200229g.99288000: el total declara 14 líneas y el archivo tiene 15"
+      ]
+    },
+    "2020-03": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 36,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 877,
+        "fondos_mutuos": 928,
+        "extranjeros": 3221,
+        "derivados": 2528,
+        "pactos": 51,
+        "control_inversiones": 956
+      },
+      "avisos": 11,
+      "detalle_avisos": [
+        "vida a200331v.99289000: el total declara 36 líneas y el archivo tiene 37",
+        "vida a200331v.99301000: el total declara 40 líneas y el archivo tiene 44",
+        "vida c200331v.76034737: el total declara 10 líneas y el archivo tiene 11",
+        "vida c200331v.76263414: el total declara 8 líneas y el archivo tiene 9",
+        "vida c200331v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "generales a200331g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c200331g.96508210: el total declara 13 líneas y el archivo tiene 14",
+        "generales c200331g.96994700: el encabezado dice 2 pero la CMF lo publica en 2020-03",
+        "generales c200331g.99017000: el total declara 9 líneas y el archivo tiene 13",
+        "generales c200331g.99288000: el total declara 14 líneas y el archivo tiene 15",
+        "generales x200331g.99024000: el encabezado dice 202002 pero la CMF lo publica en 2020-03"
+      ]
+    },
+    "2020-04": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 36,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 866,
+        "fondos_mutuos": 918,
+        "extranjeros": 3186,
+        "derivados": 2478,
+        "pactos": 37,
+        "control_inversiones": 947
+      },
+      "avisos": 14,
+      "detalle_avisos": [
+        "vida a200430v.96588080: el total declara 21 líneas y el archivo tiene 22",
+        "vida a200430v.99289000: el total declara 35 líneas y el archivo tiene 36",
+        "vida c200430v.76034737: el total declara 10 líneas y el archivo tiene 11",
+        "vida c200430v.76263414: el total declara 8 líneas y el archivo tiene 9",
+        "vida c200430v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida c200430v.96819630: el total declara 19 líneas y el archivo tiene 20",
+        "vida c200430v.99185000: el total declara 32 líneas y el archivo tiene 33",
+        "vida x200430v.76418751: el total declara 55 líneas y el archivo tiene 56",
+        "vida x200430v.99185000: el total declara 202 líneas y el archivo tiene 201",
+        "generales a200430g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c200430g.76620816: el total declara 8 líneas y el archivo tiene 9",
+        "generales c200430g.96994700: el encabezado dice 2 pero la CMF lo publica en 2020-04",
+        "generales c200430g.99017000: el total declara 10 líneas y el archivo tiene 14",
+        "generales c200430g.99288000: el total declara 13 líneas y el archivo tiene 14"
+      ]
+    },
+    "2020-05": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 36,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 870,
+        "fondos_mutuos": 945,
+        "extranjeros": 3167,
+        "derivados": 2431,
+        "pactos": 47,
+        "control_inversiones": 951
+      },
+      "avisos": 11,
+      "detalle_avisos": [
+        "vida a200531v.99289000: el total declara 35 líneas y el archivo tiene 36",
+        "vida a200531v.99301000: el total declara 40 líneas y el archivo tiene 44",
+        "vida c200531v.76034737: el total declara 10 líneas y el archivo tiene 11",
+        "vida c200531v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida f200531v.76263414: el total declara 2 líneas y el archivo tiene 3",
+        "generales a200531g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c200531g.76620816: el total declara 8 líneas y el archivo tiene 9",
+        "generales c200531g.96994700: el encabezado dice 2 pero la CMF lo publica en 2020-05",
+        "generales c200531g.99017000: el total declara 9 líneas y el archivo tiene 13",
+        "generales c200531g.99225000: el total declara 1 líneas y el archivo tiene 11",
+        "generales c200531g.99288000: el total declara 14 líneas y el archivo tiene 15"
+      ]
+    },
+    "2020-06": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 862,
+        "fondos_mutuos": 974,
+        "extranjeros": 3200,
+        "derivados": 2524,
+        "pactos": 31,
+        "control_inversiones": 961
+      },
+      "avisos": 11,
+      "detalle_avisos": [
+        "vida a200630v.96588080: el total declara 21 líneas y el archivo tiene 22",
+        "vida a200630v.99301000: el total declara 40 líneas y el archivo tiene 44",
+        "vida c200630v.76034737: el total declara 10 líneas y el archivo tiene 11",
+        "vida c200630v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida c200630v.96571890: el total declara 39 líneas y el archivo tiene 38",
+        "vida f200630v.76263414: el total declara 2 líneas y el archivo tiene 3",
+        "generales a200630g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c200630g.76810563: el total declara 10 líneas y el archivo tiene 11",
+        "generales c200630g.96994700: el encabezado dice 2 pero la CMF lo publica en 2020-06",
+        "generales c200630g.99017000: el total declara 9 líneas y el archivo tiene 14",
+        "generales c200630g.99288000: el total declara 14 líneas y el archivo tiene 15"
+      ]
+    },
+    "2020-07": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 867,
+        "fondos_mutuos": 968,
+        "extranjeros": 3157,
+        "derivados": 2602,
+        "pactos": 46,
+        "control_inversiones": 944
+      },
+      "avisos": 15,
+      "detalle_avisos": [
+        "vida a200731v.70015730: el total declara 28 líneas y el archivo tiene 34",
+        "vida a200731v.99289000: el total declara 35 líneas y el archivo tiene 36",
+        "vida c200731v.76034737: el total declara 10 líneas y el archivo tiene 11",
+        "vida c200731v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida c200731v.96571890: el total declara 39 líneas y el archivo tiene 37",
+        "vida f200731v.76263414: el total declara 2 líneas y el archivo tiene 3",
+        "vida p200731v.96571890: el encabezado dice 202006 pero la CMF lo publica en 2020-07",
+        "vida p200731v.96571890: el total declara 532 líneas y el archivo tiene 531",
+        "vida x200731v.99024000: el encabezado dice 202006 pero la CMF lo publica en 2020-07",
+        "generales a200731g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c200731g.76620816: el total declara 7 líneas y el archivo tiene 8",
+        "generales c200731g.76810563: el total declara 9 líneas y el archivo tiene 10",
+        "generales c200731g.96994700: el encabezado dice 2 pero la CMF lo publica en 2020-07",
+        "generales c200731g.99017000: el total declara 9 líneas y el archivo tiene 14",
+        "generales c200731g.99288000: el total declara 14 líneas y el archivo tiene 15"
+      ]
+    },
+    "2020-08": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 878,
+        "fondos_mutuos": 972,
+        "extranjeros": 3138,
+        "derivados": 2579,
+        "pactos": 53,
+        "control_inversiones": 951
+      },
+      "avisos": 15,
+      "detalle_avisos": [
+        "vida a200831v.99289000: el total declara 37 líneas y el archivo tiene 36",
+        "vida a200831v.99301000: el total declara 40 líneas y el archivo tiene 44",
+        "vida c200831v.76034737: el total declara 10 líneas y el archivo tiene 11",
+        "vida c200831v.76263414: el total declara 9 líneas y el archivo tiene 10",
+        "vida c200831v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida c200831v.96571890: el total declara 39 líneas y el archivo tiene 38",
+        "vida f200831v.76263414: el total declara 2 líneas y el archivo tiene 3",
+        "generales a200831g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c200831g.76620816: el total declara 6 líneas y el archivo tiene 7",
+        "generales c200831g.76810563: el total declara 9 líneas y el archivo tiene 10",
+        "generales c200831g.96994700: el encabezado dice 2 pero la CMF lo publica en 2020-08",
+        "generales c200831g.99017000: el total declara 9 líneas y el archivo tiene 13",
+        "generales c200831g.99288000: el total declara 14 líneas y el archivo tiene 15",
+        "generales x200831g.76363534: el encabezado dice 202007 pero la CMF lo publica en 2020-08",
+        "generales x200831g.96573590: el encabezado dice 202007 pero la CMF lo publica en 2020-08"
+      ]
+    },
+    "2020-09": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 891,
+        "fondos_mutuos": 1017,
+        "extranjeros": 3170,
+        "derivados": 2554,
+        "pactos": 42,
+        "control_inversiones": 963
+      },
+      "avisos": 17,
+      "detalle_avisos": [
+        "vida c200930v.76408757: el total declara 11 líneas y el archivo tiene 10",
+        "vida c200930v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida c200930v.96549050: el encabezado dice 202008 pero la CMF lo publica en 2020-09",
+        "vida c200930v.96571890: el total declara 40 líneas y el archivo tiene 38",
+        "vida f200930v.76263414: el total declara 2 líneas y el archivo tiene 3",
+        "vida p200930v.76263414: el encabezado dice 202008 pero la CMF lo publica en 2020-09",
+        "vida x200930v.70015730: el total declara 13 líneas y el archivo tiene 18",
+        "vida x200930v.76263414: el encabezado dice 202008 pero la CMF lo publica en 2020-09",
+        "generales a200930g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c200930g.76810563: el total declara 9 líneas y el archivo tiene 10",
+        "generales c200930g.96994700: el encabezado dice 2 pero la CMF lo publica en 2020-09",
+        "generales c200930g.99017000: el total declara 9 líneas y el archivo tiene 13",
+        "generales c200930g.99288000: el total declara 14 líneas y el archivo tiene 15",
+        "generales f200930g.76328793: el total declara 5 líneas y el archivo tiene 4",
+        "generales p200930g.76039758: el encabezado dice 202008 pero la CMF lo publica en 2020-09",
+        "generales p200930g.76743492: el encabezado dice 202008 pero la CMF lo publica en 2020-09",
+        "generales x200930g.76743492: el encabezado dice 202008 pero la CMF lo publica en 2020-09"
+      ]
+    },
+    "2020-10": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 885,
+        "fondos_mutuos": 976,
+        "extranjeros": 3146,
+        "derivados": 2522,
+        "pactos": 44,
+        "control_inversiones": 948
+      },
+      "avisos": 12,
+      "detalle_avisos": [
+        "vida a201031v.99301000: el total declara 41 líneas y el archivo tiene 45",
+        "vida c201031v.76034737: el total declara 11 líneas y el archivo tiene 12",
+        "vida c201031v.76263414: el total declara 8 líneas y el archivo tiene 9",
+        "vida c201031v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida x201031v.99588060: el encabezado dice 202009 pero la CMF lo publica en 2020-10",
+        "generales a201031g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c201031g.76620816: el total declara 8 líneas y el archivo tiene 7",
+        "generales c201031g.76810563: el total declara 9 líneas y el archivo tiene 10",
+        "generales c201031g.96994700: el encabezado dice 2 pero la CMF lo publica en 2020-10",
+        "generales c201031g.99017000: el total declara 10 líneas y el archivo tiene 14",
+        "generales c201031g.99288000: el total declara 14 líneas y el archivo tiene 15",
+        "generales f201031g.76328793: el total declara 5 líneas y el archivo tiene 4"
+      ]
+    },
+    "2020-11": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 37,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 868,
+        "fondos_mutuos": 949,
+        "extranjeros": 3130,
+        "derivados": 2585,
+        "pactos": 50,
+        "control_inversiones": 951
+      },
+      "avisos": 13,
+      "detalle_avisos": [
+        "vida a201130v.99185000: el total declara 50 líneas y el archivo tiene 49",
+        "vida a201130v.99289000: el total declara 35 líneas y el archivo tiene 36",
+        "vida a201130v.99301000: el total declara 41 líneas y el archivo tiene 45",
+        "vida c201130v.76263414: el total declara 9 líneas y el archivo tiene 10",
+        "vida c201130v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida c201130v.96549050: el encabezado dice 202010 pero la CMF lo publica en 2020-11",
+        "vida x201130v.70015730: el total declara 14 líneas y el archivo tiene 17",
+        "generales a201130g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c201130g.76620816: el total declara 8 líneas y el archivo tiene 7",
+        "generales c201130g.96994700: el encabezado dice 2 pero la CMF lo publica en 2020-11",
+        "generales c201130g.99017000: el total declara 9 líneas y el archivo tiene 13",
+        "generales c201130g.99288000: el total declara 14 líneas y el archivo tiene 15",
+        "generales f201130g.76328793: el total declara 5 líneas y el archivo tiene 4"
+      ]
+    },
+    "2020-12": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 36,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 895,
+        "fondos_mutuos": 960,
+        "extranjeros": 3177,
+        "derivados": 2518,
+        "pactos": 47,
+        "control_inversiones": 958
+      },
+      "avisos": 10,
+      "detalle_avisos": [
+        "vida c201231v.76263414: el total declara 9 líneas y el archivo tiene 10",
+        "vida c201231v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida c201231v.96571890: el total declara 40 líneas y el archivo tiene 37",
+        "vida c201231v.96933030: el total declara 12 líneas y el archivo tiene 13",
+        "vida x201231v.70015730: el total declara 23 líneas y el archivo tiene 24",
+        "generales a201231g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales a201231g.99288000: el total declara 14 líneas y el archivo tiene 13",
+        "generales c201231g.76810563: el total declara 14 líneas y el archivo tiene 13",
+        "generales c201231g.96994700: el encabezado dice 2 pero la CMF lo publica en 2020-12",
+        "generales c201231g.99017000: el total declara 9 líneas y el archivo tiene 13"
+      ]
+    },
+    "2021-01": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 36,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 899,
+        "fondos_mutuos": 873,
+        "extranjeros": 3137,
+        "derivados": 2578,
+        "pactos": 36,
+        "control_inversiones": 947
+      },
+      "avisos": 15,
+      "detalle_avisos": [
+        "vida a210131v.76034737: el total declara 10 líneas y el archivo tiene 9",
+        "vida c210131v.76263414: el total declara 9 líneas y el archivo tiene 10",
+        "vida c210131v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida c210131v.96549050: el total declara 21 líneas y el archivo tiene 22",
+        "vida c210131v.96571890: el total declara 40 líneas y el archivo tiene 37",
+        "vida c210131v.99301000: el total declara 27 líneas y el archivo tiene 36",
+        "generales a210131g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c210131g.76620816: el total declara 8 líneas y el archivo tiene 7",
+        "generales c210131g.76810563: el total declara 12 líneas y el archivo tiene 11",
+        "generales c210131g.96994700: el encabezado dice 2 pero la CMF lo publica en 2021-01",
+        "generales c210131g.99017000: el total declara 9 líneas y el archivo tiene 13",
+        "generales c210131g.99024000: el total declara 9 líneas y el archivo tiene 8",
+        "generales c210131g.99225000: el total declara 11 líneas y el archivo tiene 12",
+        "generales c210131g.99288000: el total declara 13 líneas y el archivo tiene 14",
+        "generales f210131g.76328793: el total declara 5 líneas y el archivo tiene 4"
+      ]
+    },
+    "2021-02": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 36,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 914,
+        "fondos_mutuos": 882,
+        "extranjeros": 3149,
+        "derivados": 2613,
+        "pactos": 34,
+        "control_inversiones": 946
+      },
+      "avisos": 14,
+      "detalle_avisos": [
+        "vida a210228v.99301000: el total declara 46 líneas y el archivo tiene 47",
+        "vida c210228v.76263414: el total declara 8 líneas y el archivo tiene 9",
+        "vida c210228v.96549050: el total declara 21 líneas y el archivo tiene 22",
+        "vida c210228v.96571890: el total declara 40 líneas y el archivo tiene 37",
+        "vida c210228v.99301000: el total declara 25 líneas y el archivo tiene 36",
+        "vida x210228v.99289000: el total declara 381 líneas y el archivo tiene 380",
+        "generales a210228g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c210228g.76042965: el total declara 11 líneas y el archivo tiene 12",
+        "generales c210228g.76620816: el total declara 8 líneas y el archivo tiene 7",
+        "generales c210228g.76810563: el total declara 13 líneas y el archivo tiene 12",
+        "generales c210228g.96994700: el encabezado dice 2 pero la CMF lo publica en 2021-02",
+        "generales c210228g.99017000: el total declara 9 líneas y el archivo tiene 13",
+        "generales c210228g.99288000: el total declara 13 líneas y el archivo tiene 14",
+        "generales f210228g.76328793: el total declara 3 líneas y el archivo tiene 4"
+      ]
+    },
+    "2021-03": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 36,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 911,
+        "fondos_mutuos": 932,
+        "extranjeros": 3194,
+        "derivados": 2679,
+        "pactos": 34,
+        "control_inversiones": 955
+      },
+      "avisos": 16,
+      "detalle_avisos": [
+        "vida c210331v.76263414: el total declara 9 líneas y el archivo tiene 10",
+        "vida c210331v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida c210331v.96549050: el total declara 21 líneas y el archivo tiene 22",
+        "vida c210331v.96571890: el total declara 40 líneas y el archivo tiene 37",
+        "vida c210331v.99301000: el total declara 33 líneas y el archivo tiene 37",
+        "generales a210331g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales a210331g.99037000: el total declara 11 líneas y el archivo tiene 10",
+        "generales c210331g.76042965: el total declara 11 líneas y el archivo tiene 12",
+        "generales c210331g.76810563: el total declara 13 líneas y el archivo tiene 12",
+        "generales c210331g.96994700: el encabezado dice 2 pero la CMF lo publica en 2021-03",
+        "generales c210331g.99017000: el total declara 10 líneas y el archivo tiene 14",
+        "generales c210331g.99024000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c210331g.99225000: el total declara 10 líneas y el archivo tiene 11",
+        "generales c210331g.99288000: el total declara 13 líneas y el archivo tiene 14",
+        "generales f210331g.76328793: el total declara 3 líneas y el archivo tiene 4",
+        "generales x210331g.76363534: el encabezado dice 202102 pero la CMF lo publica en 2021-03"
+      ]
+    },
+    "2021-04": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 35,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 917,
+        "fondos_mutuos": 892,
+        "extranjeros": 3162,
+        "derivados": 2555,
+        "pactos": 69,
+        "control_inversiones": 934
+      },
+      "avisos": 17,
+      "detalle_avisos": [
+        "vida a210430v.99301000: el total declara 43 líneas y el archivo tiene 47",
+        "vida c210430v.76263414: el total declara 9 líneas y el archivo tiene 10",
+        "vida c210430v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida c210430v.96571890: el total declara 40 líneas y el archivo tiene 37",
+        "vida c210430v.96656410: el total declara 39 líneas y el archivo tiene 38",
+        "vida c210430v.99301000: el total declara 34 líneas y el archivo tiene 37",
+        "vida p210430v.96571890: el encabezado dice 202103 pero la CMF lo publica en 2021-04",
+        "generales a210430g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c210430g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c210430g.76620816: el total declara 8 líneas y el archivo tiene 7",
+        "generales c210430g.76810563: el total declara 12 líneas y el archivo tiene 11",
+        "generales c210430g.96994700: el encabezado dice 2 pero la CMF lo publica en 2021-04",
+        "generales c210430g.99017000: el total declara 10 líneas y el archivo tiene 14",
+        "generales c210430g.99225000: el total declara 10 líneas y el archivo tiene 11",
+        "generales c210430g.99288000: el total declara 13 líneas y el archivo tiene 14",
+        "generales f210430g.76328793: el total declara 3 líneas y el archivo tiene 4",
+        "generales x210430g.76363534: el encabezado dice 202102 pero la CMF lo publica en 2021-04"
+      ]
+    },
+    "2021-05": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 35,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 941,
+        "fondos_mutuos": 891,
+        "extranjeros": 3183,
+        "derivados": 2569,
+        "pactos": 78,
+        "control_inversiones": 935
+      },
+      "avisos": 14,
+      "detalle_avisos": [
+        "vida c210531v.76263414: el total declara 8 líneas y el archivo tiene 9",
+        "vida c210531v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida c210531v.96571890: el total declara 40 líneas y el archivo tiene 37",
+        "vida c210531v.99301000: el total declara 36 líneas y el archivo tiene 37",
+        "generales a210531g.99017000: el encabezado dice 202104 pero la CMF lo publica en 2021-05",
+        "generales a210531g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c210531g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c210531g.76590840: el total declara 15 líneas y el archivo tiene 16",
+        "generales c210531g.76810563: el total declara 12 líneas y el archivo tiene 11",
+        "generales c210531g.96994700: el encabezado dice 2 pero la CMF lo publica en 2021-05",
+        "generales c210531g.99017000: el total declara 9 líneas y el archivo tiene 13",
+        "generales c210531g.99225000: el total declara 10 líneas y el archivo tiene 11",
+        "generales c210531g.99288000: el total declara 14 líneas y el archivo tiene 15",
+        "generales f210531g.76328793: el total declara 5 líneas y el archivo tiene 4"
+      ]
+    },
+    "2021-06": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 35,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 950,
+        "fondos_mutuos": 893,
+        "extranjeros": 3208,
+        "derivados": 2568,
+        "pactos": 77,
+        "control_inversiones": 950
+      },
+      "avisos": 18,
+      "detalle_avisos": [
+        "vida c210630v.76263414: el total declara 8 líneas y el archivo tiene 11",
+        "vida c210630v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida c210630v.96571890: el total declara 40 líneas y el archivo tiene 37",
+        "vida c210630v.99185000: el total declara 31 líneas y el archivo tiene 32",
+        "vida x210630v.70015730: el total declara 15 líneas y el archivo tiene 16",
+        "generales a210630g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c210630g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c210630g.76620816: el total declara 7 líneas y el archivo tiene 8",
+        "generales c210630g.76810563: el total declara 12 líneas y el archivo tiene 11",
+        "generales c210630g.96994700: el encabezado dice 2 pero la CMF lo publica en 2021-06",
+        "generales c210630g.99017000: el total declara 10 líneas y el archivo tiene 15",
+        "generales c210630g.99225000: el total declara 10 líneas y el archivo tiene 11",
+        "generales c210630g.99288000: el total declara 15 líneas y el archivo tiene 16",
+        "generales f210630g.76328793: el total declara 5 líneas y el archivo tiene 4",
+        "generales f210630g.99225000: el encabezado dice 202105 pero la CMF lo publica en 2021-06",
+        "generales p210630g.99225000: el encabezado dice 202105 pero la CMF lo publica en 2021-06",
+        "generales x210630g.99024000: el encabezado dice 202105 pero la CMF lo publica en 2021-06",
+        "generales x210630g.99225000: el encabezado dice 202105 pero la CMF lo publica en 2021-06"
+      ]
+    },
+    "2021-07": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 35,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 972,
+        "fondos_mutuos": 844,
+        "extranjeros": 3159,
+        "derivados": 2604,
+        "pactos": 48,
+        "control_inversiones": 942
+      },
+      "avisos": 14,
+      "detalle_avisos": [
+        "vida a210731v.99289000: el total declara 35 líneas y el archivo tiene 36",
+        "vida a210731v.99301000: el total declara 47 líneas y el archivo tiene 51",
+        "vida c210731v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c210731v.94716000: el total declara 20 líneas y el archivo tiene 21",
+        "vida c210731v.96571890: el total declara 40 líneas y el archivo tiene 37",
+        "vida f210731v.99588060: el encabezado dice 202106 pero la CMF lo publica en 2021-07",
+        "generales a210731g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c210731g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c210731g.96994700: el encabezado dice 2 pero la CMF lo publica en 2021-07",
+        "generales c210731g.99017000: el total declara 12 líneas y el archivo tiene 15",
+        "generales c210731g.99225000: el total declara 10 líneas y el archivo tiene 11",
+        "generales c210731g.99288000: el total declara 15 líneas y el archivo tiene 16",
+        "generales f210731g.76328793: el total declara 5 líneas y el archivo tiene 4",
+        "generales x210731g.99024000: el encabezado dice 202105 pero la CMF lo publica en 2021-07"
+      ]
+    },
+    "2021-08": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 35,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 983,
+        "fondos_mutuos": 888,
+        "extranjeros": 3140,
+        "derivados": 2513,
+        "pactos": 48,
+        "control_inversiones": 939
+      },
+      "avisos": 20,
+      "detalle_avisos": [
+        "vida a210831v.70015730: el total declara 25 líneas y el archivo tiene 26",
+        "vida a210831v.76408757: el encabezado dice 202107 pero la CMF lo publica en 2021-08",
+        "vida a210831v.99301000: el total declara 47 líneas y el archivo tiene 51",
+        "vida c210831v.76034737: el total declara 14 líneas y el archivo tiene 15",
+        "vida c210831v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c210831v.76418751: el total declara 29 líneas y el archivo tiene 30",
+        "vida c210831v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c210831v.96571890: el total declara 40 líneas y el archivo tiene 37",
+        "vida c210831v.99301000: el total declara 30 líneas y el archivo tiene 38",
+        "vida x210831v.76418751: el total declara 49 líneas y el archivo tiene 50",
+        "vida x210831v.99289000: el total declara 372 líneas y el archivo tiene 371",
+        "generales a210831g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c210831g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c210831g.96994700: el encabezado dice 2 pero la CMF lo publica en 2021-08",
+        "generales c210831g.99017000: el total declara 12 líneas y el archivo tiene 15",
+        "generales c210831g.99037000: el total declara 18 líneas y el archivo tiene 19",
+        "generales c210831g.99225000: el total declara 10 líneas y el archivo tiene 11",
+        "generales c210831g.99288000: el total declara 14 líneas y el archivo tiene 15",
+        "generales f210831g.76042965: el total declara 5 líneas y el archivo tiene 4",
+        "generales f210831g.76328793: el total declara 5 líneas y el archivo tiene 4"
+      ]
+    },
+    "2021-09": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 35,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 980,
+        "fondos_mutuos": 889,
+        "extranjeros": 3165,
+        "derivados": 2608,
+        "pactos": 91,
+        "control_inversiones": 940
+      },
+      "avisos": 17,
+      "detalle_avisos": [
+        "vida a210930v.99185000: el total declara 50 líneas y el archivo tiene 49",
+        "vida a210930v.99301000: el total declara 47 líneas y el archivo tiene 51",
+        "vida c210930v.76034737: el total declara 14 líneas y el archivo tiene 15",
+        "vida c210930v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c210930v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c210930v.96571890: el total declara 40 líneas y el archivo tiene 38",
+        "vida c210930v.99301000: el total declara 26 líneas y el archivo tiene 37",
+        "generales a210930g.99017000: el encabezado dice 202108 pero la CMF lo publica en 2021-09",
+        "generales a210930g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c210930g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c210930g.76620816: el total declara 7 líneas y el archivo tiene 8",
+        "generales c210930g.96994700: el encabezado dice 2 pero la CMF lo publica en 2021-09",
+        "generales c210930g.99017000: el total declara 12 líneas y el archivo tiene 15",
+        "generales c210930g.99225000: el total declara 10 líneas y el archivo tiene 11",
+        "generales c210930g.99288000: el total declara 15 líneas y el archivo tiene 16",
+        "generales f210930g.76042965: el total declara 5 líneas y el archivo tiene 4",
+        "generales f210930g.76328793: el total declara 5 líneas y el archivo tiene 4"
+      ]
+    },
+    "2021-10": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 34,
+        "generales": 34
+      },
+      "registros": {
+        "acciones": 963,
+        "fondos_mutuos": 881,
+        "extranjeros": 3022,
+        "derivados": 2458,
+        "pactos": 170,
+        "control_inversiones": 931
+      },
+      "avisos": 12,
+      "detalle_avisos": [
+        "vida c211031v.76034737: el total declara 13 líneas y el archivo tiene 14",
+        "vida c211031v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c211031v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c211031v.99588060: el total declara 9 líneas y el archivo tiene 10",
+        "vida p211031v.96571890: el total declara 452 líneas y el archivo tiene 450",
+        "vida x211031v.99289000: el total declara 357 líneas y el archivo tiene 356",
+        "generales a211031g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c211031g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c211031g.96994700: el encabezado dice 2 pero la CMF lo publica en 2021-10",
+        "generales c211031g.99017000: el total declara 12 líneas y el archivo tiene 15",
+        "generales c211031g.99288000: el total declara 15 líneas y el archivo tiene 16",
+        "generales f211031g.76042965: el total declara 5 líneas y el archivo tiene 4"
+      ]
+    },
+    "2021-11": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 34,
+        "generales": 34
+      },
+      "registros": {
+        "acciones": 938,
+        "fondos_mutuos": 880,
+        "extranjeros": 3033,
+        "derivados": 2416,
+        "pactos": 147,
+        "control_inversiones": 937
+      },
+      "avisos": 11,
+      "detalle_avisos": [
+        "vida c211130v.76034737: el total declara 12 líneas y el archivo tiene 13",
+        "vida c211130v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c211130v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c211130v.99588060: el total declara 9 líneas y el archivo tiene 10",
+        "vida x211130v.99185000: el total declara 165 líneas y el archivo tiene 166",
+        "generales a211130g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c211130g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c211130g.96994700: el encabezado dice 2 pero la CMF lo publica en 2021-11",
+        "generales c211130g.99017000: el total declara 12 líneas y el archivo tiene 15",
+        "generales c211130g.99288000: el total declara 15 líneas y el archivo tiene 16",
+        "generales f211130g.76042965: el total declara 5 líneas y el archivo tiene 4"
+      ]
+    },
+    "2021-12": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 34,
+        "generales": 34
+      },
+      "registros": {
+        "acciones": 950,
+        "fondos_mutuos": 906,
+        "extranjeros": 3057,
+        "derivados": 2346,
+        "pactos": 147,
+        "control_inversiones": 940
+      },
+      "avisos": 11,
+      "detalle_avisos": [
+        "vida c211231v.76034737: el total declara 12 líneas y el archivo tiene 13",
+        "vida c211231v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c211231v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c211231v.99185000: el total declara 32 líneas y el archivo tiene 33",
+        "vida c211231v.99588060: el total declara 9 líneas y el archivo tiene 10",
+        "generales a211231g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c211231g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c211231g.96994700: el encabezado dice 2 pero la CMF lo publica en 2021-12",
+        "generales c211231g.99017000: el total declara 12 líneas y el archivo tiene 15",
+        "generales c211231g.99288000: el total declara 14 líneas y el archivo tiene 15",
+        "generales f211231g.76042965: el total declara 5 líneas y el archivo tiene 4"
+      ]
+    },
+    "2022-01": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 34,
+        "generales": 34
+      },
+      "registros": {
+        "acciones": 943,
+        "fondos_mutuos": 873,
+        "extranjeros": 3061,
+        "derivados": 2393,
+        "pactos": 169,
+        "control_inversiones": 930
+      },
+      "avisos": 14,
+      "detalle_avisos": [
+        "vida a220131v.99289000: el total declara 37 líneas y el archivo tiene 36",
+        "vida a220131v.99301000: el total declara 50 líneas y el archivo tiene 54",
+        "vida c220131v.76034737: el total declara 13 líneas y el archivo tiene 14",
+        "vida c220131v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c220131v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c220131v.96549050: el encabezado dice 202101 pero la CMF lo publica en 2022-01",
+        "vida c220131v.99301000: el total declara 35 líneas y el archivo tiene 38",
+        "vida c220131v.99588060: el total declara 9 líneas y el archivo tiene 10",
+        "generales a220131g.99017000: el encabezado dice 202112 pero la CMF lo publica en 2022-01",
+        "generales a220131g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c220131g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c220131g.96994700: el encabezado dice 2 pero la CMF lo publica en 2022-01",
+        "generales c220131g.99017000: el total declara 12 líneas y el archivo tiene 15",
+        "generales c220131g.99288000: el total declara 14 líneas y el archivo tiene 15"
+      ]
+    },
+    "2022-02": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 34,
+        "generales": 34
+      },
+      "registros": {
+        "acciones": 942,
+        "fondos_mutuos": 832,
+        "extranjeros": 3083,
+        "derivados": 2440,
+        "pactos": 157,
+        "control_inversiones": 929
+      },
+      "avisos": 15,
+      "detalle_avisos": [
+        "vida a220228v.96656410: el total declara 91 líneas y el archivo tiene 90",
+        "vida a220228v.99185000: el total declara 20 líneas y el archivo tiene 19",
+        "vida a220228v.99289000: el total declara 35 líneas y el archivo tiene 36",
+        "vida c220228v.76034737: el total declara 12 líneas y el archivo tiene 13",
+        "vida c220228v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c220228v.76477116: el total declara 7 líneas y el archivo tiene 8",
+        "vida c220228v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c220228v.96549050: el encabezado dice 202102 pero la CMF lo publica en 2022-02",
+        "vida c220228v.99588060: el total declara 9 líneas y el archivo tiene 10",
+        "vida x220228v.99289000: el total declara 355 líneas y el archivo tiene 354",
+        "generales a220228g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales a220228g.99037000: el total declara 11 líneas y el archivo tiene 10",
+        "generales c220228g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c220228g.96994700: el encabezado dice 2 pero la CMF lo publica en 2022-02",
+        "generales c220228g.99017000: el total declara 12 líneas y el archivo tiene 15"
+      ]
+    },
+    "2022-03": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 34,
+        "generales": 34
+      },
+      "registros": {
+        "acciones": 948,
+        "fondos_mutuos": 873,
+        "extranjeros": 3091,
+        "derivados": 2431,
+        "pactos": 151,
+        "control_inversiones": 936
+      },
+      "avisos": 17,
+      "detalle_avisos": [
+        "vida a220331v.99185000: el total declara 20 líneas y el archivo tiene 19",
+        "vida a220331v.99301000: el total declara 49 líneas y el archivo tiene 53",
+        "vida c220331v.76034737: el total declara 12 líneas y el archivo tiene 13",
+        "vida c220331v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c220331v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c220331v.99588060: el total declara 8 líneas y el archivo tiene 9",
+        "vida x220331v.99289000: el total declara 363 líneas y el archivo tiene 380",
+        "vida x220331v.99301000: el total declara 426 líneas y el archivo tiene 427",
+        "generales a220331g.99017000: el encabezado dice 202112 pero la CMF lo publica en 2022-03",
+        "generales a220331g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c220331g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c220331g.77096952: el encabezado dice 202231 pero la CMF lo publica en 2022-03",
+        "generales c220331g.96994700: el encabezado dice 2 pero la CMF lo publica en 2022-03",
+        "generales c220331g.99017000: el total declara 12 líneas y el archivo tiene 15",
+        "generales c220331g.99288000: el total declara 15 líneas y el archivo tiene 16",
+        "generales x220331g.76039758: el encabezado dice 202202 pero la CMF lo publica en 2022-03",
+        "generales x220331g.77096952: el encabezado dice 202204 pero la CMF lo publica en 2022-03"
+      ]
+    },
+    "2022-04": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 34,
+        "generales": 34
+      },
+      "registros": {
+        "acciones": 951,
+        "fondos_mutuos": 888,
+        "extranjeros": 3167,
+        "derivados": 2441,
+        "pactos": 125,
+        "control_inversiones": 932
+      },
+      "avisos": 13,
+      "detalle_avisos": [
+        "vida a220430v.99301000: el total declara 50 líneas y el archivo tiene 54",
+        "vida c220430v.76034737: el total declara 12 líneas y el archivo tiene 13",
+        "vida c220430v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c220430v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c220430v.99289000: el total declara 30 líneas y el archivo tiene 36",
+        "vida c220430v.99301000: el total declara 33 líneas y el archivo tiene 38",
+        "vida c220430v.99588060: el total declara 8 líneas y el archivo tiene 9",
+        "generales a220430g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c220430g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c220430g.76810563: el total declara 12 líneas y el archivo tiene 13",
+        "generales c220430g.96994700: el encabezado dice 2 pero la CMF lo publica en 2022-04",
+        "generales c220430g.99017000: el total declara 12 líneas y el archivo tiene 15",
+        "generales c220430g.99288000: el total declara 14 líneas y el archivo tiene 15"
+      ]
+    },
+    "2022-05": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 34,
+        "generales": 34
+      },
+      "registros": {
+        "acciones": 952,
+        "fondos_mutuos": 888,
+        "extranjeros": 3237,
+        "derivados": 2476,
+        "pactos": 78,
+        "control_inversiones": 934
+      },
+      "avisos": 13,
+      "detalle_avisos": [
+        "vida a220531v.99289000: el total declara 36 líneas y el archivo tiene 37",
+        "vida b220531v.99012000: el total declara 3258 líneas y el archivo tiene 3257",
+        "vida c220531v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c220531v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c220531v.99289000: el total declara 30 líneas y el archivo tiene 36",
+        "vida c220531v.99588060: el total declara 9 líneas y el archivo tiene 10",
+        "vida x220531v.99289000: el total declara 388 líneas y el archivo tiene 387",
+        "generales a220531g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c220531g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c220531g.76810563: el total declara 11 líneas y el archivo tiene 12",
+        "generales c220531g.96994700: el encabezado dice 2 pero la CMF lo publica en 2022-05",
+        "generales c220531g.99017000: el total declara 12 líneas y el archivo tiene 15",
+        "generales c220531g.99288000: el total declara 15 líneas y el archivo tiene 16"
+      ]
+    },
+    "2022-06": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 34,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 959,
+        "fondos_mutuos": 923,
+        "extranjeros": 3350,
+        "derivados": 2568,
+        "pactos": 63,
+        "control_inversiones": 943
+      },
+      "avisos": 17,
+      "detalle_avisos": [
+        "vida a220630v.70015730: el total declara 19 líneas y el archivo tiene 23",
+        "vida a220630v.76282191: el encabezado dice 202205 pero la CMF lo publica en 2022-06",
+        "vida a220630v.96656410: el total declara 90 líneas y el archivo tiene 89",
+        "vida a220630v.99185000: el total declara 20 líneas y el archivo tiene 19",
+        "vida c220630v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c220630v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c220630v.99289000: el total declara 36 líneas y el archivo tiene 37",
+        "vida c220630v.99301000: el total declara 26 líneas y el archivo tiene 38",
+        "vida c220630v.99588060: el total declara 9 líneas y el archivo tiene 10",
+        "generales a220630g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c220630g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c220630g.76598625: el total declara 10 líneas y el archivo tiene 11",
+        "generales c220630g.76810563: el total declara 12 líneas y el archivo tiene 13",
+        "generales c220630g.77591207: el total declara -1 líneas y el archivo tiene 3",
+        "generales c220630g.96994700: el encabezado dice 2 pero la CMF lo publica en 2022-06",
+        "generales c220630g.99017000: el total declara 12 líneas y el archivo tiene 15",
+        "generales c220630g.99288000: el total declara 14 líneas y el archivo tiene 15"
+      ]
+    },
+    "2022-07": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 34,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 965,
+        "fondos_mutuos": 894,
+        "extranjeros": 3385,
+        "derivados": 2608,
+        "pactos": 102,
+        "control_inversiones": 940
+      },
+      "avisos": 15,
+      "detalle_avisos": [
+        "vida a220731v.99185000: el total declara 20 líneas y el archivo tiene 19",
+        "vida a220731v.99301000: el total declara 64 líneas y el archivo tiene 65",
+        "vida c220731v.76263414: el total declara 10 líneas y el archivo tiene 11",
+        "vida c220731v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c220731v.99301000: el total declara 37 líneas y el archivo tiene 38",
+        "vida c220731v.99588060: el total declara 9 líneas y el archivo tiene 10",
+        "vida p220731v.96571890: el total declara 443 líneas y el archivo tiene 486",
+        "generales a220731g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c220731g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c220731g.76094234: el total declara 9 líneas y el archivo tiene 10",
+        "generales c220731g.76810563: el total declara 12 líneas y el archivo tiene 13",
+        "generales c220731g.96994700: el encabezado dice 2 pero la CMF lo publica en 2022-07",
+        "generales c220731g.99017000: el total declara 12 líneas y el archivo tiene 15",
+        "generales c220731g.99288000: el total declara 14 líneas y el archivo tiene 15",
+        "generales x220731g.96573590: el encabezado dice 202206 pero la CMF lo publica en 2022-07"
+      ]
+    },
+    "2022-08": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 34,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 999,
+        "fondos_mutuos": 890,
+        "extranjeros": 3499,
+        "derivados": 2727,
+        "pactos": 127,
+        "control_inversiones": 935
+      },
+      "avisos": 12,
+      "detalle_avisos": [
+        "vida a220831v.70015730: el total declara 28 líneas y el archivo tiene 31",
+        "vida a220831v.76408757: el encabezado dice 202209 pero la CMF lo publica en 2022-08",
+        "vida c220831v.76263414: el total declara 10 líneas y el archivo tiene 9",
+        "vida c220831v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c220831v.99588060: el total declara 9 líneas y el archivo tiene 10",
+        "vida p220831v.96571890: el total declara 456 líneas y el archivo tiene 511",
+        "vida x220831v.99289000: el total declara 427 líneas y el archivo tiene 426",
+        "generales a220831g.99017000: el total declara 8 líneas y el archivo tiene 9",
+        "generales c220831g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c220831g.76810563: el total declara 12 líneas y el archivo tiene 13",
+        "generales c220831g.99017000: el total declara 12 líneas y el archivo tiene 15",
+        "generales c220831g.99288000: el total declara 14 líneas y el archivo tiene 15"
+      ]
+    },
+    "2022-09": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 34,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 972,
+        "fondos_mutuos": 902,
+        "extranjeros": 3757,
+        "derivados": 2742,
+        "pactos": 107,
+        "control_inversiones": 945
+      },
+      "avisos": 13,
+      "detalle_avisos": [
+        "vida a220930v.96571890: el total declara 127 líneas y el archivo tiene 128",
+        "vida c220930v.76263414: el total declara 10 líneas y el archivo tiene 9",
+        "vida c220930v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c220930v.96588080: el encabezado dice 202208 pero la CMF lo publica en 2022-09",
+        "vida c220930v.99301000: el total declara 35 líneas y el archivo tiene 38",
+        "vida c220930v.99588060: el total declara 10 líneas y el archivo tiene 11",
+        "vida p220930v.96571890: el total declara 442 líneas y el archivo tiene 485",
+        "generales c220930g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c220930g.76810563: el total declara 12 líneas y el archivo tiene 13",
+        "generales c220930g.94510000: el total declara 13 líneas y el archivo tiene 14",
+        "generales c220930g.99037000: el total declara 16 líneas y el archivo tiene 19",
+        "generales c220930g.99288000: el total declara 14 líneas y el archivo tiene 15",
+        "generales x220930g.76039758: el encabezado dice 202208 pero la CMF lo publica en 2022-09"
+      ]
+    },
+    "2022-10": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 34,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 950,
+        "fondos_mutuos": 854,
+        "extranjeros": 3900,
+        "derivados": 2696,
+        "pactos": 113,
+        "control_inversiones": 941
+      },
+      "avisos": 14,
+      "detalle_avisos": [
+        "vida a221031v.99185000: el total declara 20 líneas y el archivo tiene 19",
+        "vida a221031v.99289000: el total declara 35 líneas y el archivo tiene 36",
+        "vida a221031v.99301000: el total declara 70 líneas y el archivo tiene 71",
+        "vida c221031v.76263414: el total declara 10 líneas y el archivo tiene 9",
+        "vida c221031v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c221031v.96588080: el encabezado dice 202208 pero la CMF lo publica en 2022-10",
+        "vida c221031v.96656410: el encabezado dice 202209 pero la CMF lo publica en 2022-10",
+        "vida c221031v.99588060: el total declara 10 líneas y el archivo tiene 11",
+        "vida p221031v.96571890: el total declara 443 líneas y el archivo tiene 491",
+        "vida x221031v.99289000: el total declara 449 líneas y el archivo tiene 448",
+        "generales a221031g.96573590: el total declara 15 líneas y el archivo tiene 16",
+        "generales c221031g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c221031g.76810563: el total declara 12 líneas y el archivo tiene 13",
+        "generales c221031g.99288000: el total declara 14 líneas y el archivo tiene 15"
+      ]
+    },
+    "2022-11": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 34,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 926,
+        "fondos_mutuos": 794,
+        "extranjeros": 4130,
+        "derivados": 2702,
+        "pactos": 84,
+        "control_inversiones": 937
+      },
+      "avisos": 19,
+      "detalle_avisos": [
+        "vida a221130v.99185000: el total declara 20 líneas y el archivo tiene 19",
+        "vida a221130v.99196000: el encabezado dice 202210 pero la CMF lo publica en 2022-11",
+        "vida a221130v.99289000: el total declara 36 líneas y el archivo tiene 37",
+        "vida a221130v.99301000: el total declara 65 líneas y el archivo tiene 73",
+        "vida c221130v.76263414: el total declara 10 líneas y el archivo tiene 9",
+        "vida c221130v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c221130v.99196000: el encabezado dice 202207 pero la CMF lo publica en 2022-11",
+        "vida c221130v.99301000: el total declara 30 líneas y el archivo tiene 38",
+        "vida c221130v.99588060: el total declara 10 líneas y el archivo tiene 11",
+        "vida f221130v.99196000: el encabezado dice 202210 pero la CMF lo publica en 2022-11",
+        "vida p221130v.96571890: el total declara 433 líneas y el archivo tiene 465",
+        "vida p221130v.99196000: el encabezado dice 202210 pero la CMF lo publica en 2022-11",
+        "vida x221130v.99196000: el encabezado dice 202210 pero la CMF lo publica en 2022-11",
+        "vida x221130v.99289000: el total declara 455 líneas y el archivo tiene 456",
+        "generales a221130g.96573590: el total declara 15 líneas y el archivo tiene 16",
+        "generales a221130g.99037000: el total declara 11 líneas y el archivo tiene 10",
+        "generales c221130g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c221130g.76810563: el total declara 12 líneas y el archivo tiene 13",
+        "generales c221130g.99288000: el total declara 15 líneas y el archivo tiene 16"
+      ]
+    },
+    "2022-12": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 34,
+        "generales": 35
+      },
+      "registros": {
+        "acciones": 923,
+        "fondos_mutuos": 821,
+        "extranjeros": 4229,
+        "derivados": 2696,
+        "pactos": 80,
+        "control_inversiones": 946
+      },
+      "avisos": 12,
+      "detalle_avisos": [
+        "vida a221231v.99185000: el total declara 20 líneas y el archivo tiene 19",
+        "vida c221231v.76263414: el total declara 10 líneas y el archivo tiene 9",
+        "vida c221231v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c221231v.99588060: el total declara 10 líneas y el archivo tiene 11",
+        "vida p221231v.96571890: el total declara 401 líneas y el archivo tiene 433",
+        "generales a221231g.96573590: el total declara 15 líneas y el archivo tiene 16",
+        "generales a221231g.99037000: el total declara 11 líneas y el archivo tiene 10",
+        "generales c221231g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c221231g.76810563: el total declara 12 líneas y el archivo tiene 13",
+        "generales c221231g.96994700: el encabezado dice 2 pero la CMF lo publica en 2022-12",
+        "generales c221231g.99037000: el total declara 20 líneas y el archivo tiene 19",
+        "generales c221231g.99288000: el total declara 15 líneas y el archivo tiene 16"
+      ]
+    },
+    "2023-01": {
+      "formato": "v2016",
+      "companias": {
+        "vida": 33,
+        "generales": 33
+      },
+      "registros": {
+        "acciones": 924,
+        "fondos_mutuos": 804,
+        "extranjeros": 4225,
+        "derivados": 2824,
+        "pactos": 59,
+        "control_inversiones": 933
+      },
+      "avisos": 13,
+      "detalle_avisos": [
+        "vida a230131v.99185000: el total declara 20 líneas y el archivo tiene 19",
+        "vida a230131v.99301000: el total declara 68 líneas y el archivo tiene 76",
+        "vida c230131v.94716000: el total declara 19 líneas y el archivo tiene 20",
+        "vida c230131v.96837630: el total declara 17 líneas y el archivo tiene 16",
+        "vida c230131v.99301000: el total declara 28 líneas y el archivo tiene 38",
+        "vida c230131v.99588060: el total declara 10 líneas y el archivo tiene 11",
+        "vida p230131v.96571890: el total declara 395 líneas y el archivo tiene 427",
+        "vida x230131v.96549050: el total declara 331 líneas y el archivo tiene 326",
+        "vida x230131v.99301000: el total declara 410 líneas y el archivo tiene 418",
+        "generales a230131g.96573590: el total declara 15 líneas y el archivo tiene 16",
+        "generales c230131g.76042965: el total declara 10 líneas y el archivo tiene 11",
+        "generales c230131g.76810563: el total declara 12 líneas y el archivo tiene 13",
+        "generales c230131g.99288000: el total declara 14 líneas y el archivo tiene 15"
+      ]
+    }
+  },
+  "aseguradoras": {
+    "generales|76015592-6": {
+      "nombre": "CESCE CHILE ASEGURADORA S.A",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|76039758-K": {
+      "nombre": "Compa#ia de Seguros Generales Continental S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|76042965-1": {
+      "nombre": "ORION SEGUROS GENERALES S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|76061223-5": {
+      "nombre": "ZENIT SEGUROS GENERALES S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|76079624-7": {
+      "nombre": "HDI GARANTIA Y CREDITO",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|76094234-0": {
+      "nombre": "SOLUNION CHILE SEGUROS DE CREDITO S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|76173258-7": {
+      "nombre": "UNNIO SEGUROS GENERALES S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|76212519-6": {
+      "nombre": "ASSURANT CHILE COMPANIA DE SEGUROS GENERALES S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|76328793-9": {
+      "nombre": "METLIFE CHILE SEGUROS GENERALES S.A",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|76363534-1": {
+      "nombre": "AVALCHILE SEGUROS DE CREDITO Y GARANTIA S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|76479498-2": {
+      "nombre": "BBVA SEGUROS GENERALES S.A.",
+      "primer": "2016-11",
+      "ultimo": "2017-03",
+      "meses": 5
+    },
+    "generales|76590840-K": {
+      "nombre": "Zurich-Santander Seguros Generales S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|76598625-7": {
+      "nombre": "ASEGURADORA PORVENIR   S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|76620816-9": {
+      "nombre": "SEGCHILE SEGUROS GENERALES S.A.",
+      "primer": "2016-12",
+      "ultimo": "2021-09",
+      "meses": 58
+    },
+    "generales|76620932-7": {
+      "nombre": "STARR INTERNACIONAL SEGUROS GENERALES S.A.",
+      "primer": "2016-12",
+      "ultimo": "2023-01",
+      "meses": 74
+    },
+    "generales|76743492-8": {
+      "nombre": "REALE CHILE SEGUROS GENERALES S.A.",
+      "primer": "2017-05",
+      "ultimo": "2023-01",
+      "meses": 69
+    },
+    "generales|76810563-4": {
+      "nombre": "ORSAN SEGUROS DE CREDITO Y GARANTIA S.A.",
+      "primer": "2017-12",
+      "ultimo": "2023-01",
+      "meses": 62
+    },
+    "generales|76844788-8": {
+      "nombre": "SUAVAL COMPANIA DE SEGUROS DE GARANTIA Y CREDITOS S.A",
+      "primer": "2018-03",
+      "ultimo": "2023-01",
+      "meses": 59
+    },
+    "generales|76981875-8": {
+      "nombre": "CONTEMPORA COMPANIA DE SEGUROS GENERALES S.A.",
+      "primer": "2019-03",
+      "ultimo": "2023-01",
+      "meses": 47
+    },
+    "generales|77096952-2": {
+      "nombre": "FID CHILE SEGUROS GENERALES S.A.",
+      "primer": "2019-12",
+      "ultimo": "2023-01",
+      "meses": 38
+    },
+    "generales|77591207-3": {
+      "nombre": "EVEREST COMPANIA DE SEGUROS GENERALES CHILE S.A.",
+      "primer": "2022-06",
+      "ultimo": "2023-01",
+      "meses": 8
+    },
+    "generales|94510000-1": {
+      "nombre": "RENTA NACIONAL COMPA#IA DE SEGUROS GENERALES S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|96508210-7": {
+      "nombre": "MAPFRE COMPANIA DE SEGUROS GENERALES DE CHILE SA",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|96573590-9": {
+      "nombre": "Compa#ia de Seguros de Credito Continental S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|96642610-1": {
+      "nombre": "CHUBB DE CHILE COMPANIA DE SEGUROS GENERALES S.A.",
+      "primer": "2016-11",
+      "ultimo": "2017-12",
+      "meses": 14
+    },
+    "generales|96654180-6": {
+      "nombre": "CONSORCIO NACIONAL DE SEGUROS GENERALES",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|96683120-0": {
+      "nombre": "CIA. DE SEGUROS GENERALES PENTA SEGUROS S.A.",
+      "primer": "2016-11",
+      "ultimo": "2017-06",
+      "meses": 8
+    },
+    "generales|96831690-7": {
+      "nombre": "COMPANIA DE SEGUROS DE CREDITO COFACE CHILE S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|96837640-3": {
+      "nombre": "BNP PARIBAS CARDIF SEGUROS GENERALES S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|96917990-3": {
+      "nombre": "BANCHILE SEGUROS DE VIDA S.A.",
+      "primer": "2017-03",
+      "ultimo": "2019-10",
+      "meses": 10
+    },
+    "generales|96994700-5": {
+      "nombre": "COMPA#IA DE SEGUROS GENERALES HUELEN S.A.",
+      "primer": "2016-11",
+      "ultimo": "2022-12",
+      "meses": 70
+    },
+    "generales|99017000-2": {
+      "nombre": "SEGUROS GENERALES SURAMERICANA S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|99024000-0": {
+      "nombre": "MUTUALIDAD DE CARABINEROS",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|99037000-1": {
+      "nombre": "CHILENA CONSOLIDADA SEGUROS GENERALES S.A",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|99061000-2": {
+      "nombre": "LIBERTY CIA. DE SEGUROS GENERALES S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|99147000-K": {
+      "nombre": "BCI SEGUROS GENERALES",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|99196000-7": {
+      "nombre": "COMPA#IA DE SEGUROS DE GENERALES HUELEN S.A.",
+      "primer": "2016-11",
+      "ultimo": "2022-12",
+      "meses": 70
+    },
+    "generales|99225000-3": {
+      "nombre": "Chubb Seguros Chile S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|99231000-6": {
+      "nombre": "HDI SEGUROS S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "generales|99288000-7": {
+      "nombre": "SOUTHBRIDGE COMPA#IA DE SEGUROS GENERALES S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|109681296-0": {
+      "nombre": "0PENTA VIDA",
+      "primer": "2018-01",
+      "ultimo": "2018-01",
+      "meses": 1
+    },
+    "vida|70015730-K": {
+      "nombre": "MUTUAL DE SEGUROS DE CHILE",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|76034737-K": {
+      "nombre": "SAVE BCJ SEGUROS DE VIDA S.A",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|76072304-5": {
+      "nombre": "CompaNia de Seguros Corpseguros S.A.",
+      "primer": "2016-11",
+      "ultimo": "2019-05",
+      "meses": 31
+    },
+    "vida|76092587-K": {
+      "nombre": "RIGEL SEGUROS DE VIDA SA",
+      "primer": "2016-11",
+      "ultimo": "2021-03",
+      "meses": 53
+    },
+    "vida|76213329-6": {
+      "nombre": "HELP SEGUROS DE VIDA S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|76263414-7": {
+      "nombre": "SEGUROS DE VIDA SURAMERICANA S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|76282191-5": {
+      "nombre": "BUPA COMPA#IA DE SEGUROS DE VIDA S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|76408757-7": {
+      "nombre": "COLMENA COMPANIA DE SEGUROS DE VIDA S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|76418751-2": {
+      "nombre": "4 LIFE SEGUROS DE VIDA S.A",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|76477116-8": {
+      "nombre": "CF SEGUROS DE VIDA S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|76511423-3": {
+      "nombre": "ALEMANA SEGUROS S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|76573480-0": {
+      "nombre": "SEGUROS CLC S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|76948367-5": {
+      "nombre": "BICE SEGUROS DE VIDA S.A.",
+      "primer": "2018-12",
+      "ultimo": "2020-01",
+      "meses": 14
+    },
+    "vida|77205281-2": {
+      "nombre": "DIVINA PASTORA SEGUROS DE VIDA S.A.",
+      "primer": "2020-06",
+      "ultimo": "2023-01",
+      "meses": 32
+    },
+    "vida|94716000-1": {
+      "nombre": "RENTA NACIONAL  SEGUROS DE VIDA SA",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|96549050-7": {
+      "nombre": "SEGUROS DE VIDA SURA SA",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|96571890-7": {
+      "nombre": "COMPANIA SEGUROS CONFUTURO S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|96573600-K": {
+      "nombre": "BCIVIDA",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|96579280-5": {
+      "nombre": "CN LIFE COMPA#IA DE SEGUROS DE VIDA S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|96588080-1": {
+      "nombre": "PRINCIPAL CIA DE SEG DE VIDA CHILE S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|96656410-5": {
+      "nombre": "BICE VIDA CIA SEGUROS S. A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|96687900-9": {
+      "nombre": "OHIO NATIONAL SEGUROS DE VIDA S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|96812960-0": {
+      "nombre": "PENTA VIDA",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|96819630-8": {
+      "nombre": "Zurich-Santander Seguros de Vida S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|96837630-6": {
+      "nombre": "BNP PARIBAS CARDIF SEGUROS DE VIDA S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|96917990-3": {
+      "nombre": "BANCHILE SEGUROS DE VIDA S.A.",
+      "primer": "2016-11",
+      "ultimo": "2021-09",
+      "meses": 59
+    },
+    "vida|96933030-K": {
+      "nombre": "MAPFRE COMPANIA DE SEGUROS DE VIDA DE CHILE SA",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|96933770-3": {
+      "nombre": "CARDIF SEGUROS RENTAS VITALICIAS S.A.",
+      "primer": "2016-11",
+      "ultimo": "2020-11",
+      "meses": 49
+    },
+    "vida|99003000-6": {
+      "nombre": "COMPANIA DE SEGUROS DE VIDA CAMARA S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|99012000-5": {
+      "nombre": "CONSORCIO NACIONAL-VIDA",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|99024000-0": {
+      "nombre": "MUTUALIDAD DE CARABINEROS SEGUROS DE VIDA",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|99025000-6": {
+      "nombre": "MUTUALIDAD DEL EJERCITO Y AVIACION",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|99027000-7": {
+      "nombre": "CAJA REASEGURADORA DE CHILE S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|99185000-7": {
+      "nombre": "CHILENA CONSOLIDADA SEGUROS DE VIDA S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|99196000-7": {
+      "nombre": "COMPA#IA DE SEGUROS DE VIDA HUELEN S.A.",
+      "primer": "2016-11",
+      "ultimo": "2022-12",
+      "meses": 74
+    },
+    "vida|99279000-8": {
+      "nombre": "EUROAMERICA SEGUROS DE VIDA S.A",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|99289000-2": {
+      "nombre": "METLIFE CHILE SEGUROS DE VIDA S.A",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|99301000-6": {
+      "nombre": "SEGUROS VIDA SECURITY PREVISION S.A",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    },
+    "vida|99588060-1": {
+      "nombre": "Chubb Seguros de Vida Chile S.A.",
+      "primer": "2016-11",
+      "ultimo": "2023-01",
+      "meses": 75
+    }
+  },
+  "desde": {
+    "renta_fija": "2024-12",
+    "acciones": "2016-11",
+    "fondos_mutuos": "2016-11",
+    "bienes_raices": "2024-12",
+    "extranjeros": "2016-11",
+    "derivados": "2016-11",
+    "pactos": "2016-11",
+    "control_inversiones": "2016-11"
+  },
+  "updated_at": "2026-09-28T08:42:43+00:00"
+}
