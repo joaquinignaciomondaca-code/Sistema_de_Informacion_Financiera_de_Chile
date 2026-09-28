@@ -38,21 +38,63 @@ class P(HTMLParser):
         if s.o is not None: s.o[1] += d.strip()
 
 
+import urllib.parse
+def forms(txt):
+    out=[]
+    for m in re.finditer(r"<form\b(.*?)>(.*?)</form>", txt, re.S|re.I):
+        attrs, body = m.group(1), m.group(2)
+        if "<select" not in body.lower(): continue
+        campos=[]
+        for t in re.finditer(r"<(input|select)\b([^>]*)>", body, re.I):
+            a=dict(re.findall(r'(\w+)\s*=\s*["\']([^"\']*)["\']', t.group(2)))
+            campos.append([t.group(1).lower(), a.get("name"), a.get("value"), a.get("type")])
+        out.append({"attrs": attrs.strip(), "campos": campos, "html": body[:3000]})
+    return out
+def titulo_tab(txt):
+    t=re.sub(r"\s+"," ",re.sub(r"<[^>]+>"," ",txt))
+    j=t.find("Raz&oacute;n Social:"); j = j if j>0 else t.find("Razón Social")
+    return t[max(0,j-80):j+40]
+base = C + "entidad.php?mercado=V&rut=96971830&grupo=&tipoentidad=RGSEC&row=&vig=VI&control=svs&pestania="
 res = {}
-urls = {}
-for pest in (18, 21, 22, 23, 24, 25, 33, 36):
-    urls[f"ps_ef_p{pest}"] = C + f"entidad.php?mercado=V&rut=96971830&grupo=&tipoentidad=RGSEC&row=&vig=VI&control=svs&pestania={pest}"
-urls["ps_volcom_p1"] = C + "entidad.php?mercado=V&rut=76965774&grupo=&tipoentidad=RGSEC&row=&vig=VI&control=svs&pestania=1"
-res = {}
-for k, u in urls.items():
-    raw = get(u)
-    txt = raw.decode("utf-8", errors="replace")
+raw = get(base+"18").decode("utf-8", errors="replace")
+fs = forms(raw); res["p18_forms"] = fs
+for f in fs:
+    datos = {}
+    for tipo, n, v, ty in f["campos"]:
+        if not n: continue
+        if tipo == "select":
+            datos[n] = None
+        elif (ty or "").lower() not in ("button","submit","reset") or v:
+            datos[n] = v or ""
+    sels = [n for tipo, n, v, ty in f["campos"] if tipo == "select" and n]
+    for mes, ano in (("12","2025"), ("06","2025")):
+        d = dict(datos)
+        for n in sels:
+            d[n] = mes if ("mm" in n.lower() or "mes" in n.lower()) else ano
+        if len(sels)==2 and all(d[n]==d[sels[0]] for n in sels):
+            d[sels[0]], d[sels[1]] = mes, ano
+        am = re.search(r'action\s*=\s*["\']([^"\']*)', f["attrs"], re.I)
+        act = urllib.parse.urljoin(base+"18", am.group(1).replace("&amp;","&")) if am and am.group(1) else base+"18"
+        meth = (re.search(r'method\s*=\s*["\'](\w+)', f["attrs"], re.I) or [None,"get"])[1].lower()
+        body = urllib.parse.urlencode({k:v for k,v in d.items() if v is not None})
+        try:
+            if meth=="post":
+                req = urllib.request.Request(act, data=body.encode(), headers={**UA, "Content-Type":"application/x-www-form-urlencoded"})
+            else:
+                req = urllib.request.Request(act + ("&" if "?" in act else "?") + body, headers=UA)
+            with urllib.request.urlopen(req, timeout=90) as r: t2 = r.read().decode("utf-8","replace")
+        except Exception as e:
+            t2 = f"ERROR {e}"
+        p = P()
+        try: p.feed(t2)
+        except Exception: pass
+        res[f"p18_{ano}{mes}"] = {"metodo": meth, "action": act, "body": body, "n_filas": len(p.rows), "filas": p.rows[:80],
+                                 "links": [l for l in p.links if "pdf" in l.lower() or "inscrip" in l.lower() or "patrim" in l.lower()][:40]}
+for pest in (37, 38, 43, 46, 47, 48, 49, 50, 100, 115):
+    t = get(base+str(pest)).decode("utf-8", errors="replace")
     p = P()
-    try: p.feed(txt)
+    try: p.feed(t)
     except Exception: pass
-    res[k] = {"url": u, "bytes": len(raw), "titulo": (re.search(r"<title>(.*?)</title>", txt, re.S | re.I) or [None, None])[1],
-              "opciones": p.opts[:400], "filas": p.rows[:40], "texto": re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", txt[txt.find("pestania=36"):]))[:3000], "n_filas": len(p.rows),
-              "links": [l for l in p.links if any(x in l.lower() for x in ("pestania", "inscrip", "emision", "afp", "vcf", "entidad="))][:80],
-              "inicio": txt[:300] if len(raw) < 2000 else ""}
-(OUT / "sonda2.json").write_text(json.dumps(res, ensure_ascii=False, indent=1))
-print({k: (v["bytes"], v["n_filas"], len(v["opciones"])) for k, v in res.items()})
+    res[f"tab{pest}"] = {"titulo": titulo_tab(t), "n_filas": len(p.rows), "filas": p.rows[:25], "forms": [f["campos"] for f in forms(t)]}
+(OUT / "sonda3.json").write_text(json.dumps(res, ensure_ascii=False, indent=1))
+print({k: v.get("n_filas") if isinstance(v, dict) else len(v) for k, v in res.items()})
