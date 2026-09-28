@@ -382,12 +382,38 @@ def parse_workbook(sheets: dict[str, list[list]]) -> dict:
     return parsed
 
 
-def run(publish: bool, desde: str, hasta: str | None) -> int:
+def periodos_publicados(out_dir: Path = OUT_DIR) -> set[str]:
+    """Períodos ya publicados: presentes en validacion.json con status passed y en estados.parquet."""
+    val, est = out_dir / "validacion.json", out_dir / "estados.parquet"
+    if not (val.exists() and est.exists()):
+        return set()
+    import pyarrow.parquet as pq
+    en_parquet = set(pq.read_table(est, columns=["periodo"]).column("periodo").to_pylist())
+    validados = {p["periodo"] for p in json.loads(val.read_text(encoding="utf-8")).get("periodos", [])
+                 if p.get("status") == "passed"}
+    return en_parquet & validados
+
+
+def pendientes(disponibles, ya_publicados: set[str], desde: str, hasta: str | None, completo: bool) -> list[str]:
+    en_rango = sorted(p for p in disponibles if p >= desde and (hasta is None or p <= hasta))
+    return en_rango if completo else [p for p in en_rango if p not in ya_publicados]
+
+
+def run(publish: bool, desde: str, hasta: str | None, completo: bool = False) -> int:
+    """Por defecto incremental: solo descarga y valida los meses que aún no están publicados y los
+    agrega a lo existente. Con completo=True reconstruye toda la serie desde cero."""
     from bancos.scripts.inspect_cmf_bank_sample import MAX_FILE, MAX_PAGE, fetch
     import pyarrow as pa
+    import pyarrow.compute as pc
     import pyarrow.parquet as pq
     sources = discover(fetch(INDEX, MAX_PAGE).decode("utf-8", "replace"))
-    periods = sorted(p for p in sources if p >= desde and (hasta is None or p <= hasta))
+    ya = set() if completo else periodos_publicados()
+    periods = pendientes(sources, ya, desde, hasta, completo)
+    print(f"::notice title=Cooperativas CMF::{'reconstrucción completa' if completo else 'incremental'}: "
+          f"{len(ya)} meses ya publicados, {len(periods)} por descargar {periods[:6]}{'…' if len(periods) > 6 else ''}", flush=True)
+    if not periods:
+        print("Nada nuevo en la CMF; no se modifica la web.")
+        return 0
     all_rows, report, failures = [], [], []
     for period in periods:
         url = sources[period]
@@ -403,16 +429,33 @@ def run(publish: bool, desde: str, hasta: str | None) -> int:
         except Exception as exc:  # fail-closed por período, se reporta todo
             failures.append({"periodo": period, "error": f"{type(exc).__name__}: {exc}"[:400]})
             print(f"::warning title=Cooperativas {period}::{failures[-1]['error']}", flush=True)
-    expected = [p for p in periods]
-    print(f"::notice title=Cooperativas CMF::períodos={len(periods)} ok={len(report)} fallidos={len(failures)} registros={len(all_rows)}")
+    print(f"::notice title=Cooperativas CMF::períodos={len(periods)} ok={len(report)} fallidos={len(failures)} registros_nuevos={len(all_rows)}")
     if failures:
         print("::error title=Cooperativas CMF::Hay períodos que no pasan la validación; no se publica.")
         return 1
     if not publish:
         return 0
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    table = pa.Table.from_pylist(all_rows)
-    pq.write_table(table, OUT_DIR / "estados.parquet", compression="zstd")
+    nuevos = pa.Table.from_pylist(all_rows)
+    previo_report = []
+    if ya:
+        previo = pq.read_table(OUT_DIR / "estados.parquet")
+        previo = previo.filter(pc.is_in(previo.column("periodo"), value_set=pa.array(sorted(ya))))
+        nuevos = pa.concat_tables([previo, nuevos.cast(previo.schema)])
+        previo_report = [p for p in json.loads((OUT_DIR / "validacion.json").read_text(encoding="utf-8"))["periodos"]
+                         if p.get("periodo") in ya]
+    report = sorted(previo_report + report, key=lambda p: p["periodo"])
+    ids = nuevos.column("id").to_pylist()
+    if len(ids) != len(set(ids)):
+        print("::error title=Cooperativas CMF::ids repetidos al unir lo nuevo con lo publicado; no se publica.")
+        return 1
+    orden = pc.sort_indices(nuevos, sort_keys=[("periodo", "ascending"), ("rut", "ascending"),
+                                                       ("seccion", "ascending"), ("orden", "ascending")])
+    table = nuevos.take(orden)
+    expected = [p["periodo"] for p in report]
+    tmp = OUT_DIR / "estados.parquet.tmp"
+    pq.write_table(table, tmp, compression="zstd")
+    tmp.replace(OUT_DIR / "estados.parquet")
     (OUT_DIR / "validacion.json").write_text(json.dumps({
         "dataset": "cooperativas_cmf_reporte_financiero", "fuente": INDEX,
         "cobertura": {"desde": expected[0], "hasta": expected[-1], "periodos": len(expected)},
@@ -422,8 +465,9 @@ def run(publish: bool, desde: str, hasta: str | None) -> int:
         "reglas": ["cabecera con frases clave", "N montos exactos por fila", "subtotales internos (±2 MM$; hasta ±5 MM$ se acepta y se declara)",
                    "activos = pasivos + patrimonio (misma tolerancia)", "suma cooperativas = Total Cooperativas",
                    "margen/comisiones iguales entre hojas"],
-        "total_registros": len(all_rows), "periodos": report,
+        "total_registros": table.num_rows, "periodos": report,
     }, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
+    print(f"Publicados: {', '.join(periods)} ({table.num_rows} registros en total).")
     return 0
 
 
@@ -432,8 +476,10 @@ def main() -> None:
     ap.add_argument("--publicar", action="store_true")
     ap.add_argument("--desde", default=FIRST_PERIOD)
     ap.add_argument("--hasta")
+    ap.add_argument("--completo", action="store_true",
+                    help="reconstruir toda la serie (por defecto solo agrega los meses nuevos)")
     a = ap.parse_args()
-    sys.exit(run(a.publicar, max(a.desde, FIRST_PERIOD), a.hasta))
+    sys.exit(run(a.publicar, max(a.desde, FIRST_PERIOD), a.hasta, a.completo))
 
 
 if __name__ == "__main__":
