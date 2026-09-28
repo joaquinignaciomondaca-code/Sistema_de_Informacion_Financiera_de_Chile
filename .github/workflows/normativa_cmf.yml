@@ -63,6 +63,8 @@ jobs:
           GEMINI_MODEL_FLASH: gemini-flash-latest
           NORMATIVA_LOOKBACK_DAYS: '365'
           NORMATIVA_PDF_RECHECK_DAYS: '45'
+          # Una pausa de 6 s limita las solicitudes a un máximo aproximado de 10 por minuto.
+          NORMATIVA_GEMINI_MIN_INTERVAL_SECONDS: '6'
           # 68 publicaciones pendientes pueden consumir hasta dos llamadas cada una.
           NORMATIVA_MAX_AI_CALLS: '150'
           NORMATIVA_MAX_PDF_CHECKS: '120'
