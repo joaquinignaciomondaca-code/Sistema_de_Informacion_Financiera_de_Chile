@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/app.css?v=3.8">
+  <link rel="stylesheet" href="css/app.css?v=20260928-normativa-cmf-2">
 </head>
 <body>
 
@@ -254,20 +254,9 @@
         <!-- Contenedor del Visor de Datos en Vivo -->
         <div class="data-viewer-container" id="data-viewer-container" style="display: none;"></div>
 
-        <!-- Contenedor de Funcionalidades Próximamente -->
+        <!-- Seguimiento de publicaciones normativas oficiales de la CMF -->
         <div class="soon-container" id="soon-container" style="display: none;">
-          <div class="soon-card">
-            <div class="soon-icon">✦</div>
-            <div class="info-section-kicker">EN PREPARACIÓN</div>
-            <h2>Próximamente</h2>
-            <p>Estamos preparando nuevas herramientas para ampliar la lectura, comparación y seguimiento de la información financiera chilena.</p>
-            <div class="soon-roadmap">
-              <div class="soon-roadmap-item"><span>01</span><div><strong>Nuevas vistas analíticas</strong><small>Indicadores y comparaciones por industria.</small></div></div>
-              <div class="soon-roadmap-item"><span>02</span><div><strong>Más cobertura histórica</strong><small>Incorporación progresiva de nuevas fuentes y períodos.</small></div></div>
-              <div class="soon-roadmap-item"><span>03</span><div><strong>Herramientas de seguimiento</strong><small>Formas más simples de encontrar cambios relevantes.</small></div></div>
-            </div>
-            <p class="soon-footnote">Esta sección se irá habilitando a medida que cada módulo pase sus validaciones de calidad.</p>
-          </div>
+          <div id="normativa-monitor" aria-label="Novedades normativas de la Comisión para el Mercado Financiero"></div>
         </div>
 
       <!-- Controles de Zoom en Esquina Inferior Derecha (+ / -) -->
@@ -352,10 +341,11 @@
   <script src="js/erd_graph.js?v=20260928-agf-split"></script>
   <script src="js/duckdb_client.js?v=fl-202606-30046-22368"></script>
   <script src="js/chat_terminal.js?v=3.4"></script>
-  <script src="js/sidebar.js?v=fl-202606-30046-22368"></script>
+  <script src="js/sidebar.js?v=20260928-normativa-sector"></script>
+  <script src="js/normativa_monitor.js?v=20260928-cmf-feed-2"></script>
   <script src="js/theme_switcher.js?v=3.1"></script>
   <script src="js/data_dictionary.js?v=fl-202606-30046-22368"></script>
-  <script src="js/data_viewer.js?v=fl-202606-30046-22368"></script>
+  <script src="js/data_viewer.js?v=20260928-normativa-sector"></script>
   <script src="js/jszip.min.js"></script>
   <script src="js/xlsx.full.min.js"></script>
   <script src="js/export_modal.js?v=20260928-agf-split"></script>
@@ -415,6 +405,7 @@
           }
         } else if (activeTab === "soon") {
           if (tabSoon) tabSoon.classList.add("active");
+          if (window.NormativaMonitor) window.NormativaMonitor.init();
         }
       };
 

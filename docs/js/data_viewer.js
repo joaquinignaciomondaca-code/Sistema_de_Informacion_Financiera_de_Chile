@@ -158,9 +158,37 @@ class DataViewerController {
     this.loadTable(this.currentView, this.currentDisplayName, this.currentLimit);
   }
 
+  sectorForView(viewName) {
+    const id = String(viewName || "");
+    const sectors = [
+      ["patrimonios_separados_", "patrimonios_separados"],
+      ["cajas_compensacion_", "cajas_compensacion"],
+      ["ccaf_", "cajas_compensacion"],
+      ["factoring_leasing_", "factoring_leasing"],
+      ["corredoras_bolsa_", "corredoras_bolsa"],
+      ["securitizadoras_", "securitizadoras"],
+      ["sistemas_pago_", "sistemas_pago"],
+      ["cooperativas_", "cooperativas"],
+      ["seguros_", "seguros"],
+      ["ffmm_", "ffmm"],
+      ["agf_", "agf"],
+      ["fi_", "fi"],
+      ["afp_", "afp_corporativo"],
+      ["bancos_", "bancos"],
+      ["macro_", "macro"],
+      ["fintech_", "fintech"]
+    ];
+    const match = sectors.find(([prefix]) => id.startsWith(prefix));
+    return match ? match[1] : null;
+  }
+
   async loadTable(viewName, displayName, limit = 100) {
     this.currentView = viewName;
     this.currentDisplayName = displayName || viewName;
+    const industry = this.sectorForView(viewName);
+    if (industry && window.SidebarNav && typeof window.SidebarNav.setActiveSector === "function") {
+      window.SidebarNav.setActiveSector(industry, "data-viewer");
+    }
     this.currentLimit = limit;
     this.filterText = "";
     this.sortCol = null;
