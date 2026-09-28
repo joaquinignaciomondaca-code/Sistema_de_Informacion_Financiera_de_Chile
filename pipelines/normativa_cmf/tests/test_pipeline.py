@@ -5,7 +5,7 @@ import tempfile
 import unittest
 from datetime import datetime, timezone
 from pathlib import Path
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from pipelines.normativa_cmf import pipeline
 from pipelines.normativa_cmf.audit import audit as audit_cmf
@@ -271,6 +271,107 @@ class PdfExtractionTests(unittest.TestCase):
         self.assertEqual(len(pages), 1)
         self.assertEqual(pages[0]["page"], 1)
         self.assertIn("fondos mutuos", pages[0]["text"])
+
+
+class GeminiInteractionsApiTests(unittest.TestCase):
+    def test_uses_interactions_rest_contract_and_standard_json_schema(self):
+        response = Mock()
+        response.status_code = 200
+        response.json.return_value = {
+            "status": "completed",
+            "steps": [{
+                "type": "model_output",
+                "content": [{"type": "text", "text": '{"event_type":"otro"}'}],
+            }],
+        }
+        with patch("pipelines.normativa_cmf.pipeline.requests.post", return_value=response) as post:
+            result = pipeline._call_gemini("test-key", "gemini-3.5-flash-lite", "prompt de prueba")
+
+        self.assertEqual(result, {"event_type": "otro"})
+        self.assertEqual(pipeline.GEMINI_INTERACTIONS_URL, "https://generativelanguage.googleapis.com/v1beta/interactions")
+        self.assertEqual(post.call_args.args[0], pipeline.GEMINI_INTERACTIONS_URL)
+        self.assertEqual(pipeline.GEMINI_API_REVISION, "2026-05-20")
+        self.assertEqual(post.call_args.kwargs["headers"]["Api-Revision"], pipeline.GEMINI_API_REVISION)
+        self.assertEqual(post.call_args.kwargs["headers"]["x-goog-api-key"], "test-key")
+        payload = post.call_args.kwargs["json"]
+        self.assertEqual(payload["model"], "gemini-3.5-flash-lite")
+        self.assertEqual(pipeline.DEFAULT_MODEL_FLASH_LITE, "gemini-3.5-flash-lite")
+        self.assertEqual(pipeline.DEFAULT_MODEL_FLASH, "gemini-3.8-flash")
+        self.assertEqual(payload["input"], "prompt de prueba")
+        self.assertIs(payload["store"], False)
+        self.assertEqual(payload["generation_config"], {"max_output_tokens": 2400})
+        self.assertEqual(payload["response_format"]["type"], "text")
+        self.assertEqual(payload["response_format"]["mime_type"], "application/json")
+        self.assertEqual(payload["response_format"]["schema"], pipeline.ANALYSIS_SCHEMA)
+        self.assertEqual(pipeline.ANALYSIS_SCHEMA["type"], "object")
+        self.assertEqual(pipeline.ANALYSIS_SCHEMA["properties"]["event_type"]["type"], "string")
+        self.assertNotIn("contents", payload)
+        self.assertNotIn("generationConfig", payload)
+
+    def test_parses_outputs_text_shape_as_well_as_current_steps_shape(self):
+        cases = [
+            {
+                "status": "completed",
+                "outputs": [{"type": "text", "text": '{"event_type":"otro"}'}],
+            },
+            {
+                "status": "completed",
+                "steps": [{
+                    "type": "thought",
+                    "content": [{"type": "text", "text": "no se publica como salida"}],
+                }, {
+                    "type": "model_output",
+                    "content": [
+                        {"type": "text", "text": '{"event_type":"ot'},
+                        {"type": "text", "text": 'ro"}'},
+                    ],
+                }],
+            },
+        ]
+        for body in cases:
+            with self.subTest(shape="steps" if "steps" in body else "outputs"):
+                response = Mock(status_code=200)
+                response.json.return_value = body
+                with patch("pipelines.normativa_cmf.pipeline.requests.post", return_value=response):
+                    self.assertEqual(
+                        pipeline._call_gemini("test-key", "gemini-3.8-flash", "prompt"),
+                        {"event_type": "otro"},
+                    )
+
+    def test_incomplete_interaction_is_not_accepted_as_a_classification(self):
+        response = Mock(status_code=200)
+        response.json.return_value = {
+            "status": "incomplete",
+            "steps": [{
+                "type": "model_output",
+                "content": [{"type": "text", "text": '{"event_type":"otro"}'}],
+            }],
+        }
+        with patch("pipelines.normativa_cmf.pipeline.requests.post", return_value=response):
+            with self.assertRaisesRegex(pipeline.GeminiError, "incomplete"):
+                pipeline._call_gemini("test-key", "gemini-3.5-flash-lite", "prompt")
+
+    def test_http_diagnostic_is_redacted_and_pending_error_stays_generic(self):
+        secret = "test-secret-that-must-not-be-logged"
+        response = Mock(status_code=403)
+        response.json.return_value = {
+            "error": {
+                "status": "PERMISSION_DENIED",
+                "message": f"API key: {secret} is not authorized for this method",
+            },
+        }
+        with (
+            patch("pipelines.normativa_cmf.pipeline.requests.post", return_value=response),
+            patch("pipelines.normativa_cmf.pipeline.LOGGER.warning") as warning,
+        ):
+            with self.assertRaises(pipeline.GeminiError) as raised:
+                pipeline._call_gemini(secret, "gemini-3.5-flash-lite", "prompt")
+
+        self.assertEqual(raised.exception.status_code, 403)
+        self.assertEqual(str(raised.exception), "HTTP 403")
+        self.assertNotIn(secret, warning.call_args.args[1])
+        self.assertIn("PERMISSION_DENIED", warning.call_args.args[1])
+        self.assertIn("[redacted]", warning.call_args.args[1])
 
 
 class AnalysisRoutingTests(unittest.TestCase):

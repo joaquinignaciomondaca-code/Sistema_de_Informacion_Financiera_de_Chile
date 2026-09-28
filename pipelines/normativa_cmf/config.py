@@ -8,7 +8,7 @@ CMF_LIST_URL = (
 CMF_BASE_URL = "https://www.cmfchile.cl"
 CMF_SOURCE_LABEL = "CMF · Legislación y normativa"
 SCHEMA_VERSION = 1
-ANALYSIS_VERSION = "2026-09-28.2"
+ANALYSIS_VERSION = "2026-09-28.3"
 DEFAULT_LOOKBACK_DAYS = 365
 DEFAULT_MAX_AI_CALLS = 10
 DEFAULT_MAX_PDF_CHECKS = 120
@@ -55,53 +55,54 @@ EFFECTIVE_DATE_PRECISIONS = ("dia", "mes", "inmediata", "sin_fecha")
 
 DEFAULT_MODEL_FLASH_LITE = "gemini-3.5-flash-lite"
 DEFAULT_MODEL_FLASH = "gemini-3.8-flash"
-GEMINI_API_BASE = "https://generativelanguage.googleapis.com/v1beta/models"
+GEMINI_INTERACTIONS_URL = "https://generativelanguage.googleapis.com/v1beta/interactions"
+GEMINI_API_REVISION = "2026-05-20"
 
 ANALYSIS_SCHEMA = {
-    "type": "OBJECT",
+    "type": "object",
     "properties": {
-        "event_type": {"type": "STRING", "enum": list(EVENT_TYPES)},
-        "summary": {"type": "STRING"},
-        "summary_evidence": {"type": "STRING"},
-        "summary_evidence_page": {"type": "INTEGER"},
+        "event_type": {"type": "string", "enum": list(EVENT_TYPES)},
+        "summary": {"type": "string"},
+        "summary_evidence": {"type": "string"},
+        "summary_evidence_page": {"type": "integer"},
         "sectors": {
-            "type": "ARRAY",
-            "items": {"type": "STRING", "enum": list(SECTOR_LABELS)},
+            "type": "array",
+            "items": {"type": "string", "enum": list(SECTOR_LABELS)},
         },
         "sector_evidence": {
-            "type": "ARRAY",
+            "type": "array",
             "items": {
-                "type": "OBJECT",
+                "type": "object",
                 "properties": {
-                    "sector": {"type": "STRING", "enum": list(SECTOR_LABELS)},
-                    "quote": {"type": "STRING"},
-                    "page": {"type": "INTEGER"},
+                    "sector": {"type": "string", "enum": list(SECTOR_LABELS)},
+                    "quote": {"type": "string"},
+                    "page": {"type": "integer"},
                 },
                 "required": ["sector", "quote", "page"],
             },
         },
-        "affected_norms": {"type": "ARRAY", "items": {"type": "STRING"}},
+        "affected_norms": {"type": "array", "items": {"type": "string"}},
         "norm_evidence": {
-            "type": "ARRAY",
+            "type": "array",
             "items": {
-                "type": "OBJECT",
+                "type": "object",
                 "properties": {
-                    "norm": {"type": "STRING"},
-                    "quote": {"type": "STRING"},
-                    "page": {"type": "INTEGER"},
+                    "norm": {"type": "string"},
+                    "quote": {"type": "string"},
+                    "page": {"type": "integer"},
                 },
                 "required": ["norm", "quote", "page"],
             },
         },
-        "effective_date": {"type": "STRING"},
+        "effective_date": {"type": "string"},
         "effective_date_precision": {
-            "type": "STRING",
+            "type": "string",
             "enum": list(EFFECTIVE_DATE_PRECISIONS),
         },
-        "effective_date_evidence": {"type": "STRING"},
-        "effective_date_page": {"type": "INTEGER"},
-        "confidence": {"type": "STRING", "enum": ["alta", "media", "baja"]},
-        "needs_human_review": {"type": "BOOLEAN"},
+        "effective_date_evidence": {"type": "string"},
+        "effective_date_page": {"type": "integer"},
+        "confidence": {"type": "string", "enum": ["alta", "media", "baja"]},
+        "needs_human_review": {"type": "boolean"},
     },
     "required": [
         "event_type",

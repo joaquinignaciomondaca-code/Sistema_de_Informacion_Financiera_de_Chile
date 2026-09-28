@@ -38,7 +38,8 @@ from .config import (
     DEFAULT_MODEL_FLASH_LITE,
     EFFECTIVE_DATE_PRECISIONS,
     EVENT_TYPES,
-    GEMINI_API_BASE,
+    GEMINI_API_REVISION,
+    GEMINI_INTERACTIONS_URL,
     MAX_DESCRIPTION_CHARS,
     MAX_PDF_BYTES,
     MAX_PDF_PAGES,
@@ -463,29 +464,110 @@ DOCUMENTO:
 {_format_model_input(event, pages)}"""
 
 
+def _safe_gemini_http_error(response: requests.Response, api_key: str) -> str:
+    """Devuelve un diagnóstico breve, sin credenciales ni cuerpo arbitrario."""
+    result = f"HTTP {response.status_code}"
+    try:
+        body = response.json()
+    except (requests.RequestException, ValueError):
+        return result
+    error = body.get("error") if isinstance(body, dict) else None
+    if not isinstance(error, dict):
+        return result
+
+    detail_parts = [
+        str(error.get(key, ""))
+        for key in ("status", "message")
+        if isinstance(error.get(key), str) and error.get(key).strip()
+    ]
+    if not detail_parts:
+        return result
+    detail = _normalize_space(" — ".join(detail_parts))
+    if api_key:
+        detail = detail.replace(api_key, "[redacted]")
+    detail = re.sub(r"(?i)AIza[0-9A-Za-z_-]{20,}", "[redacted]", detail)
+    detail = re.sub(r"(?i)([?&]key=)[^&\s]+", r"\1[redacted]", detail)
+    detail = re.sub(
+        r"(?i)(\b(?:api[_ -]?key|authorization)\b\s*[:=]\s*)[^\s,;]+",
+        r"\1[redacted]",
+        detail,
+    )
+    return f"{result}: {detail[:240]}"
+
+
+def _interaction_output_text(body: dict[str, Any]) -> str:
+    status = body.get("status")
+    if status and status != "completed":
+        raise GeminiError(f"Estado de interacción no completado: {status}")
+
+    # La respuesta REST vigente organiza el contenido en steps/model_output;
+    # también aceptamos outputs[] para versiones previas documentadas de v1beta.
+    text_parts: list[str] = []
+    steps = body.get("steps")
+    if isinstance(steps, list):
+        for step in steps:
+            if not isinstance(step, dict) or step.get("type") != "model_output":
+                continue
+            content = step.get("content")
+            if isinstance(content, list):
+                text_parts.extend(
+                    part["text"]
+                    for part in content
+                    if isinstance(part, dict)
+                    and part.get("type") == "text"
+                    and isinstance(part.get("text"), str)
+                )
+    if not text_parts:
+        outputs = body.get("outputs")
+        if isinstance(outputs, list):
+            text_parts.extend(
+                output["text"]
+                for output in outputs
+                if isinstance(output, dict)
+                and output.get("type") == "text"
+                and isinstance(output.get("text"), str)
+            )
+    if not text_parts and isinstance(body.get("output_text"), str):
+        text_parts.append(body["output_text"])
+
+    text = "".join(part for part in text_parts if part.strip()).strip()
+    if not text:
+        raise ValueError("La interacción no contiene salida textual")
+    return text
+
+
 def _call_gemini(api_key: str, model: str, prompt: str) -> dict[str, Any]:
-    url = f"{GEMINI_API_BASE}/{model}:generateContent"
     payload = {
-        "contents": [{"role": "user", "parts": [{"text": prompt}]}],
-        "generationConfig": {
-            "temperature": 0.1,
-            "maxOutputTokens": 2400,
-            "responseMimeType": "application/json",
-            "responseSchema": ANALYSIS_SCHEMA,
+        "model": model,
+        "input": prompt,
+        "store": False,
+        "generation_config": {"max_output_tokens": 2400},
+        "response_format": {
+            "type": "text",
+            "mime_type": "application/json",
+            "schema": ANALYSIS_SCHEMA,
         },
     }
     try:
         response = requests.post(
-            url,
-            headers={"x-goog-api-key": api_key, "Content-Type": "application/json"},
+            GEMINI_INTERACTIONS_URL,
+            headers={
+                "x-goog-api-key": api_key,
+                "Content-Type": "application/json",
+                "Api-Revision": GEMINI_API_REVISION,
+            },
             json=payload,
             timeout=(15, 90),
         )
         if response.status_code >= 400:
-            # Nunca registrar URL con credenciales ni el cuerpo completo del error.
+            # El feed conserva solo el estado HTTP; el diagnóstico se muestra
+            # en los logs de Actions tras ocultar cualquier clave que se repita.
+            LOGGER.warning("Gemini Interactions API respondió: %s", _safe_gemini_http_error(response, api_key))
             raise GeminiError(f"HTTP {response.status_code}", status_code=response.status_code)
         body = response.json()
-        text = body["candidates"][0]["content"]["parts"][0]["text"]
+        if not isinstance(body, dict):
+            raise ValueError("La respuesta no es un objeto de interacción")
+        text = _interaction_output_text(body)
         parsed = json.loads(text)
         if not isinstance(parsed, dict):
             raise ValueError("La respuesta no es un objeto JSON")
