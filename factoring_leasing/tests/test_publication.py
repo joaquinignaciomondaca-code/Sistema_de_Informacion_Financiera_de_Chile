@@ -85,14 +85,6 @@ class PublicationTests(unittest.TestCase):
         self.assertEqual(manifest['total_records'],
                          sum(t.get('registros_reales', 0) for t in manifest['tables']))
 
-    def test_legacy_pipeline_entrypoints_fail_before_writing(self):
-        from factoring_leasing.scripts import pipeline_stream_factoring_leasing as pipeline
-        from factoring_leasing.scripts import stream_cmf_eeff_series as streaming
-        with self.assertRaisesRegex(RuntimeError, 'suspendida'):
-            pipeline.run_factoring_leasing_pipeline()
-        with self.assertRaisesRegex(RuntimeError, 'suspendida'):
-            streaming.run_cmf_streaming_pipeline([])
-
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,17 +1,25 @@
 # Bancos — estado de publicación
 
-**Publicado en el sitio:** `bancos_maestro` (40 códigos de un catálogo local, entre instituciones históricas, filiales y agregados) y `bancos_repos_saldos_series` (saldos CMF de pactos y préstamos de valores: **cotejo numérico aprobado**, metadatos no aprobados). Los nombres, RUT y estados del catálogo todavía requieren cotejo registral con CMF. REPO no es volumen transado del mes: `total_transado_mm_usd` es la suma de dos saldos.
+**Publicado en el sitio (automático):**
 
-El 27-09-2026 se retiraron del sitio y del repositorio de datos publicados los balances, estados de resultados y derivados anteriores para extraerlos nuevamente desde cero. **No volver a publicarlos con los extractores actuales sin revisión:** los balances presentan rupturas de escala, conversiones USD con tipos de cambio fijos, y los derivados mezclan dimensiones/unidades de series BCCh. Los scripts y catálogos en `bancos/scripts/` y `bancos/derivados_otc/` quedan sólo como material de investigación; no constituyen una extracción validada ni un flujo automatizado incremental. Véase [auditoría bancaria](AUDITORIA_BANCOS_2026-09-27.md) para las comprobaciones, fuentes y criterios de nueva publicación.
+- `bancos_maestro`: lista de instituciones (código CMF, RUT, razón social, estado). Altas y vigencia se
+  actualizan con `entidades.yml` (pipelines/entidades).
+- `bancos_cmf_balance` / `bancos_cmf_resultados`: líneas de los archivos oficiales CMF B1/B2/R1 por
+  institución y mes, en `docs/outputs/bancos/cmf_b1_b2_r1/<periodo>/lineas.parquet`. Esquema en
+  [ESQUEMA_CMF_B1_B2_R1.md](ESQUEMA_CMF_B1_B2_R1.md).
 
-El Excel `repo_banco.xlsx` que usa `02_extract_bancos_repos_series.py` no está en el repositorio. No regenerar REPO sin el archivo, su procedencia y cotejo con las cuentas CMF.
+**Workflow:** `bancos_cmf_mensual.yml` (días 1, 11 y 21) → tests → `python -m bancos.scripts.publish_cmf_bank_period --catch-up`.
+Es incremental: sólo descarga los meses que faltan en el manifest.
 
-La [auditoría de REPO](AUDITORIA_REPO_BANCOS_2026-09-27.md) incluyó un barrido de los 220 ZIP mensuales CMF: **5.894 saldos cotejados numéricamente, sin discrepancias** con la tabla publicada bajo una hipótesis de cuentas, suma de columnas y escala. Esto corrige la antigua descripción «sin cotejo CMF», pero **no certifica toda la tabla**: faltan la interpretación independiente de las cuentas y de las columnas B1, la identidad/vigencia de los RUT, la cobertura de bancos ausentes, los agregados y el Excel fuente. Además, `total_transado_mm_usd` suma saldos y no representa flujo negociado. El sitio indica «saldos cotejados» y detalla los campos no aprobados; no se ha aprobado un extractor incremental de publicación ni cambiado el Parquet. Para revisar una corrección sin reemplazar datos publicados: `python -m bancos.scripts.prepare_repo_corrections` produce borradores separados de bancos (2.779 filas), agregados (155) y filiales extranjeras (13), sin RUT/nombres retrospectivos ni falso volumen, sólo en `.local-data/review/bancos/repo_correcciones/`. El extractor legacy de Excel está bloqueado para evitar republicar errores. Este borrador tampoco se aprueba hasta cotejar glosas, columnas, cobertura e identidad por código-mes.
+**Código vigente:**
 
-**Reextracción de revisión CMF B1 (27-09-2026):** se procesaron los 220 meses directamente desde ZIP con hashes y parser tabulado de cuatro monedas; los 2.947 saldos publicados coinciden, pero aparecieron 1.874 filas adicionales de importe crudo cero y 220 registros `999` del total del sistema (no bancos). La suma ingenua de importes **redondeados** no concilia con `999` en 42 meses del activo y 30 del pasivo; a precisión de fuente, **204 meses concilian** y **16 concilian únicamente al excluir aritméticamente `507`** (no se le elimina de los datos ni se conoce aún el motivo oficial). Ver [dictamen y límites](AUDITORIA_REPO_BANCOS_2026-09-27.md). El job `rebuild_review` en el workflow `bancos_repo.yml` es manual; **no publica** ni autoriza actualizar el Parquet.
+| Archivo | Rol |
+|---|---|
+| `scripts/publish_cmf_bank_period.py` | descarga el paquete mensual CMF, extrae, valida y publica un período |
+| `scripts/extract_cmf_bank_lines.py` | parser de líneas B1/B2/R1 |
+| `scripts/inspect_cmf_bank_sample.py` | lectura/validación del ZIP CMF (usado por los dos anteriores) |
+| `tests/` | tests de los tres scripts + identidad del maestro |
 
-**Análisis local sin repetir descargas:** `python -m bancos.scripts.hydrate_repo_review 36302817104` recupera los tres lotes verificables de anotaciones de Actions y escribe únicamente en `.local-data/review/bancos/reconstruccion_cmf/snapshot_hidratado.json`. Luego `python -m bancos.scripts.analyze_repo_snapshot --snapshot .local-data/review/bancos/reconstruccion_cmf/snapshot_hidratado.json` compara 220 meses con legacy y el total `999` a precisión cruda. `gh` debe tener acceso de solo lectura a los runs; si el run/las anotaciones expiran, el lector falla cerrado, no fabrica datos. Los hashes de transporte garantizan integridad de los mensajes, **no sustituyen verificar los ZIP originales CMF**. El procesamiento histórico por Actions es manual; la revisión diaria continúa incremental y no publica.
-
-**FX externo 220/220 verificado:** la [corrida `36304337121`](https://github.com/joaquinignaciomondaca-code/monitor-financiero-chile/actions/runs/36304337121) contrastó sin diferencias la última cotización diaria SII de cada mes publicado entre 2008-01 y 2026-04 contra `tc_usd_cierre`. En 2026 se cotejaron únicamente enero–abril. Esto valida la conversión, **no** los saldos, identidades, perímetro o el supuesto volumen transado. Véase [dictamen y fuentes](AUDITORIA_REPO_BANCOS_2026-09-27.md).
-
-**Decisión por componente (27-09-2026):** quedan aprobados el cotejo numérico de saldos CLP publicados con B1 CMF y el FX mensual con SII; no se aprueba el dataset como registro de transacciones ni como nómina con RUT históricos. El nombre de columna `total_transado_mm_usd` es engañoso y no debe usarse como volumen. El extractor automático sigue bloqueado. La sección «Origen de los Datos» del diccionario web detalla fuentes, cuentas, unidades y límites.
+**Retirado (2026-09-28):** el laboratorio REPO (pactos/préstamos de valores), los derivados OTC BCCh,
+el pipeline antiguo `pipeline_stream_bancos.py` y las sondas de formato/muestra. Ninguno publicaba datos;
+quedan en el historial de Git si alguna vez se retoman.

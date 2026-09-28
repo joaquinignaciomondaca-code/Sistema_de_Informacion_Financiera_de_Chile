@@ -772,7 +772,7 @@ const DATA_DICTIONARY = [
     frescura: "Catálogo Vigente",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "70 entidades",
+    registros: "72 entidades",
     descripcion: "Catálogo oficial de Administradoras Generales de Fondos (AGF) autorizadas por la Comisión para el Mercado Financiero (CMF) bajo la Ley N° 20.712. Incluye 52 gestoras vigentes y 16 no vigentes/canceladas, junto con su grupo financiero controlador y el número de fondos de inversión administrados.",
     origen: "Comisión para el Mercado Financiero (CMF) — Registro de Administradoras Generales de Fondos (RGAGF / RACRT).",
     columnas: [
