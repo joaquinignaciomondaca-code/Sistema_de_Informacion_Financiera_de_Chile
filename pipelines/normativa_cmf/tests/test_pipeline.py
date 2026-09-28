@@ -449,7 +449,10 @@ class PersistenceTests(unittest.TestCase):
                     "summary_evidence_page": 1,
                     "sectors": ["ffmm"],
                     "sector_evidence": [{"sector": "ffmm", "quote": "cita anterior del documento", "page": 1}],
-                    "review_flags": [],
+                    "review_flags": [
+                        "Límite de descargas PDF alcanzado en esta ejecución",
+                        "HTTP 403",
+                    ],
                     "needs_human_review": False,
                 }
                 state_path = Path(tmp) / "state.json"
@@ -483,6 +486,8 @@ class PersistenceTests(unittest.TestCase):
                 self.assertEqual(event["summary"], previous["summary"])
                 self.assertTrue(event["needs_human_review"])
                 self.assertIn(expected_flag, event["review_flags"])
+                self.assertNotIn("Límite de descargas PDF alcanzado en esta ejecución", event["review_flags"])
+                self.assertNotIn("HTTP 403", event["review_flags"])
                 self.assertEqual(feed["run_summary"]["pending_analysis"], 1)
 
     def test_failed_gemini_call_consumes_the_budget_before_processing_next_document(self):

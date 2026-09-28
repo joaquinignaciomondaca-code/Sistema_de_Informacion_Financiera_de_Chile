@@ -770,6 +770,18 @@ def _write_json_atomic(path: Path, payload: Any) -> None:
     temporary.replace(path)
 
 
+def _is_runtime_pending_flag(value: Any) -> bool:
+    if not isinstance(value, str):
+        return False
+    prefixes = (
+        "API de análisis no disponible en esta ejecución",
+        "API de análisis suspendida tras HTTP ",
+        "Límite de llamadas de análisis alcanzado en esta ejecución",
+        "Límite de descargas PDF alcanzado en esta ejecución",
+    )
+    return value.startswith(prefixes) or bool(re.fullmatch(r"HTTP \d{3}", value)) or value == "sin_texto_para_analizar"
+
+
 def _safe_existing_event(event: dict[str, Any]) -> dict[str, Any]:
     # JSON publicado se limita a campos usados por la interfaz; nunca se copia
     # estado de autenticación, texto completo del PDF ni variables de entorno.
@@ -998,6 +1010,7 @@ def run_pipeline(
                 review_flags = base_event.get("review_flags", [])
                 if not isinstance(review_flags, list):
                     review_flags = []
+                review_flags = [flag for flag in review_flags if not _is_runtime_pending_flag(flag)]
                 review_flags.append(pending_reason)
                 base_event["review_flags"] = list(dict.fromkeys(review_flags))
         # Al conservar un análisis anterior, se guardan exactamente las etiquetas
