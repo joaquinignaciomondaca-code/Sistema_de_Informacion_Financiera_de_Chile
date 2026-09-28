@@ -1,9 +1,13 @@
 from playwright.sync_api import sync_playwright
 import os
 import zipfile
+from pathlib import Path as _Path
+import os as _os
+_ROOT = _Path(__file__).resolve().parents[2]  # raíz del repo
+_RESPALDO = _Path(_os.environ.get('MFC_RESPALDO_DIR', _Path.home().joinpath('Desktop', 'Respaldo_BCCH')))
 
 test_periods = ['202006', '201506', '201006', '200506', '200210']
-raw_dir = r"C:\Users\joaqu\.gemini\antigravity\scratch\bcch_market_monitor\pensiones\raw\test"
+raw_dir = str(_ROOT.joinpath('pensiones', 'raw', 'test'))
 os.makedirs(raw_dir, exist_ok=True)
 
 with sync_playwright() as p:

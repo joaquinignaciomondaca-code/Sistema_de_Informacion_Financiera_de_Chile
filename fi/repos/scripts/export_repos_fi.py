@@ -8,6 +8,10 @@ import re
 import unicodedata
 from pathlib import Path
 import pandas as pd
+from pathlib import Path as _Path
+import os as _os
+_ROOT = _Path(__file__).resolve().parents[3]  # raíz del repo
+_RESPALDO = _Path(_os.environ.get('MFC_RESPALDO_DIR', _Path.home().joinpath('Desktop', 'Respaldo_BCCH')))
 
 def clean_col(col):
     c = unicodedata.normalize("NFKD", str(col)).encode("ASCII", "ignore").decode("utf-8").lower()
@@ -15,7 +19,7 @@ def clean_col(col):
     return c
 
 def main():
-    excel_path = Path(r"C:\Users\joaqu\Desktop\Respaldo_BCCH\Fondos_Inversion\01_estados_financieros\outputs\5_Repos_CMF_Completo.xlsx")
+    excel_path = _RESPALDO.joinpath('Fondos_Inversion', '01_estados_financieros', 'outputs', '5_Repos_CMF_Completo.xlsx')
     if not excel_path.exists():
         print(f"ERROR: Archivo no encontrado en {excel_path}")
         return

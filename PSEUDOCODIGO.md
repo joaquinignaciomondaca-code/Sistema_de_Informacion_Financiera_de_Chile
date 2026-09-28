@@ -333,11 +333,11 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 - ✅ Se agregó `__init__.py` a las carpetas `tests/`: `unittest discover -s <dir> -t .` ya funciona.
 - ✅ `scripts/audit_navigation.py` actualizado a la estructura real de Bancos (maestro + CMF B1/B2 + R1; REPO legado retirado).
 - ✅ `scripts/audit_web_full.py` ahora entiende vistas por `manifest` (particiones) y avisa sin fallar si aún no hay períodos.
-- ℹ️ `docs/outputs/bancos/cmf_b1_b2_r1/manifest.json` sigue vacío: las vistas `bancos_cmf_balance/resultados` aparecen "no disponibles" hasta la primera corrida mensual exitosa de `bancos_cmf_mensual.yml`.
+- ℹ️ `docs/outputs/bancos/cmf_b1_b2_r1/manifest.json` sigue vacío (no hay Parquet bancario en ningún lado; se llena ejecutando `python -m bancos.scripts.publish_cmf_bank_period` con internet, o el workflow manualmente): las vistas `bancos_cmf_balance/resultados` aparecen "no disponibles" hasta la primera corrida mensual exitosa de `bancos_cmf_mensual.yml`.
 
 **Deuda técnica / riesgos**
-1. **Rutas absolutas Windows** (`C:\Users\joaqu\…`) en ~33 scripts (casi todo `pensiones/`, `ccaf/`, partes de `seguros/`, `ffmm/04b`, `fi/repos/export`). No corren fuera de ese PC.
-2. **Código duplicado**: `docs/ffmm/` y `docs/fi/` son copias de `ffmm/` y `fi/` (scripts + parquet) → se publican en Pages y triplican Parquet (`fi_cartera_nacional` ×3). Además `docs/outputs/b7_*.parquet` duplica `docs/outputs/vida/b7_*`.
+1. ✅ **Rutas `C:\Users\joaqu\…` eliminadas** (32 scripts): la raíz vieja `bcch_market_monitor` → `_ROOT` relativo al repo; `Desktop\Respaldo_BCCH` → `_RESPALDO` (variable `MFC_RESPALDO_DIR`, por defecto `~/Desktop/Respaldo_BCCH`); otros archivos del Escritorio → `Path.home()/'Desktop'/…`.
+2. ✅ `docs/ffmm/` y `docs/fi/` eliminados (624 archivos idénticos); sidebar y ERD leen ahora `outputs/ffmm|fi/…`. Pendiente: `docs/outputs/b7_*.parquet` (versión antigua distinta de `vida/b7_*`, solo usada por `feedback_review/`). Ojo: los pipelines FFMM/FI escriben en `ffmm/…/outputs` y `fi/…/outputs`; hay que copiar a `docs/outputs/` al publicar.
 3. Utilidades (DV, parse_num, tc_map) repetidas en ~15 archivos.
 4. ✅ `fintech/scripts/explore.py` corregido (compilaba solo en Python ≥ 3.12).
 5. ✅ BOM UTF-8 eliminado de 9 scripts.
@@ -348,7 +348,7 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 
 **Siguientes pasos sugeridos (por prioridad)**
 1. ✅ ~~Arreglar auditorías web~~ (hecho).
-2. Eliminar `docs/ffmm`, `docs/fi` scripts duplicados y Parquet repetidos.
-3. Crear `common/` con utilidades chilenas + `ROOT` relativo; reemplazar rutas `C:\`.
+2. ✅ ~~Duplicados docs/ffmm, docs/fi~~ y ✅ ~~rutas C:\~~.
+3. Crear `common/` con utilidades chilenas (DV, parse_num, tc_map).
 4. Mover exploratorios a `*/scratch/` o `archive/`; (`__init__.py` en `tests/` ✅).
 5. `requirements.txt` por sector o global con versiones fijadas.

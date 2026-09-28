@@ -7,6 +7,10 @@ La preparación no publicadora está en prepare_repo_corrections.py.
 
 import os
 import json
+from pathlib import Path as _Path
+import os as _os
+_ROOT = _Path(__file__).resolve().parents[2]  # raíz del repo
+_RESPALDO = _Path(_os.environ.get('MFC_RESPALDO_DIR', _Path.home().joinpath('Desktop', 'Respaldo_BCCH')))
 
 def extract_bancos_repos_series():
     raise RuntimeError(
@@ -16,7 +20,7 @@ def extract_bancos_repos_series():
     )
     import pandas as pd  # sólo para conservar referencia histórica; inalcanzable
     base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
-    excel_path = r"C:\Users\joaqu\Desktop\Respaldo_BCCH\Bancos\REPO_BANCO\REPO_BANCOS_CMF\repo_banco.xlsx"
+    excel_path = str(_RESPALDO.joinpath('Bancos', 'REPO_BANCO', 'REPO_BANCOS_CMF', 'repo_banco.xlsx'))
     maestro_path = os.path.join(base_dir, "docs", "outputs", "bancos", "bancos_maestro.parquet")
     out_dir = os.path.join(base_dir, "docs", "outputs", "bancos")
     os.makedirs(out_dir, exist_ok=True)

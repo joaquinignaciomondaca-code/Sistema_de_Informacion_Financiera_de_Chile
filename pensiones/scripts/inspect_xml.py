@@ -1,9 +1,13 @@
 import zipfile
 import xml.etree.ElementTree as ET
 import os
+from pathlib import Path as _Path
+import os as _os
+_ROOT = _Path(__file__).resolve().parents[2]  # raíz del repo
+_RESPALDO = _Path(_os.environ.get('MFC_RESPALDO_DIR', _Path.home().joinpath('Desktop', 'Respaldo_BCCH')))
 
-zip_path = r"C:\Users\joaqu\.gemini\antigravity\scratch\bcch_market_monitor\pensiones\raw\cartera_desagregada202603.zip"
-extract_dir = r"C:\Users\joaqu\.gemini\antigravity\scratch\bcch_market_monitor\pensiones\raw\extracted"
+zip_path = str(_ROOT.joinpath('pensiones', 'raw', 'cartera_desagregada202603.zip'))
+extract_dir = str(_ROOT.joinpath('pensiones', 'raw', 'extracted'))
 os.makedirs(extract_dir, exist_ok=True)
 
 with zipfile.ZipFile(zip_path, 'r') as z:
