@@ -1,5 +1,9 @@
 from playwright.sync_api import sync_playwright
 import os, zipfile
+from pathlib import Path as _Path
+import os as _os
+_ROOT = _Path(__file__).resolve().parents[2]  # raíz del repo
+_RESPALDO = _Path(_os.environ.get('MFC_RESPALDO_DIR', _Path.home().joinpath('Desktop', 'Respaldo_BCCH')))
 
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True)
@@ -10,7 +14,7 @@ with sync_playwright() as p:
     with page.expect_download(timeout=15000) as download_info:
         link.click()
     download = download_info.value
-    dest = r'C:\Users\joaqu\.gemini\antigravity\scratch\bcch_market_monitor\pensiones\raw\test_legacy.zip'
+    dest = str(_ROOT.joinpath('pensiones', 'raw', 'test_legacy.zip'))
     download.save_as(dest)
     print('Descargado legacy zip:', os.path.getsize(dest), 'bytes')
     with zipfile.ZipFile(dest, 'r') as z:

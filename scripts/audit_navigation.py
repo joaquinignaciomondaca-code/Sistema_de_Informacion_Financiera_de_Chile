@@ -105,22 +105,24 @@ assert.deepEqual(opened, hasFullSeries
      'factoring_leasing_balance_serie_ifrs_cmf', 'factoring_leasing_resultados_serie_ifrs_cmf']
   : ['factoring_leasing_eeff_muestra_cmf', 'factoring_leasing_resultados_muestra_cmf']);
 
-// AFP: sólo identidad sin métricas generadas. Bancos: identidad y REPO,
-// mantenido expresamente como excepción con advertencia de auditoría.
+// AFP: sólo identidad sin métricas generadas. Bancos: identidad + líneas
+// CMF B1/B2 y R1 publicadas por partición mensual validada. El REPO legado
+// (bancos_repos_saldos_series) fue retirado y no debe reaparecer.
 const pensiones = byGroup.group_pensiones;
 const bancos = byGroup.group_bancos;
 assert.deepEqual(Array.from(pensiones.children, s => s.sector), ['afp_corporativo']);
 assert.deepEqual(Array.from(pensiones.children[0].children, c => c.id), ['cat_afp_maestro']);
 assert.deepEqual(Array.from(bancos.children[0].children, c => c.id),
-  ['cat_bancos_maestro', 'circ_bancos_repos']);
+  ['cat_bancos_maestro', 'cat_bancos_cmf_balance', 'cat_bancos_cmf_resultados']);
 assert.equal(pensiones.status, 'active');
-assert.equal(bancos.status, 'active');
-assert.equal(bancos.children[0].children[1].status, 'active');
-assert(bancos.children[0].children[1].label.includes('REPO'));
-// El componente de saldos cotejado sigue distinguiéndose de flujo/RUT no auditados.
+for (const c of bancos.children[0].children.slice(1)) {
+  assert.equal(c.status, 'active', 'carpeta CMF bancaria no activa: ' + c.id);
+  assert.deepEqual(Array.from(c.tables[0].files), ['outputs/bancos/cmf_b1_b2_r1/manifest.json']);
+}
 assert.deepEqual(Array.from(viewer.find(g => g.group.startsWith('Fondos de Pensiones')).tables, t => t.id), ['afp_maestro']);
 assert.deepEqual(Array.from(viewer.find(g => g.group.startsWith('Banca Comercial')).tables, t => t.id),
-  ['bancos_maestro', 'bancos_repos_saldos_series']);
+  ['bancos_maestro', 'bancos_cmf_balance', 'bancos_cmf_resultados']);
+assert(!expected.has('bancos_repos_saldos_series'), 'REPO bancario retirado todavía visible');
 assert(!pensiones.badges.some(b => b.text.includes('Falta validar')));
 for (const id of ['afp_cartera_bonos','afp_cartera_acciones','afp_derivados_swaps','afp_derivados_forwards',
                  'bancos_balance_resumen','bancos_estado_resultados','bancos_derivados_posicion_vigente',

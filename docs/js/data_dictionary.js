@@ -1400,66 +1400,6 @@ const DATA_DICTIONARY = [
     ]
   },
   // =========================================================================
-  // RETAIL FINANCIERO Y EMISORES NO BANCARIOS (CMF)
-  // =========================================================================
-  {
-    id: "retail_financiero_maestro",
-    name: "retail_financiero.lista_entidades",
-    viewName: "retail_financiero_maestro",
-    sector: "retail_financiero",
-    sectorLabel: "Retail Financiero",
-    norma: "CMF (Registros RVEMI, TCEEM, TPEEM, BCSAG)",
-    corte: "Oficial CMF 2026",
-    frescura: "Catálogo Vigente",
-    modo: "Automático",
-    ultimaActualizacion: "2026-09-23",
-    registros: "17 entidades",
-    descripcion: "Catálogo maestro oficial de los emisores no bancarios de tarjetas de crédito y prepago, sociedades de apoyo al giro y matrices cotizadas de retail financiero supervisadas por la CMF. Incluye Falabella, Cencosud, Ripley, Hites, Tricot, abcvisa, Tenpo, Tapp Los Andes y Prepago Los Héroes.",
-    origen: "Comisión para el Mercado Financiero (CMF) — Registros de Entidades Supervisadas.",
-    columnas: [
-      { name: "rut", type: "BIGINT", role: "PK", significado: "Rol Único Tributario numérico de la sociedad.", contable: "No aplica", interpretacion: "Identificador tributario corporativo único del emisor/matriz." },
-      { name: "dv", type: "VARCHAR", role: "Dimensión", significado: "Dígito verificador calculado bajo algoritmo Módulo 11.", contable: "No aplica", interpretacion: "Control de integridad tributaria." },
-      { name: "rut_completo", type: "VARCHAR", role: "Dimensión", significado: "RUT estándar con puntos y guion (ej: 90.749.000-9).", contable: "No aplica", interpretacion: "Formato oficial para consultas regulatorias." },
-      { name: "razon_social", type: "VARCHAR", role: "Dimensión", significado: "Nombre legal formal de la corporación o sociedad anónima.", contable: "No aplica", interpretacion: "Denominación legal inscrita en el registro público de la CMF." },
-      { name: "nombre_comercial", type: "VARCHAR", role: "Dimensión", significado: "Marca comercial o nombre de fantasía ante clientes e inversionistas.", contable: "No aplica", interpretacion: "Identidad comercial del negocio de retail y tarjetas." },
-      { name: "tipo_entidad_cmf", type: "VARCHAR", role: "Dimensión", significado: "Tipo de registro en CMF: RVEMI (Emisores de Valores), TCEEM (Emisor Tarjetas Crédito), TPEEM (Emisor Prepago), BCSAG (Apoyo Giro), TPOPE (Operador Tarjetas).", contable: "No aplica", interpretacion: "Marco regulatorio y habilitación operativa conferida por el supervisor." },
-      { name: "segmento_mercado", type: "VARCHAR", role: "Dimensión", significado: "Clasificación de industria: Retail Departamental y Financiero, Especialistas en Prepago Digital, Farmacias/Especialistas.", contable: "No aplica", interpretacion: "Agrupación analítica del modelo de negocio." },
-      { name: "grupo_controlador", type: "VARCHAR", role: "Dimensión", significado: "Conglomerado económico o grupo empresarial controlador.", contable: "No aplica", interpretacion: "Vínculo de propiedad y control societario." },
-      { name: "estado_vigencia", type: "VARCHAR", role: "Dimensión", significado: "Condición en el registro oficial CMF: 'Vigente'.", contable: "No aplica", interpretacion: "Filtro para entidades activas en el mercado financiero." },
-      { name: "domicilio_casa_matriz", type: "VARCHAR", role: "Dimensión", significado: "Dirección de la sede corporativa central.", contable: "No aplica", interpretacion: "Ubicación del domicilio legal corporativo." },
-      { name: "comuna", type: "VARCHAR", role: "Dimensión", significado: "Comuna de la casa matriz.", contable: "No aplica", interpretacion: "Localización geográfica de la sede." },
-      { name: "region", type: "VARCHAR", role: "Dimensión", significado: "Región político-administrativa chilena.", contable: "No aplica", interpretacion: "Jurisdicción regional." },
-      { name: "cmf_url", type: "VARCHAR", role: "Dimensión", significado: "Enlace directo al expediente institucional en el portal de la CMF.", contable: "No aplica", interpretacion: "Ficha oficial de fiscalizado en el regulador." }
-    ]
-  },
-  {
-    id: "retail_financiero_balances",
-    name: "retail_financiero.balances",
-    viewName: "retail_financiero_balances",
-    sector: "retail_financiero",
-    sectorLabel: "Retail Financiero",
-    norma: "Norma Internacional de Información Financiera (IFRS) / CMF",
-    corte: "Serie Trimestral Histórica (2018-2026)",
-    frescura: "Actualización Trimestral CMF",
-    modo: "Automático",
-    ultimaActualizacion: "2026-09-23",
-    registros: "190 registros",
-    descripcion: "Serie histórica de balances consolidados y estados de resultados bajo norma IFRS correspondientes a las matrices cotizadas de retail financiero (Falabella, Cencosud, Ripley, Hites, Tricot, ABC). Monitorea solvencia, dimensión de activos, efectivo y caja disponible, endeudamiento total y utilidad neta con identidad contable 100% exacta.",
-    origen: "Comisión para el Mercado Financiero (CMF) — Estados Financieros Consolidados IFRS Trimestrales.",
-    columnas: [
-      { name: "rut", type: "BIGINT", role: "FK", significado: "RUT de la matriz de retail financiero.", contable: "No aplica", interpretacion: "Llave foránea vinculada a retail_financiero_maestro." },
-      { name: "periodo", type: "VARCHAR", role: "Dimensión", significado: "Periodo contable trimestral en formato AAAA-MM.", contable: "No aplica", interpretacion: "Fecha de corte del reporte financiero IFRS." },
-      { name: "razon_social", type: "VARCHAR", role: "Dimensión", significado: "Razón social formal de la compañía informante.", contable: "No aplica", interpretacion: "Entidad corporativa matriz." },
-      { name: "total_activos_m_clp", type: "DOUBLE", role: "Métrica", significado: "Total de activos consolidados de la compañía en millones de CLP.", contable: "Total Activos IFRS", interpretacion: "Dimensión patrimonial total de la corporación de retail y financiero." },
-      { name: "total_pasivos_m_clp", type: "DOUBLE", role: "Métrica", significado: "Total de pasivos y obligaciones financieras consolidadas en millones de CLP.", contable: "Total Pasivos IFRS", interpretacion: "Nivel de apalancamiento y endeudamiento total." },
-      { name: "patrimonio_neto_m_clp", type: "DOUBLE", role: "Métrica", significado: "Patrimonio neto total atribuible a los accionistas en millones de CLP.", contable: "Patrimonio Neto IFRS", interpretacion: "Base de solvencia patrimonial corporativa." },
-      { name: "efectivo_y_equivalentes_m_clp", type: "DOUBLE", role: "Métrica", significado: "Caja, depósitos líquidos y equivalentes al efectivo en millones de CLP.", contable: "Efectivo y Equivalentes", interpretacion: "Colchón de liquidez disponible para operaciones y vencimientos." },
-      { name: "ganancia_perdida_ejercicio_m_clp", type: "DOUBLE", role: "Métrica", significado: "Resultado neto del periodo (ganancia o pérdida consolidada) en millones de CLP.", contable: "Utilidad Neta IFRS", interpretacion: "Rentabilidad contable final generada por la operación global." },
-      { name: "total_activos_m_usd", type: "DOUBLE", role: "Métrica", significado: "Total de activos convertido a millones de USD según tipo de cambio de cierre BCCh.", contable: "Activos USD", interpretacion: "Comparabilidad internacional del tamaño corporativo." },
-      { name: "patrimonio_neto_m_usd", type: "DOUBLE", role: "Métrica", significado: "Patrimonio neto convertido a millones de USD.", contable: "Patrimonio USD", interpretacion: "Solvencia en divisa dura para inversionistas extranjeros." }
-    ]
-  },
-  // =========================================================================
   // FINTECH & FINANZAS ABIERTAS (Ley N° 21.521 / CMF)
   // =========================================================================
   {
@@ -1786,7 +1726,7 @@ const DATA_DICTIONARY = [
     modo: "Automático Streaming RAM CMF",
     ultimaActualizacion: "2026-09-24",
     registros: "7 entidades",
-    descripcion: "Catastro maestro y directorio institucional de las Cooperativas de Ahorro y Crédito (CAC) de importancia sistémica supervisadas por la CMF. Incluye Coopeuch, Oriencoop, Capual, Ahorrocoop, Detacoop, Coonfia y Coocretal con RUT canónico validado bajo Módulo 11.",
+    descripcion: "Catastro maestro y directorio institucional de las Cooperativas de Ahorro y Crédito (CAC) de importancia sistémica supervisadas por la CMF. Incluye Coopeuch, Oriencoop, Capual, Ahorrocoop, Detacoop, Coonfia y Coocretal con RUT canónico validado bajo Módulo 11. Criterio de inclusión: cooperativas fiscalizadas por la CMF (art. 87 Ley General de Cooperativas, patrimonio sobre UF 400.000), según la nómina vigente CMF. Cooperativas bajo supervisión DAES (p. ej. Norte Grande, Financoop) no se incluyen porque no reportan estados financieros comparables a la CMF.",
     origen: "Comisión para el Mercado Financiero (CMF) — Nómina de Cooperativas de Ahorro y Crédito Fiscalizadas.",
     columnas: [
       { name: "rut", type: "VARCHAR", role: "PK", significado: "Rol Único Tributario canónico con guión y dígito verificador.", contable: "No aplica", interpretacion: "Identificador institucional único para interoperabilidad con el sistema financiero." },
@@ -1801,6 +1741,68 @@ const DATA_DICTIONARY = [
       { name: "estado_vigencia", type: "VARCHAR", role: "Dimensión", significado: "Condición operativa ante el regulador: VIGENTE.", contable: "No aplica", interpretacion: "Certificación de operación activa y supervisión vigente." },
       { name: "fecha_fundacion", type: "VARCHAR", role: "Dimensión", significado: "Fecha fundacional histórica de la institución cooperativa.", contable: "No aplica", interpretacion: "Trayectoria y madurez institucional en el mercado financiero chileno." },
       { name: "es_sistemica", type: "BOOLEAN", role: "Dimensión", significado: "Indicador de relevancia sistémica por activos o base de socios (>50% o supervisión CMF integral).", contable: "No aplica", interpretacion: "Sujeta a estándares de solvencia, Basilea y provisiones equivalentes a la banca." }
+    ]
+  },
+  {
+    id: "cooperativas_cmf_balance",
+    name: "cooperativas.cmf_balance",
+    viewName: "cooperativas_cmf_balance",
+    sector: "cooperativas",
+    sectorLabel: "Cooperativas de Ahorro y Crédito",
+    norma: "CMF Chile — Reporte Financiero de Cooperativas de Ahorro y Crédito (plan de cuentas 2017+)",
+    corte: "2017-01 a 2026-07 (115 meses)",
+    frescura: "Publicación mensual automática; la serie completa se valida y se publica en bloque",
+    modo: "Automático CMF con validación fail-closed",
+    registros: "23.345 registros (activos y pasivos por concepto)",
+    descripcion: "Balance de cada cooperativa fiscalizada por la CMF al grano concepto contable: activos (efectivo, instrumentos, colocaciones y provisiones) y pasivos (depósitos y captaciones, préstamos, provisiones y patrimonio). Montos en millones de pesos tal como los publica la fuente. Antes de 2017 la CMF usaba otra planilla y otro plan de cuentas: esa parte no se mezcla en esta serie.",
+    origen: "CMF — Reporte Financiero de Cooperativas de Ahorro y Crédito (planilla mensual, hojas Activos y Pasivos Cooperativas).",
+    columnas: [
+      { name: "id", type: "VARCHAR", role: "PK", significado: "Clave determinística del registro (período + RUT + sección + código de concepto).", contable: "No aplica", interpretacion: "Identifica una celda contable única de la planilla CMF." },
+      { name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Período mensual de la planilla CMF en formato YYYY-MM.", contable: "No aplica", interpretacion: "Eje temporal mensual de la serie (2017-01 en adelante)." },
+      { name: "fecha_corte", type: "VARCHAR", role: "Fecha", significado: "Último día calendario del mes informado, en formato ISO (AAAA-MM-DD).", contable: "No aplica", interpretacion: "Fecha de cierre del balance o del acumulado." },
+      { name: "rut", type: "VARCHAR", role: "FK", significado: "RUT de la cooperativa informante, tomado del catálogo maestro validado.", contable: "No aplica", interpretacion: "Enlaza con cooperativas.lista_entidades." },
+      { name: "cooperativa", type: "VARCHAR", role: "Dimensión", significado: "Nombre de fantasía de la cooperativa (COOPEUCH, CAPUAL, ...).", contable: "No aplica", interpretacion: "Identificación de la entidad que reporta." },
+      { name: "estado", type: "VARCHAR", role: "Atributo", significado: "balance (saldos al cierre) o resultados (acumulado del año a la fecha).", contable: "Naturaleza del saldo", interpretacion: "Evita confundir un saldo con un acumulado del ejercicio." },
+      { name: "seccion", type: "VARCHAR", role: "Clasificación", significado: "Hoja de origen: activos, pasivos, resultados o margen.", contable: "No aplica", interpretacion: "Permite filtrar por estado financiero y por hoja CMF." },
+      { name: "orden", type: "INTEGER", role: "Orden", significado: "Posición del concepto dentro de su hoja, en el orden de la planilla CMF.", contable: "No aplica", interpretacion: "Reconstruye el orden de las líneas tal como las publica la CMF." },
+      { name: "codigo_concepto", type: "VARCHAR", role: "Clave", significado: "Código estable del concepto (activos_totales, depositos_plazo, margen_intereses, ...).", contable: "No aplica", interpretacion: "Clave para series y cruces entre períodos." },
+      { name: "glosa", type: "VARCHAR", role: "Atributo", significado: "Nombre del concepto en lenguaje contable.", contable: "Nombre de la cuenta", interpretacion: "Texto legible del rubro." },
+      { name: "nivel", type: "INTEGER", role: "Atributo", significado: "Profundidad del concepto en la jerarquía de la planilla (0 = total).", contable: "Jerarquía de cuentas", interpretacion: "Distingue totales de sus componentes; no sumar niveles distintos." },
+      { name: "monto_mm_clp", type: "BIGINT", role: "Métrica", significado: "Monto en millones de pesos, tal como lo publica la CMF (sin reinterpretar).", contable: "Saldo al cierre o acumulado", interpretacion: "Cifra oficial de la fuente; el signo lo define la CMF." },
+      { name: "base_monto", type: "VARCHAR", role: "Atributo", significado: "saldo al cierre (balance) o acumulado del año a la fecha (resultados).", contable: "Base de medición", interpretacion: "Indica si el monto es foto del mes o flujo del año." },
+      { name: "fuente_url", type: "VARCHAR", role: "Procedencia", significado: "URL de la planilla CMF descargada para ese período.", contable: "No aplica", interpretacion: "Trazabilidad directa a la fuente oficial." },
+      { name: "sha256_fuente", type: "VARCHAR", role: "Procedencia", significado: "Hash SHA-256 del archivo CMF usado.", contable: "No aplica", interpretacion: "Permite verificar que la cifra viene del archivo exacto." }
+    ]
+  },
+  {
+    id: "cooperativas_cmf_resultados",
+    name: "cooperativas.cmf_resultados",
+    viewName: "cooperativas_cmf_resultados",
+    sector: "cooperativas",
+    sectorLabel: "Cooperativas de Ahorro y Crédito",
+    norma: "CMF Chile — Reporte Financiero de Cooperativas de Ahorro y Crédito (plan de cuentas 2017+)",
+    corte: "2017-01 a 2026-07 (115 meses)",
+    frescura: "Publicación mensual automática; la serie completa se valida y se publica en bloque",
+    modo: "Automático CMF con validación fail-closed",
+    registros: "28.980 registros (resultados y margen por concepto)",
+    descripcion: "Estado de resultados de cada cooperativa fiscalizada por la CMF, al grano concepto contable: margen de intereses, comisiones netas, gasto en provisiones, gastos de apoyo, resultado del ejercicio y castigos, más el desglose de margen y comisiones. Los montos son acumulados del año a la fecha, tal como los publica la fuente.",
+    origen: "CMF — Reporte Financiero de Cooperativas de Ahorro y Crédito (planilla mensual, hojas Estado Resultados Coop y Margen Interes - Comisiones).",
+    columnas: [
+      { name: "id", type: "VARCHAR", role: "PK", significado: "Clave determinística del registro (período + RUT + sección + código de concepto).", contable: "No aplica", interpretacion: "Identifica una celda contable única de la planilla CMF." },
+      { name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Período mensual de la planilla CMF en formato YYYY-MM.", contable: "No aplica", interpretacion: "Eje temporal mensual de la serie (2017-01 en adelante)." },
+      { name: "fecha_corte", type: "VARCHAR", role: "Fecha", significado: "Último día calendario del mes informado, en formato ISO (AAAA-MM-DD).", contable: "No aplica", interpretacion: "Fecha de cierre del balance o del acumulado." },
+      { name: "rut", type: "VARCHAR", role: "FK", significado: "RUT de la cooperativa informante, tomado del catálogo maestro validado.", contable: "No aplica", interpretacion: "Enlaza con cooperativas.lista_entidades." },
+      { name: "cooperativa", type: "VARCHAR", role: "Dimensión", significado: "Nombre de fantasía de la cooperativa (COOPEUCH, CAPUAL, ...).", contable: "No aplica", interpretacion: "Identificación de la entidad que reporta." },
+      { name: "estado", type: "VARCHAR", role: "Atributo", significado: "balance (saldos al cierre) o resultados (acumulado del año a la fecha).", contable: "Naturaleza del saldo", interpretacion: "Evita confundir un saldo con un acumulado del ejercicio." },
+      { name: "seccion", type: "VARCHAR", role: "Clasificación", significado: "Hoja de origen: activos, pasivos, resultados o margen.", contable: "No aplica", interpretacion: "Permite filtrar por estado financiero y por hoja CMF." },
+      { name: "orden", type: "INTEGER", role: "Orden", significado: "Posición del concepto dentro de su hoja, en el orden de la planilla CMF.", contable: "No aplica", interpretacion: "Reconstruye el orden de las líneas tal como las publica la CMF." },
+      { name: "codigo_concepto", type: "VARCHAR", role: "Clave", significado: "Código estable del concepto (activos_totales, depositos_plazo, margen_intereses, ...).", contable: "No aplica", interpretacion: "Clave para series y cruces entre períodos." },
+      { name: "glosa", type: "VARCHAR", role: "Atributo", significado: "Nombre del concepto en lenguaje contable.", contable: "Nombre de la cuenta", interpretacion: "Texto legible del rubro." },
+      { name: "nivel", type: "INTEGER", role: "Atributo", significado: "Profundidad del concepto en la jerarquía de la planilla (0 = total).", contable: "Jerarquía de cuentas", interpretacion: "Distingue totales de sus componentes; no sumar niveles distintos." },
+      { name: "monto_mm_clp", type: "BIGINT", role: "Métrica", significado: "Monto en millones de pesos, tal como lo publica la CMF (sin reinterpretar).", contable: "Saldo al cierre o acumulado", interpretacion: "Cifra oficial de la fuente; el signo lo define la CMF." },
+      { name: "base_monto", type: "VARCHAR", role: "Atributo", significado: "saldo al cierre (balance) o acumulado del año a la fecha (resultados).", contable: "Base de medición", interpretacion: "Indica si el monto es foto del mes o flujo del año." },
+      { name: "fuente_url", type: "VARCHAR", role: "Procedencia", significado: "URL de la planilla CMF descargada para ese período.", contable: "No aplica", interpretacion: "Trazabilidad directa a la fuente oficial." },
+      { name: "sha256_fuente", type: "VARCHAR", role: "Procedencia", significado: "Hash SHA-256 del archivo CMF usado.", contable: "No aplica", interpretacion: "Permite verificar que la cifra viene del archivo exacto." }
     ]
   },
   {
@@ -2077,7 +2079,6 @@ class DataDictionaryController {
             <button class="dict-filter-btn ${this.currentSector === 'cajas_compensacion' ? 'active' : ''}" data-sec="cajas_compensacion">Cajas de Compensación</button>
             <button class="dict-filter-btn ${this.currentSector === 'agf' ? 'active' : ''}" data-sec="agf">AGF</button>
             <button class="dict-filter-btn ${this.currentSector === 'sistemas_pago' ? 'active' : ''}" data-sec="sistemas_pago">Sistemas de Pago</button>
-            <button class="dict-filter-btn ${this.currentSector === 'retail_financiero' ? 'active' : ''}" data-sec="retail_financiero">Retail Financiero</button>
             <button class="dict-filter-btn ${this.currentSector === 'fintech' ? 'active' : ''}" data-sec="fintech">FinTech</button>
           </div>
         </div>

@@ -21,8 +21,12 @@ from pathlib import Path
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from playwright.sync_api import sync_playwright
 import pandas as pd
+from pathlib import Path as _Path
+import os as _os
+_ROOT = _Path(__file__).resolve().parents[2]  # raíz del repo
+_RESPALDO = _Path(_os.environ.get('MFC_RESPALDO_DIR', _Path.home().joinpath('Desktop', 'Respaldo_BCCH')))
 
-BASE_DIR = Path(r"C:\Users\joaqu\.gemini\antigravity\scratch\bcch_market_monitor")
+BASE_DIR = _ROOT
 PARTITIONS_DIR = BASE_DIR / "pensiones" / "outputs" / "partitions"
 OUTPUT_DIR = BASE_DIR / "pensiones" / "outputs"
 DOCS_OUTPUT_DIR = BASE_DIR / "docs" / "outputs" / "pensiones"

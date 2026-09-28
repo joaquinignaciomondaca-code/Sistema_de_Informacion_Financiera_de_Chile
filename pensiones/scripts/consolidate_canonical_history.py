@@ -7,8 +7,12 @@ para garantizar 100% de integridad referencial con afp_maestro_administradoras y
 import glob
 import pandas as pd
 from pathlib import Path
+from pathlib import Path as _Path
+import os as _os
+_ROOT = _Path(__file__).resolve().parents[2]  # raíz del repo
+_RESPALDO = _Path(_os.environ.get('MFC_RESPALDO_DIR', _Path.home().joinpath('Desktop', 'Respaldo_BCCH')))
 
-BASE_DIR = Path(r"C:\Users\joaqu\.gemini\antigravity\scratch\bcch_market_monitor")
+BASE_DIR = _ROOT
 PARTITIONS_DIR = BASE_DIR / "pensiones" / "outputs" / "partitions"
 OUTPUT_DIR = BASE_DIR / "pensiones" / "outputs"
 DOCS_OUTPUT_DIR = BASE_DIR / "docs" / "outputs" / "pensiones"

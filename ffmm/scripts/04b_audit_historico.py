@@ -13,6 +13,10 @@ import sys
 import json
 import pandas as pd
 import numpy as np
+from pathlib import Path as _Path
+import os as _os
+_ROOT = _Path(__file__).resolve().parents[2]  # raíz del repo
+_RESPALDO = _Path(_os.environ.get('MFC_RESPALDO_DIR', _Path.home().joinpath('Desktop', 'Respaldo_BCCH')))
 
 sys.stdout.reconfigure(encoding='utf-8', errors='replace')
 
@@ -20,7 +24,7 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 OUTPUT_DIR = os.path.join(BASE_DIR, "docs", "outputs", "ffmm")
 EEFF_PARQUET = os.path.join(OUTPUT_DIR, "ffmm_caratula_eeff_historico.parquet")
 REPOS_PARQUET = os.path.join(OUTPUT_DIR, "ffmm_repos_detalle_historico.parquet")
-BENCHMARK_CSV = r"C:\Users\joaqu\Desktop\Respaldo_BCCH\Fondos_Mutuos\05_REPO\outputs\repo_transacciones.csv"
+BENCHMARK_CSV = str(_RESPALDO.joinpath('Fondos_Mutuos', '05_REPO', 'outputs', 'repo_transacciones.csv'))
 
 def audit_eeff():
     print("=" * 80)

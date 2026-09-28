@@ -21,8 +21,12 @@ import zipfile
 import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
+from pathlib import Path as _Path
+import os as _os
+_ROOT = _Path(__file__).resolve().parents[2]  # raíz del repo
+_RESPALDO = _Path(_os.environ.get('MFC_RESPALDO_DIR', _Path.home().joinpath('Desktop', 'Respaldo_BCCH')))
 
-BASE_DIR = r"C:\Users\joaqu\.gemini\antigravity\scratch\bcch_market_monitor"
+BASE_DIR = str(_ROOT)
 OUT_DIRS = [
     os.path.join(BASE_DIR, "docs", "outputs", "cajas_compensacion"),
     os.path.join(BASE_DIR, "seguros", "circular_1835_cartera", "outputs", "cajas_compensacion")

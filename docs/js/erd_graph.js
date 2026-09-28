@@ -448,7 +448,7 @@ const ERD_TABLES = [
     w: 220,
     h: 145,
     rows: "1.156 fondos",
-    file: "ffmm/circular_1333_cartera/outputs/maestro_fondos_mutuos.parquet",
+    file: "outputs/ffmm/maestro_fondos_mutuos.parquet",
     cols: [
       { name: "id", pk: true, type: "VARCHAR" },
       { name: "run_fondo", type: "VARCHAR" },
@@ -466,7 +466,7 @@ const ERD_TABLES = [
     w: 220,
     h: 150,
     rows: "Futuros FFMM",
-    file: "ffmm/circular_1333_cartera/outputs/ffmm_futu_normalizado.parquet",
+    file: "outputs/ffmm/ffmm_futu_normalizado.parquet",
     cols: [
       { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
@@ -486,7 +486,7 @@ const ERD_TABLES = [
     w: 220,
     h: 150,
     rows: "Opciones FFMM",
-    file: "ffmm/circular_1333_cartera/outputs/ffmm_opci_normalizado.parquet",
+    file: "outputs/ffmm/ffmm_opci_normalizado.parquet",
     cols: [
       { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
@@ -506,7 +506,7 @@ const ERD_TABLES = [
     w: 220,
     h: 145,
     rows: "1.129 fondos",
-    file: "fi/cartera_inversiones/outputs/maestro_fondos_inversion.parquet",
+    file: "outputs/fi/maestro_fondos_inversion.parquet",
     cols: [
       { name: "id", pk: true, type: "VARCHAR" },
       { name: "run_fondo", type: "VARCHAR" },
@@ -524,7 +524,7 @@ const ERD_TABLES = [
     w: 220,
     h: 155,
     rows: "834k activos",
-    file: "fi/cartera_inversiones/outputs/fi_cartera_nacional.parquet",
+    file: "outputs/fi/fi_cartera_nacional.parquet",
     cols: [
       { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
@@ -545,7 +545,7 @@ const ERD_TABLES = [
     w: 220,
     h: 155,
     rows: "67.4k activos",
-    file: "fi/cartera_inversiones/outputs/fi_cartera_extranjera.parquet",
+    file: "outputs/fi/fi_cartera_extranjera.parquet",
     cols: [
       { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
@@ -566,7 +566,7 @@ const ERD_TABLES = [
     w: 220,
     h: 145,
     rows: "3.6k contratos",
-    file: "fi/cartera_inversiones/outputs/fi_futuros_forward.parquet",
+    file: "outputs/fi/fi_futuros_forward.parquet",
     cols: [
       { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
@@ -586,7 +586,7 @@ const ERD_TABLES = [
     w: 220,
     h: 165,
     rows: "Pactos CMF",
-    file: "fi/repos/outputs/fi_repos_vrc_crv.parquet",
+    file: "outputs/fi/fi_repos_vrc_crv.parquet",
     cols: [
       { name: "id", pk: true, type: "VARCHAR" },
       { name: "periodo", type: "VARCHAR" },
@@ -1204,6 +1204,54 @@ const ERD_TABLES = [
     ]
   },
   {
+    id: "cooperativas_cmf_balance",
+    name: "cooperativas.cmf_balance",
+    sector: "cooperativas",
+    color: "#0E7490",
+    x: 5040,
+    y: 1100,
+    w: 260,
+    h: 210,
+    rows: "23.345 registros · 115 meses",
+    file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet",
+    cols: [
+      { name: "id", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "cooperativa", type: "VARCHAR" },
+      { name: "seccion", type: "VARCHAR" },
+      { name: "codigo_concepto", type: "VARCHAR" },
+      { name: "glosa", type: "VARCHAR" },
+      { name: "nivel", type: "INTEGER" },
+      { name: "monto_mm_clp", type: "BIGINT" },
+      { name: "base_monto", type: "VARCHAR" }
+    ]
+  },
+  {
+    id: "cooperativas_cmf_resultados",
+    name: "cooperativas.cmf_resultados",
+    sector: "cooperativas",
+    color: "#0E7490",
+    x: 5040,
+    y: 1340,
+    w: 260,
+    h: 210,
+    rows: "28.980 registros · 115 meses",
+    file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet",
+    cols: [
+      { name: "id", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rut", fk: true, type: "VARCHAR" },
+      { name: "cooperativa", type: "VARCHAR" },
+      { name: "seccion", type: "VARCHAR" },
+      { name: "codigo_concepto", type: "VARCHAR" },
+      { name: "glosa", type: "VARCHAR" },
+      { name: "nivel", type: "INTEGER" },
+      { name: "monto_mm_clp", type: "BIGINT" },
+      { name: "base_monto", type: "VARCHAR" }
+    ]
+  },
+  {
     id: "ccaf_maestro",
     name: "ccaf.lista_entidades",
     sector: "cajas_compensacion",
@@ -1321,46 +1369,6 @@ const ERD_TABLES = [
       { name: "monto_compensado_cca_tef_m_clp", type: "DOUBLE" },
       { name: "circulante_stock_m_clp", type: "DOUBLE" },
       { name: "tasa_tarjetas_consumo_pct", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "retail_financiero_maestro",
-    name: "retail_financiero.lista_entidades",
-    sector: "retail_financiero",
-    color: "#BE185D",
-    x: 5630,
-    y: 200,
-    w: 260,
-    h: 175,
-    rows: "17 entidades",
-    file: "outputs/retail_financiero/retail_financiero_maestro.parquet",
-    cols: [
-      { name: "rut", pk: true, type: "BIGINT" },
-      { name: "dv", type: "VARCHAR" },
-      { name: "razon_social", type: "VARCHAR" },
-      { name: "nombre_comercial", type: "VARCHAR" },
-      { name: "tipo_entidad_cmf", type: "VARCHAR" },
-      { name: "grupo_controlador", type: "VARCHAR" }
-    ]
-  },
-  {
-    id: "retail_financiero_balances",
-    name: "retail_financiero.balances",
-    sector: "retail_financiero",
-    color: "#9D174D",
-    x: 5630,
-    y: 400,
-    w: 260,
-    h: 185,
-    rows: "190 balances",
-    file: "outputs/retail_financiero/retail_financiero_balances.parquet",
-    cols: [
-      { name: "rut", fk: true, type: "BIGINT" },
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "total_activos_m_clp", type: "DOUBLE" },
-      { name: "total_pasivos_m_clp", type: "DOUBLE" },
-      { name: "patrimonio_neto_m_clp", type: "DOUBLE" },
-      { name: "ganancia_perdida_ejercicio_m_clp", type: "DOUBLE" }
     ]
   },
   {
@@ -1543,6 +1551,9 @@ const ERD_TABLES = [
 const ERD_LINKS = [
   { from: "cooperativas_maestro", to: "cooperativas_balance_resumen", key: "rut" },
   { from: "cooperativas_maestro", to: "cooperativas_nota_efectivo_detalle", key: "rut" },
+  { from: "cooperativas_maestro", to: "cooperativas_cmf_balance", key: "rut" },
+  { from: "cooperativas_maestro", to: "cooperativas_cmf_resultados", key: "rut" },
+  { from: "cooperativas_cmf_balance", to: "cooperativas_cmf_resultados", key: "periodo, rut (misma planilla CMF)" },
   { from: "cooperativas_nota_efectivo_detalle", to: "bancos_maestro", key: "institucion_contraparte (cuentas corrientes bancarias)" },
   { from: "cooperativas_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "ccaf_maestro", to: "ccaf_caratula_totales", key: "rut, ccaf" },
@@ -1557,9 +1568,6 @@ const ERD_LINKS = [
   { from: "sistemas_pago_maestro", to: "sistemas_pago_balances", key: "rut" },
   { from: "sistemas_pago_balances", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "sistemas_pago_estadisticas_bcch", to: "macro_tasas_rendimientos", key: "periodo (tasas de referencia)" },
-  { from: "retail_financiero_maestro", to: "retail_financiero_balances", key: "rut" },
-  { from: "retail_financiero_balances", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
-  { from: "retail_financiero_balances", to: "macro_precios_actividad", key: "periodo (consumo privado)" },
   { from: "agf_maestro", to: "agf_balance_resumen", key: "rut" },
   { from: "agf_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "agf_maestro", to: "fi_maestro", key: "rut_administradora (gestión fiduciaria LUF)" },
