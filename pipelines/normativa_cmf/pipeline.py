@@ -55,6 +55,7 @@ STATE_PATH = ROOT / "data" / "normativa_cmf" / "state.json"
 FEED_PATH = ROOT / "docs" / "outputs" / "normativa_cmf" / "feed.json"
 USER_AGENT = "MonitorFinancieroChile/1.0 (+https://github.com/joaquinignaciomondaca-code/monitor-financiero-chile)"
 LOGGER = logging.getLogger("normativa_cmf")
+_LAST_GEMINI_REQUEST_AT: float | None = None
 
 _DATE_PATTERNS = (
     re.compile(r"(?<!\d)(\d{2})/(\d{2})/(\d{4})(?!\d)"),
@@ -464,6 +465,24 @@ DOCUMENTO:
 {_format_model_input(event, pages)}"""
 
 
+def _wait_for_gemini_slot() -> None:
+    """Aplica una pausa configurable entre solicitudes para respetar cuotas RPM."""
+    global _LAST_GEMINI_REQUEST_AT
+    try:
+        interval = float(os.getenv("NORMATIVA_GEMINI_MIN_INTERVAL_SECONDS", "0").strip() or "0")
+    except (AttributeError, TypeError, ValueError):
+        interval = 0.0
+    if not interval > 0:
+        return
+    interval = min(interval, 60.0)
+    now = time.monotonic()
+    if _LAST_GEMINI_REQUEST_AT is not None:
+        remaining = interval - (now - _LAST_GEMINI_REQUEST_AT)
+        if remaining > 0:
+            time.sleep(remaining)
+    _LAST_GEMINI_REQUEST_AT = time.monotonic()
+
+
 def _safe_gemini_http_error(response: requests.Response, api_key: str) -> str:
     """Devuelve un diagnóstico breve, sin credenciales ni cuerpo arbitrario."""
     result = f"HTTP {response.status_code}"
@@ -549,6 +568,7 @@ def _call_gemini(api_key: str, model: str, prompt: str) -> dict[str, Any]:
         },
     }
     try:
+        _wait_for_gemini_slot()
         response = requests.post(
             GEMINI_INTERACTIONS_URL,
             headers={
