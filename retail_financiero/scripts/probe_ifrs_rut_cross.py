@@ -79,16 +79,15 @@ def main() -> None:
         info.append(f"archivo={name} lineas={len(lines)}")
         info.extend("  muestra: " + l[:300] for l in lines[:4])
         for line in lines:
-            parts = [p.strip() for p in line.split(";")]
-            if len(parts) < 3:
+            parts = [x.strip() for x in line.split(";")]
+            if len(parts) < 9 or not parts[1].isdigit():
                 continue
-            rut_idx = next((i for i, p in enumerate(parts[:4]) if re.fullmatch(r"\d{6,9}", p.replace(".", ""))), None)
-            if rut_idx is None:
-                continue
-            rut = int(parts[rut_idx].replace(".", ""))
-            # razón social: primer campo alfabético tras el RUT (saltando DV)
-            razon = next((p for p in parts[rut_idx + 1:rut_idx + 4] if re.search(r"[A-Za-z]{3}", p)), "")
-            e = entities.setdefault(rut, {"rut": rut, "razon_social": razon, "campos_ejemplo": parts[:10]})
+            rut = int(parts[1])
+            e = entities.setdefault(rut, {"razon_social": parts[2], "tax": set(), "tipos": set(), "activos": ""})
+            e["tax"].add(parts[7]); e["tipos"].add(parts[8])
+            if norm(parts[5]) in ("TOTAL DE ACTIVOS", "ACTIVOS", "TOTAL ACTIVOS") and parts[3] in ("C", "I"):
+                if not e["activos"] or parts[3] == "C":
+                    e["activos"] = f"{parts[3]}:{parts[4]}:{parts[6]}"
             rows_by[rut] += 1
     annotate("IFRS formato", "\n".join(info))
 
@@ -98,7 +97,8 @@ def main() -> None:
     for rut, e in sorted(entities.items()):
         n = norm(e["razon_social"])
         hits = [k for k in KEYWORDS if k in n]
-        table.append({"rut": rut, "razon_social": e["razon_social"], "filas": rows_by[rut],
+        table.append({"rut": rut, "razon_social": e["razon_social"], "filas": rows_by[rut], "taxonomia": "|".join(sorted(e["tax"])),
+                      "activos": e["activos"],
                       "en_maestro": rut in maestro_ruts, "palabras_clave": "|".join(hits)})
     with (out / f"ifrs_{PERIOD}_ruts.csv").open("w", newline="", encoding="utf-8") as f:
         w = csv.DictWriter(f, fieldnames=list(table[0]) if table else ["rut"])
@@ -110,12 +110,12 @@ def main() -> None:
     candidatos = [t for t in table if not t["en_maestro"] and t["palabras_clave"]]
     annotate("IFRS resumen", "\n".join([
         f"periodo={PERIOD} RUT_unicos={len(table)} maestro={len(maestro_ruts)} maestro_en_IFRS={len(presentes)}",
-        "MAESTRO PRESENTES: " + "; ".join(f"{t['rut']} {t['razon_social']} ({t['filas']})" for t in presentes),
+        "MAESTRO PRESENTES: " + "; ".join(f"{t['rut']} {t['razon_social']} [{t['taxonomia']}] {t['activos']}" for t in presentes),
         "MAESTRO AUSENTES: " + "; ".join(f"{r} {n}" for r, n in ausentes),
     ]))
     annotate("IFRS candidatos", "\n".join(
-        f"{t['rut']};{t['razon_social']};{t['filas']};{t['palabras_clave']}" for t in candidatos) or "ninguno")
-    annotate("IFRS todos", "\n".join(f"{t['rut']};{t['razon_social']}" for t in table))
+        f"{t['rut']};{t['razon_social']};{t['taxonomia']};{t['activos']};{t['palabras_clave']}" for t in candidatos) or "ninguno")
+    annotate("IFRS todos", "\n".join(f"{t['rut']};{t['razon_social']};{t['taxonomia']};{t['activos']}" for t in table))
 
 
 if __name__ == "__main__":
