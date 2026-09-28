@@ -249,6 +249,9 @@ actualizar_carteras.py (workflow seguros_carteras.yml):
         por archivo: decodificar (UTF-8 o Latin-1 según el largo), largo exacto de cada línea,
                      encabezado (o RUT/mes desde el nombre si falta), totales y mes → avisos
                      campos numéricos y fechas: ilegibles > 1 % de las filas de una tabla → no publicar (fail-closed)
+                     archivo defectuoso de una compañía (línea de otro largo, tipo de registro inválido) →
+                       se excluye SOLO ese archivo (aviso + manifest "archivos_excluidos"); si son > 2 y > 5 %
+                       de los archivos del sector → no publicar el mes (lectura mal hecha)
         escribir: renta_fija y bienes_raices un archivo por mes; resto un archivo por año
                   (esquema fijo por tabla); manifiesto por tabla, aseguradoras.parquet, data_manifest.json
 tests/test_formato_1835.py: lee las muestras de ambos formatos; cuadratura de bonos y fechas válidas
