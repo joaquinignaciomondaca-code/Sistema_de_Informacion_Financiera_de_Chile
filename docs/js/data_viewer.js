@@ -122,21 +122,13 @@ const DATA_VIEWER_CATALOG = [
     group: "Cooperativas de Ahorro y Crédito (CMF)",
     tables: [
       { id: "cooperativas_maestro", name: "cooperativas.lista_entidades (7 entidades)" },
-      { id: "cooperativas_balance_resumen", name: "cooperativas.balance_resumen (294 balances)" },
-      { id: "cooperativas_nota_efectivo_detalle", name: "cooperativas.nota_efectivo (122 registros)" },
-      { id: "cooperativas_cmf_balance", name: "cooperativas.cmf_balance (activos y pasivos por cuenta · 23.345 registros)" },
-      { id: "cooperativas_cmf_resultados", name: "cooperativas.cmf_resultados (resultados y margen por cuenta · 28.980 registros)" }
     ]
   },
   {
     group: "Cajas de Compensación (CCAF / CMF - SUSESO)",
     tables: [
       { id: "ccaf_maestro", name: "ccaf.lista_entidades (6 entidades)" },
-      { id: "ccaf_caratula_totales", name: "ccaf.balances (288 balances)" },
-      { id: "ccaf_nota8_efectivo_resumen", name: "ccaf.nota8_efectivo_resumen (213 registros)" },
-      { id: "ccaf_colocaciones_credito_social", name: "ccaf.colocaciones_credito_social (268 registros)" },
-      { id: "ccaf_nota8_dap_detalle", name: "ccaf.nota8_dap_detalle (52 registros)" },
-      { id: "ccaf_nota8_repos_detalle", name: "ccaf.nota8_repos_detalle (158 operaciones)" }
+      { id: "ccaf_caratula_totales", name: "ccaf.balances (72 balances · 288 filas)" },
     ]
   },
   {
@@ -151,16 +143,12 @@ const DATA_VIEWER_CATALOG = [
     group: "Sistemas de Pago (BCCh / CMF)",
     tables: [
       { id: "sistemas_pago_maestro", name: "sistemas_pago.lista_entidades (12 entidades)" },
-      { id: "sistemas_pago_balances", name: "sistemas_pago.balances (82 registros)" },
-      { id: "sistemas_pago_estadisticas_bcch", name: "sistemas_pago.estadisticas_bcch (102 registros)" }
     ]
   },
   {
     group: "FinTech & Finanzas Abiertas (Ley 21.521 / CMF)",
     tables: [
       { id: "fintech_rpsf_maestro", name: "fintech.lista_entidades (262 entidades)" },
-      { id: "fintech_servicios_acreditados", name: "fintech.servicios_acreditados (262 registros)" },
-      { id: "fintech_finanzas_abiertas_roles", name: "fintech.finanzas_abiertas_roles (262 registros)" }
     ]
   }
 ];

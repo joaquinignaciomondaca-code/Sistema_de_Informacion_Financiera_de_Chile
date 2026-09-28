@@ -978,102 +978,6 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "cooperativas_balance_resumen",
-    name: "cooperativas.balance_resumen",
-    sector: "cooperativas",
-    color: "#15803D",
-    x: 5040,
-    y: 620,
-    w: 260,
-    h: 210,
-    rows: "700+ balances IFRS",
-    file: "outputs/cooperativas/cooperativas_balance_resumen.parquet",
-    cols: [
-      { name: "id_balance", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "nombre_fantasia", type: "VARCHAR" },
-      { name: "total_activos_m_clp", type: "DOUBLE" },
-      { name: "total_pasivos_m_clp", type: "DOUBLE" },
-      { name: "patrimonio_neto_m_clp", type: "DOUBLE" },
-      { name: "utilidad_ejercicio_m_clp", type: "DOUBLE" },
-      { name: "total_activos_m_usd", type: "DOUBLE" },
-      { name: "patrimonio_m_usd", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "cooperativas_nota_efectivo_detalle",
-    name: "cooperativas.nota_efectivo",
-    sector: "cooperativas",
-    color: "#15803D",
-    x: 5040,
-    y: 860,
-    w: 260,
-    h: 210,
-    rows: "122 registros Notas 5/6",
-    file: "outputs/cooperativas/cooperativas_nota_efectivo_detalle.parquet",
-    cols: [
-      { name: "id_registro", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "nombre_fantasia", type: "VARCHAR" },
-      { name: "numero_nota", type: "VARCHAR" },
-      { name: "categoria_efectivo", type: "VARCHAR" },
-      { name: "concepto_literal", type: "VARCHAR" },
-      { name: "institucion_contraparte", type: "VARCHAR" },
-      { name: "monto_m_clp", type: "DOUBLE" },
-      { name: "monto_m_usd", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "cooperativas_cmf_balance",
-    name: "cooperativas.cmf_balance",
-    sector: "cooperativas",
-    color: "#0E7490",
-    x: 5040,
-    y: 1100,
-    w: 260,
-    h: 210,
-    rows: "23.345 registros · 115 meses",
-    file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "cooperativa", type: "VARCHAR" },
-      { name: "seccion", type: "VARCHAR" },
-      { name: "codigo_concepto", type: "VARCHAR" },
-      { name: "glosa", type: "VARCHAR" },
-      { name: "nivel", type: "INTEGER" },
-      { name: "monto_mm_clp", type: "BIGINT" },
-      { name: "base_monto", type: "VARCHAR" }
-    ]
-  },
-  {
-    id: "cooperativas_cmf_resultados",
-    name: "cooperativas.cmf_resultados",
-    sector: "cooperativas",
-    color: "#0E7490",
-    x: 5040,
-    y: 1340,
-    w: 260,
-    h: 210,
-    rows: "28.980 registros · 115 meses",
-    file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet",
-    cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "cooperativa", type: "VARCHAR" },
-      { name: "seccion", type: "VARCHAR" },
-      { name: "codigo_concepto", type: "VARCHAR" },
-      { name: "glosa", type: "VARCHAR" },
-      { name: "nivel", type: "INTEGER" },
-      { name: "monto_mm_clp", type: "BIGINT" },
-      { name: "base_monto", type: "VARCHAR" }
-    ]
-  },
-  {
     id: "ccaf_maestro",
     name: "ccaf.lista_entidades",
     sector: "cajas_compensacion",
@@ -1176,44 +1080,6 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "sistemas_pago_balances",
-    name: "pagos.balances",
-    sector: "sistemas_pago",
-    color: "#0D9488",
-    x: 5340,
-    y: 360,
-    w: 260,
-    h: 185,
-    rows: "82 balances",
-    file: "outputs/sistemas_pago/sistemas_pago_balances.parquet",
-    cols: [
-      { name: "rut", fk: true, type: "BIGINT" },
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "razon_social", type: "VARCHAR" },
-      { name: "total_activos_m_clp", type: "DOUBLE" },
-      { name: "patrimonio_neto_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "sistemas_pago_estadisticas_bcch",
-    name: "pagos.estadisticas",
-    sector: "sistemas_pago",
-    color: "#14B8A6",
-    x: 5340,
-    y: 575,
-    w: 260,
-    h: 185,
-    rows: "102 meses",
-    file: "outputs/sistemas_pago/sistemas_pago_estadisticas_bcch.parquet",
-    cols: [
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "monto_liquidado_lbtr_m_usd", type: "DOUBLE" },
-      { name: "monto_compensado_cca_tef_m_clp", type: "DOUBLE" },
-      { name: "circulante_stock_m_clp", type: "DOUBLE" },
-      { name: "tasa_tarjetas_consumo_pct", type: "DOUBLE" }
-    ]
-  },
-  {
     id: "fintech_rpsf_maestro",
     name: "fintech.lista_entidades",
     sector: "fintech",
@@ -1231,44 +1097,6 @@ const ERD_TABLES = [
       { name: "estado_vigencia", type: "VARCHAR" },
       { name: "tipo_persona", type: "VARCHAR" },
       { name: "servicios_acreditados_total", type: "BIGINT" }
-    ]
-  },
-  {
-    id: "fintech_servicios_acreditados",
-    name: "fintech.servicios",
-    sector: "fintech",
-    color: "#B45309",
-    x: 5920,
-    y: 360,
-    w: 260,
-    h: 185,
-    rows: "262 licencias",
-    file: "outputs/fintech/fintech_servicios_acreditados.parquet",
-    cols: [
-      { name: "rut", fk: true, type: "BIGINT" },
-      { name: "servicio_codigo", pk: true, type: "VARCHAR" },
-      { name: "razon_social", type: "VARCHAR" },
-      { name: "servicio_sigla", type: "VARCHAR" },
-      { name: "estado_autorizacion", type: "VARCHAR" }
-    ]
-  },
-  {
-    id: "fintech_finanzas_abiertas_roles",
-    name: "fintech.open_finance",
-    sector: "fintech",
-    color: "#F59E0B",
-    x: 5920,
-    y: 575,
-    w: 260,
-    h: 185,
-    rows: "262 roles",
-    file: "outputs/fintech/fintech_finanzas_abiertas_roles.parquet",
-    cols: [
-      { name: "rut", fk: true, type: "BIGINT" },
-      { name: "rol_sfa", pk: true, type: "VARCHAR" },
-      { name: "razon_social", type: "VARCHAR" },
-      { name: "estandar_interfaz", type: "VARCHAR" },
-      { name: "requisito_consentimiento", type: "VARCHAR" }
     ]
   },
   {
@@ -1309,107 +1137,12 @@ const ERD_TABLES = [
       { name: "asiento_contable", type: "VARCHAR" },
       { name: "monto_m_clp", type: "DOUBLE" }
     ]
-  },
-  {
-    id: "ccaf_nota8_efectivo_resumen",
-    name: "ccaf.nota8_efectivo_resumen",
-    sector: "cajas_compensacion",
-    color: "#047857",
-    x: 6300,
-    y: 540,
-    w: 260,
-    h: 185,
-    rows: "189 componentes",
-    file: "outputs/cajas_compensacion/ccaf_nota8_efectivo_resumen.parquet",
-    cols: [
-      { name: "rut", fk: true, type: "VARCHAR" },
-      { name: "ccaf", type: "VARCHAR" },
-      { name: "ano", type: "BIGINT" },
-      { name: "tipo_eeff", type: "VARCHAR" },
-      { name: "concepto", type: "VARCHAR" },
-      { name: "monto_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "ccaf_nota8_dap_detalle",
-    name: "ccaf.nota8_dap_detalle",
-    sector: "cajas_compensacion",
-    color: "#065F46",
-    x: 6620,
-    y: 430,
-    w: 260,
-    h: 170,
-    rows: "52 depósitos",
-    file: "outputs/cajas_compensacion/ccaf_nota8_dap_detalle.parquet",
-    cols: [
-      { name: "ccaf", type: "VARCHAR" },
-      { name: "ano", type: "BIGINT" },
-      { name: "tipo_eeff", type: "VARCHAR" },
-      { name: "tipo_inversion", type: "VARCHAR" },
-      { name: "valor_contable_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "ccaf_nota8_repos_detalle",
-    name: "ccaf.nota8_repos_detalle",
-    sector: "cajas_compensacion",
-    color: "#064E3B",
-    x: 6620,
-    y: 650,
-    w: 260,
-    h: 170,
-    rows: "158 pactos",
-    file: "outputs/cajas_compensacion/ccaf_nota8_repos_detalle.parquet",
-    cols: [
-      { name: "ccaf", type: "VARCHAR" },
-      { name: "ano", type: "BIGINT" },
-      { name: "tipo_eeff", type: "VARCHAR" },
-      { name: "broker_estandarizado", type: "VARCHAR" },
-      { name: "valor_contable_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
-    id: "ccaf_colocaciones_credito_social",
-    name: "ccaf.colocaciones_credito_social",
-    sector: "cajas_compensacion",
-    color: "#047857",
-    x: 6320,
-    y: 650,
-    w: 260,
-    h: 190,
-    rows: "268 líneas",
-    file: "outputs/cajas_compensacion/ccaf_colocaciones_credito_social.parquet",
-    cols: [
-      { name: "rut", type: "VARCHAR", key: true },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "tipo_afiliado", type: "VARCHAR" },
-      { name: "tipo_credito", type: "VARCHAR" },
-      { name: "monto_neto_miles_clp", type: "DOUBLE" }
-    ]
   }
 ];
 
 // Relaciones entre tablas (Claves Foráneas lógicas)
 const ERD_LINKS = [
-  { from: "cooperativas_maestro", to: "cooperativas_balance_resumen", key: "rut" },
-  { from: "cooperativas_maestro", to: "cooperativas_nota_efectivo_detalle", key: "rut" },
-  { from: "cooperativas_maestro", to: "cooperativas_cmf_balance", key: "rut" },
-  { from: "cooperativas_maestro", to: "cooperativas_cmf_resultados", key: "rut" },
-  { from: "cooperativas_cmf_balance", to: "cooperativas_cmf_resultados", key: "periodo, rut (misma planilla CMF)" },
-  { from: "cooperativas_nota_efectivo_detalle", to: "bancos_maestro", key: "institucion_contraparte (cuentas corrientes bancarias)" },
-  { from: "cooperativas_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "ccaf_maestro", to: "ccaf_caratula_totales", key: "rut, ccaf" },
-  { from: "ccaf_caratula_totales", to: "ccaf_colocaciones_credito_social", key: "ano, mes, rut, tipo_eeff" },
-  { from: "ccaf_caratula_totales", to: "ccaf_nota8_efectivo_resumen", key: "ano, mes, ccaf, tipo_eeff" },
-  { from: "ccaf_nota8_efectivo_resumen", to: "ccaf_nota8_dap_detalle", key: "ano, mes, ccaf, tipo_eeff (DAP)" },
-  { from: "ccaf_nota8_efectivo_resumen", to: "ccaf_nota8_repos_detalle", key: "ano, mes, ccaf, tipo_eeff (Pactos)" },
-  { from: "fintech_rpsf_maestro", to: "fintech_servicios_acreditados", key: "rut" },
-  { from: "fintech_rpsf_maestro", to: "fintech_finanzas_abiertas_roles", key: "rut" },
-  { from: "fintech_finanzas_abiertas_roles", to: "bancos_maestro", key: "APIs Open Finance (IPI / IPSI)" },
-  { from: "fintech_servicios_acreditados", to: "sistemas_pago_maestro", key: "interconexión transaccional y custodia" },
-  { from: "sistemas_pago_maestro", to: "sistemas_pago_balances", key: "rut" },
-  { from: "sistemas_pago_balances", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
-  { from: "sistemas_pago_estadisticas_bcch", to: "macro_tasas_rendimientos", key: "periodo (tasas de referencia)" },
   { from: "agf_maestro", to: "agf_balance", key: "rut" },
   { from: "agf_maestro", to: "agf_resultados", key: "rut" },
   { from: "agf_balance", to: "agf_resultados", key: "rut, periodo" },

@@ -92,21 +92,10 @@ const SEMANTIC_VIEWS = [
 
   // COOPERATIVAS DE AHORRO Y CRÉDITO (CMF)
   { name: "cooperativas_maestro", file: "outputs/cooperativas/cooperativas_maestro.parquet" },
-  { name: "cooperativas_balance_resumen", file: "outputs/cooperativas/cooperativas_balance_resumen.parquet" },
-  { name: "cooperativas_nota_efectivo_detalle", file: "outputs/cooperativas/cooperativas_nota_efectivo_detalle.parquet" },
-  // Reporte Financiero CMF por cooperativa (2017-01+): la misma planilla trae balance y
-  // resultados, separados aquí por el campo `estado`. La serie se publica en bloque: si un
-  // período no pasa la validación, no se publica ninguno (no hay particiones a medias).
-  { name: "cooperativas_cmf_balance", file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet", where: "estado = 'balance'" },
-  { name: "cooperativas_cmf_resultados", file: "outputs/cooperativas/cmf_reporte_financiero/estados.parquet", where: "estado = 'resultados'" },
 
   // CAJAS DE COMPENSACION (CCAF / SUSESO - Ley 18.833 / CMF)
   { name: "ccaf_maestro", file: "outputs/cajas_compensacion/ccaf_maestro.parquet" },
   { name: "ccaf_caratula_totales", file: "outputs/cajas_compensacion/ccaf_caratula_totales.parquet" },
-  { name: "ccaf_nota8_efectivo_resumen", file: "outputs/cajas_compensacion/ccaf_nota8_efectivo_resumen.parquet" },
-  { name: "ccaf_nota8_dap_detalle", file: "outputs/cajas_compensacion/ccaf_nota8_dap_detalle.parquet" },
-  { name: "ccaf_nota8_repos_detalle", file: "outputs/cajas_compensacion/ccaf_nota8_repos_detalle.parquet" },
-  { name: "ccaf_colocaciones_credito_social", file: "outputs/cajas_compensacion/ccaf_colocaciones_credito_social.parquet" },
 
   // ADMINISTRADORAS GENERALES DE FONDOS (AGF / Ley 20.712)
   { name: "agf_maestro", file: "outputs/agf/agf_maestro.parquet" },
@@ -115,13 +104,9 @@ const SEMANTIC_VIEWS = [
 
   // SISTEMAS DE PAGO (BCCh / CMF)
   { name: "sistemas_pago_maestro", file: "outputs/sistemas_pago/sistemas_pago_maestro.parquet" },
-  { name: "sistemas_pago_balances", file: "outputs/sistemas_pago/sistemas_pago_balances.parquet" },
-  { name: "sistemas_pago_estadisticas_bcch", file: "outputs/sistemas_pago/sistemas_pago_estadisticas_bcch.parquet" },
 
   // FINTECH & FINANZAS ABIERTAS (LEY N° 21.521 / CMF)
   { name: "fintech_rpsf_maestro", file: "outputs/fintech/fintech_rpsf_maestro.parquet" },
-  { name: "fintech_servicios_acreditados", file: "outputs/fintech/fintech_servicios_acreditados.parquet" },
-  { name: "fintech_finanzas_abiertas_roles", file: "outputs/fintech/fintech_finanzas_abiertas_roles.parquet" }
 ];
 
 class DuckDBClient {

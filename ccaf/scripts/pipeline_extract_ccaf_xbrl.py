@@ -5,10 +5,10 @@ pipeline_extract_ccaf_xbrl.py
 Extractor unificado, determinístico y 100% en memoria de Estados Financieros XBRL 
 para Cajas de Compensación (CCAF) desde la Comisión para el Mercado Financiero (CMF Chile).
 
-Genera tres tablas paritarias (Parquet + JSON):
+Genera (Parquet + JSON):
 1. ccaf_caratula_totales (Balance General y Estado de Resultados: Activos, Pasivos, Patrimonio, Utilidad)
-2. ccaf_nota8_efectivo_resumen (Efectivo y Equivalentes: Caja, Bancos, Inversiones líquidas)
-3. ccaf_colocaciones_credito_social (Cartera de Crédito Social bruta, deterioro/provisiones y neta)
+(2026-09-28: se retiraron de la web Nota 8 y colocaciones de crédito social; solo queda el balance
+desde el XBRL oficial, junto con la lista de entidades.)
 """
 
 import os
@@ -155,8 +155,6 @@ def extract_all():
     print("=" * 80)
 
     caratula_rows = []
-    efectivo_rows = []
-    credito_rows = []
 
     success_count = 0
     fail_count = 0
@@ -230,90 +228,12 @@ def extract_all():
                     'codigo_fecu': '23050', 'moneda': 'CLP', 'escala': 'Miles de pesos'
                 })
 
-            # -------------------------------------------------------------
-            # 2. EFECTIVO Y EQUIVALENTES DE EFECTIVO
-            # -------------------------------------------------------------
-            cash_total = get_fact(facts, 'ifrs-full:Cash', instant_ctx)
-            cash_on_hand = get_fact(facts, 'ifrs-full:CashOnHand', instant_ctx) or 0.0
-            cash_eq = get_fact(facts, 'ifrs-full:CashEquivalents', instant_ctx) or get_fact(facts, 'ifrs-full:ShorttermInvestmentsClassifiedAsCashEquivalents', instant_ctx) or 0.0
-
-            if cash_total is not None:
-                bancos_val = max(0.0, cash_total - cash_on_hand)
-                if cash_on_hand > 0:
-                    efectivo_rows.append({
-                        'ano': ano, 'mes': mes, 'ccaf': ccaf_nombre, 'rut': rut_fmt,
-                        'tipo_eeff': tipo_eeff, 'concepto': 'Saldo en caja',
-                        'monto_m_clp': round(cash_on_hand / 1e9, 3),
-                        'monto_miles_clp': round(cash_on_hand / 1e3, 0),
-                        'moneda': 'CLP', 'escala': 'Miles de pesos'
-                    })
-                if bancos_val > 0:
-                    efectivo_rows.append({
-                        'ano': ano, 'mes': mes, 'ccaf': ccaf_nombre, 'rut': rut_fmt,
-                        'tipo_eeff': tipo_eeff, 'concepto': 'Saldos en bancos',
-                        'monto_m_clp': round(bancos_val / 1e9, 3),
-                        'monto_miles_clp': round(bancos_val / 1e3, 0),
-                        'moneda': 'CLP', 'escala': 'Miles de pesos'
-                    })
-                if cash_eq > 0:
-                    efectivo_rows.append({
-                        'ano': ano, 'mes': mes, 'ccaf': ccaf_nombre, 'rut': rut_fmt,
-                        'tipo_eeff': tipo_eeff, 'concepto': 'Inversiones a corto plazo (DAP y Pactos)',
-                        'monto_m_clp': round(cash_eq / 1e9, 3),
-                        'monto_miles_clp': round(cash_eq / 1e3, 0),
-                        'moneda': 'CLP', 'escala': 'Miles de pesos'
-                    })
-
-            # -------------------------------------------------------------
-            # 3. COLOCACIONES DE CREDITO SOCIAL Y PROVISIONES
-            # -------------------------------------------------------------
-            segmentos = [
-                ('Trabajadores', 'Consumo', 'ColocacionesCreditoSocialCorrientesNetoTrabajadoresConsumo', 'ColocacionesCreditoSocialNOcorrientesNetoTrabajadoresConsumo', 'DeterioroColocacionesCreditoSocialTrabajadoresConsumo'),
-                ('Trabajadores', 'Fines Educacionales', 'ColocacionesCreditoSocialCorrientesNetoTrabajadoresFinesEducacionales', 'ColocacionesCreditoSocialNOcorrientesNetoTrabajadoresFinesEducacionales', 'DeterioroColocacionesCreditoSocialTrabajadoresFinesEducacionales'),
-                ('Trabajadores', 'Microempresarios', 'ColocacionesCreditoSocialCorrientesNetoTrabajadoresMicroempresarios', 'ColocacionesCreditoSocialNOcorrientesNetoTrabajadoresMicroempresarios', 'DeterioroColocacionesCreditoSocialTrabajadoresMicroempresarios'),
-                ('Trabajadores', 'Mutuos Hipotecarios No Endosables', 'ColocacionesCreditoSocialCorrientesNetoTrabajadoresMutuosHipotecariosNoEndosables', 'ColocacionesCreditoSocialNOcorrientesNetoTrabajadoresMutuosHipotecariosNoEndosables', 'DeterioroColocacionesCreditoSocialTrabajadoresMutuosHipotecariosNoEndosables'),
-                ('Pensionados', 'Consumo', 'ColocacionesCreditoSocialCorrientesNetoPensionadosConsumo', 'ColocacionesCreditoSocialNOcorrientesNetoPensionadosConsumo', 'DeterioroColocacionesCreditoSocialPensionadosConsumo'),
-                ('Pensionados', 'Fines Educacionales', 'ColocacionesCreditoSocialCorrientesNetoPensionadosFinesEducacionales', 'ColocacionesCreditoSocialNOcorrientesNetoPensionadosFinesEducacionales', 'DeterioroColocacionesCreditoSocialPensionadosFinesEducacionales'),
-                ('Pensionados', 'Microempresarios', 'ColocacionesCreditoSocialCorrientesNetoPensionadosMicroempresarios', None, None)
-            ]
-
-            for af, cred, tag_corr, tag_nocorr, tag_det in segmentos:
-                v_corr = get_fact(facts, f'cl-cc:{tag_corr}', instant_ctx) if tag_corr else None
-                v_nocorr = get_fact(facts, f'cl-cc:{tag_nocorr}', instant_ctx) if tag_nocorr else None
-                v_det = get_fact(facts, f'cl-cc:{tag_det}', instant_ctx) if tag_det else None
-
-                if v_corr is not None or v_nocorr is not None or v_det is not None:
-                    c_miles = round(v_corr / 1e3, 0) if v_corr is not None else 0.0
-                    nc_miles = round(v_nocorr / 1e3, 0) if v_nocorr is not None else 0.0
-                    det_miles = round(v_det / 1e3, 0) if v_det is not None else 0.0
-                    neto_miles = c_miles + nc_miles
-
-                    credito_rows.append({
-                        'ano': ano,
-                        'mes': mes,
-                        'periodo': f"{ano}-{mes:02d}",
-                        'rut': rut_fmt,
-                        'ccaf': ccaf_nombre,
-                        'tipo_eeff': tipo_eeff,
-                        'tipo_afiliado': af,
-                        'tipo_credito': cred,
-                        'monto_corriente_miles_clp': c_miles,
-                        'monto_no_corriente_miles_clp': nc_miles,
-                        'deterioro_provision_miles_clp': det_miles,
-                        'monto_neto_miles_clp': neto_miles,
-                        'moneda': 'CLP',
-                        'escala': 'Miles de pesos',
-                        'fuente': 'CMF_XBRL'
-                    })
-
     print("\n" + "=" * 80)
     print(f"RESUMEN DE EXTRACCION: {success_count} reportes procesados con éxito.")
     print("=" * 80)
 
     # Convertir a DataFrames y ordenar
     df_caratula = pd.DataFrame(caratula_rows).sort_values(['ano', 'mes', 'ccaf', 'codigo_fecu'])
-    df_efectivo = pd.DataFrame(efectivo_rows).sort_values(['ano', 'mes', 'ccaf', 'concepto'])
-    df_credito = pd.DataFrame(credito_rows).sort_values(['ano', 'mes', 'ccaf', 'tipo_afiliado', 'tipo_credito'])
 
     # Guardar en ambas carpetas
     for od in OUT_DIRS:
@@ -324,19 +244,7 @@ def extract_all():
         with open(os.path.join(od, "ccaf_caratula_totales.json"), "w", encoding="utf-8") as f:
             json.dump(df_caratula.to_dict(orient="records"), f, indent=2, ensure_ascii=False)
 
-        # 2. Efectivo
-        df_efectivo.to_parquet(os.path.join(od, "ccaf_nota8_efectivo_resumen.parquet"), index=False)
-        with open(os.path.join(od, "ccaf_nota8_efectivo_resumen.json"), "w", encoding="utf-8") as f:
-            json.dump(df_efectivo.to_dict(orient="records"), f, indent=2, ensure_ascii=False)
-
-        # 3. Crédito Social
-        df_credito.to_parquet(os.path.join(od, "ccaf_colocaciones_credito_social.parquet"), index=False)
-        with open(os.path.join(od, "ccaf_colocaciones_credito_social.json"), "w", encoding="utf-8") as f:
-            json.dump(df_credito.to_dict(orient="records"), f, indent=2, ensure_ascii=False)
-
     print(f"[+] ccaf_caratula_totales: {len(df_caratula)} filas guardadas.")
-    print(f"[+] ccaf_nota8_efectivo_resumen: {len(df_efectivo)} filas guardadas.")
-    print(f"[+] ccaf_colocaciones_credito_social: {len(df_credito)} filas guardadas.")
     print("[*] Proceso completado con cero residuos en disco.")
 
 if __name__ == '__main__':
