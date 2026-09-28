@@ -25,7 +25,12 @@ SHEET_NAMES = {"activos": "Activos Cooperativas", "pasivos": "Pasivos Cooperativ
 
 def sheet(key, data=None, extra_row=None, blank_col=True):
     data = data or REAL[key]
-    rows = [["Volver"], [None, "(Cifras en millones de pesos)"], [None, "Instituciones (1):", *HEADERS[key]], []]
+    width = len(next(iter(REAL[key].values())))
+    head = [None] * width  # como en la planilla: frases en la primera columna de cada bloque combinado
+    for i, h in enumerate(HEADERS[key][:-1]):
+        head[i * 2] = h
+    head[-1] = HEADERS[key][-1]
+    rows = [["Volver"], [None, "(Cifras en millones de pesos)"], [None, "Instituciones (1):", None, *head], []]
     for name, vals in data.items():
         rows.append([None, name, *( [None] if blank_col else [] ), *vals])
     if extra_row:
@@ -103,6 +108,22 @@ class FailClosedTests(unittest.TestCase):
         rows = sheet("margen", {"Coopeuch": REAL["margen"]["Coopeuch"]})
         with self.assertRaisesRegex(ValueError, "cooperativas"):
             x.validate_period(x.parse_workbook(workbook(margen=rows)))
+
+
+class DeclaredDifferenceTests(unittest.TestCase):
+    def test_small_source_difference_is_declared(self):
+        data = {k: list(v) for k, v in REAL["resultados"].items()}
+        data["Capual"][11] -= 4; data["Capual"][13] -= 4; data["Capual"][15] -= 4; data["Capual"][16] -= 4
+        info = x.validate_period(x.parse_workbook(workbook(resultados=sheet("resultados", data))))
+        d = info["diferencias_fuente_declaradas"]
+        self.assertEqual([(i["cooperativa"], i["concepto"], i["diferencia_mm_clp"]) for i in d],
+                         [("CAPUAL", "resultado_operacional_neto", -4)])
+
+    def test_hidden_columns_right_of_header_are_ignored(self):
+        rows = sheet("activos")
+        for r in rows[4:6]:
+            r.extend([None, 7, 8, 9])
+        x.validate_period(x.parse_workbook(workbook(activos=rows)))
 
 
 class DiscoverTests(unittest.TestCase):

@@ -146,6 +146,7 @@ MARGEN = Sheet(
 )
 SHEETS = (ACTIVOS, PASIVOS, RESULTADOS, MARGEN)
 IDENTITY_TOLERANCE = 2      # MM$: los subtotales publicados se redondean por separado
+DECLARED_TOLERANCE = 5      # MM$: diferencias de la propia fuente CMF que se aceptan pero se declaran
 TOTAL_TOLERANCE_PER_COOP = 1
 
 
@@ -181,6 +182,10 @@ def parse_sheet(spec: Sheet, rows: list[list]) -> tuple[dict, list[int]]:
     if missing:
         raise ValueError(f"{spec.key}: cabecera sin {missing}")
     width = len(spec.concepts)
+    # Sólo columnas bajo la cabecera (algunas planillas traen columnas auxiliares ocultas a la derecha).
+    last_col = max((i for r in rows[:first] for i, v in enumerate(r) if isinstance(v, str) and v.strip()), default=None)
+    if last_col is not None:
+        rows = rows[:first] + [list(r[:last_col + 1]) for r in rows[first:]]
     data: dict[str, list[int]] = {}
     total = None
     for r in rows[first:]:
@@ -210,10 +215,14 @@ def parse_sheet(spec: Sheet, rows: list[list]) -> tuple[dict, list[int]]:
     return data, total
 
 
-def check_identities(spec: Sheet, name: str, vals: list[int]) -> None:
+def check_identities(spec: Sheet, name: str, vals: list[int], declared: list) -> None:
     for total_idx, parts in spec.identities:
         s = sum(vals[i] for i in parts)
-        if abs(vals[total_idx] - s) > IDENTITY_TOLERANCE:
+        diff = vals[total_idx] - s
+        if IDENTITY_TOLERANCE < abs(diff) <= DECLARED_TOLERANCE:
+            declared.append({"seccion": spec.key, "cooperativa": COOPERATIVAS[name][1], "concepto": spec.concepts[total_idx][0],
+                             "publicado": vals[total_idx], "suma_componentes": s, "diferencia_mm_clp": diff})
+        elif abs(diff) > DECLARED_TOLERANCE:
             raise ValueError(
                 f"{spec.key}/{name}: {spec.concepts[total_idx][0]}={vals[total_idx]} ≠ suma {s} "
                 f"de {[spec.concepts[i][0] for i in parts]}")
@@ -221,13 +230,14 @@ def check_identities(spec: Sheet, name: str, vals: list[int]) -> None:
 
 def validate_period(parsed: dict[str, tuple[dict, list[int]]]) -> dict:
     coops = set(parsed["activos"][0])
+    declared: list[dict] = []
     for key, (data, _) in parsed.items():
         if set(data) != coops:
             raise ValueError(f"{key}: cooperativas {sorted(data)} ≠ activos {sorted(coops)}")
     for spec in SHEETS:
         data, total = parsed[spec.key]
         for name, vals in data.items():
-            check_identities(spec, name, vals)
+            check_identities(spec, name, vals, declared)
         for i, (code, _, _) in enumerate(spec.concepts):
             s = sum(v[i] for v in data.values())
             if abs(s - total[i]) > TOTAL_TOLERANCE_PER_COOP * len(data):
@@ -235,14 +245,18 @@ def validate_period(parsed: dict[str, tuple[dict, list[int]]]) -> dict:
     a, p = parsed["activos"][0], parsed["pasivos"][0]
     for name in coops:
         lhs, rhs = a[name][15], p[name][0] + p[name][11]
-        if abs(lhs - rhs) > IDENTITY_TOLERANCE:
+        if IDENTITY_TOLERANCE < abs(lhs - rhs) <= DECLARED_TOLERANCE:
+            declared.append({"seccion": "balance", "cooperativa": COOPERATIVAS[name][1], "concepto": "activos = pasivos + patrimonio",
+                             "publicado": lhs, "suma_componentes": rhs, "diferencia_mm_clp": lhs - rhs})
+        elif abs(lhs - rhs) > DECLARED_TOLERANCE:
             raise ValueError(f"{name}: activos totales {lhs} ≠ pasivos + patrimonio {rhs}")
     r, m = parsed["resultados"][0], parsed["margen"][0]
     for name in coops:
         for ri, mi in ((0, 0), (1, 11)):
             if abs(r[name][ri] - m[name][mi]) > IDENTITY_TOLERANCE:
                 raise ValueError(f"{name}: resultados/margen no calzan en {RESULTADOS.concepts[ri][0]}")
-    return {"cooperativas": sorted(COOPERATIVAS[k][1] for k in coops), "n_cooperativas": len(coops)}
+    return {"cooperativas": sorted(COOPERATIVAS[k][1] for k in coops), "n_cooperativas": len(coops),
+            "diferencias_fuente_declaradas": declared}
 
 
 def to_rows(period: str, parsed: dict, url: str, sha: str) -> list[dict]:
@@ -347,8 +361,8 @@ def run(publish: bool, desde: str, hasta: str | None) -> int:
         "unidad": "millones de pesos (MM$)",
         "nota": "Balance: saldos al cierre. Resultados: acumulados del año a la fecha. Formato CMF 2017+; "
                 "antes de 2017 la planilla y el plan de cuentas son distintos y no se incluyen.",
-        "reglas": ["cabecera con frases clave", "N montos exactos por fila", "subtotales internos (±2 MM$)",
-                   "activos = pasivos + patrimonio (±2 MM$)", "suma cooperativas = Total Cooperativas",
+        "reglas": ["cabecera con frases clave", "N montos exactos por fila", "subtotales internos (±2 MM$; hasta ±5 MM$ se acepta y se declara)",
+                   "activos = pasivos + patrimonio (misma tolerancia)", "suma cooperativas = Total Cooperativas",
                    "margen/comisiones iguales entre hojas"],
         "total_registros": len(all_rows), "periodos": report,
     }, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
