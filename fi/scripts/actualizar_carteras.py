@@ -503,7 +503,15 @@ def procesar_trimestre(periodo: str, fondos: list[str], control: dict, reciente:
 def escribir_salidas(control: dict, registro: list[dict]) -> None:
     for tabla in TABLAS:
         (SALIDA / tabla).mkdir(parents=True, exist_ok=True)
-        rutas = sorted((SALIDA / tabla).glob("*.parquet"))
+        vacio = SALIDA / tabla / "_vacio.parquet"
+        rutas = sorted(r for r in (SALIDA / tabla).glob("*.parquet") if r.name != vacio.name)
+        if rutas:
+            vacio.unlink(missing_ok=True)
+        else:
+            # Ningún fondo informó esta cartera todavía (p. ej. bienes raíces directos): se publica
+            # un archivo sin filas con el esquema, para que la vista web exista y responda vacía.
+            pq.write_table(esquema(tabla).empty_table(), vacio)
+            rutas = [vacio]
         man = {"tabla": tabla, "files": [f"outputs/fi/{tabla}/{r.name}" for r in rutas],
                "total_records": sum(pq.ParquetFile(r).metadata.num_rows for r in rutas),
                "periodos": sorted(control["periodos"]),
