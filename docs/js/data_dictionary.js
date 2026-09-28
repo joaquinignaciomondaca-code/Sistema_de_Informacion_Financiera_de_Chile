@@ -439,7 +439,7 @@ const DATA_DICTIONARY = [
     frescura: "Se actualiza sola 3 veces al mes (días 10, 20 y 28)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-28",
-    registros: "40 códigos (incluye agregados)",
+    registros: "41 códigos (incluye agregados)",
     descripcion: "Códigos de institución de los archivos bancarios CMF: bancos vigentes, históricos (fusionados o cerrados), filiales en el exterior y agregados del sistema. No equivale al número de bancos activos. RUT de los bancos activos cotejados con el registro CMF.",
     origen: "Registro CMF de bancos (consulta.php?mercado=B&entidad=BANCO): alta de bancos nuevos y paso de «Activo» a «No vigente». Códigos históricos y agregados: lista original. pipelines/entidades/actualizar_listas.py.",
     columnas: [
@@ -672,7 +672,7 @@ const DATA_DICTIONARY = [
     frescura: "Se actualiza sola 3 veces al mes (días 10, 20 y 28)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-28",
-    registros: "18 emisiones",
+    registros: "19 emisiones",
     descripcion: "Inscripciones de títulos de deuda de securitización (patrimonios separados) por registro automático: número, fecha, securitizadora, tipo, moneda, monto inscrito y vencimiento. La clase de colateral no está en el listado CMF: queda vacía en las inscripciones agregadas automáticamente.",
     origen: "CMF — Inscripciones de títulos de deuda mediante modalidad de registro automático (listado_titulos_deuda.php), filtrado a securitizadoras. pipelines/entidades/actualizar_listas.py.",
     columnas: [
@@ -811,7 +811,7 @@ const DATA_DICTIONARY = [
     frescura: "Se actualiza sola 3 veces al mes (días 10, 20 y 28)",
     modo: "Automático",
     ultimaActualizacion: "2026-09-28",
-    registros: "12 entidades",
+    registros: "19 entidades",
     descripcion: "Infraestructuras del sistema de pagos: LBTR del Banco Central, cámaras de compensación, depósito de valores, contrapartes centrales y operadores de tarjetas de pago.",
     origen: "Registros públicos CMF: altas desde operadores de tarjetas de pago (TPOPE) y entidades de contraparte central (RGCCO); vigencia también desde sociedades de apoyo al giro (BCSAG) y depósito de valores (DCVAL). El LBTR (BCCh) no tiene registro CMF y no se modifica. pipelines/entidades/actualizar_listas.py.",
     columnas: [
