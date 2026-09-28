@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "updated_at": "2026-09-28",
   "total_tables": 47,
-  "total_records": 6908823,
+  "total_records": 6908824,
   "classification": {
     "automatico": "Extracción y procesamiento 100% por código autónomo (APIs, scrapers, normalizadores)",
     "manual": "Extracción asistida o transcripción de notas y reportes no estructurados (ej. NotebookLM)"
@@ -580,7 +580,7 @@
       "modo": "Automático",
       "ultima_actualizacion": "2026-09-23",
       "file_parquet": "outputs/fintech/fintech_rpsf_maestro.parquet",
-      "registros_reales": 262,
+      "registros_reales": 263,
       "descripcion": "Registro de Prestadores de Servicios Financieros (RPSF) de la CMF. Catálogo integral de las entidades FinTech que operan bajo el perímetro regulatorio de la Ley Fintec en Chile. Incluye personas jurídicas y naturales, estado de vigencia, número y fecha de inscripción oficial, código institucional CMF, datos de contacto y total de servicios autorizados.",
       "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Prestadores de Servicios Financieros (RPSF)."
     },
