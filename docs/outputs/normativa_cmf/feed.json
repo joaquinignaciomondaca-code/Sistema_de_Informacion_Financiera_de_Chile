@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "status": "sin_ejecucion",
+  "source": "CMF · Legislación y normativa",
+  "source_url": "https://www.cmfchile.cl/institucional/legislacion_normativa/normativa2.php?tiponorma=ALL&numero=&dd=&mm=&aa=&dd2=&mm2=&aa2=&buscar=&entidad_web=ALL&materia=ALL&enviado=1&hidden_mercado=%25",
+  "generated_at": null,
+  "last_checked_at": null,
+  "last_detected_at": null,
+  "history_days": 365,
+  "sector_labels": {
+    "seguros": "Seguros de Vida y Generales",
+    "agf": "Administradoras Generales de Fondos (AGF)",
+    "ffmm": "Fondos Mutuos (FFMM)",
+    "fi": "Fondos de Inversión (FI)",
+    "pensiones": "Fondos de Pensiones",
+    "bancos": "Banca Comercial",
+    "macro": "Macroeconomía y Tasas",
+    "factoring_leasing": "Factoring y Leasing",
+    "corredoras_bolsa": "Corredoras de Bolsa",
+    "securitizadoras": "Sociedades Securitizadoras",
+    "patrimonios_separados": "Patrimonios Separados",
+    "cooperativas": "Cooperativas de Ahorro y Crédito",
+    "cajas_compensacion": "Cajas de Compensación",
+    "sistemas_pago": "Sistemas de Pago",
+    "fintech": "FinTech y Finanzas Abiertas"
+  },
+  "run_summary": {
+    "listed_records": 0,
+    "new_or_changed_records": 0,
+    "pdf_checks": 0,
+    "gemini_calls": 0,
+    "pending_analysis": 0,
+    "unassigned_records": 0
+  },
+  "events": []
+}

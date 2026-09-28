@@ -10,7 +10,13 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 CHECK = r"""
 const fs = require('fs'), vm = require('vm'), assert = require('assert');
-const context = { window: {}, document: { getElementById: () => null } };
+const industryEvents = [];
+class CustomEvent { constructor(type, options = {}) { this.type = type; this.detail = options.detail || {}; } }
+const context = {
+  window: { dispatchEvent: event => industryEvents.push(event) },
+  document: { getElementById: () => null, querySelectorAll: () => [] },
+  CustomEvent
+};
 vm.createContext(context);
 for (const file of ['sidebar.js', 'data_viewer.js']) {
   vm.runInContext(fs.readFileSync('docs/js/' + file, 'utf8'), context);
@@ -95,6 +101,16 @@ const opened = [];
 sidebar.onTableSelect = (id) => opened.push(id);
 for (const id of expectedFolders) sidebar.onCircularSelect(id, 'factoring_leasing');
 assert.deepEqual(opened, ['factoring_leasing_maestro', ...expectedSeriesTables]);
+assert(industryEvents.some(event => event.type === 'mfc:industry-change' && event.detail.sector === 'factoring_leasing'),
+  'al seleccionar una tabla/carpeta debe notificarse la industria activa');
+context.window.DataViewer = { loadTable() {} };
+const selectedTable = Object.create(SidebarController.prototype);
+selectedTable.selectedTableId = null;
+selectedTable.breadcrumbEl = null;
+selectedTable.onTableSelect('ffmm_maestro', 'ffmm.lista_entidades', '', 'ffmm');
+assert(industryEvents.some(event => event.type === 'mfc:industry-change' &&
+  event.detail.sector === 'ffmm' && event.detail.source === 'table'),
+  'al seleccionar una tabla FFMM debe publicarse exactamente la industria FFMM');
 
 // AFP: sólo identidad sin métricas generadas. Bancos: identidad + líneas
 // CMF B1/B2 y R1 publicadas por partición mensual validada. El REPO legado
