@@ -1,17 +1,18 @@
 """
 Pipeline de Macroeconomía y Tasas de Interés - Banco Central de Chile (BCCh SIETE).
-Descarga streaming concurrente y consolidación de 23 series canónicas (2020 a 2026):
+Descarga incremental concurrente y consolidación de 23 series canónicas (2014 en adelante):
 1. macro_tasas_rendimientos: TPM, TIB/ICP, Curva BCP (2y, 5y, 10y), Curva BCU (5y, 10y, 20y), SPC (CLP 2y, UF 1y), Slopes y Breakeven Inflation.
 2. macro_divisas_mercado: USD/CLP (promedio, cierre, min, max, volatilidad), EUR/CLP (promedio, cierre), TCR Multilateral, TCR-5 y variaciones.
 3. macro_precios_actividad: UF (cierre, promedio), IPC (índice, mensual, anual), IMACEC (total, no minero), Cobre BML (USD/lb), Expectativas EEE (11m, 23m).
 """
 
 import os
-import json
+import shutil
 import time
+from pathlib import Path
 import numpy as np
 import pandas as pd
-from datetime import datetime
+from datetime import date
 from concurrent.futures import ThreadPoolExecutor
 
 try:
@@ -19,12 +20,13 @@ try:
 except ImportError:
     raise ImportError("La librería 'bcchapi' es obligatoria. Instalar con 'pip install bcchapi'.")
 
-EMAIL_BCCH = "REMOVED_BCCH_EMAIL"
-PASS_BCCH = "REMOVED_BCCH_PASSWORD"
+EMAIL_BCCH = os.environ.get("BCCH_EMAIL", "")
+PASS_BCCH = os.environ.get("BCCH_PASSWORD", "")
 
 FETCH_START_DATE = "2013-01-01"
 SERIES_START_PERIOD = "2014-01"
-END_DATE = datetime.today().strftime("%Y-%m-%d")
+ROOT = Path(__file__).resolve().parents[2]
+TABLES = ("macro_tasas_rendimientos", "macro_divisas_mercado", "macro_precios_actividad")
 
 SERIES_CATALOG = {
     # Tasas
@@ -55,14 +57,14 @@ SERIES_CATALOG = {
     "eee_23m": {"sid": "F089.IPC.V12.15.M", "freq": "M", "desc": "Expectativa IPC EEE 23M %"}
 }
 
-def fetch_single_series(item):
+def fetch_single_series(item, start_date, end_date):
     """Descarga una serie creando su propia instancia de bcchapi (Thread-safe)."""
     key, meta = item
     sid = meta["sid"]
     for attempt in range(1, 4):
         try:
             siete = bcchapi.Siete(EMAIL_BCCH, PASS_BCCH)
-            df = siete.cuadro(series=[sid], desde=FETCH_START_DATE, hasta=END_DATE)
+            df = siete.cuadro(series=[sid], desde=start_date, hasta=end_date)
             if df is not None and not df.empty:
                 df.columns = ["valor"]
                 df.index = pd.to_datetime(df.index)
@@ -71,38 +73,141 @@ def fetch_single_series(item):
                 return key, df
             else:
                 return key, pd.DataFrame()
-        except Exception as e:
+        except Exception:
             if attempt == 3:
-                print(f"Error persistente en {key} ({sid}): {e}")
-                return key, pd.DataFrame()
+                # La excepción de la API podría incluir parámetros sensibles.
+                print(f"Error persistente en {key} ({sid}); se omiten detalles de autenticación.")
+                raise RuntimeError(f"Falló la consulta de {key} ({sid}); no se publicará nada") from None
             time.sleep(1.0)
-    return key, pd.DataFrame()
+    raise RuntimeError(f"Falló la consulta de {key} ({sid})")
 
-def run_macro_pipeline():
-    print("=" * 70)
-    print("Iniciando Pipeline de Macroeconomía y Tasas (BCCh SIETE)")
-    print(f"Rango temporal: {FETCH_START_DATE} a {END_DATE} (Series finales desde {SERIES_START_PERIOD})")
-    print(f"Descargando {len(SERIES_CATALOG)} series con 8 workers concurrentes...")
-    print("=" * 70)
+def load_baseline(directory):
+    """La última extracción validada es el punto de partida; sin ella, backfill completo."""
+    directory = Path(directory)
+    if not directory.exists():
+        return {}
+    existing = [directory / f"{name}.parquet" for name in TABLES]
+    if not any(path.exists() for path in existing):
+        return {}
+    if not all(path.exists() for path in existing):
+        raise ValueError("Baseline macro incompleto; faltan tablas Parquet")
+    tables = {name: pd.read_parquet(directory / f"{name}.parquet") for name in TABLES}
+    periods = [table["periodo"].tolist() for table in tables.values()]
+    if not periods[0] or any(p != periods[0] for p in periods[1:]):
+        raise ValueError("Baseline macro con períodos inconsistentes")
+    if periods[0] != sorted(set(periods[0])) or periods[0][-1] > date.today().strftime("%Y-%m"):
+        raise ValueError("Baseline macro con períodos duplicados, desordenados o futuros")
+    return tables
 
+
+def merge_incremental(fresh, baseline, start_period):
+    """Valores nuevos no nulos prevalecen; se preservan historia y métricas antiguas."""
+    if not baseline:
+        return fresh
+    merged = {}
+    for name in TABLES:
+        old = baseline[name].set_index("periodo")
+        new = fresh[name].set_index("periodo")
+        if list(old.columns) != list(new.columns):
+            raise ValueError(f"Cambio de esquema de {name}; requiere revisión manual")
+        result = new.combine_first(old).sort_index().reset_index()
+        merged[name] = result[baseline[name].columns]
+
+    # Recalcular retornos usando el histórico completo (12 meses previos),
+    # sin cambiar los meses anteriores al rango consultado.
+    changes = {
+        "macro_divisas_mercado": [
+            ("var_mensual_usd_pct", "usd_clp_cierre", 1),
+            ("var_anual_usd_pct", "usd_clp_cierre", 12),
+            ("var_mensual_eur_pct", "eur_clp_cierre", 1),
+        ],
+        "macro_precios_actividad": [
+            ("uf_var_mensual_pct", "uf_cierre", 1),
+            ("imacec_var_anual_pct", "imacec_empalmado", 12),
+            ("cobre_var_anual_pct", "cobre_spot_usd_lb", 12),
+        ],
+    }
+    for name, metrics in changes.items():
+        frame = merged[name]
+        mask = frame["periodo"] >= start_period
+        old_sources = baseline[name].set_index("periodo")
+        for target, source, lag in metrics:
+            values = pd.to_numeric(frame[source], errors="coerce")
+            calculated = (values.pct_change(lag, fill_method=None) * 100).round(2)
+            before = frame["periodo"].map(old_sources[source])
+            same = frame[source].eq(before) | (frame[source].isna() & before.isna())
+            changed_source = mask & (~same | ~frame["periodo"].isin(old_sources.index))
+            frame.loc[changed_source, target] = calculated.loc[changed_source].combine_first(frame.loc[changed_source, target])
+    return merged
+
+
+# Campos mensuales publicados con rezago: su último dato puede ser anterior
+# al último mes de la tabla. Reconsultar sólo esa cola, no el histórico completo.
+MONTHLY_COLUMNS = {
+    "tpm_m": (TABLES[0], "tpm"), "tib_m": (TABLES[0], "tib_promedio"),
+    "tcr_m": (TABLES[1], "tcr_general"), "tcr_5_m": (TABLES[1], "tcr_5monedas"),
+    "ipc_idx_m": (TABLES[2], "ipc_indice"), "ipc_var_m": (TABLES[2], "ipc_var_mensual"),
+    "ipc_v12_m": (TABLES[2], "ipc_var_anual"),
+    "imacec_m": (TABLES[2], "imacec_empalmado"),
+    "imacec_nm_m": (TABLES[2], "imacec_no_minero"),
+    "cobre_m": (TABLES[2], "cobre_spot_usd_lb"),
+    "eee_11m": (TABLES[2], "eee_ipc_11m"), "eee_23m": (TABLES[2], "eee_ipc_23m"),
+}
+
+
+def query_starts(baseline):
+    """Cola mensual rezagada por serie; máximo tres meses antes del último corte."""
+    if not baseline:
+        return {key: FETCH_START_DATE for key in SERIES_CATALOG}
+    latest = baseline[TABLES[0]]["periodo"].iloc[-1]
+    floor = (pd.Period(latest, freq="M") - 3).strftime("%Y-%m")
+    starts = {}
+    for key, meta in SERIES_CATALOG.items():
+        period = latest
+        if meta["freq"] == "M":
+            table, column = MONTHLY_COLUMNS[key]
+            valid = baseline[table].loc[baseline[table][column].notna(), "periodo"]
+            period = max(floor, valid.iloc[-1]) if len(valid) else floor
+        starts[key] = period + "-01"
+    return starts
+
+
+def run_macro_pipeline(output_dir=None, baseline_dir=None):
+    """Consulta sólo meses recientes y reintenta la cola de publicaciones rezagadas."""
+    if not EMAIL_BCCH or not PASS_BCCH:
+        raise RuntimeError("Faltan BCCH_EMAIL y BCCH_PASSWORD en el entorno; no se ejecutó la descarga.")
+    published = ROOT / "docs" / "outputs" / "macro"
+    baseline = load_baseline(baseline_dir or published)
+    # En un primer arranque sin Parquets previos se hace un backfill completo.
+    # Consultar el mes inclusivo permite completar datos diarios y publicaciones
+    # mensuales con retraso; el histórico anterior se lee solo del baseline.
+    starts = query_starts(baseline)
+    start_date = min(starts.values())
+    end_date = date.today().isoformat()
+    if start_date > end_date:
+        raise ValueError("Baseline macro posterior a la fecha actual")
+    print("=" * 70)
+    print(f"BCCh SIETE: {len(SERIES_CATALOG)} series desde cola reciente {start_date} hasta {end_date}")
+    print("=" * 70)
     t0 = time.time()
     raw_series = {}
-
     with ThreadPoolExecutor(max_workers=8) as executor:
-        results = executor.map(fetch_single_series, SERIES_CATALOG.items())
+        results = executor.map(lambda item: fetch_single_series(item, starts[item[0]], end_date), SERIES_CATALOG.items())
         for key, df in results:
             raw_series[key] = df
-            print(f"  OK: {key:15s} [{SERIES_CATALOG[key]['sid']}] -> {len(df):4d} observaciones")
-
-    elapsed = time.time() - t0
-    print(f"Descarga completada en {elapsed:.2f} segundos.")
-    print("-" * 70)
-
-    # Creamos un índice maestro de periodos mensuales (YYYY-MM)
-    all_months = pd.date_range(start=FETCH_START_DATE, end=END_DATE, freq="MS").strftime("%Y-%m").tolist()
-    # Limitar hasta el mes actual
-    curr_month = datetime.today().strftime("%Y-%m")
-    periods = [p for p in all_months if p <= curr_month]
+            print(f"  {key:15s}: {len(df):4d} observaciones")
+    print(f"Descarga completada en {time.time() - t0:.2f} segundos.")
+    # Si faltan las dos fuentes diarias básicas, lo más probable es un fallo
+    # de API/autenticación. Una serie mensual puede estar vacía legítimamente.
+    if all(frame.empty for frame in raw_series.values()):
+        raise RuntimeError("BCCh no entregó ninguna serie; revisar autenticación/API; no se escribieron salidas")
+    if not baseline and any(frame.empty for frame in raw_series.values()):
+        raise RuntimeError("Backfill incompleto: algunas series llegaron vacías; no se escribieron salidas")
+    # Una respuesta vacía NO borra el histórico. Los fallos de red/autenticación
+    # abortan arriba; series sin nuevas observaciones son normales (IPC/IMACEC).
+    periods = pd.date_range(start=start_date, end=end_date, freq="MS").strftime("%Y-%m").tolist()
+    if not periods:
+        periods = [start_date[:7]]
 
     # =========================================================================
     # TABLA 1: macro_tasas_rendimientos
@@ -110,7 +215,6 @@ def run_macro_pipeline():
     print("Construyendo tabla: macro_tasas_rendimientos...")
     t_rows = []
     for p in periods:
-        p_dt = pd.to_datetime(p)
         # Helper para series mensuales directas
         def get_m_val(df_key):
             df = raw_series.get(df_key)
@@ -225,9 +329,9 @@ def run_macro_pipeline():
 
     df_divisas = pd.DataFrame(d_rows).sort_values("periodo").reset_index(drop=True)
     # Calcular variaciones porcentuales mensuales e interanuales
-    df_divisas["var_mensual_usd_pct"] = round(df_divisas["usd_clp_cierre"].pct_change() * 100.0, 2)
-    df_divisas["var_anual_usd_pct"] = round(df_divisas["usd_clp_cierre"].pct_change(12) * 100.0, 2)
-    df_divisas["var_mensual_eur_pct"] = round(df_divisas["eur_clp_cierre"].pct_change() * 100.0, 2)
+    df_divisas["var_mensual_usd_pct"] = round(df_divisas["usd_clp_cierre"].pct_change(fill_method=None) * 100.0, 2)
+    df_divisas["var_anual_usd_pct"] = round(df_divisas["usd_clp_cierre"].pct_change(12, fill_method=None) * 100.0, 2)
+    df_divisas["var_mensual_eur_pct"] = round(df_divisas["eur_clp_cierre"].pct_change(fill_method=None) * 100.0, 2)
 
     # Filtrar desde el periodo de referencia maestro
     df_divisas = df_divisas[df_divisas["periodo"] >= SERIES_START_PERIOD].reset_index(drop=True)
@@ -289,9 +393,9 @@ def run_macro_pipeline():
 
     df_precios = pd.DataFrame(p_rows).sort_values("periodo").reset_index(drop=True)
     # Variaciones de UF e IMACEC
-    df_precios["uf_var_mensual_pct"] = round(df_precios["uf_cierre"].pct_change() * 100.0, 2)
-    df_precios["imacec_var_anual_pct"] = round(df_precios["imacec_empalmado"].pct_change(12) * 100.0, 2)
-    df_precios["cobre_var_anual_pct"] = round(df_precios["cobre_spot_usd_lb"].pct_change(12) * 100.0, 2)
+    df_precios["uf_var_mensual_pct"] = round(df_precios["uf_cierre"].pct_change(fill_method=None) * 100.0, 2)
+    df_precios["imacec_var_anual_pct"] = round(df_precios["imacec_empalmado"].pct_change(12, fill_method=None) * 100.0, 2)
+    df_precios["cobre_var_anual_pct"] = round(df_precios["cobre_spot_usd_lb"].pct_change(12, fill_method=None) * 100.0, 2)
     df_precios["desvio_eee_11m_meta_bps"] = round((df_precios["eee_ipc_11m"] - 3.0) * 100.0, 1)
 
     # Filtrar desde el periodo de referencia maestro
@@ -306,33 +410,44 @@ def run_macro_pipeline():
     ]
     df_precios = df_precios[precios_cols]
 
-    # =========================================================================
-    # EXPORTACIÓN PARQUET Y JSON
-    # =========================================================================
-    out_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", "docs", "outputs", "macro"))
-    os.makedirs(out_dir, exist_ok=True)
+    # No abrir períodos posteriores si alguna tabla carece de su indicador base.
+    # Las series mensuales con rezago permanecen NULL hasta que las publique BCCh;
+    # nunca se sustituyen valores válidos anteriores por respuestas vacías.
+    fresh = {"macro_tasas_rendimientos": df_tasas,
+             "macro_divisas_mercado": df_divisas,
+             "macro_precios_actividad": df_precios}
+    last = next(iter(baseline.values()))["periodo"].iloc[-1] if baseline else None
+    core = {"macro_divisas_mercado": "usd_clp_cierre", "macro_precios_actividad": "uf_cierre"}
+    accepted = last
+    for period in [p for p in periods if last is None or p > last]:
+        if any(fresh[name].loc[fresh[name]["periodo"] == period, column].isna().all()
+               for name, column in core.items()):
+            print(f"Periodo {period} pendiente de datos esenciales; se reintentará mañana.")
+            break
+        accepted = period
+    if accepted is None:
+        raise RuntimeError("BCCh no entregó un primer período completo; no se escribieron salidas")
+    fresh = {name: table[table["periodo"] <= accepted].copy() for name, table in fresh.items()}
+    tables = merge_incremental(fresh, baseline, start_date[:7])
 
-    tables = {
-        "macro_tasas_rendimientos": df_tasas,
-        "macro_divisas_mercado": df_divisas,
-        "macro_precios_actividad": df_precios
-    }
-
-    print("-" * 70)
+    out_dir = Path(output_dir or ROOT / ".local-data" / "macro").resolve()
+    source = Path(baseline_dir or published).resolve()
+    if out_dir == source:
+        raise ValueError("Staging y baseline deben estar en directorios distintos")
+    out_dir.mkdir(parents=True, exist_ok=True)
     for name, df in tables.items():
-        pq_path = os.path.join(out_dir, f"{name}.parquet")
-        js_path = os.path.join(out_dir, f"{name}.json")
-
+        pq_path, js_path = out_dir / f"{name}.parquet", out_dir / f"{name}.json"
+        if baseline and df.equals(baseline[name]) and (source / js_path.name).exists():
+            if pq_path != source / pq_path.name:
+                shutil.copyfile(source / pq_path.name, pq_path)
+            if js_path != source / js_path.name:
+                shutil.copyfile(source / js_path.name, js_path)
+            print(f"Sin cambios: {name}")
+            continue
         df.to_parquet(pq_path, index=False, engine="pyarrow")
         df.to_json(js_path, orient="records", date_format="iso", indent=2)
-
-        pq_size = os.path.getsize(pq_path) / 1024.0
-        js_size = os.path.getsize(js_path) / 1024.0
-        print(f"Exportado: {name:28s} | {len(df):3d} filas x {len(df.columns):2d} cols | Parquet: {pq_size:6.1f} KB | JSON: {js_size:6.1f} KB")
-
-    print("=" * 70)
-    print("Pipeline de Macroeconomía finalizado con éxito.")
-    print("=" * 70)
+        print(f"Actualizado: {name}: {len(df)} períodos hasta {df['periodo'].iloc[-1]}")
+    print("Pipeline macro incremental finalizado; salidas en staging.")
 
 if __name__ == "__main__":
     run_macro_pipeline()

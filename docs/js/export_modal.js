@@ -18,7 +18,9 @@ class ExportModalController {
 
     // Mapeo directo a archivos Parquet físicos en docs/outputs/
     this.parquetMap = {
-      vida_bonos: "outputs/vida/cartera_bonos.parquet",
+      // vida_bonos no tiene Parquet consolidado publicado (supera los 100 MB de
+      // GitHub): se omite aquí para que la descarga use la vista SQL que une las
+      // dos particiones, en lugar de servir un archivo inexistente.
       vida_acciones: "outputs/vida/cartera_acciones.parquet",
       vida_bienes_raices: "outputs/vida/cartera_bienes_raices.parquet",
       vida_fondos: "outputs/vida/cartera_fondos.parquet",
@@ -43,25 +45,16 @@ class ExportModalController {
       fi_nacional: "outputs/fi/fi_cartera_nacional.parquet",
       fi_extranjera: "outputs/fi/fi_cartera_extranjera.parquet",
       fi_maestro: "outputs/fi/maestro_fondos_inversion.parquet",
+      ffmm_futuros: "outputs/ffmm/ffmm_futu_normalizado.parquet",
+      ffmm_opciones: "outputs/ffmm/ffmm_opci_normalizado.parquet",
       ffmm_inversiones_nac: "outputs/ffmm/ffmm_futu_normalizado.parquet",
-      ffmm_derivados: "outputs/ffmm/ffmm_opci_normalizado.parquet",
       ffmm_maestro: "outputs/ffmm/maestro_fondos_mutuos.parquet",
       afp_maestro: "outputs/pensiones/afp_maestro_administradoras.parquet",
-      afp_derivados_forwards: "outputs/pensiones/afp_derivados_forwards.parquet",
-      afp_derivados_swaps: "outputs/pensiones/afp_derivados_swaps.parquet",
-      afp_cartera_bonos: "outputs/pensiones/afp_cartera_bonos.parquet",
-      afp_cartera_acciones: "outputs/pensiones/afp_cartera_acciones.parquet",
       bancos_maestro: "outputs/bancos/bancos_maestro.parquet",
-      bancos_balance_resumen: "outputs/bancos/bancos_balance_resumen.parquet",
-      bancos_estado_resultados: "outputs/bancos/bancos_estado_resultados.parquet",
-      bancos_derivados_posicion_vigente: "outputs/bancos/bancos_derivados_posicion_vigente.parquet",
-      bancos_derivados_flujos_transados: "outputs/bancos/bancos_derivados_flujos_transados.parquet",
-      bancos_repos_saldos_series: "outputs/bancos/bancos_repos_saldos_series.parquet",
       macro_tasas_rendimientos: "outputs/macro/macro_tasas_rendimientos.parquet",
       macro_divisas_mercado: "outputs/macro/macro_divisas_mercado.parquet",
       macro_precios_actividad: "outputs/macro/macro_precios_actividad.parquet",
       factoring_leasing_maestro: "outputs/factoring_leasing/factoring_leasing_maestro.parquet",
-      factoring_leasing_balance_resumen: "outputs/factoring_leasing/factoring_leasing_balance_resumen.parquet",
       corredoras_bolsa_maestro: "outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet",
       corredoras_bolsa_balance_resumen: "outputs/corredoras_bolsa/corredoras_bolsa_balance_resumen.parquet",
       securitizadoras_maestro: "outputs/securitizadoras/securitizadoras_maestro.parquet",
@@ -113,20 +106,8 @@ class ExportModalController {
       fi_repos: 2654,
       ffmm_inversiones_nac: 125000,
       afp_maestro: 7,
-      afp_derivados_forwards: 560,
-      afp_derivados_swaps: 6666,
-      afp_cartera_bonos: 168182,
-      afp_cartera_acciones: 39835,
       bancos_maestro: 40,
-      bancos_balance_resumen: 5095,
-      bancos_estado_resultados: 5095,
-      bancos_derivados_posicion_vigente: 12500,
-      bancos_derivados_flujos_transados: 12500,
-      bancos_repos_saldos_series: 2947,
       factoring_leasing_maestro: 28,
-      factoring_leasing_balance_resumen: 878,
-      factoring_leasing_nota_efectivo_detalle: 2975,
-      factoring_leasing_cartera_morosidad_detalle: 17406,
       patrimonios_separados_maestro: 18,
       patrimonios_separados_balance_resumen: 64,
       patrimonios_separados_balance_lineas: 16842,
@@ -532,13 +513,17 @@ class ExportModalController {
           sql += ` WHERE periodo >= '${this.fromYear}-01' AND periodo <= '${this.toYear}-12'`;
         }
 
-        if (window.DuckDBClient) {
-          const res = await window.DuckDBClient.query(sql);
-          if (res && res.success) {
-            rowsToExport = res.rows || [];
-            colsToExport = res.columns || colsToExport;
-          }
+        if (!window.DuckDBClient) {
+          throw new Error("DuckDB-Wasm no está disponible en esta página: no es posible exportar datos reales.");
         }
+        const res = await window.DuckDBClient.query(sql);
+        // Un fallo del motor no puede confundirse con "no hay filas": se propaga
+        // el error real para que el usuario sepa que la exportación no ocurrió.
+        if (!res || !res.success) {
+          throw new Error(`No se pudo consultar la vista ${view}: ${(res && res.error) || "respuesta inválida del motor DuckDB"}`);
+        }
+        rowsToExport = res.rows || [];
+        colsToExport = res.columns || colsToExport;
       }
 
       if (!rowsToExport.length) {

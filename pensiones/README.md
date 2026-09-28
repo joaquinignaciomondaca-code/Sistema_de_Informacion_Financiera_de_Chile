@@ -1,0 +1,5 @@
+# Fondos de pensiones — estado de publicación
+
+**Publicado en el sitio:** únicamente `afp_maestro_administradoras` con cuatro campos de identificación (`id`, RUT, razón social y nombre de fantasía). Son entradas conservadas de un catálogo local; identidad y vigencia todavía requieren cotejo con la Superintendencia de Pensiones. El maestro **ya no contiene** AUM, afiliados, comisiones, encaje ni participación calculada.
+
+El 27-09-2026 se retiraron las antiguas carteras de bonos/acciones, derivados (incluidos forwards sintéticos), agregados y particiones históricas para permitir una extracción desde cero. Los scripts anteriores en `pensiones/scripts/` permanecen **sólo como referencia de laboratorio**: no volver a ejecutar `generate_cartera_afp.py`, `generate_derivados_afp.py`, los extractores ZIP/XML o consolidadores contra `docs/outputs/` sin corregir primero su interpretación de listados y unidades, y cotejar su salida con la fuente oficial. El generador `generate_afp_maestro.py` sólo publica campos de identidad. Ver [auditoría AFP](AUDITORIA_AFP_2026-09-27.md) para los problemas detectados y criterios de validación.

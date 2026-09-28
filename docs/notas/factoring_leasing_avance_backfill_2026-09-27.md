@@ -1,0 +1,13 @@
+# Avance del backfill y publicación automática IFRS Factoring/Leasing (2026-09-27)
+
+La corrida [36340541773](https://github.com/joaquinignaciomondaca-code/monitor-financiero-chile/actions/runs/36340541773) terminó correctamente: **70/70 cierres** del índice CMF, 2009-03 a 2026-06. Actions consolidó y comiteó automáticamente los archivos de web en el PR #3, commit `8015782514a77010e99379129b897780c6d8614e`.
+
+- Dos Parquets web: `docs/outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet` (28.938 filas de cuentas ESF) y `docs/outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet` (21.464 filas de cuentas ER). Son filas de cuentas, no balances agregados ni estados completos por entidad.
+- En el explorador aparecen en carpetas separadas, una por balance y otra por resultados; DuckDB, selector, diccionario y cache-busting también se actualizan automáticamente.
+- El catálogo tiene 28 RUT (9 Leasing, 9 Factoring, 8 Ambas, 2 Automotriz); **24 RUT** aparecen en al menos un cierre. No hay filas para **76562786-9, 96611310-3, 96720830-2 y 96805850-9** en este TXT. Ausencia aquí no demuestra que no reporten en otra fuente CMF.
+- **2.426 importes no enteros** se conservan como texto original con valor numérico nulo; **902 repeticiones de cuenta/contexto** se preservan por ordinal, sin deduplicar ni sumar. Monedas, taxonomías y estados individuales/consolidados se conservan sin conversión ni combinación.
+- Para 2009-03 se usó el enlace anual del índice CMF y se filtraron únicamente filas `200903`; el Parquet conserva ese origen en las columnas de fuente/huella.
+
+**La serie está en los archivos `docs/` de la rama del PR, no se ha desplegado al sitio público.** El PR #3 sigue abierto y el repositorio no tiene GitHub Pages configurado (`has_pages: false`), así que un commit en `docs/` por sí solo no activa un hosting público nuevo. La vista previa/árbol del PR puede mostrar los archivos al servir esa rama; el sitio público requiere que el PR se integre y que el hosting existente despliegue `docs/` (o configurar Pages expresamente).
+
+El workflow está automatizado y solo publica cuando todos los períodos listados están completos; mantiene en cache la extracción y deja artifact por 90 días. **El cron diario declarado comenzará cuando el workflow esté en la rama por defecto `main`**; el PR abierto todavía no dispara `schedule`. La publicación automática lleva advertencia explícita: extracción literal del TXT, **sin cotejo integral** de todas las cifras, unidades, identidades históricas ni semántica acumulada/trimestral. La muestra anterior de dos entidades permanece separada como referencia cotejada.

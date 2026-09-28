@@ -1,4 +1,4 @@
-﻿# Python cache & virtual environments
+# Python cache & virtual environments
 __pycache__/
 *.py[cod]
 *$py.class
@@ -25,4 +25,8 @@ docs/outputs/vida/cartera_bonos.parquet
 .DS_Store
 Thumbs.db
 
-.github/
+# Local credentials and staging datasets (never publish)
+.env
+.env.*
+!.env.example
+.local-data/

@@ -1,0 +1,100 @@
+name: Publicación mensual CMF B1/B2/R1 (bancos)
+
+on:
+  schedule:
+    # Una ejecución al mes, el día 15 para dar plazo de publicación a la CMF.
+    - cron: '0 13 15 * *'
+  workflow_dispatch:
+    inputs:
+      period:
+        description: 'Período YYYY-MM opcional; en blanco toma el primer período pendiente desde 2026-07'
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: bancos-cmf-mensual-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validate-and-publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      published_changed: ${{ steps.publish.outputs.published_changed }}
+      period: ${{ steps.publish.outputs.period }}
+    steps:
+      - name: Checkout de la rama que recibirá la publicación
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias del cotejo y Parquet
+        run: python -m pip install --disable-pip-version-check openpyxl==3.1.5 pyarrow==21.0.0
+
+      - name: Probar extracción, gate de calidad e idempotencia
+        run: python -m unittest bancos.tests.test_inspect_cmf_bank_sample bancos.tests.test_extract_cmf_bank_lines bancos.tests.test_publish_cmf_bank_period -v
+
+      - name: Extraer, cotejar y publicar una partición (o saltar si ya existe)
+        id: publish
+        env:
+          PERIOD: ${{ github.event_name == 'workflow_dispatch' && inputs.period || '' }}
+        run: |
+          args=()
+          if [ -n "$PERIOD" ]; then args+=(--period "$PERIOD"); fi
+          python -m bancos.scripts.publish_cmf_bank_period "${args[@]}"
+
+      - name: Confirmar el período validado para que la web recoja los cambios
+        if: steps.publish.outputs.published_changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data_manifest.json docs/outputs/bancos/cmf_b1_b2_r1
+          if git diff --cached --quiet; then
+            echo 'No hay cambios que confirmar.'
+            exit 0
+          fi
+          git commit -m "Publica período CMF bancario ${{ steps.publish.outputs.period }}"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+  deploy-page:
+    needs: validate-and-publish
+    if: needs.validate-and-publish.result == 'success' && needs.validate-and-publish.outputs.published_changed == 'true' && github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout con el período publicado
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Empaquetar sitio desde docs/
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Desplegar el sitio
+        id: deployment
+        uses: actions/deploy-pages@v4
