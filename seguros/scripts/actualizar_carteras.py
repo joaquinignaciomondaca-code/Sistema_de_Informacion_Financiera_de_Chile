@@ -478,7 +478,12 @@ def main(argv=None) -> int:
     ap.add_argument("--diagnostico", action="store_true",
                     help="revisar todos los meses pendientes sin escribir nada y listar los problemas")
     ap.add_argument("--salida-github", default=os.environ.get("GITHUB_OUTPUT"))
+    ap.add_argument("--solo-data-manifest", action="store_true",
+                    help="solo recalcular las entradas de este sector en data_manifest.json")
     a = ap.parse_args(argv)
+    if a.solo_data_manifest:
+        actualizar_data_manifest(cargar_control())
+        return 0
 
     SALIDA.mkdir(parents=True, exist_ok=True)
     control = cargar_control()
