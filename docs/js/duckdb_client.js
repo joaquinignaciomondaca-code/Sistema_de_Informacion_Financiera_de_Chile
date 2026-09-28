@@ -87,8 +87,7 @@ const SEMANTIC_VIEWS = [
    { name: "securitizadoras_maestro", file: "outputs/securitizadoras/securitizadoras_maestro.parquet" },
    { name: "securitizadoras_balance_resumen", file: "outputs/securitizadoras/securitizadoras_balance_resumen.parquet" },
    { name: "patrimonios_separados_maestro", file: "outputs/securitizadoras/patrimonios_separados_maestro.parquet" },
-   { name: "patrimonios_separados_balance_fsb", file: "outputs/securitizadoras/patrimonios_separados_balance_fsb.parquet" },
-   { name: "patrimonios_separados_balance_cuentas", file: "outputs/securitizadoras/patrimonios_separados_balance_cuentas.parquet" },
+   { name: "patrimonios_separados_balance", file: "outputs/securitizadoras/patrimonios_separados_balance.parquet" },
 
   // COOPERATIVAS DE AHORRO Y CRÉDITO (CMF)
   { name: "cooperativas_maestro", file: "outputs/cooperativas/cooperativas_maestro.parquet" },
