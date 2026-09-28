@@ -142,3 +142,45 @@ class NormalizeNameAccentTests(unittest.TestCase):
         for f in (normalize_name, norm):
             self.assertEqual(f("Banco de Crédito e Inversiones"), f("BANCO DE CREDITO E INVERSIONES"))
             self.assertEqual(f("Itaú Corpbanca"), "ITAUCORPBANCA")
+
+
+class LegacyFormatTests(unittest.TestCase):
+    """Formato CMF 2022-01..2024-04: Instrucciones/Modelo-*.txt y montos ' 123,00<TAB>'."""
+
+    @staticmethod
+    def legacy_model(title, rows):
+        body = "".join(f"{code}\t{glosa}\n" for code, glosa in rows)
+        return (f"Descriptores de cuentas usados en reporte {title}\n\nPeriodo: Año 2022 - Mes: Enero\n\n"
+                f"CUENTA\tGLOSA\n{body}\n\nMás información\nhttps://www.cmfchile.cl/x.html\n").encode("latin-1")
+
+    def make_zip(self):
+        out = BytesIO()
+        with zipfile.ZipFile(out, "w") as z:
+            for bank, name in (("001", "BANCO DE CHILE"), ("009", "BANCO INTERNACIONAL")):
+                z.writestr(f"202201/b1202201{bank}.txt", f"{bank}\t{name}\n100000000\t 0000000000010,00\t 0000000000002,00\t 0000000000003,00\t 0000000000004,00\t\n")
+                z.writestr(f"202201/b2202201{bank}.txt", f"{bank}\t{name}\n143000000\t-0000000000001,00\t 0000000000000,00\t 0000000000000,00\t 0000000000000,00\t\n")
+                z.writestr(f"202201/r1202201{bank}.txt", f"{bank}\t{name}\n411000000\t 0149769961175,00\t\n")
+            z.writestr("202201/Instrucciones/Modelo-MB1.txt", self.legacy_model("MB1", [
+                ("100000000", "TOTAL ACTIVOS"), ("105000000", "EFECTIVO Y DEPÓSITOS EN BANCOS"),
+                ("105000100", "          Efectivo      ")]))
+            z.writestr("202201/Instrucciones/Modelo-MB2.txt", self.legacy_model("MB2", [("143000000", "     Adeudado por bancos")]))
+            z.writestr("202201/Instrucciones/Modelo-MR1.txt", self.legacy_model("MR1", [("411000000", "INGRESOS POR INTERESES")]))
+            z.writestr("202201/Instrucciones/LEAME.TXT", "DOCUMENTACION\n")
+        return out.getvalue()
+
+    def test_legacy_zip_is_extracted_with_derived_hierarchy(self):
+        rows, report = extract_archive(self.make_zip(), "2022-01", "https://cmf.example/2022.zip")
+        self.assertEqual(report["account_rows_by_family"], {"B1": 2, "B2": 2, "R1": 2})
+        b1 = next(r for r in rows if r["codigo_institucion"] == "001" and r["modelo_cmf"] == "MB1")
+        self.assertEqual(b1["importes_fuente_decimal"], ["10.00", "2.00", "3.00", "4.00"])
+        self.assertEqual((b1["rubro"], b1["linea"], b1["item"]), ("10000", "00", "00"))
+        self.assertEqual(b1["tipo_linea"], "total")
+        b2 = next(r for r in rows if r["modelo_cmf"] == "MB2")
+        self.assertEqual(b2["importes_fuente_decimal"][0], "-1.00")
+        self.assertEqual(b2["glosa_cuenta"], "Adeudado por bancos")
+
+    def test_legacy_model_derives_rubro_linea_item_and_skips_footer(self):
+        text = self.legacy_model("MB1", [("100000000", "TOTAL ACTIVOS"), ("105000100", "   Efectivo ")]).decode("latin-1")
+        model = parse_account_model(text, "Modelo-MB1.txt")
+        self.assertEqual(set(model), {"100000000", "105000100"})
+        self.assertEqual(model["105000100"], {"rubro": "10500", "linea": "01", "item": "00", "glosa_cuenta": "Efectivo", "tipo_linea": "detalle"})

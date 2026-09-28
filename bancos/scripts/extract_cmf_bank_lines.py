@@ -79,7 +79,10 @@ def parse_account_model(text: str, member_name: str) -> dict[str, dict[str, str]
     headers = [value.strip().upper() for value in rows[0]]
     expected_headers = ["CUENTA", "RUBRO", "LINEA", "ITEM", "GLOSA"]
     if headers != expected_headers:
-        raise RuntimeError(f"Unexpected columns in {member_name}: {headers!r}")
+        legacy = _parse_legacy_account_model(rows, member_name)
+        if legacy is None:
+            raise RuntimeError(f"Unexpected columns in {member_name}: {headers!r}")
+        return _classify_line_types(legacy)
     model: dict[str, dict[str, str]] = {}
     for line_no, values in enumerate(rows[1:], start=2):
         if not values or not any(value.strip() for value in values):
@@ -95,7 +98,37 @@ def parse_account_model(text: str, member_name: str) -> dict[str, dict[str, str]
         model[account] = {"rubro": rubro, "linea": linea, "item": item, "glosa_cuenta": description}
     if not model:
         raise RuntimeError(f"No account definitions in {member_name}")
+    return _classify_line_types(model)
 
+
+def _parse_legacy_account_model(rows: list[list[str]], member_name: str) -> dict[str, dict[str, str]] | None:
+    """Modelo CMF 2022-01..2024-04 (Instrucciones/Modelo-MB1.txt).
+
+    Trae un encabezado de texto, luego la tabla `CUENTA<TAB>GLOSA` (glosa con
+    sangría jerárquica) y un pie con enlaces. RUBRO/LINEA/ITEM no vienen, pero
+    son posiciones fijas del código de 9 dígitos (igual que el modelo 2024-07+:
+    105000100 -> 10500 / 01 / 00).
+    """
+    start = next((i for i, r in enumerate(rows) if [v.strip().upper() for v in r[:2]] == ["CUENTA", "GLOSA"]), None)
+    if start is None:
+        return None
+    model: dict[str, dict[str, str]] = {}
+    for line_no, values in enumerate(rows[start + 1:], start=start + 2):
+        if len(values) < 2 or not CODE_RE.fullmatch(values[0].strip()):
+            continue  # líneas en blanco y pie de documentación
+        account = values[0].strip()
+        description = " ".join("\t".join(values[1:]).split())
+        if not description:
+            raise RuntimeError(f"Incomplete account definition in {member_name}:{line_no}")
+        if account in model:
+            raise RuntimeError(f"Duplicate account definition {account} in {member_name}")
+        model[account] = {"rubro": account[:5], "linea": account[5:7], "item": account[7:9], "glosa_cuenta": description}
+    if not model:
+        raise RuntimeError(f"No account definitions in {member_name}")
+    return model
+
+
+def _classify_line_types(model: dict[str, dict[str, str]]) -> dict[str, dict[str, str]]:
     account_codes = set(model)
     for account, definition in model.items():
         if definition["glosa_cuenta"].strip().upper().startswith("TOTAL "):
@@ -144,7 +177,11 @@ def extract_archive(blob: bytes, period: str, source_url: str = "") -> tuple[lis
             raise RuntimeError(f"No CMF bank TXT files found for {period}")
         account_models: dict[str, dict[str, dict[str, str]]] = {}
         for kind, model_name in (("B1", "modelo_mb1.txt"), ("B2", "modelo_mb2.txt"), ("R1", "modelo_mr1.txt")):
-            model_infos = [info for info in infos if info.filename.casefold().endswith("/" + model_name)]
+            # 2024-07+: metadata/modelo_mb1.txt ; 2022-01..2024-04: Instrucciones/Modelo-MB1.txt
+            model_infos = [
+                info for info in infos
+                if info.filename.rsplit("/", 1)[-1].casefold().replace("-", "_") == model_name
+            ]
             if len(model_infos) != 1:
                 raise RuntimeError(f"Expected exactly one metadata/{model_name}; found {len(model_infos)}")
             account_models[kind] = parse_account_model(decode_text(archive.read(model_infos[0])), model_infos[0].filename)
@@ -181,6 +218,8 @@ def extract_archive(blob: bytes, period: str, source_url: str = "") -> tuple[lis
 
             for line_no, line in lines[1:]:
                 fields = line.split("\t")
+                while len(fields) > expected_amount_fields + 1 and not fields[-1].strip():
+                    fields.pop()  # formato 2022-2024: tabulador sobrante al final
                 observed_widths[len(fields)] += 1
                 if len(fields) != expected_amount_fields + 1:
                     raise RuntimeError(
