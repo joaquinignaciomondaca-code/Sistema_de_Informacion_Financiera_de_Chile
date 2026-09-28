@@ -169,6 +169,52 @@ def blocks(period: str, only_sheet: str | None = None, all_rows: bool = False) -
     annotate("COOP blocks", "\n".join(out))
 
 
+def coop_sheet(periods: list[str], sheet_regex: str) -> None:
+    """Diagnóstico de las hojas cuyo NOMBRE calza `sheet_regex` (para elegir la tabla buena)."""
+    from cooperativas.scripts.extract_cmf_coop_report import _blocks, coop_key as ck
+    from cooperativas.scripts.extract_cmf_coop_report import discover, norm as nm, read_workbook
+    out = []
+    for period in periods:
+        url = discover(fetch(INDEX, MAX_PAGE).decode("utf-8", "replace"))[period]
+        wb = read_workbook(fetch(url, MAX_FILE), url)
+        out.append(f"#### {period} {url.split('?')[0].rsplit('/', 1)[-1]} hojas={len(wb)}")
+        for title, rows in wb.items():
+            if not re.search(sheet_regex, nm(title)):
+                continue
+            out.append(f"== hoja {title!r} filas={len(rows)}")
+            first = None
+            for n, r in enumerate(rows):
+                vals = [v for v in r if v not in (None, "")]
+                if vals and isinstance(vals[0], str) and ck(vals[0]):
+                    first = n
+                    break
+            if first is None:
+                out.append("   sin filas de cooperativas")
+                continue
+            for n in range(max(0, first - 4), first + 2):
+                out.append(f"  n={n + 1} {_desc(list(rows[n]), 20)}")
+            vistas = 0
+            for n, r in enumerate(rows[first:], start=first):
+                vals = [v for v in r if v not in (None, "")]
+                if not vals or not isinstance(vals[0], str):
+                    continue
+                label = vals[0]
+                es_total = nm(label).startswith("total cooperativas")
+                if ck(label) is None and not es_total:
+                    continue
+                if vistas >= 3 and not es_total:
+                    continue
+                start = next(i for i, v in enumerate(r) if v not in (None, "")) + 1
+                cells_ = list(r[start:])
+                pos = [i for i, v in enumerate(cells_) if v not in (None, "")]
+                out.append(f"  f{n + 1} {label[:20]!r} nn={len(pos)} bloques g1..g4={[[len(b) for b in _blocks(cells_, g)][:4] for g in (1, 2, 3, 4)]}")
+                out.append("      " + _desc(cells_, 24))
+                vistas += 1
+                if es_total:
+                    break
+    annotate("COOP sheet", "\n".join(out))
+
+
 def cells(period: str, sheet_pat: str) -> None:
     from cooperativas.scripts.extract_cmf_coop_report import discover, read_workbook
     url = discover(fetch(INDEX, MAX_PAGE).decode("utf-8", "replace"))[period]
@@ -187,6 +233,9 @@ if __name__ == "__main__":
         cells(sys.argv[2], sys.argv[3]); raise SystemExit
     if sys.argv[1] == "blocks":
         blocks(sys.argv[2], sys.argv[3] if len(sys.argv) > 3 and sys.argv[3] else None)
+        raise SystemExit
+    if sys.argv[1] == "coop_sheet":
+        coop_sheet(sys.argv[2].split(","), sys.argv[3])
         raise SystemExit
     if sys.argv[1] == "layouts":
         layouts(sys.argv[2].split(","))

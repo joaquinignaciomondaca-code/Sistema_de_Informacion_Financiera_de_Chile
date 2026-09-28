@@ -23,5 +23,5 @@ jobs:
       - run: python -m pip install --disable-pip-version-check openpyxl==3.1.5
       - run: python -m pip install --disable-pip-version-check xlrd==2.0.1
       - run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
-      - name: Huecos y bloques por fila (2019-11)
-        run: python -m cooperativas.scripts.probe_coop_layout blocks 2019-11
+      - name: Hojas de resultados 2019-11 y 2026-07
+        run: python -m cooperativas.scripts.probe_coop_layout coop_sheet 2019-11,2026-07 "^estado resultados coop"
