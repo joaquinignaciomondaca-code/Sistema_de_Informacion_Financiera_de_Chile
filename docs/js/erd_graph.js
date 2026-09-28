@@ -1117,25 +1117,45 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "agf_balance_resumen",
-    name: "agf.balance_resumen",
+    id: "agf_balance",
+    name: "agf.balance",
     sector: "agf",
     color: "#4F46E5",
     x: 5040,
     y: 400,
     w: 260,
     h: 190,
-    rows: "Balances IFRS",
-    file: "outputs/agf/agf_balance_resumen.parquet",
+    rows: "1.572 balances",
+    file: "outputs/agf/agf_balance.parquet",
     cols: [
       { name: "rut", fk: true, type: "BIGINT" },
       { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "total_activos_m_clp", type: "DOUBLE" },
-      { name: "patrimonio_neto_m_clp", type: "DOUBLE" },
-      { name: "cartera_propia_inversiones_m_clp", type: "DOUBLE" },
-      { name: "ingresos_comisiones_m_clp", type: "DOUBLE" }
+      { name: "total_activos_mm_clp", type: "DOUBLE" },
+      { name: "total_pasivos_mm_clp", type: "DOUBLE" },
+      { name: "patrimonio_mm_clp", type: "DOUBLE" },
+      { name: "efectivo_equivalentes_mm_clp", type: "DOUBLE" }
     ]
   },
+  {
+    id: "agf_resultados",
+    name: "agf.resultados",
+    sector: "agf",
+    color: "#4F46E5",
+    x: 5040,
+    y: 620,
+    w: 260,
+    h: 170,
+    rows: "1.572 trimestres",
+    file: "outputs/agf/agf_resultados.parquet",
+    cols: [
+      { name: "rut", fk: true, type: "BIGINT" },
+      { name: "periodo", pk: true, type: "VARCHAR" },
+      { name: "meses_acumulados", type: "BIGINT" },
+      { name: "ingresos_ordinarios_acum_mm_clp", type: "DOUBLE" },
+      { name: "ingresos_ordinarios_trimestre_mm_clp", type: "DOUBLE" }
+    ]
+  },
+
   {
     id: "sistemas_pago_maestro",
     name: "pagos.maestro",
@@ -1390,8 +1410,10 @@ const ERD_LINKS = [
   { from: "sistemas_pago_maestro", to: "sistemas_pago_balances", key: "rut" },
   { from: "sistemas_pago_balances", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "sistemas_pago_estadisticas_bcch", to: "macro_tasas_rendimientos", key: "periodo (tasas de referencia)" },
-  { from: "agf_maestro", to: "agf_balance_resumen", key: "rut" },
-  { from: "agf_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
+  { from: "agf_maestro", to: "agf_balance", key: "rut" },
+  { from: "agf_maestro", to: "agf_resultados", key: "rut" },
+  { from: "agf_balance", to: "agf_resultados", key: "rut, periodo" },
+  { from: "agf_balance", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "agf_maestro", to: "fi_maestro", key: "rut_administradora (gestión fiduciaria LUF)" },
   { from: "securitizadoras_maestro", to: "securitizadoras_balance_resumen", key: "rut" },
   { from: "securitizadoras_maestro", to: "patrimonios_separados_maestro", key: "rut_administradora (administración fiduciaria)" },

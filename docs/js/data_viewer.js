@@ -143,7 +143,8 @@ const DATA_VIEWER_CATALOG = [
     group: "Administración de fondos · AGF (sociedades gestoras)",
     tables: [
       { id: "agf_maestro", name: "agf.lista_administradoras (68 entidades)" },
-      { id: "agf_balance_resumen", name: "agf.balance_resumen (1.572 balances)" }
+      { id: "agf_balance", name: "agf.balance (1.572 balances)" },
+      { id: "agf_resultados", name: "agf.resultados (1.572 trimestres)" }
     ]
   },
   {

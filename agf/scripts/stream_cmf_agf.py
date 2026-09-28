@@ -7,7 +7,14 @@ reguladas por la CMF al amparo de la Ley N° 20.712 (Ley Única de Fondos - LUF)
 
 Genera:
   1. docs/outputs/agf/agf_maestro.parquet / .json
-  2. docs/outputs/agf/agf_balance_resumen.parquet / .json
+  2. agf/fuentes/agf_eeff_cmf.parquet (EEFF IFRS trimestrales, en MM$) y luego llama a
+     publicar_agf_balance_resultados.py, que publica docs/outputs/agf/agf_balance.parquet y agf_resultados.parquet.
+
+Se corre a mano (no hay workflow de GitHub Actions).
+Corrección 2026-09-28: antes se decodificaba siempre como latin-1 y se buscaban las etiquetas con tilde
+tal cual, así que "Gastos de administración" y "Ganancia (pérdida)" nunca calzaban y quedaban en 0.
+Ahora se respeta el charset de la página, se comparan etiquetas sin tildes, y una etiqueta ausente
+queda NULL en vez de 0.
 """
 
 import os
@@ -15,6 +22,8 @@ import sys
 import re
 import json
 import socket
+import subprocess
+import unicodedata
 import urllib.request
 import urllib.parse
 from bs4 import BeautifulSoup
@@ -41,8 +50,29 @@ def calcular_dv(rut_num: int) -> str:
         return 'K'
     return str(rem)
 
+def normalizar_etiqueta(txt):
+    txt = unicodedata.normalize("NFKD", txt or "")
+    txt = "".join(c for c in txt if not unicodedata.combining(c))
+    return re.sub(r"\s+", " ", txt).strip().lower()
+
+
+def decodificar(raw, content_type=""):
+    m = re.search(r"charset=([\w-]+)", content_type or "", re.I) or re.search(rb"charset=[\"']?([\w-]+)", raw[:4000], re.I)
+    charset = m.group(1) if m else "utf-8"
+    charset = charset.decode() if isinstance(charset, bytes) else charset
+    try:
+        return raw.decode(charset)
+    except (LookupError, UnicodeDecodeError):
+        try:
+            return raw.decode("utf-8")
+        except UnicodeDecodeError:
+            return raw.decode("latin-1", errors="ignore")
+
+
 def parse_num(val_str):
-    if not val_str or val_str in ("-", "--", "---", "N/A"):
+    if val_str is None:
+        return None
+    if val_str in ("", "-", "--", "---", "N/A"):
         return 0.0
     s = str(val_str).replace(".", "").replace(",", ".").replace(" ", "").replace("\xa0", "").strip()
     try:
@@ -129,7 +159,7 @@ def parse_cmf_balance_tables(html):
             if i + 2 < len(cells) and "derecha" in cells[i+1].get("class", []):
                 val_actual = cells[i+1].get_text(strip=True)
                 val_anterior = cells[i+2].get_text(strip=True)
-                items[txt] = (val_actual, val_anterior)
+                items.setdefault(normalizar_etiqueta(txt), (val_actual, val_anterior))
                 i += 3
             else:
                 i += 1
@@ -138,26 +168,33 @@ def parse_cmf_balance_tables(html):
     bal_items = extract_cells(tables[1])
     res_items = extract_cells(tables[2]) if len(tables) > 2 else {}
 
-    activos_k = parse_num(bal_items.get("Total de activos", ("0", "0"))[0])
-    pasivos_k = parse_num(bal_items.get("Total de pasivos", ("0", "0"))[0])
-    patrimonio_k = parse_num(bal_items.get("Patrimonio total", ("0", "0"))[0])
-    efectivo_k = parse_num(bal_items.get("Efectivo y equivalentes al efectivo", ("0", "0"))[0])
-    cartera_propia_k = parse_num(bal_items.get("Otros activos financieros", ("0", "0"))[0])
+    def val(items, etiqueta):
+        par = items.get(normalizar_etiqueta(etiqueta))
+        return parse_num(par[0]) if par else None
 
-    ingresos_k = parse_num(res_items.get("Ingresos de actividades ordinarias", ("0", "0"))[0])
-    gastos_k = parse_num(res_items.get("Gastos de administración", ("0", "0"))[0])
-    utilidad_k = parse_num(res_items.get("Ganancia (pérdida)", ("0", "0"))[0])
+    activos_k = val(bal_items, "Total de activos") or 0.0
+    pasivos_k = val(bal_items, "Total de pasivos") or 0.0
+    patrimonio_k = val(bal_items, "Patrimonio total") or 0.0
+    efectivo_k = val(bal_items, "Efectivo y equivalentes al efectivo")
+    cartera_propia_k = val(bal_items, "Otros activos financieros")
+
+    ingresos_k = val(res_items, "Ingresos de actividades ordinarias")
+    gastos_k = val(res_items, "Gastos de administración")
+    utilidad_k = val(res_items, "Ganancia (pérdida)")
+
+    def mm(v):
+        return None if v is None else round(v / 1000.0, 3)
 
     if activos_k > 0 or pasivos_k > 0 or patrimonio_k > 0:
         return {
             "total_activos_m_clp": round(activos_k / 1000.0, 3),
             "total_pasivos_m_clp": round(pasivos_k / 1000.0, 3),
             "patrimonio_neto_m_clp": round(patrimonio_k / 1000.0, 3),
-            "efectivo_y_equivalentes_m_clp": round(efectivo_k / 1000.0, 3),
-            "cartera_propia_inversiones_m_clp": round(cartera_propia_k / 1000.0, 3),
-            "ingresos_comisiones_m_clp": round(ingresos_k / 1000.0, 3),
-            "gastos_administracion_m_clp": round(gastos_k / 1000.0, 3),
-            "ganancia_perdida_ejercicio_m_clp": round(utilidad_k / 1000.0, 3)
+            "efectivo_y_equivalentes_m_clp": mm(efectivo_k),
+            "cartera_propia_inversiones_m_clp": mm(cartera_propia_k),
+            "ingresos_comisiones_m_clp": mm(ingresos_k),
+            "gastos_administracion_m_clp": mm(gastos_k),
+            "ganancia_perdida_ejercicio_m_clp": mm(utilidad_k)
         }
     return None
 
@@ -168,7 +205,7 @@ def fetch_agf_balance_period(task):
     try:
         req = urllib.request.Request(url, headers=headers)
         with urllib.request.urlopen(req, timeout=6) as r:
-            html = r.read().decode("latin-1", errors="ignore")
+            html = decodificar(r.read(), r.headers.get("Content-Type", ""))
         parsed = parse_cmf_balance_tables(html)
         if parsed:
             parsed["rut"] = int(rut)
@@ -344,12 +381,11 @@ def main():
         ]
         df_bal = df_bal[cols_b].sort_values(["periodo", "total_activos_m_clp"], ascending=[False, False])
 
-        pq_bal = os.path.join(out_dir, "agf_balance_resumen.parquet")
-        js_bal = os.path.join(out_dir, "agf_balance_resumen.json")
-        table_b = pa.Table.from_pandas(df_bal)
-        pq.write_table(table_b, pq_bal, compression="snappy")
-        df_bal.to_json(js_bal, orient="records", indent=2, force_ascii=False)
-        print(f"[OK] agf_balance_resumen guardado: {pq_bal} ({len(df_bal)} balances trimestrales)", flush=True)
+        fuente = os.path.join(base_dir, "agf", "fuentes", "agf_eeff_cmf.parquet")
+        os.makedirs(os.path.dirname(fuente), exist_ok=True)
+        pq.write_table(pa.Table.from_pandas(df_bal, preserve_index=False), fuente, compression="zstd")
+        print(f"[OK] fuente EEFF guardada: {fuente} ({len(df_bal)} balances trimestrales)", flush=True)
+        subprocess.run([sys.executable, "-m", "agf.scripts.publicar_agf_balance_resultados"], cwd=base_dir, check=True)
 
     print("=== PIPELINE AGF FINALIZADO EXITOSAMENTE ===", flush=True)
 

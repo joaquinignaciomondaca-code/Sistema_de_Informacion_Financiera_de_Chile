@@ -238,21 +238,40 @@ const EXPLORER_TREE = [
             ]
           },
           {
-            id: "circ_agf_balances",
+            id: "circ_agf_balance",
             type: "circular",
-            label: "Balances y Resultados (IFRS)",
+            label: "Balance (IFRS individual)",
             badge: "1.572 Balances",
             badgeType: "data",
             status: "active",
             sector: "agf",
             chips: [
-              { label: "Ranking Activos Propios de las Gestoras (MM$ CLP)", query: "SELECT periodo, razon_social, total_activos_m_clp, patrimonio_neto_m_clp, efectivo_y_equivalentes_m_clp, cartera_propia_inversiones_m_clp FROM agf_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM agf_balance_resumen) ORDER BY total_activos_m_clp DESC LIMIT 15;" },
-              { label: "Ingresos por Comisiones de Administración (Top 10 AGF)", query: "SELECT periodo, razon_social, ingresos_comisiones_m_clp, ganancia_perdida_ejercicio_m_clp, patrimonio_neto_m_clp FROM agf_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM agf_balance_resumen) ORDER BY ingresos_comisiones_m_clp DESC LIMIT 10;" },
-              { label: "Cartera Propia de Inversión (Coinversión AGF)", query: "SELECT periodo, razon_social, cartera_propia_inversiones_m_clp, total_activos_m_clp, round(cartera_propia_inversiones_m_clp / NULLIF(total_activos_m_clp, 0) * 100, 1) as pct_cartera_propia FROM agf_balance_resumen WHERE periodo = (SELECT MAX(periodo) FROM agf_balance_resumen) AND cartera_propia_inversiones_m_clp > 0 ORDER BY cartera_propia_inversiones_m_clp DESC LIMIT 15;" },
-              { label: "Utilidad Neta del Ejercicio: Banchile vs Santander vs LarrainVial", query: "SELECT periodo, razon_social, ganancia_perdida_ejercicio_m_clp, ingresos_comisiones_m_clp, total_activos_m_usd FROM agf_balance_resumen WHERE razon_social LIKE '%BANCHILE%' OR razon_social LIKE '%SANTANDER%' OR razon_social LIKE '%LARRAIN%' ORDER BY periodo DESC, ingresos_comisiones_m_clp DESC LIMIT 15;" }
+              { label: "Ranking por activos propios, último trimestre (MM$)", query: "SELECT periodo, razon_social, total_activos_mm_clp, total_pasivos_mm_clp, patrimonio_mm_clp, efectivo_equivalentes_mm_clp, otros_activos_financieros_mm_clp FROM agf_balance WHERE periodo = (SELECT max(periodo) FROM agf_balance) ORDER BY total_activos_mm_clp DESC LIMIT 15;" },
+              { label: "Evolución del sector por trimestre", query: "SELECT periodo, count(*) AS agf, round(sum(total_activos_mm_clp), 1) AS activos_mm_clp, round(sum(patrimonio_mm_clp), 1) AS patrimonio_mm_clp, round(sum(total_pasivos_mm_clp) / sum(patrimonio_mm_clp), 3) AS pasivo_sobre_patrimonio, round(sum(total_activos_mm_usd), 1) AS activos_mm_usd FROM agf_balance GROUP BY periodo ORDER BY periodo;" },
+              { label: "Liquidez: efectivo sobre activos, último trimestre", query: "SELECT razon_social, efectivo_equivalentes_mm_clp, total_activos_mm_clp, round(efectivo_equivalentes_mm_clp / NULLIF(total_activos_mm_clp, 0) * 100, 1) AS pct_efectivo FROM agf_balance WHERE periodo = (SELECT max(periodo) FROM agf_balance) ORDER BY total_activos_mm_clp DESC;" },
+              { label: "Otros activos financieros (coinversión en fondos propios)", query: "SELECT periodo, razon_social, otros_activos_financieros_mm_clp, total_activos_mm_clp, round(otros_activos_financieros_mm_clp / NULLIF(total_activos_mm_clp, 0) * 100, 1) AS pct_activos FROM agf_balance WHERE periodo = (SELECT max(periodo) FROM agf_balance) AND otros_activos_financieros_mm_clp > 0 ORDER BY otros_activos_financieros_mm_clp DESC;" }
             ],
             tables: [
-              { id: "agf_balance_resumen", name: "agf.balance_resumen", rows: "1.572 balances", file: "outputs/agf/agf_balance_resumen.parquet" }
+              { id: "agf_balance", name: "agf.balance", rows: "1.572 balances", file: "outputs/agf/agf_balance.parquet" }
+            ]
+          },
+          {
+            id: "circ_agf_resultados",
+            type: "circular",
+            label: "Estado de Resultados (ingresos)",
+            badge: "1.572 Trimestres",
+            badgeType: "data",
+            status: "active",
+            sector: "agf",
+            chips: [
+              { label: "Ingresos anuales por AGF, 2025 (MM$)", query: "SELECT razon_social, ingresos_ordinarios_acum_mm_clp AS ingresos_2025_mm_clp, round(ingresos_ordinarios_acum_mm_clp / sum(ingresos_ordinarios_acum_mm_clp) OVER () * 100, 2) AS participacion_pct FROM agf_resultados WHERE periodo = '2025-12' ORDER BY ingresos_2025_mm_clp DESC LIMIT 20;" },
+              { label: "Ingresos del sector por año (cierres de diciembre)", query: "SELECT left(periodo, 4) AS anio, count(*) AS agf, round(sum(ingresos_ordinarios_acum_mm_clp), 1) AS ingresos_mm_clp FROM agf_resultados WHERE meses_acumulados = 12 GROUP BY anio ORDER BY anio;" },
+              { label: "Ingresos del trimestre, top 10 del último período", query: "SELECT periodo, razon_social, ingresos_ordinarios_trimestre_mm_clp, ingresos_ordinarios_acum_mm_clp, meses_acumulados FROM agf_resultados WHERE periodo = (SELECT max(periodo) FROM agf_resultados) ORDER BY ingresos_ordinarios_trimestre_mm_clp DESC NULLS LAST LIMIT 10;" },
+              { label: "Ingresos anuales sobre patrimonio, 2025", query: "SELECT r.razon_social, r.ingresos_ordinarios_acum_mm_clp AS ingresos_mm_clp, b.patrimonio_mm_clp, round(r.ingresos_ordinarios_acum_mm_clp / NULLIF(b.patrimonio_mm_clp, 0), 2) AS ingresos_sobre_patrimonio FROM agf_resultados r JOIN agf_balance b USING (rut, periodo) WHERE r.periodo = '2025-12' ORDER BY r.ingresos_ordinarios_acum_mm_clp DESC LIMIT 15;" },
+              { label: "Evolución de ingresos: Banchile, BTG, LarrainVial, Santander", query: "SELECT periodo, razon_social, ingresos_ordinarios_trimestre_mm_clp, ingresos_ordinarios_acum_mm_clp FROM agf_resultados WHERE razon_social LIKE '%BANCHILE%' OR razon_social LIKE '%BTG%' OR razon_social LIKE '%LARRAIN%' OR razon_social LIKE '%SANTANDER%' ORDER BY periodo DESC, ingresos_ordinarios_acum_mm_clp DESC LIMIT 40;" }
+            ],
+            tables: [
+              { id: "agf_resultados", name: "agf.resultados", rows: "1.572 trimestres", file: "outputs/agf/agf_resultados.parquet" }
             ]
           }
         ]

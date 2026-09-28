@@ -25,7 +25,7 @@ El repositorio consolida fuentes oficiales emitidas por la **Comisión para el M
 9. **Sociedades Securitizadoras** (securitizadoras/): Emisoras de títulos de deuda y balances IFRS.
 10. **Patrimonios Separados** (securitizadoras/): Vehículos de propósito especial y carteras de activos securitizados (Ley 18.045). Lista de emisiones inscritas en la CMF y balance de cierre de diciembre 2014–2025 (de 2010 a 2013 no hay datos) con métricas FSB CI2, MT2 y L5, publicado desde un Excel leído con NotebookLM.
 11. **Cajas de Compensación** (ccaf/): Catálogo institucional, serie histórica de balances 2010–2025, desglose analítico de Efectivo (Nota 8) y carteras de crédito social.
-12. **Administradoras Generales de Fondos** (agf/): Sociedades gestoras fiduciarias (Ley 20.712) y balances auditados.
+12. **Administradoras Generales de Fondos** (agf/): Sociedades gestoras fiduciarias (Ley 20.712), su balance y su estado de resultados IFRS trimestral (2018–2026) en tablas separadas.
 13. **Sistemas de Pago** (sistemas_pago/): Infraestructuras de liquidación bruta en tiempo real (LBTR), cámaras de compensación y operadores de medios de pago.
 14. **FinTech & Finanzas Abiertas** (fintech/): Ley N° 21.521, Registro de Prestadores de Servicios Financieros (RPSF) y taxonomía del Sistema de Finanzas Abiertas (SFA).
 
