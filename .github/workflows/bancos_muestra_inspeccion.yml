@@ -48,11 +48,19 @@ jobs:
           BANK_CODE: ${{ github.event.inputs.bank_code || '001' }}
           BANK_NAME: ${{ github.event.inputs.bank_name || 'Banco de Chile' }}
         run: |
+          mkdir -p .local-data/review/bancos/sample_inspection
+          set +e
           python -m bancos.scripts.inspect_cmf_bank_sample \
             --period "$PERIOD" \
             --bank-code "$BANK_CODE" \
             --bank-name "$BANK_NAME" \
-            --output .local-data/review/bancos/sample_inspection
+            --output .local-data/review/bancos/sample_inspection \
+            2>&1 | tee .local-data/review/bancos/sample_inspection/run.log
+          result=${PIPESTATUS[0]}
+          if [ "$result" -ne 0 ]; then
+            tail -n 1 .local-data/review/bancos/sample_inspection/run.log | sed 's/^/::error title=CMF sample inspection failed::/'
+            exit "$result"
+          fi
       - name: Adjuntar fuentes CMF y resumen estructural para revisión humana
         if: always()
         uses: actions/upload-artifact@v4
