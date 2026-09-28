@@ -904,7 +904,7 @@ const EXPLORER_TREE = [
               { label: "Distribución Regional", query: "SELECT region, COUNT(*) AS total_entidades FROM fintech_rpsf_maestro WHERE region != '' GROUP BY region ORDER BY total_entidades DESC;" }
             ],
             tables: [
-              { id: "fintech_rpsf_maestro", name: "fintech.lista_entidades", rows: "262 entidades", file: "outputs/fintech/fintech_rpsf_maestro.parquet" }
+              { id: "fintech_rpsf_maestro", name: "fintech.lista_entidades", rows: "263 entidades", file: "outputs/fintech/fintech_rpsf_maestro.parquet" }
             ]
           }
         ]

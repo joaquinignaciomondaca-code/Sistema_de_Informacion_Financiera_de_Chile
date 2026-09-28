@@ -794,7 +794,7 @@ const DATA_DICTIONARY = [
     frescura: "Actualización Continua / Eventos Registrales CMF",
     modo: "Automático",
     ultimaActualizacion: "2026-09-23",
-    registros: "262 entidades",
+    registros: "263 entidades",
     descripcion: "Registro de Prestadores de Servicios Financieros (RPSF) de la CMF. Catálogo integral de las entidades FinTech que operan bajo el perímetro regulatorio de la Ley Fintec en Chile. Incluye personas jurídicas y naturales, estado de vigencia, número y fecha de inscripción oficial, código institucional CMF, datos de contacto y total de servicios autorizados.",
     origen: "Comisión para el Mercado Financiero (CMF) — Registro de Prestadores de Servicios Financieros (RPSF).",
     columnas: [
