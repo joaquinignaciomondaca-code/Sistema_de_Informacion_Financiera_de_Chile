@@ -1,7 +1,9 @@
 import unittest
+from unittest import mock
 import zipfile
 from io import BytesIO
 
+import bancos.scripts.inspect_cmf_bank_sample as insp
 from bancos.scripts.inspect_cmf_bank_sample import inspect_zip, resolve_resource_from_article_links
 
 
@@ -49,6 +51,27 @@ class InspectCmfBankSampleTests(unittest.TestCase):
             zf.writestr("r1202607001.txt", "001\tBANCO DE CHILE\n")
         with self.assertRaisesRegex(RuntimeError, "missing_core=.*B1"):
             inspect_zip(out.getvalue(), "2026-07", "001")
+
+
+class FindSourceNotPublishedTests(unittest.TestCase):
+    BASE = "https://www.cmfchile.cl/portal/estadisticas/626/"
+
+    def _page(self, *links):
+        return ("<html>" + "".join(f'<a href="{self.BASE}{h}">{t}</a>' for h, t in links) + "</html>").encode()
+
+    def test_no_link_for_period_means_not_yet_published(self):
+        page = self._page(("articles-1_recurso_1.zip", "Balance bancos julio 2026"))
+        with mock.patch.object(insp, "fetch", return_value=page):
+            with self.assertRaises(insp.SourceNotPublished):
+                insp.find_source(insp.ZIP_INDEX, "2026-08", ".zip")
+
+    def test_ambiguous_links_are_an_error_not_a_wait(self):
+        page = self._page(("articles-1_recurso_1.zip", "Balance bancos agosto 2026"),
+                          ("articles-2_recurso_1.zip", "Balance bancos agosto 2026 (rectificado)"))
+        with mock.patch.object(insp, "fetch", return_value=page):
+            with self.assertRaises(RuntimeError) as ctx:
+                insp.find_source(insp.ZIP_INDEX, "2026-08", ".zip")
+        self.assertNotIsInstance(ctx.exception, insp.SourceNotPublished)
 
 
 if __name__ == "__main__":

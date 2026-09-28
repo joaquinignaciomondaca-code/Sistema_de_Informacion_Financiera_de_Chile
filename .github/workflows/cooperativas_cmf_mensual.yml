@@ -1,16 +1,19 @@
-name: Publicación mensual CMF cooperativas (balance y resultados)
+name: Publicación CMF cooperativas (balance y resultados), 3 veces al mes, incremental
 
 on:
   schedule:
-    # Día 16 de cada mes (la CMF publica el reporte del mes anterior hacia fin de mes).
-    - cron: '0 14 16 * *'
+    # Tres intentos al mes (días 2, 12 y 22, 14:00 UTC; la CMF publica el mes anterior hacia fin de mes).
+    # Incremental: solo descarga los meses que aún no están publicados; si no hay nada nuevo, no escribe.
+    # Para reconstruir toda la serie, correr a mano: python -m cooperativas.scripts.extract_cmf_coop_report --publicar --completo
+    - cron: '0 14 2,12,22 * *'
   push:
     branches:
       - main
-      - arena/01a0e66e-monitor-financiero-chile
+      - arena/01a0e680-monitor-financiero-chile
     paths:
       - .github/workflows/cooperativas_cmf_mensual.yml
       - cooperativas/scripts/extract_cmf_coop_report.py
+      - cooperativas/tests/test_extract_cmf_coop_report.py
   workflow_dispatch:
 
 permissions:
@@ -24,6 +27,8 @@ jobs:
   validate-and-publish:
     runs-on: ubuntu-latest
     timeout-minutes: 60
+    outputs:
+      changed: ${{ steps.commit.outputs.changed }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -36,14 +41,42 @@ jobs:
       - run: python -m pip install --disable-pip-version-check openpyxl==3.1.5 xlrd==2.0.1 pyarrow==21.0.0
       - name: Tests del extractor
         run: python -m unittest cooperativas.tests.test_extract_cmf_coop_report -v
-      - name: Descargar, validar y reconstruir la serie completa (2017-01 → último mes)
+      - name: Descargar y validar solo los meses nuevos, y agregarlos a la serie
         run: python -m cooperativas.scripts.extract_cmf_coop_report --publicar
       - name: Confirmar cambios
+        id: commit
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/outputs/cooperativas/cmf_reporte_financiero
-          if git diff --cached --quiet; then echo 'Sin cambios.'; exit 0; fi
-          git commit -m "Publica reporte financiero CMF de cooperativas"
+          if git diff --cached --quiet; then echo 'Sin cambios.'; echo "changed=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          git commit -m "Cooperativas CMF: agrega meses nuevos"
           git pull --rebase origin "${GITHUB_REF_NAME}"
           git push origin "HEAD:${GITHUB_REF_NAME}"
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+  # Los commits hechos con GITHUB_TOKEN no disparan pages.yml, así que se despliega aquí.
+  deploy-page:
+    needs: validate-and-publish
+    if: needs.validate-and-publish.outputs.changed == 'true' && github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+      - name: Actualizar a la revisión con los meses nuevos
+        run: git pull --ff-only origin "${GITHUB_REF_NAME}" || true
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - id: deployment
+        uses: actions/deploy-pages@v4
