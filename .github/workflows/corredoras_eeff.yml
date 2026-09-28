@@ -1,0 +1,95 @@
+name: Estados financieros de corredores de bolsa y agentes de valores (CMF, FECU IFRS trimestral), 3 veces al mes, incremental
+
+on:
+  schedule:
+    # Días 6, 16 y 26 (13:45 UTC). La CMF publica un Excel trimestral por tipo de intermediario con
+    # todas las cuentas FECU. Los trimestres cerrados (más de 150 días) no se vuelven a descargar; los
+    # recientes se releen para sumar a quienes presentan tarde.
+    - cron: '45 13 6,16,26 * *'
+  push:
+    branches:
+      - main
+      - arena/01a0e680-monitor-financiero-chile
+    paths:
+      - .github/workflows/corredoras_eeff.yml
+      - corredoras_bolsa/scripts/actualizar_eeff.py
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: corredoras-eeff-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validar-y-publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    outputs:
+      publicados: ${{ steps.publicar.outputs.publicados }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: python -m pip install --disable-pip-version-check pandas==2.2.3 pyarrow==21.0.0 openpyxl==3.1.5
+
+      - name: Descargar y publicar los trimestres pendientes
+        id: publicar
+        run: python corredoras_bolsa/scripts/actualizar_eeff.py --minutos 40
+
+      - name: Confirmar los trimestres publicados
+        if: always() && steps.publicar.outcome != 'skipped'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/outputs/corredoras_bolsa/manifest.json docs/outputs/corredoras_bolsa/corredoras_bolsa_balance docs/outputs/corredoras_bolsa/corredoras_bolsa_resultados
+          if git diff --cached --quiet; then echo 'Sin cambios.'; exit 0; fi
+          ultimo=$(python -c "import json;print(max(k for k,v in json.load(open('docs/outputs/corredoras_bolsa/manifest.json'))['periodos'].items() if v.get('sociedades')))")
+          git commit -m "Corredoras y agentes de valores: estados financieros hasta ${ultimo}"
+          git checkout -- data_manifest.json
+          datos=$(git rev-parse HEAD)
+          for i in 1 2 3 4 5; do
+            git fetch origin "${GITHUB_REF_NAME}"
+            git reset --hard FETCH_HEAD
+            git cherry-pick "$datos"
+            python corredoras_bolsa/scripts/actualizar_eeff.py --solo-data-manifest
+            git add data_manifest.json
+            git diff --cached --quiet || git commit -m "Corredoras: data_manifest"
+            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
+            sleep 20
+          done
+          exit 1
+
+  desplegar-sitio:
+    needs: validar-y-publicar
+    if: needs.validar-y-publicar.result == 'success' && needs.validar-y-publicar.outputs.publicados != '0' && github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+      - run: git pull --ff-only origin "${GITHUB_REF_NAME}" || true
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - id: deployment
+        uses: actions/deploy-pages@v4
