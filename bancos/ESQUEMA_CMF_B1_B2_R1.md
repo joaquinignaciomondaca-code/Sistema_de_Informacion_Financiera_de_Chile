@@ -49,4 +49,14 @@ No descartar las cuentas que representan totales o subtotales. Clasificarlas con
 
 ## Estado de validación y publicación
 
-`bancos/scripts/extract_cmf_bank_lines.py` valida que cada institución incluida tenga un B1, B2 y R1 único, conserva todas las filas y sus campos originales, y guarda resultados en `.local-data/review/`. No escribe en `docs/outputs/`, no actualiza el manifest ni publica cifras. El extractor ya mapea glosas y rubro/línea/ítem desde los tres modelos del ZIP y conserva todos los registros. Antes del backfill se deben terminar: (1) asignar significado oficial a los campos monetarios B1/B2, (2) revisar la regla derivada de total/subtotal/detalle contra el plan CMF, (3) validar el cruce a RUT/razón social, y (4) cotejar R1 contra el XLSX CMF, incluyendo su base temporal.
+`bancos/scripts/extract_cmf_bank_lines.py` valida que cada institución incluida tenga un B1, B2 y R1 único, conserva todas las filas y sus campos originales, y guarda resultados en `.local-data/review/`. No escribe en `docs/outputs/`, no actualiza el manifest ni publica cifras. El extractor mapea glosas y rubro/línea/ítem desde los tres modelos del ZIP; también incluye la fila fuente física en `numero_fila_fuente`.
+
+### Muestra julio de 2026
+
+La ejecución de revisión de [GitHub Actions](https://github.com/joaquinignaciomondaca-code/monitor-financiero-chile/actions/runs/36362212221) procesó **18 instituciones**, 54 archivos B1/B2/R1 y **35.028 filas de cuentas**: 12.762 B1, 144 B2 y 22.122 R1.
+
+- Banco de Chile, B1 `100000000` (**TOTAL ACTIVOS**): la suma diagnóstica de los cuatro campos fuente es **$54.712.553.524.383** y coincide con la hoja `Est. Situación Financ. Bancos` del XLSX (**54.712.553,524383 MM$**).
+- Banco de Chile, R1: **11 cuentas** coinciden exactamente con importes de la hoja `Est. del Resultado Bancos`, entre ellas `590000000` (utilidad del ejercicio) por **$750.034.790.494** y `594000000` (resultado de los propietarios) por **$750.034.662.608**.
+- B2 quedó extraído y separado como individual; ese XLSX no ofrece un cotejo individual en la fila consolidada usada para este control.
+
+Antes de cualquier backfill se deben terminar: (1) asignar significado oficial a los campos monetarios B1/B2, (2) revisar la regla derivada de total/subtotal/detalle contra el plan CMF, (3) validar el cruce a RUT/razón social, y (4) confirmar el tratamiento temporal de R1 (mensual o acumulado del ejercicio). La salida actual es una muestra de revisión, no una publicación ni autorización para backfill.
