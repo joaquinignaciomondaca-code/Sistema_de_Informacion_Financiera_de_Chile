@@ -23,7 +23,7 @@ El repositorio consolida fuentes oficiales emitidas por la **Comisión para el M
 7. **Factoring & Leasing** (`factoring_leasing/`): por ahora solo la Lista de Entidades; balances y notas retirados de la publicación.
 8. **Corredoras de Bolsa** (corredoras_bolsa/): Intermediarios de valores, balances patrimoniales y solvencia.
 9. **Sociedades Securitizadoras** (securitizadoras/): Emisoras de títulos de deuda y balances IFRS.
-10. **Patrimonios Separados** (securitizadoras/): Vehículos de propósito especial y carteras de activos securitizados (Ley 18.045).
+10. **Patrimonios Separados** (securitizadoras/): Vehículos de propósito especial y carteras de activos securitizados (Ley 18.045). Lista de emisiones inscritas en la CMF y balance de cierre de diciembre 2010–2025 (sin 2013) con métricas FSB CI2, MT2 y L5, publicado desde un Excel leído con NotebookLM.
 11. **Cajas de Compensación** (ccaf/): Catálogo institucional, serie histórica de balances 2010–2025, desglose analítico de Efectivo (Nota 8) y carteras de crédito social.
 12. **Administradoras Generales de Fondos** (agf/): Sociedades gestoras fiduciarias (Ley 20.712) y balances auditados.
 13. **Sistemas de Pago** (sistemas_pago/): Infraestructuras de liquidación bruta en tiempo real (LBTR), cámaras de compensación y operadores de medios de pago.

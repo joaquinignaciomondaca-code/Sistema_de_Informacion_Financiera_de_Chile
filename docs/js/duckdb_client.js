@@ -82,24 +82,13 @@ const SEMANTIC_VIEWS = [
   { name: "corredoras_bolsa_balance_resumen", file: "outputs/corredoras_bolsa/corredoras_bolsa_balance_resumen.parquet" },
   { name: "corredoras_bolsa_caratula_eeff_historico", file: "outputs/corredoras_bolsa/corredoras_bolsa_caratula_eeff_historico.parquet" },
 
-        // SECURITIZADORAS (CMF / Ley 18.045) - Subsección EEFF & Notas Exhaustivas
-  { name: "patrimonios_separados_balance_lineas", file: "outputs/securitizadoras/patrimonios_separados_balance_lineas.parquet" },
-  { name: "patrimonios_separados_excedentes_lineas", file: "outputs/securitizadoras/patrimonios_separados_excedentes_lineas.parquet" },
-  { name: "patrimonios_separados_nota_cartera_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_cartera_detalle.parquet" },
-  { name: "patrimonios_separados_nota_morosidad_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_morosidad_detalle.parquet" },
-  { name: "patrimonios_separados_nota_bonos_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_bonos_detalle.parquet" },
-  { name: "patrimonios_separados_nota_administracion_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_administracion_detalle.parquet" },
-  { name: "patrimonios_separados_nota_sobrecolateral_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_sobrecolateral_detalle.parquet" },
-  { name: "patrimonios_separados_nota_efectivo_detalle", file: "outputs/securitizadoras/patrimonios_separados_nota_efectivo_detalle.parquet" },
 
    // SECURITIZADORAS (CMF / Ley 18.045) - Gestoras & Resumen
    { name: "securitizadoras_maestro", file: "outputs/securitizadoras/securitizadoras_maestro.parquet" },
    { name: "securitizadoras_balance_resumen", file: "outputs/securitizadoras/securitizadoras_balance_resumen.parquet" },
    { name: "patrimonios_separados_maestro", file: "outputs/securitizadoras/patrimonios_separados_maestro.parquet" },
-   { name: "patrimonios_separados_balance_resumen", file: "outputs/securitizadoras/patrimonios_separados_balance_resumen.parquet" },
-   { name: "patrimonios_separados_repos_detalle", file: "outputs/securitizadoras/patrimonios_separados_repos_detalle.parquet" },
-   { name: "patrimonios_separados_cartera_morosidad_detalle", file: "outputs/securitizadoras/patrimonios_separados_cartera_morosidad_detalle.parquet" },
-   { name: "patrimonios_separados_balance_pdf", file: "outputs/securitizadoras/patrimonios_separados_balance_pdf.parquet" },
+   { name: "patrimonios_separados_balance_fsb", file: "outputs/securitizadoras/patrimonios_separados_balance_fsb.parquet" },
+   { name: "patrimonios_separados_balance_cuentas", file: "outputs/securitizadoras/patrimonios_separados_balance_cuentas.parquet" },
 
   // COOPERATIVAS DE AHORRO Y CRÉDITO (CMF)
   { name: "cooperativas_maestro", file: "outputs/cooperativas/cooperativas_maestro.parquet" },

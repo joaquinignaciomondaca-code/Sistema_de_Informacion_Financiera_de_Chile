@@ -273,7 +273,14 @@ patrón:
 
 agf/                stream_cmf_agf (balances AGF + conteo fondos)                     + audit_agf
 corredoras_bolsa/   01 universo → 02 EEFF + REPO → 03 audit ; stream_cmf_corredoras_series (50 trimestres 2014-03..2026-06)
-securitizadoras/    stream_cmf_securitizadoras ; 03 patrimonios separados (PDF: balance, notas efectivo/repos/morosidad…) ; 04 audit
+securitizadoras/    stream_cmf_securitizadoras (gestoras + lista de patrimonios separados)
+                    05_publicar_balance_patrimonios_fsb:
+                      leer fuentes/FSB_Patrimonio_Separado_v4.xlsx (hoja Detalle_de_Cuentas; Detalle_por_patrimonio solo para contrastar)
+                      descartar filas vacías → exigir: DV mód.11, periodo AAAA12, activos = PC + PNC + patrimonio (±2 M$) en todos
+                      recalcular por documento: activos, cartera (activo securitizado ± provisiones), AC, PC, PNC, patrimonio, CI2, MT2, L5
+                      revisar = detalle≠subtotal ∪ lectura independiente distinta (8 docs fijos) ∪ hoja resumen distinta
+                      → patrimonios_separados_balance_cuentas.parquet (11.082) + _balance_fsb.parquet (497)
+                    audit_securitizadoras (gestoras, lista y balance FSB)
 cooperativas/       01 maestro → 02 series (Excel CMF) → 03 audit → 04 nota efectivo (RAW_NOTE_DATA transcrito)
                     + flujo automático CMF (ver §8b)
 ccaf/               build_ccaf_maestro ; pipeline_extract_ccaf_xbrl (XBRL SUSESO/CMF) ; build_ccaf_repos_enriquecido ; audit

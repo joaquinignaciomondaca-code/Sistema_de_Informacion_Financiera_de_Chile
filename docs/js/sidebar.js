@@ -740,7 +740,7 @@ const EXPLORER_TREE = [
     label: "SECURITIZACIÓN (CMF / LEY 18.045)",
     badges: [
       { type: "entities", text: "16 Gestoras", title: "Sociedades securitizadoras y sus patrimonios separados son entidades distintas" },
-      { type: "data", text: "2.086 PDF", title: "Balances de patrimonios separados leídos de PDF; los balances de las gestoras son otra serie" }
+      { type: "data", text: "497 balances", title: "Balances de diciembre 2010–2025 de patrimonios separados (Excel FSB); los balances de las gestoras son otra serie" }
     ],
     status: "active",
     children: [
@@ -808,198 +808,40 @@ const EXPLORER_TREE = [
             ]
           },
           {
-            id: "circ_ps_balance_pdf",
+            id: "circ_ps_balance_fsb",
             type: "circular",
-            label: "Balances · Cuentas por Línea",
-            badge: "46.502 Registros",
+            label: "Balance · Métricas FSB (CI2, MT2, L5)",
+            badge: "497 Balances",
             badgeType: "data",
             status: "active",
             sector: "patrimonios_separados",
             chips: [
-              { label: "Total activos de marzo 2026", query: "SELECT nombre_administradora, codigo_patrimonio, nombre_cuenta, monto_m_clp FROM patrimonios_separados_balance_pdf WHERE categoria = 'Total Activos' AND periodo = '202603' ORDER BY monto_m_clp DESC;" },
-              { label: "Cuentas de un PDF", query: "SELECT categoria, nombre_cuenta, monto_m_clp FROM patrimonios_separados_balance_pdf WHERE archivo = '201003_96765170_TRANSA_SECURITIZADORA_TRANSA_PATRIMONIO_SEPARADO_BTRA1.pdf' ORDER BY id_linea;" },
-              { label: "Rubros del balance", query: "SELECT categoria, count(*) AS filas FROM patrimonios_separados_balance_pdf GROUP BY categoria ORDER BY filas DESC;" },
-              { label: "PDF por securitizadora del catálogo", query: "SELECT s.razon_social, count(DISTINCT p.archivo) AS pdfs FROM patrimonios_separados_balance_pdf p JOIN securitizadoras_maestro s ON s.rut = p.rut_administradora GROUP BY s.razon_social ORDER BY pdfs DESC;" }
+              { label: "Agregado del sector por cierre", query: "SELECT periodo, count(*) AS patrimonios, sum(total_activos_m_clp) AS activos_m_clp, sum(cartera_securitizada_m_clp) AS cartera_m_clp, sum(activos_corto_plazo_m_clp) AS activos_cp_m_clp, sum(pasivos_corto_plazo_m_clp) AS pasivos_cp_m_clp, sum(pasivos_largo_plazo_m_clp) AS pasivos_lp_m_clp, sum(patrimonio_m_clp) AS patrimonio_m_clp, round(sum(cartera_securitizada_m_clp) / sum(total_activos_m_clp), 4) AS ci2_agregado, round(sum(pasivos_corto_plazo_m_clp) / sum(activos_corto_plazo_m_clp), 4) AS mt2_agregado, round((sum(total_activos_m_clp) - sum(patrimonio_m_clp)) / sum(total_activos_m_clp), 4) AS l5_agregado FROM patrimonios_separados_balance_fsb GROUP BY periodo ORDER BY periodo;" },
+              { label: "Percentiles CI2 · MT2 · L5 por cierre", query: "SELECT periodo, count(*) AS patrimonios, round(quantile_cont(ci2_intermediacion_credito, 0.25), 3) AS ci2_p25, round(quantile_cont(ci2_intermediacion_credito, 0.5), 3) AS ci2_p50, round(quantile_cont(ci2_intermediacion_credito, 0.75), 3) AS ci2_p75, round(quantile_cont(mt2_transformacion_plazos, 0.25), 3) AS mt2_p25, round(quantile_cont(mt2_transformacion_plazos, 0.5), 3) AS mt2_p50, round(quantile_cont(mt2_transformacion_plazos, 0.75), 3) AS mt2_p75, round(quantile_cont(l5_apalancamiento, 0.25), 3) AS l5_p25, round(quantile_cont(l5_apalancamiento, 0.5), 3) AS l5_p50, round(quantile_cont(l5_apalancamiento, 0.75), 3) AS l5_p75 FROM patrimonios_separados_balance_fsb GROUP BY periodo ORDER BY periodo;" },
+              { label: "Agregado sin balances dudosos", query: "SELECT periodo, count(*) AS patrimonios, sum(total_activos_m_clp) AS activos_m_clp, sum(cartera_securitizada_m_clp) AS cartera_m_clp, sum(patrimonio_m_clp) AS patrimonio_m_clp, round(sum(cartera_securitizada_m_clp) / sum(total_activos_m_clp), 4) AS ci2_agregado, round((sum(total_activos_m_clp) - sum(patrimonio_m_clp)) / sum(total_activos_m_clp), 4) AS l5_agregado FROM patrimonios_separados_balance_fsb WHERE NOT revisar GROUP BY periodo ORDER BY periodo;" },
+              { label: "Por securitizadora, diciembre 2025", query: "SELECT s.razon_social, count(*) AS patrimonios, sum(b.total_activos_m_clp) AS activos_m_clp, sum(b.cartera_securitizada_m_clp) AS cartera_m_clp, sum(b.patrimonio_m_clp) AS patrimonio_m_clp FROM patrimonios_separados_balance_fsb b LEFT JOIN securitizadoras_maestro s ON s.rut = b.rut_administradora WHERE b.periodo = '2025-12' GROUP BY s.razon_social ORDER BY activos_m_clp DESC;" },
+              { label: "Balances marcados para revisar", query: "SELECT periodo, nombre_administradora, codigo_patrimonio, total_activos_m_clp, patrimonio_m_clp, motivo_revision FROM patrimonios_separados_balance_fsb WHERE revisar ORDER BY periodo, nombre_administradora, codigo_patrimonio;" }
             ],
             tables: [
-              { id: "patrimonios_separados_balance_pdf", name: "patrimonios_separados.balance_cuentas", rows: "46.502 registros", file: "outputs/securitizadoras/patrimonios_separados_balance_pdf.parquet" }
+              { id: "patrimonios_separados_balance_fsb", name: "patrimonios_separados.balance_fsb", rows: "497 balances", file: "outputs/securitizadoras/patrimonios_separados_balance_fsb.parquet" }
             ]
           },
           {
-            id: "circ_ps_balance_resumen",
+            id: "circ_ps_balance_cuentas",
             type: "circular",
-            label: "Estados Financieros · Resumen Anual",
-            badge: "64 Balances",
+            label: "Balance · Cuentas Impresas",
+            badge: "11.082 Cuentas",
             badgeType: "data",
             status: "active",
             sector: "patrimonios_separados",
             chips: [
-              { label: "Mayores activos del resumen", query: "SELECT codigo_emision, denominacion_ps, nombre_administradora, periodo, total_activos_mclp, deuda_bonos_largo_plazo_mclp, cuadre_contable_ok FROM patrimonios_separados_balance_resumen ORDER BY total_activos_mclp DESC LIMIT 15;" },
-              { label: "Marca de cuadre que trae el archivo", query: "SELECT periodo, count(*) as balances, SUM(CASE WHEN cuadre_contable_ok THEN 1 ELSE 0 END) as marca_cuadre FROM patrimonios_separados_balance_resumen GROUP BY periodo ORDER BY periodo;" }
+              { label: "Balance completo de un patrimonio", query: "SELECT orden_en_balance, categoria, cuenta, monto_m_clp, categoria_fsb FROM patrimonios_separados_balance_cuentas WHERE periodo = '2025-12' AND nombre_administradora = 'SECURITIZADORA SECURITY' AND codigo_patrimonio = (SELECT min(codigo_patrimonio) FROM patrimonios_separados_balance_cuentas WHERE periodo = '2025-12' AND nombre_administradora = 'SECURITIZADORA SECURITY') ORDER BY orden_en_balance;" },
+              { label: "Cartera securitizada y provisiones por cierre", query: "SELECT periodo, sum(CASE WHEN monto_m_clp > 0 THEN monto_m_clp ELSE 0 END) AS activo_securitizado_m_clp, sum(CASE WHEN monto_m_clp < 0 THEN monto_m_clp ELSE 0 END) AS provisiones_m_clp, sum(monto_m_clp) AS cartera_neta_m_clp, round(-sum(CASE WHEN monto_m_clp < 0 THEN monto_m_clp ELSE 0 END) / sum(CASE WHEN monto_m_clp > 0 THEN monto_m_clp ELSE 0 END), 4) AS cobertura_provisiones FROM patrimonios_separados_balance_cuentas WHERE categoria_fsb = 'Loans' GROUP BY periodo ORDER BY periodo;" },
+              { label: "Pasivos de diciembre 2025 por cuenta", query: "SELECT periodo, categoria, cuenta, sum(monto_m_clp) AS monto_m_clp, count(*) AS patrimonios FROM patrimonios_separados_balance_cuentas WHERE categoria IN ('Pasivo Circulante', 'Pasivo No Circulante') AND periodo = '2025-12' GROUP BY periodo, categoria, cuenta ORDER BY monto_m_clp DESC;" },
+              { label: "Cuentas más frecuentes por rubro", query: "SELECT categoria, cuenta, count(*) AS balances, sum(monto_m_clp) AS suma_m_clp FROM patrimonios_separados_balance_cuentas WHERE categoria NOT LIKE 'Total%' GROUP BY categoria, cuenta ORDER BY balances DESC LIMIT 30;" }
             ],
             tables: [
-              { id: "patrimonios_separados_balance_resumen", name: "patrimonios_separados.balance_resumen", rows: "64 balances", file: "outputs/securitizadoras/patrimonios_separados_balance_resumen.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_balance_lineas",
-            type: "circular",
-            label: "Estados Financieros · Balance Línea a Línea",
-            badge: "16.842 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Activos contra pasivo y patrimonio", query: "SELECT id_patrimonio, periodo, MAX(CASE WHEN codigo_cuenta = '10.000' THEN monto_m_clp END) as total_activos_mclp, MAX(CASE WHEN codigo_cuenta = '20.000' THEN monto_m_clp END) as total_pasivo_y_patrimonio_mclp, MAX(CASE WHEN codigo_cuenta = '21.000' THEN monto_m_clp END) as pasivos_circulantes_mclp, MAX(CASE WHEN codigo_cuenta = '22.000' THEN monto_m_clp END) as pasivos_largo_plazo_mclp FROM patrimonios_separados_balance_lineas GROUP BY id_patrimonio, periodo ORDER BY periodo DESC, total_activos_mclp DESC LIMIT 20;" },
-              { label: "Activo securitizado y su provisión", query: "SELECT id_patrimonio, periodo, codigo_cuenta, nombre_cuenta, monto_m_clp FROM patrimonios_separados_balance_lineas WHERE codigo_cuenta IN ('11.030', '11.120', '13.010') ORDER BY periodo DESC, monto_m_clp DESC LIMIT 20;" },
-              { label: "Disponible y valores negociables", query: "SELECT id_patrimonio, periodo, nombre_cuenta, monto_m_clp FROM patrimonios_separados_balance_lineas WHERE codigo_cuenta IN ('11.010', '11.020') AND monto_m_clp > 0 ORDER BY periodo DESC, monto_m_clp DESC LIMIT 20;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_balance_lineas", name: "patrimonios_separados.balance_lineas", rows: "16.842 registros", file: "outputs/securitizadoras/patrimonios_separados_balance_lineas.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_excedentes_lineas",
-            type: "circular",
-            label: "Estados Financieros · Excedentes y Resultados",
-            badge: "11.157 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Ingresos del estado de excedentes", query: "SELECT id_patrimonio, periodo, codigo_cuenta, nombre_cuenta, monto_m_clp FROM patrimonios_separados_excedentes_lineas WHERE codigo_cuenta IN ('31.000', '31.030', '31.040') ORDER BY periodo DESC, monto_m_clp DESC LIMIT 20;" },
-              { label: "Remuneraciones de administración y servicios", query: "SELECT id_patrimonio, periodo, codigo_cuenta, nombre_cuenta, monto_m_clp FROM patrimonios_separados_excedentes_lineas WHERE codigo_cuenta IN ('35.210', '35.215', '35.220', '35.230') ORDER BY periodo DESC, monto_m_clp DESC LIMIT 20;" },
-              { label: "Excedente o déficit del ejercicio", query: "SELECT id_patrimonio, periodo, nombre_cuenta, monto_m_clp FROM patrimonios_separados_excedentes_lineas WHERE codigo_cuenta = '30.000' ORDER BY periodo DESC, monto_m_clp DESC LIMIT 20;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_excedentes_lineas", name: "patrimonios_separados.excedentes", rows: "11.157 registros", file: "outputs/securitizadoras/patrimonios_separados_excedentes_lineas.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_nota_cartera",
-            type: "circular",
-            label: "Notas · Cartera Securitizada",
-            badge: "796 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Cartera por Originador y Tipo de Activo", query: "SELECT originador, tipo_activo, count(*) as emisiones, SUM(valor_presente_mclp) as valor_total_mclp FROM patrimonios_separados_nota_cartera_detalle GROUP BY originador, tipo_activo ORDER BY valor_total_mclp DESC;" },
-              { label: "Tasas Promedio y Plazos Residuales", query: "SELECT codigo_emision, periodo, originador, tasa_interes_promedio_pct, plazo_promedio_residual_meses, valor_presente_mclp FROM patrimonios_separados_nota_cartera_detalle ORDER BY valor_presente_mclp DESC LIMIT 20;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_nota_cartera_detalle", name: "patrimonios_separados.nota_cartera", rows: "796 registros", file: "outputs/securitizadoras/patrimonios_separados_nota_cartera_detalle.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_nota_morosidad",
-            type: "circular",
-            label: "Notas · Morosidad",
-            badge: "6.632 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Distribución de Cartera y Provisiones por Tramo", query: "SELECT tramo_mora, SUM(numero_deudores) as deudores, SUM(monto_cartera_mclp) as cartera_mclp, SUM(monto_provision_mclp) as provision_mclp FROM patrimonios_separados_nota_morosidad_detalle GROUP BY tramo_mora ORDER BY cartera_mclp DESC;" },
-              { label: "Etiquetas de tramo tal como están guardadas", query: "SELECT tramo_mora, count(*) as filas FROM patrimonios_separados_nota_morosidad_detalle GROUP BY tramo_mora ORDER BY filas DESC;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_nota_morosidad_detalle", name: "patrimonios_separados.nota_morosidad", rows: "6.632 registros", file: "outputs/securitizadoras/patrimonios_separados_nota_morosidad_detalle.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_nota_bonos",
-            type: "circular",
-            label: "Notas · Bonos",
-            badge: "8.001 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Series Emitidas por Moneda y Tasa Carátula", query: "SELECT serie, moneda, AVG(tasa_caratula_pct) as tasa_prom, SUM(saldo_insoluto_mclp) as saldo_total_mclp FROM patrimonios_separados_nota_bonos_detalle GROUP BY serie, moneda ORDER BY saldo_total_mclp DESC;" },
-              { label: "Vencimientos y Saldo Insoluto de Bonos", query: "SELECT codigo_emision, serie, nemotecnico, fecha_vencimiento, tasa_caratula_pct, saldo_insoluto_mclp FROM patrimonios_separados_nota_bonos_detalle ORDER BY saldo_insoluto_mclp DESC LIMIT 20;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_nota_bonos_detalle", name: "patrimonios_separados.nota_bonos", rows: "8.001 registros", file: "outputs/securitizadoras/patrimonios_separados_nota_bonos_detalle.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_nota_administracion",
-            type: "circular",
-            label: "Notas · Administración",
-            badge: "2.153 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Comisiones de Administración por Concepto", query: "SELECT nombre_administradora, concepto_comision, SUM(gasto_periodo_mclp) as gasto_total_mclp FROM patrimonios_separados_nota_administracion_detalle GROUP BY nombre_administradora, concepto_comision ORDER BY gasto_total_mclp DESC;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_nota_administracion_detalle", name: "patrimonios_separados.nota_administracion", rows: "2.153 registros", file: "outputs/securitizadoras/patrimonios_separados_nota_administracion_detalle.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_nota_sobrecolateral",
-            type: "circular",
-            label: "Notas · Sobrecolateral y Reservas",
-            badge: "679 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Sobrecolateral y Fondo de Reserva por Emisión", query: "SELECT codigo_emision, periodo, valor_activos_mclp, valor_pasivos_bonos_mclp, monto_sobrecolateral_mclp, sobrecolateral_pct, fondo_reserva_mclp FROM patrimonios_separados_nota_sobrecolateral_detalle ORDER BY monto_sobrecolateral_mclp DESC LIMIT 20;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_nota_sobrecolateral_detalle", name: "patrimonios_separados.nota_sobrecolateral", rows: "679 registros", file: "outputs/securitizadoras/patrimonios_separados_nota_sobrecolateral_detalle.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_nota_efectivo",
-            type: "circular",
-            label: "Notas · Efectivo y Valores Negociables",
-            badge: "3.802 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Efectivo y Equivalentes Estrictos (NIC 7 - Bancos, FFMM, DAP, Repos)", query: "SELECT institucion, tipo_instrumento, count(*) as num_partidas, SUM(saldo_mclp) as total_mclp, SUM(saldo_mmclp) as total_mmclp FROM patrimonios_separados_nota_efectivo_detalle WHERE tipo_instrumento NOT LIKE '%Mutuo%' GROUP BY institucion, tipo_instrumento ORDER BY total_mclp DESC;" },
-              { label: "Saldos Totales por Institución Depositaria", query: "SELECT institucion, tipo_instrumento, count(*) as num_partidas, SUM(saldo_mclp) as total_mclp, SUM(saldo_mmclp) as total_mmclp FROM patrimonios_separados_nota_efectivo_detalle GROUP BY institucion, tipo_instrumento ORDER BY total_mclp DESC;" },
-              { label: "Inversiones Transitorias de Caja en Mutuos Hipotecarios", query: "SELECT codigo_emision, periodo, institucion, tipo_instrumento, saldo_mclp, saldo_mmclp FROM patrimonios_separados_nota_efectivo_detalle WHERE tipo_instrumento LIKE '%Mutuo%' ORDER BY saldo_mclp DESC LIMIT 20;" },
-              { label: "Top Posiciones de Liquidez y Depósitos", query: "SELECT codigo_emision, periodo, institucion, tipo_instrumento, saldo_mclp, saldo_mmclp FROM patrimonios_separados_nota_efectivo_detalle ORDER BY saldo_mclp DESC LIMIT 20;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_nota_efectivo_detalle", name: "patrimonios_separados.nota_efectivo", rows: "3.802 registros", file: "outputs/securitizadoras/patrimonios_separados_nota_efectivo_detalle.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_cartera_morosidad",
-            type: "circular",
-            label: "Notas · Extracto de Mora",
-            badge: "67 Registros",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Tramos del extracto, sin la columna de porcentaje", query: "SELECT codigo_emision, periodo, tramo_mora, numero_deudores, monto_cartera_mclp, provision_mclp FROM patrimonios_separados_cartera_morosidad_detalle WHERE tramo_mora <> 'Total' ORDER BY periodo DESC, monto_cartera_mclp DESC LIMIT 20;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_cartera_morosidad_detalle", name: "patrimonios_separados.cartera_morosidad", rows: "67 registros", file: "outputs/securitizadoras/patrimonios_separados_cartera_morosidad_detalle.parquet" }
-            ]
-          },
-          {
-            id: "circ_ps_repos",
-            type: "circular",
-            label: "Operaciones · Pactos de Retroventa",
-            badge: "52 Pactos",
-            badgeType: "data",
-            status: "active",
-            sector: "patrimonios_separados",
-            chips: [
-              { label: "Pactos por contraparte", query: "SELECT contraparte, count(*) as pactos, ROUND(SUM(monto_mclp)/1000, 1) as monto_mm_clp, ROUND(AVG(tasa_interes_anual_pct), 2) as tasa_prom_pct FROM patrimonios_separados_repos_detalle GROUP BY contraparte ORDER BY monto_mm_clp DESC;" },
-              { label: "Instrumentos de los pactos", query: "SELECT instrumento_pacto, emisor_subyacente, count(*) as operaciones, ROUND(SUM(monto_mclp)/1000, 1) as monto_mm_clp FROM patrimonios_separados_repos_detalle GROUP BY instrumento_pacto, emisor_subyacente ORDER BY monto_mm_clp DESC;" }
-            ],
-            tables: [
-              { id: "patrimonios_separados_repos_detalle", name: "patrimonios_separados.repos_contratos", rows: "52 pactos", file: "outputs/securitizadoras/patrimonios_separados_repos_detalle.parquet" }
+              { id: "patrimonios_separados_balance_cuentas", name: "patrimonios_separados.balance_cuentas", rows: "11.082 cuentas", file: "outputs/securitizadoras/patrimonios_separados_balance_cuentas.parquet" }
             ]
           }
         ]

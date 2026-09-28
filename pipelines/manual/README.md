@@ -2,7 +2,7 @@
 
 El lector automático de PDF de factoring (`pipelines/eeff`) se retiró. Las notas que se quieran publicar entran por este flujo.
 
-El balance de patrimonios separados leído del PDF está en `patrimonios_separados_balance_pdf`. El Excel no se guarda.
+El balance de patrimonios separados sale de un Excel leído con NotebookLM (`securitizadoras/fuentes/FSB_Patrimonio_Separado_v4.xlsx`). Lo publica `securitizadoras/scripts/05_publicar_balance_patrimonios_fsb.py` en `patrimonios_separados_balance_cuentas` y `patrimonios_separados_balance_fsb`.
 
 Este directorio gestiona los flujos de extracción y normalización de información que **requieren intervención humana previa o procesamiento asistido por IA**, tales como el análisis de notas explicativas en memorias anuales y estados financieros en PDF.
 
