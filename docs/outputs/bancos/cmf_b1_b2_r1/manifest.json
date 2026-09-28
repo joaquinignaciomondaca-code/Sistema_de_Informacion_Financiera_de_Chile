@@ -1,8 +1,22 @@
 {
   "dataset": "bancos_cmf_lineas",
-  "description": "Particiones mensuales B1/B2/R1 CMF. El visor las carga solo después de que cada período pasa validación.",
-  "updated_at": null,
-  "periods": [],
-  "files": [],
-  "total_records": 0
+  "description": "Líneas contables B1/B2/R1 CMF al grano fuente; importes sin reinterpretar.",
+  "updated_at": "2026-09-28",
+  "periods": [
+    {
+      "period": "2026-07",
+      "file": "outputs/bancos/cmf_b1_b2_r1/2026-07/lineas.parquet",
+      "validation_file": "outputs/bancos/cmf_b1_b2_r1/2026-07/validacion.json",
+      "records": 35028,
+      "sha256_zip": "c65267444f29aa5592031610063873899318a376ff641792862960d7e949317b",
+      "sha256_xlsx": "cf23026da3e8e9a26432a2996b2bba03bd3768c1416aee7b4184d8e8b79e8072",
+      "zip_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-113067_recurso_1.zip?ts=1787944720",
+      "xlsx_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-113057_recurso_1.xlsx?ts=1787943075",
+      "validated_at": "2026-09-28"
+    }
+  ],
+  "files": [
+    "outputs/bancos/cmf_b1_b2_r1/2026-07/lineas.parquet"
+  ],
+  "total_records": 35028
 }
