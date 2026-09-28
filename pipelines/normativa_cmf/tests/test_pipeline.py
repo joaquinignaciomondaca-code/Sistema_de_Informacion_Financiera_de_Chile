@@ -274,6 +274,25 @@ class PdfExtractionTests(unittest.TestCase):
 
 
 class GeminiInteractionsApiTests(unittest.TestCase):
+    def test_configured_request_interval_waits_between_gemini_calls(self):
+        clock = {"now": 100.0}
+
+        def advance_clock(seconds):
+            clock["now"] += seconds
+
+        with (
+            patch.dict("os.environ", {"NORMATIVA_GEMINI_MIN_INTERVAL_SECONDS": "6"}),
+            patch.object(pipeline, "_LAST_GEMINI_REQUEST_AT", None),
+            patch("pipelines.normativa_cmf.pipeline.time.monotonic", side_effect=lambda: clock["now"]),
+            patch("pipelines.normativa_cmf.pipeline.time.sleep", side_effect=advance_clock) as sleep,
+        ):
+            pipeline._wait_for_gemini_slot()
+            clock["now"] += 1
+            pipeline._wait_for_gemini_slot()
+
+        sleep.assert_called_once()
+        self.assertAlmostEqual(sleep.call_args.args[0], 5.0)
+
     def test_uses_interactions_rest_contract_and_standard_json_schema(self):
         response = Mock()
         response.status_code = 200
