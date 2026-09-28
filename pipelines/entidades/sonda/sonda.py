@@ -39,23 +39,11 @@ class P(HTMLParser):
 
 
 res = {}
-urls = {
-    "consulta_B": C + "consulta.php?mercado=B",
-    "consulta_V": C + "consulta.php?mercado=V",
-    "consulta_O": C + "consulta.php?mercado=O",
-    "consulta_S": C + "consulta.php?mercado=S",
-}
-for m, cod in [("B", "TPOPE"), ("B", "BCSAG"), ("V", "RGCCO"), ("V", "DCVAL"), ("V", "FASOC"), ("V", "LISOC"),
-               ("O", "FASOC"), ("O", "LISOC"), ("B", "BANCO"), ("S", "AFP")]:
-    urls[f"reg_{m}_{cod}_VI"] = C + f"consulta.php?mercado={m}&Estado=VI&entidad={cod}"
-urls["ps_entidad_ef_p1"] = C + "entidad.php?mercado=V&rut=96971830&tipoentidad=RGSEC&vig=VI&control=svs&pestania=1"
-for pest in range(2, 12):
-    urls[f"ps_entidad_ef_p{pest}"] = C + f"entidad.php?mercado=V&rut=96971830&tipoentidad=RGSEC&vig=VI&control=svs&pestania={pest}"
-urls["sp_vcf"] = "https://www.spensiones.cl/apps/valoresCuotaFondo/vcfAFP.php?tf=A"
-urls["sp_home_afp"] = "https://www.spensiones.cl/portal/institucional/594/w3-propertyvalue-9910.html"
-urls["sp_portal"] = "https://www.spensiones.cl/portal/institucional/594/w3-channel.html"
-urls["cmf_registro_automatico"] = C + "consulta.php?mercado=V&Estado=VI&entidad=RVEMI"
-
+urls = {}
+for pest in (18, 21, 22, 23, 24, 25, 33, 36):
+    urls[f"ps_ef_p{pest}"] = C + f"entidad.php?mercado=V&rut=96971830&grupo=&tipoentidad=RGSEC&row=&vig=VI&control=svs&pestania={pest}"
+urls["ps_volcom_p1"] = C + "entidad.php?mercado=V&rut=76965774&grupo=&tipoentidad=RGSEC&row=&vig=VI&control=svs&pestania=1"
+res = {}
 for k, u in urls.items():
     raw = get(u)
     txt = raw.decode("utf-8", errors="replace")
@@ -63,8 +51,8 @@ for k, u in urls.items():
     try: p.feed(txt)
     except Exception: pass
     res[k] = {"url": u, "bytes": len(raw), "titulo": (re.search(r"<title>(.*?)</title>", txt, re.S | re.I) or [None, None])[1],
-              "opciones": p.opts[:400], "filas": p.rows[:60], "n_filas": len(p.rows),
+              "opciones": p.opts[:400], "filas": p.rows[:40], "texto": re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", txt[txt.find("pestania=36"):]))[:3000], "n_filas": len(p.rows),
               "links": [l for l in p.links if any(x in l.lower() for x in ("pestania", "inscrip", "emision", "afp", "vcf", "entidad="))][:80],
               "inicio": txt[:300] if len(raw) < 2000 else ""}
-(OUT / "sonda.json").write_text(json.dumps(res, ensure_ascii=False, indent=1))
+(OUT / "sonda2.json").write_text(json.dumps(res, ensure_ascii=False, indent=1))
 print({k: (v["bytes"], v["n_filas"], len(v["opciones"])) for k, v in res.items()})
