@@ -216,8 +216,11 @@ def inspect_zip(blob: bytes, period: str, bank_code: str) -> dict:
                 f"Incomplete or duplicate bank files for {bank_code}/{period}; "
                 f"missing_core={missing_core}; duplicates={duplicates}; found={sorted(bank_files)}"
             )
+        recognized_names = set(members)
         return {
             "archive_member_count": len(infos),
+            "archive_member_names": [info.filename for info in infos],
+            "unclassified_archive_member_names": sorted(info.filename for info in infos if info.filename not in recognized_names),
             "matching_period_financial_file_count": len(members),
             "matching_period_financial_file_names": sorted(members),
             "bank_code": bank_code,
@@ -303,7 +306,7 @@ def run(period: str, bank_code: str, bank_name: str, output: Path) -> dict:
         "period": period,
         "bank": f"{bank_code} {bank_name}",
         "zip_members": zip_inspection["archive_member_count"],
-        "txt_names": zip_inspection["matching_period_b1_b2_names"],
+        "unclassified_members": zip_inspection["unclassified_archive_member_names"],
         "financial_file_names": zip_inspection["matching_period_financial_file_names"],
         "bank_file_shapes": {
             kind: {"rows": info["nonempty_lines"], "fields": info["tab_field_counts"]}
