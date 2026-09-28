@@ -76,7 +76,19 @@ daily_macro.run():                                   # Actions diario 10:00 UTC
     published_changed = publish(STAGE, docs/outputs/macro, data_manifest.json)
     si STAGE ≠ source: copiar STAGE → checkpoint
     escribir GITHUB_OUTPUT (checkpoint_changed, published_changed)
-    # Workflow: si published_changed → artifact "macro-validada" (revisión humana + PR). Sin commits automáticos.
+    # Workflow: commit de lo validado (reintento con cherry-pick) y, en main, redespliegue del sitio.
+
+series_bcch.main():                                  # mismo workflow, después de daily_macro
+    CATALOGO = 53 series (clave, código SIETE, grupo, unidad; frecuencia = sufijo D/M/T)
+    previo = docs/outputs/macro/series/*.parquet
+    por serie (6 hilos): desde = última fecha − ventana (D 10 días · M 6 meses · T 13 meses), o 2014-01-01
+        GetSeries (API REST SIETE) → [(fecha, valor)]; descarta NaN y fechas futuras
+        error o código inexistente → estado en el catálogo + aviso, sigue con las demás
+        combinar: la fecha nueva reemplaza a la misma fecha; ninguna observación previa se borra
+    ✗ si fallan todas (credenciales/API)   ✗ si alguna serie queda con menos observaciones
+    → series/<AAAA>.parquet (solo años que cambian) + series/manifest.json
+    → macro_series_catalogo.parquet (nombre, frecuencia, unidad, título BCCh, cobertura, estado)
+    → data_manifest: macro_series, macro_series_catalogo (+ corte de las 3 tablas mensuales)
 
 run_macro_pipeline(output_dir, baseline_dir):
     ✗ si faltan BCCH_EMAIL / BCCH_PASSWORD
@@ -419,7 +431,7 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 
 | Workflow | Cron (UTC) | Publica | Qué hace |
 |---|---|---|---|
-| macro.yml | diario 10:00 | artifact (PR humano) | daily_macro con cache checkpoint |
+| macro.yml | diario 10:00 | commit automático | daily_macro (3 tablas mensuales) + series_bcch (53 series, formato largo) |
 | bancos_cmf_mensual.yml | días 1, 11, 21 13:00 | **sí** (commit + Pages) | tests + publish_cmf_bank_period --catch-up (incremental) |
 | web_audit.yml | push a docs/** | no | audit_navigation + audit_web_full (anotaciones) |
 | bancos_probe_historia.yml / retail_probe_ifrs.yml | manual | no | sondas de formato |

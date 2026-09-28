@@ -133,13 +133,22 @@ def consultar(serie_id: str, desde: str, hasta: str, usuario: str, clave: str) -
     for intento in range(3):
         try:
             with urllib.request.urlopen(f"{API}?{q}", timeout=120) as r:
-                d = json.loads(r.read().decode("utf-8-sig"))
+                crudo = r.read()
             break
         except Exception as e:  # red: reintentar
             ultimo = type(e).__name__
             time.sleep(3 * (intento + 1))
     else:
         raise ErrorApi(f"sin conexión ({ultimo})")
+    # La API responde en UTF-8 o en Windows-1252 según la serie (títulos con tildes).
+    try:
+        texto = crudo.decode("utf-8-sig")
+    except UnicodeDecodeError:
+        texto = crudo.decode("cp1252", errors="replace")
+    try:
+        d = json.loads(texto)
+    except ValueError:
+        raise ErrorApi("respuesta no es JSON")
     if d.get("Codigo") != 0:
         raise ErrorApi(f"BCCh código {d.get('Codigo')}: {d.get('Descripcion')}")
     serie = d.get("Series") or {}

@@ -28,6 +28,7 @@ class ExportModalController {
       macro_tasas_rendimientos: "outputs/macro/macro_tasas_rendimientos.parquet",
       macro_divisas_mercado: "outputs/macro/macro_divisas_mercado.parquet",
       macro_precios_actividad: "outputs/macro/macro_precios_actividad.parquet",
+      macro_series_catalogo: "outputs/macro/macro_series_catalogo.parquet",
       factoring_leasing_maestro: "outputs/factoring_leasing/factoring_leasing_maestro.parquet",
       corredoras_bolsa_maestro: "outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet",
       securitizadoras_maestro: "outputs/securitizadoras/securitizadoras_maestro.parquet",
@@ -42,6 +43,7 @@ class ExportModalController {
     // Estimaciones históricas de filas por tabla
     this.rowEstimates = {
       seguros_renta_fija: 1500000,
+      macro_series: 150000,
       seguros_bienes_raices: 400000,
       seguros_acciones: 100000,
       fi_cartera_nacional: 250000,

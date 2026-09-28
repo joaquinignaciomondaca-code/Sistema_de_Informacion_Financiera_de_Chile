@@ -46,6 +46,8 @@ const SEMANTIC_VIEWS = [
   { name: "macro_tasas_rendimientos", file: "outputs/macro/macro_tasas_rendimientos.parquet" },
   { name: "macro_divisas_mercado", file: "outputs/macro/macro_divisas_mercado.parquet" },
   { name: "macro_precios_actividad", file: "outputs/macro/macro_precios_actividad.parquet" },
+  { name: "macro_series", manifest: "outputs/macro/series/manifest.json" },
+  { name: "macro_series_catalogo", file: "outputs/macro/macro_series_catalogo.parquet" },
 
   // FACTORING & LEASING (CMF / NBFI)
   // BEGIN AUTO FL IFRS SERIES VIEWS
