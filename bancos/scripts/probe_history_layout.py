@@ -65,10 +65,11 @@ def dump_models(period: str) -> str:
     blob = fetch(url, MAX_FILE)
     out = [period]
     with zipfile.ZipFile(BytesIO(blob)) as z:
+        out.append("NO_DATOS=" + repr([i.filename for i in z.infolist() if not MEMBER.search(i.filename)][:25]))
         for info in z.infolist():
             low = info.filename.lower()
             base = low.rsplit("/", 1)[-1]
-            want = base.replace("-", "_") in {"modelo_mb1.txt", "modelo_mb2.txt", "modelo_mr1.txt"} or base in {"leame.txt"}
+            want = ("mb1" in base or "mr1" in base) and not MEMBER.search(info.filename)
             m = MEMBER.search(info.filename)
             if m and m.group(1).lower() == "r" and m.group(5) == "001":
                 want = True
