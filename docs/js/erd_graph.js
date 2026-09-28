@@ -605,7 +605,7 @@ const ERD_TABLES = [
     y: 560,
     w: 240,
     h: 180,
-    rows: "53 series",
+    rows: "51 series",
     file: "outputs/macro/macro_series_catalogo.parquet",
     cols: [
       { name: "clave", pk: true, type: "VARCHAR" },
