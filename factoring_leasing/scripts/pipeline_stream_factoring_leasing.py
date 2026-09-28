@@ -12,6 +12,10 @@ import time
 import pandas as pd
 import numpy as np
 from datetime import datetime
+from pathlib import Path as _Path
+import os as _os
+_ROOT = _Path(__file__).resolve().parents[2]  # raíz del repo
+_RESPALDO = _Path(_os.environ.get('MFC_RESPALDO_DIR', _Path.home().joinpath('Desktop', 'Respaldo_BCCH')))
 
 try:
     import bcchapi
@@ -19,7 +23,7 @@ except ImportError:
     bcchapi = None
 
 # Rutas de origen
-BASE_RESPALDO = r"C:\Users\joaqu\Desktop\Respaldo_BCCH"
+BASE_RESPALDO = str(_RESPALDO)
 RUTA_SOCIEDADES = os.path.join(BASE_RESPALDO, "Factoring&Leasing", "Sociedades leasing y factoring.xlsx")
 RUTA_METRICAS = os.path.join(BASE_RESPALDO, "Factoring_y_Leasing", "outputs", "Metricas_Finales_Entregable.xlsx") if os.path.exists(os.path.join(BASE_RESPALDO, "Factoring_y_Leasing", "outputs", "Metricas_Finales_Entregable.xlsx")) else os.path.join(BASE_RESPALDO, "FSB", "Factoring_y_Leasing", "hoja_5_risk_metrics", "outputs", "Metricas_FSB_Finales_Entregable.xlsx")
 

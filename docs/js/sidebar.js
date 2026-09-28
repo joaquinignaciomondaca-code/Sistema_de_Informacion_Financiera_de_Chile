@@ -275,7 +275,7 @@ const EXPLORER_TREE = [
               { label: "Listado de Fondos Mutuos", query: "SELECT run_fondo, nombre_fondo, sector FROM ffmm_maestro ORDER BY nombre_fondo LIMIT 10;" }
             ],
             tables: [
-              { id: "ffmm_maestro", name: "ffmm.lista_entidades", rows: "1.156 entidades", file: "ffmm/circular_1333_cartera/outputs/maestro_fondos_mutuos.parquet" }
+              { id: "ffmm_maestro", name: "ffmm.lista_entidades", rows: "1.156 entidades", file: "outputs/ffmm/maestro_fondos_mutuos.parquet" }
             ]
           },
           {
@@ -291,8 +291,8 @@ const EXPLORER_TREE = [
               { label: "Opciones Circular 1333", query: "SELECT * FROM ffmm_opciones LIMIT 10;" }
             ],
             tables: [
-              { id: "ffmm_futuros", name: "ffmm.derivados_futuros", rows: "280.494 registros", file: "ffmm/circular_1333_cartera/outputs/ffmm_futu_normalizado.parquet" },
-              { id: "ffmm_opciones", name: "ffmm.derivados_opciones", rows: "5.347 registros", file: "ffmm/circular_1333_cartera/outputs/ffmm_opci_normalizado.parquet" }
+              { id: "ffmm_futuros", name: "ffmm.derivados_futuros", rows: "280.494 registros", file: "outputs/ffmm/ffmm_futu_normalizado.parquet" },
+              { id: "ffmm_opciones", name: "ffmm.derivados_opciones", rows: "5.347 registros", file: "outputs/ffmm/ffmm_opci_normalizado.parquet" }
             ]
           },
           {
@@ -348,7 +348,7 @@ const EXPLORER_TREE = [
               { label: "Fondos por Administradora", query: "SELECT administradora, count(*) as total_fondos FROM fi_maestro GROUP BY administradora ORDER BY total_fondos DESC LIMIT 10;" }
             ],
             tables: [
-              { id: "fi_maestro", name: "fi.lista_entidades", rows: "1.129 entidades", file: "fi/cartera_inversiones/outputs/maestro_fondos_inversion.parquet" }
+              { id: "fi_maestro", name: "fi.lista_entidades", rows: "1.129 entidades", file: "outputs/fi/maestro_fondos_inversion.parquet" }
             ]
           },
           {
@@ -398,7 +398,7 @@ const EXPLORER_TREE = [
             ],
             tables: [
               { id: "fi_repos_detalle_historico", name: "fi.repos_contratos", rows: "2.946 contratos", file: "outputs/fi/fi_repos_detalle_historico.parquet" },
-              { id: "fi_repos", name: "fi.repos_vrc_crv", rows: "1.366 pactos", file: "fi/repos/outputs/fi_repos_vrc_crv.parquet" }
+              { id: "fi_repos", name: "fi.repos_vrc_crv", rows: "1.366 pactos", file: "outputs/fi/fi_repos_vrc_crv.parquet" }
             ]
           },
           {
@@ -415,11 +415,11 @@ const EXPLORER_TREE = [
               { label: "Derivados Forwards FFII", query: "SELECT nombre_contraparte, count(*) as contratos FROM fi_derivados GROUP BY nombre_contraparte ORDER BY contratos DESC LIMIT 10;" }
             ],
             tables: [
-              { id: "fi_nacional", name: "fi.cartera_nacional", rows: "833.584 registros", file: "fi/cartera_inversiones/outputs/fi_cartera_nacional.parquet" },
-              { id: "fi_extranjera", name: "fi.cartera_extranjera", rows: "67.371 registros", file: "fi/cartera_inversiones/outputs/fi_cartera_extranjera.parquet" },
-              { id: "fi_derivados", name: "fi.derivados_futuros", rows: "3.611 registros", file: "fi/cartera_inversiones/outputs/fi_futuros_forward.parquet" },
-              { id: "fi_metodo_part", name: "fi.metodo_participacion", rows: "14.401 registros", file: "fi/cartera_inversiones/outputs/fi_metodo_participacion.parquet" },
-              { id: "fi_opciones", name: "fi.derivados_opciones", rows: "1.447 registros", file: "fi/cartera_inversiones/outputs/fi_opciones.parquet" }
+              { id: "fi_nacional", name: "fi.cartera_nacional", rows: "833.584 registros", file: "outputs/fi/fi_cartera_nacional.parquet" },
+              { id: "fi_extranjera", name: "fi.cartera_extranjera", rows: "67.371 registros", file: "outputs/fi/fi_cartera_extranjera.parquet" },
+              { id: "fi_derivados", name: "fi.derivados_futuros", rows: "3.611 registros", file: "outputs/fi/fi_futuros_forward.parquet" },
+              { id: "fi_metodo_part", name: "fi.metodo_participacion", rows: "14.401 registros", file: "outputs/fi/fi_metodo_participacion.parquet" },
+              { id: "fi_opciones", name: "fi.derivados_opciones", rows: "1.447 registros", file: "outputs/fi/fi_opciones.parquet" }
             ]
           }
         ]

@@ -3,6 +3,10 @@ import pandas as pd
 from pathlib import Path
 from tqdm import tqdm
 import re
+from pathlib import Path as _Path
+import os as _os
+_ROOT = _Path(__file__).resolve().parents[3]  # raíz del repo
+_RESPALDO = _Path(_os.environ.get('MFC_RESPALDO_DIR', _Path.home().joinpath('Desktop', 'Respaldo_BCCH')))
 
 # Layouts DEFINITIVOS del Anexo B.7 validados quirúrgicamente contra el manual y la data cruda
 B7_LAYOUTS = {
@@ -174,8 +178,8 @@ def clean_numeric(val, col_name):
         return 0.0
 
 def super_consolidate_b7():
-    input_dir = Path(r"C:\Users\joaqu\Desktop\1835_Cartera_Inversiones\data\eeff_pdfs\generales")
-    output_path = Path(r"C:\Users\joaqu\Desktop\1835_Cartera_Inversiones\consolidados\generales_B7_super_completo.parquet")
+    input_dir = _Path.home().joinpath("Desktop").joinpath('1835_Cartera_Inversiones', 'data', 'eeff_pdfs', 'generales')
+    output_path = _Path.home().joinpath("Desktop").joinpath('1835_Cartera_Inversiones', 'consolidados', 'generales_B7_super_completo.parquet')
     
     all_rows = []
     zip_files = sorted(list(input_dir.glob("*.zip")))
