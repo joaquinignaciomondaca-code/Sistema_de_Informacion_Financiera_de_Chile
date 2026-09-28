@@ -451,7 +451,7 @@ REGLAS DE EXACTITUD:
 - `sectors` solo puede contener códigos de la lista siguiente cuando el documento aplique expresamente a esa industria. No asignes un sector por una mención incidental o cita histórica.
 - Cada sector debe tener una `sector_evidence` con cita literal breve y número de página PDF (usa 0 si la única evidencia es la descripción del listado).
 - Cada norma afectada debe tener una `norm_evidence` con cita literal. Si no está identificable, deja ambas listas vacías.
-- Cada resumen debe incluir `summary_evidence` como cita literal que lo respalde. Las citas deben copiarse del texto, no parafrasearse. Puede citarse literalmente `Descripción CMF` con página 0 incluso si hay texto PDF; si la cita proviene del PDF, indica su página.
+- Cada resumen debe incluir `summary_evidence` como cita literal que lo respalde. Las citas deben copiarse del texto, no parafrasearse. Cuando `Descripción CMF` respalde el resumen, prioriza una cita literal de ese campo y usa página 0; usa una página PDF solo para detalles del resumen que no estén en la descripción.
 - La excepción de página 0 para el resumen no respalda vigencias. Las fechas de vigencia deben citar el PDF y pasar la validación correspondiente.
 - Si la vigencia no es explícita, usa `effective_date` vacío, `effective_date_precision` `sin_fecha`, página 0 y evidencia vacía.
 - Para una vigencia inmediata explícita, usa `effective_date` `inmediata`, precisión `inmediata` y su cita.
