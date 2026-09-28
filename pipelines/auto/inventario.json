@@ -1,0 +1,234 @@
+{
+  "_ayuda": "Una entrada por tabla de data_manifest.json y por vista del sitio (SEMANTIC_VIEWS): {\"workflow\": archivo en .github/workflows} o {\"manual\": motivo}. 'marca' reemplaza al nombre del archivo cuando el script lo arma por partes. Lo revisa scripts/audit_automatizacion.py en cada push y, con --frescura, cada semana contra las corridas reales.",
+  "tablas": {
+    "afp_maestro": {
+      "workflow": "entidades.yml"
+    },
+    "agf_balance": {
+      "workflow": "ifrs_sectores.yml",
+      "marca": "\"prefijo\": \"agf\""
+    },
+    "agf_maestro": {
+      "workflow": "entidades.yml"
+    },
+    "agf_resultados": {
+      "workflow": "ifrs_sectores.yml",
+      "marca": "\"prefijo\": \"agf\""
+    },
+    "bancos_cmf_balance": {
+      "workflow": "bancos_cmf_mensual.yml",
+      "marca": "cmf_b1_b2_r1"
+    },
+    "bancos_cmf_lineas": {
+      "workflow": "bancos_cmf_mensual.yml"
+    },
+    "bancos_cmf_resultados": {
+      "workflow": "bancos_cmf_mensual.yml",
+      "marca": "cmf_b1_b2_r1"
+    },
+    "bancos_maestro": {
+      "workflow": "entidades.yml"
+    },
+    "ccaf_balance": {
+      "workflow": "ifrs_sectores.yml",
+      "marca": "\"prefijo\": \"ccaf\""
+    },
+    "ccaf_maestro": {
+      "workflow": "ifrs_sectores.yml"
+    },
+    "ccaf_resultados": {
+      "workflow": "ifrs_sectores.yml",
+      "marca": "\"prefijo\": \"ccaf\""
+    },
+    "cooperativas_maestro": {
+      "workflow": "entidades.yml"
+    },
+    "corredoras_bolsa_balance": {
+      "workflow": "corredoras_eeff.yml"
+    },
+    "corredoras_bolsa_maestro": {
+      "workflow": "entidades.yml"
+    },
+    "corredoras_bolsa_registro_universo": {
+      "workflow": "entidades.yml"
+    },
+    "corredoras_bolsa_resultados": {
+      "workflow": "corredoras_eeff.yml"
+    },
+    "factoring_leasing_balance_serie_ifrs_cmf": {
+      "workflow": "factoring_leasing_backfill.yml"
+    },
+    "factoring_leasing_maestro": {
+      "workflow": "ifrs_sectores.yml"
+    },
+    "factoring_leasing_resultados_serie_ifrs_cmf": {
+      "workflow": "factoring_leasing_backfill.yml"
+    },
+    "ffmm_cartera_extranjera": {
+      "workflow": "ffmm_carteras.yml"
+    },
+    "ffmm_cartera_nacional": {
+      "workflow": "ffmm_carteras.yml"
+    },
+    "ffmm_futuros": {
+      "workflow": "ffmm_carteras.yml"
+    },
+    "ffmm_maestro": {
+      "workflow": "ffmm_carteras.yml"
+    },
+    "ffmm_opciones": {
+      "workflow": "ffmm_carteras.yml"
+    },
+    "fi_bienes_raices": {
+      "workflow": "fi_carteras.yml"
+    },
+    "fi_cartera_extranjera": {
+      "workflow": "fi_carteras.yml"
+    },
+    "fi_cartera_nacional": {
+      "workflow": "fi_carteras.yml"
+    },
+    "fi_futuros": {
+      "workflow": "fi_carteras.yml"
+    },
+    "fi_maestro": {
+      "workflow": "fi_carteras.yml"
+    },
+    "fi_metodo_participacion": {
+      "workflow": "fi_carteras.yml"
+    },
+    "fi_opciones": {
+      "workflow": "fi_carteras.yml"
+    },
+    "fi_pactos": {
+      "workflow": "fi_carteras.yml"
+    },
+    "fintech_rpsf_maestro": {
+      "workflow": "entidades.yml"
+    },
+    "macro_divisas_mercado": {
+      "workflow": "macro.yml"
+    },
+    "macro_precios_actividad": {
+      "workflow": "macro.yml"
+    },
+    "macro_series": {
+      "workflow": "macro.yml"
+    },
+    "macro_series_catalogo": {
+      "workflow": "macro.yml"
+    },
+    "macro_tasas_rendimientos": {
+      "workflow": "macro.yml"
+    },
+    "patrimonios_separados_balance": {
+      "manual": "Balance construido una vez desde el Excel entregado por el usuario (2014-12 a 2025-12). La CMF publica los EEFF de cada patrimonio separado solo como PDF por securitizadora, sin archivo estructurado."
+    },
+    "patrimonios_separados_maestro": {
+      "workflow": "entidades.yml"
+    },
+    "securitizadoras_balance": {
+      "workflow": "ifrs_sectores.yml",
+      "marca": "\"prefijo\": \"securitizadoras\""
+    },
+    "securitizadoras_maestro": {
+      "workflow": "entidades.yml"
+    },
+    "securitizadoras_resultados": {
+      "workflow": "ifrs_sectores.yml",
+      "marca": "\"prefijo\": \"securitizadoras\""
+    },
+    "seguros_acciones": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_bienes_raices": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_control_inversiones": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_derivados": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_extranjeros": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_fondos_mutuos": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_maestro": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_pactos": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_renta_fija": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "sistemas_pago_maestro": {
+      "workflow": "entidades.yml"
+    }
+  },
+  "workflows": {
+    "fi_carteras.yml": {
+      "scripts": [
+        "fi/scripts/actualizar_carteras.py"
+      ],
+      "max_dias": 16
+    },
+    "seguros_carteras.yml": {
+      "scripts": [
+        "seguros/scripts/actualizar_carteras.py",
+        "seguros/scripts/formato_1835.py"
+      ],
+      "max_dias": 16,
+      "scripts_indirectos": true
+    },
+    "ffmm_carteras.yml": {
+      "scripts": [
+        "ffmm/scripts/actualizar_carteras.py"
+      ],
+      "max_dias": 16
+    },
+    "entidades.yml": {
+      "scripts": [
+        "pipelines/entidades/actualizar_listas.py"
+      ],
+      "max_dias": 16
+    },
+    "ifrs_sectores.yml": {
+      "scripts": [
+        "pipelines/ifrs_sectores/actualizar.py"
+      ],
+      "max_dias": 16
+    },
+    "macro.yml": {
+      "scripts": [
+        "macro/scripts/daily_macro.py",
+        "macro/scripts/series_bcch.py",
+        "macro/scripts/pipeline_stream_macro_bcch.py"
+      ],
+      "max_dias": 3,
+      "scripts_indirectos": true
+    },
+    "factoring_leasing_backfill.yml": {
+      "scripts": [
+        "factoring_leasing/scripts/backfill_ifrs.py",
+        "factoring_leasing/scripts/publish_backfill.py"
+      ],
+      "max_dias": 16
+    },
+    "bancos_cmf_mensual.yml": {
+      "scripts": [
+        "bancos/scripts/publish_cmf_bank_period.py"
+      ],
+      "max_dias": 16
+    },
+    "corredoras_eeff.yml": {
+      "scripts": [
+        "corredoras_bolsa/scripts/actualizar_eeff.py"
+      ],
+      "max_dias": 16
+    }
+  }
+}

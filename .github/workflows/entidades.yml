@@ -1,10 +1,12 @@
-name: Listas de entidades (altas y vigencia desde los registros CMF), 3 veces al mes
+name: Listas de entidades (altas y vigencia desde los registros CMF y la Superintendencia de Pensiones), 3 veces al mes
 
 on:
   schedule:
     # Días 10, 20 y 28 (12:30 UTC). Compara las listas de AGF, securitizadoras, corredores de
-    # bolsa y fintech con los registros públicos CMF: agrega entidades nuevas y actualiza la
-    # vigencia. Solo escribe si hay cambios.
+    # bolsa, fintech, bancos, cooperativas y sistemas de pago con los registros públicos CMF (altas y
+    # vigencia), la de patrimonios separados con el listado CMF de inscripciones por registro
+    # automático y la de AFP con el valor cuota diario de la Superintendencia de Pensiones.
+    # Solo escribe si hay cambios.
     - cron: '30 12 10,20,28 * *'
   push:
     branches:
@@ -52,18 +54,18 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          rutas="docs/outputs/entidades docs/outputs/agf/agf_maestro.json docs/outputs/agf/agf_maestro.parquet docs/outputs/securitizadoras/securitizadoras_maestro.json docs/outputs/securitizadoras/securitizadoras_maestro.parquet docs/outputs/corredoras_bolsa/corredoras_bolsa_maestro.json docs/outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet docs/outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.json docs/outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet docs/outputs/fintech/fintech_rpsf_maestro.json docs/outputs/fintech/fintech_rpsf_maestro.parquet docs/js/sidebar.js docs/js/data_dictionary.js"
+          rutas="docs/outputs/entidades docs/outputs/agf/agf_maestro.json docs/outputs/agf/agf_maestro.parquet docs/outputs/securitizadoras/securitizadoras_maestro.json docs/outputs/securitizadoras/securitizadoras_maestro.parquet docs/outputs/corredoras_bolsa/corredoras_bolsa_maestro.json docs/outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet docs/outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.json docs/outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet docs/outputs/fintech/fintech_rpsf_maestro.json docs/outputs/fintech/fintech_rpsf_maestro.parquet docs/outputs/bancos/bancos_maestro.json docs/outputs/bancos/bancos_maestro.parquet docs/outputs/sistemas_pago/sistemas_pago_maestro.json docs/outputs/sistemas_pago/sistemas_pago_maestro.parquet docs/outputs/pensiones/afp_maestro_administradoras.json docs/outputs/pensiones/afp_maestro_administradoras.parquet docs/outputs/securitizadoras/patrimonios_separados_maestro.json docs/outputs/securitizadoras/patrimonios_separados_maestro.parquet docs/outputs/cooperativas/cooperativas_maestro.json docs/outputs/cooperativas/cooperativas_maestro.parquet"
           git add $rutas
           if git diff --cached --quiet; then echo 'Sin cambios.'; exit 0; fi
           git commit -m "Listas de entidades: ${{ steps.revisar.outputs.cambios }} cambios desde los registros CMF"
-          git checkout -- data_manifest.json
+          git checkout -- data_manifest.json docs/js/sidebar.js docs/js/data_dictionary.js
           datos=$(git rev-parse HEAD)
           for i in 1 2 3 4 5; do
             git fetch origin "${GITHUB_REF_NAME}"
             git reset --hard FETCH_HEAD
             git cherry-pick "$datos"
-            python pipelines/entidades/actualizar_listas.py --solo-data-manifest
-            git add data_manifest.json
+            python pipelines/entidades/actualizar_listas.py --solo-conteos
+            git add data_manifest.json docs/js/sidebar.js docs/js/data_dictionary.js
             git diff --cached --quiet || git commit -m "Listas de entidades: data_manifest"
             git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
             sleep 20
