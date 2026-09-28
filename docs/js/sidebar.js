@@ -532,22 +532,22 @@ const EXPLORER_TREE = [
           // BEGIN AUTO FL IFRS SERIES NAVIGATION
           {
             id: "fl_balance_serie_ifrs_cmf_folder", type: "circular",
-            label: "Balance · Serie CMF (2009-03–2026-06)", badge: "70 cierres · 24 RUT", badgeType: "data", status: "active",
+            label: "Balance · Serie CMF (2009-03–2026-06)", badge: "70 cierres · 28 RUT", badgeType: "data", status: "active",
             sector: "factoring_leasing",
             chips: [{ label: "Cuentas de balance CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_balance_serie_ifrs_cmf ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;" }],
-            tables: [{ id: "factoring_leasing_balance_serie_ifrs_cmf", name: "factoring_leasing.balance_serie_ifrs_cmf (28,938 cuentas; no cotejo integral)",
-                       rows: "28,938 cuentas · 70 cierres · extracción sin cotejo integral",
+            tables: [{ id: "factoring_leasing_balance_serie_ifrs_cmf", name: "factoring_leasing.balance_serie_ifrs_cmf (30,046 cuentas; no cotejo integral)",
+                       rows: "30,046 cuentas · 70 cierres · extracción sin cotejo integral",
                        file: "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet" }]
           },
           {
             id: "fl_resultados_serie_ifrs_cmf_folder", type: "circular",
-            label: "Resultados · Serie CMF (2009-03–2026-06)", badge: "70 cierres · 24 RUT", badgeType: "data", status: "active",
+            label: "Resultados · Serie CMF (2009-03–2026-06)", badge: "70 cierres · 28 RUT", badgeType: "data", status: "active",
             sector: "factoring_leasing",
             chips: [{ label: "Cuentas de resultados CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_resultados_serie_ifrs_cmf ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;" },
                     { label: "Utilidad del período · 1 fila por estado", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, estado_financiero, valor_archivo AS ganancia_perdida FROM factoring_leasing_resultados_serie_ifrs_cmf WHERE lower(cuenta) = 'ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion_contexto = 1 ORDER BY periodo DESC, rut;" },
                     { label: "Dónde se repite 'Ganancia (pérdida)'", query: "SELECT estado_financiero, repeticion_contexto, count(*) AS filas, count(DISTINCT (periodo, rut, tipo_balance)) AS estados FROM factoring_leasing_resultados_serie_ifrs_cmf WHERE lower(cuenta) = 'ganancia (pérdida)' GROUP BY ALL ORDER BY estado_financiero, repeticion_contexto;" }],
-            tables: [{ id: "factoring_leasing_resultados_serie_ifrs_cmf", name: "factoring_leasing.resultados_serie_ifrs_cmf (21,464 cuentas; no cotejo integral)",
-                       rows: "21,464 cuentas · 70 cierres · extracción sin cotejo integral",
+            tables: [{ id: "factoring_leasing_resultados_serie_ifrs_cmf", name: "factoring_leasing.resultados_serie_ifrs_cmf (22,368 cuentas; no cotejo integral)",
+                       rows: "22,368 cuentas · 70 cierres · extracción sin cotejo integral",
                        file: "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet" }]
           },
   // END AUTO FL IFRS SERIES NAVIGATION
