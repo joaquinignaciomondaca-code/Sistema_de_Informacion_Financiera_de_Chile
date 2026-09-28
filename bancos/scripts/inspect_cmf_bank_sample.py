@@ -216,6 +216,28 @@ def inspect_zip(blob: bytes, period: str, bank_code: str) -> dict:
                 f"Incomplete or duplicate bank files for {bank_code}/{period}; "
                 f"missing_core={missing_core}; duplicates={duplicates}; found={sorted(bank_files)}"
             )
+        metadata_text = {}
+        account_codes = {"100000000", "143000000", "411000000"}
+        for info in infos:
+            if not info.filename.startswith("metadata/") or not info.filename.lower().endswith(".txt"):
+                continue
+            raw = zf.read(info)
+            try:
+                text = raw.decode("utf-8-sig")
+                encoding = "utf-8-sig"
+            except UnicodeDecodeError:
+                text = raw.decode("latin-1")
+                encoding = "latin-1"
+            lines = [line.rstrip() for line in text.splitlines()]
+            if info.filename.endswith("plan_de_cuentas.txt"):
+                selected = [line for line in lines if any(code in line for code in account_codes)][:20]
+            else:
+                selected = lines[:20]
+            metadata_text[info.filename] = {
+                "encoding": encoding,
+                "line_count": len(lines),
+                "preview_lines": selected,
+            }
         recognized_names = set(members)
         return {
             "archive_member_count": len(infos),
@@ -223,6 +245,7 @@ def inspect_zip(blob: bytes, period: str, bank_code: str) -> dict:
             "unclassified_archive_member_names": sorted(info.filename for info in infos if info.filename not in recognized_names),
             "matching_period_financial_file_count": len(members),
             "matching_period_financial_file_names": sorted(members),
+            "metadata_text_files": metadata_text,
             "bank_code": bank_code,
             "bank_files": {
                 kind: safe_txt_summary(zf, files[0])
@@ -332,10 +355,16 @@ def run(period: str, bank_code: str, bank_name: str, output: Path) -> dict:
         if kind in {"B1", "B2", "R1", "R2"}
     }
     excel_sheets = [sheet["name"].strip() for sheet in workbook_inspection["sheets"]]
+    metadata_previews = {
+        name: contents["preview_lines"]
+        for name, contents in zip_inspection["metadata_text_files"].items()
+        if name.endswith(("modelo_mb1.txt", "modelo_mb2.txt", "modelo_mr1.txt", "plan_de_cuentas.txt"))
+    }
     for title, payload in (
         ("CMF sample structure", summary),
         ("CMF bank TXT previews", txt_previews),
         ("CMF bank workbook core rows", {"sheets": excel_sheets, "rows": core_rows}),
+        ("CMF ZIP model metadata", metadata_previews),
     ):
         print("::notice title=" + title + "::" + json.dumps(payload, ensure_ascii=False, separators=(",", ":")), flush=True)
     return report
