@@ -156,18 +156,19 @@
         ? feed.events.filter((event) => event.analysis_status !== "complete" || event.needs_human_review).length
         : 0;
       const latestPublished = relevant.slice().sort((a, b) => String(b.publication_date || "").localeCompare(String(a.publication_date || "")))[0];
-      const latestDetectedAt = relevant.reduce((latest, event) => {
+      const latestEventDetectedAt = relevant.reduce((latest, event) => {
         const detectedAt = String(event.last_detected_at || "");
         return detectedAt > String(latest || "") ? detectedAt : latest;
       }, "");
+      const latestDetectedAt = feed.last_detected_at || latestEventDetectedAt;
       const latestPublishedText = latestPublished
         ? formatDate(latestPublished.publication_date)
         : (feed.status === "sin_ejecucion"
           ? "Pendiente de primera consulta"
           : unassigned > 0 ? "Publicaciones pendientes de clasificación" : "Sin novedades clasificadas");
       const latestDetectedText = latestDetectedAt
-        ? `Detectada por el monitor: ${formatTimestamp(latestDetectedAt)}`
-        : "Sin detección registrada para esta industria";
+        ? `Detectada en el feed CMF: ${formatTimestamp(latestDetectedAt)}`
+        : "Sin detección registrada en el feed";
       const sourceListUrl = isOfficialCmfUrl(feed.source_url) ? feed.source_url : CMF_LIST_FALLBACK;
       const status = this.error
         ? `<div class="normativa-alert normativa-alert-error" role="alert">No se pudo actualizar el panel (${escapeHtml(this.error)}). La fecha de la última revisión exitosa se conserva.</div>`
