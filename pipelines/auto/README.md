@@ -27,7 +27,6 @@ Este directorio cataloga y documenta los flujos de extracción y procesamiento q
 | **Cajas de Compensación** | SUSESO / CMF Registro Oficial | Anual / Trimestral | `cajas_compensacion/scripts/stream_ccaf.py` | `docs/outputs/cajas_compensacion/` |
 | **Administradoras de Fondos (AGF)** | CMF Ley 20.712 Balances IFRS | Trimestral | `agf/scripts/stream_cmf_agf.py` | `docs/outputs/agf/` |
 | **Sistemas de Pago** | BCCh Tráfico LBTR/CCA y Balances CMF | Mensual / Trimestral | `sistemas_pago/scripts/stream_sistemas_pago.py` | `docs/outputs/sistemas_pago/` |
-| **Retail Financiero** | CMF Emisores no bancarios | Trimestral | `retail_financiero/scripts/stream_cmf_retail_financiero.py` | `docs/outputs/retail_financiero/` |
 | **FinTech** | CMF Registro RPSF (Ley 21.521) | Mensual | `fintech/scripts/stream_cmf_fintech.py` | `docs/outputs/fintech/` |
 
 ---

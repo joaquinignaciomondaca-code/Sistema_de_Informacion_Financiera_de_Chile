@@ -34,13 +34,11 @@ CONFIG = {
     'ffmm': ('docs/outputs/ffmm/ffmm_registro_fondos_universo.json', 'RGFMU', '3', 'FMEF', 'run_fondo', 'nombre_fondo'),
     'fi': ('docs/outputs/fi/fi_registro_fondos_universo.json', None, '29', 'FIEF', 'run_fondo', 'nombre_fondo'),
     'agf': ('docs/outputs/agf/agf_maestro.json', 'RGAGF', '3', 'XBRL', 'rut', 'razon_social'),
-    'retail': ('docs/outputs/retail_financiero/retail_financiero_maestro.json', 'RVEMI', '3', 'XBRL', 'rut', 'razon_social'),
 }
 # Fondos mutuos: XML anual. AGF presenta períodos trimestrales (ficha CMF
-# 2026-03/06). Para RVEMI se consultan cortes trimestrales de forma exploratoria;
-# no hay aún cotejo por entidad que pruebe su cobertura.
+# 2026-03/06).
 PERIODICIDAD = {'corredoras': 'trimestral', 'fi': 'trimestral', 'ffmm': 'anual',
-                'agf': 'trimestral', 'retail': 'trimestral'}
+                'agf': 'trimestral'}
 BALANCE = {'corredoras': ('TotalActivos', 'TotalPasivos', 'TotalPatrimonio'),
            'ffmm': ('TotalActivo', 'TotalPasivo', 'ActivoNetoAtribuibleALosParticipes'),
            'fi': ('TotalActivo', 'TotalPasivo', 'TotalPatrimonioNeto')}

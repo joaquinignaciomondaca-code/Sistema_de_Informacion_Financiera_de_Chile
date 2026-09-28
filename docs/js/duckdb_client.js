@@ -120,10 +120,6 @@ const SEMANTIC_VIEWS = [
   { name: "agf_maestro", file: "outputs/agf/agf_maestro.parquet" },
   { name: "agf_balance_resumen", file: "outputs/agf/agf_balance_resumen.parquet" },
 
-  // RETAIL FINANCIERO Y EMISORES NO BANCARIOS (CMF)
-  { name: "retail_financiero_maestro", file: "outputs/retail_financiero/retail_financiero_maestro.parquet" },
-  { name: "retail_financiero_balances", file: "outputs/retail_financiero/retail_financiero_balances.parquet" },
-
   // SISTEMAS DE PAGO (BCCh / CMF)
   { name: "sistemas_pago_maestro", file: "outputs/sistemas_pago/sistemas_pago_maestro.parquet" },
   { name: "sistemas_pago_balances", file: "outputs/sistemas_pago/sistemas_pago_balances.parquet" },

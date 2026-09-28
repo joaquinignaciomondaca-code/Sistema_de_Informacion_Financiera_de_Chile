@@ -1324,46 +1324,6 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "retail_financiero_maestro",
-    name: "retail_financiero.lista_entidades",
-    sector: "retail_financiero",
-    color: "#BE185D",
-    x: 5630,
-    y: 200,
-    w: 260,
-    h: 175,
-    rows: "17 entidades",
-    file: "outputs/retail_financiero/retail_financiero_maestro.parquet",
-    cols: [
-      { name: "rut", pk: true, type: "BIGINT" },
-      { name: "dv", type: "VARCHAR" },
-      { name: "razon_social", type: "VARCHAR" },
-      { name: "nombre_comercial", type: "VARCHAR" },
-      { name: "tipo_entidad_cmf", type: "VARCHAR" },
-      { name: "grupo_controlador", type: "VARCHAR" }
-    ]
-  },
-  {
-    id: "retail_financiero_balances",
-    name: "retail_financiero.balances",
-    sector: "retail_financiero",
-    color: "#9D174D",
-    x: 5630,
-    y: 400,
-    w: 260,
-    h: 185,
-    rows: "190 balances",
-    file: "outputs/retail_financiero/retail_financiero_balances.parquet",
-    cols: [
-      { name: "rut", fk: true, type: "BIGINT" },
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "total_activos_m_clp", type: "DOUBLE" },
-      { name: "total_pasivos_m_clp", type: "DOUBLE" },
-      { name: "patrimonio_neto_m_clp", type: "DOUBLE" },
-      { name: "ganancia_perdida_ejercicio_m_clp", type: "DOUBLE" }
-    ]
-  },
-  {
     id: "fintech_rpsf_maestro",
     name: "fintech.lista_entidades",
     sector: "fintech",
@@ -1557,9 +1517,6 @@ const ERD_LINKS = [
   { from: "sistemas_pago_maestro", to: "sistemas_pago_balances", key: "rut" },
   { from: "sistemas_pago_balances", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "sistemas_pago_estadisticas_bcch", to: "macro_tasas_rendimientos", key: "periodo (tasas de referencia)" },
-  { from: "retail_financiero_maestro", to: "retail_financiero_balances", key: "rut" },
-  { from: "retail_financiero_balances", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
-  { from: "retail_financiero_balances", to: "macro_precios_actividad", key: "periodo (consumo privado)" },
   { from: "agf_maestro", to: "agf_balance_resumen", key: "rut" },
   { from: "agf_balance_resumen", to: "macro_divisas_mercado", key: "periodo (conversión USD)" },
   { from: "agf_maestro", to: "fi_maestro", key: "rut_administradora (gestión fiduciaria LUF)" },

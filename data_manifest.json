@@ -793,38 +793,6 @@
       "origen": "Banco Central de Chile (BCCh) - Base de Datos Estadísticos (SIETE) e ISiP."
     },
     {
-      "id": "retail_financiero_maestro",
-      "name": "retail.maestro",
-      "view_name": "retail_financiero_maestro",
-      "sector": "retail_financiero",
-      "sector_label": "Retail Financiero",
-      "norma": "CMF (Registros RVEMI, TCEEM, TPEEM, BCSAG)",
-      "corte": "Oficial CMF 2026",
-      "frescura": "Catálogo Vigente",
-      "modo": "Automático",
-      "ultima_actualizacion": "2026-09-23",
-      "file_parquet": "outputs/retail_financiero/retail_financiero_maestro.parquet",
-      "registros_reales": 17,
-      "descripcion": "Catálogo maestro oficial de los emisores no bancarios de tarjetas de crédito y prepago, sociedades de apoyo al giro y matrices cotizadas de retail financiero supervisadas por la CMF. Incluye Falabella, Cencosud, Ripley, Hites, Tricot, abcvisa, Tenpo, Tapp Los Andes y Prepago Los Héroes.",
-      "origen": "Comisión para el Mercado Financiero (CMF) — Registros de Entidades Supervisadas."
-    },
-    {
-      "id": "retail_financiero_balances",
-      "name": "retail.balances",
-      "view_name": "retail_financiero_balances",
-      "sector": "retail_financiero",
-      "sector_label": "Retail Financiero",
-      "norma": "Norma Internacional de Información Financiera (IFRS) / CMF",
-      "corte": "Serie Trimestral Histórica (2018-2026)",
-      "frescura": "Actualización Trimestral CMF",
-      "modo": "Automático",
-      "ultima_actualizacion": "2026-09-23",
-      "file_parquet": "outputs/retail_financiero/retail_financiero_balances.parquet",
-      "registros_reales": 190,
-      "descripcion": "Serie histórica de balances consolidados y estados de resultados bajo norma IFRS correspondientes a las matrices cotizadas de retail financiero (Falabella, Cencosud, Ripley, Hites, Tricot, ABC). Monitorea solvencia, dimensión de activos, efectivo y caja disponible, endeudamiento total y utilidad neta con identidad contable 100% exacta.",
-      "origen": "Comisión para el Mercado Financiero (CMF) — Estados Financieros Consolidados IFRS Trimestrales."
-    },
-    {
       "id": "fintech_rpsf_maestro",
       "name": "fintech.rpsf_maestro",
       "view_name": "fintech_rpsf_maestro",
