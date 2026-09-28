@@ -1,0 +1,372 @@
+B.4     BIENES RAICES
+
+        Esta información deberá contener la totalidad de los bienes raíces (bienes de uso propio, en arriendo o
+        dados en leasing) de propiedad de la entidad aseguradora, adquiridos para utilizarlos tanto en la
+        explotación social, como con la intención de obtener una renta.
+
+        Para aquellos casos en que la entidad informante es copropietaria de un bien raíz, la información sobre
+        valorización deberá ser equivalente a la proporción de la entidad aseguradora.
+
+        El archivo BaammddG.TXT deberá contener la siguiente estructura:
+
+        Identificación (registro tipo 1) :       contendrá información que permite identificar a la compañía y
+                                                   período informado. Cabe señalar que sólo se informará un
+                                                   registro de este tipo y deberá ser el primero del archivo.
+
+        Detalle (registro tipo 2)                : contendrá información de los bienes raíces que formen parte de
+                                                   las inversiones de la compañía.
+
+        Totales (registro tipo 3)        :       contendrá cuadratura de los registros de detalle informados. Cabe
+                                                   señalar que sólo se informará un registro de este tipo y deberá
+                                                   ser el último del archivo.
+
+        Los registros antes mencionados deberán tener la siguiente estructura:
+
+      Registro Tipo 1 de IDENTIFICACION
+
+      CAMPO                           DESCRIPCION                                                          PICTURE
+
+      TIPO                            Tipo de registro. En este caso corresponde "1".                      9(01)
+
+      RUT                             RUT de la compañía informante.        Es obligatorio y no puede      9(09)
+                                      informarse en ceros.
+
+      VERIFICADOR                     Dígito verificador del RUT de la compañía informante.                X(01)
+
+      NOMBRE                          Nombre o razón social de la compañía informante.                     X(60)
+
+      PERIODO                         Período a que corresponde la información. El formato de esta         9(06)
+                                      fecha será AAAAMM. Este deberá coincidir con lo informado en el
+                                      nombre del archivo que contiene la información.
+
+      FILLER                          Se deberá informar espacios.                                         X(400)
+
+
+
+      Registro Tipo 2 de DETALLE
+
+      CAMPO                           DESCRIPCION                                                          PICTURE
+
+      TIPO                            Tipo de registro. En este caso corresponde "2".                      9(01)
+
+      ROL                             Corresponde señalar el número bajo el cual se encuentra              X(11)
+                                      identificado el bien raíz en el Servicio de Impuestos Internos. En
+                                      caso que se trate de un contrato de leasing, que esté compuesto
+                                      por más de un bien inmueble, por ejemplo: una oficina, un
+                                      estacionamiento y una bodega, los cuales tengan roles diferentes,
+                                      se informará como único rol uno de éstos, que la compañía estime
+                                      conveniente. Siempre deberá informarse el mismo rol.
+DESCRIPCION_   Se deberá señalar si las combinaciones que forman un bien raíz
+DEL_INMUEBLE   corresponden a casa, departamento, oficina, pisos completos de
+               edificios, terreno, local comercial, etc. Se indicará con una S (Si) el
+               tipo de bien raíz que corresponda; con una N (No) lo que no
+               corresponda al bien raíz que se informa.
+
+               Local: Se indicará si es un local.                                        X(01)
+               S       : Si
+               N       : No
+
+               Oficina: Se indicará si es una oficina.                                   X(01)
+               S       : Si
+               N       : No
+
+               Bodega: Se indicará si es una bodega.                                     X(01)
+               S     : Si
+               N     : No
+
+               Estacionamiento: Se indicará si es un estacionamiento.                    X(01)
+               S      : Si
+               N      : No
+
+               Terreno: Se indicará si es un terreno.                                    X(01)
+               S      : Si
+               N      : No
+
+               Casa: Se indicará si es una casa.                                         X(01)
+               S      : Si
+               N      : No
+
+               Edificio: Se indicará si es un edificio.                                  X(01)
+               S        : Si
+               N        : No
+
+               Piso completo de edificio: Se indicará si es un piso completo del         X(01)
+               edificio.
+               S         : Si
+               N         : No
+
+               Piso incompleto de edificio: Se indicará si es un piso incompleto del     X(01)
+               edificio.
+               S         : Si
+               N         : No
+
+
+               Departamento: Se indicará si es un departamento.                          X(01)
+               S      : Si
+               N      : No
+
+
+               Obra en construcción: Se indicará si es una obra en construcción.         X(01)
+               S      : Si
+               N      : No
+
+
+
+               Otros: Se indicará si es otros.                                           X(01)
+               S       : Si
+               N       : No
+              Ejemplos:
+              1.     Si el bien raíz es una casa, se informará con una S en el
+                     campo CASA, y todos los otros campos deberán informarse
+                     con una N.
+
+              1.     En caso que la compañía tenga contabilizado un local, una
+                     oficina y una bodega con un mismo rol, se deberá informar
+                     de la siguiente manera:
+
+                     Local                            : S
+                     Oficina                          : S
+                     Bodega                           : S
+                     Estacionamiento                  : N
+                     Terreno                          : N
+                     Casa                             : N
+                     Edificio                         : N
+                     Piso completo de edificio        : N
+                     Piso incompleto de edificio      :N
+                     Departamento                     : N
+                     Obras en construcción            : N
+                     Otros                            : N
+
+
+TIPO_DE_      Corresponde señalar si el bien raíz es urbano o no urbano. Se          X(02)
+INMUEBLE      informará de acuerdo a la siguiente codificación:
+
+              UR     :   Urbano
+              NU     :   No Urbano
+
+DESTINO       Corresponde indicar si el bien raíz es "Habitacional" o "No            X(02)
+              Habitacional", de acuerdo a las correspondientes autorizaciones
+              municipales. Se informará de acuerdo a la siguiente codificación:
+
+              HA     :   Habitacional
+              NH     :   No Habitacional
+
+USO           Corresponde indicar el uso que se le da al bien raíz, es decir si se   X(01)
+              arrienda con el fin de obtener una renta o es ocupado para
+              desarrollar la actividad de seguros. En caso que una compañía
+              tenga un bien raíz y una parte esté dada en arriendo y otra para
+              uso propio y contablemente esté registrado como un sólo bien, se
+              deberá informar como uso mixto. Se informará de acuerdo a la
+              codificación definida en SEIL, codificación SVS, Circular 1835, Uso
+              bien raíz.
+
+PORCENTAJE_   Corresponde informar, cuando el uso es mixto, qué porcentaje del       9(03)V9(02)
+USO_PROPIO    bien raíz está destinado para uso propio.
+
+TIPO_         Este campo es obligatorio y se informará de acuerdo a la               X(10)
+INSTRUMENTO   codificación definida en SEIL, Codificación S.V.S., Instrumentos.
+              Para los bienes raíces dados en leasing, el tipo de instrumento será
+              CLEAS.
+
+CODIGO_       Corresponde informar, cuando sea un bien raíz dado en leasing, el      X(30)
+NEMOTECNICO   código asignado por esta Superintendencia, según lo señalado en
+              Anexo Nº1 de esta Circular, si no corresponde, se informará con
+              espacios.
+ARRENDATARIO     Corresponde informar la razón social o el nombre del arrendatario     X(60)
+                 de la forma: apellido paterno, apellido materno y primer nombre. Se
+                 informará para los bienes raíces dado en arrendamiento, ya sea
+                 como leasing financiero u operacional o simple arrendamiento. Si
+                 no corresponde, se informará con espacios.
+
+
+RELACIONADO      En el caso que el bien raíz se encuentre arrendado, corresponde       X(02)
+                 informar si el arrendatario está relacionado con la compañía de
+                 seguros, de acuerdo a lo establecido en el artículo N°100 de la ley
+                 N°18.045 del 22.10.1981 y sus modificaciones.
+
+                 Se señalará de acuerdo a la siguiente codificación:
+                 RE : Relacionado
+                 NR : No Relacionado
+                 NA : No Aplica
+
+SALDO_PLAZO_     Se deberá informar los meses restantes del contrato de arriendo a     9(03)
+ARRIENDO         contar de la fecha de información.
+                 En el caso de los contratos de leasing, se debe indicar el plazo
+                 informado en el archivo B.1.
+                 En el caso de los bienes raíces de uso propio se debe informar en
+                 cero (0).
+
+
+MONTO_ARRIENDO   Para los bienes raíces en arriendo, corresponde informar el monto     9(04)V9(02)
+                 de arriendo mensual expresado en UF. En caso de arriendos
+                 trimestrales, semestrales, anuales u otros deberán informarse el
+                 valor equivalente mensual de éstos.
+                 En el caso de los bienes raíces de uso propio y de los leasing se
+                 debe informar en cero (0)
+
+
+UBICACIÓN        Corresponderá señalar la dirección exacta del bien raíz.              X(40)
+
+COMUNA           Corresponde señalar la comuna donde se ubica geográficamente el       X(03)
+                 bien raíz, de acuerdo a listado de códigos establecidos en el
+                 módulo SEIL, codificación SVS, Comuna.
+
+CIUDAD           Corresponderá señalar la ciudad en donde se encuentra el bien         X(30)
+                 raíz.
+
+FECHA_DE_        Corresponderá señalar la fecha de adquisición del bien raíz. Se       9(08)
+COMPRA           deberá informar con el siguiente formato: AAAAMMDD.
+
+COMPRA_          Corresponde informar si el bien raíz fue adquirido a una entidad      X(01)
+ENTIDAD_         relacionada con la compañía de seguros, de acuerdo a lo
+RELACIONADA      establecido en las letras a) y b) del artículo N°100 de la ley
+                 N°18.045 de 22.10.1981. Se señalará de acuerdo a la siguiente
+                 codificación:
+
+                 S      :   Adquirido a Entidad Relacionada
+                 N      :   No Adquirido a Entidad Relacionada
+
+COSTO_           Corresponde señalar el valor de adquisición del bien raíz más su      9(11)
+ACTUALIZADO      correspondiente revalorización a la fecha de cierre del mes a que
+                 se refiere la información, en miles de pesos (M$).
+
+DEPRECIACION_    Corresponde señalar el monto de depreciación acumulada a              9(11)
+ACUMULADA        deducir del activo inmovilizado, en miles de pesos (M$).
+PLAZO              Se deberá informar los meses de vida útil restante del bien raíz.      9(04)
+
+
+COSTO_CORREGIDO_   Corresponde a la diferencia entre el costo actualizado del bien raíz   9(11)
+Y DEPRECIADO       y la depreciación acumulada, en miles de pesos (M$).
+                   Para el caso de los bienes raíces entregados en leasing este valor
+                   debe incorporar el crédito a que se refiere el párrafo segundo del
+                   número 2 del título V de la Circular N° 1360, sobre valorización de
+                   inversiones
+TASACION_1         Corresponde señalar el valor según lo dispuesto en Norma de            9(11)
+                   Carácter General Nº42 de esta Superintendencia o la que la
+                   reemplace; deberá expresarse en miles de pesos (M$), según la
+                   conversión a la fecha de cierre del mes a que se refiere la
+                   información, del valor de tasación expresado originalmente en
+                   UF.
+
+
+
+TASACION_2         Corresponde señalar el valor según lo dispuesto en Norma de            9(11)
+                   Carácter General Nº42 de esta Superintendencia o la que la
+                   reemplace; deberá expresarse en miles de pesos (M$), según la
+                   conversión a la fecha de cierre del mes a que se refiere la
+                   información, del valor de tasación expresado originalmente en
+                   UF.
+
+
+
+NOMBRE_DEL_        Corresponde indicar la razón social o el nombre del profesional que    X(40)
+TASADOR_1          emitió el informe de tasación 1. En este último caso, se indicará:
+                   apellido paterno, apellido materno y primer nombre.
+
+NOMBRE_DEL_        Corresponde indicar la razón social o el nombre del profesional que    X(40)
+TASADOR_2          emitió el informe de tasación 2. En este último caso, se indicará:
+                   apellido paterno, apellido materno, y primer nombre.
+
+FECHA_             Corresponderá señalar la fecha en que se efectuó la tasación 1. Se     9(08)
+TASACION_1         deberá informar con el siguiente formato: AAAAMMDD.
+
+FECHA_             Corresponderá señalar la fecha en que se efectuó la tasación 2. Se     9(08)
+TASACION_2         deberá informar con el siguiente formato: AAAAMMDD.
+
+                   Corresponde al deterioro de la inversión, según lo señalado en la      9(11)
+DETERIORO          Norma de Carácter General N°311, del 28.06.2011. Este monto
+                   deberá expresarse en miles de pesos (M$)
+
+VALOR_FINAL        Corresponde al valor que tiene el bien raíz a la fecha de cierre del   9(12)
+                   mes a que se refiere la información, según lo establecido en
+                   Circular de Valorización vigente, expresados en miles de pesos
+                   (M$).
+                   En el caso de los bienes raíces dados en leasing corresponde al
+                   menor entre el valor final del contrato de leasing indicado en el
+                   archivo B.1, el campo valor contable de este archivo y la menor
+                   tasación del bien raíz.
+
+COPROPIETARIA      Corresponde informar si la compañía es copropietaria de un bien        9(02)V9(02)
+                   raíz, si lo fuera, en este campo deberá informar el porcentaje de
+                   propiedad de la compañía.
+PROHIBICION_O_      Se deberá informar si los bienes raíces registrados se encuentran        X(01)
+GRAVAMEN            afectos a prohibiciones o gravámenes u otros impedimentos
+                    señalados en el Art 22 DFL N°251. Se informará de acuerdo a la
+                    siguiente codificación:
+                    S : Si tiene prohibición
+                    N : No tiene prohibición
+
+
+ACTIVO_             Corresponde informar si uno o más títulos (en caso de haber              X(05)
+RESPALDA_           agrupado instrumentos con características idénticas) registrados,
+RESERVA_VALOR_DE_   se encuentran respaldando la reserva de valor del fondo señalada
+FONDO               en el DFL Nº251.
+                    Se informará de acuerdo a la valorización que tengan los títulos,
+                    según Circular N°1360 y posteriores modificaciones, con un código
+                    de cinco letras formado de la siguiente manera:
+
+                    Las tres primeras letras serán:
+
+                    APV :      si los instrumentos respaldan la reserva de valor del
+                    fondo de seguros con ahorro previsional voluntario, o
+
+                    OTR :       si los instrumentos respaldan la reserva de valor del
+                    fondo de seguros con ahorro, distinto a los seguros con ahorro
+                    previsional voluntario.
+
+                    La cuarta letra será A, B, C o D dependiendo de la forma de
+                    constitución de la reserva de descalce a que se refiere el N°4 de la
+                    Norma de Carácter General N°132, de 13 de marzo de 2002 y sus
+                    posteriores modificaciones.
+
+                    La quinta letra será G si se garantiza la rentabilidad del valor de la
+                    póliza en los casos B, C o D, si no corresponde se informará con
+                    espacio.
+
+                    Si el instrumento no respalda reserva de valor del fondo se
+                    indicará:
+
+                    VIDA: Para activos que NO estén asociados a fondos que
+                    respalden seguros de vida con cuenta de inversión y correspondan
+                    a inversiones de compañías del segundo grupo
+
+                    GRAL: Para activos que correspondan a inversiones del primer
+                    grupo.
+
+NOMBRE_DEL_         Para instrumentos que estén asociados a fondos que respalden             X(30)
+FONDO               seguros de vida con cuenta de inversión, se debe informar el
+                    nombre del Fondo al cual pertenece. Se entenderá por fondo al tipo
+                    de plan o modalidades de inversión convenidos para los seguros
+                    con cuentas de inversión.
+
+                    Para instrumentos que no respalden seguros de vida con cuenta de
+                    inversión, se debe informar “NO APLICA”.
+
+NOMBRE_CARTERA      Para instrumentos que no respalden seguros de vida con cuenta de         X(30)
+                    inversión, se debe informar la sub cartera que respalda, si
+                    corresponde.
+                    Para instrumentos que no respalden una sub cartera, se debe
+                    informar “NO APLICA”
+TSA                      Corresponde informar si el instrumento está incluido en el Test de    X(02)
+                         Suficiencia de Activos para el periodo informado, de acuerdo a la
+                         siguiente codificación:
+                         SI: el instrumento es utilizado para el análisis del Test de
+                         Suficiencia de Activos
+                         NO: el instrumento no es utilizado para el análisis del Test de
+                         Suficiencia de Activos.
+
+                         En periodos que no corresponde enviar el Test de Suficiencia de
+                         Activos
+
+
+Registro Tipo 3 de TOTALES
+
+
+CAMPO                    DESCRIPCION                                                           PICTURE
+TIPO                     Tipo de registro. En este caso corresponde "3".                       9(01)
+
+TOTAL                    Corresponde al número total de registros informados incluidos el de   9(06)
+                         IDENTIFICACION y el de TOTALES.
+
+FILLER                   Se deberá informar espacios.                                          X(470)
+

@@ -1,0 +1,1215 @@
+ B.7        INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS
+
+   Formato de Registro                      :       El Archivo PddaammddG.TXT deberá contener la
+                                                    siguiente estructura:
+
+   Identificación (Registro Tipo 1):        contendrá información que permita identificar a la Compañía
+                                                   que informa y período de la información. Cabe señalar
+                                                   que sólo se informará un registro de este tipo y deberá
+                                                   ser el primero del archivo.
+
+   Detalle (Registro Tipo 2)     :          contendrá información de los Contratos de Opciones.
+
+   Detalle (Registro Tipo 3)     :          contendrá información de los Contratos de Forwards
+
+   Detalle (Registro Tipo 4)     :          contendrá información de los Contratos de Futuros.
+
+   Detalle (Registro Tipo 5)     :          contendrá información de los Contratos de Swaps.
+
+   Detalle (Registro Tipo 6)     :          contendrá información de los Contratos de Pactos.
+
+   Detalle (Registro Tipo 7)     :          contendrá cuadratura de los registros de detalle    informados.
+                                                  Cabe señalar que sólo se informará un solo registro de
+                                                  este tipo y deberá ser el último del archivo.
+
+Registro Tipo 1 de IDENTIFICACION
+
+CAMPO                          DESCRIPCION                                                          PICTURE
+
+TIPO                           Tipo de registro. En este caso corresponde tipo "1".                 9(01)
+
+RUT                            RUT de la compañía informante.        Es obligatorio y no puede      9(09)
+                               informarse en ceros.
+
+VERIFICADOR                    Dígito verificador del RUT de la compañía informante.                X(01)
+
+NOMBRE                         Nombre o razón social de la compañía informante.                     X(60)
+
+PERIODO                        Período a que corresponde la información. El formato de esta         9(06)
+                               fecha será la de AAAAMM, éste deberá coincidir con lo informado
+                               en el nombre del archivo que contiene la información.
+
+FILLER                         Se deberá informar espacios.                                         X(412)
+
+
+Registro tipo 2 DETALLE              INFORMACIÓN GENERAL DE IDENTIFICACIÓN DE LOS CONTRATOS DE
+                                     OPCIONES.
+
+CAMPO                          DESCRIPCION                                                          PICTURE
+TIPO                           Tipo de registro. En este caso corresponde tipo "2".                 9(01)
+
+OBJETIVO_                      Corresponde informar el objetivo del contrato derivado, de acuerdo   X(03)
+CONTRATO                       a lo señalado en la NCG N°200 de fecha 07.08.2006.
+                               Se señalará de acuerdo a la siguiente codificación:
+                               INV        : Inversión
+                               CBE        : Cobertura de riesgos financieros
+
+TIPO_OPERACION                 Código que identifica las operaciones informadas por la compañía,    X(10)
+                               deben informarse todas las operaciones vigentes a la fecha de
+                               presentación de la información. Se informará de acuerdo a la
+                               codificación definida en la página web de esta Superintendencia en
+                               el módulo SEIL, Codificación S.V.S., Instrumentos.
+FOLIO_               Corresponde al número de la papeleta de la mesa de dinero de la         9(10)
+OPERACION            compañía, donde se registra la compra del instrumento derivado.
+                     En caso de no poder obtener este número se deberá asociar al
+                     documento contable que respalda la compra del instrumento.
+ITEM_OPERACION       Secuencia del instrumento derivado dentro del folio de la operación.    9(03)
+                     No pueden existir dos instrumentos derivados con igual folio e ítem
+                     operación.
+FECHA_DE_LA_         Corresponde informar la fecha de inicio del contrato con el             9(08)
+OPERACION            siguiente formato: AAAAMMDD.
+FECHA_DE_            Corresponde informar la fecha de término del contrato con el            9(08)
+VENCIMIENTO_         siguiente formato: AAAAMMDD.
+DEL_CONTRATO
+NOMBRE               Corresponde informar el nombre o razón social de la contraparte de      X(60)
+                     la operación.
+                     Para el caso de las operaciones realizadas con bancos
+                     nacionales se informará de acuerdo a codificación definida en
+                     SEIL, Codificación SVS, Códigos Circular 1835, Códigos de
+                     Bancos, Nombre del Banco para C.1835
+NACIONALIDAD         Corresponde informar la nacionalidad de la contraparte de la            X(02)
+                     operación, de acuerdo a la codificación definida en SEIL,
+                     Codificación SVS, Países.
+RELACIONADO           Corresponde informar si la contraparte de la operación está            X(02)
+                      relacionada con la compañía de seguros, de acuerdo a lo
+                      establecido en el artículo N°100 de la ley N°18.045 del 22.10.1981
+                      y modificaciones.
+                      Se señalará de acuerdo a la siguiente codificación:
+                      RE : Relacionado
+                     NR : No Relacionado
+CLASIFICACION_       Corresponde informar la menor clasificación de riesgo vigente de la     X(15)
+DE_RIESGO            contraparte de la operación.
+                     Si la contraparte no contara con clasificación de riesgo se debe
+                     informar S/C.
+ACTIVO_OBJETO_       Corresponde informar el activo objeto para opciones con posición        X(30)
+POSICION_LARGA       larga, para opciones con posición corta indicar NO APLICA.
+(nombre)             Se debe informar el código nemotécnico del instrumento, ya sea de
+                     acuerdo a lo instruido en la Circular 1085, o la que la reemplace, de
+                     esta Superintendencia, o el código asignado según lo señalado en
+                     Anexo Nº 1 de la presente Circular, aquel asignado por las
+                     entidades bursátiles o el código universal “ISIN” (International
+                     Securities Identification Number), a falta de éste, el código “CUSIP”
+                     (Commitee On Uniform Securities Identification Procedures).
+                     Para el caso de una moneda como activo subyacente se debe
+                     informar el código definido en SEIL, codificación S.V.S., Unidades
+                     Monetarias.
+                     Si el activo subyacente es una tasa, si ésta es variable se informará
+                     la tasa de interés de referencia del instrumento, por ejemplo Libor
+                     360. Si es un interés fijo se llenará con la tasa fijada.
+                     De no existir los anteriores, se deberá consultar a esta
+                     Superintendencia.
+
+ACTIVO_OBJETO_       Corresponde informar el activo objeto para opciones con posición        X(30)
+POSICIÓN_CORTA_(no   corta, para opciones con posición larga indicar NO APLICA.
+mbre)                Se debe informar el código nemotécnico del instrumento, ya sea de
+                     acuerdo a lo instruido en la Circular 1085, o la que la reemplace, de
+                     esta Superintendencia, o el código asignado según lo señalado en
+                     Anexo Nº 1 de la presente Circular, aquel asignado por las
+                     entidades bursátiles o el código universal “ISIN” (International
+                     Securities Identification Number), a falta de éste, el código “CUSIP”
+                     (Commitee On Uniform Securities Identification Procedures).
+                   Para el caso de una moneda como activo subyacente se debe
+                   informar el código definido en SEIL, codificación S.V.S., Unidades
+                   Monetarias.
+                   Si el activo subyacente es una tasa, si ésta es variable se informará
+                   la tasa de interés de referencia del instrumento, por ejemplo Libor
+                   360. Si es un interés fijo se llenará con la tasa fijada.
+                   De no existir los anteriores, se deberá consultar a esta
+                   Superintendencia.
+ACTIVO_OBJETO      Corresponde al número de unidades del activo subyacente de cada            9(13)V9(03)
+(unidades)         contrato.
+
+                   En caso de: Opción sobre moneda, corresponde al monto en
+                   moneda extranjera establecido por contrato que se tiene derecho a
+                   recibir o entregar a la fecha de ejercicio.
+                   En caso de opción sobre tasa o renta fija, corresponde al valor
+                   nocional sobre el cual se calculan los flujos que se tienen derecho a
+                   recibir o entregar a la fecha de ejercicio, o bien al valor presente del
+                   instrumento de renta fija establecido por contrato que se tiene
+                   derecho a recibir o entregar a la fecha de ejercicio.
+                   En caso de opción sobre acción o índice accionario, corresponde a
+                   la cantidad de acciones que se tiene derecho a recibir o entregar a
+                   la fecha de ejercicio. En caso de índices accionarios, corresponde
+                   al valor de mercado del índice al cierre de los Estados Financieros
+                   que se tiene derecho a recibir o entregar a la fecha de ejercicio.
+
+MONEDA             Corresponde a la moneda en la cual está denominado el                      X(06)
+                   derivado, cuando corresponda. Se informará de acuerdo a la
+                   codificación definida en el sitio web de esta Superintendencia en
+                   el módulo SEIL, Codificación SVS, Unidad Monetaria. De no
+                   existir, se deberá consultar a esta Superintendencia.
+
+PRECIO_DE_         Precio de intercambio a futuro fijado en el contrato, por una              9(10)V9(03)
+EJERCICIO          unidad del activo subyacente. Debe ser expresado en la moneda
+                   en la cual está denominado el derivado.
+
+PRECIO_SPOT_       Corresponde al precio de cierre observado del activo subyacente            9(10)V9(03)
+DEL_ACTIVO_        a la opción, a la fecha de la información.
+SUBYACENTE
+                   En caso de Opción sobre moneda, corresponde al valor de la
+                   moneda en el mercado contado a la fecha de información.
+
+                   En caso de Opción sobre tasa o renta fija, corresponde a la tasa
+                   vigente en el mercado o al valor de mercado del instrumento de
+                   renta fija a la fecha de información.
+
+                   En caso de Opción sobre acción o índice accionario, corresponde
+                   al valor bursátil de la acción o índice accionario, en el mercado
+                   contado a la fecha de información.
+
+                   Debe ser expresado en la moneda en la cual está denominado el
+                   derivado.
+
+PRIMA_DE_LA_       Corresponde informar el valor pagado o recibido por la suscripción         9(13)V9(03)
+OPCION (monto)     de la opción.
+
+PRIMA_DE_LA_       Corresponde informar la moneda en que se encuentra expresada la            X(06)
+OPCION (moneda)    prima de la opción, de acuerdo a la codificación definida en SEIL,
+                   Codificación SVS, Unidades Monetarias.
+
+VALOR_RAZONABLE_   Corresponde informar el precio spot del activo objeto a la fecha de        9(13)
+DEL_ACTIVO_        información multiplicado por el número de unidades del activo
+OBJETO_A_LA_       subyacente de cada contrato (M$).
+FECHA_DE_
+INFORMACION (monto)
+NUMERO_DE_            Corresponde informar el número de contratos comprados o                  9(06)
+CONTRATOS             vendidos en cada operación.
+
+                      Corresponde al valor razonable de la opción, a la fecha de cierre        -9(12)
+VALOR RAZONABLE       del mes a que se refiere la información (M$).
+DE LA OPCIÓN A LA
+FECHA DE
+INFORMACIÓN”
+
+
+ORIGEN_DE_LA_         Corresponde a la fuente de donde se obtuvieron los datos para            X(30)
+INFORMACION           valorizar el contrato.
+
+ACTIVO_               Corresponde informar si uno o más títulos (en caso de haber              X(05)
+RESPALDA_             agrupado instrumentos con características idénticas) registrados,
+RESERVA_VALOR_DE_     se encuentran respaldando la reserva de valor del fondo señalada
+FONDO                 en el DFL Nº251.
+                      Se informará de acuerdo a la valorización que tengan los títulos,
+                      según Circular N°1360 y posteriores modificaciones, con un código
+                      de cinco letras formado de la siguiente manera:
+
+                      Las tres primeras letras serán:
+
+                      APV :      si los instrumentos respaldan la reserva de valor del
+                      fondo de seguros con ahorro previsional voluntario, o
+
+                      OTR :       si los instrumentos respaldan la reserva de valor del
+                      fondo de seguros con ahorro, distinto a los seguros con ahorro
+                      previsional voluntario.
+
+                      La cuarta letra será A, B, C o D dependiendo de la forma de
+                      constitución de la reserva de descalce a que se refiere el N°4 de la
+                      Norma de Carácter General N°132, de 13 de marzo de 2002 y sus
+                      posteriores modificaciones.
+
+                      La quinta letra será G si se garantiza la rentabilidad del valor de la
+                      póliza en los casos B, C o D, si no corresponde se informará con
+                      espacio.
+
+                      Si el instrumento no respalda reserva de valor del fondo se
+                      indicará:
+
+                      VIDA: Para activos que NO estén asociados a fondos que
+                      respalden seguros de vida con cuenta de inversión y correspondan
+                      a inversiones de compañías del segundo grupo
+
+                      GRAL: Para activos que correspondan a inversiones del primer
+                      grupo.
+
+NOMBRE_DEL_           Para instrumentos que estén asociados a fondos que respalden             X(30)
+FONDO                 seguros de vida con cuenta de inversión, se debe informar el
+                      nombre del Fondo al cual pertenece. Se entenderá por fondo al tipo
+                      de plan o modalidades de inversión convenidos para los seguros
+                      con cuentas de inversión.
+
+                      Para instrumentos que no respalden seguros de vida con cuenta de
+                      inversión, se debe informar “NO APLICA”.
+NOMBRE_CARTERA            Para instrumentos que no respalden seguros de vida con cuenta de        X(30)
+                          inversión, se debe informar la sub cartera que respalda, si
+                          corresponde.
+                          Para instrumentos que no respalden una sub cartera, se debe
+                          informar “NO APLICA”
+
+MONTO_ACTIVOS_EN_         Se deberá informar el valor final, a la fecha de información, de los    9(13)
+MARGEN                    activos entregados como margen en la operación, expresado en
+                          miles de pesos (M$).
+                          Si para la operación no es necesario dejar activos en margen
+                          indicar cero.
+MONTO (activo)            Corresponde informar el monto contabilizado en activos producto         9(13)
+                          de este contrato, es decir, el producto entre el valor de la opción a
+                          la fecha de la información y el número de contratos. Este monto se
+                          deberá expresar en miles de pesos (M$).
+MONTO (pasivo)            Corresponde informar el monto contabilizado en pasivos producto         9(13)
+                          de este contrato, es decir, el producto entre el valor de la opción a
+                          la fecha de la información y el número de contratos. Este monto se
+                          deberá expresar en miles de pesos (M$).
+
+EFECTO_EN_                Corresponde informar el efecto realizado en los resultados de las       -9(13)
+RESULTADOS_               operaciones a la fecha de los estados financieros. Este monto se
+REALIZADOS                deberá expresar en miles de pesos (M$).
+
+TSA                       Corresponde informar si el instrumento está incluido en el Test de      X(02)
+                          Suficiencia de Activos para el periodo informado, de acuerdo a la
+                          siguiente codificación:
+                          SI: el instrumento es utilizado para el análisis del Test de
+                          Suficiencia de Activos
+                          NO: el instrumento no es utilizado para el análisis del Test de
+                          Suficiencia de Activos.
+
+                          En periodos que no corresponde enviar el Test de Suficiencia de
+                          Activos
+METOD_CLASIF_VALO         Corresponde informar la clasificación dada al instrumento en los        X(6)
+RIZ_EEFF                  Estados de Situación Financiera, de acuerdo a lo siguiente:
+                          CA : Activos Financieros a Costo Amortizado (5.11.30.00).
+                          VR : Activos Financieros a Valor Razonable (5.11.20.00).
+                          EE : Efectivo Equivalente (5.11.10.00).
+                          CUI : Inversiones Seguros Cuenta Única de Inversión
+                          (5.11.50.00)
+                          OTRCLA: Otra clasificación dentro del Estado de Situación
+                          Financiera.
+FILLER                    Se deberá informar espacios.                                            X(49)
+
+
+Registro tipo 3 DETALLE          INFORMACIÓN GENERAL DE IDENTIFICACIÓN DE LOS CONTRATOS DE
+                                 FORWARDS
+
+CAMPO                     DESCRIPCION                                                             PICTURE
+TIPO                      Tipo de registro. En este caso corresponde tipo "3".                    9(01)
+OBJETIVO_           Corresponde informar el objetivo del contrato derivado, de acuerdo      X(05)
+CONTRATO            a lo señalado en la NCG N°200 de fecha 07.08.2006 Se señalará
+                    de acuerdo a la siguiente codificación:
+
+                    INV      :   Inversión
+                    CBE      :   Cobertura de Riesgos Financieros
+                    1512     :   Cobertura1512, para aquellos contratos que apliquen
+                                 lo dispuesto en el título VII de la Circular N° 1512 del
+                                 2001 referida al calce.
+TIPO_OPERACION      Código que identifica las operaciones informadas por la compañía,       X(10)
+                    deben informarse todas las operaciones vigentes a la fecha de
+                    presentación de la información. Se informará de acuerdo a la
+                    codificación definida en la página web de esta Superintendencia en
+                    el módulo SEIL, Codificación S.V.S., Instrumentos.
+
+FOLIO_              Corresponde al número de la papeleta de la mesa de dinero de la         9(10)
+OPERACION           compañía, donde se registra la compra del instrumento derivado.
+                    En caso de no poder obtener este número se deberá asociar al
+                    documento contable que respalda la compra del instrumento.
+
+ITEM_OPERACION      Secuencia del instrumento derivado dentro del folio de la operación.    9(03)
+                    No pueden existir dos instrumentos derivados con igual folio e ítem
+                    operación.
+
+FECHA_DE_LA_        Corresponde informar la fecha de inicio del contrato con el             9(08)
+OPERACION           siguiente formato: AAAAMMDD.
+
+FECHA_DE_           Corresponde informar la fecha de término del contrato con el            9(08)
+VENCIMIENTO_        siguiente formato: AAAAMMDD.
+DEL_CONTRATO
+NOMBRE              Corresponde informar el nombre o razón social de la contraparte de      X(60)
+                    la operación.
+                    Para el caso de las operaciones realizadas con bancos
+                    nacionales se informará de acuerdo a codificación definida en
+                    SEIL, Codificación SVS, Códigos Circular 1835, Códigos de
+                    Bancos, Nombre del Banco para C.1835
+NACIONALIDAD        Corresponde informar la nacionalidad de la contraparte de la            X(02)
+                    operación, de acuerdo a la codificación definida en SEIL,
+                    Codificación SVS, Países.
+
+RELACIONADO         Corresponde informar si la contraparte de la operación está             X(02)
+                    relacionada con la compañía de seguros, de acuerdo a lo
+                    establecido en el artículo N°100 de la ley N°18.045 del 22.10.1981
+                    y modificaciones.
+                    Se señalará de acuerdo a la siguiente codificación:
+                    RE : Relacionado
+                    NR : No Relacionado
+CLASIFICACION_      Corresponde informar la menor clasificación de riesgo vigente de la     X(15)
+DE_RIESGO           contraparte de la operación.
+
+                    Si la contraparte no contara con clasificación de riesgo se debe
+                    informar S/C.
+
+ACTIVO_             Corresponde informar si uno o más títulos (en caso de haber             X(05)
+RESPALDA_           agrupado instrumentos con características idénticas) registrados,
+RESERVA_VALOR_DE_   se encuentran respaldando la reserva de valor del fondo señalada
+FONDO               en el DFL Nº251.
+
+                    Se informará de acuerdo a la valorización que tengan los títulos,
+                    según Circular N°1360 y posteriores modificaciones, con un código
+                    de cinco letras formado de la siguiente manera:
+                 Las tres primeras letras serán:
+
+                 APV :      si los instrumentos respaldan la reserva de valor del
+                 fondo de seguros con ahorro previsional voluntario, o
+
+                 OTR :       si los instrumentos respaldan la reserva de valor del
+                 fondo de seguros con ahorro, distinto a los seguros con ahorro
+                 previsional voluntario.
+
+                 La cuarta letra será A, B, C o D dependiendo de la forma de
+                 constitución de la reserva de descalce a que se refiere el N°4 de la
+                 Norma de Carácter General N°132, de 13 de marzo de 2002 y sus
+                 posteriores modificaciones.
+
+                 La quinta letra será G si se garantiza la rentabilidad del valor de la
+                 póliza en los casos B, C o D, si no corresponde se informará con
+                 espacio.
+
+                 Si el instrumento no respalda reserva de valor del fondo se
+                 indicará:
+
+                 VIDA: Para activos que NO estén asociados a fondos que
+                 respalden seguros de vida con cuenta de inversión y correspondan
+                 a inversiones de compañías del segundo grupo
+
+                 GRAL: Para activos que correspondan a inversiones del primer
+                 grupo.
+
+NOMBRE_DEL_      Para instrumentos que estén asociados a fondos que respalden             X(30)
+FONDO            seguros de vida con cuenta de inversión, se debe informar el
+                 nombre del Fondo al cual pertenece. Se entenderá por fondo al tipo
+                 de plan o modalidades de inversión convenidos para los seguros
+                 con cuentas de inversión.
+
+                 Para instrumentos que no respalden seguros de vida con cuenta de
+                 inversión, se debe informar “NO APLICA”.
+
+NOMBRE_CARTERA   Para instrumentos que no respalden seguros de vida con cuenta de         X(30)
+                 inversión, se debe informar la sub cartera que respalda, si
+                 corresponde.
+                 Para instrumentos que no respalden una sub cartera, se debe
+                 informar “NO APLICA”
+
+ACTIVO_OBJETO_   Corresponde informar el activo objeto en la cual está expresada la       X(30)
+POSICION_LARGA   posición larga en el contrato forward.
+(nombre)         Se debe informar el código nemotécnico del instrumento, ya sea de
+                 acuerdo a lo instruido en la Circular 1085, o la que la reemplace, de
+                 esta Superintendencia, o el código asignado según lo señalado en
+                 Anexo Nº 1 de la presente Circular aquel asignado por las
+                 entidades bursátiles o el código universal “ISIN” (International
+                 Securities Identification Number), a falta de éste, el código “CUSIP”
+                 (Commitee On Uniform Securities Identification Procedures).
+                 Para el caso de una moneda como activo subyacente se debe
+                 informar el código definido en SEIL, codificación S.V.S., Unidades
+                 Monetarias.
+
+                 Si el activo subyacente es una tasa, si ésta es variable se informará
+                 la tasa de interés de referencia del instrumento, por ejemplo Libor
+                 360. Si es un interés fijo se llenará con la tasa fijada.
+                 De no existir los anteriores, se deberá consultar a esta
+                 Superintendencia.
+ACTIVO_OBJETO_       Corresponde informar el activo objeto en la cual está expresada la      X(30)
+POSICIÓN_CORTA_(no   posición corta en el contrato forward.
+mbre)                Se debe informar el código nemotécnico del instrumento, ya sea de
+                     acuerdo a lo instruido en la Circular 1085, o la que la reemplace, de
+                     esta Superintendencia, o el código asignado según lo señalado en
+                     Anexo Nº 1 de la presente Circular, aquel asignado por las
+                     entidades bursátiles o el código universal “ISIN” (International
+                     Securities Identification Number), a falta de éste, el código “CUSIP”
+                     (Commitee On Uniform Securities Identification Procedures).
+                     Para el caso de una moneda como activo subyacente se debe
+                     informar el código definido en SEIL, codificación S.V.S., Unidades
+                     Monetarias.
+                     Si el activo subyacente es una tasa, si ésta es variable se informará
+                     la tasa de interés de referencia del instrumento, por ejemplo Libor
+                     360. Si es un interés fijo se llenará con la tasa fijada.
+                     De no existir los anteriores, se deberá consultar a esta
+                     Superintendencia.
+ACTIVO_OBJETO_       Corresponde informar el número de unidades del activo subyacente        9(13)V9(03)
+POSICION_LARGA       en el cual esta expresada la posición larga de cada contrato.
+(unidades)            En caso de tratarse de un forward de moneda, corresponde
+                     informar el monto en moneda extranjera establecido por contrato
+                     que debe ser intercambiado en una fecha futura de acuerdo a la
+                     posición en el contrato.
+                     Para forward de tasa o renta fija corresponde informar el valor
+                     nocional o valor presente del instrumento de renta fija o el flujo,
+                     establecido por contrato a ser intercambiado en una fecha futura.
+                     Debe informarse en la moneda establecida en el contrato.
+                     En el caso de forward de acción, corresponde informar la cantidad
+                     de acciones objeto del contrato. Para índices accionarios,
+                     corresponde informar el valor monetario de cada punto del índice
+                     objeto del contrato multiplicado por el número de unidades del
+                     índice que se intercambian, de acuerdo al número de contratos.
+
+ACTIVO_OBJETO_       Corresponde informar el número de unidades del activo subyacente        9(13)V9(03)
+POSICION_CORTA       en el cual esta expresada la posición corta de cada contrato
+(unidades)            En caso de tratarse de un forward de moneda, corresponde
+                     informar el monto en moneda extranjera establecido por contrato
+                     que debe ser intercambiado en una fecha futura de acuerdo a la
+                     posición en el contrato.
+                     Para forward de tasa o renta fija corresponde informar el valor
+                     nocional o valor presente del instrumento de renta fija o el flujo,
+                     establecido por contrato a ser intercambiado en una fecha futura.
+                     Debe informarse en la moneda establecida en el contrato.
+
+                     En el caso de forward de acción, corresponde informar la cantidad
+                     de acciones objeto del contrato. Para índices accionarios,
+                     corresponde informar el valor monetario de cada punto del índice
+                     objeto del contrato multiplicado por el número de unidades del
+                     índice que se intercambian, de acuerdo al número de contratos.
+MONEDA               Corresponde a la moneda en la cual expresada la posición de la          X(06)
+                     compañía en el contrato. Se informará de acuerdo a la codificación
+                     definida en el sitio web de esta Superintendencia en el módulo
+                     SEIL, Codificación SVS, Unidades Monetarias. De no existir, se
+                     deberá consultar a esta Superintendencia.
+
+PRECIO_              Corresponde informar el precio a futuro establecido en el contrato.     9(10)V9(05)
+FORWARD_             En caso de un forward de moneda corresponde informar el valor al
+CONTRATO             cual será intercambiada la moneda de acuerdo a la posición que
+                     tenga la compañía en el contrato.
+                     Para un forward de tasa o renta fija corresponde informar la tasa o
+                     precio que será intercambiada de acuerdo a la posición en el
+                      contrato forward.
+                      Si se trata de un forward de acción e índice accionario corresponde
+                      informar el precio al cual será intercambiada la acción o índice al
+                      vencimiento del contrato.
+
+VALOR_DE_             Corresponde informar el precio spot del activo objeto a la fecha de      9(13)V9(03)
+MERCADO_DEL_          información multiplicado por el número de unidades del activo
+ACTIVO_OBJETO_A_LA    subyacente de cada contrato (M$).
+_FECHA_DE_
+INFORMACION (monto)
+PRECIO_SPOT_          Corresponde al precio de cierre observado del activo subyacente al       9(10)V9(03)
+DEL_ACTIVO_           contrato, a la fecha de la información.
+SUBYACENTE
+                      En caso de forward de moneda corresponde informar el valor de la
+                      moneda en el mercado contado a la fecha de información
+                      En caso de forward de tasa o renta fija corresponde informar la tasa
+                      vigente en el mercado o al valor de mercado del instrumento de
+                      renta fija a la fecha de información.
+                      En caso de forward de acción e índice accionario corresponde
+                      informar el valor bursátil o contado de la acción o índice accionario,
+                      en el mercado contado a la fecha de información
+                      Debe ser expresado en la moneda en la cual está denominado el
+                      derivado.
+
+PRECIO_ FORWARD_      Precio forward de mercado a la fecha de valorización, para un            9(10)V9(05)
+MERCADO               contrato de similares características al valorizado, entendiéndose
+                      por características del contrato, el activo subyacente y la fecha que
+                      le resta al vencimiento desde la fecha de valorización. Este debe
+                      ser expresado de acuerdo a la moneda extranjera establecida por
+                      contrato a ser entregada o recibida en una fecha futura.
+                      Corresponderá al informado por los mercados donde se transaron
+                      los respectivos contratos, pudiendo ser obtenido desde medios de
+                      información de reconocido prestigio internacional. En caso de no
+                      existir dicho valor de mercado, corresponderá al Tipo de cambio
+                      spot o de mercado a la fecha de valorización.
+
+TASA_                 Corresponde a la tasa de interés real anual de mercado para              -9(10)V9(03)
+DESCUENTO_            operaciones similares a plazos equivalentes a la madurez del
+DE_FLUJOS             contrato o a la Tir de compra para los derivados que cubren activos
+                      acogidos a la Circular N° 1512.
+
+VALOR_RAZONABLE_      Corresponde al valor que presenta el contrato forward a la fecha de      -9(13)
+DEL_CONTRATO_A_LA     información, que se define como el valor actual de la diferencia
+_FECHA_DE_LA_         entre el precio forward de mercado para un contrato de similares
+INFORMACION           características menos el precio forward fijado en el contrato,
+                      multiplicado por los nominales del activo objeto que se tiene
+                      derecho a comprar o vender. En el caso de derivados que cubran
+                      activos acogidos a la Circular N°1.512, corresponde al valor del
+                      contrato utilizando la TIR de Compra, multiplicado por los
+                      nominales del activo objeto que se tiene derecho a comprar o
+                      vender (M$).
+ORIGEN_DE_LA_         Corresponde a la fuente de donde se obtuvieron los datos para            X(30)
+INFORMACION           valorizar el contrato.
+
+MONTO_ACTIVOS_EN_     Se deberá informar el valor final, a la fecha de información, de los     9(13)
+MARGEN                activos entregados como margen en la operación, expresado en
+                      miles de pesos (M$).
+                      Si para la operación no es necesario dejar activos en margen
+                      indicar cero.
+
+MONTO (activo)        Corresponde informar el monto contabilizado en activos producto          9(13)
+                      de este contrato. Este monto se deberá expresar en miles de pesos
+                          (M$).
+
+MONTO (pasivo)            Corresponde informar el monto contabilizado en pasivos producto        9(13)
+                          de este contrato. Este monto se deberá expresar en miles de pesos
+                          (M$).
+
+EFECTO_EN_                Corresponde informar el efecto realizado en los resultados de las      -9(13)
+RESULTADOS_               operaciones a la fecha de los estados financieros. Este monto se
+REALIZADOS                deberá expresar en miles de pesos (M$).
+
+TSA                       Corresponde informar si el instrumento está incluido en el Test de     X(02)
+                          Suficiencia de Activos para el periodo informado, de acuerdo a la
+                          siguiente codificación:
+                          SI: el instrumento es utilizado para el análisis del Test de
+                          Suficiencia de Activos
+                          NO: el instrumento no es utilizado para el análisis del Test de
+                          Suficiencia de Activos.
+
+                          En periodos que no corresponde enviar el Test de Suficiencia de
+                          Activos
+METOD_CLASIF_VALO         Corresponde informar la clasificación dada al instrumento en los       X(6)
+RIZ_EEFF                  Estados de Situación Financiera, de acuerdo a lo siguiente:
+                          CA : Activos Financieros a Costo Amortizado (5.11.30.00).
+                          VR : Activos Financieros a Valor Razonable (5.11.20.00).
+                          EE : Efectivo Equivalente (5.11.10.00).
+                          CUI : Inversiones Seguros Cuenta Única de Inversión
+                          (5.11.50.00)
+                          OTRCLA: Otra clasificación dentro del Estado de Situación
+                          Financiera.
+FLLER                     Se deberá informar espacios.                                           X(24)
+
+
+
+Registro tipo 4 DETALLE           INFORMACIÓN GENERAL DE IDENTIFICACIÓN DE LOS CONTRATOS DE
+                                  FUTUROS
+
+CAMPO                     DESCRIPCION                                                            PICTURE
+TIPO                      Tipo de registro. En este caso corresponde tipo "4".                   9(01)
+
+OBJETIVO_                 Corresponde informar el objetivo del contrato derivado, de acuerdo     X(3)
+CONTRATO                  a lo señalado en la NCG N°200 de fecha 07.08.2006. Se señalará
+                          de acuerdo a la siguiente codificación:
+
+                          INV        :   Inversión
+                          CBE        :   Cobertura de Riesgos Financieros
+
+TIPO_OPERACION            Código que identifica las operaciones informadas por la compañía,      X(10)
+                          deben informarse todas las operaciones vigentes a la fecha de
+                          presentación de la información. Se informará de acuerdo a la
+                          codificación definida en la página web de esta Superintendencia en
+                          el módulo SEIL, Codificación S.V.S., Instrumentos.
+
+FOLIO_                    Corresponde al número de la papeleta de la mesa de dinero de la        9(10)
+OPERACION                 compañía, donde se registra la compra del instrumento derivado.
+                          En caso de no poder obtener este número se deberá asociar al
+                          documento contable que respalda la compra del instrumento.
+
+ITEM_OPERACION            Secuencia del instrumento derivado dentro del folio de la operación.   9(03)
+                          No pueden existir dos instrumentos derivados con igual folio e ítem
+                          operación.
+FECHA_DE_LA_        Corresponde informar la fecha de compra de la operación con el 9(08)
+OPERACION           siguiente formato: AAAAMMDD.
+
+FECHA_DE_           Corresponde informar la fecha de vencimiento del contrato con el         9(08)
+VENCIMIENTO_        siguiente formato: AAAAMMDD.
+DEL_CONTRATO
+
+NOMBRE              Corresponde informar el nombre o razón social de la contraparte de       X(60)
+                    la operación.
+                    Para el caso de las operaciones realizadas con bancos
+                    nacionales se informará de acuerdo a codificación definida en
+                    SEIL, Codificación SVS, Códigos Circular 1835, Códigos de
+                    Bancos, Nombre del Banco para C.1835
+NACIONALIDAD        Corresponde informar la nacionalidad de la contraparte de la             X(02)
+                    operación, de acuerdo a la codificación definida en SEIL,
+                    Codificación SVS, países.
+RELACIONADO          Corresponde informar si la contraparte de la operación está             X(02)
+                     relacionada con la compañía de seguros, de acuerdo a lo
+                     establecido en el artículo N°100 de la ley N°18.045 del 22.10.1981
+                     y modificaciones.
+                     Se señalará de acuerdo a la siguiente codificación:
+                     RE : Relacionado
+                    NR : No Relacionado
+CLASIFICACION_      Corresponde informar la menor clasificación de riesgo vigente de la      X(15)
+DE_RIESGO           contraparte de la operación.
+                    Si la contraparte no contara con clasificación de riesgo se debe
+                    informar S/C.
+ACTIVO_             Corresponde informar si uno o más títulos (en caso de haber              X(05)
+RESPALDA_           agrupado instrumentos con características idénticas) registrados,
+RESERVA_VALOR_DE_   se encuentran respaldando la reserva de valor del fondo señalada
+FONDO               en el DFL Nº251.
+                    Se informará de acuerdo a la valorización que tengan los títulos,
+                    según Circular N°1360 y posteriores modificaciones, con un código
+                    de cinco letras formado de la siguiente manera:
+
+                    Las tres primeras letras serán:
+
+                    APV :      si los instrumentos respaldan la reserva de valor del
+                    fondo de seguros con ahorro previsional voluntario, o
+
+                    OTR :       si los instrumentos respaldan la reserva de valor del
+                    fondo de seguros con ahorro, distinto a los seguros con ahorro
+                    previsional voluntario.
+
+                    La cuarta letra será A, B, C o D dependiendo de la forma de
+                    constitución de la reserva de descalce a que se refiere el N°4 de la
+                    Norma de Carácter General N°132, de 13 de marzo de 2002 y sus
+                    posteriores modificaciones.
+
+                    La quinta letra será G si se garantiza la rentabilidad del valor de la
+                    póliza en los casos B, C o D, si no corresponde se informará con
+                    espacio.
+
+                    Si el instrumento no respalda reserva de valor del fondo se
+                    indicará:
+
+                    VIDA: Para activos que NO estén asociados a fondos que
+                    respalden seguros de vida con cuenta de inversión y correspondan
+                    a inversiones de compañías del segundo grupo
+                     GRAL: Para activos que correspondan a inversiones del primer
+                     grupo.
+NOMBRE_DEL_          Para instrumentos que estén asociados a fondos que respalden            X(30)
+FONDO                seguros de vida con cuenta de inversión, se debe informar el
+                     nombre del Fondo al cual pertenece. Se entenderá por fondo al tipo
+                     de plan o modalidades de inversión convenidos para los seguros
+                     con cuentas de inversión.
+
+                     Para instrumentos que no respalden seguros de vida con cuenta de
+                     inversión, se debe informar “NO APLICA”.
+
+NOMBRE_CARTERA       Para instrumentos que estén asociados a fondos que respalden            X(30)
+                     seguros de vida con cuenta de inversión, se debe informar la sub
+                     cartera que respalda, si corresponde.
+
+                     Para instrumentos que no respalden seguros de vida con cuenta de
+                     inversión, se debe informar “NO APLICA”.
+ACTIVO_OBJETO_       Corresponde informar el activo objeto en la cual está expresada la      X(30)
+POSICION_LARGA       posición larga en el contrato futuro.
+(nombre)             Se debe informar el código nemotécnico del instrumento, ya sea de
+                     acuerdo a lo instruido en la Circular 1085, o la que la reemplace, de
+                     esta Superintendencia o el código asignado según lo señalado en
+                     Anexo Nº 1 de la presente Circular o aquel asignado por las
+                     entidades bursátiles o el código universal “ISIN” (International
+                     Securities Identification Number), a falta de éste, el código “CUSIP”
+                     (Commitee On Uniform Securities Identification Procedures).
+                     Para el caso de una moneda como activo subyacente se debe
+                     informar el código definido en SEIL, codificación S.V.S., Unidades
+                     Monetarias.
+
+                     Si el activo subyacente es una tasa, si ésta es variable se informará
+                     la tasa de interés de referencia del instrumento, por ejemplo Libor
+                     360. Si es un interés fijo se llenará con la tasa fijada.
+
+                     De no existir los anteriores, se deberá consultar a esta
+                     Superintendencia.
+ACTIVO_OBJETO_       Corresponde informar el activo objeto en la cual está expresada la      X(30)
+POSICIÓN_CORTA_(no   posición corta en el contrato futuro.
+mbre)                Se debe informar el código nemotécnico del instrumento, ya sea de
+                     acuerdo a lo instruido en la Circular 1085, o la que la reemplace, de
+                     esta Superintendencia o el código asignado según lo señalado en
+                     Anexo Nº 1 de la presente Circular o aquel asignado por las
+                     entidades bursátiles o el código universal “ISIN” (International
+                     Securities Identification Number), a falta de éste, el código “CUSIP”
+                     (Commitee On Uniform Securities Identification Procedures).
+                     Para el caso de una moneda como activo subyacente se debe
+                     informar el código definido en SEIL, codificación S.V.S., Unidades
+                     Monetarias.
+                     Si el activo subyacente es una tasa, si ésta es variable se informará
+                     la tasa de interés de referencia del instrumento, por ejemplo Libor
+                     360. Si es un interés fijo se llenará con la tasa fijada.
+                     De no existir los anteriores, se deberá consultar a esta
+                     Superintendencia.
+
+ACTIVO_OBJETO_       Corresponde informar el número de unidades del activo subyacente        9(13)V9(03)
+POSICION_LARGA       en el cual esta expresada la posición larga de cada contrato.
+(unidades)           En caso de tratarse de un futuro de moneda, corresponde informar
+                     el monto en moneda extranjera establecido por contrato que debe
+                     ser intercambiado en una fecha futura de acuerdo a la posición en
+                     el contrato.
+                     Para futuro de tasa o renta fija corresponde informar el valor
+                     nocional o valor presente del instrumento de renta fija o el flujo,
+                      establecido por contrato a ser intercambiado en una fecha futura.
+                      Debe informarse en la moneda establecida en el contrato.
+
+                      En el caso de futuro de acción, corresponde informar la cantidad de
+                      acciones objeto del contrato. Para índices accionarios, corresponde
+                      informar el valor monetario de cada punto del índice objeto del
+                      contrato multiplicado por el número de unidades del índice que se
+                      intercambian, de acuerdo al número de contratos.
+
+ACTIVO_OBJETO_        Corresponde informar el número de unidades del activo subyacente         9(13)V9(03)
+POSICION_CORTA        en el cual esta expresada la posición corta de cada contrato
+(unidades)             En caso de tratarse de un futuro de moneda, corresponde informar
+                      el monto en moneda extranjera establecido por contrato que debe
+                      ser intercambiado en una fecha futura de acuerdo a la posición en
+                      el contrato.
+                      Para futuro de tasa o renta fija corresponde informar el valor
+                      nocional o valor presente del instrumento de renta fija o el flujo,
+                      establecido por contrato a ser intercambiado en una fecha futura.
+                      Debe informarse en la moneda establecida en el contrato.
+
+                      En el caso de futuro de acción, corresponde informar la cantidad de
+                      acciones objeto del contrato. Para índices accionarios, corresponde
+                      informar el valor monetario de cada punto del índice objeto del
+                      contrato multiplicado por el número de unidades del índice que se
+                      intercambian, de acuerdo al número de contratos.
+
+MONEDA                Corresponde a la moneda en la cual está expresada la posición de         X(06)
+                      la compañía en el contrato. Se informará de acuerdo a la
+                      codificación definida en el sitio web de esta Superintendencia en el
+                      módulo SEIL, Codificación SVS, Unidades Monetarias.
+
+                      De no existir, se deberá consultar a esta Superintendencia.
+
+NUMERO_DE_            Corresponde informar el número de contratos comprados o                  9(06)
+CONTRATOS             vendidos en cada operación.
+
+VALOR_DE_             Corresponde informar el valor de mercado del activo objeto a la          9(13)
+MERCADO               fecha de información multiplicado por el número de unidades del
+DEL_ACTIVO_           activo subyacente de cada contrato, multiplicado por el número de
+OBJETO_A_LA_          contratos (M$).
+FECHA_DE_
+INFORMACION (monto)
+
+PRECIO_SPOT_          Corresponde al precio de cierre observado del activo subyacente al       9(10)V9(05)
+DEL_ACTIVO_           contrato, a la fecha de la información.
+SUBYACENTE
+                      En caso de futuro de moneda corresponde informar el valor de la
+                      moneda en el mercado contado a la fecha de información
+                      En caso de futuro de tasa o renta fija corresponde informar la tasa
+                      vigente en el mercado o al valor de mercado del instrumento de
+                      renta fija a la fecha de información.
+                      En caso de forward de acción e índice accionario corresponde
+                      informar el valor bursátil o contado de la acción o índice accionario,
+                      en el mercado contado a la fecha de información
+                      Debe ser expresado en la moneda en la cual está denominado el
+                      derivado.
+
+PRECIO_FUTURO_DE_     Corresponde al precio futuro de mercado del contrato a la fecha de       9(10)V9(05)
+MERCADO_AL_INICIO_    cierre del trimestre anterior; o bien, a la fecha de inicio de la
+DE_LA_                operación si es que ésta se efectúo durante el trimestre que se
+OPERACIÓN             está informando.
+PRECIO_FUTURO_DE_     Corresponde al precio futuro de mercado a la fecha de información,     9(10)V9(05)
+MERCADO_A_LA_         para un contrato de idénticas características. Este debe ser
+FECHA_DE_             expresado de acuerdo a la moneda extranjera establecida por
+INFORMACION           contrato a ser entregada o recibida en una fecha futura.
+                      Corresponderá al informado por los mercados donde se transaron
+                      los respectivos contratos, pudiendo ser obtenido desde medios de
+                      información de reconocido prestigio internacional. En caso de no
+                      existir dicho valor de mercado, corresponderá al Tipo de cambio
+                      spot o de mercado a la fecha de valorización.
+
+ORIGEN_DE_LA_         Corresponde a la fuente de donde se obtuvieron los datos para          X(30)
+INFORMACION           valorizar el contrato.
+
+MONTO_ACTIVOS_EN_     Se deberá informar el valor final, a la fecha de información, de los   9(13)
+MARGEN                activos entregados como margen en la operación, expresado en
+                      miles de pesos (M$).
+                      Si para la operación no es necesario dejar activos en margen
+                      indicar cero.
+MONTO (activo)        Corresponde informar el monto contabilizado en activos producto        9(13)
+                      de este contrato. Este monto se deberá expresar en miles de pesos
+                      (M$).
+
+MONTO (pasivo)        Corresponde informar el monto contabilizado en pasivos producto        9(13)
+                      de este contrato. Este monto se deberá expresar en miles de pesos
+                      (M$).
+
+                      Para aquellos Futuros que no tengan compensación diaria se             -9(13)
+VALOR_RAZONABLE_D     debe informar el valor neto de la posición del futuro, el cual
+EL_CONTRATO_          corresponde a la diferencia entre los montos contabilizados en
+FUTURO_A_LA_          activos y pasivos producto de este contrato, a la fecha de cierre
+                      de los estados financieros. Esta información deberá expresarse
+FECHA_DE_INFORMAC
+                      en miles de pesos (M$).
+ION
+
+
+
+TSA                   Corresponde informar si el instrumento está incluido en el Test de     X(02)
+                      Suficiencia de Activos para el periodo informado, de acuerdo a la
+                      siguiente codificación:
+                      SI: el instrumento es utilizado para el análisis del Test de
+                      Suficiencia de Activos
+                      NO: el instrumento no es utilizado para el análisis del Test de
+                      Suficiencia de Activos.
+
+                      En periodos que no corresponde enviar el Test de Suficiencia de
+                      Activos
+METOD_CLASIF_VALO     Corresponde informar la clasificación dada al instrumento en los       X(6)
+RIZ_EEFF              Estados de Situación Financiera, de acuerdo a lo siguiente:
+                      CA : Activos Financieros a Costo Amortizado (5.11.30.00).
+                      VR : Activos Financieros a Valor Razonable (5.11.20.00).
+                      EE : Efectivo Equivalente (5.11.10.00).
+                      CUI : Inversiones Seguros Cuenta Única de Inversión
+                      (5.11.50.00)
+                      OTRCLA: Otra clasificación dentro del Estado de Situación
+                      Financiera.
+FILLER                Se deberá informar espacios.                                           X(49)
+
+
+
+Registro tipo 5 DETALLE: INFORMACIÓN GENERAL DE IDENTIFICACIÓN DE LOS CONTRATOS SWAPS
+CAMPO            DESCRIPCION                                                            PICTURE
+TIPO             Tipo de registro. En este caso corresponde tipo "5".                   9(01)
+
+OBJETIVO_        Corresponde informar el objetivo del contrato derivado, de acuerdo     X(05)
+CONTRATO         a lo señalado en la NCG N°200 de fecha 07.08.2006. Se señalará
+                 de acuerdo a la siguiente codificación:
+                 INV      : Inversión
+                 CBE      : Cobertura de riesgos financieros
+                 1512     : Cobertura1512, para aquellos contratos que apliquen lo
+                            dispuesto en el Título VII de la Circular N°1512 del 2001
+                            referida a calce.
+
+TIPO_OPERACION   Código que identifica las operaciones informadas por la compañía,      X(10)
+                 deben informarse todas las operaciones vigentes a la fecha de
+                 presentación de la información. Se informará de acuerdo a la
+                 codificación definida en la página web de esta Superintendencia en
+                 el módulo SEIL, Codificación S.V.S., Instrumentos.
+FOLIO_           Corresponde al número de la papeleta de la mesa de dinero de la        9(10)
+OPERACION        compañía, donde se registra la compra del instrumento derivado.
+                 En caso de no poder obtener este número se deberá asociar al
+                 documento contable que respalda la compra del instrumento.
+
+ITEM_OPERACION   Secuencia del instrumento derivado dentro del folio de la operación.   9(03)
+                 No pueden existir dos instrumentos derivados con igual folio e ítem
+                 operación.
+
+FECHA_DE_LA_     Corresponde informar la fecha de inicio del contrato con el            9(08)
+OPERACION        siguiente formato: AAAAMMDD.
+
+FECHA_DE_        Corresponde informar la fecha de vencimiento del contrato con el       9(08)
+VENCIMIENTO_     siguiente formato: AAAAMMDD.
+DEL_CONTRATO
+
+NOMBRE           Corresponde informar el nombre o razón social de la contraparte de     X(60)
+                 la operación.
+                 Para el caso de las operaciones realizadas con bancos
+                 nacionales se informará de acuerdo a codificación definida en
+                 SEIL, Codificación SVS, Códigos Circular 1835, Códigos de
+                 Bancos, Nombre del Banco para C.1835
+NACIONALIDAD     Corresponde informar la nacionalidad de la contraparte de la           X(02)
+                 operación, de acuerdo a la codificación definida SEIL, Codificación
+                 SVS, Países.
+RELACIONADO       Corresponde informar si la contraparte de la operación está           X(02)
+                  relacionada con la compañía de seguros, de acuerdo a lo
+                  establecido en el artículo N°100 de la ley N°18.045 del 22.10.1981
+                  y modificaciones.
+                  Se señalará de acuerdo a la siguiente codificación:
+                  RE : Relacionado
+                 NR : No Relacionado
+CLASIFICACION_   Corresponde informar la menor clasificación de riesgo vigente, si      X(15)
+DE_RIESGO        tuviere, de la contraparte de la operación.
+                 Si la contraparte no contara con clasificación de riesgo se debe
+                 informar S/C.
+
+ACTIVO_OBJETO_   Corresponde al Valor nocional establecido por contrato, que será       9(13)V9(03)
+POSICION_LARGA   recibido en una fecha futura por la compañía.
+(monto)
+ACTIVO_OBJETO_   Corresponde al Valor nocional establecido por contrato, que será       9(13)V9(03)
+POSICION_CORTA   entregado en una fecha futura por la compañía.
+(monto)
+MONEDA_          Corresponde a la moneda en la cual está expresada la posición          X(06)
+POSICION_LARGA        larga en el contrato swap, es decir la moneda en que está
+                      denominada la tasa o el nocional, que debe ser recibido en una
+                      fecha futura, cuando corresponda. Se informará de acuerdo a la
+                      codificación definida en el sitio web de esta Superintendencia en el
+                      módulo SEIL, Codificación SVS, Unidades Monetarias. De no
+                      existir, se deberá consultar a esta Superintendencia.
+
+MONEDA_               Corresponde a la moneda en la cual está expresada la posición           X(06)
+POSICION_CORTA        corta en el contrato swap, es decir la moneda en que está
+                      denominada la tasa o el nocional, que debe ser entregado en una
+                      fecha futura, cuando corresponda. Se informará de acuerdo a la
+                      codificación definida en el sitio web de esta Superintendencia en el
+                      módulo SEIL, Codificación SVS, Unidades Monetarias. De no
+                      existir, se deberá consultar a esta Superintendencia.
+
+TASA_A_FUTURO_        Corresponde a la tasa a futuro establecida en el contrato swap la       X(30)
+CONTRATO_             cual generará los flujos a ser recibidos en una fecha futura, cuando
+POSICION_LARGA        corresponda. Ej.: Fija 8,5%, Libor, etc.
+
+TASA_A_FUTURO_        Corresponde a la tasa a futuro establecida en el contrato swap la       X(30)
+CONTRATO_             cual generará los flujos a ser entregados en una fecha futura,
+POSICION_CORTA        cuando corresponda. Ej: Fija 7,4%, Libor, etc.
+
+T. C._FUTURO_         Corresponde al tipo de cambio a futuro establecido en el contrato       9(10)V9(03)
+CONTRATO              swap y deberá ser expresado de acuerdo a la moneda extranjera
+                      establecida por contrato a ser entregada o recibida en una fecha
+                      futura.
+
+TASA_A_FUTURO_        Corresponde a la tasa de interés única, que aplicada a cada flujo       9(10)V9(03)
+MERCADO               del swap de la posición larga, genera el mismo valor presente que
+POSICION_LARGA        al valorizar cada flujo usando la estructura cero cupón de mercado
+                      a la fecha.
+
+TASA_A_FUTURO_        Corresponde a la tasa de interés única, que aplicada a cada flujo       9(10)V9(03)
+MERCADO_              del swap de la posición corta, genera el mismo valor presente que
+POSICION_CORTA        al valorizar cada flujo usando la estructura cero cupón de mercado
+                      a la fecha.
+
+TIPO_DE_CAMBIO_ME     Tipo de cambio spot de mercado a la fecha de valorización               9(10)V9(03)
+RCADO                 Corresponderá al informado por los mercados donde se transaron
+                      los respectivos contratos, pudiendo ser obtenido desde medios de
+                      información de reconocido prestigio internacional.
+
+VALOR_                Corresponde al valor actual de los flujos a recibir descontados a la    9(13)
+PRESENTE_             tasa de mercado posición larga o a Tir de compra según
+POSICION_LARGA (M$)   corresponda.
+
+VALOR_                Corresponde al valor actual de los flujos a entregar descontados a      9(13)
+PRESENTE_             la tasa de mercado posición corta o a Tir de compra según
+POSICION_CORTA (M$)   corresponda.
+
+VALOR_RAZONABLE_      Corresponde informar, en caso de:                                       9(13)
+DEL_ACTIVO_           Swaps de monedas: el valor de mercado de la moneda multiplicada
+OBJETO_A_LA_          por los nominales del contrato
+FECHA_DE_LA_          Swaps de tasa de interés: el valor presente del nocional o de
+INFORMACION (M$)      referencia del contrato
+                      Swaps sobre instrumento de renta fija: el número de unidades del
+                      instrumento o índice por el precio spot a la fecha de la información.
+
+VALOR_RAZONABLE_D     Corresponde al valor razonable que presenta el contrato swap, o         -9(13)
+EL_CONTRATO_A_LA_     uno de similares características, a la fecha de información. En el
+FECHA_DE_LA_          caso de derivados que cubran activos acogidos a la Circular
+INFORMACION_(M$)    N°1.512, corresponde al valor del contrato utilizando la TIR de
+                    compra.
+ORIGEN_DE_LA_       Corresponde a la fuente de donde se obtuvieron los datos para            X(30)
+INFORMACION         valorizar el contrato.
+
+ACTIVO_             Corresponde informar si uno o más títulos (en caso de haber              X(05)
+RESPALDA_           agrupado instrumentos con características idénticas) registrados,
+RESERVA_VALOR_DE_   se encuentran respaldando la reserva de valor del fondo señalada
+FONDO               en el DFL Nº251.
+                    Se informará de acuerdo a la valorización que tengan los títulos,
+                    según Circular N°1360 y posteriores modificaciones, con un código
+                    de cinco letras formado de la siguiente manera:
+
+                    Las tres primeras letras serán:
+
+                    APV :      si los instrumentos respaldan la reserva de valor del
+                    fondo de seguros con ahorro previsional voluntario, o
+
+                    OTR :       si los instrumentos respaldan la reserva de valor del
+                    fondo de seguros con ahorro, distinto a los seguros con ahorro
+                    previsional voluntario
+
+                    La cuarta letra será A, B, C o D dependiendo de la forma de
+                    constitución de la reserva de descalce a que se refiere el N°4 de la
+                    Norma de Carácter General N°132, de 13 de marzo de 2002 y sus
+                    posteriores modificaciones.
+
+                    La quinta letra será G si se garantiza la rentabilidad del valor de la
+                    póliza en los casos B, C o D, si no corresponde se informará con
+                    espacio.
+
+                    Si el instrumento no respalda reserva de valor del fondo se
+                    indicará:
+
+                    VIDA: Para activos que NO estén asociados a fondos que
+                    respalden seguros de vida con cuenta de inversión y correspondan
+                    a inversiones de compañías del segundo grupo
+
+
+                    GRAL: Para activos que correspondan a inversiones del primer
+                    grupo.
+NOMBRE_DEL_         Para instrumentos que estén asociados a fondos que respalden             X(30)
+FONDO               seguros de vida con cuenta de inversión, se debe informar el
+                    nombre del Fondo al cual pertenece. Se entenderá por fondo al tipo
+                    de plan o modalidades de inversión convenidos para los seguros
+                    con cuentas de inversión.
+
+                    Para instrumentos que no respalden seguros de vida con cuenta de
+                    inversión, se debe informar “NO APLICA”.
+
+
+
+NOMBRE_CARTERA      Para instrumentos que no respalden seguros de vida con cuenta de         X(30)
+                    inversión, se debe informar la sub cartera que respalda, si
+                    corresponde.
+                    Para instrumentos que no respalden una sub cartera, se debe
+                    informar “NO APLICA”
+
+
+MONTO_ACTIVOS_EN_   Se deberá informar el valor final, a la fecha de información, de los     9(13)
+MARGEN              activos entregados como margen en la operación, expresado en
+                    miles de pesos (M$).
+                           Si para la operación no es necesario dejar activos en margen
+                           indicar cero.
+
+MONTO (activo)             Corresponde informar el monto contabilizado en activos producto        9(13)
+                           de este contrato. Este monto se deberá expresar en miles de pesos
+                           (M$).
+
+
+MONTO (pasivo)             Corresponde informar el monto contabilizado en pasivos producto        9(13)
+                           de este contrato. Este monto se deberá expresar en miles de pesos
+                           (M$).
+
+EFECTO_EN_                 Corresponde informar el efecto realizado en los resultados de las      -9(13)
+RESULTADOS_                operaciones a la fecha de los estados financieros. Este monto se
+REALIZADOS                 deberá expresar en miles de pesos (M$).
+
+TSA                        Corresponde informar si el instrumento está incluido en el Test de     X(02)
+                           Suficiencia de Activos para el periodo informado, de acuerdo a la
+                           siguiente codificación:
+                           SI: el instrumento es utilizado para el análisis del Test de
+                           Suficiencia de Activos
+                           NO: el instrumento no es utilizado para el análisis del Test de
+                           Suficiencia de Activos.
+
+                           En periodos que no corresponde enviar el Test de Suficiencia de
+                           Activos
+METOD_CLASIF_VALO          Corresponde informar la clasificación dada al instrumento en los       X(6)
+RIZ_EEFF                   Estados de Situación Financiera, de acuerdo a lo siguiente:
+                           CA : Activos Financieros a Costo Amortizado (5.11.30.00).
+                           VR : Activos Financieros a Valor Razonable (5.11.20.00).
+                           EE : Efectivo Equivalente (5.11.10.00).
+                           CUI : Inversiones Seguros Cuenta Única de Inversión
+                           (5.11.50.00)
+                           OTRCLA: Otra clasificación dentro del Estado de Situación
+                           Financiera.
+
+
+Registro tipo 6 DETALLE:      INFORMACIÓN GENERAL DE IDENTIFICACIÓN DE LOS CONTRATOS DE
+                              PACTOS
+
+CAMPO                      DESCRIPCION                                                            PICTURE
+TIPO                       Tipo de registro. En este caso corresponde tipo "6".                   9(01)
+
+TIPO_OPERACION             Código que identifica las operaciones informadas por la compañía,      X(10)
+                           deben informarse todas las operaciones vigentes a la fecha de
+                           presentación de la información. Se informará de acuerdo a la
+                           codificación definida en la página web de esta Superintendencia en
+                           el módulo SEIL, Codificación S.V.S., Instrumentos.
+FOLIO_                     En el caso que la operación corresponda a una retroventa, se debe      9(10)
+OPERACION                  indicar el número de la papeleta de la mesa de dinero de la
+                           compañía, donde se registra la operación subyacente al pacto.
+                           Para otro tipo de pacto se debe informar el folio de la operación de
+                           pacto.
+                           En caso de no poder obtener este número se deberá asociar al
+                           documento contable que respalda la compra del instrumento.
+
+ITEM_OPERACION             Secuencia dentro del folio de la operación. No pueden existir dos      9(03)
+                           operaciones con igual folio e ítem operación.
+FECHA_DE_LA          Corresponde informar la fecha de inicio del contrato de pacto con el    9(08)
+OPERACION            siguiente formato: AAAAMMDD.
+
+FECHA_DE_            Corresponde informar la fecha de vencimiento del contrato de pacto      9(08)
+VENCIMIENTO_         con el siguiente formato: AAAAMMDD.
+DEL_CONTRATO
+
+TASA_PACTO           Corresponde informar la tasa a la cual fue realizado el pacto,          9(10)V9(03)
+                     indicada en el contrato de pacto.
+
+NOMBRE               Corresponde informar el nombre o razón social de la contraparte         X(60)
+                     del pacto.
+                     Para el caso de las operaciones realizadas con bancos
+                     nacionales se informará de acuerdo a codificación definida en
+                     SEIL, Codificación SVS, Códigos Circular 1835, Códigos de
+                     Bancos, Nombre del Banco para C.1835
+NACIONALIDAD         Corresponde informar la nacionalidad de la contraparte del pacto,       X(02)
+                     de acuerdo a la codificación definida en SEIL, Codificación SVS,
+                     Países.
+RELACIONADO          Corresponde informar si la contraparte del pacto de la operación        X(02)
+                     está relacionada con la compañía de seguros, de acuerdo a lo
+                     establecido en el artículo N°100 de la ley N°18.045 del 22.10.1981
+                     y modificaciones.
+                     Se señalará de acuerdo a la siguiente codificación:
+                     RE : Relacionado
+                     NR : No Relacionado
+
+
+ACTIVO_OBJETO        Instrumento subyacente al pacto. En el caso de tratarse de un           X(30)
+(nombre)             instrumento de renta fija nacional corresponde obligatoriamente
+                     informar el código nemotécnico de acuerdo a lo instruido en la
+                     Circular 1085, o la que la reemplace, de esta Superintendencia o el
+                     código asignado según lo señalado en Anexo Nº 1 de la presente
+                     Circular. En el caso de instrumentos financieros de renta fija
+                     emitidos por empresas extranjeras o por empresas nacionales y
+                     transados en el extranjero, corresponde informar el código
+                     universal “ISIN” (International Securities Identification Number), a
+                     falta de éste, el código “CUSIP” (Commitee On Uniform Securities
+                     Identification Procedures). De no existir los anteriores, se deberá
+                     consultar a esta Superintendencia.
+
+SERIE_ACTIVO_        Corresponde informar la serie del instrumento subyacente al pacto       X(30)
+OBJETO               cuando corresponda.
+
+NRO_RUT_ACTIVO       Corresponde    informar   el   Rut   del   emisor   del   instrumento   9(09)
+OBJETO               subyacente.
+
+DIG_RUT_ACTIVO_OBJ   Corresponde informar el dígito verificador del RUT del emisor del       X(01)
+ETO                  instrumento subyacente.
+
+VALOR_NOMINAL        Corresponde informar el valor nominal del instrumento subyacente        9(13)V9(03)
+                     a la fecha de presentación de la información. Se entiende por
+                     “nominal” los nominales comprados originalmente menos las
+                     ventas realizadas sobre este título. No se deberán rebajar las
+                     amortizaciones del instrumento a la fecha de información.
+
+TIR_COMPRA           Corresponde a la tasa anual de descuento utilizada para                 9(10)V9(03)
+                     determinar el precio del instrumento subyacente al momento de la
+                     compra.
+
+TASA_EMISION         Corresponde a la tasa a la cual fue emitido el instrumento              9(10)V9(03)
+                     subyacente.
+ACTIVO_OBJETO         Corresponde al valor contable del instrumento subyacente al pacto      9(13)
+(monto) (M$)          a la fecha de información, según Circular de valorización vigente.
+
+MONEDA                Corresponde a la moneda en la cual está denominado el                  X(06)
+                      instrumento subyacente el pacto, cuando corresponda. Se
+                      informará de acuerdo a la codificación definida en el sitio web de
+                      esta Superintendencia en el módulo SEIL, Codificación SVS,
+                      Unidades Monetarias. De no existir, se deberá consultar a esta
+                      Superintendencia.
+
+TASA_O_PRECIO_        Tasa de mercado del instrumento subyacente al pacto, a la fecha        9(10)V9(03)
+DE_MERCADO            de valorización.
+
+VALOR_DE_             Corresponde informar el monto del valor de mercado, del activo         9(13)V9(03)
+MERCADO_A_LA_         objeto a la fecha de suscripción del pacto.
+FECHA_DE_
+SUSCRIPCION (monto)
+
+VALOR_INICIAL_UM      Corresponde al valor invertido en la operación, indicado en el         9(13)V9(03)
+                      contrato de pacto, expresado en la moneda del pacto.
+
+VALOR_ PACTADO        Corresponde al valor del pacto al vencimiento, acordado en el          9(13)V9(03)
+                      contrato de pacto, expresado en la moneda del pacto.
+
+INTERES_              Corresponde informar el interés que resulte de aplicar la tasa         9(13)
+DEVENGADO_DEL_        implícita entre el valor de compra del activo objeto y el monto a
+PACTO M$              recibir por el cumplimiento del compromiso de venta, en proporción
+(Otros Activos)       al tiempo transcurrido.
+
+VALORIZACION_         Corresponde informar el valor en que se encuentra contabilizado el     9(13)
+DE_PACTO_A_LA_FEC     pacto, de acuerdo a las instrucciones de circular sobre valorización
+HA_DE_                de esta Superintendencia, a la fecha de cierre del mes a que se
+CIERRE                refiere la información, expresado en miles de pesos (M$).
+
+VALOR_DE_             Corresponde informar el monto del valor de mercado, del activo         9(13)
+MERCADO_A_LA_         subyacente del pacto, a la fecha de información.
+FECHA_DE_
+INFORMACION
+ (monto) (M$)
+TSA                   Corresponde informar si el instrumento está incluido en el Test de     X(02)
+                      Suficiencia de Activos para el periodo informado, de acuerdo a la
+                      siguiente codificación:
+                      SI: el instrumento es utilizado para el análisis del Test de
+                      Suficiencia de Activos
+                      NO: el instrumento no es utilizado para el análisis del Test de
+                      Suficiencia de Activos.
+
+                      En periodos que no corresponde enviar el Test de Suficiencia de
+                      Activos
+METOD_CLASIF_VALO     Corresponde informar la clasificación dada al instrumento en los       X(6)
+RIZ_EEFF              Estados de Situación Financiera, de acuerdo a lo siguiente:
+                      CA : Activos Financieros a Costo Amortizado (5.11.30.00).
+                      VR : Activos Financieros a Valor Razonable (5.11.20.00).
+                      EE : Efectivo Equivalente (5.11.10.00).
+                      CUI : Inversiones Seguros Cuenta Única de Inversión
+                      (5.11.50.00)
+                      OTRCLA: Otra clasificación dentro del Estado de Situación
+                      Financiera.
+FILLER                Se deberá informar espacios.                                           X(133)
+Registro Tipo 7 de TOTALES
+
+
+CAMPO                        DESCRIPCION                                                     PICTURE
+TIPO                         Tipo de registro. En este caso corresponde "7".                 9(01)
+
+TOTAL_REGISTROS              Corresponde al número total de registros informados incluidos   9(06)
+                             el de IDENTIFICACION y el de TOTALES.
+
+FILLER                       Se deberá informar espacios.                                    X(482)
+
