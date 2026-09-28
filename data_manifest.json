@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "updated_at": "2026-09-28",
   "total_tables": 51,
-  "total_records": 15408338,
+  "total_records": 15405079,
   "classification": {
     "automatico": "Extracción y procesamiento 100% por código autónomo (APIs, scrapers, normalizadores)",
     "manual": "Extracción asistida o transcripción de notas y reportes no estructurados (ej. NotebookLM)"
@@ -511,13 +511,13 @@
       "sector": "patrimonios_separados",
       "sector_label": "Patrimonios Separados",
       "norma": "Balance del patrimonio separado (EEFF CMF), métricas FSB EF5",
-      "corte": "2010-12 a 2025-12 (diciembre; sin 2013)",
+      "corte": "2014-12 a 2025-12 (diciembre; 2010–2013 sin datos)",
       "frescura": "Anual, cierre de diciembre",
       "modo": "Manual",
       "ultima_actualizacion": "2026-09-28",
       "file_parquet": "outputs/securitizadoras/patrimonios_separados_balance_fsb.parquet",
-      "registros_reales": 497,
-      "descripcion": "Un balance por patrimonio separado y cierre de diciembre, con las 6 categorías FSB recalculadas desde las cuentas y los ratios CI2, MT2 y L5. Todos cuadran activos = pasivos + patrimonio. 29 balances vienen marcados con revisar y el motivo.",
+      "registros_reales": 358,
+      "descripcion": "Un balance por patrimonio separado y cierre de diciembre, con las 6 categorías FSB recalculadas desde las cuentas y los ratios CI2, MT2 y L5. Todos cuadran activos = pasivos + patrimonio. 10 balances vienen marcados con revisar y el motivo. La serie parte en diciembre de 2014: de 2010 a 2013 no hay datos publicados (2013 no está en la fuente y 2010–2012 se dejaron fuera para no cortar la serie; eran además los años más dudosos).",
       "origen": "securitizadoras/fuentes/FSB_Patrimonio_Separado_v4.xlsx (lectura NotebookLM de los EEFF CMF) → securitizadoras/scripts/05_publicar_balance_patrimonios_fsb.py"
     },
     {
@@ -527,13 +527,13 @@
       "sector": "patrimonios_separados",
       "sector_label": "Patrimonios Separados",
       "norma": "Balance del patrimonio separado (EEFF CMF), métricas FSB EF5",
-      "corte": "2010-12 a 2025-12 (diciembre; sin 2013)",
+      "corte": "2014-12 a 2025-12 (diciembre; 2010–2013 sin datos)",
       "frescura": "Anual, cierre de diciembre",
       "modo": "Manual",
       "ultima_actualizacion": "2026-09-28",
       "file_parquet": "outputs/securitizadoras/patrimonios_separados_balance_cuentas.parquet",
-      "registros_reales": 11082,
-      "descripcion": "Cada cuenta del balance impreso, en M$ y con su signo, incluidas las líneas de subtotal, para 497 balances de 11 securitizadoras.",
+      "registros_reales": 7962,
+      "descripcion": "Cada cuenta del balance impreso, en M$ y con su signo, incluidas las líneas de subtotal, para 358 balances de 10 securitizadoras. La serie parte en diciembre de 2014: de 2010 a 2013 no hay datos publicados (2013 no está en la fuente y 2010–2012 se dejaron fuera para no cortar la serie; eran además los años más dudosos).",
       "origen": "securitizadoras/fuentes/FSB_Patrimonio_Separado_v4.xlsx, hoja Detalle_de_Cuentas → securitizadoras/scripts/05_publicar_balance_patrimonios_fsb.py"
     },
     {

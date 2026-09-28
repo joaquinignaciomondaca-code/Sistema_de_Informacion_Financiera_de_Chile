@@ -276,10 +276,10 @@ corredoras_bolsa/   01 universo → 02 EEFF + REPO → 03 audit ; stream_cmf_cor
 securitizadoras/    stream_cmf_securitizadoras (gestoras + lista de patrimonios separados)
                     05_publicar_balance_patrimonios_fsb:
                       leer fuentes/FSB_Patrimonio_Separado_v4.xlsx (hoja Detalle_de_Cuentas; Detalle_por_patrimonio solo para contrastar)
-                      descartar filas vacías → exigir: DV mód.11, periodo AAAA12, activos = PC + PNC + patrimonio (±2 M$) en todos
+                      descartar filas vacías y años < 2014 (2013 no está; 2010–2013 sin datos) → exigir: DV mód.11, periodo AAAA12, activos = PC + PNC + patrimonio (±2 M$) en todos
                       recalcular por documento: activos, cartera (activo securitizado ± provisiones), AC, PC, PNC, patrimonio, CI2, MT2, L5
                       revisar = detalle≠subtotal ∪ lectura independiente distinta (8 docs fijos) ∪ hoja resumen distinta
-                      → patrimonios_separados_balance_cuentas.parquet (11.082) + _balance_fsb.parquet (497)
+                      → patrimonios_separados_balance_cuentas.parquet (7.962) + _balance_fsb.parquet (358)
                     audit_securitizadoras (gestoras, lista y balance FSB)
 cooperativas/       01 maestro → 02 series (Excel CMF) → 03 audit → 04 nota efectivo (RAW_NOTE_DATA transcrito)
                     + flujo automático CMF (ver §8b)

@@ -740,7 +740,7 @@ const EXPLORER_TREE = [
     label: "SECURITIZACIÓN (CMF / LEY 18.045)",
     badges: [
       { type: "entities", text: "16 Gestoras", title: "Sociedades securitizadoras y sus patrimonios separados son entidades distintas" },
-      { type: "data", text: "497 balances", title: "Balances de diciembre 2010–2025 de patrimonios separados (Excel FSB); los balances de las gestoras son otra serie" }
+      { type: "data", text: "358 balances", title: "Balances de diciembre 2014–2025 de patrimonios separados (Excel FSB). De 2010 a 2013 no hay datos. Los balances de las gestoras son otra serie" }
     ],
     status: "active",
     children: [
@@ -810,12 +810,13 @@ const EXPLORER_TREE = [
           {
             id: "circ_ps_balance_fsb",
             type: "circular",
-            label: "Balance · Métricas FSB (CI2, MT2, L5)",
-            badge: "497 Balances",
+            label: "Balance · Métricas FSB (desde 2014; 2010–2013 sin datos)",
+            badge: "358 Balances",
             badgeType: "data",
             status: "active",
             sector: "patrimonios_separados",
             chips: [
+              { label: "Cobertura por año (2010–2013 sin datos)", query: "SELECT a.anio, count(b.archivo) AS balances, CASE WHEN a.anio < 2014 THEN 'Sin datos: la serie parte en diciembre de 2014 (2013 no está en la fuente; 2010–2012 se dejaron fuera para no cortar la serie)' ELSE 'Cierre de diciembre' END AS nota FROM range(2010, 2026) a(anio) LEFT JOIN patrimonios_separados_balance_fsb b ON b.anio = a.anio GROUP BY a.anio ORDER BY a.anio;" },
               { label: "Agregado del sector por cierre", query: "SELECT periodo, count(*) AS patrimonios, sum(total_activos_m_clp) AS activos_m_clp, sum(cartera_securitizada_m_clp) AS cartera_m_clp, sum(activos_corto_plazo_m_clp) AS activos_cp_m_clp, sum(pasivos_corto_plazo_m_clp) AS pasivos_cp_m_clp, sum(pasivos_largo_plazo_m_clp) AS pasivos_lp_m_clp, sum(patrimonio_m_clp) AS patrimonio_m_clp, round(sum(cartera_securitizada_m_clp) / sum(total_activos_m_clp), 4) AS ci2_agregado, round(sum(pasivos_corto_plazo_m_clp) / sum(activos_corto_plazo_m_clp), 4) AS mt2_agregado, round((sum(total_activos_m_clp) - sum(patrimonio_m_clp)) / sum(total_activos_m_clp), 4) AS l5_agregado FROM patrimonios_separados_balance_fsb GROUP BY periodo ORDER BY periodo;" },
               { label: "Percentiles CI2 · MT2 · L5 por cierre", query: "SELECT periodo, count(*) AS patrimonios, round(quantile_cont(ci2_intermediacion_credito, 0.25), 3) AS ci2_p25, round(quantile_cont(ci2_intermediacion_credito, 0.5), 3) AS ci2_p50, round(quantile_cont(ci2_intermediacion_credito, 0.75), 3) AS ci2_p75, round(quantile_cont(mt2_transformacion_plazos, 0.25), 3) AS mt2_p25, round(quantile_cont(mt2_transformacion_plazos, 0.5), 3) AS mt2_p50, round(quantile_cont(mt2_transformacion_plazos, 0.75), 3) AS mt2_p75, round(quantile_cont(l5_apalancamiento, 0.25), 3) AS l5_p25, round(quantile_cont(l5_apalancamiento, 0.5), 3) AS l5_p50, round(quantile_cont(l5_apalancamiento, 0.75), 3) AS l5_p75 FROM patrimonios_separados_balance_fsb GROUP BY periodo ORDER BY periodo;" },
               { label: "Agregado sin balances dudosos", query: "SELECT periodo, count(*) AS patrimonios, sum(total_activos_m_clp) AS activos_m_clp, sum(cartera_securitizada_m_clp) AS cartera_m_clp, sum(patrimonio_m_clp) AS patrimonio_m_clp, round(sum(cartera_securitizada_m_clp) / sum(total_activos_m_clp), 4) AS ci2_agregado, round((sum(total_activos_m_clp) - sum(patrimonio_m_clp)) / sum(total_activos_m_clp), 4) AS l5_agregado FROM patrimonios_separados_balance_fsb WHERE NOT revisar GROUP BY periodo ORDER BY periodo;" },
@@ -823,14 +824,14 @@ const EXPLORER_TREE = [
               { label: "Balances marcados para revisar", query: "SELECT periodo, nombre_administradora, codigo_patrimonio, total_activos_m_clp, patrimonio_m_clp, motivo_revision FROM patrimonios_separados_balance_fsb WHERE revisar ORDER BY periodo, nombre_administradora, codigo_patrimonio;" }
             ],
             tables: [
-              { id: "patrimonios_separados_balance_fsb", name: "patrimonios_separados.balance_fsb", rows: "497 balances", file: "outputs/securitizadoras/patrimonios_separados_balance_fsb.parquet" }
+              { id: "patrimonios_separados_balance_fsb", name: "patrimonios_separados.balance_fsb", rows: "358 balances", file: "outputs/securitizadoras/patrimonios_separados_balance_fsb.parquet" }
             ]
           },
           {
             id: "circ_ps_balance_cuentas",
             type: "circular",
-            label: "Balance · Cuentas Impresas",
-            badge: "11.082 Cuentas",
+            label: "Balance · Cuentas Impresas (desde 2014)",
+            badge: "7.962 Cuentas",
             badgeType: "data",
             status: "active",
             sector: "patrimonios_separados",
@@ -841,7 +842,7 @@ const EXPLORER_TREE = [
               { label: "Cuentas más frecuentes por rubro", query: "SELECT categoria, cuenta, count(*) AS balances, sum(monto_m_clp) AS suma_m_clp FROM patrimonios_separados_balance_cuentas WHERE categoria NOT LIKE 'Total%' GROUP BY categoria, cuenta ORDER BY balances DESC LIMIT 30;" }
             ],
             tables: [
-              { id: "patrimonios_separados_balance_cuentas", name: "patrimonios_separados.balance_cuentas", rows: "11.082 cuentas", file: "outputs/securitizadoras/patrimonios_separados_balance_cuentas.parquet" }
+              { id: "patrimonios_separados_balance_cuentas", name: "patrimonios_separados.balance_cuentas", rows: "7.962 cuentas", file: "outputs/securitizadoras/patrimonios_separados_balance_cuentas.parquet" }
             ]
           }
         ]

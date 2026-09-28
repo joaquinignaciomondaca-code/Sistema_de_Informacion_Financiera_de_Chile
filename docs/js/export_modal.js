@@ -97,8 +97,8 @@ class ExportModalController {
       bancos_maestro: 40,
       factoring_leasing_maestro: 28,
       patrimonios_separados_maestro: 18,
-      patrimonios_separados_balance_fsb: 497,
-      patrimonios_separados_balance_cuentas: 11082,
+      patrimonios_separados_balance_fsb: 358,
+      patrimonios_separados_balance_cuentas: 7962,
       corredoras_bolsa_maestro: 47,
       corredoras_bolsa_balance_resumen: 1586
     };
