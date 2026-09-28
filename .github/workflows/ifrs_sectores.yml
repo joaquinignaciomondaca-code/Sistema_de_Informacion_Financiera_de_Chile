@@ -1,10 +1,11 @@
-name: Estados financieros IFRS de AGF, securitizadoras y cajas de compensación (CMF), 3 veces al mes, incremental
+name: Estados financieros IFRS de AGF, securitizadoras y cajas de compensación (CMF) y altas de CCAF y factoring/leasing, 3 veces al mes, incremental
 
 on:
   schedule:
     # Días 2, 12 y 22 (13:30 UTC). La CMF publica un TXT trimestral con los estados IFRS de todas
     # las sociedades. Los trimestres cerrados (más de 150 días) no se vuelven a descargar; los
-    # recientes se releen para sumar a quienes presentan tarde.
+    # recientes se releen para sumar a quienes presentan tarde. Las CCAF y sociedades de
+    # factoring/leasing que reportan en el último trimestre y no están en su lista se agregan.
     - cron: '30 13 2,12,22 * *'
   push:
     branches:
@@ -52,7 +53,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          rutas="docs/outputs/ifrs_sectores docs/outputs/agf/agf_balance docs/outputs/agf/agf_resultados docs/outputs/securitizadoras/securitizadoras_balance docs/outputs/securitizadoras/securitizadoras_resultados docs/outputs/cajas_compensacion/ccaf_balance docs/outputs/cajas_compensacion/ccaf_resultados"
+          rutas="docs/outputs/ifrs_sectores docs/outputs/agf/agf_balance docs/outputs/agf/agf_resultados docs/outputs/securitizadoras/securitizadoras_balance docs/outputs/securitizadoras/securitizadoras_resultados docs/outputs/cajas_compensacion/ccaf_balance docs/outputs/cajas_compensacion/ccaf_resultados docs/outputs/cajas_compensacion/ccaf_maestro.json docs/outputs/cajas_compensacion/ccaf_maestro.parquet docs/outputs/factoring_leasing/factoring_leasing_maestro.json docs/outputs/factoring_leasing/factoring_leasing_maestro.parquet docs/outputs/entidades/novedades_ifrs.json"
           git add $rutas
           if git diff --cached --quiet; then echo 'Sin cambios.'; exit 0; fi
           ultimo=$(python -c "import json;print(max(json.load(open('docs/outputs/ifrs_sectores/manifest.json'))['periodos']))")
@@ -64,7 +65,8 @@ jobs:
             git reset --hard FETCH_HEAD
             git cherry-pick "$datos"
             python pipelines/ifrs_sectores/actualizar.py --solo-data-manifest
-            git add data_manifest.json
+            python pipelines/entidades/actualizar_listas.py --solo-conteos
+            git add data_manifest.json docs/js/sidebar.js docs/js/data_dictionary.js
             git diff --cached --quiet || git commit -m "IFRS sectores: data_manifest"
             git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
             sleep 20

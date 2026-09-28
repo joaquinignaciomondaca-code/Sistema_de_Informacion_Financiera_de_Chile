@@ -19,6 +19,13 @@ Selección de entidades por sector: RUT de la lista de entidades del sector, o n
 reportado que calza con el patrón del sector (así aparecen solas las entidades nuevas,
 que quedan marcadas en_lista_entidades = false y se informan en el manifiesto).
 
+Altas automáticas en listas sin registro CMF propio: una sociedad que en el último trimestre
+reporta con nombre de caja de compensación (CCAF) o de factoring/leasing y no está en la
+lista respectiva se agrega a esa lista (docs/outputs/entidades/novedades_ifrs.json deja el
+evento). Solo el último trimestre: una sociedad que dejó de existir no reaparece. Para
+factoring/leasing el archivo solo se usa para detectar; sus tablas las publica
+factoring_leasing/scripts/backfill_ifrs.py con esa misma lista.
+
 Montos: el entero literal del archivo, en unidades de la moneda informada (moneda =
 CLP o USD). No se convierte, no se suma ni se redondea. Si un valor no es entero se
 deja nulo y el texto original queda en valor_no_numerico.
@@ -69,8 +76,31 @@ SECTORES = {
         "carpeta": "cajas_compensacion", "prefijo": "ccaf", "etiqueta": "Cajas de Compensación",
         "lista": "cajas_compensacion/ccaf_maestro.json", "clave_rut": "rut",
         "patron": re.compile(r"CAJA\s+DE\s+COMPENSACI"),
+        "alta": lambda c, d, nombre: {
+            "rut": int(c), "dv": d, "rut_completo": f"{int(c):,}".replace(",", ".") + f"-{d}", "razon_social": nombre,
+            "nombre_fantasia": nombre, "tipo_entidad": "Caja de Compensación de Asignación Familiar",
+            "marco_legal": "Ley N° 18.833", "regulador_primario": "SUSESO", "emisor_valores_cmf": False,
+            "estado_vigencia": "Vigente", "lineas_deuda_registradas": False,
+            "observaciones": "Agregada automáticamente: reporta estados financieros IFRS a la CMF."},
     },
 }
+# Listas que solo se completan con este archivo (sin tablas propias aquí).
+SOLO_LISTA = {
+    "factoring_leasing": {
+        "lista": "factoring_leasing/factoring_leasing_maestro.json", "clave_rut": "rut",
+        "patron": re.compile(r"\bFACTORING\b|\bLEASING\b"), "excluir": re.compile(r"^BANCO\b|SEGUROS"),
+        "alta": lambda c, d, nombre: {
+            "rut": f"{c}-{d}", "rut_formateado": f"{int(c):,}".replace(",", ".") + f"-{d}", "razon_social": nombre,
+            "nombre_fantasia": nombre, "tipo_sociedad": "Factoring" if "FACTORING" in nombre.upper() else "Leasing",
+            "segmento": "Factoring" if "FACTORING" in nombre.upper() else "Leasing",
+            "registro_cmf": "Estados financieros IFRS (CMF)", "vigencia_cmf": "Vigente", "vigente": 1, "estado": "Activo",
+            "es_factoring": int("FACTORING" in nombre.upper()), "es_leasing_financiero": int("LEASING" in nombre.upper()),
+            "eeff_ifrs_en_cmf": "Sí (IFRS)", "fuente_eeff": "CMF > Estados financieros IFRS (TXT)",
+            "observaciones": "Agregada automáticamente: reporta estados financieros IFRS a la CMF con giro factoring/leasing."},
+    },
+}
+NOVEDADES = DOCS / "entidades" / "novedades_ifrs.json"
+MAX_ALTAS = 10
 TABLAS = {"balance": "ESF", "resultados": "ER"}
 TIPO_BALANCE = {"I": "individual", "C": "consolidado"}
 
@@ -172,7 +202,7 @@ def _norm(s: str) -> str:
 
 def cargar_listas() -> dict[str, dict[str, str]]:
     listas = {}
-    for sec, cfg in SECTORES.items():
+    for sec, cfg in {**SECTORES, **SOLO_LISTA}.items():
         filas = json.loads((DOCS / cfg["lista"]).read_text(encoding="utf-8"))
         ruts = {}
         for f in filas:
@@ -196,6 +226,7 @@ def leer_archivo(raw: bytes, periodo: str, listas: dict[str, dict[str, str]]):
     orden: dict[tuple, int] = {}
     repet: dict[tuple, int] = {}
     asignacion: dict[str, str | None] = {}
+    candidatos: dict[str, dict[str, str]] = {s: {} for s in SOLO_LISTA}
     for n, c in enumerate(csv.reader(io.StringIO(decodificar(raw)), delimiter=";"), start=1):
         if not c or all(not x.strip() for x in c):
             continue
@@ -215,6 +246,10 @@ def leer_archivo(raw: bytes, periodo: str, listas: dict[str, dict[str, str]]):
                 next((s for s, cfg in SECTORES.items() if cfg["patron"].search(nn)), None)
         sec = asignacion[cuerpo]
         if sec is None:
+            for s, cfg in SOLO_LISTA.items():
+                nn = _norm(nombre)
+                if cuerpo.isdigit() and cuerpo not in listas[s] and cfg["patron"].search(nn) and not cfg["excluir"].search(nn):
+                    candidatos[s][f"{cuerpo}-{dv(cuerpo)}"] = nombre
             continue
         tabla = next((t for t, pref in TABLAS.items() if estado.startswith(pref)), None)
         if tabla is None:
@@ -238,7 +273,9 @@ def leer_archivo(raw: bytes, periodo: str, listas: dict[str, dict[str, str]]):
         raise ErrorFuente(f"el archivo no trae filas de {periodo}")
     if len(entidades_archivo) < 50:
         raise ErrorFuente(f"el archivo trae solo {len(entidades_archivo)} sociedades")
-    return datos, {"lineas": lineas_periodo, "sociedades": len(entidades_archivo)}, avisos
+    return datos, {"lineas": lineas_periodo, "sociedades": len(entidades_archivo),
+                   "solo_lista_fuera": {s: [{"rut": r, "razon_social": n} for r, n in sorted(v.items())]
+                                        for s, v in candidatos.items()}}, avisos
 
 
 def ruta_tabla(sec: str, tabla: str) -> Path:
@@ -293,6 +330,8 @@ def refrescar_marcas(listas: dict[str, dict[str, str]], control: dict) -> int:
         for sec, r in per.get("sectores", {}).items():
             if "fuera_de_lista" in r:
                 r["fuera_de_lista"] = [e for e in r["fuera_de_lista"] if e["rut"].split("-")[0] not in listas[sec]]
+        for sec, lst in per.get("solo_lista_fuera", {}).items():
+            per["solo_lista_fuera"][sec] = [e for e in lst if e["rut"].split("-")[0] not in listas.get(sec, {})]
     if cambios:
         print(f"Marca en_lista_entidades actualizada en {cambios} archivos")
     return cambios
@@ -371,6 +410,57 @@ def actualizar_data_manifest(control: dict) -> None:
     ruta.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n")
 
 
+def guardar_lista(rel: str, filas: list[dict]) -> None:
+    js = DOCS / rel
+    js.write_text(json.dumps(filas, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    pqt = js.with_suffix(".parquet")
+    if pqt.exists():
+        esquema = pq.read_schema(pqt)
+        df = pd.DataFrame(filas).reindex(columns=esquema.names)
+        for campo in esquema:
+            if pa.types.is_integer(campo.type):
+                df[campo.name] = pd.to_numeric(df[campo.name], errors="coerce").astype("Int64")
+            elif pa.types.is_boolean(campo.type):
+                df[campo.name] = df[campo.name].fillna(False).astype(bool)
+        pq.write_table(pa.Table.from_pandas(df, schema=esquema.remove_metadata(), preserve_index=False), pqt)
+
+
+def agregar_altas(fuera: dict[str, list[dict]], periodo: str) -> int:
+    """Agrega a la lista las sociedades del último trimestre que calzan con el giro y no están."""
+    eventos = []
+    for s, lst in fuera.items():
+        cfg = SECTORES.get(s) or SOLO_LISTA.get(s)
+        if not cfg or "alta" not in cfg or not lst:
+            continue
+        filas = json.loads((DOCS / cfg["lista"]).read_text(encoding="utf-8"))
+        ya = {str(f[cfg["clave_rut"]]).replace(".", "").split("-")[0] for f in filas}
+        columnas = list(filas[0].keys())
+        pendientes = [e for e in lst if e["rut"].split("-")[0] not in ya]
+        if len(pendientes) > MAX_ALTAS:
+            print(f"::warning::{s}: {len(pendientes)} sociedades calzan con el giro y no están en la lista; "
+                  f"más de {MAX_ALTAS} en una corrida sugiere un patrón demasiado amplio: no se agrega ninguna")
+            continue
+        for e in lst:
+            c, d = e["rut"].split("-")
+            if c in ya or not c.isdigit():
+                continue
+            alta = cfg["alta"](c, d, e["razon_social"])
+            filas.append({k: alta.get(k) for k in columnas})
+            ya.add(c)
+            eventos.append({"fecha": date.today().isoformat(), "sector": s, "lista": cfg["lista"].removesuffix(".json"),
+                            "rut": e["rut"], "razon_social": e["razon_social"], "evento": "alta",
+                            "antes": None, "ahora": f"reporta IFRS en {periodo}"})
+            print(f"::notice::{s}: alta {e['rut']} {e['razon_social']} (reporta IFRS en {periodo})")
+        if any(ev["sector"] == s for ev in eventos):
+            guardar_lista(cfg["lista"], filas)
+    if eventos:
+        NOVEDADES.parent.mkdir(parents=True, exist_ok=True)
+        hist = json.loads(NOVEDADES.read_text()) if NOVEDADES.exists() else {"eventos": []}
+        hist["eventos"] = hist["eventos"] + eventos
+        NOVEDADES.write_text(json.dumps(hist, ensure_ascii=False, indent=2) + "\n")
+    return len(eventos)
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--minutos", type=float, default=40)
@@ -442,9 +532,16 @@ def main(argv=None) -> int:
               " · ".join(f"{s} {r['entidades']} ent. ({r['filas']['balance']}+{r['filas']['resultados']} filas)"
                          for s, r in resumen.items()) + (f" · {len(avisos)} avisos" if avisos else ""))
     hechos += refrescar_marcas(listas, control)
-    # Entidades del sector presentes en el último trimestre que no están en la lista.
+    # Entidades del giro presentes en el último trimestre que no están en la lista: las CCAF y
+    # factoring/leasing se agregan solas; AGF y securitizadoras entran por el registro CMF
+    # (pipelines/entidades), aquí solo se avisan.
     if control["periodos"]:
         ult = max(control["periodos"])
+        fuera = {s: r.get("fuera_de_lista", []) for s, r in control["periodos"][ult]["sectores"].items()}
+        fuera.update(control["periodos"][ult].get("solo_lista_fuera", {}))
+        if agregar_altas(fuera, ult):
+            listas = cargar_listas()
+            hechos += 1 + refrescar_marcas(listas, control)
         nuevas = {s: r.get("fuera_de_lista", []) for s, r in control["periodos"][ult]["sectores"].items()}
         control["entidades_fuera_de_lista_ultimo_trimestre"] = {"periodo": ult, **nuevas}
         for s, lst in nuevas.items():

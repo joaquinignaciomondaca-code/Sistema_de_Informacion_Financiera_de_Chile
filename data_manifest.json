@@ -367,14 +367,14 @@
       "sector": "pensiones",
       "sector_label": "Fondos de Pensiones",
       "norma": "D.L. 3.500 / SPensiones",
-      "corte": "2026-03",
-      "frescura": "Al dia (2026-03)",
+      "corte": "Lista vigente",
+      "frescura": "Se actualiza sola 3 veces al mes (días 10, 20 y 28)",
       "modo": "Automático",
-      "ultima_actualizacion": "2026-09-23",
+      "ultima_actualizacion": "2026-09-28",
       "file_parquet": "outputs/pensiones/afp_maestro_administradoras.parquet",
       "registros_reales": 7,
-      "descripcion": "Catálogo maestro oficial de las 7 Administradoras de Fondos de Pensiones (AFP) activas en Chile, con AUM administrado, encaje legal del 1% y afiliados.",
-      "origen": "Superintendencia de Pensiones (SPensiones) — Nómina Oficial de Administradoras y Ficha Estadística (FEE) CMF."
+      "descripcion": "Administradoras de fondos de pensiones: RUT, razón social y nombre de fantasía. Sin cifras.",
+      "origen": "Altas: AFP con valor cuota publicado a diario por la Superintendencia de Pensiones (vcfAFP.php), con el RUT del Registro de Valores CMF (RVEMI). pipelines/entidades/actualizar_listas.py."
     },
     {
       "id": "bancos_maestro",
@@ -383,14 +383,14 @@
       "sector": "bancos",
       "sector_label": "Banca Comercial",
       "norma": "Ley General de Bancos / CMF",
-      "corte": "2008-01 a 2026-07",
-      "frescura": "Al dia (40 instituciones historicas)",
+      "corte": "Códigos históricos y vigentes",
+      "frescura": "Se actualiza sola 3 veces al mes (días 10, 20 y 28)",
       "modo": "Automático",
-      "ultima_actualizacion": "2026-09-23",
+      "ultima_actualizacion": "2026-09-28",
       "file_parquet": "outputs/bancos/bancos_maestro.parquet",
       "registros_reales": 40,
-      "descripcion": "Catalogo exhaustivo de bancos comerciales, agencias extranjeras y filiales bancarias supervisadas por la CMF.",
-      "origen": "Comision para el Mercado Financiero (CMF) — Nomina Oficial de Entidades Bancarias y Grupos Financieros."
+      "descripcion": "Códigos de institución de los archivos bancarios CMF: bancos vigentes, históricos (fusionados o cerrados), filiales en el exterior y agregados del sistema. No equivale al número de bancos activos. RUT de los bancos activos cotejados con el registro CMF.",
+      "origen": "Registro CMF de bancos (consulta.php?mercado=B&entidad=BANCO): alta de bancos nuevos y paso de «Activo» a «No vigente». Códigos históricos y agregados: lista original. pipelines/entidades/actualizar_listas.py."
     },
     {
       "id": "macro_tasas_rendimientos",
@@ -447,14 +447,14 @@
       "sector": "factoring_leasing",
       "sector_label": "Factoring & Leasing",
       "norma": "Nómina Oficial CMF & Registro de Valores (RVEMI / FASOC / LISOC)",
-      "corte": "2026-03",
-      "frescura": "Al día (2026-03)",
+      "corte": "Lista vigente",
+      "frescura": "Se actualiza sola 3 veces al mes (días 2, 12 y 22)",
       "modo": "Automático",
-      "ultima_actualizacion": "2026-09-23",
+      "ultima_actualizacion": "2026-09-28",
       "file_parquet": "outputs/factoring_leasing/factoring_leasing_maestro.parquet",
       "registros_reales": 28,
-      "descripcion": "Lista local de 28 entidades de Factoring, Leasing y financiamiento automotriz. RUT únicos con dígito verificador válido; identidad, vigencia y exhaustividad registral no certificadas. Balances y notas retirados por ahora.",
-      "origen": "Catálogo local con referencias declaradas a registros CMF FASOC, LISOC y RVEMI; pendiente cotejo registral independiente."
+      "descripcion": "Sociedades de factoring, leasing y financiamiento automotriz. Las sociedades nuevas se agregan cuando reportan estados financieros IFRS a la CMF con giro factoring o leasing; sus estados se publican desde entonces.",
+      "origen": "Lista original (referencias CMF FASOC, LISOC y RVEMI) + altas automáticas desde el TXT IFRS de la CMF (pipelines/ifrs_sectores/actualizar.py)."
     },
     {
       "id": "corredoras_bolsa_maestro",
@@ -495,14 +495,14 @@
       "sector": "patrimonios_separados",
       "sector_label": "Patrimonios Separados",
       "norma": "CMF Chile — Ley 18.045 Título XVIII (Registro de Títulos de Deuda)",
-      "corte": "2026-06",
-      "frescura": "Registros Oficiales CMF",
+      "corte": "Lista vigente",
+      "frescura": "Se actualiza sola 3 veces al mes (días 10, 20 y 28)",
       "modo": "Automático",
-      "ultima_actualizacion": "2026-09-23",
+      "ultima_actualizacion": "2026-09-28",
       "file_parquet": "outputs/securitizadoras/patrimonios_separados_maestro.parquet",
       "registros_reales": 18,
-      "descripcion": "Registro oficial de líneas y emisiones de bonos securitizados constituidos como Patrimonios Separados independientes conforme a la Ley de Mercado de Valores. Detalla el colateral subyacente, montos autorizados y vencimientos.",
-      "origen": "Comisión para el Mercado Financiero (CMF) — Inscripción de Títulos de Deuda mediante Registro Automático."
+      "descripcion": "Inscripciones de títulos de deuda de securitización (patrimonios separados) por registro automático: número, fecha, securitizadora, tipo, moneda, monto inscrito y vencimiento. La clase de colateral no está en el listado CMF: queda vacía en las inscripciones agregadas automáticamente.",
+      "origen": "CMF — Inscripciones de títulos de deuda mediante modalidad de registro automático (listado_titulos_deuda.php), filtrado a securitizadoras. pipelines/entidades/actualizar_listas.py."
     },
     {
       "id": "patrimonios_separados_balance",
@@ -527,14 +527,14 @@
       "sector": "cajas_compensacion",
       "sector_label": "Cajas de Compensación",
       "norma": "SUSESO (Ley N° 18.833) / CMF (Ley N° 18.045 Emisores RVEMI)",
-      "corte": "Oficial 2026",
-      "frescura": "Catálogo Vigente",
+      "corte": "Lista vigente",
+      "frescura": "Se actualiza sola 3 veces al mes (días 2, 12 y 22)",
       "modo": "Automático",
-      "ultima_actualizacion": "2026-09-23",
+      "ultima_actualizacion": "2026-09-28",
       "file_parquet": "outputs/cajas_compensacion/ccaf_maestro.parquet",
       "registros_reales": 6,
-      "descripcion": "Catálogo institucional maestro de las Cajas de Compensación de Asignación Familiar (CCAF) de Chile. Consolida las 4 entidades activas del sistema de previsión y bienestar social, así como las 2 entidades históricas absorbidas, con sus respectivos marcos regulatorios SUSESO y registros de emisión de bonos ante la CMF.",
-      "origen": "Superintendencia de Seguridad Social (SUSESO) y Comisión para el Mercado Financiero (CMF) — Registro de Valores (RVEMI)."
+      "descripcion": "Cajas de compensación de asignación familiar, vigentes y absorbidas, con marco legal, regulador y registro CMF. Una caja nueva se agrega cuando reporta estados financieros IFRS a la CMF.",
+      "origen": "Lista original (SUSESO y Registro de Valores CMF) + altas automáticas desde el TXT IFRS de la CMF (pipelines/ifrs_sectores/actualizar.py)."
     },
     {
       "id": "agf_maestro",
@@ -559,14 +559,14 @@
       "sector": "sistemas_pago",
       "sector_label": "Sistemas de Pago",
       "norma": "Ley Orgánica Constitucional BCCh (Ley 18.840) / Ley 18.876 (DCV) / Ley 20.345 (Cámaras) / Compendio Normas Financieras BCCh",
-      "corte": "Catálogo Oficial Vigente",
-      "frescura": "Trimestral / Eventos Registrales",
+      "corte": "Lista vigente",
+      "frescura": "Se actualiza sola 3 veces al mes (días 10, 20 y 28)",
       "modo": "Automático",
-      "ultima_actualizacion": "2026-09-23",
+      "ultima_actualizacion": "2026-09-28",
       "file_parquet": "outputs/sistemas_pago/sistemas_pago_maestro.parquet",
       "registros_reales": 12,
-      "descripcion": "Catálogo maestro de infraestructuras críticas del sistema financiero chileno: sistemas de liquidación bruta en tiempo real (LBTR-BCCh), cámaras de compensación de alto valor (Combanc), custodia centralizada de valores (DCV), contrapartes centrales para derivados OTC (ComDer) y valores (CCLV), cámara de compensación minorista (CCA), y redes de adquirencia y procesamiento de tarjetas de pago (Transbank, Getnet, Klap, Redelcom, Nexus, Banchile Pagos).",
-      "origen": "Banco Central de Chile (BCCh) y Comisión para el Mercado Financiero (CMF)."
+      "descripcion": "Infraestructuras del sistema de pagos: LBTR del Banco Central, cámaras de compensación, depósito de valores, contrapartes centrales y operadores de tarjetas de pago.",
+      "origen": "Registros públicos CMF: altas desde operadores de tarjetas de pago (TPOPE) y entidades de contraparte central (RGCCO); vigencia también desde sociedades de apoyo al giro (BCSAG) y depósito de valores (DCVAL). El LBTR (BCCh) no tiene registro CMF y no se modifica. pipelines/entidades/actualizar_listas.py."
     },
     {
       "id": "fintech_rpsf_maestro",

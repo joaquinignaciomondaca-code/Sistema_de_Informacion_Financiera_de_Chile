@@ -31,7 +31,9 @@ HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
 }
 
-# Maestro Institucional con RUTs 100% verificados bajo Algoritmo Modulo 11
+# Maestro institucional (script antiguo, sin workflow). La lista publicada la mantiene
+# pipelines/entidades/actualizar_listas.py contra el registro CMF de bancos; RUT de los
+# bancos activos cotejados con ese registro el 2026-09-28.
 MAESTRO_BANCOS = {
     "001": {"rut": "97.004.000-5", "razon_social": "Banco de Chile", "nombre_fantasia": "BANCO DE CHILE", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
     "009": {"rut": "97.011.000-3", "razon_social": "Banco Internacional", "nombre_fantasia": "BANCO INTERNACIONAL", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
@@ -40,27 +42,27 @@ MAESTRO_BANCOS = {
     "016": {"rut": "97.006.000-6", "razon_social": "Banco de Credito e Inversiones", "nombre_fantasia": "BCI", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
     "017": {"rut": "59.015.000-2", "razon_social": "Banco do Brasil S.A.", "nombre_fantasia": "BANCO DO BRASIL", "tipo_licencia": "Agencia Bancaria Extranjera", "estado": "Cerrado"},
     "027": {"rut": "97.022.000-3", "razon_social": "CorpBanca", "nombre_fantasia": "CORPBANCA", "tipo_licencia": "Banca Comercial", "estado": "Fusionado"},
-    "028": {"rut": "97.028.000-6", "razon_social": "Banco BICE", "nombre_fantasia": "BANCO BICE", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
-    "031": {"rut": "97.078.000-9", "razon_social": "HSBC Bank (Chile)", "nombre_fantasia": "HSBC BANK", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
+    "028": {"rut": "97.080.000-K", "razon_social": "Banco BICE", "nombre_fantasia": "BANCO BICE", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
+    "031": {"rut": "97.951.000-4", "razon_social": "HSBC Bank (Chile)", "nombre_fantasia": "HSBC BANK", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
     "037": {"rut": "97.036.000-K", "razon_social": "Banco Santander-Chile", "nombre_fantasia": "BANCO SANTANDER", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
     "039": {"rut": "97.023.000-9", "razon_social": "Banco Itau Chile", "nombre_fantasia": "ITAU CHILE", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
-    "041": {"rut": "59.043.600-3", "razon_social": "JP Morgan Chase Bank N.A.", "nombre_fantasia": "JP MORGAN", "tipo_licencia": "Agencia Bancaria Extranjera", "estado": "Activo"},
+    "041": {"rut": "97.043.000-8", "razon_social": "JP Morgan Chase Bank N.A.", "nombre_fantasia": "JP MORGAN", "tipo_licencia": "Agencia Bancaria Extranjera", "estado": "Activo"},
     "043": {"rut": "59.048.000-2", "razon_social": "Banco de la Nacion Argentina", "nombre_fantasia": "BANCO NACION ARGENTINA", "tipo_licencia": "Agencia Bancaria Extranjera", "estado": "Cerrado"},
     "045": {"rut": "59.060.000-8", "razon_social": "The Bank of Tokyo-Mitsubishi UFJ Ltd.", "nombre_fantasia": "MUFG BANK", "tipo_licencia": "Agencia Bancaria Extranjera", "estado": "Cerrado"},
     "046": {"rut": "97.054.000-8", "razon_social": "The Royal Bank of Scotland (Chile)", "nombre_fantasia": "RBS CHILE", "tipo_licencia": "Banca Comercial", "estado": "Cerrado"},
     "049": {"rut": "97.053.000-2", "razon_social": "Banco Security", "nombre_fantasia": "BANCO SECURITY", "tipo_licencia": "Banca Comercial", "estado": "Fusionado"},
-    "051": {"rut": "97.038.000-0", "razon_social": "Banco Falabella", "nombre_fantasia": "BANCO FALABELLA", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
+    "051": {"rut": "96.509.660-4", "razon_social": "Banco Falabella", "nombre_fantasia": "BANCO FALABELLA", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
     "052": {"rut": "97.058.000-K", "razon_social": "Deutsche Bank (Chile)", "nombre_fantasia": "DEUTSCHE BANK", "tipo_licencia": "Banca Comercial", "estado": "Cerrado"},
-    "053": {"rut": "97.044.000-3", "razon_social": "Banco Ripley", "nombre_fantasia": "BANCO RIPLEY", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
+    "053": {"rut": "97.947.000-2", "razon_social": "Banco Ripley", "nombre_fantasia": "BANCO RIPLEY", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
     "054": {"rut": "97.060.000-0", "razon_social": "Rabobank Chile", "nombre_fantasia": "RABOBANK CHILE", "tipo_licencia": "Banca Comercial", "estado": "Cerrado"},
-    "055": {"rut": "97.034.000-9", "razon_social": "Banco Consorcio", "nombre_fantasia": "BANCO CONSORCIO", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
+    "055": {"rut": "99.500.410-0", "razon_social": "Banco Consorcio", "nombre_fantasia": "BANCO CONSORCIO", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
     "056": {"rut": "97.066.000-3", "razon_social": "Banco Penta", "nombre_fantasia": "BANCO PENTA", "tipo_licencia": "Banca Comercial", "estado": "Cerrado"},
     "057": {"rut": "97.068.000-4", "razon_social": "Banco Paris", "nombre_fantasia": "BANCO PARIS", "tipo_licencia": "Banca Comercial", "estado": "Cerrado"},
     "058": {"rut": "59.070.000-2", "razon_social": "DnB NOR Bank ASA", "nombre_fantasia": "DNB NOR BANK", "tipo_licencia": "Agencia Bancaria Extranjera", "estado": "Cerrado"},
-    "059": {"rut": "97.070.000-5", "razon_social": "Banco BTG Pactual Chile", "nombre_fantasia": "BTG PACTUAL", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
-    "060": {"rut": "59.278.400-9", "razon_social": "China Construction Bank", "nombre_fantasia": "CHINA CONSTRUCTION BANK", "tipo_licencia": "Agencia Bancaria Extranjera", "estado": "Activo"},
-    "061": {"rut": "59.300.900-9", "razon_social": "Bank of China, Agencia en Chile", "nombre_fantasia": "BANK OF CHINA", "tipo_licencia": "Agencia Bancaria Extranjera", "estado": "Activo"},
-    "062": {"rut": "77.892.484-6", "razon_social": "Tanner Banco Digital", "nombre_fantasia": "TANNER BANCO DIGITAL", "tipo_licencia": "Banca Digital", "estado": "Activo"},
+    "059": {"rut": "76.362.099-9", "razon_social": "Banco BTG Pactual Chile", "nombre_fantasia": "BTG PACTUAL", "tipo_licencia": "Banca Comercial", "estado": "Activo"},
+    "060": {"rut": "59.203.500-6", "razon_social": "China Construction Bank", "nombre_fantasia": "CHINA CONSTRUCTION BANK", "tipo_licencia": "Agencia Bancaria Extranjera", "estado": "Activo"},
+    "061": {"rut": "59.238.930-4", "razon_social": "Bank of China, Agencia en Chile", "nombre_fantasia": "BANK OF CHINA", "tipo_licencia": "Agencia Bancaria Extranjera", "estado": "Activo"},
+    "062": {"rut": "77.844.703-7", "razon_social": "Tanner Banco Digital", "nombre_fantasia": "TANNER BANCO DIGITAL", "tipo_licencia": "Banca Digital", "estado": "Activo"},
     "504": {"rut": "97.032.000-8", "razon_social": "Banco Bilbao Vizcaya Argentaria (BBVA)", "nombre_fantasia": "BBVA CHILE", "tipo_licencia": "Banca Comercial", "estado": "Fusionado"},
     "507": {"rut": "97.051.000-1", "razon_social": "Banco del Desarrollo", "nombre_fantasia": "BANCO DEL DESARROLLO", "tipo_licencia": "Banca Comercial", "estado": "Fusionado"},
     "816": {"rut": "97.006.816-3", "razon_social": "BCI Financial Group Inc and Subsidiaries", "nombre_fantasia": "BCI USA / MIAMI", "tipo_licencia": "Filial Bancaria Extranjera", "estado": "Activo"},
