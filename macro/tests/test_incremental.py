@@ -42,7 +42,7 @@ class IncrementalTests(unittest.TestCase):
         starts = {sid: start for sid, start, _ in FakeSiete.calls}
         assert starts[macro.SERIES_CATALOG['usd_clp_d']['sid']] == '2026-09-01'
         assert starts[macro.SERIES_CATALOG['imacec_m']['sid']] == '2026-07-01'
-        assert starts[macro.SERIES_CATALOG['tcr_m']['sid']] == '2026-07-01'
+        assert starts[macro.SERIES_CATALOG['tcr_m']['sid']] == '2026-08-01'
         assert min(starts.values()) >= '2026-06-01'  # cola acotada, nunca backfill diario
         pub = macro.ROOT / 'docs/outputs/macro'
         for name in macro.TABLES:
@@ -80,7 +80,7 @@ class IncrementalTests(unittest.TestCase):
         starts = macro.query_starts(baseline)
         self.assertEqual(starts['usd_clp_d'], '2026-09-01')
         self.assertEqual(starts['imacec_m'], '2026-07-01')
-        self.assertEqual(starts['tcr_5_m'], '2026-07-01')
+        self.assertEqual(starts['tcr_5_m'], '2026-08-01')
         self.assertEqual(starts['ipc_idx_m'], '2026-08-01')
         # Serie mensual permanentemente vacía: no retroceder ilimitadamente.
         baseline['macro_precios_actividad']['cobre_spot_usd_lb'] = float('nan')
