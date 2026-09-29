@@ -39,7 +39,7 @@ import pyarrow.parquet as pq
 
 RAIZ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(RAIZ))
-from pipelines.auto import cuadratura  # noqa: E402
+from pipelines.auto import cuadratura, estable  # noqa: E402
 SALIDA = RAIZ / "docs" / "outputs" / "corredoras_bolsa"
 CONTROL = SALIDA / "manifest.json"
 URL = ("https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/"
@@ -255,7 +255,7 @@ def guardar_control(c: dict) -> None:
     c["periodos"] = dict(sorted(c["periodos"].items()))
     c["desde"] = DESDE
     c["updated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    CONTROL.write_text(json.dumps(c, ensure_ascii=False, indent=2) + "\n")
+    estable.escribir_json(CONTROL, c)
 
 
 def escribir_manifiestos(c: dict) -> None:
@@ -268,7 +268,7 @@ def escribir_manifiestos(c: dict) -> None:
                "files": [f"outputs/corredoras_bolsa/{carpeta.name}/{r.name}" for r in rutas],
                "total_records": sum(pq.ParquetFile(r).metadata.num_rows for r in rutas),
                "periodos": con, "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds")}
-        (carpeta / "manifest.json").write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n")
+        estable.escribir_json((carpeta / "manifest.json"), man)
 
 
 ORIGEN = ("CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y "
@@ -309,7 +309,7 @@ def actualizar_data_manifest() -> None:
     man["total_tables"] = len(man["tables"])
     man["total_records"] = sum(int(t.get("registros_reales") or 0) for t in man["tables"])
     man["updated_at"] = hoy
-    ruta.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n")
+    estable.escribir_json(ruta, man)
 
 
 def refrescar_marcas(lista: set[str], c: dict) -> int:

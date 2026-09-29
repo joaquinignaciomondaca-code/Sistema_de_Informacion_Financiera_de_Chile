@@ -47,6 +47,8 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 RAIZ = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(RAIZ))
+from pipelines.auto import estable  # noqa: E402
 SALIDA = RAIZ / "docs" / "outputs" / "fi"
 UA = "Mozilla/5.0 (monitor-financiero-chile)"
 BASE_CARTERA = "https://www.cmfchile.cl/sitio/inc/inf_financiera/ifrs_xml/"
@@ -408,7 +410,7 @@ def guardar_control(control: dict) -> None:
     control["periodos"] = dict(sorted(control["periodos"].items()))
     control["desde"] = DESDE
     control["updated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    (SALIDA / "manifest.json").write_text(json.dumps(control, ensure_ascii=False, indent=2) + "\n")
+    estable.escribir_json((SALIDA / "manifest.json"), control)
 
 
 def ruta_particion(tabla: str, periodo: str) -> Path:
@@ -523,7 +525,7 @@ def escribir_salidas(control: dict, registro: list[dict]) -> None:
                "total_records": sum(pq.ParquetFile(r).metadata.num_rows for r in rutas),
                "periodos": sorted(control["periodos"]),
                "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds")}
-        (SALIDA / tabla / "manifest.json").write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n")
+        estable.escribir_json((SALIDA / tabla / "manifest.json"), man)
     ultimo = max(control["periodos"]) if control["periodos"] else None
     filas = []
     for f in sorted(registro, key=lambda f: (int(f["run_fondo"]), f["tipo_entidad"])):
@@ -593,7 +595,7 @@ def actualizar_data_manifest(control: dict) -> None:
     man["total_tables"] = len(man["tables"])
     man["total_records"] = sum(int(t.get("registros_reales") or 0) for t in man["tables"])
     man["updated_at"] = hoy
-    ruta.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n")
+    estable.escribir_json(ruta, man)
 
 
 def main(argv=None) -> int:

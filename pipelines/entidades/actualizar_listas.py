@@ -57,7 +57,7 @@ import pyarrow.parquet as pq
 
 RAIZ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(RAIZ))
-from pipelines.auto import bundles  # noqa: E402
+from pipelines.auto import bundles, estable  # noqa: E402
 from pipelines.auto.rut import normalizar_registros  # noqa: E402
 
 DOCS = RAIZ / "docs" / "outputs"
@@ -543,7 +543,7 @@ def main(argv=None) -> int:
     hist["eventos"] = hist["eventos"] + eventos
     hist["ultima_revision_utc"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     hist["sectores_revisados"] = a.sectores
-    NOVEDADES.write_text(json.dumps(hist, ensure_ascii=False, indent=2) + "\n")
+    estable.escribir_json(NOVEDADES, hist)
     actualizar_data_manifest()
     actualizar_fondos_agf()
     actualizar_conteos_web()

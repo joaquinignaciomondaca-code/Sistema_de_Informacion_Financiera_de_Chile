@@ -48,6 +48,7 @@ import pyarrow.parquet as pq
 
 RAIZ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(RAIZ))
+from pipelines.auto import estable  # noqa: E402
 from pipelines.auto.rut import normalizar_dataframe  # noqa: E402
 
 SALIDA = RAIZ / "docs" / "outputs" / "ffmm"
@@ -275,7 +276,7 @@ def escribir_manifiestos(control: dict) -> None:
         man = {"tabla": tabla, "files": [f"outputs/ffmm/{tabla}/{r.name}" for r in rutas],
                "total_records": sum(pq.ParquetFile(r).metadata.num_rows for r in rutas), "periodos": periodos,
                "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds")}
-        (SALIDA / tabla / "manifest.json").write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n")
+        estable.escribir_json((SALIDA / tabla / "manifest.json"), man)
     filas = [{"run_fondo": run, "nombre_fondo": i["nombre"], "primer_periodo": i["primer"],
               "ultimo_periodo": i["ultimo"], "meses_reportados": i["meses"]}
              for run, i in sorted(control["fondos"].items(), key=lambda x: int(x[0]) if x[0].isdigit() else 0)]
@@ -317,7 +318,7 @@ def actualizar_data_manifest(control: dict) -> None:
     man["total_tables"] = len(man["tables"])
     man["total_records"] = sum(int(t.get("registros_reales") or 0) for t in man["tables"])
     man["updated_at"] = hoy
-    ruta.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n")
+    estable.escribir_json(ruta, man)
 
 
 def cargar_control() -> dict:
@@ -331,7 +332,7 @@ def guardar_control(control: dict) -> None:
     control["periodos"] = dict(sorted(control["periodos"].items()))
     control["desde"] = {t: DESDE_TABLA.get(t, DESDE) for t in TABLAS}
     control["updated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    (SALIDA / "manifest.json").write_text(json.dumps(control, ensure_ascii=False, indent=2) + "\n")
+    estable.escribir_json((SALIDA / "manifest.json"), control)
 
 
 def meses(desde: str, hasta: str) -> list[str]:

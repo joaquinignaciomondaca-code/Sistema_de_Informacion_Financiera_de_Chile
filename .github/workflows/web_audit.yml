@@ -142,7 +142,7 @@ jobs:
           exit $n
 
       - name: Pruebas de las compuertas compartidas de los pipelines
-        run: python -m unittest -v pipelines.auto.tests.test_cuadratura
+        run: python -m unittest -v pipelines.auto.tests.test_cuadratura pipelines.auto.tests.test_estable
 
   frescura:
     if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.ref_name == github.event.repository.default_branch)
