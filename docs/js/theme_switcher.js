@@ -1,6 +1,6 @@
 /**
  * Theme and Color Palette Switcher (Dropdown Swatch Selector)
- * Monitor Financiero Chile
+ * Sistema de Información Financiera de Chile
  * Shows exclusively color swatches in a dropdown menu without text names.
  */
 

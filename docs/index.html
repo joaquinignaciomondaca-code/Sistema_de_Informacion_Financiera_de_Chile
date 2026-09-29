@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Monitor Financiero Chile — Inversiones Institucionales & Mercados</title>
+  <title>Sistema de Información Financiera de Chile — Inversiones institucionales y mercados</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/app.css?v=20260928-normativa-cmf-4">
+  <link rel="stylesheet" href="css/app.css?v=20260928-vocabulario-1">
 </head>
 <body>
 
@@ -17,21 +17,14 @@
       <button class="sidebar-toggle-btn" id="toggle-sidebar" title="Ocultar / Mostrar barra lateral">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M1 2.75A.75.75 0 011.75 2h12.5a.75.75 0 010 1.5H1.75A.75.75 0 011 2.75zm0 5A.75.75 0 011.75 7h12.5a.75.75 0 010 1.5H1.75A.75.75 0 011 7.75zm0 5a.75.75 0 011.75-1.5h12.5a.75.75 0 010 1.5H1.75a.75.75 0 01-.75-.75z"/></svg>
       </button>
-      <span class="brand-tag">MFC</span>
-      <div>
-        <span class="brand-title">Monitor Financiero Chile</span>
-        <span class="brand-subtitle">Carteras de Inversión Institucionales</span>
+      <span class="brand-tag" title="Sistema de Información Financiera de Chile">SIF</span>
+      <div class="brand-text">
+        <span class="brand-title">Sistema de Información Financiera de Chile</span>
+        <span class="brand-subtitle">Inversiones institucionales y mercados</span>
       </div>
     </div>
     <div class="header-badges">
-      <button type="button" class="header-download-btn" id="btn-header-download" title="Centro de Exportación & Descarga (Parquet, Excel, CSV)">
-        <svg width="13" height="13" viewBox="0 0 16 16" fill="currentColor">
-          <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
-          <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
-        </svg>
-        <span>Descargar Base de Datos</span>
-      </button>
-      <div class="badge" id="engine-badge" title="Estado del motor SQL en el navegador">Inicializando DuckDB…</div>
+      <button type="button" class="badge" id="engine-badge" title="Estado del motor SQL en el navegador">Inicializando DuckDB…</button>
       <div class="theme-dropdown-container" id="theme-dropdown-container">
         <button type="button" class="theme-dropdown-btn" id="theme-dropdown-btn" aria-expanded="false" title="Seleccionar paleta de colores">
           <span class="theme-palette-icon">
@@ -79,34 +72,37 @@
       <!-- PANEL SUPERIOR: MAPA RELACIONAL Y DICCIONARIO -->
       <div class="top-panel">
         <div class="panel-header">
-          <div class="panel-tabs">
-            <button class="panel-tab-btn active" id="tab-btn-info" title="Información general del Monitor Financiero Chile">
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.25a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5zM8 4a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm1.1 8H6.9v-.9h.55V7.8H6.9v-.9h2.2v4.2h.55V12z"/></svg>
+          <div class="panel-tabs" role="tablist" aria-label="Vistas del sistema">
+            <button role="tab" aria-selected="false" aria-controls="info-container" class="panel-tab-btn active" id="tab-btn-info" title="Información general: fuentes, cobertura y cómo usar el sistema">
               Información
             </button>
-            <button class="panel-tab-btn" id="tab-btn-erd" title="Visualizar mapa de relaciones ERD">
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M1 2.5A1.5 1.5 0 012.5 1h3A1.5 1.5 0 017 2.5v3A1.5 1.5 0 015.5 7h-3A1.5 1.5 0 011 5.5v-3zM2.5 2a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5h-3zm6.5.5A1.5 1.5 0 0110.5 1h3A1.5 1.5 0 0115 2.5v3A1.5 1.5 0 0113.5 7h-3A1.5 1.5 0 019 5.5v-3zm1.5-.5a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5h-3zM1 10.5A1.5 1.5 0 012.5 9h3A1.5 1.5 0 017 10.5v3A1.5 1.5 0 015.5 15h-3A1.5 1.5 0 011 13.5v-3zm1.5-.5a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5h-3zm6.5.5A1.5 1.5 0 0110.5 9h3a1.5 1.5 0 011.5 1.5v3a1.5 1.5 0 01-1.5 1.5h-3A1.5 1.5 0 019 13.5v-3zm1.5-.5a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5h-3z"/></svg>
-              Mapa Relacional
+            <button role="tab" aria-selected="false" aria-controls="erd-canvas" class="panel-tab-btn" id="tab-btn-erd" title="Mapa relacional: diagrama entidad-relación de tablas y llaves">
+              Mapa
             </button>
-            <button class="panel-tab-btn" id="tab-btn-dict" title="Consultar significado y criterio contable de cada columna">
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M0 1.75A.75.75 0 01.75 1h4.253c1.227 0 2.317.59 3 1.501A3.744 3.744 0 0111 1h4.25a.75.75 0 01.75.75v10.5a.75.75 0 01-.75.75h-4.25a2.25 2.25 0 00-2.25 2.25.75.75 0 01-1.5 0 2.25 2.25 0 00-2.25-2.25H.75a.75.75 0 01-.75-.75V1.75zM5.003 2.5H1.5v9h3.503a3.747 3.747 0 012.247.747V3.998A2.25 2.25 0 005.003 2.5zm4.497 10.247A3.747 3.747 0 0111.747 11.5H14.5v-9h-2.753a2.25 2.25 0 00-2.247 1.498v8.749z"/></svg>
-              Diccionario de Datos & Contabilidad
+            <button role="tab" aria-selected="false" aria-controls="dict-container" class="panel-tab-btn" id="tab-btn-dict" title="Diccionario de datos: significado y criterio contable de cada columna">
+              Diccionario
             </button>
-            <button class="panel-tab-btn" id="tab-btn-data" title="Previsualizar filas reales de la tabla seleccionada con DuckDB">
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M0 2a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H2a2 2 0 01-2-2V2zm1.5 0a.5.5 0 00-.5.5v2h14v-2a.5.5 0 00-.5-.5h-13zM15 5.5H1v4h14v-4zm0 5H1v3.5a.5.5 0 00.5.5h13a.5.5 0 00.5-.5V10.5z"/></svg>
-              Visor de Datos
+            <button role="tab" aria-selected="false" aria-controls="data-viewer-container" class="panel-tab-btn" id="tab-btn-data" title="Visor de datos: previsualiza filas reales de la tabla activa">
+              Visor
             </button>
-            <button class="panel-tab-btn" id="tab-btn-normativa" title="Novedades CMF según la industria activa del explorador" aria-controls="normativa-container">
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3 1h7l3 3v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm6.5 1.5V5H12M5 7h6v1H5zm0 2.5h6v1H5zm0 2.5h4v1H5z"/></svg>
-              Normativa CMF
+            <button role="tab" aria-selected="false" aria-controls="sql-container" class="panel-tab-btn" id="tab-btn-sql" title="Consultas SQL sobre las vistas publicadas, ejecutadas en tu navegador">
+              Consultas SQL
             </button>
-            <button class="panel-tab-btn panel-tab-export" id="tab-btn-export" title="Centro de Exportación & Descarga (Parquet, Excel, CSV)">
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
-              Descargar Datos
+            <button role="tab" aria-selected="false" aria-controls="downloads-container" class="panel-tab-btn" id="tab-btn-downloads" title="Descargas: catálogo publicado con filas, peso y periodo; Parquet original, CSV o Excel">
+              Descargas
+            </button>
+            <button role="tab" aria-selected="false" aria-controls="normativa-container" class="panel-tab-btn" id="tab-btn-normativa" title="Normativa CMF: publicaciones y cambios normativos recientes">
+              Normativa
             </button>
           </div>
-          <div class="erd-controls-group" id="erd-controls-group">
-            <span class="erd-breadcrumb" id="erd-breadcrumb">Seguros > Circular 1835</span>
+          <div class="panel-header-right">
+            <span class="context-chip" id="erd-breadcrumb" title="Ubicación actual dentro del explorador">Seguros &rsaquo; Circular 1835</span>
+            
+          </div>
+        </div>
+
+        <!-- Sub-barra: filtros de industria del mapa relacional -->
+        <div class="erd-controls-group" id="erd-controls-group" style="display: none;">
             <button class="filter-btn active" data-filter="seguros">Seguros</button>
             <button class="filter-btn" data-filter="ffmm">FFMM</button>
             <button class="filter-btn" data-filter="fi">FFII</button>
@@ -123,20 +119,20 @@
             <button class="filter-btn" data-filter="sistemas_pago">Sistemas de Pago</button>
             <button class="filter-btn" data-filter="fintech">Fintech</button>
             <button class="filter-btn" data-filter="todos">Todos</button>
-          </div>
         </div>
 
         <!-- Información general del Monitor -->
         <div class="info-container" id="info-container">
           <div class="info-scroll">
             <section class="info-hero">
-              <div class="info-eyebrow">GUÍA DEL MONITOR · CHILE</div>
-              <h1>Información</h1>
-              <p class="info-lead">Un punto de entrada para explorar datos públicos de las principales industrias financieras chilenas: quiénes participan, qué reportan y cómo se relacionan sus datos.</p>
+              <div class="info-eyebrow">SISTEMA DE INFORMACIÓN FINANCIERA · CHILE</div>
+              <h1>Sistema de Información Financiera de Chile</h1>
+              <p class="info-lead">Un punto de entrada para explorar la información pública que las entidades chilenas reportan a la CMF, la Superintendencia de Pensiones, la SUSESO y el Banco Central: quiénes participan, qué reportan y cómo se relacionan sus datos.</p>
               <div class="info-hero-tags">
                 <span class="info-tag">Fuentes oficiales</span>
-                <span class="info-tag">Datos publicados</span>
-                <span class="info-tag">Exploración en el navegador</span>
+                <span class="info-tag">15 industrias</span>
+                <span class="info-tag">52 tablas publicadas</span>
+                <span class="info-tag">Consultas SQL en el navegador</span>
               </div>
             </section>
 
@@ -189,7 +185,7 @@
                 </article>
                 <article class="info-industry-card">
                   <span class="info-card-icon">SZ</span>
-                  <div><h3>Securitización</h3><p>Securitizadoras y patrimonios separados, con entidades, balances y relaciones entre los vehículos.</p></div>
+                  <div><h3>Securitización y patrimonios</h3><p>Securitizadoras y patrimonios separados, con entidades, balances y las relaciones entre los vehículos de propósito especial.</p></div>
                 </article>
                 <article class="info-industry-card">
                   <span class="info-card-icon">CC</span>
@@ -211,36 +207,42 @@
                   <span class="info-card-icon">MX</span>
                   <div><h3>Macroeconomía</h3><p>Series del Banco Central: tasas, tipo de cambio, precios, actividad, inflación y otras referencias económicas.</p></div>
                 </article>
+                <article class="info-industry-card">
+                  <span class="info-card-icon">NM</span>
+                  <div><h3>Normativa CMF</h3><p>Circulares, normas de carácter general y publicaciones recientes, agrupadas por la industria a la que afectan.</p></div>
+                </article>
               </div>
             </section>
 
             <section class="info-two-columns">
               <div class="info-block info-block-compact">
-                <div class="info-section-kicker">CÓMO LEERLO</div>
+                <div class="info-section-kicker">CÓMO LEER LOS DATOS</div>
                 <h2>La fuente importa</h2>
                 <ul class="info-list">
                   <li><strong>Período:</strong> cada tabla indica si es diaria, mensual, trimestral o histórica.</li>
                   <li><strong>Unidades:</strong> los montos conservan la unidad informada por la fuente; no se convierten automáticamente.</li>
                   <li><strong>Cobertura:</strong> que una entidad esté en una lista no garantiza que haya reportado en todos los períodos.</li>
                   <li><strong>Estados IFRS:</strong> AGF, securitizadoras y CCAF usan el TXT oficial de estados financieros IFRS de la CMF; cubre a quienes aparecen reportando en cada corte.</li>
+                  <li><strong>Trazabilidad:</strong> cada tabla declara su fuente, su archivo de origen y su manifiesto de publicación; los datos se muestran tal como los emite la fuente, sin reinterpretarlos.</li>
                 </ul>
               </div>
               <div class="info-block info-block-compact">
                 <div class="info-section-kicker">HERRAMIENTAS</div>
                 <h2>Cómo explorar</h2>
                 <ul class="info-list">
-                  <li><strong>Barra lateral:</strong> elige una industria, circular, carpeta o tabla.</li>
-                  <li><strong>Mapa relacional:</strong> entiende entidades, tablas y relaciones principales.</li>
-                  <li><strong>Diccionario:</strong> consulta el significado de cada columna y su criterio contable.</li>
-                  <li><strong>Visor de datos:</strong> revisa filas reales y filtra sin salir del navegador.</li>
-                  <li><strong>Terminal SQL:</strong> arma consultas sobre las vistas disponibles.</li>
+                  <li><strong>Explorador (izquierda):</strong> elige industria, circular o tabla; el visor y el diccionario se sincronizan solos.</li>
+                  <li><strong>Pestañas:</strong> Información, Mapa relacional, Diccionario, Visor de datos, Consultas SQL y Normativa CMF.</li>
+                  <li><strong>Diccionario:</strong> significado de cada columna, su rol (PK, FK, dimensión, métrica) y su criterio contable (MtM, costo amortizado, tasación).</li>
+                  <li><strong>Terminal SQL:</strong> consultas sobre las vistas publicadas, ejecutadas en tu navegador. <kbd>Enter</kbd> ejecuta, <kbd>Tab</kbd> completa nombres de tabla y <kbd>↑</kbd>/<kbd>↓</kbd> recuperan el historial.</li>
+                  <li><strong>Descarga:</strong> todo lo publicado vive en la pestaña <em>Descargas</em>: Parquet original, CSV o Excel, con filas, periodo y peso a la vista.</li>
+                  <li><strong>Atajos:</strong> <kbd>Alt</kbd>+<kbd>1</kbd>…<kbd>6</kbd> cambia de pestaña y <kbd>/</kbd> enfoca la búsqueda del explorador.</li>
                 </ul>
               </div>
             </section>
 
             <section class="info-note">
               <span class="info-note-mark">i</span>
-              <p>Este monitor es una herramienta de exploración y análisis de información pública. No constituye recomendación de inversión. Revisa siempre la fuente, la fecha de corte, la unidad y las notas de cobertura antes de interpretar una cifra.</p>
+              <p>Este sistema es una herramienta de exploración y análisis de información pública. No constituye recomendación de inversión. Revisa siempre la fuente, la fecha de corte, la unidad y las notas de cobertura antes de interpretar una cifra.</p>
             </section>
           </div>
         </div>
@@ -259,42 +261,38 @@
           <div id="normativa-monitor" aria-labelledby="normativa-title"></div>
         </div>
 
-      <!-- Controles de Zoom en Esquina Inferior Derecha (+ / -) -->
-      <div class="zoom-controls">
-        <button class="zoom-btn" id="btn-zoom-in" title="Acercar (+)">+</button>
-        <button class="zoom-btn" id="btn-zoom-out" title="Alejar (-)">−</button>
-        <button class="zoom-btn" id="btn-zoom-reset" title="Restablecer Vista" style="font-size: 13px;">⟲</button>
-      </div>
+        <!-- Consultas SQL: terminal DuckDB ejecutado en el navegador -->
+        <div class="sql-container" id="sql-container" style="display: none;" role="tabpanel" aria-labelledby="tab-btn-sql">
+          <div class="sql-toolbar">
+            <div class="sql-toolbar-left">
+              <span class="sql-engine-dot" id="sql-engine-dot" aria-hidden="true"></span>
+              <span class="sql-title">Terminal SQL</span>
+              <span class="sql-hint" id="sql-engine-hint">DuckDB-Wasm: cada consulta se ejecuta en tu navegador sobre los Parquet publicados.</span>
+            </div>
+            <div class="sql-toolbar-right">
+              <button class="header-action-btn" id="btn-clear-terminal" type="button" title="Limpiar la conversación de esta sesión (no borra las consultas guardadas)">Limpiar</button>
+              <button class="header-action-btn" id="btn-show-favorites" type="button" title="Ver consultas guardadas en favoritos">Guardadas</button>
+              <button class="header-action-btn" id="btn-share-query" type="button" title="Copiar un enlace con la consulta escrita">Compartir enlace</button>
+            </div>
+          </div>
 
-      <!-- Modal Flotante de Esquema / Columnas -->
-      <div class="schema-modal" id="schema-modal">
-        <div class="schema-title">
-          <span id="modal-table-name">Tabla</span>
-          <button id="close-schema-modal" style="background:transparent; border:none; color:#8b949e; cursor:pointer; font-size:16px;">&times;</button>
-        </div>
-        <ul class="schema-list" id="modal-columns-list"></ul>
-      </div>
-    </div>
+          <!-- Diagnóstico del motor: aparece sólo si DuckDB-Wasm no pudo cargar -->
+          <div class="sql-engine-alert" id="sql-engine-alert" role="alert" hidden>
+            <div class="engine-alert-body">
+              <strong>El motor SQL no pudo iniciarse en este navegador.</strong>
+              <div id="sql-engine-error">Motivo no informado.</div>
+              <div class="engine-alert-env" id="sql-engine-env"></div>
+              <div class="engine-alert-hint">El resto del sistema sigue navegable. Si el problema persiste, copia el diagnóstico y compártelo para revisarlo.</div>
+            </div>
+            <div class="engine-alert-actions">
+              <button class="engine-retry-btn" id="btn-engine-retry" type="button" title="Volver a intentar levantar DuckDB-Wasm">Reintentar</button>
+              <button class="engine-retry-btn engine-copy-btn" id="btn-engine-copy" type="button" title="Copiar el informe técnico del fallo al portapapeles">Copiar diagnóstico</button>
+            </div>
+          </div>
 
-    <!-- SEPARADOR AJUSTABLE (SPLITTER) -->
-    <div class="splitter" id="panel-splitter" title="Arrastra para ajustar el tamaño de los paneles"></div>
-
-    <!-- PANEL INFERIOR: CHAT PARA CONSULTAS SQL Y MÁS (MOCKUP) -->
-    <div class="bottom-panel">
-      <div class="chat-header">
-        <div class="chat-header-left">
-          <span class="chat-title">CONSULTAS SQL & TERMINAL</span>
-          <span style="font-size: 11px; color: var(--text-secondary); font-family: var(--font-mono);">[DuckDB Engine In-Browser]</span>
-        </div>
-        <div class="chat-header-actions">
-          <button class="header-action-btn" id="btn-show-favorites" title="Ver consultas guardadas en favoritos">Guardadas</button>
-          <button class="header-action-btn" id="btn-share-query" title="Copiar enlace con la consulta actual">Compartir Link</button>
-        </div>
-      </div>
-
-      <!-- Chips de Consultas Rápidas Sugeridas -->
-      <div class="quick-chips">
-        <div class="chip" data-query="SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija) GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 10;">
+          <!-- Chips de consultas rápidas sugeridas -->
+          <div class="quick-chips" aria-label="Consultas sugeridas">
+                    <div class="chip" data-query="SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija) GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 10;">
           Renta fija de seguros por tipo
         </div>
         <div class="chip" data-query="SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = (SELECT max(periodo) FROM seguros_acciones) GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;">
@@ -312,43 +310,75 @@
         <div class="chip" data-query="SELECT tipo_operacion, contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_prom_pct FROM fi_pactos WHERE periodo = (SELECT max(periodo) FROM fi_pactos) GROUP BY tipo_operacion, contraparte ORDER BY pactos DESC LIMIT 15;">
           Pactos FI: contrapartes y tasas
         </div>
-        <div class="chip" data-query="SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo, meses_reportados FROM seguros_maestro WHERE reporta_ultimo_mes ORDER BY sector, nombre_aseguradora;">
+        <div class="chip" data-query="SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo, meses_reportados FROM seguros_lista_entidades WHERE reporta_ultimo_mes ORDER BY sector, nombre_aseguradora;">
           Aseguradoras que reportan
         </div>
+          </div>
+
+          <!-- Flujo de mensajes y grilla de resultados -->
+          <div class="chat-messages" id="chat-messages" aria-live="polite"></div>
+
+          <!-- Barra de entrada estilo consola -->
+          <div class="chat-input-bar">
+            <div class="chat-input-inner">
+              <span class="prompt-prefix">sql&gt;</span>
+              <div class="input-container">
+                <input type="text" id="chat-input" aria-label="Consulta SQL" placeholder="Escribe una consulta SQL (ej: SELECT * FROM afp_lista_entidades LIMIT 5;) o elige una sugerencia" autocomplete="off" spellcheck="false">
+              </div>
+              <button class="send-btn" id="send-btn" type="button" title="Ejecutar la consulta (Enter)">
+                <span>Ejecutar</span>
+                <span aria-hidden="true">&#9654;</span>
+              </button>
+            </div>
+            <div class="sql-shortcuts">
+              <span><kbd>Enter</kbd> ejecuta</span>
+              <span><kbd>Tab</kbd> completa nombres de tabla o palabras clave</span>
+              <span><kbd>&uarr;</kbd><kbd>&darr;</kbd> historial</span>
+              <span><kbd>Alt</kbd>+<kbd>1</kbd>…<kbd>7</kbd> cambia de pestaña</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Descargas: catálogo publicado con filas, peso y periodo de cada conjunto -->
+        <div class="downloads-container" id="downloads-container" style="display: none;" role="tabpanel" aria-labelledby="tab-btn-downloads"></div>
+
+      <!-- Controles de Zoom en Esquina Inferior Derecha (+ / -) -->
+      <div class="zoom-controls">
+        <button class="zoom-btn" id="btn-zoom-in" title="Acercar (+)">+</button>
+        <button class="zoom-btn" id="btn-zoom-out" title="Alejar (-)">−</button>
+        <button class="zoom-btn" id="btn-zoom-reset" title="Restablecer Vista" style="font-size: 13px;">⟲</button>
       </div>
 
-      <!-- Flujo de Mensajes y Grilla de Resultados -->
-      <div class="chat-messages" id="chat-messages"></div>
-
-      <!-- Barra de Entrada Estilo PowerShell -->
-      <div class="chat-input-bar">
-        <span class="prompt-prefix">PS financiero:\&gt;</span>
-        <div class="input-container">
-          <input type="text" id="chat-input" placeholder="Escribe tu consulta SQL (ej: SELECT * FROM afp_maestro LIMIT 5;) o selecciona una sugerencia..." autocomplete="off" spellcheck="false">
+      <!-- Modal Flotante de Esquema / Columnas -->
+      <div class="schema-modal" id="schema-modal">
+        <div class="schema-title">
+          <span id="modal-table-name">Tabla</span>
+          <button id="close-schema-modal" style="background:transparent; border:none; color:#8b949e; cursor:pointer; font-size:16px;">&times;</button>
         </div>
-        <button class="send-btn" id="send-btn">
-          <span>Ejecutar</span>
-          <span>▶</span>
-        </button>
+        <ul class="schema-list" id="modal-columns-list"></ul>
       </div>
     </div>
+
   </div> <!-- Cierre de main-container -->
 </div> <!-- Cierre de app-layout -->
 
   <!-- Scripts de la Aplicación -->
-  <script src="js/data_bundles.js?v=3.0"></script>
-  <script src="js/chart_renderer.js?v=3.0"></script>
-  <script src="js/erd_graph.js?v=20260928-agf-split"></script>
-  <script src="js/duckdb_client.js?v=fl-202606-30046-22368"></script>
-  <script src="js/chat_terminal.js?v=3.4"></script>
-  <script src="js/sidebar.js?v=fl-202606-30046-22368"></script>
-  <script src="js/normativa_monitor.js?v=20260928-cmf-feed-5"></script>
-  <script src="js/theme_switcher.js?v=3.1"></script>
-  <script src="js/data_dictionary.js?v=fl-202606-30046-22368"></script>
-  <script src="js/data_viewer.js?v=fl-202606-30046-22368"></script>
+  <script src="js/data_bundles.js?v=20260928-vocabulario-1"></script>
+  <script src="js/chart_renderer.js?v=20260928-vocabulario-1"></script>
+  <script src="js/erd_graph.js?v=20260928-vocabulario-1"></script>
+  <script src="js/duckdb_client.js?v=20260928-vocabulario-1"></script>
+  <script src="js/chat_terminal.js?v=20260928-vocabulario-1"></script>
+  <script src="js/sidebar.js?v=20260928-vocabulario-1"></script>
+  <script src="js/ux_shell.js?v=20260928-vocabulario-1"></script>
+  <script src="js/normativa_monitor.js?v=20260928-vocabulario-1"></script>
+  <script src="js/theme_switcher.js?v=20260928-vocabulario-1"></script>
+  <script src="js/data_dictionary.js?v=20260928-vocabulario-1"></script>
+  <script src="js/data_viewer.js?v=20260928-vocabulario-1"></script>
   <script src="js/jszip.min.js"></script>
   <script src="js/xlsx.full.min.js"></script>
-  <script src="js/export_modal.js?v=20260928-agf-split"></script>
+  <script src="js/download_utils.js?v=20260928-vocabulario-1"></script>
+  <script src="js/download_catalog.js?v=20260928-vocabulario-1"></script>
+  <script src="js/downloads_panel.js?v=20260928-vocabulario-1"></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -366,78 +396,53 @@
         window.DataDictionary.init();
       }
 
-      // Conmutación de Pestañas Superiores
-      const tabInfo = document.getElementById("tab-btn-info");
-      const tabErd = document.getElementById("tab-btn-erd");
-      const tabDict = document.getElementById("tab-btn-dict");
-      const tabData = document.getElementById("tab-btn-data");
-      const tabNormativa = document.getElementById("tab-btn-normativa");
-      const canvasErd = document.getElementById("erd-canvas");
+      // Conmutación de pestañas de la vista principal
+      const TAB_REGISTRY = {
+        info:      { button: "tab-btn-info",      container: "info-container",        display: "block" },
+        erd:       { button: "tab-btn-erd",       container: "erd-canvas",            display: "block" },
+        dict:      { button: "tab-btn-dict",      container: "dict-container",        display: "block" },
+        data:      { button: "tab-btn-data",      container: "data-viewer-container", display: "flex"  },
+        sql:       { button: "tab-btn-sql",       container: "sql-container",         display: "flex"  },
+        downloads: { button: "tab-btn-downloads", container: "downloads-container",   display: "flex"  },
+        normativa: { button: "tab-btn-normativa", container: "normativa-container",   display: "flex"  }
+      };
       const zoomControls = document.querySelector(".zoom-controls");
       const erdControls = document.getElementById("erd-controls-group");
-      const infoContainer = document.getElementById("info-container");
-      const dictContainer = document.getElementById("dict-container");
-      const dataViewerContainer = document.getElementById("data-viewer-container");
-      const normativaContainer = document.getElementById("normativa-container");
 
       window.switchMainTab = (activeTab) => {
-        [tabInfo, tabErd, tabDict, tabData, tabNormativa].forEach(t => t && t.classList.remove("active"));
-        if (infoContainer) infoContainer.style.display = activeTab === "info" ? "block" : "none";
-        if (canvasErd) canvasErd.style.display = activeTab === "erd" ? "block" : "none";
-        if (zoomControls) zoomControls.style.display = activeTab === "erd" ? "flex" : "none";
-        if (erdControls) erdControls.style.display = activeTab === "erd" ? "flex" : "none";
-        if (dictContainer) dictContainer.style.display = activeTab === "dict" ? "block" : "none";
-        if (dataViewerContainer) dataViewerContainer.style.display = activeTab === "data" ? "flex" : "none";
-        if (normativaContainer) normativaContainer.style.display = activeTab === "normativa" ? "flex" : "none";
-
-        if (activeTab === "info") {
-          if (tabInfo) tabInfo.classList.add("active");
-        } else if (activeTab === "erd") {
-          if (tabErd) tabErd.classList.add("active");
-          if (window.erdInstance) window.erdInstance.render();
-        } else if (activeTab === "dict") {
-          if (tabDict) tabDict.classList.add("active");
-          if (window.DataDictionary) window.DataDictionary.render();
-        } else if (activeTab === "data") {
-          if (tabData) tabData.classList.add("active");
-          if (window.DataViewer && (!window.DataViewer.currentRows || window.DataViewer.currentRows.length === 0)) {
-            window.DataViewer.init();
+        const target = TAB_REGISTRY[activeTab] ? activeTab : "info";
+        Object.keys(TAB_REGISTRY).forEach((key) => {
+          const spec = TAB_REGISTRY[key];
+          const isActive = key === target;
+          const btn = document.getElementById(spec.button);
+          const panel = document.getElementById(spec.container);
+          if (btn) {
+            btn.classList.toggle("active", isActive);
+            btn.setAttribute("aria-selected", isActive ? "true" : "false");
           }
-        } else if (activeTab === "normativa") {
-          if (tabNormativa) tabNormativa.classList.add("active");
-          if (window.NormativaMonitor) window.NormativaMonitor.init();
+          if (panel) panel.style.display = isActive ? spec.display : "none";
+        });
+        if (zoomControls) zoomControls.style.display = target === "erd" ? "flex" : "none";
+        if (erdControls) erdControls.style.display = target === "erd" ? "flex" : "none";
+
+        if (target === "erd" && window.erdInstance) window.erdInstance.resize();
+        if (target === "dict" && window.DataDictionary) window.DataDictionary.render();
+        if (target === "data" && window.DataViewer) {
+          if (!window.DataViewer.currentRows || window.DataViewer.currentRows.length === 0) window.DataViewer.init();
         }
+        if (target === "normativa" && window.NormativaMonitor) window.NormativaMonitor.init();
+        if (target === "sql" && window.ChatTerminal && window.ChatTerminal.focusTerminal) window.ChatTerminal.focusTerminal();
+        if (target === "downloads" && window.DownloadsPanel) window.DownloadsPanel.render();
+        if (window.MFCUI && window.MFCUI.rememberTab) window.MFCUI.rememberTab(target);
       };
 
-      if (tabInfo) tabInfo.addEventListener("click", () => window.switchMainTab("info"));
-      if (tabErd) tabErd.addEventListener("click", () => window.switchMainTab("erd"));
-      if (tabDict) tabDict.addEventListener("click", () => window.switchMainTab("dict"));
-      if (tabData) tabData.addEventListener("click", () => window.switchMainTab("data"));
-      if (tabNormativa) tabNormativa.addEventListener("click", () => window.switchMainTab("normativa"));
+      Object.keys(TAB_REGISTRY).forEach((key) => {
+        const btn = document.getElementById(TAB_REGISTRY[key].button);
+        if (btn) btn.addEventListener("click", () => window.switchMainTab(key));
+      });
 
-      // Centro de Exportación y Descarga Global
-      const btnHeaderDownload = document.getElementById("btn-header-download");
-      const tabBtnExport = document.getElementById("tab-btn-export");
-      const openGlobalExport = () => {
-        if (window.ExportModal) {
-          const v = (window.DataViewer && window.DataViewer.currentView) ? window.DataViewer.currentView : "agf_maestro";
-          const d = (window.DataViewer && window.DataViewer.currentDisplayName) ? window.DataViewer.currentDisplayName : "ccaf.caratula_totales";
-          const r = (window.DataViewer && window.DataViewer.currentView === v) ? window.DataViewer.getFilteredRows() : [];
-          const c = (window.DataViewer && window.DataViewer.currentView === v) ? window.DataViewer.currentColumns : [];
-          window.ExportModal.open({
-            viewName: v,
-            displayName: d,
-            currentRows: r,
-            currentColumns: c,
-            totalCount: r.length || 100
-          });
-        }
-      };
-      if (btnHeaderDownload) btnHeaderDownload.addEventListener("click", openGlobalExport);
-      if (tabBtnExport) tabBtnExport.addEventListener("click", openGlobalExport);
-
-      // La aplicación abre primero la pestaña descriptiva para orientar al usuario.
-      window.switchMainTab("info");
+      // Al cargar se respeta la última pestaña usada; si no hay ninguna, se abre Información.
+      window.switchMainTab(window.MFCUI && window.MFCUI.initialTab ? window.MFCUI.initialTab() : "info");
     });
   </script>
 </body>
