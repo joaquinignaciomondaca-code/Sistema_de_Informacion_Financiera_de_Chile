@@ -10,7 +10,6 @@ on:
   push:
     branches:
       - main
-      - arena/01a0e952-monitor-financiero-chile
     paths:
       - .github/workflows/ifrs_sectores.yml
       - pipelines/ifrs_sectores/actualizar.py

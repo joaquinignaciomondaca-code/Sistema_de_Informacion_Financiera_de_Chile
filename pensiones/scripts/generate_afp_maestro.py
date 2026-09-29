@@ -5,8 +5,12 @@ local de entidades sin fecha de vigencia; no es una nómina oficial certificada.
 """
 
 import json
+import sys
 from pathlib import Path
 import pandas as pd
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+from pipelines.auto.rut import normalizar_dataframe  # noqa: E402
 
 # Catálogo local conservado únicamente para identificación, sin métricas sintéticas.
 AFP_DATA = [
@@ -22,6 +26,7 @@ COLUMNS = ["id", "rut_administradora", "nombre_administradora", "nombre_fantasia
 
 def main():
     df = pd.DataFrame(AFP_DATA, columns=COLUMNS)
+    df = normalizar_dataframe(df)  # convención de RUT: rut_administradora = cuerpo (C)
     print("DataFrame creado con", len(df), "administradoras de fondos de pensiones.")
 
     out_dirs = [

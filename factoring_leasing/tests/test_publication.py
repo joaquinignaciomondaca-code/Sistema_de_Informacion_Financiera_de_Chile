@@ -51,16 +51,19 @@ class PublicationTests(unittest.TestCase):
                 run_audit(folder)
 
     def test_site_catalogs_and_manifest_expose_series_with_caveats(self):
+        # export_modal.js se eliminó en la refactorización del 2026-09-28 (la
+        # descarga pasó a la pestaña Descargas): ya no se comprueba aquí.
         site_files = ('sidebar.js', 'data_viewer.js', 'data_dictionary.js',
-                      'erd_graph.js', 'duckdb_client.js', 'export_modal.js')
+                      'erd_graph.js', 'duckdb_client.js')
         for file in site_files:
             source = (ROOT / 'docs/js' / file).read_text(encoding='utf-8')
-            if file == 'export_modal.js':
-                # El exportador no expone la muestra, pero tampoco la lista; se
-                # comprueba aparte que no reaparezcan los archivos retirados.
-                pass
-            else:
-                self.assertIn('factoring_leasing_maestro', source, file)
+            # Antes del vocabulario canónico la lista se exponía como
+            # factoring_leasing_maestro; duckdb_client.js conserva ese alias
+            # y los demás catálogos usan el id canónico.
+            self.assertTrue(
+                'factoring_leasing_maestro' in source
+                or 'factoring_leasing_lista_entidades' in source,
+                file)
             for name in RETIRED:
                 self.assertNotIn(name, source, file)
         manifest = json.loads((ROOT / 'data_manifest.json').read_text(encoding='utf-8'))
