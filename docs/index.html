@@ -8,6 +8,12 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/app.css?v=20260928-vocabulario-1">
+  <!-- Arranque en frío: el motor pesa ~18 MB. Preanunciar los tres archivos hace
+       que se descarguen en paralelo con la página, en vez de esperar a que el
+       JavaScript los pida al final de la cadena de carga. -->
+  <link rel="modulepreload" href="vendor/duckdb/duckdb-browser.mjs">
+  <link rel="preload" href="vendor/duckdb/duckdb-eh.wasm" as="fetch">
+  <link rel="preload" href="vendor/duckdb/duckdb-browser-eh.worker.js" as="fetch">
 </head>
 <body>
 

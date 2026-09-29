@@ -45,6 +45,7 @@ import os
 import re
 import sys
 import time
+import unicodedata
 import urllib.request
 from datetime import date, datetime, timezone
 from html.parser import HTMLParser
@@ -55,6 +56,9 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 RAIZ = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(RAIZ))
+from pipelines.auto.rut import normalizar_registros  # noqa: E402
+
 DOCS = RAIZ / "docs" / "outputs"
 NOVEDADES = DOCS / "entidades" / "novedades.json"
 URL = "https://www.cmfchile.cl/institucional/mercados/consulta.php?mercado={mercado}&Estado={estado}&entidad={codigo}"
@@ -215,6 +219,9 @@ def cuerpo(v) -> str:
 
 
 def guardar(base: str, filas: list[dict]) -> None:
+    # Convención de RUT: `rut` = cuerpo, `rut_dv` = con DV, sin `rut_cuerpo`
+    # (ver pipelines/auto/rut.py). Único punto de escritura de todas las listas.
+    filas = normalizar_registros(filas)[0]
     js, pqt = DOCS / f"{base}.json", DOCS / f"{base}.parquet"
     js.write_text(json.dumps(filas, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     if pqt.exists():
@@ -409,6 +416,49 @@ def procesar_ps(hoy: str) -> list[dict]:
     return eventos
 
 
+FI_MAESTRO = "fi/maestro_fondos_inversion"
+
+
+def _norm_nombre(s) -> str:
+    s = unicodedata.normalize("NFKD", s or "").encode("ascii", "ignore").decode()
+    s = re.sub(r"\bS\.A\.?\b", " ", s)
+    s = re.sub(r"\bADMINISTRADORA GENERAL DE FONDOS\b", " ", s)
+    return " ".join(s.upper().split())
+
+
+def actualizar_fondos_agf() -> None:
+    """AGF: cuántos fondos de inversión vigentes administra cada una.
+
+    El registro CMF de AGF no publica ese número: se cuenta con el registro de
+    fondos (FI), que anota la `administradora` de cada fondo. El cruce se hace
+    por nombre normalizado (mayúsculas, sin «S.A.» ni «ADMINISTRADORA GENERAL
+    DE FONDOS»); una AGF que no aparece administra 0 fondos de inversión. Sin
+    esta pasada el campo queda en 0 para todas, como estaba.
+    """
+    ruta = DOCS / "agf/agf_maestro.json"
+    fi = DOCS / f"{FI_MAESTRO}.parquet"
+    if not ruta.exists() or not fi.exists():
+        return
+    tabla = pq.read_table(fi, columns=["administradora", "run_fondo", "estado_vigencia"]).to_pandas()
+    vigentes = tabla[tabla["estado_vigencia"] == "Vigente"]
+    conteo: dict[str, int] = {}
+    for nombre, n in vigentes.groupby("administradora")["run_fondo"].nunique().items():
+        conteo[_norm_nombre(nombre)] = max(conteo.get(_norm_nombre(nombre), 0), int(n))
+    filas = json.loads(ruta.read_text(encoding="utf-8"))
+    cambio = 0
+    for f in filas:
+        n = conteo.get(_norm_nombre(f.get("razon_social")))
+        if n is None:
+            n = conteo.get(_norm_nombre(f.get("nombre_fantasia")), 0)
+        if f.get("fondos_inversion_administrados") != n:
+            f["fondos_inversion_administrados"] = n
+            cambio += 1
+    if cambio:
+        guardar("agf/agf_maestro", filas)
+    print(f"agf · fondos_inversion_administrados: {cambio} AGF actualizadas "
+          f"({vigentes['run_fondo'].nunique()} fondos vigentes en el registro FI)")
+
+
 def actualizar_conteos_web() -> None:
     """Conteo «N entidades» del menú lateral (por archivo) y del diccionario (por id) de cada lista."""
     vistas = {AFP_BASE: "afp_maestro"}
@@ -458,6 +508,7 @@ def main(argv=None) -> int:
         return 0
     if a.solo_conteos:
         actualizar_data_manifest()
+        actualizar_fondos_agf()
         actualizar_conteos_web()
         return 0
     hoy = date.today().isoformat()
@@ -477,6 +528,7 @@ def main(argv=None) -> int:
     hist["sectores_revisados"] = a.sectores
     NOVEDADES.write_text(json.dumps(hist, ensure_ascii=False, indent=2) + "\n")
     actualizar_data_manifest()
+    actualizar_fondos_agf()
     actualizar_conteos_web()
     gh = os.environ.get("GITHUB_OUTPUT")
     if gh:

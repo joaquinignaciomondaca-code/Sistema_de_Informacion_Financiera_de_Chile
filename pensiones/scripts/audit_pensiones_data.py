@@ -7,9 +7,14 @@ import pandas as pd
 from pathlib import Path
 
 def validate_rut_dv(rut_str):
-    if not rut_str or '-' not in str(rut_str):
+    # Convención canónica: `rut_administradora` = cuerpo (C); también se
+    # tolera A/B con DV válido en datos históricos.
+    s = str(rut_str).strip()
+    if not s:
         return False
-    clean = str(rut_str).replace('.', '').strip().upper()
+    if s.isdigit():
+        return True  # cuerpo (C), formato canónico
+    clean = s.replace('.', '').strip().upper()
     parts = clean.split('-')
     if len(parts) != 2:
         return False

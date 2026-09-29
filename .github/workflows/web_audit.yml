@@ -70,6 +70,31 @@ jobs:
           echo "::notice title=Interfaz::$(tail -n 2 interfaz.log | head -1)"
           exit $n
 
+      - name: Auditor de formatos de RUT (guardián de la convención)
+        run: |
+          set +e
+          python scripts/audit_rut_formatos.py > rut.log 2>&1; n=$?
+          grep -h "^Error" rut.log | head -20 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=RUT::$linea"; done
+          echo "::notice title=RUT::$(tail -n 1 rut.log)"
+          exit $n
+
+      - name: Auditar las 116 consultas sugeridas contra los Parquet
+        run: |
+          python -m pip install --disable-pip-version-check duckdb
+          set +e
+          python scripts/audit_consultas_sugeridas.py --check > consultas.log 2>&1; n=$?
+          grep -h -E "^(FALLA|  ·)" consultas.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Consultas sugeridas::$linea"; done
+          grep -h -E "Consultas sugeridas|OK|VACIA|ERROR" consultas.log | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::notice title=Consultas sugeridas::$linea"; done
+          exit $n
+
+      - name: Prueba del cliente DuckDB (registro de vistas sin navegador)
+        run: |
+          set +e
+          node scripts/audit_duckdb_client.js > cliente.log 2>&1; n=$?
+          grep -h "^FALLA" cliente.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Cliente DuckDB::$linea"; done
+          echo "::notice title=Cliente DuckDB::$(tail -n 1 cliente.log)"
+          exit $n
+
       - name: Buscar credenciales en el historial
         run: |
           set +e
@@ -101,6 +126,7 @@ jobs:
           python-version: '3.11'
       - name: Toda tabla publicada tiene quien la actualice
         run: |
+          python -m pip install --disable-pip-version-check pyarrow
           set +e
           python scripts/audit_automatizacion.py > auto.log 2>&1; n=$?
           grep -h "^Error" auto.log | head -20 | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=Automatizacion::$l"; done

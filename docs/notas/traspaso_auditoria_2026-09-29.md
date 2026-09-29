@@ -29,8 +29,8 @@ python3 scripts/audit_consultas_sugeridas.py          # informe
 python3 scripts/audit_consultas_sugeridas.py --check  # falla si hay rotas
 ```
 
-Registra las 52 vistas igual que el navegador y ejecuta las 117 consultas sugeridas.
-Estado actual: **115 OK · 2 vacías · 0 errores · 1 vista sin filas**.
+Registra las 52 vistas igual que el navegador y ejecuta las 116 consultas sugeridas.
+Estado actual: **116 OK · 0 vacías · 0 errores** (la vista `fi_bienes_raices` está documentada como «Sin datos» y su consulta va en `VACIAS_ESPERADAS`; la otra vacía era el defecto de formato RUT, ver `docs/notas/rut_formatos_2026-09-29.md`).
 
 ---
 
@@ -87,7 +87,7 @@ y se avisa con claridad en vez de fallar.
 
 ## Funcionalidades: qué probar
 
-- **Las 117 consultas sugeridas** ya tienen arnés; mantenerlo en verde.
+- **Las 116 consultas sugeridas** ya tienen arnés; mantenerlo en verde.
 - **Recorrido completo de las 7 pestañas** con el producto servido de verdad
   (`python3 -m http.server` sobre `docs/`), no solo con auditorías estáticas.
 - **Exportaciones**: CSV, Excel y Parquet sobre un resultado grande y sobre uno vacío.

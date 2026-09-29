@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
   "updated_at": "2026-09-29",
-  "total_tables": 49,
-  "total_records": 10870636,
+  "total_tables": 51,
+  "total_records": 10870763,
   "classification": {
     "automatico": "Extracción y procesamiento 100% por código autónomo (APIs, scrapers, normalizadores)",
     "manual": "Extracción asistida o transcripción de notas y reportes no estructurados (ej. NotebookLM)"
@@ -792,6 +792,38 @@
       "file_parquet": "outputs/macro/macro_series_catalogo.parquet",
       "registros_reales": 51,
       "descripcion": "Catálogo de series del Banco Central publicadas: código SIETE, nombre, grupo, frecuencia, unidad, título oficial, cobertura y estado."
+    },
+    {
+      "id": "cooperativas_lista_entidades",
+      "name": "cooperativas.lista_entidades",
+      "view_name": "cooperativas_lista_entidades",
+      "sector": "cooperativas",
+      "sector_label": "Cooperativas de Ahorro y Crédito",
+      "norma": "Ley 14.468 de cooperativas · supervisión CMF (registro BCCOO)",
+      "corte": "Lista vigente",
+      "frescura": "Se actualiza sola 3 veces al mes (días 10, 20 y 28)",
+      "modo": "Automático",
+      "ultima_actualizacion": "2026-09-29",
+      "file_parquet": "outputs/cooperativas/cooperativas_maestro.parquet",
+      "registros_reales": 7,
+      "descripcion": "Cooperativas de ahorro y crédito fiscalizadas por la CMF: RUT, nombre, tipo de institución y regulador.",
+      "origen": "Registro BCCOO (mercado B) de los registros públicos CMF. pipelines/entidades/actualizar_listas.py."
+    },
+    {
+      "id": "corredoras_bolsa_lista_entidades_registro",
+      "name": "corredoras.lista_entidades_registro",
+      "view_name": "corredoras_bolsa_lista_entidades_registro",
+      "sector": "corredoras_bolsa",
+      "sector_label": "Corredoras de Bolsa",
+      "norma": "CMF Chile — Registro de Corredores de Bolsa (Ley 18.045)",
+      "corte": "2014-03 a 2026-06",
+      "frescura": "Al día (Trimestral)",
+      "modo": "Automático",
+      "ultima_actualizacion": "2026-09-29",
+      "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet",
+      "registros_reales": 120,
+      "descripcion": "Registro único de corredores y agentes de valores (universo vigentes y no vigentes) con validación de RUT bajo Módulo 11.",
+      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Intermediarios de Valores; vigencia mantenida por pipelines/entidades/actualizar_listas.py."
     }
   ]
 }

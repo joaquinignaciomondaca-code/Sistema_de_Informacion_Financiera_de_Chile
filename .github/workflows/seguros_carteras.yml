@@ -10,7 +10,6 @@ on:
   push:
     branches:
       - main
-      - arena/01a0e952-monitor-financiero-chile
     paths:
       - .github/workflows/seguros_carteras.yml
       - seguros/scripts/actualizar_carteras.py

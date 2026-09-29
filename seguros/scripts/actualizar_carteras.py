@@ -44,6 +44,7 @@ import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
 
+from pipelines.auto.rut import normalizar_dataframe
 from seguros.scripts import metadatos_web
 from seguros.scripts.formato_1835 import ENCABEZADO, LARGO, TIPO_TOTAL, campos, formato_de
 
@@ -365,6 +366,7 @@ def escribir_periodo(periodo: str, filas: dict, tablas: list[str]) -> dict:
         df = pd.concat(partes, ignore_index=True).reindex(columns=esquema(tabla).names)
         orden = ["sector", "rut_aseguradora"] + [c for c in ORDEN.get(tabla, []) if c in df.columns] + ["periodo"]
         df = df.sort_values(orden, kind="stable", na_position="first")
+        df = normalizar_dataframe(df)  # convención de RUT (pipelines/auto/rut.py)
         tmp = ruta.with_suffix(".tmp")
         pq.write_table(pa.Table.from_pandas(df, schema=esquema(tabla), preserve_index=False), tmp,
                        compression="zstd", compression_level=9)
@@ -392,6 +394,7 @@ def escribir_manifiestos(control: dict) -> None:
     if len(df):
         ultimo = max(control["periodos"])
         df["reporta_ultimo_mes"] = df["ultimo_periodo"] == ultimo
+        df = normalizar_dataframe(df)  # convención de RUT (pipelines/auto/rut.py)
         pq.write_table(_tabla_arrow(df), SALIDA / "aseguradoras.parquet", compression="zstd")
 
 
