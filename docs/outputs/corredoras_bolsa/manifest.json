@@ -880,9 +880,13 @@
         "resultados": 1003
       },
       "corredores_fuera_de_lista": [],
-      "avisos": []
+      "avisos": [],
+      "sha256_origen": {
+        "corredor de bolsa": "4e0e7bc41d0f21784f25260775a12277ae693c9f982ab8693264aac61c6300f2",
+        "agente de valores": "15ba42754603d92c9fccfccf7f5a8b53074bd8fc70344e09117320532a1c373e"
+      }
     }
   },
   "desde": "2010-12",
-  "updated_at": "2026-09-29T18:59:18+00:00"
+  "updated_at": "2026-09-29T23:39:28+00:00"
 }
