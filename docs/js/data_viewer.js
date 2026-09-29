@@ -1,138 +1,138 @@
 /**
  * Visor de Datos en Vivo (Data Grid Viewer)
- * Monitor Financiero Chile
+ * Sistema de Información Financiera de Chile
  * Previsualización interactiva de filas reales mediante DuckDB-Wasm.
  * Soporta ordenamiento, filtro en memoria, límites de filas y exportación.
  */
 
 const DATA_VIEWER_CATALOG = [
   {
-    group: "Macroeconomía & Tasas (BCCh SIETE)",
+    group: "Macroeconomía y Tasas (BCCh)",
     tables: [
-      { id: "macro_tasas_rendimientos", name: "macro.tasas_rendimientos (153 registros)" },
-      { id: "macro_divisas_mercado", name: "macro.divisas_mercado (153 registros)" },
-      { id: "macro_precios_actividad", name: "macro.precios_actividad (153 registros)" },
-      { id: "macro_series", name: "macro.series (51 series BCCh, una fila por serie y fecha)" },
-      { id: "macro_series_catalogo", name: "macro.series_catalogo (código, nombre, frecuencia y cobertura)" }
+      { id: "macro_tasas_rendimientos", name: "macro.tasas_rendimientos", detalle: "Tasas y rendimientos", descripcion: "Tasas de interés y curvas soberanas de Chile." },
+      { id: "macro_divisas_mercado", name: "macro.divisas_mercado", detalle: "Divisas y mercado cambiario", descripcion: "Tipos de cambio y condiciones del mercado cambiario." },
+      { id: "macro_precios_actividad", name: "macro.precios_actividad", detalle: "Precios y actividad", descripcion: "Precios, actividad económica y expectativas." },
+      { id: "macro_series", name: "macro.series", detalle: "Series de tiempo", descripcion: "Series de tiempo del Banco Central: una fila por serie y fecha." },
+      { id: "macro_series_catalogo", name: "macro.series_catalogo", detalle: "Catálogo de series", descripcion: "Catálogo de series del Banco Central: código, nombre, frecuencia y cobertura." }
     ]
   },
   {
-    group: "Banca Comercial (CMF) · estados financieros validados",
+    group: "Banca (CMF)",
     tables: [
-      { id: "bancos_maestro", name: "bancos.lista_instituciones (catálogo institucional)" },
-      { id: "bancos_cmf_balance", name: "bancos.cmf_balance_b1_b2 (Balance B1/B2 · importes fuente)" },
-      { id: "bancos_cmf_resultados", name: "bancos.cmf_resultados_r1 (Estado de Resultados R1 · importes fuente)" }
+      { id: "bancos_lista_entidades", name: "bancos.lista_entidades", detalle: "Lista de entidades", descripcion: "Bancos comerciales, sucursales de bancos extranjeros y agregados sectoriales de la CMF." },
+      { id: "bancos_balance", name: "bancos.balance", detalle: "Balance", descripcion: "Balance B1/B2 de la CMF, con las líneas contables tal como se publican." },
+      { id: "bancos_resultados", name: "bancos.resultados", detalle: "Estado de resultados", descripcion: "Estado de resultados R1 de la CMF, con las líneas tal como se publican." }
     ]
   },
   {
     group: "Fondos de Pensiones (SPensiones)",
     tables: [
-      { id: "afp_maestro", name: "afp.lista_administradoras (7 entidades)" }
+      { id: "afp_lista_entidades", name: "afp.lista_entidades", detalle: "Lista de entidades", descripcion: "Administradoras de fondos de pensiones del sistema chileno." }
     ]
   },
   {
-    group: "Seguros de Vida y Generales (CMF Circular 1835)",
+    group: "Seguros de Vida y Generales (CMF)",
     tables: [
-      { id: "seguros_maestro", name: "seguros.lista_entidades (compañías que reportan)" },
-      { id: "seguros_renta_fija", name: "seguros.renta_fija (bonos y depósitos por instrumento)" },
-      { id: "seguros_acciones", name: "seguros.acciones (acciones y cuotas de fondos de inversión)" },
-      { id: "seguros_fondos_mutuos", name: "seguros.fondos_mutuos (cuotas de fondos mutuos)" },
-      { id: "seguros_bienes_raices", name: "seguros.bienes_raices (inmuebles por rol)" },
-      { id: "seguros_extranjeros", name: "seguros.extranjeros (deuda, acciones y fondos en el exterior)" },
-      { id: "seguros_derivados", name: "seguros.derivados (opciones, forwards, futuros y swaps)" },
-      { id: "seguros_pactos", name: "seguros.pactos (compras y ventas con pacto)" },
-      { id: "seguros_control_inversiones", name: "seguros.control_inversiones (totales por tipo de inversión)" }
+      { id: "seguros_lista_entidades", name: "seguros.lista_entidades", detalle: "Lista de entidades", descripcion: "Compañías de seguros de vida y generales que reportan cartera a la CMF." },
+      { id: "seguros_renta_fija", name: "seguros.renta_fija", detalle: "Renta fija", descripcion: "Renta fija en cartera: bonos, depósitos y otros instrumentos, valorizados al cierre." },
+      { id: "seguros_acciones", name: "seguros.acciones", detalle: "Acciones", descripcion: "Acciones y cuotas de fondos de inversión en cartera, por nemotécnico." },
+      { id: "seguros_fondos_mutuos", name: "seguros.fondos_mutuos", detalle: "Fondos mutuos", descripcion: "Cuotas de fondos mutuos en cartera, por administradora y fondo." },
+      { id: "seguros_bienes_raices", name: "seguros.bienes_raices", detalle: "Bienes raíces", descripcion: "Inmuebles en cartera, identificados por rol y ciudad." },
+      { id: "seguros_extranjeros", name: "seguros.extranjeros", detalle: "Inversiones en el exterior", descripcion: "Inversiones en el exterior: deuda, acciones y fondos, por país." },
+      { id: "seguros_derivados", name: "seguros.derivados", detalle: "Derivados", descripcion: "Derivados vigentes: opciones, forwards, futuros y swaps, por contraparte." },
+      { id: "seguros_pactos", name: "seguros.pactos", detalle: "Pactos", descripcion: "Compras y ventas con pacto, con tasa y contraparte." },
+      { id: "seguros_control_inversiones", name: "seguros.control_inversiones", detalle: "Control de inversiones", descripcion: "Totales de inversión por tipo, para el control de límites de la Circular 1835." }
     ]
   },
   {
-    group: "Administración de fondos · Fondos de Inversión (FI)",
+    group: "Fondos de Inversión (CMF)",
     tables: [
-      { id: "fi_maestro", name: "fi.lista_entidades (registro CMF de fondos)" },
-      { id: "fi_cartera_nacional", name: "fi.cartera_nacional (trimestral desde 2020-03)" },
-      { id: "fi_cartera_extranjera", name: "fi.cartera_extranjera (trimestral desde 2020-03)" },
-      { id: "fi_metodo_participacion", name: "fi.metodo_participacion (trimestral desde 2020-03)" },
-      { id: "fi_bienes_raices", name: "fi.bienes_raices (trimestral desde 2020-03)" },
-      { id: "fi_futuros", name: "fi.futuros_forwards (trimestral desde 2020-03)" },
-      { id: "fi_opciones", name: "fi.opciones (trimestral desde 2020-03)" },
-      { id: "fi_pactos", name: "fi.pactos (trimestral desde 2020-03)" }
+      { id: "fi_lista_entidades", name: "fi.lista_entidades", detalle: "Lista de entidades", descripcion: "Registro CMF de fondos de inversión públicos y privados." },
+      { id: "fi_cartera_nacional", name: "fi.cartera_nacional", detalle: "Cartera nacional", descripcion: "Cartera de inversiones nacional de cada fondo (informes IFRS trimestrales)." },
+      { id: "fi_cartera_extranjera", name: "fi.cartera_extranjera", detalle: "Cartera en el exterior", descripcion: "Cartera de inversiones en el exterior de cada fondo." },
+      { id: "fi_metodo_participacion", name: "fi.metodo_participacion", detalle: "Método de participación", descripcion: "Inversiones valorizadas por método de participación." },
+      { id: "fi_bienes_raices", name: "fi.bienes_raices", detalle: "Bienes raíces", descripcion: "Bienes raíces en cartera de cada fondo." },
+      { id: "fi_futuros", name: "fi.futuros_forwards", detalle: "Futuros y forwards", descripcion: "Contratos de futuros y forwards vigentes de cada fondo." },
+      { id: "fi_opciones", name: "fi.opciones", detalle: "Opciones", descripcion: "Contratos de opciones vigentes de cada fondo." },
+      { id: "fi_pactos", name: "fi.pactos", detalle: "Pactos", descripcion: "Compras y ventas con pacto de cada fondo." }
     ]
   },
   {
-    group: "Administración de fondos · Fondos Mutuos (FFMM)",
+    group: "Fondos Mutuos (CMF)",
     tables: [
-      { id: "ffmm_maestro", name: "ffmm.lista_entidades (fondos que reportan cartera)" },
-      { id: "ffmm_cartera_nacional", name: "ffmm.cartera_nacional (mensual desde 2022-01)" },
-      { id: "ffmm_cartera_extranjera", name: "ffmm.cartera_extranjera (mensual desde 2001)" },
-      { id: "ffmm_futuros", name: "ffmm.futuros_forwards (mensual desde 2001)" },
-      { id: "ffmm_opciones", name: "ffmm.opciones (mensual desde 2001)" }
+      { id: "ffmm_lista_entidades", name: "ffmm.lista_entidades", detalle: "Lista de entidades", descripcion: "Fondos mutuos que reportan cartera a la CMF." },
+      { id: "ffmm_cartera_nacional", name: "ffmm.cartera_nacional", detalle: "Cartera nacional", descripcion: "Cartera de inversiones nacional (Circular 1333)." },
+      { id: "ffmm_cartera_extranjera", name: "ffmm.cartera_extranjera", detalle: "Cartera en el exterior", descripcion: "Cartera de inversiones en el exterior." },
+      { id: "ffmm_futuros", name: "ffmm.futuros_forwards", detalle: "Futuros y forwards", descripcion: "Futuros y forwards vigentes al cierre de cada mes." },
+      { id: "ffmm_opciones", name: "ffmm.opciones", detalle: "Opciones", descripcion: "Opciones vigentes al cierre de cada mes." }
     ]
   },
   {
-    group: "Factoring & Leasing (CMF / NBFI)",
+    group: "Factoring y Leasing (CMF)",
     tables: [
-      { id: "factoring_leasing_maestro", name: "factoring_leasing.lista_entidades (28 entidades)" },
+      { id: "factoring_leasing_lista_entidades", name: "factoring_leasing.lista_entidades", detalle: "Lista de entidades", descripcion: "Sociedades de factoring y leasing inscritas en la CMF." },
       // BEGIN AUTO FL IFRS SERIES VIEWER
-      { id: "factoring_leasing_balance_serie_ifrs_cmf", name: "factoring_leasing.balance_serie_ifrs_cmf (30,046 cuentas; no cotejo integral)" },
-      { id: "factoring_leasing_resultados_serie_ifrs_cmf", name: "factoring_leasing.resultados_serie_ifrs_cmf (22,368 cuentas; no cotejo integral)" },
+      { id: "factoring_leasing_balance", name: "factoring_leasing.balance", detalle: "Balance", descripcion: "Serie IFRS de estados de situación financiera, cuenta por cuenta." },
+      { id: "factoring_leasing_resultados", name: "factoring_leasing.resultados", detalle: "Estado de resultados", descripcion: "Serie IFRS de estados de resultados, cuenta por cuenta." },
   // END AUTO FL IFRS SERIES VIEWER
     ]
   },
   {
     group: "Corredoras de Bolsa (CMF)",
     tables: [
-      { id: "corredoras_bolsa_registro_universo", name: "corredoras.registro_unico (120 entidades)" },
-      { id: "corredoras_bolsa_maestro", name: "corredoras.lista_entidades (120 entidades)" },
-      { id: "corredoras_bolsa_balance", name: "corredoras.balance (2010-12–2026-06)" },
-      { id: "corredoras_bolsa_resultados", name: "corredoras.resultados (2010-12–2026-06)" }
+      { id: "corredoras_bolsa_lista_entidades_registro", name: "corredoras.lista_entidades_registro", detalle: "Lista de entidades (registro único)", descripcion: "Registro único de corredoras por grupo financiero y estado de vigencia." },
+      { id: "corredoras_bolsa_lista_entidades", name: "corredoras.lista_entidades", detalle: "Lista de entidades", descripcion: "Corredoras de bolsa inscritas en la CMF." },
+      { id: "corredoras_bolsa_balance", name: "corredoras.balance", detalle: "Balance", descripcion: "Balance FECU IFRS de cada corredora de bolsa." },
+      { id: "corredoras_bolsa_resultados", name: "corredoras.resultados", detalle: "Estado de resultados", descripcion: "Estado de resultados FECU IFRS de cada corredora de bolsa." }
     ]
   },
   {
-    group: "Securitización · Sociedades Securitizadoras (CMF)",
+    group: "Sociedades Securitizadoras (CMF)",
     tables: [
-      { id: "securitizadoras_maestro", name: "securitizadoras.lista_entidades (16 entidades)" },
-      { id: "securitizadoras_balance", name: "securitizadoras.balance (2009-12–2026-06)" },
-      { id: "securitizadoras_resultados", name: "securitizadoras.resultados (2009-12–2026-06)" }
+      { id: "securitizadoras_lista_entidades", name: "securitizadoras.lista_entidades", detalle: "Lista de entidades", descripcion: "Sociedades securitizadoras inscritas en la CMF." },
+      { id: "securitizadoras_balance", name: "securitizadoras.balance", detalle: "Balance", descripcion: "Balance IFRS de cada sociedad securitizadora." },
+      { id: "securitizadoras_resultados", name: "securitizadoras.resultados", detalle: "Estado de resultados", descripcion: "Estado de resultados IFRS de cada sociedad securitizadora." }
     ]
   },
   {
-    group: "Securitización · Patrimonios Separados (CMF / Ley 18.045)",
+    group: "Patrimonios Separados (CMF)",
     tables: [
-      { id: "patrimonios_separados_maestro", name: "patrimonios_separados.lista_emisiones (18 emisiones)" },
-      { id: "patrimonios_separados_balance", name: "patrimonios_separados.balance (358 balances · 7.962 cuentas, 2014–2025)" }
+      { id: "patrimonios_separados_lista_entidades", name: "patrimonios_separados.lista_entidades", detalle: "Lista de entidades", descripcion: "Patrimonios separados y sus emisiones inscritas." },
+      { id: "patrimonios_separados_balance", name: "patrimonios_separados.balance", detalle: "Balance", descripcion: "Balance general de cada patrimonio separado." }
     ]
   },
   {
     group: "Cooperativas de Ahorro y Crédito (CMF)",
     tables: [
-      { id: "cooperativas_maestro", name: "cooperativas.lista_entidades (7 entidades)" }
+      { id: "cooperativas_lista_entidades", name: "cooperativas.lista_entidades", detalle: "Lista de entidades", descripcion: "Cooperativas de ahorro y crédito supervisadas por la CMF." }
     ]
   },
   {
-    group: "Cajas de Compensación (CCAF / CMF - SUSESO)",
+    group: "Cajas de Compensación (CCAF / SUSESO)",
     tables: [
-      { id: "ccaf_maestro", name: "ccaf.lista_entidades (6 entidades)" },
-      { id: "ccaf_balance", name: "ccaf.balance (2010-06–2026-06)" },
-      { id: "ccaf_resultados", name: "ccaf.resultados (2010-06–2026-06)" }
+      { id: "ccaf_lista_entidades", name: "ccaf.lista_entidades", detalle: "Lista de entidades", descripcion: "Cajas de compensación de asignación familiar." },
+      { id: "ccaf_balance", name: "ccaf.balance", detalle: "Balance", descripcion: "Balance IFRS de cada caja de compensación." },
+      { id: "ccaf_resultados", name: "ccaf.resultados", detalle: "Estado de resultados", descripcion: "Estado de resultados IFRS de cada caja de compensación." }
     ]
   },
   {
-    group: "Administración de fondos · AGF (sociedades gestoras)",
+    group: "Administradoras Generales de Fondos (CMF)",
     tables: [
-      { id: "agf_maestro", name: "agf.lista_administradoras (68 entidades)" },
-      { id: "agf_balance", name: "agf.balance (2010-06–2026-06)" },
-      { id: "agf_resultados", name: "agf.resultados (2010-06–2026-06)" }
+      { id: "agf_lista_entidades", name: "agf.lista_entidades", detalle: "Lista de entidades", descripcion: "Administradoras generales de fondos inscritas en la CMF." },
+      { id: "agf_balance", name: "agf.balance", detalle: "Balance", descripcion: "Balance IFRS de cada administradora general de fondos." },
+      { id: "agf_resultados", name: "agf.resultados", detalle: "Estado de resultados", descripcion: "Estado de resultados IFRS de cada administradora general de fondos." }
     ]
   },
   {
     group: "Sistemas de Pago (BCCh / CMF)",
     tables: [
-      { id: "sistemas_pago_maestro", name: "sistemas_pago.lista_entidades (12 entidades)" }
+      { id: "sistemas_pago_lista_entidades", name: "sistemas_pago.lista_entidades", detalle: "Lista de entidades", descripcion: "Operadores de infraestructura financiera y redes de pago." }
     ]
   },
   {
     group: "FinTech & Finanzas Abiertas (Ley 21.521 / CMF)",
     tables: [
-      { id: "fintech_rpsf_maestro", name: "fintech.lista_entidades (262 entidades)" }
+      { id: "fintech_rpsf_lista_entidades", name: "fintech.lista_entidades", detalle: "Lista de entidades", descripcion: "Prestadores inscritos en el Registro de Prestadores de Servicios Financieros (RPSF)." }
     ]
   }
 ];
@@ -140,8 +140,8 @@ const DATA_VIEWER_CATALOG = [
 class DataViewerController {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
-    this.currentView = "afp_maestro";
-    this.currentDisplayName = "afp.lista_administradoras";
+    this.currentView = "afp_lista_entidades";
+    this.currentDisplayName = "afp.lista_entidades";
     this.currentLimit = 100;
     this.currentRows = [];
     this.currentColumns = [];
@@ -298,14 +298,17 @@ class DataViewerController {
     }).catch(() => {});
   }
 
+  // La exportación vive ahora en la pestaña Descargas: se abre con esta tabla
+  // ya seleccionada. Se conserva el nombre del método por compatibilidad con el
+  // botón del visor y con enlaces antiguos.
   openExportModal() {
-    if (window.ExportModal) {
-      window.ExportModal.open({
+    if (window.MFCUI && window.MFCUI.openDownloads) {
+      window.MFCUI.openDownloads({
         viewName: this.currentView,
         displayName: this.currentDisplayName,
-        currentRows: this.getFilteredRows(),
-        currentColumns: this.currentColumns,
-        totalCount: this.totalCount
+        rows: this.getFilteredRows(),
+        columns: this.currentColumns,
+        origen: "visor"
       });
     } else {
       this.exportCSV();
@@ -421,7 +424,7 @@ class DataViewerController {
       <optgroup label="${grp.group}">
         ${grp.tables.map(tbl => `
           <option value="${tbl.id}" ${tbl.id === this.currentView ? "selected" : ""}>
-            ${tbl.name}
+            ${tbl.name}${tbl.detalle ? "  ·  " + tbl.detalle : ""}
           </option>
         `).join("")}
       </optgroup>
@@ -457,8 +460,8 @@ class DataViewerController {
               <button class="dv-limit-btn ${this.currentLimit === 500 ? 'active' : ''}" onclick="window.DataViewer.setLimit(500)">500</button>
             </div>
 
-            <button class="dv-export-btn" onclick="window.DataViewer.openExportModal()" title="Abrir centro de exportación (CSV, Excel, Parquet con filtros)">
-              Exportar Datos ▾
+            <button class="dv-export-btn" onclick="window.DataViewer.openExportModal()" title="Abrir la pestaña Descargas con esta tabla seleccionada (Parquet, CSV, Excel)">
+              Descargar datos
             </button>
           </div>
         </div>

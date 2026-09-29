@@ -1,0 +1,126 @@
+/**
+ * Utilidades de descarga compartidas
+ * Sistema de Información Financiera de Chile
+ *
+ * Un solo lugar para armar los archivos que el visitante se lleva: CSV con
+ * separador ";" y BOM (para que Excel en Chile lo abra sin pasos extra), Excel
+ * nativo (.xlsx) y empaquetado .ZIP cuando el volumen no cabe cómodo en una
+ * planilla. Lo usan la pestaña Descargas y el visor de datos.
+ */
+window.MFCDownload = (function () {
+  const LIMITE_ZIP_CSV = 250000;
+  const LIMITE_ZIP_XLSX = 150000;
+  const LIMITE_EXCEL = 1048576;
+
+  function numero(valor) {
+    if (valor === null || valor === undefined || Number.isNaN(Number(valor))) return "—";
+    return Number(valor).toLocaleString("es-CL");
+  }
+
+  function bytes(valor) {
+    if (!valor) return "—";
+    const unidades = ["B", "KB", "MB", "GB", "TB"];
+    let i = 0;
+    let v = Number(valor);
+    while (v >= 1000 && i < unidades.length - 1) {
+      v /= 1024;
+      i += 1;
+    }
+    const decimales = v < 10 && i > 0 ? 1 : 0;
+    return `${v.toLocaleString("es-CL", { minimumFractionDigits: decimales, maximumFractionDigits: decimales })} ${unidades[i]}`;
+  }
+
+  function marcaTiempo() {
+    const d = new Date();
+    const p = (n) => String(n).padStart(2, "0");
+    return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}`;
+  }
+
+  function celdaCsv(valor) {
+    return `"${String(valor === null || valor === undefined ? "" : valor).replace(/"/g, '""')}"`;
+  }
+
+  function textoCsv(rows, cols) {
+    const cabecera = cols.map(celdaCsv).join(";");
+    const lineas = rows.map((fila) => cols.map((col) => celdaCsv(fila[col])).join(";"));
+    return `\ufeff${[cabecera, ...lineas].join("\n")}`;
+  }
+
+  function blobCsv(rows, cols) {
+    return new Blob([textoCsv(rows, cols)], { type: "text/csv;charset=utf-8;" });
+  }
+
+  function libroXlsx(rows, cols, nombreHoja) {
+    if (!window.XLSX) throw new Error("La librería de Excel (SheetJS) no está cargada en esta página.");
+    const hoja = window.XLSX.utils.json_to_sheet(rows, { header: cols });
+    const libro = window.XLSX.utils.book_new();
+    window.XLSX.utils.book_append_sheet(libro, hoja, String(nombreHoja || "Datos").slice(0, 31));
+    const salida = window.XLSX.write(libro, { bookType: "xlsx", type: "array" });
+    return new Blob([salida], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+  }
+
+  function descargar(blob, nombreArchivo) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = nombreArchivo;
+    a.rel = "noopener";
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 4000);
+  }
+
+  async function empaquetar(filas, cols, { formato, nombre, limite, tamano }) {
+    if (!window.JSZip) throw new Error("No se pudo empaquetar el .ZIP (JSZip no está cargado).");
+    const zip = new window.JSZip();
+    const total = Math.ceil(filas.length / tamano);
+    for (let parte = 0; parte < total; parte += 1) {
+      const bloque = filas.slice(parte * tamano, (parte + 1) * tamano);
+      const sufijo = `parte_${parte + 1}_de_${total}`;
+      if (formato === "csv") {
+        zip.file(`${nombre}_${sufijo}.csv`, textoCsv(bloque, cols));
+      } else {
+        const hoja = window.XLSX.utils.json_to_sheet(bloque, { header: cols });
+        const libro = window.XLSX.utils.book_new();
+        window.XLSX.utils.book_append_sheet(libro, hoja, `Parte_${parte + 1}`);
+        zip.file(`${nombre}_${sufijo}.xlsx`, window.XLSX.write(libro, { bookType: "xlsx", type: "array" }));
+      }
+    }
+    const blob = await zip.generateAsync({ type: "blob" });
+    descargar(blob, `${nombre}_${marcaTiempo()}.zip`);
+    return { filas: filas.length, archivos: total, comprimido: true };
+  }
+
+  /**
+   * Descarga filas ya cargadas en memoria.
+   * @returns {Promise<{filas:number, archivos:number, comprimido:boolean}>}
+   */
+  async function exportarFilas(rows, cols, opciones) {
+    const op = opciones || {};
+    const formato = op.formato === "xlsx" ? "xlsx" : "csv";
+    const nombre = op.nombre || "datos";
+    const filas = Array.isArray(rows) ? rows : [];
+    const columnas = Array.isArray(cols) && cols.length ? cols : Object.keys(filas[0] || {});
+    if (!filas.length) throw new Error("No hay filas para descargar con los criterios elegidos.");
+
+    if (formato === "csv" && filas.length > LIMITE_ZIP_CSV && op.particionar !== false) {
+      return empaquetar(filas, columnas, { formato, nombre, tamano: 150000 });
+    }
+    if (formato === "xlsx" && filas.length > LIMITE_EXCEL) {
+      return empaquetar(filas, columnas, { formato, nombre, tamano: 100000 });
+    }
+    if (formato === "xlsx" && filas.length > LIMITE_ZIP_XLSX && op.particionar !== false) {
+      return empaquetar(filas, columnas, { formato, nombre, tamano: 100000 });
+    }
+
+    if (formato === "csv") {
+      descargar(blobCsv(filas, columnas), `${nombre}_${marcaTiempo()}.csv`);
+    } else {
+      descargar(libroXlsx(filas, columnas, nombre), `${nombre}_${marcaTiempo()}.xlsx`);
+    }
+    return { filas: filas.length, archivos: 1, comprimido: false };
+  }
+
+  return { numero, bytes, textoCsv, blobCsv, libroXlsx, descargar, exportarFilas, marcaTiempo };
+})();
