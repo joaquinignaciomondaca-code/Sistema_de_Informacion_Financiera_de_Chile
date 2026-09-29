@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "updated_at": "2026-09-29",
   "total_tables": 49,
-  "total_records": 10870630,
+  "total_records": 10870636,
   "classification": {
     "automatico": "Extracción y procesamiento 100% por código autónomo (APIs, scrapers, normalizadores)",
     "manual": "Extracción asistida o transcripción de notas y reportes no estructurados (ej. NotebookLM)"
@@ -774,7 +774,7 @@
       "ultima_actualizacion": "2026-09-29",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
       "file_parquet": "outputs/macro/series/manifest.json",
-      "registros_reales": 79865,
+      "registros_reales": 79871,
       "descripcion": "Observaciones de todas las series del catálogo, una fila por serie y fecha, en su frecuencia original (diaria, mensual o trimestral)."
     },
     {
