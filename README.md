@@ -104,6 +104,8 @@ La web trae **116 consultas sugeridas** organizadas por industria, para no parti
 
 ## 3. Los datos
 
+*Cifras al 2026-09-29; macroeconomía se actualiza a diario.*
+
 | Industria | Tablas | Filas | Serie | Fuente |
 |---|---:|---:|---|---|
 | Seguros de Vida y Generales | 9 | 4.103.093 | 2016-11 → 2026-08 | CMF · Circular 1835 |
@@ -111,7 +113,7 @@ La web trae **116 consultas sugeridas** organizadas por industria, para no parti
 | Fondos de Inversión | 8 | 1.036.645 | 2020-03 → 2026-06 | CMF · LUF / Circular 1998 |
 | Corredoras de Bolsa | 4 | 185.921 | 2010-12 → 2026-06 | CMF · FECU IFRS |
 | Administradoras Generales de Fondos | 3 | 129.711 | 2010-06 → 2026-06 | CMF · IFRS |
-| Macroeconomía y Tasas | 5 | 80.375 | diaria → mensual | BCCh |
+| Macroeconomía y Tasas | 5 | 80.381 | diaria → mensual | BCCh |
 | Factoring y Leasing | 3 | 52.446 | 2009-03 → 2026-06 | CMF · IFRS |
 | Sociedades Securitizadoras | 3 | 25.985 | 2009-12 → 2026-06 | CMF · IFRS |
 | Cajas de Compensación | 3 | 13.555 | 2010-06 → 2026-06 | CMF · TXT IFRS (XBRL) |
@@ -125,7 +127,9 @@ La web trae **116 consultas sugeridas** organizadas por industria, para no parti
 
 † En banca, *balance* y *resultados* son vistas filtradas sobre las mismas 55 particiones mensuales: B1 y B2 (710.025 filas) y R1 (1.217.939), sin solape. Por eso el manifiesto las declara como **un solo datasete** (1.927.964 filas) detrás de las dos vistas: 52 tablas publicadas = 51 datasets, cada uno contado una vez, y la pestaña Descargas muestra el total completo de 10.870.763 sin doble contar las particiones de banca.
 
-Cada tabla publica su **manifiesto** —períodos, archivos, registros y hash de origen—, de modo que se puede verificar que lo que muestra la web es exactamente lo que se descargó de la fuente.
+Cada tabla publica su **manifiesto** —períodos, archivos y registros—, de modo que se puede verificar qué contiene la web. Donde la fuente es un archivo descargable único (banca B1/B2/R1, y los TXT IFRS de AGF, securitizadoras, cajas de compensación y factoring/leasing) el manifiesto además guarda el **SHA-256 del archivo de origen**, y ahí se puede comprobar que lo publicado sale exactamente de lo descargado. En seguros, fondos mutuos, fondos de inversión y corredoras el extractor guarda el SHA-256 de lo que devolvió la CMF (`sha256_origen` en el manifiesto) **solo para los períodos que se publiquen desde el 2026-09-29**: los anteriores se descargaron sin registrar hash y no se pueden reconstruir. En fondos de inversión, que son miles de páginas por trimestre, se guarda un hash que las resume. Macroeconomía, pensiones, fintech y los registros vigentes (listas de entidades) no tienen hash de origen.
+
+Las marcas de tiempo de los manifiestos (`updated_at`, `ultima_actualizacion`, `leido_utc`) indican cuándo **cambió** algo, no cuándo corrió el workflow: si una corrida no trae datos nuevos, el extractor no reescribe el manifiesto (ni se crea commit ni se regenera el catálogo). Que los workflows siguen corriendo se comprueba con sus corridas en Actions (`audit_automatizacion.py --frescura`). Los trimestres IFRS ya leídos cuyo TXT de origen no cambió (mismo SHA-256) tampoco se reescriben ni se vuelven a desplegar. Excepción: el monitor normativo registra cada revisión a propósito.
 
 ---
 
@@ -134,14 +138,14 @@ Cada tabla publica su **manifiesto** —períodos, archivos, registros y hash de
 Un dato financiero mal extraído es peor que no tener el dato. El sistema valida **antes** de publicar y se detiene si algo no cuadra:
 
 - **Identidad**: RUT validado con dígito verificador módulo 11 y homologado **a toda la base** bajo una convención canónica (cuerpo / cuerpo-DV / puntos, según la columna).
-- **Cuadraturas contables**: activos = pasivos + patrimonio. Un balance que no cuadra detiene la publicación.
+- **Cuadraturas contables**: activos = pasivos + patrimonio. En los estados financieros IFRS de AGF, securitizadoras, cajas de compensación y corredoras se verifica antes de publicar: un balance aislado que no cuadra queda como aviso en el manifiesto, y si la lectura falla en bloque (al menos 3 balances y más del 5 %) el trimestre no se publica. Banca cotea el total de activos contra el Excel de la CMF y fondos de inversión cuadra cada cartera con la fila TOTAL de la fuente. Factoring y leasing y patrimonios separados se verifican en auditoría, después de publicar (hoy cuadran todos, con diferencias de hasta 1 mil pesos por redondeo).
 - **Cobertura mínima**: si un mes trae menos del 90 % de las entidades del mes anterior, no se publica.
 - **Legibilidad**: más de 1 % de filas ilegibles en un archivo aborta el proceso.
 - **Esquema**: si la fuente cambia las columnas, el flujo falla en vez de publicar basura.
 
 Cuando algo falla, la web dice «no disponible». Nunca un número inventado.
 
-**Convención canónica de RUT.** Antes del 2026-09-29 el RUT estaba homologado solo *dentro* de cada industria: convivían tres convenciones (`12.345.678-9`, `12345678-9`, `12345678`) según el origen del archivo, y un `JOIN` directo entre sectores devolvía cero filas en silencio, que es la peor forma de fallar. Ahora toda la base publica bajo una convención única — `rut` = cuerpo, `rut_dv` = cuerpo-DV, `rut_completo` = puntos y DV —, los `JOIN` directos funcionan (los 147 emisores que comparten aseguradoras y fondos mutuos salen sin trucos, como en el ejemplo de arriba), y un guardián en CI (`scripts/audit_rut_formatos.py`) detiene cualquier corrida que publique otro formato. La auditoría completa, columna por columna, y el registro de la corrección están en [`docs/notas/rut_formatos_2026-09-29.md`](docs/notas/rut_formatos_2026-09-29.md).
+**Convención canónica de RUT.** Antes del 2026-09-29 el RUT estaba homologado solo *dentro* de cada industria: convivían tres convenciones (`12.345.678-9`, `12345678-9`, `12345678`) según el origen del archivo, y un `JOIN` directo entre sectores devolvía cero filas en silencio, que es la peor forma de fallar. Ahora toda la base publica bajo una convención única — `rut` = cuerpo, `rut_dv` = cuerpo-DV, `rut_completo` = puntos y DV —, los `JOIN` directos funcionan (los 147 emisores que comparten aseguradoras y fondos mutuos salen sin trucos, y 15 de ellos también son bancos, como en el ejemplo de arriba), y un guardián en CI (`scripts/audit_rut_formatos.py`) detiene cualquier corrida que publique otro formato. La auditoría completa, columna por columna, y el registro de la corrección están en [`docs/notas/rut_formatos_2026-09-29.md`](docs/notas/rut_formatos_2026-09-29.md).
 
 ---
 

@@ -29,6 +29,7 @@ Salida (docs/outputs/fi/):
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -46,6 +47,8 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 RAIZ = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(RAIZ))
+from pipelines.auto import estable  # noqa: E402
 SALIDA = RAIZ / "docs" / "outputs" / "fi"
 UA = "Mozilla/5.0 (monitor-financiero-chile)"
 BASE_CARTERA = "https://www.cmfchile.cl/sitio/inc/inf_financiera/ifrs_xml/"
@@ -407,7 +410,7 @@ def guardar_control(control: dict) -> None:
     control["periodos"] = dict(sorted(control["periodos"].items()))
     control["desde"] = DESDE
     control["updated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    (SALIDA / "manifest.json").write_text(json.dumps(control, ensure_ascii=False, indent=2) + "\n")
+    estable.escribir_json((SALIDA / "manifest.json"), control)
 
 
 def ruta_particion(tabla: str, periodo: str) -> Path:
@@ -456,8 +459,10 @@ def procesar_trimestre(periodo: str, fondos: list[str], control: dict, reciente:
     datos = {t: [] for t in TABLAS}
     malas, descuadres, inesperadas, monedas, con_cartera, fondos_con_datos = [], [], [], {}, set(), 0
     fondos_descuadre = set()
+    paginas = []  # «fondo|cartera|sha256» de cada página tal como la devolvió la CMF
     with ThreadPoolExecutor(max_workers=TRABAJADORES) as ex:
         for (run, cod), raw in ex.map(bajar, tareas):
+            paginas.append(f"{run}|{cod}|{hashlib.sha256(raw).hexdigest()}")
             try:
                 if cod == "V":
                     filas, m, d, moneda = leer_pactos(raw)
@@ -497,7 +502,11 @@ def procesar_trimestre(periodo: str, fondos: list[str], control: dict, reciente:
         raise Falta(f"{periodo}: {len(con_cartera)} fondos con cartera (trimestre anterior {previo}); "
                     "se espera a que la CMF complete el trimestre")
     avisos = inesperadas + malas + descuadres
-    return datos, avisos, con_cartera, monedas, len(tareas)
+    # Son miles de páginas por trimestre: el manifiesto guarda un hash que las resume (SHA-256 de la
+    # lista ordenada «fondo|cartera|sha256»); la lista completa se puede recalcular al re-descargar.
+    origen = {"paginas": len(paginas),
+              "sha256_resumen": hashlib.sha256("\n".join(sorted(paginas)).encode()).hexdigest()}
+    return datos, avisos, con_cartera, monedas, len(tareas), origen
 
 
 def escribir_salidas(control: dict, registro: list[dict]) -> None:
@@ -516,7 +525,7 @@ def escribir_salidas(control: dict, registro: list[dict]) -> None:
                "total_records": sum(pq.ParquetFile(r).metadata.num_rows for r in rutas),
                "periodos": sorted(control["periodos"]),
                "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds")}
-        (SALIDA / tabla / "manifest.json").write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n")
+        estable.escribir_json((SALIDA / tabla / "manifest.json"), man)
     ultimo = max(control["periodos"]) if control["periodos"] else None
     filas = []
     for f in sorted(registro, key=lambda f: (int(f["run_fondo"]), f["tipo_entidad"])):
@@ -586,7 +595,7 @@ def actualizar_data_manifest(control: dict) -> None:
     man["total_tables"] = len(man["tables"])
     man["total_records"] = sum(int(t.get("registros_reales") or 0) for t in man["tables"])
     man["updated_at"] = hoy
-    ruta.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n")
+    estable.escribir_json(ruta, man)
 
 
 def main(argv=None) -> int:
@@ -623,7 +632,7 @@ def main(argv=None) -> int:
         fondos = a.fondos or fondos_a_consultar(periodo, registro, control, reciente)
         t0 = time.monotonic()
         try:
-            datos, avisos, con_cartera, monedas, n = procesar_trimestre(periodo, fondos, control, reciente and not a.fondos)
+            datos, avisos, con_cartera, monedas, n, origen = procesar_trimestre(periodo, fondos, control, reciente and not a.fondos)
         except NoPublicado as e:
             print(f"{e}. Se retoma en la próxima corrida.")
             break
@@ -637,7 +646,8 @@ def main(argv=None) -> int:
         conteo = {t: escribir(t, periodo, v) for t, v in datos.items()}
         control["periodos"][periodo] = {"registros": conteo, "n_fondos_con_cartera": len(con_cartera),
                                         "fondos_con_cartera": sorted(con_cartera, key=int),
-                                        "avisos": len(avisos), "detalle_avisos": avisos[:20]}
+                                        "avisos": len(avisos), "detalle_avisos": avisos[:20],
+                                        "sha256_origen": origen}
         for run in con_cartera:
             i = control["fondos"].setdefault(run, {"primer": None, "ultimo": None, "trimestres": 0})
             i["primer"] = min(i["primer"] or periodo, periodo)

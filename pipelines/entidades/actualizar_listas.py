@@ -57,6 +57,7 @@ import pyarrow.parquet as pq
 
 RAIZ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(RAIZ))
+from pipelines.auto import bundles, estable  # noqa: E402
 from pipelines.auto.rut import normalizar_registros  # noqa: E402
 
 DOCS = RAIZ / "docs" / "outputs"
@@ -459,6 +460,21 @@ def actualizar_fondos_agf() -> None:
           f"({vigentes['run_fondo'].nunique()} fondos vigentes en el registro FI)")
 
 
+def actualizar_bundles() -> None:
+    """Refresca en docs/js/data_bundles.js las listas de bancos y AFP desde sus maestros.
+
+    El bundle es una copia liviana de esas listas; si nadie la regenera queda con datos viejos
+    (en 2026-09 los RUT de 14 de 27 bancos diferían del maestro). Se escribe solo si cambia.
+    """
+    ruta = RAIZ / "docs" / "js" / "data_bundles.js"
+    fuentes = {"bancos_lista_entidades": DOCS / "bancos" / "bancos_maestro.json",
+               "afp_lista_entidades": DOCS / f"{AFP_BASE}.json"}
+    if not ruta.exists():
+        return
+    claves = {k: json.loads(p.read_text(encoding="utf-8")) for k, p in fuentes.items() if p.exists()}
+    bundles.guardar_claves(ruta, claves)
+
+
 def actualizar_conteos_web() -> None:
     """Conteo «N entidades» del menú lateral (por archivo) y del diccionario (por id) de cada lista."""
     vistas = {AFP_BASE: "afp_maestro"}
@@ -474,6 +490,7 @@ def actualizar_conteos_web() -> None:
                 patron = rf'(id: "{vid}",(?:(?!\n  \}}).)*?registros: ")\d+( [^"]*")'
             s = re.sub(patron, rf"\g<1>{n}\g<2>", s, count=1, flags=re.S)
         ruta.write_text(s, encoding="utf-8")
+    actualizar_bundles()
 
 
 # Listas que completa pipelines/ifrs_sectores/actualizar.py; aquí solo se cuentan.
@@ -526,7 +543,7 @@ def main(argv=None) -> int:
     hist["eventos"] = hist["eventos"] + eventos
     hist["ultima_revision_utc"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     hist["sectores_revisados"] = a.sectores
-    NOVEDADES.write_text(json.dumps(hist, ensure_ascii=False, indent=2) + "\n")
+    estable.escribir_json(NOVEDADES, hist)
     actualizar_data_manifest()
     actualizar_fondos_agf()
     actualizar_conteos_web()
