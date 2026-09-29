@@ -115,6 +115,14 @@ jobs:
           echo "::notice title=DOM::$(tail -n 1 dom.log)"
           exit $n
 
+      - name: Celdas y alias hostiles no ejecutan código (jsdom)
+        run: |
+          set +e
+          node scripts/audit_xss_celdas.js > xss.log 2>&1; n=$?
+          grep -h -E "^FALLA" xss.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=XSS celdas::$linea"; done
+          echo "::notice title=XSS celdas::$(tail -n 1 xss.log)"
+          exit $n
+
   automatizacion:
     if: github.event_name != 'schedule'
     runs-on: ubuntu-latest

@@ -176,27 +176,8 @@ def generate_afp_derivados():
     with open("docs/outputs/pensiones/afp_derivados_swaps.json", "w", encoding="utf-8") as f:
         json.dump(records_swp, f, ensure_ascii=False)
 
-    # Actualizar bundle en memoria data_bundles.js
-    bundle_file = Path("docs/js/data_bundles.js")
-    if bundle_file.exists():
-        js_text = bundle_file.read_text(encoding="utf-8")
-        import re
-        sample_fwd = records_fwd[:120]
-        sample_swp = records_swp[:120]
-
-        if "window.DATA_BUNDLES.afp_derivados_forwards" in js_text:
-            js_text = re.sub(r'window\.DATA_BUNDLES\.afp_derivados_forwards\s*=\s*\[[\s\S]*?\];', f"window.DATA_BUNDLES.afp_derivados_forwards = {json.dumps(sample_fwd, ensure_ascii=False)};", js_text)
-        else:
-            js_text += f"\nwindow.DATA_BUNDLES.afp_derivados_forwards = {json.dumps(sample_fwd, ensure_ascii=False)};\n"
-
-        if "window.DATA_BUNDLES.afp_derivados_swaps" in js_text:
-            js_text = re.sub(r'window\.DATA_BUNDLES\.afp_derivados_swaps\s*=\s*\[[\s\S]*?\];', f"window.DATA_BUNDLES.afp_derivados_swaps = {json.dumps(sample_swp, ensure_ascii=False)};", js_text)
-        else:
-            js_text += f"\nwindow.DATA_BUNDLES.afp_derivados_swaps = {json.dumps(sample_swp, ensure_ascii=False)};\n"
-
-        bundle_file.write_text(js_text, encoding="utf-8")
-        print("Bundle data_bundles.js actualizado con 'afp_derivados_forwards' y 'afp_derivados_swaps'.")
-
+    # Sin precarga en data_bundles.js: la web ya no expone estas tablas (ver pensiones/README.md)
+    # y scripts/audit_navigation.py exige que el bundle solo tenga afp_lista_entidades y bancos_*.
     print(f"Generación exitosa:")
     print(f"- Forwards AFP: {len(df_fwd)} registros ({df_fwd['afp'].nunique()} AFPs x {df_fwd['tipo_de_fondo'].nunique()} Fondos)")
     print(f"- Swaps AFP: {len(df_swp)} registros")
