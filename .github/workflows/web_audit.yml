@@ -43,7 +43,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
+      # fetch-depth: 0 trae el historial completo: la auditoría de credenciales
+      # revisa todos los blobs, no sólo el commit actual.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -64,6 +68,14 @@ jobs:
           python scripts/audit_interfaz.py > interfaz.log 2>&1; n=$?
           grep -h -E "^(Error|Inconsistencia|Advertencia)|^  - " interfaz.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Interfaz::$linea"; done
           echo "::notice title=Interfaz::$(tail -n 2 interfaz.log | head -1)"
+          exit $n
+
+      - name: Buscar credenciales en el historial
+        run: |
+          set +e
+          python scripts/audit_secretos.py > secretos.log 2>&1; n=$?
+          grep -h -E "POSIBLES CREDENCIALES|Revisa esos archivos" secretos.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Secretos::$linea"; done
+          echo "::notice title=Secretos::$(tail -n 2 secretos.log | head -1)"
           exit $n
 
       - name: Prueba de comportamiento del DOM (jsdom)
