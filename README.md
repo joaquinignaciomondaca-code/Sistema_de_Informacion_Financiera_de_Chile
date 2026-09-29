@@ -1,21 +1,21 @@
 # Sistema de Información Financiera de Chile (SIF)
 
 **25 años del sistema financiero chileno, consultables con SQL desde el navegador.**
-Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Central, la Superintendencia de Pensiones y la SUSESO: **15 industrias, 52 tablas, 8,9 millones de filas** desde enero de 2001. Sin backend, sin base de datos, sin servidores — el dato viaja como Parquet estático y el motor corre en el cliente.
+Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Central, la Superintendencia de Pensiones y la SUSESO: **15 industrias, 52 tablas, 10,9 millones de filas** desde enero de 2001. Sin backend, sin base de datos, sin servidores — el dato viaja como Parquet estático y el motor corre en el cliente.
 
 **▶ [Abrir el sistema](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/)** — sin instalar nada, las consultas corren en tu navegador.
 
 ![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![DuckDB-Wasm 1.28.0](https://img.shields.io/badge/DuckDB--Wasm-1.28.0-FFF000?logo=duckdb&logoColor=black)
 ![Sin backend](https://img.shields.io/badge/backend-ninguno-2ea44f)
-![Datos](https://img.shields.io/badge/datos-52%20tablas%20%C2%B7%208%2C9%20M%20filas-blue)
+![Datos](https://img.shields.io/badge/datos-52%20tablas%20%C2%B7%2010%2C9%20M%20filas-blue)
 ![Serie](https://img.shields.io/badge/serie-2001--01%20%E2%86%92%202026--08-informational)
 
 | En números | |
 |---|---|
 | Historia cubierta | **25 años** · 2001-01 → 2026-08 |
 | Industrias supervisadas | **15** (CMF · BCCh · SPensiones · SUSESO) |
-| Tablas publicadas | **52** Parquet · 8.942.793 filas · 262 MB |
+| Tablas publicadas | **52** Parquet · 10.870.757 filas · 262 MB |
 | Consultas sugeridas listas para usar | **117** |
 | Actualización | **11 flujos** automáticos en GitHub Actions |
 | Verificación | **7 suites** de auditoría + **130** pruebas unitarias |
@@ -121,9 +121,9 @@ La web trae **117 consultas sugeridas** organizadas por industria, para no parti
 | Sistemas de Pago | 1 | 19 | registro vigente | BCCh / CMF |
 | Fondos de Pensiones | 1 | 7 | registro vigente | SPensiones · D.L. 3.500 |
 | Cooperativas de Ahorro y Crédito | 1 | 7 | registro vigente | CMF |
-| **Total** | **52** | **8.942.793** | **2001 → 2026** | |
+| **Total** | **52** | **10.870.757** | **2001 → 2026** | |
 
-† En banca, *balance* y *resultados* son vistas filtradas sobre las mismas 55 particiones mensuales (1,93 M filas fuente). La pestaña Descargas no muestra un total engañoso para ellas: informa que las filas se cuentan al consultar.
+† En banca, *balance* y *resultados* son vistas filtradas sobre las mismas 55 particiones mensuales: B1 y B2 (710.025 filas) y R1 (1.217.939), sin solape. La pestaña Descargas no precuenta esas dos tablas —informa que las filas se cuentan al consultar—, por lo que muestra 8.942.793 en vez del total de 10.870.757.
 
 Cada tabla publica su **manifiesto** —períodos, archivos, registros y hash de origen—, de modo que se puede verificar que lo que muestra la web es exactamente lo que se descargó de la fuente.
 
