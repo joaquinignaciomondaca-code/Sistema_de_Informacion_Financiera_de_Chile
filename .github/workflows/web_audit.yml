@@ -74,7 +74,11 @@ jobs:
         run: |
           set +e
           python scripts/audit_secretos.py > secretos.log 2>&1; n=$?
-          grep -h -E "POSIBLES CREDENCIALES|Revisa esos archivos" secretos.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Secretos::$linea"; done
+          # Las anotaciones llevan el detalle (archivo y tipo) porque los logs de
+          # Actions no siempre se pueden recuperar desde fuera del runner.
+          awk '/POSIBLES CREDENCIALES/{detalle=1} detalle' secretos.log | head -12 \
+            | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Secretos::$linea"; done
+          grep -h -E "Verificación de secretos|blobs de texto|marcadores de posición|identificadores" secretos.log | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::notice title=Secretos (resumen)::$linea"; done
           echo "::notice title=Secretos::$(tail -n 2 secretos.log | head -1)"
           exit $n
 
