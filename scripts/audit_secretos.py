@@ -53,8 +53,10 @@ MARCADOR = re.compile(
 )
 
 PATRONES = [
+    # El valor no puede cruzar de línea: un `SECRETOS = (` seguido de una tupla
+    # multilínea no es una credencial (falso positivo detectado en este repo).
     ("asignación de clave", re.compile(
-        r"(?P<clave>[A-Za-z_]*[A-Za-z])\s*[:=]\s*(?P<q>[\"'])(?P<val>[^\"']{8,})(?P=q)")),
+        r"(?P<clave>[A-Za-z_]*[A-Za-z])[ \t]*[:=][ \t]*(?P<q>[\"'])(?P<val>[^\"'\n]{8,})(?P=q)")),
     ("credencial embebida en URL", re.compile(r"https?://[^\s\"'/]+:(?P<val>[^@\s\"']{6,})@")),
     ("formato de token conocido", re.compile(
         r"(?P<val>(?:ghp_|gho_|sk-|AIza|xox[baprs]-)[A-Za-z0-9_\-]{16,})")),
