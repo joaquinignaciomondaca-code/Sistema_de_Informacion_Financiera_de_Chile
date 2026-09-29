@@ -16,7 +16,7 @@
 | Fuentes oficiales | CMF · BCCh · SPensiones · SUSESO |
 | Web | 7 pestañas · 52 opciones del visor · 6 paletas |
 | Automatización | **11 flujos** programados en GitHub Actions |
-| Calidad | **6 suites de auditoría** + **130 pruebas** unitarias |
+| Calidad | **7 suites de auditoría** + **130 pruebas** unitarias |
 
 ---
 
@@ -53,7 +53,7 @@ flowchart LR
   D --> E["Web estática docs/<br/>GitHub Pages · Vercel"]
   E --> F["DuckDB-Wasm en el navegador<br/>vistas SQL sobre los Parquet"]
   G["GitHub Actions<br/>11 flujos programados"] -.-> B
-  H["Auditorías<br/>6 suites · 130 pruebas"] -.-> C
+  H["Auditorías<br/>7 suites · 130 pruebas"] -.-> C
   H -.-> E
 ```
 
@@ -67,7 +67,7 @@ El mismo Parquet que se publica es el que se consulta: no hay copia intermedia, 
 | Datos | `pandas` + `pyarrow` → Parquet particionado con manifiestos JSON (períodos, archivos, registros y hash de origen) |
 | Automatización | GitHub Actions: 11 flujos programados con commit controlado, issue automático si una fuente se atrasa |
 | Frontend | JavaScript sin framework **y sin build** · DuckDB-Wasm 1.28.0 embebido · CSS con variables (6 paletas) |
-| Calidad | `unittest` (130 pruebas) + 6 suites de auditoría propias en Python y Node |
+| Calidad | `unittest` (130 pruebas) + 7 suites de auditoría propias en Python y Node |
 
 ---
 
@@ -155,6 +155,7 @@ python scripts/audit_automatizacion.py      # quién actualiza cada tabla y con 
 node   scripts/audit_normativa_web.js       # sección de normativa CMF
 python scripts/normalizar_vocabulario.py --check   # el vocabulario de nombres no se desincroniza
 python scripts/build_download_catalog.py --check   # el catálogo de descargas refleja lo publicado
+python scripts/audit_secretos.py                   # ninguna credencial en el historial de Git
 ```
 
 Los flujos maduros (bancos, factoring-leasing, macro, normativa) corren además sus **130 pruebas unitarias** en CI antes de publicar. Las suites de auditoría no son decorativas: son el contrato del proyecto — si la web y los datos se separan, el push falla.
@@ -203,7 +204,7 @@ PSEUDOCODIGO.md      mapa de código: qué hace cada pieza y en qué orden
 
 Publicar los pendientes es parte del trabajo:
 
-1. **Credenciales**: las claves de la API del Banco Central deben vivir sólo en GitHub Secrets y hay que rotar las que alguna vez estuvieron en el repositorio.
+1. **Credenciales**: las claves de la API del Banco Central viven sólo en GitHub Secrets (`USER_BCCH` / `PASSWORD_BCCH`) y el código las lee del entorno. Una auditoría del historial completo no encontró credenciales reales —sólo marcadores de posición en el commit inicial—; la comprobación es reproducible con `scripts/audit_secretos.py`.
 2. **Utilidades duplicadas**: el dígito verificador, el parseo de números chilenos y el tipo de cambio están copiados en ~15 scripts; su lugar es un módulo `common/`.
 3. **Higiene del repositorio**: conviven scripts exploratorios con pipelines productivos, y el historial pesa ~270 MB por Parquet antiguos (candidato a Git LFS o releases).
 4. **Cobertura de pruebas despareja**: los 130 tests se concentran en los flujos maduros; los sectores "stream + audit" se validan con auditorías, no con pruebas unitarias.

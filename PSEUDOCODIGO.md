@@ -461,7 +461,8 @@ python -m scripts.preview_no_cache --port 8000      # sirve docs/ en 0.0.0.0:800
 requisitos del navegador: la copia local de DuckDB-Wasm cubre el caso normal; jsDelivr/unpkg sólo si falta
 ```
 
-Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local), `build_download_catalog.py`
+Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local), `audit_secretos.py` (credenciales
+en el historial), `build_download_catalog.py`
 (genera `docs/js/download_catalog.js`: 52 conjuntos, filas, peso y periodo de cada vista publicada),
 `normalizar_vocabulario.py` (aplica y vigila el vocabulario de §9).
 (`standardize_schema_keys.py`, `verify_joins.py` y `orchestrate_overnight_market_pipeline.py` se eliminaron
@@ -475,7 +476,7 @@ con los pipelines antiguos de FFMM y FI.)
 |---|---|---|---|
 | macro.yml | diario 10:00 | commit automático | daily_macro (3 tablas mensuales) + series_bcch (51 series, formato largo) |
 | bancos_cmf_mensual.yml | días 1, 11, 21 13:00 | **sí** (commit + Pages) | tests + publish_cmf_bank_period --catch-up (incremental) |
-| web_audit.yml | push a main, PR hacia main y lunes | no | audit_navigation + audit_web_full + audit_interfaz + prueba DOM (anotaciones); el lunes, guardián de frescura |
+| web_audit.yml | push a main, PR hacia main y lunes | no | audit_navigation + audit_web_full + audit_interfaz + prueba DOM + audit_secretos (anotaciones); el lunes, guardián de frescura |
 | factoring_leasing_backfill.yml | días 3, 13, 23 12:20 | **sí** | backfill_ifrs + publish_backfill + auditorías web |
 | ifrs_sectores.yml | días 2, 12, 22 13:30 | **sí** (commit + Pages) | estados IFRS de AGF, securitizadoras y CCAF (§8a) |
 | corredoras_eeff.yml | días 6, 16, 26 13:45 | **sí** (commit + Pages) | estados FECU IFRS de corredores y agentes (§8a) |
@@ -531,7 +532,10 @@ con los pipelines antiguos de FFMM y FI.)
 3. Utilidades (DV, parse_num, tc_map) repetidas en ~15 archivos.
 4. ✅ `fintech/scripts/explore.py` corregido (compilaba solo en Python ≥ 3.12).
 5. ✅ BOM UTF-8 eliminado de 9 scripts.
-6. Credenciales: README pide rotar la contraseña BCCh expuesta en el historial Git — sigue pendiente de confirmar. (`ccaf/scripts/legacy` se eliminó.)
+6. ✅ Credenciales: `scripts/audit_secretos.py` audita todo el historial alcanzable (2.551 blobs de texto).
+   Resultado: los únicos valores ligados a las variables BCCh fueron marcadores de posición del commit inicial
+   (`REMOVED_BCCH_EMAIL`, `CAMBIAR_ESTE_PASSWORD`) y claves de prueba; ninguna credencial real. La nota anterior
+   («hay que rotar la contraseña expuesta») quedó sin sustento y se corrigió en `pipelines/README.md`.
 7. `.git` pesa ~270 MB por el historial (los Parquet antiguos de seguros siguen en commits viejos). Considerar Git LFS o releases.
 8. ✅ Ya existe `requirements.txt` global (Python 3.11, pyarrow/openpyxl/xlrd fijados igual que en Actions).
 9. Muchos scripts exploratorios (`pensiones/inspect_*`, `test_*` que no son tests) mezclados con pipelines productivos.
