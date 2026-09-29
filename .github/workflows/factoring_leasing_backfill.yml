@@ -3,7 +3,7 @@ name: Factoring y Leasing - serie IFRS CMF y publicación automática
 
 on:
   push:
-    branches: [main, arena/01a0e680-monitor-financiero-chile]
+    branches: [main, arena/01a0e952-monitor-financiero-chile]
     paths:
       - '.github/workflows/factoring_leasing_backfill.yml'
       - 'factoring_leasing/scripts/backfill_ifrs.py'

@@ -1,0 +1,132 @@
+name: Monitor normativo CMF por industria
+
+on:
+  schedule:
+    # Revisión diaria; la fecha real de ejecución se muestra por separado de
+    # la fecha de publicación de la última norma.
+    - cron: '23 13 * * 1-5'
+  push:
+    branches:
+      - main
+      - arena/01a0e952-monitor-financiero-chile
+    paths:
+      - '.github/workflows/normativa_cmf.yml'
+      - 'pipelines/normativa_cmf/**'
+      - 'docs/js/normativa_monitor.js'
+      - 'docs/js/sidebar.js'
+      - 'docs/js/data_viewer.js'
+      - 'docs/index.html'
+      - 'docs/css/app.css'
+      - 'scripts/audit_normativa_web.js'
+      - 'docs/outputs/normativa_cmf/feed.json'
+      - 'data/normativa_cmf/state.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: normativa-cmf-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  actualizar-feed:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout de la rama que inició el flujo
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: pipelines/normativa_cmf/requirements.txt
+
+      - name: Instalar dependencias
+        run: python -m pip install --disable-pip-version-check -r pipelines/normativa_cmf/requirements.txt
+
+      - name: Ejecutar pruebas y auditoría de integración web
+        run: |
+          python -m unittest discover -s pipelines/normativa_cmf/tests -v
+          node scripts/audit_normativa_web.js
+
+      - name: Actualizar publicaciones CMF y análisis respaldado
+        env:
+          API_GOOGLE_AI_STUDIO: ${{ secrets.API_GOOGLE_AI_STUDIO }}
+          # Alias oficiales latest: el modelo se actualiza sin cambiar el workflow.
+          GEMINI_MODEL_FLASH_LITE: gemini-flash-lite-latest
+          GEMINI_MODEL_FLASH: gemini-flash-latest
+          NORMATIVA_LOOKBACK_DAYS: '365'
+          NORMATIVA_PDF_RECHECK_DAYS: '45'
+          # Una pausa de 6 s limita las solicitudes a un máximo aproximado de 10 por minuto.
+          NORMATIVA_GEMINI_MIN_INTERVAL_SECONDS: '6'
+          # Hasta dos llamadas por publicación, con margen para el backlog residual.
+          NORMATIVA_MAX_AI_CALLS: '20'
+          NORMATIVA_MAX_PDF_CHECKS: '120'
+        run: python -m pipelines.normativa_cmf.pipeline
+
+      - name: Auditar feed y estado después de la consulta oficial
+        run: python -m pipelines.normativa_cmf.audit --require-run
+
+      - name: Guardar salida en la misma rama
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/normativa_cmf/state.json docs/outputs/normativa_cmf/feed.json
+          if git diff --cached --quiet; then
+            echo 'Feed y estado sin cambios.'
+          else
+            git commit -m "CMF: actualizar novedades normativas"
+            # Otros workflows actualizan esta misma rama; rebasar la salida
+            # sobre el último tip evita perder el feed por una carrera de push.
+            for intento in 1 2 3; do
+              git fetch --deepen=50 origin "${GITHUB_REF_NAME}"
+              git rebase FETCH_HEAD
+              if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+                exit 0
+              fi
+              echo "Push concurrente rechazado (intento ${intento}/3)."
+            done
+            exit 1
+          fi
+
+
+  # Los commits hechos con GITHUB_TOKEN no disparan pages.yml. Se despliega
+  # desde un job condicionado a la rama por defecto; la rama de trabajo no publica.
+  publicar-pages:
+    if: github.ref_name == github.event.repository.default_branch
+    needs: actualizar-feed
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Obtener la última versión de la rama por defecto
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Empaquetar sitio
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Publicar sitio
+        id: deployment
+        uses: actions/deploy-pages@v4
