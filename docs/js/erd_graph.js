@@ -770,7 +770,7 @@ const ERD_TABLES = [
     file: "outputs/cooperativas/cooperativas_maestro.parquet",
     cols: [
       { name: "rut", pk: true, type: "VARCHAR" },
-      { name: "rut_cuerpo", type: "VARCHAR" },
+      { name: "rut_dv", type: "VARCHAR" },
       { name: "dv", type: "VARCHAR" },
       { name: "nombre_empresa", type: "VARCHAR" },
       { name: "nombre_fantasia", type: "VARCHAR" },

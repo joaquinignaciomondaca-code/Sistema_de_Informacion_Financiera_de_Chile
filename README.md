@@ -15,8 +15,8 @@ Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Centra
 |---|---|
 | Historia cubierta | **25 años** · 2001-01 → 2026-08 |
 | Industrias supervisadas | **15** (CMF · BCCh · SPensiones · SUSESO) |
-| Tablas publicadas | **52** Parquet · 10.870.757 filas · 262 MB |
-| Consultas sugeridas listas para usar | **117** |
+| Tablas publicadas | **52** Parquet · 10.870.763 filas · 273 MB |
+| Consultas sugeridas listas para usar | **116** |
 | Actualización | **11 flujos** automáticos en GitHub Actions |
 | Verificación | **7 suites** de auditoría + **130** pruebas unitarias |
 
@@ -66,7 +66,7 @@ Y el caso que motiva el proyecto — **un emisor visto desde tres industrias a l
 ```sql
 -- ¿Qué emisores concentran exposición simultánea de aseguradoras y fondos mutuos?
 WITH bancos AS (
-  SELECT split_part(replace(rut, '.', ''), '-', 1) AS rut, razon_social
+  SELECT rut, razon_social
   FROM bancos_lista_entidades
 ),
 seguros AS (
@@ -76,7 +76,7 @@ seguros AS (
   GROUP BY 1
 ),
 fondos AS (
-  SELECT split_part(rut_emisor, '-', 1) AS rut, count(DISTINCT run_fondo) AS fondos_mutuos
+  SELECT rut_emisor AS rut, count(DISTINCT run_fondo) AS fondos_mutuos
   FROM ffmm_cartera_nacional
   WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional)
   GROUP BY 1
@@ -96,9 +96,9 @@ ORDER BY s.aseguradoras + f.fondos_mutuos DESC;
 | Banco BICE | 50 | 161 |
 | Banco del Estado de Chile | 53 | 145 |
 
-Tres industrias cruzadas en 50 ms, en el navegador. Fíjate en los `split_part`: son necesarios porque el RUT aún no está homologado entre industrias — ver la nota en la sección 4.
+Tres industrias cruzadas en 50 ms, en el navegador, con `JOIN`s directos: el RUT está homologado a toda la base bajo una convención canónica (sección 4).
 
-La web trae **117 consultas sugeridas** organizadas por industria, para no partir de una pantalla en blanco. Cada resultado se ve como tabla o gráfico y se exporta a CSV, Excel o Parquet.
+La web trae **116 consultas sugeridas** organizadas por industria, para no partir de una pantalla en blanco. Cada resultado se ve como tabla o gráfico y se exporta a CSV, Excel o Parquet.
 
 ---
 
@@ -121,9 +121,9 @@ La web trae **117 consultas sugeridas** organizadas por industria, para no parti
 | Sistemas de Pago | 1 | 19 | registro vigente | BCCh / CMF |
 | Fondos de Pensiones | 1 | 7 | registro vigente | SPensiones · D.L. 3.500 |
 | Cooperativas de Ahorro y Crédito | 1 | 7 | registro vigente | CMF |
-| **Total** | **52** | **10.870.757** | **2001 → 2026** | |
+| **Total** | **52** | **10.870.763** | **2001 → 2026** | |
 
-† En banca, *balance* y *resultados* son vistas filtradas sobre las mismas 55 particiones mensuales: B1 y B2 (710.025 filas) y R1 (1.217.939), sin solape. La pestaña Descargas no precuenta esas dos tablas —informa que las filas se cuentan al consultar—, por lo que muestra 8.942.793 en vez del total de 10.870.757.
+† En banca, *balance* y *resultados* son vistas filtradas sobre las mismas 55 particiones mensuales: B1 y B2 (710.025 filas) y R1 (1.217.939), sin solape. Por eso el manifiesto las declara como **un solo datasete** (1.927.964 filas) detrás de las dos vistas: 52 tablas publicadas = 51 datasets, cada uno contado una vez, y la pestaña Descargas muestra el total completo de 10.870.763 sin doble contar las particiones de banca.
 
 Cada tabla publica su **manifiesto** —períodos, archivos, registros y hash de origen—, de modo que se puede verificar que lo que muestra la web es exactamente lo que se descargó de la fuente.
 
@@ -133,7 +133,7 @@ Cada tabla publica su **manifiesto** —períodos, archivos, registros y hash de
 
 Un dato financiero mal extraído es peor que no tener el dato. El sistema valida **antes** de publicar y se detiene si algo no cuadra:
 
-- **Identidad**: RUT validado con dígito verificador módulo 11 y nombres de entidad homologados **dentro de cada industria**.
+- **Identidad**: RUT validado con dígito verificador módulo 11 y homologado **a toda la base** bajo una convención canónica (cuerpo / cuerpo-DV / puntos, según la columna).
 - **Cuadraturas contables**: activos = pasivos + patrimonio. Un balance que no cuadra detiene la publicación.
 - **Cobertura mínima**: si un mes trae menos del 90 % de las entidades del mes anterior, no se publica.
 - **Legibilidad**: más de 1 % de filas ilegibles en un archivo aborta el proceso.
@@ -141,7 +141,7 @@ Un dato financiero mal extraído es peor que no tener el dato. El sistema valida
 
 Cuando algo falla, la web dice «no disponible». Nunca un número inventado.
 
-**Limitación conocida, medida y documentada.** El RUT está homologado dentro de cada industria, pero todavía no *entre* industrias: conviven tres convenciones (`12.345.678-9`, `12345678-9`, `12345678`) según el origen del archivo. Un `JOIN` directo entre sectores devuelve cero filas en silencio, que es la peor forma de fallar. Normalizando con `split_part` aparecen los 147 emisores que comparten aseguradoras y fondos mutuos, como en el ejemplo de arriba. La auditoría completa de formatos, columna por columna, está en [`docs/notas/rut_formatos_2026-09-29.md`](docs/notas/rut_formatos_2026-09-29.md); unificar el identificador es la corrección en curso.
+**Convención canónica de RUT.** Antes del 2026-09-29 el RUT estaba homologado solo *dentro* de cada industria: convivían tres convenciones (`12.345.678-9`, `12345678-9`, `12345678`) según el origen del archivo, y un `JOIN` directo entre sectores devolvía cero filas en silencio, que es la peor forma de fallar. Ahora toda la base publica bajo una convención única — `rut` = cuerpo, `rut_dv` = cuerpo-DV, `rut_completo` = puntos y DV —, los `JOIN` directos funcionan (los 147 emisores que comparten aseguradoras y fondos mutuos salen sin trucos, como en el ejemplo de arriba), y un guardián en CI (`scripts/audit_rut_formatos.py`) detiene cualquier corrida que publique otro formato. La auditoría completa, columna por columna, y el registro de la corrección están en [`docs/notas/rut_formatos_2026-09-29.md`](docs/notas/rut_formatos_2026-09-29.md).
 
 ---
 

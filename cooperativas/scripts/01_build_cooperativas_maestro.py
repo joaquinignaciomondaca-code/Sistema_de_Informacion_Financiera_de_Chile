@@ -9,9 +9,13 @@ Guarda:
 
 import os
 import json
+import sys
 import pandas as pd
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+sys.path.insert(0, BASE_DIR)
+from pipelines.auto.rut import normalizar_dataframe  # noqa: E402
+
 OUT_DIR = os.path.join(BASE_DIR, "docs", "outputs", "cooperativas")
 os.makedirs(OUT_DIR, exist_ok=True)
 
@@ -128,6 +132,7 @@ def build_maestro():
             "tipo_institucion", "regulador_principal", "sede_matriz", "region", 
             "estado_vigencia", "fecha_fundacion", "es_sistemica"]
     df = pd.DataFrame(records)[cols]
+    df = normalizar_dataframe(df)  # convención de RUT: `rut`=cuerpo, `rut_dv`=con DV
 
     p_out = os.path.join(OUT_DIR, "cooperativas_maestro.parquet")
     j_out = os.path.join(OUT_DIR, "cooperativas_maestro.json")
