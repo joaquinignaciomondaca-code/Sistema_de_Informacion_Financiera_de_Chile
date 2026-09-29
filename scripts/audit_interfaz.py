@@ -335,13 +335,29 @@ def audit_engine():
     # Los bundles se declaran de forma explícita (y no vía getJsDelivrBundles) para
     # poder incluir la entrada "mvp", que selectBundle exige en navegadores sin
     # exception handling. Se comprueba entonces que existan los dos CDNs de respaldo.
-    for esperado, etiqueta in [("jsdelivr", "jsDelivr"), ("unpkg", "unpkg")]:
+    for esperado, etiqueta in [("jsdelivr", "jsDelivr"), ("esm.sh", "esm.sh")]:
         if esperado not in source.lower():
             fail(f"duckdb_client.js perdió el respaldo por CDN {etiqueta}")
     if 'bundles.mvp' not in source:
         fail("duckdb_client.js no declara el bundle mvp (selectBundle falla sin él)")
     else:
-        print("  [OK] Respaldos por CDN jsDelivr y unpkg, con bundle mvp declarado")
+        print("  [OK] Respaldos por CDN jsDelivr y esm.sh, con bundle mvp declarado")
+    # Los .mjs que upstream publica en dist/ importan "apache-arrow" como
+    # especificador desnudo. Un navegador no lo resuelve sin import map, así que
+    # un bundle vendorizado con imports desnudos deja la terminal SQL muerta en
+    # producción aunque todos los archivos existan y se sirvan con HTTP 200.
+    bundle_local = os.path.join(vendor, "duckdb-browser.mjs")
+    if os.path.exists(bundle_local):
+        desnudos = sorted(set(re.findall(r'from\s*["\']([^"\'./][^"\']*)["\']', read(bundle_local))))
+        if desnudos:
+            fail(
+                "el bundle local del motor tiene imports sin resolver "
+                f"({', '.join(desnudos)}): el navegador no puede cargarlo"
+            )
+        else:
+            print("  [OK] El bundle local del motor es autocontenido (sin imports desnudos)")
+    if "importmap" not in read("docs/index.html") and not os.path.exists(bundle_local):
+        fail("sin bundle autocontenido ni import map, el motor no puede arrancar")
     for capacidad in ["probeBlobWorker", "getPlatformFeatures", "buildDiagnostics"]:
         if capacidad not in source:
             fail(f"duckdb_client.js no expone {capacidad} para el diagnóstico")
