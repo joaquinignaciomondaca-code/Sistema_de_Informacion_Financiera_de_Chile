@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import io
+import hashlib
 import json
 import os
 import re
@@ -37,6 +38,8 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 RAIZ = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(RAIZ))
+from pipelines.auto import cuadratura, estable  # noqa: E402
 SALIDA = RAIZ / "docs" / "outputs" / "corredoras_bolsa"
 CONTROL = SALIDA / "manifest.json"
 URL = ("https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/"
@@ -252,7 +255,7 @@ def guardar_control(c: dict) -> None:
     c["periodos"] = dict(sorted(c["periodos"].items()))
     c["desde"] = DESDE
     c["updated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    CONTROL.write_text(json.dumps(c, ensure_ascii=False, indent=2) + "\n")
+    estable.escribir_json(CONTROL, c)
 
 
 def escribir_manifiestos(c: dict) -> None:
@@ -265,7 +268,7 @@ def escribir_manifiestos(c: dict) -> None:
                "files": [f"outputs/corredoras_bolsa/{carpeta.name}/{r.name}" for r in rutas],
                "total_records": sum(pq.ParquetFile(r).metadata.num_rows for r in rutas),
                "periodos": con, "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds")}
-        (carpeta / "manifest.json").write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n")
+        estable.escribir_json((carpeta / "manifest.json"), man)
 
 
 ORIGEN = ("CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y "
@@ -306,7 +309,7 @@ def actualizar_data_manifest() -> None:
     man["total_tables"] = len(man["tables"])
     man["total_records"] = sum(int(t.get("registros_reales") or 0) for t in man["tables"])
     man["updated_at"] = hoy
-    ruta.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n")
+    estable.escribir_json(ruta, man)
 
 
 def refrescar_marcas(lista: set[str], c: dict) -> int:
@@ -358,10 +361,11 @@ def main(argv=None) -> int:
             print("Tiempo agotado; el resto sigue en la próxima corrida.")
             break
         datos = {t: [] for t in TABLAS}
-        por_tipo, avisos = {}, []
+        por_tipo, avisos, sha_origen = {}, [], {}
         for tipo in TIPOS:
             try:
                 raw = _get(URL.format(tipo=tipo, mm=periodo[5:], aaaa=periodo[:4]))
+                sha_origen[TIPOS[tipo]] = hashlib.sha256(raw).hexdigest()
                 d = leer_excel(raw, periodo, tipo, lista, nombres)
             except ErrorFuente as e:
                 avisos.append(f"{TIPOS[tipo]}: {e}")
@@ -381,6 +385,13 @@ def main(argv=None) -> int:
         if total < previo.get("sociedades", 0):
             print(f"::warning::{periodo}: la relectura trae {total} sociedades (antes {previo['sociedades']}); se mantiene")
             continue
+        # Cuadratura contable (README §4): activos = pasivos + patrimonio (FECU 10 = 21 + 22).
+        verificados, descuadres = cuadratura.verificar_fecu(datos["balance"])
+        if cuadratura.debe_detener(verificados, descuadres):
+            print(f"::warning::{periodo}: {len(descuadres)} de {verificados} balances no cuadran "
+                  f"(activos ≠ pasivos + patrimonio); no se publica. Ej.: {descuadres[0]}")
+            continue
+        avisos += [f"balance no cuadra: {m}" for m in descuadres]
         for t in TABLAS:
             escribir(t, periodo, datos[t])
         fuera = sorted({(f["rut_dv"], f["razon_social"]) for f in datos["balance"]
@@ -388,7 +399,7 @@ def main(argv=None) -> int:
         c["periodos"][periodo] = {"cerrado": cerrado(periodo, hoy), "sociedades": total, "por_tipo": por_tipo,
                                   "filas": {t: len(datos[t]) for t in TABLAS},
                                   "corredores_fuera_de_lista": [{"rut": r, "razon_social": n} for r, n in fuera],
-                                  "avisos": avisos}
+                                  "avisos": avisos, "sha256_origen": sha_origen}
         guardar_control(c)
         hechos += 1
         print(f"{periodo}: {por_tipo} · balance {len(datos['balance'])} · resultados {len(datos['resultados'])}"

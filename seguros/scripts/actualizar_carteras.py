@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import argparse
 import io
+import hashlib
 import json
 import os
 import re
@@ -49,6 +50,8 @@ from seguros.scripts import metadatos_web
 from seguros.scripts.formato_1835 import ENCABEZADO, LARGO, TIPO_TOTAL, campos, formato_de
 
 RAIZ = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(RAIZ))
+from pipelines.auto import estable  # noqa: E402
 SALIDA = RAIZ / "docs" / "outputs" / "seguros"
 URL = "https://www.cmfchile.cl/institucional/estadisticas/merc_seguros/cartera_inversiones/dcisgv/descarga_cartera_inv.php"
 SECTORES = {"vida": "CSVID", "generales": "CSGEN"}
@@ -383,7 +386,7 @@ def escribir_manifiestos(control: dict) -> None:
         man = {"tabla": tabla, "files": [f"outputs/seguros/{tabla}/{r.name}" for r in rutas],
                "total_records": registros, "periodos": periodos,
                "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds")}
-        (SALIDA / tabla / "manifest.json").write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n")
+        estable.escribir_json((SALIDA / tabla / "manifest.json"), man)
     # Compañías que reportan: primer y último mes por sector.
     filas = []
     for (sector, rut), info in sorted(control["aseguradoras"].items()):
@@ -432,7 +435,7 @@ def actualizar_data_manifest(control: dict) -> None:
     man["total_tables"] = len(man["tables"])
     man["total_records"] = sum(int(t.get("registros_reales") or 0) for t in man["tables"])
     man["updated_at"] = hoy
-    ruta.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n")
+    estable.escribir_json(ruta, man)
 
 
 def cargar_control() -> dict:
@@ -450,7 +453,7 @@ def guardar_control(control: dict) -> None:
     c["periodos"] = dict(sorted(control["periodos"].items()))
     c["desde"] = {t: DESDE_TABLA.get(t, DESDE) for t in TABLAS}
     c["updated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    (SALIDA / "manifest.json").write_text(json.dumps(c, ensure_ascii=False, indent=2) + "\n")
+    estable.escribir_json((SALIDA / "manifest.json"), c)
 
 
 # ---------------------------------------------------------------------------
@@ -577,6 +580,8 @@ def main(argv=None) -> int:
             if excluidos:
                 previo["archivos_excluidos"] = excluidos
         previo["registros"].update(conteo)
+        # SHA-256 del ZIP que entregó la CMF por cada sector (vida / generales).
+        previo.setdefault("sha256_origen", {}).update({s: hashlib.sha256(d).hexdigest() for s, d in datos.items()})
         control["periodos"][periodo] = previo
         guardar_control(control)
         hechos.append(periodo)

@@ -271,8 +271,12 @@ def build() -> dict:
         for grupo, items in sorted(por_sector.items())
     ]
 
+    # «generado» sale de los datos (la última actualización publicada) y no del reloj: con
+    # date.today() el catálogo quedaba «desactualizado» para --check cada medianoche, sin
+    # que cambiara nada publicado.
+    fechas = [i["actualizado"][:10] for bl in bloques for i in bl["items"] if i.get("actualizado")]
     return {
-        "generado": date.today().isoformat(),
+        "generado": max(fechas) if fechas else date.today().isoformat(),
         "conjuntos": sum(len(b["items"]) for b in bloques),
         "filas": total_filas,
         "bytes": total_bytes,

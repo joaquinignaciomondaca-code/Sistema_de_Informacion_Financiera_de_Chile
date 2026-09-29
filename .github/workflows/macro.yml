@@ -86,7 +86,8 @@ jobs:
             git reset --hard FETCH_HEAD
             git cherry-pick "$datos"
             python -m macro.scripts.series_bcch --solo-data-manifest
-            git add data_manifest.json
+            python scripts/build_download_catalog.py
+            git add data_manifest.json docs/js/download_catalog.js
             git diff --cached --quiet || git commit -m "Macro BCCh: data_manifest"
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then echo "publicado=true" >> "$GITHUB_OUTPUT"; exit 0; fi
             sleep 20

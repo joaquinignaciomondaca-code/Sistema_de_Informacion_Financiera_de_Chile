@@ -57,14 +57,15 @@ jobs:
           git add $rutas
           if git diff --cached --quiet; then echo 'Sin cambios.'; exit 0; fi
           git commit -m "Listas de entidades: ${{ steps.revisar.outputs.cambios }} cambios desde los registros CMF"
-          git checkout -- data_manifest.json docs/js/sidebar.js docs/js/data_dictionary.js
+          git checkout -- data_manifest.json docs/js/sidebar.js docs/js/data_dictionary.js docs/js/data_bundles.js
           datos=$(git rev-parse HEAD)
           for i in 1 2 3 4 5; do
             git fetch origin "${GITHUB_REF_NAME}"
             git reset --hard FETCH_HEAD
             git cherry-pick "$datos"
             python pipelines/entidades/actualizar_listas.py --solo-conteos
-            git add data_manifest.json docs/js/sidebar.js docs/js/data_dictionary.js
+            python scripts/build_download_catalog.py
+            git add data_manifest.json docs/js/sidebar.js docs/js/data_dictionary.js docs/js/data_bundles.js docs/js/download_catalog.js
             git diff --cached --quiet || git commit -m "Listas de entidades: data_manifest"
             git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
             sleep 20
