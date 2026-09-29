@@ -44,15 +44,15 @@ def main():
     if bundle_file.exists():
         js_text = bundle_file.read_text(encoding="utf-8")
         records_json = json.dumps(df.to_dict(orient="records"), ensure_ascii=False, indent=2)
-        snippet = f"\nwindow.DATA_BUNDLES.afp_maestro = {records_json};\n"
-        if "window.DATA_BUNDLES.afp_maestro" in js_text:
+        snippet = f"\nwindow.DATA_BUNDLES.afp_lista_entidades = {records_json};\n"
+        if "window.DATA_BUNDLES.afp_lista_entidades" in js_text:
             # Reemplazar definicion previa
             import re
-            js_text = re.sub(r'window\.DATA_BUNDLES\.afp_maestro\s*=\s*\[[\s\S]*?\];', f"window.DATA_BUNDLES.afp_maestro = {records_json};", js_text)
+            js_text = re.sub(r'window\.DATA_BUNDLES\.afp_maestro\s*=\s*\[[\s\S]*?\];', f"window.DATA_BUNDLES.afp_lista_entidades = {records_json};", js_text)
         else:
             js_text += snippet
         bundle_file.write_text(js_text, encoding="utf-8")
-        print("Bundle data_bundles.js actualizado con 'afp_maestro'.")
+        print("Bundle data_bundles.js actualizado con 'afp_lista_entidades'.")
 
 if __name__ == "__main__":
     main()
