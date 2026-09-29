@@ -30,6 +30,9 @@ import urllib.request
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from pipelines.auto.rut import con_dv, cuerpo, formato  # noqa: E402
+
 OUT = ROOT / '.local-data' / 'factoring_leasing_serie'
 INDEX = 'https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php'
 ARCHIVE = 'https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio={0}&termino={0}'
@@ -123,16 +126,36 @@ def annual_fallback(raw_index, period, fetcher):
 
 
 def load_catalog(path=CATALOG):
+    """Índice del catálogo por cuerpo de RUT, con el RUT completo publicado.
+
+    El maestro sigue la convención canónica de `pipelines/auto/rut.py` (la misma
+    que exige `audit_factoring_leasing.py`): `rut` = cuerpo (C) y `rut_dv` =
+    cuerpo-DV (B). También se aceptan catálogos anteriores con `rut` en A o B,
+    para que un cambio de formato en el archivo publicado no detenga la
+    extracción.
+
+    El DV se toma del catálogo tal como está publicado; solo se calcula con el
+    algoritmo oficial (módulo 11) cuando el registro no trae ninguno.
+    """
     rows = json.loads(Path(path).read_text(encoding='utf-8'))
     catalog = {}
     for row in rows:
-        rut = str(row['rut']).replace('.', '').upper()
-        body, dv = rut.split('-')
-        if body in catalog or not body.isdigit() or not dv:
-            raise ValueError('RUT duplicado o inválido en catálogo: ' + rut)
+        body = cuerpo(row.get('rut'))
+        if body is None or not body.isdigit():
+            raise ValueError(f'RUT inválido en catálogo: {row.get("rut")!r}')
+        # DV publicado: `rut_dv` (B) o, en catálogos anteriores, el propio `rut` (A/B).
+        fuente = row.get('rut_dv') if formato(row.get('rut_dv')) in ('A', 'B') else row.get('rut')
+        if formato(fuente) in ('A', 'B'):
+            if cuerpo(fuente) != body:
+                raise ValueError(f'Catálogo inconsistente: rut={row.get("rut")!r} no coincide con {fuente!r}')
+            completo = con_dv(fuente)
+        else:
+            completo = con_dv(body)
+        if body in catalog or not completo:
+            raise ValueError('RUT duplicado o inválido en catálogo: ' + str(row.get('rut')))
         # Los 28 registros del catálogo incluyen segmento Automotriz. Se incluyen
         # expresamente para no omitir silenciosamente entidades de la carpeta FL.
-        catalog[body] = {'rut': body + '-' + dv, 'segmento': row['segmento'],
+        catalog[body] = {'rut': completo, 'segmento': row['segmento'],
                          'nombre': row['razon_social'].strip()}
     if not catalog:
         raise ValueError('Catálogo de entidades vacío')
