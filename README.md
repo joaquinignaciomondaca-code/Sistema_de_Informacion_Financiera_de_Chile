@@ -33,7 +33,8 @@ Los datos del mercado financiero chileno existen, son públicos y son difíciles
 ### Cómo verlo funcionando
 
 ```bash
-git clone https://github.com/joaquinignaciomondaca-code/monitor-financiero-chile && cd monitor-financiero-chile
+git clone https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile
+cd Sistema_de_Informacion_Financiera_de_Chile
 python3 -m scripts.preview_no_cache --port 8000     # sirve docs/ sin caché, con soporte HTTP Range
 # → http://localhost:8000
 ```
@@ -64,6 +65,7 @@ El mismo Parquet que se publica es el que se consulta: no hay copia intermedia, 
 | Capa | Tecnología |
 |---|---|
 | Extracción | Python 3.11 · `requests` + `BeautifulSoup` (HTML), `openpyxl` (XLSX), `PyMuPDF`/`pdfplumber` (PDF), `Playwright` (sitios sin API), `bcchapi` (BCCh) |
+| Lectura asistida | Sólo en normativa CMF: Gemini con salida forzada a esquema JSON, límite de llamadas por corrida, marca `needs_human_review` y regla anti inyección de prompt (el texto del PDF se trata como dato no confiable). Ningún dato financiero pasa por un modelo. |
 | Datos | `pandas` + `pyarrow` → Parquet particionado con manifiestos JSON (períodos, archivos, registros y hash de origen) |
 | Automatización | GitHub Actions: 11 flujos programados con commit controlado, issue automático si una fuente se atrasa |
 | Frontend | JavaScript sin framework **y sin build** · DuckDB-Wasm 1.28.0 embebido · CSS con variables (6 paletas) |
@@ -83,7 +85,7 @@ Aplicación estática de **siete pestañas** (cada una a pantalla completa, sin 
 | **Visor de datos** | Consulta tabular con filtro, orden y copia de celdas. |
 | **Consultas SQL** | Terminal con autocompletado, historial, favoritos y enlaces compartibles. |
 | **Descargas** | Catálogo de los 52 conjuntos: filas, período, peso y archivos, con Parquet, CSV y Excel. |
-| **Normativa CMF** | Seguimiento de la normativa publicada por la CMF. |
+| **Normativa CMF** | Seguimiento de la normativa publicada por la CMF, con lectura asistida de los PDF (ver §7.6) y marca de revisión humana. |
 
 - **Explorador jerárquico**: 12 industrias → 15 sectores → 38 carpetas temáticas → 52 tablas, con consultas sugeridas por carpeta.
 - **Motor embebido**: copia local de DuckDB-Wasm 1.28.0 (`docs/vendor/duckdb/`) con respaldo por CDN, de modo que las consultas funcionan aunque la red del visitante bloquee el CDN.
@@ -100,7 +102,7 @@ Aplicación estática de **siete pestañas** (cada una a pantalla completa, sin 
 | Fondos Mutuos | `ffmm/` | 5 | 3.306.744 | 2001-01 → 2026-08 | CMF · Circular 1333 |
 | Fondos de Inversión | `fi/` | 8 | 1.036.645 | 2020-03 → 2026-06 | CMF · LUF / Circular 1998 |
 | Corredoras de Bolsa | `corredoras_bolsa/` | 4 | 185.921 | 2010-12 → 2026-06 | CMF · FECU IFRS |
-| Administradoras Generales de Fondos | `agf/` | 3 | 129.711 | 2010-06 → 2026-06 | CMF · IFRS |
+| Administradoras Generales de Fondos | `pipelines/ifrs_sectores/` | 3 | 129.711 | 2010-06 → 2026-06 | CMF · IFRS |
 | Macroeconomía y Tasas | `macro/` | 5 | 80.375 | diaria → mensual | BCCh |
 | Factoring y Leasing | `factoring_leasing/` | 3 | 52.446 | 2009-03 → 2026-06 | CMF · IFRS |
 | Sociedades Securitizadoras | `securitizadoras/` | 3 | 25.985 | 2009-12 → 2026-06 | CMF · IFRS |
@@ -149,16 +151,16 @@ Todo lo que promete este README se puede comprobar con un comando:
 ```bash
 python scripts/audit_web_full.py            # Parquet, enlaces, chips SQL, diccionario y ERD
 python scripts/audit_interfaz.py            # pestañas, catálogo, vocabulario, temas, motor
-node   scripts/audit_interfaz_dom.js        # 39 comprobaciones de comportamiento en un DOM (requiere jsdom)
+node   scripts/audit_interfaz_dom.js        # comportamiento de la interfaz en un DOM real (requiere jsdom)
 python scripts/audit_navigation.py          # taxonomía: 12 familias, 52 tablas, 52 opciones del visor
 python scripts/audit_automatizacion.py      # quién actualiza cada tabla y con qué frecuencia
 node   scripts/audit_normativa_web.js       # sección de normativa CMF
 python scripts/normalizar_vocabulario.py --check   # el vocabulario de nombres no se desincroniza
 python scripts/build_download_catalog.py --check   # el catálogo de descargas refleja lo publicado
-python scripts/audit_secretos.py                   # ninguna credencial en el historial de Git
+python scripts/audit_secretos.py                   # rastrea credenciales en el historial (requiere clon completo)
 ```
 
-Los flujos maduros (bancos, factoring-leasing, macro, normativa) corren además sus **130 pruebas unitarias** en CI antes de publicar. Las suites de auditoría no son decorativas: son el contrato del proyecto — si la web y los datos se separan, el push falla.
+Los flujos maduros (bancos, factoring-leasing, macro, normativa) corren además sus **130 pruebas unitarias** en CI antes de publicar. Todo lo anterior se ejecuta en `web_audit.yml` en cada push a `main` y en cada PR: si el catálogo de la web y los Parquet publicados divergen, el push falla.
 
 ---
 
@@ -169,6 +171,7 @@ Los flujos maduros (bancos, factoring-leasing, macro, normativa) corren además 
 3. **Un vocabulario, no convenciones orales.** Todo nombre visible vive en `docs/vocabulario.json` y un verificador recorre el repositorio; los sinónimos desaparecieron de la interfaz por construcción, no por disciplina.
 4. **Compatibilidad sin contaminar.** Los nombres históricos de las vistas siguen funcionando en SQL (alias), pero no se sugieren en pantalla: quien tiene una consulta guardada no se rompe, y quien llega nuevo ve un solo criterio.
 5. **Auditorías como contrato ejecutable.** Cada promesa del README se traduce en un chequeo automático; la documentación no puede quedar desactualizada en silencio.
+6. **El LLM lee prosa, nunca cifras.** El único flujo con lectura asistida es el de normativa CMF, donde la fuente son PDF en lenguaje natural sin formato estable. El modelo devuelve JSON contra un esquema cerrado, el texto del documento se trata como dato no confiable (no como instrucción), y todo resultado con evidencia incompleta queda marcado `needs_human_review`. Los estados financieros, carteras y series macro se parsean con código determinista y se validan contra cuadraturas: ningún número publicado proviene de un modelo.
 
 ---
 
@@ -204,11 +207,12 @@ PSEUDOCODIGO.md      mapa de código: qué hace cada pieza y en qué orden
 
 Publicar los pendientes es parte del trabajo:
 
-1. **Credenciales**: las claves de la API del Banco Central viven sólo en GitHub Secrets (`USER_BCCH` / `PASSWORD_BCCH`) y el código las lee del entorno. Una auditoría del historial completo no encontró credenciales reales —sólo marcadores de posición en el commit inicial—; la comprobación es reproducible con `scripts/audit_secretos.py`.
-2. **Utilidades duplicadas**: el dígito verificador, el parseo de números chilenos y el tipo de cambio están copiados en ~15 scripts; su lugar es un módulo `common/`.
-3. **Higiene del repositorio**: conviven scripts exploratorios con pipelines productivos, y el historial pesa ~270 MB por Parquet antiguos (candidato a Git LFS o releases).
+1. **Dos contadores de tablas**: el catálogo de descargas se regenera desde los Parquet reales y tiene verificador (`build_download_catalog.py --check`), por eso es la fuente citada en este README. `data_manifest.json` se mantiene aparte y todavía reporta otro total. Hay que derivar ambos del mismo cálculo o retirar el segundo.
+2. **Utilidades duplicadas**: el dígito verificador, el parseo de números chilenos y el tipo de cambio están copiados en ~8 scripts; su lugar es un módulo `common/`.
+3. **Peso del historial**: ~230 MB por Parquet antiguos versionados; candidato a Git LFS o a publicar los datos como *releases*.
 4. **Cobertura de pruebas despareja**: los 130 tests se concentran en los flujos maduros; los sectores "stream + audit" se validan con auditorías, no con pruebas unitarias.
-5. **Publicación**: definir si el proyecto se publica con GitHub Pages, en Vercel, o se mantiene privado con demo bajo solicitud.
+
+La operación de credenciales (secrets de GitHub, variables de entorno y rotación) está documentada en [`pipelines/README.md`](pipelines/README.md); `scripts/audit_secretos.py` la comprueba en CI.
 
 ---
 
@@ -222,4 +226,4 @@ Proyecto de datos de punta a punta: extracción, validación estadística y cont
 
 ## Licencia
 
-© 2026 Joaquín Mondaca. Código publicado con fines de portafolio y evaluación técnica. Los datos pertenecen a sus fuentes oficiales (CMF, Banco Central de Chile, SPensiones, SUSESO) y se publican tal como ellas los emiten.
+© 2026 Joaquín Mondaca. Todos los derechos reservados: el repositorio aún no incluye un archivo `LICENSE`, de modo que el código se publica para consulta y evaluación técnica, no para reutilización. Los datos pertenecen a sus fuentes oficiales (CMF, Banco Central de Chile, SPensiones, SUSESO) y se publican tal como ellas los emiten.
