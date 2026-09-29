@@ -12,12 +12,15 @@ Guarda:
 import os
 import re
 import ssl
+import sys
 import json
 import urllib.request
 import pandas as pd
 from bs4 import BeautifulSoup
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+sys.path.insert(0, BASE_DIR)
+from pipelines.auto.rut import normalizar_dataframe  # noqa: E402
 OUT_DIR = os.path.join(BASE_DIR, "docs", "outputs", "corredoras_bolsa")
 os.makedirs(OUT_DIR, exist_ok=True)
 
@@ -143,6 +146,7 @@ def scrape_entities():
             })
 
     df = pd.DataFrame(records)
+    df = normalizar_dataframe(df)  # convención de RUT: `rut`=cuerpo, `rut_dv`=con DV
     print(f"Total entidades COBOL extraidas: {len(df)}")
     print(f"  Vigentes: {len(df[df['estado_vigencia'] == 'Vigente'])}")
     print(f"  No Vigentes: {len(df[df['estado_vigencia'] == 'No Vigente'])}")

@@ -25,6 +25,10 @@ docs/outputs/vida/cartera_bonos.parquet
 .DS_Store
 Thumbs.db
 
+# Scratch / working files and one-off source downloads (no versionear)
+scratch/
+FSB_Patrimonio_Separado (4).xlsx
+
 # Local credentials and staging datasets (never publish)
 .env
 .env.*

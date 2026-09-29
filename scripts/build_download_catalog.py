@@ -114,6 +114,53 @@ def filas_parquet(rel_path: str) -> int | None:
         return None
 
 
+def filas_filtradas(rutas: list[str], where: str) -> int | None:
+    """Filas que devuelve de verdad una vista con `where` (bancos_balance y
+    bancos_resultados filtran la misma partición por `familia_archivo_fuente`).
+
+    Soporta las dos formas de filtro que declaran las vistas —`col = 'valor'` y
+    `col IN ('a', 'b', ...)`— y cuenta leyendo solo la columna filtrada de cada
+    Parquet. Con un filtro que no reconozca, sin pyarrow o ante un esquema
+    inesperado devuelve None: el catálogo vuelve a decir «se cuentan al
+    consultar» antes que mostrar un número dudoso.
+    """
+    if pq is None:
+        return None
+    m = re.match(r"^\s*(\w+)\s*=\s*'([^']*)'\s*$", where)
+    if m:
+        col, valores = m.group(1), [m.group(2)]
+    else:
+        m = re.match(r"^\s*(\w+)\s+IN\s*\(([^)]*)\)\s*$", where, re.IGNORECASE)
+        if not m:
+            return None
+        col, valores = m.group(1), re.findall(r"'([^']*)'", m.group(2))
+        if not valores:
+            return None
+    try:
+        import pyarrow as pa
+        import pyarrow.compute as pc
+    except Exception:  # pragma: no cover - entorno sin pyarrow
+        return None
+    total = 0
+    for rel in rutas:
+        full = os.path.join(DOCS, rel)
+        if not os.path.exists(full):
+            return None
+        try:
+            tabla = pq.read_table(full, columns=[col])
+        except Exception:
+            return None
+        if col not in tabla.schema.names:
+            return None
+        serie = tabla.column(col)
+        if len(valores) > 1:
+            coincidencia = pc.is_in(serie, pa.array(valores))
+        else:
+            coincidencia = pc.equal(serie, valores[0])
+        total += int(pc.sum(coincidencia))
+    return total
+
+
 def catalogo_vigente() -> dict:
     """Catálogo ya escrito, para heredar los conteos cuando no hay pyarrow."""
     if not os.path.exists(OUT_JS):
@@ -180,9 +227,12 @@ def build() -> dict:
 
         if view["where"]:
             # Vista unificada: el manifiesto cuenta las filas de todos los archivos
-            # fuente, no las de la vista (que aplica un filtro). Preferimos decir
-            # "se cuentan al consultar" antes que mostrar un número equivocado.
-            filas = None
+            # fuente, no las de la vista (que aplica un filtro). Contamos el filtro
+            # de verdad; sin pyarrow se hereda el conteo del catálogo vigente para
+            # que el resultado sea idéntico con o sin la dependencia.
+            filas = filas_filtradas([a["ruta"] for a in archivos], view["where"])
+            if filas is None and previo:
+                filas = filas_heredadas(previo, vid)
         elif manifest_total is not None:
             filas = int(manifest_total)
         else:

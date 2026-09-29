@@ -127,6 +127,18 @@ def registrar(con, vistas: list[dict], alias: dict[str, list[str]]) -> list[str]
     return sin_datos
 
 
+# Vistas que están vacías por la FUENTE, no por un defecto del pipeline: se
+# registran y se publican (el esquema existe, la web no inventa datos) pero la
+# fuente no informa nada para esa tabla todavía. Se tratan como «esperadas
+# vacías», no como rotas. Si la fuente empieza a publicar, la vista deja de
+# estar en este conjunto de forma natural (ya no será 0 filas).
+VACIAS_ESPERADAS: dict[str, str] = {
+    "fi_bienes_raices":
+        "Ningún fondo de inversión ha informado cartera de bienes raíces a la CMF "
+        "(2020-03 → 2026-06); la fuente no trae datos, no el pipeline.",
+}
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--check", action="store_true", help="salir con error si algo falla")
@@ -156,10 +168,14 @@ def main() -> int:
             'SELECT count(*) FROM "%s"' % v["name"]
         ).fetchone()[0]
     vistas_vacias = sorted(n for n, c in filas_por_vista.items() if c == 0)
+    vacias_inesperadas = [n for n in vistas_vacias if n not in VACIAS_ESPERADAS]
+    vacias_desactualizadas = sorted(n for n in VACIAS_ESPERADAS if filas_por_vista.get(n, 0) > 0)
     total_filas = sum(filas_por_vista.values())
     print(f"Filas publicadas  : {total_filas:,}".replace(",", "."))
     if vistas_vacias:
         print(f"Vistas con 0 filas: {len(vistas_vacias)} -> {', '.join(vistas_vacias)}")
+    for n in vacias_desactualizadas:
+        print(f"  (listada como esperada vacía pero ya trae filas: {n})")
     print()
 
     consultas = consultas_sugeridas()
@@ -189,8 +205,9 @@ def main() -> int:
         for etiqueta, _sql, msg in errores:
             print(f"  · {etiqueta}\n      {msg}")
 
-    if args.check and (errores or vacias or vistas_vacias):
-        print("\nFALLA: hay consultas sugeridas rotas o vacías, o vistas sin filas.")
+    if args.check and (errores or vacias or vacias_inesperadas or vacias_desactualizadas):
+        print("\nFALLA: hay consultas sugeridas rotas o vacías, una vista sin filas "
+              "sin justificación, o una vista esperada vacía que ya trae datos.")
         return 1
     print("\nOK")
     return 0

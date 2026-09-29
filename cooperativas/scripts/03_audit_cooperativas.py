@@ -39,7 +39,8 @@ def run_audit():
     assert os.path.exists(p_maestro), "No existe cooperativas_maestro.parquet"
     df_m = pd.read_parquet(p_maestro)
     print(f"\n1. Catastro Maestro: {len(df_m)} cooperativas fiscalizadas.")
-    m11_ok = sum(dv_m11(r["rut_cuerpo"]) == r["dv"] for _, r in df_m.iterrows())
+    # Convención de RUT: `rut` = cuerpo, `dv` = dígito verificador.
+    m11_ok = sum(dv_m11(r["rut"]) == r["dv"] for _, r in df_m.iterrows())
     print(f"   - Validacion Modulo 11: {m11_ok}/{len(df_m)} ({m11_ok/len(df_m)*100:.2f}%)")
     assert m11_ok == len(df_m), "Fallo Modulo 11 en maestro"
 

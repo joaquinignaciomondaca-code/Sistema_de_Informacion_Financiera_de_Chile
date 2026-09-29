@@ -393,52 +393,88 @@ class DuckDBClient {
     return relativePath;
   }
 
+  // Lista de archivos de una vista (manifiesto o fichero fijo). Se resuelve
+  // fuera de las vistas para poder pedir todos los manifiestos a la vez: en
+  // serie, el arranque pagaba un ida-y-vuelta de red por vista (30+ RTT).
+  async prepararVista(view) {
+    let files;
+    if (view.manifest) {
+      // no-store: el manifiesto es la lista de verdad de lo publicado; una
+      // copia en caché haría que la vista no viera particiones nuevas.
+      const response = await fetch(this.absoluteUrl(view.manifest), { cache: "no-store" });
+      if (!response.ok) throw new Error(`Manifiesto HTTP ${response.status}: ${view.manifest}`);
+      const manifest = await response.json();
+      files = manifest.files;
+      if (!Array.isArray(files) || files.length === 0) {
+        throw new Error(`No hay particiones publicadas para ${view.name}`);
+      }
+    } else {
+      files = Array.isArray(view.file) ? view.file : [view.file];
+    }
+    if (files.some((file) => typeof file !== "string" || file.startsWith("/") || file.split("/").includes(".."))) {
+      throw new Error(`Ruta de partición no válida en ${view.name}`);
+    }
+    return { view, files };
+  }
+
+  // Ejecuta `fn` sobre cada elemento con a lo sumo `max` en paralelo.
+  async enTandas(lista, max, fn) {
+    let i = 0;
+    const workers = Array.from({ length: Math.min(max, lista.length) }, async () => {
+      while (i < lista.length) {
+        const actual = i++;
+        await fn(lista[actual], actual);
+      }
+    });
+    await Promise.all(workers);
+  }
+
+  async crearVista({ view, files }) {
+    const safePath = (file) => file.replace(/'/g, "''");
+    const source = files.length === 1
+      ? `read_parquet('${safePath(files[0])}')`
+      : `read_parquet([${files.map((f) => `'${safePath(f)}'`).join(", ")}])`;
+    const filter = view.where ? ` WHERE ${view.where}` : "";
+    await this.conn.query(`CREATE OR REPLACE VIEW ${view.name} AS SELECT * FROM ${source}${filter};`);
+    // Alias de compatibilidad: un nombre viejo nunca debe ocultar un error,
+    // pero tampoco debe dejar sin datos a quien ya guardó una consulta.
+    for (const alias of (LEGACY_VIEW_ALIASES[view.name] || [])) {
+      try {
+        await this.conn.query(`CREATE OR REPLACE VIEW ${alias} AS SELECT * FROM ${view.name};`);
+      } catch (errAlias) {
+        console.warn(`[DuckDB-Wasm] No se pudo crear el alias ${alias}:`, errAlias);
+      }
+    }
+  }
+
   async registerSemanticViews() {
     this.unavailableViews = [];
     if (!this.conn) return;
 
-    for (const view of SEMANTIC_VIEWS) {
-      try {
-        let files;
-        if (view.manifest) {
-          const response = await fetch(this.absoluteUrl(view.manifest), { cache: "no-store" });
-          if (!response.ok) throw new Error(`Manifiesto HTTP ${response.status}: ${view.manifest}`);
-          const manifest = await response.json();
-          files = manifest.files;
-          if (!Array.isArray(files) || files.length === 0) {
-            throw new Error(`No hay particiones publicadas para ${view.name}`);
-          }
-        } else {
-          files = Array.isArray(view.file) ? view.file : [view.file];
+    // 1) Manifiestos y rutas, todo a la vez. El fallo de un manifiesto solo
+    //    desactiva su vista, igual que antes.
+    const preparadas = await Promise.all(
+      SEMANTIC_VIEWS.map(async (view) => {
+        try {
+          const p = await this.prepararVista(view);
+          return { ok: true, ...p };
+        } catch (err) {
+          this.unavailableViews.push(view.name);
+          console.error(`[DuckDB-Wasm] Vista ${view.name} no disponible:`, err);
+          return { ok: false };
         }
-        if (files.some((file) => typeof file !== "string" || file.startsWith("/") || file.split("/").includes(".."))) {
-          throw new Error(`Ruta de partición no válida en ${view.name}`);
-        }
-        for (const file of files) {
-          await this.registerFile(file);
-        }
-        const safePath = (file) => file.replace(/'/g, "''");
-        const source = files.length === 1
-          ? `read_parquet('${safePath(files[0])}')`
-          : `read_parquet([${files.map((f) => `'${safePath(f)}'`).join(", ")}])`;
-        const filter = view.where ? ` WHERE ${view.where}` : "";
-        await this.conn.query(`CREATE OR REPLACE VIEW ${view.name} AS SELECT * FROM ${source}${filter};`);
-        // Alias de compatibilidad: un nombre viejo nunca debe ocultar un error,
-        // pero tampoco debe dejar sin datos a quien ya guardó una consulta.
-        for (const alias of (LEGACY_VIEW_ALIASES[view.name] || [])) {
-          try {
-            await this.conn.query(`CREATE OR REPLACE VIEW ${alias} AS SELECT * FROM ${view.name};`);
-          } catch (errAlias) {
-            console.warn(`[DuckDB-Wasm] No se pudo crear el alias ${alias}:`, errAlias);
-          }
-        }
-      } catch (err) {
-        // Una vista rota se declara como no disponible: la consulta que la use
-        // fallará visiblemente en lugar de devolver datos inventados.
-        this.unavailableViews.push(view.name);
-        console.error(`[DuckDB-Wasm] Vista ${view.name} no disponible:`, err);
-      }
-    }
+      })
+    );
+    const ok = preparadas.filter((p) => p.ok);
+
+    // 2) Todos los ficheros del sistema a la vez (registerFileURL es idempotente
+    //    y dos vistas pueden compartir particiones).
+    const todos = [...new Set(ok.flatMap((p) => p.files))];
+    await Promise.all(todos.map((file) => this.registerFile(file)));
+
+    // 3) Creación de vistas en tandas: el worker las serializa de todos modos,
+    //    pero sin esperar un ida-y-vuelta por vista desde el hilo principal.
+    await this.enTandas(ok, 8, (p) => this.crearVista(p));
 
     console.log(`[DuckDB-Wasm] Vistas registradas: ${SEMANTIC_VIEWS.length - this.unavailableViews.length}/${SEMANTIC_VIEWS.length}`);
     if (this.unavailableViews.length) {

@@ -232,6 +232,18 @@ el argumento de «todo es auditable» se cae justo donde más importa.
 Esto es deuda técnica real y no aparece en la sección de deuda técnica — que es
 donde debería estar, si no se resuelve antes.
 
+**Resuelto (2026-09-29, auditoría de eficiencia):** `data_manifest.json` pasó de
+49/10.870.630 a **51 datasets · 10.870.757 filas**, las dos cifras que faltaban
+eran `cooperativas_lista_entidades` (7) y `corredoras_bolsa_lista_entidades_registro`
+(120). La divergencia restante es la esperada y documentada: 52 vistas = 51
+datasets porque `bancos_balance` y `bancos_resultados` filtran las mismas 55
+particiones (dataset `bancos_cmf_lineas`, contado una vez). El inventario interno
+(`pipelines/auto/inventario.json`) sigue en 53 filas = 52 vistas + ese datasete.
+`audit_automatizacion.py` ahora tiene una comprobación de alineación
+(`alineacion_manifest`) que falla si el manifiesto deja de coincidir con las
+filas reales de los Parquet o con las vistas publicadas, de modo que la deriva
+no vuelve a pasar en silencio.
+
 ### 4.3 Hay sección «Licencia» pero no hay licencia
 
 No existe `LICENSE` en el repositorio. GitHub mostrará *«No license»*, cuyo
@@ -285,7 +297,9 @@ al abrir un repositorio de datos.
 
 - `git rm -r scratch "FSB_Patrimonio_Separado (4).xlsx"`
 - Quitar `arena/01a0e952-monitor-financiero-chile` de los 10 workflows.
-- Regenerar `data_manifest.json` desde la misma fuente que el catálogo, o
-  eliminarlo si el catálogo ya lo reemplaza.
+- ~~Regenerar `data_manifest.json` desde la misma fuente que el catálogo, o
+  eliminarlo si el catálogo ya lo reemplaza.~~ → **Resuelto:** se alineó (51
+  datasets · 10.870.757 filas) y quedó vigilado por `alineacion_manifest` en
+  `audit_automatizacion.py`; ver la nota «Resuelto» en §4.2.
 - Crear `LICENSE`.
 - Publicar el sitio y poner el enlace en la primera línea.

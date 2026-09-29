@@ -19,6 +19,9 @@ import tempfile
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+from pipelines.auto.rut import normalizar_dataframe  # noqa: E402
+
 DATA = ROOT / '.local-data' / 'factoring_leasing_serie'
 DOCS = ROOT / 'docs'
 OUT = DOCS / 'outputs' / 'factoring_leasing'
@@ -30,6 +33,8 @@ MARKERS = {
     'docs/js/data_viewer.js': ('// BEGIN AUTO FL IFRS SERIES VIEWER', '// END AUTO FL IFRS SERIES VIEWER'),
     'docs/js/data_dictionary.js': ('// BEGIN AUTO FL IFRS SERIES DICTIONARY', '// END AUTO FL IFRS SERIES DICTIONARY'),
 }
+# Esquema del STAGING (igual a COLUMNS de backfill_ifrs.py); la publicación
+# aplica la convención de RUT en atomic_parquet y queda documentada en DOC_COLUMNS.
 TABLE_COLUMNS = [
     ('periodo', 'VARCHAR', 'Cierre informado por CMF, AAAA-MM.'),
     ('rut_cuerpo', 'VARCHAR', 'Cuerpo del RUT que aparece en el TXT; el archivo no trae dígito verificador.'),
@@ -50,6 +55,28 @@ TABLE_COLUMNS = [
     ('sha256_archivo', 'VARCHAR', 'SHA-256 de la respuesta de descarga o del subconjunto anual filtrado.'),
     ('identidad_nombre_coincide_catalogo', 'BOOLEAN', 'Coincidencia textual normalizada entre nombre fuente y nombre actual; no certifica identidad histórica.'),
 ]
+# Esquema publicado tras normalizar (convención de RUT, pipelines/auto/rut.py):
+# `rut` = cuerpo, `rut_dv` = con DV, sin `rut_cuerpo`.
+DOC_COLUMNS = [
+    ('periodo', 'VARCHAR'),
+    ('rut', 'VARCHAR'),
+    ('nombre_reportado', 'VARCHAR'),
+    ('segmento_catalogo', 'VARCHAR'),
+    ('nombre_catalogo', 'VARCHAR'),
+    ('tipo_balance', 'VARCHAR'),
+    ('moneda_archivo', 'VARCHAR'),
+    ('cuenta', 'VARCHAR'),
+    ('valor_archivo', 'BIGINT'),
+    ('valor_texto_original', 'VARCHAR'),
+    ('valor_es_entero', 'BOOLEAN'),
+    ('taxonomia', 'VARCHAR'),
+    ('estado_financiero', 'VARCHAR'),
+    ('repeticion_contexto', 'BIGINT'),
+    ('fuente_archivo', 'VARCHAR'),
+    ('sha256_archivo', 'VARCHAR'),
+    ('identidad_nombre_coincide_catalogo', 'BOOLEAN'),
+    ('rut_dv', 'VARCHAR'),
+]
 
 
 def file_sha256(path):
@@ -61,6 +88,8 @@ def file_sha256(path):
 
 
 def atomic_parquet(frame, path):
+    # Convención de RUT (pipelines/auto/rut.py): `rut` = cuerpo, `rut_dv` = con DV.
+    frame = normalizar_dataframe(frame)
     path.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(dir=path.parent, suffix='.parquet', delete=False) as tmp:
         temp = Path(tmp.name)
@@ -165,8 +194,8 @@ def duckdb_block():
 
 def dictionary_block(meta, run_id):
     descriptions = {
-        'rut_cuerpo': 'Identificador de 8 dígitos (sin DV) literal del TXT; rut actual proviene del catálogo.',
-        'rut': 'Unión al RUT actual del catálogo por cuerpo; no certifica vigencia ni identidad histórica.',
+        'rut': 'Cuerpo del RUT actual del catálogo (sin DV); la unión es por cuerpo y no certifica vigencia ni identidad histórica.',
+        'rut_dv': 'RUT del catálogo con dígito verificador (cuerpo-DV).',
         'nombre_reportado': 'Nombre reportado por CMF en ese período.',
         'nombre_catalogo': 'Nombre del catálogo actual; puede diferir del nombre histórico.',
         'tipo_balance': 'I individual / C consolidado. Se preservan separados; no sumar.',
@@ -185,10 +214,11 @@ def dictionary_block(meta, run_id):
         'sha256_archivo': 'Huella de la descarga usada.',
         'identidad_nombre_coincide_catalogo': 'Coincidencia de nombre normalizada; señal, no auditoría histórica.',
     }
+    stage_desc = {name: desc for name, _typ, desc in TABLE_COLUMNS}
     columns = []
-    for name, typ, desc in TABLE_COLUMNS:
+    for name, typ in DOC_COLUMNS:
         columns.append({'name': name, 'type': typ, 'role': 'Métrica' if name in ('valor_archivo', 'valor_texto_original') else 'Dimensión',
-                        'significado': descriptions.get(name, desc), 'contable': 'No aplica'})
+                        'significado': descriptions.get(name, stage_desc.get(name, '')), 'contable': 'No aplica'})
     created = meta['fecha_actualizacion_utc'][:10]
     period_range = f"{meta['primer_periodo'][:4]}-{meta['primer_periodo'][4:]} a {meta['ultimo_periodo'][:4]}-{meta['ultimo_periodo'][4:]}"
     common = {
