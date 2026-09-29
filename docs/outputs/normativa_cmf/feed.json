@@ -30,7 +30,7 @@
     "pdf_checks": 1,
     "gemini_calls": 2,
     "pending_analysis": 0,
-    "unassigned_records": 7
+    "unassigned_records": 6
   },
   "events": [
     {
@@ -1108,13 +1108,15 @@
       "analysis_version": "2026-09-28.3",
       "needs_human_review": true,
       "review_flags": [
-        "sector_sin_evidencia_verificable",
-        "vigencia_sin_evidencia_verificable",
-        "sin_industria_asignada"
+        "vigencia_sin_evidencia_verificable"
       ],
       "event_type": "modificacion",
       "summary": "Se introducen modificaciones al Capítulo 18-5 de la Recopilación Actualizada de Normas para bancos en relación con la información sobre deudores de las instituciones financieras, incorporando referencias a la Ley N°21.680 y ajustando aspectos de seguridad y manejo de información.",
-      "sectors": [],
+      "sectors": [
+        "bancos",
+        "cooperativas",
+        "sistemas_pago"
+      ],
       "affected_norms": [
         "Recopilación Actualizada de Normas para Bancos, Capítulo 18-5"
       ],
@@ -1122,7 +1124,23 @@
       "effective_date_precision": "sin_fecha",
       "summary_evidence": "Introduce modificaciones al Capítulo 18-5 de la Recopilación Actualizada de Normas para bancos, respecto a la información sobre deudores de las instituciones financieras.",
       "summary_evidence_page": 1,
-      "sector_evidence": [],
+      "sector_evidence": [
+        {
+          "sector": "bancos",
+          "quote": "Capítulo 18-5 de la Recopilación Actualizada de Normas para bancos",
+          "page": 1
+        },
+        {
+          "sector": "cooperativas",
+          "quote": "Cooperativas Empresas emisores de Tarjetas de Pago No Bancarias",
+          "page": 1
+        },
+        {
+          "sector": "sistemas_pago",
+          "quote": "Empresas emisores de Tarjetas de Pago No Bancarias",
+          "page": 1
+        }
+      ],
       "norm_evidence": [
         {
           "norm": "Recopilación Actualizada de Normas para Bancos, Capítulo 18-5",
