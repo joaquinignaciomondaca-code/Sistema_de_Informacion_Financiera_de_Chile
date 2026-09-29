@@ -263,14 +263,13 @@ const EXPLORER_TREE = [
               { label: "Cartera nacional por tipo de instrumento, último trimestre", query: "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM fi_cartera_nacional) GROUP BY tipo_instrumento ORDER BY posiciones DESC;" },
               { label: "Mayores emisores nacionales, último trimestre", query: "SELECT rut_emisor, count(DISTINCT run_fondo) AS fondos, count(*) AS posiciones FROM fi_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM fi_cartera_nacional) GROUP BY rut_emisor ORDER BY fondos DESC LIMIT 20;" },
               { label: "Cartera extranjera por país emisor, último trimestre", query: "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM fi_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM fi_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC;" },
-              { label: "Filiales y coligadas (método de la participación)", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, count(*) AS inversiones FROM fi_metodo_participacion GROUP BY periodo ORDER BY periodo DESC LIMIT 12;" },
-              { label: "Bienes raíces por comuna, último trimestre", query: "SELECT comuna, count(*) AS inmuebles, count(DISTINCT run_fondo) AS fondos FROM fi_bienes_raices WHERE periodo = (SELECT max(periodo) FROM fi_bienes_raices) GROUP BY comuna ORDER BY inmuebles DESC LIMIT 20;" }
+              { label: "Filiales y coligadas (método de la participación)", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, count(*) AS inversiones FROM fi_metodo_participacion GROUP BY periodo ORDER BY periodo DESC LIMIT 12;" }
             ],
             tables: [
               { id: "fi_cartera_nacional", name: "fi.cartera_nacional", rows: "Trimestral", file: "", files: ["outputs/fi/cartera_nacional/manifest.json"] },
               { id: "fi_cartera_extranjera", name: "fi.cartera_extranjera", rows: "Trimestral", file: "", files: ["outputs/fi/cartera_extranjera/manifest.json"] },
               { id: "fi_metodo_participacion", name: "fi.metodo_participacion", rows: "Trimestral", file: "", files: ["outputs/fi/metodo_participacion/manifest.json"] },
-              { id: "fi_bienes_raices", name: "fi.bienes_raices", rows: "Trimestral", file: "", files: ["outputs/fi/bienes_raices/manifest.json"] }
+              { id: "fi_bienes_raices", name: "fi.bienes_raices", rows: "Sin datos", file: "", files: ["outputs/fi/bienes_raices/manifest.json"], nota: "Ningún fondo ha informado cartera de bienes raíces a la CMF (2020-03 → 2026-06); la tabla se completa sola cuando la fuente publique datos." }
             ]
           },
           {
@@ -1072,7 +1071,7 @@ class SidebarController {
                   ${arrowHtml}
                   ${ICONS.table}
                   <span class="tree-label table-label">${tbl.name}</span>
-                  <span class="table-rows-tag">${tbl.rows}</span>
+                  <span class="table-rows-tag"${tbl.nota ? ` title="${tbl.nota.replace(/"/g, "&quot;")}"` : ""}>${tbl.rows}</span>
                   <div class="table-hover-actions">
                     <button class="table-action-btn run-btn" data-table-id="${tbl.id}" data-file="${tbl.file || ''}" data-name="${tbl.name}" title="Consultar en Terminal DuckDB">▶ SQL</button>
                     <button class="table-action-btn inspect-btn" data-table-id="${tbl.id}" title="Inspeccionar esquema">i</button>

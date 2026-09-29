@@ -33,6 +33,11 @@ RAIZ = Path(__file__).resolve().parents[1]
 INVENTARIO = RAIZ / "pipelines" / "auto" / "inventario.json"
 VOCABULARIO = RAIZ / "docs" / "vocabulario.json"
 
+try:  # la verificación de filas necesita leer los pies de los Parquet
+    import pyarrow.parquet as pq
+except ImportError:  # pragma: no cover
+    pq = None
+
 
 def canonico() -> dict[str, str]:
     """Los pipelines publican con los ids históricos de data_manifest.json.
@@ -119,6 +124,78 @@ def estatica() -> list[str]:
             errores.append(f"vista web {nombre}: ningún script de {e['workflow']} nombra «{base}» (no la escribe)")
     for tid in set(tablas_inv) - ids - set(vistas):
         errores.append(f"inventario: {tid} ya no existe en data_manifest.json ni en el sitio (quitarla)")
+    return errores + alineacion_manifest(vistas)
+
+
+# Datasetes publicados que no tienen vista propia en el sitio: la misma
+# partición se consulta a través de varias vistas (bancos_balance y
+# bancos_resultados filtran la misma serie por familia de archivo fuente), de
+# modo que contarlos una vez es lo correcto.
+DATASETS_SIN_VISTA = {
+    "bancos_cmf_lineas": "misma partición de bancos_balance y bancos_resultados (contada una vez)",
+}
+
+
+def _registros_de(tabla: dict, raiz: Path) -> int | None:
+    """Filas reales que declaran los archivos de una entrada del manifiesto."""
+    ref = tabla.get("files_manifest") or tabla.get("file_parquet") or ""
+    if ref.endswith(".json"):
+        man = raiz / "docs" / ref
+        if not man.exists():
+            return None
+        data = json.loads(man.read_text(encoding="utf-8"))
+        archivos = data.get("files", [])
+    else:
+        archivos = [ref]
+    total = 0
+    for rel in archivos:
+        ruta = raiz / "docs" / rel
+        if not ruta.exists():
+            return None
+        total += int(pq.ParquetFile(ruta).metadata.num_rows)
+    return total
+
+
+def alineacion_manifest(vistas: dict[str, str]) -> list[str]:
+    """data_manifest.json debe alinearse con lo publicado, no con el historial.
+
+    * total_tables/total_records consistentes con la lista;
+    * el `registros_reales` de cada entrada igual a las filas de sus archivos
+      (detecta la deriva de conteo: una vez quedaron 127 filas fuera);
+    * cada id del manifiesto corresponde a una vista del sitio (o a un
+      datasete sin vista documentado) y viceversa: cada vista tiene entrada.
+    """
+    try:
+        import pyarrow.parquet as pq
+    except ImportError:
+        return ["alineación data_manifest: falta pyarrow (pip install pyarrow) para verificar las filas"]
+    raiz = RAIZ
+    errores: list[str] = []
+    man = json.loads((raiz / "data_manifest.json").read_text(encoding="utf-8"))
+    tablas = man.get("tables", [])
+    if man.get("total_tables") != len(tablas):
+        errores.append(f"data_manifest.json: total_tables={man.get('total_tables')} pero hay {len(tablas)} entradas")
+    suma = sum(int(t.get("registros_reales") or 0) for t in tablas)
+    if man.get("total_records") != suma:
+        errores.append(f"data_manifest.json: total_records={man.get('total_records'):,} pero las entradas suman {suma:,}")
+    canon_de = lambda tid: canonico().get(tid, tid)
+    ids_manifiesto = {canon_de(t["id"]) for t in tablas}
+    por_archivo: dict[str, str] = {}
+    for t in tablas:
+        ref = t.get("files_manifest") or t.get("file_parquet") or ""
+        if ref:
+            por_archivo[ref] = canon_de(t["id"])
+        real = _registros_de(t, raiz)
+        if real is None:
+            errores.append(f"data_manifest.json {t['id']}: los archivos declarados no existen en docs/")
+        elif real != int(t.get("registros_reales") or 0):
+            errores.append(f"data_manifest.json {t['id']}: declara {t.get('registros_reales'):,} filas pero sus archivos traen {real:,}")
+        if canon_de(t["id"]) not in vistas and t["id"] not in DATASETS_SIN_VISTA:
+            errores.append(f"data_manifest.json {t['id']}: no corresponde a ninguna vista del sitio")
+    for vista, ruta in vistas.items():
+        cubre = por_archivo.get(ruta)
+        if vista not in ids_manifiesto and cubre not in (vista, *DATASETS_SIN_VISTA):
+            errores.append(f"vista {vista}: sin entrada en data_manifest.json (¿quién la cuenta?)")
     return errores
 
 
