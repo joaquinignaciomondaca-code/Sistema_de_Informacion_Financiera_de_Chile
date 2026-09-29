@@ -129,6 +129,8 @@ La web trae **116 consultas sugeridas** organizadas por industria, para no parti
 
 Cada tabla publica su **manifiesto** —períodos, archivos y registros—, de modo que se puede verificar qué contiene la web. Donde la fuente es un archivo descargable único (banca B1/B2/R1, y los TXT IFRS de AGF, securitizadoras, cajas de compensación y factoring/leasing) el manifiesto además guarda el **SHA-256 del archivo de origen**, y ahí se puede comprobar que lo publicado sale exactamente de lo descargado. En seguros, fondos mutuos, fondos de inversión y corredoras el extractor guarda el SHA-256 de lo que devolvió la CMF (`sha256_origen` en el manifiesto) **solo para los períodos que se publiquen desde el 2026-09-29**: los anteriores se descargaron sin registrar hash y no se pueden reconstruir. En fondos de inversión, que son miles de páginas por trimestre, se guarda un hash que las resume. Macroeconomía, pensiones, fintech y los registros vigentes (listas de entidades) no tienen hash de origen.
 
+Las marcas de tiempo de los manifiestos (`updated_at`, `ultima_actualizacion`, `leido_utc`) indican cuándo **cambió** algo, no cuándo corrió el workflow: si una corrida no trae datos nuevos, el extractor no reescribe el manifiesto (ni se crea commit ni se regenera el catálogo). Que los workflows siguen corriendo se comprueba con sus corridas en Actions (`audit_automatizacion.py --frescura`). Los trimestres IFRS ya leídos cuyo TXT de origen no cambió (mismo SHA-256) tampoco se reescriben ni se vuelven a desplegar. Excepción: el monitor normativo registra cada revisión a propósito.
+
 ---
 
 ## 4. Por qué confiar en la cifra

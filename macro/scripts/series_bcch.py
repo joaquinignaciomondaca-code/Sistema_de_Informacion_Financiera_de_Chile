@@ -40,6 +40,8 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 RAIZ = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(RAIZ))
+from pipelines.auto import estable  # noqa: E402
 SALIDA = RAIZ / "docs" / "outputs" / "macro"
 CARPETA = SALIDA / "series"
 CATALOGO_PQ = SALIDA / "macro_series_catalogo.parquet"
@@ -272,7 +274,7 @@ def actualizar_data_manifest() -> None:
     man["total_tables"] = len(man["tables"])
     man["total_records"] = sum(int(t.get("registros_reales") or 0) for t in man["tables"])
     man["updated_at"] = hoy
-    ruta.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n")
+    estable.escribir_json(ruta, man)
 
 
 def main(argv=None) -> int:
@@ -335,7 +337,7 @@ def main(argv=None) -> int:
     control.update({"files": [f"outputs/macro/series/{r.name}" for r in rutas],
                     "total_records": int(sum(pq.ParquetFile(r).metadata.num_rows for r in rutas)),
                     "series_en_catalogo": len(CATALOGO), "updated_at": ahora})
-    (CARPETA / "manifest.json").write_text(json.dumps(control, ensure_ascii=False, indent=2) + "\n")
+    estable.escribir_json((CARPETA / "manifest.json"), control)
     escribir_catalogo(df, control)
     actualizar_data_manifest()
     print(f"Observaciones nuevas: {nuevas_obs}. Años reescritos: {anios or 'ninguno'}. Series con error: {len(fallas)}")
