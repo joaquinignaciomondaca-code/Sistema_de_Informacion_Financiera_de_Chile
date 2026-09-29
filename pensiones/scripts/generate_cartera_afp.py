@@ -168,30 +168,7 @@ def generate_carteras_afp():
     print(f"AFP Cartera Bonos generada: {len(df_bonos)} tenencias.")
     print(f"AFP Cartera Acciones generada: {len(df_acciones)} tenencias.")
 
-    # 4. PRECARGA EN data_bundles.js
-    bundles_path = Path("docs/js/data_bundles.js")
-    if bundles_path.exists():
-        content = bundles_path.read_text(encoding="utf-8")
-        
-        sample_bonos = bonos_records[:120]
-        sample_acciones = acciones_records[:120]
-        
-        snippet_bonos = f"\nwindow.DATA_BUNDLES.afp_cartera_bonos = {json.dumps(sample_bonos, ensure_ascii=False, indent=2)};\n"
-        snippet_acciones = f"\nwindow.DATA_BUNDLES.afp_cartera_acciones = {json.dumps(sample_acciones, ensure_ascii=False, indent=2)};\n"
-        
-        import re
-        if "window.DATA_BUNDLES.afp_cartera_bonos" in content:
-            content = re.sub(r'window\.DATA_BUNDLES\.afp_cartera_bonos\s*=\s*\[[\s\S]*?\];', f"window.DATA_BUNDLES.afp_cartera_bonos = {json.dumps(sample_bonos, ensure_ascii=False, indent=2)};", content)
-        else:
-            content += snippet_bonos
-
-        if "window.DATA_BUNDLES.afp_cartera_acciones" in content:
-            content = re.sub(r'window\.DATA_BUNDLES\.afp_cartera_acciones\s*=\s*\[[\s\S]*?\];', f"window.DATA_BUNDLES.afp_cartera_acciones = {json.dumps(sample_acciones, ensure_ascii=False, indent=2)};", content)
-        else:
-            content += snippet_acciones
-            
-        bundles_path.write_text(content, encoding="utf-8")
-        print("data_bundles.js actualizado con afp_cartera_bonos y afp_cartera_acciones.")
-
+    # Sin precarga en data_bundles.js: la web ya no expone estas tablas (ver pensiones/README.md)
+    # y scripts/audit_navigation.py exige que el bundle solo tenga afp_lista_entidades y bancos_*.
 if __name__ == "__main__":
     generate_carteras_afp()

@@ -65,7 +65,8 @@ jobs:
             git cherry-pick "$datos"
             python pipelines/ifrs_sectores/actualizar.py --solo-data-manifest
             python pipelines/entidades/actualizar_listas.py --solo-conteos
-            git add data_manifest.json docs/js/sidebar.js docs/js/data_dictionary.js
+            python scripts/build_download_catalog.py
+            git add data_manifest.json docs/js/sidebar.js docs/js/data_dictionary.js docs/js/download_catalog.js
             git diff --cached --quiet || git commit -m "IFRS sectores: data_manifest"
             git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
             sleep 20
