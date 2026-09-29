@@ -730,38 +730,6 @@
       "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
     },
     {
-      "id": "macro_series",
-      "name": "macro.series",
-      "view_name": "macro_series",
-      "sector": "macro",
-      "sector_label": "Macroeconomía (BCCh)",
-      "norma": "Estadísticas oficiales BCCh",
-      "corte": "2014-01-01 a 2026-09-29",
-      "frescura": "Se actualiza sola a diario",
-      "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-09-29",
-      "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "file_parquet": "outputs/macro/series/manifest.json",
-      "registros_reales": 79871,
-      "descripcion": "Observaciones de todas las series del catálogo, una fila por serie y fecha, en su frecuencia original (diaria, mensual o trimestral)."
-    },
-    {
-      "id": "macro_series_catalogo",
-      "name": "macro.series_catalogo",
-      "view_name": "macro_series_catalogo",
-      "sector": "macro",
-      "sector_label": "Macroeconomía (BCCh)",
-      "norma": "Estadísticas oficiales BCCh",
-      "corte": "2014-01-01 a 2026-09-29",
-      "frescura": "Se actualiza sola a diario",
-      "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-09-29",
-      "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "file_parquet": "outputs/macro/macro_series_catalogo.parquet",
-      "registros_reales": 51,
-      "descripcion": "Catálogo de series del Banco Central publicadas: código SIETE, nombre, grupo, frecuencia, unidad, título oficial, cobertura y estado."
-    },
-    {
       "id": "cooperativas_lista_entidades",
       "name": "cooperativas.lista_entidades",
       "view_name": "cooperativas_lista_entidades",
@@ -824,6 +792,38 @@
       "registros_reales": 77705,
       "descripcion": "Estado de resultados y resultados integrales de cada corredor de bolsa y agente de valores, acumulados del ejercicio al cierre de cada trimestre, cuenta FECU por cuenta. Miles de pesos.",
       "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/"
+    },
+    {
+      "id": "macro_series",
+      "name": "macro.series",
+      "view_name": "macro_series",
+      "sector": "macro",
+      "sector_label": "Macroeconomía (BCCh)",
+      "norma": "Estadísticas oficiales BCCh",
+      "corte": "2014-01-01 a 2026-09-29",
+      "frescura": "Se actualiza sola a diario",
+      "modo": "Automático · diario, incremental",
+      "ultima_actualizacion": "2026-09-29",
+      "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
+      "file_parquet": "outputs/macro/series/manifest.json",
+      "registros_reales": 79871,
+      "descripcion": "Observaciones de todas las series del catálogo, una fila por serie y fecha, en su frecuencia original (diaria, mensual o trimestral)."
+    },
+    {
+      "id": "macro_series_catalogo",
+      "name": "macro.series_catalogo",
+      "view_name": "macro_series_catalogo",
+      "sector": "macro",
+      "sector_label": "Macroeconomía (BCCh)",
+      "norma": "Estadísticas oficiales BCCh",
+      "corte": "2014-01-01 a 2026-09-29",
+      "frescura": "Se actualiza sola a diario",
+      "modo": "Automático · diario, incremental",
+      "ultima_actualizacion": "2026-09-29",
+      "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
+      "file_parquet": "outputs/macro/macro_series_catalogo.parquet",
+      "registros_reales": 51,
+      "descripcion": "Catálogo de series del Banco Central publicadas: código SIETE, nombre, grupo, frecuencia, unidad, título oficial, cobertura y estado."
     }
   ]
 }
