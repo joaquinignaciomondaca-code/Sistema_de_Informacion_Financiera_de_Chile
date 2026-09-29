@@ -54,6 +54,8 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 RAIZ = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(RAIZ))
+from pipelines.auto import cuadratura  # noqa: E402
 DOCS = RAIZ / "docs" / "outputs"
 CONTROL = DOCS / "ifrs_sectores" / "manifest.json"
 INDICE = "https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
@@ -506,6 +508,20 @@ def main(argv=None) -> int:
             errores.append(f"{periodo}: {e}")
             print(f"::warning::{periodo}: {e}")
             continue
+        # Cuadratura contable (README §4): activos = pasivos + patrimonio. Un balance aislado que
+        # no cuadra queda como aviso; si la lectura falla en bloque (≥3 y más del 5 %), el trimestre no se publica.
+        verificados, descuadres = 0, []
+        for sec in SECTORES:
+            v, malos = cuadratura.verificar_ifrs(datos[sec]["balance"])
+            verificados += v
+            descuadres += [f"{sec} {m}" for m in malos]
+        if cuadratura.debe_detener(verificados, descuadres):
+            errores.append(f"{periodo}: {len(descuadres)} de {verificados} balances no cuadran")
+            print(f"::warning::{periodo}: {len(descuadres)} de {verificados} balances no cuadran "
+                  f"(activos ≠ pasivos + patrimonio); no se publica. Ej.: {descuadres[0]}")
+            continue
+        avisos += [f"balance no cuadra: {m}" for m in descuadres]
+        est["balances_verificados"], est["balances_descuadrados"] = verificados, len(descuadres)
         previo = control["periodos"].get(periodo, {}).get("sectores", {})
         resumen = {}
         for sec in SECTORES:

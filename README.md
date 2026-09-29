@@ -104,6 +104,8 @@ La web trae **116 consultas sugeridas** organizadas por industria, para no parti
 
 ## 3. Los datos
 
+*Cifras al 2026-09-29; macroeconomía se actualiza a diario.*
+
 | Industria | Tablas | Filas | Serie | Fuente |
 |---|---:|---:|---|---|
 | Seguros de Vida y Generales | 9 | 4.103.093 | 2016-11 → 2026-08 | CMF · Circular 1835 |
@@ -111,7 +113,7 @@ La web trae **116 consultas sugeridas** organizadas por industria, para no parti
 | Fondos de Inversión | 8 | 1.036.645 | 2020-03 → 2026-06 | CMF · LUF / Circular 1998 |
 | Corredoras de Bolsa | 4 | 185.921 | 2010-12 → 2026-06 | CMF · FECU IFRS |
 | Administradoras Generales de Fondos | 3 | 129.711 | 2010-06 → 2026-06 | CMF · IFRS |
-| Macroeconomía y Tasas | 5 | 80.375 | diaria → mensual | BCCh |
+| Macroeconomía y Tasas | 5 | 80.381 | diaria → mensual | BCCh |
 | Factoring y Leasing | 3 | 52.446 | 2009-03 → 2026-06 | CMF · IFRS |
 | Sociedades Securitizadoras | 3 | 25.985 | 2009-12 → 2026-06 | CMF · IFRS |
 | Cajas de Compensación | 3 | 13.555 | 2010-06 → 2026-06 | CMF · TXT IFRS (XBRL) |
@@ -134,7 +136,7 @@ Cada tabla publica su **manifiesto** —períodos, archivos y registros—, de m
 Un dato financiero mal extraído es peor que no tener el dato. El sistema valida **antes** de publicar y se detiene si algo no cuadra:
 
 - **Identidad**: RUT validado con dígito verificador módulo 11 y homologado **a toda la base** bajo una convención canónica (cuerpo / cuerpo-DV / puntos, según la columna).
-- **Cuadraturas contables**: activos = pasivos + patrimonio. Un balance que no cuadra detiene la publicación.
+- **Cuadraturas contables**: activos = pasivos + patrimonio. En los estados financieros IFRS de AGF, securitizadoras, cajas de compensación y corredoras se verifica antes de publicar: un balance aislado que no cuadra queda como aviso en el manifiesto, y si la lectura falla en bloque (al menos 3 balances y más del 5 %) el trimestre no se publica. Banca cotea el total de activos contra el Excel de la CMF y fondos de inversión cuadra cada cartera con la fila TOTAL de la fuente. Factoring y leasing y patrimonios separados se verifican en auditoría, después de publicar (hoy cuadran todos, con diferencias de hasta 1 mil pesos por redondeo).
 - **Cobertura mínima**: si un mes trae menos del 90 % de las entidades del mes anterior, no se publica.
 - **Legibilidad**: más de 1 % de filas ilegibles en un archivo aborta el proceso.
 - **Esquema**: si la fuente cambia las columnas, el flujo falla en vez de publicar basura.
