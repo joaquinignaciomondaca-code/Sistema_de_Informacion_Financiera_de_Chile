@@ -60,26 +60,26 @@ for (const id of options) assert(expected.has(id), 'opción no encontrada en sid
 const fl = byGroup.group_factoring_leasing.children[0];
 const hasFullSeries = fs.existsSync('docs/outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet') &&
   fs.existsSync('docs/outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet');
-const expectedFolders = ['cat_fl_maestro'];
+const expectedFolders = ['cat_factoring_leasing_lista_entidades'];
 const expectedSeriesTables = [];
 if (hasFullSeries) {
-  expectedFolders.push('fl_balance_serie_ifrs_cmf_folder', 'fl_resultados_serie_ifrs_cmf_folder');
-  expectedSeriesTables.push('factoring_leasing_balance_serie_ifrs_cmf', 'factoring_leasing_resultados_serie_ifrs_cmf');
+  expectedFolders.push('cat_factoring_leasing_balance', 'cat_factoring_leasing_resultados');
+  expectedSeriesTables.push('factoring_leasing_balance', 'factoring_leasing_resultados');
 }
 assert.deepEqual(Array.from(fl.children, c => c.id), expectedFolders);
 const tableForFolder = Object.fromEntries(fl.children.filter(c => c.type === 'circular')
   .map(c => [c.id, c.tables[0].id]));
 assert.equal(Object.keys(tableForFolder).length, fl.children.length);
 if (hasFullSeries) {
-  assert.deepEqual(tableForFolder.fl_balance_serie_ifrs_cmf_folder, 'factoring_leasing_balance_serie_ifrs_cmf');
-  assert.deepEqual(tableForFolder.fl_resultados_serie_ifrs_cmf_folder, 'factoring_leasing_resultados_serie_ifrs_cmf');
+  assert.deepEqual(tableForFolder.cat_factoring_leasing_balance, 'factoring_leasing_balance');
+  assert.deepEqual(tableForFolder.cat_factoring_leasing_resultados, 'factoring_leasing_resultados');
   // "Ganancia (pérdida)" se repite hasta 3 veces por estado: debe existir el chip que elige una fila.
-  const flResults = fl.children.find(c => c.id === 'fl_resultados_serie_ifrs_cmf_folder');
+  const flResults = fl.children.find(c => c.id === 'cat_factoring_leasing_resultados');
   assert(flResults.chips.some(c => /repeticion_contexto = 1/.test(c.query) && /'ERFG', 'ERNG'/.test(c.query)),
     'falta chip de utilidad del período sin repeticiones');
 }
-const expectedViewerTables = ['factoring_leasing_maestro', ...expectedSeriesTables];
-assert.deepEqual(Array.from(viewer.find(g => g.group.startsWith('Factoring & Leasing')).tables, t => t.id), expectedViewerTables);
+const expectedViewerTables = ['factoring_leasing_lista_entidades', ...expectedSeriesTables];
+assert.deepEqual(Array.from(viewer.find(g => g.group.startsWith('Factoring y Leasing')).tables, t => t.id), expectedViewerTables);
 // Verificar el HTML real del explorador y qué tabla se abre al pulsar cada carpeta.
 const SidebarController = vm.runInContext('SidebarController', context);
 const sidebar = Object.create(SidebarController.prototype);
@@ -100,14 +100,14 @@ for (const id of ['fl_balance_muestra_cmf_folder', 'fl_resultados_muestra_cmf_fo
 const opened = [];
 sidebar.onTableSelect = (id) => opened.push(id);
 for (const id of expectedFolders) sidebar.onCircularSelect(id, 'factoring_leasing');
-assert.deepEqual(opened, ['factoring_leasing_maestro', ...expectedSeriesTables]);
+assert.deepEqual(opened, ['factoring_leasing_lista_entidades', ...expectedSeriesTables]);
 assert(industryEvents.some(event => event.type === 'mfc:industry-change' && event.detail.sector === 'factoring_leasing'),
   'al seleccionar una tabla/carpeta debe notificarse la industria activa');
 context.window.DataViewer = { loadTable() {} };
 const selectedTable = Object.create(SidebarController.prototype);
 selectedTable.selectedTableId = null;
 selectedTable.breadcrumbEl = null;
-selectedTable.onTableSelect('ffmm_maestro', 'ffmm.lista_entidades', '', 'ffmm');
+selectedTable.onTableSelect('ffmm_lista_entidades', 'ffmm.lista_entidades', '', 'ffmm');
 assert(industryEvents.some(event => event.type === 'mfc:industry-change' &&
   event.detail.sector === 'ffmm' && event.detail.source === 'table'),
   'al seleccionar una tabla FFMM debe publicarse exactamente la industria FFMM');
@@ -118,17 +118,17 @@ assert(industryEvents.some(event => event.type === 'mfc:industry-change' &&
 const pensiones = byGroup.group_pensiones;
 const bancos = byGroup.group_bancos;
 assert.deepEqual(Array.from(pensiones.children, s => s.sector), ['afp_corporativo']);
-assert.deepEqual(Array.from(pensiones.children[0].children, c => c.id), ['cat_afp_maestro']);
+assert.deepEqual(Array.from(pensiones.children[0].children, c => c.id), ['cat_afp_lista_entidades']);
 assert.deepEqual(Array.from(bancos.children[0].children, c => c.id),
-  ['cat_bancos_maestro', 'cat_bancos_cmf_balance', 'cat_bancos_cmf_resultados']);
+  ['cat_bancos_lista_entidades', 'cat_bancos_balance', 'cat_bancos_resultados']);
 assert.equal(pensiones.status, 'active');
 for (const c of bancos.children[0].children.slice(1)) {
   assert.equal(c.status, 'active', 'carpeta CMF bancaria no activa: ' + c.id);
   assert.deepEqual(Array.from(c.tables[0].files), ['outputs/bancos/cmf_b1_b2_r1/manifest.json']);
 }
-assert.deepEqual(Array.from(viewer.find(g => g.group.startsWith('Fondos de Pensiones')).tables, t => t.id), ['afp_maestro']);
-assert.deepEqual(Array.from(viewer.find(g => g.group.startsWith('Banca Comercial')).tables, t => t.id),
-  ['bancos_maestro', 'bancos_cmf_balance', 'bancos_cmf_resultados']);
+assert.deepEqual(Array.from(viewer.find(g => g.group.startsWith('Fondos de Pensiones')).tables, t => t.id), ['afp_lista_entidades']);
+assert.deepEqual(Array.from(viewer.find(g => g.group.startsWith('Banca (CMF)')).tables, t => t.id),
+  ['bancos_lista_entidades', 'bancos_balance', 'bancos_resultados']);
 assert(!expected.has('bancos_repos_saldos_series'), 'REPO bancario retirado todavía visible');
 assert(!pensiones.badges.some(b => b.text.includes('Falta validar')));
 for (const id of ['afp_cartera_bonos','afp_cartera_acciones','afp_derivados_swaps','afp_derivados_forwards',
@@ -136,7 +136,7 @@ for (const id of ['afp_cartera_bonos','afp_cartera_acciones','afp_derivados_swap
                  'bancos_derivados_flujos_transados']) {
   assert(!expected.has(id), 'tabla retirada todavía visible: ' + id);
 }
-const restrictedFiles = ['duckdb_client.js', 'export_modal.js', 'data_dictionary.js', 'erd_graph.js', 'index.html'];
+const restrictedFiles = ['duckdb_client.js', 'downloads_panel.js', 'data_dictionary.js', 'erd_graph.js', 'index.html'];
 for (const file of restrictedFiles) {
   const text = fs.readFileSync('docs/' + (file.endsWith('.js') ? 'js/' : '') + file, 'utf8');
   for (const id of ['afp_cartera_bonos','afp_cartera_acciones','afp_derivados_swaps','afp_derivados_forwards',
@@ -157,15 +157,16 @@ vm.createContext(bundleContext);
 vm.runInContext(fs.readFileSync('docs/js/data_bundles.js', 'utf8'), bundleContext);
 assert.deepEqual(Array.from(Object.keys(bundleContext.window.DATA_BUNDLES)
   .filter(k => k.startsWith('afp_') || k.startsWith('bancos_')).sort()),
-  ['afp_maestro', 'bancos_maestro']);
-const afpKeys = Object.keys(bundleContext.window.DATA_BUNDLES.afp_maestro[0]).sort();
+  ['afp_lista_entidades', 'bancos_lista_entidades']);
+const afpKeys = Object.keys(bundleContext.window.DATA_BUNDLES.afp_lista_entidades[0]).sort();
 assert.deepEqual(afpKeys, ['id', 'nombre_administradora', 'nombre_fantasia', 'rut_administradora']);
 
-// --- Normalización del catálogo de entidades ---------------------------------
-// Estándar: cada sector abre con una carpeta "Lista de Entidades" (badge de tipo
-// entities) que contiene sólo la tabla maestra del sector. Las excepciones son
-// sectores sin maestra propia: macro (series estadísticas).
-const SIN_MAESTRA = ['macro'];
+// --- Vocabulario canónico (docs/vocabulario.json) ----------------------------
+// Cada sector abre con una carpeta "Lista de Entidades" (badge de tipo entities)
+// que contiene sólo la lista de entidades del sector; su nodo se llama
+// cat_<tabla_id>. No hay sectores sin lista de entidades salvo macro, que son
+// series estadísticas.
+const SIN_LISTA_ENTIDADES = ['macro'];
 const BADGE_TYPES = ['entities', 'data', 'roadmap'];
 for (const group of tree) for (const sector of group.children) {
   for (const category of sector.children) {
@@ -173,9 +174,9 @@ for (const group of tree) for (const sector of group.children) {
       'badgeType no soportado por el render: ' + category.id + ' -> ' + category.badgeType);
   }
   const carpetasEntidades = sector.children.filter(c => c.label === 'Lista de Entidades');
-  if (SIN_MAESTRA.includes(sector.sector)) {
+  if (SIN_LISTA_ENTIDADES.includes(sector.sector)) {
     assert.equal(carpetasEntidades.length, 0,
-      'sector sin tabla maestra no debe declarar Lista de Entidades: ' + sector.sector);
+      'sector sin lista de entidades no debe declarar esa carpeta: ' + sector.sector);
     continue;
   }
   assert.equal(carpetasEntidades.length, 1,
@@ -185,12 +186,12 @@ for (const group of tree) for (const sector of group.children) {
     'Lista de Entidades debe ser el primer nodo del sector: ' + sector.sector);
   assert.equal(entidades.badgeType, 'entities', 'badge incorrecto en ' + sector.sector);
   assert.equal(entidades.tables.length, 1,
-    'Lista de Entidades debe contener sólo la tabla maestra: ' + sector.sector);
-  assert(/_maestro$/.test(entidades.tables[0].id),
-    'Lista de Entidades debe apuntar a la tabla maestra: ' + sector.sector + ' -> ' + entidades.tables[0].id);
+    'Lista de Entidades debe contener sólo la lista de entidades: ' + sector.sector);
+  assert(/\.lista_entidades$|\.lista_entidades_registro$/.test(entidades.tables[0].name),
+    'Lista de Entidades debe apuntar a la lista de entidades canónica: ' + sector.sector + ' -> ' + entidades.tables[0].name);
 }
 console.log(`Navegación OK: ${tree.length} familias, ${expected.size} tablas, ${options.length} opciones del visor.`);
-console.log(`Catálogo de entidades normalizado en ${tree.reduce((n, g) => n + g.children.length, 0) - SIN_MAESTRA.length} sectores.`);
+console.log(`Catálogo de entidades normalizado en ${tree.reduce((n, g) => n + g.children.length, 0) - SIN_LISTA_ENTIDADES.length} sectores.`);
 """
 
 

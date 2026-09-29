@@ -31,6 +31,22 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[1]
 INVENTARIO = RAIZ / "pipelines" / "auto" / "inventario.json"
+VOCABULARIO = RAIZ / "docs" / "vocabulario.json"
+
+
+def canonico() -> dict[str, str]:
+    """Los pipelines publican con los ids históricos de data_manifest.json.
+
+    El vocabulario (docs/vocabulario.json) es la autoridad de nombres: declara
+    esos ids como alias de la tabla canónica, así que aquí se traducen para
+    poder cruzar manifiesto, inventario y vistas del sitio.
+    """
+    mapa: dict[str, str] = {}
+    for tabla in json.loads(VOCABULARIO.read_text(encoding="utf-8"))["tablas"]:
+        mapa[tabla["id"]] = tabla["id"]
+        for alias in tabla.get("alias", []):
+            mapa[alias] = tabla["id"]
+    return mapa
 
 
 def estatica() -> list[str]:
@@ -38,9 +54,11 @@ def estatica() -> list[str]:
     inv = json.loads(INVENTARIO.read_text(encoding="utf-8"))
     tablas_inv, flujos = inv["tablas"], inv["workflows"]
     man = json.loads((RAIZ / "data_manifest.json").read_text(encoding="utf-8"))
-    ids = {t["id"] for t in man["tables"]}
+    id_canonico = canonico()
+    canon_de = lambda tid: id_canonico.get(tid, tid)
+    ids = {canon_de(t["id"]) for t in man["tables"]}
     for t in man["tables"]:
-        e = tablas_inv.get(t["id"])
+        e = tablas_inv.get(canon_de(t["id"]))
         modo = (t.get("modo") or "").lower()
         if e is None:
             errores.append(f"{t['id']}: no está en pipelines/auto/inventario.json (¿quién la actualiza?)")
@@ -81,7 +99,7 @@ def estatica() -> list[str]:
                 errores.append(f"workflow {nombre}: no ejecuta {s}")
     # El sitio lee sus tablas de SEMANTIC_VIEWS (docs/js/duckdb_client.js), no solo de data_manifest:
     # cada vista debe corresponder a una tabla inventariada (por nombre o por archivo).
-    por_archivo = {t["file_parquet"]: t["id"] for t in man["tables"]}
+    por_archivo = {t["file_parquet"]: canon_de(t["id"]) for t in man["tables"]}
     vistas = vistas_web()
     for nombre, ruta in vistas.items():
         tid = nombre if nombre in tablas_inv else por_archivo.get(ruta)

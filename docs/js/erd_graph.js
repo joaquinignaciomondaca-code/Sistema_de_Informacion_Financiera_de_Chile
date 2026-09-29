@@ -1,11 +1,11 @@
 /**
  * ERD Graph Renderer (Canvas 2D con Pan, Zoom y Nodos Draggable)
- * Monitor Financiero Chile — Circular 1835 CMF
+ * Sistema de Información Financiera de Chile — Circular 1835 CMF
  */
 
 const ERD_TABLES = [
   {
-    id: "seguros_maestro",
+    id: "seguros_lista_entidades",
     name: "seguros.lista_entidades",
     sector: "seguros",
     color: "var(--accent-mint)",
@@ -226,7 +226,7 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "ffmm_maestro",
+    id: "ffmm_lista_entidades",
     name: "ffmm.lista_entidades",
     sector: "ffmm",
     color: "var(--accent-mint)",
@@ -332,7 +332,7 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "fi_maestro",
+    id: "fi_lista_entidades",
     name: "fi.lista_entidades",
     sector: "fi",
     color: "var(--accent-mint)",
@@ -430,8 +430,8 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "afp_maestro",
-    name: "afp.lista_administradoras",
+    id: "afp_lista_entidades",
+    name: "afp.lista_entidades",
     sector: "pensiones",
     color: "var(--accent-mint)",
     x: 1900,
@@ -448,8 +448,8 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "bancos_maestro",
-    name: "bancos.lista_instituciones",
+    id: "bancos_lista_entidades",
+    name: "bancos.lista_entidades",
     sector: "bancos",
     color: "var(--accent-mint)",
     x: 2480,
@@ -468,8 +468,8 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "bancos_cmf_balance",
-    name: "bancos.cmf_balance_b1_b2",
+    id: "bancos_balance",
+    name: "bancos.balance",
     sector: "bancos",
     color: "#2E7D32",
     x: 2760,
@@ -499,8 +499,8 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "bancos_cmf_resultados",
-    name: "bancos.cmf_resultados_r1",
+    id: "bancos_resultados",
+    name: "bancos.resultados",
     sector: "bancos",
     color: "#2E7D32",
     x: 2760,
@@ -637,7 +637,7 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "factoring_leasing_maestro",
+    id: "factoring_leasing_lista_entidades",
     name: "factoring_leasing.lista_entidades",
     sector: "factoring_leasing",
     color: "#D97706",
@@ -659,7 +659,7 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "corredoras_bolsa_maestro",
+    id: "corredoras_bolsa_lista_entidades",
     name: "corredoras.lista_entidades",
     sector: "corredoras_bolsa",
     color: "#8B5CF6",
@@ -679,7 +679,7 @@ const ERD_TABLES = [
   },
 
   {
-    id: "securitizadoras_maestro",
+    id: "securitizadoras_lista_entidades",
     name: "securitizadoras.lista_entidades",
     sector: "securitizadoras",
     color: "#0284C7",
@@ -732,8 +732,8 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "patrimonios_separados_maestro",
-    name: "patrimonios_separados.lista_emisiones",
+    id: "patrimonios_separados_lista_entidades",
+    name: "patrimonios_separados.lista_entidades",
     sector: "patrimonios_separados",
     color: "#075985",
     x: 4460,
@@ -758,7 +758,7 @@ const ERD_TABLES = [
 
 
   {
-    id: "cooperativas_maestro",
+    id: "cooperativas_lista_entidades",
     name: "cooperativas.lista_entidades",
     sector: "cooperativas",
     color: "#16A34A",
@@ -780,7 +780,7 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "ccaf_maestro",
+    id: "ccaf_lista_entidades",
     name: "ccaf.lista_entidades",
     sector: "cajas_compensacion",
     color: "#D97706",
@@ -803,8 +803,8 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "agf_maestro",
-    name: "agf.lista_administradoras",
+    id: "agf_lista_entidades",
+    name: "agf.lista_entidades",
     sector: "agf",
     color: "#6366F1",
     x: 5040,
@@ -1007,8 +1007,8 @@ const ERD_TABLES = [
 
 
   {
-    id: "sistemas_pago_maestro",
-    name: "pagos.maestro",
+    id: "sistemas_pago_lista_entidades",
+    name: "sistemas_pago.lista_entidades",
     sector: "sistemas_pago",
     color: "#0F766E",
     x: 5340,
@@ -1026,7 +1026,7 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "fintech_rpsf_maestro",
+    id: "fintech_rpsf_lista_entidades",
     name: "fintech.lista_entidades",
     sector: "fintech",
     color: "#D97706",
@@ -1046,7 +1046,7 @@ const ERD_TABLES = [
     ]
   },
   {
-    id: "ccaf_maestro",
+    id: "ccaf_lista_entidades",
     name: "ccaf.lista_entidades",
     sector: "cajas_compensacion",
     color: "#10B981",
@@ -1069,37 +1069,37 @@ const ERD_TABLES = [
 
 // Relaciones entre tablas (Claves Foráneas lógicas)
 const ERD_LINKS = [
-  { from: "seguros_maestro", to: "seguros_renta_fija", key: "sector, rut_aseguradora" },
-  { from: "seguros_maestro", to: "seguros_acciones", key: "sector, rut_aseguradora" },
-  { from: "seguros_maestro", to: "seguros_fondos_mutuos", key: "sector, rut_aseguradora" },
-  { from: "seguros_maestro", to: "seguros_bienes_raices", key: "sector, rut_aseguradora" },
-  { from: "seguros_maestro", to: "seguros_extranjeros", key: "sector, rut_aseguradora" },
-  { from: "seguros_maestro", to: "seguros_derivados", key: "sector, rut_aseguradora" },
-  { from: "seguros_maestro", to: "seguros_pactos", key: "sector, rut_aseguradora" },
-  { from: "seguros_maestro", to: "seguros_control_inversiones", key: "sector, rut_aseguradora" },
-  { from: "agf_maestro", to: "fi_maestro", key: "rut_administradora (gestión fiduciaria LUF)" },
-  { from: "fi_maestro", to: "fi_cartera_nacional", key: "run_fondo" },
-  { from: "fi_maestro", to: "fi_cartera_extranjera", key: "run_fondo" },
-  { from: "fi_maestro", to: "fi_futuros", key: "run_fondo" },
-  { from: "fi_maestro", to: "fi_pactos", key: "run_fondo" },
-  { from: "securitizadoras_maestro", to: "patrimonios_separados_maestro", key: "rut_administradora (administración fiduciaria)" },
-  { from: "securitizadoras_maestro", to: "patrimonios_separados_balance", key: "rut = rut_administradora (cuerpo, sin dígito verificador)" },
+  { from: "seguros_lista_entidades", to: "seguros_renta_fija", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_acciones", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_fondos_mutuos", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_bienes_raices", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_extranjeros", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_derivados", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_pactos", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_control_inversiones", key: "sector, rut_aseguradora" },
+  { from: "agf_lista_entidades", to: "fi_lista_entidades", key: "rut_administradora (gestión fiduciaria LUF)" },
+  { from: "fi_lista_entidades", to: "fi_cartera_nacional", key: "run_fondo" },
+  { from: "fi_lista_entidades", to: "fi_cartera_extranjera", key: "run_fondo" },
+  { from: "fi_lista_entidades", to: "fi_futuros", key: "run_fondo" },
+  { from: "fi_lista_entidades", to: "fi_pactos", key: "run_fondo" },
+  { from: "securitizadoras_lista_entidades", to: "patrimonios_separados_lista_entidades", key: "rut_administradora (administración fiduciaria)" },
+  { from: "securitizadoras_lista_entidades", to: "patrimonios_separados_balance", key: "rut = rut_administradora (cuerpo, sin dígito verificador)" },
   { from: "macro_tasas_rendimientos", to: "macro_precios_actividad", key: "periodo (expectativas e inflación)" },
   { from: "macro_series_catalogo", to: "macro_series", key: "clave" },
-  { from: "bancos_maestro", to: "bancos_cmf_balance", key: "codigo_institucion (código fuente CMF)" },
-  { from: "bancos_maestro", to: "bancos_cmf_resultados", key: "codigo_institucion (código fuente CMF)" },
-  { from: "agf_maestro", to: "agf_balance", key: "rut" },
-  { from: "agf_maestro", to: "agf_resultados", key: "rut" },
-  { from: "securitizadoras_maestro", to: "securitizadoras_balance", key: "rut" },
-  { from: "securitizadoras_maestro", to: "securitizadoras_resultados", key: "rut" },
-  { from: "ccaf_maestro", to: "ccaf_balance", key: "rut" },
-  { from: "ccaf_maestro", to: "ccaf_resultados", key: "rut" },
-  { from: "corredoras_bolsa_maestro", to: "corredoras_bolsa_balance", key: "rut" },
-  { from: "corredoras_bolsa_maestro", to: "corredoras_bolsa_resultados", key: "rut" },
-  { from: "ffmm_maestro", to: "ffmm_cartera_nacional", key: "run_fondo" },
-  { from: "ffmm_maestro", to: "ffmm_cartera_extranjera", key: "run_fondo" },
-  { from: "ffmm_maestro", to: "ffmm_futuros", key: "run_fondo" },
-  { from: "ffmm_maestro", to: "ffmm_opciones", key: "run_fondo" },
+  { from: "bancos_lista_entidades", to: "bancos_balance", key: "codigo_institucion (código fuente CMF)" },
+  { from: "bancos_lista_entidades", to: "bancos_resultados", key: "codigo_institucion (código fuente CMF)" },
+  { from: "agf_lista_entidades", to: "agf_balance", key: "rut" },
+  { from: "agf_lista_entidades", to: "agf_resultados", key: "rut" },
+  { from: "securitizadoras_lista_entidades", to: "securitizadoras_balance", key: "rut" },
+  { from: "securitizadoras_lista_entidades", to: "securitizadoras_resultados", key: "rut" },
+  { from: "ccaf_lista_entidades", to: "ccaf_balance", key: "rut" },
+  { from: "ccaf_lista_entidades", to: "ccaf_resultados", key: "rut" },
+  { from: "corredoras_bolsa_lista_entidades", to: "corredoras_bolsa_balance", key: "rut" },
+  { from: "corredoras_bolsa_lista_entidades", to: "corredoras_bolsa_resultados", key: "rut" },
+  { from: "ffmm_lista_entidades", to: "ffmm_cartera_nacional", key: "run_fondo" },
+  { from: "ffmm_lista_entidades", to: "ffmm_cartera_extranjera", key: "run_fondo" },
+  { from: "ffmm_lista_entidades", to: "ffmm_futuros", key: "run_fondo" },
+  { from: "ffmm_lista_entidades", to: "ffmm_opciones", key: "run_fondo" },
 ];
 
 class ERDGraph {
@@ -1140,9 +1140,15 @@ class ERDGraph {
   }
 
   resize() {
-    const rect = this.canvas.parentElement.getBoundingClientRect();
-    this.canvas.width = rect.width;
-    this.canvas.height = rect.height;
+    // El canvas comparte el panel con la cabecera de pestañas y la franja de
+    // filtros, así que se mide a sí mismo (y no al panel completo) para no
+    // dibujar más alto que su espacio visible. Con la pestaña oculta el rect
+    // es 0x0: se usa 1 para no dejar un canvas inválido y se recalcula al abrir.
+    const rect = this.canvas.getBoundingClientRect();
+    const width = Math.max(1, Math.round(rect.width));
+    const height = Math.max(1, Math.round(rect.height));
+    if (this.canvas.width !== width) this.canvas.width = width;
+    if (this.canvas.height !== height) this.canvas.height = height;
     this.autoCenterSector(this.filter);
     this.render();
   }

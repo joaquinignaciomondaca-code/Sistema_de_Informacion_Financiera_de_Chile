@@ -1,6 +1,6 @@
 /**
  * Explorer Tree Controller (Patron DBeaver / Supabase Studio / VS Code)
- * Monitor Financiero Chile
+ * Sistema de Información Financiera de Chile
  * Navegacion jerarquica de alta densidad por Grupos, Sectores, Circulares y Tablas.
  * Sin emojis.
  */
@@ -29,11 +29,11 @@ const EXPLORER_TREE = [
       {
         id: "sector_seguros",
         type: "sector",
-        label: "Seguros de Vida y Generales",
+        label: "Seguros de Vida y Generales (CMF)",
         sector: "seguros",
         children: [
           {
-            id: "cat_seguros_maestro",
+            id: "cat_seguros_lista_entidades",
             type: "circular",
             label: "Lista de Entidades",
             badge: "Desde los reportes",
@@ -41,16 +41,16 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "seguros",
             chips: [
-              { label: "Compañías que reportan en el último mes", query: "SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo, meses_reportados FROM seguros_maestro WHERE reporta_ultimo_mes ORDER BY sector, nombre_aseguradora;" },
-              { label: "Compañías que dejaron de reportar", query: "SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo, ultimo_periodo FROM seguros_maestro WHERE NOT reporta_ultimo_mes ORDER BY ultimo_periodo DESC;" },
-              { label: "Compañías que empezaron a reportar más recientemente", query: "SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo FROM seguros_maestro ORDER BY primer_periodo DESC, nombre_aseguradora LIMIT 10;" }
+              { label: "Compañías que reportan en el último mes", query: "SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo, meses_reportados FROM seguros_lista_entidades WHERE reporta_ultimo_mes ORDER BY sector, nombre_aseguradora;" },
+              { label: "Compañías que dejaron de reportar", query: "SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo, ultimo_periodo FROM seguros_lista_entidades WHERE NOT reporta_ultimo_mes ORDER BY ultimo_periodo DESC;" },
+              { label: "Compañías que empezaron a reportar más recientemente", query: "SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo FROM seguros_lista_entidades ORDER BY primer_periodo DESC, nombre_aseguradora LIMIT 10;" }
             ],
             tables: [
-              { id: "seguros_maestro", name: "seguros.lista_entidades", rows: "Una fila por compañía y sector", file: "outputs/seguros/aseguradoras.parquet" }
+              { id: "seguros_lista_entidades", name: "seguros.lista_entidades", rows: "Una fila por compañía y sector", file: "outputs/seguros/aseguradoras.parquet" }
             ]
           },
           {
-            id: "c1835_seguros_cartera",
+            id: "cat_seguros_cartera_1835",
             type: "circular",
             label: "Circular 1835 · Cartera de inversiones",
             badge: "Mensual validada",
@@ -67,16 +67,16 @@ const EXPLORER_TREE = [
               { label: "Inversiones en el extranjero por país, último mes (M$)", query: "SELECT pais, tipo_registro, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_extranjeros WHERE periodo = (SELECT max(periodo) FROM seguros_extranjeros) GROUP BY pais, tipo_registro ORDER BY valor_final_m_clp DESC LIMIT 10;" }
             ],
             tables: [
-              { id: "seguros_renta_fija", name: "seguros.renta_fija", rows: "Un archivo por mes · desde 2024-12", file: "", files: ["outputs/seguros/renta_fija/manifest.json"] },
-              { id: "seguros_acciones", name: "seguros.acciones", rows: "Un archivo por año", file: "", files: ["outputs/seguros/acciones/manifest.json"] },
-              { id: "seguros_fondos_mutuos", name: "seguros.fondos_mutuos", rows: "Un archivo por año", file: "", files: ["outputs/seguros/fondos_mutuos/manifest.json"] },
-              { id: "seguros_bienes_raices", name: "seguros.bienes_raices", rows: "Un archivo por mes · desde 2024-12", file: "", files: ["outputs/seguros/bienes_raices/manifest.json"] },
-              { id: "seguros_extranjeros", name: "seguros.extranjeros", rows: "Un archivo por año", file: "", files: ["outputs/seguros/extranjeros/manifest.json"] },
-              { id: "seguros_control_inversiones", name: "seguros.control_inversiones", rows: "Un archivo por año", file: "", files: ["outputs/seguros/control_inversiones/manifest.json"] }
+              { id: "seguros_renta_fija", name: "seguros.renta_fija", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/renta_fija/manifest.json"] },
+              { id: "seguros_acciones", name: "seguros.acciones", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/acciones/manifest.json"] },
+              { id: "seguros_fondos_mutuos", name: "seguros.fondos_mutuos", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/fondos_mutuos/manifest.json"] },
+              { id: "seguros_bienes_raices", name: "seguros.bienes_raices", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/bienes_raices/manifest.json"] },
+              { id: "seguros_extranjeros", name: "seguros.extranjeros", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/extranjeros/manifest.json"] },
+              { id: "seguros_control_inversiones", name: "seguros.control_inversiones", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/control_inversiones/manifest.json"] }
             ]
           },
           {
-            id: "c1835_seguros_derivados",
+            id: "cat_seguros_derivados_1835",
             type: "circular",
             label: "Circular 1835 · Derivados y pactos",
             badge: "Mensual validada",
@@ -89,8 +89,8 @@ const EXPLORER_TREE = [
               { label: "Pactos: contrapartes y tasa promedio, último mes", query: "SELECT contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_pacto_prom_pct, SUM(valor_contable_m_clp) AS valor_contable_m_clp FROM seguros_pactos WHERE periodo = (SELECT max(periodo) FROM seguros_pactos) GROUP BY contraparte ORDER BY valor_contable_m_clp DESC LIMIT 10;" }
             ],
             tables: [
-              { id: "seguros_derivados", name: "seguros.derivados", rows: "Un archivo por año", file: "", files: ["outputs/seguros/derivados/manifest.json"] },
-              { id: "seguros_pactos", name: "seguros.pactos", rows: "Un archivo por año", file: "", files: ["outputs/seguros/pactos/manifest.json"] }
+              { id: "seguros_derivados", name: "seguros.derivados", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/derivados/manifest.json"] },
+              { id: "seguros_pactos", name: "seguros.pactos", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/pactos/manifest.json"] }
             ]
           }
         ]
@@ -109,11 +109,11 @@ const EXPLORER_TREE = [
       {
         id: "sector_agf",
         type: "sector",
-        label: "Administradoras Generales de Fondos (AGF)",
+        label: "Administradoras Generales de Fondos (CMF)",
         sector: "agf",
         children: [
           {
-            id: "cat_agf_maestro",
+            id: "cat_agf_lista_entidades",
             type: "circular",
             label: "Lista de Entidades",
             badge: "68 Entidades",
@@ -121,12 +121,12 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "agf",
             chips: [
-              { label: "Catálogo de AGF (Vigentes vs Canceladas)", query: "SELECT rut_completo, razon_social, estado_vigencia, grupo_controlador, fondos_inversion_administrados FROM agf_maestro ORDER BY estado_vigencia, razon_social;" },
-              { label: "Ranking de AGF por Fondos de Inversión Administrados", query: "SELECT razon_social, grupo_controlador, fondos_inversion_administrados, cmf_url FROM agf_maestro WHERE fondos_inversion_administrados > 0 ORDER BY fondos_inversion_administrados DESC LIMIT 15;" },
-              { label: "AGF por Grupo Financiero Controlador", query: "SELECT grupo_controlador, count(*) as cantidad_agf, sum(fondos_inversion_administrados) as total_fondos FROM agf_maestro WHERE estado_vigencia = 'Vigente' GROUP BY grupo_controlador ORDER BY total_fondos DESC;" }
+              { label: "Catálogo de AGF (Vigentes vs Canceladas)", query: "SELECT rut_completo, razon_social, estado_vigencia, grupo_controlador, fondos_inversion_administrados FROM agf_lista_entidades ORDER BY estado_vigencia, razon_social;" },
+              { label: "Ranking de AGF por Fondos de Inversión Administrados", query: "SELECT razon_social, grupo_controlador, fondos_inversion_administrados, cmf_url FROM agf_lista_entidades WHERE fondos_inversion_administrados > 0 ORDER BY fondos_inversion_administrados DESC LIMIT 15;" },
+              { label: "AGF por Grupo Financiero Controlador", query: "SELECT grupo_controlador, count(*) as cantidad_agf, sum(fondos_inversion_administrados) as total_fondos FROM agf_lista_entidades WHERE estado_vigencia = 'Vigente' GROUP BY grupo_controlador ORDER BY total_fondos DESC;" }
             ],
             tables: [
-              { id: "agf_maestro", name: "agf.lista_administradoras", rows: "72 entidades", file: "outputs/agf/agf_maestro.parquet" }
+              { id: "agf_lista_entidades", name: "agf.lista_entidades", rows: "Una fila por administradora", file: "outputs/agf/agf_maestro.parquet" }
             ]
           },
           {
@@ -143,7 +143,7 @@ const EXPLORER_TREE = [
               { label: "Balance completo de Banchile AGF, último trimestre", query: "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM agf_balance WHERE rut = '96767630' AND periodo = (SELECT max(periodo) FROM agf_balance WHERE rut = '96767630') ORDER BY tipo_balance, estado_financiero, orden;" }
             ],
             tables: [
-              { id: "agf_balance", name: "agf.balance", rows: "71.423 cuentas · un archivo por año", file: "", files: ["outputs/agf/agf_balance/manifest.json"] }
+              { id: "agf_balance", name: "agf.balance", rows: "Serie IFRS", file: "", files: ["outputs/agf/agf_balance/manifest.json"] }
             ]
           },
           {
@@ -160,7 +160,7 @@ const EXPLORER_TREE = [
               { label: "Estado de resultados completo de Banchile AGF, ejercicio 2025", query: "SELECT tipo_balance, estado_financiero, orden, cuenta, valor FROM agf_resultados WHERE rut = '96767630' AND periodo = '2025-12' ORDER BY tipo_balance, estado_financiero, orden;" }
             ],
             tables: [
-              { id: "agf_resultados", name: "agf.resultados", rows: "58.216 cuentas · un archivo por año", file: "", files: ["outputs/agf/agf_resultados/manifest.json"] }
+              { id: "agf_resultados", name: "agf.resultados", rows: "Serie IFRS", file: "", files: ["outputs/agf/agf_resultados/manifest.json"] }
             ]
           }
         ]
@@ -168,11 +168,11 @@ const EXPLORER_TREE = [
       {
         id: "sector_ffmm",
         type: "sector",
-        label: "Fondos Mutuos (FFMM)",
+        label: "Fondos Mutuos (CMF)",
         sector: "ffmm",
         children: [
           {
-            id: "c1333_ffmm_cat",
+            id: "cat_ffmm_lista_entidades",
             type: "circular",
             label: "Lista de Entidades",
             badge: "Desde los reportes",
@@ -180,16 +180,16 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "ffmm",
             chips: [
-              { label: "Fondos que reportan en el último mes", query: "SELECT run_fondo, nombre_fondo, primer_periodo, meses_reportados FROM ffmm_maestro WHERE reporta_ultimo_mes ORDER BY nombre_fondo;" },
-              { label: "Fondos nuevos (primer reporte más reciente)", query: "SELECT run_fondo, nombre_fondo, primer_periodo FROM ffmm_maestro ORDER BY primer_periodo DESC, nombre_fondo LIMIT 20;" },
-              { label: "Fondos que dejaron de reportar", query: "SELECT run_fondo, nombre_fondo, primer_periodo, ultimo_periodo FROM ffmm_maestro WHERE NOT reporta_ultimo_mes ORDER BY ultimo_periodo DESC LIMIT 20;" }
+              { label: "Fondos que reportan en el último mes", query: "SELECT run_fondo, nombre_fondo, primer_periodo, meses_reportados FROM ffmm_lista_entidades WHERE reporta_ultimo_mes ORDER BY nombre_fondo;" },
+              { label: "Fondos nuevos (primer reporte más reciente)", query: "SELECT run_fondo, nombre_fondo, primer_periodo FROM ffmm_lista_entidades ORDER BY primer_periodo DESC, nombre_fondo LIMIT 20;" },
+              { label: "Fondos que dejaron de reportar", query: "SELECT run_fondo, nombre_fondo, primer_periodo, ultimo_periodo FROM ffmm_lista_entidades WHERE NOT reporta_ultimo_mes ORDER BY ultimo_periodo DESC LIMIT 20;" }
             ],
             tables: [
-              { id: "ffmm_maestro", name: "ffmm.lista_entidades", rows: "Una fila por fondo", file: "outputs/ffmm/maestro_fondos_mutuos.parquet" }
+              { id: "ffmm_lista_entidades", name: "ffmm.lista_entidades", rows: "Una fila por fondo", file: "outputs/ffmm/maestro_fondos_mutuos.parquet" }
             ]
           },
           {
-            id: "c1333_ffmm_cartera",
+            id: "cat_ffmm_cartera_1333",
             type: "circular",
             label: "Circular 1333 · Cartera de inversiones",
             badge: "Mensual validada",
@@ -204,12 +204,12 @@ const EXPLORER_TREE = [
               { label: "Fondos con inversión extranjera por mes", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, count(*) AS posiciones FROM ffmm_cartera_extranjera GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" }
             ],
             tables: [
-              { id: "ffmm_cartera_nacional", name: "ffmm.cartera_nacional", rows: "Un archivo por mes · desde 2022-01", file: "", files: ["outputs/ffmm/cartera_nacional/manifest.json"] },
-              { id: "ffmm_cartera_extranjera", name: "ffmm.cartera_extranjera", rows: "Un archivo por año · desde 2001", file: "", files: ["outputs/ffmm/cartera_extranjera/manifest.json"] }
+              { id: "ffmm_cartera_nacional", name: "ffmm.cartera_nacional", rows: "Mensual", file: "", files: ["outputs/ffmm/cartera_nacional/manifest.json"] },
+              { id: "ffmm_cartera_extranjera", name: "ffmm.cartera_extranjera", rows: "Mensual", file: "", files: ["outputs/ffmm/cartera_extranjera/manifest.json"] }
             ]
           },
           {
-            id: "c1333_ffmm",
+            id: "cat_ffmm_derivados_1333",
             type: "circular",
             label: "Circular 1333 · Derivados",
             badge: "Mensual validada",
@@ -222,8 +222,8 @@ const EXPLORER_TREE = [
               { label: "Opciones del último mes", query: "SELECT run_fondo, nombre_fondo, activo_objeto, nemotecnico, tipo_opcion, fecha_expiracion, numero_contratos, precio_ejercicio, inversion_primas_miles_mf FROM ffmm_opciones WHERE periodo = (SELECT max(periodo) FROM ffmm_opciones) ORDER BY run_fondo;" }
             ],
             tables: [
-              { id: "ffmm_futuros", name: "ffmm.futuros_forwards", rows: "Un archivo por año · desde 2001", file: "", files: ["outputs/ffmm/futuros_forwards/manifest.json"] },
-              { id: "ffmm_opciones", name: "ffmm.opciones", rows: "Un archivo por año · desde 2001", file: "", files: ["outputs/ffmm/opciones/manifest.json"] }
+              { id: "ffmm_futuros", name: "ffmm.futuros_forwards", rows: "Mensual", file: "", files: ["outputs/ffmm/futuros_forwards/manifest.json"] },
+              { id: "ffmm_opciones", name: "ffmm.opciones", rows: "Mensual", file: "", files: ["outputs/ffmm/opciones/manifest.json"] }
             ]
           }
         ]
@@ -231,11 +231,11 @@ const EXPLORER_TREE = [
       {
         id: "sector_fi",
         type: "sector",
-        label: "Fondos de Inversión (Públicos y Privados)",
+        label: "Fondos de Inversión (CMF)",
         sector: "fi",
         children: [
           {
-            id: "fi_cat_entidades",
+            id: "cat_fi_lista_entidades",
             type: "circular",
             label: "Lista de Entidades",
             badge: "Registro CMF",
@@ -243,16 +243,16 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "fi",
             chips: [
-              { label: "Fondos que reportan cartera en el último trimestre", query: "SELECT run_fondo, nombre_fondo, administradora, moneda_funcional, trimestres_con_cartera FROM fi_maestro WHERE reporta_ultimo_periodo ORDER BY administradora, nombre_fondo;" },
-              { label: "Fondos por administradora (vigentes)", query: "SELECT administradora, count(*) AS fondos FROM fi_maestro WHERE estado_vigencia = 'Vigente' GROUP BY administradora ORDER BY fondos DESC LIMIT 20;" },
-              { label: "Fondos por moneda funcional", query: "SELECT moneda_funcional, count(*) AS fondos FROM fi_maestro WHERE reporta_ultimo_periodo GROUP BY moneda_funcional ORDER BY fondos DESC;" }
+              { label: "Fondos que reportan cartera en el último trimestre", query: "SELECT run_fondo, nombre_fondo, administradora, moneda_funcional, trimestres_con_cartera FROM fi_lista_entidades WHERE reporta_ultimo_periodo ORDER BY administradora, nombre_fondo;" },
+              { label: "Fondos por administradora (vigentes)", query: "SELECT administradora, count(*) AS fondos FROM fi_lista_entidades WHERE estado_vigencia = 'Vigente' GROUP BY administradora ORDER BY fondos DESC LIMIT 20;" },
+              { label: "Fondos por moneda funcional", query: "SELECT moneda_funcional, count(*) AS fondos FROM fi_lista_entidades WHERE reporta_ultimo_periodo GROUP BY moneda_funcional ORDER BY fondos DESC;" }
             ],
             tables: [
-              { id: "fi_maestro", name: "fi.lista_entidades", rows: "Una fila por fondo", file: "outputs/fi/maestro_fondos_inversion.parquet" }
+              { id: "fi_lista_entidades", name: "fi.lista_entidades", rows: "Una fila por fondo", file: "outputs/fi/maestro_fondos_inversion.parquet" }
             ]
           },
           {
-            id: "fi_cartera",
+            id: "cat_fi_cartera",
             type: "circular",
             label: "Cartera de Inversiones · Informes IFRS",
             badge: "Trimestral desde 2020-03",
@@ -267,14 +267,14 @@ const EXPLORER_TREE = [
               { label: "Bienes raíces por comuna, último trimestre", query: "SELECT comuna, count(*) AS inmuebles, count(DISTINCT run_fondo) AS fondos FROM fi_bienes_raices WHERE periodo = (SELECT max(periodo) FROM fi_bienes_raices) GROUP BY comuna ORDER BY inmuebles DESC LIMIT 20;" }
             ],
             tables: [
-              { id: "fi_cartera_nacional", name: "fi.cartera_nacional", rows: "Un archivo por trimestre · desde 2020-03", file: "", files: ["outputs/fi/cartera_nacional/manifest.json"] },
-              { id: "fi_cartera_extranjera", name: "fi.cartera_extranjera", rows: "Un archivo por año · desde 2020-03", file: "", files: ["outputs/fi/cartera_extranjera/manifest.json"] },
-              { id: "fi_metodo_participacion", name: "fi.metodo_participacion", rows: "Un archivo por año · desde 2020-03", file: "", files: ["outputs/fi/metodo_participacion/manifest.json"] },
-              { id: "fi_bienes_raices", name: "fi.bienes_raices", rows: "Un archivo por año · desde 2020-03", file: "", files: ["outputs/fi/bienes_raices/manifest.json"] }
+              { id: "fi_cartera_nacional", name: "fi.cartera_nacional", rows: "Trimestral", file: "", files: ["outputs/fi/cartera_nacional/manifest.json"] },
+              { id: "fi_cartera_extranjera", name: "fi.cartera_extranjera", rows: "Trimestral", file: "", files: ["outputs/fi/cartera_extranjera/manifest.json"] },
+              { id: "fi_metodo_participacion", name: "fi.metodo_participacion", rows: "Trimestral", file: "", files: ["outputs/fi/metodo_participacion/manifest.json"] },
+              { id: "fi_bienes_raices", name: "fi.bienes_raices", rows: "Trimestral", file: "", files: ["outputs/fi/bienes_raices/manifest.json"] }
             ]
           },
           {
-            id: "fi_derivados_pactos",
+            id: "cat_fi_derivados_pactos",
             type: "circular",
             label: "Derivados y Pactos · Informes IFRS",
             badge: "Trimestral desde 2020-03",
@@ -288,9 +288,9 @@ const EXPLORER_TREE = [
               { label: "Pactos por tipo de operación y contraparte, último trimestre", query: "SELECT tipo_operacion, contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_prom_pct FROM fi_pactos WHERE periodo = (SELECT max(periodo) FROM fi_pactos) GROUP BY tipo_operacion, contraparte ORDER BY pactos DESC LIMIT 20;" }
             ],
             tables: [
-              { id: "fi_futuros", name: "fi.futuros_forwards", rows: "Un archivo por año · desde 2020-03", file: "", files: ["outputs/fi/futuros_forwards/manifest.json"] },
-              { id: "fi_opciones", name: "fi.opciones", rows: "Un archivo por año · desde 2020-03", file: "", files: ["outputs/fi/opciones/manifest.json"] },
-              { id: "fi_pactos", name: "fi.pactos", rows: "Un archivo por año · desde 2020-03", file: "", files: ["outputs/fi/pactos/manifest.json"] }
+              { id: "fi_futuros", name: "fi.futuros_forwards", rows: "Trimestral", file: "", files: ["outputs/fi/futuros_forwards/manifest.json"] },
+              { id: "fi_opciones", name: "fi.opciones", rows: "Trimestral", file: "", files: ["outputs/fi/opciones/manifest.json"] },
+              { id: "fi_pactos", name: "fi.pactos", rows: "Trimestral", file: "", files: ["outputs/fi/pactos/manifest.json"] }
             ]
           }
         ]
@@ -313,7 +313,7 @@ const EXPLORER_TREE = [
         sector: "afp_corporativo",
         children: [
           {
-            id: "cat_afp_maestro",
+            id: "cat_afp_lista_entidades",
             type: "circular",
             label: "Lista de Entidades",
             badge: "7 Entidades",
@@ -321,10 +321,10 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "afp_corporativo",
             chips: [
-              { label: "Identificación de administradoras", query: "SELECT rut_administradora, nombre_administradora, nombre_fantasia FROM afp_maestro ORDER BY nombre_fantasia;" }
+              { label: "Identificación de administradoras", query: "SELECT rut_administradora, nombre_administradora, nombre_fantasia FROM afp_lista_entidades ORDER BY nombre_fantasia;" }
             ],
             tables: [
-              { id: "afp_maestro", name: "afp.lista_administradoras", rows: "7 entidades", file: "outputs/pensiones/afp_maestro_administradoras.parquet" }
+              { id: "afp_lista_entidades", name: "afp.lista_entidades", rows: "Una fila por administradora", file: "outputs/pensiones/afp_maestro_administradoras.parquet" }
             ]
           }
         ]
@@ -350,7 +350,7 @@ const EXPLORER_TREE = [
         open: true,
         children: [
           {
-            id: "cat_bancos_maestro",
+            id: "cat_bancos_lista_entidades",
             type: "circular",
             label: "Lista de Entidades",
             badge: "40 códigos · Falta validar",
@@ -359,15 +359,15 @@ const EXPLORER_TREE = [
             sector: "bancos",
             open: false,
             chips: [
-              { label: "Bancos Comerciales Activos", query: "SELECT codigo_institucion, rut, nombre_fantasia, tipo_licencia, estado FROM bancos_maestro WHERE estado = 'Activo' ORDER BY codigo_institucion;" },
-              { label: "Historial de Bancos Fusionados / Cerrados", query: "SELECT codigo_institucion, nombre_fantasia, razon_social, estado FROM bancos_maestro WHERE estado != 'Activo' ORDER BY estado, nombre_fantasia;" }
+              { label: "Bancos Comerciales Activos", query: "SELECT codigo_institucion, rut, nombre_fantasia, tipo_licencia, estado FROM bancos_lista_entidades WHERE estado = 'Activo' ORDER BY codigo_institucion;" },
+              { label: "Historial de Bancos Fusionados / Cerrados", query: "SELECT codigo_institucion, nombre_fantasia, razon_social, estado FROM bancos_lista_entidades WHERE estado != 'Activo' ORDER BY estado, nombre_fantasia;" }
             ],
             tables: [
-              { id: "bancos_maestro", name: "bancos.lista_instituciones", rows: "41 códigos", file: "outputs/bancos/bancos_maestro.parquet" }
+              { id: "bancos_lista_entidades", name: "bancos.lista_entidades", rows: "Una fila por institución y agregado", file: "outputs/bancos/bancos_maestro.parquet" }
             ]
           },
           {
-            id: "cat_bancos_cmf_balance",
+            id: "cat_bancos_balance",
             type: "circular",
             label: "Estados de Situación Financiera CMF · B1/B2",
             badge: "Publicación mensual validada",
@@ -376,15 +376,15 @@ const EXPLORER_TREE = [
             sector: "bancos",
             open: false,
             chips: [
-              { label: "Muestra de líneas de balance B1/B2 (sin sumar importes)", query: "SELECT periodo, codigo_institucion, nombre_institucion_fuente, familia_archivo_fuente, modelo_cmf, codigo_cuenta, glosa_cuenta, rubro, linea, item, numero_fila_fuente, importes_fuente_raw FROM bancos_cmf_balance ORDER BY periodo DESC, codigo_institucion, familia_archivo_fuente, numero_fila_fuente LIMIT 100;" },
-              { label: "Cobertura de balance por período y modelo", query: "SELECT periodo, familia_archivo_fuente, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_cmf_balance GROUP BY periodo, familia_archivo_fuente, modelo_cmf ORDER BY periodo DESC, familia_archivo_fuente;" }
+              { label: "Muestra de líneas de balance B1/B2 (sin sumar importes)", query: "SELECT periodo, codigo_institucion, nombre_institucion_fuente, familia_archivo_fuente, modelo_cmf, codigo_cuenta, glosa_cuenta, rubro, linea, item, numero_fila_fuente, importes_fuente_raw FROM bancos_balance ORDER BY periodo DESC, codigo_institucion, familia_archivo_fuente, numero_fila_fuente LIMIT 100;" },
+              { label: "Cobertura de balance por período y modelo", query: "SELECT periodo, familia_archivo_fuente, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_balance GROUP BY periodo, familia_archivo_fuente, modelo_cmf ORDER BY periodo DESC, familia_archivo_fuente;" }
             ],
             tables: [
-              { id: "bancos_cmf_balance", name: "bancos.cmf_balance_b1_b2", rows: "Particiones validadas · B1/B2", file: "", files: ["outputs/bancos/cmf_b1_b2_r1/manifest.json"] }
+              { id: "bancos_balance", name: "bancos.balance", rows: "B1/B2 · importes fuente", file: "", files: ["outputs/bancos/cmf_b1_b2_r1/manifest.json"] }
             ]
           },
           {
-            id: "cat_bancos_cmf_resultados",
+            id: "cat_bancos_resultados",
             type: "circular",
             label: "Estado de Resultados CMF · R1",
             badge: "Publicación mensual validada",
@@ -393,11 +393,11 @@ const EXPLORER_TREE = [
             sector: "bancos",
             open: false,
             chips: [
-              { label: "Muestra de líneas de resultados R1 (sin sumar importes)", query: "SELECT periodo, codigo_institucion, nombre_institucion_fuente, familia_archivo_fuente, modelo_cmf, codigo_cuenta, glosa_cuenta, rubro, linea, item, numero_fila_fuente, importes_fuente_raw FROM bancos_cmf_resultados ORDER BY periodo DESC, codigo_institucion, numero_fila_fuente LIMIT 100;" },
-              { label: "Cobertura de resultados por período", query: "SELECT periodo, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_cmf_resultados GROUP BY periodo, modelo_cmf ORDER BY periodo DESC;" }
+              { label: "Muestra de líneas de resultados R1 (sin sumar importes)", query: "SELECT periodo, codigo_institucion, nombre_institucion_fuente, familia_archivo_fuente, modelo_cmf, codigo_cuenta, glosa_cuenta, rubro, linea, item, numero_fila_fuente, importes_fuente_raw FROM bancos_resultados ORDER BY periodo DESC, codigo_institucion, numero_fila_fuente LIMIT 100;" },
+              { label: "Cobertura de resultados por período", query: "SELECT periodo, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_resultados GROUP BY periodo, modelo_cmf ORDER BY periodo DESC;" }
             ],
             tables: [
-              { id: "bancos_cmf_resultados", name: "bancos.cmf_resultados_r1", rows: "Particiones validadas · R1", file: "", files: ["outputs/bancos/cmf_b1_b2_r1/manifest.json"] }
+              { id: "bancos_resultados", name: "bancos.resultados", rows: "R1 · importes fuente", file: "", files: ["outputs/bancos/cmf_b1_b2_r1/manifest.json"] }
             ]
           }
         ]
@@ -421,7 +421,7 @@ const EXPLORER_TREE = [
         sector: "macro",
         children: [
           {
-            id: "circ_macro_tasas",
+            id: "cat_macro_tasas_rendimientos",
             type: "circular",
             label: "Tasas de Interés y Curvas Soberanas",
             badge: "153 Registros",
@@ -434,11 +434,11 @@ const EXPLORER_TREE = [
               { label: "Breakeven de Inflación a 5 y 10 años", query: "SELECT periodo, bcp_5y, bcu_5y, inflacion_implicita_5y_breakeven, bcp_10y, bcu_10y, inflacion_implicita_10y_breakeven FROM macro_tasas_rendimientos WHERE inflacion_implicita_5y_breakeven IS NOT NULL ORDER BY periodo DESC LIMIT 24;" }
             ],
             tables: [
-              { id: "macro_tasas_rendimientos", name: "macro.tasas_rendimientos", rows: "153 registros", file: "outputs/macro/macro_tasas_rendimientos.parquet" }
+              { id: "macro_tasas_rendimientos", name: "macro.tasas_rendimientos", rows: "Series BCCh", file: "outputs/macro/macro_tasas_rendimientos.parquet" }
             ]
           },
           {
-            id: "circ_macro_divisas",
+            id: "cat_macro_divisas_mercado",
             type: "circular",
             label: "Mercado Cambiario & Divisas",
             badge: "153 Registros",
@@ -451,11 +451,11 @@ const EXPLORER_TREE = [
               { label: "Dólar vs Euro Observado y Variación Mensual", query: "SELECT periodo, usd_clp_cierre, var_mensual_usd_pct, eur_clp_cierre, var_mensual_eur_pct FROM macro_divisas_mercado ORDER BY periodo DESC LIMIT 15;" }
             ],
             tables: [
-              { id: "macro_divisas_mercado", name: "macro.divisas_mercado", rows: "153 registros", file: "outputs/macro/macro_divisas_mercado.parquet" }
+              { id: "macro_divisas_mercado", name: "macro.divisas_mercado", rows: "Series BCCh", file: "outputs/macro/macro_divisas_mercado.parquet" }
             ]
           },
           {
-            id: "circ_macro_precios",
+            id: "cat_macro_precios_actividad",
             type: "circular",
             label: "Precios, Actividad y Expectativas",
             badge: "153 Registros",
@@ -468,11 +468,11 @@ const EXPLORER_TREE = [
               { label: "Valor de la UF y Variación Mensual", query: "SELECT periodo, uf_cierre, uf_promedio, uf_var_mensual_pct FROM macro_precios_actividad ORDER BY periodo DESC LIMIT 18;" }
             ],
             tables: [
-              { id: "macro_precios_actividad", name: "macro.precios_actividad", rows: "153 registros", file: "outputs/macro/macro_precios_actividad.parquet" }
+              { id: "macro_precios_actividad", name: "macro.precios_actividad", rows: "Series BCCh", file: "outputs/macro/macro_precios_actividad.parquet" }
             ]
           },
           {
-            id: "circ_macro_series",
+            id: "cat_macro_series",
             type: "circular",
             label: "Catálogo amplio de series BCCh (diarias, mensuales y trimestrales)",
             badge: "51 series",
@@ -488,8 +488,8 @@ const EXPLORER_TREE = [
               { label: "Tasas de EE.UU. vs Chile (Fed, TPM, BCP 10 años)", query: "SELECT periodo, round(avg(valor) FILTER (WHERE clave = 'fed_funds'), 2) AS fed_funds, round(avg(valor) FILTER (WHERE clave = 'tpm'), 2) AS tpm, round(avg(valor) FILTER (WHERE clave = 'bcp_10y'), 2) AS bcp_10y FROM macro_series WHERE clave IN ('fed_funds', 'tpm', 'bcp_10y') GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" }
             ],
             tables: [
-              { id: "macro_series", name: "macro.series", rows: "Una fila por serie y fecha · desde 2014", file: "", files: ["outputs/macro/series/manifest.json"] },
-              { id: "macro_series_catalogo", name: "macro.series_catalogo", rows: "51 series", file: "outputs/macro/macro_series_catalogo.parquet" }
+              { id: "macro_series", name: "macro.series", rows: "Series BCCh", file: "", files: ["outputs/macro/series/manifest.json"] },
+              { id: "macro_series_catalogo", name: "macro.series_catalogo", rows: "Catálogo", file: "outputs/macro/macro_series_catalogo.parquet" }
             ]
           }
         ]
@@ -508,11 +508,11 @@ const EXPLORER_TREE = [
       {
         id: "sector_factoring_leasing",
         type: "sector",
-        label: "Intermediación Financiera No Bancaria",
+        label: "Factoring y Leasing (CMF)",
         sector: "factoring_leasing",
         children: [
           {
-            id: "cat_fl_maestro",
+            id: "cat_factoring_leasing_lista_entidades",
             type: "circular",
             label: "Lista de Entidades",
             badge: "28 Entidades",
@@ -520,34 +520,34 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "factoring_leasing",
             chips: [
-              { label: "Lista por segmento y licencia (catálogo local)", query: "SELECT rut, razon_social, nombre_fantasia, segmento, tipo_licencia, grupo_controlador, vigente FROM factoring_leasing_maestro ORDER BY vigente DESC, segmento, razon_social;" },
-              { label: "Estado consignado en la lista", query: "SELECT vigente, estado, count(*) as total_entidades, string_agg(nombre_fantasia, ', ') as instituciones FROM factoring_leasing_maestro GROUP BY vigente, estado ORDER BY vigente DESC;" },
-              { label: "Tipos de licencia consignados", query: "SELECT tipo_licencia, count(*) as total, string_agg(nombre_fantasia, ', ') as instituciones FROM factoring_leasing_maestro WHERE vigente = 1 GROUP BY tipo_licencia;" },
-              { label: "Segmentación por Línea de Negocio", query: "SELECT segmento, count(*) as entidades, sum(es_factoring) as con_factoring, sum(es_leasing_financiero) as con_leasing, sum(es_automotriz) as con_automotriz FROM factoring_leasing_maestro WHERE vigente = 1 GROUP BY segmento;" }
+              { label: "Lista por segmento y licencia (catálogo local)", query: "SELECT rut, razon_social, nombre_fantasia, segmento, tipo_licencia, grupo_controlador, vigente FROM factoring_leasing_lista_entidades ORDER BY vigente DESC, segmento, razon_social;" },
+              { label: "Estado consignado en la lista", query: "SELECT vigente, estado, count(*) as total_entidades, string_agg(nombre_fantasia, ', ') as instituciones FROM factoring_leasing_lista_entidades GROUP BY vigente, estado ORDER BY vigente DESC;" },
+              { label: "Tipos de licencia consignados", query: "SELECT tipo_licencia, count(*) as total, string_agg(nombre_fantasia, ', ') as instituciones FROM factoring_leasing_lista_entidades WHERE vigente = 1 GROUP BY tipo_licencia;" },
+              { label: "Segmentación por Línea de Negocio", query: "SELECT segmento, count(*) as entidades, sum(es_factoring) as con_factoring, sum(es_leasing_financiero) as con_leasing, sum(es_automotriz) as con_automotriz FROM factoring_leasing_lista_entidades WHERE vigente = 1 GROUP BY segmento;" }
             ],
             tables: [
-              { id: "factoring_leasing_maestro", name: "factoring_leasing.lista_entidades", rows: "32 entidades", file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet" }
+              { id: "factoring_leasing_lista_entidades", name: "factoring_leasing.lista_entidades", rows: "Una fila por sociedad", file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet" }
             ]
           },
           // BEGIN AUTO FL IFRS SERIES NAVIGATION
           {
-            id: "fl_balance_serie_ifrs_cmf_folder", type: "circular",
+            id: "cat_factoring_leasing_balance", type: "circular",
             label: "Balance · Serie CMF (2009-03–2026-06)", badge: "70 cierres · 28 RUT", badgeType: "data", status: "active",
             sector: "factoring_leasing",
-            chips: [{ label: "Cuentas de balance CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_balance_serie_ifrs_cmf ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;" }],
-            tables: [{ id: "factoring_leasing_balance_serie_ifrs_cmf", name: "factoring_leasing.balance_serie_ifrs_cmf (30,046 cuentas; no cotejo integral)",
-                       rows: "30,046 cuentas · 70 cierres · extracción sin cotejo integral",
+            chips: [{ label: "Cuentas de balance CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_balance ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;" }],
+            tables: [{ id: "factoring_leasing_balance", name: "factoring_leasing.balance",
+                       rows: "Serie IFRS · sin cotejo integral",
                        file: "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet" }]
           },
           {
-            id: "fl_resultados_serie_ifrs_cmf_folder", type: "circular",
+            id: "cat_factoring_leasing_resultados", type: "circular",
             label: "Resultados · Serie CMF (2009-03–2026-06)", badge: "70 cierres · 28 RUT", badgeType: "data", status: "active",
             sector: "factoring_leasing",
-            chips: [{ label: "Cuentas de resultados CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_resultados_serie_ifrs_cmf ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;" },
-                    { label: "Utilidad del período · 1 fila por estado", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, estado_financiero, valor_archivo AS ganancia_perdida FROM factoring_leasing_resultados_serie_ifrs_cmf WHERE lower(cuenta) = 'ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion_contexto = 1 ORDER BY periodo DESC, rut;" },
-                    { label: "Dónde se repite 'Ganancia (pérdida)'", query: "SELECT estado_financiero, repeticion_contexto, count(*) AS filas, count(DISTINCT (periodo, rut, tipo_balance)) AS estados FROM factoring_leasing_resultados_serie_ifrs_cmf WHERE lower(cuenta) = 'ganancia (pérdida)' GROUP BY ALL ORDER BY estado_financiero, repeticion_contexto;" }],
-            tables: [{ id: "factoring_leasing_resultados_serie_ifrs_cmf", name: "factoring_leasing.resultados_serie_ifrs_cmf (22,368 cuentas; no cotejo integral)",
-                       rows: "22,368 cuentas · 70 cierres · extracción sin cotejo integral",
+            chips: [{ label: "Cuentas de resultados CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_resultados ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;" },
+                    { label: "Utilidad del período · 1 fila por estado", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, estado_financiero, valor_archivo AS ganancia_perdida FROM factoring_leasing_resultados WHERE lower(cuenta) = 'ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion_contexto = 1 ORDER BY periodo DESC, rut;" },
+                    { label: "Dónde se repite 'Ganancia (pérdida)'", query: "SELECT estado_financiero, repeticion_contexto, count(*) AS filas, count(DISTINCT (periodo, rut, tipo_balance)) AS estados FROM factoring_leasing_resultados WHERE lower(cuenta) = 'ganancia (pérdida)' GROUP BY ALL ORDER BY estado_financiero, repeticion_contexto;" }],
+            tables: [{ id: "factoring_leasing_resultados", name: "factoring_leasing.resultados",
+                       rows: "Serie IFRS · sin cotejo integral",
                        file: "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet" }]
           },
   // END AUTO FL IFRS SERIES NAVIGATION
@@ -568,11 +568,11 @@ const EXPLORER_TREE = [
       {
         id: "sector_corredoras_bolsa",
         type: "sector",
-        label: "Intermediación de Valores y Corretaje Bursátil",
+        label: "Corredoras de Bolsa (CMF)",
         sector: "corredoras_bolsa",
         children: [
           {
-            id: "cat_cb_maestro",
+            id: "cat_corredoras_bolsa_lista_entidades",
             type: "circular",
             label: "Lista de Entidades",
             badge: "120 Entidades",
@@ -580,31 +580,31 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "corredoras_bolsa",
             chips: [
-              { label: "Catálogo de Corredoras Vigentes", query: "SELECT rut, nombre_empresa, nombre_fantasia, grupo_financiero, estado_vigencia FROM corredoras_bolsa_maestro WHERE estado_vigencia = 'Vigente' ORDER BY nombre_empresa;" },
-              { label: "Distribución por Conglomerado", query: "SELECT grupo_financiero, count(*) as total_corredoras, sum(CASE WHEN estado_vigencia = 'Vigente' THEN 1 ELSE 0 END) as vigentes FROM corredoras_bolsa_maestro GROUP BY grupo_financiero ORDER BY total_corredoras DESC;" }
+              { label: "Catálogo de Corredoras Vigentes", query: "SELECT rut, nombre_empresa, nombre_fantasia, grupo_financiero, estado_vigencia FROM corredoras_bolsa_lista_entidades WHERE estado_vigencia = 'Vigente' ORDER BY nombre_empresa;" },
+              { label: "Distribución por Conglomerado", query: "SELECT grupo_financiero, count(*) as total_corredoras, sum(CASE WHEN estado_vigencia = 'Vigente' THEN 1 ELSE 0 END) as vigentes FROM corredoras_bolsa_lista_entidades GROUP BY grupo_financiero ORDER BY total_corredoras DESC;" }
             ],
             tables: [
-              { id: "corredoras_bolsa_maestro", name: "corredoras.lista_entidades", rows: "120 entidades", file: "outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet" }
+              { id: "corredoras_bolsa_lista_entidades", name: "corredoras.lista_entidades", rows: "Una fila por corredora", file: "outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet" }
             ]
           },
           {
-            id: "cat_cb_registro",
+            id: "cat_corredoras_bolsa_lista_entidades_registro",
             type: "circular",
-            label: "Registro Único de Corredoras",
+            label: "Lista de Entidades · Registro",
             badge: "120 Entidades",
             badgeType: "entities",
             status: "active",
             sector: "corredoras_bolsa",
             chips: [
-              { label: "Catálogo de Corredoras por Grupo Financiero", query: "SELECT rut, nombre_empresa, nombre_fantasia, grupo_financiero, estado_vigencia FROM corredoras_bolsa_registro_universo ORDER BY estado_vigencia DESC, grupo_financiero, nombre_empresa;" },
-              { label: "Distribución de Corredoras por Conglomerado", query: "SELECT grupo_financiero, count(*) as total_corredoras, sum(CASE WHEN estado_vigencia = 'Vigente' THEN 1 ELSE 0 END) as vigentes, string_agg(nombre_fantasia, ', ') as instituciones FROM corredoras_bolsa_registro_universo GROUP BY grupo_financiero ORDER BY total_corredoras DESC;" }
+              { label: "Catálogo de Corredoras por Grupo Financiero", query: "SELECT rut, nombre_empresa, nombre_fantasia, grupo_financiero, estado_vigencia FROM corredoras_bolsa_lista_entidades_registro ORDER BY estado_vigencia DESC, grupo_financiero, nombre_empresa;" },
+              { label: "Distribución de Corredoras por Conglomerado", query: "SELECT grupo_financiero, count(*) as total_corredoras, sum(CASE WHEN estado_vigencia = 'Vigente' THEN 1 ELSE 0 END) as vigentes, string_agg(nombre_fantasia, ', ') as instituciones FROM corredoras_bolsa_lista_entidades_registro GROUP BY grupo_financiero ORDER BY total_corredoras DESC;" }
             ],
             tables: [
-              { id: "corredoras_bolsa_registro_universo", name: "corredoras.registro_unico", rows: "120 entidades", file: "outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet" }
+              { id: "corredoras_bolsa_lista_entidades_registro", name: "corredoras.lista_entidades_registro", rows: "Una fila por corredora", file: "outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet" }
             ]
           },
           {
-            id: "cat_cb_balance",
+            id: "cat_corredoras_bolsa_balance",
             type: "circular",
             label: "Balance FECU IFRS · CMF (2010-12–2026-06)",
             badge: "63 trimestres",
@@ -617,11 +617,11 @@ const EXPLORER_TREE = [
               { label: "Balance completo de Banchile Corredores, último trimestre", query: "SELECT periodo, seccion, codigo_fecu, nivel, cuenta, valor_miles_clp FROM corredoras_bolsa_balance WHERE rut = '96571220' AND periodo = (SELECT max(periodo) FROM corredoras_bolsa_balance) ORDER BY codigo_fecu;" }
             ],
             tables: [
-              { id: "corredoras_bolsa_balance", name: "corredoras.balance", rows: "107.976 cuentas · un archivo por año", file: "", files: ["outputs/corredoras_bolsa/corredoras_bolsa_balance/manifest.json"] }
+              { id: "corredoras_bolsa_balance", name: "corredoras.balance", rows: "FECU IFRS", file: "", files: ["outputs/corredoras_bolsa/corredoras_bolsa_balance/manifest.json"] }
             ]
           },
           {
-            id: "cat_cb_resultados",
+            id: "cat_corredoras_bolsa_resultados",
             type: "circular",
             label: "Estado de Resultados FECU IFRS · CMF (2010-12–2026-06)",
             badge: "63 trimestres",
@@ -634,7 +634,7 @@ const EXPLORER_TREE = [
               { label: "Catálogo de cuentas FECU de resultados", query: "SELECT codigo_fecu, any_value(cuenta) AS cuenta, any_value(seccion) AS seccion, count(*) AS filas FROM corredoras_bolsa_resultados GROUP BY codigo_fecu ORDER BY codigo_fecu;" }
             ],
             tables: [
-              { id: "corredoras_bolsa_resultados", name: "corredoras.resultados", rows: "77.705 cuentas · un archivo por año", file: "", files: ["outputs/corredoras_bolsa/corredoras_bolsa_resultados/manifest.json"] }
+              { id: "corredoras_bolsa_resultados", name: "corredoras.resultados", rows: "FECU IFRS", file: "", files: ["outputs/corredoras_bolsa/corredoras_bolsa_resultados/manifest.json"] }
             ]
           }
         ]
@@ -654,11 +654,11 @@ const EXPLORER_TREE = [
       {
         id: "sector_securitizadoras",
         type: "sector",
-        label: "Sociedades Securitizadoras",
+        label: "Sociedades Securitizadoras (CMF)",
         sector: "securitizadoras",
         children: [
           {
-            id: "cat_sec_maestro",
+            id: "cat_securitizadoras_lista_entidades",
             type: "circular",
             label: "Lista de Entidades",
             badge: "16 Entidades",
@@ -666,11 +666,11 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "securitizadoras",
             chips: [
-              { label: "Catálogo de Securitizadoras (Vigentes vs Históricas)", query: "SELECT rut_completo, razon_social, estado_vigencia, lineas_deuda_registradas FROM securitizadoras_maestro ORDER BY estado_vigencia, razon_social;" },
-              { label: "Securitizadoras con Emisiones Activas CMF", query: "SELECT razon_social, rut_completo, lineas_deuda_registradas, cmf_url FROM securitizadoras_maestro WHERE lineas_deuda_registradas > 0 ORDER BY lineas_deuda_registradas DESC;" }
+              { label: "Catálogo de Securitizadoras (Vigentes vs Históricas)", query: "SELECT rut_completo, razon_social, estado_vigencia, lineas_deuda_registradas FROM securitizadoras_lista_entidades ORDER BY estado_vigencia, razon_social;" },
+              { label: "Securitizadoras con Emisiones Activas CMF", query: "SELECT razon_social, rut_completo, lineas_deuda_registradas, cmf_url FROM securitizadoras_lista_entidades WHERE lineas_deuda_registradas > 0 ORDER BY lineas_deuda_registradas DESC;" }
             ],
             tables: [
-              { id: "securitizadoras_maestro", name: "securitizadoras.lista_entidades", rows: "16 entidades", file: "outputs/securitizadoras/securitizadoras_maestro.parquet" }
+              { id: "securitizadoras_lista_entidades", name: "securitizadoras.lista_entidades", rows: "Una fila por sociedad", file: "outputs/securitizadoras/securitizadoras_maestro.parquet" }
             ]
           },
           {
@@ -687,7 +687,7 @@ const EXPLORER_TREE = [
               { label: "Balance completo de BCI Securitizadora, último trimestre", query: "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM securitizadoras_balance WHERE rut = '96948880' AND periodo = (SELECT max(periodo) FROM securitizadoras_balance WHERE rut = '96948880') ORDER BY tipo_balance, estado_financiero, orden;" }
             ],
             tables: [
-              { id: "securitizadoras_balance", name: "securitizadoras.balance", rows: "13.679 cuentas · un archivo por año", file: "", files: ["outputs/securitizadoras/securitizadoras_balance/manifest.json"] }
+              { id: "securitizadoras_balance", name: "securitizadoras.balance", rows: "Serie IFRS", file: "", files: ["outputs/securitizadoras/securitizadoras_balance/manifest.json"] }
             ]
           },
           {
@@ -704,7 +704,7 @@ const EXPLORER_TREE = [
               { label: "Estado de resultados completo de BCI Securitizadora, ejercicio 2025", query: "SELECT tipo_balance, estado_financiero, orden, cuenta, valor FROM securitizadoras_resultados WHERE rut = '96948880' AND periodo = '2025-12' ORDER BY tipo_balance, estado_financiero, orden;" }
             ],
             tables: [
-              { id: "securitizadoras_resultados", name: "securitizadoras.resultados", rows: "12.290 cuentas · un archivo por año", file: "", files: ["outputs/securitizadoras/securitizadoras_resultados/manifest.json"] }
+              { id: "securitizadoras_resultados", name: "securitizadoras.resultados", rows: "Serie IFRS", file: "", files: ["outputs/securitizadoras/securitizadoras_resultados/manifest.json"] }
             ]
           }
         ]
@@ -712,11 +712,11 @@ const EXPLORER_TREE = [
       {
         id: "sector_patrimonios_separados",
         type: "sector",
-        label: "Patrimonios Separados",
+        label: "Patrimonios Separados (CMF)",
         sector: "patrimonios_separados",
         children: [
           {
-            id: "circ_ps_emisiones",
+            id: "cat_patrimonios_separados_lista_entidades",
             type: "circular",
             label: "Lista de Entidades",
             badge: "18 Emisiones",
@@ -724,15 +724,15 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "patrimonios_separados",
             chips: [
-              { label: "Líneas por clase de colateral", query: "SELECT clase_colateral_subyacente, count(*) as lineas, string_agg(razon_social_administradora, ', ') as administradoras FROM patrimonios_separados_maestro GROUP BY clase_colateral_subyacente ORDER BY lineas DESC;" },
-              { label: "Inscripciones por moneda y monto", query: "SELECT numero_inscripcion, fecha_inscripcion, razon_social_administradora, denominacion_emision, moneda, monto_inscrito, clase_colateral_subyacente FROM patrimonios_separados_maestro ORDER BY fecha_inscripcion DESC;" }
+              { label: "Líneas por clase de colateral", query: "SELECT clase_colateral_subyacente, count(*) as lineas, string_agg(razon_social_administradora, ', ') as administradoras FROM patrimonios_separados_lista_entidades GROUP BY clase_colateral_subyacente ORDER BY lineas DESC;" },
+              { label: "Inscripciones por moneda y monto", query: "SELECT numero_inscripcion, fecha_inscripcion, razon_social_administradora, denominacion_emision, moneda, monto_inscrito, clase_colateral_subyacente FROM patrimonios_separados_lista_entidades ORDER BY fecha_inscripcion DESC;" }
             ],
             tables: [
-              { id: "patrimonios_separados_maestro", name: "patrimonios_separados.lista_emisiones", rows: "19 emisiones", file: "outputs/securitizadoras/patrimonios_separados_maestro.parquet" }
+              { id: "patrimonios_separados_lista_entidades", name: "patrimonios_separados.lista_entidades", rows: "Una fila por patrimonio", file: "outputs/securitizadoras/patrimonios_separados_maestro.parquet" }
             ]
           },
           {
-            id: "circ_ps_balance",
+            id: "cat_patrimonios_separados_balance",
             type: "circular",
             label: "Balance General (diciembre 2014–2025; 2010–2013 sin datos)",
             badge: "358 Balances",
@@ -743,13 +743,13 @@ const EXPLORER_TREE = [
               { label: "Cobertura por año (2010–2013 sin datos)", query: "SELECT a.anio, count(DISTINCT b.archivo) AS balances, CASE WHEN a.anio < 2014 THEN 'Sin datos: la serie parte en diciembre de 2014' ELSE 'Cierre de diciembre' END AS nota FROM range(2010, 2026) a(anio) LEFT JOIN patrimonios_separados_balance b ON b.anio = a.anio GROUP BY a.anio ORDER BY a.anio;" },
               { label: "Totales por patrimonio, diciembre 2025", query: "SELECT nombre_administradora, codigo_patrimonio, activos_m_clp, pasivos_m_clp, patrimonio_m_clp FROM (SELECT periodo, rut_administradora, nombre_administradora, codigo_patrimonio, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Activos') AS activos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria IN ('Total Pasivo Circulante', 'Total Pasivo No Circulante')) AS pasivos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Patrimonio (Excedente Acumulado)') AS patrimonio_m_clp FROM patrimonios_separados_balance GROUP BY ALL) WHERE periodo = '2025-12' ORDER BY activos_m_clp DESC;" },
               { label: "Agregado del sector por cierre", query: "SELECT periodo, count(*) AS patrimonios, sum(activos_m_clp) AS activos_m_clp, sum(pasivos_m_clp) AS pasivos_m_clp, sum(patrimonio_m_clp) AS patrimonio_m_clp FROM (SELECT periodo, rut_administradora, nombre_administradora, codigo_patrimonio, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Activos') AS activos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria IN ('Total Pasivo Circulante', 'Total Pasivo No Circulante')) AS pasivos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Patrimonio (Excedente Acumulado)') AS patrimonio_m_clp FROM patrimonios_separados_balance GROUP BY ALL) GROUP BY periodo ORDER BY periodo;" },
-              { label: "Por securitizadora, diciembre 2025", query: "SELECT coalesce(s.razon_social, t.nombre_administradora) AS securitizadora, count(*) AS patrimonios, sum(t.activos_m_clp) AS activos_m_clp, sum(t.pasivos_m_clp) AS pasivos_m_clp, sum(t.patrimonio_m_clp) AS patrimonio_m_clp FROM (SELECT periodo, rut_administradora, nombre_administradora, codigo_patrimonio, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Activos') AS activos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria IN ('Total Pasivo Circulante', 'Total Pasivo No Circulante')) AS pasivos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Patrimonio (Excedente Acumulado)') AS patrimonio_m_clp FROM patrimonios_separados_balance GROUP BY ALL) t LEFT JOIN securitizadoras_maestro s ON s.rut = t.rut_administradora WHERE t.periodo = '2025-12' GROUP BY ALL ORDER BY activos_m_clp DESC;" },
+              { label: "Por securitizadora, diciembre 2025", query: "SELECT coalesce(s.razon_social, t.nombre_administradora) AS securitizadora, count(*) AS patrimonios, sum(t.activos_m_clp) AS activos_m_clp, sum(t.pasivos_m_clp) AS pasivos_m_clp, sum(t.patrimonio_m_clp) AS patrimonio_m_clp FROM (SELECT periodo, rut_administradora, nombre_administradora, codigo_patrimonio, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Activos') AS activos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria IN ('Total Pasivo Circulante', 'Total Pasivo No Circulante')) AS pasivos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Patrimonio (Excedente Acumulado)') AS patrimonio_m_clp FROM patrimonios_separados_balance GROUP BY ALL) t LEFT JOIN securitizadoras_lista_entidades s ON s.rut = t.rut_administradora WHERE t.periodo = '2025-12' GROUP BY ALL ORDER BY activos_m_clp DESC;" },
               { label: "Balance completo de un patrimonio", query: "SELECT orden_en_balance, categoria, cuenta, monto_m_clp FROM patrimonios_separados_balance WHERE periodo = '2025-12' AND nombre_administradora = 'SECURITIZADORA SECURITY' AND codigo_patrimonio = (SELECT min(codigo_patrimonio) FROM patrimonios_separados_balance WHERE periodo = '2025-12' AND nombre_administradora = 'SECURITIZADORA SECURITY') ORDER BY orden_en_balance;" },
               { label: "Pasivos de diciembre 2025 por cuenta", query: "SELECT categoria, cuenta, sum(monto_m_clp) AS monto_m_clp, count(*) AS patrimonios FROM patrimonios_separados_balance WHERE categoria IN ('Pasivo Circulante', 'Pasivo No Circulante') AND periodo = '2025-12' GROUP BY ALL ORDER BY monto_m_clp DESC;" },
               { label: "Cuentas más frecuentes por rubro", query: "SELECT categoria, cuenta, count(*) AS balances, sum(monto_m_clp) AS suma_m_clp FROM patrimonios_separados_balance WHERE categoria NOT LIKE 'Total%' GROUP BY ALL ORDER BY balances DESC LIMIT 30;" }
             ],
             tables: [
-              { id: "patrimonios_separados_balance", name: "patrimonios_separados.balance", rows: "358 balances · 7.962 cuentas", file: "outputs/securitizadoras/patrimonios_separados_balance.parquet" }
+              { id: "patrimonios_separados_balance", name: "patrimonios_separados.balance", rows: "Balance", file: "outputs/securitizadoras/patrimonios_separados_balance.parquet" }
             ]
           }
         ]
@@ -768,11 +768,11 @@ const EXPLORER_TREE = [
       {
         id: "sector_cooperativas",
         type: "sector",
-        label: "Ahorro y Crédito Cooperativo",
+        label: "Cooperativas de Ahorro y Crédito (CMF)",
         sector: "cooperativas",
         children: [
           {
-            id: "cat_coop_maestro",
+            id: "cat_cooperativas_lista_entidades",
             type: "circular",
             label: "Lista de Entidades",
             badge: "7 Entidades",
@@ -780,11 +780,11 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "cooperativas",
             chips: [
-              { label: "Directorio de Cooperativas Fiscalizadas", query: "SELECT rut, nombre_empresa, nombre_fantasia, sede_matriz, region, estado_vigencia FROM cooperativas_maestro ORDER BY nombre_fantasia;" },
-              { label: "Distribución Regional de Cooperativas", query: "SELECT region, count(*) as total_entidades, string_agg(nombre_fantasia, ', ') as instituciones FROM cooperativas_maestro GROUP BY region ORDER BY total_entidades DESC;" }
+              { label: "Directorio de Cooperativas Fiscalizadas", query: "SELECT rut, nombre_empresa, nombre_fantasia, sede_matriz, region, estado_vigencia FROM cooperativas_lista_entidades ORDER BY nombre_fantasia;" },
+              { label: "Distribución Regional de Cooperativas", query: "SELECT region, count(*) as total_entidades, string_agg(nombre_fantasia, ', ') as instituciones FROM cooperativas_lista_entidades GROUP BY region ORDER BY total_entidades DESC;" }
             ],
             tables: [
-              { id: "cooperativas_maestro", name: "cooperativas.lista_entidades", rows: "7 entidades", file: "outputs/cooperativas/cooperativas_maestro.parquet" }
+              { id: "cooperativas_lista_entidades", name: "cooperativas.lista_entidades", rows: "Una fila por cooperativa", file: "outputs/cooperativas/cooperativas_maestro.parquet" }
             ]
           }
         ]
@@ -804,11 +804,11 @@ const EXPLORER_TREE = [
       {
         id: "sector_cajas_compensacion",
         type: "sector",
-        label: "Crédito Social y Emisión de Bonos Públicos",
+        label: "Cajas de Compensación (CCAF / SUSESO)",
         sector: "cajas_compensacion",
         children: [
           {
-            id: "cat_ccaf_maestro",
+            id: "cat_ccaf_lista_entidades",
             type: "circular",
             label: "Lista de Entidades",
             badge: "6 Entidades",
@@ -816,12 +816,12 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "cajas_compensacion",
             chips: [
-              { label: "Catálogo CCAF (Vigentes vs Absorbidas)", query: "SELECT rut_completo, nombre_fantasia, estado_vigencia, regulador_mercado_valores, codigo_cmf, lineas_deuda_registradas FROM ccaf_maestro ORDER BY estado_vigencia DESC, nombre_fantasia;" },
-              { label: "CCAF Emisoras de Bonos Públicos CMF", query: "SELECT rut_completo, razon_social, codigo_cmf, lineas_deuda_registradas, cmf_url FROM ccaf_maestro WHERE emisor_valores_cmf = true ORDER BY rut;" },
-              { label: "CCAF Supervisadas Exclusivamente por SUSESO", query: "SELECT rut_completo, razon_social, domicilio_casa_matriz, suseso_url, observaciones FROM ccaf_maestro WHERE emisor_valores_cmf = false AND estado_vigencia = 'Vigente';" }
+              { label: "Catálogo CCAF (Vigentes vs Absorbidas)", query: "SELECT rut_completo, nombre_fantasia, estado_vigencia, regulador_mercado_valores, codigo_cmf, lineas_deuda_registradas FROM ccaf_lista_entidades ORDER BY estado_vigencia DESC, nombre_fantasia;" },
+              { label: "CCAF Emisoras de Bonos Públicos CMF", query: "SELECT rut_completo, razon_social, codigo_cmf, lineas_deuda_registradas, cmf_url FROM ccaf_lista_entidades WHERE emisor_valores_cmf = true ORDER BY rut;" },
+              { label: "CCAF Supervisadas Exclusivamente por SUSESO", query: "SELECT rut_completo, razon_social, domicilio_casa_matriz, suseso_url, observaciones FROM ccaf_lista_entidades WHERE emisor_valores_cmf = false AND estado_vigencia = 'Vigente';" }
             ],
             tables: [
-              { id: "ccaf_maestro", name: "ccaf.lista_entidades", rows: "6 entidades", file: "outputs/cajas_compensacion/ccaf_maestro.parquet" }
+              { id: "ccaf_lista_entidades", name: "ccaf.lista_entidades", rows: "Una fila por caja", file: "outputs/cajas_compensacion/ccaf_maestro.parquet" }
             ]
           },
           {
@@ -838,7 +838,7 @@ const EXPLORER_TREE = [
               { label: "Balance completo de CCAF Los Andes, último trimestre", query: "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM ccaf_balance WHERE rut = '81826800' AND periodo = (SELECT max(periodo) FROM ccaf_balance WHERE rut = '81826800') ORDER BY tipo_balance, estado_financiero, orden;" }
             ],
             tables: [
-              { id: "ccaf_balance", name: "ccaf.balance", rows: "8.043 cuentas · un archivo por año", file: "", files: ["outputs/cajas_compensacion/ccaf_balance/manifest.json"] }
+              { id: "ccaf_balance", name: "ccaf.balance", rows: "Serie IFRS", file: "", files: ["outputs/cajas_compensacion/ccaf_balance/manifest.json"] }
             ]
           },
           {
@@ -855,7 +855,7 @@ const EXPLORER_TREE = [
               { label: "Estado de resultados completo de CCAF Los Andes, ejercicio 2025", query: "SELECT tipo_balance, estado_financiero, orden, cuenta, valor FROM ccaf_resultados WHERE rut = '81826800' AND periodo = '2025-12' ORDER BY tipo_balance, estado_financiero, orden;" }
             ],
             tables: [
-              { id: "ccaf_resultados", name: "ccaf.resultados", rows: "5.506 cuentas · un archivo por año", file: "", files: ["outputs/cajas_compensacion/ccaf_resultados/manifest.json"] }
+              { id: "ccaf_resultados", name: "ccaf.resultados", rows: "Serie IFRS", file: "", files: ["outputs/cajas_compensacion/ccaf_resultados/manifest.json"] }
             ]
           }
         ]
@@ -878,7 +878,7 @@ const EXPLORER_TREE = [
         sector: "sistemas_pago",
         children: [
           {
-            id: "cat_pagos_maestro",
+            id: "cat_sistemas_pago_lista_entidades",
             type: "circular",
             label: "Lista de Entidades",
             badge: "12 Entidades",
@@ -886,11 +886,11 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "sistemas_pago",
             chips: [
-              { label: "Directorio de Infraestructuras", query: "SELECT codigo_sistema, nombre_comercial, tipo_sistema, supervisor FROM sistemas_pago_maestro ORDER BY codigo_sistema;" },
-              { label: "Cámaras y Contrapartes Centrales", query: "SELECT codigo_sistema, razon_social, marco_legal FROM sistemas_pago_maestro WHERE tipo_sistema LIKE '%Cámara%' OR tipo_sistema LIKE '%Contraparte%';" }
+              { label: "Directorio de Infraestructuras", query: "SELECT codigo_sistema, nombre_comercial, tipo_sistema, supervisor FROM sistemas_pago_lista_entidades ORDER BY codigo_sistema;" },
+              { label: "Cámaras y Contrapartes Centrales", query: "SELECT codigo_sistema, razon_social, marco_legal FROM sistemas_pago_lista_entidades WHERE tipo_sistema LIKE '%Cámara%' OR tipo_sistema LIKE '%Contraparte%';" }
             ],
             tables: [
-              { id: "sistemas_pago_maestro", name: "sistemas_pago.lista_entidades", rows: "19 entidades", file: "outputs/sistemas_pago/sistemas_pago_maestro.parquet" }
+              { id: "sistemas_pago_lista_entidades", name: "sistemas_pago.lista_entidades", rows: "Una fila por entidad", file: "outputs/sistemas_pago/sistemas_pago_maestro.parquet" }
             ]
           }
         ]
@@ -909,11 +909,11 @@ const EXPLORER_TREE = [
       {
         id: "sector_fintech",
         type: "sector",
-        label: "Prestadores de Servicios Financieros y Open Finance",
+        label: "Fintech y Finanzas Abiertas (CMF)",
         sector: "fintech",
         children: [
           {
-            id: "cat_fintech_maestro",
+            id: "cat_fintech_rpsf_lista_entidades",
             type: "circular",
             label: "Lista de Entidades",
             badge: "262 Entidades",
@@ -921,11 +921,11 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "fintech",
             chips: [
-              { label: "Prestadores Vigentes", query: "SELECT rut_completo, razon_social, tipo_persona, servicios_acreditados_total FROM fintech_rpsf_maestro WHERE estado_vigencia = 'Vigente' ORDER BY servicios_acreditados_total DESC, razon_social LIMIT 15;" },
-              { label: "Distribución Regional", query: "SELECT region, COUNT(*) AS total_entidades FROM fintech_rpsf_maestro WHERE region != '' GROUP BY region ORDER BY total_entidades DESC;" }
+              { label: "Prestadores Vigentes", query: "SELECT rut_completo, razon_social, tipo_persona, servicios_acreditados_total FROM fintech_rpsf_lista_entidades WHERE estado_vigencia = 'Vigente' ORDER BY servicios_acreditados_total DESC, razon_social LIMIT 15;" },
+              { label: "Distribución Regional", query: "SELECT region, COUNT(*) AS total_entidades FROM fintech_rpsf_lista_entidades WHERE region != '' GROUP BY region ORDER BY total_entidades DESC;" }
             ],
             tables: [
-              { id: "fintech_rpsf_maestro", name: "fintech.lista_entidades", rows: "263 entidades", file: "outputs/fintech/fintech_rpsf_maestro.parquet" }
+              { id: "fintech_rpsf_lista_entidades", name: "fintech.lista_entidades", rows: "Una fila por prestador", file: "outputs/fintech/fintech_rpsf_maestro.parquet" }
             ]
           }
         ]
@@ -942,7 +942,7 @@ class SidebarController {
     this.toggleBtn = document.getElementById("toggle-sidebar");
     this.breadcrumbEl = document.getElementById("erd-breadcrumb");
 
-    this.selectedTableId = "seguros_maestro";
+    this.selectedTableId = "seguros_lista_entidades";
     this.activeSector = "seguros";
     window.MFC_ACTIVE_SECTOR = this.activeSector;
     // El explorador se muestra colapsado al cargar: el usuario decide qué abrir.
@@ -1149,7 +1149,7 @@ class SidebarController {
 
       html += `
         <div class="tree-group ${groupOpenClass} ${groupRoadmapClass}" data-group-id="${group.id}">
-          <div class="tree-group-header">
+          <div class="tree-group-header" title="${group.label}">
             <span class="arrow-slot">${groupArrow}</span>
             <span class="group-title">${group.label}</span>
             <div class="group-badges">
@@ -1325,6 +1325,27 @@ class SidebarController {
     });
   }
 
+  // Ruta legible de la ubicación actual, usada por la barra de contexto del panel.
+  describeLocation(sector, tableName) {
+    if (!sector || sector === "todos") return "Todas las industrias";
+    for (const grupo of EXPLORER_TREE) {
+      for (const sec of grupo.children) {
+        if (sec.sector !== sector) continue;
+        let circularLabel = "";
+        for (const circ of sec.children || []) {
+          const tablas = circ.tables || [];
+          if (tablas.some((t) => t.name === tableName || t.id === this.selectedTableId)) {
+            circularLabel = circ.label;
+            break;
+          }
+        }
+        const tablaCorta = tableName && tableName.includes(".") ? tableName.split(".").pop() : tableName;
+        return [sec.label, circularLabel, tablaCorta].filter(Boolean).join(" \u203a ");
+      }
+    }
+    return tableName || sector;
+  }
+
   setNodeExpanded(nodeId, isOpen) {
     if (!nodeId) return;
     if (isOpen) {
@@ -1365,7 +1386,7 @@ class SidebarController {
     this.setActiveSector(sector, "circular");
 
     if (this.breadcrumbEl) {
-      this.breadcrumbEl.textContent = `${targetSectorName} > ${targetCirc.label}`;
+      this.breadcrumbEl.textContent = `${targetSectorName} \u203a ${targetCirc.label}`;
     }
 
     if (window.erdInstance) {
@@ -1392,9 +1413,10 @@ class SidebarController {
       el.classList.toggle("selected", el.dataset.tableId === tableId);
     });
 
-    // Actualizar Breadcrumb
+    // Actualizar la barra de contexto del panel
     if (this.breadcrumbEl) {
-      this.breadcrumbEl.textContent = `Tabla: ${tableName}`;
+      this.breadcrumbEl.textContent = this.describeLocation(sector, tableName);
+      this.breadcrumbEl.title = `Ubicación actual: ${this.breadcrumbEl.textContent}`;
     }
 
     // Enfocar y centrar la tabla en el Canvas ERD
