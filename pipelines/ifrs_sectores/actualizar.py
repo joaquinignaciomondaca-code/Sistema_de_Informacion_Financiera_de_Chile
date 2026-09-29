@@ -55,7 +55,7 @@ import pyarrow.parquet as pq
 
 RAIZ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(RAIZ))
-from pipelines.auto import cuadratura  # noqa: E402
+from pipelines.auto import cuadratura, estable  # noqa: E402
 DOCS = RAIZ / "docs" / "outputs"
 CONTROL = DOCS / "ifrs_sectores" / "manifest.json"
 INDICE = "https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
@@ -354,7 +354,7 @@ def escribir_manifiestos(control: dict) -> None:
                    "total_records": sum(pq.ParquetFile(r).metadata.num_rows for r in rutas),
                    "periodos": [f"{p[:4]}-{p[4:]}" for p in con],
                    "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds")}
-            (carpeta / "manifest.json").write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n")
+            estable.escribir_json((carpeta / "manifest.json"), man)
 
 
 def cargar_control() -> dict:
@@ -365,7 +365,7 @@ def guardar_control(control: dict) -> None:
     CONTROL.parent.mkdir(parents=True, exist_ok=True)
     control["periodos"] = dict(sorted(control["periodos"].items()))
     control["updated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    CONTROL.write_text(json.dumps(control, ensure_ascii=False, indent=2) + "\n")
+    estable.escribir_json(CONTROL, control)
 
 
 ORIGEN = ("CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían "
@@ -411,7 +411,7 @@ def actualizar_data_manifest(control: dict) -> None:
     man["total_tables"] = len(man["tables"])
     man["total_records"] = sum(int(t.get("registros_reales") or 0) for t in man["tables"])
     man["updated_at"] = hoy
-    ruta.write_text(json.dumps(man, ensure_ascii=False, indent=2) + "\n")
+    estable.escribir_json(ruta, man)
 
 
 def guardar_lista(rel: str, filas: list[dict]) -> None:
@@ -508,6 +508,18 @@ def main(argv=None) -> int:
             errores.append(f"{periodo}: {e}")
             print(f"::warning::{periodo}: {e}")
             continue
+        # Misma fuente que la última lectura: no hay nada nuevo que escribir ni desplegar. Los
+        # trimestres abiertos se releen en cada corrida (la CMF reenvía cifras hasta ~150 días), pero
+        # casi siempre el TXT es idéntico; solo se registra si el trimestre pasó a cerrado.
+        sha = hashlib.sha256(raw).hexdigest()
+        anterior = control["periodos"].get(periodo)
+        if anterior and anterior.get("sha256") == sha:
+            ahora_cerrado = cerrado(periodo, hoy)
+            if anterior.get("cerrado") != ahora_cerrado:
+                anterior["cerrado"] = ahora_cerrado
+                guardar_control(control)
+            print(f"{periodo}: sin cambios en la fuente")
+            continue
         # Cuadratura contable (README §4): activos = pasivos + patrimonio. Un balance aislado que
         # no cuadra queda como aviso; si la lectura falla en bloque (≥3 y más del 5 %), el trimestre no se publica.
         verificados, descuadres = 0, []
@@ -541,7 +553,7 @@ def main(argv=None) -> int:
                             "fuera_de_lista": [{"rut": r, "razon_social": n} for r, n in fuera]}
         control["periodos"][periodo] = {
             "cerrado": cerrado(periodo, hoy), "leido_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-            "fuente": url, "sha256": hashlib.sha256(raw).hexdigest(), **est,
+            "fuente": url, "sha256": sha, **est,
             "sectores": resumen, "avisos": avisos[:20],
         }
         guardar_control(control)
