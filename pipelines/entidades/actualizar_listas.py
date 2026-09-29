@@ -459,6 +459,25 @@ def actualizar_fondos_agf() -> None:
           f"({vigentes['run_fondo'].nunique()} fondos vigentes en el registro FI)")
 
 
+def actualizar_bundle_bancos() -> None:
+    """Refresca `bancos_lista_entidades` de docs/js/data_bundles.js desde bancos_maestro.json.
+
+    El bundle es una copia liviana de la lista; si nadie la regenera queda con RUT viejos
+    (en 2026-09 difería del maestro en 14 de 27 bancos). Se escribe solo si cambia.
+    """
+    ruta = RAIZ / "docs" / "js" / "data_bundles.js"
+    maestro = DOCS / "bancos" / "bancos_maestro.json"
+    if not ruta.exists() or not maestro.exists():
+        return
+    s = ruta.read_text(encoding="utf-8")
+    pre, _, cuerpo = s.partition("=")
+    bundles = json.loads(cuerpo.strip().rstrip(";"))
+    bundles["bancos_lista_entidades"] = json.loads(maestro.read_text(encoding="utf-8"))
+    nuevo = f"{pre}= {json.dumps(bundles, ensure_ascii=False)};\n"
+    if nuevo != s:
+        ruta.write_text(nuevo, encoding="utf-8")
+
+
 def actualizar_conteos_web() -> None:
     """Conteo «N entidades» del menú lateral (por archivo) y del diccionario (por id) de cada lista."""
     vistas = {AFP_BASE: "afp_maestro"}
@@ -474,6 +493,7 @@ def actualizar_conteos_web() -> None:
                 patron = rf'(id: "{vid}",(?:(?!\n  \}}).)*?registros: ")\d+( [^"]*")'
             s = re.sub(patron, rf"\g<1>{n}\g<2>", s, count=1, flags=re.S)
         ruta.write_text(s, encoding="utf-8")
+    actualizar_bundle_bancos()
 
 
 # Listas que completa pipelines/ifrs_sectores/actualizar.py; aquí solo se cuentan.
