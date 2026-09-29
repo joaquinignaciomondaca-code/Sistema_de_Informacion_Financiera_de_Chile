@@ -38,6 +38,8 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 RAIZ = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(RAIZ))
+from pipelines.auto import cuadratura  # noqa: E402
 SALIDA = RAIZ / "docs" / "outputs" / "corredoras_bolsa"
 CONTROL = SALIDA / "manifest.json"
 URL = ("https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/"
@@ -383,6 +385,13 @@ def main(argv=None) -> int:
         if total < previo.get("sociedades", 0):
             print(f"::warning::{periodo}: la relectura trae {total} sociedades (antes {previo['sociedades']}); se mantiene")
             continue
+        # Cuadratura contable (README §4): activos = pasivos + patrimonio (FECU 10 = 21 + 22).
+        verificados, descuadres = cuadratura.verificar_fecu(datos["balance"])
+        if cuadratura.debe_detener(verificados, descuadres):
+            print(f"::warning::{periodo}: {len(descuadres)} de {verificados} balances no cuadran "
+                  f"(activos ≠ pasivos + patrimonio); no se publica. Ej.: {descuadres[0]}")
+            continue
+        avisos += [f"balance no cuadra: {m}" for m in descuadres]
         for t in TABLAS:
             escribir(t, periodo, datos[t])
         fuera = sorted({(f["rut_dv"], f["razon_social"]) for f in datos["balance"]

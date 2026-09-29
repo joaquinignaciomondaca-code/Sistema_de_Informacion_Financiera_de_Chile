@@ -141,6 +141,9 @@ jobs:
           echo "::notice title=Automatizacion::$(tail -n 1 auto.log)"
           exit $n
 
+      - name: Pruebas de las compuertas compartidas de los pipelines
+        run: python -m unittest -v pipelines.auto.tests.test_cuadratura
+
   frescura:
     if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.ref_name == github.event.repository.default_branch)
     runs-on: ubuntu-latest
