@@ -546,3 +546,29 @@ con los pipelines antiguos de FFMM y FI.)
 3. Crear `common/` con utilidades chilenas (DV, parse_num, tc_map).
 4. Mover exploratorios a `*/scratch/` o `archive/`; (`__init__.py` en `tests/` ✅).
 5. ✅ ~~`requirements.txt` global~~ (hecho).
+
+---
+
+## Mapa del repositorio
+
+```
+<fuente>/            extracción por sector (seguros, ffmm, fi, bancos, macro, ccaf, …)
+  scripts/           extractores, normalizadores y auditorías del sector
+  tests/             pruebas unitarias del flujo
+pipelines/           flujos transversales
+  entidades/         altas y vigencia de las listas de entidades (CMF y SPensiones)
+  ifrs_sectores/     estados IFRS trimestrales (AGF, securitizadoras, CCAF)
+  normativa_cmf/     seguimiento de normativa (único flujo con lectura asistida)
+  auto/inventario.json  quién actualiza cada tabla y con qué frecuencia
+  manual/            ingesta de notas y reportes transcritos
+docs/                sitio estático (lo que se publica)
+  index.html         la aplicación (7 pestañas)
+  js/  css/          interfaz, motor DuckDB, catálogo de descargas
+  img/               capturas usadas en el README
+  vocabulario.json   nombres canónicos de todas las tablas
+  outputs/           52 Parquet publicados + manifiestos
+  vendor/duckdb/     DuckDB-Wasm embebido (MIT) — ver su README antes de actualizarlo
+  notas/             bitácora técnica de las decisiones
+scripts/             auditorías, generadores y servidor de vista previa
+.github/workflows/   11 flujos programados + despliegue
+```

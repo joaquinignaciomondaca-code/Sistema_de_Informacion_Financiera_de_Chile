@@ -1,6 +1,9 @@
 # Sistema de Información Financiera de Chile (SIF)
 
-**Plataforma de datos y web analítica del sistema financiero chileno.** Extrae, valida y publica información de **15 sectores supervisados** (CMF, Banco Central, SPensiones y SUSESO) como **52 tablas Parquet** con **8,9 millones de filas**, y las deja consultables con **SQL en el navegador** mediante DuckDB-Wasm. Sin backend, sin base de datos, sin servidores: el dato viaja como Parquet estático y el motor corre en el cliente.
+**25 años del sistema financiero chileno, consultables con SQL desde el navegador.**
+Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Central, la Superintendencia de Pensiones y la SUSESO: **15 industrias, 52 tablas, 8,9 millones de filas** desde enero de 2001. Sin backend, sin base de datos, sin servidores — el dato viaja como Parquet estático y el motor corre en el cliente.
+
+**▶ [Abrir el sistema](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/)** — sin instalar nada, las consultas corren en tu navegador.
 
 ![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![DuckDB-Wasm 1.28.0](https://img.shields.io/badge/DuckDB--Wasm-1.28.0-FFF000?logo=duckdb&logoColor=black)
@@ -10,27 +13,155 @@
 
 | En números | |
 |---|---|
-| Sectores supervisados cubiertos | **15** |
-| Tablas publicadas | **52** Parquet · 8.942.793 filas · 261,8 MB |
-| Serie temporal | **2001-01 → 2026-08** |
-| Fuentes oficiales | CMF · BCCh · SPensiones · SUSESO |
-| Web | 7 pestañas · 52 opciones del visor · 6 paletas |
-| Automatización | **11 flujos** programados en GitHub Actions |
-| Calidad | **7 suites de auditoría** + **130 pruebas** unitarias |
+| Historia cubierta | **25 años** · 2001-01 → 2026-08 |
+| Industrias supervisadas | **15** (CMF · BCCh · SPensiones · SUSESO) |
+| Tablas publicadas | **52** Parquet · 8.942.793 filas · 262 MB |
+| Consultas sugeridas listas para usar | **117** |
+| Actualización | **11 flujos** automáticos en GitHub Actions |
+| Verificación | **7 suites** de auditoría + **130** pruebas unitarias |
 
 ---
 
-## 1. Qué resuelve
+## 1. El problema
 
-Los datos del mercado financiero chileno existen, son públicos y son difíciles de usar: están repartidos entre cuatro instituciones, en formatos distintos (TXT delimitados, XLSX, ZIP con XML/XBRL, PDF escaneados, HTML sin API), con identificadores inconsistentes y sin garantía de continuidad. Este proyecto los convierte en un producto consultable:
+Los datos del mercado financiero chileno son públicos, y son casi inusables.
 
-- **Extracción** en *streaming* desde cada fuente, sin acumular residuos en disco.
-- **Normalización**: RUT con dígito verificador módulo 11, períodos `AAAA-MM`, montos en CLP/USD, nombres de entidad homologados.
-- **Validación fail-closed**: cuadraturas contables (activos = pasivos + patrimonio), cobertura mínima por período y verificación de esquema. Si un dato no cuadra, **no se publica** y el flujo avisa.
-- **Publicación** como Parquet particionado con manifiestos incrementales, servido como sitio estático.
-- **Exploración** con SQL real en el navegador, diccionario de datos y mapa relacional.
+Están repartidos entre cuatro organismos, en formatos que no conversan: TXT delimitados, XLSX, ZIP con XML/XBRL, PDF escaneados, HTML sin API. Cada fuente escribe el RUT a su manera, cada una nombra distinto la misma entidad, y ninguna garantiza que el archivo del mes que viene tenga las columnas de este mes.
 
-### Cómo verlo funcionando
+El resultado práctico: **cruzar la cartera de una aseguradora con la de un fondo mutuo es un proyecto, no una consulta.** Un analista que quiera saber qué emisores concentran riesgo en dos industrias a la vez pasa más tiempo homologando identificadores que analizando.
+
+Este proyecto convierte eso en una base de datos que se consulta en el navegador.
+
+---
+
+## 2. Qué puedes preguntarle
+
+Las consultas se escriben en SQL estándar y se ejecutan **en tu máquina**, sobre los Parquet publicados. No hay servidor de datos ni se envía nada a terceros.
+
+```sql
+-- ¿Dónde invierten fuera de Chile los fondos mutuos, en el último mes publicado?
+SELECT pais_emisor,
+       count(*)                  AS posiciones,
+       count(DISTINCT run_fondo) AS fondos
+FROM ffmm_cartera_extranjera
+WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera)
+GROUP BY pais_emisor
+ORDER BY posiciones DESC;
+```
+
+Resultado real, último período publicado:
+
+| pais_emisor | posiciones | fondos |
+|---|---:|---:|
+| US | 1.131 | 148 |
+| LU | 512 | 141 |
+| IE | 489 | 101 |
+| BR | 98 | 14 |
+| GB | 84 | 43 |
+
+Luxemburgo e Irlanda por delante de Brasil y Reino Unido: el patrón esperable de domiciliación de vehículos de fondos, visible en una consulta.
+
+Y el caso que motiva el proyecto — **un emisor visto desde tres industrias a la vez**:
+
+```sql
+-- ¿Qué emisores concentran exposición simultánea de aseguradoras y fondos mutuos?
+WITH bancos AS (
+  SELECT split_part(replace(rut, '.', ''), '-', 1) AS rut, razon_social
+  FROM bancos_lista_entidades
+),
+seguros AS (
+  SELECT rut_emisor AS rut, count(DISTINCT rut_aseguradora) AS aseguradoras
+  FROM seguros_renta_fija
+  WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija)
+  GROUP BY 1
+),
+fondos AS (
+  SELECT split_part(rut_emisor, '-', 1) AS rut, count(DISTINCT run_fondo) AS fondos_mutuos
+  FROM ffmm_cartera_nacional
+  WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional)
+  GROUP BY 1
+)
+SELECT b.razon_social AS emisor, s.aseguradoras, f.fondos_mutuos
+FROM bancos b JOIN seguros s USING (rut) JOIN fondos f USING (rut)
+ORDER BY s.aseguradoras + f.fondos_mutuos DESC;
+```
+
+| emisor | aseguradoras | fondos_mutuos |
+|---|---:|---:|
+| Banco de Credito e Inversiones | 57 | 205 |
+| Banco Santander-Chile | 51 | 199 |
+| Banco Itau Chile | 52 | 194 |
+| Banco de Chile | 60 | 179 |
+| Scotiabank Chile | 51 | 167 |
+| Banco BICE | 50 | 161 |
+| Banco del Estado de Chile | 53 | 145 |
+
+Tres industrias cruzadas en 50 ms, en el navegador. Fíjate en los `split_part`: son necesarios porque el RUT aún no está homologado entre industrias — ver la nota en la sección 4.
+
+La web trae **117 consultas sugeridas** organizadas por industria, para no partir de una pantalla en blanco. Cada resultado se ve como tabla o gráfico y se exporta a CSV, Excel o Parquet.
+
+---
+
+## 3. Los datos
+
+| Industria | Tablas | Filas | Serie | Fuente |
+|---|---:|---:|---|---|
+| Seguros de Vida y Generales | 9 | 4.103.093 | 2016-11 → 2026-08 | CMF · Circular 1835 |
+| Fondos Mutuos | 5 | 3.306.744 | 2001-01 → 2026-08 | CMF · Circular 1333 |
+| Fondos de Inversión | 8 | 1.036.645 | 2020-03 → 2026-06 | CMF · LUF / Circular 1998 |
+| Corredoras de Bolsa | 4 | 185.921 | 2010-12 → 2026-06 | CMF · FECU IFRS |
+| Administradoras Generales de Fondos | 3 | 129.711 | 2010-06 → 2026-06 | CMF · IFRS |
+| Macroeconomía y Tasas | 5 | 80.375 | diaria → mensual | BCCh |
+| Factoring y Leasing | 3 | 52.446 | 2009-03 → 2026-06 | CMF · IFRS |
+| Sociedades Securitizadoras | 3 | 25.985 | 2009-12 → 2026-06 | CMF · IFRS |
+| Cajas de Compensación | 3 | 13.555 | 2010-06 → 2026-06 | CMF · TXT IFRS (XBRL) |
+| Patrimonios Separados | 2 | 7.981 | dic. 2014 → 2025 | CMF · PDF de estados financieros |
+| Banca | 3 | 41 · 1,93 M † | 2022-01 → 2026-07 | CMF · B1/B2/R1 |
+| FinTech | 1 | 263 | registro vigente | CMF · Ley 21.521 (RPSF) |
+| Sistemas de Pago | 1 | 19 | registro vigente | BCCh / CMF |
+| Fondos de Pensiones | 1 | 7 | registro vigente | SPensiones · D.L. 3.500 |
+| Cooperativas de Ahorro y Crédito | 1 | 7 | registro vigente | CMF |
+| **Total** | **52** | **8.942.793** | **2001 → 2026** | |
+
+† En banca, *balance* y *resultados* son vistas filtradas sobre las mismas 55 particiones mensuales (1,93 M filas fuente). La pestaña Descargas no muestra un total engañoso para ellas: informa que las filas se cuentan al consultar.
+
+Cada tabla publica su **manifiesto** —períodos, archivos, registros y hash de origen—, de modo que se puede verificar que lo que muestra la web es exactamente lo que se descargó de la fuente.
+
+---
+
+## 4. Por qué confiar en la cifra
+
+Un dato financiero mal extraído es peor que no tener el dato. El sistema valida **antes** de publicar y se detiene si algo no cuadra:
+
+- **Identidad**: RUT validado con dígito verificador módulo 11 y nombres de entidad homologados **dentro de cada industria**.
+- **Cuadraturas contables**: activos = pasivos + patrimonio. Un balance que no cuadra detiene la publicación.
+- **Cobertura mínima**: si un mes trae menos del 90 % de las entidades del mes anterior, no se publica.
+- **Legibilidad**: más de 1 % de filas ilegibles en un archivo aborta el proceso.
+- **Esquema**: si la fuente cambia las columnas, el flujo falla en vez de publicar basura.
+
+Cuando algo falla, la web dice «no disponible». Nunca un número inventado.
+
+**Limitación conocida, medida y documentada.** El RUT está homologado dentro de cada industria, pero todavía no *entre* industrias: conviven tres convenciones (`12.345.678-9`, `12345678-9`, `12345678`) según el origen del archivo. Un `JOIN` directo entre sectores devuelve cero filas en silencio, que es la peor forma de fallar. Normalizando con `split_part` aparecen los 147 emisores que comparten aseguradoras y fondos mutuos, como en el ejemplo de arriba. La auditoría completa de formatos, columna por columna, está en [`docs/notas/rut_formatos_2026-09-29.md`](docs/notas/rut_formatos_2026-09-29.md); unificar el identificador es la corrección en curso.
+
+---
+
+## 5. La web
+
+Aplicación estática de siete pestañas, sin framework y sin build:
+
+| Pestaña | Qué hace |
+|---|---|
+| **Información** | Cobertura, fuentes y estado de cada industria. |
+| **Mapa relacional** | Diagrama entidad-relación con zoom, paneo y enlaces entre tablas. |
+| **Diccionario** | Campo por campo: rol (PK, FK, dimensión, métrica), definición y criterio contable. |
+| **Visor de datos** | Consulta tabular con filtro, orden y copia de celdas. |
+| **Consultas SQL** | Terminal con autocompletado, historial, favoritos y enlaces compartibles. |
+| **Descargas** | Los 52 conjuntos con filas, período y peso, en Parquet, CSV y Excel. |
+| **Normativa CMF** | Seguimiento de la normativa publicada por la CMF (ver §7.6). |
+
+El **explorador jerárquico** organiza 12 industrias → 15 sectores → 38 carpetas temáticas → 52 tablas, con consultas sugeridas en cada carpeta. El motor DuckDB-Wasm 1.28.0 va **embebido en el propio sitio** (`docs/vendor/duckdb/`), así que las consultas funcionan aunque la red del visitante bloquee los CDN públicos.
+
+### Verlo funcionando
 
 ```bash
 git clone https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile
@@ -39,96 +170,21 @@ python3 -m scripts.preview_no_cache --port 8000     # sirve docs/ sin caché, co
 # → http://localhost:8000
 ```
 
-El servidor local soporta `206 Partial Content` igual que GitHub Pages, así que DuckDB-Wasm lee sólo el pie y los grupos de fila que necesita en vez de bajar archivos completos. Para publicarlo: el repositorio incluye un flujo de **GitHub Pages** (`pages.yml`, despliega `docs/` tal cual) y también funciona en **Vercel** como sitio estático sin build.
+El servidor local responde `206 Partial Content` igual que GitHub Pages, así que DuckDB-Wasm lee sólo el pie y los grupos de fila que necesita en vez de bajar archivos completos.
 
 ---
 
-## 2. Arquitectura
+## 6. Se mantiene solo
 
-```mermaid
-flowchart LR
-  A["Fuentes oficiales<br/>CMF · BCCh · SPensiones · SUSESO"] --> B["Extracción por sector<br/>streaming, cero residuos en disco"]
-  B --> C{"Validación fail-closed<br/>RUT módulo 11 · cuadraturas · cobertura"}
-  C -- no cuadra --> X["No publica<br/>aviso + issue"]
-  C -- ok --> D[("docs/outputs<br/>52 Parquet + manifiestos")]
-  D --> E["Web estática docs/<br/>GitHub Pages · Vercel"]
-  E --> F["DuckDB-Wasm en el navegador<br/>vistas SQL sobre los Parquet"]
-  G["GitHub Actions<br/>11 flujos programados"] -.-> B
-  H["Auditorías<br/>7 suites · 130 pruebas"] -.-> C
-  H -.-> E
-```
+Once flujos programados en GitHub Actions extraen, validan y publican con commit controlado. Un **guardián de automatización** cruza el manifiesto de datos, el inventario de flujos y las vistas del sitio: cada tabla publicada tiene un responsable declarado, y si una fuente se atrasa más allá de su plazo, se abre un issue automáticamente.
 
-El mismo Parquet que se publica es el que se consulta: no hay copia intermedia, ni ETL nocturno, ni servicio que se caiga. Eso hace al sitio **barato, reproducible y auditable**: cualquiera puede descargar el archivo y recalcular el resultado.
-
-### Stack
-
-| Capa | Tecnología |
-|---|---|
-| Extracción | Python 3.11 · `requests` + `BeautifulSoup` (HTML), `openpyxl` (XLSX), `PyMuPDF`/`pdfplumber` (PDF), `Playwright` (sitios sin API), `bcchapi` (BCCh) |
-| Lectura asistida | Sólo en normativa CMF: Gemini con salida forzada a esquema JSON, límite de llamadas por corrida, marca `needs_human_review` y regla anti inyección de prompt (el texto del PDF se trata como dato no confiable). Ningún dato financiero pasa por un modelo. |
-| Datos | `pandas` + `pyarrow` → Parquet particionado con manifiestos JSON (períodos, archivos, registros y hash de origen) |
-| Automatización | GitHub Actions: 11 flujos programados con commit controlado, issue automático si una fuente se atrasa |
-| Frontend | JavaScript sin framework **y sin build** · DuckDB-Wasm 1.28.0 embebido · CSS con variables (6 paletas) |
-| Calidad | `unittest` (130 pruebas) + 7 suites de auditoría propias en Python y Node |
-
----
-
-## 3. La web (`docs/`)
-
-Aplicación estática de **siete pestañas** (cada una a pantalla completa, sin panel inferior):
-
-| Pestaña | Qué hace |
-|---|---|
-| **Información** | Portada del sistema: cobertura, fuentes y estado de cada sector. |
-| **Mapa relacional** | Diagrama entidad-relación en canvas, con zoom, paneo y enlaces entre tablas. |
-| **Diccionario** | Campo por campo: rol (PK, FK, dimensión, métrica), definición y criterio contable. |
-| **Visor de datos** | Consulta tabular con filtro, orden y copia de celdas. |
-| **Consultas SQL** | Terminal con autocompletado, historial, favoritos y enlaces compartibles. |
-| **Descargas** | Catálogo de los 52 conjuntos: filas, período, peso y archivos, con Parquet, CSV y Excel. |
-| **Normativa CMF** | Seguimiento de la normativa publicada por la CMF, con lectura asistida de los PDF (ver §7.6) y marca de revisión humana. |
-
-- **Explorador jerárquico**: 12 industrias → 15 sectores → 38 carpetas temáticas → 52 tablas, con consultas sugeridas por carpeta.
-- **Motor embebido**: copia local de DuckDB-Wasm 1.28.0 (`docs/vendor/duckdb/`) con respaldo por CDN, de modo que las consultas funcionan aunque la red del visitante bloquee el CDN.
-- **Vocabulario único** (`docs/vocabulario.json`): una tabla se llama `<sector>.<tipo>` y **toda lista de entidades se llama `lista_entidades`**, sin sinónimos. `scripts/normalizar_vocabulario.py` propaga ese vocabulario a la interfaz y falla si algo se sale de la convención. Los nombres históricos sobreviven únicamente como vistas de alias en SQL, nunca en pantalla.
-- **Atajos**: `Alt`+`1`…`7` para las pestañas, `/` para el buscador. La última pestaña usada se recuerda.
-
----
-
-## 4. Datos y cobertura
-
-| Sector | Carpeta | Tablas | Filas | Serie | Fuente |
-|---|---|---:|---:|---|---|
-| Seguros de Vida y Generales | `seguros/` | 9 | 4.103.093 | 2016-11 → 2026-08 | CMF · Circular 1835 |
-| Fondos Mutuos | `ffmm/` | 5 | 3.306.744 | 2001-01 → 2026-08 | CMF · Circular 1333 |
-| Fondos de Inversión | `fi/` | 8 | 1.036.645 | 2020-03 → 2026-06 | CMF · LUF / Circular 1998 |
-| Corredoras de Bolsa | `corredoras_bolsa/` | 4 | 185.921 | 2010-12 → 2026-06 | CMF · FECU IFRS |
-| Administradoras Generales de Fondos | `pipelines/ifrs_sectores/` | 3 | 129.711 | 2010-06 → 2026-06 | CMF · IFRS |
-| Macroeconomía y Tasas | `macro/` | 5 | 80.375 | diaria → mensual | BCCh |
-| Factoring y Leasing | `factoring_leasing/` | 3 | 52.446 | 2009-03 → 2026-06 | CMF · IFRS |
-| Sociedades Securitizadoras | `securitizadoras/` | 3 | 25.985 | 2009-12 → 2026-06 | CMF · IFRS |
-| Cajas de Compensación | `ccaf/` | 3 | 13.555 | 2010-06 → 2026-06 | CMF · TXT IFRS (XBRL) |
-| Patrimonios Separados | `securitizadoras/` | 2 | 7.981 | dic. 2014 → 2025 | CMF · PDF de estados financieros |
-| Banca | `bancos/` | 3 | 41 · 1,93 M † | 2022-01 → 2026-07 | CMF · B1/B2/R1 |
-| FinTech | `fintech/` | 1 | 263 | registro vigente | CMF · Ley 21.521 (RPSF) |
-| Sistemas de Pago | `sistemas_pago/` | 1 | 19 | registro vigente | BCCh / CMF |
-| Fondos de Pensiones | `pensiones/` | 1 | 7 | registro vigente | SPensiones · D.L. 3.500 |
-| Cooperativas de Ahorro y Crédito | `cooperativas/` | 1 | 7 | registro vigente | CMF |
-| **Total** | | **52** | **8.942.793** | **2001 → 2026** | |
-
-† En banca, *balance* y *resultados* son vistas filtradas sobre las mismas 55 particiones mensuales (1,93 M filas fuente). La pestaña Descargas no muestra un total engañoso para ellas: informa que las filas se cuentan al consultar.
-
-Cada tabla publica además su **manifiesto** (períodos, archivos, registros y hash de origen), lo que permite verificar que lo que muestra la web es exactamente lo que se descargó de la fuente.
-
----
-
-## 5. Automatización (GitHub Actions)
-
-Los flujos corren solos, publican con commit controlado y dejan rastro auditable:
+<details>
+<summary>Calendario de los 11 flujos</summary>
 
 | Flujo | Frecuencia | Publica |
 |---|---|---|
 | `macro.yml` | diario | Macro BCCh: tasas, divisas, precios y catálogo de series |
-| `bancos_cmf_mensual.yml` | días 1, 11, 21 | Particiones B1/B2/R1 de la CMF (incremental, valida antes de publicar) |
+| `bancos_cmf_mensual.yml` | días 1, 11, 21 | Particiones B1/B2/R1 de la CMF (incremental) |
 | `ifrs_sectores.yml` | días 2, 12, 22 | Estados IFRS de AGF, securitizadoras y CCAF |
 | `factoring_leasing_backfill.yml` | días 3, 13, 23 | Serie IFRS de balance y resultados |
 | `corredoras_eeff.yml` | días 6, 16, 26 | FECU IFRS de corredores y agentes de valores |
@@ -137,93 +193,62 @@ Los flujos corren solos, publican con commit controlado y dejan rastro auditable
 | `fi_carteras.yml` | días 9, 19, 29 | Cartera y pactos de fondos de inversión |
 | `entidades.yml` | días 10, 20, 28 | Altas y vigencia de las listas de entidades |
 | `normativa_cmf.yml` | lunes a viernes | Normativa publicada por la CMF |
-| `web_audit.yml` | lunes, push a `main` y cada PR | Auditorías del sitio (navegación, web completa, interfaz, vocabulario, catálogo y DOM) + guardián de frescura |
+| `web_audit.yml` | lunes, push y PR | Auditorías del sitio + guardián de frescura |
 | `pages.yml` | push a `main` | Despliegue del sitio estático |
 
-Un **guardián de automatización** (`scripts/audit_automatizacion.py`) cruza el manifiesto de datos, el inventario de flujos y las vistas del sitio: cada tabla publicada tiene un responsable declarado, y si un flujo deja de entregar datos en el plazo esperado, abre un issue.
+</details>
 
----
-
-## 6. Calidad y verificación
-
-Todo lo que promete este README se puede comprobar con un comando:
+<details>
+<summary>Auditorías que corren en cada push y PR</summary>
 
 ```bash
 python scripts/audit_web_full.py            # Parquet, enlaces, chips SQL, diccionario y ERD
 python scripts/audit_interfaz.py            # pestañas, catálogo, vocabulario, temas, motor
-node   scripts/audit_interfaz_dom.js        # comportamiento de la interfaz en un DOM real (requiere jsdom)
 python scripts/audit_navigation.py          # taxonomía: 12 familias, 52 tablas, 52 opciones del visor
 python scripts/audit_automatizacion.py      # quién actualiza cada tabla y con qué frecuencia
-node   scripts/audit_normativa_web.js       # sección de normativa CMF
-python scripts/normalizar_vocabulario.py --check   # el vocabulario de nombres no se desincroniza
-python scripts/build_download_catalog.py --check   # el catálogo de descargas refleja lo publicado
-python scripts/audit_secretos.py                   # rastrea credenciales en el historial (requiere clon completo)
+python scripts/build_download_catalog.py --check   # el catálogo refleja lo publicado
+python scripts/normalizar_vocabulario.py --check   # los nombres no se desincronizan
 ```
 
-Los flujos maduros (bancos, factoring-leasing, macro, normativa) corren además sus **130 pruebas unitarias** en CI antes de publicar. Todo lo anterior se ejecuta en `web_audit.yml` en cada push a `main` y en cada PR: si el catálogo de la web y los Parquet publicados divergen, el push falla.
+Más `audit_interfaz_dom.js` (comportamiento en un DOM real), `audit_normativa_web.js` y `audit_secretos.py`. Los flujos maduros —bancos, factoring-leasing, macro y normativa— corren además sus **130 pruebas unitarias** antes de publicar.
+
+</details>
 
 ---
 
 ## 7. Decisiones de diseño
 
-1. **Sin backend.** Parquet estático + HTTP Range + DuckDB-Wasm: cero infraestructura, cero costo de servidor y ninguna copia de los datos fuera de la fuente. El mismo archivo que se descarga es el que se consulta.
-2. **Fail-closed antes que "algo es mejor que nada".** Un balance que no cuadra, un archivo con más de 1 % de filas ilegibles o un mes con cobertura bajo el 90 % detienen la publicación. La web muestra "no disponible" antes que un número inventado.
+1. **Sin backend.** Parquet estático + HTTP Range + DuckDB-Wasm: cero infraestructura y ninguna copia de los datos fuera de la fuente. El mismo archivo que se descarga es el que se consulta, así que cualquiera puede recalcular el resultado por su cuenta.
+2. **Fail-closed antes que «algo es mejor que nada».** Publicar un balance descuadrado es peor que no publicarlo: quien lo use tomará una decisión con un número falso sin saberlo. Por eso la validación aborta en vez de degradar.
 3. **Un vocabulario, no convenciones orales.** Todo nombre visible vive en `docs/vocabulario.json` y un verificador recorre el repositorio; los sinónimos desaparecieron de la interfaz por construcción, no por disciplina.
-4. **Compatibilidad sin contaminar.** Los nombres históricos de las vistas siguen funcionando en SQL (alias), pero no se sugieren en pantalla: quien tiene una consulta guardada no se rompe, y quien llega nuevo ve un solo criterio.
-5. **Auditorías como contrato ejecutable.** Cada promesa del README se traduce en un chequeo automático; la documentación no puede quedar desactualizada en silencio.
-6. **El LLM lee prosa, nunca cifras.** El único flujo con lectura asistida es el de normativa CMF, donde la fuente son PDF en lenguaje natural sin formato estable. El modelo devuelve JSON contra un esquema cerrado, el texto del documento se trata como dato no confiable (no como instrucción), y todo resultado con evidencia incompleta queda marcado `needs_human_review`. Los estados financieros, carteras y series macro se parsean con código determinista y se validan contra cuadraturas: ningún número publicado proviene de un modelo.
+4. **Compatibilidad sin contaminar.** Los nombres históricos siguen funcionando como alias en SQL, pero no se sugieren en pantalla: quien tenía una consulta guardada no se rompe, y quien llega nuevo ve un solo criterio.
+5. **Auditorías como contrato ejecutable.** Cada promesa de este README se traduce en un chequeo automático. Si el catálogo de la web y los Parquet publicados divergen, el push falla.
+6. **El modelo lee prosa, nunca cifras.** El único flujo con lectura asistida es el de normativa CMF, donde la fuente son PDF jurídicos sin formato estable. El modelo devuelve JSON contra un esquema cerrado, con tope de llamadas por corrida, el texto del documento tratado como dato no confiable —no como instrucción— y marca `needs_human_review` cuando la evidencia es incompleta. Cada ficha conserva sus citas y el enlace al documento oficial. Los estados financieros, carteras y series macro se parsean con código determinista y se validan contra cuadraturas: **ningún número publicado proviene de un modelo.**
 
 ---
 
-## 8. Mapa del repositorio
+## 8. Próximos pasos
 
-```
-<fuente>/            extracción por sector (seguros, ffmm, fi, bancos, macro, ccaf, agf, …)
-  scripts/           extractores, normalizadores y auditorías del sector
-  tests/             pruebas unitarias del flujo
-pipelines/           flujos transversales
-  entidades/         altas y vigencia de las listas de entidades (CMF y SPensiones)
-  ifrs_sectores/     estados IFRS trimestrales (AGF, securitizadoras, CCAF)
-  normativa_cmf/     seguimiento de normativa
-  auto/inventario.json  quién actualiza cada tabla y con qué frecuencia
-  manual/            ingesta de notas y reportes transcritos
-docs/                sitio estático (lo que se publica)
-  index.html         la aplicación (7 pestañas)
-  js/  css/          interfaz, motor DuckDB, catálogo de descargas
-  vocabulario.json   nombres canónicos de todas las tablas
-  outputs/           52 Parquet publicados + manifiestos
-  vendor/duckdb/     DuckDB-Wasm embebido (MIT)
-  notas/             bitácora técnica de las decisiones
-scripts/             auditorías, generadores y servidor de vista previa
-.github/workflows/   11 flujos programados + despliegue
-PSEUDOCODIGO.md      mapa de código: qué hace cada pieza y en qué orden
-```
-
-**Documentación**: [`PSEUDOCODIGO.md`](PSEUDOCODIGO.md) (mapa de código y decisiones) · [`pipelines/README.md`](pipelines/README.md) (operación de datos) · [`docs/notas/rediseno_ui_2026-09-28.md`](docs/notas/rediseno_ui_2026-09-28.md) (bitácora del rediseño) · READMEs por sector (`bancos/`, `ccaf/`, `factoring_leasing/`, `fi/`, `macro/`, `pensiones/`).
+- **Más profundidad por entidad**: incorporar las notas a los estados financieros y otros desgloses que hoy quedan fuera del dato tabular (comisiones, juicios pendientes, vencimientos, covenants).
+- **Nuevas fuentes de interés** para completar la vista por industria.
 
 ---
 
-## 9. Deuda técnica conocida
+## 9. Documentación
 
-Publicar los pendientes es parte del trabajo:
-
-1. **Dos contadores de tablas**: el catálogo de descargas se regenera desde los Parquet reales y tiene verificador (`build_download_catalog.py --check`), por eso es la fuente citada en este README. `data_manifest.json` se mantiene aparte y todavía reporta otro total. Hay que derivar ambos del mismo cálculo o retirar el segundo.
-2. **Utilidades duplicadas**: el dígito verificador, el parseo de números chilenos y el tipo de cambio están copiados en ~8 scripts; su lugar es un módulo `common/`.
-3. **Peso del historial**: ~230 MB por Parquet antiguos versionados; candidato a Git LFS o a publicar los datos como *releases*.
-4. **Cobertura de pruebas despareja**: los 130 tests se concentran en los flujos maduros; los sectores "stream + audit" se validan con auditorías, no con pruebas unitarias.
-
-La operación de credenciales (secrets de GitHub, variables de entorno y rotación) está documentada en [`pipelines/README.md`](pipelines/README.md); `scripts/audit_secretos.py` la comprueba en CI.
+[`PSEUDOCODIGO.md`](PSEUDOCODIGO.md) — mapa de código, estructura del repositorio y decisiones ·
+[`pipelines/README.md`](pipelines/README.md) — operación de datos y credenciales ·
+[`docs/vendor/duckdb/README.md`](docs/vendor/duckdb/README.md) — cómo se vendoriza el motor ·
+READMEs por sector en `bancos/`, `ccaf/`, `factoring_leasing/`, `fi/`, `macro/` y `pensiones/`.
 
 ---
 
-## 10. Autor
+## Autor
 
 **Joaquín Mondaca** — [LinkedIn](https://www.linkedin.com/in/joaqu%C3%ADnmondaca/) · [GitHub](https://github.com/joaquinignaciomondaca-code)
 
 Proyecto de datos de punta a punta: extracción, validación estadística y contable, publicación incremental, automatización y producto web.
 
----
-
 ## Licencia
 
-© 2026 Joaquín Mondaca. Todos los derechos reservados: el repositorio aún no incluye un archivo `LICENSE`, de modo que el código se publica para consulta y evaluación técnica, no para reutilización. Los datos pertenecen a sus fuentes oficiales (CMF, Banco Central de Chile, SPensiones, SUSESO) y se publican tal como ellas los emiten.
+© 2026 Joaquín Mondaca. Todos los derechos reservados; el código se publica para consulta y evaluación técnica. Los datos pertenecen a sus fuentes oficiales (CMF, Banco Central de Chile, SPensiones, SUSESO) y se publican tal como ellas los emiten.
