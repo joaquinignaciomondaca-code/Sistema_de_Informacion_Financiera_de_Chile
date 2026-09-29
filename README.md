@@ -135,7 +135,7 @@ Los flujos corren solos, publican con commit controlado y dejan rastro auditable
 | `fi_carteras.yml` | días 9, 19, 29 | Cartera y pactos de fondos de inversión |
 | `entidades.yml` | días 10, 20, 28 | Altas y vigencia de las listas de entidades |
 | `normativa_cmf.yml` | lunes a viernes | Normativa publicada por la CMF |
-| `web_audit.yml` | lunes y en cada push | Auditorías del sitio + guardián de frescura de los datos |
+| `web_audit.yml` | lunes, push a `main` y cada PR | Auditorías del sitio (navegación, web completa, interfaz, vocabulario, catálogo y DOM) + guardián de frescura |
 | `pages.yml` | push a `main` | Despliegue del sitio estático |
 
 Un **guardián de automatización** (`scripts/audit_automatizacion.py`) cruza el manifiesto de datos, el inventario de flujos y las vistas del sitio: cada tabla publicada tiene un responsable declarado, y si un flujo deja de entregar datos en el plazo esperado, abre un issue.
