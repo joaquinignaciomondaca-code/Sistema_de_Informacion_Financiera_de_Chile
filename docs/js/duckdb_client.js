@@ -4,9 +4,24 @@
 // soportara el bundle "eh", se cae al CDN oficial como respaldo.
 const DUCKDB_VERSION = "1.28.0";
 const DUCKDB_LOCAL_DIR = "vendor/duckdb/";
+// Los .mjs que publica upstream en dist/ importan "apache-arrow" como
+// especificador desnudo, que ningún navegador resuelve sin import map. Por eso
+// el respaldo usa endpoints que sí entregan el módulo con sus dependencias ya
+// resueltas (+esm en jsDelivr, esm.sh), mientras el .wasm y el worker se siguen
+// tomando de dist/, que son archivos sueltos y no tienen ese problema.
 const DUCKDB_CDN_BASES = [
-  `https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@${DUCKDB_VERSION}/dist/`,
-  `https://unpkg.com/@duckdb/duckdb-wasm@${DUCKDB_VERSION}/dist/`
+  {
+    id: "jsdelivr",
+    label: "CDN jsDelivr",
+    mjs: `https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@${DUCKDB_VERSION}/+esm`,
+    dist: `https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@${DUCKDB_VERSION}/dist/`
+  },
+  {
+    id: "esmsh",
+    label: "CDN esm.sh",
+    mjs: `https://esm.sh/@duckdb/duckdb-wasm@${DUCKDB_VERSION}`,
+    dist: `https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@${DUCKDB_VERSION}/dist/`
+  }
 ];
 
 // Nombres anteriores de las vistas publicadas. Se conservan como alias SQL para que
@@ -79,7 +94,7 @@ const SEMANTIC_VIEWS = [
   { name: "bancos_balance", manifest: "outputs/bancos/cmf_b1_b2_r1/manifest.json", where: "familia_archivo_fuente IN ('B1', 'B2')" },
   { name: "bancos_resultados", manifest: "outputs/bancos/cmf_b1_b2_r1/manifest.json", where: "familia_archivo_fuente = 'R1'" },
 
-  // MACROECONOMIA & TASAS (BCCh SIETE)
+  // MACROECONOMÍA & TASAS (BCCh SIETE)
   { name: "macro_tasas_rendimientos", file: "outputs/macro/macro_tasas_rendimientos.parquet" },
   { name: "macro_divisas_mercado", file: "outputs/macro/macro_divisas_mercado.parquet" },
   { name: "macro_precios_actividad", file: "outputs/macro/macro_precios_actividad.parquet" },
@@ -229,12 +244,12 @@ class DuckDBClient {
           }
         }
       }];
-      for (const base of DUCKDB_CDN_BASES) {
-        const esUnpkg = base.indexOf("unpkg") !== -1;
+      for (const cdn of DUCKDB_CDN_BASES) {
+        const base = cdn.dist;
         intentos.push({
-          id: esUnpkg ? "unpkg" : "jsdelivr",
-          label: esUnpkg ? "CDN unpkg" : "CDN jsDelivr",
-          mjs: `${base}duckdb-browser.mjs`,
+          id: cdn.id,
+          label: cdn.label,
+          mjs: cdn.mjs,
           bundles: {
             eh: { mainModule: `${base}duckdb-eh.wasm`, mainWorker: `${base}duckdb-browser-eh.worker.js` },
             mvp: { mainModule: `${base}duckdb-mvp.wasm`, mainWorker: `${base}duckdb-browser-mvp.worker.js` }
@@ -249,7 +264,7 @@ class DuckDBClient {
           // selectBundle exige la entrada "mvp" cuando el navegador no soporta el
           // bundle "eh"; sin ella lanza un TypeError que no explica nada.
           if (!intento.bundles.mvp) {
-            const respaldo = DUCKDB_CDN_BASES[0];
+            const respaldo = DUCKDB_CDN_BASES[0].dist;
             intento.bundles.mvp = {
               mainModule: `${respaldo}duckdb-mvp.wasm`,
               mainWorker: `${respaldo}duckdb-browser-mvp.worker.js`
