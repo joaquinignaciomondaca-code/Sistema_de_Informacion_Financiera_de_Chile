@@ -1,67 +1,67 @@
 {
   "_ayuda": "Una entrada por tabla de data_manifest.json y por vista del sitio (SEMANTIC_VIEWS): {\"workflow\": archivo en .github/workflows} o {\"manual\": motivo}. 'marca' reemplaza al nombre del archivo cuando el script lo arma por partes. Lo revisa scripts/audit_automatizacion.py en cada push y, con --frescura, cada semana contra las corridas reales.",
   "tablas": {
-    "afp_maestro": {
+    "afp_lista_entidades": {
       "workflow": "entidades.yml"
     },
     "agf_balance": {
       "workflow": "ifrs_sectores.yml",
       "marca": "\"prefijo\": \"agf\""
     },
-    "agf_maestro": {
+    "agf_lista_entidades": {
       "workflow": "entidades.yml"
     },
     "agf_resultados": {
       "workflow": "ifrs_sectores.yml",
       "marca": "\"prefijo\": \"agf\""
     },
-    "bancos_cmf_balance": {
+    "bancos_balance": {
       "workflow": "bancos_cmf_mensual.yml",
       "marca": "cmf_b1_b2_r1"
     },
     "bancos_cmf_lineas": {
       "workflow": "bancos_cmf_mensual.yml"
     },
-    "bancos_cmf_resultados": {
+    "bancos_resultados": {
       "workflow": "bancos_cmf_mensual.yml",
       "marca": "cmf_b1_b2_r1"
     },
-    "bancos_maestro": {
+    "bancos_lista_entidades": {
       "workflow": "entidades.yml"
     },
     "ccaf_balance": {
       "workflow": "ifrs_sectores.yml",
       "marca": "\"prefijo\": \"ccaf\""
     },
-    "ccaf_maestro": {
+    "ccaf_lista_entidades": {
       "workflow": "ifrs_sectores.yml"
     },
     "ccaf_resultados": {
       "workflow": "ifrs_sectores.yml",
       "marca": "\"prefijo\": \"ccaf\""
     },
-    "cooperativas_maestro": {
+    "cooperativas_lista_entidades": {
       "workflow": "entidades.yml"
     },
     "corredoras_bolsa_balance": {
       "workflow": "corredoras_eeff.yml"
     },
-    "corredoras_bolsa_maestro": {
+    "corredoras_bolsa_lista_entidades": {
       "workflow": "entidades.yml"
     },
-    "corredoras_bolsa_registro_universo": {
+    "corredoras_bolsa_lista_entidades_registro": {
       "workflow": "entidades.yml"
     },
     "corredoras_bolsa_resultados": {
       "workflow": "corredoras_eeff.yml"
     },
-    "factoring_leasing_balance_serie_ifrs_cmf": {
+    "factoring_leasing_balance": {
       "workflow": "factoring_leasing_backfill.yml"
     },
-    "factoring_leasing_maestro": {
+    "factoring_leasing_lista_entidades": {
       "workflow": "ifrs_sectores.yml"
     },
-    "factoring_leasing_resultados_serie_ifrs_cmf": {
+    "factoring_leasing_resultados": {
       "workflow": "factoring_leasing_backfill.yml"
     },
     "ffmm_cartera_extranjera": {
@@ -73,7 +73,7 @@
     "ffmm_futuros": {
       "workflow": "ffmm_carteras.yml"
     },
-    "ffmm_maestro": {
+    "ffmm_lista_entidades": {
       "workflow": "ffmm_carteras.yml"
     },
     "ffmm_opciones": {
@@ -91,7 +91,7 @@
     "fi_futuros": {
       "workflow": "fi_carteras.yml"
     },
-    "fi_maestro": {
+    "fi_lista_entidades": {
       "workflow": "fi_carteras.yml"
     },
     "fi_metodo_participacion": {
@@ -103,7 +103,7 @@
     "fi_pactos": {
       "workflow": "fi_carteras.yml"
     },
-    "fintech_rpsf_maestro": {
+    "fintech_rpsf_lista_entidades": {
       "workflow": "entidades.yml"
     },
     "macro_divisas_mercado": {
@@ -124,14 +124,14 @@
     "patrimonios_separados_balance": {
       "manual": "Balance construido una vez desde el Excel entregado por el usuario (2014-12 a 2025-12). La CMF publica los EEFF de cada patrimonio separado solo como PDF por securitizadora, sin archivo estructurado."
     },
-    "patrimonios_separados_maestro": {
+    "patrimonios_separados_lista_entidades": {
       "workflow": "entidades.yml"
     },
     "securitizadoras_balance": {
       "workflow": "ifrs_sectores.yml",
       "marca": "\"prefijo\": \"securitizadoras\""
     },
-    "securitizadoras_maestro": {
+    "securitizadoras_lista_entidades": {
       "workflow": "entidades.yml"
     },
     "securitizadoras_resultados": {
@@ -156,7 +156,7 @@
     "seguros_fondos_mutuos": {
       "workflow": "seguros_carteras.yml"
     },
-    "seguros_maestro": {
+    "seguros_lista_entidades": {
       "workflow": "seguros_carteras.yml"
     },
     "seguros_pactos": {
@@ -165,7 +165,7 @@
     "seguros_renta_fija": {
       "workflow": "seguros_carteras.yml"
     },
-    "sistemas_pago_maestro": {
+    "sistemas_pago_lista_entidades": {
       "workflow": "entidades.yml"
     }
   },

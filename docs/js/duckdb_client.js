@@ -1,11 +1,48 @@
-const DUCKDB_WASM_URL = "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.28.0/dist/duckdb-browser.mjs";
+// Motor DuckDB-Wasm. Se intenta primero la copia incluida en el repositorio
+// (docs/vendor/duckdb) para que el terminal funcione sin depender de la red del
+// visitante ni de un CDN externo; si esa copia faltara o el navegador no
+// soportara el bundle "eh", se cae al CDN oficial como respaldo.
+const DUCKDB_VERSION = "1.28.0";
+const DUCKDB_LOCAL_DIR = "vendor/duckdb/";
+const DUCKDB_CDN_BASES = [
+  `https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@${DUCKDB_VERSION}/dist/`,
+  `https://unpkg.com/@duckdb/duckdb-wasm@${DUCKDB_VERSION}/dist/`
+];
+
+// Nombres anteriores de las vistas publicadas. Se conservan como alias SQL para que
+// las consultas ya guardadas por los visitantes sigan funcionando, pero la interfaz
+// sólo muestra y sugiere el nombre canónico del vocabulario (docs/vocabulario.json).
+// La lista la regenera scripts/normalizar_vocabulario.py: no editar a mano.
+const LEGACY_VIEW_ALIASES = {
+  // BEGIN VOCABULARIO ALIAS
+  seguros_lista_entidades: ["seguros_maestro"],
+  fi_lista_entidades: ["fi_maestro"],
+  ffmm_lista_entidades: ["ffmm_maestro"],
+  afp_lista_entidades: ["afp_maestro"],
+  bancos_lista_entidades: ["bancos_maestro"],
+  bancos_balance: ["bancos_cmf_balance"],
+  bancos_resultados: ["bancos_cmf_resultados"],
+  factoring_leasing_lista_entidades: ["factoring_leasing_maestro"],
+  factoring_leasing_balance: ["factoring_leasing_balance_serie_ifrs_cmf"],
+  factoring_leasing_resultados: ["factoring_leasing_resultados_serie_ifrs_cmf"],
+  corredoras_bolsa_lista_entidades: ["corredoras_bolsa_maestro"],
+  corredoras_bolsa_lista_entidades_registro: ["corredoras_bolsa_registro_universo"],
+  securitizadoras_lista_entidades: ["securitizadoras_maestro"],
+  patrimonios_separados_lista_entidades: ["patrimonios_separados_maestro"],
+  cooperativas_lista_entidades: ["cooperativas_maestro"],
+  ccaf_lista_entidades: ["ccaf_maestro"],
+  agf_lista_entidades: ["agf_maestro"],
+  sistemas_pago_lista_entidades: ["sistemas_pago_maestro"],
+  fintech_rpsf_lista_entidades: ["fintech_rpsf_maestro"],
+  // END VOCABULARIO ALIAS
+};
 
 // Vistas semánticas disponibles para el chat SQL, el explorador y las exportaciones.
 const SEMANTIC_VIEWS = [
   // SEGUROS (vida y generales en las mismas tablas, columna "sector"). Cartera de inversiones
   // de la Circular 1835 leída con la ficha técnica oficial; se actualiza sola 3 veces al mes y
   // cada tabla se publica en archivos por año o por mes listados en su manifiesto.
-  { name: "seguros_maestro", file: "outputs/seguros/aseguradoras.parquet" },
+  { name: "seguros_lista_entidades", file: "outputs/seguros/aseguradoras.parquet" },
   { name: "seguros_renta_fija", manifest: "outputs/seguros/renta_fija/manifest.json" },
   { name: "seguros_acciones", manifest: "outputs/seguros/acciones/manifest.json" },
   { name: "seguros_fondos_mutuos", manifest: "outputs/seguros/fondos_mutuos/manifest.json" },
@@ -17,7 +54,7 @@ const SEMANTIC_VIEWS = [
 
   // FONDOS DE INVERSIÓN. Cartera y pactos de los informes IFRS trimestrales de cada fondo (CMF);
   // se actualiza sola 3 veces al mes. Montos en miles de la moneda funcional de cada fondo.
-  { name: "fi_maestro", file: "outputs/fi/maestro_fondos_inversion.parquet" },
+  { name: "fi_lista_entidades", file: "outputs/fi/maestro_fondos_inversion.parquet" },
   { name: "fi_cartera_nacional", manifest: "outputs/fi/cartera_nacional/manifest.json" },
   { name: "fi_cartera_extranjera", manifest: "outputs/fi/cartera_extranjera/manifest.json" },
   { name: "fi_metodo_participacion", manifest: "outputs/fi/metodo_participacion/manifest.json" },
@@ -28,19 +65,19 @@ const SEMANTIC_VIEWS = [
 
   // FONDOS MUTUOS. Cartera de inversiones de la Circular 1333 (archivo mensual CMF); se actualiza
   // sola 3 veces al mes. Montos en miles de la moneda funcional de cada fondo.
-  { name: "ffmm_maestro", file: "outputs/ffmm/maestro_fondos_mutuos.parquet" },
+  { name: "ffmm_lista_entidades", file: "outputs/ffmm/maestro_fondos_mutuos.parquet" },
   { name: "ffmm_cartera_nacional", manifest: "outputs/ffmm/cartera_nacional/manifest.json" },
   { name: "ffmm_cartera_extranjera", manifest: "outputs/ffmm/cartera_extranjera/manifest.json" },
   { name: "ffmm_futuros", manifest: "outputs/ffmm/futuros_forwards/manifest.json" },
   { name: "ffmm_opciones", manifest: "outputs/ffmm/opciones/manifest.json" },
 
   // FONDOS DE PENSIONES (SPENSIONES)
-  { name: "afp_maestro", file: "outputs/pensiones/afp_maestro_administradoras.parquet" },
+  { name: "afp_lista_entidades", file: "outputs/pensiones/afp_maestro_administradoras.parquet" },
 
   // BANCA: catálogo institucional y líneas CMF publicadas solo tras pasar el gate mensual.
-  { name: "bancos_maestro", file: "outputs/bancos/bancos_maestro.parquet" },
-  { name: "bancos_cmf_balance", manifest: "outputs/bancos/cmf_b1_b2_r1/manifest.json", where: "familia_archivo_fuente IN ('B1', 'B2')" },
-  { name: "bancos_cmf_resultados", manifest: "outputs/bancos/cmf_b1_b2_r1/manifest.json", where: "familia_archivo_fuente = 'R1'" },
+  { name: "bancos_lista_entidades", file: "outputs/bancos/bancos_maestro.parquet" },
+  { name: "bancos_balance", manifest: "outputs/bancos/cmf_b1_b2_r1/manifest.json", where: "familia_archivo_fuente IN ('B1', 'B2')" },
+  { name: "bancos_resultados", manifest: "outputs/bancos/cmf_b1_b2_r1/manifest.json", where: "familia_archivo_fuente = 'R1'" },
 
   // MACROECONOMIA & TASAS (BCCh SIETE)
   { name: "macro_tasas_rendimientos", file: "outputs/macro/macro_tasas_rendimientos.parquet" },
@@ -51,29 +88,29 @@ const SEMANTIC_VIEWS = [
 
   // FACTORING & LEASING (CMF / NBFI)
   // BEGIN AUTO FL IFRS SERIES VIEWS
-  { name: "factoring_leasing_balance_serie_ifrs_cmf", file: "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet" },
-  { name: "factoring_leasing_resultados_serie_ifrs_cmf", file: "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet" },
+  { name: "factoring_leasing_balance", file: "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet" },
+  { name: "factoring_leasing_resultados", file: "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet" },
   // END AUTO FL IFRS SERIES VIEWS
-  { name: "factoring_leasing_maestro", file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet" },
+  { name: "factoring_leasing_lista_entidades", file: "outputs/factoring_leasing/factoring_leasing_maestro.parquet" },
 
   // CORREDORAS DE BOLSA (CMF)
-  { name: "corredoras_bolsa_registro_universo", file: "outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet" },
-  { name: "corredoras_bolsa_maestro", file: "outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet" },
+  { name: "corredoras_bolsa_lista_entidades_registro", file: "outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet" },
+  { name: "corredoras_bolsa_lista_entidades", file: "outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet" },
 
 
    // SECURITIZADORAS (CMF / Ley 18.045) - Gestoras & Resumen
-   { name: "securitizadoras_maestro", file: "outputs/securitizadoras/securitizadoras_maestro.parquet" },
-   { name: "patrimonios_separados_maestro", file: "outputs/securitizadoras/patrimonios_separados_maestro.parquet" },
+   { name: "securitizadoras_lista_entidades", file: "outputs/securitizadoras/securitizadoras_maestro.parquet" },
+   { name: "patrimonios_separados_lista_entidades", file: "outputs/securitizadoras/patrimonios_separados_maestro.parquet" },
    { name: "patrimonios_separados_balance", file: "outputs/securitizadoras/patrimonios_separados_balance.parquet" },
 
   // COOPERATIVAS DE AHORRO Y CRÉDITO (CMF)
-  { name: "cooperativas_maestro", file: "outputs/cooperativas/cooperativas_maestro.parquet" },
+  { name: "cooperativas_lista_entidades", file: "outputs/cooperativas/cooperativas_maestro.parquet" },
 
   // CAJAS DE COMPENSACION (CCAF / SUSESO - Ley 18.833 / CMF)
-  { name: "ccaf_maestro", file: "outputs/cajas_compensacion/ccaf_maestro.parquet" },
+  { name: "ccaf_lista_entidades", file: "outputs/cajas_compensacion/ccaf_maestro.parquet" },
 
   // ADMINISTRADORAS GENERALES DE FONDOS (AGF / Ley 20.712)
-  { name: "agf_maestro", file: "outputs/agf/agf_maestro.parquet" },
+  { name: "agf_lista_entidades", file: "outputs/agf/agf_maestro.parquet" },
   { name: "agf_balance", manifest: "outputs/agf/agf_balance/manifest.json" },
   { name: "agf_resultados", manifest: "outputs/agf/agf_resultados/manifest.json" },
   { name: "securitizadoras_balance", manifest: "outputs/securitizadoras/securitizadoras_balance/manifest.json" },
@@ -84,10 +121,10 @@ const SEMANTIC_VIEWS = [
   { name: "corredoras_bolsa_resultados", manifest: "outputs/corredoras_bolsa/corredoras_bolsa_resultados/manifest.json" },
 
   // SISTEMAS DE PAGO (BCCh / CMF)
-  { name: "sistemas_pago_maestro", file: "outputs/sistemas_pago/sistemas_pago_maestro.parquet" },
+  { name: "sistemas_pago_lista_entidades", file: "outputs/sistemas_pago/sistemas_pago_maestro.parquet" },
 
   // FINTECH & FINANZAS ABIERTAS (LEY N° 21.521 / CMF)
-  { name: "fintech_rpsf_maestro", file: "outputs/fintech/fintech_rpsf_maestro.parquet" },
+  { name: "fintech_rpsf_lista_entidades", file: "outputs/fintech/fintech_rpsf_maestro.parquet" },
 ];
 
 class DuckDBClient {
@@ -102,30 +139,154 @@ class DuckDBClient {
     this.engineError = null;
     this.unavailableViews = [];
     this.registeredFiles = new Set();
+    this.engineSource = null;
+    this.localEngineError = null;
     this.initPromise = this.init();
+  }
+
+  // Monta worker, base y conexión a partir de un bundle ya resuelto.
+  async startEngine(duckdb, bundle) {
+    const worker = await duckdb.createWorker(bundle.mainWorker);
+    this.db = new duckdb.AsyncDuckDB(new duckdb.ConsoleLogger(), worker);
+    await this.db.instantiate(bundle.mainModule, bundle.pthreadWorker);
+    this.conn = await this.db.connect();
+  }
+
+  // Comprueba si el entorno puede alojar un Web Worker creado desde un Blob URL.
+  // El motor arma su worker así (ver createWorker en duckdb-browser.mjs), de modo
+  // que un CSP que bloquee blob: o un iframe en sandbox sin allow-same-origin
+  // impiden arrancarlo aunque los archivos estén disponibles.
+  probeBlobWorker() {
+    return new Promise((resolve) => {
+      let url = null;
+      try {
+        url = URL.createObjectURL(new Blob(["self.onmessage=function(){self.postMessage('ok')};"], { type: "text/javascript" }));
+        const worker = new Worker(url);
+        const cerrar = (resultado) => {
+          clearTimeout(temporizador);
+          try { worker.terminate(); } catch (e) { /* ya cerrado */ }
+          URL.revokeObjectURL(url);
+          resolve(resultado);
+        };
+        const temporizador = setTimeout(() => cerrar({ ok: false, reason: "el worker no respondió en 2 s" }), 2000);
+        worker.onmessage = () => cerrar({ ok: true, reason: null });
+        worker.onerror = (evento) => cerrar({ ok: false, reason: (evento && evento.message) || "el worker emitió un error" });
+        worker.postMessage("ping");
+      } catch (err) {
+        if (url) URL.revokeObjectURL(url);
+        resolve({ ok: false, reason: err && err.message ? err.message : String(err) });
+      }
+    });
+  }
+
+  // Sonda del entorno: qué puede hacer este navegador. Se muestra en el
+  // diagnóstico de la pestaña de consultas cuando el motor no arranca.
+  async probeEnvironment() {
+    const soporte = {
+      wasm: typeof WebAssembly === "object",
+      wasmExceptions: null,
+      wasmSIMD: null,
+      crossOriginIsolated: Boolean(window.crossOriginIsolated),
+      blobWorker: null,
+      blobWorkerError: null
+    };
+    if (this.duckdb && typeof this.duckdb.getPlatformFeatures === "function") {
+      try {
+        const features = await this.duckdb.getPlatformFeatures();
+        soporte.wasmExceptions = Boolean(features.wasmExceptions);
+        soporte.wasmSIMD = Boolean(features.wasmSIMD);
+      } catch (e) { /* sonda opcional */ }
+    }
+    const worker = await this.probeBlobWorker();
+    soporte.blobWorker = worker.ok;
+    soporte.blobWorkerError = worker.reason;
+    return soporte;
   }
 
   async init() {
     try {
       console.log("[DuckDB-Wasm] Inicializando motor WebAssembly...");
-      if (!window.duckdb) {
-        window.duckdb = await import(DUCKDB_WASM_URL);
-      }
-      const duckdb = window.duckdb;
-      this.duckdb = duckdb;
+      this.engineAvailable = false;
+      this.engineError = null;
+      this.localEngineError = null;
+      this.attempts = [];
+      this.environment = null;
+      this.unavailableViews = [];
+      this.registeredFiles = new Set();
+      this.db = null;
+      this.conn = null;
 
-      const bundle = await duckdb.selectBundle(duckdb.getJsDelivrBundles());
-      const worker = await duckdb.createWorker(bundle.mainWorker);
-      this.db = new duckdb.AsyncDuckDB(new duckdb.ConsoleLogger(), worker);
-      await this.db.instantiate(bundle.mainModule, bundle.pthreadWorker);
-      this.conn = await this.db.connect();
+      // Orden de intentos: copia local del repositorio y, si falla, CDNs públicos.
+      const localBase = this.absoluteUrl(DUCKDB_LOCAL_DIR);
+      const intentos = [{
+        id: "local",
+        label: "copia local del repositorio",
+        mjs: `${localBase}duckdb-browser.mjs`,
+        bundles: {
+          eh: {
+            mainModule: `${localBase}duckdb-eh.wasm`,
+            mainWorker: `${localBase}duckdb-browser-eh.worker.js`
+          }
+        }
+      }];
+      for (const base of DUCKDB_CDN_BASES) {
+        const esUnpkg = base.indexOf("unpkg") !== -1;
+        intentos.push({
+          id: esUnpkg ? "unpkg" : "jsdelivr",
+          label: esUnpkg ? "CDN unpkg" : "CDN jsDelivr",
+          mjs: `${base}duckdb-browser.mjs`,
+          bundles: {
+            eh: { mainModule: `${base}duckdb-eh.wasm`, mainWorker: `${base}duckdb-browser-eh.worker.js` },
+            mvp: { mainModule: `${base}duckdb-mvp.wasm`, mainWorker: `${base}duckdb-browser-mvp.worker.js` }
+          }
+        });
+      }
+
+      for (const intento of intentos) {
+        try {
+          const modulo = await import(intento.mjs);
+          this.duckdb = modulo;
+          // selectBundle exige la entrada "mvp" cuando el navegador no soporta el
+          // bundle "eh"; sin ella lanza un TypeError que no explica nada.
+          if (!intento.bundles.mvp) {
+            const respaldo = DUCKDB_CDN_BASES[0];
+            intento.bundles.mvp = {
+              mainModule: `${respaldo}duckdb-mvp.wasm`,
+              mainWorker: `${respaldo}duckdb-browser-mvp.worker.js`
+            };
+          }
+          const bundle = await modulo.selectBundle(intento.bundles);
+          await this.startEngine(modulo, bundle);
+          this.engineSource = intento.id;
+          this.engineSourceLabel = intento.label;
+          break;
+        } catch (error) {
+          const motivo = error && error.message ? error.message : String(error);
+          this.attempts.push({ id: intento.id, label: intento.label, error: motivo });
+          if (intento.id === "local") this.localEngineError = motivo;
+          console.warn(`[DuckDB-Wasm] Falló ${intento.label}: ${motivo}`);
+          this.db = null;
+          this.conn = null;
+        }
+      }
+
+      if (!this.conn) {
+        const detalle = this.attempts.map((a) => `${a.label}: ${a.error}`).join(" | ");
+        throw new Error(detalle || "ninguna fuente del motor respondió");
+      }
 
       await this.registerSemanticViews();
       this.engineAvailable = true;
-      console.log(`[DuckDB-Wasm] Motor listo: ${SEMANTIC_VIEWS.length - this.unavailableViews.length}/${SEMANTIC_VIEWS.length} vistas disponibles.`);
+      console.log(`[DuckDB-Wasm] Motor listo (${this.engineSourceLabel}): ${SEMANTIC_VIEWS.length - this.unavailableViews.length}/${SEMANTIC_VIEWS.length} vistas disponibles.`);
     } catch (e) {
       this.engineAvailable = false;
       this.engineError = e && e.message ? e.message : String(e);
+      // Con el motor caído se sondea el entorno, para poder explicar la causa.
+      try {
+        this.environment = await this.probeEnvironment();
+      } catch (err) {
+        this.environment = null;
+      }
       console.error("[DuckDB-Wasm] Motor no disponible; las consultas fallarán de forma explícita:", this.engineError);
     } finally {
       this.isReady = true;
@@ -135,6 +296,11 @@ class DuckDBClient {
           detail: {
             available: this.engineAvailable,
             error: this.engineError,
+            source: this.engineSource,
+            sourceLabel: this.engineSourceLabel,
+            localError: this.localEngineError,
+            attempts: (this.attempts || []).slice(),
+            environment: this.environment,
             unavailableViews: this.unavailableViews.slice()
           }
         }));
@@ -150,15 +316,49 @@ class DuckDBClient {
       badge.textContent = "DuckDB-Wasm activo";
       badge.classList.add("live");
     } else if (this.engineAvailable) {
-      badge.textContent = `DuckDB activo · ${this.unavailableViews.length} vista(s) no disponible(s)`;
+      badge.textContent = `DuckDB activo · ${this.unavailableViews.length} sin publicar`;
       badge.classList.add("offline");
       badge.title = this.unavailableViews.join(", ");
     } else {
-      badge.textContent = "Motor DuckDB no disponible";
+      badge.textContent = "DuckDB sin conexión";
       badge.classList.add("offline");
-      if (this.engineError) badge.title = this.engineError;
+      badge.title = this.engineError ? `Motor no disponible: ${this.engineError}` : "Motor no disponible";
     }
   }
+
+  // Reintenta levantar el motor (por ejemplo, si la primera carga falló por red).
+  async retry() {
+    this.isReady = false;
+    this.initPromise = this.init();
+    return this.initPromise;
+  }
+
+  // Informe de texto para pegar en un issue cuando el motor no arranca.
+  buildDiagnostics() {
+    const lineas = [
+      "Diagnostico DuckDB-Wasm - Sistema de Informacion Financiera de Chile",
+      `Fecha: ${new Date().toISOString()}`,
+      `Navegador: ${navigator.userAgent}`,
+      `Motor disponible: ${this.engineAvailable ? "si (" + (this.engineSourceLabel || this.engineSource) + ")" : "no"}`,
+      `Motivo final: ${this.engineError || "(sin error)"}`,
+      "Intentos:"
+    ];
+    for (const intento of (this.attempts || [])) {
+      lineas.push(`  - ${intento.label}: ${intento.error}`);
+    }
+    const entorno = this.environment;
+    if (entorno) {
+      const si = (valor) => (valor === null || valor === undefined) ? "sin dato" : (valor ? "si" : "no");
+      lineas.push("Entorno:");
+      lineas.push(`  - WebAssembly: ${si(entorno.wasm)}`);
+      lineas.push(`  - WebAssembly exception handling: ${si(entorno.wasmExceptions)}`);
+      lineas.push(`  - WebAssembly SIMD: ${si(entorno.wasmSIMD)}`);
+      lineas.push(`  - Contexto aislado (crossOriginIsolated): ${si(entorno.crossOriginIsolated)}`);
+      lineas.push(`  - Web Worker desde Blob URL: ${entorno.blobWorker === false ? "no (" + entorno.blobWorkerError + ")" : si(entorno.blobWorker)}`);
+    }
+    return lineas.join("\n");
+  }
+
 
   absoluteUrl(relativePath) {
     return new URL(relativePath, document.baseURI).href;
@@ -208,6 +408,15 @@ class DuckDBClient {
           : `read_parquet([${files.map((f) => `'${safePath(f)}'`).join(", ")}])`;
         const filter = view.where ? ` WHERE ${view.where}` : "";
         await this.conn.query(`CREATE OR REPLACE VIEW ${view.name} AS SELECT * FROM ${source}${filter};`);
+        // Alias de compatibilidad: un nombre viejo nunca debe ocultar un error,
+        // pero tampoco debe dejar sin datos a quien ya guardó una consulta.
+        for (const alias of (LEGACY_VIEW_ALIASES[view.name] || [])) {
+          try {
+            await this.conn.query(`CREATE OR REPLACE VIEW ${alias} AS SELECT * FROM ${view.name};`);
+          } catch (errAlias) {
+            console.warn(`[DuckDB-Wasm] No se pudo crear el alias ${alias}:`, errAlias);
+          }
+        }
       } catch (err) {
         // Una vista rota se declara como no disponible: la consulta que la use
         // fallará visiblemente en lugar de devolver datos inventados.

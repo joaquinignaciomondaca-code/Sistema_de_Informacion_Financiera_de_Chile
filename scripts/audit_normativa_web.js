@@ -176,14 +176,17 @@ vm.runInNewContext(viewer, {
   document: { getElementById() { return null; } }
 });
 
-assert.match(html, /id="tab-btn-normativa"[^>]*aria-controls="normativa-container"/);
+assert.match(html, /aria-controls="normativa-container"[^>]*id="tab-btn-normativa"|id="tab-btn-normativa"[^>]*aria-controls="normativa-container"/);
 assert.match(html, />\s*Normativa CMF\s*</);
 assert.match(html, /id="normativa-container"/);
 assert.match(html, /id="normativa-monitor"/);
 assert.match(html, /js\/normativa_monitor\.js\?v=/);
 assert.doesNotMatch(html, /tab-btn-soon|soon-container|Próximamente/);
-assert.match(html, /activeTab === "normativa"/);
-assert.match(html, /window\.switchMainTab\("normativa"\)/);
+// Desde el rediseño, las pestañas se declaran en un registro y se cablean en un
+// bucle: la pestaña de normativa debe seguir registrada y conectada a switchMainTab.
+assert.match(html, /normativa:\s*\{[^}]*button:\s*"tab-btn-normativa"[^}]*container:\s*"normativa-container"[^}]*\}/);
+assert.match(html, /btn\.addEventListener\("click", \(\) => window\.switchMainTab\(key\)\)/);
+assert.match(html, /window\.switchMainTab\(window\.MFCUI && window\.MFCUI\.initialTab \? window\.MFCUI\.initialTab\(\) : "info"\)/);
 assert.match(monitorSource, /Publicaciones asociadas/);
 assert.match(monitorSource, /Industria activa/);
 assert.match(monitorSource, /Sin industria verificada/);

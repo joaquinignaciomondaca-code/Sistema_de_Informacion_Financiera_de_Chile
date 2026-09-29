@@ -16,16 +16,22 @@ on:
     - cron: '0 14 * * 1'
 
   push:
-    branches: [main, arena/01a0e952-monitor-financiero-chile]
+    branches: [main]
     paths:
       - 'docs/**'
-      - 'scripts/audit_navigation.py'
-      - 'scripts/audit_web_full.py'
-      - '.github/workflows/web_audit.yml'
-      - 'scripts/audit_automatizacion.py'
+      - 'scripts/audit_*.py'
+      - 'scripts/audit_*.js'
+      - 'scripts/normalizar_vocabulario.py'
+      - 'scripts/build_download_catalog.py'
       - 'pipelines/**'
       - '.github/workflows/**'
       - 'data_manifest.json'
+
+  # Antes esto listaba una rama de trabajo concreta, que quedaba obsoleta en cada
+  # sesión. Con pull_request, cualquier rama que proponga cambios a main se audita.
+  pull_request:
+    branches: [main]
+
   workflow_dispatch:
 
 permissions:
@@ -37,7 +43,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
+      # fetch-depth: 0 trae el historial completo: la auditoría de credenciales
+      # revisa todos los blobs, no sólo el commit actual.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -51,6 +61,34 @@ jobs:
           tail -n 3 nav.log web.log | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::warning title=Auditoria web (cola)::$linea"; done
           echo "::notice title=Auditoria web::navigation=$n1 audit_full=$n2 (0 = sin hallazgos)"
           exit $(( n1 || n2 ))
+
+      - name: Auditar interfaz, vocabulario y catálogo de descargas
+        run: |
+          set +e
+          python scripts/audit_interfaz.py > interfaz.log 2>&1; n=$?
+          grep -h -E "^(Error|Inconsistencia|Advertencia)|^  - " interfaz.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Interfaz::$linea"; done
+          echo "::notice title=Interfaz::$(tail -n 2 interfaz.log | head -1)"
+          exit $n
+
+      - name: Buscar credenciales en el historial
+        run: |
+          set +e
+          python scripts/audit_secretos.py > secretos.log 2>&1; n=$?
+          # Las anotaciones llevan el detalle (archivo y tipo) porque los logs de
+          # Actions no siempre se pueden recuperar desde fuera del runner.
+          awk '/POSIBLES CREDENCIALES/{detalle=1} detalle' secretos.log | head -12 \
+            | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Secretos::$linea"; done
+          grep -h -E "Verificación de secretos|blobs de texto|marcadores de posición|identificadores" secretos.log | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::notice title=Secretos (resumen)::$linea"; done
+          echo "::notice title=Secretos::$(tail -n 2 secretos.log | head -1)"
+          exit $n
+
+      - name: Prueba de comportamiento del DOM (jsdom)
+        run: |
+          npm install --no-save --no-audit --no-fund jsdom
+          node scripts/audit_interfaz_dom.js > dom.log 2>&1; n=$?
+          grep -h -E "^FALLA" dom.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=DOM::$linea"; done
+          echo "::notice title=DOM::$(tail -n 1 dom.log)"
+          exit $n
 
   automatizacion:
     if: github.event_name != 'schedule'

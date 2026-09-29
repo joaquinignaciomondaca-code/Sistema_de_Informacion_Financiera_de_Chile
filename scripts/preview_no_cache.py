@@ -7,6 +7,7 @@ Soporta peticiones HTTP Range (un solo rango), igual que GitHub Pages: DuckDB-Wa
 lee los Parquet por trozos (pie de archivo + grupos de filas) y, sin Range, cada
 consulta descargaría el archivo completo (algunos superan 70 MB).
 """
+import mimetypes
 import os
 import re
 from argparse import ArgumentParser
@@ -17,10 +18,20 @@ from pathlib import Path
 
 RANGE_RE = re.compile(r"bytes=(\d*)-(\d*)$")
 
+# Sin este tipo, DuckDB-Wasm no puede compilar el .wasm en streaming y cae a un
+# camino más lento; Python no siempre reconoce la extensión.
+mimetypes.add_type("application/wasm", ".wasm")
+mimetypes.add_type("text/javascript", ".mjs")
+
 
 class NoCacheHandler(SimpleHTTPRequestHandler):
     def end_headers(self):
-        self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
+        # El motor DuckDB-Wasm (.wasm, ~18 MB) sí se cachea: sólo cambia al subir
+        # la versión del paquete, y sin caché cada recarga lo volvería a descargar.
+        if self.path.endswith(".wasm"):
+            self.send_header("Cache-Control", "public, max-age=86400")
+        else:
+            self.send_header("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0")
         self.send_header("Pragma", "no-cache")
         self.send_header("Expires", "0")
         self.send_header("Accept-Ranges", "bytes")
