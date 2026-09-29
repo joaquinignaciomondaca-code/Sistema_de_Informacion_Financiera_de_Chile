@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/app.css?v=20260928-normativa-cmf-2">
+  <link rel="stylesheet" href="css/app.css?v=20260928-normativa-cmf-4">
 </head>
 <body>
 
@@ -96,9 +96,9 @@
               <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M0 2a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H2a2 2 0 01-2-2V2zm1.5 0a.5.5 0 00-.5.5v2h14v-2a.5.5 0 00-.5-.5h-13zM15 5.5H1v4h14v-4zm0 5H1v3.5a.5.5 0 00.5.5h13a.5.5 0 00.5-.5V10.5z"/></svg>
               Visor de Datos
             </button>
-            <button class="panel-tab-btn" id="tab-btn-soon" title="Nuevas funciones en preparación">
-              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.25a6.75 6.75 0 1 0 0 13.5A6.75 6.75 0 0 0 8 1.25zM8 3.2a.8.8 0 1 1 0 1.6.8.8 0 0 1 0-1.6zM7 6h2v4.1H7V6zm0 5.1h2v1.7H7v-1.7z"/></svg>
-              Próximamente
+            <button class="panel-tab-btn" id="tab-btn-normativa" title="Novedades CMF según la industria activa del explorador" aria-controls="normativa-container">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3 1h7l3 3v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm6.5 1.5V5H12M5 7h6v1H5zm0 2.5h6v1H5zm0 2.5h4v1H5z"/></svg>
+              Normativa CMF
             </button>
             <button class="panel-tab-btn panel-tab-export" id="tab-btn-export" title="Centro de Exportación & Descarga (Parquet, Excel, CSV)">
               <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
@@ -255,8 +255,8 @@
         <div class="data-viewer-container" id="data-viewer-container" style="display: none;"></div>
 
         <!-- Seguimiento de publicaciones normativas oficiales de la CMF -->
-        <div class="soon-container" id="soon-container" style="display: none;">
-          <div id="normativa-monitor" aria-label="Novedades normativas de la Comisión para el Mercado Financiero"></div>
+        <div class="normativa-container" id="normativa-container" style="display: none;">
+          <div id="normativa-monitor" aria-labelledby="normativa-title"></div>
         </div>
 
       <!-- Controles de Zoom en Esquina Inferior Derecha (+ / -) -->
@@ -342,7 +342,7 @@
   <script src="js/duckdb_client.js?v=fl-202606-30046-22368"></script>
   <script src="js/chat_terminal.js?v=3.4"></script>
   <script src="js/sidebar.js?v=20260928-cmf-industry-3"></script>
-  <script src="js/normativa_monitor.js?v=20260928-cmf-feed-3"></script>
+  <script src="js/normativa_monitor.js?v=20260928-cmf-feed-5"></script>
   <script src="js/theme_switcher.js?v=3.1"></script>
   <script src="js/data_dictionary.js?v=fl-202606-30046-22368"></script>
   <script src="js/data_viewer.js?v=20260928-cmf-industry-3"></script>
@@ -371,24 +371,24 @@
       const tabErd = document.getElementById("tab-btn-erd");
       const tabDict = document.getElementById("tab-btn-dict");
       const tabData = document.getElementById("tab-btn-data");
-      const tabSoon = document.getElementById("tab-btn-soon");
+      const tabNormativa = document.getElementById("tab-btn-normativa");
       const canvasErd = document.getElementById("erd-canvas");
       const zoomControls = document.querySelector(".zoom-controls");
       const erdControls = document.getElementById("erd-controls-group");
       const infoContainer = document.getElementById("info-container");
       const dictContainer = document.getElementById("dict-container");
       const dataViewerContainer = document.getElementById("data-viewer-container");
-      const soonContainer = document.getElementById("soon-container");
+      const normativaContainer = document.getElementById("normativa-container");
 
       window.switchMainTab = (activeTab) => {
-        [tabInfo, tabErd, tabDict, tabData, tabSoon].forEach(t => t && t.classList.remove("active"));
+        [tabInfo, tabErd, tabDict, tabData, tabNormativa].forEach(t => t && t.classList.remove("active"));
         if (infoContainer) infoContainer.style.display = activeTab === "info" ? "block" : "none";
         if (canvasErd) canvasErd.style.display = activeTab === "erd" ? "block" : "none";
         if (zoomControls) zoomControls.style.display = activeTab === "erd" ? "flex" : "none";
         if (erdControls) erdControls.style.display = activeTab === "erd" ? "flex" : "none";
         if (dictContainer) dictContainer.style.display = activeTab === "dict" ? "block" : "none";
         if (dataViewerContainer) dataViewerContainer.style.display = activeTab === "data" ? "flex" : "none";
-        if (soonContainer) soonContainer.style.display = activeTab === "soon" ? "flex" : "none";
+        if (normativaContainer) normativaContainer.style.display = activeTab === "normativa" ? "flex" : "none";
 
         if (activeTab === "info") {
           if (tabInfo) tabInfo.classList.add("active");
@@ -403,8 +403,8 @@
           if (window.DataViewer && (!window.DataViewer.currentRows || window.DataViewer.currentRows.length === 0)) {
             window.DataViewer.init();
           }
-        } else if (activeTab === "soon") {
-          if (tabSoon) tabSoon.classList.add("active");
+        } else if (activeTab === "normativa") {
+          if (tabNormativa) tabNormativa.classList.add("active");
           if (window.NormativaMonitor) window.NormativaMonitor.init();
         }
       };
@@ -413,7 +413,7 @@
       if (tabErd) tabErd.addEventListener("click", () => window.switchMainTab("erd"));
       if (tabDict) tabDict.addEventListener("click", () => window.switchMainTab("dict"));
       if (tabData) tabData.addEventListener("click", () => window.switchMainTab("data"));
-      if (tabSoon) tabSoon.addEventListener("click", () => window.switchMainTab("soon"));
+      if (tabNormativa) tabNormativa.addEventListener("click", () => window.switchMainTab("normativa"));
 
       // Centro de Exportación y Descarga Global
       const btnHeaderDownload = document.getElementById("btn-header-download");
