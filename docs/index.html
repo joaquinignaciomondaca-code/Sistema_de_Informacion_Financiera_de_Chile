@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/app.css?v=3.8">
+  <link rel="stylesheet" href="css/app.css?v=20260928-normativa-cmf-4">
 </head>
 <body>
 
@@ -80,7 +80,11 @@
       <div class="top-panel">
         <div class="panel-header">
           <div class="panel-tabs">
-            <button class="panel-tab-btn active" id="tab-btn-erd" title="Visualizar mapa de relaciones ERD">
+            <button class="panel-tab-btn active" id="tab-btn-info" title="Información general del Monitor Financiero Chile">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M8 1.25a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5zM8 4a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm1.1 8H6.9v-.9h.55V7.8H6.9v-.9h2.2v4.2h.55V12z"/></svg>
+              Información
+            </button>
+            <button class="panel-tab-btn" id="tab-btn-erd" title="Visualizar mapa de relaciones ERD">
               <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M1 2.5A1.5 1.5 0 012.5 1h3A1.5 1.5 0 017 2.5v3A1.5 1.5 0 015.5 7h-3A1.5 1.5 0 011 5.5v-3zM2.5 2a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5h-3zm6.5.5A1.5 1.5 0 0110.5 1h3A1.5 1.5 0 0115 2.5v3A1.5 1.5 0 0113.5 7h-3A1.5 1.5 0 019 5.5v-3zm1.5-.5a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5h-3zM1 10.5A1.5 1.5 0 012.5 9h3A1.5 1.5 0 017 10.5v3A1.5 1.5 0 015.5 15h-3A1.5 1.5 0 011 13.5v-3zm1.5-.5a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5h-3zm6.5.5A1.5 1.5 0 0110.5 9h3a1.5 1.5 0 011.5 1.5v3a1.5 1.5 0 01-1.5 1.5h-3A1.5 1.5 0 019 13.5v-3zm1.5-.5a.5.5 0 00-.5.5v3a.5.5 0 00.5.5h3a.5.5 0 00.5-.5v-3a.5.5 0 00-.5-.5h-3z"/></svg>
               Mapa Relacional
             </button>
@@ -91,6 +95,10 @@
             <button class="panel-tab-btn" id="tab-btn-data" title="Previsualizar filas reales de la tabla seleccionada con DuckDB">
               <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M0 2a2 2 0 012-2h12a2 2 0 012 2v12a2 2 0 01-2 2H2a2 2 0 01-2-2V2zm1.5 0a.5.5 0 00-.5.5v2h14v-2a.5.5 0 00-.5-.5h-13zM15 5.5H1v4h14v-4zm0 5H1v3.5a.5.5 0 00.5.5h13a.5.5 0 00.5-.5V10.5z"/></svg>
               Visor de Datos
+            </button>
+            <button class="panel-tab-btn" id="tab-btn-normativa" title="Novedades CMF según la industria activa del explorador" aria-controls="normativa-container">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M3 1h7l3 3v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zm6.5 1.5V5H12M5 7h6v1H5zm0 2.5h6v1H5zm0 2.5h4v1H5z"/></svg>
+              Normativa CMF
             </button>
             <button class="panel-tab-btn panel-tab-export" id="tab-btn-export" title="Centro de Exportación & Descarga (Parquet, Excel, CSV)">
               <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/></svg>
@@ -118,6 +126,125 @@
           </div>
         </div>
 
+        <!-- Información general del Monitor -->
+        <div class="info-container" id="info-container">
+          <div class="info-scroll">
+            <section class="info-hero">
+              <div class="info-eyebrow">GUÍA DEL MONITOR · CHILE</div>
+              <h1>Información</h1>
+              <p class="info-lead">Un punto de entrada para explorar datos públicos de las principales industrias financieras chilenas: quiénes participan, qué reportan y cómo se relacionan sus datos.</p>
+              <div class="info-hero-tags">
+                <span class="info-tag">Fuentes oficiales</span>
+                <span class="info-tag">Datos publicados</span>
+                <span class="info-tag">Exploración en el navegador</span>
+              </div>
+            </section>
+
+            <section class="info-block">
+              <div class="info-section-kicker">QUÉ ENCONTRARÁS</div>
+              <h2>Una vista común para mercados distintos</h2>
+              <p>El Monitor reúne listas de entidades, carteras, estados financieros, series macroeconómicas y registros operativos. Cada industria conserva su propia periodicidad, unidad, definición y fuente: el objetivo es hacerlas comparables para explorar, no borrar sus diferencias.</p>
+              <div class="info-highlight-row">
+                <div class="info-highlight"><strong>Entidades</strong><span>Quiénes participan, su identidad y estado de vigencia.</span></div>
+                <div class="info-highlight"><strong>Datos</strong><span>Filas reales publicadas por período, instrumento o cuenta.</span></div>
+                <div class="info-highlight"><strong>Contexto</strong><span>Fuente, cobertura, metodología y advertencias de cada tabla.</span></div>
+              </div>
+            </section>
+
+            <section class="info-block">
+              <div class="info-section-kicker">INDUSTRIAS Y MERCADOS</div>
+              <h2>Explora por industria</h2>
+              <div class="info-industry-grid">
+                <article class="info-industry-card">
+                  <span class="info-card-icon">SE</span>
+                  <div><h3>Seguros</h3><p>Carteras de compañías de seguros: renta fija, acciones, fondos, bienes raíces, inversiones extranjeras, derivados y pactos.</p></div>
+                </article>
+                <article class="info-industry-card">
+                  <span class="info-card-icon">FM</span>
+                  <div><h3>Fondos mutuos</h3><p>Fondos, entidades administradoras y carteras de inversión reportadas por instrumento y emisor.</p></div>
+                </article>
+                <article class="info-industry-card">
+                  <span class="info-card-icon">FI</span>
+                  <div><h3>Fondos de inversión</h3><p>Fondos de inversión, carteras nacionales y extranjeras, derivados, renta fija, acciones y pactos.</p></div>
+                </article>
+                <article class="info-industry-card">
+                  <span class="info-card-icon">AG</span>
+                  <div><h3>Administradoras generales de fondos</h3><p>Entidades AGF y estados financieros IFRS publicados por la CMF, con sus cuentas de balance y resultados.</p></div>
+                </article>
+                <article class="info-industry-card">
+                  <span class="info-card-icon">BA</span>
+                  <div><h3>Bancos</h3><p>Identidad bancaria y líneas B1, B2 y R1 de la CMF, manteniendo los importes y el orden de la fuente.</p></div>
+                </article>
+                <article class="info-industry-card">
+                  <span class="info-card-icon">AF</span>
+                  <div><h3>Pensiones</h3><p>Registro de administradoras de fondos de pensiones y sus datos de identidad disponibles en el monitor.</p></div>
+                </article>
+                <article class="info-industry-card">
+                  <span class="info-card-icon">FL</span>
+                  <div><h3>Factoring y leasing</h3><p>Entidades y series IFRS de balance y resultados provenientes del flujo de estados financieros de la CMF.</p></div>
+                </article>
+                <article class="info-industry-card">
+                  <span class="info-card-icon">CB</span>
+                  <div><h3>Corredoras de bolsa</h3><p>Universo de intermediarios y estados financieros IFRS de corredores y agentes de valores.</p></div>
+                </article>
+                <article class="info-industry-card">
+                  <span class="info-card-icon">SZ</span>
+                  <div><h3>Securitización</h3><p>Securitizadoras y patrimonios separados, con entidades, balances y relaciones entre los vehículos.</p></div>
+                </article>
+                <article class="info-industry-card">
+                  <span class="info-card-icon">CC</span>
+                  <div><h3>Cajas de compensación</h3><p>Entidades CCAF y estados financieros IFRS publicados por la CMF para los períodos disponibles.</p></div>
+                </article>
+                <article class="info-industry-card">
+                  <span class="info-card-icon">CO</span>
+                  <div><h3>Cooperativas</h3><p>Universo de cooperativas de ahorro y crédito y su información de entidades publicada.</p></div>
+                </article>
+                <article class="info-industry-card">
+                  <span class="info-card-icon">SP</span>
+                  <div><h3>Sistemas de pago</h3><p>Participantes y entidades vinculadas a la infraestructura y regulación de pagos en Chile.</p></div>
+                </article>
+                <article class="info-industry-card">
+                  <span class="info-card-icon">FT</span>
+                  <div><h3>Fintech y finanzas abiertas</h3><p>Entidades asociadas al marco de finanzas tecnológicas y abiertas de la CMF.</p></div>
+                </article>
+                <article class="info-industry-card">
+                  <span class="info-card-icon">MX</span>
+                  <div><h3>Macroeconomía</h3><p>Series del Banco Central: tasas, tipo de cambio, precios, actividad, inflación y otras referencias económicas.</p></div>
+                </article>
+              </div>
+            </section>
+
+            <section class="info-two-columns">
+              <div class="info-block info-block-compact">
+                <div class="info-section-kicker">CÓMO LEERLO</div>
+                <h2>La fuente importa</h2>
+                <ul class="info-list">
+                  <li><strong>Período:</strong> cada tabla indica si es diaria, mensual, trimestral o histórica.</li>
+                  <li><strong>Unidades:</strong> los montos conservan la unidad informada por la fuente; no se convierten automáticamente.</li>
+                  <li><strong>Cobertura:</strong> que una entidad esté en una lista no garantiza que haya reportado en todos los períodos.</li>
+                  <li><strong>Estados IFRS:</strong> AGF, securitizadoras y CCAF usan el TXT oficial de estados financieros IFRS de la CMF; cubre a quienes aparecen reportando en cada corte.</li>
+                </ul>
+              </div>
+              <div class="info-block info-block-compact">
+                <div class="info-section-kicker">HERRAMIENTAS</div>
+                <h2>Cómo explorar</h2>
+                <ul class="info-list">
+                  <li><strong>Barra lateral:</strong> elige una industria, circular, carpeta o tabla.</li>
+                  <li><strong>Mapa relacional:</strong> entiende entidades, tablas y relaciones principales.</li>
+                  <li><strong>Diccionario:</strong> consulta el significado de cada columna y su criterio contable.</li>
+                  <li><strong>Visor de datos:</strong> revisa filas reales y filtra sin salir del navegador.</li>
+                  <li><strong>Terminal SQL:</strong> arma consultas sobre las vistas disponibles.</li>
+                </ul>
+              </div>
+            </section>
+
+            <section class="info-note">
+              <span class="info-note-mark">i</span>
+              <p>Este monitor es una herramienta de exploración y análisis de información pública. No constituye recomendación de inversión. Revisa siempre la fuente, la fecha de corte, la unidad y las notas de cobertura antes de interpretar una cifra.</p>
+            </section>
+          </div>
+        </div>
+
         <!-- Canvas del Grafo Interactivo -->
         <canvas id="erd-canvas"></canvas>
 
@@ -126,6 +253,11 @@
 
         <!-- Contenedor del Visor de Datos en Vivo -->
         <div class="data-viewer-container" id="data-viewer-container" style="display: none;"></div>
+
+        <!-- Seguimiento de publicaciones normativas oficiales de la CMF -->
+        <div class="normativa-container" id="normativa-container" style="display: none;">
+          <div id="normativa-monitor" aria-labelledby="normativa-title"></div>
+        </div>
 
       <!-- Controles de Zoom en Esquina Inferior Derecha (+ / -) -->
       <div class="zoom-controls">
@@ -209,10 +341,11 @@
   <script src="js/erd_graph.js?v=20260928-agf-split"></script>
   <script src="js/duckdb_client.js?v=fl-202606-30046-22368"></script>
   <script src="js/chat_terminal.js?v=3.4"></script>
-  <script src="js/sidebar.js?v=fl-202606-30046-22368"></script>
+  <script src="js/sidebar.js?v=20260928-cmf-industry-3"></script>
+  <script src="js/normativa_monitor.js?v=20260928-cmf-feed-5"></script>
   <script src="js/theme_switcher.js?v=3.1"></script>
   <script src="js/data_dictionary.js?v=fl-202606-30046-22368"></script>
-  <script src="js/data_viewer.js?v=fl-202606-30046-22368"></script>
+  <script src="js/data_viewer.js?v=20260928-cmf-industry-3"></script>
   <script src="js/jszip.min.js"></script>
   <script src="js/xlsx.full.min.js"></script>
   <script src="js/export_modal.js?v=20260928-agf-split"></script>
@@ -233,25 +366,33 @@
         window.DataDictionary.init();
       }
 
-      // Conmutación de Pestañas Superiores (ERD vs Diccionario vs Visor de Datos)
+      // Conmutación de Pestañas Superiores
+      const tabInfo = document.getElementById("tab-btn-info");
       const tabErd = document.getElementById("tab-btn-erd");
       const tabDict = document.getElementById("tab-btn-dict");
       const tabData = document.getElementById("tab-btn-data");
+      const tabNormativa = document.getElementById("tab-btn-normativa");
       const canvasErd = document.getElementById("erd-canvas");
       const zoomControls = document.querySelector(".zoom-controls");
       const erdControls = document.getElementById("erd-controls-group");
+      const infoContainer = document.getElementById("info-container");
       const dictContainer = document.getElementById("dict-container");
       const dataViewerContainer = document.getElementById("data-viewer-container");
+      const normativaContainer = document.getElementById("normativa-container");
 
       window.switchMainTab = (activeTab) => {
-        [tabErd, tabDict, tabData].forEach(t => t && t.classList.remove("active"));
+        [tabInfo, tabErd, tabDict, tabData, tabNormativa].forEach(t => t && t.classList.remove("active"));
+        if (infoContainer) infoContainer.style.display = activeTab === "info" ? "block" : "none";
         if (canvasErd) canvasErd.style.display = activeTab === "erd" ? "block" : "none";
         if (zoomControls) zoomControls.style.display = activeTab === "erd" ? "flex" : "none";
         if (erdControls) erdControls.style.display = activeTab === "erd" ? "flex" : "none";
         if (dictContainer) dictContainer.style.display = activeTab === "dict" ? "block" : "none";
         if (dataViewerContainer) dataViewerContainer.style.display = activeTab === "data" ? "flex" : "none";
+        if (normativaContainer) normativaContainer.style.display = activeTab === "normativa" ? "flex" : "none";
 
-        if (activeTab === "erd") {
+        if (activeTab === "info") {
+          if (tabInfo) tabInfo.classList.add("active");
+        } else if (activeTab === "erd") {
           if (tabErd) tabErd.classList.add("active");
           if (window.erdInstance) window.erdInstance.render();
         } else if (activeTab === "dict") {
@@ -262,12 +403,17 @@
           if (window.DataViewer && (!window.DataViewer.currentRows || window.DataViewer.currentRows.length === 0)) {
             window.DataViewer.init();
           }
+        } else if (activeTab === "normativa") {
+          if (tabNormativa) tabNormativa.classList.add("active");
+          if (window.NormativaMonitor) window.NormativaMonitor.init();
         }
       };
 
+      if (tabInfo) tabInfo.addEventListener("click", () => window.switchMainTab("info"));
       if (tabErd) tabErd.addEventListener("click", () => window.switchMainTab("erd"));
       if (tabDict) tabDict.addEventListener("click", () => window.switchMainTab("dict"));
       if (tabData) tabData.addEventListener("click", () => window.switchMainTab("data"));
+      if (tabNormativa) tabNormativa.addEventListener("click", () => window.switchMainTab("normativa"));
 
       // Centro de Exportación y Descarga Global
       const btnHeaderDownload = document.getElementById("btn-header-download");
@@ -289,6 +435,9 @@
       };
       if (btnHeaderDownload) btnHeaderDownload.addEventListener("click", openGlobalExport);
       if (tabBtnExport) tabBtnExport.addEventListener("click", openGlobalExport);
+
+      // La aplicación abre primero la pestaña descriptiva para orientar al usuario.
+      window.switchMainTab("info");
     });
   </script>
 </body>

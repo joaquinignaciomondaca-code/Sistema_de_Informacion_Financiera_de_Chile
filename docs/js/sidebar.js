@@ -944,6 +944,7 @@ class SidebarController {
 
     this.selectedTableId = "seguros_maestro";
     this.activeSector = "seguros";
+    window.MFC_ACTIVE_SECTOR = this.activeSector;
     // El explorador se muestra colapsado al cargar: el usuario decide qué abrir.
     // Los identificadores son group.id, sector/circular id y "part_<tabla>" para particiones.
     this.expandedNodes = new Set();
@@ -1210,6 +1211,7 @@ class SidebarController {
     const allBtn = document.getElementById("btn-show-all");
     if (allBtn) {
       allBtn.addEventListener("click", () => {
+        this.setActiveSector("todos", "all-industries");
         document.querySelectorAll(".tree-row").forEach((r) => r.classList.remove("selected"));
         if (this.breadcrumbEl) this.breadcrumbEl.textContent = "Todas las Industrias";
         if (window.erdInstance) window.erdInstance.focusSector("todos");
@@ -1241,6 +1243,7 @@ class SidebarController {
         if (arrow) arrow.innerHTML = isOpen ? ICONS.chevronDown : ICONS.chevronRight;
 
         const sector = row.dataset.sector;
+        if (sector) this.setActiveSector(sector, "sector");
         if (sector && window.erdInstance) {
           window.erdInstance.focusSector(sector);
         }
@@ -1331,6 +1334,15 @@ class SidebarController {
     }
   }
 
+  setActiveSector(sector, source = "sidebar") {
+    if (!sector) return;
+    this.activeSector = String(sector);
+    window.MFC_ACTIVE_SECTOR = this.activeSector;
+    window.dispatchEvent(new CustomEvent("mfc:industry-change", {
+      detail: { sector: this.activeSector, tableId: this.selectedTableId, source }
+    }));
+  }
+
   onCircularSelect(circId, sector) {
     let targetCirc = null;
     let targetSectorName = "";
@@ -1350,6 +1362,7 @@ class SidebarController {
     }
 
     if (!targetCirc) return;
+    this.setActiveSector(sector, "circular");
 
     if (this.breadcrumbEl) {
       this.breadcrumbEl.textContent = `${targetSectorName} > ${targetCirc.label}`;
@@ -1372,6 +1385,7 @@ class SidebarController {
 
   onTableSelect(tableId, tableName, file, sector) {
     this.selectedTableId = tableId;
+    this.setActiveSector(sector, "table");
 
     // Actualizar clase seleccionada en la fila del arbol
     document.querySelectorAll(".tree-table").forEach((el) => {

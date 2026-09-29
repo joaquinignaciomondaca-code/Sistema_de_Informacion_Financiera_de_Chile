@@ -16,7 +16,7 @@ on:
     - cron: '0 14 * * 1'
 
   push:
-    branches: [main, arena/01a0e680-monitor-financiero-chile]
+    branches: [main, arena/01a0e952-monitor-financiero-chile]
     paths:
       - 'docs/**'
       - 'scripts/audit_navigation.py'
