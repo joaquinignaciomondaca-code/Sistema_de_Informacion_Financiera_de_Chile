@@ -57,6 +57,7 @@ import pyarrow.parquet as pq
 
 RAIZ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(RAIZ))
+from pipelines.auto import bundles  # noqa: E402
 from pipelines.auto.rut import normalizar_registros  # noqa: E402
 
 DOCS = RAIZ / "docs" / "outputs"
@@ -459,23 +460,19 @@ def actualizar_fondos_agf() -> None:
           f"({vigentes['run_fondo'].nunique()} fondos vigentes en el registro FI)")
 
 
-def actualizar_bundle_bancos() -> None:
-    """Refresca `bancos_lista_entidades` de docs/js/data_bundles.js desde bancos_maestro.json.
+def actualizar_bundles() -> None:
+    """Refresca en docs/js/data_bundles.js las listas de bancos y AFP desde sus maestros.
 
-    El bundle es una copia liviana de la lista; si nadie la regenera queda con RUT viejos
-    (en 2026-09 difería del maestro en 14 de 27 bancos). Se escribe solo si cambia.
+    El bundle es una copia liviana de esas listas; si nadie la regenera queda con datos viejos
+    (en 2026-09 los RUT de 14 de 27 bancos diferían del maestro). Se escribe solo si cambia.
     """
     ruta = RAIZ / "docs" / "js" / "data_bundles.js"
-    maestro = DOCS / "bancos" / "bancos_maestro.json"
-    if not ruta.exists() or not maestro.exists():
+    fuentes = {"bancos_lista_entidades": DOCS / "bancos" / "bancos_maestro.json",
+               "afp_lista_entidades": DOCS / f"{AFP_BASE}.json"}
+    if not ruta.exists():
         return
-    s = ruta.read_text(encoding="utf-8")
-    pre, _, cuerpo = s.partition("=")
-    bundles = json.loads(cuerpo.strip().rstrip(";"))
-    bundles["bancos_lista_entidades"] = json.loads(maestro.read_text(encoding="utf-8"))
-    nuevo = f"{pre}= {json.dumps(bundles, ensure_ascii=False)};\n"
-    if nuevo != s:
-        ruta.write_text(nuevo, encoding="utf-8")
+    claves = {k: json.loads(p.read_text(encoding="utf-8")) for k, p in fuentes.items() if p.exists()}
+    bundles.guardar_claves(ruta, claves)
 
 
 def actualizar_conteos_web() -> None:
@@ -493,7 +490,7 @@ def actualizar_conteos_web() -> None:
                 patron = rf'(id: "{vid}",(?:(?!\n  \}}).)*?registros: ")\d+( [^"]*")'
             s = re.sub(patron, rf"\g<1>{n}\g<2>", s, count=1, flags=re.S)
         ruta.write_text(s, encoding="utf-8")
-    actualizar_bundle_bancos()
+    actualizar_bundles()
 
 
 # Listas que completa pipelines/ifrs_sectores/actualizar.py; aquí solo se cuentan.
