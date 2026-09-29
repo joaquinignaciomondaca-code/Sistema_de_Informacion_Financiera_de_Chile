@@ -31,35 +31,8 @@ def update_bundles():
         
     print(f"JSONs exportados: {len(bonos_records):,} bonos, {len(acciones_records):,} acciones, {len(derivados_records):,} swaps")
     
-    # 3. Muestra para precarga en data_bundles.js (primeros 250 registros de los datos reales para no saturar memoria)
-    sample_bonos = bonos_records[:250]
-    sample_acciones = acciones_records[:250]
-    sample_swaps = derivados_records[:250]
-    
-    bundle_file = Path("docs/js/data_bundles.js")
-    if bundle_file.exists():
-        js_text = bundle_file.read_text(encoding="utf-8")
-        
-        # Reemplazar o insertar afp_cartera_bonos
-        if "window.DATA_BUNDLES.afp_cartera_bonos" in js_text:
-            js_text = re.sub(r'window\.DATA_BUNDLES\.afp_cartera_bonos\s*=\s*\[[\s\S]*?\];', f"window.DATA_BUNDLES.afp_cartera_bonos = {json.dumps(sample_bonos, ensure_ascii=False)};", js_text)
-        else:
-            js_text += f"\nwindow.DATA_BUNDLES.afp_cartera_bonos = {json.dumps(sample_bonos, ensure_ascii=False)};\n"
-
-        # Reemplazar o insertar afp_cartera_acciones
-        if "window.DATA_BUNDLES.afp_cartera_acciones" in js_text:
-            js_text = re.sub(r'window\.DATA_BUNDLES\.afp_cartera_acciones\s*=\s*\[[\s\S]*?\];', f"window.DATA_BUNDLES.afp_cartera_acciones = {json.dumps(sample_acciones, ensure_ascii=False)};", js_text)
-        else:
-            js_text += f"\nwindow.DATA_BUNDLES.afp_cartera_acciones = {json.dumps(sample_acciones, ensure_ascii=False)};\n"
-
-        # Reemplazar o insertar afp_derivados_swaps
-        if "window.DATA_BUNDLES.afp_derivados_swaps" in js_text:
-            js_text = re.sub(r'window\.DATA_BUNDLES\.afp_derivados_swaps\s*=\s*\[[\s\S]*?\];', f"window.DATA_BUNDLES.afp_derivados_swaps = {json.dumps(sample_swaps, ensure_ascii=False)};", js_text)
-        else:
-            js_text += f"\nwindow.DATA_BUNDLES.afp_derivados_swaps = {json.dumps(sample_swaps, ensure_ascii=False)};\n"
-
-        bundle_file.write_text(js_text, encoding="utf-8")
-        print("data_bundles.js actualizado exitosamente con datos históricos reales.")
+    # Sin precarga en data_bundles.js: la web ya no expone estas tablas (ver pensiones/README.md)
+    # y scripts/audit_navigation.py exige que el bundle solo tenga afp_lista_entidades y bancos_*.
 
 if __name__ == "__main__":
     update_bundles()
