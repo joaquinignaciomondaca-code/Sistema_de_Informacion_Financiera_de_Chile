@@ -475,7 +475,7 @@ con los pipelines antiguos de FFMM y FI.)
 |---|---|---|---|
 | macro.yml | diario 10:00 | commit automático | daily_macro (3 tablas mensuales) + series_bcch (51 series, formato largo) |
 | bancos_cmf_mensual.yml | días 1, 11, 21 13:00 | **sí** (commit + Pages) | tests + publish_cmf_bank_period --catch-up (incremental) |
-| web_audit.yml | push a docs/** | no | audit_navigation + audit_web_full (anotaciones) |
+| web_audit.yml | push a main, PR hacia main y lunes | no | audit_navigation + audit_web_full + audit_interfaz + prueba DOM (anotaciones); el lunes, guardián de frescura |
 | factoring_leasing_backfill.yml | días 3, 13, 23 12:20 | **sí** | backfill_ifrs + publish_backfill + auditorías web |
 | ifrs_sectores.yml | días 2, 12, 22 13:30 | **sí** (commit + Pages) | estados IFRS de AGF, securitizadoras y CCAF (§8a) |
 | corredoras_eeff.yml | días 6, 16, 26 13:45 | **sí** (commit + Pages) | estados FECU IFRS de corredores y agentes (§8a) |
