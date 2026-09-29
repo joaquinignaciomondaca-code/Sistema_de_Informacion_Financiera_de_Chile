@@ -1,0 +1,579 @@
+{
+  "version": "2026-09-28",
+  "nota": "Vocabulario canónico del Sistema de Información Financiera de Chile. Una tabla se nombra <sector>.<tipo>; toda lista de entidades de un sector se llama lista_entidades y no admite otro nombre. El prefijo de sector es corto y estable: afp, bancos, ccaf, corredoras, fi, ffmm, fintech, macro, factoring_leasing, patrimonios_separados, cooperativas, agf, securitizadoras, seguros, sistemas_pago.",
+  "nombres_retirados": [
+    "lista_administradoras",
+    "lista_instituciones",
+    "lista_emisiones",
+    "registro_unico",
+    "registro_universo",
+    "catalogo_institucional",
+    "catálogo institucional"
+  ],
+  "sectores": {
+    "macro": "Macroeconomía y Tasas (BCCh)",
+    "bancos": "Banca (CMF)",
+    "pensiones": "Fondos de Pensiones (SPensiones)",
+    "seguros": "Seguros de Vida y Generales (CMF)",
+    "fi": "Fondos de Inversión (CMF)",
+    "ffmm": "Fondos Mutuos (CMF)",
+    "factoring_leasing": "Factoring y Leasing (CMF)",
+    "corredoras_bolsa": "Corredoras de Bolsa (CMF)",
+    "securitizadoras": "Sociedades Securitizadoras (CMF)",
+    "patrimonios_separados": "Patrimonios Separados (CMF)",
+    "cooperativas": "Cooperativas de Ahorro y Crédito (CMF)",
+    "cajas_compensacion": "Cajas de Compensación (CCAF / SUSESO)",
+    "agf": "Administradoras Generales de Fondos (CMF)",
+    "sistemas_pago": "Sistemas de Pago (BCCh / CMF)",
+    "fintech": "Fintech y Finanzas Abiertas (CMF)"
+  },
+  "prefijos": {
+    "seguros": "seguros",
+    "fi": "fi",
+    "ffmm": "ffmm",
+    "pensiones": "afp",
+    "bancos": "bancos",
+    "macro": "macro",
+    "factoring_leasing": "factoring_leasing",
+    "corredoras_bolsa": "corredoras",
+    "securitizadoras": "securitizadoras",
+    "patrimonios_separados": "patrimonios_separados",
+    "cooperativas": "cooperativas",
+    "cajas_compensacion": "ccaf",
+    "agf": "agf",
+    "sistemas_pago": "sistemas_pago",
+    "fintech": "fintech"
+  },
+  "tipos": {
+    "lista_entidades": "Lista de entidades",
+    "balance": "Balance",
+    "resultados": "Estado de resultados",
+    "cartera_nacional": "Cartera nacional",
+    "cartera_extranjera": "Cartera en el exterior",
+    "metodo_participacion": "Método de participación",
+    "bienes_raices": "Bienes raíces",
+    "futuros_forwards": "Futuros y forwards",
+    "opciones": "Opciones",
+    "pactos": "Pactos",
+    "renta_fija": "Renta fija",
+    "acciones": "Acciones",
+    "fondos_mutuos": "Fondos mutuos",
+    "extranjeros": "Inversiones en el exterior",
+    "derivados": "Derivados",
+    "control_inversiones": "Control de inversiones",
+    "tasas_rendimientos": "Tasas y rendimientos",
+    "divisas_mercado": "Divisas y mercado cambiario",
+    "precios_actividad": "Precios y actividad",
+    "series": "Series de tiempo",
+    "series_catalogo": "Catálogo de series",
+    "lista_entidades_registro": "Lista de entidades (registro único)"
+  },
+  "tablas": [
+    {
+      "id": "seguros_lista_entidades",
+      "alias": [
+        "seguros_maestro"
+      ],
+      "nombre": "seguros.lista_entidades",
+      "tipo": "lista_entidades",
+      "sector": "seguros",
+      "descripcion": "Compañías de seguros de vida y generales que reportan cartera a la CMF.",
+      "cobertura": "Una fila por compañía y sector"
+    },
+    {
+      "id": "seguros_renta_fija",
+      "alias": [],
+      "nombre": "seguros.renta_fija",
+      "tipo": "renta_fija",
+      "sector": "seguros",
+      "descripcion": "Renta fija en cartera: bonos, depósitos y otros instrumentos, valorizados al cierre.",
+      "cobertura": "Un archivo por mes"
+    },
+    {
+      "id": "seguros_acciones",
+      "alias": [],
+      "nombre": "seguros.acciones",
+      "tipo": "acciones",
+      "sector": "seguros",
+      "descripcion": "Acciones y cuotas de fondos de inversión en cartera, por nemotécnico.",
+      "cobertura": "Un archivo por mes"
+    },
+    {
+      "id": "seguros_fondos_mutuos",
+      "alias": [],
+      "nombre": "seguros.fondos_mutuos",
+      "tipo": "fondos_mutuos",
+      "sector": "seguros",
+      "descripcion": "Cuotas de fondos mutuos en cartera, por administradora y fondo.",
+      "cobertura": "Un archivo por mes"
+    },
+    {
+      "id": "seguros_bienes_raices",
+      "alias": [],
+      "nombre": "seguros.bienes_raices",
+      "tipo": "bienes_raices",
+      "sector": "seguros",
+      "descripcion": "Inmuebles en cartera, identificados por rol y ciudad.",
+      "cobertura": "Un archivo por mes"
+    },
+    {
+      "id": "seguros_extranjeros",
+      "alias": [],
+      "nombre": "seguros.extranjeros",
+      "tipo": "extranjeros",
+      "sector": "seguros",
+      "descripcion": "Inversiones en el exterior: deuda, acciones y fondos, por país.",
+      "cobertura": "Un archivo por mes"
+    },
+    {
+      "id": "seguros_derivados",
+      "alias": [],
+      "nombre": "seguros.derivados",
+      "tipo": "derivados",
+      "sector": "seguros",
+      "descripcion": "Derivados vigentes: opciones, forwards, futuros y swaps, por contraparte.",
+      "cobertura": "Un archivo por mes"
+    },
+    {
+      "id": "seguros_pactos",
+      "alias": [],
+      "nombre": "seguros.pactos",
+      "tipo": "pactos",
+      "sector": "seguros",
+      "descripcion": "Compras y ventas con pacto, con tasa y contraparte.",
+      "cobertura": "Un archivo por mes"
+    },
+    {
+      "id": "seguros_control_inversiones",
+      "alias": [],
+      "nombre": "seguros.control_inversiones",
+      "tipo": "control_inversiones",
+      "sector": "seguros",
+      "descripcion": "Totales de inversión por tipo, para el control de límites de la Circular 1835.",
+      "cobertura": "Un archivo por mes"
+    },
+    {
+      "id": "fi_lista_entidades",
+      "alias": [
+        "fi_maestro"
+      ],
+      "nombre": "fi.lista_entidades",
+      "tipo": "lista_entidades",
+      "sector": "fi",
+      "descripcion": "Registro CMF de fondos de inversión públicos y privados.",
+      "cobertura": "Una fila por fondo"
+    },
+    {
+      "id": "fi_cartera_nacional",
+      "alias": [],
+      "nombre": "fi.cartera_nacional",
+      "tipo": "cartera_nacional",
+      "sector": "fi",
+      "descripcion": "Cartera de inversiones nacional de cada fondo (informes IFRS trimestrales).",
+      "cobertura": "Trimestral"
+    },
+    {
+      "id": "fi_cartera_extranjera",
+      "alias": [],
+      "nombre": "fi.cartera_extranjera",
+      "tipo": "cartera_extranjera",
+      "sector": "fi",
+      "descripcion": "Cartera de inversiones en el exterior de cada fondo.",
+      "cobertura": "Trimestral"
+    },
+    {
+      "id": "fi_metodo_participacion",
+      "alias": [],
+      "nombre": "fi.metodo_participacion",
+      "tipo": "metodo_participacion",
+      "sector": "fi",
+      "descripcion": "Inversiones valorizadas por método de participación.",
+      "cobertura": "Trimestral"
+    },
+    {
+      "id": "fi_bienes_raices",
+      "alias": [],
+      "nombre": "fi.bienes_raices",
+      "tipo": "bienes_raices",
+      "sector": "fi",
+      "descripcion": "Bienes raíces en cartera de cada fondo.",
+      "cobertura": "Trimestral"
+    },
+    {
+      "id": "fi_futuros",
+      "alias": [],
+      "nombre": "fi.futuros_forwards",
+      "tipo": "futuros_forwards",
+      "sector": "fi",
+      "descripcion": "Contratos de futuros y forwards vigentes de cada fondo.",
+      "cobertura": "Trimestral"
+    },
+    {
+      "id": "fi_opciones",
+      "alias": [],
+      "nombre": "fi.opciones",
+      "tipo": "opciones",
+      "sector": "fi",
+      "descripcion": "Contratos de opciones vigentes de cada fondo.",
+      "cobertura": "Trimestral"
+    },
+    {
+      "id": "fi_pactos",
+      "alias": [],
+      "nombre": "fi.pactos",
+      "tipo": "pactos",
+      "sector": "fi",
+      "descripcion": "Compras y ventas con pacto de cada fondo.",
+      "cobertura": "Trimestral"
+    },
+    {
+      "id": "ffmm_lista_entidades",
+      "alias": [
+        "ffmm_maestro"
+      ],
+      "nombre": "ffmm.lista_entidades",
+      "tipo": "lista_entidades",
+      "sector": "ffmm",
+      "descripcion": "Fondos mutuos que reportan cartera a la CMF.",
+      "cobertura": "Una fila por fondo"
+    },
+    {
+      "id": "ffmm_cartera_nacional",
+      "alias": [],
+      "nombre": "ffmm.cartera_nacional",
+      "tipo": "cartera_nacional",
+      "sector": "ffmm",
+      "descripcion": "Cartera de inversiones nacional (Circular 1333).",
+      "cobertura": "Mensual"
+    },
+    {
+      "id": "ffmm_cartera_extranjera",
+      "alias": [],
+      "nombre": "ffmm.cartera_extranjera",
+      "tipo": "cartera_extranjera",
+      "sector": "ffmm",
+      "descripcion": "Cartera de inversiones en el exterior.",
+      "cobertura": "Mensual"
+    },
+    {
+      "id": "ffmm_futuros",
+      "alias": [],
+      "nombre": "ffmm.futuros_forwards",
+      "tipo": "futuros_forwards",
+      "sector": "ffmm",
+      "descripcion": "Futuros y forwards vigentes al cierre de cada mes.",
+      "cobertura": "Mensual"
+    },
+    {
+      "id": "ffmm_opciones",
+      "alias": [],
+      "nombre": "ffmm.opciones",
+      "tipo": "opciones",
+      "sector": "ffmm",
+      "descripcion": "Opciones vigentes al cierre de cada mes.",
+      "cobertura": "Mensual"
+    },
+    {
+      "id": "afp_lista_entidades",
+      "alias": [
+        "afp_maestro"
+      ],
+      "nombre": "afp.lista_entidades",
+      "tipo": "lista_entidades",
+      "sector": "pensiones",
+      "descripcion": "Administradoras de fondos de pensiones del sistema chileno.",
+      "cobertura": "Una fila por administradora"
+    },
+    {
+      "id": "bancos_lista_entidades",
+      "alias": [
+        "bancos_maestro"
+      ],
+      "nombre": "bancos.lista_entidades",
+      "tipo": "lista_entidades",
+      "sector": "bancos",
+      "descripcion": "Bancos comerciales, sucursales de bancos extranjeros y agregados sectoriales de la CMF.",
+      "cobertura": "Una fila por institución y agregado"
+    },
+    {
+      "id": "bancos_balance",
+      "alias": [
+        "bancos_cmf_balance"
+      ],
+      "nombre": "bancos.balance",
+      "tipo": "balance",
+      "sector": "bancos",
+      "descripcion": "Balance B1/B2 de la CMF, con las líneas contables tal como se publican.",
+      "cobertura": "B1/B2 · importes fuente"
+    },
+    {
+      "id": "bancos_resultados",
+      "alias": [
+        "bancos_cmf_resultados"
+      ],
+      "nombre": "bancos.resultados",
+      "tipo": "resultados",
+      "sector": "bancos",
+      "descripcion": "Estado de resultados R1 de la CMF, con las líneas tal como se publican.",
+      "cobertura": "R1 · importes fuente"
+    },
+    {
+      "id": "macro_tasas_rendimientos",
+      "alias": [],
+      "nombre": "macro.tasas_rendimientos",
+      "tipo": "tasas_rendimientos",
+      "sector": "macro",
+      "descripcion": "Tasas de interés y curvas soberanas de Chile.",
+      "cobertura": "Series BCCh"
+    },
+    {
+      "id": "macro_divisas_mercado",
+      "alias": [],
+      "nombre": "macro.divisas_mercado",
+      "tipo": "divisas_mercado",
+      "sector": "macro",
+      "descripcion": "Tipos de cambio y condiciones del mercado cambiario.",
+      "cobertura": "Series BCCh"
+    },
+    {
+      "id": "macro_precios_actividad",
+      "alias": [],
+      "nombre": "macro.precios_actividad",
+      "tipo": "precios_actividad",
+      "sector": "macro",
+      "descripcion": "Precios, actividad económica y expectativas.",
+      "cobertura": "Series BCCh"
+    },
+    {
+      "id": "macro_series",
+      "alias": [],
+      "nombre": "macro.series",
+      "tipo": "series",
+      "sector": "macro",
+      "descripcion": "Series de tiempo del Banco Central: una fila por serie y fecha.",
+      "cobertura": "Series BCCh"
+    },
+    {
+      "id": "macro_series_catalogo",
+      "alias": [],
+      "nombre": "macro.series_catalogo",
+      "tipo": "series_catalogo",
+      "sector": "macro",
+      "descripcion": "Catálogo de series del Banco Central: código, nombre, frecuencia y cobertura.",
+      "cobertura": "Catálogo"
+    },
+    {
+      "id": "factoring_leasing_lista_entidades",
+      "alias": [
+        "factoring_leasing_maestro"
+      ],
+      "nombre": "factoring_leasing.lista_entidades",
+      "tipo": "lista_entidades",
+      "sector": "factoring_leasing",
+      "descripcion": "Sociedades de factoring y leasing inscritas en la CMF.",
+      "cobertura": "Una fila por sociedad"
+    },
+    {
+      "id": "factoring_leasing_balance",
+      "alias": [
+        "factoring_leasing_balance_serie_ifrs_cmf"
+      ],
+      "nombre": "factoring_leasing.balance",
+      "tipo": "balance",
+      "sector": "factoring_leasing",
+      "descripcion": "Serie IFRS de estados de situación financiera, cuenta por cuenta.",
+      "cobertura": "Serie IFRS · sin cotejo integral"
+    },
+    {
+      "id": "factoring_leasing_resultados",
+      "alias": [
+        "factoring_leasing_resultados_serie_ifrs_cmf"
+      ],
+      "nombre": "factoring_leasing.resultados",
+      "tipo": "resultados",
+      "sector": "factoring_leasing",
+      "descripcion": "Serie IFRS de estados de resultados, cuenta por cuenta.",
+      "cobertura": "Serie IFRS · sin cotejo integral"
+    },
+    {
+      "id": "corredoras_bolsa_lista_entidades",
+      "alias": [
+        "corredoras_bolsa_maestro"
+      ],
+      "nombre": "corredoras.lista_entidades",
+      "tipo": "lista_entidades",
+      "sector": "corredoras_bolsa",
+      "descripcion": "Corredoras de bolsa inscritas en la CMF.",
+      "cobertura": "Una fila por corredora"
+    },
+    {
+      "id": "corredoras_bolsa_lista_entidades_registro",
+      "alias": [
+        "corredoras_bolsa_registro_universo"
+      ],
+      "nombre": "corredoras.lista_entidades_registro",
+      "tipo": "lista_entidades_registro",
+      "sector": "corredoras_bolsa",
+      "descripcion": "Registro único de corredoras por grupo financiero y estado de vigencia.",
+      "cobertura": "Una fila por corredora"
+    },
+    {
+      "id": "corredoras_bolsa_balance",
+      "alias": [],
+      "nombre": "corredoras.balance",
+      "tipo": "balance",
+      "sector": "corredoras_bolsa",
+      "descripcion": "Balance FECU IFRS de cada corredora de bolsa.",
+      "cobertura": "FECU IFRS"
+    },
+    {
+      "id": "corredoras_bolsa_resultados",
+      "alias": [],
+      "nombre": "corredoras.resultados",
+      "tipo": "resultados",
+      "sector": "corredoras_bolsa",
+      "descripcion": "Estado de resultados FECU IFRS de cada corredora de bolsa.",
+      "cobertura": "FECU IFRS"
+    },
+    {
+      "id": "securitizadoras_lista_entidades",
+      "alias": [
+        "securitizadoras_maestro"
+      ],
+      "nombre": "securitizadoras.lista_entidades",
+      "tipo": "lista_entidades",
+      "sector": "securitizadoras",
+      "descripcion": "Sociedades securitizadoras inscritas en la CMF.",
+      "cobertura": "Una fila por sociedad"
+    },
+    {
+      "id": "securitizadoras_balance",
+      "alias": [],
+      "nombre": "securitizadoras.balance",
+      "tipo": "balance",
+      "sector": "securitizadoras",
+      "descripcion": "Balance IFRS de cada sociedad securitizadora.",
+      "cobertura": "Serie IFRS"
+    },
+    {
+      "id": "securitizadoras_resultados",
+      "alias": [],
+      "nombre": "securitizadoras.resultados",
+      "tipo": "resultados",
+      "sector": "securitizadoras",
+      "descripcion": "Estado de resultados IFRS de cada sociedad securitizadora.",
+      "cobertura": "Serie IFRS"
+    },
+    {
+      "id": "patrimonios_separados_lista_entidades",
+      "alias": [
+        "patrimonios_separados_maestro"
+      ],
+      "nombre": "patrimonios_separados.lista_entidades",
+      "tipo": "lista_entidades",
+      "sector": "patrimonios_separados",
+      "descripcion": "Patrimonios separados y sus emisiones inscritas.",
+      "cobertura": "Una fila por patrimonio"
+    },
+    {
+      "id": "patrimonios_separados_balance",
+      "alias": [],
+      "nombre": "patrimonios_separados.balance",
+      "tipo": "balance",
+      "sector": "patrimonios_separados",
+      "descripcion": "Balance general de cada patrimonio separado.",
+      "cobertura": "Balance"
+    },
+    {
+      "id": "cooperativas_lista_entidades",
+      "alias": [
+        "cooperativas_maestro"
+      ],
+      "nombre": "cooperativas.lista_entidades",
+      "tipo": "lista_entidades",
+      "sector": "cooperativas",
+      "descripcion": "Cooperativas de ahorro y crédito supervisadas por la CMF.",
+      "cobertura": "Una fila por cooperativa"
+    },
+    {
+      "id": "ccaf_lista_entidades",
+      "alias": [
+        "ccaf_maestro"
+      ],
+      "nombre": "ccaf.lista_entidades",
+      "tipo": "lista_entidades",
+      "sector": "cajas_compensacion",
+      "descripcion": "Cajas de compensación de asignación familiar.",
+      "cobertura": "Una fila por caja"
+    },
+    {
+      "id": "ccaf_balance",
+      "alias": [],
+      "nombre": "ccaf.balance",
+      "tipo": "balance",
+      "sector": "cajas_compensacion",
+      "descripcion": "Balance IFRS de cada caja de compensación.",
+      "cobertura": "Serie IFRS"
+    },
+    {
+      "id": "ccaf_resultados",
+      "alias": [],
+      "nombre": "ccaf.resultados",
+      "tipo": "resultados",
+      "sector": "cajas_compensacion",
+      "descripcion": "Estado de resultados IFRS de cada caja de compensación.",
+      "cobertura": "Serie IFRS"
+    },
+    {
+      "id": "agf_lista_entidades",
+      "alias": [
+        "agf_maestro"
+      ],
+      "nombre": "agf.lista_entidades",
+      "tipo": "lista_entidades",
+      "sector": "agf",
+      "descripcion": "Administradoras generales de fondos inscritas en la CMF.",
+      "cobertura": "Una fila por administradora"
+    },
+    {
+      "id": "agf_balance",
+      "alias": [],
+      "nombre": "agf.balance",
+      "tipo": "balance",
+      "sector": "agf",
+      "descripcion": "Balance IFRS de cada administradora general de fondos.",
+      "cobertura": "Serie IFRS"
+    },
+    {
+      "id": "agf_resultados",
+      "alias": [],
+      "nombre": "agf.resultados",
+      "tipo": "resultados",
+      "sector": "agf",
+      "descripcion": "Estado de resultados IFRS de cada administradora general de fondos.",
+      "cobertura": "Serie IFRS"
+    },
+    {
+      "id": "sistemas_pago_lista_entidades",
+      "alias": [
+        "sistemas_pago_maestro"
+      ],
+      "nombre": "sistemas_pago.lista_entidades",
+      "tipo": "lista_entidades",
+      "sector": "sistemas_pago",
+      "descripcion": "Operadores de infraestructura financiera y redes de pago.",
+      "cobertura": "Una fila por entidad"
+    },
+    {
+      "id": "fintech_rpsf_lista_entidades",
+      "alias": [
+        "fintech_rpsf_maestro"
+      ],
+      "nombre": "fintech.lista_entidades",
+      "tipo": "lista_entidades",
+      "sector": "fintech",
+      "descripcion": "Prestadores inscritos en el Registro de Prestadores de Servicios Financieros (RPSF).",
+      "cobertura": "Una fila por prestador"
+    }
+  ]
+}

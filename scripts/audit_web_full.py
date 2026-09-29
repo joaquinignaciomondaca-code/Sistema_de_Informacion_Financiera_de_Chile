@@ -273,7 +273,7 @@ def audit_erd_graph(base_dir, registered_views):
 
 def main():
     print("===========================================================================")
-    print("AUDITORIA INTEGRAL DE LA APLICACION WEB Y SECCIONES (MONITOR FINANCIERO)")
+    print("AUDITORIA INTEGRAL DE LA APLICACION WEB Y SECCIONES (SIF CHILE)")
     print("===========================================================================")
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     

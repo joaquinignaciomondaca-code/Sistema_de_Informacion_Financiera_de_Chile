@@ -56,11 +56,11 @@ finally:
 
 El módulo cuenta con scripts especializados y desacoplados:
 
-1. **uild_ccaf_maestro.py**:
+1. **`build_ccaf_maestro.py`**:
    - Genera el catálogo maestro oficial de las 6 CCAF (docs/outputs/cajas_compensacion/ccaf_maestro.parquet y .json).
    - Valida 100% de los RUTs bajo algoritmo Módulo 11.
 
-2. **uild_ccaf_caratula_totales.py**:
+2. **`build_ccaf_caratula_totales.py`**:
    - Serie histórica completa de 15 años (2010 a septiembre 2025): **266 balances**.
    - Asientos contables estándar: Activo Total (10000), Pasivo Total (20000), Patrimonio Total (23000) y Utilidad Neta (23050).
    - Incorpora la columna 	ipo_eeff (Consolidado vs Individual).
@@ -73,7 +73,7 @@ El módulo cuenta con scripts especializados y desacoplados:
    - Incorpora la columna 	ipo_eeff (Consolidado vs Individual).
    - Consumo de tokens: **0 tokens** (algoritmo local determinístico con PyMuPDF).
 
-4. **udit_ccaf.py**:
+4. **`audit_ccaf.py`**:
    - Auditor de consistencia profunda: valida integridad referencial de RUTs, paridad Parquet/JSON, balance contable de carátula (A = P + Pat), suma de componentes de Nota 8 vs total impreso en PDF, y ausencia de archivos residuales en disco.
 
 5. **legacy/**:
@@ -96,12 +96,12 @@ El módulo cuenta con scripts especializados y desacoplados:
 ## 6. Ejecución y Auditoría
 
 Para ejecutar el ciclo de auditoría completo del sector CCAF:
-`ash
+```bash
 python ccaf/scripts/audit_ccaf.py
 `
 
 Para verificar la integración con la plataforma web interactiva:
-`ash
+```bash
 python scripts/audit_web_full.py
 `
 

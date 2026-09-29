@@ -1,6 +1,6 @@
 /**
  * ChartRenderer (Motor de Visualización Gráfica Canvas 2D)
- * Monitor Financiero Chile
+ * Sistema de Información Financiera de Chile
  * Renderiza gráficos de barras y líneas interactivos tomando los colores de la
  * paleta activa (variables CSS), por lo que siguen el tema seleccionado.
  * Cero emojis y cero dependencias externas.

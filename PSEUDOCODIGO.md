@@ -1,8 +1,11 @@
-# Pseudocódigo del proyecto — Monitor Financiero Chile (MFC)
+# Pseudocódigo del proyecto — Sistema de Información Financiera de Chile (SIF)
 
 > Mapa de referencia interno. Resume **qué hace cada pieza y en qué orden**, no reemplaza al código.
 > Generado a partir de una revisión completa del repo (commit `37f7cea`, 2026-09-28).
 > **Revisado y actualizado** sobre `df3e26c` (2026-09-28, 2ª pasada): bancos B1/B2/R1 publicado 2022-01→2026-07, nuevo flujo mensual de Cooperativas CMF, `requirements.txt` global, nuevas sondas y `web_audit.yml`.
+> **Revisado y actualizado** (2026-09-28, 3ª pasada): proyecto renombrado a **SIF**, la descarga pasó a ser la
+> 7ª pestaña (sin panel inferior) y el **vocabulario de tablas** quedó en `docs/vocabulario.json`, aplicado por
+> `scripts/normalizar_vocabulario.py`. Detalle en `docs/notas/rediseno_ui_2026-09-28.md` (§7 y §8).
 > Convención: `→` = produce / escribe, `⟵` = lee, `✗` = aborta (fail-closed).
 
 ---
@@ -23,8 +26,17 @@ PUBLICADO  docs/outputs/<sector>/*.parquet|*.json  + data_manifest.json
       │   (GitHub Pages sirve docs/)
       ▼
 WEB ESTÁTICA docs/index.html
-      DuckDB-Wasm crea VISTAS sobre los Parquet → sidebar / visor / diccionario / ERD / terminal SQL / export
+      DuckDB-Wasm crea VISTAS sobre los Parquet → siete pestañas (Información · Mapa · Diccionario ·
+      Visor · Consultas SQL · Descargas · Normativa CMF)
 ```
+
+**Nombres.** Los Parquet publicados y `data_manifest.json` conservan sus ids históricos
+(`bancos_maestro`, `ccaf_maestro`, …) porque renombrarlos rompería los pipelines y los enlaces ya
+publicados. La web los muestra con el vocabulario canónico (`bancos.lista_entidades`,
+`ccaf.lista_entidades`, …) que manda `docs/vocabulario.json` (§9), y en SQL los nombres viejos
+siguen vivos sólo como vistas de alias. En las secciones 2–8 de este mapa aparecen los **nombres
+reales de scripts y archivos** (`build_ccaf_maestro.py`, `ccaf_maestro.parquet`): son los del
+repositorio, no los que ve el usuario en pantalla.
 
 Dos tipos de flujo (ver `pipelines/README.md`):
 
@@ -348,6 +360,9 @@ pipelines/entidades/actualizar_listas.py   (entidades.yml, días 10, 20, 28)
 scripts/audit_automatizacion.py   (web_audit.yml: en cada push; --frescura cada lunes)
   inventario pipelines/auto/inventario.json: cada tabla de data_manifest y cada vista SEMANTIC_VIEWS
     → {workflow} o {manual: motivo}
+  los ids de publicación (data_manifest) se traducen al vocabulario por los alias de vocabulario.json
+  antes de cruzar manifiesto ↔ inventario ↔ vistas del sitio (así «bancos_cmf_balance» y
+  «bancos_balance» son la misma tabla)
   push: workflow existe + cron + ejecuta su script + el script nombra el archivo (o «marca») + modo coherente
   lunes: última corrida exitosa en la rama por defecto ≤ max_dias (16; macro 3) → si no, issue
 ```
@@ -357,12 +372,15 @@ scripts/audit_automatizacion.py   (web_audit.yml: en cada push; --frescura cada 
 Criterio: balances/resultados solo si salen de XML o XBRL oficial; si no, solo la lista de entidades.
 cooperativas : balances venían de planillas Excel CMF (Reporte Financiero y 02_extract) → RETIRADOS.
                Se borraron extract_cmf_coop_report, 02_extract, 04 nota efectivo, probe_coop_layout,
-               sus tests y los workflows cooperativas_cmf_mensual.yml y coop_probe.yml. Queda cooperativas_maestro.
+               sus tests y los workflows cooperativas_cmf_mensual.yml y coop_probe.yml. Queda
+               cooperativas.lista_entidades (archivo cooperativas_maestro.parquet).
 ccaf         : balance y resultados salen del TXT IFRS CMF, que es la exportación de los estados XBRL enviados
                por las cajas (ver §8a); reemplazan a ccaf_caratula_totales (XBRL bajado a mano, retirado).
                Nota 8 (efectivo, DAP, repos) y colocaciones de crédito social → RETIRADAS.
-sistemas_pago: solo sistemas_pago_maestro (balances y estadísticas BCCh retirados).
-fintech      : solo fintech_rpsf_maestro (servicios acreditados y roles de finanzas abiertas retirados).
+sistemas_pago: solo sistemas_pago.lista_entidades (archivo sistemas_pago_maestro.parquet; balances y
+               estadísticas BCCh retirados).
+fintech      : solo fintech.lista_entidades (archivo fintech_rpsf_maestro.parquet; servicios acreditados
+               y roles de finanzas abiertas retirados).
 Los extractores que quedan ya no escriben las tablas retiradas; las auditorías sectoriales solo revisan lo publicado.
 ```
 
@@ -371,42 +389,68 @@ Los extractores que quedan ya no escriben las tablas retiradas; las auditorías 
 ## 9. Web estática (`docs/`)
 
 ```
+docs/vocabulario.json — ÚNICA fuente de nombres de la web
+  52 tablas: {id, alias[], nombre, tipo, sector, descripcion, cobertura} · 15 sectores · 22 tipos
+  regla: una tabla se llama <sector>.<tipo>; TODA lista de entidades se llama lista_entidades
+         (única variante: lista_entidades_registro, para el registro único de corredoras)
+  nombres_retirados: lista_administradoras, lista_instituciones, lista_emisiones, registro_unico, …
+  scripts/normalizar_vocabulario.py  sin argumentos: aplica el vocabulario a los archivos vivos
+      (ids *_maestro → *_lista_entidades, nombres visibles, etiquetas de sector, filas «rows/registros»,
+       ids de nodo del árbol, encabezados del diccionario, bloques de alias SQL, README.md)
+      --check: falla si un archivo se salió del vocabulario (lo corre scripts/audit_interfaz.py)
+
 index.html carga en orden:
-  data_bundles.js   window.DATA_BUNDLES = {fi_repos, afp_maestro, bancos_maestro, …}  (JSON embebido, fallback liviano)
-  chart_renderer.js, erd_graph.js, duckdb_client.js, chat_terminal.js, sidebar.js,
-  theme_switcher.js, data_dictionary.js, data_viewer.js, jszip, xlsx, export_modal.js
-  script inline: instancia ERD, wiring de pestañas
+  data_bundles.js   window.DATA_BUNDLES = {afp_lista_entidades, bancos_lista_entidades}  (fallback liviano)
+  theme_switcher.js, ux_shell.js, chart_renderer.js, erd_graph.js, duckdb_client.js, sidebar.js,
+  data_dictionary.js, data_viewer.js, chat_terminal.js, download_utils.js, download_catalog.js,
+  downloads_panel.js, jszip, xlsx
+  script inline: instancia ERD, wiring de pestañas y atajos
+  los 15 archivos locales comparten una sola etiqueta de versión (?v=20260928-vocabulario-1)
+Siete pestañas, cada una a pantalla completa (ya no existe el panel inferior ni el divisor):
+  Información · Mapa relacional · Diccionario · Visor de datos · Consultas SQL · Descargas · Normativa CMF
 
 DuckDBClient (singleton window.DuckDBClient):
   init():
-      import duckdb-wasm desde jsDelivr (v1.28.0) → worker → db → conn
+      import duckdb-wasm: copia local docs/vendor/duckdb/ → jsDelivr → unpkg (mvp de respaldo)
       registerSemanticViews()
-      badge de motor (OK / parcial / caído)
+      badge de motor (OK / parcial / caído) con el motivo del primer intento
   registerSemanticViews():
       para view en SEMANTIC_VIEWS:        # {name, file | [files] | manifest, where?}
           files = view.manifest ? fetch(manifest).files : view.file
           ✗ rutas absolutas o con ".."
           registerFileURL(cada file, HTTP)
           CREATE OR REPLACE VIEW name AS SELECT * FROM read_parquet(files) [WHERE …]
+          + CREATE OR REPLACE VIEW alias AS SELECT * FROM name
+            (LEGACY_VIEW_ALIASES con los nombres anteriores: compatibilidad SQL, nunca en la interfaz)
           si falla → unavailableViews (no se inventan datos)
   query(sql) → {success, rows (BigInt→Number), columns, elapsedMs} | {success:false, error}
 
 SidebarController (EXPLORER_TREE: grupo → sector → carpeta/circular → tablas + chips SQL):
+  cada carpeta se identifica con cat_<tabla_id> (cat_afp_lista_entidades, cat_bancos_balance);
+  si agrupa varias tablas, cat_<prefijo>_<contenido> (cat_seguros_cartera_1835, cat_ffmm_cartera_1333)
+  toda carpeta de lista de entidades se rotula «Lista de Entidades» (el registro único, «· Registro»)
   render árbol, búsqueda, resizer
   onCircularSelect → breadcrumb, ERD.focusSector, ChatTerminal.setCustomChips, abrir 1ª tabla
   onTableSelect    → ERD.focusTable, DataViewer.load(view), terminal "SELECT * … LIMIT"
 
-DataViewerController (DATA_VIEWER_CATALOG): query view LIMIT n → tabla con filtro, orden, copiar celda, export
+DataViewerController (DATA_VIEWER_CATALOG): opción = <sector>.<tipo> · tipo de tabla; query LIMIT n → tabla con filtro, orden, copiar celda; «Descargar datos» abre Descargas con la tabla puesta
 DataDictionaryController: diccionario por sector (rol PK/FK/Dim/Métrica, criterio contable) con filtro y búsqueda
 ERDGraph (canvas): nodos por tabla + enlaces FK; zoom/pan; click → modal esquema / abrir tabla
 ChatTerminalController: input SQL, historial ↑↓, favoritos en localStorage, compartir por #hash, render + ChartRenderer
-ExportModalController: alcance (pantalla / todo / años) × formato (CSV, XLSX, JSON, Parquet directo); ZIP si >150k filas; XLSX parte en 1.048.576
+DownloadsPanelController (js/downloads_panel.js): dibuja DOWNLOAD_CATALOG con búsqueda, filtro por sector y
+  recorte por años; Parquet directo (un enlace por periodo cuando el conjunto va por partes), CSV y Excel
+  armados con DuckDB, y «SQL» que abre el terminal con la consulta lista
+MFCDownload (js/download_utils.js): numero/bytes/fecha, CSV con BOM y «;», XLSX, descarga por Blob,
+  ZIP si supera 250.000 filas en CSV / 150.000 en Excel, tope de 1.048.576 filas por hoja
+UX shell (js/ux_shell.js): pestaña recordada, avisos, estado del motor, Alt+1…7 y «/»
 theme_switcher: 6 paletas vía CSS vars; persistencia localStorage; re-render ERD
 
-Contrato de coherencia (lo verifica scripts/audit_navigation.py y audit_web_full.py):
-  cada tabla del sidebar ↔ vista en SEMANTIC_VIEWS ↔ opción del visor ↔ entrada en diccionario ↔ nodo ERD ↔ archivo existente
-  cada sector abre con "Lista de Entidades" = tabla *_maestro (salvo macro)
-  tablas retiradas (afp_cartera_*, bancos_balance_resumen, derivados…) no deben aparecer en ningún JS
+Contrato de coherencia (lo verifican audit_interfaz.py, audit_interfaz_dom.js, audit_navigation.py y audit_web_full.py):
+  cada tabla del sidebar ↔ vista SEMANTIC_VIEWS ↔ opción del visor ↔ diccionario ↔ nodo ERD ↔ Parquet existente
+  cada sector abre con «Lista de Entidades» = su lista_entidades canónica (salvo macro, que son series)
+  ningún nombre retirado por el vocabulario aparece en los archivos de la web
+  cada conjunto del catálogo de Descargas ↔ vista publicada ↔ manifest/Parquet existente
+  los 15 assets locales llevan la misma etiqueta de versión (evita caché vieja entre pestañas)
 ```
 
 Cómo levantarla en local:
@@ -414,10 +458,15 @@ Cómo levantarla en local:
 python -m scripts.preview_no_cache --port 8000      # sirve docs/ en 0.0.0.0:8000, sin caché
     soporta HTTP Range (206 Partial Content) igual que GitHub Pages → DuckDB-Wasm lee solo pie + row groups
     (antes devolvía 200 con el archivo completo: 71 MB para leer 100 bytes)
-requisitos del navegador: acceso a cdn.jsdelivr.net (DuckDB-Wasm 1.28.0) y fonts.googleapis.com
+requisitos del navegador: la copia local de DuckDB-Wasm cubre el caso normal; jsDelivr/unpkg sólo si falta
 ```
 
-Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local). (`standardize_schema_keys.py`, `verify_joins.py` y `orchestrate_overnight_market_pipeline.py` se eliminaron con los pipelines antiguos de FFMM y FI.)
+Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local), `audit_secretos.py` (credenciales
+en el historial), `build_download_catalog.py`
+(genera `docs/js/download_catalog.js`: 52 conjuntos, filas, peso y periodo de cada vista publicada),
+`normalizar_vocabulario.py` (aplica y vigila el vocabulario de §9).
+(`standardize_schema_keys.py`, `verify_joins.py` y `orchestrate_overnight_market_pipeline.py` se eliminaron
+con los pipelines antiguos de FFMM y FI.)
 
 ---
 
@@ -427,7 +476,7 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 |---|---|---|---|
 | macro.yml | diario 10:00 | commit automático | daily_macro (3 tablas mensuales) + series_bcch (51 series, formato largo) |
 | bancos_cmf_mensual.yml | días 1, 11, 21 13:00 | **sí** (commit + Pages) | tests + publish_cmf_bank_period --catch-up (incremental) |
-| web_audit.yml | push a docs/** | no | audit_navigation + audit_web_full (anotaciones) |
+| web_audit.yml | push a main, PR hacia main y lunes | no | audit_navigation + audit_web_full + audit_interfaz + prueba DOM + audit_secretos (anotaciones); el lunes, guardián de frescura |
 | factoring_leasing_backfill.yml | días 3, 13, 23 12:20 | **sí** | backfill_ifrs + publish_backfill + auditorías web |
 | ifrs_sectores.yml | días 2, 12, 22 13:30 | **sí** (commit + Pages) | estados IFRS de AGF, securitizadoras y CCAF (§8a) |
 | corredoras_eeff.yml | días 6, 16, 26 13:45 | **sí** (commit + Pages) | estados FECU IFRS de corredores y agentes (§8a) |
@@ -439,6 +488,25 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 ---
 
 ## 11. Hallazgos de la revisión (estado al 2026-09-28)
+
+**3ª pasada (rama de trabajo, 2026-09-28) — interfaz, descargas y vocabulario**
+- Proyecto renombrado a **Sistema de Información Financiera de Chile (SIF)**; el panel principal pasó a
+  **siete pestañas** con el terminal SQL como pestaña propia (se eliminó el panel inferior y su divisor).
+- La descarga dejó de ser un modal: es la pestaña **Descargas**, alimentada por el catálogo generado
+  (`scripts/build_download_catalog.py` → `docs/js/download_catalog.js`). `docs/js/export_modal.js` se eliminó.
+- **Vocabulario canónico** (§9): `docs/vocabulario.json` + `scripts/normalizar_vocabulario.py`. Todos los ids
+  `*_maestro` pasaron a `*_lista_entidades`, las cinco variantes de «lista de entidades» desaparecieron de la
+  interfaz, los nodos del árbol se llaman `cat_<tabla_id>` y los nombres anteriores sólo sobreviven como
+  vistas de alias en SQL.
+- ✅ Auditorías en verde: `audit_interfaz.py` («INTERFAZ COHERENTE», incluye vocabulario y caché) ·
+  `audit_interfaz_dom.js` **39/39** · `audit_navigation.py` 12 familias, **52 tablas, 52 opciones del visor,
+  14 sectores** · `audit_automatizacion.py` **0 problemas** (traduce los ids históricos por los alias del
+  vocabulario) · `audit_normativa_web.js` OK · `audit_web_full.py` 100%.
+- ✅ Catálogo de Descargas regenerado con conteo real de filas (pyarrow): **52 conjuntos, 8.942.772 filas y
+  261,8 MB**; los dos conjuntos unificados de banca informan «filas: se cuentan al consultar» en vez de
+  repetir el total del manifiesto (que suma B1 + B2 + R1, no lo que muestra la vista).
+- ✅ Los 15 assets locales de `docs/index.html` comparten una sola etiqueta de versión
+  (`?v=20260928-vocabulario-1`), verificada por `audit_interfaz.py`; antes convivían cinco etiquetas.
 
 **2ª pasada (sobre `df3e26c`)**
 - Tests: `bancos` 81 OK · `factoring_leasing` 42 OK (tras corregir el manifiesto) · `xml_eeff` 44 OK · `macro` requiere `bcchapi`.
@@ -464,7 +532,10 @@ Otros scripts transversales (`scripts/`): `preview_no_cache.py` (servidor local)
 3. Utilidades (DV, parse_num, tc_map) repetidas en ~15 archivos.
 4. ✅ `fintech/scripts/explore.py` corregido (compilaba solo en Python ≥ 3.12).
 5. ✅ BOM UTF-8 eliminado de 9 scripts.
-6. Credenciales: README pide rotar la contraseña BCCh expuesta en el historial Git — sigue pendiente de confirmar. (`ccaf/scripts/legacy` se eliminó.)
+6. ✅ Credenciales: `scripts/audit_secretos.py` audita todo el historial alcanzable (2.551 blobs de texto).
+   Resultado: los únicos valores ligados a las variables BCCh fueron marcadores de posición del commit inicial
+   (`REMOVED_BCCH_EMAIL`, `CAMBIAR_ESTE_PASSWORD`) y claves de prueba; ninguna credencial real. La nota anterior
+   («hay que rotar la contraseña expuesta») quedó sin sustento y se corrigió en `pipelines/README.md`.
 7. `.git` pesa ~270 MB por el historial (los Parquet antiguos de seguros siguen en commits viejos). Considerar Git LFS o releases.
 8. ✅ Ya existe `requirements.txt` global (Python 3.11, pyarrow/openpyxl/xlrd fijados igual que en Actions).
 9. Muchos scripts exploratorios (`pensiones/inspect_*`, `test_*` que no son tests) mezclados con pipelines productivos.

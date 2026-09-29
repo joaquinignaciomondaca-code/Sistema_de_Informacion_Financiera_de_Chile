@@ -1,8 +1,9 @@
 /**
- * Chat & SQL Terminal Controller
- * Monitor Financiero Chile
- * Soporte DuckDB-Wasm, Gráficos Canvas 2D interactivos, URL Hash sharing,
- * Consultas Favoritas en localStorage y formateo financiero chileno ($CLP, %, UF).
+ * Terminal SQL (pestaña "Consultas SQL")
+ * Sistema de Información Financiera de Chile
+ * Soporte DuckDB-Wasm, gráficos Canvas 2D interactivos, enlaces compartibles,
+ * consultas favoritas en localStorage y formato financiero chileno ($CLP, %, UF).
+ * La pestaña ocupa el panel completo: ya no existe panel inferior ni splitter.
  * Cero emojis.
  */
 
@@ -21,7 +22,6 @@ class ChatTerminalController {
     this.resultsMap = {};
 
     this.initEvents();
-    this.initSplitter();
     this.initFavoritesModal();
     this.showWelcomeMessage();
     this.checkUrlHash();
@@ -34,6 +34,9 @@ class ChatTerminalController {
       if (e.key === "Enter") {
         e.preventDefault();
         this.handleSend();
+      } else if (e.key === "Tab") {
+        e.preventDefault();
+        this.completeInput();
       } else if (e.key === "ArrowUp") {
         if (this.historyIndex > 0) {
           this.historyIndex--;
@@ -82,11 +85,18 @@ class ChatTerminalController {
         url.hash = `sql=${encodeURIComponent(sqlToShare)}`;
         navigator.clipboard.writeText(url.href).then(() => {
           this.addSystemMessage(`Enlace directo copiado al portapapeles: <code>${this.escapeHtml(url.hash)}</code>`);
+          if (window.MFCUI) window.MFCUI.toast("Enlace con la consulta copiado", "ok");
         }).catch(() => {
           window.location.hash = `sql=${encodeURIComponent(sqlToShare)}`;
           this.addSystemMessage(`URL actualizada en la barra del navegador.`);
         });
       });
+    }
+
+    // Limpiar la conversación de la sesión (no toca las consultas guardadas)
+    const clearBtn = document.getElementById("btn-clear-terminal");
+    if (clearBtn) {
+      clearBtn.addEventListener("click", () => this.clearTerminal());
     }
 
     // Botón para desplegar Favoritas
@@ -115,38 +125,68 @@ class ChatTerminalController {
     }
   }
 
-  initSplitter() {
-    const splitter = document.getElementById("panel-splitter");
-    const topPanel = document.querySelector(".top-panel");
-    const mainContainer = document.querySelector(".main-container");
-    if (!splitter || !topPanel || !mainContainer) return;
-    let isResizing = false;
+  // La pestaña SQL ocupa todo el panel: no hay splitter que ajustar.
+  focusTerminal() {
+    if (this.messagesContainer) this.scrollToBottom();
+    if (this.input) setTimeout(() => this.input.focus(), 30);
+  }
 
-    splitter.addEventListener("mousedown", () => {
-      isResizing = true;
-      splitter.classList.add("dragging");
-      document.body.style.userSelect = "none";
+  clearTerminal() {
+    if (!this.messagesContainer) return;
+    this.messagesContainer.innerHTML = "";
+    this.resultsMap = {};
+    this.showWelcomeMessage();
+    if (window.MFCUI) window.MFCUI.toast("Conversación limpia. Las consultas guardadas siguen disponibles.", "info");
+  }
+
+  // Autocompletado con Tab sobre los nombres de las vistas publicadas y palabras clave SQL.
+  completionCandidates() {
+    // Los nombres se toman del catálogo de vistas (duckdb_client.js) y, como
+    // respaldo, de las tablas ya dibujadas en el explorador: así el autocompletado
+    // no depende del orden de carga de los scripts.
+    const views = (typeof SEMANTIC_VIEWS !== "undefined" && Array.isArray(SEMANTIC_VIEWS))
+      ? SEMANTIC_VIEWS.map((v) => v.name)
+      : [];
+    const domViews = Array.from(document.querySelectorAll(".tree-table"))
+      .map((el) => el.dataset.tableId)
+      .filter(Boolean);
+    const keywords = ["SELECT", "FROM", "WHERE", "GROUP BY", "ORDER BY", "LIMIT", "HAVING",
+      "JOIN", "LEFT JOIN", "AS", "DESC", "ASC", "DISTINCT", "COUNT", "SUM", "AVG", "MIN", "MAX",
+      "AND", "OR", "NOT", "IN", "LIKE", "BETWEEN", "WITH", "UNION", "NULL", "CAST", "ROUND"];
+    return Array.from(new Set(views.concat(domViews, keywords)));
+  }
+
+  completeInput() {
+    const input = this.input;
+    if (!input) return;
+    const caret = input.selectionStart != null ? input.selectionStart : input.value.length;
+    const before = input.value.slice(0, caret);
+    const match = before.match(/([A-Za-z_][A-Za-z0-9_]*)$/);
+    if (!match) return;
+    const fragment = match[1];
+    const lower = fragment.toLowerCase();
+    const candidates = this.completionCandidates().filter((c) => {
+      const lc = c.toLowerCase();
+      return lc.startsWith(lower) && lc !== lower;
     });
-
-    window.addEventListener("mousemove", (e) => {
-      if (!isResizing) return;
-      const containerRect = mainContainer.getBoundingClientRect();
-      const newHeightPct = ((e.clientY - containerRect.top) / containerRect.height) * 100;
-      if (newHeightPct >= 15 && newHeightPct <= 85) {
-        topPanel.style.height = `${newHeightPct}%`;
-        if (window.erdInstance) {
-          window.erdInstance.resize();
-        }
+    if (candidates.length === 0) return;
+    let completion = candidates[0];
+    if (candidates.length > 1) {
+      for (const candidate of candidates) {
+        let i = 0;
+        while (i < completion.length && i < candidate.length &&
+               completion[i].toLowerCase() === candidate[i].toLowerCase()) i++;
+        completion = completion.slice(0, i);
       }
-    });
-
-    window.addEventListener("mouseup", () => {
-      if (isResizing) {
-        isResizing = false;
-        splitter.classList.remove("dragging");
-        document.body.style.userSelect = "";
-      }
-    });
+      if (completion.toLowerCase() === lower) completion = candidates[0];
+    }
+    const rest = input.value.slice(caret);
+    input.value = before.slice(0, caret - fragment.length) + completion + rest;
+    const newCaret = caret - fragment.length + completion.length;
+    input.selectionStart = input.selectionEnd = newCaret;
+    if (candidates.length > 1 && window.MFCUI) {
+      window.MFCUI.toast(`${candidates.length} coincidencias: ${candidates.slice(0, 5).join(", ")}${candidates.length > 5 ? "…" : ""}`, "info");
+    }
   }
 
   initFavoritesModal() {
@@ -162,12 +202,14 @@ class ChatTerminalController {
         </div>
         <ul class="saved-list" id="saved-queries-list"></ul>
       `;
-      const bottomPanel = document.querySelector(".bottom-panel");
-      if (bottomPanel) bottomPanel.appendChild(modal);
+      // El panel inferior ya no existe: el modal se ancla al documento y se
+      // posiciona de forma fija (ver .saved-queries-modal en app.css).
+      document.body.appendChild(modal);
 
-      document.getElementById("close-fav-modal").addEventListener("click", () => {
-        modal.classList.remove("visible");
-      });
+      const closeBtn = modal.querySelector("#close-fav-modal");
+      if (closeBtn) {
+        closeBtn.addEventListener("click", () => modal.classList.remove("visible"));
+      }
     }
   }
 
@@ -295,12 +337,12 @@ class ChatTerminalController {
   showWelcomeMessage() {
     this.addBotMessage(`
       <div style="line-height: 1.5;">
-        <b>Bienvenido a Monitor Financiero Chile</b><br>
+        <b>Terminal SQL del Sistema de Información Financiera de Chile</b><br>
         <span style="color: var(--text-secondary); font-size: 12px;">
-          Esta consola ejecuta consultas SQL mediante <b>DuckDB-Wasm</b> directamente en tu navegador sobre más de <b>11.9 millones de contratos y registros</b> de carteras de inversión institucionales (CMF 2007 – 2024).
+          Las consultas se ejecutan con <b>DuckDB-Wasm</b> dentro de tu navegador, directamente sobre los Parquet publicados: no hay servidor de datos ni se envía nada a terceros.
         </span>
         <div style="margin-top: 8px; font-size: 12px; color: var(--text-secondary);">
-          <i>Selecciona cualquier tabla en el explorador lateral para consultar, o prueba las sugerencias rápidas. Ahora puedes alternar entre Vista Tabla y Vista Gráfico en cada resultado.</i>
+          <i>Elige una tabla en el explorador de la izquierda para cargar su consulta, o parte por una de las sugerencias de arriba. Cada resultado se puede ver como tabla o como gráfico y exportar a CSV.</i>
         </div>
       </div>
     `);
@@ -527,7 +569,7 @@ class ChatTerminalController {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `monitor_financiero_${Date.now()}.csv`;
+    a.download = `sif_chile_resultado_${Date.now()}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   }
@@ -535,7 +577,7 @@ class ChatTerminalController {
   addUserMessage(text) {
     const div = document.createElement("div");
     div.className = "message message-user";
-    div.innerHTML = `<div class="bubble">PS financiero:\\> ${this.escapeHtml(text)}</div>`;
+    div.innerHTML = `<div class="bubble">sql&gt; ${this.escapeHtml(text)}</div>`;
     this.messagesContainer.appendChild(div);
     this.scrollToBottom();
   }
