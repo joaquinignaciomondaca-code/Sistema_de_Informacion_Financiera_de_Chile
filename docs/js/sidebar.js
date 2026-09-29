@@ -407,7 +407,7 @@ const EXPLORER_TREE = [
   {
     id: "group_macro",
     type: "group",
-    label: "MACROECONOMIA & TASAS (BCCh)",
+    label: "MACROECONOMÍA & TASAS (BCCh)",
     badges: [
       { type: "entities", text: "1 Entidad", title: "Series canónicas oficiales del Banco Central de Chile" },
       { type: "data", text: "51 series", title: "Tablas mensuales consolidadas y catálogo amplio de series diarias, mensuales y trimestrales (2014 en adelante)" }

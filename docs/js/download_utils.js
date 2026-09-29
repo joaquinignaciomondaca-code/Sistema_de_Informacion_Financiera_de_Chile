@@ -22,8 +22,10 @@ window.MFCDownload = (function () {
     const unidades = ["B", "KB", "MB", "GB", "TB"];
     let i = 0;
     let v = Number(valor);
+    // Base 1000 (decimal), la misma que usa scripts/build_download_catalog.py y
+    // el README: así el peso que muestra la web y el que se documenta coinciden.
     while (v >= 1000 && i < unidades.length - 1) {
-      v /= 1024;
+      v /= 1000;
       i += 1;
     }
     const decimales = v < 10 && i > 0 ? 1 : 0;
