@@ -5,6 +5,14 @@
  * Soporta ordenamiento, filtro en memoria, límites de filas y exportación.
  */
 
+// Escapa texto para HTML y para valores de atributo (también comillas). Todo dato que venga de
+// Parquet o de una consulta del usuario (celdas, alias de columna) pasa por aquí antes de innerHTML.
+function dvEscapar(valor) {
+  return String(valor ?? "")
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
 const DATA_VIEWER_CATALOG = [
   {
     group: "Macroeconomía y Tasas (BCCh)",
@@ -267,7 +275,7 @@ class DataViewerController {
 
   formatCell(colName, val) {
     if (val === null || val === undefined) return '<span class="cell-null">—</span>';
-    if (typeof val !== "number") return String(val);
+    if (typeof val !== "number") return dvEscapar(val);
 
     const lower = colName.toLowerCase();
     if (lower.includes("_pct") || lower.includes("tasa") || lower.includes("tir") || lower.includes("presencia")) {
@@ -349,8 +357,9 @@ class DataViewerController {
         const raw = r[col];
         const formatted = this.formatCell(col, raw);
         const isNum = typeof raw === "number";
-        const valEsc = String(raw ?? "").replace(/'/g, "\\'").replace(/"/g, "&quot;");
-        return `<td class="${isNum ? 'cell-num' : ''}" onclick="window.DataViewer.copyCell(this, '${valEsc}')" title="Clic para copiar">${formatted}</td>`;
+        // El valor va en data-copy (escapado) y no dentro de un string JS en el onclick: así
+        // ni comillas, barras invertidas ni entidades del dato pueden salir del atributo.
+        return `<td class="${isNum ? 'cell-num' : ''}" data-copy="${dvEscapar(raw)}" onclick="window.DataViewer.copyCell(this, this.dataset.copy)" title="Clic para copiar">${formatted}</td>`;
       }).join("");
       return `<tr>${cells}</tr>`;
     }).join("");
@@ -383,7 +392,7 @@ class DataViewerController {
       this.container.innerHTML = `
         <div class="dv-loading-state">
           <div class="dv-spinner"></div>
-          <span>Consultando <code>${this.currentView}</code> con DuckDB-Wasm...</span>
+          <span>Consultando <code>${dvEscapar(this.currentView)}</code> con DuckDB-Wasm...</span>
         </div>
       `;
       return;
@@ -394,8 +403,8 @@ class DataViewerController {
       // en lugar de una tabla vacía que parecería decir "no hay datos".
       this.container.innerHTML = `
         <div class="dv-error-state">
-          <b>No se pudieron cargar datos reales de <code>${String(this.currentView).replace(/[<>&]/g, "")}</code>.</b>
-          <pre>${String(this.error).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")}</pre>
+          <b>No se pudieron cargar datos reales de <code>${dvEscapar(this.currentView)}</code>.</b>
+          <pre>${dvEscapar(this.error)}</pre>
           <span>Revisa el indicador DuckDB de la cabecera. Esta aplicación no muestra datos de demostración.</span>
         </div>
       `;
@@ -404,8 +413,8 @@ class DataViewerController {
 
     const rows = this.getFilteredRows();
     const headersHtml = this.currentColumns.map((col, idx) => `
-      <th onclick="window.DataViewer.sortTable(${idx})" title="Ordenar por ${col}">
-        ${col}<span class="dv-sort-icon" id="dv_sort_${idx}"></span>
+      <th onclick="window.DataViewer.sortTable(${idx})" title="Ordenar por ${dvEscapar(col)}">
+        ${dvEscapar(col)}<span class="dv-sort-icon" id="dv_sort_${idx}"></span>
       </th>
     `).join("");
 
@@ -414,8 +423,9 @@ class DataViewerController {
         const raw = r[col];
         const formatted = this.formatCell(col, raw);
         const isNum = typeof raw === "number";
-        const valEsc = String(raw ?? "").replace(/'/g, "\\'").replace(/"/g, "&quot;");
-        return `<td class="${isNum ? 'cell-num' : ''}" onclick="window.DataViewer.copyCell(this, '${valEsc}')" title="Clic para copiar">${formatted}</td>`;
+        // El valor va en data-copy (escapado) y no dentro de un string JS en el onclick: así
+        // ni comillas, barras invertidas ni entidades del dato pueden salir del atributo.
+        return `<td class="${isNum ? 'cell-num' : ''}" data-copy="${dvEscapar(raw)}" onclick="window.DataViewer.copyCell(this, this.dataset.copy)" title="Clic para copiar">${formatted}</td>`;
       }).join("");
       return `<tr>${cells}</tr>`;
     }).join("");
@@ -439,7 +449,7 @@ class DataViewerController {
             <select id="dv-table-select" class="dv-table-select">
               ${optionsHtml}
             </select>
-            <span class="dv-badge-view">Vista: <code>${this.currentView}</code></span>
+            <span class="dv-badge-view">Vista: <code>${dvEscapar(this.currentView)}</code></span>
             <span class="dv-badge-mode mode-auto">Automático</span>
             <span class="dv-badge-update" title="Fecha de última actualización del pipeline">Actualizado: 2026-09-23</span>
             <span class="dv-meta-timing"><b>${this.elapsedMs} ms</b></span>
@@ -449,7 +459,7 @@ class DataViewerController {
           
           <div class="dv-actions">
             <div class="dv-search-box">
-              <input type="text" id="dv-filter-input" placeholder="Filtrar datos en pantalla..." value="${this.filterText}">
+              <input type="text" id="dv-filter-input" placeholder="Filtrar datos en pantalla..." value="${dvEscapar(this.filterText)}">
             </div>
             
             <div class="dv-limit-group">
@@ -474,7 +484,7 @@ class DataViewerController {
               <tbody>${rowsHtml}</tbody>
             </table>
           ` : `
-            <div class="dv-empty">No hay columnas o filas disponibles para <code>${this.currentView}</code>.</div>
+            <div class="dv-empty">No hay columnas o filas disponibles para <code>${dvEscapar(this.currentView)}</code>.</div>
           `}
         </div>
       </div>

@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import argparse
 import io
+import hashlib
 import json
 import os
 import re
@@ -384,6 +385,10 @@ def procesar_mes(periodo: str, tablas: list[str], control: dict, cache: Path | N
                 i["primer"] = min(i["primer"], periodo)
                 if periodo >= i["ultimo"]:
                     i["ultimo"], i["nombre"] = periodo, nombre
+    # SHA-256 de cada archivo tal como lo devolvió la CMF: deja en el manifiesto el rastro de
+    # dónde sale lo publicado. Solo los meses publicados desde que se agregó tienen este campo.
+    control["periodos"].setdefault(periodo, {"registros": {}, "avisos": 0}).setdefault(
+        "sha256_origen", {}).update({c: hashlib.sha256(crudos[c]).hexdigest() for c in cods})
     return conteo, avisos, fondos
 
 
