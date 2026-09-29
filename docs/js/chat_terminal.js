@@ -298,14 +298,14 @@ class ChatTerminalController {
   setQueryInput(sql, tableName) {
     this.input.value = sql;
     this.input.focus();
-    this.addSystemMessage(`Tabla seleccionada: <b>${tableName}</b>. Presiona Enter o clic en Ejecutar para consultar.`);
+    this.addSystemMessage(`Tabla seleccionada: <b>${this.escapeHtml(tableName)}</b>. Presiona Enter o clic en Ejecutar para consultar.`);
   }
 
   setCustomChips(chips, contextTitle) {
     if (!this.chipsContainer) return;
     this.chipsContainer.innerHTML = chips.map((c) => `
-      <div class="chip" data-query="${c.query.replace(/"/g, '&quot;')}">
-        ${c.label}
+      <div class="chip" data-query="${this.escapeHtml(c.query)}">
+        ${this.escapeHtml(c.label)}
       </div>
     `).join("");
     this.chipsContainer.querySelectorAll(".chip").forEach((chip) => {
@@ -317,7 +317,7 @@ class ChatTerminalController {
         }
       });
     });
-    this.addSystemMessage(`Contexto activo: <b>${contextTitle}</b>. Sugerencias actualizadas.`);
+    this.addSystemMessage(`Contexto activo: <b>${this.escapeHtml(contextTitle)}</b>. Sugerencias actualizadas.`);
   }
 
   restoreDefaultChips() {
@@ -381,7 +381,7 @@ class ChatTerminalController {
 
   formatCellValue(colName, val) {
     if (val === null || val === undefined) return "";
-    if (typeof val !== "number") return val;
+    if (typeof val !== "number") return this.escapeHtml(val);
 
     const lower = colName.toLowerCase();
     if (lower.includes("_pct") || lower.includes("tasa") || lower.includes("tir") || lower.includes("presencia")) {
@@ -404,7 +404,7 @@ class ChatTerminalController {
     this.resultsMap[queryId] = { query, result, sortCol: null, sortAsc: true };
 
     let headersHtml = result.columns.map((col, idx) => 
-      `<th onclick="window.ChatTerminal.sortTable('${queryId}', ${idx})" title="Clic para ordenar">${col}<span class="sort-icon" id="sort_${queryId}_${idx}"></span></th>`
+      `<th onclick="window.ChatTerminal.sortTable('${queryId}', ${idx})" title="Clic para ordenar">${this.escapeHtml(col)}<span class="sort-icon" id="sort_${queryId}_${idx}"></span></th>`
     ).join("");
 
     let rowsHtml = result.rows.map((row) => {
@@ -412,8 +412,7 @@ class ChatTerminalController {
         let rawVal = row[col];
         let formatted = this.formatCellValue(col, rawVal);
         const isNum = typeof rawVal === "number";
-        const valStr = String(rawVal ?? "").replace(/'/g, "\\'").replace(/"/g, "&quot;");
-        return `<td class="${isNum ? 'cell-num' : ''}" onclick="window.ChatTerminal.copyCell(this, '${valStr}')" title="Clic para copiar">${formatted}</td>`;
+        return `<td class="${isNum ? 'cell-num' : ''}" data-copy="${this.escapeHtml(rawVal)}" onclick="window.ChatTerminal.copyCell(this, this.dataset.copy)" title="Clic para copiar">${formatted}</td>`;
       }).join("");
       return `<tr>${cells}</tr>`;
     }).join("");
@@ -428,7 +427,7 @@ class ChatTerminalController {
           </div>
           <button class="action-btn" onclick="window.ChatTerminal.exportCSV('${tableWrapperId}')">Exportar CSV</button>
           <button class="action-btn" onclick="window.ChatTerminal.saveQuery('${queryId}')">Guardar</button>
-          <button class="action-btn" onclick="navigator.clipboard.writeText('${query.replace(/'/g, "\\'")}')">Copiar SQL</button>
+          <button class="action-btn" data-sql="${this.escapeHtml(query)}" onclick="navigator.clipboard.writeText(this.dataset.sql)">Copiar SQL</button>
         </div>
       </div>
       <div class="table-wrapper" id="${tableWrapperId}">
@@ -479,8 +478,7 @@ class ChatTerminalController {
         let rawVal = row[col];
         let formatted = this.formatCellValue(col, rawVal);
         const isNum = typeof rawVal === "number";
-        const valStr = String(rawVal ?? "").replace(/'/g, "\\'").replace(/"/g, "&quot;");
-        return `<td class="${isNum ? 'cell-num' : ''}" onclick="window.ChatTerminal.copyCell(this, '${valStr}')" title="Clic para copiar">${formatted}</td>`;
+        return `<td class="${isNum ? 'cell-num' : ''}" data-copy="${this.escapeHtml(rawVal)}" onclick="window.ChatTerminal.copyCell(this, this.dataset.copy)" title="Clic para copiar">${formatted}</td>`;
       }).join("");
       return `<tr>${cells}</tr>`;
     }).join("");
@@ -618,8 +616,11 @@ class ChatTerminalController {
     this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
   }
 
+  // Sirve para texto y para valores de atributo (escapa también comillas).
   escapeHtml(str) {
-    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return String(str ?? "")
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
 }
 

@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import io
+import hashlib
 import json
 import os
 import re
@@ -358,10 +359,11 @@ def main(argv=None) -> int:
             print("Tiempo agotado; el resto sigue en la próxima corrida.")
             break
         datos = {t: [] for t in TABLAS}
-        por_tipo, avisos = {}, []
+        por_tipo, avisos, sha_origen = {}, [], {}
         for tipo in TIPOS:
             try:
                 raw = _get(URL.format(tipo=tipo, mm=periodo[5:], aaaa=periodo[:4]))
+                sha_origen[TIPOS[tipo]] = hashlib.sha256(raw).hexdigest()
                 d = leer_excel(raw, periodo, tipo, lista, nombres)
             except ErrorFuente as e:
                 avisos.append(f"{TIPOS[tipo]}: {e}")
@@ -388,7 +390,7 @@ def main(argv=None) -> int:
         c["periodos"][periodo] = {"cerrado": cerrado(periodo, hoy), "sociedades": total, "por_tipo": por_tipo,
                                   "filas": {t: len(datos[t]) for t in TABLAS},
                                   "corredores_fuera_de_lista": [{"rut": r, "razon_social": n} for r, n in fuera],
-                                  "avisos": avisos}
+                                  "avisos": avisos, "sha256_origen": sha_origen}
         guardar_control(c)
         hechos += 1
         print(f"{periodo}: {por_tipo} · balance {len(datos['balance'])} · resultados {len(datos['resultados'])}"

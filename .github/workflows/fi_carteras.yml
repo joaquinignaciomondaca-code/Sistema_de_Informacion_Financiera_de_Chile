@@ -65,7 +65,8 @@ jobs:
             git reset --hard FETCH_HEAD
             git cherry-pick "$datos"
             python -m fi.scripts.actualizar_carteras --solo-data-manifest
-            git add data_manifest.json
+            python scripts/build_download_catalog.py
+            git add data_manifest.json docs/js/download_catalog.js
             git diff --cached --quiet || git commit -m "FI: data_manifest"
             git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
             sleep 20
