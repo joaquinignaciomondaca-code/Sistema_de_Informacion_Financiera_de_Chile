@@ -35,6 +35,8 @@ jobs:
   extraer:
     runs-on: ubuntu-latest
     timeout-minutes: 45
+    outputs:
+      desplegar: ${{ steps.publish_docs.outputs.desplegar }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -86,15 +88,22 @@ jobs:
                   docs/js/data_dictionary.js docs/index.html data_manifest.json
           if ! git diff --cached --quiet; then
             git commit -m "Publicar serie completa IFRS de Factoring y Leasing desde Actions"
-            # Otros bots publican en la misma rama: sincronizar y reintentar en vez de fallar.
+            datos=$(git rev-parse HEAD)
+            # Otros bots publican en la misma rama: se reaplica el commit sobre su última versión
+            # y se regenera el catálogo de Descargas (JS estático) antes de cada intento de push.
             for i in 1 2 3 4 5; do
+              git fetch origin "${GITHUB_REF_NAME}"
+              git reset --hard FETCH_HEAD
+              git cherry-pick "$datos" || { git cherry-pick --abort; sleep 20; continue; }
+              python scripts/build_download_catalog.py
+              git add docs/js/download_catalog.js
+              git diff --cached --quiet || git commit -m "Factoring y Leasing: catálogo de descargas"
               if git push origin "HEAD:${GITHUB_REF_NAME}"; then
                 echo "pushed=true" >> "$GITHUB_OUTPUT"
+                echo "desplegar=true" >> "$GITHUB_OUTPUT"
                 exit 0
               fi
-              git fetch origin "${GITHUB_REF_NAME}"
-              git rebase FETCH_HEAD || { git rebase --abort; sleep 20; git fetch origin "${GITHUB_REF_NAME}"; git rebase FETCH_HEAD || { git rebase --abort; exit 1; }; }
-              sleep 5
+              sleep 20
             done
             exit 1
           else
@@ -139,3 +148,29 @@ jobs:
           else
             echo 'Sin resumen: falló antes de consultar el índice CMF.' >> "$GITHUB_STEP_SUMMARY"
           fi
+
+  # Los commits hechos con GITHUB_TOKEN no disparan pages.yml, así que sin este job la serie
+  # publicada en la rama no llegaba al sitio hasta el siguiente push humano a docs/.
+  desplegar-sitio:
+    needs: extraer
+    if: needs.extraer.result == 'success' && needs.extraer.outputs.desplegar == 'true' && github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+      - run: git pull --ff-only origin "${GITHUB_REF_NAME}" || true
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+      - id: deployment
+        uses: actions/deploy-pages@v4

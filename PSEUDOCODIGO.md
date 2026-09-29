@@ -405,7 +405,7 @@ index.html carga en orden:
   data_dictionary.js, data_viewer.js, chat_terminal.js, download_utils.js, download_catalog.js,
   downloads_panel.js, jszip, xlsx
   script inline: instancia ERD, wiring de pestañas y atajos
-  los 15 archivos locales comparten una sola etiqueta de versión (?v=20260928-vocabulario-1)
+  los 15 archivos locales comparten una sola etiqueta de versión (?v=20260929-seguridad-1)
 Siete pestañas, cada una a pantalla completa (ya no existe el panel inferior ni el divisor):
   Información · Mapa relacional · Diccionario · Visor de datos · Consultas SQL · Descargas · Normativa CMF
 
@@ -549,7 +549,7 @@ con los pipelines antiguos de FFMM y FI.)
   261,8 MB**; los dos conjuntos unificados de banca informan «filas: se cuentan al consultar» en vez de
   repetir el total del manifiesto (que suma B1 + B2 + R1, no lo que muestra la vista).
 - ✅ Los 15 assets locales de `docs/index.html` comparten una sola etiqueta de versión
-  (`?v=20260928-vocabulario-1`), verificada por `audit_interfaz.py`; antes convivían cinco etiquetas.
+  (`?v=20260929-seguridad-1`), verificada por `audit_interfaz.py`; antes convivían cinco etiquetas.
 
 **2ª pasada (sobre `df3e26c`)**
 - Tests: `bancos` 81 OK · `factoring_leasing` 42 OK (tras corregir el manifiesto) · `xml_eeff` 44 OK · `macro` requiere `bcchapi`.

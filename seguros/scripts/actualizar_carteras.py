@@ -30,6 +30,7 @@ from __future__ import annotations
 
 import argparse
 import io
+import hashlib
 import json
 import os
 import re
@@ -577,6 +578,8 @@ def main(argv=None) -> int:
             if excluidos:
                 previo["archivos_excluidos"] = excluidos
         previo["registros"].update(conteo)
+        # SHA-256 del ZIP que entregó la CMF por cada sector (vida / generales).
+        previo.setdefault("sha256_origen", {}).update({s: hashlib.sha256(d).hexdigest() for s, d in datos.items()})
         control["periodos"][periodo] = previo
         guardar_control(control)
         hechos.append(periodo)
