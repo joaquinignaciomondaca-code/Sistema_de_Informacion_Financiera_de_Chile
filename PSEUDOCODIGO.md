@@ -487,7 +487,50 @@ con los pipelines antiguos de FFMM y FI.)
 
 ---
 
-## 11. Hallazgos de la revisión (estado al 2026-09-28)
+## 11. Hallazgos de la revisión (estado al 2026-09-29)
+
+**Auditoría de eficiencia (2026-09-29) — todo medido, defectos 2–6 cerrados o documentados**
+- **Arranque en frío** (prioridad 1): 23 s en frío vs ~3,5 ms en caliente se descompuso en wasm 18,1 MB
+  + 31 manifiestos en serie + 536 `registerFileURL` en serie + 71 `CREATE VIEW` en serie. Solución:
+  las tres fases del arranque ahora son paralelas (`Promise.all`) y el wasm y los manifiestos se
+  precalientan con `<link rel="preload">`. La medición en el navegador queda en manos de quien
+  tenga un navegador (en este entorno no hay Chromium); en el arnés `scripts/audit_duckdb_client.js`
+  el registro de las 52 vistas + 10 comprobaciones sale OK sin navegador.
+- **Defecto 6 (conteos)**: `data_manifest.json` pasó de 49/10.870.630 a **51 datasets · 10.870.757
+  filas** (faltaban `cooperativas_lista_entidades` y `corredoras_bolsa_lista_entidades_registro`).
+  52 vistas = 51 datasets: `bancos_balance` y `bancos_resultados` comparten el datasete
+  `bancos_cmf_lineas` (55 particiones, contado una vez). **Nueva guardia**:
+  `audit_automatizacion.py::alineacion_manifest()` falla si una entrada del manifiesto deja de
+  coincidir con las filas reales de sus Parquet, o si una vista publicada queda sin entrada.
+- **Defecto 3 (AGF vacía)**: `fi/scripts/actualizar_carteras.py` calcula
+  `fondos_inversion_administrados`; backfill ya publicado → 47/72 AGF con valor > 0.
+- **Defecto 4 (bienes raíces)**: la CMF publica 0 filas de bienes raíces para FI en los 26
+  trimestres disponibles (vs 933.532 de cartera nacional) → se publica la vista marcada
+  «Sin datos» en sidebar, diccionario y vocabulario; su consulta va en `VACIAS_ESPERADAS`.
+- **Defecto 2 (formatos RUT)**: **corregido (2026-09-29)**, decisión «aplica todo».
+  Convención canónica: `rut` = **cuerpo** (C), `rut_dv`/`*_dv` = cuerpo-DV (B),
+  `rut_completo`/`*_completo` = puntos y DV (A; RUNs de 4-5 cifras quedan B).
+  `rut_cuerpo` y `rut_formateado` dejan de existir. Aplicado a **193 Parquet + 7 JSON**
+  (`scripts/normalizar_rut_publicado.py --apply`, idempotente, conserva row groups y codec);
+  5 valores corruptos de fuente en `ffmm_cartera_nacional` corregidos (DV `X` inválido →
+  `K` por módulo 11; `0-.` → `0`). El cruce que motivó el hallazgo
+  (`corredoras_bolsa_maestro.rut = corredoras_bolsa_balance.rut`) pasa de 0 a miles de filas.
+  Ver `docs/notas/rut_formatos_2026-09-29.md`.
+- **Catálogo de Descargas** ahora cuenta también las dos vistas unificadas de banca por sus filas
+  heredadas (fue 8.942.793 → ahora **10.870.757**, igual con o sin pyarrow); la nota de pie del
+  README se actualizó.
+- **CI**: `web_audit.yml` ahora corre `audit_consultas_sugeridas.py --check` (116/0/0),
+  `scripts/audit_duckdb_client.js` y el **guardián de RUT**
+  (`scripts/audit_rut_formatos.py`: 613 archivos, 0 problemas) en cada push; el flujo de
+  automatización instala pyarrow para la nueva guardia de alineación.
+- **Writers blindados**: `pipelines/auto/rut.py::normalizar_*` se aplica en el único punto de
+  escritura de las listas (`entidades/actualizar_listas.py::guardar`), en los constructores de
+  maestros de cooperativas y corredoras, en `factoring_leasing/publish_backfill.py`, en las
+  actualizaciones de carteras de ffmm y seguros y en el maestro de pensiones: la próxima
+  corrida de CI publica el formato canónico, no lo que traiga la fuente.
+- Auditorías en verde: navegación 12/52/52 · automatización 53 tablas / 0 problemas ·
+  vocabulario 52/15/22 · consultas sugeridas **116 OK · 0 VACIA · 0 ERROR** · web full 100 % ·
+  cliente DuckDB 10/10.
 
 **3ª pasada (rama de trabajo, 2026-09-28) — interfaz, descargas y vocabulario**
 - Proyecto renombrado a **Sistema de Información Financiera de Chile (SIF)**; el panel principal pasó a
@@ -515,7 +558,11 @@ con los pipelines antiguos de FFMM y FI.)
 - ✅ `preview_no_cache.py` sin soporte HTTP Range → agregado.
 - ✅ (2026-09-28) Se quitaron de `data_manifest.json` las 4 tablas AFP retiradas cuyos Parquet ya no existían.
 - ✅ `web_audit.yml` y `factoring_leasing_backfill.yml` se disparaban en push a ramas de sesiones anteriores; ahora `main` + rama de trabajo actual.
-- Muchas vistas del visor no tienen entrada en `data_manifest.json` (vida_fondos, fi_*, bancos_cmf_balance/resultados agrupadas como `bancos_cmf_lineas`…): el manifiesto es un catálogo parcial, no la fuente de verdad de la web (esa es `SEMANTIC_VIEWS`).
+- ~~Muchas vistas del visor no tienen entrada en `data_manifest.json`…~~ → **Resuelto en la
+  auditoría de eficiencia (2026-09-29):** cada vista publicada tiene entrada en el manifiesto
+  (51 datasets para 52 vistas; `bancos_balance`/`bancos_resultados` comparten `bancos_cmf_lineas`),
+  vigilado por `alineacion_manifest()`. La fuente de verdad del visor sigue siendo
+  `SEMANTIC_VIEWS`; el manifiesto es el inventario contable.
 
 **1ª pasada**
 
@@ -560,6 +607,7 @@ pipelines/           flujos transversales
   ifrs_sectores/     estados IFRS trimestrales (AGF, securitizadoras, CCAF)
   normativa_cmf/     seguimiento de normativa (único flujo con lectura asistida)
   auto/inventario.json  quién actualiza cada tabla y con qué frecuencia
+  auto/rut.py          convención canónica de RUT (cuerpo / cuerpo-DV / puntos)
   manual/            ingesta de notas y reportes transcritos
 docs/                sitio estático (lo que se publica)
   index.html         la aplicación (7 pestañas)

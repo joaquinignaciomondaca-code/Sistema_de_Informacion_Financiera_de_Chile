@@ -46,6 +46,9 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 
 RAIZ = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(RAIZ))
+from pipelines.auto.rut import normalizar_dataframe  # noqa: E402
+
 SALIDA = RAIZ / "docs" / "outputs" / "ffmm"
 URL = "https://www.cmfchile.cl/institucional/estadisticas/ffm_download.php"
 REFERER = "https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php"
@@ -255,6 +258,7 @@ def escribir(tabla: str, periodo: str, nuevo: pd.DataFrame) -> int:
         return 0
     df = pd.concat(partes, ignore_index=True).reindex(columns=esquema(tabla).names)
     df = df.sort_values(["periodo", "run_fondo"] + ORDEN.get(tabla, []), kind="stable", na_position="first")
+    df = normalizar_dataframe(df)  # convención de RUT (pipelines/auto/rut.py)
     tmp = ruta.with_suffix(".tmp")
     pq.write_table(pa.Table.from_pandas(df, schema=esquema(tabla), preserve_index=False), tmp,
                    compression="zstd", compression_level=9)

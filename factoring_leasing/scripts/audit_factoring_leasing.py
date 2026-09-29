@@ -39,15 +39,19 @@ def run_audit(output_dir=OUTPUT):
         raise ValueError(f"Archivos retirados aún publicados: {retired_files}")
     df = pd.read_parquet(parquet)
     rows = json.loads(json_path.read_text(encoding="utf-8"))
-    required = {"rut", "razon_social"}
+    required = {"rut", "razon_social", "rut_dv"}
     if df.empty or not required <= set(df.columns) or not isinstance(rows, list) or len(rows) != len(df):
         raise ValueError("Lista vacía, esquema incompleto o cantidad JSON/Parquet distinta")
     if df["rut"].isna().any() or df["razon_social"].isna().any() or df["rut"].duplicated().any():
         raise ValueError("RUT/nombre faltante o RUT duplicado")
-    for rut in df["rut"]:
-        parts = str(rut).split("-")
-        if len(parts) != 2 or dv_m11(parts[0]) != parts[1].upper():
-            raise ValueError(f"Dígito verificador inválido: {rut}")
+    # Convención de RUT (pipelines/auto/rut.py): `rut` = cuerpo numérico,
+    # `rut_dv` = cuerpo-DV. Se valida el DV contra el cuerpo.
+    for i, rut in enumerate(df["rut"]):
+        cuerpo = str(rut)
+        if not cuerpo.isdigit():
+            raise ValueError(f"rut debe ser el cuerpo numérico (sin DV): {rut!r}")
+        if str(df["rut_dv"].iloc[i]) != f"{cuerpo}-{dv_m11(cuerpo)}":
+            raise ValueError(f"Dígito verificador inválido en rut_dv para {cuerpo}")
     if any(not isinstance(row, dict) or set(row) != set(df.columns) for row in rows):
         raise ValueError("Columnas JSON/Parquet distintas")
     # El JSON publicado debe representar los mismos registros, no sólo igual cantidad.
