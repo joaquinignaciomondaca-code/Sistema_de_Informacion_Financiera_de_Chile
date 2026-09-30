@@ -156,6 +156,11 @@ class DuckDBClient {
     this.registeredFiles = new Set();
     this.engineSource = null;
     this.localEngineError = null;
+    // Una conexión DuckDB-Wasm no admite dos runQuery simultáneos. La
+    // inicialización crea muchas vistas y la interfaz también puede recibir
+    // consultas concurrentes; mantener una cola aquí evita que los mensajes
+    // Thrift se intercalen y terminen en TProtocolException: Invalid data.
+    this.queryQueue = Promise.resolve();
     this.initPromise = this.init();
   }
 
@@ -417,7 +422,26 @@ class DuckDBClient {
     return { view, files };
   }
 
-  // Ejecuta `fn` sobre cada elemento con a lo sumo `max` en paralelo.
+  // DuckDB-Wasm procesa una conexión de forma serial. Aunque el worker puede
+  // recibir varios mensajes, dos conn.query() simultáneos sobre la misma
+  // conexión pueden intercalar el protocolo Thrift y devolver "TProtocolException:
+  // Invalid data". La cola conserva el paralelismo de la red y serializa sólo
+  // la sección crítica del motor.
+  runQuerySerial(sql) {
+    if (!this.queryQueue) this.queryQueue = Promise.resolve();
+    const siguiente = this.queryQueue.then(() => {
+      if (!this.conn) throw new Error("La conexión DuckDB-Wasm no está disponible");
+      return this.conn.query(sql);
+    });
+    // Una consulta fallida no debe bloquear las siguientes. El error original
+    // sigue viajando por `siguiente` al llamador.
+    this.queryQueue = siguiente.catch(() => undefined);
+    return siguiente;
+  }
+
+  // Ejecuta `fn` sobre cada elemento con a lo sumo `max` en paralelo. Las
+  // operaciones de base se serializan en runQuerySerial; este límite conserva
+  // la concurrencia de la preparación/cola sin corromper el protocolo.
   async enTandas(lista, max, fn) {
     let i = 0;
     const workers = Array.from({ length: Math.min(max, lista.length) }, async () => {
@@ -435,12 +459,12 @@ class DuckDBClient {
       ? `read_parquet('${safePath(files[0])}')`
       : `read_parquet([${files.map((f) => `'${safePath(f)}'`).join(", ")}])`;
     const filter = view.where ? ` WHERE ${view.where}` : "";
-    await this.conn.query(`CREATE OR REPLACE VIEW ${view.name} AS SELECT * FROM ${source}${filter};`);
+    await this.runQuerySerial(`CREATE OR REPLACE VIEW ${view.name} AS SELECT * FROM ${source}${filter};`);
     // Alias de compatibilidad: un nombre viejo nunca debe ocultar un error,
     // pero tampoco debe dejar sin datos a quien ya guardó una consulta.
     for (const alias of (LEGACY_VIEW_ALIASES[view.name] || [])) {
       try {
-        await this.conn.query(`CREATE OR REPLACE VIEW ${alias} AS SELECT * FROM ${view.name};`);
+        await this.runQuerySerial(`CREATE OR REPLACE VIEW ${alias} AS SELECT * FROM ${view.name};`);
       } catch (errAlias) {
         console.warn(`[DuckDB-Wasm] No se pudo crear el alias ${alias}:`, errAlias);
       }
@@ -472,8 +496,9 @@ class DuckDBClient {
     const todos = [...new Set(ok.flatMap((p) => p.files))];
     await Promise.all(todos.map((file) => this.registerFile(file)));
 
-    // 3) Creación de vistas en tandas: el worker las serializa de todos modos,
-    //    pero sin esperar un ida-y-vuelta por vista desde el hilo principal.
+    // 3) La preparación puede seguir en tandas, pero runQuerySerial mantiene
+    //    una sola consulta activa por conexión; así no se corrompe el protocolo
+    //    mientras conservamos el resto de la mejora de arranque.
     await this.enTandas(ok, 8, (p) => this.crearVista(p));
 
     console.log(`[DuckDB-Wasm] Vistas registradas: ${SEMANTIC_VIEWS.length - this.unavailableViews.length}/${SEMANTIC_VIEWS.length}`);
@@ -496,7 +521,7 @@ class DuckDBClient {
     }
 
     try {
-      const result = await this.conn.query(sql);
+      const result = await this.runQuerySerial(sql);
       const replacer = (key, value) => (typeof value === "bigint" ? Number(value) : value);
       const rows = result.toArray().map((row) => {
         const obj = row.toJSON();

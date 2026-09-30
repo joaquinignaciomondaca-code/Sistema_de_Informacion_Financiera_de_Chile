@@ -150,6 +150,23 @@ vm.runInContext(fuente.slice(0, corte) + "\nglobalThis.__DuckDBClient = DuckDBCl
   });
   check("enTandas nunca supera la concurrencia máxima", maximo <= 3, `máximo ${maximo}`);
 
+  // 5) Las consultas sobre una misma conexión deben serializarse aunque
+  //    distintos componentes las disparen al mismo tiempo. Esto reproduce la
+  //    condición que en el navegador producía TProtocolException: Invalid data.
+  let consultasActivas = 0, maximoConsultas = 0;
+  const cliente3 = Object.create(DuckDBClient.prototype);
+  cliente3.queryQueue = Promise.resolve();
+  cliente3.conn = { query: async (sql) => {
+    consultasActivas++;
+    maximoConsultas = Math.max(maximoConsultas, consultasActivas);
+    await new Promise((r) => setTimeout(r, 1));
+    consultasActivas--;
+    return { sql };
+  } };
+  await Promise.all(["uno", "dos", "tres", "cuatro"].map((sql) => cliente3.runQuerySerial(sql)));
+  check("runQuerySerial mantiene una consulta activa por conexión", maximoConsultas === 1,
+    `máximo ${maximoConsultas}`);
+
   console.log(`\n${fallos === 0 ? "CLIENTE DUCKDB: registro de vistas OK" : "CLIENTE DUCKDB: " + fallos + " fallos"}`);
   process.exit(fallos === 0 ? 0 : 1);
 })().catch((e) => { console.error("Error de prueba:", e); process.exit(1); });
