@@ -103,38 +103,3 @@ jobs:
             exit 1
           fi
 
-
-  # Los commits hechos con GITHUB_TOKEN no disparan pages.yml. Se despliega
-  # desde un job condicionado a la rama por defecto; la rama de trabajo no publica.
-  publicar-pages:
-    if: github.ref_name == github.event.repository.default_branch
-    needs: actualizar-feed
-    concurrency:
-      group: pages
-      cancel-in-progress: false
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Obtener la última versión de la rama por defecto
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref_name }}
-          fetch-depth: 1
-
-      - name: Configurar GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Empaquetar sitio
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs
-
-      - name: Publicar sitio
-        id: deployment
-        uses: actions/deploy-pages@v4
