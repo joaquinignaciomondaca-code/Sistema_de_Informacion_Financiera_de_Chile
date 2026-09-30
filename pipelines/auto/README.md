@@ -25,13 +25,16 @@ seguros construyen su lista con los fondos / compañías que reportan; el actual
 las CCAF y sociedades de factoring/leasing que reportan y avisa (`::notice::`) de las AGF y
 securitizadoras que reportan sin estar en la lista. Nunca se da de baja por simple ausencia.
 
-Única tabla manual: el balance de patrimonios separados (planilla entregada, 2014-12 a 2025-12;
-la CMF solo publica esos estados como PDF).
+Única tabla fuera de Actions: el balance de patrimonios separados (la CMF solo publica esos
+estados como PDF). Es un flujo híbrido: la extracción y curación inicial se consolidan localmente
+en una planilla, mientras `securitizadoras/scripts/05_publicar_balance_patrimonios.py` ejecuta
+validaciones reproducibles y compila el Parquet (2014-12 a 2025-12).
 
 ## Guardián: que ninguna tabla vuelva a quedar como foto fija
 
 `pipelines/auto/inventario.json` declara, para cada tabla de `data_manifest.json`, el workflow que
-la actualiza (o el motivo por el que es manual). `scripts/audit_automatizacion.py` lo revisa:
+la actualiza o, cuando todavía no hay workflow programado, si el flujo es híbrido/manual y su
+motivo. `scripts/audit_automatizacion.py` lo revisa:
 
 * **en cada push** (`web_audit.yml`, job `automatizacion`): una tabla sin inventario, un workflow
   sin horario o que no ejecuta su script, un script que no nombra el archivo de la tabla, o una
@@ -40,7 +43,7 @@ la actualiza (o el motivo por el que es manual). `scripts/audit_automatizacion.p
   dentro de su plazo (`max_dias`: 16 para los de 3 veces al mes, 3 para macro). Si no, se abre un
   issue «Automatización: hay tablas que no se están actualizando» (o se comenta el abierto).
 
-Al agregar una tabla: sumarla al inventario con su workflow, o con `{"manual": "motivo"}`.
+Al agregar una tabla: sumarla al inventario con su workflow, o con `{"hibrido": "motivo", "scripts": ["ruta/al/compilador.py"]}` si el procesamiento posterior es reproducible, o con `{"manual": "motivo"}` si todavía no existe ese compilador.
 
 ```bash
 python scripts/audit_automatizacion.py                 # revisión estática

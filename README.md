@@ -182,6 +182,8 @@ El servidor local responde `206 Partial Content` igual que GitHub Pages, así qu
 
 Once flujos programados en GitHub Actions extraen, validan y publican con commit controlado. Un **guardián de automatización** cruza el manifiesto de datos, el inventario de flujos y las vistas del sitio: cada tabla publicada tiene un responsable declarado, y si una fuente se atrasa más allá de su plazo, se abre un issue automáticamente.
 
+La ausencia de un workflow no implica ausencia de procesamiento automático. El catálogo distingue tres modalidades: **Automático** (extracción, validación y publicación programadas), **Híbrido** (extracción o curación inicial local desde fuentes no estructuradas, seguida de validación y compilación reproducibles) y **Manual** (intervención todavía no respaldada por un compilador reproducible). El balance de patrimonios separados es actualmente híbrido: la CMF publica los estados como PDF, la consolidación inicial se hace fuera de Actions y `05_publicar_balance_patrimonios.py` ejecuta las validaciones y genera el Parquet.
+
 <details>
 <summary>Calendario de los 11 flujos</summary>
 
