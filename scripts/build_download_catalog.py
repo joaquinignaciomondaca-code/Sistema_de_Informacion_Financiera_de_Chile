@@ -157,7 +157,11 @@ def filas_filtradas(rutas: list[str], where: str) -> int | None:
             coincidencia = pc.is_in(serie, pa.array(valores))
         else:
             coincidencia = pc.equal(serie, valores[0])
-        total += int(pc.sum(coincidencia))
+        # pc.sum devuelve un escalar de pyarrow (UInt64Scalar): int() lo acepta
+        # recién en versiones recientes del motor (pyarrow 21) y truena con TypeError
+        # en las antiguas (pyarrow 19, la que instala macro/requirements.txt).
+        # as_py() es estable en todas; un sum nulo (columna sin valores) cuenta 0.
+        total += int(pc.sum(coincidencia).as_py() or 0)
     return total
 
 

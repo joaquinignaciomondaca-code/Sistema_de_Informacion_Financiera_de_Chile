@@ -121,6 +121,15 @@ class ErrorFuente(Exception):
     pass
 
 
+class ErrorContenido(ErrorFuente):
+    """La descarga vino completa pero su contenido no sirve (guardas de filas/sociedades).
+
+    Se separa de ErrorFuente para poder distinguir un archivo histórico defectuoso —p. ej.
+    201003, que la CMF solo publica con 4 sociedades— de un problema de red o de fuente.
+    """
+    pass
+
+
 class _Links(HTMLParser):
     def __init__(self):
         super().__init__()
@@ -274,9 +283,9 @@ def leer_archivo(raw: bytes, periodo: str, listas: dict[str, dict[str, str]]):
             "repeticion": repet[k2], "taxonomia": tax, "en_lista_entidades": cuerpo in listas[sec],
         })
     if lineas_periodo == 0:
-        raise ErrorFuente(f"el archivo no trae filas de {periodo}")
+        raise ErrorContenido(f"el archivo no trae filas de {periodo}")
     if len(entidades_archivo) < 50:
-        raise ErrorFuente(f"el archivo trae solo {len(entidades_archivo)} sociedades")
+        raise ErrorContenido(f"el archivo trae solo {len(entidades_archivo)} sociedades")
     return datos, {"lineas": lineas_periodo, "sociedades": len(entidades_archivo),
                    "solo_lista_fuera": {s: [{"rut": r, "razon_social": n} for r, n in sorted(v.items())]
                                         for s, v in candidatos.items()}}, avisos
@@ -484,7 +493,7 @@ def main(argv=None) -> int:
     print(f"Índice CMF: {len(periodos)} trimestres ({periodos[0]}..{periodos[-1]}). "
           f"Procesados y cerrados: {len(periodos) - len(pendientes)}. A leer ahora: {len(pendientes)}")
     cache_anual: dict[tuple, bytes] = {}
-    hechos, errores = 0, []
+    hechos, errores, defectos = 0, [], []
     for periodo in pendientes[:a.max_periodos]:
         if time.monotonic() - inicio > a.minutos * 60:
             print(f"Tiempo agotado ({a.minutos:.0f} min); el resto sigue en la próxima corrida.")
@@ -504,6 +513,19 @@ def main(argv=None) -> int:
                 raw = cache_anual[par]
                 datos, est, avisos = leer_archivo(raw, periodo, listas)
                 avisos.insert(0, f"trimestre leído del archivo anual ({e})")
+        except ErrorContenido as e:
+            if cerrado(periodo, hoy):
+                # Trimestre histórico cerrado cuyo archivo de la CMF trae contenido incompleto
+                # (p. ej. 201003 con solo 4 sociedades): no se publica, se reintenta ante cada
+                # cambio de la fuente y no debe dejar la corrida en rojo cuando no hay nada
+                # nuevo que publicar.
+                defectos.append(f"{periodo}: {e}")
+                print(f"::warning::{periodo}: {e} — archivo histórico incompleto; no publica "
+                      f"ni falla la corrida")
+                continue
+            errores.append(f"{periodo}: {e}")
+            print(f"::warning::{periodo}: {e}")
+            continue
         except ErrorFuente as e:
             errores.append(f"{periodo}: {e}")
             print(f"::warning::{periodo}: {e}")
@@ -580,7 +602,8 @@ def main(argv=None) -> int:
         guardar_control(control)
     escribir_manifiestos(control)
     actualizar_data_manifest(control)
-    print(f"Trimestres leídos en esta corrida: {hechos}. Errores: {len(errores)}")
+    print(f"Trimestres leídos en esta corrida: {hechos}. Errores: {len(errores)}"
+          + (f" · archivos históricos incompletos: {len(defectos)}" if defectos else ""))
     gh = os.environ.get("GITHUB_OUTPUT")
     if gh:
         with open(gh, "a") as f:
