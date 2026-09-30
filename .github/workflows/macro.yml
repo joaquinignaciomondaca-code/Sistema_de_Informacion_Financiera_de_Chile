@@ -15,8 +15,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: macro-update
@@ -105,26 +103,3 @@ jobs:
           echo "::error title=Publicación en la rama::No se pudo publicar tras 8 intentos por contención en ${GITHUB_REF_NAME}"
           exit 1
 
-  desplegar-sitio:
-    needs: update
-    if: needs.update.outputs.publicado == 'true' && github.ref_name == github.event.repository.default_branch
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref_name }}
-          fetch-depth: 1
-      - run: git pull --ff-only origin "${GITHUB_REF_NAME}" || true
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs
-      - id: deployment
-        uses: actions/deploy-pages@v4
