@@ -83,14 +83,23 @@ jobs:
             git commit -m "CMF: actualizar novedades normativas"
             # Otros workflows actualizan esta misma rama; rebasar la salida
             # sobre el último tip evita perder el feed por una carrera de push.
-            for intento in 1 2 3; do
+            # Un rebase en conflicto tampoco debe abortar el paso: la shell corre
+            # con `bash -e` y cualquier código distinto de cero lo termina.
+            for intento in 1 2 3 4 5 6; do
               git fetch --deepen=50 origin "${GITHUB_REF_NAME}"
-              git rebase FETCH_HEAD
+              if ! git rebase FETCH_HEAD; then
+                git rebase --abort || true
+                echo "Rebase en conflicto (intento ${intento}/6): otra publicación tocó los mismos archivos."
+                sleep $(( 15 + RANDOM % 20 ))
+                continue
+              fi
               if git push origin "HEAD:${GITHUB_REF_NAME}"; then
                 exit 0
               fi
-              echo "Push concurrente rechazado (intento ${intento}/3)."
+              echo "Push concurrente rechazado (intento ${intento}/6)."
+              sleep $(( 15 + RANDOM % 20 ))
             done
+            echo "::error title=Publicación en la rama::No se pudo publicar el feed normativo tras 6 intentos por contención en ${GITHUB_REF_NAME}"
             exit 1
           fi
 
