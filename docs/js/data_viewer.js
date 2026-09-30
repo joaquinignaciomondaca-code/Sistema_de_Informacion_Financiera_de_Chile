@@ -190,6 +190,18 @@ class DataViewerController {
     return match ? match[1] : null;
   }
 
+  modeForView() {
+    const table = (window.SIFDataDictionary || []).find((item) => item.id === this.currentView);
+    const modo = table && table.modo ? table.modo : "Automático";
+    const helper = window.SIFDataMode;
+    if (!helper) return { className: "auto", label: "Automático", title: "Modalidad de procesamiento" };
+    return {
+      className: helper.className(modo),
+      label: helper.label(modo),
+      title: (table && table.modoAyuda) || helper.title(modo)
+    };
+  }
+
   async loadTable(viewName, displayName, limit = 100) {
     this.currentView = viewName;
     this.currentDisplayName = displayName || viewName;
@@ -412,6 +424,7 @@ class DataViewerController {
     }
 
     const rows = this.getFilteredRows();
+    const mode = this.modeForView();
     const headersHtml = this.currentColumns.map((col, idx) => `
       <th onclick="window.DataViewer.sortTable(${idx})" title="Ordenar por ${dvEscapar(col)}">
         ${dvEscapar(col)}<span class="dv-sort-icon" id="dv_sort_${idx}"></span>
@@ -450,7 +463,7 @@ class DataViewerController {
               ${optionsHtml}
             </select>
             <span class="dv-badge-view">Vista: <code>${dvEscapar(this.currentView)}</code></span>
-            <span class="dv-badge-mode mode-auto">Automático</span>
+            <span class="dv-badge-mode mode-${mode.className}" title="${dvEscapar(mode.title)}">${dvEscapar(mode.label)}</span>
             <span class="dv-badge-update" title="Fecha de última actualización del pipeline">Actualizado: 2026-09-23</span>
             <span class="dv-meta-timing"><b>${this.elapsedMs} ms</b></span>
             <span class="dv-count-info">${rows.length} fila(s) · ${this.currentColumns.length} columnas</span>

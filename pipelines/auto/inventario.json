@@ -1,5 +1,5 @@
 {
-  "_ayuda": "Una entrada por tabla de data_manifest.json y por vista del sitio (SEMANTIC_VIEWS): {\"workflow\": archivo en .github/workflows} o {\"manual\": motivo}. 'marca' reemplaza al nombre del archivo cuando el script lo arma por partes. Lo revisa scripts/audit_automatizacion.py en cada push y, con --frescura, cada semana contra las corridas reales.",
+  "_ayuda": "Una entrada por tabla de data_manifest.json y por vista del sitio (SEMANTIC_VIEWS): {\"workflow\": archivo en .github/workflows}, {\"hibrido\": motivo, \"scripts\": [rutas]}, o {\"manual\": motivo}. 'marca' reemplaza al nombre del archivo cuando el script lo arma por partes. Lo revisa scripts/audit_automatizacion.py en cada push y, con --frescura, cada semana contra las corridas reales.",
   "tablas": {
     "afp_lista_entidades": {
       "workflow": "entidades.yml"
@@ -122,7 +122,10 @@
       "workflow": "macro.yml"
     },
     "patrimonios_separados_balance": {
-      "manual": "Balance construido una vez desde el Excel entregado por el usuario (2014-12 a 2025-12). La CMF publica los EEFF de cada patrimonio separado solo como PDF por securitizadora, sin archivo estructurado."
+      "hibrido": "La CMF publica los EEFF de cada patrimonio separado solo como PDF. La extracción y curación inicial se consolidan localmente en Excel; el script validado genera el Parquet, pero todavía no existe un workflow programado en Actions.",
+      "scripts": [
+        "securitizadoras/scripts/05_publicar_balance_patrimonios.py"
+      ]
     },
     "patrimonios_separados_lista_entidades": {
       "workflow": "entidades.yml"
