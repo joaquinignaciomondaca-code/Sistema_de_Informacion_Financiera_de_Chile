@@ -2248,6 +2248,28 @@ header {
   border: 1px solid rgba(var(--warn-rgb), 0.3);
 }
 
+.dict-mode-badge.mode-hybrid {
+  color: rgb(var(--violet-rgb));
+  background: rgba(var(--violet-rgb), 0.12);
+  border: 1px solid rgba(var(--violet-rgb), 0.3);
+}
+
+.dict-mode-legend {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-size: 10.5px;
+}
+
+.dict-mode-legend-label {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
 .dict-update-badge {
   font-size: 10.5px;
   color: var(--text-muted);
@@ -2596,6 +2618,12 @@ header {
   color: rgb(var(--warn-rgb));
   background: rgba(var(--warn-rgb), 0.12);
   border: 1px solid rgba(var(--warn-rgb), 0.3);
+}
+
+.dv-badge-mode.mode-hybrid {
+  color: rgb(var(--violet-rgb));
+  background: rgba(var(--violet-rgb), 0.12);
+  border: 1px solid rgba(var(--violet-rgb), 0.3);
 }
 
 .dv-badge-update {

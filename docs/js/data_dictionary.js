@@ -700,7 +700,8 @@ const DATA_DICTIONARY = [
     norma: "Balance general del patrimonio separado (estados financieros publicados en la CMF)",
     corte: "Diciembre 2014 a diciembre 2025 (2010–2013 sin datos)",
     frescura: "Anual, cierre de diciembre",
-    modo: "Lectura de los PDF de estados financieros, validada",
+    modo: "Híbrido · extracción PDF/Excel local; validación y publicación reproducibles",
+    modoAyuda: "La extracción y curación inicial se consolidan fuera del workflow programado, en un Excel preparado desde PDFs; el script 05_publicar_balance_patrimonios.py valida y compila el resultado en Parquet.",
     ultimaActualizacion: "2026-09-28",
     registros: "Balance",
     descripcion: "Balance general de cada patrimonio separado, cuenta por cuenta y tal como viene impreso, en M$ y con su signo: 358 balances de 10 securitizadoras. Incluye las líneas de subtotal (categorías que empiezan con Total). Todos los balances cuadran: activos = pasivo circulante + pasivo no circulante + patrimonio, y las cuentas de detalle suman su subtotal. Ojo: 'Total Pasivos' es pasivo más patrimonio (igual al total de activos); el pasivo exigible es 'Total Pasivo Circulante' + 'Total Pasivo No Circulante'. Para sumar sin contar dos veces, usa solo las categorías de detalle o solo las de Total. La serie parte en diciembre de 2014: de 2010 a 2013 no hay datos (2013 no está en la fuente y 2010–2012 se dejaron fuera para no cortar la serie).",
@@ -903,6 +904,36 @@ const DATA_DICTIONARY = [
   }
 ];
 
+// La modalidad separa la automatización del procesamiento de la automatización
+// de su orquestación. Un flujo híbrido puede compilar y validar con código sin
+// tener todavía un workflow programado que lo ejecute.
+function modalidadDatos(modo) {
+  const texto = String(modo || "Automático").toLowerCase();
+  if (texto.startsWith("híbrido") || texto.startsWith("hibrido")) return "hybrid";
+  if (texto.startsWith("manual")) return "manual";
+  return "auto";
+}
+
+function ayudaModalidadDatos(modo) {
+  const clase = modalidadDatos(modo);
+  if (clase === "hybrid") {
+    return "Híbrido: la extracción o curación inicial ocurre fuera del workflow programado; la validación, normalización y compilación del resultado son reproducibles mediante código.";
+  }
+  if (clase === "manual") {
+    return "Manual: la extracción, selección o transcripción todavía requiere intervención y no cuenta con un compilador reproducible integrado.";
+  }
+  return "Automático: extracción, validación y publicación ejecutadas por código y workflows programados.";
+}
+
+window.SIFDataMode = {
+  className: modalidadDatos,
+  title: ayudaModalidadDatos,
+  label: (modo) => modalidadDatos(modo) === "hybrid"
+    ? "Híbrido"
+    : modalidadDatos(modo) === "manual" ? "Manual" : "Automático"
+};
+window.SIFDataDictionary = DATA_DICTIONARY;
+
 class DataDictionaryController {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
@@ -983,6 +1014,12 @@ class DataDictionaryController {
             <button class="dict-filter-btn ${this.currentSector === 'sistemas_pago' ? 'active' : ''}" data-sec="sistemas_pago">Sistemas de Pago</button>
             <button class="dict-filter-btn ${this.currentSector === 'fintech' ? 'active' : ''}" data-sec="fintech">FinTech</button>
           </div>
+          <div class="dict-mode-legend" title="La modalidad describe la extracción y la publicación, no solo si existe un workflow de Actions.">
+            <span class="dict-mode-legend-label">Modalidad:</span>
+            <span class="dict-mode-badge mode-auto">Automático</span>
+            <span class="dict-mode-badge mode-hybrid">Híbrido</span>
+            <span class="dict-mode-badge mode-manual">Manual</span>
+          </div>
         </div>
 
         <!-- Lista de Tablas y sus Columnas -->
@@ -994,7 +1031,7 @@ class DataDictionaryController {
                   <span class="dict-table-name">${table.name}</span>
                   <span class="dict-view-badge">Vista: <code>${table.viewName}</code></span>
                   <span class="dict-norma-badge">${table.norma}</span>
-                  <span class="dict-mode-badge ${table.modo === 'Manual' ? 'mode-manual' : 'mode-auto'}">${table.modo || 'Automático'}</span>
+                  <span class="dict-mode-badge mode-${modalidadDatos(table.modo)}" title="${table.modoAyuda || ayudaModalidadDatos(table.modo)}">${table.modo || 'Automático'}</span>
                 </div>
                 <div class="dict-card-meta">
                   <span class="dict-freshness-tag">

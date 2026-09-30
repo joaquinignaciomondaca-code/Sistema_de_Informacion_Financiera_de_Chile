@@ -5,7 +5,7 @@
 | Flujo | Ejecución | Publicación |
 | --- | --- | --- |
 | Series estructuradas pequeñas y maduras (piloto: `macro/`) | PC o GitHub Actions | Commit automático tras validar (anti-regresión) |
-| PDFs, descargas masivas, notas asistidas, métodos experimentales | PC (`pipelines/manual/`, scripts por sector) | Manual, tras auditoría sectorial |
+| PDFs, descargas masivas, notas asistidas, métodos experimentales | PC (`pipelines/manual/`, scripts por sector) | Híbrido: extracción o curación local, seguida de validación y compilación reproducibles; publicación tras auditoría sectorial |
 | Cambios de esquema/catálogo de la web | Revisión humana | Junto con Parquet/JSON compatibles |
 
 Criterios antes de mover otro sector a Actions: fuente estable y términos de uso compatibles, sin dependencia de carpetas personales; credenciales externalizadas; dependencias fijadas; staging separado de `docs/`; auditoría que falle con datos incompletos; frecuencia y coste acotados; revisión de cambios antes de fusionar.
