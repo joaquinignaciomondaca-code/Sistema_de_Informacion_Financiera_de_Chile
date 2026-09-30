@@ -91,10 +91,19 @@ jobs:
             datos=$(git rev-parse HEAD)
             # Otros bots publican en la misma rama: se reaplica el commit sobre su última versión
             # y se regenera el catálogo de Descargas (JS estático) antes de cada intento de push.
-            for i in 1 2 3 4 5; do
+            # Nada de esto debe abortar el paso: la shell corre con `bash -e`, así
+            # que un cherry-pick en conflicto o un push rechazado se reintentan
+            # sobre la cabeza nueva. La espera aleatoria desincroniza las corridas
+            # que arrancan juntas y el fallo final queda anotado como error.
+            for i in 1 2 3 4 5 6 7 8; do
               git fetch origin "${GITHUB_REF_NAME}"
               git reset --hard FETCH_HEAD
-              git cherry-pick "$datos" || { git cherry-pick --abort; sleep 20; continue; }
+              if ! git cherry-pick "$datos"; then
+                git cherry-pick --abort || git reset --hard FETCH_HEAD
+                echo "Cherry-pick en conflicto (intento ${i}/8): otra publicación tocó los mismos archivos."
+                sleep $(( 15 + RANDOM % 20 ))
+                continue
+              fi
               python scripts/build_download_catalog.py
               git add docs/js/download_catalog.js
               git diff --cached --quiet || git commit -m "Factoring y Leasing: catálogo de descargas"
@@ -103,8 +112,10 @@ jobs:
                 echo "desplegar=true" >> "$GITHUB_OUTPUT"
                 exit 0
               fi
-              sleep 20
+              echo "Push rechazado (intento ${i}/8): otra corrida publicó primero."
+              sleep $(( 15 + RANDOM % 20 ))
             done
+            echo "::error title=Publicación en la rama::No se pudo publicar la serie IFRS tras 8 intentos por contención en ${GITHUB_REF_NAME}"
             exit 1
           else
             echo "La web ya está al día; no hay archivos nuevos que publicar."

@@ -59,18 +59,29 @@ jobs:
           git commit -m "IFRS AGF, securitizadoras y CCAF: hasta ${ultimo}"
           git checkout -- data_manifest.json
           datos=$(git rev-parse HEAD)
-          for i in 1 2 3 4 5; do
+          # Varias publicaciones compiten por la misma rama: un cherry-pick en
+          # conflicto o un push rechazado no deben abortar el paso (la shell corre
+          # con `bash -e`). Se reintenta sobre la cabeza nueva, con espera aleatoria
+          # para desincronizar las corridas que arrancan juntas.
+          for i in 1 2 3 4 5 6 7 8; do
             git fetch origin "${GITHUB_REF_NAME}"
             git reset --hard FETCH_HEAD
-            git cherry-pick "$datos"
+            if ! git cherry-pick "$datos"; then
+              git cherry-pick --abort || git reset --hard FETCH_HEAD
+              echo "Cherry-pick en conflicto (intento ${i}/8): otra publicación tocó los mismos archivos."
+              sleep $(( 15 + RANDOM % 20 ))
+              continue
+            fi
             python pipelines/ifrs_sectores/actualizar.py --solo-data-manifest
             python pipelines/entidades/actualizar_listas.py --solo-conteos
             python scripts/build_download_catalog.py
             git add data_manifest.json docs/js/sidebar.js docs/js/data_dictionary.js docs/js/download_catalog.js
             git diff --cached --quiet || git commit -m "IFRS sectores: data_manifest"
-            git push origin "HEAD:${GITHUB_REF_NAME}" && exit 0
-            sleep 20
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "Push rechazado (intento ${i}/8): otra corrida publicó primero."
+            sleep $(( 15 + RANDOM % 20 ))
           done
+          echo "::error title=Publicación en la rama::No se pudo publicar tras 8 intentos por contención en ${GITHUB_REF_NAME}"
           exit 1
 
   desplegar-sitio:
