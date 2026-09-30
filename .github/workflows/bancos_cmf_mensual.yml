@@ -27,8 +27,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
 
 concurrency:
   group: bancos-cmf-mensual-${{ github.ref }}
@@ -107,35 +105,3 @@ jobs:
           echo "::error title=Publicación en la rama::No se pudo publicar el período bancario tras 8 intentos por contención en ${GITHUB_REF_NAME}"
           exit 1
 
-  deploy-page:
-    needs: validate-and-publish
-    if: needs.validate-and-publish.result == 'success' && needs.validate-and-publish.outputs.published_changed == 'true' && github.ref_name == github.event.repository.default_branch
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Checkout con el período publicado
-        uses: actions/checkout@v4
-        with:
-          ref: ${{ github.ref_name }}
-          fetch-depth: 1
-      # Tras el commit del job anterior, asegurar la última revisión de la rama.
-      - name: Actualizar a la revisión con el período publicado
-        run: git pull --ff-only origin "${GITHUB_REF_NAME}" || true
-
-      - name: Configurar GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: Empaquetar sitio desde docs/
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs
-
-      - name: Desplegar el sitio
-        id: deployment
-        uses: actions/deploy-pages@v4
