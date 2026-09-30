@@ -83,13 +83,29 @@ jobs:
             exit 0
           fi
           git commit -m "Publica período CMF bancario ${{ steps.publish.outputs.period }}"
-          # Otra corrida pudo avanzar la rama mientras tanto: rebase antes de empujar.
-          git pull --rebase origin "${GITHUB_REF_NAME}"
-          # El catálogo de Descargas (JS estático) se regenera sobre la versión final de la rama.
-          python scripts/build_download_catalog.py
-          git add docs/js/download_catalog.js
-          git diff --cached --quiet || git commit -m "Banca: catálogo de descargas"
-          git push origin "HEAD:${GITHUB_REF_NAME}"
+          # Otras corridas avanzan la misma rama y data_manifest.json es un archivo
+          # compartido, así que el rebase puede chocar. Nada de eso debe abortar el
+          # paso (la shell corre con `bash -e`): se reintenta sobre la cabeza nueva
+          # y, si aun así no se puede publicar, se deja un error explícito en el
+          # resumen en vez de un paso rojo sin explicación.
+          for intento in 1 2 3 4 5 6 7 8; do
+            git fetch origin "${GITHUB_REF_NAME}"
+            if ! git rebase FETCH_HEAD; then
+              git rebase --abort || true
+              echo "Rebase en conflicto (intento ${intento}/8): otra publicación tocó data_manifest.json."
+              sleep $(( 15 + RANDOM % 20 ))
+              continue
+            fi
+            # El catálogo de Descargas (JS estático) se regenera sobre la versión final de la rama.
+            python scripts/build_download_catalog.py
+            git add docs/js/download_catalog.js
+            git diff --cached --quiet || git commit -m "Banca: catálogo de descargas"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "Push rechazado (intento ${intento}/8): otra corrida publicó primero."
+            sleep $(( 15 + RANDOM % 20 ))
+          done
+          echo "::error title=Publicación en la rama::No se pudo publicar el período bancario tras 8 intentos por contención en ${GITHUB_REF_NAME}"
+          exit 1
 
   deploy-page:
     needs: validate-and-publish
