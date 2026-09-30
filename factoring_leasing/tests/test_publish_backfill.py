@@ -2,10 +2,13 @@
 import importlib.util
 import json
 from pathlib import Path
+import re
+import shutil
 import tempfile
 import unittest
 
 HERE = Path(__file__).resolve().parents[1]
+RAIZ = HERE.parent
 
 def load_module(name, path):
     spec = importlib.util.spec_from_file_location(name, path)
@@ -41,6 +44,10 @@ def make_docs(root):
     }
     for name, content in fixtures.items():
         (docs / 'js' / name).write_text(content)
+    # El vocabulario canónico real: de ahí salen los ids y nombres que el publicador
+    # inyecta en los catálogos web. Con una copia sintética, un desvío de nombres
+    # (publicar con un alias retirado) pasaría desapercibido en las pruebas.
+    shutil.copyfile(RAIZ / 'docs' / 'vocabulario.json', docs / 'vocabulario.json')
     (docs / 'index.html').write_text('\n'.join(
         f'<script src="js/{name}?v=old"></script>'
         for name in ('duckdb_client.js','sidebar.js','data_dictionary.js','data_viewer.js')))
@@ -116,10 +123,27 @@ class PublishBackfillTests(unittest.TestCase):
             self.assertEqual(sector_ids, [publish.BALANCE, publish.RESULTS])
             self.assertEqual(manifest['total_tables'], len(manifest['tables']))
             self.assertEqual(manifest['total_records'], sum(x.get('registros_reales', 0) for x in manifest['tables']))
+            vocab = publish.vocabulario(RAIZ / 'docs' / 'vocabulario.json')
+            retirados = [publish.BALANCE, publish.RESULTS]
             for file in ['duckdb_client.js','sidebar.js','data_viewer.js','data_dictionary.js']:
                 text=(docs/'js'/file).read_text()
-                self.assertIn(publish.BALANCE, text)
-                self.assertIn(publish.RESULTS, text)
+                for clave in ('balance','resultados'):
+                    self.assertIn(vocab[clave]['id'], text)
+                    if file != 'duckdb_client.js':
+                        # El cliente DuckDB registra la vista por su id; el nombre
+                        # punteado (<sector>.<tipo>) es el de los catálogos visibles.
+                        self.assertIn(vocab[clave]['nombre'], text)
+                # El nombre largo es sólo el del archivo: nunca un identificador web.
+                for viejo in retirados:
+                    for patron in (f'id: "{viejo}"', f'name: "{viejo}"', f'FROM {viejo}',
+                                   f'"id":"{viejo}"', f'"name":"{viejo}"', f'"viewName":"{viejo}"'):
+                        self.assertNotIn(patron, text)
+            sidebar_text=(docs/'js/sidebar.js').read_text()
+            for clave in ('balance','resultados'):
+                self.assertIn(vocab[clave]['carpeta'], sidebar_text)
+                self.assertIn(f"outputs/factoring_leasing/{vocab[clave]['archivo']}.parquet", sidebar_text)
+                # Las consultas de los chips deben apuntar a la vista registrada.
+                self.assertIn(f"FROM {vocab[clave]['id']}", sidebar_text)
             self.assertIn('2022-06–2022-09', (docs/'js/sidebar.js').read_text())
             self.assertIn('2022-06 a 2022-09', (docs/'js/data_dictionary.js').read_text())
             index=(docs/'index.html').read_text()
@@ -156,6 +180,34 @@ class PublishBackfillTests(unittest.TestCase):
     def test_catalog_marker_must_be_unique(self):
         with self.assertRaisesRegex(ValueError, 'Markers ausentes/duplicados'):
             publish.replace_block('// X\n// END\n', '// BEGIN', '// END', '', 'fixture')
+
+    def test_all_local_assets_share_one_version_tag(self):
+        """scripts/audit_interfaz.py exige una sola etiqueta de versión en index.html."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); docs = make_docs(root)
+            index = docs / 'index.html'
+            # Otros assets del sitio con la etiqueta vigente, como en el index.html real.
+            index.write_text(index.read_text() +
+                             '\n<link href="css/estilo.css?v=20260929-seguridad-1">'
+                             '\n<script src="js/ux_shell.js?v=20260929-seguridad-1"></script>\n')
+            data, _ = self.setup_data(root)
+            self.assertTrue(publish.publish(data, docs, '12345'))
+            etiquetas = set(re.findall(r'(?:src|href)="(?:css|js)/[^"?]+\?v=([^"]+)"',
+                                       index.read_text()))
+            self.assertEqual(len(etiquetas), 1, f'quedaron varias etiquetas: {etiquetas}')
+            self.assertTrue(etiquetas.pop().startswith('fl-202209-'))
+
+    def test_missing_vocabulary_entry_is_explicit(self):
+        """Sin entrada canónica el publicador falla en vez de inventar identificadores."""
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp); docs = make_docs(root)
+            vocab = json.loads((docs / 'vocabulario.json').read_text(encoding='utf-8'))
+            vocab['tablas'] = [t for t in vocab['tablas'] if t['id'] not in
+                               ('factoring_leasing_balance', 'factoring_leasing_resultados')]
+            (docs / 'vocabulario.json').write_text(json.dumps(vocab, ensure_ascii=False))
+            data, _ = self.setup_data(root)
+            with self.assertRaisesRegex(ValueError, 'vocabulario canónico'):
+                publish.publish(data, docs, '12345')
 
 if __name__ == '__main__':
     unittest.main()
