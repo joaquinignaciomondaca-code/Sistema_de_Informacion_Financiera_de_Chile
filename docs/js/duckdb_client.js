@@ -156,6 +156,9 @@ class DuckDBClient {
     this.registeredFiles = new Set();
     this.engineSource = null;
     this.localEngineError = null;
+    // Nombre del archivo (vista) -> motivo por el que no pudo crearse. Se
+    // muestra en el diagnóstico para poder decir qué Parquet concreto falló.
+    this.viewErrors = {};
     // Una conexión DuckDB-Wasm no admite dos runQuery simultáneos. La
     // inicialización crea muchas vistas y la interfaz también puede recibir
     // consultas concurrentes; mantener una cola aquí evita que los mensajes
@@ -232,6 +235,7 @@ class DuckDBClient {
       this.attempts = [];
       this.environment = null;
       this.unavailableViews = [];
+      this.viewErrors = {};
       this.registeredFiles = new Set();
       this.db = null;
       this.conn = null;
@@ -321,7 +325,8 @@ class DuckDBClient {
             localError: this.localEngineError,
             attempts: (this.attempts || []).slice(),
             environment: this.environment,
-            unavailableViews: this.unavailableViews.slice()
+            unavailableViews: this.unavailableViews.slice(),
+            viewErrors: { ...(this.viewErrors || {}) }
           }
         }));
       }
@@ -376,6 +381,13 @@ class DuckDBClient {
       lineas.push(`  - Contexto aislado (crossOriginIsolated): ${si(entorno.crossOriginIsolated)}`);
       lineas.push(`  - Web Worker desde Blob URL: ${entorno.blobWorker === false ? "no (" + entorno.blobWorkerError + ")" : si(entorno.blobWorker)}`);
     }
+    if ((this.unavailableViews || []).length) {
+      lineas.push("Vistas no disponibles (el motor sigue activo para el resto):");
+      for (const vista of this.unavailableViews) {
+        const motivo = (this.viewErrors || {})[vista];
+        lineas.push(`  - ${vista}${motivo ? ": " + motivo : ""}`);
+      }
+    }
     return lineas.join("\n");
   }
 
@@ -384,13 +396,32 @@ class DuckDBClient {
     return new URL(relativePath, document.baseURI).href;
   }
 
+  // DuckDB-Wasm lee los Parquet con XHR síncronos de rango hechos desde el
+  // worker. En Chrome/Edge sobre Windows, tras un recargo esas respuestas
+  // pueden salir de la caché HTTP con bytes corridos y el parser Thrift de
+  // Parquet muere con "TProtocolException: Invalid data" (duckdb/duckdb-wasm
+  // issue #1658; Firefox y el modo incógnito no fallan). Un sufijo de URL
+  // único por carga de página saca esas peticiones de la caché del navegador.
+  // Se calcula perezosamente para que también funcione en instancias creadas
+  // sin pasar por el constructor (arnés de scripts/audit_duckdb_client.js).
+  sufijoAntiCache() {
+    if (!this.httpCacheBuster) {
+      this.httpCacheBuster = `cb=${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
+    }
+    return this.httpCacheBuster;
+  }
+
   // Registra el Parquet en el sistema de archivos virtual de DuckDB-Wasm; sin
   // este paso las rutas relativas no existen para el motor y toda consulta falla.
+  // La URL lleva el sufijo anti-caché: las lecturas de rango que hace el worker
+  // (XHR síncrono) no deben reutilizarse de una carga anterior de la página.
   async registerFile(relativePath) {
     if (this.registeredFiles.has(relativePath)) return relativePath;
+    const base = this.absoluteUrl(relativePath);
+    const url = `${base}${base.includes("?") ? "&" : "?"}${this.sufijoAntiCache()}`;
     await this.db.registerFileURL(
       relativePath,
-      this.absoluteUrl(relativePath),
+      url,
       this.duckdb.DuckDBDataProtocol.HTTP,
       false
     );
@@ -498,8 +529,30 @@ class DuckDBClient {
 
     // 3) La preparación puede seguir en tandas, pero runQuerySerial mantiene
     //    una sola consulta activa por conexión; así no se corrompe el protocolo
-    //    mientras conservamos el resto de la mejora de arranque.
-    await this.enTandas(ok, 8, (p) => this.crearVista(p));
+    //    mientras conservamos el resto de la mejora de arranque. Un fallo al
+    //    crear UNA vista (p.ej. un Parquet cuya lectura por red se corrompió)
+    //    no debe tumbar el motor completo: esa vista queda como no disponible
+    //    con su motivo y el resto del sistema sigue funcionando. Antes de
+    //    rendirse se reintenta una vez: la corrupción de lectura del
+    //    navegador (issue #1658 de duckdb-wasm) es intermitente y el segundo
+    //    intento suele leer de la red.
+    this.viewErrors = {};
+    await this.enTandas(ok, 8, async (p) => {
+      try {
+        await this.crearVista(p);
+      } catch (primerError) {
+        const motivo = primerError && primerError.message ? primerError.message : String(primerError);
+        console.warn(`[DuckDB-Wasm] Vista ${p.view.name} falló al crearse; se reintenta:`, motivo);
+        try {
+          await this.crearVista(p);
+        } catch (segundoError) {
+          const motivo2 = segundoError && segundoError.message ? segundoError.message : String(segundoError);
+          this.unavailableViews.push(p.view.name);
+          this.viewErrors[p.view.name] = motivo2;
+          console.error(`[DuckDB-Wasm] Vista ${p.view.name} no disponible tras reintento:`, motivo2);
+        }
+      }
+    });
 
     console.log(`[DuckDB-Wasm] Vistas registradas: ${SEMANTIC_VIEWS.length - this.unavailableViews.length}/${SEMANTIC_VIEWS.length}`);
     if (this.unavailableViews.length) {

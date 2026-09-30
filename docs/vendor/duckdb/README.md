@@ -75,6 +75,12 @@ Al cambiar de versión hay que actualizar también `DUCKDB_VERSION` en
 * El servidor de vista previa (`scripts/preview_no_cache.py`) y GitHub Pages deben
   servir `.wasm` como `application/wasm`; si el tipo es incorrecto, el motor cae a
   `WebAssembly.instantiate` sobre el arreglo de bytes y sigue funcionando, pero más lento.
+* Las URL con las que el motor lee los Parquet llevan un sufijo `?cb=` único por
+  carga de página y Vercel publica los `.parquet` con `Cache-Control: no-store`
+  (ver `vercel.json`): Chrome/Edge en Windows reutiliza mal la caché HTTP en las
+  lecturas de rango y el parser Thrift de Parquet muere con
+  `TProtocolException: Invalid data` (ver
+  `docs/notas/diagnostico_tprotocol_exception_2026-09-30.md`).
 * El total son ~17,7 MB en el repositorio (el `.wasm` es el 99% del peso). No se
   publican variantes `mvp` ni `coi`: la primera sólo se necesita en navegadores sin
   soporte de exception handling —y se toma del CDN— y la segunda requiere

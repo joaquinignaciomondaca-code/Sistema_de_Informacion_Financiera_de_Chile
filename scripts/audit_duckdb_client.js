@@ -51,6 +51,7 @@ function emularFetch(url) {
 
 const createdViews = [];
 const registeredFiles = new Set();
+const registeredUrls = [];
 const contexto = {
   console,
   URL,
@@ -66,7 +67,7 @@ const contexto = {
   window: { dispatchEvent: () => true },
   __connStub: { query: (sql) => { createdViews.push(sql); return Promise.resolve({}); } },
   __dbStub: {
-    registerFileURL: (rel, abs, proto, persist) => { registeredFiles.add(rel); return Promise.resolve(); },
+    registerFileURL: (rel, abs, proto, persist) => { registeredFiles.add(rel); registeredUrls.push(abs); return Promise.resolve(); },
   },
 };
 contexto.window.DuckDBClient = null;
@@ -112,6 +113,13 @@ vm.runInContext(fuente.slice(0, corte) + "\nglobalThis.__DuckDBClient = DuckDBCl
   check("todas las rutas del SQL existen en docs/", faltantes.length === 0, faltantes.slice(0, 3).join(", "));
   check("cada Parquet se registra una sola vez", registeredFiles.size === rutasEnSql.size,
     `${registeredFiles.size} vs ${rutasEnSql.size}`);
+  // 2b) Las URL registradas deben salir de la caché HTTP del navegador:
+  //     Chrome/Edge en Windows entrega respuestas de rango corridas tras un
+  //     recargo y el parser Thrift de Parquet falla con TProtocolException
+  //     (duckdb/duckdb-wasm#1658). registerFile añade "?cb=<carga>" por eso.
+  const sinBuster = registeredUrls.filter((u) => !/[?&]cb=/.test(u));
+  check("las URL de Parquet llevan el sufijo anti-caché (?cb=...)", sinBuster.length === 0,
+    sinBuster.slice(0, 3).join(", "));
 
   // 3) Fail-closed: un manifiestro ausente solo desactiva su vista.
   const vistas3 = [];
