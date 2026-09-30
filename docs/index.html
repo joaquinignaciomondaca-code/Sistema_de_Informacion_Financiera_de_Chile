@@ -11,9 +11,13 @@
   <!-- Arranque en frío: el motor pesa ~18 MB. Preanunciar los tres archivos hace
        que se descarguen en paralelo con la página, en vez de esperar a que el
        JavaScript los pida al final de la cadena de carga. -->
-  <link rel="modulepreload" href="vendor/duckdb/duckdb-browser.mjs">
-  <link rel="preload" href="vendor/duckdb/duckdb-eh.wasm" as="fetch">
-  <link rel="preload" href="vendor/duckdb/duckdb-browser-eh.worker.js" as="fetch">
+  <!-- DuckDB hace fetch() con credenciales same-origin. El atributo
+       crossorigin hace que el preload use el mismo modo de credenciales y que
+       el navegador pueda reutilizarlo (sin la advertencia "preload ... not
+       used" en Vercel). -->
+  <link rel="modulepreload" href="vendor/duckdb/duckdb-browser.mjs" crossorigin="anonymous">
+  <link rel="preload" href="vendor/duckdb/duckdb-eh.wasm" as="fetch" crossorigin="anonymous">
+  <link rel="preload" href="vendor/duckdb/duckdb-browser-eh.worker.js" as="fetch" crossorigin="anonymous">
 </head>
 <body>
 
@@ -243,6 +247,26 @@
                   <li><strong>Descarga:</strong> todo lo publicado vive en la pestaña <em>Descargas</em>: Parquet original, CSV o Excel, con filas, periodo y peso a la vista.</li>
                   <li><strong>Atajos:</strong> <kbd>Alt</kbd>+<kbd>1</kbd>…<kbd>6</kbd> cambia de pestaña y <kbd>/</kbd> enfoca la búsqueda del explorador.</li>
                 </ul>
+              </div>
+            </section>
+
+            <section class="info-block info-processing-block">
+              <div class="info-section-kicker">MODALIDAD DE PROCESAMIENTO</div>
+              <h2>La fuente determina la ruta</h2>
+              <p>La etiqueta de cada tabla describe cómo se extrae y publica la información. “Híbrido” no significa que el resultado sea una foto fija: indica que la fuente requiere curación o extracción inicial fuera del workflow programado, mientras que la validación, normalización y compilación posterior sí están versionadas y son reproducibles.</p>
+              <div class="info-highlight-row">
+                <div class="info-highlight">
+                  <strong>Automático</strong>
+                  <span>Extracción, validación y publicación ejecutadas por código y workflows programados.</span>
+                </div>
+                <div class="info-highlight">
+                  <strong>Híbrido</strong>
+                  <span>Fuente PDF o no estructurada con intervención inicial; el procesamiento y el QA posteriores se ejecutan mediante código local reproducible.</span>
+                </div>
+                <div class="info-highlight">
+                  <strong>Manual</strong>
+                  <span>Extracción, selección o transcripción que todavía requiere intervención y no cuenta con un compilador integrado.</span>
+                </div>
               </div>
             </section>
 
