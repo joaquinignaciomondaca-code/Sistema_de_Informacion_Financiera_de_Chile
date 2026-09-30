@@ -27,6 +27,8 @@ DOCS = ROOT / 'docs'
 OUT = DOCS / 'outputs' / 'factoring_leasing'
 BALANCE = 'factoring_leasing_balance_serie_ifrs_cmf'
 RESULTS = 'factoring_leasing_resultados_serie_ifrs_cmf'
+SECTOR = 'factoring_leasing'
+VOCABULARIO = ROOT / 'docs' / 'vocabulario.json'
 MARKERS = {
     'docs/js/duckdb_client.js': ('// BEGIN AUTO FL IFRS SERIES VIEWS', '// END AUTO FL IFRS SERIES VIEWS'),
     'docs/js/sidebar.js': ('// BEGIN AUTO FL IFRS SERIES NAVIGATION', '// END AUTO FL IFRS SERIES NAVIGATION'),
@@ -149,50 +151,70 @@ def profit_queries(name):
     ]
 
 
-def sidebar_block(meta):
+def vocabulario(path=VOCABULARIO):
+    """Rótulos canónicos de la web para la serie, leídos de docs/vocabulario.json.
+
+    La web identifica estas tablas con ids cortos (`factoring_leasing_balance`);
+    el nombre largo del archivo (`..._serie_ifrs_cmf`) quedó registrado sólo como
+    alias. Publicar con el alias renombra las carpetas de la navegación, las
+    tablas del visor y las vistas DuckDB, con lo que `scripts/audit_navigation.py`
+    falla y las consultas de los chips apuntan a una vista que la web ya no
+    registra con ese nombre. Por eso los identificadores no se duplican aquí: se
+    toman de la fuente canónica y siguen sus cambios.
+    """
+    vocab = json.loads(Path(path).read_text(encoding='utf-8'))
+    por_alias = {alias: t for t in vocab['tablas'] for alias in (t['id'], *(t.get('alias') or []))}
+    tablas = {}
+    for clave, archivo in (('balance', BALANCE), ('resultados', RESULTS)):
+        entrada = por_alias.get(archivo) or por_alias.get(f'{SECTOR}_{clave}')
+        if entrada is None:
+            raise ValueError(f'El vocabulario canónico no define la tabla {archivo}')
+        tablas[clave] = {'archivo': archivo, 'id': entrada['id'],
+                         # Las carpetas con una sola tabla usan `cat_<tabla_id>`.
+                         'carpeta': 'cat_' + entrada['id'], 'nombre': entrada['nombre'],
+                         'detalle': vocab['tipos'][entrada['tipo']],
+                         'descripcion': entrada['descripcion'], 'cobertura': entrada['cobertura']}
+    return {'sectorLabel': vocab['sectores'][SECTOR], **tablas}
+
+
+def sidebar_block(meta, vocab):
     period = f"{meta['primer_periodo'][:4]}-{meta['primer_periodo'][4:]}–{meta['ultimo_periodo'][:4]}-{meta['ultimo_periodo'][4:]}"
     badge = f"{meta['periodos_indice']} cierres · {len(meta['ruts_con_datos_total'])} RUT"
     entries = []
-    for cid, label, table_id, table_name, rows, file, sql_label in [
-        ('fl_balance_serie_ifrs_cmf_folder', f'Balance · Serie CMF ({period})', BALANCE,
-         'factoring_leasing.balance_serie_ifrs_cmf', meta['filas_balance_total'],
-         f'outputs/factoring_leasing/{BALANCE}.parquet', 'Cuentas de balance CMF'),
-        ('fl_resultados_serie_ifrs_cmf_folder', f'Resultados · Serie CMF ({period})', RESULTS,
-         'factoring_leasing.resultados_serie_ifrs_cmf', meta['filas_resultados_total'],
-         f'outputs/factoring_leasing/{RESULTS}.parquet', 'Cuentas de resultados CMF')]:
-        chip_list = [(sql_label + ' · primeros 500', query(table_id))]
-        if table_id == RESULTS:
-            chip_list += profit_queries(table_id)
+    for clave, titulo, sql_label in [('balance', 'Balance', 'Cuentas de balance CMF'),
+                                     ('resultados', 'Resultados', 'Cuentas de resultados CMF')]:
+        tabla = vocab[clave]
+        chip_list = [(sql_label + ' · primeros 500', query(tabla['id']))]
+        if clave == 'resultados':
+            chip_list += profit_queries(tabla['id'])
         chips = ',\n                    '.join(f'{{ label: {js(lbl)}, query: {js(sql)} }}' for lbl, sql in chip_list)
         entries.append(f'''          {{
-            id: "{cid}", type: "circular",
-            label: {js(label)}, badge: {js(badge)}, badgeType: "data", status: "active",
-            sector: "factoring_leasing",
+            id: "{tabla['carpeta']}", type: "circular",
+            label: {js(f'{titulo} · Serie CMF ({period})')}, badge: {js(badge)}, badgeType: "data", status: "active",
+            sector: "{SECTOR}",
             chips: [{chips}],
-            tables: [{{ id: "{table_id}", name: {js(f'{table_name} ({rows:,} cuentas; no cotejo integral)')},
-                       rows: {js(f'{rows:,} cuentas · {meta["periodos_indice"]} cierres · extracción sin cotejo integral')},
-                       file: {js(file)} }}]
+            tables: [{{ id: "{tabla['id']}", name: {js(tabla['nombre'])},
+                       rows: {js(tabla['cobertura'])},
+                       file: "outputs/factoring_leasing/{tabla['archivo']}.parquet" }}]
           }},''')
     return '\n'.join(entries)
 
 
-def viewer_block(meta):
-    balance_name = f"factoring_leasing.balance_serie_ifrs_cmf ({meta['filas_balance_total']:,} cuentas; no cotejo integral)"
-    results_name = f"factoring_leasing.resultados_serie_ifrs_cmf ({meta['filas_resultados_total']:,} cuentas; no cotejo integral)"
-    return '\n'.join([
-        f'      {{ id: "{BALANCE}", name: {js(balance_name)} }},',
-        f'      {{ id: "{RESULTS}", name: {js(results_name)} }},',
-    ])
+def viewer_block(vocab):
+    return '\n'.join(
+        f'      {{ id: "{vocab[clave]["id"]}", name: {js(vocab[clave]["nombre"])}, '
+        f'detalle: {js(vocab[clave]["detalle"])}, descripcion: {js(vocab[clave]["descripcion"])} }},'
+        for clave in ('balance', 'resultados'))
 
 
-def duckdb_block():
-    return '\n'.join([
-        f'  {{ name: "{BALANCE}", file: "outputs/factoring_leasing/{BALANCE}.parquet" }},',
-        f'  {{ name: "{RESULTS}", file: "outputs/factoring_leasing/{RESULTS}.parquet" }},',
-    ])
+def duckdb_block(vocab):
+    return '\n'.join(
+        f'  {{ name: "{vocab[clave]["id"]}", '
+        f'file: "outputs/factoring_leasing/{vocab[clave]["archivo"]}.parquet" }},'
+        for clave in ('balance', 'resultados'))
 
 
-def dictionary_block(meta, run_id):
+def dictionary_block(meta, run_id, vocab):
     descriptions = {
         'rut': 'Cuerpo del RUT actual del catálogo (sin DV); la unión es por cuerpo y no certifica vigencia ni identidad histórica.',
         'rut_dv': 'RUT del catálogo con dígito verificador (cuerpo-DV).',
@@ -222,7 +244,7 @@ def dictionary_block(meta, run_id):
     created = meta['fecha_actualizacion_utc'][:10]
     period_range = f"{meta['primer_periodo'][:4]}-{meta['primer_periodo'][4:]} a {meta['ultimo_periodo'][:4]}-{meta['ultimo_periodo'][4:]}"
     common = {
-        'sector': 'factoring_leasing', 'sectorLabel': 'Factoring & Leasing',
+        'sector': SECTOR, 'sectorLabel': vocab['sectorLabel'],
         'norma': 'CMF IFRS TXT · extracción automática de cuentas ESF/ER',
         'corte': f"{period_range} · {meta['periodos_indice']} cierres",
         'frescura': 'Serie de la fuente CMF; valores crudos, no validación integral',
@@ -232,14 +254,15 @@ def dictionary_block(meta, run_id):
         'columnas': columns,
     }
     objects = []
-    for table_id, view_name, title, rows, statement in [
-        (BALANCE, BALANCE, 'Balance IFRS CMF · serie histórica', meta['filas_balance_total'], 'ESF'),
-        (RESULTS, RESULTS, 'Resultados IFRS CMF · serie histórica', meta['filas_resultados_total'], 'ER'),
+    for clave, title, rows, statement in [
+        ('balance', 'Balance IFRS CMF · serie histórica', meta['filas_balance_total'], 'ESF'),
+        ('resultados', 'Resultados IFRS CMF · serie histórica', meta['filas_resultados_total'], 'ER'),
     ]:
+        tabla = vocab[clave]
         item = dict(common)
         item.update({
-            'id': table_id, 'name': 'factoring_leasing.' + table_id.removeprefix('factoring_leasing_'), 'viewName': view_name,
-            'registros': f"{rows:,} cuentas · {len(meta['ruts_con_datos_total'])}/28 RUT con datos",
+            'id': tabla['id'], 'name': tabla['nombre'], 'viewName': tabla['id'],
+            'registros': tabla['cobertura'],
             'descripcion': (f"{title}. {rows:,} filas de cuentas de estados {statement} entre "
                             f"{period_range}; no son estados agregados. "
                             f"Incluye {meta['importes_no_enteros_total']:,} importes no enteros preservados como texto/null y "
@@ -251,11 +274,13 @@ def dictionary_block(meta, run_id):
 
 
 def apply_catalogs(meta, run_id, root=DOCS):
+    # Los identificadores web salen del vocabulario canónico del sitio.
+    vocab = vocabulario(root / 'vocabulario.json')
     files = {
-        'docs/js/duckdb_client.js': duckdb_block(),
-        'docs/js/sidebar.js': sidebar_block(meta),
-        'docs/js/data_viewer.js': viewer_block(meta),
-        'docs/js/data_dictionary.js': dictionary_block(meta, run_id),
+        'docs/js/duckdb_client.js': duckdb_block(vocab),
+        'docs/js/sidebar.js': sidebar_block(meta, vocab),
+        'docs/js/data_viewer.js': viewer_block(vocab),
+        'docs/js/data_dictionary.js': dictionary_block(meta, run_id, vocab),
     }
     for rel, block in files.items():
         path = root.parent / rel
@@ -263,14 +288,20 @@ def apply_catalogs(meta, run_id, root=DOCS):
         start, end = MARKERS[rel]
         path.write_text(replace_block(text, start, end, block, rel), encoding='utf-8')
     # Cache busting: la web descarga los catálogos recién generados y los Parquets.
+    # scripts/audit_interfaz.py exige que todos los assets locales compartan UNA
+    # etiqueta, así que se renuevan juntos y no sólo los cuatro catálogos: dejar
+    # el resto con la etiqueta anterior rompía la auditoría de interfaz en cada
+    # publicación. El mismo patrón que audita esa etiqueta es el que se reescribe.
     version = f"fl-{meta['ultimo_periodo']}-{meta['filas_balance_total']}-{meta['filas_resultados_total']}"
     index = root / 'index.html'
     text = index.read_text(encoding='utf-8')
-    for file in ('duckdb_client.js', 'sidebar.js', 'data_dictionary.js', 'data_viewer.js'):
-        pattern = rf'(src="js/{re.escape(file)}\?v=)[^"]*(")'
-        text, count = re.subn(pattern, rf'\g<1>{version}\2', text)
-        if count != 1:
-            raise ValueError(f'No se pudo renovar cache busting de {file}: {count}')
+    pattern = r'((?:src|href)="(?:css|js)/[^"?]+\?v=)[^"]*(")'
+    text, count = re.subn(pattern, lambda m: m.group(1) + version + m.group(2), text)
+    # Al menos los cuatro catálogos que este paso reescribe deben quedar renovados.
+    if count < 4:
+        raise ValueError(f'No se pudo renovar cache busting de los assets locales: {count} coincidencias')
+    if len(set(re.findall(r'(?:src|href)="(?:css|js)/[^"?]+\?v=([^"]+)"', text))) != 1:
+        raise ValueError('Los assets locales quedaron con más de una etiqueta de versión')
     index.write_text(text, encoding='utf-8')
 
 
