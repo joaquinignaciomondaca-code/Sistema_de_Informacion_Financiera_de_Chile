@@ -176,5 +176,70 @@ class BackfillTests(unittest.TestCase):
             self.assertEqual(b.run(args, fetch), 0)
             self.assertTrue((out/'periodos/202206/resultados.parquet').exists())
 
+    def test_catalog_accepts_canonical_and_legacy_rut_formats(self):
+        """El maestro publicado usa rut=cuerpo (C) + rut_dv (B); antes usaba rut con DV."""
+        esperado = {'96655860': {'rut': '96655860-1', 'segmento': 'Factoring',
+                                 'nombre': 'FACTORING SECURITY S.A.'}}
+        canonical = {'rut': '96655860', 'rut_dv': '96655860-1', 'rut_completo': '96.655.860-1',
+                     'segmento': 'Factoring', 'razon_social': 'FACTORING SECURITY S.A.'}
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'catalog.json'
+            path.write_text(json.dumps([canonical]))
+            self.assertEqual(b.load_catalog(path), esperado)
+            # Formatos anteriores del mismo catálogo: B (cuerpo-DV) y A (con puntos).
+            for legacy in ('96655860-1', '96.655.860-1'):
+                path.write_text(json.dumps([{'rut': legacy, 'segmento': 'Factoring',
+                                             'razon_social': 'FACTORING SECURITY S.A.'}]))
+                self.assertEqual(b.load_catalog(path), esperado)
+            # Sin DV publicado: se calcula el oficial (módulo 11), no se inventa otro.
+            path.write_text(json.dumps([{'rut': '96655860', 'segmento': 'Factoring',
+                                         'razon_social': 'FACTORING SECURITY S.A.'}]))
+            self.assertEqual(b.load_catalog(path), esperado)
+
+    def test_catalog_rejects_duplicate_inconsistent_or_invalid_rut(self):
+        base = {'segmento': 'Factoring', 'razon_social': 'FACTORING SECURITY S.A.'}
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'catalog.json'
+            casos = [
+                ([{**base, 'rut': '96655860', 'rut_dv': '96655860-1'},
+                  {**base, 'rut': '96655860', 'rut_dv': '96655860-1'}], 'duplicado'),
+                ([{**base, 'rut': '96655860', 'rut_dv': '76002293-4'}], 'inconsistente'),
+                ([{**base, 'rut': 'NO-ES-RUT'}], 'inválido'),
+                ([{**base, 'rut': ''}], 'inválido'),
+                ([], 'vacío'),
+            ]
+            for rows, motivo in casos:
+                path.write_text(json.dumps(rows))
+                with self.assertRaises(ValueError, msg=motivo):
+                    b.load_catalog(path)
+
+    def test_run_with_canonical_catalog_labels_rows_as_published(self):
+        """La extracción sigue indexando por cuerpo y rotulando con el RUT del catálogo."""
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp)
+            args = SimpleNamespace(out=out, catalog=Path(tmp) / 'catalog.json', batch=1)
+            args.catalog.write_text(json.dumps([{'rut': '96655860', 'rut_dv': '96655860-1',
+                                                 'rut_completo': '96.655.860-1',
+                                                 'segmento': 'Factoring',
+                                                 'razon_social': 'FACTORING SECURITY S.A.'}]))
+            index = b'<html><a href="ver_archivo.php?inicio=202206&termino=202206">2022</a></html>'
+            self.assertEqual(b.run(args, lambda url: index if url == b.INDEX else fixture()), 0)
+            rows = b.pd.read_parquet(out / 'periodos/202206/balance.parquet')
+            self.assertEqual(set(rows['rut_cuerpo']), {'96655860'})
+            self.assertEqual(set(rows['rut']), {'96655860-1'})
+            self.assertEqual(json.loads((out / 'resumen.json').read_text())['rut_catalogo'], 1)
+
+    def test_published_master_catalog_loads(self):
+        """Guardia de regresión: el maestro publicado real debe cargar sin red ni parches."""
+        self.assertTrue(b.CATALOG.is_file(), f'falta el catálogo publicado: {b.CATALOG}')
+        catalog = b.load_catalog()
+        self.assertGreaterEqual(len(catalog), 28)
+        for body, meta in catalog.items():
+            self.assertTrue(body.isdigit())
+            self.assertEqual(b.formato(meta['rut']), 'B')
+            self.assertEqual(b.cuerpo(meta['rut']), body)
+            self.assertTrue(meta['nombre'].strip())
+            self.assertTrue(meta['segmento'].strip())
+
 if __name__ == '__main__':
     unittest.main()
