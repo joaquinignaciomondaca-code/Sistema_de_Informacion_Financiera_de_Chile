@@ -3,7 +3,7 @@
 """
 ingest_manual_notes.py
 Compilador e ingestor de extracciones manuales y asistidas (NotebookLM / LLM).
-Valida estructura JSON, verifica RUTs (Modulo 11) y genera Parquets normalizados.
+Lee JSON válido, verifica RUTs (Modulo 11) y genera Parquets normalizados; no extrae PDFs ni certifica cuadraturas contables.
 """
 
 import os

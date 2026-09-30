@@ -38,12 +38,13 @@ siguen vivos sólo como vistas de alias. En las secciones 2–8 de este mapa apa
 reales de scripts y archivos** (`build_ccaf_maestro.py`, `ccaf_maestro.parquet`): son los del
 repositorio, no los que ve el usuario en pantalla.
 
-Dos tipos de flujo (ver `pipelines/README.md`):
+Tres modalidades de flujo (ver `pipelines/README.md`):
 
-| Tipo | Dónde corre | Cómo publica |
+| Modalidad | Dónde corre | Cómo publica |
 |---|---|---|
-| **Maduro/automático** (macro, bancos B1/B2/R1, factoring-leasing IFRS) | GitHub Actions + PC | staging → validación → artifact o commit controlado |
-| **Manual/experimental** (PDFs, notas, FFMM, FI, AFP, CCAF…) | PC | escritura directa a `docs/outputs/` tras auditoría sectorial |
+| **Automático** (macro, bancos B1/B2/R1, factoring-leasing IFRS) | GitHub Actions + PC | staging → validación → artifact o commit controlado |
+| **Híbrido** (PDFs, notas asistidas y fuentes no estructuradas) | PC/VM + scripts versionados | extracción o curación local → validación/normalización reproducible → publicación tras auditoría |
+| **Manual** | PC | intervención y selección de datos sin compilador reproducible integrado |
 | ~~Laboratorio~~ (bancos REPO, XML/XBRL, sondas) | — | **eliminado el 2026-09-28** (no publicaban; quedan en el historial de Git) |
 
 ---
@@ -311,7 +312,7 @@ fintech/            stream_fintech_rpsf (registro RPSF Ley 21.521, solo maestro)
 pensiones/          pipeline_stream_history(_parallel): Playwright descarga ZIP SP → parse → particiones → consolidate
                     generate_afp_maestro (única tabla AFP publicada); cartera/derivados AFP RETIRADOS de la web
                     ~25 scripts inspect_*/test_*/sample_* = exploración ad-hoc (rutas C:\)
-pipelines/manual/   ingest_manual_notes: plantillas CSV de notas transcritas → valida RUT → parquet
+pipelines/manual/   ingest_manual_notes: JSON/pipe de notas extraídas fuera del pipeline → lee/normaliza y comprueba RUT → Parquet; flujo híbrido, no extractor PDF completo
 ```
 
 ---
@@ -359,7 +360,7 @@ pipelines/entidades/actualizar_listas.py   (entidades.yml, días 10, 20, 28)
 
 scripts/audit_automatizacion.py   (web_audit.yml: en cada push; --frescura cada lunes)
   inventario pipelines/auto/inventario.json: cada tabla de data_manifest y cada vista SEMANTIC_VIEWS
-    → {workflow} o {manual: motivo}
+    → {workflow}, {hibrido: motivo, scripts: [...] } o {manual: motivo}
   los ids de publicación (data_manifest) se traducen al vocabulario por los alias de vocabulario.json
   antes de cruzar manifiesto ↔ inventario ↔ vistas del sitio (así «bancos_cmf_balance» y
   «bancos_balance» son la misma tabla)

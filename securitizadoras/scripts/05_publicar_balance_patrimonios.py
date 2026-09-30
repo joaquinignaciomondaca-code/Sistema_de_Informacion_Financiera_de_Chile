@@ -1,8 +1,9 @@
 """Balance de los Patrimonios Separados (cuenta por cuenta) → Parquet publicado.
 
 Fuente: securitizadoras/fuentes/balances_patrimonios_separados.xlsx, hoja Balance_por_cuenta.
-    Balance general de cada patrimonio separado, leído de los PDF de estados financieros que
-    publica la CMF. Una fila por cuenta impresa; montos en miles de pesos (M$) con el signo impreso.
+    Excel curado localmente a partir de los PDF de estados financieros que publica la CMF.
+    El script no extrae PDFs: publica una fila por cuenta ya consolidada; montos en miles de pesos
+    (M$) con el signo impreso.
 
 Cobertura publicada: cierres de diciembre 2014–2025 (ANIO_DESDE). La fuente trae 2010, 2011 y 2012
 pero no 2013; para no dejar un hueco en la serie se publica desde 2014.

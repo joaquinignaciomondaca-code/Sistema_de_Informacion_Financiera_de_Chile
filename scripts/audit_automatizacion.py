@@ -2,7 +2,7 @@
 """Guardián de automatización: ninguna tabla publicada puede quedar como «foto fija» sin aviso.
 
 Inventario: pipelines/auto/inventario.json declara, para CADA tabla de data_manifest.json, qué
-workflow y qué script la actualizan, o el motivo explícito por el que es manual.
+workflow y qué script la actualizan, o si el flujo es híbrido/manual y cuál es su motivo.
 
 Revisión estática (en cada push, sin red):
   1. toda tabla de data_manifest.json y toda vista del sitio (SEMANTIC_VIEWS de
@@ -10,7 +10,12 @@ Revisión estática (en cada push, sin red):
   2. el workflow existe, tiene horario (cron) y ejecuta el script declarado;
   3. el script (o los que declara) nombra el archivo publicado de la tabla (o la «marca» declarada
      cuando arma el nombre por partes);
-  4. el texto «modo» que muestra la web coincide: «Manual» si es manual, «Automático» si no.
+  4. el texto «modo» que muestra la web coincide con la modalidad del inventario:
+     «Automático», «Híbrido» o «Manual».
+
+Un flujo híbrido no se trata como una tabla automática: exige declarar los scripts reproducibles
+que validan/compilan el resultado, pero no exige un workflow programado. Así se distingue la
+automatización del procesamiento de la automatización de su orquestación.
 
 Revisión de frescura (--frescura, semanal en Actions, requiere GH_TOKEN y la rama por defecto):
   5. cada workflow del inventario tuvo una corrida exitosa en los últimos `max_dias` días.
@@ -25,6 +30,7 @@ import json
 import os
 import re
 import sys
+import unicodedata
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -54,6 +60,53 @@ def canonico() -> dict[str, str]:
     return mapa
 
 
+def _sin_tildes(texto: object) -> str:
+    """Normaliza las etiquetas de modalidad para comparar sin depender de la tilde."""
+    texto = unicodedata.normalize("NFKD", str(texto or "")).encode("ascii", "ignore").decode()
+    return " ".join(texto.lower().split())
+
+
+def modalidad_web(modo: object) -> str | None:
+    """Devuelve la modalidad declarada por el texto visible en la web."""
+    normalizado = _sin_tildes(modo)
+    if normalizado.startswith("hibrido"):
+        return "hibrido"
+    if normalizado.startswith("manual"):
+        return "manual"
+    if normalizado.startswith("automatico") or "automatico" in normalizado:
+        return "automatico"
+    return None
+
+
+def scripts_hibridos(entrada: dict, tabla: dict, errores: list[str]) -> None:
+    """Valida la parte reproducible de una entrada híbrida sin exigir Actions."""
+    rutas = entrada.get("scripts")
+    if not isinstance(rutas, list) or not rutas:
+        errores.append(f"{tabla['id']}: híbrida sin scripts reproducibles declarados")
+        return
+    textos = []
+    for ruta_relativa in rutas:
+        ruta = RAIZ / str(ruta_relativa)
+        if not ruta.exists():
+            errores.append(f"{tabla['id']}: script híbrido inexistente: {ruta_relativa}")
+            continue
+        textos.append(ruta.read_text(encoding="utf-8", errors="ignore"))
+    if not textos:
+        return
+    fuente = "".join(textos)
+    base = Path(tabla["file_parquet"]).stem
+    if base == "manifest":
+        base = Path(tabla["file_parquet"]).parent.name
+    if tabla["id"] not in fuente and base not in fuente:
+        errores.append(f"{tabla['id']}: ningún script híbrido nombra «{base}» (no la compila)")
+
+
+def modalidad_especial(entrada: dict) -> str | None:
+    """Identifica entradas que no dependen de un workflow programado."""
+    claves = [clave for clave in ("hibrido", "manual") if clave in entrada]
+    return claves[0] if len(claves) == 1 else ("conflicto" if claves else None)
+
+
 def estatica() -> list[str]:
     errores = []
     inv = json.loads(INVENTARIO.read_text(encoding="utf-8"))
@@ -64,18 +117,25 @@ def estatica() -> list[str]:
     ids = {canon_de(t["id"]) for t in man["tables"]}
     for t in man["tables"]:
         e = tablas_inv.get(canon_de(t["id"]))
-        modo = (t.get("modo") or "").lower()
+        modalidad = modalidad_web(t.get("modo"))
         if e is None:
             errores.append(f"{t['id']}: no está en pipelines/auto/inventario.json (¿quién la actualiza?)")
             continue
-        if "manual" in e:
-            if not str(e["manual"]).strip():
-                errores.append(f"{t['id']}: manual sin motivo")
-            if not modo.startswith("manual"):
-                errores.append(f"{t['id']}: es manual pero la web dice «{t.get('modo')}»")
+        especial = modalidad_especial(e)
+        if especial == "conflicto":
+            errores.append(f"{t['id']}: inventario mezcla hibrido y manual")
             continue
-        if modo.startswith("manual") or "automático" not in modo:
-            errores.append(f"{t['id']}: está automatizada pero la web dice «{t.get('modo')}»")
+        if especial in {"hibrido", "manual"}:
+            motivo = e.get(especial)
+            if not str(motivo or "").strip():
+                errores.append(f"{t['id']}: {especial} sin motivo")
+            if modalidad != especial:
+                errores.append(f"{t['id']}: es {especial} pero la web dice «{t.get('modo')}»")
+            if especial == "hibrido":
+                scripts_hibridos(e, t, errores)
+            continue
+        if modalidad != "automatico":
+            errores.append(f"{t['id']}: está automatizada pero la web no dice «Automático»: «{t.get('modo')}»")
         wf = flujos.get(e.get("workflow"))
         if wf is None:
             errores.append(f"{t['id']}: workflow {e.get('workflow')!r} no declarado en el inventario")
@@ -112,7 +172,7 @@ def estatica() -> list[str]:
         if e is None:
             errores.append(f"vista web {nombre} ({ruta}): no está en pipelines/auto/inventario.json (¿quién la actualiza?)")
             continue
-        if tid in ids or "manual" in e:
+        if tid in ids or modalidad_especial(e) in {"hibrido", "manual"}:
             continue  # ya revisada arriba
         wf = flujos.get(e.get("workflow"))
         if wf is None:

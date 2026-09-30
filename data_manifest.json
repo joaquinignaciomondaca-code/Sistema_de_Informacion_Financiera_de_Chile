@@ -4,8 +4,9 @@
   "total_tables": 51,
   "total_records": 10870763,
   "classification": {
-    "automatico": "Extracción y procesamiento 100% por código autónomo (APIs, scrapers, normalizadores)",
-    "manual": "Extracción asistida o transcripción de notas y reportes no estructurados (ej. NotebookLM)"
+    "automatico": "Extracción, validación y publicación ejecutadas por código y workflows programados (APIs, scrapers y normalizadores)",
+    "hibrido": "Extracción o curación inicial asistida desde fuentes no estructuradas, seguida de validación, normalización y publicación reproducibles mediante código; puede ejecutarse fuera de Actions",
+    "manual": "Extracción, selección o transcripción que todavía requiere intervención y no cuenta con un compilador reproducible integrado"
   },
   "tables": [
     {
@@ -513,12 +514,12 @@
       "norma": "Balance general del patrimonio separado (estados financieros publicados en la CMF)",
       "corte": "2014-12 a 2025-12 (diciembre; 2010–2013 sin datos)",
       "frescura": "Anual, cierre de diciembre",
-      "modo": "Manual",
+      "modo": "Híbrido · extracción PDF/Excel local; validación y publicación reproducibles",
       "ultima_actualizacion": "2026-09-28",
       "file_parquet": "outputs/securitizadoras/patrimonios_separados_balance.parquet",
       "registros_reales": 7962,
       "descripcion": "Balance general de cada patrimonio separado, cuenta por cuenta y tal como viene impreso (M$, con su signo, incluidas las líneas de subtotal): 358 balances de 10 securitizadoras. Todos cuadran. La serie parte en diciembre de 2014: de 2010 a 2013 no hay datos.",
-      "origen": "securitizadoras/fuentes/balances_patrimonios_separados.xlsx (lectura de los PDF de EEFF publicados en la CMF) → securitizadoras/scripts/05_publicar_balance_patrimonios.py"
+      "origen": "securitizadoras/fuentes/balances_patrimonios_separados.xlsx (Excel curado localmente a partir de los PDF de EEFF publicados en la CMF) → securitizadoras/scripts/05_publicar_balance_patrimonios.py"
     },
     {
       "id": "ccaf_maestro",
