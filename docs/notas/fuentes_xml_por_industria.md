@@ -1,5 +1,14 @@
 # Fuentes XML/XBRL por industria (auditoría y oportunidades)
 
+> **Estado al 2026-10-01.** Esta nota es un registro del 2026-09-27 y varias cosas que menciona ya
+> no existen: el 2026-09-28 se eliminaron la sonda `scripts/probe_xml_sources.py`, los workflows
+> `probe_xml_sources.yml` y `factoring_leasing_sample.yml` y el laboratorio XML/XBRL (ver «Sin
+> sondas ni laboratorios» en `pipelines/auto/README.md`); `corredoras_bolsa_caratula_eeff_historico`
+> ya no se publica (corredores y agentes publican balance y resultados desde el Excel FECU:
+> `corredoras_bolsa/scripts/actualizar_eeff.py`); y factoring/leasing publica la serie IFRS completa
+> desde el TXT de la CMF (`factoring_leasing/scripts/`), con la muestra de dos filas ya retirada de
+> la web. Las secciones 1 a 4 se conservan solo como evidencia del cotejo de entonces.
+
 Fecha de revisión: 2026-09-27
 Alcance: verificar **qué industrias del sitio pueden alimentarse de XML/XBRL oficiales** en lugar de PDF,
 HTML o planillas, y dejar registro del cotejo hecho para Corredoras de Bolsa.
