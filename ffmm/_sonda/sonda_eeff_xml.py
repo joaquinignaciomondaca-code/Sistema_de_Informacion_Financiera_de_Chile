@@ -90,13 +90,13 @@ def get(url: str, intentos: int = 3) -> tuple[bytes | None, float, str]:
 def leer_xml(raw: bytes) -> tuple[ET.Element | None, str]:
     try:
         return ET.fromstring(raw), "ok"
-    except ET.ParseError as e:
-        err = f"ParseError:{e}"
-    try:  # codificación declarada incorrecta: se relee como latin-1 sin la declaración
+    except (ET.ParseError, LookupError, ValueError) as e:  # LookupError: encoding="iso-8011-K" (RUN pegado)
+        err = f"{type(e).__name__}:{e}"
+    try:  # declaración inválida: se descarta y el cuerpo se relee como latin-1
         txt = re.sub(rb"^\s*<\?xml[^>]*\?>", b"", raw).decode("latin-1")
-        return ET.fromstring(txt), "ok_tras_latin1 (" + err[:60] + ")"
-    except ET.ParseError as e:
-        return None, f"{err[:80]} | reintento: {str(e)[:60]}"
+        return ET.fromstring(txt), "ok_sin_declaracion (" + err[:70] + ")"
+    except Exception as e:  # noqa: BLE001
+        return None, f"{err[:80]} | reintento: {type(e).__name__}:{str(e)[:60]}"
 
 
 def num(txt: str | None):
@@ -227,6 +227,14 @@ def procesar(item: dict) -> dict:
     return r
 
 
+def seguro(item: dict) -> dict:
+    try:
+        return procesar(item)
+    except Exception as e:  # noqa: BLE001
+        return {"run": item["run"], "anio": item["anio"], "grupo": item["grupo"], "clase": "error_inesperado",
+                "t_ficha": 0, "est_ficha": "?", "error": repr(e)[:200]}
+
+
 def pct(a, b):
     return f"{a}/{b}" + (f" ({100 * a / b:.1f}%)" if b else "")
 
@@ -250,6 +258,9 @@ def resumir(filas: list[dict]) -> dict:
     R["enlaces_pdf"] = {k: sum(1 for f in filas if f.get(k)) for k in ("pdf_notas", "pdf_dictamen", "pdf_declaracion")}
     R["generadores"] = dict(Counter(f.get("generador") for f in ok).most_common(8))
     R["declaracion_xml"] = dict(Counter(f.get("decl") for f in filas if "decl" in f))
+    R["declaraciones_anomalas"] = [[f["run"], f["anio"], f["decl"]] for f in filas
+                                   if "decl" in f and f["decl"].lower() not in ("iso-8859-1", "utf-8")][:15]
+    R["errores_inesperados"] = [[f["run"], f["anio"], f.get("error")] for f in filas if f["clase"] == "error_inesperado"][:6]
     R["parse"] = dict(Counter(f.get("parse", "")[:40] for f in filas if "parse" in f))
     R["moneda"] = dict(Counter(f["moneda"] for f in ok))
     R["flags_ESF_ERI_ECAN_EFEdir_EFEind"] = dict(Counter(f["flags"] for f in ok).most_common(6))
@@ -326,7 +337,7 @@ def main() -> int:
     muestra = muestra[:limite]
     t0 = time.time()
     with ThreadPoolExecutor(max_workers=int(os.environ.get("SONDA_HILOS", "4"))) as ex:
-        filas = list(ex.map(procesar, muestra))
+        filas = list(ex.map(seguro, muestra))
     seg = round(time.time() - t0, 1)
     out = AQUI / "out"
     out.mkdir(exist_ok=True)
