@@ -135,3 +135,101 @@ class CoberturaTest(unittest.TestCase):
         motivo = c.motivo_detener(100, malos)
         self.assertIn("6 de 100 balances no cuadran", motivo)
         self.assertIn(malos[0], motivo)
+
+
+# ---------------------------------------------------------------------------
+# Fondos mutuos (XML IFRS de la CMF): activo − pasivo = activo neto y las identidades del estado de resultados
+# ---------------------------------------------------------------------------
+def ffmm(run, **cuentas):
+    """Filas publicadas de un fondo y cierre (solo las cuentas pedidas)."""
+    return [{"periodo": "2025-12", "run_fondo": run, "codigo_cuenta": k, "valor_miles_mf": v} for k, v in cuentas.items()]
+
+
+_NO_CEROS = {
+    "EfectivoYEfectivoEquivalente": 116573, "ActivosFinancierosACostoAmortizado": 192755620, "OtrosActivos": 7,
+    "TotalActivo": 192872200, "RemuneracionesSociedadAdministradora": 12234, "OtrosDocumentosYCuentasPorPagar": 14691,
+    "TotalPasivo": 26925, "ActivoNetoAtribuibleALosParticipes": 192845275,
+    "InteresesYReajustes": 11317039,
+    "CambiosNetosEnValorRazonableDeActivosYPasivosFinancierosAValorRazonableConEfectoEnResultados": -3823,
+    "ResultadoEnVentaDeInstrumentosFinancieros": -20255, "OtrosEri": 73,
+    "TotalIngresosPerdidasNetosDeLaOperacion": 11293034, "ComisionDeAdministracion": -2552317,
+    "OtrosGastosDeOperacion": -50997, "TotalGastosDeOperacion": -2603314,
+    "UtilidadPerdidaDeLaOperacionAntesDeImpuesto": 8689720, "ImpuestosALasGananciasPorInversionesEnElExterior": 0,
+    "UtilidadPerdidaDeLaOperacionDespuesDeImpuesto": 8689720,
+    c._FFMM_AUMENTO_ANTES: 8689720, "DistribucionDeBeneficios": 0, c._FFMM_AUMENTO_DESPUES: 8689720,
+}
+# Los archivos reales traen siempre las 35 cuentas (las que valen cero, con 0): sin ellas las sumas no se evalúan.
+COMPLETO = {**{k: 0 for k in c.FFMM_ACTIVOS + c.FFMM_PASIVOS + c.FFMM_INGRESOS + c.FFMM_GASTOS}, **_NO_CEROS}
+
+
+class FondosMutuosTest(unittest.TestCase):
+    def test_balance_real_cuadra(self):
+        self.assertEqual(c.verificar_ffmm(ffmm("8011", **COMPLETO)), (1, []))
+
+    def test_el_activo_neto_no_es_patrimonio_del_pasivo(self):
+        # un fondo mutuo no suma el activo neto al pasivo: activo − pasivo = activo neto
+        v, malos = c.verificar_ffmm(ffmm("1", TotalActivo=1_000_000, TotalPasivo=10_000, ActivoNetoAtribuibleALosParticipes=500_000))
+        self.assertEqual(v, 1)
+        self.assertIn("Δ 490000", malos[0])
+
+    def test_tolerancia_de_redondeo_y_fondos_independientes(self):
+        filas = (ffmm("1", TotalActivo=100, TotalPasivo=40, ActivoNetoAtribuibleALosParticipes=62)
+                 + ffmm("2", TotalActivo=100, TotalPasivo=40, ActivoNetoAtribuibleALosParticipes=70))
+        v, malos = c.verificar_ffmm(filas)
+        self.assertEqual(v, 2)
+        self.assertEqual(len(malos), 1)
+        self.assertTrue(malos[0].startswith("2025-12/2:"))
+
+    def test_sin_los_tres_totales_no_se_verifica(self):
+        self.assertEqual(c.verificar_ffmm(ffmm("1", TotalActivo=10, TotalPasivo=4)), (0, []))
+
+    def test_las_nueve_identidades_cuadran_con_los_importes_reales(self):
+        self.assertEqual(c.identidades_ffmm(COMPLETO), [])
+
+    def test_cada_identidad_detecta_su_descuadre(self):
+        casos = {
+            "Σ activos = total activo": {"OtrosActivos": 500},
+            "Σ pasivos = total pasivo": {"OtrosDocumentosYCuentasPorPagar": 0},
+            "activo − pasivo = activo neto": {"ActivoNetoAtribuibleALosParticipes": 1},
+            "Σ ingresos = total ingresos": {"OtrosEri": 0},
+            "Σ gastos = total gastos": {"OtrosGastosDeOperacion": 0},
+            "ingresos + gastos = utilidad antes de impuesto": {"UtilidadPerdidaDeLaOperacionAntesDeImpuesto": 1},
+            "utilidad antes + impuestos = utilidad después": {"UtilidadPerdidaDeLaOperacionDespuesDeImpuesto": 1},
+            "utilidad después = aumento del activo neto antes de distribución": {c._FFMM_AUMENTO_ANTES: 1},
+            "aumento antes + distribución = aumento después": {c._FFMM_AUMENTO_DESPUES: 1},
+        }
+        for regla, cambio in casos.items():
+            with self.subTest(regla):
+                malas = [r for r, _d in c.identidades_ffmm({**COMPLETO, **cambio})]
+                self.assertIn(regla, malas)
+
+    def test_una_regla_sin_todos_sus_datos_no_se_evalua(self):
+        parcial = {k: v for k, v in COMPLETO.items() if k != "TotalPasivo"}
+        self.assertEqual(c.identidades_ffmm(parcial), [])
+        self.assertEqual(c.identidades_ffmm({}), [])
+
+    def test_se_puede_pedir_solo_balance_o_solo_resultados(self):
+        roto = {**COMPLETO, "TotalActivo": 1, "TotalGastosDeOperacion": 1}
+        solo_balance = {r for r, _ in c.identidades_ffmm(roto, resultados=False)}
+        solo_resultados = {r for r, _ in c.identidades_ffmm(roto, balance=False)}
+        self.assertTrue(all("activo" in r or "pasivo" in r for r in solo_balance))
+        self.assertFalse(solo_balance & solo_resultados)
+
+    def test_resultados_publicados(self):
+        v, malos = c.verificar_resultados_ffmm(ffmm("8011", **COMPLETO))
+        self.assertEqual((v, malos), (6, []))
+        v, malos = c.verificar_resultados_ffmm(ffmm("8011", **{**COMPLETO, "OtrosEri": 0}))
+        self.assertEqual(v, 6)
+        self.assertEqual(len(malos), 1)
+        self.assertIn("Σ ingresos = total ingresos", malos[0])
+        self.assertTrue(malos[0].startswith("2025-12/8011:"))
+
+    def test_la_compuerta_en_bloque_de_fondos_mutuos(self):
+        filas = []
+        for i in range(30):
+            filas += ffmm(str(i), TotalActivo=1_000_000, TotalPasivo=1_000,
+                          ActivoNetoAtribuibleALosParticipes=999_000 if i >= 6 else 1)
+        v, malos = c.verificar_ffmm(filas)
+        self.assertEqual((v, len(malos)), (30, 6))
+        self.assertTrue(c.debe_detener(v, malos, c.contar_grupos(filas, c.CLAVES_FFMM)))
+        self.assertIn("6 de 30 balances no cuadran", c.motivo_detener(v, malos))
