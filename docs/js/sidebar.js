@@ -328,7 +328,9 @@ const EXPLORER_TREE = [
               { id: "fi_opciones", name: "fi.opciones", rows: "Trimestral", file: "", files: ["outputs/fi/opciones/manifest.json"] },
               { id: "fi_pactos", name: "fi.pactos", rows: "Trimestral", file: "", files: ["outputs/fi/pactos/manifest.json"] }
             ]
-          }
+          },
+          // BEGIN AUTO FI EEFF NAVIGATION
+          // END AUTO FI EEFF NAVIGATION
         ]
       }
     ]

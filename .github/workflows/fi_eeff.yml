@@ -1,22 +1,58 @@
 name: Fondos de inversión - balance y resultados XML IFRS CMF
 
 on:
+  schedule:
+    # Días 5, 15 y 25. Backfill reanudable y relectura de cierres/reenvíos.
+    - cron: '35 15 5,15,25 * *'
   push:
     branches: [main, 'arena/**']
     paths:
+      - fi/scripts/actualizar_eeff.py
+      - fi/scripts/eeff_xml.py
+      - fi/scripts/cotejo_eeff.py
+      - fi/scripts/auditar_eeff.py
+      - fi/scripts/catalogos_eeff.py
       - fi/scripts/validar_fuente_eeff.py
+      - fi/tests/**
+      - pipelines/auto/estable.py
+      - pipelines/auto/rut.py
       - .github/workflows/fi_eeff.yml
   workflow_dispatch:
+    inputs:
+      desde:
+        description: 'Primer cierre de la ventana (AAAA-MM); default pro forma 2010-12'
+        default: '2010-12'
+        type: string
+      hasta:
+        description: 'Último cierre (vacío = último admisible por plazo CMF)'
+        default: ''
+        type: string
+      minutos:
+        description: 'Tiempo máximo; el progreso se conserva'
+        default: '270'
+        type: string
+      max_periodos:
+        description: 'Máximo de cierres a revisar por corrida (0 = sin tope)'
+        default: '0'
+        type: string
+      hilos:
+        description: 'Descargas simultáneas (default 4)'
+        default: '4'
+        type: string
+      refrescar_todo:
+        description: 'Releer también XML sin cambio de nombre y toda la ventana'
+        default: false
+        type: boolean
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: fi-eeff-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
-  validar-fuente:
+  probar:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -24,27 +60,113 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Descargar muestras oficiales para verificar el formato (sin publicación)
-        run: python -m fi.scripts.validar_fuente_eeff --solo-descargar
-      # Bootstrap de fixtures pequeñas para pruebas: únicamente la rama de trabajo.
-      # Se retira al quedar implementado el publicador; no publica tablas ni toca main.
-      - name: Conservar fixtures originales para las pruebas del parser
-        if: success() && github.ref_name != 'main'
-        run: |
-          mkdir -p fi/tests/fixtures
-          cp .local-data/fi_eeff_muestra/*.xml .local-data/fi_eeff_muestra/*.html .local-data/fi_eeff_muestra/muestras.json fi/tests/fixtures/
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add fi/tests/fixtures
-          if ! git diff --cached --quiet; then
-            git commit -m "FI: fixtures oficiales para validar XML y cotejo de fichas"
-            git push origin "HEAD:${GITHUB_REF_NAME}"
-          fi
-      - name: Conservar muestras originales y fichas para el cotejo
+      - name: Dependencias
+        run: python -m pip install --disable-pip-version-check pyarrow==21.0.0 beautifulsoup4==4.13.5
+      - name: Pruebas de fuentes originales, parser, cotejo, conservación y publicación
+        run: python -m unittest discover -s fi/tests -v
+      - name: Verificar las ocho muestras con sus fichas actuales (sin publicación)
+        run: python -m fi.scripts.validar_fuente_eeff
+      - name: Conservar evidencia del cotejo
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: fi-eeff-muestras-originales
+          name: fi-eeff-cotejo-fuente
           path: .local-data/fi_eeff_muestra/
           retention-days: 30
-          if-no-files-found: error
+          if-no-files-found: warn
+
+  extraer-y-publicar:
+    needs: probar
+    # Un push de rama de trabajo solo prueba. La carga/publicación en ella es explícita.
+    if: github.ref_name == 'main' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Dependencias
+        run: python -m pip install --disable-pip-version-check pyarrow==21.0.0 beautifulsoup4==4.13.5
+      - name: Recuperar progreso de esta rama
+        uses: actions/cache/restore@v4
+        with:
+          path: .local-data/fi_eeff
+          key: fi-eeff-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            fi-eeff-${{ github.ref_name }}-
+      - name: Extraer, validar y preparar cierres completos
+        id: procesar
+        env:
+          DESDE: ${{ inputs.desde }}
+          HASTA: ${{ inputs.hasta }}
+          MINUTOS: ${{ inputs.minutos }}
+          PERIODOS: ${{ inputs.max_periodos }}
+          HILOS: ${{ inputs.hilos }}
+          REFRESCAR: ${{ inputs.refrescar_todo }}
+        run: |
+          args=()
+          if [ -n "${HASTA}" ]; then args+=(--hasta "${HASTA}"); fi
+          if [ "${REFRESCAR}" = "true" ]; then args+=(--refrescar-todo); fi
+          python -m fi.scripts.actualizar_eeff --desde "${DESDE:-2010-12}" --minutos "${MINUTOS:-270}" \
+            --max-periodos "${PERIODOS:-0}" --hilos "${HILOS:-4}" "${args[@]}"
+      - name: Auditar toda la salida antes de permitir el push
+        id: auditar
+        if: success() && steps.procesar.outputs.publicado == 'true'
+        run: |
+          python -m fi.scripts.auditar_eeff
+          python scripts/auditar_eeff_ifrs.py
+          python scripts/audit_rut_formatos.py --check
+          python scripts/build_download_catalog.py
+          python scripts/audit_navigation.py
+          python scripts/audit_interfaz.py
+      - name: Publicar exclusivamente datos auditados y regenerar los catálogos sobre la cabeza vigente
+        if: success() && steps.procesar.outputs.publicado == 'true' && steps.auditar.outcome == 'success'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/outputs/fi/fi_balance docs/outputs/fi/fi_resultados docs/outputs/fi/fi_eeff_control.json
+          if git diff --cached --quiet; then echo 'Sin cambios de datos.'; exit 0; fi
+          git commit -m "FI: balance y resultados FIEF validados"
+          datos=$(git rev-parse HEAD)
+          compartidos="data_manifest.json docs/vocabulario.json docs/js/duckdb_client.js docs/js/sidebar.js docs/js/data_viewer.js docs/js/data_dictionary.js docs/js/erd_graph.js docs/js/download_catalog.js docs/index.html"
+          git checkout -- $compartidos
+          for i in 1 2 3 4 5 6 7 8; do
+            git fetch origin "${GITHUB_REF_NAME}"
+            git reset --hard FETCH_HEAD
+            if ! git cherry-pick "$datos"; then
+              git cherry-pick --abort || git reset --hard FETCH_HEAD
+              sleep $(( 15 + RANDOM % 20 ))
+              continue
+            fi
+            python -m fi.scripts.actualizar_eeff --solo-catalogos
+            python scripts/build_download_catalog.py
+            # También se audita la cabeza regenerada: un cambio concurrente no elude la compuerta.
+            python -m fi.scripts.auditar_eeff
+            python scripts/audit_navigation.py
+            git add $compartidos
+            git diff --cached --quiet || git commit -m "FI: catálogo, vistas, diccionario y mapa relacional"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            sleep $(( 15 + RANDOM % 20 ))
+          done
+          echo '::error::No se pudo publicar FI por contención en la rama'
+          exit 1
+      - name: Conservar progreso aunque se detenga la fuente o falle una compuerta
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .local-data/fi_eeff
+          key: fi-eeff-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+      - name: Resumen de cobertura, rechazos y pendientes
+        if: always()
+        run: |
+          if [ -f .local-data/fi_eeff/resumen.json ]; then
+            echo '```json' >> "$GITHUB_STEP_SUMMARY"
+            cat .local-data/fi_eeff/resumen.json >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          fi

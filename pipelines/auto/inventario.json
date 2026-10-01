@@ -85,6 +85,9 @@
     "ffmm_resultados": {
       "workflow": "ffmm_eeff.yml"
     },
+    "fi_balance": {
+      "workflow": "fi_eeff.yml"
+    },
     "fi_bienes_raices": {
       "workflow": "fi_carteras.yml"
     },
@@ -108,6 +111,9 @@
     },
     "fi_pactos": {
       "workflow": "fi_carteras.yml"
+    },
+    "fi_resultados": {
+      "workflow": "fi_eeff.yml"
     },
     "fintech_rpsf_lista_entidades": {
       "workflow": "entidades.yml"
@@ -300,6 +306,12 @@
     "corredoras_eeff.yml": {
       "scripts": [
         "corredoras_bolsa/scripts/actualizar_eeff.py"
+      ],
+      "max_dias": 16
+    },
+    "fi_eeff.yml": {
+      "scripts": [
+        "fi/scripts/actualizar_eeff.py"
       ],
       "max_dias": 16
     }

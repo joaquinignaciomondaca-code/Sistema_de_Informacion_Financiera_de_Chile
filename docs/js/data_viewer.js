@@ -83,7 +83,9 @@ const DATA_VIEWER_CATALOG = [
       { id: "fi_bienes_raices", name: "fi.bienes_raices", detalle: "Bienes raíces", descripcion: "Bienes raíces en cartera de cada fondo." },
       { id: "fi_futuros", name: "fi.futuros_forwards", detalle: "Futuros y forwards", descripcion: "Contratos de futuros y forwards vigentes de cada fondo." },
       { id: "fi_opciones", name: "fi.opciones", detalle: "Opciones", descripcion: "Contratos de opciones vigentes de cada fondo." },
-      { id: "fi_pactos", name: "fi.pactos", detalle: "Pactos", descripcion: "Compras y ventas con pacto de cada fondo." }
+      { id: "fi_pactos", name: "fi.pactos", detalle: "Pactos", descripcion: "Compras y ventas con pacto de cada fondo." },
+      // BEGIN AUTO FI EEFF VIEWER
+      // END AUTO FI EEFF VIEWER
     ]
   },
   {
