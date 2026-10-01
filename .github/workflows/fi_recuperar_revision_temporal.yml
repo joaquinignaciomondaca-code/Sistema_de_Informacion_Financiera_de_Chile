@@ -1,0 +1,56 @@
+name: FI - recuperar evidencia de cobertura de Actions (temporal)
+
+on:
+  push:
+    branches: ['arena/01a0f8b4-sistema-de-informacion-financi']
+    paths: [.github/workflows/fi_recuperar_revision_temporal.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  recuperar:
+    if: contains(github.event.head_commit.message, '[fi-evidencia-cobertura]')
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      actions: read
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: arena/01a0f8b4-sistema-de-informacion-financi
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/download-artifact@v4
+        with:
+          name: fi-eeff-revision-cobertura
+          run-id: 36932700351
+          github-token: ${{ github.token }}
+          path: .local-data/fi_eeff_cobertura_recuperada/
+      - name: Recuperar solo diagnóstico pequeño; nunca Parquet ni fuentes crudas
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          origen = Path('.local-data/fi_eeff_cobertura_recuperada')
+          dato = json.loads((origen / 'revision.json').read_text())
+          assert dato['periodo'] == '2026-06'
+          assert len(dato['fondos']) == 1679
+          assert 'revision_cmf' in dato
+          salida = Path('docs/notas/revision_cobertura_fi_2026-10-01')
+          salida.parent.mkdir(parents=True, exist_ok=True)
+          salida.with_suffix('.json').write_text(json.dumps(dato, ensure_ascii=False, indent=2) + '\n')
+          salida.with_suffix('.md').write_bytes((origen / 'revision.md').read_bytes())
+          resumen = {k: v for k,v in dato['revision_cmf'].items() if k != 'revisiones'}
+          print(json.dumps(resumen, ensure_ascii=False, indent=2))
+          PY
+          [ "${GITHUB_REF_NAME}" = "arena/01a0f8b4-sistema-de-informacion-financi" ]
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/notas/revision_cobertura_fi_2026-10-01.json docs/notas/revision_cobertura_fi_2026-10-01.md
+          git diff --cached --quiet && exit 0
+          git commit -m "FI: conservar diagnóstico de cobertura CMF por tipo y vigencia"
+          git push origin HEAD:arena/01a0f8b4-sistema-de-informacion-financi
