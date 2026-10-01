@@ -28,6 +28,8 @@ from __future__ import annotations
 import io
 import re
 import unicodedata
+from datetime import datetime, timedelta, timezone
+from html.parser import HTMLParser
 
 from pipelines.auto.rut import dv  # noqa: F401  (reexportado: los extractores lo usaban local)
 
@@ -122,3 +124,117 @@ class Contextos:
 
     def clave_estado(self, periodo, rut, tipo, moneda, taxonomia, estado) -> tuple:
         return (periodo, rut, tipo, moneda, taxonomia, estado)
+
+
+# ---------------------------------------------------------------------------
+# Fecha de «actualizado» del índice
+# ---------------------------------------------------------------------------
+# El índice (`estadisticas_ifrs.php`) muestra, junto a cada archivo, cuándo lo actualizó la CMF:
+#     Diciembre 2025   (actualizado: 26/08/2026 22:01)
+#     2024             (actualizado: 31/03/2025)
+# La CMF reedita cierres antiguos (en 2026 tocó dic-2025 y los tres primeros trimestres de 2025
+# mucho después de su cierre). Quien solo relee los trimestres «abiertos» no se entera, así que
+# los extractores usan esta fecha para decidir si un trimestre ya cerrado hay que volver a bajarlo.
+
+ZONA_CMF = "America/Santiago"
+MESES_CIERRE = ("03", "06", "09", "12")
+_ACTUALIZADO = re.compile(
+    r"actualizado\s*:?\s*(\d{1,2})/(\d{1,2})/(\d{4})(?:\s+(\d{1,2}):(\d{2}))?", re.IGNORECASE)
+_ENLACE_ARCHIVO = re.compile(r"ver_archivo\.php\?(?:[^#]*?&)?inicio=(\d{6})&termino=(\d{6})")
+
+
+def _zona_cmf():
+    try:
+        from zoneinfo import ZoneInfo
+        return ZoneInfo(ZONA_CMF)
+    except Exception:  # noqa: BLE001 - sin base de zonas horarias en el sistema
+        return None
+
+
+def fecha_actualizado(texto: str) -> datetime | None:
+    """«(actualizado: 30/09/2026 23:59)» → instante en UTC; sin texto o fecha imposible, `None`.
+
+    La hora es la de Chile. Si el índice solo trae el día, se toma el final de ese día: para
+    decidir una relectura es la lectura prudente (a lo sumo se baja una vez de más).
+    """
+    m = _ACTUALIZADO.search(texto or "")
+    if not m:
+        return None
+    dia, mes, anio, hora, minuto = m.groups()
+    try:
+        local = datetime(int(anio), int(mes), int(dia), int(hora) if hora else 23,
+                         int(minuto) if minuto else 59, 0 if hora else 59)
+    except ValueError:
+        return None
+    zona = _zona_cmf()
+    if zona is not None:
+        # fold=1: ante una hora repetida por el cambio de horario, la lectura posterior.
+        return local.replace(tzinfo=zona, fold=1).astimezone(timezone.utc)
+    return (local + timedelta(hours=4)).replace(tzinfo=timezone.utc)  # peor caso: UTC-4
+
+
+class _EnlacesConFecha(HTMLParser):
+    """Junta, para cada enlace a un archivo, el texto que le sigue hasta el enlace siguiente."""
+
+    def __init__(self):
+        super().__init__(convert_charrefs=True)
+        self.entradas: list[tuple[str, str, list[str]]] = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag != "a":
+            return
+        m = _ENLACE_ARCHIVO.search((dict(attrs).get("href") or "").replace("&amp;", "&"))
+        if m:
+            self.entradas.append((m.group(1), m.group(2), []))
+
+    def handle_data(self, data):
+        if self.entradas:
+            self.entradas[-1][2].append(data)
+
+
+def actualizaciones_indice(raw: bytes) -> dict[str, datetime]:
+    """Trimestre (AAAAMM) → cuándo dice la CMF que actualizó el archivo que lo contiene.
+
+    Un enlace anual (`inicio=202403&termino=202412`) vale para sus cuatro trimestres. Si el
+    índice no trae fechas —o cambia de forma—, devuelve `{}` y los extractores se comportan
+    como siempre: nada se relee por reedición.
+    """
+    if not raw:
+        return {}
+    parser = _EnlacesConFecha()
+    try:
+        parser.feed(raw.decode("utf-8", errors="replace"))
+        parser.close()
+    except Exception:  # noqa: BLE001 - un HTML roto no debe tirar la corrida
+        return {}
+    por_enlace: dict[tuple[str, str], datetime] = {}
+    for inicio, fin, trozos in parser.entradas:
+        fecha = fecha_actualizado(" ".join(trozos))
+        if fecha is not None and fecha > por_enlace.get((inicio, fin), fecha - timedelta(seconds=1)):
+            por_enlace[(inicio, fin)] = fecha
+    por_trimestre: dict[str, datetime] = {}
+    for (inicio, fin), fecha in por_enlace.items():
+        if inicio > fin or inicio[4:] not in MESES_CIERRE or fin[4:] not in MESES_CIERRE:
+            continue
+        anio, mes = int(inicio[:4]), int(inicio[4:])
+        while f"{anio:04d}{mes:02d}" <= fin:
+            clave = f"{anio:04d}{mes:02d}"
+            if fecha > por_trimestre.get(clave, fecha - timedelta(seconds=1)):
+                por_trimestre[clave] = fecha
+            mes += 3
+            if mes > 12:
+                anio, mes = anio + 1, 3
+    return por_trimestre
+
+
+def reeditado_despues(leido_utc: str | None, actualizado: datetime | None) -> bool:
+    """¿La CMF actualizó el archivo después de la última lectura? Sin uno de los datos, no."""
+    if actualizado is None or not leido_utc:
+        return False
+    try:
+        leido = datetime.fromisoformat(str(leido_utc))
+    except ValueError:
+        return False
+    if leido.tzinfo is None:
+        leido = leido.replace(tzinfo=timezone.utc)
+    return actualizado > leido

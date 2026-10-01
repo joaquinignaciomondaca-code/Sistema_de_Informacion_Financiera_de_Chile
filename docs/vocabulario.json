@@ -297,6 +297,24 @@
       "cobertura": "Mensual"
     },
     {
+      "id": "ffmm_balance",
+      "alias": [],
+      "nombre": "ffmm.balance",
+      "tipo": "balance",
+      "sector": "ffmm",
+      "descripcion": "Balance anual IFRS de cada fondo mutuo, vigente o extinto, línea por línea, al 31 de diciembre.",
+      "cobertura": "Anual"
+    },
+    {
+      "id": "ffmm_resultados",
+      "alias": [],
+      "nombre": "ffmm.resultados",
+      "tipo": "resultados",
+      "sector": "ffmm",
+      "descripcion": "Estado de resultados anual IFRS de cada fondo mutuo, vigente o extinto, línea por línea, del ejercicio completo.",
+      "cobertura": "Anual"
+    },
+    {
       "id": "afp_lista_entidades",
       "alias": [
         "afp_maestro"

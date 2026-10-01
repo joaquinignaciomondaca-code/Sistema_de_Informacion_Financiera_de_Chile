@@ -1,7 +1,7 @@
 {
   "dataset": "bancos_cmf_lineas",
   "description": "Líneas contables B1/B2/R1 CMF al grano fuente; importes sin reinterpretar.",
-  "updated_at": "2026-09-28",
+  "updated_at": "2026-10-01",
   "periods": [
     {
       "period": "2022-01",
@@ -607,6 +607,17 @@
       "zip_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-113067_recurso_1.zip?ts=1787944720",
       "xlsx_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-113057_recurso_1.xlsx?ts=1787943075",
       "validated_at": "2026-09-28"
+    },
+    {
+      "period": "2026-08",
+      "file": "outputs/bancos/cmf_b1_b2_r1/2026-08/lineas.parquet",
+      "validation_file": "outputs/bancos/cmf_b1_b2_r1/2026-08/validacion.json",
+      "records": 35028,
+      "sha256_zip": "30d441927a9f0befbdec7fe5aae7a3ebb519684041a0fc6871f42af6ca17f810",
+      "sha256_xlsx": "683bc6a0562cc78865e9d4ad6d32fdf601fab3c84040f0b45d568eaab47dff4d",
+      "zip_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-113894_recurso_1.zip?ts=1790773409",
+      "xlsx_url": "https://www.cmfchile.cl/portal/estadisticas/626/articles-113883_recurso_1.xlsx?ts=1790771875",
+      "validated_at": "2026-10-01"
     }
   ],
   "files": [
@@ -664,7 +675,8 @@
     "outputs/bancos/cmf_b1_b2_r1/2026-04/lineas.parquet",
     "outputs/bancos/cmf_b1_b2_r1/2026-05/lineas.parquet",
     "outputs/bancos/cmf_b1_b2_r1/2026-06/lineas.parquet",
-    "outputs/bancos/cmf_b1_b2_r1/2026-07/lineas.parquet"
+    "outputs/bancos/cmf_b1_b2_r1/2026-07/lineas.parquet",
+    "outputs/bancos/cmf_b1_b2_r1/2026-08/lineas.parquet"
   ],
-  "total_records": 1927964
+  "total_records": 1962992
 }

@@ -115,7 +115,7 @@ scripts/build_macro_web.py:                          # misma TABLAS → web, ent
 
 ### 3.1 Publicación incremental B1/B2/R1 (automático, `publish_cmf_bank_period.py`)
 ```
-Workflow bancos_cmf_mensual.yml: días 1, 11 y 21 13:00 UTC → tests → publish --catch-up (incremental)
+Workflow bancos_cmf_mensual.yml: días 1, 11 y 21 13:00 UTC → tests → publish --catch-up (incremental) → commit
 # Meses ya en manifest se saltan sin descargar. find_source lanza SourceNotPublished si la CMF aún no
 # publica el mes pendiente: si han pasado ≤ DIAS_MAX_ESPERA (75) días desde el cierre → aviso y salida 0
 # ("Nada nuevo"); si pasaron más → error (la CMF cambió el índice o el mes se perdió).
@@ -140,6 +140,18 @@ main(period?):
                  + validacion.json
         actualizar manifest.json de particiones + data_manifest.json (rollback si falla)
     → GITHUB_OUTPUT
+# Commit (workflow): lleva SOLO docs/outputs/bancos/cmf_b1_b2_r1. `data_manifest.json` no viaja en él: lo
+# editan todos los publicadores y, si iba en el commit, el cherry-pick/rebase chocaba con la edición de otro y el
+# reintento no lo arreglaba (reproducido con el historial real; era la causa de «8 intentos por contención»). Se descarta la edición
+# local y en cada intento (≤ 8): fetch → reset --hard FETCH_HEAD → cherry-pick del commit de datos →
+# `publish_cmf_bank_period --solo-data-manifest` (rebuild_data_manifest: regenera la entrada desde las
+# particiones ya publicadas; falla si falta un archivo listado) → build_download_catalog → commit → push.
+#
+# Lectura de lo publicado (verificada 2026-10-01, ver bancos/ESQUEMA_CMF_B1_B2_R1.md):
+#   B1/B2: 4 importes por línea = moneda no reajustable · reajustable IPC · reajustable tipo de cambio · extranjera;
+#          su SUMA es el total de la cuenta (activos = pasivos + patrimonio en 989 de 991 balances banco-mes).
+#   R1:    importe ACUMULADO del ejercicio (enero → mes); se reinicia en enero. Un mes suelto = restar el anterior.
+#   B2:    ~8 cuentas por banco y mes (no es el balance individual completo).   999 = total del sistema (no es un banco).
 # La web lee estas particiones vía `manifest` en SEMANTIC_VIEWS.
 #
 # Estado publicado: 55 particiones 2022-01 → 2026-07 (1.927.964 filas). SEED_PERIOD = 2026-07, así que
@@ -169,19 +181,30 @@ Queda: publish_cmf_bank_period + extract_cmf_bank_lines + inspect_cmf_bank_sampl
 ```
 Web actual: solo Lista de Entidades + muestras cotejadas (+ serie IFRS si backfill completo)
 
-backfill_ifrs.run(batch):                        # Actions diario 12:20 UTC
-    ⟵ catálogo 28 RUT (factoring_leasing_maestro.json)
+backfill_ifrs.run(batch):                        # Actions días 3, 13 y 23, 12:20 UTC
+    ⟵ catálogo (factoring_leasing_maestro.json: 32 RUT al 2026-10-01, 28 con datos; crece con las altas del flujo IFRS)
     períodos = periods_from_index(estadisticas_ifrs.php)
-    por período no cacheado (y batch restante):
+    updates  = ifrs_txt.actualizaciones_indice(índice)    # «(actualizado: …)» que la CMF muestra por archivo
+    por período no cacheado, O cuya caché es anterior a la reedición de la CMF (y batch restante):
         raw = fetch(ver_archivo.php?…)   si falla → annual_fallback (solo enlace anual anunciado)
         parse_period: 1 fila por cuenta/contexto, sin sumar ni redondear
         save_period → .local-data/factoring_leasing_serie/<period>.json (atomic)
 publish_backfill.publish():
-    ✗ si el índice no está completo localmente
-    → docs/outputs/factoring_leasing/{balance,resultados}_serie_ifrs_cmf.parquet
+    ✗ si el índice no está completo localmente (o un cierre reeditado por la CMF aún no se refresca)
+    ✗ cuadratura_serie(balance, resultados): por trimestre, activos = pasivos + patrimonio, identidades del
+      resultado y cobertura mínima de balances verificables (cuadratura.motivo_detener); si falla → ValueError,
+      no escribe nada y la corrida queda en rojo. Estadísticas en metadata["cuadratura"].
+    → docs/outputs/factoring_leasing/{balance,resultados}_serie_ifrs_cmf.parquet (+ _metadata.json)
     reescribe bloques entre marcadores "// BEGIN AUTO …" en duckdb_client.js, sidebar.js, data_viewer.js, data_dictionary.js
     update_root_manifest
     luego workflow corre scripts/audit_navigation.py + audit_web_full.py
+publish_backfill --solo-catalogos (republicar_catalogos):    # lo usa el workflow tras cada fetch
+    regenera esos catálogos + index.html + data_manifest.json desde los Parquet y la metadata YA publicados
+    ✗ si los Parquet no coinciden con el sha256 de la metadata
+Commit (workflow): lleva SOLO los 2 Parquet y la metadata. Los archivos compartidos (catálogos JS, index.html,
+    data_manifest.json, download_catalog.js) NO viajan en él (chocaban con la edición de otro publicador y la serie
+    no se publicaba nunca): en cada intento (≤ 8) fetch → reset --hard FETCH_HEAD → copiar los datos →
+    publish_backfill --solo-catalogos → build_download_catalog → commit → push.
 audit_structured_sample : coteja archivo plano vs ficha HTML (2 entidades; su workflow manual factoring_leasing_sample se eliminó el 2026-09-28)
 publish_structured_sample / publish_income_sample : publican SOLO filas aprobadas (run id + valores fijos)
     → sus Parquet ya NO se muestran en la web (2026-09-28): repetían cifras de la serie IFRS. Quedan como evidencia.
@@ -197,7 +220,8 @@ Legado (pipeline_stream_factoring_leasing, stream_cmf_eeff_series, 02_extract_�
 pipelines/xml_eeff/ (extract en cuarentena + audit_sample) y sus workflows xml_eeff_review / xml_eeff_sample:
 eliminados el 2026-09-28. Nunca publicaron: desde Actions la descarga XBRL de la CMF devuelve HTML.
 (scripts/probe_xml_sources.py y su workflow diario: eliminados antes; las fuentes que vigilaban se
- automatizaron por otras vías: TXT IFRS CMF, carteras FFMM/FI y Excel FECU de corredoras)
+ automatizaron por otras vías: TXT IFRS CMF, carteras FFMM/FI, Excel FECU de corredoras y, desde 2026-10-01,
+ el XML IFRS de cada fondo mutuo: §7b. Ese XML no es el XBRL de emisores: se baja con un GET plano desde Actions)
 ```
 
 ---
@@ -261,6 +285,43 @@ FI    scripts/actualizar_carteras.py  (workflow fi_carteras.yml: días 9, 19 y 2
       confirmación: commit de datos, cherry-pick sobre la rama al día + --solo-data-manifest
 ```
 
+## 7b. Fondos Mutuos: balance y estado de resultados anuales (XML IFRS por fondo y año)
+```
+ffmm/scripts/actualizar_eeff.py + eeff_xml.py   (ffmm_eeff.yml, días 4, 14, 24; incremental, --minutos 270)
+  fuente: ficha del fondo entidad.php?…&rut=RUN&pestania=3&mm=12&aa=AAAA&tipo_norma=IFRS → enlaza el XML «FMEF…»
+          (ifrs_xml_verarchivo.php?archivo=…). No hay XBRL para fondos ni descarga masiva: una ficha y un XML por fondo y año.
+  candidatos: (RUN, año) de cada diciembre dentro de la vida activa del fondo según maestro_fondos_mutuos (2010 en adelante);
+              fondos del registro que nunca reportaron cartera → todos los años (la ficha confirma «No existe información»)
+  estado por (RUN, año): ok · sin_informacion · ilegible · pendiente      (progreso en .local-data/ffmm_eeff, caché de Actions;
+      si se pierde, se reconstruye desde los Parquet y ffmm_eeff_control.json)
+  resolver(RUN, año):
+      GET ficha → clasificar_ficha: enlace XML (gana el reenvío más reciente) | «No existe información…» | sin enlace
+          una respuesta que no es la ficha (desafío JavaScript de la CMF) = ErrorTransitorio, NUNCA «sin información»
+      GET XML → leer_xml: descarta la declaración de codificación (UTF-8 falso, ausente o inventada «iso-8011-K»),
+          decodifica por contenido (UTF-8 estricto, si no latin-1); sin </IFRS> o sin <IFRS = transitorio (a medias)
+      extraer: RUN, cierre 12/AAAA y moneda ($$ → CLP, PROM → USD) deben ser los pedidos; las 35 cuentas del ejercicio
+          (16 de balance + 19 de resultados; código con strip(); «OtrosEri», alias antiguo «Otros» solo si falta);
+          cuentas con serie y las de otros estados se ignoran; importes enteros en miles de la moneda del fondo
+      nueve identidades contables (cuadratura.identidades_ffmm) → avisos, no descartan el fondo aislado
+      reedición: si el nombre del XML cambió → se baja de nuevo y queda en `reediciones`; si el reenvío no se puede leer, se
+          conserva lo publicado y se avisa
+  planificar: nuevos y pendientes + refresco (dos últimos cierres siempre; el resto 1/36 por corrida: crc32(RUN|año) % 36
+      == (día del año // 10) % 36 → toda la historia se revisa una vez al año)
+  4 hilos, pausa 0,05-0,25 s por petición, espera creciente y freno de emergencia (40 fallas seguidas) · tope de tiempo
+  compuerta (evaluar): publica solo si NO hay cierres cerrados pendientes (un cierre abierto, < 150 días, se publica parcial)
+      y NO hay motivo de detención: cuadratura activo − pasivo = activo neto en bloque (≥ 3 y > 5 %, cuadratura.motivo_detener)
+      o > 2 % de XML ilegibles (cambió el formato). 3 corridas sin poder leer un XML → ilegible (se excluye y se lista).
+  escribir: ffmm_balance/<AAAA>.parquet (16 líneas) y ffmm_resultados/<AAAA>.parquet (19), 19 columnas, `orden` fijo por
+      cuenta (el XML las trae en orden alfabético) + manifest.json por tabla + ffmm_eeff_control.json (cierres, sin_informacion,
+      ilegibles, avisos, reediciones) + data_manifest.json; no reescribe lo que no cambió (Table.equals, estable.escribir_json)
+  confirmación: commit solo de datos → fetch → reset --hard FETCH_HEAD → cherry-pick → --solo-data-manifest →
+      build_download_catalog.py → push (≤ 8 intentos)
+  tests (ffmm_eeff.yml, ANTES de procesar): test_eeff_xml + test_actualizar_eeff + test_cuadratura + test_estable;
+      CMF simulada con XML sintéticos con los importes reales del fondo 8011; relojes inyectables (_hoy)
+  medido con 278 fondo-años reales (docs/notas/ffmm_estados_financieros_xml_2026-10-01.md): 277/277 legibles, 9 identidades
+      al 100 %, XML = tabla HTML de la CMF, 9,7 % con la codificación mal declarada, 0,2 % de respuestas transitorias
+```
+
 ---
 
 ## 8. Otros sectores (patrón común "stream + audit")
@@ -309,6 +370,13 @@ pipelines/ifrs_sectores/actualizar.py   (ifrs_sectores.yml, días 2, 12, 22)
   valor = entero literal en pesos (o USD); no entero → nulo + valor_no_numerico; repeticion = n-ésima vez de la cuenta
   incremental: docs/outputs/ifrs_sectores/manifest.json. Trimestre > 150 días desde el cierre = cerrado, no se
     vuelve a pedir; los recientes se releen (presentaciones tardías) y nunca pierden entidades ya publicadas
+  EXCEPCIÓN — cierres reeditados: el índice trae «(actualizado: dd/mm/aaaa hh:mm)» por archivo
+    (ifrs_txt.actualizaciones_indice; hora de Chile → UTC; un enlace anual vale para sus 4 trimestres). Si esa fecha es
+    posterior a `leido_utc` de un trimestre cerrado, se vuelve a bajar y pasa las mismas compuertas. Mismo SHA-256 →
+    solo se anota la lectura (`leido_utc`, `cmf_actualizado_utc`). Si no pasa las compuertas → se conserva lo
+    publicado y se avisa (va a `defectos`, no deja la corrida en rojo; una primera lectura que falla sí).
+  tests (ifrs_sectores.yml, ANTES de publicar): test_actualizar + test_ifrs_txt + test_cuadratura + test_estable
+    + test_conteos; relojes inyectables (_hoy/_ahora): ninguna prueba depende de la fecha en que corre.
   → docs/outputs/{agf,securitizadoras,cajas_compensacion}/<prefijo>_{balance,resultados}/<AAAA>.parquet + manifest
   entidades del sector que reportan y no están en la lista → ::notice + manifest (entidades_fuera_de_lista_…)
   último trimestre: CCAF y sociedades FACTORING|LEASING (no bancos) fuera de su lista → alta en ccaf_maestro /
@@ -320,6 +388,11 @@ corredoras_bolsa/scripts/actualizar_eeff.py   (corredoras_eeff.yml, días 6, 16,
   nombres legibles y nivel: versión HTML del mismo informe (xls=n), una vez por corrida
   1x-2x → corredoras_bolsa_balance ; 30 → resultados ; 31-32 → otros resultados integrales ; 5x (flujo) no
   30.00.00 se repite en el Excel → solo la primera aparición ; miles de pesos
+  compuerta: verificar_fecu (10.00.00 = 21.00.00 + 22.00.00) con `balances_totales`: se detiene ante una falla en
+    bloque Y si casi ningún balance trae los tres totales reconocibles (antes esta segunda condición no existía y un
+    cambio de códigos publicaba a ciegas). Trimestre abierto que no pasa → errores (corrida en rojo si no hubo
+    avance); ya cerrado (> 150 días) → solo aviso. Sin relectura de cierres: el informe no trae fecha de actualización.
+  tests: corredoras_bolsa/tests/test_actualizar_eeff.py (Excel FECU sintéticos), corren en corredoras_eeff.yml antes de publicar
   mismo esquema incremental (manifest.json del sector, cerrado a 150 días)
   controles: DV mód.11, fecha de cada fila = trimestre pedido, valores enteros; activos = pasivos + patrimonio
     cuadra en 2.860 de 2.861 balances (el TXT IFRS: 2.934/2.935 AGF, 223/223 CCAF, 645/645 securitizadoras)
@@ -371,7 +444,7 @@ Los extractores que quedan ya no escriben las tablas retiradas; las auditorías 
 
 ```
 docs/vocabulario.json — ÚNICA fuente de nombres de la web
-  71 tablas: {id, alias[], nombre, tipo, sector, descripcion, cobertura} · 15 sectores · 41 tipos
+  73 tablas: {id, alias[], nombre, tipo, sector, descripcion, cobertura} · 15 sectores · 41 tipos
   regla: una tabla se llama <sector>.<tipo>; TODA lista de entidades se llama lista_entidades
          (única variante: lista_entidades_registro, para el registro único de corredoras)
   nombres_retirados: lista_administradoras, lista_instituciones, lista_emisiones, registro_unico, …
@@ -457,12 +530,13 @@ con los pipelines antiguos de FFMM y FI.)
 |---|---|---|---|
 | macro.yml | diario 10:00 | commit automático | series_bcch (51 series nativas) → build_tablas_tematicas (23 tablas temáticas) → audit_macro_bcch |
 | bancos_cmf_mensual.yml | días 1, 11, 21 13:00 | **sí** (commit + Pages) | tests + publish_cmf_bank_period --catch-up (incremental) |
-| web_audit.yml | push a main, PR hacia main y lunes | no | audit_navigation + audit_web_full + audit_interfaz + prueba DOM + audit_secretos (anotaciones); el lunes, guardián de frescura |
-| factoring_leasing_backfill.yml | días 3, 13, 23 12:20 | **sí** | backfill_ifrs + publish_backfill + auditorías web |
-| ifrs_sectores.yml | días 2, 12, 22 13:30 | **sí** (commit + Pages) | estados IFRS de AGF, securitizadoras y CCAF (§8a) |
-| corredoras_eeff.yml | días 6, 16, 26 13:45 | **sí** (commit + Pages) | estados FECU IFRS de corredores y agentes (§8a) |
+| web_audit.yml | push a main, PR hacia main y lunes | no | audit_navigation + audit_web_full + audit_interfaz + prueba DOM + audit_secretos + auditar_eeff_ifrs (anotaciones); job `pruebas`: todas las pruebas unitarias de los extractores de estados financieros (IFRS, corredoras, banca, factoring) en cada push y PR; el lunes, guardián de frescura |
+| factoring_leasing_backfill.yml | días 3, 13, 23 12:20 | **sí** | tests + backfill_ifrs + publish_backfill (con compuerta contable) + auditorías web; el commit lleva solo datos y regenera lo compartido sobre la cabeza de la rama |
+| ifrs_sectores.yml | días 2, 12, 22 13:30 | **sí** (commit + Pages) | tests + estados IFRS de AGF, securitizadoras y CCAF (§8a) |
+| corredoras_eeff.yml | días 6, 16, 26 13:45 | **sí** (commit + Pages) | tests + estados FECU IFRS de corredores y agentes (§8a) |
 | seguros_carteras.yml | días 7, 17, 27 14:00 | **sí** (commit + Pages) | cartera de inversiones de aseguradoras (§6) |
 | ffmm_carteras.yml | días 8, 18, 28 14:00 | **sí** (commit + Pages) | cartera de fondos mutuos, Circular 1333 (§7) |
+| ffmm_eeff.yml | días 4, 14, 24 14:20 | **sí** | tests + balance y resultados anuales de fondos mutuos desde el XML IFRS de cada fondo (§7b); el commit lleva solo datos y regenera lo compartido sobre la cabeza |
 | fi_carteras.yml | días 9, 19, 29 15:00 | **sí** (commit + Pages) | cartera y pactos de fondos de inversión (§7) |
 | entidades.yml | días 10, 20, 28 12:30 | **sí** (commit + Pages) | altas y vigencia de las listas de AGF, securitizadoras, corredores, fintech, bancos, cooperativas y sistemas de pago (registros CMF), patrimonios separados (inscripciones por registro automático) y AFP (Superintendencia de Pensiones) (§8c) |
 

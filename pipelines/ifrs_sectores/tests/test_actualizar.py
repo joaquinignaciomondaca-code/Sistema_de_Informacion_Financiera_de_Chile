@@ -12,6 +12,7 @@ periodo;rut;nombre;I|C;moneda;cuenta;valor;taxonomia;estado
 from __future__ import annotations
 
 from contextlib import redirect_stdout
+from datetime import date, datetime, timezone
 import io
 import json
 import sys
@@ -67,6 +68,11 @@ def leer(lineas, periodo="202503", listas=None):
 
 LISTAS_COMPLETAS = {s: {} for s in list(actualizar.SECTORES) + list(actualizar.SOLO_LISTA)}
 LISTAS_COMPLETAS["agf"] = {"76034728": "HMC AGF"}
+
+# Fecha de las corridas de prueba. Fija a propósito: «202606 sigue abierto a 150 días» solo es
+# cierto hasta fines de noviembre de 2026, y una prueba que caduca con el calendario dejaría
+# sin publicar al workflow que la corre.
+HOY_FIJO = date(2026, 10, 15)
 
 
 def _datos_agf(ruts):
@@ -377,8 +383,9 @@ class CorridaCompletaTest(unittest.TestCase):
         diccionario.write_text('const DATA_DICTIONARY = [\n];\n', encoding="utf-8")
         reales = {n: getattr(actualizar, n) for n in
                   ("_get", "CONTROL", "ruta_tabla", "RUTA_DICCIONARIO", "cargar_listas",
-                   "actualizar_data_manifest", "agregar_altas")}
+                   "actualizar_data_manifest", "agregar_altas", "_hoy")}
         actualizar._get = lambda url: indice if "estadisticas_ifrs.php" in url else raw
+        actualizar._hoy = lambda: HOY_FIJO      # 202606 «sigue abierto» sin depender del reloj real
         actualizar.CONTROL = control
         actualizar.ruta_tabla = lambda sec, tabla: Path(tmp) / "salida" / sec / tabla
         actualizar.RUTA_DICCIONARIO = diccionario
@@ -420,8 +427,9 @@ class CorridaCompletaTest(unittest.TestCase):
                  if not l.endswith(";ESF C/NC")] + relleno(55, periodo="202606"))
             reales = {n: getattr(actualizar, n) for n in
                       ("_get", "CONTROL", "ruta_tabla", "RUTA_DICCIONARIO", "cargar_listas",
-                       "actualizar_data_manifest", "agregar_altas")}
+                       "actualizar_data_manifest", "agregar_altas", "_hoy")}
             actualizar._get = lambda url: indice if "estadisticas_ifrs.php" in url else solo_resultados
+            actualizar._hoy = lambda: HOY_FIJO
             actualizar.CONTROL = Path(tmp) / "control.json"
             actualizar.ruta_tabla = lambda sec, tabla: Path(tmp) / "salida" / sec / tabla
             actualizar.RUTA_DICCIONARIO = Path(tmp) / "data_dictionary.js"
@@ -437,6 +445,136 @@ class CorridaCompletaTest(unittest.TestCase):
             self.assertEqual(len(pq.read_table(ruta)), antes)
             avisos = json.loads((Path(tmp) / "control.json").read_text())["periodos"]["202606"]["avisos"]
             self.assertTrue(any("pierde filas en balance" in a for a in avisos), avisos)
+
+
+class ReedicionCmfTest(unittest.TestCase):
+    """Un cierre que la CMF reedita se vuelve a leer; uno que no, nunca.
+
+    El índice trae «(actualizado: dd/mm/aaaa hh:mm)» junto a cada archivo. Los trimestres
+    cerrados (más de 150 días) no se releían nunca, así que una reedición tardía de la CMF
+    no llegaba a la web. Los relojes se inyectan: la prueba no depende del día en que corre.
+    """
+
+    HOY = date(2027, 3, 1)                                   # 202606 lleva 243 días: cerrado
+    T0 = datetime(2027, 3, 1, 12, 0, tzinfo=timezone.utc)    # primera lectura
+
+    @staticmethod
+    def _indice(actualizado=None) -> bytes:
+        fecha = f"(actualizado: {actualizado})" if actualizado else ""
+        return ('<html><p><a href="ver_archivo.php?inicio=202606&amp;termino=202606">202606</a></p>'
+                f"<p>{fecha}</p></html>").encode("utf-8")
+
+    @staticmethod
+    def _txt(agfs=2, patrimonio_malo=0) -> bytes:
+        """`agfs` sociedades; las primeras `patrimonio_malo` con el balance descuadrado."""
+        lineas = []
+        for i in range(agfs):
+            # Importes muy por sobre la tolerancia de la cuadratura (1.000 pesos).
+            lineas += sociedad(str(76100000 + i), f"AGF {i} S.A. ADMINISTRADORA GENERAL DE FONDOS",
+                               activos=10_000_000, pasivos=4_000_000,
+                               patrimonio=1_000_000 if i < patrimonio_malo else 6_000_000, periodo="202606")
+        return txt(lineas + relleno(55, periodo="202606"))
+
+    def _correr(self, tmp, indice, raw, ahora, hoy=None):
+        """Una corrida sin red. Devuelve (código, control, URL de TXT pedidas)."""
+        pedidas: list[str] = []
+
+        def get(url):
+            if "estadisticas_ifrs.php" in url:
+                return indice
+            pedidas.append(url)
+            return raw
+
+        nombres = ("_get", "CONTROL", "ruta_tabla", "RUTA_DICCIONARIO", "cargar_listas",
+                   "actualizar_data_manifest", "agregar_altas", "_hoy", "_ahora")
+        reales = {n: getattr(actualizar, n) for n in nombres}
+        diccionario = Path(tmp) / "data_dictionary.js"
+        diccionario.write_text("const DATA_DICTIONARY = [\n];\n", encoding="utf-8")
+        actualizar._get = get
+        actualizar.CONTROL = Path(tmp) / "control.json"
+        actualizar.ruta_tabla = lambda sec, tabla: Path(tmp) / "salida" / sec / tabla
+        actualizar.RUTA_DICCIONARIO = diccionario
+        actualizar.cargar_listas = lambda: LISTAS_COMPLETAS
+        actualizar.actualizar_data_manifest = lambda control: None
+        actualizar.agregar_altas = lambda fuera, periodo: 0
+        actualizar._hoy = lambda: hoy or self.HOY
+        actualizar._ahora = lambda: ahora
+        try:
+            with redirect_stdout(io.StringIO()):
+                codigo = actualizar.main(["--max-periodos", "5"])
+            control = (json.loads(actualizar.CONTROL.read_text(encoding="utf-8"))
+                       if actualizar.CONTROL.exists() else {"periodos": {}})
+            return codigo, control, pedidas
+        finally:
+            for n, v in reales.items():
+                setattr(actualizar, n, v)
+
+    @staticmethod
+    def _filas(tmp) -> int:
+        return len(pq.read_table(Path(tmp) / "salida" / "agf" / "balance" / "2026.parquet"))
+
+    def test_el_cierre_solo_se_relee_si_la_cmf_lo_reedito_despues_de_la_lectura(self):
+        with TemporaryDirectory() as tmp:
+            _, control, pedidas = self._correr(tmp, self._indice(), self._txt(), self.T0)
+            self.assertTrue(control["periodos"]["202606"]["cerrado"])
+            self.assertEqual(len(pedidas), 1)
+
+            # Sin fecha en el índice, o con una fecha anterior a la lectura: no se baja otra vez.
+            self._correr(tmp, self._indice(), self._txt(), self.T0)
+            self._correr(tmp, self._indice("15/02/2027 10:00"), self._txt(), self.T0)
+            self.assertEqual(len(pedidas), 1)
+
+            # Reedición posterior (02/03 09:00 hora de Chile = 12:00 UTC): se baja y, como el
+            # contenido es idéntico, solo se anota la lectura.
+            t1 = datetime(2027, 3, 2, 13, 0, tzinfo=timezone.utc)
+            filas = self._filas(tmp)
+            _, control, pedidas = self._correr(tmp, self._indice("02/03/2027 09:00"), self._txt(), t1)
+            self.assertEqual(len(pedidas), 1)
+            per = control["periodos"]["202606"]
+            self.assertEqual(per["leido_utc"], "2027-03-02T13:00:00+00:00")
+            self.assertEqual(per["cmf_actualizado_utc"], "2027-03-02T12:00:00+00:00")
+            self.assertEqual(self._filas(tmp), filas)
+
+            # Ya leída la reedición, la corrida siguiente no vuelve a bajarlo.
+            t2 = datetime(2027, 3, 3, 13, 0, tzinfo=timezone.utc)
+            _, _, pedidas = self._correr(tmp, self._indice("02/03/2027 09:00"), self._txt(), t2)
+            self.assertEqual(pedidas, [])
+
+    def test_la_reedicion_con_contenido_nuevo_se_publica(self):
+        with TemporaryDirectory() as tmp:
+            self._correr(tmp, self._indice(), self._txt(agfs=2), self.T0)
+            antes = self._filas(tmp)
+            t1 = datetime(2027, 3, 20, 13, 0, tzinfo=timezone.utc)
+            codigo, control, pedidas = self._correr(
+                tmp, self._indice("19/03/2027 10:00"), self._txt(agfs=3), t1)
+            self.assertEqual(codigo, 0)
+            self.assertEqual(len(pedidas), 1)
+            self.assertEqual(self._filas(tmp), antes + 3)         # la AGF nueva trae 3 filas de balance
+            self.assertEqual(control["periodos"]["202606"]["sectores"]["agf"]["entidades"], 3)
+            self.assertEqual(control["periodos"]["202606"]["leido_utc"], "2027-03-20T13:00:00+00:00")
+
+    def test_reedicion_que_no_cumple_las_compuertas_conserva_lo_publicado_sin_fallar(self):
+        with TemporaryDirectory() as tmp:
+            _, previo, _ = self._correr(tmp, self._indice(), self._txt(agfs=25), self.T0)
+            antes = self._filas(tmp)
+            # La CMF reedita el archivo con 10 de 25 balances descuadrados: no se publica.
+            t1 = datetime(2027, 3, 20, 13, 0, tzinfo=timezone.utc)
+            codigo, control, pedidas = self._correr(
+                tmp, self._indice("19/03/2027 10:00"), self._txt(agfs=25, patrimonio_malo=10), t1)
+            self.assertEqual(len(pedidas), 1)
+            self.assertEqual(codigo, 0, "una reedición defectuosa no es una falla de la corrida")
+            self.assertEqual(self._filas(tmp), antes)
+            self.assertEqual(control["periodos"]["202606"]["sha256"], previo["periodos"]["202606"]["sha256"])
+            # La lectura previa queda como estaba: se vuelve a intentar cuando la CMF reedite de nuevo.
+            self.assertEqual(control["periodos"]["202606"]["leido_utc"], "2027-03-01T12:00:00+00:00")
+
+    def test_un_cierre_defectuoso_que_nunca_se_publico_sigue_siendo_un_error(self):
+        """La indulgencia es solo para reediciones: lo que nunca llegó a la web debe verse rojo."""
+        with TemporaryDirectory() as tmp:
+            codigo, control, _ = self._correr(
+                tmp, self._indice(), self._txt(agfs=25, patrimonio_malo=10), self.T0)
+            self.assertEqual(codigo, 1)
+            self.assertNotIn("202606", control["periodos"])
 
 
 if __name__ == "__main__":

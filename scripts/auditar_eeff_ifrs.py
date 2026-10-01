@@ -4,7 +4,8 @@
 El extractor valida «activos = pasivos + patrimonio» al momento de leer un trimestre, pero
 solo de los trimestres que lee: los cerrados (más de 150 días) no se vuelven a descargar
 nunca, así que de los 69 trimestres publicados únicamente el último pasó por la compuerta.
-Este script hace el trabajo que faltaba: recorre **todo lo publicado** y comprueba
+Este script hace el trabajo que faltaba: recorre **todo lo publicado** (AGF, securitizadoras,
+CCAF, factoring y leasing, corredores y agentes de valores, y fondos mutuos) y comprueba
 
   * el cuadre del balance de cada sociedad y trimestre (activos = pasivos + patrimonio);
   * que la compuerta no se haya quedado ciega: si de pronto casi ningún balance trae los
@@ -38,7 +39,11 @@ DOCS = RAIZ / "docs" / "outputs"
 
 # Series publicadas a partir del TXT IFRS de la CMF. Las tres primeras salen de
 # pipelines/ifrs_sectores (particiones por año); factoring y leasing, de
-# factoring_leasing/scripts (un Parquet plano por tabla, mismo archivo de origen).
+# factoring_leasing/scripts (un Parquet plano por tabla, mismo archivo de origen). Corredores y
+# agentes de valores salen del Excel FECU (corredoras_bolsa/scripts, miles de pesos): su balance
+# se cuadra con los códigos 10 = 21 + 22; su estado de resultados no tiene identidades definidas.
+# Los fondos mutuos salen del XML IFRS de la ficha de cada fondo (ffmm/scripts, miles de la moneda del
+# fondo): activo − pasivo = activo neto atribuible a los partícipes y seis identidades de resultados.
 SERIES = [
     # (etiqueta, carpeta de balance, carpeta de resultados, claves, campo valor, verificar_balance, verificar_resultados)
     ("AGF", "agf/agf_balance", "agf/agf_resultados",
@@ -50,6 +55,10 @@ SERIES = [
     ("Factoring y leasing", "factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
      "factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
      cuadratura.CLAVES_FL, "valor_archivo", cuadratura.verificar_fl, cuadratura.verificar_resultados_fl),
+    ("Corredores y agentes", "corredoras_bolsa/corredoras_bolsa_balance", "corredoras_bolsa/corredoras_bolsa_resultados",
+     cuadratura.CLAVES_FECU, "valor_miles_clp", cuadratura.verificar_fecu, lambda filas: (0, [])),
+    ("Fondos mutuos", "ffmm/ffmm_balance", "ffmm/ffmm_resultados",
+     cuadratura.CLAVES_FFMM, "valor_miles_mf", cuadratura.verificar_ffmm, cuadratura.verificar_resultados_ffmm),
 ]
 
 CAMPO_PERIODO = "periodo"

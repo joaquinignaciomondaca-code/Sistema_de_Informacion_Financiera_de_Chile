@@ -226,6 +226,42 @@ const EXPLORER_TREE = [
               { id: "ffmm_futuros", name: "ffmm.futuros_forwards", rows: "Mensual", file: "", files: ["outputs/ffmm/futuros_forwards/manifest.json"] },
               { id: "ffmm_opciones", name: "ffmm.opciones", rows: "Mensual", file: "", files: ["outputs/ffmm/opciones/manifest.json"] }
             ]
+          },
+          {
+            id: "cat_ffmm_balance",
+            type: "circular",
+            label: "Balance anual IFRS · CMF",
+            badge: "Anual validada",
+            badgeType: "data",
+            status: "active",
+            sector: "ffmm",
+            chips: [
+              { label: "Mayores fondos en pesos por activo neto, último cierre (MM$)", query: "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS activo_neto_mm, round(valor_anterior_miles_mf / 1e3, 1) AS activo_neto_anterior_mm FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY valor_miles_mf DESC LIMIT 20;" },
+              { label: "Activo neto de la industria en pesos, por cierre (MM$)", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, round(sum(valor_miles_mf) / 1e3, 0) AS activo_neto_mm FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' GROUP BY periodo ORDER BY periodo;" },
+              { label: "Fondos que informan en dólares, por cierre (miles de US$)", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, round(sum(valor_miles_mf), 0) AS activo_neto_miles_usd FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'USD' GROUP BY periodo ORDER BY periodo;" },
+              { label: "Balance completo del mayor fondo en pesos, último cierre", query: "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf, valor_anterior_miles_mf FROM ffmm_balance WHERE run_fondo = (SELECT run_fondo FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY valor_miles_mf DESC LIMIT 1) AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY orden;" }
+            ],
+            tables: [
+              { id: "ffmm_balance", name: "ffmm.balance", rows: "Anual", file: "", files: ["outputs/ffmm/ffmm_balance/manifest.json"] }
+            ]
+          },
+          {
+            id: "cat_ffmm_resultados",
+            type: "circular",
+            label: "Estado de Resultados anual IFRS · CMF",
+            badge: "Anual validada",
+            badgeType: "data",
+            status: "active",
+            sector: "ffmm",
+            chips: [
+              { label: "Mayores utilidades del último ejercicio, fondos en pesos (MM$)", query: "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS utilidad_mm FROM ffmm_resultados WHERE codigo_cuenta = 'UtilidadPerdidaDeLaOperacionDespuesDeImpuesto' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;" },
+              { label: "Comisión de administración cobrada, por ejercicio (MM$, fondos en pesos)", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, round(-sum(valor_miles_mf) / 1e3, 0) AS comisiones_mm FROM ffmm_resultados WHERE codigo_cuenta = 'ComisionDeAdministracion' AND moneda = 'CLP' GROUP BY periodo ORDER BY periodo;" },
+              { label: "Fondos con pérdida en cada ejercicio", query: "SELECT periodo, count(*) AS fondos, count(*) FILTER (WHERE valor_miles_mf < 0) AS con_perdida, round(100.0 * count(*) FILTER (WHERE valor_miles_mf < 0) / count(*), 1) AS pct_con_perdida FROM ffmm_resultados WHERE codigo_cuenta = 'UtilidadPerdidaDeLaOperacionDespuesDeImpuesto' GROUP BY periodo ORDER BY periodo;" },
+              { label: "Estado de resultados del mayor fondo en pesos, último ejercicio", query: "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf, valor_anterior_miles_mf FROM ffmm_resultados WHERE run_fondo = (SELECT run_fondo FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY valor_miles_mf DESC LIMIT 1) AND periodo = (SELECT max(periodo) FROM ffmm_resultados) ORDER BY orden;" }
+            ],
+            tables: [
+              { id: "ffmm_resultados", name: "ffmm.resultados", rows: "Anual", file: "", files: ["outputs/ffmm/ffmm_resultados/manifest.json"] }
+            ]
           }
         ]
       },
@@ -600,7 +636,7 @@ const EXPLORER_TREE = [
     type: "group",
     label: "FACTORING & LEASING (CMF / NBFI)",
     badges: [
-      { type: "entities", text: "28 Entidades", title: "Lista de 28 entidades de Factoring y Leasing" }
+      { type: "entities", text: "32 Entidades", title: "Lista de 32 entidades de Factoring y Leasing" }
     ],
     status: "active",
     children: [
@@ -614,7 +650,7 @@ const EXPLORER_TREE = [
             id: "cat_factoring_leasing_lista_entidades",
             type: "circular",
             label: "Lista de Entidades",
-            badge: "28 Entidades",
+            badge: "32 Entidades",
             badgeType: "entities",
             status: "active",
             sector: "factoring_leasing",
@@ -633,7 +669,7 @@ const EXPLORER_TREE = [
             id: "cat_factoring_leasing_balance", type: "circular",
             label: "Balance · Serie CMF (2009-03–2026-06)", badge: "70 cierres · 28 RUT", badgeType: "data", status: "active",
             sector: "factoring_leasing",
-            chips: [{ label: "Cuentas de balance CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_balance ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;" }],
+            chips: [{ label: "Cuentas de balance CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, orden, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_balance ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, orden LIMIT 500;" }],
             tables: [{ id: "factoring_leasing_balance", name: "factoring_leasing.balance",
                        rows: "Serie IFRS · sin cotejo integral",
                        file: "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet" }]
@@ -642,7 +678,7 @@ const EXPLORER_TREE = [
             id: "cat_factoring_leasing_resultados", type: "circular",
             label: "Resultados · Serie CMF (2009-03–2026-06)", badge: "70 cierres · 28 RUT", badgeType: "data", status: "active",
             sector: "factoring_leasing",
-            chips: [{ label: "Cuentas de resultados CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_resultados ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;" },
+            chips: [{ label: "Cuentas de resultados CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, orden, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_resultados ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, orden LIMIT 500;" },
                     { label: "Utilidad del período · 1 fila por estado", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, estado_financiero, valor_archivo AS ganancia_perdida FROM factoring_leasing_resultados WHERE lower(cuenta) = 'ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion_contexto = 1 ORDER BY periodo DESC, rut;" },
                     { label: "Dónde se repite 'Ganancia (pérdida)'", query: "SELECT estado_financiero, repeticion_contexto, count(*) AS filas, count(DISTINCT (periodo, rut, tipo_balance)) AS estados FROM factoring_leasing_resultados WHERE lower(cuenta) = 'ganancia (pérdida)' GROUP BY ALL ORDER BY estado_financiero, repeticion_contexto;" }],
             tables: [{ id: "factoring_leasing_resultados", name: "factoring_leasing.resultados",
