@@ -79,10 +79,12 @@ XML y las columnas que la ficha no muestra quedan diferenciadas por `cotejo_fich
 Tolerancia contable: ±2 miles de la moneda o 1 millonésima del importe esperado, lo mayor,
 para cuentas redondeadas en la fuente. El cotejo con HTML exige igualdad exacta.
 
-**Comparativos defectuosos:** en dos muestras reales la fuente omite una cuenta del balance
+**Contextos adicionales defectuosos:** en dos muestras reales la fuente omite una cuenta del balance
 comparativo. No se fabrica un cero ni se traslada otra cuenta de contexto. Se excluye ese
 contexto y su motivo aparece en `manifest.json` y `fi_eeff_control.json`; el actual completo
-puede publicarse. Si una reedición pierde un contexto previamente validado, se conserva
+puede publicarse. Los trimestres con importes incorrectos o sin fechas declaradas también se excluyen: no se
+infiere un rango de fechas ni se publica un trimestre que no cuadra. El balance y el
+acumulado de PeriodoActual deben estar completos y cotejados. Si una reedición pierde un contexto previamente validado, se conserva
 **todo el documento anterior** con su archivo/hash y se registra la actualización rechazada.
 También se conserva ante una fuente desaparecida o una falla de red. No se mezclan cifras de
 dos envíos dentro de un documento para disimular una pérdida.

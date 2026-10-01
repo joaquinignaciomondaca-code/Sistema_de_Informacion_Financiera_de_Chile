@@ -172,7 +172,6 @@ class GuardasTest(unittest.TestCase):
             ("DatosPeriodo/PeriodoPresentacionEstadosFinancieros/Mes", "03"),
             ("DatosPeriodo/MonedaPresentacionEstadosFinancieros", "XYZ"),
             ("Contextos/PeriodoActual/FechaTermino", "2026-09-30"),
-            ("Contextos/PeriodoAnterior/FechaTermino", "2025-03-31"),
             ("DatosPeriodo/EstadoResultadosIntegrales", "N"),
         ]
         for ruta, valor in cambios:
@@ -191,14 +190,45 @@ class GuardasTest(unittest.TestCase):
             with self.subTest(codigo=codigo), self.assertRaises(m.ErrorFuente):
                 m.extraer(cambiar(codigo, quitar=True), "7002", "2026-06")
 
-    def test_resultados_actuales_y_trimestre_actual_descuadrados_se_rechazan(self):
-        for ctx in ("PeriodoActual", "TrimestreActual"):
-            with self.subTest(ctx=ctx), self.assertRaises(m.ErrorFuente):
-                m.extraer(
-                    cambiar("InteresesYReajustes", ctx, valor=1000000),
-                    "7002",
-                    "2026-06",
-                )
+    def test_resultado_acumulado_actual_incorrecto_rechaza_documento(self):
+        with self.assertRaises(m.ErrorFuente):
+            m.extraer(
+                cambiar("InteresesYReajustes", "PeriodoActual", valor=1000000),
+                "7002",
+                "2026-06",
+            )
+
+    def test_trimestre_incorrecto_no_se_publica_pero_actual_completo_se_conserva(self):
+        r = m.extraer(
+            cambiar("InteresesYReajustes", "TrimestreActual", valor=1000000),
+            "7002",
+            "2026-06",
+        )
+        self.assertNotIn("TrimestreActual", r["tablas"]["resultados"])
+        self.assertEqual(
+            r["validacion"]["resultados"]["TrimestreActual"]["estado"], "rechazado"
+        )
+        self.assertIn("PeriodoActual", r["tablas"]["resultados"])
+
+    def test_trimestre_sin_fechas_declaradas_no_se_infiere(self):
+        raiz = m.leer_xml(datos()[0])
+        ctx = raiz.find("Contextos")
+        ctx.remove(ctx.find("TrimestreActual"))
+        r = m.extraer(ET.tostring(raiz), "7002", "2026-06")
+        self.assertNotIn("TrimestreActual", r["tablas"]["resultados"])
+        self.assertIn(
+            "sin fechas declaradas",
+            r["validacion"]["resultados"]["TrimestreActual"]["errores"][0],
+        )
+
+    def test_fechas_incoherentes_de_contexto_adicional_se_excluyen(self):
+        raiz = m.leer_xml(datos()[0])
+        raiz.find("Contextos/TrimestreActual/FechaInicio").text = "2026-01-01"
+        r = m.extraer(ET.tostring(raiz), "7002", "2026-06")
+        self.assertNotIn("TrimestreActual", r["tablas"]["resultados"])
+        self.assertEqual(
+            r["validacion"]["resultados"]["TrimestreActual"]["estado"], "rechazado"
+        )
 
     def test_detalle_de_balance_malo_con_totales_buenos_no_pasa(self):
         with self.assertRaises(m.ErrorFuente):
