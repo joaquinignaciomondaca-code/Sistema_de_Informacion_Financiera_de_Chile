@@ -1,0 +1,36 @@
+name: Fondos de inversión - balance y resultados XML IFRS CMF
+
+on:
+  push:
+    branches: [main, 'arena/**']
+    paths:
+      - fi/scripts/validar_fuente_eeff.py
+      - .github/workflows/fi_eeff.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fi-eeff-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validar-fuente:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Descargar muestras oficiales para verificar el formato (sin publicación)
+        run: python -m fi.scripts.validar_fuente_eeff --solo-descargar
+      - name: Conservar muestras originales y fichas para el cotejo
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fi-eeff-muestras-originales
+          path: .local-data/fi_eeff_muestra/
+          retention-days: 30
+          if-no-files-found: error
