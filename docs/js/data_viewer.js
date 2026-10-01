@@ -93,7 +93,9 @@ const DATA_VIEWER_CATALOG = [
       { id: "ffmm_cartera_nacional", name: "ffmm.cartera_nacional", detalle: "Cartera nacional", descripcion: "Cartera de inversiones nacional (Circular 1333)." },
       { id: "ffmm_cartera_extranjera", name: "ffmm.cartera_extranjera", detalle: "Cartera en el exterior", descripcion: "Cartera de inversiones en el exterior." },
       { id: "ffmm_futuros", name: "ffmm.futuros_forwards", detalle: "Futuros y forwards", descripcion: "Futuros y forwards vigentes al cierre de cada mes." },
-      { id: "ffmm_opciones", name: "ffmm.opciones", detalle: "Opciones", descripcion: "Opciones vigentes al cierre de cada mes." }
+      { id: "ffmm_opciones", name: "ffmm.opciones", detalle: "Opciones", descripcion: "Opciones vigentes al cierre de cada mes." },
+      { id: "ffmm_balance", name: "ffmm.balance", detalle: "Balance anual", descripcion: "Balance IFRS de cada fondo mutuo al 31 de diciembre." },
+      { id: "ffmm_resultados", name: "ffmm.resultados", detalle: "Estado de resultados", descripcion: "Estado de resultados IFRS de cada fondo mutuo por ejercicio." }
     ]
   },
   {

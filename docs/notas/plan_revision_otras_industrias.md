@@ -34,7 +34,7 @@ aplicó en Corredoras (ficha CMF vs dato extraído, período y moneda incluidos)
    el XML de la sociedad securitizadora (`RGSEC`) incluye los patrimonios o solo la matriz.
 
 4. **Bancos.**
-   CMF publica PDF y reportes mensuales (el repo ya parsea el archivo de ancho fijo MB1). Cómo
+   CMF publica PDF y reportes mensuales (el repo ya parsea el TSV MB1: campos separados por tabulador, importes con ceros a la izquierda). Cómo
    probarlo: verificar si los reportes mensuales vienen en XBRL estructurado; si es así, comparar
    una línea del MB1 contra el XBRL antes de cambiar nada.
 

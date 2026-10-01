@@ -1,0 +1,149 @@
+name: Fondos mutuos - balance y estado de resultados anuales (CMF, XML IFRS), 3 veces al mes, incremental
+
+on:
+  schedule:
+    # Días 4, 14 y 24 (14:20 UTC). La CMF publica un XML por fondo y año (cierre de diciembre) en la ficha de cada
+    # fondo; no hay descarga masiva. La primera corrida recorre toda la historia (~7.900 fondos y cierres, ~90 min);
+    # después cada corrida revisa los dos últimos cierres y 1/36 del resto (toda la historia una vez al año) y
+    # baja solo lo que cambió (reenvíos) o apareció (presentaciones tardías).
+    - cron: '20 14 4,14,24 * *'
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/ffmm_eeff.yml
+      - ffmm/scripts/actualizar_eeff.py
+      - ffmm/scripts/eeff_xml.py
+      - ffmm/tests/**
+      # Módulos compartidos que importa el extractor.
+      - pipelines/auto/cuadratura.py
+      - pipelines/auto/estable.py
+  workflow_dispatch:
+    inputs:
+      minutos:
+        description: 'Tope de tiempo de la corrida en minutos (default 270; el progreso se conserva)'
+        required: false
+        default: '270'
+        type: string
+      refrescar_todo:
+        description: 'Revisar la ficha de toda la historia (por defecto, 1/36 por corrida)'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ffmm-eeff-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  validar-y-publicar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    outputs:
+      publicado: ${{ steps.procesar.outputs.publicado }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar dependencias
+        run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
+
+      # Sin red y en segundos: la lectura del XML (codificaciones falsas, desafíos de la CMF, códigos desfasados),
+      # las compuertas contables y la política incremental no pueden llegar a la web sin haber pasado sus pruebas.
+      - name: Pruebas del extractor, de la lectura del XML y de las compuertas contables
+        run: >
+          python -m unittest -v
+          ffmm.tests.test_eeff_xml
+          ffmm.tests.test_actualizar_eeff
+          pipelines.auto.tests.test_cuadratura
+          pipelines.auto.tests.test_estable
+
+      - name: Recuperar el progreso de corridas anteriores (solo esta rama)
+        uses: actions/cache/restore@v4
+        with:
+          path: .local-data/ffmm_eeff
+          key: ffmm-eeff-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: |
+            ffmm-eeff-${{ github.ref_name }}-
+
+      - name: Resolver los fondos y cierres pendientes y publicar la serie si está completa
+        id: procesar
+        env:
+          MINUTOS: ${{ inputs.minutos }}
+          REFRESCAR: ${{ inputs.refrescar_todo }}
+        run: |
+          extra=""
+          if [ "${REFRESCAR}" = "true" ]; then extra="--refrescar-todo"; fi
+          python ffmm/scripts/actualizar_eeff.py --minutos "${MINUTOS:-270}" ${extra}
+
+      - name: Auditar RUT y cuadratura de lo publicado
+        if: always() && steps.procesar.outputs.publicado == 'true'
+        run: |
+          python scripts/audit_rut_formatos.py --check
+          python scripts/auditar_eeff_ifrs.py
+
+      # Los Parquet, el manifiesto de cada tabla y el control solo los escribe este workflow. data_manifest.json y el
+      # catálogo de descargas los editan TODOS los publicadores: si viajaran en el commit de datos chocarían con la
+      # edición de otro (el cherry-pick en conflicto no se arregla reintentando) y la serie quedaría sin publicar.
+      # Por eso el commit lleva solo datos y, en cada intento, se parte de la cabeza vigente de la rama, se aplican los
+      # datos y se regeneran esos archivos sobre ella.
+      - name: Confirmar la serie publicada
+        if: always() && steps.procesar.outputs.publicado == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/outputs/ffmm/ffmm_balance docs/outputs/ffmm/ffmm_resultados docs/outputs/ffmm/ffmm_eeff_control.json
+          if git diff --cached --quiet; then echo 'Sin cambios.'; exit 0; fi
+          ultimo=$(python -c "import json;print(json.load(open('docs/outputs/ffmm/ffmm_balance/manifest.json'))['periodos'][-1])")
+          git commit -m "Fondos mutuos: balance y resultados anuales hasta ${ultimo}"
+          git checkout -- data_manifest.json
+          datos=$(git rev-parse HEAD)
+          # Varias publicaciones compiten por la misma rama: un cherry-pick en conflicto o un push rechazado no deben
+          # abortar el paso (la shell corre con `bash -e`). Se reintenta sobre la cabeza nueva, con espera aleatoria
+          # para desincronizar las corridas que arrancan juntas.
+          for i in 1 2 3 4 5 6 7 8; do
+            git fetch origin "${GITHUB_REF_NAME}"
+            git reset --hard FETCH_HEAD
+            if ! git cherry-pick "$datos"; then
+              git cherry-pick --abort || git reset --hard FETCH_HEAD
+              echo "Cherry-pick en conflicto (intento ${i}/8): otra publicación tocó los mismos archivos."
+              sleep $(( 15 + RANDOM % 20 ))
+              continue
+            fi
+            python ffmm/scripts/actualizar_eeff.py --solo-data-manifest
+            python scripts/build_download_catalog.py
+            git add data_manifest.json docs/js/download_catalog.js
+            git diff --cached --quiet || git commit -m "Fondos mutuos: data_manifest"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "Push rechazado (intento ${i}/8): otra corrida publicó primero."
+            sleep $(( 15 + RANDOM % 20 ))
+          done
+          echo "::error title=Publicación en la rama::No se pudo publicar tras 8 intentos por contención en ${GITHUB_REF_NAME}"
+          exit 1
+
+      - name: Conservar el progreso para la próxima corrida aun si falló la CMF
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: .local-data/ffmm_eeff
+          key: ffmm-eeff-${{ github.ref_name }}-${{ github.run_id }}-${{ github.run_attempt }}
+
+      - name: Resumen visible de la corrida
+        if: always()
+        run: |
+          if [ -f .local-data/ffmm_eeff/resumen.json ]; then
+            echo '```json' >> "$GITHUB_STEP_SUMMARY"
+            cat .local-data/ffmm_eeff/resumen.json >> "$GITHUB_STEP_SUMMARY"
+            echo '```' >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo 'Sin resumen: la corrida terminó antes de procesar fondos.' >> "$GITHUB_STEP_SUMMARY"
+          fi

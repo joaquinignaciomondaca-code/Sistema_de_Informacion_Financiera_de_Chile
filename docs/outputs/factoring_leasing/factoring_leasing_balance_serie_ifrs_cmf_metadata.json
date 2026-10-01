@@ -1,8 +1,8 @@
 {
   "estado": "serie_completa_del_indice_no_cotejo_integral",
   "fuente_indice": "https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
-  "run_actions": "36650995647",
-  "fecha_actualizacion_utc": "2026-09-30T00:35:07.203778+00:00",
+  "run_actions": "36817226109",
+  "fecha_actualizacion_utc": "2026-10-01T04:56:37.663018+00:00",
   "publicado_en_docs": true,
   "primer_periodo": "200903",
   "ultimo_periodo": "202606",
@@ -82,7 +82,14 @@
   "importes_no_enteros_total": 2446,
   "cuentas_contexto_repetidas": 950,
   "cuentas_contexto_repetidas_total": 950,
+  "cuadratura": {
+    "balances_totales": 949,
+    "balances_verificados": 947,
+    "balances_descuadrados": 0,
+    "identidades_resultados": 1863,
+    "identidades_divergentes": 0
+  },
   "advertencia": "Extracción literal del TXT IFRS CMF. No es un cotejo integral de estados; no convertir monedas, sumar balances individual/consolidado, deduplicar etiquetas, ni interpretar valores no enteros como cero. Filas y faltantes según fuente disponible.",
-  "sha256_balance_parquet": "d8228b4d491aa24c444777dde830133ab1161013c7491336002fbd4b05d6efe6",
-  "sha256_resultados_parquet": "ceb8d0cc464f2b208c0776a02d1928a3b96e0522fbfd606d397c1237afcae2d6"
+  "sha256_balance_parquet": "63ce5c417905e2ea8c3d75d7d71148adbe2e7e6f54ebf5ccc1ced31ea1ac22af",
+  "sha256_resultados_parquet": "19f6d3c5601cee11b0e8ddae4ae4e2f40db7de992f7e731a0dba05a5f62e5b1b"
 }

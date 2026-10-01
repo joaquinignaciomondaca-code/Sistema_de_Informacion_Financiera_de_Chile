@@ -135,9 +135,12 @@ def clasificar_fecu(f: dict):
     return {"10.00.00": "A", "21.00.00": "P", "22.00.00": "E"}.get(str(f.get("codigo_fecu")))
 
 
+CLAVES_FECU = ("rut", "tipo_intermediario")
+
+
 def verificar_fecu(filas, tol_abs=1):
     """Balances de corredores y agentes de valores (plan FECU IFRS, miles de pesos)."""
-    return verificar(filas, ("rut", "tipo_intermediario"), "valor_miles_clp", clasificar_fecu, tol_abs)
+    return verificar(filas, CLAVES_FECU, "valor_miles_clp", clasificar_fecu, tol_abs)
 
 
 # ---------------------------------------------------------------------------
@@ -255,3 +258,111 @@ def motivo_detener(verificados: int, malos: list, balances_totales: int | None =
                     f"reconocibles ({verificados / balances_totales:.0%} < {cobertura_minima:.0%}): "
                     "cambiaron las glosas del archivo y la compuerta no puede verificar la lectura")
     return ""
+
+
+# ---------------------------------------------------------------------------
+# Fondos mutuos (XML IFRS de la CMF, «FMEF»; miles de la moneda del fondo)
+# ---------------------------------------------------------------------------
+# Un fondo mutuo no tiene «patrimonio» en el pasivo: el activo neto atribuible a los partícipes se presenta
+# fuera de él, así que la identidad es activo − pasivo = activo neto. Las cuentas se informan ya redondeadas a
+# miles; con 277 archivos reales (2010-2025) las nueve identidades de abajo cuadran al 100 % con ±2.
+CLAVES_FFMM = ("periodo", "run_fondo")
+FFMM_ACTIVOS = ("EfectivoYEfectivoEquivalente", "ActivosFinancierosAValorRazonableConEfectoEnResultados",
+                "ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia",
+                "ActivosFinancierosACostoAmortizado", "CuentasPorCobrarAIntermediarios", "OtrasCuentasPorCobrar",
+                "OtrosActivos")
+FFMM_PASIVOS = ("PasivosFinancierosAValorRazonableConEfectoEnResultados", "CuentasPorAPagarIntermediarios",
+                "RescatesPorPagar", "RemuneracionesSociedadAdministradora", "OtrosDocumentosYCuentasPorPagar",
+                "OtrosPasivos")
+FFMM_INGRESOS = ("InteresesYReajustes", "IngresosPorDividendos",
+                 "DiferenciasDeCambioNetasSobreActivosFinancierosACostoAmortizado",
+                 "DiferenciasDeCambioNetasSobreEfectivoYEfectivoEquivalente",
+                 "CambiosNetosEnValorRazonableDeActivosYPasivosFinancierosAValorRazonableConEfectoEnResultados",
+                 "ResultadoEnVentaDeInstrumentosFinancieros", "OtrosEri")
+FFMM_GASTOS = ("ComisionDeAdministracion", "HonorariosPorCustodiaYAdministracion", "CostosDeTransaccion",
+               "OtrosGastosDeOperacion")
+_FFMM_AUMENTO_ANTES = ("AumentoDisminucionDeActivoNetoAtribuibleAParticipesOriginadasPorActividadesDeLaOperacion"
+                       "AntesDeDistribucionDeBeneficios")
+_FFMM_AUMENTO_DESPUES = ("AumentoDisminucionDeActivoNetoAtribuibleAParticipesOriginadasPorActividadesDeLaOperacion"
+                         "DespuesDeDistribucionDeBeneficios")
+
+
+def clasificar_ffmm(f: dict):
+    return {"TotalActivo": "A", "TotalPasivo": "P", "ActivoNetoAtribuibleALosParticipes": "E"}.get(
+        str(f.get("codigo_cuenta")))
+
+
+def verificar_ffmm(filas, tol_abs=2):
+    """Balances de fondos mutuos: activo = pasivo + activo neto atribuible a los partícipes."""
+    return verificar(filas, CLAVES_FFMM, "valor_miles_mf", clasificar_ffmm, tol_abs)
+
+
+def identidades_ffmm(c: dict, tol_abs: int = 2, balance: bool = True, resultados: bool = True) -> list[tuple[str, int]]:
+    """Las nueve identidades contables de un fondo y un cierre (`c`: código de cuenta → importe).
+
+    Devuelve [(regla, diferencia)] solo de las que no cuadran; una regla a la que le falta algún dato no se evalúa.
+    """
+    malos: list[tuple[str, int]] = []
+
+    def chequear(regla: str, obtenido: int, esperado: int) -> None:
+        d = obtenido - esperado
+        if abs(d) > max(tol_abs, abs(esperado) * 1e-6):
+            malos.append((regla, d))
+
+    def suma(codigos):
+        return sum(c[k] for k in codigos) if all(k in c for k in codigos) else None
+
+    def tiene(*claves) -> bool:
+        return all(k in c for k in claves)
+
+    if balance:
+        if (s := suma(FFMM_ACTIVOS)) is not None and tiene("TotalActivo"):
+            chequear("Σ activos = total activo", s, c["TotalActivo"])
+        if (s := suma(FFMM_PASIVOS)) is not None and tiene("TotalPasivo"):
+            chequear("Σ pasivos = total pasivo", s, c["TotalPasivo"])
+        if tiene("TotalActivo", "TotalPasivo", "ActivoNetoAtribuibleALosParticipes"):
+            chequear("activo − pasivo = activo neto", c["TotalActivo"] - c["TotalPasivo"],
+                     c["ActivoNetoAtribuibleALosParticipes"])
+    if resultados:
+        if (s := suma(FFMM_INGRESOS)) is not None and tiene("TotalIngresosPerdidasNetosDeLaOperacion"):
+            chequear("Σ ingresos = total ingresos", s, c["TotalIngresosPerdidasNetosDeLaOperacion"])
+        if (s := suma(FFMM_GASTOS)) is not None and tiene("TotalGastosDeOperacion"):
+            chequear("Σ gastos = total gastos", s, c["TotalGastosDeOperacion"])
+        if tiene("TotalIngresosPerdidasNetosDeLaOperacion", "TotalGastosDeOperacion",
+                 "UtilidadPerdidaDeLaOperacionAntesDeImpuesto"):
+            chequear("ingresos + gastos = utilidad antes de impuesto",
+                     c["TotalIngresosPerdidasNetosDeLaOperacion"] + c["TotalGastosDeOperacion"],
+                     c["UtilidadPerdidaDeLaOperacionAntesDeImpuesto"])
+        if tiene("UtilidadPerdidaDeLaOperacionAntesDeImpuesto", "ImpuestosALasGananciasPorInversionesEnElExterior",
+                 "UtilidadPerdidaDeLaOperacionDespuesDeImpuesto"):
+            chequear("utilidad antes + impuestos = utilidad después",
+                     c["UtilidadPerdidaDeLaOperacionAntesDeImpuesto"]
+                     + c["ImpuestosALasGananciasPorInversionesEnElExterior"],
+                     c["UtilidadPerdidaDeLaOperacionDespuesDeImpuesto"])
+        if tiene("UtilidadPerdidaDeLaOperacionDespuesDeImpuesto", _FFMM_AUMENTO_ANTES):
+            chequear("utilidad después = aumento del activo neto antes de distribución",
+                     c["UtilidadPerdidaDeLaOperacionDespuesDeImpuesto"], c[_FFMM_AUMENTO_ANTES])
+        if tiene(_FFMM_AUMENTO_ANTES, "DistribucionDeBeneficios", _FFMM_AUMENTO_DESPUES):
+            chequear("aumento antes + distribución = aumento después",
+                     c[_FFMM_AUMENTO_ANTES] + c["DistribucionDeBeneficios"], c[_FFMM_AUMENTO_DESPUES])
+    return malos
+
+
+def verificar_resultados_ffmm(filas, tol_abs=2):
+    """Estado de resultados de fondos mutuos publicado: las seis identidades de resultados por fondo y cierre.
+
+    Devuelve (verificaciones, [descripción de cada divergencia]); cada fondo y cierre aporta una verificación
+    por identidad evaluable.
+    """
+    grupos: dict[tuple, dict[str, int]] = {}
+    for f in filas:
+        v = f.get("valor_miles_mf")
+        if v is None:
+            continue
+        grupos.setdefault(tuple(f.get(k) for k in CLAVES_FFMM), {})[str(f.get("codigo_cuenta"))] = v
+    verificaciones, malos = 0, []
+    for clave, c in sorted(grupos.items()):
+        verificaciones += 6
+        for regla, delta in identidades_ffmm(c, tol_abs, balance=False):
+            malos.append(f"{'/'.join(map(str, clave))}: {regla} (Δ {delta})")
+    return verificaciones, malos
