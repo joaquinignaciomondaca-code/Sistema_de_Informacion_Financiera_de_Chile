@@ -330,7 +330,75 @@ const EXPLORER_TREE = [
             ]
           },
           // BEGIN AUTO FI EEFF NAVIGATION
-          // END AUTO FI EEFF NAVIGATION
+{
+  id: "cat_fi_balance",
+  type: "circular",
+  label: "Balance trimestral IFRS · CMF",
+  badge: "1 cierres validados",
+  badgeType: "data",
+  status: "active",
+  sector: "fi",
+  chips: [
+    {
+      label: "Mayores patrimonios en pesos, último cierre (MM$)",
+      query: "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS patrimonio_mm FROM fi_balance WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'TotalPatrimonioNeto' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_balance) ORDER BY valor_miles_mf DESC LIMIT 20;"
+    },
+    {
+      label: "Balance actual del mayor fondo en pesos, último cierre",
+      query: "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf FROM fi_balance WHERE contexto = 'PeriodoActual' AND periodo = (SELECT max(periodo) FROM fi_balance) AND run_fondo = (SELECT run_fondo FROM fi_balance WHERE contexto = 'PeriodoActual' AND moneda = 'CLP' AND codigo_cuenta = 'TotalPatrimonioNeto' AND periodo = (SELECT max(periodo) FROM fi_balance) ORDER BY valor_miles_mf DESC LIMIT 1) ORDER BY orden;"
+    },
+    {
+      label: "Cobertura de balances por cierre y contexto",
+      query: "SELECT periodo, contexto, moneda, count(DISTINCT run_fondo) AS fondos FROM fi_balance GROUP BY periodo, contexto, moneda ORDER BY periodo DESC, contexto, moneda;"
+    }
+  ],
+  tables: [
+    {
+      id: "fi_balance",
+      name: "fi.balance",
+      rows: "Trimestral · contextos separados",
+      file: "",
+      files: [
+        "outputs/fi/fi_balance/manifest.json"
+      ]
+    }
+  ]
+},
+{
+  id: "cat_fi_resultados",
+  type: "circular",
+  label: "Estado de Resultados trimestral IFRS · CMF",
+  badge: "1 cierres validados",
+  badgeType: "data",
+  status: "active",
+  sector: "fi",
+  chips: [
+    {
+      label: "Mayores resultados acumulados en pesos, último cierre (MM$)",
+      query: "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_mm FROM fi_resultados WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;"
+    },
+    {
+      label: "Resultado SOLO del trimestre en pesos, según XML (MM$)",
+      query: "SELECT periodo, run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_trimestre_mm, cotejo_ficha FROM fi_resultados WHERE contexto = 'TrimestreActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;"
+    },
+    {
+      label: "Comisiones acumuladas por cierre y moneda, sin mezclar contextos",
+      query: "SELECT periodo, moneda, count(DISTINCT run_fondo) AS fondos, -sum(valor_miles_mf) AS comision_miles_moneda FROM fi_resultados WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'ComisionDeAdministracion' GROUP BY periodo, moneda ORDER BY periodo DESC, moneda;"
+    }
+  ],
+  tables: [
+    {
+      id: "fi_resultados",
+      name: "fi.resultados",
+      rows: "Trimestral · contextos separados",
+      file: "",
+      files: [
+        "outputs/fi/fi_resultados/manifest.json"
+      ]
+    }
+  ]
+},
+  // END AUTO FI EEFF NAVIGATION
         ]
       }
     ]
