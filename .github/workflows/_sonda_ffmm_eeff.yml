@@ -1,0 +1,28 @@
+# TEMPORAL — sonda de investigación (EEFF de fondos mutuos desde el XML IFRS de la CMF).
+# Solo lectura: no publica ni hace commit. Se elimina de la rama al terminar la medición; nunca va a main.
+name: Sonda temporal - EEFF FFMM (XML IFRS CMF)
+
+on:
+  push:
+    branches: [arena/01a0f57d-sistema-de-informacion-financi]
+    paths:
+      - 'ffmm/_sonda/**'
+      - '.github/workflows/_sonda_ffmm_eeff.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  sonda:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Medir ficha + XML sobre la muestra fija
+        env:
+          SONDA_HILOS: '4'
+        run: python ffmm/_sonda/sonda_eeff_xml.py
