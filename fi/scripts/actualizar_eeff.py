@@ -408,12 +408,31 @@ class Frenazo:
 
 
 def procesar(registro, estado, periodo, hoy, ultimo, deadline, hilos, fetcher, forzar):
+    def necesita(run):
+        r = estado.get(run, {})
+        if (
+            r.get("estado") in (None, "pendiente", "rechazado")
+            or r.get("version_parser") != xml.VERSION_PARSER
+        ):
+            return True
+        if forzar:
+            return True
+        # Reanudar/depurar en el mismo día no exige volver a descargar un censo
+        # que acaba de resolverse. --refrescar-todo ignora esta caché diaria.
+        try:
+            revision = (
+                datetime.fromisoformat(r.get("ultima_revision_utc", ""))
+                .astimezone(ZoneInfo("America/Santiago"))
+                .date()
+            )
+        except ValueError:
+            revision = None
+        return revision != hoy and toca_refresco(run, periodo, hoy, ultimo)
+
     pedir = [
         (run, r["tipo_entidad"])
         for run, r in sorted(registro.items(), key=lambda p: int(p[0]))
-        if estado.get(run, {}).get("estado") in (None, "pendiente", "rechazado")
-        or estado.get(run, {}).get("version_parser") != xml.VERSION_PARSER
-        or toca_refresco(run, periodo, hoy, ultimo, forzar)
+        if necesita(run)
     ]
     freno, cuenta = Frenazo(), Counter()
 
@@ -663,6 +682,11 @@ def correr(
             "motivos_rechazo": dict(
                 Counter(r.get("motivo", "")[:120] for r in rechazados).most_common(5)
             ),
+            "ejemplos_pendientes": [
+                {"run": r["run"], "motivo": r.get("motivo", "")[:220]}
+                for r in estado.values()
+                if r["estado"] == "pendiente"
+            ][:8],
             "ejemplos_rechazo": [
                 {"run": r["run"], "motivo": r.get("motivo", "")[:220]}
                 for r in rechazados[:3]

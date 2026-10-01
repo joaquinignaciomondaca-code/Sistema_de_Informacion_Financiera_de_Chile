@@ -152,7 +152,7 @@ class CorridaTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             cfg = make_root(Path(tmp))
             html = datos()[1].replace(b"3.560.527", b"3.560.528", 1)
-            r = correr(cfg, proveedor(html=html))
+            r = correr(cfg, proveedor(html=html), forzar=True)
             self.assertTrue(r["errores"])
             self.assertEqual(r["publicados"], [])
 
@@ -169,8 +169,7 @@ class CorridaTest(unittest.TestCase):
             before = {p: p.read_bytes() for p in paths}
             calls = []
             r = correr(cfg, proveedor(llamadas=calls))
-            self.assertEqual(len(calls), 1)
-            self.assertNotIn("archivo=", calls[0])
+            self.assertEqual(len(calls), 0)
             self.assertEqual(r["publicados"], [])
             for p, b in before.items():
                 self.assertEqual(p.read_bytes(), b)
@@ -189,6 +188,7 @@ class CorridaTest(unittest.TestCase):
                 proveedor(
                     cambiar("TotalActivo", "PeriodoAnualAnterior", valor=1), html
                 ),
+                forzar=True,
             )
             self.assertEqual(p.read_bytes(), antes)
             ctl = json.loads(cfg.control.read_text())
@@ -206,7 +206,7 @@ class CorridaTest(unittest.TestCase):
                 correr(cfg)
                 p = cfg.docs / "fi_balance/2026-06.parquet"
                 before = p.read_bytes()
-                correr(cfg, proveedor(html=html))
+                correr(cfg, proveedor(html=html), forzar=True)
                 self.assertEqual(p.read_bytes(), before)
                 self.assertEqual(auditar(cfg.docs)["errores"], [])
 
