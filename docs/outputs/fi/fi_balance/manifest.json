@@ -1,0 +1,2038 @@
+{
+  "tabla": "fi_balance",
+  "files": [
+    "outputs/fi/fi_balance/2026-06.parquet"
+  ],
+  "periodos": [
+    "2026-06"
+  ],
+  "total_records": 66864,
+  "updated_at": "2026-10-01T21:19:19+00:00",
+  "nota": "Filtrar contexto = 'PeriodoActual' para el cierre/acumulado actual; no sumar contextos ni monedas.",
+  "contextos_excluidos": [
+    {
+      "periodo": "2026-06",
+      "run_fondo": "7031",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "7200",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "7202",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "7228",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "7244",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "7251",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "7260",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "7269",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "7280",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "7281",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9081",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9090",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9095",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9102",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9115",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9118",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9136",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9142",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9152",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9153",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9165",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9167",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9194",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9214",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9230",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9257",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9274",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9275",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9280",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9288",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9289",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9290",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9297",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9307",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9308",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9324",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9336",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9338",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9357",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9363",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9364",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9378",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9383",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9396",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9409",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9410",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9413",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9416",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9420",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9435",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9461",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9472",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9479",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9495",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9502",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9503",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9506",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9508",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9513",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9522",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9531",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9555",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9565",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9601",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9604",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9605",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9613",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9621",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9634",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9642",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9657",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9662",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9664",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9681",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9684",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9689",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9696",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9702",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9711",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9713",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9720",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9725",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9731",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9732",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9736",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9740",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9744",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9755",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9758",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9764",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9769",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9776",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "activo = pasivo y patrimonio (Δ 3000)"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9779",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9781",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9783",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9791",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9794",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9795",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9796",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9802",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9803",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9804",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9805",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9807",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9821",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9822",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9827",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9832",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9840",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9863",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9865",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9866",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9874",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9876",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9878",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9879",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9886",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9899",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9902",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9911",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9912",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9914",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9917",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9919",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9937",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9938",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9939",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9949",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9957",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9958",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9968",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9971",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9989",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9998",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10001",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10003",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10012",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10013",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10025",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10029",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10037",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10038",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10043",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10044",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10062",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10078",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10079",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10081",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10092",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10097",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10115",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10124",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10127",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10134",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10146",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10158",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10172",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10178",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10182",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10187",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10188",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10189",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10192",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10199",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10207",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10213",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10217",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10220",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10228",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "activo = pasivo y patrimonio (Δ -6865)"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10236",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10238",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10242",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10247",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10257",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10263",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10265",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10268",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10272",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10273",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10278",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10283",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10348",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10366",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10398",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10400",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10401",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10402",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10414",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10420",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10423",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10428",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10474",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10475",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10491",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10514",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10536",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10538",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10540",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10555",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10560",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10563",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10565",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10570",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10572",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10591",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10593",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10594",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10595",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10597",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10598",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10608",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10612",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10617",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10626",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10627",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10628",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10635",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10643",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10650",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10653",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10668",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10670",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10672",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10675",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10681",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10682",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10689",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10692",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10695",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10696",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10699",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10707",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10709",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10723",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10730",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10739",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10741",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10742",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10743",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10751",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10778",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10792",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10799",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10806",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10815",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10816",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10825",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10836",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10837",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10844",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10845",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10846",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10861",
+      "contexto": "PeriodoAnualAnterior",
+      "errores": [
+        "faltan 1 cuentas: ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia"
+      ]
+    }
+  ]
+}
