@@ -116,6 +116,9 @@ jobs:
           grep -h -E "^(Sector|Total|Resultados)" eeff.log | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::notice title=EEFF IFRS::$linea"; done
           exit $n
 
+      - name: Estados financieros FI · cuadratura y completitud de todos los contextos
+        run: python -m fi.scripts.auditar_eeff --permitir-vacio
+
       - name: Buscar credenciales en el historial
         run: |
           set +e
@@ -178,7 +181,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Dependencias
-        run: python -m pip install --disable-pip-version-check pandas==2.2.3 pyarrow==21.0.0 openpyxl==3.1.5
+        run: python -m pip install --disable-pip-version-check pandas==2.2.3 pyarrow==21.0.0 openpyxl==3.1.5 beautifulsoup4==4.13.5
       - name: AGF, securitizadoras y CCAF · parseo y compuertas compartidas · corredoras · fondos mutuos · banca
         run: >
           python -m unittest -v
@@ -197,6 +200,8 @@ jobs:
           bancos.tests.test_extract_cmf_bank_lines
           bancos.tests.test_publish_cmf_bank_period
           bancos.tests.test_bank_master_identity
+      - name: Fondos de inversión · XML original, cotejo, contextos y publicación
+        run: python -m unittest discover -s fi/tests -v
       - name: Factoring y leasing · extracción y publicación
         run: python -m unittest discover -s factoring_leasing/tests -v
 

@@ -897,6 +897,396 @@ const DATA_DICTIONARY = [
   {"id": "ffmm_cartera_extranjera", "name": "ffmm.cartera_extranjera", "viewName": "ffmm_cartera_extranjera", "sector": "ffmm", "sectorLabel": "Fondos Mutuos (CMF)", "norma": "Circular CMF 1333", "frescura": "Se actualiza sola 3 veces al mes", "modo": "Automático · incremental, cada mes validado antes de publicarse", "ultimaActualizacion": "2026-09-28", "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php", "descripcion": "Inversiones de cada fondo en instrumentos de emisores extranjeros al cierre de cada mes. Montos en miles de la moneda funcional del fondo.", "corte": "Desde 2001-01", "registros": "Mensual", "columnas": [{"name": "periodo", "type": "VARCHAR", "role": "Fecha", "significado": "Mes informado (AAAA-MM), cartera al último día del mes.", "contable": "No aplica"}, {"name": "run_fondo", "type": "VARCHAR", "role": "FK", "significado": "RUN del fondo mutuo (une con ffmm.lista_entidades).", "contable": "No aplica"}, {"name": "nombre_fondo", "type": "VARCHAR", "role": "Atributo", "significado": "Nombre del fondo en el archivo del mes.", "contable": "No aplica"}, {"name": "nemotecnico", "type": "VARCHAR", "role": "Atributo", "significado": "Nemotécnico del instrumento o contrato (en forwards, la palabra FORWARD).", "contable": "No aplica"}, {"name": "nombre_emisor", "type": "VARCHAR", "role": "Atributo", "significado": "Nombre del emisor en la bolsa extranjera.", "contable": "No aplica"}, {"name": "pais_emisor", "type": "VARCHAR", "role": "Atributo", "significado": "Código del país del emisor.", "contable": "No aplica"}, {"name": "tipo_instrumento", "type": "VARCHAR", "role": "Atributo", "significado": "Tipo de instrumento según la codificación SEIL de la CMF.", "contable": "No aplica"}, {"name": "fecha_vencimiento", "type": "VARCHAR", "role": "Fecha", "significado": "Fecha de vencimiento (vacío si no aplica).", "contable": "No aplica"}, {"name": "situacion_instrumento", "type": "VARCHAR", "role": "Atributo", "significado": "1 sin restricción; 2 con compromiso (pacto); 3 en garantía de derivados o venta corta; 4 otra restricción; 5 préstamo para venta corta.", "contable": "No aplica"}, {"name": "clasificacion_riesgo", "type": "VARCHAR", "role": "Atributo", "significado": "Menor categoría de riesgo (AAA … E, N-1 … N-5; NA si no aplica).", "contable": "No aplica"}, {"name": "grupo_empresarial", "type": "VARCHAR", "role": "Atributo", "significado": "Grupo empresarial del emisor (NA si no aplica).", "contable": "No aplica"}, {"name": "cantidad_unidades", "type": "DOUBLE", "role": "Métrica", "significado": "Unidades nominales (deuda) o número de unidades (capitalización).", "contable": "No aplica"}, {"name": "tipo_unidades", "type": "VARCHAR", "role": "Atributo", "significado": "Moneda o unidad de reajuste de la cantidad de unidades.", "contable": "No aplica"}, {"name": "tir_pct", "type": "DOUBLE", "role": "Métrica", "significado": "TIR de valorización (%), cuando el código de valorización es 1.", "contable": "No aplica"}, {"name": "valor_par_pct", "type": "DOUBLE", "role": "Métrica", "significado": "Porcentaje del valor par, cuando el código de valorización es 2.", "contable": "No aplica"}, {"name": "valor_relevante", "type": "DOUBLE", "role": "Métrica", "significado": "Valor relevante (precio) usado, cuando el código de valorización es 3.", "contable": "No aplica"}, {"name": "codigo_valorizacion", "type": "VARCHAR", "role": "Atributo", "significado": "1 TIR; 2 % del valor par; 3 valor relevante.", "contable": "No aplica"}, {"name": "base_tasa_dias", "type": "DOUBLE", "role": "Atributo", "significado": "Días que cubre la tasa (30, 360, 365; 0 si no aplica).", "contable": "No aplica"}, {"name": "tipo_interes", "type": "VARCHAR", "role": "Atributo", "significado": "NL nominal lineal; NC nominal compuesto; RL real lineal; RC real compuesto; NA no aplica.", "contable": "No aplica"}, {"name": "valorizacion_miles_mf", "type": "DOUBLE", "role": "Métrica", "significado": "Valorización al cierre, en miles de la moneda funcional del fondo, sin decimales.", "contable": "Valor Razonable / MtM"}, {"name": "moneda_liquidacion", "type": "VARCHAR", "role": "Atributo", "significado": "Moneda de liquidación (codificación SEIL; $$ pesos, PROM dólar, UF, etc.).", "contable": "No aplica"}, {"name": "pais_transaccion", "type": "VARCHAR", "role": "Atributo", "significado": "País donde se adquirió el instrumento.", "contable": "No aplica"}, {"name": "pct_capital_emisor", "type": "DOUBLE", "role": "Métrica", "significado": "% del capital del emisor que posee el fondo (acciones y cuotas; 0 en deuda).", "contable": "No aplica"}, {"name": "pct_activo_emisor", "type": "DOUBLE", "role": "Métrica", "significado": "Inversión como % del activo total del emisor.", "contable": "No aplica"}, {"name": "pct_activo_fondo", "type": "DOUBLE", "role": "Métrica", "significado": "Inversión como % del activo total del fondo.", "contable": "No aplica"}]},
   {"id": "ffmm_futuros", "name": "ffmm.futuros_forwards", "viewName": "ffmm_futuros", "sector": "ffmm", "sectorLabel": "Fondos Mutuos (CMF)", "norma": "Circular CMF 1333", "frescura": "Se actualiza sola 3 veces al mes", "modo": "Automático · incremental, cada mes validado antes de publicarse", "ultimaActualizacion": "2026-09-28", "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php", "descripcion": "Contratos de futuro y forward vigentes de cada fondo al cierre de cada mes. Montos en miles de la moneda funcional del fondo.", "corte": "Desde 2001-01", "registros": "Mensual", "columnas": [{"name": "periodo", "type": "VARCHAR", "role": "Fecha", "significado": "Mes informado (AAAA-MM), cartera al último día del mes.", "contable": "No aplica"}, {"name": "run_fondo", "type": "VARCHAR", "role": "FK", "significado": "RUN del fondo mutuo (une con ffmm.lista_entidades).", "contable": "No aplica"}, {"name": "nombre_fondo", "type": "VARCHAR", "role": "Atributo", "significado": "Nombre del fondo en el archivo del mes.", "contable": "No aplica"}, {"name": "activo_objeto", "type": "VARCHAR", "role": "Atributo", "significado": "Activo objeto del contrato.", "contable": "No aplica"}, {"name": "nemotecnico", "type": "VARCHAR", "role": "Atributo", "significado": "Nemotécnico del instrumento o contrato (en forwards, la palabra FORWARD).", "contable": "No aplica"}, {"name": "unidad_cotizacion", "type": "VARCHAR", "role": "Atributo", "significado": "Unidad o moneda de cotización del contrato.", "contable": "No aplica"}, {"name": "fecha_vencimiento", "type": "VARCHAR", "role": "Fecha", "significado": "Fecha de vencimiento (vacío si no aplica).", "contable": "No aplica"}, {"name": "moneda_liquidacion", "type": "VARCHAR", "role": "Atributo", "significado": "Moneda de liquidación (codificación SEIL; $$ pesos, PROM dólar, UF, etc.).", "contable": "No aplica"}, {"name": "pais", "type": "VARCHAR", "role": "Atributo", "significado": "País donde se suscribió el contrato.", "contable": "No aplica"}, {"name": "posicion", "type": "VARCHAR", "role": "Atributo", "significado": "C posición compradora; V posición vendedora.", "contable": "No aplica"}, {"name": "unidades_nominales", "type": "DOUBLE", "role": "Métrica", "significado": "Unidades nominales totales comprometidas.", "contable": "No aplica"}, {"name": "precio_futuro", "type": "DOUBLE", "role": "Métrica", "significado": "Precio a futuro acordado, en la moneda de cotización.", "contable": "No aplica"}, {"name": "monto_comprometido_miles_mf", "type": "DOUBLE", "role": "Métrica", "significado": "Valor total de los contratos al precio acordado, en miles de la moneda funcional del fondo.", "contable": "Valor Razonable / MtM"}, {"name": "valorizacion_mercado_miles_mf", "type": "DOUBLE", "role": "Métrica", "significado": "Valor de mercado, en miles de la moneda funcional del fondo.", "contable": "Valor Razonable / MtM"}]},
   {"id": "ffmm_opciones", "name": "ffmm.opciones", "viewName": "ffmm_opciones", "sector": "ffmm", "sectorLabel": "Fondos Mutuos (CMF)", "norma": "Circular CMF 1333", "frescura": "Se actualiza sola 3 veces al mes", "modo": "Automático · incremental, cada mes validado antes de publicarse", "ultimaActualizacion": "2026-09-28", "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php", "descripcion": "Contratos de opciones vigentes de cada fondo al cierre de cada mes. Montos en miles de la moneda funcional del fondo.", "corte": "Desde 2001-01", "registros": "Mensual", "columnas": [{"name": "periodo", "type": "VARCHAR", "role": "Fecha", "significado": "Mes informado (AAAA-MM), cartera al último día del mes.", "contable": "No aplica"}, {"name": "run_fondo", "type": "VARCHAR", "role": "FK", "significado": "RUN del fondo mutuo (une con ffmm.lista_entidades).", "contable": "No aplica"}, {"name": "nombre_fondo", "type": "VARCHAR", "role": "Atributo", "significado": "Nombre del fondo en el archivo del mes.", "contable": "No aplica"}, {"name": "activo_objeto", "type": "VARCHAR", "role": "Atributo", "significado": "Activo objeto del contrato.", "contable": "No aplica"}, {"name": "nemotecnico", "type": "VARCHAR", "role": "Atributo", "significado": "Nemotécnico del instrumento o contrato (en forwards, la palabra FORWARD).", "contable": "No aplica"}, {"name": "forma_ejercicio", "type": "VARCHAR", "role": "Atributo", "significado": "A americana; E europea.", "contable": "No aplica"}, {"name": "fecha_expiracion", "type": "VARCHAR", "role": "Fecha", "significado": "Último día en que la opción puede ejercerse.", "contable": "No aplica"}, {"name": "moneda_liquidacion", "type": "VARCHAR", "role": "Atributo", "significado": "Moneda de liquidación (codificación SEIL; $$ pesos, PROM dólar, UF, etc.).", "contable": "No aplica"}, {"name": "pais", "type": "VARCHAR", "role": "Atributo", "significado": "País donde se suscribió el contrato.", "contable": "No aplica"}, {"name": "tipo_opcion", "type": "VARCHAR", "role": "Atributo", "significado": "C derecho a comprar; V derecho a vender.", "contable": "No aplica"}, {"name": "valor_mercado_unitario_prima", "type": "DOUBLE", "role": "Métrica", "significado": "Valor de mercado unitario de la prima.", "contable": "No aplica"}, {"name": "numero_contratos", "type": "DOUBLE", "role": "Métrica", "significado": "Número de contratos de la misma serie.", "contable": "No aplica"}, {"name": "precio_ejercicio", "type": "DOUBLE", "role": "Métrica", "significado": "Precio de ejercicio.", "contable": "No aplica"}, {"name": "valor_mercado_activo_objeto", "type": "DOUBLE", "role": "Métrica", "significado": "Precio de mercado del activo objeto.", "contable": "No aplica"}, {"name": "unidades_activo_objeto", "type": "DOUBLE", "role": "Métrica", "significado": "Unidades del activo objeto que se pueden comprar o vender.", "contable": "No aplica"}, {"name": "inversion_primas_miles_mf", "type": "DOUBLE", "role": "Métrica", "significado": "Inversión en primas, en miles de la moneda funcional del fondo.", "contable": "Valor Razonable / MtM"}, {"name": "valorizacion_precio_ejercicio_miles_mf", "type": "DOUBLE", "role": "Métrica", "significado": "Unidades del activo objeto valorizadas a precio de ejercicio, en miles de la moneda funcional.", "contable": "Valor Razonable / MtM"}, {"name": "valorizacion_mercado_miles_mf", "type": "DOUBLE", "role": "Métrica", "significado": "Valor de mercado, en miles de la moneda funcional del fondo.", "contable": "Valor Razonable / MtM"}, {"name": "pct_primas_activo_fondo", "type": "DOUBLE", "role": "Métrica", "significado": "Inversión en primas como % del activo total del fondo.", "contable": "No aplica"}]},
+  // BEGIN AUTO FI EEFF DICTIONARY
+{
+  id: "fi_balance",
+  name: "fi.balance",
+  viewName: "fi_balance",
+  sector: "fi",
+  sectorLabel: "Fondos de Inversión (CMF)",
+  norma: "IFRS · XML CMF FIEF (Circular 1998)",
+  corte: "2026-06 a 2026-06 · 1 cierres publicados",
+  frecuencia: "Trimestral",
+  frescura: "Se actualiza sola 3 veces al mes",
+  modo: "Automático · incremental; identidades y cotejo antes de publicar",
+  ultimaActualizacion: "2026-10-01",
+  registros: "Trimestral · contextos separados",
+  origen: "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado.",
+  descripcion: "Estado de situación financiera de fondos de inversión FIRES/FINRE, cuenta por cuenta (42 líneas por contexto). TotalPasivo de la fuente incluye patrimonio: el pasivo exigible es TotalPasivoCorriente + TotalPasivoNoCorriente. Miles de la moneda de presentación, sin conversión. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
+  advertencia: "El archivo puede traer varios contextos para la misma cuenta. Elegir PeriodoActual para el saldo/acumulado actual; no sumar contextos ni monedas. sin_columna no significa cotejado contra HTML. Las exclusiones y huecos están en fi_eeff_control.json y manifest.json.",
+  columnas: [
+    {
+      name: "periodo",
+      type: "VARCHAR",
+      role: "PK",
+      significado: "Cierre del archivo AAAA-MM. En comparativos no es la fecha de la cifra: usar fecha_fin_contexto.",
+      contable: "No aplica"
+    },
+    {
+      name: "run_fondo",
+      type: "VARCHAR",
+      role: "FK",
+      significado: "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
+      contable: "No aplica"
+    },
+    {
+      name: "run_fondo_dv",
+      type: "VARCHAR",
+      role: "Atributo",
+      significado: "RUN con DV módulo 11. El DV recibido se conserva separado.",
+      contable: "No aplica"
+    },
+    {
+      name: "dv_fondo_fuente",
+      type: "VARCHAR",
+      role: "Dato fuente",
+      significado: "Dígito verificador literal del XML; las discrepancias quedan como aviso.",
+      contable: "No aplica"
+    },
+    {
+      name: "nombre_fondo",
+      type: "VARCHAR",
+      role: "Dimensión",
+      significado: "Nombre reportado en el XML; puede ser abreviado y diferir del maestro.",
+      contable: "No aplica"
+    },
+    {
+      name: "tipo_entidad",
+      type: "VARCHAR",
+      role: "Dimensión",
+      significado: "FIRES rescatable / FINRE no rescatable, según registro CMF.",
+      contable: "No aplica"
+    },
+    {
+      name: "rut_agf",
+      type: "VARCHAR",
+      role: "FK",
+      significado: "RUT de la administradora reportada, sin DV; une con agf.lista_entidades.",
+      contable: "No aplica"
+    },
+    {
+      name: "razon_social_agf",
+      type: "VARCHAR",
+      role: "Dimensión",
+      significado: "Nombre de administradora declarado en este envío.",
+      contable: "No aplica"
+    },
+    {
+      name: "moneda",
+      type: "VARCHAR",
+      role: "Dimensión",
+      significado: "Moneda de presentación: CLP, USD, EUR o COP; no sumar monedas distintas.",
+      contable: "No aplica"
+    },
+    {
+      name: "moneda_cmf",
+      type: "VARCHAR",
+      role: "Dato fuente",
+      significado: "Código CMF literal ($$ pesos, PROM dólar, EUR euro, COP peso colombiano).",
+      contable: "No aplica"
+    },
+    {
+      name: "contexto",
+      type: "VARCHAR",
+      role: "PK",
+      significado: "Contexto original. PeriodoActual = saldo/acumulado actual; PeriodoAnualAnterior = balance al diciembre anterior; PeriodoAnterior = acumulado comparable; TrimestreActual/TrimestreAnterior = solo el trimestre. SaldoInicialTerceraColumna = apertura IFRS cuando se informa. Filtrar el contexto antes de agregar.",
+      contable: "No aplica"
+    },
+    {
+      name: "fecha_inicio_contexto",
+      type: "VARCHAR",
+      role: "Fecha",
+      significado: "Inicio declarado del contexto. Para el saldo de apertura, la única fecha del XML.",
+      contable: "No aplica"
+    },
+    {
+      name: "fecha_fin_contexto",
+      type: "VARCHAR",
+      role: "Fecha",
+      significado: "Corte/fin declarado de las cifras; en apertura es el mismo instante de FechaInicio.",
+      contable: "No aplica"
+    },
+    {
+      name: "tipo_periodo",
+      type: "VARCHAR",
+      role: "Dimensión",
+      significado: "saldo, acumulado o trimestre; evita confundir stocks y flujos.",
+      contable: "No aplica"
+    },
+    {
+      name: "seccion",
+      type: "VARCHAR",
+      role: "Dimensión",
+      significado: "Rubro del estado: corriente/no corriente, patrimonio, ingresos, gastos u otros integrales.",
+      contable: "No aplica"
+    },
+    {
+      name: "tipo_linea",
+      type: "VARCHAR",
+      role: "Dimensión",
+      significado: "detalle o total. No sumar detalles con sus totales.",
+      contable: "No aplica"
+    },
+    {
+      name: "orden",
+      type: "INTEGER",
+      role: "Atributo",
+      significado: "Orden de presentación de la cuenta en la ficha CMF, dentro de cada tabla/contexto.",
+      contable: "No aplica"
+    },
+    {
+      name: "codigo_cuenta",
+      type: "VARCHAR",
+      role: "PK",
+      significado: "Código FIEF literal. La clave de fila es periodo + run_fondo + contexto + codigo_cuenta.",
+      contable: "No aplica"
+    },
+    {
+      name: "cuenta",
+      type: "VARCHAR",
+      role: "Dimensión",
+      significado: "Glosa del modelo CMF. TotalPasivo se explicita como pasivo más patrimonio.",
+      contable: "No aplica"
+    },
+    {
+      name: "nota",
+      type: "VARCHAR",
+      role: "Atributo",
+      significado: "Referencia a nota del XML, si existe. No se extrae su texto PDF.",
+      contable: "No aplica"
+    },
+    {
+      name: "valor_miles_mf",
+      type: "BIGINT",
+      role: "Métrica",
+      significado: "Entero exacto del XML, en miles de su moneda. No convertido, redondeado ni rellenado. No sumar contextos.",
+      contable: "Valor contable"
+    },
+    {
+      name: "fuente_archivo",
+      type: "VARCHAR",
+      role: "Dato fuente",
+      significado: "Nombre del FIEF original; la URL se reconstruye con RUN, período y la ruta CMF fiifr/xml.",
+      contable: "No aplica"
+    },
+    {
+      name: "enviado_cmf",
+      type: "VARCHAR",
+      role: "Fecha",
+      significado: "Fecha/hora de envío leída del nombre del archivo; hora local declarada, sin inventar zona.",
+      contable: "No aplica"
+    },
+    {
+      name: "sha256_archivo",
+      type: "VARCHAR",
+      role: "Dato fuente",
+      significado: "SHA-256 de los bytes originales del XML descargado.",
+      contable: "No aplica"
+    },
+    {
+      name: "cotejo_ficha",
+      type: "VARCHAR",
+      role: "Atributo",
+      significado: "coincide = importe cotejado exactamente con su concepto y columna HTML. sin_columna = contexto del XML no expuesto por la ficha (por ejemplo trimestres en el cierre anual), validado contablemente pero no cotejable allí.",
+      contable: "No aplica"
+    }
+  ]
+},
+{
+  id: "fi_resultados",
+  name: "fi.resultados",
+  viewName: "fi_resultados",
+  sector: "fi",
+  sectorLabel: "Fondos de Inversión (CMF)",
+  norma: "IFRS · XML CMF FIEF (Circular 1998)",
+  corte: "2026-06 a 2026-06 · 1 cierres publicados",
+  frecuencia: "Trimestral",
+  frescura: "Se actualiza sola 3 veces al mes",
+  modo: "Automático · incremental; identidades y cotejo antes de publicar",
+  ultimaActualizacion: "2026-10-01",
+  registros: "Trimestral · contextos separados",
+  origen: "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado.",
+  descripcion: "Estado de resultados integrales de fondos de inversión FIRES/FINRE, cuenta por cuenta (30 líneas por contexto). Se separan acumulado del ejercicio, trimestre y sus comparativos; no se suman entre sí. Miles de la moneda de presentación, gastos con signo original. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
+  advertencia: "El archivo puede traer varios contextos para la misma cuenta. Elegir PeriodoActual para el saldo/acumulado actual; no sumar contextos ni monedas. sin_columna no significa cotejado contra HTML. Las exclusiones y huecos están en fi_eeff_control.json y manifest.json.",
+  columnas: [
+    {
+      name: "periodo",
+      type: "VARCHAR",
+      role: "PK",
+      significado: "Cierre del archivo AAAA-MM. En comparativos no es la fecha de la cifra: usar fecha_fin_contexto.",
+      contable: "No aplica"
+    },
+    {
+      name: "run_fondo",
+      type: "VARCHAR",
+      role: "FK",
+      significado: "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
+      contable: "No aplica"
+    },
+    {
+      name: "run_fondo_dv",
+      type: "VARCHAR",
+      role: "Atributo",
+      significado: "RUN con DV módulo 11. El DV recibido se conserva separado.",
+      contable: "No aplica"
+    },
+    {
+      name: "dv_fondo_fuente",
+      type: "VARCHAR",
+      role: "Dato fuente",
+      significado: "Dígito verificador literal del XML; las discrepancias quedan como aviso.",
+      contable: "No aplica"
+    },
+    {
+      name: "nombre_fondo",
+      type: "VARCHAR",
+      role: "Dimensión",
+      significado: "Nombre reportado en el XML; puede ser abreviado y diferir del maestro.",
+      contable: "No aplica"
+    },
+    {
+      name: "tipo_entidad",
+      type: "VARCHAR",
+      role: "Dimensión",
+      significado: "FIRES rescatable / FINRE no rescatable, según registro CMF.",
+      contable: "No aplica"
+    },
+    {
+      name: "rut_agf",
+      type: "VARCHAR",
+      role: "FK",
+      significado: "RUT de la administradora reportada, sin DV; une con agf.lista_entidades.",
+      contable: "No aplica"
+    },
+    {
+      name: "razon_social_agf",
+      type: "VARCHAR",
+      role: "Dimensión",
+      significado: "Nombre de administradora declarado en este envío.",
+      contable: "No aplica"
+    },
+    {
+      name: "moneda",
+      type: "VARCHAR",
+      role: "Dimensión",
+      significado: "Moneda de presentación: CLP, USD, EUR o COP; no sumar monedas distintas.",
+      contable: "No aplica"
+    },
+    {
+      name: "moneda_cmf",
+      type: "VARCHAR",
+      role: "Dato fuente",
+      significado: "Código CMF literal ($$ pesos, PROM dólar, EUR euro, COP peso colombiano).",
+      contable: "No aplica"
+    },
+    {
+      name: "contexto",
+      type: "VARCHAR",
+      role: "PK",
+      significado: "Contexto original. PeriodoActual = saldo/acumulado actual; PeriodoAnualAnterior = balance al diciembre anterior; PeriodoAnterior = acumulado comparable; TrimestreActual/TrimestreAnterior = solo el trimestre. SaldoInicialTerceraColumna = apertura IFRS cuando se informa. Filtrar el contexto antes de agregar.",
+      contable: "No aplica"
+    },
+    {
+      name: "fecha_inicio_contexto",
+      type: "VARCHAR",
+      role: "Fecha",
+      significado: "Inicio declarado del contexto. Para el saldo de apertura, la única fecha del XML.",
+      contable: "No aplica"
+    },
+    {
+      name: "fecha_fin_contexto",
+      type: "VARCHAR",
+      role: "Fecha",
+      significado: "Corte/fin declarado de las cifras; en apertura es el mismo instante de FechaInicio.",
+      contable: "No aplica"
+    },
+    {
+      name: "tipo_periodo",
+      type: "VARCHAR",
+      role: "Dimensión",
+      significado: "saldo, acumulado o trimestre; evita confundir stocks y flujos.",
+      contable: "No aplica"
+    },
+    {
+      name: "seccion",
+      type: "VARCHAR",
+      role: "Dimensión",
+      significado: "Rubro del estado: corriente/no corriente, patrimonio, ingresos, gastos u otros integrales.",
+      contable: "No aplica"
+    },
+    {
+      name: "tipo_linea",
+      type: "VARCHAR",
+      role: "Dimensión",
+      significado: "detalle o total. No sumar detalles con sus totales.",
+      contable: "No aplica"
+    },
+    {
+      name: "orden",
+      type: "INTEGER",
+      role: "Atributo",
+      significado: "Orden de presentación de la cuenta en la ficha CMF, dentro de cada tabla/contexto.",
+      contable: "No aplica"
+    },
+    {
+      name: "codigo_cuenta",
+      type: "VARCHAR",
+      role: "PK",
+      significado: "Código FIEF literal. La clave de fila es periodo + run_fondo + contexto + codigo_cuenta.",
+      contable: "No aplica"
+    },
+    {
+      name: "cuenta",
+      type: "VARCHAR",
+      role: "Dimensión",
+      significado: "Glosa del modelo CMF. TotalPasivo se explicita como pasivo más patrimonio.",
+      contable: "No aplica"
+    },
+    {
+      name: "nota",
+      type: "VARCHAR",
+      role: "Atributo",
+      significado: "Referencia a nota del XML, si existe. No se extrae su texto PDF.",
+      contable: "No aplica"
+    },
+    {
+      name: "valor_miles_mf",
+      type: "BIGINT",
+      role: "Métrica",
+      significado: "Entero exacto del XML, en miles de su moneda. No convertido, redondeado ni rellenado. No sumar contextos.",
+      contable: "Valor contable"
+    },
+    {
+      name: "fuente_archivo",
+      type: "VARCHAR",
+      role: "Dato fuente",
+      significado: "Nombre del FIEF original; la URL se reconstruye con RUN, período y la ruta CMF fiifr/xml.",
+      contable: "No aplica"
+    },
+    {
+      name: "enviado_cmf",
+      type: "VARCHAR",
+      role: "Fecha",
+      significado: "Fecha/hora de envío leída del nombre del archivo; hora local declarada, sin inventar zona.",
+      contable: "No aplica"
+    },
+    {
+      name: "sha256_archivo",
+      type: "VARCHAR",
+      role: "Dato fuente",
+      significado: "SHA-256 de los bytes originales del XML descargado.",
+      contable: "No aplica"
+    },
+    {
+      name: "cotejo_ficha",
+      type: "VARCHAR",
+      role: "Atributo",
+      significado: "coincide = importe cotejado exactamente con su concepto y columna HTML. sin_columna = contexto del XML no expuesto por la ficha (por ejemplo trimestres en el cierre anual), validado contablemente pero no cotejable allí.",
+      contable: "No aplica"
+    }
+  ]
+},
+  // END AUTO FI EEFF DICTIONARY
   {
     id: "ffmm_balance",
     name: "ffmm.balance",

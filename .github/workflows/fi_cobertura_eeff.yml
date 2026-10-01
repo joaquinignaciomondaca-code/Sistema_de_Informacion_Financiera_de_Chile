@@ -1,0 +1,69 @@
+name: Fondos de inversión - revisión de cobertura rescatables y no rescatables (solo lectura)
+
+on:
+  push:
+    branches: [main, 'arena/**']
+    paths:
+      - fi/scripts/revisar_cobertura_eeff.py
+      - fi/tests/test_revisar_cobertura_eeff.py
+      - .github/workflows/fi_cobertura_eeff.yml
+  workflow_dispatch:
+    inputs:
+      periodo:
+        description: 'Cierre que se revisará (debe estar publicado)'
+        default: '2026-06'
+        type: string
+      solo_vigentes:
+        description: 'Limitar el contraste a ausencias vigentes y nuevas altas'
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fi-cobertura-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  revisar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Dependencias
+        run: python -m pip install --disable-pip-version-check pyarrow==21.0.0 beautifulsoup4==4.13.5
+      - name: Probar el cruce por tipo, vigencia, fecha e identidad
+        run: python -m unittest fi.tests.test_revisar_cobertura_eeff -v
+      - name: Contrastar padrón, control y ambos estados sin red
+        env:
+          PERIODO: ${{ inputs.periodo || '2026-06' }}
+        run: python -m fi.scripts.revisar_cobertura_eeff --periodo "$PERIODO"
+      - name: Revisar las cuatro listas y las ausencias en ambos tipos contra la CMF
+        if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[fi-revisar-cobertura]'))
+        env:
+          PERIODO: ${{ inputs.periodo || '2026-06' }}
+          SOLO_VIGENTES: ${{ inputs.solo_vigentes }}
+        run: |
+          args=()
+          if [ "$SOLO_VIGENTES" = "true" ]; then args+=(--solo-vigentes); fi
+          python -m fi.scripts.revisar_cobertura_eeff --periodo "$PERIODO" --red --minutos 40 --hilos 6 --exportar-log "${args[@]}"
+      - name: Resumen y evidencia de solo lectura
+        if: always()
+        run: |
+          if [ -f .local-data/fi_eeff_cobertura/revision.md ]; then
+            cat .local-data/fi_eeff_cobertura/revision.md >> "$GITHUB_STEP_SUMMARY"
+          fi
+          # La revisión jamás debe modificar el padrón, los estados ni sus catálogos.
+          git diff --exit-code -- docs/outputs/fi data_manifest.json docs/js docs/vocabulario.json
+      - name: Conservar respuestas originales, hashes y diagnóstico
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fi-eeff-revision-cobertura
+          path: .local-data/fi_eeff_cobertura/
+          retention-days: 15
+          if-no-files-found: warn
