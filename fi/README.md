@@ -72,7 +72,9 @@ XML y las columnas que la ficha no muestra quedan diferenciadas por `cotejo_fich
    `sin_columna` y solo se publica si valida internamente.
 6. Completitud del cierre: cada fondo del registro debe estar resuelto (`ok`, ausencia
    declarada o rechazo explícito). Un desafío/corte/JSON de error sigue pendiente, nunca
-   equivale a ausencia. Más del 2 % de XML conocidos rechazados bloquea la publicación.
+   equivale a ausencia. Más del 2 % de envíos con XML conocidos rechazados bloquea la publicación.
+   Una negativa explícita `ACCION NO PERMITIDA` se registra como exclusión de descarga
+   (no como ausencia), sin buscar rutas que eludan la negativa de acceso.
 7. Auditoría de la salida completa, incluidos comparativos, claves, cobertura igual entre
    balance y resultados actuales, conteos y hashes de Parquet, antes de habilitar el push.
 
