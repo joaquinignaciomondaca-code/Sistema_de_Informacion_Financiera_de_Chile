@@ -90,9 +90,11 @@ class TestLecturaDelXml(unittest.TestCase):
         self.assertEqual(cuadratura.identidades_ffmm(d["actual"]), [])
         self.assertEqual(cuadratura.identidades_ffmm(d["anterior"]), [])
 
-    def test_pesos_y_dolares(self):
+    def test_pesos_dolares_y_euros(self):
         self.assertEqual(extraer(moneda="$$")["moneda"], "CLP")
         self.assertEqual(extraer(moneda="PROM")["moneda"], "USD")
+        d = extraer(moneda="EUR")                     # hay fondos en euros (fondos 8272, 9068, 8686, 8739…)
+        self.assertEqual((d["moneda"], d["moneda_cmf"]), ("EUR", "EUR"))
 
     def test_las_cuentas_con_serie_y_las_de_otros_estados_no_pisan_balance_ni_resultados(self):
         d = extraer()
@@ -152,7 +154,7 @@ class TestRechazos(unittest.TestCase):
         self.assertIn("no 12/2025", str(cm.exception))
 
     def test_moneda_desconocida(self):
-        self.rechaza("moneda desconocida 'EUR'", moneda="EUR")
+        self.rechaza("moneda desconocida 'XYZ'", moneda="XYZ")
 
     def test_run_con_ceros_a_la_izquierda_es_el_mismo_fondo(self):
         self.assertEqual(extraer(run_xml="008011")["run_dv"], "8011-K")

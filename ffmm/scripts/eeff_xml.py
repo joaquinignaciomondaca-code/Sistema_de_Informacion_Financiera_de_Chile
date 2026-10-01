@@ -21,7 +21,7 @@ maneja a propósito:
     usan `OtrosEri` (`Otros` existe además en el flujo de efectivo). Se acepta `Otros` solo si falta `OtrosEri`
     y las identidades contables lo validan;
   * códigos con espacio final y elementos de cuenta con código vacío;
-  * `PROM` es dólares (la ficha dice «miles de Dolar»), `$$` es pesos.
+  * `PROM` es dólares (la ficha dice «miles de Dolar»), `$$` es pesos y `EUR` euros.
 """
 from __future__ import annotations
 
@@ -96,7 +96,9 @@ CATALOGO: dict[str, list[tuple[int, str, str, str, str]]] = {
 CODIGOS = {c[1] for lineas in CATALOGO.values() for c in lineas}
 # El modelo oficial de 2011 llamaba `Otros` a la línea de resultados; hoy es `OtrosEri`.
 ALIAS = {"OtrosEri": ("Otros",)}
-MONEDAS = {"$$": "CLP", "PROM": "USD"}
+# `$$` pesos · `PROM` dólares (la ficha dice «miles de Dolar») · `EUR` euros (hay fondos en euros: no aparecieron en la
+# muestra de 278 fondo-años, sí en el primer recorrido completo). Un código nuevo deja el fondo y cierre como ilegible.
+MONEDAS = {"$$": "CLP", "PROM": "USD", "EUR": "EUR"}
 CONTEXTOS = ("PeriodoActual", "PeriodoAnterior")
 
 RE_XML = re.compile(r"ifrs_xml_verarchivo\.php\?archivo=(FMEF[A-Za-z0-9_\-]+\.xml)")
