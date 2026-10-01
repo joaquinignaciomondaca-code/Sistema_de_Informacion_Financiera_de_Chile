@@ -150,7 +150,7 @@ class BackfillTests(unittest.TestCase):
             catalog_hash = b.hashlib.sha256(args.catalog.read_bytes()).hexdigest()
             for period in ('200912', '200909', '200906'):
                 bal, inc, stats = b.parse_period(fixture(period=period), period, CATALOG)
-                stats.update(periodo=period, sha256_catalogo=catalog_hash,
+                stats.update(periodo=period, schema=b.SCHEMA_VERSION, sha256_catalogo=catalog_hash,
                              filas_balance=len(bal), filas_resultados=len(inc))
                 b.save_period(out, period, bal, inc, stats)
             self.assertEqual(b.run(args, fetch), 0)

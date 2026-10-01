@@ -95,6 +95,23 @@ jobs:
           echo "::notice title=Cliente DuckDB::$(tail -n 1 cliente.log)"
           exit $n
 
+      - name: La consola SQL es de solo lectura (guardia)
+        run: |
+          set +e
+          node scripts/audit_sql_guard.js > guardia.log 2>&1; n=$?
+          grep -h "^FALLA" guardia.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Guardia SQL::$linea"; done
+          echo "::notice title=Guardia SQL::$(tail -n 1 guardia.log)"
+          exit $n
+
+      - name: 'Estados financieros IFRS publicados: cuadratura sobre toda la historia'
+        run: |
+          python -m pip install --disable-pip-version-check pandas==2.2.3 pyarrow==21.0.0
+          set +e
+          python scripts/auditar_eeff_ifrs.py > eeff.log 2>&1; n=$?
+          grep -h -E "^(FALLA|  ·)" eeff.log | head -20 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=EEFF IFRS::$linea"; done
+          grep -h -E "^(Sector|Total|Resultados)" eeff.log | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::notice title=EEFF IFRS::$linea"; done
+          exit $n
+
       - name: Buscar credenciales en el historial
         run: |
           set +e
