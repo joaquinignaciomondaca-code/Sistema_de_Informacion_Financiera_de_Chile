@@ -8,7 +8,11 @@
     "registro_unico",
     "registro_universo",
     "catalogo_institucional",
-    "catálogo institucional"
+    "catálogo institucional",
+    "macro.series",
+    "macro.tasas_rendimientos",
+    "macro.divisas_mercado",
+    "macro.precios_actividad"
   ],
   "sectores": {
     "macro": "Macroeconomía y Tasas (BCCh)",
@@ -61,12 +65,31 @@
     "extranjeros": "Inversiones en el exterior",
     "derivados": "Derivados",
     "control_inversiones": "Control de inversiones",
-    "tasas_rendimientos": "Tasas y rendimientos",
-    "divisas_mercado": "Divisas y mercado cambiario",
-    "precios_actividad": "Precios y actividad",
-    "series": "Series de tiempo",
     "series_catalogo": "Catálogo de series",
-    "lista_entidades_registro": "Lista de entidades (registro único)"
+    "lista_entidades_registro": "Lista de entidades (registro único)",
+    "tasas_corto_plazo": "TPM y tasa interbancaria",
+    "swaps_camara": "Swaps de cámara",
+    "curva_bonos_pesos": "Curva de bonos en pesos",
+    "curva_bonos_uf": "Curva de bonos en UF",
+    "inflacion_implicita": "Inflación implícita",
+    "dolar_observado": "Dólar observado",
+    "euro_observado": "Euro observado",
+    "tipo_cambio_multilateral": "Tipo de cambio multilateral",
+    "tipo_cambio_real": "Tipo de cambio real",
+    "uf": "Unidad de Fomento",
+    "utm": "Unidad Tributaria Mensual",
+    "inflacion_ipc": "Inflación (IPC)",
+    "imacec": "Imacec",
+    "pib_trimestral": "PIB trimestral",
+    "mercado_laboral": "Mercado laboral",
+    "cobre": "Cobre",
+    "metales_preciosos": "Metales preciosos",
+    "reservas_internacionales": "Reservas internacionales",
+    "tasa_referencia_fed": "Tasa de la Reserva Federal",
+    "deuda_publica_pct_pib": "Deuda pública sobre PIB",
+    "expectativas_inflacion": "Expectativas de inflación",
+    "expectativas_tpm": "Expectativas de TPM",
+    "expectativas_operadores": "Encuesta de Operadores Financieros"
   },
   "tablas": [
     {
@@ -318,51 +341,6 @@
       "cobertura": "R1 · importes fuente"
     },
     {
-      "id": "macro_tasas_rendimientos",
-      "alias": [],
-      "nombre": "macro.tasas_rendimientos",
-      "tipo": "tasas_rendimientos",
-      "sector": "macro",
-      "descripcion": "Tasas de interés y curvas soberanas de Chile.",
-      "cobertura": "Series BCCh"
-    },
-    {
-      "id": "macro_divisas_mercado",
-      "alias": [],
-      "nombre": "macro.divisas_mercado",
-      "tipo": "divisas_mercado",
-      "sector": "macro",
-      "descripcion": "Tipos de cambio y condiciones del mercado cambiario.",
-      "cobertura": "Series BCCh"
-    },
-    {
-      "id": "macro_precios_actividad",
-      "alias": [],
-      "nombre": "macro.precios_actividad",
-      "tipo": "precios_actividad",
-      "sector": "macro",
-      "descripcion": "Precios, actividad económica y expectativas.",
-      "cobertura": "Series BCCh"
-    },
-    {
-      "id": "macro_series",
-      "alias": [],
-      "nombre": "macro.series",
-      "tipo": "series",
-      "sector": "macro",
-      "descripcion": "Series de tiempo del Banco Central: una fila por serie y fecha.",
-      "cobertura": "Series BCCh"
-    },
-    {
-      "id": "macro_series_catalogo",
-      "alias": [],
-      "nombre": "macro.series_catalogo",
-      "tipo": "series_catalogo",
-      "sector": "macro",
-      "descripcion": "Catálogo de series del Banco Central: código, nombre, frecuencia y cobertura.",
-      "cobertura": "Catálogo"
-    },
-    {
       "id": "factoring_leasing_lista_entidades",
       "alias": [
         "factoring_leasing_maestro"
@@ -574,6 +552,222 @@
       "sector": "fintech",
       "descripcion": "Prestadores inscritos en el Registro de Prestadores de Servicios Financieros (RPSF).",
       "cobertura": "Una fila por prestador"
+    },
+    {
+      "id": "macro_tasas_corto_plazo",
+      "alias": [],
+      "nombre": "macro.tasas_corto_plazo",
+      "tipo": "tasas_corto_plazo",
+      "sector": "macro",
+      "descripcion": "Tasas de referencia de corto plazo de Chile: Tasa de Política Monetaria (TPM) del Banco Central y tasa promedio transada en el mercado interbancario (TIB), en porcentaje.",
+      "cobertura": "Una fila por día"
+    },
+    {
+      "id": "macro_swaps_camara",
+      "alias": [],
+      "nombre": "macro.swaps_camara",
+      "tipo": "swaps_camara",
+      "sector": "macro",
+      "descripcion": "Tasa de swap promedio de cámara (SPC) del Banco Central: contratos en pesos a 90, 180 y 360 días y a 2 años, y contrato en UF a 1 año, en porcentaje.",
+      "cobertura": "Una fila por día"
+    },
+    {
+      "id": "macro_curva_bonos_pesos",
+      "alias": [],
+      "nombre": "macro.curva_bonos_pesos",
+      "tipo": "curva_bonos_pesos",
+      "sector": "macro",
+      "descripcion": "Curva de rendimiento de los bonos soberanos en pesos licitados por el BCCh (Bono Corto Plazo, BCP): tasa de interés de mercado secundario a 2, 5 y 10 años.",
+      "cobertura": "Una fila por día"
+    },
+    {
+      "id": "macro_curva_bonos_uf",
+      "alias": [],
+      "nombre": "macro.curva_bonos_uf",
+      "tipo": "curva_bonos_uf",
+      "sector": "macro",
+      "descripcion": "Curva de rendimiento de los bonos soberanos en UF (BCU/BTU): tasa de interés de mercado secundario a 1, 2, 5, 10, 20 y 30 años.",
+      "cobertura": "Una fila por día"
+    },
+    {
+      "id": "macro_inflacion_implicita",
+      "alias": [],
+      "nombre": "macro.inflacion_implicita",
+      "tipo": "inflacion_implicita",
+      "sector": "macro",
+      "descripcion": "Inflación implícita de las curvas soberanas (breakeven): diferencia entre el rendimiento del bono en pesos y el del bono en UF del mismo plazo. Calculada por SIF a partir de las curvas publicadas por el BCCh.",
+      "cobertura": "Una fila por día"
+    },
+    {
+      "id": "macro_dolar_observado",
+      "alias": [],
+      "nombre": "macro.dolar_observado",
+      "tipo": "dolar_observado",
+      "sector": "macro",
+      "descripcion": "Dólar observado: tipo de cambio nominal del dólar de los Estados Unidos en pesos chilenos (CLP por USD), según el Banco Central.",
+      "cobertura": "Una fila por día"
+    },
+    {
+      "id": "macro_euro_observado",
+      "alias": [],
+      "nombre": "macro.euro_observado",
+      "tipo": "euro_observado",
+      "sector": "macro",
+      "descripcion": "Euro observado: tipo de cambio nominal del euro en pesos chilenos (CLP por EUR), según el Banco Central.",
+      "cobertura": "Una fila por día"
+    },
+    {
+      "id": "macro_tipo_cambio_multilateral",
+      "alias": [],
+      "nombre": "macro.tipo_cambio_multilateral",
+      "tipo": "tipo_cambio_multilateral",
+      "sector": "macro",
+      "descripcion": "Índices de tipo de cambio nominal multilateral del Banco Central: TCM, TCM-5 (monedas de Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro) y TCM-X.",
+      "cobertura": "Una fila por día"
+    },
+    {
+      "id": "macro_tipo_cambio_real",
+      "alias": [],
+      "nombre": "macro.tipo_cambio_real",
+      "tipo": "tipo_cambio_real",
+      "sector": "macro",
+      "descripcion": "Índices de tipo de cambio real (TCR) del Banco Central, promedio 1986=100: TCR general y TCR-5 (monedas de Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro).",
+      "cobertura": "Una fila por mes"
+    },
+    {
+      "id": "macro_uf",
+      "alias": [],
+      "nombre": "macro.uf",
+      "tipo": "uf",
+      "sector": "macro",
+      "descripcion": "Valor diario de la Unidad de Fomento (UF) en pesos chilenos, según el Banco Central.",
+      "cobertura": "Una fila por día"
+    },
+    {
+      "id": "macro_utm",
+      "alias": [],
+      "nombre": "macro.utm",
+      "tipo": "utm",
+      "sector": "macro",
+      "descripcion": "Valor mensual de la Unidad Tributaria Mensual (UTM) en pesos chilenos, según el Banco Central.",
+      "cobertura": "Una fila por mes"
+    },
+    {
+      "id": "macro_inflacion_ipc",
+      "alias": [],
+      "nombre": "macro.inflacion_ipc",
+      "tipo": "inflacion_ipc",
+      "sector": "macro",
+      "descripcion": "Índice de Precios al Consumidor (IPC), serie empalmada del BCCh base 2023=100: índice y variaciones mensual y anual en porcentaje (fuente INE).",
+      "cobertura": "Una fila por mes"
+    },
+    {
+      "id": "macro_imacec",
+      "alias": [],
+      "nombre": "macro.imacec",
+      "tipo": "imacec",
+      "sector": "macro",
+      "descripcion": "Imacec a costo de factores, series empalmadas del BCCh (índice 2018=100): total, no minero, minero, comercio y servicios.",
+      "cobertura": "Una fila por mes"
+    },
+    {
+      "id": "macro_pib_trimestral",
+      "alias": [],
+      "nombre": "macro.pib_trimestral",
+      "tipo": "pib_trimestral",
+      "sector": "macro",
+      "descripcion": "Producto Interno Bruto (PIB) en volumen a precios del año anterior encadenado, referencia 2018: miles de millones de pesos encadenados.",
+      "cobertura": "Una fila por trimestre"
+    },
+    {
+      "id": "macro_mercado_laboral",
+      "alias": [],
+      "nombre": "macro.mercado_laboral",
+      "tipo": "mercado_laboral",
+      "sector": "macro",
+      "descripcion": "Mercado laboral de Chile (series no ajustadas del INE, vía BCCh): tasa de desocupación en porcentaje, y personas ocupadas, asalariadas y fuerza de trabajo en miles de personas.",
+      "cobertura": "Una fila por mes"
+    },
+    {
+      "id": "macro_cobre",
+      "alias": [],
+      "nombre": "macro.cobre",
+      "tipo": "cobre",
+      "sector": "macro",
+      "descripcion": "Precio del cobre refinado en dólares por libra: cotización diaria de la Bolsa de Metales de Londres (BML) y valor referencial mensual publicado por el BCCh (la referencia mensual aparece en la fila del primer día de su mes).",
+      "cobertura": "Una fila por día"
+    },
+    {
+      "id": "macro_metales_preciosos",
+      "alias": [],
+      "nombre": "macro.metales_preciosos",
+      "tipo": "metales_preciosos",
+      "sector": "macro",
+      "descripcion": "Precios de los metales preciosos en dólares por onza troy: oro y plata, según el Banco Central.",
+      "cobertura": "Una fila por día"
+    },
+    {
+      "id": "macro_reservas_internacionales",
+      "alias": [],
+      "nombre": "macro.reservas_internacionales",
+      "tipo": "reservas_internacionales",
+      "sector": "macro",
+      "descripcion": "Activos de reserva internacional del Banco Central de Chile, en millones de dólares de los Estados Unidos.",
+      "cobertura": "Una fila por mes"
+    },
+    {
+      "id": "macro_tasa_referencia_fed",
+      "alias": [],
+      "nombre": "macro.tasa_referencia_fed",
+      "tipo": "tasa_referencia_fed",
+      "sector": "macro",
+      "descripcion": "Tasa de interés de política monetaria de la Reserva Federal de los Estados Unidos (fed funds), en porcentaje.",
+      "cobertura": "Una fila por día"
+    },
+    {
+      "id": "macro_deuda_publica_pct_pib",
+      "alias": [],
+      "nombre": "macro.deuda_publica_pct_pib",
+      "tipo": "deuda_publica_pct_pib",
+      "sector": "macro",
+      "descripcion": "Deuda bruta del Gobierno Central como porcentaje del Producto Interno Bruto (PIB), según el Banco Central.",
+      "cobertura": "Una fila por trimestre"
+    },
+    {
+      "id": "macro_expectativas_inflacion",
+      "alias": [],
+      "nombre": "macro.expectativas_inflacion",
+      "tipo": "expectativas_inflacion",
+      "sector": "macro",
+      "descripcion": "Expectativas de inflación de la Encuesta de Expectativas Económicas (EEE) del Banco Central: variación del IPC en 12 meses vista, con horizonte de 11 y 23 meses, mediana en porcentaje.",
+      "cobertura": "Una fila por mes"
+    },
+    {
+      "id": "macro_expectativas_tpm",
+      "alias": [],
+      "nombre": "macro.expectativas_tpm",
+      "tipo": "expectativas_tpm",
+      "sector": "macro",
+      "descripcion": "Expectativas de la Tasa de Política Monetaria (TPM) de la Encuesta de Expectativas Económicas (EEE) del Banco Central, con horizonte de 11 y 23 meses, mediana en porcentaje.",
+      "cobertura": "Una fila por mes"
+    },
+    {
+      "id": "macro_expectativas_operadores",
+      "alias": [],
+      "nombre": "macro.expectativas_operadores",
+      "tipo": "expectativas_operadores",
+      "sector": "macro",
+      "descripcion": "Evolución diaria de la Encuesta de Operadores Financieros (EOF) del Banco Central: expectativa de inflación (variación del IPC) y de TPM para los 12 meses siguientes, en porcentaje.",
+      "cobertura": "Una fila por día"
+    },
+    {
+      "id": "macro_series_catalogo",
+      "alias": [],
+      "nombre": "macro.series_catalogo",
+      "tipo": "series_catalogo",
+      "sector": "macro",
+      "descripcion": "Catálogo de las series del Banco Central que alimentan las tablas macro: código, nombre, unidad, frecuencia y cobertura.",
+      "cobertura": "Una fila por serie"
     }
   ]
 }

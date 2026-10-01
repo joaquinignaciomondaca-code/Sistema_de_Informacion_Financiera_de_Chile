@@ -4286,7 +4286,10 @@ kbd {
 
 .dl-tag-info { border-color: rgba(var(--info-rgb), 0.6); color: rgb(var(--info-rgb)); }
 
-.dl-item-actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; }
+.dl-item-actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; align-items: center; }
+.dl-freq { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; color: var(--text-secondary); }
+.dl-freq-label { white-space: nowrap; }
+.dl-freq-select { font-family: var(--font-sans); font-size: 11.5px; font-weight: 600; padding: 4px 6px; border: 1px solid var(--border-color); border-radius: 6px; background: var(--bg-tertiary); color: var(--text-primary); cursor: pointer; }
 
 /* --- Botones --- */
 .dl-btn {

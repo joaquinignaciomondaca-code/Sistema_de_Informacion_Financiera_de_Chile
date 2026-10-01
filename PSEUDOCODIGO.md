@@ -65,8 +65,8 @@ func parse_num(texto):                       # parse_num / clean_num / parse_num
     "-" o vacío → None   (¡nunca 0 si está ausente!)
 
 func get_usd_rates_map():                    # obtener_tc_map / get_usd_rates_map
-    ⟵ docs/outputs/macro/macro_divisas_mercado.parquet
-    return { "AAAA-MM": usd_clp_cierre }
+    ⟵ docs/outputs/macro/macro_dolar_observado.parquet (diaria → cierre de mes)
+    return { "AAAA-MM": dolar_observado_clp_por_usd }
     # Se usa para agregar columnas *_mm_usd a balances en CLP
 
 func slugify / normalize_name → claves estables para IDs
@@ -80,18 +80,7 @@ func atomic_json(path, obj): escribir tmp → os.replace   (sin archivos a medio
 ## 2. Macro BCCh (`macro/`) — flujo automático piloto
 
 ```
-daily_macro.run():                                   # Actions diario 10:00 UTC
-    source = docs/outputs/macro
-    si existe checkpoint .local-data/checkpoint/macro y es ≥ publicado:
-        source = checkpoint
-    run_macro_pipeline(output=STAGE, baseline=source)
-    validate(STAGE, source)                          ✗ nunca guardar checkpoint no auditado
-    published_changed = publish(STAGE, docs/outputs/macro, data_manifest.json)
-    si STAGE ≠ source: copiar STAGE → checkpoint
-    escribir GITHUB_OUTPUT (checkpoint_changed, published_changed)
-    # Workflow: commit de lo validado (reintento con cherry-pick) y, en main, redespliegue del sitio.
-
-series_bcch.main():                                  # mismo workflow, después de daily_macro
+series_bcch.main():                                  # Actions diario 10:00 UTC
     CATALOGO = 51 series (clave, código SIETE, grupo, unidad; frecuencia = sufijo D/M/T)
     previo = docs/outputs/macro/series/*.parquet
     por serie (6 hilos): desde = última fecha − ventana (D 10 días · M 6 meses · T 13 meses), o 2014-01-01
@@ -99,34 +88,25 @@ series_bcch.main():                                  # mismo workflow, después 
         error o código inexistente → estado en el catálogo + aviso, sigue con las demás
         combinar: la fecha nueva reemplaza a la misma fecha; ninguna observación previa se borra
     ✗ si fallan todas (credenciales/API)   ✗ si alguna serie queda con menos observaciones
-    → series/<AAAA>.parquet (solo años que cambian) + series/manifest.json
+    → series/<AAAA>.parquet (materia prima interna, no se expone en la web) + series/manifest.json
     → macro_series_catalogo.parquet (nombre, frecuencia, unidad, título BCCh, cobertura, estado)
-    → data_manifest: macro_series, macro_series_catalogo (+ corte de las 3 tablas mensuales)
 
-run_macro_pipeline(output_dir, baseline_dir):
-    ✗ si faltan BCCH_EMAIL / BCCH_PASSWORD
-    baseline = load_baseline(dir)      # 3 tablas, mismos períodos, ordenados, sin futuro; si no hay → {} (backfill)
-    starts   = query_starts(baseline)  # por serie: desde último mes (mensuales rezagadas: hasta 3 meses atrás)
-    en paralelo (8 hilos): fetch_single_series(serie, start, hoy) vía bcchapi (23 series SIETE)
-    ✗ si todas vacías (auth/API)   ✗ si backfill y alguna vacía
-    para cada mes en rango:
-        diarias → promedio y cierre del mes; mensuales → valor directo
-    construir 3 tablas:
-        macro_tasas_rendimientos   (TPM, TIB, BCP/BCU…)
-        macro_divisas_mercado      (USD, EUR, TCR…, var% mensual/anual)
-        macro_precios_actividad    (UF, IPC, IMACEC, cobre, EEE…)
-    merge_incremental(fresh, baseline):  nuevo no-nulo prevalece (combine_first); ✗ si cambia el esquema
-        recalcular var% solo donde cambió la fuente
-    → output_dir/{tabla}.parquet + .json
+build_tablas_tematicas.main():                       # mismo workflow, sin API
+    TABLAS = 23 especificaciones {id, nombre, frecuencia, descripción, [(clave → columna)], derivadas}
+    series = concat(series/*.parquet)
+    por tabla: pivot(fecha × clave) → columnas autoexplicativas (indicador_detalle_unidad)
+               derivadas: inflacion_implicita = bcp − bcu (5 y 10 años)
+               verificar(): cada celda == serie nativa; sin fechas duplicadas/futuras; periodo = fecha[:7]
+    → docs/outputs/macro/<id>.parquet (23)   → data_manifest.json (24 entradas macro; retira las antiguas)
 
-publish_macro.validate(stage, published):
-    run_audit(stage)
-    por tabla: JSON == Parquet (filas, períodos, columnas, valores ±1e-8)
-               ✗ período futuro
-               ✗ mes nuevo sin dato central (usd_clp_cierre / uf_cierre)
-               ✗ menos filas / menos cobertura / menos no-nulos que lo publicado  (anti-regresión)
-    ✗ si las 3 tablas no tienen la misma cobertura
-publish(): copiar solo si difiere + actualizar data_manifest.json
+audit_macro_bcch.run_audit():                        ✗ bloquea el commit si falla
+    columnas exactas por tabla · fechas únicas y ordenadas · numéricas y no vacías
+    rangos plausibles (TPM, dólar, UF, UTM, IPC, cobre, oro, desocupación, fed funds)
+    las 51 claves del catálogo cubiertas por alguna tabla
+
+scripts/build_macro_web.py:                          # misma TABLAS → web, entre marcadores <macro:inicio/fin>
+    sidebar (8 carpetas temáticas + catálogo, chips) · data_viewer · data_dictionary (todas las columnas)
+    erd_graph (nodos + enlaces) · duckdb_client (vistas) · vocabulario.json     --check en auditoría
 ```
 
 ---
@@ -391,7 +371,7 @@ Los extractores que quedan ya no escriben las tablas retiradas; las auditorías 
 
 ```
 docs/vocabulario.json — ÚNICA fuente de nombres de la web
-  52 tablas: {id, alias[], nombre, tipo, sector, descripcion, cobertura} · 15 sectores · 22 tipos
+  71 tablas: {id, alias[], nombre, tipo, sector, descripcion, cobertura} · 15 sectores · 41 tipos
   regla: una tabla se llama <sector>.<tipo>; TODA lista de entidades se llama lista_entidades
          (única variante: lista_entidades_registro, para el registro único de corredoras)
   nombres_retirados: lista_administradoras, lista_instituciones, lista_emisiones, registro_unico, …
@@ -475,7 +455,7 @@ con los pipelines antiguos de FFMM y FI.)
 
 | Workflow | Cron (UTC) | Publica | Qué hace |
 |---|---|---|---|
-| macro.yml | diario 10:00 | commit automático | daily_macro (3 tablas mensuales) + series_bcch (51 series, formato largo) |
+| macro.yml | diario 10:00 | commit automático | series_bcch (51 series nativas) → build_tablas_tematicas (23 tablas temáticas) → audit_macro_bcch |
 | bancos_cmf_mensual.yml | días 1, 11, 21 13:00 | **sí** (commit + Pages) | tests + publish_cmf_bank_period --catch-up (incremental) |
 | web_audit.yml | push a main, PR hacia main y lunes | no | audit_navigation + audit_web_full + audit_interfaz + prueba DOM + audit_secretos (anotaciones); el lunes, guardián de frescura |
 | factoring_leasing_backfill.yml | días 3, 13, 23 12:20 | **sí** | backfill_ifrs + publish_backfill + auditorías web |

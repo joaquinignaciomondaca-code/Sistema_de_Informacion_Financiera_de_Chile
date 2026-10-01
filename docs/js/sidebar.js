@@ -403,98 +403,197 @@ const EXPLORER_TREE = [
       }
     ]
   },
+  // <macro:inicio>
   {
     id: "group_macro",
     type: "group",
-    label: "MACROECONOMÍA & TASAS (BCCh)",
+    label: "MACROECONOMÍA Y TASAS (BCCh)",
     badges: [
-      { type: "entities", text: "1 Entidad", title: "Series canónicas oficiales del Banco Central de Chile" },
-      { type: "data", text: "51 series", title: "Tablas mensuales consolidadas y catálogo amplio de series diarias, mensuales y trimestrales (2014 en adelante)" }
+      { type: "data", text: "23 tablas", title: "Una tabla por indicador económico, en la frecuencia en que lo publica el Banco Central (diaria, mensual o trimestral)" },
+      { type: "data", text: "2014 → 2026", title: "Cobertura de las series: desde 2014 hasta la última publicación del BCCh" }
     ],
     status: "active",
     children: [
       {
         id: "sector_macro_general",
         type: "sector",
-        label: "Estadísticas Financieras y Macroeconómicas",
+        label: "Banco Central de Chile · Base de Datos Estadísticos",
         sector: "macro",
         children: [
           {
-            id: "cat_macro_tasas_rendimientos",
+            id: "cat_macro_tasas_interes",
             type: "circular",
-            label: "Tasas de Interés y Curvas Soberanas",
-            badge: "153 Registros",
+            label: "Tasas de interés",
+            badge: "5 tablas",
             badgeType: "data",
             status: "active",
             sector: "macro",
             chips: [
-              { label: "Curva Rendimiento BCP vs BCU (Spread 10y-2y)", query: "SELECT periodo, tpm, tib_promedio, bcp_2y, bcp_5y, bcp_10y, bcu_5y, bcu_10y, spread_bcp_10y_2y_bps, inflacion_implicita_5y_breakeven FROM macro_tasas_rendimientos ORDER BY periodo DESC LIMIT 12;" },
-              { label: "Evolución TPM vs Tasa Interbancaria (ICP)", query: "SELECT periodo, tpm, tib_promedio, round(tpm - tib_promedio, 3) as spread_tpm_tib, spc_clp_2y FROM macro_tasas_rendimientos ORDER BY periodo DESC LIMIT 24;" },
-              { label: "Breakeven de Inflación a 5 y 10 años", query: "SELECT periodo, bcp_5y, bcu_5y, inflacion_implicita_5y_breakeven, bcp_10y, bcu_10y, inflacion_implicita_10y_breakeven FROM macro_tasas_rendimientos WHERE inflacion_implicita_5y_breakeven IS NOT NULL ORDER BY periodo DESC LIMIT 24;" }
+              { label: "TPM y tasa interbancaria: últimos 60 días", query: "SELECT fecha, tpm_pct, tib_promedio_pct, round(tib_promedio_pct - tpm_pct, 3) AS diferencia_tib_tpm FROM macro_tasas_corto_plazo ORDER BY fecha DESC LIMIT 60;" },
+              { label: "Curva de bonos en pesos: promedio mensual, últimos 24 meses", query: "SELECT periodo, round(avg(rendimiento_bono_pesos_2_anos_pct), 3) AS bono_2_anos_pct, round(avg(rendimiento_bono_pesos_5_anos_pct), 3) AS bono_5_anos_pct, round(avg(rendimiento_bono_pesos_10_anos_pct), 3) AS bono_10_anos_pct FROM macro_curva_bonos_pesos GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
+              { label: "Curva de bonos en UF: último dato disponible por plazo", query: "SELECT fecha, rendimiento_bono_uf_1_ano_pct, rendimiento_bono_uf_2_anos_pct, rendimiento_bono_uf_5_anos_pct, rendimiento_bono_uf_10_anos_pct, rendimiento_bono_uf_20_anos_pct, rendimiento_bono_uf_30_anos_pct FROM macro_curva_bonos_uf ORDER BY fecha DESC LIMIT 20;" },
+              { label: "Inflación implícita a 5 y 10 años: promedio mensual", query: "SELECT periodo, round(avg(inflacion_implicita_5_anos_pct), 3) AS implicita_5_anos_pct, round(avg(inflacion_implicita_10_anos_pct), 3) AS implicita_10_anos_pct FROM macro_inflacion_implicita GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
+              { label: "Swaps de cámara en pesos: curva 90 días a 2 años", query: "SELECT fecha, swap_camara_pesos_90_dias_pct, swap_camara_pesos_180_dias_pct, swap_camara_pesos_360_dias_pct, swap_camara_pesos_2_anos_pct, swap_camara_uf_1_ano_pct FROM macro_swaps_camara ORDER BY fecha DESC LIMIT 30;" }
             ],
             tables: [
-              { id: "macro_tasas_rendimientos", name: "macro.tasas_rendimientos", rows: "Series BCCh", file: "outputs/macro/macro_tasas_rendimientos.parquet" }
+              { id: "macro_tasas_corto_plazo", name: "macro.tasas_corto_plazo", rows: "Una fila por día", file: "outputs/macro/macro_tasas_corto_plazo.parquet" },
+              { id: "macro_swaps_camara", name: "macro.swaps_camara", rows: "Una fila por día", file: "outputs/macro/macro_swaps_camara.parquet" },
+              { id: "macro_curva_bonos_pesos", name: "macro.curva_bonos_pesos", rows: "Una fila por día", file: "outputs/macro/macro_curva_bonos_pesos.parquet" },
+              { id: "macro_curva_bonos_uf", name: "macro.curva_bonos_uf", rows: "Una fila por día", file: "outputs/macro/macro_curva_bonos_uf.parquet" },
+              { id: "macro_inflacion_implicita", name: "macro.inflacion_implicita", rows: "Una fila por día", file: "outputs/macro/macro_inflacion_implicita.parquet" }
             ]
           },
           {
-            id: "cat_macro_divisas_mercado",
+            id: "cat_macro_tipo_cambio",
             type: "circular",
-            label: "Mercado Cambiario & Divisas",
-            badge: "153 Registros",
+            label: "Tipo de cambio",
+            badge: "4 tablas",
             badgeType: "data",
             status: "active",
             sector: "macro",
             chips: [
-              { label: "Dólar Observado: Promedio vs Cierre vs Volatilidad", query: "SELECT periodo, usd_clp_promedio, usd_clp_cierre, var_mensual_usd_pct, var_anual_usd_pct, usd_clp_volatilidad_anualizada_pct FROM macro_divisas_mercado ORDER BY periodo DESC LIMIT 15;" },
-              { label: "Tipo de Cambio Real Multilateral (TCR vs TCR-5)", query: "SELECT periodo, usd_clp_cierre, tcr_general, tcr_5monedas FROM macro_divisas_mercado WHERE tcr_general IS NOT NULL ORDER BY periodo DESC LIMIT 18;" },
-              { label: "Dólar vs Euro Observado y Variación Mensual", query: "SELECT periodo, usd_clp_cierre, var_mensual_usd_pct, eur_clp_cierre, var_mensual_eur_pct FROM macro_divisas_mercado ORDER BY periodo DESC LIMIT 15;" }
+              { label: "Dólar observado: últimos 30 días hábiles", query: "SELECT fecha, dolar_observado_clp_por_usd FROM macro_dolar_observado ORDER BY fecha DESC LIMIT 30;" },
+              { label: "Dólar observado por mes: promedio, mínimo, máximo y cierre", query: "SELECT periodo, round(avg(dolar_observado_clp_por_usd), 2) AS promedio_clp, min(dolar_observado_clp_por_usd) AS minimo_clp, max(dolar_observado_clp_por_usd) AS maximo_clp, arg_max(dolar_observado_clp_por_usd, fecha) AS cierre_clp FROM macro_dolar_observado GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
+              { label: "Dólar y euro observados en la misma fecha", query: "SELECT d.fecha, d.dolar_observado_clp_por_usd, e.euro_observado_clp_por_eur, round(e.euro_observado_clp_por_eur / d.dolar_observado_clp_por_usd, 4) AS euro_por_dolar FROM macro_dolar_observado d JOIN macro_euro_observado e USING (fecha) ORDER BY d.fecha DESC LIMIT 30;" },
+              { label: "Tipo de cambio real: TCR general y TCR-5", query: "SELECT periodo, tipo_cambio_real_general_indice, tipo_cambio_real_5_monedas_indice FROM macro_tipo_cambio_real ORDER BY periodo DESC LIMIT 24;" }
             ],
             tables: [
-              { id: "macro_divisas_mercado", name: "macro.divisas_mercado", rows: "Series BCCh", file: "outputs/macro/macro_divisas_mercado.parquet" }
+              { id: "macro_dolar_observado", name: "macro.dolar_observado", rows: "Una fila por día", file: "outputs/macro/macro_dolar_observado.parquet" },
+              { id: "macro_euro_observado", name: "macro.euro_observado", rows: "Una fila por día", file: "outputs/macro/macro_euro_observado.parquet" },
+              { id: "macro_tipo_cambio_multilateral", name: "macro.tipo_cambio_multilateral", rows: "Una fila por día", file: "outputs/macro/macro_tipo_cambio_multilateral.parquet" },
+              { id: "macro_tipo_cambio_real", name: "macro.tipo_cambio_real", rows: "Una fila por mes", file: "outputs/macro/macro_tipo_cambio_real.parquet" }
             ]
           },
           {
-            id: "cat_macro_precios_actividad",
+            id: "cat_macro_precios_reajustes",
             type: "circular",
-            label: "Precios, Actividad y Expectativas",
-            badge: "153 Registros",
+            label: "Precios y reajustes",
+            badge: "3 tablas",
             badgeType: "data",
             status: "active",
             sector: "macro",
             chips: [
-              { label: "Inflación IPC Anual vs Expectativas EEE (11m y 23m)", query: "SELECT periodo, ipc_var_anual, eee_ipc_11m, eee_ipc_23m, desvio_eee_11m_meta_bps FROM macro_precios_actividad WHERE ipc_var_anual IS NOT NULL ORDER BY periodo DESC LIMIT 18;" },
-              { label: "IMACEC Total vs No Minero vs Cobre BML", query: "SELECT periodo, imacec_empalmado, imacec_no_minero, imacec_var_anual_pct, cobre_spot_usd_lb, cobre_var_anual_pct FROM macro_precios_actividad WHERE imacec_empalmado IS NOT NULL ORDER BY periodo DESC LIMIT 18;" },
-              { label: "Valor de la UF y Variación Mensual", query: "SELECT periodo, uf_cierre, uf_promedio, uf_var_mensual_pct FROM macro_precios_actividad ORDER BY periodo DESC LIMIT 18;" }
+              { label: "Inflación IPC: índice y variaciones mensual y anual", query: "SELECT periodo, ipc_indice, ipc_var_mensual_pct, ipc_var_anual_pct FROM macro_inflacion_ipc ORDER BY periodo DESC LIMIT 24;" },
+              { label: "UF: valor de cierre de cada mes y variación mensual", query: "SELECT periodo, uf_cierre_clp, round((uf_cierre_clp / lag(uf_cierre_clp) OVER (ORDER BY periodo) - 1) * 100, 2) AS uf_var_mensual_pct FROM (SELECT periodo, arg_max(uf_valor_clp, fecha) AS uf_cierre_clp FROM macro_uf GROUP BY periodo) ORDER BY periodo DESC LIMIT 24;" },
+              { label: "UF y UTM vigentes: último valor de cada mes", query: "SELECT u.periodo, arg_max(u.uf_valor_clp, u.fecha) AS uf_cierre_clp, max(t.utm_valor_clp) AS utm_valor_clp FROM macro_uf u LEFT JOIN macro_utm t USING (periodo) GROUP BY u.periodo ORDER BY u.periodo DESC LIMIT 24;" }
             ],
             tables: [
-              { id: "macro_precios_actividad", name: "macro.precios_actividad", rows: "Series BCCh", file: "outputs/macro/macro_precios_actividad.parquet" }
+              { id: "macro_uf", name: "macro.uf", rows: "Una fila por día", file: "outputs/macro/macro_uf.parquet" },
+              { id: "macro_utm", name: "macro.utm", rows: "Una fila por mes", file: "outputs/macro/macro_utm.parquet" },
+              { id: "macro_inflacion_ipc", name: "macro.inflacion_ipc", rows: "Una fila por mes", file: "outputs/macro/macro_inflacion_ipc.parquet" }
             ]
           },
           {
-            id: "cat_macro_series",
+            id: "cat_macro_actividad",
             type: "circular",
-            label: "Catálogo amplio de series BCCh (diarias, mensuales y trimestrales)",
+            label: "Actividad económica",
+            badge: "2 tablas",
+            badgeType: "data",
+            status: "active",
+            sector: "macro",
+            chips: [
+              { label: "Imacec total y no minero con variación anual", query: "SELECT periodo, imacec_empalmado_indice, round((imacec_empalmado_indice / lag(imacec_empalmado_indice, 12) OVER (ORDER BY periodo) - 1) * 100, 2) AS imacec_var_anual_pct, imacec_no_minero_indice, imacec_minero_indice FROM macro_imacec ORDER BY periodo DESC LIMIT 24;" },
+              { label: "Imacec por sector: comercio y servicios", query: "SELECT periodo, imacec_comercio_indice, imacec_servicios_indice, imacec_no_minero_indice FROM macro_imacec ORDER BY periodo DESC LIMIT 24;" },
+              { label: "PIB trimestral con variación respecto al mismo trimestre del año anterior", query: "SELECT periodo, pib_encadenado_miles_mm_clp, round((pib_encadenado_miles_mm_clp / lag(pib_encadenado_miles_mm_clp, 4) OVER (ORDER BY periodo) - 1) * 100, 2) AS pib_var_anual_pct FROM macro_pib_trimestral ORDER BY periodo DESC LIMIT 20;" }
+            ],
+            tables: [
+              { id: "macro_imacec", name: "macro.imacec", rows: "Una fila por mes", file: "outputs/macro/macro_imacec.parquet" },
+              { id: "macro_pib_trimestral", name: "macro.pib_trimestral", rows: "Una fila por trimestre", file: "outputs/macro/macro_pib_trimestral.parquet" }
+            ]
+          },
+          {
+            id: "cat_macro_mercado_laboral",
+            type: "circular",
+            label: "Mercado laboral",
+            badge: "152 meses",
+            badgeType: "data",
+            status: "active",
+            sector: "macro",
+            chips: [
+              { label: "Desocupación, ocupados y fuerza de trabajo: últimos 24 meses", query: "SELECT periodo, desocupacion_pct, ocupados_miles_personas, asalariados_miles_personas, fuerza_trabajo_miles_personas FROM macro_mercado_laboral ORDER BY periodo DESC LIMIT 24;" },
+              { label: "Participación de asalariados sobre ocupados", query: "SELECT periodo, round(asalariados_miles_personas / ocupados_miles_personas * 100, 2) AS asalariados_sobre_ocupados_pct, desocupacion_pct FROM macro_mercado_laboral ORDER BY periodo DESC LIMIT 24;" }
+            ],
+            tables: [
+              { id: "macro_mercado_laboral", name: "macro.mercado_laboral", rows: "Una fila por mes", file: "outputs/macro/macro_mercado_laboral.parquet" }
+            ]
+          },
+          {
+            id: "cat_macro_materias_primas",
+            type: "circular",
+            label: "Materias primas",
+            badge: "2 tablas",
+            badgeType: "data",
+            status: "active",
+            sector: "macro",
+            chips: [
+              { label: "Cobre: precio diario BML, últimos 30 días", query: "SELECT fecha, cobre_refinado_usd_por_libra FROM macro_cobre WHERE cobre_refinado_usd_por_libra IS NOT NULL ORDER BY fecha DESC LIMIT 30;" },
+              { label: "Cobre: promedio mensual y referencia BCCh con variación anual", query: "SELECT periodo, promedio_diario_usd_lb, referencia_mensual_usd_lb, round((referencia_mensual_usd_lb / lag(referencia_mensual_usd_lb, 12) OVER (ORDER BY periodo) - 1) * 100, 2) AS referencia_var_anual_pct FROM (SELECT periodo, round(avg(cobre_refinado_usd_por_libra), 4) AS promedio_diario_usd_lb, max(cobre_referencial_mensual_usd_por_libra) AS referencia_mensual_usd_lb FROM macro_cobre GROUP BY periodo) ORDER BY periodo DESC LIMIT 24;" },
+              { label: "Oro y plata: últimos 30 días", query: "SELECT fecha, oro_usd_por_onza_troy, plata_usd_por_onza_troy, round(oro_usd_por_onza_troy / plata_usd_por_onza_troy, 2) AS relacion_oro_plata FROM macro_metales_preciosos ORDER BY fecha DESC LIMIT 30;" }
+            ],
+            tables: [
+              { id: "macro_cobre", name: "macro.cobre", rows: "Una fila por día", file: "outputs/macro/macro_cobre.parquet" },
+              { id: "macro_metales_preciosos", name: "macro.metales_preciosos", rows: "Una fila por día", file: "outputs/macro/macro_metales_preciosos.parquet" }
+            ]
+          },
+          {
+            id: "cat_macro_sector_externo_fiscal",
+            type: "circular",
+            label: "Sector externo y fiscal",
+            badge: "3 tablas",
+            badgeType: "data",
+            status: "active",
+            sector: "macro",
+            chips: [
+              { label: "Reservas internacionales: últimos 24 meses", query: "SELECT periodo, reservas_internacionales_millones_usd FROM macro_reservas_internacionales ORDER BY periodo DESC LIMIT 24;" },
+              { label: "Tasa de la Fed frente a la TPM de Chile: promedio mensual", query: "SELECT f.periodo, round(avg(f.tasa_fed_funds_pct), 2) AS fed_funds_pct, round(avg(t.tpm_pct), 2) AS tpm_chile_pct FROM macro_tasa_referencia_fed f JOIN macro_tasas_corto_plazo t USING (periodo) GROUP BY f.periodo ORDER BY f.periodo DESC LIMIT 24;" },
+              { label: "Deuda pública sobre PIB: serie trimestral", query: "SELECT periodo, deuda_bruta_gobierno_central_pct_pib FROM macro_deuda_publica_pct_pib ORDER BY periodo DESC LIMIT 20;" }
+            ],
+            tables: [
+              { id: "macro_reservas_internacionales", name: "macro.reservas_internacionales", rows: "Una fila por mes", file: "outputs/macro/macro_reservas_internacionales.parquet" },
+              { id: "macro_tasa_referencia_fed", name: "macro.tasa_referencia_fed", rows: "Una fila por día", file: "outputs/macro/macro_tasa_referencia_fed.parquet" },
+              { id: "macro_deuda_publica_pct_pib", name: "macro.deuda_publica_pct_pib", rows: "Una fila por trimestre", file: "outputs/macro/macro_deuda_publica_pct_pib.parquet" }
+            ]
+          },
+          {
+            id: "cat_macro_expectativas",
+            type: "circular",
+            label: "Expectativas",
+            badge: "3 tablas",
+            badgeType: "data",
+            status: "active",
+            sector: "macro",
+            chips: [
+              { label: "Inflación anual efectiva frente a la esperada (EEE)", query: "SELECT i.periodo, i.ipc_var_anual_pct, e.expectativa_inflacion_ipc_11_meses_pct, e.expectativa_inflacion_ipc_23_meses_pct, round((e.expectativa_inflacion_ipc_11_meses_pct - 3.0) * 100, 0) AS desvio_11_meses_vs_meta_puntos_basicos FROM macro_inflacion_ipc i JOIN macro_expectativas_inflacion e USING (periodo) ORDER BY i.periodo DESC LIMIT 24;" },
+              { label: "TPM efectiva frente a la esperada por la EEE", query: "SELECT e.periodo, round(avg(t.tpm_pct), 2) AS tpm_pct, max(e.expectativa_tpm_11_meses_pct) AS expectativa_tpm_11_meses_pct, max(e.expectativa_tpm_23_meses_pct) AS expectativa_tpm_23_meses_pct FROM macro_expectativas_tpm e JOIN macro_tasas_corto_plazo t USING (periodo) GROUP BY e.periodo ORDER BY e.periodo DESC LIMIT 24;" },
+              { label: "Encuesta de Operadores Financieros: últimas 20 encuestas", query: "SELECT fecha, expectativa_inflacion_12_meses_pct, expectativa_tpm_12_meses_pct FROM macro_expectativas_operadores ORDER BY fecha DESC LIMIT 20;" }
+            ],
+            tables: [
+              { id: "macro_expectativas_inflacion", name: "macro.expectativas_inflacion", rows: "Una fila por mes", file: "outputs/macro/macro_expectativas_inflacion.parquet" },
+              { id: "macro_expectativas_tpm", name: "macro.expectativas_tpm", rows: "Una fila por mes", file: "outputs/macro/macro_expectativas_tpm.parquet" },
+              { id: "macro_expectativas_operadores", name: "macro.expectativas_operadores", rows: "Una fila por día", file: "outputs/macro/macro_expectativas_operadores.parquet" }
+            ]
+          },
+          {
+            id: "cat_macro_series_catalogo",
+            type: "circular",
+            label: "Catálogo de series",
             badge: "51 series",
             badgeType: "data",
             status: "active",
             sector: "macro",
             chips: [
-              { label: "Catálogo: series, frecuencia y última fecha", query: "SELECT grupo, clave, nombre, frecuencia, unidad, ultima_fecha, observaciones, estado FROM macro_series_catalogo ORDER BY grupo, clave;" },
-              { label: "Dólar, cobre y oro: últimos 30 días hábiles", query: "SELECT fecha, max(valor) FILTER (WHERE clave = 'usd_clp') AS dolar, max(valor) FILTER (WHERE clave = 'cobre_diario') AS cobre_usd_lb, max(valor) FILTER (WHERE clave = 'oro') AS oro_usd_oz FROM macro_series WHERE clave IN ('usd_clp', 'cobre_diario', 'oro') GROUP BY fecha ORDER BY fecha DESC LIMIT 30;" },
-              { label: "Curva swap pesos (SPC 90d, 180d, 360d, 2 años), promedio mensual", query: "SELECT periodo, round(avg(valor) FILTER (WHERE clave = 'spc_clp_90d'), 3) AS spc_90d, round(avg(valor) FILTER (WHERE clave = 'spc_clp_180d'), 3) AS spc_180d, round(avg(valor) FILTER (WHERE clave = 'spc_clp_360d'), 3) AS spc_360d, round(avg(valor) FILTER (WHERE clave = 'spc_clp_2y'), 3) AS spc_2y FROM macro_series WHERE clave LIKE 'spc_clp_%' GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
-              { label: "Mercado laboral: desocupación, ocupados y fuerza de trabajo", query: "SELECT periodo, max(valor) FILTER (WHERE clave = 'desocupacion') AS desocupacion_pct, max(valor) FILTER (WHERE clave = 'ocupados') AS ocupados_miles, max(valor) FILTER (WHERE clave = 'fuerza_trabajo') AS fuerza_trabajo_miles FROM macro_series WHERE clave IN ('desocupacion', 'ocupados', 'fuerza_trabajo') GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
-              { label: "Expectativas de TPM e inflación (EEE y EOF) vs TPM", query: "SELECT periodo, round(avg(valor) FILTER (WHERE clave = 'tpm'), 2) AS tpm, max(valor) FILTER (WHERE clave = 'eee_tpm_11m') AS eee_tpm_11m, round(avg(valor) FILTER (WHERE clave = 'eof_tpm_12m'), 2) AS eof_tpm_12m, max(valor) FILTER (WHERE clave = 'eee_ipc_11m') AS eee_ipc_11m, round(avg(valor) FILTER (WHERE clave = 'eof_ipc_12m'), 2) AS eof_ipc_12m FROM macro_series WHERE clave IN ('tpm', 'eee_tpm_11m', 'eof_tpm_12m', 'eee_ipc_11m', 'eof_ipc_12m') GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
-              { label: "Tasas de EE.UU. vs Chile (Fed, TPM, BCP 10 años)", query: "SELECT periodo, round(avg(valor) FILTER (WHERE clave = 'fed_funds'), 2) AS fed_funds, round(avg(valor) FILTER (WHERE clave = 'tpm'), 2) AS tpm, round(avg(valor) FILTER (WHERE clave = 'bcp_10y'), 2) AS bcp_10y FROM macro_series WHERE clave IN ('fed_funds', 'tpm', 'bcp_10y') GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" }
+              { label: "Catálogo: series, frecuencia, unidad y última fecha", query: "SELECT grupo, nombre, frecuencia, unidad, primera_fecha, ultima_fecha, observaciones, estado FROM macro_series_catalogo ORDER BY grupo, nombre;" },
+              { label: "Estado de la última consulta al BCCh por grupo", query: "SELECT grupo, count(*) AS series, sum(CASE WHEN estado = 'ok' THEN 1 ELSE 0 END) AS series_ok, max(ultima_fecha) AS dato_mas_reciente, max(ultima_consulta_utc) AS ultima_consulta_utc FROM macro_series_catalogo GROUP BY grupo ORDER BY grupo;" }
             ],
             tables: [
-              { id: "macro_series", name: "macro.series", rows: "Series BCCh", file: "", files: ["outputs/macro/series/manifest.json"] },
-              { id: "macro_series_catalogo", name: "macro.series_catalogo", rows: "Catálogo", file: "outputs/macro/macro_series_catalogo.parquet" }
+              { id: "macro_series_catalogo", name: "macro.series_catalogo", rows: "Una fila por serie", file: "outputs/macro/macro_series_catalogo.parquet" }
             ]
           }
         ]
       }
     ]
   },
+  // <macro:fin>
   {
     id: "group_factoring_leasing",
     type: "group",

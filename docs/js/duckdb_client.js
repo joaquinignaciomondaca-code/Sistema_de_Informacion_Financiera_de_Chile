@@ -95,11 +95,32 @@ const SEMANTIC_VIEWS = [
   { name: "bancos_resultados", manifest: "outputs/bancos/cmf_b1_b2_r1/manifest.json", where: "familia_archivo_fuente = 'R1'" },
 
   // MACROECONOMÍA & TASAS (BCCh SIETE)
-  { name: "macro_tasas_rendimientos", file: "outputs/macro/macro_tasas_rendimientos.parquet" },
-  { name: "macro_divisas_mercado", file: "outputs/macro/macro_divisas_mercado.parquet" },
-  { name: "macro_precios_actividad", file: "outputs/macro/macro_precios_actividad.parquet" },
-  { name: "macro_series", manifest: "outputs/macro/series/manifest.json" },
+  // <macro:inicio>
+  { name: "macro_tasas_corto_plazo", file: "outputs/macro/macro_tasas_corto_plazo.parquet" },
+  { name: "macro_swaps_camara", file: "outputs/macro/macro_swaps_camara.parquet" },
+  { name: "macro_curva_bonos_pesos", file: "outputs/macro/macro_curva_bonos_pesos.parquet" },
+  { name: "macro_curva_bonos_uf", file: "outputs/macro/macro_curva_bonos_uf.parquet" },
+  { name: "macro_inflacion_implicita", file: "outputs/macro/macro_inflacion_implicita.parquet" },
+  { name: "macro_dolar_observado", file: "outputs/macro/macro_dolar_observado.parquet" },
+  { name: "macro_euro_observado", file: "outputs/macro/macro_euro_observado.parquet" },
+  { name: "macro_tipo_cambio_multilateral", file: "outputs/macro/macro_tipo_cambio_multilateral.parquet" },
+  { name: "macro_tipo_cambio_real", file: "outputs/macro/macro_tipo_cambio_real.parquet" },
+  { name: "macro_uf", file: "outputs/macro/macro_uf.parquet" },
+  { name: "macro_utm", file: "outputs/macro/macro_utm.parquet" },
+  { name: "macro_inflacion_ipc", file: "outputs/macro/macro_inflacion_ipc.parquet" },
+  { name: "macro_imacec", file: "outputs/macro/macro_imacec.parquet" },
+  { name: "macro_pib_trimestral", file: "outputs/macro/macro_pib_trimestral.parquet" },
+  { name: "macro_mercado_laboral", file: "outputs/macro/macro_mercado_laboral.parquet" },
+  { name: "macro_cobre", file: "outputs/macro/macro_cobre.parquet" },
+  { name: "macro_metales_preciosos", file: "outputs/macro/macro_metales_preciosos.parquet" },
+  { name: "macro_reservas_internacionales", file: "outputs/macro/macro_reservas_internacionales.parquet" },
+  { name: "macro_tasa_referencia_fed", file: "outputs/macro/macro_tasa_referencia_fed.parquet" },
+  { name: "macro_deuda_publica_pct_pib", file: "outputs/macro/macro_deuda_publica_pct_pib.parquet" },
+  { name: "macro_expectativas_inflacion", file: "outputs/macro/macro_expectativas_inflacion.parquet" },
+  { name: "macro_expectativas_tpm", file: "outputs/macro/macro_expectativas_tpm.parquet" },
+  { name: "macro_expectativas_operadores", file: "outputs/macro/macro_expectativas_operadores.parquet" },
   { name: "macro_series_catalogo", file: "outputs/macro/macro_series_catalogo.parquet" },
+  // <macro:fin>
 
   // FACTORING & LEASING (CMF / NBFI)
   // BEGIN AUTO FL IFRS SERIES VIEWS
