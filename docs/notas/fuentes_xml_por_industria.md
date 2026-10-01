@@ -8,6 +8,10 @@
 > `corredoras_bolsa/scripts/actualizar_eeff.py`); y factoring/leasing publica la serie IFRS completa
 > desde el TXT de la CMF (`factoring_leasing/scripts/`), con la muestra de dos filas ya retirada de
 > la web. Las secciones 1 a 4 se conservan solo como evidencia del cotejo de entonces.
+>
+> **Fondos mutuos (2026-10-01):** la medición real del XML `FMEF` desde Actions está en
+> `ffmm_estados_financieros_xml_2026-10-01.md`. La fila «Fondos mutuos … hoy se lee HTML/PDF» de la tabla 3 y la
+> prioridad n.º 1 de la sección 5 son históricas: hoy el sitio no publica balance ni resultados de fondos mutuos.
 
 Fecha de revisión: 2026-09-27
 Alcance: verificar **qué industrias del sitio pueden alimentarse de XML/XBRL oficiales** en lugar de PDF,
