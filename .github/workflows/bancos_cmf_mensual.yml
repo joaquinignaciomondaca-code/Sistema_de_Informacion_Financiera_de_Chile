@@ -11,7 +11,6 @@ on:
   push:
     branches:
       - main
-      - arena/01a0f57d-sistema-de-informacion-financi  # TEMPORAL: prueba real en la rama del PR (2.ª corrida, sin novedades)
     paths:
       - .github/workflows/bancos_cmf_mensual.yml
       - bancos/scripts/publish_cmf_bank_period.py
