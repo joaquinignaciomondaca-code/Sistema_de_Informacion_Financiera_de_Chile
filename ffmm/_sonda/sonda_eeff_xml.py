@@ -183,6 +183,11 @@ def procesar(item: dict) -> dict:
     if "No existe información de la entidad" in html:
         r["clase"] = "sin_informacion"
         return r
+    texto = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", html))
+    mu = re.search(r"Expresado en miles de ([A-Za-zÁ-úñ$]+)", texto)
+    r["unidad_html"] = mu.group(1) if mu else "?"
+    ma = re.search(r"Total Activo \(\+\)\s+(-?[\d.]+)\s+(-?[\d.]+)", texto)
+    r["html_total_activo"] = [int(ma.group(1).replace(".", "")), int(ma.group(2).replace(".", ""))] if ma else None
     m = re.search(r"ifrs_xml_verarchivo\.php\?archivo=(FMEF[A-Za-z0-9_\-]+\.xml)", html)
     r["pdf_notas"] = bool(re.search(r"archivo=FMNO\d+", html))
     r["pdf_dictamen"] = bool(re.search(r"archivo=FMDA\d+", html))
@@ -263,6 +268,31 @@ def resumir(filas: list[dict]) -> dict:
     R["errores_inesperados"] = [[f["run"], f["anio"], f.get("error")] for f in filas if f["clase"] == "error_inesperado"][:6]
     R["parse"] = dict(Counter(f.get("parse", "")[:40] for f in filas if "parse" in f))
     R["moneda"] = dict(Counter(f["moneda"] for f in ok))
+    R["moneda_x_unidad_html"] = dict(Counter(f"{f['moneda']}|{f.get('unidad_html')}" for f in ok))
+    R["moneda_no_pesos_filas"] = [[f["run"], f["anio"], f["moneda"], f.get("unidad_html"), f["actual"].get("TotalActivo")]
+                                  for f in ok if f["moneda"] != "$$"][:10]
+    R["moneda_prom_por_anio"] = dict(sorted(Counter(f["anio"] for f in ok if f["moneda"] == "PROM").items()))
+    cmp_a = Counter()
+    for f in ok:
+        h = f.get("html_total_activo")
+        if not h:
+            cmp_a["html_no_leido"] += 1
+        else:
+            cmp_a["actual_igual" if h[0] == f["actual"].get("TotalActivo") else "actual_difiere"] += 1
+            if f["anterior"].get("TotalActivo") is not None:
+                cmp_a["anterior_igual" if h[1] == f["anterior"].get("TotalActivo") else "anterior_difiere"] += 1
+    R["html_vs_xml_total_activo"] = dict(cmp_a)
+    R["html_vs_xml_ejemplos_difieren"] = [[f["run"], f["anio"], f["html_total_activo"], f["actual"].get("TotalActivo")] for f in ok
+                                          if f.get("html_total_activo") and f["html_total_activo"][0] != f["actual"].get("TotalActivo")][:6]
+    fam = lambda d: "iso" if d.lower() == "iso-8859-1" else "utf8" if d.lower() == "utf-8" else "ninguna" if d.startswith("(") else "invalida"  # noqa: E731
+    dxa = defaultdict(Counter)
+    for f in filas:
+        if "decl" in f:
+            dxa[f["anio"]][fam(f["decl"])] += 1
+    R["declaracion_por_anio"] = {a: dict(c) for a, c in sorted(dxa.items())}
+    fb = Counter(f["anio"] for f in filas if str(f.get("parse", "")).startswith("ok_sin_declaracion"))
+    R["lectura_con_respaldo_por_anio"] = dict(sorted(fb.items()))
+    R["generador_x_declaracion"] = dict(Counter(f"{(f.get('generador') or '')[:10]}|{fam(f['decl'])}" for f in filas if "decl" in f).most_common(10))
     R["flags_ESF_ERI_ECAN_EFEdir_EFEind"] = dict(Counter(f["flags"] for f in ok).most_common(6))
     R["mes_distinto_de_12"] = sum(1 for f in ok if f["mes"] != "12")
     R["anio_xml_distinto_del_pedido"] = [(f["run"], f["anio"], f["anio_xml"]) for f in ok if str(f["anio"]) != f["anio_xml"]][:10]
@@ -276,7 +306,7 @@ def resumir(filas: list[dict]) -> dict:
     for f in ok:
         for k, n in f["codigos"].items():
             cod[k] += 1
-    R["codigos_en_n_archivos"] = {k: n for k, n in sorted(cod.items()) if k in CONOCIDOS}
+    R["codigos_conocidos_no_presentes_en_todos"] = {k: len(ok) - cod.get(k, 0) for k in sorted(CONOCIDOS) if cod.get(k, 0) != len(ok)}
     R["codigos_fuera_del_modelo_esf_eri"] = {k: n for k, n in sorted(cod.items())
                                               if k not in CONOCIDOS and "PorSerie" not in k}
     faltan = Counter()
@@ -326,9 +356,10 @@ def resumir(filas: list[dict]) -> dict:
 
 def anotar(titulo: str, obj) -> None:
     txt = json.dumps(obj, ensure_ascii=False, separators=(",", ":"), default=str)
-    txt = txt.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
-    for i in range(0, len(txt), 28000):
-        print(f"::notice title={titulo} {i // 28000 + 1}::{txt[i:i + 28000]}", flush=True)
+    trozos = [txt[i:i + 3800] for i in range(0, len(txt), 3800)] or [""]
+    for n, tr in enumerate(trozos, 1):
+        tr = tr.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A")
+        print(f"::notice title={titulo} {n}/{len(trozos)}::{tr}", flush=True)
 
 
 def main() -> int:
@@ -345,7 +376,21 @@ def main() -> int:
     R = resumir(filas)
     R["duracion_total_s"] = seg
     R["peticiones_aprox"] = len(filas) + sum(1 for f in filas if "est_xml" in f)
-    anotar("SONDA FFMM resumen", R)
+    secciones = {
+        "1 general": ["fichas", "por_clase", "estado_http_ficha", "estado_http_xml", "duracion_total_s", "peticiones_aprox", "tiempos_s",
+                      "bytes_xml", "enlaces_pdf", "series_por_fondo", "valores_no_numericos", "valores_no_enteros", "mes_distinto_de_12",
+                      "anio_xml_distinto_del_pedido", "run_xml_distinto", "total_activo_cero", "errores_inesperados", "clase_por_anio"],
+        "2 cuadratura": ["chk_actual", "chk_anterior", "chk_actual_ejemplos_falla", "chk_anterior_ejemplos_falla",
+                         "consecutivos_anterior_vs_actual", "controles_contra_html_ya_leido", "html_vs_xml_total_activo",
+                         "html_vs_xml_ejemplos_difieren"],
+        "3 codificacion y generador": ["declaracion_xml", "parse", "declaracion_por_anio", "lectura_con_respaldo_por_anio", "generadores",
+                                       "generador_x_declaracion", "declaraciones_anomalas", "xml_ilegible_muestras", "sin_enlace_xml_muestras"],
+        "4 moneda": ["moneda", "moneda_x_unidad_html", "moneda_no_pesos_filas", "moneda_prom_por_anio", "flags_ESF_ERI_ECAN_EFEdir_EFEind"],
+        "5 codigos": ["otros_eri_variante", "codigos_conocidos_no_presentes_en_todos", "cuentas_esf_eri_ausentes_en_actual",
+                      "codigos_fuera_del_modelo_esf_eri"],
+    }
+    for nombre, claves in secciones.items():
+        anotar(f"SONDA FFMM {nombre}", {k: R[k] for k in claves if k in R})
     return 0
 
 
