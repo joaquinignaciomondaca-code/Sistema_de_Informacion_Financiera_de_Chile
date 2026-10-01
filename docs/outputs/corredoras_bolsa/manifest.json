@@ -875,6 +875,8 @@
         "corredor de bolsa": 24,
         "agente de valores": 9
       },
+      "balances_verificados": 33,
+      "balances_totales": 33,
       "filas": {
         "balance": 1354,
         "resultados": 1003
@@ -882,11 +884,11 @@
       "corredores_fuera_de_lista": [],
       "avisos": [],
       "sha256_origen": {
-        "corredor de bolsa": "91f3bca1e49047fb83feddbf23e5946a4ec83a650e121da97ad50933f90f9002",
-        "agente de valores": "15f13d19c732580104bb9ab37e3ae786bcd91949a48821fac124c77673b7b680"
+        "corredor de bolsa": "a3bc60867bf437021f7cb9d1a483698a3ba25165245c0c6070b9f53c25eb9688",
+        "agente de valores": "8f08734d551778b9d5536aead2927b41f2657ba256da53aaf2f31cbf6a2ad685"
       }
     }
   },
   "desde": "2010-12",
-  "updated_at": "2026-09-30T18:59:32+00:00"
+  "updated_at": "2026-10-01T18:23:25+00:00"
 }
