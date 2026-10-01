@@ -19,7 +19,7 @@ import sys
 import time
 import unicodedata
 import urllib.request
-from collections import Counter
+from collections import Counter, defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime, timezone
 from pathlib import Path
@@ -196,9 +196,10 @@ def cobertura_local(docs, periodo):
     registro = json.loads(
         (docs / "fi_registro_fondos_universo.json").read_text(encoding="utf-8")
     )
-    control = json.loads((docs / "fi_eeff_control.json").read_text(encoding="utf-8"))[
+    todos = json.loads((docs / "fi_eeff_control.json").read_text(encoding="utf-8"))[
         "periodos"
-    ][periodo]
+    ]
+    control = todos[periodo]
     regs = control["registros"]
     indice = {r["run_fondo"]: r for r in registro}
     if len(indice) != len(registro):
@@ -262,6 +263,16 @@ def cobertura_local(docs, periodo):
         "alcance": "fondos públicos FIRES/FINRE, no fondos privados no reportantes",
         "advertencia_vigencia": "El padrón indica vigencia actual, no vigencia histórica al cierre.",
         "cierre_historico_completo": False,
+        "periodos_publicados": sorted(todos),
+        "entradas_sha256": {
+            str(p.relative_to(docs)): hashlib.sha256(p.read_bytes()).hexdigest()
+            for p in (
+                docs / "fi_registro_fondos_universo.json",
+                docs / "fi_eeff_control.json",
+                docs / f"fi_balance/{periodo}.parquet",
+                docs / f"fi_resultados/{periodo}.parquet",
+            )
+        },
         "resumen_local": tabla,
         "fondos": filas,
     }
@@ -285,9 +296,22 @@ def motivo_temporal(identificacion, periodo):
 
 
 class Fuentes:
-    def __init__(self, destino, deadline, fetcher=None):
+    def __init__(self, destino, deadline, fetcher=None, previo=None):
         self.destino, self.deadline = destino, deadline
         self.fetcher = fetcher or self.descargar
+        self.previas = {}
+        if previo:
+            red = previo.get("revision_cmf", {})
+            fuentes = list(red.get("listas", []))
+            for r in red.get("revisiones", []):
+                fuentes.extend(r["sondeos"])
+                if "identificacion" in r:
+                    fuentes.append(r["identificacion"])
+            self.previas = {
+                r["url"]: r
+                for r in fuentes
+                if r.get("sha256") and r.get("estado") != "pendiente"
+            }
         (destino / "fuentes").mkdir(parents=True, exist_ok=True)
 
     def descargar(self, url):
@@ -322,7 +346,21 @@ class Fuentes:
         try:
             if time.monotonic() >= self.deadline:
                 raise TimeoutError("tiempo de revisión agotado")
-            raw = self.fetcher(url)
+            ruta = (
+                self.destino
+                / "fuentes"
+                / (hashlib.sha256(url.encode()).hexdigest() + ".html")
+            )
+            anterior = self.previas.get(url)
+            raw = ruta.read_bytes() if anterior and ruta.exists() else None
+            if (
+                raw is not None
+                and hashlib.sha256(raw).hexdigest() == anterior["sha256"]
+            ):
+                meta["revisado_utc"] = anterior["revisado_utc"]
+                meta["cache_sha256_verificado"] = True
+            else:
+                raw = self.fetcher(url)
             meta["sha256"] = hashlib.sha256(raw).hexdigest()
             meta["bytes"] = len(raw)
             (
@@ -336,43 +374,68 @@ class Fuentes:
 
 
 def cotejar_registro(locales, nuevos):
-    actual = {r["run_fondo"]: r for r in nuevos}
-    if len(actual) != len(nuevos):
-        raise ValueError(
-            "las listas oficiales sitúan un RUN en más de un tipo/vigencia"
-        )
+    por_run = defaultdict(list)
+    for f in nuevos:
+        por_run[f["run_fondo"]].append(f)
     local = {r["run_fondo"]: r for r in locales}
+    # Un mismo RUN puede figurar en VI y NV simultáneamente (9251, muestra real).
+    # Contarlo una sola vez no autoriza a elegir una vigencia arbitraria.
+    univocos = {run: fs[0] for run, fs in por_run.items() if len(fs) == 1}
+    ambiguos = [
+        {"run": run, "registros": fs}
+        for run, fs in sorted(por_run.items(), key=lambda kv: int(kv[0]))
+        if len(fs) > 1
+    ]
+    tipos_ambiguos = [
+        r["run"]
+        for r in ambiguos
+        if len({f["tipo_entidad"] for f in r["registros"]}) > 1
+    ]
+    compartidos = sorted(set(local) & set(por_run), key=int)
     return {
-        "fondos_cmf": len(actual),
+        "filas_listas_cmf": len(nuevos),
+        "fondos_cmf": len(por_run),
+        "registros_ambiguos": ambiguos,
+        "tipos_ambiguos": tipos_ambiguos,
         "altas_fuera_del_padron_local": [
-            actual[r] for r in sorted(set(actual) - set(local), key=int)
+            univocos[r] for r in sorted(set(univocos) - set(local), key=int)
         ],
-        "ausentes_del_registro_actual": sorted(set(local) - set(actual), key=int),
+        "altas_ambiguas": [r for r in ambiguos if r["run"] not in local],
+        "ausentes_del_registro_actual": sorted(set(local) - set(por_run), key=int),
         "cambios_tipo": [
             {
-                "run": r,
-                "local": local[r]["tipo_entidad"],
-                "cmf": actual[r]["tipo_entidad"],
+                "run": run,
+                "local": local[run]["tipo_entidad"],
+                "cmf": fs[0]["tipo_entidad"],
             }
-            for r in sorted(set(local) & set(actual), key=int)
-            if local[r]["tipo_entidad"] != actual[r]["tipo_entidad"]
+            for run in compartidos
+            if (fs := por_run[run])
+            and len({f["tipo_entidad"] for f in fs}) == 1
+            and local[run]["tipo_entidad"] != fs[0]["tipo_entidad"]
         ],
         "cambios_vigencia": [
             {
-                "run": r,
-                "local": local[r]["estado_vigencia"],
-                "cmf": actual[r]["estado_vigencia"],
+                "run": run,
+                "local": local[run]["estado_vigencia"],
+                "cmf": univocos[run]["estado_vigencia"],
             }
-            for r in sorted(set(local) & set(actual), key=int)
-            if local[r]["estado_vigencia"] != actual[r]["estado_vigencia"]
+            for run in compartidos
+            if run in univocos
+            and local[run]["estado_vigencia"] != univocos[run]["estado_vigencia"]
         ],
     }
 
 
 def revisar_red(
-    informe, destino, minutos=30, hilos=6, solo_vigentes=False, fetcher=None
+    informe,
+    destino,
+    minutos=30,
+    hilos=6,
+    solo_vigentes=False,
+    fetcher=None,
+    previo=None,
 ):
-    fuente = Fuentes(destino, time.monotonic() + minutos * 60, fetcher)
+    fuente = Fuentes(destino, time.monotonic() + minutos * 60, fetcher, previo)
     locales = informe["fondos"]
     listas, nuevas = [], []
     for tipo in TIPOS_FONDO:
@@ -458,12 +521,25 @@ def revisar_red(
                     flush=True,
                 )
     revisiones.sort(key=lambda r: int(r["run"]))
-    pendientes = [
-        r["run"]
-        for r in revisiones
-        if any(p["estado"] == "pendiente" for p in r["sondeos"])
-        or r.get("identificacion", {}).get("estado") == "pendiente"
-    ]
+    pendientes = []
+    auxiliares_pendientes = []
+    for r in revisiones:
+        vig_correcta = "VI" if r["vigencia_actual"] == "Vigente" else "NV"
+        relevantes = [p for p in r["sondeos"] if p["vig_consultada"] == vig_correcta]
+        primaria = next(
+            p for p in relevantes if p["tipo_consultado"] == r["tipo_padron"]
+        )
+        if (
+            any(p["estado"] == "pendiente" for p in relevantes)
+            or primaria["estado"] not in ("sin_informacion", "xml")
+            or r.get("identificacion", {}).get("estado") == "pendiente"
+        ):
+            pendientes.append(r["run"])
+        auxiliares_pendientes.extend(
+            {"run": r["run"], **p}
+            for p in r["sondeos"]
+            if p["vig_consultada"] != vig_correcta and p["estado"] == "pendiente"
+        )
     enlaces_otro = [
         r["run"]
         for r in revisiones
@@ -498,8 +574,11 @@ def revisar_red(
         "revision_completa": not pendientes
         and all(r["estado"] == "ok" for r in listas)
         and registro is not None
-        and not registro.get("error"),
+        and not registro.get("error")
+        and not registro.get("tipos_ambiguos")
+        and not registro.get("altas_ambiguas"),
         "fondos_pendientes": pendientes,
+        "consultas_auxiliares_pendientes": auxiliares_pendientes,
         "enlace_en_otro_tipo": enlaces_otro,
         "enlace_en_tipo_del_padron": enlaces_propio,
         "enlace_solo_cambiando_vigencia": enlaces_nv,
@@ -514,6 +593,7 @@ def revisar_red(
                     r.get("situacion_temporal_declarada", "identificacion_pendiente")
                     for r in revisiones
                     if r["vigencia_actual"] == "Vigente"
+                    and r["estado_publicado"] != "fuera_del_padron_local"
                 ).items()
             )
         ),
@@ -542,7 +622,12 @@ def markdown(informe):
     lineas += [
         "",
         "**Vigencia actual, no histórica:** esta tabla no afirma cuáles estaban activos al cierre.",
-        "Solo está cargado el cierre indicado; falta completar la serie histórica. No se deben fabricar filas de cero para fondos sin envío.",
+        (
+            "Solo está cargado el cierre indicado; falta completar la serie histórica."
+            if len(informe.get("periodos_publicados", [periodo])) == 1
+            else "Esta revisión se limita al cierre indicado, no certifica la completitud de toda la historia."
+        )
+        + " No se deben fabricar filas de cero para fondos sin envío.",
         "",
     ]
     red = informe.get("revision_cmf")
@@ -552,7 +637,8 @@ def markdown(informe):
             "",
             f"- Alcance: {red['alcance']}; **{red['fondos_contrastados']}** fondos.",
             f"- Revisión completa: **{'sí' if red['revision_completa'] else 'no; existen consultas o listas pendientes'}**.",
-            f"- Fondos con consultas pendientes: **{len(red['fondos_pendientes'])}**.",
+            f"- Fondos con consultas pendientes en su vigencia correcta: **{len(red['fondos_pendientes'])}**.",
+            f"- Consultas auxiliares (vigencia incorrecta) pendientes: **{len(red.get('consultas_auxiliares_pendientes', []))}**; se conservan como tales, no como ausencias.",
             f"- Ausencias/altas con enlace FIEF en el otro tipo: **{len(red['enlace_en_otro_tipo'])}**.",
             f"- Ausencias/altas con enlace en su tipo: **{len(red['enlace_en_tipo_del_padron'])}**.",
             f"- Enlaces recuperables al cambiar VI por NV: **{len(red['enlace_solo_cambiando_vigencia'])}**.",
@@ -563,12 +649,29 @@ def markdown(informe):
         if reg and "error" not in reg:
             lineas += [
                 (
-                    f"Registro CMF cotejado: **{reg['fondos_cmf']}** RUN; "
+                    f"Registro CMF cotejado: **{reg['fondos_cmf']}** RUN únicos en **{reg.get('filas_listas_cmf', reg['fondos_cmf'])}** filas; "
                     f"**{len(reg['altas_fuera_del_padron_local'])}** altas fuera del padrón local y "
                     f"**{len(reg['cambios_tipo'])}** cambios de tipo."
                 ),
                 "",
             ]
+        if reg and "error" not in reg:
+            if reg.get("registros_ambiguos"):
+                lineas += [
+                    "**Ambigüedad de vigencia en el registro oficial:** "
+                    + ", ".join(r["run"] for r in reg["registros_ambiguos"])
+                    + ". Cada RUN se cuenta una sola vez, sin asignarle una vigencia arbitraria.",
+                    "",
+                ]
+            if reg.get("altas_fuera_del_padron_local"):
+                lineas += ["### Fondos fuera de la copia local del padrón", ""]
+                por_run = {r["run"]: r for r in red["revisiones"]}
+                for f in reg["altas_fuera_del_padron_local"]:
+                    i = por_run.get(f["run_fondo"], {}).get("identificacion", {})
+                    lineas.append(
+                        f"- **{f['run_fondo']} ({f['tipo_entidad']}) — {f['nombre_fondo']}**. Inicio declarado: {i.get('fecha_inicio_operaciones') or 'no informado'}. La incorporación al padrón no supone publicar cifras sin un XML validado."
+                    )
+                lineas.append("")
         if (
             red["revision_completa"]
             and not red["enlace_en_otro_tipo"]
@@ -599,7 +702,10 @@ def markdown(informe):
         ]
         nombres = {r["run_fondo"]: r["nombre_fondo"] for r in informe["fondos"]}
         for r in red["revisiones"]:
-            if r["vigencia_actual"] != "Vigente":
+            if (
+                r["vigencia_actual"] != "Vigente"
+                or r["estado_publicado"] == "fuera_del_padron_local"
+            ):
                 continue
             i = r.get("identificacion", {})
             nombre = (i.get("nombre") or nombres.get(r["run"], "")).replace("|", "\\|")
@@ -637,6 +743,11 @@ def main(argv=None):
     ap.add_argument("--periodo", default="2026-06")
     ap.add_argument("--out", type=Path, default=ROOT / ".local-data/fi_eeff_cobertura")
     ap.add_argument("--red", action="store_true")
+    ap.add_argument(
+        "--reanudar",
+        action="store_true",
+        help="reusar respuestas previas de staging solo si su SHA-256 coincide",
+    )
     ap.add_argument("--solo-vigentes", action="store_true")
     ap.add_argument("--minutos", type=float, default=30)
     ap.add_argument("--hilos", type=int, choices=range(1, 9), default=6)
@@ -652,7 +763,21 @@ def main(argv=None):
     informe["revisado_utc"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     args.out.mkdir(parents=True, exist_ok=True)
     if args.red:
-        revisar_red(informe, args.out, args.minutos, args.hilos, args.solo_vigentes)
+        anterior = (
+            json.loads((args.out / "revision.json").read_text())
+            if args.reanudar and (args.out / "revision.json").exists()
+            else None
+        )
+        if anterior and anterior.get("periodo") != args.periodo:
+            ap.error("el cierre del staging no coincide con --periodo")
+        revisar_red(
+            informe,
+            args.out,
+            args.minutos,
+            args.hilos,
+            args.solo_vigentes,
+            previo=anterior,
+        )
     serializado = json.dumps(informe, ensure_ascii=False, indent=2) + "\n"
     (args.out / "revision.json").write_text(serializado, encoding="utf-8")
     (args.out / "revision.md").write_text(markdown(informe), encoding="utf-8")
