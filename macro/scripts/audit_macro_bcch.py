@@ -1,146 +1,117 @@
-"""
-Suite de Auditoría y Verificación de Integridad de Datos Macro (BCCh SIETE).
-Valida:
-1. Unicidad de clave primaria (periodo YYYY-MM) en cada dataset.
-2. Continuidad cronológica estricta sin lagunas temporales.
-3. Cobertura de columnas esperadas y tipos de datos numéricos.
-4. Rangos económicos plausibles (TPM, Dólar, UF, IPC, IMACEC, Cobre).
-5. Coherencia de métricas calculadas (Spreads, Breakeven, Variaciones).
-"""
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Auditoría de integridad de las tablas temáticas macro (BCCh SIETE).
 
-import os
+Valida, sobre docs/outputs/macro/ (o el directorio indicado):
+1. Que exista un Parquet por cada tabla temática declarada en build_tablas_tematicas.TABLAS
+   y que tenga exactamente las columnas declaradas (fecha, periodo + indicadores).
+2. Unicidad y orden cronológico de `fecha`; sin fechas futuras; `periodo` = fecha[:7].
+3. Que cada columna sea numérica y no esté completamente vacía.
+4. Que ninguna observación de las series nativas se haya perdido al pivotar.
+5. Rangos económicos plausibles en indicadores clave (TPM, dólar, UF, IPC, cobre).
+6. Que las 51 series del catálogo estén cubiertas por alguna tabla temática.
+
+Uso: python -m macro.scripts.audit_macro_bcch [--input-dir docs/outputs/macro]
+"""
+from __future__ import annotations
+
 import argparse
+import sys
+from datetime import date
+from pathlib import Path
+
 import pandas as pd
-import numpy as np
+import pyarrow.parquet as pq
 
-def run_audit(macro_dir=None):
-    macro_dir = os.path.abspath(macro_dir or os.path.join(os.path.dirname(__file__), "..", "..", ".local-data", "macro"))
+from macro.scripts.build_tablas_tematicas import (
+    CARPETA_SERIES, CATALOGO_PQ, SALIDA, TABLAS, cargar_series, verificar,
+)
+
+RANGOS = {  # columna -> (mínimo, máximo) plausibles
+    "tpm_pct": (0.0, 15.0),
+    "tib_promedio_pct": (0.0, 15.0),
+    "dolar_observado_clp_por_usd": (400.0, 1400.0),
+    "euro_observado_clp_por_eur": (500.0, 1500.0),
+    "uf_valor_clp": (20000.0, 60000.0),
+    "utm_valor_clp": (40000.0, 100000.0),
+    "ipc_var_anual_pct": (-5.0, 20.0),
+    "cobre_refinado_usd_por_libra": (1.0, 10.0),
+    "oro_usd_por_onza_troy": (800.0, 8000.0),
+    "desocupacion_pct": (3.0, 20.0),
+    "tasa_fed_funds_pct": (0.0, 10.0),
+}
+
+
+def run_audit(macro_dir: Path | None = None) -> int:
+    macro_dir = Path(macro_dir or SALIDA).resolve()
+    errores: list[str] = []
+    hoy = date.today().isoformat()
     print("=" * 70)
-    print("Iniciando Auditoría de Integridad: Macroeconomía & Tasas (BCCh SIETE)")
-    print(f"Directorio de datos: {macro_dir}")
+    print("Auditoría de integridad: tablas temáticas macro (BCCh SIETE)")
+    print(f"Directorio: {macro_dir}")
     print("=" * 70)
 
-    tables = {
-        "macro_tasas_rendimientos": {
-            "file": "macro_tasas_rendimientos.parquet",
-            "required_cols": [
-                "periodo", "tpm", "tib_promedio", "bcp_2y", "bcp_5y", "bcp_10y",
-                "bcu_5y", "bcu_10y", "bcu_20y", "spc_clp_2y", "spc_uf_1y",
-                "spread_bcp_10y_2y_bps", "spread_bcp_5y_2y_bps",
-                "inflacion_implicita_5y_breakeven", "inflacion_implicita_10y_breakeven"
-            ]
-        },
-        "macro_divisas_mercado": {
-            "file": "macro_divisas_mercado.parquet",
-            "required_cols": [
-                "periodo", "usd_clp_promedio", "usd_clp_cierre", "usd_clp_min", "usd_clp_max",
-                "var_mensual_usd_pct", "var_anual_usd_pct", "usd_clp_volatilidad_anualizada_pct",
-                "eur_clp_promedio", "eur_clp_cierre", "var_mensual_eur_pct",
-                "tcr_general", "tcr_5monedas"
-            ]
-        },
-        "macro_precios_actividad": {
-            "file": "macro_precios_actividad.parquet",
-            "required_cols": [
-                "periodo", "uf_cierre", "uf_promedio", "uf_var_mensual_pct",
-                "ipc_indice", "ipc_var_mensual", "ipc_var_anual",
-                "imacec_empalmado", "imacec_no_minero", "imacec_var_anual_pct",
-                "cobre_spot_usd_lb", "cobre_var_anual_pct",
-                "eee_ipc_11m", "eee_ipc_23m", "desvio_eee_11m_meta_bps"
-            ]
-        }
-    }
+    series = cargar_series() if CARPETA_SERIES.exists() else None
+    claves_cubiertas: set[str] = set()
 
-    errors = []
-
-    for name, spec in tables.items():
-        pq_path = os.path.join(macro_dir, spec["file"])
-        if not os.path.exists(pq_path):
-            errors.append(f"Falta archivo Parquet: {pq_path}")
+    for spec in TABLAS:
+        ruta = macro_dir / f"{spec['id']}.parquet"
+        if not ruta.exists():
+            errores.append(f"{spec['id']}: falta el Parquet")
             continue
-
-        df = pd.read_parquet(pq_path)
-        if df.empty:
-            errors.append(f"[{name}] Tabla vacía")
+        df = pq.read_table(ruta).to_pandas()
+        esperadas = ["fecha", "periodo"] + [c for _, c in spec.get("columnas", [])] \
+            + [c for c, _, _ in spec.get("derivadas", [])]
+        if list(df.columns) != esperadas:
+            errores.append(f"{spec['id']}: columnas {list(df.columns)} ≠ {esperadas}")
             continue
-        if "periodo" not in df.columns:
-            errors.append(f"[{name}] Falta periodo")
-            continue
-        print(f"\nAuditando: {name} ({len(df)} filas, {len(df.columns)} columnas)")
+        if df["fecha"].duplicated().any() or not df["fecha"].is_monotonic_increasing:
+            errores.append(f"{spec['id']}: fechas duplicadas o desordenadas")
+        if (df["fecha"] > hoy).any():
+            errores.append(f"{spec['id']}: fechas futuras")
+        if not (df["periodo"] == df["fecha"].str[:7]).all():
+            errores.append(f"{spec['id']}: periodo incoherente con fecha")
+        for col in esperadas[2:]:
+            if not pd.api.types.is_numeric_dtype(df[col]):
+                errores.append(f"{spec['id']}.{col}: no numérica")
+            elif df[col].notna().sum() == 0:
+                errores.append(f"{spec['id']}.{col}: sin ningún valor")
+            elif col in RANGOS:
+                lo, hi = RANGOS[col]
+                fuera = df[(df[col] < lo) | (df[col] > hi)]
+                if not fuera.empty:
+                    errores.append(f"{spec['id']}.{col}: {len(fuera)} valores fuera de [{lo}, {hi}] "
+                                   f"(ej. {fuera['fecha'].iloc[0]} = {fuera[col].iloc[0]})")
+        if series is not None:
+            try:
+                verificar(spec, df, series)
+            except ValueError as e:
+                errores.append(str(e))
+        claves_cubiertas.update(c for c, _ in spec.get("columnas", []))
+        for _, a, b in spec.get("derivadas", []):
+            claves_cubiertas.update((a, b))
+        print(f"  OK  {spec['id']:38s} {len(df):6d} filas  {df['fecha'].iloc[0]} → {df['fecha'].iloc[-1]}")
 
-        # 1. Columnas esperadas
-        missing = set(spec["required_cols"]) - set(df.columns)
-        if missing:
-            errors.append(f"[{name}] Columnas faltantes: {missing}")
+    if CATALOGO_PQ.exists():
+        cat = pq.read_table(CATALOGO_PQ, columns=["clave"]).column(0).to_pylist()
+        faltan = sorted(set(cat) - claves_cubiertas)
+        if faltan:
+            errores.append(f"series del catálogo sin tabla temática: {faltan}")
         else:
-            print("  [PASS] 100% columnas requeridas presentes.")
-
-        # 2. Unicidad de periodo
-        if df["periodo"].duplicated().any():
-            dups = df["periodo"][df["periodo"].duplicated()].tolist()
-            errors.append(f"[{name}] Periodos duplicados: {dups}")
-        else:
-            print("  [PASS] Unicidad de clave primaria 'periodo' (0 duplicados).")
-
-        # 3. Continuidad cronológica
-        periods = sorted(df["periodo"].tolist())
-        start_p, end_p = periods[0], periods[-1]
-        expected_periods = pd.date_range(start=f"{start_p}-01", end=f"{end_p}-01", freq="MS").strftime("%Y-%m").tolist()
-        missing_periods = set(expected_periods) - set(periods)
-        if missing_periods:
-            errors.append(f"[{name}] Lagunas cronológicas: {sorted(list(missing_periods))}")
-        else:
-            print(f"  [PASS] Continuidad mensual completa sin lagunas ({start_p} a {end_p}).")
-
-    if errors:
-        raise ValueError("Auditoría estructural fallida: " + "; ".join(errors))
-
-    # 4. Validaciones de negocio específicas
-    print("\nValidaciones de Negocio y Coherencia Financiera:")
-    df_tasas = pd.read_parquet(os.path.join(macro_dir, "macro_tasas_rendimientos.parquet"))
-    df_divisas = pd.read_parquet(os.path.join(macro_dir, "macro_divisas_mercado.parquet"))
-    df_precios = pd.read_parquet(os.path.join(macro_dir, "macro_precios_actividad.parquet"))
-
-    # Rangos TPM
-    valid_tpm = df_tasas["tpm"].dropna()
-    if (valid_tpm < 0).any() or (valid_tpm > 20).any():
-        errors.append(f"TPM fuera de rango lógico [0, 20]: min={valid_tpm.min()}, max={valid_tpm.max()}")
-    else:
-        print(f"  [PASS] TPM dentro de rango válido: min={valid_tpm.min()}%, max={valid_tpm.max()}%.")
-
-    # Rangos USD/CLP
-    valid_usd = df_divisas["usd_clp_cierre"].dropna()
-    if (valid_usd < 450).any() or (valid_usd > 1500).any():
-        errors.append(f"USD/CLP fuera de rango [450, 1500]: min={valid_usd.min()}, max={valid_usd.max()}")
-    else:
-        print(f"  [PASS] USD/CLP dentro de rango válido: min={valid_usd.min()}, max={valid_usd.max()}.")
-
-    # Rangos UF
-    valid_uf = df_precios["uf_cierre"].dropna()
-    if (valid_uf < 20000).any() or (valid_uf > 50000).any():
-        errors.append(f"UF fuera de rango [20000, 50000]: min={valid_uf.min()}, max={valid_uf.max()}")
-    else:
-        print(f"  [PASS] UF dentro de rango válido: min={valid_uf.min()}, max={valid_uf.max()}.")
-
-    # Rangos Cobre
-    valid_cu = df_precios["cobre_spot_usd_lb"].dropna()
-    if (valid_cu < 1.5).any() or (valid_cu > 8.0).any():
-        errors.append(f"Cobre fuera de rango [1.5, 8.0]: min={valid_cu.min()}, max={valid_cu.max()}")
-    else:
-        print(f"  [PASS] Cobre spot dentro de rango válido: min={valid_cu.min()}, max={valid_cu.max()} USD/lb.")
+            print(f"  OK  las {len(cat)} series del catálogo están cubiertas por las {len(TABLAS)} tablas")
 
     print("=" * 70)
-    if errors:
-        print(f"AUDITORIA FALLIDA con {len(errors)} errores:")
-        for e in errors:
-            print(f"  - {e}")
-        raise ValueError("Auditoría macro fallida")
-    else:
-        print("AUDITORIA 100% EXITOSA. Todos los datasets macro cumplen con los estándares de calidad.")
-        print("=" * 70)
+    if errores:
+        for e in errores:
+            print(f"  ERROR  {e}")
+        print(f"Auditoría FALLIDA: {len(errores)} problema(s).")
+        return 1
+    print("Auditoría OK.")
+    return 0
+
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Audita un directorio de salidas macro")
-    parser.add_argument("--input-dir", default=None, help="Directorio con los tres Parquet (por defecto .local-data/macro)")
-    args = parser.parse_args()
-    run_audit(args.input_dir)
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--input-dir", default=None)
+    a = ap.parse_args()
+    sys.exit(run_audit(a.input_dir))

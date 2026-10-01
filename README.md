@@ -1,21 +1,21 @@
 # Sistema de Información Financiera de Chile (SIF)
 
 **25 años del sistema financiero chileno, consultables con SQL desde el navegador.**
-Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Central, la Superintendencia de Pensiones y la SUSESO: **15 industrias, 52 tablas, 10,9 millones de filas** desde enero de 2001. Sin backend, sin base de datos, sin servidores — el dato viaja como Parquet estático y el motor corre en el cliente.
+Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Central, la Superintendencia de Pensiones y la SUSESO: **15 industrias, 71 tablas, 10,8 millones de filas** desde enero de 2001. Sin backend, sin base de datos, sin servidores — el dato viaja como Parquet estático y el motor corre en el cliente.
 
 **▶ [Abrir el sistema](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/)** — sin instalar nada, las consultas corren en tu navegador.
 
 ![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![DuckDB-Wasm 1.28.0](https://img.shields.io/badge/DuckDB--Wasm-1.28.0-FFF000?logo=duckdb&logoColor=black)
 ![Sin backend](https://img.shields.io/badge/backend-ninguno-2ea44f)
-![Datos](https://img.shields.io/badge/datos-52%20tablas%20%C2%B7%2010%2C9%20M%20filas-blue)
+![Datos](https://img.shields.io/badge/datos-71%20tablas%20%C2%B7%2010%2C8%20M%20filas-blue)
 ![Serie](https://img.shields.io/badge/serie-2001--01%20%E2%86%92%202026--08-informational)
 
 | En números | |
 |---|---|
 | Historia cubierta | **25 años** · 2001-01 → 2026-08 |
 | Industrias supervisadas | **15** (CMF · BCCh · SPensiones · SUSESO) |
-| Tablas publicadas | **52** Parquet · 10.870.763 filas · 273 MB |
+| Tablas publicadas | **71** Parquet · 10.831.742 filas · 273 MB |
 | Consultas sugeridas listas para usar | **116** |
 | Actualización | **11 flujos** automáticos en GitHub Actions |
 | Verificación | **7 suites** de auditoría + **130** pruebas unitarias |
@@ -104,7 +104,7 @@ La web trae **116 consultas sugeridas** organizadas por industria, para no parti
 
 ## 3. Los datos
 
-*Cifras al 2026-09-29; macroeconomía se actualiza a diario.*
+*Cifras al 2026-09-30; macroeconomía se actualiza a diario.*
 
 | Industria | Tablas | Filas | Serie | Fuente |
 |---|---:|---:|---|---|
@@ -113,7 +113,7 @@ La web trae **116 consultas sugeridas** organizadas por industria, para no parti
 | Fondos de Inversión | 8 | 1.036.645 | 2020-03 → 2026-06 | CMF · LUF / Circular 1998 |
 | Corredoras de Bolsa | 4 | 185.921 | 2010-12 → 2026-06 | CMF · FECU IFRS |
 | Administradoras Generales de Fondos | 3 | 129.711 | 2010-06 → 2026-06 | CMF · IFRS |
-| Macroeconomía y Tasas | 5 | 80.381 | diaria → mensual | BCCh |
+| Macroeconomía y Tasas | 24 | 41.360 | diaria / mensual / trimestral | BCCh |
 | Factoring y Leasing | 3 | 52.446 | 2009-03 → 2026-06 | CMF · IFRS |
 | Sociedades Securitizadoras | 3 | 25.985 | 2009-12 → 2026-06 | CMF · IFRS |
 | Cajas de Compensación | 3 | 13.555 | 2010-06 → 2026-06 | CMF · TXT IFRS (XBRL) |
@@ -123,9 +123,9 @@ La web trae **116 consultas sugeridas** organizadas por industria, para no parti
 | Sistemas de Pago | 1 | 19 | registro vigente | BCCh / CMF |
 | Fondos de Pensiones | 1 | 7 | registro vigente | SPensiones · D.L. 3.500 |
 | Cooperativas de Ahorro y Crédito | 1 | 7 | registro vigente | CMF |
-| **Total** | **52** | **10.870.763** | **2001 → 2026** | |
+| **Total** | **71** | **10.831.742** | **2001 → 2026** | |
 
-† En banca, *balance* y *resultados* son vistas filtradas sobre las mismas 55 particiones mensuales: B1 y B2 (710.025 filas) y R1 (1.217.939), sin solape. Por eso el manifiesto las declara como **un solo datasete** (1.927.964 filas) detrás de las dos vistas: 52 tablas publicadas = 51 datasets, cada uno contado una vez, y la pestaña Descargas muestra el total completo de 10.870.763 sin doble contar las particiones de banca.
+† En banca, *balance* y *resultados* son vistas filtradas sobre las mismas 55 particiones mensuales: B1 y B2 (710.025 filas) y R1 (1.217.939), sin solape. Por eso el manifiesto las declara como **un solo datasete** (1.927.964 filas) detrás de las dos vistas: 71 tablas publicadas = 70 datasets, cada uno contado una vez, y la pestaña Descargas muestra el total completo de 10.870.763 sin doble contar las particiones de banca.
 
 Cada tabla publica su **manifiesto** —períodos, archivos y registros—, de modo que se puede verificar qué contiene la web. Donde la fuente es un archivo descargable único (banca B1/B2/R1, y los TXT IFRS de AGF, securitizadoras, cajas de compensación y factoring/leasing) el manifiesto además guarda el **SHA-256 del archivo de origen**, y ahí se puede comprobar que lo publicado sale exactamente de lo descargado. En seguros, fondos mutuos, fondos de inversión y corredoras el extractor guarda el SHA-256 de lo que devolvió la CMF (`sha256_origen` en el manifiesto) **solo para los períodos que se publiquen desde el 2026-09-29**: los anteriores se descargaron sin registrar hash y no se pueden reconstruir. En fondos de inversión, que son miles de páginas por trimestre, se guarda un hash que las resume. Macroeconomía, pensiones, fintech y los registros vigentes (listas de entidades) no tienen hash de origen.
 
@@ -160,10 +160,10 @@ Aplicación estática de siete pestañas, sin framework y sin build:
 | **Diccionario** | Campo por campo: rol (PK, FK, dimensión, métrica), definición y criterio contable. |
 | **Visor de datos** | Consulta tabular con filtro, orden y copia de celdas. |
 | **Consultas SQL** | Terminal con autocompletado, historial, favoritos y enlaces compartibles. |
-| **Descargas** | Los 52 conjuntos con filas, período y peso, en Parquet, CSV y Excel. |
+| **Descargas** | Los 71 conjuntos con filas, período y peso, en Parquet, CSV y Excel. |
 | **Normativa CMF** | Seguimiento de la normativa publicada por la CMF (ver §7.6). |
 
-El **explorador jerárquico** organiza 12 industrias → 15 sectores → 38 carpetas temáticas → 52 tablas, con consultas sugeridas en cada carpeta. El motor DuckDB-Wasm 1.28.0 va **embebido en el propio sitio** (`docs/vendor/duckdb/`), así que las consultas funcionan aunque la red del visitante bloquee los CDN públicos.
+El **explorador jerárquico** organiza 12 industrias → 15 sectores → 43 carpetas temáticas → 71 tablas, con consultas sugeridas en cada carpeta. El motor DuckDB-Wasm 1.28.0 va **embebido en el propio sitio** (`docs/vendor/duckdb/`), así que las consultas funcionan aunque la red del visitante bloquee los CDN públicos.
 
 ### Verlo funcionando
 
@@ -189,7 +189,7 @@ La ausencia de un workflow no implica ausencia de procesamiento automático. El 
 
 | Flujo | Frecuencia | Publica |
 |---|---|---|
-| `macro.yml` | diario | Macro BCCh: tasas, divisas, precios y catálogo de series |
+| `macro.yml` | diario | Macro BCCh: 51 series nativas → 23 tablas temáticas (tasas, tipo de cambio, precios, actividad, laboral, materias primas, sector externo, expectativas) + catálogo |
 | `bancos_cmf_mensual.yml` | días 1, 11, 21 | Particiones B1/B2/R1 de la CMF (incremental) |
 | `ifrs_sectores.yml` | días 2, 12, 22 | Estados IFRS de AGF, securitizadoras y CCAF |
 | `factoring_leasing_backfill.yml` | días 3, 13, 23 | Serie IFRS de balance y resultados |
@@ -210,7 +210,7 @@ La ausencia de un workflow no implica ausencia de procesamiento automático. El 
 ```bash
 python scripts/audit_web_full.py            # Parquet, enlaces, chips SQL, diccionario y ERD
 python scripts/audit_interfaz.py            # pestañas, catálogo, vocabulario, temas, motor
-python scripts/audit_navigation.py          # taxonomía: 12 familias, 52 tablas, 52 opciones del visor
+python scripts/audit_navigation.py          # taxonomía: 12 familias, 71 tablas, 71 opciones del visor
 python scripts/audit_automatizacion.py      # quién actualiza cada tabla y con qué frecuencia
 python scripts/build_download_catalog.py --check   # el catálogo refleja lo publicado
 python scripts/normalizar_vocabulario.py --check   # los nombres no se desincronizan
