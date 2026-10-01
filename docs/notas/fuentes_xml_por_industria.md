@@ -11,7 +11,8 @@
 >
 > **Fondos mutuos (2026-10-01):** la medición real del XML `FMEF` desde Actions está en
 > `ffmm_estados_financieros_xml_2026-10-01.md`. La fila «Fondos mutuos … hoy se lee HTML/PDF» de la tabla 3 y la
-> prioridad n.º 1 de la sección 5 son históricas: hoy el sitio no publica balance ni resultados de fondos mutuos.
+> prioridad n.º 1 de la sección 5 son históricas: desde el 2026-10-01 el sitio publica el balance y el estado de resultados
+> anuales de los fondos mutuos (`ffmm_balance`, `ffmm_resultados`), leídos del XML de cada fondo.
 
 Fecha de revisión: 2026-09-27
 Alcance: verificar **qué industrias del sitio pueden alimentarse de XML/XBRL oficiales** en lugar de PDF,

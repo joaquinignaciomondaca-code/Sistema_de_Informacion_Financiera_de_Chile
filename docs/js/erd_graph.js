@@ -332,6 +332,50 @@ const ERD_TABLES = [
     ]
   },
   {
+    id: "ffmm_balance",
+    name: "ffmm.balance",
+    sector: "ffmm",
+    color: "var(--accent-mint)",
+    x: 1340,
+    y: 890,
+    w: 240,
+    h: 184,
+    rows: "Un archivo por año",
+    file: "outputs/ffmm/ffmm_balance/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "run_fondo", fk: true, type: "VARCHAR" },
+      { name: "nombre_fondo", type: "VARCHAR" },
+      { name: "moneda", type: "VARCHAR" },
+      { name: "orden", pk: true, type: "INTEGER" },
+      { name: "codigo_cuenta", type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "valor_miles_mf", type: "BIGINT" }
+    ]
+  },
+  {
+    id: "ffmm_resultados",
+    name: "ffmm.resultados",
+    sector: "ffmm",
+    color: "var(--accent-mint)",
+    x: 1340,
+    y: 1099,
+    w: 240,
+    h: 184,
+    rows: "Un archivo por año",
+    file: "outputs/ffmm/ffmm_resultados/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "run_fondo", fk: true, type: "VARCHAR" },
+      { name: "nombre_fondo", type: "VARCHAR" },
+      { name: "moneda", type: "VARCHAR" },
+      { name: "orden", pk: true, type: "INTEGER" },
+      { name: "codigo_cuenta", type: "VARCHAR" },
+      { name: "cuenta", type: "VARCHAR" },
+      { name: "valor_miles_mf", type: "BIGINT" }
+    ]
+  },
+  {
     id: "fi_lista_entidades",
     name: "fi.lista_entidades",
     sector: "fi",
@@ -1442,6 +1486,8 @@ const ERD_LINKS = [
   { from: "ffmm_lista_entidades", to: "ffmm_cartera_extranjera", key: "run_fondo" },
   { from: "ffmm_lista_entidades", to: "ffmm_futuros", key: "run_fondo" },
   { from: "ffmm_lista_entidades", to: "ffmm_opciones", key: "run_fondo" },
+  { from: "ffmm_lista_entidades", to: "ffmm_balance", key: "run_fondo" },
+  { from: "ffmm_lista_entidades", to: "ffmm_resultados", key: "run_fondo" },
 ];
 
 class ERDGraph {

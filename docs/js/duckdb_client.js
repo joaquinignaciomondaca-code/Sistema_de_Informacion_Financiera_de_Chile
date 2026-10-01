@@ -78,13 +78,16 @@ const SEMANTIC_VIEWS = [
   { name: "fi_opciones", manifest: "outputs/fi/opciones/manifest.json" },
   { name: "fi_pactos", manifest: "outputs/fi/pactos/manifest.json" },
 
-  // FONDOS MUTUOS. Cartera de inversiones de la Circular 1333 (archivo mensual CMF); se actualiza
-  // sola 3 veces al mes. Montos en miles de la moneda funcional de cada fondo.
+  // FONDOS MUTUOS. Cartera de inversiones de la Circular 1333 (archivo mensual CMF) y balance y estado de
+  // resultados anuales IFRS (XML de la Circular 1997, uno por fondo y año); se actualizan solos 3 veces al mes.
+  // Montos en miles de la moneda funcional de cada fondo.
   { name: "ffmm_lista_entidades", file: "outputs/ffmm/maestro_fondos_mutuos.parquet" },
   { name: "ffmm_cartera_nacional", manifest: "outputs/ffmm/cartera_nacional/manifest.json" },
   { name: "ffmm_cartera_extranjera", manifest: "outputs/ffmm/cartera_extranjera/manifest.json" },
   { name: "ffmm_futuros", manifest: "outputs/ffmm/futuros_forwards/manifest.json" },
   { name: "ffmm_opciones", manifest: "outputs/ffmm/opciones/manifest.json" },
+  { name: "ffmm_balance", manifest: "outputs/ffmm/ffmm_balance/manifest.json" },
+  { name: "ffmm_resultados", manifest: "outputs/ffmm/ffmm_resultados/manifest.json" },
 
   // FONDOS DE PENSIONES (SPENSIONES)
   { name: "afp_lista_entidades", file: "outputs/pensiones/afp_maestro_administradoras.parquet" },

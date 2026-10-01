@@ -1,8 +1,9 @@
 # Balance y estado de resultados de fondos mutuos (FFMM): cómo obtenerlos del XML de la CMF
 
 **Fecha:** 2026-10-01
-**Estado:** INVESTIGACIÓN terminada, **sin implementar**. Hoy el sitio no publica balance ni resultados de fondos
-mutuos (solo carteras mensuales, registro y maestro).
+**Estado:** **IMPLEMENTADO y publicado el 2026-10-01** (`ffmm_balance` y `ffmm_resultados`, workflow `ffmm_eeff.yml`,
+extractor `ffmm/scripts/actualizar_eeff.py`): ver §9, con los resultados del primer recorrido real y lo que corrigió de
+esta investigación. Lo demás es la investigación que lo sustentó, con sus cifras de la muestra de 278 fondo-años.
 **Pregunta:** ¿se pueden obtener el balance y el estado de resultados de los FFMM por XBRL, XML u otro formato
 estructurado, y con qué calidad?
 
@@ -200,7 +201,7 @@ def cuadra_esf(c: dict[str, int], tol: int = 2) -> bool:
 
 ---
 
-## 7. Diseño propuesto (mismo patrón que FL y corredoras)
+## 7. Diseño propuesto (mismo patrón que FL y corredoras; implementado: ver §9 para las diferencias)
 
 1. **Módulo** `ffmm/scripts/actualizar_eeff.py` con pruebas en `ffmm/tests/`, usando como fixtures reales unos
    pocos XML pequeños y públicos: uno latin-1, uno con UTF-8 falso, uno en dólares y uno con la declaración inventada.
@@ -211,7 +212,7 @@ def cuadra_esf(c: dict[str, int], tol: int = 2) -> bool:
    las 35 cuentas del ejercicio actual → comprobar las identidades → guardar partición por fondo-año con `sha256`,
    nombre de archivo y fecha de envío (sale del nombre).
 4. **Tablas largas** (convención de `docs/NAMING.md`): balance y resultados anuales, con `periodo` (`AAAA-12`),
-   `run_fondo`, `nombre_fondo`, `rut_agf`, `moneda` (CLP/USD) y `moneda_cmf` (`$$`/`PROM`), `orden` oficial,
+   `run_fondo`, `nombre_fondo`, `rut_agf`, `moneda` (CLP/USD/EUR) y `moneda_cmf` (`$$`/`PROM`/`EUR`), `orden` oficial,
    `codigo_cuenta`, `cuenta`, `valor` (miles de la moneda funcional), `nota`, `fuente_archivo`, `sha256_archivo`.
    ≈ 276 mil filas si solo se publica el ejercicio actual.
 5. **Compuerta** como la de FL: no publicar si falla la cuadratura, si falta alguna de las 35 cuentas, si la
@@ -242,3 +243,51 @@ original o último) y sobre mostrar dólares sin convertir.
 * Fondos de inversión (misma familia, otro formato y trimestral): no se midió.
 * La fila «Fondos mutuos … hoy se lee HTML/PDF» de `fuentes_xml_por_industria.md` es histórica: **hoy no se lee
   nada**, y su prioridad n.º 1 queda cubierta por esta nota.
+
+---
+
+## 9. Implementación y primer recorrido real (2026-10-01)
+
+Qué quedó funcionando: el extractor `ffmm/scripts/actualizar_eeff.py` (+ `eeff_xml.py`), el workflow `ffmm_eeff.yml`
+(días 4, 14 y 24; progreso en la caché de Actions y reconstruible desde lo publicado), las tablas `ffmm_balance` y
+`ffmm_resultados` (19 columnas, un Parquet por año) con su manifiesto y `ffmm_eeff_control.json`, el registro completo en la
+web (explorador, visor, diccionario, ERD, descargas, vocabulario, inventario de automatización), 78 pruebas sin red y la
+serie en la auditoría histórica de cuadratura. Las columnas y su significado están en `ffmm/README.md` y en el diccionario
+de datos; el procedimiento, en `PSEUDOCODIGO.md` §7b y `pipelines/auto/README.md`.
+
+**El recorrido completo, en Actions** (primera corrida 83 min; con la caché poblada, 10 min):
+
+| Medida | Resultado |
+| :--- | :--- |
+| Candidatos | 11.242 fondo-años: 7.898 del maestro de carteras y 3.344 de los 209 fondos del registro que nunca reportaron cartera |
+| Con estados publicados | **7.891 fondo-años de 1.124 fondos**, 16 cierres (2010–2025), de 449 a 561 fondos por cierre |
+| Filas | **126.256** de balance (16 líneas) y **149.929** de resultados (19 líneas) |
+| Acierto del criterio de candidatos | 7.891 de 7.898 (99,9 %). Los 7 restantes, sin estados: 6 fondos (10384 a 10389, con estados 2022–2024) que dejaron de reportar cartera en febrero de 2026 sin presentar los de 2025, y el fondo 9045, que solo existió en diciembre de 2013 |
+| Los 209 fondos «sin cartera» | ninguno tiene estados financieros (3.344 de 3.344 «No existe información»): el barrido se confirma una vez y después solo se revisa 1/36 por corrida |
+| Balances que cuadran (activo − pasivo = activo neto) | **7.891 de 7.891, 0 descuadres** |
+| Las 9 identidades contables | **0 avisos** en los 7.891 |
+| Controles contra la ficha de la CMF leída a mano (8011 FY2025, 8001 FY2012) | 7 de 7 importes idénticos |
+| Llave `(periodo, run_fondo, orden)` | única en las dos tablas |
+| Ilegibles · pendientes al publicar | 0 · 0 |
+
+**Lo que el recorrido completo mostró y la muestra no** (y que ya está corregido y probado):
+
+1. **Fondos en euros.** Hay 4 fondos con `EUR` (20 fondo-años; 8272, 9068, 8686 y 8739, hasta 2017). La muestra de 278 solo tenía
+   `$$` y `PROM`. Totales: 942 fondos en pesos (6.619 fondo-años), 188 en dólares (1.252) y 4 en euros (20). Un código de moneda
+   nuevo deja el fondo y cierre como ilegible y detiene la serie si pasa de 2 %: no se publica una moneda adivinada.
+2. **Desafío JavaScript de la CMF.** 14 fichas de ~19.000 peticiones (0,07 %) recibieron la página de desafío; sin reintento
+   quedaban pendientes y la serie no se publicaba. Ahora cada ficha o XML se reintenta 3 veces con espera, y al final de la
+   corrida hay dos rondas lentas de 1 hilo para los rezagados. Un desafío sigue sin tomarse nunca por «sin información».
+3. **Dígito verificador del XML mal digitado.** En 85 fondo-años (61 fondos) el DV del XML es incorrecto, y el mismo fondo
+   viene bien en otros años (8011 trae «2» en un año en vez de «K»). El DV calculado coincide con el registro oficial de la CMF en
+   los 1.124 fondos publicados, y el del XML en ninguno de esos 61: se publica el calculado y la diferencia queda como aviso.
+4. **Lo que sí se confirmó:** las 35 cuentas de balance y resultados están en todos los archivos publicados; la línea «Otros» de
+   resultados es `OtrosEri` en todos (el alias antiguo `Otros` no se usó nunca).
+
+**Operación.** Cada corrida revisa las fichas de los dos últimos cierres y de 1/36 del resto (toda la historia una vez al año) y
+baja de nuevo solo los XML cuyo nombre cambió (reenvío autorizado, queda en `reediciones`). Hasta ahora no hay reediciones. Los
+ilegibles se reintentan en cada corrida. Si la CMF cambia el formato (más de 2 % de ilegibles) o los balances descuadran en
+bloque, la serie no se publica y la corrida sale en rojo.
+
+**Pendiente (fases 2 y 3 de §7):** estado de cambios del activo neto por serie y flujo de efectivo (los 9 archivos con flujo
+indirecto usan otros códigos), y fondos de inversión (`FIEF`, trimestral).

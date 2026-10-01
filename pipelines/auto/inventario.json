@@ -64,6 +64,9 @@
     "factoring_leasing_resultados": {
       "workflow": "factoring_leasing_backfill.yml"
     },
+    "ffmm_balance": {
+      "workflow": "ffmm_eeff.yml"
+    },
     "ffmm_cartera_extranjera": {
       "workflow": "ffmm_carteras.yml"
     },
@@ -78,6 +81,9 @@
     },
     "ffmm_opciones": {
       "workflow": "ffmm_carteras.yml"
+    },
+    "ffmm_resultados": {
+      "workflow": "ffmm_eeff.yml"
     },
     "fi_bienes_raices": {
       "workflow": "fi_carteras.yml"
@@ -247,6 +253,13 @@
     "ffmm_carteras.yml": {
       "scripts": [
         "ffmm/scripts/actualizar_carteras.py"
+      ],
+      "max_dias": 16
+    },
+    "ffmm_eeff.yml": {
+      "scripts": [
+        "ffmm/scripts/actualizar_eeff.py",
+        "ffmm/scripts/eeff_xml.py"
       ],
       "max_dias": 16
     },
