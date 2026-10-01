@@ -1,0 +1,62 @@
+{
+  "registro_FINRE_VI": {
+    "url": "https://www.cmfchile.cl/institucional/mercados/consulta.php?mercado=V&Estado=VI&entidad=FINRE",
+    "revisado_utc": "2026-10-01T22:03:56+00:00",
+    "sha256": "52ad2db13f4484f55a894a6942a8af63170c3983e8dbb9839d0825e1f8bf0b94",
+    "bytes": 603763,
+    "estado": "ok",
+    "tipo_entidad": "FINRE",
+    "vigencia": "VI",
+    "fondos": 829
+  },
+  "registro_FINRE_NV": {
+    "url": "https://www.cmfchile.cl/institucional/mercados/consulta.php?mercado=V&Estado=NV&entidad=FINRE",
+    "revisado_utc": "2026-10-01T22:03:58+00:00",
+    "sha256": "938bbe09c319b8b3491bd3540257888ba41cb76bc2af8ccf873bb90b499af228",
+    "bytes": 423994,
+    "estado": "ok",
+    "tipo_entidad": "FINRE",
+    "vigencia": "NV",
+    "fondos": 516
+  },
+  "registro_FIRES_VI": {
+    "url": "https://www.cmfchile.cl/institucional/mercados/consulta.php?mercado=V&Estado=VI&entidad=FIRES",
+    "revisado_utc": "2026-10-01T22:04:00+00:00",
+    "sha256": "945f9475140d1270d0425f3339e8db3838827858bdfc80a59102a27a620092cd",
+    "bytes": 223637,
+    "estado": "ok",
+    "tipo_entidad": "FIRES",
+    "vigencia": "VI",
+    "fondos": 165
+  },
+  "registro_FIRES_NV": {
+    "url": "https://www.cmfchile.cl/institucional/mercados/consulta.php?mercado=V&Estado=NV&entidad=FIRES",
+    "revisado_utc": "2026-10-01T22:04:01+00:00",
+    "sha256": "64a4f9d6912483c5da9d5ff3a0e5f587ad9e7dc5e26a600872fb3b3e522fb0d6",
+    "bytes": 228055,
+    "estado": "ok",
+    "tipo_entidad": "FIRES",
+    "vigencia": "NV",
+    "fondos": 173
+  },
+  "ficha_7035_FINRE_VI": {
+    "url": "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=7035&tipoentidad=FINRE&vig=VI&control=svs&pestania=29&mm=06&aa=2026&tipo=I&tipo_norma=IFRS",
+    "revisado_utc": "2026-10-01T22:04:18+00:00",
+    "sha256": "abd551ee4cc009bb061e4603760cecd36158ea0f503dd1399a5cd181b2fa7093",
+    "bytes": 2583,
+    "estado": "pendiente",
+    "error": "la respuesta no es la ficha FI (posible desafío CMF)",
+    "tipo_consultado": "FINRE",
+    "vig_consultada": "VI"
+  },
+  "ficha_9709_FIRES_VI": {
+    "url": "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=9709&tipoentidad=FIRES&vig=VI&control=svs&pestania=29&mm=06&aa=2026&tipo=I&tipo_norma=IFRS",
+    "revisado_utc": "2026-10-01T22:08:57+00:00",
+    "sha256": "5d909245360235fc5fc65c530af4de4b3457e0ba5f95a2ea899a1529769968bf",
+    "bytes": 2552,
+    "estado": "pendiente",
+    "error": "la respuesta no es la ficha FI (posible desafío CMF)",
+    "tipo_consultado": "FIRES",
+    "vig_consultada": "VI"
+  }
+}

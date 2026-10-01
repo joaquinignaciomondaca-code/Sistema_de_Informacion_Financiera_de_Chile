@@ -1,24 +1,24 @@
 # Sistema de Información Financiera de Chile (SIF)
 
 **25 años del sistema financiero chileno, consultables con SQL desde el navegador.**
-Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Central, la Superintendencia de Pensiones y la SUSESO: **15 industrias, 73 tablas, 11,1 millones de filas** desde enero de 2001. Sin backend, sin base de datos, sin servidores — el dato viaja como Parquet estático y el motor corre en el cliente.
+Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Central, la Superintendencia de Pensiones y la SUSESO: **15 industrias, 75 tablas, 11,3 millones de filas** desde enero de 2001. Sin backend, sin base de datos, sin servidores — el dato viaja como Parquet estático y el motor corre en el cliente.
 
 **▶ [Abrir el sistema](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/)** — sin instalar nada, las consultas corren en tu navegador.
 
 ![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![DuckDB-Wasm 1.28.0](https://img.shields.io/badge/DuckDB--Wasm-1.28.0-FFF000?logo=duckdb&logoColor=black)
 ![Sin backend](https://img.shields.io/badge/backend-ninguno-2ea44f)
-![Datos](https://img.shields.io/badge/datos-73%20tablas%20%C2%B7%2011%2C1%20M%20filas-blue)
+![Datos](https://img.shields.io/badge/datos-75%20tablas%20%C2%B7%2011%2C3%20M%20filas-blue)
 ![Serie](https://img.shields.io/badge/serie-2001--01%20%E2%86%92%202026--08-informational)
 
 | En números | |
 |---|---|
 | Historia cubierta | **25 años** · 2001-01 → 2026-08 |
 | Industrias supervisadas | **15** (CMF · BCCh · SPensiones · SUSESO) |
-| Tablas publicadas | **73** Parquet · 11.142.865 filas (al 2026-10-01) · 277 MB |
-| Consultas sugeridas listas para usar | **140** |
-| Actualización | **11 flujos** automáticos en GitHub Actions |
-| Verificación | **7 suites** de auditoría + **más de 200** pruebas unitarias |
+| Tablas publicadas | **75** Parquet · 11.307.590 filas (al 2026-10-01) · 277 MB |
+| Consultas sugeridas listas para usar | **146** |
+| Actualización | **11 flujos inventariados** en GitHub Actions |
+| Verificación | **7 suites** de auditoría + **440** pruebas unitarias (97 de FI) |
 
 ---
 
@@ -98,11 +98,18 @@ ORDER BY s.aseguradoras + f.fondos_mutuos DESC;
 
 Tres industrias cruzadas en 50 ms, en el navegador, con `JOIN`s directos: el RUT está homologado a toda la base bajo una convención canónica (sección 4).
 
-La web trae **140 consultas sugeridas** organizadas por industria, para no partir de una pantalla en blanco. Cada resultado se ve como tabla o gráfico y se exporta a CSV, Excel o Parquet.
+La web trae **146 consultas sugeridas** organizadas por industria, para no partir de una pantalla en blanco. Cada resultado se ve como tabla o gráfico y se exporta a CSV, Excel o Parquet.
 
 ---
 
 ## 3. Los datos
+
+**Nuevo:** balance y resultados de FIRES/FINRE desde XML FIEF, con contextos separados,
+cuadraturas y cotejo por cuenta/columna. Primer cierre: **2026-06, 908 fondos**, 66.864
+filas de balance y 97.860 de resultados; **35.570 identidades contables verificadas**.
+Seis documentos y los contextos adicionales defectuosos se excluyen con motivo explícito.
+[Fuente, controles y ejecución](fi/README.md). La historia FI aún está en backfill; el
+workflow tiene horario, pero solo se activa programadamente al fusionarse a la rama por defecto.
 
 *Cifras al 2026-10-01; macroeconomía se actualiza a diario.*
 
@@ -110,7 +117,7 @@ La web trae **140 consultas sugeridas** organizadas por industria, para no parti
 |---|---:|---:|---|---|
 | Seguros de Vida y Generales | 9 | 4.103.093 | 2016-11 → 2026-08 | CMF · Circular 1835 |
 | Fondos Mutuos | 7 | 3.582.929 | 2001-01 → 2026-08 | CMF · Circulares 1333 y 1997 |
-| Fondos de Inversión | 8 | 1.036.645 | 2020-03 → 2026-06 | CMF · LUF / Circular 1998 |
+| Fondos de Inversión | 10 | 1.201.369 | Carteras 2020-03 → 2026-06; EEFF 2026-06 (backfill pendiente) | CMF · LUF / Circular 1998 · XML FIEF |
 | Corredoras de Bolsa | 4 | 185.921 | 2010-12 → 2026-06 | CMF · FECU IFRS |
 | Administradoras Generales de Fondos | 3 | 129.711 | 2010-06 → 2026-06 | CMF · IFRS |
 | Macroeconomía y Tasas | 24 | 41.360 | diaria / mensual / trimestral | BCCh |

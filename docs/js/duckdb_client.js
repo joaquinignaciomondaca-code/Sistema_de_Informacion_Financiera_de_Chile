@@ -77,6 +77,10 @@ const SEMANTIC_VIEWS = [
   { name: "fi_futuros", manifest: "outputs/fi/futuros_forwards/manifest.json" },
   { name: "fi_opciones", manifest: "outputs/fi/opciones/manifest.json" },
   { name: "fi_pactos", manifest: "outputs/fi/pactos/manifest.json" },
+  // BEGIN AUTO FI EEFF VIEWS
+  { name: "fi_balance", manifest: "outputs/fi/fi_balance/manifest.json" },
+  { name: "fi_resultados", manifest: "outputs/fi/fi_resultados/manifest.json" },
+  // END AUTO FI EEFF VIEWS
 
   // FONDOS MUTUOS. Cartera de inversiones de la Circular 1333 (archivo mensual CMF) y balance y estado de
   // resultados anuales IFRS (XML de la Circular 1997, uno por fondo y año); se actualizan solos 3 veces al mes.
