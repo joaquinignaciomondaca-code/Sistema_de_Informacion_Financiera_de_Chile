@@ -17,13 +17,26 @@ Solo está cargado el cierre indicado; falta completar la serie histórica. No s
 
 ## Contraste directo con la CMF
 
-- Alcance: todas las ausencias del censo y altas; **765** fondos.
-- Revisión completa: **no; existen consultas o listas pendientes**.
-- Fondos con consultas pendientes: **2**.
+- Alcance: todas las ausencias del censo y altas; **768** fondos.
+- Revisión completa: **sí**.
+- Fondos con consultas pendientes en su vigencia correcta: **0**.
+- Consultas auxiliares (vigencia incorrecta) pendientes: **0**; se conservan como tales, no como ausencias.
 - Ausencias/altas con enlace FIEF en el otro tipo: **0**.
 - Ausencias/altas con enlace en su tipo: **0**.
 - Enlaces recuperables al cambiar VI por NV: **0**.
 - Identificaciones cuyo tipo difiere del padrón: **0**.
+
+Registro CMF cotejado: **1682** RUN únicos en **1683** filas; **3** altas fuera del padrón local y **0** cambios de tipo.
+
+**Ambigüedad de vigencia en el registro oficial:** 9251. Cada RUN se cuenta una sola vez, sin asignarle una vigencia arbitraria.
+
+### Fondos fuera de la copia local del padrón
+
+- **10926 (FINRE) — AMERIS DOVER STREET XII FONDO DE INVERSIÓN**. Inicio declarado: no informado. La incorporación al padrón no supone publicar cifras sin un XML validado.
+- **10927 (FINRE) — NEORENTAS DIECINUEVE FONDO DE INVERSIÓN**. Inicio declarado: no informado. La incorporación al padrón no supone publicar cifras sin un XML validado.
+- **10928 (FINRE) — FONDO DE INVERSIÓN PRINCIPAL BC XII**. Inicio declarado: no informado. La incorporación al padrón no supone publicar cifras sin un XML validado.
+
+**Resultado del contraste:** en el alcance revisado no se recuperan fondos por intercambiar rescatable/no rescatable. No se está omitiendo una de las dos categorías.
 
 ### Fechas y situación declaradas de los faltantes vigentes
 
