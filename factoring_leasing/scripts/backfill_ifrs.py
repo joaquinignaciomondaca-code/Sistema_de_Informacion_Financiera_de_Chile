@@ -32,6 +32,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from pipelines.auto.rut import con_dv, cuerpo, formato  # noqa: E402
+from pipelines.auto import ifrs_txt  # noqa: E402
 
 OUT = ROOT / '.local-data' / 'factoring_leasing_serie'
 INDEX = 'https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php'
@@ -39,8 +40,14 @@ ARCHIVE = 'https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?in
 CATALOG = ROOT / 'docs/outputs/factoring_leasing/factoring_leasing_maestro.json'
 HEADERS = {'User-Agent': 'Mozilla/5.0 (compatible; MonitorFinancieroChile/1.0)', 'Accept': 'text/plain,text/html,*/*'}
 # No asignar un tipo de balance o unidad no informada por el archivo.
+# El parseo (reconocimiento del archivo, reparto por estado, importe y conteo de
+# `orden`/`repeticion_contexto`) es el de pipelines/auto/ifrs_txt.py, compartido con
+# pipelines/ifrs_sectores: los dos leen el mismo TXT y no pueden interpretarlo distinto.
+# `orden` llega en la versión 2: posición de la cuenta dentro de su estado, con el mismo
+# criterio que usan el resto de las series IFRS del sitio (la taxonomía separa contextos).
+SCHEMA_VERSION = 2
 COLUMNS = ['periodo', 'rut_cuerpo', 'rut', 'nombre_reportado', 'segmento_catalogo',
-           'nombre_catalogo', 'tipo_balance', 'moneda_archivo', 'cuenta',
+           'nombre_catalogo', 'tipo_balance', 'moneda_archivo', 'orden', 'cuenta',
            'valor_archivo', 'valor_texto_original', 'valor_es_entero',
            'taxonomia', 'estado_financiero', 'repeticion_contexto', 'fuente_archivo',
            'sha256_archivo', 'identidad_nombre_coincide_catalogo']
@@ -182,7 +189,7 @@ def parse_period(raw, period, catalog, url=None):
     reportes y monedas compartan una escala. La unidad se validará antes de
     publicar; por ahora permanece en cuarentena sin conversión.
     """
-    if not raw or b'<html' in raw[:500].lower() or b'ACCION NO PERMITIDA' in raw[:1000].upper():
+    if not ifrs_txt.es_txt(raw) or b'ACCION NO PERMITIDA' in raw[:1000].upper():
         raise ValueError('La descarga no es el archivo TXT CMF')
     if not re.fullmatch(r'\d{4}(03|06|09|12)', period):
         raise ValueError('Período inválido')
@@ -193,7 +200,8 @@ def parse_period(raw, period, catalog, url=None):
     noninteger = []
     repetitions = {}
     duplicates = []
-    for number, cells in enumerate(csv.reader(io.StringIO(decode(raw)), delimiter=';', strict=True), start=1):
+    contextos = ifrs_txt.Contextos()
+    for number, cells in enumerate(csv.reader(io.StringIO(ifrs_txt.decodificar(raw)), delimiter=';', strict=True), start=1):
         if not cells or all(not c.strip() for c in cells):
             continue
         if len(cells) < 9:
@@ -209,29 +217,33 @@ def parse_period(raw, period, catalog, url=None):
             raise ValueError(f'Línea {number}: período {p} distinto al solicitado {period}')
         if len(cells) != 9 or not account or not name or not currency or not tax or not state or kind not in ('I', 'C'):
             raise ValueError(f'Línea {number}: esquema/identidad/tipo incompleto')
-        integer = bool(re.fullmatch(r'-?\d+', amount))
-        if not integer and len(noninteger) < 20:
-            # Nunca convertir silenciosamente a 0, ni inferir separador decimal.
+        # Importe: entero literal o nada (mismo criterio de pipelines/auto/ifrs_txt.py,
+        # compartido con el resto de las series IFRS). Nunca un 0 inventado ni un
+        # separador decimal adivinado.
+        valor_entero = ifrs_txt.valor_y_texto(amount)[0] is not None
+        if not valor_entero and len(noninteger) < 20:
             noninteger.append({'linea': number, 'rut': body, 'cuenta': account,
                                'valor_original': amount[:120]})
-        if not state.startswith(('ESF', 'ER')):
-            continue
+        tabla = ifrs_txt.tabla_de(state)
+        if tabla is None:
+            continue  # flujos de efectivo y otros estados: no se publican
         key = (p, body, kind, currency, tax, state, account)
         repetitions[key] = repetitions.get(key, 0) + 1
         if repetitions[key] > 1 and len(duplicates) < 20:
             duplicates.append({'linea': number, 'rut': body, 'cuenta': account,
                                'tipo_balance': kind, 'moneda': currency, 'estado': state,
                                'valor_original': amount[:120]})
+        # `orden` y `repeticion_contexto` salen del contador compartido, igual que en las
+        # demás series IFRS: así una cuenta repetida se puede distinguir sin sumarla.
+        clave_estado = contextos.clave_estado(p, body, kind, currency, tax, state)
+        orden, _repeticion = contextos.agregar(clave_estado, account)
         row = dict(zip(COLUMNS, [f'{p[:4]}-{p[4:]}', body, catalog[body]['rut'], name,
                                  catalog[body]['segmento'], catalog[body]['nombre'], kind,
-                                 currency, account, int(amount) if integer else None,
-                                 amount, integer, tax, state, repetitions[key], url, digest,
-                                 normalize_name(name) == normalize_name(catalog[body]['nombre'])]))
-        if state.startswith('ESF'):
-            balance.append(row)
-        else:
-            income.append(row)
-        # Otros estados en el TXT no se confunden con balance/resultados.
+                                 currency, orden, account,
+                                 int(amount) if valor_entero else None,
+                                 amount, valor_entero, tax, state, repetitions[key], url, digest,
+                                 ifrs_txt.normalizar(name) == ifrs_txt.normalizar(catalog[body]['nombre'])]))
+        (balance if tabla == 'balance' else income).append(row)
     if selected == 0:
         return balance, income, {'estado': 'sin_rut_catalogo', 'filas_objetivo': 0}
     if not balance and not income:
@@ -268,6 +280,10 @@ def valid_cached(out, period, catalog_digest):
     try:
         meta = json.loads(marker.read_text(encoding='utf-8'))
         if meta.get('sha256_catalogo') != catalog_digest or meta.get('periodo') != period:
+            return False
+        # Un cambio de esquema (p. ej. sumar `orden`) invalida lo descargado: las filas
+        # viejas no lo traen y publicar NULL sería peor que volver a bajar el trimestre.
+        if meta.get('schema') != SCHEMA_VERSION:
             return False
         for name in ('balance', 'resultados'):
             file = folder / f'{name}.parquet'
@@ -338,7 +354,8 @@ def run(args, fetcher=fetch):
                     stats['error_consulta_trimestre'] = f'{type(direct_error).__name__}: {direct_error}'
                 except (ValueError, OSError) as annual_error:
                     raise ValueError(f'corte individual: {direct_error}; respaldo anual: {annual_error}') from annual_error
-            stats.update(periodo=period, sha256_archivo=hashlib.sha256(raw).hexdigest(),
+            stats.update(periodo=period, schema=SCHEMA_VERSION,
+                 sha256_archivo=hashlib.sha256(raw).hexdigest(),
                          sha256_catalogo=catalog_digest, filas_balance=len(balance),
                          filas_resultados=len(income),
                          fuente_archivo=url, fecha_descarga_utc=datetime.now(timezone.utc).isoformat())
