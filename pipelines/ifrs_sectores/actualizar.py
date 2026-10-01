@@ -10,7 +10,10 @@ de resultados (ER) por RUT. Un solo archivo por trimestre alimenta los tres sect
 Incremental:
   * docs/outputs/ifrs_sectores/manifest.json guarda los trimestres ya procesados.
   * Un trimestre «cerrado» (más de DIAS_CIERRE días desde el fin del trimestre) no se
-    vuelve a descargar nunca.
+    vuelve a descargar... salvo que la CMF lo reedite: el índice muestra junto a cada archivo
+    «(actualizado: dd/mm/aaaa hh:mm)» y, si esa fecha es posterior a la última lectura, el
+    trimestre se baja otra vez y pasa por las mismas compuertas que uno nuevo. Si el archivo
+    reeditado no las cumple, se conserva lo publicado y se avisa (no deja la corrida en rojo).
   * Los trimestres recientes se vuelven a leer en cada corrida hasta que se cierran,
     para recoger a las sociedades que presentan tarde. Solo se reescribe el archivo
     anual de ese año.
@@ -200,6 +203,15 @@ def periodos_indice(raw: bytes) -> tuple[list[str], dict[str, str]]:
     if not periodos:
         raise ErrorFuente("índice CMF sin trimestres")
     return sorted(periodos), anual
+
+
+def _hoy() -> date:
+    """Fecha de la corrida (se aparta para que las pruebas no dependan del reloj)."""
+    return date.today()
+
+
+def _ahora() -> datetime:
+    return datetime.now(timezone.utc)
 
 
 def cerrado(periodo: str, hoy: date) -> bool:
@@ -671,13 +683,21 @@ def main(argv=None) -> int:
         actualizar_data_manifest(control)
         return 0
     inicio = time.monotonic()
-    hoy = date.today()
+    hoy = _hoy()
     listas = cargar_listas()
     indice = _get(INDICE)
     periodos, anual = periodos_indice(indice)
-    pendientes = [p for p in periodos if p not in control["periodos"] or not control["periodos"][p].get("cerrado")]
+    # Cierres que la CMF reeditó después de nuestra última lectura (el índice trae la fecha).
+    # Sin fecha en el índice, o si la página cambia de forma, queda vacío: se actúa como siempre.
+    cmf = ifrs_txt.actualizaciones_indice(indice)
+    reeditados = {p for p in periodos
+                  if (control["periodos"].get(p) or {}).get("cerrado")
+                  and ifrs_txt.reeditado_despues(control["periodos"][p].get("leido_utc"), cmf.get(p))}
+    pendientes = [p for p in periodos if p not in control["periodos"]
+                  or not control["periodos"][p].get("cerrado") or p in reeditados]
     print(f"Índice CMF: {len(periodos)} trimestres ({periodos[0]}..{periodos[-1]}). "
-          f"Procesados y cerrados: {len(periodos) - len(pendientes)}. A leer ahora: {len(pendientes)}")
+          f"Procesados y cerrados: {len(periodos) - len(pendientes)}. A leer ahora: {len(pendientes)}"
+          + (f" (cierres que la CMF reeditó: {', '.join(sorted(reeditados))})" if reeditados else ""))
     cache_anual: dict[tuple, bytes] = {}
     hechos, errores, defectos = 0, [], []
     for periodo in pendientes[:a.max_periodos]:
@@ -723,10 +743,18 @@ def main(argv=None) -> int:
         anterior = control["periodos"].get(periodo)
         if anterior and anterior.get("sha256") == sha:
             ahora_cerrado = cerrado(periodo, hoy)
-            if anterior.get("cerrado") != ahora_cerrado:
-                anterior["cerrado"] = ahora_cerrado
+            hay_que_guardar = anterior.get("cerrado") != ahora_cerrado
+            anterior["cerrado"] = ahora_cerrado
+            if periodo in reeditados:
+                # La CMF tocó el archivo pero el contenido es idéntico: se anota la lectura para
+                # no volver a bajarlo en cada corrida hasta que la CMF lo reedite otra vez.
+                anterior["leido_utc"] = _ahora().isoformat(timespec="seconds")
+                anterior["cmf_actualizado_utc"] = cmf[periodo].isoformat(timespec="seconds")
+                hay_que_guardar = True
+            if hay_que_guardar:
                 guardar_control(control)
-            print(f"{periodo}: sin cambios en la fuente")
+            print(f"{periodo}: sin cambios en la fuente"
+                  + (" (la CMF lo reeditó, el contenido es idéntico)" if periodo in reeditados else ""))
             continue
         # Cuadratura contable (README §4): activos = pasivos + patrimonio sobre el balance, y
         # dos identidades del estado de resultados (el resultado integral arrastra la misma
@@ -746,13 +774,15 @@ def main(argv=None) -> int:
             verificaciones += vr
             divergencias += [f"{sec} {m}" for m in mr]
         motivo = cuadratura.motivo_detener(verificados, descuadres, balances_totales)
+        # Un cierre ya publicado cuya reedición no cumple las compuertas conserva lo publicado:
+        # es un aviso sobre la fuente, no una falla de la corrida (que no tiene nada pendiente).
         if motivo:
-            errores.append(f"{periodo}: {motivo}")
+            (defectos if periodo in reeditados else errores).append(f"{periodo}: {motivo}")
             print(f"::warning::{periodo}: {motivo}; no se publica")
             continue
         motivo_res = cuadratura.motivo_detener(verificaciones, divergencias)
         if motivo_res:
-            errores.append(f"{periodo}: estado de resultados · {motivo_res}")
+            (defectos if periodo in reeditados else errores).append(f"{periodo}: estado de resultados · {motivo_res}")
             print(f"::warning::{periodo}: {len(divergencias)} de {verificaciones} identidades del "
                   f"estado de resultados no se cumplen; no se publica. Ej.: {divergencias[0]}")
             continue
@@ -770,8 +800,9 @@ def main(argv=None) -> int:
                 sec, datos, previo, listas, control, periodo)
             avisos += avisos_sec
         control["periodos"][periodo] = {
-            "cerrado": cerrado(periodo, hoy), "leido_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "cerrado": cerrado(periodo, hoy), "leido_utc": _ahora().isoformat(timespec="seconds"),
             "fuente": url, "sha256": sha, **est,
+            **({"cmf_actualizado_utc": cmf[periodo].isoformat(timespec="seconds")} if periodo in cmf else {}),
             "sectores": resumen, "avisos": avisos[:20],
             # RUT por sector: la comparación del trimestre siguiente (dejaron_de_informar)
             # necesita los nombres, no solo la cantidad.
@@ -805,7 +836,8 @@ def main(argv=None) -> int:
         print("Cobertura publicada en el diccionario de la web")
     actualizar_data_manifest(control)
     print(f"Trimestres leídos en esta corrida: {hechos}. Errores: {len(errores)}"
-          + (f" · archivos históricos incompletos: {len(defectos)}" if defectos else ""))
+          + (f" · archivos históricos incompletos o reediciones que no pasan las compuertas: {len(defectos)}"
+             if defectos else ""))
     gh = os.environ.get("GITHUB_OUTPUT")
     if gh:
         with open(gh, "a") as f:

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Serie completa de cuentas IFRS CMF para los 28 RUT del catálogo FL.
+"""Serie completa de cuentas IFRS CMF para los RUT del catálogo FL.
 
 La primera extracción completa del índice quedó registrada en Actions 36339078376;
 los Parquets por período son recuperables desde su artifact de workflow.
@@ -11,7 +11,10 @@ sin inventar pasivos, ceros, conversiones o tipo de cambio. No escribe en docs/.
 
 Persistencia: un par de Parquets por trimestre + estado atómico; Actions restaura
 esta carpeta desde cache y vuelve a intentar períodos fallidos. El índice se
-consulta de nuevo cada día, pero los períodos ya guardados no se descargan.
+consulta de nuevo cada día, pero los períodos ya guardados no se descargan...
+salvo que la CMF los reedite: el índice muestra «(actualizado: dd/mm/aaaa hh:mm)» junto a
+cada archivo y, si esa fecha es posterior a la descarga guardada, el trimestre se baja
+otra vez (pipelines/auto/ifrs_txt.py). Mientras no se refresque, la serie no se publica.
 """
 import argparse
 import csv
@@ -160,8 +163,8 @@ def load_catalog(path=CATALOG):
             completo = con_dv(body)
         if body in catalog or not completo:
             raise ValueError('RUT duplicado o inválido en catálogo: ' + str(row.get('rut')))
-        # Los 28 registros del catálogo incluyen segmento Automotriz. Se incluyen
-        # expresamente para no omitir silenciosamente entidades de la carpeta FL.
+        # El catálogo incluye el segmento Automotriz. Se incluye expresamente para no
+        # omitir silenciosamente entidades de la carpeta FL.
         catalog[body] = {'rut': completo, 'segmento': row['segmento'],
                          'nombre': row['razon_social'].strip()}
     if not catalog:
@@ -272,7 +275,12 @@ def atomic_json(path, value):
     temp.replace(path)
 
 
-def valid_cached(out, period, catalog_digest):
+def valid_cached(out, period, catalog_digest, actualizado=None):
+    """¿Hay una descarga guardada, completa, del esquema vigente y no anterior a la reedición de la CMF?
+
+    `actualizado` es la fecha (UTC) que el índice de la CMF muestra para el archivo del
+    trimestre; si es posterior a la descarga guardada, la copia está vencida.
+    """
     folder = out / 'periodos' / period
     marker = folder / '_complete.json'
     if not marker.is_file():
@@ -284,6 +292,8 @@ def valid_cached(out, period, catalog_digest):
         # Un cambio de esquema (p. ej. sumar `orden`) invalida lo descargado: las filas
         # viejas no lo traen y publicar NULL sería peor que volver a bajar el trimestre.
         if meta.get('schema') != SCHEMA_VERSION:
+            return False
+        if ifrs_txt.reeditado_despues(meta.get('fecha_descarga_utc'), actualizado):
             return False
         for name in ('balance', 'resultados'):
             file = folder / f'{name}.parquet'
@@ -319,6 +329,8 @@ def run(args, fetcher=fetch):
     catalog_digest = hashlib.sha256(Path(args.catalog).read_bytes()).hexdigest()
     index_data = fetcher(INDEX)
     periods = periods_from_index(index_data)
+    # Cuándo dice la CMF que actualizó cada archivo (vacío si el índice no trae fechas).
+    updates = ifrs_txt.actualizaciones_indice(index_data)
     out.mkdir(parents=True, exist_ok=True)
     summary = {'fuente_indice': INDEX, 'generado_utc': datetime.now(timezone.utc).isoformat(),
                'publicado_en_web': False, 'sha256_catalogo': catalog_digest,
@@ -334,7 +346,12 @@ def run(args, fetcher=fetch):
     progress = json.loads(progress_path.read_text(encoding='utf-8')) if progress_path.is_file() else {}
     if progress.get('sha256_catalogo') != catalog_digest:
         progress = {'sha256_catalogo': catalog_digest, 'fallidos': []}
-    pending = [p for p in reversed(periods) if not valid_cached(out, p, catalog_digest)]
+    reedited = [p for p in periods if valid_cached(out, p, catalog_digest)
+                and not valid_cached(out, p, catalog_digest, updates.get(p))]
+    summary['periodos_reeditados_cmf'] = reedited
+    if reedited:
+        print(f"Cierres que la CMF reeditó después de la descarga guardada: {', '.join(reedited)}", flush=True)
+    pending = [p for p in reversed(periods) if not valid_cached(out, p, catalog_digest, updates.get(p))]
     # Evitar que un solo corte que falla persistentemente monopolice el batch.
     failures = set(progress.get('fallidos', []))
     fresh = [p for p in pending if p not in failures]
@@ -372,12 +389,12 @@ def run(args, fetcher=fetch):
             # Un corte antiguo puede devolver 500/HTML aunque los demás funcionen.
             # Se reintentará en la próxima corrida sin bloquear el backfill.
             continue
-    summary['pendientes'] = [p for p in reversed(periods) if not valid_cached(out, p, catalog_digest)]
+    summary['pendientes'] = [p for p in reversed(periods) if not valid_cached(out, p, catalog_digest, updates.get(p))]
     atomic_json(progress_path, {'sha256_catalogo': catalog_digest,
                                 'fallidos': sorted(failures & set(summary['pendientes']))})
     summary['completados_total'] = len(periods) - len(summary['pendientes'])
     completed = [json.loads((out / 'periodos' / p / '_complete.json').read_text(encoding='utf-8'))
-                 for p in periods if valid_cached(out, p, catalog_digest)]
+                 for p in periods if valid_cached(out, p, catalog_digest, updates.get(p))]
     summary['ruts_con_datos_total'] = sorted({rut for item in completed for rut in item.get('ruts_con_datos', [])})
     summary['ruts_sin_datos_hasta_ahora'] = sorted({meta['rut'] for meta in catalog.values()} - set(summary['ruts_con_datos_total']))
     summary['filas_balance_total'] = sum(item['filas_balance'] for item in completed)
