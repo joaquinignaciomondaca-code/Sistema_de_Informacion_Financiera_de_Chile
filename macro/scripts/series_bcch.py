@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Series del Banco Central (API REST SIETE) en formato largo: una fila por serie y fecha.
 
-Complementa las tres tablas mensuales de macro con un catálogo amplio de series (tasas, tipo de
-cambio, precios, actividad, empleo, commodities, sector externo, fiscal y expectativas),
-cada una con su frecuencia original (diaria, mensual o trimestral). Agregar una serie = sumar una
-línea a CATALOGO.
+Descarga las series nativas del BCCh (tasas, tipo de cambio, precios, actividad, empleo,
+commodities, sector externo, fiscal y expectativas), cada una con su frecuencia original
+(diaria, mensual o trimestral). Es la fuente de las 23 tablas temáticas que publica la web
+(`build_tablas_tematicas.py`). Agregar una serie = sumar una línea a CATALOGO y asignarla a
+una tabla temática.
 
 Incremental: por serie, solo se consulta desde la última fecha guardada menos una ventana de
 revisión (10 días en diarias, 6 meses en mensuales, 13 meses en trimestrales). Fail-closed:
@@ -48,7 +49,6 @@ CATALOGO_PQ = SALIDA / "macro_series_catalogo.parquet"
 API = "https://si3.bcentral.cl/SieteRestWS/SieteRestWS.ashx"
 DESDE = "2014-01-01"
 VENTANA = {"D": 10, "M": 183, "T": 400}  # días de relectura para capturar revisiones
-MENSUALES = ("macro_tasas_rendimientos", "macro_divisas_mercado", "macro_precios_actividad")
 FRECUENCIA = {"D": "Diaria", "M": "Mensual", "T": "Trimestral"}
 
 # clave, código SIETE, grupo, unidad, nombre corto
@@ -238,39 +238,26 @@ def escribir_catalogo(df: pd.DataFrame, control: dict) -> None:
 
 
 def actualizar_data_manifest() -> None:
+    """Registra/refresca macro.series_catalogo en data_manifest.json. Las tablas temáticas
+    las registra build_tablas_tematicas (única fuente de verdad de la sección macro)."""
     ruta = RAIZ / "data_manifest.json"
     if not ruta.exists() or not CATALOGO_PQ.exists():
         return
     man = json.loads(ruta.read_text())
-    man_series = json.loads((CARPETA / "manifest.json").read_text())
     cat = pq.read_table(CATALOGO_PQ).to_pandas()
     corte = f"{cat['primera_fecha'].dropna().min()} a {cat['ultima_fecha'].dropna().max()}"
     hoy = date.today().isoformat()
     origen = "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS)."
-    base = {"sector": "macro", "sector_label": "Macroeconomía (BCCh)", "norma": "Estadísticas oficiales BCCh",
-            "corte": corte, "frescura": "Se actualiza sola a diario", "modo": "Automático · diario, incremental",
-            "ultima_actualizacion": hoy, "origen": origen}
-    entradas = [
-        {"id": "macro_series", "name": "macro.series", "view_name": "macro_series", **base,
-         "file_parquet": "outputs/macro/series/manifest.json", "registros_reales": man_series["total_records"],
-         "descripcion": "Observaciones de todas las series del catálogo, una fila por serie y fecha, en su "
-                        "frecuencia original (diaria, mensual o trimestral)."},
-        {"id": "macro_series_catalogo", "name": "macro.series_catalogo", "view_name": "macro_series_catalogo", **base,
-         "file_parquet": "outputs/macro/macro_series_catalogo.parquet", "registros_reales": len(cat),
-         "descripcion": "Catálogo de series del Banco Central publicadas: código SIETE, nombre, grupo, frecuencia, "
-                        "unidad, título oficial, cobertura y estado."},
-    ]
-    # Tablas mensuales: corte y filas desde los Parquet publicados (el reintento del commit
-    # rehace data_manifest sobre la versión remota y no debe perder su actualización).
-    for t in man["tables"]:
-        pqt = SALIDA / f"{t['id']}.parquet"
-        if t["id"] in MENSUALES and pqt.exists():
-            per = pq.read_table(pqt, columns=["periodo"]).column(0).to_pylist()
-            nuevo = {"corte": f"{per[0]} a {per[-1]}", "registros_reales": len(per)}
-            if any(t.get(k) != v for k, v in nuevo.items()):
-                t.update(nuevo, ultima_actualizacion=hoy)
-    ids = {e["id"] for e in entradas}
-    man["tables"] = [t for t in man["tables"] if t["id"] not in ids] + entradas
+    entrada = {"id": "macro_series_catalogo", "name": "macro.series_catalogo", "view_name": "macro_series_catalogo",
+               "sector": "macro", "sector_label": "Macroeconomía y Tasas (BCCh)", "norma": "Estadísticas oficiales BCCh",
+               "corte": corte, "frescura": "Se actualiza sola a diario", "modo": "Automático · diario, incremental",
+               "ultima_actualizacion": hoy, "origen": origen,
+               "file_parquet": "outputs/macro/macro_series_catalogo.parquet", "registros_reales": len(cat),
+               "descripcion": "Catálogo de las series del Banco Central que alimentan las tablas macro: código SIETE, "
+                              "nombre, grupo, frecuencia, unidad, título oficial, cobertura y estado."}
+    retiradas = {"macro_series", "macro_tasas_rendimientos", "macro_divisas_mercado", "macro_precios_actividad"}
+    man["tables"] = [t for t in man["tables"] if t["id"] not in retiradas | {entrada["id"]}] + [entrada]
+    man["tables"].sort(key=lambda t: t["id"])
     man["total_tables"] = len(man["tables"])
     man["total_records"] = sum(int(t.get("registros_reales") or 0) for t in man["tables"])
     man["updated_at"] = hoy

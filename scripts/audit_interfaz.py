@@ -181,8 +181,9 @@ def audit_vocabulario():
 
     vocab = json.loads(read("docs/vocabulario.json"))
     tablas = vocab["tablas"]
-    if len(tablas) != 52:
-        fail(f"el vocabulario describe {len(tablas)} tablas y hay 52 publicadas")
+    publicadas = len(re.findall(r'\{\s*name:\s*"[a-z0-9_]+"\s*,\s*(?:file|manifest):', read("docs/js/duckdb_client.js")))
+    if len(tablas) != publicadas:
+        fail(f"el vocabulario describe {len(tablas)} tablas y hay {publicadas} publicadas")
 
     # Toda lista de entidades de un sector se llama lista_entidades.
     listas = [t for t in tablas if t["tipo"].startswith("lista_entidades")]
