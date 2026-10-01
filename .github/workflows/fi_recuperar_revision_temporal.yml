@@ -33,6 +33,8 @@ jobs:
       - name: Recuperar solo diagnóstico pequeño; nunca Parquet ni fuentes crudas
         run: |
           python - <<'PY'
+          import gzip
+          import hashlib
           import json
           from pathlib import Path
           origen = Path('.local-data/fi_eeff_cobertura_recuperada')
@@ -44,13 +46,29 @@ jobs:
           salida.parent.mkdir(parents=True, exist_ok=True)
           salida.with_suffix('.json').write_text(json.dumps(dato, ensure_ascii=False, indent=2) + '\n')
           salida.with_suffix('.md').write_bytes((origen / 'revision.md').read_bytes())
+          muestras = Path('fi/tests/fixtures/cobertura')
+          muestras.mkdir(parents=True, exist_ok=True)
+          fuentes = []
+          for r in dato['revision_cmf']['listas']:
+              fuentes.append((f"registro_{r['tipo_entidad']}_{r['vigencia']}", r))
+          for r in dato['revision_cmf']['revisiones']:
+              if r['run'] in dato['revision_cmf']['fondos_pendientes']:
+                  for p in r['sondeos']:
+                      if p['estado'] == 'pendiente':
+                          fuentes.append((f"ficha_{r['run']}_{p['tipo_consultado']}_{p['vig_consultada']}", p))
+          for nombre, r in fuentes:
+              ruta = origen / 'fuentes' / (hashlib.sha256(r['url'].encode()).hexdigest() + '.html')
+              raw = ruta.read_bytes()
+              assert hashlib.sha256(raw).hexdigest() == r['sha256']
+              (muestras / f'{nombre}.html.gz').write_bytes(gzip.compress(raw, mtime=0))
+          (muestras / 'muestras.json').write_text(json.dumps({nombre:r for nombre,r in fuentes}, ensure_ascii=False, indent=2) + '\n')
           resumen = {k: v for k,v in dato['revision_cmf'].items() if k != 'revisiones'}
           print(json.dumps(resumen, ensure_ascii=False, indent=2))
           PY
           [ "${GITHUB_REF_NAME}" = "arena/01a0f8b4-sistema-de-informacion-financi" ]
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/notas/revision_cobertura_fi_2026-10-01.json docs/notas/revision_cobertura_fi_2026-10-01.md
+          git add docs/notas/revision_cobertura_fi_2026-10-01.json docs/notas/revision_cobertura_fi_2026-10-01.md fi/tests/fixtures/cobertura
           git diff --cached --quiet && exit 0
           git commit -m "FI: conservar diagnóstico de cobertura CMF por tipo y vigencia"
           git push origin HEAD:arena/01a0f8b4-sistema-de-informacion-financi
