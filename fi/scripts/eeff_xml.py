@@ -393,6 +393,11 @@ def leer_xml(raw: bytes) -> ET.Element:
     if not raw or len(raw) > MAX_XML:
         raise ErrorTransitorio("XML vacío o mayor del límite de 10 MB")
     texto = re.sub(r"^\s*<\?xml[^>]*\?>", "", decodificar(raw))
+    # Respuesta explícita de la CMF, no un desafío ambiguo ni una ausencia de EEFF.
+    # Se excluye el documento y se reintentará en futuras corridas; no se busca
+    # una ruta alternativa para eludir la negativa de acceso del regulador.
+    if re.fullmatch(r"\s*ACCION NO PERMITIDA(?:\s+\d+)?\s*", texto, re.IGNORECASE):
+        raise ErrorFuente("CMF rechaza explícitamente la descarga: " + texto.strip())
     if "<!DOCTYPE" in texto.upper() or "<!ENTITY" in texto.upper():
         raise ErrorFuente("no se admiten DTD ni entidades en el XML")
     if "<IFRS" not in texto[:4000] or not texto.rstrip().endswith("</IFRS>"):
