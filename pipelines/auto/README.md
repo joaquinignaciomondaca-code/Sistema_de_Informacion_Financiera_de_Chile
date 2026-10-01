@@ -17,7 +17,7 @@ la corrida siguiente). Tras publicar en `main`, el mismo workflow despliega GitH
 | Listas de entidades: AGF, securitizadoras, corredores, fintech, bancos, cooperativas, sistemas de pago | Registros públicos CMF (consulta.php: RGAGF, RGSEC, COBOL, RGPSF, BANCO, BCCOO, TPOPE, RGCCO, BCSAG, DCVAL) | 10, 20, 28 | `pipelines/entidades/actualizar_listas.py` (`entidades.yml`) | listas `*_maestro` + `docs/outputs/entidades/novedades.json` |
 | Lista de patrimonios separados | CMF, inscripciones de títulos de deuda por registro automático (`listado_titulos_deuda.php`) | 10, 20, 28 | ídem | `patrimonios_separados_maestro` |
 | Lista de AFP | Superintendencia de Pensiones, valor cuota diario por AFP (RUT desde el Registro de Valores CMF) | 10, 20, 28 | ídem | `afp_maestro_administradoras` |
-| Macro | Banco Central (API SIETE) | diario | `macro/scripts/daily_macro.py` + `macro/scripts/series_bcch.py` (`macro.yml`) | `docs/outputs/macro/` (3 tablas mensuales + `series/` y catálogo de 51 series) |
+| Macro | Banco Central (API SIETE) | diario | `macro/scripts/series_bcch.py` → `build_tablas_tematicas.py` → `audit_macro_bcch.py` (`macro.yml`) | `docs/outputs/macro/` (23 tablas temáticas + catálogo de 51 series; `series/` es materia prima interna) |
 
 Entidades nuevas: todas las listas se completan solas. `entidades.yml` agrega y actualiza la
 vigencia desde los registros públicos; FI regenera su registro completo en cada corrida; FFMM y

@@ -22,12 +22,12 @@
     "bancos_cmf_lineas": {
       "workflow": "bancos_cmf_mensual.yml"
     },
+    "bancos_lista_entidades": {
+      "workflow": "entidades.yml"
+    },
     "bancos_resultados": {
       "workflow": "bancos_cmf_mensual.yml",
       "marca": "cmf_b1_b2_r1"
-    },
-    "bancos_lista_entidades": {
-      "workflow": "entidades.yml"
     },
     "ccaf_balance": {
       "workflow": "ifrs_sectores.yml",
@@ -106,19 +106,76 @@
     "fintech_rpsf_lista_entidades": {
       "workflow": "entidades.yml"
     },
-    "macro_divisas_mercado": {
+    "macro_cobre": {
       "workflow": "macro.yml"
     },
-    "macro_precios_actividad": {
+    "macro_curva_bonos_pesos": {
       "workflow": "macro.yml"
     },
-    "macro_series": {
+    "macro_curva_bonos_uf": {
+      "workflow": "macro.yml"
+    },
+    "macro_deuda_publica_pct_pib": {
+      "workflow": "macro.yml"
+    },
+    "macro_dolar_observado": {
+      "workflow": "macro.yml"
+    },
+    "macro_euro_observado": {
+      "workflow": "macro.yml"
+    },
+    "macro_expectativas_inflacion": {
+      "workflow": "macro.yml"
+    },
+    "macro_expectativas_operadores": {
+      "workflow": "macro.yml"
+    },
+    "macro_expectativas_tpm": {
+      "workflow": "macro.yml"
+    },
+    "macro_imacec": {
+      "workflow": "macro.yml"
+    },
+    "macro_inflacion_implicita": {
+      "workflow": "macro.yml"
+    },
+    "macro_inflacion_ipc": {
+      "workflow": "macro.yml"
+    },
+    "macro_mercado_laboral": {
+      "workflow": "macro.yml"
+    },
+    "macro_metales_preciosos": {
+      "workflow": "macro.yml"
+    },
+    "macro_pib_trimestral": {
+      "workflow": "macro.yml"
+    },
+    "macro_reservas_internacionales": {
       "workflow": "macro.yml"
     },
     "macro_series_catalogo": {
       "workflow": "macro.yml"
     },
-    "macro_tasas_rendimientos": {
+    "macro_swaps_camara": {
+      "workflow": "macro.yml"
+    },
+    "macro_tasa_referencia_fed": {
+      "workflow": "macro.yml"
+    },
+    "macro_tasas_corto_plazo": {
+      "workflow": "macro.yml"
+    },
+    "macro_tipo_cambio_multilateral": {
+      "workflow": "macro.yml"
+    },
+    "macro_tipo_cambio_real": {
+      "workflow": "macro.yml"
+    },
+    "macro_uf": {
+      "workflow": "macro.yml"
+    },
+    "macro_utm": {
       "workflow": "macro.yml"
     },
     "patrimonios_separados_balance": {
@@ -207,9 +264,9 @@
     },
     "macro.yml": {
       "scripts": [
-        "macro/scripts/daily_macro.py",
         "macro/scripts/series_bcch.py",
-        "macro/scripts/pipeline_stream_macro_bcch.py"
+        "macro/scripts/build_tablas_tematicas.py",
+        "macro/scripts/audit_macro_bcch.py"
       ],
       "max_dias": 3,
       "scripts_indirectos": true
