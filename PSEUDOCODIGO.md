@@ -220,7 +220,8 @@ Legado (pipeline_stream_factoring_leasing, stream_cmf_eeff_series, 02_extract_�
 pipelines/xml_eeff/ (extract en cuarentena + audit_sample) y sus workflows xml_eeff_review / xml_eeff_sample:
 eliminados el 2026-09-28. Nunca publicaron: desde Actions la descarga XBRL de la CMF devuelve HTML.
 (scripts/probe_xml_sources.py y su workflow diario: eliminados antes; las fuentes que vigilaban se
- automatizaron por otras vías: TXT IFRS CMF, carteras FFMM/FI y Excel FECU de corredoras)
+ automatizaron por otras vías: TXT IFRS CMF, carteras FFMM/FI, Excel FECU de corredoras y, desde 2026-10-01,
+ el XML IFRS de cada fondo mutuo: §7b. Ese XML no es el XBRL de emisores: se baja con un GET plano desde Actions)
 ```
 
 ---
@@ -282,6 +283,43 @@ FI    scripts/actualizar_carteras.py  (workflow fi_carteras.yml: días 9, 19 y 2
       maestro_fondos_inversion.parquet (registro + moneda + primer/último trimestre con cartera)
       fi_registro_fondos_universo.json
       confirmación: commit de datos, cherry-pick sobre la rama al día + --solo-data-manifest
+```
+
+## 7b. Fondos Mutuos: balance y estado de resultados anuales (XML IFRS por fondo y año)
+```
+ffmm/scripts/actualizar_eeff.py + eeff_xml.py   (ffmm_eeff.yml, días 4, 14, 24; incremental, --minutos 270)
+  fuente: ficha del fondo entidad.php?…&rut=RUN&pestania=3&mm=12&aa=AAAA&tipo_norma=IFRS → enlaza el XML «FMEF…»
+          (ifrs_xml_verarchivo.php?archivo=…). No hay XBRL para fondos ni descarga masiva: una ficha y un XML por fondo y año.
+  candidatos: (RUN, año) de cada diciembre dentro de la vida activa del fondo según maestro_fondos_mutuos (2010 en adelante);
+              fondos del registro que nunca reportaron cartera → todos los años (la ficha confirma «No existe información»)
+  estado por (RUN, año): ok · sin_informacion · ilegible · pendiente      (progreso en .local-data/ffmm_eeff, caché de Actions;
+      si se pierde, se reconstruye desde los Parquet y ffmm_eeff_control.json)
+  resolver(RUN, año):
+      GET ficha → clasificar_ficha: enlace XML (gana el reenvío más reciente) | «No existe información…» | sin enlace
+          una respuesta que no es la ficha (desafío JavaScript de la CMF) = ErrorTransitorio, NUNCA «sin información»
+      GET XML → leer_xml: descarta la declaración de codificación (UTF-8 falso, ausente o inventada «iso-8011-K»),
+          decodifica por contenido (UTF-8 estricto, si no latin-1); sin </IFRS> o sin <IFRS = transitorio (a medias)
+      extraer: RUN, cierre 12/AAAA y moneda ($$ → CLP, PROM → USD) deben ser los pedidos; las 35 cuentas del ejercicio
+          (16 de balance + 19 de resultados; código con strip(); «OtrosEri», alias antiguo «Otros» solo si falta);
+          cuentas con serie y las de otros estados se ignoran; importes enteros en miles de la moneda del fondo
+      nueve identidades contables (cuadratura.identidades_ffmm) → avisos, no descartan el fondo aislado
+      reedición: si el nombre del XML cambió → se baja de nuevo y queda en `reediciones`; si el reenvío no se puede leer, se
+          conserva lo publicado y se avisa
+  planificar: nuevos y pendientes + refresco (dos últimos cierres siempre; el resto 1/36 por corrida: crc32(RUN|año) % 36
+      == (día del año // 10) % 36 → toda la historia se revisa una vez al año)
+  4 hilos, pausa 0,05-0,25 s por petición, espera creciente y freno de emergencia (40 fallas seguidas) · tope de tiempo
+  compuerta (evaluar): publica solo si NO hay cierres cerrados pendientes (un cierre abierto, < 150 días, se publica parcial)
+      y NO hay motivo de detención: cuadratura activo − pasivo = activo neto en bloque (≥ 3 y > 5 %, cuadratura.motivo_detener)
+      o > 2 % de XML ilegibles (cambió el formato). 3 corridas sin poder leer un XML → ilegible (se excluye y se lista).
+  escribir: ffmm_balance/<AAAA>.parquet (16 líneas) y ffmm_resultados/<AAAA>.parquet (19), 19 columnas, `orden` fijo por
+      cuenta (el XML las trae en orden alfabético) + manifest.json por tabla + ffmm_eeff_control.json (cierres, sin_informacion,
+      ilegibles, avisos, reediciones) + data_manifest.json; no reescribe lo que no cambió (Table.equals, estable.escribir_json)
+  confirmación: commit solo de datos → fetch → reset --hard FETCH_HEAD → cherry-pick → --solo-data-manifest →
+      build_download_catalog.py → push (≤ 8 intentos)
+  tests (ffmm_eeff.yml, ANTES de procesar): test_eeff_xml + test_actualizar_eeff + test_cuadratura + test_estable;
+      CMF simulada con XML sintéticos con los importes reales del fondo 8011; relojes inyectables (_hoy)
+  medido con 278 fondo-años reales (docs/notas/ffmm_estados_financieros_xml_2026-10-01.md): 277/277 legibles, 9 identidades
+      al 100 %, XML = tabla HTML de la CMF, 9,7 % con la codificación mal declarada, 0,2 % de respuestas transitorias
 ```
 
 ---
@@ -406,7 +444,7 @@ Los extractores que quedan ya no escriben las tablas retiradas; las auditorías 
 
 ```
 docs/vocabulario.json — ÚNICA fuente de nombres de la web
-  71 tablas: {id, alias[], nombre, tipo, sector, descripcion, cobertura} · 15 sectores · 41 tipos
+  73 tablas: {id, alias[], nombre, tipo, sector, descripcion, cobertura} · 15 sectores · 41 tipos
   regla: una tabla se llama <sector>.<tipo>; TODA lista de entidades se llama lista_entidades
          (única variante: lista_entidades_registro, para el registro único de corredoras)
   nombres_retirados: lista_administradoras, lista_instituciones, lista_emisiones, registro_unico, …
@@ -498,6 +536,7 @@ con los pipelines antiguos de FFMM y FI.)
 | corredoras_eeff.yml | días 6, 16, 26 13:45 | **sí** (commit + Pages) | tests + estados FECU IFRS de corredores y agentes (§8a) |
 | seguros_carteras.yml | días 7, 17, 27 14:00 | **sí** (commit + Pages) | cartera de inversiones de aseguradoras (§6) |
 | ffmm_carteras.yml | días 8, 18, 28 14:00 | **sí** (commit + Pages) | cartera de fondos mutuos, Circular 1333 (§7) |
+| ffmm_eeff.yml | días 4, 14, 24 14:20 | **sí** | tests + balance y resultados anuales de fondos mutuos desde el XML IFRS de cada fondo (§7b); el commit lleva solo datos y regenera lo compartido sobre la cabeza |
 | fi_carteras.yml | días 9, 19, 29 15:00 | **sí** (commit + Pages) | cartera y pactos de fondos de inversión (§7) |
 | entidades.yml | días 10, 20, 28 12:30 | **sí** (commit + Pages) | altas y vigencia de las listas de AGF, securitizadoras, corredores, fintech, bancos, cooperativas y sistemas de pago (registros CMF), patrimonios separados (inscripciones por registro automático) y AFP (Superintendencia de Pensiones) (§8c) |
 

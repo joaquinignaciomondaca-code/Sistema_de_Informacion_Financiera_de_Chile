@@ -279,9 +279,13 @@ def extraer(raiz: ET.Element, run: str, anio: int) -> dict:
         for a in otros:
             if canonico not in crudo["PeriodoActual"] and a in notas:
                 notas[canonico] = notas.pop(a)
+    # El dígito verificador del XML es un dato digitado por la administradora y a veces está mal (85 fondo-años de 61 fondos
+    # en el primer recorrido completo, con el mismo fondo bien en otros años). El del RUN se calcula, y coincide con el
+    # registro oficial de la CMF en los 1.124 fondos publicados: ese es el que se publica; la diferencia queda como aviso.
     dv_xml = _texto(ident, "DVFondoInforma").upper()
     return {
-        "run_dv": f"{run}-{dv_xml}" if dv_xml else run,
+        "run_dv": f"{run}-{dv(run)}",
+        "dv_xml": dv_xml,
         "dv_coincide": (not dv_xml) or dv_xml == dv(run),
         "nombre": _texto(ident, "NombreEntidadInforma"),
         "rut_agf": _solo_digitos(_texto(ident, "RUTAdministradora")),
@@ -310,7 +314,7 @@ def filas(reg: dict) -> dict[str, list[dict]]:
     out: dict[str, list[dict]] = {}
     for tabla, lineas in CATALOGO.items():
         out[tabla] = [{
-            "periodo": f"{reg['anio']}-12", "run_fondo": reg["run"], "run_fondo_dv": reg["run_dv"],
+            "periodo": f"{reg['anio']}-12", "run_fondo": reg["run"], "run_fondo_dv": f"{reg['run']}-{dv(reg['run'])}",
             "nombre_fondo": reg["nombre"] or None, "rut_agf": reg["rut_agf"] or None,
             "razon_social_agf": reg["agf"] or None, "moneda": reg["moneda"], "moneda_cmf": reg["moneda_cmf"],
             "seccion": seccion, "tipo_linea": tipo, "orden": orden, "codigo_cuenta": codigo, "cuenta": cuenta,

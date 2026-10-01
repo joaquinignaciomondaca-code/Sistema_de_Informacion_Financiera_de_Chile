@@ -82,7 +82,7 @@ jobs:
           echo "::notice title=RUT::$(tail -n 1 rut.log)"
           exit $n
 
-      - name: Auditar las 116 consultas sugeridas contra los Parquet
+      - name: Auditar las consultas sugeridas contra los Parquet
         run: |
           python -m pip install --disable-pip-version-check duckdb
           set +e

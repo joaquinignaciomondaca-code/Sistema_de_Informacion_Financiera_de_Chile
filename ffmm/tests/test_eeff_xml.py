@@ -159,10 +159,12 @@ class TestRechazos(unittest.TestCase):
     def test_run_con_ceros_a_la_izquierda_es_el_mismo_fondo(self):
         self.assertEqual(extraer(run_xml="008011")["run_dv"], "8011-K")
 
-    def test_digito_verificador_distinto_se_avisa_pero_no_rechaza(self):
-        d = extraer(dv_xml="3")
+    def test_digito_verificador_equivocado_del_xml_se_avisa_y_se_publica_el_correcto(self):
+        d = extraer(dv_xml="3")                       # 85 fondo-años reales traen un DV digitado mal (8011 → «2» en vez de «K»)
         self.assertFalse(d["dv_coincide"])
-        self.assertEqual(d["run_dv"], "8011-3")
+        self.assertEqual((d["run_dv"], d["dv_xml"]), ("8011-K", "3"))
+        self.assertTrue(extraer(dv_xml="k")["dv_coincide"], "la K en minúscula es la misma")
+        self.assertTrue(extraer(dv_xml="")["dv_coincide"], "un XML sin DV no es una discrepancia")
 
     def test_faltan_los_bloques_de_identificacion(self):
         raw = X.xml().replace(b"<Identificacion>", b"<Otra>").replace(b"</Identificacion>", b"</Otra>")
@@ -256,6 +258,11 @@ class TestFilas(unittest.TestCase):
         self.assertEqual([f["orden"] for f in res], list(range(1, 20)))
         self.assertEqual(res[8]["valor_miles_mf"], -2552317)
         self.assertEqual({f["seccion"] for f in res}, {"INGRESOS/PÉRDIDAS DE LA OPERACIÓN", "GASTOS", "RESULTADO"})
+
+    def test_el_dv_publicado_sale_del_run_aunque_el_registro_guardado_traiga_otro(self):
+        reg = self.registro()
+        reg["run_dv"] = "8011-2"                      # registro viejo de la caché, con el DV equivocado del XML
+        self.assertEqual({f["run_fondo_dv"] for t in E.filas(reg).values() for f in t}, {"8011-K"})
 
     def test_sin_comparativo_el_valor_anterior_es_nulo(self):
         for f in E.filas(self.registro(sin_anterior=True))["balance"]:

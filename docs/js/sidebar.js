@@ -226,6 +226,42 @@ const EXPLORER_TREE = [
               { id: "ffmm_futuros", name: "ffmm.futuros_forwards", rows: "Mensual", file: "", files: ["outputs/ffmm/futuros_forwards/manifest.json"] },
               { id: "ffmm_opciones", name: "ffmm.opciones", rows: "Mensual", file: "", files: ["outputs/ffmm/opciones/manifest.json"] }
             ]
+          },
+          {
+            id: "cat_ffmm_balance",
+            type: "circular",
+            label: "Balance anual IFRS · CMF",
+            badge: "Anual validada",
+            badgeType: "data",
+            status: "active",
+            sector: "ffmm",
+            chips: [
+              { label: "Mayores fondos en pesos por activo neto, último cierre (MM$)", query: "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS activo_neto_mm, round(valor_anterior_miles_mf / 1e3, 1) AS activo_neto_anterior_mm FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY valor_miles_mf DESC LIMIT 20;" },
+              { label: "Activo neto de la industria en pesos, por cierre (MM$)", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, round(sum(valor_miles_mf) / 1e3, 0) AS activo_neto_mm FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' GROUP BY periodo ORDER BY periodo;" },
+              { label: "Fondos que informan en dólares, por cierre (miles de US$)", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, round(sum(valor_miles_mf), 0) AS activo_neto_miles_usd FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'USD' GROUP BY periodo ORDER BY periodo;" },
+              { label: "Balance completo del mayor fondo en pesos, último cierre", query: "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf, valor_anterior_miles_mf FROM ffmm_balance WHERE run_fondo = (SELECT run_fondo FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY valor_miles_mf DESC LIMIT 1) AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY orden;" }
+            ],
+            tables: [
+              { id: "ffmm_balance", name: "ffmm.balance", rows: "Anual", file: "", files: ["outputs/ffmm/ffmm_balance/manifest.json"] }
+            ]
+          },
+          {
+            id: "cat_ffmm_resultados",
+            type: "circular",
+            label: "Estado de Resultados anual IFRS · CMF",
+            badge: "Anual validada",
+            badgeType: "data",
+            status: "active",
+            sector: "ffmm",
+            chips: [
+              { label: "Mayores utilidades del último ejercicio, fondos en pesos (MM$)", query: "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS utilidad_mm FROM ffmm_resultados WHERE codigo_cuenta = 'UtilidadPerdidaDeLaOperacionDespuesDeImpuesto' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;" },
+              { label: "Comisión de administración cobrada, por ejercicio (MM$, fondos en pesos)", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, round(-sum(valor_miles_mf) / 1e3, 0) AS comisiones_mm FROM ffmm_resultados WHERE codigo_cuenta = 'ComisionDeAdministracion' AND moneda = 'CLP' GROUP BY periodo ORDER BY periodo;" },
+              { label: "Fondos con pérdida en cada ejercicio", query: "SELECT periodo, count(*) AS fondos, count(*) FILTER (WHERE valor_miles_mf < 0) AS con_perdida, round(100.0 * count(*) FILTER (WHERE valor_miles_mf < 0) / count(*), 1) AS pct_con_perdida FROM ffmm_resultados WHERE codigo_cuenta = 'UtilidadPerdidaDeLaOperacionDespuesDeImpuesto' GROUP BY periodo ORDER BY periodo;" },
+              { label: "Estado de resultados del mayor fondo en pesos, último ejercicio", query: "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf, valor_anterior_miles_mf FROM ffmm_resultados WHERE run_fondo = (SELECT run_fondo FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY valor_miles_mf DESC LIMIT 1) AND periodo = (SELECT max(periodo) FROM ffmm_resultados) ORDER BY orden;" }
+            ],
+            tables: [
+              { id: "ffmm_resultados", name: "ffmm.resultados", rows: "Anual", file: "", files: ["outputs/ffmm/ffmm_resultados/manifest.json"] }
+            ]
           }
         ]
       },

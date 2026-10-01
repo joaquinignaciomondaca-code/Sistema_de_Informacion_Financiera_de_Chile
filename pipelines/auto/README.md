@@ -13,6 +13,7 @@ la corrida siguiente). Tras publicar en `main`, el mismo workflow despliega GitH
 | Corredores de bolsa y agentes de valores | CMF, Excel FECU IFRS trimestral de intermediarios | 6, 16, 26 | `corredoras_bolsa/scripts/actualizar_eeff.py` (`corredoras_eeff.yml`) | `docs/outputs/corredoras_bolsa/` |
 | Seguros (vida y generales) | CMF, Circular 1835 (cartera de inversiones, archivo mensual) | 7, 17, 27 | `seguros/scripts/actualizar_carteras.py` (`seguros_carteras.yml`) | `docs/outputs/seguros/` |
 | Fondos mutuos | CMF, Circular 1333 (cartera mensual) | 8, 18, 28 | `ffmm/scripts/actualizar_carteras.py` (`ffmm_carteras.yml`) | `docs/outputs/ffmm/` |
+| Fondos mutuos · balance y resultados anuales | CMF, XML IFRS de cada fondo (Circular 1997), uno por fondo y año | 4, 14, 24 | `ffmm/scripts/actualizar_eeff.py` + `eeff_xml.py` (`ffmm_eeff.yml`) | `docs/outputs/ffmm/ffmm_balance`, `ffmm_resultados`, `ffmm_eeff_control.json` |
 | Fondos de inversión | CMF, informes IFRS trimestrales de cartera y pactos de cada fondo | 9, 19, 29 | `fi/scripts/actualizar_carteras.py` (`fi_carteras.yml`) | `docs/outputs/fi/` |
 | Listas de entidades: AGF, securitizadoras, corredores, fintech, bancos, cooperativas, sistemas de pago | Registros públicos CMF (consulta.php: RGAGF, RGSEC, COBOL, RGPSF, BANCO, BCCOO, TPOPE, RGCCO, BCSAG, DCVAL) | 10, 20, 28 | `pipelines/entidades/actualizar_listas.py` (`entidades.yml`) | listas `*_maestro` + `docs/outputs/entidades/novedades.json` |
 | Lista de patrimonios separados | CMF, inscripciones de títulos de deuda por registro automático (`listado_titulos_deuda.php`) | 10, 20, 28 | ídem | `patrimonios_separados_maestro` |
@@ -46,8 +47,8 @@ todos los que miran esos archivos). Para que ninguno quede sin publicar por culp
    commit → `push`. Un push rechazado se reintenta igual, con espera aleatoria.
 3. **Pruebas antes de publicar.** Un publicador con lógica propia de extracción o de compuertas corre sus pruebas
    unitarias (sin red, con fuentes sintéticas) antes de tocar la fuente: lo que decide qué se publica no llega a la web
-   sin haberlas pasado. Hoy las tienen cableadas IFRS, corredores, banca, factoring-leasing y normativa; seguros,
-   FFMM, FI, entidades y macro no tienen pruebas en su workflow. `web_audit.yml` corre
+   sin haberlas pasado. Hoy las tienen cableadas IFRS, corredores, banca, factoring-leasing, los estados financieros de
+   fondos mutuos y normativa; seguros, las carteras de FFMM, FI, entidades y macro no tienen pruebas en su workflow. `web_audit.yml` corre
    además todas las de los extractores de estados financieros en cada push y PR (job `pruebas`).
    Las pruebas no pueden depender del día en que corren: los relojes se inyectan (`_hoy()`/`_ahora()`).
 4. **Los disparadores `push` incluyen los módulos compartidos que el script importa**
@@ -60,6 +61,23 @@ Cierres que la CMF reedita: el TXT IFRS muestra «(actualizado: …)» junto a c
 (`ifrs_txt.actualizaciones_indice`). `ifrs_sectores/actualizar.py` y `factoring_leasing/scripts/backfill_ifrs.py`
 vuelven a leer un trimestre ya cerrado si esa fecha es posterior a su última lectura; el informe de
 corredores no trae fecha, así que ahí un cierre no se relee.
+
+Fondos mutuos, estados financieros (`ffmm/scripts/actualizar_eeff.py`): no hay descarga masiva, solo una ficha y un XML por
+fondo y año, así que el flujo es distinto al del TXT IFRS. Procesa todos los fondos (vigentes y extintos) y todos los cierres de
+diciembre desde 2010, y cada fondo y cierre queda en uno de cuatro estados: `ok`, `sin_informacion`, `ilegible` o `pendiente`.
+Reglas que lo distinguen de los demás publicadores:
+
+* **Un error transitorio nunca es «sin información».** La CMF sirve a veces una página de desafío JavaScript en lugar de la ficha,
+  o un XML a medias: eso se reintenta y deja el cierre `pendiente`. Mientras haya un cierre cerrado pendiente, no se publica
+  nada (serie incompleta). Tras 3 corridas sin poder leer un XML, se excluye como `ilegible` y queda listado en el control.
+* **Reedición por nombre de archivo.** El nombre del XML lleva la fecha y hora de envío: si cambió, hubo un reenvío autorizado y se
+  baja de nuevo (`reediciones` en `ffmm_eeff_control.json`). Cada corrida revisa las fichas de los dos últimos cierres y de 1/36
+  del resto, de modo que toda la historia se revisa una vez al año sin pedir las ~8.000 fichas cada vez.
+* **El estado se reconstruye de lo publicado.** El progreso (`.local-data/ffmm_eeff`) viaja en la caché de Actions, pero si se pierde
+  se rehace desde los Parquet y el control: no hay que volver a bajar la historia.
+* **Compuertas:** cuadratura activo − pasivo = activo neto (el activo neto atribuible a los partícipes no se suma al pasivo) con la
+  política común de `pipelines/auto/cuadratura.py`, nueve identidades contables por fondo y cierre como avisos, y detención si
+  más del 2 % de los XML son ilegibles (cambió el formato).
 
 ## Guardián: que ninguna tabla vuelva a quedar como foto fija
 
