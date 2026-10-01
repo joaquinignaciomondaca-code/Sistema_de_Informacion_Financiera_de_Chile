@@ -398,7 +398,7 @@ def actualizar_catalogos(raiz=RAIZ, salida=None):
             token = hashlib.sha256("".join(nuevos.values()).encode()).hexdigest()[:12]
             index = indexp.read_text(encoding="utf-8")
             index = re.sub(
-                r'(src="js/(?:duckdb_client|data_viewer|data_dictionary|sidebar|erd_graph)\.js\?v=)[^\"]*',
+                r'((?:src|href)="(?:css|js)/[^"?]+\?v=)[^"]*',
                 lambda m: m.group(1) + "fi-eeff-" + token,
                 index,
             )

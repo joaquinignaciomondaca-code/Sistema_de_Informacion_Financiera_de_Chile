@@ -7,6 +7,7 @@ import copy
 import gzip
 import io
 import json
+import re
 import shutil
 import subprocess
 import tempfile
@@ -420,6 +421,17 @@ class PoliticaYCatalogosTest(unittest.TestCase):
                 ],
                 ["fi.balance", "fi.resultados"],
             )
+
+    def test_todos_los_assets_comparten_una_version_de_cache(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            cfg = make_root(Path(tmp))
+            correr(cfg)
+            index = (cfg.raiz / "docs/index.html").read_text()
+            versiones = set(
+                re.findall(r'(?:src|href)="(?:css|js)/[^"?]+\?v=([^"]+)"', index)
+            )
+            self.assertEqual(len(versiones), 1)
+            self.assertTrue(next(iter(versiones)).startswith("fi-eeff-"))
 
     def test_no_registra_tablas_inexistentes_y_catalogos_idempotentes(self):
         with tempfile.TemporaryDirectory() as tmp:
