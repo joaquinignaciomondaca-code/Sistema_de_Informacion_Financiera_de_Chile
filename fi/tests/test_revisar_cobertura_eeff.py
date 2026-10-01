@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 import copy
+import gzip
+import hashlib
 import json
 import tempfile
+import time
 import unittest
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
@@ -239,10 +242,21 @@ class LecturaCoberturaTest(unittest.TestCase):
         self.assertEqual(r["cambios_tipo"][0]["run"], "10898")
         self.assertEqual(r["altas_fuera_del_padron_local"][0]["run_fondo"], "10930")
 
-    def test_un_run_en_dos_tipos_no_se_colapsa(self):
+    def test_un_run_en_dos_tipos_no_se_colapsa_ni_se_elige_un_tipo(self):
         fs = universo()
-        with self.assertRaises(ValueError):
-            m.cotejar_registro(fs, [*fs, {**fs[0], "tipo_entidad": "FINRE"}])
+        r = m.cotejar_registro(fs, [*fs, {**fs[0], "tipo_entidad": "FINRE"}])
+        self.assertEqual(r["fondos_cmf"], 4)
+        self.assertEqual(r["filas_listas_cmf"], 5)
+        self.assertEqual(r["tipos_ambiguos"], ["10898"])
+        self.assertEqual(r["cambios_tipo"], [])
+
+    def test_duplicado_de_vigencia_no_duplica_fondos_ni_inventa_vigencia(self):
+        fs = universo()
+        r = m.cotejar_registro(fs, [*fs, {**fs[0], "estado_vigencia": "No Vigente"}])
+        self.assertEqual(r["fondos_cmf"], 4)
+        self.assertEqual(r["registros_ambiguos"][0]["run"], "10898")
+        self.assertEqual(r["tipos_ambiguos"], [])
+        self.assertEqual(r["cambios_vigencia"], [])
 
 
 class RevisionRedTest(unittest.TestCase):
@@ -319,6 +333,111 @@ class RevisionRedTest(unittest.TestCase):
         self.assertEqual(
             r["situacion_faltantes_vigentes"], {"fecha_inicio_no_informada": 2}
         )
+
+    def test_fallo_auxiliar_vi_no_oculta_ausencia_identificada_nv(self):
+        def get(url):
+            if "rut=7001&" in url and "&vig=VI&" in url:
+                raise OSError("ficha vacía al pedir no vigente con VI")
+            return proveedor()(url)
+
+        with tempfile.TemporaryDirectory() as tmp:
+            r = m.revisar_red(
+                {"periodo": "2026-06", "fondos": universo()}, Path(tmp), fetcher=get
+            )["revision_cmf"]
+        self.assertTrue(r["revision_completa"])
+        self.assertEqual(r["fondos_pendientes"], [])
+        self.assertEqual(len(r["consultas_auxiliares_pendientes"]), 2)
+
+    def test_fallo_en_vigencia_correcta_no_pasa_como_revision_completa(self):
+        def get(url):
+            if "rut=7001&" in url and "&vig=NV&" in url:
+                raise OSError("ficha requerida incompleta")
+            return proveedor()(url)
+
+        with tempfile.TemporaryDirectory() as tmp:
+            r = m.revisar_red(
+                {"periodo": "2026-06", "fondos": universo()}, Path(tmp), fetcher=get
+            )["revision_cmf"]
+        self.assertFalse(r["revision_completa"])
+        self.assertIn("7001", r["fondos_pendientes"])
+
+
+class FuentesCacheTest(unittest.TestCase):
+    def test_solo_reusa_bytes_verificados_y_conserva_fecha_original(self):
+        url = "https://www.cmfchile.cl/ficha_prueba"
+        raw = financiero()
+        anterior = {
+            "url": url,
+            "estado": "sin_informacion",
+            "sha256": hashlib.sha256(raw).hexdigest(),
+            "revisado_utc": "2026-10-01T22:00:00+00:00",
+        }
+
+        def no_red(u):
+            raise AssertionError("no debe volver a descargar una fuente verificada")
+
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp)
+            (p / "fuentes").mkdir()
+            (
+                p / "fuentes" / (hashlib.sha256(url.encode()).hexdigest() + ".html")
+            ).write_bytes(raw)
+            f = m.Fuentes(
+                p,
+                time.monotonic() + 60,
+                no_red,
+                {"revision_cmf": {"listas": [anterior]}},
+            )
+            r = f.consultar(url, lambda b: m.clasificar_sondeo(b, "10898", "2026-06"))
+        self.assertTrue(r["cache_sha256_verificado"])
+        self.assertEqual(r["revisado_utc"], anterior["revisado_utc"])
+
+    def test_cache_corrupta_no_se_acepta_y_se_vuelve_a_consultar(self):
+        url = "https://www.cmfchile.cl/ficha_prueba"
+        raw = financiero()
+        llamadas = []
+        anterior = {
+            "url": url,
+            "estado": "sin_informacion",
+            "sha256": hashlib.sha256(raw).hexdigest(),
+            "revisado_utc": "2026-10-01T22:00:00+00:00",
+        }
+
+        def get(u):
+            llamadas.append(u)
+            return raw
+
+        with tempfile.TemporaryDirectory() as tmp:
+            p = Path(tmp)
+            (p / "fuentes").mkdir()
+            (
+                p / "fuentes" / (hashlib.sha256(url.encode()).hexdigest() + ".html")
+            ).write_bytes(b"corrupto")
+            f = m.Fuentes(
+                p, time.monotonic() + 60, get, {"revision_cmf": {"listas": [anterior]}}
+            )
+            r = f.consultar(url, lambda b: m.clasificar_sondeo(b, "10898", "2026-06"))
+        self.assertEqual(llamadas, [url])
+        self.assertEqual(r["estado"], "sin_informacion")
+        self.assertNotIn("cache_sha256_verificado", r)
+
+
+class FuentesOficialesRegistroTest(unittest.TestCase):
+    def test_cuatro_listas_originales_conservan_hash_y_no_duplican_9251(self):
+        carpeta = FIXTURES / "cobertura"
+        fuentes = json.loads((carpeta / "muestras.json").read_text())
+        filas = []
+        for nombre, r in fuentes.items():
+            raw = gzip.decompress((carpeta / (nombre + ".html.gz")).read_bytes())
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), r["sha256"])
+            self.assertEqual(len(raw), r["bytes"])
+            if nombre.startswith("registro_"):
+                filas.extend(m.leer_lista(raw, r["tipo_entidad"], r["vigencia"]))
+        informe = m.cotejar_registro([], filas)
+        self.assertEqual(informe["filas_listas_cmf"], 1683)
+        self.assertEqual(informe["fondos_cmf"], 1682)
+        self.assertEqual([x["run"] for x in informe["registros_ambiguos"]], ["9251"])
+        self.assertEqual(informe["tipos_ambiguos"], [])
 
 
 class CoberturaLocalTest(unittest.TestCase):
