@@ -10,7 +10,6 @@ on:
   push:
     branches:
       - main
-      - arena/01a0f57d-sistema-de-informacion-financi  # TEMPORAL: backfill real en la rama del PR
     paths:
       - .github/workflows/ffmm_eeff.yml
       - ffmm/scripts/actualizar_eeff.py
