@@ -600,7 +600,7 @@ const EXPLORER_TREE = [
     type: "group",
     label: "FACTORING & LEASING (CMF / NBFI)",
     badges: [
-      { type: "entities", text: "28 Entidades", title: "Lista de 28 entidades de Factoring y Leasing" }
+      { type: "entities", text: "32 Entidades", title: "Lista de 32 entidades de Factoring y Leasing" }
     ],
     status: "active",
     children: [
@@ -614,7 +614,7 @@ const EXPLORER_TREE = [
             id: "cat_factoring_leasing_lista_entidades",
             type: "circular",
             label: "Lista de Entidades",
-            badge: "28 Entidades",
+            badge: "32 Entidades",
             badgeType: "entities",
             status: "active",
             sector: "factoring_leasing",

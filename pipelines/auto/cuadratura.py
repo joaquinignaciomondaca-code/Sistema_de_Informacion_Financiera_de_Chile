@@ -135,9 +135,12 @@ def clasificar_fecu(f: dict):
     return {"10.00.00": "A", "21.00.00": "P", "22.00.00": "E"}.get(str(f.get("codigo_fecu")))
 
 
+CLAVES_FECU = ("rut", "tipo_intermediario")
+
+
 def verificar_fecu(filas, tol_abs=1):
     """Balances de corredores y agentes de valores (plan FECU IFRS, miles de pesos)."""
-    return verificar(filas, ("rut", "tipo_intermediario"), "valor_miles_clp", clasificar_fecu, tol_abs)
+    return verificar(filas, CLAVES_FECU, "valor_miles_clp", clasificar_fecu, tol_abs)
 
 
 # ---------------------------------------------------------------------------

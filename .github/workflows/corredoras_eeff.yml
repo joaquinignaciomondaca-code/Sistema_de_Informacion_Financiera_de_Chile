@@ -12,6 +12,9 @@ on:
     paths:
       - .github/workflows/corredoras_eeff.yml
       - corredoras_bolsa/scripts/actualizar_eeff.py
+      # Módulos compartidos que importa el extractor.
+      - pipelines/auto/cuadratura.py
+      - pipelines/auto/estable.py
   workflow_dispatch:
 
 permissions:
@@ -39,6 +42,16 @@ jobs:
 
       - name: Instalar dependencias
         run: python -m pip install --disable-pip-version-check pandas==2.2.3 pyarrow==21.0.0 openpyxl==3.1.5
+
+      # Sin red y en segundos: la lectura del Excel FECU, las compuertas contables (incluida la de
+      # cobertura: un cambio de códigos no puede publicarse a ciegas) y la política incremental
+      # no pueden llegar a la web sin haber pasado sus pruebas.
+      - name: Pruebas del extractor y de las compuertas contables
+        run: >
+          python -m unittest -v
+          corredoras_bolsa.tests.test_actualizar_eeff
+          pipelines.auto.tests.test_cuadratura
+          pipelines.auto.tests.test_estable
 
       - name: Descargar y publicar los trimestres pendientes
         id: publicar

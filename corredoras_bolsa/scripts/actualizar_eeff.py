@@ -122,6 +122,11 @@ def ultimo_trimestre(hoy: date) -> str:
     return f"{y:04d}-{m:02d}"
 
 
+def _hoy() -> date:
+    """Fecha de la corrida (se aparta para que las pruebas no dependan del reloj)."""
+    return date.today()
+
+
 def cerrado(periodo: str, hoy: date) -> bool:
     y, m = int(periodo[:4]), int(periodo[5:])
     fin = date(y + (m == 12), 1 if m == 12 else m + 1, 1)
@@ -345,7 +350,7 @@ def main(argv=None) -> int:
     if a.solo_data_manifest:
         actualizar_data_manifest()
         return 0
-    inicio, hoy = time.monotonic(), date.today()
+    inicio, hoy = time.monotonic(), _hoy()
     SALIDA.mkdir(parents=True, exist_ok=True)
     c = cargar_control()
     lista = {str(e["rut"]).replace(".", "").split("-")[0]
@@ -353,7 +358,7 @@ def main(argv=None) -> int:
     todos = trimestres(DESDE, ultimo_trimestre(hoy))
     pendientes = [p for p in todos if not c["periodos"].get(p, {}).get("cerrado")]
     print(f"Trimestres {DESDE}..{todos[-1]}: cerrados {len(todos) - len(pendientes)}, a leer {len(pendientes)}")
-    hechos = 0
+    hechos, errores, defectos = 0, [], []
     nombres = nombres_cuentas(todos[-2]) if pendientes else {}
     print(f"Nombres de cuentas desde el informe HTML: {len(nombres)}")
     for periodo in pendientes:
@@ -386,10 +391,18 @@ def main(argv=None) -> int:
             print(f"::warning::{periodo}: la relectura trae {total} sociedades (antes {previo['sociedades']}); se mantiene")
             continue
         # Cuadratura contable (README §4): activos = pasivos + patrimonio (FECU 10 = 21 + 22).
+        # Se detiene ante una falla en bloque (≥3 y más del 5 %) y también si de pronto casi ningún
+        # balance trae los tres totales reconocibles (cambiaron los códigos y la compuerta quedó
+        # ciega): sin `balances_totales` esa segunda condición no existía y un cambio de códigos
+        # publicaba a ciegas.
         verificados, descuadres = cuadratura.verificar_fecu(datos["balance"])
-        if cuadratura.debe_detener(verificados, descuadres):
-            print(f"::warning::{periodo}: {len(descuadres)} de {verificados} balances no cuadran "
-                  f"(activos ≠ pasivos + patrimonio); no se publica. Ej.: {descuadres[0]}")
+        balances_totales = cuadratura.contar_grupos(datos["balance"], cuadratura.CLAVES_FECU)
+        motivo = cuadratura.motivo_detener(verificados, descuadres, balances_totales)
+        if motivo:
+            # Un trimestre abierto que no pasa la compuerta es una falla de la corrida; uno ya cerrado
+            # es una fuente histórica defectuosa: se avisa, pero no deja la corrida en rojo para siempre.
+            (defectos if cerrado(periodo, hoy) else errores).append(f"{periodo}: {motivo}")
+            print(f"::warning::{periodo}: {motivo}; no se publica")
             continue
         avisos += [f"balance no cuadra: {m}" for m in descuadres]
         for t in TABLAS:
@@ -397,6 +410,7 @@ def main(argv=None) -> int:
         fuera = sorted({(f["rut_dv"], f["razon_social"]) for f in datos["balance"]
                         if f["tipo_intermediario"] == TIPOS[1] and not f["en_lista_entidades"]})
         c["periodos"][periodo] = {"cerrado": cerrado(periodo, hoy), "sociedades": total, "por_tipo": por_tipo,
+                                  "balances_verificados": verificados, "balances_totales": balances_totales,
                                   "filas": {t: len(datos[t]) for t in TABLAS},
                                   "corredores_fuera_de_lista": [{"rut": r, "razon_social": n} for r, n in fuera],
                                   "avisos": avisos, "sha256_origen": sha_origen}
@@ -417,8 +431,10 @@ def main(argv=None) -> int:
     if gh:
         with open(gh, "a") as f:
             f.write(f"publicados={hechos}\n")
-    print(f"Trimestres escritos: {hechos}")
-    return 0
+    print(f"Trimestres escritos: {hechos}"
+          + (f" · errores: {len(errores)}" if errores else "")
+          + (f" · trimestres cerrados que no pasan las compuertas: {len(defectos)}" if defectos else ""))
+    return 1 if errores and not hechos else 0
 
 
 if __name__ == "__main__":

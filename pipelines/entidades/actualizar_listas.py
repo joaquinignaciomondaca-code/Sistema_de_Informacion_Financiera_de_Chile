@@ -475,20 +475,52 @@ def actualizar_bundles() -> None:
     bundles.guardar_claves(ruta, claves)
 
 
+# Listas que se completan solas con las altas del TXT IFRS (factoring/leasing y CCAF): su etiqueta
+# «N Entidades» del menú —la del grupo del sector y la de la propia lista— tiene que seguir a las
+# filas del maestro; si no, queda diciendo «28» con 32 sociedades. Las demás listas llevan una
+# etiqueta redactada a mano (vigentes, históricas, códigos) que no equivale a su número de filas,
+# así que no se tocan.
+ETIQUETAS_CONTEO = {
+    "factoring_leasing/factoring_leasing_maestro": ("group_factoring_leasing", "cat_factoring_leasing_lista_entidades"),
+    "cajas_compensacion/ccaf_maestro": ("group_cajas_compensacion", "cat_ccaf_lista_entidades"),
+}
+
+
+def etiquetas_conteo(texto: str, filas: dict[str, int]) -> str:
+    """Actualiza en el texto de `sidebar.js` las etiquetas «N Entidades» de ETIQUETAS_CONTEO."""
+    for base, (grupo, lista) in ETIQUETAS_CONTEO.items():
+        n = filas.get(base)
+        if n is None:
+            continue
+        # El grupo es un objeto de 2 espacios de sangría y la lista uno de 10: el patrón no cruza su cierre.
+        patrones = (
+            (rf'(id: "{grupo}",(?:(?!\n  \}}).)*?text: ")\d+( Entidades")', 1),
+            (rf'(id: "{grupo}",(?:(?!\n  \}}).)*?title: "Lista de )\d+( entidades)', 1),
+            (rf'(id: "{lista}",(?:(?!\n          \}}).)*?badge: ")\d+( Entidades")', 1),
+        )
+        for patron, cuantas in patrones:
+            texto = re.sub(patron, rf"\g<1>{n}\g<2>", texto, count=cuantas, flags=re.S)
+    return texto
+
+
 def actualizar_conteos_web() -> None:
     """Conteo «N entidades» del menú lateral (por archivo) y del diccionario (por id) de cada lista."""
     vistas = {AFP_BASE: "afp_maestro"}
     for nombre in ("sidebar.js", "data_dictionary.js"):
         ruta = RAIZ / "docs" / "js" / nombre
         s = ruta.read_text(encoding="utf-8")
+        filas = {}
         for base in bases():
             n = pq.ParquetFile(DOCS / f"{base}.parquet").metadata.num_rows
+            filas[base] = n
             if nombre == "sidebar.js":
                 patron = rf'(rows: ")\d+( [^"]*", file: "outputs/{re.escape(base)}\.parquet")'
             else:
                 vid = re.escape(vistas.get(base, base.split("/")[-1]))
                 patron = rf'(id: "{vid}",(?:(?!\n  \}}).)*?registros: ")\d+( [^"]*")'
             s = re.sub(patron, rf"\g<1>{n}\g<2>", s, count=1, flags=re.S)
+        if nombre == "sidebar.js":
+            s = etiquetas_conteo(s, filas)
         ruta.write_text(s, encoding="utf-8")
     actualizar_bundles()
 
