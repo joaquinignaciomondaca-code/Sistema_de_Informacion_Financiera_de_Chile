@@ -13,6 +13,10 @@ on:
       - 'factoring_leasing/tests/test_publication.py'
       - 'factoring_leasing/scripts/audit_factoring_leasing.py'
       - 'scripts/audit_navigation.py'
+      # Módulos compartidos que importan el extractor y el publicador.
+      - 'pipelines/auto/ifrs_txt.py'
+      - 'pipelines/auto/cuadratura.py'
+      - 'pipelines/auto/rut.py'
   workflow_dispatch:
     inputs:
       batch:
@@ -73,54 +77,51 @@ jobs:
         id: publish_docs
         if: success()
         run: |
-          if [ ! -f docs/outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet ] || \
-             [ ! -f docs/outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet ]; then
+          datos=docs/outputs/factoring_leasing
+          balance="$datos/factoring_leasing_balance_serie_ifrs_cmf"
+          resultados="$datos/factoring_leasing_resultados_serie_ifrs_cmf"
+          if [ ! -f "$balance.parquet" ] || [ ! -f "$resultados.parquet" ]; then
             echo "La extracción aún está incompleta; no se publica."
             echo "pushed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet \
-                  docs/outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet \
-                  docs/outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf_metadata.json \
-                  docs/js/duckdb_client.js docs/js/sidebar.js docs/js/data_viewer.js \
-                  docs/js/data_dictionary.js docs/index.html data_manifest.json
-          if ! git diff --cached --quiet; then
+          # Los Parquets y su metadata solo los escribe este workflow. Los catálogos de la web
+          # (duckdb_client, sidebar, data_viewer, data_dictionary, index.html), data_manifest.json y
+          # el catálogo de descargas los editan TODOS los publicadores: si viajaran en el commit
+          # chocarían con la edición de otro (el cherry-pick en conflicto no se arregla reintentando: persiste
+          # mientras esa edición esté en la rama) y la serie quedaba sin publicar. Por eso se resguardan solo los datos y, en cada intento,
+          # se parte de la cabeza vigente de la rama, se copian los datos y se REGENERAN esos archivos
+          # sobre ella (`publish_backfill.py --solo-catalogos`). Un push rechazado se reintenta igual.
+          resguardo="${RUNNER_TEMP}/fl_publicacion"
+          mkdir -p "$resguardo"
+          cp "$balance.parquet" "$resultados.parquet" "${balance}_metadata.json" "$resguardo/"
+          for i in 1 2 3 4 5 6 7 8; do
+            git fetch origin "${GITHUB_REF_NAME}"
+            git reset --hard FETCH_HEAD
+            cp "$resguardo"/*.parquet "$resguardo"/*.json "$datos/"
+            python factoring_leasing/scripts/publish_backfill.py --solo-catalogos
+            python scripts/build_download_catalog.py
+            git add "$balance.parquet" "$resultados.parquet" "${balance}_metadata.json" \
+                    docs/js/duckdb_client.js docs/js/sidebar.js docs/js/data_viewer.js \
+                    docs/js/data_dictionary.js docs/js/download_catalog.js docs/index.html data_manifest.json
+            if git diff --cached --quiet; then
+              echo "La web ya está al día; no hay archivos nuevos que publicar."
+              echo "pushed=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
             git commit -m "Publicar serie completa IFRS de Factoring y Leasing desde Actions"
-            datos=$(git rev-parse HEAD)
-            # Otros bots publican en la misma rama: se reaplica el commit sobre su última versión
-            # y se regenera el catálogo de Descargas (JS estático) antes de cada intento de push.
-            # Nada de esto debe abortar el paso: la shell corre con `bash -e`, así
-            # que un cherry-pick en conflicto o un push rechazado se reintentan
-            # sobre la cabeza nueva. La espera aleatoria desincroniza las corridas
-            # que arrancan juntas y el fallo final queda anotado como error.
-            for i in 1 2 3 4 5 6 7 8; do
-              git fetch origin "${GITHUB_REF_NAME}"
-              git reset --hard FETCH_HEAD
-              if ! git cherry-pick "$datos"; then
-                git cherry-pick --abort || git reset --hard FETCH_HEAD
-                echo "Cherry-pick en conflicto (intento ${i}/8): otra publicación tocó los mismos archivos."
-                sleep $(( 15 + RANDOM % 20 ))
-                continue
-              fi
-              python scripts/build_download_catalog.py
-              git add docs/js/download_catalog.js
-              git diff --cached --quiet || git commit -m "Factoring y Leasing: catálogo de descargas"
-              if git push origin "HEAD:${GITHUB_REF_NAME}"; then
-                echo "pushed=true" >> "$GITHUB_OUTPUT"
-                echo "desplegar=true" >> "$GITHUB_OUTPUT"
-                exit 0
-              fi
-              echo "Push rechazado (intento ${i}/8): otra corrida publicó primero."
-              sleep $(( 15 + RANDOM % 20 ))
-            done
-            echo "::error title=Publicación en la rama::No se pudo publicar la serie IFRS tras 8 intentos por contención en ${GITHUB_REF_NAME}"
-            exit 1
-          else
-            echo "La web ya está al día; no hay archivos nuevos que publicar."
-            echo "pushed=true" >> "$GITHUB_OUTPUT"
-          fi
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then
+              echo "pushed=true" >> "$GITHUB_OUTPUT"
+              echo "desplegar=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "Push rechazado (intento ${i}/8): otra corrida publicó primero."
+            sleep $(( 15 + RANDOM % 20 ))
+          done
+          echo "::error title=Publicación en la rama::No se pudo publicar la serie IFRS tras 8 intentos por contención en ${GITHUB_REF_NAME}"
+          exit 1
       - name: Conservar progreso para próxima corrida aun si falló la CMF
         if: always()
         uses: actions/cache/save@v4

@@ -24,6 +24,10 @@ on:
       - 'scripts/normalizar_vocabulario.py'
       - 'scripts/build_download_catalog.py'
       - 'pipelines/**'
+      - 'factoring_leasing/**'
+      - 'bancos/**'
+      - 'corredoras_bolsa/**'
+      - 'ffmm/**'
       - '.github/workflows/**'
       - 'data_manifest.json'
 
@@ -78,7 +82,7 @@ jobs:
           echo "::notice title=RUT::$(tail -n 1 rut.log)"
           exit $n
 
-      - name: Auditar las 116 consultas sugeridas contra los Parquet
+      - name: Auditar las consultas sugeridas contra los Parquet
         run: |
           python -m pip install --disable-pip-version-check duckdb
           set +e
@@ -160,6 +164,41 @@ jobs:
 
       - name: Pruebas de las compuertas compartidas de los pipelines
         run: python -m unittest -v pipelines.auto.tests.test_cuadratura pipelines.auto.tests.test_estable
+
+  # Pruebas unitarias de los extractores y publicadores de estados financieros. Cada publicador
+  # corre las suyas antes de publicar, pero solo cuando se dispara; aquí corren en cada PR y push,
+  # que es cuando un cambio todavía se puede corregir. Sin red: todo con fuentes sintéticas.
+  pruebas:
+    if: github.event_name != 'schedule'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Dependencias
+        run: python -m pip install --disable-pip-version-check pandas==2.2.3 pyarrow==21.0.0 openpyxl==3.1.5
+      - name: AGF, securitizadoras y CCAF · parseo y compuertas compartidas · corredoras · fondos mutuos · banca
+        run: >
+          python -m unittest -v
+          pipelines.ifrs_sectores.tests.test_actualizar
+          pipelines.ifrs_sectores.tests.test_roundtrip_publicado
+          pipelines.ifrs_sectores.tests.test_sondeo
+          pipelines.auto.tests.test_ifrs_txt
+          pipelines.auto.tests.test_cuadratura
+          pipelines.auto.tests.test_estable
+          pipelines.auto.tests.test_contrato_publicadores
+          pipelines.entidades.tests.test_conteos
+          corredoras_bolsa.tests.test_actualizar_eeff
+          ffmm.tests.test_eeff_xml
+          ffmm.tests.test_actualizar_eeff
+          bancos.tests.test_inspect_cmf_bank_sample
+          bancos.tests.test_extract_cmf_bank_lines
+          bancos.tests.test_publish_cmf_bank_period
+          bancos.tests.test_bank_master_identity
+      - name: Factoring y leasing · extracción y publicación
+        run: python -m unittest discover -s factoring_leasing/tests -v
 
   frescura:
     if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && github.ref_name == github.event.repository.default_branch)

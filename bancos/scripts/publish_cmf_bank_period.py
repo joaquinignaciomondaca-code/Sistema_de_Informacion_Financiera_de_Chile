@@ -3,6 +3,12 @@
 El script es idempotente: un período presente en el manifiesto nunca se vuelve a
 extraer ni se sobrescribe. Los importes se conservan al grano de cuenta, en sus
 campos fuente originales; no se derivan métricas financieras.
+
+`--solo-data-manifest` regenera la entrada de bancos en `data_manifest.json` desde las
+particiones YA publicadas, sin descargar nada. El workflow lo usa después de integrar la
+partición nueva sobre la última cabeza de la rama: `data_manifest.json` lo editan todos los
+publicadores, así que se regenera sobre la versión vigente en lugar de viajar en el commit
+de datos, donde choca con la edición de otro publicador.
 """
 from __future__ import annotations
 
@@ -444,6 +450,25 @@ def update_data_manifest(period_manifest: dict, latest: dict) -> None:
     atomic_json(DATA_MANIFEST, catalog)
 
 
+def rebuild_data_manifest() -> str:
+    """Regenera la entrada de bancos en `data_manifest.json` desde las particiones publicadas.
+
+    Devuelve el último período registrado. Se niega si no hay particiones o si el manifiesto de
+    particiones lista un archivo que no está en disco (p. ej. una integración a medias): sería
+    anunciar en el inventario del sitio datos que no existen.
+    """
+    manifest = load_manifest()
+    periods = manifest.get("periods") or []
+    if not periods:
+        raise RuntimeError("No hay particiones publicadas: no hay nada que registrar en data_manifest.json")
+    faltantes = [item["file"] for item in periods if not (ROOT / "docs" / item["file"]).is_file()]
+    if faltantes:
+        raise RuntimeError(f"El manifiesto de particiones lista {len(faltantes)} archivo(s) que no están en disco "
+                           f"(p. ej. {faltantes[0]})")
+    update_data_manifest(manifest, periods[-1])
+    return str(periods[-1]["period"])
+
+
 def write_github_output(result: dict) -> None:
     output = os.environ.get("GITHUB_OUTPUT")
     if output:
@@ -520,8 +545,14 @@ def main() -> int:
                         help="Publicar en orden todos los meses cerrados pendientes (cada uno con su propio gate)")
     parser.add_argument("--desde", default="", help="Con --catch-up: primer período de la historia a completar (YYYY-MM)")
     parser.add_argument("--max-periods", type=int, default=24, help="Tope de meses por corrida con --catch-up")
+    parser.add_argument("--solo-data-manifest", action="store_true",
+                        help="Regenerar la entrada de bancos en data_manifest.json desde las particiones ya publicadas")
     args = parser.parse_args()
     try:
+        if args.solo_data_manifest:
+            ultimo = rebuild_data_manifest()
+            print(f"data_manifest.json regenerado desde las particiones publicadas (último período: {ultimo}).")
+            return 0
         if args.catch_up and not args.period:
             if args.desde:
                 period_label(args.desde)
