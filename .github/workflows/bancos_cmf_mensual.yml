@@ -75,33 +75,41 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data_manifest.json docs/outputs/bancos/cmf_b1_b2_r1
+          # El commit de datos lleva solo lo que escribe este workflow (las particiones y su
+          # manifiesto). data_manifest.json lo editan todos los publicadores: si viajara en el commit
+          # chocaría con la edición de otro, y reintentar no sirve: el conflicto persiste mientras esa
+          # edición esté en la rama, así que el período quedaba sin publicar. Se descarta la edición local y se regenera
+          # sobre la cabeza vigente tras integrar los datos (`--solo-data-manifest`), como hacen los
+          # demás publicadores.
+          git add docs/outputs/bancos/cmf_b1_b2_r1
           if git diff --cached --quiet; then
             echo 'No hay cambios que confirmar.'
             exit 0
           fi
           git commit -m "Publica período CMF bancario ${{ steps.publish.outputs.period }}"
-          # Otras corridas avanzan la misma rama y data_manifest.json es un archivo
-          # compartido, así que el rebase puede chocar. Nada de eso debe abortar el
-          # paso (la shell corre con `bash -e`): se reintenta sobre la cabeza nueva
-          # y, si aun así no se puede publicar, se deja un error explícito en el
-          # resumen en vez de un paso rojo sin explicación.
+          git checkout -- data_manifest.json
+          datos=$(git rev-parse HEAD)
+          # Un cherry-pick en conflicto o un push rechazado no deben abortar el paso (la shell corre
+          # con `bash -e`): se reintenta sobre la cabeza nueva, con espera aleatoria para
+          # desincronizar las corridas que arrancan juntas, y si aun así no se puede publicar se deja
+          # un error explícito en vez de un paso rojo sin explicación.
           for intento in 1 2 3 4 5 6 7 8; do
             git fetch origin "${GITHUB_REF_NAME}"
-            if ! git rebase FETCH_HEAD; then
-              git rebase --abort || true
-              echo "Rebase en conflicto (intento ${intento}/8): otra publicación tocó data_manifest.json."
+            git reset --hard FETCH_HEAD
+            if ! git cherry-pick "$datos"; then
+              git cherry-pick --abort || git reset --hard FETCH_HEAD
+              echo "Cherry-pick en conflicto (intento ${intento}/8): otra publicación tocó los mismos archivos."
               sleep $(( 15 + RANDOM % 20 ))
               continue
             fi
+            python -m bancos.scripts.publish_cmf_bank_period --solo-data-manifest
             # El catálogo de Descargas (JS estático) se regenera sobre la versión final de la rama.
             python scripts/build_download_catalog.py
-            git add docs/js/download_catalog.js
-            git diff --cached --quiet || git commit -m "Banca: catálogo de descargas"
+            git add data_manifest.json docs/js/download_catalog.js
+            git diff --cached --quiet || git commit -m "Banca: data_manifest y catálogo de descargas"
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
             echo "Push rechazado (intento ${intento}/8): otra corrida publicó primero."
             sleep $(( 15 + RANDOM % 20 ))
           done
           echo "::error title=Publicación en la rama::No se pudo publicar el período bancario tras 8 intentos por contención en ${GITHUB_REF_NAME}"
           exit 1
-

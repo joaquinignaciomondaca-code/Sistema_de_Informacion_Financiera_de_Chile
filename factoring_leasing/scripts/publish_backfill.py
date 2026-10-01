@@ -5,6 +5,18 @@ El workflow primero completa el backfill en .local-data, luego este script arma
 Parquets únicos de balance y resultados y actualiza los catálogos de la web.
 Nunca resume/suma cuentas, convierte unidades, elimina repeticiones ni rellena
 importes no enteros. El commit/push lo realiza el workflow a la misma rama.
+
+Antes de escribir nada, la serie pasa la misma cuadratura contable que usa el extractor de
+AGF, securitizadoras y CCAF (`pipelines/auto/cuadratura.py`): activos = pasivos + patrimonio
+y las identidades del estado de resultados, trimestre por trimestre. Si falla en bloque, o
+si de pronto casi ningún balance trae los tres totales reconocibles (señal de que cambiaron
+las glosas), no se publica y la corrida queda en rojo.
+
+`--solo-catalogos` regenera los catálogos de la web y el manifiesto raíz desde los Parquets
+y la metadata YA publicados, sin pasar por el staging. El workflow lo usa para reaplicar la
+publicación sobre la última cabeza de la rama: esos archivos los editan todos los
+publicadores, así que se regeneran sobre la versión vigente en vez de entrar en un commit
+que choca con la edición de otro.
 """
 import argparse
 from datetime import datetime, timezone
@@ -20,6 +32,7 @@ import pandas as pd
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
+from pipelines.auto import cuadratura  # noqa: E402
 from pipelines.auto.rut import normalizar_dataframe  # noqa: E402
 
 DATA = ROOT / '.local-data' / 'factoring_leasing_serie'
@@ -252,7 +265,10 @@ def dictionary_block(meta, run_id, vocab):
         'frescura': 'Serie de la fuente CMF; valores crudos, no validación integral',
         'modo': 'Actions: descarga histórica incremental y publicación automática al completarse',
         'ultimaActualizacion': created,
-        'origen': f"CMF {meta['fuente_indice']}; corrida Actions {run_id}. 24/28 RUT de catálogo presentes. Incluye cuentas repetidas y valores no enteros; no convertir, deduplicar ni sumar sin criterio. No cotejo integral de estados.",
+        'origen': (f"CMF {meta['fuente_indice']}; corrida Actions {run_id}. "
+                   f"{len(meta['ruts_con_datos_total'])}/{meta['rut_catalogo']} RUT del catálogo con datos en la fuente. "
+                   'Incluye cuentas repetidas y valores no enteros; no convertir, deduplicar ni sumar sin criterio. '
+                   'No cotejo integral de estados.'),
         'columnas': columns,
     }
     objects = []
@@ -389,7 +405,7 @@ def update_root_manifest(meta, run_id, docs=DOCS):
             'descripcion': (f"{rows:,} filas de cuentas {statement}; no son estados agregados. "
                             'Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.'),
             'origen': (f"CMF {meta['fuente_indice']}; corrida Actions {run_id}. "
-                       f"{len(meta['ruts_con_datos_total'])}/28 RUT del catálogo con datos; "
+                       f"{len(meta['ruts_con_datos_total'])}/{meta['rut_catalogo']} RUT del catálogo con datos; "
                        'revisar metadata JSON acompañante para faltantes y advertencias.'),
         })
     tables.extend(generated)
@@ -400,12 +416,78 @@ def update_root_manifest(meta, run_id, docs=DOCS):
     path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
 
+CAMPOS_CUADRATURA = tuple(cuadratura.CLAVES_FL) + ('cuenta', 'valor_archivo')
+
+
+def _filas(frame, campos=CAMPOS_CUADRATURA):
+    """Filas como dicts con `None` en los nulos (los NA de pandas no son `None`)."""
+    sub = frame[list(campos)]
+    return sub.astype(object).where(sub.notna(), None).to_dict('records')
+
+
+def cuadratura_serie(balance, results):
+    """Cuadratura contable de la serie completa, trimestre por trimestre.
+
+    Devuelve `(estadisticas, motivos)`; `motivos` vacío = se puede publicar. Las reglas son las
+    del extractor de AGF/securitizadoras/CCAF: un descuadre aislado no detiene (queda contado en
+    las estadísticas y lo marca la auditoría de la web), pero sí una falla en bloque o una
+    cobertura de verificación que se cae.
+    """
+    totales = verificados = descuadres = 0
+    identidades = divergencias = 0
+    motivos = []
+    for periodo, grupo in balance.groupby('periodo', sort=True):
+        filas = _filas(grupo)
+        n = cuadratura.contar_grupos(filas, cuadratura.CLAVES_FL)
+        v, malos = cuadratura.verificar_fl(filas)
+        totales, verificados, descuadres = totales + n, verificados + v, descuadres + len(malos)
+        motivo = cuadratura.motivo_detener(v, malos, n)
+        if motivo:
+            motivos.append(f'{periodo} · balance · {motivo}')
+    for periodo, grupo in results.groupby('periodo', sort=True):
+        vr, malos = cuadratura.verificar_resultados_fl(_filas(grupo))
+        identidades, divergencias = identidades + vr, divergencias + len(malos)
+        motivo = cuadratura.motivo_detener(vr, malos)
+        if motivo:
+            motivos.append(f'{periodo} · resultados · {motivo}')
+    return {'balances_totales': totales, 'balances_verificados': verificados,
+            'balances_descuadrados': descuadres, 'identidades_resultados': identidades,
+            'identidades_divergentes': divergencias}, motivos
+
+
+def republicar_catalogos(docs=DOCS):
+    """Regenera catálogos web y manifiesto raíz desde lo ya publicado (sin staging).
+
+    Se niega si los Parquets de `docs/` no son los que describe la metadata: sería publicar
+    en el sitio una ficha que no corresponde a los datos.
+    """
+    carpeta = docs / 'outputs' / 'factoring_leasing'
+    meta_path = carpeta / f'{BALANCE}_metadata.json'
+    if not meta_path.is_file():
+        raise ValueError(f'No hay metadata publicada: {meta_path.name}')
+    meta = json.loads(meta_path.read_text(encoding='utf-8'))
+    for tabla, campo in ((BALANCE, 'sha256_balance_parquet'), (RESULTS, 'sha256_resultados_parquet')):
+        archivo = carpeta / f'{tabla}.parquet'
+        if not archivo.is_file() or file_sha256(archivo) != meta.get(campo):
+            raise ValueError(f'{archivo.name} no coincide con la metadata publicada ({campo})')
+    run_id = meta['run_actions']
+    apply_catalogs(meta, run_id, docs)
+    update_root_manifest(meta, run_id, docs)
+    print(f"CATALOGOS_REGENERADOS: {meta['periodos_indice']} cierres, "
+          f"{meta['filas_balance_total']:,} + {meta['filas_resultados_total']:,} filas, run={run_id}", flush=True)
+
+
 def publish(out=DATA, docs=DOCS, run_id='local'):
     loaded, reason = load_complete(out)
     if loaded is None:
         print(f'PUBLICACION_OMITIDA: {reason}', flush=True)
         return False
     summary, balance, results = loaded
+    # Compuerta contable ANTES de escribir nada en docs/: si falla, el sitio sigue como estaba.
+    verificacion, motivos = cuadratura_serie(balance, results)
+    if motivos:
+        raise ValueError('La serie no pasa la cuadratura contable, no se publica: ' + ' | '.join(motivos[:5])
+                         + (f' (+{len(motivos) - 5} más)' if len(motivos) > 5 else ''))
     summary['filas_balance_total'] = len(balance)
     summary['filas_resultados_total'] = len(results)
     summary['fuente_indice'] = summary.get('fuente_indice', 'https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php')
@@ -430,6 +512,7 @@ def publish(out=DATA, docs=DOCS, run_id='local'):
         'importes_no_enteros_total': summary.get('importes_no_enteros_total', 0),
         'cuentas_contexto_repetidas': summary.get('cuentas_contexto_repetidas_total', 0),
         'cuentas_contexto_repetidas_total': summary.get('cuentas_contexto_repetidas_total', 0),
+        'cuadratura': verificacion,
         'advertencia': ('Extracción literal del TXT IFRS CMF. No es un cotejo integral de estados; '
                         'no convertir monedas, sumar balances individual/consolidado, deduplicar etiquetas, '
                         'ni interpretar valores no enteros como cero. Filas y faltantes según fuente disponible.'),
@@ -468,8 +551,13 @@ def main():
     parser.add_argument('--data', type=Path, default=DATA)
     parser.add_argument('--docs', type=Path, default=DOCS)
     parser.add_argument('--run-id', default=os.environ.get('GITHUB_RUN_ID', 'local'))
+    parser.add_argument('--solo-catalogos', action='store_true',
+                        help='regenerar catálogos web y data_manifest.json desde lo ya publicado (sin staging)')
     args = parser.parse_args()
     try:
+        if args.solo_catalogos:
+            republicar_catalogos(args.docs)
+            return 0
         publish(args.data, args.docs, args.run_id)
     except Exception as exc:
         print(f'::error::Publicación no realizada: {type(exc).__name__}: {exc}', flush=True)

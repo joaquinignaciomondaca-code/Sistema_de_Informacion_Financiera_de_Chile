@@ -1,3 +1,5 @@
+import json
+import sys
 import tempfile
 import unittest
 from datetime import date
@@ -265,6 +267,91 @@ class PublishCmfBankPeriodTests(unittest.TestCase):
             self._release({5: 1000.2, 7: 1000.1})
         with self.assertRaisesRegex(RuntimeError, "no concilia con el XLSX"):
             self._release({5: 1002.0})  # 0,2 %
+
+
+class SoloDataManifestTests(unittest.TestCase):
+    """`data_manifest.json` se regenera sobre la versión vigente, no viaja en el commit de datos."""
+
+    def _entorno(self, tmp, periodos=("2026-06", "2026-07"), crear=True):
+        root = Path(tmp)
+        salida = root / "docs" / "outputs" / "bancos" / "cmf_b1_b2_r1"
+        registros = []
+        for periodo in periodos:
+            archivo = f"outputs/bancos/cmf_b1_b2_r1/{periodo}/lineas.parquet"
+            if crear:
+                (root / "docs" / archivo).parent.mkdir(parents=True)
+                (root / "docs" / archivo).write_bytes(b"PAR1")
+            registros.append({"period": periodo, "file": archivo, "records": 100,
+                              "zip_url": f"https://cmf.invalid/{periodo}.zip"})
+        particiones = {"dataset": "bancos_cmf_lineas", "periods": registros,
+                       "files": [r["file"] for r in registros],
+                       "total_records": 100 * len(registros)}
+        (salida / "manifest.json").parent.mkdir(parents=True, exist_ok=True)
+        (salida / "manifest.json").write_text(json.dumps(particiones))
+        (root / "data_manifest.json").write_text(json.dumps({
+            "version": "1.0.0", "updated_at": "2026-09-01", "total_tables": 2, "total_records": 1150,
+            "tables": [{"id": "bancos_cmf_lineas", "registros_reales": 100, "corte": "2026-06 a 2026-06",
+                        "file_parquet": "x"},
+                       {"id": "otra_tabla", "registros_reales": 1050}]}))
+        return root, salida
+
+    def _con_rutas(self, root, salida):
+        return (mock.patch.object(mod, "ROOT", root), mock.patch.object(mod, "OUTPUT_ROOT", salida),
+                mock.patch.object(mod, "PARTITION_MANIFEST", salida / "manifest.json"),
+                mock.patch.object(mod, "DATA_MANIFEST", root / "data_manifest.json"))
+
+    def test_registra_el_ultimo_periodo_y_conserva_las_demas_tablas(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, salida = self._entorno(tmp)
+            parches = self._con_rutas(root, salida)
+            with parches[0], parches[1], parches[2], parches[3]:
+                self.assertEqual(mod.rebuild_data_manifest(), "2026-07")
+            man = json.loads((root / "data_manifest.json").read_text())
+            por_id = {t["id"]: t for t in man["tables"]}
+            self.assertEqual(por_id["bancos_cmf_lineas"]["registros_reales"], 200)
+            self.assertEqual(por_id["bancos_cmf_lineas"]["corte"], "2026-06 a 2026-07")
+            self.assertEqual(por_id["bancos_cmf_lineas"]["file_parquet"],
+                             "outputs/bancos/cmf_b1_b2_r1/2026-07/lineas.parquet")
+            self.assertEqual(por_id["bancos_cmf_lineas"]["origen"], "https://cmf.invalid/2026-07.zip")
+            self.assertEqual(por_id["otra_tabla"]["registros_reales"], 1050)       # lo ajeno no se toca
+            self.assertEqual(man["total_records"], 1250)
+            self.assertEqual(man["total_tables"], 2)
+
+    def test_es_idempotente(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, salida = self._entorno(tmp)
+            parches = self._con_rutas(root, salida)
+            with parches[0], parches[1], parches[2], parches[3]:
+                mod.rebuild_data_manifest()
+                primero = (root / "data_manifest.json").read_bytes()
+                mod.rebuild_data_manifest()
+            self.assertEqual((root / "data_manifest.json").read_bytes(), primero)
+
+    def test_sin_particiones_o_con_una_particion_faltante_falla_sin_escribir(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, salida = self._entorno(tmp, periodos=(), crear=False)
+            antes = (root / "data_manifest.json").read_bytes()
+            parches = self._con_rutas(root, salida)
+            with parches[0], parches[1], parches[2], parches[3]:
+                with self.assertRaisesRegex(RuntimeError, "No hay particiones"):
+                    mod.rebuild_data_manifest()
+        with tempfile.TemporaryDirectory() as tmp:
+            root, salida = self._entorno(tmp, crear=False)
+            antes = (root / "data_manifest.json").read_bytes()
+            parches = self._con_rutas(root, salida)
+            with parches[0], parches[1], parches[2], parches[3]:
+                with self.assertRaisesRegex(RuntimeError, "no están en disco"):
+                    mod.rebuild_data_manifest()
+            self.assertEqual((root / "data_manifest.json").read_bytes(), antes)
+
+    def test_la_opcion_de_linea_de_comandos_llama_al_modo_y_devuelve_codigo(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root, salida = self._entorno(tmp)
+            parches = self._con_rutas(root, salida)
+            with parches[0], parches[1], parches[2], parches[3]:
+                with mock.patch.object(sys, "argv", ["publish_cmf_bank_period", "--solo-data-manifest"]):
+                    self.assertEqual(mod.main(), 0)
+            self.assertEqual(json.loads((root / "data_manifest.json").read_text())["total_records"], 1250)
 
 
 if __name__ == "__main__":
