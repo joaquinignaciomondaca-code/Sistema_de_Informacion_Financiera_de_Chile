@@ -529,71 +529,426 @@ const ERD_TABLES = [
       { name: "sha256_zip", type: "VARCHAR" }
     ]
   },
+  // <macro:inicio>
   {
-    id: "macro_tasas_rendimientos",
-    name: "macro.tasas_rendimientos",
+    id: "macro_tasas_corto_plazo",
+    name: "macro.tasas_corto_plazo",
     sector: "macro",
     color: "#E65100",
     x: 3040,
     y: 110,
-    w: 240,
-    h: 180,
-    rows: "153 periodos",
-    file: "outputs/macro/macro_tasas_rendimientos.parquet",
+    w: 250,
+    h: 116,
+    rows: "3.175 días",
+    file: "outputs/macro/macro_tasas_corto_plazo.parquet",
     cols: [
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "tpm", type: "DOUBLE" },
-      { name: "tib_promedio", type: "DOUBLE" },
-      { name: "bcp_2y", type: "DOUBLE" },
-      { name: "bcp_5y", type: "DOUBLE" },
-      { name: "bcp_10y", type: "DOUBLE" },
-      { name: "bcu_5y", type: "DOUBLE" },
-      { name: "spread_bcp_10y_2y_bps", type: "DOUBLE" },
-      { name: "inflacion_implicita_5y_breakeven", type: "DOUBLE" }
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "tpm_pct", type: "DOUBLE" },
+      { name: "tib_promedio_pct", type: "DOUBLE" }
     ]
   },
   {
-    id: "macro_divisas_mercado",
-    name: "macro.divisas_mercado",
+    id: "macro_swaps_camara",
+    name: "macro.swaps_camara",
+    sector: "macro",
+    color: "#E65100",
+    x: 3330,
+    y: 110,
+    w: 250,
+    h: 170,
+    rows: "3.188 días",
+    file: "outputs/macro/macro_swaps_camara.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "swap_camara_pesos_90_dias_pct", type: "DOUBLE" },
+      { name: "swap_camara_pesos_180_dias_pct", type: "DOUBLE" },
+      { name: "swap_camara_pesos_360_dias_pct", type: "DOUBLE" },
+      { name: "swap_camara_pesos_2_anos_pct", type: "DOUBLE" },
+      { name: "swap_camara_uf_1_ano_pct", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_curva_bonos_pesos",
+    name: "macro.curva_bonos_pesos",
+    sector: "macro",
+    color: "#E65100",
+    x: 3040,
+    y: 256,
+    w: 250,
+    h: 134,
+    rows: "3.157 días",
+    file: "outputs/macro/macro_curva_bonos_pesos.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rendimiento_bono_pesos_2_anos_pct", type: "DOUBLE" },
+      { name: "rendimiento_bono_pesos_5_anos_pct", type: "DOUBLE" },
+      { name: "rendimiento_bono_pesos_10_anos_pct", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_curva_bonos_uf",
+    name: "macro.curva_bonos_uf",
+    sector: "macro",
+    color: "#E65100",
+    x: 3330,
+    y: 310,
+    w: 250,
+    h: 188,
+    rows: "3.159 días",
+    file: "outputs/macro/macro_curva_bonos_uf.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "rendimiento_bono_uf_1_ano_pct", type: "DOUBLE" },
+      { name: "rendimiento_bono_uf_2_anos_pct", type: "DOUBLE" },
+      { name: "rendimiento_bono_uf_5_anos_pct", type: "DOUBLE" },
+      { name: "rendimiento_bono_uf_10_anos_pct", type: "DOUBLE" },
+      { name: "rendimiento_bono_uf_20_anos_pct", type: "DOUBLE" },
+      { name: "rendimiento_bono_uf_30_anos_pct", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_inflacion_implicita",
+    name: "macro.inflacion_implicita",
+    sector: "macro",
+    color: "#E65100",
+    x: 3040,
+    y: 420,
+    w: 250,
+    h: 116,
+    rows: "3.063 días",
+    file: "outputs/macro/macro_inflacion_implicita.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "inflacion_implicita_5_anos_pct", type: "DOUBLE" },
+      { name: "inflacion_implicita_10_anos_pct", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_dolar_observado",
+    name: "macro.dolar_observado",
+    sector: "macro",
+    color: "#E65100",
+    x: 3330,
+    y: 528,
+    w: 250,
+    h: 98,
+    rows: "3.174 días",
+    file: "outputs/macro/macro_dolar_observado.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "dolar_observado_clp_por_usd", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_euro_observado",
+    name: "macro.euro_observado",
+    sector: "macro",
+    color: "#E65100",
+    x: 3040,
+    y: 566,
+    w: 250,
+    h: 98,
+    rows: "3.174 días",
+    file: "outputs/macro/macro_euro_observado.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "euro_observado_clp_por_eur", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_tipo_cambio_multilateral",
+    name: "macro.tipo_cambio_multilateral",
+    sector: "macro",
+    color: "#E65100",
+    x: 3330,
+    y: 656,
+    w: 250,
+    h: 134,
+    rows: "3.174 días",
+    file: "outputs/macro/macro_tipo_cambio_multilateral.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "tipo_cambio_nominal_multilateral_indice", type: "DOUBLE" },
+      { name: "tipo_cambio_nominal_multilateral_5_monedas_indice", type: "DOUBLE" },
+      { name: "tipo_cambio_nominal_multilateral_x_indice", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_tipo_cambio_real",
+    name: "macro.tipo_cambio_real",
     sector: "macro",
     color: "#F57C00",
-    x: 3320,
-    y: 110,
-    w: 240,
-    h: 180,
-    rows: "153 periodos",
-    file: "outputs/macro/macro_divisas_mercado.parquet",
+    x: 3040,
+    y: 694,
+    w: 250,
+    h: 116,
+    rows: "152 meses",
+    file: "outputs/macro/macro_tipo_cambio_real.parquet",
     cols: [
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "usd_clp_promedio", type: "DOUBLE" },
-      { name: "usd_clp_cierre", type: "DOUBLE" },
-      { name: "var_mensual_usd_pct", type: "DOUBLE" },
-      { name: "usd_clp_volatilidad_anualizada_pct", type: "DOUBLE" },
-      { name: "eur_clp_cierre", type: "DOUBLE" },
-      { name: "tcr_general", type: "DOUBLE" },
-      { name: "tcr_5monedas", type: "DOUBLE" }
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "tipo_cambio_real_general_indice", type: "DOUBLE" },
+      { name: "tipo_cambio_real_5_monedas_indice", type: "DOUBLE" }
     ]
   },
   {
-    id: "macro_precios_actividad",
-    name: "macro.precios_actividad",
+    id: "macro_uf",
+    name: "macro.uf",
+    sector: "macro",
+    color: "#E65100",
+    x: 3330,
+    y: 820,
+    w: 250,
+    h: 98,
+    rows: "4.656 días",
+    file: "outputs/macro/macro_uf.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "uf_valor_clp", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_utm",
+    name: "macro.utm",
+    sector: "macro",
+    color: "#F57C00",
+    x: 3040,
+    y: 840,
+    w: 250,
+    h: 98,
+    rows: "153 meses",
+    file: "outputs/macro/macro_utm.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "utm_valor_clp", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_inflacion_ipc",
+    name: "macro.inflacion_ipc",
+    sector: "macro",
+    color: "#F57C00",
+    x: 3330,
+    y: 948,
+    w: 250,
+    h: 134,
+    rows: "152 meses",
+    file: "outputs/macro/macro_inflacion_ipc.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "ipc_indice", type: "DOUBLE" },
+      { name: "ipc_var_mensual_pct", type: "DOUBLE" },
+      { name: "ipc_var_anual_pct", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_imacec",
+    name: "macro.imacec",
+    sector: "macro",
+    color: "#F57C00",
+    x: 3040,
+    y: 968,
+    w: 250,
+    h: 170,
+    rows: "151 meses",
+    file: "outputs/macro/macro_imacec.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "imacec_empalmado_indice", type: "DOUBLE" },
+      { name: "imacec_no_minero_indice", type: "DOUBLE" },
+      { name: "imacec_minero_indice", type: "DOUBLE" },
+      { name: "imacec_comercio_indice", type: "DOUBLE" },
+      { name: "imacec_servicios_indice", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_pib_trimestral",
+    name: "macro.pib_trimestral",
     sector: "macro",
     color: "#FF9800",
-    x: 3040,
-    y: 320,
-    w: 240,
-    h: 180,
-    rows: "153 periodos",
-    file: "outputs/macro/macro_precios_actividad.parquet",
+    x: 3330,
+    y: 1112,
+    w: 250,
+    h: 98,
+    rows: "50 trimestres",
+    file: "outputs/macro/macro_pib_trimestral.parquet",
     cols: [
-      { name: "periodo", pk: true, type: "VARCHAR" },
-      { name: "uf_cierre", type: "DOUBLE" },
-      { name: "ipc_indice", type: "DOUBLE" },
-      { name: "ipc_var_anual", type: "DOUBLE" },
-      { name: "imacec_empalmado", type: "DOUBLE" },
-      { name: "cobre_spot_usd_lb", type: "DOUBLE" },
-      { name: "eee_ipc_11m", type: "DOUBLE" },
-      { name: "desvio_eee_11m_meta_bps", type: "DOUBLE" }
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "pib_encadenado_miles_mm_clp", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_mercado_laboral",
+    name: "macro.mercado_laboral",
+    sector: "macro",
+    color: "#F57C00",
+    x: 3040,
+    y: 1168,
+    w: 250,
+    h: 152,
+    rows: "152 meses",
+    file: "outputs/macro/macro_mercado_laboral.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "desocupacion_pct", type: "DOUBLE" },
+      { name: "ocupados_miles_personas", type: "DOUBLE" },
+      { name: "asalariados_miles_personas", type: "DOUBLE" },
+      { name: "fuerza_trabajo_miles_personas", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_cobre",
+    name: "macro.cobre",
+    sector: "macro",
+    color: "#E65100",
+    x: 3330,
+    y: 1240,
+    w: 250,
+    h: 116,
+    rows: "3.246 días",
+    file: "outputs/macro/macro_cobre.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "cobre_refinado_usd_por_libra", type: "DOUBLE" },
+      { name: "cobre_referencial_mensual_usd_por_libra", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_metales_preciosos",
+    name: "macro.metales_preciosos",
+    sector: "macro",
+    color: "#E65100",
+    x: 3040,
+    y: 1350,
+    w: 250,
+    h: 116,
+    rows: "3.174 días",
+    file: "outputs/macro/macro_metales_preciosos.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "oro_usd_por_onza_troy", type: "DOUBLE" },
+      { name: "plata_usd_por_onza_troy", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_reservas_internacionales",
+    name: "macro.reservas_internacionales",
+    sector: "macro",
+    color: "#F57C00",
+    x: 3330,
+    y: 1386,
+    w: 250,
+    h: 98,
+    rows: "152 meses",
+    file: "outputs/macro/macro_reservas_internacionales.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "reservas_internacionales_millones_usd", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_tasa_referencia_fed",
+    name: "macro.tasa_referencia_fed",
+    sector: "macro",
+    color: "#E65100",
+    x: 3040,
+    y: 1496,
+    w: 250,
+    h: 98,
+    rows: "3.313 días",
+    file: "outputs/macro/macro_tasa_referencia_fed.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "tasa_fed_funds_pct", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_deuda_publica_pct_pib",
+    name: "macro.deuda_publica_pct_pib",
+    sector: "macro",
+    color: "#FF9800",
+    x: 3330,
+    y: 1514,
+    w: 250,
+    h: 98,
+    rows: "49 trimestres",
+    file: "outputs/macro/macro_deuda_publica_pct_pib.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "deuda_bruta_gobierno_central_pct_pib", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_expectativas_inflacion",
+    name: "macro.expectativas_inflacion",
+    sector: "macro",
+    color: "#F57C00",
+    x: 3040,
+    y: 1624,
+    w: 250,
+    h: 116,
+    rows: "153 meses",
+    file: "outputs/macro/macro_expectativas_inflacion.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "expectativa_inflacion_ipc_11_meses_pct", type: "DOUBLE" },
+      { name: "expectativa_inflacion_ipc_23_meses_pct", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_expectativas_tpm",
+    name: "macro.expectativas_tpm",
+    sector: "macro",
+    color: "#F57C00",
+    x: 3330,
+    y: 1642,
+    w: 250,
+    h: 116,
+    rows: "153 meses",
+    file: "outputs/macro/macro_expectativas_tpm.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "expectativa_tpm_11_meses_pct", type: "DOUBLE" },
+      { name: "expectativa_tpm_23_meses_pct", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "macro_expectativas_operadores",
+    name: "macro.expectativas_operadores",
+    sector: "macro",
+    color: "#E65100",
+    x: 3040,
+    y: 1770,
+    w: 250,
+    h: 116,
+    rows: "237 días",
+    file: "outputs/macro/macro_expectativas_operadores.parquet",
+    cols: [
+      { name: "fecha", pk: true, type: "VARCHAR" },
+      { name: "periodo", type: "VARCHAR" },
+      { name: "expectativa_inflacion_12_meses_pct", type: "DOUBLE" },
+      { name: "expectativa_tpm_12_meses_pct", type: "DOUBLE" }
     ]
   },
   {
@@ -601,10 +956,10 @@ const ERD_TABLES = [
     name: "macro.series_catalogo",
     sector: "macro",
     color: "#FF9800",
-    x: 3040,
-    y: 560,
-    w: 240,
-    h: 180,
+    x: 3330,
+    y: 1788,
+    w: 250,
+    h: 170,
     rows: "51 series",
     file: "outputs/macro/macro_series_catalogo.parquet",
     cols: [
@@ -612,30 +967,12 @@ const ERD_TABLES = [
       { name: "serie_id", type: "VARCHAR" },
       { name: "nombre", type: "VARCHAR" },
       { name: "grupo", type: "VARCHAR" },
-      { name: "frecuencia", type: "VARCHAR" },
       { name: "unidad", type: "VARCHAR" },
-      { name: "ultima_fecha", type: "VARCHAR" }
+      { name: "frecuencia", type: "VARCHAR" },
+      { name: "titulo_bcch", type: "VARCHAR" }
     ]
   },
-  {
-    id: "macro_series",
-    name: "macro.series",
-    sector: "macro",
-    color: "#FF9800",
-    x: 3040,
-    y: 800,
-    w: 240,
-    h: 160,
-    rows: "Diaria / mensual / trimestral",
-    file: "outputs/macro/series/manifest.json",
-    cols: [
-      { name: "fecha", type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "clave", fk: true, type: "VARCHAR" },
-      { name: "serie_id", type: "VARCHAR" },
-      { name: "valor", type: "DOUBLE" }
-    ]
-  },
+  // <macro:fin>
   {
     id: "factoring_leasing_lista_entidades",
     name: "factoring_leasing.lista_entidades",
@@ -1084,8 +1421,13 @@ const ERD_LINKS = [
   { from: "fi_lista_entidades", to: "fi_pactos", key: "run_fondo" },
   { from: "securitizadoras_lista_entidades", to: "patrimonios_separados_lista_entidades", key: "rut_administradora (administración fiduciaria)" },
   { from: "securitizadoras_lista_entidades", to: "patrimonios_separados_balance", key: "rut = rut_administradora (cuerpo, sin dígito verificador)" },
-  { from: "macro_tasas_rendimientos", to: "macro_precios_actividad", key: "periodo (expectativas e inflación)" },
-  { from: "macro_series_catalogo", to: "macro_series", key: "clave" },
+  // <macro-links:inicio>
+  { from: "macro_curva_bonos_pesos", to: "macro_inflacion_implicita", key: "fecha (bono pesos − bono UF)" },
+  { from: "macro_curva_bonos_uf", to: "macro_inflacion_implicita", key: "fecha (bono pesos − bono UF)" },
+  { from: "macro_inflacion_ipc", to: "macro_expectativas_inflacion", key: "periodo (inflación efectiva vs esperada)" },
+  { from: "macro_tasas_corto_plazo", to: "macro_expectativas_tpm", key: "periodo (TPM efectiva vs esperada)" },
+  { from: "macro_dolar_observado", to: "macro_euro_observado", key: "fecha" },
+  // <macro-links:fin>
   { from: "bancos_lista_entidades", to: "bancos_balance", key: "codigo_institucion (código fuente CMF)" },
   { from: "bancos_lista_entidades", to: "bancos_resultados", key: "codigo_institucion (código fuente CMF)" },
   { from: "agf_lista_entidades", to: "agf_balance", key: "rut" },
