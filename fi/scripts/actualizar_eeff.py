@@ -448,6 +448,19 @@ def procesar(registro, estado, periodo, hoy, ultimo, deadline, hilos, fetcher, f
             cuenta[evento] += 1
             if r is not None:
                 estado[run] = r
+    # Una segunda vuelta acotada a los transitorios aislados: nunca resuelve
+    # ausencias por agotamiento de intentos ni vuelve a bajar el censo completo.
+    pendientes = [
+        (run, r["tipo_entidad"])
+        for run, r in registro.items()
+        if estado.get(run, {}).get("estado") == "pendiente"
+    ]
+    if pendientes and not freno.activo and time.monotonic() + 15 < deadline:
+        with ThreadPoolExecutor(max_workers=min(hilos, 3)) as ex:
+            for run, r, evento in ex.map(tarea, pendientes):
+                cuenta[f"reintento_{evento}"] += 1
+                if r is not None:
+                    estado[run] = r
     return dict(cuenta), freno.activo
 
 
@@ -582,7 +595,7 @@ def escribir_manifiestos(cfg, control):
             "total_records": sum(pq.ParquetFile(p).metadata.num_rows for p in rutas),
             "updated_at": _ahora(),
             "nota": "Filtrar contexto = 'PeriodoActual' para el cierre/acumulado actual; no sumar contextos ni monedas.",
-            "comparativos_excluidos": [
+            "contextos_excluidos": [
                 {
                     "periodo": per,
                     "run_fondo": run,
