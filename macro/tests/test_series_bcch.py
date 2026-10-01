@@ -62,8 +62,9 @@ class Pruebas(Base):
         self.assertEqual(cat.loc["oro", "titulo_bcch"], "Título F019.PPB.PRE.44.D")
         self.assertEqual(cat.loc["usd_clp", "observaciones"], 40)
         man = json.loads((self.raiz / "data_manifest.json").read_text())
-        self.assertIn("macro_series", {t["id"] for t in man["tables"]})
-        self.assertEqual(man["total_records"], 5 + 41 + len(sb.CATALOGO))
+        self.assertIn("macro_series_catalogo", {t["id"] for t in man["tables"]})
+        self.assertNotIn("macro_series", {t["id"] for t in man["tables"]})
+        self.assertEqual(man["total_records"], 5 + len(sb.CATALOGO))
         # Segunda corrida: consulta solo la ventana; la API "olvida" un día viejo y revisa uno.
         self.llamadas.clear()
         d2 = [(f, v) for f, v in d[-15:] if f != d[-12][0]]

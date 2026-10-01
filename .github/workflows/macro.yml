@@ -11,6 +11,7 @@ on:
     paths:
       - .github/workflows/macro.yml
       - macro/scripts/series_bcch.py
+      - macro/scripts/build_tablas_tematicas.py
   workflow_dispatch:
 
 permissions:
@@ -38,39 +39,21 @@ jobs:
           cache-dependency-path: macro/requirements.txt
       - name: Instalar dependencias macro
         run: python -m pip install -r macro/requirements.txt
-      # Estado validado de corridas anteriores que aún no llegó al repositorio (si el cache
-      # expiró, el script parte de los Parquet publicados del checkout).
-      - name: Recuperar checkpoint incremental
-        uses: actions/cache/restore@v4
-        with:
-          path: .local-data/checkpoint/macro
-          key: macro-checkpoint-${{ github.run_id }}
-          restore-keys: |
-            macro-checkpoint-
-      - name: Tablas mensuales (tasas, divisas, precios y actividad)
-        id: update
+      - name: Descargar series nativas BCCh (incremental)
         env:
           BCCH_EMAIL: ${{ secrets.USER_BCCH }}
           BCCH_PASSWORD: ${{ secrets.PASSWORD_BCCH }}
         run: |
           test -n "$BCCH_EMAIL" && test -n "$BCCH_PASSWORD" || { echo 'Faltan secrets USER_BCCH o PASSWORD_BCCH'; exit 1; }
-          python -m macro.scripts.daily_macro
-      - name: Guardar checkpoint validado
-        if: steps.update.outputs.checkpoint_changed == 'true'
-        uses: actions/cache/save@v4
-        with:
-          path: .local-data/checkpoint/macro
-          key: macro-checkpoint-${{ github.run_id }}
-      - name: Catálogo amplio de series (formato largo)
-        # Una serie que falla no bloquea a las demás ni a las tablas mensuales ya validadas.
-        if: always()
-        env:
-          BCCH_EMAIL: ${{ secrets.USER_BCCH }}
-          BCCH_PASSWORD: ${{ secrets.PASSWORD_BCCH }}
-        run: python -m macro.scripts.series_bcch
+          python -m macro.scripts.series_bcch
+      - name: Construir tablas temáticas y auditar
+        # Pivota las series nativas en las 23 tablas temáticas de la web. Si la
+        # auditoría falla no se publica nada (los Parquet quedan sin commit).
+        run: |
+          python -m macro.scripts.build_tablas_tematicas
+          python -m macro.scripts.audit_macro_bcch
       - name: Publicar en el repositorio
         id: commit
-        if: always()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -92,7 +75,7 @@ jobs:
               sleep $(( 15 + RANDOM % 20 ))
               continue
             fi
-            python -m macro.scripts.series_bcch --solo-data-manifest
+            python -m macro.scripts.build_tablas_tematicas --solo-data-manifest
             python scripts/build_download_catalog.py
             git add data_manifest.json docs/js/download_catalog.js
             git diff --cached --quiet || git commit -m "Macro BCCh: data_manifest"

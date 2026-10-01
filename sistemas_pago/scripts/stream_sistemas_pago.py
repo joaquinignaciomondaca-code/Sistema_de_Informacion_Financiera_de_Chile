@@ -55,13 +55,21 @@ def parse_num(val_str: str) -> float:
     except Exception:
         return 0.0
 
+def _macro_mensual(base_dir: str, tabla: str, columna: str, agregado: str) -> "pd.Series | None":
+    """Serie mensual (indexada por periodo) desde una tabla temática macro diaria.
+
+    agregado: "cierre" (último valor del mes) o "promedio"."""
+    ruta = os.path.join(base_dir, "docs", "outputs", "macro", f"{tabla}.parquet")
+    if not os.path.exists(ruta):
+        return None
+    df = pd.read_parquet(ruta, columns=["fecha", "periodo", columna]).dropna(subset=[columna]).sort_values("fecha")
+    g = df.groupby("periodo")[columna]
+    return g.last() if agregado == "cierre" else g.mean()
+
+
 def obtener_tc_map(base_dir: str):
-    macro_path = os.path.join(base_dir, "docs", "outputs", "macro", "macro_divisas_mercado.parquet")
-    if os.path.exists(macro_path):
-        df_fx = pd.read_parquet(macro_path)
-        col = "usd_clp_cierre" if "usd_clp_cierre" in df_fx.columns else "usd_clp_promedio"
-        return dict(zip(df_fx["periodo"], df_fx[col]))
-    return {}
+    tc = _macro_mensual(base_dir, "macro_dolar_observado", "dolar_observado_clp_por_usd", "cierre")
+    return tc.to_dict() if tc is not None else {}
 
 SISTEMAS_PAGO_CONFIG = [
     {
@@ -377,12 +385,10 @@ def extract_bcch_payment_stats(tc_map):
     if not rows:
         print("Generando series de sistemas de pago calibradas con Informe de Sistemas de Pago (ISiP) y macro existente...", flush=True)
         base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-        div_pq = os.path.join(base_dir, "docs", "outputs", "macro", "macro_divisas_mercado.parquet")
-        tas_pq = os.path.join(base_dir, "docs", "outputs", "macro", "macro_tasas_rendimientos.parquet")
-        if os.path.exists(div_pq) and os.path.exists(tas_pq):
-            df_div = pd.read_parquet(div_pq)
-            df_tas = pd.read_parquet(tas_pq)
-            df_m = pd.merge(df_div[["periodo", "usd_clp_promedio"]], df_tas[["periodo", "tpm"]], on="periodo", how="inner")
+        usd = _macro_mensual(base_dir, "macro_dolar_observado", "dolar_observado_clp_por_usd", "promedio")
+        tpm = _macro_mensual(base_dir, "macro_tasas_corto_plazo", "tpm_pct", "promedio")
+        if usd is not None and tpm is not None:
+            df_m = pd.merge(usd.rename("usd_clp_promedio").reset_index(), tpm.rename("tpm").reset_index(), on="periodo", how="inner")
             df_m = df_m[(df_m["periodo"] >= "2018-01") & (df_m["periodo"] <= "2026-06")].sort_values("periodo")
             for idx, r in df_m.iterrows():
                 per = r["periodo"]
