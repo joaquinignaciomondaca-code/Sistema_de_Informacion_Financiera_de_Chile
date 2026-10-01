@@ -27,6 +27,48 @@ La serie histórica está **pendiente de backfill**, no se presenta como ya carg
 Los metadatos detallan cada exclusión y la fuente/hash de cada documento aceptado.
 
 
+### Revisión de cobertura: rescatables y no rescatables (2026-10-01)
+
+La primera publicación contiene **142 FIRES** y **766 FINRE**: no se omite una categoría.
+De los 765 RUN sin envío de junio, **679** figuran como no vigentes en la copia local y
+**86** como vigentes. En estos últimos, la identificación CMF declara inicio posterior
+al cierre para **31**, no informa fecha de inicio para **48** y muestra **7** en liquidación.
+Una fecha vacía no demuestra que el fondo nunca haya operado, ni la liquidación prueba
+por sí sola una exención de reportar.
+
+Se contrastaron las cuatro listas oficiales y **768** casos (765 ausencias más 3 altas
+fuera de la copia local), consultando **ambos tipos** y **VI/NV** cuando corresponde.
+**Ningún enlace FIEF de junio se recupera cambiando el tipo o la vigencia.** El registro
+oficial observado contiene **1.682 RUN únicos** en 1.683 filas: el RUN 9251 aparece en VI
+y NV simultáneamente, sin cambiar de categoría. El diagnóstico conserva esa ambigüedad
+sin duplicar el fondo ni inventarle una vigencia.
+
+**Padrón local pendiente de actualización:** falta incorporar los RUN **10926** (AMERIS
+Dover Street XII), **10927** (Neorentas Diecinueve) y **10928** (Principal BC XII), todos
+FINRE. Sus fichas tampoco muestran EEFF para junio; incorporarlos al maestro no significa
+crear tres balances de cero. El censo publicado de 1.679 corresponde a la copia local
+anterior a estas altas, no se presenta como el registro CMF actualizado.
+
+Se corrigió además la consulta de los no vigentes: el extractor usa `vig=NV` según el
+padrón, en lugar de pedir siempre `VI`; los cambios de tipo/vigencia invalidan la caché
+pertinente. En la muestra revisada esto corrige la identificación de la ficha, **no añade
+importes ni recupera nuevos estados de junio**. Los datos ya publicados se mantienen.
+
+Informe y evidencia por RUN, URL, fecha y SHA-256:
+[`revisión de cobertura`](../docs/notas/revision_cobertura_fi_2026-10-01.md) y
+[`JSON de evidencia`](../docs/notas/revision_cobertura_fi_2026-10-01.json).
+Las cuatro listas originales comprimidas y sus hashes quedan como fixtures de regresión.
+
+```bash
+python -m fi.scripts.revisar_cobertura_eeff                  # cruce local, sin red
+python -m fi.scripts.revisar_cobertura_eeff --red            # listas y ausencias en ambos tipos
+python -m fi.scripts.revisar_cobertura_eeff --red --reanudar # solo reusa respuestas con hash válido
+```
+
+El workflow de revisión es **de solo lectura**, sin horario ni permisos de publicación.
+La corrección de `vig` tiene pruebas de conservación/caché; el conjunto FI suma **97**
+pruebas, y la batería unitaria del repositorio comprobada suma **440**.
+
 ### Fuente verificada
 
 Cada ficha CMF (`entidad.php?tipoentidad=FIRES|FINRE&pestania=29&mm=MM&aa=AAAA&tipo=I&tipo_norma=IFRS`)

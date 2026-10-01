@@ -376,16 +376,102 @@ class PoliticaYCatalogosTest(unittest.TestCase):
             p.write_text(
                 json.dumps(
                     [
-                        {"run_fondo": "7002", "tipo_entidad": "FINRE"},
-                        {"run_fondo": "9919", "tipo_entidad": "FIRES"},
+                        {
+                            "run_fondo": "7002",
+                            "tipo_entidad": "FINRE",
+                            "estado_vigencia": "Vigente",
+                        },
+                        {
+                            "run_fondo": "9919",
+                            "tipo_entidad": "FIRES",
+                            "estado_vigencia": "No Vigente",
+                        },
                     ]
                 )
             )
             self.assertEqual(set(m.cargar_registro(cfg)), {"7002", "9919"})
+            self.assertEqual(m.cargar_registro(cfg)["7002"]["vig"], "VI")
+            self.assertEqual(m.cargar_registro(cfg)["9919"]["vig"], "NV")
             p.write_text(
-                json.dumps([{"run_fondo": "7002", "tipo_entidad": "FINRE"}] * 2)
+                json.dumps(
+                    [
+                        {
+                            "run_fondo": "7002",
+                            "tipo_entidad": "FINRE",
+                            "estado_vigencia": "Vigente",
+                        }
+                    ]
+                    * 2
+                )
             )
             with self.assertRaises(ValueError):
+                m.cargar_registro(cfg)
+
+    def test_ruta_preserva_tipo_y_vigencia_declarados(self):
+        for tipo in m.TIPOS:
+            for vig in ("VI", "NV"):
+                q = parse_qs(urlsplit(m.url_ficha("7002", tipo, "2026-06", vig)).query)
+                self.assertEqual(q["tipoentidad"], [tipo])
+                self.assertEqual(q["vig"], [vig])
+                self.assertEqual(q["aa"], ["2026"])
+                self.assertEqual(q["mm"], ["06"])
+        with self.assertRaises(ValueError):
+            m.url_ficha("7002", "FINRE", "2026-06", "desconocida")
+
+    def test_resolver_no_vigente_no_pide_solo_vi(self):
+        llamadas = []
+        r, _evento = m.resolver(
+            "7002", "FINRE", "2026-06", None, proveedor(llamadas=llamadas), vig="NV"
+        )
+        self.assertEqual(r["estado"], "ok")
+        self.assertEqual(r["vigencia_consultada"], "NV")
+        self.assertEqual(parse_qs(urlsplit(llamadas[0]).query)["vig"], ["NV"])
+        self.assertIn("&vig=NV&", r["fuente_ficha"])
+
+    def test_cambio_vigencia_no_reusa_cotejo_de_otra_ficha(self):
+        r, _ = m.resolver("7002", "FINRE", "2026-06", None, proveedor())
+        llamadas = []
+        nuevo, _ = m.resolver(
+            "7002", "FINRE", "2026-06", r, proveedor(llamadas=llamadas), vig="NV"
+        )
+        self.assertEqual(len(llamadas), 2)
+        self.assertIn("&vig=NV&", nuevo["fuente_ficha"])
+        self.assertEqual(nuevo["sha256"], r["sha256"])
+
+    def test_censo_revisa_cambio_a_nv_aunque_cache_sea_del_mismo_dia(self):
+        from datetime import datetime
+
+        r, _ = m.resolver("7002", "FINRE", "2026-06", None, proveedor())
+        registro = {"7002": {"run": "7002", "tipo_entidad": "FINRE", "vig": "NV"}}
+        estado = {"7002": r}
+        llamadas = []
+        hoy = (
+            datetime.fromisoformat(r["ultima_revision_utc"])
+            .astimezone(m.ZoneInfo("America/Santiago"))
+            .date()
+        )
+        m.procesar(
+            registro,
+            estado,
+            "2026-06",
+            hoy,
+            "2026-06",
+            m.time.monotonic() + 60,
+            1,
+            proveedor(llamadas=llamadas),
+            False,
+        )
+        self.assertEqual(estado["7002"]["vigencia_consultada"], "NV")
+        self.assertTrue(llamadas)
+
+    def test_registro_sin_vigencia_no_adivina_vi(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            cfg = m.Config(raiz=Path(tmp))
+            cfg.docs.mkdir(parents=True)
+            (cfg.docs / "fi_registro_fondos_universo.json").write_text(
+                json.dumps([{"run_fondo": "7002", "tipo_entidad": "FINRE"}])
+            )
+            with self.assertRaisesRegex(ValueError, "vigencia inválida"):
                 m.cargar_registro(cfg)
 
     def test_catalogos_js_validos_dos_carpetas_campos_y_chips_sin_dobles_sumas(self):

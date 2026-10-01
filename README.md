@@ -18,7 +18,7 @@ Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Centra
 | Tablas publicadas | **75** Parquet · 11.307.590 filas (al 2026-10-01) · 277 MB |
 | Consultas sugeridas listas para usar | **146** |
 | Actualización | **11 flujos inventariados** en GitHub Actions |
-| Verificación | **7 suites** de auditoría + **351** pruebas unitarias de EEFF (58 de FI) |
+| Verificación | **7 suites** de auditoría + **440** pruebas unitarias (97 de FI) |
 
 ---
 
