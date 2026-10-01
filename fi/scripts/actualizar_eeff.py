@@ -148,11 +148,29 @@ def cargar_registro(cfg):
             raise ValueError("identidad/tipo inválidos en el registro FI")
         if run in out:
             raise ValueError(f"RUN duplicado en el registro FI: {run}")
-        out[run] = {"run": run, "tipo_entidad": tipo}
+        vigencia = r.get("estado_vigencia")
+        if vigencia not in ("Vigente", "No Vigente"):
+            raise ValueError(
+                f"vigencia inválida o no declarada en el registro FI: {run}"
+            )
+        out[run] = {
+            "run": run,
+            "tipo_entidad": tipo,
+            "vig": "VI" if vigencia == "Vigente" else "NV",
+        }
     if not out:
         raise ValueError("registro FI vacío")
     # No usar vida observada de cartera como vida legal: omitiría los FI sin cartera.
     return out
+
+
+def url_ficha(run, tipo, periodo, vig="VI"):
+    if tipo not in TIPOS or vig not in ("VI", "NV"):
+        raise ValueError("tipo/vigencia de ficha FI inválidos")
+    xml.fin_periodo(periodo)
+    return FICHA.format(run=run, tipo=tipo, anio=periodo[:4], mes=periodo[5:]).replace(
+        "&vig=VI&", f"&vig={vig}&"
+    )
 
 
 def leer_json(ruta, defecto=None):
@@ -317,17 +335,18 @@ def pedir_validado(url, parser, fetcher):
             time.sleep((2, 5)[intento])
 
 
-def resolver(run, tipo, periodo, previo, fetcher=_get, forzar=False):
+def resolver(run, tipo, periodo, previo, fetcher=_get, forzar=False, vig="VI"):
     base = {
         "run": run,
         "tipo_entidad": tipo,
+        "vigencia_consultada": vig,
         "periodo": periodo,
         "ultima_revision_utc": _ahora(),
         "version_parser": xml.VERSION_PARSER,
     }
     archivo = None
     try:
-        ficha_url = FICHA.format(run=run, tipo=tipo, anio=periodo[:4], mes=periodo[5:])
+        ficha_url = url_ficha(run, tipo, periodo, vig)
         ficha, (estado, archivo) = pedir_validado(
             ficha_url, lambda b: xml.clasificar_ficha(b, periodo), fetcher
         )
@@ -343,6 +362,8 @@ def resolver(run, tipo, periodo, previo, fetcher=_get, forzar=False):
             and previo.get("estado") == "ok"
             and previo.get("archivo") == archivo
             and previo.get("version_parser") == xml.VERSION_PARSER
+            and previo.get("tipo_entidad") == tipo
+            and previo.get("fuente_ficha") == ficha_url
             and not forzar
         ):
             return {
@@ -413,6 +434,8 @@ def procesar(registro, estado, periodo, hoy, ultimo, deadline, hilos, fetcher, f
         if (
             r.get("estado") in (None, "pendiente", "rechazado")
             or r.get("version_parser") != xml.VERSION_PARSER
+            or r.get("tipo_entidad") != registro[run]["tipo_entidad"]
+            or r.get("vigencia_consultada", "VI") != registro[run].get("vig", "VI")
         ):
             return True
         if forzar:
@@ -430,18 +453,20 @@ def procesar(registro, estado, periodo, hoy, ultimo, deadline, hilos, fetcher, f
         return revision != hoy and toca_refresco(run, periodo, hoy, ultimo)
 
     pedir = [
-        (run, r["tipo_entidad"])
+        (run, r["tipo_entidad"], r.get("vig", "VI"))
         for run, r in sorted(registro.items(), key=lambda p: int(p[0]))
         if necesita(run)
     ]
     freno, cuenta = Frenazo(), Counter()
 
     def tarea(t):
-        run, tipo = t
+        run, tipo, vig = t
         if time.monotonic() >= deadline or freno.activo:
             return run, None, "sin_tiempo"
         try:
-            r, evento = resolver(run, tipo, periodo, estado.get(run), fetcher, forzar)
+            r, evento = resolver(
+                run, tipo, periodo, estado.get(run), fetcher, forzar, vig
+            )
         except (OSError, ValueError) as e:
             r, evento = (
                 {
@@ -470,7 +495,7 @@ def procesar(registro, estado, periodo, hoy, ultimo, deadline, hilos, fetcher, f
     # Una segunda vuelta acotada a los transitorios aislados: nunca resuelve
     # ausencias por agotamiento de intentos ni vuelve a bajar el censo completo.
     pendientes = [
-        (run, r["tipo_entidad"])
+        (run, r["tipo_entidad"], r.get("vig", "VI"))
         for run, r in registro.items()
         if estado.get(run, {}).get("estado") == "pendiente"
     ]

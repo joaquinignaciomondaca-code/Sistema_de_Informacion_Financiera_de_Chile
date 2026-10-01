@@ -1,5 +1,9 @@
 # Revisión de cobertura de fondos de inversión — 2026-06
 
+**Conclusión:** no falta una categoría completa. Se publican rescatables y no rescatables, y el contraste de **768 casos** no recuperó estados de junio intercambiando FIRES/FINRE. Sí hay **tres fondos del registro actual fuera de la copia local del padrón** y una **serie histórica todavía pendiente**. No se agregaron importes sin fuente ni se fabricaron estados vacíos.
+
+**Base del conteo:** los 1.679 RUN de la publicación inicial usan la copia del padrón cuyo proceso de carteras declara actualización `2026-09-28T17:20:36+00:00`; el contraste CMF de esta revisión encontró 1.682 RUN únicos. Las URL y fechas de consulta están en el JSON adjunto. La vigencia de la tabla siguiente es la de esa copia local, no una certificación de vigencia legal a junio ni un padrón actualizado hoy.
+
 ## Rescatables y no rescatables
 
 Los datos publicados incluyen **FIRES (rescatables)** y **FINRE (no rescatables)**.
@@ -155,3 +159,13 @@ Una fecha de inicio vacía significa **no informada**, no prueba que el fondo nu
 - `sin_ficha` en la categoría alternativa no equivale a `sin_informacion` del cierre. Desafíos, cortes y errores quedan pendientes.
 - La vida observada de carteras no se usa como prueba de vida legal ni para omitir fondos de las consultas.
 - Prioridad pendiente: completar el histórico, mantener actualizado el padrón y resolver las exclusiones y las ausencias con inicio anterior al cierre sin inventar cifras.
+
+## Cambios de código y trabajo pendiente
+
+- **Corregido:** la extracción de EEFF toma `VI`/`NV` del padrón en vez de consultar siempre `VI`. Cambios de tipo o vigencia invalidan la caché pertinente; no se reutiliza el cotejo de una ficha distinta.
+- **Añadido:** revisor reproducible y workflow de solo lectura para los dos tipos, las cuatro listas, fechas de operación, altas y ambigüedades. Los originales comprimidos de las listas permiten reproducir el solapamiento del RUN 9251 y comprobar hashes sin red.
+- **Verificado:** 97 pruebas FI y 440 pruebas unitarias del repositorio aprobadas; 35.570 identidades de los datos publicados, sin fallas. Las cantidades publicadas siguen siendo 908 fondos, 66.864 filas de balance y 97.860 de resultados.
+- **Pendiente:** sincronizar los RUN 10926, 10927 y 10928 en el maestro/censo local, completar la historia disponible y resolver las seis exclusiones de fuente. Las tres altas están identificadas en el diagnóstico, **no se presentan como ya incorporadas a los datos del sitio**.
+- No se interpretan los 48 inicios no informados como evidencia suficiente de que nunca hubo operaciones. Para estos fondos solo se confirmó que sus fichas, en ambos tipos, no enlazan FIEF para el cierre solicitado.
+
+El flujo temporal utilizado para recuperar evidencia desde Actions se retiró. La revisión no introdujo permisos de publicación de datos ni modificó los Parquet financieros.
