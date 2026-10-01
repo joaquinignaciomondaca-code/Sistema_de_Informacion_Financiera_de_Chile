@@ -4,7 +4,7 @@
  * sin navegador: se carga el script en un contexto Node con fetch, document y
  * window emulados, y se comprueba el comportamiento de registerSemanticViews:
  *
- *   * las 52 vistas semánticas y sus alias de compatibilidad se crean todas,
+ *   * todas las vistas semánticas (según SEMANTIC_VIEWS) y sus alias de compatibilidad se crean todas,
  *   * los Parquet se registran una sola vez aunque varias vistas los compartan,
  *   * el SQL generado coincide con el fichero real de cada vista (el mismo
  *     arnés de scripts/audit_consultas_sugeridas.py debe poder ejecutarlo),
@@ -74,6 +74,9 @@ contexto.window.DuckDBClient = null;
 vm.createContext(contexto);
 
 let fuente = fs.readFileSync(CLIENTE, "utf8");
+// Conteos esperados derivados del propio catálogo de vistas (no literales a mano).
+const N_VISTAS = (fuente.match(/\{\s*name:\s*"[a-z0-9_]+"\s*,\s*(?:file|manifest):/g) || []).length;
+const N_MANIFIESTOS = (fuente.match(/\{\s*name:\s*"[a-z0-9_]+"\s*,\s*manifest:/g) || []).length;
 // No se instancia el motor de verdad: el script termina creando
 // window.DuckDBClient = new DuckDBClient(); y eso dispararía init() sobre
 // archivos de red. Se corta ahí y se recupera la clase para probarla.
@@ -96,12 +99,12 @@ vm.runInContext(fuente.slice(0, corte) + "\nglobalThis.__DuckDBClient = DuckDBCl
   // 1) Arranque completo con todos los manifiestos presentes.
   await cliente.registerSemanticViews();
   const principales = createdViews.filter((s) => s.includes("read_parquet"));
-  check("se crean las 52 vistas con read_parquet", principales.length === 52, `${principales.length}`);
+  check(`se crean las ${N_VISTAS} vistas con read_parquet`, principales.length === N_VISTAS, `${principales.length}`);
   check("no hay vistas no disponibles con manifiestos sanos", cliente.unavailableViews.length === 0,
     cliente.unavailableViews.join(", "));
   const alias = createdViews.length - principales.length;
   check("se crean los 19 alias de compatibilidad", alias === 19, `${alias}`);
-  check("los manifiestos se piden por red", fetchCalls.manifiestos >= 30, `${fetchCalls.manifiestos}`);
+  check("los manifiestos se piden por red", fetchCalls.manifiestos >= N_MANIFIESTOS, `${fetchCalls.manifiestos}`);
   // 2) El SQL de cada vista apunta a ficheros que existen en docs/.
   const rutasEnSql = new Set();
   for (const sql of principales) {
@@ -145,7 +148,7 @@ vm.runInContext(fuente.slice(0, corte) + "\nglobalThis.__DuckDBClient = DuckDBCl
     cliente2.unavailableViews.length === 1 && cliente2.unavailableViews[0] === "fi_bienes_raices",
     JSON.stringify(cliente2.unavailableViews));
   check("las demás vistas siguen creadas",
-    vistas3.filter((s) => s.includes("read_parquet")).length === 51,
+    vistas3.filter((s) => s.includes("read_parquet")).length === N_VISTAS - 1,
     `${vistas3.filter((s) => s.includes("read_parquet")).length}`);
   contexto.fetch = fetchReal;
 
