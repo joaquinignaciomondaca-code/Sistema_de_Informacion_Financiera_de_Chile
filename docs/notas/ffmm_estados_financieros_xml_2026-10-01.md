@@ -289,5 +289,11 @@ baja de nuevo solo los XML cuyo nombre cambió (reenvío autorizado, queda en `r
 ilegibles se reintentan en cada corrida. Si la CMF cambia el formato (más de 2 % de ilegibles) o los balances descuadran en
 bloque, la serie no se publica y la corrida sale en rojo.
 
+**Verificación tras la republicación** (tercera corrida del mismo día, 10 min, con la caché y el DV corregido): 7.891 fondo-años,
+0 ilegibles, 0 pendientes, 0 reediciones; `run_fondo_dv` coincide con `rut_fondo_completo` del registro oficial de la CMF en los
+1.124 fondos (antes, el fondo 8011 aparecía con «8011-2» en un año); los 85 avisos de DV quedaron con el texto nuevo. La auditoría
+de CI sobre ese estado (catálogo, vocabulario, web completa, RUT, automatización, cuadratura histórica con la serie de fondos
+mutuos y las 140 consultas sugeridas ejecutadas con DuckDB) pasa sin hallazgos.
+
 **Pendiente (fases 2 y 3 de §7):** estado de cambios del activo neto por serie y flujo de efectivo (los 9 archivos con flujo
 indirecto usan otros códigos), y fondos de inversión (`FIEF`, trimestral).
