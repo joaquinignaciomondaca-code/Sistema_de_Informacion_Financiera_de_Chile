@@ -1,6 +1,7 @@
 """Descarga masiva en cuarentena; pruebas sin red ni escrituras en el sitio."""
 import importlib.util
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 import tempfile
 from types import SimpleNamespace
@@ -240,6 +241,102 @@ class BackfillTests(unittest.TestCase):
             self.assertEqual(b.cuerpo(meta['rut']), body)
             self.assertTrue(meta['nombre'].strip())
             self.assertTrue(meta['segmento'].strip())
+
+class _Reloj(datetime):
+    """`datetime` con un `now()` controlado: la prueba decide cuándo «se descargó» cada cosa."""
+    ahora = datetime(2027, 3, 1, 12, 0, tzinfo=timezone.utc)
+
+    @classmethod
+    def now(cls, tz=None):
+        return cls.ahora
+
+
+class ReedicionCmfTests(unittest.TestCase):
+    """La CMF reedita cierres viejos; la caché por trimestre no debe dejarlos viejos para siempre."""
+
+    @staticmethod
+    def _indice(actualizado=''):
+        fecha = f'(actualizado: {actualizado})' if actualizado else ''
+        return (f'<html><p><a href="ver_archivo.php?inicio=202206&termino=202206">2022</a></p>'
+                f'<p>{fecha}</p></html>').encode()
+
+    def setUp(self):
+        self.real_datetime = b.datetime
+        b.datetime = _Reloj
+        _Reloj.ahora = datetime(2027, 3, 1, 12, 0, tzinfo=timezone.utc)   # cada prueba parte igual
+        self.addCleanup(setattr, b, 'datetime', self.real_datetime)
+
+    def _entorno(self, tmp):
+        out = Path(tmp)
+        args = SimpleNamespace(out=out, catalog=out / 'catalog.json', batch=5)
+        args.catalog.write_text(json.dumps([{'rut': '96655860-1', 'segmento': 'Factoring',
+                                             'razon_social': 'FACTORING SECURITY S.A.'}]))
+        estado = {'indice': self._indice(), 'fallar': False}
+        descargas = []
+
+        def fetch(url):
+            if url == b.INDEX:
+                return estado['indice']
+            descargas.append(url)
+            return b'<html>CMF 500</html>' if estado['fallar'] else fixture(period='202206')
+        return out, args, estado, descargas, fetch
+
+    def test_el_trimestre_solo_se_baja_otra_vez_si_la_cmf_lo_reedito_despues_de_la_descarga(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out, args, estado, descargas, fetch = self._entorno(tmp)
+            _Reloj.ahora = datetime(2027, 3, 1, 12, 0, tzinfo=timezone.utc)
+            self.assertEqual(b.run(args, fetch), 0)
+            self.assertEqual(len(descargas), 1)
+
+            # Sin fecha en el índice, o con una anterior a la descarga: se reutiliza la caché.
+            b.run(args, fetch)
+            estado['indice'] = self._indice('15/02/2027 10:00')
+            b.run(args, fetch)
+            self.assertEqual(len(descargas), 1)
+            self.assertEqual(json.loads((out / 'resumen.json').read_text())['periodos_reeditados_cmf'], [])
+
+            # La CMF reedita el 02/03 a las 10:00 (13:00 UTC), después de la descarga guardada.
+            _Reloj.ahora = datetime(2027, 3, 2, 15, 0, tzinfo=timezone.utc)
+            estado['indice'] = self._indice('02/03/2027 10:00')
+            self.assertEqual(b.run(args, fetch), 0)
+            self.assertEqual(len(descargas), 2)
+            self.assertEqual(json.loads((out / 'resumen.json').read_text())['periodos_reeditados_cmf'], ['202206'])
+            meta = json.loads((out / 'periodos/202206/_complete.json').read_text())
+            self.assertEqual(meta['fecha_descarga_utc'], '2027-03-02T15:00:00+00:00')
+
+            # Ya refrescado: la corrida siguiente no lo baja de nuevo.
+            b.run(args, fetch)
+            self.assertEqual(len(descargas), 2)
+            self.assertEqual(json.loads((out / 'resumen.json').read_text())['periodos_reeditados_cmf'], [])
+
+    def test_una_reedicion_que_no_se_pudo_bajar_deja_la_serie_incompleta_sin_perder_lo_guardado(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out, args, estado, descargas, fetch = self._entorno(tmp)
+            self.assertEqual(b.run(args, fetch), 0)
+            antes = len(b.pd.read_parquet(out / 'periodos/202206/balance.parquet'))
+            _Reloj.ahora = datetime(2027, 3, 2, 15, 0, tzinfo=timezone.utc)
+            estado['indice'] = self._indice('02/03/2027 10:00')
+            estado['fallar'] = True
+            b.run(args, fetch)
+            resumen = json.loads((out / 'resumen.json').read_text())
+            # Fail-closed: con un cierre vencido y sin refrescar, no se declara completa la serie.
+            self.assertEqual(resumen['pendientes'], ['202206'])
+            self.assertEqual(resumen['estado_global'], 'parcial_con_errores_sin_publicar')
+            # Y la copia anterior sigue ahí para el reintento.
+            self.assertEqual(len(b.pd.read_parquet(out / 'periodos/202206/balance.parquet')), antes)
+
+    def test_valid_cached_ignora_fechas_si_no_hay_fecha_de_descarga(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            out, args, estado, descargas, fetch = self._entorno(tmp)
+            b.run(args, fetch)
+            marcador = out / 'periodos/202206/_complete.json'
+            meta = json.loads(marcador.read_text())
+            meta.pop('fecha_descarga_utc')
+            marcador.write_text(json.dumps(meta))
+            digest = meta['sha256_catalogo']
+            reedicion = datetime(2099, 1, 1, tzinfo=timezone.utc)
+            self.assertTrue(b.valid_cached(out, '202206', digest, reedicion))
+
 
 if __name__ == '__main__':
     unittest.main()
