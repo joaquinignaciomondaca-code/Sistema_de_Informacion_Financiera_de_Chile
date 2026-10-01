@@ -710,7 +710,7 @@ class _Ficha(HTMLParser):
         self.textos.append(data)
 
 
-def clasificar_ficha(raw: bytes) -> tuple[str, str | None]:
+def clasificar_ficha(raw: bytes, periodo: str | None = None) -> tuple[str, str | None]:
     p = _Ficha()
     try:
         p.feed(decodificar(raw))
@@ -724,6 +724,17 @@ def clasificar_ficha(raw: bytes) -> tuple[str, str | None]:
         c for c in unicodedata.normalize("NFKD", texto) if not unicodedata.combining(c)
     )
     texto = " ".join(texto.split())
+    ausencia_fechada = re.search(
+        r"no existe informacion de la entidad para el periodo (\d{4})/(03|06|09|12)\b",
+        texto,
+    )
+    if ausencia_fechada:
+        cierre = "-".join(ausencia_fechada.groups())
+        if periodo is not None and cierre != periodo:
+            raise ErrorTransitorio(
+                f"la ausencia declarada es de {cierre}, no de {periodo}"
+            )
+        return "sin_informacion", None
     if "no existe informacion de la entidad para el periodo senalado" in texto:
         return "sin_informacion", None
     if "informacion financiera" in texto:

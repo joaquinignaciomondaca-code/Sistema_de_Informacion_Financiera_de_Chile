@@ -302,6 +302,14 @@ class FichaYCotejoTest(unittest.TestCase):
         with self.assertRaises(m.ErrorTransitorio):
             m.clasificar_ficha(externo)
 
+    def test_ausencia_fechada_real_fi_y_rechazo_de_otro_periodo(self):
+        pagina = b"<html>INFORMACION FINANCIERA. No existe informacion de la entidad para el periodo 2026/06. Verifique parametros.</html>"
+        self.assertEqual(
+            m.clasificar_ficha(pagina, "2026-06"), ("sin_informacion", None)
+        )
+        with self.assertRaises(m.ErrorTransitorio):
+            m.clasificar_ficha(pagina, "2026-03")
+
     def test_reenvio_el_mas_reciente_por_fecha_no_correlativo(self):
         a = "FIEF2026999999_20260101_100000_7002.xml"
         b = "FIEF2026000001_20260901_100000_7002.xml"
