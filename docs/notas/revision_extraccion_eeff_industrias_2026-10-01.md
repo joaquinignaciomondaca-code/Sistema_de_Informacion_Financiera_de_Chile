@@ -10,6 +10,56 @@ publicados** (no sobre lo que el extractor dice que hizo). Todo número de este 
 `docs/outputs/**` tal como está en el repositorio. No se pudo descargar la CMF desde este entorno
 (TLS cerrado; ya documentado en `docs/notas/fuentes_xml_por_industria.md`).
 
+
+---
+
+## 0. Seguimiento: estado de los hallazgos al 2026-10-01 (posterior a esta revisión)
+
+Las secciones 1 a 5 describen el estado **en el momento de la revisión** y se conservan como
+registro. Esta sección dice qué pasó después con cada hallazgo, con dónde mirarlo.
+
+| # | Hallazgo | Estado | Dónde |
+| :-- | :--- | :--- | :--- |
+| F1 | Dos extractores, convenciones distintas | **Parcial** | Parseo compartido en `pipelines/auto/ifrs_txt.py`; FL ya tiene `orden` (esquema v2, se publica en su próxima corrida) y cuadratura. Siguen distintos, a propósito (cambiarlos rompería consultas ya guardadas): `tipo_balance` (`I`/`C` literal en FL; `individual`/`consolidado` en el resto) y los nombres de columna (`valor_archivo`, `moneda_archivo`, `repeticion_contexto`). |
+| F2 | Se publica el 18 % de la fuente | **Abierto, por diseño** | `ifrs_sondeo.yml` (día 5 de cada mes) y `scripts/sondear_ifrs_sectores.py` miden lo que se descarta. En una muestra en vivo del archivo (2026-10-01) se ven emisoras no financieras (CGE, Cencosud Shopping, Watt's, Aguas de Antofagasta…): ampliar industrias es una decisión de alcance, no un arreglo. |
+| F3 | La compuerta se apaga en silencio | **Resuelto** | `cuadratura.COBERTURA_MINIMA = 0,90` (otras notas dicen 95 %; el valor vigente es 90 %) y glosas ampliadas. También en corredoras (antes no pasaba `balances_totales`) y en el publicador de FL. |
+| F4 | Resultados sin validar | **Resuelto** para AGF, securitizadoras, CCAF y FL | `verificar_resultados_ifrs` / `verificar_resultados_fl`. Corredoras y banca no tienen identidades de resultados propias (banca coteja `590000000` y `594000000` contra el XLSX). |
+| F5 | La historia nunca pasó por la compuerta | **Resuelto** | `scripts/auditar_eeff_ifrs.py` en `web_audit.yml`; desde 2026-10-01 incluye corredores y agentes (5 series). |
+| F6 | README promete auditoría de FL | **Resuelto** | La auditoría anterior y, además, una compuerta en `publish_backfill.py` antes de escribir. |
+| F7 | Duplicidades en `SUM(valor)` | **Resuelto** (documentado) | Diccionario y consultas sugeridas. |
+| F8 | `escribir()` podía borrar un trimestre | **Resuelto** | `publicar_sector()`: guarda por tabla. |
+| F9 | Unidades dispares | **Abierto** | Pesos en IFRS/FL/banca, miles en corredoras y patrimonios; declarado en cada diccionario, sin columna `unidad` normalizada. |
+| F10 | Cobertura | **Resuelto** | `cobertura()` en manifiestos y diccionario. |
+| F11 | Sin pruebas unitarias | **Resuelto** | 35 pruebas de `ifrs_sectores`, 19 nuevas de corredoras, 6 de etiquetas del menú. Además **se cablearon en CI**: antes ni `test_actualizar` ni `test_roundtrip_publicado` corrían en ningún workflow. |
+| F12 | Detalles del parseo | **Parcial** | La taxonomía ya entra en la clave de `orden`. Un cierre de más de 150 días **se relee si la CMF lo reedita** (ver abajo). El tope de altas por patrón de nombre sigue abierto. |
+
+### Hallazgos posteriores a la revisión
+
+1. **Cierres reeditados por la CMF.** El índice muestra «(actualizado: dd/mm/aaaa hh:mm)» junto
+   a cada archivo y la CMF reedita cierres viejos (en 2026: dic-2025 el 26/08 y mar/jun/sep-2025 el
+   27/04). `pipelines/auto/ifrs_txt.actualizaciones_indice` lee esa fecha y, si es posterior a la
+   última lectura, `ifrs_sectores/actualizar.py` y `backfill_ifrs.py` vuelven a bajar el trimestre
+   aunque esté cerrado. Si la reedición no pasa las compuertas, se conserva lo publicado y se
+   avisa sin dejar la corrida en rojo. **Corredoras sigue sin esa relectura**: su informe no trae
+   fecha de actualización.
+2. **Publicación contra la rama.** FL y banca incluían `data_manifest.json` en su commit de datos;
+   cuando otro publicador reescribía esa lista entre medio, el `cherry-pick`/`rebase` chocaba
+   (y reintentar no lo arreglaba: el conflicto persiste mientras esa edición esté en la rama) y la
+   corrida terminaba en «8 intentos por contención». Reproducido con el historial
+   real de `main` (el commit de FL contra la cabeza que dejó el bot de IFRS: conflicto único en
+   `data_manifest.json`). Ahora esos dos workflows siguen el patrón de los demás publicadores: el
+   commit lleva solo datos y lo compartido se regenera sobre la cabeza vigente (`publish_backfill.py
+   --solo-catalogos`, `publish_cmf_bank_period.py --solo-data-manifest`).
+3. **Pruebas.** Una prueba de `ifrs_sectores` afirmaba que 202606 «sigue abierto a 150 días»: pasaba
+   hasta fines de noviembre de 2026 y habría empezado a fallar, bloqueando la publicación en cuanto
+   se cablearan las pruebas. Ahora fija la fecha de la corrida.
+4. **Banca.** Los cuatro importes de B1/B2 son moneda no reajustable, reajustable por IPC,
+   reajustable por tipo de cambio y extranjera (su suma es el total); R1 es acumulado del ejercicio;
+   B2 trae solo ~8 cuentas por banco; el código 999 es el total del sistema. Detalle en
+   `bancos/ESQUEMA_CMF_B1_B2_R1.md`.
+5. **Cifras de FL.** El catálogo tiene 32 RUT y 28 aparecen en la fuente; el README decía «24 de 28»
+   y el manifiesto «28/28» (el 28 estaba fijo en `publish_backfill.py`). Ahora salen de la metadata.
+
 ---
 
 ## 1. Resumen ejecutivo
@@ -39,7 +89,7 @@ publicados** (no sobre lo que el extractor dice que hizo). Todo número de este 
 | 1 | AGF, securitizadoras, CCAF | `pipelines/ifrs_sectores/actualizar.py` | TXT IFRS `estadisticas_ifrs.php` (una descarga, todos los sectores) | pesos (`valor`) | **sí** (glosas literales, tolerancia 1.000) |
 | 2 | Factoring y leasing | `factoring_leasing/scripts/backfill_ifrs.py` → `publish_backfill.py` | **el mismo TXT IFRS** | pesos (`valor_archivo`) | **no** (solo la muestra de 2 filas) |
 | 3 | Corredoras y agentes de valores | `corredoras_bolsa/scripts/actualizar_eeff.py` | Excel FECU `intermediarios_ifrs1.php?xls=y` | **miles de pesos** (`valor_miles_clp`) | **sí** (códigos FECU 10/21/22) |
-| 4 | Banca | `bancos/scripts/extract_cmf_bank_lines.py` | B1/B2/R1 (ancho fijo) | según informe | coteja total de activos vs Excel CMF |
+| 4 | Banca | `bancos/scripts/extract_cmf_bank_lines.py` | B1/B2/R1 (TSV: campos separados por tabulador; los importes llevan ceros a la izquierda) | pesos | coteja total de activos vs Excel CMF |
 | 5 | Patrimonios separados | `securitizadoras/scripts/05_publicar_balance_patrimonios.py` | PDF (curación híbrida) | miles de pesos | auditoría posterior |
 
 Filas publicadas (balance + resultados): AGF **129.639**, securitizadoras **25.969**,

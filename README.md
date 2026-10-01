@@ -15,10 +15,10 @@ Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Centra
 |---|---|
 | Historia cubierta | **25 años** · 2001-01 → 2026-08 |
 | Industrias supervisadas | **15** (CMF · BCCh · SPensiones · SUSESO) |
-| Tablas publicadas | **71** Parquet · 10.831.742 filas · 273 MB |
+| Tablas publicadas | **71** Parquet · 10.831.652 filas (al 2026-10-01) · 273 MB |
 | Consultas sugeridas listas para usar | **116** |
 | Actualización | **11 flujos** automáticos en GitHub Actions |
-| Verificación | **7 suites** de auditoría + **130** pruebas unitarias |
+| Verificación | **7 suites** de auditoría + **más de 200** pruebas unitarias |
 
 ---
 
@@ -138,8 +138,9 @@ Las marcas de tiempo de los manifiestos (`updated_at`, `ultima_actualizacion`, `
 Un dato financiero mal extraído es peor que no tener el dato. El sistema valida **antes** de publicar y se detiene si algo no cuadra:
 
 - **Identidad**: RUT validado con dígito verificador módulo 11 y homologado **a toda la base** bajo una convención canónica (cuerpo / cuerpo-DV / puntos, según la columna).
-- **Cuadraturas contables**: activos = pasivos + patrimonio. En los estados financieros IFRS de AGF, securitizadoras, cajas de compensación y corredoras se verifica antes de publicar: un balance aislado que no cuadra queda como aviso en el manifiesto, y si la lectura falla en bloque (al menos 3 balances y más del 5 %) el trimestre no se publica. Banca cotea el total de activos contra el Excel de la CMF y fondos de inversión cuadra cada cartera con la fila TOTAL de la fuente. Factoring y leasing y patrimonios separados se verifican en auditoría, después de publicar (hoy cuadran todos, con diferencias de hasta 1 mil pesos por redondeo).
-- **Cobertura mínima**: si un mes trae menos del 90 % de las entidades del mes anterior, no se publica.
+- **Cuadraturas contables**: activos = pasivos + patrimonio. En los estados financieros IFRS de AGF, securitizadoras, cajas de compensación, factoring y leasing y corredoras se verifica antes de publicar: un balance aislado que no cuadra queda registrado como aviso (en el manifiesto o en la metadata de la serie), y si la lectura falla en bloque (al menos 3 balances y más del 5 %) el trimestre no se publica. Banca cotea el total de activos contra el Excel de la CMF y fondos de inversión cuadra cada cartera con la fila TOTAL de la fuente. Patrimonios separados cuadra cada balance (±2 mil pesos) y sus subtotales al compilar el Parquet. Además, `scripts/auditar_eeff_ifrs.py` repasa en cada push y PR **toda la historia publicada** de AGF, securitizadoras, CCAF, factoring y leasing y corredores (hoy cuadran todos, con diferencias de hasta 1 mil pesos por redondeo).
+- **Cobertura mínima**: si un mes trae menos del 90 % de las entidades del mes anterior, no se publica. En los estados financieros, además, si casi ningún balance trae los tres totales reconocibles (cambiaron las glosas o los códigos), el trimestre tampoco se publica.
+- **Cierres reeditados**: la CMF reedita a veces cierres antiguos y lo avisa en su índice («actualizado: …»). Si la fecha es posterior a la última lectura, el trimestre se vuelve a leer y pasa las mismas compuertas; si no las cumple, se conserva lo publicado. (Corredores y agentes no la tienen: su informe no trae esa fecha.)
 - **Legibilidad**: más de 1 % de filas ilegibles en un archivo aborta el proceso.
 - **Esquema**: si la fuente cambia las columnas, el flujo falla en vez de publicar basura.
 
@@ -216,7 +217,7 @@ python scripts/build_download_catalog.py --check   # el catálogo refleja lo pub
 python scripts/normalizar_vocabulario.py --check   # los nombres no se desincronizan
 ```
 
-Más `audit_interfaz_dom.js` (comportamiento en un DOM real), `audit_normativa_web.js` y `audit_secretos.py`. Los flujos maduros —bancos, factoring-leasing, macro y normativa— corren además sus **130 pruebas unitarias** antes de publicar.
+Más `audit_interfaz_dom.js` (comportamiento en un DOM real), `audit_normativa_web.js` y `audit_secretos.py`. Los flujos de estados financieros —AGF, securitizadoras y CCAF, corredores, bancos y factoring-leasing— y el de normativa corren además sus pruebas unitarias antes de publicar (macro corre su auditoría `audit_macro_bcch`), y `web_audit.yml` ejecuta en cada push y PR todas las de los extractores de estados financieros (más de 200, sin red y con fuentes sintéticas).
 
 </details>
 
