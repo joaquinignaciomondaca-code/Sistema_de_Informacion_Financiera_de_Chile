@@ -77,8 +77,10 @@ jobs:
 
   extraer-y-publicar:
     needs: probar
-    # Un push de rama de trabajo solo prueba. La carga/publicación en ella es explícita.
-    if: github.ref_name == 'main' || github.event_name == 'workflow_dispatch'
+    # Un push ordinario de rama de trabajo solo prueba. El marcador explícito permite
+    # una primera carga de UN cierre reciente sin necesitar el permiso actions:write
+    # de workflow_dispatch; mantiene todas las compuertas y nunca publica en main.
+    if: github.ref_name == 'main' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[fi-carga-inicial]'))
     runs-on: ubuntu-latest
     timeout-minutes: 330
     permissions:
@@ -109,7 +111,15 @@ jobs:
           PERIODOS: ${{ inputs.max_periodos }}
           HILOS: ${{ inputs.hilos }}
           REFRESCAR: ${{ inputs.refrescar_todo }}
+          CARGA_INICIAL: ${{ github.event_name == 'push' && contains(github.event.head_commit.message, '[fi-carga-inicial]') }}
         run: |
+          if [ "${CARGA_INICIAL}" = "true" ]; then
+            DESDE=$(python -c 'from fi.scripts.actualizar_eeff import ultimo_disponible, _hoy; print(ultimo_disponible(_hoy()))')
+            HASTA="$DESDE"
+            MINUTOS=45
+            PERIODOS=1
+            HILOS=6
+          fi
           args=()
           if [ -n "${HASTA}" ]; then args+=(--hasta "${HASTA}"); fi
           if [ "${REFRESCAR}" = "true" ]; then args+=(--refrescar-todo); fi
