@@ -375,7 +375,16 @@ def actualizar_catalogos(raiz=RAIZ, salida=None):
         total_records=sum(int(t.get("registros_reales") or 0) for t in man["tables"]),
         updated_at=manifests["balance"]["updated_at"][:10],
     )
+    # El inventario registra tablas realmente publicadas, no promesas de carga.
+    invp = raiz / "pipelines/auto/inventario.json"
+    if invp.exists():
+        inv = json.loads(invp.read_text(encoding="utf-8"))
+        for tid in ("fi_balance", "fi_resultados"):
+            inv["tablas"][tid] = {"workflow": "fi_eeff.yml"}
+        inv["tablas"] = dict(sorted(inv["tablas"].items()))
     # Todos los bloques se comprueban ANTES de modificar archivos compartidos.
+    if invp.exists():
+        estable.escribir_json(invp, inv)
     estable.escribir_json(vocabp, vocab)
     estable.escribir_json(mp, man)
     cambiaron = False
