@@ -1,8 +1,8 @@
 {
   "estado": "serie_completa_del_indice_no_cotejo_integral",
   "fuente_indice": "https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
-  "run_actions": "36817226109",
-  "fecha_actualizacion_utc": "2026-10-01T04:56:37.663018+00:00",
+  "run_actions": "36906389534",
+  "fecha_actualizacion_utc": "2026-10-01T18:23:32.227709+00:00",
   "publicado_en_docs": true,
   "primer_periodo": "200903",
   "ultimo_periodo": "202606",
@@ -90,6 +90,6 @@
     "identidades_divergentes": 0
   },
   "advertencia": "Extracción literal del TXT IFRS CMF. No es un cotejo integral de estados; no convertir monedas, sumar balances individual/consolidado, deduplicar etiquetas, ni interpretar valores no enteros como cero. Filas y faltantes según fuente disponible.",
-  "sha256_balance_parquet": "63ce5c417905e2ea8c3d75d7d71148adbe2e7e6f54ebf5ccc1ced31ea1ac22af",
-  "sha256_resultados_parquet": "19f6d3c5601cee11b0e8ddae4ae4e2f40db7de992f7e731a0dba05a5f62e5b1b"
+  "sha256_balance_parquet": "0ef9ff7f5001e99b3f8ce83907e68b8c0680faccdcbcbd65ec50483d9674da49",
+  "sha256_resultados_parquet": "0f5496c41460fa424480f5b2ad7e9dbc5e56d9aab8c56b53ae60c6a74db0a765"
 }
