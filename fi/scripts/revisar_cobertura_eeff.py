@@ -30,7 +30,7 @@ from bs4 import BeautifulSoup
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from fi.scripts import eeff_xml as xml
-from fi.scripts.actualizar_eeff import FICHA
+from fi.scripts.actualizar_eeff import url_ficha
 
 TIPOS_FONDO = {
     "FINRE": "Fondo de Inversión No Rescatable",
@@ -487,9 +487,7 @@ def revisar_red(
             consultas.extend(((tipo, "NV"), (otro, "NV")))
         probes = []
         for t, v in consultas:
-            url = FICHA.format(
-                run=run, tipo=t, anio=periodo[:4], mes=periodo[5:]
-            ).replace("&vig=VI&", f"&vig={v}&")
+            url = url_ficha(run, t, periodo, v)
             r = fuente.consultar(url, lambda raw: clasificar_sondeo(raw, run, periodo))
             probes.append({**r, "tipo_consultado": t, "vig_consultada": v})
         r = {
