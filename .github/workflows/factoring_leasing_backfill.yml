@@ -3,7 +3,7 @@ name: Factoring y Leasing - serie IFRS CMF y publicación automática
 
 on:
   push:
-    branches: [main, arena/01a0f57d-sistema-de-informacion-financi]  # TEMPORAL: prueba real en la rama del PR
+    branches: [main, arena/01a0f57d-sistema-de-informacion-financi]  # TEMPORAL: prueba real en la rama del PR (2.ª corrida, sin novedades)
     paths:
       - '.github/workflows/factoring_leasing_backfill.yml'
       - 'factoring_leasing/scripts/backfill_ifrs.py'
