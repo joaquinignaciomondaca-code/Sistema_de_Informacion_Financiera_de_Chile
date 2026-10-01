@@ -149,9 +149,19 @@
       "evento": "alta",
       "antes": null,
       "ahora": "inscrita 2026-09-24"
+    },
+    {
+      "fecha": "2026-10-01",
+      "sector": "fintech",
+      "lista": "fintech/fintech_rpsf_maestro",
+      "rut": "17327674-5",
+      "razon_social": "ANDREA MARÍA ALARCÓN FIORENTINO",
+      "evento": "cambio_vigencia",
+      "antes": "Vigente",
+      "ahora": "No Vigente"
     }
   ],
-  "ultima_revision_utc": "2026-09-28T17:59:09+00:00",
+  "ultima_revision_utc": "2026-10-01T18:23:49+00:00",
   "sectores_revisados": [
     "agf",
     "securitizadoras",
