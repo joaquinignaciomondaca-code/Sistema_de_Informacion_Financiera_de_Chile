@@ -633,7 +633,7 @@ const EXPLORER_TREE = [
             id: "cat_factoring_leasing_balance", type: "circular",
             label: "Balance · Serie CMF (2009-03–2026-06)", badge: "70 cierres · 28 RUT", badgeType: "data", status: "active",
             sector: "factoring_leasing",
-            chips: [{ label: "Cuentas de balance CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_balance ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;" }],
+            chips: [{ label: "Cuentas de balance CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, orden, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_balance ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, orden LIMIT 500;" }],
             tables: [{ id: "factoring_leasing_balance", name: "factoring_leasing.balance",
                        rows: "Serie IFRS · sin cotejo integral",
                        file: "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet" }]
@@ -642,7 +642,7 @@ const EXPLORER_TREE = [
             id: "cat_factoring_leasing_resultados", type: "circular",
             label: "Resultados · Serie CMF (2009-03–2026-06)", badge: "70 cierres · 28 RUT", badgeType: "data", status: "active",
             sector: "factoring_leasing",
-            chips: [{ label: "Cuentas de resultados CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_resultados ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;" },
+            chips: [{ label: "Cuentas de resultados CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, orden, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_resultados ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, orden LIMIT 500;" },
                     { label: "Utilidad del período · 1 fila por estado", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, estado_financiero, valor_archivo AS ganancia_perdida FROM factoring_leasing_resultados WHERE lower(cuenta) = 'ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion_contexto = 1 ORDER BY periodo DESC, rut;" },
                     { label: "Dónde se repite 'Ganancia (pérdida)'", query: "SELECT estado_financiero, repeticion_contexto, count(*) AS filas, count(DISTINCT (periodo, rut, tipo_balance)) AS estados FROM factoring_leasing_resultados WHERE lower(cuenta) = 'ganancia (pérdida)' GROUP BY ALL ORDER BY estado_financiero, repeticion_contexto;" }],
             tables: [{ id: "factoring_leasing_resultados", name: "factoring_leasing.resultados",
