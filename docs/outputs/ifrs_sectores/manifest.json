@@ -2420,9 +2420,9 @@
     },
     "202606": {
       "cerrado": false,
-      "leido_utc": "2026-09-30T18:59:40+00:00",
+      "leido_utc": "2026-10-01T03:19:11+00:00",
       "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202606&termino=202606",
-      "sha256": "9894d2d3cc77bed0fb0134f0363aee5514f5cb7023adffc5e2073472d919fee9",
+      "sha256": "7ad13197acc38fd2ac3dad220a6ebd93bf285f78bf2b938fdd9d987a4037c613",
       "lineas": 30213,
       "sociedades": 368,
       "solo_lista_fuera": {
@@ -2430,6 +2430,9 @@
       },
       "balances_verificados": 66,
       "balances_descuadrados": 0,
+      "balances_totales": 66,
+      "resultados_verificaciones": 92,
+      "resultados_divergencias": 0,
       "sectores": {
         "agf": {
           "entidades": 53,
@@ -2437,6 +2440,9 @@
             "balance": 1337,
             "resultados": 1054
           },
+          "lista_sin_datos": 19,
+          "lista_total": 72,
+          "dejaron_de_informar": [],
           "fuera_de_lista": []
         },
         "securitizadoras": {
@@ -2445,6 +2451,9 @@
             "balance": 195,
             "resultados": 157
           },
+          "lista_sin_datos": 7,
+          "lista_total": 16,
+          "dejaron_de_informar": [],
           "fuera_de_lista": []
         },
         "cajas_compensacion": {
@@ -2453,13 +2462,90 @@
             "balance": 141,
             "resultados": 94
           },
+          "lista_sin_datos": 2,
+          "lista_total": 6,
+          "dejaron_de_informar": [],
           "fuera_de_lista": []
         }
       },
-      "avisos": []
+      "avisos": [],
+      "ruts": {
+        "agf": [
+          "76034728",
+          "76036521",
+          "76071197",
+          "76081215",
+          "76122579",
+          "76172904",
+          "76173632",
+          "76202136",
+          "76336511",
+          "76429904",
+          "76435792",
+          "76493189",
+          "76503272",
+          "76503273",
+          "76507811",
+          "76543031",
+          "76551925",
+          "76579033",
+          "76798260",
+          "76800115",
+          "76810627",
+          "76917333",
+          "76930595",
+          "76930984",
+          "76963034",
+          "77057272",
+          "77244875",
+          "77324967",
+          "77333224",
+          "77677124",
+          "77704838",
+          "77750920",
+          "91999000",
+          "96514410",
+          "96530900",
+          "96576660",
+          "96601710",
+          "96632170",
+          "96634320",
+          "96639280",
+          "96667040",
+          "96684990",
+          "96690790",
+          "96753330",
+          "96767630",
+          "96804330",
+          "96836390",
+          "96955500",
+          "96960970",
+          "96966250",
+          "96980650",
+          "99543100",
+          "99549940"
+        ],
+        "securitizadoras": [
+          "76965774",
+          "77677546",
+          "96765170",
+          "96785590",
+          "96819300",
+          "96847360",
+          "96948880",
+          "96971830",
+          "96972780"
+        ],
+        "cajas_compensacion": [
+          "70016160",
+          "70016330",
+          "81826800",
+          "82606800"
+        ]
+      }
     }
   },
-  "updated_at": "2026-09-30T18:59:40+00:00",
+  "updated_at": "2026-10-01T03:19:11+00:00",
   "entidades_fuera_de_lista_ultimo_trimestre": {
     "periodo": "202606",
     "agf": [],
