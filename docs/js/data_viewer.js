@@ -85,7 +85,19 @@ const DATA_VIEWER_CATALOG = [
       { id: "fi_opciones", name: "fi.opciones", detalle: "Opciones", descripcion: "Contratos de opciones vigentes de cada fondo." },
       { id: "fi_pactos", name: "fi.pactos", detalle: "Pactos", descripcion: "Compras y ventas con pacto de cada fondo." },
       // BEGIN AUTO FI EEFF VIEWER
-      // END AUTO FI EEFF VIEWER
+{
+  id: "fi_balance",
+  name: "fi.balance",
+  detalle: "Balance trimestral",
+  descripcion: "Estado de situación financiera de fondos de inversión FIRES/FINRE, cuenta por cuenta (42 líneas por contexto). TotalPasivo de la fuente incluye patrimonio: el pasivo exigible es TotalPasivoCorriente + TotalPasivoNoCorriente. Miles de la moneda de presentación, sin conversión. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros."
+},
+{
+  id: "fi_resultados",
+  name: "fi.resultados",
+  detalle: "Estado de resultados trimestral",
+  descripcion: "Estado de resultados integrales de fondos de inversión FIRES/FINRE, cuenta por cuenta (30 líneas por contexto). Se separan acumulado del ejercicio, trimestre y sus comparativos; no se suman entre sí. Miles de la moneda de presentación, gastos con signo original. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros."
+},
+  // END AUTO FI EEFF VIEWER
     ]
   },
   {

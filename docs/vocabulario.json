@@ -786,6 +786,24 @@
       "sector": "macro",
       "descripcion": "Catálogo de las series del Banco Central que alimentan las tablas macro: código, nombre, unidad, frecuencia y cobertura.",
       "cobertura": "Una fila por serie"
+    },
+    {
+      "id": "fi_balance",
+      "alias": [],
+      "nombre": "fi.balance",
+      "tipo": "balance",
+      "sector": "fi",
+      "descripcion": "Estado de situación financiera de fondos de inversión FIRES/FINRE, cuenta por cuenta (42 líneas por contexto). TotalPasivo de la fuente incluye patrimonio: el pasivo exigible es TotalPasivoCorriente + TotalPasivoNoCorriente. Miles de la moneda de presentación, sin conversión.",
+      "cobertura": "Trimestral · contextos separados"
+    },
+    {
+      "id": "fi_resultados",
+      "alias": [],
+      "nombre": "fi.resultados",
+      "tipo": "resultados",
+      "sector": "fi",
+      "descripcion": "Estado de resultados integrales de fondos de inversión FIRES/FINRE, cuenta por cuenta (30 líneas por contexto). Se separan acumulado del ejercicio, trimestre y sus comparativos; no se suman entre sí. Miles de la moneda de presentación, gastos con signo original.",
+      "cobertura": "Trimestral · contextos separados"
     }
   ]
 }

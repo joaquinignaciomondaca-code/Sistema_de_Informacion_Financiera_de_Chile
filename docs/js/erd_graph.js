@@ -1447,12 +1447,110 @@ const ERD_TABLES = [
   },
 
   // BEGIN AUTO FI EEFF ERD
+{
+  id: "fi_balance",
+  name: "fi.balance",
+  sector: "fi",
+  color: "var(--accent-mint)",
+  x: 1620,
+  y: 850,
+  w: 270,
+  h: 248,
+  rows: "Trimestral · contextos separados",
+  file: "outputs/fi/fi_balance/manifest.json",
+  cols: [
+    {
+      name: "periodo",
+      pk: true,
+      type: "VARCHAR"
+    },
+    {
+      name: "run_fondo",
+      fk: true,
+      type: "VARCHAR"
+    },
+    {
+      name: "contexto",
+      pk: true,
+      type: "VARCHAR"
+    },
+    {
+      name: "codigo_cuenta",
+      pk: true,
+      type: "VARCHAR"
+    },
+    {
+      name: "rut_agf",
+      fk: true,
+      type: "VARCHAR"
+    },
+    {
+      name: "moneda",
+      type: "VARCHAR"
+    },
+    {
+      name: "valor_miles_mf",
+      type: "BIGINT"
+    }
+  ]
+},
+{
+  id: "fi_resultados",
+  name: "fi.resultados",
+  sector: "fi",
+  color: "var(--accent-mint)",
+  x: 1920,
+  y: 850,
+  w: 270,
+  h: 248,
+  rows: "Trimestral · contextos separados",
+  file: "outputs/fi/fi_resultados/manifest.json",
+  cols: [
+    {
+      name: "periodo",
+      pk: true,
+      type: "VARCHAR"
+    },
+    {
+      name: "run_fondo",
+      fk: true,
+      type: "VARCHAR"
+    },
+    {
+      name: "contexto",
+      pk: true,
+      type: "VARCHAR"
+    },
+    {
+      name: "codigo_cuenta",
+      pk: true,
+      type: "VARCHAR"
+    },
+    {
+      name: "rut_agf",
+      fk: true,
+      type: "VARCHAR"
+    },
+    {
+      name: "moneda",
+      type: "VARCHAR"
+    },
+    {
+      name: "valor_miles_mf",
+      type: "BIGINT"
+    }
+  ]
+},
   // END AUTO FI EEFF ERD
 ];
 
 // Relaciones entre tablas (Claves Foráneas lógicas)
 const ERD_LINKS = [
   // BEGIN AUTO FI EEFF LINKS
+  { from: "fi_lista_entidades", to: "fi_balance", key: "run_fondo" },
+  { from: "agf_lista_entidades", to: "fi_balance", key: "rut = rut_agf" },
+  { from: "fi_lista_entidades", to: "fi_resultados", key: "run_fondo" },
+  { from: "agf_lista_entidades", to: "fi_resultados", key: "rut = rut_agf" },
   // END AUTO FI EEFF LINKS
   { from: "seguros_lista_entidades", to: "seguros_renta_fija", key: "sector, rut_aseguradora" },
   { from: "seguros_lista_entidades", to: "seguros_acciones", key: "sector, rut_aseguradora" },
