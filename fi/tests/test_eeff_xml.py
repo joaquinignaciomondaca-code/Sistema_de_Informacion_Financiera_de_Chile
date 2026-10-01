@@ -308,6 +308,12 @@ class GuardasTest(unittest.TestCase):
         with self.assertRaises(m.ErrorFuente):
             m.leer_xml(b'<!DOCTYPE IFRS [<!ENTITY x "42">]><IFRS></IFRS>')
 
+    def test_denegacion_explicita_cmf_es_exclusion_no_ausencia_ni_ceros(self):
+        with self.assertRaisesRegex(m.ErrorFuente, "rechaza explícitamente"):
+            m.leer_xml(b"ACCION NO PERMITIDA 16")
+        with self.assertRaises(m.ErrorTransitorio):
+            m.leer_xml(b"<html>challenge() reintente</html>")
+
     def test_codificacion_falsa_o_inventada_no_modifica_las_cifras(self):
         for decl in ('encoding="iso-8011-K"', 'encoding="UTF-8"'):
             raw = ('<?xml version="1.0" ' + decl + "?>").encode() + ET.tostring(
