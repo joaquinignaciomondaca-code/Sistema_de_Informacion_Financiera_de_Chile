@@ -46,6 +46,7 @@ TABLE_COLUMNS = [
     ('nombre_catalogo', 'VARCHAR', 'Razón social del catálogo local actual; no reemplaza al nombre reportado históricamente.'),
     ('tipo_balance', 'VARCHAR', 'I individual o C consolidado, literal del archivo CMF; no sumar contextos.'),
     ('moneda_archivo', 'VARCHAR', 'Moneda literal CMF; sin conversión FX ni homogeneización.'),
+    ('orden', 'BIGINT', 'Posición de la cuenta dentro de su estado (sociedad, tipo de balance, moneda, taxonomía y estado), tal como viene en el archivo; permite leer el estado en el orden que lo presenta la sociedad. Mismo criterio que las series de AGF, securitizadoras y CCAF.'),
     ('cuenta', 'VARCHAR', 'Etiqueta literal de la cuenta en el TXT IFRS CMF.'),
     ('valor_archivo', 'BIGINT', 'Importe entero literal del TXT cuando es entero; NULL si el original no se interpreta como entero.'),
     ('valor_texto_original', 'VARCHAR', 'Valor literal del TXT, preservado incluso si valor_archivo es NULL.'),
@@ -67,6 +68,7 @@ DOC_COLUMNS = [
     ('nombre_catalogo', 'VARCHAR'),
     ('tipo_balance', 'VARCHAR'),
     ('moneda_archivo', 'VARCHAR'),
+    ('orden', 'BIGINT'),
     ('cuenta', 'VARCHAR'),
     ('valor_archivo', 'BIGINT'),
     ('valor_texto_original', 'VARCHAR'),
@@ -125,10 +127,10 @@ def js(value):
 
 
 def query(name):
-    return (f'SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, cuenta, '
+    return (f'SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, orden, cuenta, '
             f'valor_archivo, valor_texto_original, valor_es_entero, taxonomia, '
             f'estado_financiero, repeticion_contexto FROM {name} '
-            'ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, cuenta LIMIT 500;')
+            'ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, orden LIMIT 500;')
 
 
 # En los resultados IFRS la etiqueta "Ganancia (pérdida)" aparece hasta 3 veces por estado, siempre

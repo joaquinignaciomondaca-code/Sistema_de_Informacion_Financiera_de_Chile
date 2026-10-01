@@ -581,6 +581,23 @@ class DuckDBClient {
     }
   }
 
+  // El motor corre en memoria, dentro de la pestaña, sobre Parquet servidos por
+  // HTTP: una consulta no puede tocar los archivos publicados ni el repositorio.
+  // Pero sí puede alterar el catálogo de ESTA sesión (DROP VIEW, CREATE OR REPLACE
+  // VIEW sobre una tabla real, INSERT en una tabla fabricada), y eso es grave
+  // porque `checkUrlHash()` ejecuta lo que traiga el enlace. La guardia se aplica
+  // aquí —único punto por donde pasa el SQL del visitante— y no en la terminal,
+  // para que también cubra al visor de datos y a cualquier llamador futuro.
+  revisarSoloLectura(sql) {
+    if (typeof window === "undefined" || !window.SIFSqlGuard) return { ok: true, motivo: "" };
+    try {
+      return window.SIFSqlGuard.validar(sql);
+    } catch (err) {
+      // Una guardia que falla no debe abrir la puerta: se rechaza la consulta.
+      return { ok: false, motivo: "No se pudo verificar la consulta y no se ejecuta por seguridad." };
+    }
+  }
+
   async query(sql) {
     await this.initPromise;
     const t0 = performance.now();
@@ -591,6 +608,16 @@ class DuckDBClient {
         error: `Motor DuckDB-Wasm no disponible${this.engineError ? `: ${this.engineError}` : ""}. ` +
                "Verifica la conexión al CDN y que los Parquet de docs/outputs sean accesibles; " +
                "no se muestran datos de demostración."
+      };
+    }
+
+    const revision = this.revisarSoloLectura(sql);
+    if (!revision.ok) {
+      return {
+        success: false,
+        bloqueada: true,
+        error: revision.motivo,
+        elapsedMs: (performance.now() - t0).toFixed(1)
       };
     }
 
@@ -612,12 +639,59 @@ class DuckDBClient {
         count: rows.length
       };
     } catch (err) {
+      const mensaje = err && err.message ? err.message : String(err);
+      // Red de seguridad: si algo borró una vista del catálogo (DROP VIEW escrito
+      // por el visitante, o un error nuestro), la recreamos y reintentamos una vez.
+      // En el camino normal no cuesta nada: solo se mira el texto del error.
+      const reparado = this.parecenFaltarVistas(mensaje) ? await this.repararVistas() : false;
+      if (reparado) {
+        try {
+          const retry = await this.runQuerySerial(sql);
+          const rows = retry.toArray().map((row) => {
+            const obj = row.toJSON();
+            for (const [k, v] of Object.entries(obj)) {
+              if (typeof v === "bigint") obj[k] = Number(v);
+            }
+            return obj;
+          });
+          return {
+            success: true, rows, columns: retry.schema.fields.map((f) => f.name),
+            elapsedMs: (performance.now() - t0).toFixed(1), count: rows.length, vistasReparadas: true
+          };
+        } catch (segundo) {
+          return {
+            success: false,
+            error: segundo && segundo.message ? segundo.message : String(segundo),
+            elapsedMs: (performance.now() - t0).toFixed(1)
+          };
+        }
+      }
       // El error real de SQL o de lectura de archivo se comunica tal cual.
       return {
         success: false,
-        error: err && err.message ? err.message : String(err),
+        error: mensaje,
         elapsedMs: (performance.now() - t0).toFixed(1)
       };
+    }
+  }
+
+  // ¿El error dice que falta un objeto del catálogo que podría ser una vista nuestra?
+  parecenFaltarVistas(mensaje) {
+    return /Catalog Error/i.test(mensaje) && /does not exist|not found|Unknown table/i.test(mensaje);
+  }
+
+  // Vuelve a crear las vistas semánticas y devuelve true si se pudo. Es la
+  // reparación de una sesión dañada: no toca ningún archivo, solo el catálogo
+  // en memoria de esta pestaña.
+  async repararVistas() {
+    if (!this.conn || typeof this.registerSemanticViews !== "function") return false;
+    try {
+      await this.registerSemanticViews();
+      console.warn("[DuckDB-Wasm] Vistas restauradas tras un error de catálogo.");
+      return true;
+    } catch (err) {
+      console.error("[DuckDB-Wasm] No se pudieron restaurar las vistas:", err);
+      return false;
     }
   }
 }

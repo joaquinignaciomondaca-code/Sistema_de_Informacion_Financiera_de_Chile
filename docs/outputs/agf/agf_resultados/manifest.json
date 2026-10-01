@@ -87,5 +87,90 @@
     "2026-03",
     "2026-06"
   ],
-  "updated_at": "2026-09-29T18:59:18+00:00"
+  "updated_at": "2026-10-01T02:49:01+00:00",
+  "cobertura": {
+    "ultimo_periodo": "2026-06",
+    "entidades": 53,
+    "lista_total": 72,
+    "sin_datos": [
+      {
+        "rut": "76020091",
+        "razon_social": "EQUITAS MANAGEMENT PARTNERS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+        "ultimo_periodo": "2017-09"
+      },
+      {
+        "rut": "76048177",
+        "razon_social": "AURUS CAPITAL S.A. ADMINISTRADORA GENERAL DE FONDOS",
+        "ultimo_periodo": "2017-09"
+      },
+      {
+        "rut": "76481735",
+        "razon_social": "AZIMUT INVESTMENTS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+        "ultimo_periodo": "2025-09"
+      },
+      {
+        "rut": "76576607",
+        "razon_social": "SARTOR ADMINISTRADORA GENERAL DE FONDOS S.A.",
+        "ultimo_periodo": "2024-12"
+      },
+      {
+        "rut": "76613788",
+        "razon_social": "PATAGON LAND ADMINISTRADORA GENERAL DE FONDOS S.A.",
+        "ultimo_periodo": "2017-06"
+      },
+      {
+        "rut": "76620928",
+        "razon_social": "TAURUS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+        "ultimo_periodo": "2025-09"
+      },
+      {
+        "rut": "76708560",
+        "razon_social": "BCI ADMINISTRADORA GENERAL DE FONDOS S.A.",
+        "ultimo_periodo": "2011-09"
+      },
+      {
+        "rut": "76945436",
+        "razon_social": "SRM ADMINISTRADORA GENERAL DE FONDOS S.A.",
+        "ultimo_periodo": "2019-06"
+      },
+      {
+        "rut": "96513630",
+        "razon_social": "CORPBANCA  ADMINISTRADORA GENERAL DE FONDOS S.A.",
+        "ultimo_periodo": "2017-09"
+      },
+      {
+        "rut": "96613580",
+        "razon_social": "BANEDWARDS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+        "ultimo_periodo": null
+      },
+      {
+        "rut": "96788500",
+        "razon_social": "BANDESARROLLO ADMINISTRADORA GENERAL DE FONDOS S.A.",
+        "ultimo_periodo": null
+      },
+      {
+        "rut": "96815680",
+        "razon_social": "SCOTIA AZUL ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+        "ultimo_periodo": "2019-12"
+      }
+    ],
+    "sin_datos_total": 19,
+    "dejaron_de_informar": [
+      {
+        "rut": "76620928",
+        "razon_social": "TAURUS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+        "ultimo_periodo": "2025-09"
+      },
+      {
+        "rut": "76481735",
+        "razon_social": "AZIMUT INVESTMENTS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+        "ultimo_periodo": "2025-09"
+      },
+      {
+        "rut": "76576607",
+        "razon_social": "SARTOR ADMINISTRADORA GENERAL DE FONDOS S.A.",
+        "ultimo_periodo": "2024-12"
+      }
+    ]
+  }
 }
