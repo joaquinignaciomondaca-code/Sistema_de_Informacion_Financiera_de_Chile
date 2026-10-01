@@ -11,6 +11,22 @@ reportantes a la CMF.
 
 ## Balance y estado de resultados
 
+### Primera publicación (2026-10-01)
+
+Cierre **2026-06**: censo de **1.679** RUN del registro. **908** fondos publicados,
+**765** con ausencia explícita de información del período, **6** excluidos (5
+negativas de descarga CMF, 1 moneda COP no expuesta en la ficha HTML). Sin pendientes.
+
+- Balance: **66.864 filas**, incluidos los contextos adicionales que pasaron controles.
+- Resultados: **97.860 filas**.
+- Auditoría: **35.570 identidades**, cero fallas en la salida.
+- Contextos excluidos con motivo: 253 de balance y 135 de resultados. No implican
+  descartar el actual válido del fondo, ni se rellenan sus importes.
+
+La serie histórica está **pendiente de backfill**, no se presenta como ya cargada.
+Los metadatos detallan cada exclusión y la fuente/hash de cada documento aceptado.
+
+
 ### Fuente verificada
 
 Cada ficha CMF (`entidad.php?tipoentidad=FIRES|FINRE&pestania=29&mm=MM&aa=AAAA&tipo=I&tipo_norma=IFRS`)
