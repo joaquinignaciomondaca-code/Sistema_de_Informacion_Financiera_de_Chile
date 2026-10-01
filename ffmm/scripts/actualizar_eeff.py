@@ -93,6 +93,9 @@ URL_FICHA = ("https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado
 URL_XML = ("https://www.cmfchile.cl/institucional/inc/inf_financiera/ifrs_xml/ifrs_xml_verarchivo.php"
            "?archivo={archivo}&&rut={run}&&periodo={anio}12&&path=/web/ifrs_xml/fmifr/xml/&&desc_archivo=Estados_financieros_")
 
+AVISO_DV = "el XML informa un dígito verificador distinto del RUN (se publica el correcto)"
+AVISOS_ANTIGUOS = {"el dígito verificador del RUN no coincide": AVISO_DV}   # texto de la primera versión
+
 ESQUEMA = pa.schema([
     ("periodo", pa.string()), ("run_fondo", pa.string()), ("run_fondo_dv", pa.string()),
     ("nombre_fondo", pa.string()), ("rut_agf", pa.string()), ("razon_social_agf", pa.string()),
@@ -284,6 +287,9 @@ def cargar_estado() -> dict[tuple[str, int], dict]:
         base = estado.get(k)
         if base is None or r.get("revisado", "") >= base.get("revisado", ""):
             estado[k] = r
+    for r in estado.values():
+        if r.get("avisos"):
+            r["avisos"] = [AVISOS_ANTIGUOS.get(a, a) for a in r["avisos"]]
     return estado
 
 
@@ -348,7 +354,7 @@ def resolver(run: str, anio: int, previo: dict | None, hoy: date, contar: bool =
                 "intentos": intentos + 1}, "ilegible"
     avisos = [f"{regla} (Δ {delta})" for regla, delta in cuadratura.identidades_ffmm(datos["actual"])]
     if not datos["dv_coincide"]:
-        avisos.append("el dígito verificador del RUN no coincide")
+        avisos.append(AVISO_DV)
     if datos["usa_alias"]:
         avisos.append("la línea «Otros» de resultados viene con el código antiguo `Otros`")
     reg = {**base, "estado": "ok", "archivo": archivo, "sha256": hashlib.sha256(raw).hexdigest(),

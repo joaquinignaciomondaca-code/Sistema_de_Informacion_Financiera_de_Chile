@@ -214,6 +214,22 @@ class TestPublicacion(Escenario):
         self.assertTrue(ids["ffmm_balance"]["modo"].startswith("Automático"))
         self.assertEqual(dm["total_records"], 7 * 16 + 7 * 19)
 
+    def test_el_dv_publicado_es_el_correcto_aunque_el_xml_traiga_otro(self):
+        self.fondo("8001", 2023, xml=X.xml("8001", 2023, factor=3, dv_xml="9"))
+        self.correr()
+        dvs = {f["run_fondo_dv"] for f in self.filas("balance") if f["run_fondo"] == "8001"}
+        self.assertEqual(dvs, {"8001-2"})
+        avisos = json.loads(m.CONTROL.read_text())["avisos"]
+        self.assertEqual([a["aviso"] for a in avisos if a["run"] == "8001"], [m.AVISO_DV])
+
+    def test_el_aviso_antiguo_de_dv_se_normaliza_al_cargar_el_estado(self):
+        self.correr()
+        r = m.cargar_progreso()
+        k = ("8011", 2025)
+        r[k]["avisos"] = ["el dígito verificador del RUN no coincide"]
+        m.guardar_progreso(r)
+        self.assertEqual(m.cargar_estado()[k]["avisos"], [m.AVISO_DV])
+
     def test_el_guardian_de_rut_acepta_lo_publicado(self):
         self.correr()
         for t in ("balance", "resultados"):

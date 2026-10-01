@@ -1,22 +1,22 @@
 # Sistema de Información Financiera de Chile (SIF)
 
 **25 años del sistema financiero chileno, consultables con SQL desde el navegador.**
-Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Central, la Superintendencia de Pensiones y la SUSESO: **15 industrias, 71 tablas, 10,8 millones de filas** desde enero de 2001. Sin backend, sin base de datos, sin servidores — el dato viaja como Parquet estático y el motor corre en el cliente.
+Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Central, la Superintendencia de Pensiones y la SUSESO: **15 industrias, 73 tablas, 11,1 millones de filas** desde enero de 2001. Sin backend, sin base de datos, sin servidores — el dato viaja como Parquet estático y el motor corre en el cliente.
 
 **▶ [Abrir el sistema](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/)** — sin instalar nada, las consultas corren en tu navegador.
 
 ![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![DuckDB-Wasm 1.28.0](https://img.shields.io/badge/DuckDB--Wasm-1.28.0-FFF000?logo=duckdb&logoColor=black)
 ![Sin backend](https://img.shields.io/badge/backend-ninguno-2ea44f)
-![Datos](https://img.shields.io/badge/datos-71%20tablas%20%C2%B7%2010%2C8%20M%20filas-blue)
+![Datos](https://img.shields.io/badge/datos-73%20tablas%20%C2%B7%2011%2C1%20M%20filas-blue)
 ![Serie](https://img.shields.io/badge/serie-2001--01%20%E2%86%92%202026--08-informational)
 
 | En números | |
 |---|---|
 | Historia cubierta | **25 años** · 2001-01 → 2026-08 |
 | Industrias supervisadas | **15** (CMF · BCCh · SPensiones · SUSESO) |
-| Tablas publicadas | **71** Parquet · 10.831.652 filas (al 2026-10-01) · 273 MB |
-| Consultas sugeridas listas para usar | **116** |
+| Tablas publicadas | **73** Parquet · 11.142.865 filas (al 2026-10-01) · 277 MB |
+| Consultas sugeridas listas para usar | **140** |
 | Actualización | **11 flujos** automáticos en GitHub Actions |
 | Verificación | **7 suites** de auditoría + **más de 200** pruebas unitarias |
 
@@ -98,18 +98,18 @@ ORDER BY s.aseguradoras + f.fondos_mutuos DESC;
 
 Tres industrias cruzadas en 50 ms, en el navegador, con `JOIN`s directos: el RUT está homologado a toda la base bajo una convención canónica (sección 4).
 
-La web trae **116 consultas sugeridas** organizadas por industria, para no partir de una pantalla en blanco. Cada resultado se ve como tabla o gráfico y se exporta a CSV, Excel o Parquet.
+La web trae **140 consultas sugeridas** organizadas por industria, para no partir de una pantalla en blanco. Cada resultado se ve como tabla o gráfico y se exporta a CSV, Excel o Parquet.
 
 ---
 
 ## 3. Los datos
 
-*Cifras al 2026-09-30; macroeconomía se actualiza a diario.*
+*Cifras al 2026-10-01; macroeconomía se actualiza a diario.*
 
 | Industria | Tablas | Filas | Serie | Fuente |
 |---|---:|---:|---|---|
 | Seguros de Vida y Generales | 9 | 4.103.093 | 2016-11 → 2026-08 | CMF · Circular 1835 |
-| Fondos Mutuos | 5 | 3.306.744 | 2001-01 → 2026-08 | CMF · Circular 1333 |
+| Fondos Mutuos | 7 | 3.582.929 | 2001-01 → 2026-08 | CMF · Circulares 1333 y 1997 |
 | Fondos de Inversión | 8 | 1.036.645 | 2020-03 → 2026-06 | CMF · LUF / Circular 1998 |
 | Corredoras de Bolsa | 4 | 185.921 | 2010-12 → 2026-06 | CMF · FECU IFRS |
 | Administradoras Generales de Fondos | 3 | 129.711 | 2010-06 → 2026-06 | CMF · IFRS |
@@ -118,16 +118,16 @@ La web trae **116 consultas sugeridas** organizadas por industria, para no parti
 | Sociedades Securitizadoras | 3 | 25.985 | 2009-12 → 2026-06 | CMF · IFRS |
 | Cajas de Compensación | 3 | 13.555 | 2010-06 → 2026-06 | CMF · TXT IFRS (XBRL) |
 | Patrimonios Separados | 2 | 7.981 | dic. 2014 → 2025 | CMF · PDF de estados financieros |
-| Banca | 3 | 41 · 1,93 M † | 2022-01 → 2026-07 | CMF · B1/B2/R1 |
+| Banca | 3 | 41 · 1,96 M † | 2022-01 → 2026-08 | CMF · B1/B2/R1 |
 | FinTech | 1 | 263 | registro vigente | CMF · Ley 21.521 (RPSF) |
 | Sistemas de Pago | 1 | 19 | registro vigente | BCCh / CMF |
 | Fondos de Pensiones | 1 | 7 | registro vigente | SPensiones · D.L. 3.500 |
 | Cooperativas de Ahorro y Crédito | 1 | 7 | registro vigente | CMF |
-| **Total** | **71** | **10.831.742** | **2001 → 2026** | |
+| **Total** | **73** | **11.142.955** | **2001 → 2026** | |
 
-† En banca, *balance* y *resultados* son vistas filtradas sobre las mismas 55 particiones mensuales: B1 y B2 (710.025 filas) y R1 (1.217.939), sin solape. Por eso el manifiesto las declara como **un solo datasete** (1.927.964 filas) detrás de las dos vistas: 71 tablas publicadas = 70 datasets, cada uno contado una vez, y la pestaña Descargas muestra el total completo de 10.870.763 sin doble contar las particiones de banca.
+† En banca, *balance* y *resultados* son vistas filtradas sobre las mismas 56 particiones mensuales: B1 y B2 (722.931 filas) y R1 (1.240.061), sin solape. Por eso el manifiesto las declara como **un solo datasete** (1.962.992 filas) detrás de las dos vistas: 71 tablas publicadas = 70 datasets, cada uno contado una vez, y la pestaña Descargas muestra el total completo de 10.870.763 sin doble contar las particiones de banca.
 
-Cada tabla publica su **manifiesto** —períodos, archivos y registros—, de modo que se puede verificar qué contiene la web. Donde la fuente es un archivo descargable único (banca B1/B2/R1, y los TXT IFRS de AGF, securitizadoras, cajas de compensación y factoring/leasing) el manifiesto además guarda el **SHA-256 del archivo de origen**, y ahí se puede comprobar que lo publicado sale exactamente de lo descargado. En seguros, fondos mutuos, fondos de inversión y corredoras el extractor guarda el SHA-256 de lo que devolvió la CMF (`sha256_origen` en el manifiesto) **solo para los períodos que se publiquen desde el 2026-09-29**: los anteriores se descargaron sin registrar hash y no se pueden reconstruir. En fondos de inversión, que son miles de páginas por trimestre, se guarda un hash que las resume. Macroeconomía, pensiones, fintech y los registros vigentes (listas de entidades) no tienen hash de origen.
+Cada tabla publica su **manifiesto** —períodos, archivos y registros—, de modo que se puede verificar qué contiene la web. Donde la fuente es un archivo descargable único (banca B1/B2/R1, y los TXT IFRS de AGF, securitizadoras, cajas de compensación y factoring/leasing) el manifiesto además guarda el **SHA-256 del archivo de origen**, y ahí se puede comprobar que lo publicado sale exactamente de lo descargado. En los estados financieros de fondos mutuos cada fila lleva el nombre y el SHA-256 del XML de origen (`fuente_archivo`, `sha256_archivo`). En seguros, carteras de fondos mutuos, fondos de inversión y corredoras el extractor guarda el SHA-256 de lo que devolvió la CMF (`sha256_origen` en el manifiesto) **solo para los períodos que se publiquen desde el 2026-09-29**: los anteriores se descargaron sin registrar hash y no se pueden reconstruir. En fondos de inversión, que son miles de páginas por trimestre, se guarda un hash que las resume. Macroeconomía, pensiones, fintech y los registros vigentes (listas de entidades) no tienen hash de origen.
 
 Las marcas de tiempo de los manifiestos (`updated_at`, `ultima_actualizacion`, `leido_utc`) indican cuándo **cambió** algo, no cuándo corrió el workflow: si una corrida no trae datos nuevos, el extractor no reescribe el manifiesto (ni se crea commit ni se regenera el catálogo). Que los workflows siguen corriendo se comprueba con sus corridas en Actions (`audit_automatizacion.py --frescura`). Los trimestres IFRS ya leídos cuyo TXT de origen no cambió (mismo SHA-256) tampoco se reescriben ni se vuelven a desplegar. Excepción: el monitor normativo registra cada revisión a propósito.
 
@@ -138,9 +138,9 @@ Las marcas de tiempo de los manifiestos (`updated_at`, `ultima_actualizacion`, `
 Un dato financiero mal extraído es peor que no tener el dato. El sistema valida **antes** de publicar y se detiene si algo no cuadra:
 
 - **Identidad**: RUT validado con dígito verificador módulo 11 y homologado **a toda la base** bajo una convención canónica (cuerpo / cuerpo-DV / puntos, según la columna).
-- **Cuadraturas contables**: activos = pasivos + patrimonio. En los estados financieros IFRS de AGF, securitizadoras, cajas de compensación, factoring y leasing y corredoras se verifica antes de publicar: un balance aislado que no cuadra queda registrado como aviso (en el manifiesto o en la metadata de la serie), y si la lectura falla en bloque (al menos 3 balances y más del 5 %) el trimestre no se publica. Banca cotea el total de activos contra el Excel de la CMF y fondos de inversión cuadra cada cartera con la fila TOTAL de la fuente. Patrimonios separados cuadra cada balance (±2 mil pesos) y sus subtotales al compilar el Parquet. Además, `scripts/auditar_eeff_ifrs.py` repasa en cada push y PR **toda la historia publicada** de AGF, securitizadoras, CCAF, factoring y leasing y corredores (hoy cuadran todos, con diferencias de hasta 1 mil pesos por redondeo).
+- **Cuadraturas contables**: activos = pasivos + patrimonio. En los estados financieros IFRS de AGF, securitizadoras, cajas de compensación, factoring y leasing, corredoras y fondos mutuos (donde la identidad es activo − pasivo = activo neto atribuible a los partícipes) se verifica antes de publicar: un balance aislado que no cuadra queda registrado como aviso (en el manifiesto o en la metadata de la serie), y si la lectura falla en bloque (al menos 3 balances y más del 5 %) el trimestre no se publica. Banca cotea el total de activos contra el Excel de la CMF y fondos de inversión cuadra cada cartera con la fila TOTAL de la fuente. Patrimonios separados cuadra cada balance (±2 mil pesos) y sus subtotales al compilar el Parquet. Además, `scripts/auditar_eeff_ifrs.py` repasa en cada push y PR **toda la historia publicada** de AGF, securitizadoras, CCAF, factoring y leasing, corredores y fondos mutuos (hoy cuadran todos, con diferencias de hasta 1 mil pesos por redondeo).
 - **Cobertura mínima**: si un mes trae menos del 90 % de las entidades del mes anterior, no se publica. En los estados financieros, además, si casi ningún balance trae los tres totales reconocibles (cambiaron las glosas o los códigos), el trimestre tampoco se publica.
-- **Cierres reeditados**: la CMF reedita a veces cierres antiguos y lo avisa en su índice («actualizado: …»). Si la fecha es posterior a la última lectura, el trimestre se vuelve a leer y pasa las mismas compuertas; si no las cumple, se conserva lo publicado. (Corredores y agentes no la tienen: su informe no trae esa fecha.)
+- **Cierres reeditados**: la CMF reedita a veces cierres antiguos y lo avisa en su índice («actualizado: …»). Si la fecha es posterior a la última lectura, el trimestre se vuelve a leer y pasa las mismas compuertas; si no las cumple, se conserva lo publicado. (Corredores y agentes no la tienen: su informe no trae esa fecha. En fondos mutuos no hay índice con fecha: el nombre del XML lleva la fecha y hora de envío, así que cada corrida revisa las fichas de los dos últimos cierres y de 1/36 del resto —toda la historia una vez al año— y baja de nuevo solo los archivos cuyo nombre cambió.)
 - **Legibilidad**: más de 1 % de filas ilegibles en un archivo aborta el proceso.
 - **Esquema**: si la fuente cambia las columnas, el flujo falla en vez de publicar basura.
 
@@ -161,10 +161,10 @@ Aplicación estática de siete pestañas, sin framework y sin build:
 | **Diccionario** | Campo por campo: rol (PK, FK, dimensión, métrica), definición y criterio contable. |
 | **Visor de datos** | Consulta tabular con filtro, orden y copia de celdas. |
 | **Consultas SQL** | Terminal con autocompletado, historial, favoritos y enlaces compartibles. |
-| **Descargas** | Los 71 conjuntos con filas, período y peso, en Parquet, CSV y Excel. |
+| **Descargas** | Los 73 conjuntos con filas, período y peso, en Parquet, CSV y Excel. |
 | **Normativa CMF** | Seguimiento de la normativa publicada por la CMF (ver §7.6). |
 
-El **explorador jerárquico** organiza 12 industrias → 15 sectores → 43 carpetas temáticas → 71 tablas, con consultas sugeridas en cada carpeta. El motor DuckDB-Wasm 1.28.0 va **embebido en el propio sitio** (`docs/vendor/duckdb/`), así que las consultas funcionan aunque la red del visitante bloquee los CDN públicos.
+El **explorador jerárquico** organiza 12 industrias → 15 sectores → 45 carpetas temáticas → 73 tablas, con consultas sugeridas en cada carpeta. El motor DuckDB-Wasm 1.28.0 va **embebido en el propio sitio** (`docs/vendor/duckdb/`), así que las consultas funcionan aunque la red del visitante bloquee los CDN públicos.
 
 ### Verlo funcionando
 
@@ -186,7 +186,7 @@ Once flujos programados en GitHub Actions extraen, validan y publican con commit
 La ausencia de un workflow no implica ausencia de procesamiento automático. El catálogo distingue tres modalidades: **Automático** (extracción, validación y publicación programadas), **Híbrido** (extracción o curación inicial local desde fuentes no estructuradas, seguida de validación y compilación reproducibles) y **Manual** (intervención todavía no respaldada por un compilador reproducible). El balance de patrimonios separados es actualmente híbrido: la CMF publica los estados como PDF, la consolidación inicial se hace fuera de Actions y `05_publicar_balance_patrimonios.py` ejecuta las validaciones y genera el Parquet.
 
 <details>
-<summary>Calendario de los 11 flujos</summary>
+<summary>Calendario de los 12 flujos</summary>
 
 | Flujo | Frecuencia | Publica |
 |---|---|---|
@@ -196,6 +196,7 @@ La ausencia de un workflow no implica ausencia de procesamiento automático. El 
 | `factoring_leasing_backfill.yml` | días 3, 13, 23 | Serie IFRS de balance y resultados |
 | `corredoras_eeff.yml` | días 6, 16, 26 | FECU IFRS de corredores y agentes de valores |
 | `seguros_carteras.yml` | días 7, 17, 27 | Cartera de inversiones Circular 1835 |
+| `ffmm_eeff.yml` | días 4, 14, 24 | Balance y estado de resultados anuales de fondos mutuos (XML IFRS, Circular 1997) |
 | `ffmm_carteras.yml` | días 8, 18, 28 | Cartera de fondos mutuos Circular 1333 |
 | `fi_carteras.yml` | días 9, 19, 29 | Cartera y pactos de fondos de inversión |
 | `entidades.yml` | días 10, 20, 28 | Altas y vigencia de las listas de entidades |
@@ -211,7 +212,7 @@ La ausencia de un workflow no implica ausencia de procesamiento automático. El 
 ```bash
 python scripts/audit_web_full.py            # Parquet, enlaces, chips SQL, diccionario y ERD
 python scripts/audit_interfaz.py            # pestañas, catálogo, vocabulario, temas, motor
-python scripts/audit_navigation.py          # taxonomía: 12 familias, 71 tablas, 71 opciones del visor
+python scripts/audit_navigation.py          # taxonomía: 12 familias, 73 tablas, 73 opciones del visor
 python scripts/audit_automatizacion.py      # quién actualiza cada tabla y con qué frecuencia
 python scripts/build_download_catalog.py --check   # el catálogo refleja lo publicado
 python scripts/normalizar_vocabulario.py --check   # los nombres no se desincronizan
