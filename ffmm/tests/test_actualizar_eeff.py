@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import os
 import sys
 import tempfile
 import time
@@ -335,10 +336,61 @@ class TestErroresDeLaCmf(Escenario):
         self.assertTrue(out["publicado"])
 
 
+def secuencia(*respuestas):
+    """Una respuesta distinta en cada petición (la CMF a veces sirve el desafío una vez y luego la ficha)."""
+    it = iter(respuestas)
+    return lambda: next(it)
+
+
+class TestReintentosYRondaLenta(Escenario):
+    """El primer recorrido real dejó 14 fichas pendientes por la página de desafío de la CMF: la serie no se publicaba."""
+
+    def ficha_ok(self, run="8001", anio=2023):
+        return X.ficha(run, anio, "xml", X.nombre_archivo(run, anio))
+
+    def test_un_desafio_aislado_se_resuelve_con_el_reintento_de_la_misma_corrida(self):
+        self.fichas[("8001", 2023)] = secuencia(X.ficha("8001", 2023, "desafio"), self.ficha_ok())
+        out = self.correr()
+        self.assertTrue(out["publicado"], out)
+        self.assertEqual(out["ok"], 7)
+        fichas = [u for u in self.pedidos if "entidad.php" in u and "rut=8001" in u]
+        self.assertEqual(len(fichas), 2, "una ficha rechazada y la reintentada")
+
+    def test_un_xml_a_medias_aislado_tambien_se_reintenta(self):
+        buenos = X.xml("8001", 2023, factor=3)
+        self.archivos[X.nombre_archivo("8001", 2023)] = secuencia(buenos[:1500], buenos)
+        out = self.correr()
+        self.assertTrue(out["publicado"], out)
+        self.assertEqual(out["ok"], 7)
+
+    def test_la_ronda_lenta_resuelve_lo_que_aguanto_los_reintentos(self):
+        desafio = X.ficha("8001", 2023, "desafio")
+        self.fichas[("8001", 2023)] = secuencia(*([desafio] * m.REINTENTOS_RESPUESTA), self.ficha_ok())
+        out = self.correr()
+        self.assertTrue(out["publicado"], out)
+        self.assertEqual(out["cuenta"]["rezagados_resueltos"], 1)
+        self.assertEqual(out["ok"], 7)
+
+    def test_las_rondas_lentas_no_cuentan_como_corridas_para_marcar_un_xml_ilegible(self):
+        buenos = X.xml("8001", 2023, factor=3)
+        self.archivos[X.nombre_archivo("8001", 2023)] = buenos[:1500]          # nunca llega completo
+        out = self.correr()
+        r = m.cargar_progreso()[("8001", 2023)]
+        self.assertEqual((r["estado"], r["intentos"]), ("pendiente", 1), "pese a 3 intentos + 2 rondas, es 1 corrida")
+        self.assertFalse(out["publicado"])
+
+    def test_sin_tiempo_no_hay_ronda_lenta(self):
+        desafio = X.ficha("8001", 2023, "desafio")
+        self.fichas[("8001", 2023)] = secuencia(*([desafio] * m.REINTENTOS_RESPUESTA), self.ficha_ok())
+        out = self.correr(minutos=0.5)
+        self.assertEqual(out["cuenta"].get("rezagados_resueltos", 0), 0)
+        self.assertFalse(out["publicado"])
+
+
 class TestIlegiblesYCompuertas(Escenario):
     def test_xml_de_otro_fondo_moneda_desconocida_o_cuentas_faltantes_se_excluyen_y_se_listan(self):
         self.fondo("8001", 2023, xml=X.xml("8001", 2023, run_xml="1234"))
-        self.fondo("7001", 2023, moneda="EUR")
+        self.fondo("7001", 2023, moneda="XYZ")
         self.fondo("9001", 2024, omitir=("TotalPasivo",))
         out = self.correr()
         self.assertTrue(out["publicado"])
@@ -346,9 +398,27 @@ class TestIlegiblesYCompuertas(Escenario):
         ctl = json.loads(m.CONTROL.read_text())
         motivos = {(e["run"], e["anio"]): e["motivo"] for e in ctl["ilegibles"]}
         self.assertIn("es del fondo 1234", motivos[("8001", 2023)])
-        self.assertIn("moneda desconocida 'EUR'", motivos[("7001", 2023)])
+        self.assertIn("moneda desconocida 'XYZ'", motivos[("7001", 2023)])
         self.assertIn("faltan 1 cuentas", motivos[("9001", 2024)])
         self.assertEqual(ctl["cierres"]["2023"]["ilegibles"], 2)
+
+    def test_hay_fondos_en_euros(self):
+        self.fondo("7001", 2023, factor=4, moneda="EUR")
+        out = self.correr()
+        self.assertEqual((out["ok"], out["ilegibles"]), (7, 0))
+        euros = {(f["run_fondo"], f["moneda"], f["moneda_cmf"]) for f in self.filas("balance") if f["moneda"] == "EUR"}
+        self.assertEqual(euros, {("7001", "EUR", "EUR")})
+
+    def test_los_ilegibles_se_reintentan_en_cada_corrida_y_se_recuperan(self):
+        arch = self.fondo("8001", 2023, xml=X.xml("8001", 2023, factor=3, moneda="XYZ"))
+        out = self.correr()
+        self.assertEqual((out["ok"], out["ilegibles"]), (6, 1))
+        self.assertEqual(out["motivos_ilegibles"], {"moneda desconocida 'XYZ'": 1})
+        self.assertTrue(out["publicado"])
+        self.archivos[arch] = X.xml("8001", 2023, factor=3)                    # se corrige la fuente (o el código)
+        out = self.correr()
+        self.assertEqual((out["ok"], out["ilegibles"]), (7, 0))
+        self.assertEqual(json.loads(m.CONTROL.read_text())["ilegibles"], [])
 
     def test_un_balance_aislado_que_no_cuadra_se_publica_con_su_aviso(self):
         self.fondo("8001", 2023, xml=X.xml("8001", 2023, factor=3, sobrescribir={"TotalActivo": 999}))
@@ -463,6 +533,52 @@ class TestHilos(Escenario):
         shutil.rmtree(self.local)
         self.correr(hilos=6)
         self.assertEqual({a.name: a.read_bytes() for a in sorted(self.salida.rglob("*.parquet"))}, uno)
+
+
+class TestInterfazDelWorkflow(Escenario):
+    """Lo que ffmm_eeff.yml lee del script: salidas de GITHUB_OUTPUT y código de salida."""
+
+    def salidas(self, argv):
+        archivo = Path(self._tmp.name) / "github_output"
+        with mock.patch.dict(os.environ, {"GITHUB_OUTPUT": str(archivo)}):
+            rc = m.main(argv)
+        return rc, dict(l.split("=") for l in archivo.read_text().split())
+
+    def test_publicada_y_completa(self):
+        rc, sal = self.salidas(["--desde", "2023"])
+        self.assertEqual((rc, sal), (0, {"publicado": "true", "completo": "true"}))
+
+    def test_incompleta_no_publica_y_no_es_un_error(self):
+        self.fichas[("8001", 2023)] = X.ficha("8001", 2023, "desafio")
+        rc, sal = self.salidas(["--desde", "2023"])
+        self.assertEqual((rc, sal), (0, {"publicado": "false", "completo": "false"}))
+
+    def test_la_compuerta_en_bloque_sale_en_rojo(self):
+        runs = [str(7100 + i) for i in range(30)]
+        self.maestro(*[(r, "2001-01", "2026-08") for r in runs])
+        for i, r in enumerate(runs):
+            self.fondo(r, 2025, **({"sobrescribir": {"TotalActivo": 1}} if i < 6 else {}))
+        rc, sal = self.salidas(["--desde", "2025"])
+        self.assertEqual((rc, sal["publicado"]), (1, "false"))
+
+    def test_resumen_para_la_pagina_de_la_corrida(self):
+        self.correr()
+        r = json.loads((self.local / "resumen.json").read_text())
+        self.assertEqual((r["ok"], r["publicado"], r["pendientes_cerrados"]), (7, True, 0))
+
+    def test_solo_data_manifest(self):
+        self.correr()
+        (m.RAIZ / "data_manifest.json").write_text(json.dumps({"tables": [{"id": "otra", "registros_reales": 5}]}))
+        self.assertEqual(m.main(["--solo-data-manifest"]), 0)
+        dm = json.loads((m.RAIZ / "data_manifest.json").read_text())
+        self.assertEqual([t["id"] for t in dm["tables"]], ["otra", "ffmm_balance", "ffmm_resultados"])
+        self.assertEqual(dm["total_tables"], 3)
+        self.assertEqual(dm["total_records"], 5 + 7 * 16 + 7 * 19)
+
+    def test_el_limite_acota_los_pedidos(self):
+        out = self.correr(limite=3)
+        self.assertEqual(sum(1 for u in self.pedidos if "entidad.php" in u), 3)
+        self.assertFalse(out["publicado"])
 
 
 class TestRed(unittest.TestCase):

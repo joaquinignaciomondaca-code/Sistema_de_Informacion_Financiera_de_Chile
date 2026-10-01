@@ -80,6 +80,10 @@ DIAS_CIERRE = 150            # un cierre de diciembre se da por cerrado 150 día
 ILEGIBLE_TRAS = 3            # corridas seguidas sin poder leer el XML antes de excluirlo como ilegible
 VUELTAS_REFRESCO = 36        # 3 corridas al mes × 12: cada corrida revisa 1/36 de lo ya resuelto
 MAX_ILEGIBLES = 0.02         # más de 2 % de XML ilegibles = cambió el formato: no se publica
+REINTENTOS_RESPUESTA = 3     # intentos por ficha o XML cuando la CMF responde algo que no es lo pedido
+ESPERAS_RESPUESTA = (8, 20)  # segundos entre esos intentos
+RONDAS_REZAGADOS = 2         # al final de la corrida, rondas lentas (1 hilo) para los que siguen pendientes
+ESPERA_REZAGADOS = 45        # segundos antes de cada ronda
 MAX_AVISOS = 300
 MAX_REEDICIONES = 200
 
@@ -161,6 +165,26 @@ def _get(url: str, intentos: int = 3, timeout: int = 60) -> bytes:
             ultimo = type(e).__name__
         FRENO.falla()
     raise ErrorTransitorio(f"sin respuesta de la CMF ({ultimo})")
+
+
+def _con_reintentos(fn):
+    """Ejecuta `fn`; si la CMF responde algo que no es lo pedido (página de desafío, XML a medias) espera y reintenta.
+
+    En el primer recorrido completo (11.242 fondos y cierres) 14 fichas recibieron el desafío JavaScript y, sin este
+    reintento, quedaron pendientes y bloquearon la publicación de toda la serie.
+    """
+    ultimo = None
+    for i in range(REINTENTOS_RESPUESTA):
+        try:
+            return fn()
+        except ErrorTransitorio as e:
+            ultimo = e
+            FRENO.falla()
+            if FRENO.detener.is_set():
+                break
+            if i < REINTENTOS_RESPUESTA - 1:
+                time.sleep(ESPERAS_RESPUESTA[min(i, len(ESPERAS_RESPUESTA) - 1)])
+    raise ultimo
 
 
 # ---------------------------------------------------------------------------
@@ -271,17 +295,21 @@ def cargar_control() -> dict:
 # Un fondo y un cierre
 # ---------------------------------------------------------------------------
 
-def _pendiente(previo: dict | None, base: dict, fase: str, motivo: str, intentos: int) -> tuple[dict, str]:
-    """La CMF no entregó lo pedido. Un dato ya resuelto no se pierde por una falla de la relectura."""
+def _pendiente(previo: dict | None, base: dict, fase: str, motivo: str, intentos: int,
+               contar: bool = True) -> tuple[dict, str]:
+    """La CMF no entregó lo pedido. Un dato ya resuelto no se pierde por una falla de la relectura.
+
+    `intentos` cuenta corridas, no peticiones: las rondas finales de la misma corrida no lo suben (`contar=False`).
+    """
     if previo is not None and previo.get("estado") in ("ok", "sin_informacion"):
         return previo, "error_transitorio"
-    intentos += 1
+    intentos += 1 if contar else 0
     if fase in ("xml", "enlace") and intentos >= ILEGIBLE_TRAS:
         return {**base, "estado": "ilegible", "motivo": f"{motivo} (tras {intentos} corridas)", "intentos": intentos}, "ilegible"
     return {**base, "estado": "pendiente", "motivo": motivo, "fase": fase, "intentos": intentos}, "error_transitorio"
 
 
-def resolver(run: str, anio: int, previo: dict | None, hoy: date) -> tuple[dict, str | None]:
+def resolver(run: str, anio: int, previo: dict | None, hoy: date, contar: bool = True) -> tuple[dict, str | None]:
     """Resuelve un fondo y un cierre. Devuelve (registro, evento); no lanza.
 
     evento: None · 'nuevo' · 'reedicion' · 'error_transitorio' · 'ilegible'
@@ -289,10 +317,10 @@ def resolver(run: str, anio: int, previo: dict | None, hoy: date) -> tuple[dict,
     base = {"run": run, "anio": anio, "revisado": hoy.isoformat()}
     intentos = int((previo or {}).get("intentos", 0)) if (previo or {}).get("estado") in ("pendiente", "ilegible") else 0
     try:
-        tipo, archivo = eeff_xml.clasificar_ficha(_get(URL_FICHA.format(run=run, anio=anio)))
+        tipo, archivo = _con_reintentos(
+            lambda: eeff_xml.clasificar_ficha(_get(URL_FICHA.format(run=run, anio=anio))))
     except ErrorTransitorio as e:
-        FRENO.falla()
-        return _pendiente(previo, base, "ficha", str(e), intentos)
+        return _pendiente(previo, base, "ficha", str(e), intentos, contar)
     if tipo == "sin_informacion":
         if previo is not None and previo.get("estado") == "ok":
             # La CMF ya no muestra el envío: se conserva lo publicado y se deja constancia.
@@ -300,15 +328,18 @@ def resolver(run: str, anio: int, previo: dict | None, hoy: date) -> tuple[dict,
             return {**previo, "avisos": avisos, "revisado": base["revisado"]}, None
         return {**base, "estado": "sin_informacion"}, None
     if tipo == "sin_enlace":
-        return _pendiente(previo, base, "enlace", "la ficha no enlaza ningún XML", intentos)
+        return _pendiente(previo, base, "enlace", "la ficha no enlaza ningún XML", intentos, contar)
     if previo is not None and previo.get("estado") == "ok" and previo.get("archivo") == archivo:
         return {**previo, "revisado": base["revisado"]}, None
+    def pedir_xml():
+        crudo = _get(URL_XML.format(archivo=archivo, run=run, anio=anio))
+        return crudo, eeff_xml.leer_xml(crudo)
+
     try:
-        raw = _get(URL_XML.format(archivo=archivo, run=run, anio=anio))
-        datos = eeff_xml.extraer(eeff_xml.leer_xml(raw), run, anio)
+        raw, raiz = _con_reintentos(pedir_xml)
+        datos = eeff_xml.extraer(raiz, run, anio)
     except ErrorTransitorio as e:
-        FRENO.falla()
-        return _pendiente(previo, base, "xml", str(e), intentos)
+        return _pendiente(previo, base, "xml", str(e), intentos, contar)
     except ErrorFuente as e:
         if previo is not None and previo.get("estado") == "ok":
             avisos = sorted(set(previo.get("avisos", [])) | {f"el reenvío {archivo} no se pudo leer: {e}"})
@@ -347,7 +378,7 @@ def planificar(cand: list[tuple[str, int]], estado: dict, hoy: date, forzar: boo
     pedir = []
     for run, anio in cand:
         r = estado.get((run, anio))
-        if r is None or r["estado"] == "pendiente" or toca_refresco(run, anio, hoy, forzar):
+        if r is None or r["estado"] in ("pendiente", "ilegible") or toca_refresco(run, anio, hoy, forzar):
             pedir.append((run, anio))
     return pedir
 
@@ -454,10 +485,10 @@ ORIGEN = ("CMF — Estados financieros IFRS de fondos mutuos (XML «FMEF», Circ
 DESCRIPCION = {
     "balance": ("Estado de situación financiera de cada fondo mutuo —vigente o extinto— al 31 de diciembre de cada año, "
                 "línea por línea (16 líneas), con el comparativo del año anterior. Miles de la moneda del fondo "
-                "(pesos o dólares)."),
+                "(pesos, dólares o euros)."),
     "resultados": ("Estado de resultados integrales de cada fondo mutuo —vigente o extinto— del ejercicio completo, "
                    "línea por línea (19 líneas), con el comparativo del año anterior. Miles de la moneda del fondo "
-                   "(pesos o dólares)."),
+                   "(pesos, dólares o euros)."),
 }
 
 
@@ -495,7 +526,8 @@ def actualizar_data_manifest() -> None:
 # Corrida
 # ---------------------------------------------------------------------------
 
-def procesar(pedir: list[tuple[str, int]], estado: dict, hoy: date, minutos: float, hilos: int) -> dict:
+def procesar(pedir: list[tuple[str, int]], estado: dict, hoy: date, minutos: float, hilos: int,
+             contar: bool = True) -> dict:
     """Resuelve los pendientes con `hilos` hilos y un tope de tiempo; devuelve contadores y reediciones."""
     inicio = time.monotonic()
     cuenta: Counter = Counter()
@@ -505,7 +537,7 @@ def procesar(pedir: list[tuple[str, int]], estado: dict, hoy: date, minutos: flo
     def tarea(k):
         if FRENO.detener.is_set() or time.monotonic() - inicio > minutos * 60:
             return k, None, "omitido"
-        r, ev = resolver(k[0], k[1], estado.get(k), hoy)
+        r, ev = resolver(k[0], k[1], estado.get(k), hoy, contar)
         return k, r, ev
 
     hechos = 0
@@ -535,6 +567,7 @@ def procesar(pedir: list[tuple[str, int]], estado: dict, hoy: date, minutos: flo
 def correr(minutos: float = 270, hilos: int = 4, desde: int = DESDE, hasta: int | None = None,
            limite: int = 0, forzar: bool = False, publicar: bool = True) -> dict:
     hoy = _hoy()
+    inicio = time.monotonic()
     FRENO.__init__()
     LOCAL.mkdir(parents=True, exist_ok=True)
     estado = cargar_estado()
@@ -547,6 +580,20 @@ def correr(minutos: float = 270, hilos: int = 4, desde: int = DESDE, hasta: int 
           f"ya resueltos {len(estado)} · a pedir {len(pedir)} ({nuevos} nuevos)", flush=True)
     res = procesar(pedir, estado, hoy, minutos, hilos) if pedir else {"cuenta": {}, "reediciones": [], "por_tiempo": False,
                                                                        "freno": False}
+    # Rondas lentas para los que siguen pendientes (desafíos de la CMF que aguantaron los reintentos): un hilo y espera
+    # previa. No cuentan como una corrida más para marcar un XML como ilegible.
+    for ronda in range(RONDAS_REZAGADOS):
+        rezagados = sorted((k for k, r in estado.items() if r["estado"] == "pendiente"), key=lambda k: (-k[1], int(k[0])))
+        restante = minutos - (time.monotonic() - inicio) / 60
+        if not rezagados or res["freno"] or restante <= ESPERA_REZAGADOS / 60 + 1:
+            break
+        print(f"Ronda lenta {ronda + 1}/{RONDAS_REZAGADOS}: {len(rezagados)} pendientes tras la pasada principal", flush=True)
+        time.sleep(ESPERA_REZAGADOS)
+        extra = procesar(rezagados, estado, hoy, restante, 1, contar=False)
+        res["reediciones"] += extra["reediciones"]
+        res["freno"] = res["freno"] or extra["freno"]
+        res["cuenta"]["rezagados_resueltos"] = res["cuenta"].get("rezagados_resueltos", 0) + sum(
+            1 for k in rezagados if estado[k]["estado"] != "pendiente")
     guardar_progreso(estado)
     ev = evaluar(estado, cand, hoy)
     out = {**res, **ev, "candidatos": len(cand), "publicado": False}
@@ -562,12 +609,17 @@ def correr(minutos: float = 270, hilos: int = 4, desde: int = DESDE, hasta: int 
         estable.escribir_json(CONTROL, construir_control(estado, cand, hoy, res["reediciones"]))
         actualizar_data_manifest()
         out["publicado"] = True
-    for r in estado.values():
-        if r["estado"] == "ilegible":
-            print(f"::warning::fondo {r['run']} cierre {r['anio']} ilegible: {r.get('motivo', '')[:140]}")
+    ilegibles = sorted((r for r in estado.values() if r["estado"] == "ilegible"), key=lambda r: (r["anio"], int(r["run"])))
     pend = sorted((r for r in estado.values() if r["estado"] == "pendiente"), key=lambda r: (r["anio"], int(r["run"])))
-    for r in pend[:6]:                                   # una muestra para diagnosticar desde las anotaciones
-        print(f"::notice::pendiente: fondo {r['run']} cierre {r['anio']} ({r.get('fase')}): {r.get('motivo', '')[:200]}")
+    # Los logs de Actions no se pueden bajar desde fuera: el diagnóstico va agrupado en una sola anotación (≤ 4.000 caracteres).
+    out["motivos_ilegibles"] = dict(Counter((r.get("motivo") or "")[:70] for r in ilegibles).most_common(8))
+    out["motivos_pendientes"] = dict(Counter((r.get("motivo") or "")[:70] for r in pend).most_common(4))
+    if ilegibles:
+        print("::warning title=FFMM EEFF ilegibles::" + json.dumps(out["motivos_ilegibles"], ensure_ascii=False))
+    for r in ilegibles[:3]:
+        print(f"::notice::ilegible: fondo {r['run']} cierre {r['anio']}: {r.get('motivo', '')[:140]}")
+    for r in pend[:4]:                                   # una muestra para diagnosticar desde las anotaciones
+        print(f"::notice::pendiente: fondo {r['run']} cierre {r['anio']} ({r.get('fase')}): {r.get('motivo', '')[:160]}")
     for r in res["reediciones"]:
         print(f"::notice::reedición del fondo {r['run']} cierre {r['anio']}: {r['archivo_nuevo']}")
     (LOCAL / "resumen.json").write_text(json.dumps(
@@ -603,7 +655,8 @@ def main(argv=None) -> int:
                "pendientes_cerrados": len(out["pendientes_cerrados"]), "publicado": out["publicado"],
                "cuenta": c, "balances_verificados": out["balances_verificados"],
                "balances_descuadrados": out["balances_descuadrados"], "por_tiempo": out["por_tiempo"],
-               "freno": out["freno"]}
+               "freno": out["freno"], "motivos_ilegibles": out["motivos_ilegibles"],
+               "motivos_pendientes": out["motivos_pendientes"]}
     print("::notice title=FFMM EEFF::FFMM_EEFF_PROGRESS=" + json.dumps(resumen, ensure_ascii=False))
     return 1 if out["motivo_error"] else 0
 
