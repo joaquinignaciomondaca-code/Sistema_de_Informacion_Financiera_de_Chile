@@ -1,0 +1,1101 @@
+{
+  "tabla": "fi_resultados",
+  "files": [
+    "outputs/fi/fi_resultados/2026-06.parquet"
+  ],
+  "periodos": [
+    "2026-06"
+  ],
+  "total_records": 97860,
+  "updated_at": "2026-10-01T21:19:19+00:00",
+  "nota": "Filtrar contexto = 'PeriodoActual' para el cierre/acumulado actual; no sumar contextos ni monedas.",
+  "contextos_excluidos": [
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9142",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "operación + costos financieros = utilidad antes de impuesto (Δ -12)",
+        "antes de impuesto + impuestos = resultado (Δ 12)"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9179",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9179",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9183",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9183",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9289",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "Σ gastos = total gastos (Δ -732)",
+        "ingresos + gastos = utilidad de operación (Δ 732)"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9364",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "ingresos + gastos = utilidad de operación (Δ -10)",
+        "operación + costos financieros = utilidad antes de impuesto (Δ 10)"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9387",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9387",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9427",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9427",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9452",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9452",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9488",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9488",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9502",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "ingresos + gastos = utilidad de operación (Δ 568552)"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9505",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9505",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9555",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "Σ ingresos = total ingresos (Δ 18346)"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9580",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9580",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9588",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9588",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9592",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9592",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9619",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9619",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9620",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9620",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9686",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9686",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9695",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9695",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9705",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9705",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9706",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9706",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9735",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9735",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9739",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9739",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9743",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9743",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9770",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9770",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9772",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9772",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9798",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9798",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9823",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9823",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9830",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9830",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9846",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9846",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9871",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9871",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9906",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9906",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9911",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "antes de impuesto + impuestos = resultado (Δ 20)"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9948",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9948",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9951",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9951",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9954",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9954",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9970",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9970",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9990",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "fechas inválidas/ambiguas: TrimestreActual: fechas 2026-01-01..2026-06-30 incoherentes con 2026-06"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9990",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "fechas inválidas/ambiguas: TrimestreAnterior: fechas 2025-01-01..2025-06-30 incoherentes con 2026-06"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9991",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "9991",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10054",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10054",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10075",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10075",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10090",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10090",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10144",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10144",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10150",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10150",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10196",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10196",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10218",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10218",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10220",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "Σ ingresos = total ingresos (Δ -74)",
+        "ingresos + gastos = utilidad de operación (Δ 74)"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10308",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10308",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10333",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10333",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10356",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10356",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10357",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10357",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10391",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10391",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10402",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "ingresos + gastos = utilidad de operación (Δ 128)"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10437",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10437",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10438",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10438",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10448",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10448",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10514",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "operación + costos financieros = utilidad antes de impuesto (Δ 53426)"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10550",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10550",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10563",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "Σ gastos = total gastos (Δ -45)",
+        "ingresos + gastos = utilidad de operación (Δ 45)"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10600",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10600",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10609",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10609",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10616",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10616",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10640",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10640",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10645",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10645",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10660",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10660",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10681",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "Σ ingresos = total ingresos (Δ 105)",
+        "ingresos + gastos = utilidad de operación (Δ -105)"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10695",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "ingresos + gastos = utilidad de operación (Δ -1462)"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10698",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10698",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10730",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "ingresos + gastos = utilidad de operación (Δ -180)",
+        "operación + costos financieros = utilidad antes de impuesto (Δ 180)"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10746",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10746",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10748",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10748",
+      "contexto": "TrimestreAnterior",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10763",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10770",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10771",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10776",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10793",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "10811",
+      "contexto": "TrimestreActual",
+      "errores": [
+        "cuentas en contexto sin fechas declaradas; no se infieren"
+      ]
+    }
+  ]
+}
