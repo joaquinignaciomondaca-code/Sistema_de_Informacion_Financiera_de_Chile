@@ -1446,10 +1446,14 @@ const ERD_TABLES = [
     ]
   },
 
+  // BEGIN AUTO FI EEFF ERD
+  // END AUTO FI EEFF ERD
 ];
 
 // Relaciones entre tablas (Claves Foráneas lógicas)
 const ERD_LINKS = [
+  // BEGIN AUTO FI EEFF LINKS
+  // END AUTO FI EEFF LINKS
   { from: "seguros_lista_entidades", to: "seguros_renta_fija", key: "sector, rut_aseguradora" },
   { from: "seguros_lista_entidades", to: "seguros_acciones", key: "sector, rut_aseguradora" },
   { from: "seguros_lista_entidades", to: "seguros_fondos_mutuos", key: "sector, rut_aseguradora" },
