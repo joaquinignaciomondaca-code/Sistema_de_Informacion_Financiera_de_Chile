@@ -115,6 +115,15 @@ class ChatTerminalController {
         const sql = decodeURIComponent(hash.substring(5));
         if (sql) {
           this.input.value = sql;
+          // Un enlace compartido ejecuta SQL en el navegador de quien lo abre.
+          // Decirlo evita que una consulta ajena pase por propia: el visitante ve
+          // el texto antes del resultado y puede borrarlo sin ejecutarlo.
+          this.addSystemMessage(
+            "Esta consulta viene del enlace que abriste, no la escribiste tú: <code>" +
+            this.escapeHtml(sql.length > 220 ? sql.slice(0, 220) + "…" : sql) +
+            "</code>. Revisa el texto antes de usar el resultado. Se ejecutará en unos segundos " +
+            "(o bórrala y escribe la tuya)."
+          );
           setTimeout(() => {
             this.handleSend();
           }, 600);

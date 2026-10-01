@@ -1,0 +1,53 @@
+name: Sondeo de industrias en el TXT IFRS de la CMF (solo lectura)
+
+# El archivo trimestral de la CMF trae todas las sociedades que envían estados
+# financieros XBRL (368 en 2026-06) y el sistema publica 66. Este flujo no publica
+# nada: describe qué se está descartando —por giro, taxonomía y estado— para decidir
+# con datos a qué industria conviene extenderse (docs/notas/revision_extraccion_eeff_industrias_2026-10-01.md).
+#
+# No escribe en docs/, no hace commit y no necesita credenciales.
+
+on:
+  workflow_dispatch:
+    inputs:
+      periodo:
+        description: 'Trimestre AAAAMM (vacío = el último del índice)'
+        required: false
+        default: ''
+        type: string
+  schedule:
+    - cron: '40 13 5 * *'
+
+permissions:
+  contents: read
+
+jobs:
+  sondear:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Instalar dependencias
+        run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
+      - name: Pruebas del sondeo
+        run: python -m unittest -v pipelines.ifrs_sectores.tests.test_sondeo
+      - name: Describir las sociedades que hoy se descartan
+        run: |
+          set +e
+          args=""
+          if [ -n "${{ inputs.periodo }}" ]; then args="--periodo ${{ inputs.periodo }}"; fi
+          python scripts/sondear_ifrs_sectores.py $args > sondeo.log 2>&1; n=$?
+          cat sondeo.log
+          if [ $n -ne 0 ]; then
+            echo "::error title=Sondeo IFRS::no se pudo leer el archivo de la CMF"
+            exit $n
+          fi
+      - name: Subir el informe
+        uses: actions/upload-artifact@v4
+        with:
+          name: sondeo-ifrs-${{ inputs.periodo || 'ultimo' }}
+          path: .local-data/ifrs_sectores/sondeo_*.json
+          if-no-files-found: warn

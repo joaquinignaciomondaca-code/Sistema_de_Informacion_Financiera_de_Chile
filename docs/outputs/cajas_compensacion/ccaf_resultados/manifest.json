@@ -87,5 +87,24 @@
     "2026-03",
     "2026-06"
   ],
-  "updated_at": "2026-09-29T18:59:18+00:00"
+  "updated_at": "2026-10-01T02:49:01+00:00",
+  "cobertura": {
+    "ultimo_periodo": "2026-06",
+    "entidades": 4,
+    "lista_total": 6,
+    "sin_datos": [
+      {
+        "rut": "70014300",
+        "razon_social": "CAJA DE COMPENSACION DE ASIGNACION FAMILIAR JAVIERA CARRERA",
+        "ultimo_periodo": null
+      },
+      {
+        "rut": "70017000",
+        "razon_social": "CAJA DE COMPENSACION DE ASIGNACION FAMILIAR GABRIELA MISTRAL",
+        "ultimo_periodo": null
+      }
+    ],
+    "sin_datos_total": 2,
+    "dejaron_de_informar": []
+  }
 }

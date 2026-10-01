@@ -89,5 +89,55 @@
     "2026-03",
     "2026-06"
   ],
-  "updated_at": "2026-09-29T18:59:18+00:00"
+  "updated_at": "2026-10-01T02:49:01+00:00",
+  "cobertura": {
+    "ultimo_periodo": "2026-06",
+    "entidades": 9,
+    "lista_total": 16,
+    "sin_datos": [
+      {
+        "rut": "79558200",
+        "razon_social": "FINTESA SECURITIZADORA S.A.",
+        "ultimo_periodo": "2024-12"
+      },
+      {
+        "rut": "96761720",
+        "razon_social": "CB SECURITIZADORA S.A.",
+        "ultimo_periodo": null
+      },
+      {
+        "rut": "96777130",
+        "razon_social": "SECURITIZADORA LA CONSTRUCCION S.A.",
+        "ultimo_periodo": "2011-09"
+      },
+      {
+        "rut": "96876290",
+        "razon_social": "SECURITIZADORA CHILE MAE S.A.",
+        "ultimo_periodo": null
+      },
+      {
+        "rut": "96912880",
+        "razon_social": "CREDICORP CAPITAL S.A. SECURITIZADORA",
+        "ultimo_periodo": "2017-09"
+      },
+      {
+        "rut": "96932010",
+        "razon_social": "BANCHILE SECURITIZADORA S.A.",
+        "ultimo_periodo": "2022-06"
+      },
+      {
+        "rut": "99551980",
+        "razon_social": "SECURITIZADORA EXPEDITA S.A.",
+        "ultimo_periodo": null
+      }
+    ],
+    "sin_datos_total": 7,
+    "dejaron_de_informar": [
+      {
+        "rut": "79558200",
+        "razon_social": "FINTESA SECURITIZADORA S.A.",
+        "ultimo_periodo": "2024-12"
+      }
+    ]
+  }
 }
