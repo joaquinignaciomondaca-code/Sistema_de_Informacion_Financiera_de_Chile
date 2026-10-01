@@ -83,7 +83,9 @@ class PublicationTests(unittest.TestCase):
             for table_id in full_ids:
                 entry = next(x for x in manifest['tables'] if x['id'] == table_id)
                 self.assertIn('no cotejadas', entry['descripcion'])
-        self.assertEqual(sector, expected)
+        # El orden en data_manifest.json depende de qué flujo escribió la tabla
+        # primero; lo que importa es cuáles hay, no en qué posición quedaron.
+        self.assertEqual(sorted(sector), sorted(expected))
         self.assertEqual(manifest['total_tables'], len(manifest['tables']))
         self.assertEqual(manifest['total_records'],
                          sum(t.get('registros_reales', 0) for t in manifest['tables']))

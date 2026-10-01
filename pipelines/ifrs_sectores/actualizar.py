@@ -30,15 +30,18 @@ Montos: el entero literal del archivo, en unidades de la moneda informada (moned
 CLP o USD). No se convierte, no se suma ni se redondea. Si un valor no es entero se
 deja nulo y el texto original queda en valor_no_numerico.
 
+El reconocimiento del archivo, el reparto por estado, el tratamiento del importe y el
+conteo de `orden`/`repeticion` viven en `pipelines/auto/ifrs_txt.py`, compartido con el
+backfill de factoring y leasing: los dos leen este mismo TXT y no pueden interpretarlo
+distinto. La cuadratura contable, en `pipelines/auto/cuadratura.py`.
+
 Salidas por sector y tabla (balance, resultados):
   docs/outputs/<carpeta>/<prefijo>_<tabla>/<AAAA>.parquet  +  manifest.json
 """
 from __future__ import annotations
 
 import argparse
-import csv
 import hashlib
-import io
 import json
 import os
 import re
@@ -55,9 +58,11 @@ import pyarrow.parquet as pq
 
 RAIZ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(RAIZ))
-from pipelines.auto import cuadratura, estable  # noqa: E402
+from pipelines.auto import cuadratura, estable, ifrs_txt  # noqa: E402
 DOCS = RAIZ / "docs" / "outputs"
 CONTROL = DOCS / "ifrs_sectores" / "manifest.json"
+# Fichas del diccionario de la web: allí se publica la cobertura de cada sector.
+RUTA_DICCIONARIO = RAIZ / "docs" / "js" / "data_dictionary.js"
 INDICE = "https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
 ARCHIVO = "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio={0}&termino={1}"
 UA = {"User-Agent": "Mozilla/5.0 (compatible; MonitorFinancieroChile/1.0)", "Accept": "text/plain,text/html,*/*"}
@@ -104,9 +109,17 @@ SOLO_LISTA = {
     },
 }
 NOVEDADES = DOCS / "entidades" / "novedades_ifrs.json"
+# Ventana en que una ausencia se considera novedad y no historia: 8 trimestres = 2 años.
+TRIMESTRES_NOVEDAD = 8
 MAX_ALTAS = 10
-TABLAS = {"balance": "ESF", "resultados": "ER"}
-TIPO_BALANCE = {"I": "individual", "C": "consolidado"}
+# Entidades que entran solo porque su NOMBRE calza con el giro (sin estar en la lista).
+# Unas pocas son altas reales; muchas de golpe indican un patrón demasiado amplio, y eso
+# mete sociedades de otro giro en la tabla del sector: se avisa para revisar el patrón.
+MAX_FUERA_DE_LISTA = 5
+# Un solo lugar define qué prefijo de estado va a cada tabla y cómo se traduce el
+# tipo de balance: son las mismas reglas que usa el backfill de factoring y leasing.
+TABLAS = ifrs_txt.TABLAS
+TIPO_BALANCE = ifrs_txt.TIPO_BALANCE
 
 ESQUEMA = pa.schema([
     ("periodo", pa.string()), ("rut", pa.string()), ("rut_dv", pa.string()),
@@ -196,21 +209,15 @@ def cerrado(periodo: str, hoy: date) -> bool:
 
 
 def es_txt(raw: bytes) -> bool:
-    cab = raw[:2000].lower()
-    return bool(raw) and b"<html" not in cab and b"<!doctype" not in cab and b"accion no permitida" not in cab
+    return ifrs_txt.es_txt(raw)
 
 
 def decodificar(raw: bytes) -> str:
-    try:
-        return raw.decode("utf-8")
-    except UnicodeDecodeError:
-        return raw.decode("latin-1")
+    return ifrs_txt.decodificar(raw)
 
 
 def _norm(s: str) -> str:
-    import unicodedata
-    s = "".join(c for c in unicodedata.normalize("NFKD", s.upper()) if not unicodedata.combining(c))
-    return " ".join(s.split())
+    return ifrs_txt.normalizar(s)
 
 
 def cargar_listas() -> dict[str, dict[str, str]]:
@@ -236,14 +243,10 @@ def leer_archivo(raw: bytes, periodo: str, listas: dict[str, dict[str, str]]):
     avisos: list[str] = []
     entidades_archivo = set()
     lineas_periodo = 0
-    orden: dict[tuple, int] = {}
-    repet: dict[tuple, int] = {}
+    contextos = ifrs_txt.Contextos()
     asignacion: dict[str, str | None] = {}
     candidatos: dict[str, dict[str, str]] = {s: {} for s in SOLO_LISTA}
-    for n, c in enumerate(csv.reader(io.StringIO(decodificar(raw)), delimiter=";"), start=1):
-        if not c or all(not x.strip() for x in c):
-            continue
-        c = [x.strip() for x in c]
+    for n, c in ifrs_txt.lineas(raw):
         if len(c) < 9:
             if len(c) > 2 and c[0] == periodo:
                 avisos.append(f"línea {n}: {len(c)} campos")
@@ -254,33 +257,33 @@ def leer_archivo(raw: bytes, periodo: str, listas: dict[str, dict[str, str]]):
         lineas_periodo += 1
         entidades_archivo.add(cuerpo)
         if cuerpo not in asignacion:
-            nn = _norm(nombre)
+            nn = ifrs_txt.normalizar(nombre)
             asignacion[cuerpo] = next((s for s in SECTORES if cuerpo in listas[s]), None) or \
                 next((s for s, cfg in SECTORES.items() if cfg["patron"].search(nn)), None)
         sec = asignacion[cuerpo]
         if sec is None:
             for s, cfg in SOLO_LISTA.items():
-                nn = _norm(nombre)
+                nn = ifrs_txt.normalizar(nombre)
                 if cuerpo.isdigit() and cuerpo not in listas[s] and cfg["patron"].search(nn) and not cfg["excluir"].search(nn):
                     candidatos[s][f"{cuerpo}-{dv(cuerpo)}"] = nombre
             continue
-        tabla = next((t for t, pref in TABLAS.items() if estado.startswith(pref)), None)
+        tabla = ifrs_txt.tabla_de(estado)
         if tabla is None:
             continue  # flujos de efectivo y otros estados: no se publican
         if len(c) != 9 or tipo not in TIPO_BALANCE or not cuenta:
             avisos.append(f"línea {n}: esquema inesperado ({cuerpo})")
             continue
-        clave = (cuerpo, tipo, moneda, estado)
-        orden[clave] = orden.get(clave, 0) + 1
-        k2 = clave + (tax, cuenta)
-        repet[k2] = repet.get(k2, 0) + 1
-        entero = re.fullmatch(r"-?\d+", valor) is not None
+        # `orden` y `repeticion` salen del contador compartido (la taxonomía entra en la
+        # llave: dos taxonomías del mismo estado no deben intercalar sus cuentas).
+        clave_estado = contextos.clave_estado(per, cuerpo, tipo, moneda, tax, estado)
+        orden, repeticion = contextos.agregar(clave_estado, cuenta)
+        valor_entero, valor_texto = ifrs_txt.valor_y_texto(valor)
         datos[sec][tabla].append({
             "periodo": f"{per[:4]}-{per[4:]}", "rut": cuerpo, "rut_dv": f"{cuerpo}-{dv(cuerpo)}" if cuerpo.isdigit() else cuerpo,
             "razon_social": nombre, "tipo_balance": TIPO_BALANCE[tipo], "moneda": moneda,
-            "estado_financiero": estado, "orden": orden[clave], "cuenta": cuenta,
-            "valor": int(valor) if entero else None, "valor_no_numerico": None if entero else valor[:200],
-            "repeticion": repet[k2], "taxonomia": tax, "en_lista_entidades": cuerpo in listas[sec],
+            "estado_financiero": estado, "orden": orden, "cuenta": cuenta,
+            "valor": valor_entero, "valor_no_numerico": valor_texto,
+            "repeticion": repeticion, "taxonomia": tax, "en_lista_entidades": cuerpo in listas[sec],
         })
     if lineas_periodo == 0:
         raise ErrorContenido(f"el archivo no trae filas de {periodo}")
@@ -350,7 +353,186 @@ def refrescar_marcas(listas: dict[str, dict[str, str]], control: dict) -> int:
     return cambios
 
 
-def escribir_manifiestos(control: dict) -> None:
+def periodo_anterior(control: dict, periodo: str) -> str | None:
+    """Trimestre publicado inmediatamente anterior a `periodo` (o None si no hay)."""
+    anteriores = [p for p in sorted(control.get("periodos", {})) if p < periodo]
+    return anteriores[-1] if anteriores else None
+
+
+def dejaron_de_informar(control: dict, periodo: str, sec: str, presentes: set[str]) -> list[str]:
+    """RUT que informaban en el trimestre anterior y en este no aparecen.
+
+    La fuente no avisa de las ausencias: una entidad que se fusiona, se disuelve o
+    simplemente deja de enviar su XBRL desaparece del archivo sin más. Comparar contra
+    el trimestre anterior convierte ese silencio en un aviso con nombre y RUT.
+    """
+    ant = periodo_anterior(control, periodo)
+    if not ant:
+        return []
+    ruts_antes = control["periodos"].get(ant, {}).get("ruts", {})
+    if not ruts_antes:
+        return []
+    antes = ruts_antes.get(sec) or []
+    return sorted(set(antes) - set(presentes))
+
+
+def publicar_sector(sec: str, datos: dict, previo: dict, listas: dict, control: dict,
+                    periodo: str) -> tuple[dict, list[str], list[str]]:
+    """Publica un sector de un trimestre, o conserva lo ya publicado si la relectura empeora.
+
+    Devuelve `(resumen, ruts, avisos)`. La guarda mira **entidades y filas por tabla**: una
+    relectura que trae las mismas sociedades pero pierde las filas de una de las dos tablas
+    (p. ej. un cambio de glosas que manda todo al `avisos`) no puede sobrescribir el trimestre
+    con una tabla vacía, que es lo que borraría el dato del Parquet publicado sin avisar.
+    """
+    avisos: list[str] = []
+    ents = sorted({f["rut"] for t in TABLAS for f in datos[sec][t]})
+    antes = previo.get(sec, {}).get("entidades", 0)
+    filas_antes = previo.get(sec, {}).get("filas", {}) or {}
+    pierde = [t for t in TABLAS if len(datos[sec][t]) < int(filas_antes.get(t, 0) or 0)]
+    if len(ents) < antes or pierde:
+        avisos.append(
+            f"{sec}: la relectura trae {len(ents)} entidades (antes {antes})"
+            + (f" y pierde filas en {', '.join(pierde)}" if pierde else "")
+            + "; se mantiene lo anterior")
+        # Si se conserva lo publicado, se conserva también el conjunto de RUT: registrar los
+        # de la relectura haría aparecer como «dejaron de informar» a entidades que siguen
+        # estando en los Parquet.
+        return previo[sec], (control["periodos"].get(periodo, {}).get("ruts") or {}).get(sec, ents), avisos
+    for tabla in TABLAS:
+        escribir(sec, tabla, periodo, datos[sec][tabla])
+    fuera = sorted({(f["rut_dv"], f["razon_social"]) for t in TABLAS for f in datos[sec][t]
+                    if not f["en_lista_entidades"]})
+    if len(fuera) > MAX_FUERA_DE_LISTA:
+        avisos.append(f"{sec}: {len(fuera)} entidades entran solo por su nombre")
+        print(f"::warning::{sec}: {len(fuera)} sociedades calzan con el patrón del nombre "
+              f"y no están en la lista de entidades (más de {MAX_FUERA_DE_LISTA} sugiere un "
+              f"patrón demasiado amplio); se publican con en_lista_entidades = false")
+    # Cobertura silenciosa: quién falta y quién dejó de informar. Sin esto, una entidad que
+    # desaparece del archivo no se nota hasta que alguien la busca.
+    sin_datos = sorted(set(listas[sec]) - set(ents))
+    resumen = {"entidades": len(ents),
+               "filas": {t: len(datos[sec][t]) for t in TABLAS},
+               "lista_sin_datos": len(sin_datos),
+               "lista_total": len(listas[sec]),
+               "dejaron_de_informar": dejaron_de_informar(control, periodo, sec, set(ents)),
+               "fuera_de_lista": [{"rut": r, "razon_social": n} for r, n in fuera]}
+    if resumen["dejaron_de_informar"]:
+        avisos.append(f"{sec}: dejaron de informar {', '.join(resumen['dejaron_de_informar'][:5])}")
+        for e in resumen["dejaron_de_informar"]:
+            print(f"::notice::{sec}: {e} informaba hasta el trimestre anterior y no aparece en {periodo}")
+    if sin_datos:
+        print(f"::notice::{sec}: {len(sin_datos)} de {len(listas[sec])} entidades de la lista "
+              f"no informan en {periodo}")
+    return resumen, ents, avisos
+
+
+def _indice(periodo: str) -> int:
+    """Orden natural de un trimestre 'AAAA-MM' (para comparar y restar trimestres)."""
+    return int(periodo[:4]) * 4 + (int(periodo[5:]) - 1) // 3
+
+
+def _periodo(indice: int) -> str:
+    return f"{indice // 4}-{indice % 4 * 3 + 3:02d}"
+
+
+def ultimo_periodo_por_rut(sec: str, tabla: str = "balance") -> tuple[dict[str, str], dict[str, str]]:
+    """Último trimestre publicado de cada RUT, y el nombre con que se publicó.
+
+    Se leen solo tres columnas de todos los años: es la forma más barata de saber quién
+    dejó de informar sin depender de la memoria del pipeline (un `control.json` viejo no
+    trae el historial de RUT y, si se pierde, esta información se reconstruye completa).
+    """
+    ultimos: dict[str, str] = {}
+    nombres: dict[str, str] = {}
+    for ruta in sorted(ruta_tabla(sec, tabla).glob("*.parquet")):
+        t = pq.read_table(ruta, columns=["periodo", "rut", "razon_social"])
+        for per, rut, nombre in zip(t.column("periodo").to_pylist(), t.column("rut").to_pylist(),
+                                    t.column("razon_social").to_pylist()):
+            if not rut:
+                continue
+            if rut not in ultimos or per > ultimos[rut]:
+                ultimos[rut] = per
+                nombres[rut] = nombre or ""
+    return ultimos, nombres
+
+
+def cobertura(listas: dict[str, dict[str, str]], max_sin_datos: int = 12) -> dict[str, dict]:
+    """Quién informa y quién no en el último trimestre publicado de cada sector.
+
+    La fuente no avisa de las ausencias: una sociedad que se fusiona o deja de enviar su
+    archivo simplemente desaparece. Aquí el silencio se convierte en un dato publicado.
+    """
+    out: dict[str, dict] = {}
+    for sec in SECTORES:
+        ultimos, nombres = ultimo_periodo_por_rut(sec)
+        if not ultimos:
+            continue
+        per = max(ultimos.values())
+        presentes = {r for r, p in ultimos.items() if p == per}
+        catalogo = listas.get(sec) or {}
+        sin_datos = [{"rut": r, "razon_social": nombres.get(r) or nombre, "ultimo_periodo": ultimos.get(r)}
+                     for r, nombre in sorted(catalogo.items()) if r not in presentes]
+        # «Dejaron de informar» = venían informando hace poco y ya no. Lo que se fue antes
+        # de esa ventana queda como ausencia histórica, no como novedad del trimestre; igual
+        # se publica en `sin_datos`, con el último trimestre en que apareció.
+        desde = _periodo(_indice(per) - TRIMESTRES_NOVEDAD)
+        dejaron = [{"rut": r, "razon_social": nombres.get(r) or catalogo.get(r, ""),
+                    "ultimo_periodo": ultimos[r]}
+                   for r, p in sorted(ultimos.items(), key=lambda kv: kv[1], reverse=True)
+                   if p >= desde and r not in presentes]
+        out[sec] = {"ultimo_periodo": per, "entidades": len(presentes), "lista_total": len(catalogo),
+                    "sin_datos": sin_datos[:max_sin_datos], "sin_datos_total": len(sin_datos),
+                    "dejaron_de_informar": dejaron}
+    return out
+
+
+def texto_cobertura(cob: dict, cuantos: int = 4) -> str:
+    """Una frase para la web con la cobertura del último trimestre."""
+    if not cob:
+        return ""
+    partes = [f"Cobertura {cob['ultimo_periodo']}: informan {cob['entidades']} de las "
+              f"{cob['lista_total']} entidades del catálogo del sector."]
+    if cob["dejaron_de_informar"]:
+        nombres = [f"{(d['razon_social'] or d['rut']).strip()} (último {d['ultimo_periodo']})"
+                   for d in cob["dejaron_de_informar"][:cuantos]]
+        mas = len(cob["dejaron_de_informar"]) - len(nombres)
+        partes.append("Dejaron de informar: " + "; ".join(nombres) + (f" y {mas} más." if mas > 0 else "."))
+    if cob["sin_datos_total"]:
+        muestra = [f["razon_social"] or f["rut"] for f in cob["sin_datos"][:3]]
+        partes.append(f"Sin dato en {cob['ultimo_periodo']}: {cob['sin_datos_total']} entidades"
+                      + (f" ({', '.join(muestra)}…)" if muestra else "") + ".")
+    return " ".join(partes)
+
+
+def escribir_cobertura_web(cob: dict[str, dict]) -> bool:
+    """Escribe la cobertura en las fichas del diccionario de la web; True si algo cambió."""
+    lineas = RUTA_DICCIONARIO.read_text(encoding="utf-8").split("\n")
+    ids = {f"{cfg['prefijo']}_{t}": sec for sec, cfg in SECTORES.items() for t in TABLAS}
+    cambiado = False
+    for i, linea in enumerate(lineas):
+        t = linea.strip().rstrip(",")
+        if not t.startswith('{"id": "') or not t.endswith("}"):
+            continue
+        try:
+            obj = json.loads(t)
+        except ValueError:
+            continue
+        sec = ids.get(obj.get("id"))
+        if sec is None or sec not in cob:
+            continue
+        texto = texto_cobertura(cob[sec])
+        if obj.get("cobertura") == texto:
+            continue
+        obj["cobertura"] = texto
+        lineas[i] = "  " + json.dumps(obj, ensure_ascii=False) + ","
+        cambiado = True
+    if cambiado:
+        RUTA_DICCIONARIO.write_text("\n".join(lineas), encoding="utf-8")
+    return cambiado
+
+
+def escribir_manifiestos(control: dict, coberturas: dict | None = None) -> None:
     periodos = sorted(control["periodos"])
     for sec, cfg in SECTORES.items():
         for tabla in TABLAS:
@@ -363,6 +545,10 @@ def escribir_manifiestos(control: dict) -> None:
                    "total_records": sum(pq.ParquetFile(r).metadata.num_rows for r in rutas),
                    "periodos": [f"{p[:4]}-{p[4:]}" for p in con],
                    "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds")}
+            # Cobertura del último trimestre: quién informa, quién falta y quién se fue.
+            # Viaja con los datos para que cualquier descarga sepa qué le falta.
+            if coberturas and sec in coberturas:
+                man["cobertura"] = coberturas[sec]
             estable.escribir_json((carpeta / "manifest.json"), man)
 
 
@@ -542,41 +728,54 @@ def main(argv=None) -> int:
                 guardar_control(control)
             print(f"{periodo}: sin cambios en la fuente")
             continue
-        # Cuadratura contable (README §4): activos = pasivos + patrimonio. Un balance aislado que
-        # no cuadra queda como aviso; si la lectura falla en bloque (≥3 y más del 5 %), el trimestre no se publica.
-        verificados, descuadres = 0, []
+        # Cuadratura contable (README §4): activos = pasivos + patrimonio sobre el balance, y
+        # dos identidades del estado de resultados (el resultado integral arrastra la misma
+        # ganancia del ejercicio, y ganancia bruta = ingresos − costo de ventas).
+        # Un caso aislado queda como aviso; si la lectura falla en bloque (≥3 y más del 5 %),
+        # o si de pronto casi ningún balance trae los tres totales conocidos —señal de que
+        # cambiaron las glosas y la compuerta se quedó ciega—, el trimestre no se publica.
+        verificados, descuadres, balances_totales = 0, [], 0
+        verificaciones, divergencias = 0, []
         for sec in SECTORES:
-            v, malos = cuadratura.verificar_ifrs(datos[sec]["balance"])
+            filas_balance = datos[sec]["balance"]
+            balances_totales += cuadratura.contar_grupos(filas_balance, cuadratura.CLAVES_IFRS)
+            v, malos = cuadratura.verificar_ifrs(filas_balance)
             verificados += v
             descuadres += [f"{sec} {m}" for m in malos]
-        if cuadratura.debe_detener(verificados, descuadres):
-            errores.append(f"{periodo}: {len(descuadres)} de {verificados} balances no cuadran")
-            print(f"::warning::{periodo}: {len(descuadres)} de {verificados} balances no cuadran "
-                  f"(activos ≠ pasivos + patrimonio); no se publica. Ej.: {descuadres[0]}")
+            vr, mr = cuadratura.verificar_resultados_ifrs(datos[sec]["resultados"])
+            verificaciones += vr
+            divergencias += [f"{sec} {m}" for m in mr]
+        motivo = cuadratura.motivo_detener(verificados, descuadres, balances_totales)
+        if motivo:
+            errores.append(f"{periodo}: {motivo}")
+            print(f"::warning::{periodo}: {motivo}; no se publica")
+            continue
+        motivo_res = cuadratura.motivo_detener(verificaciones, divergencias)
+        if motivo_res:
+            errores.append(f"{periodo}: estado de resultados · {motivo_res}")
+            print(f"::warning::{periodo}: {len(divergencias)} de {verificaciones} identidades del "
+                  f"estado de resultados no se cumplen; no se publica. Ej.: {divergencias[0]}")
             continue
         avisos += [f"balance no cuadra: {m}" for m in descuadres]
+        avisos += [f"resultados: {m}" for m in divergencias[:10]]
         est["balances_verificados"], est["balances_descuadrados"] = verificados, len(descuadres)
+        est["balances_totales"] = balances_totales
+        est["resultados_verificaciones"] = verificaciones
+        est["resultados_divergencias"] = len(divergencias)
         previo = control["periodos"].get(periodo, {}).get("sectores", {})
         resumen = {}
+        ruts_periodo = {}
         for sec in SECTORES:
-            ents = sorted({f["rut"] for t in TABLAS for f in datos[sec][t]})
-            antes = previo.get(sec, {}).get("entidades", 0)
-            if len(ents) < antes:
-                # Una relectura nunca debe perder entidades: se conserva lo ya publicado.
-                avisos.append(f"{sec}: la relectura trae {len(ents)} entidades (antes {antes}); se mantiene lo anterior")
-                resumen[sec] = previo[sec]
-                continue
-            for tabla in TABLAS:
-                escribir(sec, tabla, periodo, datos[sec][tabla])
-            fuera = sorted({(f["rut_dv"], f["razon_social"]) for t in TABLAS for f in datos[sec][t]
-                            if not f["en_lista_entidades"]})
-            resumen[sec] = {"entidades": len(ents),
-                            "filas": {t: len(datos[sec][t]) for t in TABLAS},
-                            "fuera_de_lista": [{"rut": r, "razon_social": n} for r, n in fuera]}
+            resumen[sec], ruts_periodo[sec], avisos_sec = publicar_sector(
+                sec, datos, previo, listas, control, periodo)
+            avisos += avisos_sec
         control["periodos"][periodo] = {
             "cerrado": cerrado(periodo, hoy), "leido_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "fuente": url, "sha256": sha, **est,
             "sectores": resumen, "avisos": avisos[:20],
+            # RUT por sector: la comparación del trimestre siguiente (dejaron_de_informar)
+            # necesita los nombres, no solo la cantidad.
+            "ruts": ruts_periodo,
         }
         guardar_control(control)
         hechos += 1
@@ -600,7 +799,10 @@ def main(argv=None) -> int:
             for e in lst:
                 print(f"::notice::{s}: {e['rut']} {e['razon_social']} reporta en {ult} y no está en la lista de entidades")
         guardar_control(control)
-    escribir_manifiestos(control)
+    cobs = cobertura(listas)
+    escribir_manifiestos(control, cobs)
+    if escribir_cobertura_web(cobs):
+        print("Cobertura publicada en el diccionario de la web")
     actualizar_data_manifest(control)
     print(f"Trimestres leídos en esta corrida: {hechos}. Errores: {len(errores)}"
           + (f" · archivos históricos incompletos: {len(defectos)}" if defectos else ""))
