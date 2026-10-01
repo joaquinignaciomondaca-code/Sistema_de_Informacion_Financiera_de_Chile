@@ -1,0 +1,491 @@
+<IFRS>
+     <Identificacion>
+         <RUTFondoInforma>7064</RUTFondoInforma>
+         <DVFondoInforma>5</DVFondoInforma>
+         <NombreEntidadInforma>FONDO DE INVERSION DEUDA LATAM HIGH YIELD</NombreEntidadInforma>
+         <RUTAdministradora>96955500</RUTAdministradora>
+         <DVAdministradora>K</DVAdministradora>
+         <NombreAdministradoraInforma>LARRAINVIAL ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.</NombreAdministradoraInforma>
+     </Identificacion>
+     <DatosPeriodo>
+         <MonedaPresentacionEstadosFinancieros>PROM</MonedaPresentacionEstadosFinancieros>
+          <PeriodoPresentacionEstadosFinancieros>
+              <Mes>12</Mes>
+              <Anio>2021</Anio>
+          </PeriodoPresentacionEstadosFinancieros>
+         <EstadoSituacionFinanciera>S</EstadoSituacionFinanciera>
+         <EstadoResultadosIntegrales>S</EstadoResultadosIntegrales>
+         <EstadoCambiosPatrimonioNeto>S</EstadoCambiosPatrimonioNeto>
+         <EstadoFlujoEfectivoMetodoDirecto>S</EstadoFlujoEfectivoMetodoDirecto>
+     </DatosPeriodo>
+     <Contextos>
+          <PeriodoActual>
+             <FechaInicio>2021-01-01</FechaInicio>
+             <FechaTermino>2021-12-31</FechaTermino>
+          </PeriodoActual>
+          <PeriodoAnterior>
+             <FechaInicio>2020-01-01</FechaInicio>
+             <FechaTermino>2020-12-31</FechaTermino>
+          </PeriodoAnterior>
+          <PeriodoAnualAnterior>
+             <FechaInicio>2020-01-01</FechaInicio>
+             <FechaTermino>2020-12-31</FechaTermino>
+          </PeriodoAnualAnterior>
+     </Contextos>
+ <!-- Periodo Actual -->
+<Cuenta CodigoCuenta='AportesDividendosProvisorios' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioResultadoDelEjercicio' Context='PeriodoActual'>-122</Cuenta>
+<Cuenta CodigoCuenta='AportesResultadoDelEjercicio' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesDividendosProvisorios' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesResultadoDelEjercicio' Context='PeriodoActual'>647</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosDividendosProvisorios' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosDividendosProvisorios' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosResultadoDelEjercicio' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesDividendosProvisorios' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesResultadoDelEjercicio' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosDividendosProvisorios' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosResultadoDelEjercicio' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioDividendosProvisorios' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioResultadoDelEjercicio' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioDividendosProvisorios' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioDividendosProvisorios' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioResultadoDelEjercicio' Context='PeriodoActual'>-647</Cuenta>
+<Cuenta CodigoCuenta='SubtotalDividendosProvisorios' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='SubtotalResultadoDelEjercicio' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalesDividendosProvisorios' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalesResultadoDelEjercicio' Context='PeriodoActual'>-122</Cuenta>
+<Cuenta CodigoCuenta='DiferenciasDeCambioNetasSobreEfectivoYEfectivoEquivalenteEF' Context='PeriodoActual'>7</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesDividendosProvisorios' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ActivosFinancierosAValorRazonableConEfectoEnOtrosResultadosIntegralesCorriente' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ActivosFinancierosACostoAmortizadoCorriente' Context='PeriodoActual' Nota='9'>0</Cuenta>
+<Cuenta CodigoCuenta='EfectivoYEfectivoEquivalente' Context='PeriodoActual' Nota='11'>148</Cuenta>
+<Cuenta CodigoCuenta='ActivosFinancierosAValorRazonableConEfectoEnResultadosCorriente' Context='PeriodoActual' Nota='8'>24739</Cuenta>
+<Cuenta CodigoCuenta='ActivosFinancierosACostoAmortizadoNoCorriente' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='CuentasYDocumentosPorCobrarPorOperacionesNoCorriente' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosDocumentosYCuentasPorCobrarNoCorriente' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='InversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='RemuneracionesSociedadAdministradora' Context='PeriodoActual' Nota='26'>26</Cuenta>
+<Cuenta CodigoCuenta='OtrosDocumentosYCuentasPorPagarCorriente' Context='PeriodoActual' Nota='13'>32</Cuenta>
+<Cuenta CodigoCuenta='IngresosAnticipadosCorriente' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosPasivosCorriente' Context='PeriodoActual' Nota='14'>3</Cuenta>
+<Cuenta CodigoCuenta='TotalPasivoCorriente' Context='PeriodoActual'>61</Cuenta>
+<Cuenta CodigoCuenta='PrestamosNoCorriente' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosPasivosFinancierosNoCorriente' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='CuentasYDocumentosPorPagarPorOperacionesNoCorriente' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosDocumentosYCuentasPorPagarNoCorriente' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='IngresosAnticipadosNoCorriente' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosPasivosNoCorriente' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalPasivoNoCorriente' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='AportesPatrimonioNeto' Context='PeriodoActual'>14235</Cuenta>
+<Cuenta CodigoCuenta='OtrasReservas' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadosAcumulados' Context='PeriodoActual'>10713</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicio' Context='PeriodoActual'>-122</Cuenta>
+<Cuenta CodigoCuenta='DividendosProvisorios' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalPatrimonioNeto' Context='PeriodoActual'>24826</Cuenta>
+<Cuenta CodigoCuenta='TotalPasivo' Context='PeriodoActual'>24887</Cuenta>
+<Cuenta CodigoCuenta='PropiedadesDeInversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosActivosNoCorriente' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalActivoNoCorriente' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalActivo' Context='PeriodoActual'>24887</Cuenta>
+<Cuenta CodigoCuenta='PasivosFinancierosAValorRazonableConEfectoEnResultados' Context='PeriodoActual' Nota='10'>0</Cuenta>
+<Cuenta CodigoCuenta='PrestamosCorriente' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosPasivosFinancierosCorriente' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='CuentasYDocumentosPorPagarPorOperacionesCorriente' Context='PeriodoActual' Nota='12'>0</Cuenta>
+<Cuenta CodigoCuenta='CuentasYDocumentosPorCobrarPorOperacionesCorriente' Context='PeriodoActual' Nota='12'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosDocumentosYCuentasPorCobrarCorriente' Context='PeriodoActual' Nota='13'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosActivosCorriente' Context='PeriodoActual' Nota='14'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalActivoCorriente' Context='PeriodoActual'>24887</Cuenta>
+<Cuenta CodigoCuenta='ActivosFinancierosAValorRazonableConEfectoEnResultadosNoCorriente' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ActivosFinancierosAValorRazonableConEfectoEnOtrosResultadosIntegralesNoCorriente' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='DiferenciasDeCambioNetasSobreEfectivoYEfectivoEquivalente' Context='PeriodoActual'>7</Cuenta>
+<Cuenta CodigoCuenta='CambiosNetosEnValorRazonableDeActivosFinancierosYPasivosFinancierosAValorRazonableConEfectoEnResultados' Context='PeriodoActual' Nota='8'>212</Cuenta>
+<Cuenta CodigoCuenta='ResultadoEnVentaDeInstrumentosFinancieros' Context='PeriodoActual'>17</Cuenta>
+<Cuenta CodigoCuenta='InteresesYReajustes' Context='PeriodoActual' Nota='15'>0</Cuenta>
+<Cuenta CodigoCuenta='IngresosPorDividendos' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='DiferenciasDeCambioNetasSobreActivosFinancierosACostoAmortizado' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='DepreciacionesGastos' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='RemuneracionDelComiteDeVigilancia' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ComisionDeAdministracion' Context='PeriodoActual' Nota='26'>-323</Cuenta>
+<Cuenta CodigoCuenta='HonorariosPorCustodiaYAdmistracion' Context='PeriodoActual'>-12</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicio' Context='PeriodoActual'>-122</Cuenta>
+<Cuenta CodigoCuenta='CoberturaDeFlujoDeCaja' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='AjustesPorConversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='AjustesProvenientesDeInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosAjustesAlPatrimonioNeto' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalDeOtrosResultadosIntegrales' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalResultadoIntegral' Context='PeriodoActual'>-122</Cuenta>
+<Cuenta CodigoCuenta='CostosDeTransaccion' Context='PeriodoActual'>-2</Cuenta>
+<Cuenta CodigoCuenta='OtrosGastosDeOperacion' Context='PeriodoActual' Nota='28'>-22</Cuenta>
+<Cuenta CodigoCuenta='TotalGastosDeOperacion' Context='PeriodoActual'>-359</Cuenta>
+<Cuenta CodigoCuenta='UtilidadPerdidaDeLaOperacion' Context='PeriodoActual'>-122</Cuenta>
+<Cuenta CodigoCuenta='CostosFinancieros' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='UtilidadPerdidaAntesDeImpuesto' Context='PeriodoActual'>-122</Cuenta>
+<Cuenta CodigoCuenta='ImpuestoALasGananciasPorInversionesEnElExterior' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadosPorVentaDeInmuebles' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='IngresoPorArriendoDeBienesRaices' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='VariacionesEnValorRazonableDePropiedadesDeInversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoEnInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosIngresosPerdidasDeLaOperacion' Context='PeriodoActual'>1</Cuenta>
+<Cuenta CodigoCuenta='TotalIngresosPerdidasNetosDeLaOperacion' Context='PeriodoActual'>237</Cuenta>
+<Cuenta CodigoCuenta='VentaDeActivosFinancierosOperacion' Context='PeriodoActual'>5833</Cuenta>
+<Cuenta CodigoCuenta='InteresesDiferenciasDeCambioYReajustesRecibidosOperacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='LiquidacionDeInstrumentosFinancierosDerivadosOperacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='DividendosRecibidosOperacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='CobroDeArrendamientoDeBienesRaicesOperacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='VentaDeInmueblesOperacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='CompraDeActivosFinancierosOperacion' Context='PeriodoActual'>-2494</Cuenta>
+<Cuenta CodigoCuenta='CobroDeArrendamientoDeBienesRaicesInversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='VentaDeInmueblesInversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='CompraDeActivosFinancierosInversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='VentaDeActivosFinancierosInversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosPasivosFinancierosObtenidos' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='PagosDeOtrosPasivosFinancieros' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='Aportes' Context='PeriodoActual'>2723</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonio' Context='PeriodoActual'>-5741</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendos' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='Otros' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='FlujoNetoOriginadoPorActividadesDeFinanciamiento' Context='PeriodoActual'>-3018</Cuenta>
+<Cuenta CodigoCuenta='AumentoDisminucionNetoDeEfectivoYEfectivoEquivalente' Context='PeriodoActual'>-40</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicialDeEfectivoYEfectivoEquivalente' Context='PeriodoActual'>181</Cuenta>
+<Cuenta CodigoCuenta='DiferenciasDeCambioNetasSobreEfectivoYEfectivoEquivalente' Context='PeriodoActual'>7</Cuenta>
+<Cuenta CodigoCuenta='SaldoFinalDeEfectivoYEfectivoEquivalente' Context='PeriodoActual'>148</Cuenta>
+<Cuenta CodigoCuenta='InteresesDiferenciasDeCambioYReajustesRecibidosInversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='LiquidacionDeInstrumentosFinancierosDerivadosInversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='DividendosRecibidosInversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='CobranzaDeCuentasYDocumentosPorCobrarInversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='PagoDeCuentasYDocumentosPorPagarInversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosGastosDeInversionPagados' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosIngresosDeInversionPercibidos' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ObtencionDePrestamos' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='PagoDePrestamos' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='CobranzaDeCuentasYDocumentosPorCobrarOperacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='PagoDeCuentasYDocumentosPorPagarOperacion' Context='PeriodoActual'>-324</Cuenta>
+<Cuenta CodigoCuenta='OtrosGastosDeOperacionPagados' Context='PeriodoActual'>-40</Cuenta>
+<Cuenta CodigoCuenta='OtrosIngresosDeOperacionPercibidos' Context='PeriodoActual'>3</Cuenta>
+<Cuenta CodigoCuenta='FlujoNetoOriginadoPorActividadesDeLaOperacion' Context='PeriodoActual'>2978</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosAportes' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosOtrasReservasConversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosOtrasReservasOtras' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosOtrasReservasTotalOtrasReservas' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosResultadosAcumulados' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosTotal' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalesAportes' Context='PeriodoActual'>14235</Cuenta>
+<Cuenta CodigoCuenta='TotalesOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalesOtrasReservasConversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalesOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalesOtrasReservasOtras' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalesOtrasReservasTotalOtrasReservas' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalesResultadosAcumulados' Context='PeriodoActual'>10713</Cuenta>
+<Cuenta CodigoCuenta='TotalesTotal' Context='PeriodoActual'>24826</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosOtrasReservasOtras' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosOtrasReservasTotalOtrasReservas' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosResultadosAcumulados' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosTotal' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioAportes' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioOtrasReservasConversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioOtrasReservasOtras' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioOtrasReservasTotalOtrasReservas' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioResultadosAcumulados' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioTotal' Context='PeriodoActual'>-122</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesAportes' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesOtrasReservasConversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesOtrasReservasOtras' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesOtrasReservasTotalOtrasReservas' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesResultadosAcumulados' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesTotal' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioAportes' Context='PeriodoActual'>17285</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioOtrasReservasConversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioOtrasReservasOtras' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioOtrasReservasTotalOtrasReservas' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioResultadosAcumulados' Context='PeriodoActual'>11360</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioTotal' Context='PeriodoActual'>27998</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesAportes' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesOtrasReservasConversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesOtrasReservasOtras' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesOtrasReservasTotalOtrasReservas' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesResultadosAcumulados' Context='PeriodoActual'>-647</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesTotal' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='SubtotalAportes' Context='PeriodoActual'>17285</Cuenta>
+<Cuenta CodigoCuenta='SubtotalOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='SubtotalOtrasReservasConversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='SubtotalOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='SubtotalOtrasReservasOtras' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='SubtotalOtrasReservasTotalOtrasReservas' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='SubtotalResultadosAcumulados' Context='PeriodoActual'>10713</Cuenta>
+<Cuenta CodigoCuenta='SubtotalTotal' Context='PeriodoActual'>27998</Cuenta>
+<Cuenta CodigoCuenta='AportesAportes' Context='PeriodoActual'>2723</Cuenta>
+<Cuenta CodigoCuenta='AportesOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='AportesOtrasReservasConversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='AportesOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='AportesOtrasReservasOtras' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='AportesOtrasReservasTotalOtrasReservas' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='AportesResultadosAcumulados' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='AportesTotal' Context='PeriodoActual'>2723</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioAportes' Context='PeriodoActual'>-5773</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioOtrasReservasConversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioOtrasReservasOtras' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioOtrasReservasTotalOtrasReservas' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioResultadosAcumulados' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioTotal' Context='PeriodoActual'>-5773</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosAportes' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosOtrasReservasConversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicio' Context='PeriodoActual'>-122</Cuenta>
+<Cuenta CodigoCuenta='FlujoNetoOriginadoPorActividadesDeInversion' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='ObtencionDePrestamos' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='PagoDePrestamos' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosPasivosFinancierosObtenidos' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='PagosDeOtrosPasivosFinancieros' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='Aportes' Context='PeriodoActual'>2723</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonio' Context='PeriodoActual'>-5741</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendos' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='Otros' Context='PeriodoActual'>0</Cuenta>
+<Cuenta CodigoCuenta='FlujoNetoOriginadoPorActividadesDeFinanciamiento' Context='PeriodoActual'>-3018</Cuenta>
+<Cuenta CodigoCuenta='AumentoDisminucionNetoDeEfectivoYEfectivoEquivalente' Context='PeriodoActual'>-40</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicialDeEfectivoYEfectivoEquivalente' Context='PeriodoActual'>181</Cuenta>
+<Cuenta CodigoCuenta='DiferenciasDeCambioNetasSobreEfectivoYEfectivoEquivalente' Context='PeriodoActual'>7</Cuenta>
+<Cuenta CodigoCuenta='SaldoFinalDeEfectivoYEfectivoEquivalente' Context='PeriodoActual'>148</Cuenta>
+<!-- Periodo Anterior -->
+<Cuenta CodigoCuenta='AportesDividendosProvisorios' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioResultadoDelEjercicio' Context='PeriodoAnterior'>-647</Cuenta>
+<Cuenta CodigoCuenta='AportesResultadoDelEjercicio' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesDividendosProvisorios' Context='PeriodoAnterior'>84</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesResultadoDelEjercicio' Context='PeriodoAnterior'>-3880</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosDividendosProvisorios' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosDividendosProvisorios' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosResultadoDelEjercicio' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesDividendosProvisorios' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesResultadoDelEjercicio' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosDividendosProvisorios' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosResultadoDelEjercicio' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioDividendosProvisorios' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioResultadoDelEjercicio' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioDividendosProvisorios' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioDividendosProvisorios' Context='PeriodoAnterior'>-84</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioResultadoDelEjercicio' Context='PeriodoAnterior'>3880</Cuenta>
+<Cuenta CodigoCuenta='SubtotalDividendosProvisorios' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='SubtotalResultadoDelEjercicio' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalesDividendosProvisorios' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalesResultadoDelEjercicio' Context='PeriodoAnterior'>-647</Cuenta>
+<Cuenta CodigoCuenta='DiferenciasDeCambioNetasSobreEfectivoYEfectivoEquivalenteEF' Context='PeriodoAnterior'>-2</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesDividendosProvisorios' Context='PeriodoAnterior'>84</Cuenta>
+<Cuenta CodigoCuenta='DiferenciasDeCambioNetasSobreEfectivoYEfectivoEquivalente' Context='PeriodoAnterior'>-2</Cuenta>
+<Cuenta CodigoCuenta='CambiosNetosEnValorRazonableDeActivosFinancierosYPasivosFinancierosAValorRazonableConEfectoEnResultados' Context='PeriodoAnterior'>123</Cuenta>
+<Cuenta CodigoCuenta='ResultadoEnVentaDeInstrumentosFinancieros' Context='PeriodoAnterior'>-393</Cuenta>
+<Cuenta CodigoCuenta='InteresesYReajustes' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='IngresosPorDividendos' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='DiferenciasDeCambioNetasSobreActivosFinancierosACostoAmortizado' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='DepreciacionesGastos' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='RemuneracionDelComiteDeVigilancia' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ComisionDeAdministracion' Context='PeriodoAnterior'>-326</Cuenta>
+<Cuenta CodigoCuenta='HonorariosPorCustodiaYAdmistracion' Context='PeriodoAnterior'>-12</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicio' Context='PeriodoAnterior'>-647</Cuenta>
+<Cuenta CodigoCuenta='CoberturaDeFlujoDeCaja' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='AjustesPorConversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='AjustesProvenientesDeInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosAjustesAlPatrimonioNeto' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalDeOtrosResultadosIntegrales' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalResultadoIntegral' Context='PeriodoAnterior'>-647</Cuenta>
+<Cuenta CodigoCuenta='CostosDeTransaccion' Context='PeriodoAnterior'>-1</Cuenta>
+<Cuenta CodigoCuenta='OtrosGastosDeOperacion' Context='PeriodoAnterior'>-38</Cuenta>
+<Cuenta CodigoCuenta='TotalGastosDeOperacion' Context='PeriodoAnterior'>-377</Cuenta>
+<Cuenta CodigoCuenta='UtilidadPerdidaDeLaOperacion' Context='PeriodoAnterior'>-647</Cuenta>
+<Cuenta CodigoCuenta='CostosFinancieros' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='UtilidadPerdidaAntesDeImpuesto' Context='PeriodoAnterior'>-647</Cuenta>
+<Cuenta CodigoCuenta='ImpuestoALasGananciasPorInversionesEnElExterior' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadosPorVentaDeInmuebles' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='IngresoPorArriendoDeBienesRaices' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='VariacionesEnValorRazonableDePropiedadesDeInversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoEnInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosIngresosPerdidasDeLaOperacion' Context='PeriodoAnterior'>2</Cuenta>
+<Cuenta CodigoCuenta='TotalIngresosPerdidasNetosDeLaOperacion' Context='PeriodoAnterior'>-270</Cuenta>
+<Cuenta CodigoCuenta='VentaDeActivosFinancierosOperacion' Context='PeriodoAnterior'>4013</Cuenta>
+<Cuenta CodigoCuenta='InteresesDiferenciasDeCambioYReajustesRecibidosOperacion' Context='PeriodoAnterior'>1</Cuenta>
+<Cuenta CodigoCuenta='LiquidacionDeInstrumentosFinancierosDerivadosOperacion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='DividendosRecibidosOperacion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='CobroDeArrendamientoDeBienesRaicesOperacion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='VentaDeInmueblesOperacion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='CompraDeActivosFinancierosOperacion' Context='PeriodoAnterior'>-1515</Cuenta>
+<Cuenta CodigoCuenta='CobroDeArrendamientoDeBienesRaicesInversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='VentaDeInmueblesInversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='CompraDeActivosFinancierosInversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='VentaDeActivosFinancierosInversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosPasivosFinancierosObtenidos' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='PagosDeOtrosPasivosFinancieros' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='Aportes' Context='PeriodoAnterior'>2144</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonio' Context='PeriodoAnterior'>-4358</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendos' Context='PeriodoAnterior'>-84</Cuenta>
+<Cuenta CodigoCuenta='Otros' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='FlujoNetoOriginadoPorActividadesDeFinanciamiento' Context='PeriodoAnterior'>-2298</Cuenta>
+<Cuenta CodigoCuenta='AumentoDisminucionNetoDeEfectivoYEfectivoEquivalente' Context='PeriodoAnterior'>-181</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicialDeEfectivoYEfectivoEquivalente' Context='PeriodoAnterior'>364</Cuenta>
+<Cuenta CodigoCuenta='DiferenciasDeCambioNetasSobreEfectivoYEfectivoEquivalente' Context='PeriodoAnterior'>-2</Cuenta>
+<Cuenta CodigoCuenta='SaldoFinalDeEfectivoYEfectivoEquivalente' Context='PeriodoAnterior'>181</Cuenta>
+<Cuenta CodigoCuenta='InteresesDiferenciasDeCambioYReajustesRecibidosInversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='LiquidacionDeInstrumentosFinancierosDerivadosInversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='DividendosRecibidosInversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='CobranzaDeCuentasYDocumentosPorCobrarInversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='PagoDeCuentasYDocumentosPorPagarInversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosGastosDeInversionPagados' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosIngresosDeInversionPercibidos' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ObtencionDePrestamos' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='PagoDePrestamos' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='CobranzaDeCuentasYDocumentosPorCobrarOperacion' Context='PeriodoAnterior'>3</Cuenta>
+<Cuenta CodigoCuenta='PagoDeCuentasYDocumentosPorPagarOperacion' Context='PeriodoAnterior'>-383</Cuenta>
+<Cuenta CodigoCuenta='OtrosGastosDeOperacionPagados' Context='PeriodoAnterior'>-5</Cuenta>
+<Cuenta CodigoCuenta='OtrosIngresosDeOperacionPercibidos' Context='PeriodoAnterior'>3</Cuenta>
+<Cuenta CodigoCuenta='FlujoNetoOriginadoPorActividadesDeLaOperacion' Context='PeriodoAnterior'>2117</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosAportes' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosOtrasReservasConversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosOtrasReservasOtras' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosOtrasReservasTotalOtrasReservas' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosResultadosAcumulados' Context='PeriodoAnterior'>84</Cuenta>
+<Cuenta CodigoCuenta='OtrosMovimientosTotal' Context='PeriodoAnterior'>84</Cuenta>
+<Cuenta CodigoCuenta='TotalesAportes' Context='PeriodoAnterior'>17285</Cuenta>
+<Cuenta CodigoCuenta='TotalesOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalesOtrasReservasConversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalesOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalesOtrasReservasOtras' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalesOtrasReservasTotalOtrasReservas' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalesResultadosAcumulados' Context='PeriodoAnterior'>11360</Cuenta>
+<Cuenta CodigoCuenta='TotalesTotal' Context='PeriodoAnterior'>27998</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosOtrasReservasOtras' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosOtrasReservasTotalOtrasReservas' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosResultadosAcumulados' Context='PeriodoAnterior'>-84</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosTotal' Context='PeriodoAnterior'>-84</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioAportes' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioOtrasReservasConversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioOtrasReservasOtras' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioOtrasReservasTotalOtrasReservas' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioResultadosAcumulados' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicioTotal' Context='PeriodoAnterior'>-647</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesAportes' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesOtrasReservasConversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesOtrasReservasOtras' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesOtrasReservasTotalOtrasReservas' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesResultadosAcumulados' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosResultadosIntegralesTotal' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioAportes' Context='PeriodoAnterior'>19499</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioOtrasReservasConversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioOtrasReservasOtras' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioOtrasReservasTotalOtrasReservas' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioResultadosAcumulados' Context='PeriodoAnterior'>7564</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicioTotal' Context='PeriodoAnterior'>30859</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesAportes' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesOtrasReservasConversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesOtrasReservasOtras' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesOtrasReservasTotalOtrasReservas' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesResultadosAcumulados' Context='PeriodoAnterior'>3796</Cuenta>
+<Cuenta CodigoCuenta='CambiosContablesTotal' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='SubtotalAportes' Context='PeriodoAnterior'>19499</Cuenta>
+<Cuenta CodigoCuenta='SubtotalOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='SubtotalOtrasReservasConversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='SubtotalOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='SubtotalOtrasReservasOtras' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='SubtotalOtrasReservasTotalOtrasReservas' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='SubtotalResultadosAcumulados' Context='PeriodoAnterior'>11360</Cuenta>
+<Cuenta CodigoCuenta='SubtotalTotal' Context='PeriodoAnterior'>30859</Cuenta>
+<Cuenta CodigoCuenta='AportesAportes' Context='PeriodoAnterior'>2144</Cuenta>
+<Cuenta CodigoCuenta='AportesOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='AportesOtrasReservasConversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='AportesOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='AportesOtrasReservasOtras' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='AportesOtrasReservasTotalOtrasReservas' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='AportesResultadosAcumulados' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='AportesTotal' Context='PeriodoAnterior'>2144</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioAportes' Context='PeriodoAnterior'>-4358</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioOtrasReservasConversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioOtrasReservasInversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioOtrasReservasOtras' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioOtrasReservasTotalOtrasReservas' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioResultadosAcumulados' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonioTotal' Context='PeriodoAnterior'>-4358</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosAportes' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosOtrasReservasCoberturaDeFlujoDeCaja' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendosOtrasReservasConversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicio' Context='PeriodoAnterior'>-647</Cuenta>
+<Cuenta CodigoCuenta='FlujoNetoOriginadoPorActividadesDeInversion' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ObtencionDePrestamos' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='PagoDePrestamos' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosPasivosFinancierosObtenidos' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='PagosDeOtrosPasivosFinancieros' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='Aportes' Context='PeriodoAnterior'>2144</Cuenta>
+<Cuenta CodigoCuenta='RepartosDePatrimonio' Context='PeriodoAnterior'>-4358</Cuenta>
+<Cuenta CodigoCuenta='RepartosDeDividendos' Context='PeriodoAnterior'>-84</Cuenta>
+<Cuenta CodigoCuenta='Otros' Context='PeriodoAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='FlujoNetoOriginadoPorActividadesDeFinanciamiento' Context='PeriodoAnterior'>-2298</Cuenta>
+<Cuenta CodigoCuenta='AumentoDisminucionNetoDeEfectivoYEfectivoEquivalente' Context='PeriodoAnterior'>-181</Cuenta>
+<Cuenta CodigoCuenta='SaldoInicialDeEfectivoYEfectivoEquivalente' Context='PeriodoAnterior'>364</Cuenta>
+<Cuenta CodigoCuenta='DiferenciasDeCambioNetasSobreEfectivoYEfectivoEquivalente' Context='PeriodoAnterior'>-2</Cuenta>
+<Cuenta CodigoCuenta='SaldoFinalDeEfectivoYEfectivoEquivalente' Context='PeriodoAnterior'>181</Cuenta>
+<!-- Periodo Anual Anterior-->
+<Cuenta CodigoCuenta='DiferenciasDeCambioNetasSobreEfectivoYEfectivoEquivalenteEF' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ActivosFinancierosAValorRazonableConEfectoEnOtrosResultadosIntegralesCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ActivosFinancierosAValorRazonableConEfectoEnResultadosEntregadosEnGarantia' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ActivosFinancierosACostoAmortizadoCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='EfectivoYEfectivoEquivalente' Context='PeriodoAnualAnterior'>181</Cuenta>
+<Cuenta CodigoCuenta='ActivosFinancierosAValorRazonableConEfectoEnResultadosCorriente' Context='PeriodoAnualAnterior'>27849</Cuenta>
+<Cuenta CodigoCuenta='ActivosFinancierosACostoAmortizadoNoCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='CuentasYDocumentosPorCobrarPorOperacionesNoCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosDocumentosYCuentasPorCobrarNoCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='InversionesValorizadasPorElMetodoDeLaParticipacion' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='RemuneracionesSociedadAdministradora' Context='PeriodoAnualAnterior'>28</Cuenta>
+<Cuenta CodigoCuenta='OtrosDocumentosYCuentasPorPagarCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='IngresosAnticipadosCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosPasivosCorriente' Context='PeriodoAnualAnterior'>4</Cuenta>
+<Cuenta CodigoCuenta='TotalPasivoCorriente' Context='PeriodoAnualAnterior'>32</Cuenta>
+<Cuenta CodigoCuenta='PrestamosNoCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosPasivosFinancierosNoCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='CuentasYDocumentosPorPagarPorOperacionesNoCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosDocumentosYCuentasPorPagarNoCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='IngresosAnticipadosNoCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosPasivosNoCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalPasivoNoCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='AportesPatrimonioNeto' Context='PeriodoAnualAnterior'>17285</Cuenta>
+<Cuenta CodigoCuenta='OtrasReservas' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ResultadosAcumulados' Context='PeriodoAnualAnterior'>11360</Cuenta>
+<Cuenta CodigoCuenta='ResultadoDelEjercicio' Context='PeriodoAnualAnterior'>-647</Cuenta>
+<Cuenta CodigoCuenta='DividendosProvisorios' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalPatrimonioNeto' Context='PeriodoAnualAnterior'>27998</Cuenta>
+<Cuenta CodigoCuenta='TotalPasivo' Context='PeriodoAnualAnterior'>28030</Cuenta>
+<Cuenta CodigoCuenta='PropiedadesDeInversion' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosActivosNoCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalActivoNoCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalActivo' Context='PeriodoAnualAnterior'>28030</Cuenta>
+<Cuenta CodigoCuenta='PasivosFinancierosAValorRazonableConEfectoEnResultados' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='PrestamosCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosPasivosFinancierosCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='CuentasYDocumentosPorPagarPorOperacionesCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='CuentasYDocumentosPorCobrarPorOperacionesCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosDocumentosYCuentasPorCobrarCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='OtrosActivosCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='TotalActivoCorriente' Context='PeriodoAnualAnterior'>28030</Cuenta>
+<Cuenta CodigoCuenta='ActivosFinancierosAValorRazonableConEfectoEnResultadosNoCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+<Cuenta CodigoCuenta='ActivosFinancierosAValorRazonableConEfectoEnOtrosResultadosIntegralesNoCorriente' Context='PeriodoAnualAnterior'>0</Cuenta>
+ </IFRS>
