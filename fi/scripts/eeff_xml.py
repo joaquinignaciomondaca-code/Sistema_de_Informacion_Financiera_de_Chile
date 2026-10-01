@@ -368,7 +368,7 @@ MONEDAS = {
     "USD": "USD",
 }
 MAX_XML = 10_000_000
-VERSION_PARSER = 1
+VERSION_PARSER = 2
 TOL_ABS = 2
 
 
@@ -427,49 +427,52 @@ def entero(txt: str | None, codigo: str) -> int:
     return n
 
 
-def _fechas(raiz, periodo):
+def _fechas(raiz, periodo, errores):
     fin = fin_periodo(periodo)
     nodo = raiz.find("Contextos")
     if nodo is None:
         raise ErrorFuente("faltan Contextos")
-    out = {}
+    out, vistos = {}, set()
     for c in nodo:
         if c.tag not in CONTEXTOS:
             continue
-        if c.tag in out:
-            raise ErrorFuente(f"contexto duplicado: {c.tag}")
         try:
+            if c.tag in vistos:
+                raise ErrorFuente(f"contexto duplicado: {c.tag}")
+            vistos.add(c.tag)
             inicio = date.fromisoformat(_texto(c, "FechaInicio"))
-            # El saldo de apertura es un instante; el formato oficial solo trae FechaInicio.
             termino_txt = _texto(c, "FechaTermino")
             termino = (
                 inicio
                 if c.tag == "SaldoInicialTerceraColumna" and not termino_txt
                 else date.fromisoformat(termino_txt)
             )
-        except ValueError as e:
-            raise ErrorFuente(f"fechas inválidas en {c.tag}") from e
-        if c.tag == "SaldoInicialTerceraColumna":
-            if not inicio <= termino < date(fin.year, 1, 1):
-                raise ErrorFuente("fecha del balance de apertura incoherente")
-        else:
-            anio = (
-                fin.year
-                if c.tag in ("PeriodoActual", "TrimestreActual")
-                else fin.year - 1
-            )
-            mes = 12 if c.tag == "PeriodoAnualAnterior" else fin.month
-            esperado = date(anio, mes, calendar.monthrange(anio, mes)[1])
-            minimo = (
-                date(anio, mes - 2, 1)
-                if c.tag.startswith("Trimestre")
-                else date(anio, 1, 1)
-            )
-            if termino != esperado or not minimo <= inicio <= termino:
+            if c.tag == "SaldoInicialTerceraColumna":
+                correcto = inicio <= termino < date(fin.year, 1, 1)
+            else:
+                anio = (
+                    fin.year
+                    if c.tag in ("PeriodoActual", "TrimestreActual")
+                    else fin.year - 1
+                )
+                mes = 12 if c.tag == "PeriodoAnualAnterior" else fin.month
+                esperado = date(anio, mes, calendar.monthrange(anio, mes)[1])
+                minimo = (
+                    date(anio, mes - 2, 1)
+                    if c.tag.startswith("Trimestre")
+                    else date(anio, 1, 1)
+                )
+                correcto = termino == esperado and minimo <= inicio <= termino
+            if not correcto:
                 raise ErrorFuente(
                     f"{c.tag}: fechas {inicio}..{termino} incoherentes con {periodo}"
                 )
-        out[c.tag] = {"inicio": inicio.isoformat(), "termino": termino.isoformat()}
+            out[c.tag] = {"inicio": inicio.isoformat(), "termino": termino.isoformat()}
+        except (ValueError, ErrorFuente) as e:
+            if c.tag == "PeriodoActual":
+                raise ErrorFuente(f"fechas inválidas de PeriodoActual: {e}") from e
+            errores[c.tag] = [f"fechas inválidas/ambiguas: {e}"]
+            out.pop(c.tag, None)
     if "PeriodoActual" not in out:
         raise ErrorFuente("falta el contexto PeriodoActual")
     return out
@@ -574,9 +577,9 @@ def extraer(
     """Valida identidad, fechas y TODAS las tablas/contextos presentes antes de devolver cifras.
 
     Un comparativo ausente se declara sin_cuentas. Uno parcial o descuadrado queda
-    rechazado y NO aporta filas; nunca se rellena con ceros. El actual (incluido
-    TrimestreActual si viene) siempre es fail-closed. La política estricta opcional
-    rechaza también todo el documento si falla un comparativo.
+    rechazado y NO aporta filas; nunca se rellena con ceros. El balance y el acumulado de PeriodoActual siempre son fail-closed. Los demás
+    contextos se excluyen con motivo si fallan, incluido TrimestreActual. La política
+    estricta opcional rechaza todo el documento si falla cualquier contexto adicional.
     """
     raiz = leer_xml(raw)
     fin_periodo(periodo)
@@ -601,7 +604,8 @@ def extraer(
     moneda = MONEDAS.get(moneda_cmf)
     if not moneda:
         raise ErrorFuente(f"moneda desconocida {moneda_cmf!r}")
-    fechas = _fechas(raiz, periodo)
+    errores_contexto = {}
+    fechas = _fechas(raiz, periodo, errores_contexto)
     crudo = {c: {} for c in CONTEXTOS}
     notas, duplicadas = {}, 0
     for cuenta in raiz.findall("Cuenta"):
@@ -611,14 +615,23 @@ def extraer(
         if ctx not in crudo or codigo not in CODIGOS:
             continue
         if ctx not in fechas:
-            raise ErrorFuente(f"cuenta en contexto no declarado: {ctx}")
-        valor = entero(cuenta.text, codigo)
-        if codigo in crudo[ctx]:
-            if crudo[ctx][codigo] != valor:
-                raise ErrorFuente(f"{ctx}/{codigo}: repetido con valores distintos")
-            duplicadas += 1
-        else:
-            crudo[ctx][codigo] = valor
+            errores_contexto.setdefault(
+                ctx, ["cuentas en contexto sin fechas declaradas; no se infieren"]
+            )
+            continue
+        try:
+            valor = entero(cuenta.text, codigo)
+            if codigo in crudo[ctx]:
+                if crudo[ctx][codigo] != valor:
+                    raise ErrorFuente(f"{ctx}/{codigo}: repetido con valores distintos")
+                duplicadas += 1
+            else:
+                crudo[ctx][codigo] = valor
+        except ErrorFuente as e:
+            if ctx == "PeriodoActual" or estricto_comparativos:
+                raise
+            errores_contexto.setdefault(ctx, []).append(str(e))
+            continue
         nota = (cuenta.get("Nota") or "").strip()
         if nota:
             notas.setdefault(ctx, {})[codigo] = nota
@@ -626,13 +639,24 @@ def extraer(
     for tabla, contextos in CONTEXTOS_TABLA.items():
         tablas[tabla], validacion[tabla] = {}, {}
         for ctx in contextos:
+            if ctx in errores_contexto:
+                if estricto_comparativos:
+                    raise ErrorFuente(
+                        f"{tabla}/{ctx}: {'; '.join(errores_contexto[ctx])}"
+                    )
+                validacion[tabla][ctx] = {
+                    "estado": "rechazado",
+                    "reglas": 0,
+                    "errores": errores_contexto[ctx],
+                }
+                continue
             c = {k: v for k, v in crudo[ctx].items() if k in CODIGOS_TABLA[tabla]}
             if not c and ctx != "PeriodoActual":
                 validacion[tabla][ctx] = {"estado": "sin_cuentas", "reglas": 0}
                 continue
             n, malos = verificar_cuentas(tabla, c)
             if malos:
-                if ctx in ("PeriodoActual", "TrimestreActual") or estricto_comparativos:
+                if ctx == "PeriodoActual" or estricto_comparativos:
                     raise ErrorFuente(f"{tabla}/{ctx}: {'; '.join(malos[:5])}")
                 validacion[tabla][ctx] = {
                     "estado": "rechazado",

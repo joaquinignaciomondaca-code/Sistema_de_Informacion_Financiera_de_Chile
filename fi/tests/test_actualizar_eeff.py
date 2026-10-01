@@ -145,7 +145,7 @@ class CorridaTest(unittest.TestCase):
                 pq.read_table(cfg.docs / "fi_balance/2026-06.parquet").num_rows, 42
             )
             man = json.loads((cfg.docs / "fi_balance/manifest.json").read_text())
-            self.assertEqual(man["comparativos_excluidos"][0]["run_fondo"], "7002")
+            self.assertEqual(man["contextos_excluidos"][0]["run_fondo"], "7002")
             self.assertEqual(auditar(cfg.docs)["errores"], [])
 
     def test_cotejo_fallido_no_publica(self):

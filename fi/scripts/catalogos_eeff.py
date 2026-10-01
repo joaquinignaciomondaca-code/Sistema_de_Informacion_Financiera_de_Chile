@@ -222,7 +222,7 @@ def actualizar_catalogos(raiz=RAIZ, salida=None):
         per, fecha = m["periodos"], m["updated_at"][:10]
         descripcion = (
             DESCRIPCIONES[t]
-            + " Solo se publican contextos completos y que cuadran. Los comparativos rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros."
+            + " Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros."
         )
         columnas = [
             {
