@@ -91,8 +91,8 @@ glosa no trae los tres totales reconocibles, no un agujero de la validación.
 ### 2 · Cerrar F3 (glosas) → **hecha**
 
 En `pipelines/auto/cuadratura.py`: la detección de totales ya no depende de una lista blanca
-frágil, y se exige una **cobertura mínima de cuadratura** (≥ 95 % de los balances del trimestre
-deben ser verificables). Si cambian las glosas y la compuerta se queda ciega, **el trimestre no se
+frágil, y se exige una **cobertura mínima de cuadratura** (≥ 90 % de los balances del trimestre
+deben ser verificables: `cuadratura.COBERTURA_MINIMA`; la primera versión de esta nota decía 95 %). Si cambian las glosas y la compuerta se queda ciega, **el trimestre no se
 publica** en vez de publicarse a ciegas. 19 pruebas unitarias.
 
 ### 3 · Validar el estado de resultados → **hecha**
@@ -108,8 +108,11 @@ Medido sobre la historia: **7.157 identidades comprobadas, 0 divergencias**.
 
 `pipelines/auto/ifrs_txt.py` es ahora el único parseo del TXT de la CMF; lo usan tanto
 `pipelines/ifrs_sectores/actualizar.py` como `factoring_leasing/scripts/backfill_ifrs.py`
-(12 pruebas). Convenciones compartidas: `tipo_balance` traducido, `orden` presente,
-`moneda` explícita, cuadratura para todos.
+(12 pruebas). Convenciones compartidas: `orden` presente, cuadratura para todos, y el
+mismo contador de `orden`/`repeticion`. **`tipo_balance` no se tradujo en factoring/leasing**: queda
+`I`/`C` literal (y sus columnas siguen llamándose `valor_archivo`, `moneda_archivo`,
+`repeticion_contexto`) para no romper las consultas ya guardadas; la primera versión de esta nota
+decía lo contrario.
 
 **Prueba de que no se movió ningún dato publicado:**
 `pipelines/ifrs_sectores/tests/test_roundtrip_publicado.py` reconstruye el TXT de la CMF desde el

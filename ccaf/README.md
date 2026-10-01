@@ -1,113 +1,88 @@
 # Módulo Cajas de Compensación de Asignación Familiar (CCAF)
 
-> **Estado al 2026-09-28:** en la web quedan `ccaf_maestro` (lista de entidades) y `ccaf_balance` / `ccaf_resultados`,
-> que publica automáticamente `pipelines/ifrs_sectores/actualizar.py` (workflow `ifrs_sectores.yml`, 3 veces al mes)
-> desde el TXT IFRS trimestral de la CMF, la exportación de los estados financieros XBRL que envían las cajas
-> (Los Andes, La Araucana, Los Héroes y 18 de Septiembre, desde 2010-06). Se retiraron `ccaf_caratula_totales` y su
-> extractor manual, la Nota 8 (efectivo, DAP, repos) y las colocaciones de crédito social.
-> Las secciones de abajo describen el trabajo histórico.
+> **Estado al 2026-10-01.** En la web hay tres tablas: `ccaf_maestro` (lista de entidades) y
+> `ccaf_balance` / `ccaf_resultados`. Estas dos últimas las publica automáticamente
+> `pipelines/ifrs_sectores/actualizar.py` (workflow `ifrs_sectores.yml`, días 2, 12 y 22 de cada mes)
+> desde el TXT IFRS trimestral de la CMF, la exportación de los estados financieros XBRL que envían
+> las cajas (Los Andes, La Araucana, Los Héroes y 18 de Septiembre, desde 2010-06).
+>
+> Hasta el 2026-09-28 este módulo tenía otra vía, manual: extractores de PDF/OCR sobre las memorias
+> de la SUSESO que producían `ccaf_caratula_totales` (266 balances), la Nota 8 (efectivo, DAP y repos)
+> y las colocaciones de crédito social. Esos scripts y tablas **se retiraron** (la serie IFRS de la
+> CMF cubre balance y resultados completos, con cuadratura, sin OCR) y esta guía ya no los describe.
 
-## 1. Alcance Normativo y Universo de Entidades
-Las Cajas de Compensación de Asignación Familiar (CCAF) están reguladas primariamente por la **Superintendencia de Seguridad Social (SUSESO)** bajo la Ley N° 18.833, y secundariamente por la **Comisión para el Mercado Financiero (CMF)** en su calidad de emisores de bonos y efectos de comercio de oferta pública.
+## 1. Alcance normativo y universo de entidades
 
-El universo del sistema financiero chileno comprende:
-- **4 entidades vigentes**:
-  1. **CCAF Los Andes** (RUT: 81.826.800-9 | Código CMF: 1009)
-  2. **CCAF La Araucana** (RUT: 70.016.160-5 | Código CMF: 2574)
-  3. **CCAF Los Héroes** (RUT: 70.016.330-1 | Código CMF: 1011)
-  4. **CCAF 18 de Septiembre / Caja 18** (RUT: 82.606.800-K | Supervisión SUSESO)
-- **2 entidades absorbidas**:
-  5. **CCAF Gabriela Mistral** (absorbida por La Araucana)
-  6. **CCAF Javiera Carrera** (absorbida por Los Héroes)
+Las CCAF están reguladas primariamente por la **Superintendencia de Seguridad Social (SUSESO)**
+(Ley N° 18.833) y, en su calidad de emisoras de bonos y efectos de comercio de oferta pública, por la
+**Comisión para el Mercado Financiero (CMF)**.
 
----
+El universo es de 6 entidades (`ccaf_maestro`):
 
-## 2. Fuentes Oficiales de Información
-- **Carátulas y Balances en Línea**: CMF Chile (https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&pestania=3).
-  - Los Andes, La Araucana y Los Héroes informan bajo consolidado y en periodos intermedios bajo individual.
-  - Caja 18 informa bajo alcance individual al no mantener filiales consolidadas.
-- **Memorias y Estados Financieros Auditados Completos en PDF**: SUSESO (https://www.suseso.cl/609/w3-propertyvalue-10337.html), con informes independientes de firmas auditoras (KPMG, EY, PwC, Deloitte).
+| Entidad | RUT | Situación |
+|---|---|---|
+| CCAF Los Andes | 81.826.800-9 | Vigente · informa a la CMF |
+| CCAF La Araucana | 70.016.160-9 | Vigente · informa a la CMF |
+| CCAF Los Héroes | 70.016.330-K | Vigente · informa a la CMF |
+| CCAF 18 de Septiembre (Caja 18) | 82.606.800-0 | Vigente · informa a la CMF (individual: no tiene filiales consolidables) |
+| CCAF Gabriela Mistral | 70.017.000-4 | Absorbida por La Araucana · nunca aparece en la fuente |
+| CCAF Javiera Carrera | 70.014.300-7 | Absorbida por Los Héroes · nunca aparece en la fuente |
 
----
+La lista crece sola: una sociedad que, en el último trimestre del TXT, reporta con nombre de caja de
+compensación y no está en `ccaf_maestro` se agrega (máximo 10 por corrida; si calzan más, el patrón es
+sospechoso y no se agrega nada). El evento queda en `docs/outputs/entidades/novedades_ifrs.json`.
 
-## 3. Principio de Higiene Efímera de Disco (Automatización Segura)
-Para garantizar la viabilidad en entornos de integración continua, servidores y procesos desatendidos, todos los scripts de descarga y procesamiento operan bajo el principio de **cero residuos en disco**:
+## 2. De dónde sale cada tabla
 
-`python
-try:
-    # 1. Descarga del PDF oficial a ruta temporal
-    urllib.request.urlretrieve(url, temp_pdf)
-    doc = fitz.open(temp_pdf)
-    # 2. Extracción focalizada de páginas contables
-    ...
-finally:
-    # 3. Cierre de descriptores de archivo y borrado inmediato
-    if 'doc' in locals() and doc:
-        doc.close()
-    if os.path.exists(temp_pdf):
-        os.remove(temp_pdf)
-`
+| Tabla | Fuente | Cómo |
+|---|---|---|
+| `ccaf_balance` | TXT IFRS de la CMF (`estadisticas_ifrs.php` → `ver_archivo.php?inicio=AAAAMM&termino=AAAAMM`), estados `ESF*` | Un archivo por trimestre con todas las sociedades que envían XBRL; se reparte por sector según el RUT de la lista o el nombre. |
+| `ccaf_resultados` | El mismo archivo, estados `ER*` (`ERFG`, `ERNG`, `ERI`) | Importes **acumulados del ejercicio** a cada trimestre. |
+| `ccaf_maestro` | `ccaf/scripts/build_ccaf_maestro.py` + altas automáticas del flujo IFRS | Catálogo de las 6 cajas; valida el RUT con módulo 11. |
 
-**Resultado de higiene**: 0 bytes residuales de archivos PDF en disco en todo momento.
+Los flujos de efectivo (`EFMD`/`EFMI`) viajan en el mismo archivo y **no se publican**.
 
----
+Fuentes complementarias, no usadas por el pipeline: la ficha de cada entidad en la CMF
+(<https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&pestania=3>) y las memorias y
+estados financieros auditados en PDF de la SUSESO (<https://www.suseso.cl/609/w3-propertyvalue-10337.html>).
 
-## 4. Arquitectura Modular de Scripts (ccaf/scripts/)
+## 3. Cómo se publica y se valida
 
-El módulo cuenta con scripts especializados y desacoplados:
+Es el mismo mecanismo de AGF y securitizadoras (detalle en `pipelines/ifrs_sectores/actualizar.py` y
+`pipelines/auto/README.md`):
 
-1. **`build_ccaf_maestro.py`**:
-   - Genera el catálogo maestro oficial de las 6 CCAF (docs/outputs/cajas_compensacion/ccaf_maestro.parquet y .json).
-   - Valida 100% de los RUTs bajo algoritmo Módulo 11.
+* **Incremental.** Un trimestre cerrado (más de 150 días) no se vuelve a descargar, salvo que la CMF lo
+  reedite: el índice muestra «(actualizado: …)» junto a cada archivo y, si esa fecha es posterior a la
+  última lectura, se vuelve a leer. Los trimestres recientes se releen en cada corrida.
+* **Compuertas contables antes de publicar:** activos = pasivos + patrimonio (tolerancia de 1.000
+  pesos), cobertura mínima de balances verificables (90 %), identidades del estado de resultados y
+  guarda contra pérdida de filas por tabla.
+* **Auditoría de toda la historia:** `scripts/auditar_eeff_ifrs.py` (corre en `web_audit.yml`)
+  recorre los Parquet publicados. Para CCAF: 224 balances, 224 verificables, 0 descuadres.
 
-2. **`build_ccaf_caratula_totales.py`**:
-   - Serie histórica completa de 15 años (2010 a septiembre 2025): **266 balances**.
-   - Asientos contables estándar: Activo Total (10000), Pasivo Total (20000), Patrimonio Total (23000) y Utilidad Neta (23050).
-   - Incorpora la columna 	ipo_eeff (Consolidado vs Individual).
-   - Fallback de OCR nativo (winocr a 200 DPI) para memorias históricas escaneadas.
-   - Verificación matemática obligatoria: Activo Total = Pasivo Total + Patrimonio Total con 0.00 de discrepancia.
+## 4. Datasets en `docs/outputs/cajas_compensacion/`
 
-3. **extract_ccaf_nota8_efectivo.py**:
-   - Extracción de componentes puros de liquidez de la Nota 8 (Efectivo y Equivalentes al Efectivo) para 2012–2024: **189 registros**.
-   - **Exclusión estricta de la fila de Total general**: Extrae únicamente Caja, Bancos, Depósitos a plazo y Otro efectivo y equivalentes (Repos/Pactos) para evitar doble contabilización en agregaciones SQL.
-   - Incorpora la columna 	ipo_eeff (Consolidado vs Individual).
-   - Consumo de tokens: **0 tokens** (algoritmo local determinístico con PyMuPDF).
+| Tabla | Formato | Registros | Cobertura | Descripción |
+|---|---|---:|---|---|
+| `ccaf_maestro` | Parquet / JSON | 6 | Lista vigente | Catálogo institucional: razón social, RUT, reguladores. |
+| `ccaf_balance/<AAAA>.parquet` | Parquet por año | 8.043 | 2010-06 a 2026-06 | Estado de situación financiera cuenta por cuenta, en pesos. |
+| `ccaf_resultados/<AAAA>.parquet` | Parquet por año | 5.506 | 2010-06 a 2026-06 | Estado de resultados y resultado integral, acumulado del ejercicio, en pesos. |
 
-4. **`audit_ccaf.py`**:
-   - Auditor de consistencia profunda: valida integridad referencial de RUTs, paridad Parquet/JSON, balance contable de carátula (A = P + Pat), suma de componentes de Nota 8 vs total impreso en PDF, y ausencia de archivos residuales en disco.
+Para sumar utilidades sin triplicarlas: `estado_financiero IN ('ERFG','ERNG') AND repeticion = 1`
+(la etiqueta «Ganancia (pérdida)» aparece hasta tres veces por estado, siempre con el mismo valor).
 
-5. **legacy/**:
-   - Carpeta de archivo para prototipos exploratorios iniciales (pipeline_extract_ccaf_phase1.py, stream_mass_ccaf_eeff.py).
+## 5. Ejecución y pruebas
 
----
-
-## 5. Datasets Generados en docs/outputs/cajas_compensacion/
-
-| Tabla | Formato | Registros | Cobertura Temporal | Descripción |
-|---|---|---|---|---|
-| ccaf_maestro | Parquet / JSON | 6 entidades | Vigente 2026 | Catálogo institucional, Razón Social, RUT, reguladores y líneas de deuda CMF |
-| ccaf_caratula_totales | Parquet / JSON | 266 balances | 2010 – 2025 (15 años) | Cifras de carátula auditadas IFRS (Activo, Pasivo, Patrimonio, Utilidad) con 	ipo_eeff |
-| ccaf_nota8_efectivo_resumen | Parquet / JSON | 189 componentes | 2012 – 2024 | Desglose puro de liquidez (Caja, Bancos, DAP, Repos) sin fila Total |
-| ccaf_nota8_dap_detalle | Parquet / JSON | 52 depósitos | 2017 – 2024 | Detalle analítico por plazo en días, tasas y montos devengados |
-| ccaf_nota8_repos_detalle | Parquet / JSON | 100 pactos | 2017 – 2024 | Detalle contrato por contrato con corredoras de bolsa en pactos de retroventa |
-
----
-
-## 6. Ejecución y Auditoría
-
-Para ejecutar el ciclo de auditoría completo del sector CCAF:
 ```bash
-python ccaf/scripts/audit_ccaf.py
-`
+python pipelines/ifrs_sectores/actualizar.py            # necesita red hacia la CMF (la hace Actions)
+python -m unittest pipelines.ifrs_sectores.tests.test_actualizar    # sin red
+python scripts/auditar_eeff_ifrs.py                     # cuadratura de toda la historia publicada
+python scripts/audit_web_full.py                        # integración con la web
+```
 
-Para verificar la integración con la plataforma web interactiva:
-```bash
-python scripts/audit_web_full.py
-`
+## 6. Pendiente
 
----
-
-## 7. Roadmap de Próximas Notas Contables
-- **Notas 9 y 10 (Crédito Social)**: Colocaciones brutas por segmento (Trabajadores vs Pensionados), deudores previsionales, provisiones por incobrabilidad y castigos de cartera.
-- **Notas 11 y 22 (Mutuos Hipotecarios Endosables)**: Cartera de mutuos hipotecarios residenciales otorgados a afiliados.
-- **Nota 13 (Instrumentos Financieros Derivados)**: Posición en Cross Currency Swaps para cobertura contable de emisiones de bonos en UF y financiamiento.
+La Nota 8 (efectivo, DAP, repos), el crédito social (colocaciones por segmento, deudores previsionales,
+provisiones y castigos), los mutuos hipotecarios endosables y los derivados de cobertura dependían de los
+extractores de PDF retirados. Si se retoman, hay que reconstruir el extractor desde las memorias de la
+SUSESO; no hay un reemplazo en el pipeline automático.

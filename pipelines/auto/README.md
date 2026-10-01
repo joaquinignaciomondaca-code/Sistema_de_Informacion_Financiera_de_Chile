@@ -30,6 +30,37 @@ estados como PDF). Es un flujo híbrido: la extracción y curación inicial se c
 en una planilla, mientras `securitizadoras/scripts/05_publicar_balance_patrimonios.py` ejecuta
 validaciones reproducibles y compila el Parquet (2014-12 a 2025-12).
 
+## Contrato de un publicador (cómo escribe en la rama sin pisar a los demás)
+
+Una docena de workflows escriben en la misma rama y varios arrancan a la vez (un merge a `main` dispara
+todos los que miran esos archivos). Para que ninguno quede sin publicar por culpa de otro:
+
+1. **El commit de datos lleva solo lo que ese workflow escribe** (sus Parquet, su `manifest.json`). Nunca
+   `data_manifest.json`, `docs/js/*.js`, `docs/index.html` ni el catálogo de descargas: los edita todo el
+   mundo. Un publicador que los metía en su commit (factoring/leasing y banca hasta el 2026-10-01) chocaba en
+   cuanto otro reescribía esa lista entre medio, y reintentar no servía (el conflicto persiste mientras esa edición
+   esté en la rama): «8 intentos por contención» y nada publicado.
+2. **Lo compartido se regenera sobre la cabeza vigente**, no se integra: en cada intento (≤ 8) `fetch` →
+   `reset --hard FETCH_HEAD` → `cherry-pick` del commit de datos → comando `--solo-…` del propio
+   publicador (`--solo-data-manifest`, `--solo-conteos`, `--solo-catalogos`) → `build_download_catalog.py` →
+   commit → `push`. Un push rechazado se reintenta igual, con espera aleatoria.
+3. **Pruebas antes de publicar.** Un publicador con lógica propia de extracción o de compuertas corre sus pruebas
+   unitarias (sin red, con fuentes sintéticas) antes de tocar la fuente: lo que decide qué se publica no llega a la web
+   sin haberlas pasado. Hoy las tienen cableadas IFRS, corredores, banca, factoring-leasing y normativa; seguros,
+   FFMM, FI, entidades y macro no tienen pruebas en su workflow. `web_audit.yml` corre
+   además todas las de los extractores de estados financieros en cada push y PR (job `pruebas`).
+   Las pruebas no pueden depender del día en que corren: los relojes se inyectan (`_hoy()`/`_ahora()`).
+4. **Los disparadores `push` incluyen los módulos compartidos que el script importa**
+   (`pipelines/auto/ifrs_txt.py`, `cuadratura.py`, `estable.py`, `rut.py`).
+
+`pipelines/auto/tests/test_contrato_publicadores.py` (job `pruebas` de `web_audit.yml`) hace cumplir los puntos 1 y 2: todo `git add`
+que nombre un archivo compartido tiene que ir precedido, en el mismo paso, de `reset --hard FETCH_HEAD` y de un regenerador.
+
+Cierres que la CMF reedita: el TXT IFRS muestra «(actualizado: …)» junto a cada archivo
+(`ifrs_txt.actualizaciones_indice`). `ifrs_sectores/actualizar.py` y `factoring_leasing/scripts/backfill_ifrs.py`
+vuelven a leer un trimestre ya cerrado si esa fecha es posterior a su última lectura; el informe de
+corredores no trae fecha, así que ahí un cierre no se relee.
+
 ## Guardián: que ninguna tabla vuelva a quedar como foto fija
 
 `pipelines/auto/inventario.json` declara, para cada tabla de `data_manifest.json`, el workflow que
