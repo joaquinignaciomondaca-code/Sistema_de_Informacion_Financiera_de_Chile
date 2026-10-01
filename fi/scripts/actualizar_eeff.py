@@ -329,7 +329,7 @@ def resolver(run, tipo, periodo, previo, fetcher=_get, forzar=False):
     try:
         ficha_url = FICHA.format(run=run, tipo=tipo, anio=periodo[:4], mes=periodo[5:])
         ficha, (estado, archivo) = pedir_validado(
-            ficha_url, xml.clasificar_ficha, fetcher
+            ficha_url, lambda b: xml.clasificar_ficha(b, periodo), fetcher
         )
         if estado == "sin_informacion":
             return _conservar(previo, base, "la ficha ya no muestra el envío") or (
