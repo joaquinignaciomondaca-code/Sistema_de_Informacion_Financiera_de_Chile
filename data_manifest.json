@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
   "updated_at": "2026-10-01",
-  "total_tables": 70,
-  "total_records": 10866680,
+  "total_tables": 72,
+  "total_records": 11142865,
   "classification": {
     "automatico": "Extracción, validación y publicación ejecutadas por código y workflows programados (APIs, scrapers y normalizadores)",
     "hibrido": "Extracción o curación inicial asistida desde fuentes no estructuradas, seguida de validación, normalización y publicación reproducibles mediante código; puede ejecutarse fuera de Actions",
@@ -1129,6 +1129,38 @@
       "registros_reales": 22368,
       "descripcion": "22,368 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
       "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 36817226109. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
+    },
+    {
+      "id": "ffmm_balance",
+      "name": "ffmm.balance",
+      "view_name": "ffmm_balance",
+      "sector": "ffmm",
+      "sector_label": "Fondos Mutuos",
+      "norma": "IFRS · XML CMF (Circular 1997)",
+      "corte": "2010-12 a 2025-12",
+      "frescura": "Último cierre publicado: 2025-12",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-01",
+      "file_parquet": "outputs/ffmm/ffmm_balance/manifest.json",
+      "registros_reales": 126256,
+      "descripcion": "Estado de situación financiera de cada fondo mutuo —vigente o extinto— al 31 de diciembre de cada año, línea por línea (16 líneas), con el comparativo del año anterior. Miles de la moneda del fondo (pesos, dólares o euros).",
+      "origen": "CMF — Estados financieros IFRS de fondos mutuos (XML «FMEF», Circular 1997 de 2010), enlazado en la ficha de cada fondo: https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU"
+    },
+    {
+      "id": "ffmm_resultados",
+      "name": "ffmm.resultados",
+      "view_name": "ffmm_resultados",
+      "sector": "ffmm",
+      "sector_label": "Fondos Mutuos",
+      "norma": "IFRS · XML CMF (Circular 1997)",
+      "corte": "2010-12 a 2025-12",
+      "frescura": "Último cierre publicado: 2025-12",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-01",
+      "file_parquet": "outputs/ffmm/ffmm_resultados/manifest.json",
+      "registros_reales": 149929,
+      "descripcion": "Estado de resultados integrales de cada fondo mutuo —vigente o extinto— del ejercicio completo, línea por línea (19 líneas), con el comparativo del año anterior. Miles de la moneda del fondo (pesos, dólares o euros).",
+      "origen": "CMF — Estados financieros IFRS de fondos mutuos (XML «FMEF», Circular 1997 de 2010), enlazado en la ficha de cada fondo: https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU"
     }
   ]
 }
