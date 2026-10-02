@@ -166,7 +166,8 @@
   "sin_valor_publicado": {
     "identidad_falla": 81,
     "discrepancia_cu": 71,
-    "valor_cuota_cero": 92
+    "valor_cuota_cero": 92,
+    "salto_temporal": 5
   },
   "avisos": [
     {
@@ -3439,8 +3440,88 @@
       ],
       "lineas": 4,
       "aseguradoras": 3
+    },
+    {
+      "periodo": "2019-08",
+      "run_fondo": "8177",
+      "nemotecnico": "CFMLVCASHI",
+      "serie": "UNICA",
+      "estado": "salto_temporal",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        141.2158
+      ],
+      "lineas": 1,
+      "aseguradoras": 1,
+      "referencia_serie": 1403.39365,
+      "desviacion": 0.8994,
+      "meses_cercanos": 10
+    },
+    {
+      "periodo": "2021-11",
+      "run_fondo": "8049",
+      "nemotecnico": "CFMBNSMMDI",
+      "serie": "I",
+      "estado": "salto_temporal",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        836878.1849
+      ],
+      "lineas": 1,
+      "aseguradoras": 1,
+      "referencia_serie": 1008.6837,
+      "desviacion": 0.9988,
+      "meses_cercanos": 3
+    },
+    {
+      "periodo": "2023-07",
+      "run_fondo": "8107",
+      "nemotecnico": "CFMBCICOMA",
+      "serie": "A",
+      "estado": "salto_temporal",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        107103.5706
+      ],
+      "lineas": 1,
+      "aseguradoras": 1,
+      "referencia_serie": 14609.19555,
+      "desviacion": 0.8636,
+      "meses_cercanos": 10
+    },
+    {
+      "periodo": "2024-12",
+      "run_fondo": "8230",
+      "nemotecnico": "CFMSTDMDEJ",
+      "serie": "EJECU",
+      "estado": "salto_temporal",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        727.6658
+      ],
+      "lineas": 1,
+      "aseguradoras": 1,
+      "referencia_serie": 679247.3712,
+      "desviacion": 0.9989,
+      "meses_cercanos": 13
+    },
+    {
+      "periodo": "2025-01",
+      "run_fondo": "8230",
+      "nemotecnico": "CFMSTDMDEJ",
+      "serie": "EJECU",
+      "estado": "salto_temporal",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        729.9942
+      ],
+      "lineas": 1,
+      "aseguradoras": 1,
+      "referencia_serie": 684803.62225,
+      "desviacion": 0.9989,
+      "meses_cercanos": 12
     }
   ],
-  "avisos_totales": 244,
-  "updated_at": "2026-10-02T05:18:00+00:00"
+  "avisos_totales": 249,
+  "updated_at": "2026-10-02T06:07:38+00:00"
 }

@@ -41,13 +41,14 @@ series distintas del mismo fondo, y la clave correcta es
 **(período, fondo, nemotécnico, serie)**: 51.512 grupos, de los que 1.360 discrepan y solo 30 de esos
 son de una sola aseguradora.
 
-## 3. Las tres compuertas, calibradas sobre los datos reales
+## 3. Las cuatro compuertas, calibradas sobre los datos reales
 
 | | Qué comprueba | Tolerancia | Resultado medido |
 |---|---|---|---|
 | **C1** identidad | `unidades × valor_cuota = valor_final × 1000` | 1.000.000 de pesos o 0,5 % | 99,85 % de las 99.853 líneas |
 | **C2** consenso | todas las aseguradoras de la serie coinciden | la misma | 1.289 series con desacuerdo real |
 | **C3** positivo | el valor cuota es > 0 | — | 92 series con valor 0 |
+| **C4** continuidad | el valor puede con el nivel de su propia serie | 70 % de la mediana en ±12 meses | 5 series con un valor 7 a 832 veces desviado |
 
 **C1** necesita tolerancia mixta y no exacta: el desvío mediano es 6,6·10⁻⁷ y el percentil 90
 es 1,8·10⁻⁴, pero la cola la forman las carteras chicas. La mediana de `valor_final` de las líneas
@@ -60,8 +61,12 @@ veces). Sin este control, 92 ceros se habrían publicado como si fueran valores 
 tipo de defecto que F3 en la revisión de estados financieros: la compuerta verde por una vía que
 nadie miró.
 
-Cuando C1, C2 o C3 no pasan, la fila **se publica con `valor_cuota` nulo** y un `estado` que lo
+Cuando C1, C2, C3 o C4 no pasan, la fila **se publica con `valor_cuota` nulo** y un `estado` que lo
 explica. No se promedia, no se elige la primera y no se rellena con cero.
+
+**C4** se agregó después de una auditoría que encontró cinco valores publicados que no eran ciertos;
+está explicada en la sección 6 porque su historia —incluidos dos criterios que hubo que cambiar— es la
+razón de que hoy sea un 70 % y no un 25 %.
 
 ## 4. Lo que sale, y lo que no sale
 
@@ -120,7 +125,64 @@ porque este entorno no alcanza a `cmfchile.cl`.
    cada aseguradora usó para valorar su posición, y que todas coinciden en reportar. La diferencia se
    reduce al 3,25 % de las series y, tras aplicar C1, a 152 filas de 51.512 (0,3 %).
 
-## 6. Defecto preexistente encontrado: la codificación de los nombres de fondos mutuos
+## 6. Auditoría profunda: cinco valores que estaban publicados y no eran ciertos
+
+Una revisión de la tabla completa, re-derivando todo desde la fuente con SQL y sin reusar el código de
+agregación, encontró **cinco filas con `estado = 'ok'` cuyo valor cuota no era el del fondo**. Las cinco
+ya no se publican.
+
+### Por qué las compuertas originales no las veían
+
+C1 (identidad), C2 (consenso) y C3 (valor positivo) comparten una debilidad: **comparan los números
+dentro de una misma línea**. Cuando una aseguradora reporta `unidades`, `valor_cuota` y `valor_final`
+con el mismo error de escala, las tres cifras se equivocan juntas, la identidad `unidades ×
+valor_cuota = valor_final × 1000` cierra igual, el valor es positivo, y si es la única que reporta esa
+serie no hay con quién discrepar. Las tres compuertas dicen que el número es bueno.
+
+Solo la trayectoria lo delata: el valor cuota de un fondo se mueve despacio, y estos valores no.
+
+### Los cinco casos
+
+| Período | RUN | Serie | Valor publicado | Valor real de la serie | Factor |
+|---|---|---|---|---|---|
+| 2019-08 | 8177 | UNICA | 141,2158 | ~1.408 | ×0,1 |
+| 2021-11 | 8049 | I | 836.878,1849 | ~1.008 | ×832 |
+| 2023-07 | 8107 | A | 107.103,5706 | ~14.609 | ×7,3 |
+| 2024-12 | 8230 | EJECU | 727,6658 | ~679.000 | ×0,001 |
+| 2025-01 | 8230 | EJECU | 729,9942 | ~684.000 | ×0,001 |
+
+El primero trae `unidades = 3,41` y el cuarto `unidades = 0,1244`: las unidades son tan pequeñas que
+la línea se cierra sola. Dos de los cinco venían en moneda `PROM`.
+
+### C4 · continuidad
+
+Se agregó una cuarta compuerta, que no corrige el número: **lo deja fuera y explica por qué**. Un valor
+se publica solo si está dentro de un 70 % de la mediana de su propia serie en los ±12 meses.
+
+El umbral sale de medir la tabla, no de elegirlo a ojo. El desvío contra esa mediana tiene mediana
+1,6 % y p99,9 25,6 %; el desvío más alto que corresponde a un fondo sano es **55 %** (RUN 8684, que
+sube de 1.300 a 2.266 y vuelve a 1.346, un cambio de régimen real), y los cinco valores corruptos
+estaban todos sobre **86 %**. El hueco entre 55 % y 86 % está vacío y 70 % cae en el medio.
+
+Tres decisiones que hubo que corregir sobre la marcha, y quedan escritas porque son fáciles de repetir:
+
+- **La ventana tiene que ser ancha.** Con los meses inmediatamente anteriores, RUN 8230 en 2024-11
+  parecía el valor corrupto —era el sano— y los dos errores de diciembre y enero pasaban. La serie
+  tenía huecos y el criterio local se quedó sin contexto. Con ±12 meses la mediana de la serie
+  absuelve al bueno y cae el que corresponde.
+- **Con menos de tres vecinos no se juzga.** No hay forma de saber cuál de dos meses equivocados es el
+  culpable, así que no se descarta ninguno.
+- **Va en dos pasadas.** Un valor corrupto dentro de la ventana contamina la mediana de sus vecinos. Al
+  excluir en la segunda pasada lo que ya cayó, cada fila juzga a las que siguen en pie.
+
+### Un defecto de arquitectura que salió en el camino
+
+`agregar()` se llama **una vez por año** desde el publicador, así que la primera versión de C4 veía
+cada año por separado y un valor de diciembre no tenía con qué contrastarse: cazaba cuatro de los
+cinco y se le escapaba el de 2021-11, cuyos vecinos están en 2022. C4 se movió a la tabla
+concatenada, después de juntar todos los años.
+
+## 7. Defecto preexistente encontrado: la codificación de los nombres de fondos mutuos
 
 Al cruzar con el maestro apareció que **206 de los 1.543** nombres del universo de fondos mutuos
 llegaron con el UTF-8 leído como latin-1: `HASTA 3 AÃ\x91OS` (Ñ), `INVERSIÃ\x93N` (Ó), `DÃ\x93LAR`
@@ -141,7 +203,7 @@ a revisión.
 como UTF-8 primero, y corregir los nombres ya publicados. No se hizo en este cambio porque modifica
 una tabla publicada que tiene su propia cadena de procedencia, y `01b` no se puede ejercitar sin red.
 
-## 7. Archivos
+## 8. Archivos
 
 **Nuevos**
 - `ffmm/scripts/valor_cuota.py` — grano, compuertas C1/C2/C3, reparación de codificación, clasificación de RUN
@@ -149,14 +211,14 @@ una tabla publicada que tiene su propia cadena de procedencia, y `01b` no se pue
 - `ffmm/tests/test_valor_cuota.py` — 31 pruebas, sin red, con las rarezas medidas
 - `.github/workflows/valor_cuota.yml` — días 9, 19 y 29 a las 12:50 UTC, dos días después de que
   `seguros_carteras.yml` publique (7, 17 y 27) y antes de que ningún otro flujo comparta horario
-- `docs/outputs/valor_cuota_control.json` — cobertura, tolerancias, 244 avisos y pendientes de codificación
+- `docs/outputs/valor_cuota_control.json` — cobertura, tolerancias, 249 avisos y pendientes de codificación
 - `docs/outputs/valor_cuota/ffmm/<AAAA>.parquet` + `manifest.json` — 51.509 filas en 11 Parquet
 
 **Modificados**
 - `docs/js/duckdb_client.js` (vista `ffmm_valor_cuota`) · `docs/js/sidebar.js` (tarjeta y 5 consultas)
 - `docs/vocabulario.json` · `pipelines/auto/inventario.json` · `data_manifest.json` · `docs/js/download_catalog.js`
 
-## 8. Estado de las auditorías
+## 9. Estado de las auditorías
 
 | Auditoría | Resultado |
 |---|---|
@@ -169,7 +231,7 @@ una tabla publicada que tiene su propia cadena de procedencia, y `01b` no se pue
 | `audit_consultas_sugeridas` | **151 OK, 0 vacías, 0 con error** (5 nuevas) |
 | `unittest ffmm.tests.test_valor_cuota` | 31 OK |
 
-## 9. Lo que queda para completar el sector
+## 10. Lo que queda para completar el sector
 
 1. **Fondos de inversión, de verdad:** la ficha de la CMF (pestañas 7 y 27), que además trae los
    **aportantes**, otra magnitud que hoy no existe en ninguna tabla. Requiere red: solo en Actions.

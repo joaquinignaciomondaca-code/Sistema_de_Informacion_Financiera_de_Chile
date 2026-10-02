@@ -53,6 +53,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
@@ -69,6 +70,21 @@ PENDIENTES_CODIFICACION: dict[str, dict] = {}
 # Tolerancias de C1 y C2, calibradas sobre las 99.853 líneas publicadas (ver docstring).
 IDENTIDAD_ABS = 1_000_000.0   # pesos: el archivo redondea `valor_final` a miles
 IDENTIDAD_REL = 0.005         # 0,5 %
+
+# C4 · continuidad. Un valor cuota tiene que poder con el nivel de su propia serie. El umbral sale de
+# medir la tabla completa, no de elegirlo a ojo: contra la mediana de los meses cercanos el desvío
+# tiene mediana 1,6 % y p99,9 25,6 %, y el desvío más alto que corresponde a un fondo sano es 55 %
+# (RUN 8684, que sube de 1.300 a 2.266 y vuelve a 1.346: un cambio de regimen real). Los cinco valores
+# corruptos estan todos sobre 86 %. El hueco entre 55 % y 86 % esta vacio y 70 % cae en el medio: un
+# umbral mas bajo reventaria al fondo volatil, uno mas alto dejaria pasar lo que se busca cazar.
+#
+# La ventana es de ±12 meses y no de los meses inmediatamente anteriores porque una serie con huecos
+# rompe el criterio local. RUN 8230 serie EJECU vale unos 700.000 desde 2023 y en 2024-12 y 2025-01
+# trae 727,67 y 729,99: mirando solo los dos meses siguientes, el valor sano de 2024-11 parece el
+# raro, y es el bueno. Con la ventana ancha la mediana de la serie lo absuelve y cae el que corresponde.
+CONTINUIDAD_REL = 0.70
+CONTINUIDAD_VECINOS = 12       # meses a cada lado que entran en la referencia
+CONTINUIDAD_MIN_VECINOS = 3    # con menos, la mediana de la serie no es confiable y la fila no se juzga
 
 # Columnas de la fuente que se leen. `valor_final` viene en miles de la moneda de la línea.
 FUENTE_COLS = ["periodo", "run_fondo", "serie", "nemotecnico", "unidad_monetaria",
@@ -246,6 +262,101 @@ def leer_fuente(ruta: Path) -> pd.DataFrame:
     return pq.read_table(ruta, columns=FUENTE_COLS).to_pandas()
 
 
+def _mes(periodo: str) -> int:
+    """Periodo 'AAAA-MM' como mes entero, para medir distancias sin depender del calendario."""
+    return int(periodo[:4]) * 12 + int(periodo[5:7])
+
+
+def aplicar_continuidad(tabla: pd.DataFrame) -> tuple[pd.DataFrame, list[dict]]:
+    """C4: el valor cuota tiene que poder con el nivel de su propia serie. Deja el valor fuera y explica
+    por que.
+
+    Existe porque C1, C2 y C3 no ven este caso, que es lo que lo hace peligroso. Cuando una
+    aseguradora reporta `unidades`, `valor_cuota` y `valor_final` los tres escalados por el mismo
+    error, la identidad aritmetica cierra igual porque compara numeros que se equivan, el valor es
+    positivo, y si es la unica que reporta esa serie no hay con quien discrepar. Las tres compuertas
+    dicen que el numero es bueno y queda publicado. Solo la trayectoria lo delata.
+
+    En la tabla completa aparecieron cinco asi, todos por encima del 86 % de desvío contra la
+    mediana de su serie, y los cinco son de fondos que se mueven como los demas. Uno de ellos es
+    832 veces el nivel real de su serie. No se corrige el numero: se deja fuera y se dice por que,
+    que es lo unico defendible sin ir a mirar la linea de origen una por una.
+
+    Va en dos pasadas a proposito. Un valor corrupto dentro de la ventana contamina la mediana de sus
+    vecinos y, con una serie corta, los condena tambien. Al excluir en la segunda pasada lo que ya
+    se cayo, cada fila juzga a las que quedan en pie.
+    """
+    if tabla.empty:
+        return tabla, []
+
+    t = tabla.copy()
+    t["_mes"] = [_mes(p) for p in t["periodo"]]
+    cols = ["periodo", "run_fondo", "nemotecnico", "serie"]
+    serie_cols = ["run_fondo", "nemotecnico", "serie"]
+    caidas: set[tuple] = set()
+
+    for _ in range(2):
+        # Se agrupa por fondo, nemotecnico y serie: el periodo es la dimension que se quiere medir,
+        # no parte de la clave. La referencia se arma solo con las filas que siguen en pie, para que
+        # un valor caido no pueda contaminar a sus vecinos en la segunda pasada.
+        #
+        # La referencia es la mediana de la serie en la ventana, no el mes anterior. Un fondo sano
+        # puede tener una serie con huecos, y mirar solo al vecino inmediato hace que el dato bueno
+        # parezca el raro cuando al lado hay dos meses erroneos.
+        refs: dict[tuple, list[float]] = {}
+        en_pie = t[~t.set_index(cols).index.isin(caidas)]
+        for clave, g in en_pie.groupby(serie_cols, sort=False):
+            for _, fila in g.iterrows():
+                # Los parentesis en la comparacion no son esteticos: sin ellos Python resuelve
+                # `abs() <= (12 & mascara)` como una cuenta de bits entre enteros, la ventana de meses
+                # deja de filtrar, cada fila se compara consigo misma y la compuerta no ve nada.
+                vecinos = g[((g["_mes"] - fila["_mes"]).abs() <= CONTINUIDAD_VECINOS)
+                            & (g["_mes"] != fila["_mes"])
+                            & g["valor_cuota"].notna()]
+                if len(vecinos) >= CONTINUIDAD_MIN_VECINOS:
+                    refs[clave + (int(fila["_mes"]),)] = vecinos["valor_cuota"].tolist()
+
+        for _, fila in en_pie.iterrows():
+            clave = (fila["periodo"], fila["run_fondo"], fila["nemotecnico"], fila["serie"])
+            vecinos = refs.get((fila["run_fondo"], fila["nemotecnico"], fila["serie"]) + (int(fila["_mes"]),))
+            if not vecinos:
+                continue
+            if _relativo(float(fila["valor_cuota"]), float(np.median(vecinos))) > CONTINUIDAD_REL:
+                caidas.add(clave)
+
+    if not caidas:
+        return tabla, []
+
+    avisos = []
+    for pos, fila in t.iterrows():
+        clave = (fila["periodo"], fila["run_fondo"], fila["nemotecnico"], fila["serie"])
+        if clave not in caidas:
+            continue
+        serie = t[(t["run_fondo"] == fila["run_fondo"]) & (t["nemotecnico"] == fila["nemotecnico"])
+                  & (t["serie"] == fila["serie"])]
+        vecinos = serie[((serie["_mes"] - fila["_mes"]).abs() <= CONTINUIDAD_VECINOS)
+                        & (serie["_mes"] != fila["_mes"])].dropna(subset=["valor_cuota"])
+        ref = float(vecinos["valor_cuota"].median()) if len(vecinos) else None
+        mejor = _relativo(float(fila["valor_cuota"]), ref) if ref else None
+        avisos.append({
+            "periodo": fila["periodo"], "run_fondo": fila["run_fondo"],
+            "nemotecnico": fila["nemotecnico"], "serie": fila["serie"],
+            "estado": "salto_temporal",
+            "origen": "una_aseguradora_varias_lineas" if int(fila["aseguradoras_reportantes"]) == 1 else "varias_aseguradoras",
+            "valor_cuota_reportados": [float(fila["valor_cuota"])],
+            "lineas": int(fila["aseguradoras_reportantes"]),
+            "aseguradoras": int(fila["aseguradoras_reportantes"]),
+            "referencia_serie": ref,
+            "desviacion": None if mejor is None else round(mejor, 4),
+            "meses_cercanos": int(len(vecinos)),
+        })
+        t.at[pos, "valor_cuota"] = None
+        t.at[pos, "estado"] = "salto_temporal"
+
+    avisos.sort(key=lambda a: (a["periodo"], a["run_fondo"]))
+    return t.drop(columns=["_mes"]), avisos
+
+
 def agregar(df: pd.DataFrame) -> tuple[pd.DataFrame, list[dict]]:
     """De las líneas de las aseguradoras a una fila por (período, fondo, nemotécnico, serie).
 
@@ -304,6 +415,9 @@ def agregar(df: pd.DataFrame) -> tuple[pd.DataFrame, list[dict]]:
         })
 
     tabla = pd.DataFrame(filas)
+    # C4 no se aplica aqui: `agregar` se llama una vez por año y la continuidad se juzga contra los
+    # meses vecinos de la misma serie, que casi siempre viven en otro archivo. El publicador la
+    # aplica sobre la tabla concatenationada, en `reconstruir`.
     ffmm, fi = cargar_maestros()
     sectores, fichas = zip(*(clasificar(r, ffmm, fi) for r in tabla["run_fondo"]))
     tabla.insert(2, "run_fondo_dv", [f.get("run_fondo_dv", "") for f in fichas])

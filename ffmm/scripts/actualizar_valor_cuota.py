@@ -83,6 +83,13 @@ def reconstruir(rehacer: bool) -> tuple[dict, list[dict]]:
         return {}, avisos
 
     todo = pd.concat(hechos, ignore_index=True)
+    # C4 se juzga acá y no dentro de `agregar`, que se llama una vez por año: la referencia de cada
+    # valor son los meses vecinos de la misma serie, y la mayoría viven en otro archivo anual. Con
+    # la comparación hecha por año, un valor corrupto en diciembre no tiene con qué contrastar y pasa
+    # de largo. Ver `aplicar_continuidad`.
+    todo, avisos_c4 = VC.aplicar_continuidad(todo)
+    avisos.extend(avisos_c4)
+
     # Un RUN que no está en ninguno de los dos padrónes oficiales no se publica: sin maestro no hay
     # a qué sector pertenece ni qué nombre tiene. Queda contado en el control.
     sin_maestro = sorted(todo.loc[todo["sector"] == "sin_maestro", "run_fondo"].unique())

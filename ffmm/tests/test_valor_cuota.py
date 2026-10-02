@@ -317,6 +317,102 @@ class TestEsquema(unittest.TestCase):
         self.assertEqual(VC.ESQUEMA.field("aseguradoras_reportantes").type, "int64")
 
 
+class TestContinuidad(unittest.TestCase):
+    """C4. Los casos de abajo son los cinco valores que una auditoria encontro publicados y que
+    C1, C2 y C3 habian dejado pasar: los tres numeros de la linea vienen escalados por el mismo
+    error, asi que la identidad cierra, el valor es positivo y no hay segunda aseguradora."""
+
+    @staticmethod
+    def _serie(vals, run="R", ne="N", se="I"):
+        return pd.DataFrame([{
+            "periodo": p, "run_fondo": run, "nemotecnico": ne, "serie": se,
+            "unidad_monetaria": "$$", "valor_cuota": v, "unidades_aseguradoras": 1.0,
+            "patrimonio_aseguradoras_m": 1.0, "aseguradoras_reportantes": 1, "estado": "ok",
+        } for p, v in vals])
+
+    def _caidas(self, vals):
+        _, avisos = VC.aplicar_continuidad(self._serie(vals))
+        return sorted(a["periodo"] for a in avisos)
+
+    @staticmethod
+    def _meses(desde, hasta, base, paso):
+        a, b = desde.split("-"), hasta.split("-")
+        y, m = int(a[0]), int(a[1])
+        fy, fm = int(b[0]), int(b[1])
+        out = []
+        while (y, m) <= (fy, fm):
+            out.append((f"{y}-{m:02d}", base))
+            base += paso
+            m += 1
+            if m > 12:
+                m, y = 1, y + 1
+        return out
+
+    def test_cae_el_valor_corrupto_y_no_el_sano(self):
+        # RUN 8230 serie EJECU vale unos 700.000 desde 2023 y en dos meses de 2024 trae 727,67 y
+        # 729,99. Con la referencia tomada solo de los meses siguientes, el valor sano de 2024-11
+        # pareceria el raro: la ventana tiene que ser ancha para que la mediana de la serie absuelva
+        # al bueno y condene a los dos malos.
+        liso = self._meses("2023-01", "2023-12", 690_000, 500)
+        cola = [(f"2025-{m:02d}", 700_000 + m * 300) for m in (5, 8, 9, 10)]
+        cola += [(f"2026-{m:02d}", 710_000 + m * 200) for m in (1, 2, 3, 4, 5, 7, 8)]
+        fila = [("2024-11", 709_031.002), ("2024-12", 727.6658), ("2025-01", 729.9942)]
+        self.assertEqual(self._caidas(liso + fila + cola), ["2024-12", "2025-01"])
+
+    def test_cae_un_valor_832_veces_mayor(self):
+        self.assertEqual(self._caidas([("2021-11", 836_878.1849), ("2021-12", 1_005.048),
+                                       ("2022-01", 1_008.6837), ("2022-02", 1_012.8125)]),
+                         ["2021-11"])
+
+    def test_cae_un_valor_diez_veces_menor(self):
+        meses = [(f"2019-{m:02d}", 1400 + m) for m in (5, 6, 7, 9, 10, 11)]
+        self.assertEqual(self._caidas(meses + [("2019-08", 141.2158)]), ["2019-08"])
+
+    def test_no_se_toca_un_cambio_de_regimen_legitimo(self):
+        # RUN 8684 serie I sube de 1.300 a 2.266 y vuelve a 1.346. Con el umbral en 70 % entra de
+        # sobra y este test es el que impide que alguien lo baje por encontrar otro error.
+        base = [(f"2021-{m:02d}", 1300 + m) for m in range(1, 6)]
+        pico = [("2021-06", 1935.86), ("2021-07", 2029.04), ("2021-08", 2111.61), ("2021-09", 2106.73),
+                ("2021-10", 2209.42), ("2021-11", 2232.89), ("2021-12", 2266.03), ("2022-01", 1953.98)]
+        self.assertEqual(self._caidas(base + pico), [])
+
+    def test_no_se_toca_una_serie_normal_ni_el_restojo_de_marzo_2020(self):
+        normal = [(f"2021-{m:02d}", 1000 + m) for m in range(1, 13)]
+        self.assertEqual(self._caidas(normal), [])
+        marzo = [("2020-01", 540.0), ("2020-02", 527.24), ("2020-03", 334.91),
+                 ("2020-04", 345.0), ("2020-05", 350.0), ("2020-06", 355.0)]
+        self.assertEqual(self._caidas(marzo), [])
+
+    def test_no_se_toca_una_tendencia_fuerte(self):
+        # Un fondo que se multiplica por veinte en un año sube 15 % cada mes y sigue siendo sano.
+        for paso in (1.15, 0.88):
+            vals = [(f"2021-{m:02d}", 1000 * paso ** (m - 1)) for m in range(1, 13)]
+            self.assertEqual(self._caidas(vals), [], f"paso={paso}")
+
+    def test_sin_tres_vecinos_no_se_juzga(self):
+        # Con dos meses no hay forma de saber cual de los dos esta malo, asi que no se descarta ninguno.
+        self.assertEqual(self._caidas([("2021-11", 999_999.0), ("2021-12", 1005.0)]), [])
+
+    def test_un_valor_corrupto_no_arrastra_a_sus_vecinos(self):
+        # El caso de RUN 8230 al reves: si la referencia se contaminara, caeria la serie entera.
+        liso = self._meses("2023-01", "2023-12", 690_000, 500)
+        cola = [(f"2025-{m:02d}", 700_000 + m * 300) for m in (5, 8, 9, 10)]
+        fila = [("2024-11", 709_031.002), ("2024-12", 727.6658), ("2025-01", 729.9942)]
+        self.assertEqual(len(self._caidas(liso + fila + cola)), 2)
+
+    def test_queda_constancia_del_por_que(self):
+        _, avisos = VC.aplicar_continuidad(self._serie(
+            [("2021-11", 836_878.1849), ("2021-12", 1_005.048), ("2022-01", 1_008.6837),
+             ("2022-02", 1_012.8125)]))
+        self.assertEqual(len(avisos), 1)
+        a = avisos[0]
+        self.assertEqual(a["estado"], "salto_temporal")
+        self.assertEqual(a["valor_cuota_reportados"], [836_878.1849])
+        self.assertGreater(a["desviacion"], VC.CONTINUIDAD_REL)
+        self.assertGreaterEqual(a["meses_cercanos"], VC.CONTINUIDAD_MIN_VECINOS)
+        self.assertIsNotNone(a["referencia_serie"])
+
+
 class TestCobertura(unittest.TestCase):
     """El desglose de cobertura por vigencia es el que responde si faltó procesar o si la fuente es finita."""
 
