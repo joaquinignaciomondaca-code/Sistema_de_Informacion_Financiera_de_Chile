@@ -44,7 +44,9 @@ concurrency:
 jobs:
   validate-and-publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    # Debe cubrir el presupuesto `minutos` del input (270) más la instalación y las auditorías:
+    # con 180 el job moría a mitad de una puesta al día larga y no publicaba nada.
+    timeout-minutes: 300
     outputs:
       published_changed: ${{ steps.publish.outputs.published_changed }}
       period: ${{ steps.publish.outputs.period }}
@@ -82,6 +84,9 @@ jobs:
           if [ -n "${DESDE}" ]; then HISTORY_START="${DESDE}"; else HISTORY_START='2022-01'; fi
           if [ -n "${HASTA}" ]; then args+=(--hasta "${HASTA}"); fi
           args+=(--catch-up --desde "${HISTORY_START}" --max-periods "${PERIODOS:-0}")
+          # El presupuesto de tiempo se pasa de verdad: antes el input `minutos` no llegaba al
+          # script, así que una puesta al día larga dependía del tope del job para cortarse.
+          args+=(--minutos "${MINUTOS:-270}")
           python -m bancos.scripts.publish_cmf_bank_period "${args[@]}"
 
       - name: Confirmar el período validado para que la web recoja los cambios

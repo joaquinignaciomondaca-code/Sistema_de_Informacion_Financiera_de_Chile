@@ -314,6 +314,13 @@
         "fi/scripts/actualizar_eeff.py"
       ],
       "max_dias": 16
+    },
+    "normativa_cmf.yml": {
+      "scripts": [
+        "pipelines/normativa_cmf/pipeline.py",
+        "pipelines/normativa_cmf/audit.py"
+      ],
+      "max_dias": 4
     }
   }
 }

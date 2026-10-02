@@ -13,6 +13,9 @@ on:
     paths:
       - .github/workflows/fi_carteras.yml
       - fi/scripts/actualizar_carteras.py
+      # Módulos compartidos que importan el extractor: un cambio ahí debe volver a probar
+      # y a publicar (en las corridas programadas no corre el job `pruebas` de web_audit).
+      - pipelines/auto/estable.py
   workflow_dispatch:
     inputs:
       desde:
@@ -61,6 +64,10 @@ jobs:
 
       - name: Instalar dependencias
         run: python -m pip install --disable-pip-version-check pandas==2.2.3 pyarrow==21.0.0
+
+      # El trimestre solo se publica si la guardería de filas y la escritura atómica están sanas.
+      - name: Probar la escritura estable
+        run: python -m unittest -v pipelines.auto.tests.test_estable
 
       - name: Descargar, validar y publicar los trimestres pendientes
         id: publicar
