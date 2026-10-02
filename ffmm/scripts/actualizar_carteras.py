@@ -395,8 +395,10 @@ def procesar_mes(periodo: str, tablas: list[str], control: dict, cache: Path | N
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--desde", default=None, help="primer cierre (AAAA-MM); vacío = autodescubre el más antiguo disponible")
     ap.add_argument("--hasta", default=None)
-    ap.add_argument("--max-periodos", type=int, default=400)
+    ap.add_argument("--minutos", type=float, default=270, help="tope de tiempo de la corrida (el progreso se conserva)")
+    ap.add_argument("--max-periodos", type=int, default=0, help="máximo de cierres a revisar por corrida (0 = sin tope)")
     ap.add_argument("--cache", type=Path, default=None, help="guardar/reusar las descargas en esta carpeta")
     ap.add_argument("--diagnostico", action="store_true", help="revisar los meses pendientes sin escribir")
     ap.add_argument("--solo-data-manifest", action="store_true",
@@ -406,18 +408,35 @@ def main(argv=None) -> int:
         actualizar_data_manifest(cargar_control())
         return 0
     gha = bool(os.environ.get("GITHUB_ACTIONS"))
+    inicio = time.monotonic()
     SALIDA.mkdir(parents=True, exist_ok=True)
     control = cargar_control()
+    
+    # Determinar el primer mes
+    if a.desde:
+        primer_mes = a.desde
+    elif control["periodos"]:
+        # Ya hay datos publicados: usar el más antiguo
+        primer_mes = min(control["periodos"].keys())
+    else:
+        # Primera corrida: usar el default
+        primer_mes = min([DESDE] + list(DESDE_TABLA.values()))
+    
     pendientes = []
-    for p in meses(min([DESDE] + list(DESDE_TABLA.values())), a.hasta or ultimo_mes_disponible()):
+    for p in meses(primer_mes, a.hasta or ultimo_mes_disponible()):
         hechas = set(control["periodos"].get(p, {}).get("registros", {}))
         faltan = [t for t in TABLAS if p >= DESDE_TABLA.get(t, DESDE) and t not in hechas]
         if faltan:
             pendientes.append((p, faltan))
-    print(f"Meses publicados: {len(control['periodos'])}. Meses con tablas pendientes: {len(pendientes)}")
+    
+    limite = pendientes if a.max_periodos <= 0 else pendientes[:a.max_periodos]
+    print(f"Meses publicados: {len(control['periodos'])}. Meses con tablas pendientes: {len(limite)}")
     hechos, malos = [], 0
     limite_reciente = meses("2000-01", a.hasta or ultimo_mes_disponible())[-3]
-    for periodo, faltan in pendientes[:a.max_periodos]:
+    for periodo, faltan in limite:
+        if time.monotonic() - inicio > a.minutos * 60:
+            print("Tiempo agotado; el resto sigue en la próxima corrida.")
+            break
         try:
             conteo, avisos, fondos = procesar_mes(periodo, faltan, control, a.cache, not a.diagnostico,
                                                    reciente=periodo >= limite_reciente)

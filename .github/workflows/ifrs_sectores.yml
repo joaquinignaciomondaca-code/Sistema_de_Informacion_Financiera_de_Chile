@@ -1,12 +1,12 @@
-name: Estados financieros IFRS de AGF, securitizadoras y cajas de compensación (CMF) y altas de CCAF y factoring/leasing, 3 veces al mes, incremental
+name: Estados financieros IFRS de AGF, securitizadoras y cajas de compensación (CMF) y altas de CCAF y factoring/leasing, cada 3 días, incremental
 
 on:
   schedule:
-    # Días 2, 12 y 22 (13:30 UTC). La CMF publica un TXT trimestral con los estados IFRS de todas
+    # Cada 3 días (13:30 UTC). La CMF publica un TXT trimestral con los estados IFRS de todas
     # las sociedades. Los trimestres cerrados (más de 150 días) no se vuelven a descargar; los
     # recientes se releen para sumar a quienes presentan tarde. Las CCAF y sociedades de
     # factoring/leasing que reportan en el último trimestre y no están en su lista se agregan.
-    - cron: '30 13 2,12,22 * *'
+    - cron: '30 13 */3 * *'
   push:
     branches:
       - main
@@ -20,6 +20,23 @@ on:
       - pipelines/auto/estable.py
       - pipelines/auto/rut.py
   workflow_dispatch:
+    inputs:
+      desde:
+        description: 'Primer cierre (AAAA-MM); vacío = el más antiguo pendiente'
+        default: ''
+        type: string
+      hasta:
+        description: 'Último cierre (vacío = último admisible)'
+        default: ''
+        type: string
+      minutos:
+        description: 'Tiempo máximo en minutos; el progreso se conserva'
+        default: '270'
+        type: string
+      max_periodos:
+        description: 'Máximo de cierres a revisar por corrida (0 = sin tope)'
+        default: '0'
+        type: string
 
 permissions:
   contents: write
@@ -62,7 +79,17 @@ jobs:
 
       - name: Descargar y publicar los trimestres pendientes
         id: publicar
-        run: python pipelines/ifrs_sectores/actualizar.py --minutos 70
+        env:
+          DESDE: ${{ inputs.desde }}
+          HASTA: ${{ inputs.hasta }}
+          MINUTOS: ${{ inputs.minutos }}
+          PERIODOS: ${{ inputs.max_periodos }}
+        run: |
+          args=()
+          if [ -n "${DESDE}" ]; then args+=(--desde "${DESDE}"); fi
+          if [ -n "${HASTA}" ]; then args+=(--hasta "${HASTA}"); fi
+          python pipelines/ifrs_sectores/actualizar.py --minutos "${MINUTOS:-270}" \
+            --max-periodos "${PERIODOS:-0}" "${args[@]}"
 
       - name: Confirmar los trimestres publicados
         if: always() && steps.publicar.outcome != 'skipped'

@@ -401,13 +401,27 @@ def ultimo_trimestre_disponible(hoy: date | None = None) -> str:
         y, m = (y - 1, 12) if m == 3 else (y, m - 3)
 
 
+def trimestres_reintentables(control: dict) -> list[str]:
+    """Trimestres sondeados sin datos que deben reintentarse.
+    
+    Regla: reintentar TODOS los sondeados_sin_datos, sin importar si son anteriores
+    o posteriores al primer dato publicado. La CMF puede completar datos históricos
+    o subir data nueva en cualquier momento. La única excepción son los ya publicados
+    (que sí tienen datos y no necesitan reintentarse).
+    """
+    return control.get("sondeados_sin_datos", [])
+
+
 def cargar_control() -> dict:
     ruta = SALIDA / "manifest.json"
-    return json.loads(ruta.read_text()) if ruta.exists() else {"periodos": {}, "fondos": {}}
+    control = json.loads(ruta.read_text()) if ruta.exists() else {"periodos": {}, "fondos": {}}
+    control.setdefault("sondeados_sin_datos", [])
+    return control
 
 
 def guardar_control(control: dict) -> None:
     control["periodos"] = dict(sorted(control["periodos"].items()))
+    control["sondeados_sin_datos"] = sorted(control.get("sondeados_sin_datos", []))
     control["desde"] = DESDE
     control["updated_at"] = datetime.now(timezone.utc).isoformat(timespec="seconds")
     estable.escribir_json((SALIDA / "manifest.json"), control)
@@ -451,7 +465,7 @@ def fondos_a_consultar(periodo: str, registro: list[dict], control: dict, recien
     return sorted(vig | anteriores, key=int)
 
 
-def procesar_trimestre(periodo: str, fondos: list[str], control: dict, reciente: bool):
+def procesar_trimestre(periodo: str, fondos: list[str], control: dict, reciente: bool, hilos: int = TRABAJADORES):
     tareas = [(run, cod) for run in fondos for cod in list(CARTERAS) + ["V"]]
     def bajar(t):
         run, cod = t
@@ -460,7 +474,7 @@ def procesar_trimestre(periodo: str, fondos: list[str], control: dict, reciente:
     malas, descuadres, inesperadas, monedas, con_cartera, fondos_con_datos = [], [], [], {}, set(), 0
     fondos_descuadre = set()
     paginas = []  # «fondo|cartera|sha256» de cada página tal como la devolvió la CMF
-    with ThreadPoolExecutor(max_workers=TRABAJADORES) as ex:
+    with ThreadPoolExecutor(max_workers=hilos) as ex:
         for (run, cod), raw in ex.map(bajar, tareas):
             paginas.append(f"{run}|{cod}|{hashlib.sha256(raw).hexdigest()}")
             try:
@@ -598,11 +612,76 @@ def actualizar_data_manifest(control: dict) -> None:
     estable.escribir_json(ruta, man)
 
 
+def descubrir_primer_trimestre(registro: list[dict], control: dict, hilos: int = TRABAJADORES) -> tuple[str, list[str]]:
+    """Descubre automáticamente el trimestre más antiguo con datos de cartera en la CMF.
+    
+    Prueba TODOS los fondos del registro para cada trimestre, caminando hacia atrás
+    desde DESDE. Retorna una tupla (primer_trimestre, trimestres_sin_datos).
+    Los trimestres_sin_datos son los que se sondearon sin encontrar nada, para
+    no reintentarlos si son anteriores al primer dato encontrado.
+    """
+    runs = [f["run_fondo"] for f in registro]
+    print(f"Descubriendo primer trimestre disponible con {len(runs)} fondos del registro...")
+    
+    def probar_fondo(run, periodo):
+        """Retorna True si el fondo tiene datos de cartera para ese trimestre."""
+        try:
+            raw = _get(url_pagina("N", run, periodo), timeout=20)
+            filas, _, _ = leer_cartera("N", raw)
+            return len(filas) > 0
+        except Exception:
+            return False
+    
+    # Caminar hacia atrás desde DESDE
+    y, m = int(DESDE[:4]), int(DESDE[5:])
+    trimestre_valido = DESDE
+    trimestres_sin_datos = []
+    trimestres_consecutivos_sin_datos = 0
+    
+    while True:
+        # Retroceder un trimestre
+        y, m = (y - 1, 12) if m == 3 else (y, m - 3)
+        
+        # Detenerse si llegamos a 2015 (límite razonable; antes de eso la CMF no publicaba en este formato)
+        if y < 2015:
+            print(f"  Límite 2015 alcanzado sin encontrar corte.")
+            break
+        
+        periodo = f"{y}-{m:02d}"
+        
+        # Probar TODOS los fondos en paralelo
+        fondos_con_datos = 0
+        with ThreadPoolExecutor(max_workers=hilos) as ex:
+            futuros = [ex.submit(probar_fondo, run, periodo) for run in runs]
+            for fut in futuros:
+                if fut.result():
+                    fondos_con_datos += 1
+        
+        if fondos_con_datos > 0:
+            trimestre_valido = periodo
+            print(f"  {periodo}: {fondos_con_datos}/{len(runs)} fondos con datos ✓")
+            trimestres_consecutivos_sin_datos = 0
+        else:
+            trimestres_sin_datos.append(periodo)
+            trimestres_consecutivos_sin_datos += 1
+            print(f"  {periodo}: 0/{len(runs)} fondos con datos")
+            # Si 2 trimestres consecutivos sin datos, asumir que llegamos al límite
+            if trimestres_consecutivos_sin_datos >= 2:
+                print(f"  Dos trimestres consecutivos sin datos. Límite detectado.")
+                break
+    
+    print(f"→ Primer trimestre disponible: {trimestre_valido}")
+    print(f"→ Trimestres sondeados sin datos: {len(trimestres_sin_datos)}")
+    return trimestre_valido, trimestres_sin_datos
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    ap.add_argument("--desde", default=None, help="primer cierre (AAAA-MM); default: autodescubre el más antiguo disponible en CMF")
     ap.add_argument("--hasta", default=None)
-    ap.add_argument("--max-periodos", type=int, default=100)
+    ap.add_argument("--max-periodos", type=int, default=100, help="máximo de cierres a revisar por corrida (0 = sin tope)")
     ap.add_argument("--minutos", type=float, default=240, help="no empezar trimestres nuevos pasado este tiempo")
+    ap.add_argument("--hilos", type=int, default=TRABAJADORES, help="descargas simultáneas (máx 32)")
     ap.add_argument("--fondos", nargs="*", help="solo estos RUN (pruebas; no escribe)")
     ap.add_argument("--solo-data-manifest", action="store_true")
     a = ap.parse_args(argv)
@@ -620,11 +699,35 @@ def main(argv=None) -> int:
     print(f"Registro CMF: {len(registro)} fondos "
           f"({sum(f['estado_vigencia'] == 'Vigente' for f in registro)} vigentes)")
     hasta = a.hasta or ultimo_trimestre_disponible()
-    pendientes = [p for p in trimestres(DESDE, hasta) if p not in control["periodos"]]
-    recientes = set(trimestres(DESDE, hasta)[-2:])
-    print(f"Trimestres publicados: {len(control['periodos'])}. Pendientes: {len(pendientes)}")
+    if a.desde:
+        desde = a.desde
+    elif control["periodos"]:
+        # Si ya hay periodos publicados, partir del más antiguo conocido (evita sondear la CMF)
+        desde = min(control["periodos"])
+    else:
+        # Primera corrida: descubrir automáticamente hasta dónde llega la historia CMF
+        desde, nuevos_sin_datos = descubrir_primer_trimestre(registro, control, a.hilos)
+        # Persistir los trimestres sondeados sin datos (los anteriores al primer dato no se reintentan)
+        control["sondeados_sin_datos"] = sorted(
+            set(control.get("sondeados_sin_datos", [])) | set(nuevos_sin_datos)
+        )
+        guardar_control(control)
+    # Pendientes: trimestres no publicados, más los sondeados sin datos que son reintentables
+    # (posteriores al primer dato publicado, donde la CMF pudo haber subido data nueva)
+    publicados = set(control["periodos"].keys())
+    reintentables = set(trimestres_reintentables(control))
+    todos = set(trimestres(desde, hasta))
+    if a.fondos:
+        # Con --fondos, procesar todo (incluye periodos ya publicados; para pruebas)
+        pendientes = sorted(todos)
+    else:
+        pendientes = sorted((todos - publicados) | (reintentables & todos))
+    recientes = set(trimestres(desde, hasta)[-2:])
+    print(f"Trimestres publicados: {len(control['periodos'])}. "
+          f"Pendientes: {len(pendientes)} ({len(reintentables)} reintentables).")
     hechos = []
-    for periodo in pendientes[:a.max_periodos]:
+    limite = pendientes if a.max_periodos <= 0 else pendientes[:a.max_periodos]
+    for periodo in limite:
         if time.monotonic() - inicio > a.minutos * 60:
             print(f"Tiempo agotado ({a.minutos:.0f} min); el resto sigue en la próxima corrida.")
             break
@@ -632,10 +735,15 @@ def main(argv=None) -> int:
         fondos = a.fondos or fondos_a_consultar(periodo, registro, control, reciente)
         t0 = time.monotonic()
         try:
-            datos, avisos, con_cartera, monedas, n, origen = procesar_trimestre(periodo, fondos, control, reciente and not a.fondos)
+            datos, avisos, con_cartera, monedas, n, origen = procesar_trimestre(periodo, fondos, control, reciente and not a.fondos, a.hilos)
         except NoPublicado as e:
-            print(f"{e}. Se retoma en la próxima corrida.")
-            break
+            print(f"{e}. Se marca como sondeado sin datos y continúa con el siguiente.")
+            # Marcar como sondeado sin datos (puede ser data que la CMF aún no subió)
+            control.setdefault("sondeados_sin_datos", [])
+            if periodo not in control["sondeados_sin_datos"]:
+                control["sondeados_sin_datos"].append(periodo)
+                guardar_control(control)
+            continue
         resumen = ", ".join(f"{t} {len(v)}" for t, v in datos.items())
         print(f"{periodo}: {len(fondos)} fondos consultados ({n} páginas, {time.monotonic() - t0:.0f} s), "
               f"{len(con_cartera)} con cartera · {resumen}" + (f" · {len(avisos)} avisos" if avisos else ""))
@@ -659,6 +767,9 @@ def main(argv=None) -> int:
             if periodo >= (i.get("moneda_periodo") or ""):
                 i["moneda"], i["moneda_periodo"] = moneda, periodo
         control["fondos_registro"] = len(registro)
+        # Si se publicó exitosamente, remover de sondeados_sin_datos
+        if periodo in control.get("sondeados_sin_datos", []):
+            control["sondeados_sin_datos"].remove(periodo)
         guardar_control(control)
         escribir_salidas(control, registro)
         hechos.append(periodo)

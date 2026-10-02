@@ -1,11 +1,11 @@
-name: Cartera de inversiones de seguros (CMF, Circular 1835), 3 veces al mes, incremental
+name: Cartera de inversiones de seguros (CMF, Circular 1835), cada 3 días, incremental
 
 on:
   schedule:
-    # Días 7, 17 y 27 (14:00 UTC). Las compañías informan el mes M hasta mediados de M+1 y la CMF
+    # Cada 3 días (14:00 UTC). Las compañías informan el mes M hasta mediados de M+1 y la CMF
     # lo publica después; cualquiera de los tres intentos lo recoge. Es incremental: los meses ya
     # publicados no se descargan, y si el mes pendiente aún no está la corrida termina sin cambios.
-    - cron: '0 14 7,17,27 * *'
+    - cron: '0 14 */3 * *'
   # Primera carga: al subir cambios del publicador se ejecuta y completa los meses pendientes.
   push:
     branches:
@@ -16,10 +16,21 @@ on:
       - seguros/scripts/formato_1835.py
   workflow_dispatch:
     inputs:
+      desde:
+        description: 'Primer cierre (AAAA-MM); vacío = 2016-11'
+        default: ''
+        type: string
+      hasta:
+        description: 'Último cierre (vacío = último admisible por plazo CMF)'
+        default: ''
+        type: string
+      minutos:
+        description: 'Tiempo máximo en minutos; el progreso se conserva'
+        default: '270'
+        type: string
       max_periodos:
-        description: 'Máximo de meses a procesar en esta corrida'
-        required: false
-        default: '240'
+        description: 'Máximo de cierres a revisar por corrida (0 = sin tope)'
+        default: '0'
         type: string
 
 permissions:
@@ -59,7 +70,17 @@ jobs:
 
       - name: Descargar, validar y publicar los meses pendientes
         id: publicar
-        run: python -m seguros.scripts.actualizar_carteras --cache /tmp/cmf1835 --max-periodos "${{ inputs.max_periodos || '240' }}"
+        env:
+          DESDE: ${{ inputs.desde }}
+          HASTA: ${{ inputs.hasta }}
+          MINUTOS: ${{ inputs.minutos }}
+          PERIODOS: ${{ inputs.max_periodos }}
+        run: |
+          args=()
+          if [ -n "${DESDE}" ]; then args+=(--desde "${DESDE}"); fi
+          if [ -n "${HASTA}" ]; then args+=(--hasta "${HASTA}"); fi
+          python -m seguros.scripts.actualizar_carteras --cache /tmp/cmf1835 \
+            --minutos "${MINUTOS:-270}" --max-periodos "${PERIODOS:-0}" "${args[@]}"
 
       # Se confirma también si un mes posterior falló la validación: los meses anteriores ya
       # quedaron validados y escritos; el mes con problemas no se publica y la corrida queda en rojo.

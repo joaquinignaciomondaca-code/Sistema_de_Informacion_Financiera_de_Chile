@@ -2,8 +2,8 @@ name: Fondos de inversión - balance y resultados XML IFRS CMF
 
 on:
   schedule:
-    # Días 5, 15 y 25. Backfill reanudable y relectura de cierres/reenvíos.
-    - cron: '35 15 5,15,25 * *'
+    # Cada 3 días. Backfill reanudable y relectura de cierres/reenvíos.
+    - cron: '35 15 */3 * *'
   push:
     branches: [main, 'arena/**']
     paths:
@@ -20,8 +20,8 @@ on:
   workflow_dispatch:
     inputs:
       desde:
-        description: 'Primer cierre de la ventana (AAAA-MM); default pro forma 2010-12'
-        default: '2010-12'
+        description: 'Primer cierre (AAAA-MM); vacío = autodescubre el más antiguo disponible'
+        default: ''
         type: string
       hasta:
         description: 'Último cierre (vacío = último admisible por plazo CMF)'
@@ -36,8 +36,8 @@ on:
         default: '0'
         type: string
       hilos:
-        description: 'Descargas simultáneas (default 4)'
-        default: '4'
+        description: 'Descargas simultáneas (default 16; máx 32)'
+        default: '16'
         type: string
       refrescar_todo:
         description: 'Releer también XML sin cambio de nombre y toda la ventana'
@@ -121,10 +121,11 @@ jobs:
             HILOS=6
           fi
           args=()
+          if [ -n "${DESDE}" ]; then args+=(--desde "${DESDE}"); fi
           if [ -n "${HASTA}" ]; then args+=(--hasta "${HASTA}"); fi
           if [ "${REFRESCAR}" = "true" ]; then args+=(--refrescar-todo); fi
-          python -m fi.scripts.actualizar_eeff --desde "${DESDE:-2010-12}" --minutos "${MINUTOS:-270}" \
-            --max-periodos "${PERIODOS:-0}" --hilos "${HILOS:-4}" "${args[@]}"
+          python -m fi.scripts.actualizar_eeff --minutos "${MINUTOS:-270}" \
+            --max-periodos "${PERIODOS:-0}" --hilos "${HILOS:-16}" "${args[@]}"
       - name: Auditar toda la salida antes de permitir el push
         id: auditar
         if: success() && steps.procesar.outputs.publicado == 'true'

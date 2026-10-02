@@ -305,6 +305,31 @@ def cargar_estado(cfg, periodo, control):
     return estado
 
 
+def sondeados_sin_datos(cfg):
+    """Cargar la lista de trimestres sondeados sin datos desde el control."""
+    control = leer_json(cfg.control, {"periodos": {}})
+    return set(control.get("sondeados_sin_datos", []))
+
+
+def guardar_sondeados(cfg, sondeados):
+    """Persistir la lista de trimestres sondeados sin datos."""
+    control = leer_json(cfg.control, {"periodos": {}})
+    control["sondeados_sin_datos"] = sorted(sondeados)
+    json_atomico(cfg.control, control)
+
+
+def trimestres_reintentables(cfg):
+    """Trimestres sondeados sin datos que deben reintentarse.
+    
+    Regla: reintentar TODOS los sondeados_sin_datos, sin importar si son anteriores
+    o posteriores al primer dato publicado. La CMF puede completar datos históricos
+    o subir data nueva en cualquier momento. La única excepción son los ya publicados
+    (que sí tienen datos y no necesitan reintentarse).
+    """
+    control = leer_json(cfg.control, {"periodos": {}})
+    return set(control.get("sondeados_sin_datos", []))
+
+
 def claves_reg(r):
     return {
         (t, ctx, cod)
@@ -657,11 +682,85 @@ def escribir_manifiestos(cfg, control):
             (carpeta / "_vacio.parquet").unlink(missing_ok=True)
 
 
+def descubrir_primer_trimestre(registro, hilos=8, fetcher=_get):
+    """Descubre automáticamente el trimestre más antiguo con EEFF en la CMF.
+    
+    Prueba TODOS los fondos del registro para cada trimestre, caminando hacia atrás
+    desde DESDE. Un trimestre es válido si al menos un fondo tiene estado financiero
+    (ok o ausencia). Si 2+ trimestres consecutivos no tienen ningún dato, se asume
+    que se alcanzó el límite histórico.
+    
+    Retorna una tupla (primer_trimestre, lista_trimestres_sin_datos).
+    """
+    runs = list(registro.keys())
+    print(f"Descubriendo primer trimestre EEFF con {len(runs)} fondos del registro...")
+    
+    def probar_fondo(run, periodo):
+        """Retorna el estado del fondo para ese periodo: 'ok', 'sin_informacion', o None."""
+        tipo = registro[run]["tipo_entidad"]
+        vig = registro[run].get("vig", "VI")
+        try:
+            r, evento = resolver(run, tipo, periodo, None, fetcher, forzar=False, vig=vig)
+            if r.get("estado") in ("ok", "sin_informacion"):
+                return r["estado"]
+            return None
+        except Exception:
+            return None
+    
+    y, m = int(DESDE[:4]), int(DESDE[5:])
+    trimestre_valido = DESDE
+    trimestres_sin_datos = []
+    trimestres_consecutivos_sin_datos = 0
+    
+    while True:
+        y, m = (y - 1, 12) if m == 3 else (y, m - 3)
+        
+        # Límite razonable: antes de 2008 no había IFRS para FI en Chile
+        if y < 2008:
+            print(f"  Límite 2008 alcanzado sin encontrar corte.")
+            break
+        
+        periodo = f"{y:04d}-{m:02d}"
+        fondos_con_datos = 0
+        fondos_sin_info = 0
+        
+        with ThreadPoolExecutor(max_workers=min(hilos, 8)) as ex:
+            futuros = [ex.submit(probar_fondo, run, periodo) for run in runs]
+            for fut in futuros:
+                resultado = fut.result()
+                if resultado == "ok":
+                    fondos_con_datos += 1
+                elif resultado == "sin_informacion":
+                    fondos_sin_info += 1
+        
+        total = fondos_con_datos + fondos_sin_info
+        if fondos_con_datos > 0:
+            trimestre_valido = periodo
+            print(f"  {periodo}: {fondos_con_datos} fondos con EEFF + {fondos_sin_info} sin info ({total}/{len(runs)}) ✓")
+            trimestres_consecutivos_sin_datos = 0
+        elif fondos_sin_info > 0:
+            # Hay fondos que reportan ausencia: la CMF ya operaba
+            trimestre_valido = periodo
+            print(f"  {periodo}: 0 con EEFF + {fondos_sin_info} sin info ({total}/{len(runs)}) ✓")
+            trimestres_consecutivos_sin_datos = 0
+        else:
+            trimestres_sin_datos.append(periodo)
+            trimestres_consecutivos_sin_datos += 1
+            print(f"  {periodo}: 0/{len(runs)} fondos con datos")
+            if trimestres_consecutivos_sin_datos >= 2:
+                print(f"  Dos trimestres consecutivos sin datos. Límite detectado.")
+                break
+    
+    print(f"→ Primer trimestre EEFF disponible: {trimestre_valido}")
+    print(f"→ Trimestres sondeados sin datos: {len(trimestres_sin_datos)}")
+    return trimestre_valido, trimestres_sin_datos
+
+
 def correr(
     cfg=None,
     minutos=270,
-    hilos=4,
-    desde=DESDE,
+    hilos=8,
+    desde=None,
     hasta=None,
     max_periodos=0,
     forzar=False,
@@ -670,7 +769,7 @@ def correr(
     fetcher=_get,
 ):
     cfg = cfg or Config()
-    if minutos <= 0 or not 1 <= hilos <= 16 or max_periodos < 0:
+    if minutos <= 0 or not 1 <= hilos <= 32 or max_periodos < 0:
         raise ValueError("minutos/hilos/max-periodos inválidos")
     hoy, deadline = _hoy(), time.monotonic() + minutos * 60
     ultimo = ultimo_disponible(hoy)
@@ -679,15 +778,40 @@ def correr(
         raise ValueError(
             f"el último trimestre admisible por plazo de publicación es {ultimo}"
         )
-    periodos = list(reversed(trimestres(desde, hasta)))
-    if max_periodos:
-        periodos = periodos[:max_periodos]
     registro = cargar_registro(cfg) if registro is None else registro
     if not registro:
         raise ValueError("registro FI vacío")
     control = leer_json(cfg.control, {"periodos": {}})
+    control.setdefault("sondeados_sin_datos", [])
+    # Determinar el primer trimestre
+    if desde:
+        primer_trimestre = desde
+    elif control.get("periodos"):
+        # Ya hay datos publicados: usar el más antiguo
+        primer_trimestre = min(control["periodos"].keys())
+    else:
+        # Primera corrida: descubrir automáticamente
+        primer_trimestre, nuevos_sin_datos = descubrir_primer_trimestre(registro, hilos, fetcher)
+        # Agregar a la lista de sondeados sin datos (no persistir aún; se guarda al publicar)
+        control["sondeados_sin_datos"] = sorted(
+            set(control.get("sondeados_sin_datos", [])) | set(nuevos_sin_datos)
+        )
+    # Periodos a procesar: no publicados + reintentables (huecos posteriores al primer dato)
+    publicados = set(control.get("periodos", {}).keys())
+    reintentables = trimestres_reintentables(cfg)
+    todos = set(trimestres(primer_trimestre, hasta))
+    if forzar:
+        # Con forzar=True, reprocesar todo (incluye periodos ya publicados)
+        periodos_set = todos
+    else:
+        periodos_set = (todos - publicados) | (reintentables & todos)
+    periodos = sorted(periodos_set, reverse=True)
+    if max_periodos:
+        periodos = periodos[:max_periodos]
+    print(f"Periodos publicados: {len(publicados)}. "
+          f"A procesar: {len(periodos)} ({len(reintentables)} reintentables).")
     resumen = {
-        "desde": desde,
+        "desde": primer_trimestre,
         "hasta": hasta,
         "publicados": [],
         "periodos": {},
@@ -727,10 +851,21 @@ def correr(
             try:
                 if publicar_periodo(cfg, periodo, estado, control, registro):
                     resumen["publicados"].append(periodo)
+                    # Publicado con éxito: remover de sondeados_sin_datos
+                    if periodo in control.get("sondeados_sin_datos", []):
+                        control["sondeados_sin_datos"].remove(periodo)
+                        json_atomico(cfg.control, control)
             except (OSError, ValueError) as e:
                 resumen["errores"].append(f"{periodo}: {e}")
         elif ev["motivo_error"]:
             resumen["errores"].append(f"{periodo}: {ev['motivo_error']}")
+        elif not ev["puede_publicar"] and not ev["ok"]:
+            # No se puede publicar y no hay fondos ok: marcar como sondeado sin datos
+            if periodo not in control.get("sondeados_sin_datos", []):
+                control.setdefault("sondeados_sin_datos", []).append(periodo)
+                # Solo persistir si el control ya existe (hay datos publicados)
+                if cfg.control.exists():
+                    json_atomico(cfg.control, control)
         print(
             f"::notice title=FI EEFF::{periodo}: {ev['ok']} fondos validados, {ev['rechazados']} rechazados, "
             f"{len(ev['pendientes'])} pendientes; eventos {json.dumps(cuenta, ensure_ascii=False)}; "
@@ -749,10 +884,10 @@ def correr(
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--desde", default=DESDE)
+    ap.add_argument("--desde", default=None, help="primer cierre (AAAA-MM); default: autodescubre el más antiguo disponible en CMF")
     ap.add_argument("--hasta")
     ap.add_argument("--minutos", type=float, default=270)
-    ap.add_argument("--hilos", type=int, default=4)
+    ap.add_argument("--hilos", type=int, default=16, help="descargas simultáneas (máx 32)")
     ap.add_argument("--max-periodos", type=int, default=0)
     ap.add_argument("--refrescar-todo", action="store_true")
     ap.add_argument("--sin-publicar", action="store_true")
