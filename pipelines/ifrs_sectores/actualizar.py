@@ -674,8 +674,10 @@ def agregar_altas(fuera: dict[str, list[dict]], periodo: str) -> int:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--minutos", type=float, default=40)
-    ap.add_argument("--max-periodos", type=int, default=200)
+    ap.add_argument("--desde", default=None, help="primer cierre (AAAA-MM); vacío = el más antiguo pendiente")
+    ap.add_argument("--hasta", default=None, help="último cierre a considerar (por defecto, el último cerrado)")
+    ap.add_argument("--minutos", type=float, default=270, help="tope de tiempo de la corrida (el progreso se conserva)")
+    ap.add_argument("--max-periodos", type=int, default=0, help="máximo de cierres a revisar por corrida (0 = sin tope)")
     ap.add_argument("--solo-data-manifest", action="store_true")
     a = ap.parse_args(argv)
     control = cargar_control()
@@ -693,14 +695,24 @@ def main(argv=None) -> int:
     reeditados = {p for p in periodos
                   if (control["periodos"].get(p) or {}).get("cerrado")
                   and ifrs_txt.reeditado_despues(control["periodos"][p].get("leido_utc"), cmf.get(p))}
+    # Aplicar filtros de --desde y --hasta
+    if a.desde:
+        periodos = [p for p in periodos if p >= a.desde]
+    if a.hasta:
+        periodos = [p for p in periodos if p <= a.hasta]
+    
     pendientes = [p for p in periodos if p not in control["periodos"]
                   or not control["periodos"][p].get("cerrado") or p in reeditados]
+    
+    if a.max_periodos > 0:
+        pendientes = pendientes[:a.max_periodos]
+    
     print(f"Índice CMF: {len(periodos)} trimestres ({periodos[0]}..{periodos[-1]}). "
           f"Procesados y cerrados: {len(periodos) - len(pendientes)}. A leer ahora: {len(pendientes)}"
           + (f" (cierres que la CMF reeditó: {', '.join(sorted(reeditados))})" if reeditados else ""))
     cache_anual: dict[tuple, bytes] = {}
     hechos, errores, defectos = 0, [], []
-    for periodo in pendientes[:a.max_periodos]:
+    for periodo in pendientes:
         if time.monotonic() - inicio > a.minutos * 60:
             print(f"Tiempo agotado ({a.minutos:.0f} min); el resto sigue en la próxima corrida.")
             break
