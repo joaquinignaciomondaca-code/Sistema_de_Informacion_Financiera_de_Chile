@@ -1,12 +1,12 @@
-name: Fondos mutuos - balance y estado de resultados anuales (CMF, XML IFRS), 3 veces al mes, incremental
+name: Fondos mutuos - balance y estado de resultados anuales (CMF, XML IFRS), cada 3 días, incremental
 
 on:
   schedule:
-    # Días 4, 14 y 24 (14:20 UTC). La CMF publica un XML por fondo y año (cierre de diciembre) en la ficha de cada
+    # Cada 3 días (14:20 UTC). La CMF publica un XML por fondo y año (cierre de diciembre) en la ficha de cada
     # fondo; no hay descarga masiva. La primera corrida recorre toda la historia (~7.900 fondos y cierres, ~90 min);
     # después cada corrida revisa los dos últimos cierres y 1/36 del resto (toda la historia una vez al año) y
     # baja solo lo que cambió (reenvíos) o apareció (presentaciones tardías).
-    - cron: '20 14 4,14,24 * *'
+    - cron: '20 14 */3 * *'
   push:
     branches:
       - main
@@ -20,10 +20,22 @@ on:
       - pipelines/auto/estable.py
   workflow_dispatch:
     inputs:
+      desde:
+        description: 'Primer año (AAAA); vacío = 2010'
+        default: ''
+        type: string
+      hasta:
+        description: 'Último año (vacío = último admisible)'
+        default: ''
+        type: string
       minutos:
         description: 'Tope de tiempo de la corrida en minutos (default 270; el progreso se conserva)'
         required: false
         default: '270'
+        type: string
+      hilos:
+        description: 'Descargas simultáneas (default 16; máx 32)'
+        default: '16'
         type: string
       refrescar_todo:
         description: 'Revisar la ficha de toda la historia (por defecto, 1/36 por corrida)'
@@ -78,12 +90,17 @@ jobs:
       - name: Resolver los fondos y cierres pendientes y publicar la serie si está completa
         id: procesar
         env:
+          DESDE: ${{ inputs.desde }}
+          HASTA: ${{ inputs.hasta }}
           MINUTOS: ${{ inputs.minutos }}
+          HILOS: ${{ inputs.hilos }}
           REFRESCAR: ${{ inputs.refrescar_todo }}
         run: |
           extra=""
-          if [ "${REFRESCAR}" = "true" ]; then extra="--refrescar-todo"; fi
-          python ffmm/scripts/actualizar_eeff.py --minutos "${MINUTOS:-270}" ${extra}
+          if [ -n "${DESDE}" ]; then extra="--desde ${DESDE}"; fi
+          if [ -n "${HASTA}" ]; then extra="${extra} --hasta ${HASTA}"; fi
+          if [ "${REFRESCAR}" = "true" ]; then extra="${extra} --refrescar-todo"; fi
+          python ffmm/scripts/actualizar_eeff.py --minutos "${MINUTOS:-270}" --hilos "${HILOS:-16}" ${extra}
 
       - name: Auditar RUT y cuadratura de lo publicado
         if: always() && steps.procesar.outputs.publicado == 'true'
