@@ -142,6 +142,47 @@ def _periodos_de(ruta: Path) -> list[str]:
     return sorted({str(v) for v in pq.read_table(ruta, columns=["periodo"]).to_pydict()["periodo"] if v})
 
 
+def _run(v) -> str | None:
+    """Clave comparable de un RUN. El registro lo guarda como entero y lo publicado como cadena, así que
+    sin normalizar el cruce no encuentra nada y la cobertura por vigencia sale en cero sin avisar."""
+    if v is None or v == "":
+        return None
+    return str(int(v)) if isinstance(v, (int, float)) and float(v).is_integer() else str(v).strip()
+
+
+def _runs_publicados(base: Path) -> set[str]:
+    """RUN que efectivamente tienen valor cuota publicado, contados en los Parquet, no en el manifiesto."""
+    archivos = sorted(base.glob("*.parquet"))
+    if not archivos:
+        return set()
+    return {k for k in (_run(v) for v in pq.read_table(archivos, columns=["run_fondo"])["run_fondo"].to_pylist()) if k}
+
+
+def _desglose_vigencia(universo: Path, publicados: set[str]) -> dict:
+    """Reparte el universo entre fondos vigentes y cerrados, y en cuál de los dos grupos cae la cobertura.
+
+    El denominador "todos los RUN del registro" mezcla dos poblaciones que no se parecen: los fondos
+    vigentes, que una aseguradora puede mantener hoy, y los que la CMF da por no vigentes, que ya
+    no pueden aparecer en una cartera salvo en periodos antiguos. Medir contra el total y publicar
+    un solo porcentaje hace creer que faltó procesar algo, cuando el techo lo pone la fuente.
+    """
+    if not universo.exists():
+        return {}
+    t = pq.read_table(universo, columns=["run_fondo", "estado_cmf"]).to_pydict()
+    out: dict[str, dict] = {}
+    for run, estado in zip(t["run_fondo"], t["estado_cmf"]):
+        clave = _run(run)
+        if not clave:
+            continue
+        g = out.setdefault(estado or "sin estado", {"fondos": 0, "con_valor_cuota": 0})
+        g["fondos"] += 1
+        if clave in publicados:
+            g["con_valor_cuota"] += 1
+    for g in out.values():
+        g["cobertura"] = round(g["con_valor_cuota"] / g["fondos"], 4) if g["fondos"] else None
+    return out
+
+
 def escribir_control(avisos: list[dict]) -> None:
     """Cobertura y los casos que no se publicaron con un valor."""
     resumen = {}
@@ -152,6 +193,7 @@ def escribir_control(avisos: list[dict]) -> None:
         if not carpeta.exists():
             continue
         m = json.loads(carpeta.read_text(encoding="utf-8"))
+        publicados = _runs_publicados(base)
         resumen[sector] = {
             "publicado": sector not in NO_PUBLICADO,
             "motivo_sin_publicar": NO_PUBLICADO.get(sector),
@@ -159,6 +201,8 @@ def escribir_control(avisos: list[dict]) -> None:
             "fondos_con_valor_cuota": m["fondos"],
             "universo_registro": total,
             "cobertura": round(m["fondos"] / total, 4) if total else None,
+            "por_vigencia": _desglose_vigencia(universo, publicados),
+            "periodos_fuente": m.get("periodos"),
             "primera": m["primera"],
             "ultima": m["ultima"],
         }

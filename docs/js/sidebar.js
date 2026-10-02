@@ -225,7 +225,7 @@ const EXPLORER_TREE = [
               { label: "Cobertura: fondos con valor cuota por mes", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, count(*) AS series, count(*) FILTER (WHERE estado = 'ok') AS series_con_valor FROM ffmm_valor_cuota GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" }
             ],
             tables: [
-              { id: "ffmm_valor_cuota", name: "ffmm.valor_cuota", rows: "Los fondos que alguna aseguradora reportó tener. Al 2026-10-02 son 309 de los 1.543 RUN del registro (20,0 %), entre 2016-11 y 2026-08. Cobertura parcial declarada, no un censo.", file: "", files: ["outputs/valor_cuota/ffmm/manifest.json"] }
+              { id: "ffmm_valor_cuota", name: "ffmm.valor_cuota", rows: "Los fondos que alguna aseguradora reportó tener, con los 118 periodos de la fuente completos entre 2016-11 y 2026-08. Al 2026-10-02 son 309 RUN: el 20,0 % de los 1.543 del registro CMF, pero 1.094 de esos ya figuran 'No Vigente'; entre los 449 vigentes, 204 tienen valor cuota (45,4 %). La brecha no es periodo sin procesar, sino fondos que las aseguradoras no pueden mantener. Cobertura parcial declarada, no un censo.", file: "", files: ["outputs/valor_cuota/ffmm/manifest.json"] }
             ]
           },
           {

@@ -91,6 +91,31 @@ porque este entorno no alcanza a `cmfchile.cl`.
    `patrimonio_aseguradoras_m`, y no `patrimonio`.
 2. **No es el mercado.** 309 de 1.543 fondos mutuos (20,0 %) y 0,06 % de los fondos de inversión. La
    cobertura es un dato de la tabla, no una promesa del sitio.
+
+   ### Por qué el número es 20,0 % y no indica trabajo pendiente
+
+   Conviene desarmarlo, porque leído en crudo parece que falta por procesar y no es así:
+
+   | Eje | Resultado |
+   |---|---|
+   | Periodos de la fuente / publicados | **118 / 118**, del 2016-11 al 2026-08. Ninguno ausente. |
+   | Grupos `(periodo, run, nemotécnico, serie)` de la fuente / publicados | 51.512 / 51.509. Los 3 que faltan están explicados. |
+   | Fondos vigentes del registro CMF con valor cuota | 204 de 449 (**45,4 %**) |
+   | Fondos «No Vigente» del registro con valor cuota | 105 de 1.094 (9,6 %), los que se tenían en periodos antigos |
+   | Total, que es el 20,0 % publicado | 309 de 1.543 |
+
+   El denominador de 1.543 mezcla 449 fondos vigentes con 1.094 que la CMF ya da por cerrados: un
+   fondo cerrado en 2017 no puede aparecer en una cartera de 2026, así que medir contra el total
+   subestima la cobertura por construcción. Entre los vigentes, que es la comparación que tiene
+   sentido, es 45,4 %. El resto de esa brecha tampoco es un fallo: hay fondos que las aseguradoras
+   no pueden mantener por sus propias normas de inversión.
+
+   Las 99.853 filas de la fuente contra las 51.512 series no son una pérdida: la fuente está a nivel
+   de aseguradora (68 aseguradoras, 1,15 por grupo de media y mediana 1, con cola larga en los
+   fondos grandes) y la tabla publicada agrega a nivel de fondo.
+
+   `docs/outputs/valor_cuota_control.json` publica el desglose en `cobertura.ffmm.por_vigencia` y
+   `periodos_fuente`, para que el número no dependa de que alguien lo interprete.
 3. **No es lo que la CMF llama «valor cuota» del fondo**, aunque venga de la CMF: es el precio que
    cada aseguradora usó para valorar su posición, y que todas coinciden en reportar. La diferencia se
    reduce al 3,25 % de las series y, tras aplicar C1, a 152 filas de 51.512 (0,3 %).

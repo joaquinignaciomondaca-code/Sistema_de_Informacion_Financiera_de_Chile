@@ -14,6 +14,7 @@ import unittest
 from pathlib import Path
 
 import pandas as pd
+import pyarrow.parquet as pq
 
 RAIZ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(RAIZ))
@@ -314,6 +315,50 @@ class TestEsquema(unittest.TestCase):
         self.assertEqual(VC.ESQUEMA.field("valor_cuota").type, "double")
         self.assertTrue(VC.ESQUEMA.field("valor_cuota").nullable, "un valor sin confirmar es nulo, no cero")
         self.assertEqual(VC.ESQUEMA.field("aseguradoras_reportantes").type, "int64")
+
+
+class TestCobertura(unittest.TestCase):
+    """El desglose de cobertura por vigencia es el que responde si faltó procesar o si la fuente es finita."""
+
+    def test_el_run_se_normaliza_entre_registro_y_publicado(self):
+        # El registro CMF guarda el RUN como entero y lo publicado como cadena. Sin normalizar, el
+        # cruce queda vacío y la cobertura por vigencia sale en 0,0 % sin ningún error: el peor tipo
+        # de defecto, el que parece un resultado.
+        from ffmm.scripts import actualizar_valor_cuota as AV
+        for bruto, esperado in [(8001, "8001"), ("8001", "8001"), (8001.0, "8001"),
+                                (" 8001 ", "8001"), (None, None), ("", None)]:
+            self.assertEqual(AV._run(bruto), esperado, f"RUN {bruto!r}")
+
+    def test_la_cobertura_por_vigencia_cuadra_con_el_total(self):
+        import json
+        from ffmm.scripts import actualizar_valor_cuota as AV
+        control = json.loads(AV.CONTROL.read_text(encoding="utf-8"))
+        ffmm = control["cobertura"]["ffmm"]
+        desglose = ffmm["por_vigencia"]
+        self.assertTrue(desglose, "el desglose por vigencia no se está publicando")
+        self.assertEqual(sum(g["fondos"] for g in desglose.values()), ffmm["universo_registro"],
+                         "el desglose no cubre el mismo universo que el total")
+        self.assertEqual(sum(g["con_valor_cuota"] for g in desglose.values()), ffmm["fondos_con_valor_cuota"],
+                         "el desglose no cubre los mismos fondos que el total")
+        for nombre, g in desglose.items():
+            self.assertIsNotNone(g["cobertura"], f"{nombre}: cobertura nula con {g['fondos']} fondos")
+            self.assertGreaterEqual(g["cobertura"], 0.0, f"{nombre}: cobertura negativa")
+
+    def test_los_periodos_publicados_son_todos_los_de_la_fuente(self):
+        # La pregunta "20 % es poco, ¿no procesamos todos los periodos?" se responde acá: si la fuente
+        # trae un periodo y el conjunto publicado no, es una pérdida real y no un efecto del denominador.
+        import json
+        from ffmm.scripts import actualizar_valor_cuota as AV
+        m = json.loads((AV.SECTORES["ffmm"] / "manifest.json").read_text(encoding="utf-8"))
+        control = json.loads(AV.CONTROL.read_text(encoding="utf-8"))
+        self.assertEqual(len(control["cobertura"]["ffmm"]["periodos_fuente"]), len(m["periodos"]))
+        fuente = VC.ORIGEN_SEGUROS
+        if fuente.exists():
+            periodos = sorted({str(p) for f in sorted(fuente.glob("*.parquet"))
+                               for p in pq.read_table(f, columns=["periodo"])["periodo"].to_pylist() if p})
+            self.assertEqual(set(periodos), set(m["periodos"]),
+                             f"periodos de la fuente ausentes del manifiesto: "
+                             f"{sorted(set(periodos) - set(m['periodos']))}")
 
 
 if __name__ == "__main__":

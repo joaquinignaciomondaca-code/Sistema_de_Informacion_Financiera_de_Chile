@@ -813,7 +813,7 @@
       "tipo": "serie_valor_cuota",
       "sector": "ffmm",
       "descripcion": "Valor cuota de cada serie de cada fondo mutuo al cierre de cada mes, derivado de la sección B.3 de la Circular 1835 (cartera de las aseguradoras). Junto al valor cuota trae las unidades y el patrimonio que las aseguradoras declaran tener invertidos: es una cota inferior del patrimonio del fondo, no el total.",
-      "cobertura": "Los fondos que alguna aseguradora reportó tener. Al 2026-10-02 son 309 de los 1.543 RUN del registro (20,0 %), entre 2016-11 y 2026-08. Cobertura parcial declarada, no un censo.",
+      "cobertura": "Los fondos que alguna aseguradora reportó tener, con los 118 periodos de la fuente completos entre 2016-11 y 2026-08. Al 2026-10-02 son 309 RUN: el 20,0 % de los 1.543 del registro CMF, pero 1.094 de esos ya figuran 'No Vigente'; entre los 449 vigentes, 204 tienen valor cuota (45,4 %). La brecha no es periodo sin procesar, sino fondos que las aseguradoras no pueden mantener. Cobertura parcial declarada, no un censo.",
       "advertencia": "Cuando las aseguradoras no coinciden en el valor cuota, o la línea no cierra la identidad aritmética, o el valor es cero, la fila se publica con valor_cuota nulo y un estado que lo explica. Filtre por estado = 'ok' antes de calcular rendimiento."
     }
   ]
