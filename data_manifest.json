@@ -235,6 +235,22 @@
       "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/"
     },
     {
+      "id": "factoring_leasing_balance_serie_ifrs_cmf",
+      "name": "factoring_leasing.balance_serie_ifrs_cmf",
+      "view_name": "factoring_leasing_balance_serie_ifrs_cmf",
+      "sector": "factoring_leasing",
+      "sector_label": "Factoring & Leasing",
+      "norma": "CMF IFRS TXT · extracción de cuentas ESF/ER",
+      "corte": "2009-03 a 2026-06",
+      "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
+      "modo": "Automático · Actions publica solo al completar todos los cierres CMF",
+      "ultima_actualizacion": "2026-10-02",
+      "file_parquet": "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
+      "registros_reales": 30046,
+      "descripcion": "30,046 filas de cuentas ESF; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
+      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 36954204964. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
+    },
+    {
       "id": "factoring_leasing_maestro",
       "name": "factoring_leasing.lista_entidades",
       "view_name": "factoring_leasing_maestro",
@@ -249,6 +265,22 @@
       "registros_reales": 32,
       "descripcion": "Sociedades de factoring, leasing y financiamiento automotriz. Las sociedades nuevas se agregan cuando reportan estados financieros IFRS a la CMF con giro factoring o leasing; sus estados se publican desde entonces.",
       "origen": "Lista original (referencias CMF FASOC, LISOC y RVEMI) + altas automáticas desde el TXT IFRS de la CMF (pipelines/ifrs_sectores/actualizar.py)."
+    },
+    {
+      "id": "factoring_leasing_resultados_serie_ifrs_cmf",
+      "name": "factoring_leasing.resultados_serie_ifrs_cmf",
+      "view_name": "factoring_leasing_resultados_serie_ifrs_cmf",
+      "sector": "factoring_leasing",
+      "sector_label": "Factoring & Leasing",
+      "norma": "CMF IFRS TXT · extracción de cuentas ESF/ER",
+      "corte": "2009-03 a 2026-06",
+      "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
+      "modo": "Automático · Actions publica solo al completar todos los cierres CMF",
+      "ultima_actualizacion": "2026-10-02",
+      "file_parquet": "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
+      "registros_reales": 22368,
+      "descripcion": "22,368 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
+      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 36954204964. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
     },
     {
       "id": "ffmm_balance",
@@ -361,6 +393,22 @@
       "registros_reales": 149929,
       "descripcion": "Estado de resultados integrales de cada fondo mutuo —vigente o extinto— del ejercicio completo, línea por línea (19 líneas), con el comparativo del año anterior. Miles de la moneda del fondo (pesos, dólares o euros).",
       "origen": "CMF — Estados financieros IFRS de fondos mutuos (XML «FMEF», Circular 1997 de 2010), enlazado en la ficha de cada fondo: https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU"
+    },
+    {
+      "id": "fi_balance",
+      "name": "fi.balance",
+      "view_name": "fi_balance",
+      "sector": "fi",
+      "sector_label": "Fondos de Inversión",
+      "norma": "IFRS · XML CMF (Circular 1998)",
+      "corte": "2022-03 a 2026-06",
+      "frescura": "Último cierre: 2026-06",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-02",
+      "file_parquet": "outputs/fi/fi_balance/manifest.json",
+      "registros_reales": 985908,
+      "descripcion": "Estado de situación financiera de fondos de inversión FIRES/FINRE, cuenta por cuenta (42 líneas por contexto). TotalPasivo de la fuente incluye patrimonio: el pasivo exigible es TotalPasivoCorriente + TotalPasivoNoCorriente. Miles de la moneda de presentación, sin conversión. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
+      "origen": "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado."
     },
     {
       "id": "fi_bienes_raices",
@@ -489,6 +537,22 @@
       "registros_reales": 777,
       "descripcion": "Operaciones de venta con compromiso de retrocompra (VRC) y de compra con compromiso de retroventa (CRV) vigentes al cierre de cada trimestre.",
       "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
+    },
+    {
+      "id": "fi_resultados",
+      "name": "fi.resultados",
+      "view_name": "fi_resultados",
+      "sector": "fi",
+      "sector_label": "Fondos de Inversión",
+      "norma": "IFRS · XML CMF (Circular 1998)",
+      "corte": "2022-03 a 2026-06",
+      "frescura": "Último cierre: 2026-06",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-02",
+      "file_parquet": "outputs/fi/fi_resultados/manifest.json",
+      "registros_reales": 1164000,
+      "descripcion": "Estado de resultados integrales de fondos de inversión FIRES/FINRE, cuenta por cuenta (30 líneas por contexto). Se separan acumulado del ejercicio, trimestre y sus comparativos; no se suman entre sí. Miles de la moneda de presentación, gastos con signo original. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
+      "origen": "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado."
     },
     {
       "id": "fintech_rpsf_maestro",
@@ -1129,70 +1193,6 @@
       "registros_reales": 19,
       "descripcion": "Infraestructuras del sistema de pagos: LBTR del Banco Central, cámaras de compensación, depósito de valores, contrapartes centrales y operadores de tarjetas de pago.",
       "origen": "Registros públicos CMF: altas desde operadores de tarjetas de pago (TPOPE) y entidades de contraparte central (RGCCO); vigencia también desde sociedades de apoyo al giro (BCSAG) y depósito de valores (DCVAL). El LBTR (BCCh) no tiene registro CMF y no se modifica. pipelines/entidades/actualizar_listas.py."
-    },
-    {
-      "id": "factoring_leasing_balance_serie_ifrs_cmf",
-      "name": "factoring_leasing.balance_serie_ifrs_cmf",
-      "view_name": "factoring_leasing_balance_serie_ifrs_cmf",
-      "sector": "factoring_leasing",
-      "sector_label": "Factoring & Leasing",
-      "norma": "CMF IFRS TXT · extracción de cuentas ESF/ER",
-      "corte": "2009-03 a 2026-06",
-      "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
-      "modo": "Automático · Actions publica solo al completar todos los cierres CMF",
-      "ultima_actualizacion": "2026-10-02",
-      "file_parquet": "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
-      "registros_reales": 30046,
-      "descripcion": "30,046 filas de cuentas ESF; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
-      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 36954204964. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
-    },
-    {
-      "id": "factoring_leasing_resultados_serie_ifrs_cmf",
-      "name": "factoring_leasing.resultados_serie_ifrs_cmf",
-      "view_name": "factoring_leasing_resultados_serie_ifrs_cmf",
-      "sector": "factoring_leasing",
-      "sector_label": "Factoring & Leasing",
-      "norma": "CMF IFRS TXT · extracción de cuentas ESF/ER",
-      "corte": "2009-03 a 2026-06",
-      "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
-      "modo": "Automático · Actions publica solo al completar todos los cierres CMF",
-      "ultima_actualizacion": "2026-10-02",
-      "file_parquet": "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
-      "registros_reales": 22368,
-      "descripcion": "22,368 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
-      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 36954204964. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
-    },
-    {
-      "id": "fi_balance",
-      "name": "fi.balance",
-      "view_name": "fi_balance",
-      "sector": "fi",
-      "sector_label": "Fondos de Inversión",
-      "norma": "IFRS · XML CMF (Circular 1998)",
-      "corte": "2022-03 a 2026-06",
-      "frescura": "Último cierre: 2026-06",
-      "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-02",
-      "file_parquet": "outputs/fi/fi_balance/manifest.json",
-      "registros_reales": 985908,
-      "descripcion": "Estado de situación financiera de fondos de inversión FIRES/FINRE, cuenta por cuenta (42 líneas por contexto). TotalPasivo de la fuente incluye patrimonio: el pasivo exigible es TotalPasivoCorriente + TotalPasivoNoCorriente. Miles de la moneda de presentación, sin conversión. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
-      "origen": "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado."
-    },
-    {
-      "id": "fi_resultados",
-      "name": "fi.resultados",
-      "view_name": "fi_resultados",
-      "sector": "fi",
-      "sector_label": "Fondos de Inversión",
-      "norma": "IFRS · XML CMF (Circular 1998)",
-      "corte": "2022-03 a 2026-06",
-      "frescura": "Último cierre: 2026-06",
-      "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-02",
-      "file_parquet": "outputs/fi/fi_resultados/manifest.json",
-      "registros_reales": 1164000,
-      "descripcion": "Estado de resultados integrales de fondos de inversión FIRES/FINRE, cuenta por cuenta (30 líneas por contexto). Se separan acumulado del ejercicio, trimestre y sus comparativos; no se suman entre sí. Miles de la moneda de presentación, gastos con signo original. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
-      "origen": "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado."
     }
   ]
 }
