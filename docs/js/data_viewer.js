@@ -109,7 +109,8 @@ const DATA_VIEWER_CATALOG = [
       { id: "ffmm_futuros", name: "ffmm.futuros_forwards", detalle: "Futuros y forwards", descripcion: "Futuros y forwards vigentes al cierre de cada mes." },
       { id: "ffmm_opciones", name: "ffmm.opciones", detalle: "Opciones", descripcion: "Opciones vigentes al cierre de cada mes." },
       { id: "ffmm_balance", name: "ffmm.balance", detalle: "Balance anual", descripcion: "Balance IFRS de cada fondo mutuo al 31 de diciembre." },
-      { id: "ffmm_resultados", name: "ffmm.resultados", detalle: "Estado de resultados", descripcion: "Estado de resultados IFRS de cada fondo mutuo por ejercicio." }
+      { id: "ffmm_resultados", name: "ffmm.resultados", detalle: "Estado de resultados", descripcion: "Estado de resultados IFRS de cada fondo mutuo por ejercicio." },
+      { id: "ffmm_valor_cuota", name: "ffmm.valor_cuota", detalle: "Valor cuota por serie", descripcion: "Valor cuota de cada serie al cierre de cada mes, derivado de la Circular 1835 B.3. Cobertura parcial: solo los fondos que alguna aseguradora reportó tener. Filtre por estado = 'ok' antes de calcular rendimiento: las filas sin consenso entre aseguradoras vienen con valor nulo y un estado que lo explica." }
     ]
   },
   {

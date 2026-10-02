@@ -239,6 +239,9 @@
     },
     "sistemas_pago_lista_entidades": {
       "workflow": "entidades.yml"
+    },
+    "ffmm_valor_cuota": {
+      "workflow": "valor_cuota.yml"
     }
   },
   "workflows": {
@@ -321,6 +324,15 @@
         "pipelines/normativa_cmf/audit.py"
       ],
       "max_dias": 4
+    },
+    "valor_cuota.yml": {
+      "scripts": [
+        "ffmm/scripts/actualizar_valor_cuota.py",
+        "ffmm/scripts/valor_cuota.py"
+      ],
+      "max_dias": 16,
+      "scripts_indirectos": true,
+      "nota": "Derivado: no descarga. Reconstruye el valor cuota desde docs/outputs/seguros/fondos_mutuos/ (Circular 1835 B.3)."
     }
   }
 }

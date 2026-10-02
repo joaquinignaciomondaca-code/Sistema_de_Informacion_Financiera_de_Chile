@@ -92,6 +92,11 @@ const SEMANTIC_VIEWS = [
   { name: "ffmm_opciones", manifest: "outputs/ffmm/opciones/manifest.json" },
   { name: "ffmm_balance", manifest: "outputs/ffmm/ffmm_balance/manifest.json" },
   { name: "ffmm_resultados", manifest: "outputs/ffmm/ffmm_resultados/manifest.json" },
+  // Valor cuota por serie, derivado de la sección B.3 de la Circular 1835 (cartera de las
+  // aseguradoras). No descarga nada: se reconstruye desde outputs/seguros/fondos_mutuos/. Cobertura
+  // parcial declarada —son los fondos que alguna aseguradora reportó tener— y las filas sin consenso
+  // entre aseguradoras vienen con valor_cuota nulo y un estado que lo explica.
+  { name: "ffmm_valor_cuota", manifest: "outputs/valor_cuota/ffmm/manifest.json" },
 
   // FONDOS DE PENSIONES (SPENSIONES)
   { name: "afp_lista_entidades", file: "outputs/pensiones/afp_maestro_administradoras.parquet" },

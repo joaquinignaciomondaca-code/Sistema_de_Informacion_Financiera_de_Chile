@@ -6,6 +6,28 @@ Dos flujos independientes, los dos automáticos y los dos en `docs/outputs/ffmm/
 |---|---|---|---|
 | Carteras (Circular 1333) | cartera nacional y extranjera, futuros y forwards, opciones, lista de fondos | `scripts/actualizar_carteras.py` · `ffmm_carteras.yml` | días 8, 18 y 28 |
 | **Estados financieros anuales** (Circular 1997) | **balance** y **estado de resultados** de cada fondo, línea por línea | `scripts/actualizar_eeff.py` (+ `scripts/eeff_xml.py`) · `ffmm_eeff.yml` | días 4, 14 y 24 |
+| **Valor cuota** (Circular 1835 B.3) | valor cuota por serie, con las unidades y el patrimonio que las aseguradoras declaran tener | `scripts/actualizar_valor_cuota.py` (+ `scripts/valor_cuota.py`) · `valor_cuota.yml` | días 9, 19 y 29 |
+
+### Valor cuota
+
+No descarga nada: es una agregación de `docs/outputs/seguros/fondos_mutuos/` (sección B.3 de la
+Circular 1835, la cartera que reportan las aseguradoras), que ya se publica con su fuente y su hash.
+
+Grano: **una fila por período, fondo, nemotécnico y serie** — el valor cuota es de la serie, y la
+serie se identifica por su nemotécnico. Se probó primero con (período, fondo, serie) y daba 271
+falsos desacuerdos entre aseguradoras: el fondo 8806 reportaba en 2016-11 las series B, G y H con
+1.394,8885 / 1.042,3925 / 1.027,558, y eso no era desacuerdo sino tres series distintas.
+
+Tres compuertas, calibradas sobre las 99.853 líneas reales: **identidad** (`unidades × valor_cuota =
+valor_final × 1000`, tolerancia mixta de 1.000.000 de pesos o 0,5 %), **consenso** entre las
+aseguradoras que reportan la serie, y **valor positivo**. Cuando alguna no pasa, la fila se publica
+con `valor_cuota` nulo y un `estado` que lo explica; no se promedia ni se rellena con cero.
+
+**Alcance:** 309 de los 1.543 RUN del registro (20,0 %), entre 2016-11 y 2026-08. `patrimonio_
+aseguradoras_m` es lo que las aseguradoras tienen invertido en el fondo: una cota inferior, no el
+patrimonio del fondo. Los fondos de inversión **no** se publican: esta fuente entrega uno solo de los
+1.679 del registro, y el umbral y el motivo están en `docs/outputs/valor_cuota_control.json`.
+Detalle completo en [`docs/notas/valor_cuota_fondos_2026-10-02.md`](../docs/notas/valor_cuota_fondos_2026-10-02.md).
 
 ## Estados financieros anuales
 

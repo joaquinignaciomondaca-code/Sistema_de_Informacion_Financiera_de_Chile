@@ -196,6 +196,7 @@ jobs:
           corredoras_bolsa.tests.test_actualizar_eeff
           ffmm.tests.test_eeff_xml
           ffmm.tests.test_actualizar_eeff
+          ffmm.tests.test_valor_cuota
           bancos.tests.test_inspect_cmf_bank_sample
           bancos.tests.test_extract_cmf_bank_lines
           bancos.tests.test_publish_cmf_bank_period

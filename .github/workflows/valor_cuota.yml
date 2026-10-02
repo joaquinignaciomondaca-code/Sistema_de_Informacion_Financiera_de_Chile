@@ -1,0 +1,106 @@
+name: Fondos mutuos - valor cuota derivado de la Circular 1835 (3 veces al mes)
+
+on:
+  schedule:
+    # Días 9, 19 y 29 a las 12:50 UTC, dos días después de que publique la cartera de aseguradoras
+    # (seguros_carteras.yml, días 7, 17 y 27 a las 14:00), para reconstruir siempre con el mes nuevo.
+    # NO se usa `*/3`: en el campo día del mes eso dispara 1, 4, 7, 10, 13, 16, 19, 22, 25, 28 y 31
+    # (once veces al mes, no tres), y coincidiría en día con ffmm_eeff, seguros, entidades y carteras.
+    - cron: '50 12 9,19,29 * *'
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/valor_cuota.yml
+      - ffmm/scripts/valor_cuota.py
+      - ffmm/scripts/actualizar_valor_cuota.py
+      - ffmm/tests/test_valor_cuota.py
+      # La fuente de esta tabla: si cambia el formato o el lector, hay que rehacerla.
+      - seguros/scripts/formato_1835.py
+      - pipelines/auto/estable.py
+  workflow_dispatch:
+    inputs:
+      rehacer:
+        description: 'Reescribir todos los años, no solo los que falten'
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: write
+
+concurrency:
+  group: valor-cuota-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    # El trabajo real es local: lee Parquet ya publicados y agrega. Le sobra margen.
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: python -m pip install --disable-pip-version-check 'pandas>=2.2,<4' pyarrow==21.0.0
+
+      # Lo que decide qué se publica no llega a la web sin pasar sus pruebas. Las de propiedades leen
+      # el Parquet real de la fuente y comprueban que no se inventa ni se pierde ningún grupo, y que
+      # todo número publicado proviene de una línea que cerraba la identidad aritmética.
+      - name: Pruebas de la agregación y de las compuertas
+        run: python -m unittest -v ffmm.tests.test_valor_cuota
+
+      - name: Reconstruir el valor cuota y los avisos
+        id: procesar
+        env:
+          REHACER: ${{ inputs.rehacer }}
+        run: |
+          extra=""
+          if [ "${REHACER}" = "true" ]; then extra="--rehacer"; fi
+          python -m ffmm.scripts.actualizar_valor_cuota ${extra}
+
+      - name: Auditar el formato de RUT de lo publicado
+        run: python scripts/audit_rut_formatos.py --check
+
+      # Mismo contrato que el resto de los publicadores: el commit lleva solo datos, y lo compartido
+      # (data_manifest.json y el catálogo de descargas) se regenera sobre la cabeza vigente de la rama.
+      # La carpeta es docs/outputs/valor_cuota/ y NO docs/outputs/ffmm/ a propósito: ffmm_carteras.yml
+      # hace `git add docs/outputs/ffmm` y arrastraría estos Parquet a su commit, y dos publicadores
+      # peleando por los mismos archivos es la contención que este protocolo existe para evitar.
+      - name: Publicar
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/outputs/valor_cuota docs/outputs/valor_cuota_control.json
+          if git diff --cached --quiet; then echo 'Sin cambios.'; exit 0; fi
+          ultimo=$(python -c "import json;print(json.load(open('docs/outputs/valor_cuota/ffmm/manifest.json'))['ultima'])")
+          git commit -m "Fondos mutuos: valor cuota de series hasta ${ultimo}"
+          git checkout -- data_manifest.json
+          datos=$(git rev-parse HEAD)
+          for i in 1 2 3 4 5 6 7 8; do
+            git fetch origin "${GITHUB_REF_NAME}"
+            git reset --hard FETCH_HEAD
+            if ! git cherry-pick "$datos"; then
+              git cherry-pick --abort || git reset --hard FETCH_HEAD
+              echo "Cherry-pick en conflicto (intento ${i}/8): otra publicación tocó los mismos archivos."
+              sleep $(( 15 + RANDOM % 20 ))
+              continue
+            fi
+            python -m ffmm.scripts.actualizar_valor_cuota --solo-data-manifest
+            python scripts/build_download_catalog.py
+            git add data_manifest.json docs/js/download_catalog.js
+            git diff --cached --quiet || git commit -m "Valor cuota: data_manifest"
+            if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
+            echo "Push rechazado (intento ${i}/8): otra corrida publicó primero."
+            sleep $(( 15 + RANDOM % 20 ))
+          done
+          echo "::error title=Publicación en la rama::No se pudo publicar tras 8 intentos por contención en ${GITHUB_REF_NAME}"
+          exit 1

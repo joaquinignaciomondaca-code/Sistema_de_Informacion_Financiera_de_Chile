@@ -1,30 +1,14 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-10-02",
-  "total_tables": 74,
-  "total_records": 11307601,
+  "updated_at": "2026-10-02T04:52:36+00:00",
+  "total_tables": 75,
+  "total_records": 11359110,
   "classification": {
     "automatico": "Extracción, validación y publicación ejecutadas por código y workflows programados (APIs, scrapers y normalizadores)",
     "hibrido": "Extracción o curación inicial asistida desde fuentes no estructuradas, seguida de validación, normalización y publicación reproducibles mediante código; puede ejecutarse fuera de Actions",
     "manual": "Extracción, selección o transcripción que todavía requiere intervención y no cuenta con un compilador reproducible integrado"
   },
   "tables": [
-    {
-      "id": "afp_maestro",
-      "name": "afp.lista_administradoras",
-      "view_name": "afp_maestro",
-      "sector": "pensiones",
-      "sector_label": "Fondos de Pensiones",
-      "norma": "D.L. 3.500 / SPensiones",
-      "corte": "Lista vigente",
-      "frescura": "Se actualiza sola 3 veces al mes (días 10, 20 y 28)",
-      "modo": "Automático",
-      "ultima_actualizacion": "2026-09-28",
-      "file_parquet": "outputs/pensiones/afp_maestro_administradoras.parquet",
-      "registros_reales": 7,
-      "descripcion": "Administradoras de fondos de pensiones: RUT, razón social y nombre de fantasía. Sin cifras.",
-      "origen": "Altas: AFP con valor cuota publicado a diario por la Superintendencia de Pensiones (vcfAFP.php), con el RUT del Registro de Valores CMF (RVEMI). pipelines/entidades/actualizar_listas.py."
-    },
     {
       "id": "agf_balance",
       "name": "agf.balance",
@@ -235,6 +219,22 @@
       "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/"
     },
     {
+      "id": "factoring_leasing_balance_serie_ifrs_cmf",
+      "name": "factoring_leasing.balance_serie_ifrs_cmf",
+      "view_name": "factoring_leasing_balance_serie_ifrs_cmf",
+      "sector": "factoring_leasing",
+      "sector_label": "Factoring & Leasing",
+      "norma": "CMF IFRS TXT · extracción de cuentas ESF/ER",
+      "corte": "2009-03 a 2026-06",
+      "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
+      "modo": "Automático · Actions publica solo al completar todos los cierres CMF",
+      "ultima_actualizacion": "2026-10-02",
+      "file_parquet": "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
+      "registros_reales": 30046,
+      "descripcion": "30,046 filas de cuentas ESF; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
+      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 36954204964. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
+    },
+    {
       "id": "factoring_leasing_maestro",
       "name": "factoring_leasing.lista_entidades",
       "view_name": "factoring_leasing_maestro",
@@ -249,6 +249,22 @@
       "registros_reales": 32,
       "descripcion": "Sociedades de factoring, leasing y financiamiento automotriz. Las sociedades nuevas se agregan cuando reportan estados financieros IFRS a la CMF con giro factoring o leasing; sus estados se publican desde entonces.",
       "origen": "Lista original (referencias CMF FASOC, LISOC y RVEMI) + altas automáticas desde el TXT IFRS de la CMF (pipelines/ifrs_sectores/actualizar.py)."
+    },
+    {
+      "id": "factoring_leasing_resultados_serie_ifrs_cmf",
+      "name": "factoring_leasing.resultados_serie_ifrs_cmf",
+      "view_name": "factoring_leasing_resultados_serie_ifrs_cmf",
+      "sector": "factoring_leasing",
+      "sector_label": "Factoring & Leasing",
+      "norma": "CMF IFRS TXT · extracción de cuentas ESF/ER",
+      "corte": "2009-03 a 2026-06",
+      "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
+      "modo": "Automático · Actions publica solo al completar todos los cierres CMF",
+      "ultima_actualizacion": "2026-10-02",
+      "file_parquet": "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
+      "registros_reales": 22368,
+      "descripcion": "22,368 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
+      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 36954204964. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
     },
     {
       "id": "ffmm_balance",
@@ -361,6 +377,23 @@
       "registros_reales": 149929,
       "descripcion": "Estado de resultados integrales de cada fondo mutuo —vigente o extinto— del ejercicio completo, línea por línea (19 líneas), con el comparativo del año anterior. Miles de la moneda del fondo (pesos, dólares o euros).",
       "origen": "CMF — Estados financieros IFRS de fondos mutuos (XML «FMEF», Circular 1997 de 2010), enlazado en la ficha de cada fondo: https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU"
+    },
+    {
+      "id": "ffmm_valor_cuota",
+      "name": "ffmm.valor_cuota",
+      "view_name": "ffmm_valor_cuota",
+      "sector": "ffmm",
+      "sector_label": "Fondos Mutuos",
+      "norma": "CMF — Circular 1835, sección B.3 (cartera de aseguradoras)",
+      "corte": "2016-11 a 2026-08",
+      "frescura": "Derivado de la cartera de aseguradoras (Circular 1835). Último mes: 2026-08",
+      "modo": "Automático · derivado, se reconstruye cuando cambia la cartera de seguros",
+      "ultima_actualizacion": "2026-10-02",
+      "file_parquet": "outputs/valor_cuota/ffmm/manifest.json",
+      "registros_reales": 51509,
+      "descripcion": "Valor cuota de cada serie de cada fondo mutuo, al cierre de cada mes, con las unidades y el patrimonio que las aseguradoras declaran tener invertidos. Es una cota inferior del patrimonio del fondo, no el total: solo incluye fondos que alguna aseguradora reportó.",
+      "origen": "CMF — sección B.3 del reporte de cartera de inversiones de aseguradoras (Circular 1835), leída de docs/outputs/seguros/fondos_mutuos/. Derivado por ffmm/scripts/actualizar_valor_cuota.py.",
+      "advertencia": "Cobertura parcial: solo los fondos que alguna aseguradora reportó tener. No es el patrimonio del fondo, es el que las aseguradoras tienen invertido en él."
     },
     {
       "id": "fi_balance",
@@ -955,6 +988,22 @@
       "origen": "CMF — Inscripciones de títulos de deuda mediante modalidad de registro automático (listado_titulos_deuda.php), filtrado a securitizadoras. pipelines/entidades/actualizar_listas.py."
     },
     {
+      "id": "afp_maestro",
+      "name": "afp.lista_administradoras",
+      "view_name": "afp_maestro",
+      "sector": "pensiones",
+      "sector_label": "Fondos de Pensiones",
+      "norma": "D.L. 3.500 / SPensiones",
+      "corte": "Lista vigente",
+      "frescura": "Se actualiza sola 3 veces al mes (días 10, 20 y 28)",
+      "modo": "Automático",
+      "ultima_actualizacion": "2026-09-28",
+      "file_parquet": "outputs/pensiones/afp_maestro_administradoras.parquet",
+      "registros_reales": 7,
+      "descripcion": "Administradoras de fondos de pensiones: RUT, razón social y nombre de fantasía. Sin cifras.",
+      "origen": "Altas: AFP con valor cuota publicado a diario por la Superintendencia de Pensiones (vcfAFP.php), con el RUT del Registro de Valores CMF (RVEMI). pipelines/entidades/actualizar_listas.py."
+    },
+    {
       "id": "securitizadoras_balance",
       "name": "securitizadoras.balance",
       "view_name": "securitizadoras_balance",
@@ -1161,38 +1210,6 @@
       "registros_reales": 19,
       "descripcion": "Infraestructuras del sistema de pagos: LBTR del Banco Central, cámaras de compensación, depósito de valores, contrapartes centrales y operadores de tarjetas de pago.",
       "origen": "Registros públicos CMF: altas desde operadores de tarjetas de pago (TPOPE) y entidades de contraparte central (RGCCO); vigencia también desde sociedades de apoyo al giro (BCSAG) y depósito de valores (DCVAL). El LBTR (BCCh) no tiene registro CMF y no se modifica. pipelines/entidades/actualizar_listas.py."
-    },
-    {
-      "id": "factoring_leasing_balance_serie_ifrs_cmf",
-      "name": "factoring_leasing.balance_serie_ifrs_cmf",
-      "view_name": "factoring_leasing_balance_serie_ifrs_cmf",
-      "sector": "factoring_leasing",
-      "sector_label": "Factoring & Leasing",
-      "norma": "CMF IFRS TXT · extracción de cuentas ESF/ER",
-      "corte": "2009-03 a 2026-06",
-      "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
-      "modo": "Automático · Actions publica solo al completar todos los cierres CMF",
-      "ultima_actualizacion": "2026-10-02",
-      "file_parquet": "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
-      "registros_reales": 30046,
-      "descripcion": "30,046 filas de cuentas ESF; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
-      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 36954204964. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
-    },
-    {
-      "id": "factoring_leasing_resultados_serie_ifrs_cmf",
-      "name": "factoring_leasing.resultados_serie_ifrs_cmf",
-      "view_name": "factoring_leasing_resultados_serie_ifrs_cmf",
-      "sector": "factoring_leasing",
-      "sector_label": "Factoring & Leasing",
-      "norma": "CMF IFRS TXT · extracción de cuentas ESF/ER",
-      "corte": "2009-03 a 2026-06",
-      "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
-      "modo": "Automático · Actions publica solo al completar todos los cierres CMF",
-      "ultima_actualizacion": "2026-10-02",
-      "file_parquet": "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
-      "registros_reales": 22368,
-      "descripcion": "22,368 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
-      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 36954204964. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
     }
   ]
 }

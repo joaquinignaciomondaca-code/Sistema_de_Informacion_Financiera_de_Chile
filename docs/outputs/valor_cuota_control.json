@@ -1,0 +1,3314 @@
+{
+  "descripcion": "Valor cuota derivada de la sección B.3 de la Circular 1835. Cubre los fondos que alguna aseguradora reportó tener, no el mercado. Los casos sin consenso entre aseguradoras se publican con valor nulo y motivo, nunca con un número elegido.",
+  "identidad_tolerancia": {
+    "absoluta_pesos": 1000000.0,
+    "relativa": 0.005
+  },
+  "cobertura": {
+    "ffmm": {
+      "publicado": true,
+      "motivo_sin_publicar": null,
+      "series_periodo": 51509,
+      "fondos_con_valor_cuota": 309,
+      "universo_registro": 1543,
+      "cobertura": 0.2003,
+      "primera": "2016-11",
+      "ultima": "2026-08"
+    }
+  },
+  "minimo_fondos_para_publicar": 10,
+  "sin_maestro": [
+    "2597"
+  ],
+  "codificacion_pendiente": {
+    "nota": "Nombres del universo de fondos mutuos que llegaron con el UTF-8 leído como latin-1 y se repararon invirtiendo la decodificación. Estos quedaron con un carácter que ya venía perdido en el origen: la reparación da otra palabra y conviene que alguien los mire.",
+    "casos": [
+      {
+        "run_fondo": "9049",
+        "motivo": "no_reparable",
+        "original": "FONDO MUTUO DEPÃÂ¿SITO PLUS GARANTIZADO",
+        "publicado": "FONDO MUTUO DEPÃÂ¿SITO PLUS GARANTIZADO"
+      }
+    ]
+  },
+  "sin_valor_publicado": {
+    "identidad_falla": 81,
+    "discrepancia_cu": 71,
+    "valor_cuota_cero": 92
+  },
+  "avisos": [
+    {
+      "periodo": "2016-12",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCHC",
+      "serie": "01",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        813310.3158
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2017-01",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCHC",
+      "serie": "01",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        813310.3158
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2017-02",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        782975.2279,
+        787453.2544,
+        787453.2555
+      ],
+      "lineas": 4,
+      "aseguradoras": 4
+    },
+    {
+      "periodo": "2017-02",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCHC",
+      "serie": "01",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        788435.2705
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2017-02",
+      "run_fondo": "8608",
+      "nemotecnico": "CFMBCIEXPR",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        12459.4618,
+        13556.2048
+      ],
+      "lineas": 2,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2017-02",
+      "run_fondo": "8931",
+      "nemotecnico": "CFMBCHCVOU",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1059.3148,
+        1212.431
+      ],
+      "lineas": 2,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2017-06",
+      "run_fondo": "8037",
+      "nemotecnico": "CFMBCIEFCL",
+      "serie": "CLASI",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        3844119.0762
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2017-06",
+      "run_fondo": "8117",
+      "nemotecnico": "CFMBBVRMXV",
+      "serie": "E",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        2993.2834
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2017-06",
+      "run_fondo": "8209",
+      "nemotecnico": "CFMSTDTSRC",
+      "serie": "CORP",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        6585.7915
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2017-09",
+      "run_fondo": "8117",
+      "nemotecnico": "CFMBBVRMXV",
+      "serie": "E",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1506.8518
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2017-10",
+      "run_fondo": "8319",
+      "nemotecnico": "CFMESTSDOI",
+      "serie": "I",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1185.3069,
+        1667.7328
+      ],
+      "lineas": 2,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2017-12",
+      "run_fondo": "8202",
+      "nemotecnico": "CFMCFNMMKI",
+      "serie": "I",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        18780977.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2018-01",
+      "run_fondo": "8202",
+      "nemotecnico": "CFMCFNMMKI",
+      "serie": "I",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        18827653.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2018-01",
+      "run_fondo": "8950",
+      "nemotecnico": "CFMCFNRACA",
+      "serie": "A",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1882.7653
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2018-02",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        719899.5882,
+        725349.3924
+      ],
+      "lineas": 3,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2018-03",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        4043.67,
+        4100.239
+      ],
+      "lineas": 5,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2018-06",
+      "run_fondo": "8119",
+      "nemotecnico": "CFMCORMFF3",
+      "serie": "F3",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1657.872
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2018-06",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        3824.0,
+        3851.8727
+      ],
+      "lineas": 5,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2018-07",
+      "run_fondo": "9328",
+      "nemotecnico": "CFMSURRALM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2018-08",
+      "run_fondo": "9328",
+      "nemotecnico": "CFMSURRALM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2018-09",
+      "run_fondo": "9328",
+      "nemotecnico": "CFMSURRALM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2018-10",
+      "run_fondo": "8230",
+      "nemotecnico": "CFMSTDMMUS",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        437704.3517,
+        441044.7976
+      ],
+      "lineas": 3,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2018-10",
+      "run_fondo": "9328",
+      "nemotecnico": "CFMSURRALM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2018-10",
+      "run_fondo": "9414",
+      "nemotecnico": "CFMTOEEQUI",
+      "serie": "I",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1088.9115,
+        1102.6778
+      ],
+      "lineas": 3,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2018-11",
+      "run_fondo": "9328",
+      "nemotecnico": "CFMSURRALM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2018-12",
+      "run_fondo": "9328",
+      "nemotecnico": "CFMSURRALM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-01",
+      "run_fondo": "8026",
+      "nemotecnico": "CFMBCHCFIN",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1009.3545,
+        21025.8979
+      ],
+      "lineas": 2,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2019-01",
+      "run_fondo": "9414",
+      "nemotecnico": "CFMTOEEQUI",
+      "serie": "I",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1149.5446,
+        1156.3315
+      ],
+      "lineas": 3,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2019-02",
+      "run_fondo": "8037",
+      "nemotecnico": "CFMBCIEFCL",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        661974.019
+      ],
+      "lineas": 2,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-02",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        3799.2353,
+        3818.0,
+        3821.52
+      ],
+      "lineas": 8,
+      "aseguradoras": 6
+    },
+    {
+      "periodo": "2019-02",
+      "run_fondo": "9414",
+      "nemotecnico": "CFMTOEEQUI",
+      "serie": "I",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1137.1552,
+        1149.5675
+      ],
+      "lineas": 4,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2019-05",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        3457.31,
+        3486.6029,
+        3494.0
+      ],
+      "lineas": 9,
+      "aseguradoras": 6
+    },
+    {
+      "periodo": "2019-05",
+      "run_fondo": "9414",
+      "nemotecnico": "CFMTOEEQUI",
+      "serie": "I",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1038.3085,
+        1047.258
+      ],
+      "lineas": 4,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2019-06",
+      "run_fondo": "8618",
+      "nemotecnico": "CFMBTGMMDF",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        7716542.5049
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-07",
+      "run_fondo": "8230",
+      "nemotecnico": "CFMSTDMMUS",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        64.2073
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-07",
+      "run_fondo": "8240",
+      "nemotecnico": "CFMLVAHESI",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1598.7361
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-07",
+      "run_fondo": "8363",
+      "nemotecnico": "CFMEURRPLD",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1659.4672
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-07",
+      "run_fondo": "8411",
+      "nemotecnico": "CFMEURRNOD",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1665.2322
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-07",
+      "run_fondo": "8606",
+      "nemotecnico": "CFMLVMMAKI",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1698438.7423
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-07",
+      "run_fondo": "8618",
+      "nemotecnico": "CFMBTGMMDF",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        740918.8179
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-07",
+      "run_fondo": "8629",
+      "nemotecnico": "CFMEURDOLD",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        774852.8027
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-07",
+      "run_fondo": "8932",
+      "nemotecnico": "CFMCFNREPI",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1409.4416
+      ],
+      "lineas": 2,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2019-07",
+      "run_fondo": "8950",
+      "nemotecnico": "CFMCFNRACI",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1554.2273
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-07",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        3485.1562,
+        3492.9,
+        3494.19,
+        3515.0766
+      ],
+      "lineas": 9,
+      "aseguradoras": 7
+    },
+    {
+      "periodo": "2019-07",
+      "run_fondo": "9025",
+      "nemotecnico": "CFMEURRCHD",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1356.6438
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-08",
+      "run_fondo": "8363",
+      "nemotecnico": "CFMEURRPLD",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        166.5069
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-08",
+      "run_fondo": "8755",
+      "nemotecnico": "CFMLVCAZOI",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        151.0738
+      ],
+      "lineas": 2,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2019-08",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        3347.35,
+        3347.3516,
+        3348.2,
+        3366.2459
+      ],
+      "lineas": 9,
+      "aseguradoras": 7
+    },
+    {
+      "periodo": "2019-09",
+      "run_fondo": "8057",
+      "nemotecnico": "CFMSTDMMCO",
+      "serie": "Corpo",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1125.3775
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-09",
+      "run_fondo": "8945",
+      "nemotecnico": "CFMCCMONMI",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        2210.2809
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-10",
+      "run_fondo": "8606",
+      "nemotecnico": "CFMLVMMAKI",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        179009.3433
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-10",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        3285.2,
+        3314.48,
+        3321.1052
+      ],
+      "lineas": 8,
+      "aseguradoras": 6
+    },
+    {
+      "periodo": "2019-11",
+      "run_fondo": "8230",
+      "nemotecnico": "CFMSTDMMUS",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        646.1996
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-11",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1022522.1845,
+        1042818.2671
+      ],
+      "lineas": 2,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2019-11",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        3164.0,
+        3178.2491,
+        3190.96
+      ],
+      "lineas": 6,
+      "aseguradoras": 4
+    },
+    {
+      "periodo": "2019-12",
+      "run_fondo": "8230",
+      "nemotecnico": "CFMSTDMMUS",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        647.4336
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-12",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-12",
+      "run_fondo": "8859",
+      "nemotecnico": "CFMSURALPM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2019-12",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-01",
+      "run_fondo": "8320",
+      "nemotecnico": "CFMESTCONI",
+      "serie": "I",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        0.0,
+        1345.29
+      ],
+      "lineas": 2,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2020-01",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-01",
+      "run_fondo": "8859",
+      "nemotecnico": "CFMSURALPM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-01",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-01",
+      "run_fondo": "9022",
+      "nemotecnico": "CFMBCHCAPE",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1213.288,
+        13426.0392
+      ],
+      "lineas": 4,
+      "aseguradoras": 4
+    },
+    {
+      "periodo": "2020-02",
+      "run_fondo": "8320",
+      "nemotecnico": "CFMESTCONI",
+      "serie": "I",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        0.0,
+        1347.2784,
+        1347.428,
+        1347.43
+      ],
+      "lineas": 5,
+      "aseguradoras": 5
+    },
+    {
+      "periodo": "2020-02",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-02",
+      "run_fondo": "8859",
+      "nemotecnico": "CFMSURALPM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-02",
+      "run_fondo": "8931",
+      "nemotecnico": "CFMBCHCEFP",
+      "serie": "P",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1092.86
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-02",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-02",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        2884.493,
+        2909.1,
+        2918.41
+      ],
+      "lineas": 7,
+      "aseguradoras": 5
+    },
+    {
+      "periodo": "2020-03",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-03",
+      "run_fondo": "8859",
+      "nemotecnico": "CFMSURALPM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-03",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-03",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        2382.47,
+        2419.4865,
+        2424.1
+      ],
+      "lineas": 7,
+      "aseguradoras": 6
+    },
+    {
+      "periodo": "2020-04",
+      "run_fondo": "8320",
+      "nemotecnico": "CFMESTCONI",
+      "serie": "",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-04",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-04",
+      "run_fondo": "8859",
+      "nemotecnico": "CFMSURALPM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-04",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-04",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        2729.11,
+        2742.4,
+        2750.3392
+      ],
+      "lineas": 6,
+      "aseguradoras": 5
+    },
+    {
+      "periodo": "2020-05",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-05",
+      "run_fondo": "8859",
+      "nemotecnico": "CFMSURALPM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-05",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-06",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-06",
+      "run_fondo": "8859",
+      "nemotecnico": "CFMSURALPM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-06",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-06",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        2680.2015,
+        2696.83,
+        2697.9
+      ],
+      "lineas": 6,
+      "aseguradoras": 4
+    },
+    {
+      "periodo": "2020-07",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-07",
+      "run_fondo": "8859",
+      "nemotecnico": "CFMSURALPM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-07",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-07",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        2691.08,
+        2695.0,
+        2719.4341
+      ],
+      "lineas": 6,
+      "aseguradoras": 4
+    },
+    {
+      "periodo": "2020-08",
+      "run_fondo": "8384",
+      "nemotecnico": "CFMSECDMMA",
+      "serie": "A",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1163.5489
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-08",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-08",
+      "run_fondo": "8859",
+      "nemotecnico": "CFMSURALPM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-08",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-08",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        2547.2855,
+        2558.4,
+        2563.2
+      ],
+      "lineas": 6,
+      "aseguradoras": 4
+    },
+    {
+      "periodo": "2020-09",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-09",
+      "run_fondo": "8859",
+      "nemotecnico": "CFMSURALPM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-09",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-09",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        2432.35,
+        2436.9,
+        2458.757
+      ],
+      "lineas": 7,
+      "aseguradoras": 4
+    },
+    {
+      "periodo": "2020-10",
+      "run_fondo": "8037",
+      "nemotecnico": "CFMBCIEFCL",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        675972.1782
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-10",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-10",
+      "run_fondo": "8859",
+      "nemotecnico": "CFMSURALPM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-10",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-11",
+      "run_fondo": "8315",
+      "nemotecnico": "CFMLVCOAPV",
+      "serie": "",
+      "estado": "discrepancia_cu",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        2109.544,
+        2207.4109,
+        2352.4232
+      ],
+      "lineas": 4,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-11",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-11",
+      "run_fondo": "8859",
+      "nemotecnico": "CFMSURALPM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-11",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-11",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        2713.7232,
+        2747.3,
+        2758.69
+      ],
+      "lineas": 7,
+      "aseguradoras": 4
+    },
+    {
+      "periodo": "2020-12",
+      "run_fondo": "8859",
+      "nemotecnico": "CFMSURALPM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-12",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2020-12",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        2798.8392,
+        2815.9,
+        2824.1
+      ],
+      "lineas": 7,
+      "aseguradoras": 4
+    },
+    {
+      "periodo": "2021-01",
+      "run_fondo": "8125",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        931801.9254
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-01",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCCL",
+      "serie": "CLASICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        92774.5721,
+        93630.8129
+      ],
+      "lineas": 2,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2021-01",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-01",
+      "run_fondo": "8859",
+      "nemotecnico": "CFMSURALPM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-01",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-01",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        2868.2484,
+        2898.5,
+        2899.8
+      ],
+      "lineas": 6,
+      "aseguradoras": 4
+    },
+    {
+      "periodo": "2021-02",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-02",
+      "run_fondo": "8859",
+      "nemotecnico": "CFMSURALPM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-02",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-03",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        915618.7811,
+        928671.5051
+      ],
+      "lineas": 2,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2021-03",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-03",
+      "run_fondo": "8859",
+      "nemotecnico": "CFMSURALPM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-03",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-04",
+      "run_fondo": "8238",
+      "nemotecnico": "CFMBNSDOLA",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        91022.4654
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-04",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        894454.8932,
+        902028.2465
+      ],
+      "lineas": 2,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2021-04",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-04",
+      "run_fondo": "8859",
+      "nemotecnico": "CFMSURALPM",
+      "serie": "M",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-04",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-05",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-06",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        923234.8077,
+        932774.6639
+      ],
+      "lineas": 2,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2021-06",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-06",
+      "run_fondo": "9473",
+      "nemotecnico": "CFMSURAMAI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-07",
+      "run_fondo": "8956",
+      "nemotecnico": "CFMSURCLPE",
+      "serie": "E",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-07",
+      "run_fondo": "9473",
+      "nemotecnico": "CFMSURAMAI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-08",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        983370.8191,
+        989498.3329
+      ],
+      "lineas": 3,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2021-09",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1019477.6679,
+        1030020.1826
+      ],
+      "lineas": 4,
+      "aseguradoras": 4
+    },
+    {
+      "periodo": "2021-10",
+      "run_fondo": "8049",
+      "nemotecnico": "CFMBNSCLIB",
+      "serie": "MEDIUM",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1621.2834
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-10",
+      "run_fondo": "8238",
+      "nemotecnico": "CFMBNSDOLA",
+      "serie": "UNICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        104029.028
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2021-10",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1021877.7191,
+        1028779.2981,
+        1028779.7035
+      ],
+      "lineas": 3,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2021-11",
+      "run_fondo": "9019",
+      "nemotecnico": "CFMITNIPSA",
+      "serie": "UNICA",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        2716.0,
+        2775.5911
+      ],
+      "lineas": 3,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2021-12",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1071706.9416,
+        1078761.2344
+      ],
+      "lineas": 3,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2022-01",
+      "run_fondo": "8107",
+      "nemotecnico": "CFMBCICOME",
+      "serie": "E",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        10420.3164,
+        10421.706,
+        13635.0986
+      ],
+      "lineas": 5,
+      "aseguradoras": 5
+    },
+    {
+      "periodo": "2022-01",
+      "run_fondo": "8107",
+      "nemotecnico": "CFMBCICPAP",
+      "serie": "AP",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        10421.706,
+        13635.0986
+      ],
+      "lineas": 4,
+      "aseguradoras": 4
+    },
+    {
+      "periodo": "2022-01",
+      "run_fondo": "8238",
+      "nemotecnico": "CFMBNSMMDI",
+      "serie": "I",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        810489.8198
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2022-01",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1019968.2496,
+        1027885.6028
+      ],
+      "lineas": 2,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2022-01",
+      "run_fondo": "8679",
+      "nemotecnico": "CFMSUCMCSB",
+      "serie": "B",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2022-01",
+      "run_fondo": "9022",
+      "nemotecnico": "CFMBCHCAPE",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1221.9505,
+        1228.4703
+      ],
+      "lineas": 3,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2022-02",
+      "run_fondo": "8049",
+      "nemotecnico": "CFMBNSCLIB",
+      "serie": "B",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1012.9681,
+        1974.4481
+      ],
+      "lineas": 4,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2022-02",
+      "run_fondo": "8107",
+      "nemotecnico": "CFMBCICPAP",
+      "serie": "AP",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        10463.6923,
+        13683.8491
+      ],
+      "lineas": 4,
+      "aseguradoras": 4
+    },
+    {
+      "periodo": "2022-02",
+      "run_fondo": "8238",
+      "nemotecnico": "CFMBNSMMDI",
+      "serie": "I",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        805773.6541
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2022-02",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1012565.1232,
+        1021751.6892
+      ],
+      "lineas": 3,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2022-04",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1079678.7006,
+        1087039.1657
+      ],
+      "lineas": 3,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2022-04",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        90965.7123
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2022-04",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCCL",
+      "serie": "CLASI",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        108255.8653
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2022-06",
+      "run_fondo": "8049",
+      "nemotecnico": "CFMBNSMMII",
+      "serie": "I",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1032.152,
+        1037.3297,
+        1037.5839
+      ],
+      "lineas": 5,
+      "aseguradoras": 5
+    },
+    {
+      "periodo": "2022-06",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1168342.9486,
+        1183722.3992
+      ],
+      "lineas": 3,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2022-06",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        97829.2418
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2022-07",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1150153.9243,
+        1158185.051
+      ],
+      "lineas": 4,
+      "aseguradoras": 4
+    },
+    {
+      "periodo": "2022-07",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        97044.4471
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2022-08",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1122110.0783,
+        1133255.0015,
+        1142374.233
+      ],
+      "lineas": 4,
+      "aseguradoras": 4
+    },
+    {
+      "periodo": "2022-08",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        94107.3761
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2022-09",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1223208.9258,
+        1230546.345
+      ],
+      "lineas": 4,
+      "aseguradoras": 4
+    },
+    {
+      "periodo": "2022-09",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        103282.4982
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2022-10",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1194937.285,
+        1206371.7252
+      ],
+      "lineas": 4,
+      "aseguradoras": 4
+    },
+    {
+      "periodo": "2022-10",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        101318.1367
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2022-11",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1144392.6355,
+        1158307.1567
+      ],
+      "lineas": 3,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2022-11",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        97361.5726
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2022-11",
+      "run_fondo": "9221",
+      "nemotecnico": "CFMLVAHDAP",
+      "serie": "APV-AP-APV",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1.01
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2022-11",
+      "run_fondo": "9221",
+      "nemotecnico": "CFMLVAHDOA",
+      "serie": "A",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1067.65
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2022-11",
+      "run_fondo": "9221",
+      "nemotecnico": "CFMLVAHDOF",
+      "serie": "F",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1103.73
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2022-11",
+      "run_fondo": "9221",
+      "nemotecnico": "CFMLVAHDOV",
+      "serie": "APV",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1081.4
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2023-01",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1034850.0253,
+        1042685.8992
+      ],
+      "lineas": 2,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2023-01",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        88178.7908
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2023-05",
+      "run_fondo": "8230",
+      "nemotecnico": "CFMSTDMDEJ",
+      "serie": "EJ",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        674.3932
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2023-05",
+      "run_fondo": "8230",
+      "nemotecnico": "CFMSTDMMDG",
+      "serie": "EJECU",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        537902.8714
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2023-05",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1049136.0724,
+        1059145.3687
+      ],
+      "lineas": 5,
+      "aseguradoras": 5
+    },
+    {
+      "periodo": "2023-05",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        88595.3135
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2023-06",
+      "run_fondo": "8230",
+      "nemotecnico": "CFMSTDMDEJ",
+      "serie": "EJ",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        677.1537
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2023-07",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1088673.1781,
+        1105571.915
+      ],
+      "lineas": 5,
+      "aseguradoras": 5
+    },
+    {
+      "periodo": "2023-07",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        92031.8006
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2023-08",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCCL",
+      "serie": "CLASICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        132.5006
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2023-09",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1187210.4946,
+        1202110.2779
+      ],
+      "lineas": 4,
+      "aseguradoras": 4
+    },
+    {
+      "periodo": "2023-09",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        101744.6368
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2023-09",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCCL",
+      "serie": "CLASICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        133.0566
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2023-10",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1196993.0106,
+        1211419.1027
+      ],
+      "lineas": 3,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2023-10",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        102618.8683
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2023-11",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCF",
+      "serie": "F",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2023-11",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2023-12",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1175991.2722,
+        1186006.6119
+      ],
+      "lineas": 3,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2023-12",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        100694.1181
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2023-12",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCF",
+      "serie": "F",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2023-12",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-01",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCF",
+      "serie": "F",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-01",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-02",
+      "run_fondo": "10282",
+      "nemotecnico": "CFMSUMMUSI",
+      "serie": "I        0",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        105.2736
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-02",
+      "run_fondo": "8125",
+      "nemotecnico": "CFMBCIEFCL",
+      "serie": "CLASICA",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        81650.6158
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-02",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1309980.7171,
+        1323865.1
+      ],
+      "lineas": 3,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2024-02",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        112629.6141
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-02",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCF",
+      "serie": "F",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-02",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-03",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCF",
+      "serie": "F",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-03",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-04",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        109421.3259
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-04",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCF",
+      "serie": "F",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-04",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-05",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCF",
+      "serie": "F",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-05",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-06",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCF",
+      "serie": "F",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-06",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-07",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        112417.2265
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-07",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCF",
+      "serie": "F",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-07",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-09",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCF",
+      "serie": "F",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-09",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-10",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        113158.002
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-11",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCF",
+      "serie": "F",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-11",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2024-12",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCF",
+      "serie": "F",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2025-01",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCF",
+      "serie": "F",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2025-01",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2025-02",
+      "run_fondo": "8230",
+      "nemotecnico": "CFMSTDMDEJ",
+      "serie": "EJECU",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        732.105
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2025-03",
+      "run_fondo": "8052",
+      "nemotecnico": "CFMBCHDISP",
+      "serie": "A",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        8940.7648
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2025-03",
+      "run_fondo": "8059",
+      "nemotecnico": "CFMSTDMMPB",
+      "serie": "EJECU",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        285825.3084
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2025-03",
+      "run_fondo": "8230",
+      "nemotecnico": "CFMSTDMDEJ",
+      "serie": "EJECU",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        734.4233
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2025-03",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        121.0638,
+        114538.4612
+      ],
+      "lineas": 2,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2025-04",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1337514.0366,
+        1352149.8641
+      ],
+      "lineas": 3,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2025-04",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        121.4677,
+        114837.9929
+      ],
+      "lineas": 2,
+      "aseguradoras": 2
+    },
+    {
+      "periodo": "2025-07",
+      "run_fondo": "8057",
+      "nemotecnico": "CFMSTDMMKB",
+      "serie": "EJECU",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1826.8983
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2026-01",
+      "run_fondo": "8026",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1450.0065
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2026-01",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCAP",
+      "serie": "ALPAT",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        107394.9279
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2026-01",
+      "run_fondo": "8774",
+      "nemotecnico": "CFMSUREEQF",
+      "serie": "F",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2026-01",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCF",
+      "serie": "F",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2026-01",
+      "run_fondo": "8812",
+      "nemotecnico": "CFMSURCHCI",
+      "serie": "I",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2026-01",
+      "run_fondo": "9474",
+      "nemotecnico": "CFMSURAMMB",
+      "serie": "B",
+      "estado": "valor_cuota_cero",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        0.0
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2026-02",
+      "run_fondo": "8026",
+      "nemotecnico": "CFMBCHCAPE",
+      "serie": "A",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1575.0037
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2026-02",
+      "run_fondo": "8107",
+      "nemotecnico": "CFMBCICPAP",
+      "serie": "AP",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        18133.5792,
+        64376.8256
+      ],
+      "lineas": 3,
+      "aseguradoras": 3
+    },
+    {
+      "periodo": "2026-02",
+      "run_fondo": "8257",
+      "nemotecnico": "CFMBCIDCCL",
+      "serie": "CLASI",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        147.2857
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2026-02",
+      "run_fondo": "9022",
+      "nemotecnico": "CFMBCHCFIP",
+      "serie": "P",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        1450.0065
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2026-04",
+      "run_fondo": "8011",
+      "nemotecnico": "CFMPRIVISO",
+      "serie": "O",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1378.8762,
+        93568.6227
+      ],
+      "lineas": 7,
+      "aseguradoras": 7
+    },
+    {
+      "periodo": "2026-05",
+      "run_fondo": "8011",
+      "nemotecnico": "CFMPRIVISO",
+      "serie": "O",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1384.4382,
+        92368.5416
+      ],
+      "lineas": 6,
+      "aseguradoras": 6
+    },
+    {
+      "periodo": "2026-06",
+      "run_fondo": "8049",
+      "nemotecnico": "CFMBNSCLIB",
+      "serie": "",
+      "estado": "identidad_falla",
+      "origen": "una_aseguradora_varias_lineas",
+      "valor_cuota_reportados": [
+        2661.4411
+      ],
+      "lineas": 1,
+      "aseguradoras": 1
+    },
+    {
+      "periodo": "2026-07",
+      "run_fondo": "8011",
+      "nemotecnico": "CFMPRIVISO",
+      "serie": "O",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1384.4382,
+        1395.1986
+      ],
+      "lineas": 5,
+      "aseguradoras": 5
+    },
+    {
+      "periodo": "2026-08",
+      "run_fondo": "8248",
+      "nemotecnico": "CFMBCHCDFU",
+      "serie": "A",
+      "estado": "discrepancia_cu",
+      "origen": "varias_aseguradoras",
+      "valor_cuota_reportados": [
+        1479.5484,
+        1381010.4766
+      ],
+      "lineas": 4,
+      "aseguradoras": 3
+    }
+  ],
+  "avisos_totales": 244,
+  "updated_at": "2026-10-02T04:32:22+00:00"
+}

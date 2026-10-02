@@ -376,6 +376,27 @@ const ERD_TABLES = [
     ]
   },
   {
+    id: "ffmm_valor_cuota",
+    name: "ffmm.valor_cuota",
+    sector: "ffmm",
+    color: "var(--accent-mint)",
+    x: 1340,
+    y: 1319,
+    w: 240,
+    h: 184,
+    rows: "Un archivo por año",
+    file: "outputs/valor_cuota/ffmm/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "run_fondo", fk: true, type: "VARCHAR" },
+      { name: "serie", pk: true, type: "VARCHAR" },
+      { name: "nemotecnico", pk: true, type: "VARCHAR" },
+      { name: "valor_cuota", type: "DOUBLE" },
+      { name: "patrimonio_aseguradoras_m", type: "DOUBLE" },
+      { name: "estado", type: "VARCHAR" }
+    ]
+  },
+  {
     id: "fi_lista_entidades",
     name: "fi.lista_entidades",
     sector: "fi",
@@ -1590,6 +1611,7 @@ const ERD_LINKS = [
   { from: "ffmm_lista_entidades", to: "ffmm_opciones", key: "run_fondo" },
   { from: "ffmm_lista_entidades", to: "ffmm_balance", key: "run_fondo" },
   { from: "ffmm_lista_entidades", to: "ffmm_resultados", key: "run_fondo" },
+  { from: "ffmm_lista_entidades", to: "ffmm_valor_cuota", key: "run_fondo" },
 ];
 
 class ERDGraph {

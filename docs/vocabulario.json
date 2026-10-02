@@ -89,7 +89,8 @@
     "deuda_publica_pct_pib": "Deuda pública sobre PIB",
     "expectativas_inflacion": "Expectativas de inflación",
     "expectativas_tpm": "Expectativas de TPM",
-    "expectativas_operadores": "Encuesta de Operadores Financieros"
+    "expectativas_operadores": "Encuesta de Operadores Financieros",
+    "serie_valor_cuota": "Valor cuota por serie"
   },
   "tablas": [
     {
@@ -804,6 +805,16 @@
       "sector": "fi",
       "descripcion": "Estado de resultados integrales de fondos de inversión FIRES/FINRE, cuenta por cuenta (30 líneas por contexto). Se separan acumulado del ejercicio, trimestre y sus comparativos; no se suman entre sí. Miles de la moneda de presentación, gastos con signo original.",
       "cobertura": "Trimestral · contextos separados"
+    },
+    {
+      "id": "ffmm_valor_cuota",
+      "alias": [],
+      "nombre": "ffmm.valor_cuota",
+      "tipo": "serie_valor_cuota",
+      "sector": "ffmm",
+      "descripcion": "Valor cuota de cada serie de cada fondo mutuo al cierre de cada mes, derivado de la sección B.3 de la Circular 1835 (cartera de las aseguradoras). Junto al valor cuota trae las unidades y el patrimonio que las aseguradoras declaran tener invertidos: es una cota inferior del patrimonio del fondo, no el total.",
+      "cobertura": "Los fondos que alguna aseguradora reportó tener. Al 2026-10-02 son 309 de los 1.543 RUN del registro (20,0 %), entre 2016-11 y 2026-08. Cobertura parcial declarada, no un censo.",
+      "advertencia": "Cuando las aseguradoras no coinciden en el valor cuota, o la línea no cierra la identidad aritmética, o el valor es cero, la fila se publica con valor_cuota nulo y un estado que lo explica. Filtre por estado = 'ok' antes de calcular rendimiento."
     }
   ]
 }

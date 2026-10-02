@@ -210,6 +210,25 @@ const EXPLORER_TREE = [
             ]
           },
           {
+            id: "cat_ffmm_valor_cuota",
+            type: "circular",
+            label: "Circular 1835 · Valor cuota y tamaño",
+            badge: "Mensual · cobertura 20 %",
+            badgeType: "data",
+            status: "active",
+            sector: "ffmm",
+            chips: [
+              { label: "Valor cuota del último mes por fondo", query: "SELECT run_fondo, nombre_fondo, serie, nemotecnico, unidad_monetaria, valor_cuota, patrimonio_aseguradoras_m FROM ffmm_valor_cuota WHERE periodo = (SELECT max(periodo) FROM ffmm_valor_cuota) AND estado = 'ok' ORDER BY patrimonio_aseguradoras_m DESC LIMIT 20;" },
+              { label: "Fondos con mayor patrimonio en carteras de aseguradoras, último mes", query: "SELECT run_fondo, any_value(nombre_fondo) AS nombre_fondo, any_value(unidad_monetaria) AS moneda, SUM(unidades_aseguradoras) AS unidades, SUM(patrimonio_aseguradoras_m) AS patrimonio_m FROM ffmm_valor_cuota WHERE periodo = (SELECT max(periodo) FROM ffmm_valor_cuota) GROUP BY run_fondo ORDER BY patrimonio_m DESC LIMIT 15;" },
+              { label: "Variación del valor cuota en el último año por fondo", query: "SELECT run_fondo, any_value(nombre_fondo) AS nombre_fondo, serie, min(valor_cuota) AS valor_inicial, arg_max(valor_cuota, periodo) AS valor_final, max(periodo) AS ultimo_mes, 100.0 * (arg_max(valor_cuota, periodo) / min(valor_cuota) - 1) AS variacion_pct FROM ffmm_valor_cuota WHERE estado = 'ok' AND periodo >= (SELECT substr(CAST(max(periodo) AS VARCHAR), 1, 4) || '-01' FROM ffmm_valor_cuota) GROUP BY run_fondo, serie ORDER BY variacion_pct DESC LIMIT 20;" },
+              { label: "Filas sin valor cuota publicado, y por qué", query: "SELECT estado, count(*) AS filas, count(DISTINCT run_fondo) AS fondos FROM ffmm_valor_cuota GROUP BY estado ORDER BY filas DESC;" },
+              { label: "Cobertura: fondos con valor cuota por mes", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, count(*) AS series, count(*) FILTER (WHERE estado = 'ok') AS series_con_valor FROM ffmm_valor_cuota GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" }
+            ],
+            tables: [
+              { id: "ffmm_valor_cuota", name: "ffmm.valor_cuota", rows: "Los fondos que alguna aseguradora reportó tener. Al 2026-10-02 son 309 de los 1.543 RUN del registro (20,0 %), entre 2016-11 y 2026-08. Cobertura parcial declarada, no un censo.", file: "", files: ["outputs/valor_cuota/ffmm/manifest.json"] }
+            ]
+          },
+          {
             id: "cat_ffmm_derivados_1333",
             type: "circular",
             label: "Circular 1333 · Derivados",
