@@ -48,7 +48,8 @@ concurrency:
 jobs:
   validar-y-publicar:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    # --minutos admite hasta 270; con 90 el job se cortaba antes de agotar el presupuesto.
+    timeout-minutes: 300
     outputs:
       publicados: ${{ steps.publicar.outputs.publicados }}
     steps:

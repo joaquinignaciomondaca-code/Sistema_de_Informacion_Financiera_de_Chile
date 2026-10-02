@@ -12,6 +12,10 @@ on:
       - .github/workflows/macro.yml
       - macro/scripts/series_bcch.py
       - macro/scripts/build_tablas_tematicas.py
+      - macro/scripts/audit_macro_bcch.py
+      # Módulos compartidos que importan el extractor: un cambio ahí debe volver a probar
+      # y a publicar (en las corridas programadas no corre el job `pruebas` de web_audit).
+      - pipelines/auto/estable.py
   workflow_dispatch:
 
 permissions:
@@ -39,6 +43,10 @@ jobs:
           cache-dependency-path: macro/requirements.txt
       - name: Instalar dependencias macro
         run: python -m pip install -r macro/requirements.txt
+      # Prueba sin red (la API se simula): el corte incremental y la conservación de lo publicado.
+      - name: Probar la extracción incremental y la escritura estable
+        run: python -m unittest -v macro.tests.test_series_bcch pipelines.auto.tests.test_estable
+
       - name: Descargar series nativas BCCh (incremental)
         env:
           BCCH_EMAIL: ${{ secrets.USER_BCCH }}

@@ -182,7 +182,7 @@ jobs:
           python-version: '3.11'
       - name: Dependencias
         run: python -m pip install --disable-pip-version-check pandas==2.2.3 pyarrow==21.0.0 openpyxl==3.1.5 beautifulsoup4==4.13.5
-      - name: AGF, securitizadoras y CCAF · parseo y compuertas compartidas · corredoras · fondos mutuos · banca
+      - name: AGF, securitizadoras y CCAF · parseo y compuertas compartidas · corredoras · fondos mutuos · banca · macro · seguros
         run: >
           python -m unittest -v
           pipelines.ifrs_sectores.tests.test_actualizar
@@ -200,6 +200,10 @@ jobs:
           bancos.tests.test_extract_cmf_bank_lines
           bancos.tests.test_publish_cmf_bank_period
           bancos.tests.test_bank_master_identity
+          # Solo se probaban dentro de su propio publicador (o nunca, en el caso de macro): en un
+          # PR no corrían, que es cuando todavía se puede corregir el cambio.
+          macro.tests.test_series_bcch
+          seguros.tests.test_formato_1835
       - name: Fondos de inversión · XML original, cotejo, contextos y publicación
         run: python -m unittest discover -s fi/tests -v
       - name: Factoring y leasing · extracción y publicación

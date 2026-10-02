@@ -188,28 +188,35 @@ El servidor local responde `206 Partial Content` igual que GitHub Pages, así qu
 
 ## 6. Se mantiene solo
 
-Once flujos programados en GitHub Actions extraen, validan y publican con commit controlado. Un **guardián de automatización** cruza el manifiesto de datos, el inventario de flujos y las vistas del sitio: cada tabla publicada tiene un responsable declarado, y si una fuente se atrasa más allá de su plazo, se abre un issue automáticamente.
+Catorce flujos programados en GitHub Actions extraen, validan y publican con commit controlado; dos más
+(`fi_cobertura_eeff.yml` y `pages.yml`) corren por evento, sin horario. Un **guardián de automatización** cruza el manifiesto de datos, el inventario de flujos y las vistas del sitio: cada tabla publicada tiene un responsable declarado, y si una fuente se atrasa más allá de su plazo, se abre un issue automáticamente.
 
 La ausencia de un workflow no implica ausencia de procesamiento automático. El catálogo distingue tres modalidades: **Automático** (extracción, validación y publicación programadas), **Híbrido** (extracción o curación inicial local desde fuentes no estructuradas, seguida de validación y compilación reproducibles) y **Manual** (intervención todavía no respaldada por un compilador reproducible). El balance de patrimonios separados es actualmente híbrido: la CMF publica los estados como PDF, la consolidación inicial se hace fuera de Actions y `05_publicar_balance_patrimonios.py` ejecuta las validaciones y genera el Parquet.
 
 <details>
-<summary>Calendario de los 12 flujos</summary>
+<summary>Calendario de los 16 flujos</summary>
 
-| Flujo | Frecuencia | Publica |
+| Flujo | Frecuencia (UTC) | Publica |
 |---|---|---|
-| `macro.yml` | diario | Macro BCCh: 51 series nativas → 23 tablas temáticas (tasas, tipo de cambio, precios, actividad, laboral, materias primas, sector externo, expectativas) + catálogo |
-| `bancos_cmf_mensual.yml` | días 1, 11, 21 | Particiones B1/B2/R1 de la CMF (incremental) |
-| `ifrs_sectores.yml` | días 2, 12, 22 | Estados IFRS de AGF, securitizadoras y CCAF |
-| `factoring_leasing_backfill.yml` | días 3, 13, 23 | Serie IFRS de balance y resultados |
-| `corredoras_eeff.yml` | días 6, 16, 26 | FECU IFRS de corredores y agentes de valores |
-| `seguros_carteras.yml` | días 7, 17, 27 | Cartera de inversiones Circular 1835 |
-| `ffmm_eeff.yml` | días 4, 14, 24 | Balance y estado de resultados anuales de fondos mutuos (XML IFRS, Circular 1997) |
-| `ffmm_carteras.yml` | días 8, 18, 28 | Cartera de fondos mutuos Circular 1333 |
-| `fi_carteras.yml` | días 9, 19, 29 | Cartera y pactos de fondos de inversión |
-| `entidades.yml` | días 10, 20, 28 | Altas y vigencia de las listas de entidades |
-| `normativa_cmf.yml` | lunes a viernes | Normativa publicada por la CMF |
-| `web_audit.yml` | lunes, push y PR | Auditorías del sitio + guardián de frescura |
-| `pages.yml` | push a `main` | Despliegue del sitio estático |
+| `macro.yml` | diario 10:00 | Macro BCCh: 51 series nativas → 23 tablas temáticas (tasas, tipo de cambio, precios, actividad, laboral, materias primas, sector externo, expectativas) + catálogo |
+| `factoring_leasing_backfill.yml` | cada 3 días, 12:20 | Serie IFRS de balance y resultados |
+| `bancos_cmf_mensual.yml` | cada 3 días, 13:00 | Particiones B1/B2/R1 de la CMF (incremental) |
+| `ifrs_sectores.yml` | cada 3 días, 13:30 | Estados IFRS de AGF, securitizadoras y CCAF |
+| `ifrs_sondeo.yml` | día 5, 13:40 | nada: describe qué sociedades del TXT IFRS quedan fuera (solo lectura) |
+| `corredoras_eeff.yml` | cada 3 días, 13:45 | FECU IFRS de corredores y agentes de valores |
+| `seguros_carteras.yml` | cada 3 días, 14:00 | Cartera de inversiones Circular 1835 |
+| `ffmm_carteras.yml` | cada 3 días, 14:00 | Cartera de fondos mutuos Circular 1333 |
+| `web_audit.yml` | lunes 14:00, push y PR | nada: auditorías del sitio + guardián de frescura |
+| `ffmm_eeff.yml` | cada 3 días, 14:20 | Balance y estado de resultados anuales de fondos mutuos (XML IFRS, Circular 1997) |
+| `fi_carteras.yml` | cada 3 días, 15:00 | Cartera y pactos de fondos de inversión |
+| `fi_eeff.yml` | cada 3 días, 15:35 | Balance y resultados anuales de fondos de inversión (XML IFRS) |
+| `entidades.yml` | días 10, 20 y 28, 12:30 | Altas y vigencia de las listas de entidades |
+| `normativa_cmf.yml` | lunes a viernes, 13:23 | Feed de normativa publicada por la CMF |
+| `fi_cobertura_eeff.yml` | sin horario (push) | nada: revisión de cobertura de FI (solo lectura) |
+| `pages.yml` | cada 6 h (03:15, 09:15, 15:15, 21:15) y push a `main` | Despliegue de `docs/` en GitHub Pages |
+
+Cada publicador deja su rastro en la cabecera del archivo de datos y en `data_manifest.json`; los horarios
+son los `cron` reales de `.github/workflows/*.yml`.
 
 </details>
 
@@ -225,7 +232,7 @@ python scripts/build_download_catalog.py --check   # el catálogo refleja lo pub
 python scripts/normalizar_vocabulario.py --check   # los nombres no se desincronizan
 ```
 
-Más `audit_interfaz_dom.js` (comportamiento en un DOM real), `audit_normativa_web.js` y `audit_secretos.py`. Los flujos de estados financieros —AGF, securitizadoras y CCAF, corredores, bancos y factoring-leasing— y el de normativa corren además sus pruebas unitarias antes de publicar (macro corre su auditoría `audit_macro_bcch`), y `web_audit.yml` ejecuta en cada push y PR todas las de los extractores de estados financieros (más de 200, sin red y con fuentes sintéticas).
+Más `audit_interfaz_dom.js` (comportamiento en un DOM real), `audit_normativa_web.js` y `audit_secretos.py`. **Todo workflow que escribe en la rama corre sus pruebas unitarias antes del `git commit`** —incluidos macro, entidades, carteras de FI y de fondos mutuos, cuya auditoría `web_audit` no cubre en las corridas programadas— y lo vigila `pipelines/auto/tests/test_contrato_publicadores.py`, que además exige que el `timeout-minutes` del job cubra el presupuesto `--minutos` del extractor y que los módulos compartidos que un publicador importa estén en sus `on.push.paths`. `web_audit.yml` ejecuta en cada push y PR todas las pruebas de los extractores de estados financieros, macro y seguros (más de 300, sin red y con fuentes sintéticas).
 
 </details>
 

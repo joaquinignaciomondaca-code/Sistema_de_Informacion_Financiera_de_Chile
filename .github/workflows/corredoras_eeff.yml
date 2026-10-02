@@ -43,7 +43,9 @@ concurrency:
 jobs:
   validar-y-publicar:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    # El extractor se autolimita a 270 minutos (--minutos) y conserva el progreso; un tope del job
+    # más corto (antes 60) mataba la corrida antes que el propio presupuesto, sin dejar publicar.
+    timeout-minutes: 300
     outputs:
       publicados: ${{ steps.publicar.outputs.publicados }}
     steps:

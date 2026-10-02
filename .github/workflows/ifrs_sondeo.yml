@@ -8,6 +8,19 @@ name: Sondeo de industrias en el TXT IFRS de la CMF (solo lectura)
 # No escribe en docs/, no hace commit y no necesita credenciales.
 
 on:
+  # Además del horario mensual, un push que toque el sondeo o sus módulos lo ejecuta: el
+  # workflow_dispatch requiere permiso actions:write, que los aportes por rama no tienen, y sin
+  # este disparador el sondeo podía quedar meses sin correr. Es de solo lectura: no escribe nada.
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/ifrs_sondeo.yml
+      - scripts/sondear_ifrs_sectores.py
+      - pipelines/ifrs_sectores/tests/test_sondeo.py
+      # Módulos compartidos que importa el sondeo: cambian qué se lee del TXT de la CMF.
+      - pipelines/auto/ifrs_txt.py
+      - pipelines/auto/rut.py
   workflow_dispatch:
     inputs:
       periodo:
@@ -20,6 +33,11 @@ on:
 
 permissions:
   contents: read
+
+# Dos sondeos simultáneos descargarían el mismo TXT de 40 MB para el mismo informe.
+concurrency:
+  group: ifrs-sondeo-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   sondear:

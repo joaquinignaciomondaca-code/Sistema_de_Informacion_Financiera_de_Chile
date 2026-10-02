@@ -14,6 +14,10 @@ on:
       - .github/workflows/seguros_carteras.yml
       - seguros/scripts/actualizar_carteras.py
       - seguros/scripts/formato_1835.py
+      # Módulos compartidos que importan el extractor: un cambio ahí debe volver a probar
+      # y a publicar (en las corridas programadas no corre el job `pruebas` de web_audit).
+      - pipelines/auto/estable.py
+      - pipelines/auto/rut.py
   workflow_dispatch:
     inputs:
       desde:
@@ -59,8 +63,11 @@ jobs:
       - name: Instalar dependencias
         run: python -m pip install --disable-pip-version-check pandas==2.2.3 pyarrow==21.0.0
 
-      - name: Probar el lector con líneas reales de ambos formatos
-        run: python -m seguros.tests.test_formato_1835
+      - name: Probar el lector con líneas reales de ambos formatos y la escritura estable
+        run: >
+          python -m unittest -v
+          seguros.tests.test_formato_1835
+          pipelines.auto.tests.test_estable
 
       # Revisa todos los meses pendientes sin escribir y anota los que tienen problemas, para
       # corregirlos juntos. Las descargas quedan en /tmp/cmf1835 y la publicación las reutiliza.

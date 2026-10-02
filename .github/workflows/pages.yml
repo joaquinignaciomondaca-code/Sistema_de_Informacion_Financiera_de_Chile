@@ -1,0 +1,86 @@
+name: Publicar web (GitHub Pages)
+
+# La web ES el producto: `docs/` es el sitio estático (visor DuckDB-Wasm + Parquet). Este flujo se
+# borró el 2026-09-30 después de fallar en `configure-pages` y desde entonces GitHub Pages responde
+# 404, aunque los datos siguieran publicándose: la rama avanzaba y el sitio no.
+#
+# El horario de cada 6 horas no es un capricho: los commits de datos los hace `github-actions[bot]`
+# con GITHUB_TOKEN, y un push creado por ese token NO dispara otros workflows. Sin schedule, la web
+# sólo se actualizaría cuando una persona toca `docs/`. (El `push` sigue ahí para ese caso.)
+#
+# Requiere un ajuste del dueño del repositorio que ningún workflow puede hacer por sí solo:
+# Settings → Pages → Build and deployment → Source: **GitHub Actions**. Si falta, el paso previo lo
+# advierte en la corrida y termina en verde en vez de dejar un aspa roja permanente.
+
+on:
+  schedule:
+    - cron: '15 3,9,15,21 * * *'
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - 'data_manifest.json'
+      - '.github/workflows/pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  desplegar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment:
+      name: github-pages
+      url: ${{ steps.despliegue.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Comprobar que GitHub Pages acepta despliegues desde Actions
+        id: destino
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # `configure-pages` aborta con un mensaje que no dice qué falta. Se consulta el origen
+          # configurado: si Pages está apagado o en modo rama, no hay destino donde publicar y se
+          # informa el cambio exacto en lugar de fallar (activarlo es un ajuste de configuración).
+          estado=$(curl -sS -o /tmp/pages.json -w '%{http_code}' \
+            -H "Authorization: Bearer ${GH_TOKEN}" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${GITHUB_REPOSITORY}/pages")
+          if [ "${estado}" != "200" ]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=GitHub Pages sin publicar desde Actions::GET /repos/${GITHUB_REPOSITORY}/pages devolvió ${estado}. Activar Settings → Pages → Build and deployment → Source: GitHub Actions; hecho eso, la próxima corrida publica sin tocar el repositorio."
+            exit 0
+          fi
+          origen=$(python3 -c 'import json;d=json.load(open("/tmp/pages.json"));print((d.get("build_config") or {}).get("build_type") or "legacy")')
+          if [ "${origen}" != "workflow" ]; then
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::warning title=GitHub Pages en modo rama::el sitio se sirve con build_type=${origen}. Para publicar desde Actions cambiar Settings → Pages → Source a «GitHub Actions»; mientras tanto este flujo no despliega para no pisar el otro mecanismo."
+            exit 0
+          fi
+          echo "enabled=true" >> "$GITHUB_OUTPUT"
+          echo "Sitio actual: $(python3 -c 'import json;print(json.load(open("/tmp/pages.json")).get("html_url","?"))')"
+
+      - name: Configurar Pages
+        if: steps.destino.outputs.enabled == 'true'
+        uses: actions/configure-pages@v5
+
+      - name: Empaquetar docs/ como artefacto del sitio
+        if: steps.destino.outputs.enabled == 'true'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+
+      - name: Desplegar
+        if: steps.destino.outputs.enabled == 'true'
+        id: despliegue
+        uses: actions/deploy-pages@v4
