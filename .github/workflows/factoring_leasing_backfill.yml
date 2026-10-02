@@ -20,13 +20,13 @@ on:
   workflow_dispatch:
     inputs:
       batch:
-        description: 'Cantidad máxima de períodos pendientes en esta corrida (default 100)'
+        description: 'Cantidad máxima de períodos pendientes en esta corrida (0 = sin tope, default 100)'
         required: false
         default: '100'
         type: string
   schedule:
-    # 3 veces al mes (la fuente IFRS CMF es trimestral). Los trimestres ya descargados se saltan.
-    - cron: '20 12 3,13,23 * *'
+    # Cada 3 días (la fuente IFRS CMF es trimestral). Los trimestres ya descargados se saltan.
+    - cron: '20 12 */3 * *'
 
 permissions:
   contents: write

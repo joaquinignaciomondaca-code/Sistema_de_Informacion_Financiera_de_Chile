@@ -1,11 +1,11 @@
-name: Cartera de inversiones de fondos mutuos (CMF, Circular 1333), 3 veces al mes, incremental
+name: Cartera de inversiones de fondos mutuos (CMF, Circular 1333), cada 3 días, incremental
 
 on:
   schedule:
-    # Días 8, 18 y 28 (14:00 UTC). Los fondos informan el mes M dentro de 5 días hábiles; el
+    # Cada 3 días (14:00 UTC). Los fondos informan el mes M dentro de 5 días hábiles; el
     # publicador espera 12 días desde el cierre y exige que la cartera nacional traiga al menos el
     # 90 % de los fondos del mes anterior. Los meses ya publicados no se vuelven a descargar.
-    - cron: '0 14 8,18,28 * *'
+    - cron: '0 14 */3 * *'
   # Primera carga: al subir cambios del publicador se ejecuta y completa los meses pendientes.
   push:
     branches:
@@ -15,10 +15,21 @@ on:
       - ffmm/scripts/actualizar_carteras.py
   workflow_dispatch:
     inputs:
+      desde:
+        description: 'Primer cierre (AAAA-MM); vacío = autodescubre el más antiguo disponible'
+        default: ''
+        type: string
+      hasta:
+        description: 'Último cierre (vacío = último admisible por plazo CMF)'
+        default: ''
+        type: string
+      minutos:
+        description: 'Tiempo máximo en minutos; el progreso se conserva'
+        default: '270'
+        type: string
       max_periodos:
-        description: 'Máximo de meses a procesar en esta corrida'
-        required: false
-        default: '400'
+        description: 'Máximo de cierres a revisar por corrida (0 = sin tope)'
+        default: '0'
         type: string
 
 permissions:
@@ -59,7 +70,17 @@ jobs:
 
       - name: Descargar, validar y publicar los meses pendientes
         id: publicar
-        run: python -m ffmm.scripts.actualizar_carteras --cache /tmp/cmf1333 --max-periodos "${{ inputs.max_periodos || '400' }}"
+        env:
+          DESDE: ${{ inputs.desde }}
+          HASTA: ${{ inputs.hasta }}
+          MINUTOS: ${{ inputs.minutos }}
+          PERIODOS: ${{ inputs.max_periodos }}
+        run: |
+          args=()
+          if [ -n "${DESDE}" ]; then args+=(--desde "${DESDE}"); fi
+          if [ -n "${HASTA}" ]; then args+=(--hasta "${HASTA}"); fi
+          python -m ffmm.scripts.actualizar_carteras --cache /tmp/cmf1333 \
+            --minutos "${MINUTOS:-270}" --max-periodos "${PERIODOS:-0}" "${args[@]}"
 
       - name: Confirmar los meses publicados
         if: always() && steps.publicar.outcome != 'skipped'

@@ -638,7 +638,7 @@ def correr(minutos: float = 270, hilos: int = 4, desde: int = DESDE, hasta: int 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--minutos", type=float, default=270, help="tope de tiempo de la corrida (el progreso se conserva)")
-    ap.add_argument("--hilos", type=int, default=4)
+    ap.add_argument("--hilos", type=int, default=16, help="descargas simultáneas (máx 32)")
     ap.add_argument("--desde", type=int, default=DESDE)
     ap.add_argument("--hasta", type=int, default=None, help="último cierre a considerar (por defecto, el año pasado)")
     ap.add_argument("--limite", type=int, default=0, help="máximo de fondos y cierres a pedir (pruebas)")

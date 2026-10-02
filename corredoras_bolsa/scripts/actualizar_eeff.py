@@ -344,7 +344,10 @@ def refrescar_marcas(lista: set[str], c: dict) -> int:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--minutos", type=float, default=40)
+    ap.add_argument("--desde", default=None, help="primer cierre (AAAA-MM); vacío = autodescubre el más antiguo disponible")
+    ap.add_argument("--hasta", default=None, help="último mes a considerar (por defecto, el último mes cerrado)")
+    ap.add_argument("--minutos", type=float, default=270, help="tope de tiempo de la corrida (el progreso se conserva)")
+    ap.add_argument("--max-periodos", type=int, default=0, help="máximo de cierres a revisar por corrida (0 = sin tope)")
     ap.add_argument("--solo-data-manifest", action="store_true")
     a = ap.parse_args(argv)
     if a.solo_data_manifest:
@@ -355,9 +358,25 @@ def main(argv=None) -> int:
     c = cargar_control()
     lista = {str(e["rut"]).replace(".", "").split("-")[0]
              for e in json.loads((SALIDA / "corredoras_bolsa_maestro.json").read_text(encoding="utf-8"))}
-    todos = trimestres(DESDE, ultimo_trimestre(hoy))
+    
+    # Determinar el primer trimestre
+    if a.desde:
+        primer_trimestre = a.desde
+    elif c["periodos"]:
+        # Ya hay datos publicados: usar el más antiguo
+        primer_trimestre = min(c["periodos"].keys())
+    else:
+        # Primera corrida: usar el default
+        primer_trimestre = DESDE
+    
+    hasta = a.hasta or ultimo_trimestre(hoy)
+    todos = trimestres(primer_trimestre, hasta)
     pendientes = [p for p in todos if not c["periodos"].get(p, {}).get("cerrado")]
-    print(f"Trimestres {DESDE}..{todos[-1]}: cerrados {len(todos) - len(pendientes)}, a leer {len(pendientes)}")
+    
+    if a.max_periodos > 0:
+        pendientes = pendientes[:a.max_periodos]
+    
+    print(f"Trimestres {primer_trimestre}..{todos[-1]}: cerrados {len(todos) - len(pendientes)}, a leer {len(pendientes)}")
     hechos, errores, defectos = 0, [], []
     nombres = nombres_cuentas(todos[-2]) if pendientes else {}
     print(f"Nombres de cuentas desde el informe HTML: {len(nombres)}")

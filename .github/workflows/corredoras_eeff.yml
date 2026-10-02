@@ -1,11 +1,10 @@
-name: Estados financieros de corredores de bolsa y agentes de valores (CMF, FECU IFRS trimestral), 3 veces al mes, incremental
+name: Estados financieros de corredores de bolsa y agentes de valores (CMF, FECU IFRS trimestral), cada 3 días, incremental
 
 on:
   schedule:
-    # Días 6, 16 y 26 (13:45 UTC). La CMF publica un Excel trimestral por tipo de intermediario con
-    # todas las cuentas FECU. Los trimestres cerrados (más de 150 días) no se vuelven a descargar; los
+    # Cada 3 días (13:45 UTC). Los trimestres cerrados (más de 150 días) no se vuelven a descargar; los
     # recientes se releen para sumar a quienes presentan tarde.
-    - cron: '45 13 6,16,26 * *'
+    - cron: '45 13 */3 * *'
   push:
     branches:
       - main
@@ -16,6 +15,23 @@ on:
       - pipelines/auto/cuadratura.py
       - pipelines/auto/estable.py
   workflow_dispatch:
+    inputs:
+      desde:
+        description: 'Primer cierre (AAAA-MM); vacío = autodescubre el más antiguo disponible'
+        default: ''
+        type: string
+      hasta:
+        description: 'Último cierre (vacío = último admisible por plazo CMF)'
+        default: ''
+        type: string
+      minutos:
+        description: 'Tiempo máximo en minutos; el progreso se conserva'
+        default: '270'
+        type: string
+      max_periodos:
+        description: 'Máximo de cierres a revisar por corrida (0 = sin tope)'
+        default: '0'
+        type: string
 
 permissions:
   contents: write
@@ -55,7 +71,17 @@ jobs:
 
       - name: Descargar y publicar los trimestres pendientes
         id: publicar
-        run: python corredoras_bolsa/scripts/actualizar_eeff.py --minutos 40
+        env:
+          DESDE: ${{ inputs.desde }}
+          HASTA: ${{ inputs.hasta }}
+          MINUTOS: ${{ inputs.minutos }}
+          PERIODOS: ${{ inputs.max_periodos }}
+        run: |
+          args=()
+          if [ -n "${DESDE}" ]; then args+=(--desde "${DESDE}"); fi
+          if [ -n "${HASTA}" ]; then args+=(--hasta "${HASTA}"); fi
+          python corredoras_bolsa/scripts/actualizar_eeff.py --minutos "${MINUTOS:-270}" \
+            --max-periodos "${PERIODOS:-0}" "${args[@]}"
 
       - name: Confirmar los trimestres publicados
         if: always() && steps.publicar.outcome != 'skipped'
