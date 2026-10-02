@@ -13,6 +13,10 @@ on:
     paths:
       - .github/workflows/ffmm_carteras.yml
       - ffmm/scripts/actualizar_carteras.py
+      # Módulos compartidos que importan el extractor: un cambio ahí debe volver a probar
+      # y a publicar (en las corridas programadas no corre el job `pruebas` de web_audit).
+      - pipelines/auto/estable.py
+      - pipelines/auto/rut.py
   workflow_dispatch:
     inputs:
       desde:
@@ -57,6 +61,11 @@ jobs:
 
       - name: Instalar dependencias
         run: python -m pip install --disable-pip-version-check pandas==2.2.3 pyarrow==21.0.0
+
+      # La guardería contra pérdida de filas y la normalización de RUT son las que deciden si un
+      # mes se publica: se prueban acá, antes de tocar la rama, porque el schedule no corre pruebas.
+      - name: Probar la escritura estable y las guardas de filas
+        run: python -m unittest -v pipelines.auto.tests.test_estable
 
       # Si todavía existen las descargas antiguas de FUTU/OPCI se reutilizan (mismo formato CMF).
       - name: Preparar caché de descargas

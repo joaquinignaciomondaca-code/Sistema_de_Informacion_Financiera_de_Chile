@@ -177,3 +177,46 @@ Trimestres publicados: 0. A procesar: 7 (0 reintentables).
 2026-06: 1679 fondos consultados (11753 páginas, 245 s), 908 con cartera · ...
 ...
 ```
+
+---
+
+## Revisión de la automatización (2026-10-02) — dejar todos los flujos corriendo
+
+Se cruzaron los 15 flujos del repositorio contra lo que realmente ejecutan, contra GitHub Actions
+(última corrida por flujo, horarios activos) y contra el watchdog propio
+(`scripts/audit_automatizacion.py --frescura`). Encontrado y corregido:
+
+1. **Tope del job vs. presupuesto `--minutos`** (`bancos` 180, `corredoras` 60, `ifrs_sectores` 90
+   minutos contra 270 prometidos por sus propios extractores): la corrida moría antes de agotar su
+   presupuesto y no publicaba nada. Alineados a 300 min, como `ffmm_eeff`/`fi_carteras`.
+2. **Input `minutos` decorativo en banca**: se declaraba, se pasaba al `env:` del paso y el comando
+   nunca lo usaba (el script no tenía `--minutos`). Implementado en
+   `bancos/scripts/publish_cmf_bank_period.py`: corta **entre meses**, nunca a mitad de uno, y lo ya
+   validado queda publicado. Con dos pruebas nuevas.
+3. **Publicadores que escribían en la rama sin correr pruebas**: `macro`, `entidades`,
+   `ffmm_carteras`, `fi_carteras` (y `seguros_carteras` sólo a medias). El job `pruebas` de
+   `web_audit.yml` está excluido de las corridas programadas (`if: github.event_name != 'schedule'`),
+   así que el camino habitual —el cron— publicaba sin validar. Cada uno prueba lo suyo y la
+   guardería compartida (`pipelines.auto.tests.test_estable`) antes del `git commit`.
+4. **`on.push.paths` incompletos**: un cambio en `pipelines/auto/{estable,rut,bundles}.py` —el
+   normalizador de RUT y la escritura atómica que deciden qué se publica— no volvía a disparar a
+   `entidades`, `ffmm_carteras`, `fi_carteras`, `macro` y `seguros_carteras`, aunque los importan.
+5. **`ifrs_sondeo.yml` era inalcanzable**: sólo `schedule` (día 5) y `workflow_dispatch`, que exige
+   permiso `actions:write`; nunca corrió desde que se creó. Agregado disparador por `push` sobre sus
+   propios archivos (es de solo lectura) y `concurrency` para no bajar dos veces el TXT de la CMF.
+6. **`pipelines/auto/tests/test_contrato_publicadores.py`** fija ahora como prueba las reglas 1, 3,
+   4 y «todo input declarado debe llegar a un comando»: los cuatro defectos anteriores están
+   detectados por guardia, no por costumbre.
+7. **La web no se desplegaba**: `.github/workflows/pages.yml` se borró el 2026-09-30 tras fallar en
+   `configure-pages` y `https://…github.io/Sistema_de_Informacion_Financiera_de_Chile/` responde 404
+   desde entonces. Restaurado con comprobación previa del origen de Pages (avisa y sale en verde si
+   falta el ajuste, en vez de dejar un aspa roja) y horario cada 6 h, porque los commits de datos del
+   bot no disparan `push`. **Falta un clic del dueño**: Settings → Pages → Source → *GitHub Actions*.
+8. Menores: `run_update.bat` apuntaba a `ffmm/circular_1333_cartera/…` (carpeta que ya no existe);
+   `normativa_cmf.yml` no estaba en el inventario de frescura (ahora `max_dias` 4); `factoring` corría
+   con Python 3.12 y dependencias sin fijar, contra el 3.11 del resto del proyecto; README y
+   PSEUDOCODIGO describían los horarios antiguos («3 veces al mes, días 4, 14, 24») y atribuían el
+   despliegue de la web a cada publicador.
+
+Verificado en local, sin red: 251 + 97 + 59 pruebas unitarias OK y las once auditorías del job
+`audit` en verde, incluido `audit_automatizacion.py --frescura` (12 flujos, 0 problemas).
