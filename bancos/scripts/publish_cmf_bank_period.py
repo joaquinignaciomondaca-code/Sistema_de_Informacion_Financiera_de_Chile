@@ -18,6 +18,7 @@ import json
 import os
 import sys
 import tempfile
+import time
 from datetime import date
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
@@ -492,11 +493,16 @@ def dias_desde_cierre(period: str, today: date) -> int:
 
 
 def catch_up(dry_run: bool, max_periods: int, today: date | None = None, publisher=None,
-             start: str | None = None, hasta: str | None = None) -> dict:
+             start: str | None = None, hasta: str | None = None, minutos: float | None = None,
+             reloj=time.monotonic) -> dict:
     """Publica en orden todos los meses cerrados pendientes (uno a uno, cada uno con su gate).
 
     Si un mes falla después de haber publicado otros, se detiene ahí y conserva
     los ya validados: la siguiente corrida retoma desde el mes que falló.
+
+    `minutos` es un presupuesto de tiempo: al agotarse se corta antes de empezar un mes nuevo
+    —nunca a mitad de uno—, de modo que la corrida del workflow termina en verde con lo publicado
+    y el resto queda pendiente para la siguiente.
     """
     today = today or date.today()
     publisher = publisher or publish_period
@@ -505,7 +511,15 @@ def catch_up(dry_run: bool, max_periods: int, today: date | None = None, publish
     waiting = ""
     # max_periods=0 significa sin tope; usamos un límite grande
     limite = max_periods if max_periods > 0 else 10000
+    inicio = reloj()
+    presupuesto_agotado = False
     for _ in range(limite):
+        if minutos is not None and (reloj() - inicio) / 60.0 >= minutos:
+            presupuesto_agotado = True
+            print(f"::notice title=CMF B1/B2/R1::Presupuesto de {minutos:g} min agotado tras "
+                  f"{len(published)} mes(es) publicado(s); el resto sigue pendiente para la próxima "
+                  "corrida.", flush=True)
+            break
         period = next_unpublished_period(load_manifest(), today, start)
         if period is None:
             break
@@ -533,7 +547,8 @@ def catch_up(dry_run: bool, max_periods: int, today: date | None = None, publish
             break  # dry-run o ya publicado: no hay avance que encadenar
         published.append(period)
     return {
-        "status": "caught_up" if not stopped_error else "partial",
+        "status": ("presupuesto_agotado" if presupuesto_agotado
+                   else "caught_up" if not stopped_error else "partial"),
         "period": published[-1] if published else "",
         "periods": published,
         "published_changed": bool(published),
@@ -551,6 +566,8 @@ def main() -> int:
     parser.add_argument("--desde", default="", help="Con --catch-up: primer período de la historia a completar (YYYY-MM)")
     parser.add_argument("--hasta", default="", help="Con --catch-up: último período a considerar (YYYY-MM)")
     parser.add_argument("--max-periods", type=int, default=0, help="Tope de meses por corrida con --catch-up (0 = sin tope)")
+    parser.add_argument("--minutos", type=float, default=270,
+                        help="tope de tiempo de la puesta al día con --catch-up (se corta antes de empezar un mes nuevo)")
     parser.add_argument("--solo-data-manifest", action="store_true",
                         help="Regenerar la entrada de bancos en data_manifest.json desde las particiones ya publicadas")
     args = parser.parse_args()
@@ -564,7 +581,8 @@ def main() -> int:
                 period_label(args.desde)
             if args.hasta:
                 period_label(args.hasta)
-            result = catch_up(args.dry_run, args.max_periods, start=args.desde or None, hasta=args.hasta or None)
+            result = catch_up(args.dry_run, args.max_periods, start=args.desde or None,
+                              hasta=args.hasta or None, minutos=args.minutos)
             if not result["periods"]:
                 if result.get("waiting_for"):
                     print(f"Nada nuevo: {result['waiting_for']} aún no está en la CMF; no se modifica la web.")

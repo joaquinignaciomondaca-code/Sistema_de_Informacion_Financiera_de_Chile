@@ -115,7 +115,7 @@ scripts/build_macro_web.py:                          # misma TABLAS → web, ent
 
 ### 3.1 Publicación incremental B1/B2/R1 (automático, `publish_cmf_bank_period.py`)
 ```
-Workflow bancos_cmf_mensual.yml: días 1, 11 y 21 13:00 UTC → tests → publish --catch-up (incremental) → commit
+Workflow bancos_cmf_mensual.yml: cada 3 días 13:00 UTC → tests → publish --catch-up --minutos (incremental) → commit
 # Meses ya en manifest se saltan sin descargar. find_source lanza SourceNotPublished si la CMF aún no
 # publica el mes pendiente: si han pasado ≤ DIAS_MAX_ESPERA (75) días desde el cierre → aviso y salida 0
 # ("Nada nuevo"); si pasaron más → error (la CMF cambió el índice o el mes se perdió).
@@ -181,7 +181,7 @@ Queda: publish_cmf_bank_period + extract_cmf_bank_lines + inspect_cmf_bank_sampl
 ```
 Web actual: solo Lista de Entidades + muestras cotejadas (+ serie IFRS si backfill completo)
 
-backfill_ifrs.run(batch):                        # Actions días 3, 13 y 23, 12:20 UTC
+backfill_ifrs.run(batch):                        # Actions cada 3 días, 12:20 UTC
     ⟵ catálogo (factoring_leasing_maestro.json: 32 RUT al 2026-10-01, 28 con datos; crece con las altas del flujo IFRS)
     períodos = periods_from_index(estadisticas_ifrs.php)
     updates  = ifrs_txt.actualizaciones_indice(índice)    # «(actualizado: …)» que la CMF muestra por archivo
@@ -226,7 +226,7 @@ eliminados el 2026-09-28. Nunca publicaron: desde Actions la descarga XBRL de la
 
 ---
 
-## 6. Seguros (`seguros/scripts/`) — automático, 3 veces al mes (días 7, 17, 27)
+## 6. Seguros (`seguros/scripts/`) — automático, cada 3 días (14:00 UTC)
 ```
 formato_1835.py: posiciones oficiales de cada archivo (I renta fija, A acciones, F fondos mutuos,
     B bienes raíces, X extranjero, P derivados y pactos, C control) en los dos formatos:
@@ -253,7 +253,7 @@ tests/test_formato_1835.py: lee las muestras de ambos formatos; cuadratura de bo
 
 ## 7. Fondos Mutuos (`ffmm/`) y Fondos de Inversión (`fi/`)
 ```
-FFMM  scripts/actualizar_carteras.py  (workflow ffmm_carteras.yml: días 8, 18 y 28; incremental)
+FFMM  scripts/actualizar_carteras.py  (workflow ffmm_carteras.yml: cada 3 días, 14:00 UTC; incremental)
   para cada mes pendiente según docs/outputs/ffmm/manifest.json (desde 2001-01; nacional desde 2022-01):
       POST ffm_download.php aa, mm, cartera ∈ {NACI, EXTR, FUTU, OPCI}   (OPLA viene siempre vacía)
       leer CSV ";": encabezado idéntico al de la Circular 1333 (FFM_60xxxxx) o error
@@ -268,7 +268,7 @@ FFMM  scripts/actualizar_carteras.py  (workflow ffmm_carteras.yml: días 8, 18 y
   01  registro fondos activos (fm_ident2.php)          → ffmm_registro_fondos
   01b universo vigentes + históricos                   → ffmm_registro_fondos_universo
 
-FI    scripts/actualizar_carteras.py  (workflow fi_carteras.yml: días 9, 19 y 29; incremental, --minutos 270)
+FI    scripts/actualizar_carteras.py  (workflow fi_carteras.yml: cada 3 días, 15:00 UTC; incremental, --minutos 270)
   registro CMF (consulta.php FINRE + FIRES, vigentes y no vigentes) en cada corrida
   para cada trimestre pendiente según docs/outputs/fi/manifest.json (desde 2020-03; espera 75 días,
   100 en diciembre):
@@ -287,7 +287,7 @@ FI    scripts/actualizar_carteras.py  (workflow fi_carteras.yml: días 9, 19 y 2
 
 ## 7b. Fondos Mutuos: balance y estado de resultados anuales (XML IFRS por fondo y año)
 ```
-ffmm/scripts/actualizar_eeff.py + eeff_xml.py   (ffmm_eeff.yml, días 4, 14, 24; incremental, --minutos 270)
+ffmm/scripts/actualizar_eeff.py + eeff_xml.py   (ffmm_eeff.yml, cada 3 días, 14:20 UTC; incremental, --minutos 270)
   fuente: ficha del fondo entidad.php?…&rut=RUN&pestania=3&mm=12&aa=AAAA&tipo_norma=IFRS → enlaza el XML «FMEF…»
           (ifrs_xml_verarchivo.php?archivo=…). No hay XBRL para fondos ni descarga masiva: una ficha y un XML por fondo y año.
   candidatos: (RUN, año) de cada diciembre dentro de la vida activa del fondo según maestro_fondos_mutuos (2010 en adelante);
@@ -358,9 +358,9 @@ pipelines/manual/   ingest_manual_notes: JSON/pipe de notas extraídas fuera del
 
 ---
 
-## 8a. Estados IFRS de AGF, securitizadoras, CCAF y corredoras — automático, 3 veces al mes
+## 8a. Estados IFRS de AGF, securitizadoras, CCAF y corredoras — automático, cada 3 días
 ```
-pipelines/ifrs_sectores/actualizar.py   (ifrs_sectores.yml, días 2, 12, 22)
+pipelines/ifrs_sectores/actualizar.py   (ifrs_sectores.yml, cada 3 días, 13:30 UTC)
   índice estadisticas_ifrs.php → trimestres (2009-03..último); ver_archivo.php?inicio=P&termino=P = TXT con
     TODAS las sociedades que envían EEFF XBRL: periodo;rut;nombre;I|C;moneda;cuenta;valor;taxonomía;estado
   si el trimestre falla → mismo trimestre desde el archivo anual del índice
@@ -382,7 +382,7 @@ pipelines/ifrs_sectores/actualizar.py   (ifrs_sectores.yml, días 2, 12, 22)
   último trimestre: CCAF y sociedades FACTORING|LEASING (no bancos) fuera de su lista → alta en ccaf_maestro /
     factoring_leasing_maestro (máx. 10 por corrida; si calzan más, el patrón es sospechoso y no se agrega nada)
 
-corredoras_bolsa/scripts/actualizar_eeff.py   (corredoras_eeff.yml, días 6, 16, 26)
+corredoras_bolsa/scripts/actualizar_eeff.py   (corredoras_eeff.yml, cada 3 días, 13:45 UTC)
   intermediarios_ifrs1.php?xls=y&tiposociedad={1 corredores, 2 agentes}&mes1=MM&anno1=AAAA → Excel trimestral
     (desde 2010-12): fila por sociedad, columna por cuenta FECU «11.01.00Nombre» (sin espacios, UTF-8 mal leído)
   nombres legibles y nivel: versión HTML del mismo informe (xls=n), una vez por corrida
@@ -526,19 +526,26 @@ con los pipelines antiguos de FFMM y FI.)
 
 ## 10. CI (`.github/workflows/`)
 
+Horarios reales de los `cron` vigentes (UTC). La columna «Publica» se refiere al commit de datos en la rama: **la web la despliega únicamente `pages.yml`**, no cada publicador.
+
 | Workflow | Cron (UTC) | Publica | Qué hace |
 |---|---|---|---|
-| macro.yml | diario 10:00 | commit automático | series_bcch (51 series nativas) → build_tablas_tematicas (23 tablas temáticas) → audit_macro_bcch |
-| bancos_cmf_mensual.yml | días 1, 11, 21 13:00 | **sí** (commit + Pages) | tests + publish_cmf_bank_period --catch-up (incremental) |
-| web_audit.yml | push a main, PR hacia main y lunes | no | audit_navigation + audit_web_full + audit_interfaz + prueba DOM + audit_secretos + auditar_eeff_ifrs (anotaciones); job `pruebas`: todas las pruebas unitarias de los extractores de estados financieros (IFRS, corredoras, banca, factoring) en cada push y PR; el lunes, guardián de frescura |
-| factoring_leasing_backfill.yml | días 3, 13, 23 12:20 | **sí** | tests + backfill_ifrs + publish_backfill (con compuerta contable) + auditorías web; el commit lleva solo datos y regenera lo compartido sobre la cabeza de la rama |
-| ifrs_sectores.yml | días 2, 12, 22 13:30 | **sí** (commit + Pages) | tests + estados IFRS de AGF, securitizadoras y CCAF (§8a) |
-| corredoras_eeff.yml | días 6, 16, 26 13:45 | **sí** (commit + Pages) | tests + estados FECU IFRS de corredores y agentes (§8a) |
-| seguros_carteras.yml | días 7, 17, 27 14:00 | **sí** (commit + Pages) | cartera de inversiones de aseguradoras (§6) |
-| ffmm_carteras.yml | días 8, 18, 28 14:00 | **sí** (commit + Pages) | cartera de fondos mutuos, Circular 1333 (§7) |
-| ffmm_eeff.yml | días 4, 14, 24 14:20 | **sí** | tests + balance y resultados anuales de fondos mutuos desde el XML IFRS de cada fondo (§7b); el commit lleva solo datos y regenera lo compartido sobre la cabeza |
-| fi_carteras.yml | días 9, 19, 29 15:00 | **sí** (commit + Pages) | cartera y pactos de fondos de inversión (§7) |
-| entidades.yml | días 10, 20, 28 12:30 | **sí** (commit + Pages) | altas y vigencia de las listas de AGF, securitizadoras, corredores, fintech, bancos, cooperativas y sistemas de pago (registros CMF), patrimonios separados (inscripciones por registro automático) y AFP (Superintendencia de Pensiones) (§8c) |
+| macro.yml | diario 10:00 | commit automático | tests (series_bcch incremental, escritura estable) → series_bcch (51 series nativas) → build_tablas_tematicas (23 tablas temáticas) → audit_macro_bcch |
+| bancos_cmf_mensual.yml | cada 3 días 13:00 | **sí** (commit; `pages.yml` despliega la web) | tests + publish_cmf_bank_period --catch-up (incremental) |
+| web_audit.yml | push a main, PR hacia main y lunes | no | audit_navigation + audit_web_full + audit_interfaz + prueba DOM + audit_secretos + auditar_eeff_ifrs (anotaciones); job `pruebas`: todas las pruebas unitarias de los extractores (IFRS, corredoras, banca, factoring, FI, fondos mutuos, macro y seguros) en cada push y PR; el lunes, guardián de frescura |
+| factoring_leasing_backfill.yml | cada 3 días 12:20 | **sí** | tests + backfill_ifrs + publish_backfill (con compuerta contable) + auditorías web; el commit lleva solo datos y regenera lo compartido sobre la cabeza de la rama |
+| ifrs_sectores.yml | cada 3 días 13:30 | **sí** (commit; `pages.yml` despliega la web) | tests + estados IFRS de AGF, securitizadoras y CCAF (§8a) |
+| corredoras_eeff.yml | cada 3 días 13:45 | **sí** (commit; `pages.yml` despliega la web) | tests + estados FECU IFRS de corredores y agentes (§8a) |
+| seguros_carteras.yml | cada 3 días 14:00 | **sí** (commit; `pages.yml` despliega la web) | cartera de inversiones de aseguradoras (§6) |
+| ffmm_carteras.yml | cada 3 días 14:00 | **sí** (commit; `pages.yml` despliega la web) | cartera de fondos mutuos, Circular 1333 (§7) |
+| ffmm_eeff.yml | cada 3 días 14:20 | **sí** | tests + balance y resultados anuales de fondos mutuos desde el XML IFRS de cada fondo (§7b); el commit lleva solo datos y regenera lo compartido sobre la cabeza |
+| fi_carteras.yml | cada 3 días 15:00 | **sí** (commit; `pages.yml` despliega la web) | cartera y pactos de fondos de inversión (§7) |
+| entidades.yml | días 10, 20, 28 12:30 | **sí** (commit; `pages.yml` despliega la web) | altas y vigencia de las listas de AGF, securitizadoras, corredores, fintech, bancos, cooperativas y sistemas de pago (registros CMF), patrimonios separados (inscripciones por registro automático) y AFP (Superintendencia de Pensiones) (§8c) |
+| fi_eeff.yml | cada 3 días 15:35 | **sí** | job `probar` (tests de fuentes, parser, cotejo y conservación) → actualizar_eeff (XML IFRS por fondo, --minutos/--hilos) → auditar_eeff + compuertas de la web → commit de datos y catálogos regenerados sobre la cabeza vigente |
+| normativa_cmf.yml | lunes a viernes 13:23 | **sí** (feed.json + state.json) | tests del pipeline y auditoría del monitor web → scrape de publicaciones CMF + análisis asistido → audit --require-run; desde 2026-10-02 está en el inventario de frescura (`max_dias` 4) |
+| ifrs_sondeo.yml | día 5 13:40 y push | no (solo lectura) | lee el TXT IFRS completo de la CMF y describe qué sociedades se descartan (giro, taxonomía, estado); sube el informe como artefacto |
+| fi_cobertura_eeff.yml | sin horario: push que toque el revisor | no (solo lectura) | contrasta padrón, control y ambos tipos de fondo contra la CMF; comprueba que la revisión no modificó docs/ ni los catálogos |
+| pages.yml | cada 6 h (03:15, 09:15, 15:15, 21:15) y push a `main` que toque `docs/` | despliegue | comprueba que GitHub Pages esté habilitado (si no, avisa y sale en verde: fue la causa de que este flujo se borrara el 2026-09-30) y publica `docs/` tal cual |
 
 ---
 

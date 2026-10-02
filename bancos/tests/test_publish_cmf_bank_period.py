@@ -51,6 +51,29 @@ class PublishCmfBankPeriodTests(unittest.TestCase):
         self.assertEqual(result["status"], "partial")
         self.assertIn("2026-09", result["stopped_error"])
 
+    def test_el_presupuesto_de_minutos_corta_entre_meses_y_no_a_mitad_de_uno(self):
+        """`--minutos` se aplica antes de empezar un mes nuevo (los tiempos van en segundos).
+
+        Sin este corte el `timeout-minutes` del job mataba la corrida a mitad de un mes: lo
+        descargado se perdía y la siguiente corrida partía de cero otra vez.
+        """
+        manifest = {"periods": []}
+        tiempos = iter([0.0, 0.0, 3600.0, 3601.0])   # el segundo mes ya cae en los 60 min
+        with mock.patch.object(mod, "load_manifest", lambda: manifest):
+            result = catch_up(False, 24, date(2026, 10, 15), self._fake_publisher(manifest),
+                              minutos=60, reloj=lambda: next(tiempos))
+        self.assertEqual(result["periods"], ["2026-07"], "no había que empezar el mes siguiente")
+        self.assertEqual(result["status"], "presupuesto_agotado")
+        self.assertEqual(result["stopped_error"], "", "quedarse sin presupuesto no es un error de datos")
+        self.assertTrue(result["published_changed"], "lo publicado debe confirmarse en la rama")
+
+    def test_sin_presupuesto_la_puesta_al_dia_recorre_todos_los_meses(self):
+        manifest = {"periods": []}
+        with mock.patch.object(mod, "load_manifest", lambda: manifest):
+            result = catch_up(False, 24, date(2026, 10, 15), self._fake_publisher(manifest), minutos=None)
+        self.assertEqual(result["status"], "caught_up")
+        self.assertEqual(len(result["periods"]), 3)
+
     def test_catch_up_first_failure_is_an_error_and_dry_run_does_not_loop(self):
         manifest = {"periods": []}
         with mock.patch.object(mod, "load_manifest", lambda: manifest):
