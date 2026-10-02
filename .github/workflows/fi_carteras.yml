@@ -1,12 +1,12 @@
-name: Cartera de inversiones de fondos de inversión (CMF, informes IFRS trimestrales), 3 veces al mes, incremental
+name: Cartera de inversiones de fondos de inversión (CMF, informes IFRS trimestrales), cada 3 días, incremental
 
 on:
   schedule:
-    # Días 9, 19 y 29 (15:00 UTC). Los fondos presentan la cartera trimestral con sus estados
+    # Cada 3 días (15:00 UTC). Los fondos presentan la cartera trimestral con sus estados
     # financieros (60 días; 90 el cierre anual). El publicador espera 75/100 días desde el cierre,
     # exige el 90 % de los fondos del trimestre anterior y no repite trimestres ya publicados.
     # La carga histórica avanza por tramos de hasta 4,5 horas por corrida.
-    - cron: '0 15 9,19,29 * *'
+    - cron: '0 15 */3 * *'
   push:
     branches:
       - main
@@ -14,6 +14,27 @@ on:
       - .github/workflows/fi_carteras.yml
       - fi/scripts/actualizar_carteras.py
   workflow_dispatch:
+    inputs:
+      desde:
+        description: 'Primer cierre (AAAA-MM); vacío = autodescubre el más antiguo disponible'
+        default: ''
+        type: string
+      hasta:
+        description: 'Último cierre (vacío = último admisible por plazo CMF)'
+        default: ''
+        type: string
+      minutos:
+        description: 'Tiempo máximo en minutos; el progreso se conserva'
+        default: '270'
+        type: string
+      max_periodos:
+        description: 'Máximo de cierres a revisar por corrida (0 = sin tope)'
+        default: '0'
+        type: string
+      hilos:
+        description: 'Descargas simultáneas (default 16; máx 32)'
+        default: '16'
+        type: string
 
 permissions:
   contents: write
@@ -43,7 +64,18 @@ jobs:
 
       - name: Descargar, validar y publicar los trimestres pendientes
         id: publicar
-        run: python -m fi.scripts.actualizar_carteras --minutos 270
+        env:
+          DESDE: ${{ inputs.desde }}
+          HASTA: ${{ inputs.hasta }}
+          MINUTOS: ${{ inputs.minutos }}
+          PERIODOS: ${{ inputs.max_periodos }}
+          HILOS: ${{ inputs.hilos }}
+        run: |
+          args=()
+          if [ -n "${DESDE}" ]; then args+=(--desde "${DESDE}"); fi
+          if [ -n "${HASTA}" ]; then args+=(--hasta "${HASTA}"); fi
+          python -m fi.scripts.actualizar_carteras --minutos "${MINUTOS:-270}" \
+            --max-periodos "${PERIODOS:-0}" --hilos "${HILOS:-16}" "${args[@]}"
 
       - name: Confirmar los meses publicados
         if: always() && steps.publicar.outcome != 'skipped'

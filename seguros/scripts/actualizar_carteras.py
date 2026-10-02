@@ -511,7 +511,8 @@ def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--desde", default=DESDE)
     ap.add_argument("--hasta", default=None, help="último mes a considerar (por defecto, el último mes cerrado)")
-    ap.add_argument("--max-periodos", type=int, default=240)
+    ap.add_argument("--minutos", type=float, default=270, help="tope de tiempo de la corrida (el progreso se conserva)")
+    ap.add_argument("--max-periodos", type=int, default=0, help="máximo de cierres a revisar por corrida (0 = sin tope)")
     ap.add_argument("--zip-dir", type=Path, default=None, help="leer ZIP locales en vez de descargar (pruebas)")
     ap.add_argument("--cache", type=Path, default=None, help="guardar/reusar las descargas en esta carpeta")
     ap.add_argument("--diagnostico", action="store_true",
@@ -537,9 +538,15 @@ def main(argv=None) -> int:
     print(f"Meses publicados: {len(control['periodos'])}. Meses con tablas pendientes: {len(pendientes)}"
           + (f" ({pendientes[0][0]} .. {pendientes[-1][0]})" if pendientes else ""))
     if a.diagnostico:
-        return diagnostico([p for p, _ in pendientes[:a.max_periodos]], a)
+        return diagnostico([p for p, _ in pendientes[:a.max_periodos if a.max_periodos > 0 else len(pendientes)]], a)
     hechos = []
-    for periodo, faltan in pendientes[:a.max_periodos]:
+    inicio = time.monotonic()
+    for periodo, faltan in pendientes:
+        if a.max_periodos > 0 and len(hechos) >= a.max_periodos:
+            break
+        if time.monotonic() - inicio > a.minutos * 60:
+            print("Tiempo agotado; el resto sigue en la próxima corrida.")
+            break
         t0 = time.time()
         try:
             datos = {s: descargar(s, periodo, a.zip_dir, a.cache) for s in SECTORES}
