@@ -2,307 +2,307 @@
   "series": {
     "tpm": {
       "serie_id": "F022.TPM.TIN.D001.NO.Z.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Tasa de política monetaria (TPM) (porcentaje)"
     },
     "tib": {
       "serie_id": "F022.TIB.TIP.D001.NO.Z.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "titulo_bcch": "Tasa promedio transada en el mercado interbancario (TIB) (porcentaje)",
       "estado": "ok"
     },
     "spc_clp_90d": {
       "serie_id": "F022.SPC.TPR.D090.NO.Z.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Swap promedio de camara, nominal. 90 días"
     },
     "spc_clp_180d": {
       "serie_id": "F022.SPC.TPR.D180.NO.Z.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": " Swap promedio de camara, nominal. 180 días"
     },
     "spc_clp_360d": {
       "serie_id": "F022.SPC.TPR.D360.NO.Z.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": " Swap promedio de camara, nominal. 360 días"
     },
     "spc_clp_2y": {
       "serie_id": "F022.SPC.TIN.AN02.NO.Z.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Swap promedio camara (SPC) en pesos 2 años"
     },
     "spc_uf_1y": {
       "serie_id": "F022.SPC.TIN.AN01.UF.Z.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Swap promedio camara (SPC) en UF 1 año"
     },
     "bcp_2y": {
       "serie_id": "F022.BCLP.TIS.AN02.NO.Z.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Tasa de interés mercado secundario de los bonos licitados por el BCCh (BCP) a 2 años"
     },
     "bcp_5y": {
       "serie_id": "F022.BCLP.TIS.AN05.NO.Z.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Tasa de interés mercado secundario de los bonos licitados por el BCCh (BCP) a 5 años"
     },
     "bcp_10y": {
       "serie_id": "F022.BCLP.TIS.AN10.NO.Z.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Tasa de interés mercado secundario de los bonos licitados por el BCCh (BCP) a 10 años"
     },
     "bcu_1y": {
       "serie_id": "F022.BUF.TIS.AN01.UF.Z.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Tasa de interés mercado secundario, bonos en UF a 1 año (BCU, BTU)"
     },
     "bcu_2y": {
       "serie_id": "F022.BUF.TIS.AN02.UF.Z.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Tasa de interés mercado secundario, bonos en UF a 2 años (BCU, BTU)"
     },
     "bcu_5y": {
       "serie_id": "F022.BUF.TIS.AN05.UF.Z.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Tasa de interés mercado secundario, bonos en UF a 5 años (BCU, BTU)"
     },
     "bcu_10y": {
       "serie_id": "F022.BUF.TIS.AN10.UF.Z.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Tasa de interés mercado secundario, bonos en UF a 10 años (BCU, BTU)"
     },
     "bcu_20y": {
       "serie_id": "F022.BUF.TIS.AN20.UF.Z.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Tasa de interés mercado secundario, bonos en UF a 20 años (BCU, BTU)"
     },
     "bcu_30y": {
       "serie_id": "F022.BUF.TIS.AN30.UF.Z.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Tasa de interés mercado secundario, bonos en UF a 30 años, BCU"
     },
     "usd_clp": {
       "serie_id": "F073.TCO.PRE.Z.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Tipo de cambio nominal (dólar observado $CLP/USD)\\ tipo de cambio \\ precio \\ diario \\ BCCh"
     },
     "eur_clp": {
       "serie_id": "F072.CLP.EUR.N.O.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "titulo_bcch": "Tipo de cambio nominal euro",
       "estado": "ok"
     },
     "tcm": {
       "serie_id": "F073.TCM.IND.199502.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "titulo_bcch": "Tipo de cambio nominal multilateral - TCM",
       "estado": "ok"
     },
     "tcm_5": {
       "serie_id": "F073.TM5.IND.199001.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Índices de tipo de cambio y de precios externos / TCM-5"
     },
     "tcm_x": {
       "serie_id": "G073.TCMX.IND.199801.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Índice TCM-X (2 enero 1998=100)"
     },
     "tcr": {
       "serie_id": "F073.TCR.IND.199101.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Índice de tipo de cambio real - TCR (promedio 1986=100)"
     },
     "tcr_5": {
       "serie_id": "F073.TR5.IND.198601.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Índice de tipo de cambio real para las monedas de: Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro - TCR-5 (promedio 1986=100)"
     },
     "uf": {
       "serie_id": "F073.UFF.PRE.Z.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "titulo_bcch": "Unidad de fomento (UF)",
       "estado": "ok"
     },
     "utm": {
       "serie_id": "F073.UTR.PRE.Z.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "titulo_bcch": "Unidad tributaria mensual (UTM)",
       "estado": "ok"
     },
     "ipc_indice": {
       "serie_id": "G073.IPC.IND.2023.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "General (empalme BCCh) | IPC Analíticos, índice empalmado BCCh, base 2023 = 100 | Mensual"
     },
     "ipc_var_mensual": {
       "serie_id": "G073.IPC.VAR.2023.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "General (empalme BCCh) | IPC Analíticos, variación empalmada BCCh, base 2023 = 100 | Mensual"
     },
     "ipc_var_anual": {
       "serie_id": "G073.IPC.V12.2023.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "General (empalme BCCh) | IPC Analíticos, variación anual empalmada BCCh, base 2023 = 100 | Mensual"
     },
     "imacec": {
       "serie_id": "F032.ICF.IND.Z.Z.EP18.Z.Z.0.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Imacec a costo de factores, serie empalmada (índice 2018=100)"
     },
     "imacec_no_minero": {
       "serie_id": "F032.IMC.IND.Z.Z.EP18.N03.Z.0.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "titulo_bcch": "Imacec no minero, serie empalmada (Indice 2018=100)",
       "estado": "ok"
     },
     "imacec_mineria": {
       "serie_id": "F032.IMC.IND.Z.Z.EP18.03.Z.0.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "titulo_bcch": "Imacec minero, serie empalmada (Indice 2018=100)",
       "estado": "ok"
     },
     "imacec_comercio": {
       "serie_id": "F032.IMC.IND.Z.Z.EP18.COM.Z.0.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Imacec comercio, serie original (índice 2018=100)"
     },
     "imacec_servicios": {
       "serie_id": "F032.IMC.IND.Z.Z.EP18.SERV.Z.0.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Imacec servicios, serie original (índice 2018=100)"
     },
     "pib": {
       "serie_id": "F032.PIB.FLU.R.CLP.EP18.Z.Z.0.T",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "PIB, volumen a precios del año anterior encadenado, referencia 2018 (miles de millones de pesos encadenados)"
     },
     "desocupacion": {
       "serie_id": "F049.DES.TAS.INE9.10.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Tasa de desocupación, total | No Ajustada | INE | Mensual | Porcentaje"
     },
     "ocupados": {
       "serie_id": "F049.OCU.PMT.INE9.01.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "titulo_bcch": "Personas ocupadas, total | No Ajustada | INE | Mensual | Miles de Personas",
       "estado": "ok"
     },
     "asalariados": {
       "serie_id": "F049.OCU.PMT.INE9.87.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "titulo_bcch": "Empleo categoria : Trabajadores Asalariados, NENE",
       "estado": "ok"
     },
     "fuerza_trabajo": {
       "serie_id": "F049.FTR.PMT.INE9.01.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "titulo_bcch": "Fuerza de trabajo, total | No Ajustada | INE | Mensual | Miles de Personas",
       "estado": "ok"
     },
     "cobre_diario": {
       "serie_id": "F019.PPB.PRE.100.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Precio del cobre refinado BML (dólares/libra) | Diario "
     },
     "cobre_mensual": {
       "serie_id": "F019.PPB.PRE.40.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Precio del cobre refinado BML (dólares/libra) (valores referenciales, obtenidas de fuentes internacionales para apoyo al análisis económico)"
     },
     "oro": {
       "serie_id": "F019.PPB.PRE.44.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Precios de productos básicos / Onza troy de oro. Dólares / oz"
     },
     "plata": {
       "serie_id": "F019.PPB.PRE.45.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Precios de productos básicos / Onza troy de plata. Dólares / oz"
     },
     "reservas": {
       "serie_id": "F062.A5.STO.PF.USD.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Reservas internacionales del Banco Central de Chile, Activos de reserva (millones de dólares)"
     },
     "fed_funds": {
       "serie_id": "F019.TPM.TIN.10.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Tasa de interés externa, política monetaria EE.UU."
     },
     "deuda_publica_pib": {
       "serie_id": "F051.D7.PPB.C.Z.Z.T",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "titulo_bcch": "Deuda bruta Gobierno Central (porcentaje del PIB)",
       "estado": "ok"
     },
     "eee_ipc_11m": {
       "serie_id": "F089.IPC.V12.14.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Expectativas de inflación en 11 meses (variación 12 meses, mediana)"
     },
     "eee_ipc_23m": {
       "serie_id": "F089.IPC.V12.15.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Expectativas de inflación en 23 meses (variación 12 meses, mediana)"
     },
     "eee_tpm_11m": {
       "serie_id": "F089.TPM.TAS.14.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Expectativas tasa de política monetaria , dentro de 11 meses, mediana"
     },
     "eee_tpm_23m": {
       "serie_id": "F089.TPM.TAS.15.M",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Expectativas tasa de política monetaria , dentro de 23 meses, mediana"
     },
     "eof_ipc_12m": {
       "serie_id": "F089.EOF.VII.12MS.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Evolución encuesta de operadores financieros (EOF), Inflación (variación IPC en %). 12 meses siguientes (1 al 12)"
     },
     "eof_tpm_12m": {
       "serie_id": "F089.EOF.TPM.12MS.D",
-      "ultima_consulta_utc": "2026-10-02T02:08:29+00:00",
+      "ultima_consulta_utc": "2026-10-02T16:12:34+00:00",
       "estado": "ok",
       "titulo_bcch": "Evolución encuesta de operadores financieros (EOF), Expectativas de TPM (%). 12 meses siguientes"
     }
@@ -322,7 +322,7 @@
     "outputs/macro/series/2025.parquet",
     "outputs/macro/series/2026.parquet"
   ],
-  "total_records": 79945,
+  "total_records": 79946,
   "series_en_catalogo": 51,
-  "updated_at": "2026-10-02T02:08:29+00:00"
+  "updated_at": "2026-10-02T16:12:34+00:00"
 }
