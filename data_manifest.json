@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "updated_at": "2026-10-02",
   "total_tables": 74,
-  "total_records": 11307601,
+  "total_records": 13292785,
   "classification": {
     "automatico": "Extracción, validación y publicación ejecutadas por código y workflows programados (APIs, scrapers y normalizadores)",
     "hibrido": "Extracción o curación inicial asistida desde fuentes no estructuradas, seguida de validación, normalización y publicación reproducibles mediante código; puede ejecutarse fuera de Actions",
@@ -363,22 +363,6 @@
       "origen": "CMF — Estados financieros IFRS de fondos mutuos (XML «FMEF», Circular 1997 de 2010), enlazado en la ficha de cada fondo: https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU"
     },
     {
-      "id": "fi_balance",
-      "name": "fi.balance",
-      "view_name": "fi_balance",
-      "sector": "fi",
-      "sector_label": "Fondos de Inversión",
-      "norma": "IFRS · XML CMF (Circular 1998)",
-      "corte": "2026-06 a 2026-06",
-      "frescura": "Último cierre: 2026-06",
-      "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-01",
-      "file_parquet": "outputs/fi/fi_balance/manifest.json",
-      "registros_reales": 66864,
-      "descripcion": "Estado de situación financiera de fondos de inversión FIRES/FINRE, cuenta por cuenta (42 líneas por contexto). TotalPasivo de la fuente incluye patrimonio: el pasivo exigible es TotalPasivoCorriente + TotalPasivoNoCorriente. Miles de la moneda de presentación, sin conversión. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
-      "origen": "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado."
-    },
-    {
       "id": "fi_bienes_raices",
       "name": "fi.bienes_raices",
       "view_name": "fi_bienes_raices",
@@ -505,22 +489,6 @@
       "registros_reales": 777,
       "descripcion": "Operaciones de venta con compromiso de retrocompra (VRC) y de compra con compromiso de retroventa (CRV) vigentes al cierre de cada trimestre.",
       "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
-    },
-    {
-      "id": "fi_resultados",
-      "name": "fi.resultados",
-      "view_name": "fi_resultados",
-      "sector": "fi",
-      "sector_label": "Fondos de Inversión",
-      "norma": "IFRS · XML CMF (Circular 1998)",
-      "corte": "2026-06 a 2026-06",
-      "frescura": "Último cierre: 2026-06",
-      "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-01",
-      "file_parquet": "outputs/fi/fi_resultados/manifest.json",
-      "registros_reales": 97860,
-      "descripcion": "Estado de resultados integrales de fondos de inversión FIRES/FINRE, cuenta por cuenta (30 líneas por contexto). Se separan acumulado del ejercicio, trimestre y sus comparativos; no se suman entre sí. Miles de la moneda de presentación, gastos con signo original. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
-      "origen": "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado."
     },
     {
       "id": "fintech_rpsf_maestro",
@@ -1193,6 +1161,38 @@
       "registros_reales": 22368,
       "descripcion": "22,368 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
       "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 36954204964. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
+    },
+    {
+      "id": "fi_balance",
+      "name": "fi.balance",
+      "view_name": "fi_balance",
+      "sector": "fi",
+      "sector_label": "Fondos de Inversión",
+      "norma": "IFRS · XML CMF (Circular 1998)",
+      "corte": "2022-03 a 2026-06",
+      "frescura": "Último cierre: 2026-06",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-02",
+      "file_parquet": "outputs/fi/fi_balance/manifest.json",
+      "registros_reales": 985908,
+      "descripcion": "Estado de situación financiera de fondos de inversión FIRES/FINRE, cuenta por cuenta (42 líneas por contexto). TotalPasivo de la fuente incluye patrimonio: el pasivo exigible es TotalPasivoCorriente + TotalPasivoNoCorriente. Miles de la moneda de presentación, sin conversión. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
+      "origen": "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado."
+    },
+    {
+      "id": "fi_resultados",
+      "name": "fi.resultados",
+      "view_name": "fi_resultados",
+      "sector": "fi",
+      "sector_label": "Fondos de Inversión",
+      "norma": "IFRS · XML CMF (Circular 1998)",
+      "corte": "2022-03 a 2026-06",
+      "frescura": "Último cierre: 2026-06",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-02",
+      "file_parquet": "outputs/fi/fi_resultados/manifest.json",
+      "registros_reales": 1164000,
+      "descripcion": "Estado de resultados integrales de fondos de inversión FIRES/FINRE, cuenta por cuenta (30 líneas por contexto). Se separan acumulado del ejercicio, trimestre y sus comparativos; no se suman entre sí. Miles de la moneda de presentación, gastos con signo original. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
+      "origen": "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado."
     }
   ]
 }
