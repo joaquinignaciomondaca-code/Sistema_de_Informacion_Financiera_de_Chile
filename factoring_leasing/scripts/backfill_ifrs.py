@@ -356,7 +356,9 @@ def run(args, fetcher=fetch):
     failures = set(progress.get('fallidos', []))
     fresh = [p for p in pending if p not in failures]
     retry = [p for p in pending if p in failures]
-    planned = (fresh + retry)[:args.batch]
+    # args.batch=0 significa sin tope
+    all_pending = fresh + retry
+    planned = all_pending if args.batch == 0 else all_pending[:args.batch]
     for period in planned:
         try:
             url = ARCHIVE.format(period)
@@ -417,10 +419,10 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument('--catalog', type=Path, default=CATALOG)
     p.add_argument('--out', type=Path, default=OUT)
-    p.add_argument('--batch', type=int, default=100, help='máximo de trimestres por corrida')
+    p.add_argument('--batch', type=int, default=100, help='máximo de trimestres por corrida (0 = sin tope)')
     args = p.parse_args()
-    if args.batch < 1:
-        p.error('--batch debe ser positivo')
+    if args.batch < 0:
+        p.error('--batch debe ser >= 0 (0 = sin tope)')
     return run(args)
 
 

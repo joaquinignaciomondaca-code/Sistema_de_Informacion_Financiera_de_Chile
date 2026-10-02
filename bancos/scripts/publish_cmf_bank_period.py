@@ -492,7 +492,7 @@ def dias_desde_cierre(period: str, today: date) -> int:
 
 
 def catch_up(dry_run: bool, max_periods: int, today: date | None = None, publisher=None,
-             start: str | None = None) -> dict:
+             start: str | None = None, hasta: str | None = None) -> dict:
     """Publica en orden todos los meses cerrados pendientes (uno a uno, cada uno con su gate).
 
     Si un mes falla después de haber publicado otros, se detiene ahí y conserva
@@ -503,9 +503,14 @@ def catch_up(dry_run: bool, max_periods: int, today: date | None = None, publish
     published: list[str] = []
     stopped_error = ""
     waiting = ""
-    for _ in range(max_periods):
+    # max_periods=0 significa sin tope; usamos un límite grande
+    limite = max_periods if max_periods > 0 else 10000
+    for _ in range(limite):
         period = next_unpublished_period(load_manifest(), today, start)
         if period is None:
+            break
+        # Si se especificó un --hasta, detenerse ahí
+        if hasta and period > hasta:
             break
         try:
             result = publisher(period, dry_run=dry_run)
@@ -544,7 +549,8 @@ def main() -> int:
     parser.add_argument("--catch-up", action="store_true",
                         help="Publicar en orden todos los meses cerrados pendientes (cada uno con su propio gate)")
     parser.add_argument("--desde", default="", help="Con --catch-up: primer período de la historia a completar (YYYY-MM)")
-    parser.add_argument("--max-periods", type=int, default=24, help="Tope de meses por corrida con --catch-up")
+    parser.add_argument("--hasta", default="", help="Con --catch-up: último período a considerar (YYYY-MM)")
+    parser.add_argument("--max-periods", type=int, default=0, help="Tope de meses por corrida con --catch-up (0 = sin tope)")
     parser.add_argument("--solo-data-manifest", action="store_true",
                         help="Regenerar la entrada de bancos en data_manifest.json desde las particiones ya publicadas")
     args = parser.parse_args()
@@ -556,7 +562,9 @@ def main() -> int:
         if args.catch_up and not args.period:
             if args.desde:
                 period_label(args.desde)
-            result = catch_up(args.dry_run, args.max_periods, start=args.desde or None)
+            if args.hasta:
+                period_label(args.hasta)
+            result = catch_up(args.dry_run, args.max_periods, start=args.desde or None, hasta=args.hasta or None)
             if not result["periods"]:
                 if result.get("waiting_for"):
                     print(f"Nada nuevo: {result['waiting_for']} aún no está en la CMF; no se modifica la web.")

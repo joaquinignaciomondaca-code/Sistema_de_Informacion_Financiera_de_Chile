@@ -1,11 +1,9 @@
-name: Publicación CMF B1/B2/R1 (bancos), 3 veces al mes, incremental
+name: Publicación CMF B1/B2/R1 (bancos), cada 3 días, incremental
 
 on:
   schedule:
-    # Tres intentos al mes (días 1, 11 y 21, 13:00 UTC). La CMF publica el mes M hacia fines de M+1,
-    # así que cualquiera de los intentos lo recoge. Es incremental: los meses ya publicados se saltan
-    # sin descargarse, y si el mes pendiente aún no está en la CMF la corrida termina sin cambios (en verde).
-    - cron: '0 13 1,11,21 * *'
+    # Cada 3 días (13:00 UTC). La CMF publica el mes M hacia fines de M+1, así que cualquiera de los intentos lo recoge. Es incremental: los meses ya publicados se saltan sin descargarse, y si el mes pendiente aún no está en la CMF la corrida termina sin cambios (en verde).
+    - cron: '0 13 */3 * *'
   # Primera carga automática: al fusionar/subir cambios del publicador se ejecuta
   # una vez y pone al día todos los meses cerrados pendientes desde 2026-07.
   push:
@@ -19,10 +17,21 @@ on:
       - bancos/tests/test_publish_cmf_bank_period.py
   workflow_dispatch:
     inputs:
-      period:
-        description: 'Período YYYY-MM opcional; en blanco toma el primer período pendiente desde 2026-07'
-        required: false
+      desde:
+        description: 'Primer período (YYYY-MM); vacío = autodescubre el más antiguo disponible'
         default: ''
+        type: string
+      hasta:
+        description: 'Último período (vacío = último admisible)'
+        default: ''
+        type: string
+      minutos:
+        description: 'Tiempo máximo en minutos; el progreso se conserva'
+        default: '270'
+        type: string
+      max_periodos:
+        description: 'Máximo de períodos a revisar por corrida (0 = sin tope)'
+        default: '0'
         type: string
 
 permissions:
@@ -61,13 +70,18 @@ jobs:
       - name: Extraer, cotejar y publicar una partición (o saltar si ya existe)
         id: publish
         env:
-          PERIOD: ${{ github.event_name == 'workflow_dispatch' && inputs.period || '' }}
-          # Historia completa desde el plan de cuentas CMF de 9 dígitos; los meses
-          # ya publicados se saltan, así que la corrida mensual solo agrega lo nuevo.
-          HISTORY_START: '2022-01'
+          DESDE: ${{ inputs.desde }}
+          HASTA: ${{ inputs.hasta }}
+          MINUTOS: ${{ inputs.minutos }}
+          PERIODOS: ${{ inputs.max_periodos }}
         run: |
+          # Si no se especifica un período concreto, hacemos catch-up desde el inicio de la historia
+          # (2022-01 = inicio del plan de cuentas CMF de 9 dígitos) o desde donde lo dejamos.
+          # Los meses ya publicados se saltan.
           args=()
-          if [ -n "$PERIOD" ]; then args+=(--period "$PERIOD"); else args+=(--catch-up --desde "$HISTORY_START" --max-periods 120); fi
+          if [ -n "${DESDE}" ]; then HISTORY_START="${DESDE}"; else HISTORY_START='2022-01'; fi
+          if [ -n "${HASTA}" ]; then args+=(--hasta "${HASTA}"); fi
+          args+=(--catch-up --desde "${HISTORY_START}" --max-periods "${PERIODOS:-0}")
           python -m bancos.scripts.publish_cmf_bank_period "${args[@]}"
 
       - name: Confirmar el período validado para que la web recoja los cambios
