@@ -17,6 +17,14 @@ Un trimestre se publica completo o no se publica (fail-closed):
 Montos en miles de la moneda funcional de cada fondo (sufijo _miles_mf); la moneda funcional
 se lee del informe de pactos ("Cifras expresadas en miles de: ...") y va en la lista de fondos.
 
+Texto y codificación: cada página se decodifica con el charset que declara, luego UTF-8 y por
+último cp1252/latin-1, y se repara el mojibake «UTF-8 leído como latin-1» (ver decodificar_html).
+Todo lo que el script escribe va en UTF-8 explícito. Los centinelas de «no aplica» de las
+columnas de identificación (NA/N/A/S-I) se publican como vacío, no como texto, y los nombres de
+contraparte que traen el carácter de reemplazo (�) se reparan por RUT contra un padrón o contra
+una tabla de textos reconstruidos con certeza (ver normalizar_contraparte). Lo que no se puede
+reconstruir queda tal cual y se reporta como aviso del trimestre.
+
 Salida (docs/outputs/fi/):
   cartera_nacional/<AAAA-MM>.parquet     un archivo por trimestre
   <tabla>/<AAAA>.parquet                 cartera_extranjera, metodo_participacion, bienes_raices,
@@ -29,6 +37,7 @@ Salida (docs/outputs/fi/):
 from __future__ import annotations
 
 import argparse
+import codecs
 import hashlib
 import json
 import os
@@ -50,6 +59,7 @@ import pyarrow.parquet as pq
 RAIZ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(RAIZ))
 from pipelines.auto import estable  # noqa: E402
+from pipelines.auto.rut import dv as dv_rut  # noqa: E402
 SALIDA = RAIZ / "docs" / "outputs" / "fi"
 UA = "Mozilla/5.0 (monitor-financiero-chile)"
 BASE_CARTERA = "https://www.cmfchile.cl/sitio/inc/inf_financiera/ifrs_xml/"
@@ -187,13 +197,65 @@ class _Tablas(HTMLParser):
             self._celda.append(data)
 
 
+_CHARSET_META = re.compile(br"charset\s*=\s*[\"']?\s*([A-Za-z0-9_\-]+)", re.I)
+_MOJIBAKE = re.compile(r"[ÃÂ][\u0080-\u00bf]|ï¿½")
+
+
+def _charset_declarado(raw: bytes) -> str | None:
+    """Nombre del charset declarado por el propio documento, si lo trae."""
+    m = _CHARSET_META.search(raw[:4096])
+    return m.group(1).decode("ascii", "ignore").lower() if m else None
+
+
+def _reparar_mojibake(texto: str) -> str:
+    """Deshace «EuroamÃ©rica» (bytes UTF-8 leídos como latin-1) cuando el texto lo delata.
+
+    La página de la CMF es UTF-8 salvo excepciones; si un byte suelto la vuelve inválida, el
+    respaldo en latin-1 convierte todas las tildes en mojibake. El viaje de vuelta sólo se
+    aplica si el texto contiene las secuencias típicas y vuelve a ser UTF-8 válido, así que un
+    documento sano nunca se toca.
+    """
+    if not _MOJIBAKE.search(texto):
+        return texto
+    for errores in ("strict", "replace"):
+        try:
+            candidato = texto.encode("latin-1").decode("utf-8", errores)
+        except (UnicodeEncodeError, UnicodeDecodeError):
+            continue
+        # Sólo se acepta si de verdad desaparecen las secuencias de mojibake; el byte suelto que
+        # forzó el respaldo queda como carácter de reemplazo y lo reporta el aviso del trimestre.
+        if len(_MOJIBAKE.findall(candidato)) < len(_MOJIBAKE.findall(texto)):
+            return candidato
+    return texto
+
+
+def decodificar_html(raw: bytes) -> str:
+    """Decodifica una página de la CMF con el charset correcto, sin adivinar.
+
+    Orden: UTF-8 estricto (el caso normal), el charset que declara el documento (varias páginas
+    antiguas son ISO-8859-1) y, como último recurso, cp1252 y latin-1, que no fallan. Después se
+    repara el mojibake de UTF-8 leído como latin-1.
+    """
+    candidatos = ["utf-8"]
+    declarado = _charset_declarado(raw)
+    if declarado and declarado.replace("_", "-") not in ("utf-8", "utf8"):
+        candidatos.append(declarado)
+    candidatos += ["cp1252", "iso8859-1"]
+    for nombre in candidatos:
+        try:
+            codec = codecs.lookup(nombre)
+        except LookupError:
+            continue
+        try:
+            return _reparar_mojibake(raw.decode(codec.name))
+        except UnicodeDecodeError:
+            continue
+    return raw.decode("utf-8", "replace")
+
+
 def tablas_html(raw: bytes) -> list[dict]:
-    try:
-        texto = raw.decode("utf-8")
-    except UnicodeDecodeError:
-        texto = raw.decode("latin-1")
     p = _Tablas()
-    p.feed(texto)
+    p.feed(decodificar_html(raw))
     return p.tablas
 
 
@@ -240,40 +302,154 @@ def rut(txt: str):
     return s.upper()
 
 
-def convertir(valor: str, tipo: str):
+def convertir(valor: str, tipo: str, col: str | None = None):
     if tipo == "n":
         return num(valor)
     if tipo == "f":
         return fecha(valor)
     if tipo == "r":
         return rut(valor)
-    return valor.strip() or None
+    s = valor.strip()
+    # En las columnas de identificación «NA», «N/A» o «S/I» son el «no aplica» de la CMF: se
+    # publican como vacío para no mezclar texto con ausencia de dato. En columnas de
+    # codificación (tipo_interes, grupo_empresarial, país) «NA» es un código válido y se conserva.
+    if col in CENTINELAS_TEXTO and s.upper() in TEXTO_VACIO:
+        return None
+    return TEXTOS_REPARADOS.get(s) or s or None
 
 
-_NOMBRE_CORREDORA_LARRAIN_VIAL = "LARRAIN VIAL S.A. CORREDORA DE BOLSA"
+# Centinelas de «no aplica» de la CMF y columnas donde se traducen a vacío.
+TEXTO_VACIO = frozenset({"", "NA", "N/A", "N/A.", "S/I", "--"})
+CENTINELAS_TEXTO = frozenset({"isin", "nemotecnico", "nombre_emisor"})
+
+# Textos que traen el carácter de reemplazo Unicode (�) y se pueden reconstruir con certeza:
+# la entidad es identificable sin ambigüedad (empresa chilena conocida) o el nemotécnico
+# coincide con el patrón que la CMF publica sana en el resto de la serie (FNB??-ddmmyy).
+# El � está dentro del dato recibido: la lectura de la página no puede recuperar el carácter
+# perdido, así que se restituye sólo cuando no hay duda. Lo que no está acá no se toca.
+TEXTOS_REPARADOS = {
+    "Euroam\ufffdrica AGF S.A.": "Euroamérica AGF S.A.",
+    "QUI\ufffdENCO": "QUIÑENCO",
+    "QUI\ufffdENCO S.A.": "QUIÑENCO S.A.",
+    "Banco Ita\ufffd": "Banco Itaú",
+    "COMPA\ufffdA GENERAL DE ELECTRICIDAD S.A": "COMPAÑIA GENERAL DE ELECTRICIDAD S.A",
+    "FNBNS-220923\ufffd": "FNBNS-220923",
+    "FNBNS-130525\ufffd": "FNBNS-130525",
+}
+
+# Padrón de contrapartes de pactos. La clave es el cuerpo del RUT y el nombre canónico sale del
+# padrón CMF publicado en el repositorio (docs/outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet
+# y docs/outputs/agf/agf_maestro.parquet) o de la grafía mayoritaria de los cierres sin daño.
+CONTRAPARTES_CANONICAS = {
+    "80537000": "LARRAIN VIAL S.A. CORREDORA DE BOLSA",
+    "76081215": "LARRAIN VIAL ACTIVOS S.A. ADM. GRAL. DE FONDOS",
+    "96921130": "MBI CORREDORES DE BOLSA S.A.",
+    "96899230": "EUROAMERICA CORREDORES DE BOLSA S.A.",
+    "96772490": "CONSORCIO CORREDORES DE BOLSA S.A.",
+    "96519800": "BCI CORREDOR DE BOLSA S.A.",
+}
+
+# Grafías alternativas del mismo RUT que la CMF usa en algunos cierres (abreviaturas, siglas y
+# plurales/singulares), en clave compacta, más allá de la del propio nombre canónico. Se registran
+# sólo las entidades cuyo mismo RUT aparece con más de una grafía en la serie de pactos. Una fila
+# cuyo nombre calza toma el nombre canónico del padrón; una que no calza se deja tal cual, porque
+# el mismo RUT con otro nombre puede ser otra entidad o el nombre histórico de una fusión
+# (p. ej. 96489000: IM Trust y Credicorp Capital conviven en la serie y no se fusionan).
+CONTRAPARTES_VARIANTES = {
+    "80537000": frozenset({"larrainvialsacorredoradebolsas"}),
+    "76081215": frozenset({"larrainvialactivossa"}),
+    "96899230": frozenset({"euroamericacdeb", "euroamericacorredoradebolsasa"}),
+    "96772490": frozenset({"consorciofinanciero"}),
+    "96921130": frozenset({"mbicorredoresdebolsa", "mbicb"}),
+    "96519800": frozenset({"bcicorredoresdebolsa", "bcicorredoresdebolsasa", "bcicorredoradebolsasa"}),
+}
+
+
+def cuerpo_contraparte(rut_contraparte: str | None) -> str | None:
+    """Cuerpo del RUT de la contraparte, sin puntos ni DV.
+
+    La CMF publica el mismo RUT de dos formas: sólo el cuerpo (80537000) o con el DV pegado
+    (805370009). Si los 9 dígitos traen como último carácter el DV correcto del cuerpo de 8,
+    se descarta; el resto de los formatos se conserva tal como llegó.
+    """
+    s = re.sub(r"[^0-9K]", "", str(rut_contraparte or "").upper())
+    if len(s) == 9 and s[-1] == dv_rut(s[:8]):
+        return s[:8]
+    return s or None
+
+
+def _clave_compacta(nombre: str) -> str:
+    """Clave sin caso, tildes, espacios ni puntuación: «LARRAIN VIAL S.A.» ~ «larrain vial sa»."""
+    texto = unicodedata.normalize("NFKD", str(nombre)).encode("ascii", "ignore").decode("ascii")
+    return re.sub(r"[^a-z0-9]+", "", texto.casefold())
+
+
+def _grafias_del_padron() -> dict[str, tuple[str, str]]:
+    """Clave compacta de cada grafía aceptada → (cuerpo del RUT del padrón, nombre canónico)."""
+    mapa: dict[str, tuple[str, str]] = {}
+    for rut, canonico in CONTRAPARTES_CANONICAS.items():
+        claves = {_clave_compacta(canonico)} | set(CONTRAPARTES_VARIANTES.get(rut, ()))
+        for clave in claves:
+            mapa.setdefault(clave, (rut, canonico))
+    return mapa
+
+
+GRAFIAS_PADRON = _grafias_del_padron()
 
 
 def normalizar_contraparte(rut_contraparte: str | None, nombre: str | None) -> str | None:
-    """Estandariza variantes CMF de Larraín Vial usando su RUT como identificador.
+    """Estandariza el nombre de la contraparte de pactos usando el RUT como identificador.
 
-    En distintos cierres el informe trae el mismo RUT con el nombre escrito de varias
-    formas; algunas filas ya incluyen el carácter de reemplazo Unicode (�), así que no
-    es posible reconstruirlas cambiando la codificación del archivo. Se usa el padrón
-    CMF como nombre canónico y se excluyen las variantes de la AGF, que es otra entidad.
+    En distintos cierres el informe trae el mismo RUT con el nombre escrito de varias formas y
+    algunas filas incluyen el carácter de reemplazo Unicode (�), que no se puede recuperar
+    cambiando la codificación del archivo. Reglas, en orden:
+
+      1. nombre dañado con reconstrucción verificada → tabla de textos reparados;
+      2. nombre vacío o dañado → nombre canónico del padrón por RUT (también completa la celda);
+      3. RUT del padrón con una grafía conocida de ese mismo RUT (sin caso, tildes, puntuación,
+         abreviaturas ni plurales) → se usa el canónico: es la misma entidad escrita distinto,
+         nunca otra contraparte;
+      4. RUT fuera del padrón cuya grafía identifica a una sola contraparte del padrón (cierres
+         antiguos con el RUT mal armado) → se usa ese canónico.
     """
-    rut_limpio = re.sub(r"[^0-9K]", "", str(rut_contraparte or "").upper())
-    if rut_limpio == "805370009":
-        rut_limpio = rut_limpio[:-1]  # RUT completo 80.537.000-9
-    if rut_limpio != "80537000" or not nombre:
+    if nombre and nombre in TEXTOS_REPARADOS:
+        nombre = TEXTOS_REPARADOS[nombre]
+    cuerpo = cuerpo_contraparte(rut_contraparte)
+    canonico = CONTRAPARTES_CANONICAS.get(cuerpo)
+    if not nombre or "\ufffd" in nombre:
+        return canonico or nombre
+    grafia = GRAFIAS_PADRON.get(_clave_compacta(nombre))
+    if grafia is None:
         return nombre
+    rut_grafia, canonico_grafia = grafia
+    if canonico is not None and rut_grafia != cuerpo:
+        # El nombre es de otra entidad del padrón: se deja la inconsistencia a la vista.
+        return nombre
+    return canonico_grafia
 
-    clave = unicodedata.normalize("NFKD", nombre).encode("ascii", "ignore").decode("ascii").upper()
-    palabras = set(re.findall(r"[A-Z0-9]+", clave))
-    if "LARRA" not in clave or "VIAL" not in clave:
-        return nombre
-    if palabras & {"ACTIVOS", "ADMINISTRADORA", "FONDO", "FONDOS", "AGF"}:
-        return nombre
-    return _NOMBRE_CORREDORA_LARRAIN_VIAL
+
+# Columnas donde la CMF publica texto libre y por lo tanto pueden traer el carácter de reemplazo.
+COLUMNAS_TEXTO = ("contraparte", "nemotecnico", "nombre_emisor", "isin", "activo_objeto")
+
+
+def avisos_texto_danado(datos: dict[str, list[dict]]) -> list[str]:
+    """Un aviso si algún texto conserva el carácter de reemplazo (�) después de reparar lo conocido.
+
+    Cuando no hay reconstrucción verificada (TEXTOS_REPARADOS) el dato se publica tal cual, pero
+    el trimestre lo deja anotado: así el daño de la fuente se coteja en vez de pasar en silencio.
+    """
+    total, ejemplos = 0, []
+    for tabla, filas in datos.items():
+        for fila in filas:
+            for col in COLUMNAS_TEXTO:
+                v = fila.get(col)
+                if isinstance(v, str) and "\ufffd" in v:
+                    total += 1
+                    if len(ejemplos) < 3:
+                        ejemplos.append(f"{tabla}.{col}={v!r}")
+    if not total:
+        return []
+    return [f"{total} celdas de texto con carácter de reemplazo (�) sin reconstruir; ej.: " + ", ".join(ejemplos)]
 
 
 def _cuadrar(detalle: list[list[str]], total: list[str], cols: list[tuple[str, str]]) -> list[str]:
@@ -319,7 +495,7 @@ def leer_cartera(cod: str, raw: bytes) -> tuple[list[dict], list[str], list[str]
         fila, malo = {}, None
         for (_, col, tipo), v in zip(spec, f):
             try:
-                fila[col] = convertir(v, tipo)
+                fila[col] = convertir(v, tipo, col)
             except ValueError as e:
                 fila[col], malo = None, malo or f"{col} ({e})"
         if malo:
@@ -392,7 +568,7 @@ def leer_pactos_detallado(raw: bytes) -> tuple[list[dict], list[str], list[str],
             fila, malo = {}, None
             for (col, tipo), v in zip(PACTOS, f):
                 try:
-                    fila[col] = convertir(v, tipo)
+                    fila[col] = convertir(v, tipo, col)
                 except ValueError as e:
                     fila[col], malo = None, malo or f"{col} ({e})"
             if not malo:
@@ -491,7 +667,7 @@ def trimestres_reintentables(control: dict) -> list[str]:
 
 def cargar_control() -> dict:
     ruta = SALIDA / "manifest.json"
-    control = json.loads(ruta.read_text()) if ruta.exists() else {"periodos": {}, "fondos": {}}
+    control = json.loads(ruta.read_text(encoding="utf-8")) if ruta.exists() else {"periodos": {}, "fondos": {}}
     control.setdefault("sondeados_sin_datos", [])
     return control
 
@@ -598,6 +774,7 @@ def procesar_trimestre(periodo: str, fondos: list[str], control: dict, reciente:
         raise Falta(f"{periodo}: {len(con_cartera)} fondos con cartera (trimestre anterior {previo}); "
                     "se espera a que la CMF complete el trimestre")
     avisos = inesperadas + malas + descuadres
+    avisos += avisos_texto_danado(datos)
     # Son miles de páginas por trimestre: el manifiesto guarda un hash que las resume (SHA-256 de la
     # lista ordenada «fondo|cartera|sha256»); la lista completa se puede recalcular al re-descargar.
     origen = {"paginas": len(paginas),
@@ -662,7 +839,8 @@ def escribir_salidas(control: dict, registro: list[dict]) -> None:
     pq.write_table(pa.Table.from_pandas(df, preserve_index=False), SALIDA / "maestro_fondos_inversion.parquet",
                    compression="zstd")
     universo = [{"id": f"FI_{f['run_fondo']}", **f} for f in registro]
-    (SALIDA / "fi_registro_fondos_universo.json").write_text(json.dumps(universo, ensure_ascii=False, indent=1) + "\n")
+    (SALIDA / "fi_registro_fondos_universo.json").write_text(
+        json.dumps(universo, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
 
 
 ORIGEN = ("CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, "
@@ -693,7 +871,7 @@ def actualizar_data_manifest(control: dict) -> None:
     ruta = RAIZ / "data_manifest.json"
     if not ruta.exists() or not (SALIDA / "maestro_fondos_inversion.parquet").exists():
         return
-    man = json.loads(ruta.read_text())
+    man = json.loads(ruta.read_text(encoding="utf-8"))
     hoy = date.today().isoformat()
     periodos = sorted(control["periodos"])
     entradas = []
@@ -704,7 +882,7 @@ def actualizar_data_manifest(control: dict) -> None:
             periodos_tabla = periodos
         else:
             archivo = f"outputs/fi/{tabla}/manifest.json"
-            manifiesto_tabla = json.loads((SALIDA / tabla / "manifest.json").read_text())
+            manifiesto_tabla = json.loads((SALIDA / tabla / "manifest.json").read_text(encoding="utf-8"))
             registros = manifiesto_tabla["total_records"]
             periodos_tabla = sorted(manifiesto_tabla.get("periodos", [])) if tabla == "pactos" else periodos
         entradas.append({
