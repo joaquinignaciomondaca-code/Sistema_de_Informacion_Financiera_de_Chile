@@ -762,7 +762,7 @@ def main(argv=None):
     args.out.mkdir(parents=True, exist_ok=True)
     if args.red:
         anterior = (
-            json.loads((args.out / "revision.json").read_text())
+            json.loads((args.out / "revision.json").read_text(encoding="utf-8"))
             if args.reanudar and (args.out / "revision.json").exists()
             else None
         )
