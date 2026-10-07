@@ -7,7 +7,7 @@ name: Corroboración fuente CMF (auditoría, manual)
 # y sube un JSON por mes como artifact.
 on:
   workflow_dispatch:
-  # Temporal de la auditoría 2026-10-07: corre solo al empujar esta rama (workflow_dispatch
+  # Temporal de la auditoría 2026-10-07 (reintento 2): corre solo al empujar esta rama (workflow_dispatch
   # por nombre de archivo no resuelve ramas que no son la por defecto).
   push:
     branches:
