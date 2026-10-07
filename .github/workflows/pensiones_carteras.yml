@@ -1,0 +1,41 @@
+name: Pensiones · preparación y control BDP (sin publicación)
+
+on:
+  schedule:
+    - cron: '25 10 10 * *'
+  push:
+    paths:
+      - 'pensiones/scripts/*carteras_afp.py'
+      - 'pensiones/tests/**'
+      - 'pensiones/config/**'
+      - '.github/workflows/pensiones_carteras.yml'
+  pull_request:
+    paths:
+      - 'pensiones/**'
+      - '.github/workflows/pensiones_carteras.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pensiones-bdp-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install pyarrow==21.0.0
+      - name: Pruebas sintéticas sin red
+        run: python -m unittest discover -s pensiones/tests -v
+      - name: Estado de activación
+        run: |
+          echo '### BDP: publicación bloqueada intencionalmente' >> "$GITHUB_STEP_SUMMARY"
+          echo 'Extractor local y auditoría probados. Pendientes: CSV original SP, cotejo numérico, permiso de redistribución y descarga oficial verificada.' >> "$GITHUB_STEP_SUMMARY"
+          echo 'No se descargan ni suben carteras como artifacts. Este horario ejecuta controles, no actualiza datos.' >> "$GITHUB_STEP_SUMMARY"
