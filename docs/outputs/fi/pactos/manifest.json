@@ -17,14 +17,11 @@
     "outputs/fi/pactos/2025.parquet",
     "outputs/fi/pactos/2026.parquet"
   ],
-  "total_records": 1716,
+  "total_records": 1698,
   "periodos": [
     "2012-03",
-    "2012-06",
     "2012-09",
     "2012-12",
-    "2013-03",
-    "2013-06",
     "2013-09",
     "2013-12",
     "2014-03",
@@ -154,11 +151,11 @@
     "2026-03",
     "2026-06"
   ],
-  "updated_at": "2026-10-07T04:13:38+00:00",
+  "updated_at": "2026-10-07T05:18:11+00:00",
   "sondeo_historico": {
     "desde": "2008-03",
     "hasta": "2026-06",
     "cierres_completados": 74,
-    "cierres_con_operaciones": 58
+    "cierres_con_operaciones": 55
   }
 }
