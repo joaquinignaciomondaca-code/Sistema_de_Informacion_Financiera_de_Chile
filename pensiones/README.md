@@ -37,6 +37,8 @@ no una activación del backfill antiguo.
 El [estado de implementación y guía de activación](AUTOMATIZACION_BDP.md) documenta
 la descarga oficial con catálogo de URLs aún bloqueado, el staging CSV/ZIP reanudable,
 las actualizaciones incrementales por paquete, las auditorías y el gate de publicación.
+La [guía operativa](GUIA_INGESTA_BDP.md) describe paso a paso dónde queda cada archivo
+y qué orden ejecutar cuando existan originales oficiales.
 **No se han descargado originales SP ni se publican carteras**: faltan el flujo real del
 botón BDP, cotejo de campos/cifras, condiciones de redistribución y configuración del
 runner privado/Vercel. No hay nuevas tablas BDP en `data_manifest.json` ni en el explorador.
