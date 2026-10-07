@@ -216,9 +216,11 @@ lector.** El pipeline publica fielmente lo que la CMF entrega. Evidencia:
 **El lector está bien verificado**
 
 - Posiciones comparadas contra la ficha técnica oficial (`seguros/fuentes/fichas_tecnicas_1835/`):
-  los campos verificables cuadran (B.1: `tipo_instrumento` 43, `nemotecnico` 53, `serie` 104,
-  `rut_emisor` 33, `pais` 114, `fecha_compra` 17, `fecha_emision` 83, `unidad_monetaria` 150,
-  `valor_nominal` 116; B.2 y B.8 likewise).
+  **B.8 cuadra 12/12 campos** (`tipo_inversion` 1,3; `valor_final` 4,12; representativas 16,12;
+  no representativas 28,12; los seis totales de 14; largo 138) y **B.1 cuadra en toda la
+  sección general** (`tipo_instrumento` 43, `nemotecnico` 53, `serie` 104, `rut_emisor` 33,
+  `pais` 114, `fecha_compra` 17, `fecha_emision` 83, `unidad_monetaria` 150,
+  `valor_nominal` 116).
 - Línea real de muestra (`i161031v.70015730`, CSVID 2016-10): todos los campos coherentes
   (nemotécnico `BSECG11206`, UF, fechas 2010/2006/2016, tasas 3,0 %/5,74 %/1,5 %, custodia
   DCV) y la cuadratura `costo_amortizado − deterioro = valor_final` exacta.
