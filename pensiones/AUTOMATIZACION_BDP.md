@@ -66,8 +66,10 @@ no se presenta como histórico completo.
 
 ## Vercel
 
-El repositorio contiene configuración de cabeceras Vercel, pero eso **no demuestra
-que exista un proyecto conectado**. Para el sitio estático, confirmar en Vercel:
+El PR #28 confirmó la integración Git de Vercel: el check de preview terminó
+correctamente para el proyecto `sistema_de_informacion_financiera_de_chile-docs`.
+Esto confirma el despliegue de preview, no la actualización de carteras BDP ni
+la configuración de producción. Para el sitio estático, confirmar en Vercel:
 
 - repositorio correcto y rama de producción elegida por el propietario;
 - preset «Other», raíz `docs`, sin comando de build (sitio estático);
@@ -76,7 +78,8 @@ que exista un proyecto conectado**. Para el sitio estático, confirmar en Vercel
   como secret. Verificar con una ejecución real: un push con `GITHUB_TOKEN` no
   dispara otros workflows de GitHub, y no se debe asumir un despliegue Vercel.
 
-No se han creado proyectos, secrets, hooks ni despliegues remotos. El workflow
+No se han creado proyectos, secrets ni hooks. Vercel generó automáticamente
+un preview al abrir el PR. El workflow
 `pages.yml` existente despliega GitHub Pages por separado; no configura Vercel.
 Hasta completar los puntos anteriores, el sitio mantiene solamente los datos
 ya publicados y no promete cartera BDP disponible.
@@ -93,3 +96,12 @@ RUT, cliente DuckDB, guardia SQL, catálogo de descargas e historial de secretos
 **Alcance de fusión:** investigación y staging privado probado; no equivale a
 activación del pipeline productivo SP→Actions→Vercel. No cambia tablas públicas,
 no añade permisos de escritura a Actions y no contiene datos originales.
+
+### Estado remoto del PR #28
+
+- GitHub informa `MERGEABLE`: no hay conflictos con `main`.
+- Vercel: check de despliegue de preview aprobado.
+- Actions: jobs **no iniciados**, por pagos fallidos o límite de gasto de la
+  cuenta (anotación de GitHub). No es un resultado de las pruebas del código.
+- Antes de fusionar: corregir «Billing & plans», reejecutar los workflows
+  fallidos y exigir controles verdes. No se ha fusionado el PR.
