@@ -31,4 +31,4 @@ ORDER BY periodo DESC
 LIMIT 12;
 ```
 
-Para el estado comparado con fondos de inversión y la aclaración sobre fondos mutuos, ver [cobertura de REPO/pactos](../docs/notas/cobertura_repos_pactos_2026-10-07.md).
+Para el estado comparado con fondos de inversión y la aclaración sobre fondos mutuos, ver [cobertura de REPO/pactos](../docs/notas/cobertura_repos_pactos_2026-10-07.md). Para la auditoría profunda de estos datos (cobertura, esquemas, RUT, fechas, cuadraturas, duplicados y maestro de entidades), ver [auditoría 2026-10-07](../docs/notas/auditoria_seguros_2026-10-07.md).
