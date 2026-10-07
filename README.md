@@ -140,7 +140,7 @@ explícito. [Fuente, controles y ejecución](fi/README.md).
 ### Operaciones REPO (pactos): cobertura vigente
 
 - **Seguros:** `seguros_pactos`, mensual, hasta **2026-08** (155 filas en agosto; 11.153 en la serie).
-- **Fondos de inversión:** `fi_pactos`, trimestral, hasta **2026-06** (40 filas en junio; 777 en la serie), con VRC y CRV.
+- **Fondos de inversión:** `fi_pactos`, trimestral, hasta **2026-06** (40 filas en junio; 777 en la serie), con VRC y CRV. Por prudencia, los dos últimos períodos disponibles se tratan como cautelares (hoy **2026-03** y **2026-06**); sus datos se conservan, pero no se consideran definitivos para comparaciones concluyentes.
 - **Fondos mutuos:** no hay una tabla independiente de pactos/REPO en la extracción actual; su ausencia no equivale a cero operaciones.
 
 Las corridas de seguros y carteras FI del 2026-10-04 terminaron bien y no publicaron un período nuevo. [Cobertura, fuentes, unidades y consultas SQL](docs/notas/cobertura_repos_pactos_2026-10-07.md).

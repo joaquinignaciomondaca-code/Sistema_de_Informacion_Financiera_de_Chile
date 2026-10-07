@@ -8,10 +8,10 @@ La revisión cruza los manifiestos publicados en `docs/outputs/` con las última
 | Industria | Tabla | Frecuencia | Último período | Filas del último período | Filas históricas | Estado de la revisión |
 |---|---|---|---|---:|---:|---|
 | Compañías de seguros | `seguros_pactos` | Mensual | 2026-08 | 155 | 11.153 | Publicado hasta agosto; la corrida del 2026-10-04 terminó bien, con diagnóstico sin problemas, y no añadió un período nuevo. |
-| Fondos de inversión | `fi_pactos` | Trimestral | 2026-06 | 40 | 777 | Publicado hasta junio; la corrida del 2026-10-04 terminó bien y reportó 0 trimestres nuevos. El cierre 2026-09 aún está dentro del plazo de presentación. |
+| Fondos de inversión | `fi_pactos` | Trimestral | 2026-06 | 40 | 777 | Publicado hasta junio; la corrida del 2026-10-04 terminó bien y reportó 0 trimestres nuevos. Por prudencia analítica, los dos últimos períodos disponibles se tratan siempre como cautelares por posible rezago de carga de la fuente (hoy 2026-03 y 2026-06). Los registros se conservan y esto no se atribuye a una falla del extractor; la ventana se desplaza al publicarse un nuevo trimestre. El cierre 2026-09 aún está dentro del plazo de presentación. |
 | Fondos mutuos | — | — | — | — | — | No hay una tabla independiente de pactos/REPO en el extractor actual. No se debe interpretar como exposición cero. |
 
-Las series de seguros y FI cubren, respectivamente, **118 períodos mensuales** entre 2016-11 y 2026-08 y **26 períodos trimestrales** entre 2020-03 y 2026-06. En ambos casos el conteo representa filas publicadas, no operaciones únicas deduplicadas por folio/contrato.
+Los manifiestos muestran secuencias continuas, sin huecos de calendario dentro de los rangos publicados: seguros tiene **118 períodos mensuales** (2016-11–2026-08) y FI **26 cierres trimestrales** (2020-03–2026-06). Esto confirma que no faltan etiquetas de período en esos rangos, pero no que todas las entidades hayan reportado ni que la fuente ya haya cargado todo. El conteo representa filas publicadas, no operaciones únicas deduplicadas por folio/contrato. En FI, los dos cierres más recientes se consideran cautelares aunque ya figuren en el manifiesto.
 
 ## Fuentes, definiciones y unidades
 

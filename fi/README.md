@@ -237,6 +237,11 @@ página por tipo de cartera y otra de pactos. `scripts/actualizar_carteras.py` l
   2020-03 hasta **2026-06**; junio de 2026 aporta **40 filas**.
 - La corrida más reciente de `fi_carteras.yml` (2026-10-04) terminó bien y reportó **0 trimestres
   nuevos**. El cierre 2026-09 todavía está dentro del plazo de presentación y no se espera aún.
+- **Cautela móvil:** para análisis, se recomienda tratar siempre los dos cierres trimestrales más
+  recientes de `fi_pactos` como cautelares por posible rezago de carga de la fuente CMF. Hoy son
+  **2026-03** y **2026-06**. Los registros se conservan, pero no se consideran definitivos para
+  comparaciones concluyentes; al publicarse un trimestre nuevo, la ventana se desplaza al nuevo par.
+  Es una precaución por posible falta de carga, no un fallo del extractor.
 - El workflow es incremental; valida encabezados, cuadratura contra la fila TOTAL, legibilidad y
   cobertura respecto al trimestre anterior. Los importes `*_miles_mf` están en miles de la moneda
   funcional de cada fondo y no se deben sumar entre monedas sin conversión.
