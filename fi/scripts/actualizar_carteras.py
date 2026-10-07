@@ -250,6 +250,32 @@ def convertir(valor: str, tipo: str):
     return valor.strip() or None
 
 
+_NOMBRE_CORREDORA_LARRAIN_VIAL = "LARRAIN VIAL S.A. CORREDORA DE BOLSA"
+
+
+def normalizar_contraparte(rut_contraparte: str | None, nombre: str | None) -> str | None:
+    """Estandariza variantes CMF de Larraín Vial usando su RUT como identificador.
+
+    En distintos cierres el informe trae el mismo RUT con el nombre escrito de varias
+    formas; algunas filas ya incluyen el carácter de reemplazo Unicode (�), así que no
+    es posible reconstruirlas cambiando la codificación del archivo. Se usa el padrón
+    CMF como nombre canónico y se excluyen las variantes de la AGF, que es otra entidad.
+    """
+    rut_limpio = re.sub(r"[^0-9K]", "", str(rut_contraparte or "").upper())
+    if rut_limpio == "805370009":
+        rut_limpio = rut_limpio[:-1]  # RUT completo 80.537.000-9
+    if rut_limpio != "80537000" or not nombre:
+        return nombre
+
+    clave = unicodedata.normalize("NFKD", nombre).encode("ascii", "ignore").decode("ascii").upper()
+    palabras = set(re.findall(r"[A-Z0-9]+", clave))
+    if "LARRA" not in clave or "VIAL" not in clave:
+        return nombre
+    if palabras & {"ACTIVOS", "ADMINISTRADORA", "FONDO", "FONDOS", "AGF"}:
+        return nombre
+    return _NOMBRE_CORREDORA_LARRAIN_VIAL
+
+
 def _cuadrar(detalle: list[list[str]], total: list[str], cols: list[tuple[str, str]]) -> list[str]:
     """Compara cada celda numérica de la fila TOTAL con la suma de su columna."""
     difs = []
@@ -369,6 +395,10 @@ def leer_pactos_detallado(raw: bytes) -> tuple[list[dict], list[str], list[str],
                     fila[col] = convertir(v, tipo)
                 except ValueError as e:
                     fila[col], malo = None, malo or f"{col} ({e})"
+            if not malo:
+                fila["contraparte"] = normalizar_contraparte(
+                    fila["rut_contraparte"], fila["contraparte"]
+                )
             if not malo and es_relleno_pacto(fila):
                 rellenos += 1
                 continue
