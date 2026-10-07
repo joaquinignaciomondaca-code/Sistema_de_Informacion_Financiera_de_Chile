@@ -208,7 +208,65 @@ tocaron** (siguen siendo la fuente CMF tal cual).
    se quiere la historia completa, basta bajar `DESDE_TABLA` y dejar que el flujo
    incremental complete los meses (el código ya lo soporta).
 
-## 6. Límites de la auditoría
+## 6. Corroboración: ¿tema de la CMF o error nuestro?
+
+**Veredicto: los hallazgos de calidad (F3, F4, F5) son de la fuente (compañías/CMF), no del
+lector.** El pipeline publica fielmente lo que la CMF entrega. Evidencia:
+
+**El lector está bien verificado**
+
+- Posiciones comparadas contra la ficha técnica oficial (`seguros/fuentes/fichas_tecnicas_1835/`):
+  los campos verificables cuadran (B.1: `tipo_instrumento` 43, `nemotecnico` 53, `serie` 104,
+  `rut_emisor` 33, `pais` 114, `fecha_compra` 17, `fecha_emision` 83, `unidad_monetaria` 150,
+  `valor_nominal` 116; B.2 y B.8 likewise).
+- Línea real de muestra (`i161031v.70015730`, CSVID 2016-10): todos los campos coherentes
+  (nemotécnico `BSECG11206`, UF, fechas 2010/2006/2016, tasas 3,0 %/5,74 %/1,5 %, custodia
+  DCV) y la cuadratura `costo_amortizado − deterioro = valor_final` exacta.
+- El test del lector sobre muestras reales de ambos formatos pasa con cuadratura 100 %.
+
+**F3 (duplicados) — fuente**
+
+- La propia compañía declaró menos líneas de las que envió: 2025-03, `99301000`, archivo de
+  acciones declaró 77 líneas y envió 84; control declaró 30 y envió 37 (avisos del
+  manifiesto). Las líneas extra son los duplicados.
+- Multiplicidad variable (2–22) distribuida en todos los meses; un lector con corrimiento
+  produciría basura, no filas 100 % idénticas, y la cuadratura (100 %) se rompería.
+- Las muestras de la fuente no traen duplicados (son chicas; no concluyentes solas).
+
+**F4 (doble reporte) — fuente**
+
+- HDI 2024-06: los 12 `tipo_inversion` aparecen exactamente 2 veces con **valores distintos**;
+  un lector duplicador produciría valores idénticos → son dos reportes distintos (dos
+  archivos C en el ZIP de la CMF).
+- Eventos societarios corroborados públicamente: Zurich (división 2024; fusión por
+  incorporación de la NewCo Rentas Vitalicias materializada el 4-11-2024 y posterior venta a
+  Ohio National — Diario Oficial/Diario Estrategia/CMF); Chilena Consolidada cambió de razón
+  social a Zurich Chile Seguros de Vida en 2022; CLC es de Clínica Las Condes y **sigue
+  vigente** (CMF) → el archivo «SEGUROS CLC» bajo el RUT de Principal (2018-06) es un error
+  de la fuente, no una fusión; Alemana es de Clínica Alemana (CMF) y se asoció con UC
+  Christus en 2024. Principal (96588080) fue Seguros de Vida Banmédica hasta 1998 (CMF).
+
+**F5 (fechas imposibles) — fuente**
+
+- `BLAPO-F`/`BLAPO-G` son bonos de **Empresas La Polar**: BLAPO-F venció el 31-07-2022 y
+  BLAPO-G vence el 31-07-2032 (cbonds). En los datos aparecen con vencimiento 2173 → error
+  de la compañía en el archivo.
+- Los bonos del Tesoro de EE.UU. a 30 años emitidos en 2024 vencen en 2054; ninguno vence
+  en 2173. El mismo bono (`USP32133CH47`) aparece con vencimiento 2034-12-12 en otras filas
+  del mismo mes.
+- México sí emitió bonos a 100 años (vence 2110): esos vencimientos largos son legítimos.
+
+**Límite: la corroboración cruda quedó bloqueada por billing**
+
+Descargar el ZIP real y ver las líneas era la prueba directa; GitHub Actions está con límite
+de gasto agotado ("recent account payments have failed or your spending limit needs to be
+increased" — corridas 37583101363 y 37583312889 fallaron antes de iniciar el job). La
+herramienta queda lista para correr cuando haya billing: `python -m
+seguros.scripts.corroborar_fuente_cmf 2025-03:vida 2024-06:generales ...` (descarga el ZIP,
+cuenta duplicados/dobles C/fechas raras en el crudo y verifica que releer reproduce exactamente
+lo publicado). El workflow temporal usado para el intento se retiró; el script se conserva.
+
+## 7. Límites de la auditoría
 
 - No se pudo descargar los ZIP originales de la CMF desde este entorno (el proxy no lo
   permite), así que la atribución «dato fuente vs. error del lector» se hizo por consistencia
