@@ -2420,9 +2420,9 @@
     },
     "202606": {
       "cerrado": false,
-      "leido_utc": "2026-10-04T17:47:35+00:00",
+      "leido_utc": "2026-10-07T19:28:57+00:00",
       "fuente": "https://www.cmfchile.cl/institucional/estadisticas/ver_archivo.php?inicio=202606&termino=202606",
-      "sha256": "aaf8d798924ef159d270b135f9c5082cc84c1a63ad505076eba9bfe16b383fb9",
+      "sha256": "9c9e61acdd6dad7f7559ea833ffabf4a1896fb6d33591c5752ec58fe25013b30",
       "lineas": 30247,
       "sociedades": 369,
       "solo_lista_fuera": {
@@ -2433,7 +2433,7 @@
       "balances_totales": 66,
       "resultados_verificaciones": 92,
       "resultados_divergencias": 0,
-      "cmf_actualizado_utc": "2026-10-04T16:59:00+00:00",
+      "cmf_actualizado_utc": "2026-10-07T19:00:00+00:00",
       "sectores": {
         "agf": {
           "entidades": 53,
@@ -2546,7 +2546,7 @@
       }
     }
   },
-  "updated_at": "2026-10-04T17:47:35+00:00",
+  "updated_at": "2026-10-07T19:28:57+00:00",
   "entidades_fuera_de_lista_ultimo_trimestre": {
     "periodo": "202606",
     "agf": [],
