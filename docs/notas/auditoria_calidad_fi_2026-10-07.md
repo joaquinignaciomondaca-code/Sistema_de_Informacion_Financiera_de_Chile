@@ -40,18 +40,36 @@ reconciliaron en los Parquet, manifiestos, control histórico y catálogo de des
 Se encontró la variante `Larra�Vial S.A.Corredora de Bolsa` en `fi_pactos`, junto con otras
 formas dañadas o inconsistentes del nombre. El Parquet y el JSON se publican en UTF-8; el
 carácter `�` ya estaba dentro del dato recibido y no se puede recuperar cambiando la codificación
-del archivo. El RUT de contraparte `80.537.000-9` permite identificarla sin ambigüedad con el
+del archivo: la lectura de la página ahora prueba el charset declarado, UTF-8, cp1252 y latin-1
+(reparando el mojibake cuando corresponde) y el carácter sólo se restituye cuando hay reconstrucción
+verificada. El RUT de contraparte `80.537.000-9` permite identificarla sin ambigüedad con el
 padrón de corredoras CMF: `LARRAIN VIAL S.A. CORREDORA DE BOLSA`.
 
-Se estandarizaron por RUT las variantes históricas del corredor en los Parquet de pactos: **893
-filas modificadas**, **1.078 filas** quedan con el nombre canónico y los **1.698 registros** y sus
-importes no cambian. No se mezcló con la AGF Larraín Vial Activos, que es otra entidad. El parser
-aplica la misma normalización en futuras descargas y una regresión comprueba tanto el RUT como la
-lectura de nombres con tildes en UTF-8.
+Estado del Parquet **publicado** tras la corrección (`scripts/reparar_pactos_fi.py`, idempotente;
+una segunda corrida no escribe nada): **1.181 celdas en 14 archivos**, repartidas así.
 
-La búsqueda también detecta caracteres `�` en algunos emisores, nemotécnicos y contrapartes FI,
-incluidos otros campos de pactos. No se sustituyen globalmente: en esos casos no hay una clave o
-padrón suficiente para reconstruir el texto con certeza; requieren cotejo por fuente o identificador.
+- `contraparte`: **157** celdas — 12 con `�`, 1 vacía completada con el padrón y 144 grafías del
+  mismo RUT unificadas al nombre canónico (variantes de Larraín Vial, `EUROAMERICA C. DE B.`,
+  `CONSORCIO FINANCIERO`, `MBI CB`/`MBICB`, variantes de `BCI` y la forma corta de Larraín Vial
+  Activos). No se fusionaron entidades distintas que comparten RUT por un rebautizo
+  (p. ej. IM Trust / Credicorp) ni se reescribieron los casos en que el RUT y el nombre del padrón
+  no coinciden.
+- `isin`: **896** centinelas `NA`/`N/A` publicados como vacío (la convención de la casa para
+  «sin dato»); lo mismo aplica a `nemotecnico` y `nombre_emisor`.
+- `rut_contraparte`: **118** DV pegados descartados (`805370009` → `80537000`).
+- `nemotecnico` + `nombre_emisor`: **2 + 8** celdas con `�` reparadas (`FNBNS-…`, `QUIÑENCO`,
+  `Banco Itaú`, `Compañía General de Electricidad`).
+
+Los **1.698 registros** y sus importes no cambian. El parser aplica las mismas reglas en futuras
+descargas y una regresión comprueba el RUT, las grafías y la lectura de nombres con tildes en UTF-8.
+Si queda un `�` sin reconstrucción verificada, el trimestre lo anota en los avisos en vez de
+sustituirlo a ciegas.
+
+La búsqueda también detecta caracteres `�` en nemotécnicos, emisores y contrapartes de otras tablas
+FI (cartera nacional y extranjera, método de participación, futuros/forwards y opciones). No se
+sustituyen globalmente —no siempre hay una clave o padrón suficiente para reconstruir el texto— y el
+Parquet ya publicado de esas tablas **no** se reescribió en esta corrección; el extractor ahora los
+reporta en los avisos de cada trimestre.
 
 ## Interpretación de ceros: qué sí y qué no se debe eliminar
 
@@ -88,6 +106,9 @@ python -m unittest discover -s fi/tests -v
 python scripts/build_download_catalog.py --check
 ```
 
-La suite FI ejecutada en esta revisión terminó con **104 pruebas aprobadas**. La salida vacía de
+La suite FI ejecutada en esta revisión terminó con **120 pruebas aprobadas** (**23** de
+`fi/tests/test_actualizar_carteras.py`, que incluyen las regresiones de decodificación, centinelas,
+grafías de contraparte y Parquet publicado) y `scripts/build_download_catalog.py --check` quedó al
+día tras regenerar el catálogo. La salida vacía de
 `bienes_raices/_vacio.parquet` se conserva como tabla sin filas publicadas; por sí sola no demuestra
 exposición inmobiliaria igual a cero.
