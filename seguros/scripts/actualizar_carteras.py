@@ -45,6 +45,7 @@ import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
 
+from pipelines.auto import rut as rutmod
 from pipelines.auto.rut import normalizar_dataframe
 from seguros.scripts import metadatos_web
 from seguros.scripts.formato_1835 import ENCABEZADO, LARGO, TIPO_TOTAL, campos, formato_de
@@ -296,6 +297,16 @@ def leer_zip(data: bytes, periodo: str, sector: str):
         for fila in filas[t]:
             if fila["nombre_aseguradora"] is None:
                 fila["nombre_aseguradora"] = compania.get(fila["rut_aseguradora"])
+    # Doble reporte: la misma compañía trae dos valores distintos para el mismo tipo_inversion en
+    # el mes (pasa en fusiones: la CMF publica los archivos C de ambas sociedades). Se publica
+    # tal cual (es la fuente), pero se avisa: las agregaciones por compañía-mes suman ambos.
+    valores: dict[tuple, set] = {}
+    for fila in filas["control_inversiones"]:
+        valores.setdefault((fila["rut_aseguradora"], fila["tipo_inversion"]), set()).add(fila["valor_final_m_clp"])
+    for (rut, tipo), vals in sorted(valores.items()):
+        if len(vals) > 1:
+            avisos.append(f"{sector} {rut}: {len(vals)} valores distintos para tipo_inversion {tipo} "
+                          f"(doble reporte de control en el mes)")
     # Campos ilegibles: quedan vacíos y se avisan; si superan el 1 % de las filas de una tabla,
     # lo más probable es que la lectura esté corrida y el mes no se publica.
     for tabla, lista in ilegibles.items():
@@ -401,6 +412,46 @@ def escribir_manifiestos(control: dict) -> None:
         pq.write_table(_tabla_arrow(df), SALIDA / "aseguradoras.parquet", compression="zstd")
 
 
+def recalcular_maestro() -> None:
+    """Recalcula aseguradoras.parquet desde las filas publicadas (--solo-maestro).
+
+    El maestro publica una fila por compañía con al menos una fila publicada, con su primer y
+    último mes, cuántos meses publicó y el nombre del último mes. Sirve para corregir la
+    métrica sin re-descargar la fuente (los meses se cuentan por filas publicadas, no por
+    archivos recibidos vacíos).
+    """
+    meses: dict[tuple, set] = {}
+    nombres: dict[tuple, str] = {}
+    for t in TABLAS:
+        carpeta = SALIDA / t
+        if not carpeta.is_dir():
+            continue
+        for a in sorted(carpeta.glob("*.parquet")):
+            df = pq.read_table(a, columns=["periodo", "sector", "rut_aseguradora",
+                                           "nombre_aseguradora"]).to_pandas()
+            for clave, g in df.groupby(["sector", "rut_aseguradora"], sort=True):
+                meses.setdefault(clave, set()).update(g["periodo"])
+            con_nombre = df.dropna(subset=["nombre_aseguradora"])
+            if len(con_nombre):
+                ultimos = (con_nombre.sort_values("periodo")
+                           .groupby(["sector", "rut_aseguradora"])["nombre_aseguradora"].last())
+                nombres.update(ultimos.to_dict())
+    filas = [{"sector": s, "rut_aseguradora": r, "nombre_aseguradora": nombres.get((s, r)),
+              "primer_periodo": min(m), "ultimo_periodo": max(m), "meses_reportados": len(m)}
+             for (s, r), m in sorted(meses.items()) if m]
+    df = pd.DataFrame(filas)
+    control = cargar_control()
+    ultimo = max(control["periodos"]) if control["periodos"] else None
+    df["reporta_ultimo_mes"] = df["ultimo_periodo"] == ultimo
+    df = normalizar_dataframe(df)  # convención de RUT (pipelines/auto/rut.py)
+    pq.write_table(_tabla_arrow(df), SALIDA / "aseguradoras.parquet", compression="zstd")
+    control["aseguradoras"] = {(f["sector"], f["rut_aseguradora"]):
+                               {"nombre": f["nombre_aseguradora"], "primer": f["primer_periodo"],
+                                "ultimo": f["ultimo_periodo"], "meses": int(f["meses_reportados"])}
+                               for f in filas}
+    guardar_control(control)
+
+
 def actualizar_data_manifest(control: dict) -> None:
     """Mantiene al día las entradas de seguros en data_manifest.json (registros, último mes, fecha)."""
     ruta = RAIZ / "data_manifest.json"
@@ -429,9 +480,15 @@ def actualizar_data_manifest(control: dict) -> None:
             "file_parquet": archivo, "registros_reales": registros, "descripcion": descripcion,
             "origen": metadatos_web.ORIGEN,
         })
-    ids = {e["id"] for e in entradas}
-    resto = [t for t in man["tables"] if t["id"] not in ids]
-    man["tables"] = entradas + resto
+    # Reemplaza in-place: conserva el orden histórico de cada tabla en el catálogo.
+    por_id = {t["id"]: t for t in man["tables"]}
+    nuevas = []
+    for e in entradas:
+        if e["id"] in por_id:
+            por_id[e["id"]] = e
+        else:
+            nuevas.append(e)
+    man["tables"] = [por_id[t["id"]] for t in man["tables"]] + nuevas
     man["total_tables"] = len(man["tables"])
     man["total_records"] = sum(int(t.get("registros_reales") or 0) for t in man["tables"])
     man["updated_at"] = hoy
@@ -442,7 +499,12 @@ def cargar_control() -> dict:
     ruta = SALIDA / "manifest.json"
     if ruta.exists():
         c = json.loads(ruta.read_text())
-        c["aseguradoras"] = {tuple(k.split("|", 1)): v for k, v in c.get("aseguradoras", {}).items()}
+        # Claves con el RUT en formato canónico (cuerpo sin DV), igual que aseguradoras.parquet.
+        recibidas = c.get("aseguradoras", {})
+        c["aseguradoras"] = {}
+        for k, v in recibidas.items():
+            s, r = k.split("|", 1)
+            c["aseguradoras"][(s, rutmod.cuerpo(r) or r)] = v
         return c
     return {"periodos": {}, "aseguradoras": {}}
 
@@ -520,9 +582,16 @@ def main(argv=None) -> int:
     ap.add_argument("--salida-github", default=os.environ.get("GITHUB_OUTPUT"))
     ap.add_argument("--solo-data-manifest", action="store_true",
                     help="solo recalcular las entradas de este sector en data_manifest.json")
+    ap.add_argument("--solo-maestro", action="store_true",
+                    help="solo recalcular aseguradoras.parquet desde las filas publicadas")
     a = ap.parse_args(argv)
     if a.solo_data_manifest:
         actualizar_data_manifest(cargar_control())
+        return 0
+    if a.solo_maestro:
+        recalcular_maestro()
+        if (RAIZ / "data_manifest.json").exists():
+            actualizar_data_manifest(cargar_control())
         return 0
 
     SALIDA.mkdir(parents=True, exist_ok=True)
@@ -572,12 +641,24 @@ def main(argv=None) -> int:
                 filas[t].extend(f[t])
             companias[sector] = comp
         conteo = escribir_periodo(periodo, filas, faltan)
+        # Duplicados exactos: la fuente (compañía/CMF) a veces repite líneas idénticas; se publica
+        # tal cual, pero se avisa (al agregar por instrumento o compañía, esos meses sobrestiman).
+        for t in TABLAS:
+            d = int(pd.DataFrame(filas[t]).duplicated().sum())
+            if d:
+                avisos.append(f"{t}: {d} filas 100% idénticas (duplicados de la fuente)")
         previo = control["periodos"].get(periodo)
         if previo is None:  # primera vez que se procesa el mes: registrar las compañías que reportan
+            # Los meses se cuentan por filas publicadas: una compañía que solo envía archivos
+            # vacíos (sin detalle) no suma meses en el maestro de entidades.
+            con_filas = {s: {f["rut_aseguradora"] for t in TABLAS for f in filas[t]
+                             if f["sector"] == s and f["rut_aseguradora"]} for s in SECTORES}
             for sector, comp in companias.items():
-                for rut, nombre in comp.items():
-                    info = control["aseguradoras"].setdefault((sector, rut), {"nombre": nombre, "primer": periodo,
-                                                                              "ultimo": periodo, "meses": 0})
+                for rut in con_filas[sector]:
+                    nombre = comp.get(rut)
+                    info = control["aseguradoras"].setdefault((sector, rutmod.cuerpo(rut) or rut),
+                                                              {"nombre": nombre, "primer": periodo,
+                                                               "ultimo": periodo, "meses": 0})
                     info["meses"] += 1
                     info["primer"] = min(info["primer"], periodo)
                     if periodo >= info["ultimo"]:
