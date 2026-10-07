@@ -7,6 +7,10 @@
   el paquete completo, para no mezclar versiones ni perder una corrida válida.
 - La descarga oficial, el cotejo SP y la autorización de redistribución son gates
   separados: este extractor nunca publica en docs/outputs/.
+
+Códigos de salida de ``main``: 0 = staging completo; 2 = límite alcanzado con
+checkpoint íntegro (repita la misma orden para reanudar); 3 = uso incorrecto o
+ausencia de originales (no hay nada que reanudar); 1 = error de ingesta.
 """
 from __future__ import annotations
 
@@ -20,6 +24,7 @@ import math
 import os
 import re
 import socket
+import sys
 import time
 import zipfile
 from collections import Counter, defaultdict
@@ -757,7 +762,18 @@ def main(argv: list[str] | None = None) -> int:
         folder = assert_private_path(args.scan, label="La carpeta de originales")
         inputs.extend(sorted([*folder.glob("*.zip"), *folder.glob("*.csv")]))
     if not inputs:
-        parser.error("indique originales CSV/ZIP o use --scan")
+        # argparse.error() también sale con código 2, que en este extractor
+        # significa "límite/checkpoint reanudable: repita la misma orden". Sin
+        # originales no hay nada que reanudar, así que se usa un código distinto
+        # para que el operador no repita la orden en bucle sin efecto.
+        parser.print_usage(sys.stderr)
+        print(
+            "No se encontraron originales CSV/ZIP en la ruta indicada; no hay "
+            "checkpoint que reanudar. Código 3 = uso/ausencia de originales; el "
+            "código 2 queda reservado a límite/checkpoint incompleto.",
+            file=sys.stderr,
+        )
+        return 3
     try:
         result = extract(
             inputs,
