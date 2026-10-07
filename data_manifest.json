@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "updated_at": "2026-10-07",
   "total_tables": 74,
-  "total_records": 13293521,
+  "total_records": 13293748,
   "classification": {
     "automatico": "Extracción, validación y publicación ejecutadas por código y workflows programados (APIs, scrapers y normalizadores)",
     "hibrido": "Extracción o curación inicial asistida desde fuentes no estructuradas, seguida de validación, normalización y publicación reproducibles mediante código; puede ejecutarse fuera de Actions",
@@ -128,12 +128,12 @@
       "sector": "fi",
       "sector_label": "Fondos de Inversión",
       "norma": "IFRS · informes de cartera CMF",
-      "corte": "2012-06 a 2026-06",
+      "corte": "2012-03 a 2026-06",
       "frescura": "Último trimestre publicado: 2026-06",
       "modo": "Automático · 3 veces al mes, incremental",
       "ultima_actualizacion": "2026-10-07",
       "file_parquet": "outputs/fi/pactos/manifest.json",
-      "registros_reales": 1489,
+      "registros_reales": 1716,
       "descripcion": "Operaciones de venta con compromiso de retrocompra (VRC) y de compra con compromiso de retroventa (CRV) vigentes al cierre de cada trimestre.",
       "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
     },
