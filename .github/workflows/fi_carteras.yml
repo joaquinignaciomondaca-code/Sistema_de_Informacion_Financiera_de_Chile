@@ -10,6 +10,7 @@ on:
   push:
     branches:
       - main
+      - 'arena/**'
     paths:
       - .github/workflows/fi_carteras.yml
       - fi/scripts/actualizar_carteras.py
@@ -54,6 +55,9 @@ concurrency:
 
 jobs:
   validar-y-publicar:
+    # En ramas de trabajo se ejecuta solo ante el marcador explícito de backfill;
+    # las actualizaciones normales de FI siguen reservadas a main o a workflow_dispatch.
+    if: github.ref_name == 'main' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[fi-pactos-backfill]'))
     runs-on: ubuntu-latest
     timeout-minutes: 330
     outputs:
@@ -83,7 +87,7 @@ jobs:
           MINUTOS: ${{ inputs.minutos }}
           PERIODOS: ${{ inputs.max_periodos }}
           HILOS: ${{ inputs.hilos }}
-          HISTORICO_PACTOS: ${{ inputs.historico_pactos }}
+          HISTORICO_PACTOS: ${{ inputs.historico_pactos == true || (github.event_name == 'push' && contains(github.event.head_commit.message, '[fi-pactos-backfill]')) }}
         run: |
           if [ "${HISTORICO_PACTOS:-false}" = "true" ]; then
             python -u -m fi.scripts.backfill_pactos_historico \
