@@ -58,6 +58,29 @@ class PactosHistoricosTest(unittest.TestCase):
         self.assertEqual(moneda, "$$")
         self.assertEqual(len(leer_pactos(raw)[0]), 1)
 
+    def test_excluye_plantillas_historicas_con_rut_ficticio_no_cero(self):
+        rellenos = [
+            [
+                "VRC", "01/01/2010", "31/10/2013", "Nombre Contraparte 1", "999234999",
+                "0", "$$", "0,0000", "0", "0", "ISIN", "Nemotecnico", "Nombre Emisor", "CFI", "0",
+            ],
+            [
+                "VRC", "01/01/2010", "31/10/2013", "Nombre Contraparte 1", "111111111",
+                "0", "$$", "0,0000", "0", "0", "ISIN", "Nemotecnico", "Nombre Emisor", "CFI", "0",
+            ],
+        ]
+        raw = b"".join(
+            _tabla_pactos("201206", "VRC", fila, {5: "0", 8: "0", 9: "0", 14: "0"}).encode()
+            for fila in rellenos
+        )
+
+        filas, malas, descuadres, _, excluidas = leer_pactos_detallado(raw)
+
+        self.assertEqual(filas, [])
+        self.assertEqual(excluidas, 2)
+        self.assertEqual(malas, [])
+        self.assertEqual(descuadres, [])
+
     def test_fila_con_rotulos_genericos_y_montos_no_cero_no_se_descarta(self):
         fila = {
             "tipo_operacion": "VRC",
@@ -106,6 +129,20 @@ class PactosHistoricosTest(unittest.TestCase):
         self.assertEqual(reintentos, 1)
         self.assertIsNone(error)
         self.assertEqual(descargas, 2)
+
+    def test_pactos_publicados_no_conservan_filas_de_plantilla(self):
+        carpeta = ac.RAIZ / "docs" / "outputs" / "fi" / "pactos"
+        if not carpeta.exists():
+            self.skipTest("no hay salida FI publicada en este checkout")
+        rutas = sorted(carpeta.glob("*.parquet"))
+        sospechosas = []
+        for ruta in rutas:
+            if ruta.name == "_vacio.parquet":
+                continue
+            for fila in pq.read_table(ruta).to_pylist():
+                if es_relleno_pacto(fila):
+                    sospechosas.append((ruta.name, fila["periodo"], fila["run_fondo"]))
+        self.assertEqual(sospechosas, [])
 
     def test_escribir_vacio_reemplaza_el_cierre_anual_existente(self):
         salida_anterior = ac.SALIDA
