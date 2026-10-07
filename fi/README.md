@@ -11,20 +11,27 @@ reportantes a la CMF.
 
 ## Balance y estado de resultados
 
-### Primera publicación (2026-10-01)
+### Publicación y backfill (estado al 2026-10-04)
 
-Cierre **2026-06**: censo de **1.679** RUN del registro. **908** fondos publicados,
-**765** con ausencia explícita de información del período, **6** excluidos (5
-negativas de descarga CMF, 1 moneda COP no expuesta en la ficha HTML). Sin pendientes.
+El cierre más reciente publicado es **2026-06**: censo local de **1.679** RUN; **908** fondos
+con estados, **765** con ausencia explícita de información y **6** excluidos (5 negativas de
+descarga CMF, 1 moneda COP no expuesta en la ficha HTML). Para junio:
 
-- Balance: **66.864 filas**, incluidos los contextos adicionales que pasaron controles.
-- Resultados: **97.860 filas**.
+- Balance: **66.864 filas**; resultados: **97.860 filas**.
 - Auditoría: **35.570 identidades**, cero fallas en la salida.
-- Contextos excluidos con motivo: 253 de balance y 135 de resultados. No implican
-  descartar el actual válido del fondo, ni se rellenan sus importes.
+- Contextos excluidos con motivo: 253 de balance y 135 de resultados. No implican descartar
+  el actual válido del fondo, ni se rellenan sus importes.
 
-La serie histórica está **pendiente de backfill**, no se presenta como ya cargada.
-Los metadatos detallan cada exclusión y la fuente/hash de cada documento aceptado.
+Desde la publicación inicial del 2026-10-01 se completó un backfill **parcial**: hay **16 cierres
+publicados entre 2022-03 y 2026-06**, con **985.908 filas de balance** y **1.164.000 de resultados**.
+No se publica una serie continua: faltan los cierres **2023-06** y **2025-03**, además de la
+historia anterior a 2022. El intento programado del 2026-10-04 no completó el backfill: la CMF
+rechazó 175 de 782 descargas XML de 2023-06 (`ACCION NO PERMITIDA 16`); en 2025-03 quedaron
+3 rechazos y 1 envío pendiente. Las compuertas conservaron los períodos válidos ya publicados.
+
+Los metadatos detallan cada exclusión y la fuente/hash de cada documento aceptado. La revisión de
+cobertura del 2026-10-01 sigue describiendo el padrón y la evidencia disponibles a esa fecha;
+no debe confundirse con el estado del backfill aquí actualizado.
 
 
 ### Revisión de cobertura: rescatables y no rescatables (2026-10-01)
@@ -220,14 +227,19 @@ WHERE contexto = 'PeriodoActual'
 ORDER BY periodo DESC, patrimonio_miles_clp DESC;
 ```
 
-## Carteras y pactos (flujo existente, sin cambios de extracción)
+## Carteras y pactos (estado al 2026-10-07)
 
 La CMF no publica un archivo masivo de carteras FI: cada fondo tiene, por trimestre, una
-página por tipo de cartera y una de pactos. `scripts/actualizar_carteras.py` las recorre.
+página por tipo de cartera y otra de pactos. `scripts/actualizar_carteras.py` las recorre.
 
-- Workflow `fi_carteras.yml`, días 9, 19 y 29; incremental desde 2020-03.
-- Encabezados exactos, cuadratura contra la fila TOTAL, límite de filas ilegibles y cobertura
-  respecto al trimestre anterior. Montos en miles de la moneda funcional de cada fondo.
+- **`fi_pactos`** reúne operaciones VRC (venta con compromiso de retrocompra) y CRV (compra con
+  compromiso de retroventa). El manifiesto registra **777 filas** en **26 cierres** desde
+  2020-03 hasta **2026-06**; junio de 2026 aporta **40 filas**.
+- La corrida más reciente de `fi_carteras.yml` (2026-10-04) terminó bien y reportó **0 trimestres
+  nuevos**. El cierre 2026-09 todavía está dentro del plazo de presentación y no se espera aún.
+- El workflow es incremental; valida encabezados, cuadratura contra la fila TOTAL, legibilidad y
+  cobertura respecto al trimestre anterior. Los importes `*_miles_mf` están en miles de la moneda
+  funcional de cada fondo y no se deben sumar entre monedas sin conversión.
 - Salidas: `cartera_nacional/`, `cartera_extranjera/`, `metodo_participacion/`, `bienes_raices/`,
   `futuros_forwards/`, `opciones/`, `pactos/`, `maestro_fondos_inversion.parquet` y
   `fi_registro_fondos_universo.json`.
@@ -235,4 +247,6 @@ página por tipo de cartera y una de pactos. `scripts/actualizar_carteras.py` la
   `fi_metodo_participacion`, `fi_bienes_raices`, `fi_futuros`, `fi_opciones`, `fi_pactos`.
 
 Los extractores/REPO antiguos (`cartera_inversiones/`, `repos/`, scripts 01–04) se retiraron el
-2026-09-28; no son la fuente del nuevo balance ni de los resultados.
+2026-09-28; la cartera actual y `fi_pactos` se alimentan del flujo IFRS vigente. Para comparar
+con seguros y ver por qué FFMM no tiene una tabla específica, consulta
+[la nota de cobertura REPO](../docs/notas/cobertura_repos_pactos_2026-10-07.md).
