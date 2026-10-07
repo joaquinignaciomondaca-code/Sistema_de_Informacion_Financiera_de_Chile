@@ -1,6 +1,8 @@
 # Plan de extracción masiva de carteras históricas AFP — portal BDP
 
-**Fecha: 07-10-2026. Propuesta de diseño, no implementación ni publicación.**
+**Fecha: 07-10-2026. Diseño objetivo; la capa de staging se implementó después del PR #28, pero no hay descarga real SP ni publicación.**
+
+> Estado actual y procedimientos: [AUTOMATIZACION_BDP.md](AUTOMATIZACION_BDP.md). La descarga oficial sigue bloqueada hasta observar el flujo real del botón; el histórico, el cotejo financiero y las condiciones de redistribución siguen pendientes. Las recomendaciones de abajo no certifican datos.
 
 ## 1. Qué se puede obtener
 
@@ -83,6 +85,8 @@ Estas dimensiones pueden ayudar a cruzar bonos/acciones/fondos con otros sectore
 
 ## 5. Extracción masiva recomendada
 
+**Qué está implementado:** `download_bdp_packages.py` sólo descarga tras registrar URLs capturadas desde el portal y un registro de captura UI saneado con SHA-256 revisado; el catálogo actual sigue sin URLs ni evidencia. `extraer_carteras_afp.py` guarda staging privado por paquete/revisión/familia/lote, reanuda checkpoints e incorpora paquetes revisados de forma idempotente. No normaliza fechas ni números y todavía no particiona por año: eso depende de validar el CSV SP. La guía operativa y el estado de Actions/Vercel están en [AUTOMATIZACION_BDP.md](AUTOMATIZACION_BDP.md).
+
 ### A. Descarga acotada, procesamiento local
 
 1. Obtener documentación vigente y los tres paquetes usando el flujo normal del portal, conservando fecha, opción, nombre del archivo y SHA-256. La captura anuncia unos **428,9 MB sumando los tres paquetes**; no se conoce aún el tamaño descomprimido ni el total de filas.
@@ -129,4 +133,4 @@ El manual histórico dice: «Esta base es de uso exclusivo para fines de investi
 - Inventario: `scratch/bdp-research/inspection_2021.json`, `checks_2021.json`, `families_2021.json` (ignorados por Git). Los conteos describen únicamente enero–mayo de 2021 del espejo.
 - Informe ampliado: [FUENTES_DERIVADOS_2026-10-07.md](FUENTES_DERIVADOS_2026-10-07.md).
 
-**No se implementó un extractor, no se publicaron Parquet y no se certificó cobertura histórica completa.** El siguiente insumo necesario es documentación vigente y al menos un CSV original de SP; después se puede validar un piloto de lectura/clasificación y escalar a los tres paquetes.
+**A la fecha de este diseño aún no se han descargado originales SP, publicado Parquet ni certificado la cobertura histórica.** Desde la revisión posterior al PR #28 ya existe un extractor incremental/reanudable y un descargador restringido al dominio SP, pero el catálogo permanece vacío y la extracción oficial no ha corrido. El siguiente insumo sigue siendo el flujo real del botón BDP y al menos un CSV/ZIP original; después se debe cotejar la clasificación/semántica antes de escalar a los tres paquetes. La publicación continúa bloqueada.
