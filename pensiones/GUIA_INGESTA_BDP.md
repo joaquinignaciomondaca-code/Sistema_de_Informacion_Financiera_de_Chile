@@ -20,10 +20,11 @@ sube como artifact de Actions ni se publica en el sitio**.
 │   └── <paquete>.json
 ├── originales/                    ← ZIP oficiales + sidecar de procedencia
 │   ├── <paquete>.zip
-│   ├── <paquete>.zip.json         ← sidecar: URL sin query, fecha, SHA-256, ETag
+│   ├── <paquete>.zip.source.json  ← sidecar: URL sin query, fecha, SHA-256, ETag
 │   └── revisions/<paquete>/       ← versión anterior conservada al refrescar
 └── staging/                       ← salida del backfill (privada)
     ├── manifest.json              ← paquetes, revisiones activas, fuentes, hashes
+    ├── audit.json                 ← resumen de la última corrida
     └── revisions/<revision_id>/<familia>/batch-000001.parquet
 ```
 
@@ -84,6 +85,11 @@ de `spensiones.cl`, rutas inseguras, fechas sin zona y valores con apariencia de
 **Pegar el bloque y revisarlo en un pull request es un paso humano.** El script nunca
 modifica el catálogo por su cuenta.
 
+Al terminar los tres paquetes, la revisión humana debe cambiar `"estado"` en
+`pensiones/config/paquetes_bdp.json` de `bloqueado_sin_captura_oficial` a **`listo`**. Sin ese
+valor `load_catalog` responde `CatalogNotReady` y el descargador no arranca, aunque las URLs y
+la evidencia estén completas: es el candado explícito de que alguien revisó la captura.
+
 ### Paso 3 — Descargar
 
 ```bash
@@ -94,6 +100,15 @@ python -m pensiones.scripts.download_bdp_packages \
 Vuelve a validar el host en cada redirección, comprueba límites de tamaño, rutas y CRC del
 ZIP, inventaría los miembros CSV y verifica el SHA-256 contra el catálogo. Deja ZIP y sidecar
 en `originales/`; al refrescar, conserva la versión anterior en `originales/revisions/<id>/`.
+
+Dos comportamientos que conviene saber:
+
+- Si el ZIP ya existe y su sidecar es válido, revalida con `HEAD`/ETag/`Last-Modified` y omite
+  la descarga si nada cambió. Si la SP no implementa HEAD, vuelve a descargar y validar: nunca
+  conserva un ZIP sólo porque la URL no cambió.
+- Si `expected_sha256` del catálogo **no** coincide con el ZIP local, re-descarga de inmediato
+  sin consultar HEAD. Es más estricto, no menos: un hash nuevo en el catálogo se trata como
+  revisión pendiente, no como caché válida.
 
 ### Paso 4 — Backfill por lotes
 
@@ -113,6 +128,14 @@ python -m pensiones.scripts.extraer_carteras_afp \
 
 Un paquete a medias **no se activa**: sigue en `paquetes_pendientes` hasta completar todos
 sus miembros. `--incremental` exige un staging ya existente; no usarlo para inicializar uno vacío.
+
+Cómo leer el JSON de salida:
+
+- `paquetes_procesados` son los paquetes **activos en el staging** (`sorted(manifest["packages"])`),
+  no los procesados en esta corrida. El nombre induce a error.
+- `miembros_procesados_en_corrida` y `lotes_confirmados_en_corrida` sí son de la corrida.
+  Una reingesta de la misma fuente da `0` miembros: es idempotente.
+- `filas_activas` es el total del staging, no el delta de la corrida.
 
 Opciones útiles: `--package-id` (repetible, para CSV/ZIP sin sidecar), `--encoding cp1252`,
 `--max-archivos` (máximo de miembros CSV por corrida, por defecto 50).
@@ -134,7 +157,16 @@ Campos que hay que leer juntos:
 - `paquetes_oficiales_verificados` — cuáles tienen sidecar de una descarga oficial real.
 - `codigos_no_clasificados` — cuarentena; si no está vacío, bloquea la certificación.
 
-`--allow-incomplete` y `--allow-quarantine` sólo sirven para inspeccionar checkpoints.
+**La auditoría falla a propósito (código 1) si hay cuarentena o paquetes en curso.** El mensaje
+es `Hay códigos sin clasificar; se conservan en cuarentena y bloquean la auditoría`. Para
+inspeccionar el detalle hay que pedirlo explícitamente:
+
+```bash
+python -m pensiones.scripts.audit_carteras_afp .local-data/pensiones/bdp/staging --allow-quarantine
+```
+
+`--allow-incomplete` y `--allow-quarantine` sólo permiten *leer* el estado; no vuelven
+publicable una corrida ni cambian `publicable`, que es `false` por construcción.
 
 ### Paso 6 — Evaluar el gate (no publicar)
 
@@ -162,13 +194,35 @@ sustituye esa aprobación.
 
 ## 4. Verificación sin datos oficiales
 
-La suite cubre el flujo completo con fuentes sintéticas y sin red:
+Dos comprobaciones complementarias, ambas sin red:
 
 ```bash
 python -m pip install pyarrow==21.0.0
+
+# Pruebas unitarias y de integración (35)
 python -m unittest discover -s pensiones/tests -v
+
+# Verificación punta a punta del procedimiento completo (37 comprobaciones)
+python -m pensiones.scripts.verificar_pipeline_bdp
 ```
 
-35 pruebas: preservación literal CSV/ZIP, lote y reanudación, códigos de salida, reingesta
-idempotente, revisiones, incremental, CP1252, celdas multilínea, cuarentena, integridad SHA,
-descarga reanudable, guards de host/redirección, asistente de captura y bloqueo de publicación.
+`verificar_pipeline_bdp` ejercita el código real —asistente de captura, descargador, extractor,
+auditoría y gate— sobre fuentes sintéticas servidas por un transporte HTTP inyectado. El único
+punto sustituido es el socket; la validación de host, el registro saneado, el inventario ZIP/CRC,
+el SHA-256, los sidecars, los lotes con checkpoint, la cuarentena, las revisiones y el gate son
+las funciones del repositorio. Cubre:
+
+- catálogo bloqueado responde `ready=false` sin hacer solicitudes;
+- evidencia saneada y rechazo de URLs con token;
+- descarga, inventario, SHA-256 cotejado y sidecars `redistribution_status=not_reviewed`;
+- salida `2` con checkpoint, reanudación a `0`, `3` sin originales, reingesta idempotente;
+- auditoría fail-closed ante cuarentena y `cobertura_historica_certificada=false`;
+- gate bloqueado aun con staging completo y sidecars oficiales;
+- revalidación HEAD, conservación de revisión anterior e incremental sin duplicar filas;
+- aislamiento: nada en `docs/outputs/`, nada visible para Git, manifiesto público intacto.
+
+Trabaja en `.local-data/pensiones/bdp-verificacion/`, se borra solo al terminar y **se niega a
+correr si ya existen originales o staging reales**, para no pisar una ingesta en curso.
+
+Esta verificación prueba que el procedimiento funciona. **No certifica datos reales**: no hay
+originales SP, no hay cotejo de cifras y el gate sigue cerrado.
