@@ -2,6 +2,25 @@
   "version": 1,
   "fuente": "CMF · ifrs_informe_vrc_crv.php",
   "periodos": {
+    "2008-03": {
+      "fecha_sondeo": "2026-10-07T03:52:17+00:00",
+      "estado": "sin_operaciones",
+      "registro_fondos": 1683,
+      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
+      "paginas_consultadas": 1683,
+      "paginas_descargadas": 1684,
+      "paginas_parseadas": 1683,
+      "paginas_reintentadas_por_esquema": 1,
+      "paginas_con_operaciones": 0,
+      "fondos_con_operaciones": 0,
+      "filas_operacion": 0,
+      "filas_relleno_excluidas": 0,
+      "filas_ilegibles": 0,
+      "descuadres": 0,
+      "tipos_operacion": {},
+      "sha256_resumen_paginas": "c1edcc7864dac565a360dca78ecaf88ff2ba25b6f27818e6ec1f94908932a522",
+      "segundos": 102.4
+    },
     "2008-06": {
       "fecha_sondeo": "2026-10-07T02:14:53+00:00",
       "estado": "sin_operaciones",
@@ -19,6 +38,25 @@
       "tipos_operacion": {},
       "sha256_resumen_paginas": "a70a646c5b21d1637883169c129a7fcc41d7cd6ea967b72c052480f9d1259b39",
       "segundos": 115.0
+    },
+    "2008-09": {
+      "fecha_sondeo": "2026-10-07T03:54:00+00:00",
+      "estado": "sin_operaciones",
+      "registro_fondos": 1683,
+      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
+      "paginas_consultadas": 1683,
+      "paginas_descargadas": 1683,
+      "paginas_parseadas": 1683,
+      "paginas_reintentadas_por_esquema": 0,
+      "paginas_con_operaciones": 0,
+      "fondos_con_operaciones": 0,
+      "filas_operacion": 0,
+      "filas_relleno_excluidas": 0,
+      "filas_ilegibles": 0,
+      "descuadres": 0,
+      "tipos_operacion": {},
+      "sha256_resumen_paginas": "5dba39eb83bdabdca33eb8a30ec9814cbdf662493e34c1ef6cd0778ac109060a",
+      "segundos": 102.2
     },
     "2008-12": {
       "fecha_sondeo": "2026-10-07T02:18:44+00:00",
@@ -55,6 +93,25 @@
       "tipos_operacion": {},
       "sha256_resumen_paginas": "569afec6d72584dcfb3cfed9620bfd23312620e0bbed2c4a5a61d03b4a9f79b8",
       "segundos": 115.1
+    },
+    "2009-06": {
+      "fecha_sondeo": "2026-10-07T03:55:40+00:00",
+      "estado": "sin_operaciones",
+      "registro_fondos": 1683,
+      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
+      "paginas_consultadas": 1683,
+      "paginas_descargadas": 1684,
+      "paginas_parseadas": 1683,
+      "paginas_reintentadas_por_esquema": 1,
+      "paginas_con_operaciones": 0,
+      "fondos_con_operaciones": 0,
+      "filas_operacion": 0,
+      "filas_relleno_excluidas": 0,
+      "filas_ilegibles": 0,
+      "descuadres": 0,
+      "tipos_operacion": {},
+      "sha256_resumen_paginas": "dc8edc8616e016f404b9ec20440c82fb131eaf7d9170227b738b323d2d27dab7",
+      "segundos": 100.8
     },
     "2009-09": {
       "fecha_sondeo": "2026-10-07T02:24:30+00:00",
@@ -127,6 +184,25 @@
       "tipos_operacion": {},
       "sha256_resumen_paginas": "20f7bdd0ca24492b0ebd2711e5f942064e8d0911188280e0d5c7bf7a43c1f18f",
       "segundos": 114.6
+    },
+    "2010-09": {
+      "fecha_sondeo": "2026-10-07T03:57:22+00:00",
+      "estado": "sin_operaciones",
+      "registro_fondos": 1683,
+      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
+      "paginas_consultadas": 1683,
+      "paginas_descargadas": 1683,
+      "paginas_parseadas": 1683,
+      "paginas_reintentadas_por_esquema": 0,
+      "paginas_con_operaciones": 0,
+      "fondos_con_operaciones": 0,
+      "filas_operacion": 0,
+      "filas_relleno_excluidas": 0,
+      "filas_ilegibles": 0,
+      "descuadres": 0,
+      "tipos_operacion": {},
+      "sha256_resumen_paginas": "414826d82d1a7391f9c220d0245e2b9f8e72e8a02c46866835fbf046709bad5d",
+      "segundos": 101.7
     },
     "2010-12": {
       "fecha_sondeo": "2026-10-07T02:34:05+00:00",
@@ -218,6 +294,28 @@
       "sha256_resumen_paginas": "694b772df1e9bc8f707d0451a5c73dba28caa0d886238af55598e24452f16880",
       "segundos": 114.6
     },
+    "2012-03": {
+      "fecha_sondeo": "2026-10-07T03:59:07+00:00",
+      "estado": "completo",
+      "registro_fondos": 1683,
+      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
+      "paginas_consultadas": 1683,
+      "paginas_descargadas": 1683,
+      "paginas_parseadas": 1683,
+      "paginas_reintentadas_por_esquema": 0,
+      "paginas_con_operaciones": 3,
+      "fondos_con_operaciones": 3,
+      "filas_operacion": 3,
+      "filas_relleno_excluidas": 8,
+      "filas_ilegibles": 0,
+      "descuadres": 0,
+      "tipos_operacion": {
+        "CRV": 1,
+        "VRC": 2
+      },
+      "sha256_resumen_paginas": "1005696e9953357e74c5b1da8aea7d085eed651dce95998c2fff0e03f9cd7499",
+      "segundos": 104.9
+    },
     "2012-06": {
       "fecha_sondeo": "2026-10-07T02:45:34+00:00",
       "estado": "completo",
@@ -237,6 +335,28 @@
       },
       "sha256_resumen_paginas": "eae858c9a796814e1dfab303695a242a1f304c059fbf34af7c6b17bceee4dd98",
       "segundos": 114.2
+    },
+    "2012-09": {
+      "fecha_sondeo": "2026-10-07T04:00:44+00:00",
+      "estado": "completo",
+      "registro_fondos": 1683,
+      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
+      "paginas_consultadas": 1683,
+      "paginas_descargadas": 1683,
+      "paginas_parseadas": 1683,
+      "paginas_reintentadas_por_esquema": 0,
+      "paginas_con_operaciones": 3,
+      "fondos_con_operaciones": 3,
+      "filas_operacion": 5,
+      "filas_relleno_excluidas": 8,
+      "filas_ilegibles": 0,
+      "descuadres": 0,
+      "tipos_operacion": {
+        "CRV": 3,
+        "VRC": 2
+      },
+      "sha256_resumen_paginas": "91c3134efc391dabd458dfd9aa55e72bb00eb8dba78f8e1ad1f314fa7ece9081",
+      "segundos": 96.6
     },
     "2012-12": {
       "fecha_sondeo": "2026-10-07T02:49:23+00:00",
@@ -278,6 +398,27 @@
       },
       "sha256_resumen_paginas": "37ef7cabfedcb8c71411deb32e472770dfd813f25af0d2b7825687a34064df8d",
       "segundos": 115.8
+    },
+    "2013-06": {
+      "fecha_sondeo": "2026-10-07T04:02:19+00:00",
+      "estado": "completo",
+      "registro_fondos": 1683,
+      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
+      "paginas_consultadas": 1683,
+      "paginas_descargadas": 1684,
+      "paginas_parseadas": 1683,
+      "paginas_reintentadas_por_esquema": 1,
+      "paginas_con_operaciones": 2,
+      "fondos_con_operaciones": 2,
+      "filas_operacion": 2,
+      "filas_relleno_excluidas": 10,
+      "filas_ilegibles": 0,
+      "descuadres": 0,
+      "tipos_operacion": {
+        "VRC": 2
+      },
+      "sha256_resumen_paginas": "bdbf13423eb7aadde52d89e7c11afe51e1a1dc24bc2a1c374d7e4361bec30e71",
+      "segundos": 95.4
     },
     "2013-09": {
       "fecha_sondeo": "2026-10-07T02:55:16+00:00",
@@ -361,6 +502,49 @@
       },
       "sha256_resumen_paginas": "f938f0bc45fde6cc04469d599854791fcc6ec20978533758ca8a317a322feaf3",
       "segundos": 115.1
+    },
+    "2014-09": {
+      "fecha_sondeo": "2026-10-07T04:03:56+00:00",
+      "estado": "completo",
+      "registro_fondos": 1683,
+      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
+      "paginas_consultadas": 1683,
+      "paginas_descargadas": 1683,
+      "paginas_parseadas": 1683,
+      "paginas_reintentadas_por_esquema": 0,
+      "paginas_con_operaciones": 3,
+      "fondos_con_operaciones": 3,
+      "filas_operacion": 16,
+      "filas_relleno_excluidas": 0,
+      "filas_ilegibles": 0,
+      "descuadres": 0,
+      "tipos_operacion": {
+        "CRV": 16
+      },
+      "sha256_resumen_paginas": "a84ceeeff95363ea36a47477d93d87f6bfd8ea2ec2b8b4f938945905f6e02685",
+      "segundos": 96.3
+    },
+    "2014-12": {
+      "fecha_sondeo": "2026-10-07T04:05:31+00:00",
+      "estado": "completo",
+      "registro_fondos": 1683,
+      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
+      "paginas_consultadas": 1683,
+      "paginas_descargadas": 1683,
+      "paginas_parseadas": 1683,
+      "paginas_reintentadas_por_esquema": 0,
+      "paginas_con_operaciones": 7,
+      "fondos_con_operaciones": 7,
+      "filas_operacion": 66,
+      "filas_relleno_excluidas": 0,
+      "filas_ilegibles": 0,
+      "descuadres": 0,
+      "tipos_operacion": {
+        "CRV": 44,
+        "VRC": 22
+      },
+      "sha256_resumen_paginas": "05d1722fa02962b4363408c44fbe04c375618ae980e7140329616c1a6bdccab5",
+      "segundos": 95.0
     },
     "2015-03": {
       "fecha_sondeo": "2026-10-07T03:06:47+00:00",
@@ -446,6 +630,49 @@
       "sha256_resumen_paginas": "5cb285e47a3d175252f836298767dcf29403db9fd4253dc46c0fd749870aa062",
       "segundos": 116.2
     },
+    "2016-03": {
+      "fecha_sondeo": "2026-10-07T04:07:06+00:00",
+      "estado": "completo",
+      "registro_fondos": 1683,
+      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
+      "paginas_consultadas": 1683,
+      "paginas_descargadas": 1683,
+      "paginas_parseadas": 1683,
+      "paginas_reintentadas_por_esquema": 0,
+      "paginas_con_operaciones": 10,
+      "fondos_con_operaciones": 10,
+      "filas_operacion": 35,
+      "filas_relleno_excluidas": 0,
+      "filas_ilegibles": 0,
+      "descuadres": 0,
+      "tipos_operacion": {
+        "CRV": 34,
+        "VRC": 1
+      },
+      "sha256_resumen_paginas": "eccfc8c6992aa4d570a03e998a15cac7abc9481e32a3ef4c2e904d5ecb97f90f",
+      "segundos": 95.2
+    },
+    "2016-06": {
+      "fecha_sondeo": "2026-10-07T04:08:47+00:00",
+      "estado": "completo",
+      "registro_fondos": 1683,
+      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
+      "paginas_consultadas": 1683,
+      "paginas_descargadas": 1683,
+      "paginas_parseadas": 1683,
+      "paginas_reintentadas_por_esquema": 0,
+      "paginas_con_operaciones": 5,
+      "fondos_con_operaciones": 5,
+      "filas_operacion": 31,
+      "filas_relleno_excluidas": 0,
+      "filas_ilegibles": 0,
+      "descuadres": 0,
+      "tipos_operacion": {
+        "CRV": 31
+      },
+      "sha256_resumen_paginas": "f182a67c72f6b5b6b98cf557caed5ff3533dce59a690cb09a16c3d9f4affebd1",
+      "segundos": 101.3
+    },
     "2016-09": {
       "fecha_sondeo": "2026-10-07T03:18:28+00:00",
       "estado": "completo",
@@ -527,6 +754,27 @@
       "sha256_resumen_paginas": "3942e9e6be731ff3b4e96312373da3c347cb275fa051e5167a5cda275c265824",
       "segundos": 118.7
     },
+    "2017-09": {
+      "fecha_sondeo": "2026-10-07T04:10:23+00:00",
+      "estado": "completo",
+      "registro_fondos": 1683,
+      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
+      "paginas_consultadas": 1683,
+      "paginas_descargadas": 1683,
+      "paginas_parseadas": 1683,
+      "paginas_reintentadas_por_esquema": 0,
+      "paginas_con_operaciones": 4,
+      "fondos_con_operaciones": 4,
+      "filas_operacion": 28,
+      "filas_relleno_excluidas": 0,
+      "filas_ilegibles": 0,
+      "descuadres": 0,
+      "tipos_operacion": {
+        "CRV": 28
+      },
+      "sha256_resumen_paginas": "eb48ee00064c0bfd10c0dca98d264834411d68699db826e5cddb4452b72e94c0",
+      "segundos": 95.7
+    },
     "2017-12": {
       "fecha_sondeo": "2026-10-07T03:28:19+00:00",
       "estado": "completo",
@@ -567,6 +815,27 @@
       "sha256_resumen_paginas": "a897ad48a4249587cedc2a960fb3480c055a563a6f24faa6eae9b2c698dcd1d7",
       "segundos": 115.7
     },
+    "2018-06": {
+      "fecha_sondeo": "2026-10-07T04:11:59+00:00",
+      "estado": "completo",
+      "registro_fondos": 1683,
+      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
+      "paginas_consultadas": 1683,
+      "paginas_descargadas": 1684,
+      "paginas_parseadas": 1683,
+      "paginas_reintentadas_por_esquema": 1,
+      "paginas_con_operaciones": 5,
+      "fondos_con_operaciones": 5,
+      "filas_operacion": 22,
+      "filas_relleno_excluidas": 0,
+      "filas_ilegibles": 0,
+      "descuadres": 0,
+      "tipos_operacion": {
+        "CRV": 22
+      },
+      "sha256_resumen_paginas": "f3b06c36512cd9548a587e261c891370d9161d1638e42f7bb442a4856820ada7",
+      "segundos": 96.1
+    },
     "2018-09": {
       "fecha_sondeo": "2026-10-07T03:34:07+00:00",
       "estado": "completo",
@@ -586,6 +855,27 @@
       },
       "sha256_resumen_paginas": "6b91d804ba6ddcbea6012080257a0f9c4f567c7cb53426e3df7938cac1810efa",
       "segundos": 115.9
+    },
+    "2018-12": {
+      "fecha_sondeo": "2026-10-07T04:13:38+00:00",
+      "estado": "completo",
+      "registro_fondos": 1683,
+      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
+      "paginas_consultadas": 1683,
+      "paginas_descargadas": 1684,
+      "paginas_parseadas": 1683,
+      "paginas_reintentadas_por_esquema": 1,
+      "paginas_con_operaciones": 6,
+      "fondos_con_operaciones": 6,
+      "filas_operacion": 19,
+      "filas_relleno_excluidas": 0,
+      "filas_ilegibles": 0,
+      "descuadres": 0,
+      "tipos_operacion": {
+        "CRV": 19
+      },
+      "sha256_resumen_paginas": "7cf1d9e67fba4f4af0574caba5a720975819ff5e0876f25acf92f2ce3529fa9f",
+      "segundos": 98.5
     },
     "2019-03": {
       "fecha_sondeo": "2026-10-07T03:38:01+00:00",
@@ -669,369 +959,7 @@
       "segundos": 118.0
     }
   },
-  "fallidos": {
-    "2008-03": {
-      "fecha_sondeo": "2026-10-07T02:12:58+00:00",
-      "estado": "fallido",
-      "registro_fondos": 1683,
-      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
-      "paginas_consultadas": 1683,
-      "paginas_descargadas": 1683,
-      "paginas_parseadas": 1682,
-      "paginas_con_operaciones": 0,
-      "fondos_con_operaciones": 0,
-      "filas_operacion": 0,
-      "filas_relleno_excluidas": 0,
-      "filas_ilegibles": 0,
-      "descuadres": 0,
-      "tipos_operacion": {},
-      "sha256_resumen_paginas": "27f657ddba35657aa5a6ee8b0c25f8021f6ee8b5515c2dd7ff88fa729fac0ea3",
-      "segundos": 113.8,
-      "errores": [
-        "1 páginas sin esquema reconocido",
-        "parser: 7099: pactos: encabezado inesperado"
-      ],
-      "detalle_filas_ilegibles": [],
-      "detalle_descuadres": []
-    },
-    "2008-09": {
-      "fecha_sondeo": "2026-10-07T02:16:48+00:00",
-      "estado": "fallido",
-      "registro_fondos": 1683,
-      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
-      "paginas_consultadas": 1683,
-      "paginas_descargadas": 1683,
-      "paginas_parseadas": 1682,
-      "paginas_con_operaciones": 0,
-      "fondos_con_operaciones": 0,
-      "filas_operacion": 0,
-      "filas_relleno_excluidas": 0,
-      "filas_ilegibles": 0,
-      "descuadres": 0,
-      "tipos_operacion": {},
-      "sha256_resumen_paginas": "fb02113bb67cd7487561646717b60e1da7b8610ee3a8d3d1cf0debaa8418af97",
-      "segundos": 115.1,
-      "errores": [
-        "1 páginas sin esquema reconocido",
-        "parser: 9920: pactos: encabezado inesperado"
-      ],
-      "detalle_filas_ilegibles": [],
-      "detalle_descuadres": []
-    },
-    "2009-06": {
-      "fecha_sondeo": "2026-10-07T02:22:35+00:00",
-      "estado": "fallido",
-      "registro_fondos": 1683,
-      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
-      "paginas_consultadas": 1683,
-      "paginas_descargadas": 1683,
-      "paginas_parseadas": 1682,
-      "paginas_con_operaciones": 0,
-      "fondos_con_operaciones": 0,
-      "filas_operacion": 0,
-      "filas_relleno_excluidas": 0,
-      "filas_ilegibles": 0,
-      "descuadres": 0,
-      "tipos_operacion": {},
-      "sha256_resumen_paginas": "8c6341a55eb799704e56eda4c77f3636dcd47d57e24325d43df85d85e8f529f2",
-      "segundos": 116.1,
-      "errores": [
-        "1 páginas sin esquema reconocido",
-        "parser: 9740: pactos: encabezado inesperado"
-      ],
-      "detalle_filas_ilegibles": [],
-      "detalle_descuadres": []
-    },
-    "2010-09": {
-      "fecha_sondeo": "2026-10-07T02:32:11+00:00",
-      "estado": "fallido",
-      "registro_fondos": 1683,
-      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
-      "paginas_consultadas": 1683,
-      "paginas_descargadas": 1683,
-      "paginas_parseadas": 1681,
-      "paginas_con_operaciones": 0,
-      "fondos_con_operaciones": 0,
-      "filas_operacion": 0,
-      "filas_relleno_excluidas": 0,
-      "filas_ilegibles": 0,
-      "descuadres": 0,
-      "tipos_operacion": {},
-      "sha256_resumen_paginas": "3cd0db46d182e50c4498e85854295121463bd3e6d4a3efc1f6f51814ea7f269f",
-      "segundos": 114.4,
-      "errores": [
-        "2 páginas sin esquema reconocido",
-        "parser: 9500: pactos: encabezado inesperado",
-        "parser: 10710: pactos: encabezado inesperado"
-      ],
-      "detalle_filas_ilegibles": [],
-      "detalle_descuadres": []
-    },
-    "2012-03": {
-      "fecha_sondeo": "2026-10-07T02:43:40+00:00",
-      "estado": "fallido",
-      "registro_fondos": 1683,
-      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
-      "paginas_consultadas": 1683,
-      "paginas_descargadas": 1683,
-      "paginas_parseadas": 1682,
-      "paginas_con_operaciones": 3,
-      "fondos_con_operaciones": 3,
-      "filas_operacion": 3,
-      "filas_relleno_excluidas": 8,
-      "filas_ilegibles": 0,
-      "descuadres": 0,
-      "tipos_operacion": {
-        "CRV": 1,
-        "VRC": 2
-      },
-      "sha256_resumen_paginas": "7e49d66a71ec12b4e39cdd1a18eb14d29c248c5272afe950fadb66fe4c1339c8",
-      "segundos": 114.6,
-      "errores": [
-        "1 páginas sin esquema reconocido",
-        "parser: 9619: pactos: encabezado inesperado"
-      ],
-      "detalle_filas_ilegibles": [],
-      "detalle_descuadres": []
-    },
-    "2012-09": {
-      "fecha_sondeo": "2026-10-07T02:47:28+00:00",
-      "estado": "fallido",
-      "registro_fondos": 1683,
-      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
-      "paginas_consultadas": 1683,
-      "paginas_descargadas": 1683,
-      "paginas_parseadas": 1682,
-      "paginas_con_operaciones": 3,
-      "fondos_con_operaciones": 3,
-      "filas_operacion": 5,
-      "filas_relleno_excluidas": 8,
-      "filas_ilegibles": 0,
-      "descuadres": 0,
-      "tipos_operacion": {
-        "CRV": 3,
-        "VRC": 2
-      },
-      "sha256_resumen_paginas": "49e74501e2f7eab834cdd416eaad029c1c3188641a7d04f336f7346f96adb765",
-      "segundos": 114.2,
-      "errores": [
-        "1 páginas sin esquema reconocido",
-        "parser: 9181: pactos: encabezado inesperado"
-      ],
-      "detalle_filas_ilegibles": [],
-      "detalle_descuadres": []
-    },
-    "2013-06": {
-      "fecha_sondeo": "2026-10-07T02:53:20+00:00",
-      "estado": "fallido",
-      "registro_fondos": 1683,
-      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
-      "paginas_consultadas": 1683,
-      "paginas_descargadas": 1683,
-      "paginas_parseadas": 1682,
-      "paginas_con_operaciones": 2,
-      "fondos_con_operaciones": 2,
-      "filas_operacion": 2,
-      "filas_relleno_excluidas": 10,
-      "filas_ilegibles": 0,
-      "descuadres": 0,
-      "tipos_operacion": {
-        "VRC": 2
-      },
-      "sha256_resumen_paginas": "607e2de3d357920a4cb85ecb25417cc246ab1d84c3667051a6f1ac3bf432c419",
-      "segundos": 121.2,
-      "errores": [
-        "1 páginas sin esquema reconocido",
-        "parser: 10608: pactos: encabezado inesperado"
-      ],
-      "detalle_filas_ilegibles": [],
-      "detalle_descuadres": []
-    },
-    "2014-09": {
-      "fecha_sondeo": "2026-10-07T03:02:56+00:00",
-      "estado": "fallido",
-      "registro_fondos": 1683,
-      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
-      "paginas_consultadas": 1683,
-      "paginas_descargadas": 1683,
-      "paginas_parseadas": 1682,
-      "paginas_con_operaciones": 3,
-      "fondos_con_operaciones": 3,
-      "filas_operacion": 16,
-      "filas_relleno_excluidas": 0,
-      "filas_ilegibles": 0,
-      "descuadres": 0,
-      "tipos_operacion": {
-        "CRV": 16
-      },
-      "sha256_resumen_paginas": "37cb7816c9cc8b73fc7c647b673d753815ac955c5a4fcaeda907bfb51943f4d7",
-      "segundos": 115.1,
-      "errores": [
-        "1 páginas sin esquema reconocido",
-        "parser: 7001: pactos: encabezado inesperado"
-      ],
-      "detalle_filas_ilegibles": [],
-      "detalle_descuadres": []
-    },
-    "2014-12": {
-      "fecha_sondeo": "2026-10-07T03:04:51+00:00",
-      "estado": "fallido",
-      "registro_fondos": 1683,
-      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
-      "paginas_consultadas": 1683,
-      "paginas_descargadas": 1683,
-      "paginas_parseadas": 1682,
-      "paginas_con_operaciones": 7,
-      "fondos_con_operaciones": 7,
-      "filas_operacion": 66,
-      "filas_relleno_excluidas": 0,
-      "filas_ilegibles": 0,
-      "descuadres": 0,
-      "tipos_operacion": {
-        "CRV": 44,
-        "VRC": 22
-      },
-      "sha256_resumen_paginas": "1ec7613b5cbcb89a106da30e7ff09ffc05091689a317fccbd4cc889fe311e4d1",
-      "segundos": 115.1,
-      "errores": [
-        "1 páginas sin esquema reconocido",
-        "parser: 9499: pactos: encabezado inesperado"
-      ],
-      "detalle_filas_ilegibles": [],
-      "detalle_descuadres": []
-    },
-    "2016-03": {
-      "fecha_sondeo": "2026-10-07T03:14:36+00:00",
-      "estado": "fallido",
-      "registro_fondos": 1683,
-      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
-      "paginas_consultadas": 1683,
-      "paginas_descargadas": 1683,
-      "paginas_parseadas": 1682,
-      "paginas_con_operaciones": 10,
-      "fondos_con_operaciones": 10,
-      "filas_operacion": 35,
-      "filas_relleno_excluidas": 0,
-      "filas_ilegibles": 0,
-      "descuadres": 0,
-      "tipos_operacion": {
-        "CRV": 34,
-        "VRC": 1
-      },
-      "sha256_resumen_paginas": "c35a43581c909fa0ccb5e71ecb4a8cba0e1e55564fe39e412d15915d291fe220",
-      "segundos": 119.8,
-      "errores": [
-        "1 páginas sin esquema reconocido",
-        "parser: 10467: pactos: encabezado inesperado"
-      ],
-      "detalle_filas_ilegibles": [],
-      "detalle_descuadres": []
-    },
-    "2016-06": {
-      "fecha_sondeo": "2026-10-07T03:16:32+00:00",
-      "estado": "fallido",
-      "registro_fondos": 1683,
-      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
-      "paginas_consultadas": 1683,
-      "paginas_descargadas": 1683,
-      "paginas_parseadas": 1682,
-      "paginas_con_operaciones": 5,
-      "fondos_con_operaciones": 5,
-      "filas_operacion": 31,
-      "filas_relleno_excluidas": 0,
-      "filas_ilegibles": 0,
-      "descuadres": 0,
-      "tipos_operacion": {
-        "CRV": 31
-      },
-      "sha256_resumen_paginas": "0781cd8a0b45dc2182cae577725f504377b74a4bccf97ec6dc1a1d4b5c08469e",
-      "segundos": 116.0,
-      "errores": [
-        "1 páginas sin esquema reconocido",
-        "parser: 10403: pactos: encabezado inesperado"
-      ],
-      "detalle_filas_ilegibles": [],
-      "detalle_descuadres": []
-    },
-    "2017-09": {
-      "fecha_sondeo": "2026-10-07T03:26:20+00:00",
-      "estado": "fallido",
-      "registro_fondos": 1683,
-      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
-      "paginas_consultadas": 1683,
-      "paginas_descargadas": 1683,
-      "paginas_parseadas": 1682,
-      "paginas_con_operaciones": 4,
-      "fondos_con_operaciones": 4,
-      "filas_operacion": 28,
-      "filas_relleno_excluidas": 0,
-      "filas_ilegibles": 0,
-      "descuadres": 0,
-      "tipos_operacion": {
-        "CRV": 28
-      },
-      "sha256_resumen_paginas": "30d2a0470f15db43e07f5083a063abb27aac213cc58b804b71006e145e3646b0",
-      "segundos": 116.1,
-      "errores": [
-        "1 páginas sin esquema reconocido",
-        "parser: 7235: pactos: encabezado inesperado"
-      ],
-      "detalle_filas_ilegibles": [],
-      "detalle_descuadres": []
-    },
-    "2018-06": {
-      "fecha_sondeo": "2026-10-07T03:32:11+00:00",
-      "estado": "fallido",
-      "registro_fondos": 1683,
-      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
-      "paginas_consultadas": 1683,
-      "paginas_descargadas": 1683,
-      "paginas_parseadas": 1682,
-      "paginas_con_operaciones": 5,
-      "fondos_con_operaciones": 5,
-      "filas_operacion": 22,
-      "filas_relleno_excluidas": 0,
-      "filas_ilegibles": 0,
-      "descuadres": 0,
-      "tipos_operacion": {
-        "CRV": 22
-      },
-      "sha256_resumen_paginas": "7443bfe40eadc6cc2d10bb4ec04499f7fc797e7025ae85dd11c98d3e0705c5f5",
-      "segundos": 116.4,
-      "errores": [
-        "1 páginas sin esquema reconocido",
-        "parser: 9627: pactos: encabezado inesperado"
-      ],
-      "detalle_filas_ilegibles": [],
-      "detalle_descuadres": []
-    },
-    "2018-12": {
-      "fecha_sondeo": "2026-10-07T03:36:05+00:00",
-      "estado": "fallido",
-      "registro_fondos": 1683,
-      "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
-      "paginas_consultadas": 1683,
-      "paginas_descargadas": 1683,
-      "paginas_parseadas": 1682,
-      "paginas_con_operaciones": 6,
-      "fondos_con_operaciones": 6,
-      "filas_operacion": 19,
-      "filas_relleno_excluidas": 0,
-      "filas_ilegibles": 0,
-      "descuadres": 0,
-      "tipos_operacion": {
-        "CRV": 19
-      },
-      "sha256_resumen_paginas": "2290be1b003550ef1930db6d2867bf0d30d61e3b6c02d7816cd21b64fdc04efa",
-      "segundos": 117.7,
-      "errores": [
-        "1 páginas sin esquema reconocido",
-        "parser: 9890: pactos: encabezado inesperado"
-      ],
-      "detalle_filas_ilegibles": [],
-      "detalle_descuadres": []
-    }
-  },
+  "fallidos": {},
   "registro_fondos": 1683,
   "sha256_registro_runs": "bbd1dfbcec4323948e8d0693d2913939d72cebe01326cebcc3c7e8369ba5ff56",
   "rango_ultima_corrida": {
@@ -1042,5 +970,5 @@
     "desde": "2008-03",
     "hasta": "2019-12"
   },
-  "updated_at": "2026-10-07T03:43:53+00:00"
+  "updated_at": "2026-10-07T04:13:38+00:00"
 }
