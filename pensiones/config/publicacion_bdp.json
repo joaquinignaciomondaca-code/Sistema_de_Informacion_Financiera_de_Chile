@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "estado": "bloqueado",
+  "motivo": "No se han cotejado originales descargados desde SP ni están verificadas las condiciones vigentes de redistribución.",
+  "criterios": {
+    "descarga_oficial_y_procedencia": {
+      "estado": "pendiente",
+      "evidencia": null
+    },
+    "cotejo_de_originales_sp": {
+      "estado": "pendiente",
+      "evidencia": null
+    },
+    "cobertura_y_clasificacion_historica": {
+      "estado": "pendiente",
+      "evidencia": null
+    },
+    "semantica_y_precision_de_campos": {
+      "estado": "pendiente",
+      "evidencia": null
+    },
+    "redistribucion_de_datos_y_derivados": {
+      "estado": "pendiente",
+      "evidencia": null
+    }
+  },
+  "aprobacion_final": null,
+  "requisitos_de_desbloqueo": {
+    "revision_en_pull_request": true,
+    "entorno_github_actions": "pensiones-publicacion",
+    "sin_secretos_o_banderas_de_workflow_como_sustituto_de_evidencia": true
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "source_page": "https://www.spensiones.cl/apps/bdp/index.php",
+  "estado": "bloqueado_sin_captura_oficial",
+  "nota": "Los tres paquetes se identificaron en la captura del portal descrita en PLAN_EXTRACCION_CARTERAS_BDP.md. No se ha observado desde este entorno el formulario, el enlace ni la petición real de descarga. Para habilitarla, una persona debe capturar URL/nombre/fecha y agregar un registro saneado (sin cookies, headers ni cuerpo POST) en .local-data/pensiones/bdp/evidencia/; fijar su SHA-256 en este catálogo y revisar el cambio. No completar URLs por conjetura.",
+  "packages": [
+    {
+      "id": "historico_1996_2005",
+      "descripcion": "Carteras históricas 1996–2005",
+      "download_url": null,
+      "expected_filename": null,
+      "expected_sha256": null,
+      "captured_from": null,
+      "captured_at": null,
+      "capture_evidence": null,
+      "capture_sha256": null
+    },
+    {
+      "id": "historico_2006_2015",
+      "descripcion": "Carteras históricas 2006–2015",
+      "download_url": null,
+      "expected_filename": null,
+      "expected_sha256": null,
+      "captured_from": null,
+      "captured_at": null,
+      "capture_evidence": null,
+      "capture_sha256": null
+    },
+    {
+      "id": "historico_2016_actualidad",
+      "descripcion": "Carteras históricas 2016–a la fecha",
+      "download_url": null,
+      "expected_filename": null,
+      "expected_sha256": null,
+      "captured_from": null,
+      "captured_at": null,
+      "capture_evidence": null,
+      "capture_sha256": null
+    }
+  ]
+}

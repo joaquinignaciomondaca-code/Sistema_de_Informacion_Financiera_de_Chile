@@ -371,4 +371,7 @@ del archivo espejo enero–mayo 2021 en **14 familias disjuntas**, conservando l
 ETF, capital/deuda privados, créditos sindicados, promesas, disponibilidades y derivados.
 Ver [diseño de tablas, campos, cobertura y controles](PLAN_EXTRACCION_CARTERAS_BDP.md).
 El archivo original y las condiciones de redistribución siguen pendientes; no hay una
-extracción histórica completa ni publicación nueva.
+extracción histórica SP completa ni publicación nueva. **Adenda posterior al PR #28:**
+se implementaron descarga con catálogo oficial bloqueado, staging reanudable/incremental,
+auditoría y gate de publicación; al no existir aún enlaces observados ni CSV SP, no se ha
+ejecutado con datos reales. Ver [AUTOMATIZACION_BDP.md](AUTOMATIZACION_BDP.md).
