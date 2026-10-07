@@ -101,7 +101,11 @@ no añade permisos de escritura a Actions y no contiene datos originales.
 
 - GitHub informa `MERGEABLE`: no hay conflictos con `main`.
 - Vercel: check de despliegue de preview aprobado.
-- Actions: jobs **no iniciados**, por pagos fallidos o límite de gasto de la
-  cuenta (anotación de GitHub). No es un resultado de las pruebas del código.
-- Antes de fusionar: corregir «Billing & plans», reejecutar los workflows
-  fallidos y exigir controles verdes. No se ha fusionado el PR.
+- Actions: las primeras corridas no iniciaron por pagos fallidos o límite de
+  gasto (anotación de GitHub), no por fallas del código. El propietario convirtió
+  el repositorio en público; la API confirmó `isPrivate: false`.
+- La integración no tiene permiso de reejecución (HTTP 403), por lo que se
+  disparan controles nuevos con un push a la misma rama. Revisar los checks
+  del **último commit** en el PR y exigirlos verdes antes de fusionar.
+- El estado vigente de las corridas se consulta en el PR; esta nota registra
+  el diagnóstico inicial, no una certificación de CI. No se ha fusionado el PR.
