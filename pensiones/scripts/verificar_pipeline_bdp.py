@@ -152,6 +152,20 @@ def main() -> int:
         shutil.rmtree(SALON, ignore_errors=True)
         for ruta in creadas:
             ruta.unlink(missing_ok=True)
+        _podar_vacias(EVIDENCIA_REAL)
+
+
+def _podar_vacias(ruta: Path) -> None:
+    """Borra directorios vacíos hacia arriba, sin tocar nada que contenga archivos."""
+    actual = ruta
+    while actual == PRIVATE_ROOT or PRIVATE_ROOT in actual.parents:
+        try:
+            actual.rmdir()  # sólo tiene efecto si está vacío
+        except OSError:
+            return  # contiene datos reales: no se toca
+        if actual == PRIVATE_ROOT:
+            return
+        actual = actual.parent
 
 
 def _verificar(creadas: list[Path]) -> int:
