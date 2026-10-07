@@ -114,6 +114,8 @@ COLUMNAS = {
     "total_coligadas_m_clp": "Total en coligadas, en M$.",
     "primer_periodo": "Primer mes en que la compañía aparece en los archivos publicados.",
     "ultimo_periodo": "Último mes en que la compañía aparece.",
-    "meses_reportados": "Número de meses publicados en que aparece.",
+    "meses_reportados": "Número de meses publicados en que la compañía tiene filas publicadas "
+                        "(meses con al menos una fila en alguna tabla; no cuenta meses en que solo "
+                        "envió archivos sin detalle).",
     "reporta_ultimo_mes": "Verdadero si aparece en el último mes publicado.",
 }

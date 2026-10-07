@@ -68,18 +68,27 @@ igual). Corregido: el paso ahora corre `python -m seguros.tests.test_formato_183
 pipelines.auto.tests.test_estable`. El contrato de publicadores sigue pasando (9/9) y el
 YAML valida.
 
-### F2 (medio, maestro de entidades — defecto del pipeline, pendiente de decisión)
+### F2 (medio, maestro de entidades — defecto del pipeline — **corregido**)
 
-`meses_reportados` (y con él `primer_periodo`) **sobrestima la cobertura real en 11 de 87
-compañías**: el publicador cuenta un mes cuando la compañía aparece en el ZIP (aparece en el
-encabezado de un archivo leído), no cuando aporta filas publicadas. Tres compañías figuran
-con meses reportados pero **cero filas en todas las tablas**: HUELEN generales
+`meses_reportados` (y con él `primer_periodo`) **sobraba la cobertura real en 11 de 87
+compañías**: el publicador contaba un mes cuando la compañía aparecía en el ZIP (en el
+encabezado de un archivo leído), no cuando aportaba filas publicadas. Tres compañías
+figuraban con meses reportados pero **cero filas en todas las tablas**: HUELEN generales
 (`96994700`, 70 meses contados, 0 filas; sus 70 archivos C llegan con encabezado y sin
 detalle), Suramericana Vida (`99017000`, 8 meses, 0 filas) y Chubb Seguros de Vida en
-generales (`99588060`, 2 meses, 0 filas). Otras 8 compañías sobrestiman entre 1 y 7 meses
+generales (`99588060`, 2 meses, 0 filas). Otras 8 compañías sobraban entre 1 y 7 meses
 (p. ej. Banchile Vida en generales: 10 contados, 3 reales; Starr: 117 contados, 115 reales).
-La causa raíz está en `leer_zip`/`main` de `actualizar_carteras.py`: `compania[rut]` se
-llena al leer el encabezado, sin exigir filas.
+
+**Corrección aplicada**: (1) el publicador ahora cuenta los meses por filas efectivamente
+publicadas; (2) se agregó `--solo-maestro`, que recalcula `aseguradoras.parquet` desde los
+Parquet publicados, y se ejecutó: el maestro pasó de 87 a **84 compañías** (las 3 sin filas
+quedaron fuera, coherente con la definición del diccionario: «meses publicados en que
+aparece») y los 11 casos corregidos cuadran al 100 % con los datos; (3) `data_manifest.json`
+se recalculó (solo cambió `seguros_maestro`: 87 → 84 registros; el orden del catálogo se
+conserva reemplazando in-place); (4) la descripción de `meses_reportados` en
+`metadatos_web.py` ahora dice explícitamente «meses con filas publicadas». Las tres
+compañías retiradas siguen documentadas aquí: enviaron reporte (archivos C sin detalle) pero
+nunca publicaron una fila.
 
 ### F3 (medio, calidad de la fuente — duplicados exactos)
 
@@ -89,8 +98,11 @@ hasta 22 (ej.: bono `BNTRA-D` de Seguros Vida Security, 2025-03, 22 copias idén
 un artefacto del lector: las muestras de la fuente no traen duplicados, la escritura
 reemplaza el período completo y ningún compañía-mes está duplicado por entero — las líneas
 repetidas vienen dentro del archivo que envía la compañía y la CMF las publica tal cual. El
-pipeline no deduplica ni avisa. Al agregar por instrumento o compañía, esos meses sobrestiman
-el valor final.
+pipeline no deduplica. Al agregar por instrumento o compañía, esos meses sobrestiman
+el valor final. **Mitigación aplicada**: el publicador ahora avisa cada mes con duplicados
+exactos (`<tabla>: N filas 100% idénticas (duplicados de la fuente)`), así el lector queda
+documentado en el manifiesto; los datos ya publicados se conservan tal cual (son la fuente).
+La deduplicación aktive queda como decisión de política (ver Recomendaciones).
 
 ### F4 (medio, calidad de la fuente — doble reporte en el control)
 
@@ -168,22 +180,35 @@ la compañía no reportó; el pipeline publica lo que la CMF publica y no interp
 - **Vencimientos largos (2041–2070)**: normales en renta fija (bonos a 30+ años); sólo los
   > 2070 se reportan en F5.
 
-## 4. Recomendaciones (pendientes de decisión)
+## 4. Correcciones aplicadas en esta auditoría
 
-1. **F2**: calcular `meses_reportados` desde las filas efectivamente publicadas (o al menos
-   desde el archivo C leído sin error) y regenerar `aseguradoras.parquet`; hoy 3 compañías
-   figuran con meses reportados sin una sola fila publicada.
-2. **F3**: deduplicar filas 100 % idénticas al publicar, o al menos registrar un aviso en el
-   manifiesto (hoy el lector publica «lo que la CMF entrega», política documentada, pero sin
-   aviso de duplicidad).
-3. **F4**: avisar (o marcar) el doble reporte de `(periodo, sector, rut, tipo_inversion)`
-   en el control; los meses de traslape de fusiones hoy inflan las agregaciones por compañía.
-4. **F5–F7**: documentar en el diccionario de datos como calidad de la fuente; no corregir
-   unilateralmente (sería alterar el dato publicado por la CMF).
-5. **F8**: unificar el formato del RUT entre el manifiesto y el Parquet, o documentar la
-   diferencia.
+| # | Hallazgo | Corrección | Archivos |
+| :--- | :--- | :--- | :--- |
+| 1 | F1: el paso de pruebas del workflow ejecutaba 0 pruebas | El paso corre `python -m seguros.tests.test_formato_1835` (el `main()` real) además del unittest de `estable`; contrato de publicadores sigue pasando (9/9) | `.github/workflows/seguros_carteras.yml` |
+| 2 | F2: maestro con meses sobrestimados (11 compañías; 3 sin filas publicadas) | Los meses se cuentan por filas publicadas; se agregó `--solo-maestro` y se recalculó el maestro desde los Parquet: 87 → **84 compañías**, métricas cuadradas al 100 %; `data_manifest.json` recalculado (solo cambió `seguros_maestro` 87 → 84, con el orden del catálogo preservado); la descripción de `meses_reportados` ahora dice «meses con filas publicadas» | `seguros/scripts/actualizar_carteras.py`, `seguros/scripts/metadatos_web.py`, `docs/outputs/seguros/aseguradoras.parquet`, `docs/outputs/seguros/manifest.json`, `data_manifest.json` |
+| 3 | F3: duplicados exactos sin aviso | El publicador avisa cada mes con duplicados exactos por tabla en el manifiesto | `seguros/scripts/actualizar_carteras.py` |
+| 4 | F4: doble reporte en el control sin aviso | `leer_zip` avisa cada clave `(rut, tipo_inversion)` con valores distintos en el mes | `seguros/scripts/actualizar_carteras.py` |
+| 5 | F8: formato del RUT distinto entre manifiesto y Parquet | `cargar_control` normaliza las claves al formato canónico (cuerpo sin DV); el control recalculado ya se guarda así | `seguros/scripts/actualizar_carteras.py`, `docs/outputs/seguros/manifest.json` |
 
-## 5. Límites de la auditoría
+**Verificación tras las correcciones**: `python -m seguros.tests.test_formato_1835` OK;
+`pipelines.auto` 14/14 OK; el maestro recalculado cuadra al 100 % con las filas publicadas
+(0 diferencias en 84 compañías); los 118 períodos y las 8 tablas de detalle **no se
+tocaron** (siguen siendo la fuente CMF tal cual).
+
+## 5. Recomendaciones pendientes (decisión de política del pipeline)
+
+1. **F3**: deduplicar filas 100 % idénticas al publicar (hoy se avisan, no se eliminan). Si se
+   adopta, conviene reescribir la historia afectada (28.240 filas en `renta_fija`, 5.931 en
+   `extranjeros`, 92 en `fondos_mutuos`, 4 en `acciones`).
+2. **F4**: en meses de traslape de fusiones, decidir si el control publica ambos reportes
+   (hoy, con aviso) o solo el de la sociedad sobreviviente.
+3. **F5–F7**: documentar en el diccionario de datos como calidad de la fuente (fechas
+   imposibles, `run_fondo = "1"`, nombres con `#`); no corregir unilateralmente.
+4. **Cobertura**: `renta_fija` y `bienes_raices` parten en 2024-12 por peso (~5 MB/mes). Si
+   se quiere la historia completa, basta bajar `DESDE_TABLA` y dejar que el flujo
+   incremental complete los meses (el código ya lo soporta).
+
+## 6. Límites de la auditoría
 
 - No se pudo descargar los ZIP originales de la CMF desde este entorno (el proxy no lo
   permite), así que la atribución «dato fuente vs. error del lector» se hizo por consistencia
