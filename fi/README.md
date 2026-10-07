@@ -73,8 +73,8 @@ python -m fi.scripts.revisar_cobertura_eeff --red --reanudar # solo reusa respue
 ```
 
 El workflow de revisión es **de solo lectura**, sin horario ni permisos de publicación.
-La corrección de `vig` tiene pruebas de conservación/caché; el conjunto FI suma **97**
-pruebas, y la batería unitaria del repositorio comprobada suma **440**.
+La corrección de `vig` tiene pruebas de conservación/caché; el conjunto FI suma **104 pruebas**
+con `python -m unittest discover -s fi/tests -v`.
 
 ### Fuente verificada
 
@@ -233,17 +233,19 @@ La CMF no publica un archivo masivo de carteras FI: cada fondo tiene, por trimes
 página por tipo de cartera y otra de pactos. `scripts/actualizar_carteras.py` las recorre.
 
 - **`fi_pactos`** reúne operaciones VRC (venta con compromiso de retrocompra) y CRV (compra con
-  compromiso de retroventa). El manifiesto registra **1.716 filas** en **58 cierres con operaciones**,
-  desde **2012-03** hasta **2026-06**; junio de 2026 aporta **40 filas**. El primer cierre con filas
-  reales apareció al consultar el registro completo, no al extrapolar períodos de un fondo aislado.
+  compromiso de retroventa). El manifiesto registra **1.698 filas** en **55 cierres con operaciones**,
+  desde **2012-03** hasta **2026-06**; junio de 2026 aporta **40 filas**. La auditoría encontró y
+  quitó 18 filas de plantilla histórica (2012-03–2014-03) que traían `Nemotecnico`, `ISIN` y montos
+  cero; `2012-06`, `2013-03` y `2013-06` quedaron correctamente como cierres sondeados sin operaciones.
 - El barrido histórico exclusivo de pactos cubrió **2008-03–2019-12**, los **48 cierres** y los
-  **1.683 RUN** devueltos por el registro CMF. Los 48 cierres quedaron parseados; **32** tuvieron
-  operaciones (**939 filas**) y **16** no devolvieron operaciones reales. Se excluyeron **107 filas
-  centinela** de relleno y no se fabricaron filas cero. `pactos/historico_control.json` conserva el
-  resultado y las huellas SHA-256 por cierre; `periodos_sondeados` distingue la consulta completa
-  de los 58 períodos que sí tienen filas.
-- El backfill de Actions (2026-10-07) terminó correctamente; el cierre 2026-09 aún está dentro del
-  plazo de presentación y no se espera todavía.
+  **1.683 RUN** devueltos por el registro CMF. Los 48 cierres quedaron parseados; **29** tuvieron
+  operaciones reales (**921 filas**) y **19** no devolvieron operaciones reales. Se excluyeron **125 filas
+  centinela** de relleno y no se fabricaron operaciones ni montos cero. `pactos/historico_control.json`
+  conserva el resultado y las huellas SHA-256 por cierre; `periodos_sondeados` distingue la consulta
+  completa de los 55 períodos que sí tienen filas.
+- El backfill de Actions (2026-10-07) completó las 48 consultas históricas sin fallas de descarga;
+  la revisión posterior encontró y corrigió las plantillas descritas arriba. El cierre 2026-09 aún
+  está dentro del plazo de presentación y no se espera todavía.
 - **Cautela móvil:** para análisis, se recomienda tratar siempre los dos cierres trimestrales más
   recientes de `fi_pactos` como cautelares por posible rezago de carga de la fuente CMF. Hoy son
   **2026-03** y **2026-06**. Los registros se conservan, pero no se consideran definitivos para
@@ -257,6 +259,14 @@ página por tipo de cartera y otra de pactos. `scripts/actualizar_carteras.py` l
   `fi_registro_fondos_universo.json`.
 - Vistas: `fi_lista_entidades`, `fi_cartera_nacional`, `fi_cartera_extranjera`,
   `fi_metodo_participacion`, `fi_bienes_raices`, `fi_futuros`, `fi_opciones`, `fi_pactos`.
+
+**Cómo leer valores cero:** en `fi_balance` y `fi_resultados`, el cero aparece explícitamente en
+el XML FIEF de la CMF; el extractor no lo inventa: exige que cada cuenta del catálogo esté presente
+en el XML y rechaza las faltantes. En las carteras también se conservan ceros reportados por la
+fuente, incluso si otras columnas identifican un instrumento real. En `fi_pactos` solo se eliminan
+plantillas cuando coinciden varias señales a la vez (contraparte/RUT ficticios, rótulos de columna
+en lugar de datos y todos los importes y la tasa en cero); nunca se filtra una operación solo por
+sus montos cero. Véase la [auditoría de calidad FI](../docs/notas/auditoria_calidad_fi_2026-10-07.md).
 
 Los extractores/REPO antiguos (`cartera_inversiones/`, `repos/`, scripts 01–04) se retiraron el
 2026-09-28; la cartera actual y `fi_pactos` se alimentan del flujo IFRS vigente. Para comparar

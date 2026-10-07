@@ -313,14 +313,19 @@ def _clave_placeholder(valor) -> str:
 
 
 def es_relleno_pacto(fila: dict) -> bool:
-    """Reconoce la fila ficticia VRC/CRV (p. ej. «Nombre Contraparte», ISIN y montos cero).
+    """Reconoce filas de plantilla VRC/CRV y las separa de operaciones reales.
 
-    La CMF puede usar fechas de cobertura reales en esta fila, por lo que las fechas no sirven
-    para distinguirla. Se exigen varios rótulos centinela, RUT 0 y todos los montos/tasa en cero.
+    La CMF ha usado más de una plantilla: además de «Nombre Contraparte»/RUT 0,
+    en cierres antiguos aparece «Nombre Contraparte 1» junto a los RUT ficticios
+    111111111 o 999234999. Las fechas de esas filas pueden ser fechas de cobertura
+    reales, así que no se usan como señal. Se exige la combinación de operación,
+    contraparte genérica, RUT de plantilla, varios rótulos de columna repetidos y
+    todos los montos/tasa en cero. Un monto cero por sí solo nunca descarta una fila.
     """
     if _clave_placeholder(fila.get("tipo_operacion")) not in {"vrc", "crv"}:
         return False
-    if _clave_placeholder(fila.get("contraparte")) != "nombre contraparte":
+    contraparte = _clave_placeholder(fila.get("contraparte"))
+    if not re.fullmatch(r"nombre contraparte(?: \d+)?", contraparte):
         return False
     marcadores = (
         _clave_placeholder(fila.get("isin")) == "isin",
@@ -330,7 +335,8 @@ def es_relleno_pacto(fila: dict) -> bool:
     )
     if sum(marcadores) < 3:
         return False
-    if str(fila.get("rut_contraparte") or "0") != "0":
+    rut_plantilla = str(fila.get("rut_contraparte") or "0")
+    if rut_plantilla not in {"0", "111111111", "999234999"}:
         return False
     montos = ("valor_inicial_miles_mf", "tasa_pacto_pct", "valor_final_miles_mf",
               "valorizacion_cierre_miles_mf", "valor_mercado_miles_moneda")
