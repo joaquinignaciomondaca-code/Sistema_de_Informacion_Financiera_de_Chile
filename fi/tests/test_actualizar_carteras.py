@@ -33,6 +33,100 @@ def _tabla_pactos(periodo: str, codigo: str, detalle: list[str], total: dict[int
     return f"<table>{encabezado}{subencabezado}{meta}{fila}{total_html}</table>"
 
 
+class TextoCmfTest(unittest.TestCase):
+    """Codificación, centinelas de texto y reparación de contrapartes de las páginas CMF."""
+
+    def test_decodifica_latin1_declarado_y_utf8(self):
+        pagina = ('<html><head><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">'
+                  "</head><body><p>Larraín Vial S.A. Corredora de Bolsa</p></body></html>")
+        self.assertIn("Larraín Vial", ac.decodificar_html(pagina.encode("latin-1")))
+        self.assertIn("Larraín Vial", ac.decodificar_html(pagina.encode("utf-8")))
+
+    def test_repara_mojibake_de_utf8_leido_como_latin1(self):
+        """Una página UTF-8 con un byte suelto se lee en latin-1: las tildes no se publican rotas."""
+        raw = b'<p>Euroam' + "érica".encode() + b'\xe9 AGF S.A.</p>'
+        texto = ac.decodificar_html(raw)
+        self.assertIn("Euroamérica", texto)
+        self.assertNotIn("Ã©", texto)
+
+    def test_texto_sano_no_se_toca(self):
+        for pagina in ("<p>Compania de Seguros S.A.</p>", "<p>Larraín Vial S.A.</p>", "<p>Pacto UF $$</p>"):
+            self.assertEqual(ac.decodificar_html(pagina.encode("utf-8")), pagina)
+
+    def test_centinelas_de_identificacion_se_publican_como_vacio(self):
+        for col in ("isin", "nemotecnico", "nombre_emisor"):
+            with self.subTest(col=col):
+                for centinela in ("NA", "n/a", " N/A ", "S/I", "", "  "):
+                    self.assertIsNone(ac.convertir(centinela, "t", col))
+                self.assertEqual(ac.convertir("CL0002936111", "t", col), "CL0002936111")
+        # En las columnas de codificación «NA» es un código de la CMF, no «sin dato».
+        self.assertEqual(ac.convertir("NA", "t", "tipo_interes"), "NA")
+        self.assertEqual(ac.convertir("NA", "t", "pais"), "NA")
+
+    def test_cuerpo_contraparte_descarta_solo_el_dv_valido(self):
+        self.assertEqual(ac.cuerpo_contraparte("805370009"), "80537000")
+        self.assertEqual(ac.cuerpo_contraparte("80537000-9"), "80537000")
+        self.assertEqual(ac.cuerpo_contraparte("80537000"), "80537000")
+        # Sin DV válido al final el valor se conserva tal como llegó (dato de la CMF).
+        self.assertEqual(ac.cuerpo_contraparte("80537001"), "80537001")
+        self.assertIsNone(ac.cuerpo_contraparte(None))
+
+    def test_contraparte_vacia_o_danada_se_completa_con_el_padron(self):
+        self.assertEqual(ac.normalizar_contraparte("96921130", None), "MBI CORREDORES DE BOLSA S.A.")
+        self.assertEqual(ac.normalizar_contraparte("76081215", "Larra\ufffdVial Activos S.A Adm. Gral. De Fondos"),
+                         "LARRAIN VIAL ACTIVOS S.A. ADM. GRAL. DE FONDOS")
+        self.assertEqual(ac.normalizar_contraparte("77750920", "Euroam\ufffdrica AGF S.A."), "Euroamérica AGF S.A.")
+
+    def test_contraparte_con_grafias_alternativas_del_mismo_rut(self):
+        casos = [
+            ("80537000", "LARRAIN VIAL S.A. CORREDORA DE BOLSAS", "LARRAIN VIAL S.A. CORREDORA DE BOLSA"),
+            ("8053700", "LARRAIN VIAL S.A. CORREDORA DE BOLSAS", "LARRAIN VIAL S.A. CORREDORA DE BOLSA"),
+            ("76081215", "LARRAIN VIAL ACTIVOS S.A.", "LARRAIN VIAL ACTIVOS S.A. ADM. GRAL. DE FONDOS"),
+            ("96899230", "EUROAMERICA C. DE B.", "EUROAMERICA CORREDORES DE BOLSA S.A."),
+            ("96899230", "Euroamerica Corredora de Bolsa S.A.", "EUROAMERICA CORREDORES DE BOLSA S.A."),
+            ("96772490", "CONSORCIO FINANCIERO", "CONSORCIO CORREDORES DE BOLSA S.A."),
+            ("96921130", "MBI CB", "MBI CORREDORES DE BOLSA S.A."),
+            ("96921130", "mbi corredores de bolsa", "MBI CORREDORES DE BOLSA S.A."),
+            ("96519800", "BCI CORREDORES DE BOLSA S.A", "BCI CORREDOR DE BOLSA S.A."),
+        ]
+        for rut, nombre, esperado in casos:
+            with self.subTest(rut=rut, nombre=nombre):
+                self.assertEqual(ac.normalizar_contraparte(rut, nombre), esperado)
+
+    def test_contraparte_no_fusiona_entidades_distintas(self):
+        # La AGF Larraín Vial con el RUT de la corredora (fuente inconsistente) se deja tal cual.
+        self.assertEqual(ac.normalizar_contraparte("80537000-9", "Larraín Vial Activos S.A. Adm. Gral. de Fondos"),
+                         "Larraín Vial Activos S.A. Adm. Gral. de Fondos")
+        self.assertEqual(ac.normalizar_contraparte("80537000", "LARRAIN VIAL ACTIVOS S.A. ADM. GRAL. DE FONDOS"),
+                         "LARRAIN VIAL ACTIVOS S.A. ADM. GRAL. DE FONDOS")
+        # La corredora con el RUT de la AGF tampoco: el RUT y el nombre del padrón no coinciden.
+        self.assertEqual(ac.normalizar_contraparte("76081215", "LarraIn Vial S.A Corredora de Bolsa"),
+                         "LarraIn Vial S.A Corredora de Bolsa")
+        # El mismo RUT con otro nombre (rebautizo, p. ej. IM Trust → Credicorp) no se reescribe.
+        self.assertEqual(ac.normalizar_contraparte("96489000", "IM TRUST SA CB"), "IM TRUST SA CB")
+        self.assertEqual(ac.normalizar_contraparte("96489000", "CREDICORP CAPITAL S.A. CB"), "CREDICORP CAPITAL S.A. CB")
+
+    def test_avisos_texto_danado_reporta_lo_no_reconstruido(self):
+        sanas = {"pactos": [{"contraparte": "BANCO BICE", "nemotecnico": "FNBCI-151226"}]}
+        self.assertEqual(ac.avisos_texto_danado(sanas), [])
+        danadas = {"cartera_nacional": [{"nemotecnico": "ARRENDA.VICU\ufffdSPA"}]}
+        avisos = ac.avisos_texto_danado(danadas)
+        self.assertEqual(len(avisos), 1)
+        self.assertIn("cartera_nacional.nemotecnico", avisos[0])
+
+    def test_pagina_latin1_se_parsea_con_el_nombre_correcto(self):
+        detalle = [
+            "CRV", "31/12/2024", "01/01/2025", "Larraín Vial S.A. Corredora de Bolsa", "80537000",
+            "1.000", "$$", "0,1200", "1.001", "1.000", "CL0000000001", "BCHIUO0911",
+            "Banco de Chile", "BTP", "900",
+        ]
+        pagina = _tabla_pactos("202412", "CRV", detalle, {5: "1.000", 8: "1.001", 9: "1.000", 14: "900"})
+        filas, malas, descuadres, _, _ = leer_pactos_detallado(pagina.encode("latin-1"))
+        self.assertEqual(malas, [])
+        self.assertEqual(descuadres, [])
+        self.assertEqual(filas[0]["contraparte"], "LARRAIN VIAL S.A. CORREDORA DE BOLSA")
+
+
 class PactosHistoricosTest(unittest.TestCase):
     def test_excluye_fila_ficticia_y_conserva_operacion_real(self):
         relleno = [
@@ -197,6 +291,71 @@ class PactosHistoricosTest(unittest.TestCase):
                     filas_objetivo += 1
         self.assertGreater(filas_objetivo, 0)
         self.assertEqual(diferencias, [])
+
+    def test_pactos_publicados_sin_caracter_de_reemplazo(self):
+        carpeta = ac.RAIZ / "docs" / "outputs" / "fi" / "pactos"
+        if not carpeta.exists():
+            self.skipTest("no hay salida FI publicada en este checkout")
+        danadas = []
+        for ruta in sorted(carpeta.glob("*.parquet")):
+            if ruta.name == "_vacio.parquet":
+                continue
+            tabla = pq.read_table(ruta)
+            for col in ac.COLUMNAS_TEXTO:
+                if col not in tabla.column_names:
+                    continue
+                for valor in tabla.column(col).to_pylist():
+                    if isinstance(valor, str) and "\ufffd" in valor:
+                        danadas.append((ruta.name, col, valor))
+        self.assertEqual(danadas, [])
+
+    def test_pactos_publicados_sin_centinelas_de_no_aplica(self):
+        """«NA»/«N/A» se publican como vacío: una sola forma de decir «sin dato»."""
+        carpeta = ac.RAIZ / "docs" / "outputs" / "fi" / "pactos"
+        if not carpeta.exists():
+            self.skipTest("no hay salida FI publicada en este checkout")
+        centinelas = []
+        for ruta in sorted(carpeta.glob("*.parquet")):
+            if ruta.name == "_vacio.parquet":
+                continue
+            tabla = pq.read_table(ruta, columns=sorted(ac.CENTINELAS_TEXTO))
+            for col in tabla.column_names:
+                for valor in tabla.column(col).to_pylist():
+                    if isinstance(valor, str) and valor.strip().upper() in ac.TEXTO_VACIO:
+                        centinelas.append((ruta.name, col, valor))
+        self.assertEqual(centinelas, [])
+
+    def test_pactos_publicados_publican_el_cuerpo_del_rut(self):
+        """`rut_contraparte` es el cuerpo sin DV; el DV pegado (805370009) se descarta."""
+        carpeta = ac.RAIZ / "docs" / "outputs" / "fi" / "pactos"
+        if not carpeta.exists():
+            self.skipTest("no hay salida FI publicada en este checkout")
+        pegados = []
+        for ruta in sorted(carpeta.glob("*.parquet")):
+            if ruta.name == "_vacio.parquet":
+                continue
+            for valor in pq.read_table(ruta, columns=["rut_contraparte"])["rut_contraparte"].to_pylist():
+                if valor and ac.cuerpo_contraparte(valor) != valor:
+                    pegados.append((ruta.name, valor))
+        self.assertEqual(pegados, [])
+
+    def test_pactos_publicados_cumplen_las_reglas_de_contraparte(self):
+        """La contraparte publicada es la que devuelve la normalización vigente (idempotente)."""
+        carpeta = ac.RAIZ / "docs" / "outputs" / "fi" / "pactos"
+        if not carpeta.exists():
+            self.skipTest("no hay salida FI publicada en este checkout")
+        diferencias, filas = [], {}
+        for ruta in sorted(carpeta.glob("*.parquet")):
+            if ruta.name == "_vacio.parquet":
+                continue
+            for fila in pq.read_table(ruta, columns=["periodo", "run_fondo", "contraparte",
+                                                    "rut_contraparte"]).to_pylist():
+                if ac.normalizar_contraparte(fila["rut_contraparte"], fila["contraparte"]) != fila["contraparte"]:
+                    diferencias.append((ruta.name, fila["rut_contraparte"], fila["contraparte"]))
+                filas[(fila["periodo"], fila["run_fondo"])] = fila["contraparte"]
+        self.assertEqual(diferencias, [])
+        # La única contraparte vacía del histórico (2014-12, RUN 9077) se completó con el padrón.
+        self.assertEqual(filas[("2014-12", "9077")], "MBI CORREDORES DE BOLSA S.A.")
 
     def test_escribir_vacio_reemplaza_el_cierre_anual_existente(self):
         salida_anterior = ac.SALIDA
