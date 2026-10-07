@@ -19,6 +19,7 @@ on:
       # Módulos compartidos que importan el extractor: un cambio ahí debe volver a probar
       # y a publicar (en las corridas programadas no corre el job `pruebas` de web_audit).
       - pipelines/auto/estable.py
+      - pipelines/auto/rut.py
   workflow_dispatch:
     inputs:
       desde:
@@ -60,6 +61,10 @@ jobs:
     if: github.ref_name == 'main' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[fi-pactos-backfill]'))
     runs-on: ubuntu-latest
     timeout-minutes: 330
+    # Los nombres de contrapartes y emisores traen tildes: el modo UTF-8 de Python evita que una
+    # lectura/escritura sin encoding explícito dependa del locale del runner.
+    env:
+      PYTHONUTF8: '1'
     outputs:
       publicados: ${{ steps.publicar.outputs.publicados }}
     steps:
