@@ -233,10 +233,17 @@ La CMF no publica un archivo masivo de carteras FI: cada fondo tiene, por trimes
 página por tipo de cartera y otra de pactos. `scripts/actualizar_carteras.py` las recorre.
 
 - **`fi_pactos`** reúne operaciones VRC (venta con compromiso de retrocompra) y CRV (compra con
-  compromiso de retroventa). El manifiesto registra **777 filas** en **26 cierres** desde
-  2020-03 hasta **2026-06**; junio de 2026 aporta **40 filas**.
-- La corrida más reciente de `fi_carteras.yml` (2026-10-04) terminó bien y reportó **0 trimestres
-  nuevos**. El cierre 2026-09 todavía está dentro del plazo de presentación y no se espera aún.
+  compromiso de retroventa). El manifiesto registra **1.716 filas** en **58 cierres con operaciones**,
+  desde **2012-03** hasta **2026-06**; junio de 2026 aporta **40 filas**. El primer cierre con filas
+  reales apareció al consultar el registro completo, no al extrapolar períodos de un fondo aislado.
+- El barrido histórico exclusivo de pactos cubrió **2008-03–2019-12**, los **48 cierres** y los
+  **1.683 RUN** devueltos por el registro CMF. Los 48 cierres quedaron parseados; **32** tuvieron
+  operaciones (**939 filas**) y **16** no devolvieron operaciones reales. Se excluyeron **107 filas
+  centinela** de relleno y no se fabricaron filas cero. `pactos/historico_control.json` conserva el
+  resultado y las huellas SHA-256 por cierre; `periodos_sondeados` distingue la consulta completa
+  de los 58 períodos que sí tienen filas.
+- El backfill de Actions (2026-10-07) terminó correctamente; el cierre 2026-09 aún está dentro del
+  plazo de presentación y no se espera todavía.
 - **Cautela móvil:** para análisis, se recomienda tratar siempre los dos cierres trimestrales más
   recientes de `fi_pactos` como cautelares por posible rezago de carga de la fuente CMF. Hoy son
   **2026-03** y **2026-06**. Los registros se conservan, pero no se consideran definitivos para

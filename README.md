@@ -114,13 +114,13 @@ releer cierres históricos porque la CMF rechazó parte de las descargas; el úl
 siguen en 2026-06. Seis documentos y los contextos adicionales defectuosos se excluyen con motivo
 explícito. [Fuente, controles y ejecución](fi/README.md).
 
-*Cifras del manifiesto 2026-10-06; cada serie muestra su propio último período publicado.*
+*Cifras del manifiesto 2026-10-07; cada serie muestra su propio último período publicado.*
 
 | Industria | Tablas | Filas | Serie | Fuente |
 |---|---:|---:|---|---|
 | Seguros de Vida y Generales | 9 | 4.103.093 | 2016-11 → 2026-08 | CMF · Circular 1835 |
 | Fondos Mutuos | 7 | 3.582.929 | Carteras 2001-01 → 2026-08; EEFF 2010-12 → 2025-12 | CMF · Circulares 1333 y 1997 |
-| Fondos de Inversión | 10 | 3.186.553 | Carteras 2020-03 → 2026-06; EEFF 2022-03 → 2026-06 (16 cierres, backfill parcial) | CMF · LUF / Circular 1998 · XML FIEF |
+| Fondos de Inversión | 10 | 3.187.492 | Carteras 2020-03 → 2026-06; pactos 2012-03 → 2026-06; EEFF 2022-03 → 2026-06 (16 cierres, backfill parcial) | CMF · LUF / Circular 1998 · XML FIEF |
 | Corredoras de Bolsa | 4 | 185.921 | 2010-12 → 2026-06 | CMF · FECU IFRS |
 | Administradoras Generales de Fondos | 3 | 129.711 | 2010-06 → 2026-06 | CMF · IFRS |
 | Macroeconomía y Tasas | 24 | 41.306 | diaria / mensual / trimestral | BCCh |

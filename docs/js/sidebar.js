@@ -313,7 +313,7 @@ const EXPLORER_TREE = [
             id: "cat_fi_derivados_pactos",
             type: "circular",
             label: "Derivados y Pactos · Informes IFRS",
-            badge: "Trimestral desde 2020-03",
+            badge: "Derivados desde 2020-03 · pactos desde 2012-03",
             badgeType: "data",
             status: "active",
             sector: "fi",
