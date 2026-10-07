@@ -2,6 +2,8 @@
 
 **Revisión: 2026-10-07 · continuación del PR #28.** El PR #28 está fusionado en `main` (`d3e295d4`); sus checks `audit`, `tests`, `automatizacion`, `pruebas` y el preview de Vercel finalizaron correctamente. Esta revisión amplía el staging privado; no modifica los datos AFP publicados ni abre el gate.
 
+**Re-verificación posterior al PR #30 (`aa25f740`), 2026-10-07:** se volvió a comprobar la fuente oficial antes de descargar. El portal BDP sigue respondiendo 404, el catálogo sigue sin URLs ni evidencia y el gate sigue bloqueado. **La ingesta histórica no se inició.** Detalle y comandos en [Re-verificación de fuentes](#re-verificación-de-fuentes-2026-10-07-posterior-al-pr-30).
+
 ## Estado ejecutivo
 
 - Hay código para validar/descargar paquetes ZIP oficiales una vez que se registren las URL reales y evidencia de captura saneada desde la interfaz BDP; incluye revalidación HTTP, continuidad de transferencias, procesamiento CSV por lotes reanudables, revisiones y auditoría de staging.
@@ -10,6 +12,52 @@
 - El gate `config/publicacion_bdp.json` sigue bloqueado: faltan originales SP, cotejo, semántica/cobertura histórica y evidencia vigente de redistribución.
 - Actions no guarda originales ni Parquet privados como artifacts/caché de un repositorio público. El ciclo de ingesta automática requiere un runner Linux propio, aislado, con el label `bdp-private-stage` y `.local-data/` persistente. La variable de repositorio `BDP_PRIVATE_RUNNER_READY=true` lo habilita explícitamente; hoy no se ha configurado en este cambio.
 - No hay nuevos Parquet en `docs/outputs/`, tablas BDP en `data_manifest.json`, vistas DuckDB ni referencias web a manifiestos inexistentes. Vercel no publica datos BDP en este estado.
+
+## Re-verificación de fuentes (2026-10-07, posterior al PR #30)
+
+Se volvió a intentar la verificación de la fuente oficial antes de cualquier descarga. **Resultado: no están dadas las condiciones; la ingesta histórica completa de los tres paquetes no se preparó ni se ejecutó. Catálogo y gate permanecen bloqueados.**
+
+### Portal oficial de la Superintendencia
+
+La página institucional vigente <https://www.spensiones.cl/portal/institucional/594/w3-propertyname-621.html> («Estadísticas e Informes») sigue enlazando «Acceso a bases de datos» a `https://www.spensiones.cl/apps/bdp/index.php`, pero esa ruta responde con la página 404 de la SP:
+
+| URL consultada | Resultado observado |
+|---|---|
+| `https://www.spensiones.cl/apps/bdp/index.php` | redirige a `https://www.spensiones.cl/404%20HTML` («Página no encontrada») |
+| `https://www.spensiones.cl/apps/bdp/` | misma 404 |
+| `http://www.spensiones.cl/apps/bdp/index.php` | misma 404 |
+| `https://www.spensiones.cl/apps/bdp/index.php?menu=sci` | misma 404 |
+
+No se observaron el formulario, los tres enlaces, los nombres de archivo, las fechas ni el método HTTP de descarga. Sin esa observación no existe captura válida y el descargador no tiene nada que ejecutar. No se inventaron URLs, no se automatizó un POST no observado, no se eludió CAPTCHA/WAF y no se usaron enlaces con tokens o credenciales.
+
+### Espejo de terceros (no oficial, no utilizable como fuente)
+
+En `github.com/Sud-Austral/Descargas`, carpeta «Carteras históricas de Inversión de los Fondos de Pensiones» (rama `main`, 27 entradas) hay `cartera_mensual_1996.xlsx` a `cartera_mensual_2021.xlsx` y `docchist.pdf` (378.629 bytes, SHA-256 `2c3153be6f0c68fa86a06a13e16e8efa56f4feb060f9bfdaf65802e89a0147e4`). No contiene 2022 en adelante ni los tres paquetes ZIP del BDP, por lo que **no sustituye** a los originales; el plan ya lo descarta como fuente numérica del backfill.
+
+Ese `docchist.pdf` (manual SP, versión actualizada mayo 2020, 11 páginas) conserva en su nota al pie 1: «Esta base es de uso exclusivo para fines de investigación. Se solicita no distribuir esta información». Es la única condición de uso verificable a la fecha y proviene de un espejo, no de la SP: las **condiciones vigentes siguen sin verificarse** y el criterio `redistribucion_de_datos_y_derivados` no puede aprobarse con ella.
+
+### Estado del repositorio comprobado
+
+- `config/paquetes_bdp.json`: `estado: bloqueado_sin_captura_oficial`; los tres IDs requeridos están presentes y los ocho campos de cada paquete están en `null`.
+- `.local-data/` no existe en el checkout: sin `evidencia/`, sin `originales/` y sin `staging/`.
+- `config/publicacion_bdp.json`: `bloqueado`, los cinco criterios `pendiente`, `aprobacion_final: null`.
+- `docs/outputs/pensiones/bdp/` no existe y `data_manifest.json` no referencia tablas BDP.
+
+### Comandos ejecutados
+
+| Comando | Resultado |
+|---|---|
+| `python -m pensiones.scripts.download_bdp_packages --check-only` | `ready=false`, salida 0: «Faltan URL/nombre/fecha o evidencia saneada capturada desde la interfaz oficial para: historico_1996_2005, historico_2006_2015, historico_2016_actualidad». No contactó a la SP. |
+| `python -m pensiones.scripts.check_publicacion_bdp` | `ready=false`: política bloqueada, los 5 criterios pendientes, «No se entregó un staging auditado», `publicacion_de_datos: "no ejecutada"`. |
+| `python -m pensiones.scripts.extraer_carteras_afp --scan .local-data/pensiones/bdp/originales --output .local-data/pensiones/bdp/staging --filas-por-lote 10000 --max-lotes 0 --minutos 300` | salida 3 (sin originales que procesar). No se creó staging ni se inventaron filas. |
+| `python -m pensiones.scripts.audit_carteras_afp .local-data/pensiones/bdp/staging` | falla: «Falta manifest.json de staging». |
+| `python -m unittest discover -s pensiones/tests -v` | 31 pruebas, OK, sin red. |
+
+No hubo descarga, por lo que no existen filas, fechas ni hashes de paquetes que reportar, y la publicación no está autorizada.
+
+### Códigos de salida del extractor (corrección de esta revisión)
+
+`extraer_carteras_afp.py` reservaba el código 2 al límite/checkpoint reanudable, pero `argparse` también terminaba con 2 ante un uso incorrecto o la ausencia de originales; repetir la orden en ese caso habría girado en bucle sin reanudar nada. Ahora: `0` staging completo, `2` límite con checkpoint íntegro (repetir la misma orden), `3` uso incorrecto o sin originales, `1` error de ingesta. Lo cubren `test_missing_originals_exits_with_usage_code_not_checkpoint_code` y `test_exit_codes_separate_checkpoint_from_complete_staging`.
 
 ## Componentes implementados
 

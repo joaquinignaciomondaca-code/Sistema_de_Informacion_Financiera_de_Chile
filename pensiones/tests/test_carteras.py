@@ -28,7 +28,7 @@ from download_bdp_packages import (
     download_package,
     load_catalog,
 )
-from extraer_carteras_afp import _acquire_lock, extract, mapping
+from extraer_carteras_afp import _acquire_lock, extract, main as extract_main, mapping
 from publish_bdp import DEFAULT_PUBLIC_ROOT, _publish_tree, publish
 
 
@@ -235,6 +235,39 @@ class CarterasPipelineTest(unittest.TestCase):
         manifest = json.loads((self.out / "manifest.json").read_text())
         self.assertEqual(set(manifest["active_sources"]), {"recent!2022.csv"})
         self.assertEqual(audit(self.out)["filas"], 1)
+
+    def test_missing_originals_exits_with_usage_code_not_checkpoint_code(self):
+        """Sin originales no hay checkpoint: el código no puede ser el 2 reanudable."""
+        empty_scan = self.root / "originales-vacios"
+        empty_scan.mkdir(parents=True)
+        staging = self.root / "staging-vacio"
+        code = extract_main(
+            [
+                "--scan",
+                str(empty_scan),
+                "--output",
+                str(staging),
+                "--filas-por-lote",
+                "10",
+                "--max-lotes",
+                "0",
+                "--minutos",
+                "1",
+            ]
+        )
+        self.assertEqual(code, 3)
+        self.assertFalse(staging.exists(), "no debe crearse staging sin originales")
+
+    def test_exit_codes_separate_checkpoint_from_complete_staging(self):
+        """2 = límite con checkpoint íntegro; 0 = staging completo tras reanudar."""
+        rows = [self.row(code=code, fecha=f"2021-01-{i:02d}") for i, code in enumerate(["WNMV", "BTU", "ACC"], 1)]
+        self.write_csv(rows=rows)
+        common = ["--filas-por-lote", "2", "--minutos", "1"]
+        first = extract_main([str(self.csv), "--output", str(self.out), *common, "--max-lotes", "1"])
+        self.assertEqual(first, 2, "un lote pendiente debe salir con 2")
+        resumed = extract_main([str(self.csv), "--output", str(self.out), *common, "--max-lotes", "0"])
+        self.assertEqual(resumed, 0)
+        self.assertEqual(audit(self.out)["filas"], 3)
 
     def test_limits_bad_ids_and_public_destinations(self):
         self.write_csv()
