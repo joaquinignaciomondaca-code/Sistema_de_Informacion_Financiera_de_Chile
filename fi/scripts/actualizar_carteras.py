@@ -35,6 +35,7 @@ import os
 import re
 import sys
 import time
+import unicodedata
 import urllib.parse
 import urllib.request
 from concurrent.futures import ThreadPoolExecutor
@@ -305,11 +306,43 @@ def leer_cartera(cod: str, raw: bytes) -> tuple[list[dict], list[str], list[str]
     return filas, malas, descuadres
 
 
-def leer_pactos(raw: bytes) -> tuple[list[dict], list[str], list[str], str | None]:
+def _clave_placeholder(valor) -> str:
+    """Normaliza los rótulos genéricos que la CMF inserta en filas de relleno."""
+    texto = unicodedata.normalize("NFKD", str(valor or "")).encode("ascii", "ignore").decode("ascii")
+    return " ".join(re.sub(r"[^a-z0-9]+", " ", texto.casefold()).split())
+
+
+def es_relleno_pacto(fila: dict) -> bool:
+    """Reconoce la fila ficticia VRC/CRV (p. ej. «Nombre Contraparte», ISIN y montos cero).
+
+    La CMF puede usar fechas de cobertura reales en esta fila, por lo que las fechas no sirven
+    para distinguirla. Se exigen varios rótulos centinela, RUT 0 y todos los montos/tasa en cero.
+    """
+    if _clave_placeholder(fila.get("tipo_operacion")) not in {"vrc", "crv"}:
+        return False
+    if _clave_placeholder(fila.get("contraparte")) != "nombre contraparte":
+        return False
+    marcadores = (
+        _clave_placeholder(fila.get("isin")) == "isin",
+        _clave_placeholder(fila.get("nemotecnico")) in {"nomotecnico", "nemotecnico"},
+        _clave_placeholder(fila.get("nombre_emisor")) == "nombre emisor",
+        _clave_placeholder(fila.get("tipo_instrumento")) == "cfi",
+    )
+    if sum(marcadores) < 3:
+        return False
+    if str(fila.get("rut_contraparte") or "0") != "0":
+        return False
+    montos = ("valor_inicial_miles_mf", "tasa_pacto_pct", "valor_final_miles_mf",
+              "valorizacion_cierre_miles_mf", "valor_mercado_miles_moneda")
+    return all(fila.get(c) is None or fila[c] == 0 for c in montos)
+
+
+def leer_pactos_detallado(raw: bytes) -> tuple[list[dict], list[str], list[str], str | None, int]:
+    """Lee operaciones, avisos, cuadraturas, moneda y número de filas ficticias excluidas."""
     tablas = [t for t in tablas_html(raw) if t["th"] and [_norm(h) for h in t["th"][0]] == PACTOS_TH]
     if not tablas or any(len(t["th"]) < 2 or [_norm(h) for h in t["th"][1]] != PACTOS_SUB for t in tablas):
         raise ErrorValidacion("pactos: encabezado inesperado")
-    filas, malas, descuadres, moneda = [], [], [], None
+    filas, malas, descuadres, moneda, rellenos = [], [], [], None, 0
     for t in tablas:
         detalle = []
         for f in t["filas"]:
@@ -330,12 +363,20 @@ def leer_pactos(raw: bytes) -> tuple[list[dict], list[str], list[str], str | Non
                     fila[col] = convertir(v, tipo)
                 except ValueError as e:
                     fila[col], malo = None, malo or f"{col} ({e})"
+            if not malo and es_relleno_pacto(fila):
+                rellenos += 1
+                continue
             if malo:
                 malas.append(malo)
             detalle.append(f)
             filas.append(fila)
-    return filas, malas, descuadres, moneda
+    return filas, malas, descuadres, moneda, rellenos
 
+
+def leer_pactos(raw: bytes) -> tuple[list[dict], list[str], list[str], str | None]:
+    """Interfaz histórica del parser; las filas de relleno ya vienen excluidas."""
+    filas, malas, descuadres, moneda, _ = leer_pactos_detallado(raw)
+    return filas, malas, descuadres, moneda
 
 # --- descargas ---------------------------------------------------------------
 def _get(url: str, timeout: int = 90) -> bytes:
@@ -441,9 +482,14 @@ def escribir(tabla: str, periodo: str, filas: list[dict]) -> int:
         partes.append(viejo[viejo["periodo"] != periodo])
     partes.append(nuevo)
     partes = [p for p in partes if len(p)]
-    if not partes:
+    if partes:
+        df = pd.concat(partes, ignore_index=True).reindex(columns=esquema(tabla).names)
+    elif ruta.exists():
+        # Reprocesar con cero filas debe borrar las filas viejas de ese cierre, aunque sean las
+        # únicas del archivo anual; de otro modo --forzar dejaría datos obsoletos.
+        df = nuevo.reindex(columns=esquema(tabla).names)
+    else:
         return 0
-    df = pd.concat(partes, ignore_index=True).reindex(columns=esquema(tabla).names)
     df["_run"] = pd.to_numeric(df["run_fondo"], errors="coerce")
     df = df.sort_values(["periodo", "_run"], kind="stable").drop(columns="_run")
     tmp = ruta.with_suffix(".tmp")
@@ -523,6 +569,15 @@ def procesar_trimestre(periodo: str, fondos: list[str], control: dict, reciente:
     return datos, avisos, con_cartera, monedas, len(tareas), origen
 
 
+def _periodos_pactos_publicados() -> list[str]:
+    periodos = set()
+    for ruta in (SALIDA / "pactos").glob("*.parquet"):
+        if ruta.name == "_vacio.parquet" or pq.ParquetFile(ruta).metadata.num_rows == 0:
+            continue
+        periodos.update(str(p) for p in pq.read_table(ruta, columns=["periodo"])["periodo"].to_pylist() if p)
+    return sorted(periodos)
+
+
 def escribir_salidas(control: dict, registro: list[dict]) -> None:
     for tabla in TABLAS:
         (SALIDA / tabla).mkdir(parents=True, exist_ok=True)
@@ -539,6 +594,23 @@ def escribir_salidas(control: dict, registro: list[dict]) -> None:
                "total_records": sum(pq.ParquetFile(r).metadata.num_rows for r in rutas),
                "periodos": sorted(control["periodos"]),
                "updated_at": datetime.now(timezone.utc).isoformat(timespec="seconds")}
+        if tabla == "pactos":
+            # El histórico de pactos tiene un control propio porque no depende de que las otras
+            # carteras del fondo tengan registros en el mismo trimestre.
+            hist_path = SALIDA / "pactos" / "historico_control.json"
+            hist = json.loads(hist_path.read_text(encoding="utf-8")) if hist_path.exists() else {}
+            sondeados = set(hist.get("periodos", {})) | set(control["periodos"])
+            sondeados |= set(control.get("sondeados_sin_datos", []))
+            periodos = _periodos_pactos_publicados()
+            man["periodos"] = periodos
+            man["periodos_sondeados"] = sorted(sondeados)
+            if hist.get("fallidos"):
+                man["cierres_fallidos"] = sorted(hist["fallidos"])
+            if sondeados:
+                ss = sorted(sondeados)
+                man["sondeo_historico"] = {"desde": ss[0], "hasta": ss[-1],
+                                           "cierres_completados": len(sondeados),
+                                           "cierres_con_operaciones": len(set(periodos) & sondeados)}
         estable.escribir_json((SALIDA / tabla / "manifest.json"), man)
     ultimo = max(control["periodos"]) if control["periodos"] else None
     filas = []
@@ -593,14 +665,17 @@ def actualizar_data_manifest(control: dict) -> None:
         if tabla is None:
             archivo = "outputs/fi/maestro_fondos_inversion.parquet"
             registros = pq.ParquetFile(SALIDA / "maestro_fondos_inversion.parquet").metadata.num_rows
+            periodos_tabla = periodos
         else:
             archivo = f"outputs/fi/{tabla}/manifest.json"
-            registros = json.loads((SALIDA / tabla / "manifest.json").read_text())["total_records"]
+            manifiesto_tabla = json.loads((SALIDA / tabla / "manifest.json").read_text())
+            registros = manifiesto_tabla["total_records"]
+            periodos_tabla = sorted(manifiesto_tabla.get("periodos", [])) if tabla == "pactos" else periodos
         entradas.append({
             "id": vista, "name": nombre, "view_name": vista, "sector": "fi", "sector_label": "Fondos de Inversión",
             "norma": "IFRS · informes de cartera CMF",
-            "corte": f"{periodos[0]} a {periodos[-1]}" if periodos else "sin trimestres publicados",
-            "frescura": f"Último trimestre publicado: {periodos[-1]}" if periodos else "",
+            "corte": f"{periodos_tabla[0]} a {periodos_tabla[-1]}" if periodos_tabla else "sin trimestres publicados",
+            "frescura": f"Último trimestre publicado: {periodos_tabla[-1]}" if periodos_tabla else "",
             "modo": "Automático · 3 veces al mes, incremental", "ultima_actualizacion": hoy,
             "file_parquet": archivo, "registros_reales": registros, "descripcion": descripcion, "origen": ORIGEN,
         })

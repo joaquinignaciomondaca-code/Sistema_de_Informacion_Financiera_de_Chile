@@ -444,7 +444,7 @@ Los extractores que quedan ya no escriben las tablas retiradas; las auditorías 
 
 ```
 docs/vocabulario.json — ÚNICA fuente de nombres de la web
-  73 tablas: {id, alias[], nombre, tipo, sector, descripcion, cobertura} · 15 sectores · 41 tipos
+  75 tablas: {id, alias[], nombre, tipo, sector, descripcion, cobertura} · 15 sectores · 41 tipos
   regla: una tabla se llama <sector>.<tipo>; TODA lista de entidades se llama lista_entidades
          (única variante: lista_entidades_registro, para el registro único de corredoras)
   nombres_retirados: lista_administradoras, lista_instituciones, lista_emisiones, registro_unico, …
@@ -676,9 +676,9 @@ docs/                sitio estático (lo que se publica)
   js/  css/          interfaz, motor DuckDB, catálogo de descargas
   img/               capturas usadas en el README
   vocabulario.json   nombres canónicos de todas las tablas
-  outputs/           52 Parquet publicados + manifiestos
+  outputs/           75 conjuntos Parquet publicados + manifiestos
   vendor/duckdb/     DuckDB-Wasm embebido (MIT) — ver su README antes de actualizarlo
   notas/             bitácora técnica de las decisiones
 scripts/             auditorías, generadores y servidor de vista previa
-.github/workflows/   11 flujos programados + despliegue
+.github/workflows/   16 workflows: 15 con horario y 1 solo por evento
 ```

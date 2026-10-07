@@ -10,9 +10,12 @@ on:
   push:
     branches:
       - main
+      - 'arena/**'
     paths:
       - .github/workflows/fi_carteras.yml
       - fi/scripts/actualizar_carteras.py
+      - fi/scripts/backfill_pactos_historico.py
+      - fi/tests/test_actualizar_carteras.py
       # Módulos compartidos que importan el extractor: un cambio ahí debe volver a probar
       # y a publicar (en las corridas programadas no corre el job `pruebas` de web_audit).
       - pipelines/auto/estable.py
@@ -38,6 +41,10 @@ on:
         description: 'Descargas simultáneas (default 16; máx 32)'
         default: '16'
         type: string
+      historico_pactos:
+        description: 'Sondear y recuperar solo pactos VRC/CRV anteriores a 2020'
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -48,6 +55,9 @@ concurrency:
 
 jobs:
   validar-y-publicar:
+    # En ramas de trabajo se ejecuta solo ante el marcador explícito de backfill;
+    # las actualizaciones normales de FI siguen reservadas a main o a workflow_dispatch.
+    if: github.ref_name == 'main' || github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[fi-pactos-backfill]'))
     runs-on: ubuntu-latest
     timeout-minutes: 330
     outputs:
@@ -66,8 +76,8 @@ jobs:
         run: python -m pip install --disable-pip-version-check pandas==2.2.3 pyarrow==21.0.0
 
       # El trimestre solo se publica si la guardería de filas y la escritura atómica están sanas.
-      - name: Probar la escritura estable
-        run: python -m unittest -v pipelines.auto.tests.test_estable
+      - name: Probar la escritura estable y el parser de pactos
+        run: python -m unittest -v pipelines.auto.tests.test_estable fi.tests.test_actualizar_carteras
 
       - name: Descargar, validar y publicar los trimestres pendientes
         id: publicar
@@ -77,14 +87,21 @@ jobs:
           MINUTOS: ${{ inputs.minutos }}
           PERIODOS: ${{ inputs.max_periodos }}
           HILOS: ${{ inputs.hilos }}
+          HISTORICO_PACTOS: ${{ inputs.historico_pactos == true || (github.event_name == 'push' && contains(github.event.head_commit.message, '[fi-pactos-backfill]')) }}
         run: |
-          args=()
-          if [ -n "${DESDE}" ]; then args+=(--desde "${DESDE}"); fi
-          if [ -n "${HASTA}" ]; then args+=(--hasta "${HASTA}"); fi
-          python -m fi.scripts.actualizar_carteras --minutos "${MINUTOS:-270}" \
-            --max-periodos "${PERIODOS:-0}" --hilos "${HILOS:-16}" "${args[@]}"
+          if [ "${HISTORICO_PACTOS:-false}" = "true" ]; then
+            python -u -m fi.scripts.backfill_pactos_historico \
+              --desde "${DESDE:-2008-03}" --hasta "${HASTA:-2019-12}" \
+              --minutos "${MINUTOS:-270}" --max-periodos "${PERIODOS:-0}" --hilos "${HILOS:-16}"
+          else
+            args=()
+            if [ -n "${DESDE}" ]; then args+=(--desde "${DESDE}"); fi
+            if [ -n "${HASTA}" ]; then args+=(--hasta "${HASTA}"); fi
+            python -m fi.scripts.actualizar_carteras --minutos "${MINUTOS:-270}" \
+              --max-periodos "${PERIODOS:-0}" --hilos "${HILOS:-16}" "${args[@]}"
+          fi
 
-      - name: Confirmar los meses publicados
+      - name: Confirmar los trimestres publicados
         if: always() && steps.publicar.outcome != 'skipped'
         run: |
           git config user.name "github-actions[bot]"
