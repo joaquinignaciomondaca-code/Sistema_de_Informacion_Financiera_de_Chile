@@ -35,6 +35,24 @@ reconciliaron en los Parquet, manifiestos, control histórico y catálogo de des
   descargadas.
 - Junio de 2026 conserva sus **40 operaciones**; la corrección es histórica.
 
+## Texto Unicode en pactos
+
+Se encontró la variante `Larra�Vial S.A.Corredora de Bolsa` en `fi_pactos`, junto con otras
+formas dañadas o inconsistentes del nombre. El Parquet y el JSON se publican en UTF-8; el
+carácter `�` ya estaba dentro del dato recibido y no se puede recuperar cambiando la codificación
+del archivo. El RUT de contraparte `80.537.000-9` permite identificarla sin ambigüedad con el
+padrón de corredoras CMF: `LARRAIN VIAL S.A. CORREDORA DE BOLSA`.
+
+Se estandarizaron por RUT las variantes históricas del corredor en los Parquet de pactos: **893
+filas modificadas**, **1.078 filas** quedan con el nombre canónico y los **1.698 registros** y sus
+importes no cambian. No se mezcló con la AGF Larraín Vial Activos, que es otra entidad. El parser
+aplica la misma normalización en futuras descargas y una regresión comprueba tanto el RUT como la
+lectura de nombres con tildes en UTF-8.
+
+La búsqueda también detecta caracteres `�` en algunos emisores, nemotécnicos y contrapartes FI,
+incluidos otros campos de pactos. No se sustituyen globalmente: en esos casos no hay una clave o
+padrón suficiente para reconstruir el texto con certeza; requieren cotejo por fuente o identificador.
+
 ## Interpretación de ceros: qué sí y qué no se debe eliminar
 
 ### Estados financieros `fi_balance` / `fi_resultados`
