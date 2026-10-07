@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "nota": "Clasificación provisional observada en espejo 2021; desconocidos van a cuarentena. No certifica fuente ni permiso.",
+  "familias": {
+    "renta_fija": "BTU BTP DEB BRP BVL LHF BCS BCA BEF BSF BCU BCP PRC EBC BEE TBI BSE BFI BHM TBE BEC CERO",
+    "intermediacion_financiera": "DPF PDC",
+    "acciones": "ACC ADR AEE",
+    "cuotas_fi": "CFIV CFID CIEV",
+    "cuotas_ffmm": "CFMV CFMD CMEV CMED",
+    "etf": "ETFA ETFB",
+    "capital_privado": "ACPE VCPE CCPE KCPE",
+    "deuda_privada": "ADPE VDPE",
+    "creditos_sindicados": "CSIN",
+    "promesas_cuotas_fi": "PFI",
+    "disponibilidades": "CC2 CC3",
+    "derivados_forwards": "WNMV WNMC WNNV WNNC WNTC YENV WEMV YEMC WEMC YEMV YENC WENV",
+    "derivados_swaps": "SNT YSET YSEM SNM",
+    "derivados_opciones": "OSAN"
+  }
+}
