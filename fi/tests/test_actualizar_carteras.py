@@ -5,10 +5,12 @@ import html
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 import pyarrow.parquet as pq
 
 from fi.scripts import actualizar_carteras as ac
+from fi.scripts import backfill_pactos_historico as backfill
 from fi.scripts.actualizar_carteras import (
     PACTOS_SUB,
     PACTOS_TH,
@@ -89,6 +91,21 @@ class PactosHistoricosTest(unittest.TestCase):
             "valor_mercado_miles_moneda": 0,
         }
         self.assertFalse(es_relleno_pacto(fila))
+
+    def test_reintenta_respuesta_con_encabezado_transitorio(self):
+        parseado = ([], [], [], "$$", 0)
+        with (
+            patch.object(backfill.ac, "_get", side_effect=[b"interstitial", b"pagina correcta"]),
+            patch.object(backfill.ac, "leer_pactos_detallado",
+                         side_effect=[ac.ErrorValidacion("encabezado inesperado"), parseado]),
+            patch.object(backfill.time, "sleep"),
+        ):
+            raw, resultado, reintentos, error, descargas = backfill._descargar_y_parsear("7182", "2013-09")
+        self.assertEqual(raw, b"pagina correcta")
+        self.assertEqual(resultado, parseado)
+        self.assertEqual(reintentos, 1)
+        self.assertIsNone(error)
+        self.assertEqual(descargas, 2)
 
     def test_escribir_vacio_reemplaza_el_cierre_anual_existente(self):
         salida_anterior = ac.SALIDA

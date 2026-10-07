@@ -83,8 +83,19 @@ def runs_registro() -> tuple[list[str], str]:
     return runs, hashlib.sha256(resumen).hexdigest()
 
 
-def _descargar(run: str, periodo: str) -> bytes:
-    return ac._get(ac.url_pagina("V", run, periodo), timeout=45)
+def _descargar_y_parsear(run: str, periodo: str, max_intentos: int = 3):
+    """Reintenta páginas HTML con esquema inesperado: CMF puede devolver respuestas transitorias."""
+    ultimo_error = None
+    for intento in range(1, max_intentos + 1):
+        raw = ac._get(ac.url_pagina("V", run, periodo), timeout=45)
+        try:
+            parseado = ac.leer_pactos_detallado(raw)
+            return raw, parseado, intento - 1, None, intento
+        except ac.ErrorValidacion as e:
+            ultimo_error = e
+            if intento < max_intentos:
+                time.sleep(2 * intento)
+    return raw, None, max_intentos - 1, str(ultimo_error), max_intentos
 
 
 def sondear_periodo(periodo: str, runs: list[str], hilos: int, hash_registro: str) -> tuple[dict, list[dict]]:
@@ -93,25 +104,26 @@ def sondear_periodo(periodo: str, runs: list[str], hilos: int, hash_registro: st
     filas: list[dict] = []
     hashes: list[str] = []
     errores_red, errores_parseo, malas, descuadres = [], [], [], []
-    rellenos = paginas_parseadas = paginas_con_operaciones = 0
+    rellenos = paginas_parseadas = paginas_con_operaciones = paginas_descargadas = reintentos_formato = 0
     fondos_con_operaciones: set[str] = set()
     tipos = Counter()
 
     with ThreadPoolExecutor(max_workers=max(1, min(hilos, 32))) as pool:
-        trabajos = {pool.submit(_descargar, run, periodo): run for run in runs}
+        trabajos = {pool.submit(_descargar_y_parsear, run, periodo): run for run in runs}
         for futuro in as_completed(trabajos):
             run = trabajos[futuro]
             try:
-                raw = futuro.result()
+                raw, resultado, reintentos, error_parseo, n_descargas = futuro.result()
             except Exception as e:  # no registrar un fallo de red como un trimestre sin operaciones
                 errores_red.append(f"{run}: {type(e).__name__}: {e}")
                 continue
+            paginas_descargadas += n_descargas
+            reintentos_formato += reintentos
             hashes.append(f"{run}|{hashlib.sha256(raw).hexdigest()}")
-            try:
-                operaciones, malas_pagina, descuadres_pagina, _, rellenos_pagina = ac.leer_pactos_detallado(raw)
-            except ac.ErrorValidacion as e:
-                errores_parseo.append(f"{run}: {e}")
+            if error_parseo:
+                errores_parseo.append(f"{run}: {error_parseo}")
                 continue
+            operaciones, malas_pagina, descuadres_pagina, _, rellenos_pagina = resultado
             paginas_parseadas += 1
             rellenos += rellenos_pagina
             malas.extend(f"{run}: {x}" for x in malas_pagina)
@@ -149,8 +161,9 @@ def sondear_periodo(periodo: str, runs: list[str], hilos: int, hash_registro: st
         "registro_fondos": len(runs),
         "sha256_registro_runs": hash_registro,
         "paginas_consultadas": len(runs),
-        "paginas_descargadas": len(hashes),
+        "paginas_descargadas": paginas_descargadas,
         "paginas_parseadas": paginas_parseadas,
+        "paginas_reintentadas_por_esquema": reintentos_formato,
         "paginas_con_operaciones": paginas_con_operaciones,
         "fondos_con_operaciones": len(fondos_con_operaciones),
         "filas_operacion": len(filas),
@@ -189,7 +202,13 @@ def escribir_manifiesto(control: dict) -> None:
         if not vacio.exists():
             pq.write_table(ac.esquema("pactos").empty_table(), vacio)
         rutas = [vacio]
-    sondeados = sorted(set(control.get("periodos", {})))
+    sondeados = set(control.get("periodos", {}))
+    control_general = SALIDA / "manifest.json"
+    if control_general.exists():
+        publicado = json.loads(control_general.read_text(encoding="utf-8"))
+        sondeados |= set(publicado.get("periodos", {}))
+        sondeados |= set(publicado.get("sondeados_sin_datos", []))
+    sondeados = sorted(sondeados)
     actualizado = {
         "tabla": "pactos",
         "files": [f"outputs/fi/pactos/{r.name}" for r in rutas],
