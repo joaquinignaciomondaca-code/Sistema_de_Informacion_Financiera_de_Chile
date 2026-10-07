@@ -81,6 +81,42 @@ class PactosHistoricosTest(unittest.TestCase):
         self.assertEqual(malas, [])
         self.assertEqual(descuadres, [])
 
+    def test_contraparte_larrain_vial_se_repara_por_rut_y_utf8_se_conserva(self):
+        for rut_contraparte in ("80537000", "80537000-9", "805370009"):
+            with self.subTest(rut=rut_contraparte):
+                detalle = [
+                    "CRV", "31/12/2024", "01/01/2025", "Larra\ufffdVial S.A.Corredora de Bolsa",
+                    rut_contraparte, "1.000", "$$", "0,1200", "1.001", "1.000",
+                    "CL0000000001", "BCHIUO0911", "Banco de Chile", "BTP", "900",
+                ]
+                raw = _tabla_pactos(
+                    "202412", "CRV", detalle,
+                    {5: "1.000", 8: "1.001", 9: "1.000", 14: "900"},
+                ).encode("utf-8")
+
+                filas, malas, descuadres, _, _ = leer_pactos_detallado(raw)
+
+                self.assertEqual(malas, [])
+                self.assertEqual(descuadres, [])
+                self.assertEqual(filas[0]["contraparte"], "LARRAIN VIAL S.A. CORREDORA DE BOLSA")
+
+        detalle_utf8 = [
+            "CRV", "31/12/2024", "01/01/2025", "Euroamérica AGF S.A.", "77750920",
+            "1.000", "$$", "0,1200", "1.001", "1.000", "CL0000000001", "BCHIUO0911",
+            "Banco de Chile", "BTP", "900",
+        ]
+        raw_utf8 = _tabla_pactos(
+            "202412", "CRV", detalle_utf8, {5: "1.000", 8: "1.001", 9: "1.000", 14: "900"}
+        ).encode("utf-8")
+        filas_utf8 = leer_pactos_detallado(raw_utf8)[0]
+        self.assertEqual(filas_utf8[0]["contraparte"], "Euroamérica AGF S.A.")
+        self.assertEqual(
+            ac.normalizar_contraparte(
+                "80537000-9", "Larraín Vial Activos S.A. Adm. Gral. de Fondos"
+            ),
+            "Larraín Vial Activos S.A. Adm. Gral. de Fondos",
+        )
+
     def test_fila_con_rotulos_genericos_y_montos_no_cero_no_se_descarta(self):
         fila = {
             "tipo_operacion": "VRC",
@@ -143,6 +179,24 @@ class PactosHistoricosTest(unittest.TestCase):
                 if es_relleno_pacto(fila):
                     sospechosas.append((ruta.name, fila["periodo"], fila["run_fondo"]))
         self.assertEqual(sospechosas, [])
+
+    def test_pactos_publicados_normalizan_larrain_vial_por_rut(self):
+        carpeta = ac.RAIZ / "docs" / "outputs" / "fi" / "pactos"
+        if not carpeta.exists():
+            self.skipTest("no hay salida FI publicada en este checkout")
+        diferencias = []
+        filas_objetivo = 0
+        for ruta in sorted(carpeta.glob("*.parquet")):
+            if ruta.name == "_vacio.parquet":
+                continue
+            for fila in pq.read_table(ruta, columns=["contraparte", "rut_contraparte"]).to_pylist():
+                esperado = ac.normalizar_contraparte(fila["rut_contraparte"], fila["contraparte"])
+                if esperado != fila["contraparte"]:
+                    diferencias.append((ruta.name, fila["rut_contraparte"], fila["contraparte"]))
+                if esperado == "LARRAIN VIAL S.A. CORREDORA DE BOLSA":
+                    filas_objetivo += 1
+        self.assertGreater(filas_objetivo, 0)
+        self.assertEqual(diferencias, [])
 
     def test_escribir_vacio_reemplaza_el_cierre_anual_existente(self):
         salida_anterior = ac.SALIDA
