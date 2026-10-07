@@ -4,6 +4,10 @@
 
 **Re-verificación posterior al PR #30 (`aa25f740`), 2026-10-07:** se volvió a comprobar la fuente oficial antes de descargar. El portal BDP sigue respondiendo 404, el catálogo sigue sin URLs ni evidencia y el gate sigue bloqueado. **La ingesta histórica no se inició.** Detalle y comandos en [Re-verificación de fuentes](#re-verificación-de-fuentes-2026-10-07-posterior-al-pr-30).
 
+> **Uso paso a paso:** rutas de destino, órdenes exactas, códigos de salida y condiciones de
+> detención están en [GUIA_INGESTA_BDP.md](GUIA_INGESTA_BDP.md). Este documento registra estado
+> y evidencia; la guía registra procedimiento.
+
 ## Estado ejecutivo
 
 - Hay código para validar/descargar paquetes ZIP oficiales una vez que se registren las URL reales y evidencia de captura saneada desde la interfaz BDP; incluye revalidación HTTP, continuidad de transferencias, procesamiento CSV por lotes reanudables, revisiones y auditoría de staging.
@@ -161,6 +165,64 @@ python -m unittest discover -s pensiones/tests -v
 python -m pensiones.scripts.download_bdp_packages --check-only
 python -m pensiones.scripts.check_publicacion_bdp
 ```
+
+## Preparación para la serie completa (2026-10-07)
+
+### Ensayo general del runbook con una serie sintética (sin datos SP)
+
+Se construyó una serie sintética de los tres paquetes (31 CSV: 1996–2005, 2006–2015 y 2016–2026) bajo `.local-data/` y se ejecutó la secuencia CLI documentada, para comprobar el procedimiento antes de que exista un original real:
+
+| Paso | Comando | Resultado observado |
+|---|---|---|
+| A | `extraer_carteras_afp … --filas-por-lote 10000 --max-lotes 1 --minutos 300` | salida **2**; `status=incomplete`, `paquetes_procesados=[]` — un paquete a medias no se activa |
+| B | la misma orden con `--max-lotes 0 --minutos 300` | salida **0**; `staging_complete`, 868 filas, 31 miembros, 30 lotes en la corrida |
+| C | `audit_carteras_afp .local-data/pensiones/bdp/staging` | `estado=staging_completo`, `publicable=False`, `publicacion_bloqueada=True`, `historico_completo_por_paquetes=True`, **`cobertura_historica_certificada=False`**, **`paquetes_oficiales_verificados=[]`** |
+| D | `check_publicacion_bdp --staging …/staging` | `ready=False`; a los cinco criterios pendientes se suma **«No todos los paquetes tienen sidecar oficial verificado»** |
+| E | aislamiento | no existe `docs/outputs/pensiones/bdp/`; `data_manifest.json` sin referencias BDP; Git sólo ve cambios bajo `pensiones/` |
+
+Conclusión operativa: el backfill, la reanudación por checkpoint y la auditoría funcionan sobre una serie de 31 años, y **el gate no se abre aunque el staging quede completo y auditado**, porque falta el sidecar de una descarga oficial. La presencia de los tres IDs de paquete no certifica cobertura: la auditoría informa cobertura *observada* (en el ensayo: 124 cortes de fecha, 3 AFP, 3 fondos, 7 códigos, 868 combinaciones) y `cobertura_historica_certificada` es `False` por construcción. Los datos sintéticos se eliminaron; `.local-data/` no se versiona.
+
+### Asistente de captura saneada: `registrar_captura_bdp.py`
+
+Convierte lo observado en el navegador en el registro de ocho campos que exige el descargador, calcula su SHA-256 e imprime el bloque exacto para pegar en el catálogo. **No descarga y no modifica `config/paquetes_bdp.json`.**
+
+```bash
+python -m pensiones.scripts.registrar_captura_bdp \
+  --package-id historico_1996_2005 \
+  --request-url https://www.spensiones.cl/ruta/observada.zip \
+  --response-filename nombre_observado.zip \
+  --captured-at 2026-10-07T12:00:00Z \
+  --dry-run
+```
+
+Escribe en `.local-data/pensiones/bdp/evidencia/<id>.json`. Rechaza: método distinto de GET, status distinto de 200, Content-Type que no identifique ZIP/binario, referer distinto de la página BDP, hosts fuera de `spensiones.cl`, nombres de archivo inseguros, fechas sin zona horaria, paquetes no requeridos y valores con apariencia de credencial (`token`, `sessionid`, cookies, JWT). Pegar el bloque y revisarlo sigue siendo un paso humano en un pull request; `expected_sha256` se fija después de la primera descarga verificada.
+
+### Lo que todavía falta para «todos los años»
+
+- No hay ningún original: la cobertura real por año sólo se certifica con el inventario de cada ZIP oficial y el cotejo contra SP.
+- El extractor todavía **no particiona por año** (`familia/anio=AAAA/…`); quedó pendiente de validar el formato de fecha del CSV SP, que no se ha observado.
+- El espejo XLSX de terceros no sirve como entrada: `extraer_carteras_afp.py` lo rechaza explícitamente («Sólo se aceptan originales CSV o ZIP; no espejos XLSX»).
+
+### Descarga mediante token opaco: decisión pendiente
+
+En la página oficial de cartera desagregada (que sí responde) el botón «Versión completa en formato Zip» apunta a `https://www.spensiones.cl/apps/GetFile_v2.0.php?param=<cadena base64 larga>`. Si el BDP usa el mismo mecanismo, hay que decidirlo antes de tocar el catálogo:
+
+- `validate_official_https_url` **acepta** `?param=` (rechaza `token`, `sessionid`, `csrf`, `expires`, `signature`, JWT y similares). Nada avisaría por sí solo.
+- Si `param` fuera un token por sesión, fijarlo en `config/paquetes_bdp.json` publicaría una credencial en un repositorio **público con licencia MIT**. `registrar_captura_bdp.py` no lo detecta por nombre de parámetro: la revisión humana debe mirarlo.
+- El descargador **no** concatena respuestas incompatibles: reanudar exige huella de URL coincidente y ETag fuerte, y si el servidor ignora `Range` o el objeto cambió, descarta el parcial y repite una solicitud completa. El riesgo no es corruptela de datos: es la fugacidad del enlace y la eventual credencial en Git.
+- `catalog_status` no hace solicitudes de red: `ready=true` afirma que el catálogo está completo y su evidencia coincide en hash, no que el enlace siga vivo.
+
+Decisión a tomar al observar el flujo real: si `param` es un identificador público estable, se fija en el catálogo; si es de sesión, la URL debe entregarse en tiempo de ejecución (variable de entorno o archivo privado) y el catálogo guardar sólo un localizador no sensible.
+
+### Condiciones de uso y redistribución: qué se verificó
+
+- Manual SP «Base de Cartera de los Fondos de Pensiones», versión mayo 2020 (obtenido del espejo de terceros, `docchist.pdf`, 11 páginas), nota al pie 1: «Esta base es de uso exclusivo para fines de investigación. Se solicita no distribuir esta información». Restringe el **propósito** y la **distribución**; no está condicionada a que exista ánimo de lucro.
+- La página oficial de cartera desagregada muestra: «Copyright © 2026, American Bankers Association. CUSIP Database provided by FactSet Research Systems Inc. All rights reserved.» Reserva de derechos de terceros, independiente del uso comercial.
+- Este repositorio es **público y de licencia MIT**, que concede a terceros «use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies». Publicar datos de la SP aquí chocaría con ambas restricciones, haya o no intención comercial.
+- En `datos.gob.cl` la SP mantiene 8 conjuntos (XLS/HTML, creados y actualizados en 2015) bajo una licencia que la consulta muestra truncada como «Creative Commons No…» y debe confirmarse; **ninguno es la cartera histórica BDP**.
+- Las condiciones **vigentes** siguen sin verificarse: el portal que aloja el manual actual responde 404.
+
+Conclusión: usar los datos localmente para investigación no es el obstáculo; **publicarlos o redistribuirlos sí lo es**, y no se resuelve declarando ausencia de fin comercial. Sólo una condición vigente verificada o una autorización escrita de la SP desbloquea el criterio `redistribucion_de_datos_y_derivados`.
 
 ## Pendientes externos que no puede resolver este checkout
 

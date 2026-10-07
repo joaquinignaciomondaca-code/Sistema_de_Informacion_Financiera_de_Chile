@@ -30,6 +30,7 @@ from download_bdp_packages import (
 )
 from extraer_carteras_afp import _acquire_lock, extract, main as extract_main, mapping
 from publish_bdp import DEFAULT_PUBLIC_ROOT, _publish_tree, publish
+from registrar_captura_bdp import CaptureRejected, build_capture, main as registrar_main
 
 
 class FakeResponse:
@@ -655,6 +656,82 @@ class BdpPublicationGateTest(unittest.TestCase):
         self.assertTrue((output / ".bdp_publication.json").is_file())
         self.assertTrue((output / "afp_derivados_forwards/manifest.json").is_file())
         self.assertFalse(DEFAULT_PUBLIC_ROOT.exists())
+
+
+class CaptureRegistrarTest(unittest.TestCase):
+    """El asistente de captura sanea la evidencia y nunca persiste credenciales."""
+
+    OK = {
+        "package_id": "historico_1996_2005",
+        "request_url": "https://www.spensiones.cl/apps/bdp/descargas/carteras_1996_2005.zip",
+        "response_filename": "carteras_1996_2005.zip",
+        "captured_at": "2026-10-07T12:00:00Z",
+    }
+
+    def test_builds_the_eight_field_sane_record(self):
+        capture = build_capture(**self.OK)
+        self.assertEqual(
+            set(capture),
+            {
+                "source_page", "captured_at", "request_method", "request_url",
+                "referer", "response_status", "content_type", "response_filename",
+            },
+        )
+        self.assertEqual(capture["request_method"], "GET")
+        self.assertEqual(capture["referer"], OFFICIAL_LANDING_PAGE)
+
+    def test_rejects_post_session_tokens_and_bad_input(self):
+        cases = {
+            "request_method": "POST",
+            "response_status": 403,
+            "content_type": "text/html",
+            "referer": "https://www.spensiones.cl/otra/pagina.php",
+        }
+        for field, value in cases.items():
+            with self.assertRaises(CaptureRejected, msg=field):
+                build_capture(**{**self.OK, field: value})
+        # Credenciales y destinos fuera del dominio oficial.
+        with self.assertRaises(CaptureRejected):
+            build_capture(**{**self.OK, "request_url": self.OK["request_url"] + "?sessionid=abc123"})
+        with self.assertRaises(ValueError):
+            build_capture(**{**self.OK, "request_url": "https://espejo.example.org/paquete.zip"})
+        with self.assertRaises(CaptureRejected):
+            build_capture(**{**self.OK, "package_id": "historico_2026_2035"})
+        with self.assertRaises(CaptureRejected):
+            build_capture(**{**self.OK, "captured_at": "07/10/2026 12:00"})
+        with self.assertRaises(CaptureRejected):
+            build_capture(**{**self.OK, "captured_at": "2026-10-07T12:00:00"})
+        with self.assertRaises(CaptureRejected):
+            build_capture(**{**self.OK, "response_filename": "../fuera.zip"})
+
+    def test_dry_run_validates_without_writing_anything(self):
+        (ROOT / ".local-data").mkdir(exist_ok=True)
+        before = sorted(p.name for p in (PRIVATE_ROOT / "pensiones/bdp/evidencia").glob("*.json")) \
+            if (PRIVATE_ROOT / "pensiones/bdp/evidencia").is_dir() else []
+        code = registrar_main(
+            [
+                "--package-id", self.OK["package_id"],
+                "--request-url", self.OK["request_url"],
+                "--response-filename", self.OK["response_filename"],
+                "--captured-at", self.OK["captured_at"],
+                "--dry-run",
+            ]
+        )
+        self.assertEqual(code, 0)
+        evidence_dir = PRIVATE_ROOT / "pensiones/bdp/evidencia"
+        after = sorted(p.name for p in evidence_dir.glob("*.json")) if evidence_dir.is_dir() else []
+        self.assertEqual(before, after, "un dry-run no debe escribir evidencia")
+
+    def test_rejects_secret_bearing_capture_without_writing(self):
+        code = registrar_main(
+            [
+                "--package-id", self.OK["package_id"],
+                "--request-url", self.OK["request_url"] + "?token=abc",
+                "--response-filename", self.OK["response_filename"],
+                "--captured-at", self.OK["captured_at"],
+            ]
+        )
+        self.assertEqual(code, 1)
 
 
 if __name__ == "__main__":
