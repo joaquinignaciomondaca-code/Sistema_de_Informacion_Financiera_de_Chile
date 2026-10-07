@@ -268,6 +268,15 @@ plantillas cuando coinciden varias señales a la vez (contraparte/RUT ficticios,
 en lugar de datos y todos los importes y la tasa en cero); nunca se filtra una operación solo por
 sus montos cero. Véase la [auditoría de calidad FI](../docs/notas/auditoria_calidad_fi_2026-10-07.md).
 
+**Texto y celdas vacías (pactos):** el nombre de la contraparte se publica con la grafía canónica
+del padrón CMF cuando su RUT está en el padrón, reconociendo las grafías alternativas del mismo RUT
+(abreviaturas, siglas y plurales) y sin fusionar entidades distintas que comparten RUT por un
+rebautizo. `rut_contraparte` va como cuerpo del RUT (sin DV pegado). En las columnas de identificación
+(`isin`, `nemotecnico`, `nombre_emisor`) los centinelas «NA»/«N/A»/«S/I» se publican como vacío y no
+como texto. Las reglas ya se aplicaron al Parquet publicado con `scripts/reparar_pactos_fi.py`
+(idempotente: una segunda corrida no escribe nada), y si queda un `�` sin reconstrucción verificada
+el trimestre lo anota en los avisos en vez de sustituirlo a ciegas.
+
 Los extractores/REPO antiguos (`cartera_inversiones/`, `repos/`, scripts 01–04) se retiraron el
 2026-09-28; la cartera actual y `fi_pactos` se alimentan del flujo IFRS vigente. Para comparar
 con seguros y ver por qué FFMM no tiene una tabla específica, consulta
