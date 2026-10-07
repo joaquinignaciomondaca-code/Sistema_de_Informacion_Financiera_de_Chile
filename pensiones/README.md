@@ -35,7 +35,8 @@ no una activación del backfill antiguo.
 ### Preparación reproducible para Actions y Vercel
 
 El [estado de implementación y guía de activación](AUTOMATIZACION_BDP.md) documenta
-el extractor local CSV/ZIP, la auditoría y las pruebas mensuales de Actions.
-**Publicación bloqueada**: todavía no se descargan carteras automáticamente ni se
-actualizan tablas BDP en Vercel. Se requieren originales SP, validación numérica,
-condiciones de redistribución y confirmación del proyecto Vercel.
+la descarga oficial con catálogo de URLs aún bloqueado, el staging CSV/ZIP reanudable,
+las actualizaciones incrementales por paquete, las auditorías y el gate de publicación.
+**No se han descargado originales SP ni se publican carteras**: faltan el flujo real del
+botón BDP, cotejo de campos/cifras, condiciones de redistribución y configuración del
+runner privado/Vercel. No hay nuevas tablas BDP en `data_manifest.json` ni en el explorador.
