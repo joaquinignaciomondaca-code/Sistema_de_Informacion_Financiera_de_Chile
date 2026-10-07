@@ -73,3 +73,9 @@ python ffmm/scripts/actualizar_eeff.py                               # lo que co
 la declaración de codificación no es fiable (UTF-8 falso, ausente o inventada: `iso-8011-K`); la línea «Otros» de
 resultados es `OtrosEri` y no `Otros` como dice el modelo oficial de 2011; hay códigos con espacio final y la CMF
 sirve a veces una página de desafío JavaScript en lugar de la ficha.
+
+## Operaciones REPO / pactos
+
+La extracción mensual de cartera mutua **no publica una tabla independiente de pactos/REPO**. El script de Circular 1333 procesa las secciones `NACI`, `EXTR`, `FUTU` y `OPCI` (cartera nacional, extranjera, futuros/forwards y opciones); no existe una salida `ffmm_pactos` en los manifiestos actuales.
+
+Por eso el sistema no informa un conteo específico de REPO para fondos mutuos. La ausencia de esa tabla **no debe leerse como cero operaciones** ni como prueba de que los contratos no estén clasificados de otra manera dentro de la cartera nacional. Comparación de cobertura con seguros y fondos de inversión: [nota REPO/pactos](../docs/notas/cobertura_repos_pactos_2026-10-07.md).
