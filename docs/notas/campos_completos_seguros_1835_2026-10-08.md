@@ -54,10 +54,13 @@ seguros/fuentes/inventario_1835.json      (todos los campos: posición, PICTURE,
 | `seguros.acciones` | 18 | 56 |
 | `seguros.fondos_mutuos` | 16 | 35 |
 | `seguros.bienes_raices` | 19 | 56 |
-| `seguros.extranjeros` | 17 | 111 |
-| `seguros.derivados` | 26 | 72 |
+| `seguros.extranjeros` | 17 | 112 |
+| `seguros.derivados` | 26 | 73 |
 | `seguros.pactos` | 21 | 30 |
 | `seguros.control_inversiones` | 15 | 15 |
+
+El conteo incluye las columnas que agrega el pipeline (`periodo`, `sector`,
+`rut_aseguradora`, `nombre_aseguradora` y, en extranjeros y derivados, `tipo_registro`).
 
 Los mayores saltos son dos: renta fija (la ficha de 2024 agregó clasificación, garantías,
 custodia, calce, etc.) y extranjeros, donde **antes se descartaban por completo los registros
