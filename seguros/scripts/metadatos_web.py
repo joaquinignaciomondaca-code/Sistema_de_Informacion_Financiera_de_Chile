@@ -1,4 +1,8 @@
-"""Descripción de las tablas de seguros para la web (diccionario, diagrama y data_manifest.json)."""
+"""Descripción de las tablas de seguros para la web (diccionario, diagrama y data_manifest.json).
+
+Las descripciones de las columnas salen de la ficha técnica de la Circular 1835 (ver
+``diccionario_1835.py``): se publican todos los campos, con el nombre original de la CMF.
+"""
 
 ORIGEN = ("CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales "
           "de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial "
@@ -17,8 +21,9 @@ TABLAS = {
     "bienes_raices": ("seguros.bienes_raices",
                       "Bienes raíces por rol: dirección, arriendo, costo, depreciación, tasaciones y valor final."),
     "extranjeros": ("seguros.extranjeros",
-                    "Inversiones en el extranjero: deuda (tipo_registro = 'deuda') y acciones y fondos "
-                    "(tipo_registro = 'acciones_y_fondos')."),
+                    "Inversiones en el extranjero: deuda (tipo_registro = 'deuda'), acciones y fondos "
+                    "(tipo_registro = 'acciones_y_fondos'), bienes raíces (tipo_registro = 'bienes_raices') y "
+                    "filiales (tipo_registro = 'filiales')."),
     "derivados": ("seguros.derivados",
                   "Contratos de opciones, forwards, futuros y swaps (tipo_registro), con contraparte, nocional, "
                   "valor razonable y efecto en resultados."),
@@ -28,90 +33,14 @@ TABLAS = {
                             "inversión (valor final, representativas y no representativas de reservas, etc.)."),
 }
 
-COLUMNAS = {
+# Columnas que arma el pipeline (no vienen en la ficha): se describen a mano.
+COLUMNAS_CONTROL = {
     "periodo": "Mes de la cartera (AAAA-MM).",
     "sector": "vida o generales.",
-    "rut_aseguradora": "RUT de la compañía de seguros, con dígito verificador.",
+    "rut_aseguradora": "RUT de la compañía de seguros, con dígito verificador "
+                       "(une con seguros.lista_entidades).",
     "nombre_aseguradora": "Nombre de la compañía tal como aparece en el archivo del mes.",
     "tipo_registro": "Subtipo de registro de la ficha (p. ej. forward, swap, deuda).",
-    "tipo_instrumento": "Código del tipo de instrumento según la ficha técnica de la CMF.",
-    "nemotecnico": "Nemotécnico o código del instrumento.",
-    "serie": "Serie del instrumento.",
-    "rut_emisor": "RUT del emisor.",
-    "pais": "País del emisor o de la inversión.",
-    "fecha_compra": "Fecha de compra (AAAA-MM-DD).",
-    "fecha_emision": "Fecha de emisión (AAAA-MM-DD).",
-    "fecha_vencimiento": "Fecha de vencimiento (AAAA-MM-DD).",
-    "fecha_operacion": "Fecha de la operación (AAAA-MM-DD).",
-    "unidad_monetaria": "Unidad o moneda en que está expresado el instrumento (UF, $$, PROM, USD...).",
-    "moneda": "Moneda del contrato o del activo.",
-    "valor_nominal": "Valor nominal en la unidad del instrumento.",
-    "tasa_emision_pct": "Tasa de emisión (%).",
-    "tir_compra_pct": "TIR de compra (%).",
-    "tir_mercado_pct": "TIR de mercado al cierre (%).",
-    "valor_compra_clp": "Valor de compra, en pesos.",
-    "costo_amortizado_clp": "Costo amortizado, en pesos.",
-    "valor_razonable_clp": "Valor razonable, en pesos.",
-    "deterioro_clp": "Deterioro, en pesos.",
-    "valor_final_m_clp": "Valor final informado, en miles de pesos (M$).",
-    "custodia": "Dónde está custodiado (DCV, compañía, extranjero...).",
-    "run_fondo": "RUN del fondo.",
-    "unidades": "Número de acciones o cuotas.",
-    "presencia_bursatil_pct": "Presencia bursátil (%).",
-    "valor_costo_clp": "Costo, en pesos.",
-    "valor_bolsa_clp": "Valor bolsa, en pesos.",
-    "valor_razonable_m_clp": "Valor razonable, en miles de pesos (M$).",
-    "deterioro_m_clp": "Deterioro, en miles de pesos (M$).",
-    "rut_administradora": "RUT de la administradora del fondo.",
-    "tipo_fondo": "Tipo de fondo mutuo.",
-    "valor_cuota": "Valor cuota al cierre.",
-    "clasificacion_riesgo": "Clasificación de riesgo.",
-    "rol": "Rol de avalúo del inmueble.",
-    "direccion": "Dirección del inmueble.",
-    "codigo_comuna": "Código de comuna.",
-    "ciudad": "Ciudad.",
-    "monto_arriendo_uf": "Arriendo mensual, en UF.",
-    "costo_m_clp": "Costo del inmueble, en miles de pesos (M$).",
-    "depreciacion_m_clp": "Depreciación acumulada, en miles de pesos (M$).",
-    "costo_corregido_m_clp": "Costo corregido, en miles de pesos (M$).",
-    "tasacion_1_m_clp": "Primera tasación, en miles de pesos (M$).",
-    "tasacion_2_m_clp": "Segunda tasación, en miles de pesos (M$).",
-    "emisor": "Nombre del emisor extranjero.",
-    "codigo": "Código del instrumento extranjero (ISIN u otro).",
-    "objetivo": "Objetivo del derivado (cobertura, inversión...).",
-    "tipo_operacion": "Tipo de operación según la ficha.",
-    "folio": "Folio de la operación.",
-    "item": "Ítem dentro del folio.",
-    "contraparte": "Nombre de la contraparte.",
-    "nacionalidad_contraparte": "Nacionalidad de la contraparte.",
-    "relacionado": "Indica si la contraparte es relacionada.",
-    "activo_objeto_largo": "Activo objeto de la posición larga.",
-    "activo_objeto_corto": "Activo objeto de la posición corta.",
-    "nocional_largo": "Nocional de la posición larga.",
-    "nocional_corto": "Nocional de la posición corta.",
-    "moneda_larga": "Moneda de la pata larga (swaps).",
-    "moneda_corta": "Moneda de la pata corta (swaps).",
-    "tasa_larga": "Tasa de la pata larga (swaps).",
-    "tasa_corta": "Tasa de la pata corta (swaps).",
-    "origen_valorizacion": "Fuente de la valorización.",
-    "efecto_resultados_m_clp": "Efecto en resultados, en miles de pesos (M$).",
-    "tasa_pacto_pct": "Tasa del pacto (%).",
-    "activo_objeto": "Instrumento objeto del pacto.",
-    "serie_activo_objeto": "Serie del instrumento objeto.",
-    "rut_emisor_activo_objeto": "RUT del emisor del instrumento objeto.",
-    "interes_devengado_m_clp": "Interés devengado, en miles de pesos (M$).",
-    "valor_contable_m_clp": "Valorización del pacto al cierre, en miles de pesos (M$).",
-    "valor_mercado_activo_objeto_m_clp": "Valor de mercado del activo objeto, en miles de pesos (M$).",
-    "tipo_inversion": "Código del tipo de inversión en la información de control.",
-    "inversiones_representativas_m_clp": "Inversiones representativas de reservas, en M$.",
-    "inversiones_no_representativas_m_clp": "Inversiones no representativas de reservas, en M$.",
-    "total_costo_amortizado_m_clp": "Total a costo amortizado, en M$.",
-    "total_valor_razonable_m_clp": "Total a valor razonable, en M$.",
-    "total_efectivo_equivalente_m_clp": "Total efectivo equivalente, en M$.",
-    "total_cui_apv_m_clp": "Total de inversiones de seguros con cuenta única de inversión (CUI) y APV, en M$.",
-    "total_otra_clasificacion_m_clp": "Total en otra clasificación, en M$.",
-    "total_filiales_m_clp": "Total en filiales, en M$.",
-    "total_coligadas_m_clp": "Total en coligadas, en M$.",
     "primer_periodo": "Primer mes en que la compañía aparece en los archivos publicados.",
     "ultimo_periodo": "Último mes en que la compañía aparece.",
     "meses_reportados": "Número de meses publicados en que la compañía tiene filas publicadas "
@@ -119,3 +48,26 @@ COLUMNAS = {
                         "envió archivos sin detalle).",
     "reporta_ultimo_mes": "Verdadero si aparece en el último mes publicado.",
 }
+
+
+def _columnas_ficha() -> dict:
+    """{columna: descripción} de todos los campos de la Circular 1835, desde el inventario.
+
+    La descripción es la de la ficha técnica de la CMF (resumida), con la unidad al final
+    cuando el campo la declara (miles de pesos, pesos, UF...).
+    """
+    from seguros.scripts import diccionario_1835 as dic
+    salida = {}
+    for filas_ in dic.genera().values():
+        for fila in filas_:
+            if fila["columna"] in salida:
+                continue
+            texto = dic._resumen(fila["descripcion"])
+            unidad = dic._unidad(fila)
+            if unidad:
+                texto = f"{texto} Expresado en {unidad}." if texto else f"Expresado en {unidad}."
+            salida[fila["columna"]] = texto
+    return salida
+
+
+COLUMNAS = {**_columnas_ficha(), **COLUMNAS_CONTROL}

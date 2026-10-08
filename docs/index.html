@@ -331,10 +331,10 @@
         <div class="chip" data-query="SELECT ciudad, count(*) AS inmuebles, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_bienes_raices WHERE periodo = (SELECT max(periodo) FROM seguros_bienes_raices) GROUP BY ciudad ORDER BY valor_final_m_clp DESC LIMIT 10;">
           Bienes raíces por ciudad
         </div>
-        <div class="chip" data-query="SELECT contraparte, count(*) AS contratos, count(DISTINCT rut_aseguradora) AS aseguradoras FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY contraparte ORDER BY contratos DESC LIMIT 10;">
+        <div class="chip" data-query="SELECT nombre AS contraparte, count(*) AS contratos, count(DISTINCT rut_aseguradora) AS aseguradoras FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY contraparte ORDER BY contratos DESC LIMIT 10;">
           Derivados: contrapartes
         </div>
-        <div class="chip" data-query="SELECT contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_pacto_prom_pct, SUM(valor_contable_m_clp) AS valor_contable_m_clp FROM seguros_pactos WHERE periodo = (SELECT max(periodo) FROM seguros_pactos) GROUP BY contraparte ORDER BY valor_contable_m_clp DESC LIMIT 10;">
+        <div class="chip" data-query="SELECT nombre AS contraparte, count(*) AS pactos, AVG(tasa_pacto) AS tasa_pacto_prom, SUM(valorizacion_de_pacto_a_la_fecha_de_cierre_m_clp) AS valorizacion_m_clp FROM seguros_pactos WHERE periodo = (SELECT max(periodo) FROM seguros_pactos) GROUP BY contraparte ORDER BY valorizacion_m_clp DESC LIMIT 10;">
           Pactos de seguros
         </div>
         <div class="chip" data-query="SELECT tipo_operacion, contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_prom_pct FROM fi_pactos WHERE periodo = (SELECT max(periodo) FROM fi_pactos) GROUP BY tipo_operacion, contraparte ORDER BY pactos DESC LIMIT 15;">
@@ -407,6 +407,7 @@
   <script src="js/data_viewer.js?v=fl-202606-30046-22368"></script>
   <script src="js/jszip.min.js"></script>
   <script src="js/xlsx.full.min.js"></script>
+  <script src="js/diccionario_seguros.js?v=fl-202606-30046-22368"></script>
   <script src="js/download_utils.js?v=fl-202606-30046-22368"></script>
   <script src="js/download_catalog.js?v=fl-202606-30046-22368"></script>
   <script src="js/downloads_panel.js?v=fl-202606-30046-22368"></script>
