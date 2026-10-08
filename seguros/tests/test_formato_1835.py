@@ -8,12 +8,15 @@ con el mismo código que usa la actualización mensual.
 """
 import io
 import re
+import tempfile
 import zipfile
 from collections import defaultdict
 from pathlib import Path
 
 import pandas as pd
+import pyarrow.parquet as pq
 
+from seguros.scripts import actualizar_carteras as ac
 from seguros.scripts.actualizar_carteras import SECTORES, ErrorValidacion, leer_zip
 
 MUESTRAS = Path(__file__).resolve().parents[1] / "fuentes" / "muestras_1835"
@@ -52,6 +55,7 @@ def main():
             print(f"          bonos: cuadratura {cuadra:.1%}, vencimientos válidos {validas:.1%}")
             if cuadra < 0.95 or validas < 0.99:
                 fallas += 1
+        fallas += escritura(periodo, filas, ac.tablas_de(periodo))
         for t in ("acciones", "fondos_mutuos", "bienes_raices", "extranjeros", "derivados", "pactos"):
             df = pd.DataFrame(filas[t])
             for c in [c for c in df.columns if c.startswith("fecha")]:
@@ -62,6 +66,31 @@ def main():
     assert fallas == 0, f"{fallas} fallas"
     exclusion()
     print("OK")
+
+
+def escritura(periodo, filas, tablas):
+    """Publica el mes en una carpeta temporal: prueba el esquema Parquet (unión de ambos
+    formatos y de todos los subtipos de registro), no sólo la lectura."""
+    fallas = 0
+    original = ac.SALIDA
+    try:
+        with tempfile.TemporaryDirectory() as tmp:
+            ac.SALIDA = Path(tmp)
+            conteo = ac.escribir_periodo(periodo, filas, tablas)
+            for tabla in tablas:
+                ruta = ac.ruta_particion(tabla, periodo)
+                if not ruta.exists():
+                    continue
+                leido = pq.read_table(ruta)
+                if leido.num_rows != conteo[tabla]:
+                    print(f"          FALLA {tabla}: {leido.num_rows} filas, esperadas {conteo[tabla]}")
+                    fallas += 1
+                if leido.schema.names != ac.esquema(tabla).names:
+                    print(f"          FALLA {tabla}: columnas distintas del esquema")
+                    fallas += 1
+    finally:
+        ac.SALIDA = original
+    return fallas
 
 
 def exclusion():

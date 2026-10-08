@@ -36,6 +36,10 @@ on:
         description: 'Máximo de cierres a revisar por corrida (0 = sin tope)'
         default: '0'
         type: string
+      forzar:
+        description: 'Reconstruir: volver a publicar los meses del rango aunque ya estén publicados'
+        default: false
+        type: boolean
 
 permissions:
   contents: write
@@ -85,10 +89,12 @@ jobs:
           HASTA: ${{ inputs.hasta }}
           MINUTOS: ${{ inputs.minutos }}
           PERIODOS: ${{ inputs.max_periodos }}
+          FORZAR: ${{ inputs.forzar }}
         run: |
           args=()
           if [ -n "${DESDE}" ]; then args+=(--desde "${DESDE}"); fi
           if [ -n "${HASTA}" ]; then args+=(--hasta "${HASTA}"); fi
+          if [ "${FORZAR}" = "true" ]; then args+=(--forzar); fi
           python -m seguros.scripts.actualizar_carteras --cache /tmp/cmf1835 \
             --minutos "${MINUTOS:-270}" --max-periodos "${PERIODOS:-0}" "${args[@]}"
 

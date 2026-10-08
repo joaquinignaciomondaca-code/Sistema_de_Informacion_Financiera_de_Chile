@@ -70,7 +70,7 @@ WITH bancos AS (
   FROM bancos_lista_entidades
 ),
 seguros AS (
-  SELECT rut_emisor AS rut, count(DISTINCT rut_aseguradora) AS aseguradoras
+  SELECT nro_rut AS rut, count(DISTINCT rut_aseguradora) AS aseguradoras
   FROM seguros_renta_fija
   WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija)
   GROUP BY 1
