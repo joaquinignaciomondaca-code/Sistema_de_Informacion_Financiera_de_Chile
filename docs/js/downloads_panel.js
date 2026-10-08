@@ -403,6 +403,14 @@ class DownloadsPanelController {
     });
   }
 
+  /* Tabla a la que pertenece un id de vista (seguros_renta_fija -> renta_fija), cuando
+     existe un diccionario para ella: la descarga de Excel agrega la hoja "Diccionario". */
+  tablaConDiccionario(id) {
+    if (!window.DICCIONARIO_SEGUROS || !id || !id.startsWith("seguros_")) return null;
+    const tabla = id.slice("seguros_".length);
+    return window.DICCIONARIO_SEGUROS[tabla] ? tabla : null;
+  }
+
   /* ── Descargas ────────────────────────────────────────────────────────── */
 
   async descargarPantalla(formato, boton) {
@@ -415,7 +423,8 @@ class DownloadsPanelController {
       const resumen = await window.MFCDownload.exportarFilas(ctx.rows, ctx.columns, {
         formato,
         nombre: `${ctx.viewName}_pantalla`,
-        particionar: false
+        particionar: false,
+        diccionario: this.tablaConDiccionario(ctx.viewName)
       });
       this.avisar(`Descarga lista: ${window.MFCDownload.numero(resumen.filas)} filas en ${formato === "csv" ? "CSV" : "Excel"}.`);
     });
@@ -512,7 +521,8 @@ class DownloadsPanelController {
       const resumen = await window.MFCDownload.exportarFilas(filas, res.columns || [], {
         formato,
         nombre: nombreArchivo,
-        particionar: true
+        particionar: true,
+        diccionario: this.tablaConDiccionario(item.id)
       });
       this.avisar(
         `Listo: ${window.MFCDownload.numero(resumen.filas)} ${mensual ? "meses (cierre)" : "filas"} en ` +
