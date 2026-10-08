@@ -7,7 +7,7 @@ mira el archivo crudo y responde:
 
   1. duplicados: ¿el archivo crudo trae las mismas líneas repetidas que se publicaron?
   2. doble reporte: ¿el ZIP trae dos archivos de control (C) para la misma compañía, o un
-     archivo con el mismo tipo_inversion dos veces con valores distintos?
+     archivo con el mismo tipo_de_inversion dos veces con valores distintos?
   3. fechas imposibles: ¿la fecha (p. ej. vencimiento 2173) aparece en la línea cruda?
   4. fidelidad: ¿releer el ZIP con el lector del repo reproduce exactamente lo publicado
      (filas y duplicados por tabla)?
@@ -79,10 +79,10 @@ def analizar(sector: str, periodo: str) -> dict:
     # Releer con el lector del repo y comparar con lo publicado.
     filas, _comp, avisos, exc = leer_zip(data, periodo, sector)
     rep["exclusiones"] = exc
-    # Doble reporte dentro de las filas leídas: mismo (rut, tipo_inversion), valores distintos.
+    # Doble reporte dentro de las filas leídas: mismo (rut, tipo_de_inversion), valores distintos.
     vals: dict[tuple, set] = {}
     for f in filas["control_inversiones"]:
-        vals.setdefault((f["rut_aseguradora"], f["tipo_inversion"]), set()).add(f["valor_final_m_clp"])
+        vals.setdefault((f["rut_aseguradora"], f["tipo_de_inversion"]), set()).add(f["valor_final_m_clp"])
     rep["dobles_c"] = [f"{r} tipo {t}: {len(v)} valores" for (r, t), v in sorted(vals.items()) if len(v) > 1]
     for t in TABLAS:
         pub = leer_publicado(t, periodo)

@@ -68,9 +68,10 @@ DESDE_TABLA = {"renta_fija": "2024-12", "bienes_raices": "2024-12"}
 POR_MES = {"renta_fija", "bienes_raices"}
 # Orden dentro de cada archivo: el mismo instrumento queda en filas contiguas y comprime mejor.
 ORDEN = {"renta_fija": ["tipo_instrumento", "nemotecnico", "serie", "fecha_compra"],
-         "acciones": ["nemotecnico"], "fondos_mutuos": ["rut_fondo"], "bienes_raices": ["rol"],
-         "extranjeros": ["tipo_registro", "nemotecnico"], "derivados": ["tipo_registro", "folio"],
-         "pactos": ["folio"], "control_inversiones": []}
+         "acciones": ["nemotecnico"], "fondos_mutuos": ["nemotecnico"], "bienes_raices": ["rol"],
+         "extranjeros": ["tipo_registro", "codigo_individualizacion_o_nemotecnico"],
+         "derivados": ["tipo_registro", "folio_operacion"], "pactos": ["folio_operacion"],
+         "control_inversiones": ["tipo_de_inversion"]}
 ARCHIVOS = set("iafbxpc")
 
 
@@ -234,8 +235,6 @@ def leer_archivo(nombre: str, raw: bytes, formato: str, periodo: str, sector: st
     for n, ln in enumerate(detalle, start=2):
         clave = (letra, ln[:1])
         if clave not in mapa:
-            if letra == "x" and ln[:1] in "45":  # bienes raíces y filiales en el extranjero: no se publican
-                continue
             errores.append(f"{nombre}: tipo de registro {ln[:1]!r} desconocido (línea {n})")
             return
         tabla, subtipo, cols = mapa[clave]
@@ -302,10 +301,10 @@ def leer_zip(data: bytes, periodo: str, sector: str):
     # tal cual (es la fuente), pero se avisa: las agregaciones por compañía-mes suman ambos.
     valores: dict[tuple, set] = {}
     for fila in filas["control_inversiones"]:
-        valores.setdefault((fila["rut_aseguradora"], fila["tipo_inversion"]), set()).add(fila["valor_final_m_clp"])
+        valores.setdefault((fila["rut_aseguradora"], fila["tipo_de_inversion"]), set()).add(fila["valor_final_m_clp"])
     for (rut, tipo), vals in sorted(valores.items()):
         if len(vals) > 1:
-            avisos.append(f"{sector} {rut}: {len(vals)} valores distintos para tipo_inversion {tipo} "
+            avisos.append(f"{sector} {rut}: {len(vals)} valores distintos para tipo_de_inversion {tipo} "
                           f"(doble reporte de control en el mes)")
     # Campos ilegibles: quedan vacíos y se avisan; si superan el 1 % de las filas de una tabla,
     # lo más probable es que la lectura esté corrida y el mes no se publica.
@@ -330,6 +329,20 @@ def leer_zip(data: bytes, periodo: str, sector: str):
 _ESQUEMAS: dict = {}
 
 
+def _tipo_arrow(tipo: str, decimales: int) -> pa.DataType:
+    return pa.string() if tipo in "tfr" else pa.float64() if decimales else pa.int64()
+
+
+def _mas_ancho(a: pa.DataType | None, b: pa.DataType) -> pa.DataType:
+    if a is None or a == b:
+        return b
+    if pa.types.is_string(a) or pa.types.is_string(b):
+        return pa.string()
+    if pa.types.is_floating(a) or pa.types.is_floating(b):
+        return pa.float64()
+    return pa.int64()
+
+
 def esquema(tabla: str) -> pa.Schema:
     """Esquema fijo por tabla según la ficha (unión de ambos formatos): así todos los archivos
     de una tabla se leen juntos y un mes nunca cambia el tipo de una columna."""
@@ -343,7 +356,11 @@ def esquema(tabla: str) -> pa.Schema:
                 if subtipo:
                     cols.setdefault("tipo_registro", pa.string())
                 for c, _, _, tipo, dec in campos_:
-                    cols.setdefault(c, pa.string() if tipo in "tfr" else pa.float64() if dec else pa.int64())
+                    # Un mismo nombre puede declararse distinto en dos subtipos (p. ej. con y sin
+                    # decimales): gana el tipo más ancho para que ningún mes quede fuera del
+                    # esquema. Los nombres con sentidos distintos (texto vs número) se separan
+                    # en el inventario, no aquí.
+                    cols[c] = _mas_ancho(cols.get(c), _tipo_arrow(tipo, dec))
         _ESQUEMAS[tabla] = pa.schema(list(cols.items()))
     return _ESQUEMAS[tabla]
 
@@ -584,6 +601,9 @@ def main(argv=None) -> int:
                     help="solo recalcular las entradas de este sector en data_manifest.json")
     ap.add_argument("--solo-maestro", action="store_true",
                     help="solo recalcular aseguradoras.parquet desde las filas publicadas")
+    ap.add_argument("--forzar", action="store_true",
+                    help="volver a descargar y publicar todos los meses del rango, aunque ya "
+                         "estén publicados (para reconstruir la historia tras cambiar el esquema)")
     a = ap.parse_args(argv)
     if a.solo_data_manifest:
         actualizar_data_manifest(cargar_control())
@@ -600,10 +620,15 @@ def main(argv=None) -> int:
     desde = min([a.desde] + list(DESDE_TABLA.values())) if a.desde == DESDE else a.desde
     pendientes = []
     for p in meses(desde, hasta):
+        if a.forzar:  # reconstruir: el mes se vuelve a descargar y a escribir tal cual
+            pendientes.append((p, tablas_de(p)))
+            continue
         hechas = set(control["periodos"].get(p, {}).get("registros", {}))
         faltan = [t for t in tablas_de(p) if t not in hechas]
         if faltan:
             pendientes.append((p, faltan))
+    if a.forzar:
+        print("--forzar: se vuelven a descargar y publicar los meses del rango")
     print(f"Meses publicados: {len(control['periodos'])}. Meses con tablas pendientes: {len(pendientes)}"
           + (f" ({pendientes[0][0]} .. {pendientes[-1][0]})" if pendientes else ""))
     if a.diagnostico:

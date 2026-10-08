@@ -44,7 +44,7 @@ const ERD_TABLES = [
       { name: "tipo_instrumento", type: "VARCHAR" },
       { name: "nemotecnico", type: "VARCHAR" },
       { name: "serie", type: "VARCHAR" },
-      { name: "rut_emisor", type: "VARCHAR" },
+      { name: "nro_rut", type: "VARCHAR" },
       { name: "pais", type: "VARCHAR" },
       { name: "fecha_compra", type: "VARCHAR" },
       { name: "fecha_emision", type: "VARCHAR" }
@@ -67,12 +67,12 @@ const ERD_TABLES = [
       { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
       { name: "nombre_aseguradora", type: "VARCHAR" },
       { name: "tipo_instrumento", type: "VARCHAR" },
-      { name: "rut_emisor", type: "VARCHAR" },
-      { name: "run_fondo", type: "VARCHAR" },
+      { name: "rut", type: "VARCHAR" },
+      { name: "run", type: "VARCHAR" },
       { name: "nemotecnico", type: "VARCHAR" },
       { name: "serie", type: "VARCHAR" },
       { name: "unidades", type: "DOUBLE" },
-      { name: "presencia_bursatil_pct", type: "DOUBLE" }
+      { name: "pres_bursatil", type: "DOUBLE" }
     ]
   },
   {
@@ -93,7 +93,7 @@ const ERD_TABLES = [
       { name: "nombre_aseguradora", type: "VARCHAR" },
       { name: "tipo_instrumento", type: "VARCHAR" },
       { name: "rut_administradora", type: "VARCHAR" },
-      { name: "run_fondo", type: "VARCHAR" },
+      { name: "run", type: "VARCHAR" },
       { name: "nemotecnico", type: "VARCHAR" },
       { name: "tipo_fondo", type: "VARCHAR" },
       { name: "serie", type: "VARCHAR" },
@@ -119,8 +119,8 @@ const ERD_TABLES = [
       { name: "rol", type: "VARCHAR" },
       { name: "tipo_instrumento", type: "VARCHAR" },
       { name: "nemotecnico", type: "VARCHAR" },
-      { name: "direccion", type: "VARCHAR" },
-      { name: "codigo_comuna", type: "VARCHAR" },
+      { name: "ubicacion", type: "VARCHAR" },
+      { name: "comuna", type: "VARCHAR" },
       { name: "ciudad", type: "VARCHAR" },
       { name: "monto_arriendo_uf", type: "DOUBLE" }
     ]
@@ -145,8 +145,8 @@ const ERD_TABLES = [
       { name: "tipo_instrumento", type: "VARCHAR" },
       { name: "valor_nominal", type: "DOUBLE" },
       { name: "pais", type: "VARCHAR" },
-      { name: "emisor", type: "VARCHAR" },
-      { name: "codigo", type: "VARCHAR" },
+      { name: "nombre_del_emisor", type: "VARCHAR" },
+      { name: "codigo_individualizacion_o_nemotecnico", type: "VARCHAR" },
       { name: "moneda", type: "VARCHAR" }
     ]
   },
@@ -167,12 +167,12 @@ const ERD_TABLES = [
       { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
       { name: "nombre_aseguradora", type: "VARCHAR" },
       { name: "tipo_registro", type: "VARCHAR" },
-      { name: "objetivo", type: "VARCHAR" },
+      { name: "objetivo_contrato", type: "VARCHAR" },
       { name: "tipo_operacion", type: "VARCHAR" },
-      { name: "folio", type: "VARCHAR" },
-      { name: "item", type: "VARCHAR" },
-      { name: "fecha_operacion", type: "VARCHAR" },
-      { name: "fecha_vencimiento", type: "VARCHAR" }
+      { name: "folio_operacion", type: "VARCHAR" },
+      { name: "item_operacion", type: "VARCHAR" },
+      { name: "fecha_de_la_operacion", type: "VARCHAR" },
+      { name: "fecha_de_vencimiento_del_contrato", type: "VARCHAR" }
     ]
   },
   {
@@ -192,12 +192,12 @@ const ERD_TABLES = [
       { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
       { name: "nombre_aseguradora", type: "VARCHAR" },
       { name: "tipo_operacion", type: "VARCHAR" },
-      { name: "folio", type: "VARCHAR" },
-      { name: "item", type: "VARCHAR" },
-      { name: "fecha_operacion", type: "VARCHAR" },
-      { name: "fecha_vencimiento", type: "VARCHAR" },
-      { name: "tasa_pacto_pct", type: "DOUBLE" },
-      { name: "contraparte", type: "VARCHAR" }
+      { name: "folio_operacion", type: "VARCHAR" },
+      { name: "item_operacion", type: "VARCHAR" },
+      { name: "fecha_de_la_operacion", type: "VARCHAR" },
+      { name: "fecha_de_vencimiento_del_contrato", type: "VARCHAR" },
+      { name: "tasa_pacto", type: "DOUBLE" },
+      { name: "nombre", type: "VARCHAR" }
     ]
   },
   {
@@ -216,10 +216,10 @@ const ERD_TABLES = [
       { name: "sector", type: "VARCHAR" },
       { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
       { name: "nombre_aseguradora", type: "VARCHAR" },
-      { name: "tipo_inversion", type: "VARCHAR" },
+      { name: "tipo_de_inversion", type: "VARCHAR" },
       { name: "valor_final_m_clp", type: "BIGINT" },
-      { name: "inversiones_representativas_m_clp", type: "BIGINT" },
-      { name: "inversiones_no_representativas_m_clp", type: "BIGINT" },
+      { name: "inversiones_representativas_de_rt_pr_m_clp", type: "BIGINT" },
+      { name: "inversiones_no_representativas_de_rt_pr_m_clp", type: "BIGINT" },
       { name: "total_costo_amortizado_m_clp", type: "BIGINT" },
       { name: "total_valor_razonable_m_clp", type: "BIGINT" },
       { name: "total_efectivo_equivalente_m_clp", type: "BIGINT" }

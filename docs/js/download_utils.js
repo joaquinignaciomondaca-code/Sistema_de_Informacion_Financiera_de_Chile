@@ -52,11 +52,27 @@ window.MFCDownload = (function () {
     return new Blob([textoCsv(rows, cols)], { type: "text/csv;charset=utf-8;" });
   }
 
-  function libroXlsx(rows, cols, nombreHoja) {
+  /* Hoja "Diccionario": una fila por columna con el nombre original de la CMF, el tipo, la
+     unidad y la descripción de la ficha técnica. Sólo Excel (el CSV queda como estaba) y
+     sólo para las tablas que traen diccionario (hoy, las de seguros). */
+  function hojaDiccionario(tabla) {
+    const datos = window.DICCIONARIO_SEGUROS && tabla && window.DICCIONARIO_SEGUROS[tabla];
+    if (!datos || !datos.filas || !datos.filas.length) return null;
+    const hoja = window.XLSX.utils.aoa_to_sheet([datos.cabecera].concat(datos.filas));
+    hoja["!cols"] = [{ wch: 46 }, { wch: 10 }, { wch: 16 }, { wch: 46 }, { wch: 30 },
+                     { wch: 14 }, { wch: 110 }];
+    hoja["!autofilter"] = { ref: window.XLSX.utils.encode_range({ s: { r: 0, c: 0 },
+      e: { r: datos.filas.length, c: datos.cabecera.length - 1 } }) };
+    return hoja;
+  }
+
+  function libroXlsx(rows, cols, nombreHoja, tabla) {
     if (!window.XLSX) throw new Error("La librería de Excel (SheetJS) no está cargada en esta página.");
     const hoja = window.XLSX.utils.json_to_sheet(rows, { header: cols });
     const libro = window.XLSX.utils.book_new();
     window.XLSX.utils.book_append_sheet(libro, hoja, String(nombreHoja || "Datos").slice(0, 31));
+    const diccionario = hojaDiccionario(tabla);
+    if (diccionario) window.XLSX.utils.book_append_sheet(libro, diccionario, "Diccionario");
     const salida = window.XLSX.write(libro, { bookType: "xlsx", type: "array" });
     return new Blob([salida], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
   }
@@ -73,7 +89,7 @@ window.MFCDownload = (function () {
     setTimeout(() => URL.revokeObjectURL(url), 4000);
   }
 
-  async function empaquetar(filas, cols, { formato, nombre, limite, tamano }) {
+  async function empaquetar(filas, cols, { formato, nombre, limite, tamano, tabla }) {
     if (!window.JSZip) throw new Error("No se pudo empaquetar el .ZIP (JSZip no está cargado).");
     const zip = new window.JSZip();
     const total = Math.ceil(filas.length / tamano);
@@ -86,6 +102,8 @@ window.MFCDownload = (function () {
         const hoja = window.XLSX.utils.json_to_sheet(bloque, { header: cols });
         const libro = window.XLSX.utils.book_new();
         window.XLSX.utils.book_append_sheet(libro, hoja, `Parte_${parte + 1}`);
+        const diccionario = hojaDiccionario(tabla);
+        if (diccionario) window.XLSX.utils.book_append_sheet(libro, diccionario, "Diccionario");
         zip.file(`${nombre}_${sufijo}.xlsx`, window.XLSX.write(libro, { bookType: "xlsx", type: "array" }));
       }
     }
@@ -106,23 +124,27 @@ window.MFCDownload = (function () {
     const columnas = Array.isArray(cols) && cols.length ? cols : Object.keys(filas[0] || {});
     if (!filas.length) throw new Error("No hay filas para descargar con los criterios elegidos.");
 
+    // El diccionario (hoja extra del Excel) se busca por tabla: sólo las tablas de seguros
+    // lo traen por ahora; en las demás la descarga queda igual que antes.
+    const tabla = op.diccionario || null;
     if (formato === "csv" && filas.length > LIMITE_ZIP_CSV && op.particionar !== false) {
-      return empaquetar(filas, columnas, { formato, nombre, tamano: 150000 });
+      return empaquetar(filas, columnas, { formato, nombre, tamano: 150000, tabla });
     }
     if (formato === "xlsx" && filas.length > LIMITE_EXCEL) {
-      return empaquetar(filas, columnas, { formato, nombre, tamano: 100000 });
+      return empaquetar(filas, columnas, { formato, nombre, tamano: 100000, tabla });
     }
     if (formato === "xlsx" && filas.length > LIMITE_ZIP_XLSX && op.particionar !== false) {
-      return empaquetar(filas, columnas, { formato, nombre, tamano: 100000 });
+      return empaquetar(filas, columnas, { formato, nombre, tamano: 100000, tabla });
     }
 
     if (formato === "csv") {
       descargar(blobCsv(filas, columnas), `${nombre}_${marcaTiempo()}.csv`);
     } else {
-      descargar(libroXlsx(filas, columnas, nombre), `${nombre}_${marcaTiempo()}.xlsx`);
+      descargar(libroXlsx(filas, columnas, nombre, tabla), `${nombre}_${marcaTiempo()}.xlsx`);
     }
     return { filas: filas.length, archivos: 1, comprimido: false };
   }
 
-  return { numero, bytes, textoCsv, blobCsv, libroXlsx, descargar, exportarFilas, marcaTiempo };
+  return { numero, bytes, textoCsv, blobCsv, hojaDiccionario, libroXlsx, descargar,
+           exportarFilas, marcaTiempo };
 })();
