@@ -159,9 +159,19 @@
       "evento": "cambio_vigencia",
       "antes": "Vigente",
       "ahora": "No Vigente"
+    },
+    {
+      "fecha": "2026-10-10",
+      "sector": "fintech",
+      "lista": "fintech/fintech_rpsf_maestro",
+      "rut": "76005079-2",
+      "razon_social": "AMM ASESORIAS SPA",
+      "evento": "cambio_vigencia",
+      "antes": "Vigente",
+      "ahora": "No Vigente"
     }
   ],
-  "ultima_revision_utc": "2026-10-01T18:23:49+00:00",
+  "ultima_revision_utc": "2026-10-10T17:25:49+00:00",
   "sectores_revisados": [
     "agf",
     "securitizadoras",
