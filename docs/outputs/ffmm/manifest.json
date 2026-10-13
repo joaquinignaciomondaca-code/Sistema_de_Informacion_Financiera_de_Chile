@@ -3135,6 +3135,23 @@
       "avisos": 0,
       "fondos_nacional": 375,
       "detalle_avisos": []
+    },
+    "2026-09": {
+      "registros": {
+        "cartera_nacional": 29366,
+        "cartera_extranjera": 2514,
+        "futuros_forwards": 1551,
+        "opciones": 18
+      },
+      "avisos": 0,
+      "sha256_origen": {
+        "NACI": "bc014b0f8f46815a967c3e089168bde032e709664213c51b45e328a46c39d07d",
+        "EXTR": "467182b79f8d55b1c0e237f36b9ed6f6bc842d1d17eb50a943c24b9382e77d05",
+        "FUTU": "374f3e15ac4f4b3a64771d55b6794b789abe0fb950a86738c30a318b6257b061",
+        "OPCI": "3dc4d76ec7ae5df10f99ef90ac6f74b03d4aa8b57eaf7c40760c1114dda0e4f4"
+      },
+      "fondos_nacional": 364,
+      "detalle_avisos": []
     }
   },
   "fondos": {
@@ -3147,8 +3164,8 @@
     "8011": {
       "nombre": "VISION MONEY MARKET",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 307
+      "ultimo": "2026-09",
+      "meses": 308
     },
     "8014": {
       "nombre": "CRECIMIENTO",
@@ -3165,8 +3182,8 @@
     "8023": {
       "nombre": "HORIZONTE",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8025": {
       "nombre": "FLEXIBLE",
@@ -3177,8 +3194,8 @@
     "8026": {
       "nombre": "CAPITAL FINANCIERO",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8027": {
       "nombre": "CHILE ACCIONARIO",
@@ -3195,8 +3212,8 @@
     "8029": {
       "nombre": "BICE RENTA PESOS",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8030": {
       "nombre": "SELECCION NACIONAL",
@@ -3207,8 +3224,8 @@
     "8032": {
       "nombre": "BICE BALANCEADO",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8034": {
       "nombre": "OPERACIONAL",
@@ -3225,20 +3242,20 @@
     "8036": {
       "nombre": "RENDIMIENTO",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8037": {
       "nombre": "DEPOSITO EFECTIVO",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8038": {
       "nombre": "CAPITALES ACC CHI",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 307
+      "ultimo": "2026-09",
+      "meses": 308
     },
     "8039": {
       "nombre": "PATRIMONIAL",
@@ -3303,8 +3320,8 @@
     "8049": {
       "nombre": "MONEY MARKET",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8050": {
       "nombre": "LEADER",
@@ -3321,8 +3338,8 @@
     "8052": {
       "nombre": "DISPONIBLE",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8053": {
       "nombre": "PERFORMANCE",
@@ -3333,14 +3350,14 @@
     "8054": {
       "nombre": "EMERGING",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8055": {
       "nombre": "FIRST",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 307
+      "ultimo": "2026-09",
+      "meses": 308
     },
     "8056": {
       "nombre": "RENTAMAS",
@@ -3351,14 +3368,14 @@
     "8057": {
       "nombre": "MONEY MARKET",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8058": {
       "nombre": "GO GLOBAL EMERGENTE",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8059": {
       "nombre": "MONETARIO",
@@ -3381,14 +3398,14 @@
     "8063": {
       "nombre": "BICE LIQUIDEZ PESOS",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8064": {
       "nombre": "FM BCI EST. UF H 3A",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8065": {
       "nombre": "PREMIUM",
@@ -3459,14 +3476,14 @@
     "8077": {
       "nombre": "LARGO PLAZO UF",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8078": {
       "nombre": "INVERSION USA",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8079": {
       "nombre": "OPTIMO",
@@ -3489,8 +3506,8 @@
     "8082": {
       "nombre": "LARGO PLAZO PESOS",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8084": {
       "nombre": "DINAMICO",
@@ -3513,14 +3530,14 @@
     "8088": {
       "nombre": "FM BCH GLOBAL ACC",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8089": {
       "nombre": "PROGRESION DEUDA LP",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 307
+      "ultimo": "2026-09",
+      "meses": 308
     },
     "8091": {
       "nombre": "MAS INGRESO",
@@ -3531,8 +3548,8 @@
     "8092": {
       "nombre": "ITAU PERFORMANCE",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8093": {
       "nombre": "ACTIVO",
@@ -3561,14 +3578,14 @@
     "8097": {
       "nombre": "EUROPE EQUITY",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8098": {
       "nombre": "LATAM EQUITY",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8099": {
       "nombre": "EMPRESARIAL",
@@ -3579,8 +3596,8 @@
     "8100": {
       "nombre": "BICE TESORERIA",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8101": {
       "nombre": "GLOBAL ACCIONES",
@@ -3615,20 +3632,20 @@
     "8106": {
       "nombre": "DEUDA M. PLAZO UF",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8107": {
       "nombre": "COMPETITIVO",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8108": {
       "nombre": "FM BCI EST UF H5AÑOS",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8109": {
       "nombre": "SELECTO",
@@ -3657,14 +3674,14 @@
     "8113": {
       "nombre": "USA EQUITY",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8114": {
       "nombre": "BICE ACCIONES EUROPA",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8115": {
       "nombre": "LIQUIDEZ",
@@ -3675,14 +3692,14 @@
     "8116": {
       "nombre": "ARRIESGADO",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8118": {
       "nombre": "GOLD",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8119": {
       "nombre": "MAS FUTURO",
@@ -3711,20 +3728,20 @@
     "8125": {
       "nombre": "ESTRATEGICO",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8127": {
       "nombre": "UTILIDADES",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8129": {
       "nombre": "EUROPA DESARROLLADA",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8130": {
       "nombre": "MERCADO MONETARIO",
@@ -3795,14 +3812,14 @@
     "8141": {
       "nombre": "BICE RENTA UF",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8142": {
       "nombre": "BICE CHILE SELECTIVO",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8143": {
       "nombre": "U.S. HIGH TECHNOLOGY",
@@ -3861,8 +3878,8 @@
     "8152": {
       "nombre": "DEPOSITO XXI",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8153": {
       "nombre": "EURO TECHNOLOGY",
@@ -3909,8 +3926,8 @@
     "8160": {
       "nombre": "LATINOAMÉRICA",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8161": {
       "nombre": "DEPOSITO TOTAL",
@@ -3987,14 +4004,14 @@
     "8174": {
       "nombre": "FM BCI EST.$>a 1 año",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8177": {
       "nombre": "MONETARIO",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8178": {
       "nombre": "BICE ACCIONES ASIA",
@@ -4029,14 +4046,14 @@
     "8183": {
       "nombre": "BICE NORTEAMERICA",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8090": {
       "nombre": "GO ACCIONES GLOBALES",
       "primer": "2001-01",
-      "ultimo": "2026-08",
-      "meses": 308
+      "ultimo": "2026-09",
+      "meses": 309
     },
     "8166": {
       "nombre": "DEPOSITO INTERNACION",
@@ -4083,8 +4100,8 @@
     "8187": {
       "nombre": "SCOTIA LIQUIDEZ",
       "primer": "2001-05",
-      "ultimo": "2026-08",
-      "meses": 304
+      "ultimo": "2026-09",
+      "meses": 305
     },
     "8188": {
       "nombre": "PERMANENCIA",
@@ -4137,8 +4154,8 @@
     "8209": {
       "nombre": "TESORERIA",
       "primer": "2001-09",
-      "ultimo": "2026-08",
-      "meses": 300
+      "ultimo": "2026-09",
+      "meses": 301
     },
     "8190": {
       "nombre": "BICE EXTRA DOLAR",
@@ -4191,8 +4208,8 @@
     "8230": {
       "nombre": "MARKET DOLAR",
       "primer": "2001-12",
-      "ultimo": "2026-08",
-      "meses": 297
+      "ultimo": "2026-09",
+      "meses": 298
     },
     "8231": {
       "nombre": "BONOS DOLAR",
@@ -4221,8 +4238,8 @@
     "8202": {
       "nombre": "BTG MONEY MARKET",
       "primer": "2002-01",
-      "ultimo": "2026-08",
-      "meses": 296
+      "ultimo": "2026-09",
+      "meses": 297
     },
     "8204": {
       "nombre": "BTG ACCIONES CHILENA",
@@ -4233,26 +4250,26 @@
     "8203": {
       "nombre": "RENTA CHILENA",
       "primer": "2002-02",
-      "ultimo": "2026-08",
-      "meses": 295
+      "ultimo": "2026-09",
+      "meses": 296
     },
     "8207": {
       "nombre": "AHORRO LAT. DÓLAR",
       "primer": "2002-02",
-      "ultimo": "2026-08",
-      "meses": 295
+      "ultimo": "2026-09",
+      "meses": 296
     },
     "8205": {
       "nombre": "ACCIONES USA",
       "primer": "2002-02",
-      "ultimo": "2026-08",
-      "meses": 295
+      "ultimo": "2026-09",
+      "meses": 296
     },
     "8206": {
       "nombre": "ACC. LATINOAMERICANA",
       "primer": "2002-02",
-      "ultimo": "2026-08",
-      "meses": 295
+      "ultimo": "2026-09",
+      "meses": 296
     },
     "8208": {
       "nombre": "RENTA INTERNACIONAL",
@@ -4275,8 +4292,8 @@
     "8234": {
       "nombre": "SELECT PLUS",
       "primer": "2002-04",
-      "ultimo": "2026-08",
-      "meses": 293
+      "ultimo": "2026-09",
+      "meses": 294
     },
     "8236": {
       "nombre": "ITAU DOLLAR",
@@ -4293,14 +4310,14 @@
     "8238": {
       "nombre": "MONEY MARKET DOLAR",
       "primer": "2002-07",
-      "ultimo": "2026-08",
-      "meses": 290
+      "ultimo": "2026-09",
+      "meses": 291
     },
     "8240": {
       "nombre": "AHORRO ESTRATEGICO",
       "primer": "2002-08",
-      "ultimo": "2026-08",
-      "meses": 289
+      "ultimo": "2026-09",
+      "meses": 290
     },
     "8241": {
       "nombre": "AHORRO CENTRAL",
@@ -4323,38 +4340,38 @@
     "8244": {
       "nombre": "DEUDA LATAM DOLAR",
       "primer": "2002-10",
-      "ultimo": "2026-08",
-      "meses": 287
+      "ultimo": "2026-09",
+      "meses": 288
     },
     "8248": {
       "nombre": "CORPORATE DOLLAR",
       "primer": "2002-10",
-      "ultimo": "2026-08",
-      "meses": 287
+      "ultimo": "2026-09",
+      "meses": 288
     },
     "8250": {
       "nombre": "DEUDA CORTO PLAZO",
       "primer": "2002-10",
-      "ultimo": "2026-08",
-      "meses": 287
+      "ultimo": "2026-09",
+      "meses": 288
     },
     "8251": {
       "nombre": "DEUDA FLEXIBLE",
       "primer": "2002-10",
-      "ultimo": "2026-08",
-      "meses": 287
+      "ultimo": "2026-09",
+      "meses": 288
     },
     "8252": {
       "nombre": "LIFETIME 2030",
       "primer": "2002-10",
-      "ultimo": "2026-08",
-      "meses": 287
+      "ultimo": "2026-09",
+      "meses": 288
     },
     "8253": {
       "nombre": "SECURITY PLUS",
       "primer": "2002-10",
-      "ultimo": "2026-08",
-      "meses": 287
+      "ultimo": "2026-09",
+      "meses": 288
     },
     "8243": {
       "nombre": "CORP DOLAR",
@@ -4365,8 +4382,8 @@
     "8254": {
       "nombre": "LATAM CORPORATE",
       "primer": "2002-11",
-      "ultimo": "2026-08",
-      "meses": 286
+      "ultimo": "2026-09",
+      "meses": 287
     },
     "8255": {
       "nombre": "PRIORIDAD",
@@ -4377,14 +4394,14 @@
     "8245": {
       "nombre": "PORTFOLIO LIDER",
       "primer": "2003-01",
-      "ultimo": "2026-08",
-      "meses": 284
+      "ultimo": "2026-09",
+      "meses": 285
     },
     "8249": {
       "nombre": "FM BCH DEUDA GLOBAL",
       "primer": "2003-02",
-      "ultimo": "2026-08",
-      "meses": 283
+      "ultimo": "2026-09",
+      "meses": 284
     },
     "8258": {
       "nombre": "PREVISION",
@@ -4425,14 +4442,14 @@
     "8257": {
       "nombre": "DOLAR CASH",
       "primer": "2003-07",
-      "ultimo": "2026-08",
-      "meses": 278
+      "ultimo": "2026-09",
+      "meses": 279
     },
     "8263": {
       "nombre": "AHORRO CAPITAL",
       "primer": "2003-07",
-      "ultimo": "2026-08",
-      "meses": 278
+      "ultimo": "2026-09",
+      "meses": 279
     },
     "8265": {
       "nombre": "G. DEUDA LOCAL",
@@ -4467,8 +4484,8 @@
     "8280": {
       "nombre": "MEDIANO PLAZO",
       "primer": "2003-09",
-      "ultimo": "2026-08",
-      "meses": 276
+      "ultimo": "2026-09",
+      "meses": 277
     },
     "8273": {
       "nombre": "GARANTIZADO 110",
@@ -4479,8 +4496,8 @@
     "8274": {
       "nombre": "FM RENTA CP",
       "primer": "2003-11",
-      "ultimo": "2026-08",
-      "meses": 274
+      "ultimo": "2026-09",
+      "meses": 275
     },
     "8275": {
       "nombre": "DEUDA ESTATAL PESOS",
@@ -4551,8 +4568,8 @@
     "8287": {
       "nombre": "BONOS NACIONALES",
       "primer": "2004-01",
-      "ultimo": "2026-08",
-      "meses": 272
+      "ultimo": "2026-09",
+      "meses": 273
     },
     "8291": {
       "nombre": "XTRA INCOME",
@@ -4581,8 +4598,8 @@
     "8292": {
       "nombre": "DEUDA MEDIANO PLAZO",
       "primer": "2004-05",
-      "ultimo": "2026-08",
-      "meses": 268
+      "ultimo": "2026-09",
+      "meses": 269
     },
     "8293": {
       "nombre": "GARANTIZADO EXTRA",
@@ -4593,8 +4610,8 @@
     "8295": {
       "nombre": "BICE CONSERVADOR",
       "primer": "2004-05",
-      "ultimo": "2026-08",
-      "meses": 268
+      "ultimo": "2026-09",
+      "meses": 269
     },
     "8296": {
       "nombre": "FONDO A",
@@ -4617,32 +4634,32 @@
     "8299": {
       "nombre": "BCH EMERGING DOLLAR",
       "primer": "2004-05",
-      "ultimo": "2026-08",
-      "meses": 268
+      "ultimo": "2026-09",
+      "meses": 269
     },
     "8300": {
       "nombre": "U.S. DOLLAR",
       "primer": "2004-05",
-      "ultimo": "2026-08",
-      "meses": 268
+      "ultimo": "2026-09",
+      "meses": 269
     },
     "8301": {
       "nombre": "GLOBAL DOLLAR",
       "primer": "2004-05",
-      "ultimo": "2026-08",
-      "meses": 268
+      "ultimo": "2026-09",
+      "meses": 269
     },
     "8294": {
       "nombre": "GLOBAL",
       "primer": "2004-05",
-      "ultimo": "2026-08",
-      "meses": 268
+      "ultimo": "2026-09",
+      "meses": 269
     },
     "8289": {
       "nombre": "ACCIONES CHILE",
       "primer": "2004-06",
-      "ultimo": "2026-08",
-      "meses": 267
+      "ultimo": "2026-09",
+      "meses": 268
     },
     "8302": {
       "nombre": "BALANCEADO MODERADO",
@@ -4659,20 +4676,20 @@
     "8411": {
       "nombre": "RENDIMIENTO NOMINAL",
       "primer": "2004-07",
-      "ultimo": "2026-08",
-      "meses": 266
+      "ultimo": "2026-09",
+      "meses": 267
     },
     "8304": {
       "nombre": "MAS CONSERVADOR",
       "primer": "2004-08",
-      "ultimo": "2026-08",
-      "meses": 265
+      "ultimo": "2026-09",
+      "meses": 266
     },
     "8306": {
       "nombre": "CONSERVADOR ESTRATÉG",
       "primer": "2004-08",
-      "ultimo": "2026-08",
-      "meses": 265
+      "ultimo": "2026-09",
+      "meses": 266
     },
     "8307": {
       "nombre": "SECURITY ACCIONES MI",
@@ -4731,8 +4748,8 @@
     "8305": {
       "nombre": "NATIONAL EQUITY",
       "primer": "2004-09",
-      "ultimo": "2026-08",
-      "meses": 264
+      "ultimo": "2026-09",
+      "meses": 265
     },
     "8314": {
       "nombre": "LIDER DOLAR",
@@ -4743,8 +4760,8 @@
     "8317": {
       "nombre": "COMPROMISO BANCOESTA",
       "primer": "2004-09",
-      "ultimo": "2026-08",
-      "meses": 264
+      "ultimo": "2026-09",
+      "meses": 265
     },
     "8318": {
       "nombre": "CORPORATIVO BANCOEST",
@@ -4755,26 +4772,26 @@
     "8319": {
       "nombre": "SOLVENTE BANCOESTADO",
       "primer": "2004-09",
-      "ultimo": "2026-08",
-      "meses": 264
+      "ultimo": "2026-09",
+      "meses": 265
     },
     "8320": {
       "nombre": "CONVENIENCIA BANCOES",
       "primer": "2004-09",
-      "ultimo": "2026-08",
-      "meses": 264
+      "ultimo": "2026-09",
+      "meses": 265
     },
     "8316": {
       "nombre": "PROTECCION BANCOESTA",
       "primer": "2004-09",
-      "ultimo": "2026-08",
-      "meses": 264
+      "ultimo": "2026-09",
+      "meses": 265
     },
     "8327": {
       "nombre": "FM BCI ESTR. $ H 1 A",
       "primer": "2004-10",
-      "ultimo": "2026-08",
-      "meses": 263
+      "ultimo": "2026-09",
+      "meses": 264
     },
     "8328": {
       "nombre": "BCI DEUDA EMERGENTE",
@@ -4815,8 +4832,8 @@
     "8333": {
       "nombre": "ITAU CASH DOLLAR",
       "primer": "2004-11",
-      "ultimo": "2026-08",
-      "meses": 262
+      "ultimo": "2026-09",
+      "meses": 263
     },
     "8334": {
       "nombre": "CAPITAL TRUST 100",
@@ -4833,8 +4850,8 @@
     "8315": {
       "nombre": "AHORRO CORPORATIVO",
       "primer": "2004-12",
-      "ultimo": "2026-08",
-      "meses": 261
+      "ultimo": "2026-09",
+      "meses": 262
     },
     "8325": {
       "nombre": "LIQUIDEZ DOLAR",
@@ -4845,8 +4862,8 @@
     "8336": {
       "nombre": "BALANCEADO ESTRATÉGI",
       "primer": "2005-01",
-      "ultimo": "2026-08",
-      "meses": 260
+      "ultimo": "2026-09",
+      "meses": 261
     },
     "8337": {
       "nombre": "SECURITY EURO BOND",
@@ -4869,8 +4886,8 @@
     "8346": {
       "nombre": "ZURICH PATRIMONIO",
       "primer": "2005-01",
-      "ultimo": "2026-08",
-      "meses": 260
+      "ultimo": "2026-09",
+      "meses": 261
     },
     "8345": {
       "nombre": "ZURICH CASH",
@@ -4959,8 +4976,8 @@
     "8323": {
       "nombre": "SECURITY EMERGING M.",
       "primer": "2005-02",
-      "ultimo": "2026-08",
-      "meses": 259
+      "ultimo": "2026-09",
+      "meses": 260
     },
     "8360": {
       "nombre": "U.S.A.",
@@ -4977,8 +4994,8 @@
     "8338": {
       "nombre": "SELECT",
       "primer": "2005-03",
-      "ultimo": "2026-08",
-      "meses": 258
+      "ultimo": "2026-09",
+      "meses": 259
     },
     "8353": {
       "nombre": "BAN. GARANTIZADO 112",
@@ -5001,8 +5018,8 @@
     "8363": {
       "nombre": "RENTA A PLAZO",
       "primer": "2005-04",
-      "ultimo": "2026-08",
-      "meses": 257
+      "ultimo": "2026-09",
+      "meses": 258
     },
     "8364": {
       "nombre": "GARANTIZADO 108",
@@ -5013,14 +5030,14 @@
     "8352": {
       "nombre": "AHORRO CORTO PLAZO",
       "primer": "2005-05",
-      "ultimo": "2026-08",
-      "meses": 256
+      "ultimo": "2026-09",
+      "meses": 257
     },
     "8367": {
       "nombre": "RETAIL DÓLAR",
       "primer": "2005-05",
-      "ultimo": "2026-08",
-      "meses": 256
+      "ultimo": "2026-09",
+      "meses": 257
     },
     "8368": {
       "nombre": "ENFOQUE",
@@ -5043,14 +5060,14 @@
     "8372": {
       "nombre": "SELECTAS CHILE",
       "primer": "2005-05",
-      "ultimo": "2026-08",
-      "meses": 256
+      "ultimo": "2026-09",
+      "meses": 257
     },
     "8375": {
       "nombre": "CONSORCIO AHORRO DIN",
       "primer": "2005-06",
-      "ultimo": "2026-08",
-      "meses": 255
+      "ultimo": "2026-09",
+      "meses": 256
     },
     "8376": {
       "nombre": "RETORNO TOTAL",
@@ -5061,8 +5078,8 @@
     "8377": {
       "nombre": "FM BCH P ConserV LP",
       "primer": "2005-06",
-      "ultimo": "2026-08",
-      "meses": 255
+      "ultimo": "2026-09",
+      "meses": 256
     },
     "8373": {
       "nombre": "ACC. ASIA EMERGENTE",
@@ -5097,20 +5114,20 @@
     "8380": {
       "nombre": "FM BCH SEL ACCIONES",
       "primer": "2005-09",
-      "ultimo": "2026-08",
-      "meses": 252
+      "ultimo": "2026-09",
+      "meses": 253
     },
     "8381": {
       "nombre": "CHILE ACCIONES",
       "primer": "2005-09",
-      "ultimo": "2026-08",
-      "meses": 252
+      "ultimo": "2026-09",
+      "meses": 253
     },
     "8384": {
       "nombre": "DOLAR MONEY MARKET",
       "primer": "2005-09",
-      "ultimo": "2026-08",
-      "meses": 252
+      "ultimo": "2026-09",
+      "meses": 253
     },
     "8385": {
       "nombre": "GESTION ACTIVA",
@@ -5127,8 +5144,8 @@
     "8387": {
       "nombre": "RENTA EXTRA LP UF",
       "primer": "2005-09",
-      "ultimo": "2026-08",
-      "meses": 252
+      "ultimo": "2026-09",
+      "meses": 253
     },
     "8389": {
       "nombre": "INVESTMENT D",
@@ -5205,8 +5222,8 @@
     "8401": {
       "nombre": "FM CC LIQUIDEZ",
       "primer": "2005-12",
-      "ultimo": "2026-08",
-      "meses": 249
+      "ultimo": "2026-09",
+      "meses": 250
     },
     "8402": {
       "nombre": "GARANTIZADO ALZA",
@@ -5283,8 +5300,8 @@
     "8422": {
       "nombre": "DEUDA MEDIANO PLAZO",
       "primer": "2006-04",
-      "ultimo": "2026-08",
-      "meses": 245
+      "ultimo": "2026-09",
+      "meses": 246
     },
     "8420": {
       "nombre": "GARANTIZADO 2008",
@@ -5295,8 +5312,8 @@
     "8421": {
       "nombre": "RENTA ESTRATEGICA",
       "primer": "2006-05",
-      "ultimo": "2026-08",
-      "meses": 244
+      "ultimo": "2026-09",
+      "meses": 245
     },
     "8429": {
       "nombre": "GARANTIZADO SAMURAI",
@@ -5307,8 +5324,8 @@
     "8430": {
       "nombre": "fm Bci Acc. Ch",
       "primer": "2006-05",
-      "ultimo": "2026-08",
-      "meses": 244
+      "ultimo": "2026-09",
+      "meses": 245
     },
     "8423": {
       "nombre": "PENTA ACCIONES INTER",
@@ -5337,20 +5354,20 @@
     "8434": {
       "nombre": "AMERICA LATINA",
       "primer": "2006-05",
-      "ultimo": "2026-08",
-      "meses": 244
+      "ultimo": "2026-09",
+      "meses": 245
     },
     "8435": {
       "nombre": "AGRESIVO ESTRATÉGICO",
       "primer": "2006-06",
-      "ultimo": "2026-08",
-      "meses": 243
+      "ultimo": "2026-09",
+      "meses": 244
     },
     "8427": {
       "nombre": "GLOBALES I",
       "primer": "2006-06",
-      "ultimo": "2026-08",
-      "meses": 243
+      "ultimo": "2026-09",
+      "meses": 244
     },
     "8440": {
       "nombre": "IM. ACCIONES",
@@ -5367,14 +5384,14 @@
     "8438": {
       "nombre": "PRINCIPAL ASIA",
       "primer": "2006-07",
-      "ultimo": "2026-08",
-      "meses": 242
+      "ultimo": "2026-09",
+      "meses": 243
     },
     "8442": {
       "nombre": "FM CC RENTA INTERNAC",
       "primer": "2006-07",
-      "ultimo": "2026-08",
-      "meses": 242
+      "ultimo": "2026-09",
+      "meses": 243
     },
     "8406": {
       "nombre": "FINANCIERAS GLOBALES",
@@ -5415,8 +5432,8 @@
     "8448": {
       "nombre": "FM BCH P Agresivo LP",
       "primer": "2006-09",
-      "ultimo": "2026-08",
-      "meses": 240
+      "ultimo": "2026-09",
+      "meses": 241
     },
     "8449": {
       "nombre": "VISION DINAMICA B",
@@ -5439,26 +5456,26 @@
     "8455": {
       "nombre": "ZURICH EXPERTO",
       "primer": "2006-09",
-      "ultimo": "2026-08",
-      "meses": 240
+      "ultimo": "2026-09",
+      "meses": 241
     },
     "8457": {
       "nombre": "EUROAMERICA ASIA",
       "primer": "2006-09",
-      "ultimo": "2026-08",
-      "meses": 240
+      "ultimo": "2026-09",
+      "meses": 241
     },
     "8459": {
       "nombre": "ZURICH M.MARKET",
       "primer": "2006-09",
-      "ultimo": "2026-08",
-      "meses": 240
+      "ultimo": "2026-09",
+      "meses": 241
     },
     "8460": {
       "nombre": "FM BCI EST UF>5 AÑOS",
       "primer": "2006-09",
-      "ultimo": "2026-08",
-      "meses": 240
+      "ultimo": "2026-09",
+      "meses": 241
     },
     "8463": {
       "nombre": "CONFIANZA",
@@ -5475,14 +5492,14 @@
     "8456": {
       "nombre": "EUROAMERICA EUROPA",
       "primer": "2006-09",
-      "ultimo": "2026-08",
-      "meses": 240
+      "ultimo": "2026-09",
+      "meses": 241
     },
     "8437": {
       "nombre": "ESTADOS UNIDOS",
       "primer": "2006-09",
-      "ultimo": "2026-08",
-      "meses": 240
+      "ultimo": "2026-09",
+      "meses": 241
     },
     "8451": {
       "nombre": "VISION DINAMICA D",
@@ -5529,8 +5546,8 @@
     "8458": {
       "nombre": "EUROAMERICA USA",
       "primer": "2006-10",
-      "ultimo": "2026-08",
-      "meses": 239
+      "ultimo": "2026-09",
+      "meses": 240
     },
     "8461": {
       "nombre": "ENERGY FUND",
@@ -5565,8 +5582,8 @@
     "8475": {
       "nombre": "BICE EMERGENTE",
       "primer": "2006-12",
-      "ultimo": "2026-08",
-      "meses": 237
+      "ultimo": "2026-09",
+      "meses": 238
     },
     "8486": {
       "nombre": "SECURITY LATINOAMERI",
@@ -5601,14 +5618,14 @@
     "8479": {
       "nombre": "TOP USA",
       "primer": "2006-12",
-      "ultimo": "2026-08",
-      "meses": 237
+      "ultimo": "2026-09",
+      "meses": 238
     },
     "8480": {
       "nombre": "ACCIONES USA",
       "primer": "2006-12",
-      "ultimo": "2026-08",
-      "meses": 237
+      "ultimo": "2026-09",
+      "meses": 238
     },
     "8481": {
       "nombre": "ASIA",
@@ -5619,8 +5636,8 @@
     "8482": {
       "nombre": "LATAM",
       "primer": "2006-12",
-      "ultimo": "2026-08",
-      "meses": 237
+      "ultimo": "2026-09",
+      "meses": 238
     },
     "8483": {
       "nombre": "BBVA JAPON",
@@ -5631,8 +5648,8 @@
     "8484": {
       "nombre": "RV EUROPA",
       "primer": "2006-12",
-      "ultimo": "2026-08",
-      "meses": 237
+      "ultimo": "2026-09",
+      "meses": 238
     },
     "8485": {
       "nombre": "SELECCION EMOA",
@@ -5715,8 +5732,8 @@
     "8502": {
       "nombre": "BONOS LATAM",
       "primer": "2007-03",
-      "ultimo": "2026-08",
-      "meses": 234
+      "ultimo": "2026-09",
+      "meses": 235
     },
     "8504": {
       "nombre": "LIQUIDEZ FULL",
@@ -5751,8 +5768,8 @@
     "8506": {
       "nombre": "BICE LIQUIDEZ DÓLAR",
       "primer": "2007-05",
-      "ultimo": "2026-08",
-      "meses": 232
+      "ultimo": "2026-09",
+      "meses": 233
     },
     "8508": {
       "nombre": "BBVA CHILE +",
@@ -5799,26 +5816,26 @@
     "8513": {
       "nombre": "EUROPA",
       "primer": "2007-09",
-      "ultimo": "2026-08",
-      "meses": 228
+      "ultimo": "2026-09",
+      "meses": 229
     },
     "8514": {
       "nombre": "ASIA",
       "primer": "2007-09",
-      "ultimo": "2026-08",
-      "meses": 228
+      "ultimo": "2026-09",
+      "meses": 229
     },
     "8515": {
       "nombre": "USA",
       "primer": "2007-09",
-      "ultimo": "2026-08",
-      "meses": 228
+      "ultimo": "2026-09",
+      "meses": 229
     },
     "8517": {
       "nombre": "ASIATICO EMERGENTE",
       "primer": "2007-10",
-      "ultimo": "2026-08",
-      "meses": 227
+      "ultimo": "2026-09",
+      "meses": 228
     },
     "8521": {
       "nombre": "G. CONSERVADOR DOLAR",
@@ -5889,14 +5906,14 @@
     "8536": {
       "nombre": "ACCIONES NACIONALES",
       "primer": "2007-12",
-      "ultimo": "2026-08",
-      "meses": 225
+      "ultimo": "2026-09",
+      "meses": 226
     },
     "8537": {
       "nombre": "BICE LATAM",
       "primer": "2007-12",
-      "ultimo": "2026-08",
-      "meses": 225
+      "ultimo": "2026-09",
+      "meses": 226
     },
     "8547": {
       "nombre": "AMERICA 106 GARANTIZ",
@@ -6015,8 +6032,8 @@
     "8553": {
       "nombre": "BICE CHILE MID CAP",
       "primer": "2008-01",
-      "ultimo": "2026-08",
-      "meses": 224
+      "ultimo": "2026-09",
+      "meses": 225
     },
     "8571": {
       "nombre": "GARANTIZADO LOCKIN",
@@ -6081,8 +6098,8 @@
     "8606": {
       "nombre": "MONEY MARKET",
       "primer": "2008-03",
-      "ultimo": "2026-08",
-      "meses": 222
+      "ultimo": "2026-09",
+      "meses": 223
     },
     "8560": {
       "nombre": "ESTRATEGICAS COLOMBI",
@@ -6099,14 +6116,14 @@
     "8600": {
       "nombre": "LIFETIME 2040",
       "primer": "2008-04",
-      "ultimo": "2026-08",
-      "meses": 221
+      "ultimo": "2026-09",
+      "meses": 222
     },
     "8615": {
       "nombre": "CORTO PLAZO",
       "primer": "2008-04",
-      "ultimo": "2026-08",
-      "meses": 221
+      "ultimo": "2026-09",
+      "meses": 222
     },
     "8616": {
       "nombre": "MONEY MARKET DOLAR 2",
@@ -6117,14 +6134,14 @@
     "8618": {
       "nombre": "MONEY MARKET DOLAR",
       "primer": "2008-04",
-      "ultimo": "2026-08",
-      "meses": 221
+      "ultimo": "2026-09",
+      "meses": 222
     },
     "8619": {
       "nombre": "DEUDA INTERNACIONAL",
       "primer": "2008-04",
-      "ultimo": "2026-08",
-      "meses": 221
+      "ultimo": "2026-09",
+      "meses": 222
     },
     "8545": {
       "nombre": "MULTIMERCADO",
@@ -6147,8 +6164,8 @@
     "8610": {
       "nombre": "EMERGING EUROPE EQ",
       "primer": "2008-04",
-      "ultimo": "2026-08",
-      "meses": 221
+      "ultimo": "2026-09",
+      "meses": 222
     },
     "8612": {
       "nombre": "BRASIL",
@@ -6267,8 +6284,8 @@
     "8620": {
       "nombre": "DEUDA NOMINAL",
       "primer": "2008-06",
-      "ultimo": "2026-08",
-      "meses": 219
+      "ultimo": "2026-09",
+      "meses": 220
     },
     "8622": {
       "nombre": "CASH PLUS",
@@ -6291,8 +6308,8 @@
     "8629": {
       "nombre": "ZURICH DOLAR",
       "primer": "2008-06",
-      "ultimo": "2026-08",
-      "meses": 219
+      "ultimo": "2026-09",
+      "meses": 220
     },
     "8561": {
       "nombre": "ESTRATEGICAS PERU",
@@ -6327,8 +6344,8 @@
     "8625": {
       "nombre": "EMERGENTE GLOBAL",
       "primer": "2008-06",
-      "ultimo": "2026-08",
-      "meses": 219
+      "ultimo": "2026-09",
+      "meses": 220
     },
     "8533": {
       "nombre": "INVERSION BRASIL",
@@ -6351,8 +6368,8 @@
     "8604": {
       "nombre": "REAL ESTATE GLOBAL",
       "primer": "2008-07",
-      "ultimo": "2026-08",
-      "meses": 218
+      "ultimo": "2026-09",
+      "meses": 219
     },
     "8605": {
       "nombre": "EE.UU.",
@@ -6447,8 +6464,8 @@
     "8638": {
       "nombre": "FM BCI CD CONSERV.",
       "primer": "2008-12",
-      "ultimo": "2026-08",
-      "meses": 213
+      "ultimo": "2026-09",
+      "meses": 214
     },
     "8675": {
       "nombre": "MONEY MARKET DOLAR 3",
@@ -6465,8 +6482,8 @@
     "8621": {
       "nombre": "SELECT GLOBAL",
       "primer": "2009-01",
-      "ultimo": "2026-08",
-      "meses": 212
+      "ultimo": "2026-09",
+      "meses": 213
     },
     "8665": {
       "nombre": "G. NORTEAMERICA 100",
@@ -6477,8 +6494,8 @@
     "8676": {
       "nombre": "RENTA BONOS CHILE",
       "primer": "2009-01",
-      "ultimo": "2026-08",
-      "meses": 212
+      "ultimo": "2026-09",
+      "meses": 213
     },
     "8677": {
       "nombre": "FUTURO 2040",
@@ -6489,8 +6506,8 @@
     "8678": {
       "nombre": "RENTA DEPOSITO",
       "primer": "2009-01",
-      "ultimo": "2026-08",
-      "meses": 212
+      "ultimo": "2026-09",
+      "meses": 213
     },
     "8679": {
       "nombre": "CHILE MID CAP",
@@ -6519,14 +6536,14 @@
     "8684": {
       "nombre": "SELECCION LATAM",
       "primer": "2009-01",
-      "ultimo": "2026-08",
-      "meses": 212
+      "ultimo": "2026-09",
+      "meses": 213
     },
     "8685": {
       "nombre": "SELECCION ACCION",
       "primer": "2009-01",
-      "ultimo": "2026-08",
-      "meses": 212
+      "ultimo": "2026-09",
+      "meses": 213
     },
     "8688": {
       "nombre": "CHILE 100",
@@ -6561,14 +6578,14 @@
     "8639": {
       "nombre": "FM BCI CD BALANCEADA",
       "primer": "2009-03",
-      "ultimo": "2026-08",
-      "meses": 210
+      "ultimo": "2026-09",
+      "meses": 211
     },
     "8640": {
       "nombre": "FM BCI C D ACTIVA",
       "primer": "2009-03",
-      "ultimo": "2026-08",
-      "meses": 210
+      "ultimo": "2026-09",
+      "meses": 211
     },
     "8687": {
       "nombre": "BICE EST AGRESIVA",
@@ -6603,8 +6620,8 @@
     "8705": {
       "nombre": "LATINOAMERICANO",
       "primer": "2009-04",
-      "ultimo": "2026-08",
-      "meses": 209
+      "ultimo": "2026-09",
+      "meses": 210
     },
     "8706": {
       "nombre": "PERU",
@@ -6621,14 +6638,14 @@
     "8710": {
       "nombre": "GLOBAL TITAN",
       "primer": "2009-05",
-      "ultimo": "2026-08",
-      "meses": 208
+      "ultimo": "2026-09",
+      "meses": 209
     },
     "8712": {
       "nombre": "ESTADOS UNIDOS",
       "primer": "2009-05",
-      "ultimo": "2026-08",
-      "meses": 208
+      "ultimo": "2026-09",
+      "meses": 209
     },
     "8709": {
       "nombre": "LONG/SHORT COMMODITI",
@@ -6651,14 +6668,14 @@
     "8723": {
       "nombre": "ENFOQUE",
       "primer": "2009-06",
-      "ultimo": "2026-08",
-      "meses": 207
+      "ultimo": "2026-09",
+      "meses": 208
     },
     "8707": {
       "nombre": "SELECCION GLOBAL",
       "primer": "2009-06",
-      "ultimo": "2026-08",
-      "meses": 207
+      "ultimo": "2026-09",
+      "meses": 208
     },
     "8718": {
       "nombre": "MI AHORRO",
@@ -6705,14 +6722,14 @@
     "8740": {
       "nombre": "MAS ARRIESGADO",
       "primer": "2009-08",
-      "ultimo": "2026-08",
-      "meses": 205
+      "ultimo": "2026-09",
+      "meses": 206
     },
     "8741": {
       "nombre": "PORTAFOLIO MODERADO",
       "primer": "2009-08",
-      "ultimo": "2026-08",
-      "meses": 205
+      "ultimo": "2026-09",
+      "meses": 206
     },
     "8703": {
       "nombre": "ENERGIAS ALTERNATIVA",
@@ -6741,14 +6758,14 @@
     "8750": {
       "nombre": "BICE BONOS LATAM",
       "primer": "2009-10",
-      "ultimo": "2026-08",
-      "meses": 203
+      "ultimo": "2026-09",
+      "meses": 204
     },
     "8755": {
       "nombre": "AHORRO A PLAZO",
       "primer": "2009-10",
-      "ultimo": "2026-08",
-      "meses": 203
+      "ultimo": "2026-09",
+      "meses": 204
     },
     "8756": {
       "nombre": "CHILE LONG-SHORT",
@@ -6777,8 +6794,8 @@
     "8731": {
       "nombre": "FM BCI CCP",
       "primer": "2009-11",
-      "ultimo": "2026-08",
-      "meses": 202
+      "ultimo": "2026-09",
+      "meses": 203
     },
     "8761": {
       "nombre": "ESTRATEGIA COMMODITI",
@@ -6795,8 +6812,8 @@
     "8744": {
       "nombre": "BNP PARIBAS ACC. DES",
       "primer": "2009-11",
-      "ultimo": "2026-08",
-      "meses": 202
+      "ultimo": "2026-09",
+      "meses": 203
     },
     "8745": {
       "nombre": "BNP PARIBAS ACC. EME",
@@ -6813,8 +6830,8 @@
     "8753": {
       "nombre": "MERCADOS EMERGENTES",
       "primer": "2009-11",
-      "ultimo": "2026-08",
-      "meses": 202
+      "ultimo": "2026-09",
+      "meses": 203
     },
     "8730": {
       "nombre": "EFICIENTE",
@@ -6867,8 +6884,8 @@
     "8773": {
       "nombre": "MULTIACTIVO PRUDENTE",
       "primer": "2010-03",
-      "ultimo": "2026-08",
-      "meses": 198
+      "ultimo": "2026-09",
+      "meses": 199
     },
     "8774": {
       "nombre": "ESTRATEGIA EQUILIBRA",
@@ -6903,8 +6920,8 @@
     "8788": {
       "nombre": "PROTECCION",
       "primer": "2010-03",
-      "ultimo": "2026-08",
-      "meses": 198
+      "ultimo": "2026-09",
+      "meses": 199
     },
     "8768": {
       "nombre": "CORP ASIA PACIFICO",
@@ -6927,8 +6944,8 @@
     "8785": {
       "nombre": "BICE AGRESIVO",
       "primer": "2010-04",
-      "ultimo": "2026-08",
-      "meses": 197
+      "ultimo": "2026-09",
+      "meses": 198
     },
     "8790": {
       "nombre": "PROTECCION UF",
@@ -6957,8 +6974,8 @@
     "8799": {
       "nombre": "BRASIL ACTIVO",
       "primer": "2010-07",
-      "ultimo": "2026-08",
-      "meses": 194
+      "ultimo": "2026-09",
+      "meses": 195
     },
     "8801": {
       "nombre": "BICE ACCIONES MÉXICO",
@@ -6975,14 +6992,14 @@
     "8806": {
       "nombre": "CORPORATIVO",
       "primer": "2010-08",
-      "ultimo": "2026-08",
-      "meses": 193
+      "ultimo": "2026-09",
+      "meses": 194
     },
     "8807": {
       "nombre": "MAS RENTA BICENTENAR",
       "primer": "2010-08",
-      "ultimo": "2026-08",
-      "meses": 193
+      "ultimo": "2026-09",
+      "meses": 194
     },
     "8808": {
       "nombre": "MONETARIO IV",
@@ -6999,8 +7016,8 @@
     "8787": {
       "nombre": "TOP PICKS",
       "primer": "2010-09",
-      "ultimo": "2026-08",
-      "meses": 192
+      "ultimo": "2026-09",
+      "meses": 193
     },
     "8805": {
       "nombre": "GESTION CONSERVADORA",
@@ -7011,8 +7028,8 @@
     "8811": {
       "nombre": "LATAM ACCIONARIO",
       "primer": "2010-09",
-      "ultimo": "2026-08",
-      "meses": 192
+      "ultimo": "2026-09",
+      "meses": 193
     },
     "8813": {
       "nombre": "GESTION FLEXIBLE",
@@ -7047,8 +7064,8 @@
     "8819": {
       "nombre": "BICE CHILE ACTIVO",
       "primer": "2010-11",
-      "ultimo": "2026-08",
-      "meses": 190
+      "ultimo": "2026-09",
+      "meses": 191
     },
     "8818": {
       "nombre": "MEGATENDENCIAS",
@@ -7059,20 +7076,20 @@
     "8820": {
       "nombre": "ASIA EMERGENTE",
       "primer": "2010-12",
-      "ultimo": "2026-08",
-      "meses": 189
+      "ultimo": "2026-09",
+      "meses": 190
     },
     "8795": {
       "nombre": "INDEX FUND LATAM",
       "primer": "2011-01",
-      "ultimo": "2026-08",
-      "meses": 188
+      "ultimo": "2026-09",
+      "meses": 189
     },
     "8824": {
       "nombre": "GA MUY ARRIESGADO",
       "primer": "2011-01",
-      "ultimo": "2026-08",
-      "meses": 188
+      "ultimo": "2026-09",
+      "meses": 189
     },
     "8825": {
       "nombre": "GESTION ESTRATEGICA",
@@ -7119,26 +7136,26 @@
     "8844": {
       "nombre": "PERFIL  A",
       "primer": "2011-02",
-      "ultimo": "2026-08",
-      "meses": 187
+      "ultimo": "2026-09",
+      "meses": 188
     },
     "8845": {
       "nombre": "PERFIL C",
       "primer": "2011-02",
-      "ultimo": "2026-08",
-      "meses": 187
+      "ultimo": "2026-09",
+      "meses": 188
     },
     "8846": {
       "nombre": "PERFIL  E",
       "primer": "2011-02",
-      "ultimo": "2026-08",
-      "meses": 187
+      "ultimo": "2026-09",
+      "meses": 188
     },
     "8822": {
       "nombre": "RV GLOBAL",
       "primer": "2011-02",
-      "ultimo": "2026-08",
-      "meses": 187
+      "ultimo": "2026-09",
+      "meses": 188
     },
     "8828": {
       "nombre": "mercados emergentes",
@@ -7149,8 +7166,8 @@
     "8853": {
       "nombre": "RENDIMIENTO UF",
       "primer": "2011-03",
-      "ultimo": "2026-08",
-      "meses": 186
+      "ultimo": "2026-09",
+      "meses": 187
     },
     "8856": {
       "nombre": "CUSTODIA",
@@ -7197,14 +7214,14 @@
     "8857": {
       "nombre": "CHILE MID CAP",
       "primer": "2011-05",
-      "ultimo": "2026-08",
-      "meses": 184
+      "ultimo": "2026-09",
+      "meses": 185
     },
     "8872": {
       "nombre": "ACCIONES NACIONALES",
       "primer": "2011-05",
-      "ultimo": "2026-08",
-      "meses": 184
+      "ultimo": "2026-09",
+      "meses": 185
     },
     "8873": {
       "nombre": "ACCIONES BENEFICIO",
@@ -7275,8 +7292,8 @@
     "8886": {
       "nombre": "CONSERVADOR",
       "primer": "2011-07",
-      "ultimo": "2026-08",
-      "meses": 181
+      "ultimo": "2026-09",
+      "meses": 182
     },
     "8889": {
       "nombre": "MONETARIO VIII",
@@ -7317,8 +7334,8 @@
     "8881": {
       "nombre": "MID TERM",
       "primer": "2011-09",
-      "ultimo": "2026-08",
-      "meses": 180
+      "ultimo": "2026-09",
+      "meses": 181
     },
     "8894": {
       "nombre": "IMT DEUDA SOB MM",
@@ -7329,8 +7346,8 @@
     "8897": {
       "nombre": "RENTA LOCAL",
       "primer": "2011-10",
-      "ultimo": "2026-08",
-      "meses": 179
+      "ultimo": "2026-09",
+      "meses": 180
     },
     "8899": {
       "nombre": "MONETARIO X",
@@ -7359,14 +7376,14 @@
     "8898": {
       "nombre": "CHILE ACCION",
       "primer": "2011-11",
-      "ultimo": "2026-08",
-      "meses": 178
+      "ultimo": "2026-09",
+      "meses": 179
     },
     "8902": {
       "nombre": "BICE RENTA CORTO PLA",
       "primer": "2011-11",
-      "ultimo": "2026-08",
-      "meses": 178
+      "ultimo": "2026-09",
+      "meses": 179
     },
     "8904": {
       "nombre": "DEUDA LOCAL",
@@ -7383,8 +7400,8 @@
     "8906": {
       "nombre": "DEUDA LATAM",
       "primer": "2011-12",
-      "ultimo": "2026-08",
-      "meses": 177
+      "ultimo": "2026-09",
+      "meses": 178
     },
     "8907": {
       "nombre": "OPTIMO",
@@ -7395,20 +7412,20 @@
     "8908": {
       "nombre": "BANKING AGRESIVO",
       "primer": "2011-12",
-      "ultimo": "2026-08",
-      "meses": 177
+      "ultimo": "2026-09",
+      "meses": 178
     },
     "8910": {
       "nombre": "BANKING prudente",
       "primer": "2011-12",
-      "ultimo": "2026-08",
-      "meses": 177
+      "ultimo": "2026-09",
+      "meses": 178
     },
     "8911": {
       "nombre": "BANKING EQUILIBRIO",
       "primer": "2011-12",
-      "ultimo": "2026-08",
-      "meses": 177
+      "ultimo": "2026-09",
+      "meses": 178
     },
     "8909": {
       "nombre": "BOOSTER CHILE",
@@ -7443,8 +7460,8 @@
     "8918": {
       "nombre": "DIVIDENDO LOCAL",
       "primer": "2012-03",
-      "ultimo": "2026-08",
-      "meses": 174
+      "ultimo": "2026-09",
+      "meses": 175
     },
     "8919": {
       "nombre": "AHORRO ESTABLE III",
@@ -7479,14 +7496,14 @@
     "8915": {
       "nombre": "USA",
       "primer": "2012-03",
-      "ultimo": "2026-08",
-      "meses": 173
+      "ultimo": "2026-09",
+      "meses": 174
     },
     "8916": {
       "nombre": "EMERGENTES",
       "primer": "2012-03",
-      "ultimo": "2026-08",
-      "meses": 174
+      "ultimo": "2026-09",
+      "meses": 175
     },
     "8921": {
       "nombre": "BOOSTER BALANCED",
@@ -7509,8 +7526,8 @@
     "8924": {
       "nombre": "MUNDO SUSTENTABLE",
       "primer": "2012-04",
-      "ultimo": "2026-08",
-      "meses": 173
+      "ultimo": "2026-09",
+      "meses": 174
     },
     "8930": {
       "nombre": "G. DEPOSITO 108 II",
@@ -7527,8 +7544,8 @@
     "8932": {
       "nombre": "BTG RENTA A PLAZO",
       "primer": "2012-05",
-      "ultimo": "2026-08",
-      "meses": 172
+      "ultimo": "2026-09",
+      "meses": 173
     },
     "8933": {
       "nombre": "BICE EST MAS CONSERV",
@@ -7539,8 +7556,8 @@
     "8934": {
       "nombre": "BCH DEUDA SOBERANA",
       "primer": "2012-06",
-      "ultimo": "2026-08",
-      "meses": 171
+      "ultimo": "2026-09",
+      "meses": 172
     },
     "8936": {
       "nombre": "TWIN WIN USA",
@@ -7563,14 +7580,14 @@
     "8940": {
       "nombre": "DEUDA CORPORATIVA",
       "primer": "2012-07",
-      "ultimo": "2026-08",
-      "meses": 170
+      "ultimo": "2026-09",
+      "meses": 171
     },
     "8941": {
       "nombre": "FM BCI EST UF H1 AÑO",
       "primer": "2012-07",
-      "ultimo": "2026-08",
-      "meses": 170
+      "ultimo": "2026-09",
+      "meses": 171
     },
     "8942": {
       "nombre": "FM BCI EUROPA GARANT",
@@ -7593,8 +7610,8 @@
     "8945": {
       "nombre": "FM CC MONEY M",
       "primer": "2012-08",
-      "ultimo": "2026-08",
-      "meses": 169
+      "ultimo": "2026-09",
+      "meses": 170
     },
     "8947": {
       "nombre": "DEPÓSITO PLUS G",
@@ -7647,8 +7664,8 @@
     "8957": {
       "nombre": "DEUDA DOLAR",
       "primer": "2012-09",
-      "ultimo": "2026-08",
-      "meses": 168
+      "ultimo": "2026-09",
+      "meses": 169
     },
     "8958": {
       "nombre": "SECURITY EVOLUCIÓN",
@@ -7659,14 +7676,14 @@
     "8959": {
       "nombre": "DINAMICO",
       "primer": "2012-09",
-      "ultimo": "2026-08",
-      "meses": 168
+      "ultimo": "2026-09",
+      "meses": 169
     },
     "8956": {
       "nombre": "RENTA CORPORATIVA",
       "primer": "2012-10",
-      "ultimo": "2026-08",
-      "meses": 167
+      "ultimo": "2026-09",
+      "meses": 168
     },
     "8960": {
       "nombre": "ITAU GESTIONADO ACCI",
@@ -7719,8 +7736,8 @@
     "8967": {
       "nombre": "FM BCI D.L. HY",
       "primer": "2012-12",
-      "ultimo": "2026-08",
-      "meses": 165
+      "ultimo": "2026-09",
+      "meses": 166
     },
     "8970": {
       "nombre": "FM BCI B. LATINO",
@@ -7737,14 +7754,14 @@
     "8946": {
       "nombre": "HIGH YIELD LATAM",
       "primer": "2013-01",
-      "ultimo": "2026-08",
-      "meses": 164
+      "ultimo": "2026-09",
+      "meses": 165
     },
     "8950": {
       "nombre": "RENTA ACTIVA",
       "primer": "2013-01",
-      "ultimo": "2026-08",
-      "meses": 164
+      "ultimo": "2026-09",
+      "meses": 165
     },
     "8964": {
       "nombre": "CH BURSATIL GARANT",
@@ -7761,8 +7778,8 @@
     "8971": {
       "nombre": "G. ACCIONES",
       "primer": "2013-01",
-      "ultimo": "2026-08",
-      "meses": 164
+      "ultimo": "2026-09",
+      "meses": 165
     },
     "8972": {
       "nombre": "BOOSTER EUROPA",
@@ -7785,8 +7802,8 @@
     "8976": {
       "nombre": "FM BCI CMP",
       "primer": "2013-03",
-      "ultimo": "2026-08",
-      "meses": 162
+      "ultimo": "2026-09",
+      "meses": 163
     },
     "8977": {
       "nombre": "MONETARIO XVI",
@@ -7803,8 +7820,8 @@
     "8979": {
       "nombre": "DINÁMICO ULTRA",
       "primer": "2013-03",
-      "ultimo": "2026-08",
-      "meses": 162
+      "ultimo": "2026-09",
+      "meses": 163
     },
     "8981": {
       "nombre": "LIQUIDEZ",
@@ -7821,8 +7838,8 @@
     "8982": {
       "nombre": "FM CC ACC ESTRATEGIC",
       "primer": "2013-04",
-      "ultimo": "2026-08",
-      "meses": 160
+      "ultimo": "2026-09",
+      "meses": 161
     },
     "8984": {
       "nombre": "PLUS IV GARANTIZADO",
@@ -7839,8 +7856,8 @@
     "8986": {
       "nombre": "MID TERM UF",
       "primer": "2013-04",
-      "ultimo": "2026-08",
-      "meses": 161
+      "ultimo": "2026-09",
+      "meses": 162
     },
     "8980": {
       "nombre": "ASIA EMERGENTE",
@@ -7869,8 +7886,8 @@
     "8987": {
       "nombre": "FM ACCIONES EEUU",
       "primer": "2013-05",
-      "ultimo": "2026-08",
-      "meses": 160
+      "ultimo": "2026-09",
+      "meses": 161
     },
     "8990": {
       "nombre": "MONETARIO XIV",
@@ -7881,26 +7898,26 @@
     "8991": {
       "nombre": "CORTO PLAZO UF",
       "primer": "2013-06",
-      "ultimo": "2026-08",
-      "meses": 159
+      "ultimo": "2026-09",
+      "meses": 160
     },
     "8992": {
       "nombre": "G. MODERADO",
       "primer": "2013-06",
-      "ultimo": "2026-08",
-      "meses": 159
+      "ultimo": "2026-09",
+      "meses": 160
     },
     "8993": {
       "nombre": "G. AGRESIVO",
       "primer": "2013-06",
-      "ultimo": "2026-08",
-      "meses": 159
+      "ultimo": "2026-09",
+      "meses": 160
     },
     "8994": {
       "nombre": "G. CONSERVADOR",
       "primer": "2013-06",
-      "ultimo": "2026-08",
-      "meses": 159
+      "ultimo": "2026-09",
+      "meses": 160
     },
     "8997": {
       "nombre": "SELECT PRUDENTE",
@@ -7947,14 +7964,14 @@
     "9006": {
       "nombre": "GESTION ACTIVA",
       "primer": "2013-07",
-      "ultimo": "2026-08",
-      "meses": 158
+      "ultimo": "2026-09",
+      "meses": 159
     },
     "9005": {
       "nombre": "GLOBAL DESARROLLADO",
       "primer": "2013-07",
-      "ultimo": "2026-08",
-      "meses": 158
+      "ultimo": "2026-09",
+      "meses": 159
     },
     "9007": {
       "nombre": "BICE ACCIONES JAPÓN",
@@ -8011,10 +8028,10 @@
       "meses": 25
     },
     "9019": {
-      "nombre": "ETF IT NOW ACC CHILE",
+      "nombre": "ETF IT NOW MSCI IPSA",
       "primer": "2013-08",
-      "ultimo": "2026-08",
-      "meses": 157
+      "ultimo": "2026-09",
+      "meses": 158
     },
     "9012": {
       "nombre": "PERFIL AGRESIVO",
@@ -8031,26 +8048,26 @@
     "9021": {
       "nombre": "DEUDA CHILE FLEXIBLE",
       "primer": "2013-09",
-      "ultimo": "2026-08",
-      "meses": 156
+      "ultimo": "2026-09",
+      "meses": 157
     },
     "9022": {
       "nombre": "CAPITAL EMPRESARIAL",
       "primer": "2013-09",
-      "ultimo": "2026-08",
-      "meses": 156
+      "ultimo": "2026-09",
+      "meses": 157
     },
     "9023": {
       "nombre": "ASIA",
       "primer": "2013-09",
-      "ultimo": "2026-08",
-      "meses": 156
+      "ultimo": "2026-09",
+      "meses": 157
     },
     "9024": {
       "nombre": "GLOBAL EMERGENTE",
       "primer": "2013-09",
-      "ultimo": "2026-08",
-      "meses": 156
+      "ultimo": "2026-09",
+      "meses": 157
     },
     "9029": {
       "nombre": "DEUDA LATAM",
@@ -8073,8 +8090,8 @@
     "9027": {
       "nombre": "FM LV EUROPA",
       "primer": "2013-10",
-      "ultimo": "2026-08",
-      "meses": 155
+      "ultimo": "2026-09",
+      "meses": 156
     },
     "9025": {
       "nombre": "EAI RENTA CHILENA",
@@ -8091,14 +8108,14 @@
     "9033": {
       "nombre": "PERMANENCIA EXTRA LP",
       "primer": "2013-11",
-      "ultimo": "2026-08",
-      "meses": 154
+      "ultimo": "2026-09",
+      "meses": 155
     },
     "9034": {
       "nombre": "SELECTA CHILE",
       "primer": "2013-11",
-      "ultimo": "2026-08",
-      "meses": 154
+      "ultimo": "2026-09",
+      "meses": 155
     },
     "9035": {
       "nombre": "BCI GAR DEP 107 III",
@@ -8145,8 +8162,8 @@
     "9043": {
       "nombre": "FM BCH P Moderado LP",
       "primer": "2013-12",
-      "ultimo": "2026-08",
-      "meses": 153
+      "ultimo": "2026-09",
+      "meses": 154
     },
     "9038": {
       "nombre": "QUANT GLOBAL",
@@ -8217,8 +8234,8 @@
     "9056": {
       "nombre": "FM CC DEUDA 360",
       "primer": "2014-03",
-      "ultimo": "2026-08",
-      "meses": 150
+      "ultimo": "2026-09",
+      "meses": 151
     },
     "9058": {
       "nombre": "DEPÓSITO PLUS VI",
@@ -8235,8 +8252,8 @@
     "9054": {
       "nombre": "EAI DEUDA CORP CHILE",
       "primer": "2014-04",
-      "ultimo": "2026-08",
-      "meses": 149
+      "ultimo": "2026-09",
+      "meses": 150
     },
     "9057": {
       "nombre": "DEUDA CORP. 3-5 AÑOS",
@@ -8277,26 +8294,26 @@
     "9060": {
       "nombre": "FM BCI CP ACTIVA",
       "primer": "2014-06",
-      "ultimo": "2026-08",
-      "meses": 147
+      "ultimo": "2026-09",
+      "meses": 148
     },
     "9061": {
       "nombre": "FM BCI CP AHORRO",
       "primer": "2014-06",
-      "ultimo": "2026-08",
-      "meses": 147
+      "ultimo": "2026-09",
+      "meses": 148
     },
     "9062": {
       "nombre": "FM BCI CP BALANCEADA",
       "primer": "2014-06",
-      "ultimo": "2026-08",
-      "meses": 147
+      "ultimo": "2026-09",
+      "meses": 148
     },
     "9063": {
       "nombre": "FM BCI CP CONSERV",
       "primer": "2014-06",
-      "ultimo": "2026-08",
-      "meses": 147
+      "ultimo": "2026-09",
+      "meses": 148
     },
     "9068": {
       "nombre": "LARRAINVIAL ESPAÑA",
@@ -8313,8 +8330,8 @@
     "9074": {
       "nombre": "RENTA FUTURA",
       "primer": "2014-08",
-      "ultimo": "2026-08",
-      "meses": 145
+      "ultimo": "2026-09",
+      "meses": 146
     },
     "9070": {
       "nombre": "BOOSTER EUROPA II",
@@ -8343,8 +8360,8 @@
     "9084": {
       "nombre": "RENTA LOCAL UF",
       "primer": "2014-10",
-      "ultimo": "2026-08",
-      "meses": 143
+      "ultimo": "2026-09",
+      "meses": 144
     },
     "9086": {
       "nombre": "TENDENCIAS DEUDA",
@@ -8361,8 +8378,8 @@
     "9104": {
       "nombre": "DOLAR DISPONIBLE",
       "primer": "2014-12",
-      "ultimo": "2026-08",
-      "meses": 141
+      "ultimo": "2026-09",
+      "meses": 142
     },
     "9094": {
       "nombre": "GLOBAL DEBT",
@@ -8397,8 +8414,8 @@
     "9106": {
       "nombre": "RENTA CORTO PLAZO",
       "primer": "2015-01",
-      "ultimo": "2026-08",
-      "meses": 140
+      "ultimo": "2026-09",
+      "meses": 141
     },
     "9111": {
       "nombre": "OBJETIVO EUROPA I",
@@ -8439,8 +8456,8 @@
     "9154": {
       "nombre": "DEUDA LARGO PLAZO UF",
       "primer": "2015-03",
-      "ultimo": "2026-08",
-      "meses": 138
+      "ultimo": "2026-09",
+      "meses": 139
     },
     "9156": {
       "nombre": "SCOTIA PROGRESO",
@@ -8475,8 +8492,8 @@
     "9190": {
       "nombre": "CTA ACTIVA MODERADA",
       "primer": "2015-06",
-      "ultimo": "2026-08",
-      "meses": 135
+      "ultimo": "2026-09",
+      "meses": 136
     },
     "9191": {
       "nombre": "CTA ACTIVA DEFENSIVA",
@@ -8487,14 +8504,14 @@
     "9192": {
       "nombre": "CTA ACTIVA CONSERVAD",
       "primer": "2015-06",
-      "ultimo": "2026-08",
-      "meses": 135
+      "ultimo": "2026-09",
+      "meses": 136
     },
     "9193": {
       "nombre": "CTA ACTIVA AGRESIVA",
       "primer": "2015-06",
-      "ultimo": "2026-08",
-      "meses": 135
+      "ultimo": "2026-09",
+      "meses": 136
     },
     "9196": {
       "nombre": "RENDIMIENTO CORTO",
@@ -8517,14 +8534,14 @@
     "9201": {
       "nombre": "UF PLUS",
       "primer": "2015-06",
-      "ultimo": "2026-08",
-      "meses": 135
+      "ultimo": "2026-09",
+      "meses": 136
     },
     "9187": {
       "nombre": "EUROPA ESTRATÉGICO",
       "primer": "2015-06",
-      "ultimo": "2026-08",
-      "meses": 135
+      "ultimo": "2026-09",
+      "meses": 136
     },
     "9210": {
       "nombre": "FM EMPRESAS EUROPEAS",
@@ -8535,8 +8552,8 @@
     "9209": {
       "nombre": "RENTA INTERNACIONAL",
       "primer": "2015-07",
-      "ultimo": "2026-08",
-      "meses": 134
+      "ultimo": "2026-09",
+      "meses": 135
     },
     "9205": {
       "nombre": "NIVEL 100",
@@ -8553,14 +8570,14 @@
     "9221": {
       "nombre": "FMLV AHORRO DÓLAR",
       "primer": "2015-08",
-      "ultimo": "2026-08",
-      "meses": 133
+      "ultimo": "2026-09",
+      "meses": 134
     },
     "9226": {
       "nombre": "FM BCI DC ESTR",
       "primer": "2015-08",
-      "ultimo": "2026-08",
-      "meses": 133
+      "ultimo": "2026-09",
+      "meses": 134
     },
     "9218": {
       "nombre": "BOOSTER USA",
@@ -8577,26 +8594,26 @@
     "9228": {
       "nombre": "FM BCI C D AHORRO",
       "primer": "2015-09",
-      "ultimo": "2026-08",
-      "meses": 132
+      "ultimo": "2026-09",
+      "meses": 133
     },
     "9231": {
       "nombre": "FM BCI deuda lat. ig",
       "primer": "2015-09",
-      "ultimo": "2026-08",
-      "meses": 132
+      "ultimo": "2026-09",
+      "meses": 133
     },
     "9238": {
       "nombre": "BICE RENTA LARGO PLA",
       "primer": "2015-09",
-      "ultimo": "2026-08",
-      "meses": 132
+      "ultimo": "2026-09",
+      "meses": 133
     },
     "9222": {
       "nombre": "AHORRO MP",
       "primer": "2015-10",
-      "ultimo": "2026-08",
-      "meses": 131
+      "ultimo": "2026-09",
+      "meses": 132
     },
     "9232": {
       "nombre": "JAPÓN NIVEL 100",
@@ -8619,8 +8636,8 @@
     "9248": {
       "nombre": "ITAU D. CORP. CHILE",
       "primer": "2015-10",
-      "ultimo": "2026-08",
-      "meses": 131
+      "ultimo": "2026-09",
+      "meses": 132
     },
     "9253": {
       "nombre": "MONETARIO XX",
@@ -8637,8 +8654,8 @@
     "9254": {
       "nombre": "ACCIONES EUROPA",
       "primer": "2015-11",
-      "ultimo": "2026-08",
-      "meses": 130
+      "ultimo": "2026-09",
+      "meses": 131
     },
     "9255": {
       "nombre": "JAPÓN ACCIONARIO",
@@ -8667,8 +8684,8 @@
     "9291": {
       "nombre": "AHORRO CORTO PLAZO",
       "primer": "2016-01",
-      "ultimo": "2026-08",
-      "meses": 128
+      "ultimo": "2026-09",
+      "meses": 129
     },
     "9285": {
       "nombre": "BOOSTER ACCIONES USA",
@@ -8751,8 +8768,8 @@
     "9362": {
       "nombre": "COMPASS ACC CHILENAS",
       "primer": "2016-08",
-      "ultimo": "2026-08",
-      "meses": 121
+      "ultimo": "2026-09",
+      "meses": 122
     },
     "9334": {
       "nombre": "ACCIONES GLOBALES",
@@ -8769,8 +8786,8 @@
     "9352": {
       "nombre": "DEUDA LATAM ESG DOLA",
       "primer": "2016-08",
-      "ultimo": "2026-08",
-      "meses": 121
+      "ultimo": "2026-09",
+      "meses": 122
     },
     "9345": {
       "nombre": "IG LATAM",
@@ -8781,8 +8798,8 @@
     "9365": {
       "nombre": "FM CC DEUDA LATAM IG",
       "primer": "2016-09",
-      "ultimo": "2026-08",
-      "meses": 120
+      "ultimo": "2026-09",
+      "meses": 121
     },
     "9397": {
       "nombre": "RENTA MENSUAL II",
@@ -8805,8 +8822,8 @@
     "9371": {
       "nombre": "FM BCI D. global",
       "primer": "2016-12",
-      "ultimo": "2026-08",
-      "meses": 117
+      "ultimo": "2026-09",
+      "meses": 118
     },
     "9405": {
       "nombre": "DEUDA CHILE ESG",
@@ -8823,14 +8840,14 @@
     "9414": {
       "nombre": "CHILE EQUITIES",
       "primer": "2016-12",
-      "ultimo": "2026-08",
-      "meses": 117
+      "ultimo": "2026-09",
+      "meses": 118
     },
     "9372": {
       "nombre": "FM BCI ACC. GLOB.",
       "primer": "2016-12",
-      "ultimo": "2026-08",
-      "meses": 117
+      "ultimo": "2026-09",
+      "meses": 118
     },
     "9421": {
       "nombre": "TOESCAMM",
@@ -8859,8 +8876,8 @@
     "9445": {
       "nombre": "FM BCI RET. DOLAR IG",
       "primer": "2017-04",
-      "ultimo": "2026-08",
-      "meses": 113
+      "ultimo": "2026-09",
+      "meses": 114
     },
     "9450": {
       "nombre": "SEL INMOBILIARIA",
@@ -8889,32 +8906,32 @@
     "9428": {
       "nombre": "FMCODAGRE",
       "primer": "2017-07",
-      "ultimo": "2026-08",
-      "meses": 110
+      "ultimo": "2026-09",
+      "meses": 111
     },
     "9429": {
       "nombre": "FMCODBAL",
       "primer": "2017-07",
-      "ultimo": "2026-08",
-      "meses": 110
+      "ultimo": "2026-09",
+      "meses": 111
     },
     "9430": {
       "nombre": "FMCODCON",
       "primer": "2017-07",
-      "ultimo": "2026-08",
-      "meses": 110
+      "ultimo": "2026-09",
+      "meses": 111
     },
     "9431": {
       "nombre": "FMCODCREC",
       "primer": "2017-07",
-      "ultimo": "2026-08",
-      "meses": 110
+      "ultimo": "2026-09",
+      "meses": 111
     },
     "9432": {
       "nombre": "FMCODMOD",
       "primer": "2017-07",
-      "ultimo": "2026-08",
-      "meses": 110
+      "ultimo": "2026-09",
+      "meses": 111
     },
     "9449": {
       "nombre": "BTG INVESTMENT GRADE",
@@ -8925,14 +8942,14 @@
     "9473": {
       "nombre": "MULTIACTIVO AGRESIVO",
       "primer": "2017-07",
-      "ultimo": "2026-08",
-      "meses": 108
+      "ultimo": "2026-09",
+      "meses": 109
     },
     "9474": {
       "nombre": "MULTIACTIVO MODERADO",
       "primer": "2017-07",
-      "ultimo": "2026-08",
-      "meses": 110
+      "ultimo": "2026-09",
+      "meses": 111
     },
     "9484": {
       "nombre": "BONOS UF PLUS II",
@@ -8943,8 +8960,8 @@
     "9489": {
       "nombre": "RENTA VARIABLE NAC",
       "primer": "2017-08",
-      "ultimo": "2026-08",
-      "meses": 109
+      "ultimo": "2026-09",
+      "meses": 110
     },
     "9487": {
       "nombre": "BOOSTER ACC EUR II",
@@ -8955,8 +8972,8 @@
     "9511": {
       "nombre": "FM BCI CD CHILE",
       "primer": "2017-09",
-      "ultimo": "2026-08",
-      "meses": 108
+      "ultimo": "2026-09",
+      "meses": 109
     },
     "9519": {
       "nombre": "ACCIONES EMERGENTES",
@@ -8991,8 +9008,8 @@
     "9539": {
       "nombre": "AHORRO PLUS",
       "primer": "2017-12",
-      "ultimo": "2026-08",
-      "meses": 105
+      "ultimo": "2026-09",
+      "meses": 106
     },
     "9535": {
       "nombre": "FI CC ARGENTINA LIQ",
@@ -9039,38 +9056,38 @@
     "9568": {
       "nombre": "CLOONEY",
       "primer": "2018-02",
-      "ultimo": "2026-08",
-      "meses": 103
+      "ultimo": "2026-09",
+      "meses": 104
     },
     "9569": {
       "nombre": "PITT",
       "primer": "2018-02",
-      "ultimo": "2026-08",
-      "meses": 103
+      "ultimo": "2026-09",
+      "meses": 104
     },
     "9570": {
       "nombre": "NORRIS",
       "primer": "2018-02",
-      "ultimo": "2026-08",
-      "meses": 103
+      "ultimo": "2026-09",
+      "meses": 104
     },
     "9575": {
       "nombre": "EA CONSERVADOR",
       "primer": "2018-03",
-      "ultimo": "2026-08",
-      "meses": 102
+      "ultimo": "2026-09",
+      "meses": 103
     },
     "9576": {
       "nombre": "EA AGRESIVO",
       "primer": "2018-03",
-      "ultimo": "2026-08",
-      "meses": 102
+      "ultimo": "2026-09",
+      "meses": 103
     },
     "9577": {
       "nombre": "EA MODERADO",
       "primer": "2018-03",
-      "ultimo": "2026-08",
-      "meses": 102
+      "ultimo": "2026-09",
+      "meses": 103
     },
     "9585": {
       "nombre": "FM BOOSTER BRASIL",
@@ -9093,32 +9110,32 @@
     "9593": {
       "nombre": "GA ARRIESGADO",
       "primer": "2018-04",
-      "ultimo": "2026-08",
-      "meses": 101
+      "ultimo": "2026-09",
+      "meses": 102
     },
     "9594": {
       "nombre": "GA MODERADO",
       "primer": "2018-04",
-      "ultimo": "2026-08",
-      "meses": 101
+      "ultimo": "2026-09",
+      "meses": 102
     },
     "9595": {
       "nombre": "GA CONSERVADOR",
       "primer": "2018-04",
-      "ultimo": "2026-08",
-      "meses": 101
+      "ultimo": "2026-09",
+      "meses": 102
     },
     "9596": {
       "nombre": "GA MUY CONSERVADOR",
       "primer": "2018-04",
-      "ultimo": "2026-08",
-      "meses": 101
+      "ultimo": "2026-09",
+      "meses": 102
     },
     "9597": {
       "nombre": "FONDO DEUDA MED P UF",
       "primer": "2018-04",
-      "ultimo": "2026-08",
-      "meses": 101
+      "ultimo": "2026-09",
+      "meses": 102
     },
     "9607": {
       "nombre": "ACTIVO 2025",
@@ -9129,20 +9146,20 @@
     "9608": {
       "nombre": "ACTIVO 2035",
       "primer": "2018-04",
-      "ultimo": "2026-08",
-      "meses": 101
+      "ultimo": "2026-09",
+      "meses": 102
     },
     "9609": {
       "nombre": "ACTIVO 2045",
       "primer": "2018-04",
-      "ultimo": "2026-08",
-      "meses": 101
+      "ultimo": "2026-09",
+      "meses": 102
     },
     "9610": {
       "nombre": "ACTIVO 2055",
       "primer": "2018-04",
-      "ultimo": "2026-08",
-      "meses": 101
+      "ultimo": "2026-09",
+      "meses": 102
     },
     "9630": {
       "nombre": "PLUS VIII",
@@ -9159,14 +9176,14 @@
     "9625": {
       "nombre": "LATAM EQUITIES",
       "primer": "2018-07",
-      "ultimo": "2026-08",
-      "meses": 98
+      "ultimo": "2026-09",
+      "meses": 99
     },
     "9646": {
       "nombre": "GA EQUILIBRIO",
       "primer": "2018-09",
-      "ultimo": "2026-08",
-      "meses": 96
+      "ultimo": "2026-09",
+      "meses": 97
     },
     "9647": {
       "nombre": "GA RETORNO",
@@ -9177,14 +9194,14 @@
     "9648": {
       "nombre": "GA AGRESIVA",
       "primer": "2018-09",
-      "ultimo": "2026-08",
-      "meses": 96
+      "ultimo": "2026-09",
+      "meses": 97
     },
     "9649": {
       "nombre": "GA PRUDENTE",
       "primer": "2018-09",
-      "ultimo": "2026-08",
-      "meses": 96
+      "ultimo": "2026-09",
+      "meses": 97
     },
     "9651": {
       "nombre": "RV INTERNACIONAL",
@@ -9195,8 +9212,8 @@
     "9655": {
       "nombre": "DEUDA INTERNACIONAL",
       "primer": "2018-10",
-      "ultimo": "2026-08",
-      "meses": 95
+      "ultimo": "2026-09",
+      "meses": 96
     },
     "9673": {
       "nombre": "BOOSTER A EMERG III",
@@ -9219,8 +9236,8 @@
     "9690": {
       "nombre": "BI LIQUIDEZ",
       "primer": "2018-12",
-      "ultimo": "2026-08",
-      "meses": 93
+      "ultimo": "2026-09",
+      "meses": 94
     },
     "9691": {
       "nombre": "BI RENTA A PLAZO",
@@ -9231,14 +9248,14 @@
     "9692": {
       "nombre": "BI MAS AHORRO",
       "primer": "2018-12",
-      "ultimo": "2026-08",
-      "meses": 93
+      "ultimo": "2026-09",
+      "meses": 94
     },
     "9693": {
       "nombre": "BI DINAMICO",
       "primer": "2018-12",
-      "ultimo": "2026-08",
-      "meses": 93
+      "ultimo": "2026-09",
+      "meses": 94
     },
     "9699": {
       "nombre": "F.M.BCI EST. AH 7 II",
@@ -9255,20 +9272,20 @@
     "9687": {
       "nombre": "LIFETIME 2050",
       "primer": "2019-01",
-      "ultimo": "2026-08",
-      "meses": 92
+      "ultimo": "2026-09",
+      "meses": 93
     },
     "9688": {
       "nombre": "LIFETIME 2060",
       "primer": "2019-01",
-      "ultimo": "2026-08",
-      "meses": 92
+      "ultimo": "2026-09",
+      "meses": 93
     },
     "9712": {
       "nombre": "MID TERM GLOBAL",
       "primer": "2019-01",
-      "ultimo": "2026-08",
-      "meses": 92
+      "ultimo": "2026-09",
+      "meses": 93
     },
     "9714": {
       "nombre": "BOOSTER BRASIL II",
@@ -9297,8 +9314,8 @@
     "9730": {
       "nombre": "STREEP",
       "primer": "2019-05",
-      "ultimo": "2026-08",
-      "meses": 88
+      "ultimo": "2026-09",
+      "meses": 89
     },
     "9757": {
       "nombre": "INDEX ACC BRASIL",
@@ -9309,14 +9326,14 @@
     "9765": {
       "nombre": "MI FUTURO ACCESIBLE",
       "primer": "2019-07",
-      "ultimo": "2026-08",
-      "meses": 86
+      "ultimo": "2026-09",
+      "meses": 87
     },
     "9766": {
       "nombre": "MI FUTURO CONSERVADO",
       "primer": "2019-07",
-      "ultimo": "2026-08",
-      "meses": 86
+      "ultimo": "2026-09",
+      "meses": 87
     },
     "9767": {
       "nombre": "MI FUTURO VERDE",
@@ -9327,8 +9344,8 @@
     "9768": {
       "nombre": "MI FUTURO MODERADO",
       "primer": "2019-07",
-      "ultimo": "2026-08",
-      "meses": 86
+      "ultimo": "2026-09",
+      "meses": 87
     },
     "9748": {
       "nombre": "FM ACCIONES BRASIL",
@@ -9339,8 +9356,8 @@
     "9717": {
       "nombre": "DINAMICO PLUS",
       "primer": "2019-08",
-      "ultimo": "2026-08",
-      "meses": 85
+      "ultimo": "2026-09",
+      "meses": 86
     },
     "9761": {
       "nombre": "INDICE BONOS BRASIL",
@@ -9351,26 +9368,26 @@
     "9809": {
       "nombre": "FONDO MODERADO",
       "primer": "2019-10",
-      "ultimo": "2026-08",
-      "meses": 83
+      "ultimo": "2026-09",
+      "meses": 84
     },
     "9810": {
       "nombre": "FONDO CONSERVADOR",
       "primer": "2019-10",
-      "ultimo": "2026-08",
-      "meses": 83
+      "ultimo": "2026-09",
+      "meses": 84
     },
     "9811": {
       "nombre": "FONDO ARRIESGADO",
       "primer": "2019-10",
-      "ultimo": "2026-08",
-      "meses": 83
+      "ultimo": "2026-09",
+      "meses": 84
     },
     "9816": {
       "nombre": "CUENTA ACTIVA DÓLAR",
       "primer": "2019-11",
-      "ultimo": "2026-08",
-      "meses": 82
+      "ultimo": "2026-09",
+      "meses": 83
     },
     "9839": {
       "nombre": "BOOSTER BRASIL III",
@@ -9381,20 +9398,20 @@
     "9834": {
       "nombre": "RENTA DINAMICA GLOBA",
       "primer": "2019-12",
-      "ultimo": "2026-08",
-      "meses": 81
+      "ultimo": "2026-09",
+      "meses": 82
     },
     "9843": {
       "nombre": "RENTA GLOBAL DÓLAR",
       "primer": "2020-01",
-      "ultimo": "2026-08",
-      "meses": 80
+      "ultimo": "2026-09",
+      "meses": 81
     },
     "9853": {
       "nombre": "CONSERVADORA DÓLAR",
       "primer": "2020-02",
-      "ultimo": "2026-08",
-      "meses": 79
+      "ultimo": "2026-09",
+      "meses": 80
     },
     "9864": {
       "nombre": "BEST COUPON EUROPE",
@@ -9405,14 +9422,14 @@
     "9873": {
       "nombre": "GESTIÓN AGRESIVA",
       "primer": "2020-04",
-      "ultimo": "2026-08",
-      "meses": 77
+      "ultimo": "2026-09",
+      "meses": 78
     },
     "9872": {
       "nombre": "GESTIÓN CONSERVADORA",
       "primer": "2020-04",
-      "ultimo": "2026-08",
-      "meses": 77
+      "ultimo": "2026-09",
+      "meses": 78
     },
     "9875": {
       "nombre": "FM BCI PORT. EST. 20",
@@ -9441,8 +9458,8 @@
     "9905": {
       "nombre": "BI ESTRATÉGICO",
       "primer": "2020-08",
-      "ultimo": "2026-08",
-      "meses": 73
+      "ultimo": "2026-09",
+      "meses": 74
     },
     "9916": {
       "nombre": "FM BCH DEUDA INT",
@@ -9453,14 +9470,14 @@
     "9934": {
       "nombre": "RENTA MÁS LARGO PLAZ",
       "primer": "2020-09",
-      "ultimo": "2026-08",
-      "meses": 72
+      "ultimo": "2026-09",
+      "meses": 73
     },
     "9936": {
       "nombre": "CHILE EQUITIES",
       "primer": "2020-09",
-      "ultimo": "2026-08",
-      "meses": 72
+      "ultimo": "2026-09",
+      "meses": 73
     },
     "9928": {
       "nombre": "LV AHORRO EST",
@@ -9477,14 +9494,14 @@
     "9921": {
       "nombre": "INCOME",
       "primer": "2020-09",
-      "ultimo": "2026-08",
-      "meses": 72
+      "ultimo": "2026-09",
+      "meses": 73
     },
     "9922": {
       "nombre": "ACCIONES EMERGENTES",
       "primer": "2020-09",
-      "ultimo": "2026-08",
-      "meses": 72
+      "ultimo": "2026-09",
+      "meses": 73
     },
     "9923": {
       "nombre": "DEUDA EMERGENTE",
@@ -9495,20 +9512,20 @@
     "9926": {
       "nombre": "ACCIONES LATAM",
       "primer": "2020-09",
-      "ultimo": "2026-08",
-      "meses": 72
+      "ultimo": "2026-09",
+      "meses": 73
     },
     "9931": {
       "nombre": "GLOBAL BRANDS",
       "primer": "2020-09",
-      "ultimo": "2026-08",
-      "meses": 72
+      "ultimo": "2026-09",
+      "meses": 73
     },
     "9932": {
       "nombre": "US ADVANTAGE",
       "primer": "2020-09",
-      "ultimo": "2026-08",
-      "meses": 72
+      "ultimo": "2026-09",
+      "meses": 73
     },
     "9929": {
       "nombre": "AHORRO LARGO PLAZO",
@@ -9525,8 +9542,8 @@
     "9935": {
       "nombre": "MONEDA CREDITO LATAM",
       "primer": "2020-11",
-      "ultimo": "2026-08",
-      "meses": 70
+      "ultimo": "2026-09",
+      "meses": 71
     },
     "9961": {
       "nombre": "FM BCI EST. AHORRO 3",
@@ -9537,8 +9554,8 @@
     "9981": {
       "nombre": "FM BCI EST. DEU. CAL",
       "primer": "2020-12",
-      "ultimo": "2026-08",
-      "meses": 69
+      "ultimo": "2026-09",
+      "meses": 70
     },
     "9947": {
       "nombre": "DOLLAR COUPON USADO",
@@ -9567,14 +9584,14 @@
     "9988": {
       "nombre": "ESG GLOBAL CREDITS",
       "primer": "2021-01",
-      "ultimo": "2026-08",
-      "meses": 68
+      "ultimo": "2026-09",
+      "meses": 69
     },
     "9987": {
       "nombre": "ESG NORDEA EM STARS",
       "primer": "2021-01",
-      "ultimo": "2026-08",
-      "meses": 68
+      "ultimo": "2026-09",
+      "meses": 69
     },
     "9994": {
       "nombre": "COMPASS DVA LIQUIDEZ",
@@ -9585,14 +9602,14 @@
     "10020": {
       "nombre": "CARTERA RESERVA",
       "primer": "2021-03",
-      "ultimo": "2026-08",
-      "meses": 66
+      "ultimo": "2026-09",
+      "meses": 67
     },
     "10021": {
       "nombre": "CARTERA DEFENSIVO",
       "primer": "2021-03",
-      "ultimo": "2026-08",
-      "meses": 66
+      "ultimo": "2026-09",
+      "meses": 67
     },
     "10034": {
       "nombre": "BOOSTER CLEAN ENERGY",
@@ -9615,26 +9632,26 @@
     "10009": {
       "nombre": "TEMÁTICO GLOBAL",
       "primer": "2021-03",
-      "ultimo": "2026-08",
-      "meses": 66
+      "ultimo": "2026-09",
+      "meses": 67
     },
     "10024": {
       "nombre": "EQUILIBRIO DÓLAR",
       "primer": "2021-03",
-      "ultimo": "2026-08",
-      "meses": 66
+      "ultimo": "2026-09",
+      "meses": 67
     },
     "10002": {
       "nombre": "CA AGRESIVA DÓLAR",
       "primer": "2021-04",
-      "ultimo": "2026-08",
-      "meses": 65
+      "ultimo": "2026-09",
+      "meses": 66
     },
     "10027": {
       "nombre": "AHORRO PLUS DÓLAR",
       "primer": "2021-04",
-      "ultimo": "2026-08",
-      "meses": 65
+      "ultimo": "2026-09",
+      "meses": 66
     },
     "10030": {
       "nombre": "BTG PACTUAL AUDAZ",
@@ -9663,14 +9680,14 @@
     "10063": {
       "nombre": "CARTERA BALANCEADO",
       "primer": "2021-04",
-      "ultimo": "2026-08",
-      "meses": 65
+      "ultimo": "2026-09",
+      "meses": 66
     },
     "10064": {
       "nombre": "CARTERA AGRESIVO",
       "primer": "2021-04",
-      "ultimo": "2026-08",
-      "meses": 65
+      "ultimo": "2026-09",
+      "meses": 66
     },
     "10036": {
       "nombre": "ZCHTGLOBALES",
@@ -9681,44 +9698,44 @@
     "10026": {
       "nombre": "BI PROTECCIÓN",
       "primer": "2021-05",
-      "ultimo": "2026-08",
-      "meses": 64
+      "ultimo": "2026-09",
+      "meses": 65
     },
     "10071": {
       "nombre": "FM BCI C DOLAR BALAN",
       "primer": "2021-05",
-      "ultimo": "2026-08",
-      "meses": 64
+      "ultimo": "2026-09",
+      "meses": 65
     },
     "10072": {
       "nombre": "FM BCI C. DOLAR CONS",
       "primer": "2021-05",
-      "ultimo": "2026-08",
-      "meses": 64
+      "ultimo": "2026-09",
+      "meses": 65
     },
     "10067": {
       "nombre": "FM BCI ACC SOST. ESG",
       "primer": "2021-05",
-      "ultimo": "2026-08",
-      "meses": 64
+      "ultimo": "2026-09",
+      "meses": 65
     },
     "10048": {
       "nombre": "DIGITAL BALANCEADO",
       "primer": "2021-06",
-      "ultimo": "2026-08",
-      "meses": 63
+      "ultimo": "2026-09",
+      "meses": 64
     },
     "10049": {
       "nombre": "DIGITAL AGRESIVO",
       "primer": "2021-06",
-      "ultimo": "2026-08",
-      "meses": 63
+      "ultimo": "2026-09",
+      "meses": 64
     },
     "10050": {
       "nombre": "DIGITAL CONSERVADOR",
       "primer": "2021-06",
-      "ultimo": "2026-08",
-      "meses": 63
+      "ultimo": "2026-09",
+      "meses": 64
     },
     "10057": {
       "nombre": "FUTURE WEALTH",
@@ -9735,20 +9752,20 @@
     "10058": {
       "nombre": "FM BCH AGRESIVO",
       "primer": "2021-07",
-      "ultimo": "2026-08",
-      "meses": 62
+      "ultimo": "2026-09",
+      "meses": 63
     },
     "10059": {
       "nombre": "FM BCH CONSERVADOR",
       "primer": "2021-07",
-      "ultimo": "2026-08",
-      "meses": 62
+      "ultimo": "2026-09",
+      "meses": 63
     },
     "10060": {
       "nombre": "FM BCH MODERADO",
       "primer": "2021-07",
-      "ultimo": "2026-08",
-      "meses": 62
+      "ultimo": "2026-09",
+      "meses": 63
     },
     "10061": {
       "nombre": "FM BCH RENTA LP",
@@ -9777,20 +9794,20 @@
     "10111": {
       "nombre": "FM BCH PA USD MOD",
       "primer": "2021-08",
-      "ultimo": "2026-08",
-      "meses": 61
+      "ultimo": "2026-09",
+      "meses": 62
     },
     "10125": {
       "nombre": "RENTA GLOBAL AHORRO",
       "primer": "2021-08",
-      "ultimo": "2026-08",
-      "meses": 61
+      "ultimo": "2026-09",
+      "meses": 62
     },
     "10087": {
       "nombre": "FM CC SHORT D LATAM",
       "primer": "2021-09",
-      "ultimo": "2026-08",
-      "meses": 60
+      "ultimo": "2026-09",
+      "meses": 61
     },
     "10130": {
       "nombre": "CLEVER DNA SCIENCE",
@@ -9813,8 +9830,8 @@
     "10139": {
       "nombre": "RENTA GLOBAL",
       "primer": "2021-10",
-      "ultimo": "2026-08",
-      "meses": 59
+      "ultimo": "2026-09",
+      "meses": 60
     },
     "9251": {
       "nombre": "FI CC DEUDA CORP IG",
@@ -9825,8 +9842,8 @@
     "10135": {
       "nombre": "FM CC EQUILIBRIO",
       "primer": "2021-11",
-      "ultimo": "2026-08",
-      "meses": 58
+      "ultimo": "2026-09",
+      "meses": 59
     },
     "10137": {
       "nombre": "FM CC LIGHT REGGAE",
@@ -9837,26 +9854,26 @@
     "10138": {
       "nombre": "FM CC PROTEGE",
       "primer": "2021-11",
-      "ultimo": "2026-08",
-      "meses": 58
+      "ultimo": "2026-09",
+      "meses": 59
     },
     "10141": {
       "nombre": "FM CC DESPEGA",
       "primer": "2021-11",
-      "ultimo": "2026-08",
-      "meses": 58
+      "ultimo": "2026-09",
+      "meses": 59
     },
     "10151": {
       "nombre": "FM BCH PA USD AGRESI",
       "primer": "2021-11",
-      "ultimo": "2026-08",
-      "meses": 58
+      "ultimo": "2026-09",
+      "meses": 59
     },
     "10152": {
       "nombre": "FM BCH PA USD CONSER",
       "primer": "2021-11",
-      "ultimo": "2026-08",
-      "meses": 58
+      "ultimo": "2026-09",
+      "meses": 59
     },
     "10169": {
       "nombre": "PROTECCIÓN UF",
@@ -9885,8 +9902,8 @@
     "10147": {
       "nombre": "PRUDENTE DÓLAR",
       "primer": "2021-11",
-      "ultimo": "2026-08",
-      "meses": 58
+      "ultimo": "2026-09",
+      "meses": 59
     },
     "10184": {
       "nombre": "BALANCEADO DÓLAR",
@@ -9915,14 +9932,14 @@
     "10202": {
       "nombre": "AGRESIVO DÓLAR",
       "primer": "2022-02",
-      "ultimo": "2026-08",
-      "meses": 55
+      "ultimo": "2026-09",
+      "meses": 56
     },
     "10198": {
       "nombre": "MBI DEUDA CHILENA",
       "primer": "2022-03",
-      "ultimo": "2026-08",
-      "meses": 54
+      "ultimo": "2026-09",
+      "meses": 55
     },
     "10205": {
       "nombre": "AHORRO MEDIANO PLAZO",
@@ -9933,8 +9950,8 @@
     "10208": {
       "nombre": "CONSERVADOR",
       "primer": "2022-03",
-      "ultimo": "2026-08",
-      "meses": 54
+      "ultimo": "2026-09",
+      "meses": 55
     },
     "10224": {
       "nombre": "PROTECCIÓN USA",
@@ -9957,26 +9974,26 @@
     "10235": {
       "nombre": "COMPASS PROTECCIÓN",
       "primer": "2022-03",
-      "ultimo": "2026-08",
-      "meses": 54
+      "ultimo": "2026-09",
+      "meses": 55
     },
     "10225": {
       "nombre": "LITIO+",
       "primer": "2022-03",
-      "ultimo": "2026-08",
-      "meses": 54
+      "ultimo": "2026-09",
+      "meses": 55
     },
     "9108": {
       "nombre": "FM CC MEDIANO PLAZO",
       "primer": "2022-04",
-      "ultimo": "2026-08",
-      "meses": 53
+      "ultimo": "2026-09",
+      "meses": 54
     },
     "10243": {
       "nombre": "AHORRO UF",
       "primer": "2022-04",
-      "ultimo": "2026-08",
-      "meses": 53
+      "ultimo": "2026-09",
+      "meses": 54
     },
     "10246": {
       "nombre": "ESTRUCTURADO UF II",
@@ -10011,8 +10028,8 @@
     "10261": {
       "nombre": "RENTA CORTO PLAZO UF",
       "primer": "2022-05",
-      "ultimo": "2026-08",
-      "meses": 52
+      "ultimo": "2026-09",
+      "meses": 53
     },
     "10264": {
       "nombre": "ESTRUCTURADO PESOS",
@@ -10131,8 +10148,8 @@
     "10260": {
       "nombre": "LV AHORRO ACTIVO",
       "primer": "2022-08",
-      "ultimo": "2026-08",
-      "meses": 49
+      "ultimo": "2026-09",
+      "meses": 50
     },
     "10287": {
       "nombre": "EST UPSIDE USA",
@@ -10185,8 +10202,8 @@
     "10322": {
       "nombre": "LIQUIDEZ ASG",
       "primer": "2022-08",
-      "ultimo": "2026-08",
-      "meses": 49
+      "ultimo": "2026-09",
+      "meses": 50
     },
     "10342": {
       "nombre": "ESTRUCTURADO DEUDAUF",
@@ -10269,20 +10286,20 @@
     "10282": {
       "nombre": "SURA MONEY MARKET",
       "primer": "2022-11",
-      "ultimo": "2026-08",
-      "meses": 46
+      "ultimo": "2026-09",
+      "meses": 47
     },
     "10329": {
       "nombre": "PRU RENTA UF",
       "primer": "2022-11",
-      "ultimo": "2026-08",
-      "meses": 46
+      "ultimo": "2026-09",
+      "meses": 47
     },
     "10331": {
       "nombre": "PRU ACCIONES CHILE",
       "primer": "2022-11",
-      "ultimo": "2026-08",
-      "meses": 46
+      "ultimo": "2026-09",
+      "meses": 47
     },
     "10355": {
       "nombre": "ESTRUCTURADO UF IV",
@@ -10293,14 +10310,14 @@
     "10358": {
       "nombre": "FM BCI MACH",
       "primer": "2022-11",
-      "ultimo": "2026-08",
-      "meses": 46
+      "ultimo": "2026-09",
+      "meses": 47
     },
     "10360": {
       "nombre": "CHILE ECOLOGICO",
       "primer": "2022-11",
-      "ultimo": "2026-08",
-      "meses": 46
+      "ultimo": "2026-09",
+      "meses": 47
     },
     "10372": {
       "nombre": "ESTRUCTURADO UF",
@@ -10329,8 +10346,8 @@
     "10383": {
       "nombre": "TOESCA WALLET HOLDO",
       "primer": "2022-11",
-      "ultimo": "2026-08",
-      "meses": 46
+      "ultimo": "2026-09",
+      "meses": 47
     },
     "10386": {
       "nombre": "SARTOR MIXTO III",
@@ -10353,14 +10370,14 @@
     "10330": {
       "nombre": "PRU RENTA INTERNACIO",
       "primer": "2022-11",
-      "ultimo": "2026-08",
-      "meses": 46
+      "ultimo": "2026-09",
+      "meses": 47
     },
     "10332": {
       "nombre": "PRU ACCIONES MUNDO",
       "primer": "2022-11",
-      "ultimo": "2026-08",
-      "meses": 46
+      "ultimo": "2026-09",
+      "meses": 47
     },
     "10378": {
       "nombre": "FM CC RETORNO NOMINA",
@@ -10401,14 +10418,14 @@
     "10367": {
       "nombre": "DIGITAL RENTA UF",
       "primer": "2023-01",
-      "ultimo": "2026-08",
-      "meses": 44
+      "ultimo": "2026-09",
+      "meses": 45
     },
     "10368": {
       "nombre": "DIGITAL LIQ PESOS",
       "primer": "2023-01",
-      "ultimo": "2026-08",
-      "meses": 44
+      "ultimo": "2026-09",
+      "meses": 45
     },
     "10375": {
       "nombre": "FFMM CC TOTAL RETURN",
@@ -10419,14 +10436,14 @@
     "10369": {
       "nombre": "DIGITAL CHILE ACTIVO",
       "primer": "2023-01",
-      "ultimo": "2026-08",
-      "meses": 44
+      "ultimo": "2026-09",
+      "meses": 45
     },
     "10370": {
       "nombre": "DIGITAL MUNDO SUSTEN",
       "primer": "2023-01",
-      "ultimo": "2026-08",
-      "meses": 44
+      "ultimo": "2026-09",
+      "meses": 45
     },
     "10395": {
       "nombre": "EST AHORRO+ UF",
@@ -10473,8 +10490,8 @@
     "10431": {
       "nombre": "LIQUIDEZ",
       "primer": "2023-03",
-      "ultimo": "2026-08",
-      "meses": 42
+      "ultimo": "2026-09",
+      "meses": 43
     },
     "10432": {
       "nombre": "FM BCH DEP PLUS XIII",
@@ -10491,14 +10508,14 @@
     "10441": {
       "nombre": "COOPEUCH LIQUIDEZ",
       "primer": "2023-03",
-      "ultimo": "2026-08",
-      "meses": 42
+      "ultimo": "2026-09",
+      "meses": 43
     },
     "10393": {
       "nombre": "DDA GLOBAL USD",
       "primer": "2023-04",
-      "ultimo": "2026-08",
-      "meses": 41
+      "ultimo": "2026-09",
+      "meses": 42
     },
     "10446": {
       "nombre": "FM BCH DEP PLUS XIV",
@@ -10539,8 +10556,8 @@
     "10450": {
       "nombre": "LIQUIDEZ DOLAR",
       "primer": "2023-05",
-      "ultimo": "2026-08",
-      "meses": 40
+      "ultimo": "2026-09",
+      "meses": 41
     },
     "10457": {
       "nombre": "NOMINAL 2024",
@@ -10557,8 +10574,8 @@
     "10461": {
       "nombre": "AHORRO UF",
       "primer": "2023-05",
-      "ultimo": "2026-08",
-      "meses": 40
+      "ultimo": "2026-09",
+      "meses": 41
     },
     "10471": {
       "nombre": "FM BCI MONETARIO II",
@@ -10569,14 +10586,14 @@
     "10392": {
       "nombre": "RV GLOBAL DOLAR",
       "primer": "2023-05",
-      "ultimo": "2026-08",
-      "meses": 40
+      "ultimo": "2026-09",
+      "meses": 41
     },
     "10454": {
       "nombre": "ZDCORP.DESARROLLADA",
       "primer": "2023-05",
-      "ultimo": "2026-08",
-      "meses": 40
+      "ultimo": "2026-09",
+      "meses": 41
     },
     "10227": {
       "nombre": "FM BCH GLOBAL MEGA",
@@ -10599,26 +10616,26 @@
     "10478": {
       "nombre": "FM BCI AD",
       "primer": "2023-06",
-      "ultimo": "2026-08",
-      "meses": 39
+      "ultimo": "2026-09",
+      "meses": 40
     },
     "10482": {
       "nombre": "DEFENSIVO",
       "primer": "2023-06",
-      "ultimo": "2026-08",
-      "meses": 39
+      "ultimo": "2026-09",
+      "meses": 40
     },
     "10483": {
       "nombre": "DIGITAL BALANCEADO",
       "primer": "2023-06",
-      "ultimo": "2026-08",
-      "meses": 39
+      "ultimo": "2026-09",
+      "meses": 40
     },
     "10484": {
       "nombre": "DIGITAL AGRESIVO",
       "primer": "2023-06",
-      "ultimo": "2026-08",
-      "meses": 39
+      "ultimo": "2026-09",
+      "meses": 40
     },
     "10479": {
       "nombre": "NOMINAL 2024 II",
@@ -10629,14 +10646,14 @@
     "10480": {
       "nombre": "DIGITAL CONSERVADOR",
       "primer": "2023-07",
-      "ultimo": "2026-08",
-      "meses": 38
+      "ultimo": "2026-09",
+      "meses": 39
     },
     "10481": {
       "nombre": "JUGADO",
       "primer": "2023-07",
-      "ultimo": "2026-08",
-      "meses": 38
+      "ultimo": "2026-09",
+      "meses": 39
     },
     "10486": {
       "nombre": "UF FEBRERO 2025",
@@ -10647,8 +10664,8 @@
     "10488": {
       "nombre": "FFMM PRU LIQ PESOS",
       "primer": "2023-07",
-      "ultimo": "2026-08",
-      "meses": 38
+      "ultimo": "2026-09",
+      "meses": 39
     },
     "10490": {
       "nombre": "ESTRUCTURADO PESOS",
@@ -10677,14 +10694,14 @@
     "10173": {
       "nombre": "FM BCH ESG",
       "primer": "2023-08",
-      "ultimo": "2026-08",
-      "meses": 37
+      "ultimo": "2026-09",
+      "meses": 38
     },
     "10502": {
       "nombre": "DEUDA LARGO PLAZO",
       "primer": "2023-09",
-      "ultimo": "2026-08",
-      "meses": 36
+      "ultimo": "2026-09",
+      "meses": 37
     },
     "10508": {
       "nombre": "FM BCI EST INV UFIII",
@@ -10707,8 +10724,8 @@
     "10515": {
       "nombre": "RENTA A PLAZO UF",
       "primer": "2023-10",
-      "ultimo": "2026-08",
-      "meses": 35
+      "ultimo": "2026-09",
+      "meses": 36
     },
     "10518": {
       "nombre": "ESTRUCTURADO UF V",
@@ -10719,14 +10736,14 @@
     "10519": {
       "nombre": "FM BCH P AHORRO CP",
       "primer": "2023-10",
-      "ultimo": "2026-08",
-      "meses": 35
+      "ultimo": "2026-09",
+      "meses": 36
     },
     "10520": {
       "nombre": "FM BCH P RETORNO MP",
       "primer": "2023-10",
-      "ultimo": "2026-08",
-      "meses": 35
+      "ultimo": "2026-09",
+      "meses": 36
     },
     "10539": {
       "nombre": "FM BCI EST UF IV",
@@ -10737,8 +10754,8 @@
     "10517": {
       "nombre": "BICE MP LIQUIDEZ",
       "primer": "2023-11",
-      "ultimo": "2026-08",
-      "meses": 34
+      "ultimo": "2026-09",
+      "meses": 35
     },
     "10537": {
       "nombre": "ESTRUCTURADO UF IX",
@@ -10755,14 +10772,14 @@
     "10548": {
       "nombre": "FM BCH ESTATAL LP",
       "primer": "2023-11",
-      "ultimo": "2026-08",
-      "meses": 34
+      "ultimo": "2026-09",
+      "meses": 35
     },
     "10551": {
       "nombre": "DEUDA SOBERANA",
       "primer": "2023-11",
-      "ultimo": "2026-08",
-      "meses": 34
+      "ultimo": "2026-09",
+      "meses": 35
     },
     "10556": {
       "nombre": "FM BCH EST DOLAR II",
@@ -10779,8 +10796,8 @@
     "10521": {
       "nombre": "ACCIONES EEUU",
       "primer": "2023-11",
-      "ultimo": "2026-08",
-      "meses": 34
+      "ultimo": "2026-09",
+      "meses": 35
     },
     "10533": {
       "nombre": "EST AHORRO UF V",
@@ -10797,8 +10814,8 @@
     "10561": {
       "nombre": "FM BCI DGS",
       "primer": "2023-12",
-      "ultimo": "2026-08",
-      "meses": 33
+      "ultimo": "2026-09",
+      "meses": 34
     },
     "10559": {
       "nombre": "DEU CORP LAT DÓL LIQ",
@@ -10815,26 +10832,26 @@
     "10578": {
       "nombre": "FM BCI MACH ARR.",
       "primer": "2024-02",
-      "ultimo": "2026-08",
-      "meses": 31
+      "ultimo": "2026-09",
+      "meses": 32
     },
     "10579": {
       "nombre": "FM BCI MACH MOD",
       "primer": "2024-02",
-      "ultimo": "2026-08",
-      "meses": 31
+      "ultimo": "2026-09",
+      "meses": 32
     },
     "10580": {
       "nombre": "FM BCI MACH CONS.",
       "primer": "2024-02",
-      "ultimo": "2026-08",
-      "meses": 31
+      "ultimo": "2026-09",
+      "meses": 32
     },
     "10583": {
       "nombre": "FM BCH DIV ACC CH",
       "primer": "2024-02",
-      "ultimo": "2026-08",
-      "meses": 31
+      "ultimo": "2026-09",
+      "meses": 32
     },
     "10584": {
       "nombre": "LIQUIDEZ X",
@@ -10851,14 +10868,14 @@
     "10601": {
       "nombre": "OBJETIVO ABRIL 2028",
       "primer": "2024-03",
-      "ultimo": "2026-08",
-      "meses": 30
+      "ultimo": "2026-09",
+      "meses": 31
     },
     "10607": {
       "nombre": "LIQUIDEZ XI",
       "primer": "2024-04",
-      "ultimo": "2026-08",
-      "meses": 29
+      "ultimo": "2026-09",
+      "meses": 30
     },
     "10615": {
       "nombre": "AHORRO+ UF VI",
@@ -10875,26 +10892,26 @@
     "10622": {
       "nombre": "AMERIS LIQUIDEZ II",
       "primer": "2024-05",
-      "ultimo": "2026-08",
-      "meses": 28
+      "ultimo": "2026-09",
+      "meses": 29
     },
     "10632": {
       "nombre": "FM BCH AHORRO DOLAR",
       "primer": "2024-05",
-      "ultimo": "2026-08",
-      "meses": 28
+      "ultimo": "2026-09",
+      "meses": 29
     },
     "10633": {
       "nombre": "LIQUIDEZ XII",
       "primer": "2024-06",
-      "ultimo": "2026-08",
-      "meses": 27
+      "ultimo": "2026-09",
+      "meses": 28
     },
     "10634": {
       "nombre": "LIQUIDEZ XIV",
       "primer": "2024-06",
-      "ultimo": "2026-08",
-      "meses": 27
+      "ultimo": "2026-09",
+      "meses": 28
     },
     "10638": {
       "nombre": "EST USD II",
@@ -10917,8 +10934,8 @@
     "10664": {
       "nombre": "FM CARTERA PAT CONS",
       "primer": "2024-08",
-      "ultimo": "2026-08",
-      "meses": 25
+      "ultimo": "2026-09",
+      "meses": 26
     },
     "10665": {
       "nombre": "EST UF VIII",
@@ -10929,20 +10946,20 @@
     "9623": {
       "nombre": "FM LATIN AMERICA EQ",
       "primer": "2024-08",
-      "ultimo": "2026-08",
-      "meses": 25
+      "ultimo": "2026-09",
+      "meses": 26
     },
     "10658": {
       "nombre": "HOLDO ACCIONES CHILE",
       "primer": "2024-09",
-      "ultimo": "2026-08",
-      "meses": 24
+      "ultimo": "2026-09",
+      "meses": 25
     },
     "10602": {
       "nombre": "DEUDA BRASIL",
       "primer": "2024-09",
-      "ultimo": "2026-08",
-      "meses": 24
+      "ultimo": "2026-09",
+      "meses": 25
     },
     "10679": {
       "nombre": "ESTRUCT DEUDA UF III",
@@ -10953,86 +10970,86 @@
     "10680": {
       "nombre": "ESTRUCTURADO UF VI",
       "primer": "2024-10",
-      "ultimo": "2026-08",
-      "meses": 23
+      "ultimo": "2026-09",
+      "meses": 24
     },
     "10700": {
       "nombre": "FM BCI ESTRUCT.UF VI",
       "primer": "2024-11",
-      "ultimo": "2026-08",
-      "meses": 22
+      "ultimo": "2026-09",
+      "meses": 23
     },
     "10701": {
       "nombre": "VISIÓN MM DÓLAR",
       "primer": "2024-12",
-      "ultimo": "2026-08",
-      "meses": 21
+      "ultimo": "2026-09",
+      "meses": 22
     },
     "10721": {
       "nombre": "LIQUIDEZ XIII",
       "primer": "2025-02",
-      "ultimo": "2026-08",
-      "meses": 19
+      "ultimo": "2026-09",
+      "meses": 20
     },
     "10720": {
       "nombre": "CORTO PLAZO DOLAR",
       "primer": "2025-03",
-      "ultimo": "2026-08",
-      "meses": 18
+      "ultimo": "2026-09",
+      "meses": 19
     },
     "10727": {
       "nombre": "FFMM PRU MODERADO",
       "primer": "2025-03",
-      "ultimo": "2026-08",
-      "meses": 18
+      "ultimo": "2026-09",
+      "meses": 19
     },
     "10729": {
       "nombre": "FFMM PRU ARRIESGADO",
       "primer": "2025-03",
-      "ultimo": "2026-08",
-      "meses": 18
+      "ultimo": "2026-09",
+      "meses": 19
     },
     "10735": {
       "nombre": "FM BCI ESTRUC UF VII",
       "primer": "2025-03",
-      "ultimo": "2026-08",
-      "meses": 18
+      "ultimo": "2026-09",
+      "meses": 19
     },
     "10722": {
       "nombre": "DEUDA LATAM 2028",
       "primer": "2025-04",
-      "ultimo": "2026-08",
-      "meses": 17
+      "ultimo": "2026-09",
+      "meses": 18
     },
     "10737": {
       "nombre": "AHORRO+ V",
       "primer": "2025-05",
-      "ultimo": "2026-08",
-      "meses": 16
+      "ultimo": "2026-09",
+      "meses": 17
     },
     "10747": {
       "nombre": "GLOBAL EQUITY",
       "primer": "2025-05",
-      "ultimo": "2026-08",
-      "meses": 16
+      "ultimo": "2026-09",
+      "meses": 17
     },
     "10755": {
       "nombre": "FM CC RENTA UF 2029",
       "primer": "2025-06",
-      "ultimo": "2026-08",
-      "meses": 15
+      "ultimo": "2026-09",
+      "meses": 16
     },
     "10764": {
       "nombre": "FFMM PRU CONSERVADOR",
       "primer": "2025-06",
-      "ultimo": "2026-08",
-      "meses": 15
+      "ultimo": "2026-09",
+      "meses": 16
     },
     "10772": {
       "nombre": "CHILE SOSTENIBLE",
       "primer": "2025-08",
-      "ultimo": "2026-08",
-      "meses": 13
+      "ultimo": "2026-09",
+      "meses": 14
     },
     "10782": {
       "nombre": "REND CONSERVADOR",
@@ -11043,104 +11060,104 @@
     "10802": {
       "nombre": "FM BCH AHORRO",
       "primer": "2025-10",
-      "ultimo": "2026-08",
-      "meses": 11
+      "ultimo": "2026-09",
+      "meses": 12
     },
     "10819": {
       "nombre": "FFMM PRU RENTA CORTO",
       "primer": "2025-11",
-      "ultimo": "2026-08",
-      "meses": 10
+      "ultimo": "2026-09",
+      "meses": 11
     },
     "10813": {
       "nombre": "ESTRUCT NOMINAL 2030",
       "primer": "2025-12",
-      "ultimo": "2026-08",
-      "meses": 9
+      "ultimo": "2026-09",
+      "meses": 10
     },
     "10827": {
       "nombre": "RISKY CHUCK 107",
       "primer": "2026-04",
-      "ultimo": "2026-08",
-      "meses": 5
+      "ultimo": "2026-09",
+      "meses": 6
     },
     "10850": {
       "nombre": "MODERATE BRAD 107",
       "primer": "2026-05",
-      "ultimo": "2026-08",
-      "meses": 4
+      "ultimo": "2026-09",
+      "meses": 5
     },
     "10851": {
       "nombre": "CONSERVATIVE 107",
       "primer": "2026-05",
-      "ultimo": "2026-08",
-      "meses": 4
+      "ultimo": "2026-09",
+      "meses": 5
     },
     "10871": {
       "nombre": "FFMM PRU LARGO PLAZO",
       "primer": "2026-06",
-      "ultimo": "2026-08",
-      "meses": 3
+      "ultimo": "2026-09",
+      "meses": 4
     },
     "10882": {
       "nombre": "ESTRUCTURADO UF II",
       "primer": "2026-06",
-      "ultimo": "2026-08",
-      "meses": 3
+      "ultimo": "2026-09",
+      "meses": 4
     },
     "10862": {
       "nombre": "RUTPAY",
       "primer": "2026-07",
-      "ultimo": "2026-08",
-      "meses": 2
+      "ultimo": "2026-09",
+      "meses": 3
     },
     "10888": {
       "nombre": "RENTA CORTO PLAZO",
       "primer": "2026-07",
-      "ultimo": "2026-08",
-      "meses": 2
+      "ultimo": "2026-09",
+      "meses": 3
     },
     "10892": {
       "nombre": "ESTRUCTURADO UF",
       "primer": "2026-07",
-      "ultimo": "2026-08",
-      "meses": 2
+      "ultimo": "2026-09",
+      "meses": 3
     },
     "10902": {
       "nombre": "FM BCI ED",
       "primer": "2026-07",
-      "ultimo": "2026-08",
-      "meses": 2
+      "ultimo": "2026-09",
+      "meses": 3
     },
     "10903": {
       "nombre": "FM BCI IMP DIGITAL",
       "primer": "2026-07",
-      "ultimo": "2026-08",
-      "meses": 2
+      "ultimo": "2026-09",
+      "meses": 3
     },
     "10904": {
       "nombre": "FM BCI RD",
       "primer": "2026-07",
-      "ultimo": "2026-08",
-      "meses": 2
+      "ultimo": "2026-09",
+      "meses": 3
     },
     "10899": {
       "nombre": "LIQUIDEZ USD",
       "primer": "2026-08",
-      "ultimo": "2026-08",
-      "meses": 1
+      "ultimo": "2026-09",
+      "meses": 2
     },
     "10901": {
       "nombre": "ESTRUCT. DEUDA UF IV",
       "primer": "2026-08",
-      "ultimo": "2026-08",
-      "meses": 1
+      "ultimo": "2026-09",
+      "meses": 2
     },
     "10917": {
       "nombre": "RENTA UF III",
       "primer": "2026-08",
-      "ultimo": "2026-08",
-      "meses": 1
+      "ultimo": "2026-09",
+      "meses": 2
     }
   },
   "desde": {
@@ -11149,5 +11166,5 @@
     "futuros_forwards": "2001-01",
     "opciones": "2001-01"
   },
-  "updated_at": "2026-09-28T07:57:28+00:00"
+  "updated_at": "2026-10-13T20:05:47+00:00"
 }
