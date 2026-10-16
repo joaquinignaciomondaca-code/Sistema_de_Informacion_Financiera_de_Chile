@@ -21,9 +21,10 @@
     "outputs/seguros/renta_fija/2026-05.parquet",
     "outputs/seguros/renta_fija/2026-06.parquet",
     "outputs/seguros/renta_fija/2026-07.parquet",
-    "outputs/seguros/renta_fija/2026-08.parquet"
+    "outputs/seguros/renta_fija/2026-08.parquet",
+    "outputs/seguros/renta_fija/2026-09.parquet"
   ],
-  "total_records": 2216342,
+  "total_records": 2321911,
   "periodos": [
     "2024-12",
     "2025-01",
@@ -45,7 +46,8 @@
     "2026-05",
     "2026-06",
     "2026-07",
-    "2026-08"
+    "2026-08",
+    "2026-09"
   ],
-  "updated_at": "2026-09-28T17:19:17+00:00"
+  "updated_at": "2026-10-16T17:48:11+00:00"
 }
