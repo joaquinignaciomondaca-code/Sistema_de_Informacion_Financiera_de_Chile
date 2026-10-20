@@ -1,5 +1,5 @@
 /**
- * Citación, versión académica, autoría y reproducibilidad
+ * Citación de la base, autoría y reproducibilidad
  * Sistema de Información Financiera de Chile
  *
  * Un solo objeto (CITA) define versión, fecha de corte, DOI, autoría, licencias
@@ -27,8 +27,9 @@
     version: "1.0",
     corte: "2026-08",          // último periodo publicado incluido en el snapshot
     publicada: "2026-10-20",
-    doi: "",                   // ← completar cuando Zenodo asigne el DOI
-    zenodo: "",                // ← URL del registro en Zenodo
+    doi: "",                   // ← completar cuando el registro tenga DOI
+    editor: "",                // ← repositorio que publica el registro (si aplica)
+    registro: "",              // ← URL pública del snapshot
     estado: "En preparación: el snapshot descargable de la versión congelada y su DOI están pendientes.",
 
     // Autoría y contacto (se completa con los datos públicos del autor).
@@ -79,16 +80,22 @@
          + `fondos mutuos y fondos de inversión de Chile (2001–${CITA.corte.slice(0, 4)})`;
   }
 
+  /** Repositorio que publica el registro; si no hay uno, el nombre del proyecto. */
+  function editor() {
+    return CITA.editor || "Sistema de Información Financiera de Chile";
+  }
+
   /**
    * Cita en formato APA 7 para conjuntos de datos. Sin DOI se cae al repositorio
    * y se declara el DOI pendiente, en vez de omitir el campo.
    */
+
   function apa() {
     const año = (CITA.publicada || "").slice(0, 4) || new Date().getFullYear();
     const base = `Mondaca, J. (${año}). ${tituloDataset()} [Conjunto de datos].`;
     if (CITA.doi) {
       const url = CITA.doi.startsWith("http") ? CITA.doi : `https://doi.org/${CITA.doi}`;
-      return `${base} Zenodo. ${url}`;
+      return `${base} ${editor()}. ${url}`;
     }
     return `${base} Sistema de Información Financiera de Chile. ${CITA.github} `
          + `(versión congelada v${CITA.version}; DOI pendiente).`;
@@ -101,11 +108,11 @@
       "  author       = {Mondaca, Joaquín},",
       `  title        = {${CITA.nombre} v${CITA.version}: carteras y estados financieros de seguros, fondos mutuos y fondos de inversión de Chile},`,
       `  year         = {${año}},`,
-      "  publisher    = {Zenodo},",
+      `  publisher    = {${editor()}},`,
       `  note         = {Corte de datos: ${CITA.corte}. ${CITA.estado}}`,
     ];
     if (CITA.doi) lineas.push(`  doi          = {${CITA.doi}},`);
-    if (CITA.zenodo) lineas.push(`  url          = {${CITA.zenodo}}`);
+    if (CITA.registro) lineas.push(`  url          = {${CITA.registro}}`);
     else lineas.push(`  url          = {${CITA.github}}`);
     lineas[lineas.length - 1] = lineas[lineas.length - 1].replace(/,$/, "");
     lineas.push("}");
@@ -132,12 +139,12 @@
     const doiFila = CITA.doi
       ? fila("DOI", enlace(CITA.doi.startsWith("http") ? CITA.doi : `https://doi.org/${CITA.doi}`, CITA.doi))
       : fila("DOI", dato("", "pendiente"));
-    const snapshot = CITA.zenodo
-      ? enlace(CITA.zenodo, `Descargar snapshot v${CITA.version}`)
+    const snapshot = CITA.registro
+      ? enlace(CITA.registro, `Descargar snapshot v${CITA.version}`)
       : `<span class="cita-pendiente">Snapshot en preparación: se publicará con DOI y registro de cambios.</span>`;
 
     return `
-      <div class="info-section-kicker">CITACIÓN Y VERSIÓN ACADÉMICA</div>
+      <div class="info-section-kicker">CÓMO CITAR ESTA BASE</div>
       <h2>Cómo citar esta base</h2>
       <p class="cita-lead">El sitio es la plataforma viva de exploración y cambia con cada publicación.
       Para investigar se cita la <strong>versión congelada ${escapar(CITA.nombre)} v${escapar(CITA.version)}</strong>,
@@ -209,13 +216,13 @@
   /* ── Bloque compacto: pestaña Descargas ────────────────────────────────── */
 
   function htmlDescargas() {
-    const snapshot = CITA.zenodo
-      ? `<a class="dl-cita-btn" href="${escapar(CITA.zenodo)}" target="_blank" rel="noopener">Descargar snapshot académico (v${escapar(CITA.version)})</a>`
+    const snapshot = CITA.registro
+      ? `<a class="dl-cita-btn" href="${escapar(CITA.registro)}" target="_blank" rel="noopener">Descargar snapshot v${escapar(CITA.version)})</a>`
       : `<span class="cita-pendiente">Snapshot v${escapar(CITA.version)} en preparación (DOI pendiente)</span>`;
     return `
       <div class="dl-cita-head">
         <div>
-          <h3>Citación y versión académica</h3>
+          <h3>Cómo citar esta base</h3>
           <p>Si vas a compartir una cifra, un gráfico o un archivo, cita la versión congelada
           <b>${escapar(CITA.nombre)} v${escapar(CITA.version)}</b> (corte ${escapar(CITA.corte)}), no la página viva.</p>
         </div>
