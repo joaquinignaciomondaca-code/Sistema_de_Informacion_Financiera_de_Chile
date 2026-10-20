@@ -458,6 +458,8 @@ index.html carga en orden:
   theme_switcher.js, ux_shell.js, chart_renderer.js, erd_graph.js, duckdb_client.js, sidebar.js,
   data_dictionary.js, data_viewer.js, chat_terminal.js, download_utils.js, download_catalog.js,
   downloads_panel.js, jszip, xlsx
+  alcance.js        window.SIFAlcance: nivel editorial de cada sector (lee DOWNLOAD_CATALOG.alcance)
+  portada.js        cifras de la portada (data-alcance="…") y botones hacia explorador, mapa y Descargas
   script inline: instancia ERD, wiring de pestañas y atajos
   los 15 archivos locales comparten una sola etiqueta de versión (?v=20260929-seguridad-1)
 Siete pestañas, cada una a pantalla completa (ya no existe el panel inferior ni el divisor):
@@ -486,6 +488,15 @@ SidebarController (EXPLORER_TREE: grupo → sector → carpeta/circular → tabl
   render árbol, búsqueda, resizer
   onCircularSelect → breadcrumb, ERD.focusSector, ChatTerminal.setCustomChips, abrir 1ª tabla
   onTableSelect    → ERD.focusTable, DataViewer.load(view), terminal "SELECT * … LIMIT"
+
+Alcance editorial (recorte visual 2026-10-20, docs/notas/recorte_visual_industrias_2026-10-20.md):
+  docs/vocabulario.json → alcance: nivel por sector (nucleo · secundario · contexto · archivo · registro),
+      visibles, orden, agrupaciones (securitizacion), tablas_ocultas (fi_bienes_raices), variantes
+  build_download_catalog.py → grupos e ítems con clave/nivel/oculto/varianteDe + DOWNLOAD_CATALOG.alcance
+      (cifras por nivel y por sector; viaja en el catálogo porque los workflows ya lo regeneran)
+  SIFAlcance (js/alcance.js) lo consultan el explorador, el mapa, el diccionario, el visor, Descargas y la
+      portada: núcleo, instituciones y contexto a la vista; archivo y registro al final, plegados.
+      Sin catálogo, todo visible (nunca se esconde algo por error). Nada se borra: vistas SQL, Parquet y URLs.
 
 DataViewerController (DATA_VIEWER_CATALOG): opción = <sector>.<tipo> · tipo de tabla; query LIMIT n → tabla con filtro, orden, copiar celda; «Descargar datos» abre Descargas con la tabla puesta
 DataDictionaryController: diccionario por sector (rol PK/FK/Dim/Métrica, criterio contable) con filtro y búsqueda
