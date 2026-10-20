@@ -116,10 +116,10 @@ const ERD_TABLES = [
       { name: "sector", type: "VARCHAR" },
       { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
       { name: "nombre_aseguradora", type: "VARCHAR" },
-      { name: "rol", type: "VARCHAR" },
+      { name: "property_id", type: "VARCHAR" },
       { name: "tipo_instrumento", type: "VARCHAR" },
       { name: "nemotecnico", type: "VARCHAR" },
-      { name: "ubicacion", type: "VARCHAR" },
+      { name: "destino", type: "VARCHAR" },
       { name: "comuna", type: "VARCHAR" },
       { name: "ciudad", type: "VARCHAR" },
       { name: "monto_arriendo_uf", type: "DOUBLE" }
@@ -402,7 +402,7 @@ const ERD_TABLES = [
     x: 1620,
     y: 90,
     w: 240,
-    h: 166,
+    h: 176,
     rows: "Un archivo por trimestre",
     file: "outputs/fi/cartera_nacional/manifest.json",
     cols: [
@@ -410,6 +410,7 @@ const ERD_TABLES = [
       { name: "run_fondo", fk: true, type: "VARCHAR" },
       { name: "nemotecnico", type: "VARCHAR" },
       { name: "rut_emisor", type: "VARCHAR" },
+      { name: "emisor_tipo", type: "VARCHAR" },
       { name: "tipo_instrumento", type: "VARCHAR" },
       { name: "valorizacion_miles_mf", type: "DOUBLE" }
     ]
