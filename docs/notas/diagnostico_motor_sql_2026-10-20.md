@@ -81,3 +81,31 @@ Descartado por ahora: cambiar el bundle `eh` por `mvp`. Es más pequeño, pero n
 - Implementar 3 y 4 (cambio pequeño, elimina el colgado).
 - Medir 5 en la URL publicada (requiere acceso a la red pública).
 - Decidir 1 y 2 según cuántos visitantes llegan sin intención de consultar.
+
+## Actualización: punto 2 aplicado (timeout y verificación HTTP)
+
+Cambios en `docs/js/duckdb_client.js`:
+
+- **Verificación HTTP previa**: antes de crear el worker se comprueba con `HEAD` (con `GET` si el host
+  responde 405/501) que el worker y el `.wasm` responden 2xx. Un 404 falla con la causa exacta.
+- **Timeout por intento** de 15 s (`DUCKDB_INIT_TIMEOUT_MS`) sobre la creación del motor, con mensaje
+  "inicializar el motor: sin respuesta tras 15 s".
+- **Motivo siempre legible** (`motivoDe`): ya no puede quedar vacío, aunque el error sea un `Event`.
+- **`terminarMotor()`**: libera el worker de un intento fallido y se llama al reintentar, para no dejar
+  workers vivos.
+- **Tiempo de arranque** en `this.initMs` y en el diagnóstico copiable.
+
+Resultados con `scripts/diagnostico_motor_sql.mjs` (mismo entorno que la tabla de arriba):
+
+| Escenario | Antes | Después |
+|---|---|---|
+| `normal` | Listo en ~1,8 s, 84 filas | Listo en ~1,8–2,0 s, 84 filas |
+| `sin_mjs` | Fallo explícito en ~0,7 s | Igual (~0,6 s) |
+| `worker_404` | **Colgado sin error** | Fallo en ~0,6 s: "…worker… respondió HTTP 404" |
+| `wasm_404` | **Colgado sin error** | Fallo en ~0,6 s: "…eh.wasm… respondió HTTP 404" |
+| `worker_mudo` | **Colgado sin error** | Fallo en ~15,5 s: "inicializar el motor: sin respuesta tras 15 s" |
+
+`scripts/audit_duckdb_client.js` sigue pasando (registro de vistas OK).
+
+Pendiente: verificar en la URL publicada y en un navegador distinto de Chromium (Firefox, Safari).
+Si las tres fuentes fallan, el peor caso sigue siendo ~45 s antes del mensaje final.

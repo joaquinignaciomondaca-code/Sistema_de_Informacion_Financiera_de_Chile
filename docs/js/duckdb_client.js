@@ -170,6 +170,49 @@ const SEMANTIC_VIEWS = [
   { name: "fintech_rpsf_lista_entidades", file: "outputs/fintech/fintech_rpsf_maestro.parquet" },
 ];
 
+// Tiempo máximo por intento de arranque. Sin límite, un worker o un .wasm que no
+// responde deja el motor "cargando" para siempre sin ningún mensaje (ver
+// docs/notas/diagnostico_motor_sql_2026-10-20.md).
+const DUCKDB_INIT_TIMEOUT_MS = 15000;
+
+// Texto legible de un error, aunque no sea un Error (p. ej. un Event del worker).
+function motivoDe(error) {
+  if (error && typeof error.message === "string" && error.message) return error.message;
+  if (error && error.type) return `evento "${error.type}" sin detalle`;
+  const texto = String(error);
+  return texto && texto !== "[object Object]" ? texto : "error sin detalle";
+}
+
+// Rechaza si la promesa no se resuelve antes del plazo.
+function conPlazo(promesa, ms, descripcion) {
+  let temporizador = null;
+  const plazo = new Promise((_, reject) => {
+    temporizador = setTimeout(() => {
+      reject(new Error(`${descripcion}: sin respuesta tras ${Math.round(ms / 1000)} s`));
+    }, ms);
+  });
+  return Promise.race([promesa, plazo]).finally(() => clearTimeout(temporizador));
+}
+
+// Comprueba que un recurso responde 2xx antes de entregárselo al motor. El worker
+// de DuckDB no valida el HTTP: un 404 se convierte en un worker inválido que nunca responde.
+async function verificarRecurso(url) {
+  let respuesta;
+  try {
+    respuesta = await fetch(url, { method: "HEAD", cache: "no-store" });
+    // Algunos hosts no aceptan HEAD: se reintenta con GET y se descarta el cuerpo.
+    if (respuesta.status === 405 || respuesta.status === 501) {
+      respuesta = await fetch(url, { cache: "no-store" });
+      if (respuesta.body && respuesta.body.cancel) respuesta.body.cancel().catch(() => {});
+    }
+  } catch (err) {
+    throw new Error(`no se pudo leer ${url} (${motivoDe(err)})`);
+  }
+  if (!respuesta.ok) {
+    throw new Error(`${url} respondió HTTP ${respuesta.status}`);
+  }
+}
+
 class DuckDBClient {
   constructor() {
     this.db = null;
@@ -254,7 +297,19 @@ class DuckDBClient {
     return soporte;
   }
 
+  // Libera el worker de un intento fallido o colgado. Sin esto, un reintento
+  // dejaría vivo el worker anterior.
+  terminarMotor() {
+    try {
+      if (this.db && typeof this.db.terminate === "function") this.db.terminate();
+    } catch (e) { /* ya cerrado */ }
+    this.db = null;
+    this.conn = null;
+  }
+
   async init() {
+    const inicio = performance.now();
+    this.terminarMotor();
     try {
       console.log("[DuckDB-Wasm] Inicializando motor WebAssembly...");
       this.engineAvailable = false;
@@ -308,17 +363,19 @@ class DuckDBClient {
             };
           }
           const bundle = await modulo.selectBundle(intento.bundles);
-          await this.startEngine(modulo, bundle);
+          // Antes de entregar las URLs al motor, se comprueba que existen: así un 404
+          // se reporta con su causa en vez de colgar la inicialización.
+          await Promise.all([verificarRecurso(bundle.mainWorker), verificarRecurso(bundle.mainModule)]);
+          await conPlazo(this.startEngine(modulo, bundle), DUCKDB_INIT_TIMEOUT_MS, "inicializar el motor");
           this.engineSource = intento.id;
           this.engineSourceLabel = intento.label;
           break;
         } catch (error) {
-          const motivo = error && error.message ? error.message : String(error);
+          const motivo = motivoDe(error);
           this.attempts.push({ id: intento.id, label: intento.label, error: motivo });
           if (intento.id === "local") this.localEngineError = motivo;
           console.warn(`[DuckDB-Wasm] Falló ${intento.label}: ${motivo}`);
-          this.db = null;
-          this.conn = null;
+          this.terminarMotor();
         }
       }
 
@@ -342,6 +399,8 @@ class DuckDBClient {
       console.error("[DuckDB-Wasm] Motor no disponible; las consultas fallarán de forma explícita:", this.engineError);
     } finally {
       this.isReady = true;
+      // Tiempo total hasta quedar listo (motor + vistas), para medir el arranque.
+      this.initMs = Math.round(performance.now() - inicio);
       this.updateEngineBadge();
       if (typeof window.dispatchEvent === "function" && typeof CustomEvent === "function") {
         window.dispatchEvent(new CustomEvent("duckdb-ready", {
@@ -394,6 +453,7 @@ class DuckDBClient {
       `Navegador: ${navigator.userAgent}`,
       `Motor disponible: ${this.engineAvailable ? "si (" + (this.engineSourceLabel || this.engineSource) + ")" : "no"}`,
       `Motivo final: ${this.engineError || "(sin error)"}`,
+      `Tiempo de arranque: ${this.initMs != null ? this.initMs + " ms" : "(no terminó)"}`,
       "Intentos:"
     ];
     for (const intento of (this.attempts || [])) {
