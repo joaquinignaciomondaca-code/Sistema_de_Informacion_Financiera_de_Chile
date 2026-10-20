@@ -398,7 +398,7 @@ setTimeout(() => {
     visiblesDl().length === itemsDl().length, visiblesDl().length + " de " + itemsDl().length);
   document.querySelector("#dl-archive .dl-archive-toggle").dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
 
-  // Citación y versión académica: el bloque se pinta en Información y en
+  // Cómo citar esta base: el bloque se pinta en Información y en
   // Descargas, y nunca inventa un DOI: si no existe, lo declara pendiente.
   const citaInfo = document.getElementById("cita-info");
   const citaDl = document.getElementById("cita-descargas");

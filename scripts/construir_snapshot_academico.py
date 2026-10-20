@@ -333,7 +333,7 @@ def main() -> int:
         print(f"  ZIP del snapshot: {zip_base.name}.zip")
 
     print("\nSiguiente paso: publica el snapshot donde obtenga DOI y copia ese DOI en "
-          "docs/js/cita.js (bloque «Citación y versión académica» de la web).")
+          "docs/js/cita.js (bloque «Cómo citar esta base» de la web).")
     return 0
 
 
