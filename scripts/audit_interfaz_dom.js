@@ -398,16 +398,26 @@ setTimeout(() => {
     visiblesDl().length === itemsDl().length, visiblesDl().length + " de " + itemsDl().length);
   document.querySelector("#dl-archive .dl-archive-toggle").dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
 
-  // Cómo citar esta base: el bloque se pinta en Información y en
-  // Descargas, y nunca inventa un DOI: si no existe, lo declara pendiente.
+  // Cómo citar esta base: el bloque se pinta en Información y en Descargas, y
+  // sólo escribe lo que existe hoy: sin DOI, sin versión congelada publicada y
+  // sin promesas de nada pendiente.
   const citaInfo = document.getElementById("cita-info");
   const citaDl = document.getElementById("cita-descargas");
+  const citaTodo = citaInfo.textContent + " " + citaDl.textContent
+    + " " + document.getElementById("cita-autor").textContent;
   check("citación: el bloque de Información se pinta con la cita APA",
     /Conjunto de datos/.test(citaInfo.textContent) && !!document.getElementById("cita-apa"));
   check("citación: el bloque de Descargas sobrevive a que el panel se redibuje",
     /Conjunto de datos/.test(citaDl.textContent) && !!document.getElementById("cita-apa-dl"));
-  check("citación: declara el DOI pendiente en vez de inventarlo",
-    /pendiente/i.test(citaInfo.textContent) && !/doi\.org\/10\.\d/.test(citaInfo.textContent));
+  check("citación: no inventa un DOI (no hay ninguno publicado)",
+    !/doi\.org\/10\.\d/.test(citaTodo) && !/\bDOI\b/.test(citaTodo.replace(/No hay DOI/, "")),
+    (citaTodo.match(/\bDOI\b/gi) || []).length + " menciones");
+  check("citación: no anuncia nada pendiente ni por publicar",
+    !/pendiente|en preparación|próximamente|versión congelada|snapshot/i.test(citaTodo),
+    (citaTodo.match(/pendiente|en preparación|próximamente|versión congelada|snapshot/gi) || []).join(", "));
+  check("citación: la fecha de corte viene del catálogo publicado",
+    new RegExp(window.DOWNLOAD_CATALOG.alcance.visible.periodo.hasta).test(citaInfo.textContent),
+    window.DOWNLOAD_CATALOG.alcance.visible.periodo.hasta);
   check("citación: ofrece BibTeX además de APA", /@misc\{/.test(document.getElementById("cita-bibtex").textContent));
   check("autoría: el bloque de autoría se pinta", /Quién construye esto/.test(document.getElementById("cita-autor").textContent));
   const archivosRepo = [...document.querySelectorAll("#cita-info .cita-lista a, #cita-descargas .dl-cita-archivos a")]

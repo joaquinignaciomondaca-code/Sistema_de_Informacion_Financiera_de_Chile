@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Arma la versión congelada y citable de la base: SIF-Chile Core Holdings.
+"""Arma una copia local congelada del núcleo de la base (SIF-Chile Core Holdings).
 
-El sitio es la plataforma viva: cambia con cada publicación. Una página que se
-mueve no sirve como referencia estable, así que esta es la pieza que se congela,
-se publica con DOI y se cita:
+El sitio es la plataforma viva: cambia con cada publicación. Este script junta
+los 25 conjuntos del núcleo en una carpeta con fecha de corte, hashes y
+documentación, para trabajar sobre una foto fija sin depender de la web.
+
+Es una herramienta local: la copia que genera NO se publica y no tiene DOI. La
+cita del sitio no sale de acá (ver docs/js/cita.js).
 
     snapshot/sif_chile_core_holdings_v1.0/
         README.md            qué es, alcance, cómo se generó, limitaciones
@@ -50,11 +53,13 @@ CATALOGO_JS = DOCS / "js" / "download_catalog.js"
 CITA_JS = DOCS / "js" / "cita.js"
 NIVEL_SNAPSHOT = "nucleo"
 
-# Datos de citación: el espejo para la web vive en docs/js/cita.js.
+# Metadatos del snapshot. El corte y el github se releen de docs/js/cita.js y
+# del catálogo publicado; el resto queda acá porque la web ya no publica ni
+# versión congelada ni DOI.
 CITA_POR_OMISION = {
     "nombre": "SIF-Chile Core Holdings",
     "version": "1.0",
-    "corte": "2026-08",
+    "corte": "2026-09",
     "doi": "",
     "autor": "Joaquín Mondaca",
     "orcid": "",
@@ -128,7 +133,7 @@ inversión— tal como los reportan a la Comisión para el Mercado Financiero.
 - **Registros:** {filas:,}
 - **Peso:** {bytes_totales / 1e6:.1f} MB en Parquet
 - **Publicado:** {date.today().isoformat()}
-- **DOI:** {cita['doi'] or '(pendiente: se asigna al publicar el snapshot)'}
+- **DOI:** {cita['doi'] or 'No tiene: esta es una copia local, sin depósito ni identificador permanente.'}
 
 ## Qué contiene
 
@@ -198,7 +203,7 @@ def citation_cff(cita: dict) -> str:
     return f"""cff-version: 1.2.0
 message: "Si usas estos datos, por favor cítalos con la referencia de abajo."
 title: "{cita['nombre']} v{cita['version']}: carteras y estados financieros de seguros, fondos mutuos y fondos de inversión de Chile"
-abstract: "Versión congelada del Sistema de Información Financiera de Chile: carteras de inversión y estados financieros reportados a la CMF por compañías de seguros, fondos mutuos y fondos de inversión, con corte al {cita['corte']}."
+abstract: "Copia local congelada del Sistema de Información Financiera de Chile: carteras de inversión y estados financieros reportados a la CMF por compañías de seguros, fondos mutuos y fondos de inversión, con corte al {cita['corte']}."
 type: dataset
 {autores}
 version: "{cita['version']}"
@@ -332,8 +337,8 @@ def main() -> int:
         shutil.make_archive(str(zip_base), "zip", root_dir=destino)
         print(f"  ZIP del snapshot: {zip_base.name}.zip")
 
-    print("\nSiguiente paso: publica el snapshot donde obtenga DOI y copia ese DOI en "
-          "docs/js/cita.js (bloque «Cómo citar esta base» de la web).")
+    print("\nCopia local lista. No se publica ni tiene DOI: la cita del sitio no "
+          "sale de acá (ver docs/js/cita.js).")
     return 0
 
 
