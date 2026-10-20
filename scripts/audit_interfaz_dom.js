@@ -121,8 +121,9 @@ function check(name, condition, extra) {
 }
 
 setTimeout(() => {
-  const tabIds = ["tab-btn-info", "tab-btn-erd", "tab-btn-dict", "tab-btn-data", "tab-btn-sql", "tab-btn-downloads", "tab-btn-normativa"];
-  check("existen las 7 pestañas", tabIds.every((id) => document.getElementById(id)));
+  const tabIds = ["tab-btn-info", "tab-btn-erd", "tab-btn-dict", "tab-btn-data", "tab-btn-sql", "tab-btn-downloads"];
+  check("existen las 6 pestañas", tabIds.every((id) => document.getElementById(id)));
+  check("la pestaña de normativa está retirada", !document.getElementById("tab-btn-normativa") && !document.getElementById("normativa-container"));
   check("cada pestaña apunta a un panel existente", tabIds.every((id) => {
     const controls = document.getElementById(id).getAttribute("aria-controls");
     return controls && document.getElementById(controls);
@@ -240,7 +241,7 @@ setTimeout(() => {
     document.getElementById("tab-btn-sql").getAttribute("aria-selected") === "true");
   check("el resto queda oculto",
     document.getElementById("info-container").style.display === "none" &&
-    document.getElementById("normativa-container").style.display === "none");
+    document.getElementById("downloads-container").style.display === "none");
   window.switchMainTab("erd");
   check("mapa: filtros y zoom visibles",
     document.getElementById("erd-controls-group").style.display === "flex" &&
@@ -396,6 +397,30 @@ setTimeout(() => {
   check("descargas: al abrir el archivo aparece el catálogo completo",
     visiblesDl().length === itemsDl().length, visiblesDl().length + " de " + itemsDl().length);
   document.querySelector("#dl-archive .dl-archive-toggle").dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+
+  // Citación y versión académica: el bloque se pinta en Información y en
+  // Descargas, y nunca inventa un DOI: si no existe, lo declara pendiente.
+  const citaInfo = document.getElementById("cita-info");
+  const citaDl = document.getElementById("cita-descargas");
+  check("citación: el bloque de Información se pinta con la cita APA",
+    /Conjunto de datos/.test(citaInfo.textContent) && !!document.getElementById("cita-apa"));
+  check("citación: el bloque de Descargas sobrevive a que el panel se redibuje",
+    /Conjunto de datos/.test(citaDl.textContent) && !!document.getElementById("cita-apa-dl"));
+  check("citación: declara el DOI pendiente en vez de inventarlo",
+    /pendiente/i.test(citaInfo.textContent) && !/doi\.org\/10\.\d/.test(citaInfo.textContent));
+  check("citación: ofrece BibTeX además de APA", /@misc\{/.test(document.getElementById("cita-bibtex").textContent));
+  check("autoría: el bloque de autoría se pinta", /Quién construye esto/.test(document.getElementById("cita-autor").textContent));
+  const archivosRepo = [...document.querySelectorAll("#cita-info .cita-lista a, #cita-descargas .dl-cita-archivos a")]
+    .map((a) => a.getAttribute("href"));
+  check("reproducibilidad: hay enlaces a los archivos planos", archivosRepo.length > 0,
+    archivosRepo.length + " enlaces");
+  check("reproducibilidad: todos los archivos enlazados existen en el disco",
+    archivosRepo.length > 0 && archivosRepo.every((href) => fs.existsSync(path.join(DOCS, href))),
+    archivosRepo.filter((href) => !fs.existsSync(path.join(DOCS, href))).join(", "));
+  check("fuentes y limitaciones: la sección declara respaldo, AFP y cobertura",
+    /sin respaldo|respaldo oficial/i.test(document.body.textContent) &&
+    /AFP/.test(document.querySelector(".info-fuentes").textContent) &&
+    /cobertura homogénea/i.test(document.querySelector(".info-fuentes").textContent));
 
   window.switchMainTab("info");
   document.querySelector('.info-core-card[data-sector="ffmm"] [data-portada="explorar"]')
