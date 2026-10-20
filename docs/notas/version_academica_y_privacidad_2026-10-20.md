@@ -20,8 +20,8 @@ Resumen de lo que se tocó:
 
 ## 1. Versión académica: la página se mueve, el objeto citable no
 
-El sitio cambia con cada publicación; un paper no puede citarlo. El objeto
-citable es **SIF-Chile Core Holdings v1.0**: los 25 conjuntos del núcleo
+El sitio cambia con cada publicación, así que la base se cita por una versión
+congelada: **SIF-Chile Core Holdings v1.0**: los 25 conjuntos del núcleo
 (seguros, fondos mutuos y fondos de inversión), congelados con fecha de corte
 **2026-08**, 11.063.323 registros, 242,4 MB en Parquet.
 
@@ -30,15 +30,15 @@ citable es **SIF-Chile Core Holdings v1.0**: los 25 conjuntos del núcleo
   y uno compacto en Descargas. Ambos ofrecen la cita en APA 7 y BibTeX, con
   botón de copiar.
 - **Regla del módulo:** si un dato no existe (DOI, ORCID, filiación, correo), el
-  bloque lo declara *pendiente*. Nunca inventa un identificador. Un DOI falso es
-  peor que un DOI pendiente, y es justamente lo primero que revisa un revisor.
+  bloque lo declara *pendiente*. Nunca inventa un identificador: un DOI falso es
+  peor que un DOI pendiente.
 - `scripts/construir_snapshot_academico.py` arma la carpeta del snapshot con
   `README.md`, `CITATION.cff`, `CHANGELOG.md`, `LICENSE.txt`, los Parquet del
   núcleo y la documentación, más un `inventario_snapshot.csv` con el SHA-256 de
-  cada archivo de ese snapshot. Con `--zip` deja el archivo listo para Zenodo.
+  cada archivo de ese snapshot. Con `--zip` deja además el archivo comprimido.
 
-Pendiente para el autor: crear el depósito en Zenodo, publicarlo y copiar el DOI
-y la URL en `docs/js/cita.js`, junto con filiación, ORCID y correo de contacto.
+Pendiente, y se completa en un solo lugar (`docs/js/cita.js`): DOI y URL del
+snapshot, filiación, ORCID y correo de contacto.
 
 ## 2. Fuentes, licencia y limitaciones
 
@@ -50,10 +50,9 @@ Banco Central) y **limitaciones** (cobertura 2001–2026 como máximo entre tabl
 no homogénea; unidades y criterios de la fuente sin convertir; sin carteras de
 AFP; identificadores protegidos).
 
-Ojo: hay una contradicción heredada en el repositorio — `LICENSE` dice MIT y el
-README dice «todos los derechos reservados». Para depositar en Zenodo hay que
-zánjarla (recomendación: MIT para el código y una nota explícita de que los
-datos pertenecen a sus fuentes).
+Ojo: había una contradicción heredada en el repositorio — `LICENSE` dice MIT y el
+README decía «todos los derechos reservados». Quedó resuelta: MIT para el código
+y una nota explícita de que los datos pertenecen a sus fuentes oficiales.
 
 ## 3. Identificadores protegidos
 
@@ -118,7 +117,7 @@ y deja de ser un punto débil.
 **Decisión abierta:** `arrendatario` (nombre del arrendatario, muchas veces una
 persona) y `nombre_del_tasador_1/2` siguen publicados tal como los informa la
 CMF. El encargo original no los mencionaba y enmascararlos tiene costo
-analítico; conviene decidirlo antes de depositar en Zenodo.
+analítico; queda como decisión abierta.
 
 ## 4. Reproducibilidad fuera del JavaScript
 

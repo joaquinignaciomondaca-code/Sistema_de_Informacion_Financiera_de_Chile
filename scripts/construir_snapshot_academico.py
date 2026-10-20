@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 """Arma la versión congelada y citable de la base: SIF-Chile Core Holdings.
 
-El sitio es la plataforma viva: cambia con cada publicación. Un paper no puede
-citar una página que se mueve, así que esta es la pieza que se congela, se
-deposita en Zenodo y se cita:
+El sitio es la plataforma viva: cambia con cada publicación. Una página que se
+mueve no sirve como referencia estable, así que esta es la pieza que se congela,
+se publica con DOI y se cita:
 
     snapshot/sif_chile_core_holdings_v1.0/
         README.md            qué es, alcance, cómo se generó, limitaciones
-        CITATION.cff         citación en Citation File Format (GitHub y Zenodo lo leen)
+        CITATION.cff         citación en Citation File Format (lo leen GitHub, Zenodo y los gestores)
         CHANGELOG.md         registro de cambios entre versiones
         LICENSE.txt          licencia del código y nota sobre la licencia de los datos
         datos/…              los Parquet del núcleo, sin alterar
@@ -25,7 +25,7 @@ base fiel a la CMF, congelada en una fecha de corte.
 
 Uso:
     python3 scripts/construir_snapshot_academico.py                  # construye
-    python3 scripts/construir_snapshot_academico.py --zip            # + .zip para Zenodo
+    python3 scripts/construir_snapshot_academico.py --zip            # + .zip del snapshot
     python3 scripts/construir_snapshot_academico.py --version 1.1 --corte 2026-09
 """
 from __future__ import annotations
@@ -128,7 +128,7 @@ inversión— tal como los reportan a la Comisión para el Mercado Financiero.
 - **Registros:** {filas:,}
 - **Peso:** {bytes_totales / 1e6:.1f} MB en Parquet
 - **Publicado:** {date.today().isoformat()}
-- **DOI:** {cita['doi'] or '(pendiente: se asigna al depositar en Zenodo)'}
+- **DOI:** {cita['doi'] or '(pendiente: se asigna al publicar el snapshot)'}
 
 ## Qué contiene
 
@@ -259,7 +259,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Arma la versión congelada y citable de la base.")
     parser.add_argument("--version", help="versión del snapshot (por omisión, la de docs/js/cita.js)")
     parser.add_argument("--corte", help="fecha de corte (AAAA-MM)")
-    parser.add_argument("--zip", action="store_true", help="además arma un .zip listo para subir a Zenodo")
+    parser.add_argument("--zip", action="store_true", help="además arma un .zip con todo el snapshot")
     args = parser.parse_args()
 
     cita = leer_cita()
@@ -330,10 +330,10 @@ def main() -> int:
     if args.zip:
         zip_base = SALIDA / nombre
         shutil.make_archive(str(zip_base), "zip", root_dir=destino)
-        print(f"  ZIP listo para Zenodo: {zip_base.name}.zip")
+        print(f"  ZIP del snapshot: {zip_base.name}.zip")
 
-    print("\nSiguiente paso: sube el contenido a Zenodo, publica el registro y copia el DOI "
-          "en docs/js/cita.js (bloque «Citación y versión académica» de la web).")
+    print("\nSiguiente paso: publica el snapshot donde obtenga DOI y copia ese DOI en "
+          "docs/js/cita.js (bloque «Citación y versión académica» de la web).")
     return 0
 
 
