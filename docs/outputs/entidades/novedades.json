@@ -169,9 +169,19 @@
       "evento": "cambio_vigencia",
       "antes": "Vigente",
       "ahora": "No Vigente"
+    },
+    {
+      "fecha": "2026-10-20",
+      "sector": "fintech",
+      "lista": "fintech/fintech_rpsf_maestro",
+      "rut": "78374724-3",
+      "razon_social": "VERTICE CAPITAL SPA",
+      "evento": "alta",
+      "antes": null,
+      "ahora": "Vigente"
     }
   ],
-  "ultima_revision_utc": "2026-10-10T17:25:49+00:00",
+  "ultima_revision_utc": "2026-10-20T17:26:08+00:00",
   "sectores_revisados": [
     "agf",
     "securitizadoras",
