@@ -207,8 +207,8 @@ class DownloadsPanelController {
 
         <section class="dl-context" id="dl-context" hidden aria-live="polite"></section>
 
-        <!-- Cómo citar esta base + reproducibilidad: lo pinta docs/js/cita.js -->
-        <section class="dl-cita" id="cita-descargas" aria-labelledby="dl-title"></section>
+        <!-- Reproducibilidad y código: lo pinta docs/js/creditos.js -->
+        <section class="dl-creditos" id="creditos-descargas" aria-labelledby="dl-title"></section>
 
         <section class="dl-catalog" aria-labelledby="dl-title">
           <div class="dl-toolbar">
