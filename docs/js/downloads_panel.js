@@ -172,7 +172,7 @@ class DownloadsPanelController {
     const fuera = A ? A.datos().fuera : null;
     const statsHtml = principal
       ? `
-            <div class="dl-stat"><b>${window.MFCDownload.numero(principal.conjuntos)}</b><span>conjuntos principales</span></div>
+            <div class="dl-stat" title="Conjuntos de la vista principal: 25 del núcleo (seguros, fondos mutuos y fondos de inversión) más instituciones y contexto. El núcleo, por sí solo, son 25."><b>${window.MFCDownload.numero(principal.conjuntos)}</b><span>conjuntos en la vista principal</span></div>
             <div class="dl-stat"><b>${window.MFCDownload.numero(principal.filas)}</b><span>filas</span></div>
             <div class="dl-stat"><b>${window.MFCDownload.bytes(principal.bytes)}</b><span>Parquet</span></div>
             <div class="dl-stat dl-stat-fuera" title="Archivo congelado y registros complementarios: plegados al final del catálogo"><b>${window.MFCDownload.numero(fuera.conjuntos)}</b><span>en archivo</span></div>`
@@ -198,7 +198,9 @@ class DownloadsPanelController {
               y fondos de inversión), luego las instituciones y el contexto macro; al final, plegados, el
               archivo congelado y los registros complementarios. Cada conjunto muestra cuántas filas, qué
               periodo y cuánto pesa <b>antes</b> de descargar. El Parquet original se baja directo desde este
-              servidor; CSV y Excel se arman con el motor que corre en tu navegador.
+              servidor; CSV y Excel se arman con el motor que corre en tu navegador. Los datos se publican tal
+              como los emite la fuente y pueden contener errores: revísalos y haz tus propias verificaciones
+              antes de usarlos.
             </p>
           </div>
           <div class="dl-hero-stats">${statsHtml}
@@ -206,6 +208,9 @@ class DownloadsPanelController {
         </header>
 
         <section class="dl-context" id="dl-context" hidden aria-live="polite"></section>
+
+        <!-- Reproducibilidad y código: lo pinta docs/js/creditos.js -->
+        <section class="dl-creditos" id="creditos-descargas" aria-labelledby="dl-title"></section>
 
         <section class="dl-catalog" aria-labelledby="dl-title">
           <div class="dl-toolbar">

@@ -121,8 +121,9 @@ function check(name, condition, extra) {
 }
 
 setTimeout(() => {
-  const tabIds = ["tab-btn-info", "tab-btn-erd", "tab-btn-dict", "tab-btn-data", "tab-btn-sql", "tab-btn-downloads", "tab-btn-normativa"];
-  check("existen las 7 pestañas", tabIds.every((id) => document.getElementById(id)));
+  const tabIds = ["tab-btn-info", "tab-btn-erd", "tab-btn-dict", "tab-btn-data", "tab-btn-sql", "tab-btn-downloads"];
+  check("existen las 6 pestañas", tabIds.every((id) => document.getElementById(id)));
+  check("la pestaña de normativa está retirada", !document.getElementById("tab-btn-normativa") && !document.getElementById("normativa-container"));
   check("cada pestaña apunta a un panel existente", tabIds.every((id) => {
     const controls = document.getElementById(id).getAttribute("aria-controls");
     return controls && document.getElementById(controls);
@@ -240,7 +241,7 @@ setTimeout(() => {
     document.getElementById("tab-btn-sql").getAttribute("aria-selected") === "true");
   check("el resto queda oculto",
     document.getElementById("info-container").style.display === "none" &&
-    document.getElementById("normativa-container").style.display === "none");
+    document.getElementById("downloads-container").style.display === "none");
   window.switchMainTab("erd");
   check("mapa: filtros y zoom visibles",
     document.getElementById("erd-controls-group").style.display === "flex" &&
@@ -321,8 +322,11 @@ setTimeout(() => {
   const nucleo = alcance.niveles.find((n) => n.id === "nucleo");
   check("la portada muestra las cifras del núcleo desde el catálogo",
     cifra("nucleo.sectores") === "3" && cifra("nucleo.conjuntos") === String(nucleo.conjuntos) &&
-    /millones$/.test(cifra("nucleo.filas")) && /^\d{4}–\d{4}$/.test(cifra("nucleo.periodo")),
-    [cifra("nucleo.sectores"), cifra("nucleo.conjuntos"), cifra("nucleo.filas"), cifra("nucleo.periodo")].join(" · "));
+    /millones$/.test(cifra("nucleo.filas")),
+    [cifra("nucleo.sectores"), cifra("nucleo.conjuntos"), cifra("nucleo.filas")].join(" · "));
+  check("la portada no promete una cobertura global (cada tabla tiene su periodo)",
+    !/cobertura máxima/.test(document.getElementById("info-container").textContent)
+    && !/data-alcance="nucleo\.periodo"/.test(document.getElementById("info-container").innerHTML));
   check("la portada tiene tres tarjetas grandes: seguros, fondos mutuos y fondos de inversión",
     Array.from(document.querySelectorAll(".info-core-card")).map((c) => c.dataset.sector).join(",") === "seguros,ffmm,fi");
   check("la portada ya no anuncia 15 industrias",
@@ -396,6 +400,49 @@ setTimeout(() => {
   check("descargas: al abrir el archivo aparece el catálogo completo",
     visiblesDl().length === itemsDl().length, visiblesDl().length + " de " + itemsDl().length);
   document.querySelector("#dl-archive .dl-archive-toggle").dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+
+  // Autoría y reproducibilidad (docs/js/creditos.js). El sitio no publica cita,
+  // DOI, versión congelada ni una fecha de corte única: la cobertura no es
+  // homogénea y cada tabla declara su periodo. Estos checks cuidan esa frontera.
+  const creditosAutor = document.getElementById("creditos-autor");
+  const creditosDl = document.getElementById("creditos-descargas");
+  check("autoría: el bloque de autoría se pinta en Información",
+    /Quién construye esto/.test(creditosAutor.textContent) && /Joaquín Mondaca/.test(creditosAutor.textContent));
+  check("autoría: declara cuándo partió el proyecto",
+    /septiembre de 2026/.test(creditosAutor.textContent));
+  check("autoría: no queda ningún bloque de citación en el sitio",
+    !document.getElementById("cita-info") && !document.getElementById("cita-autor")
+    && !document.getElementById("cita-descargas"));
+  // El chequeo se acota a Información y Descargas: en el Diccionario la palabra
+  // «pendiente» aparece describiendo columnas de las fuentes, y eso es legítimo.
+  const textoSitio = creditosAutor.textContent + " " + creditosDl.textContent + " "
+    + document.getElementById("info-container").textContent + " "
+    + document.getElementById("downloads-container").textContent;
+  check("autoría: el sitio no menciona DOI, versión congelada ni snapshot",
+    !/\bDOI\b|versión congelada|snapshot/i.test(textoSitio),
+    (textoSitio.match(/\bDOI\b|versión congelada|snapshot/gi) || []).join(", "));
+  check("autoría: no hay cita armada (APA/BibTeX) ni nada pendiente",
+    !/\[Conjunto de datos\]|@misc\{|\bpendiente\b|en preparación/i.test(textoSitio),
+    (textoSitio.match(/\[Conjunto de datos\]|@misc\{|\bpendiente\b|en preparación/gi) || []).join(", "));
+  check("autoría: no hay una fecha de corte global",
+    !/datos al \d{4}-\d{2}/i.test(textoSitio) && !/fecha de corte:/i.test(textoSitio));
+  check("reproducibilidad: el bloque de Descargas sobrevive a que el panel se redibuje",
+    /Reproducibilidad y código/.test(creditosDl.textContent));
+  const archivosRepo = [...document.querySelectorAll("#creditos-descargas .dl-creditos-archivos a")]
+    .map((a) => a.getAttribute("href"));
+  check("reproducibilidad: hay enlaces a los archivos planos", archivosRepo.length > 0,
+    archivosRepo.length + " enlaces");
+  check("reproducibilidad: todos los archivos enlazados existen en el disco",
+    archivosRepo.length > 0 && archivosRepo.every((href) => fs.existsSync(path.join(DOCS, href))),
+    archivosRepo.filter((href) => !fs.existsSync(path.join(DOCS, href))).join(", "));
+  check("la web advierte que la base puede tener errores y pide verificar",
+    /Puede haber errores/.test(document.querySelector(".info-fuentes").textContent) &&
+    /puede contener errores/.test(document.querySelector(".info-note").textContent) &&
+    /verificaciones/.test(document.getElementById("downloads-container").textContent));
+  check("fuentes y limitaciones: la sección declara respaldo, AFP y cobertura",
+    /sin respaldo|respaldo oficial/i.test(document.body.textContent) &&
+    /AFP/.test(document.querySelector(".info-fuentes").textContent) &&
+    /cobertura homogénea/i.test(document.querySelector(".info-fuentes").textContent));
 
   window.switchMainTab("info");
   document.querySelector('.info-core-card[data-sector="ffmm"] [data-portada="explorar"]')

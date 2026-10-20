@@ -35,7 +35,6 @@ TABS = {
     "tab-btn-data": "data-viewer-container",
     "tab-btn-sql": "sql-container",
     "tab-btn-downloads": "downloads-container",
-    "tab-btn-normativa": "normativa-container",
 }
 
 # Colores fijos que rompen una u otra paleta cuando quedan fuera de los bloques
@@ -366,14 +365,30 @@ def audit_engine():
         print("  [OK] Sondas de entorno y diagnóstico copiable presentes")
 
 
-def audit_normativa():
-    print("\n--- 6. Enlaces del visor de normativa ---")
-    audit = os.path.join(ROOT, "scripts", "audit_normativa_web.js")
-    source = read("scripts/audit_normativa_web.js")
-    if "switchMainTab" not in source:
-        fail("la auditoría de normativa ya no comprueba la conexión con switchMainTab")
+def audit_normativa_retirada():
+    """El monitor normativo salió de la navegación, pero su código se conserva.
+
+    Se retiró de la interfaz (era otro producto: exigía revisión periódica y
+    resúmenes que envejecen) sin borrar el módulo ni los datos, por si algún día
+    vuelve como proyecto aparte. Esta auditoría cuida justamente esa frontera:
+    que la pestaña no esté en la web, pero que el código siga en el repo.
+    """
+    print("\n--- 6. Monitor normativo fuera de la interfaz, código conservado ---")
+    html = read("docs/index.html")
+    shell = read("docs/js/ux_shell.js")
+    if "tab-btn-normativa" in html or "normativa-container" in html:
+        fail("la pestaña de normativa volvió al index.html")
+    elif "normativa_monitor.js" in html:
+        fail("index.html volvió a cargar normativa_monitor.js")
+    elif '"normativa"' in shell:
+        fail('ux_shell.js volvió a incluir "normativa" en sus pestañas válidas')
     else:
-        print("  [OK] La auditoría de normativa sigue verificando la pestaña")
+        print("  [OK] Ni la pestaña ni su script se cargan en la web")
+    for pieza in ("docs/js/normativa_monitor.js", "scripts/audit_normativa_web.js"):
+        if not os.path.exists(os.path.join(ROOT, pieza)):
+            fail(f"se borró {pieza}: el monitor estaba retirado de la interfaz, no del repo")
+        else:
+            print(f"  [OK] {pieza} sigue en el repo")
 
 
 def audit_dead_classes():
@@ -439,7 +454,7 @@ def main():
     audit_ux_layer()
     audit_theme_tokens()
     audit_engine()
-    audit_normativa()
+    audit_normativa_retirada()
     audit_dead_classes()
     audit_control_chars()
     audit_header_compaction(html, read("docs/css/app.css"))

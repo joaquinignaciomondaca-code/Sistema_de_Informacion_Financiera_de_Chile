@@ -1,9 +1,13 @@
+<div align="center">
+  <img src="docs/assets/logo_sif.svg" alt="SIF — Sistema de Información Financiera de Chile" width="430">
+</div>
+
 # Sistema de Información Financiera de Chile (SIF)
 
 **25 años del sistema financiero chileno, consultables con SQL desde el navegador.**
 Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Central, la Superintendencia de Pensiones y la SUSESO: **15 industrias, 75 tablas y 13,3 millones de filas** desde enero de 2001. Sin backend, sin base de datos, sin servidores — el dato viaja como Parquet estático y el motor corre en el cliente.
 
-**En la web, el foco es la inversión institucional:** seguros, fondos mutuos y fondos de inversión (25 conjuntos, 11,1 millones de filas, 2001 → 2026), con bancos, AGF y corredoras como instituciones y las series del Banco Central como contexto. Factoring y leasing, securitización y cajas de compensación quedan en un archivo congelado, y AFP, cooperativas, sistemas de pago y fintech como registro de entidades: siguen publicados, consultables y descargables, sólo que fuera del camino ([alcance de la edición](docs/notas/recorte_visual_industrias_2026-10-20.md)).
+**En la web, el foco es la inversión institucional:** seguros, fondos mutuos y fondos de inversión (**25 conjuntos del núcleo**, 11,1 millones de filas, 2001 → 2026 —la vista principal suma 59 porque agrega instituciones y contexto—), con bancos, AGF y corredoras como instituciones y las series del Banco Central como contexto. Factoring y leasing, securitización y cajas de compensación quedan en un archivo congelado, y AFP, cooperativas, sistemas de pago y fintech como registro de entidades: siguen publicados, consultables y descargables, sólo que fuera del camino ([alcance de la edición](docs/notas/recorte_visual_industrias_2026-10-20.md)).
 
 **▶ [Abrir el sistema](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/)** — sin instalar nada, las consultas corren en tu navegador.
 
@@ -273,7 +277,26 @@ Más `audit_interfaz_dom.js` (comportamiento en un DOM real), `audit_normativa_w
 [`PSEUDOCODIGO.md`](PSEUDOCODIGO.md) — mapa de código, estructura del repositorio y decisiones ·
 [`pipelines/README.md`](pipelines/README.md) — operación de datos y credenciales ·
 [`docs/vendor/duckdb/README.md`](docs/vendor/duckdb/README.md) — cómo se vendoriza el motor ·
+[`docs/notas/version_academica_y_privacidad_2026-10-20.md`](docs/notas/version_academica_y_privacidad_2026-10-20.md) — versión citable, reproducibilidad y protección de identificadores ·
 READMEs por sector en `bancos/`, `ccaf/`, `factoring_leasing/`, `ffmm/`, `fi/`, `macro/`, `pensiones/` y `seguros/`.
+
+---
+
+## 10. Reproducibilidad y privacidad
+
+La base se actualiza cada vez que las fuentes publican y **cada tabla tiene su
+propio periodo**: seguros, fondos mutuos, fondos de inversión, banca y contexto
+reportan con frecuencias y rezagos distintos. Por eso el sitio no muestra una
+fecha de corte única ni una versión congelada —resumirían mal a la mayoría de
+las tablas— y tampoco hay cita armada ni DOI. El periodo de cada conjunto se ve
+en el explorador, en el diccionario y en Descargas.
+
+| Qué necesitas | Dónde |
+|---|---|
+| Auditar la base | `docs/reproducibilidad/`: diccionario CSV/JSON, inventario de archivos con SHA-256, cobertura por periodo y resumen de validación. Se regeneran con `python3 scripts/construir_reproducibilidad.py` |
+| Armar una copia local con hashes | `python3 scripts/construir_snapshot_academico.py --zip`: junta los 25 conjuntos del núcleo en una carpeta con `README.md`, `CHANGELOG.md` y el inventario SHA-256. Es una herramienta local; no hay copia publicada |
+| Fuentes, licencia y limitaciones | sección *Fuentes, licencia y limitaciones* de la web y `docs/notas/version_academica_y_privacidad_2026-10-20.md` |
+| Criterio de privacidad | `pipelines/auto/privacidad.py` (RUT de personas naturales en `fi.cartera_nacional`; dirección y rol en `seguros.bienes_raices`) |
 
 ---
 
@@ -285,4 +308,27 @@ Proyecto de datos de punta a punta: extracción, validación estadística y cont
 
 ## Licencia
 
-© 2026 Joaquín Mondaca. Todos los derechos reservados; el código se publica para consulta y evaluación técnica. Los datos pertenecen a sus fuentes oficiales (CMF, Banco Central de Chile, SPensiones, SUSESO) y se publican tal como ellas los emiten.
+**Código:** MIT ([`LICENSE`](LICENSE)).
+
+**Datos:** pertenecen a sus fuentes oficiales —Comisión para el Mercado
+Financiero, Banco Central de Chile, Superintendencia de Pensiones y SUSESO— y se
+publican tal como ellas los emiten, sin alterar su contenido. Antes de
+redistribuirlos verifica las condiciones de reutilización de cada fuente.
+
+**Límites que conviene declarar al usar la base:**
+
+- Los datos regulatorios son de la CMF y del Banco Central; el SIF aporta
+  extracción, normalización, validación, documentación y armonización.
+- Es un proyecto independiente: no tiene respaldo ni aval de la CMF ni del
+  Banco Central de Chile.
+- La cobertura 2001–2026 es el máximo entre tablas, no una cobertura homogénea:
+  cada tabla tiene su propio inicio y su propia frecuencia.
+- Los montos conservan la unidad y el criterio de valorización de la fuente; no
+  se convierten ni se reexpresan.
+- La extracción y la validación son automáticas, así que la base puede contener
+  errores: úsala con criterio y haz las verificaciones propias que consideres
+  necesarias antes de publicar una cifra.
+- Esta edición no publica carteras de AFP: de las AFP sólo está el registro de
+  administradoras.
+- Los identificadores sensibles están protegidos en la versión pública: ver
+  `pipelines/auto/privacidad.py`.
