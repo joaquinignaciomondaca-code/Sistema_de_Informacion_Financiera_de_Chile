@@ -19,6 +19,29 @@ on:
       - 'scripts/audit_normativa_web.js'
       - 'docs/outputs/normativa_cmf/feed.json'
       - 'data/normativa_cmf/state.json'
+
+  # Sólo pruebas y auditorías: en un pull_request no se consulta la CMF ni se
+  # publica nada (los pasos que escriben llevan `if: github.event_name != 'pull_request'`).
+  # Existe porque el monitor salió de la navegación y esta auditoría siguió
+  # exigiendo su pestaña: el flujo programado fallaba todos los días por una
+  # decisión editorial ya tomada, y nadie lo veía antes de mezclar. Con este
+  # disparador, cualquier cambio en la web o en el pipeline tiene que dejar la
+  # auditoría en verde para poder entrar a main.
+  pull_request:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/normativa_cmf.yml'
+      - 'pipelines/normativa_cmf/**'
+      - 'scripts/audit_normativa_web.js'
+      - 'scripts/audit_interfaz.py'
+      - 'docs/index.html'
+      - 'docs/css/app.css'
+      - 'docs/js/normativa_monitor.js'
+      - 'docs/js/sidebar.js'
+      - 'docs/js/data_viewer.js'
+      - 'docs/js/ux_shell.js'
+      - 'docs/outputs/normativa_cmf/feed.json'
   workflow_dispatch:
 
 permissions:
@@ -36,7 +59,12 @@ jobs:
       - name: Checkout de la rama que inició el flujo
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.ref_name }}
+          # En push y schedule se trabaja sobre la rama que dispara el flujo (el
+          # último paso publica ahí). En pull_request `github.ref_name` vale
+          # "123/merge", que no es una ref de checkout: con la cadena vacía se
+          # toma el commit de mezcla que arma GitHub, que es justo lo que hay
+          # que auditar.
+          ref: ${{ github.event_name != 'pull_request' && github.ref_name || '' }}
           fetch-depth: 1
 
       - name: Configurar Python
@@ -55,6 +83,8 @@ jobs:
           node scripts/audit_normativa_web.js
 
       - name: Actualizar publicaciones CMF y análisis respaldado
+        # En un pull_request este flujo sólo audita: no consulta la CMF ni escribe en la rama.
+        if: github.event_name != 'pull_request'
         env:
           API_GOOGLE_AI_STUDIO: ${{ secrets.API_GOOGLE_AI_STUDIO }}
           # Alias oficiales latest: el modelo se actualiza sin cambiar el workflow.
@@ -70,9 +100,13 @@ jobs:
         run: python -m pipelines.normativa_cmf.pipeline
 
       - name: Auditar feed y estado después de la consulta oficial
+        # En un pull_request este flujo sólo audita: no consulta la CMF ni escribe en la rama.
+        if: github.event_name != 'pull_request'
         run: python -m pipelines.normativa_cmf.audit --require-run
 
       - name: Guardar salida en la misma rama
+        # En un pull_request este flujo sólo audita: no consulta la CMF ni escribe en la rama.
+        if: github.event_name != 'pull_request'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
