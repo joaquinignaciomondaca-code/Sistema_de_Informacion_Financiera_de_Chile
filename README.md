@@ -284,15 +284,19 @@ READMEs por sector en `bancos/`, `ccaf/`, `factoring_leasing/`, `ffmm/`, `fi/`, 
 
 ## 10. Citar esta base
 
-El sitio se actualiza en cada publicación. La base se cita por su **versión
-congelada**, que no cambia:
+La base se actualiza cada vez que las fuentes publican, así que se cita con su
+**fecha de corte** y la fecha de consulta (el bloque *Cómo citar esta base* de la
+web arma la cita en APA 7 y BibTeX, y toma el corte del catálogo publicado):
 
-> **SIF-Chile Core Holdings v1.0** — 25 conjuntos del núcleo (seguros, fondos mutuos y fondos de inversión), corte 2026-08, 11.063.323 registros. DOI pendiente.
+> Mondaca, J. (2026). *Sistema de Información Financiera de Chile* [Conjunto de datos]. GitHub. <https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile> (datos al 2026-09; consultado el 20-10-2026).
+
+No hay DOI: la base no está depositada en un repositorio con identificador
+permanente.
 
 | Qué necesitas | Dónde |
 |---|---|
-| Armar el snapshot citable | `python3 scripts/construir_snapshot_academico.py --zip` (deja `README.md`, `CITATION.cff`, `CHANGELOG.md`, los Parquet del núcleo y el inventario con SHA-256) |
 | Auditar la base | `docs/reproducibilidad/`: diccionario CSV/JSON, inventario de archivos con SHA-256, cobertura por periodo y resumen de validación. Se regeneran con `python3 scripts/construir_reproducibilidad.py` |
+| Armar una copia local con hashes | `python3 scripts/construir_snapshot_academico.py --zip`: junta los 25 conjuntos del núcleo en una carpeta con `README.md`, `CHANGELOG.md` y el inventario SHA-256. Es una herramienta local; no hay copia publicada |
 | Fuentes, licencia y limitaciones | sección *Fuentes, licencia y limitaciones* de la web y `docs/notas/version_academica_y_privacidad_2026-10-20.md` |
 | Criterio de privacidad | `pipelines/auto/privacidad.py` (RUT de personas naturales en `fi.cartera_nacional`; dirección y rol en `seguros.bienes_raices`) |
 

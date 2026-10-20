@@ -2206,14 +2206,6 @@ header {
   text-decoration: underline;
 }
 
-/* Un dato que todavía no existe se declara: nunca se rellena con un valor
-   inventado (un DOI falso es peor que un DOI pendiente). */
-.cita-pendiente {
-  color: rgb(var(--warn-rgb));
-  font-size: 12.5px;
-  font-style: italic;
-}
-
 .cita-nota {
   margin-top: 12px;
   color: var(--text-secondary);

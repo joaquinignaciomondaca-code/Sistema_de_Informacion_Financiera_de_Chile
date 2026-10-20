@@ -2,46 +2,40 @@
  * Citación de la base, autoría y reproducibilidad
  * Sistema de Información Financiera de Chile
  *
- * Un solo objeto (CITA) define versión, fecha de corte, DOI, autoría, licencias
- * y enlaces, y se pinta en dos bloques:
+ * Un solo objeto (CITA) define autoría, licencias y enlaces, y se pinta en dos
+ * bloques:
  *
- *   #cita-info        → Información: cómo citar, versión congelada, snapshot,
- *                       código, autoría y contacto (bloque largo).
- *   #cita-descargas   → Descargas: misma información en formato compacto,
- *                       junto a los archivos de reproducibilidad.
+ *   #cita-info        → Información: cómo citar, alcance, código, licencias,
+ *                       reproducibilidad y autoría (bloque largo).
+ *   #cita-descargas   → Descargas: la cita en formato compacto, junto a los
+ *                       archivos de reproducibilidad.
  *
- * Regla de este módulo: si un dato todavía no existe (DOI, ORCID, filiación),
- * el bloque lo declara pendiente. Nunca inventa un identificador: un DOI falso
- * es peor que un DOI pendiente.
+ * Regla de este módulo: en el sitio se escribe sólo lo que existe hoy. No hay
+ * DOI, no hay una versión congelada publicada y no hay ORCID ni correo
+ * declarados, así que ninguna de esas cosas aparece: ni inventada ni anunciada
+ * como pendiente. La cita se arma con lo que sí se puede verificar: autor,
+ * título, fecha de corte de los datos, fecha de consulta y URL.
  *
- * El sitio es la plataforma viva de exploración y cambia con cada publicación.
- * Lo que se cita es la versión congelada (SIF-Chile Core Holdings vX.Y), con su
- * fecha de corte y su DOI: mismos datos, mismos archivos, mismos hashes.
+ * El corte, el alcance y la fecha del catálogo se leen de window.DOWNLOAD_CATALOG
+ * (generado por scripts/build_download_catalog.py) para que la cita nunca se
+ * atrase respecto de lo publicado. Si el catálogo no está cargado, se cae a los
+ * valores de CITA.
  */
 (function (global) {
   "use strict";
 
   const CITA = {
-    // Versión congelada y citable.
-    nombre: "SIF-Chile Core Holdings",
-    version: "1.0",
-    corte: "2026-08",          // último periodo publicado incluido en el snapshot
-    publicada: "2026-10-20",
-    doi: "",                   // ← completar cuando el registro tenga DOI
-    editor: "",                // ← repositorio que publica el registro (si aplica)
-    registro: "",              // ← URL pública del snapshot
-    estado: "En preparación: el snapshot descargable de la versión congelada y su DOI están pendientes.",
-
-    // Autoría y contacto (se completa con los datos públicos del autor).
+    titulo: "Sistema de Información Financiera de Chile",
     autor: "Joaquín Mondaca",
-    afiliacion: "",            // ← universidad o programa, si se quiere declarar
-    orcid: "",                 // ← 0000-0000-0000-0000
-    contacto: "",              // ← correo público de contacto
+    apellidoAutor: "Mondaca, J.",
+    autorBibtex: "Mondaca, Joaquín",
     github: "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile",
     linkedin: "https://www.linkedin.com/in/joaqu%C3%ADnmondaca/",
 
-    // Alcance de la versión congelada: el núcleo, tal como se publica.
-    alcance: "Seguros, fondos mutuos y fondos de inversión: 25 conjuntos, 11,1 millones de registros, 2001–2026.",
+    // Respaldo: sólo se usa si no está cargado window.DOWNLOAD_CATALOG.
+    corte: "2026-09",
+    generado: "2026-10-16",
+    alcance: "59 conjuntos · 13,4 millones de registros · 2001-01 → 2026-09",
 
     // Licencias. El código es MIT; los datos son de sus fuentes oficiales.
     licencia_codigo: "MIT (ver LICENSE en el repositorio)",
@@ -58,69 +52,95 @@
     ]
   };
 
-  function escapar(valor) {
-    return String(valor == null ? "" : valor)
-      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  /* ── Datos que salen del catálogo publicado ────────────────────────────── */
+
+  function catalogo() {
+    return global.DOWNLOAD_CATALOG || null;
   }
 
-  // Un dato vacío se declara pendiente en vez de omitirse en silencio.
-  function dato(valor, etiquetaPendiente) {
-    const texto = String(valor == null ? "" : valor).trim();
-    return texto || `<span class="cita-pendiente">${escapar(etiquetaPendiente || "pendiente")}</span>`;
+  /** Alcance publicado: vive en la sección `alcance` del catálogo. */
+  function alcanceCatalogo() {
+    const c = catalogo();
+    return (c && c.alcance && c.alcance.visible) || null;
   }
 
-  function enlace(href, texto) {
-    if (!href) return "";
-    return `<a href="${escapar(href)}" target="_blank" rel="noopener">${escapar(texto)}</a>`;
+  /** Último periodo publicado: es la fecha de corte de los datos. */
+  function corte() {
+    const v = alcanceCatalogo();
+    return (v && v.periodo && v.periodo.hasta) || CITA.corte;
   }
 
-  function tituloDataset() {
-    return `${CITA.nombre} v${CITA.version}: carteras y estados financieros de seguros, `
-         + `fondos mutuos y fondos de inversión de Chile (2001–${CITA.corte.slice(0, 4)})`;
+  /** Día en que se generó el catálogo de descargas. */
+  function generado() {
+    const c = catalogo();
+    return (c && c.generado) || CITA.generado;
   }
 
-  /** Repositorio que publica el registro; si no hay uno, el nombre del proyecto. */
-  function editor() {
-    return CITA.editor || "Sistema de Información Financiera de Chile";
+  function alcance() {
+    const v = alcanceCatalogo();
+    if (v && v.periodo) {
+      const millones = v.filas / 1e6;
+      const filas = millones >= 1
+        ? `${millones.toFixed(1).replace(".", ",")} millones`
+        : v.filas.toLocaleString("es-CL");
+      return `${v.conjuntos} conjuntos · ${filas} de registros · `
+           + `${v.periodo.desde} → ${v.periodo.hasta}`;
+    }
+    return CITA.alcance;
   }
+
+  function año() {
+    return corte().slice(0, 4) || String(new Date().getFullYear());
+  }
+
+  function hoy() {
+    const d = new Date();
+    const dos = (n) => String(n).padStart(2, "0");
+    return `${dos(d.getDate())}-${dos(d.getMonth() + 1)}-${d.getFullYear()}`;
+  }
+
+  /* ── Citas ─────────────────────────────────────────────────────────────── */
 
   /**
-   * Cita en formato APA 7 para conjuntos de datos. Sin DOI se cae al repositorio
-   * y se declara el DOI pendiente, en vez de omitir el campo.
+   * Cita en formato APA 7 para conjuntos de datos vivos: autor, año, título,
+   * sitio y URL, con la fecha de corte de los datos y la fecha de consulta.
    */
-
   function apa() {
-    const año = (CITA.publicada || "").slice(0, 4) || new Date().getFullYear();
-    const base = `Mondaca, J. (${año}). ${tituloDataset()} [Conjunto de datos].`;
-    if (CITA.doi) {
-      const url = CITA.doi.startsWith("http") ? CITA.doi : `https://doi.org/${CITA.doi}`;
-      return `${base} ${editor()}. ${url}`;
-    }
-    return `${base} Sistema de Información Financiera de Chile. ${CITA.github} `
-         + `(versión congelada v${CITA.version}; DOI pendiente).`;
+    return `${CITA.apellidoAutor} (${año()}). ${CITA.titulo} [Conjunto de datos]. GitHub. `
+         + `${CITA.github} (datos al ${corte()}; consultado el ${hoy()}).`;
   }
 
   function bibtex() {
-    const año = (CITA.publicada || "").slice(0, 4) || new Date().getFullYear();
     const lineas = [
-      "@misc{sif_chile_core_holdings_v" + CITA.version.replace(/\./g, "_") + ",",
-      "  author       = {Mondaca, Joaquín},",
-      `  title        = {${CITA.nombre} v${CITA.version}: carteras y estados financieros de seguros, fondos mutuos y fondos de inversión de Chile},`,
-      `  year         = {${año}},`,
-      `  publisher    = {${editor()}},`,
-      `  note         = {Corte de datos: ${CITA.corte}. ${CITA.estado}}`,
+      "@misc{sistema_de_informacion_financiera_de_chile,",
+      `  author       = {${CITA.autorBibtex}},`,
+      `  title        = {${CITA.titulo}},`,
+      `  year         = {${año()}},`,
+      "  howpublished = {GitHub},",
+      `  note         = {Conjunto de datos. Datos al ${corte()}. Consultado el ${hoy()}.},`,
+      `  url          = {${CITA.github}}`
     ];
-    if (CITA.doi) lineas.push(`  doi          = {${CITA.doi}},`);
-    if (CITA.registro) lineas.push(`  url          = {${CITA.registro}}`);
-    else lineas.push(`  url          = {${CITA.github}}`);
     lineas[lineas.length - 1] = lineas[lineas.length - 1].replace(/,$/, "");
     lineas.push("}");
     return lineas.join("\n");
   }
 
+  /* ── Utilidades de pintado ─────────────────────────────────────────────── */
+
+  function escapar(texto) {
+    return String(texto)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+  }
+
+  function enlace(href, texto, extra) {
+    return `<a href="${escapar(href)}" ${extra || ""}>${escapar(texto)}</a>`;
+  }
+
   function fila(etiqueta, valor) {
-    return `<div class="cita-fila"><dt>${escapar(etiqueta)}</dt><dd>${valor}</dd></div>`;
+    return `<div class="cita-fila"><dt>${escapar(etiqueta)}</dt><dd>${escapar(valor)}</dd></div>`;
   }
 
   function botonCopiar(objetivo, texto) {
@@ -136,19 +156,12 @@
   /* ── Bloque largo: pestaña Información ─────────────────────────────────── */
 
   function htmlInformacion() {
-    const doiFila = CITA.doi
-      ? fila("DOI", enlace(CITA.doi.startsWith("http") ? CITA.doi : `https://doi.org/${CITA.doi}`, CITA.doi))
-      : fila("DOI", dato("", "pendiente"));
-    const snapshot = CITA.registro
-      ? enlace(CITA.registro, `Descargar snapshot v${CITA.version}`)
-      : `<span class="cita-pendiente">Snapshot en preparación: se publicará con DOI y registro de cambios.</span>`;
-
     return `
       <div class="info-section-kicker">CÓMO CITAR ESTA BASE</div>
       <h2>Cómo citar esta base</h2>
-      <p class="cita-lead">El sitio es la plataforma viva de exploración y cambia con cada publicación.
-      Para investigar se cita la <strong>versión congelada ${escapar(CITA.nombre)} v${escapar(CITA.version)}</strong>,
-      depositada con DOI: misma data, mismos archivos, mismos hashes, para siempre.</p>
+      <p class="cita-lead">La base se actualiza cada vez que las fuentes publican. Si usas estos datos,
+      cítalos con su <strong>fecha de corte</strong> y la fecha en que los consultaste: la cita de abajo
+      ya incluye ambas.</p>
 
       <div class="cita-caja">
         <div class="cita-caja-head">
@@ -167,48 +180,40 @@
       </div>
 
       <dl class="cita-fichas">
-        ${fila("Versión", escapar(CITA.nombre) + " v" + escapar(CITA.version))}
-        ${fila("Fecha de corte", escapar(CITA.corte))}
-        ${fila("Publicada", escapar(CITA.publicada))}
-        ${doiFila}
-        ${fila("Alcance", escapar(CITA.alcance))}
-        ${fila("Licencia del código", escapar(CITA.licencia_codigo))}
-        ${fila("Licencia de los datos", escapar(CITA.licencia_datos))}
+        ${fila("Datos al", corte() + " (último periodo publicado)")}
+        ${fila("Catálogo de descargas del", generado())}
+        ${fila("Alcance de la vista principal", alcance())}
+        ${fila("Licencia del código", CITA.licencia_codigo)}
+        ${fila("Licencia de los datos", CITA.licencia_datos)}
       </dl>
 
       <div class="cita-enlaces">
-        <div class="cita-enlace"><span>Versión citable</span>${snapshot}</div>
-        <div class="cita-enlace"><span>Código y metodología</span>${enlace(CITA.github, "Repositorio público en GitHub")}</div>
+        <div class="cita-enlace"><span>Código y metodología</span>${enlace(CITA.github, "Repositorio público en GitHub", 'target="_blank" rel="noopener"')}</div>
         <div class="cita-enlace"><span>Reproducibilidad</span>
           <ul class="cita-lista">${enlacesReproducibilidad("cita-link")}</ul>
         </div>
       </div>
 
-      <p class="cita-nota">${escapar(CITA.estado)} La versión congelada es la que se cita; la página viva se referencia como la herramienta de exploración.</p>
+      <p class="cita-nota">No hay DOI: la base no está depositada en un repositorio con identificador
+      permanente, así que se cita por su URL, con la fecha de corte de los datos y la fecha de consulta.</p>
     `;
   }
 
   /* ── Bloque de autoría ─────────────────────────────────────────────────── */
 
   function htmlAutor() {
-    const piezas = [];
-    if (CITA.github) piezas.push(enlace(CITA.github, "GitHub"));
-    if (CITA.linkedin) piezas.push(enlace(CITA.linkedin, "LinkedIn"));
-    if (CITA.orcid) {
-      piezas.push(enlace(CITA.orcid.startsWith("http") ? CITA.orcid : `https://orcid.org/${CITA.orcid}`, `ORCID ${CITA.orcid}`));
-    } else {
-      piezas.push(`<span class="cita-pendiente">ORCID pendiente</span>`);
-    }
-    if (CITA.contacto) piezas.push(enlace(`mailto:${CITA.contacto}`, CITA.contacto));
+    const piezas = [
+      enlace(CITA.github, "GitHub", 'target="_blank" rel="noopener"'),
+      enlace(CITA.linkedin, "LinkedIn", 'target="_blank" rel="noopener"')
+    ];
     return `
       <div class="info-section-kicker">AUTORÍA</div>
       <h2>Quién construye esto</h2>
       <div class="cita-autor">
-        <p><strong>${escapar(CITA.autor)}</strong>${CITA.afiliacion ? " · " + escapar(CITA.afiliacion) : ""}</p>
+        <p><strong>${escapar(CITA.autor)}</strong></p>
         <p class="cita-autor-rol">Proyecto de datos de punta a punta: extracción desde las fuentes oficiales, validación
         estadística y contable, publicación incremental, automatización y producto web.</p>
         <p class="cita-autor-enlaces">${piezas.join(" · ")}</p>
-        ${CITA.contacto ? "" : "<p class=\"cita-nota\">Correo de contacto pendiente: se recomienda publicar uno para que quien use la base pueda informar errores.</p>"}
       </div>
     `;
   }
@@ -216,23 +221,18 @@
   /* ── Bloque compacto: pestaña Descargas ────────────────────────────────── */
 
   function htmlDescargas() {
-    const snapshot = CITA.registro
-      ? `<a class="dl-cita-btn" href="${escapar(CITA.registro)}" target="_blank" rel="noopener">Descargar snapshot v${escapar(CITA.version)})</a>`
-      : `<span class="cita-pendiente">Snapshot v${escapar(CITA.version)} en preparación (DOI pendiente)</span>`;
     return `
       <div class="dl-cita-head">
         <div>
           <h3>Cómo citar esta base</h3>
-          <p>Si vas a compartir una cifra, un gráfico o un archivo, cita la versión congelada
-          <b>${escapar(CITA.nombre)} v${escapar(CITA.version)}</b> (corte ${escapar(CITA.corte)}), no la página viva.</p>
+          <p>Cita la base con su fecha de corte (${escapar(corte())}): el sitio se actualiza
+          y los periodos cambian.</p>
         </div>
         ${botonCopiar("cita-apa-dl", "Copiar cita")}
       </div>
       <pre class="cita-pre" id="cita-apa-dl">${escapar(apa())}</pre>
       <div class="dl-cita-enlaces">
-        ${snapshot}
         ${enlace(CITA.github, "Código y metodología")}
-        ${CITA.doi ? enlace(CITA.doi.startsWith("http") ? CITA.doi : `https://doi.org/${CITA.doi}`, `DOI ${CITA.doi}`) : `<span class="cita-pendiente">DOI pendiente</span>`}
       </div>
       <ul class="dl-cita-archivos">${enlacesReproducibilidad("cita-link")}</ul>
     `;

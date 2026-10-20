@@ -1,4 +1,4 @@
-# Versión académica citable, reproducibilidad y privacidad (2026-10-20)
+# Cómo citar la base, reproducibilidad y privacidad (2026-10-20)
 
 Nota de implementación. Cierra cinco cambios acordados para convertir el sitio en
 una plataforma académicamente citable **sin rediseñarlo**: la portada, la
@@ -9,7 +9,7 @@ Resumen de lo que se tocó:
 
 | # | Cambio | Dónde |
 |---|---|---|
-| 1 | Versión académica congelada + cómo citar | `docs/js/cita.js`, bloques en Información y Descargas, `scripts/construir_snapshot_academico.py` |
+| 1 | Cómo citar la base | `docs/js/cita.js`, bloques en Información y Descargas |
 | 2 | Fuentes, licencia y limitaciones | sección nueva en Información (`docs/index.html`) |
 | 3 | Protección de identificadores | `pipelines/auto/privacidad.py`, `scripts/enmascarar_identificadores.py`, publicadores de `fi` y `seguros` |
 | 4 | Reproducibilidad descargable | `scripts/construir_reproducibilidad.py` → `docs/reproducibilidad/` |
@@ -18,27 +18,29 @@ Resumen de lo que se tocó:
 
 ---
 
-## 1. Versión académica: la página se mueve, el objeto citable no
+## 1. Cómo citar la base
 
-El sitio cambia con cada publicación, así que la base se cita por una versión
-congelada: **SIF-Chile Core Holdings v1.0**: los 25 conjuntos del núcleo
-(seguros, fondos mutuos y fondos de inversión), congelados con fecha de corte
-**2026-08**, 11.063.323 registros, 242,4 MB en Parquet.
+El sitio cambia con cada publicación: no hay una versión congelada publicada ni
+un DOI, así que la base se cita como lo que es —un conjunto de datos vivo— con
+dos fechas: el **corte de los datos** y el **día de la consulta**.
 
-- `docs/js/cita.js` es la única fuente de los datos de citación (versión, corte,
-  DOI, autoría, licencias, enlaces). Pinta dos bloques: uno largo en Información
-  y uno compacto en Descargas. Ambos ofrecen la cita en APA 7 y BibTeX, con
+- `docs/js/cita.js` pinta dos bloques (*Cómo citar esta base*): uno largo en
+  Información y uno compacto en Descargas. Ambos ofrecen APA 7 y BibTeX con
   botón de copiar.
-- **Regla del módulo:** si un dato no existe (DOI, ORCID, filiación, correo), el
-  bloque lo declara *pendiente*. Nunca inventa un identificador: un DOI falso es
-  peor que un DOI pendiente.
-- `scripts/construir_snapshot_academico.py` arma la carpeta del snapshot con
-  `README.md`, `CITATION.cff`, `CHANGELOG.md`, `LICENSE.txt`, los Parquet del
-  núcleo y la documentación, más un `inventario_snapshot.csv` con el SHA-256 de
-  cada archivo de ese snapshot. Con `--zip` deja además el archivo comprimido.
-
-Pendiente, y se completa en un solo lugar (`docs/js/cita.js`): DOI y URL del
-snapshot, filiación, ORCID y correo de contacto.
+- El corte, el alcance y la fecha del catálogo **se leen de
+  `window.DOWNLOAD_CATALOG`** (generado por `scripts/build_download_catalog.py`),
+  no están escritos a mano: la cita no se puede atrasar respecto de lo publicado.
+  Si el catálogo no carga, el módulo cae a los valores de respaldo de `CITA`.
+- **Regla del módulo:** en el sitio se escribe sólo lo que existe hoy. No hay
+  DOI, no hay versión congelada publicada y no hay ORCID ni correo declarados,
+  así que ninguna de esas cosas aparece: ni inventada ni anunciada como
+  pendiente. El bloque lo dice explícito: *«No hay DOI: la base no está
+  depositada en un repositorio con identificador permanente»*.
+- `scripts/audit_interfaz_dom.js` cuida esa frontera: falla si el bloque vuelve a
+  mencionar un DOI, una versión congelada, un snapshot o cualquier «pendiente».
+- `scripts/construir_snapshot_academico.py` queda como herramienta local: junta
+  los 25 conjuntos del núcleo en una carpeta con `README.md`, `CHANGELOG.md` y un
+  inventario con SHA-256. No hay ninguna copia publicada.
 
 ## 2. Fuentes, licencia y limitaciones
 
@@ -110,7 +112,7 @@ Resultado: 22 archivos, 760.152 filas sin dirección ni rol, y 42.925
 
 El seudónimo es determinista por omisión (reproducible por cualquiera), lo que
 implica que un atacante con el listado de roles podría probar combinaciones. Para
-la versión académica se recomienda fijar la variable de entorno
+una publicación con copia fija se recomienda establecer la variable de entorno
 `SIF_PRIV_SALT` con un valor que no se publique: el id deja de ser reproducible
 y deja de ser un punto débil.
 
@@ -163,5 +165,5 @@ python3 scripts/audit_interfaz.py
 node scripts/audit_interfaz_dom.js              # 72 comprobaciones
 .venv/bin/python scripts/enmascarar_identificadores.py            # informe (idempotente)
 .venv/bin/python scripts/construir_reproducibilidad.py --check
-.venv/bin/python scripts/construir_snapshot_academico.py --zip
+.venv/bin/python scripts/construir_snapshot_academico.py            # copia local, no publicada
 ```
