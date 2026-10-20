@@ -40,3 +40,10 @@ Conviene conciliarlas en el próximo recálculo del recorte.
 - README: ejemplo de consulta FFMM (US 1.131 / LU 512 / BR 98 / GB 84 / IE 489) reemplazado por el resultado
   verificado de la misma consulta sobre el Parquet publicado en 2026-09: US 1.100, LU 524, IE 489, BR 100, GB 84.
   No está claro si la cifra antigua venía de otra versión del dato; no hay registro de ello en el historial.
+
+## Conciliación de bancos (punto 5)
+
+- `bancos_cmf_lineas` (1.962.992) es la fuente de `bancos_balance` (722.931) y `bancos_resultados` (1.240.061).
+  Se cuenta una sola vez en el total; no tiene vista ni descarga propia. Por eso el sector Bancos tiene 2 tablas
+  en el manifiesto (la líneas y el maestro) y 2 vistas en la web.
+- Las filas de los Parquet suman exactamente el total del manifiesto (13.483.676). Ver `verificacion_descargas_2026-10-20.md`.
