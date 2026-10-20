@@ -284,10 +284,10 @@ READMEs por sector en `bancos/`, `ccaf/`, `factoring_leasing/`, `ffmm/`, `fi/`, 
 
 ## 10. Citar esta base
 
-El sitio se actualiza en cada publicación; para un paper, un informe o una tesis
-se cita la **versión congelada**, no la página:
+El sitio se actualiza en cada publicación. La base se cita por su **versión
+congelada**, que no cambia:
 
-> **SIF-Chile Core Holdings v1.0** — 25 conjuntos del núcleo (seguros, fondos mutuos y fondos de inversión), corte 2026-08, 11.063.323 registros. DOI pendiente (depósito en Zenodo en preparación).
+> **SIF-Chile Core Holdings v1.0** — 25 conjuntos del núcleo (seguros, fondos mutuos y fondos de inversión), corte 2026-08, 11.063.323 registros. DOI pendiente.
 
 | Qué necesitas | Dónde |
 |---|---|

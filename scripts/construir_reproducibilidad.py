@@ -15,7 +15,7 @@ archivos planos, regenerables con un solo comando:
   * `inventario_fuentes.csv`
       Todos los archivos publicados (Parquet y manifiestos) con su peso y su
       SHA-256. Sirve para verificar que lo descargado es exactamente lo que el
-      proyecto publicó, y para armar el inventario de un depósito en Zenodo.
+      proyecto publicó, y para armar el inventario de una versión congelada.
 
   * `cobertura_por_periodo.csv`
       Registros por tabla y periodo, según los manifiestos que se publican
