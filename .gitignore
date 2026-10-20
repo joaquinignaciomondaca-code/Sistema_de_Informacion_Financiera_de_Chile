@@ -8,6 +8,8 @@ env/
 
 # Large raw CSV files (DuckDB-Wasm uses Parquets; CSVs exceed GitHub 100MB limit)
 *.csv
+# Excepción: los artefactos de reproducibilidad del sitio son chicos y se publican
+!docs/reproducibilidad/*.csv
 docs/outputs/**/*.csv
 seguros/circular_1835_cartera/outputs/**/*.csv
 
