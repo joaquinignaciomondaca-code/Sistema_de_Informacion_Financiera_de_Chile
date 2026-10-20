@@ -47,6 +47,7 @@ import pyarrow.parquet as pq
 
 from pipelines.auto import rut as rutmod
 from pipelines.auto.rut import normalizar_dataframe
+from pipelines.auto import privacidad
 from seguros.scripts import metadatos_web
 from seguros.scripts.formato_1835 import ENCABEZADO, LARGO, TIPO_TOTAL, campos, formato_de
 
@@ -68,7 +69,9 @@ DESDE_TABLA = {"renta_fija": "2024-12", "bienes_raices": "2024-12"}
 POR_MES = {"renta_fija", "bienes_raices"}
 # Orden dentro de cada archivo: el mismo instrumento queda en filas contiguas y comprime mejor.
 ORDEN = {"renta_fija": ["tipo_instrumento", "nemotecnico", "serie", "fecha_compra"],
-         "acciones": ["nemotecnico"], "fondos_mutuos": ["nemotecnico"], "bienes_raices": ["rol"],
+         "acciones": ["nemotecnico"], "fondos_mutuos": ["nemotecnico"],
+         # bienes raíces ordena por property_id: el rol no se publica (privacidad).
+         "bienes_raices": ["property_id"],
          "extranjeros": ["tipo_registro", "codigo_individualizacion_o_nemotecnico"],
          "derivados": ["tipo_registro", "folio_operacion"], "pactos": ["folio_operacion"],
          "control_inversiones": ["tipo_de_inversion"]}
@@ -361,6 +364,11 @@ def esquema(tabla: str) -> pa.Schema:
                     # esquema. Los nombres con sentidos distintos (texto vs número) se separan
                     # en el inventario, no aquí.
                     cols[c] = _mas_ancho(cols.get(c), _tipo_arrow(tipo, dec))
+        if tabla == "bienes_raices":
+            # La dirección exacta («ubicacion») y el rol tributario no se
+            # publican; «property_id» es el seudónimo que permite seguir el
+            # mismo inmueble entre meses. Criterio en pipelines/auto/privacidad.py.
+            cols["property_id"] = pa.string()
         _ESQUEMAS[tabla] = pa.schema(list(cols.items()))
     return _ESQUEMAS[tabla]
 
@@ -395,6 +403,10 @@ def escribir_periodo(periodo: str, filas: dict, tablas: list[str]) -> dict:
         if not partes:
             continue
         df = pd.concat(partes, ignore_index=True).reindex(columns=esquema(tabla).names)
+        # Protección de identificadores antes de ordenar: en bienes raíces el
+        # orden pasa a ser por el seudónimo, porque el rol deja de existir.
+        if tabla == "bienes_raices":
+            df = privacidad.proteger_bienes_raices(df)
         orden = ["sector", "rut_aseguradora"] + [c for c in ORDEN.get(tabla, []) if c in df.columns] + ["periodo"]
         df = df.sort_values(orden, kind="stable", na_position="first")
         df = normalizar_dataframe(df)  # convención de RUT (pipelines/auto/rut.py)

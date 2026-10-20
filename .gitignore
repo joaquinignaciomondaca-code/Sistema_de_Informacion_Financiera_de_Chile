@@ -8,6 +8,8 @@ env/
 
 # Large raw CSV files (DuckDB-Wasm uses Parquets; CSVs exceed GitHub 100MB limit)
 *.csv
+# Excepción: los artefactos de reproducibilidad del sitio son chicos y se publican
+!docs/reproducibilidad/*.csv
 docs/outputs/**/*.csv
 seguros/circular_1835_cartera/outputs/**/*.csv
 
@@ -37,3 +39,6 @@ FSB_Patrimonio_Separado (4).xlsx
 
 # Dependencias de Node para las auditorías JS (se instalan a mano: npm install --no-save jsdom)
 node_modules/
+
+# Snapshots académicos locales (se construyen, no se versionan)
+snapshot/

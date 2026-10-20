@@ -266,6 +266,16 @@
   --red-rgb: 220, 38, 38;
 }
 
+/* Colores de marca del logotipo. Van en :root y no dentro de los bloques de
+   paleta porque son invariantes de marca, no del tema: el resto del sitio se
+   recolorea con la paleta activa, el logotipo mantiene su identidad. Quedan
+   antes del cuerpo del archivo a propósito: ahí el auditor de temas sí permite
+   valores fijos (scripts/audit_interfaz.py). */
+:root {
+  --tinta-marca: #12366A;
+  --acento-marca: #00A6A6;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -302,16 +312,60 @@ header {
   gap: 12px;
 }
 
-.brand-tag {
-  background-color: var(--accent-mint);
-  color: var(--accent-contrast, #132D46);
-  font-weight: 800;
-  font-size: 11px;
-  padding: 3px 8px;
-  border-radius: 4px;
-  letter-spacing: 0.8px;
-  font-family: var(--font-mono);
-  transition: background-color 0.2s ease, color 0.2s ease;
+/* Logotipo SIF. La geometría se define una sola vez en #sif-lockup (sprite al
+   inicio del body) y se reutiliza con <use>: recortada al símbolo y las siglas
+   en la barra superior, completa en la portada. En vez de apoyar el azul
+   marino sobre una placa clara —que en las paletas oscuras parecía un parche—,
+   el dibujo usa currentColor: --logo-ink es blanco en las cinco paletas
+   oscuras y toma el azul marino de marca en la clara ("informe"). El turquesa
+   de marca se conserva siempre: se lee bien sobre fondo oscuro y sobre fondo
+   claro, y es lo que sostiene la identidad.
+   Los dos valores viven como tokens arriba (--tinta-marca y --acento-marca),
+   fuera del cuerpo del archivo, porque son invariantes de marca y no de paleta:
+   aquí el auditor de temas no permite colores fijos. */
+:root { --logo-ink: var(--text-bright); }
+[data-theme="informe"] { --logo-ink: var(--tinta-marca); }
+
+/* El sprite sólo aporta la geometría: no debe ocupar lugar ni pintar nada. */
+.sif-sprite {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+/* Nodos turquesa del logotipo: el resto del dibujo va en currentColor y se
+   recolorea con el tema, pero el acento es de marca y se mantiene. La regla
+   aplica sobre el original del sprite y las instancias <use> la heredan. */
+.marca-acento { fill: var(--acento-marca); }
+
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  line-height: 0;
+}
+
+.brand-logo-mark {
+  display: block;
+  height: 32px;
+  width: auto;
+  color: var(--logo-ink);
+}
+
+/* Portada: el logotipo ocupa el lugar del título (es el <h1> de la página), así
+   que se le quitan el margen y el tracking que la tipografía del título le
+   heredaría al texto del SVG. */
+.info-hero-brand {
+  margin: 0;
+  letter-spacing: normal;
+}
+
+.info-hero-logo {
+  display: block;
+  width: min(100%, 430px);
+  height: auto;
+  color: var(--logo-ink);
 }
 
 .brand-title {
@@ -1210,7 +1264,7 @@ header {
 
 .zoom-btn {
   width: 30px;
-  height: 30px;
+  height: 32px;
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
   color: var(--text-bright);
@@ -1995,6 +2049,95 @@ header {
 
 .info-list strong {
   color: var(--text-primary);
+}
+
+/* ── Autoría y reproducibilidad (docs/js/creditos.js) ──────────────────────
+   El sitio muestra lo que existe: quién lo construye, desde cuándo y dónde
+   auditar lo publicado. No hay DOI ni versión congelada, así que no hay caja de
+   cita ni ficha con fechas. */
+
+.info-autor,
+.info-fuentes {
+  margin-top: 16px;
+}
+
+.creditos-autor p {
+  margin: 0 0 6px;
+  color: var(--text-secondary);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.creditos-autor p strong {
+  color: var(--text-primary);
+  font-size: 14px;
+}
+
+.creditos-autor-rol {
+  max-width: 830px;
+}
+
+.creditos-autor-enlaces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  font-size: 12.5px;
+}
+
+.creditos-link {
+  color: var(--accent-mint);
+  text-decoration: none;
+}
+
+.creditos-link:hover {
+  text-decoration: underline;
+}
+
+.dl-creditos {
+  margin: 0 0 18px;
+}
+
+.dl-creditos-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dl-creditos-head h3 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.dl-creditos-head p {
+  max-width: 760px;
+  margin: 4px 0 0;
+  color: var(--text-secondary);
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+
+.dl-creditos-enlaces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  padding: 8px 0 0;
+  font-size: 12.5px;
+}
+
+.dl-creditos-archivos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  margin: 0;
+  padding: 8px 0 0;
+  list-style: none;
+  border-top: 1px solid var(--border-color);
+}
+
+@media (max-width: 720px) {
+  .dl-creditos-head { flex-direction: column; }
 }
 
 .info-note {
