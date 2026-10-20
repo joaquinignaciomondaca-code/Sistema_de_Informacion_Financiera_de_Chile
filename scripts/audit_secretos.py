@@ -67,6 +67,15 @@ PATRONES = [
 # `clave = "cooperativas"`, ids y configuraciones de la interfaz).
 NOMBRE_RELEVANTE = re.compile(r"(pass|clave|contrase|token|secret|apikey|api_key|credential)", re.I)
 
+# Una credencial es un token: no lleva espacios ni paréntesis, corchetes o llaves.
+# Sin este filtro, la prosa entre comillas que sigue a una palabra como «token»
+# se leía como una asignación: el comentario
+# `# Calificador pegado al token: "POSICIÓN_CORTA_(nombre)"` de
+# seguros/scripts/ficha_1835.py quedaba como credencial posible y hacía fallar
+# la auditoría en cada corrida. Un valor con esa forma es documentación, no una
+# clave; los tokens reales (hex, base64, url-safe) no usan esos caracteres.
+PROSA = re.compile(r"[\s()\[\]{}<>,;]")
+
 
 def es_superficial() -> bool:
     resultado = subprocess.run(["git", "rev-parse", "--is-shallow-repository"],
@@ -128,6 +137,9 @@ def main() -> int:
                 valor = grupos.get("val") or "CLAVE PRIVADA PEM"
                 clave = grupos.get("clave") or ""
                 if nombre == "asignación de clave" and not NOMBRE_RELEVANTE.search(clave):
+                    continue
+                if nombre == "asignación de clave" and PROSA.search(valor):
+                    ignorados += 1        # prosa entre comillas, no un token
                     continue
                 # Los separadores cambian entre archivos (`not-store-this-key`),
                 # así que se normalizan antes de buscar palabras de marcador.
