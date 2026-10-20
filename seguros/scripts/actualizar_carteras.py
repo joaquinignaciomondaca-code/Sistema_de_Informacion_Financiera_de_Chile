@@ -156,6 +156,9 @@ def _valor(txt: str, tipo: str, dec: int):
             return None
         if not cuerpo.isdigit():
             raise ValueError(f"rut {txt!r}")
+        # RUTs de 1 a 3 cifras son placeholders del origen ('1', '1-9'); se publican como cuerpo (C) sin DV
+        if int(cuerpo) < 1000:
+            return str(int(cuerpo))
         return f"{int(cuerpo)}-{dv}" if dv else str(int(cuerpo))
     # Números: el signo va en el primer carácter, pero algunas compañías lo escriben después de
     # ceros de relleno ("00-15500"); ambas formas se aceptan. Cualquier otro carácter es error.
