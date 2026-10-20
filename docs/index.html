@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/app.css?v=fl-202610-20103-121500">
+  <link rel="stylesheet" href="css/app.css?v=fl-202610-20104-083000">
   <!-- Arranque en frío: el motor pesa ~18 MB. Preanunciar los tres archivos hace
        que se descarguen en paralelo con la página, en vez de esperar a que el
        JavaScript los pida al final de la cadena de carga. -->
@@ -47,7 +47,7 @@
           <circle cx="75" cy="91" r="8"/>
           <circle cx="80" cy="128" r="7"/>
         </g>
-        <g fill="#00A6A6">
+        <g class="marca-acento">
           <circle cx="61" cy="158" r="9"/>
           <circle cx="82" cy="42" r="10"/>
           <circle cx="67" cy="112" r="8"/>
@@ -149,9 +149,6 @@
             <button role="tab" aria-selected="false" aria-controls="downloads-container" class="panel-tab-btn" id="tab-btn-downloads" title="Descargas: catálogo publicado con filas, peso y periodo; Parquet original, CSV o Excel">
               Descargas
             </button>
-            <button role="tab" aria-selected="false" aria-controls="normativa-container" class="panel-tab-btn" id="tab-btn-normativa" title="Normativa CMF: publicaciones y cambios normativos recientes">
-              Normativa
-            </button>
           </div>
           <div class="panel-header-right">
             <span class="context-chip" id="erd-breadcrumb" title="Ubicación actual dentro del explorador">Seguros &rsaquo; Circular 1835</span>
@@ -201,7 +198,7 @@
               <p class="info-lead">Las carteras y los estados financieros de los grandes inversionistas institucionales de Chile —compañías de seguros, fondos mutuos y fondos de inversión—, tal como los reportan a la CMF, junto con las instituciones que los rodean y las series del Banco Central como contexto. Todo consultable con SQL en tu navegador.</p>
               <div class="info-hero-stats" aria-label="Cifras del núcleo de esta edición">
                 <div class="info-stat"><b data-alcance="nucleo.sectores">3</b><span>sectores de inversión institucional</span></div>
-                <div class="info-stat"><b data-alcance="nucleo.conjuntos">25</b><span>conjuntos principales</span></div>
+                <div class="info-stat" title="Conjuntos del núcleo: seguros, fondos mutuos y fondos de inversión. La vista principal muestra 59 porque suma instituciones y contexto."><b data-alcance="nucleo.conjuntos">25</b><span>conjuntos del núcleo</span></div>
                 <div class="info-stat"><b data-alcance="nucleo.filas">11,1 millones</b><span>de registros</span></div>
                 <div class="info-stat"><b data-alcance="nucleo.periodo">2001–2026</b><span>cobertura máxima</span></div>
               </div>
@@ -211,6 +208,9 @@
                 <span class="info-tag">Parquet descargable</span>
               </div>
             </section>
+
+            <!-- Citación y versión académica: se pinta con docs/js/cita.js -->
+            <section class="info-block info-cita" id="cita-info"></section>
 
             <section class="info-block">
               <div class="info-section-kicker">NÚCLEO · INVERSIÓN INSTITUCIONAL</div>
@@ -328,12 +328,11 @@
                 <h2>Cómo explorar</h2>
                 <ul class="info-list">
                   <li><strong>Explorador (izquierda):</strong> el núcleo arriba, luego instituciones y contexto; el archivo y los registros complementarios quedan al final, plegados. Elige industria, carpeta o tabla y el visor y el diccionario se sincronizan solos.</li>
-                  <li><strong>Pestañas:</strong> Información, Mapa relacional, Diccionario, Visor de datos, Consultas SQL y Normativa CMF.</li>
+                  <li><strong>Pestañas:</strong> Información, Mapa relacional, Diccionario, Visor de datos, Consultas SQL y Descargas.</li>
                   <li><strong>Diccionario:</strong> significado de cada columna, su rol (PK, FK, dimensión, métrica) y su criterio contable (MtM, costo amortizado, tasación).</li>
                   <li><strong>Terminal SQL:</strong> consultas sobre las vistas publicadas, ejecutadas en tu navegador. <kbd>Enter</kbd> ejecuta, <kbd>Tab</kbd> completa nombres de tabla y <kbd>↑</kbd>/<kbd>↓</kbd> recuperan el historial.</li>
                   <li><strong>Descarga:</strong> todo lo publicado vive en la pestaña <em>Descargas</em>: Parquet original, CSV o Excel, con filas, periodo y peso a la vista.</li>
-                  <li><strong>Normativa CMF</strong>: circulares, normas de carácter general y publicaciones recientes, filtradas por la industria activa del explorador.</li>
-                  <li><strong>Atajos:</strong> <kbd>Alt</kbd>+<kbd>1</kbd>…<kbd>7</kbd> cambia de pestaña y <kbd>/</kbd> enfoca la búsqueda del explorador.</li>
+                  <li><strong>Atajos:</strong> <kbd>Alt</kbd>+<kbd>1</kbd>…<kbd>6</kbd> cambia de pestaña y <kbd>/</kbd> enfoca la búsqueda del explorador.</li>
                 </ul>
               </div>
             </section>
@@ -348,7 +347,7 @@
                     <li><strong>Núcleo:</strong> seguros, fondos mutuos y fondos de inversión.</li>
                     <li><strong>Instituciones:</strong> bancos, administradoras generales de fondos y corredoras de bolsa.</li>
                     <li><strong>Contexto:</strong> series macroeconómicas y de tasas del Banco Central.</li>
-                    <li><span data-alcance="visible.resumen">59 conjuntos · 13,4 millones de registros (99,3 %)</span>.</li>
+                    <li><span data-alcance="visible.resumen">59 conjuntos visibles en la vista principal · 13,4 millones de registros (99,3 %)</span>: son los <strong>25 del núcleo</strong> más instituciones (bancos, AGF y corredoras) y contexto (series del Banco Central). Cuando una cifra diga «25 conjuntos» se refiere sólo al núcleo.</li>
                   </ul>
                 </div>
                 <div class="info-scope-col">
@@ -390,6 +389,40 @@
               </div>
             </section>
 
+            <section class="info-block info-fuentes">
+              <div class="info-section-kicker">FUENTES, LICENCIA Y LIMITACIONES</div>
+              <h2>Qué es de quién y qué no es</h2>
+              <div class="info-scope-grid">
+                <div class="info-scope-col">
+                  <h3>Fuentes</h3>
+                  <ul class="info-list">
+                    <li><strong>Los datos regulatorios son de sus fuentes oficiales:</strong> Comisión para el Mercado Financiero (CMF), Banco Central de Chile, Superintendencia de Pensiones y SUSESO. Cada tabla declara su origen, su archivo de origen y su norma.</li>
+                    <li><strong>El SIF aporta</strong> extracción, normalización, validación, documentación y armonización. No genera los datos ni los modifica: los publica tal como los emite la fuente.</li>
+                  </ul>
+                </div>
+                <div class="info-scope-col">
+                  <h3>Licencia y respaldo</h3>
+                  <ul class="info-list">
+                    <li><strong>Código:</strong> MIT (ver <code>LICENSE</code> en el repositorio).</li>
+                    <li><strong>Datos:</strong> pertenecen a sus fuentes oficiales y se republican sin alterar su contenido; verifica las condiciones de reutilización de cada fuente antes de redistribuirlos.</li>
+                    <li><strong>Sin respaldo oficial:</strong> este es un proyecto independiente. No tiene respaldo, patrocinio ni aval de la CMF, del Banco Central de Chile ni de ningún otro organismo.</li>
+                  </ul>
+                </div>
+                <div class="info-scope-col">
+                  <h3>Limitaciones que hay que declarar al usar la base</h3>
+                  <ul class="info-list">
+                    <li><strong>Cobertura 2001–2026:</strong> es el máximo entre tablas, no una cobertura homogénea. Cada tabla tiene su propio inicio, su propia frecuencia y sus propios vacíos.</li>
+                    <li><strong>Unidades:</strong> los montos conservan la unidad y el criterio de valorización de la fuente (miles de pesos, UF, porcentajes, valor razonable, costo amortizado); no se convierten ni se reexpresan.</li>
+                    <li><strong>Fondos de pensiones:</strong> esta edición no publica carteras de AFP; de las AFP sólo está el registro de administradoras.</li>
+                    <li><strong>Identificadores protegidos:</strong> en <code>fi.cartera_nacional</code> se suprime <code>rut_emisor</code> cuando probablemente corresponde a una persona natural, y en <code>seguros.bienes_raices</code> no se publican la dirección exacta ni el rol del inmueble (se conservan comuna, ciudad y un <code>property_id</code> estable). La referencia a la fuente CMF se mantiene en ambos casos.</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- Autoría: se pinta con docs/js/cita.js -->
+            <section class="info-block info-autor" id="cita-autor"></section>
+
             <section class="info-note">
               <span class="info-note-mark">i</span>
               <p>Este sistema es una herramienta de exploración y análisis de información pública. No constituye recomendación de inversión. Revisa siempre la fuente, la fecha de corte, la unidad y las notas de cobertura antes de interpretar una cifra.</p>
@@ -405,11 +438,6 @@
 
         <!-- Contenedor del Visor de Datos en Vivo -->
         <div class="data-viewer-container" id="data-viewer-container" style="display: none;"></div>
-
-        <!-- Seguimiento de publicaciones normativas oficiales de la CMF -->
-        <div class="normativa-container" id="normativa-container" style="display: none;">
-          <div id="normativa-monitor" aria-labelledby="normativa-title"></div>
-        </div>
 
         <!-- Consultas SQL: terminal DuckDB ejecutado en el navegador -->
         <div class="sql-container" id="sql-container" style="display: none;" role="tabpanel" aria-labelledby="tab-btn-sql">
@@ -514,26 +542,26 @@
 </div> <!-- Cierre de app-layout -->
 
   <!-- Scripts de la Aplicación -->
-  <script src="js/data_bundles.js?v=fl-202610-20103-121500"></script>
-  <script src="js/alcance.js?v=fl-202610-20103-121500"></script>
-  <script src="js/chart_renderer.js?v=fl-202610-20103-121500"></script>
-  <script src="js/erd_graph.js?v=fl-202610-20103-121500"></script>
-  <script src="js/sql_guard.js?v=fl-202610-20103-121500"></script>
-  <script src="js/duckdb_client.js?v=fl-202610-20103-121500"></script>
-  <script src="js/chat_terminal.js?v=fl-202610-20103-121500"></script>
-  <script src="js/sidebar.js?v=fl-202610-20103-121500"></script>
-  <script src="js/ux_shell.js?v=fl-202610-20103-121500"></script>
-  <script src="js/normativa_monitor.js?v=fl-202610-20103-121500"></script>
-  <script src="js/theme_switcher.js?v=fl-202610-20103-121500"></script>
-  <script src="js/data_dictionary.js?v=fl-202610-20103-121500"></script>
-  <script src="js/data_viewer.js?v=fl-202610-20103-121500"></script>
+  <script src="js/data_bundles.js?v=fl-202610-20104-083000"></script>
+  <script src="js/alcance.js?v=fl-202610-20104-083000"></script>
+  <script src="js/chart_renderer.js?v=fl-202610-20104-083000"></script>
+  <script src="js/erd_graph.js?v=fl-202610-20104-083000"></script>
+  <script src="js/sql_guard.js?v=fl-202610-20104-083000"></script>
+  <script src="js/duckdb_client.js?v=fl-202610-20104-083000"></script>
+  <script src="js/chat_terminal.js?v=fl-202610-20104-083000"></script>
+  <script src="js/sidebar.js?v=fl-202610-20104-083000"></script>
+  <script src="js/ux_shell.js?v=fl-202610-20104-083000"></script>
+  <script src="js/cita.js?v=fl-202610-20104-083000"></script>
+  <script src="js/theme_switcher.js?v=fl-202610-20104-083000"></script>
+  <script src="js/data_dictionary.js?v=fl-202610-20104-083000"></script>
+  <script src="js/data_viewer.js?v=fl-202610-20104-083000"></script>
   <script src="js/jszip.min.js"></script>
   <script src="js/xlsx.full.min.js"></script>
-  <script src="js/diccionario_seguros.js?v=fl-202610-20103-121500"></script>
-  <script src="js/download_utils.js?v=fl-202610-20103-121500"></script>
-  <script src="js/download_catalog.js?v=fl-202610-20103-121500"></script>
-  <script src="js/downloads_panel.js?v=fl-202610-20103-121500"></script>
-  <script src="js/portada.js?v=fl-202610-20103-121500"></script>
+  <script src="js/diccionario_seguros.js?v=fl-202610-20104-083000"></script>
+  <script src="js/download_utils.js?v=fl-202610-20104-083000"></script>
+  <script src="js/download_catalog.js?v=fl-202610-20104-083000"></script>
+  <script src="js/downloads_panel.js?v=fl-202610-20104-083000"></script>
+  <script src="js/portada.js?v=fl-202610-20104-083000"></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -558,8 +586,7 @@
         dict:      { button: "tab-btn-dict",      container: "dict-container",        display: "block" },
         data:      { button: "tab-btn-data",      container: "data-viewer-container", display: "flex"  },
         sql:       { button: "tab-btn-sql",       container: "sql-container",         display: "flex"  },
-        downloads: { button: "tab-btn-downloads", container: "downloads-container",   display: "flex"  },
-        normativa: { button: "tab-btn-normativa", container: "normativa-container",   display: "flex"  }
+        downloads: { button: "tab-btn-downloads", container: "downloads-container",   display: "flex"  }
       };
       const zoomControls = document.querySelector(".zoom-controls");
       const erdControls = document.getElementById("erd-controls-group");
@@ -585,9 +612,11 @@
         if (target === "data" && window.DataViewer) {
           if (!window.DataViewer.currentRows || window.DataViewer.currentRows.length === 0) window.DataViewer.init();
         }
-        if (target === "normativa" && window.NormativaMonitor) window.NormativaMonitor.init();
         if (target === "sql" && window.ChatTerminal && window.ChatTerminal.focusTerminal) window.ChatTerminal.focusTerminal();
         if (target === "downloads" && window.DownloadsPanel) window.DownloadsPanel.render();
+        // Los bloques de citación viven dentro de Información y de Descargas: se
+        // pintan después de que Descargas reconstruye su HTML, para no perderlos.
+        if (window.SIFCita) window.SIFCita.pintar();
         if (window.MFCUI && window.MFCUI.rememberTab) window.MFCUI.rememberTab(target);
       };
 

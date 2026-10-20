@@ -37,3 +37,6 @@ FSB_Patrimonio_Separado (4).xlsx
 
 # Dependencias de Node para las auditorías JS (se instalan a mano: npm install --no-save jsdom)
 node_modules/
+
+# Snapshots académicos locales (se construyen, no se versionan)
+snapshot/
