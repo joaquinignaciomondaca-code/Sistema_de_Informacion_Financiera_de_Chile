@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Ejecuta todas las consultas sugeridas de la interfaz contra los Parquet publicados.
 
-La web ofrece consultas sugeridas por industria (docs/js/sidebar.js). Si una de ellas
+La web ofrece consultas sugeridas por industria (docs/js/sidebar.js) y un juego por defecto
+en la pestaña Consultas SQL (los chips de docs/index.html). Si una de ellas
 devuelve una tabla vacía o revienta, el visitante se lleva la peor primera impresión
 posible. Esta auditoría registra las mismas vistas semánticas que registra el navegador
 (docs/js/duckdb_client.js) y ejecuta cada consulta, informando de tres estados:
@@ -20,6 +21,7 @@ para no romper entornos que no lo tengan.
 from __future__ import annotations
 
 import argparse
+import html
 import json
 import re
 import sys
@@ -29,6 +31,7 @@ RAIZ = Path(__file__).resolve().parent.parent
 DOCS = RAIZ / "docs"
 CLIENTE = DOCS / "js" / "duckdb_client.js"
 SIDEBAR = DOCS / "js" / "sidebar.js"
+INDEX = DOCS / "index.html"
 
 
 def _bloque(texto: str, marcador: str) -> str:
@@ -94,6 +97,17 @@ def consultas_sugeridas() -> list[tuple[str, str]]:
         consulta = _desescapar(m.group(2))
         fuera.append((etiqueta, consulta))
     return fuera
+
+
+def consultas_terminal() -> list[tuple[str, str]]:
+    """Chips por defecto de la pestaña Consultas SQL (docs/index.html).
+
+    Son lo primero que ve quien abre el terminal: en 2026-10 dos de ellos usaban
+    columnas que ya no existían y nadie lo notó porque esta auditoría no los leía.
+    """
+    txt = INDEX.read_text(encoding="utf-8")
+    patron = re.compile(r'<div class="chip" data-query="([^"]*)">\s*(.*?)\s*</div>', re.S)
+    return [(html.unescape(m.group(2)), html.unescape(m.group(1))) for m in patron.finditer(txt)]
 
 
 def ficheros_de(vista: dict) -> list[str]:
@@ -178,8 +192,11 @@ def main() -> int:
         print(f"  (listada como esperada vacía pero ya trae filas: {n})")
     print()
 
-    consultas = consultas_sugeridas()
-    print(f"Consultas sugeridas: {len(consultas)}\n")
+    explorador = consultas_sugeridas()
+    terminal = consultas_terminal()
+    consultas = explorador + terminal
+    print(f"Consultas sugeridas: {len(consultas)} "
+          f"({len(explorador)} del explorador + {len(terminal)} del terminal)\n")
 
     errores, vacias = [], []
     for etiqueta, sql in consultas:

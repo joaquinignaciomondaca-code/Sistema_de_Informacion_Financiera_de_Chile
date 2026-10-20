@@ -10,6 +10,13 @@ Fuentes de verdad:
 El resultado alimenta la pestaña «Descargas»: filas, periodo, peso y archivos de
 cada conjunto publicado, agrupados por sector con su nombre canónico.
 
+También lleva el alcance editorial de la web (`alcance` en docs/vocabulario.json):
+el nivel de cada sector (núcleo, instituciones, contexto, archivo o registro), las
+tablas ocultas, las variantes y las cifras de cada nivel. Viaja aquí porque los
+workflows de datos ya regeneran y confirman este archivo en cada publicación: así
+las cifras de la portada no quedan atrás. Es un recorte visual: ningún conjunto
+sale del catálogo.
+
 Uso:
     python3 scripts/build_download_catalog.py            # escribe el catálogo
     python3 scripts/build_download_catalog.py --check    # falla si está desactualizado
@@ -184,9 +191,96 @@ def filas_heredadas(vigente: dict, vid: str) -> int | None:
     return None
 
 
+def _periodo_de(items: list[dict]) -> dict | None:
+    desde = [i["periodo"]["desde"] for i in items if i.get("periodo")]
+    hasta = [i["periodo"]["hasta"] for i in items if i.get("periodo")]
+    return {"desde": min(desde), "hasta": max(hasta)} if desde and hasta else None
+
+
+def _cifras(items: list[dict]) -> dict:
+    """Conjuntos, filas, peso y periodo de un grupo de conjuntos (sin los ocultos)."""
+    vivos = [i for i in items if not i.get("oculto")]
+    return {
+        "conjuntos": len(vivos),
+        "filas": sum(int(i.get("filas") or 0) for i in vivos),
+        "bytes": sum(int(i.get("bytes") or 0) for i in vivos),
+        "periodo": _periodo_de(vivos),
+    }
+
+
+def validar_alcance(vocab: dict) -> dict:
+    """El alcance editorial debe cubrir todos los sectores con niveles conocidos."""
+    alcance = vocab.get("alcance") or {}
+    if not alcance:
+        return {}
+    niveles = [n["id"] for n in alcance["niveles"]]
+    faltan = sorted(set(vocab["sectores"]) - set(alcance["sectores"]))
+    if faltan:
+        raise SystemExit(f"alcance: sectores sin nivel en docs/vocabulario.json: {', '.join(faltan)}")
+    desconocidos = sorted({n for n in alcance["sectores"].values() if n not in niveles})
+    if desconocidos:
+        raise SystemExit(f"alcance: niveles no declarados: {', '.join(desconocidos)}")
+    ids = {t["id"] for t in vocab["tablas"]}
+    for tid in list(alcance.get("tablas_ocultas", {})) + list(alcance.get("variantes", {})):
+        if tid not in ids:
+            raise SystemExit(f"alcance: la tabla {tid} no está en el vocabulario")
+    return alcance
+
+
+def resumen_alcance(alcance: dict, vocab: dict, bloques: list[dict]) -> dict:
+    """Cifras por nivel y por sector para la portada, el explorador y Descargas."""
+    items = [i for b in bloques for i in b["items"]]
+    total_filas = sum(int(i.get("filas") or 0) for i in items if not i.get("oculto")) or 1
+    visibles = alcance.get("visibles", [])
+
+    sectores = {}
+    for clave in alcance["orden"]:
+        propios = [i for i in items if i["clave"] == clave]
+        sectores[clave] = {
+            "nivel": alcance["sectores"][clave],
+            "etiqueta": vocab["sectores"][clave],
+            "corta": sector_corto(vocab, clave),
+            **_cifras(propios),
+        }
+
+    niveles = []
+    for nivel in alcance["niveles"]:
+        claves = [c for c in alcance["orden"] if alcance["sectores"][c] == nivel["id"]]
+        propios = [i for i in items if i["nivel"] == nivel["id"]]
+        cifras = _cifras(propios)
+        niveles.append({
+            **nivel,
+            "visible": nivel["id"] in visibles,
+            "sectores": claves,
+            **cifras,
+            "pct_filas": round(100 * cifras["filas"] / total_filas, 1),
+        })
+
+    def agregado(dentro: bool) -> dict:
+        propios = [i for i in items if (i["nivel"] in visibles) == dentro]
+        cifras = _cifras(propios)
+        claves = [c for c in alcance["orden"] if (alcance["sectores"][c] in visibles) == dentro]
+        return {**cifras, "sectores": claves, "pct_filas": round(100 * cifras["filas"] / total_filas, 1)}
+
+    return {
+        "version": alcance.get("version"),
+        "nota": alcance.get("nota", ""),
+        "visibles": visibles,
+        "orden": alcance["orden"],
+        "niveles": niveles,
+        "sectores": sectores,
+        "agrupaciones": alcance.get("agrupaciones", {}),
+        "tablas_ocultas": alcance.get("tablas_ocultas", {}),
+        "variantes": alcance.get("variantes", {}),
+        "visible": agregado(True),
+        "fuera": agregado(False),
+    }
+
+
 def build() -> dict:
     views = parse_views()
     vocab = load_vocabulario()
+    alcance = validar_alcance(vocab)
     previo = catalogo_vigente() if pq is None else {}
     fichas = {t["id"]: t for t in vocab["tablas"]}
     sectores = vocab["sectores"]
@@ -266,26 +360,50 @@ def build() -> dict:
             "filasFuente": int(manifest_total) if manifest_total is not None else None,
             "actualizado": updated,
         }
+        if alcance:
+            item["clave"] = sector_clave
+            item["nivel"] = alcance["sectores"][sector_clave]
+            if vid in alcance.get("tablas_ocultas", {}):
+                item["oculto"] = True
+            variante = alcance.get("variantes", {}).get(vid)
+            if variante:
+                item["varianteDe"] = variante["de"]
         por_sector.setdefault(grupo, []).append(item)
         total_filas += int(filas or 0)
         total_bytes += item["bytes"]
 
-    bloques = [
-        {"grupo": grupo, "sector": items[0]["sector"], "items": items}
-        for grupo, items in sorted(por_sector.items())
-    ]
+    if alcance:
+        # Orden editorial: núcleo, instituciones, contexto, archivo y registro; dentro de
+        # cada nivel, el orden declarado en el vocabulario.
+        rango_nivel = {n["id"]: i for i, n in enumerate(alcance["niveles"])}
+        rango_sector = {c: i for i, c in enumerate(alcance["orden"])}
+        bloques = [
+            {"grupo": grupo, "sector": items[0]["sector"], "clave": items[0]["clave"],
+             "nivel": items[0]["nivel"], "items": items}
+            for grupo, items in sorted(
+                por_sector.items(),
+                key=lambda kv: (rango_nivel[kv[1][0]["nivel"]], rango_sector[kv[1][0]["clave"]], kv[0]))
+        ]
+    else:
+        bloques = [
+            {"grupo": grupo, "sector": items[0]["sector"], "items": items}
+            for grupo, items in sorted(por_sector.items())
+        ]
 
     # «generado» sale de los datos (la última actualización publicada) y no del reloj: con
     # date.today() el catálogo quedaba «desactualizado» para --check cada medianoche, sin
     # que cambiara nada publicado.
     fechas = [i["actualizado"][:10] for bl in bloques for i in bl["items"] if i.get("actualizado")]
-    return {
+    catalogo = {
         "generado": max(fechas) if fechas else date.today().isoformat(),
         "conjuntos": sum(len(b["items"]) for b in bloques),
         "filas": total_filas,
         "bytes": total_bytes,
         "grupos": bloques,
     }
+    if alcance:
+        catalogo["alcance"] = resumen_alcance(alcance, vocab, bloques)
+    return catalogo
 
 
 def render(catalogo: dict) -> str:
@@ -294,8 +412,8 @@ def render(catalogo: dict) -> str:
         "/**\n"
         " * Catálogo de descargas del Sistema de Información Financiera de Chile.\n"
         " * Archivo GENERADO por scripts/build_download_catalog.py — no editar a mano.\n"
-        " * Nombres, tipos y sectores salen de docs/vocabulario.json; filas, peso y\n"
-        " * periodos, de los manifiestos publicados en docs/outputs.\n"
+        " * Nombres, tipos, sectores y alcance editorial salen de docs/vocabulario.json;\n"
+        " * filas, peso y periodos, de los manifiestos publicados en docs/outputs.\n"
         " */\n"
         f"window.DOWNLOAD_CATALOG = {payload};\n"
     )
@@ -324,6 +442,9 @@ def main() -> int:
     with open(OUT_JS, "w", encoding="utf-8") as fh:
         fh.write(contenido)
     print(f"Catálogo escrito en {os.path.relpath(OUT_JS, ROOT)}: {resumen}")
+    for nivel in (catalogo.get("alcance") or {}).get("niveles", []):
+        print(f"  {nivel['corta']:<13} {nivel['conjuntos']:>3} conjuntos · "
+              f"{nivel['filas']:>12,} filas · {nivel['pct_filas']:>5}%".replace(",", "."))
     sin_filas = [i["id"] for b in catalogo["grupos"] for i in b["items"] if i["filas"] is None]
     if sin_filas and pq is None:
         print(f"  Aviso: {len(sin_filas)} conjuntos quedaron sin conteo de filas "

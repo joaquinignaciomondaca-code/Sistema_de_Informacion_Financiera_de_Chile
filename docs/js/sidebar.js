@@ -100,72 +100,12 @@ const EXPLORER_TREE = [
   {
     id: "group_administracion_fondos",
     type: "group",
-    label: "ADMINISTRACIÓN DE FONDOS (CMF / LEY 20.712)",
+    label: "FONDOS MUTUOS Y DE INVERSIÓN (CMF / LEY 20.712)",
     badges: [
-      { type: "entities", text: "AGF · FFMM · FI", title: "Sociedades administradoras y fondos son unidades jurídicas y contables distintas" }
+      { type: "entities", text: "FFMM · FI", title: "Fondos mutuos y fondos de inversión regidos por la Ley Única de Fondos. Sus administradoras (AGF) son unidades jurídicas y contables distintas: están en «Instituciones y estados financieros»" }
     ],
     status: "active",
     children: [
-      {
-        id: "sector_agf",
-        type: "sector",
-        label: "Administradoras Generales de Fondos (CMF)",
-        sector: "agf",
-        children: [
-          {
-            id: "cat_agf_lista_entidades",
-            type: "circular",
-            label: "Lista de Entidades",
-            badge: "68 Entidades",
-            badgeType: "entities",
-            status: "active",
-            sector: "agf",
-            chips: [
-              { label: "Catálogo de AGF (Vigentes vs Canceladas)", query: "SELECT rut_completo, razon_social, estado_vigencia, grupo_controlador, fondos_inversion_administrados FROM agf_lista_entidades ORDER BY estado_vigencia, razon_social;" },
-              { label: "Ranking de AGF por Fondos de Inversión Administrados", query: "SELECT razon_social, grupo_controlador, fondos_inversion_administrados, cmf_url FROM agf_lista_entidades WHERE fondos_inversion_administrados > 0 ORDER BY fondos_inversion_administrados DESC LIMIT 15;" },
-              { label: "AGF por Grupo Financiero Controlador", query: "SELECT grupo_controlador, count(*) as cantidad_agf, sum(fondos_inversion_administrados) as total_fondos FROM agf_lista_entidades WHERE estado_vigencia = 'Vigente' GROUP BY grupo_controlador ORDER BY total_fondos DESC;" }
-            ],
-            tables: [
-              { id: "agf_lista_entidades", name: "agf.lista_entidades", rows: "Una fila por administradora", file: "outputs/agf/agf_maestro.parquet" }
-            ]
-          },
-          {
-            id: "cat_agf_balance",
-            type: "circular",
-            label: "Balance IFRS · CMF (2010-06–2026-06)",
-            badge: "65 trimestres",
-            badgeType: "data",
-            status: "active",
-            sector: "agf",
-            chips: [
-              { label: "Activos, pasivos y patrimonio por AGF, último trimestre (MM$)", query: "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM agf_balance WHERE periodo = (SELECT max(periodo) FROM agf_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;" },
-              { label: "Evolución del sector: activos totales por trimestre (MM$, CLP)", query: "SELECT periodo, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS activos_mm_clp FROM agf_balance WHERE cuenta = 'Total de activos' AND moneda = 'CLP' AND repeticion = 1 GROUP BY periodo ORDER BY periodo;" },
-              { label: "Balance completo de Banchile AGF, último trimestre", query: "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM agf_balance WHERE rut = '96767630' AND periodo = (SELECT max(periodo) FROM agf_balance WHERE rut = '96767630') ORDER BY tipo_balance, estado_financiero, orden;" }
-            ],
-            tables: [
-              { id: "agf_balance", name: "agf.balance", rows: "Serie IFRS", file: "", files: ["outputs/agf/agf_balance/manifest.json"] }
-            ]
-          },
-          {
-            id: "cat_agf_resultados",
-            type: "circular",
-            label: "Estado de Resultados IFRS · CMF (2010-06–2026-06)",
-            badge: "65 trimestres",
-            badgeType: "data",
-            status: "active",
-            sector: "agf",
-            chips: [
-              { label: "Ingresos y utilidad por AGF, ejercicio 2025 (MM$)", query: "SELECT razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Ingresos de actividades ordinarias') / 1e6, 1) AS ingresos_mm, round(max(valor) FILTER (WHERE cuenta = 'Ganancia (pérdida)') / 1e6, 1) AS ganancia_mm FROM agf_resultados WHERE periodo = '2025-12' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 GROUP BY ALL ORDER BY ganancia_mm DESC NULLS LAST;" },
-              { label: "Por qué hay que filtrar: «Ganancia (pérdida)» aparece varias veces", query: "SELECT estado_financiero, repeticion, count(*) AS filas, count(DISTINCT rut) AS entidades FROM agf_resultados WHERE periodo = '2025-12' AND cuenta = 'Ganancia (pérdida)' GROUP BY ALL ORDER BY estado_financiero, repeticion;" },
-              { label: "Utilidad del sector por año (cierres de diciembre, MM$, CLP)", query: "SELECT left(periodo, 4) AS anio, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS ganancia_mm_clp FROM agf_resultados WHERE periodo LIKE '%-12' AND cuenta = 'Ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 AND moneda = 'CLP' GROUP BY 1 ORDER BY 1;" },
-              { label: "Estado de resultados completo de Banchile AGF, ejercicio 2025", query: "SELECT tipo_balance, estado_financiero, orden, cuenta, valor FROM agf_resultados WHERE rut = '96767630' AND periodo = '2025-12' ORDER BY tipo_balance, estado_financiero, orden;" }
-            ],
-            tables: [
-              { id: "agf_resultados", name: "agf.resultados", rows: "Serie IFRS", file: "", files: ["outputs/agf/agf_resultados/manifest.json"] }
-            ]
-          }
-        ]
-      },
       {
         id: "sector_ffmm",
         type: "sector",
@@ -404,6 +344,78 @@ const EXPLORER_TREE = [
     ]
   },
   {
+    id: "group_agf",
+    type: "group",
+    label: "ADMINISTRADORAS GENERALES DE FONDOS (CMF)",
+    badges: [
+      { type: "entities", text: "Administran FFMM y FI", title: "Sociedades que administran los fondos mutuos y de inversión: unidades jurídicas y contables distintas de los fondos" },
+      { type: "data", text: "IFRS trimestral", title: "Balance y estado de resultados IFRS de cada administradora, desde el TXT trimestral de la CMF" }
+    ],
+    status: "active",
+    children: [
+      {
+        id: "sector_agf",
+        type: "sector",
+        label: "Administradoras Generales de Fondos (CMF)",
+        sector: "agf",
+        children: [
+          {
+            id: "cat_agf_lista_entidades",
+            type: "circular",
+            label: "Lista de Entidades",
+            badge: "68 Entidades",
+            badgeType: "entities",
+            status: "active",
+            sector: "agf",
+            chips: [
+              { label: "Catálogo de AGF (Vigentes vs Canceladas)", query: "SELECT rut_completo, razon_social, estado_vigencia, grupo_controlador, fondos_inversion_administrados FROM agf_lista_entidades ORDER BY estado_vigencia, razon_social;" },
+              { label: "Ranking de AGF por Fondos de Inversión Administrados", query: "SELECT razon_social, grupo_controlador, fondos_inversion_administrados, cmf_url FROM agf_lista_entidades WHERE fondos_inversion_administrados > 0 ORDER BY fondos_inversion_administrados DESC LIMIT 15;" },
+              { label: "AGF por Grupo Financiero Controlador", query: "SELECT grupo_controlador, count(*) as cantidad_agf, sum(fondos_inversion_administrados) as total_fondos FROM agf_lista_entidades WHERE estado_vigencia = 'Vigente' GROUP BY grupo_controlador ORDER BY total_fondos DESC;" }
+            ],
+            tables: [
+              { id: "agf_lista_entidades", name: "agf.lista_entidades", rows: "Una fila por administradora", file: "outputs/agf/agf_maestro.parquet" }
+            ]
+          },
+          {
+            id: "cat_agf_balance",
+            type: "circular",
+            label: "Balance IFRS · CMF (2010-06–2026-06)",
+            badge: "65 trimestres",
+            badgeType: "data",
+            status: "active",
+            sector: "agf",
+            chips: [
+              { label: "Activos, pasivos y patrimonio por AGF, último trimestre (MM$)", query: "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM agf_balance WHERE periodo = (SELECT max(periodo) FROM agf_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;" },
+              { label: "Evolución del sector: activos totales por trimestre (MM$, CLP)", query: "SELECT periodo, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS activos_mm_clp FROM agf_balance WHERE cuenta = 'Total de activos' AND moneda = 'CLP' AND repeticion = 1 GROUP BY periodo ORDER BY periodo;" },
+              { label: "Balance completo de Banchile AGF, último trimestre", query: "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM agf_balance WHERE rut = '96767630' AND periodo = (SELECT max(periodo) FROM agf_balance WHERE rut = '96767630') ORDER BY tipo_balance, estado_financiero, orden;" }
+            ],
+            tables: [
+              { id: "agf_balance", name: "agf.balance", rows: "Serie IFRS", file: "", files: ["outputs/agf/agf_balance/manifest.json"] }
+            ]
+          },
+          {
+            id: "cat_agf_resultados",
+            type: "circular",
+            label: "Estado de Resultados IFRS · CMF (2010-06–2026-06)",
+            badge: "65 trimestres",
+            badgeType: "data",
+            status: "active",
+            sector: "agf",
+            chips: [
+              { label: "Ingresos y utilidad por AGF, ejercicio 2025 (MM$)", query: "SELECT razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Ingresos de actividades ordinarias') / 1e6, 1) AS ingresos_mm, round(max(valor) FILTER (WHERE cuenta = 'Ganancia (pérdida)') / 1e6, 1) AS ganancia_mm FROM agf_resultados WHERE periodo = '2025-12' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 GROUP BY ALL ORDER BY ganancia_mm DESC NULLS LAST;" },
+              { label: "Por qué hay que filtrar: «Ganancia (pérdida)» aparece varias veces", query: "SELECT estado_financiero, repeticion, count(*) AS filas, count(DISTINCT rut) AS entidades FROM agf_resultados WHERE periodo = '2025-12' AND cuenta = 'Ganancia (pérdida)' GROUP BY ALL ORDER BY estado_financiero, repeticion;" },
+              { label: "Utilidad del sector por año (cierres de diciembre, MM$, CLP)", query: "SELECT left(periodo, 4) AS anio, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS ganancia_mm_clp FROM agf_resultados WHERE periodo LIKE '%-12' AND cuenta = 'Ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 AND moneda = 'CLP' GROUP BY 1 ORDER BY 1;" },
+              { label: "Estado de resultados completo de Banchile AGF, ejercicio 2025", query: "SELECT tipo_balance, estado_financiero, orden, cuenta, valor FROM agf_resultados WHERE rut = '96767630' AND periodo = '2025-12' ORDER BY tipo_balance, estado_financiero, orden;" }
+            ],
+            tables: [
+              { id: "agf_resultados", name: "agf.resultados", rows: "Serie IFRS", file: "", files: ["outputs/agf/agf_resultados/manifest.json"] }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     id: "group_pensiones",
     type: "group",
     label: "FONDOS DE PENSIONES (SPENSIONES)",
@@ -516,7 +528,7 @@ const EXPLORER_TREE = [
     type: "group",
     label: "MACROECONOMÍA Y TASAS (BCCh)",
     badges: [
-      { type: "data", text: "23 tablas", title: "Una tabla por indicador económico, en la frecuencia en que lo publica el Banco Central (diaria, mensual o trimestral)" },
+      { type: "data", text: "24 tablas · 4 bloques", title: "23 tablas por indicador económico, en la frecuencia en que lo publica el Banco Central (diaria, mensual o trimestral), más el catálogo de series; agrupadas en tasas y curvas, tipo de cambio, actividad y precios y expectativas" },
       { type: "data", text: "2014 → 2026", title: "Cobertura de las series: desde 2014 hasta la última publicación del BCCh" }
     ],
     status: "active",
@@ -528,10 +540,10 @@ const EXPLORER_TREE = [
         sector: "macro",
         children: [
           {
-            id: "cat_macro_tasas_interes",
+            id: "cat_macro_tasas_curvas",
             type: "circular",
-            label: "Tasas de interés",
-            badge: "5 tablas",
+            label: "Tasas y curvas",
+            badge: "6 tablas",
             badgeType: "data",
             status: "active",
             sector: "macro",
@@ -540,21 +552,23 @@ const EXPLORER_TREE = [
               { label: "Curva de bonos en pesos: promedio mensual, últimos 24 meses", query: "SELECT periodo, round(avg(rendimiento_bono_pesos_2_anos_pct), 3) AS bono_2_anos_pct, round(avg(rendimiento_bono_pesos_5_anos_pct), 3) AS bono_5_anos_pct, round(avg(rendimiento_bono_pesos_10_anos_pct), 3) AS bono_10_anos_pct FROM macro_curva_bonos_pesos GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
               { label: "Curva de bonos en UF: último dato disponible por plazo", query: "SELECT fecha, rendimiento_bono_uf_1_ano_pct, rendimiento_bono_uf_2_anos_pct, rendimiento_bono_uf_5_anos_pct, rendimiento_bono_uf_10_anos_pct, rendimiento_bono_uf_20_anos_pct, rendimiento_bono_uf_30_anos_pct FROM macro_curva_bonos_uf ORDER BY fecha DESC LIMIT 20;" },
               { label: "Inflación implícita a 5 y 10 años: promedio mensual", query: "SELECT periodo, round(avg(inflacion_implicita_5_anos_pct), 3) AS implicita_5_anos_pct, round(avg(inflacion_implicita_10_anos_pct), 3) AS implicita_10_anos_pct FROM macro_inflacion_implicita GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
-              { label: "Swaps de cámara en pesos: curva 90 días a 2 años", query: "SELECT fecha, swap_camara_pesos_90_dias_pct, swap_camara_pesos_180_dias_pct, swap_camara_pesos_360_dias_pct, swap_camara_pesos_2_anos_pct, swap_camara_uf_1_ano_pct FROM macro_swaps_camara ORDER BY fecha DESC LIMIT 30;" }
+              { label: "Swaps de cámara en pesos: curva 90 días a 2 años", query: "SELECT fecha, swap_camara_pesos_90_dias_pct, swap_camara_pesos_180_dias_pct, swap_camara_pesos_360_dias_pct, swap_camara_pesos_2_anos_pct, swap_camara_uf_1_ano_pct FROM macro_swaps_camara ORDER BY fecha DESC LIMIT 30;" },
+              { label: "Tasa de la Fed frente a la TPM de Chile: promedio mensual", query: "SELECT f.periodo, round(avg(f.tasa_fed_funds_pct), 2) AS fed_funds_pct, round(avg(t.tpm_pct), 2) AS tpm_chile_pct FROM macro_tasa_referencia_fed f JOIN macro_tasas_corto_plazo t USING (periodo) GROUP BY f.periodo ORDER BY f.periodo DESC LIMIT 24;" }
             ],
             tables: [
               { id: "macro_tasas_corto_plazo", name: "macro.tasas_corto_plazo", rows: "Una fila por día", file: "outputs/macro/macro_tasas_corto_plazo.parquet" },
               { id: "macro_swaps_camara", name: "macro.swaps_camara", rows: "Una fila por día", file: "outputs/macro/macro_swaps_camara.parquet" },
               { id: "macro_curva_bonos_pesos", name: "macro.curva_bonos_pesos", rows: "Una fila por día", file: "outputs/macro/macro_curva_bonos_pesos.parquet" },
               { id: "macro_curva_bonos_uf", name: "macro.curva_bonos_uf", rows: "Una fila por día", file: "outputs/macro/macro_curva_bonos_uf.parquet" },
-              { id: "macro_inflacion_implicita", name: "macro.inflacion_implicita", rows: "Una fila por día", file: "outputs/macro/macro_inflacion_implicita.parquet" }
+              { id: "macro_inflacion_implicita", name: "macro.inflacion_implicita", rows: "Una fila por día", file: "outputs/macro/macro_inflacion_implicita.parquet" },
+              { id: "macro_tasa_referencia_fed", name: "macro.tasa_referencia_fed", rows: "Una fila por día", file: "outputs/macro/macro_tasa_referencia_fed.parquet" }
             ]
           },
           {
-            id: "cat_macro_tipo_cambio",
+            id: "cat_macro_tipo_cambio_uf_utm",
             type: "circular",
-            label: "Tipo de cambio",
-            badge: "4 tablas",
+            label: "Tipo de cambio, UF y UTM",
+            badge: "6 tablas",
             badgeType: "data",
             status: "active",
             sector: "macro",
@@ -562,102 +576,48 @@ const EXPLORER_TREE = [
               { label: "Dólar observado: últimos 30 días hábiles", query: "SELECT fecha, dolar_observado_clp_por_usd FROM macro_dolar_observado ORDER BY fecha DESC LIMIT 30;" },
               { label: "Dólar observado por mes: promedio, mínimo, máximo y cierre", query: "SELECT periodo, round(avg(dolar_observado_clp_por_usd), 2) AS promedio_clp, min(dolar_observado_clp_por_usd) AS minimo_clp, max(dolar_observado_clp_por_usd) AS maximo_clp, arg_max(dolar_observado_clp_por_usd, fecha) AS cierre_clp FROM macro_dolar_observado GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
               { label: "Dólar y euro observados en la misma fecha", query: "SELECT d.fecha, d.dolar_observado_clp_por_usd, e.euro_observado_clp_por_eur, round(e.euro_observado_clp_por_eur / d.dolar_observado_clp_por_usd, 4) AS euro_por_dolar FROM macro_dolar_observado d JOIN macro_euro_observado e USING (fecha) ORDER BY d.fecha DESC LIMIT 30;" },
-              { label: "Tipo de cambio real: TCR general y TCR-5", query: "SELECT periodo, tipo_cambio_real_general_indice, tipo_cambio_real_5_monedas_indice FROM macro_tipo_cambio_real ORDER BY periodo DESC LIMIT 24;" }
+              { label: "Tipo de cambio real: TCR general y TCR-5", query: "SELECT periodo, tipo_cambio_real_general_indice, tipo_cambio_real_5_monedas_indice FROM macro_tipo_cambio_real ORDER BY periodo DESC LIMIT 24;" },
+              { label: "UF: valor de cierre de cada mes y variación mensual", query: "SELECT periodo, uf_cierre_clp, round((uf_cierre_clp / lag(uf_cierre_clp) OVER (ORDER BY periodo) - 1) * 100, 2) AS uf_var_mensual_pct FROM (SELECT periodo, arg_max(uf_valor_clp, fecha) AS uf_cierre_clp FROM macro_uf GROUP BY periodo) ORDER BY periodo DESC LIMIT 24;" },
+              { label: "UF y UTM vigentes: último valor de cada mes", query: "SELECT u.periodo, arg_max(u.uf_valor_clp, u.fecha) AS uf_cierre_clp, max(t.utm_valor_clp) AS utm_valor_clp FROM macro_uf u LEFT JOIN macro_utm t USING (periodo) GROUP BY u.periodo ORDER BY u.periodo DESC LIMIT 24;" }
             ],
             tables: [
               { id: "macro_dolar_observado", name: "macro.dolar_observado", rows: "Una fila por día", file: "outputs/macro/macro_dolar_observado.parquet" },
               { id: "macro_euro_observado", name: "macro.euro_observado", rows: "Una fila por día", file: "outputs/macro/macro_euro_observado.parquet" },
               { id: "macro_tipo_cambio_multilateral", name: "macro.tipo_cambio_multilateral", rows: "Una fila por día", file: "outputs/macro/macro_tipo_cambio_multilateral.parquet" },
-              { id: "macro_tipo_cambio_real", name: "macro.tipo_cambio_real", rows: "Una fila por mes", file: "outputs/macro/macro_tipo_cambio_real.parquet" }
+              { id: "macro_tipo_cambio_real", name: "macro.tipo_cambio_real", rows: "Una fila por mes", file: "outputs/macro/macro_tipo_cambio_real.parquet" },
+              { id: "macro_uf", name: "macro.uf", rows: "Una fila por día", file: "outputs/macro/macro_uf.parquet" },
+              { id: "macro_utm", name: "macro.utm", rows: "Una fila por mes", file: "outputs/macro/macro_utm.parquet" }
             ]
           },
           {
-            id: "cat_macro_precios_reajustes",
+            id: "cat_macro_actividad_precios",
             type: "circular",
-            label: "Precios y reajustes",
-            badge: "3 tablas",
+            label: "Actividad y precios",
+            badge: "8 tablas",
             badgeType: "data",
             status: "active",
             sector: "macro",
             chips: [
               { label: "Inflación IPC: índice y variaciones mensual y anual", query: "SELECT periodo, ipc_indice, ipc_var_mensual_pct, ipc_var_anual_pct FROM macro_inflacion_ipc ORDER BY periodo DESC LIMIT 24;" },
-              { label: "UF: valor de cierre de cada mes y variación mensual", query: "SELECT periodo, uf_cierre_clp, round((uf_cierre_clp / lag(uf_cierre_clp) OVER (ORDER BY periodo) - 1) * 100, 2) AS uf_var_mensual_pct FROM (SELECT periodo, arg_max(uf_valor_clp, fecha) AS uf_cierre_clp FROM macro_uf GROUP BY periodo) ORDER BY periodo DESC LIMIT 24;" },
-              { label: "UF y UTM vigentes: último valor de cada mes", query: "SELECT u.periodo, arg_max(u.uf_valor_clp, u.fecha) AS uf_cierre_clp, max(t.utm_valor_clp) AS utm_valor_clp FROM macro_uf u LEFT JOIN macro_utm t USING (periodo) GROUP BY u.periodo ORDER BY u.periodo DESC LIMIT 24;" }
-            ],
-            tables: [
-              { id: "macro_uf", name: "macro.uf", rows: "Una fila por día", file: "outputs/macro/macro_uf.parquet" },
-              { id: "macro_utm", name: "macro.utm", rows: "Una fila por mes", file: "outputs/macro/macro_utm.parquet" },
-              { id: "macro_inflacion_ipc", name: "macro.inflacion_ipc", rows: "Una fila por mes", file: "outputs/macro/macro_inflacion_ipc.parquet" }
-            ]
-          },
-          {
-            id: "cat_macro_actividad",
-            type: "circular",
-            label: "Actividad económica",
-            badge: "2 tablas",
-            badgeType: "data",
-            status: "active",
-            sector: "macro",
-            chips: [
               { label: "Imacec total y no minero con variación anual", query: "SELECT periodo, imacec_empalmado_indice, round((imacec_empalmado_indice / lag(imacec_empalmado_indice, 12) OVER (ORDER BY periodo) - 1) * 100, 2) AS imacec_var_anual_pct, imacec_no_minero_indice, imacec_minero_indice FROM macro_imacec ORDER BY periodo DESC LIMIT 24;" },
               { label: "Imacec por sector: comercio y servicios", query: "SELECT periodo, imacec_comercio_indice, imacec_servicios_indice, imacec_no_minero_indice FROM macro_imacec ORDER BY periodo DESC LIMIT 24;" },
-              { label: "PIB trimestral con variación respecto al mismo trimestre del año anterior", query: "SELECT periodo, pib_encadenado_miles_mm_clp, round((pib_encadenado_miles_mm_clp / lag(pib_encadenado_miles_mm_clp, 4) OVER (ORDER BY periodo) - 1) * 100, 2) AS pib_var_anual_pct FROM macro_pib_trimestral ORDER BY periodo DESC LIMIT 20;" }
-            ],
-            tables: [
-              { id: "macro_imacec", name: "macro.imacec", rows: "Una fila por mes", file: "outputs/macro/macro_imacec.parquet" },
-              { id: "macro_pib_trimestral", name: "macro.pib_trimestral", rows: "Una fila por trimestre", file: "outputs/macro/macro_pib_trimestral.parquet" }
-            ]
-          },
-          {
-            id: "cat_macro_mercado_laboral",
-            type: "circular",
-            label: "Mercado laboral",
-            badge: "152 meses",
-            badgeType: "data",
-            status: "active",
-            sector: "macro",
-            chips: [
+              { label: "PIB trimestral con variación respecto al mismo trimestre del año anterior", query: "SELECT periodo, pib_encadenado_miles_mm_clp, round((pib_encadenado_miles_mm_clp / lag(pib_encadenado_miles_mm_clp, 4) OVER (ORDER BY periodo) - 1) * 100, 2) AS pib_var_anual_pct FROM macro_pib_trimestral ORDER BY periodo DESC LIMIT 20;" },
               { label: "Desocupación, ocupados y fuerza de trabajo: últimos 24 meses", query: "SELECT periodo, desocupacion_pct, ocupados_miles_personas, asalariados_miles_personas, fuerza_trabajo_miles_personas FROM macro_mercado_laboral ORDER BY periodo DESC LIMIT 24;" },
-              { label: "Participación de asalariados sobre ocupados", query: "SELECT periodo, round(asalariados_miles_personas / ocupados_miles_personas * 100, 2) AS asalariados_sobre_ocupados_pct, desocupacion_pct FROM macro_mercado_laboral ORDER BY periodo DESC LIMIT 24;" }
-            ],
-            tables: [
-              { id: "macro_mercado_laboral", name: "macro.mercado_laboral", rows: "Una fila por mes", file: "outputs/macro/macro_mercado_laboral.parquet" }
-            ]
-          },
-          {
-            id: "cat_macro_materias_primas",
-            type: "circular",
-            label: "Materias primas",
-            badge: "2 tablas",
-            badgeType: "data",
-            status: "active",
-            sector: "macro",
-            chips: [
+              { label: "Participación de asalariados sobre ocupados", query: "SELECT periodo, round(asalariados_miles_personas / ocupados_miles_personas * 100, 2) AS asalariados_sobre_ocupados_pct, desocupacion_pct FROM macro_mercado_laboral ORDER BY periodo DESC LIMIT 24;" },
               { label: "Cobre: precio diario BML, últimos 30 días", query: "SELECT fecha, cobre_refinado_usd_por_libra FROM macro_cobre WHERE cobre_refinado_usd_por_libra IS NOT NULL ORDER BY fecha DESC LIMIT 30;" },
               { label: "Cobre: promedio mensual y referencia BCCh con variación anual", query: "SELECT periodo, promedio_diario_usd_lb, referencia_mensual_usd_lb, round((referencia_mensual_usd_lb / lag(referencia_mensual_usd_lb, 12) OVER (ORDER BY periodo) - 1) * 100, 2) AS referencia_var_anual_pct FROM (SELECT periodo, round(avg(cobre_refinado_usd_por_libra), 4) AS promedio_diario_usd_lb, max(cobre_referencial_mensual_usd_por_libra) AS referencia_mensual_usd_lb FROM macro_cobre GROUP BY periodo) ORDER BY periodo DESC LIMIT 24;" },
-              { label: "Oro y plata: últimos 30 días", query: "SELECT fecha, oro_usd_por_onza_troy, plata_usd_por_onza_troy, round(oro_usd_por_onza_troy / plata_usd_por_onza_troy, 2) AS relacion_oro_plata FROM macro_metales_preciosos ORDER BY fecha DESC LIMIT 30;" }
-            ],
-            tables: [
-              { id: "macro_cobre", name: "macro.cobre", rows: "Una fila por día", file: "outputs/macro/macro_cobre.parquet" },
-              { id: "macro_metales_preciosos", name: "macro.metales_preciosos", rows: "Una fila por día", file: "outputs/macro/macro_metales_preciosos.parquet" }
-            ]
-          },
-          {
-            id: "cat_macro_sector_externo_fiscal",
-            type: "circular",
-            label: "Sector externo y fiscal",
-            badge: "3 tablas",
-            badgeType: "data",
-            status: "active",
-            sector: "macro",
-            chips: [
+              { label: "Oro y plata: últimos 30 días", query: "SELECT fecha, oro_usd_por_onza_troy, plata_usd_por_onza_troy, round(oro_usd_por_onza_troy / plata_usd_por_onza_troy, 2) AS relacion_oro_plata FROM macro_metales_preciosos ORDER BY fecha DESC LIMIT 30;" },
               { label: "Reservas internacionales: últimos 24 meses", query: "SELECT periodo, reservas_internacionales_millones_usd FROM macro_reservas_internacionales ORDER BY periodo DESC LIMIT 24;" },
-              { label: "Tasa de la Fed frente a la TPM de Chile: promedio mensual", query: "SELECT f.periodo, round(avg(f.tasa_fed_funds_pct), 2) AS fed_funds_pct, round(avg(t.tpm_pct), 2) AS tpm_chile_pct FROM macro_tasa_referencia_fed f JOIN macro_tasas_corto_plazo t USING (periodo) GROUP BY f.periodo ORDER BY f.periodo DESC LIMIT 24;" },
               { label: "Deuda pública sobre PIB: serie trimestral", query: "SELECT periodo, deuda_bruta_gobierno_central_pct_pib FROM macro_deuda_publica_pct_pib ORDER BY periodo DESC LIMIT 20;" }
             ],
             tables: [
+              { id: "macro_inflacion_ipc", name: "macro.inflacion_ipc", rows: "Una fila por mes", file: "outputs/macro/macro_inflacion_ipc.parquet" },
+              { id: "macro_imacec", name: "macro.imacec", rows: "Una fila por mes", file: "outputs/macro/macro_imacec.parquet" },
+              { id: "macro_pib_trimestral", name: "macro.pib_trimestral", rows: "Una fila por trimestre", file: "outputs/macro/macro_pib_trimestral.parquet" },
+              { id: "macro_mercado_laboral", name: "macro.mercado_laboral", rows: "Una fila por mes", file: "outputs/macro/macro_mercado_laboral.parquet" },
+              { id: "macro_cobre", name: "macro.cobre", rows: "Una fila por día", file: "outputs/macro/macro_cobre.parquet" },
+              { id: "macro_metales_preciosos", name: "macro.metales_preciosos", rows: "Una fila por día", file: "outputs/macro/macro_metales_preciosos.parquet" },
               { id: "macro_reservas_internacionales", name: "macro.reservas_internacionales", rows: "Una fila por mes", file: "outputs/macro/macro_reservas_internacionales.parquet" },
-              { id: "macro_tasa_referencia_fed", name: "macro.tasa_referencia_fed", rows: "Una fila por día", file: "outputs/macro/macro_tasa_referencia_fed.parquet" },
               { id: "macro_deuda_publica_pct_pib", name: "macro.deuda_publica_pct_pib", rows: "Una fila por trimestre", file: "outputs/macro/macro_deuda_publica_pct_pib.parquet" }
             ]
           },
@@ -1141,6 +1101,14 @@ const EXPLORER_TREE = [
   }
 ];
 
+// Clave del bloque «Archivo y registros complementarios» en expandedNodes.
+const ARCHIVE_NODE = "tier_fuera";
+
+function escapeAttr(texto) {
+  return String(texto === null || texto === undefined ? "" : texto)
+    .replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
 class SidebarController {
   constructor() {
     this.sidebar = document.getElementById("sidebar");
@@ -1222,6 +1190,88 @@ class SidebarController {
     });
   }
 
+  /* ── Alcance editorial (recorte visual) ─────────────────────────────────
+     El nivel de cada industria (núcleo, instituciones, contexto, archivo o
+     registro) sale de docs/vocabulario.json vía window.SIFAlcance. Sin él, el
+     árbol se dibuja completo y plano, como antes del recorte. */
+
+  alcance() {
+    const A = window.SIFAlcance;
+    return A && A.disponible() ? A : null;
+  }
+
+  // Nivel de un grupo: el de su primer sector (los sectores de un grupo comparten nivel).
+  nivelDeGrupo(group) {
+    const A = this.alcance();
+    const primero = A && (group.children || [])[0];
+    return primero ? A.nivelDe(primero.sector) : null;
+  }
+
+  // Grupos del árbol repartidos por nivel, en el orden editorial.
+  seccionesPorNivel() {
+    const A = this.alcance();
+    if (!A) return null;
+    const niveles = A.niveles();
+    const secciones = niveles.map((nivel) => ({ nivel, grupos: [] }));
+    const ultimaVisible = secciones.filter((s) => s.nivel.visible).pop() || secciones[0];
+    EXPLORER_TREE.forEach((group) => {
+      const id = this.nivelDeGrupo(group);
+      const destino = secciones.find((s) => s.nivel.id === id) || ultimaVisible;
+      destino.grupos.push(group);
+    });
+    secciones.forEach((s) => s.grupos.sort((a, b) =>
+      A.orden((a.children[0] || {}).sector) - A.orden((b.children[0] || {}).sector)));
+    return secciones.filter((s) => s.grupos.length > 0);
+  }
+
+  // Carpetas de un sector tal como se muestran: sin tablas ocultas (p. ej. una tabla
+  // todavía sin datos en la fuente) y con las variantes dentro de la carpeta de su tabla
+  // principal (p. ej. el registro CMF de corredoras, que repite la misma lista).
+  carpetasVisibles(sector) {
+    const A = this.alcance();
+    const carpetas = sector.children || [];
+    if (!A) return carpetas.map((circ) => ({ circ, tablas: circ.tables || [], variantes: [] }));
+    const absorbidas = new Set();
+    const variantes = new Map();
+    carpetas.forEach((circ) => {
+      const tablas = circ.tables || [];
+      const padres = tablas.map((t) => A.varianteDe(t.id));
+      if (!tablas.length || !padres.every(Boolean)) return;
+      const destino = carpetas.find((otra) => otra !== circ && (otra.tables || []).some((t) => padres.indexOf(t.id) !== -1));
+      if (!destino) return;
+      absorbidas.add(circ.id);
+      if (!variantes.has(destino.id)) variantes.set(destino.id, []);
+      tablas.forEach((tbl) => variantes.get(destino.id).push({ tbl, circ }));
+    });
+    return carpetas
+      .filter((circ) => !absorbidas.has(circ.id))
+      .map((circ) => ({
+        circ,
+        tablas: (circ.tables || []).filter((t) => !A.tablaOculta(t.id)),
+        variantes: variantes.get(circ.id) || []
+      }))
+      .filter((c) => c.tablas.length > 0 || c.variantes.length > 0);
+  }
+
+  // Consultas sugeridas de una carpeta, sumando las de sus variantes.
+  chipsDeCarpeta(circId) {
+    for (const grp of EXPLORER_TREE) {
+      for (const sec of grp.children) {
+        const entrada = this.carpetasVisibles(sec).find((c) => c.circ.id === circId);
+        if (!entrada) continue;
+        const chips = (entrada.circ.chips || []).slice();
+        const vistas = new Set();
+        entrada.variantes.forEach(({ circ }) => {
+          if (vistas.has(circ.id)) return;
+          vistas.add(circ.id);
+          (circ.chips || []).forEach((chip) => chips.push(chip));
+        });
+        return chips;
+      }
+    }
+    return null;
+  }
+
   render() {
     if (!this.treeContainer) return;
 
@@ -1229,150 +1279,259 @@ class SidebarController {
       <div class="explorer-toolbar">
         <div class="toolbar-title">EXPLORADOR</div>
         <div class="toolbar-actions">
-          <button class="tool-btn" id="btn-expand-all" title="Expandir todo">Expandir</button>
+          <button class="tool-btn" id="btn-expand-all" title="Expandir todo (el archivo sigue plegado)">Expandir</button>
           <button class="tool-btn" id="btn-collapse-all" title="Colapsar todo">Colapsar</button>
-          <button class="tool-btn" id="btn-show-all" title="Ver todo">Todo</button>
+          <button class="tool-btn" id="btn-show-all" title="Vista principal: quita el filtro de industria (núcleo, instituciones y contexto)">Principal</button>
         </div>
       </div>
       <div class="tree-root">
     `;
 
-    EXPLORER_TREE.forEach((group) => {
-      let groupChildrenHtml = "";
+    const secciones = this.seccionesPorNivel();
+    if (!secciones) {
+      EXPLORER_TREE.forEach((group) => { html += this.renderGroup(group, null); });
+    } else {
+      const dentro = secciones.filter((s) => s.nivel.visible);
+      const fuera = secciones.filter((s) => !s.nivel.visible);
+      dentro.forEach((seccion) => { html += this.renderTier(seccion); });
+      if (fuera.length) html += this.renderArchive(fuera);
+    }
 
-      group.children.forEach((sector) => {
-        let sectorChildrenHtml = "";
+    html += `</div>`;
+    this.treeContainer.innerHTML = html;
+    this.bindTreeEvents();
+  }
 
-        sector.children.forEach((circular) => {
-          let tablesHtml = "";
-          circular.tables.forEach((tbl) => {
-            const isSelected = tbl.id === this.selectedTableId ? "selected" : "";
-            const hasPartitions = tbl.partitions && tbl.partitions.length > 0;
-            const partKey = `part_${tbl.id}`;
-            const isPartOpen = this.expandedNodes.has(partKey);
-            const arrowHtml = hasPartitions
-              ? `<span class="arrow-slot tbl-arrow-slot" data-target="${partKey}">${isPartOpen ? ICONS.chevronDown : ICONS.chevronRight}</span>`
-              : `<span class="arrow-slot empty"></span>`;
+  renderTier(seccion) {
+    const A = this.alcance();
+    const nivel = seccion.nivel;
+    const meta = nivel.conjuntos
+      ? `${A.numero(nivel.conjuntos)} conj. · ${A.compacto(nivel.filas)} filas`
+      : "";
+    const aviso = nivel.aviso ? `<div class="tree-tier-aviso">${nivel.aviso}</div>` : "";
+    return `
+      <div class="tree-tier tier-${nivel.id}" data-tier="${nivel.id}">
+        <div class="tree-tier-header" title="${escapeAttr(nivel.descripcion || nivel.etiqueta)}">
+          <span class="tree-tier-title">${nivel.etiqueta}</span>
+          <span class="tree-tier-meta">${meta}</span>
+        </div>
+        ${aviso}
+        ${seccion.grupos.map((group) => this.renderGroup(group, nivel)).join("")}
+      </div>
+    `;
+  }
 
-            let partHtml = "";
-            if (hasPartitions) {
-              tbl.partitions.forEach((part) => {
-                const isPartSelected = part.id === this.selectedTableId ? "selected" : "";
-                partHtml += `
-                  <div class="tree-row tree-table tree-partition ${isPartSelected}" data-table-id="${part.id}" data-file="${part.file}" data-name="${tbl.name} (${part.name})" data-sector="${circular.sector}">
-                    <span class="tree-indent-4"></span>
-                    <svg class="tree-icon icon-partition" width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M3 2a1 1 0 011 1v8a2 2 0 002 2h7a1 1 0 110 2H6a4 4 0 01-4-4V3a1 1 0 011-1z"/><path fill-rule="evenodd" d="M11.293 10.293a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L12.586 15H6a1 1 0 110-2h6.586l-1.293-1.293a1 1 0 010-1.414z"/></svg>
-                    <span class="tree-label partition-label">${part.name}</span>
-                    <span class="table-rows-tag">${part.rows}</span>
-                    <div class="table-hover-actions">
-                      <button class="table-action-btn run-btn" data-table-id="${part.id}" data-file="${part.file}" data-name="${tbl.name} (${part.name})" title="Consultar partición en DuckDB">▶ SQL</button>
-                    </div>
-                  </div>
-                `;
-              });
-            }
+  // Archivo congelado y registro complementario: al final y plegados, pero en el DOM,
+  // de modo que la búsqueda del explorador los encuentra y los abre.
+  renderArchive(secciones) {
+    const A = this.alcance();
+    const fuera = A.datos().fuera;
+    const industrias = secciones.reduce((n, s) => n + s.grupos.length, 0);
+    const abierto = this.expandedNodes.has(ARCHIVE_NODE);
+    return `
+      <div class="tree-archive ${abierto ? "open" : ""}" data-archive="${ARCHIVE_NODE}">
+        <button type="button" class="tree-archive-toggle" aria-expanded="${abierto ? "true" : "false"}"
+                title="Industrias fuera del foco de esta edición: siguen publicadas, consultables y descargables">
+          <span class="arrow-slot">${abierto ? ICONS.chevronDown : ICONS.chevronRight}</span>
+          <span class="tree-archive-title">Archivo y registros complementarios</span>
+          <span class="tree-archive-meta">${industrias} industrias · ${A.numero(fuera.conjuntos)} conj. · ${A.porcentaje(fuera.pct_filas)} de las filas</span>
+        </button>
+        <div class="tree-archive-body">
+          ${secciones.map((seccion) => this.renderTier(seccion)).join("")}
+        </div>
+      </div>
+    `;
+  }
 
-            tablesHtml += `
-              <div class="table-node-wrapper">
-                <div class="tree-row tree-table ${isSelected}" data-table-id="${tbl.id}" data-file="${tbl.file || ''}" data-name="${tbl.name}" data-sector="${circular.sector}">
-                  <span class="tree-indent-3"></span>
-                  ${arrowHtml}
-                  ${ICONS.table}
-                  <span class="tree-label table-label">${tbl.name}</span>
-                  <span class="table-rows-tag"${tbl.nota ? ` title="${tbl.nota.replace(/"/g, "&quot;")}"` : ""}>${tbl.rows}</span>
-                  <div class="table-hover-actions">
-                    <button class="table-action-btn run-btn" data-table-id="${tbl.id}" data-file="${tbl.file || ''}" data-name="${tbl.name}" title="Consultar en Terminal DuckDB">▶ SQL</button>
-                    <button class="table-action-btn inspect-btn" data-table-id="${tbl.id}" title="Inspeccionar esquema">i</button>
-                  </div>
-                </div>
-                ${hasPartitions ? `<div class="table-partitions-children" id="${partKey}" style="display: ${isPartOpen ? 'block' : 'none'};">${partHtml}</div>` : ""}
-              </div>
-            `;
-          });
+  renderTableRow(tbl, circular, variante) {
+    const isSelected = tbl.id === this.selectedTableId ? "selected" : "";
+    const hasPartitions = tbl.partitions && tbl.partitions.length > 0;
+    const partKey = `part_${tbl.id}`;
+    const isPartOpen = this.expandedNodes.has(partKey);
+    const arrowHtml = hasPartitions
+      ? `<span class="arrow-slot tbl-arrow-slot" data-target="${partKey}">${isPartOpen ? ICONS.chevronDown : ICONS.chevronRight}</span>`
+      : `<span class="arrow-slot empty"></span>`;
 
-          const isCircOpen = this.expandedNodes.has(circular.id);
-          const circOpenClass = isCircOpen ? "open" : "";
-          const circArrow = isCircOpen ? ICONS.chevronDown : ICONS.chevronRight;
-          const circPendingAudit = circular.status === "por_auditar";
-          const circBadgeClass = circPendingAudit
-            ? "badge-por-auditar"
-            : (circular.status === "roadmap"
-              ? "badge-roadmap"
-              : (circular.badgeType === "entities" ? "badge-entities" : "badge-data"));
-          const circRoadmapClass = circular.status === "roadmap"
-            ? "roadmap-node"
-            : (circPendingAudit ? "audit-pending-node" : "");
-
-          sectorChildrenHtml += `
-            <div class="tree-node circular-node ${circOpenClass} ${circRoadmapClass}" data-node-id="${circular.id}">
-              <div class="tree-row tree-circular" data-circular-id="${circular.id}" data-sector="${circular.sector}">
-                <span class="tree-indent-2"></span>
-                <span class="arrow-slot">${circArrow}</span>
-                ${ICONS.database}
-                <span class="tree-label">${circular.label}</span>
-                <span class="node-badge ${circBadgeClass}">${circular.badge}</span>
-              </div>
-              <div class="node-children">
-                ${tablesHtml}
-              </div>
+    let partHtml = "";
+    if (hasPartitions) {
+      tbl.partitions.forEach((part) => {
+        const isPartSelected = part.id === this.selectedTableId ? "selected" : "";
+        partHtml += `
+          <div class="tree-row tree-table tree-partition ${isPartSelected}" data-table-id="${part.id}" data-file="${part.file}" data-name="${tbl.name} (${part.name})" data-sector="${circular.sector}">
+            <span class="tree-indent-4"></span>
+            <svg class="tree-icon icon-partition" width="11" height="11" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M3 2a1 1 0 011 1v8a2 2 0 002 2h7a1 1 0 110 2H6a4 4 0 01-4-4V3a1 1 0 011-1z"/><path fill-rule="evenodd" d="M11.293 10.293a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L12.586 15H6a1 1 0 110-2h6.586l-1.293-1.293a1 1 0 010-1.414z"/></svg>
+            <span class="tree-label partition-label">${part.name}</span>
+            <span class="table-rows-tag">${part.rows}</span>
+            <div class="table-hover-actions">
+              <button class="table-action-btn run-btn" data-table-id="${part.id}" data-file="${part.file}" data-name="${tbl.name} (${part.name})" title="Consultar partición en DuckDB">▶ SQL</button>
             </div>
-          `;
-        });
+          </div>
+        `;
+      });
+    }
 
-        const isSectorOpen = this.expandedNodes.has(sector.id);
-        const sectorOpenClass = isSectorOpen ? "open" : "";
-        const sectorArrow = isSectorOpen ? ICONS.chevronDown : ICONS.chevronRight;
+    const varianteTag = variante
+      ? `<span class="tree-variant-tag" title="${escapeAttr(variante.nota || "")}">${variante.etiqueta || "variante"}</span>`
+      : "";
+    return `
+      <div class="table-node-wrapper">
+        <div class="tree-row tree-table ${isSelected} ${variante ? "tree-variant" : ""}" data-table-id="${tbl.id}" data-file="${tbl.file || ''}" data-name="${tbl.name}" data-sector="${circular.sector}">
+          <span class="tree-indent-3"></span>
+          ${arrowHtml}
+          ${ICONS.table}
+          <span class="tree-label table-label">${tbl.name}</span>
+          ${varianteTag}
+          <span class="table-rows-tag"${tbl.nota ? ` title="${tbl.nota.replace(/"/g, "&quot;")}"` : ""}>${tbl.rows}</span>
+          <div class="table-hover-actions">
+            <button class="table-action-btn run-btn" data-table-id="${tbl.id}" data-file="${tbl.file || ''}" data-name="${tbl.name}" title="Consultar en Terminal DuckDB">▶ SQL</button>
+            <button class="table-action-btn inspect-btn" data-table-id="${tbl.id}" title="Inspeccionar esquema">i</button>
+          </div>
+        </div>
+        ${hasPartitions ? `<div class="table-partitions-children" id="${partKey}" style="display: ${isPartOpen ? 'block' : 'none'};">${partHtml}</div>` : ""}
+      </div>
+    `;
+  }
 
-        groupChildrenHtml += `
-          <div class="tree-node sector-node ${sectorOpenClass}" data-node-id="${sector.id}">
-            <div class="tree-row tree-sector" data-sector-id="${sector.id}" data-sector="${sector.sector}">
-              <span class="tree-indent-1"></span>
-              <span class="arrow-slot">${sectorArrow}</span>
-              ${ICONS.folder}
-              <span class="tree-label">${sector.label}</span>
+  renderGroup(group, nivel) {
+    const A = this.alcance();
+    let groupChildrenHtml = "";
+
+    group.children.forEach((sector) => {
+      let sectorChildrenHtml = "";
+
+      this.carpetasVisibles(sector).forEach(({ circ: circular, tablas, variantes }) => {
+        let tablesHtml = tablas.map((tbl) => this.renderTableRow(tbl, circular, null)).join("");
+        tablesHtml += variantes.map(({ tbl, circ }) => this.renderTableRow(tbl, circ, A ? A.variante(tbl.id) : null)).join("");
+
+        const isCircOpen = this.expandedNodes.has(circular.id);
+        const circOpenClass = isCircOpen ? "open" : "";
+        const circArrow = isCircOpen ? ICONS.chevronDown : ICONS.chevronRight;
+        const circPendingAudit = circular.status === "por_auditar";
+        const circBadgeClass = circPendingAudit
+          ? "badge-por-auditar"
+          : (circular.status === "roadmap"
+            ? "badge-roadmap"
+            : (circular.badgeType === "entities" ? "badge-entities" : "badge-data"));
+        const circRoadmapClass = circular.status === "roadmap"
+          ? "roadmap-node"
+          : (circPendingAudit ? "audit-pending-node" : "");
+
+        sectorChildrenHtml += `
+          <div class="tree-node circular-node ${circOpenClass} ${circRoadmapClass}" data-node-id="${circular.id}">
+            <div class="tree-row tree-circular" data-circular-id="${circular.id}" data-sector="${circular.sector}">
+              <span class="tree-indent-2"></span>
+              <span class="arrow-slot">${circArrow}</span>
+              ${ICONS.database}
+              <span class="tree-label">${circular.label}</span>
+              <span class="node-badge ${circBadgeClass}">${circular.badge}</span>
             </div>
             <div class="node-children">
-              ${sectorChildrenHtml}
+              ${tablesHtml}
             </div>
           </div>
         `;
       });
 
-      const isGroupOpen = this.expandedNodes.has(group.id);
-      const groupOpenClass = isGroupOpen ? "open" : "";
-      const groupArrow = isGroupOpen ? ICONS.chevronDown : ICONS.chevronRight;
-      const groupRoadmapClass = group.status === "roadmap" ? "roadmap-node" : "";
+      const isSectorOpen = this.expandedNodes.has(sector.id);
+      const sectorOpenClass = isSectorOpen ? "open" : "";
+      const sectorArrow = isSectorOpen ? ICONS.chevronDown : ICONS.chevronRight;
 
-      let badgesHtml = "";
-      if (group.badges && group.badges.length > 0) {
-        badgesHtml = group.badges.map((b) => {
-          const bClass = b.type === "pending" ? "badge-por-auditar" : (b.type === "entities" ? "badge-entities" : (b.type === "data" ? "badge-data" : "badge-roadmap"));
-          return `<span class="group-badge node-badge ${bClass}" title="${b.title || b.text}">${b.text}</span>`;
-        }).join("");
-      } else if (group.badge) {
-        const groupBadgeClass = group.status === "roadmap" ? "badge-roadmap" : "badge-data";
-        badgesHtml = `<span class="group-badge node-badge ${groupBadgeClass}">${group.badge}</span>`;
-      }
-
-      html += `
-        <div class="tree-group ${groupOpenClass} ${groupRoadmapClass}" data-group-id="${group.id}">
-          <div class="tree-group-header" title="${group.label}">
-            <span class="arrow-slot">${groupArrow}</span>
-            <span class="group-title">${group.label}</span>
-            <div class="group-badges">
-              ${badgesHtml}
-            </div>
+      groupChildrenHtml += `
+        <div class="tree-node sector-node ${sectorOpenClass}" data-node-id="${sector.id}">
+          <div class="tree-row tree-sector" data-sector-id="${sector.id}" data-sector="${sector.sector}">
+            <span class="tree-indent-1"></span>
+            <span class="arrow-slot">${sectorArrow}</span>
+            ${ICONS.folder}
+            <span class="tree-label">${sector.label}</span>
           </div>
-          <div class="group-children">
-            ${groupChildrenHtml}
+          <div class="node-children">
+            ${sectorChildrenHtml}
           </div>
         </div>
       `;
     });
 
-    html += `</div>`;
-    this.treeContainer.innerHTML = html;
-    this.bindTreeEvents();
+    const isGroupOpen = this.expandedNodes.has(group.id);
+    const groupOpenClass = isGroupOpen ? "open" : "";
+    const groupArrow = isGroupOpen ? ICONS.chevronDown : ICONS.chevronRight;
+    const groupRoadmapClass = group.status === "roadmap" ? "roadmap-node" : "";
+    const fuera = nivel && !nivel.visible;
+
+    let badgesHtml = "";
+    if (fuera) {
+      badgesHtml += `<span class="group-badge node-badge badge-nivel badge-nivel-${nivel.id}" title="${escapeAttr(nivel.aviso || nivel.etiqueta)}">${nivel.corta}</span>`;
+    }
+    if (group.badges && group.badges.length > 0) {
+      badgesHtml += group.badges.map((b) => {
+        const bClass = b.type === "pending" ? "badge-por-auditar" : (b.type === "entities" ? "badge-entities" : (b.type === "data" ? "badge-data" : "badge-roadmap"));
+        return `<span class="group-badge node-badge ${bClass}" title="${b.title || b.text}">${b.text}</span>`;
+      }).join("");
+    } else if (group.badge) {
+      const groupBadgeClass = group.status === "roadmap" ? "badge-roadmap" : "badge-data";
+      badgesHtml += `<span class="group-badge node-badge ${groupBadgeClass}">${group.badge}</span>`;
+    }
+
+    return `
+      <div class="tree-group ${groupOpenClass} ${groupRoadmapClass} ${fuera ? "tree-group-fuera" : ""}" data-group-id="${group.id}"${nivel ? ` data-tier="${nivel.id}"` : ""}>
+        <div class="tree-group-header" title="${group.label}">
+          <span class="arrow-slot">${groupArrow}</span>
+          <span class="group-title">${group.label}</span>
+          <div class="group-badges">
+            ${badgesHtml}
+          </div>
+        </div>
+        <div class="group-children">
+          ${groupChildrenHtml}
+        </div>
+      </div>
+    `;
+  }
+
+  // Abre en el explorador el sector pedido (desde la portada u otra vista): despliega su
+  // grupo —y el archivo si hace falta—, lo marca como industria activa y lo centra.
+  revealSector(sectorKey, source = "portada") {
+    const A = window.SIFAlcance;
+    const objetivo = A ? A.clave(sectorKey) : String(sectorKey || "");
+    for (const group of EXPLORER_TREE) {
+      for (const sec of group.children) {
+        if ((A ? A.clave(sec.sector) : sec.sector) !== objetivo) continue;
+        this.expandedNodes.add(group.id);
+        this.expandedNodes.add(sec.id);
+        if (this.alcance() && this.alcance().esArchivo(sec.sector)) this.expandedNodes.add(ARCHIVE_NODE);
+        this.mostrarBarra();
+        if (this.searchInput) this.searchInput.value = "";
+        this.render();
+        this.setActiveSector(sec.sector, source);
+        if (window.erdInstance) window.erdInstance.focusSector(sec.sector);
+        if (this.breadcrumbEl) this.breadcrumbEl.textContent = this.describeLocation(sec.sector, "");
+        const nodo = this.treeContainer ? this.treeContainer.querySelector(`[data-node-id="${sec.id}"]`) : null;
+        if (nodo) {
+          if (typeof nodo.scrollIntoView === "function") nodo.scrollIntoView({ block: "nearest", behavior: "smooth" });
+          nodo.classList.add("tree-flash");
+          setTimeout(() => nodo.classList.remove("tree-flash"), 1800);
+        }
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // Abre la sección de archivo y registros complementarios (enlace discreto de la portada).
+  openArchive() {
+    this.expandedNodes.add(ARCHIVE_NODE);
+    this.mostrarBarra();
+    if (this.searchInput) this.searchInput.value = "";
+    this.render();
+    const archivo = this.treeContainer ? this.treeContainer.querySelector(".tree-archive") : null;
+    if (archivo && typeof archivo.scrollIntoView === "function") archivo.scrollIntoView({ block: "start", behavior: "smooth" });
+    return Boolean(archivo);
+  }
+
+  mostrarBarra() {
+    if (this.sidebar && this.sidebar.classList.contains("collapsed")) {
+      this.sidebar.classList.remove("collapsed");
+      setTimeout(() => { if (window.erdInstance) window.erdInstance.resize(); }, 300);
+    }
   }
 
   bindTreeEvents() {
@@ -1411,8 +1570,27 @@ class SidebarController {
           const slot = document.querySelector(`.tbl-arrow-slot[data-target="${el.id}"]`);
           if (slot) slot.innerHTML = ICONS.chevronRight;
         });
+        document.querySelectorAll(".tree-archive").forEach((archivo) => {
+          archivo.classList.remove("open");
+          const toggle = archivo.querySelector(".tree-archive-toggle");
+          if (toggle) toggle.setAttribute("aria-expanded", "false");
+          const arrow = archivo.querySelector(".tree-archive-toggle .arrow-slot");
+          if (arrow) arrow.innerHTML = ICONS.chevronRight;
+        });
       });
     }
+
+    // Archivo y registros complementarios: plegado por defecto, al final del árbol.
+    document.querySelectorAll(".tree-archive-toggle").forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+        const archivo = toggle.closest(".tree-archive");
+        const isOpen = archivo.classList.toggle("open");
+        this.setNodeExpanded(ARCHIVE_NODE, isOpen);
+        toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        const arrow = toggle.querySelector(".arrow-slot");
+        if (arrow) arrow.innerHTML = isOpen ? ICONS.chevronDown : ICONS.chevronRight;
+      });
+    });
 
     // Toolbar: Ver todo
     const allBtn = document.getElementById("btn-show-all");
@@ -1420,11 +1598,11 @@ class SidebarController {
       allBtn.addEventListener("click", () => {
         this.setActiveSector("todos", "all-industries");
         document.querySelectorAll(".tree-row").forEach((r) => r.classList.remove("selected"));
-        if (this.breadcrumbEl) this.breadcrumbEl.textContent = "Todas las Industrias";
+        if (this.breadcrumbEl) this.breadcrumbEl.textContent = "Vista principal";
         if (window.erdInstance) window.erdInstance.focusSector("todos");
         if (window.ChatTerminal) {
           window.ChatTerminal.restoreDefaultChips();
-          window.ChatTerminal.addSystemMessage("Vista restablecida: Todas las Industrias.");
+          window.ChatTerminal.addSystemMessage("Vista restablecida: vista principal (núcleo, instituciones y contexto).");
         }
       });
     }
@@ -1534,7 +1712,8 @@ class SidebarController {
 
   // Ruta legible de la ubicación actual, usada por la barra de contexto del panel.
   describeLocation(sector, tableName) {
-    if (!sector || sector === "todos") return "Todas las industrias";
+    if (!sector || sector === "todos") return "Vista principal";
+    const prefijo = this.prefijoNivel(sector);
     for (const grupo of EXPLORER_TREE) {
       for (const sec of grupo.children) {
         if (sec.sector !== sector) continue;
@@ -1547,10 +1726,18 @@ class SidebarController {
           }
         }
         const tablaCorta = tableName && tableName.includes(".") ? tableName.split(".").pop() : tableName;
-        return [sec.label, circularLabel, tablaCorta].filter(Boolean).join(" \u203a ");
+        return prefijo + [sec.label, circularLabel, tablaCorta].filter(Boolean).join(" \u203a ");
       }
     }
     return tableName || sector;
+  }
+
+  // "Archivo › " o "Registro › " para las industrias fuera del foco; vacío en el resto.
+  prefijoNivel(sector) {
+    const A = this.alcance();
+    if (!A || !A.esArchivo(sector)) return "";
+    const nivel = A.infoNivelDe(sector);
+    return nivel ? `${nivel.corta} \u203a ` : "";
   }
 
   setNodeExpanded(nodeId, isOpen) {
@@ -1593,20 +1780,23 @@ class SidebarController {
     this.setActiveSector(sector, "circular");
 
     if (this.breadcrumbEl) {
-      this.breadcrumbEl.textContent = `${targetSectorName} \u203a ${targetCirc.label}`;
+      this.breadcrumbEl.textContent = `${this.prefijoNivel(sector)}${targetSectorName} \u203a ${targetCirc.label}`;
     }
 
     if (window.erdInstance) {
       window.erdInstance.focusSector(sector);
     }
 
-    if (window.ChatTerminal && targetCirc.chips) {
-      window.ChatTerminal.setCustomChips(targetCirc.chips, `${targetSectorName} · ${targetCirc.label}`);
+    const chips = this.chipsDeCarpeta(circId) || targetCirc.chips;
+    if (window.ChatTerminal && chips) {
+      window.ChatTerminal.setCustomChips(chips, `${this.prefijoNivel(sector)}${targetSectorName} · ${targetCirc.label}`);
     }
 
-    // Sincronizar automáticamente el Visor de Datos con la primera tabla de la circular
-    if (targetCirc.tables && targetCirc.tables.length > 0) {
-      const primary = targetCirc.tables[0];
+    // Sincronizar automáticamente el Visor de Datos con la primera tabla visible de la circular
+    const A = this.alcance();
+    const visibles = (targetCirc.tables || []).filter((t) => !A || !A.tablaOculta(t.id));
+    if (visibles.length > 0) {
+      const primary = visibles[0];
       this.onTableSelect(primary.id, primary.name, primary.file, sector);
     }
   }
@@ -1645,9 +1835,10 @@ class SidebarController {
 
   filterTree(query) {
     if (!query) {
-      document.querySelectorAll(".tree-group, .tree-node, .tree-table").forEach((el) => {
+      document.querySelectorAll(".tree-group, .tree-node, .tree-table, .tree-tier, .tree-archive").forEach((el) => {
         el.style.display = "";
       });
+      document.querySelectorAll(".tree-archive").forEach((el) => el.classList.remove("search-open"));
       return;
     }
 
@@ -1727,6 +1918,18 @@ class SidebarController {
       } else {
         group.style.display = "none";
       }
+    });
+
+    // Niveles sin coincidencias se ocultan; el archivo se abre solo si tiene alguna.
+    const conCoincidencias = (contenedor) => Array.from(contenedor.querySelectorAll(".tree-group"))
+      .some((group) => group.style.display !== "none");
+    document.querySelectorAll(".tree-tier").forEach((tier) => {
+      tier.style.display = conCoincidencias(tier) ? "" : "none";
+    });
+    document.querySelectorAll(".tree-archive").forEach((archivo) => {
+      const hay = conCoincidencias(archivo);
+      archivo.classList.toggle("search-open", hay);
+      archivo.style.display = hay ? "" : "none";
     });
   }
 }
