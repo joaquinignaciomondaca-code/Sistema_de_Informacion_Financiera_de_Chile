@@ -12,12 +12,11 @@
  *
  * Regla de este módulo: si un dato todavía no existe (DOI, ORCID, filiación),
  * el bloque lo declara pendiente. Nunca inventa un identificador: un DOI falso
- * es peor que un DOI pendiente, y es exactamente el tipo de detalle que un
- * revisor revisa primero.
+ * es peor que un DOI pendiente.
  *
- * El sitio es la plataforma viva de exploración. El objeto citable es la
- * versión congelada (SIF-Chile Core Holdings vX.Y) depositada en Zenodo con su
- * DOI: esa es la que se cita en un paper, no la página, que cambia.
+ * El sitio es la plataforma viva de exploración y cambia con cada publicación.
+ * Lo que se cita es la versión congelada (SIF-Chile Core Holdings vX.Y), con su
+ * fecha de corte y su DOI: mismos datos, mismos archivos, mismos hashes.
  */
 (function (global) {
   "use strict";
@@ -30,7 +29,7 @@
     publicada: "2026-10-20",
     doi: "",                   // ← completar cuando Zenodo asigne el DOI
     zenodo: "",                // ← URL del registro en Zenodo
-    estado: "En preparación: el depósito en Zenodo y su DOI están pendientes.",
+    estado: "En preparación: el snapshot descargable de la versión congelada y su DOI están pendientes.",
 
     // Autoría y contacto (se completa con los datos públicos del autor).
     autor: "Joaquín Mondaca",
@@ -132,10 +131,10 @@
   function htmlInformacion() {
     const doiFila = CITA.doi
       ? fila("DOI", enlace(CITA.doi.startsWith("http") ? CITA.doi : `https://doi.org/${CITA.doi}`, CITA.doi))
-      : fila("DOI", dato("", "pendiente de Zenodo"));
+      : fila("DOI", dato("", "pendiente"));
     const snapshot = CITA.zenodo
-      ? enlace(CITA.zenodo, "Descargar snapshot académico (Zenodo)")
-      : `<span class="cita-pendiente">Snapshot en preparación: se publicará en Zenodo con DOI y registro de cambios.</span>`;
+      ? enlace(CITA.zenodo, `Descargar snapshot v${CITA.version}`)
+      : `<span class="cita-pendiente">Snapshot en preparación: se publicará con DOI y registro de cambios.</span>`;
 
     return `
       <div class="info-section-kicker">CITACIÓN Y VERSIÓN ACADÉMICA</div>
@@ -178,7 +177,7 @@
         </div>
       </div>
 
-      <p class="cita-nota">${escapar(CITA.estado)} Un paper cita la versión congelada; la página viva se cita como software o herramienta.</p>
+      <p class="cita-nota">${escapar(CITA.estado)} La versión congelada es la que se cita; la página viva se referencia como la herramienta de exploración.</p>
     `;
   }
 
@@ -212,12 +211,12 @@
   function htmlDescargas() {
     const snapshot = CITA.zenodo
       ? `<a class="dl-cita-btn" href="${escapar(CITA.zenodo)}" target="_blank" rel="noopener">Descargar snapshot académico (v${escapar(CITA.version)})</a>`
-      : `<span class="cita-pendiente">Snapshot v${escapar(CITA.version)} en preparación (Zenodo + DOI)</span>`;
+      : `<span class="cita-pendiente">Snapshot v${escapar(CITA.version)} en preparación (DOI pendiente)</span>`;
     return `
       <div class="dl-cita-head">
         <div>
           <h3>Citación y versión académica</h3>
-          <p>Si vas a usar la base en un informe, tesis o paper, cita la versión congelada
+          <p>Si vas a compartir una cifra, un gráfico o un archivo, cita la versión congelada
           <b>${escapar(CITA.nombre)} v${escapar(CITA.version)}</b> (corte ${escapar(CITA.corte)}), no la página viva.</p>
         </div>
         ${botonCopiar("cita-apa-dl", "Copiar cita")}
