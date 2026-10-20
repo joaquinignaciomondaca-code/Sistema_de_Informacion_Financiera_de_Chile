@@ -6,6 +6,12 @@
  * una ventana, aquí está todo el catálogo publicado a la vista (filas, peso,
  * periodo y archivos de cada conjunto) y cada fila trae su propia acción:
  * Parquet original, CSV, Excel o consulta SQL.
+ *
+ * El catálogo se ordena por el alcance editorial (window.SIFAlcance): núcleo,
+ * instituciones y contexto primero; el archivo congelado y los registros
+ * complementarios al final, plegados pero completos (la búsqueda y el filtro de
+ * sector también los alcanzan). Las tablas ocultas (sin datos en la fuente) no se
+ * listan y las variantes se muestran bajo su tabla principal.
  */
 class DownloadsPanelController {
   constructor() {
@@ -16,6 +22,7 @@ class DownloadsPanelController {
     this.sector = "todos";
     this.recorte = { activo: false, desde: null, hasta: null };
     this.abiertos = new Set();
+    this.archivoAbierto = false;
     this.ocupado = false;
     this.iniciado = false;
   }
@@ -46,6 +53,9 @@ class DownloadsPanelController {
         (grupo.items || []).forEach((item) => {
           item.grupo = grupo.grupo;
           item.sector = grupo.sector || grupo.grupo;
+          item.clave = item.clave || grupo.clave || null;
+          item.nivel = item.nivel || grupo.nivel || null;
+          item.bloque = this.bloqueDe(item.clave) || item.sector;
           this._items.push(item);
         });
       });
@@ -57,8 +67,83 @@ class DownloadsPanelController {
     return this.items().find((x) => x.id === id) || null;
   }
 
+  alcance() {
+    const A = window.SIFAlcance;
+    return A && A.disponible() ? A : null;
+  }
+
+  // Bloque visual de un sector: su agrupación (p. ej. securitizacion) o el propio sector.
+  bloqueDe(clave) {
+    if (!clave) return null;
+    const A = this.alcance();
+    return (A && A.agrupacionDe(clave)) || clave;
+  }
+
+  // Conjuntos que se listan: las tablas ocultas (sin datos en la fuente) quedan fuera.
+  listables() {
+    return this.items().filter((x) => !x.oculto);
+  }
+
+  esFuera(item) {
+    const A = this.alcance();
+    return Boolean(A && item && item.clave && A.esArchivo(item.clave));
+  }
+
   sectores() {
-    return Array.from(new Set(this.items().map((x) => x.sector))).sort((a, b) => a.localeCompare(b, "es"));
+    return Array.from(new Set(this.listables().map((x) => x.sector))).sort((a, b) => a.localeCompare(b, "es"));
+  }
+
+  // Variantes justo debajo de su tabla principal (p. ej. el registro CMF de corredoras).
+  ordenarVariantes(items) {
+    const ids = new Set(items.map((i) => i.id));
+    const salida = [];
+    items.filter((i) => !i.varianteDe || !ids.has(i.varianteDe)).forEach((principal) => {
+      salida.push(principal);
+      items.filter((v) => v.varianteDe === principal.id).forEach((v) => salida.push(v));
+    });
+    return salida;
+  }
+
+  // Niveles editoriales con sus bloques (un bloque por sector; las agrupaciones juntan
+  // varios sectores en uno). null si el catálogo no trae alcance.
+  secciones() {
+    const A = this.alcance();
+    if (!A) return null;
+    this.items();
+    const grupos = this.catalogo.grupos || [];
+    return A.niveles().map((nivel) => {
+      const bloques = [];
+      grupos.filter((g) => g.nivel === nivel.id).forEach((g) => {
+        const clave = this.bloqueDe(g.clave);
+        let bloque = bloques.find((b) => b.clave === clave);
+        if (!bloque) {
+          const agrupacion = A.agrupaciones()[clave];
+          bloque = {
+            clave,
+            nombre: agrupacion ? agrupacion.etiqueta : g.grupo,
+            nota: agrupacion ? agrupacion.nota || "" : "",
+            items: []
+          };
+          bloques.push(bloque);
+        }
+        (g.items || []).filter((i) => !i.oculto).forEach((i) => bloque.items.push(i));
+      });
+      bloques.forEach((b) => { b.items = this.ordenarVariantes(b.items); });
+      return { nivel, bloques: bloques.filter((b) => b.items.length) };
+    }).filter((s) => s.bloques.length);
+  }
+
+  opcionesSector() {
+    const secciones = this.secciones();
+    if (!secciones) {
+      return this.sectores()
+        .map((s) => `<option value="${this.escapar(s)}">${this.escapar(s)}</option>`)
+        .join("");
+    }
+    return secciones.map((s) => `
+      <optgroup label="${this.escapar(s.nivel.corta)}">
+        ${s.bloques.map((b) => `<option value="${this.escapar(b.clave)}">${this.escapar(b.nombre)}</option>`).join("")}
+      </optgroup>`).join("");
   }
 
   anos() {
@@ -81,9 +166,27 @@ class DownloadsPanelController {
     const opciones = [];
     for (let a = anios.max; a >= anios.min; a -= 1) opciones.push(a);
     const opcionesHtml = opciones.map((a) => `<option value="${a}">${a}</option>`).join("");
-    const sectoresHtml = this.sectores()
-      .map((s) => `<option value="${this.escapar(s)}">${this.escapar(s)}</option>`)
-      .join("");
+    const sectoresHtml = this.opcionesSector();
+    const A = this.alcance();
+    const principal = A ? A.datos().visible : null;
+    const fuera = A ? A.datos().fuera : null;
+    const statsHtml = principal
+      ? `
+            <div class="dl-stat"><b>${window.MFCDownload.numero(principal.conjuntos)}</b><span>conjuntos principales</span></div>
+            <div class="dl-stat"><b>${window.MFCDownload.numero(principal.filas)}</b><span>filas</span></div>
+            <div class="dl-stat"><b>${window.MFCDownload.bytes(principal.bytes)}</b><span>Parquet</span></div>
+            <div class="dl-stat dl-stat-fuera" title="Archivo congelado y registros complementarios: plegados al final del catálogo"><b>${window.MFCDownload.numero(fuera.conjuntos)}</b><span>en archivo</span></div>`
+      : `
+            <div class="dl-stat"><b>${window.MFCDownload.numero(this.catalogo.conjuntos)}</b><span>conjuntos</span></div>
+            <div class="dl-stat"><b>${window.MFCDownload.numero(this.catalogo.filas)}</b><span>filas</span></div>
+            <div class="dl-stat"><b>${window.MFCDownload.bytes(this.catalogo.bytes)}</b><span>Parquet</span></div>`;
+    const ocultas = A ? Object.keys(A.datos().tablas_ocultas || {}) : [];
+    const ocultasHtml = ocultas.length
+      ? `<span><b>No listadas:</b> ${ocultas.map((id) => {
+          const item = this.item(id);
+          return `<code>${this.escapar(item ? item.nombre : id)}</code>`;
+        }).join(", ")}, porque la fuente aún no publica datos (0 filas). Su vista SQL sigue disponible.</span>`
+      : "";
 
     this.container.innerHTML = `
       <div class="dl-shell">
@@ -91,15 +194,14 @@ class DownloadsPanelController {
           <div class="dl-hero-text">
             <h2 id="dl-title">Descargas</h2>
             <p>
-              Todo lo publicado por el sistema, en un solo lugar. Cada conjunto muestra cuántas filas,
-              qué periodo y cuánto pesa <b>antes</b> de descargar. El Parquet original se baja directo
-              desde este servidor; CSV y Excel se arman con el motor que corre en tu navegador.
+              Todo lo publicado por el sistema, en un solo lugar: primero el núcleo (seguros, fondos mutuos
+              y fondos de inversión), luego las instituciones y el contexto macro; al final, plegados, el
+              archivo congelado y los registros complementarios. Cada conjunto muestra cuántas filas, qué
+              periodo y cuánto pesa <b>antes</b> de descargar. El Parquet original se baja directo desde este
+              servidor; CSV y Excel se arman con el motor que corre en tu navegador.
             </p>
           </div>
-          <div class="dl-hero-stats">
-            <div class="dl-stat"><b>${window.MFCDownload.numero(this.catalogo.conjuntos)}</b><span>conjuntos</span></div>
-            <div class="dl-stat"><b>${window.MFCDownload.numero(this.catalogo.filas)}</b><span>filas</span></div>
-            <div class="dl-stat"><b>${window.MFCDownload.bytes(this.catalogo.bytes)}</b><span>Parquet</span></div>
+          <div class="dl-hero-stats">${statsHtml}
           </div>
         </header>
 
@@ -137,6 +239,7 @@ class DownloadsPanelController {
           <span><b>Parquet</b> es el archivo tal como se publica: liviano, sin truncamientos y listo para Python, DuckDB, Power BI o R.
           <b>CSV</b> y <b>Excel</b> se generan en tu navegador a partir de la vista publicada; si el volumen supera las 250.000 filas se entrega un .ZIP
           con partes manejables. Los conteos de filas provienen de los manifiestos publicados junto a los datos.</span>
+          ${ocultasHtml}
         </footer>
       </div>
     `;
@@ -160,6 +263,11 @@ class DownloadsPanelController {
   }
 
   pintarGrupos() {
+    const secciones = this.secciones();
+    if (secciones) {
+      this.controles.groups.innerHTML = this.seccionesHtml(secciones);
+      return;
+    }
     const html = (this.catalogo.grupos || [])
       .map((grupo) => {
         const filas = grupo.items.reduce((acc, i) => acc + (i.filas || 0), 0);
@@ -179,6 +287,59 @@ class DownloadsPanelController {
     this.controles.groups.innerHTML = html;
   }
 
+  seccionesHtml(secciones) {
+    const A = this.alcance();
+    const dentro = secciones.filter((s) => s.nivel.visible);
+    const fuera = secciones.filter((s) => !s.nivel.visible);
+    let html = dentro.map((s) => this.seccionHtml(s)).join("");
+    if (fuera.length) {
+      const resumen = A.datos().fuera;
+      const industrias = fuera.reduce((n, s) => n + s.bloques.length, 0);
+      html += `
+        <div class="dl-archive" id="dl-archive">
+          <button type="button" class="dl-archive-toggle" data-action="archivo" aria-expanded="false" aria-controls="dl-archive-body">
+            <span class="dl-archive-title">Archivo y registros complementarios</span>
+            <span class="dl-archive-meta">${industrias} industrias · ${window.MFCDownload.numero(resumen.conjuntos)} conjuntos · ${window.MFCDownload.numero(resumen.filas)} filas (${A.porcentaje(resumen.pct_filas)})</span>
+            <span class="dl-archive-cta">Mostrar</span>
+          </button>
+          <div class="dl-archive-body" id="dl-archive-body">
+            ${fuera.map((s) => this.seccionHtml(s)).join("")}
+          </div>
+        </div>
+      `;
+    }
+    return html;
+  }
+
+  seccionHtml(seccion) {
+    const n = seccion.nivel;
+    return `
+      <section class="dl-tier dl-tier-${n.id}" data-nivel="${n.id}">
+        <header class="dl-tier-head">
+          <div class="dl-tier-title"><b>${this.escapar(n.etiqueta)}</b><span>${this.escapar(n.descripcion || "")}</span></div>
+          <span class="dl-tier-meta">${window.MFCDownload.numero(n.conjuntos)} conjunto(s) · ${window.MFCDownload.numero(n.filas)} filas · ${window.MFCDownload.bytes(n.bytes)}</span>
+        </header>
+        ${n.aviso ? `<p class="dl-tier-aviso">${this.escapar(n.aviso)}</p>` : ""}
+        ${seccion.bloques.map((b) => this.bloqueHtml(b)).join("")}
+      </section>
+    `;
+  }
+
+  bloqueHtml(bloque) {
+    const filas = bloque.items.reduce((acc, i) => acc + (i.filas || 0), 0);
+    const peso = bloque.items.reduce((acc, i) => acc + (i.bytes || 0), 0);
+    return `
+      <section class="dl-group" data-grupo="${this.escapar(bloque.nombre)}" data-bloque="${this.escapar(bloque.clave)}">
+        <div class="dl-group-head">
+          <span class="dl-group-name">${this.escapar(bloque.nombre)}</span>
+          <span class="dl-group-meta">${bloque.items.length} conjunto(s) · ${window.MFCDownload.numero(filas)} filas · ${window.MFCDownload.bytes(peso)}</span>
+        </div>
+        ${bloque.nota ? `<p class="dl-group-note">${this.escapar(bloque.nota)}</p>` : ""}
+        <div class="dl-items">${bloque.items.map((item) => this.tarjeta(item)).join("")}</div>
+      </section>
+    `;
+  }
+
   tarjeta(item) {
     const filas = item.filas === null || item.filas === undefined
       ? "filas: se cuentan al consultar"
@@ -188,6 +349,14 @@ class DownloadsPanelController {
     const etiquetas = [];
     if (item.detalle) etiquetas.push(`<span class="dl-tag" title="${this.escapar(item.descripcion || item.detalle)}">${this.escapar(item.detalle)}</span>`);
     if (item.unificado) etiquetas.push(`<span class="dl-tag dl-tag-info" title="Esta vista une varios archivos publicados y aplica un filtro; el Parquet original baja los archivos completos.">Serie unificada</span>`);
+    const A = this.alcance();
+    const variante = A && item.varianteDe ? A.variante(item.id) : null;
+    if (variante) etiquetas.push(`<span class="dl-tag dl-tag-variante" title="${this.escapar(variante.nota || "")}">Variante · ${this.escapar(variante.etiqueta || "")}</span>`);
+    const fuera = this.esFuera(item);
+    if (fuera) {
+      const nivel = A.infoNivelDe(item.clave);
+      etiquetas.push(`<span class="dl-tag dl-tag-fuera" title="${this.escapar((nivel && nivel.aviso) || "")}">${this.escapar(nivel ? nivel.corta : "Archivo")}</span>`);
+    }
 
     const botonParquet = item.archivosN === 1
       ? `<a class="dl-btn dl-btn-primary" data-action="parquet" data-id="${item.id}" href="${item.archivos[0].ruta}" download="${item.id}.parquet">
@@ -198,7 +367,8 @@ class DownloadsPanelController {
          </button>`;
 
     return `
-      <article class="dl-item" data-id="${item.id}" data-sector="${this.escapar(item.sector)}"
+      <article class="dl-item${variante ? " dl-item-variante" : ""}" data-id="${item.id}" data-sector="${this.escapar(item.sector)}"
+               data-bloque="${this.escapar(item.bloque || item.sector)}" data-fuera="${fuera ? "1" : "0"}"
                data-buscar="${this.escapar((item.id + " " + item.nombre + " " + item.detalle + " " + item.grupo).toLowerCase())}">
         <div class="dl-item-main">
           <div class="dl-item-title">
@@ -269,6 +439,7 @@ class DownloadsPanelController {
         `${window.MFCDownload.numero(ctx.columns.length)} ${ctx.columns.length === 1 ? "columna" : "columnas"}`
       : "sin filas cargadas en pantalla";
 
+    const avisoFuera = item && this.esFuera(item) ? this.alcance().aviso(item.clave) : "";
     this.controles.context.hidden = false;
     this.controles.context.innerHTML = `
       <div class="dl-context-card">
@@ -276,6 +447,7 @@ class DownloadsPanelController {
           <span class="dl-context-kicker">${ctx.origen === "sql" ? "Resultado en Consultas SQL" : "Tabla activa en el visor"}</span>
           <b class="dl-context-name">${this.escapar(ctx.displayName)}</b>
           <span class="dl-context-meta">${enPantalla}</span>
+          ${avisoFuera ? `<span class="dl-context-aviso">${this.escapar(avisoFuera)}</span>` : ""}
         </div>
         <div class="dl-context-actions">
           <button class="dl-btn dl-btn-primary" data-action="pantalla" data-fmt="csv">Descargar pantalla · CSV</button>
@@ -326,7 +498,10 @@ class DownloadsPanelController {
       if (!boton) return;
       const accion = boton.dataset.action;
       const id = boton.dataset.id;
-      if (accion === "files") {
+      if (accion === "archivo") {
+        this.archivoAbierto = !this.archivoAbierto;
+        this.aplicarFiltros();
+      } else if (accion === "files") {
         this.alternarArchivos(id, boton);
       } else if (accion === "pantalla") {
         this.descargarPantalla(boton.dataset.fmt, boton);
@@ -355,30 +530,60 @@ class DownloadsPanelController {
   aplicarFiltros() {
     if (!this.controles) return;
     const q = this.busqueda;
+    const filtroActivo = Boolean(q) || this.sector !== "todos";
     let visibles = 0;
+    let enArchivo = 0;
     const grupos = this.container.querySelectorAll(".dl-group");
     grupos.forEach((grupo) => {
       let enGrupo = 0;
       grupo.querySelectorAll(".dl-item").forEach((fila) => {
         const coincideTexto = !q || fila.dataset.buscar.includes(q);
-        const coincideSector = this.sector === "todos" || fila.dataset.sector === this.sector;
-        const visible = coincideTexto && coincideSector;
+        const coincideSector = this.sector === "todos" || (fila.dataset.bloque || fila.dataset.sector) === this.sector;
+        const fuera = fila.dataset.fuera === "1";
+        const visible = coincideTexto && coincideSector && (!fuera || this.archivoAbierto || filtroActivo);
         fila.hidden = !visible;
         if (visible) {
           enGrupo += 1;
           visibles += 1;
+          if (fuera) enArchivo += 1;
         }
       });
       grupo.hidden = enGrupo === 0;
     });
+    this.container.querySelectorAll(".dl-tier").forEach((tier) => {
+      tier.hidden = !tier.querySelector(".dl-item:not([hidden])");
+    });
+    const archivo = this.container.querySelector("#dl-archive");
+    if (archivo) {
+      const abierto = this.archivoAbierto || (filtroActivo && enArchivo > 0);
+      archivo.classList.toggle("open", abierto);
+      archivo.hidden = filtroActivo && enArchivo === 0;
+      const toggle = archivo.querySelector(".dl-archive-toggle");
+      if (toggle) toggle.setAttribute("aria-expanded", abierto ? "true" : "false");
+      const cta = archivo.querySelector(".dl-archive-cta");
+      if (cta) cta.textContent = this.archivoAbierto ? "Ocultar" : (abierto ? "Coincidencias" : "Mostrar");
+    }
     if (this.controles.vacio) this.controles.vacio.hidden = visibles > 0;
     if (this.controles.counter) {
-      const total = this.items().length;
+      const total = this.listables().length;
       const partes = [`${window.MFCDownload.numero(visibles)} de ${window.MFCDownload.numero(total)} conjuntos`];
+      if (archivo && !filtroActivo && !this.archivoAbierto) partes.push("archivo plegado");
       if (this.recorte.activo) partes.push(`recorte ${this.recorte.desde}–${this.recorte.hasta}`);
       this.controles.counter.textContent = partes.join(" · ");
     }
     this.refrescarEstadoMotor();
+  }
+
+  // Filtra por sector desde fuera (botones de la portada). Acepta claves con alias.
+  filtrarSector(clave) {
+    this.init();
+    if (!this.controles) return;
+    const A = this.alcance();
+    const bloque = this.bloqueDe(A ? A.clave(clave) : clave) || clave;
+    const existe = Array.from(this.controles.sector.options).some((o) => o.value === bloque);
+    this.sector = existe ? bloque : "todos";
+    this.controles.sector.value = this.sector;
+    this.aplicarFiltros();
   }
 
   refrescarEstadoMotor() {

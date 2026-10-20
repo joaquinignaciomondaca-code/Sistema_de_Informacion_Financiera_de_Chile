@@ -36,8 +36,10 @@ DOCS = RAIZ / "docs"
 SECTOR_LABEL = "Macroeconomía y Tasas (BCCh)"
 ORIGEN = "Banco Central de Chile — Base de Datos Estadísticos, API REST SIETE (si3.bcentral.cl/SieteRestWS)."
 
-# Carpetas temáticas del explorador: (id, etiqueta, ids de tablas, consultas sugeridas).
-CARPETAS = [
+# Temas del explorador: (id, etiqueta, ids de tablas, consultas sugeridas). Son la unidad de
+# contenido (cada consulta sugerida vive con su tema); el explorador los presenta agrupados en
+# los BLOQUES de más abajo.
+TEMAS = [
     ("cat_macro_tasas_interes", "Tasas de interés",
      ["macro_tasas_corto_plazo", "macro_swaps_camara", "macro_curva_bonos_pesos",
       "macro_curva_bonos_uf", "macro_inflacion_implicita"],
@@ -104,6 +106,53 @@ CARPETAS = [
          ("Estado de la última consulta al BCCh por grupo", "SELECT grupo, count(*) AS series, sum(CASE WHEN estado = 'ok' THEN 1 ELSE 0 END) AS series_ok, max(ultima_fecha) AS dato_mas_reciente, max(ultima_consulta_utc) AS ultima_consulta_utc FROM macro_series_catalogo GROUP BY grupo ORDER BY grupo;"),
      ]),
 ]
+
+# Bloques del explorador (recorte visual 2026-10-20). La macro es contexto para leer las
+# carteras, no una industria: en vez de nueve carpetas se muestran cuatro bloques de lectura
+# más el catálogo de series. Cada tabla y cada consulta sugerida de TEMAS se conserva; solo
+# cambia la carpeta en que aparece.
+BLOQUES = [
+    ("cat_macro_tasas_curvas", "Tasas y curvas",
+     ["macro_tasas_corto_plazo", "macro_swaps_camara", "macro_curva_bonos_pesos",
+      "macro_curva_bonos_uf", "macro_inflacion_implicita", "macro_tasa_referencia_fed"]),
+    ("cat_macro_tipo_cambio_uf_utm", "Tipo de cambio, UF y UTM",
+     ["macro_dolar_observado", "macro_euro_observado", "macro_tipo_cambio_multilateral",
+      "macro_tipo_cambio_real", "macro_uf", "macro_utm"]),
+    ("cat_macro_actividad_precios", "Actividad y precios",
+     ["macro_inflacion_ipc", "macro_imacec", "macro_pib_trimestral", "macro_mercado_laboral",
+      "macro_cobre", "macro_metales_preciosos", "macro_reservas_internacionales",
+      "macro_deuda_publica_pct_pib"]),
+    ("cat_macro_expectativas", "Expectativas",
+     ["macro_expectativas_inflacion", "macro_expectativas_tpm", "macro_expectativas_operadores"]),
+    ("cat_macro_series_catalogo", "Catálogo de series", ["macro_series_catalogo"]),
+]
+
+
+def _carpetas() -> list:
+    """Reparte las tablas y las consultas de TEMAS en los BLOQUES del explorador.
+
+    Un tema cuyas tablas caen todas en un mismo bloque se muda entero (con sus consultas).
+    Si el tema queda repartido, cada consulta va al bloque de la primera tabla que lee.
+    """
+    tablas = sorted(t for _, _, ids, _ in TEMAS for t in ids)
+    en_bloques = sorted(t for _, _, ids in BLOQUES for t in ids)
+    if tablas != en_bloques:
+        raise SystemExit("BLOQUES y TEMAS de la macro no cubren las mismas tablas")
+    bloque_de = {t: cid for cid, _, ids in BLOQUES for t in ids}
+    consultas = {cid: [] for cid, _, _ in BLOQUES}
+    for _, _, ids, chips in TEMAS:
+        destinos = {bloque_de[t] for t in ids}
+        for etiqueta, sql in chips:
+            if len(destinos) == 1:
+                destino = next(iter(destinos))
+            else:
+                primera = re.search(r"\b(?:FROM|JOIN)\s+(macro_[a-z0-9_]+)", sql)
+                destino = bloque_de[primera.group(1)] if primera else bloque_de[ids[0]]
+            consultas[destino].append((etiqueta, sql))
+    return [(cid, etiqueta, ids, consultas[cid]) for cid, etiqueta, ids in BLOQUES]
+
+
+CARPETAS = _carpetas()
 
 # Significado de cada columna para el diccionario (todas las columnas de todas las tablas).
 SIGNIFICADO = {
@@ -266,7 +315,7 @@ def bloque_sidebar(meta: dict) -> str:
     out.append('    type: "group",')
     out.append('    label: "MACROECONOMÍA Y TASAS (BCCh)",')
     out.append("    badges: [")
-    out.append(f'      {{ type: "data", text: "{n_tablas} tablas", title: "Una tabla por indicador económico, en la frecuencia en que lo publica el Banco Central (diaria, mensual o trimestral)" }},')
+    out.append(f'      {{ type: "data", text: "{n_tablas + 1} tablas · 4 bloques", title: "{n_tablas} tablas por indicador económico, en la frecuencia en que lo publica el Banco Central (diaria, mensual o trimestral), más el catálogo de series; agrupadas en tasas y curvas, tipo de cambio, actividad y precios y expectativas" }},')
     out.append(f'      {{ type: "data", text: "{anio_ini} → {anio_fin}", title: "Cobertura de las series: desde {anio_ini} hasta la última publicación del BCCh" }}')
     out.append("    ],")
     out.append('    status: "active",')
@@ -372,9 +421,14 @@ def bloque_dictionary(meta: dict, hoy: str) -> str:
 
 
 # ----------------------------------------------------------------------------- ERD
+# Columna del bloque macro en el mapa relacional: a la derecha de las instituciones (bancos,
+# AGF y corredoras), antes del archivo. Ver docs/js/erd_graph.js.
+ERD_X0 = 3760
+
+
 def bloque_erd_nodes(meta: dict) -> str:
     nodes = []
-    x0, y0, w, colw, gap = 3040, 110, 250, 290, 30
+    x0, y0, w, colw, gap = ERD_X0, 110, 250, 290, 30
     ys = [y0, y0]
     for spec in TABLAS + [None]:
         if spec is None:

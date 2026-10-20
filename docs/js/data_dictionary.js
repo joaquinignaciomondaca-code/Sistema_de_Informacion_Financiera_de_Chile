@@ -2217,11 +2217,102 @@ window.SIFDataMode = {
 };
 window.SIFDataDictionary = DATA_DICTIONARY;
 
+// Filtros del diccionario por nivel editorial (ver docs/js/alcance.js). "principal"
+// muestra núcleo, instituciones y contexto; las industrias archivadas tienen sus
+// propios botones, plegados; "todos" es el catálogo completo, ocultas incluidas.
+const DICT_FILTROS_PRINCIPALES = [
+  [["seguros", "Seguros"], ["ffmm", "FFMM"], ["fi", "FFII"]],
+  [["bancos", "Bancos"], ["agf", "AGF"], ["corredoras_bolsa", "Corredoras"]],
+  [["macro", "Macro & Tasas"]]
+];
+const DICT_FILTROS_ARCHIVO = [
+  ["factoring_leasing", "Factoring & Leasing"],
+  ["securitizacion", "Securitización"],
+  ["cajas_compensacion", "Cajas de Compensación"],
+  ["registro", "Registro de entidades"],
+  ["todos", "Todo el catálogo"]
+];
+
 class DataDictionaryController {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
-    this.currentSector = "todos";
+    this.currentSector = "principal";
     this.searchQuery = "";
+    this.mostrarArchivo = false;
+  }
+
+  alcance() {
+    const A = window.SIFAlcance;
+    return A && A.disponible() ? A : null;
+  }
+
+  // ¿Entra la tabla en el filtro activo?
+  incluye(d, filtro) {
+    const A = this.alcance();
+    if (filtro === "todos") return true;
+    if (A && A.tablaOculta(d.id)) return false;
+    if (filtro === "principal") return !A || A.esVisible(d.sector);
+    if (A) return A.sectoresDe(filtro).indexOf(A.clave(d.sector)) !== -1;
+    return d.sector === filtro;
+  }
+
+  coincideBusqueda(d) {
+    if (!this.searchQuery) return true;
+    const q = this.searchQuery;
+    const matchTable = d.name.toLowerCase().includes(q) ||
+                       d.descripcion.toLowerCase().includes(q) ||
+                       d.norma.toLowerCase().includes(q);
+    const matchCol = d.columnas.some(c =>
+      c.name.toLowerCase().includes(q) ||
+      c.significado.toLowerCase().includes(q) ||
+      c.contable.toLowerCase().includes(q)
+    );
+    return matchTable || matchCol;
+  }
+
+  filtroDeArchivo(filtro) {
+    return DICT_FILTROS_ARCHIVO.some(([sec]) => sec === filtro);
+  }
+
+  botonesFiltro() {
+    const boton = (sec, etiqueta, extra) =>
+      `<button class="dict-filter-btn ${extra || ""} ${this.currentSector === sec ? "active" : ""}" data-sec="${sec}">${etiqueta}</button>`;
+    let html = boton("principal", "Principal", "dict-filter-principal");
+    DICT_FILTROS_PRINCIPALES.forEach((grupo) => {
+      html += `<span class="dict-filter-sep" aria-hidden="true"></span>`;
+      html += grupo.map(([sec, etiqueta]) => boton(sec, etiqueta)).join("");
+    });
+    if (!this.alcance()) {
+      // Sin alcance editorial: todos los filtros a la vista, como antes del recorte.
+      return html + DICT_FILTROS_ARCHIVO.map(([sec, etiqueta]) => boton(sec, etiqueta)).join("");
+    }
+    const abierto = this.mostrarArchivo || this.filtroDeArchivo(this.currentSector);
+    html += `<button type="button" class="dict-archive-toggle ${abierto ? "open" : ""}" aria-expanded="${abierto ? "true" : "false"}"
+              title="Industrias fuera del foco de esta edición: siguen documentadas">Archivo y registros</button>`;
+    if (abierto) {
+      html += DICT_FILTROS_ARCHIVO.map(([sec, etiqueta]) => boton(sec, etiqueta, "dict-filter-fuera")).join("");
+    }
+    return html;
+  }
+
+  // Aviso de alcance en las fichas de industrias archivadas o tablas ocultas.
+  avisoAlcance(table) {
+    const A = this.alcance();
+    if (!A) return "";
+    if (A.tablaOculta(table.id)) {
+      return `
+        <div class="dict-scope-box">
+          <span class="dict-scope-badge">Oculta</span>
+          <span class="dict-scope-text">${A.motivoOculta(table.id)}</span>
+        </div>`;
+    }
+    if (!A.esArchivo(table.sector)) return "";
+    const nivel = A.infoNivelDe(table.sector);
+    return `
+      <div class="dict-scope-box">
+        <span class="dict-scope-badge">${nivel ? nivel.corta : "Archivo"}</span>
+        <span class="dict-scope-text">${A.aviso(table.sector)}</span>
+      </div>`;
   }
 
   init() {
@@ -2253,24 +2344,17 @@ class DataDictionaryController {
   render() {
     if (!this.container) return;
 
-    let filtered = DATA_DICTIONARY;
-    if (this.currentSector !== "todos") {
-      filtered = filtered.filter(d => d.sector === this.currentSector);
-    }
-
-    if (this.searchQuery) {
-      filtered = filtered.filter(d => {
-        const matchTable = d.name.toLowerCase().includes(this.searchQuery) ||
-                           d.descripcion.toLowerCase().includes(this.searchQuery) ||
-                           d.norma.toLowerCase().includes(this.searchQuery);
-        const matchCol = d.columnas.some(c => 
-          c.name.toLowerCase().includes(this.searchQuery) ||
-          c.significado.toLowerCase().includes(this.searchQuery) ||
-          c.contable.toLowerCase().includes(this.searchQuery)
-        );
-        return matchTable || matchCol;
-      });
-    }
+    const A = this.alcance();
+    const rango = (d) => (A ? A.rangoNivel(A.nivelDe(d.sector)) * 100 + A.orden(d.sector) : 0);
+    // Orden editorial (núcleo primero); dentro de cada sector se respeta el del catálogo.
+    const filtered = DATA_DICTIONARY
+      .filter(d => this.incluye(d, this.currentSector) && this.coincideBusqueda(d))
+      .sort((a, b) => rango(a) - rango(b));
+    // Si la búsqueda no encuentra nada en el filtro activo, se avisa cuántas fichas
+    // coinciden en el catálogo completo (archivo y tablas ocultas incluidas).
+    const enTodo = (filtered.length === 0 && this.searchQuery && this.currentSector !== "todos")
+      ? DATA_DICTIONARY.filter(d => this.coincideBusqueda(d)).length
+      : 0;
 
     const html = `
       <div class="dict-view-container">
@@ -2280,22 +2364,7 @@ class DataDictionaryController {
             <input type="text" id="dict-search-input" class="dict-search-input" placeholder="Buscar columna, significado o criterio contable (ej: MtM, Neto, Bruto, TIR)..." value="${this.searchQuery}">
           </div>
           <div class="dict-sector-filters">
-            <button class="dict-filter-btn ${this.currentSector === 'todos' ? 'active' : ''}" data-sec="todos">Todos</button>
-            <button class="dict-filter-btn ${this.currentSector === 'seguros' ? 'active' : ''}" data-sec="seguros">Seguros</button>
-            <button class="dict-filter-btn ${this.currentSector === 'ffmm' ? 'active' : ''}" data-sec="ffmm">FFMM</button>
-            <button class="dict-filter-btn ${this.currentSector === 'fi' ? 'active' : ''}" data-sec="fi">FFII</button>
-            <button class="dict-filter-btn ${this.currentSector === 'pensiones' ? 'active' : ''}" data-sec="pensiones">Pensiones</button>
-            <button class="dict-filter-btn ${this.currentSector === 'bancos' ? 'active' : ''}" data-sec="bancos">Bancos</button>
-            <button class="dict-filter-btn ${this.currentSector === 'macro' ? 'active' : ''}" data-sec="macro">Macro & Tasas</button>
-            <button class="dict-filter-btn ${this.currentSector === 'factoring_leasing' ? 'active' : ''}" data-sec="factoring_leasing">Factoring & Leasing</button>
-            <button class="dict-filter-btn ${this.currentSector === 'corredoras_bolsa' ? 'active' : ''}" data-sec="corredoras_bolsa">Corredoras</button>
-            <button class="dict-filter-btn ${this.currentSector === 'securitizadoras' ? 'active' : ''}" data-sec="securitizadoras">Securitizadoras</button>
-            <button class="dict-filter-btn ${this.currentSector === 'patrimonios_separados' ? 'active' : ''}" data-sec="patrimonios_separados">Patrimonios Separados</button>
-            <button class="dict-filter-btn ${this.currentSector === 'cooperativas' ? 'active' : ''}" data-sec="cooperativas">Cooperativas</button>
-            <button class="dict-filter-btn ${this.currentSector === 'cajas_compensacion' ? 'active' : ''}" data-sec="cajas_compensacion">Cajas de Compensación</button>
-            <button class="dict-filter-btn ${this.currentSector === 'agf' ? 'active' : ''}" data-sec="agf">AGF</button>
-            <button class="dict-filter-btn ${this.currentSector === 'sistemas_pago' ? 'active' : ''}" data-sec="sistemas_pago">Sistemas de Pago</button>
-            <button class="dict-filter-btn ${this.currentSector === 'fintech' ? 'active' : ''}" data-sec="fintech">FinTech</button>
+            ${this.botonesFiltro()}
           </div>
           <div class="dict-mode-legend" title="La modalidad describe la extracción y la publicación, no solo si existe un workflow de Actions.">
             <span class="dict-mode-legend-label">Modalidad:</span>
@@ -2326,6 +2395,7 @@ class DataDictionaryController {
                 </div>
               </div>
               <p class="dict-table-desc">${table.descripcion}</p>
+              ${this.avisoAlcance(table)}
               ${table.advertencia ? `
                 <div class="dict-warning-box">
                   <span class="dict-warning-badge">Sin auditar</span>
@@ -2388,7 +2458,7 @@ class DataDictionaryController {
               </div>
             </div>
           `).join('')}
-          ${filtered.length === 0 ? '<div class="dict-empty">No se encontraron tablas o columnas que coincidan con la búsqueda.</div>' : ''}
+          ${filtered.length === 0 ? `<div class="dict-empty">No se encontraron tablas o columnas que coincidan con la búsqueda.${enTodo ? ` Hay ${enTodo} ficha(s) que coinciden fuera de este filtro. <button type="button" class="dict-filter-btn dict-search-all" data-sec="todos">Buscar en todo el catálogo</button>` : ""}</div>` : ''}
         </div>
       </div>
     `;
@@ -2407,9 +2477,19 @@ class DataDictionaryController {
 
     this.container.querySelectorAll(".dict-filter-btn").forEach(btn => {
       btn.addEventListener("click", (e) => {
-        this.setFilter(e.target.dataset.sec);
+        this.setFilter(e.currentTarget.dataset.sec);
       });
     });
+
+    const archivoBtn = this.container.querySelector(".dict-archive-toggle");
+    if (archivoBtn) {
+      archivoBtn.addEventListener("click", () => {
+        const abierto = this.mostrarArchivo || this.filtroDeArchivo(this.currentSector);
+        this.mostrarArchivo = !abierto;
+        if (abierto && this.filtroDeArchivo(this.currentSector)) this.currentSector = "principal";
+        this.render();
+      });
+    }
   }
 }
 
