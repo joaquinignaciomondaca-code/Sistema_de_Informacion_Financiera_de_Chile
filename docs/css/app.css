@@ -302,33 +302,33 @@ header {
   gap: 12px;
 }
 
-/* Logotipo SIF (assets/logo_sif_marca.svg, variante compacta de
-   assets/logo_sif.svg). El isotipo y las siglas son azul marino (#12366A) con
-   acentos turquesa (#00A6A6): se apoyan sobre una placa clara porque, pegados
-   directamente al fondo del encabezado, se pierden en las cinco paletas
-   oscuras. En la paleta clara ("informe") la placa se vuelve translúcida y
-   apenas queda un borde. */
+/* Logotipo SIF (misma geometría que assets/logo_sif_marca.svg, variante
+   compacta del lockup assets/logo_sif.svg). En vez de pegar el azul marino
+   sobre una placa clara —que en las paletas oscuras parecía un parche—, el
+   dibujo va en línea y el azul se recoloque con el tema: --logo-ink es blanco
+   en las cinco paletas oscuras y el #12366A original en la clara ("informe").
+   El turquesa #00A6A6 se conserva siempre: se lee bien sobre fondo oscuro y
+   sobre fondo claro, y es el que mantiene la identidad de la marca. */
 .brand-logo {
+  --logo-ink: var(--text-bright);
   display: inline-flex;
   align-items: center;
   flex: 0 0 auto;
-  padding: 3px 7px;
-  border-radius: 6px;
-  background: #FFFFFF;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
   line-height: 0;
 }
 
-.brand-logo img {
+.brand-logo-mark {
   display: block;
-  height: 28px;
+  height: 32px;
   width: auto;
 }
 
+.brand-logo .logo-ink-stroke { stroke: var(--logo-ink); }
+.brand-logo .logo-ink-fill { fill: var(--logo-ink); }
+.brand-logo .logo-accent-fill { fill: #00A6A6; }
+
 [data-theme="informe"] .brand-logo {
-  background: rgba(255, 255, 255, 0.9);
-  box-shadow: none;
-  border: 1px solid var(--border-color);
+  --logo-ink: #12366A;
 }
 
 .brand-title {
@@ -1227,7 +1227,7 @@ header {
 
 .zoom-btn {
   width: 30px;
-  height: 30px;
+  height: 32px;
   background-color: var(--bg-secondary);
   border: 1px solid var(--border-color);
   color: var(--text-bright);
