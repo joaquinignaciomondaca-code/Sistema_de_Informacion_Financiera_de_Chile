@@ -238,7 +238,7 @@ son los `cron` reales de `.github/workflows/*.yml`.
 ```bash
 python scripts/audit_web_full.py            # Parquet, enlaces, chips SQL, diccionario y ERD
 python scripts/audit_interfaz.py            # pestañas, catálogo, vocabulario, temas, motor
-python scripts/audit_navigation.py          # taxonomía: 12 familias, 75 tablas, 75 opciones del visor
+python scripts/audit_navigation.py          # taxonomía: 13 familias, 75 tablas, 75 opciones del visor; niveles de alcance
 python scripts/audit_automatizacion.py      # quién actualiza cada tabla y con qué frecuencia
 python scripts/build_download_catalog.py --check   # el catálogo refleja lo publicado
 python scripts/normalizar_vocabulario.py --check   # los nombres no se desincronizan
