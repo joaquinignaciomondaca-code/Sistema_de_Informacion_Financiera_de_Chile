@@ -23,7 +23,17 @@
       "file_parquet": "outputs/pensiones/afp_maestro_administradoras.parquet",
       "registros_reales": 7,
       "descripcion": "Administradoras de fondos de pensiones: RUT, razón social y nombre de fantasía. Sin cifras.",
-      "origen": "Altas: AFP con valor cuota publicado a diario por la Superintendencia de Pensiones (vcfAFP.php), con el RUT del Registro de Valores CMF (RVEMI). pipelines/entidades/actualizar_listas.py."
+      "origen": "Altas: AFP con valor cuota publicado a diario por la Superintendencia de Pensiones (vcfAFP.php), con el RUT del Registro de Valores CMF (RVEMI). pipelines/entidades/actualizar_listas.py.",
+      "metadatos": {
+        "fuente": "Superintendencia de Pensiones (vcfAFP.php) y Registro de Valores CMF (RVEMI); D.L. 3.500 / SPensiones",
+        "unidad": "No aplica: catálogo",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "Lista vigente al 2026-09-28; 7 administradoras (sin cifras)",
+        "fecha_extraccion": "2026-09-28 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "agf_balance",
@@ -39,7 +49,17 @@
       "file_parquet": "outputs/agf/agf_balance/manifest.json",
       "registros_reales": 71423,
       "descripcion": "Estado de situación financiera (ESF) de cada administradora general de fondos, cuenta por cuenta, tal como lo publica la CMF. Montos en unidades de la moneda informada (CLP o USD), sin conversión.",
-      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+      "metadatos": {
+        "fuente": "CMF, estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL), https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+        "unidad": "Unidades de la moneda informada (CLP o USD), sin conversión",
+        "escala": "unidades (sin reescalado)",
+        "moneda": "CLP o USD según la moneda informada por cada sociedad; sin conversión",
+        "criterio_contable": "Estado de situación financiera IFRS tal como lo publica la CMF; cuenta por cuenta",
+        "cobertura": "2010-06 a 2026-06 (trimestral); 71.423 filas",
+        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "agf_maestro",
@@ -55,7 +75,17 @@
       "file_parquet": "outputs/agf/agf_maestro.parquet",
       "registros_reales": 72,
       "descripcion": "Catálogo oficial de Administradoras Generales de Fondos (AGF) autorizadas por la Comisión para el Mercado Financiero (CMF) bajo la Ley N° 20.712. Incluye 52 gestoras vigentes y 16 no vigentes/canceladas, junto con su grupo financiero controlador y el número de fondos de inversión administrados.",
-      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Administradoras Generales de Fondos (RGAGF / RACRT)."
+      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Administradoras Generales de Fondos (RGAGF / RACRT).",
+      "metadatos": {
+        "fuente": "CMF, Registro de Administradoras Generales de Fondos (RGAGF / RACRT), Ley 20.712",
+        "unidad": "No aplica: catálogo",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "Oficial CMF 2026; 72 AGF (52 vigentes y 16 no vigentes o canceladas)",
+        "fecha_extraccion": "2026-09-23 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "agf_resultados",
@@ -71,7 +101,17 @@
       "file_parquet": "outputs/agf/agf_resultados/manifest.json",
       "registros_reales": 58216,
       "descripcion": "Estado de resultados (ER, por función o naturaleza e integral) de cada administradora general de fondos, cuenta por cuenta. Montos acumulados del ejercicio a la fecha del trimestre, en unidades de la moneda informada.",
-      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+      "metadatos": {
+        "fuente": "CMF, estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL), https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+        "unidad": "Unidades de la moneda informada (CLP o USD), acumulado del ejercicio a la fecha del trimestre",
+        "escala": "unidades (sin reescalado)",
+        "moneda": "CLP o USD según la moneda informada por cada sociedad; sin conversión",
+        "criterio_contable": "Estado de resultados IFRS (por función o naturaleza e integral) tal como lo publica la CMF; cuenta por cuenta",
+        "cobertura": "2010-06 a 2026-06 (acumulado trimestral); 58.216 filas",
+        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "bancos_cmf_lineas",
@@ -88,7 +128,17 @@
       "files_manifest": "outputs/bancos/cmf_b1_b2_r1/manifest.json",
       "registros_reales": 1962992,
       "descripcion": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Campos monetarios originales sin reinterpretación; revisar tipo_linea antes de agregar cuentas jerárquicas.",
-      "origen": "https://www.cmfchile.cl/portal/estadisticas/626/articles-113894_recurso_1.zip?ts=1790773409"
+      "origen": "https://www.cmfchile.cl/portal/estadisticas/626/articles-113894_recurso_1.zip?ts=1790773409",
+      "metadatos": {
+        "fuente": "CMF, Manual del Sistema de Información para bancos (B1/MB1, B2/MB2, R1/MR1), archivos ZIP publicados por la CMF",
+        "unidad": "Campos monetarios en su unidad original; no se reinterpretan",
+        "escala": "Por confirmar por campo (revisar tipo_linea)",
+        "moneda": "Por confirmar (la moneda de cada campo depende de la línea)",
+        "criterio_contable": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado, sin agregación jerárquica (revisar tipo_linea antes de agregar)",
+        "cobertura": "2022-01 a 2026-08; 1.962.992 filas en 56 particiones",
+        "fecha_extraccion": "2026-10-01 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría. No está expuesta como vista SQL en el motor."
+      }
     },
     {
       "id": "bancos_maestro",
@@ -104,7 +154,17 @@
       "file_parquet": "outputs/bancos/bancos_maestro.parquet",
       "registros_reales": 41,
       "descripcion": "Códigos de institución de los archivos bancarios CMF: bancos vigentes, históricos (fusionados o cerrados), filiales en el exterior y agregados del sistema. No equivale al número de bancos activos. RUT de los bancos activos cotejados con el registro CMF.",
-      "origen": "Registro CMF de bancos (consulta.php?mercado=B&entidad=BANCO): alta de bancos nuevos y paso de «Activo» a «No vigente». Códigos históricos y agregados: lista original. pipelines/entidades/actualizar_listas.py."
+      "origen": "Registro CMF de bancos (consulta.php?mercado=B&entidad=BANCO): alta de bancos nuevos y paso de «Activo» a «No vigente». Códigos históricos y agregados: lista original. pipelines/entidades/actualizar_listas.py.",
+      "metadatos": {
+        "fuente": "Ley General de Bancos; registro CMF (consulta.php?mercado=B&entidad=BANCO)",
+        "unidad": "No aplica: catálogo",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "Códigos históricos y vigentes; 41 códigos (no equivale al número de bancos activos)",
+        "fecha_extraccion": "2026-09-28 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Según la descripción de la tabla, el RUT de los bancos activos fue cotejado con el registro CMF."
+      }
     },
     {
       "id": "ccaf_balance",
@@ -120,7 +180,17 @@
       "file_parquet": "outputs/cajas_compensacion/ccaf_balance/manifest.json",
       "registros_reales": 8043,
       "descripcion": "Estado de situación financiera (ESF) de cada caja de compensación de asignación familiar, cuenta por cuenta, tal como lo publica la CMF. Montos en unidades de la moneda informada (CLP o USD), sin conversión.",
-      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+      "metadatos": {
+        "fuente": "CMF, estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL), https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+        "unidad": "Unidades de la moneda informada (CLP o USD), sin conversión",
+        "escala": "unidades (sin reescalado)",
+        "moneda": "CLP o USD según la moneda informada por cada sociedad; sin conversión",
+        "criterio_contable": "Estado de situación financiera IFRS tal como lo publica la CMF; cuenta por cuenta",
+        "cobertura": "2010-06 a 2026-06 (trimestral); 8.043 filas",
+        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "ccaf_maestro",
@@ -136,7 +206,17 @@
       "file_parquet": "outputs/cajas_compensacion/ccaf_maestro.parquet",
       "registros_reales": 6,
       "descripcion": "Cajas de compensación de asignación familiar, vigentes y absorbidas, con marco legal, regulador y registro CMF. Una caja nueva se agrega cuando reporta estados financieros IFRS a la CMF.",
-      "origen": "Lista original (SUSESO y Registro de Valores CMF) + altas automáticas desde el TXT IFRS de la CMF (pipelines/ifrs_sectores/actualizar.py)."
+      "origen": "Lista original (SUSESO y Registro de Valores CMF) + altas automáticas desde el TXT IFRS de la CMF (pipelines/ifrs_sectores/actualizar.py).",
+      "metadatos": {
+        "fuente": "SUSESO (Ley 18.833) y CMF (RVEMI, Ley 18.045); altas automáticas desde el TXT IFRS",
+        "unidad": "No aplica: catálogo",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "Lista vigente al 2026-09-28; 6 cajas de compensación (vigentes y absorbidas)",
+        "fecha_extraccion": "2026-09-28 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "ccaf_resultados",
@@ -152,7 +232,17 @@
       "file_parquet": "outputs/cajas_compensacion/ccaf_resultados/manifest.json",
       "registros_reales": 5506,
       "descripcion": "Estado de resultados (ER, por función o naturaleza e integral) de cada caja de compensación de asignación familiar, cuenta por cuenta. Montos acumulados del ejercicio a la fecha del trimestre, en unidades de la moneda informada.",
-      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+      "metadatos": {
+        "fuente": "CMF, estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL), https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+        "unidad": "Unidades de la moneda informada (CLP o USD), acumulado del ejercicio a la fecha del trimestre",
+        "escala": "unidades (sin reescalado)",
+        "moneda": "CLP o USD según la moneda informada por cada sociedad; sin conversión",
+        "criterio_contable": "Estado de resultados IFRS (por función o naturaleza e integral) tal como lo publica la CMF; cuenta por cuenta",
+        "cobertura": "2010-06 a 2026-06 (acumulado trimestral); 5.506 filas",
+        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "cooperativas_lista_entidades",
@@ -168,7 +258,17 @@
       "file_parquet": "outputs/cooperativas/cooperativas_maestro.parquet",
       "registros_reales": 7,
       "descripcion": "Cooperativas de ahorro y crédito fiscalizadas por la CMF: RUT, nombre, tipo de institución y regulador.",
-      "origen": "Registro BCCOO (mercado B) de los registros públicos CMF. pipelines/entidades/actualizar_listas.py."
+      "origen": "Registro BCCOO (mercado B) de los registros públicos CMF. pipelines/entidades/actualizar_listas.py.",
+      "metadatos": {
+        "fuente": "Ley 14.468; registro BCCOO de los registros públicos CMF",
+        "unidad": "No aplica: catálogo",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "Lista vigente al 2026-09-29; 7 cooperativas",
+        "fecha_extraccion": "2026-09-29 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "corredoras_bolsa_balance",
@@ -184,7 +284,17 @@
       "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_balance/manifest.json",
       "registros_reales": 107976,
       "descripcion": "Estado de situación financiera de cada corredor de bolsa y agente de valores, cuenta FECU por cuenta, al cierre de cada trimestre. Miles de pesos.",
-      "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/"
+      "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/",
+      "metadatos": {
+        "fuente": "CMF, estadísticas de estados financieros IFRS de intermediarios de valores (FECU), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/",
+        "unidad": "Miles de pesos",
+        "escala": "miles (M$)",
+        "moneda": "CLP",
+        "criterio_contable": "Estado de situación financiera FECU por cuenta, al cierre de cada trimestre",
+        "cobertura": "2010-12 a 2026-06 (trimestral); 107.976 filas",
+        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "corredoras_bolsa_lista_entidades_registro",
@@ -200,7 +310,17 @@
       "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet",
       "registros_reales": 120,
       "descripcion": "Registro único de corredores y agentes de valores (universo vigentes y no vigentes) con validación de RUT bajo Módulo 11.",
-      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Intermediarios de Valores; vigencia mantenida por pipelines/entidades/actualizar_listas.py."
+      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Intermediarios de Valores; vigencia mantenida por pipelines/entidades/actualizar_listas.py.",
+      "metadatos": {
+        "fuente": "CMF, Registro de Intermediarios de Valores (Ley 18.045)",
+        "unidad": "No aplica: catálogo",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "2014-03 a 2026-06; 120 entidades (vigentes y no vigentes); RUT validado con Módulo 11",
+        "fecha_extraccion": "2026-09-29 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "corredoras_bolsa_maestro",
@@ -216,7 +336,17 @@
       "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet",
       "registros_reales": 120,
       "descripcion": "Directorio oficial de entidades autorizadas e inscritas ante la CMF para intermediar valores de oferta pública, con validación de RUT bajo Módulo 11 y clasificación por conglomerado financiero.",
-      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Intermediarios de Valores."
+      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Intermediarios de Valores.",
+      "metadatos": {
+        "fuente": "CMF, Registro de Corredores de Bolsa (Ley 18.045), intermediarios autorizados",
+        "unidad": "No aplica: catálogo",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "2014-03 a 2026-06; 120 entidades; clasificación por conglomerado financiero",
+        "fecha_extraccion": "2026-09-23 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "corredoras_bolsa_resultados",
@@ -232,7 +362,17 @@
       "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/manifest.json",
       "registros_reales": 77705,
       "descripcion": "Estado de resultados y resultados integrales de cada corredor de bolsa y agente de valores, acumulados del ejercicio al cierre de cada trimestre, cuenta FECU por cuenta. Miles de pesos.",
-      "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/"
+      "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/",
+      "metadatos": {
+        "fuente": "CMF, estadísticas de estados financieros IFRS de intermediarios de valores (FECU)",
+        "unidad": "Miles de pesos (acumulado del ejercicio a la fecha del trimestre)",
+        "escala": "miles (M$)",
+        "moneda": "CLP",
+        "criterio_contable": "Estado de resultados y resultados integrales FECU por cuenta",
+        "cobertura": "2010-12 a 2026-06 (acumulado trimestral); 77.705 filas",
+        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "factoring_leasing_balance_serie_ifrs_cmf",
@@ -248,7 +388,17 @@
       "file_parquet": "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
       "registros_reales": 30046,
       "descripcion": "30,046 filas de cuentas ESF; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
-      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39380070665. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
+      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39380070665. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias.",
+      "metadatos": {
+        "fuente": "CMF, estados financieros IFRS (TXT), extracción de cuentas ESF; corrida de Actions 39380070665",
+        "unidad": "Importes en la moneda informada; importes no enteros preservados",
+        "escala": "unidades (sin reescalado)",
+        "moneda": "Monedas separadas según la fuente; sin conversión",
+        "criterio_contable": "Cuentas ESF tal como vienen en la fuente; taxonomías y tipo I/C separados; sin deduplicación ni suma",
+        "cobertura": "2009-03 a 2026-06; 30.046 filas de cuentas ESF; 28 de 32 RUT del catálogo con datos",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Observación abierta: 4 de 32 RUT del catálogo sin datos publicados; las cifras no están cotejadas en su totalidad (según la descripción de la tabla). Revisar el JSON acompañante de advertencias. Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20)."
+      }
     },
     {
       "id": "factoring_leasing_maestro",
@@ -264,7 +414,17 @@
       "file_parquet": "outputs/factoring_leasing/factoring_leasing_maestro.parquet",
       "registros_reales": 32,
       "descripcion": "Sociedades de factoring, leasing y financiamiento automotriz. Las sociedades nuevas se agregan cuando reportan estados financieros IFRS a la CMF con giro factoring o leasing; sus estados se publican desde entonces.",
-      "origen": "Lista original (referencias CMF FASOC, LISOC y RVEMI) + altas automáticas desde el TXT IFRS de la CMF (pipelines/ifrs_sectores/actualizar.py)."
+      "origen": "Lista original (referencias CMF FASOC, LISOC y RVEMI) + altas automáticas desde el TXT IFRS de la CMF (pipelines/ifrs_sectores/actualizar.py).",
+      "metadatos": {
+        "fuente": "CMF, nómina oficial y Registro de Valores (RVEMI, FASOC, LISOC); altas desde el TXT IFRS",
+        "unidad": "No aplica: catálogo",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "Lista vigente al 2026-09-28; 32 sociedades de factoring, leasing y financiamiento automotriz",
+        "fecha_extraccion": "2026-09-28 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "factoring_leasing_resultados_serie_ifrs_cmf",
@@ -280,7 +440,17 @@
       "file_parquet": "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
       "registros_reales": 22368,
       "descripcion": "22,368 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
-      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39380070665. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
+      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39380070665. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias.",
+      "metadatos": {
+        "fuente": "CMF, estados financieros IFRS (TXT), extracción de cuentas ER; corrida de Actions 39380070665",
+        "unidad": "Importes en la moneda informada; importes no enteros preservados",
+        "escala": "unidades (sin reescalado)",
+        "moneda": "Monedas separadas según la fuente; sin conversión",
+        "criterio_contable": "Cuentas ER tal como vienen en la fuente; taxonomías y tipo I/C separados; sin deduplicación ni suma",
+        "cobertura": "2009-03 a 2026-06; 22.368 filas de cuentas ER; 28 de 32 RUT del catálogo con datos",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Observación abierta: 4 de 32 RUT del catálogo sin datos publicados; las cifras no están cotejadas en su totalidad (según la descripción de la tabla). Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20)."
+      }
     },
     {
       "id": "ffmm_balance",
@@ -738,7 +908,17 @@
       "file_parquet": "outputs/fintech/fintech_rpsf_maestro.parquet",
       "registros_reales": 264,
       "descripcion": "Registro de Prestadores de Servicios Financieros (RPSF) de la CMF. Catálogo integral de las entidades FinTech que operan bajo el perímetro regulatorio de la Ley Fintec en Chile. Incluye personas jurídicas y naturales, estado de vigencia, número y fecha de inscripción oficial, código institucional CMF, datos de contacto y total de servicios autorizados.",
-      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Prestadores de Servicios Financieros (RPSF)."
+      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Prestadores de Servicios Financieros (RPSF).",
+      "metadatos": {
+        "fuente": "CMF, Registro de Prestadores de Servicios Financieros (RPSF), Ley 21.521 y NCG 502",
+        "unidad": "No aplica: catálogo",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "Catálogo vigente al 2026-09-23; 264 entidades (personas jurídicas y naturales)",
+        "fecha_extraccion": "2026-09-23 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "macro_cobre",
