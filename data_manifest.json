@@ -1078,7 +1078,17 @@
       "file_parquet": "outputs/seguros/acciones/manifest.json",
       "registros_reales": 109019,
       "descripcion": "Acciones de sociedades anónimas y cuotas de fondos de inversión nacionales.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
+        "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
+        "escala": "Según el campo: miles (M$), pesos ($) o unidades originales; sin reescalado",
+        "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
+        "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
+        "cobertura": "2016-11 a 2026-09; 11 meses de archivo por sector; 109.019 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); SELECT * devolvió menos filas que el manifiesto (100.711 frente a 109.018 antes de la corrida #28); sin explicar. Esquema único y verificado. Conteo de filas igual al manifiesto. "
+      }
     },
     {
       "id": "seguros_bienes_raices",
@@ -1094,7 +1104,17 @@
       "file_parquet": "outputs/seguros/bienes_raices/manifest.json",
       "registros_reales": 760152,
       "descripcion": "Bienes raíces por rol: dirección, arriendo, costo, depreciación, tasaciones y valor final.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
+        "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
+        "escala": "Según el campo: miles (M$), pesos ($) o unidades originales; sin reescalado",
+        "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
+        "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
+        "cobertura": "2024-12 a 2026-09; 22 archivos; 760.152 filas; rol protegido por seudónimo",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); orden de columnas corregido en 2026-09 (commit 315d92d); sin pérdida de valores. Esquema único y verificado. Conteo de filas igual al manifiesto. "
+      }
     },
     {
       "id": "seguros_control_inversiones",
@@ -1110,7 +1130,17 @@
       "file_parquet": "outputs/seguros/control_inversiones/manifest.json",
       "registros_reales": 111410,
       "descripcion": "Información de control que cada compañía envía con su cartera: totales por tipo de inversión (valor final, representativas y no representativas de reservas, etc.).",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
+        "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
+        "escala": "Según el campo: miles (M$), pesos ($) o unidades originales; sin reescalado",
+        "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
+        "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
+        "cobertura": "2016-11 a 2026-09; 111.410 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); SELECT * devolvió menos filas que el manifiesto (103.483 frente a 111.408 antes de la corrida #28); sin explicar. Esquema único y verificado. Conteo de filas igual al manifiesto. "
+      }
     },
     {
       "id": "seguros_derivados",
@@ -1126,7 +1156,17 @@
       "file_parquet": "outputs/seguros/derivados/manifest.json",
       "registros_reales": 373469,
       "descripcion": "Contratos de opciones, forwards, futuros y swaps (tipo_registro), con contraparte, nocional, valor razonable y efecto en resultados.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
+        "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
+        "escala": "Según el campo: miles (M$), pesos ($) o unidades originales; sin reescalado",
+        "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
+        "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
+        "cobertura": "2016-11 a 2026-09; 373.469 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); Esquema único y verificado. Conteo de filas igual al manifiesto. "
+      }
     },
     {
       "id": "seguros_extranjeros",
@@ -1142,7 +1182,17 @@
       "file_parquet": "outputs/seguros/extranjeros/manifest.json",
       "registros_reales": 471942,
       "descripcion": "Inversiones en el extranjero: deuda (tipo_registro = 'deuda'), acciones y fondos (tipo_registro = 'acciones_y_fondos'), bienes raíces (tipo_registro = 'bienes_raices') y filiales (tipo_registro = 'filiales').",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
+        "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
+        "escala": "Según el campo: miles (M$), pesos ($) o unidades originales; sin reescalado",
+        "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
+        "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
+        "cobertura": "2016-11 a 2026-09; 471.942 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); Esquema único y verificado. Conteo de filas igual al manifiesto. "
+      }
     },
     {
       "id": "seguros_fondos_mutuos",
@@ -1158,7 +1208,17 @@
       "file_parquet": "outputs/seguros/fondos_mutuos/manifest.json",
       "registros_reales": 100472,
       "descripcion": "Cuotas de fondos mutuos nacionales.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
+        "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
+        "escala": "Según el campo: miles (M$), pesos ($) o unidades originales; sin reescalado",
+        "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
+        "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
+        "cobertura": "2016-11 a 2026-09; 100.472 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); Esquema único y verificado. Conteo de filas igual al manifiesto. "
+      }
     },
     {
       "id": "seguros_maestro",
@@ -1174,7 +1234,17 @@
       "file_parquet": "outputs/seguros/aseguradoras.parquet",
       "registros_reales": 84,
       "descripcion": "Compañías de seguros de vida y generales que envían su cartera a la CMF, con el primer y el último mes informado. Sirve para detectar compañías nuevas y las que dejan de reportar.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
+        "unidad": "No aplica: catálogo de compañías",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "2016-11 a 2026-09; 84 compañías con primer y último mes informado",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Validado: conteo de filas igual al manifiesto (84). No se revisó la forma de nombres y RUT. Sin observaciones abiertas en la auditoría del 2026-10-20."
+      }
     },
     {
       "id": "seguros_pactos",
@@ -1190,7 +1260,17 @@
       "file_parquet": "outputs/seguros/pactos/manifest.json",
       "registros_reales": 11371,
       "descripcion": "Compras y ventas con pacto (repos), con contraparte, tasa y activo objeto.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
+        "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
+        "escala": "Según el campo: miles (M$), pesos ($) o unidades originales; sin reescalado",
+        "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
+        "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
+        "cobertura": "2016-11 a 2026-09; 11.371 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); SELECT * devolvió menos filas que el manifiesto (9.908 frente a 11.371 antes de la corrida #28); sin explicar. Esquema único y verificado. Conteo de filas igual al manifiesto. "
+      }
     },
     {
       "id": "seguros_renta_fija",
@@ -1206,7 +1286,17 @@
       "file_parquet": "outputs/seguros/renta_fija/manifest.json",
       "registros_reales": 2321911,
       "descripcion": "Bonos, letras, depósitos y demás instrumentos de renta fija nacionales, uno por fila, con sus tasas, costo amortizado, valor razonable y valor final.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
+        "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
+        "escala": "Según el campo: miles (M$), pesos ($) o unidades originales; sin reescalado",
+        "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
+        "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
+        "cobertura": "2024-12 a 2026-09; 22 archivos; 2.321.911 filas (formato v2024 completo)",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); SELECT * tarda más de 200 s en navegador; count(*) verificado. Esquema único y verificado. Conteo de filas igual al manifiesto. "
+      }
     },
     {
       "id": "sistemas_pago_maestro",
