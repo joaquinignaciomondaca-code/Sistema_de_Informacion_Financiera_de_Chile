@@ -478,7 +478,7 @@ const ERD_TABLES = [
     name: "afp.lista_entidades",
     sector: "pensiones",
     color: "var(--accent-mint)",
-    x: 1900,
+    x: 5790,
     y: -80,
     w: 230,
     h: 160,
@@ -579,11 +579,11 @@ const ERD_TABLES = [
     name: "macro.tasas_corto_plazo",
     sector: "macro",
     color: "#E65100",
-    x: 3040,
+    x: 3760,
     y: 110,
     w: 250,
     h: 116,
-    rows: "3.175 días",
+    rows: "3.187 días",
     file: "outputs/macro/macro_tasas_corto_plazo.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -597,11 +597,11 @@ const ERD_TABLES = [
     name: "macro.swaps_camara",
     sector: "macro",
     color: "#E65100",
-    x: 3330,
+    x: 4050,
     y: 110,
     w: 250,
     h: 170,
-    rows: "3.188 días",
+    rows: "3.200 días",
     file: "outputs/macro/macro_swaps_camara.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -618,11 +618,11 @@ const ERD_TABLES = [
     name: "macro.curva_bonos_pesos",
     sector: "macro",
     color: "#E65100",
-    x: 3040,
+    x: 3760,
     y: 256,
     w: 250,
     h: 134,
-    rows: "3.157 días",
+    rows: "3.169 días",
     file: "outputs/macro/macro_curva_bonos_pesos.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -637,11 +637,11 @@ const ERD_TABLES = [
     name: "macro.curva_bonos_uf",
     sector: "macro",
     color: "#E65100",
-    x: 3330,
+    x: 4050,
     y: 310,
     w: 250,
     h: 188,
-    rows: "3.159 días",
+    rows: "3.171 días",
     file: "outputs/macro/macro_curva_bonos_uf.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -659,11 +659,11 @@ const ERD_TABLES = [
     name: "macro.inflacion_implicita",
     sector: "macro",
     color: "#E65100",
-    x: 3040,
+    x: 3760,
     y: 420,
     w: 250,
     h: 116,
-    rows: "3.063 días",
+    rows: "3.075 días",
     file: "outputs/macro/macro_inflacion_implicita.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -677,11 +677,11 @@ const ERD_TABLES = [
     name: "macro.dolar_observado",
     sector: "macro",
     color: "#E65100",
-    x: 3330,
+    x: 4050,
     y: 528,
     w: 250,
     h: 98,
-    rows: "3.174 días",
+    rows: "3.186 días",
     file: "outputs/macro/macro_dolar_observado.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -694,11 +694,11 @@ const ERD_TABLES = [
     name: "macro.euro_observado",
     sector: "macro",
     color: "#E65100",
-    x: 3040,
+    x: 3760,
     y: 566,
     w: 250,
     h: 98,
-    rows: "3.174 días",
+    rows: "3.186 días",
     file: "outputs/macro/macro_euro_observado.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -711,11 +711,11 @@ const ERD_TABLES = [
     name: "macro.tipo_cambio_multilateral",
     sector: "macro",
     color: "#E65100",
-    x: 3330,
+    x: 4050,
     y: 656,
     w: 250,
     h: 134,
-    rows: "3.174 días",
+    rows: "3.186 días",
     file: "outputs/macro/macro_tipo_cambio_multilateral.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -730,7 +730,7 @@ const ERD_TABLES = [
     name: "macro.tipo_cambio_real",
     sector: "macro",
     color: "#F57C00",
-    x: 3040,
+    x: 3760,
     y: 694,
     w: 250,
     h: 116,
@@ -748,11 +748,11 @@ const ERD_TABLES = [
     name: "macro.uf",
     sector: "macro",
     color: "#E65100",
-    x: 3330,
+    x: 4050,
     y: 820,
     w: 250,
     h: 98,
-    rows: "4.656 días",
+    rows: "4.675 días",
     file: "outputs/macro/macro_uf.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -765,11 +765,11 @@ const ERD_TABLES = [
     name: "macro.utm",
     sector: "macro",
     color: "#F57C00",
-    x: 3040,
+    x: 3760,
     y: 840,
     w: 250,
     h: 98,
-    rows: "153 meses",
+    rows: "154 meses",
     file: "outputs/macro/macro_utm.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -782,11 +782,11 @@ const ERD_TABLES = [
     name: "macro.inflacion_ipc",
     sector: "macro",
     color: "#F57C00",
-    x: 3330,
+    x: 4050,
     y: 948,
     w: 250,
     h: 134,
-    rows: "152 meses",
+    rows: "153 meses",
     file: "outputs/macro/macro_inflacion_ipc.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -801,11 +801,11 @@ const ERD_TABLES = [
     name: "macro.imacec",
     sector: "macro",
     color: "#F57C00",
-    x: 3040,
+    x: 3760,
     y: 968,
     w: 250,
     h: 170,
-    rows: "151 meses",
+    rows: "152 meses",
     file: "outputs/macro/macro_imacec.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -822,7 +822,7 @@ const ERD_TABLES = [
     name: "macro.pib_trimestral",
     sector: "macro",
     color: "#FF9800",
-    x: 3330,
+    x: 4050,
     y: 1112,
     w: 250,
     h: 98,
@@ -839,7 +839,7 @@ const ERD_TABLES = [
     name: "macro.mercado_laboral",
     sector: "macro",
     color: "#F57C00",
-    x: 3040,
+    x: 3760,
     y: 1168,
     w: 250,
     h: 152,
@@ -859,11 +859,11 @@ const ERD_TABLES = [
     name: "macro.cobre",
     sector: "macro",
     color: "#E65100",
-    x: 3330,
+    x: 4050,
     y: 1240,
     w: 250,
     h: 116,
-    rows: "3.246 días",
+    rows: "3.258 días",
     file: "outputs/macro/macro_cobre.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -877,11 +877,11 @@ const ERD_TABLES = [
     name: "macro.metales_preciosos",
     sector: "macro",
     color: "#E65100",
-    x: 3040,
+    x: 3760,
     y: 1350,
     w: 250,
     h: 116,
-    rows: "3.174 días",
+    rows: "3.186 días",
     file: "outputs/macro/macro_metales_preciosos.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -895,11 +895,11 @@ const ERD_TABLES = [
     name: "macro.reservas_internacionales",
     sector: "macro",
     color: "#F57C00",
-    x: 3330,
+    x: 4050,
     y: 1386,
     w: 250,
     h: 98,
-    rows: "152 meses",
+    rows: "153 meses",
     file: "outputs/macro/macro_reservas_internacionales.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -912,11 +912,11 @@ const ERD_TABLES = [
     name: "macro.tasa_referencia_fed",
     sector: "macro",
     color: "#E65100",
-    x: 3040,
+    x: 3760,
     y: 1496,
     w: 250,
     h: 98,
-    rows: "3.313 días",
+    rows: "3.323 días",
     file: "outputs/macro/macro_tasa_referencia_fed.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -929,7 +929,7 @@ const ERD_TABLES = [
     name: "macro.deuda_publica_pct_pib",
     sector: "macro",
     color: "#FF9800",
-    x: 3330,
+    x: 4050,
     y: 1514,
     w: 250,
     h: 98,
@@ -946,11 +946,11 @@ const ERD_TABLES = [
     name: "macro.expectativas_inflacion",
     sector: "macro",
     color: "#F57C00",
-    x: 3040,
+    x: 3760,
     y: 1624,
     w: 250,
     h: 116,
-    rows: "153 meses",
+    rows: "154 meses",
     file: "outputs/macro/macro_expectativas_inflacion.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -964,11 +964,11 @@ const ERD_TABLES = [
     name: "macro.expectativas_tpm",
     sector: "macro",
     color: "#F57C00",
-    x: 3330,
+    x: 4050,
     y: 1642,
     w: 250,
     h: 116,
-    rows: "153 meses",
+    rows: "154 meses",
     file: "outputs/macro/macro_expectativas_tpm.parquet",
     cols: [
       { name: "fecha", pk: true, type: "VARCHAR" },
@@ -982,7 +982,7 @@ const ERD_TABLES = [
     name: "macro.expectativas_operadores",
     sector: "macro",
     color: "#E65100",
-    x: 3040,
+    x: 3760,
     y: 1770,
     w: 250,
     h: 116,
@@ -1000,7 +1000,7 @@ const ERD_TABLES = [
     name: "macro.series_catalogo",
     sector: "macro",
     color: "#FF9800",
-    x: 3330,
+    x: 4050,
     y: 1788,
     w: 250,
     h: 170,
@@ -1022,7 +1022,7 @@ const ERD_TABLES = [
     name: "factoring_leasing.lista_entidades",
     sector: "factoring_leasing",
     color: "#D97706",
-    x: 3600,
+    x: 4460,
     y: -80,
     w: 240,
     h: 180,
@@ -1044,8 +1044,8 @@ const ERD_TABLES = [
     name: "corredoras.lista_entidades",
     sector: "corredoras_bolsa",
     color: "#8B5CF6",
-    x: 3900,
-    y: 110,
+    x: 3420,
+    y: -80,
     w: 240,
     h: 180,
     rows: "47 entidades",
@@ -1064,8 +1064,8 @@ const ERD_TABLES = [
     name: "securitizadoras.lista_entidades",
     sector: "securitizadoras",
     color: "#0284C7",
-    x: 3900,
-    y: 340,
+    x: 4760,
+    y: -80,
     w: 240,
     h: 175,
     rows: "16 entidades (9 vigentes)",
@@ -1095,8 +1095,8 @@ const ERD_TABLES = [
     name: "patrimonios_separados.balance",
     sector: "patrimonios_separados",
     color: "#0F766E",
-    x: 4460,
-    y: 580,
+    x: 5080,
+    y: 320,
     w: 270,
     h: 230,
     rows: "358 balances · 7.962 cuentas",
@@ -1117,8 +1117,8 @@ const ERD_TABLES = [
     name: "patrimonios_separados.lista_entidades",
     sector: "patrimonios_separados",
     color: "#075985",
-    x: 4460,
-    y: 340,
+    x: 5080,
+    y: -80,
     w: 260,
     h: 200,
     rows: "18 programas CMF",
@@ -1143,8 +1143,8 @@ const ERD_TABLES = [
     name: "cooperativas.lista_entidades",
     sector: "cooperativas",
     color: "#16A34A",
-    x: 4750,
-    y: 600,
+    x: 6080,
+    y: -80,
     w: 260,
     h: 180,
     rows: "7 entidades",
@@ -1165,8 +1165,8 @@ const ERD_TABLES = [
     name: "ccaf.lista_entidades",
     sector: "cajas_compensacion",
     color: "#D97706",
-    x: 4750,
-    y: 340,
+    x: 5410,
+    y: -80,
     w: 260,
     h: 210,
     rows: "6 entidades",
@@ -1188,8 +1188,8 @@ const ERD_TABLES = [
     name: "agf.lista_entidades",
     sector: "agf",
     color: "#6366F1",
-    x: 5040,
-    y: 200,
+    x: 3100,
+    y: -80,
     w: 260,
     h: 175,
     rows: "68 entidades",
@@ -1208,8 +1208,8 @@ const ERD_TABLES = [
     name: "agf.balance",
     sector: "agf",
     color: "#6366F1",
-    x: 5040,
-    y: 460,
+    x: 3100,
+    y: 320,
     w: 260,
     h: 222,
     rows: "71.423 cuentas",
@@ -1231,8 +1231,8 @@ const ERD_TABLES = [
     name: "agf.resultados",
     sector: "agf",
     color: "#6366F1",
-    x: 5040,
-    y: 720,
+    x: 3100,
+    y: 590,
     w: 260,
     h: 222,
     rows: "58.216 cuentas",
@@ -1254,8 +1254,8 @@ const ERD_TABLES = [
     name: "securitizadoras.balance",
     sector: "securitizadoras",
     color: "#0284C7",
-    x: 3900,
-    y: 600,
+    x: 4760,
+    y: 320,
     w: 260,
     h: 222,
     rows: "13.679 cuentas",
@@ -1277,8 +1277,8 @@ const ERD_TABLES = [
     name: "securitizadoras.resultados",
     sector: "securitizadoras",
     color: "#0284C7",
-    x: 3900,
-    y: 860,
+    x: 4760,
+    y: 590,
     w: 260,
     h: 222,
     rows: "12.290 cuentas",
@@ -1300,8 +1300,8 @@ const ERD_TABLES = [
     name: "ccaf.balance",
     sector: "cajas_compensacion",
     color: "#D97706",
-    x: 4750,
-    y: 600,
+    x: 5410,
+    y: 320,
     w: 260,
     h: 222,
     rows: "8.043 cuentas",
@@ -1323,8 +1323,8 @@ const ERD_TABLES = [
     name: "ccaf.resultados",
     sector: "cajas_compensacion",
     color: "#D97706",
-    x: 4750,
-    y: 860,
+    x: 5410,
+    y: 590,
     w: 260,
     h: 222,
     rows: "5.506 cuentas",
@@ -1346,8 +1346,8 @@ const ERD_TABLES = [
     name: "corredoras.balance",
     sector: "corredoras_bolsa",
     color: "#8B5CF6",
-    x: 3900,
-    y: 370,
+    x: 3420,
+    y: 320,
     w: 260,
     h: 204,
     rows: "107.976 cuentas",
@@ -1368,8 +1368,8 @@ const ERD_TABLES = [
     name: "corredoras.resultados",
     sector: "corredoras_bolsa",
     color: "#8B5CF6",
-    x: 3900,
-    y: 630,
+    x: 3420,
+    y: 590,
     w: 260,
     h: 204,
     rows: "77.705 cuentas",
@@ -1392,8 +1392,8 @@ const ERD_TABLES = [
     name: "sistemas_pago.lista_entidades",
     sector: "sistemas_pago",
     color: "#0F766E",
-    x: 5340,
-    y: 150,
+    x: 5790,
+    y: 320,
     w: 260,
     h: 180,
     rows: "12 entidades",
@@ -1411,8 +1411,8 @@ const ERD_TABLES = [
     name: "fintech.lista_entidades",
     sector: "fintech",
     color: "#D97706",
-    x: 5920,
-    y: 150,
+    x: 6080,
+    y: 320,
     w: 260,
     h: 180,
     rows: "262 entidades",
@@ -1424,25 +1424,6 @@ const ERD_TABLES = [
       { name: "estado_vigencia", type: "VARCHAR" },
       { name: "tipo_persona", type: "VARCHAR" },
       { name: "servicios_acreditados_total", type: "BIGINT" }
-    ]
-  },
-  {
-    id: "ccaf_lista_entidades",
-    name: "ccaf.lista_entidades",
-    sector: "cajas_compensacion",
-    color: "#10B981",
-    x: 6300,
-    y: 100,
-    w: 260,
-    h: 170,
-    rows: "6 entidades",
-    file: "outputs/cajas_compensacion/ccaf_maestro.parquet",
-    cols: [
-      { name: "rut", pk: true, type: "BIGINT" },
-      { name: "razon_social", type: "VARCHAR" },
-      { name: "nombre_fantasia", type: "VARCHAR" },
-      { name: "estado_vigencia", type: "VARCHAR" },
-      { name: "emisor_valores_cmf", type: "BOOLEAN" }
     ]
   },
 
@@ -1718,14 +1699,96 @@ class ERDGraph {
     // Filtros
     document.querySelectorAll(".filter-btn").forEach((btn) => {
       btn.addEventListener("click", (e) => {
-        const targetFilter = e.target.dataset.filter;
+        const targetFilter = e.currentTarget.dataset.filter;
         this.focusSector(targetFilter);
       });
     });
+
+    // Archivo y registros: sus filtros quedan plegados detrás de un botón propio.
+    const archivoBtn = document.getElementById("erd-archive-toggle");
+    if (archivoBtn) {
+      archivoBtn.addEventListener("click", () => {
+        const fila = document.getElementById("erd-archive-filters");
+        this.mostrarFiltrosArchivo(Boolean(fila && fila.hidden));
+      });
+    }
   }
 
-  autoCenterSector(sectorKey) {
-    const visibleTables = this.tables.filter((t) => sectorKey === "todos" || t.sector === sectorKey);
+  /* ── Alcance editorial: qué nodos entran en cada filtro ──────────────────
+     "todos"     → vista principal (núcleo, instituciones y contexto).
+     "completo"  → todo el mapa, archivo incluido.
+     agrupación  → varios sectores como uno (securitizacion = securitizadoras +
+                   patrimonios separados); nivel → todos sus sectores (registro).
+     sector      → sólo ese sector (con alias: afp_corporativo = pensiones). */
+  claveSector(sector) {
+    const A = window.SIFAlcance;
+    return A ? A.clave(sector) : String(sector || "");
+  }
+
+  // Filtro que corresponde a un sector pedido desde fuera (explorador, portada):
+  // los sectores agrupados se muestran juntos.
+  filtroPara(sectorKey) {
+    const A = window.SIFAlcance;
+    const clave = this.claveSector(sectorKey || "seguros");
+    if (!A || clave === "todos" || clave === "completo") return clave;
+    return A.agrupacionDe(clave) || clave;
+  }
+
+  sectoresDelFiltro(filtro) {
+    const A = window.SIFAlcance;
+    if (!A || !A.disponible() || filtro === "todos" || filtro === "completo") return null;
+    return A.sectoresDe(filtro);
+  }
+
+  matchesFilter(t) {
+    const filtro = this.filter;
+    if (filtro === "completo") return true;
+    const A = window.SIFAlcance;
+    if (filtro === "todos") return !A || A.esVisible(t.sector);
+    const sectores = this.sectoresDelFiltro(filtro);
+    if (sectores) return sectores.indexOf(this.claveSector(t.sector)) !== -1;
+    return t.sector === filtro;
+  }
+
+  esFiltroDeArchivo(filtro) {
+    const A = window.SIFAlcance;
+    if (!A || !A.disponible()) return false;
+    if (filtro === "completo") return true;
+    const sectores = this.sectoresDelFiltro(filtro) || [];
+    return sectores.length > 0 && sectores.every((s) => A.esArchivo(s));
+  }
+
+  mostrarFiltrosArchivo(mostrar) {
+    const fila = document.getElementById("erd-archive-filters");
+    const boton = document.getElementById("erd-archive-toggle");
+    if (fila) fila.hidden = !mostrar;
+    if (boton) {
+      boton.setAttribute("aria-expanded", mostrar ? "true" : "false");
+      boton.classList.toggle("open", mostrar);
+    }
+  }
+
+  // Botón activo, fila de archivo y aviso de alcance según el filtro vigente.
+  syncFilterUi() {
+    document.querySelectorAll(".filter-btn").forEach((b) => {
+      b.classList.toggle("active", b.dataset.filter === this.filter);
+    });
+    const archivo = this.esFiltroDeArchivo(this.filter);
+    if (archivo) this.mostrarFiltrosArchivo(true);
+    const nota = document.getElementById("erd-scope-note");
+    if (nota) {
+      const A = window.SIFAlcance;
+      const sectores = this.sectoresDelFiltro(this.filter) || [];
+      const aviso = archivo && A && sectores.length ? A.aviso(sectores[0]) : "";
+      nota.hidden = !aviso && this.filter !== "completo";
+      nota.textContent = this.filter === "completo"
+        ? "Mapa completo: incluye el archivo congelado y los registros complementarios."
+        : aviso;
+    }
+  }
+
+  autoCenterSector() {
+    const visibleTables = this.tables.filter((t) => this.matchesFilter(t));
     if (!visibleTables || visibleTables.length === 0) return;
 
     let minX = Infinity, minY = Infinity, maxX = -Infinity, maxY = -Infinity;
@@ -1743,7 +1806,10 @@ class ERDGraph {
 
     const scaleX = (canvasW - 90) / bboxW;
     const scaleY = (canvasH - 90) / bboxH;
-    this.scale = Math.min(Math.max(Math.min(scaleX, scaleY), 0.55), 1.05);
+    // Las vistas de conjunto (principal y completa) se muestran enteras aunque el texto
+    // quede chico: se ven los bloques por nivel y luego se acerca con la rueda o con +.
+    const minimo = (this.filter === "todos" || this.filter === "completo") ? 0.25 : 0.55;
+    this.scale = Math.min(Math.max(Math.min(scaleX, scaleY), minimo), 1.05);
 
     const centerX = (minX + maxX) / 2;
     const centerY = (minY + maxY) / 2;
@@ -1753,11 +1819,8 @@ class ERDGraph {
   }
 
   focusSector(sectorKey) {
-    this.filter = sectorKey || "seguros";
-    document.querySelectorAll(".filter-btn").forEach((b) => {
-      b.classList.toggle("active", b.dataset.filter === this.filter);
-    });
-
+    this.filter = this.filtroPara(sectorKey || "seguros");
+    this.syncFilterUi();
     this.autoCenterSector(this.filter);
     this.render();
   }
@@ -1766,11 +1829,9 @@ class ERDGraph {
     const table = this.tables.find((t) => t.id === tableId || t.name === tableId);
     if (!table) return;
 
-    if (this.filter !== "todos" && this.filter !== table.sector) {
-      this.filter = table.sector;
-      document.querySelectorAll(".filter-btn").forEach((b) => {
-        b.classList.toggle("active", b.dataset.filter === this.filter);
-      });
+    if (!this.matchesFilter(table)) {
+      this.filter = this.filtroPara(table.sector);
+      this.syncFilterUi();
     }
 
     this.scale = 1.0;
@@ -1793,7 +1854,7 @@ class ERDGraph {
   getNodeAt(x, y) {
     for (let i = this.tables.length - 1; i >= 0; i--) {
       const t = this.tables[i];
-      if (this.filter !== "todos" && t.sector !== this.filter) continue;
+      if (!this.matchesFilter(t)) continue;
       if (x >= t.x && x <= t.x + t.w && y >= t.y && y <= t.y + t.h) {
         return t;
       }
@@ -1906,7 +1967,7 @@ class ERDGraph {
       const fromNode = this.tables.find((t) => t.id === link.from);
       const toNode = this.tables.find((t) => t.id === link.to);
       if (!fromNode || !toNode) return;
-      if (this.filter !== "todos" && (fromNode.sector !== this.filter || toNode.sector !== this.filter)) return;
+      if (!this.matchesFilter(fromNode) || !this.matchesFilter(toNode)) return;
 
       const p1 = { x: fromNode.x + fromNode.w / 2, y: fromNode.y + fromNode.h / 2 };
       const p2 = { x: toNode.x + toNode.w / 2, y: toNode.y + toNode.h / 2 };
@@ -1941,7 +2002,7 @@ class ERDGraph {
     const borderColor = style.getPropertyValue('--border-color').trim() || "rgba(105, 110, 121, 0.4)";
 
     this.tables.forEach((t) => {
-      if (this.filter !== "todos" && t.sector !== this.filter) return;
+      if (!this.matchesFilter(t)) return;
       const isHovered = this.hoveredNode === t;
 
       ctx.save();

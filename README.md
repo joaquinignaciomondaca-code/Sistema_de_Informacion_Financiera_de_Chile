@@ -3,6 +3,8 @@
 **25 años del sistema financiero chileno, consultables con SQL desde el navegador.**
 Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Central, la Superintendencia de Pensiones y la SUSESO: **15 industrias, 75 tablas y 13,3 millones de filas** desde enero de 2001. Sin backend, sin base de datos, sin servidores — el dato viaja como Parquet estático y el motor corre en el cliente.
 
+**En la web, el foco es la inversión institucional:** seguros, fondos mutuos y fondos de inversión (25 conjuntos, 11,1 millones de filas, 2001 → 2026), con bancos, AGF y corredoras como instituciones y las series del Banco Central como contexto. Factoring y leasing, securitización y cajas de compensación quedan en un archivo congelado, y AFP, cooperativas, sistemas de pago y fintech como registro de entidades: siguen publicados, consultables y descargables, sólo que fuera del camino ([alcance de la edición](docs/notas/recorte_visual_industrias_2026-10-20.md)).
+
 **▶ [Abrir el sistema](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/)** — sin instalar nada, las consultas corren en tu navegador.
 
 ![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
@@ -174,15 +176,15 @@ Aplicación estática de siete pestañas, sin framework y sin build:
 
 | Pestaña | Qué hace |
 |---|---|
-| **Información** | Cobertura, fuentes y estado de cada industria. |
+| **Información** | Portada con el núcleo (seguros, fondos mutuos y de inversión), las instituciones, el contexto macro y el alcance de la edición. |
 | **Mapa relacional** | Diagrama entidad-relación con zoom, paneo y enlaces entre tablas. |
 | **Diccionario** | Campo por campo: rol (PK, FK, dimensión, métrica), definición y criterio contable. |
 | **Visor de datos** | Consulta tabular con filtro, orden y copia de celdas. |
 | **Consultas SQL** | Terminal con autocompletado, historial, favoritos y enlaces compartibles. |
-| **Descargas** | Los 75 conjuntos con filas, período y peso, en Parquet, CSV y Excel. |
+| **Descargas** | Los 75 conjuntos con filas, período y peso, en Parquet, CSV y Excel; el núcleo primero y el archivo al final, plegado. |
 | **Normativa CMF** | Seguimiento de la normativa publicada por la CMF (ver §7.6). |
 
-El **explorador jerárquico** organiza 12 industrias → 15 sectores → 45 carpetas temáticas → 75 tablas, con consultas sugeridas en cada carpeta. El motor DuckDB-Wasm 1.28.0 va **embebido en el propio sitio** (`docs/vendor/duckdb/`), así que las consultas funcionan aunque la red del visitante bloquee los CDN públicos.
+El **explorador jerárquico** organiza 13 familias → 15 sectores → 43 carpetas temáticas → 75 tablas, con consultas sugeridas en cada carpeta, ordenadas por nivel: núcleo, instituciones y contexto arriba; el archivo congelado y el registro complementario al final, plegados. El nivel de cada sector es una bandera en `docs/vocabulario.json` (`alcance`): cambiarla y regenerar el catálogo revierte o ajusta el recorte sin tocar datos. El motor DuckDB-Wasm 1.28.0 va **embebido en el propio sitio** (`docs/vendor/duckdb/`), así que las consultas funcionan aunque la red del visitante bloquee los CDN públicos.
 
 ### Verlo funcionando
 

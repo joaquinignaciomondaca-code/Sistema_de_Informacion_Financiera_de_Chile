@@ -27,8 +27,11 @@ const byGroup = Object.fromEntries(tree.map(g => [g.id, g]));
 assert.equal(Object.keys(byGroup).length, tree.length, 'grupo duplicado');
 assert.deepEqual(Array.from(byGroup.group_securitizacion.children, s => s.sector),
   ['securitizadoras', 'patrimonios_separados']);
+// Recorte visual 2026-10-20: FFMM y FI quedan en el núcleo; sus administradoras (AGF)
+// pasan a su propio grupo, en «Instituciones y estados financieros».
 assert.deepEqual(Array.from(byGroup.group_administracion_fondos.children, s => s.sector),
-  ['agf', 'ffmm', 'fi']);
+  ['ffmm', 'fi']);
+assert.deepEqual(Array.from(byGroup.group_agf.children, s => s.sector), ['agf']);
 const expected = new Map();
 const circularIds = new Set();
 for (const group of tree) for (const sector of group.children) {
@@ -192,6 +195,79 @@ for (const group of tree) for (const sector of group.children) {
 }
 console.log(`Navegación OK: ${tree.length} familias, ${expected.size} tablas, ${options.length} opciones del visor.`);
 console.log(`Catálogo de entidades normalizado en ${tree.reduce((n, g) => n + g.children.length, 0) - SIN_LISTA_ENTIDADES.length} sectores.`);
+
+// --- Alcance editorial (recorte visual 2026-10-20) ---------------------------
+// Con el catálogo y docs/js/alcance.js cargados, el explorador se ordena por nivel:
+// núcleo, instituciones y contexto arriba; archivo y registro al final, plegados,
+// pero presentes (la búsqueda los encuentra). Nada sale de EXPLORER_TREE.
+const ctxAlcance = {
+  window: { dispatchEvent: () => {} },
+  document: { getElementById: () => null, querySelectorAll: () => [] },
+  CustomEvent
+};
+vm.createContext(ctxAlcance);
+for (const file of ['download_catalog.js', 'alcance.js', 'sidebar.js']) {
+  vm.runInContext(fs.readFileSync('docs/js/' + file, 'utf8'), ctxAlcance);
+}
+const A = ctxAlcance.window.SIFAlcance;
+assert(A && A.disponible(), 'el catálogo debe traer el alcance editorial');
+const vocab = JSON.parse(fs.readFileSync('docs/vocabulario.json', 'utf8'));
+for (const [sector, nivel] of Object.entries(vocab.alcance.sectores)) {
+  assert.equal(A.nivelDe(sector), nivel, 'nivel del catálogo distinto al vocabulario: ' + sector);
+}
+assert.equal(A.nivelDe('afp_corporativo'), 'registro', 'el alias del explorador para AFP debe resolverse');
+const treeAlcance = vm.runInContext('EXPLORER_TREE', ctxAlcance);
+const SidebarAlcance = vm.runInContext('SidebarController', ctxAlcance);
+for (const group of treeAlcance) {
+  const niveles = new Set(group.children.map(s => A.nivelDe(s.sector)));
+  assert.equal(niveles.size, 1, 'un grupo mezcla niveles: ' + group.id);
+  assert(!niveles.has(null), 'grupo sin nivel editorial: ' + group.id);
+}
+const nav = Object.create(SidebarAlcance.prototype);
+nav.treeContainer = { innerHTML: '' };
+nav.selectedTableId = null;
+nav.expandedNodes = new Set();
+nav.bindTreeEvents = () => {};
+nav.render();
+const htmlAlcance = nav.treeContainer.innerHTML;
+const posTier = id => htmlAlcance.indexOf(`data-tier="${id}"`);
+assert(posTier('nucleo') !== -1 && posTier('nucleo') < posTier('secundario') &&
+  posTier('secundario') < posTier('contexto') && posTier('contexto') < posTier('archivo') &&
+  posTier('archivo') < posTier('registro'), 'niveles fuera de orden en el explorador');
+const inicioArchivo = htmlAlcance.indexOf('class="tree-archive');
+assert(inicioArchivo !== -1, 'falta el bloque de archivo y registros');
+assert(!/class="tree-archive open/.test(htmlAlcance), 'el archivo debe empezar plegado');
+for (const group of treeAlcance) {
+  const marca = `data-group-id="${group.id}"`;
+  assert.equal(htmlAlcance.split(marca).length - 1, 1, 'grupo ausente o repetido: ' + group.id);
+  const fuera = A.esArchivo(group.children[0].sector);
+  assert.equal(htmlAlcance.indexOf(marca) > inicioArchivo, fuera,
+    (fuera ? 'industria archivada fuera del archivo: ' : 'industria principal dentro del archivo: ') + group.id);
+}
+const nucleo = htmlAlcance.slice(posTier('nucleo'), posTier('secundario'));
+for (const id of ['group_seguros', 'group_administracion_fondos']) assert(nucleo.includes(id), 'núcleo sin ' + id);
+const instituciones = htmlAlcance.slice(posTier('secundario'), posTier('contexto'));
+for (const id of ['group_bancos', 'group_agf', 'group_corredoras_bolsa']) assert(instituciones.includes(id), 'instituciones sin ' + id);
+// Tabla oculta (0 filas en la fuente): fuera del árbol visible, pero sigue en los datos.
+assert(expected.has('fi_bienes_raices') && !htmlAlcance.includes('data-table-id="fi_bienes_raices"'),
+  'fi_bienes_raices debe seguir en EXPLORER_TREE y no dibujarse');
+// Las dos listas de corredoras se ven como una sola carpeta.
+assert(!htmlAlcance.includes('data-node-id="cat_corredoras_bolsa_lista_entidades_registro"'),
+  'la lista registro de corredoras no debe dibujarse como carpeta aparte');
+const carpetaCorredoras = htmlAlcance.split('data-node-id="cat_corredoras_bolsa_lista_entidades"')[1].split('data-node-id=')[0];
+assert(carpetaCorredoras.includes('data-table-id="corredoras_bolsa_lista_entidades_registro"') &&
+  carpetaCorredoras.includes('tree-variant'), 'la variante registro debe verse dentro de la lista principal');
+const chipsCorredoras = nav.chipsDeCarpeta('cat_corredoras_bolsa_lista_entidades');
+assert(chipsCorredoras.some(c => /corredoras_bolsa_lista_entidades_registro/.test(c.query)),
+  'la carpeta fusionada debe ofrecer también las consultas de la variante');
+// La macro se lee en cuatro bloques más el catálogo de series.
+assert.deepEqual(Array.from(byGroup.group_macro.children[0].children, c => c.label),
+  ['Tasas y curvas', 'Tipo de cambio, UF y UTM', 'Actividad y precios', 'Expectativas', 'Catálogo de series']);
+// Las industrias archivadas se anuncian como tales en la barra de contexto.
+assert(nav.describeLocation('factoring_leasing', 'factoring_leasing.lista_entidades').startsWith('Archivo'),
+  'la ruta de una industria archivada debe decir Archivo');
+assert(!nav.describeLocation('seguros', 'seguros.lista_entidades').startsWith('Archivo'));
+console.log(`Alcance OK: ${A.niveles().map(n => n.corta + ' ' + n.conjuntos).join(' · ')} conjuntos; archivo plegado al final.`);
 """
 
 
