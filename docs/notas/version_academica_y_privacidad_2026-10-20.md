@@ -9,7 +9,7 @@ Resumen de lo que se tocó:
 
 | # | Cambio | Dónde |
 |---|---|---|
-| 1 | Cómo citar la base | `docs/js/cita.js`, bloques en Información y Descargas |
+| 1 | Autoría y reproducibilidad | `docs/js/creditos.js`, bloques en Información y Descargas |
 | 2 | Fuentes, licencia y limitaciones | sección nueva en Información (`docs/index.html`) |
 | 3 | Protección de identificadores | `pipelines/auto/privacidad.py`, `scripts/enmascarar_identificadores.py`, publicadores de `fi` y `seguros` |
 | 4 | Reproducibilidad descargable | `scripts/construir_reproducibilidad.py` → `docs/reproducibilidad/` |
@@ -18,29 +18,43 @@ Resumen de lo que se tocó:
 
 ---
 
-## 1. Cómo citar la base
+## 1. Autoría y reproducibilidad: el sitio muestra lo que existe
 
-El sitio cambia con cada publicación: no hay una versión congelada publicada ni
-un DOI, así que la base se cita como lo que es —un conjunto de datos vivo— con
-dos fechas: el **corte de los datos** y el **día de la consulta**.
+Se probó un bloque de citación (APA 7 + BibTeX + ficha con versión y corte) y se
+sacó: anunciaba cosas que no están y resumía mal las que sí. Lo que queda es más
+corto y es todo verificable.
 
-- `docs/js/cita.js` pinta dos bloques (*Cómo citar esta base*): uno largo en
-  Información y uno compacto en Descargas. Ambos ofrecen APA 7 y BibTeX con
-  botón de copiar.
-- El corte, el alcance y la fecha del catálogo **se leen de
-  `window.DOWNLOAD_CATALOG`** (generado por `scripts/build_download_catalog.py`),
-  no están escritos a mano: la cita no se puede atrasar respecto de lo publicado.
-  Si el catálogo no carga, el módulo cae a los valores de respaldo de `CITA`.
-- **Regla del módulo:** en el sitio se escribe sólo lo que existe hoy. No hay
-  DOI, no hay versión congelada publicada y no hay ORCID ni correo declarados,
-  así que ninguna de esas cosas aparece: ni inventada ni anunciada como
-  pendiente. El bloque lo dice explícito: *«No hay DOI: la base no está
-  depositada en un repositorio con identificador permanente»*.
-- `scripts/audit_interfaz_dom.js` cuida esa frontera: falla si el bloque vuelve a
-  mencionar un DOI, una versión congelada, un snapshot o cualquier «pendiente».
-- `scripts/construir_snapshot_academico.py` queda como herramienta local: junta
-  los 25 conjuntos del núcleo en una carpeta con `README.md`, `CHANGELOG.md` y un
-  inventario con SHA-256. No hay ninguna copia publicada.
+**No hay:** DOI (la base no está depositada en un repositorio con identificador
+permanente), versión congelada publicada, fecha de publicación ni número de
+versión. Tampoco ORCID ni correo de contacto declarados. Nada de eso aparece en
+el sitio: ni inventado ni anunciado como pendiente.
+
+**No hay fecha de corte única**, y es una decisión: seguros llega a 2026-09,
+fondos de inversión a 2026-06, banca a 2026-08 y las series del Banco Central
+tienen su propia frecuencia. Una fecha global habría sido cierta para una
+industria y engañosa para el resto. El periodo de cada conjunto se ve en el
+explorador, en el diccionario y en la ficha de Descargas, que es donde el
+usuario la necesita.
+
+Lo que sí se publica:
+
+- **Autoría** (`docs/js/creditos.js` → `#creditos-autor`, en Información):
+  nombre, *«proyecto iniciado en septiembre de 2026»* (la fecha de creación del
+  repositorio, 2026-09-25, tomada de la API de GitHub) y los enlaces a GitHub y
+  LinkedIn.
+- **Reproducibilidad y código** (`#creditos-descargas`, en Descargas): los seis
+  archivos de `docs/reproducibilidad/` y el enlace al repositorio.
+- **Cómo referenciar**, una línea en la sección *Fuentes, licencia y
+  limitaciones*: «indica la fuente oficial y la fecha en que los consultaste.
+  Cada tabla tiene su propio periodo y su propia frecuencia».
+
+`scripts/audit_interfaz_dom.js` cuida la frontera: falla si el sitio vuelve a
+mostrar una cita armada, un DOI, una versión congelada, un snapshot, una fecha
+de corte global o cualquier «pendiente».
+
+`scripts/construir_snapshot_academico.py` queda como herramienta local: junta los
+25 conjuntos del núcleo en una carpeta con `README.md`, `CHANGELOG.md` y un
+inventario con SHA-256. No hay ninguna copia publicada.
 
 ## 2. Fuentes, licencia y limitaciones
 

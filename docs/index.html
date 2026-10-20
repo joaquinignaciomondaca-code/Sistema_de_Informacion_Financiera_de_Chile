@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/app.css?v=fl-202610-20104-083000">
+  <link rel="stylesheet" href="css/app.css?v=fl-202610-2016-234500">
   <!-- Arranque en frío: el motor pesa ~18 MB. Preanunciar los tres archivos hace
        que se descarguen en paralelo con la página, en vez de esperar a que el
        JavaScript los pida al final de la cadena de carga. -->
@@ -209,9 +209,6 @@
               </div>
             </section>
 
-            <!-- Cómo citar esta base: se pinta con docs/js/cita.js -->
-            <section class="info-block info-cita" id="cita-info"></section>
-
             <section class="info-block">
               <div class="info-section-kicker">NÚCLEO · INVERSIÓN INSTITUCIONAL</div>
               <h2>Tres sectores, de la cartera al estado financiero</h2>
@@ -398,6 +395,7 @@
                   <ul class="info-list">
                     <li><strong>Los datos regulatorios son de sus fuentes oficiales:</strong> Comisión para el Mercado Financiero (CMF), Banco Central de Chile, Superintendencia de Pensiones y SUSESO. Cada tabla declara su origen, su archivo de origen y su norma.</li>
                     <li><strong>El SIF aporta</strong> extracción, normalización, validación, documentación y armonización. No genera los datos ni los modifica: los publica tal como los emite la fuente.</li>
+                    <li><strong>Al usar estos datos:</strong> indica la fuente oficial y la fecha en que los consultaste. Cada tabla tiene su propio periodo y su propia frecuencia, y se ven en el explorador, en el diccionario y en Descargas.</li>
                   </ul>
                 </div>
                 <div class="info-scope-col">
@@ -420,8 +418,8 @@
               </div>
             </section>
 
-            <!-- Autoría: se pinta con docs/js/cita.js -->
-            <section class="info-block info-autor" id="cita-autor"></section>
+            <!-- Autoría: se pinta con docs/js/creditos.js -->
+            <section class="info-block info-autor" id="creditos-autor"></section>
 
             <section class="info-note">
               <span class="info-note-mark">i</span>
@@ -542,26 +540,26 @@
 </div> <!-- Cierre de app-layout -->
 
   <!-- Scripts de la Aplicación -->
-  <script src="js/data_bundles.js?v=fl-202610-20104-083000"></script>
-  <script src="js/alcance.js?v=fl-202610-20104-083000"></script>
-  <script src="js/chart_renderer.js?v=fl-202610-20104-083000"></script>
-  <script src="js/erd_graph.js?v=fl-202610-20104-083000"></script>
-  <script src="js/sql_guard.js?v=fl-202610-20104-083000"></script>
-  <script src="js/duckdb_client.js?v=fl-202610-20104-083000"></script>
-  <script src="js/chat_terminal.js?v=fl-202610-20104-083000"></script>
-  <script src="js/sidebar.js?v=fl-202610-20104-083000"></script>
-  <script src="js/ux_shell.js?v=fl-202610-20104-083000"></script>
-  <script src="js/cita.js?v=fl-202610-20104-083000"></script>
-  <script src="js/theme_switcher.js?v=fl-202610-20104-083000"></script>
-  <script src="js/data_dictionary.js?v=fl-202610-20104-083000"></script>
-  <script src="js/data_viewer.js?v=fl-202610-20104-083000"></script>
+  <script src="js/data_bundles.js?v=fl-202610-2016-234500"></script>
+  <script src="js/alcance.js?v=fl-202610-2016-234500"></script>
+  <script src="js/chart_renderer.js?v=fl-202610-2016-234500"></script>
+  <script src="js/erd_graph.js?v=fl-202610-2016-234500"></script>
+  <script src="js/sql_guard.js?v=fl-202610-2016-234500"></script>
+  <script src="js/duckdb_client.js?v=fl-202610-2016-234500"></script>
+  <script src="js/chat_terminal.js?v=fl-202610-2016-234500"></script>
+  <script src="js/sidebar.js?v=fl-202610-2016-234500"></script>
+  <script src="js/ux_shell.js?v=fl-202610-2016-234500"></script>
+  <script src="js/creditos.js?v=fl-202610-2016-234500"></script>
+  <script src="js/theme_switcher.js?v=fl-202610-2016-234500"></script>
+  <script src="js/data_dictionary.js?v=fl-202610-2016-234500"></script>
+  <script src="js/data_viewer.js?v=fl-202610-2016-234500"></script>
   <script src="js/jszip.min.js"></script>
   <script src="js/xlsx.full.min.js"></script>
-  <script src="js/diccionario_seguros.js?v=fl-202610-20104-083000"></script>
-  <script src="js/download_utils.js?v=fl-202610-20104-083000"></script>
-  <script src="js/download_catalog.js?v=fl-202610-20104-083000"></script>
-  <script src="js/downloads_panel.js?v=fl-202610-20104-083000"></script>
-  <script src="js/portada.js?v=fl-202610-20104-083000"></script>
+  <script src="js/diccionario_seguros.js?v=fl-202610-2016-234500"></script>
+  <script src="js/download_utils.js?v=fl-202610-2016-234500"></script>
+  <script src="js/download_catalog.js?v=fl-202610-2016-234500"></script>
+  <script src="js/downloads_panel.js?v=fl-202610-2016-234500"></script>
+  <script src="js/portada.js?v=fl-202610-2016-234500"></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -614,9 +612,10 @@
         }
         if (target === "sql" && window.ChatTerminal && window.ChatTerminal.focusTerminal) window.ChatTerminal.focusTerminal();
         if (target === "downloads" && window.DownloadsPanel) window.DownloadsPanel.render();
-        // Los bloques de citación viven dentro de Información y de Descargas: se
-        // pintan después de que Descargas reconstruye su HTML, para no perderlos.
-        if (window.SIFCita) window.SIFCita.pintar();
+        // Los bloques de autoría y de reproducibilidad viven dentro de Información
+        // y de Descargas: se pintan después de que Descargas reconstruye su HTML,
+        // para no perderlos.
+        if (window.SIFCreditos) window.SIFCreditos.pintar();
         if (window.MFCUI && window.MFCUI.rememberTab) window.MFCUI.rememberTab(target);
       };
 
