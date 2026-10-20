@@ -3874,7 +3874,7 @@
         "acciones": 905,
         "fondos_mutuos": 755,
         "bienes_raices": 34741,
-        "extranjeros": 5515,
+        "extranjeros": 5519,
         "derivados": 4693,
         "pactos": 110,
         "control_inversiones": 903
@@ -3914,7 +3914,11 @@
         "renta_fija: campo ilegible, queda vacío · generales i202508g.76212519 línea 5: tasa_emision_pct (número '########')",
         "renta_fija: campo ilegible, queda vacío · generales i202508g.76212519 línea 6: tasa_emision_pct (número '########')",
         "renta_fija: campo ilegible, queda vacío · generales i202508g.76212519 línea 7: tasa_emision_pct (número '########')"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "d7e525b86865902deb41cdaf98ef82b4f4f91ebd3dc60b1ec825c56464fd84be",
+        "generales": "401a1b6497e6ed78d214bad99214dab2abe03242ab656e760458619f6b80a568"
+      }
     },
     "2025-09": {
       "formato": "v2024",
@@ -3968,8 +3972,8 @@
         "renta_fija: campo ilegible, queda vacío · generales i202509g.76212519 línea 7: tasa_emision_pct (número '########')"
       ],
       "sha256_origen": {
-        "vida": "a661d3af15c25c89c236ef4a6ea4f0dac19b084e266ba7acbe536402cce08a73",
-        "generales": "b9114483b89c9fc5e963539445165fdae84dca5e31226b7f73b0b8a481764cce"
+        "vida": "1951a1110f0ac3ab4aba1868e65cc00058ee36beaefe56ff66691ef7694389ca",
+        "generales": "b009f940cdfbbaf1e9400a7a8fcfd0a8466c86f2ccdeb0e006d95fb62cc67a69"
       }
     },
     "2025-10": {
@@ -4024,7 +4028,7 @@
       ],
       "sha256_origen": {
         "vida": "9c6e9fc300aa387001c0b1f8ad4e27224b75b4b1482a3e7774cfdb6225dece9b",
-        "generales": "56807b3cab51c1e44fe094f7086c99cbab1f4809f45e9f9885f41d853ec132e7"
+        "generales": "641c3940df9c48a87f51135dfe0b20d5648317e6b62ef77bc293fede5ef3bd57"
       }
     },
     "2025-11": {
@@ -4077,7 +4081,7 @@
       ],
       "sha256_origen": {
         "vida": "9270f87f8e987e40aa721c4dcadf73cd144f04082977961e96e071c6f2c04203",
-        "generales": "e621c9829007cf8fb41e6fd5cde5ead0f6818650846abb7295e9f40de33ec10f"
+        "generales": "8f0c08d93ada57a79f6fbc963aa45c63f1c24f50f5678af7940d8a04425651c5"
       }
     },
     "2025-12": {
@@ -4125,8 +4129,8 @@
         "renta_fija: campo ilegible, queda vacío · generales i202512g.76212519 línea 5: tasa_emision_pct (número '########')"
       ],
       "sha256_origen": {
-        "vida": "4171dfc6d66765b9e2d55ad38b01d95000f21cda22dab924bb94982295fb20cb",
-        "generales": "458e3b2f170b28d94fe25df1c91fe91c42198f63bad6004076f33104f5751589"
+        "vida": "c6a71378f7c2414bfff897c20bf8602fb55df37e9cda29fd04f0b010a70c31af",
+        "generales": "971e201f412700e94df09b322cb33c8f4b43669d4a2f1874ccb8dd20a69ac157"
       }
     },
     "2026-01": {
@@ -4140,7 +4144,7 @@
         "acciones": 920,
         "fondos_mutuos": 613,
         "bienes_raices": 34642,
-        "extranjeros": 5385,
+        "extranjeros": 5389,
         "derivados": 4762,
         "pactos": 164,
         "control_inversiones": 873
@@ -4174,7 +4178,11 @@
         "generales f202601g.96573590: el total declara 2 líneas y el archivo tiene 3",
         "generales x202601g.99225000: el encabezado dice 202501 pero la CMF lo publica en 2026-01",
         "renta_fija: campo ilegible, queda vacío · generales i202601g.76212519 línea 5: tasa_emision_pct (número '########')"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "777107d5895f417a8d9b98484f9147ee567c1fba0a2428f04cb26bab5aa656d9",
+        "generales": "54f44a6b45fc730a4151f2108800506f17c185a28c7c4859d4b6b83162aad87e"
+      }
     },
     "2026-02": {
       "formato": "v2024",
@@ -4187,7 +4195,7 @@
         "acciones": 914,
         "fondos_mutuos": 610,
         "bienes_raices": 34654,
-        "extranjeros": 5425,
+        "extranjeros": 5429,
         "derivados": 4970,
         "pactos": 180,
         "control_inversiones": 878
@@ -4224,7 +4232,11 @@
         "generales f202602g.96573590: el total declara 2 líneas y el archivo tiene 3",
         "generales f202602g.99225000: el encabezado dice 202601 pero la CMF lo publica en 2026-02",
         "generales x202602g.99225000: el encabezado dice 202502 pero la CMF lo publica en 2026-02"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "567a9df61e0d850559207e9d7b087d0859ab0e6bb3698b7da91a4e4aa977bcf0",
+        "generales": "5ee64d549d4e36c7b93b71a2fa3470aa3e15bc5d4ae06d5faa4eb0d9ef8f2722"
+      }
     },
     "2026-03": {
       "formato": "v2024",
@@ -4237,7 +4249,7 @@
         "acciones": 911,
         "fondos_mutuos": 615,
         "bienes_raices": 35048,
-        "extranjeros": 5634,
+        "extranjeros": 5638,
         "derivados": 5111,
         "pactos": 122,
         "control_inversiones": 873
@@ -4272,7 +4284,11 @@
         "generales c202603g.99288000: el total declara 13 líneas y el archivo tiene 14",
         "generales f202603g.96573590: el total declara 2 líneas y el archivo tiene 3",
         "generales x202603g.99225000: el encabezado dice 202503 pero la CMF lo publica en 2026-03"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "2dcae2d0b09c05352e92bfcab281b34a17092b2c0b295b8b98779c8da20df0cb",
+        "generales": "dd5b0cc7ac55ffcb312274a620eedb806da01b50dfcd17909ad3e8333691a9fb"
+      }
     },
     "2026-04": {
       "formato": "v2024",
@@ -4285,7 +4301,7 @@
         "acciones": 919,
         "fondos_mutuos": 622,
         "bienes_raices": 34999,
-        "extranjeros": 5643,
+        "extranjeros": 5647,
         "derivados": 5177,
         "pactos": 129,
         "control_inversiones": 874
@@ -4323,7 +4339,11 @@
         "generales f202604g.77096952: el total declara 3 líneas y el archivo tiene 4",
         "generales f202604g.96573590: el total declara 2 líneas y el archivo tiene 3",
         "generales x202604g.99225000: el encabezado dice 202504 pero la CMF lo publica en 2026-04"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "04d653c35edf5be0b4de1e7d59336b10058070c003dfb8f1be05b973176c2537",
+        "generales": "60cab81fca1e22f129af316c25cee39345ef1c5abbfaed1f11e184f6826bac95"
+      }
     },
     "2026-05": {
       "formato": "v2024",
@@ -4336,7 +4356,7 @@
         "acciones": 918,
         "fondos_mutuos": 610,
         "bienes_raices": 34992,
-        "extranjeros": 5775,
+        "extranjeros": 5779,
         "derivados": 5279,
         "pactos": 147,
         "control_inversiones": 879
@@ -4374,7 +4394,11 @@
         "generales c202605g.99288000: el total declara 13 líneas y el archivo tiene 14",
         "generales f202605g.96573590: el total declara 2 líneas y el archivo tiene 3",
         "generales x202605g.99225000: el encabezado dice 202505 pero la CMF lo publica en 2026-05"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "7cfd300c2379b4dc005fa038cd14ca2e53ad6f70c35feac48465bd3d74f1dcda",
+        "generales": "8ff5068a4b1c3c6eb08ff23f5e190db53adb4c1be0f2b6cb2ac69c9d09242d24"
+      }
     },
     "2026-06": {
       "formato": "v2024",
@@ -4387,7 +4411,7 @@
         "acciones": 924,
         "fondos_mutuos": 619,
         "bienes_raices": 34984,
-        "extranjeros": 5829,
+        "extranjeros": 5833,
         "derivados": 5553,
         "pactos": 155,
         "control_inversiones": 880
@@ -4422,7 +4446,11 @@
         "generales f202606g.76844788: el encabezado dice 202603 pero la CMF lo publica en 2026-06",
         "generales f202606g.96573590: el total declara 2 líneas y el archivo tiene 3",
         "generales x202606g.99225000: el encabezado dice 202506 pero la CMF lo publica en 2026-06"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "426ee97007e020ff674398ea959882b6d4b56a9859233d51c68e1c3e28a9e0c3",
+        "generales": "e8ad530450abf4ccf799d20010d946a27f1136bff3619f7abf0fa006ea60bc8f"
+      }
     },
     "2026-07": {
       "formato": "v2024",
@@ -4435,7 +4463,7 @@
         "acciones": 925,
         "fondos_mutuos": 613,
         "bienes_raices": 35987,
-        "extranjeros": 6037,
+        "extranjeros": 6041,
         "derivados": 5831,
         "pactos": 193,
         "control_inversiones": 881
@@ -4476,7 +4504,11 @@
         "generales p202607g.76094234: el encabezado dice 202605 pero la CMF lo publica en 2026-07",
         "generales x202607g.76094234: el encabezado dice 202605 pero la CMF lo publica en 2026-07",
         "generales x202607g.99225000: el encabezado dice 202507 pero la CMF lo publica en 2026-07"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "dc9714197a992a35ba5a968b100f29409c318a16d9a5e0a58ad6ac03c3e800c9",
+        "generales": "208c37364cfed40fa176ec2d7b31dfea0b765075eb4e59506a471d6a073d2b7a"
+      }
     },
     "2026-08": {
       "formato": "v2024",
@@ -4486,13 +4518,13 @@
       },
       "registros": {
         "renta_fija": 105800,
-        "acciones": 932,
+        "acciones": 933,
         "fondos_mutuos": 659,
         "bienes_raices": 35878,
-        "extranjeros": 6193,
+        "extranjeros": 6197,
         "derivados": 6037,
         "pactos": 155,
-        "control_inversiones": 887
+        "control_inversiones": 889
       },
       "avisos": 31,
       "detalle_avisos": [
@@ -4527,7 +4559,11 @@
         "generales c202608g.99288000: el total declara 14 líneas y el archivo tiene 15",
         "generales f202608g.96573590: el total declara 2 líneas y el archivo tiene 3",
         "generales x202608g.99225000: el encabezado dice 202508 pero la CMF lo publica en 2026-08"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "9b8826b4774eb845c77609aa861dc3b9c418310874dd7e93a60ad059b4f2dfb4",
+        "generales": "ada957d542b8d46520654e9a9954993824936f4863f2422a09c9580d245b7763"
+      }
     },
     "2026-09": {
       "formato": "v2024",
@@ -5100,5 +5136,5 @@
     "pactos": "2016-11",
     "control_inversiones": "2016-11"
   },
-  "updated_at": "2026-10-20T22:49:30+00:00"
+  "updated_at": "2026-10-20T23:19:18+00:00"
 }
