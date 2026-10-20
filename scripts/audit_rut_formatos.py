@@ -39,7 +39,7 @@ RAIZ = Path(__file__).resolve().parents[1]
 DOCS = RAIZ / "docs" / "outputs"
 
 RE_RUN = re.compile(r"^\d{4,8}(-[\dKk])?$")  # RUNs de fondo, con o sin DV
-RE_PH = re.compile(r"^\d{1,3}$")  # placeholder numérico corto del origen
+RE_PH = re.compile(r"^\d{1,3}(-[\dKk])?$")  # placeholder numérico corto del origen ('0', '1', '90', '1-9') con o sin DV
 
 
 def _check_valor(nombre: str, v) -> str | None:
@@ -52,7 +52,7 @@ def _check_valor(nombre: str, v) -> str | None:
     n = _norm(s)
     if n is None:
         # no parseable: RUN de fondo (run_*/_completo) o placeholder numérico
-        # corto del origen ('0', '1', '90' = emisor no identificado)
+        # corto del origen ('0', '1', '90', '1-9' = emisor no identificado)
         if (nombre.startswith("run_") or nombre.endswith("_completo")) and RE_RUN.match(s):
             return None
         if RE_PH.match(s):
