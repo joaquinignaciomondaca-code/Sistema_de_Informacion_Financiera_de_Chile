@@ -322,8 +322,11 @@ setTimeout(() => {
   const nucleo = alcance.niveles.find((n) => n.id === "nucleo");
   check("la portada muestra las cifras del núcleo desde el catálogo",
     cifra("nucleo.sectores") === "3" && cifra("nucleo.conjuntos") === String(nucleo.conjuntos) &&
-    /millones$/.test(cifra("nucleo.filas")) && /^\d{4}–\d{4}$/.test(cifra("nucleo.periodo")),
-    [cifra("nucleo.sectores"), cifra("nucleo.conjuntos"), cifra("nucleo.filas"), cifra("nucleo.periodo")].join(" · "));
+    /millones$/.test(cifra("nucleo.filas")),
+    [cifra("nucleo.sectores"), cifra("nucleo.conjuntos"), cifra("nucleo.filas")].join(" · "));
+  check("la portada no promete una cobertura global (cada tabla tiene su periodo)",
+    !/cobertura máxima/.test(document.getElementById("info-container").textContent)
+    && !/data-alcance="nucleo\.periodo"/.test(document.getElementById("info-container").innerHTML));
   check("la portada tiene tres tarjetas grandes: seguros, fondos mutuos y fondos de inversión",
     Array.from(document.querySelectorAll(".info-core-card")).map((c) => c.dataset.sector).join(",") === "seguros,ffmm,fi");
   check("la portada ya no anuncia 15 industrias",
@@ -432,6 +435,10 @@ setTimeout(() => {
   check("reproducibilidad: todos los archivos enlazados existen en el disco",
     archivosRepo.length > 0 && archivosRepo.every((href) => fs.existsSync(path.join(DOCS, href))),
     archivosRepo.filter((href) => !fs.existsSync(path.join(DOCS, href))).join(", "));
+  check("la web advierte que la base puede tener errores y pide verificar",
+    /Puede haber errores/.test(document.querySelector(".info-fuentes").textContent) &&
+    /puede contener errores/.test(document.querySelector(".info-note").textContent) &&
+    /verificaciones/.test(document.getElementById("downloads-container").textContent));
   check("fuentes y limitaciones: la sección declara respaldo, AFP y cobertura",
     /sin respaldo|respaldo oficial/i.test(document.body.textContent) &&
     /AFP/.test(document.querySelector(".info-fuentes").textContent) &&

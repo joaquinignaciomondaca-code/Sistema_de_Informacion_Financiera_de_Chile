@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/app.css?v=fl-202610-2016-234500">
+  <link rel="stylesheet" href="css/app.css?v=fl-202610-2016-235500">
   <!-- Arranque en frío: el motor pesa ~18 MB. Preanunciar los tres archivos hace
        que se descarguen en paralelo con la página, en vez de esperar a que el
        JavaScript los pida al final de la cadena de carga. -->
@@ -200,7 +200,7 @@
                 <div class="info-stat"><b data-alcance="nucleo.sectores">3</b><span>sectores de inversión institucional</span></div>
                 <div class="info-stat" title="Conjuntos del núcleo: seguros, fondos mutuos y fondos de inversión. La vista principal muestra 59 porque suma instituciones y contexto."><b data-alcance="nucleo.conjuntos">25</b><span>conjuntos del núcleo</span></div>
                 <div class="info-stat"><b data-alcance="nucleo.filas">11,1 millones</b><span>de registros</span></div>
-                <div class="info-stat"><b data-alcance="nucleo.periodo">2001–2026</b><span>cobertura máxima</span></div>
+                <div class="info-stat" title="Comisión para el Mercado Financiero, Banco Central de Chile, Superintendencia de Pensiones y SUSESO."><b>4</b><span>fuentes oficiales</span></div>
               </div>
               <div class="info-hero-tags">
                 <span class="info-tag">Fuentes oficiales</span>
@@ -412,6 +412,7 @@
                     <li><strong>Cobertura 2001–2026:</strong> es el máximo entre tablas, no una cobertura homogénea. Cada tabla tiene su propio inicio, su propia frecuencia y sus propios vacíos.</li>
                     <li><strong>Unidades:</strong> los montos conservan la unidad y el criterio de valorización de la fuente (miles de pesos, UF, porcentajes, valor razonable, costo amortizado); no se convierten ni se reexpresan.</li>
                     <li><strong>Fondos de pensiones:</strong> esta edición no publica carteras de AFP; de las AFP sólo está el registro de administradoras.</li>
+                    <li><strong>Puede haber errores:</strong> la extracción, la normalización y la validación son automáticas y ningún control lo detecta todo. Usa la base con criterio y haz las verificaciones propias que consideres necesarias antes de publicar una cifra.</li>
                     <li><strong>Identificadores protegidos:</strong> en <code>fi.cartera_nacional</code> se suprime <code>rut_emisor</code> cuando probablemente corresponde a una persona natural, y en <code>seguros.bienes_raices</code> no se publican la dirección exacta ni el rol del inmueble (se conservan comuna, ciudad y un <code>property_id</code> estable). La referencia a la fuente CMF se mantiene en ambos casos.</li>
                   </ul>
                 </div>
@@ -423,7 +424,7 @@
 
             <section class="info-note">
               <span class="info-note-mark">i</span>
-              <p>Este sistema es una herramienta de exploración y análisis de información pública. No constituye recomendación de inversión. Revisa siempre la fuente, la fecha de corte, la unidad y las notas de cobertura antes de interpretar una cifra.</p>
+              <p>Este sistema es una herramienta de exploración y análisis de información pública. No constituye recomendación de inversión. Revisa siempre la fuente, el periodo, la unidad y las notas de cobertura antes de interpretar una cifra: los procesos son automáticos y la base puede contener errores.</p>
             </section>
           </div>
         </div>
@@ -540,26 +541,26 @@
 </div> <!-- Cierre de app-layout -->
 
   <!-- Scripts de la Aplicación -->
-  <script src="js/data_bundles.js?v=fl-202610-2016-234500"></script>
-  <script src="js/alcance.js?v=fl-202610-2016-234500"></script>
-  <script src="js/chart_renderer.js?v=fl-202610-2016-234500"></script>
-  <script src="js/erd_graph.js?v=fl-202610-2016-234500"></script>
-  <script src="js/sql_guard.js?v=fl-202610-2016-234500"></script>
-  <script src="js/duckdb_client.js?v=fl-202610-2016-234500"></script>
-  <script src="js/chat_terminal.js?v=fl-202610-2016-234500"></script>
-  <script src="js/sidebar.js?v=fl-202610-2016-234500"></script>
-  <script src="js/ux_shell.js?v=fl-202610-2016-234500"></script>
-  <script src="js/creditos.js?v=fl-202610-2016-234500"></script>
-  <script src="js/theme_switcher.js?v=fl-202610-2016-234500"></script>
-  <script src="js/data_dictionary.js?v=fl-202610-2016-234500"></script>
-  <script src="js/data_viewer.js?v=fl-202610-2016-234500"></script>
+  <script src="js/data_bundles.js?v=fl-202610-2016-235500"></script>
+  <script src="js/alcance.js?v=fl-202610-2016-235500"></script>
+  <script src="js/chart_renderer.js?v=fl-202610-2016-235500"></script>
+  <script src="js/erd_graph.js?v=fl-202610-2016-235500"></script>
+  <script src="js/sql_guard.js?v=fl-202610-2016-235500"></script>
+  <script src="js/duckdb_client.js?v=fl-202610-2016-235500"></script>
+  <script src="js/chat_terminal.js?v=fl-202610-2016-235500"></script>
+  <script src="js/sidebar.js?v=fl-202610-2016-235500"></script>
+  <script src="js/ux_shell.js?v=fl-202610-2016-235500"></script>
+  <script src="js/creditos.js?v=fl-202610-2016-235500"></script>
+  <script src="js/theme_switcher.js?v=fl-202610-2016-235500"></script>
+  <script src="js/data_dictionary.js?v=fl-202610-2016-235500"></script>
+  <script src="js/data_viewer.js?v=fl-202610-2016-235500"></script>
   <script src="js/jszip.min.js"></script>
   <script src="js/xlsx.full.min.js"></script>
-  <script src="js/diccionario_seguros.js?v=fl-202610-2016-234500"></script>
-  <script src="js/download_utils.js?v=fl-202610-2016-234500"></script>
-  <script src="js/download_catalog.js?v=fl-202610-2016-234500"></script>
-  <script src="js/downloads_panel.js?v=fl-202610-2016-234500"></script>
-  <script src="js/portada.js?v=fl-202610-2016-234500"></script>
+  <script src="js/diccionario_seguros.js?v=fl-202610-2016-235500"></script>
+  <script src="js/download_utils.js?v=fl-202610-2016-235500"></script>
+  <script src="js/download_catalog.js?v=fl-202610-2016-235500"></script>
+  <script src="js/downloads_panel.js?v=fl-202610-2016-235500"></script>
+  <script src="js/portada.js?v=fl-202610-2016-235500"></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
