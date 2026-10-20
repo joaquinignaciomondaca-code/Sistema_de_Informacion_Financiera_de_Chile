@@ -4,10 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sistema de Información Financiera de Chile — Inversiones institucionales y mercados</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo_sif_isotipo.svg">
+  <link rel="apple-touch-icon" href="assets/logo_sif_isotipo.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/app.css?v=fl-202606-30046-22368">
+  <link rel="stylesheet" href="css/app.css?v=fl-202610-2016-235500">
   <!-- Arranque en frío: el motor pesa ~18 MB. Preanunciar los tres archivos hace
        que se descarguen en paralelo con la página, en vez de esperar a que el
        JavaScript los pida al final de la cadena de carga. -->
@@ -21,13 +23,59 @@
 </head>
 <body>
 
+  <!-- Geometría del logotipo SIF, definida una sola vez y reutilizada con <use>
+       en dos tamaños: recortada al símbolo y las siglas en la barra superior
+       (viewBox 305×180) y completa en la portada (viewBox 820×180). Los trazos,
+       las siglas y el nombre usan currentColor, así que cada instancia fija el
+       color con la propiedad `color` de CSS (--logo-ink, ver app.css) y el
+       turquesa #00A6A6 se mantiene en todas las paletas. -->
+  <svg class="sif-sprite" aria-hidden="true" focusable="false">
+    <defs>
+      <g id="sif-lockup">
+        <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="7">
+          <path d="M48 25 V48 L30 61 L56 79 L36 102 L55 122 L40 143 L61 158"/>
+          <path d="M48 48 L78 43 M30 61 L20 88 M56 79 L75 91 M36 102 L67 112 M55 122 L80 128 M40 143 L28 158"/>
+        </g>
+        <g fill="currentColor">
+          <circle cx="48" cy="18" r="10"/>
+          <circle cx="30" cy="61" r="9"/>
+          <circle cx="56" cy="79" r="10"/>
+          <circle cx="36" cy="102" r="10"/>
+          <circle cx="55" cy="122" r="8"/>
+          <circle cx="40" cy="143" r="9"/>
+          <circle cx="20" cy="88" r="8"/>
+          <circle cx="75" cy="91" r="8"/>
+          <circle cx="80" cy="128" r="7"/>
+        </g>
+        <g class="marca-acento">
+          <circle cx="61" cy="158" r="9"/>
+          <circle cx="82" cy="42" r="10"/>
+          <circle cx="67" cy="112" r="8"/>
+          <circle cx="28" cy="158" r="7"/>
+        </g>
+        <path d="M116 25 V155" fill="none" stroke="currentColor" stroke-width="2.5" opacity=".7"/>
+        <text x="143" y="119" fill="currentColor" font-family="Arial, Helvetica, sans-serif" font-size="100" font-weight="700" letter-spacing="-5">SIF</text>
+        <text x="365" y="70" fill="currentColor" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="500">Sistema de</text>
+        <text x="365" y="105" fill="currentColor" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="500">Información Financiera</text>
+        <text x="365" y="140" fill="currentColor" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="500">de Chile</text>
+      </g>
+    </defs>
+  </svg>
+
   <!-- Header Superior -->
   <header>
     <div class="brand">
       <button class="sidebar-toggle-btn" id="toggle-sidebar" title="Ocultar / Mostrar barra lateral">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M1 2.75A.75.75 0 011.75 2h12.5a.75.75 0 010 1.5H1.75A.75.75 0 011 2.75zm0 5A.75.75 0 011.75 7h12.5a.75.75 0 010 1.5H1.75A.75.75 0 011 7.75zm0 5a.75.75 0 011.75-1.5h12.5a.75.75 0 010 1.5H1.75a.75.75 0 01-.75-.75z"/></svg>
       </button>
-      <span class="brand-tag" title="Sistema de Información Financiera de Chile">SIF</span>
+      <!-- Logotipo SIF recortado al símbolo de nodos y las siglas (viewBox
+           305×180 de la geometría completa, que está en #sif-lockup): el lockup
+           completo, a la altura de la barra, dejaría el nombre a ~5 px. -->
+      <span class="brand-logo" title="SIF — Sistema de Información Financiera de Chile">
+        <svg class="brand-logo-mark" viewBox="0 0 305 180" aria-hidden="true" focusable="false">
+          <use href="#sif-lockup"/>
+        </svg>
+      </span>
       <div class="brand-text">
         <span class="brand-title">Sistema de Información Financiera de Chile</span>
         <span class="brand-subtitle">Inversiones institucionales y mercados</span>
@@ -101,9 +149,6 @@
             <button role="tab" aria-selected="false" aria-controls="downloads-container" class="panel-tab-btn" id="tab-btn-downloads" title="Descargas: catálogo publicado con filas, peso y periodo; Parquet original, CSV o Excel">
               Descargas
             </button>
-            <button role="tab" aria-selected="false" aria-controls="normativa-container" class="panel-tab-btn" id="tab-btn-normativa" title="Normativa CMF: publicaciones y cambios normativos recientes">
-              Normativa
-            </button>
           </div>
           <div class="panel-header-right">
             <span class="context-chip" id="erd-breadcrumb" title="Ubicación actual dentro del explorador">Seguros &rsaquo; Circular 1835</span>
@@ -141,14 +186,21 @@
         <div class="info-container" id="info-container">
           <div class="info-scroll">
             <section class="info-hero">
-              <div class="info-eyebrow">SISTEMA DE INFORMACIÓN FINANCIERA · CHILE</div>
-              <h1>Sistema de Información Financiera de Chile</h1>
+              <!-- El logotipo es el título de la portada: ya trae el nombre
+                   completo, así que reemplaza al <h1> de texto y a la línea
+                   superior (eyebrow) que lo repetía en versalitas. Mantiene la
+                   jerarquía porque sigue siendo el <h1> de la página. -->
+              <h1 class="info-hero-brand">
+                <svg class="info-hero-logo" viewBox="0 0 820 180" role="img" aria-label="SIF — Sistema de Información Financiera de Chile">
+                  <use href="#sif-lockup"/>
+                </svg>
+              </h1>
               <p class="info-lead">Las carteras y los estados financieros de los grandes inversionistas institucionales de Chile —compañías de seguros, fondos mutuos y fondos de inversión—, tal como los reportan a la CMF, junto con las instituciones que los rodean y las series del Banco Central como contexto. Todo consultable con SQL en tu navegador.</p>
               <div class="info-hero-stats" aria-label="Cifras del núcleo de esta edición">
                 <div class="info-stat"><b data-alcance="nucleo.sectores">3</b><span>sectores de inversión institucional</span></div>
-                <div class="info-stat"><b data-alcance="nucleo.conjuntos">25</b><span>conjuntos principales</span></div>
+                <div class="info-stat" title="Conjuntos del núcleo: seguros, fondos mutuos y fondos de inversión. La vista principal muestra 59 porque suma instituciones y contexto."><b data-alcance="nucleo.conjuntos">25</b><span>conjuntos del núcleo</span></div>
                 <div class="info-stat"><b data-alcance="nucleo.filas">11,1 millones</b><span>de registros</span></div>
-                <div class="info-stat"><b data-alcance="nucleo.periodo">2001–2026</b><span>cobertura máxima</span></div>
+                <div class="info-stat" title="Comisión para el Mercado Financiero, Banco Central de Chile, Superintendencia de Pensiones y SUSESO."><b>4</b><span>fuentes oficiales</span></div>
               </div>
               <div class="info-hero-tags">
                 <span class="info-tag">Fuentes oficiales</span>
@@ -273,12 +325,11 @@
                 <h2>Cómo explorar</h2>
                 <ul class="info-list">
                   <li><strong>Explorador (izquierda):</strong> el núcleo arriba, luego instituciones y contexto; el archivo y los registros complementarios quedan al final, plegados. Elige industria, carpeta o tabla y el visor y el diccionario se sincronizan solos.</li>
-                  <li><strong>Pestañas:</strong> Información, Mapa relacional, Diccionario, Visor de datos, Consultas SQL y Normativa CMF.</li>
+                  <li><strong>Pestañas:</strong> Información, Mapa relacional, Diccionario, Visor de datos, Consultas SQL y Descargas.</li>
                   <li><strong>Diccionario:</strong> significado de cada columna, su rol (PK, FK, dimensión, métrica) y su criterio contable (MtM, costo amortizado, tasación).</li>
                   <li><strong>Terminal SQL:</strong> consultas sobre las vistas publicadas, ejecutadas en tu navegador. <kbd>Enter</kbd> ejecuta, <kbd>Tab</kbd> completa nombres de tabla y <kbd>↑</kbd>/<kbd>↓</kbd> recuperan el historial.</li>
                   <li><strong>Descarga:</strong> todo lo publicado vive en la pestaña <em>Descargas</em>: Parquet original, CSV o Excel, con filas, periodo y peso a la vista.</li>
-                  <li><strong>Normativa CMF</strong>: circulares, normas de carácter general y publicaciones recientes, filtradas por la industria activa del explorador.</li>
-                  <li><strong>Atajos:</strong> <kbd>Alt</kbd>+<kbd>1</kbd>…<kbd>7</kbd> cambia de pestaña y <kbd>/</kbd> enfoca la búsqueda del explorador.</li>
+                  <li><strong>Atajos:</strong> <kbd>Alt</kbd>+<kbd>1</kbd>…<kbd>6</kbd> cambia de pestaña y <kbd>/</kbd> enfoca la búsqueda del explorador.</li>
                 </ul>
               </div>
             </section>
@@ -293,7 +344,7 @@
                     <li><strong>Núcleo:</strong> seguros, fondos mutuos y fondos de inversión.</li>
                     <li><strong>Instituciones:</strong> bancos, administradoras generales de fondos y corredoras de bolsa.</li>
                     <li><strong>Contexto:</strong> series macroeconómicas y de tasas del Banco Central.</li>
-                    <li><span data-alcance="visible.resumen">59 conjuntos · 13,4 millones de registros (99,3 %)</span>.</li>
+                    <li><span data-alcance="visible.resumen">59 conjuntos visibles en la vista principal · 13,4 millones de registros (99,3 %)</span>: son los <strong>25 del núcleo</strong> más instituciones (bancos, AGF y corredoras) y contexto (series del Banco Central). Cuando una cifra diga «25 conjuntos» se refiere sólo al núcleo.</li>
                   </ul>
                 </div>
                 <div class="info-scope-col">
@@ -335,9 +386,45 @@
               </div>
             </section>
 
+            <section class="info-block info-fuentes">
+              <div class="info-section-kicker">FUENTES, LICENCIA Y LIMITACIONES</div>
+              <h2>Qué es de quién y qué no es</h2>
+              <div class="info-scope-grid">
+                <div class="info-scope-col">
+                  <h3>Fuentes</h3>
+                  <ul class="info-list">
+                    <li><strong>Los datos regulatorios son de sus fuentes oficiales:</strong> Comisión para el Mercado Financiero (CMF), Banco Central de Chile, Superintendencia de Pensiones y SUSESO. Cada tabla declara su origen, su archivo de origen y su norma.</li>
+                    <li><strong>El SIF aporta</strong> extracción, normalización, validación, documentación y armonización. No genera los datos ni los modifica: los publica tal como los emite la fuente.</li>
+                    <li><strong>Al usar estos datos:</strong> indica la fuente oficial y la fecha en que los consultaste. Cada tabla tiene su propio periodo y su propia frecuencia, y se ven en el explorador, en el diccionario y en Descargas.</li>
+                  </ul>
+                </div>
+                <div class="info-scope-col">
+                  <h3>Licencia y respaldo</h3>
+                  <ul class="info-list">
+                    <li><strong>Código:</strong> MIT (ver <code>LICENSE</code> en el repositorio).</li>
+                    <li><strong>Datos:</strong> pertenecen a sus fuentes oficiales y se republican sin alterar su contenido; verifica las condiciones de reutilización de cada fuente antes de redistribuirlos.</li>
+                    <li><strong>Sin respaldo oficial:</strong> este es un proyecto independiente. No tiene respaldo, patrocinio ni aval de la CMF, del Banco Central de Chile ni de ningún otro organismo.</li>
+                  </ul>
+                </div>
+                <div class="info-scope-col">
+                  <h3>Limitaciones</h3>
+                  <ul class="info-list">
+                    <li><strong>Cobertura 2001–2026:</strong> es el máximo entre tablas, no una cobertura homogénea. Cada tabla tiene su propio inicio, su propia frecuencia y sus propios vacíos.</li>
+                    <li><strong>Unidades:</strong> los montos conservan la unidad y el criterio de valorización de la fuente (miles de pesos, UF, porcentajes, valor razonable, costo amortizado); no se convierten ni se reexpresan.</li>
+                    <li><strong>Fondos de pensiones:</strong> esta edición no publica carteras de AFP; de las AFP sólo está el registro de administradoras.</li>
+                    <li><strong>Puede haber errores:</strong> la extracción, la normalización y la validación son automáticas y ningún control lo detecta todo. Usa la base con criterio y haz las verificaciones propias que consideres necesarias antes de publicar una cifra.</li>
+                    <li><strong>Identificadores protegidos:</strong> en <code>fi.cartera_nacional</code> se suprime <code>rut_emisor</code> cuando probablemente corresponde a una persona natural, y en <code>seguros.bienes_raices</code> no se publican la dirección exacta ni el rol del inmueble (se conservan comuna, ciudad y un <code>property_id</code> estable). La referencia a la fuente CMF se mantiene en ambos casos.</li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+
+            <!-- Autoría: se pinta con docs/js/creditos.js -->
+            <section class="info-block info-autor" id="creditos-autor"></section>
+
             <section class="info-note">
               <span class="info-note-mark">i</span>
-              <p>Este sistema es una herramienta de exploración y análisis de información pública. No constituye recomendación de inversión. Revisa siempre la fuente, la fecha de corte, la unidad y las notas de cobertura antes de interpretar una cifra.</p>
+              <p>Este sistema es una herramienta de exploración y análisis de información pública. No constituye recomendación de inversión. Revisa siempre la fuente, el periodo, la unidad y las notas de cobertura antes de interpretar una cifra: los procesos son automáticos y la base puede contener errores.</p>
             </section>
           </div>
         </div>
@@ -350,11 +437,6 @@
 
         <!-- Contenedor del Visor de Datos en Vivo -->
         <div class="data-viewer-container" id="data-viewer-container" style="display: none;"></div>
-
-        <!-- Seguimiento de publicaciones normativas oficiales de la CMF -->
-        <div class="normativa-container" id="normativa-container" style="display: none;">
-          <div id="normativa-monitor" aria-labelledby="normativa-title"></div>
-        </div>
 
         <!-- Consultas SQL: terminal DuckDB ejecutado en el navegador -->
         <div class="sql-container" id="sql-container" style="display: none;" role="tabpanel" aria-labelledby="tab-btn-sql">
@@ -459,26 +541,26 @@
 </div> <!-- Cierre de app-layout -->
 
   <!-- Scripts de la Aplicación -->
-  <script src="js/data_bundles.js?v=fl-202606-30046-22368"></script>
-  <script src="js/alcance.js?v=fl-202606-30046-22368"></script>
-  <script src="js/chart_renderer.js?v=fl-202606-30046-22368"></script>
-  <script src="js/erd_graph.js?v=fl-202606-30046-22368"></script>
-  <script src="js/sql_guard.js?v=fl-202606-30046-22368"></script>
-  <script src="js/duckdb_client.js?v=fl-202606-30046-22368"></script>
-  <script src="js/chat_terminal.js?v=fl-202606-30046-22368"></script>
-  <script src="js/sidebar.js?v=fl-202606-30046-22368"></script>
-  <script src="js/ux_shell.js?v=fl-202606-30046-22368"></script>
-  <script src="js/normativa_monitor.js?v=fl-202606-30046-22368"></script>
-  <script src="js/theme_switcher.js?v=fl-202606-30046-22368"></script>
-  <script src="js/data_dictionary.js?v=fl-202606-30046-22368"></script>
-  <script src="js/data_viewer.js?v=fl-202606-30046-22368"></script>
+  <script src="js/data_bundles.js?v=fl-202610-2016-235500"></script>
+  <script src="js/alcance.js?v=fl-202610-2016-235500"></script>
+  <script src="js/chart_renderer.js?v=fl-202610-2016-235500"></script>
+  <script src="js/erd_graph.js?v=fl-202610-2016-235500"></script>
+  <script src="js/sql_guard.js?v=fl-202610-2016-235500"></script>
+  <script src="js/duckdb_client.js?v=fl-202610-2016-235500"></script>
+  <script src="js/chat_terminal.js?v=fl-202610-2016-235500"></script>
+  <script src="js/sidebar.js?v=fl-202610-2016-235500"></script>
+  <script src="js/ux_shell.js?v=fl-202610-2016-235500"></script>
+  <script src="js/creditos.js?v=fl-202610-2016-235500"></script>
+  <script src="js/theme_switcher.js?v=fl-202610-2016-235500"></script>
+  <script src="js/data_dictionary.js?v=fl-202610-2016-235500"></script>
+  <script src="js/data_viewer.js?v=fl-202610-2016-235500"></script>
   <script src="js/jszip.min.js"></script>
   <script src="js/xlsx.full.min.js"></script>
-  <script src="js/diccionario_seguros.js?v=fl-202606-30046-22368"></script>
-  <script src="js/download_utils.js?v=fl-202606-30046-22368"></script>
-  <script src="js/download_catalog.js?v=fl-202606-30046-22368"></script>
-  <script src="js/downloads_panel.js?v=fl-202606-30046-22368"></script>
-  <script src="js/portada.js?v=fl-202606-30046-22368"></script>
+  <script src="js/diccionario_seguros.js?v=fl-202610-2016-235500"></script>
+  <script src="js/download_utils.js?v=fl-202610-2016-235500"></script>
+  <script src="js/download_catalog.js?v=fl-202610-2016-235500"></script>
+  <script src="js/downloads_panel.js?v=fl-202610-2016-235500"></script>
+  <script src="js/portada.js?v=fl-202610-2016-235500"></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -503,8 +585,7 @@
         dict:      { button: "tab-btn-dict",      container: "dict-container",        display: "block" },
         data:      { button: "tab-btn-data",      container: "data-viewer-container", display: "flex"  },
         sql:       { button: "tab-btn-sql",       container: "sql-container",         display: "flex"  },
-        downloads: { button: "tab-btn-downloads", container: "downloads-container",   display: "flex"  },
-        normativa: { button: "tab-btn-normativa", container: "normativa-container",   display: "flex"  }
+        downloads: { button: "tab-btn-downloads", container: "downloads-container",   display: "flex"  }
       };
       const zoomControls = document.querySelector(".zoom-controls");
       const erdControls = document.getElementById("erd-controls-group");
@@ -530,9 +611,12 @@
         if (target === "data" && window.DataViewer) {
           if (!window.DataViewer.currentRows || window.DataViewer.currentRows.length === 0) window.DataViewer.init();
         }
-        if (target === "normativa" && window.NormativaMonitor) window.NormativaMonitor.init();
         if (target === "sql" && window.ChatTerminal && window.ChatTerminal.focusTerminal) window.ChatTerminal.focusTerminal();
         if (target === "downloads" && window.DownloadsPanel) window.DownloadsPanel.render();
+        // Los bloques de autoría y de reproducibilidad viven dentro de Información
+        // y de Descargas: se pintan después de que Descargas reconstruye su HTML,
+        // para no perderlos.
+        if (window.SIFCreditos) window.SIFCreditos.pintar();
         if (window.MFCUI && window.MFCUI.rememberTab) window.MFCUI.rememberTab(target);
       };
 

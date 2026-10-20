@@ -19,6 +19,7 @@ on:
       # Módulos compartidos que importan el extractor: un cambio ahí debe volver a probar
       # y a publicar (en las corridas programadas no corre el job `pruebas` de web_audit).
       - pipelines/auto/estable.py
+      - pipelines/auto/privacidad.py
       - pipelines/auto/rut.py
   workflow_dispatch:
     inputs:
