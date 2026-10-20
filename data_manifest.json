@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "updated_at": "2026-10-20",
   "total_tables": 74,
-  "total_records": 13483996,
+  "total_records": 13484035,
   "classification": {
     "automatico": "Extracción, validación y publicación ejecutadas por código y workflows programados (APIs, scrapers y normalizadores)",
     "hibrido": "Extracción o curación inicial asistida desde fuentes no estructuradas, seguida de validación, normalización y publicación reproducibles mediante código; puede ejecutarse fuera de Actions",
@@ -1076,7 +1076,7 @@
       "modo": "Automático · 3 veces al mes, incremental",
       "ultima_actualizacion": "2026-10-20",
       "file_parquet": "outputs/seguros/acciones/manifest.json",
-      "registros_reales": 109018,
+      "registros_reales": 109019,
       "descripcion": "Acciones de sociedades anónimas y cuotas de fondos de inversión nacionales.",
       "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
     },
@@ -1108,7 +1108,7 @@
       "modo": "Automático · 3 veces al mes, incremental",
       "ultima_actualizacion": "2026-10-20",
       "file_parquet": "outputs/seguros/control_inversiones/manifest.json",
-      "registros_reales": 111408,
+      "registros_reales": 111410,
       "descripcion": "Información de control que cada compañía envía con su cartera: totales por tipo de inversión (valor final, representativas y no representativas de reservas, etc.).",
       "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
     },
@@ -1140,7 +1140,7 @@
       "modo": "Automático · 3 veces al mes, incremental",
       "ultima_actualizacion": "2026-10-20",
       "file_parquet": "outputs/seguros/extranjeros/manifest.json",
-      "registros_reales": 471906,
+      "registros_reales": 471942,
       "descripcion": "Inversiones en el extranjero: deuda (tipo_registro = 'deuda'), acciones y fondos (tipo_registro = 'acciones_y_fondos'), bienes raíces (tipo_registro = 'bienes_raices') y filiales (tipo_registro = 'filiales').",
       "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
     },
