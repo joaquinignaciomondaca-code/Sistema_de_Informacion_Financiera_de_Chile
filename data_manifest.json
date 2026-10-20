@@ -328,7 +328,17 @@
       "file_parquet": "outputs/ffmm/cartera_nacional/manifest.json",
       "registros_reales": 1590196,
       "descripcion": "Inversiones de cada fondo en instrumentos de emisores nacionales, instrumento por instrumento, al cierre de cada mes. Montos en miles de la moneda funcional del fondo.",
-      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php"
+      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+      "metadatos": {
+        "fuente": "CMF, archivo mensual de cartera de fondos mutuos (Circular 1333), https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+        "unidad": "Montos en miles de la moneda funcional del fondo (valorizacion_miles_mf); porcentajes en escala 0–100 (pct_*)",
+        "escala": "miles (montos); 0–100 (porcentajes)",
+        "moneda": "Moneda funcional de cada fondo (puede no ser CLP); moneda_liquidacion indica la de liquidación. Por confirmar cómo se agrega entre fondos",
+        "criterio_contable": "Valorización según Circular CMF 1333; campo codigo_valorizacion por instrumento. Por confirmar el detalle en el manual",
+        "cobertura": "2022-01 a 2026-09; 57 meses; 392 fondos en 2025-12; 1.590.196 filas",
+        "fecha_extraccion": "2026-10-13 (updated_at del manifiesto)",
+        "estado_qa": "Con observaciones: conteo vs manifiesto OK; cruce con ffmm_balance OK en 386 fondos; 2.960 filas exactamente duplicadas en 2025-12 pendientes de decisión; sin identificador de línea de origen (ver docs/notas/auditoria_fuente_a_fila_2026-10-20.md)"
+      }
     },
     {
       "id": "ffmm_futuros",
@@ -936,7 +946,17 @@
       "corte": "2014-01-01 a 2026-10-20",
       "file_parquet": "outputs/macro/macro_uf.parquet",
       "registros_reales": 4676,
-      "descripcion": "Valor diario de la Unidad de Fomento (UF) en pesos chilenos, según el Banco Central."
+      "descripcion": "Valor diario de la Unidad de Fomento (UF) en pesos chilenos, según el Banco Central.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE)",
+        "unidad": "Pesos chilenos por UF (uf_valor_clp), 2 decimales publicados",
+        "escala": "unidades (CLP por UF)",
+        "moneda": "CLP",
+        "criterio_contable": "No aplica: valor de reajustabilidad. Se reajusta del día 10 al día 9 según el IPC del mes anterior",
+        "cobertura": "2014-01-01 a 2026-10-20; calendario diario completo; 4.676 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion)",
+        "estado_qa": "Validado: sin huecos ni duplicados; signo constante en 155 ciclos de reajuste; 6 valores comparados con fuentes públicas coinciden. No comparado directamente con la API del BCCh desde el sandbox (ver docs/notas/auditoria_fuente_a_fila_2026-10-20.md)"
+      }
     },
     {
       "id": "macro_utm",
@@ -968,7 +988,17 @@
       "file_parquet": "outputs/securitizadoras/patrimonios_separados_balance.parquet",
       "registros_reales": 7962,
       "descripcion": "Balance general de cada patrimonio separado, cuenta por cuenta y tal como viene impreso (M$, con su signo, incluidas las líneas de subtotal): 358 balances de 10 securitizadoras. Todos cuadran. La serie parte en diciembre de 2014: de 2010 a 2013 no hay datos.",
-      "origen": "securitizadoras/fuentes/balances_patrimonios_separados.xlsx (Excel curado localmente a partir de los PDF de EEFF publicados en la CMF) → securitizadoras/scripts/05_publicar_balance_patrimonios.py"
+      "origen": "securitizadoras/fuentes/balances_patrimonios_separados.xlsx (Excel curado localmente a partir de los PDF de EEFF publicados en la CMF) → securitizadoras/scripts/05_publicar_balance_patrimonios.py",
+      "metadatos": {
+        "fuente": "Estados financieros de patrimonios separados publicados en la CMF (PDF), curados en securitizadoras/fuentes/balances_patrimonios_separados.xlsx",
+        "unidad": "Miles de pesos (M$), con el signo impreso en el balance",
+        "escala": "miles (M$)",
+        "moneda": "CLP",
+        "criterio_contable": "Balance general tal como viene impreso en los EEFF del patrimonio separado; norma contable específica por confirmar",
+        "cobertura": "Cierres de diciembre 2014–2025; 358 balances; 10 securitizadoras; 2010–2013 presentes en la fuente pero no publicados",
+        "fecha_extraccion": "Excel incorporado al repositorio el 2026-10-20; fecha de extracción de los PDF por confirmar",
+        "estado_qa": "Validado: identidad contable en 358/358 balances (±2 M$); conteo reconciliado con el Excel; 2 claves archivo+categoría+cuenta repetidas (usar orden_en_balance); 4 filas del Excel descartadas por columnas desplazadas (monto 0). Trazabilidad al PDF limitada: el PDF no está en el repositorio"
+      }
     },
     {
       "id": "patrimonios_separados_maestro",
