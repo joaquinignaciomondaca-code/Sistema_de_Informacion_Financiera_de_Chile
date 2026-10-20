@@ -198,7 +198,9 @@ class DownloadsPanelController {
               y fondos de inversión), luego las instituciones y el contexto macro; al final, plegados, el
               archivo congelado y los registros complementarios. Cada conjunto muestra cuántas filas, qué
               periodo y cuánto pesa <b>antes</b> de descargar. El Parquet original se baja directo desde este
-              servidor; CSV y Excel se arman con el motor que corre en tu navegador.
+              servidor; CSV y Excel se arman con el motor que corre en tu navegador. Los datos se publican tal
+              como los emite la fuente y pueden contener errores: revísalos y haz tus propias verificaciones
+              antes de usarlos.
             </p>
           </div>
           <div class="dl-hero-stats">${statsHtml}

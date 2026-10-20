@@ -325,6 +325,9 @@ redistribuirlos verifica las condiciones de reutilización de cada fuente.
   cada tabla tiene su propio inicio y su propia frecuencia.
 - Los montos conservan la unidad y el criterio de valorización de la fuente; no
   se convierten ni se reexpresan.
+- La extracción y la validación son automáticas, así que la base puede contener
+  errores: úsala con criterio y haz las verificaciones propias que consideres
+  necesarias antes de publicar una cifra.
 - Esta edición no publica carteras de AFP: de las AFP sólo está el registro de
   administradoras.
 - Los identificadores sensibles están protegidos en la versión pública: ver
