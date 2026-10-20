@@ -5,6 +5,11 @@ Reescribe los Parquet (conservando límites de row group y codec) y los JSON
 (conservando estilo de indentación) de docs/outputs/ que lleven columnas
 RUT en formato no canónico. Idempotente: en una segunda corrida no escribe nada.
 
+Como reescribe Parquet ya publicados, después de escribir regenera el catálogo
+de descargas (docs/js/download_catalog.js): ese catálogo publica el peso real de
+cada archivo y, si queda con los bytes anteriores, scripts/audit_interfaz.py
+—y con él web_audit— falla en main sin que nadie haya tocado la web.
+
 Uso:
     python3 scripts/normalizar_rut_publicado.py             # dry-run (plan)
     python3 scripts/normalizar_rut_publicado.py --apply     # escribe
@@ -14,6 +19,7 @@ from __future__ import annotations
 import argparse
 import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -113,6 +119,26 @@ def transformar_json(ruta: Path, apply: bool = False) -> tuple[bool, str]:
     return True, ", ".join(sorted(cambios))
 
 
+def regenerar_catalogo() -> bool:
+    """Deja el catálogo de descargas a la altura de los Parquet recién escritos.
+
+    El catálogo guarda el peso en bytes de cada archivo; reescribir un Parquet
+    cambia ese número y web_audit compara el catálogo con el disco. Regenerarlo
+    acá evita el fallo que se veía en main: la reparación entraba en un commit
+    y la auditoría de la web fallaba después, señalando un archivo que nadie
+    había tocado a mano.
+    """
+    script = Path(__file__).resolve().parent / "build_download_catalog.py"
+    print("\nRegenerando el catálogo de descargas (los Parquet cambiaron de peso)…")
+    corrida = subprocess.run([sys.executable, str(script)], capture_output=True, text=True)
+    print(corrida.stdout.strip() or corrida.stderr.strip())
+    if corrida.returncode != 0:
+        print("ERROR: no se pudo regenerar docs/js/download_catalog.js; "
+              "ejecuta scripts/build_download_catalog.py antes de confirmar.")
+        return False
+    return True
+
+
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--apply", action="store_true", help="escribe (por defecto solo dry-run)")
@@ -135,6 +161,8 @@ def main() -> int:
                 print(f"  {ruta.relative_to(DOCS.parent.parent)}: {detalle}")
     verbo = "escritos" if args.apply else "planificados (dry-run; --apply para escribir)"
     print(f"\nParquet {verbo}: {n_pq} · JSON {verbo}: {n_js}")
+    if args.apply and n_pq and not regenerar_catalogo():
+        return 1
     return 0
 
 
