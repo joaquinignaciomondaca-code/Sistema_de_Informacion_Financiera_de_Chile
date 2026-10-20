@@ -8,8 +8,9 @@
 // y qué estado deja el motor. Escenarios:
 //   normal      - todo disponible.
 //   sin_mjs     - falla la copia local del módulo y los CDN (fallo rápido esperado).
-//   worker_404  - el worker del motor responde 404 (esperado: sin error, puede colgarse).
-//   wasm_404    - el .wasm responde 404 (esperado: sin error, puede colgarse).
+//   worker_404  - el worker del motor responde 404 (esperado: error con causa HTTP 404).
+//   wasm_404    - el .wasm responde 404 (esperado: error con causa HTTP 404).
+//   worker_mudo - el worker responde 200 pero nunca inicializa (esperado: timeout tras ~15 s por intento).
 // Los CDN externos se bloquean en todos los escenarios para que la prueba sea determinista.
 //
 // Nota: en algunos hosts Linux sin librerías del sistema, @sparticuz/chromium necesita
@@ -26,6 +27,8 @@ const ESCENARIOS = {
   sin_mjs: (u) => (u.includes("vendor/duckdb/duckdb-browser.mjs") ? { status: 404, body: "nf" } : null),
   worker_404: (u) => (u.includes("duckdb-browser-eh.worker.js") ? { status: 404, body: "nf" } : null),
   wasm_404: (u) => (u.includes("duckdb-eh.wasm") ? { status: 404, body: "nf" } : null),
+  // Worker que responde 200 pero nunca inicializa: solo el timeout puede cortarlo.
+  worker_mudo: (u) => (u.includes("duckdb-browser-eh.worker.js") ? { status: 200, contentType: "text/javascript", body: "self.onmessage=function(){};" } : null),
 };
 
 async function correr(nombre, reglaFalla) {
