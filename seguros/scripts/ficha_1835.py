@@ -226,7 +226,7 @@ def _nombre(linea: str) -> tuple[str, str | None, str, int, bool] | None:
             tok = tok.split("(")[0]
             if not tok:
                 break
-        # Calificador pegado al token: "POSICIÓN_CORTA_(nombre)".
+        # Calificador pegado al token — «POSICIÓN_CORTA_(nombre)».
         cabeza_tok = tok
         calificador = ""
         if "(" in tok:

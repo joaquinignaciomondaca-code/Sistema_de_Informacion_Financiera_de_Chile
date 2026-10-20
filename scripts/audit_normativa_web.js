@@ -176,17 +176,47 @@ vm.runInNewContext(viewer, {
   document: { getElementById() { return null; } }
 });
 
-assert.match(html, /aria-controls="normativa-container"[^>]*id="tab-btn-normativa"|id="tab-btn-normativa"[^>]*aria-controls="normativa-container"/);
-assert.match(html, />\s*Normativa CMF\s*</);
-assert.match(html, /id="normativa-container"/);
-assert.match(html, /id="normativa-monitor"/);
-assert.match(html, /js\/normativa_monitor\.js\?v=/);
+// --- Frontera con la web: dos estados válidos, nunca un estado intermedio ---
+//
+// El monitor nació como pestaña del sitio y después se retiró de la navegación
+// (es otro producto y sus resúmenes envejecen), conservando el módulo, el feed
+// y su actualización diaria. Esta auditoría tiene que servir en los dos
+// escenarios; si no, el workflow programado falla todos los días contra una
+// decisión editorial ya tomada:
+//
+//   * pestaña presente  -> la integración debe estar completa y bien cableada;
+//   * pestaña ausente   -> no puede quedar ningún resto en la web (ni pestaña,
+//                          ni contenedor, ni script cargado) y el código debe
+//                          seguir en el repo, con su CSS y su feed.
+//
+// scripts/audit_interfaz.py es quien fija el estado esperado (hoy: retirada);
+// aquí sólo se comprueba que la web sea coherente con el estado que declare.
+const shell = fs.readFileSync("docs/js/ux_shell.js", "utf8");
+const normativaEnLaWeb = /id="tab-btn-normativa"/.test(html);
+
+if (normativaEnLaWeb) {
+  assert.match(html, /aria-controls="normativa-container"[^>]*id="tab-btn-normativa"|id="tab-btn-normativa"[^>]*aria-controls="normativa-container"/);
+  assert.match(html, />\s*Normativa CMF\s*</);
+  assert.match(html, /id="normativa-container"/);
+  assert.match(html, /id="normativa-monitor"/);
+  assert.match(html, /js\/normativa_monitor\.js\?v=/);
+  assert.match(shell, /"normativa"/, "ux_shell.js debe aceptar la pestaña de normativa");
+  // Desde el rediseño, las pestañas se declaran en un registro y se cablean en un
+  // bucle: la pestaña debe seguir registrada y conectada a switchMainTab.
+  assert.match(html, /normativa:\s*\{[^}]*button:\s*"tab-btn-normativa"[^}]*container:\s*"normativa-container"[^}]*\}/);
+  assert.match(html, /btn\.addEventListener\("click", \(\) => window\.switchMainTab\(key\)\)/);
+  assert.match(html, /window\.switchMainTab\(window\.MFCUI && window\.MFCUI\.initialTab \? window\.MFCUI\.initialTab\(\) : "info"\)/);
+  console.log("Integración web: pestaña de normativa presente y cableada.");
+} else {
+  assert.doesNotMatch(html, /normativa-container/, "la pestaña salió de la web: no debe quedar su contenedor");
+  assert.doesNotMatch(html, /normativa-monitor/, "la pestaña salió de la web: no debe quedar el punto de montaje");
+  assert.doesNotMatch(html, /js\/normativa_monitor\.js/, "la pestaña salió de la web: no debe cargarse su script");
+  assert.doesNotMatch(shell, /"normativa"/, "ux_shell.js no debe seguir aceptando la pestaña retirada");
+  assert.ok(fs.existsSync(monitorPath), "el monitor se retiró de la interfaz, no del repositorio");
+  assert.ok(fs.existsSync(feedPath), "el feed normativo se sigue publicando aunque no haya pestaña");
+  console.log("Integración web: pestaña retirada de la navegación; módulo, CSS y feed conservados.");
+}
 assert.doesNotMatch(html, /tab-btn-soon|soon-container|Próximamente/);
-// Desde el rediseño, las pestañas se declaran en un registro y se cablean en un
-// bucle: la pestaña de normativa debe seguir registrada y conectada a switchMainTab.
-assert.match(html, /normativa:\s*\{[^}]*button:\s*"tab-btn-normativa"[^}]*container:\s*"normativa-container"[^}]*\}/);
-assert.match(html, /btn\.addEventListener\("click", \(\) => window\.switchMainTab\(key\)\)/);
-assert.match(html, /window\.switchMainTab\(window\.MFCUI && window\.MFCUI\.initialTab \? window\.MFCUI\.initialTab\(\) : "info"\)/);
 assert.match(monitorSource, /Publicaciones asociadas/);
 assert.match(monitorSource, /Industria activa/);
 assert.match(monitorSource, /Sin industria verificada/);
