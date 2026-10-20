@@ -31,6 +31,103 @@
     "sistemas_pago": "Sistemas de Pago (BCCh / CMF)",
     "fintech": "Fintech y Finanzas Abiertas (CMF)"
   },
+  "alcance": {
+    "version": "2026-10-20",
+    "nota": "Alcance editorial de la web: qué industrias se destacan (núcleo), cuáles quedan como instituciones o contexto y cuáles pasan a archivo o a registro complementario. Es un recorte visual: ninguna tabla, archivo, URL ni vista SQL se elimina. Para revertirlo basta con cambiar el nivel del sector y regenerar el catálogo (scripts/build_download_catalog.py).",
+    "niveles": [
+      {
+        "id": "nucleo",
+        "etiqueta": "Núcleo · inversión institucional",
+        "corta": "Núcleo",
+        "descripcion": "Carteras y estados financieros de los tres grandes inversionistas institucionales supervisados por la CMF: compañías de seguros, fondos mutuos y fondos de inversión."
+      },
+      {
+        "id": "secundario",
+        "etiqueta": "Instituciones y estados financieros",
+        "corta": "Instituciones",
+        "descripcion": "Bancos, administradoras generales de fondos y corredoras de bolsa: identidad y estados financieros de las instituciones que rodean a los fondos."
+      },
+      {
+        "id": "contexto",
+        "etiqueta": "Contexto macroeconómico",
+        "corta": "Contexto",
+        "descripcion": "Series del Banco Central para leer las carteras: tasas y curvas; tipo de cambio, UF y UTM; actividad y precios; expectativas. Es contexto, no una industria."
+      },
+      {
+        "id": "archivo",
+        "etiqueta": "Archivo congelado",
+        "corta": "Archivo",
+        "descripcion": "Industrias que quedan fuera del foco de esta edición. Sus tablas siguen publicadas, consultables y descargables.",
+        "aviso": "Alcance congelado. Datos disponibles para consulta y descarga; esta industria no amplía su cobertura en la edición actual."
+      },
+      {
+        "id": "registro",
+        "etiqueta": "Registro complementario de entidades",
+        "corta": "Registro",
+        "descripcion": "Listas de entidades (identidad y vigencia) de industrias sin datos financieros en esta edición.",
+        "aviso": "Registro complementario: sólo la lista de entidades. Esta edición no incluye carteras ni estados financieros de estas industrias, tampoco las carteras de los fondos de pensiones (AFP)."
+      }
+    ],
+    "visibles": [
+      "nucleo",
+      "secundario",
+      "contexto"
+    ],
+    "sectores": {
+      "seguros": "nucleo",
+      "ffmm": "nucleo",
+      "fi": "nucleo",
+      "bancos": "secundario",
+      "agf": "secundario",
+      "corredoras_bolsa": "secundario",
+      "macro": "contexto",
+      "factoring_leasing": "archivo",
+      "securitizadoras": "archivo",
+      "patrimonios_separados": "archivo",
+      "cajas_compensacion": "archivo",
+      "pensiones": "registro",
+      "cooperativas": "registro",
+      "sistemas_pago": "registro",
+      "fintech": "registro"
+    },
+    "orden": [
+      "seguros",
+      "ffmm",
+      "fi",
+      "bancos",
+      "agf",
+      "corredoras_bolsa",
+      "macro",
+      "factoring_leasing",
+      "securitizadoras",
+      "patrimonios_separados",
+      "cajas_compensacion",
+      "pensiones",
+      "cooperativas",
+      "sistemas_pago",
+      "fintech"
+    ],
+    "agrupaciones": {
+      "securitizacion": {
+        "etiqueta": "Securitización",
+        "sectores": [
+          "securitizadoras",
+          "patrimonios_separados"
+        ],
+        "nota": "Securitizadoras y patrimonios separados se muestran como una sola entrada: los patrimonios son los vehículos que administran las securitizadoras."
+      }
+    },
+    "tablas_ocultas": {
+      "fi_bienes_raices": "Sin datos: ningún fondo de inversión ha informado cartera de bienes raíces a la CMF (2020-03 → 2026-06). Se oculta de la navegación hasta que la fuente publique datos; la vista SQL y el archivo siguen publicados."
+    },
+    "variantes": {
+      "corredoras_bolsa_lista_entidades_registro": {
+        "de": "corredoras_bolsa_lista_entidades",
+        "etiqueta": "Registro CMF con ficha",
+        "nota": "Las mismas corredoras de la lista principal, con el tipo de entidad y el enlace a la ficha de la CMF: se muestra junto a ella, no como una lista aparte."
+      }
+    }
+  },
   "prefijos": {
     "seguros": "seguros",
     "fi": "fi",

@@ -185,8 +185,9 @@ const DATA_VIEWER_CATALOG = [
 class DataViewerController {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
-    this.currentView = "afp_lista_entidades";
-    this.currentDisplayName = "afp.lista_entidades";
+    // Tabla inicial del núcleo (liviana: una fila por compañía y sector).
+    this.currentView = "seguros_lista_entidades";
+    this.currentDisplayName = "seguros.lista_entidades";
     this.currentLimit = 100;
     this.currentRows = [];
     this.currentColumns = [];
@@ -225,6 +226,52 @@ class DataViewerController {
     ];
     const match = sectors.find(([prefix]) => id.startsWith(prefix));
     return match ? match[1] : null;
+  }
+
+  alcance() {
+    const A = window.SIFAlcance;
+    return A && A.disponible() ? A : null;
+  }
+
+  // Grupos del selector en el orden editorial (núcleo, instituciones, contexto, archivo y
+  // registro), sin tablas ocultas salvo la que esté abierta. Las industrias archivadas se
+  // rotulan como tales y las variantes dicen de qué tabla lo son.
+  catalogoOrdenado() {
+    const A = this.alcance();
+    if (!A) return DATA_VIEWER_CATALOG.map((grp) => ({ etiqueta: grp.group, tablas: grp.tables }));
+    const sectorDe = (grp) => this.sectorForView((grp.tables[0] || {}).id);
+    return DATA_VIEWER_CATALOG
+      .map((grp, i) => ({ grp, i, sector: sectorDe(grp) }))
+      .sort((a, b) => (A.rangoNivel(A.nivelDe(a.sector)) - A.rangoNivel(A.nivelDe(b.sector))) ||
+        (A.orden(a.sector) - A.orden(b.sector)) || (a.i - b.i))
+      .map(({ grp, sector }) => {
+        const nivel = A.esArchivo(sector) ? A.infoNivelDe(sector) : null;
+        return {
+          etiqueta: nivel ? `${nivel.corta} · ${grp.group}` : grp.group,
+          tablas: grp.tables.filter((t) => !A.tablaOculta(t.id) || t.id === this.currentView)
+        };
+      })
+      .filter((g) => g.tablas.length > 0);
+  }
+
+  etiquetaOpcion(tbl) {
+    const A = this.alcance();
+    const variante = A ? A.variante(tbl.id) : null;
+    const detalle = variante ? `variante · ${variante.etiqueta}` : tbl.detalle;
+    return `${tbl.name}${detalle ? "  ·  " + detalle : ""}`;
+  }
+
+  // Aviso sobre la tabla abierta: industria archivada o tabla oculta por falta de datos.
+  avisoAlcance() {
+    const A = this.alcance();
+    if (!A) return "";
+    if (A.tablaOculta(this.currentView)) {
+      return `<div class="scope-banner" role="note"><b>Tabla oculta</b><span>${dvEscapar(A.motivoOculta(this.currentView))}</span></div>`;
+    }
+    const sector = this.sectorForView(this.currentView);
+    if (!sector || !A.esArchivo(sector)) return "";
+    const nivel = A.infoNivelDe(sector);
+    return `<div class="scope-banner" role="note"><b>${dvEscapar(nivel ? nivel.etiqueta : "Archivo")}</b><span>${dvEscapar(A.aviso(sector))}</span></div>`;
   }
 
   modeForView() {
@@ -480,11 +527,11 @@ class DataViewerController {
       return `<tr>${cells}</tr>`;
     }).join("");
 
-    const optionsHtml = DATA_VIEWER_CATALOG.map(grp => `
-      <optgroup label="${grp.group}">
-        ${grp.tables.map(tbl => `
+    const optionsHtml = this.catalogoOrdenado().map(grp => `
+      <optgroup label="${dvEscapar(grp.etiqueta)}">
+        ${grp.tablas.map(tbl => `
           <option value="${tbl.id}" ${tbl.id === this.currentView ? "selected" : ""}>
-            ${tbl.name}${tbl.detalle ? "  ·  " + tbl.detalle : ""}
+            ${dvEscapar(this.etiquetaOpcion(tbl))}
           </option>
         `).join("")}
       </optgroup>
@@ -525,6 +572,8 @@ class DataViewerController {
             </button>
           </div>
         </div>
+
+        ${this.avisoAlcance()}
 
         <!-- Tabla de datos scrollable -->
         <div class="dv-table-container">

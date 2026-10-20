@@ -311,6 +311,111 @@ setTimeout(() => {
     /navegador|local/i.test(document.getElementById("sql-engine-hint").textContent),
     document.getElementById("sql-engine-hint").textContent.slice(0, 70));
 
+  // ── Recorte visual de industrias (alcance editorial, 2026-10-20) ─────────
+  // La portada, el explorador, el mapa, el diccionario, el visor y Descargas leen la
+  // misma bandera por sector; el archivo queda al final y plegado, pero alcanzable.
+  const alcance = window.DOWNLOAD_CATALOG.alcance;
+  const A = window.SIFAlcance;
+  check("el catálogo trae el alcance editorial", Boolean(alcance && A && A.disponible()));
+  const cifra = (ruta) => (document.querySelector(`[data-alcance="${ruta}"]`) || {}).textContent;
+  const nucleo = alcance.niveles.find((n) => n.id === "nucleo");
+  check("la portada muestra las cifras del núcleo desde el catálogo",
+    cifra("nucleo.sectores") === "3" && cifra("nucleo.conjuntos") === String(nucleo.conjuntos) &&
+    /millones$/.test(cifra("nucleo.filas")) && /^\d{4}–\d{4}$/.test(cifra("nucleo.periodo")),
+    [cifra("nucleo.sectores"), cifra("nucleo.conjuntos"), cifra("nucleo.filas"), cifra("nucleo.periodo")].join(" · "));
+  check("la portada tiene tres tarjetas grandes: seguros, fondos mutuos y fondos de inversión",
+    Array.from(document.querySelectorAll(".info-core-card")).map((c) => c.dataset.sector).join(",") === "seguros,ffmm,fi");
+  check("la portada ya no anuncia 15 industrias",
+    !/15 industrias/.test(document.getElementById("info-container").textContent));
+  check("el alcance dice que no hay carteras AFP",
+    /Carteras de los fondos de pensiones \(AFP\)/.test(document.getElementById("info-alcance").textContent));
+
+  const archivoNav = document.querySelector("#sidebar-tree .tree-archive");
+  check("explorador: el archivo está al final y plegado",
+    archivoNav && !archivoNav.classList.contains("open") &&
+    archivoNav === document.querySelector("#sidebar-tree .tree-root").lastElementChild);
+  check("explorador: el núcleo va primero",
+    document.querySelector("#sidebar-tree .tree-tier").dataset.tier === "nucleo");
+  const buscadorNav = document.getElementById("sidebar-search");
+  buscadorNav.value = "factoring";
+  buscadorNav.dispatchEvent(new window.Event("input", { bubbles: true }));
+  check("explorador: la búsqueda encuentra industrias archivadas y abre el archivo",
+    archivoNav.classList.contains("search-open") &&
+    document.querySelector('[data-group-id="group_factoring_leasing"]').style.display !== "none");
+  buscadorNav.value = "";
+  buscadorNav.dispatchEvent(new window.Event("input", { bubbles: true }));
+  check("explorador: al limpiar la búsqueda el archivo vuelve a plegarse", !archivoNav.classList.contains("search-open"));
+
+  window.switchMainTab("erd");
+  const filaArchivo = document.getElementById("erd-archive-filters");
+  check("mapa: los filtros del archivo empiezan plegados", filaArchivo.hidden);
+  window.erdInstance.focusSector("patrimonios_separados");
+  const botonSecur = document.querySelector('.filter-btn[data-filter="securitizacion"]');
+  check("mapa: securitizadoras y patrimonios separados se ven como una sola entrada",
+    window.erdInstance.filter === "securitizacion" && botonSecur.classList.contains("active") && !filaArchivo.hidden &&
+    window.erdInstance.tables.filter((t) => window.erdInstance.matchesFilter(t)).length === 5);
+  check("mapa: una industria archivada muestra el aviso de alcance",
+    !document.getElementById("erd-scope-note").hidden && /Alcance congelado/.test(document.getElementById("erd-scope-note").textContent));
+  window.erdInstance.focusSector("todos");
+  const enPrincipal = window.erdInstance.tables.filter((t) => window.erdInstance.matchesFilter(t));
+  check("mapa: la vista principal no incluye el archivo",
+    enPrincipal.length > 0 && enPrincipal.every((t) => A.esVisible(t.sector)), enPrincipal.length + " nodos");
+  window.erdInstance.focusSector("afp_corporativo");
+  check("mapa: el alias del explorador para AFP encuentra su nodo",
+    window.erdInstance.tables.some((t) => window.erdInstance.matchesFilter(t) && t.id === "afp_lista_entidades"));
+  window.erdInstance.focusSector("seguros");
+
+  window.switchMainTab("dict");
+  const fichas = () => Array.from(document.querySelectorAll("#dict-container .dict-table-name")).map((n) => n.textContent.trim());
+  check("diccionario: por defecto sólo el alcance principal",
+    fichas().length > 0 && !fichas().includes("ccaf.balance") && !fichas().includes("fi.bienes_raices") &&
+    fichas().includes("seguros.renta_fija"), fichas().length + " fichas");
+  window.DataDictionary.setFilter("registro");
+  check("diccionario: el registro complementario reúne las cuatro listas",
+    fichas().sort().join(",") === "afp.lista_entidades,cooperativas.lista_entidades,fintech.lista_entidades,sistemas_pago.lista_entidades" &&
+    document.querySelectorAll("#dict-container .dict-scope-box").length === 4, fichas().join(","));
+  window.DataDictionary.setFilter("principal");
+
+  const grupos = window.DataViewer.catalogoOrdenado();
+  check("visor: los grupos siguen el orden editorial y el archivo se rotula",
+    /^Seguros/.test(grupos[0].etiqueta) && grupos.some((g) => /^Archivo · /.test(g.etiqueta)) &&
+    !grupos.some((g) => g.tablas.some((t) => t.id === "fi_bienes_raices")), grupos.slice(0, 3).map((g) => g.etiqueta).join(" | "));
+
+  window.switchMainTab("downloads");
+  const itemsDl = () => Array.from(document.querySelectorAll("#downloads-container .dl-item"));
+  const visiblesDl = () => itemsDl().filter((i) => !i.hidden);
+  check("descargas: el archivo empieza plegado y fuera del conteo visible",
+    visiblesDl().every((i) => i.dataset.fuera !== "1") && itemsDl().some((i) => i.dataset.fuera === "1"));
+  check("descargas: fi.bienes_raices (0 filas) no se lista",
+    !itemsDl().some((i) => i.dataset.id === "fi_bienes_raices"));
+  const ordenCorredoras = itemsDl().map((i) => i.dataset.id).filter((id) => id.startsWith("corredoras_bolsa_lista"));
+  check("descargas: la lista registro de corredoras va bajo la lista principal",
+    ordenCorredoras.join(",") === "corredoras_bolsa_lista_entidades,corredoras_bolsa_lista_entidades_registro" &&
+    document.querySelector('[data-id="corredoras_bolsa_lista_entidades_registro"]').classList.contains("dl-item-variante"));
+  document.querySelector("#dl-archive .dl-archive-toggle").dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  check("descargas: al abrir el archivo aparece el catálogo completo",
+    visiblesDl().length === itemsDl().length, visiblesDl().length + " de " + itemsDl().length);
+  document.querySelector("#dl-archive .dl-archive-toggle").dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+
+  window.switchMainTab("info");
+  document.querySelector('.info-core-card[data-sector="ffmm"] [data-portada="explorar"]')
+    .dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  check("portada: «Ver tablas» abre el sector en el explorador y en el mapa",
+    document.querySelector('[data-node-id="sector_ffmm"]').classList.contains("open") &&
+    document.getElementById("erd-canvas").style.display === "block" && window.erdInstance.filter === "ffmm");
+  window.switchMainTab("info");
+  document.querySelector('.info-core-card[data-sector="seguros"] [data-portada="descargas"]')
+    .dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  check("portada: «Descargar» abre Descargas filtrada por el sector",
+    document.getElementById("downloads-container").style.display === "flex" &&
+    document.getElementById("dl-sector").value === "seguros" &&
+    visiblesDl().length > 0 && visiblesDl().every((i) => i.dataset.bloque === "seguros"));
+  window.DownloadsPanel.filtrarSector("todos");
+  window.switchMainTab("info");
+  document.querySelector('[data-portada="archivo"]').dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  check("portada: el enlace discreto abre el archivo del explorador",
+    document.querySelector("#sidebar-tree .tree-archive").classList.contains("open"));
+
   const fallos = results.filter((r) => !r.ok);
   for (const r of results) console.log(`${r.ok ? "OK  " : "FALLA"}  ${r.name}${r.extra ? "  -> " + r.extra : ""}`);
   if (errors.length) {
