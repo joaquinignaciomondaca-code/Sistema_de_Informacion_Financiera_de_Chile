@@ -1,3 +1,7 @@
+<div align="center">
+  <img src="docs/assets/logo_sif.svg" alt="SIF — Sistema de Información Financiera de Chile" width="430">
+</div>
+
 # Sistema de Información Financiera de Chile (SIF)
 
 **25 años del sistema financiero chileno, consultables con SQL desde el navegador.**

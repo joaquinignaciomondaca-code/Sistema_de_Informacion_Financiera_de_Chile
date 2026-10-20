@@ -302,16 +302,33 @@ header {
   gap: 12px;
 }
 
-.brand-tag {
-  background-color: var(--accent-mint);
-  color: var(--accent-contrast, #132D46);
-  font-weight: 800;
-  font-size: 11px;
-  padding: 3px 8px;
-  border-radius: 4px;
-  letter-spacing: 0.8px;
-  font-family: var(--font-mono);
-  transition: background-color 0.2s ease, color 0.2s ease;
+/* Logotipo SIF (assets/logo_sif_marca.svg, variante compacta de
+   assets/logo_sif.svg). El isotipo y las siglas son azul marino (#12366A) con
+   acentos turquesa (#00A6A6): se apoyan sobre una placa clara porque, pegados
+   directamente al fondo del encabezado, se pierden en las cinco paletas
+   oscuras. En la paleta clara ("informe") la placa se vuelve translúcida y
+   apenas queda un borde. */
+.brand-logo {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  padding: 3px 7px;
+  border-radius: 6px;
+  background: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  line-height: 0;
+}
+
+.brand-logo img {
+  display: block;
+  height: 28px;
+  width: auto;
+}
+
+[data-theme="informe"] .brand-logo {
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: none;
+  border: 1px solid var(--border-color);
 }
 
 .brand-title {
