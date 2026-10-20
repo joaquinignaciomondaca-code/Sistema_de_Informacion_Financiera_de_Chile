@@ -109,3 +109,17 @@ Resultados con `scripts/diagnostico_motor_sql.mjs` (mismo entorno que la tabla d
 
 Pendiente: verificar en la URL publicada y en un navegador distinto de Chromium (Firefox, Safari).
 Si las tres fuentes fallan, el peor caso sigue siendo ~45 s antes del mensaje final.
+
+## Simulación del hosting en local (`scripts/servir_sitio_local.mjs`)
+
+Para no depender de `http.server` de Python, que no soporta rangos, se sirve `docs/` con un servidor que
+imita el hosting público: rangos HTTP (206), gzip para texto y wasm, y `Cache-Control: no-store` en
+`outputs/*.parquet` (igual que `docs/vercel.json`).
+
+- El `.wasm` de 18,1 MB se transfiere en **4,2 MB** con gzip.
+- Con rangos activos, **0 avisos** "fall back to full HTTP read" (antes había decenas).
+- Escenario normal: página lista en ~2,6 s medidos desde la navegación (`initMs` = 2,2 s), consulta de FFMM OK en ~0,5 s.
+
+Observación para el punto 4 (cifras): la consulta de ejemplo del README dice `US 1.131` para el último
+período de `ffmm_cartera_extranjera`; el Parquet local da `US 1.100`, `LU 524`, `IE 489`. Puede deberse a
+una actualización posterior del dato o a un cambio en el README; hay que revisarlo antes de publicar.
