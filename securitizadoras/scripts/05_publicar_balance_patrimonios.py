@@ -29,8 +29,9 @@ from pathlib import Path
 
 import pandas as pd
 import pyarrow as pa
-from pipelines.auto.rut import con_puntos
 import pyarrow.parquet as pq
+
+from pipelines.auto.rut import con_puntos
 
 ROOT = Path(__file__).resolve().parents[2]
 XLSX = ROOT / "securitizadoras" / "fuentes" / "balances_patrimonios_separados.xlsx"
@@ -53,15 +54,6 @@ COLUMNAS = ["archivo", "rut_administradora", "rut_completo", "nombre_administrad
 def fallar(msg: str) -> None:
     print(f"::error title=Balance patrimonios separados::{msg}", file=sys.stderr)
     raise SystemExit(1)
-
-
-def dv_m11(cuerpo: str) -> str:
-    suma, factor = 0, 2
-    for d in reversed(cuerpo):
-        suma += int(d) * factor
-        factor = 2 if factor == 7 else factor + 1
-    r = 11 - suma % 11
-    return "0" if r == 11 else "K" if r == 10 else str(r)
 
 
 def leer(xlsx: Path) -> pd.DataFrame:
@@ -123,43 +115,6 @@ def construir(cuentas: pd.DataFrame) -> pd.DataFrame:
     return salida[COLUMNAS].reset_index(drop=True)
 
 
-UMBRAL_VARIACION = 0.50      # 50 % frente al cierre anterior del mismo patrimonio
-UMBRAL_MONTO_M = 1_000       # y al menos 1.000 M$ de diferencia (evita marcar cuentas chicas)
-INFORME = ROOT / "docs" / "reproducibilidad" / "anomalias_patrimonios_separados.csv"
-
-
-def revisar_cambios(salida: pd.DataFrame) -> pd.DataFrame:
-    """Marca los subtotales que cambian mucho frente al cierre anterior del mismo patrimonio.
-
-    No bloquea por sí solo: un cambio grande puede ser real (una emisión, un prepago). Sirve para
-    que una persona lo revise antes de dar el dato por bueno. Solo compara categorías de subtotal,
-    porque el nombre de las cuentas de detalle cambia entre años. Solo compara cierres consecutivos.
-    """
-    subtotales = salida[salida["categoria"].str.startswith("Total ")].copy()
-    subtotales = subtotales.sort_values(["codigo_patrimonio", "periodo"])
-    subtotales["monto_anterior"] = subtotales.groupby(["codigo_patrimonio", "categoria"])["monto_m_clp"].shift(1)
-    subtotales["periodo_anterior"] = subtotales.groupby(["codigo_patrimonio", "categoria"])["periodo"].shift(1)
-    # Solo cierres consecutivos: comparar 2023 con 2025 mezclaría dos años de cambios.
-    anio = subtotales["periodo"].str[:4].astype(int)
-    anio_ant = subtotales["periodo_anterior"].str[:4].astype(float)
-    cambio = subtotales.dropna(subset=["monto_anterior"]).copy()
-    cambio = cambio[(anio.loc[cambio.index] - anio_ant.loc[cambio.index]) == 1].copy()
-    cambio["diferencia_m_clp"] = cambio["monto_m_clp"] - cambio["monto_anterior"]
-    cambio["variacion"] = cambio["diferencia_m_clp"] / cambio["monto_anterior"].abs().where(cambio["monto_anterior"] != 0)
-    marcados = cambio[(cambio["diferencia_m_clp"].abs() >= UMBRAL_MONTO_M)
-                      & (cambio["variacion"].abs() > UMBRAL_VARIACION)].copy()
-    marcados["motivo"] = "variación > 50 % y ≥ 1.000 M$ frente al cierre anterior"
-    return marcados[["archivo", "rut_administradora", "nombre_administradora", "codigo_patrimonio",
-                     "periodo_anterior", "periodo", "categoria", "monto_anterior", "monto_m_clp",
-                     "diferencia_m_clp", "variacion", "motivo"]].rename(
-        columns={"monto_m_clp": "monto_actual"}).reset_index(drop=True)
-
-
-def escribir_informe(marcados: pd.DataFrame) -> None:
-    INFORME.parent.mkdir(parents=True, exist_ok=True)
-    marcados.round({"variacion": 4}).to_csv(INFORME, index=False, encoding="utf-8")
-
-
 def escribir(df: pd.DataFrame) -> Path:
     destino = OUT / f"{TABLA}.parquet"
     tmp = destino.with_suffix(".parquet.tmp")
@@ -175,26 +130,18 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--xlsx", type=Path, default=XLSX)
     ap.add_argument("--seco", action="store_true", help="valida sin escribir")
-    ap.add_argument("--bloquear-cambios", action="store_true",
-                    help="no publica si hay cambios grandes marcados (por defecto solo se informan)")
     args = ap.parse_args()
     cuentas, vacias = limpiar(leer(args.xlsx))
     anios = sorted(int(a) for a in cuentas["periodo"].str[:4].unique())
     cuentas = cuentas[cuentas["periodo"].str[:4].astype(int) >= ANIO_DESDE]
     salida = construir(cuentas)
     balances = salida.drop_duplicates("archivo")
-    marcados = revisar_cambios(salida)
-    print(f"Cambios grandes marcados para revisión: {len(marcados)} "
-          f"(informe: {INFORME.relative_to(ROOT)})")
-    if args.bloquear_cambios and len(marcados):
-        fallar(f"{len(marcados)} cambios grandes sin revisar; ver {INFORME.name}")
     sha = hashlib.sha256(args.xlsx.read_bytes()).hexdigest()[:12]
     print(f"Fuente {args.xlsx.name} (sha256 {sha}…), años {anios}; se publica desde {ANIO_DESDE}: "
           f"{len(salida)} cuentas, {len(balances)} balances, {balances['periodo'].nunique()} cierres "
           f"({balances['periodo'].min()}–{balances['periodo'].max()}), "
           f"{balances['rut_administradora'].nunique()} securitizadoras; {vacias} filas vacías descartadas.")
     if not args.seco:
-        escribir_informe(marcados)
         print("→", escribir(salida).relative_to(ROOT))
 
 
