@@ -296,7 +296,17 @@
       "file_parquet": "outputs/ffmm/ffmm_balance/manifest.json",
       "registros_reales": 126256,
       "descripcion": "Estado de situación financiera de cada fondo mutuo —vigente o extinto— al 31 de diciembre de cada año, línea por línea (16 líneas), con el comparativo del año anterior. Miles de la moneda del fondo (pesos, dólares o euros).",
-      "origen": "CMF — Estados financieros IFRS de fondos mutuos (XML «FMEF», Circular 1997 de 2010), enlazado en la ficha de cada fondo: https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU"
+      "origen": "CMF — Estados financieros IFRS de fondos mutuos (XML «FMEF», Circular 1997 de 2010), enlazado en la ficha de cada fondo: https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU",
+      "metadatos": {
+        "fuente": "CMF, estados financieros IFRS de fondos mutuos (XML FMEF, Circular 1997), enlazados desde la ficha de cada fondo: https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU",
+        "unidad": "Miles de la moneda funcional del fondo (pesos, dólares o euros)",
+        "escala": "miles (montos)",
+        "moneda": "Moneda funcional de cada fondo (pesos, dólares o euros); no se convierte",
+        "criterio_contable": "Estados financieros IFRS según Circular 1997 de la CMF; cuenta por cuenta (16 líneas)",
+        "cobertura": "2010-12 a 2025-12 (cierres anuales); 126.256 filas; fondos vigentes y extintos",
+        "fecha_extraccion": "2026-10-01 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Validado en la auditoría del punto 6: en 2025-12, la cartera de cada uno de los 386 fondos cruzados no supera su total de activo."
+      }
     },
     {
       "id": "ffmm_cartera_extranjera",
@@ -312,7 +322,17 @@
       "file_parquet": "outputs/ffmm/cartera_extranjera/manifest.json",
       "registros_reales": 1461253,
       "descripcion": "Inversiones de cada fondo en instrumentos de emisores extranjeros al cierre de cada mes. Montos en miles de la moneda funcional del fondo.",
-      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php"
+      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual, https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+        "unidad": "Miles de la moneda funcional del fondo (montos)",
+        "escala": "miles (montos)",
+        "moneda": "Moneda funcional de cada fondo; la de liquidación va en su propio campo",
+        "criterio_contable": "Valorización según Circular 1333; detalle por instrumento en el campo codigo_valorizacion (por confirmar en el manual)",
+        "cobertura": "2001-01 a 2026-09; 1.461.253 filas",
+        "fecha_extraccion": "2026-10-13 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "ffmm_cartera_nacional",
@@ -354,7 +374,17 @@
       "file_parquet": "outputs/ffmm/futuros_forwards/manifest.json",
       "registros_reales": 282045,
       "descripcion": "Contratos de futuro y forward vigentes de cada fondo al cierre de cada mes. Montos en miles de la moneda funcional del fondo.",
-      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php"
+      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual, https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+        "unidad": "Miles de la moneda funcional del fondo (montos)",
+        "escala": "miles (montos)",
+        "moneda": "Moneda funcional de cada fondo; la de liquidación va en su propio campo",
+        "criterio_contable": "Valorización según Circular 1333 (por confirmar en el manual)",
+        "cobertura": "2001-01 a 2026-09; 282.045 filas",
+        "fecha_extraccion": "2026-10-13 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "ffmm_maestro",
@@ -370,7 +400,17 @@
       "file_parquet": "outputs/ffmm/maestro_fondos_mutuos.parquet",
       "registros_reales": 1334,
       "descripcion": "Fondos mutuos que reportan cartera a la CMF: RUN, nombre vigente, primer y último mes informado y si reportó el último mes publicado (un fondo nuevo aparece aquí el mes en que informa por primera vez).",
-      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php"
+      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual, https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+        "unidad": "No aplica: catálogo de fondos",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "2001-01 a 2026-09; 1.334 fondos con primer y último mes informado",
+        "fecha_extraccion": "2026-10-13 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "ffmm_opciones",
@@ -386,7 +426,17 @@
       "file_parquet": "outputs/ffmm/opciones/manifest.json",
       "registros_reales": 5365,
       "descripcion": "Contratos de opciones vigentes de cada fondo al cierre de cada mes. Montos en miles de la moneda funcional del fondo.",
-      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php"
+      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual, https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+        "unidad": "Miles de la moneda funcional del fondo (montos)",
+        "escala": "miles (montos)",
+        "moneda": "Moneda funcional de cada fondo; la de liquidación va en su propio campo",
+        "criterio_contable": "Valorización según Circular 1333 (por confirmar en el manual)",
+        "cobertura": "2001-01 a 2026-09; 5.365 filas",
+        "fecha_extraccion": "2026-10-13 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "ffmm_resultados",
@@ -402,7 +452,17 @@
       "file_parquet": "outputs/ffmm/ffmm_resultados/manifest.json",
       "registros_reales": 149929,
       "descripcion": "Estado de resultados integrales de cada fondo mutuo —vigente o extinto— del ejercicio completo, línea por línea (19 líneas), con el comparativo del año anterior. Miles de la moneda del fondo (pesos, dólares o euros).",
-      "origen": "CMF — Estados financieros IFRS de fondos mutuos (XML «FMEF», Circular 1997 de 2010), enlazado en la ficha de cada fondo: https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU"
+      "origen": "CMF — Estados financieros IFRS de fondos mutuos (XML «FMEF», Circular 1997 de 2010), enlazado en la ficha de cada fondo: https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU",
+      "metadatos": {
+        "fuente": "CMF, estados financieros IFRS de fondos mutuos (XML FMEF, Circular 1997), enlazados desde la ficha de cada fondo: https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU",
+        "unidad": "Miles de la moneda funcional del fondo (pesos, dólares o euros)",
+        "escala": "miles (montos)",
+        "moneda": "Moneda funcional de cada fondo (pesos, dólares o euros); no se convierte",
+        "criterio_contable": "Estado de resultados integrales según Circular 1997 de la CMF; 19 líneas por fondo y ejercicio",
+        "cobertura": "2010-12 a 2025-12 (ejercicios anuales); 149.929 filas; fondos vigentes y extintos",
+        "fecha_extraccion": "2026-10-01 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de cuadre contable de resultados en esta auditoría."
+      }
     },
     {
       "id": "fi_balance",
@@ -418,7 +478,17 @@
       "file_parquet": "outputs/fi/fi_balance/manifest.json",
       "registros_reales": 985908,
       "descripcion": "Estado de situación financiera de fondos de inversión FIRES/FINRE, cuenta por cuenta (42 líneas por contexto). TotalPasivo de la fuente incluye patrimonio: el pasivo exigible es TotalPasivoCorriente + TotalPasivoNoCorriente. Miles de la moneda de presentación, sin conversión. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
-      "origen": "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado."
+      "origen": "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado.",
+      "metadatos": {
+        "fuente": "CMF, XML IFRS de fondos de inversión (FIEF, Circular 1998), enlazados desde https://www.cmfchile.cl/institucional/mercados/entidad.php?tipoentidad=FIRES|FINRE",
+        "unidad": "Miles de la moneda de presentación, sin conversión",
+        "escala": "miles (montos)",
+        "moneda": "Moneda de presentación del fondo; sin conversión",
+        "criterio_contable": "Estado de situación financiera IFRS según Circular 1998; cuenta por cuenta (42 líneas por contexto). El pasivo exigible es TotalPasivoCorriente + TotalPasivoNoCorriente",
+        "cobertura": "2022-03 a 2026-06 (cierres); 985.908 filas",
+        "fecha_extraccion": "2026-10-02 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Solo se publican contextos completos que cuadran; los rechazados se declaran en el manifiesto. Cotejo con las tablas de la ficha; no es auditoría independiente del PDF firmado."
+      }
     },
     {
       "id": "fi_bienes_raices",
@@ -434,7 +504,17 @@
       "file_parquet": "outputs/fi/bienes_raices/manifest.json",
       "registros_reales": 0,
       "descripcion": "Bienes raíces nacionales y extranjeros de los fondos.",
-      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
+      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES).",
+      "metadatos": {
+        "fuente": "CMF, informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php)",
+        "unidad": "Por confirmar (la descripción no indica unidad)",
+        "escala": "Por confirmar",
+        "moneda": "Moneda funcional del fondo (por confirmar)",
+        "criterio_contable": "Valorización según la norma IFRS de la ficha de cartera (por confirmar)",
+        "cobertura": "2020-03 a 2026-06 declarado en el manifiesto; 0 filas publicadas",
+        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Observación abierta: la tabla figura en el manifiesto con 0 filas publicadas. Hay que revisar si no existen datos o si el proceso no los extrae. Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20)."
+      }
     },
     {
       "id": "fi_cartera_extranjera",
@@ -450,7 +530,17 @@
       "file_parquet": "outputs/fi/cartera_extranjera/manifest.json",
       "registros_reales": 76849,
       "descripcion": "Inversiones en instrumentos de emisores extranjeros al cierre de cada trimestre.",
-      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
+      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES).",
+      "metadatos": {
+        "fuente": "CMF, informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php)",
+        "unidad": "Miles de la moneda funcional del fondo (montos)",
+        "escala": "miles (montos)",
+        "moneda": "Moneda funcional de cada fondo",
+        "criterio_contable": "Valorización IFRS según la ficha de cartera (por confirmar)",
+        "cobertura": "2020-03 a 2026-06; 76.849 filas",
+        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "fi_cartera_nacional",
@@ -466,7 +556,17 @@
       "file_parquet": "outputs/fi/cartera_nacional/manifest.json",
       "registros_reales": 933532,
       "descripcion": "Inversiones en instrumentos de emisores nacionales, instrumento por instrumento, al cierre de cada trimestre. Montos en miles de la moneda funcional del fondo.",
-      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
+      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES).",
+      "metadatos": {
+        "fuente": "CMF, informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php)",
+        "unidad": "Miles de la moneda funcional del fondo (montos)",
+        "escala": "miles (montos)",
+        "moneda": "Moneda funcional de cada fondo",
+        "criterio_contable": "Valorización IFRS según la ficha de cartera (por confirmar el detalle por instrumento)",
+        "cobertura": "2020-03 a 2026-06; 933.532 filas",
+        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "fi_futuros",
@@ -482,7 +582,17 @@
       "file_parquet": "outputs/fi/futuros_forwards/manifest.json",
       "registros_reales": 13463,
       "descripcion": "Contratos de futuro, forward y swap vigentes al cierre de cada trimestre.",
-      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
+      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES).",
+      "metadatos": {
+        "fuente": "CMF, informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php)",
+        "unidad": "Por confirmar (la descripción no indica unidad)",
+        "escala": "Por confirmar",
+        "moneda": "Moneda funcional del fondo (por confirmar)",
+        "criterio_contable": "Valorización IFRS según la ficha de cartera (por confirmar)",
+        "cobertura": "2020-03 a 2026-06; 13.463 filas",
+        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "fi_maestro",
@@ -498,7 +608,17 @@
       "file_parquet": "outputs/fi/maestro_fondos_inversion.parquet",
       "registros_reales": 1679,
       "descripcion": "Registro CMF de fondos de inversión (rescatables y no rescatables, vigentes y no vigentes) con administradora, moneda funcional y primer y último trimestre con cartera publicada.",
-      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
+      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES).",
+      "metadatos": {
+        "fuente": "CMF, informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php)",
+        "unidad": "No aplica: registro de fondos",
+        "escala": "No aplica",
+        "moneda": "Moneda funcional declarada en el registro",
+        "criterio_contable": "No aplica",
+        "cobertura": "2020-03 a 2026-06; 1.679 fondos rescatables y no rescatables",
+        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "fi_metodo_participacion",
@@ -514,7 +634,17 @@
       "file_parquet": "outputs/fi/metodo_participacion/manifest.json",
       "registros_reales": 10038,
       "descripcion": "Inversiones valorizadas por el método de la participación (sociedades filiales y coligadas).",
-      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
+      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES).",
+      "metadatos": {
+        "fuente": "CMF, informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php)",
+        "unidad": "Por confirmar (la descripción no indica unidad)",
+        "escala": "Por confirmar",
+        "moneda": "Moneda funcional del fondo (por confirmar)",
+        "criterio_contable": "Método de la participación IFRS (por confirmar)",
+        "cobertura": "2020-03 a 2026-06; 10.038 filas",
+        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "fi_opciones",
@@ -530,7 +660,17 @@
       "file_parquet": "outputs/fi/opciones/manifest.json",
       "registros_reales": 307,
       "descripcion": "Contratos de opciones vigentes al cierre de cada trimestre.",
-      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
+      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES).",
+      "metadatos": {
+        "fuente": "CMF, informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php)",
+        "unidad": "Por confirmar (la descripción no indica unidad)",
+        "escala": "Por confirmar",
+        "moneda": "Moneda funcional del fondo (por confirmar)",
+        "criterio_contable": "Valorización IFRS según la ficha de cartera (por confirmar)",
+        "cobertura": "2020-03 a 2026-06; 307 filas",
+        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "fi_pactos",
@@ -546,7 +686,17 @@
       "file_parquet": "outputs/fi/pactos/manifest.json",
       "registros_reales": 1698,
       "descripcion": "Operaciones de venta con compromiso de retrocompra (VRC) y de compra con compromiso de retroventa (CRV) vigentes al cierre de cada trimestre.",
-      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
+      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES).",
+      "metadatos": {
+        "fuente": "CMF, informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php)",
+        "unidad": "Por confirmar (la descripción no indica unidad)",
+        "escala": "Por confirmar",
+        "moneda": "Moneda funcional del fondo (por confirmar)",
+        "criterio_contable": "Valorización IFRS de VRC/CRV según la ficha (por confirmar)",
+        "cobertura": "2012-03 a 2026-06; 1.698 filas",
+        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "fi_resultados",
@@ -562,7 +712,17 @@
       "file_parquet": "outputs/fi/fi_resultados/manifest.json",
       "registros_reales": 1164000,
       "descripcion": "Estado de resultados integrales de fondos de inversión FIRES/FINRE, cuenta por cuenta (30 líneas por contexto). Se separan acumulado del ejercicio, trimestre y sus comparativos; no se suman entre sí. Miles de la moneda de presentación, gastos con signo original. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
-      "origen": "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado."
+      "origen": "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado.",
+      "metadatos": {
+        "fuente": "CMF, XML IFRS de fondos de inversión (FIEF, Circular 1998), enlazados desde https://www.cmfchile.cl/institucional/mercados/entidad.php?tipoentidad=FIRES|FINRE",
+        "unidad": "Miles de la moneda de presentación, sin conversión; gastos con signo original",
+        "escala": "miles (montos)",
+        "moneda": "Moneda de presentación del fondo; sin conversión",
+        "criterio_contable": "Estado de resultados integrales IFRS según Circular 1998; 30 líneas por contexto; acumulado, trimestre y comparativos separados",
+        "cobertura": "2022-03 a 2026-06; 1.164.000 filas",
+        "fecha_extraccion": "2026-10-02 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Solo se publican contextos completos que cuadran. Sin verificación de cuadre adicional en esta auditoría."
+      }
     },
     {
       "id": "fintech_rpsf_maestro",
