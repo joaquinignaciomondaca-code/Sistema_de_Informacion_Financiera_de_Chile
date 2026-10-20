@@ -1404,7 +1404,17 @@
       "file_parquet": "outputs/securitizadoras/patrimonios_separados_maestro.parquet",
       "registros_reales": 19,
       "descripcion": "Inscripciones de títulos de deuda de securitización (patrimonios separados) por registro automático: número, fecha, securitizadora, tipo, moneda, monto inscrito y vencimiento. La clase de colateral no está en el listado CMF: queda vacía en las inscripciones agregadas automáticamente.",
-      "origen": "CMF — Inscripciones de títulos de deuda mediante modalidad de registro automático (listado_titulos_deuda.php), filtrado a securitizadoras. pipelines/entidades/actualizar_listas.py."
+      "origen": "CMF — Inscripciones de títulos de deuda mediante modalidad de registro automático (listado_titulos_deuda.php), filtrado a securitizadoras. pipelines/entidades/actualizar_listas.py.",
+      "metadatos": {
+        "fuente": "CMF, inscripciones de títulos de deuda por registro automático (listado_titulos_deuda.php), filtradas a securitizadoras",
+        "unidad": "Monto inscrito según la moneda de cada inscripción (campo moneda)",
+        "escala": "Por confirmar",
+        "moneda": "Moneda de cada inscripción (campo moneda)",
+        "criterio_contable": "No aplica: registro de inscripciones; la clase de colateral no viene en el listado y queda vacía",
+        "cobertura": "Lista vigente al 2026-09-28; 19 inscripciones",
+        "fecha_extraccion": "2026-09-28 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "securitizadoras_balance",
@@ -1420,7 +1430,17 @@
       "file_parquet": "outputs/securitizadoras/securitizadoras_balance/manifest.json",
       "registros_reales": 13679,
       "descripcion": "Estado de situación financiera (ESF) de cada sociedad securitizadora, cuenta por cuenta, tal como lo publica la CMF. Montos en unidades de la moneda informada (CLP o USD), sin conversión.",
-      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+      "metadatos": {
+        "fuente": "CMF, estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL), https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+        "unidad": "Unidades de la moneda informada (CLP o USD), sin conversión",
+        "escala": "unidades (sin reescalado)",
+        "moneda": "CLP o USD según la moneda informada por cada sociedad; sin conversión",
+        "criterio_contable": "Estado de situación financiera IFRS tal como lo publica la CMF; cuenta por cuenta",
+        "cobertura": "2009-12 a 2026-06 (trimestral); 13.679 filas",
+        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido ni de cuadre en esta auditoría."
+      }
     },
     {
       "id": "securitizadoras_maestro",
@@ -1436,7 +1456,17 @@
       "file_parquet": "outputs/securitizadoras/securitizadoras_maestro.parquet",
       "registros_reales": 16,
       "descripcion": "Catálogo maestro oficial de Sociedades Securitizadoras registradas ante la CMF bajo el Título XVIII de la Ley N° 18.045 (9 entidades vigentes y 7 históricas / en liquidación).",
-      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Sociedades Securitizadoras (RGSEC)."
+      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Sociedades Securitizadoras (RGSEC).",
+      "metadatos": {
+        "fuente": "CMF, Registro de Sociedades Securitizadoras (RGSEC), Título XVIII de la Ley 18.045",
+        "unidad": "No aplica: catálogo de sociedades",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "Lista vigente al 2026-06; 16 sociedades (9 vigentes y 7 históricas o en liquidación)",
+        "fecha_extraccion": "2026-09-23 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "securitizadoras_resultados",
@@ -1452,7 +1482,17 @@
       "file_parquet": "outputs/securitizadoras/securitizadoras_resultados/manifest.json",
       "registros_reales": 12290,
       "descripcion": "Estado de resultados (ER, por función o naturaleza e integral) de cada sociedad securitizadora, cuenta por cuenta. Montos acumulados del ejercicio a la fecha del trimestre, en unidades de la moneda informada.",
-      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+      "metadatos": {
+        "fuente": "CMF, estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL), https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+        "unidad": "Unidades de la moneda informada (CLP o USD), sin conversión; acumulado del ejercicio a la fecha del trimestre",
+        "escala": "unidades (sin reescalado)",
+        "moneda": "CLP o USD según la moneda informada por cada sociedad; sin conversión",
+        "criterio_contable": "Estado de resultados IFRS (por función o naturaleza e integral) tal como lo publica la CMF; cuenta por cuenta",
+        "cobertura": "2009-12 a 2026-06 (trimestral acumulado); 12.290 filas",
+        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "seguros_acciones",
@@ -1702,7 +1742,17 @@
       "file_parquet": "outputs/sistemas_pago/sistemas_pago_maestro.parquet",
       "registros_reales": 19,
       "descripcion": "Infraestructuras del sistema de pagos: LBTR del Banco Central, cámaras de compensación, depósito de valores, contrapartes centrales y operadores de tarjetas de pago.",
-      "origen": "Registros públicos CMF: altas desde operadores de tarjetas de pago (TPOPE) y entidades de contraparte central (RGCCO); vigencia también desde sociedades de apoyo al giro (BCSAG) y depósito de valores (DCVAL). El LBTR (BCCh) no tiene registro CMF y no se modifica. pipelines/entidades/actualizar_listas.py."
+      "origen": "Registros públicos CMF: altas desde operadores de tarjetas de pago (TPOPE) y entidades de contraparte central (RGCCO); vigencia también desde sociedades de apoyo al giro (BCSAG) y depósito de valores (DCVAL). El LBTR (BCCh) no tiene registro CMF y no se modifica. pipelines/entidades/actualizar_listas.py.",
+      "metadatos": {
+        "fuente": "CMF, registros públicos (TPOPE, RGCCO, BCSAG, DCVAL); BCCh para la LBTR (Ley 18.840, Ley 18.876, Ley 20.345)",
+        "unidad": "No aplica: catálogo de infraestructuras",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "Lista vigente al 2026-09-28; 19 entidades; la LBTR no tiene registro CMF",
+        "fecha_extraccion": "2026-09-28 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     }
   ]
 }
