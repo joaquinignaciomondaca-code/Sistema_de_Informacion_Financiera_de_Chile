@@ -282,16 +282,14 @@ READMEs por sector en `bancos/`, `ccaf/`, `factoring_leasing/`, `ffmm/`, `fi/`, 
 
 ---
 
-## 10. Citar esta base
+## 10. Reproducibilidad y privacidad
 
-La base se actualiza cada vez que las fuentes publican, así que se cita con su
-**fecha de corte** y la fecha de consulta (el bloque *Cómo citar esta base* de la
-web arma la cita en APA 7 y BibTeX, y toma el corte del catálogo publicado):
-
-> Mondaca, J. (2026). *Sistema de Información Financiera de Chile* [Conjunto de datos]. GitHub. <https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile> (datos al 2026-09; consultado el 20-10-2026).
-
-No hay DOI: la base no está depositada en un repositorio con identificador
-permanente.
+La base se actualiza cada vez que las fuentes publican y **cada tabla tiene su
+propio periodo**: seguros, fondos mutuos, fondos de inversión, banca y contexto
+reportan con frecuencias y rezagos distintos. Por eso el sitio no muestra una
+fecha de corte única ni una versión congelada —resumirían mal a la mayoría de
+las tablas— y tampoco hay cita armada ni DOI. El periodo de cada conjunto se ve
+en el explorador, en el diccionario y en Descargas.
 
 | Qué necesitas | Dónde |
 |---|---|

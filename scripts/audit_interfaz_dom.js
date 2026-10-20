@@ -398,29 +398,34 @@ setTimeout(() => {
     visiblesDl().length === itemsDl().length, visiblesDl().length + " de " + itemsDl().length);
   document.querySelector("#dl-archive .dl-archive-toggle").dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
 
-  // Cómo citar esta base: el bloque se pinta en Información y en Descargas, y
-  // sólo escribe lo que existe hoy: sin DOI, sin versión congelada publicada y
-  // sin promesas de nada pendiente.
-  const citaInfo = document.getElementById("cita-info");
-  const citaDl = document.getElementById("cita-descargas");
-  const citaTodo = citaInfo.textContent + " " + citaDl.textContent
-    + " " + document.getElementById("cita-autor").textContent;
-  check("citación: el bloque de Información se pinta con la cita APA",
-    /Conjunto de datos/.test(citaInfo.textContent) && !!document.getElementById("cita-apa"));
-  check("citación: el bloque de Descargas sobrevive a que el panel se redibuje",
-    /Conjunto de datos/.test(citaDl.textContent) && !!document.getElementById("cita-apa-dl"));
-  check("citación: no inventa un DOI (no hay ninguno publicado)",
-    !/doi\.org\/10\.\d/.test(citaTodo) && !/\bDOI\b/.test(citaTodo.replace(/No hay DOI/, "")),
-    (citaTodo.match(/\bDOI\b/gi) || []).length + " menciones");
-  check("citación: no anuncia nada pendiente ni por publicar",
-    !/pendiente|en preparación|próximamente|versión congelada|snapshot/i.test(citaTodo),
-    (citaTodo.match(/pendiente|en preparación|próximamente|versión congelada|snapshot/gi) || []).join(", "));
-  check("citación: la fecha de corte viene del catálogo publicado",
-    new RegExp(window.DOWNLOAD_CATALOG.alcance.visible.periodo.hasta).test(citaInfo.textContent),
-    window.DOWNLOAD_CATALOG.alcance.visible.periodo.hasta);
-  check("citación: ofrece BibTeX además de APA", /@misc\{/.test(document.getElementById("cita-bibtex").textContent));
-  check("autoría: el bloque de autoría se pinta", /Quién construye esto/.test(document.getElementById("cita-autor").textContent));
-  const archivosRepo = [...document.querySelectorAll("#cita-info .cita-lista a, #cita-descargas .dl-cita-archivos a")]
+  // Autoría y reproducibilidad (docs/js/creditos.js). El sitio no publica cita,
+  // DOI, versión congelada ni una fecha de corte única: la cobertura no es
+  // homogénea y cada tabla declara su periodo. Estos checks cuidan esa frontera.
+  const creditosAutor = document.getElementById("creditos-autor");
+  const creditosDl = document.getElementById("creditos-descargas");
+  check("autoría: el bloque de autoría se pinta en Información",
+    /Quién construye esto/.test(creditosAutor.textContent) && /Joaquín Mondaca/.test(creditosAutor.textContent));
+  check("autoría: declara cuándo partió el proyecto",
+    /septiembre de 2026/.test(creditosAutor.textContent));
+  check("autoría: no queda ningún bloque de citación en el sitio",
+    !document.getElementById("cita-info") && !document.getElementById("cita-autor")
+    && !document.getElementById("cita-descargas"));
+  // El chequeo se acota a Información y Descargas: en el Diccionario la palabra
+  // «pendiente» aparece describiendo columnas de las fuentes, y eso es legítimo.
+  const textoSitio = creditosAutor.textContent + " " + creditosDl.textContent + " "
+    + document.getElementById("info-container").textContent + " "
+    + document.getElementById("downloads-container").textContent;
+  check("autoría: el sitio no menciona DOI, versión congelada ni snapshot",
+    !/\bDOI\b|versión congelada|snapshot/i.test(textoSitio),
+    (textoSitio.match(/\bDOI\b|versión congelada|snapshot/gi) || []).join(", "));
+  check("autoría: no hay cita armada (APA/BibTeX) ni nada pendiente",
+    !/\[Conjunto de datos\]|@misc\{|\bpendiente\b|en preparación/i.test(textoSitio),
+    (textoSitio.match(/\[Conjunto de datos\]|@misc\{|\bpendiente\b|en preparación/gi) || []).join(", "));
+  check("autoría: no hay una fecha de corte global",
+    !/datos al \d{4}-\d{2}/i.test(textoSitio) && !/fecha de corte:/i.test(textoSitio));
+  check("reproducibilidad: el bloque de Descargas sobrevive a que el panel se redibuje",
+    /Reproducibilidad y código/.test(creditosDl.textContent));
+  const archivosRepo = [...document.querySelectorAll("#creditos-descargas .dl-creditos-archivos a")]
     .map((a) => a.getAttribute("href"));
   check("reproducibilidad: hay enlaces a los archivos planos", archivosRepo.length > 0,
     archivosRepo.length + " enlaces");
