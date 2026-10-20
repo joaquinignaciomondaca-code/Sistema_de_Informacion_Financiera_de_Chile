@@ -59,7 +59,23 @@ import pyarrow.parquet as pq
 RAIZ = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(RAIZ))
 from pipelines.auto import estable  # noqa: E402
+from pipelines.auto import privacidad  # noqa: E402
 from pipelines.auto.rut import dv as dv_rut  # noqa: E402
+
+# Tablas cuyo «rut_emisor» puede corresponder a una persona natural (mutuos
+# hipotecarios, pagarés y otros instrumentos de deuda): se publica el RUT de las
+# entidades y se suprime el de las personas. Detalle y criterio en
+# pipelines/auto/privacidad.py. «metodo_participacion» queda fuera a propósito:
+# ahí el emisor es una sociedad filial o coligada, siempre una entidad, y además
+# la fila ya trae su nombre.
+TABLAS_CON_EMISOR_PROTEGIDO = ("cartera_nacional",)
+
+
+def cargar_entidades() -> set:
+    """Entidades jurídicas conocidas, para no suprimir sus RUT (se cachea)."""
+    if not hasattr(cargar_entidades, "_cache"):
+        cargar_entidades._cache = privacidad.cargar_entidades_conocidas()
+    return cargar_entidades._cache
 SALIDA = RAIZ / "docs" / "outputs" / "fi"
 UA = "Mozilla/5.0 (monitor-financiero-chile)"
 BASE_CARTERA = "https://www.cmfchile.cl/sitio/inc/inf_financiera/ifrs_xml/"
@@ -163,6 +179,10 @@ def columnas(tabla: str) -> list[tuple[str, str]]:
 def esquema(tabla: str) -> pa.Schema:
     cols = [("periodo", pa.string()), ("run_fondo", pa.string())]
     cols += [(c, pa.float64() if t == "n" else pa.string()) for c, t in columnas(tabla)]
+    if tabla in TABLAS_CON_EMISOR_PROTEGIDO:
+        # «emisor_tipo» documenta el criterio aplicado sobre rut_emisor
+        # (persona_juridica / persona_natural_probable / sin_rut_informado).
+        cols.append(("emisor_tipo", pa.string()))
     return pa.schema(cols)
 
 
@@ -704,6 +724,11 @@ def escribir(tabla: str, periodo: str, filas: list[dict]) -> int:
         return 0
     df["_run"] = pd.to_numeric(df["run_fondo"], errors="coerce")
     df = df.sort_values(["periodo", "_run"], kind="stable").drop(columns="_run")
+    # Protección de identificadores: se aplica al publicar, sobre la tabla ya
+    # armada, para que también cubra las filas de periodos anteriores que se
+    # reescriben. Ver pipelines/auto/privacidad.py.
+    if tabla in TABLAS_CON_EMISOR_PROTEGIDO:
+        df = privacidad.proteger_cartera_nacional(df, cargar_entidades())
     tmp = ruta.with_suffix(".tmp")
     pq.write_table(pa.Table.from_pandas(df, schema=esquema(tabla), preserve_index=False), tmp,
                    compression="zstd", compression_level=9)
