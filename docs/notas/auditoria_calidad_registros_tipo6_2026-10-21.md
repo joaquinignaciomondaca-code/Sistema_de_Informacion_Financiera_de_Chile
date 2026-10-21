@@ -54,7 +54,7 @@ En la primera lectura del manifiesto aparecían **nueve entradas**, pero una era
 
 Se compararon las estructuras con el manual CMF incluido en el repositorio. En la sección B.8 (archivo C) se describen registros tipo 1, 2 y 3, no tipo `x`; en B.14 (archivo G), las estructuras documentadas son tipos 1 a 3, no tipo `4`. Por tanto, no hay soporte documental para incorporar esos registros ni para asignarles campos o semántica. La fila truncada del archivo A tampoco satisface el largo fijo y no se corrigió ni completó.
 
-La sonda de solo lectura se redujo a **cuatro ZIP distintos**, con sectores correctos, una descarga por ZIP y sin persistir los payloads. La prueba corregida confirmó:
+La primera ejecución de perfilado tenía un escape doble en el separador LF: concatenó artificialmente las líneas y sus máscaras se descartaron. Corregí el separador y repetí la prueba. La sonda corregida inspeccionó **cuatro ZIP distintos**, con sectores correctos, una descarga por ZIP y sin persistir los payloads, y confirmó:
 
 - **Generales, 2025-05, A `a202505g.99017000`:** 8 líneas; 7 de 572 caracteres y 1 de 571 (línea 2). SHA-256 del ZIP `94355cd83b08f4ecb71415669ee91c1dfb2a12e44ce23bbabd4b328d2f4ebf43`; del miembro `454db90dfec398227a11043090ef9861a30743c541cff7f5b0813d4ccf1f0cd8`.
 - **Vida, 2025-05, C `c202505v.99289000`:** 36 líneas de 138 caracteres; una línea tipo `x` (línea 1). SHA-256 del ZIP `9aa54067a771de92e3c1d05c0f18d4e5512b5de54ca7b4f4fdc56149ca596aaf`; del miembro `ea2c1f8e42c7f18aaa54cc45dda2c0314059c3a026d0227d6d594869b6a9050f`.
