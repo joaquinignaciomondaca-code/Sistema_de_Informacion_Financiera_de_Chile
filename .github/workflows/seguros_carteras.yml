@@ -95,15 +95,9 @@ jobs:
           python -m unittest -v seguros.tests.test_vistas_1835 seguros.tests.test_diagnostico_1835 pipelines.auto.tests.test_estable pipelines.auto.tests.test_privacidad
           python -m seguros.scripts.diccionario_1835 --check
 
-      # Revisa todos los meses pendientes sin escribir y distingue errores fatales de archivos
-      # excluidos con advertencia. Las descargas quedan en /tmp/cmf1835 y la publicación las reutiliza.
-      - name: Sondeo puntual de longitudes de registro (solo conteos, sin publicar)
-        if: ${{ github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Sondeo 1835 diciembre 2024') }}
-        continue-on-error: true
-        run: python -m seguros.scripts.actualizar_carteras --diagnostico --forzar --desde 2024-12 --hasta 2024-12 --cache /tmp/cmf1835
-
+      # Revisa los meses pendientes sin escribir; informa conteos B.11–B.14 y separa errores fatales
+      # de archivos excluidos con advertencia. Las descargas quedan en /tmp/cmf1835.
       - name: Diagnóstico de los meses pendientes (no escribe)
-        if: ${{ github.event_name != 'push' || !startsWith(github.event.head_commit.message, 'Sondeo 1835 diciembre 2024') }}
         continue-on-error: true
         run: python -m seguros.scripts.actualizar_carteras --diagnostico --cache /tmp/cmf1835 --max-periodos "${{ inputs.max_periodos || '240' }}"
 
