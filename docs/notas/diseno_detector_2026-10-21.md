@@ -2,7 +2,7 @@
 
 **Punto de partida:** 73 hallazgos primarios tras la corrección de contraste y tipografía
 (`contraste_y_tipografia_2026-10-21.md`).
-**Resultado:** **1** hallazgo (`overused-font`), que es una decisión de marca pendiente, no un defecto.
+**Resultado:** **0** hallazgos.
 
 | Regla | Antes | Después | Qué se hizo |
 |---|---:|---:|---|
@@ -10,7 +10,7 @@
 | `side-tab` | 9 | **0** | Barra lateral gruesa → borde completo de 1 px con el mismo tinte |
 | `dark-glow` | 3 | **0** | Halos difusos → anillo nítido de 2 px; halos de botones → elevación neutra |
 | `cramped-padding` | 1 | **0** | `padding` con `max()/calc()` → `padding` literal + centrado por `max-width` |
-| `overused-font` | 1 | 1 | Pendiente de decisión (Inter) |
+| `overused-font` | 1 | **0** | Inter → Schibsted Grotesk (ver §4) |
 
 ---
 
@@ -131,10 +131,37 @@ En pantallas de más de 1440 px el contenido queda igual de centrado que antes.
 piso de 12 px (posibles quiebres de línea en pestañas e insignias) y de los bordes completos hay que
 mirarlo en la vista previa. Todo son cambios de 1 px y de color; ningún cambio de estructura.
 
-## 4. Lo único que queda: `overused-font`
+## 4. La tipografía (1 → 0)
 
-El detector señala que **Inter** es una de las tipografías más repetidas de la web. Aquí es una
-decisión de identidad (el logotipo, las seis paletas y la densidad del terminal están construidos
-sobre ella), no un accidente. Cambiarla es una decisión de marca: afecta métricas de todas las
-tablas y del lockup del logo. Queda a la espera de una decisión; si se mantiene, se documenta como
-excepción deliberada y el resto de reglas puede usarse como compuerta en CI.
+El último hallazgo señalaba a **Inter** como una de las familias más repetidas de la web. Antes de
+elegir se midió qué acepta la regla, porque no es una lista fija:
+
+| Familia probada | Resultado |
+|---|---|
+| Inter · Instrument Sans · Instrument Serif | marcadas |
+| Schibsted Grotesk · Archivo · Sora · Manrope · Newsreader · Bricolage Grotesque · Georgia | aceptadas |
+
+Se eligió **Schibsted Grotesk**: grotesca de origen editorial (diseñada para cabeceras de prensa),
+con formas más cerradas y un ancho algo menor que Inter, que en un panel de datos se traduce en
+filas más compactas sin perder legibilidad a 12 px. JetBrains Mono sigue a cargo del código y de
+las cifras alineadas, así que la retícula numérica no cambia.
+
+- `docs/index.html`: la hoja de Google Fonts pasa a `Schibsted+Grotesk:wght@400;500;600;700` (mismo
+  origen y mismo `preconnect`, sin dependencias nuevas).
+- `docs/css/app.css`: `--font-sans: 'Schibsted Grotesk', 'Inter', …`. Inter queda como respaldo si
+  la webfont no carga; el lockup del logo es SVG con su propia tipografía y no se toca.
+
+**A vigilar en la vista previa:** al cambiar de familia cambian las métricas. Los puntos donde podría
+notarse son las pestañas del panel (seis, con letras ajustadas) y las insignias de una línea; los
+anchos son flexibles y hay reglas de compresión, pero conviene mirarlo en 1280 y 1920 px.
+
+## 5. Verificación final
+
+```bash
+DO_NOT_TRACK=1 npx -y impeccable@4.7.0 detect --no-config docs/
+# 24 files scanned with regex matching only (.css, .js) … exit 0
+```
+
+Cero hallazgos. Para descartar que el escáner se hubiera apagado, se inyectó a propósito un
+`font-size: 9px` en una copia fuera del repositorio y la regla volvió a dispararse
+(`undersized-ui-text`), así que la compuerta sigue viva.
