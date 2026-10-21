@@ -709,6 +709,8 @@ def diagnostico(periodos: list[str], a) -> int:
                            f"B.14/g {raw['g']} archivos, {len(filas['garantias_derivados'])} filas")
                 print(f"{periodo} {sector}: OK · {len(comp)} compañías · {sum(map(len, filas.values()))} filas"
                       f" · {len(avisos)} avisos · {len(excluidos)} archivos excluidos · {b11_b14}")
+                if gha:
+                    print(f"::notice title=Entradas Circular 1835 {periodo} {sector}::{b11_b14}")
             except ErrorValidacion as e:
                 malos += 1
                 print(f"{periodo} {sector}: PROBLEMA · {e}")
