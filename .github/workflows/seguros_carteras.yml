@@ -97,10 +97,10 @@ jobs:
 
       # Revisa todos los meses pendientes sin escribir y distingue errores fatales de archivos
       # excluidos con advertencia. Las descargas quedan en /tmp/cmf1835 y la publicación las reutiliza.
-      - name: Sondeo puntual 2024-12 (solo conteos, sin publicar)
+      - name: Sondeo B.11-B.14 en los 22 períodos (solo conteos, sin publicar)
         if: ${{ github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Sondeo 1835 diciembre 2024') }}
         continue-on-error: true
-        run: python -m seguros.scripts.actualizar_carteras --diagnostico --forzar --desde 2024-12 --hasta 2024-12 --cache /tmp/cmf1835
+        run: python -m seguros.scripts.actualizar_carteras --diagnostico --forzar --desde 2024-12 --hasta 2026-09 --cache /tmp/cmf1835
 
       - name: Diagnóstico de los meses pendientes (no escribe)
         if: ${{ github.event_name != 'push' || !startsWith(github.event.head_commit.message, 'Sondeo 1835 diciembre 2024') }}

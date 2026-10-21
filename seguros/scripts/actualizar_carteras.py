@@ -707,6 +707,12 @@ def diagnostico(periodos: list[str], a) -> int:
                 filas, comp, avisos, excluidos = leer_zip(data, periodo, sector)
                 raw = contar_archivos_por_tipo(data)
                 excluidos_total += len(excluidos)
+                longitudes_tipo6 = {}
+                for detalle in excluidos:
+                    match = re.search(r"tipo de registro '6'.*largo (\d+), esperado (\d+)", detalle)
+                    if match:
+                        letra = os.path.basename(detalle.split(":", 1)[0])[:1].lower()
+                        longitudes_tipo6.setdefault(letra, set()).add((int(match.group(1)), int(match.group(2))))
                 b11_b14 = (f"B.11/e {raw['e']} archivos, {len(filas['flujos_activos_elegibles'])} filas; "
                            f"B.12/r {raw['r']} archivos, {len(filas['prestamos'])} filas; "
                            f"B.13/v {raw['v']} archivos, {len(filas['bienes_raices_arriendo_morosidad'])} filas; "
@@ -715,6 +721,11 @@ def diagnostico(periodos: list[str], a) -> int:
                       f" · {len(avisos)} avisos · {len(excluidos)} archivos excluidos · {b11_b14}")
                 if gha:
                     print(f"::notice title=Entradas Circular 1835 {periodo} {sector}::{b11_b14}")
+                    if longitudes_tipo6:
+                        medida = "; ".join(
+                            f"{letra}: largo/esperado " + ", ".join(f"{n}/{e}" for n, e in sorted(valores))
+                            for letra, valores in sorted(longitudes_tipo6.items()))
+                        print(f"::notice title=Longitud de registros 6 {periodo} {sector}::{medida}")
             except ErrorValidacion as e:
                 malos += 1
                 print(f"{periodo} {sector}: PROBLEMA · {e}")
