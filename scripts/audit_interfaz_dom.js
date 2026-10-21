@@ -125,6 +125,12 @@ setTimeout(async () => {
   // index.html). Se espera la señal explícita antes de mirar el DOM.
   if (window.SIF_LISTO) await window.SIF_LISTO;
 
+  // Arranque bajo demanda: ni el mapa relacional (canvas) ni el motor DuckDB
+  // (wasm de 3,8 MB) deben construirse con la página.
+  check("el mapa relacional no se construye al cargar", !window.erdInstance);
+  check("el motor DuckDB no arranca al cargar",
+    window.DuckDBClient && window.DuckDBClient.initPromise === null);
+
   const tabIds = ["tab-btn-info", "tab-btn-erd", "tab-btn-dict", "tab-btn-data", "tab-btn-sql", "tab-btn-downloads"];
   check("existen las 6 pestañas", tabIds.every((id) => document.getElementById(id)));
   check("la pestaña de normativa está retirada", !document.getElementById("tab-btn-normativa") && !document.getElementById("normativa-container"));
@@ -227,7 +233,15 @@ setTimeout(async () => {
   check("hay descarga de lo que está en pantalla",
     Boolean(contexto.querySelector('[data-action="pantalla"][data-fmt="csv"]')));
 
-  // Con el motor caído, CSV/Excel avisan en vez de fallar en silencio.
+  // Con el motor caído, CSV/Excel avisan en vez de fallar en silencio. El motor
+  // arranca bajo demanda, así que aquí se simula el estado final de un arranque
+  // que no pudo completarse (antes ese estado llegaba solo porque el motor se
+  // inicializaba al cargar la página).
+  if (window.DuckDBClient) {
+    window.DuckDBClient.initPromise = Promise.resolve();
+    window.DuckDBClient.engineAvailable = false;
+    window.DownloadsPanel.refrescarEstadoMotor();
+  }
   check("sin motor, CSV y Excel quedan marcados como no disponibles",
     document.querySelectorAll("#downloads-container .dl-btn-motor.dl-btn-off").length > 0);
 
@@ -250,6 +264,7 @@ setTimeout(async () => {
     document.getElementById("info-container").style.display === "none" &&
     document.getElementById("downloads-container").style.display === "none");
   window.switchMainTab("erd");
+  check("abrir Mapa construye el mapa relacional", Boolean(window.erdInstance));
   check("mapa: filtros y zoom visibles",
     document.getElementById("erd-controls-group").style.display === "flex" &&
     document.querySelector(".zoom-controls").style.display === "flex");
