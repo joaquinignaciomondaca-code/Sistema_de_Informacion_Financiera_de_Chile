@@ -3115,7 +3115,11 @@
         "extranjeros": 5290,
         "derivados": 4117,
         "pactos": 132,
-        "control_inversiones": 925
+        "control_inversiones": 925,
+        "otras_inversiones": 2015,
+        "tablas_descriptores": 287,
+        "tablas_desarrollo": 61513,
+        "flujos_activos_elegibles": 211
       },
       "avisos": 23,
       "detalle_avisos": [
@@ -3142,7 +3146,11 @@
         "generales c202412.99288000: el total declara 13 líneas y el archivo tiene 14",
         "generales f202412.77096952: el total declara 4 líneas y el archivo tiene 5",
         "generales x202412.96573590: el total declara 5 líneas y el archivo tiene 6"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "f00dad95903a99159bd36a84c7450fca8e3622b6d58d27a8f17e2cb70d0b7293",
+        "generales": "8bdfdf265e79f55d3c3a4b425a99bdf7c1c037c96d2ec512b76fb83956dffc9b"
+      }
     },
     "2025-01": {
       "formato": "v2024",
@@ -4686,7 +4694,11 @@
     "extranjeros": "2016-11",
     "derivados": "2016-11",
     "pactos": "2016-11",
-    "control_inversiones": "2016-11"
+    "control_inversiones": "2016-11",
+    "otras_inversiones": "2024-12",
+    "tablas_descriptores": "2024-12",
+    "tablas_desarrollo": "2024-12",
+    "flujos_activos_elegibles": "2024-12"
   },
-  "updated_at": "2026-10-16T17:48:11+00:00"
+  "updated_at": "2026-10-21T06:53:50+00:00"
 }
