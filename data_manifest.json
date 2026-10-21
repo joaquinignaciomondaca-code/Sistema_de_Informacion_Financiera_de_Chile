@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "updated_at": "2026-10-20",
   "total_tables": 74,
-  "total_records": 13483676,
+  "total_records": 13484035,
   "classification": {
     "automatico": "Extracción, validación y publicación ejecutadas por código y workflows programados (APIs, scrapers y normalizadores)",
     "hibrido": "Extracción o curación inicial asistida desde fuentes no estructuradas, seguida de validación, normalización y publicación reproducibles mediante código; puede ejecutarse fuera de Actions",
@@ -23,7 +23,17 @@
       "file_parquet": "outputs/pensiones/afp_maestro_administradoras.parquet",
       "registros_reales": 7,
       "descripcion": "Administradoras de fondos de pensiones: RUT, razón social y nombre de fantasía. Sin cifras.",
-      "origen": "Altas: AFP con valor cuota publicado a diario por la Superintendencia de Pensiones (vcfAFP.php), con el RUT del Registro de Valores CMF (RVEMI). pipelines/entidades/actualizar_listas.py."
+      "origen": "Altas: AFP con valor cuota publicado a diario por la Superintendencia de Pensiones (vcfAFP.php), con el RUT del Registro de Valores CMF (RVEMI). pipelines/entidades/actualizar_listas.py.",
+      "metadatos": {
+        "fuente": "Superintendencia de Pensiones (vcfAFP.php) y Registro de Valores CMF (RVEMI); D.L. 3.500 / SPensiones",
+        "unidad": "No aplica: catálogo",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "Lista vigente al 2026-09-28; 7 administradoras (sin cifras)",
+        "fecha_extraccion": "2026-09-28 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "agf_balance",
@@ -39,7 +49,17 @@
       "file_parquet": "outputs/agf/agf_balance/manifest.json",
       "registros_reales": 71423,
       "descripcion": "Estado de situación financiera (ESF) de cada administradora general de fondos, cuenta por cuenta, tal como lo publica la CMF. Montos en unidades de la moneda informada (CLP o USD), sin conversión.",
-      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+      "metadatos": {
+        "fuente": "CMF, estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL), https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+        "unidad": "Unidades de la moneda informada (CLP o USD), sin conversión",
+        "escala": "unidades (sin reescalado)",
+        "moneda": "CLP o USD según la moneda informada por cada sociedad; sin conversión",
+        "criterio_contable": "Estado de situación financiera IFRS tal como lo publica la CMF; cuenta por cuenta",
+        "cobertura": "2010-06 a 2026-06 (trimestral); 71.423 filas",
+        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "agf_maestro",
@@ -55,7 +75,17 @@
       "file_parquet": "outputs/agf/agf_maestro.parquet",
       "registros_reales": 72,
       "descripcion": "Catálogo oficial de Administradoras Generales de Fondos (AGF) autorizadas por la Comisión para el Mercado Financiero (CMF) bajo la Ley N° 20.712. Incluye 52 gestoras vigentes y 16 no vigentes/canceladas, junto con su grupo financiero controlador y el número de fondos de inversión administrados.",
-      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Administradoras Generales de Fondos (RGAGF / RACRT)."
+      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Administradoras Generales de Fondos (RGAGF / RACRT).",
+      "metadatos": {
+        "fuente": "CMF, Registro de Administradoras Generales de Fondos (RGAGF / RACRT), Ley 20.712",
+        "unidad": "No aplica: catálogo",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "Oficial CMF 2026; 72 AGF (52 vigentes y 16 no vigentes o canceladas)",
+        "fecha_extraccion": "2026-09-23 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "agf_resultados",
@@ -71,7 +101,17 @@
       "file_parquet": "outputs/agf/agf_resultados/manifest.json",
       "registros_reales": 58216,
       "descripcion": "Estado de resultados (ER, por función o naturaleza e integral) de cada administradora general de fondos, cuenta por cuenta. Montos acumulados del ejercicio a la fecha del trimestre, en unidades de la moneda informada.",
-      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+      "metadatos": {
+        "fuente": "CMF, estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL), https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+        "unidad": "Unidades de la moneda informada (CLP o USD), acumulado del ejercicio a la fecha del trimestre",
+        "escala": "unidades (sin reescalado)",
+        "moneda": "CLP o USD según la moneda informada por cada sociedad; sin conversión",
+        "criterio_contable": "Estado de resultados IFRS (por función o naturaleza e integral) tal como lo publica la CMF; cuenta por cuenta",
+        "cobertura": "2010-06 a 2026-06 (acumulado trimestral); 58.216 filas",
+        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "bancos_cmf_lineas",
@@ -88,7 +128,17 @@
       "files_manifest": "outputs/bancos/cmf_b1_b2_r1/manifest.json",
       "registros_reales": 1962992,
       "descripcion": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Campos monetarios originales sin reinterpretación; revisar tipo_linea antes de agregar cuentas jerárquicas.",
-      "origen": "https://www.cmfchile.cl/portal/estadisticas/626/articles-113894_recurso_1.zip?ts=1790773409"
+      "origen": "https://www.cmfchile.cl/portal/estadisticas/626/articles-113894_recurso_1.zip?ts=1790773409",
+      "metadatos": {
+        "fuente": "CMF, Manual del Sistema de Información para bancos (B1/MB1, B2/MB2, R1/MR1), archivos ZIP publicados por la CMF",
+        "unidad": "Campos monetarios en su unidad original; no se reinterpretan",
+        "escala": "Por confirmar por campo (revisar tipo_linea)",
+        "moneda": "Por confirmar (la moneda de cada campo depende de la línea)",
+        "criterio_contable": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado, sin agregación jerárquica (revisar tipo_linea antes de agregar)",
+        "cobertura": "2022-01 a 2026-08; 1.962.992 filas en 56 particiones",
+        "fecha_extraccion": "2026-10-01 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría. No está expuesta como vista SQL en el motor."
+      }
     },
     {
       "id": "bancos_maestro",
@@ -104,7 +154,17 @@
       "file_parquet": "outputs/bancos/bancos_maestro.parquet",
       "registros_reales": 41,
       "descripcion": "Códigos de institución de los archivos bancarios CMF: bancos vigentes, históricos (fusionados o cerrados), filiales en el exterior y agregados del sistema. No equivale al número de bancos activos. RUT de los bancos activos cotejados con el registro CMF.",
-      "origen": "Registro CMF de bancos (consulta.php?mercado=B&entidad=BANCO): alta de bancos nuevos y paso de «Activo» a «No vigente». Códigos históricos y agregados: lista original. pipelines/entidades/actualizar_listas.py."
+      "origen": "Registro CMF de bancos (consulta.php?mercado=B&entidad=BANCO): alta de bancos nuevos y paso de «Activo» a «No vigente». Códigos históricos y agregados: lista original. pipelines/entidades/actualizar_listas.py.",
+      "metadatos": {
+        "fuente": "Ley General de Bancos; registro CMF (consulta.php?mercado=B&entidad=BANCO)",
+        "unidad": "No aplica: catálogo",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "Códigos históricos y vigentes; 41 códigos (no equivale al número de bancos activos)",
+        "fecha_extraccion": "2026-09-28 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Según la descripción de la tabla, el RUT de los bancos activos fue cotejado con el registro CMF."
+      }
     },
     {
       "id": "ccaf_balance",
@@ -120,7 +180,17 @@
       "file_parquet": "outputs/cajas_compensacion/ccaf_balance/manifest.json",
       "registros_reales": 8043,
       "descripcion": "Estado de situación financiera (ESF) de cada caja de compensación de asignación familiar, cuenta por cuenta, tal como lo publica la CMF. Montos en unidades de la moneda informada (CLP o USD), sin conversión.",
-      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+      "metadatos": {
+        "fuente": "CMF, estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL), https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+        "unidad": "Unidades de la moneda informada (CLP o USD), sin conversión",
+        "escala": "unidades (sin reescalado)",
+        "moneda": "CLP o USD según la moneda informada por cada sociedad; sin conversión",
+        "criterio_contable": "Estado de situación financiera IFRS tal como lo publica la CMF; cuenta por cuenta",
+        "cobertura": "2010-06 a 2026-06 (trimestral); 8.043 filas",
+        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "ccaf_maestro",
@@ -136,7 +206,17 @@
       "file_parquet": "outputs/cajas_compensacion/ccaf_maestro.parquet",
       "registros_reales": 6,
       "descripcion": "Cajas de compensación de asignación familiar, vigentes y absorbidas, con marco legal, regulador y registro CMF. Una caja nueva se agrega cuando reporta estados financieros IFRS a la CMF.",
-      "origen": "Lista original (SUSESO y Registro de Valores CMF) + altas automáticas desde el TXT IFRS de la CMF (pipelines/ifrs_sectores/actualizar.py)."
+      "origen": "Lista original (SUSESO y Registro de Valores CMF) + altas automáticas desde el TXT IFRS de la CMF (pipelines/ifrs_sectores/actualizar.py).",
+      "metadatos": {
+        "fuente": "SUSESO (Ley 18.833) y CMF (RVEMI, Ley 18.045); altas automáticas desde el TXT IFRS",
+        "unidad": "No aplica: catálogo",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "Lista vigente al 2026-09-28; 6 cajas de compensación (vigentes y absorbidas)",
+        "fecha_extraccion": "2026-09-28 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "ccaf_resultados",
@@ -152,7 +232,17 @@
       "file_parquet": "outputs/cajas_compensacion/ccaf_resultados/manifest.json",
       "registros_reales": 5506,
       "descripcion": "Estado de resultados (ER, por función o naturaleza e integral) de cada caja de compensación de asignación familiar, cuenta por cuenta. Montos acumulados del ejercicio a la fecha del trimestre, en unidades de la moneda informada.",
-      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+      "metadatos": {
+        "fuente": "CMF, estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL), https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+        "unidad": "Unidades de la moneda informada (CLP o USD), acumulado del ejercicio a la fecha del trimestre",
+        "escala": "unidades (sin reescalado)",
+        "moneda": "CLP o USD según la moneda informada por cada sociedad; sin conversión",
+        "criterio_contable": "Estado de resultados IFRS (por función o naturaleza e integral) tal como lo publica la CMF; cuenta por cuenta",
+        "cobertura": "2010-06 a 2026-06 (acumulado trimestral); 5.506 filas",
+        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "cooperativas_lista_entidades",
@@ -168,7 +258,17 @@
       "file_parquet": "outputs/cooperativas/cooperativas_maestro.parquet",
       "registros_reales": 7,
       "descripcion": "Cooperativas de ahorro y crédito fiscalizadas por la CMF: RUT, nombre, tipo de institución y regulador.",
-      "origen": "Registro BCCOO (mercado B) de los registros públicos CMF. pipelines/entidades/actualizar_listas.py."
+      "origen": "Registro BCCOO (mercado B) de los registros públicos CMF. pipelines/entidades/actualizar_listas.py.",
+      "metadatos": {
+        "fuente": "Ley 14.468; registro BCCOO de los registros públicos CMF",
+        "unidad": "No aplica: catálogo",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "Lista vigente al 2026-09-29; 7 cooperativas",
+        "fecha_extraccion": "2026-09-29 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "corredoras_bolsa_balance",
@@ -184,7 +284,17 @@
       "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_balance/manifest.json",
       "registros_reales": 107976,
       "descripcion": "Estado de situación financiera de cada corredor de bolsa y agente de valores, cuenta FECU por cuenta, al cierre de cada trimestre. Miles de pesos.",
-      "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/"
+      "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/",
+      "metadatos": {
+        "fuente": "CMF, estadísticas de estados financieros IFRS de intermediarios de valores (FECU), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/",
+        "unidad": "Miles de pesos",
+        "escala": "miles (M$)",
+        "moneda": "CLP",
+        "criterio_contable": "Estado de situación financiera FECU por cuenta, al cierre de cada trimestre",
+        "cobertura": "2010-12 a 2026-06 (trimestral); 107.976 filas",
+        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "corredoras_bolsa_lista_entidades_registro",
@@ -200,7 +310,17 @@
       "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet",
       "registros_reales": 120,
       "descripcion": "Registro único de corredores y agentes de valores (universo vigentes y no vigentes) con validación de RUT bajo Módulo 11.",
-      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Intermediarios de Valores; vigencia mantenida por pipelines/entidades/actualizar_listas.py."
+      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Intermediarios de Valores; vigencia mantenida por pipelines/entidades/actualizar_listas.py.",
+      "metadatos": {
+        "fuente": "CMF, Registro de Intermediarios de Valores (Ley 18.045)",
+        "unidad": "No aplica: catálogo",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "2014-03 a 2026-06; 120 entidades (vigentes y no vigentes); RUT validado con Módulo 11",
+        "fecha_extraccion": "2026-09-29 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "corredoras_bolsa_maestro",
@@ -216,7 +336,17 @@
       "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet",
       "registros_reales": 120,
       "descripcion": "Directorio oficial de entidades autorizadas e inscritas ante la CMF para intermediar valores de oferta pública, con validación de RUT bajo Módulo 11 y clasificación por conglomerado financiero.",
-      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Intermediarios de Valores."
+      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Intermediarios de Valores.",
+      "metadatos": {
+        "fuente": "CMF, Registro de Corredores de Bolsa (Ley 18.045), intermediarios autorizados",
+        "unidad": "No aplica: catálogo",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "2014-03 a 2026-06; 120 entidades; clasificación por conglomerado financiero",
+        "fecha_extraccion": "2026-09-23 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "corredoras_bolsa_resultados",
@@ -232,7 +362,17 @@
       "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/manifest.json",
       "registros_reales": 77705,
       "descripcion": "Estado de resultados y resultados integrales de cada corredor de bolsa y agente de valores, acumulados del ejercicio al cierre de cada trimestre, cuenta FECU por cuenta. Miles de pesos.",
-      "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/"
+      "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/",
+      "metadatos": {
+        "fuente": "CMF, estadísticas de estados financieros IFRS de intermediarios de valores (FECU)",
+        "unidad": "Miles de pesos (acumulado del ejercicio a la fecha del trimestre)",
+        "escala": "miles (M$)",
+        "moneda": "CLP",
+        "criterio_contable": "Estado de resultados y resultados integrales FECU por cuenta",
+        "cobertura": "2010-12 a 2026-06 (acumulado trimestral); 77.705 filas",
+        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "factoring_leasing_balance_serie_ifrs_cmf",
@@ -248,7 +388,17 @@
       "file_parquet": "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
       "registros_reales": 30046,
       "descripcion": "30,046 filas de cuentas ESF; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
-      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39380070665. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
+      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39380070665. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias.",
+      "metadatos": {
+        "fuente": "CMF, estados financieros IFRS (TXT), extracción de cuentas ESF; corrida de Actions 39380070665",
+        "unidad": "Importes en la moneda informada; importes no enteros preservados",
+        "escala": "unidades (sin reescalado)",
+        "moneda": "Monedas separadas según la fuente; sin conversión",
+        "criterio_contable": "Cuentas ESF tal como vienen en la fuente; taxonomías y tipo I/C separados; sin deduplicación ni suma",
+        "cobertura": "2009-03 a 2026-06; 30.046 filas de cuentas ESF; 28 de 32 RUT del catálogo con datos",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Observación abierta: 4 de 32 RUT del catálogo sin datos publicados; las cifras no están cotejadas en su totalidad (según la descripción de la tabla). Revisar el JSON acompañante de advertencias. Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20)."
+      }
     },
     {
       "id": "factoring_leasing_maestro",
@@ -264,7 +414,17 @@
       "file_parquet": "outputs/factoring_leasing/factoring_leasing_maestro.parquet",
       "registros_reales": 32,
       "descripcion": "Sociedades de factoring, leasing y financiamiento automotriz. Las sociedades nuevas se agregan cuando reportan estados financieros IFRS a la CMF con giro factoring o leasing; sus estados se publican desde entonces.",
-      "origen": "Lista original (referencias CMF FASOC, LISOC y RVEMI) + altas automáticas desde el TXT IFRS de la CMF (pipelines/ifrs_sectores/actualizar.py)."
+      "origen": "Lista original (referencias CMF FASOC, LISOC y RVEMI) + altas automáticas desde el TXT IFRS de la CMF (pipelines/ifrs_sectores/actualizar.py).",
+      "metadatos": {
+        "fuente": "CMF, nómina oficial y Registro de Valores (RVEMI, FASOC, LISOC); altas desde el TXT IFRS",
+        "unidad": "No aplica: catálogo",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "Lista vigente al 2026-09-28; 32 sociedades de factoring, leasing y financiamiento automotriz",
+        "fecha_extraccion": "2026-09-28 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "factoring_leasing_resultados_serie_ifrs_cmf",
@@ -280,7 +440,17 @@
       "file_parquet": "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
       "registros_reales": 22368,
       "descripcion": "22,368 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
-      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39380070665. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
+      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39380070665. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias.",
+      "metadatos": {
+        "fuente": "CMF, estados financieros IFRS (TXT), extracción de cuentas ER; corrida de Actions 39380070665",
+        "unidad": "Importes en la moneda informada; importes no enteros preservados",
+        "escala": "unidades (sin reescalado)",
+        "moneda": "Monedas separadas según la fuente; sin conversión",
+        "criterio_contable": "Cuentas ER tal como vienen en la fuente; taxonomías y tipo I/C separados; sin deduplicación ni suma",
+        "cobertura": "2009-03 a 2026-06; 22.368 filas de cuentas ER; 28 de 32 RUT del catálogo con datos",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Observación abierta: 4 de 32 RUT del catálogo sin datos publicados; las cifras no están cotejadas en su totalidad (según la descripción de la tabla). Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20)."
+      }
     },
     {
       "id": "ffmm_balance",
@@ -296,7 +466,17 @@
       "file_parquet": "outputs/ffmm/ffmm_balance/manifest.json",
       "registros_reales": 126256,
       "descripcion": "Estado de situación financiera de cada fondo mutuo —vigente o extinto— al 31 de diciembre de cada año, línea por línea (16 líneas), con el comparativo del año anterior. Miles de la moneda del fondo (pesos, dólares o euros).",
-      "origen": "CMF — Estados financieros IFRS de fondos mutuos (XML «FMEF», Circular 1997 de 2010), enlazado en la ficha de cada fondo: https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU"
+      "origen": "CMF — Estados financieros IFRS de fondos mutuos (XML «FMEF», Circular 1997 de 2010), enlazado en la ficha de cada fondo: https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU",
+      "metadatos": {
+        "fuente": "CMF, estados financieros IFRS de fondos mutuos (XML FMEF, Circular 1997), enlazados desde la ficha de cada fondo: https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU",
+        "unidad": "Miles de la moneda funcional del fondo (pesos, dólares o euros)",
+        "escala": "miles (montos)",
+        "moneda": "Moneda funcional de cada fondo (pesos, dólares o euros); no se convierte",
+        "criterio_contable": "Estados financieros IFRS según Circular 1997 de la CMF; cuenta por cuenta (16 líneas)",
+        "cobertura": "2010-12 a 2025-12 (cierres anuales); 126.256 filas; fondos vigentes y extintos",
+        "fecha_extraccion": "2026-10-01 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Validado en la auditoría del punto 6: en 2025-12, la cartera de cada uno de los 386 fondos cruzados no supera su total de activo."
+      }
     },
     {
       "id": "ffmm_cartera_extranjera",
@@ -312,7 +492,17 @@
       "file_parquet": "outputs/ffmm/cartera_extranjera/manifest.json",
       "registros_reales": 1461253,
       "descripcion": "Inversiones de cada fondo en instrumentos de emisores extranjeros al cierre de cada mes. Montos en miles de la moneda funcional del fondo.",
-      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php"
+      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual, https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+        "unidad": "Miles de la moneda funcional del fondo (montos)",
+        "escala": "miles (montos)",
+        "moneda": "Moneda funcional de cada fondo; la de liquidación va en su propio campo",
+        "criterio_contable": "Valorización según Circular 1333; detalle por instrumento en el campo codigo_valorizacion (por confirmar en el manual)",
+        "cobertura": "2001-01 a 2026-09; 1.461.253 filas",
+        "fecha_extraccion": "2026-10-13 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "ffmm_cartera_nacional",
@@ -328,7 +518,17 @@
       "file_parquet": "outputs/ffmm/cartera_nacional/manifest.json",
       "registros_reales": 1590196,
       "descripcion": "Inversiones de cada fondo en instrumentos de emisores nacionales, instrumento por instrumento, al cierre de cada mes. Montos en miles de la moneda funcional del fondo.",
-      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php"
+      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+      "metadatos": {
+        "fuente": "CMF, archivo mensual de cartera de fondos mutuos (Circular 1333), https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+        "unidad": "Montos en miles de la moneda funcional del fondo (valorizacion_miles_mf); porcentajes en escala 0–100 (pct_*)",
+        "escala": "miles (montos); 0–100 (porcentajes)",
+        "moneda": "Moneda funcional de cada fondo (puede no ser CLP); moneda_liquidacion indica la de liquidación. Por confirmar cómo se agrega entre fondos",
+        "criterio_contable": "Valorización según Circular CMF 1333; campo codigo_valorizacion por instrumento. Por confirmar el detalle en el manual",
+        "cobertura": "2022-01 a 2026-09; 57 meses; 392 fondos en 2025-12; 1.590.196 filas",
+        "fecha_extraccion": "2026-10-13 (updated_at del manifiesto)",
+        "estado_qa": "Con observaciones: conteo vs manifiesto OK; cruce con ffmm_balance OK en 386 fondos; 2.960 filas exactamente duplicadas en 2025-12 pendientes de decisión; sin identificador de línea de origen (ver docs/notas/auditoria_fuente_a_fila_2026-10-20.md)"
+      }
     },
     {
       "id": "ffmm_futuros",
@@ -344,7 +544,17 @@
       "file_parquet": "outputs/ffmm/futuros_forwards/manifest.json",
       "registros_reales": 282045,
       "descripcion": "Contratos de futuro y forward vigentes de cada fondo al cierre de cada mes. Montos en miles de la moneda funcional del fondo.",
-      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php"
+      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual, https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+        "unidad": "Miles de la moneda funcional del fondo (montos)",
+        "escala": "miles (montos)",
+        "moneda": "Moneda funcional de cada fondo; la de liquidación va en su propio campo",
+        "criterio_contable": "Valorización según Circular 1333 (por confirmar en el manual)",
+        "cobertura": "2001-01 a 2026-09; 282.045 filas",
+        "fecha_extraccion": "2026-10-13 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "ffmm_maestro",
@@ -360,7 +570,17 @@
       "file_parquet": "outputs/ffmm/maestro_fondos_mutuos.parquet",
       "registros_reales": 1334,
       "descripcion": "Fondos mutuos que reportan cartera a la CMF: RUN, nombre vigente, primer y último mes informado y si reportó el último mes publicado (un fondo nuevo aparece aquí el mes en que informa por primera vez).",
-      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php"
+      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual, https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+        "unidad": "No aplica: catálogo de fondos",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "2001-01 a 2026-09; 1.334 fondos con primer y último mes informado",
+        "fecha_extraccion": "2026-10-13 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "ffmm_opciones",
@@ -376,7 +596,17 @@
       "file_parquet": "outputs/ffmm/opciones/manifest.json",
       "registros_reales": 5365,
       "descripcion": "Contratos de opciones vigentes de cada fondo al cierre de cada mes. Montos en miles de la moneda funcional del fondo.",
-      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php"
+      "origen": "CMF — Cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual de https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de fondos mutuos (Circular 1333), archivo mensual, https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
+        "unidad": "Miles de la moneda funcional del fondo (montos)",
+        "escala": "miles (montos)",
+        "moneda": "Moneda funcional de cada fondo; la de liquidación va en su propio campo",
+        "criterio_contable": "Valorización según Circular 1333 (por confirmar en el manual)",
+        "cobertura": "2001-01 a 2026-09; 5.365 filas",
+        "fecha_extraccion": "2026-10-13 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "ffmm_resultados",
@@ -392,7 +622,17 @@
       "file_parquet": "outputs/ffmm/ffmm_resultados/manifest.json",
       "registros_reales": 149929,
       "descripcion": "Estado de resultados integrales de cada fondo mutuo —vigente o extinto— del ejercicio completo, línea por línea (19 líneas), con el comparativo del año anterior. Miles de la moneda del fondo (pesos, dólares o euros).",
-      "origen": "CMF — Estados financieros IFRS de fondos mutuos (XML «FMEF», Circular 1997 de 2010), enlazado en la ficha de cada fondo: https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU"
+      "origen": "CMF — Estados financieros IFRS de fondos mutuos (XML «FMEF», Circular 1997 de 2010), enlazado en la ficha de cada fondo: https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU",
+      "metadatos": {
+        "fuente": "CMF, estados financieros IFRS de fondos mutuos (XML FMEF, Circular 1997), enlazados desde la ficha de cada fondo: https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU",
+        "unidad": "Miles de la moneda funcional del fondo (pesos, dólares o euros)",
+        "escala": "miles (montos)",
+        "moneda": "Moneda funcional de cada fondo (pesos, dólares o euros); no se convierte",
+        "criterio_contable": "Estado de resultados integrales según Circular 1997 de la CMF; 19 líneas por fondo y ejercicio",
+        "cobertura": "2010-12 a 2025-12 (ejercicios anuales); 149.929 filas; fondos vigentes y extintos",
+        "fecha_extraccion": "2026-10-01 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de cuadre contable de resultados en esta auditoría."
+      }
     },
     {
       "id": "fi_balance",
@@ -408,7 +648,17 @@
       "file_parquet": "outputs/fi/fi_balance/manifest.json",
       "registros_reales": 985908,
       "descripcion": "Estado de situación financiera de fondos de inversión FIRES/FINRE, cuenta por cuenta (42 líneas por contexto). TotalPasivo de la fuente incluye patrimonio: el pasivo exigible es TotalPasivoCorriente + TotalPasivoNoCorriente. Miles de la moneda de presentación, sin conversión. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
-      "origen": "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado."
+      "origen": "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado.",
+      "metadatos": {
+        "fuente": "CMF, XML IFRS de fondos de inversión (FIEF, Circular 1998), enlazados desde https://www.cmfchile.cl/institucional/mercados/entidad.php?tipoentidad=FIRES|FINRE",
+        "unidad": "Miles de la moneda de presentación, sin conversión",
+        "escala": "miles (montos)",
+        "moneda": "Moneda de presentación del fondo; sin conversión",
+        "criterio_contable": "Estado de situación financiera IFRS según Circular 1998; cuenta por cuenta (42 líneas por contexto). El pasivo exigible es TotalPasivoCorriente + TotalPasivoNoCorriente",
+        "cobertura": "2022-03 a 2026-06 (cierres); 985.908 filas",
+        "fecha_extraccion": "2026-10-02 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Solo se publican contextos completos que cuadran; los rechazados se declaran en el manifiesto. Cotejo con las tablas de la ficha; no es auditoría independiente del PDF firmado."
+      }
     },
     {
       "id": "fi_bienes_raices",
@@ -424,7 +674,17 @@
       "file_parquet": "outputs/fi/bienes_raices/manifest.json",
       "registros_reales": 0,
       "descripcion": "Bienes raíces nacionales y extranjeros de los fondos.",
-      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
+      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES).",
+      "metadatos": {
+        "fuente": "CMF, informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php)",
+        "unidad": "Por confirmar (la descripción no indica unidad)",
+        "escala": "Por confirmar",
+        "moneda": "Moneda funcional del fondo (por confirmar)",
+        "criterio_contable": "Valorización según la norma IFRS de la ficha de cartera (por confirmar)",
+        "cobertura": "2020-03 a 2026-06 declarado en el manifiesto; 0 filas publicadas",
+        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Observación abierta: la tabla figura en el manifiesto con 0 filas publicadas. Hay que revisar si no existen datos o si el proceso no los extrae. Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20)."
+      }
     },
     {
       "id": "fi_cartera_extranjera",
@@ -440,7 +700,17 @@
       "file_parquet": "outputs/fi/cartera_extranjera/manifest.json",
       "registros_reales": 76849,
       "descripcion": "Inversiones en instrumentos de emisores extranjeros al cierre de cada trimestre.",
-      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
+      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES).",
+      "metadatos": {
+        "fuente": "CMF, informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php)",
+        "unidad": "Miles de la moneda funcional del fondo (montos)",
+        "escala": "miles (montos)",
+        "moneda": "Moneda funcional de cada fondo",
+        "criterio_contable": "Valorización IFRS según la ficha de cartera (por confirmar)",
+        "cobertura": "2020-03 a 2026-06; 76.849 filas",
+        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "fi_cartera_nacional",
@@ -456,7 +726,17 @@
       "file_parquet": "outputs/fi/cartera_nacional/manifest.json",
       "registros_reales": 933532,
       "descripcion": "Inversiones en instrumentos de emisores nacionales, instrumento por instrumento, al cierre de cada trimestre. Montos en miles de la moneda funcional del fondo.",
-      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
+      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES).",
+      "metadatos": {
+        "fuente": "CMF, informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php)",
+        "unidad": "Miles de la moneda funcional del fondo (montos)",
+        "escala": "miles (montos)",
+        "moneda": "Moneda funcional de cada fondo",
+        "criterio_contable": "Valorización IFRS según la ficha de cartera (por confirmar el detalle por instrumento)",
+        "cobertura": "2020-03 a 2026-06; 933.532 filas",
+        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "fi_futuros",
@@ -472,7 +752,17 @@
       "file_parquet": "outputs/fi/futuros_forwards/manifest.json",
       "registros_reales": 13463,
       "descripcion": "Contratos de futuro, forward y swap vigentes al cierre de cada trimestre.",
-      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
+      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES).",
+      "metadatos": {
+        "fuente": "CMF, informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php)",
+        "unidad": "Por confirmar (la descripción no indica unidad)",
+        "escala": "Por confirmar",
+        "moneda": "Moneda funcional del fondo (por confirmar)",
+        "criterio_contable": "Valorización IFRS según la ficha de cartera (por confirmar)",
+        "cobertura": "2020-03 a 2026-06; 13.463 filas",
+        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "fi_maestro",
@@ -488,7 +778,17 @@
       "file_parquet": "outputs/fi/maestro_fondos_inversion.parquet",
       "registros_reales": 1679,
       "descripcion": "Registro CMF de fondos de inversión (rescatables y no rescatables, vigentes y no vigentes) con administradora, moneda funcional y primer y último trimestre con cartera publicada.",
-      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
+      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES).",
+      "metadatos": {
+        "fuente": "CMF, informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php)",
+        "unidad": "No aplica: registro de fondos",
+        "escala": "No aplica",
+        "moneda": "Moneda funcional declarada en el registro",
+        "criterio_contable": "No aplica",
+        "cobertura": "2020-03 a 2026-06; 1.679 fondos rescatables y no rescatables",
+        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "fi_metodo_participacion",
@@ -504,7 +804,17 @@
       "file_parquet": "outputs/fi/metodo_participacion/manifest.json",
       "registros_reales": 10038,
       "descripcion": "Inversiones valorizadas por el método de la participación (sociedades filiales y coligadas).",
-      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
+      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES).",
+      "metadatos": {
+        "fuente": "CMF, informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php)",
+        "unidad": "Por confirmar (la descripción no indica unidad)",
+        "escala": "Por confirmar",
+        "moneda": "Moneda funcional del fondo (por confirmar)",
+        "criterio_contable": "Método de la participación IFRS (por confirmar)",
+        "cobertura": "2020-03 a 2026-06; 10.038 filas",
+        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "fi_opciones",
@@ -520,7 +830,17 @@
       "file_parquet": "outputs/fi/opciones/manifest.json",
       "registros_reales": 307,
       "descripcion": "Contratos de opciones vigentes al cierre de cada trimestre.",
-      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
+      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES).",
+      "metadatos": {
+        "fuente": "CMF, informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php)",
+        "unidad": "Por confirmar (la descripción no indica unidad)",
+        "escala": "Por confirmar",
+        "moneda": "Moneda funcional del fondo (por confirmar)",
+        "criterio_contable": "Valorización IFRS según la ficha de cartera (por confirmar)",
+        "cobertura": "2020-03 a 2026-06; 307 filas",
+        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "fi_pactos",
@@ -536,7 +856,17 @@
       "file_parquet": "outputs/fi/pactos/manifest.json",
       "registros_reales": 1698,
       "descripcion": "Operaciones de venta con compromiso de retrocompra (VRC) y de compra con compromiso de retroventa (CRV) vigentes al cierre de cada trimestre.",
-      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES)."
+      "origen": "CMF — Informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php), y registro de fondos (consulta.php, FINRE y FIRES).",
+      "metadatos": {
+        "fuente": "CMF, informes IFRS de cartera de inversiones y de pactos (VRC/CRV) de cada fondo de inversión, https://www.cmfchile.cl (ifrs_cartera_*.php, ifrs_informe_vrc_crv.php)",
+        "unidad": "Por confirmar (la descripción no indica unidad)",
+        "escala": "Por confirmar",
+        "moneda": "Moneda funcional del fondo (por confirmar)",
+        "criterio_contable": "Valorización IFRS de VRC/CRV según la ficha (por confirmar)",
+        "cobertura": "2012-03 a 2026-06; 1.698 filas",
+        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "fi_resultados",
@@ -552,7 +882,17 @@
       "file_parquet": "outputs/fi/fi_resultados/manifest.json",
       "registros_reales": 1164000,
       "descripcion": "Estado de resultados integrales de fondos de inversión FIRES/FINRE, cuenta por cuenta (30 líneas por contexto). Se separan acumulado del ejercicio, trimestre y sus comparativos; no se suman entre sí. Miles de la moneda de presentación, gastos con signo original. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
-      "origen": "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado."
+      "origen": "CMF — XML IFRS FIEF (Circular 1998) de cada fondo, enlazado en entidad.php?tipoentidad=FIRES|FINRE&pestania=29. Cotejo con las tablas de su ficha; no es una auditoría independiente del PDF firmado.",
+      "metadatos": {
+        "fuente": "CMF, XML IFRS de fondos de inversión (FIEF, Circular 1998), enlazados desde https://www.cmfchile.cl/institucional/mercados/entidad.php?tipoentidad=FIRES|FINRE",
+        "unidad": "Miles de la moneda de presentación, sin conversión; gastos con signo original",
+        "escala": "miles (montos)",
+        "moneda": "Moneda de presentación del fondo; sin conversión",
+        "criterio_contable": "Estado de resultados integrales IFRS según Circular 1998; 30 líneas por contexto; acumulado, trimestre y comparativos separados",
+        "cobertura": "2022-03 a 2026-06; 1.164.000 filas",
+        "fecha_extraccion": "2026-10-02 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Solo se publican contextos completos que cuadran. Sin verificación de cuadre adicional en esta auditoría."
+      }
     },
     {
       "id": "fintech_rpsf_maestro",
@@ -568,7 +908,17 @@
       "file_parquet": "outputs/fintech/fintech_rpsf_maestro.parquet",
       "registros_reales": 264,
       "descripcion": "Registro de Prestadores de Servicios Financieros (RPSF) de la CMF. Catálogo integral de las entidades FinTech que operan bajo el perímetro regulatorio de la Ley Fintec en Chile. Incluye personas jurídicas y naturales, estado de vigencia, número y fecha de inscripción oficial, código institucional CMF, datos de contacto y total de servicios autorizados.",
-      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Prestadores de Servicios Financieros (RPSF)."
+      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Prestadores de Servicios Financieros (RPSF).",
+      "metadatos": {
+        "fuente": "CMF, Registro de Prestadores de Servicios Financieros (RPSF), Ley 21.521 y NCG 502",
+        "unidad": "No aplica: catálogo",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "Catálogo vigente al 2026-09-23; 264 entidades (personas jurídicas y naturales)",
+        "fecha_extraccion": "2026-09-23 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "macro_cobre",
@@ -584,7 +934,17 @@
       "corte": "2014-01-01 a 2026-10-20",
       "file_parquet": "outputs/macro/macro_cobre.parquet",
       "registros_reales": 3259,
-      "descripcion": "Precio del cobre refinado en dólares por libra: cotización diaria de la Bolsa de Metales de Londres (BML) y valor referencial mensual publicado por el BCCh (la referencia mensual aparece en la fila del primer día de su mes)."
+      "descripcion": "Precio del cobre refinado en dólares por libra: cotización diaria de la Bolsa de Metales de Londres (BML) y valor referencial mensual publicado por el BCCh (la referencia mensual aparece en la fila del primer día de su mes).",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "USD por libra (cobre refinado) y USD por libra referencial mensual",
+        "escala": "unidades (USD por libra)",
+        "moneda": "USD",
+        "criterio_contable": "Cotización diaria de la Bolsa de Metales de Londres (BML) y referencia mensual del BCCh; la referencia mensual va en la fila del primer día de su mes",
+        "cobertura": "2014-01-01 a 2026-10-20; 3.259 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_curva_bonos_pesos",
@@ -600,7 +960,17 @@
       "corte": "2014-01-02 a 2026-10-16",
       "file_parquet": "outputs/macro/macro_curva_bonos_pesos.parquet",
       "registros_reales": 3170,
-      "descripcion": "Curva de rendimiento de los bonos soberanos en pesos licitados por el BCCh (Bono Corto Plazo, BCP): tasa de interés de mercado secundario a 2, 5 y 10 años."
+      "descripcion": "Curva de rendimiento de los bonos soberanos en pesos licitados por el BCCh (Bono Corto Plazo, BCP): tasa de interés de mercado secundario a 2, 5 y 10 años.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "% (porcentaje; valor 0–100)",
+        "escala": "tasa en porcentaje",
+        "moneda": "No aplica (tasa)",
+        "criterio_contable": "Tasa de mercado secundario de los BCP (bonos soberanos en pesos) a 2, 5 y 10 años; publicada por el BCCh",
+        "cobertura": "2014-01-02 a 2026-10-16; 3.170 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_curva_bonos_uf",
@@ -616,7 +986,17 @@
       "corte": "2014-01-02 a 2026-10-16",
       "file_parquet": "outputs/macro/macro_curva_bonos_uf.parquet",
       "registros_reales": 3172,
-      "descripcion": "Curva de rendimiento de los bonos soberanos en UF (BCU/BTU): tasa de interés de mercado secundario a 1, 2, 5, 10, 20 y 30 años."
+      "descripcion": "Curva de rendimiento de los bonos soberanos en UF (BCU/BTU): tasa de interés de mercado secundario a 1, 2, 5, 10, 20 y 30 años.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "% (porcentaje; valor 0–100)",
+        "escala": "tasa en porcentaje",
+        "moneda": "No aplica (tasa)",
+        "criterio_contable": "Tasa de mercado secundario de los BCU/BTU (bonos soberanos en UF) a 1, 2, 5, 10, 20 y 30 años; publicada por el BCCh",
+        "cobertura": "2014-01-02 a 2026-10-16; 3.172 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_deuda_publica_pct_pib",
@@ -632,7 +1012,17 @@
       "corte": "2014-01-01 a 2026-01-01",
       "file_parquet": "outputs/macro/macro_deuda_publica_pct_pib.parquet",
       "registros_reales": 49,
-      "descripcion": "Deuda bruta del Gobierno Central como porcentaje del Producto Interno Bruto (PIB), según el Banco Central."
+      "descripcion": "Deuda bruta del Gobierno Central como porcentaje del Producto Interno Bruto (PIB), según el Banco Central.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "% del PIB",
+        "escala": "porcentaje del PIB",
+        "moneda": "No aplica (razón)",
+        "criterio_contable": "Deuda bruta del Gobierno Central sobre PIB, según el BCCh",
+        "cobertura": "2014-01-01 a 2026-01-01; 49 filas (trimestral)",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_dolar_observado",
@@ -648,7 +1038,17 @@
       "corte": "2014-01-02 a 2026-10-20",
       "file_parquet": "outputs/macro/macro_dolar_observado.parquet",
       "registros_reales": 3187,
-      "descripcion": "Dólar observado: tipo de cambio nominal del dólar de los Estados Unidos en pesos chilenos (CLP por USD), según el Banco Central."
+      "descripcion": "Dólar observado: tipo de cambio nominal del dólar de los Estados Unidos en pesos chilenos (CLP por USD), según el Banco Central.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "CLP por USD",
+        "escala": "unidades de moneda (CLP)",
+        "moneda": "CLP",
+        "criterio_contable": "Dólar observado: tipo de cambio nominal publicado por el BCCh",
+        "cobertura": "2014-01-02 a 2026-10-20; 3.187 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_euro_observado",
@@ -664,7 +1064,17 @@
       "corte": "2014-01-02 a 2026-10-20",
       "file_parquet": "outputs/macro/macro_euro_observado.parquet",
       "registros_reales": 3187,
-      "descripcion": "Euro observado: tipo de cambio nominal del euro en pesos chilenos (CLP por EUR), según el Banco Central."
+      "descripcion": "Euro observado: tipo de cambio nominal del euro en pesos chilenos (CLP por EUR), según el Banco Central.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "CLP por EUR",
+        "escala": "unidades de moneda (CLP)",
+        "moneda": "CLP",
+        "criterio_contable": "Euro observado: tipo de cambio nominal publicado por el BCCh",
+        "cobertura": "2014-01-02 a 2026-10-20; 3.187 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_expectativas_inflacion",
@@ -680,7 +1090,17 @@
       "corte": "2014-01-01 a 2026-10-01",
       "file_parquet": "outputs/macro/macro_expectativas_inflacion.parquet",
       "registros_reales": 154,
-      "descripcion": "Expectativas de inflación de la Encuesta de Expectativas Económicas (EEE) del Banco Central: variación del IPC en 12 meses vista, con horizonte de 11 y 23 meses, mediana en porcentaje."
+      "descripcion": "Expectativas de inflación de la Encuesta de Expectativas Económicas (EEE) del Banco Central: variación del IPC en 12 meses vista, con horizonte de 11 y 23 meses, mediana en porcentaje.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "% (porcentaje; valor 0–100)",
+        "escala": "variación anual del IPC en porcentaje",
+        "moneda": "No aplica (tasa)",
+        "criterio_contable": "Encuesta de Expectativas Económicas (EEE) del BCCh: IPC a 11 y 23 meses vista",
+        "cobertura": "2014-01-01 a 2026-10-01; 154 filas (mensual)",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_expectativas_operadores",
@@ -696,7 +1116,17 @@
       "corte": "2014-01-07 a 2026-09-24",
       "file_parquet": "outputs/macro/macro_expectativas_operadores.parquet",
       "registros_reales": 237,
-      "descripcion": "Evolución diaria de la Encuesta de Operadores Financieros (EOF) del Banco Central: expectativa de inflación (variación del IPC) y de TPM para los 12 meses siguientes, en porcentaje."
+      "descripcion": "Evolución diaria de la Encuesta de Operadores Financieros (EOF) del Banco Central: expectativa de inflación (variación del IPC) y de TPM para los 12 meses siguientes, en porcentaje.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "% (porcentaje; valor 0–100)",
+        "escala": "porcentaje",
+        "moneda": "No aplica (tasa)",
+        "criterio_contable": "Encuesta de Operadores Financieros (EOF) del BCCh: IPC y TPM esperados a 12 meses",
+        "cobertura": "2014-01-07 a 2026-09-24; 237 filas (diaria)",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_expectativas_tpm",
@@ -712,7 +1142,17 @@
       "corte": "2014-01-01 a 2026-10-01",
       "file_parquet": "outputs/macro/macro_expectativas_tpm.parquet",
       "registros_reales": 154,
-      "descripcion": "Expectativas de la Tasa de Política Monetaria (TPM) de la Encuesta de Expectativas Económicas (EEE) del Banco Central, con horizonte de 11 y 23 meses, mediana en porcentaje."
+      "descripcion": "Expectativas de la Tasa de Política Monetaria (TPM) de la Encuesta de Expectativas Económicas (EEE) del Banco Central, con horizonte de 11 y 23 meses, mediana en porcentaje.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "% (porcentaje; valor 0–100)",
+        "escala": "porcentaje",
+        "moneda": "No aplica (tasa)",
+        "criterio_contable": "Mediana de la Encuesta de Expectativas Económicas (EEE) del BCCh para la TPM a 11 y 23 meses",
+        "cobertura": "2014-01-01 a 2026-10-01; 154 filas (mensual)",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_imacec",
@@ -728,7 +1168,17 @@
       "corte": "2014-01-01 a 2026-08-01",
       "file_parquet": "outputs/macro/macro_imacec.parquet",
       "registros_reales": 152,
-      "descripcion": "Imacec a costo de factores, series empalmadas del BCCh (índice 2018=100): total, no minero, minero, comercio y servicios."
+      "descripcion": "Imacec a costo de factores, series empalmadas del BCCh (índice 2018=100): total, no minero, minero, comercio y servicios.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "Índice 2018=100 (series empalmadas)",
+        "escala": "índice",
+        "moneda": "No aplica",
+        "criterio_contable": "Imacec a costo de factores del BCCh: total, no minero, minero, comercio y servicios",
+        "cobertura": "2014-01-01 a 2026-08-01; 152 filas (mensual)",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_inflacion_implicita",
@@ -744,7 +1194,17 @@
       "corte": "2014-01-02 a 2026-10-16",
       "file_parquet": "outputs/macro/macro_inflacion_implicita.parquet",
       "registros_reales": 3076,
-      "descripcion": "Inflación implícita de las curvas soberanas (breakeven): diferencia entre el rendimiento del bono en pesos y el del bono en UF del mismo plazo. Calculada por SIF a partir de las curvas publicadas por el BCCh."
+      "descripcion": "Inflación implícita de las curvas soberanas (breakeven): diferencia entre el rendimiento del bono en pesos y el del bono en UF del mismo plazo. Calculada por SIF a partir de las curvas publicadas por el BCCh.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS (cálculo propio de SIF a partir de las curvas BCP y BCU)",
+        "unidad": "% (porcentaje; valor 0–100)",
+        "escala": "diferencia de tasas en puntos porcentuales",
+        "moneda": "No aplica (tasa)",
+        "criterio_contable": "Cálculo propio de SIF: rendimiento del bono en pesos menos el del bono en UF del mismo plazo, a partir de las curvas del BCCh (breakeven)",
+        "cobertura": "2014-01-02 a 2026-10-16; 3.076 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Derivada: depende de las series de curvas BCP y BCU del BCCh. Cálculo propio no contrastado con una fuente externa."
+      }
     },
     {
       "id": "macro_inflacion_ipc",
@@ -760,7 +1220,17 @@
       "corte": "2014-01-01 a 2026-09-01",
       "file_parquet": "outputs/macro/macro_inflacion_ipc.parquet",
       "registros_reales": 153,
-      "descripcion": "Índice de Precios al Consumidor (IPC), serie empalmada del BCCh base 2023=100: índice y variaciones mensual y anual en porcentaje (fuente INE)."
+      "descripcion": "Índice de Precios al Consumidor (IPC), serie empalmada del BCCh base 2023=100: índice y variaciones mensual y anual en porcentaje (fuente INE).",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS; fuente primaria INE",
+        "unidad": "Índice 2023=100 (IPC); variaciones mensual y anual en %",
+        "escala": "índice y porcentaje",
+        "moneda": "No aplica",
+        "criterio_contable": "IPC serie empalmada del BCCh (base 2023=100); fuente primaria INE",
+        "cobertura": "2014-01-01 a 2026-09-01; 153 filas (mensual)",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_mercado_laboral",
@@ -776,7 +1246,17 @@
       "corte": "2014-01-01 a 2026-08-01",
       "file_parquet": "outputs/macro/macro_mercado_laboral.parquet",
       "registros_reales": 152,
-      "descripcion": "Mercado laboral de Chile (series no ajustadas del INE, vía BCCh): tasa de desocupación en porcentaje, y personas ocupadas, asalariadas y fuerza de trabajo en miles de personas."
+      "descripcion": "Mercado laboral de Chile (series no ajustadas del INE, vía BCCh): tasa de desocupación en porcentaje, y personas ocupadas, asalariadas y fuerza de trabajo en miles de personas.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS; fuente primaria INE",
+        "unidad": "% (desocupación); miles de personas (ocupados, asalariados, fuerza de trabajo)",
+        "escala": "porcentaje y miles de personas",
+        "moneda": "No aplica",
+        "criterio_contable": "Series no ajustadas del INE, vía BCCh",
+        "cobertura": "2014-01-01 a 2026-08-01; 152 filas (mensual)",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_metales_preciosos",
@@ -792,7 +1272,17 @@
       "corte": "2014-01-02 a 2026-10-20",
       "file_parquet": "outputs/macro/macro_metales_preciosos.parquet",
       "registros_reales": 3187,
-      "descripcion": "Precios de los metales preciosos en dólares por onza troy: oro y plata, según el Banco Central."
+      "descripcion": "Precios de los metales preciosos en dólares por onza troy: oro y plata, según el Banco Central.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "USD por onza troy (oro y plata)",
+        "escala": "unidades (USD por onza troy)",
+        "moneda": "USD",
+        "criterio_contable": "Precios de oro y plata del BCCh",
+        "cobertura": "2014-01-02 a 2026-10-20; 3.187 filas (diaria)",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_pib_trimestral",
@@ -808,7 +1298,17 @@
       "corte": "2014-01-01 a 2026-04-01",
       "file_parquet": "outputs/macro/macro_pib_trimestral.parquet",
       "registros_reales": 50,
-      "descripcion": "Producto Interno Bruto (PIB) en volumen a precios del año anterior encadenado, referencia 2018: miles de millones de pesos encadenados."
+      "descripcion": "Producto Interno Bruto (PIB) en volumen a precios del año anterior encadenado, referencia 2018: miles de millones de pesos encadenados.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "Miles de millones de CLP encadenados (volumen, referencia 2018)",
+        "escala": "miles de millones (encadenado)",
+        "moneda": "CLP (encadenado)",
+        "criterio_contable": "PIB en volumen a precios del año anterior encadenado, referencia 2018, según el BCCh",
+        "cobertura": "2014-01-01 a 2026-04-01; 50 filas (trimestral)",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_reservas_internacionales",
@@ -824,7 +1324,17 @@
       "corte": "2014-01-01 a 2026-09-01",
       "file_parquet": "outputs/macro/macro_reservas_internacionales.parquet",
       "registros_reales": 153,
-      "descripcion": "Activos de reserva internacional del Banco Central de Chile, en millones de dólares de los Estados Unidos."
+      "descripcion": "Activos de reserva internacional del Banco Central de Chile, en millones de dólares de los Estados Unidos.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "Millones de USD",
+        "escala": "millones de USD",
+        "moneda": "USD",
+        "criterio_contable": "Activos de reserva internacional del BCCh",
+        "cobertura": "2014-01-01 a 2026-09-01; 153 filas (mensual)",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_series_catalogo",
@@ -840,7 +1350,17 @@
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
       "file_parquet": "outputs/macro/macro_series_catalogo.parquet",
       "registros_reales": 51,
-      "descripcion": "Catálogo de las series del Banco Central que alimentan las tablas macro: código SIETE, nombre, grupo, frecuencia, unidad, título oficial, cobertura y estado."
+      "descripcion": "Catálogo de las series del Banco Central que alimentan las tablas macro: código SIETE, nombre, grupo, frecuencia, unidad, título oficial, cobertura y estado.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "No aplica: catálogo de series",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica: catálogo de las series del BCCh que alimentan las tablas macro (código SIETE, nombre, unidad, frecuencia y estado)",
+        "cobertura": "2014-01-01 a 2026-10-20; 51 series",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Catálogo de 51 series; las 51 con estado 'ok'."
+      }
     },
     {
       "id": "macro_swaps_camara",
@@ -856,7 +1376,17 @@
       "corte": "2014-01-02 a 2026-10-19",
       "file_parquet": "outputs/macro/macro_swaps_camara.parquet",
       "registros_reales": 3201,
-      "descripcion": "Tasa de swap promedio de cámara (SPC) del Banco Central: contratos en pesos a 90, 180 y 360 días y a 2 años, y contrato en UF a 1 año, en porcentaje."
+      "descripcion": "Tasa de swap promedio de cámara (SPC) del Banco Central: contratos en pesos a 90, 180 y 360 días y a 2 años, y contrato en UF a 1 año, en porcentaje.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "% (porcentaje; valor 0–100)",
+        "escala": "tasa en porcentaje",
+        "moneda": "No aplica (tasa)",
+        "criterio_contable": "Tasa swap promedio de cámara (SPC) del BCCh: pesos a 90, 180, 360 días y 2 años; UF a 1 año",
+        "cobertura": "2014-01-02 a 2026-10-19; 3.201 filas (diaria)",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_tasa_referencia_fed",
@@ -872,7 +1402,17 @@
       "corte": "2014-01-01 a 2026-10-13",
       "file_parquet": "outputs/macro/macro_tasa_referencia_fed.parquet",
       "registros_reales": 3323,
-      "descripcion": "Tasa de interés de política monetaria de la Reserva Federal de los Estados Unidos (fed funds), en porcentaje."
+      "descripcion": "Tasa de interés de política monetaria de la Reserva Federal de los Estados Unidos (fed funds), en porcentaje.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "% (porcentaje; valor 0–100)",
+        "escala": "tasa en porcentaje",
+        "moneda": "No aplica (tasa)",
+        "criterio_contable": "Fed funds de la Reserva Federal de EE. UU., según el BCCh",
+        "cobertura": "2014-01-01 a 2026-10-13; 3.323 filas (diaria)",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_tasas_corto_plazo",
@@ -888,7 +1428,17 @@
       "corte": "2014-01-02 a 2026-10-20",
       "file_parquet": "outputs/macro/macro_tasas_corto_plazo.parquet",
       "registros_reales": 3188,
-      "descripcion": "Tasas de referencia de corto plazo de Chile: Tasa de Política Monetaria (TPM) del Banco Central y tasa promedio transada en el mercado interbancario (TIB), en porcentaje."
+      "descripcion": "Tasas de referencia de corto plazo de Chile: Tasa de Política Monetaria (TPM) del Banco Central y tasa promedio transada en el mercado interbancario (TIB), en porcentaje.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "% (porcentaje; valor 0–100)",
+        "escala": "tasa en porcentaje",
+        "moneda": "No aplica (tasa)",
+        "criterio_contable": "TPM del BCCh y tasa TIB promedio transada en el mercado interbancario",
+        "cobertura": "2014-01-02 a 2026-10-20; 3.188 filas (diaria)",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_tipo_cambio_multilateral",
@@ -904,7 +1454,17 @@
       "corte": "2014-01-02 a 2026-10-20",
       "file_parquet": "outputs/macro/macro_tipo_cambio_multilateral.parquet",
       "registros_reales": 3187,
-      "descripcion": "Índices de tipo de cambio nominal multilateral del Banco Central: TCM, TCM-5 (monedas de Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro) y TCM-X."
+      "descripcion": "Índices de tipo de cambio nominal multilateral del Banco Central: TCM, TCM-5 (monedas de Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro) y TCM-X.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "Índice (TCM, TCM-5, TCM-X)",
+        "escala": "índice",
+        "moneda": "No aplica",
+        "criterio_contable": "Índices de tipo de cambio nominal multilateral del BCCh: TCM, TCM-5 y TCM-X",
+        "cobertura": "2014-01-02 a 2026-10-20; 3.187 filas (diaria)",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_tipo_cambio_real",
@@ -920,7 +1480,17 @@
       "corte": "2014-01-01 a 2026-08-01",
       "file_parquet": "outputs/macro/macro_tipo_cambio_real.parquet",
       "registros_reales": 152,
-      "descripcion": "Índices de tipo de cambio real (TCR) del Banco Central, promedio 1986=100: TCR general y TCR-5 (monedas de Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro)."
+      "descripcion": "Índices de tipo de cambio real (TCR) del Banco Central, promedio 1986=100: TCR general y TCR-5 (monedas de Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro).",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "Índice (TCR general y TCR-5), promedio 1986=100",
+        "escala": "índice",
+        "moneda": "No aplica",
+        "criterio_contable": "Índices de tipo de cambio real del BCCh, promedio 1986=100: TCR general y TCR-5",
+        "cobertura": "2014-01-01 a 2026-08-01; 152 filas (mensual)",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "macro_uf",
@@ -936,7 +1506,17 @@
       "corte": "2014-01-01 a 2026-10-20",
       "file_parquet": "outputs/macro/macro_uf.parquet",
       "registros_reales": 4676,
-      "descripcion": "Valor diario de la Unidad de Fomento (UF) en pesos chilenos, según el Banco Central."
+      "descripcion": "Valor diario de la Unidad de Fomento (UF) en pesos chilenos, según el Banco Central.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE)",
+        "unidad": "Pesos chilenos por UF (uf_valor_clp), 2 decimales publicados",
+        "escala": "unidades (CLP por UF)",
+        "moneda": "CLP",
+        "criterio_contable": "No aplica: valor de reajustabilidad. Se reajusta del día 10 al día 9 según el IPC del mes anterior",
+        "cobertura": "2014-01-01 a 2026-10-20; calendario diario completo; 4.676 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion)",
+        "estado_qa": "Validado: sin huecos ni duplicados; signo constante en 155 ciclos de reajuste; 6 valores comparados con fuentes públicas coinciden. No comparado directamente con la API del BCCh desde el sandbox (ver docs/notas/auditoria_fuente_a_fila_2026-10-20.md)"
+      }
     },
     {
       "id": "macro_utm",
@@ -952,7 +1532,17 @@
       "corte": "2014-01-01 a 2026-10-01",
       "file_parquet": "outputs/macro/macro_utm.parquet",
       "registros_reales": 154,
-      "descripcion": "Valor mensual de la Unidad Tributaria Mensual (UTM) en pesos chilenos, según el Banco Central."
+      "descripcion": "Valor mensual de la Unidad Tributaria Mensual (UTM) en pesos chilenos, según el Banco Central.",
+      "metadatos": {
+        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
+        "unidad": "CLP (valor mensual de la UTM)",
+        "escala": "unidades de moneda (CLP)",
+        "moneda": "CLP",
+        "criterio_contable": "Valor mensual de la Unidad Tributaria Mensual, según el BCCh",
+        "cobertura": "2014-01-01 a 2026-10-01; 154 filas (mensual)",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
+      }
     },
     {
       "id": "patrimonios_separados_balance",
@@ -968,7 +1558,17 @@
       "file_parquet": "outputs/securitizadoras/patrimonios_separados_balance.parquet",
       "registros_reales": 7962,
       "descripcion": "Balance general de cada patrimonio separado, cuenta por cuenta y tal como viene impreso (M$, con su signo, incluidas las líneas de subtotal): 358 balances de 10 securitizadoras. Todos cuadran. La serie parte en diciembre de 2014: de 2010 a 2013 no hay datos.",
-      "origen": "securitizadoras/fuentes/balances_patrimonios_separados.xlsx (Excel curado localmente a partir de los PDF de EEFF publicados en la CMF) → securitizadoras/scripts/05_publicar_balance_patrimonios.py"
+      "origen": "securitizadoras/fuentes/balances_patrimonios_separados.xlsx (Excel curado localmente a partir de los PDF de EEFF publicados en la CMF) → securitizadoras/scripts/05_publicar_balance_patrimonios.py",
+      "metadatos": {
+        "fuente": "Estados financieros de patrimonios separados publicados en la CMF (PDF), curados en securitizadoras/fuentes/balances_patrimonios_separados.xlsx",
+        "unidad": "Miles de pesos (M$), con el signo impreso en el balance",
+        "escala": "miles (M$)",
+        "moneda": "CLP",
+        "criterio_contable": "Balance general tal como viene impreso en los EEFF del patrimonio separado; norma contable específica por confirmar",
+        "cobertura": "Cierres de diciembre 2014–2025; 358 balances; 10 securitizadoras; 2010–2013 presentes en la fuente pero no publicados",
+        "fecha_extraccion": "Excel incorporado al repositorio el 2026-10-20; fecha de extracción de los PDF por confirmar",
+        "estado_qa": "Validado: identidad contable en 358/358 balances (±2 M$); conteo reconciliado con el Excel; 2 claves archivo+categoría+cuenta repetidas (usar orden_en_balance); 4 filas del Excel descartadas por columnas desplazadas (monto 0). Trazabilidad al PDF limitada: el PDF no está en el repositorio"
+      }
     },
     {
       "id": "patrimonios_separados_maestro",
@@ -984,7 +1584,17 @@
       "file_parquet": "outputs/securitizadoras/patrimonios_separados_maestro.parquet",
       "registros_reales": 19,
       "descripcion": "Inscripciones de títulos de deuda de securitización (patrimonios separados) por registro automático: número, fecha, securitizadora, tipo, moneda, monto inscrito y vencimiento. La clase de colateral no está en el listado CMF: queda vacía en las inscripciones agregadas automáticamente.",
-      "origen": "CMF — Inscripciones de títulos de deuda mediante modalidad de registro automático (listado_titulos_deuda.php), filtrado a securitizadoras. pipelines/entidades/actualizar_listas.py."
+      "origen": "CMF — Inscripciones de títulos de deuda mediante modalidad de registro automático (listado_titulos_deuda.php), filtrado a securitizadoras. pipelines/entidades/actualizar_listas.py.",
+      "metadatos": {
+        "fuente": "CMF, inscripciones de títulos de deuda por registro automático (listado_titulos_deuda.php), filtradas a securitizadoras",
+        "unidad": "Monto inscrito según la moneda de cada inscripción (campo moneda)",
+        "escala": "Por confirmar",
+        "moneda": "Moneda de cada inscripción (campo moneda)",
+        "criterio_contable": "No aplica: registro de inscripciones; la clase de colateral no viene en el listado y queda vacía",
+        "cobertura": "Lista vigente al 2026-09-28; 19 inscripciones",
+        "fecha_extraccion": "2026-09-28 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "securitizadoras_balance",
@@ -1000,7 +1610,17 @@
       "file_parquet": "outputs/securitizadoras/securitizadoras_balance/manifest.json",
       "registros_reales": 13679,
       "descripcion": "Estado de situación financiera (ESF) de cada sociedad securitizadora, cuenta por cuenta, tal como lo publica la CMF. Montos en unidades de la moneda informada (CLP o USD), sin conversión.",
-      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+      "metadatos": {
+        "fuente": "CMF, estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL), https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+        "unidad": "Unidades de la moneda informada (CLP o USD), sin conversión",
+        "escala": "unidades (sin reescalado)",
+        "moneda": "CLP o USD según la moneda informada por cada sociedad; sin conversión",
+        "criterio_contable": "Estado de situación financiera IFRS tal como lo publica la CMF; cuenta por cuenta",
+        "cobertura": "2009-12 a 2026-06 (trimestral); 13.679 filas",
+        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido ni de cuadre en esta auditoría."
+      }
     },
     {
       "id": "securitizadoras_maestro",
@@ -1016,7 +1636,17 @@
       "file_parquet": "outputs/securitizadoras/securitizadoras_maestro.parquet",
       "registros_reales": 16,
       "descripcion": "Catálogo maestro oficial de Sociedades Securitizadoras registradas ante la CMF bajo el Título XVIII de la Ley N° 18.045 (9 entidades vigentes y 7 históricas / en liquidación).",
-      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Sociedades Securitizadoras (RGSEC)."
+      "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Sociedades Securitizadoras (RGSEC).",
+      "metadatos": {
+        "fuente": "CMF, Registro de Sociedades Securitizadoras (RGSEC), Título XVIII de la Ley 18.045",
+        "unidad": "No aplica: catálogo de sociedades",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "Lista vigente al 2026-06; 16 sociedades (9 vigentes y 7 históricas o en liquidación)",
+        "fecha_extraccion": "2026-09-23 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "securitizadoras_resultados",
@@ -1032,7 +1662,17 @@
       "file_parquet": "outputs/securitizadoras/securitizadoras_resultados/manifest.json",
       "registros_reales": 12290,
       "descripcion": "Estado de resultados (ER, por función o naturaleza e integral) de cada sociedad securitizadora, cuenta por cuenta. Montos acumulados del ejercicio a la fecha del trimestre, en unidades de la moneda informada.",
-      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+      "metadatos": {
+        "fuente": "CMF, estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL), https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
+        "unidad": "Unidades de la moneda informada (CLP o USD), sin conversión; acumulado del ejercicio a la fecha del trimestre",
+        "escala": "unidades (sin reescalado)",
+        "moneda": "CLP o USD según la moneda informada por cada sociedad; sin conversión",
+        "criterio_contable": "Estado de resultados IFRS (por función o naturaleza e integral) tal como lo publica la CMF; cuenta por cuenta",
+        "cobertura": "2009-12 a 2026-06 (trimestral acumulado); 12.290 filas",
+        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     },
     {
       "id": "seguros_acciones",
@@ -1044,11 +1684,21 @@
       "corte": "2016-11 a 2026-09",
       "frescura": "Último mes publicado: 2026-09",
       "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-16",
+      "ultima_actualizacion": "2026-10-20",
       "file_parquet": "outputs/seguros/acciones/manifest.json",
-      "registros_reales": 109018,
+      "registros_reales": 109019,
       "descripcion": "Acciones de sociedades anónimas y cuotas de fondos de inversión nacionales.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
+        "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
+        "escala": "Según el campo: miles (M$), pesos ($) o unidades originales; sin reescalado",
+        "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
+        "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
+        "cobertura": "2016-11 a 2026-09; 11 meses de archivo por sector; 109.019 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); SELECT * devolvió menos filas que el manifiesto (100.711 frente a 109.018 antes de la corrida #28); sin explicar. Esquema único y verificado. Conteo de filas igual al manifiesto. "
+      }
     },
     {
       "id": "seguros_bienes_raices",
@@ -1060,11 +1710,21 @@
       "corte": "2024-12 a 2026-09",
       "frescura": "Último mes publicado: 2026-09",
       "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-16",
+      "ultima_actualizacion": "2026-10-20",
       "file_parquet": "outputs/seguros/bienes_raices/manifest.json",
       "registros_reales": 760152,
       "descripcion": "Bienes raíces por rol: dirección, arriendo, costo, depreciación, tasaciones y valor final.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
+        "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
+        "escala": "Según el campo: miles (M$), pesos ($) o unidades originales; sin reescalado",
+        "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
+        "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
+        "cobertura": "2024-12 a 2026-09; 22 archivos; 760.152 filas; rol protegido por seudónimo",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); orden de columnas corregido en 2026-09 (commit 315d92d); sin pérdida de valores. Esquema único y verificado. Conteo de filas igual al manifiesto. "
+      }
     },
     {
       "id": "seguros_control_inversiones",
@@ -1076,11 +1736,21 @@
       "corte": "2016-11 a 2026-09",
       "frescura": "Último mes publicado: 2026-09",
       "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-16",
+      "ultima_actualizacion": "2026-10-20",
       "file_parquet": "outputs/seguros/control_inversiones/manifest.json",
-      "registros_reales": 111408,
+      "registros_reales": 111410,
       "descripcion": "Información de control que cada compañía envía con su cartera: totales por tipo de inversión (valor final, representativas y no representativas de reservas, etc.).",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
+        "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
+        "escala": "Según el campo: miles (M$), pesos ($) o unidades originales; sin reescalado",
+        "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
+        "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
+        "cobertura": "2016-11 a 2026-09; 111.410 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); SELECT * devolvió menos filas que el manifiesto (103.483 frente a 111.408 antes de la corrida #28); sin explicar. Esquema único y verificado. Conteo de filas igual al manifiesto. "
+      }
     },
     {
       "id": "seguros_derivados",
@@ -1092,11 +1762,21 @@
       "corte": "2016-11 a 2026-09",
       "frescura": "Último mes publicado: 2026-09",
       "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-16",
+      "ultima_actualizacion": "2026-10-20",
       "file_parquet": "outputs/seguros/derivados/manifest.json",
       "registros_reales": 373469,
       "descripcion": "Contratos de opciones, forwards, futuros y swaps (tipo_registro), con contraparte, nocional, valor razonable y efecto en resultados.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
+        "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
+        "escala": "Según el campo: miles (M$), pesos ($) o unidades originales; sin reescalado",
+        "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
+        "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
+        "cobertura": "2016-11 a 2026-09; 373.469 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); Esquema único y verificado. Conteo de filas igual al manifiesto. "
+      }
     },
     {
       "id": "seguros_extranjeros",
@@ -1108,11 +1788,21 @@
       "corte": "2016-11 a 2026-09",
       "frescura": "Último mes publicado: 2026-09",
       "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-16",
+      "ultima_actualizacion": "2026-10-20",
       "file_parquet": "outputs/seguros/extranjeros/manifest.json",
-      "registros_reales": 471586,
+      "registros_reales": 471942,
       "descripcion": "Inversiones en el extranjero: deuda (tipo_registro = 'deuda'), acciones y fondos (tipo_registro = 'acciones_y_fondos'), bienes raíces (tipo_registro = 'bienes_raices') y filiales (tipo_registro = 'filiales').",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
+        "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
+        "escala": "Según el campo: miles (M$), pesos ($) o unidades originales; sin reescalado",
+        "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
+        "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
+        "cobertura": "2016-11 a 2026-09; 471.942 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); Esquema único y verificado. Conteo de filas igual al manifiesto. "
+      }
     },
     {
       "id": "seguros_fondos_mutuos",
@@ -1124,11 +1814,21 @@
       "corte": "2016-11 a 2026-09",
       "frescura": "Último mes publicado: 2026-09",
       "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-16",
+      "ultima_actualizacion": "2026-10-20",
       "file_parquet": "outputs/seguros/fondos_mutuos/manifest.json",
       "registros_reales": 100472,
       "descripcion": "Cuotas de fondos mutuos nacionales.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
+        "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
+        "escala": "Según el campo: miles (M$), pesos ($) o unidades originales; sin reescalado",
+        "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
+        "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
+        "cobertura": "2016-11 a 2026-09; 100.472 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); Esquema único y verificado. Conteo de filas igual al manifiesto. "
+      }
     },
     {
       "id": "seguros_maestro",
@@ -1140,11 +1840,21 @@
       "corte": "2016-11 a 2026-09",
       "frescura": "Último mes publicado: 2026-09",
       "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-16",
+      "ultima_actualizacion": "2026-10-20",
       "file_parquet": "outputs/seguros/aseguradoras.parquet",
       "registros_reales": 84,
       "descripcion": "Compañías de seguros de vida y generales que envían su cartera a la CMF, con el primer y el último mes informado. Sirve para detectar compañías nuevas y las que dejan de reportar.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
+        "unidad": "No aplica: catálogo de compañías",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "2016-11 a 2026-09; 84 compañías con primer y último mes informado",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Validado: conteo de filas igual al manifiesto (84). No se revisó la forma de nombres y RUT. Sin observaciones abiertas en la auditoría del 2026-10-20."
+      }
     },
     {
       "id": "seguros_pactos",
@@ -1156,11 +1866,21 @@
       "corte": "2016-11 a 2026-09",
       "frescura": "Último mes publicado: 2026-09",
       "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-16",
+      "ultima_actualizacion": "2026-10-20",
       "file_parquet": "outputs/seguros/pactos/manifest.json",
       "registros_reales": 11371,
       "descripcion": "Compras y ventas con pacto (repos), con contraparte, tasa y activo objeto.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
+        "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
+        "escala": "Según el campo: miles (M$), pesos ($) o unidades originales; sin reescalado",
+        "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
+        "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
+        "cobertura": "2016-11 a 2026-09; 11.371 filas",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); SELECT * devolvió menos filas que el manifiesto (9.908 frente a 11.371 antes de la corrida #28); sin explicar. Esquema único y verificado. Conteo de filas igual al manifiesto. "
+      }
     },
     {
       "id": "seguros_renta_fija",
@@ -1172,11 +1892,21 @@
       "corte": "2024-12 a 2026-09",
       "frescura": "Último mes publicado: 2026-09",
       "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-16",
+      "ultima_actualizacion": "2026-10-20",
       "file_parquet": "outputs/seguros/renta_fija/manifest.json",
       "registros_reales": 2321911,
       "descripcion": "Bonos, letras, depósitos y demás instrumentos de renta fija nacionales, uno por fila, con sus tasas, costo amortizado, valor razonable y valor final.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12)."
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "metadatos": {
+        "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
+        "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
+        "escala": "Según el campo: miles (M$), pesos ($) o unidades originales; sin reescalado",
+        "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
+        "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
+        "cobertura": "2024-12 a 2026-09; 22 archivos; 2.321.911 filas (formato v2024 completo)",
+        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); SELECT * tarda más de 200 s en navegador; count(*) verificado. Esquema único y verificado. Conteo de filas igual al manifiesto. "
+      }
     },
     {
       "id": "sistemas_pago_maestro",
@@ -1192,7 +1922,17 @@
       "file_parquet": "outputs/sistemas_pago/sistemas_pago_maestro.parquet",
       "registros_reales": 19,
       "descripcion": "Infraestructuras del sistema de pagos: LBTR del Banco Central, cámaras de compensación, depósito de valores, contrapartes centrales y operadores de tarjetas de pago.",
-      "origen": "Registros públicos CMF: altas desde operadores de tarjetas de pago (TPOPE) y entidades de contraparte central (RGCCO); vigencia también desde sociedades de apoyo al giro (BCSAG) y depósito de valores (DCVAL). El LBTR (BCCh) no tiene registro CMF y no se modifica. pipelines/entidades/actualizar_listas.py."
+      "origen": "Registros públicos CMF: altas desde operadores de tarjetas de pago (TPOPE) y entidades de contraparte central (RGCCO); vigencia también desde sociedades de apoyo al giro (BCSAG) y depósito de valores (DCVAL). El LBTR (BCCh) no tiene registro CMF y no se modifica. pipelines/entidades/actualizar_listas.py.",
+      "metadatos": {
+        "fuente": "CMF, registros públicos (TPOPE, RGCCO, BCSAG, DCVAL); BCCh para la LBTR (Ley 18.840, Ley 18.876, Ley 20.345)",
+        "unidad": "No aplica: catálogo de infraestructuras",
+        "escala": "No aplica",
+        "moneda": "No aplica",
+        "criterio_contable": "No aplica",
+        "cobertura": "Lista vigente al 2026-09-28; 19 entidades; la LBTR no tiene registro CMF",
+        "fecha_extraccion": "2026-09-28 (ultima_actualizacion del manifiesto)",
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+      }
     }
   ]
 }
