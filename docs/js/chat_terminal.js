@@ -621,8 +621,19 @@ class ChatTerminalController {
     if (el) el.remove();
   }
 
+  // Leer scrollHeight obliga a recalcular el layout en el acto (Lighthouse medía
+  // 72 ms de "forced reflow" en esta función). Se difiere al siguiente cuadro,
+  // se coalesce si llegan varios mensajes seguidos y se asigna un valor enorme:
+  // el navegador lo recorta al máximo real sin que haya que leer nada.
   scrollToBottom() {
-    this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
+    if (this._scrollPendiente) return;
+    this._scrollPendiente = true;
+    const ir = () => {
+      this._scrollPendiente = false;
+      if (this.messagesContainer) this.messagesContainer.scrollTop = 1e7;
+    };
+    if (typeof requestAnimationFrame === "function") requestAnimationFrame(ir);
+    else setTimeout(ir, 0);
   }
 
   // Sirve para texto y para valores de atributo (escapa también comillas).
