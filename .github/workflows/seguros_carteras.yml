@@ -119,6 +119,69 @@ jobs:
           else
             echo 'Se omite el ZIP: archi no confirmó disponibilidad.'
           fi
+          # Una sola petición por ZIP, sin cachear ni persistir payloads. Se emiten solo hashes,
+          # conteos y máscaras de clases de caracteres; nunca valores de los registros.
+          python - <<'PY'
+          import collections, hashlib, io, time, zipfile
+          from seguros.scripts.actualizar_carteras import URL, SECTORES, _get
+
+          objetivos = [
+              ("generales", "2025-05", "a202505g.99017000", "largo"),
+              ("vida", "2025-05", "c202505v.99289000", "x"),
+              ("vida", "2026-04", "g202604v.76282191", "4"),
+              ("vida", "2026-09", "g202609v.76282191", "4"),
+          ]
+
+          def mascara(s):
+              def clase(c):
+                  return "_" if c.isspace() else "9" if c.isdigit() else "A" if c.isalpha() else "."
+              clases = [clase(c) for c in s]
+              spans, inicio = [], 0
+              for i in range(1, len(clases) + 1):
+                  if i == len(clases) or clases[i] != clases[inicio]:
+                      spans.append(f"{inicio+1}-{i}:{clases[inicio]}x{i-inicio}")
+                      inicio = i
+              return ";".join(spans)
+
+          for sector, periodo, buscado, tipo in objetivos:
+              t0 = time.monotonic()
+              try:
+                  ent, yyyymm = SECTORES[sector], periodo.replace("-", "")
+                  base = f"{URL}?tipoentidad={ent}&fnAjax="
+                  disp = _get(f"{base}archi&peri={yyyymm}", 45).decode("latin-1").strip()
+                  if disp != "1":
+                      print(f"::notice title=CMF perfil::{sector} {periodo}: archi={disp!r}")
+                      continue
+                  data = _get(f"{base}descarga&peri={yyyymm}", 90)
+                  with zipfile.ZipFile(io.BytesIO(data)) as z:
+                      nombre = next((n for n in z.namelist() if n.rsplit("/", 1)[-1].lower() == buscado.lower()), None)
+                      if nombre is None:
+                          raise FileNotFoundError(buscado)
+                      raw_file = z.read(nombre)
+                  raw_lines = [b for b in raw_file.split(b"\\n") if b.strip(b"\\r\\x1a ")]
+                  lines = []
+                  for raw in raw_lines:
+                      raw = raw.rstrip(b"\\r")
+                      try:
+                          text = raw.decode("utf-8")
+                      except UnicodeDecodeError:
+                          text = raw.decode("latin-1")
+                      lines.append((raw, text))
+                  if tipo == "largo":
+                      halladas = [(i, raw, text) for i, (raw, text) in enumerate(lines, 1) if len(text) != 572]
+                  else:
+                      halladas = [(i, raw, text) for i, (raw, text) in enumerate(lines, 1) if text[:1] == tipo]
+                  resumen = (f"{sector} {periodo} {buscado}; zip_sha256={hashlib.sha256(data).hexdigest()}; "
+                             f"member_sha256={hashlib.sha256(raw_file).hexdigest()}; member_bytes={len(raw_file)}; "
+                             f"líneas={len(lines)}; largos={dict(collections.Counter(len(t) for _, t in lines))}; "
+                             f"objetivo={len(halladas)}; segundos={time.monotonic()-t0:.1f}")
+                  print(f"::notice title=CMF perfil::{resumen}")
+                  for numero, raw, text in halladas:
+                      print(f"::notice title=CMF máscara::{buscado} línea={numero}; bytes={len(raw)}; chars={len(text)}; "
+                            f"ascii={raw.isascii()}; máscara={mascara(text)}")
+              except Exception as e:
+                  print(f"::error title=CMF perfil::{sector} {periodo} {buscado}: {type(e).__name__}: {e}")
+          PY
 
       # Revisa los meses pendientes sin escribir; informa conteos B.11–B.14 y separa errores fatales
       # de archivos excluidos con advertencia. Las descargas quedan en /tmp/cmf1835.
