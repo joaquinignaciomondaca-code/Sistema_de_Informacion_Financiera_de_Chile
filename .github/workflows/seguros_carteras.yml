@@ -95,6 +95,67 @@ jobs:
           python -m unittest -v seguros.tests.test_vistas_1835 seguros.tests.test_diagnostico_1835 pipelines.auto.tests.test_estable pipelines.auto.tests.test_privacidad
           python -m seguros.scripts.diccionario_1835 --check
 
+      # Completa de forma acotada el perfil de tipo 4: cuatro ZIP de vida, uno por período,
+      # sin guardar payloads ni revelar valores; se elimina una vez obtenidas las máscaras.
+      - name: Perfilar los cuatro registros tipo 4 restantes (solo lectura, temporal)
+        if: ${{ github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Perfila registros tipo 4') }}
+        run: |
+          python - <<'PY'
+          import collections, hashlib, io, time, zipfile
+          from seguros.scripts.actualizar_carteras import URL, SECTORES, _get
+
+          def mascara(s):
+              def clase(c):
+                  return "_" if c.isspace() else "9" if c.isdigit() else "A" if c.isalpha() else "."
+              clases = [clase(c) for c in s]
+              spans, inicio = [], 0
+              for i in range(1, len(clases) + 1):
+                  if i == len(clases) or clases[i] != clases[inicio]:
+                      spans.append(f"{inicio+1}-{i}:{clases[inicio]}x{i-inicio}")
+                      inicio = i
+              return ";".join(spans)
+
+          for mes in range(5, 9):
+              periodo = f"2026-{mes:02d}"
+              nombre_objetivo = f"g2026{mes:02d}v.76282191"
+              t0 = time.monotonic()
+              try:
+                  ent, yyyymm = SECTORES["vida"], periodo.replace("-", "")
+                  base = f"{URL}?tipoentidad={ent}&fnAjax="
+                  disp = _get(f"{base}archi&peri={yyyymm}", 45).decode("latin-1").strip()
+                  if disp != "1":
+                      raise RuntimeError(f"archi={disp!r}")
+                  data = _get(f"{base}descarga&peri={yyyymm}", 90)
+                  with zipfile.ZipFile(io.BytesIO(data)) as z:
+                      nombre = next((n for n in z.namelist()
+                                     if n.rsplit("/", 1)[-1].lower() == nombre_objetivo.lower()), None)
+                      if nombre is None:
+                          raise FileNotFoundError(nombre_objetivo)
+                      raw_file = z.read(nombre)
+                  raws = [ln.rstrip(b"\r") for ln in raw_file.split(b"\n")
+                          if ln.strip(b"\r\n\x1a ")]
+                  texts = []
+                  for raw in raws:
+                      try:
+                          text = raw.decode("utf-8")
+                      except UnicodeDecodeError:
+                          text = raw.decode("latin-1")
+                      texts.append((raw, text))
+                  tipos = collections.Counter(text[:1] for _, text in texts)
+                  largos = collections.Counter(len(text) for _, text in texts)
+                  halladas = [(i, raw, text) for i, (raw, text) in enumerate(texts, 1) if text[:1] == "4"]
+                  resumen = (f"vida {periodo} {nombre_objetivo}; zip_sha256={hashlib.sha256(data).hexdigest()}; "
+                             f"member_sha256={hashlib.sha256(raw_file).hexdigest()}; member_bytes={len(raw_file)}; "
+                             f"líneas={len(texts)}; tipos={dict(tipos)}; largos={dict(largos)}; "
+                             f"tipo4={len(halladas)}; segundos={time.monotonic()-t0:.1f}")
+                  print(f"::notice title=Perfil tipo 4::{resumen}")
+                  for numero, raw, text in halladas:
+                      print(f"::notice title=Máscara tipo 4::{nombre_objetivo} línea={numero}; bytes={len(raw)}; "
+                            f"chars={len(text)}; ascii={raw.isascii()}; máscara={mascara(text)}")
+              except Exception as exc:
+                  print(f"::error title=Fallo de perfil tipo 4::{periodo} {nombre_objetivo}: {type(exc).__name__}: {exc}")
+          PY
+
       # Revisa los meses pendientes sin escribir; informa conteos B.11–B.14 y separa errores fatales
       # de archivos excluidos con advertencia. Las descargas quedan en /tmp/cmf1835.
       - name: Diagnóstico de los meses pendientes (no escribe)
