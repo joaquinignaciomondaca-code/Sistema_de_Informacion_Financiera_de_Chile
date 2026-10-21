@@ -1,0 +1,808 @@
+{
+ "generado": "2026-10-21",
+ "uniones": [
+  {
+   "from": "fi_lista_entidades",
+   "to": "fi_balance",
+   "key": "run_fondo",
+   "cardinalidad": "1:N",
+   "filas_from": 1679,
+   "filas_to": 985908,
+   "claves_distintas_from": 1679,
+   "claves_distintas_to": 1107,
+   "filas_to_sobrantes_por_clave_repetida": 984801,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "run_fondo"
+    ],
+    "to": [
+     "run_fondo"
+    ]
+   }
+  },
+  {
+   "from": "agf_lista_entidades",
+   "to": "fi_balance",
+   "key": "rut = rut_agf",
+   "cardinalidad": "1:N",
+   "filas_from": 72,
+   "filas_to": 985908,
+   "claves_distintas_from": 72,
+   "claves_distintas_to": 53,
+   "filas_to_sobrantes_por_clave_repetida": 985855,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "rut"
+    ],
+    "to": [
+     "rut_agf"
+    ]
+   }
+  },
+  {
+   "from": "fi_lista_entidades",
+   "to": "fi_resultados",
+   "key": "run_fondo",
+   "cardinalidad": "1:N",
+   "filas_from": 1679,
+   "filas_to": 1164000,
+   "claves_distintas_from": 1679,
+   "claves_distintas_to": 1107,
+   "filas_to_sobrantes_por_clave_repetida": 1162893,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "run_fondo"
+    ],
+    "to": [
+     "run_fondo"
+    ]
+   }
+  },
+  {
+   "from": "agf_lista_entidades",
+   "to": "fi_resultados",
+   "key": "rut = rut_agf",
+   "cardinalidad": "1:N",
+   "filas_from": 72,
+   "filas_to": 1164000,
+   "claves_distintas_from": 72,
+   "claves_distintas_to": 53,
+   "filas_to_sobrantes_por_clave_repetida": 1163947,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "rut"
+    ],
+    "to": [
+     "rut_agf"
+    ]
+   }
+  },
+  {
+   "from": "seguros_lista_entidades",
+   "to": "seguros_renta_fija",
+   "key": "sector, rut_aseguradora",
+   "cardinalidad": "1:N",
+   "filas_from": 84,
+   "filas_to": 2321911,
+   "claves_distintas_from": 84,
+   "claves_distintas_to": 66,
+   "filas_to_sobrantes_por_clave_repetida": 2321845,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "sector",
+     "rut_aseguradora"
+    ],
+    "to": [
+     "sector",
+     "rut_aseguradora"
+    ]
+   }
+  },
+  {
+   "from": "seguros_lista_entidades",
+   "to": "seguros_acciones",
+   "key": "sector, rut_aseguradora",
+   "cardinalidad": "1:N",
+   "filas_from": 84,
+   "filas_to": 109019,
+   "claves_distintas_from": 84,
+   "claves_distintas_to": 47,
+   "filas_to_sobrantes_por_clave_repetida": 108972,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "sector",
+     "rut_aseguradora"
+    ],
+    "to": [
+     "sector",
+     "rut_aseguradora"
+    ]
+   }
+  },
+  {
+   "from": "seguros_lista_entidades",
+   "to": "seguros_fondos_mutuos",
+   "key": "sector, rut_aseguradora",
+   "cardinalidad": "1:N",
+   "filas_from": 84,
+   "filas_to": 100472,
+   "claves_distintas_from": 84,
+   "claves_distintas_to": 71,
+   "filas_to_sobrantes_por_clave_repetida": 100401,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "sector",
+     "rut_aseguradora"
+    ],
+    "to": [
+     "sector",
+     "rut_aseguradora"
+    ]
+   }
+  },
+  {
+   "from": "seguros_lista_entidades",
+   "to": "seguros_bienes_raices",
+   "key": "sector, rut_aseguradora",
+   "cardinalidad": "1:N",
+   "filas_from": 84,
+   "filas_to": 760152,
+   "claves_distintas_from": 84,
+   "claves_distintas_to": 40,
+   "filas_to_sobrantes_por_clave_repetida": 760112,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "sector",
+     "rut_aseguradora"
+    ],
+    "to": [
+     "sector",
+     "rut_aseguradora"
+    ]
+   }
+  },
+  {
+   "from": "seguros_lista_entidades",
+   "to": "seguros_extranjeros",
+   "key": "sector, rut_aseguradora",
+   "cardinalidad": "1:N",
+   "filas_from": 84,
+   "filas_to": 471942,
+   "claves_distintas_from": 84,
+   "claves_distintas_to": 42,
+   "filas_to_sobrantes_por_clave_repetida": 471900,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "sector",
+     "rut_aseguradora"
+    ],
+    "to": [
+     "sector",
+     "rut_aseguradora"
+    ]
+   }
+  },
+  {
+   "from": "seguros_lista_entidades",
+   "to": "seguros_derivados",
+   "key": "sector, rut_aseguradora",
+   "cardinalidad": "1:N",
+   "filas_from": 84,
+   "filas_to": 373469,
+   "claves_distintas_from": 84,
+   "claves_distintas_to": 28,
+   "filas_to_sobrantes_por_clave_repetida": 373441,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "sector",
+     "rut_aseguradora"
+    ],
+    "to": [
+     "sector",
+     "rut_aseguradora"
+    ]
+   }
+  },
+  {
+   "from": "seguros_lista_entidades",
+   "to": "seguros_pactos",
+   "key": "sector, rut_aseguradora",
+   "cardinalidad": "1:N",
+   "filas_from": 84,
+   "filas_to": 11371,
+   "claves_distintas_from": 84,
+   "claves_distintas_to": 15,
+   "filas_to_sobrantes_por_clave_repetida": 11356,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "sector",
+     "rut_aseguradora"
+    ],
+    "to": [
+     "sector",
+     "rut_aseguradora"
+    ]
+   }
+  },
+  {
+   "from": "seguros_lista_entidades",
+   "to": "seguros_control_inversiones",
+   "key": "sector, rut_aseguradora",
+   "cardinalidad": "1:N",
+   "filas_from": 84,
+   "filas_to": 111410,
+   "claves_distintas_from": 84,
+   "claves_distintas_to": 82,
+   "filas_to_sobrantes_por_clave_repetida": 111328,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "sector",
+     "rut_aseguradora"
+    ],
+    "to": [
+     "sector",
+     "rut_aseguradora"
+    ]
+   }
+  },
+  {
+   "from": "agf_lista_entidades",
+   "to": "fi_lista_entidades",
+   "key": "rut_administradora (gestión fiduciaria LUF)",
+   "cardinalidad": "no medido",
+   "motivo": "la clave está descrita en texto y no a nivel de columna"
+  },
+  {
+   "from": "fi_lista_entidades",
+   "to": "fi_cartera_nacional",
+   "key": "run_fondo",
+   "cardinalidad": "1:N",
+   "filas_from": 1679,
+   "filas_to": 933532,
+   "claves_distintas_from": 1679,
+   "claves_distintas_to": 661,
+   "filas_to_sobrantes_por_clave_repetida": 932871,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "run_fondo"
+    ],
+    "to": [
+     "run_fondo"
+    ]
+   }
+  },
+  {
+   "from": "fi_lista_entidades",
+   "to": "fi_cartera_extranjera",
+   "key": "run_fondo",
+   "cardinalidad": "1:N",
+   "filas_from": 1679,
+   "filas_to": 76849,
+   "claves_distintas_from": 1679,
+   "claves_distintas_to": 643,
+   "filas_to_sobrantes_por_clave_repetida": 76206,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "run_fondo"
+    ],
+    "to": [
+     "run_fondo"
+    ]
+   }
+  },
+  {
+   "from": "fi_lista_entidades",
+   "to": "fi_futuros",
+   "key": "run_fondo",
+   "cardinalidad": "1:N",
+   "filas_from": 1679,
+   "filas_to": 13463,
+   "claves_distintas_from": 1679,
+   "claves_distintas_to": 105,
+   "filas_to_sobrantes_por_clave_repetida": 13358,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "run_fondo"
+    ],
+    "to": [
+     "run_fondo"
+    ]
+   }
+  },
+  {
+   "from": "fi_lista_entidades",
+   "to": "fi_pactos",
+   "key": "run_fondo",
+   "cardinalidad": "1:N",
+   "filas_from": 1679,
+   "filas_to": 1698,
+   "claves_distintas_from": 1679,
+   "claves_distintas_to": 55,
+   "filas_to_sobrantes_por_clave_repetida": 1643,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "run_fondo"
+    ],
+    "to": [
+     "run_fondo"
+    ]
+   }
+  },
+  {
+   "from": "securitizadoras_lista_entidades",
+   "to": "patrimonios_separados_lista_entidades",
+   "key": "rut_administradora (administración fiduciaria)",
+   "cardinalidad": "1:N",
+   "filas_from": 16,
+   "filas_to": 19,
+   "claves_distintas_from": 16,
+   "claves_distintas_to": 5,
+   "filas_to_sobrantes_por_clave_repetida": 14,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "rut"
+    ],
+    "to": [
+     "rut_administradora"
+    ]
+   }
+  },
+  {
+   "from": "securitizadoras_lista_entidades",
+   "to": "patrimonios_separados_balance",
+   "key": "rut = rut_administradora (cuerpo, sin dígito verificador)",
+   "cardinalidad": "1:N",
+   "filas_from": 16,
+   "filas_to": 7962,
+   "claves_distintas_from": 16,
+   "claves_distintas_to": 10,
+   "filas_to_sobrantes_por_clave_repetida": 7952,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "rut"
+    ],
+    "to": [
+     "rut_administradora"
+    ]
+   }
+  },
+  {
+   "from": "macro_curva_bonos_pesos",
+   "to": "macro_inflacion_implicita",
+   "key": "fecha (bono pesos − bono UF)",
+   "cardinalidad": "1:1",
+   "filas_from": 3170,
+   "filas_to": 3076,
+   "claves_distintas_from": 3170,
+   "claves_distintas_to": 3076,
+   "filas_to_sobrantes_por_clave_repetida": 0,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "fecha"
+    ],
+    "to": [
+     "fecha"
+    ]
+   }
+  },
+  {
+   "from": "macro_curva_bonos_uf",
+   "to": "macro_inflacion_implicita",
+   "key": "fecha (bono pesos − bono UF)",
+   "cardinalidad": "1:1",
+   "filas_from": 3172,
+   "filas_to": 3076,
+   "claves_distintas_from": 3172,
+   "claves_distintas_to": 3076,
+   "filas_to_sobrantes_por_clave_repetida": 0,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "fecha"
+    ],
+    "to": [
+     "fecha"
+    ]
+   }
+  },
+  {
+   "from": "macro_inflacion_ipc",
+   "to": "macro_expectativas_inflacion",
+   "key": "periodo (inflación efectiva vs esperada)",
+   "cardinalidad": "1:1",
+   "filas_from": 153,
+   "filas_to": 154,
+   "claves_distintas_from": 153,
+   "claves_distintas_to": 154,
+   "filas_to_sobrantes_por_clave_repetida": 0,
+   "coincidencia_claves_to_en_from": 0.9935,
+   "columnas": {
+    "from": [
+     "periodo"
+    ],
+    "to": [
+     "periodo"
+    ]
+   }
+  },
+  {
+   "from": "macro_tasas_corto_plazo",
+   "to": "macro_expectativas_tpm",
+   "key": "periodo (TPM efectiva vs esperada)",
+   "cardinalidad": "N:1",
+   "filas_from": 3188,
+   "filas_to": 154,
+   "claves_distintas_from": 154,
+   "claves_distintas_to": 154,
+   "filas_to_sobrantes_por_clave_repetida": 0,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "periodo"
+    ],
+    "to": [
+     "periodo"
+    ]
+   }
+  },
+  {
+   "from": "macro_dolar_observado",
+   "to": "macro_euro_observado",
+   "key": "fecha",
+   "cardinalidad": "1:1",
+   "filas_from": 3187,
+   "filas_to": 3187,
+   "claves_distintas_from": 3187,
+   "claves_distintas_to": 3187,
+   "filas_to_sobrantes_por_clave_repetida": 0,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "fecha"
+    ],
+    "to": [
+     "fecha"
+    ]
+   }
+  },
+  {
+   "from": "bancos_lista_entidades",
+   "to": "bancos_balance",
+   "key": "codigo_institucion (código fuente CMF)",
+   "cardinalidad": "1:N",
+   "filas_from": 41,
+   "filas_to": 1962992,
+   "claves_distintas_from": 41,
+   "claves_distintas_to": 19,
+   "filas_to_sobrantes_por_clave_repetida": 1962973,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "codigo_institucion"
+    ],
+    "to": [
+     "codigo_institucion"
+    ]
+   }
+  },
+  {
+   "from": "bancos_lista_entidades",
+   "to": "bancos_resultados",
+   "key": "codigo_institucion (código fuente CMF)",
+   "cardinalidad": "1:N",
+   "filas_from": 41,
+   "filas_to": 1962992,
+   "claves_distintas_from": 41,
+   "claves_distintas_to": 19,
+   "filas_to_sobrantes_por_clave_repetida": 1962973,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "codigo_institucion"
+    ],
+    "to": [
+     "codigo_institucion"
+    ]
+   }
+  },
+  {
+   "from": "agf_lista_entidades",
+   "to": "agf_balance",
+   "key": "rut",
+   "cardinalidad": "1:N",
+   "filas_from": 72,
+   "filas_to": 71423,
+   "claves_distintas_from": 72,
+   "claves_distintas_to": 67,
+   "filas_to_sobrantes_por_clave_repetida": 71356,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "rut"
+    ],
+    "to": [
+     "rut"
+    ]
+   }
+  },
+  {
+   "from": "agf_lista_entidades",
+   "to": "agf_resultados",
+   "key": "rut",
+   "cardinalidad": "1:N",
+   "filas_from": 72,
+   "filas_to": 58216,
+   "claves_distintas_from": 72,
+   "claves_distintas_to": 67,
+   "filas_to_sobrantes_por_clave_repetida": 58149,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "rut"
+    ],
+    "to": [
+     "rut"
+    ]
+   }
+  },
+  {
+   "from": "securitizadoras_lista_entidades",
+   "to": "securitizadoras_balance",
+   "key": "rut",
+   "cardinalidad": "1:N",
+   "filas_from": 16,
+   "filas_to": 13679,
+   "claves_distintas_from": 16,
+   "claves_distintas_to": 13,
+   "filas_to_sobrantes_por_clave_repetida": 13666,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "rut"
+    ],
+    "to": [
+     "rut"
+    ]
+   }
+  },
+  {
+   "from": "securitizadoras_lista_entidades",
+   "to": "securitizadoras_resultados",
+   "key": "rut",
+   "cardinalidad": "1:N",
+   "filas_from": 16,
+   "filas_to": 12290,
+   "claves_distintas_from": 16,
+   "claves_distintas_to": 13,
+   "filas_to_sobrantes_por_clave_repetida": 12277,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "rut"
+    ],
+    "to": [
+     "rut"
+    ]
+   }
+  },
+  {
+   "from": "ccaf_lista_entidades",
+   "to": "ccaf_balance",
+   "key": "rut",
+   "cardinalidad": "1:N",
+   "filas_from": 6,
+   "filas_to": 8043,
+   "claves_distintas_from": 6,
+   "claves_distintas_to": 4,
+   "filas_to_sobrantes_por_clave_repetida": 8039,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "rut"
+    ],
+    "to": [
+     "rut"
+    ]
+   }
+  },
+  {
+   "from": "ccaf_lista_entidades",
+   "to": "ccaf_resultados",
+   "key": "rut",
+   "cardinalidad": "1:N",
+   "filas_from": 6,
+   "filas_to": 5506,
+   "claves_distintas_from": 6,
+   "claves_distintas_to": 4,
+   "filas_to_sobrantes_por_clave_repetida": 5502,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "rut"
+    ],
+    "to": [
+     "rut"
+    ]
+   }
+  },
+  {
+   "from": "corredoras_bolsa_lista_entidades",
+   "to": "corredoras_bolsa_balance",
+   "key": "rut",
+   "cardinalidad": "1:N",
+   "filas_from": 120,
+   "filas_to": 107976,
+   "claves_distintas_from": 120,
+   "claves_distintas_to": 73,
+   "filas_to_sobrantes_por_clave_repetida": 107903,
+   "coincidencia_claves_to_en_from": 0.6712,
+   "columnas": {
+    "from": [
+     "rut"
+    ],
+    "to": [
+     "rut"
+    ]
+   }
+  },
+  {
+   "from": "corredoras_bolsa_lista_entidades",
+   "to": "corredoras_bolsa_resultados",
+   "key": "rut",
+   "cardinalidad": "1:N",
+   "filas_from": 120,
+   "filas_to": 77705,
+   "claves_distintas_from": 120,
+   "claves_distintas_to": 73,
+   "filas_to_sobrantes_por_clave_repetida": 77632,
+   "coincidencia_claves_to_en_from": 0.6712,
+   "columnas": {
+    "from": [
+     "rut"
+    ],
+    "to": [
+     "rut"
+    ]
+   }
+  },
+  {
+   "from": "ffmm_lista_entidades",
+   "to": "ffmm_cartera_nacional",
+   "key": "run_fondo",
+   "cardinalidad": "1:N",
+   "filas_from": 1334,
+   "filas_to": 1590196,
+   "claves_distintas_from": 1334,
+   "claves_distintas_to": 625,
+   "filas_to_sobrantes_por_clave_repetida": 1589571,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "run_fondo"
+    ],
+    "to": [
+     "run_fondo"
+    ]
+   }
+  },
+  {
+   "from": "ffmm_lista_entidades",
+   "to": "ffmm_cartera_extranjera",
+   "key": "run_fondo",
+   "cardinalidad": "1:N",
+   "filas_from": 1334,
+   "filas_to": 1461253,
+   "claves_distintas_from": 1334,
+   "claves_distintas_to": 691,
+   "filas_to_sobrantes_por_clave_repetida": 1460562,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "run_fondo"
+    ],
+    "to": [
+     "run_fondo"
+    ]
+   }
+  },
+  {
+   "from": "ffmm_lista_entidades",
+   "to": "ffmm_futuros",
+   "key": "run_fondo",
+   "cardinalidad": "1:N",
+   "filas_from": 1334,
+   "filas_to": 282045,
+   "claves_distintas_from": 1334,
+   "claves_distintas_to": 504,
+   "filas_to_sobrantes_por_clave_repetida": 281541,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "run_fondo"
+    ],
+    "to": [
+     "run_fondo"
+    ]
+   }
+  },
+  {
+   "from": "ffmm_lista_entidades",
+   "to": "ffmm_opciones",
+   "key": "run_fondo",
+   "cardinalidad": "1:N",
+   "filas_from": 1334,
+   "filas_to": 5365,
+   "claves_distintas_from": 1334,
+   "claves_distintas_to": 162,
+   "filas_to_sobrantes_por_clave_repetida": 5203,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "run_fondo"
+    ],
+    "to": [
+     "run_fondo"
+    ]
+   }
+  },
+  {
+   "from": "ffmm_lista_entidades",
+   "to": "ffmm_balance",
+   "key": "run_fondo",
+   "cardinalidad": "1:N",
+   "filas_from": 1334,
+   "filas_to": 126256,
+   "claves_distintas_from": 1334,
+   "claves_distintas_to": 1124,
+   "filas_to_sobrantes_por_clave_repetida": 125132,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "run_fondo"
+    ],
+    "to": [
+     "run_fondo"
+    ]
+   }
+  },
+  {
+   "from": "ffmm_lista_entidades",
+   "to": "ffmm_resultados",
+   "key": "run_fondo",
+   "cardinalidad": "1:N",
+   "filas_from": 1334,
+   "filas_to": 149929,
+   "claves_distintas_from": 1334,
+   "claves_distintas_to": 1124,
+   "filas_to_sobrantes_por_clave_repetida": 148805,
+   "coincidencia_claves_to_en_from": 1.0,
+   "columnas": {
+    "from": [
+     "run_fondo"
+    ],
+    "to": [
+     "run_fondo"
+    ]
+   }
+  }
+ ]
+}

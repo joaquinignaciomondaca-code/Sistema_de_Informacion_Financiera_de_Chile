@@ -556,7 +556,7 @@ class DataViewerController {
           
           <div class="dv-actions">
             <div class="dv-search-box">
-              <input type="text" id="dv-filter-input" placeholder="Filtrar datos en pantalla..." value="${dvEscapar(this.filterText)}">
+              <input type="text" id="dv-filter-input" aria-label="Filtrar datos en pantalla" placeholder="Filtrar datos en pantalla..." value="${dvEscapar(this.filterText)}">
             </div>
             
             <div class="dv-limit-group">
