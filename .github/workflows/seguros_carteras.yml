@@ -102,7 +102,7 @@ jobs:
         env:
           COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
-          if [ "${COMMIT_MESSAGE}" = "Sondeo 1835 diciembre 2024" ]; then
+          if [[ "${COMMIT_MESSAGE}" == "Sondeo 1835 diciembre 2024"* ]]; then
             python -m seguros.scripts.actualizar_carteras --diagnostico --forzar \
               --desde 2024-12 --hasta 2024-12 --cache /tmp/cmf1835
           else
