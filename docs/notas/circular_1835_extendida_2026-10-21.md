@@ -16,7 +16,11 @@ Las vistas B.1, B.2, B.4, B.5 y B.7 se reconstruyeron desde los Parquet completo
 
 En diez archivos de compañías generales, entre 2024-12 y 2025-03, se encontró un registro tipo `6` en archivos B.11 (`e`) o B.14 (`g`). La ficha técnica disponible sólo documenta los tipos 1, 2 y 3 para esos archivos. El extractor **no interpreta ni descarta silenciosamente** el registro: conserva la alerta y excluye el archivo de esa compañía, que queda listado en `docs/outputs/seguros/manifest.json`. Los otros archivos y períodos se publican. No se debe reutilizar la semántica del tipo 6 de B.7 (pactos) para B.11/B.14: son archivos distintos.
 
-Se requiere confirmación de la CMF o una versión actualizada del anexo para integrar esas líneas con seguridad. El manifiesto conserva los nombres de los archivos afectados y las alertas del proceso.
+La sonda real de 2024-12 encontró tres archivos generales afectados (uno `e`, dos `g`). Las líneas tipo 6 tienen el largo completo esperado: 178/178 bytes para `e` y 300/300 para `g`; no parecen truncadas, pero su significado sigue sin documentarse. No se leyeron ni expusieron sus campos.
+
+La misma sonda contó los nombres antes de parsear: en 2024-12, los ZIP de vida y generales tenían cero archivos B.12 (`r`) y B.13 (`v`). Esto confirma que para ese mes la ausencia no la causa el parser: esos archivos no estaban en la descarga CMF. En el backfill de 22 cierres B.12/B.13 siguen con cero filas; el conteo directo de nombres disponible corresponde al primer cierre, 2024-12.
+
+Se requiere confirmación de la CMF o una versión actualizada del anexo antes de integrar el tipo 6 con seguridad. El manifiesto conserva los nombres de los archivos afectados y las alertas del proceso.
 
 ## Verificación
 
