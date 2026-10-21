@@ -690,12 +690,16 @@ def contar_archivos_por_tipo(data: bytes) -> dict[str, int]:
 
 def diagnostico(periodos: list[str], a) -> int:
     """Lee todos los meses sin escribir; distingue errores fatales de archivos excluidos."""
-    malos, excluidos_total, revisados = 0, 0, 0
+    malos, excluidos_total, revisados, sin_publicar = 0, 0, 0, 0
     gha = bool(os.environ.get("GITHUB_ACTIONS"))
     for periodo in periodos:
         try:
             datos = {s: descargar(s, periodo, a.zip_dir, a.cache) for s in SECTORES}
-        except NoPublicado:
+        except NoPublicado as e:
+            sin_publicar += 1
+            print(f"{periodo}: al menos un ZIP aún no está publicado ({e})")
+            if gha:
+                print(f"::notice title=Diagnóstico {periodo}::ZIP no publicado todavía")
             break
         revisados += 1
         for sector, data in datos.items():
@@ -717,7 +721,8 @@ def diagnostico(periodos: list[str], a) -> int:
                 if gha:
                     print(f"::warning title=Diagnóstico {periodo} {sector}::" + str(e).replace("\n", "%0A")[:1500])
     resumen = (f"{revisados} meses revisados, {malos} sectores con error fatal, "
-               f"{excluidos_total} archivos excluidos con advertencia")
+               f"{excluidos_total} archivos excluidos con advertencia, "
+               f"{sin_publicar} meses con ZIP aún no publicado")
     print(f"Diagnóstico: {resumen}.")
     if gha:
         print(f"::notice title=Diagnóstico seguros::{resumen}")
