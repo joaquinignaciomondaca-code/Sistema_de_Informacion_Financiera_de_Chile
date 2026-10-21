@@ -99,7 +99,16 @@ jobs:
       # excluidos con advertencia. Las descargas quedan en /tmp/cmf1835 y la publicación las reutiliza.
       - name: Diagnóstico de los meses pendientes (no escribe)
         continue-on-error: true
-        run: python -m seguros.scripts.actualizar_carteras --diagnostico --cache /tmp/cmf1835 --max-periodos "${{ inputs.max_periodos || '240' }}"
+        env:
+          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+        run: |
+          if [ "${COMMIT_MESSAGE}" = "Sondeo 1835 diciembre 2024" ]; then
+            python -m seguros.scripts.actualizar_carteras --diagnostico --forzar \
+              --desde 2024-12 --hasta 2024-12 --cache /tmp/cmf1835
+          else
+            python -m seguros.scripts.actualizar_carteras --diagnostico --cache /tmp/cmf1835 \
+              --max-periodos "${{ inputs.max_periodos || '240' }}"
+          fi
 
       - name: Descargar, validar y publicar los meses pendientes
         id: publicar

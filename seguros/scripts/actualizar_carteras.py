@@ -268,7 +268,9 @@ def leer_archivo(nombre: str, raw: bytes, formato: str, periodo: str, sector: st
     for n, ln in enumerate(detalle, start=2):
         clave = (letra, ln[:1])
         if clave not in mapa:
-            errores.append(f"{nombre}: tipo de registro {ln[:1]!r} desconocido (línea {n})")
+            esperado = LARGO[formato][letra]
+            errores.append(f"{nombre}: tipo de registro {ln[:1]!r} desconocido (línea {n}; "
+                           f"largo {len(ln)}, esperado {esperado})")
             return
         tabla, subtipo, cols = mapa[clave]
         fila = {"periodo": periodo, "sector": sector, "rut_aseguradora": rut,
@@ -673,6 +675,19 @@ def ultimo_mes_cerrado(hoy: date | None = None) -> str:
     return f"{y}-{m:02d}"
 
 
+def contar_archivos_por_tipo(data: bytes) -> dict[str, int]:
+    """Cuenta entradas ZIP por letra de archivo sin leer ni exponer sus contenidos o RUT."""
+    conteos = {letra: 0 for letra in ARCHIVOS}
+    with zipfile.ZipFile(io.BytesIO(data)) as z:
+        for nombre in z.namelist():
+            if nombre.endswith("/"):
+                continue
+            letra = os.path.basename(nombre)[:1].lower()
+            if letra in conteos:
+                conteos[letra] += 1
+    return conteos
+
+
 def diagnostico(periodos: list[str], a) -> int:
     """Lee todos los meses sin escribir; distingue errores fatales de archivos excluidos."""
     malos, excluidos_total, revisados = 0, 0, 0
@@ -686,9 +701,14 @@ def diagnostico(periodos: list[str], a) -> int:
         for sector, data in datos.items():
             try:
                 filas, comp, avisos, excluidos = leer_zip(data, periodo, sector)
+                raw = contar_archivos_por_tipo(data)
                 excluidos_total += len(excluidos)
+                b11_b14 = (f"B.11/e {raw['e']} archivos, {len(filas['flujos_activos_elegibles'])} filas; "
+                           f"B.12/r {raw['r']} archivos, {len(filas['prestamos'])} filas; "
+                           f"B.13/v {raw['v']} archivos, {len(filas['bienes_raices_arriendo_morosidad'])} filas; "
+                           f"B.14/g {raw['g']} archivos, {len(filas['garantias_derivados'])} filas")
                 print(f"{periodo} {sector}: OK · {len(comp)} compañías · {sum(map(len, filas.values()))} filas"
-                      f" · {len(avisos)} avisos · {len(excluidos)} archivos excluidos")
+                      f" · {len(avisos)} avisos · {len(excluidos)} archivos excluidos · {b11_b14}")
             except ErrorValidacion as e:
                 malos += 1
                 print(f"{periodo} {sector}: PROBLEMA · {e}")
