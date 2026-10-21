@@ -1140,6 +1140,15 @@ function escapeAttr(texto) {
     .replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
+/* El mapa relacional se construye la primera vez que se necesita (window.asegurarERD,
+   en index.html). Las llamadas del explorador —enfocar un sector, abrir el esquema de
+   una tabla— lo crean si aún no existe, para que el mapa refleje la selección cuando
+   el visitante abra su pestaña. Al cargar la página no se construye. */
+function mapaERD() {
+  if (typeof window.asegurarERD === "function") return window.asegurarERD();
+  return window.erdInstance || null;
+}
+
 class SidebarController {
   constructor() {
     this.sidebar = document.getElementById("sidebar");
@@ -1164,9 +1173,8 @@ class SidebarController {
       this.toggleBtn.addEventListener("click", () => {
         this.sidebar.classList.toggle("collapsed");
         setTimeout(() => {
-          if (window.erdInstance) {
-            window.erdInstance.resize();
-          }
+          const erd = mapaERD();
+          if (erd) erd.resize();
         }, 300);
       });
     }
@@ -1203,9 +1211,8 @@ class SidebarController {
       const newWidth = Math.min(Math.max(startWidth + (e.clientX - startX), 220), 550);
       sidebar.style.width = `${newWidth}px`;
       sidebar.style.minWidth = `${newWidth}px`;
-      if (window.erdInstance) {
-        window.erdInstance.resize();
-      }
+      const erd = mapaERD();
+      if (erd) erd.resize();
     });
 
     document.addEventListener("mouseup", () => {
@@ -1214,9 +1221,8 @@ class SidebarController {
         resizer.classList.remove("resizing");
         document.body.style.cursor = "";
         document.body.style.userSelect = "";
-        if (window.erdInstance) {
-          window.erdInstance.resize();
-        }
+        const erd = mapaERD();
+        if (erd) erd.resize();
       }
     });
   }
@@ -1533,7 +1539,8 @@ class SidebarController {
         if (this.searchInput) this.searchInput.value = "";
         this.render();
         this.setActiveSector(sec.sector, source);
-        if (window.erdInstance) window.erdInstance.focusSector(sec.sector);
+        const erdSec = mapaERD();
+        if (erdSec) erdSec.focusSector(sec.sector);
         if (this.breadcrumbEl) this.breadcrumbEl.textContent = this.describeLocation(sec.sector, "");
         const nodo = this.treeContainer ? this.treeContainer.querySelector(`[data-node-id="${sec.id}"]`) : null;
         if (nodo) {
@@ -1561,7 +1568,7 @@ class SidebarController {
   mostrarBarra() {
     if (this.sidebar && this.sidebar.classList.contains("collapsed")) {
       this.sidebar.classList.remove("collapsed");
-      setTimeout(() => { if (window.erdInstance) window.erdInstance.resize(); }, 300);
+      setTimeout(() => { const erd = mapaERD(); if (erd) erd.resize(); }, 300);
     }
   }
 
@@ -1630,7 +1637,8 @@ class SidebarController {
         this.setActiveSector("todos", "all-industries");
         document.querySelectorAll(".tree-row").forEach((r) => r.classList.remove("selected"));
         if (this.breadcrumbEl) this.breadcrumbEl.textContent = "Vista principal";
-        if (window.erdInstance) window.erdInstance.focusSector("todos");
+        const erdTodos = mapaERD();
+        if (erdTodos) erdTodos.focusSector("todos");
         if (window.ChatTerminal) {
           window.ChatTerminal.restoreDefaultChips();
           window.ChatTerminal.addSystemMessage("Vista restablecida: vista principal (núcleo, instituciones y contexto).");
@@ -1660,8 +1668,9 @@ class SidebarController {
 
         const sector = row.dataset.sector;
         if (sector) this.setActiveSector(sector, "sector");
-        if (sector && window.erdInstance) {
-          window.erdInstance.focusSector(sector);
+        if (sector) {
+          const erd = mapaERD();
+          if (erd) erd.focusSector(sector);
         }
       });
     });
@@ -1716,10 +1725,11 @@ class SidebarController {
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
         const tableId = e.currentTarget.dataset.tableId;
-        if (window.erdInstance) {
-          const node = window.erdInstance.tables.find((t) => t.id === tableId || t.name === tableId);
+        const erd = mapaERD();
+        if (erd) {
+          const node = erd.tables.find((t) => t.id === tableId || t.name === tableId);
           if (node) {
-            window.erdInstance.showSchemaModal(node);
+            erd.showSchemaModal(node);
           }
         }
       });
@@ -1814,8 +1824,9 @@ class SidebarController {
       this.breadcrumbEl.textContent = `${this.prefijoNivel(sector)}${targetSectorName} \u203a ${targetCirc.label}`;
     }
 
-    if (window.erdInstance) {
-      window.erdInstance.focusSector(sector);
+    const erdCircular = mapaERD();
+    if (erdCircular) {
+      erdCircular.focusSector(sector);
     }
 
     const chips = this.chipsDeCarpeta(circId) || targetCirc.chips;
@@ -1848,8 +1859,9 @@ class SidebarController {
     }
 
     // Enfocar y centrar la tabla en el Canvas ERD
-    if (window.erdInstance) {
-      window.erdInstance.focusTable(tableId);
+    const erdTabla = mapaERD();
+    if (erdTabla) {
+      erdTabla.focusTable(tableId);
     }
 
     // Sincronizar con el Visor de Datos
