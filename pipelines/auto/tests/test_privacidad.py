@@ -144,9 +144,45 @@ class DataFrameTest(unittest.TestCase):
         df = self.pd.DataFrame({"rut_aseguradora": ["76015592"], "rol": ["1-24"], "ubicacion": ["CALLE 123"]})
         una = privacidad.proteger_bienes_raices(df, sal="prueba")
         dos = privacidad.proteger_bienes_raices(una, sal="prueba")
-        # La segunda pasada no rompe: el id se pierde porque el rol ya no está, y
-        # por eso el backfill corre una sola vez y queda marcado en su manifiesto.
         self.assertEqual(una["ubicacion"].tolist(), dos["ubicacion"].tolist())
+
+    def test_b12_suprime_identidad_deudor_persona_y_conserva_empresa(self):
+        df = self.pd.DataFrame({
+            "tipo_deudor": ["N", "J"], "rut_deudor": ["12345678-5", "76015592-1"],
+            "ver_deudor": ["5", "1"], "nombre_deudor": ["PERSONA", "EMPRESA"],
+            "primer_apellido_deudor": ["APELLIDO", ""],
+        })
+        out = privacidad.proteger_prestamos(df)
+        self.assertTrue(self.pd.isna(out.loc[0, "rut_deudor"]))
+        self.assertTrue(self.pd.isna(out.loc[0, "nombre_deudor"]))
+        self.assertEqual(out.loc[1, "rut_deudor"], "76015592-1")
+        self.assertEqual(out.loc[1, "nombre_deudor"], "EMPRESA")
+
+    def test_b13_suprime_rol_y_persona_arrendataria(self):
+        df = self.pd.DataFrame({
+            "rut_aseguradora": ["76015592"], "rol": ["001-002"],
+            "rut_arrendatario_deudor": ["12345678-5"],
+            "nombre_arrendatario_deudor": ["PERSONA NATURAL"], "comuna": ["13101"],
+        })
+        out = privacidad.proteger_bienes_raices_arriendo(df, sal="prueba")
+        self.assertTrue(self.pd.isna(out.loc[0, "rol"]))
+        self.assertTrue(self.pd.isna(out.loc[0, "rut_arrendatario_deudor"]))
+        self.assertTrue(self.pd.isna(out.loc[0, "nombre_arrendatario_deudor"]))
+        self.assertEqual(out.loc[0, "comuna"], "13101")
+        self.assertTrue(out.loc[0, "property_id"].startswith("BIEN-"))
+
+    def test_b14_suprime_contraparte_natural_y_conserva_juridica(self):
+        df = self.pd.DataFrame({
+            "rut_contraparte_nacional": ["12345678-5", "76015592-1"],
+            "nombre_contraparte_garantia": ["PERSONA", "EMPRESA"],
+            "lei_contraparte_extranjera": ["", ""],
+        })
+        out = privacidad.proteger_contrapartes(df)
+        self.assertTrue(self.pd.isna(out.loc[0, "rut_contraparte_nacional"]))
+        self.assertTrue(self.pd.isna(out.loc[0, "nombre_contraparte_garantia"]))
+        self.assertEqual(out.loc[1, "rut_contraparte_nacional"], "76015592-1")
+        self.assertEqual(out.loc[1, "nombre_contraparte_garantia"], "EMPRESA")
+        self.assertEqual(out.loc[0, "contraparte_tipo"], "persona_natural_probable")
 
 
 if __name__ == "__main__":
