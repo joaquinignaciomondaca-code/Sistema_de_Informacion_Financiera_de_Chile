@@ -14,25 +14,21 @@ Tres comprobaciones, todas contra el anexo 2024 (`Anexos_Tecnicos_Circular_N1835
 """
 from seguros.scripts import ficha_1835
 from seguros.scripts.formato_1835 import LARGO, TIPO_TOTAL
-from seguros.scripts.inventario_1835 import DESTINO, inventario
+from seguros.scripts.inventario_1835 import DESTINO, NOMBRES_POSICION, inventario
 
 # Campos por registro de detalle según la tabla de la CMF (sin contar FILLER).
 CAMPOS_CMF = {
     ("i", "2"): 107, ("a", "2"): 56, ("f", "2"): 34, ("b", "2"): 53,
     ("x", "2"): 50, ("x", "3"): 54, ("x", "4"): 41, ("x", "5"): 15,
-    ("o", "2"): 31,
+    ("o", "2"): 31, ("r", "2"): 78, ("v", "2"): 39, ("g", "2"): 22,
     ("p", "2"): 41, ("p", "3"): 44, ("p", "4"): 42, ("p", "5"): 49, ("p", "6"): 28,
     ("c", "2"): 12, ("d", "2"): 18, ("t", "2"): 9, ("e", "2"): 14,
 }
 
-# Registros que el anexo trae pero que todavía no se publican: el texto convertido perdió los
-# nombres de varios campos (B.12) o no están en la ficha de 2016 (B.13 y B.14). Se listan para
-# que la brecha quede a la vista, no cuentan como falla.
-PENDIENTES = {("r", "2"): 78, ("v", "2"): 39, ("g", "2"): 22}
-
 # Registro tipo 1 de cada archivo: el largo que debe sumar el registro de detalle.
 LARGO_ARCHIVO = {"i": 970, "a": 572, "f": 361, "b": 506, "x": 611, "o": 510,
-                 "p": 587, "c": 138, "d": 108, "t": 80, "e": 178}
+                 "p": 587, "c": 138, "d": 108, "t": 80, "e": 178,
+                 "r": 658, "v": 443, "g": 300}
 
 
 def main() -> int:
@@ -66,10 +62,17 @@ def main() -> int:
     # Ningún campo puede quedar sin nombre ni con una letra suelta (síntoma de una ficha
     # mal convertida: el nombre se imprime en otra columna).
     for clave, registro in sorted(regs.items()):
-        malos = [c for c in registro.campos if c.nombre == "SIN_NOMBRE" or len(c.nombre) <= 2]
+        malos = [c for c in registro.campos
+                 if (c.nombre == "SIN_NOMBRE" or len(c.nombre) <= 2)
+                 and (clave[0], clave[1], c.inicio) not in NOMBRES_POSICION]
         if malos:
-            print(f"FALLA {clave}: {len(malos)} campos sin nombre ({malos[0].inicio})")
+            print(f"FALLA {clave}: {len(malos)} campos sin nombre reparable ({malos[0].inicio})")
             fallas += 1
+    for (letra, tipo), columnas in inventario("v2024").items():
+        for campo in columnas:
+            if "sin_nombre" in campo["columna"]:
+                print(f"FALLA {(letra, tipo)}: columna publicada sin nombre oficial ({campo['inicio']})")
+                fallas += 1
 
     # 3: las columnas publicadas cubren el registro de punta a punta.
     for clave, columnas in sorted(inventario("v2024").items()):
@@ -104,9 +107,7 @@ def main() -> int:
             fallas += 1
 
     publicadas = {t for (_, _), (t, _) in DESTINO.items()}
-    print(f"{len(regs)} registros leídos · {len(publicadas)} tablas publicadas")
-    print("Pendientes (no publicadas): " + ", ".join(
-        f"{letra}{tipo} ({n} campos)" for (letra, tipo), n in sorted(PENDIENTES.items())))
+    print(f"{len(regs)} registros leídos · {len(publicadas)} tablas de detalle cubiertas")
     print("OK" if not fallas else f"{fallas} fallas")
     return 1 if fallas else 0
 

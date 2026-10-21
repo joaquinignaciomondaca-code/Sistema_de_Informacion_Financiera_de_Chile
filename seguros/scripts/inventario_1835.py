@@ -44,6 +44,9 @@ DESTINO = {
     ("d", "2"): ("tablas_descriptores", None),
     ("t", "2"): ("tablas_desarrollo", None),
     ("e", "2"): ("flujos_activos_elegibles", None),
+    ("r", "2"): ("prestamos", None),
+    ("v", "2"): ("bienes_raices_arriendo_morosidad", None),
+    ("g", "2"): ("garantias_derivados", None),
     ("p", "2"): ("derivados", "opcion"),
     ("p", "3"): ("derivados", "forward"),
     ("p", "4"): ("derivados", "futuro"),
@@ -91,8 +94,162 @@ _REPARAR = tuple((re.compile(p), r) for p, r in REPARAR)
 
 # Registros donde el nombre en la ficha se repara además en ``nombre_ficha`` (los que todavía no
 # tienen columnas publicadas): en el resto se conserva el texto tal como lo imprime el anexo.
-REPARAR_NOMBRE_FICHA = {"o"}
+REPARAR_NOMBRE_FICHA = {"o", "r", "v", "g"}
 
+# El PDF 2024 corta/mezcla algunos encabezados de B.12–B.14 al extraer el texto. Estas
+# correcciones se anclan a la posición fija del campo (no a una coincidencia ambigua de nombre)
+# y reconstruyen el rótulo de la ficha según la misma tabla técnica.
+NOMBRES_POSICION = {
+    ("r", "2", 1): "CODIGO_PRESTAMO",
+    ("r", "2", 10): "FECHA_PRESTAMO",
+    ("r", "2", 20): "FECHA_VENCIMIENTO",
+    ("r", "2", 30): "TIPO_DEUDOR",
+    ("r", "2", 31): "CODIGO_ACTIVIDAD_ECONOMICA",
+    ("r", "2", 37): "PRESTAMOS_TRABAJADORES",
+    ("r", "2", 39): "CLASE_DEUDOR",
+    ("r", "2", 40): "RUT_DEUDOR",
+    ("r", "2", 49): "VER_DEUDOR",
+    ("r", "2", 50): "RAZON_SOCIAL_DEUDOR",
+    ("r", "2", 150): "NOMBRE_DEUDOR",
+    ("r", "2", 230): "PRIMER_APELLIDO_DEUDOR",
+    ("r", "2", 250): "SEGUNDO_APELLIDO_DEUDOR",
+    ("r", "2", 270): "PENSIONADO",
+    ("r", "2", 271): "DESCUENTO_PENSION",
+    ("r", "2", 272): "MONTO_PENSION",
+    ("r", "2", 280): "TIPO_PRESTAMO",
+    ("r", "2", 282): "MONTO_ASEGURADO",
+    ("r", "2", 291): "PRESTAMO_REPRESENTATIVO",
+    ("r", "2", 292): "ORIGEN_PRESTAMO",
+    ("r", "2", 293): "FECHA_ORIGINACION_O_RENEGOCIACION_ANTERIOR",
+    ("r", "2", 303): "CODIGO_RENEGOCIADO_MAYOR_ORDEN",
+    ("r", "2", 312): "CODIGO_RENEGOCIADO_SEGUNDO_ORDEN",
+    ("r", "2", 321): "CODIGO_RENEGOCIADO_TERCER_ORDEN",
+    ("r", "2", 330): "RUT_VENDEDORA_PRESTAMO",
+    ("r", "2", 339): "VER_VENDEDORA_PRESTAMO",
+    ("r", "2", 340): "CATEGORIA_RIESGO_VENDEDOR",
+    ("r", "2", 343): "PORCENTAJE_PROVISION_VENDEDOR",
+    ("r", "2", 347): "CATEGORIA_RIESGO_ADQUIRIDO",
+    ("r", "2", 349): "PORCENTAJE_PROVISION_ADQUIRIDO",
+    ("r", "2", 353): "CATEGORIA_RIESGO_OTORGADO",
+    ("r", "2", 356): "PORCENTAJE_PROVISION_OTORGADO",
+    ("r", "2", 361): "VENDEDORA_RELACIONADA",
+    ("r", "2", 362): "CODIGO_PRESTAMO_ADQUIRIDO",
+    ("r", "2", 377): "UNIDAD_REAJUSTE",
+    ("r", "2", 383): "CUOTAS_IMPAGAS",
+    ("r", "2", 400): "CUOTAS_IMPAGAS",
+    ("r", "2", 413): "SALDO_INSOLUTO_DEUDA",
+    ("r", "2", 430): "SALDO_INSOLUTO_DEUDA",
+    ("r", "2", 443): "MONTO",
+    ("r", "2", 458): "MONTO_PESOS",
+    ("r", "2", 468): "CUOTA",
+    ("r", "2", 483): "PERIODO_PAGO_CUOTA",
+    ("r", "2", 485): "GARANTIAS",
+    ("r", "2", 487): "PLAZO_PRESTAMO",
+    ("r", "2", 490): "PLAZO_GRACIA",
+    ("r", "2", 492): "TIPO_TASA",
+    ("r", "2", 493): "TASA_FIJA_PACTADA",
+    ("r", "2", 499): "TASA_FIJA_EFECTIVA",
+    ("r", "2", 505): "TASA_VARIABLE_BASE",
+    ("r", "2", 507): "SPREAD_TASA_VARIABLE",
+    ("r", "2", 511): "VALOR_FINAL_B.12",
+    ("r", "2", 521): "MONTO_PROVISION",
+    ("r", "2", 531): "MODELO_DETERIORO",
+    ("r", "2", 533): "MOROSIDAD",
+    ("r", "2", 534): "TIPO_TASA_MORA",
+    ("r", "2", 535): "TASA_MORA",
+    ("r", "2", 541): "COMISION_PREPAGO",
+    ("r", "2", 542): "OTRO_PREPAGO",
+    ("r", "2", 592): "SEG_DESGRAVAMEN",
+    ("r", "2", 593): "SEG_INVALIDEZ",
+    ("r", "2", 594): "SEG_CESANTIA",
+    ("r", "2", 595): "SEG_INCENDIO",
+    ("r", "2", 596): "SEG_TERREMOTO",
+    ("r", "2", 597): "SEG_OTRO_SEGURO",
+    ("r", "2", 598): "RUT_ASEG_DESGRAVAMEN",
+    ("r", "2", 607): "DV_ASEG_DESGRAVAMEN",
+    ("r", "2", 608): "RUT_ASEG_INVALIDEZ",
+    ("r", "2", 617): "DV_ASEG_INVALIDEZ",
+    ("r", "2", 618): "RUT_ASEG_CESANTIA",
+    ("r", "2", 627): "DV_ASEG_CESANTIA",
+    ("r", "2", 628): "RUT_ASEG_INCENDIO",
+    ("r", "2", 637): "DV_ASEG_INCENDIO",
+    ("r", "2", 638): "RUT_ASEG_TERREMOTO",
+    ("r", "2", 647): "DV_ASEG_TERREMOTO",
+    ("r", "2", 648): "RUT_ASEG_OTRO",
+    ("r", "2", 657): "DV_ASEG_OTRO",
+    ("v", "2", 1): "TIPO_INSTRUMENTO",
+    ("v", "2", 11): "ROL",
+    ("v", "2", 22): "COMUNA",
+    ("v", "2", 33): "NOMBRE_ARRENDATARIO_DEUDOR",
+    ("v", "2", 93): "RUT_ARRENDATARIO_DEUDOR",
+    ("v", "2", 102): "DV_ARRENDATARIO_DEUDOR",
+    ("v", "2", 103): "CODIGO_ACTIVIDAD_ECONOMICA",
+    ("v", "2", 109): "RELACION",
+    ("v", "2", 111): "FECHA_VENCIMIENTO_CONTRATO",
+    ("v", "2", 119): "CODIGO_IDENTIFICACION",
+    ("v", "2", 149): "FACTURACION_MES",
+    ("v", "2", 162): "RECAUDACION_MES_ACTUAL",
+    ("v", "2", 175): "RECAUDACION_MESES_ANTERIORES",
+    ("v", "2", 188): "RECAUDACION_MES_TOTAL",
+    ("v", "2", 201): "MONTO_SIN_MOROSIDAD",
+    ("v", "2", 213): "MOROSIDAD_MENOR_A_30_DIAS",
+    ("v", "2", 225): "MOROSIDAD_ENTRE_30_Y_MENOR_A_60_DIAS",
+    ("v", "2", 237): "MOROSIDAD_ENTRE_60_Y_MENOR_A_90_DIAS",
+    ("v", "2", 249): "MOROSIDAD_ENTRE_90_Y_MENOR_A_180_DIAS",
+    ("v", "2", 261): "MOROSIDAD_MAYOR_A_180_DIAS_Y_MENOR_A_1_ANO",
+    ("v", "2", 273): "MOROSIDAD_MAYOR_A_1_ANO_Y_MENOR_A_2_ANOS",
+    ("v", "2", 285): "MOROSIDAD_MAYOR_A_2_ANOS_Y_MENOR_A_3_ANOS",
+    ("v", "2", 297): "MOROSIDAD_MAYOR_A_3_ANOS_Y_MENOR_A_4_ANOS",
+    ("v", "2", 309): "MOROSIDAD_MAYOR_A_4_ANOS",
+    ("v", "2", 321): "MOROSIDAD_TOTAL",
+    ("v", "2", 333): "PROVISION_INCOBRABILIDAD",
+    ("v", "2", 345): "TIPO_BIEN_RAIZ",
+    ("v", "2", 357): "NUMERO_CUOTAS_VENCIDAS",
+    ("v", "2", 361): "CARACTERISTICA_DE_REPROGRAMACION",
+    ("v", "2", 364): "MONTO_TOTAL_REPROGRAMACION",
+    ("v", "2", 376): "TOTAL_M2_DISPONIBLES_ARRIENDO",
+    ("v", "2", 383): "TOTAL_M2_EN_ARRIENDO",
+    ("v", "2", 390): "TOTAL_M2_NO_ARRENDADOS",
+    ("v", "2", 397): "TIPO_CONTRATO",
+    ("v", "2", 399): "VALOR_M2_ARRIENDO",
+    ("v", "2", 406): "VALOR_M2_ESPERADO",
+    ("v", "2", 413): "DEUDA_CAPITAL_INTERESES_DEVENGADOS",
+    ("v", "2", 430): "DEUDA_CAPITAL_INTERESES_DEVENGADOS",
+    ("g", "2", 1): "RUT_CONTRAPARTE_NACIONAL",
+    ("g", "2", 10): "DV_CONTRAPARTE_NACIONAL",
+    ("g", "2", 11): "LEI_CONTRAPARTE_EXTRANJERA",
+    ("g", "2", 31): "NOMBRE_CONTRAPARTE_GARANTIA",
+    ("g", "2", 131): "NACIONALIDAD_CONTRAPARTE_GARANTIA",
+    ("g", "2", 133): "RELACIONADO",
+    ("g", "2", 135): "POSICION_COMPANIA",
+    ("g", "2", 137): "TIPO_GARANTIA",
+    ("g", "2", 139): "IDENTIFICADOR_GARANTIA",
+    ("g", "2", 153): "TIPO_ACTIVO_EN_GARANTIA",
+    ("g", "2", 163): "FOLIO_INSTRUMENTO_EN_GARANTIA",
+    ("g", "2", 173): "ITEM_INSTRUMENTO_EN_GARANTIA",
+    ("g", "2", 176): "VALOR_NOMINAL_INSTRUMENTO_EN_GARANTIA",
+    ("g", "2", 193): "CODIGO_IDENTIFICACION_INSTRUMENTO_EN_GARANTIA",
+    ("g", "2", 223): "MONEDA_DENOMINACION_ACTIVO_EN_GARANTIA",
+    ("g", "2", 229): "CLASIFICACION_DE_RIESGO_PAIS",
+    ("g", "2", 233): "VALOR_CONTABLE_ACTIVO_EN_GARANTIA_UM",
+    ("g", "2", 250): "VALOR_CONTABLE_ACTIVO_EN_GARANTIA",
+    ("g", "2", 263): "VALOR_RAZONABLE_ACTIVO_EN_GARANTIA_UM",
+    ("g", "2", 280): "VALOR_RAZONABLE_ACTIVO_EN_GARANTIA",
+    ("g", "2", 293): "CUENTA_EEFF_DE_REGISTRO_DE_LA_GARANTIA",
+}
+
+# Etiquetas literales de la ficha que incluyen unidad en el propio CAMPO; el identificador
+# técnico de Parquet deriva la unidad al sufijo, pero el diccionario debe mostrar el rótulo CMF.
+NOMBRES_FICHA_POSICION = {
+    ("g", "2", 250): "VALOR_CONTABLE_ACTIVO_EN_GARANTIA_M$",
+    ("g", "2", 280): "VALOR_RAZONABLE_ACTIVO_EN_GARANTIA_M$",
+}
+UNIDAD_POSICION = {
+    ("r", "2", 521): "(M$)",
+    ("v", "2", 201): "(M$)", ("v", "2", 333): "(M$)",
+    ("v", "2", 413): "(UM)", ("v", "2", 430): "(M$)",
+    ("g", "2", 250): "(M$)", ("g", "2", 280): "(M$)",
+}
 # Un mismo campo, dos nombres: la ficha de 2024 renombra o trunca distinto que la de 2016.
 # Sin esto la tabla publicada tendría dos columnas para lo mismo (una nula en cada época).
 PARES = {
@@ -235,6 +392,11 @@ def _base(formato: str) -> dict[tuple[str, str], list[dict]]:
         vistos: dict[str, int] = {}
         campos: list[dict] = []
         for n, campo in enumerate(registro.campos):
+            nombre_oficial = NOMBRES_POSICION.get((clave[0], clave[1], campo.inicio))
+            if nombre_oficial:
+                campo.nombre = nombre_oficial
+                campo.nombre_ficha = NOMBRES_FICHA_POSICION.get(
+                    (clave[0], clave[1], campo.inicio), nombre_oficial)
             nombre = _reparar(campo.nombre)
             if nombre in _OMITIR_NOMBRE or (campo.inicio, nombre) in _OMITIR_INICIO:
                 continue
@@ -250,7 +412,8 @@ def _base(formato: str) -> dict[tuple[str, str], list[dict]]:
                 "nombre": nombre,
                 "aparece": aparece,
                 "campo": campo,
-                "unidad_curada": UNIDAD_CURADA.get((clave[0], clave[1], nombre)),
+                "unidad_curada": UNIDAD_POSICION.get(
+                    (clave[0], clave[1], campo.inicio), UNIDAD_CURADA.get((clave[0], clave[1], nombre))),
                 "siguiente": registro.campos[n + 1] if n + 1 < len(registro.campos) else None,
             })
         salida[clave] = campos

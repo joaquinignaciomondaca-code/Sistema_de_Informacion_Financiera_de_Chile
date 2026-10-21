@@ -192,10 +192,12 @@ def audit_vocabulario():
     else:
         print(f"  [OK] {len(listas)} listas de entidades se llaman lista_entidades")
 
-    # Nombres y tipos únicos: dos tablas no pueden llamarse igual.
-    repetidos = [n for n in {t["nombre"] for t in tablas} if [x["nombre"] for x in tablas].count(n) > 1]
+    # El título oficial puede repetirse cuando el registro tiene dos representaciones
+    # deliberadas (completa y campos relevantes); la combinación título/tipo sí es única.
+    claves = [(t["nombre"], t["tipo"]) for t in tablas]
+    repetidos = sorted({clave for clave in claves if claves.count(clave) > 1})
     if repetidos:
-        fail(f"nombres de tabla repetidos: {', '.join(repetidos)}")
+        fail("tablas repetidas con el mismo título y tipo: " + ", ".join(f"{n} ({tipo})" for n, tipo in repetidos))
 
     # Los nombres prohibidos no pueden aparecer en los archivos vivos.
     # La lista de nombres retirados vive en el propio vocabulario.

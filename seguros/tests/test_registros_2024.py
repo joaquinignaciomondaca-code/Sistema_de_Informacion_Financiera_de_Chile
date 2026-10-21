@@ -1,12 +1,8 @@
-"""Publica de punta a punta los registros que el anexo 2024 agregó (B.6 y B.9–B.11).
+"""Publica de punta a punta los siete registros incorporados por el formato 2024.
 
-No hay muestras reales de esos archivos en el repositorio (la CMF no los publica hasta
-2024-12 y el sandbox no llega a cmfchile.cl), así que esta prueba arma líneas sintéticas con
-la posición y el PICTURE de la ficha: si el inventario estuviera corrido, las líneas no
-medirían lo que mide el archivo y `leer_zip` las rechazaría.
-
-Se comprueba: largo de cada línea, que las cuatro tablas nuevas se publiquen, que una columna
-conocida de cada una traiga el valor sintético, y que el Parquet se escriba con su esquema.
+No hay muestras reales de estas fichas en el repositorio, así que se arman líneas sintéticas
+con posiciones y PICTURE del anexo oficial. Se comprueban largos, lectura, conversiones de
+campos, cuadratura y escritura Parquet de B.6, B.9–B.14.
 
   python -m seguros.tests.test_registros_2024
 """
@@ -19,11 +15,13 @@ from seguros.scripts import actualizar_carteras as ac
 from seguros.scripts import ficha_1835
 from seguros.scripts.formato_1835 import LARGO
 
-PERIODO = "2025-01"
+PERIODO = "2024-12"
 RUT = "076543210"        # 9 dígitos: el lector agrega el dígito verificador
 NOMBRE = "COMPANIA DE PRUEBA S A"
 NUEVAS = {"o": "otras_inversiones", "d": "tablas_descriptores",
-          "t": "tablas_desarrollo", "e": "flujos_activos_elegibles"}
+          "t": "tablas_desarrollo", "e": "flujos_activos_elegibles",
+          "r": "prestamos", "v": "bienes_raices_arriendo_morosidad",
+          "g": "garantias_derivados"}
 
 
 def linea(letra: str, tipo: str) -> str:
@@ -49,6 +47,22 @@ def linea(letra: str, tipo: str) -> str:
         else:                                # texto (incluidos los rellenos)
             valor = "X" * largo
         relleno[inicio:inicio + largo] = list(valor[:largo])
+    # Casos de privacidad: un deudor/arrendatario y una contraparte persona natural.
+    if letra == "r" and tipo == "2":
+        relleno[30] = "N"                 # TIPO_DEUDOR
+        relleno[40:49] = list("012345678") # RUT_DEUDOR, cuerpo bajo el umbral de persona jurídica
+        relleno[49] = "5"                  # VER_DEUDOR
+        relleno[50:59] = list("PERSONA  ")
+        relleno[150:158] = list("NOMBRE  ")
+    elif letra == "v" and tipo == "2":
+        relleno[11:22] = list("ROL-001-002")
+        relleno[33:41] = list("PERSONA ")
+        relleno[93:102] = list("012345678")
+        relleno[102] = "5"
+    elif letra == "g" and tipo == "2":
+        relleno[1:10] = list("012345678")
+        relleno[10] = "5"
+        relleno[31:39] = list("PERSONA ")
     return "".join(relleno)
 
 
@@ -64,7 +78,7 @@ def totales(letra: str, cuantas: int) -> str:
 
 def zip_mes() -> bytes:
     archivos = {}
-    # B.1 y B.8 son obligatorios para que el mes se publique; el resto es lo que se prueba.
+    # B.1 y B.8 son obligatorios para que el mes se publique; se prueba además B.6 y B.9–B.14.
     for letra, tipo in (("i", "2"), ("c", "2")) + tuple((l, "2") for l in NUEVAS):
         cuerpo = [linea(letra, tipo), linea(letra, tipo)]
         lineas = [encabezado(letra)] + cuerpo + [totales(letra, len(cuerpo) + 2)]
@@ -78,6 +92,16 @@ def zip_mes() -> bytes:
 
 def main() -> int:
     fallas = 0
+    from seguros.scripts.vistas_1835 import RESUMENES_RELEVANTES
+    ac._ESQUEMAS.clear()
+    for base, (resumen, _titulo, columnas) in RESUMENES_RELEVANTES.items():
+        nombres = ac.esquema(resumen).names
+        if nombres != list(columnas):
+            print(f"FALLA {resumen}: esquema distinto de la proyección declarada")
+            fallas += 1
+        if len(nombres) >= len(ac.esquema(base).names):
+            print(f"FALLA {resumen}: no reduce columnas respecto de {base}")
+            fallas += 1
     filas, companias, avisos, excluidos = ac.leer_zip(zip_mes(), PERIODO, "vida")
     if excluidos or not companias:
         print("FALLA: archivos excluidos:", excluidos)
@@ -91,6 +115,9 @@ def main() -> int:
         "tablas_descriptores": ("codigo_nemotecnico", "X" * 30),
         "tablas_desarrollo": ("nro_cupon", 7),
         "flujos_activos_elegibles": ("circular_aplicada", 7),
+        "prestamos": ("codigo_prestamo", 7),
+        "bienes_raices_arriendo_morosidad": ("tipo_instrumento", "X" * 10),
+        "garantias_derivados": ("identificador_garantia", "X" * 14),
     }
     for tabla, (columna, valor) in esperado.items():
         fila = filas[tabla][0] if filas[tabla] else {}
@@ -117,15 +144,52 @@ def main() -> int:
                 fallas += 1
                 continue
             import pyarrow.parquet as pq
-            esquema = pq.read_schema(ruta)
-            if "periodo" not in esquema.names or esquema.names[0] != "periodo":
-                print(f"FALLA {tabla}: esquema inesperado {esquema.names[:4]}")
+            schema = pq.read_schema(ruta)
+            if "periodo" not in schema.names or schema.names[0] != "periodo":
+                print(f"FALLA {tabla}: esquema inesperado {schema.names[:4]}")
                 fallas += 1
             if pq.ParquetFile(ruta).metadata.num_rows != 2:
                 print(f"FALLA {tabla}: el Parquet no tiene las 2 filas")
                 fallas += 1
-        if "otras_inversiones" not in ac.TABLAS or "flujos_activos_elegibles" not in ac.TABLAS:
-            print("FALLA: el publicador no incluye las tablas nuevas")
+        # También se generan las dos vistas simplificadas cuyo registro completo está en este ZIP.
+        for tabla in ("renta_fija_relevante", "prestamos_relevantes",
+                      "bienes_raices_arriendo_morosidad_relevantes"):
+            ruta = ac.ruta_particion(tabla, PERIODO)
+            if not ruta.exists():
+                print(f"FALLA {tabla}: no se escribió la vista de campos relevantes")
+                fallas += 1
+                continue
+            import pyarrow.parquet as pq
+            schema = pq.read_schema(ruta)
+            from seguros.scripts.vistas_1835 import RESUMENES_RELEVANTES
+            source = next(base for base, cfg in RESUMENES_RELEVANTES.items() if cfg[0] == tabla)
+            if len(schema) >= len(ac.esquema(source)) or len(schema) < 10:
+                print(f"FALLA {tabla}: proyección de columnas no simplificada ({len(schema)})")
+                fallas += 1
+            if pq.ParquetFile(ruta).metadata.num_rows != 2:
+                print(f"FALLA {tabla}: el resumen no conservó las dos filas")
+                fallas += 1
+        import pyarrow.parquet as pq
+        prestamos = pq.read_table(ac.ruta_particion("prestamos", PERIODO)).to_pandas()
+        if not prestamos["rut_deudor"].isna().all() or not prestamos["nombre_deudor"].isna().all():
+            print("FALLA privacidad B.12: quedó identidad de deudor natural")
+            fallas += 1
+        arriendos = pq.read_table(ac.ruta_particion("bienes_raices_arriendo_morosidad", PERIODO)).to_pandas()
+        if not arriendos["rol"].isna().all() or not arriendos["rut_arrendatario_deudor"].isna().all():
+            print("FALLA privacidad B.13: quedó rol o RUT de arrendatario natural")
+            fallas += 1
+        if not arriendos["property_id"].astype(str).str.startswith("BIEN-").all():
+            print("FALLA privacidad B.13: no se generó property_id longitudinal")
+            fallas += 1
+        garantias = pq.read_table(ac.ruta_particion("garantias_derivados", PERIODO)).to_pandas()
+        if not garantias["rut_contraparte_nacional"].isna().all() or not garantias["nombre_contraparte_garantia"].isna().all():
+            print("FALLA privacidad B.14: quedó identidad de contraparte natural")
+            fallas += 1
+        if not garantias["contraparte_tipo"].eq("persona_natural_probable").all():
+            print("FALLA privacidad B.14: no se clasificó contraparte natural")
+            fallas += 1
+        if any(tabla not in ac.TABLAS for tabla in NUEVAS.values()):
+            print("FALLA: el publicador no incluye todos los registros nuevos")
             fallas += 1
 
     print(f"avisos de lectura: {len(avisos)}")
