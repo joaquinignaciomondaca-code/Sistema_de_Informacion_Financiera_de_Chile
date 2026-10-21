@@ -41,6 +41,8 @@ La auditoría detectó además una brecha de integración: el conjunto estaba en
 - `unittest` de vistas, diagnóstico, escritura estable y privacidad: **30 pruebas, OK**.
 - `scripts/audit_web_full.py`: sintaxis JS válida; vistas y archivos enlazados; catálogo del visor y consultas SQL comprobados; columnas declaradas cotejadas con Parquet.
 - `scripts/audit_navigation.py`, `scripts/normalizar_vocabulario.py --check`, `scripts/build_download_catalog.py --check` y `seguros.scripts.diccionario_1835 --check`: OK después de integrar la ampliación de interfaz.
+- GitHub Actions **[run 39658191864](https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/actions/runs/39658191864)**: sonda acotada de DNS/TCP/TLS/TTFB y transferencia CMF; conectividad actual satisfactoria.
+- GitHub Actions **[run 39659027638](https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/actions/runs/39659027638)**: perfil de cuatro ZIP representativos, terminado con éxito; no publicó datos ni conservó payloads fuente.
 
 ## Observaciones y riesgos residuales
 
@@ -52,7 +54,16 @@ En la primera lectura del manifiesto aparecían **nueve entradas**, pero una era
 
 Se compararon las estructuras con el manual CMF incluido en el repositorio. En la sección B.8 (archivo C) se describen registros tipo 1, 2 y 3, no tipo `x`; en B.14 (archivo G), las estructuras documentadas son tipos 1 a 3, no tipo `4`. Por tanto, no hay soporte documental para incorporar esos registros ni para asignarles campos o semántica. La fila truncada del archivo A tampoco satisface el largo fijo y no se corrigió ni completó.
 
-Se intentó recuperar los ZIP afectados en una sonda de solo lectura de Actions: los ocho intentos terminaron en `URLError: timed out` antes de obtener bytes de fuente. La primera ejecución de la sonda falló por no capturar esas excepciones; la segunda dejó los errores visibles como anotaciones y el workflow terminó verde, pero **no caracterizó ninguna línea**. Una de las búsquedas del archivo A, además, estaba dirigida al sector `vida` cuando el manifiesto identifica `generales`; al no descargar datos, no aportó evidencia. La sonda temporal se retiró del workflow. En consecuencia, no se conocen las máscaras de caracteres, el contenido íntegro ni los hashes de miembro de estas ocho líneas. Se mantienen excluidas, sin inferencias ni modificaciones.
+La sonda de solo lectura se redujo a **cuatro ZIP distintos**, con sectores correctos, una descarga por ZIP y sin persistir los payloads. La prueba corregida confirmó:
+
+- **Generales, 2025-05, A `a202505g.99017000`:** 8 líneas; 7 de 572 caracteres y 1 de 571 (línea 2). SHA-256 del ZIP `94355cd83b08f4ecb71415669ee91c1dfb2a12e44ce23bbabd4b328d2f4ebf43`; del miembro `454db90dfec398227a11043090ef9861a30743c541cff7f5b0813d4ccf1f0cd8`.
+- **Vida, 2025-05, C `c202505v.99289000`:** 36 líneas de 138 caracteres; una línea tipo `x` (línea 1). SHA-256 del ZIP `9aa54067a771de92e3c1d05c0f18d4e5512b5de54ca7b4f4fdc56149ca596aaf`; del miembro `ea2c1f8e42c7f18aaa54cc45dda2c0314059c3a026d0227d6d594869b6a9050f`.
+- **Vida, 2026-04, G `g202604v.76282191`:** 2 líneas de 300 caracteres; una tipo `4`. SHA-256 del ZIP `78429066ef65e17510d22902d302d2b9a3b0276454611211f7a2ff7b07626ef7`; del miembro `014753ef214de0945e06263004c1f0d7a60453aeadd3a9d075b9a36c5752b5ef`.
+- **Vida, 2026-09, G `g202609v.76282191`:** 2 líneas de 300 caracteres; una tipo `4`. SHA-256 del ZIP `03d7f138e80b3f59eccfd6dd86e04ad5b0373f7159c6f3c449ce3b9128c87434`; del miembro `aaad7c69139d6fb5e581ca32c8a8557bfd1a895002e259a2a81a1155498108ce`.
+
+Las máscaras de caracteres de los dos registros tipo `4` muestreados son iguales; se conservaron solo máscaras, largos, conteos y hashes, no valores de registros. No se asignó significado a sus posiciones. Estos perfiles confirman que los tres tipos de excepción no están descritos por los formatos consultados y que el registro A corto incumple el largo fijo; los ocho casos siguen excluidos.
+
+**Resultado de la investigación de los timeouts:** la repetición controlada de conectividad en Actions obtuvo HTTP 200 de `archi`, con respuesta `1`. También funcionó la descarga ZIP por `curl` y por el mismo `_get` de Python que usa el publicador. En la medición de `curl`, DNS tomó 0,15 s, TCP 0,27 s, TLS 0,39 s, pero el primer byte tardó 18,19 s; el ZIP de 13.773.609 bytes terminó en 20,84 s. Las cuatro descargas Python completaron en 12,6–22,1 s. Esto apunta a latencia/variabilidad del lado del endpoint CMF al preparar la descarga, no a un fallo persistente de DNS, conexión, TLS, sector o nombre de archivo. No quedó una traza de fases del run anterior que permita probar la causa exacta de aquellos `URLError: timed out`; por eso se registra como una intermitencia observada, no como causa raíz demostrada. La sonda temporal se retiró del workflow tras obtener evidencia, y el parser permanece fail-closed.
 
 ### 3. Trazabilidad de versión de la fuente
 
@@ -71,5 +82,5 @@ Cada fila guarda el nombre del archivo, y el manifiesto del período guarda el S
 1. Mantener los controles de largo, tipo de registro, conteos y manifiestos en cada ejecución.
 2. Incorporar número de línea y hash del archivo miembro (o archivo fuente inmutable) si se exige trazabilidad transaccional fuerte.
 3. Registrar cambios de hashes de ZIP como revisiones de fuente y conservar diffs de filas al reconstruir períodos.
-4. Reintentar la caracterización de los ocho casos solo cuando la descarga de CMF vuelva a responder; hasta entonces, mantenerlos excluidos y no ampliar el parser con semánticas no documentadas.
+4. Mantener los ocho casos excluidos. La caracterización de tipo `4` cubre dos meses representativos con máscara idéntica; ampliar la muestra de los cuatro meses restantes solo si aporta una decisión de validación, sin incorporar semánticas no documentadas.
 5. Mantener `registro_original` aun si se agrega una proyección posicional: la fila fuente íntegra sirve como evidencia y permite reprocesar el contenido.
