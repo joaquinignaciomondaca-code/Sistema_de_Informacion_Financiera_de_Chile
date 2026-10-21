@@ -3415,7 +3415,12 @@
         "acciones_relevantes": 918,
         "bienes_raices_relevantes": 31986,
         "extranjeros_relevantes": 5290,
-        "derivados_relevantes": 4117
+        "derivados_relevantes": 4117,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 319,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 23,
       "detalle_avisos": [
@@ -3467,7 +3472,16 @@
         "acciones_relevantes": 920,
         "bienes_raices_relevantes": 33657,
         "extranjeros_relevantes": 5328,
-        "derivados_relevantes": 4140
+        "derivados_relevantes": 4140,
+        "otras_inversiones": 1994,
+        "tablas_descriptores": 353,
+        "tablas_desarrollo": 61371,
+        "flujos_activos_elegibles": 214,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 329,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 19,
       "detalle_avisos": [
@@ -3490,7 +3504,11 @@
         "generales c202501g.99037000: el total declara 15 líneas y el archivo tiene 19",
         "generales f202501g.77096952: el total declara 4 líneas y el archivo tiene 5",
         "generales x202501g.96573590: el total declara 5 líneas y el archivo tiene 6"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "6ef8ccde09173cd49a14f3fd2fbb38e9c36f20e95a988cfe8eed0d6de5aafedf",
+        "generales": "39621f59c2c2b8a108915ea88b272ba0608ae8885197cd92ba7446122292d55a"
+      }
     },
     "2025-02": {
       "formato": "v2024",
@@ -3511,7 +3529,16 @@
         "acciones_relevantes": 938,
         "bienes_raices_relevantes": 33742,
         "extranjeros_relevantes": 5302,
-        "derivados_relevantes": 4196
+        "derivados_relevantes": 4196,
+        "otras_inversiones": 1968,
+        "tablas_descriptores": 193,
+        "tablas_desarrollo": 41435,
+        "flujos_activos_elegibles": 217,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 316,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 25,
       "detalle_avisos": [
@@ -3540,7 +3567,11 @@
         "generales c202502g.99037000: el total declara 17 líneas y el archivo tiene 18",
         "generales x202502g.96573590: el total declara 5 líneas y el archivo tiene 6",
         "renta_fija: campo ilegible, queda vacío · generales i202502g.76212519 línea 4: tasa_emision_pct (número '########')"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "c0c2ec00c5e87b194c902542fe7a2114f40da8f16c62411ec3225ccfcc7efc3c",
+        "generales": "b6d2d5607cbc8972eb08675e974326b8bbc94073a9e5d6a0a0b28654d36c3b77"
+      }
     },
     "2025-03": {
       "formato": "v2024",
@@ -3561,7 +3592,16 @@
         "acciones_relevantes": 924,
         "bienes_raices_relevantes": 33710,
         "extranjeros_relevantes": 5412,
-        "derivados_relevantes": 4445
+        "derivados_relevantes": 4445,
+        "otras_inversiones": 2233,
+        "tablas_descriptores": 1159,
+        "tablas_desarrollo": 275797,
+        "flujos_activos_elegibles": 211,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 330,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 24,
       "detalle_avisos": [
@@ -3589,7 +3629,11 @@
         "generales c202503g.99288000: el total declara 14 líneas y el archivo tiene 15",
         "generales f202503g.76620932: el total declara 9 líneas y el archivo tiene 6",
         "generales f202503g.77096952: el total declara 4 líneas y el archivo tiene 5"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "59b84defd1580bee57194dff1e109f2ec8466545abb605e836800ba689294153",
+        "generales": "fef2f1441f10aa11e39842624330a3846c55e3835ca405601f483101891b72c2"
+      }
     },
     "2025-04": {
       "formato": "v2024",
@@ -3610,7 +3654,16 @@
         "acciones_relevantes": 920,
         "bienes_raices_relevantes": 33808,
         "extranjeros_relevantes": 5876,
-        "derivados_relevantes": 4617
+        "derivados_relevantes": 4617,
+        "otras_inversiones": 1922,
+        "tablas_descriptores": 264,
+        "tablas_desarrollo": 48666,
+        "flujos_activos_elegibles": 216,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 330,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 26,
       "detalle_avisos": [
@@ -3640,7 +3693,11 @@
         "generales c202504g.99288000: el total declara 14 líneas y el archivo tiene 15",
         "generales f202504g.77096952: el total declara 4 líneas y el archivo tiene 5",
         "generales x202504g.96573590: el total declara 5 líneas y el archivo tiene 6"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "ac223b8b1a22ac434fb1fe9346c62287064c64c06e5f5325c83639f2de04f577",
+        "generales": "1ef5bc1efeb6f0f2db39e7aa97b3756e2395353c65bac354b9f80bcf972692a9"
+      }
     },
     "2025-05": {
       "formato": "v2024",
@@ -3661,7 +3718,16 @@
         "acciones_relevantes": 913,
         "bienes_raices_relevantes": 34209,
         "extranjeros_relevantes": 5547,
-        "derivados_relevantes": 4622
+        "derivados_relevantes": 4622,
+        "otras_inversiones": 1914,
+        "tablas_descriptores": 98,
+        "tablas_desarrollo": 16002,
+        "flujos_activos_elegibles": 200,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 339,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 31,
       "detalle_avisos": [
@@ -3700,7 +3766,11 @@
       "archivos_excluidos": [
         "vida c202505v.99289000: tipo de registro 'x' desconocido (línea 2)",
         "generales a202505g.99017000: 1 líneas con largo distinto de 572 (p. ej. línea 2 con 571)"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "9aa54067a771de92e3c1d05c0f18d4e5512b5de54ca7b4f4fdc56149ca596aaf",
+        "generales": "94355cd83b08f4ecb71415669ee91c1dfb2a12e44ce23bbabd4b328d2f4ebf43"
+      }
     },
     "2025-06": {
       "formato": "v2024",
@@ -3721,7 +3791,16 @@
         "acciones_relevantes": 920,
         "bienes_raices_relevantes": 34191,
         "extranjeros_relevantes": 5512,
-        "derivados_relevantes": 4678
+        "derivados_relevantes": 4678,
+        "otras_inversiones": 1909,
+        "tablas_descriptores": 590,
+        "tablas_desarrollo": 152189,
+        "flujos_activos_elegibles": 215,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 344,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 27,
       "detalle_avisos": [
@@ -3752,7 +3831,11 @@
         "generales c202506g.99288000: el total declara 13 líneas y el archivo tiene 14",
         "generales f202506g.76620932: el total declara 9 líneas y el archivo tiene 7",
         "generales f202506g.96573590: el total declara 3 líneas y el archivo tiene 4"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "76351544334662392b6e0c8dfac35f4cd22314ceea0bba418cca2d5050a2777d",
+        "generales": "d1d3d2a5b099371635c8fa6300693b50567399ca6634c8de743ab9b8fcf5dbb6"
+      }
     },
     "2025-07": {
       "formato": "v2024",
@@ -3773,7 +3856,16 @@
         "acciones_relevantes": 910,
         "bienes_raices_relevantes": 34361,
         "extranjeros_relevantes": 5523,
-        "derivados_relevantes": 4662
+        "derivados_relevantes": 4662,
+        "otras_inversiones": 1914,
+        "tablas_descriptores": 203,
+        "tablas_desarrollo": 38899,
+        "flujos_activos_elegibles": 208,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 343,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 27,
       "detalle_avisos": [
@@ -3804,7 +3896,11 @@
         "generales c202507g.99288000: el total declara 13 líneas y el archivo tiene 14",
         "generales f202507g.76620932: el total declara 9 líneas y el archivo tiene 7",
         "generales f202507g.96573590: el total declara 3 líneas y el archivo tiene 4"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "a2aafdddc82726e3f482e564473ca4ca94d0fede454c57e8e4306d2ec29d4c19",
+        "generales": "eac04756baca7f5409a3077f23a3d8d0b78ba8b410a8c5059ca1c9827d94958b"
+      }
     },
     "2025-08": {
       "formato": "v2024",
@@ -3825,7 +3921,16 @@
         "acciones_relevantes": 905,
         "bienes_raices_relevantes": 34741,
         "extranjeros_relevantes": 5515,
-        "derivados_relevantes": 4693
+        "derivados_relevantes": 4693,
+        "otras_inversiones": 1895,
+        "tablas_descriptores": 158,
+        "tablas_desarrollo": 33696,
+        "flujos_activos_elegibles": 192,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 346,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 33,
       "detalle_avisos": [
@@ -3862,7 +3967,11 @@
         "renta_fija: campo ilegible, queda vacío · generales i202508g.76212519 línea 5: tasa_emision_pct (número '########')",
         "renta_fija: campo ilegible, queda vacío · generales i202508g.76212519 línea 6: tasa_emision_pct (número '########')",
         "renta_fija: campo ilegible, queda vacío · generales i202508g.76212519 línea 7: tasa_emision_pct (número '########')"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "c27e54dabb3af95e1bf5976b63cde96477609827a6954616aab29d9c8b7aec95",
+        "generales": "93a1537119ec3485b1a981bbeae7f10e67f63ff630331185e94721ff5582fb33"
+      }
     },
     "2025-09": {
       "formato": "v2024",
@@ -3883,7 +3992,16 @@
         "acciones_relevantes": 908,
         "bienes_raices_relevantes": 34925,
         "extranjeros_relevantes": 5493,
-        "derivados_relevantes": 4844
+        "derivados_relevantes": 4844,
+        "otras_inversiones": 1900,
+        "tablas_descriptores": 249,
+        "tablas_desarrollo": 62313,
+        "flujos_activos_elegibles": 206,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 339,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 32,
       "detalle_avisos": [
@@ -3919,7 +4037,11 @@
         "renta_fija: campo ilegible, queda vacío · generales i202509g.76212519 línea 5: tasa_emision_pct (número '########')",
         "renta_fija: campo ilegible, queda vacío · generales i202509g.76212519 línea 6: tasa_emision_pct (número '########')",
         "renta_fija: campo ilegible, queda vacío · generales i202509g.76212519 línea 7: tasa_emision_pct (número '########')"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "1951a1110f0ac3ab4aba1868e65cc00058ee36beaefe56ff66691ef7694389ca",
+        "generales": "b009f940cdfbbaf1e9400a7a8fcfd0a8466c86f2ccdeb0e006d95fb62cc67a69"
+      }
     },
     "2025-10": {
       "formato": "v2024",
@@ -3940,7 +4062,16 @@
         "acciones_relevantes": 911,
         "bienes_raices_relevantes": 34628,
         "extranjeros_relevantes": 5455,
-        "derivados_relevantes": 4806
+        "derivados_relevantes": 4806,
+        "otras_inversiones": 1883,
+        "tablas_descriptores": 201,
+        "tablas_desarrollo": 48510,
+        "flujos_activos_elegibles": 207,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 344,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 31,
       "detalle_avisos": [
@@ -3975,7 +4106,11 @@
         "generales f202510g.96573590: el total declara 2 líneas y el archivo tiene 3",
         "generales p202510g.99017000: el encabezado dice 202509 pero la CMF lo publica en 2025-10",
         "renta_fija: campo ilegible, queda vacío · generales i202510g.76212519 línea 8: tasa_emision_pct (número '########')"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "9c6e9fc300aa387001c0b1f8ad4e27224b75b4b1482a3e7774cfdb6225dece9b",
+        "generales": "641c3940df9c48a87f51135dfe0b20d5648317e6b62ef77bc293fede5ef3bd57"
+      }
     },
     "2025-11": {
       "formato": "v2024",
@@ -3996,7 +4131,16 @@
         "acciones_relevantes": 917,
         "bienes_raices_relevantes": 34577,
         "extranjeros_relevantes": 5468,
-        "derivados_relevantes": 4838
+        "derivados_relevantes": 4838,
+        "otras_inversiones": 1876,
+        "tablas_descriptores": 707,
+        "tablas_desarrollo": 216645,
+        "flujos_activos_elegibles": 208,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 341,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 29,
       "detalle_avisos": [
@@ -4029,7 +4173,11 @@
         "generales f202511g.96573590: el total declara 2 líneas y el archivo tiene 3",
         "generales x202511g.76844788: el encabezado dice 202510 pero la CMF lo publica en 2025-11",
         "renta_fija: campo ilegible, queda vacío · generales i202511g.76212519 línea 8: tasa_emision_pct (número '########')"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "9270f87f8e987e40aa721c4dcadf73cd144f04082977961e96e071c6f2c04203",
+        "generales": "8f0c08d93ada57a79f6fbc963aa45c63f1c24f50f5678af7940d8a04425651c5"
+      }
     },
     "2025-12": {
       "formato": "v2024",
@@ -4050,7 +4198,16 @@
         "acciones_relevantes": 919,
         "bienes_raices_relevantes": 34600,
         "extranjeros_relevantes": 5446,
-        "derivados_relevantes": 4708
+        "derivados_relevantes": 4708,
+        "otras_inversiones": 1931,
+        "tablas_descriptores": 671,
+        "tablas_desarrollo": 186388,
+        "flujos_activos_elegibles": 206,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 357,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 25,
       "detalle_avisos": [
@@ -4079,7 +4236,11 @@
         "generales f202512g.76810563: el total declara 8 líneas y el archivo tiene 6",
         "generales f202512g.96573590: el total declara 2 líneas y el archivo tiene 3",
         "renta_fija: campo ilegible, queda vacío · generales i202512g.76212519 línea 5: tasa_emision_pct (número '########')"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "c6a71378f7c2414bfff897c20bf8602fb55df37e9cda29fd04f0b010a70c31af",
+        "generales": "971e201f412700e94df09b322cb33c8f4b43669d4a2f1874ccb8dd20a69ac157"
+      }
     },
     "2026-01": {
       "formato": "v2024",
@@ -4100,7 +4261,16 @@
         "acciones_relevantes": 920,
         "bienes_raices_relevantes": 34642,
         "extranjeros_relevantes": 5385,
-        "derivados_relevantes": 4762
+        "derivados_relevantes": 4762,
+        "otras_inversiones": 1896,
+        "tablas_descriptores": 3354,
+        "tablas_desarrollo": 773303,
+        "flujos_activos_elegibles": 189,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 263,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 27,
       "detalle_avisos": [
@@ -4131,7 +4301,11 @@
         "generales f202601g.96573590: el total declara 2 líneas y el archivo tiene 3",
         "generales x202601g.99225000: el encabezado dice 202501 pero la CMF lo publica en 2026-01",
         "renta_fija: campo ilegible, queda vacío · generales i202601g.76212519 línea 5: tasa_emision_pct (número '########')"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "777107d5895f417a8d9b98484f9147ee567c1fba0a2428f04cb26bab5aa656d9",
+        "generales": "54f44a6b45fc730a4151f2108800506f17c185a28c7c4859d4b6b83162aad87e"
+      }
     },
     "2026-02": {
       "formato": "v2024",
@@ -4152,7 +4326,16 @@
         "acciones_relevantes": 914,
         "bienes_raices_relevantes": 34654,
         "extranjeros_relevantes": 5425,
-        "derivados_relevantes": 4970
+        "derivados_relevantes": 4970,
+        "otras_inversiones": 1885,
+        "tablas_descriptores": 188,
+        "tablas_desarrollo": 32420,
+        "flujos_activos_elegibles": 186,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 200,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 30,
       "detalle_avisos": [
@@ -4186,7 +4369,11 @@
         "generales f202602g.96573590: el total declara 2 líneas y el archivo tiene 3",
         "generales f202602g.99225000: el encabezado dice 202601 pero la CMF lo publica en 2026-02",
         "generales x202602g.99225000: el encabezado dice 202502 pero la CMF lo publica en 2026-02"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "68fc159addfae839a869d9c82448e88091906b882644b7a9a6b6a159955ed90d",
+        "generales": "f55348edcbff4806f834c30cf656cec4f423923bd4d73804e5f18692e7f190f4"
+      }
     },
     "2026-03": {
       "formato": "v2024",
@@ -4207,7 +4394,16 @@
         "acciones_relevantes": 911,
         "bienes_raices_relevantes": 35048,
         "extranjeros_relevantes": 5634,
-        "derivados_relevantes": 5111
+        "derivados_relevantes": 5111,
+        "otras_inversiones": 1896,
+        "tablas_descriptores": 248,
+        "tablas_desarrollo": 39959,
+        "flujos_activos_elegibles": 188,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 246,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 28,
       "detalle_avisos": [
@@ -4239,7 +4435,11 @@
         "generales c202603g.99288000: el total declara 13 líneas y el archivo tiene 14",
         "generales f202603g.96573590: el total declara 2 líneas y el archivo tiene 3",
         "generales x202603g.99225000: el encabezado dice 202503 pero la CMF lo publica en 2026-03"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "2dcae2d0b09c05352e92bfcab281b34a17092b2c0b295b8b98779c8da20df0cb",
+        "generales": "a043139ac9e69b22c81d29ff619c694c67625c187ab870ccb56acb8a75f6e143"
+      }
     },
     "2026-04": {
       "formato": "v2024",
@@ -4260,7 +4460,16 @@
         "acciones_relevantes": 919,
         "bienes_raices_relevantes": 34999,
         "extranjeros_relevantes": 5643,
-        "derivados_relevantes": 5177
+        "derivados_relevantes": 5177,
+        "otras_inversiones": 1909,
+        "tablas_descriptores": 129,
+        "tablas_desarrollo": 18815,
+        "flujos_activos_elegibles": 179,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 268,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 31,
       "detalle_avisos": [
@@ -4295,7 +4504,11 @@
         "generales f202604g.77096952: el total declara 3 líneas y el archivo tiene 4",
         "generales f202604g.96573590: el total declara 2 líneas y el archivo tiene 3",
         "generales x202604g.99225000: el encabezado dice 202504 pero la CMF lo publica en 2026-04"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "78429066ef65e17510d22902d302d2b9a3b0276454611211f7a2ff7b07626ef7",
+        "generales": "5eb052ada874badc908ef2aa8d47f65e835504719f12b15b04cdc89a1960cb59"
+      }
     },
     "2026-05": {
       "formato": "v2024",
@@ -4316,7 +4529,16 @@
         "acciones_relevantes": 918,
         "bienes_raices_relevantes": 34992,
         "extranjeros_relevantes": 5775,
-        "derivados_relevantes": 5279
+        "derivados_relevantes": 5279,
+        "otras_inversiones": 1919,
+        "tablas_descriptores": 167,
+        "tablas_desarrollo": 17114,
+        "flujos_activos_elegibles": 185,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 224,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 31,
       "detalle_avisos": [
@@ -4351,7 +4573,11 @@
         "generales c202605g.99288000: el total declara 13 líneas y el archivo tiene 14",
         "generales f202605g.96573590: el total declara 2 líneas y el archivo tiene 3",
         "generales x202605g.99225000: el encabezado dice 202505 pero la CMF lo publica en 2026-05"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "4bd230dab954565feffee40c4ddc00f1f46ec3afc6dfd6a778fdefbf2116327b",
+        "generales": "f3959af064478d9fd0efa44bb31f04bd1863491013ab91e6dfa0420cfd37b6c8"
+      }
     },
     "2026-06": {
       "formato": "v2024",
@@ -4372,7 +4598,16 @@
         "acciones_relevantes": 924,
         "bienes_raices_relevantes": 34984,
         "extranjeros_relevantes": 5829,
-        "derivados_relevantes": 5553
+        "derivados_relevantes": 5553,
+        "otras_inversiones": 1897,
+        "tablas_descriptores": 100,
+        "tablas_desarrollo": 11031,
+        "flujos_activos_elegibles": 186,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 236,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 28,
       "detalle_avisos": [
@@ -4404,7 +4639,11 @@
         "generales f202606g.76844788: el encabezado dice 202603 pero la CMF lo publica en 2026-06",
         "generales f202606g.96573590: el total declara 2 líneas y el archivo tiene 3",
         "generales x202606g.99225000: el encabezado dice 202506 pero la CMF lo publica en 2026-06"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "426ee97007e020ff674398ea959882b6d4b56a9859233d51c68e1c3e28a9e0c3",
+        "generales": "2be42973325fc3d5db407fec4cbe9dc13050055697d464def4731b9fc367d168"
+      }
     },
     "2026-07": {
       "formato": "v2024",
@@ -4425,7 +4664,16 @@
         "acciones_relevantes": 925,
         "bienes_raices_relevantes": 35987,
         "extranjeros_relevantes": 6037,
-        "derivados_relevantes": 5831
+        "derivados_relevantes": 5831,
+        "otras_inversiones": 1900,
+        "tablas_descriptores": 221,
+        "tablas_desarrollo": 27927,
+        "flujos_activos_elegibles": 186,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 236,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 34,
       "detalle_avisos": [
@@ -4463,7 +4711,11 @@
         "generales p202607g.76094234: el encabezado dice 202605 pero la CMF lo publica en 2026-07",
         "generales x202607g.76094234: el encabezado dice 202605 pero la CMF lo publica en 2026-07",
         "generales x202607g.99225000: el encabezado dice 202507 pero la CMF lo publica en 2026-07"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "e87ed57ba3e84b5a1306ede332bc9ab9f2ab5be5e0210c284fa504752f9972d2",
+        "generales": "208c37364cfed40fa176ec2d7b31dfea0b765075eb4e59506a471d6a073d2b7a"
+      }
     },
     "2026-08": {
       "formato": "v2024",
@@ -4484,7 +4736,16 @@
         "acciones_relevantes": 932,
         "bienes_raices_relevantes": 35878,
         "extranjeros_relevantes": 6193,
-        "derivados_relevantes": 6037
+        "derivados_relevantes": 6037,
+        "otras_inversiones": 1922,
+        "tablas_descriptores": 138,
+        "tablas_desarrollo": 12858,
+        "flujos_activos_elegibles": 187,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 230,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 31,
       "detalle_avisos": [
@@ -4519,7 +4780,11 @@
         "generales c202608g.99288000: el total declara 14 líneas y el archivo tiene 15",
         "generales f202608g.96573590: el total declara 2 líneas y el archivo tiene 3",
         "generales x202608g.99225000: el encabezado dice 202508 pero la CMF lo publica en 2026-08"
-      ]
+      ],
+      "sha256_origen": {
+        "vida": "9b8826b4774eb845c77609aa861dc3b9c418310874dd7e93a60ad059b4f2dfb4",
+        "generales": "ada957d542b8d46520654e9a9954993824936f4863f2422a09c9580d245b7763"
+      }
     },
     "2026-09": {
       "formato": "v2024",
@@ -4540,7 +4805,16 @@
         "acciones_relevantes": 944,
         "bienes_raices_relevantes": 35833,
         "extranjeros_relevantes": 6171,
-        "derivados_relevantes": 6127
+        "derivados_relevantes": 6127,
+        "otras_inversiones": 1916,
+        "tablas_descriptores": 114,
+        "tablas_desarrollo": 17130,
+        "flujos_activos_elegibles": 172,
+        "prestamos": 0,
+        "bienes_raices_arriendo_morosidad": 0,
+        "garantias_derivados": 238,
+        "prestamos_relevantes": 0,
+        "bienes_raices_arriendo_morosidad_relevantes": 0
       },
       "avisos": 30,
       "detalle_avisos": [
@@ -4576,8 +4850,8 @@
         "extranjeros: 1 filas 100% idénticas (duplicados de la fuente)"
       ],
       "sha256_origen": {
-        "vida": "61f832df9856611039cb300a90ca1433d40785f744dde80144ea051058ea6f6f",
-        "generales": "1d1a041c16b28f9e0f959080f25e6c3cdcb28fa271a017ece056aa8317e3b53b"
+        "vida": "c0621c9b7bf0de65b726cb33a0762e25763ae905d4e1bfab25f7bc6fc86bc976",
+        "generales": "fcd1bfd6da1a7f9e804b5bf5a2071373523b96c55f94e7e767f664a9028aaca0"
       }
     }
   },
@@ -5111,5 +5385,5 @@
     "prestamos_relevantes": "2024-12",
     "bienes_raices_arriendo_morosidad_relevantes": "2024-12"
   },
-  "updated_at": "2026-10-21T08:20:50+00:00"
+  "updated_at": "2026-10-21T08:55:51+00:00"
 }

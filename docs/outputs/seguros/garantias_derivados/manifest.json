@@ -1,7 +1,34 @@
 {
   "tabla": "garantias_derivados",
-  "files": [],
-  "total_records": 0,
-  "periodos": [],
-  "updated_at": "2026-10-21T08:20:50+00:00"
+  "files": [
+    "outputs/seguros/garantias_derivados/2024.parquet",
+    "outputs/seguros/garantias_derivados/2025.parquet",
+    "outputs/seguros/garantias_derivados/2026.parquet"
+  ],
+  "total_records": 6518,
+  "periodos": [
+    "2024-12",
+    "2025-01",
+    "2025-02",
+    "2025-03",
+    "2025-04",
+    "2025-05",
+    "2025-06",
+    "2025-07",
+    "2025-08",
+    "2025-09",
+    "2025-10",
+    "2025-11",
+    "2025-12",
+    "2026-01",
+    "2026-02",
+    "2026-03",
+    "2026-04",
+    "2026-05",
+    "2026-06",
+    "2026-07",
+    "2026-08",
+    "2026-09"
+  ],
+  "updated_at": "2026-10-21T08:55:51+00:00"
 }
