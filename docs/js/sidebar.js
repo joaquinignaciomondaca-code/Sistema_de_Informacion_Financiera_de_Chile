@@ -64,6 +64,7 @@ const EXPLORER_TREE = [
               { label: "Evolución de la inversión en acciones por sector (M$)", query: "SELECT periodo, sector, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones GROUP BY periodo, sector ORDER BY periodo DESC, sector LIMIT 24;" },
               { label: "Fondos mutuos por administradora, último mes (M$)", query: "SELECT rut_administradora, count(*) AS inversiones, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_fondos_mutuos WHERE periodo = (SELECT max(periodo) FROM seguros_fondos_mutuos) GROUP BY rut_administradora ORDER BY valor_final_m_clp DESC LIMIT 10;" },
               { label: "Bienes raíces por ciudad, último mes (M$)", query: "SELECT ciudad, count(*) AS inmuebles, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_bienes_raices WHERE periodo = (SELECT max(periodo) FROM seguros_bienes_raices) GROUP BY ciudad ORDER BY valor_final_m_clp DESC LIMIT 10;" },
+              { label: "Otras inversiones por tipo de inversión, último mes (M$)", query: "SELECT tipo_de_inversion, count(*) AS inversiones, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_otras_inversiones WHERE periodo = (SELECT max(periodo) FROM seguros_otras_inversiones) GROUP BY tipo_de_inversion ORDER BY valor_final_m_clp DESC LIMIT 15;" },
               { label: "Inversiones en el extranjero por país, último mes (M$)", query: "SELECT pais, tipo_registro, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_extranjeros WHERE periodo = (SELECT max(periodo) FROM seguros_extranjeros) GROUP BY pais, tipo_registro ORDER BY valor_final_m_clp DESC LIMIT 10;" }
             ],
             tables: [
@@ -72,7 +73,11 @@ const EXPLORER_TREE = [
               { id: "seguros_fondos_mutuos", name: "seguros.fondos_mutuos", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/fondos_mutuos/manifest.json"] },
               { id: "seguros_bienes_raices", name: "seguros.bienes_raices", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/bienes_raices/manifest.json"] },
               { id: "seguros_extranjeros", name: "seguros.extranjeros", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/extranjeros/manifest.json"] },
-              { id: "seguros_control_inversiones", name: "seguros.control_inversiones", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/control_inversiones/manifest.json"] }
+              { id: "seguros_control_inversiones", name: "seguros.control_inversiones", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/control_inversiones/manifest.json"] },
+              { id: "seguros_otras_inversiones", name: "seguros.otras_inversiones", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/otras_inversiones/manifest.json"] },
+              { id: "seguros_tablas_descriptores", name: "seguros.tablas_descriptores", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/tablas_descriptores/manifest.json"] },
+              { id: "seguros_tablas_desarrollo", name: "seguros.tablas_desarrollo", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/tablas_desarrollo/manifest.json"] },
+              { id: "seguros_flujos_activos_elegibles", name: "seguros.flujos_activos_elegibles", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/flujos_activos_elegibles/manifest.json"] }
             ]
           },
           {

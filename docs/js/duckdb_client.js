@@ -66,6 +66,10 @@ const SEMANTIC_VIEWS = [
   { name: "seguros_derivados", manifest: "outputs/seguros/derivados/manifest.json" },
   { name: "seguros_pactos", manifest: "outputs/seguros/pactos/manifest.json" },
   { name: "seguros_control_inversiones", manifest: "outputs/seguros/control_inversiones/manifest.json" },
+  { name: "seguros_otras_inversiones", manifest: "outputs/seguros/otras_inversiones/manifest.json" },
+  { name: "seguros_tablas_descriptores", manifest: "outputs/seguros/tablas_descriptores/manifest.json" },
+  { name: "seguros_tablas_desarrollo", manifest: "outputs/seguros/tablas_desarrollo/manifest.json" },
+  { name: "seguros_flujos_activos_elegibles", manifest: "outputs/seguros/flujos_activos_elegibles/manifest.json" },
 
   // FONDOS DE INVERSIÓN. Cartera y pactos de los informes IFRS trimestrales de cada fondo (CMF);
   // se actualiza sola 3 veces al mes. Montos en miles de la moneda funcional de cada fondo.

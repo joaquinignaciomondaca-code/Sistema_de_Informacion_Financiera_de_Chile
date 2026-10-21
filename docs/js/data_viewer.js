@@ -70,7 +70,11 @@ const DATA_VIEWER_CATALOG = [
       { id: "seguros_extranjeros", name: "seguros.extranjeros", detalle: "Inversiones en el exterior", descripcion: "Inversiones en el exterior: deuda, acciones y fondos, por país." },
       { id: "seguros_derivados", name: "seguros.derivados", detalle: "Derivados", descripcion: "Derivados vigentes: opciones, forwards, futuros y swaps, por contraparte." },
       { id: "seguros_pactos", name: "seguros.pactos", detalle: "Pactos", descripcion: "Compras y ventas con pacto, con tasa y contraparte." },
-      { id: "seguros_control_inversiones", name: "seguros.control_inversiones", detalle: "Control de inversiones", descripcion: "Totales de inversión por tipo, para el control de límites de la Circular 1835." }
+      { id: "seguros_control_inversiones", name: "seguros.control_inversiones", detalle: "Control de inversiones", descripcion: "Totales de inversión por tipo, para el control de límites de la Circular 1835." },
+      { id: "seguros_otras_inversiones", name: "seguros.otras_inversiones", detalle: "Otras inversiones", descripcion: "Saldos en cuenta corriente y caja, inversiones mobiliarias, préstamos y otras inversiones que no caben en los archivos anteriores." },
+      { id: "seguros_tablas_descriptores", name: "seguros.tablas_descriptores", detalle: "Descriptores de instrumentos", descripcion: "Emisor, tipo de instrumento, fechas y tasas de emisión y descuento, número de flujos y prepago." },
+      { id: "seguros_tablas_desarrollo", name: "seguros.tablas_desarrollo", detalle: "Desarrollo de flujos", descripcion: "Cupón, vencimiento, interés, amortización y saldo insoluto de cada flujo de los instrumentos." },
+      { id: "seguros_flujos_activos_elegibles", name: "seguros.flujos_activos_elegibles", detalle: "Flujos de activos elegibles", descripcion: "Flujos por tramo para el test de suficiencia de activos (circular aplicada y tipo de información)." }
     ]
   },
   {
