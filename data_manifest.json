@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
-  "updated_at": "2026-10-20",
+  "updated_at": "2026-10-21",
   "total_tables": 74,
-  "total_records": 13484035,
+  "total_records": 13484051,
   "classification": {
     "automatico": "Extracción, validación y publicación ejecutadas por código y workflows programados (APIs, scrapers y normalizadores)",
     "hibrido": "Extracción o curación inicial asistida desde fuentes no estructuradas, seguida de validación, normalización y publicación reproducibles mediante código; puede ejecutarse fuera de Actions",
@@ -929,22 +929,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "corte": "2014-01-01 a 2026-10-20",
+      "corte": "2014-01-01 a 2026-10-21",
       "file_parquet": "outputs/macro/macro_cobre.parquet",
-      "registros_reales": 3259,
-      "descripcion": "Precio del cobre refinado en dólares por libra: cotización diaria de la Bolsa de Metales de Londres (BML) y valor referencial mensual publicado por el BCCh (la referencia mensual aparece en la fila del primer día de su mes).",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "USD por libra (cobre refinado) y USD por libra referencial mensual",
-        "escala": "unidades (USD por libra)",
-        "moneda": "USD",
-        "criterio_contable": "Cotización diaria de la Bolsa de Metales de Londres (BML) y referencia mensual del BCCh; la referencia mensual va en la fila del primer día de su mes",
-        "cobertura": "2014-01-01 a 2026-10-20; 3.259 filas",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "registros_reales": 3260,
+      "descripcion": "Precio del cobre refinado en dólares por libra: cotización diaria de la Bolsa de Metales de Londres (BML) y valor referencial mensual publicado por el BCCh (la referencia mensual aparece en la fila del primer día de su mes)."
     },
     {
       "id": "macro_curva_bonos_pesos",
@@ -955,22 +945,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "corte": "2014-01-02 a 2026-10-16",
+      "corte": "2014-01-02 a 2026-10-19",
       "file_parquet": "outputs/macro/macro_curva_bonos_pesos.parquet",
-      "registros_reales": 3170,
-      "descripcion": "Curva de rendimiento de los bonos soberanos en pesos licitados por el BCCh (Bono Corto Plazo, BCP): tasa de interés de mercado secundario a 2, 5 y 10 años.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "% (porcentaje; valor 0–100)",
-        "escala": "tasa en porcentaje",
-        "moneda": "No aplica (tasa)",
-        "criterio_contable": "Tasa de mercado secundario de los BCP (bonos soberanos en pesos) a 2, 5 y 10 años; publicada por el BCCh",
-        "cobertura": "2014-01-02 a 2026-10-16; 3.170 filas",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "registros_reales": 3171,
+      "descripcion": "Curva de rendimiento de los bonos soberanos en pesos licitados por el BCCh (Bono Corto Plazo, BCP): tasa de interés de mercado secundario a 2, 5 y 10 años."
     },
     {
       "id": "macro_curva_bonos_uf",
@@ -981,22 +961,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "corte": "2014-01-02 a 2026-10-16",
+      "corte": "2014-01-02 a 2026-10-19",
       "file_parquet": "outputs/macro/macro_curva_bonos_uf.parquet",
-      "registros_reales": 3172,
-      "descripcion": "Curva de rendimiento de los bonos soberanos en UF (BCU/BTU): tasa de interés de mercado secundario a 1, 2, 5, 10, 20 y 30 años.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "% (porcentaje; valor 0–100)",
-        "escala": "tasa en porcentaje",
-        "moneda": "No aplica (tasa)",
-        "criterio_contable": "Tasa de mercado secundario de los BCU/BTU (bonos soberanos en UF) a 1, 2, 5, 10, 20 y 30 años; publicada por el BCCh",
-        "cobertura": "2014-01-02 a 2026-10-16; 3.172 filas",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "registros_reales": 3173,
+      "descripcion": "Curva de rendimiento de los bonos soberanos en UF (BCU/BTU): tasa de interés de mercado secundario a 1, 2, 5, 10, 20 y 30 años."
     },
     {
       "id": "macro_deuda_publica_pct_pib",
@@ -1007,22 +977,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
       "corte": "2014-01-01 a 2026-01-01",
       "file_parquet": "outputs/macro/macro_deuda_publica_pct_pib.parquet",
       "registros_reales": 49,
-      "descripcion": "Deuda bruta del Gobierno Central como porcentaje del Producto Interno Bruto (PIB), según el Banco Central.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "% del PIB",
-        "escala": "porcentaje del PIB",
-        "moneda": "No aplica (razón)",
-        "criterio_contable": "Deuda bruta del Gobierno Central sobre PIB, según el BCCh",
-        "cobertura": "2014-01-01 a 2026-01-01; 49 filas (trimestral)",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "descripcion": "Deuda bruta del Gobierno Central como porcentaje del Producto Interno Bruto (PIB), según el Banco Central."
     },
     {
       "id": "macro_dolar_observado",
@@ -1033,22 +993,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "corte": "2014-01-02 a 2026-10-20",
+      "corte": "2014-01-02 a 2026-10-21",
       "file_parquet": "outputs/macro/macro_dolar_observado.parquet",
-      "registros_reales": 3187,
-      "descripcion": "Dólar observado: tipo de cambio nominal del dólar de los Estados Unidos en pesos chilenos (CLP por USD), según el Banco Central.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "CLP por USD",
-        "escala": "unidades de moneda (CLP)",
-        "moneda": "CLP",
-        "criterio_contable": "Dólar observado: tipo de cambio nominal publicado por el BCCh",
-        "cobertura": "2014-01-02 a 2026-10-20; 3.187 filas",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "registros_reales": 3188,
+      "descripcion": "Dólar observado: tipo de cambio nominal del dólar de los Estados Unidos en pesos chilenos (CLP por USD), según el Banco Central."
     },
     {
       "id": "macro_euro_observado",
@@ -1059,22 +1009,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "corte": "2014-01-02 a 2026-10-20",
+      "corte": "2014-01-02 a 2026-10-21",
       "file_parquet": "outputs/macro/macro_euro_observado.parquet",
-      "registros_reales": 3187,
-      "descripcion": "Euro observado: tipo de cambio nominal del euro en pesos chilenos (CLP por EUR), según el Banco Central.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "CLP por EUR",
-        "escala": "unidades de moneda (CLP)",
-        "moneda": "CLP",
-        "criterio_contable": "Euro observado: tipo de cambio nominal publicado por el BCCh",
-        "cobertura": "2014-01-02 a 2026-10-20; 3.187 filas",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "registros_reales": 3188,
+      "descripcion": "Euro observado: tipo de cambio nominal del euro en pesos chilenos (CLP por EUR), según el Banco Central."
     },
     {
       "id": "macro_expectativas_inflacion",
@@ -1085,22 +1025,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
       "corte": "2014-01-01 a 2026-10-01",
       "file_parquet": "outputs/macro/macro_expectativas_inflacion.parquet",
       "registros_reales": 154,
-      "descripcion": "Expectativas de inflación de la Encuesta de Expectativas Económicas (EEE) del Banco Central: variación del IPC en 12 meses vista, con horizonte de 11 y 23 meses, mediana en porcentaje.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "% (porcentaje; valor 0–100)",
-        "escala": "variación anual del IPC en porcentaje",
-        "moneda": "No aplica (tasa)",
-        "criterio_contable": "Encuesta de Expectativas Económicas (EEE) del BCCh: IPC a 11 y 23 meses vista",
-        "cobertura": "2014-01-01 a 2026-10-01; 154 filas (mensual)",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "descripcion": "Expectativas de inflación de la Encuesta de Expectativas Económicas (EEE) del Banco Central: variación del IPC en 12 meses vista, con horizonte de 11 y 23 meses, mediana en porcentaje."
     },
     {
       "id": "macro_expectativas_operadores",
@@ -1111,22 +1041,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
       "corte": "2014-01-07 a 2026-09-24",
       "file_parquet": "outputs/macro/macro_expectativas_operadores.parquet",
       "registros_reales": 237,
-      "descripcion": "Evolución diaria de la Encuesta de Operadores Financieros (EOF) del Banco Central: expectativa de inflación (variación del IPC) y de TPM para los 12 meses siguientes, en porcentaje.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "% (porcentaje; valor 0–100)",
-        "escala": "porcentaje",
-        "moneda": "No aplica (tasa)",
-        "criterio_contable": "Encuesta de Operadores Financieros (EOF) del BCCh: IPC y TPM esperados a 12 meses",
-        "cobertura": "2014-01-07 a 2026-09-24; 237 filas (diaria)",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "descripcion": "Evolución diaria de la Encuesta de Operadores Financieros (EOF) del Banco Central: expectativa de inflación (variación del IPC) y de TPM para los 12 meses siguientes, en porcentaje."
     },
     {
       "id": "macro_expectativas_tpm",
@@ -1137,22 +1057,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
       "corte": "2014-01-01 a 2026-10-01",
       "file_parquet": "outputs/macro/macro_expectativas_tpm.parquet",
       "registros_reales": 154,
-      "descripcion": "Expectativas de la Tasa de Política Monetaria (TPM) de la Encuesta de Expectativas Económicas (EEE) del Banco Central, con horizonte de 11 y 23 meses, mediana en porcentaje.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "% (porcentaje; valor 0–100)",
-        "escala": "porcentaje",
-        "moneda": "No aplica (tasa)",
-        "criterio_contable": "Mediana de la Encuesta de Expectativas Económicas (EEE) del BCCh para la TPM a 11 y 23 meses",
-        "cobertura": "2014-01-01 a 2026-10-01; 154 filas (mensual)",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "descripcion": "Expectativas de la Tasa de Política Monetaria (TPM) de la Encuesta de Expectativas Económicas (EEE) del Banco Central, con horizonte de 11 y 23 meses, mediana en porcentaje."
     },
     {
       "id": "macro_imacec",
@@ -1163,22 +1073,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
       "corte": "2014-01-01 a 2026-08-01",
       "file_parquet": "outputs/macro/macro_imacec.parquet",
       "registros_reales": 152,
-      "descripcion": "Imacec a costo de factores, series empalmadas del BCCh (índice 2018=100): total, no minero, minero, comercio y servicios.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "Índice 2018=100 (series empalmadas)",
-        "escala": "índice",
-        "moneda": "No aplica",
-        "criterio_contable": "Imacec a costo de factores del BCCh: total, no minero, minero, comercio y servicios",
-        "cobertura": "2014-01-01 a 2026-08-01; 152 filas (mensual)",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "descripcion": "Imacec a costo de factores, series empalmadas del BCCh (índice 2018=100): total, no minero, minero, comercio y servicios."
     },
     {
       "id": "macro_inflacion_implicita",
@@ -1189,22 +1089,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "corte": "2014-01-02 a 2026-10-16",
+      "corte": "2014-01-02 a 2026-10-19",
       "file_parquet": "outputs/macro/macro_inflacion_implicita.parquet",
-      "registros_reales": 3076,
-      "descripcion": "Inflación implícita de las curvas soberanas (breakeven): diferencia entre el rendimiento del bono en pesos y el del bono en UF del mismo plazo. Calculada por SIF a partir de las curvas publicadas por el BCCh.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS (cálculo propio de SIF a partir de las curvas BCP y BCU)",
-        "unidad": "% (porcentaje; valor 0–100)",
-        "escala": "diferencia de tasas en puntos porcentuales",
-        "moneda": "No aplica (tasa)",
-        "criterio_contable": "Cálculo propio de SIF: rendimiento del bono en pesos menos el del bono en UF del mismo plazo, a partir de las curvas del BCCh (breakeven)",
-        "cobertura": "2014-01-02 a 2026-10-16; 3.076 filas",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Derivada: depende de las series de curvas BCP y BCU del BCCh. Cálculo propio no contrastado con una fuente externa."
-      }
+      "registros_reales": 3077,
+      "descripcion": "Inflación implícita de las curvas soberanas (breakeven): diferencia entre el rendimiento del bono en pesos y el del bono en UF del mismo plazo. Calculada por SIF a partir de las curvas publicadas por el BCCh."
     },
     {
       "id": "macro_inflacion_ipc",
@@ -1215,22 +1105,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
       "corte": "2014-01-01 a 2026-09-01",
       "file_parquet": "outputs/macro/macro_inflacion_ipc.parquet",
       "registros_reales": 153,
-      "descripcion": "Índice de Precios al Consumidor (IPC), serie empalmada del BCCh base 2023=100: índice y variaciones mensual y anual en porcentaje (fuente INE).",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS; fuente primaria INE",
-        "unidad": "Índice 2023=100 (IPC); variaciones mensual y anual en %",
-        "escala": "índice y porcentaje",
-        "moneda": "No aplica",
-        "criterio_contable": "IPC serie empalmada del BCCh (base 2023=100); fuente primaria INE",
-        "cobertura": "2014-01-01 a 2026-09-01; 153 filas (mensual)",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "descripcion": "Índice de Precios al Consumidor (IPC), serie empalmada del BCCh base 2023=100: índice y variaciones mensual y anual en porcentaje (fuente INE)."
     },
     {
       "id": "macro_mercado_laboral",
@@ -1241,22 +1121,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
       "corte": "2014-01-01 a 2026-08-01",
       "file_parquet": "outputs/macro/macro_mercado_laboral.parquet",
       "registros_reales": 152,
-      "descripcion": "Mercado laboral de Chile (series no ajustadas del INE, vía BCCh): tasa de desocupación en porcentaje, y personas ocupadas, asalariadas y fuerza de trabajo en miles de personas.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS; fuente primaria INE",
-        "unidad": "% (desocupación); miles de personas (ocupados, asalariados, fuerza de trabajo)",
-        "escala": "porcentaje y miles de personas",
-        "moneda": "No aplica",
-        "criterio_contable": "Series no ajustadas del INE, vía BCCh",
-        "cobertura": "2014-01-01 a 2026-08-01; 152 filas (mensual)",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "descripcion": "Mercado laboral de Chile (series no ajustadas del INE, vía BCCh): tasa de desocupación en porcentaje, y personas ocupadas, asalariadas y fuerza de trabajo en miles de personas."
     },
     {
       "id": "macro_metales_preciosos",
@@ -1267,22 +1137,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "corte": "2014-01-02 a 2026-10-20",
+      "corte": "2014-01-02 a 2026-10-21",
       "file_parquet": "outputs/macro/macro_metales_preciosos.parquet",
-      "registros_reales": 3187,
-      "descripcion": "Precios de los metales preciosos en dólares por onza troy: oro y plata, según el Banco Central.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "USD por onza troy (oro y plata)",
-        "escala": "unidades (USD por onza troy)",
-        "moneda": "USD",
-        "criterio_contable": "Precios de oro y plata del BCCh",
-        "cobertura": "2014-01-02 a 2026-10-20; 3.187 filas (diaria)",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "registros_reales": 3188,
+      "descripcion": "Precios de los metales preciosos en dólares por onza troy: oro y plata, según el Banco Central."
     },
     {
       "id": "macro_pib_trimestral",
@@ -1293,22 +1153,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
       "corte": "2014-01-01 a 2026-04-01",
       "file_parquet": "outputs/macro/macro_pib_trimestral.parquet",
       "registros_reales": 50,
-      "descripcion": "Producto Interno Bruto (PIB) en volumen a precios del año anterior encadenado, referencia 2018: miles de millones de pesos encadenados.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "Miles de millones de CLP encadenados (volumen, referencia 2018)",
-        "escala": "miles de millones (encadenado)",
-        "moneda": "CLP (encadenado)",
-        "criterio_contable": "PIB en volumen a precios del año anterior encadenado, referencia 2018, según el BCCh",
-        "cobertura": "2014-01-01 a 2026-04-01; 50 filas (trimestral)",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "descripcion": "Producto Interno Bruto (PIB) en volumen a precios del año anterior encadenado, referencia 2018: miles de millones de pesos encadenados."
     },
     {
       "id": "macro_reservas_internacionales",
@@ -1319,22 +1169,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
       "corte": "2014-01-01 a 2026-09-01",
       "file_parquet": "outputs/macro/macro_reservas_internacionales.parquet",
       "registros_reales": 153,
-      "descripcion": "Activos de reserva internacional del Banco Central de Chile, en millones de dólares de los Estados Unidos.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "Millones de USD",
-        "escala": "millones de USD",
-        "moneda": "USD",
-        "criterio_contable": "Activos de reserva internacional del BCCh",
-        "cobertura": "2014-01-01 a 2026-09-01; 153 filas (mensual)",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "descripcion": "Activos de reserva internacional del Banco Central de Chile, en millones de dólares de los Estados Unidos."
     },
     {
       "id": "macro_series_catalogo",
@@ -1343,10 +1183,10 @@
       "sector": "macro",
       "sector_label": "Macroeconomía y Tasas (BCCh)",
       "norma": "Estadísticas oficiales BCCh",
-      "corte": "2014-01-01 a 2026-10-20",
+      "corte": "2014-01-01 a 2026-10-21",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
       "file_parquet": "outputs/macro/macro_series_catalogo.parquet",
       "registros_reales": 51,
@@ -1371,22 +1211,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "corte": "2014-01-02 a 2026-10-19",
+      "corte": "2014-01-02 a 2026-10-20",
       "file_parquet": "outputs/macro/macro_swaps_camara.parquet",
-      "registros_reales": 3201,
-      "descripcion": "Tasa de swap promedio de cámara (SPC) del Banco Central: contratos en pesos a 90, 180 y 360 días y a 2 años, y contrato en UF a 1 año, en porcentaje.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "% (porcentaje; valor 0–100)",
-        "escala": "tasa en porcentaje",
-        "moneda": "No aplica (tasa)",
-        "criterio_contable": "Tasa swap promedio de cámara (SPC) del BCCh: pesos a 90, 180, 360 días y 2 años; UF a 1 año",
-        "cobertura": "2014-01-02 a 2026-10-19; 3.201 filas (diaria)",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "registros_reales": 3202,
+      "descripcion": "Tasa de swap promedio de cámara (SPC) del Banco Central: contratos en pesos a 90, 180 y 360 días y a 2 años, y contrato en UF a 1 año, en porcentaje."
     },
     {
       "id": "macro_tasa_referencia_fed",
@@ -1397,22 +1227,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "corte": "2014-01-01 a 2026-10-13",
+      "corte": "2014-01-01 a 2026-10-20",
       "file_parquet": "outputs/macro/macro_tasa_referencia_fed.parquet",
-      "registros_reales": 3323,
-      "descripcion": "Tasa de interés de política monetaria de la Reserva Federal de los Estados Unidos (fed funds), en porcentaje.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "% (porcentaje; valor 0–100)",
-        "escala": "tasa en porcentaje",
-        "moneda": "No aplica (tasa)",
-        "criterio_contable": "Fed funds de la Reserva Federal de EE. UU., según el BCCh",
-        "cobertura": "2014-01-01 a 2026-10-13; 3.323 filas (diaria)",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "registros_reales": 3328,
+      "descripcion": "Tasa de interés de política monetaria de la Reserva Federal de los Estados Unidos (fed funds), en porcentaje."
     },
     {
       "id": "macro_tasas_corto_plazo",
@@ -1423,22 +1243,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "corte": "2014-01-02 a 2026-10-20",
+      "corte": "2014-01-02 a 2026-10-21",
       "file_parquet": "outputs/macro/macro_tasas_corto_plazo.parquet",
-      "registros_reales": 3188,
-      "descripcion": "Tasas de referencia de corto plazo de Chile: Tasa de Política Monetaria (TPM) del Banco Central y tasa promedio transada en el mercado interbancario (TIB), en porcentaje.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "% (porcentaje; valor 0–100)",
-        "escala": "tasa en porcentaje",
-        "moneda": "No aplica (tasa)",
-        "criterio_contable": "TPM del BCCh y tasa TIB promedio transada en el mercado interbancario",
-        "cobertura": "2014-01-02 a 2026-10-20; 3.188 filas (diaria)",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "registros_reales": 3189,
+      "descripcion": "Tasas de referencia de corto plazo de Chile: Tasa de Política Monetaria (TPM) del Banco Central y tasa promedio transada en el mercado interbancario (TIB), en porcentaje."
     },
     {
       "id": "macro_tipo_cambio_multilateral",
@@ -1449,22 +1259,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "corte": "2014-01-02 a 2026-10-20",
+      "corte": "2014-01-02 a 2026-10-21",
       "file_parquet": "outputs/macro/macro_tipo_cambio_multilateral.parquet",
-      "registros_reales": 3187,
-      "descripcion": "Índices de tipo de cambio nominal multilateral del Banco Central: TCM, TCM-5 (monedas de Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro) y TCM-X.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "Índice (TCM, TCM-5, TCM-X)",
-        "escala": "índice",
-        "moneda": "No aplica",
-        "criterio_contable": "Índices de tipo de cambio nominal multilateral del BCCh: TCM, TCM-5 y TCM-X",
-        "cobertura": "2014-01-02 a 2026-10-20; 3.187 filas (diaria)",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "registros_reales": 3188,
+      "descripcion": "Índices de tipo de cambio nominal multilateral del Banco Central: TCM, TCM-5 (monedas de Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro) y TCM-X."
     },
     {
       "id": "macro_tipo_cambio_real",
@@ -1475,22 +1275,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
       "corte": "2014-01-01 a 2026-08-01",
       "file_parquet": "outputs/macro/macro_tipo_cambio_real.parquet",
       "registros_reales": 152,
-      "descripcion": "Índices de tipo de cambio real (TCR) del Banco Central, promedio 1986=100: TCR general y TCR-5 (monedas de Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro).",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "Índice (TCR general y TCR-5), promedio 1986=100",
-        "escala": "índice",
-        "moneda": "No aplica",
-        "criterio_contable": "Índices de tipo de cambio real del BCCh, promedio 1986=100: TCR general y TCR-5",
-        "cobertura": "2014-01-01 a 2026-08-01; 152 filas (mensual)",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "descripcion": "Índices de tipo de cambio real (TCR) del Banco Central, promedio 1986=100: TCR general y TCR-5 (monedas de Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro)."
     },
     {
       "id": "macro_uf",
@@ -1501,22 +1291,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "corte": "2014-01-01 a 2026-10-20",
+      "corte": "2014-01-01 a 2026-10-21",
       "file_parquet": "outputs/macro/macro_uf.parquet",
-      "registros_reales": 4676,
-      "descripcion": "Valor diario de la Unidad de Fomento (UF) en pesos chilenos, según el Banco Central.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE)",
-        "unidad": "Pesos chilenos por UF (uf_valor_clp), 2 decimales publicados",
-        "escala": "unidades (CLP por UF)",
-        "moneda": "CLP",
-        "criterio_contable": "No aplica: valor de reajustabilidad. Se reajusta del día 10 al día 9 según el IPC del mes anterior",
-        "cobertura": "2014-01-01 a 2026-10-20; calendario diario completo; 4.676 filas",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion)",
-        "estado_qa": "Validado: sin huecos ni duplicados; signo constante en 155 ciclos de reajuste; 6 valores comparados con fuentes públicas coinciden. No comparado directamente con la API del BCCh desde el sandbox (ver docs/notas/auditoria_fuente_a_fila_2026-10-20.md)"
-      }
+      "registros_reales": 4677,
+      "descripcion": "Valor diario de la Unidad de Fomento (UF) en pesos chilenos, según el Banco Central."
     },
     {
       "id": "macro_utm",
@@ -1527,22 +1307,12 @@
       "norma": "Estadísticas oficiales BCCh",
       "frescura": "Se actualiza sola a diario",
       "modo": "Automático · diario, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
       "corte": "2014-01-01 a 2026-10-01",
       "file_parquet": "outputs/macro/macro_utm.parquet",
       "registros_reales": 154,
-      "descripcion": "Valor mensual de la Unidad Tributaria Mensual (UTM) en pesos chilenos, según el Banco Central.",
-      "metadatos": {
-        "fuente": "Banco Central de Chile, Base de Datos Estadísticos (API REST SIETE), https://si3.bcentral.cl/SieteRestWS",
-        "unidad": "CLP (valor mensual de la UTM)",
-        "escala": "unidades de moneda (CLP)",
-        "moneda": "CLP",
-        "criterio_contable": "Valor mensual de la Unidad Tributaria Mensual, según el BCCh",
-        "cobertura": "2014-01-01 a 2026-10-01; 154 filas (mensual)",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Series con estado 'ok' en macro_series_catalogo (51 de 51)."
-      }
+      "descripcion": "Valor mensual de la Unidad Tributaria Mensual (UTM) en pesos chilenos, según el Banco Central."
     },
     {
       "id": "patrimonios_separados_balance",
