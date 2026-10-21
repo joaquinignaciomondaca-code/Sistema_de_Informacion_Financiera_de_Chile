@@ -3052,8 +3052,8 @@ class DataDictionaryController {
                         <td class="dict-col-meaning">
                           <div>${col.significado}</div>
                           ${col.interpretacion ? `
-                            <div class="dict-col-interpretacion" style="margin-top: 6px; padding: 6px 9px; background: rgba(56, 189, 248, 0.07); border-left: 3px solid #38bdf8; border-radius: 2px; font-size: 11px; line-height: 1.42; color: #bae6fd;">
-                              <strong style="color: #38bdf8; display: block; margin-bottom: 2px; text-transform: uppercase; font-size: 11px; letter-spacing: 0.5px;">Interpretación Económica / Financiera:</strong>
+                            <div class="dict-col-interpretacion" style="margin-top: 6px; padding: 6px 9px; background: rgba(56, 189, 248, 0.07); border-left: 3px solid #38bdf8; border-radius: 2px; font-size: 12px; line-height: 1.42; color: #bae6fd;">
+                              <strong style="color: #38bdf8; display: block; margin-bottom: 2px; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px;">Interpretación Económica / Financiera:</strong>
                               ${col.interpretacion}
                             </div>
                           ` : ''}
