@@ -128,29 +128,32 @@ jobs:
               return ";".join(spans)
 
           for sector, periodo, buscado, tipo_objetivo in objetivos:
-              data = descargar(sector, periodo, None)
-              with zipfile.ZipFile(io.BytesIO(data)) as z:
-                  nombre = next((n for n in z.namelist()
-                                 if n.rsplit("/", 1)[-1].lower() == buscado.lower()), None)
-                  if nombre is None:
-                      raise SystemExit(f"No se encontró el archivo esperado {buscado} en {periodo}")
-                  raw_file = z.read(nombre)
-              raw_lines = [x.rstrip(b"\r") for x in raw_file.split(b"\n") if x.strip(b"\r\x1a ")]
-              lines = [decodificar(x) for x in raw_lines]
-              tipos = collections.Counter(x[:1] for x in lines)
-              if tipo_objetivo == "largo":
-                  objetivo = [(i + 1, x, raw_lines[i]) for i, x in enumerate(lines) if len(x) != 572]
-              else:
-                  objetivo = [(i + 1, x, raw_lines[i]) for i, x in enumerate(lines) if x[:1] == tipo_objetivo]
-              print(f"::notice title=Auditoría de excepción::{periodo} {sector} {buscado}; "
-                    f"zip_sha256={hashlib.sha256(data).hexdigest()}; "
-                    f"member_sha256={hashlib.sha256(raw_file).hexdigest()}; "
-                    f"member_bytes={len(raw_file)}; líneas={len(lines)}; largos="
-                    f"{dict(collections.Counter(map(len, lines)))}; tipos={dict(tipos)}; "
-                    f"líneas_objetivo={len(objetivo)}")
-              for numero, texto, raw in objetivo:
-                  print(f"  línea={numero}; bytes={len(raw)}; chars={len(texto)}; "
-                        f"ascii={raw.isascii()}; máscara={mascara(texto)}")
+              try:
+                  data = descargar(sector, periodo, None)
+                  with zipfile.ZipFile(io.BytesIO(data)) as z:
+                      nombre = next((n for n in z.namelist()
+                                     if n.rsplit("/", 1)[-1].lower() == buscado.lower()), None)
+                      if nombre is None:
+                          print(f"::error title=Archivo no encontrado::{periodo} {sector} {buscado}")
+                          continue
+                      raw_file = z.read(nombre)
+                  raw_lines = [x.rstrip(b"\r") for x in raw_file.split(b"\n") if x.strip(b"\r\x1a ")]
+                  lines = [decodificar(x) for x in raw_lines]
+                  tipos = collections.Counter(x[:1] for x in lines)
+                  if tipo_objetivo == "largo":
+                      objetivo = [(i + 1, x, raw_lines[i]) for i, x in enumerate(lines) if len(x) != 572]
+                  else:
+                      objetivo = [(i + 1, x, raw_lines[i]) for i, x in enumerate(lines) if x[:1] == tipo_objetivo]
+                  resumen = (f"{periodo} {sector} {buscado}; zip_sha256={hashlib.sha256(data).hexdigest()}; "
+                             f"member_sha256={hashlib.sha256(raw_file).hexdigest()}; member_bytes={len(raw_file)}; "
+                             f"líneas={len(lines)}; largos={dict(collections.Counter(map(len, lines)))}; "
+                             f"tipos={dict(tipos)}; líneas_objetivo={len(objetivo)}")
+                  print(f"::notice title=Auditoría de excepción::{resumen}")
+                  for numero, texto, raw in objetivo:
+                      print(f"::notice title=Máscara de línea::{periodo} {buscado} línea={numero}; "
+                            f"bytes={len(raw)}; chars={len(texto)}; ascii={raw.isascii()}; máscara={mascara(texto)}")
+              except Exception as exc:
+                  print(f"::error title=Falla sonda::{periodo} {sector} {buscado}: {type(exc).__name__}: {exc}")
           PY
 
       # Revisa los meses pendientes sin escribir; informa conteos B.11–B.14 y separa errores fatales
