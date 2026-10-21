@@ -493,7 +493,7 @@ header {
   padding: 4px 8px;
   border-radius: 8px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color, border-color, color 0.2s ease;
   user-select: none;
   outline: none;
 }
@@ -586,7 +586,7 @@ header {
   border: 1px solid transparent;
   border-radius: 6px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background-color, border-color 0.15s ease;
   outline: none;
 }
 
@@ -658,7 +658,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: background-color, border-color, color 0.2s;
 }
 
 .sidebar-toggle-btn:hover {
@@ -745,7 +745,7 @@ header {
   font-size: 12px;
   font-family: var(--font-sans);
   outline: none;
-  transition: all 0.2s;
+  transition: border-color, box-shadow 0.2s;
 }
 
 .sidebar-search-box input:focus {
@@ -888,7 +888,7 @@ header {
   padding: 2px 7px;
   border-radius: 4px;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: background-color, border-color, color 0.15s;
 }
 
 .tool-btn:hover {
@@ -1178,7 +1178,7 @@ header {
   gap: 3px;
   cursor: pointer;
   height: 18px;
-  transition: all 0.15s;
+  transition: background-color, border-color, color 0.15s;
 }
 
 .table-action-btn:hover {
@@ -1366,7 +1366,7 @@ header {
   padding: 2px 9px;
   border-radius: 4px;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background-color, border-color, color 0.2s;
 }
 
 .filter-btn:hover, .filter-btn.active {
@@ -1419,7 +1419,7 @@ header {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background-color, border-color, color 0.15s ease;
 }
 
 .zoom-btn:hover {
@@ -1471,7 +1471,7 @@ header {
   border: 1px solid var(--border-color);
   color: var(--text-bright);
   cursor: pointer;
-  transition: all 0.2s;
+  transition: background-color, border-color, color 0.2s;
   display: flex;
   align-items: center;
 }
@@ -1569,7 +1569,7 @@ header {
   padding: 2px 8px;
   font-size: 12px;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: background-color, border-color, color 0.15s;
 }
 
 .view-btn.active {
@@ -1587,7 +1587,7 @@ header {
   font-size: 12px;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: background-color, border-color, color 0.15s;
 }
 
 .action-btn:hover {
@@ -1627,7 +1627,7 @@ header {
   padding: 3px 8px;
   border-radius: 4px;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: background-color, border-color, color 0.15s;
 }
 
 .header-action-btn:hover {
@@ -1688,7 +1688,7 @@ header {
   display: flex;
   flex-direction: column;
   gap: 2px;
-  transition: all 0.15s;
+  transition: background-color, border-color 0.15s;
 }
 
 .saved-item:hover {
@@ -1786,7 +1786,7 @@ header {
   padding: 8px 12px;
   border-radius: 6px;
   outline: none;
-  transition: all 0.2s;
+  transition: border-color, box-shadow 0.2s;
 }
 
 #chat-input:focus {
@@ -1803,7 +1803,7 @@ header {
   padding: 8px 16px;
   border-radius: 6px;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: background-color, box-shadow 0.15s;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -1924,7 +1924,7 @@ header {
   opacity: 0;
   pointer-events: none;
   transform: translateY(8px);
-  transition: all 0.2s ease;
+  transition: opacity, transform 0.2s ease;
   z-index: 9999;
 }
 
@@ -1989,7 +1989,7 @@ header {
   padding: 4px 10px;
   border-radius: 5px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background-color, border-color, color 0.2s ease;
   user-select: none;
 }
 
@@ -2400,7 +2400,7 @@ header {
   padding: 4px 9px;
   border-radius: 5px;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background-color, border-color, color 0.15s ease;
   white-space: nowrap;
 }
 
@@ -2802,7 +2802,7 @@ header {
   font-family: var(--font-mono);
   outline: none;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: border-color, box-shadow 0.15s ease;
   max-width: 290px;
 }
 
@@ -2956,7 +2956,7 @@ header {
   border-radius: 3px;
   cursor: pointer;
   font-family: var(--font-mono);
-  transition: all 0.15s;
+  transition: border-color, color, background-color 0.15s;
 }
 
 .dv-limit-btn:hover {
@@ -2979,7 +2979,7 @@ header {
   font-size: 12px;
   border-radius: 4px;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: border-color, color, background-color 0.15s;
   font-weight: 500;
 }
 
@@ -4582,7 +4582,7 @@ kbd {
   cursor: pointer;
   text-decoration: none;
   white-space: nowrap;
-  transition: all 0.15s ease;
+  transition: border-color, box-shadow, color, background-color 0.15s ease;
 }
 
 .dl-btn:hover { border-color: var(--accent-mint); color: var(--text-bright); }
