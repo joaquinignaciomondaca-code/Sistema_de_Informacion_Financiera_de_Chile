@@ -2161,7 +2161,31 @@ const ERD_TABLES = [
         type: "BIGINT"
       }
     ]
+  },
+  {
+    id: "seguros_registros_tipo6",
+    name: "Registros tipo 6 de B.11 y B.14",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 1280,
+    y: 1080,
+    w: 300,
+    h: 230,
+    rows: "Mensual · desde 2024-12",
+    file: "outputs/seguros/registros_tipo6/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "sector", type: "VARCHAR" },
+      { name: "rut_aseguradora", type: "VARCHAR", fk: true },
+      { name: "nombre_aseguradora", type: "VARCHAR" },
+      { name: "archivo_origen", type: "VARCHAR" },
+      { name: "tipo_archivo", type: "VARCHAR" },
+      { name: "tipo_registro", type: "VARCHAR" },
+      { name: "largo_registro", type: "BIGINT" },
+      { name: "registro_original", type: "VARCHAR" }
+    ]
   }
+
 ];
 
 // Relaciones entre tablas (Claves Foráneas lógicas)
@@ -2187,6 +2211,7 @@ const ERD_LINKS = [
   { from: "seguros_lista_entidades", to: "seguros_prestamos", key: "sector, rut_aseguradora" },
   { from: "seguros_lista_entidades", to: "seguros_bienes_raices_arriendo_morosidad", key: "sector, rut_aseguradora" },
   { from: "seguros_lista_entidades", to: "seguros_garantias_derivados", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_registros_tipo6", key: "sector, rut_aseguradora" },
   { from: "seguros_lista_entidades", to: "seguros_renta_fija_relevante", key: "sector, rut_aseguradora" },
   { from: "seguros_lista_entidades", to: "seguros_acciones_relevantes", key: "sector, rut_aseguradora" },
   { from: "seguros_lista_entidades", to: "seguros_bienes_raices_relevantes", key: "sector, rut_aseguradora" },

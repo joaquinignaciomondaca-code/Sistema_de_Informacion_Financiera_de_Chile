@@ -73,6 +73,7 @@ const SEMANTIC_VIEWS = [
   { name: "seguros_prestamos", manifest: "outputs/seguros/prestamos/manifest.json" },
   { name: "seguros_bienes_raices_arriendo_morosidad", manifest: "outputs/seguros/bienes_raices_arriendo_morosidad/manifest.json" },
   { name: "seguros_garantias_derivados", manifest: "outputs/seguros/garantias_derivados/manifest.json" },
+  { name: "seguros_registros_tipo6", manifest: "outputs/seguros/registros_tipo6/manifest.json" },
   { name: "seguros_renta_fija_relevante", manifest: "outputs/seguros/renta_fija_relevante/manifest.json" },
   { name: "seguros_acciones_relevantes", manifest: "outputs/seguros/acciones_relevantes/manifest.json" },
   { name: "seguros_bienes_raices_relevantes", manifest: "outputs/seguros/bienes_raices_relevantes/manifest.json" },
