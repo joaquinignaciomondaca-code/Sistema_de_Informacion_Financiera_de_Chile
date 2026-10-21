@@ -63,13 +63,14 @@ TABLAS = [
     "renta_fija", "acciones", "fondos_mutuos", "bienes_raices", "extranjeros", "otras_inversiones",
     "derivados", "pactos", "control_inversiones", "tablas_descriptores", "tablas_desarrollo",
     "flujos_activos_elegibles", "prestamos", "bienes_raices_arriendo_morosidad", "garantias_derivados",
+    "registros_tipo6",
 ] + [config[0] for config in RESUMENES_RELEVANTES.values()]
 # Primer mes publicado por tabla. La ficha "v2016" es la más antigua que tenemos; si un mes
 # anterior no la cumple, la validación lo rechaza. Renta fija y bienes raíces pesan ~5 MB por
 # mes (detalle por instrumento), por eso parten más tarde. Para extender una tabla basta con
 # cambiar su fecha aquí: la próxima corrida completa solo lo que falta de esa tabla.
 DESDE = "2016-11"
-DESDE_TABLA = {"renta_fija": "2024-12", "bienes_raices": "2024-12",
+DESDE_TABLA = {"renta_fija": "2024-12", "bienes_raices": "2024-12", "registros_tipo6": "2024-12",
                # Los registros que el anexo 2024 agregó no existen en el formato anterior.
                "otras_inversiones": "2024-12", "tablas_descriptores": "2024-12",
                "tablas_desarrollo": "2024-12", "flujos_activos_elegibles": "2024-12",
@@ -268,6 +269,17 @@ def leer_archivo(nombre: str, raw: bytes, formato: str, periodo: str, sector: st
     for n, ln in enumerate(detalle, start=2):
         clave = (letra, ln[:1])
         if clave not in mapa:
+            if ln[:1] == "6" and letra in {"e", "g"}:
+                # Se conserva fielmente como registro de origen, sin asignarle semántica o campos
+                # que el anexo consultado no documenta. El registro entra a su tabla normalizada.
+                filas["registros_tipo6"].append({
+                    "periodo": periodo, "sector": sector, "rut_aseguradora": rut,
+                    "nombre_aseguradora": enc["nombre_aseguradora"],
+                    "archivo_origen": os.path.basename(nombre),
+                    "tipo_archivo": "B.11" if letra == "e" else "B.14",
+                    "tipo_registro": "6", "largo_registro": len(ln), "registro_original": ln,
+                })
+                continue
             esperado = LARGO[formato][letra]
             errores.append(f"{nombre}: tipo de registro {ln[:1]!r} desconocido (línea {n}; "
                            f"largo {len(ln)}, esperado {esperado})")
@@ -381,6 +393,15 @@ def _mas_ancho(a: pa.DataType | None, b: pa.DataType) -> pa.DataType:
 def esquema(tabla: str) -> pa.Schema:
     """Esquema fijo de una tabla completa o de su proyección analítica derivada."""
     if tabla not in _ESQUEMAS:
+        if tabla == "registros_tipo6":
+            _ESQUEMAS[tabla] = pa.schema([
+                ("periodo", pa.string()), ("sector", pa.string()),
+                ("rut_aseguradora", pa.string()), ("nombre_aseguradora", pa.string()),
+                ("archivo_origen", pa.string()), ("tipo_archivo", pa.string()),
+                ("tipo_registro", pa.string()), ("largo_registro", pa.int64()),
+                ("registro_original", pa.string()),
+            ])
+            return _ESQUEMAS[tabla]
         origen_resumen = next((base for base, cfg in RESUMENES_RELEVANTES.items()
                                if cfg[0] == tabla), None)
         if origen_resumen:
@@ -823,6 +844,10 @@ def main(argv=None) -> int:
             continue
         hechas = set(control["periodos"].get(p, {}).get("registros", {}))
         faltan = [t for t in tablas_de(p) if t not in hechas and (p, t) not in derivables]
+        # Al migrar por primera vez a la tabla tipo 6, reconstruimos el período completo:
+        # algunos archivos que antes se excluían también contenían detalles documentados.
+        if p >= DESDE_TABLA["registros_tipo6"] and "registros_tipo6" not in hechas:
+            faltan = tablas_de(p)
         if faltan:
             pendientes.append((p, faltan))
     if a.forzar:
@@ -893,8 +918,16 @@ def main(argv=None) -> int:
         previo["registros"].update(conteo)
         # Las exclusiones de un archivo de compañía se registran también al reconstruir un
         # período ya existente (p. ej. al incorporar una tabla nueva), no sólo al primer proceso.
+        # Al reconstruir una fuente con tipo 6 ya soportado, quitar del historial esa antigua
+        # exclusión; otras alertas de archivo se conservan y siguen acumulándose.
+        anteriores = [x for x in previo.get("archivos_excluidos", [])
+                      if "tipo de registro '6' desconocido" not in x]
         if excluidos:
-            previo["archivos_excluidos"] = sorted(set(previo.get("archivos_excluidos", [])) | set(excluidos))
+            anteriores = sorted(set(anteriores) | set(excluidos))
+        if anteriores:
+            previo["archivos_excluidos"] = anteriores
+        else:
+            previo.pop("archivos_excluidos", None)
         previo["avisos"] = len(avisos)
         previo["detalle_avisos"] = avisos[:40]
         # SHA-256 del ZIP que entregó la CMF por cada sector (vida / generales).

@@ -22,6 +22,7 @@ NUEVAS = {"o": "otras_inversiones", "d": "tablas_descriptores",
           "t": "tablas_desarrollo", "e": "flujos_activos_elegibles",
           "r": "prestamos", "v": "bienes_raices_arriendo_morosidad",
           "g": "garantias_derivados"}
+TIPO6 = {"e": "B.11", "g": "B.14"}
 
 
 def linea(letra: str, tipo: str) -> str:
@@ -81,6 +82,8 @@ def zip_mes() -> bytes:
     # B.1 y B.8 son obligatorios para que el mes se publique; se prueba además B.6 y B.9–B.14.
     for letra, tipo in (("i", "2"), ("c", "2")) + tuple((l, "2") for l in NUEVAS):
         cuerpo = [linea(letra, tipo), linea(letra, tipo)]
+        if letra in TIPO6:
+            cuerpo.append("6" + "Z" * (LARGO["v2024"][letra] - 1))
         lineas = [encabezado(letra)] + cuerpo + [totales(letra, len(cuerpo) + 2)]
         archivos[f"{letra}202501.v.{RUT}"] = "\r\n".join(lineas) + "\r\n"
     buf = io.BytesIO()
@@ -110,6 +113,17 @@ def main() -> int:
         if len(filas[tabla]) != 2:
             print(f"FALLA {tabla}: {len(filas[tabla])} filas, se esperaban 2")
             fallas += 1
+    registros_6 = filas["registros_tipo6"]
+    if len(registros_6) != 2:
+        print(f"FALLA registros_tipo6: {len(registros_6)} filas, se esperaban 2")
+        fallas += 1
+    else:
+        for fila in registros_6:
+            letra = "e" if fila["tipo_archivo"] == "B.11" else "g"
+            if (fila["tipo_registro"] != "6" or fila["largo_registro"] != LARGO["v2024"][letra]
+                    or fila["registro_original"] != "6" + "Z" * (LARGO["v2024"][letra] - 1)):
+                print(f"FALLA: registro original tipo 6 no conservado ({fila['tipo_archivo']})")
+                fallas += 1
     esperado = {
         "otras_inversiones": ("codigo_o_nombre_de_la_inversion", "X" * 20),
         "tablas_descriptores": ("codigo_nemotecnico", "X" * 30),
@@ -137,7 +151,7 @@ def main() -> int:
         ac._ESQUEMAS.clear()
         tablas = ac.tablas_de(PERIODO)
         ac.escribir_periodo(PERIODO, filas, tablas)
-        for tabla in NUEVAS.values():
+        for tabla in [*NUEVAS.values(), "registros_tipo6"]:
             ruta = ac.ruta_particion(tabla, PERIODO)
             if not ruta.exists():
                 print(f"FALLA {tabla}: no se escribió {ruta.name}")
@@ -188,7 +202,7 @@ def main() -> int:
         if not garantias["contraparte_tipo"].eq("persona_natural_probable").all():
             print("FALLA privacidad B.14: no se clasificó contraparte natural")
             fallas += 1
-        if any(tabla not in ac.TABLAS for tabla in NUEVAS.values()):
+        if any(tabla not in ac.TABLAS for tabla in [*NUEVAS.values(), "registros_tipo6"]):
             print("FALLA: el publicador no incluye todos los registros nuevos")
             fallas += 1
 
