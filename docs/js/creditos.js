@@ -45,7 +45,7 @@
   }
 
   function enlace(href, texto) {
-    return `<a href="${escapar(href)}" target="_blank" rel="noopener">${escapar(texto)}</a>`;
+    return `<a href="${escapar(href)}" target="_blank" rel="noopener noreferrer">${escapar(texto)}</a>`;
   }
 
   function enlacesReproducibilidad() {
