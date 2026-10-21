@@ -219,6 +219,18 @@
     "seguros_control_inversiones": {
       "workflow": "seguros_carteras.yml"
     },
+    "seguros_otras_inversiones": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_tablas_descriptores": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_tablas_desarrollo": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_flujos_activos_elegibles": {
+      "workflow": "seguros_carteras.yml"
+    },
     "seguros_derivados": {
       "workflow": "seguros_carteras.yml"
     },

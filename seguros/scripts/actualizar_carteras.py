@@ -49,6 +49,7 @@ from pipelines.auto import rut as rutmod
 from pipelines.auto.rut import normalizar_dataframe
 from pipelines.auto import privacidad
 from seguros.scripts import metadatos_web
+from seguros.scripts.vistas_1835 import RESUMENES_RELEVANTES
 from seguros.scripts.formato_1835 import ENCABEZADO, LARGO, TIPO_TOTAL, campos, formato_de
 
 RAIZ = Path(__file__).resolve().parents[2]
@@ -57,14 +58,26 @@ from pipelines.auto import estable  # noqa: E402
 SALIDA = RAIZ / "docs" / "outputs" / "seguros"
 URL = "https://www.cmfchile.cl/institucional/estadisticas/merc_seguros/cartera_inversiones/dcisgv/descarga_cartera_inv.php"
 SECTORES = {"vida": "CSVID", "generales": "CSGEN"}
-TABLAS = ["renta_fija", "acciones", "fondos_mutuos", "bienes_raices", "extranjeros",
-          "derivados", "pactos", "control_inversiones"]
+TABLAS = [
+    # Registros, en el orden del manual Circular 1835, sección B.
+    "renta_fija", "acciones", "fondos_mutuos", "bienes_raices", "extranjeros", "otras_inversiones",
+    "derivados", "pactos", "control_inversiones", "tablas_descriptores", "tablas_desarrollo",
+    "flujos_activos_elegibles", "prestamos", "bienes_raices_arriendo_morosidad", "garantias_derivados",
+] + [config[0] for config in RESUMENES_RELEVANTES.values()]
 # Primer mes publicado por tabla. La ficha "v2016" es la más antigua que tenemos; si un mes
 # anterior no la cumple, la validación lo rechaza. Renta fija y bienes raíces pesan ~5 MB por
 # mes (detalle por instrumento), por eso parten más tarde. Para extender una tabla basta con
 # cambiar su fecha aquí: la próxima corrida completa solo lo que falta de esa tabla.
 DESDE = "2016-11"
-DESDE_TABLA = {"renta_fija": "2024-12", "bienes_raices": "2024-12"}
+DESDE_TABLA = {"renta_fija": "2024-12", "bienes_raices": "2024-12",
+               # Los registros que el anexo 2024 agregó no existen en el formato anterior.
+               "otras_inversiones": "2024-12", "tablas_descriptores": "2024-12",
+               "tablas_desarrollo": "2024-12", "flujos_activos_elegibles": "2024-12",
+               "prestamos": "2024-12", "bienes_raices_arriendo_morosidad": "2024-12",
+               "garantias_derivados": "2024-12"}
+for _base, (_resumen, _titulo, _columnas) in RESUMENES_RELEVANTES.items():
+    if _base in DESDE_TABLA:
+        DESDE_TABLA[_resumen] = DESDE_TABLA[_base]
 # Tablas grandes: un archivo por mes (se escribe una vez). Resto: un archivo por año.
 POR_MES = {"renta_fija", "bienes_raices"}
 # Orden dentro de cada archivo: el mismo instrumento queda en filas contiguas y comprime mejor.
@@ -74,8 +87,22 @@ ORDEN = {"renta_fija": ["tipo_instrumento", "nemotecnico", "serie", "fecha_compr
          "bienes_raices": ["property_id"],
          "extranjeros": ["tipo_registro", "codigo_individualizacion_o_nemotecnico"],
          "derivados": ["tipo_registro", "folio_operacion"], "pactos": ["folio_operacion"],
-         "control_inversiones": ["tipo_de_inversion"]}
-ARCHIVOS = set("iafbxpc")
+         "control_inversiones": ["tipo_de_inversion"],
+         "otras_inversiones": ["tipo_de_activo", "codigo_o_nombre_de_la_inversion"],
+         "tablas_descriptores": ["codigo_nemotecnico"],
+         "tablas_desarrollo": ["nemotecnico", "nro_cupon"],
+         "flujos_activos_elegibles": ["tipo_de_informacion", "tipo_instrumento"],
+         "prestamos": ["codigo_prestamo", "rut_deudor"],
+         "bienes_raices_arriendo_morosidad": ["tipo_instrumento", "comuna"],
+         "garantias_derivados": ["rut_contraparte_nacional", "identificador_garantia"],
+         "renta_fija_relevante": ["tipo_instrumento", "nemotecnico", "serie", "fecha_compra"],
+         "acciones_relevantes": ["nemotecnico"],
+         "bienes_raices_relevantes": ["property_id"],
+         "extranjeros_relevantes": ["tipo_registro", "codigo_individualizacion_o_nemotecnico"],
+         "derivados_relevantes": ["tipo_registro", "folio_operacion"],
+         "prestamos_relevantes": ["codigo_prestamo"],
+         "bienes_raices_arriendo_morosidad_relevantes": ["property_id", "comuna"]}
+ARCHIVOS = set("iafbxpcodetrvg")
 
 
 class NoPublicado(Exception):
@@ -350,9 +377,18 @@ def _mas_ancho(a: pa.DataType | None, b: pa.DataType) -> pa.DataType:
 
 
 def esquema(tabla: str) -> pa.Schema:
-    """Esquema fijo por tabla según la ficha (unión de ambos formatos): así todos los archivos
-    de una tabla se leen juntos y un mes nunca cambia el tipo de una columna."""
+    """Esquema fijo de una tabla completa o de su proyección analítica derivada."""
     if tabla not in _ESQUEMAS:
+        origen_resumen = next((base for base, cfg in RESUMENES_RELEVANTES.items()
+                               if cfg[0] == tabla), None)
+        if origen_resumen:
+            esquema_base = esquema(origen_resumen)
+            columnas = RESUMENES_RELEVANTES[origen_resumen][2]
+            faltan = [c for c in columnas if c not in esquema_base.names]
+            if faltan:
+                raise ValueError(f"{tabla}: columnas relevantes ausentes en {origen_resumen}: {faltan}")
+            _ESQUEMAS[tabla] = pa.schema([esquema_base.field(c) for c in columnas])
+            return _ESQUEMAS[tabla]
         cols = {"periodo": pa.string(), "sector": pa.string(), "rut_aseguradora": pa.string(),
                 "nombre_aseguradora": pa.string()}
         for formato in ("v2016", "v2024"):
@@ -367,11 +403,11 @@ def esquema(tabla: str) -> pa.Schema:
                     # esquema. Los nombres con sentidos distintos (texto vs número) se separan
                     # en el inventario, no aquí.
                     cols[c] = _mas_ancho(cols.get(c), _tipo_arrow(tipo, dec))
-        if tabla == "bienes_raices":
-            # La dirección exacta («ubicacion») y el rol tributario no se
-            # publican; «property_id» es el seudónimo que permite seguir el
-            # mismo inmueble entre meses. Criterio en pipelines/auto/privacidad.py.
+        if tabla in {"bienes_raices", "bienes_raices_arriendo_morosidad"}:
+            # Rol y dirección se suprimen; el seudónimo permite seguimiento longitudinal.
             cols["property_id"] = pa.string()
+        if tabla == "garantias_derivados":
+            cols["contraparte_tipo"] = pa.string()
         _ESQUEMAS[tabla] = pa.schema(list(cols.items()))
     return _ESQUEMAS[tabla]
 
@@ -388,13 +424,85 @@ def ruta_particion(tabla: str, periodo: str) -> Path:
     return SALIDA / tabla / (f"{periodo}.parquet" if tabla in POR_MES else f"{periodo[:4]}.parquet")
 
 
+def _proteger_tabla(tabla: str, df: pd.DataFrame) -> pd.DataFrame:
+    """Aplica privacidad a la tabla completa antes de escribir o proyectar."""
+    if tabla == "bienes_raices":
+        return privacidad.proteger_bienes_raices(df)
+    if tabla == "prestamos":
+        return privacidad.proteger_prestamos(df)
+    if tabla == "bienes_raices_arriendo_morosidad":
+        return privacidad.proteger_bienes_raices_arriendo(df)
+    if tabla == "garantias_derivados":
+        return privacidad.proteger_contrapartes(df)
+    return df
+
+
+def backfill_vistas_existentes(control: dict, escribir: bool = True) -> set[tuple[str, str]]:
+    """Deriva vistas desde Parquet completos ya publicados, sin volver a bajar ZIP históricos.
+
+    La fuente publicada ya pasó por privacidad; se proyectan sus filas intactas. Las vistas de
+    B.12 y B.13 cuyo origen aún no está publicado se completan junto con el ZIP mensual.
+    """
+    cache_particiones: dict[Path, pd.DataFrame] = {}
+    derivables: set[tuple[str, str]] = set()
+    for base, (resumen, _titulo, columnas) in RESUMENES_RELEVANTES.items():
+        for periodo, info in sorted(control["periodos"].items()):
+            registros = info.setdefault("registros", {})
+            if resumen in registros or base not in registros or periodo < DESDE_TABLA.get(resumen, DESDE):
+                continue
+            origen = ruta_particion(base, periodo)
+            if not origen.exists():
+                continue
+            derivables.add((periodo, resumen))
+            if not escribir:
+                continue
+            if origen not in cache_particiones:
+                cache_particiones[origen] = pq.read_table(origen).to_pandas()
+            fuente = cache_particiones[origen]
+            filas_mes = fuente[fuente["periodo"].astype(str) == periodo].reindex(columns=columnas)
+            registros[resumen] = len(filas_mes)
+            if not len(filas_mes):
+                continue
+            destino = ruta_particion(resumen, periodo)
+            destino.parent.mkdir(parents=True, exist_ok=True)
+            partes = []
+            if destino.exists():
+                previo = pq.read_table(destino).to_pandas()
+                partes.append(previo[previo["periodo"] != periodo])
+            partes.append(filas_mes)
+            df = pd.concat([x for x in partes if len(x)], ignore_index=True)
+            df = df.reindex(columns=esquema(resumen).names)
+            orden = ["sector", "rut_aseguradora"] + [c for c in ORDEN.get(resumen, []) if c in df.columns] + ["periodo"]
+            df = normalizar_dataframe(df.sort_values(orden, kind="stable", na_position="first"))
+            tmp = destino.with_suffix(".tmp")
+            pq.write_table(pa.Table.from_pandas(df, schema=esquema(resumen), preserve_index=False), tmp,
+                           compression="zstd", compression_level=9)
+            os.replace(tmp, destino)
+    if escribir and derivables:
+        guardar_control(control)
+        escribir_manifiestos(control)
+        actualizar_data_manifest(control)
+    return derivables
+
+
 def escribir_periodo(periodo: str, filas: dict, tablas: list[str]) -> dict:
     """Escribe el mes en el archivo de cada tabla (si el mes ya estaba en ese archivo, lo reemplaza)."""
     conteo = {}
+    fuentes_resumen = {config[0]: (base, config[2]) for base, config in RESUMENES_RELEVANTES.items()}
     for tabla in tablas:
         ruta = ruta_particion(tabla, periodo)
         ruta.parent.mkdir(parents=True, exist_ok=True)
-        nuevo = pd.DataFrame(filas[tabla])
+        if tabla in fuentes_resumen:
+            fuente, columnas = fuentes_resumen[tabla]
+            nuevo = pd.DataFrame(filas[fuente])
+        else:
+            fuente, columnas = tabla, None
+            nuevo = pd.DataFrame(filas[tabla])
+        # Aplicar las reglas de privacidad tanto a los archivos completos como a su derivado
+        # reducido, antes de seleccionar columnas, para no publicar PII en una variante.
+        nuevo = _proteger_tabla(fuente, nuevo)
+        if columnas:
+            nuevo = nuevo.reindex(columns=columnas)
         conteo[tabla] = len(nuevo)
         partes = []
         if ruta.exists():
@@ -406,10 +514,6 @@ def escribir_periodo(periodo: str, filas: dict, tablas: list[str]) -> dict:
         if not partes:
             continue
         df = pd.concat(partes, ignore_index=True).reindex(columns=esquema(tabla).names)
-        # Protección de identificadores antes de ordenar: en bienes raíces el
-        # orden pasa a ser por el seudónimo, porque el rol deja de existir.
-        if tabla == "bienes_raices":
-            df = privacidad.proteger_bienes_raices(df)
         orden = ["sector", "rut_aseguradora"] + [c for c in ORDEN.get(tabla, []) if c in df.columns] + ["periodo"]
         df = df.sort_values(orden, kind="stable", na_position="first")
         df = normalizar_dataframe(df)  # convención de RUT (pipelines/auto/rut.py)
@@ -570,26 +674,31 @@ def ultimo_mes_cerrado(hoy: date | None = None) -> str:
 
 
 def diagnostico(periodos: list[str], a) -> int:
-    """Lee todos los meses sin escribir; informa cada mes con problemas y sus avisos."""
-    malos, gha = 0, bool(os.environ.get("GITHUB_ACTIONS"))
+    """Lee todos los meses sin escribir; distingue errores fatales de archivos excluidos."""
+    malos, excluidos_total, revisados = 0, 0, 0
+    gha = bool(os.environ.get("GITHUB_ACTIONS"))
     for periodo in periodos:
         try:
             datos = {s: descargar(s, periodo, a.zip_dir, a.cache) for s in SECTORES}
         except NoPublicado:
             break
+        revisados += 1
         for sector, data in datos.items():
             try:
-                filas, comp, avisos, _exc = leer_zip(data, periodo, sector)
+                filas, comp, avisos, excluidos = leer_zip(data, periodo, sector)
+                excluidos_total += len(excluidos)
                 print(f"{periodo} {sector}: OK · {len(comp)} compañías · {sum(map(len, filas.values()))} filas"
-                      f" · {len(avisos)} avisos")
+                      f" · {len(avisos)} avisos · {len(excluidos)} archivos excluidos")
             except ErrorValidacion as e:
                 malos += 1
                 print(f"{periodo} {sector}: PROBLEMA · {e}")
                 if gha:
                     print(f"::warning title=Diagnóstico {periodo} {sector}::" + str(e).replace("\n", "%0A")[:1500])
-    print(f"Diagnóstico: {len(periodos)} meses revisados, {malos} archivos de sector con problemas.")
+    resumen = (f"{revisados} meses revisados, {malos} sectores con error fatal, "
+               f"{excluidos_total} archivos excluidos con advertencia")
+    print(f"Diagnóstico: {resumen}.")
     if gha:
-        print(f"::notice title=Diagnóstico seguros::{len(periodos)} meses revisados, {malos} con problemas")
+        print(f"::notice title=Diagnóstico seguros::{resumen}")
     return 0
 
 
@@ -633,13 +742,14 @@ def main(argv=None) -> int:
     control = cargar_control()
     hasta = a.hasta or ultimo_mes_cerrado()
     desde = min([a.desde] + list(DESDE_TABLA.values())) if a.desde == DESDE else a.desde
+    derivables = backfill_vistas_existentes(control, escribir=not a.diagnostico) if not a.forzar else set()
     pendientes = []
     for p in meses(desde, hasta):
         if a.forzar:  # reconstruir: el mes se vuelve a descargar y a escribir tal cual
             pendientes.append((p, tablas_de(p)))
             continue
         hechas = set(control["periodos"].get(p, {}).get("registros", {}))
-        faltan = [t for t in tablas_de(p) if t not in hechas]
+        faltan = [t for t in tablas_de(p) if t not in hechas and (p, t) not in derivables]
         if faltan:
             pendientes.append((p, faltan))
     if a.forzar:
@@ -708,6 +818,12 @@ def main(argv=None) -> int:
             if excluidos:
                 previo["archivos_excluidos"] = excluidos
         previo["registros"].update(conteo)
+        # Las exclusiones de un archivo de compañía se registran también al reconstruir un
+        # período ya existente (p. ej. al incorporar una tabla nueva), no sólo al primer proceso.
+        if excluidos:
+            previo["archivos_excluidos"] = sorted(set(previo.get("archivos_excluidos", [])) | set(excluidos))
+        previo["avisos"] = len(avisos)
+        previo["detalle_avisos"] = avisos[:40]
         # SHA-256 del ZIP que entregó la CMF por cada sector (vida / generales).
         previo.setdefault("sha256_origen", {}).update({s: hashlib.sha256(d).hexdigest() for s, d in datos.items()})
         control["periodos"][periodo] = previo

@@ -27,7 +27,7 @@ const ERD_TABLES = [
   },
   {
     id: "seguros_renta_fija",
-    name: "seguros.renta_fija",
+    name: "B.1 INSTRUMENTOS DE RENTA FIJA",
     sector: "seguros",
     color: "var(--accent-mint)",
     x: 80,
@@ -52,7 +52,7 @@ const ERD_TABLES = [
   },
   {
     id: "seguros_acciones",
-    name: "seguros.acciones",
+    name: "B.2 ACCIONES DE SOCIEDADES ANÓNIMAS ABIERTAS, ACCIONES DE SOCIEDADES ANÓNIMAS CERRADAS Y CUOTAS DE FONDOS DE INVERSIÓN",
     sector: "seguros",
     color: "var(--accent-mint)",
     x: 380,
@@ -77,7 +77,7 @@ const ERD_TABLES = [
   },
   {
     id: "seguros_fondos_mutuos",
-    name: "seguros.fondos_mutuos",
+    name: "B.3 CUOTAS DE FONDOS MUTUOS",
     sector: "seguros",
     color: "var(--accent-mint)",
     x: 680,
@@ -102,7 +102,7 @@ const ERD_TABLES = [
   },
   {
     id: "seguros_bienes_raices",
-    name: "seguros.bienes_raices",
+    name: "B.4 BIENES RAICES",
     sector: "seguros",
     color: "var(--accent-mint)",
     x: 980,
@@ -127,7 +127,7 @@ const ERD_TABLES = [
   },
   {
     id: "seguros_extranjeros",
-    name: "seguros.extranjeros",
+    name: "B.5 INVERSIONES EN EL EXTRANJERO",
     sector: "seguros",
     color: "var(--accent-mint)",
     x: 80,
@@ -152,7 +152,7 @@ const ERD_TABLES = [
   },
   {
     id: "seguros_derivados",
-    name: "seguros.derivados",
+    name: "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS",
     sector: "seguros",
     color: "var(--accent-mint)",
     x: 380,
@@ -177,7 +177,7 @@ const ERD_TABLES = [
   },
   {
     id: "seguros_pactos",
-    name: "seguros.pactos",
+    name: "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS",
     sector: "seguros",
     color: "var(--accent-mint)",
     x: 680,
@@ -202,7 +202,7 @@ const ERD_TABLES = [
   },
   {
     id: "seguros_control_inversiones",
-    name: "seguros.control_inversiones",
+    name: "B.8 INFORMACION DE CONTROL",
     sector: "seguros",
     color: "var(--accent-mint)",
     x: 980,
@@ -223,6 +223,106 @@ const ERD_TABLES = [
       { name: "total_costo_amortizado_m_clp", type: "BIGINT" },
       { name: "total_valor_razonable_m_clp", type: "BIGINT" },
       { name: "total_efectivo_equivalente_m_clp", type: "BIGINT" }
+    ]
+  },
+  {
+    id: "seguros_otras_inversiones",
+    name: "B.6 OTRAS INVERSIONES",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 80,
+    y: 820,
+    w: 240,
+    h: 216,
+    rows: "Mensual",
+    file: "outputs/seguros/otras_inversiones/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "sector", type: "VARCHAR" },
+      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
+      { name: "nombre_aseguradora", type: "VARCHAR" },
+      { name: "codigo_o_nombre_de_la_inversion", type: "VARCHAR" },
+      { name: "nemotecnico", type: "VARCHAR" },
+      { name: "pais", type: "VARCHAR" },
+      { name: "tipo_instrumento", type: "VARCHAR" },
+      { name: "unidad_monetaria", type: "VARCHAR" },
+      { name: "valor_costo_actualizado_m_clp", type: "BIGINT" },
+      { name: "depreciacion_acumulada_m_clp", type: "BIGINT" }
+    ]
+  },
+  {
+    id: "seguros_tablas_descriptores",
+    name: "B.9 TABLAS DE DESCRIPTORES",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 380,
+    y: 820,
+    w: 240,
+    h: 216,
+    rows: "Mensual",
+    file: "outputs/seguros/tablas_descriptores/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "sector", type: "VARCHAR" },
+      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
+      { name: "nombre_aseguradora", type: "VARCHAR" },
+      { name: "rut_del_emisor", type: "VARCHAR" },
+      { name: "codigo_nemotecnico", type: "VARCHAR" },
+      { name: "tipo_instrumento", type: "VARCHAR" },
+      { name: "fecha_emision", type: "VARCHAR" },
+      { name: "tasa_emision", type: "DOUBLE" },
+      { name: "tasa_descto", type: "DOUBLE" },
+      { name: "unidad_monetaria", type: "VARCHAR" }
+    ]
+  },
+  {
+    id: "seguros_tablas_desarrollo",
+    name: "B.10 TABLAS DE DESARROLLO",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 680,
+    y: 820,
+    w: 240,
+    h: 216,
+    rows: "Mensual",
+    file: "outputs/seguros/tablas_desarrollo/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "sector", type: "VARCHAR" },
+      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
+      { name: "nombre_aseguradora", type: "VARCHAR" },
+      { name: "rut_del_emisor", type: "VARCHAR" },
+      { name: "nemotecnico", type: "VARCHAR" },
+      { name: "nro_cupon", type: "BIGINT" },
+      { name: "fecha_vcto_cupon", type: "VARCHAR" },
+      { name: "interes", type: "DOUBLE" },
+      { name: "amortizacion", type: "DOUBLE" },
+      { name: "saldo_insoluto", type: "DOUBLE" }
+    ]
+  },
+  {
+    id: "seguros_flujos_activos_elegibles",
+    name: "B.11 FLUJOS DE ACTIVOS ELEGIBLES",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 980,
+    y: 820,
+    w: 240,
+    h: 216,
+    rows: "Mensual",
+    file: "outputs/seguros/flujos_activos_elegibles/manifest.json",
+    cols: [
+      { name: "periodo", type: "VARCHAR" },
+      { name: "sector", type: "VARCHAR" },
+      { name: "rut_aseguradora", fk: true, type: "VARCHAR" },
+      { name: "nombre_aseguradora", type: "VARCHAR" },
+      { name: "circular_aplicada", type: "BIGINT" },
+      { name: "tipo_de_informacion", type: "VARCHAR" },
+      { name: "tipo_instrumento", type: "VARCHAR" },
+      { name: "tramo_1_uf", type: "DOUBLE" },
+      { name: "tramo_2_uf", type: "DOUBLE" },
+      { name: "tramo_3_uf", type: "DOUBLE" },
+      { name: "tramo_4_uf", type: "DOUBLE" }
     ]
   },
   {
@@ -1524,6 +1624,544 @@ const ERD_TABLES = [
   ]
 },
   // END AUTO FI EEFF ERD
+  {
+    id: "seguros_prestamos",
+    name: "B.12 PRÉSTAMOS",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 80,
+    y: 1080,
+    w: 260,
+    h: 230,
+    rows: "Mensual · desde 2024-12",
+    file: "outputs/seguros/prestamos/manifest.json",
+    cols: [
+      {
+        name: "periodo",
+        type: "VARCHAR"
+      },
+      {
+        name: "sector",
+        type: "VARCHAR"
+      },
+      {
+        name: "rut_aseguradora",
+        type: "VARCHAR",
+        fk: true
+      },
+      {
+        name: "nombre_aseguradora",
+        type: "VARCHAR"
+      },
+      {
+        name: "codigo_prestamo",
+        type: "BIGINT"
+      },
+      {
+        name: "fecha_prestamo",
+        type: "VARCHAR"
+      },
+      {
+        name: "fecha_vencimiento",
+        type: "VARCHAR"
+      },
+      {
+        name: "tipo_deudor",
+        type: "VARCHAR"
+      },
+      {
+        name: "valor_final_b_12_m_clp",
+        type: "BIGINT"
+      }
+    ]
+  },
+  {
+    id: "seguros_bienes_raices_arriendo_morosidad",
+    name: "B.13 BIENES RAICES EN ARRIENDO Y MOROSIDAD DE MUTUOS HIPOTECARIOS ENDOSABLES Y CONTRATOS DE LEASING",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 380,
+    y: 1080,
+    w: 260,
+    h: 230,
+    rows: "Mensual · desde 2024-12",
+    file: "outputs/seguros/bienes_raices_arriendo_morosidad/manifest.json",
+    cols: [
+      {
+        name: "periodo",
+        type: "VARCHAR"
+      },
+      {
+        name: "sector",
+        type: "VARCHAR"
+      },
+      {
+        name: "rut_aseguradora",
+        type: "VARCHAR",
+        fk: true
+      },
+      {
+        name: "nombre_aseguradora",
+        type: "VARCHAR"
+      },
+      {
+        name: "property_id",
+        type: "VARCHAR"
+      },
+      {
+        name: "tipo_instrumento",
+        type: "VARCHAR"
+      },
+      {
+        name: "comuna",
+        type: "VARCHAR"
+      },
+      {
+        name: "recaudacion_mes_total_m_clp",
+        type: "BIGINT"
+      },
+      {
+        name: "morosidad_total_m_clp",
+        type: "BIGINT"
+      }
+    ]
+  },
+  {
+    id: "seguros_garantias_derivados",
+    name: "B.14 GARANTÍAS EN INSTRUMENTOS DERIVADOS",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 680,
+    y: 1080,
+    w: 260,
+    h: 230,
+    rows: "Mensual · desde 2024-12",
+    file: "outputs/seguros/garantias_derivados/manifest.json",
+    cols: [
+      {
+        name: "periodo",
+        type: "VARCHAR"
+      },
+      {
+        name: "sector",
+        type: "VARCHAR"
+      },
+      {
+        name: "rut_aseguradora",
+        type: "VARCHAR",
+        fk: true
+      },
+      {
+        name: "nombre_aseguradora",
+        type: "VARCHAR"
+      },
+      {
+        name: "rut_contraparte_nacional",
+        type: "VARCHAR"
+      },
+      {
+        name: "contraparte_tipo",
+        type: "VARCHAR"
+      },
+      {
+        name: "posicion_compania",
+        type: "VARCHAR"
+      },
+      {
+        name: "tipo_garantia",
+        type: "VARCHAR"
+      },
+      {
+        name: "valor_razonable_activo_en_garantia_m_clp",
+        type: "BIGINT"
+      }
+    ]
+  },
+  {
+    id: "seguros_renta_fija_relevante",
+    name: "B.1 INSTRUMENTOS DE RENTA FIJA",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 980,
+    y: 1080,
+    w: 260,
+    h: 230,
+    rows: "Campos relevantes",
+    file: "outputs/seguros/renta_fija_relevante/manifest.json",
+    cols: [
+      {
+        name: "periodo",
+        type: "VARCHAR"
+      },
+      {
+        name: "sector",
+        type: "VARCHAR"
+      },
+      {
+        name: "rut_aseguradora",
+        type: "VARCHAR",
+        fk: true
+      },
+      {
+        name: "nombre_aseguradora",
+        type: "VARCHAR"
+      },
+      {
+        name: "codigo_operacion",
+        type: "VARCHAR"
+      },
+      {
+        name: "folio_operacion",
+        type: "BIGINT"
+      },
+      {
+        name: "item_operacion",
+        type: "BIGINT"
+      },
+      {
+        name: "tipo_instrumento",
+        type: "VARCHAR"
+      },
+      {
+        name: "nemotecnico",
+        type: "VARCHAR"
+      },
+      {
+        name: "serie",
+        type: "VARCHAR"
+      }
+    ]
+  },
+  {
+    id: "seguros_acciones_relevantes",
+    name: "B.2 ACCIONES DE SOCIEDADES ANÓNIMAS ABIERTAS, ACCIONES DE SOCIEDADES ANÓNIMAS CERRADAS Y CUOTAS DE FONDOS DE INVERSIÓN",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 1280,
+    y: 1080,
+    w: 260,
+    h: 230,
+    rows: "Campos relevantes",
+    file: "outputs/seguros/acciones_relevantes/manifest.json",
+    cols: [
+      {
+        name: "periodo",
+        type: "VARCHAR"
+      },
+      {
+        name: "sector",
+        type: "VARCHAR"
+      },
+      {
+        name: "rut_aseguradora",
+        type: "VARCHAR",
+        fk: true
+      },
+      {
+        name: "nombre_aseguradora",
+        type: "VARCHAR"
+      },
+      {
+        name: "tipo_instrumento",
+        type: "VARCHAR"
+      },
+      {
+        name: "nemotecnico",
+        type: "VARCHAR"
+      },
+      {
+        name: "serie",
+        type: "VARCHAR"
+      },
+      {
+        name: "unidad_monetaria",
+        type: "VARCHAR"
+      },
+      {
+        name: "unidades",
+        type: "DOUBLE"
+      },
+      {
+        name: "valor_costo_clp",
+        type: "BIGINT"
+      }
+    ]
+  },
+  {
+    id: "seguros_bienes_raices_relevantes",
+    name: "B.4 BIENES RAICES",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 80,
+    y: 1370,
+    w: 260,
+    h: 230,
+    rows: "Campos relevantes",
+    file: "outputs/seguros/bienes_raices_relevantes/manifest.json",
+    cols: [
+      {
+        name: "periodo",
+        type: "VARCHAR"
+      },
+      {
+        name: "sector",
+        type: "VARCHAR"
+      },
+      {
+        name: "rut_aseguradora",
+        type: "VARCHAR",
+        fk: true
+      },
+      {
+        name: "nombre_aseguradora",
+        type: "VARCHAR"
+      },
+      {
+        name: "property_id",
+        type: "VARCHAR"
+      },
+      {
+        name: "tipo_de_inmueble",
+        type: "VARCHAR"
+      },
+      {
+        name: "tipo_instrumento",
+        type: "VARCHAR"
+      },
+      {
+        name: "destino",
+        type: "VARCHAR"
+      },
+      {
+        name: "uso",
+        type: "VARCHAR"
+      },
+      {
+        name: "comuna",
+        type: "VARCHAR"
+      }
+    ]
+  },
+  {
+    id: "seguros_extranjeros_relevantes",
+    name: "B.5 INVERSIONES EN EL EXTRANJERO",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 380,
+    y: 1370,
+    w: 260,
+    h: 230,
+    rows: "Campos relevantes",
+    file: "outputs/seguros/extranjeros_relevantes/manifest.json",
+    cols: [
+      {
+        name: "periodo",
+        type: "VARCHAR"
+      },
+      {
+        name: "sector",
+        type: "VARCHAR"
+      },
+      {
+        name: "rut_aseguradora",
+        type: "VARCHAR",
+        fk: true
+      },
+      {
+        name: "nombre_aseguradora",
+        type: "VARCHAR"
+      },
+      {
+        name: "tipo_registro",
+        type: "VARCHAR"
+      },
+      {
+        name: "tipo_instrumento",
+        type: "VARCHAR"
+      },
+      {
+        name: "codigo_individualizacion_o_nemotecnico",
+        type: "VARCHAR"
+      },
+      {
+        name: "pais",
+        type: "VARCHAR"
+      },
+      {
+        name: "moneda",
+        type: "VARCHAR"
+      },
+      {
+        name: "valor_nominal",
+        type: "DOUBLE"
+      }
+    ]
+  },
+  {
+    id: "seguros_derivados_relevantes",
+    name: "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 680,
+    y: 1370,
+    w: 260,
+    h: 230,
+    rows: "Campos relevantes",
+    file: "outputs/seguros/derivados_relevantes/manifest.json",
+    cols: [
+      {
+        name: "periodo",
+        type: "VARCHAR"
+      },
+      {
+        name: "sector",
+        type: "VARCHAR"
+      },
+      {
+        name: "rut_aseguradora",
+        type: "VARCHAR",
+        fk: true
+      },
+      {
+        name: "nombre_aseguradora",
+        type: "VARCHAR"
+      },
+      {
+        name: "tipo_registro",
+        type: "VARCHAR"
+      },
+      {
+        name: "tipo_operacion",
+        type: "VARCHAR"
+      },
+      {
+        name: "folio_operacion",
+        type: "BIGINT"
+      },
+      {
+        name: "item_operacion",
+        type: "BIGINT"
+      },
+      {
+        name: "fecha_de_la_operacion",
+        type: "VARCHAR"
+      },
+      {
+        name: "fecha_de_vencimiento_del_contrato",
+        type: "VARCHAR"
+      }
+    ]
+  },
+  {
+    id: "seguros_prestamos_relevantes",
+    name: "B.12 PRÉSTAMOS",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 980,
+    y: 1370,
+    w: 260,
+    h: 230,
+    rows: "Campos relevantes",
+    file: "outputs/seguros/prestamos_relevantes/manifest.json",
+    cols: [
+      {
+        name: "periodo",
+        type: "VARCHAR"
+      },
+      {
+        name: "sector",
+        type: "VARCHAR"
+      },
+      {
+        name: "rut_aseguradora",
+        type: "VARCHAR",
+        fk: true
+      },
+      {
+        name: "nombre_aseguradora",
+        type: "VARCHAR"
+      },
+      {
+        name: "codigo_prestamo",
+        type: "BIGINT"
+      },
+      {
+        name: "fecha_prestamo",
+        type: "VARCHAR"
+      },
+      {
+        name: "fecha_vencimiento",
+        type: "VARCHAR"
+      },
+      {
+        name: "tipo_deudor",
+        type: "VARCHAR"
+      },
+      {
+        name: "tipo_prestamo",
+        type: "VARCHAR"
+      },
+      {
+        name: "prestamo_representativo",
+        type: "VARCHAR"
+      }
+    ]
+  },
+  {
+    id: "seguros_bienes_raices_arriendo_morosidad_relevantes",
+    name: "B.13 BIENES RAICES EN ARRIENDO Y MOROSIDAD DE MUTUOS HIPOTECARIOS ENDOSABLES Y CONTRATOS DE LEASING",
+    sector: "seguros",
+    color: "var(--accent-mint)",
+    x: 1280,
+    y: 1370,
+    w: 260,
+    h: 230,
+    rows: "Campos relevantes",
+    file: "outputs/seguros/bienes_raices_arriendo_morosidad_relevantes/manifest.json",
+    cols: [
+      {
+        name: "periodo",
+        type: "VARCHAR"
+      },
+      {
+        name: "sector",
+        type: "VARCHAR"
+      },
+      {
+        name: "rut_aseguradora",
+        type: "VARCHAR",
+        fk: true
+      },
+      {
+        name: "nombre_aseguradora",
+        type: "VARCHAR"
+      },
+      {
+        name: "property_id",
+        type: "VARCHAR"
+      },
+      {
+        name: "tipo_instrumento",
+        type: "VARCHAR"
+      },
+      {
+        name: "comuna",
+        type: "VARCHAR"
+      },
+      {
+        name: "fecha_vencimiento_contrato",
+        type: "VARCHAR"
+      },
+      {
+        name: "facturacion_mes_m_clp",
+        type: "BIGINT"
+      },
+      {
+        name: "recaudacion_mes_actual_m_clp",
+        type: "BIGINT"
+      }
+    ]
+  }
 ];
 
 // Relaciones entre tablas (Claves Foráneas lógicas)
@@ -1542,6 +2180,20 @@ const ERD_LINKS = [
   { from: "seguros_lista_entidades", to: "seguros_derivados", key: "sector, rut_aseguradora" },
   { from: "seguros_lista_entidades", to: "seguros_pactos", key: "sector, rut_aseguradora" },
   { from: "seguros_lista_entidades", to: "seguros_control_inversiones", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_otras_inversiones", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_tablas_descriptores", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_tablas_desarrollo", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_flujos_activos_elegibles", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_prestamos", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_bienes_raices_arriendo_morosidad", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_garantias_derivados", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_renta_fija_relevante", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_acciones_relevantes", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_bienes_raices_relevantes", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_extranjeros_relevantes", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_derivados_relevantes", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_prestamos_relevantes", key: "sector, rut_aseguradora" },
+  { from: "seguros_lista_entidades", to: "seguros_bienes_raices_arriendo_morosidad_relevantes", key: "sector, rut_aseguradora" },
   { from: "agf_lista_entidades", to: "fi_lista_entidades", key: "rut_administradora (gestión fiduciaria LUF)" },
   { from: "fi_lista_entidades", to: "fi_cartera_nacional", key: "run_fondo" },
   { from: "fi_lista_entidades", to: "fi_cartera_extranjera", key: "run_fondo" },
