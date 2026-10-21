@@ -202,6 +202,8 @@ class DuckDBClient {
     // Nombre del archivo (vista) -> motivo por el que no pudo crearse. Se
     // muestra en el diagnóstico para poder decir qué Parquet concreto falló.
     this.viewErrors = {};
+    this.viewPromises = new Map();
+    this.createdViews = new Set();
     // Una conexión DuckDB-Wasm no admite dos runQuery simultáneos. La
     // inicialización crea muchas vistas y la interfaz también puede recibir
     // consultas concurrentes; mantener una cola aquí evita que los mensajes
@@ -279,6 +281,8 @@ class DuckDBClient {
       this.environment = null;
       this.unavailableViews = [];
       this.viewErrors = {};
+      this.viewPromises = new Map();
+      this.createdViews = new Set();
       this.registeredFiles = new Set();
       this.db = null;
       this.conn = null;
@@ -342,9 +346,12 @@ class DuckDBClient {
         throw new Error(detalle || "ninguna fuente del motor respondió");
       }
 
-      await this.registerSemanticViews();
+      // No inicializar las vistas del catálogo al abrir la página: cada CREATE VIEW sobre
+      // Parquet remoto debe resolver sus esquemas y puede disparar decenas de
+      // peticiones de metadatos. El motor queda disponible ahora y cada consulta
+      // prepara solamente las vistas que realmente utiliza.
       this.engineAvailable = true;
-      console.log(`[DuckDB-Wasm] Motor listo (${this.engineSourceLabel}): ${SEMANTIC_VIEWS.length - this.unavailableViews.length}/${SEMANTIC_VIEWS.length} vistas disponibles.`);
+      console.log(`[DuckDB-Wasm] Motor listo (${this.engineSourceLabel}); vistas bajo demanda.`);
     } catch (e) {
       this.engineAvailable = false;
       this.engineError = e && e.message ? e.message : String(e);
@@ -545,6 +552,53 @@ class DuckDBClient {
     }
   }
 
+  // Prepara bajo demanda únicamente las vistas que aparecen en el SQL. La
+  // expresión busca nombres del catálogo como identificadores completos; los
+  // alias históricos apuntan a su vista canónica.
+  async ensureSemanticViewsForQuery(sql) {
+    const texto = String(sql || "");
+    const porNombre = new Map(SEMANTIC_VIEWS.map((view) => [view.name, view]));
+    const requeridas = new Set();
+    // Los nombres proceden del catálogo estático y sólo contienen [a-z0-9_].
+    const coincide = (nombre) => new RegExp(`(^|[^a-zA-Z0-9_])${nombre}([^a-zA-Z0-9_]|$)`, "i").test(texto);
+
+    for (const view of SEMANTIC_VIEWS) {
+      if (coincide(view.name)) requeridas.add(view.name);
+    }
+    for (const [canonica, aliasList] of Object.entries(LEGACY_VIEW_ALIASES)) {
+      if (aliasList.some(coincide) && porNombre.has(canonica)) requeridas.add(canonica);
+    }
+
+    await Promise.all([...requeridas].map((name) => this.ensureSemanticView(name)));
+    return requeridas.size;
+  }
+
+  async ensureSemanticView(name) {
+    const view = SEMANTIC_VIEWS.find((item) => item.name === name);
+    if (!view) return;
+    if (!this.viewPromises) this.viewPromises = new Map();
+    if (!this.createdViews) this.createdViews = new Set();
+    if (this.createdViews.has(name)) return;
+    if (!this.viewPromises.has(name)) {
+      const pending = (async () => {
+        const preparada = await this.prepararVista(view);
+        await Promise.all(preparada.files.map((file) => this.registerFile(file)));
+        await this.crearVista(preparada);
+        this.createdViews.add(name);
+        this.unavailableViews = this.unavailableViews.filter((item) => item !== name);
+        delete this.viewErrors[name];
+      })().catch((err) => {
+        const motivo = err && err.message ? err.message : String(err);
+        if (!this.unavailableViews.includes(name)) this.unavailableViews.push(name);
+        this.viewErrors[name] = motivo;
+        this.updateEngineBadge();
+        throw new Error(`Vista ${name} no disponible: ${motivo}`);
+      });
+      this.viewPromises.set(name, pending);
+    }
+    return this.viewPromises.get(name);
+  }
+
   async registerSemanticViews() {
     this.unavailableViews = [];
     if (!this.conn) return;
@@ -644,6 +698,7 @@ class DuckDBClient {
     }
 
     try {
+      await this.ensureSemanticViewsForQuery(sql);
       const result = await this.runQuerySerial(sql);
       const replacer = (key, value) => (typeof value === "bigint" ? Number(value) : value);
       const rows = result.toArray().map((row) => {
@@ -665,7 +720,7 @@ class DuckDBClient {
       // Red de seguridad: si algo borró una vista del catálogo (DROP VIEW escrito
       // por el visitante, o un error nuestro), la recreamos y reintentamos una vez.
       // En el camino normal no cuesta nada: solo se mira el texto del error.
-      const reparado = this.parecenFaltarVistas(mensaje) ? await this.repararVistas() : false;
+      const reparado = this.parecenFaltarVistas(mensaje) ? await this.repararVistas(sql) : false;
       if (reparado) {
         try {
           const retry = await this.runQuerySerial(sql);
@@ -705,14 +760,15 @@ class DuckDBClient {
   // Vuelve a crear las vistas semánticas y devuelve true si se pudo. Es la
   // reparación de una sesión dañada: no toca ningún archivo, solo el catálogo
   // en memoria de esta pestaña.
-  async repararVistas() {
-    if (!this.conn || typeof this.registerSemanticViews !== "function") return false;
+  async repararVistas(sql) {
+    if (!this.conn || typeof this.ensureSemanticViewsForQuery !== "function") return false;
     try {
-      await this.registerSemanticViews();
-      console.warn("[DuckDB-Wasm] Vistas restauradas tras un error de catálogo.");
+      const cantidad = await this.ensureSemanticViewsForQuery(sql);
+      if (!cantidad) return false;
+      console.warn("[DuckDB-Wasm] Vistas requeridas restauradas tras un error de catálogo.");
       return true;
     } catch (err) {
-      console.error("[DuckDB-Wasm] No se pudieron restaurar las vistas:", err);
+      console.error("[DuckDB-Wasm] No se pudieron restaurar las vistas requeridas:", err);
       return false;
     }
   }

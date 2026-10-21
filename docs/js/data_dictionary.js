@@ -2835,6 +2835,24 @@ class DataDictionaryController {
     this.mostrarArchivo = false;
   }
 
+  renderSource(text) {
+    const escapar = (value) => String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;").replace(/\"/g, "&quot;").replace(/'/g, "&#39;");
+    const fuente = String(text || "");
+    const patron = /https?:\/\/[^\s<>\"']+/gi;
+    let salida = "";
+    let cursor = 0;
+    for (const coincidencia of fuente.matchAll(patron)) {
+      salida += escapar(fuente.slice(cursor, coincidencia.index));
+      const candidato = coincidencia[0];
+      const url = candidato.replace(/[),.;]+$/, "");
+      const sufijo = candidato.slice(url.length);
+      salida += `<a href="${escapar(url)}" target="_blank" rel="noopener noreferrer">${escapar(url)}</a>${escapar(sufijo)}`;
+      cursor = coincidencia.index + candidato.length;
+    }
+    return salida + escapar(fuente.slice(cursor));
+  }
+
   alcance() {
     const A = window.SIFAlcance;
     return A && A.disponible() ? A : null;
@@ -3005,7 +3023,7 @@ class DataDictionaryController {
               ${table.origen ? `
                 <div class="dict-table-source">
                   <span class="source-badge">Origen de Datos</span>
-                  <span class="source-text">${table.origen}</span>
+                  <span class="source-text">${this.renderSource(table.origen)}</span>
                 </div>
               ` : ''}
 
