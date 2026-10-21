@@ -14,7 +14,7 @@ on:
     paths:
       - .github/workflows/seguros_carteras.yml
       - seguros/scripts/actualizar_carteras.py
-      - seguros/tests/
+      - seguros/tests/**
       - seguros/scripts/formato_1835.py
       - seguros/scripts/vistas_1835.py
       - seguros/scripts/metadatos_web.py
