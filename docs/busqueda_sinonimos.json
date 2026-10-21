@@ -1,0 +1,528 @@
+{
+  "nota": "Conceptos y preguntas frecuentes → tablas. Lo usa scripts/generar_indice_busqueda.py para construir docs/outputs/indice_busqueda.json. Cada id debe existir en data_manifest.json; el script falla si no. Los nombres siguen los de la web (diccionario.json y sidebar), que son los que el usuario ve: p. ej. *_lista_entidades y bancos_balance/bancos_resultados, no los ids internos del manifiesto (*_maestro, bancos_cmf_lineas).",
+  "conceptos": [
+    {
+      "termino": "uf",
+      "alias": [
+        "unidad de fomento",
+        "valor uf"
+      ],
+      "tablas": [
+        "macro_uf"
+      ]
+    },
+    {
+      "termino": "utm",
+      "alias": [
+        "unidad tributaria mensual"
+      ],
+      "tablas": [
+        "macro_utm"
+      ]
+    },
+    {
+      "termino": "dolar",
+      "alias": [
+        "dólar",
+        "usd",
+        "tipo de cambio",
+        "dolar observado"
+      ],
+      "tablas": [
+        "macro_dolar_observado",
+        "macro_tipo_cambio_multilateral",
+        "macro_tipo_cambio_real"
+      ]
+    },
+    {
+      "termino": "euro",
+      "alias": [
+        "eur"
+      ],
+      "tablas": [
+        "macro_euro_observado"
+      ]
+    },
+    {
+      "termino": "tipo de cambio real",
+      "alias": [
+        "tcr"
+      ],
+      "tablas": [
+        "macro_tipo_cambio_real"
+      ]
+    },
+    {
+      "termino": "tipo de cambio multilateral",
+      "alias": [
+        "tcm"
+      ],
+      "tablas": [
+        "macro_tipo_cambio_multilateral"
+      ]
+    },
+    {
+      "termino": "inflacion",
+      "alias": [
+        "ipc",
+        "precios",
+        "inflación",
+        "variacion del ipc"
+      ],
+      "tablas": [
+        "macro_inflacion_ipc",
+        "macro_expectativas_inflacion",
+        "macro_expectativas_operadores",
+        "macro_inflacion_implicita"
+      ]
+    },
+    {
+      "termino": "expectativas",
+      "alias": [
+        "encuesta de expectativas",
+        "eee",
+        "eof",
+        "operadores financieros"
+      ],
+      "tablas": [
+        "macro_expectativas_inflacion",
+        "macro_expectativas_tpm",
+        "macro_expectativas_operadores"
+      ]
+    },
+    {
+      "termino": "tpm",
+      "alias": [
+        "tasa de politica monetaria",
+        "tasa de política monetaria",
+        "tasa de interes",
+        "tasa de interés",
+        "tasa referencia"
+      ],
+      "tablas": [
+        "macro_tasas_corto_plazo",
+        "macro_expectativas_tpm"
+      ]
+    },
+    {
+      "termino": "tib",
+      "alias": [
+        "interbancaria",
+        "tasa interbancaria"
+      ],
+      "tablas": [
+        "macro_tasas_corto_plazo"
+      ]
+    },
+    {
+      "termino": "bonos",
+      "alias": [
+        "curva",
+        "rendimiento",
+        "curva de rendimiento",
+        "bcp",
+        "bcu",
+        "bono"
+      ],
+      "tablas": [
+        "macro_curva_bonos_pesos",
+        "macro_curva_bonos_uf"
+      ]
+    },
+    {
+      "termino": "breakeven",
+      "alias": [
+        "inflacion implicita",
+        "inflación implícita"
+      ],
+      "tablas": [
+        "macro_inflacion_implicita"
+      ]
+    },
+    {
+      "termino": "swap",
+      "alias": [
+        "swaps",
+        "swap de camara",
+        "swap de cámara",
+        "spc"
+      ],
+      "tablas": [
+        "macro_swaps_camara"
+      ]
+    },
+    {
+      "termino": "fed",
+      "alias": [
+        "reserva federal",
+        "fed funds",
+        "tasa de la fed"
+      ],
+      "tablas": [
+        "macro_tasa_referencia_fed"
+      ]
+    },
+    {
+      "termino": "cobre",
+      "alias": [
+        "precio del cobre",
+        "libra de cobre"
+      ],
+      "tablas": [
+        "macro_cobre"
+      ]
+    },
+    {
+      "termino": "metales",
+      "alias": [
+        "oro",
+        "plata",
+        "precio del oro"
+      ],
+      "tablas": [
+        "macro_metales_preciosos"
+      ]
+    },
+    {
+      "termino": "pib",
+      "alias": [
+        "producto interno bruto",
+        "crecimiento",
+        "crecimiento economico",
+        "crecimiento económico"
+      ],
+      "tablas": [
+        "macro_pib_trimestral",
+        "macro_imacec"
+      ]
+    },
+    {
+      "termino": "imacec",
+      "alias": [
+        "actividad economica",
+        "actividad económica",
+        "mensual de actividad"
+      ],
+      "tablas": [
+        "macro_imacec"
+      ]
+    },
+    {
+      "termino": "empleo",
+      "alias": [
+        "desempleo",
+        "desocupacion",
+        "desocupación",
+        "ocupados",
+        "fuerza de trabajo",
+        "mercado laboral"
+      ],
+      "tablas": [
+        "macro_mercado_laboral"
+      ]
+    },
+    {
+      "termino": "reservas",
+      "alias": [
+        "reservas internacionales",
+        "reservas del banco central"
+      ],
+      "tablas": [
+        "macro_reservas_internacionales"
+      ]
+    },
+    {
+      "termino": "deuda publica",
+      "alias": [
+        "deuda pública",
+        "deuda del gobierno",
+        "deuda gobierno central"
+      ],
+      "tablas": [
+        "macro_deuda_publica_pct_pib"
+      ]
+    },
+    {
+      "termino": "fondos mutuos",
+      "alias": [
+        "ffmm",
+        "fondo mutuo",
+        "cuotas de fondos mutuos",
+        "cartera de fondos"
+      ],
+      "tablas": [
+        "ffmm_cartera_nacional",
+        "ffmm_cartera_extranjera",
+        "ffmm_balance",
+        "ffmm_resultados",
+        "ffmm_futuros",
+        "ffmm_opciones",
+        "ffmm_lista_entidades"
+      ]
+    },
+    {
+      "termino": "fondos de inversion",
+      "alias": [
+        "fondos de inversión",
+        "fi",
+        "fondo de inversion",
+        "fondo de inversión",
+        "fires",
+        "finre"
+      ],
+      "tablas": [
+        "fi_balance",
+        "fi_resultados",
+        "fi_cartera_nacional",
+        "fi_cartera_extranjera",
+        "fi_futuros",
+        "fi_opciones",
+        "fi_pactos",
+        "fi_metodo_participacion",
+        "fi_bienes_raices",
+        "fi_lista_entidades"
+      ]
+    },
+    {
+      "termino": "bancos",
+      "alias": [
+        "banco",
+        "bancaria",
+        "sistema bancario",
+        "balance bancario",
+        "colocaciones"
+      ],
+      "tablas": [
+        "bancos_balance",
+        "bancos_resultados",
+        "bancos_lista_entidades"
+      ]
+    },
+    {
+      "termino": "securitizadoras",
+      "alias": [
+        "securitizadora",
+        "securitización",
+        "securitizacion",
+        "titulos de deuda",
+        "títulos de deuda"
+      ],
+      "tablas": [
+        "securitizadoras_balance",
+        "securitizadoras_resultados",
+        "securitizadoras_lista_entidades",
+        "patrimonios_separados_lista_entidades"
+      ]
+    },
+    {
+      "termino": "patrimonio separado",
+      "alias": [
+        "patrimonios separados",
+        "patrimonio de securitizadora",
+        "patrimonio"
+      ],
+      "tablas": [
+        "patrimonios_separados_balance",
+        "patrimonios_separados_lista_entidades"
+      ]
+    },
+    {
+      "termino": "seguros",
+      "alias": [
+        "aseguradoras",
+        "compañias de seguros",
+        "compañías de seguros",
+        "seguro de vida",
+        "seguros generales",
+        "inversiones de seguros"
+      ],
+      "tablas": [
+        "seguros_lista_entidades",
+        "seguros_renta_fija",
+        "seguros_acciones",
+        "seguros_bienes_raices",
+        "seguros_derivados",
+        "seguros_extranjeros",
+        "seguros_fondos_mutuos",
+        "seguros_pactos",
+        "seguros_control_inversiones"
+      ]
+    },
+    {
+      "termino": "renta fija de seguros",
+      "alias": [
+        "bonos de seguros",
+        "instrumentos de renta fija"
+      ],
+      "tablas": [
+        "seguros_renta_fija"
+      ]
+    },
+    {
+      "termino": "derivados",
+      "alias": [
+        "opciones",
+        "futuros",
+        "forwards",
+        "swaps de seguros",
+        "nocional"
+      ],
+      "tablas": [
+        "seguros_derivados",
+        "ffmm_futuros",
+        "ffmm_opciones",
+        "fi_futuros",
+        "fi_opciones"
+      ]
+    },
+    {
+      "termino": "pactos",
+      "alias": [
+        "repo",
+        "repos",
+        "compra con retroventa",
+        "venta con retrocompra",
+        "vrc",
+        "crv"
+      ],
+      "tablas": [
+        "seguros_pactos",
+        "fi_pactos"
+      ]
+    },
+    {
+      "termino": "afp",
+      "alias": [
+        "pensiones",
+        "administradoras de fondos de pensiones",
+        "fondos de pensiones"
+      ],
+      "tablas": [
+        "afp_lista_entidades"
+      ]
+    },
+    {
+      "termino": "agf",
+      "alias": [
+        "administradora general de fondos",
+        "administradoras generales de fondos",
+        "gestoras"
+      ],
+      "tablas": [
+        "agf_balance",
+        "agf_resultados",
+        "agf_lista_entidades"
+      ]
+    },
+    {
+      "termino": "cajas de compensacion",
+      "alias": [
+        "cajas de compensación",
+        "ccaf",
+        "caja de compensacion",
+        "caja de compensación",
+        "asignacion familiar"
+      ],
+      "tablas": [
+        "ccaf_balance",
+        "ccaf_resultados",
+        "ccaf_lista_entidades"
+      ]
+    },
+    {
+      "termino": "cooperativas",
+      "alias": [
+        "cooperativa",
+        "cooperativas de ahorro",
+        "ahorro y credito",
+        "ahorro y crédito"
+      ],
+      "tablas": [
+        "cooperativas_lista_entidades"
+      ]
+    },
+    {
+      "termino": "corredoras de bolsa",
+      "alias": [
+        "corredora de bolsa",
+        "corredores de bolsa",
+        "agentes de valores",
+        "intermediarios de valores",
+        "fecu"
+      ],
+      "tablas": [
+        "corredoras_bolsa_balance",
+        "corredoras_bolsa_resultados",
+        "corredoras_bolsa_lista_entidades",
+        "corredoras_bolsa_lista_entidades_registro"
+      ]
+    },
+    {
+      "termino": "factoring",
+      "alias": [
+        "leasing",
+        "factoring y leasing",
+        "financiamiento automotriz",
+        "sociedades de factoring"
+      ],
+      "tablas": [
+        "factoring_leasing_balance",
+        "factoring_leasing_resultados",
+        "factoring_leasing_lista_entidades"
+      ]
+    },
+    {
+      "termino": "fintech",
+      "alias": [
+        "ley fintec",
+        "prestadores de servicios financieros",
+        "rpsf"
+      ],
+      "tablas": [
+        "fintech_rpsf_lista_entidades"
+      ]
+    },
+    {
+      "termino": "sistemas de pago",
+      "alias": [
+        "camaras de compensacion",
+        "cámaras de compensación",
+        "lbtr",
+        "contraparte central",
+        "tarjetas de pago",
+        "deposito de valores",
+        "depósito de valores"
+      ],
+      "tablas": [
+        "sistemas_pago_lista_entidades"
+      ]
+    },
+    {
+      "termino": "inversiones en el exterior",
+      "alias": [
+        "extranjero",
+        "inversion extranjera",
+        "inversión extranjera",
+        "emisores extranjeros"
+      ],
+      "tablas": [
+        "seguros_extranjeros",
+        "ffmm_cartera_extranjera",
+        "fi_cartera_extranjera"
+      ]
+    },
+    {
+      "termino": "bienes raices",
+      "alias": [
+        "bienes raíces",
+        "inmuebles",
+        "propiedades",
+        "arriendo"
+      ],
+      "tablas": [
+        "seguros_bienes_raices",
+        "fi_bienes_raices"
+      ]
+    }
+  ]
+}

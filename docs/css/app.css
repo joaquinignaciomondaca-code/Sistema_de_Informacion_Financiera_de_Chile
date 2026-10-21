@@ -693,6 +693,88 @@ header {
   box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.25);
 }
 
+/* Búsqueda por pregunta (docs/js/busqueda_pregunta.js) */
+.pregunta-buscar {
+  margin-top: 8px;
+}
+
+.pregunta-etiqueta {
+  display: block;
+  font-size: 10.5px;
+  color: var(--text-muted, #8b98a8);
+  margin-bottom: 4px;
+}
+
+.pregunta-buscar input {
+  width: 100%;
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 6px 10px;
+  color: var(--text-bright);
+  font-size: 11.5px;
+  font-family: var(--font-sans);
+  outline: none;
+}
+
+.pregunta-buscar input:focus {
+  border-color: var(--accent-mint);
+}
+
+.pregunta-estado {
+  font-size: 10.5px;
+  color: var(--text-muted, #8b98a8);
+  min-height: 1em;
+  margin: 4px 0;
+}
+
+.pregunta-resultados {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.pregunta-boton {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  padding: 6px 8px;
+  margin-bottom: 4px;
+  color: var(--text-bright);
+  cursor: pointer;
+  font-family: var(--font-sans);
+}
+
+.pregunta-boton:hover,
+.pregunta-boton:focus-visible {
+  border-color: var(--accent-mint);
+  outline: none;
+}
+
+.pregunta-nombre {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 600;
+}
+
+.pregunta-sector,
+.pregunta-motivo {
+  display: block;
+  font-size: 10px;
+  color: var(--text-muted, #8b98a8);
+}
+
+.pregunta-desc {
+  display: block;
+  font-size: 10.5px;
+  margin: 2px 0;
+}
+
 .sidebar-tree {
   flex: 1;
   overflow-y: auto;
