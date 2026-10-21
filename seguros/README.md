@@ -31,6 +31,29 @@ De ahí salen, generados:
 **Descargas:** el Excel lleva dos hojas, `Datos` y `Diccionario` (una fila por columna: nombre,
 tipo, unidad, nombre en la ficha, registro y descripción). El CSV se mantiene como estaba.
 
+## Circular 1835 · catálogo completo y vistas analíticas
+
+El catálogo respeta la numeración y los títulos del manual CMF, desde **B.1 INSTRUMENTOS DE RENTA FIJA** hasta **B.14 GARANTÍAS EN INSTRUMENTOS DERIVADOS**. Las tablas de cada registro conservan el conjunto completo de campos oficiales. Para los registros extensos, se agregan vistas paralelas de **campos relevantes** (no agregan ni resumen filas; sólo proyectan columnas) para análisis económico-financiero:
+
+- B.1 Renta fija, B.2 Acciones, B.4 Bienes raíces, B.5 Inversiones en el extranjero, B.7 Derivados, B.12 Préstamos y B.13 Bienes raíces en arriendo/morosidad.
+- Las vistas completas y reducidas coexisten como tablas separadas; la numeración y el nombre del registro siguen los del manual. El detalle del tipo indica «Campos relevantes».
+- El catálogo, diccionario de columnas, visor, explorador SQL y descargas se construyen a partir de `seguros/scripts/vistas_1835.py`, `metadatos_web.py`, el inventario y `docs/vocabulario.json`.
+
+### Privacidad de los registros B.4 y B.12–B.14
+
+Las columnas de la ficha oficial se mantienen en el esquema para preservar compatibilidad, pero los valores sensibles se suprimen antes de publicar:
+
+- B.4: dirección exacta y rol se sustituyen por `property_id`, seudónimo estable que permite análisis longitudinal sin revelar ubicación o identificador tributario del inmueble.
+- B.12: RUT, DV y nombres del deudor se suprimen cuando corresponde a una persona natural.
+- B.13: rol del inmueble y datos identificadores de arrendatarios/deudores personas naturales; se conserva `property_id`.
+- B.14: RUT y nombre de contrapartes que probablemente sean personas naturales; se añade `contraparte_tipo` para dejar constancia de la clasificación de privacidad.
+
+La fuente y los nombres de los campos corresponden al [anexo técnico oficial de la Circular 1835 (CMF)](https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf). La lista exacta de campos, posición, tipo, unidad y etiqueta CMF está en `seguros/fuentes/inventario_1835.json` y en el Diccionario de Datos del sitio.
+
+### Formato de publicación
+
+Se mantiene Parquet como formato principal: el sitio ya consume directamente los Parquet con DuckDB-WASM y los manifiestos describen la cobertura por período. Un duplicado CSV/JSON aumentaría transferencia y almacenamiento y perdería tipado; un snapshot DuckDB o un formato de tabla transaccional (Delta/Iceberg) no aporta consultas incrementales adicionales en el uso estático actual. Se podrá añadir una exportación puntual si la demanda de usuarios la justifica, sin sustituir los Parquet.
+
 ## Operaciones REPO (pactos)
 
 La tabla consultable es **`seguros_pactos`** (nombre lógico `seguros.pactos`), publicada por `seguros/scripts/actualizar_carteras.py` dentro del flujo incremental `seguros_carteras.yml`.
