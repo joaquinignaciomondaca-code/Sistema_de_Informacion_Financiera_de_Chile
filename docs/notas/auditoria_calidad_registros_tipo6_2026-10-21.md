@@ -46,7 +46,7 @@ La auditoría detectó además una brecha de integración: el conjunto estaba en
 
 ### 1. Alertas de archivos ajenas al tipo 6
 
-El manifiesto conserva **nueve alertas/exclusiones** que no corresponden al tipo 6: seis tipo 4 en archivos G de vida, dos tipo `x` en archivos C de vida y una línea truncada en un archivo A de generales. El proceso mantiene el comportamiento fail-closed para esos casos y no los incorpora como filas válidas. Deben tratarse por separado si se busca cerrar todas las alertas de la cartera.
+En la primera lectura del manifiesto aparecían **nueve entradas**, pero una era duplicada: el mismo archivo C de vida figuraba dos veces para el mismo tipo `x`, una con el mensaje antiguo sin largo y otra con el mensaje completo. La auditoría posterior detectó que el código acumulaba exclusiones históricas y variantes del mismo aviso al reconstruir un período. Se cambió para que la lista refleje el resultado de la lectura completa más reciente y se depuró la entrada duplicada del manifiesto. Quedan **ocho casos distintos**: seis tipo 4 en archivos G de vida, un tipo `x` en un archivo C de vida y una línea truncada en un archivo A de generales. El proceso mantiene el comportamiento fail-closed y no los incorpora como filas válidas.
 
 ### 2. Trazabilidad de versión de la fuente
 
