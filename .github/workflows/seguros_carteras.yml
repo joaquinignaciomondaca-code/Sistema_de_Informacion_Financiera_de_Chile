@@ -97,52 +97,6 @@ jobs:
 
       # Revisa los meses pendientes sin escribir; informa conteos B.11–B.14 y separa errores fatales
       # de archivos excluidos con advertencia. Las descargas quedan en /tmp/cmf1835.
-      - name: Verificar anexo CMF vigente (solo lectura)
-        if: ${{ github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Verifica manual vivo Circular 1835') }}
-        continue-on-error: true
-        run: |
-          python -m pip install --disable-pip-version-check pypdf
-          python - <<'PY'
-          import hashlib, io, unicodedata, urllib.request
-          from pypdf import PdfReader
-
-          url = "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf"
-          req = urllib.request.Request(url, headers={"User-Agent": "Circular1835-schema-check/1.0"})
-          with urllib.request.urlopen(req, timeout=60) as response:
-              pdf = response.read()
-              last_modified = response.headers.get("Last-Modified", "no informado")
-          reader = PdfReader(io.BytesIO(pdf))
-          def normalize(text):
-              text = "".join(ch for ch in unicodedata.normalize("NFKD", text.upper())
-                             if not unicodedata.combining(ch))
-              return " ".join(text.split())
-
-          pages = [normalize(page.extract_text() or "") for page in reader.pages]
-
-          def page_with(title, after=0):
-              return next(i for i, text in enumerate(pages[after:], after) if title in text)
-
-          p11 = page_with("B.11 FLUJOS DE ACTIVOS ELEGIBLES")
-          p12 = page_with("B.12 PRESTAMOS", p11 + 1)
-          p14 = page_with("B.14 GARANTIAS DE DERIVADOS")
-          try:
-              end14 = page_with("ANEXO 1", p14 + 1)
-          except StopIteration:
-              end14 = len(pages)
-          def count_type6(section):
-              phrases = ("REGISTRO TIPO 6", 'REGISTRO TIPO "6"', "REGISTRO TIPO “6”")
-              return sum(sum(text.count(phrase) for phrase in phrases) for text in section)
-
-          hits11 = count_type6(pages[p11:p12])
-          hits14 = count_type6(pages[p14:end14])
-          summary = (f"SHA256={hashlib.sha256(pdf).hexdigest()}; bytes={len(pdf)}; pages={len(pages)}; "
-                     f"last-modified={last_modified}; B.11 type6 mentions={hits11}; B.14 type6 mentions={hits14}")
-          print("::notice title=Anexo oficial Circular 1835::" + summary)
-          print(summary)
-          if hits11 or hits14:
-              raise SystemExit("El anexo vigente menciona tipo 6 en B.11/B.14; requiere revisión manual de la ficha.")
-          PY
-
       - name: Diagnóstico de los meses pendientes (no escribe)
         continue-on-error: true
         run: python -m seguros.scripts.actualizar_carteras --diagnostico --cache /tmp/cmf1835 --max-periodos "${{ inputs.max_periodos || '240' }}"
