@@ -1,5 +1,9 @@
 # Contraste y piso tipográfico — 2026-10-21
 
+> **Actualización, mismo día:** el piso tipográfico subió después de **11 a 12 px** y la
+> tipografía pasó de Inter a Schibsted Grotesk, al cerrar los hallazgos que quedaban
+> (`diseno_detector_2026-10-21.md`). Los contrastes de esta nota siguen vigentes.
+
 **Encargo:** aplicar las correcciones que salieron de la evaluación de Impeccable
 (`docs/notas/evaluacion_impeccable_2026-10-21.md`).
 **Alcance:** sólo `docs/`. Sin datos, sin pipelines, sin dependencias nuevas.
@@ -110,9 +114,9 @@ bloque con propiedades repetidas y una sola etiqueta de versión para los 20 act
 - **Tintes de acento al 20 % o más** quedaban bajo AA en SwissBorg y Nord; el único uso
   (`.dict-role-tag.pk`) bajó al 12 %, que es el mismo valor de `.dv-scroll-tag`. Si se agrega un
   tinte nuevo más cargado con texto encima, hay que usar `--accent-mint-text`.
-- **No hay guardián automático todavía.** El detector de Impeccable puede vigilar esto en
-  `web_audit.yml` como aviso (ver §6 de la nota de evaluación), pero se dejó fuera de este cambio
-  para no sumar dependencias de CI en el mismo commit que el rediseño de tokens.
+- **Guardián automático: resuelto después.** El detector de Impeccable corre ahora como paso
+  bloqueante de `web_audit.yml` (`diseno_detector_2026-10-21.md` §6), así que una regresión de
+  contraste o de tamaño falla el PR.
 
 ## 4. Reproducir
 
