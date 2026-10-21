@@ -91,7 +91,7 @@ def _rol(campo: dict) -> str:
         return "FK"
     if campo["tipo"] == "f":
         return "Fecha"
-    if c.startswith(("rut_", "run_", "rol", "lei_")) or c in ("run", "rut"):
+    if c.startswith(("rut_", "run_", "rol", "lei_")) or c in ("run", "rut", "property_id"):
         return "Identificador"
     if campo["tipo"] in "tr":
         return "Atributo"
@@ -110,8 +110,54 @@ def _unidad(campo: dict) -> str | None:
     return UNIDAD_TEXTO.get(campo["unidad"] or "")
 
 
-def filas(tabla: str) -> list[dict]:
-    """Una fila por columna publicada de la tabla, en orden (control, luego la ficha)."""
+# Columnas que el pipeline suprime o agrega por privacidad (pipelines/auto/privacidad.py). La
+# ficha de la web las describe a mano, porque lo publicado no es lo que dice la CMF.
+PRIVACIDAD_WEB = {
+    "bienes_raices": {
+        "notas": {
+            "rol": "No se publica: es el identificador tributario del inmueble. Para seguir el mismo "
+                   "bien entre meses se publica property_id, un seudónimo derivado de este campo. Ver "
+                   "pipelines/auto/privacidad.py.",
+            "ubicacion": "No se publica: la dirección exacta permite ubicar la propiedad y a sus "
+                         "ocupantes. Se conservan comuna, ciudad y property_id. (En los archivos "
+                         "anteriores al formato 2024-12 la misma columna se llama «direccion» y tampoco "
+                         "se publica.",
+        },
+        "agrega": {
+            "rol": [{
+                "columna": "property_id", "nombre_ficha": "", "tipo": "t", "decimales": 0,
+                "unidad": None,
+                "descripcion": "Seudónimo estable del bien raíz (BIEN-…), calculado desde el rol y la "
+                               "aseguradora antes de suprimirlos: permite seguir el mismo inmueble "
+                               "entre meses sin revelar su dirección ni su rol.",
+            }],
+        },
+    },
+}
+
+
+def _aplicar_privacidad(tabla: str, orden: list[dict]) -> list[dict]:
+    """Reemplaza la descripción de las columnas suprimidas y agrega las que crea el pipeline."""
+    regla = PRIVACIDAD_WEB.get(tabla)
+    if not regla:
+        return orden
+    salida: list[dict] = []
+    for fila in orden:
+        if fila["columna"] in regla["notas"]:
+            fila = {**fila, "descripcion": regla["notas"][fila["columna"]]}
+        salida.append(fila)
+        for nueva in regla.get("agrega", {}).get(fila["columna"], []):
+            salida.append({**nueva, "picture": "", "formato": "v2024",
+                           "formatos": {"v2016", "v2024"}, "registros": set()})
+    return salida
+
+
+def filas(tabla: str, web: bool = False) -> list[dict]:
+    """Una fila por columna publicada de la tabla, en orden (control, luego la ficha).
+
+    ``web=True`` es para docs/js/data_dictionary.js, que describe lo que la web publica
+    (con los cambios de privacidad); el diccionario del Excel conserva la ficha literal.
+    """
     orden: list[dict] = []
     visto: dict[str, dict] = {}
     for formato in ("v2016", "v2024"):
@@ -135,7 +181,7 @@ def filas(tabla: str) -> list[dict]:
                 orden.append(fila)
     con_subtipo = any(r["subtipo"] for r in _registros_de(tabla))
     base = [c for c in CONTROL if c["columna"] != "tipo_registro" or con_subtipo]
-    return base + orden
+    return _aplicar_privacidad(tabla, base + orden) if web else base + orden
 
 
 def _registros_de(tabla: str) -> list[dict]:
@@ -147,14 +193,14 @@ def _registros_de(tabla: str) -> list[dict]:
     return salida
 
 
-def genera() -> dict:
+def genera(web: bool = False) -> dict:
     """{tabla: [filas]} con todas las tablas de cartera (sin el maestro de compañías)."""
     tablas = []
     for formato in ("v2016", "v2024"):
         for reg in formato_1835.registros_inventario(formato).values():
             if reg["tabla"] not in tablas:
                 tablas.append(reg["tabla"])
-    return {t: filas(t) for t in tablas}
+    return {t: filas(t, web) for t in tablas}
 
 
 # ── Salidas ──────────────────────────────────────────────────────────────────────────
@@ -203,7 +249,12 @@ def _columna_js(fila: dict) -> str:
 
 
 def _actualiza_diccionario_web(texto: str, datos: dict) -> str:
-    """Reemplaza el bloque de columnas de cada tabla de seguros en data_dictionary.js."""
+    """Reemplaza el bloque de columnas de cada tabla de seguros en data_dictionary.js.
+
+    Las tablas que todavía no tienen entrada en la ficha web se saltan: el diccionario del
+    Excel las incluye igual, pero la web las publica cuando la tabla sale por primera vez.
+    """
+    pendientes = []
     for tabla, filas_ in datos.items():
         vista = f"seguros_{tabla}"
         patron = re.compile(
@@ -211,7 +262,9 @@ def _actualiza_diccionario_web(texto: str, datos: dict) -> str:
         nuevo = "    columnas: [\n" + ",\n".join(_columna_js(f) for f in filas_) + "\n    ]\n"
         texto, n = patron.subn(lambda m: m.group(1) + nuevo, texto, count=1)
         if not n:
-            raise SystemExit(f"No se encontró la entrada {vista} en {DIC_WEB.name}")
+            pendientes.append(vista)
+    if pendientes:
+        print("Sin entrada en la web todavía: " + ", ".join(pendientes))
     return texto
 
 
@@ -224,7 +277,7 @@ def main() -> int:
     datos = genera()
     js = texto_diccionario_js(datos)
     web = DIC_WEB.read_text(encoding="utf-8") if DIC_WEB.exists() else ""
-    web_nuevo = _actualiza_diccionario_web(web, datos) if web else ""
+    web_nuevo = _actualiza_diccionario_web(web, genera(web=True)) if web else ""
 
     if args.check:
         malo = False

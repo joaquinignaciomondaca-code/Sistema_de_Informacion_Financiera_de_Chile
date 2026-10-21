@@ -31,6 +31,20 @@ TABLAS = {
     "control_inversiones": ("seguros.control_inversiones",
                             "Información de control que cada compañía envía con su cartera: totales por tipo de "
                             "inversión (valor final, representativas y no representativas de reservas, etc.)."),
+    # "Otros registros" del anexo 2024 (B.6 y B.9–B.11): existen solo desde 2024-12.
+    "otras_inversiones": ("seguros.otras_inversiones",
+                          "Otras inversiones de la cartera: saldos en cuenta corriente y caja, inversiones "
+                          "mobiliarias, avances a tenedores de pólizas, préstamos y otras inversiones "
+                          "financieras que no caben en los archivos anteriores."),
+    "tablas_descriptores": ("seguros.tablas_descriptores",
+                            "Descriptores de los instrumentos de la cartera: emisor, tipo de instrumento, "
+                            "fechas y tasas de emisión y descuento, número de flujos y opciones de prepago."),
+    "tablas_desarrollo": ("seguros.tablas_desarrollo",
+                          "Desarrollo de los flujos de cada instrumento: cupón, fecha de vencimiento, "
+                          "interés, amortización y saldo insoluto."),
+    "flujos_activos_elegibles": ("seguros.flujos_activos_elegibles",
+                                 "Flujos de activos elegibles por tramo, para el cálculo del test de "
+                                 "suficiencia de activos (circular aplicada y tipo de información)."),
 }
 
 # Columnas que arma el pipeline (no vienen en la ficha): se describen a mano.
