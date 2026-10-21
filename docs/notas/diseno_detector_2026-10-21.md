@@ -118,7 +118,7 @@ En pantallas de más de 1440 px el contenido queda igual de centrado que antes.
 
 | Comprobación | Resultado |
 |---|---|
-| Detector (`detect --no-config docs/`) | 73 → **1** (`overused-font`) |
+| Detector (`detect --no-config docs/`) | 73 → **0** |
 | `font-size` mínimo en la hoja | 12,0 px (222 declaraciones) |
 | `border-left` de 2 px o más | 3 (los indicadores de estado, a propósito) |
 | `box-shadow: 0 0 <blur>` | 0 |
@@ -155,7 +155,30 @@ las cifras alineadas, así que la retícula numérica no cambia.
 notarse son las pestañas del panel (seis, con letras ajustadas) y las insignias de una línea; los
 anchos son flexibles y hay reglas de compresión, pero conviene mirarlo en 1280 y 1920 px.
 
-## 5. Verificación final
+## 5. Lo que el detector no ve: el texto dibujado en canvas
+
+El escáner sólo lee HTML y CSS. Los dos lienzos del sitio —`chart_renderer.js` (gráfico de barras de
+los resultados SQL) y `erd_graph.js` (mapa relacional)— se quedaron fuera de la primera pasada y
+seguían con la tipografía anterior y con tamaños de 9,5 a 11 px:
+
+| Archivo | Antes | Ahora |
+|---|---|---|
+| `chart_renderer.js` | `Inter`; título 11, eje 10, etiquetas 9,5, tooltip 10,5 | `'Schibsted Grotesk'`; 12 en los cuatro |
+| `erd_graph.js` | `Inter` y `sans-serif`; título 11, filas 10, insignia 10, avisos 10 | `'Schibsted Grotesk'`; 12 en todos |
+
+El aumento de tamaño obligó a ajustar la geometría, que estaba calculada para letra más chica:
+
+- **Gráfico:** el margen izquierdo pasa de 65 a 74 px para que quepan las cifras del eje; el tooltip
+  crece de 24 a 26 px de alto; y el recorte de las etiquetas del eje X ahora **se mide contra el ancho
+  real de la barra** en vez de cortar siempre a 8 caracteres, que a 12 px dejaba etiquetas pisadas
+  cuando hay muchas barras.
+- **ERD:** la insignia de filas pasa de 16 a 18 px de alto y los avisos de cardinalidad de 16 a 18 con
+  su línea base corrida 1 px; la leyenda de medidas usa 17 px de interlineado. Las filas de columnas
+  mantienen 16 px de paso: 5 columnas llegan a 131 px y la tarjeta más baja mide 148, así que no
+  desbordan. Los `ctx.font` están verificados con `node --check`, pero **el resultado visual hay que
+  mirarlo en la vista previa**.
+
+## 6. Verificación final
 
 ```bash
 DO_NOT_TRACK=1 npx -y impeccable@4.7.0 detect --no-config docs/
@@ -165,3 +188,37 @@ DO_NOT_TRACK=1 npx -y impeccable@4.7.0 detect --no-config docs/
 Cero hallazgos. Para descartar que el escáner se hubiera apagado, se inyectó a propósito un
 `font-size: 9px` en una copia fuera del repositorio y la regla volvió a dispararse
 (`undersized-ui-text`), así que la compuerta sigue viva.
+
+---
+
+## 7. La compuerta en CI
+
+El detector quedó montado en `.github/workflows/web_audit.yml` como paso «Diseño: anti-patrones de
+interfaz», dentro del job `audit` (corre en cada push a `main` que toque `docs/**` y en cada PR).
+
+Cómo está construido, y por qué:
+
+| Decisión | Motivo |
+|---|---|
+| Versión fijada (`impeccable@4.7.0`) | El detector es determinista; una regla nueva sólo entra cuando alguien sube esta línea a mano |
+| `--no-config` | Sin configuración local: hoy no hay reglas silenciadas y así nadie puede apagarlas por accidente desde el repo |
+| Anotaciones generadas desde `--json` | `--github` no emite nada en la 4.7.0 (probado con `GITHUB_ACTIONS=true`). El script arma un `::error` por hallazgo, con archivo y línea |
+| Precondición `docs/index.html` + `docs/css/app.css` | Una ruta inexistente **no** es error para el detector: devuelve 0 con cero archivos escaneados. Sin la comprobación, mover `docs/` apagaría la compuerta en silencio |
+| Reintento ante código 1 | El código 1 es «no pudo escanear» (red, binario), no un hallazgo: se reintenta una vez y, si persiste, falla con mensaje explícito |
+| JSON ilegible = fallo del paso | Un error de parseo no debe leerse como «sin hallazgos» |
+| Caché de `~/.impeccable/bin` y `~/.npm` | Evita bajar 9 MB de npm y 21 MB de binario en cada corrida |
+| Artefactos en `$RUNNER_TEMP` | `diseno.json` no queda como archivo sin versionar en la raíz del repo |
+
+**Simulacro completo del paso** (no sólo de los comandos sueltos): se extrajo el bloque `run:` del
+YAML y se ejecutó en cuatro escenarios.
+
+| Escenario | Salida | Código |
+|---|---|---:|
+| `docs/` limpio | `::notice` «0 hallazgo(s)» | 0 |
+| un `font-size: 9px` inyectado | `::error` con archivo y regla, más el resumen | 2 |
+| `docs/` ausente | `::error` «falta docs/index.html» | 1 |
+| JSON con forma inesperada | `::error` «no se pudo leer el JSON» | 1 |
+
+Y el YAML se validó con un parser (`yaml.safe_load`): 16 pasos en el job `audit`, el nuevo en la
+posición 5. Ojo con el detalle que rompió el primer intento: un `name:` con dos puntos
+(`Diseño: anti-patrones…`) invalida el YAML si no va entre comillas.

@@ -153,13 +153,13 @@ en `~/.impeccable/bin` por máquina; ~1,2 s por escaneo de `docs/` una vez cache
 
 ## 5. Recomendación
 
-1. **Hecho.** Lo de §3.1 está aplicado (tokens de texto separados y piso de 11 px; ver
-   `contraste_y_tipografia_2026-10-21.md`). El detector pasó de 100 primarios + 32 avisos a
+1. **Hecho.** Lo de §3.1 está aplicado (tokens de texto separados y piso tipográfico, que luego
+   subió a 12 px; ver `contraste_y_tipografia_2026-10-21.md` y `diseno_detector_2026-10-21.md`). El detector pasó de 100 primarios + 32 avisos a
    73 primarios + 0 avisos.
-2. **Integración útil (opcional).** Un job `diseño` en `web_audit.yml`, no bloqueante, con la
-   configuración de §6 (ignora las reglas de estética), `--no-advisory` y las anotaciones como salida.
-   Añade una red de seguridad para cambios futuros de UI sin imponer un estilo ajeno.
-3. **No instalar el skill en el repo por ahora.** Aporta escritura de `PRODUCT.md`/`DESIGN.md`,
+2. **Hecho.** El detector quedó como paso de `web_audit.yml` (job `audit`), **bloqueante**, porque
+   el sitio está en cero hallazgos. Ya no hace falta ignorar reglas: se corrigieron en su lugar
+   (ver `diseno_detector_2026-10-21.md`).
+3. **El skill sigue fuera del repo.** Aporta escritura de `PRODUCT.md`/`DESIGN.md`,
    hooks por edición y estado en `.impeccable/`; en un sitio estático sin build y con el diseño ya
    decidido, el costo (ruido, archivos nuevos, telemetría que hay que apagar) supera el beneficio.
    Si alguien lo quiere para trabajar en su máquina, que sea instalación global y con

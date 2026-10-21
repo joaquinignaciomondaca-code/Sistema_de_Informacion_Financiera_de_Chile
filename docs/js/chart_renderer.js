@@ -19,7 +19,7 @@ class ChartRenderer {
       gridColor: theme.gridColor,
       textColor: theme.textColor,
       titleColor: theme.titleColor,
-      fontFamily: "Inter, -apple-system, BlinkMacSystemFont, sans-serif",
+      fontFamily: "'Schibsted Grotesk', Inter, -apple-system, BlinkMacSystemFont, sans-serif",
       monoFont: "JetBrains Mono, monospace"
     }, options);
 
@@ -165,7 +165,8 @@ class ChartRenderer {
       return;
     }
 
-    const padding = { top: 35, right: 25, bottom: 48, left: 65 };
+    // left: 74 para que quepan las cifras del eje a 12 px monoespaciados.
+    const padding = { top: 35, right: 25, bottom: 48, left: 74 };
     const chartW = w - padding.left - padding.right;
     const chartH = h - padding.top - padding.bottom;
 
@@ -176,7 +177,7 @@ class ChartRenderer {
     // Título del Gráfico
     ctx.save();
     ctx.fillStyle = this.options.titleColor;
-    ctx.font = `bold 11px ${this.options.fontFamily}`;
+    ctx.font = `bold 12px ${this.options.fontFamily}`;
     ctx.textAlign = "left";
     ctx.fillText(`${this.valueCol.toUpperCase()} POR ${this.labelCol.toUpperCase()}`, padding.left, 20);
     ctx.restore();
@@ -187,7 +188,7 @@ class ChartRenderer {
     ctx.strokeStyle = this.options.gridColor;
     ctx.lineWidth = 1;
     ctx.setLineDash([3, 3]);
-    ctx.font = `10px ${this.options.monoFont}`;
+    ctx.font = `12px ${this.options.monoFont}`;
     ctx.fillStyle = this.options.textColor;
     ctx.textAlign = "right";
 
@@ -240,9 +241,17 @@ class ChartRenderer {
       // Etiqueta del Eje X
       ctx.save();
       ctx.fillStyle = isHov ? theme.titleColor : this.options.textColor;
-      ctx.font = `${isHov ? "bold " : ""}9.5px ${this.options.fontFamily}`;
+      ctx.font = `${isHov ? "bold " : ""}12px ${this.options.fontFamily}`;
       ctx.textAlign = "center";
-      const shortLabel = d.label.length > 8 ? d.label.substring(0, 7) + "…" : d.label;
+      // El recorte se mide contra el ancho real de la barra: a 12 px, cortar
+      // siempre a 8 caracteres dejaba etiquetas pisadas cuando hay muchas barras.
+      let shortLabel = d.label;
+      if (ctx.measureText(shortLabel).width > barWidth - 4) {
+        while (shortLabel.length > 1 && ctx.measureText(shortLabel + "…").width > barWidth - 4) {
+          shortLabel = shortLabel.slice(0, -1);
+        }
+        shortLabel += "…";
+      }
       ctx.fillText(shortLabel, x + barWidth / 2, padding.top + chartH + 16);
       ctx.restore();
     });
@@ -254,9 +263,9 @@ class ChartRenderer {
       const tipText = `${d.label}: ${d.value.toLocaleString("es-CL", { maximumFractionDigits: 2 })}`;
 
       ctx.save();
-      ctx.font = `bold 10.5px ${this.options.monoFont}`;
+      ctx.font = `bold 12px ${this.options.monoFont}`;
       const tipW = ctx.measureText(tipText).width + 16;
-      const tipH = 24;
+      const tipH = 26;
       let tipX = b.x + b.w / 2 - tipW / 2;
       tipX = Math.max(padding.left, Math.min(tipX, w - padding.right - tipW));
       const tipY = Math.max(b.y - tipH - 8, padding.top);
@@ -270,7 +279,7 @@ class ChartRenderer {
 
       ctx.fillStyle = theme.titleColor;
       ctx.textAlign = "center";
-      ctx.fillText(tipText, tipX + tipW / 2, tipY + 16);
+      ctx.fillText(tipText, tipX + tipW / 2, tipY + 18);
       ctx.restore();
     }
   }
