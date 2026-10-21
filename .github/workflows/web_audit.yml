@@ -133,6 +133,14 @@ jobs:
           fi
           exit $n
 
+      - name: El motor DuckDB vendorizado es el que se revisó (huellas)
+        run: |
+          set +e
+          python scripts/audit_vendor_duckdb.py > motor.log 2>&1; n=$?
+          grep -h "^FALLA" motor.log | head -10 | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=Motor DuckDB::$l"; done
+          echo "::notice title=Motor DuckDB::$(tail -n 1 motor.log)"
+          exit $n
+
       - name: Auditar navegación y catálogo web
         run: |
           set +e

@@ -160,7 +160,8 @@ def audit_cache():
     if len(etiquetas) != 1:
         fail(f"assets locales con {len(etiquetas)} etiquetas distintas: {', '.join(sorted(etiquetas))}")
         return
-    print(f"  [OK] Los 15 archivos locales usan la versión {etiquetas.pop()}")
+    cuantos = len(re.findall(r'(?:src|href)="(?:css|js)/[^"?]+\?v=', texto))
+    print(f"  [OK] Los {cuantos} archivos locales usan la versión {etiquetas.pop()}")
 
 
 def audit_vocabulario():
@@ -494,6 +495,44 @@ def audit_control_chars():
         print(f"  [OK] {len(revisar)} archivos de texto sin caracteres de control sueltos")
 
 
+def audit_cabeceras():
+    """El despliegue declara cabeceras de seguridad y las dos copias coinciden."""
+    print("\n--- 11. Cabeceras de seguridad del despliegue ---")
+    try:
+        raiz = read("vercel.json")
+        docs = read("docs/vercel.json")
+    except FileNotFoundError:
+        fail("falta vercel.json (o su copia en docs/): el despliegue no declara cabeceras")
+        return
+    if raiz != docs:
+        fail("vercel.json y docs/vercel.json difieren; el despliegue no es el mismo según la raíz")
+    config = json.loads(raiz)
+    reglas = config.get("headers", [])
+    if not any(regla.get("source") == "/outputs/(.*).parquet" for regla in reglas):
+        fail("vercel.json perdió la regla de caché de los Parquet")
+    generales = {}
+    for regla in reglas:
+        if regla.get("source") == "/(.*)":
+            for cabecera in regla.get("headers", []):
+                generales[cabecera.get("key")] = cabecera.get("value")
+    esperadas = {
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "X-Frame-Options": "DENY",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+        "Cross-Origin-Opener-Policy": "same-origin",
+    }
+    for clave, valor in esperadas.items():
+        if generales.get(clave) != valor:
+            fail(f"vercel.json no declara {clave}: {valor}")
+    politica = generales.get("Content-Security-Policy", "")
+    for directiva in ("frame-ancestors 'none'", "object-src 'none'", "base-uri 'self'"):
+        if directiva not in politica:
+            fail(f"la CSP del despliegue no incluye {directiva}")
+    if not any(clave not in generales for clave in esperadas) and all(d in politica for d in ("frame-ancestors 'none'", "object-src 'none'", "base-uri 'self'")):
+        print(f"  [OK] {len(esperadas) + 1} cabeceras en las dos copias de vercel.json, con CSP mínima")
+
+
 def main():
     html = read("docs/index.html")
     audit_tabs(html)
@@ -509,6 +548,7 @@ def main():
     audit_dead_classes()
     audit_control_chars()
     audit_header_compaction(html, read("docs/css/app.css"))
+    audit_cabeceras()
 
     print("\n" + "=" * 75)
     if errors:

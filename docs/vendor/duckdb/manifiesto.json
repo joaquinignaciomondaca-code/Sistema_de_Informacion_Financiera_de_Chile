@@ -1,0 +1,20 @@
+{
+  "paquete": "@duckdb/duckdb-wasm",
+  "version": "1.28.0",
+  "licencia": "MIT",
+  "nota": "Huellas de los archivos que el navegador ejecuta desde el propio origen. Se regeneran con `python3 scripts/audit_vendor_duckdb.py --actualizar` sólo al cambiar de versión y tras revisar el bundle; el CI verifica que no cambien en silencio.",
+  "archivos": {
+    "duckdb-browser.mjs": {
+      "bytes": 217870,
+      "sha256": "82b7102e376d76b4dbcda16e5b48f6a2d957b278ad0ef49f327354af974a59e9"
+    },
+    "duckdb-browser-eh.worker.js": {
+      "bytes": 265771,
+      "sha256": "f47868c8ae4f4014a20e6aafb756ef047e4507dd64e966c7f2329ea2fe966bed"
+    },
+    "duckdb-eh.wasm": {
+      "bytes": 18105915,
+      "sha256": "053f5ea4c3db0dab0b5d49851befaf36ae3a2cffd6d2a1e39f9178f3c48dbbe2"
+    }
+  }
+}
