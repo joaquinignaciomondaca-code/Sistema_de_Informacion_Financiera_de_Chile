@@ -550,7 +550,17 @@ def escribir_periodo(periodo: str, filas: dict, tablas: list[str]) -> dict:
 def escribir_manifiestos(control: dict) -> None:
     for tabla in TABLAS:
         (SALIDA / tabla).mkdir(parents=True, exist_ok=True)
-        rutas = sorted((SALIDA / tabla).glob("*.parquet"))
+        vacio = SALIDA / tabla / "_vacio.parquet"
+        rutas = sorted(r for r in (SALIDA / tabla).glob("*.parquet") if r.name != vacio.name)
+        if rutas:
+            vacio.unlink(missing_ok=True)
+        else:
+            # Ninguna compañía informó esta tabla todavía (p. ej. préstamos o arriendos, que la CMF
+            # no entrega en los ZIP publicados): se publica un archivo sin filas con el esquema
+            # completo, para que la vista web exista y responda vacía. Al llegar datos reales, el
+            # archivo vacío se retira arriba y no se mezcla con las particiones.
+            pq.write_table(esquema(tabla).empty_table(), vacio)
+            rutas = [vacio]
         registros = sum(pq.ParquetFile(r).metadata.num_rows for r in rutas)
         periodos = sorted(p for p, v in control["periodos"].items() if tabla in v.get("registros", {}))
         man = {"tabla": tabla, "files": [f"outputs/seguros/{tabla}/{r.name}" for r in rutas],
@@ -586,6 +596,8 @@ def recalcular_maestro() -> None:
         if not carpeta.is_dir():
             continue
         for a in sorted(carpeta.glob("*.parquet")):
+            if a.name == "_vacio.parquet":
+                continue
             df = pq.read_table(a, columns=["periodo", "sector", "rut_aseguradora",
                                            "nombre_aseguradora"]).to_pandas()
             for clave, g in df.groupby(["sector", "rut_aseguradora"], sort=True):
