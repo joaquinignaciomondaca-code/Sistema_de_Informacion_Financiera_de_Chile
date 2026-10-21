@@ -10,8 +10,6 @@ on:
   push:
     branches:
       - main
-      # Verificación temporal de un solo período en la rama de trabajo Arena; quitar tras validar.
-      - arena/16880910-sistema-de-informacion-financi
     paths:
       - .github/workflows/seguros_carteras.yml
       - seguros/scripts/actualizar_carteras.py
@@ -90,24 +88,15 @@ jobs:
       # corregirlos juntos. Las descargas quedan en /tmp/cmf1835 y la publicación las reutiliza.
       - name: Diagnóstico de los meses pendientes (no escribe)
         continue-on-error: true
-        env:
-          DESDE: ${{ github.event_name == 'push' && github.ref_name == 'arena/16880910-sistema-de-informacion-financi' && '2024-12' || inputs.desde }}
-          HASTA: ${{ github.event_name == 'push' && github.ref_name == 'arena/16880910-sistema-de-informacion-financi' && '2024-12' || inputs.hasta }}
-          PERIODOS: ${{ github.event_name == 'push' && github.ref_name == 'arena/16880910-sistema-de-informacion-financi' && '1' || inputs.max_periodos || '240' }}
-        run: |
-          args=()
-          if [ -n "${DESDE}" ]; then args+=(--desde "${DESDE}"); fi
-          if [ -n "${HASTA}" ]; then args+=(--hasta "${HASTA}"); fi
-          python -m seguros.scripts.actualizar_carteras --diagnostico --cache /tmp/cmf1835 \\
-            --max-periodos "${PERIODOS:-240}" "${args[@]}"
+        run: python -m seguros.scripts.actualizar_carteras --diagnostico --cache /tmp/cmf1835 --max-periodos "${{ inputs.max_periodos || '240' }}"
 
       - name: Descargar, validar y publicar los meses pendientes
         id: publicar
         env:
-          DESDE: ${{ github.event_name == 'push' && github.ref_name == 'arena/16880910-sistema-de-informacion-financi' && '2024-12' || inputs.desde }}
-          HASTA: ${{ github.event_name == 'push' && github.ref_name == 'arena/16880910-sistema-de-informacion-financi' && '2024-12' || inputs.hasta }}
+          DESDE: ${{ inputs.desde }}
+          HASTA: ${{ inputs.hasta }}
           MINUTOS: ${{ inputs.minutos }}
-          PERIODOS: ${{ github.event_name == 'push' && github.ref_name == 'arena/16880910-sistema-de-informacion-financi' && '1' || inputs.max_periodos }}
+          PERIODOS: ${{ inputs.max_periodos }}
           FORZAR: ${{ inputs.forzar }}
         run: |
           args=()
