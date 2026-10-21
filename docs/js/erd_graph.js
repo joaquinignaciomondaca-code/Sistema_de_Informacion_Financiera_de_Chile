@@ -2283,9 +2283,28 @@ class ERDGraph {
     
     this.tables = JSON.parse(JSON.stringify(ERD_TABLES));
     this.filter = "seguros";
-    
+
+    // Cardinalidad medida de cada unión (punto 10): se marca en el mapa si no es uno a uno.
+    this.cardinalidad = {};
+    this.cargarCardinalidad();
+
     this.initEvents();
     this.resize();
+  }
+
+  async cargarCardinalidad() {
+    try {
+      const respuesta = await fetch("outputs/cardinalidad_relaciones.json", { cache: "force-cache" });
+      if (!respuesta.ok) throw new Error("HTTP " + respuesta.status);
+      const datos = await respuesta.json();
+      this.cardinalidad = Object.fromEntries(
+        datos.uniones.map((u) => [`${u.from}|${u.to}`, u])
+      );
+      this.render();
+    } catch (e) {
+      // Sin el archivo el mapa funciona igual, solo sin advertencias de cardinalidad.
+      console.warn("Cardinalidad de uniones no disponible:", e.message);
+    }
   }
 
   resize() {
@@ -2611,6 +2630,29 @@ class ERDGraph {
     this.drawNodes(ctx);
 
     ctx.restore();
+
+    // 4. Leyenda de cardinalidad (fuera de la transformación: queda fija en la esquina)
+    this.drawLeyendaCardinalidad(ctx);
+  }
+
+  drawLeyendaCardinalidad(ctx) {
+    const medidas = Object.values(this.cardinalidad);
+    if (!medidas.length) return;
+    const hay = medidas.some((u) => u.cardinalidad && u.cardinalidad !== "1:1" && u.cardinalidad !== "no medido");
+    if (!hay) return;
+    const lineas = [
+      "1:N = un registro de la izquierda tiene varios a la derecha: filtre por período antes de sumar o unir.",
+      "Etiqueta amarilla: unión no uno a uno · roja: sin coincidencias · sin etiqueta: 1:1 o no medido.",
+    ];
+    ctx.save();
+    ctx.font = "10px sans-serif";
+    ctx.fillStyle = "rgba(20, 24, 30, 0.85)";
+    const alto = lineas.length * 14 + 10;
+    const ancho = Math.min(this.canvas.width - 16, Math.max(...lineas.map((l) => ctx.measureText(l).width)) + 16);
+    ctx.fillRect(8, this.canvas.height - alto - 8, ancho, alto);
+    ctx.fillStyle = "#c9d1d9";
+    lineas.forEach((l, i) => ctx.fillText(l, 16, this.canvas.height - alto - 8 + 16 + i * 14));
+    ctx.restore();
   }
 
   drawGrid(ctx) {
@@ -2670,7 +2712,32 @@ class ERDGraph {
       ctx.arc((p1.x + p2.x) / 2, (p1.y + p2.y) / 2, 3, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
+
+      // Advertencia de cardinalidad: solo si la unión no es uno a uno (o si no encontró coincidencias).
+      const medida = this.cardinalidad[`${link.from}|${link.to}`];
+      if (medida && medida.cardinalidad && medida.cardinalidad !== "1:1" && medida.cardinalidad !== "no medido") {
+        this.dibujarAdvertencia(ctx, (p1.x + p2.x) / 2, (p1.y + p2.y) / 2, medida.cardinalidad);
+      }
     });
+  }
+
+  dibujarAdvertencia(ctx, x, y, cardinalidad) {
+    const texto = cardinalidad === "sin coincidencias" ? "sin coincidencias" : cardinalidad;
+    const color = cardinalidad === "sin coincidencias" ? "#d9534f" : "#e0a526";
+    ctx.save();
+    ctx.font = "600 10px sans-serif";
+    const ancho = ctx.measureText(texto).width + 12;
+    ctx.fillStyle = "rgba(20, 24, 30, 0.9)";
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1;
+    this.roundRect(ctx, x - ancho / 2, y - 22, ancho, 16, 4);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = color;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(texto, x, y - 14);
+    ctx.restore();
   }
 
   drawNodes(ctx) {

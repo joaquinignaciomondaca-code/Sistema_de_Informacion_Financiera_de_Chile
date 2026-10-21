@@ -94,8 +94,8 @@ const EXPLORER_TREE = [
             sector: "seguros",
             chips: [
               { label: "Derivados por tipo y sector, último mes", query: "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;" },
-              { label: "Principales contrapartes de derivados, último mes", query: "SELECT contraparte, count(*) AS contratos, count(DISTINCT rut_aseguradora) AS aseguradoras FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY contraparte ORDER BY contratos DESC LIMIT 10;" },
-              { label: "Pactos: contrapartes y tasa promedio, último mes", query: "SELECT contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_pacto_prom_pct, SUM(valor_contable_m_clp) AS valor_contable_m_clp FROM seguros_pactos WHERE periodo = (SELECT max(periodo) FROM seguros_pactos) GROUP BY contraparte ORDER BY valor_contable_m_clp DESC LIMIT 10;" }
+              { label: "Principales contrapartes de derivados, último mes", query: "SELECT COALESCE(NULLIF(TRIM(nombre), ''), 'Sin nombre informado') AS contraparte, count(*) AS contratos, count(DISTINCT rut_aseguradora) AS aseguradoras FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY 1 ORDER BY contratos DESC LIMIT 10;" },
+              { label: "Pactos: contrapartes y tasa promedio, último mes", query: "SELECT COALESCE(NULLIF(TRIM(nombre), ''), 'Sin nombre informado') AS contraparte, count(*) AS pactos, AVG(tasa_pacto) AS tasa_pacto_promedio FROM seguros_pactos WHERE periodo = (SELECT max(periodo) FROM seguros_pactos) GROUP BY 1 ORDER BY pactos DESC LIMIT 10;" }
             ],
             tables: [
               { id: "seguros_derivados", name: "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS", rows: "Mensual · desde 2016-11", file: "", files: ["outputs/seguros/derivados/manifest.json"] },

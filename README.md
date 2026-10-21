@@ -5,7 +5,7 @@
 # Sistema de Información Financiera de Chile (SIF)
 
 **25 años del sistema financiero chileno, consultables con SQL desde el navegador.**
-Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Central, la Superintendencia de Pensiones y la SUSESO: **15 industrias, 75 tablas y 13,3 millones de filas** desde enero de 2001. Sin backend, sin base de datos, sin servidores — el dato viaja como Parquet estático y el motor corre en el cliente.
+Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Central, la Superintendencia de Pensiones y la SUSESO: **15 industrias, 75 tablas y 13,5 millones de filas** desde enero de 2001. Sin backend, sin base de datos, sin servidores — el dato viaja como Parquet estático y el motor corre en el cliente.
 
 **En la web, el foco es la inversión institucional:** seguros, fondos mutuos y fondos de inversión (**25 conjuntos del núcleo**, 11,1 millones de filas, 2001 → 2026 —la vista principal suma 59 porque agrega instituciones y contexto—), con bancos, AGF y corredoras como instituciones y las series del Banco Central como contexto. Factoring y leasing, securitización y cajas de compensación quedan en un archivo congelado, y AFP, cooperativas, sistemas de pago y fintech como registro de entidades: siguen publicados, consultables y descargables, sólo que fuera del camino ([alcance de la edición](docs/notas/recorte_visual_industrias_2026-10-20.md)).
 
@@ -14,14 +14,14 @@ Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Centra
 ![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![DuckDB-Wasm 1.28.0](https://img.shields.io/badge/DuckDB--Wasm-1.28.0-FFF000?logo=duckdb&logoColor=black)
 ![Sin backend](https://img.shields.io/badge/backend-ninguno-2ea44f)
-![Datos](https://img.shields.io/badge/datos-75%20tablas%20%C2%B7%2013%2C3%20M%20filas-blue)
+![Datos](https://img.shields.io/badge/datos-75%20tablas%20%C2%B7%2013%2C5%20M%20filas-blue)
 ![Serie](https://img.shields.io/badge/serie-2001--01%20%E2%86%92%202026--08-informational)
 
 | En números | |
 |---|---|
 | Historia cubierta | **25 años** · 2001-01 → 2026-08 |
 | Industrias supervisadas | **15** (CMF · BCCh · SPensiones · SUSESO) |
-| Tablas publicadas | **75** Parquet · 13.292.809 filas (manifiesto al 2026-10-06) · 283 MB |
+| Tablas publicadas | **75** Parquet · 13.483.676 filas (manifiesto al 2026-10-20) · 258 MB en 632 archivos |
 | Consultas sugeridas listas para usar | **146** |
 | Actualización | **16 workflows** en GitHub Actions (15 con horario; 1 solo por evento) |
 | Verificación | **7 suites** de auditoría + **440** pruebas unitarias (97 de FI) |
@@ -55,15 +55,15 @@ GROUP BY pais_emisor
 ORDER BY posiciones DESC;
 ```
 
-Resultado real, último período publicado:
+Resultado real, último período publicado (2026-09, verificado el 2026-10-20):
 
 | pais_emisor | posiciones | fondos |
 |---|---:|---:|
-| US | 1.131 | 148 |
-| LU | 512 | 141 |
-| IE | 489 | 101 |
-| BR | 98 | 14 |
-| GB | 84 | 43 |
+| US | 1.100 | 146 |
+| LU | 524 | 141 |
+| IE | 489 | 103 |
+| BR | 100 | 14 |
+| GB | 84 | 42 |
 
 Luxemburgo e Irlanda por delante de Brasil y Reino Unido: el patrón esperable de domiciliación de vehículos de fondos, visible en una consulta.
 
@@ -139,9 +139,9 @@ explícito. [Fuente, controles y ejecución](fi/README.md).
 | Sistemas de Pago | 1 | 19 | registro vigente | BCCh / CMF |
 | Fondos de Pensiones | 1 | 7 | registro vigente | SPensiones · D.L. 3.500 |
 | Cooperativas de Ahorro y Crédito | 1 | 7 | registro vigente | CMF |
-| **Total** | **75** | **13.292.809** | **2001 → 2026** | |
+| **Total** | **75** | **13.483.676** | **2001 → 2026** | |
 
-† En banca, *balance* y *resultados* son vistas filtradas sobre las mismas 56 particiones mensuales: B1 y B2 (722.931 filas) y R1 (1.240.061), sin solape. Por eso se cuentan como **un solo dataset** (1.962.992 filas) detrás de ambas vistas. El total del catálogo (75 salidas; 13.292.809 filas) cuenta esas particiones una sola vez.
+† En banca, *balance* y *resultados* son vistas filtradas sobre las mismas 56 particiones mensuales: B1 y B2 (722.931 filas) y R1 (1.240.061), sin solape. Por eso se cuentan como **un solo dataset** (1.962.992 filas) detrás de ambas vistas. El total del catálogo (75 salidas; 13.483.676 filas) cuenta esas particiones una sola vez. Las 75 salidas incluyen la tabla oculta `fi.bienes_raices`, que no figura en la vista principal; la vista principal muestra 59 conjuntos con 13.383.401 filas (99,3 %) y el archivo más el registro complementario suman 100.263 (0,7 %).
 
 ### Operaciones REPO (pactos): cobertura vigente
 
