@@ -97,18 +97,15 @@ jobs:
 
       # Revisa todos los meses pendientes sin escribir y distingue errores fatales de archivos
       # excluidos con advertencia. Las descargas quedan en /tmp/cmf1835 y la publicación las reutiliza.
-      - name: Diagnóstico de los meses pendientes (no escribe)
+      - name: Sondeo puntual 2024-12 (solo conteos, sin publicar)
+        if: ${{ github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Sondeo 1835 diciembre 2024') }}
         continue-on-error: true
-        env:
-          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
-        run: |
-          if [[ "${COMMIT_MESSAGE}" == "Sondeo 1835 diciembre 2024"* ]]; then
-            python -m seguros.scripts.actualizar_carteras --diagnostico --forzar \
-              --desde 2024-12 --hasta 2024-12 --cache /tmp/cmf1835
-          else
-            python -m seguros.scripts.actualizar_carteras --diagnostico --cache /tmp/cmf1835 \
-              --max-periodos "${{ inputs.max_periodos || '240' }}"
-          fi
+        run: python -m seguros.scripts.actualizar_carteras --diagnostico --forzar --desde 2024-12 --hasta 2024-12 --cache /tmp/cmf1835
+
+      - name: Diagnóstico de los meses pendientes (no escribe)
+        if: ${{ github.event_name != 'push' || !startsWith(github.event.head_commit.message, 'Sondeo 1835 diciembre 2024') }}
+        continue-on-error: true
+        run: python -m seguros.scripts.actualizar_carteras --diagnostico --cache /tmp/cmf1835 --max-periodos "${{ inputs.max_periodos || '240' }}"
 
       - name: Descargar, validar y publicar los meses pendientes
         id: publicar
