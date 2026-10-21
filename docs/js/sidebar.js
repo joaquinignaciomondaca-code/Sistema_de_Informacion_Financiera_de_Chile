@@ -64,7 +64,7 @@ const EXPLORER_TREE = [
               { label: "Evolución de la inversión en acciones por sector (M$)", query: "SELECT periodo, sector, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones GROUP BY periodo, sector ORDER BY periodo DESC, sector LIMIT 24;" },
               { label: "Fondos mutuos por administradora, último mes (M$)", query: "SELECT rut_administradora, count(*) AS inversiones, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_fondos_mutuos WHERE periodo = (SELECT max(periodo) FROM seguros_fondos_mutuos) GROUP BY rut_administradora ORDER BY valor_final_m_clp DESC LIMIT 10;" },
               { label: "Bienes raíces por ciudad, último mes (M$)", query: "SELECT ciudad, count(*) AS inmuebles, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_bienes_raices WHERE periodo = (SELECT max(periodo) FROM seguros_bienes_raices) GROUP BY ciudad ORDER BY valor_final_m_clp DESC LIMIT 10;" },
-              { label: "Otras inversiones por tipo de inversión, último mes (M$)", query: "SELECT tipo_de_inversion, count(*) AS inversiones, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_otras_inversiones WHERE periodo = (SELECT max(periodo) FROM seguros_otras_inversiones) GROUP BY tipo_de_inversion ORDER BY valor_final_m_clp DESC LIMIT 15;" },
+              { label: "Otras inversiones por tipo de instrumento, último mes (M$)", query: "SELECT tipo_instrumento, count(*) AS inversiones, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_otras_inversiones WHERE periodo = (SELECT max(periodo) FROM seguros_otras_inversiones) GROUP BY tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 15;" },
               { label: "Inversiones en el extranjero por país, último mes (M$)", query: "SELECT pais, tipo_registro, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_extranjeros WHERE periodo = (SELECT max(periodo) FROM seguros_extranjeros) GROUP BY pais, tipo_registro ORDER BY valor_final_m_clp DESC LIMIT 10;" }
             ],
             tables: [
@@ -112,8 +112,6 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "seguros",
             chips: [
-              { label: "B.12 Saldo y provisión por mes y sector (M$)", query: "SELECT periodo, sector, SUM(valor_final_b_12_m_clp) AS saldo_m_clp, SUM(monto_provision_m_clp) AS provision_m_clp FROM seguros_prestamos GROUP BY periodo, sector ORDER BY periodo DESC, sector LIMIT 24;" },
-              { label: "B.13 Recaudación y morosidad por mes y sector (M$)", query: "SELECT periodo, sector, SUM(recaudacion_mes_total_m_clp) AS recaudacion_m_clp, SUM(morosidad_total_m_clp) AS morosidad_m_clp FROM seguros_bienes_raices_arriendo_morosidad GROUP BY periodo, sector ORDER BY periodo DESC, sector LIMIT 24;" },
               { label: "B.14 Garantías por posición y tipo (M$)", query: "SELECT periodo, sector, posicion_compania, tipo_garantia, SUM(valor_razonable_activo_en_garantia_m_clp) AS valor_m_clp FROM seguros_garantias_derivados GROUP BY periodo, sector, posicion_compania, tipo_garantia ORDER BY periodo DESC LIMIT 50;" },
               { label: "Registros tipo 6 por período y archivo", query: "SELECT periodo, tipo_archivo, sector, COUNT(*) AS registros, MIN(largo_registro) AS largo_minimo, MAX(largo_registro) AS largo_maximo FROM seguros_registros_tipo6 GROUP BY periodo, tipo_archivo, sector ORDER BY periodo DESC, tipo_archivo, sector LIMIT 66;" }
             ],
