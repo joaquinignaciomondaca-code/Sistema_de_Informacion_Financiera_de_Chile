@@ -176,6 +176,14 @@ jobs:
           echo "::notice title=Cliente DuckDB::$(tail -n 1 cliente.log)"
           exit $n
 
+      - name: El motor DuckDB no arranca al cargar (bajo demanda)
+        run: |
+          set +e
+          node scripts/audit_arranque_motor.js > arranque.log 2>&1; n=$?
+          grep -h "^FALLA" arranque.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Arranque del motor::$linea"; done
+          echo "::notice title=Arranque del motor::$(tail -n 1 arranque.log)"
+          exit $n
+
       - name: La consola SQL es de solo lectura (guardia)
         run: |
           set +e

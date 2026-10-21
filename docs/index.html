@@ -8,8 +8,16 @@
   <link rel="apple-touch-icon" href="assets/logo_sif_isotipo.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/app.css?v=fl-202610-2400-rendimiento">
+  <!-- La hoja de Google Fonts se pedía como <link rel="stylesheet"> y entraba en
+       la cadena que bloquea el primer pintado (260 ms en el informe). Ahora se
+       precarga y se aplica al terminar: deja de ser render-blocking y los textos
+       se pintan con la fuente de reserva hasta que llega, igual que ya hacía
+       font-display=swap. El <noscript> conserva el comportamiento sin JS. -->
+  <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
+  <link rel="stylesheet" href="css/app.css?v=fl-202610-2410-bajo-demanda">
 
   <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
        Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
@@ -32,16 +40,11 @@
       window.SIF_JSON.indice.catch(() => {});
     }
   </script>
-  <!-- Arranque en frío: el motor pesa ~18 MB. Preanunciar los tres archivos hace
-       que se descarguen en paralelo con la página, en vez de esperar a que el
-       JavaScript los pida al final de la cadena de carga. -->
-  <!-- DuckDB hace fetch() con credenciales same-origin. El atributo
-       crossorigin hace que el preload use el mismo modo de credenciales y que
-       el navegador pueda reutilizarlo (sin la advertencia "preload ... not
-       used" en Vercel). -->
-  <link rel="modulepreload" href="vendor/duckdb/duckdb-browser.mjs" crossorigin="anonymous">
-  <link rel="preload" href="vendor/duckdb/duckdb-eh.wasm" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="vendor/duckdb/duckdb-browser-eh.worker.js" as="fetch" crossorigin="anonymous">
+  <!-- El motor DuckDB (wasm de 3,8 MB + worker de 68 KB) ya no se precarga en el
+       <head>: el informe lo contaba entero en el peso de la página aunque el
+       visitante nunca abriera Consultas o Datos. Ahora el arranque lo pide
+       duckdb_client.js la primera vez que se necesita (pestaña SQL, pestaña de
+       datos o una descarga con motor); ver ensureStarted(). -->
 </head>
 <body>
 
@@ -104,7 +107,7 @@
       </div>
     </div>
     <div class="header-badges">
-      <button type="button" class="badge" id="engine-badge" title="Estado del motor SQL en el navegador">Inicializando DuckDB…</button>
+      <button type="button" class="badge" id="engine-badge" title="El motor SQL (DuckDB-Wasm) se carga al abrir Consultas o Datos">DuckDB-Wasm · bajo demanda</button>
       <div class="theme-dropdown-container" id="theme-dropdown-container">
         <button type="button" class="theme-dropdown-btn" id="theme-dropdown-btn" aria-expanded="false" title="Seleccionar paleta de colores">
           <span class="theme-palette-icon">
@@ -563,25 +566,25 @@
 </div> <!-- Cierre de app-layout -->
 
   <!-- Scripts de la Aplicación -->
-  <script src="js/data_bundles.js?v=fl-202610-2400-rendimiento" defer></script>
-  <script src="js/alcance.js?v=fl-202610-2400-rendimiento" defer></script>
-  <script src="js/chart_renderer.js?v=fl-202610-2400-rendimiento" defer></script>
-  <script src="js/erd_graph.js?v=fl-202610-2400-rendimiento" defer></script>
-  <script src="js/sql_guard.js?v=fl-202610-2400-rendimiento" defer></script>
-  <script src="js/duckdb_client.js?v=fl-202610-2400-rendimiento" defer></script>
-  <script src="js/chat_terminal.js?v=fl-202610-2400-rendimiento" defer></script>
-  <script src="js/busqueda_pregunta.js?v=fl-202610-2400-rendimiento" defer></script>
-  <script src="js/sidebar.js?v=fl-202610-2400-rendimiento" defer></script>
-  <script src="js/ux_shell.js?v=fl-202610-2400-rendimiento" defer></script>
-  <script src="js/creditos.js?v=fl-202610-2400-rendimiento" defer></script>
-  <script src="js/theme_switcher.js?v=fl-202610-2400-rendimiento" defer></script>
-  <script src="js/data_dictionary.js?v=fl-202610-2400-rendimiento" defer></script>
-  <script src="js/data_viewer.js?v=fl-202610-2400-rendimiento" defer></script>
-  <script src="js/diccionario_seguros.js?v=fl-202610-2400-rendimiento" defer></script>
-  <script src="js/download_utils.js?v=fl-202610-2400-rendimiento" defer></script>
-  <script src="js/download_catalog.js?v=fl-202610-2400-rendimiento" defer></script>
-  <script src="js/downloads_panel.js?v=fl-202610-2400-rendimiento" defer></script>
-  <script src="js/portada.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/data_bundles.js?v=fl-202610-2410-bajo-demanda" defer></script>
+  <script src="js/alcance.js?v=fl-202610-2410-bajo-demanda" defer></script>
+  <script src="js/chart_renderer.js?v=fl-202610-2410-bajo-demanda" defer></script>
+  <script src="js/erd_graph.js?v=fl-202610-2410-bajo-demanda" defer></script>
+  <script src="js/sql_guard.js?v=fl-202610-2410-bajo-demanda" defer></script>
+  <script src="js/duckdb_client.js?v=fl-202610-2410-bajo-demanda" defer></script>
+  <script src="js/chat_terminal.js?v=fl-202610-2410-bajo-demanda" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-202610-2410-bajo-demanda" defer></script>
+  <script src="js/sidebar.js?v=fl-202610-2410-bajo-demanda" defer></script>
+  <script src="js/ux_shell.js?v=fl-202610-2410-bajo-demanda" defer></script>
+  <script src="js/creditos.js?v=fl-202610-2410-bajo-demanda" defer></script>
+  <script src="js/theme_switcher.js?v=fl-202610-2410-bajo-demanda" defer></script>
+  <script src="js/data_dictionary.js?v=fl-202610-2410-bajo-demanda" defer></script>
+  <script src="js/data_viewer.js?v=fl-202610-2410-bajo-demanda" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-202610-2410-bajo-demanda" defer></script>
+  <script src="js/download_utils.js?v=fl-202610-2410-bajo-demanda" defer></script>
+  <script src="js/download_catalog.js?v=fl-202610-2410-bajo-demanda" defer></script>
+  <script src="js/downloads_panel.js?v=fl-202610-2410-bajo-demanda" defer></script>
+  <script src="js/portada.js?v=fl-202610-2410-bajo-demanda" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -595,12 +598,14 @@
 
       // 2) El resto va en tareas aparte, para que el navegador pueda pintar y
       //    atender clics entre medio.
+      //
+      //    El Mapa Relacional NO se construye aquí: su constructor lee la
+      //    geometría del canvas (offsetWidth/Height) y el informe de Lighthouse
+      //    atribuía a esa llamada 80 ms de reflujo forzado en una pestaña que
+      //    además está oculta al cargar. Se construye la primera vez que se abre
+      //    su pestaña (window.asegurarERD, más abajo).
       const listo = new Promise((resolver) => {
         enTarea(() => {
-          // Mapa Relacional: vive en una pestaña oculta al cargar (canvas 1x1),
-          // así que construirlo aquí no compite con el primer pintado.
-          window.erdInstance = new window.ERDGraph("erd-canvas");
-
           // Diccionario: 67 fichas y ~1.100 columnas. Sólo se pinta si su pestaña
           // está a la vista; si no, switchMainTab lo hace al abrirla.
           const dict = document.getElementById("dict-container");
@@ -613,6 +618,15 @@
       });
       // Señal de arranque completo, la usa la prueba de comportamiento del DOM.
       window.SIF_LISTO = listo;
+
+      // El mapa se construye una sola vez, cuando hace falta. Se llama desde
+      // switchMainTab("erd") y desde la portada; si ya existe, no hace nada.
+      window.asegurarERD = function () {
+        if (!window.erdInstance && window.ERDGraph) {
+          window.erdInstance = new window.ERDGraph("erd-canvas");
+        }
+        return window.erdInstance;
+      };
 
       // Conmutación de pestañas de la vista principal
       const TAB_REGISTRY = {
@@ -642,7 +656,17 @@
         if (zoomControls) zoomControls.style.display = target === "erd" ? "flex" : "none";
         if (erdControls) erdControls.style.display = target === "erd" ? "flex" : "none";
 
+        // El canvas ya tiene su tamaño definitivo (se acaba de mostrar), así que
+        // construirlo aquí no fuerza un reflujo sobre una pestaña oculta.
+        if (target === "erd") window.asegurarERD();
         if (target === "erd" && window.erdInstance) window.erdInstance.resize();
+
+        // El motor DuckDB pesa varios MB. Sólo se levanta cuando el visitante
+        // entra a Consultas o a Datos; ahí query() lo espera y el badge avisa.
+        if ((target === "sql" || target === "data") &&
+            window.DuckDBClient && typeof window.DuckDBClient.ensureStarted === "function") {
+          window.DuckDBClient.ensureStarted();
+        }
         if (target === "dict" && window.DataDictionary) window.DataDictionary.render();
         if (target === "data" && window.DataViewer) {
           if (!window.DataViewer.currentRows || window.DataViewer.currentRows.length === 0) window.DataViewer.init();

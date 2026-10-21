@@ -972,6 +972,7 @@ header {
   user-select: none;
   transition: background-color 0.1s;
   position: relative;
+  isolation: isolate;
 }
 
 .tree-row:hover {
@@ -4792,13 +4793,25 @@ kbd {
   white-space: nowrap;
 }
 
-/* Destello breve al abrir un sector desde la portada. */
+/* Destello breve al abrir un sector desde la portada. Se anima la opacidad de
+   una capa (propiedad compuesta), no el background-color de la fila: el informe
+   de Lighthouse contaba esa animación entre las que no se pueden componer. La
+   capa queda por debajo del texto (z-index: -1 dentro del contexto aislado de
+   .tree-row), así que el aspecto es el mismo. */
 @keyframes tree-flash {
-  from { background-color: rgba(var(--accent-rgb), 0.22); }
-  to { background-color: transparent; }
+  from { opacity: 0.22; }
+  to { opacity: 0; }
 }
 
-.tree-flash > .tree-row { animation: tree-flash 1.6s ease-out; }
+.tree-flash > .tree-row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-color: var(--accent-mint);
+  pointer-events: none;
+  animation: tree-flash 1.6s ease-out;
+}
 
 /* --- Mapa relacional: filtros por nivel --- */
 .erd-tier-label {

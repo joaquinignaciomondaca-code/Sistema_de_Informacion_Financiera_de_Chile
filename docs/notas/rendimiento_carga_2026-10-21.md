@@ -4,9 +4,14 @@
 bloquean el render (~557 KiB) y una cadena crítica de 3.578 ms. Esta nota registra qué se cambió,
 qué se midió antes y después, y qué quedó **sin resolver** a propósito.
 
-**Alcance:** sólo `docs/` y `scripts/audit_interfaz_dom.js`. Sin datos, sin pipelines, sin
+**Alcance:** sólo `docs/`, `scripts/audit_interfaz_dom.js`, el nuevo `scripts/audit_arranque_motor.js` y su paso en `.github/workflows/web_audit.yml`. Sin datos, sin pipelines, sin
 dependencias nuevas. La etiqueta de versión de los activos locales pasa a
-`fl-202610-2400-rendimiento`.
+`fl-202610-2410-bajo-demanda`.
+
+**Dos rondas.** La primera (commit `0570a99`, etiqueta `fl-202610-2400-rendimiento`) atacó los
+scripts, los JSON y los reflujos. La segunda —la de esta etiqueta— saca del arranque el motor
+DuckDB y el mapa relacional, que el informe mostraba dentro de la cadena crítica; la §3.4 la detalla
+y corrige un diagnóstico equivocado de la §6.
 
 ---
 
@@ -34,7 +39,7 @@ Peticiones que bloqueaban el render (557 KiB en total), de mayor a menor: `xlsx.
 
 ## 2. El diagnóstico
 
-Cuatro causas, no una:
+Seis causas, no una:
 
 1. **19 `<script src>` sin `defer`**, en el `<body>` pero antes de que el navegador pudiera pintar:
    todo el JS se descargaba y se ejecutaba en serie antes del primer pintado.
@@ -51,6 +56,9 @@ Cuatro causas, no una:
    mide el TBT: no el peso, sino el tiempo en que el hilo principal no atiende clics.
 5. **`scrollToBottom()` leía `scrollHeight` en cada mensaje**, forzando un reflujo síncrono
    (72 ms en `chat_terminal.js:625` según el propio informe).
+6. **El motor DuckDB y el mapa relacional se construían al cargar.** El `<head>` precargaba el wasm
+   de 3.826 KiB, el worker y el módulo, y el constructor del cliente llamaba a `init()`. El mapa
+   leía la geometría de un canvas oculto: 80 ms de reflujo forzado en `(index):568`.
 
 ## 3. Los cambios
 
@@ -61,7 +69,13 @@ Cuatro causas, no una:
 | `docs/js/erd_graph.js` | La cardinalidad sale de `window.SIF_JSON.cardinalidad` si está; si no, del `fetch` original |
 | `docs/js/busqueda_pregunta.js` | El índice sale de `window.SIF_JSON.indice` si está; si no, del `fetch` original |
 | `docs/js/chat_terminal.js` | `scrollToBottom()` se difiere con `requestAnimationFrame`, se coalesce y usa `scrollTop = 1e7` en vez de leer `scrollHeight` |
-| `scripts/audit_interfaz_dom.js` | Espera `window.SIF_LISTO` antes de mirar el DOM (el init ya no es síncrono) |
+| `docs/js/duckdb_client.js` | `ensureStarted()`: el motor arranca la primera vez que se necesita, no en el constructor. `query()` lo espera |
+| `docs/js/downloads_panel.js` | Los botones CSV/Excel del motor se consideran disponibles hasta que un arranque falle; `exportarSerie()` arranca el motor y avisa mientras carga |
+| `docs/js/ux_shell.js` | Clic en la insignia con el motor sin arrancar: lo inicia y lo dice |
+| `docs/js/sidebar.js` | `mapaERD()`: el explorador construye el mapa la primera vez que lo necesita, sin hacerlo al cargar |
+| `docs/css/app.css` | `tree-flash` anima `opacity` de una capa (compuesta) en vez de `background-color` |
+| `docs/index.html` | Fuera los tres precargados de DuckDB del `<head>`; Google Fonts deja de ser render-blocking; insignia inicial «DuckDB-Wasm · bajo demanda»; `window.asegurarERD()` |
+| `scripts/audit_interfaz_dom.js` | 78 → **81** comprobaciones: el mapa y el motor no se construyen al cargar, y el mapa sí al abrir su pestaña |
 
 ### 3.1 Cuánto pesa menos el arranque
 
@@ -94,6 +108,29 @@ pintar y atender un clic. El diccionario, además, ahora sólo se pinta si su pe
 si el usuario nunca la abre, se ahorra el trabajo entero. `switchMainTab` lo pinta al abrirla, como
 ya hacía.
 
+### 3.4 El motor y el mapa, sólo cuando se usan
+
+El informe no sólo medía el peso: mostraba `duckdb-eh.wasm` y `duckdb-browser-eh.worker.js`
+**dentro de la cadena crítica**, a 2,3 s. La causa era doble: el `<head>` precargaba los tres
+archivos del motor y el constructor de `DuckDBClient` llamaba a `init()` al ejecutarse. Es decir,
+los 3.826 KiB se descargaban y se compilaban en **todas** las visitas, aunque nadie abriera
+Consultas ni Datos.
+
+Ahora:
+
+- fuera los tres `<link rel="preload">` del `<head>`;
+- `new DuckDBClient()` ya no arranca nada; `ensureStarted()` lo hace la primera vez que se pide
+  (pestaña SQL, pestaña de datos, descarga con motor o clic en la insignia) y devuelve siempre la
+  misma promesa;
+- el mapa relacional se construye al abrir su pestaña (`window.asegurarERD`). Su constructor leía
+  `offsetWidth`/`offsetHeight` de un canvas oculto: el informe atribuía a esa llamada
+  `(index):568` **80 ms** de reflujo forzado.
+
+Con eso, la carga inicial deja de pedir el motor. Contando con los números de transferencia del
+propio informe: 4.633 − 3.826 (wasm) − 68,5 (worker) − 52,1 (mjs) − 284,1 (xlsx) − 29,5 (jszip) =
+**≈ 373 KiB** de primera carga, frente a los 4.633 KiB medidos. El ahorro no es magia: quien abra
+Consultas seguirá pagando el wasm, pero sólo esa persona y sólo en ese momento.
+
 ## 4. Qué se midió
 
 Todo lo que sigue se ejecutó y pasó:
@@ -105,7 +142,8 @@ Todo lo que sigue se ejecutó y pasó:
 | `scripts/audit_interfaz.py` | exit 0 — «INTERFAZ COHERENTE» y los 15 archivos locales con la etiqueta nueva |
 | `scripts/audit_navigation.py` | exit 0 |
 | `scripts/audit_web_full.py` | exit 0 — «TODAS LAS SECCIONES DE LA WEB ESTAN 100% OPERATIVAS» |
-| `scripts/audit_interfaz_dom.js` (con jsdom) | **78/78** |
+| `scripts/audit_interfaz_dom.js` (con jsdom) | **81/81**, incluidas «el mapa relacional no se construye al cargar», «el motor DuckDB no arranca al cargar» y «abrir Mapa construye el mapa relacional» |
+| `scripts/audit_arranque_motor.js` (VM, **nuevo paso 11 del job `audit`**) | 7/7: el constructor no arranca ni pide red · la insignia avisa al arrancar · `ensureStarted()` es idempotente (dos llamadas, un arranque) · `query()` arranca si nadie lo hizo · un arranque fallido devuelve el error explícito |
 | `scripts/audit_xss_celdas.js` | exit 0 |
 | `scripts/audit_sql_guard.js` | exit 0 |
 | `scripts/audit_duckdb_client.js` | exit 0 — registro de vistas OK |
@@ -121,11 +159,16 @@ Todo lo que sigue se ejecutó y pasó:
   relativo de ejecución cambió respecto del HTML. Las auditorías lo cubren por comportamiento (la
   página funciona y el DOM queda completo), no por cronómetro.
 - **La carga de `xlsx`/`jszip` contra el CDN**: se sirven del mismo origen que el resto de `docs/js/`.
+- **El intercambio de la fuente.** Google Fonts pasa a precargarse y aplicarse al llegar: deja de
+  bloquear el pintado, pero el texto puede verse un instante con la fuente de reserva. No hay
+  navegador aquí para medir ese parpadeo ni para compararlo con el `font-display=swap` anterior.
+- **El costo del motor al abrir Consultas.** El wasm de 3,8 MB se sigue descargando la primera vez
+  que se usa el motor; no se midió cuánto tarda ese arranque en frío en el despliegue.
 
 ## 6. Lo que quedó pendiente, a propósito
 
-El informe también señala cosas que **no** se tocaron, y conviene dejarlas escritas para que no se
-lean como resueltas:
+El informe también señala cosas que **no** se tocaron o que quedan abiertas. Conviene dejarlas
+escritas para que no se lean como resueltas:
 
 1. **`data_dictionary.js` (495,8 KiB) y `diccionario_seguros.js` (212,7 KiB)** son ahora, de lejos,
    lo más pesado del arranque: 709 KiB de los 1.240. Son datos con forma de JS (`window.SIFDataDictionary`,
@@ -133,17 +176,24 @@ lean como resueltas:
    `downloads_panel.js` de forma **síncrona**. Convertirlos en `fetch` exige volver asíncronos esos
    tres consumidores; es una intervención de otro tamaño y con riesgo real de regresión silenciosa.
    Queda como la siguiente palanca, medida antes de tocarla.
-2. **DuckDB: 3.826 KiB de wasm** más el worker (68,5) y `duckdb-browser.mjs` (52,1). No es un
-   problema de carga inicial —el motor se levanta cuando se usa la terminal SQL o la vista de
-   datos—, pero sí explica parte del peso total de 4.633 KiB. Se dejó como estaba: es el costo del
-   motor en el navegador, no un descuido.
+2. **DuckDB: 3.826 KiB de wasm** más el worker (68,5) y `duckdb-browser.mjs` (52,1). La primera
+   versión de esta nota decía que el motor «se levanta cuando se usa»; era falso: el `<head>`
+   precargaba los archivos y el constructor llamaba a `init()` al cargar. El informe lo desmintió al
+   mostrarlo en la cadena crítica, y la segunda ronda lo corrigió (§3.4). Lo que queda es el costo
+   real del motor: quien abre Consultas o Datos lo descarga una vez; quien no, nunca.
 3. **CSS y JS sin minificar** (113,8 KiB de CSS, 1.240 de JS). Minificar exigiría un paso de
    compilación y una copia generada por archivo; hoy el sitio se sirve tal cual desde `docs/` y así
    lo leen las auditorías y el detector. El ahorro comprimido sería de decenas de KiB, no de cientos.
    No se hizo.
-4. **Las 8 animaciones no compuestas** son decorativas (pulsos, transiciones de insignias). Pasarlas
-   a `transform`/`opacity` es cosmético y no mueve el TBT; no se tocaron para no cambiar el aspecto
-   sin un antes/después visual.
+4. **Las 8 animaciones no compuestas.** De las seis reglas `@keyframes`, sólo `tree-flash` animaba
+   una propiedad no compuesta (`background-color`); las otras cinco ya usaban `transform`/`opacity`.
+   Se pasó a una capa con `opacity` (§3, `app.css`). Las que Lighthouse seguía contando de más no se
+   pudieron identificar sin Chrome: la medición dirá si bajó el número.
+5. **Las auditorías de minificación y de JS sin usar estaban contaminadas por una extensión de
+   Chrome** (`chrome-extension://gighmmpiobklfepjocnamgkkbiglidom`, un bloqueador de anuncios):
+   73 KiB de los 73 KiB de «Minify JavaScript» y 103 de los 154 KiB de «Reduce unused JavaScript»
+   eran de la extensión, no del sitio. Del sitio, lo único accionable era `xlsx` (50,9 KiB sin
+   usar), ya fuera del arranque.
 
 ## 7. Cómo volver a medir
 
@@ -156,5 +206,8 @@ node scripts/servir_sitio_local.mjs          # 0.0.0.0:8000, raíz docs/
 ```
 
 Para que la comparación sea justa, la etiqueta de versión tiene que ser la nueva
-(`fl-202610-2400-rendimiento`): si Lighthouse sigue viendo `fl-202610-212101-duckdb-lazy` en las
-URL, está midiendo la caché anterior.
+(`fl-202610-2410-bajo-demanda`): si Lighthouse sigue viendo `fl-202610-212101-duckdb-lazy` en las
+URL, está midiendo la caché anterior. En el informe nuevo deberían desaparecer del árbol de
+dependencias `duckdb-eh.wasm`, el worker y `duckdb-browser.mjs`, y el peso total debería quedar en
+el orden de los ~373 KiB contados en §3.4. El TBT sólo bajará si además desaparecen las tareas
+largas del arranque; eso es lo que hay que mirar, no el peso.
