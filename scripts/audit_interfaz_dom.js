@@ -256,7 +256,16 @@ setTimeout(async () => {
     check("SQL lleva la tabla a Consultas SQL", false, "sin botón SQL");
   }
 
+  // Se deja el motor sin arrancar otra vez para comprobar el cableado real:
+  // abrir Consultas debe disparar ensureStarted() (el estado «sin motor» que se
+  // simuló más arriba no es el de una página recién cargada).
+  if (window.DuckDBClient) {
+    window.DuckDBClient.initPromise = null;
+    window.DuckDBClient.engineAvailable = false;
+  }
   window.switchMainTab("sql");
+  check("abrir Consultas arranca el motor bajo demanda",
+    Boolean(window.DuckDBClient && window.DuckDBClient.initPromise));
   check("pestaña SQL activa y visible",
     document.getElementById("sql-container").style.display === "flex" &&
     document.getElementById("tab-btn-sql").getAttribute("aria-selected") === "true");

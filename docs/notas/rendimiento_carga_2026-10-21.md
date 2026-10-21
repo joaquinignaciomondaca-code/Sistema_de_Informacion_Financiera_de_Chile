@@ -75,7 +75,7 @@ Seis causas, no una:
 | `docs/js/sidebar.js` | `mapaERD()`: el explorador construye el mapa la primera vez que lo necesita, sin hacerlo al cargar |
 | `docs/css/app.css` | `tree-flash` anima `opacity` de una capa (compuesta) en vez de `background-color` |
 | `docs/index.html` | Fuera los tres precargados de DuckDB del `<head>`; Google Fonts deja de ser render-blocking; insignia inicial «DuckDB-Wasm · bajo demanda»; `window.asegurarERD()` |
-| `scripts/audit_interfaz_dom.js` | 78 → **81** comprobaciones: el mapa y el motor no se construyen al cargar, y el mapa sí al abrir su pestaña |
+| `scripts/audit_interfaz_dom.js` | 78 → **82** comprobaciones: el mapa y el motor no se construyen al cargar, y el mapa sí al abrir su pestaña |
 
 ### 3.1 Cuánto pesa menos el arranque
 
@@ -142,7 +142,7 @@ Todo lo que sigue se ejecutó y pasó:
 | `scripts/audit_interfaz.py` | exit 0 — «INTERFAZ COHERENTE» y los 15 archivos locales con la etiqueta nueva |
 | `scripts/audit_navigation.py` | exit 0 |
 | `scripts/audit_web_full.py` | exit 0 — «TODAS LAS SECCIONES DE LA WEB ESTAN 100% OPERATIVAS» |
-| `scripts/audit_interfaz_dom.js` (con jsdom) | **81/81**, incluidas «el mapa relacional no se construye al cargar», «el motor DuckDB no arranca al cargar» y «abrir Mapa construye el mapa relacional» |
+| `scripts/audit_interfaz_dom.js` (con jsdom) | **82/82**, incluidas «el mapa relacional no se construye al cargar», «el motor DuckDB no arranca al cargar», «abrir Mapa construye el mapa relacional» y «abrir Consultas arranca el motor bajo demanda» |
 | `scripts/audit_arranque_motor.js` (VM, **nuevo paso 11 del job `audit`**) | 7/7: el constructor no arranca ni pide red · la insignia avisa al arrancar · `ensureStarted()` es idempotente (dos llamadas, un arranque) · `query()` arranca si nadie lo hizo · un arranque fallido devuelve el error explícito |
 | `scripts/audit_xss_celdas.js` | exit 0 |
 | `scripts/audit_sql_guard.js` | exit 0 |
