@@ -313,7 +313,7 @@
         <section class="normativa-controls" aria-label="Buscar y filtrar publicaciones por texto o tipo">
           <div class="normativa-control-field">
             <label for="normativa-search">Buscar publicaciones</label>
-            <input id="normativa-search" type="search" value="${escapeHtml(this.search)}" placeholder="Norma, número, palabra o resumen…" autocomplete="off">
+            <input id="normativa-search" type="search" aria-label="Buscar en normativa" value="${escapeHtml(this.search)}" placeholder="Norma, número, palabra o resumen…" autocomplete="off">
           </div>
           <div class="normativa-control-field">
             <label for="normativa-type-filter">Tipo de publicación</label>
