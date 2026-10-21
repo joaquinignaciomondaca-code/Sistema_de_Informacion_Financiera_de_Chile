@@ -615,6 +615,30 @@ header {
 }
 
 /* App Layout with Sidebar */
+/* Enlace de salto para teclado: invisible hasta que recibe el foco. Va primero
+   en el <body>, así que es lo primero que aparece al tabular. */
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 1200;
+  padding: 8px 14px;
+  background-color: var(--bg-secondary);
+  color: var(--text-bright);
+  border: 1px solid var(--accent-mint);
+  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform 0.15s ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
 .app-layout {
   display: flex;
   flex: 1;
@@ -755,6 +779,7 @@ header {
 
 .pregunta-buscar input:focus {
   border-color: var(--accent-mint);
+  box-shadow: 0 0 0 2px var(--accent-mint-dim);
 }
 
 .pregunta-estado {
@@ -789,7 +814,6 @@ header {
 .pregunta-boton:hover,
 .pregunta-boton:focus-visible {
   border-color: var(--accent-mint);
-  outline: none;
 }
 
 .pregunta-nombre {
@@ -2909,6 +2933,7 @@ header {
 
 .dv-search-box input:focus {
   border-color: var(--accent-mint);
+  box-shadow: 0 0 0 2px var(--accent-mint-dim);
 }
 
 .dv-limit-group {
@@ -4435,6 +4460,7 @@ kbd {
 .dl-toolbar select:focus {
   outline: none;
   border-color: var(--accent-mint);
+  box-shadow: 0 0 0 2px var(--accent-mint-dim);
 }
 
 .dl-years {
