@@ -194,7 +194,8 @@
     "flujos_activos_elegibles": "Flujos de activos elegibles",
     "prestamos": "Préstamos",
     "bienes_raices_arriendo_morosidad": "Bienes raíces en arriendo y morosidad",
-    "garantias_derivados": "Garantías en instrumentos derivados"
+    "garantias_derivados": "Garantías en instrumentos derivados",
+    "registros_tipo6": "Registros tipo 6"
   },
   "tablas": [
     {
@@ -404,6 +405,15 @@
       "tipo": "garantias_derivados",
       "sector": "seguros",
       "descripcion": "Garantías en efectivo o instrumentos, recibidas u otorgadas, asociadas a derivados.",
+      "cobertura": "Mensual · desde 2024-12"
+    },
+    {
+      "id": "seguros_registros_tipo6",
+      "alias": [],
+      "nombre": "Registros tipo 6 de B.11 y B.14",
+      "tipo": "registros_tipo6",
+      "sector": "seguros",
+      "descripcion": "Líneas tipo 6 reportadas por la CMF en archivos B.11 (E) y B.14 (G). Se conserva íntegra cada línea, junto con su período, sector, aseguradora y archivo de origen; los campos internos se mantienen sin atribuirles significado no documentado.",
       "cobertura": "Mensual · desde 2024-12"
     },
     {
