@@ -40,23 +40,29 @@ La auditoría detectó además una brecha de integración: el conjunto estaba en
 - `seguros.tests.test_registros_2024`: OK; prueba sintética de lectura, preservación de tipo 6 y escritura Parquet en B.11 y B.14.
 - `unittest` de vistas, diagnóstico, escritura estable y privacidad: **30 pruebas, OK**.
 - `scripts/audit_web_full.py`: sintaxis JS válida; vistas y archivos enlazados; catálogo del visor y consultas SQL comprobados; columnas declaradas cotejadas con Parquet.
-- `scripts/audit_navigation.py`, `scripts/normalizar_vocabulario.py --check`, `scripts/build_download_catalog.py --check` y `seguros.scripts.diccionario_1835 --check`: deben permanecer verdes después de integrar esta ampliación de interfaz.
+- `scripts/audit_navigation.py`, `scripts/normalizar_vocabulario.py --check`, `scripts/build_download_catalog.py --check` y `seguros.scripts.diccionario_1835 --check`: OK después de integrar la ampliación de interfaz.
 
 ## Observaciones y riesgos residuales
 
 ### 1. Alertas de archivos ajenas al tipo 6
 
-En la primera lectura del manifiesto aparecían **nueve entradas**, pero una era duplicada: el mismo archivo C de vida figuraba dos veces para el mismo tipo `x`, una con el mensaje antiguo sin largo y otra con el mensaje completo. La auditoría posterior detectó que el código acumulaba exclusiones históricas y variantes del mismo aviso al reconstruir un período. Se cambió para que la lista refleje el resultado de la lectura completa más reciente y se depuró la entrada duplicada del manifiesto. Quedan **ocho casos distintos**: seis tipo 4 en archivos G de vida, un tipo `x` en un archivo C de vida y una línea truncada en un archivo A de generales. El proceso mantiene el comportamiento fail-closed y no los incorpora como filas válidas.
+En la primera lectura del manifiesto aparecían **nueve entradas**, pero una era duplicada: el mismo archivo C de vida figuraba dos veces para el mismo tipo `x`, una con el mensaje antiguo sin largo y otra con el mensaje completo. La auditoría posterior detectó que el código acumulaba exclusiones históricas y variantes del mismo aviso al reconstruir un período. Se cambió para que la lista refleje el resultado de la lectura completa más reciente y se depuró la entrada duplicada del manifiesto. Quedan **ocho casos distintos**: seis tipo 4 en archivos G de vida, un tipo `x` en un archivo C de vida y una línea truncada en un archivo A de generales. El proceso mantiene el comportamiento fail-closed y no los incorpora como filas válidas. Los seis tipo `4` son del archivo G `g202604v.76282191` a `g202609v.76282191` (300 caracteres esperados); el tipo `x` está en `c202505v.99289000` (138 caracteres esperados); y la línea de 571 frente a 572 caracteres corresponde a `a202505g.99017000` de `generales`.
 
-### 2. Trazabilidad de versión de la fuente
+### 2. Caracterización de las ocho exclusiones
+
+Se compararon las estructuras con el manual CMF incluido en el repositorio. En la sección B.8 (archivo C) se describen registros tipo 1, 2 y 3, no tipo `x`; en B.14 (archivo G), las estructuras documentadas son tipos 1 a 3, no tipo `4`. Por tanto, no hay soporte documental para incorporar esos registros ni para asignarles campos o semántica. La fila truncada del archivo A tampoco satisface el largo fijo y no se corrigió ni completó.
+
+Se intentó recuperar los ZIP afectados en una sonda de solo lectura de Actions: los ocho intentos terminaron en `URLError: timed out` antes de obtener bytes de fuente. La primera ejecución de la sonda falló por no capturar esas excepciones; la segunda dejó los errores visibles como anotaciones y el workflow terminó verde, pero **no caracterizó ninguna línea**. Una de las búsquedas del archivo A, además, estaba dirigida al sector `vida` cuando el manifiesto identifica `generales`; al no descargar datos, no aportó evidencia. La sonda temporal se retiró del workflow. En consecuencia, no se conocen las máscaras de caracteres, el contenido íntegro ni los hashes de miembro de estas ocho líneas. Se mantienen excluidas, sin inferencias ni modificaciones.
+
+### 3. Trazabilidad de versión de la fuente
 
 Al comparar el manifiesto anterior a la reconstrucción con el publicado por Actions, cambiaron los hashes de **12 ZIP** en **10 cierres**: 2025-07, 2025-08, 2025-10, 2025-11, 2026-01 (ambos sectores), 2026-03, 2026-06, 2026-07, 2026-08 y 2026-09. El manifiesto conserva el hash vigente, pero el ZIP histórico anterior y un registro de diferencias de datos no se archivan aquí. Por tanto, el estado actual es trazable por hash, pero no ofrece una historia de revisiones reproducible de esas fuentes.
 
-### 3. Linaje a nivel de línea
+### 4. Linaje a nivel de línea
 
 Cada fila guarda el nombre del archivo, y el manifiesto del período guarda el SHA-256 del ZIP por sector. No se persisten todavía el número ordinal de línea ni el SHA-256 del miembro del ZIP. En los datos actuales hay una sola línea tipo 6 por archivo, sin colisiones; para blindar futuras fuentes con varias líneas tipo 6 en un archivo, conviene añadir `numero_linea` y `sha256_archivo` o guardar una copia inmutable del ZIP.
 
-### 4. Preservación de bytes y alcance de la normalización
+### 5. Preservación de bytes y alcance de la normalización
 
 `registro_original` es texto decodificado y conserva espacios y largo. Las 66 líneas examinadas son ASCII, así que en esta muestra no hay pérdida por decodificación. La tabla normaliza el contexto relacional (período, sector, aseguradora, archivo y tipo) y conserva el payload opaco; no es todavía una descomposición posicional campo por campo. Si futuras líneas incluyen bytes no ASCII, o si se acuerda una ficha para el registro, será necesario versionar la codificación y/o guardar el payload binario original antes de interpretarlo.
 
@@ -65,5 +71,5 @@ Cada fila guarda el nombre del archivo, y el manifiesto del período guarda el S
 1. Mantener los controles de largo, tipo de registro, conteos y manifiestos en cada ejecución.
 2. Incorporar número de línea y hash del archivo miembro (o archivo fuente inmutable) si se exige trazabilidad transaccional fuerte.
 3. Registrar cambios de hashes de ZIP como revisiones de fuente y conservar diffs de filas al reconstruir períodos.
-4. Investigar por separado las nueve alertas aún activas; no ampliar el parser con semánticas no documentadas.
+4. Reintentar la caracterización de los ocho casos solo cuando la descarga de CMF vuelva a responder; hasta entonces, mantenerlos excluidos y no ampliar el parser con semánticas no documentadas.
 5. Mantener `registro_original` aun si se agrega una proyección posicional: la fila fuente íntegra sirve como evidencia y permite reprocesar el contenido.
