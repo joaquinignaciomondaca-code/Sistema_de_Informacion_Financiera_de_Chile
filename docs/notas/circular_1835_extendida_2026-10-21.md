@@ -20,7 +20,7 @@ La sonda real de 2024-12 ([run 39632257071](https://github.com/joaquinignaciomon
 
 La misma sonda contó los nombres antes de parsear: en 2024-12, los ZIP de vida y generales tenían cero archivos B.12 (`r`) y B.13 (`v`). Esto confirma que para ese mes la ausencia no la causa el parser: esos archivos no estaban en la descarga CMF. En el backfill de 22 cierres B.12/B.13 siguen con cero filas; el conteo directo de nombres disponible corresponde al primer cierre, 2024-12. También se ejecutó un barrido de conteos para los 22 cierres ([run 39629147333](https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/actions/runs/39629147333)), pero el servicio de logs no permitió recuperar sus conteos por mes; por eso no se toma como prueba individualizada de ausencia de archivos en cada cierre.
 
-Se requiere confirmación de la CMF o una versión actualizada del anexo antes de integrar el tipo 6 con seguridad. El manifiesto conserva los nombres de los archivos afectados y las alertas del proceso.
+Se requiere confirmación de la CMF o una versión actualizada del anexo antes de integrar el tipo 6 con seguridad. Dejé preparado, sin enviar, un [borrador de consulta técnica](consulta_cmf_registro_tipo6_1835.md). El manifiesto conserva los nombres de los archivos afectados y las alertas del proceso.
 
 ## Verificación
 
