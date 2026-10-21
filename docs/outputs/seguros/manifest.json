@@ -3459,7 +3459,21 @@
         "generales e202412g.76598625: tipo de registro '6' desconocido (línea 2)",
         "generales g202412g.76212519: tipo de registro '6' desconocido (línea 2)",
         "generales g202412g.76598625: tipo de registro '6' desconocido (línea 2)"
-      ]
+      ],
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 35,
+          "r": 0,
+          "v": 0,
+          "g": 35
+        },
+        "generales": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        }
+      }
     },
     "2025-01": {
       "formato": "v2024",
@@ -3524,7 +3538,21 @@
         "generales e202501g.76598625: tipo de registro '6' desconocido (línea 2)",
         "generales g202501g.76212519: tipo de registro '6' desconocido (línea 2)",
         "generales g202501g.76598625: tipo de registro '6' desconocido (línea 2)"
-      ]
+      ],
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 35,
+          "r": 0,
+          "v": 0,
+          "g": 35
+        },
+        "generales": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        }
+      }
     },
     "2025-02": {
       "formato": "v2024",
@@ -3595,7 +3623,21 @@
         "generales e202502g.76598625: tipo de registro '6' desconocido (línea 2)",
         "generales g202502g.76212519: tipo de registro '6' desconocido (línea 2)",
         "generales g202502g.76598625: tipo de registro '6' desconocido (línea 2)"
-      ]
+      ],
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 35,
+          "r": 0,
+          "v": 0,
+          "g": 34
+        },
+        "generales": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        }
+      }
     },
     "2025-03": {
       "formato": "v2024",
@@ -3661,7 +3703,21 @@
       },
       "archivos_excluidos": [
         "generales e202503g.76598625: tipo de registro '6' desconocido (línea 2)"
-      ]
+      ],
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 35,
+          "r": 0,
+          "v": 0,
+          "g": 36
+        },
+        "generales": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        }
+      }
     },
     "2025-04": {
       "formato": "v2024",
@@ -3725,6 +3781,20 @@
       "sha256_origen": {
         "vida": "ac223b8b1a22ac434fb1fe9346c62287064c64c06e5f5325c83639f2de04f577",
         "generales": "1ef5bc1efeb6f0f2db39e7aa97b3756e2395353c65bac354b9f80bcf972692a9"
+      },
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 34,
+          "r": 0,
+          "v": 0,
+          "g": 34
+        },
+        "generales": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        }
       }
     },
     "2025-05": {
@@ -3798,6 +3868,20 @@
       "sha256_origen": {
         "vida": "9aa54067a771de92e3c1d05c0f18d4e5512b5de54ca7b4f4fdc56149ca596aaf",
         "generales": "94355cd83b08f4ecb71415669ee91c1dfb2a12e44ce23bbabd4b328d2f4ebf43"
+      },
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 34,
+          "r": 0,
+          "v": 0,
+          "g": 34
+        },
+        "generales": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        }
       }
     },
     "2025-06": {
@@ -3863,6 +3947,20 @@
       "sha256_origen": {
         "vida": "76351544334662392b6e0c8dfac35f4cd22314ceea0bba418cca2d5050a2777d",
         "generales": "d1d3d2a5b099371635c8fa6300693b50567399ca6634c8de743ab9b8fcf5dbb6"
+      },
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 34,
+          "r": 0,
+          "v": 0,
+          "g": 34
+        },
+        "generales": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        }
       }
     },
     "2025-07": {
@@ -3928,6 +4026,20 @@
       "sha256_origen": {
         "vida": "a2aafdddc82726e3f482e564473ca4ca94d0fede454c57e8e4306d2ec29d4c19",
         "generales": "eac04756baca7f5409a3077f23a3d8d0b78ba8b410a8c5059ca1c9827d94958b"
+      },
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 34,
+          "r": 0,
+          "v": 0,
+          "g": 34
+        },
+        "generales": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        }
       }
     },
     "2025-08": {
@@ -3999,6 +4111,20 @@
       "sha256_origen": {
         "vida": "c27e54dabb3af95e1bf5976b63cde96477609827a6954616aab29d9c8b7aec95",
         "generales": "93a1537119ec3485b1a981bbeae7f10e67f63ff630331185e94721ff5582fb33"
+      },
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 33,
+          "r": 0,
+          "v": 0,
+          "g": 33
+        },
+        "generales": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        }
       }
     },
     "2025-09": {
@@ -4069,6 +4195,20 @@
       "sha256_origen": {
         "vida": "1951a1110f0ac3ab4aba1868e65cc00058ee36beaefe56ff66691ef7694389ca",
         "generales": "b009f940cdfbbaf1e9400a7a8fcfd0a8466c86f2ccdeb0e006d95fb62cc67a69"
+      },
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 33,
+          "r": 0,
+          "v": 0,
+          "g": 33
+        },
+        "generales": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        }
       }
     },
     "2025-10": {
@@ -4138,6 +4278,20 @@
       "sha256_origen": {
         "vida": "9c6e9fc300aa387001c0b1f8ad4e27224b75b4b1482a3e7774cfdb6225dece9b",
         "generales": "641c3940df9c48a87f51135dfe0b20d5648317e6b62ef77bc293fede5ef3bd57"
+      },
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 33,
+          "r": 0,
+          "v": 0,
+          "g": 33
+        },
+        "generales": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        }
       }
     },
     "2025-11": {
@@ -4205,6 +4359,20 @@
       "sha256_origen": {
         "vida": "9270f87f8e987e40aa721c4dcadf73cd144f04082977961e96e071c6f2c04203",
         "generales": "8f0c08d93ada57a79f6fbc963aa45c63f1c24f50f5678af7940d8a04425651c5"
+      },
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 33,
+          "r": 0,
+          "v": 0,
+          "g": 33
+        },
+        "generales": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        }
       }
     },
     "2025-12": {
@@ -4268,6 +4436,20 @@
       "sha256_origen": {
         "vida": "c6a71378f7c2414bfff897c20bf8602fb55df37e9cda29fd04f0b010a70c31af",
         "generales": "971e201f412700e94df09b322cb33c8f4b43669d4a2f1874ccb8dd20a69ac157"
+      },
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 33,
+          "r": 0,
+          "v": 0,
+          "g": 33
+        },
+        "generales": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        }
       }
     },
     "2026-01": {
@@ -4333,6 +4515,20 @@
       "sha256_origen": {
         "vida": "777107d5895f417a8d9b98484f9147ee567c1fba0a2428f04cb26bab5aa656d9",
         "generales": "54f44a6b45fc730a4151f2108800506f17c185a28c7c4859d4b6b83162aad87e"
+      },
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        },
+        "generales": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        }
       }
     },
     "2026-02": {
@@ -4401,6 +4597,20 @@
       "sha256_origen": {
         "vida": "68fc159addfae839a869d9c82448e88091906b882644b7a9a6b6a159955ed90d",
         "generales": "f55348edcbff4806f834c30cf656cec4f423923bd4d73804e5f18692e7f190f4"
+      },
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        },
+        "generales": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        }
       }
     },
     "2026-03": {
@@ -4467,6 +4677,20 @@
       "sha256_origen": {
         "vida": "2dcae2d0b09c05352e92bfcab281b34a17092b2c0b295b8b98779c8da20df0cb",
         "generales": "a043139ac9e69b22c81d29ff619c694c67625c187ab870ccb56acb8a75f6e143"
+      },
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        },
+        "generales": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        }
       }
     },
     "2026-04": {
@@ -4536,6 +4760,20 @@
       "sha256_origen": {
         "vida": "78429066ef65e17510d22902d302d2b9a3b0276454611211f7a2ff7b07626ef7",
         "generales": "5eb052ada874badc908ef2aa8d47f65e835504719f12b15b04cdc89a1960cb59"
+      },
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 33,
+          "r": 0,
+          "v": 0,
+          "g": 33
+        },
+        "generales": {
+          "e": 31,
+          "r": 0,
+          "v": 0,
+          "g": 31
+        }
       }
     },
     "2026-05": {
@@ -4605,6 +4843,20 @@
       "sha256_origen": {
         "vida": "4bd230dab954565feffee40c4ddc00f1f46ec3afc6dfd6a778fdefbf2116327b",
         "generales": "f3959af064478d9fd0efa44bb31f04bd1863491013ab91e6dfa0420cfd37b6c8"
+      },
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 33,
+          "r": 0,
+          "v": 0,
+          "g": 33
+        },
+        "generales": {
+          "e": 31,
+          "r": 0,
+          "v": 0,
+          "g": 31
+        }
       }
     },
     "2026-06": {
@@ -4671,6 +4923,20 @@
       "sha256_origen": {
         "vida": "426ee97007e020ff674398ea959882b6d4b56a9859233d51c68e1c3e28a9e0c3",
         "generales": "2be42973325fc3d5db407fec4cbe9dc13050055697d464def4731b9fc367d168"
+      },
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 33,
+          "r": 0,
+          "v": 0,
+          "g": 33
+        },
+        "generales": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        }
       }
     },
     "2026-07": {
@@ -4743,6 +5009,20 @@
       "sha256_origen": {
         "vida": "e87ed57ba3e84b5a1306ede332bc9ab9f2ab5be5e0210c284fa504752f9972d2",
         "generales": "208c37364cfed40fa176ec2d7b31dfea0b765075eb4e59506a471d6a073d2b7a"
+      },
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 33,
+          "r": 0,
+          "v": 0,
+          "g": 33
+        },
+        "generales": {
+          "e": 31,
+          "r": 0,
+          "v": 0,
+          "g": 31
+        }
       }
     },
     "2026-08": {
@@ -4812,6 +5092,20 @@
       "sha256_origen": {
         "vida": "9b8826b4774eb845c77609aa861dc3b9c418310874dd7e93a60ad059b4f2dfb4",
         "generales": "ada957d542b8d46520654e9a9954993824936f4863f2422a09c9580d245b7763"
+      },
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 33,
+          "r": 0,
+          "v": 0,
+          "g": 33
+        },
+        "generales": {
+          "e": 31,
+          "r": 0,
+          "v": 0,
+          "g": 31
+        }
       }
     },
     "2026-09": {
@@ -4880,6 +5174,20 @@
       "sha256_origen": {
         "vida": "c0621c9b7bf0de65b726cb33a0762e25763ae905d4e1bfab25f7bc6fc86bc976",
         "generales": "fcd1bfd6da1a7f9e804b5bf5a2071373523b96c55f94e7e767f664a9028aaca0"
+      },
+      "archivos_fuente_por_prefijo": {
+        "vida": {
+          "e": 33,
+          "r": 0,
+          "v": 0,
+          "g": 33
+        },
+        "generales": {
+          "e": 32,
+          "r": 0,
+          "v": 0,
+          "g": 32
+        }
       }
     }
   },
@@ -5413,5 +5721,5 @@
     "prestamos_relevantes": "2024-12",
     "bienes_raices_arriendo_morosidad_relevantes": "2024-12"
   },
-  "updated_at": "2026-10-21T08:55:51+00:00"
+  "updated_at": "2026-10-21T16:45:50+00:00"
 }
