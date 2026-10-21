@@ -105,14 +105,17 @@ jobs:
           archi="${base}?tipoentidad=CSVID&fnAjax=archi&peri=202604"
           descarga="${base}?tipoentidad=CSVID&fnAjax=descarga&peri=202604"
           echo '=== Resolución, TLS y respuesta del endpoint archi ==='
-          curl -sS -L --connect-timeout 15 --max-time 30 -A 'Mozilla/5.0 (monitor-financiero-chile)' \
-            -o /tmp/cmf-archi.txt -w 'http=%{http_code} ip=%{remote_ip} dns_s=%{time_namelookup} connect_s=%{time_connect} tls_s=%{time_appconnect} ttfb_s=%{time_starttransfer} total_s=%{time_total} bytes=%{size_download}\n' "$archi"
-          echo "archi_curl_exit=$? body=$(cat /tmp/cmf-archi.txt 2>/dev/null)"
-          if [ "$(cat /tmp/cmf-archi.txt 2>/dev/null | tr -d '\r\n ')" = '1' ]; then
+          archi_stats=$(curl -sS -L --connect-timeout 15 --max-time 30 -A 'Mozilla/5.0 (monitor-financiero-chile)' \
+            -o /tmp/cmf-archi.txt -w 'http=%{http_code} ip=%{remote_ip} dns_s=%{time_namelookup} connect_s=%{time_connect} tls_s=%{time_appconnect} ttfb_s=%{time_starttransfer} total_s=%{time_total} bytes=%{size_download}\n' "$archi" 2>&1)
+          archi_rc=$?
+          archi_body=$(cat /tmp/cmf-archi.txt 2>/dev/null | tr -d '\r\n ' | head -c 20)
+          echo "::notice title=CMF archi probe::curl_exit=$archi_rc $archi_stats body=$archi_body"
+          if [ "$archi_body" = '1' ]; then
             echo '=== Transferencia del ZIP (salida descartada, máximo 90 s) ==='
-            curl -sS -L --connect-timeout 15 --max-time 90 -A 'Mozilla/5.0 (monitor-financiero-chile)' \
-              -o /dev/null -w 'http=%{http_code} ip=%{remote_ip} dns_s=%{time_namelookup} connect_s=%{time_connect} tls_s=%{time_appconnect} ttfb_s=%{time_starttransfer} total_s=%{time_total} bytes=%{size_download}\n' "$descarga"
-            echo "download_curl_exit=$?"
+            zip_stats=$(curl -sS -L --connect-timeout 15 --max-time 90 -A 'Mozilla/5.0 (monitor-financiero-chile)' \
+              -o /dev/null -w 'http=%{http_code} ip=%{remote_ip} dns_s=%{time_namelookup} connect_s=%{time_connect} tls_s=%{time_appconnect} ttfb_s=%{time_starttransfer} total_s=%{time_total} bytes=%{size_download}\n' "$descarga" 2>&1)
+            zip_rc=$?
+            echo "::notice title=CMF ZIP probe::curl_exit=$zip_rc $zip_stats"
           else
             echo 'Se omite el ZIP: archi no confirmó disponibilidad.'
           fi
