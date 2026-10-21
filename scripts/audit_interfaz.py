@@ -322,6 +322,25 @@ def audit_accesibilidad(html, css):
         fail("app.css usa transition: all; hay que declarar qué propiedades cambian")
     else:
         print("  [OK] ninguna transición anima «all»")
+    # Tablas ordenables: el control debe ser un botón dentro del <th>, con scope
+    # y aria-sort, no un onclick sobre la celda de encabezado.
+    for archivo in ("docs/js/data_viewer.js", "docs/js/chat_terminal.js"):
+        fuente = read(archivo)
+        if 'scope="col"' in fuente and "th-sort-btn" in fuente and "aria-sort" in fuente:
+            print(f"  [OK] {archivo.split('/')[-1]}: encabezados ordenables con botón y aria-sort")
+        else:
+            fail(f"{archivo} no expone encabezados ordenables accesibles")
+    # El esquema del mapa es un diálogo con nombre, cierre por Escape y retorno de foco.
+    modal = re.search(r'<div class="schema-modal"[^>]*>', html)
+    if modal and 'role="dialog"' in modal.group(0) and 'aria-labelledby="modal-table-name"' in modal.group(0):
+        print("  [OK] el esquema del mapa es un diálogo con nombre")
+    else:
+        fail("el esquema del mapa no tiene role=dialog ni aria-labelledby")
+    terminal = read("docs/js/chat_terminal.js")
+    if "cerrarEsquema" in terminal and '"Escape"' in terminal and "__focoAntesDelEsquema" in terminal:
+        print("  [OK] el esquema se cierra con Escape y devuelve el foco")
+    else:
+        fail("el esquema no cierra con Escape ni devuelve el foco")
 
 
 def audit_theme_tokens():

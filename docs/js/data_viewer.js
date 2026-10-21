@@ -493,6 +493,8 @@ class DataViewerController {
   updateSortIcons(activeIdx) {
     const ths = this.container.querySelectorAll(".dv-table th");
     ths.forEach((th, i) => {
+      const activa = this.sortCol === this.currentColumns[i];
+      th.setAttribute("aria-sort", activa ? (this.sortAsc ? "ascending" : "descending") : "none");
       const icon = th.querySelector(".dv-sort-icon");
       if (icon) {
         if (i === activeIdx) {
@@ -533,11 +535,17 @@ class DataViewerController {
 
     const rows = this.getFilteredRows();
     const mode = this.modeForView();
-    const headersHtml = this.currentColumns.map((col, idx) => `
-      <th onclick="window.DataViewer.sortTable(${idx})" title="Ordenar por ${dvEscapar(col)}">
-        ${dvEscapar(col)}<span class="dv-sort-icon" id="dv_sort_${idx}"></span>
+    const headersHtml = this.currentColumns.map((col, idx) => {
+      const activa = this.sortCol === col;
+      const orden = activa ? (this.sortAsc ? "ascending" : "descending") : "none";
+      return `
+      <th scope="col" aria-sort="${orden}">
+        <button type="button" class="th-sort-btn" onclick="window.DataViewer.sortTable(${idx})" title="Ordenar por ${dvEscapar(col)}">
+          ${dvEscapar(col)}<span class="dv-sort-icon" id="dv_sort_${idx}"></span>
+        </button>
       </th>
-    `).join("");
+    `;
+    }).join("");
 
     const rowsHtml = rows.map(r => {
       const cells = this.currentColumns.map(col => {

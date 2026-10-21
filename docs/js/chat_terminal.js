@@ -64,13 +64,21 @@ class ChatTerminalController {
       });
     });
 
-    // Cerrar modal de esquema
+    // Cerrar modal de esquema: botón y Escape, devolviendo el foco a donde estaba.
+    const cerrarEsquema = () => {
+      const modal = document.getElementById("schema-modal");
+      if (!modal || !modal.classList.contains("visible")) return;
+      modal.classList.remove("visible");
+      const previo = window.__focoAntesDelEsquema;
+      window.__focoAntesDelEsquema = null;
+      if (previo && typeof previo.focus === "function" && document.contains(previo)) previo.focus();
+    };
+    window.cerrarEsquema = cerrarEsquema;
     const closeBtn = document.getElementById("close-schema-modal");
-    if (closeBtn) {
-      closeBtn.addEventListener("click", () => {
-        document.getElementById("schema-modal").classList.remove("visible");
-      });
-    }
+    if (closeBtn) closeBtn.addEventListener("click", cerrarEsquema);
+    document.addEventListener("keydown", (evento) => {
+      if (evento.key === "Escape") cerrarEsquema();
+    });
 
     // Compartir Link directo por URL Hash
     const shareBtn = document.getElementById("btn-share-query");
@@ -412,8 +420,8 @@ class ChatTerminalController {
 
     this.resultsMap[queryId] = { query, result, sortCol: null, sortAsc: true };
 
-    let headersHtml = result.columns.map((col, idx) => 
-      `<th onclick="window.ChatTerminal.sortTable('${queryId}', ${idx})" title="Clic para ordenar">${this.escapeHtml(col)}<span class="sort-icon" id="sort_${queryId}_${idx}"></span></th>`
+    let headersHtml = result.columns.map((col, idx) =>
+      `<th scope="col" aria-sort="none"><button type="button" class="th-sort-btn" onclick="window.ChatTerminal.sortTable('${queryId}', ${idx})" title="Ordenar por ${this.escapeHtml(col)}">${this.escapeHtml(col)}<span class="sort-icon" id="sort_${queryId}_${idx}"></span></button></th>`
     ).join("");
 
     let rowsHtml = result.rows.map((row) => {
@@ -494,6 +502,7 @@ class ChatTerminalController {
 
     const ths = tableWrapper.querySelectorAll("th");
     ths.forEach((th, i) => {
+      th.setAttribute("aria-sort", i === colIdx ? (stored.sortAsc ? "ascending" : "descending") : "none");
       const icon = th.querySelector(".sort-icon");
       if (icon) {
         if (i === colIdx) {

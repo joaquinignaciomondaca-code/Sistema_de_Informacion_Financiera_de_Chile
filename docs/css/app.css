@@ -3027,6 +3027,27 @@ header {
   text-align: left;
 }
 
+/* Encabezado ordenable: el botón es el control real, así funciona con teclado
+   y con lector de pantalla (el <th> lleva scope y aria-sort). */
+.th-sort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.th-sort-btn:focus-visible {
+  outline: 2px solid var(--accent-mint);
+  outline-offset: 2px;
+}
+
 .dv-table th {
   position: sticky;
   top: 0;

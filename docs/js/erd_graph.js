@@ -2611,12 +2611,17 @@ class ERDGraph {
       modal.appendChild(actionContainer);
     }
     actionContainer.innerHTML = `
-      <button class="schema-open-btn" onclick="if(window.switchMainTab) window.switchMainTab('data'); if(window.DataViewer) window.DataViewer.loadTable('${node.id}', '${node.name}'); document.getElementById('schema-modal').classList.remove('visible');">
+      <button class="schema-open-btn" onclick="if(window.switchMainTab) window.switchMainTab('data'); if(window.DataViewer) window.DataViewer.loadTable('${node.id}', '${node.name}'); if(window.cerrarEsquema) window.cerrarEsquema();">
         Explorar datos de esta tabla &rarr;
       </button>
     `;
 
+    // El esquema es un diálogo: se recuerda dónde estaba el foco para devolverlo
+    // al cerrar y se entra en el propio diálogo (el botón de cerrar).
+    window.__focoAntesDelEsquema = document.activeElement;
     modal.classList.add("visible");
+    const cerrar = document.getElementById("close-schema-modal");
+    if (cerrar && typeof cerrar.focus === "function") cerrar.focus();
   }
 
   render() {
