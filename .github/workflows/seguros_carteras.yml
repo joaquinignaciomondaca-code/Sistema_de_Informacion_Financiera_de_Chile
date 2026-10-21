@@ -10,10 +10,25 @@ on:
   push:
     branches:
       - main
+      - arena/16880910-sistema-de-informacion-financi
     paths:
       - .github/workflows/seguros_carteras.yml
       - seguros/scripts/actualizar_carteras.py
+      - seguros/tests/**
       - seguros/scripts/formato_1835.py
+      - seguros/scripts/vistas_1835.py
+      - seguros/scripts/metadatos_web.py
+      - seguros/scripts/diccionario_1835.py
+      - docs/vocabulario.json
+      - docs/js/data_dictionary.js
+      - docs/js/data_viewer.js
+      - docs/js/sidebar.js
+      - docs/js/duckdb_client.js
+      # La ficha y el inventario definen posiciones y columnas: si cambian, hay que volver a
+      # probar y publicar (B.6 y B.9–B.11 entraron por acá).
+      - seguros/scripts/ficha_1835.py
+      - seguros/scripts/inventario_1835.py
+      - seguros/fuentes/fichas_tecnicas_1835/
       # Módulos compartidos que importan el extractor: un cambio ahí debe volver a probar
       # y a publicar (en las corridas programadas no corre el job `pruebas` de web_audit).
       - pipelines/auto/estable.py
@@ -51,17 +66,17 @@ concurrency:
 
 jobs:
   validar-y-publicar:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 300
     outputs:
       publicados: ${{ steps.publicar.outputs.publicados }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           ref: ${{ github.ref_name }}
           fetch-depth: 1
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: '3.11'
 
@@ -75,10 +90,13 @@ jobs:
       - name: Probar el lector con líneas reales de ambos formatos y la escritura estable
         run: |
           python -m seguros.tests.test_formato_1835
-          python -m unittest -v pipelines.auto.tests.test_estable
+          python -m seguros.tests.test_inventario_1835
+          python -m seguros.tests.test_registros_2024
+          python -m unittest -v seguros.tests.test_vistas_1835 seguros.tests.test_diagnostico_1835 pipelines.auto.tests.test_estable pipelines.auto.tests.test_privacidad
+          python -m seguros.scripts.diccionario_1835 --check
 
-      # Revisa todos los meses pendientes sin escribir y anota los que tienen problemas, para
-      # corregirlos juntos. Las descargas quedan en /tmp/cmf1835 y la publicación las reutiliza.
+      # Revisa los meses pendientes sin escribir; informa conteos B.11–B.14 y separa errores fatales
+      # de archivos excluidos con advertencia. Las descargas quedan en /tmp/cmf1835.
       - name: Diagnóstico de los meses pendientes (no escribe)
         continue-on-error: true
         run: python -m seguros.scripts.actualizar_carteras --diagnostico --cache /tmp/cmf1835 --max-periodos "${{ inputs.max_periodos || '240' }}"

@@ -120,7 +120,7 @@ function check(name, condition, extra) {
   results.push({ name, ok: Boolean(condition), extra });
 }
 
-setTimeout(() => {
+setTimeout(async () => {
   const tabIds = ["tab-btn-info", "tab-btn-erd", "tab-btn-dict", "tab-btn-data", "tab-btn-sql", "tab-btn-downloads"];
   check("existen las 6 pestañas", tabIds.every((id) => document.getElementById(id)));
   check("la pestaña de normativa está retirada", !document.getElementById("tab-btn-normativa") && !document.getElementById("normativa-container"));
@@ -161,7 +161,7 @@ setTimeout(() => {
   buscador.dispatchEvent(new window.Event("input", { bubbles: true }));
   const filtradas = document.querySelectorAll("#downloads-container .dl-item:not([hidden])");
   check("el buscador filtra el catálogo",
-    filtradas.length === 1 && /1 de \d+ conjuntos/.test(document.getElementById("dl-counter").textContent),
+    filtradas.length > 0 && filtradas.length < tarjetas.length && /\d+ de \d+ conjuntos/.test(document.getElementById("dl-counter").textContent),
     filtradas.length + " visibles · " + document.getElementById("dl-counter").textContent);
   buscador.value = "";
   buscador.dispatchEvent(new window.Event("input", { bubbles: true }));
@@ -172,17 +172,20 @@ setTimeout(() => {
   selectorSector.dispatchEvent(new window.Event("change", { bubbles: true }));
   const porSector = document.querySelectorAll("#downloads-container .dl-item:not([hidden])");
   check("el filtro por sector acota el catálogo",
-    Boolean(opcionSector) && porSector.length > 0 && porSector.length < 20,
+    Boolean(opcionSector) && porSector.length > 0 && porSector.length < tarjetas.length,
     porSector.length + " de " + (opcionSector ? opcionSector.value : "sector"));
   selectorSector.value = "todos";
   selectorSector.dispatchEvent(new window.Event("change", { bubbles: true }));
 
   // Vocabulario: nombres canónicos y ninguna lista de entidades con otro nombre.
-  const nombres = Array.from(document.querySelectorAll("#downloads-container .dl-item-title code"))
+  const nombres = Array.from(document.querySelectorAll("#downloads-container .dl-item"))
+    .map((n) => n.dataset.id);
+  const etiquetasManuales = Array.from(document.querySelectorAll("#downloads-container .dl-item-title code"))
     .map((n) => n.textContent.trim());
-  check("todos los nombres siguen <sector>.<tipo>",
-    nombres.length > 40 && nombres.every((n) => /^[a-z_]+\.[a-z_]+$/.test(n)),
-    nombres.length ? nombres[0] + " … " + nombres[nombres.length - 1] : "sin nombres");
+  check("las vistas usan IDs canónicos y la renta fija conserva el nombre CMF",
+    nombres.length > 40 && nombres.every((n) => /^[a-z0-9_]+$/.test(n)) &&
+    nombres.includes("seguros_renta_fija") && etiquetasManuales.some((n) => n === "B.1 INSTRUMENTOS DE RENTA FIJA"),
+    nombres.length ? nombres.filter((n) => !/^[a-z0-9_]+$/.test(n)).join(", ") || etiquetasManuales.find((n) => n.startsWith("B.1")) : "sin nombres");
   const vocab = JSON.parse(fs.readFileSync(path.join(DOCS, "vocabulario.json"), "utf8"));
   const prohibidos = vocab.nombres_retirados || [];
   check("ninguna tabla usa un nombre retirado por el vocabulario",
@@ -373,12 +376,38 @@ setTimeout(() => {
   const fichas = () => Array.from(document.querySelectorAll("#dict-container .dict-table-name")).map((n) => n.textContent.trim());
   check("diccionario: por defecto sólo el alcance principal",
     fichas().length > 0 && !fichas().includes("ccaf.balance") && !fichas().includes("fi.bienes_raices") &&
-    fichas().includes("seguros.renta_fija"), fichas().length + " fichas");
+    fichas().some((n) => n.startsWith("B.1 INSTRUMENTOS DE RENTA FIJA")), fichas().filter((n) => n === "ccaf.balance" || n === "fi.bienes_raices").join(", ") || fichas().length + " fichas");
   window.DataDictionary.setFilter("registro");
   check("diccionario: el registro complementario reúne las cuatro listas",
     fichas().sort().join(",") === "afp.lista_entidades,cooperativas.lista_entidades,fintech.lista_entidades,sistemas_pago.lista_entidades" &&
     document.querySelectorAll("#dict-container .dict-scope-box").length === 4, fichas().join(","));
   window.DataDictionary.setFilter("principal");
+  const fichaTecnica = window.DataDictionary.renderSource("Ficha CMF: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf");
+  check("diccionario: la ficha técnica CMF se presenta como enlace seguro y clicable",
+    fichaTecnica.includes('<a href="https://www.cmfchile.cl/') && fichaTecnica.includes('rel="noopener noreferrer"') && !fichaTecnica.includes("&lt;a"));
+
+  // Dos selecciones rápidas: la respuesta tardía de B.12 no puede sustituir
+  // la vista tipo 6 elegida después.
+  const clienteDuckDBReal = window.DuckDBClient;
+  const sidebarReal = window.SidebarNav;
+  const renderReal = window.DataViewer.render;
+  const consultasPendientes = [];
+  window.DuckDBClient = { query: (sql) => new Promise((resolve) => consultasPendientes.push({ sql, resolve })) };
+  window.SidebarNav = null;
+  window.DataViewer.render = () => {};
+  const consultaAnterior = window.DataViewer.loadTable("seguros_prestamos", "B.12 PRÉSTAMOS");
+  const consultaActual = window.DataViewer.loadTable("seguros_registros_tipo6", "Registros tipo 6");
+  consultasPendientes[1].resolve({ success: true, columns: ["tipo_registro"], rows: [{ tipo_registro: "6" }], count: 1 });
+  await consultaActual;
+  consultasPendientes[0].resolve({ success: false, error: "Table seguros_prestamos does not exist" });
+  await consultaAnterior;
+  check("visor: una respuesta atrasada de otra tabla no pisa el tipo 6 seleccionado",
+    window.DataViewer.currentView === "seguros_registros_tipo6" &&
+    window.DataViewer.currentRows.length === 1 && window.DataViewer.currentRows[0].tipo_registro === "6" &&
+    !window.DataViewer.error);
+  window.DuckDBClient = clienteDuckDBReal;
+  window.SidebarNav = sidebarReal;
+  window.DataViewer.render = renderReal;
 
   const grupos = window.DataViewer.catalogoOrdenado();
   check("visor: los grupos siguen el orden editorial y el archivo se rotula",

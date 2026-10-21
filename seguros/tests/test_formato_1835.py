@@ -65,6 +65,7 @@ def main():
                     fallas += 1
     assert fallas == 0, f"{fallas} fallas"
     exclusion()
+    exclusion_tipos_desconocidos()
     print("OK")
 
 
@@ -122,6 +123,66 @@ def exclusion():
     else:
         raise AssertionError("muchos archivos defectuosos debían bloquear el mes")
     print("exclusión de archivos defectuosos: OK")
+
+
+def _inyectar_tipo_desconocido(data: bytes, nombre_objetivo: str, letra: str, tipo: str, largo: int) -> bytes:
+    """Agrega un registro centinela desconocido antes del total, sin valores de negocio."""
+    buf = io.BytesIO()
+    with zipfile.ZipFile(io.BytesIO(data)) as original, zipfile.ZipFile(buf, "w") as salida:
+        for nombre in original.namelist():
+            raw = original.read(nombre)
+            if nombre == nombre_objetivo:
+                lineas = [ln.rstrip(b"\r") for ln in raw.split(b"\n")
+                          if ln.strip(b"\r\n\x1a ")]
+                tipo_total = ac.TIPO_TOTAL[letra].encode("ascii")
+                indices_total = [i for i, ln in enumerate(lineas) if ln[:1] == tipo_total]
+                assert len(indices_total) == 1, (nombre, indices_total)
+                centinela = tipo.encode("ascii") + b" " * (largo - 1)
+                lineas.insert(indices_total[0], centinela)
+                raw = b"\r\n".join(lineas) + b"\r\n"
+            salida.writestr(nombre, raw)
+    return buf.getvalue()
+
+
+def exclusion_tipos_desconocidos():
+    """Los tipos G/4 y C/x, aún no documentados, excluyen solo su archivo y no filtran filas."""
+    from seguros.tests.test_registros_2024 import zip_mes
+
+    # G/4: ZIP sintético válido que incluye también control, otros detalles y el tipo 6 permitido.
+    casos = [("vida", "2024-12", zip_mes(), "g", "4", "garantias_derivados")]
+    # C/x: muestra anonimizada con varios archivos C válidos; deben seguir aportando controles.
+    sector, periodo, data = next((s, p, z) for s, p, z in zips() if s == "vida" and p == "2024-12")
+    casos.append((sector, periodo, data, "c", "x", "control_inversiones"))
+
+    for sector, periodo, data, letra, tipo, tabla in casos:
+        base, _, _, _ = leer_zip(data, periodo, sector)
+        with zipfile.ZipFile(io.BytesIO(data)) as z:
+            nombre = next(n for n in z.namelist() if Path(n).name[:1].lower() == letra)
+        largo = ac.LARGO[ac.formato_de(periodo)][letra]
+        filas, _, avisos, excluidos = leer_zip(
+            _inyectar_tipo_desconocido(data, nombre, letra, tipo, largo), periodo, sector)
+        clave_error = f"{nombre}: tipo de registro '{tipo}' desconocido"
+        assert any(clave_error in error for error in excluidos), excluidos
+        assert len(filas[tabla]) < len(base[tabla]), (tabla, len(filas[tabla]), len(base[tabla]))
+        assert any("ARCHIVO EXCLUIDO" in aviso and nombre in aviso for aviso in avisos), avisos
+        # El archivo malo no se incorpora parcialmente; las filas de los demás archivos sobreviven.
+        encabezado_nombre = ac._encabezado_desde_nombre(nombre)
+        if encabezado_nombre is not None:
+            rut = encabezado_nombre["rut_aseguradora"]
+        else:  # Algunas muestras sintéticas usan nombre de archivo alternativo.
+            ruts = {fila["rut_aseguradora"] for fila in base[tabla]}
+            assert len(ruts) == 1, (nombre, tabla, ruts)
+            rut = next(iter(ruts))
+        del_objetivo = sum(fila["rut_aseguradora"] == rut for fila in base[tabla])
+        quedan_objetivo = sum(fila["rut_aseguradora"] == rut for fila in filas[tabla])
+        assert del_objetivo > 0, (nombre, tabla, base[tabla])
+        assert quedan_objetivo == 0, (nombre, tabla, quedan_objetivo)
+        assert len(filas[tabla]) == len(base[tabla]) - del_objetivo
+        assert filas["control_inversiones"], "los archivos válidos de control debían sobrevivir"
+        if letra == "g":
+            tipo6 = filas["registros_tipo6"]
+            assert [fila["tipo_archivo"] for fila in tipo6] == ["B.11"], tipo6
+    print("exclusión de tipos desconocidos G/4 y C/x: OK")
 
 
 if __name__ == "__main__":

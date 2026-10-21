@@ -175,7 +175,7 @@ def audit_data_viewer(base_dir, registered_views):
         code = f.read()
 
     # Extraer grupos y tablas de DATA_VIEWER_CATALOG
-    dv_tables = re.findall(r'\{\s*id:\s*["\']([^"\']+)["\'],\s*name:\s*["\']([^"\']+)["\']\s*\}', code)
+    dv_tables = re.findall(r'\{\s*id:\s*["\']([^"\']+)["\'],\s*name:\s*["\']([^"\']+)["\']', code)
     print(f"Tablas en catalogo del Visor de Datos: {len(dv_tables)}")
 
     errors = 0

@@ -1,8 +1,8 @@
 {
   "version": "1.0.0",
   "updated_at": "2026-10-21",
-  "total_tables": 74,
-  "total_records": 13484051,
+  "total_tables": 89,
+  "total_records": 19777492,
   "classification": {
     "automatico": "Extracción, validación y publicación ejecutadas por código y workflows programados (APIs, scrapers y normalizadores)",
     "hibrido": "Extracción o curación inicial asistida desde fuentes no estructuradas, seguida de validación, normalización y publicación reproducibles mediante código; puede ejecutarse fuera de Actions",
@@ -31,7 +31,7 @@
         "moneda": "No aplica",
         "criterio_contable": "No aplica",
         "cobertura": "Lista vigente al 2026-09-28; 7 administradoras (sin cifras)",
-        "fecha_extraccion": "2026-09-28 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-09-28",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -57,7 +57,7 @@
         "moneda": "CLP o USD según la moneda informada por cada sociedad; sin conversión",
         "criterio_contable": "Estado de situación financiera IFRS tal como lo publica la CMF; cuenta por cuenta",
         "cobertura": "2010-06 a 2026-06 (trimestral); 71.423 filas",
-        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-19",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -83,7 +83,7 @@
         "moneda": "No aplica",
         "criterio_contable": "No aplica",
         "cobertura": "Oficial CMF 2026; 72 AGF (52 vigentes y 16 no vigentes o canceladas)",
-        "fecha_extraccion": "2026-09-23 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-09-23",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -109,7 +109,7 @@
         "moneda": "CLP o USD según la moneda informada por cada sociedad; sin conversión",
         "criterio_contable": "Estado de resultados IFRS (por función o naturaleza e integral) tal como lo publica la CMF; cuenta por cuenta",
         "cobertura": "2010-06 a 2026-06 (acumulado trimestral); 58.216 filas",
-        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-19",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -136,7 +136,7 @@
         "moneda": "Por confirmar (la moneda de cada campo depende de la línea)",
         "criterio_contable": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado, sin agregación jerárquica (revisar tipo_linea antes de agregar)",
         "cobertura": "2022-01 a 2026-08; 1.962.992 filas en 56 particiones",
-        "fecha_extraccion": "2026-10-01 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-01",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría. No está expuesta como vista SQL en el motor."
       }
     },
@@ -162,7 +162,7 @@
         "moneda": "No aplica",
         "criterio_contable": "No aplica",
         "cobertura": "Códigos históricos y vigentes; 41 códigos (no equivale al número de bancos activos)",
-        "fecha_extraccion": "2026-09-28 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-09-28",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Según la descripción de la tabla, el RUT de los bancos activos fue cotejado con el registro CMF."
       }
     },
@@ -188,7 +188,7 @@
         "moneda": "CLP o USD según la moneda informada por cada sociedad; sin conversión",
         "criterio_contable": "Estado de situación financiera IFRS tal como lo publica la CMF; cuenta por cuenta",
         "cobertura": "2010-06 a 2026-06 (trimestral); 8.043 filas",
-        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-19",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -214,7 +214,7 @@
         "moneda": "No aplica",
         "criterio_contable": "No aplica",
         "cobertura": "Lista vigente al 2026-09-28; 6 cajas de compensación (vigentes y absorbidas)",
-        "fecha_extraccion": "2026-09-28 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-09-28",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -240,7 +240,7 @@
         "moneda": "CLP o USD según la moneda informada por cada sociedad; sin conversión",
         "criterio_contable": "Estado de resultados IFRS (por función o naturaleza e integral) tal como lo publica la CMF; cuenta por cuenta",
         "cobertura": "2010-06 a 2026-06 (acumulado trimestral); 5.506 filas",
-        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-19",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -266,7 +266,7 @@
         "moneda": "No aplica",
         "criterio_contable": "No aplica",
         "cobertura": "Lista vigente al 2026-09-29; 7 cooperativas",
-        "fecha_extraccion": "2026-09-29 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-09-29",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -292,7 +292,7 @@
         "moneda": "CLP",
         "criterio_contable": "Estado de situación financiera FECU por cuenta, al cierre de cada trimestre",
         "cobertura": "2010-12 a 2026-06 (trimestral); 107.976 filas",
-        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-19",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -318,7 +318,7 @@
         "moneda": "No aplica",
         "criterio_contable": "No aplica",
         "cobertura": "2014-03 a 2026-06; 120 entidades (vigentes y no vigentes); RUT validado con Módulo 11",
-        "fecha_extraccion": "2026-09-29 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-09-29",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -344,7 +344,7 @@
         "moneda": "No aplica",
         "criterio_contable": "No aplica",
         "cobertura": "2014-03 a 2026-06; 120 entidades; clasificación por conglomerado financiero",
-        "fecha_extraccion": "2026-09-23 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-09-23",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -370,7 +370,7 @@
         "moneda": "CLP",
         "criterio_contable": "Estado de resultados y resultados integrales FECU por cuenta",
         "cobertura": "2010-12 a 2026-06 (acumulado trimestral); 77.705 filas",
-        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-19",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -396,7 +396,7 @@
         "moneda": "Monedas separadas según la fuente; sin conversión",
         "criterio_contable": "Cuentas ESF tal como vienen en la fuente; taxonomías y tipo I/C separados; sin deduplicación ni suma",
         "cobertura": "2009-03 a 2026-06; 30.046 filas de cuentas ESF; 28 de 32 RUT del catálogo con datos",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-20",
         "estado_qa": "Observación abierta: 4 de 32 RUT del catálogo sin datos publicados; las cifras no están cotejadas en su totalidad (según la descripción de la tabla). Revisar el JSON acompañante de advertencias. Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20)."
       }
     },
@@ -422,7 +422,7 @@
         "moneda": "No aplica",
         "criterio_contable": "No aplica",
         "cobertura": "Lista vigente al 2026-09-28; 32 sociedades de factoring, leasing y financiamiento automotriz",
-        "fecha_extraccion": "2026-09-28 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-09-28",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -448,7 +448,7 @@
         "moneda": "Monedas separadas según la fuente; sin conversión",
         "criterio_contable": "Cuentas ER tal como vienen en la fuente; taxonomías y tipo I/C separados; sin deduplicación ni suma",
         "cobertura": "2009-03 a 2026-06; 22.368 filas de cuentas ER; 28 de 32 RUT del catálogo con datos",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-20",
         "estado_qa": "Observación abierta: 4 de 32 RUT del catálogo sin datos publicados; las cifras no están cotejadas en su totalidad (según la descripción de la tabla). Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20)."
       }
     },
@@ -474,7 +474,7 @@
         "moneda": "Moneda funcional de cada fondo (pesos, dólares o euros); no se convierte",
         "criterio_contable": "Estados financieros IFRS según Circular 1997 de la CMF; cuenta por cuenta (16 líneas)",
         "cobertura": "2010-12 a 2025-12 (cierres anuales); 126.256 filas; fondos vigentes y extintos",
-        "fecha_extraccion": "2026-10-01 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-01",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Validado en la auditoría del punto 6: en 2025-12, la cartera de cada uno de los 386 fondos cruzados no supera su total de activo."
       }
     },
@@ -500,7 +500,7 @@
         "moneda": "Moneda funcional de cada fondo; la de liquidación va en su propio campo",
         "criterio_contable": "Valorización según Circular 1333; detalle por instrumento en el campo codigo_valorizacion (por confirmar en el manual)",
         "cobertura": "2001-01 a 2026-09; 1.461.253 filas",
-        "fecha_extraccion": "2026-10-13 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-13",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -526,7 +526,7 @@
         "moneda": "Moneda funcional de cada fondo (puede no ser CLP); moneda_liquidacion indica la de liquidación. Por confirmar cómo se agrega entre fondos",
         "criterio_contable": "Valorización según Circular CMF 1333; campo codigo_valorizacion por instrumento. Por confirmar el detalle en el manual",
         "cobertura": "2022-01 a 2026-09; 57 meses; 392 fondos en 2025-12; 1.590.196 filas",
-        "fecha_extraccion": "2026-10-13 (updated_at del manifiesto)",
+        "fecha_extraccion": "2026-10-13",
         "estado_qa": "Con observaciones: conteo vs manifiesto OK; cruce con ffmm_balance OK en 386 fondos; 2.960 filas exactamente duplicadas en 2025-12 pendientes de decisión; sin identificador de línea de origen (ver docs/notas/auditoria_fuente_a_fila_2026-10-20.md)"
       }
     },
@@ -552,7 +552,7 @@
         "moneda": "Moneda funcional de cada fondo; la de liquidación va en su propio campo",
         "criterio_contable": "Valorización según Circular 1333 (por confirmar en el manual)",
         "cobertura": "2001-01 a 2026-09; 282.045 filas",
-        "fecha_extraccion": "2026-10-13 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-13",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -578,7 +578,7 @@
         "moneda": "No aplica",
         "criterio_contable": "No aplica",
         "cobertura": "2001-01 a 2026-09; 1.334 fondos con primer y último mes informado",
-        "fecha_extraccion": "2026-10-13 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-13",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -604,7 +604,7 @@
         "moneda": "Moneda funcional de cada fondo; la de liquidación va en su propio campo",
         "criterio_contable": "Valorización según Circular 1333 (por confirmar en el manual)",
         "cobertura": "2001-01 a 2026-09; 5.365 filas",
-        "fecha_extraccion": "2026-10-13 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-13",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -630,7 +630,7 @@
         "moneda": "Moneda funcional de cada fondo (pesos, dólares o euros); no se convierte",
         "criterio_contable": "Estado de resultados integrales según Circular 1997 de la CMF; 19 líneas por fondo y ejercicio",
         "cobertura": "2010-12 a 2025-12 (ejercicios anuales); 149.929 filas; fondos vigentes y extintos",
-        "fecha_extraccion": "2026-10-01 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-01",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de cuadre contable de resultados en esta auditoría."
       }
     },
@@ -656,7 +656,7 @@
         "moneda": "Moneda de presentación del fondo; sin conversión",
         "criterio_contable": "Estado de situación financiera IFRS según Circular 1998; cuenta por cuenta (42 líneas por contexto). El pasivo exigible es TotalPasivoCorriente + TotalPasivoNoCorriente",
         "cobertura": "2022-03 a 2026-06 (cierres); 985.908 filas",
-        "fecha_extraccion": "2026-10-02 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-02",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Solo se publican contextos completos que cuadran; los rechazados se declaran en el manifiesto. Cotejo con las tablas de la ficha; no es auditoría independiente del PDF firmado."
       }
     },
@@ -682,7 +682,7 @@
         "moneda": "Moneda funcional del fondo (por confirmar)",
         "criterio_contable": "Valorización según la norma IFRS de la ficha de cartera (por confirmar)",
         "cobertura": "2020-03 a 2026-06 declarado en el manifiesto; 0 filas publicadas",
-        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-07",
         "estado_qa": "Observación abierta: la tabla figura en el manifiesto con 0 filas publicadas. Hay que revisar si no existen datos o si el proceso no los extrae. Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20)."
       }
     },
@@ -708,7 +708,7 @@
         "moneda": "Moneda funcional de cada fondo",
         "criterio_contable": "Valorización IFRS según la ficha de cartera (por confirmar)",
         "cobertura": "2020-03 a 2026-06; 76.849 filas",
-        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-07",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -734,7 +734,7 @@
         "moneda": "Moneda funcional de cada fondo",
         "criterio_contable": "Valorización IFRS según la ficha de cartera (por confirmar el detalle por instrumento)",
         "cobertura": "2020-03 a 2026-06; 933.532 filas",
-        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-07",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -760,7 +760,7 @@
         "moneda": "Moneda funcional del fondo (por confirmar)",
         "criterio_contable": "Valorización IFRS según la ficha de cartera (por confirmar)",
         "cobertura": "2020-03 a 2026-06; 13.463 filas",
-        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-07",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -786,7 +786,7 @@
         "moneda": "Moneda funcional declarada en el registro",
         "criterio_contable": "No aplica",
         "cobertura": "2020-03 a 2026-06; 1.679 fondos rescatables y no rescatables",
-        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-07",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -812,7 +812,7 @@
         "moneda": "Moneda funcional del fondo (por confirmar)",
         "criterio_contable": "Método de la participación IFRS (por confirmar)",
         "cobertura": "2020-03 a 2026-06; 10.038 filas",
-        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-07",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -838,7 +838,7 @@
         "moneda": "Moneda funcional del fondo (por confirmar)",
         "criterio_contable": "Valorización IFRS según la ficha de cartera (por confirmar)",
         "cobertura": "2020-03 a 2026-06; 307 filas",
-        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-07",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -864,7 +864,7 @@
         "moneda": "Moneda funcional del fondo (por confirmar)",
         "criterio_contable": "Valorización IFRS de VRC/CRV según la ficha (por confirmar)",
         "cobertura": "2012-03 a 2026-06; 1.698 filas",
-        "fecha_extraccion": "2026-10-07 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-07",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -890,7 +890,7 @@
         "moneda": "Moneda de presentación del fondo; sin conversión",
         "criterio_contable": "Estado de resultados integrales IFRS según Circular 1998; 30 líneas por contexto; acumulado, trimestre y comparativos separados",
         "cobertura": "2022-03 a 2026-06; 1.164.000 filas",
-        "fecha_extraccion": "2026-10-02 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-02",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Solo se publican contextos completos que cuadran. Sin verificación de cuadre adicional en esta auditoría."
       }
     },
@@ -916,7 +916,7 @@
         "moneda": "No aplica",
         "criterio_contable": "No aplica",
         "cobertura": "Catálogo vigente al 2026-09-23; 264 entidades (personas jurídicas y naturales)",
-        "fecha_extraccion": "2026-09-23 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-09-23",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -1198,7 +1198,7 @@
         "moneda": "No aplica",
         "criterio_contable": "No aplica: catálogo de las series del BCCh que alimentan las tablas macro (código SIETE, nombre, unidad, frecuencia y estado)",
         "cobertura": "2014-01-01 a 2026-10-20; 51 series",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-21",
         "estado_qa": "Catálogo de 51 series; las 51 con estado 'ok'."
       }
     },
@@ -1336,7 +1336,7 @@
         "moneda": "CLP",
         "criterio_contable": "Balance general tal como viene impreso en los EEFF del patrimonio separado; norma contable específica por confirmar",
         "cobertura": "Cierres de diciembre 2014–2025; 358 balances; 10 securitizadoras; 2010–2013 presentes en la fuente pero no publicados",
-        "fecha_extraccion": "Excel incorporado al repositorio el 2026-10-20; fecha de extracción de los PDF por confirmar",
+        "fecha_extraccion": "2026-09-28",
         "estado_qa": "Validado: identidad contable en 358/358 balances (±2 M$); conteo reconciliado con el Excel; 2 claves archivo+categoría+cuenta repetidas (usar orden_en_balance); 4 filas del Excel descartadas por columnas desplazadas (monto 0). Trazabilidad al PDF limitada: el PDF no está en el repositorio"
       }
     },
@@ -1362,7 +1362,7 @@
         "moneda": "Moneda de cada inscripción (campo moneda)",
         "criterio_contable": "No aplica: registro de inscripciones; la clase de colateral no viene en el listado y queda vacía",
         "cobertura": "Lista vigente al 2026-09-28; 19 inscripciones",
-        "fecha_extraccion": "2026-09-28 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-09-28",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -1388,7 +1388,7 @@
         "moneda": "CLP o USD según la moneda informada por cada sociedad; sin conversión",
         "criterio_contable": "Estado de situación financiera IFRS tal como lo publica la CMF; cuenta por cuenta",
         "cobertura": "2009-12 a 2026-06 (trimestral); 13.679 filas",
-        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-19",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido ni de cuadre en esta auditoría."
       }
     },
@@ -1414,7 +1414,7 @@
         "moneda": "No aplica",
         "criterio_contable": "No aplica",
         "cobertura": "Lista vigente al 2026-06; 16 sociedades (9 vigentes y 7 históricas o en liquidación)",
-        "fecha_extraccion": "2026-09-23 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-09-23",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -1440,13 +1440,13 @@
         "moneda": "CLP o USD según la moneda informada por cada sociedad; sin conversión",
         "criterio_contable": "Estado de resultados IFRS (por función o naturaleza e integral) tal como lo publica la CMF; cuenta por cuenta",
         "cobertura": "2009-12 a 2026-06 (trimestral acumulado); 12.290 filas",
-        "fecha_extraccion": "2026-10-19 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-19",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
     {
       "id": "seguros_acciones",
-      "name": "seguros.acciones",
+      "name": "B.2 ACCIONES DE SOCIEDADES ANÓNIMAS ABIERTAS, ACCIONES DE SOCIEDADES ANÓNIMAS CERRADAS Y CUOTAS DE FONDOS DE INVERSIÓN",
       "view_name": "seguros_acciones",
       "sector": "seguros",
       "sector_label": "Seguros de Vida y Generales",
@@ -1454,11 +1454,11 @@
       "corte": "2016-11 a 2026-09",
       "frescura": "Último mes publicado: 2026-09",
       "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "file_parquet": "outputs/seguros/acciones/manifest.json",
       "registros_reales": 109019,
       "descripcion": "Acciones de sociedades anónimas y cuotas de fondos de inversión nacionales.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
       "metadatos": {
         "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
         "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
@@ -1466,13 +1466,13 @@
         "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
         "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
         "cobertura": "2016-11 a 2026-09; 11 meses de archivo por sector; 109.019 filas",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); SELECT * devolvió menos filas que el manifiesto (100.711 frente a 109.018 antes de la corrida #28); sin explicar. Esquema único y verificado. Conteo de filas igual al manifiesto. "
+        "fecha_extraccion": "2026-10-21",
+        "estado_qa": "Registro histórico de verificación del 2026-10-20 (anterior al cliente DuckDB-Wasm de esta rama): Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); SELECT * devolvió menos filas que el manifiesto (100.711 frente a 109.018 antes de la corrida #28); sin explicar. Esquema único y verificado. Conteo de filas igual al manifiesto.  Chequeos locales actuales: 728/728 archivos Parquet validados, 1.122 columnas coincidentes y 156/156 consultas sugeridas ejecutadas correctamente; las vistas activas también pasan las pruebas de registro diferido. No se ha probado un SELECT * completo en un navegador real: queda pendiente confirmar allí la lectura masiva y su latencia."
       }
     },
     {
       "id": "seguros_bienes_raices",
-      "name": "seguros.bienes_raices",
+      "name": "B.4 BIENES RAICES",
       "view_name": "seguros_bienes_raices",
       "sector": "seguros",
       "sector_label": "Seguros de Vida y Generales",
@@ -1480,11 +1480,11 @@
       "corte": "2024-12 a 2026-09",
       "frescura": "Último mes publicado: 2026-09",
       "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "file_parquet": "outputs/seguros/bienes_raices/manifest.json",
       "registros_reales": 760152,
-      "descripcion": "Bienes raíces por rol: dirección, arriendo, costo, depreciación, tasaciones y valor final.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "descripcion": "Bienes raíces por inmueble: arriendo, costo, depreciación, tasaciones y valor final. El rol y la dirección exacta se suprimen por privacidad y se reemplazan por property_id.",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
       "metadatos": {
         "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
         "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
@@ -1492,13 +1492,13 @@
         "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
         "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
         "cobertura": "2024-12 a 2026-09; 22 archivos; 760.152 filas; rol protegido por seudónimo",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); orden de columnas corregido en 2026-09 (commit 315d92d); sin pérdida de valores. Esquema único y verificado. Conteo de filas igual al manifiesto. "
+        "fecha_extraccion": "2026-10-21",
+        "estado_qa": "Registro histórico de verificación del 2026-10-20 (anterior al cliente DuckDB-Wasm de esta rama): Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); orden de columnas corregido en 2026-09 (commit 315d92d); sin pérdida de valores. Esquema único y verificado. Conteo de filas igual al manifiesto.  Chequeos locales actuales: 728/728 archivos Parquet validados, 1.122 columnas coincidentes y 156/156 consultas sugeridas ejecutadas correctamente; las vistas activas también pasan las pruebas de registro diferido. No se ha probado un SELECT * completo en un navegador real: queda pendiente confirmar allí la lectura masiva y su latencia."
       }
     },
     {
       "id": "seguros_control_inversiones",
-      "name": "seguros.control_inversiones",
+      "name": "B.8 INFORMACION DE CONTROL",
       "view_name": "seguros_control_inversiones",
       "sector": "seguros",
       "sector_label": "Seguros de Vida y Generales",
@@ -1506,11 +1506,11 @@
       "corte": "2016-11 a 2026-09",
       "frescura": "Último mes publicado: 2026-09",
       "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "file_parquet": "outputs/seguros/control_inversiones/manifest.json",
       "registros_reales": 111410,
       "descripcion": "Información de control que cada compañía envía con su cartera: totales por tipo de inversión (valor final, representativas y no representativas de reservas, etc.).",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
       "metadatos": {
         "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
         "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
@@ -1518,13 +1518,13 @@
         "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
         "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
         "cobertura": "2016-11 a 2026-09; 111.410 filas",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); SELECT * devolvió menos filas que el manifiesto (103.483 frente a 111.408 antes de la corrida #28); sin explicar. Esquema único y verificado. Conteo de filas igual al manifiesto. "
+        "fecha_extraccion": "2026-10-21",
+        "estado_qa": "Registro histórico de verificación del 2026-10-20 (anterior al cliente DuckDB-Wasm de esta rama): Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); SELECT * devolvió menos filas que el manifiesto (103.483 frente a 111.408 antes de la corrida #28); sin explicar. Esquema único y verificado. Conteo de filas igual al manifiesto.  Chequeos locales actuales: 728/728 archivos Parquet validados, 1.122 columnas coincidentes y 156/156 consultas sugeridas ejecutadas correctamente; las vistas activas también pasan las pruebas de registro diferido. No se ha probado un SELECT * completo en un navegador real: queda pendiente confirmar allí la lectura masiva y su latencia."
       }
     },
     {
       "id": "seguros_derivados",
-      "name": "seguros.derivados",
+      "name": "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS",
       "view_name": "seguros_derivados",
       "sector": "seguros",
       "sector_label": "Seguros de Vida y Generales",
@@ -1532,11 +1532,11 @@
       "corte": "2016-11 a 2026-09",
       "frescura": "Último mes publicado: 2026-09",
       "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "file_parquet": "outputs/seguros/derivados/manifest.json",
       "registros_reales": 373469,
       "descripcion": "Contratos de opciones, forwards, futuros y swaps (tipo_registro), con contraparte, nocional, valor razonable y efecto en resultados.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
       "metadatos": {
         "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
         "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
@@ -1544,8 +1544,8 @@
         "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
         "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
         "cobertura": "2016-11 a 2026-09; 373.469 filas",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); Esquema único y verificado. Conteo de filas igual al manifiesto. "
+        "fecha_extraccion": "2026-10-21",
+        "estado_qa": "Registro histórico de verificación del 2026-10-20 (anterior al cliente DuckDB-Wasm de esta rama): Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); Esquema único y verificado. Conteo de filas igual al manifiesto.  Chequeos locales actuales: 728/728 archivos Parquet validados, 1.122 columnas coincidentes y 156/156 consultas sugeridas ejecutadas correctamente; las vistas activas también pasan las pruebas de registro diferido. No se ha probado un SELECT * completo en un navegador real: queda pendiente confirmar allí la lectura masiva y su latencia."
       }
     },
     {
@@ -1571,12 +1571,12 @@
         "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
         "cobertura": "2016-11 a 2026-09; 471.942 filas",
         "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); Esquema único y verificado. Conteo de filas igual al manifiesto. "
+        "estado_qa": "Registro histórico de verificación del 2026-10-20 (anterior al cliente DuckDB-Wasm de esta rama): Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); Esquema único y verificado. Conteo de filas igual al manifiesto.  Chequeos locales actuales: 728/728 archivos Parquet validados, 1.122 columnas coincidentes y 156/156 consultas sugeridas ejecutadas correctamente; las vistas activas también pasan las pruebas de registro diferido. No se ha probado un SELECT * completo en un navegador real: queda pendiente confirmar allí la lectura masiva y su latencia."
       }
     },
     {
       "id": "seguros_fondos_mutuos",
-      "name": "seguros.fondos_mutuos",
+      "name": "B.3 CUOTAS DE FONDOS MUTUOS",
       "view_name": "seguros_fondos_mutuos",
       "sector": "seguros",
       "sector_label": "Seguros de Vida y Generales",
@@ -1584,11 +1584,11 @@
       "corte": "2016-11 a 2026-09",
       "frescura": "Último mes publicado: 2026-09",
       "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "file_parquet": "outputs/seguros/fondos_mutuos/manifest.json",
       "registros_reales": 100472,
       "descripcion": "Cuotas de fondos mutuos nacionales.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
       "metadatos": {
         "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
         "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
@@ -1596,8 +1596,8 @@
         "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
         "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
         "cobertura": "2016-11 a 2026-09; 100.472 filas",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); Esquema único y verificado. Conteo de filas igual al manifiesto. "
+        "fecha_extraccion": "2026-10-21",
+        "estado_qa": "Registro histórico de verificación del 2026-10-20 (anterior al cliente DuckDB-Wasm de esta rama): Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); Esquema único y verificado. Conteo de filas igual al manifiesto.  Chequeos locales actuales: 728/728 archivos Parquet validados, 1.122 columnas coincidentes y 156/156 consultas sugeridas ejecutadas correctamente; las vistas activas también pasan las pruebas de registro diferido. No se ha probado un SELECT * completo en un navegador real: queda pendiente confirmar allí la lectura masiva y su latencia."
       }
     },
     {
@@ -1610,11 +1610,11 @@
       "corte": "2016-11 a 2026-09",
       "frescura": "Último mes publicado: 2026-09",
       "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "file_parquet": "outputs/seguros/aseguradoras.parquet",
       "registros_reales": 84,
       "descripcion": "Compañías de seguros de vida y generales que envían su cartera a la CMF, con el primer y el último mes informado. Sirve para detectar compañías nuevas y las que dejan de reportar.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
       "metadatos": {
         "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
         "unidad": "No aplica: catálogo de compañías",
@@ -1622,13 +1622,13 @@
         "moneda": "No aplica",
         "criterio_contable": "No aplica",
         "cobertura": "2016-11 a 2026-09; 84 compañías con primer y último mes informado",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-10-21",
         "estado_qa": "Validado: conteo de filas igual al manifiesto (84). No se revisó la forma de nombres y RUT. Sin observaciones abiertas en la auditoría del 2026-10-20."
       }
     },
     {
       "id": "seguros_pactos",
-      "name": "seguros.pactos",
+      "name": "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS",
       "view_name": "seguros_pactos",
       "sector": "seguros",
       "sector_label": "Seguros de Vida y Generales",
@@ -1636,11 +1636,11 @@
       "corte": "2016-11 a 2026-09",
       "frescura": "Último mes publicado: 2026-09",
       "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "file_parquet": "outputs/seguros/pactos/manifest.json",
       "registros_reales": 11371,
       "descripcion": "Compras y ventas con pacto (repos), con contraparte, tasa y activo objeto.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
       "metadatos": {
         "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
         "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
@@ -1648,13 +1648,13 @@
         "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
         "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
         "cobertura": "2016-11 a 2026-09; 11.371 filas",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); SELECT * devolvió menos filas que el manifiesto (9.908 frente a 11.371 antes de la corrida #28); sin explicar. Esquema único y verificado. Conteo de filas igual al manifiesto. "
+        "fecha_extraccion": "2026-10-21",
+        "estado_qa": "Registro histórico de verificación del 2026-10-20 (anterior al cliente DuckDB-Wasm de esta rama): Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); SELECT * devolvió menos filas que el manifiesto (9.908 frente a 11.371 antes de la corrida #28); sin explicar. Esquema único y verificado. Conteo de filas igual al manifiesto.  Chequeos locales actuales: 728/728 archivos Parquet validados, 1.122 columnas coincidentes y 156/156 consultas sugeridas ejecutadas correctamente; las vistas activas también pasan las pruebas de registro diferido. No se ha probado un SELECT * completo en un navegador real: queda pendiente confirmar allí la lectura masiva y su latencia."
       }
     },
     {
       "id": "seguros_renta_fija",
-      "name": "seguros.renta_fija",
+      "name": "B.1 INSTRUMENTOS DE RENTA FIJA",
       "view_name": "seguros_renta_fija",
       "sector": "seguros",
       "sector_label": "Seguros de Vida y Generales",
@@ -1662,11 +1662,11 @@
       "corte": "2024-12 a 2026-09",
       "frescura": "Último mes publicado: 2026-09",
       "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-20",
+      "ultima_actualizacion": "2026-10-21",
       "file_parquet": "outputs/seguros/renta_fija/manifest.json",
       "registros_reales": 2321911,
       "descripcion": "Bonos, letras, depósitos y demás instrumentos de renta fija nacionales, uno por fila, con sus tasas, costo amortizado, valor razonable y valor final.",
-      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN) en cmfchile.cl, leídos con la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12).",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
       "metadatos": {
         "fuente": "CMF, cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales CSVID (vida) y CSGEN (generales), https://www.cmfchile.cl",
         "unidad": "Varía por campo según la ficha técnica: montos en miles de pesos (M$), en pesos ($) o en la unidad original; la unidad se indica en el diccionario de cada campo",
@@ -1674,8 +1674,8 @@
         "moneda": "Moneda original del instrumento en el campo UNIDAD_MONETARIA de la fuente; la moneda de reporte es CLP cuando el campo viene en pesos",
         "criterio_contable": "Según la ficha técnica de la Circular 1835 de cada campo (costo amortizado, valor razonable, valor final o valor de compra). Detalle por campo en seguros/fuentes/fichas_tecnicas_1835",
         "cobertura": "2024-12 a 2026-09; 22 archivos; 2.321.911 filas (formato v2024 completo)",
-        "fecha_extraccion": "2026-10-20 (ultima_actualizacion del manifiesto)",
-        "estado_qa": "Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); SELECT * tarda más de 200 s en navegador; count(*) verificado. Esquema único y verificado. Conteo de filas igual al manifiesto. "
+        "fecha_extraccion": "2026-10-21",
+        "estado_qa": "Registro histórico de verificación del 2026-10-20 (anterior al cliente DuckDB-Wasm de esta rama): Con observaciones: SELECT * falla en la vista (ver docs/notas/verificacion_descargas_2026-10-20.md); SELECT * tarda más de 200 s en navegador; count(*) verificado. Esquema único y verificado. Conteo de filas igual al manifiesto.  Chequeos locales actuales: 728/728 archivos Parquet validados, 1.122 columnas coincidentes y 156/156 consultas sugeridas ejecutadas correctamente; las vistas activas también pasan las pruebas de registro diferido. No se ha probado un SELECT * completo en un navegador real: queda pendiente confirmar allí la lectura masiva y su latencia."
       }
     },
     {
@@ -1700,9 +1700,249 @@
         "moneda": "No aplica",
         "criterio_contable": "No aplica",
         "cobertura": "Lista vigente al 2026-09-28; 19 entidades; la LBTR no tiene registro CMF",
-        "fecha_extraccion": "2026-09-28 (ultima_actualizacion del manifiesto)",
+        "fecha_extraccion": "2026-09-28",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
+    },
+    {
+      "id": "seguros_otras_inversiones",
+      "name": "B.6 OTRAS INVERSIONES",
+      "view_name": "seguros_otras_inversiones",
+      "sector": "seguros",
+      "sector_label": "Seguros de Vida y Generales",
+      "norma": "Circular CMF 1835",
+      "corte": "2024-12 a 2026-09",
+      "frescura": "Último mes publicado: 2026-09",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-21",
+      "file_parquet": "outputs/seguros/otras_inversiones/manifest.json",
+      "registros_reales": 42494,
+      "descripcion": "Otras inversiones de la cartera: saldos en cuenta corriente y caja, inversiones mobiliarias, avances a tenedores de pólizas, préstamos y otras inversiones financieras que no caben en los archivos anteriores.",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf"
+    },
+    {
+      "id": "seguros_tablas_descriptores",
+      "name": "B.9 TABLAS DE DESCRIPTORES",
+      "view_name": "seguros_tablas_descriptores",
+      "sector": "seguros",
+      "sector_label": "Seguros de Vida y Generales",
+      "norma": "Circular CMF 1835",
+      "corte": "2024-12 a 2026-09",
+      "frescura": "Último mes publicado: 2026-09",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-21",
+      "file_parquet": "outputs/seguros/tablas_descriptores/manifest.json",
+      "registros_reales": 9792,
+      "descripcion": "Descriptores de los instrumentos de la cartera: emisor, tipo de instrumento, fechas y tasas de emisión y descuento, número de flujos y opciones de prepago.",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf"
+    },
+    {
+      "id": "seguros_tablas_desarrollo",
+      "name": "B.10 TABLAS DE DESARROLLO",
+      "view_name": "seguros_tablas_desarrollo",
+      "sector": "seguros",
+      "sector_label": "Seguros de Vida y Generales",
+      "norma": "Circular CMF 1835",
+      "corte": "2024-12 a 2026-09",
+      "frescura": "Último mes publicado: 2026-09",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-21",
+      "file_parquet": "outputs/seguros/tablas_desarrollo/manifest.json",
+      "registros_reales": 2193981,
+      "descripcion": "Desarrollo de los flujos de cada instrumento: cupón, fecha de vencimiento, interés, amortización y saldo insoluto.",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf"
+    },
+    {
+      "id": "seguros_flujos_activos_elegibles",
+      "name": "B.11 FLUJOS DE ACTIVOS ELEGIBLES",
+      "view_name": "seguros_flujos_activos_elegibles",
+      "sector": "seguros",
+      "sector_label": "Seguros de Vida y Generales",
+      "norma": "Circular CMF 1835",
+      "corte": "2024-12 a 2026-09",
+      "frescura": "Último mes publicado: 2026-09",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-21",
+      "file_parquet": "outputs/seguros/flujos_activos_elegibles/manifest.json",
+      "registros_reales": 4369,
+      "descripcion": "Flujos de activos elegibles por tramo, para el cálculo del test de suficiencia de activos (circular aplicada y tipo de información).",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf"
+    },
+    {
+      "id": "seguros_prestamos",
+      "name": "B.12 PRÉSTAMOS",
+      "view_name": "seguros_prestamos",
+      "sector": "seguros",
+      "sector_label": "Seguros de Vida y Generales",
+      "norma": "Circular CMF 1835",
+      "corte": "2024-12 a 2026-09",
+      "frescura": "Último mes publicado: 2026-09",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-21",
+      "file_parquet": "outputs/seguros/prestamos/manifest.json",
+      "registros_reales": 0,
+      "descripcion": "Préstamos informados por las compañías, con características del deudor, condiciones financieras, saldo, provisiones y morosidad.",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf"
+    },
+    {
+      "id": "seguros_bienes_raices_arriendo_morosidad",
+      "name": "B.13 BIENES RAICES EN ARRIENDO Y MOROSIDAD DE MUTUOS HIPOTECARIOS ENDOSABLES Y CONTRATOS DE LEASING",
+      "view_name": "seguros_bienes_raices_arriendo_morosidad",
+      "sector": "seguros",
+      "sector_label": "Seguros de Vida y Generales",
+      "norma": "Circular CMF 1835",
+      "corte": "2024-12 a 2026-09",
+      "frescura": "Último mes publicado: 2026-09",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-21",
+      "file_parquet": "outputs/seguros/bienes_raices_arriendo_morosidad/manifest.json",
+      "registros_reales": 0,
+      "descripcion": "Detalle por inmueble, unidad o contrato: arriendos, recaudación, morosidad, reprogramaciones y saldos.",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf"
+    },
+    {
+      "id": "seguros_garantias_derivados",
+      "name": "B.14 GARANTÍAS EN INSTRUMENTOS DERIVADOS",
+      "view_name": "seguros_garantias_derivados",
+      "sector": "seguros",
+      "sector_label": "Seguros de Vida y Generales",
+      "norma": "Circular CMF 1835",
+      "corte": "2024-12 a 2026-09",
+      "frescura": "Último mes publicado: 2026-09",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-21",
+      "file_parquet": "outputs/seguros/garantias_derivados/manifest.json",
+      "registros_reales": 6518,
+      "descripcion": "Garantías en efectivo o instrumentos, recibidas u otorgadas, asociadas a derivados.",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf"
+    },
+    {
+      "id": "seguros_renta_fija_relevante",
+      "name": "B.1 INSTRUMENTOS DE RENTA FIJA",
+      "view_name": "seguros_renta_fija_relevante",
+      "sector": "seguros",
+      "sector_label": "Seguros de Vida y Generales",
+      "norma": "Circular CMF 1835",
+      "corte": "2024-12 a 2026-09",
+      "frescura": "Último mes publicado: 2026-09",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-21",
+      "file_parquet": "outputs/seguros/renta_fija_relevante/manifest.json",
+      "registros_reales": 2321911,
+      "descripcion": "Vista analítica de B.1 con identificación, vencimiento, magnitudes de costo y valor, riesgo y representatividad. La tabla completa conserva todos los campos.",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf"
+    },
+    {
+      "id": "seguros_acciones_relevantes",
+      "name": "B.2 ACCIONES DE SOCIEDADES ANÓNIMAS ABIERTAS, ACCIONES DE SOCIEDADES ANÓNIMAS CERRADAS Y CUOTAS DE FONDOS DE INVERSIÓN",
+      "view_name": "seguros_acciones_relevantes",
+      "sector": "seguros",
+      "sector_label": "Seguros de Vida y Generales",
+      "norma": "Circular CMF 1835",
+      "corte": "2016-11 a 2026-09",
+      "frescura": "Último mes publicado: 2026-09",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-21",
+      "file_parquet": "outputs/seguros/acciones_relevantes/manifest.json",
+      "registros_reales": 109019,
+      "descripcion": "Vista analítica de B.2 con identificación del instrumento, unidades, valorización, deterioro y riesgo. La tabla completa conserva todos los campos.",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf"
+    },
+    {
+      "id": "seguros_bienes_raices_relevantes",
+      "name": "B.4 BIENES RAICES",
+      "view_name": "seguros_bienes_raices_relevantes",
+      "sector": "seguros",
+      "sector_label": "Seguros de Vida y Generales",
+      "norma": "Circular CMF 1835",
+      "corte": "2024-12 a 2026-09",
+      "frescura": "Último mes publicado: 2026-09",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-21",
+      "file_parquet": "outputs/seguros/bienes_raices_relevantes/manifest.json",
+      "registros_reales": 760152,
+      "descripcion": "Vista analítica de B.4 con ubicación geográfica general, superficie y valorización; no incluye rol ni dirección exacta.",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf"
+    },
+    {
+      "id": "seguros_extranjeros_relevantes",
+      "name": "B.5 INVERSIONES EN EL EXTRANJERO",
+      "view_name": "seguros_extranjeros_relevantes",
+      "sector": "seguros",
+      "sector_label": "Seguros de Vida y Generales",
+      "norma": "Circular CMF 1835",
+      "corte": "2016-11 a 2026-09",
+      "frescura": "Último mes publicado: 2026-09",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-21",
+      "file_parquet": "outputs/seguros/extranjeros_relevantes/manifest.json",
+      "registros_reales": 471670,
+      "descripcion": "Vista analítica de B.5 con país, instrumento, moneda, vencimiento y valorización.",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf"
+    },
+    {
+      "id": "seguros_derivados_relevantes",
+      "name": "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS",
+      "view_name": "seguros_derivados_relevantes",
+      "sector": "seguros",
+      "sector_label": "Seguros de Vida y Generales",
+      "norma": "Circular CMF 1835",
+      "corte": "2016-11 a 2026-09",
+      "frescura": "Último mes publicado: 2026-09",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-21",
+      "file_parquet": "outputs/seguros/derivados_relevantes/manifest.json",
+      "registros_reales": 373469,
+      "descripcion": "Vista analítica de derivados con tipo, vencimiento, nocionales y valores razonables.",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf"
+    },
+    {
+      "id": "seguros_prestamos_relevantes",
+      "name": "B.12 PRÉSTAMOS",
+      "view_name": "seguros_prestamos_relevantes",
+      "sector": "seguros",
+      "sector_label": "Seguros de Vida y Generales",
+      "norma": "Circular CMF 1835",
+      "corte": "2024-12 a 2026-09",
+      "frescura": "Último mes publicado: 2026-09",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-21",
+      "file_parquet": "outputs/seguros/prestamos_relevantes/manifest.json",
+      "registros_reales": 0,
+      "descripcion": "Vista analítica de B.12 con condiciones, saldo, provisión y morosidad; no incluye identificadores personales de deudores.",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf"
+    },
+    {
+      "id": "seguros_bienes_raices_arriendo_morosidad_relevantes",
+      "name": "B.13 BIENES RAICES EN ARRIENDO Y MOROSIDAD DE MUTUOS HIPOTECARIOS ENDOSABLES Y CONTRATOS DE LEASING",
+      "view_name": "seguros_bienes_raices_arriendo_morosidad_relevantes",
+      "sector": "seguros",
+      "sector_label": "Seguros de Vida y Generales",
+      "norma": "Circular CMF 1835",
+      "corte": "2024-12 a 2026-09",
+      "frescura": "Último mes publicado: 2026-09",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-21",
+      "file_parquet": "outputs/seguros/bienes_raices_arriendo_morosidad_relevantes/manifest.json",
+      "registros_reales": 0,
+      "descripcion": "Vista analítica de B.13 con cobranza, mora, provisión, superficie y valorización; suprime identificadores personales.",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf"
+    },
+    {
+      "id": "seguros_registros_tipo6",
+      "name": "Registros tipo 6 de B.11 y B.14",
+      "view_name": "seguros_registros_tipo6",
+      "sector": "seguros",
+      "sector_label": "Seguros de Vida y Generales",
+      "norma": "Circular CMF 1835",
+      "corte": "2024-12 a 2026-09",
+      "frescura": "Último mes publicado: 2026-09",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-21",
+      "file_parquet": "outputs/seguros/registros_tipo6/manifest.json",
+      "registros_reales": 66,
+      "descripcion": "Líneas tipo 6 reportadas por la CMF en archivos B.11 (E) y B.14 (G). Se conserva íntegra cada línea, junto con período, sector, aseguradora y archivo de origen; los campos internos no se interpretan porque no están descritos en el anexo consultado.",
+      "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835), archivos mensuales de vida (CSVID) y generales (CSGEN), conforme a la ficha técnica oficial (formato vigente hasta 2024-11 y formato desde 2024-12). Fuente: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf"
     }
   ]
 }

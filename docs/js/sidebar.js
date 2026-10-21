@@ -64,15 +64,24 @@ const EXPLORER_TREE = [
               { label: "Evolución de la inversión en acciones por sector (M$)", query: "SELECT periodo, sector, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones GROUP BY periodo, sector ORDER BY periodo DESC, sector LIMIT 24;" },
               { label: "Fondos mutuos por administradora, último mes (M$)", query: "SELECT rut_administradora, count(*) AS inversiones, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_fondos_mutuos WHERE periodo = (SELECT max(periodo) FROM seguros_fondos_mutuos) GROUP BY rut_administradora ORDER BY valor_final_m_clp DESC LIMIT 10;" },
               { label: "Bienes raíces por ciudad, último mes (M$)", query: "SELECT ciudad, count(*) AS inmuebles, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_bienes_raices WHERE periodo = (SELECT max(periodo) FROM seguros_bienes_raices) GROUP BY ciudad ORDER BY valor_final_m_clp DESC LIMIT 10;" },
+              { label: "Otras inversiones por tipo de instrumento, último mes (M$)", query: "SELECT tipo_instrumento, count(*) AS inversiones, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_otras_inversiones WHERE periodo = (SELECT max(periodo) FROM seguros_otras_inversiones) GROUP BY tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 15;" },
               { label: "Inversiones en el extranjero por país, último mes (M$)", query: "SELECT pais, tipo_registro, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_extranjeros WHERE periodo = (SELECT max(periodo) FROM seguros_extranjeros) GROUP BY pais, tipo_registro ORDER BY valor_final_m_clp DESC LIMIT 10;" }
             ],
             tables: [
-              { id: "seguros_renta_fija", name: "seguros.renta_fija", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/renta_fija/manifest.json"] },
-              { id: "seguros_acciones", name: "seguros.acciones", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/acciones/manifest.json"] },
-              { id: "seguros_fondos_mutuos", name: "seguros.fondos_mutuos", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/fondos_mutuos/manifest.json"] },
-              { id: "seguros_bienes_raices", name: "seguros.bienes_raices", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/bienes_raices/manifest.json"] },
-              { id: "seguros_extranjeros", name: "seguros.extranjeros", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/extranjeros/manifest.json"] },
-              { id: "seguros_control_inversiones", name: "seguros.control_inversiones", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/control_inversiones/manifest.json"] }
+              { id: "seguros_renta_fija", name: "B.1 INSTRUMENTOS DE RENTA FIJA", rows: "Mensual · desde 2024-12", file: "", files: ["outputs/seguros/renta_fija/manifest.json"] },
+              { id: "seguros_renta_fija_relevante", name: "B.1 INSTRUMENTOS DE RENTA FIJA", rows: "Vista de campos relevantes · desde 2024-12", file: "", files: ["outputs/seguros/renta_fija_relevante/manifest.json"] },
+              { id: "seguros_acciones", name: "B.2 ACCIONES DE SOCIEDADES ANÓNIMAS ABIERTAS, ACCIONES DE SOCIEDADES ANÓNIMAS CERRADAS Y CUOTAS DE FONDOS DE INVERSIÓN", rows: "Mensual · desde 2016-11", file: "", files: ["outputs/seguros/acciones/manifest.json"] },
+              { id: "seguros_acciones_relevantes", name: "B.2 ACCIONES DE SOCIEDADES ANÓNIMAS ABIERTAS, ACCIONES DE SOCIEDADES ANÓNIMAS CERRADAS Y CUOTAS DE FONDOS DE INVERSIÓN", rows: "Vista de campos relevantes · desde 2016-11", file: "", files: ["outputs/seguros/acciones_relevantes/manifest.json"] },
+              { id: "seguros_fondos_mutuos", name: "B.3 CUOTAS DE FONDOS MUTUOS", rows: "Mensual · desde 2016-11", file: "", files: ["outputs/seguros/fondos_mutuos/manifest.json"] },
+              { id: "seguros_bienes_raices", name: "B.4 BIENES RAICES", rows: "Mensual · desde 2024-12", file: "", files: ["outputs/seguros/bienes_raices/manifest.json"] },
+              { id: "seguros_bienes_raices_relevantes", name: "B.4 BIENES RAICES", rows: "Vista de campos relevantes · desde 2024-12", file: "", files: ["outputs/seguros/bienes_raices_relevantes/manifest.json"] },
+              { id: "seguros_extranjeros", name: "B.5 INVERSIONES EN EL EXTRANJERO", rows: "Mensual · desde 2016-11", file: "", files: ["outputs/seguros/extranjeros/manifest.json"] },
+              { id: "seguros_extranjeros_relevantes", name: "B.5 INVERSIONES EN EL EXTRANJERO", rows: "Vista de campos relevantes · desde 2016-11", file: "", files: ["outputs/seguros/extranjeros_relevantes/manifest.json"] },
+              { id: "seguros_otras_inversiones", name: "B.6 OTRAS INVERSIONES", rows: "Mensual · desde 2024-12", file: "", files: ["outputs/seguros/otras_inversiones/manifest.json"] },
+              { id: "seguros_control_inversiones", name: "B.8 INFORMACION DE CONTROL", rows: "Mensual · desde 2016-11", file: "", files: ["outputs/seguros/control_inversiones/manifest.json"] },
+              { id: "seguros_tablas_descriptores", name: "B.9 TABLAS DE DESCRIPTORES", rows: "Mensual · desde 2024-12", file: "", files: ["outputs/seguros/tablas_descriptores/manifest.json"] },
+              { id: "seguros_tablas_desarrollo", name: "B.10 TABLAS DE DESARROLLO", rows: "Mensual · desde 2024-12", file: "", files: ["outputs/seguros/tablas_desarrollo/manifest.json"] },
+              { id: "seguros_flujos_activos_elegibles", name: "B.11 FLUJOS DE ACTIVOS ELEGIBLES", rows: "Mensual · desde 2024-12", file: "", files: ["outputs/seguros/flujos_activos_elegibles/manifest.json"] }
             ]
           },
           {
@@ -85,12 +94,34 @@ const EXPLORER_TREE = [
             sector: "seguros",
             chips: [
               { label: "Derivados por tipo y sector, último mes", query: "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;" },
-              { label: "Principales contrapartes de derivados, último mes", query: "SELECT contraparte, count(*) AS contratos, count(DISTINCT rut_aseguradora) AS aseguradoras FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY contraparte ORDER BY contratos DESC LIMIT 10;" },
-              { label: "Pactos: contrapartes y tasa promedio, último mes", query: "SELECT contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_pacto_prom_pct, SUM(valor_contable_m_clp) AS valor_contable_m_clp FROM seguros_pactos WHERE periodo = (SELECT max(periodo) FROM seguros_pactos) GROUP BY contraparte ORDER BY valor_contable_m_clp DESC LIMIT 10;" }
+              { label: "Principales contrapartes de derivados, último mes", query: "SELECT COALESCE(NULLIF(TRIM(nombre), ''), 'Sin nombre informado') AS contraparte, count(*) AS contratos, count(DISTINCT rut_aseguradora) AS aseguradoras FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY 1 ORDER BY contratos DESC LIMIT 10;" },
+              { label: "Pactos: contrapartes y tasa promedio, último mes", query: "SELECT COALESCE(NULLIF(TRIM(nombre), ''), 'Sin nombre informado') AS contraparte, count(*) AS pactos, AVG(tasa_pacto) AS tasa_pacto_promedio FROM seguros_pactos WHERE periodo = (SELECT max(periodo) FROM seguros_pactos) GROUP BY 1 ORDER BY pactos DESC LIMIT 10;" }
             ],
             tables: [
-              { id: "seguros_derivados", name: "seguros.derivados", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/derivados/manifest.json"] },
-              { id: "seguros_pactos", name: "seguros.pactos", rows: "Un archivo por mes", file: "", files: ["outputs/seguros/pactos/manifest.json"] }
+              { id: "seguros_derivados", name: "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS", rows: "Mensual · desde 2016-11", file: "", files: ["outputs/seguros/derivados/manifest.json"] },
+              { id: "seguros_derivados_relevantes", name: "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS", rows: "Vista de campos relevantes · desde 2016-11", file: "", files: ["outputs/seguros/derivados_relevantes/manifest.json"] },
+              { id: "seguros_pactos", name: "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS", rows: "Mensual · desde 2016-11", file: "", files: ["outputs/seguros/pactos/manifest.json"] }
+            ]
+          },
+          {
+            id: "cat_seguros_registros_2024",
+            type: "circular",
+            label: "Circular 1835 · B.12–B.14",
+            badge: "Desde 2024-12",
+            badgeType: "data",
+            status: "active",
+            sector: "seguros",
+            chips: [
+              { label: "B.14 Garantías por posición y tipo (M$)", query: "SELECT periodo, sector, posicion_compania, tipo_garantia, SUM(valor_razonable_activo_en_garantia_m_clp) AS valor_m_clp FROM seguros_garantias_derivados GROUP BY periodo, sector, posicion_compania, tipo_garantia ORDER BY periodo DESC LIMIT 50;" },
+              { label: "Registros tipo 6 por período y archivo", query: "SELECT periodo, tipo_archivo, sector, COUNT(*) AS registros, MIN(largo_registro) AS largo_minimo, MAX(largo_registro) AS largo_maximo FROM seguros_registros_tipo6 GROUP BY periodo, tipo_archivo, sector ORDER BY periodo DESC, tipo_archivo, sector LIMIT 66;" }
+            ],
+            tables: [
+              { id: "seguros_prestamos", name: "B.12 PRÉSTAMOS", rows: "Mensual · desde 2024-12", file: "", files: ["outputs/seguros/prestamos/manifest.json"] },
+              { id: "seguros_prestamos_relevantes", name: "B.12 PRÉSTAMOS", rows: "Vista de campos relevantes · desde 2024-12", file: "", files: ["outputs/seguros/prestamos_relevantes/manifest.json"] },
+              { id: "seguros_bienes_raices_arriendo_morosidad", name: "B.13 BIENES RAICES EN ARRIENDO Y MOROSIDAD DE MUTUOS HIPOTECARIOS ENDOSABLES Y CONTRATOS DE LEASING", rows: "Mensual · desde 2024-12", file: "", files: ["outputs/seguros/bienes_raices_arriendo_morosidad/manifest.json"] },
+              { id: "seguros_bienes_raices_arriendo_morosidad_relevantes", name: "B.13 BIENES RAICES EN ARRIENDO Y MOROSIDAD DE MUTUOS HIPOTECARIOS ENDOSABLES Y CONTRATOS DE LEASING", rows: "Vista de campos relevantes · desde 2024-12", file: "", files: ["outputs/seguros/bienes_raices_arriendo_morosidad_relevantes/manifest.json"] },
+              { id: "seguros_garantias_derivados", name: "B.14 GARANTÍAS EN INSTRUMENTOS DERIVADOS", rows: "Mensual · desde 2024-12", file: "", files: ["outputs/seguros/garantias_derivados/manifest.json"] },
+              { id: "seguros_registros_tipo6", name: "Registros tipo 6 de B.11 y B.14", rows: "Mensual · desde 2024-12", file: "", files: ["outputs/seguros/registros_tipo6/manifest.json"] }
             ]
           }
         ]

@@ -701,7 +701,7 @@ header {
 .pregunta-etiqueta {
   display: block;
   font-size: 10.5px;
-  color: var(--text-muted, #8b98a8);
+  color: var(--text-muted);
   margin-bottom: 4px;
 }
 
@@ -723,7 +723,7 @@ header {
 
 .pregunta-estado {
   font-size: 10.5px;
-  color: var(--text-muted, #8b98a8);
+  color: var(--text-muted);
   min-height: 1em;
   margin: 4px 0;
 }
@@ -766,7 +766,7 @@ header {
 .pregunta-motivo {
   display: block;
   font-size: 10px;
-  color: var(--text-muted, #8b98a8);
+  color: var(--text-muted);
 }
 
 .pregunta-desc {

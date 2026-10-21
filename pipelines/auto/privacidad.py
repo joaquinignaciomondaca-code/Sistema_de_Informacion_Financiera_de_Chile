@@ -246,3 +246,60 @@ def proteger_bienes_raices(df, sal: str | None = None):
         if columna in columnas:
             df[columna] = [None] * len(df)
     return df
+
+
+def proteger_prestamos(df, entidades=frozenset()):
+    """Conserva las columnas B.12, pero suprime identidad de deudores personas naturales."""
+    columnas = set(getattr(df, "columns", []))
+    if not columnas or "rut_deudor" not in columnas:
+        return df
+    df = df.copy()
+    ruts = df["rut_deudor"].tolist()
+    tipos = df["tipo_deudor"].tolist() if "tipo_deudor" in columnas else [None] * len(df)
+    naturales = [str(t or "").strip().upper() == "N" or cuerpo_rut(rut) is None or
+                 es_probable_persona_natural(rut, entidades) for rut, t in zip(ruts, tipos)]
+    for nombre in ("rut_deudor", "ver_deudor", "razon_social_deudor", "nombre_deudor",
+                   "primer_apellido_deudor", "segundo_apellido_deudor"):
+        if nombre in columnas:
+            df[nombre] = [None if n else v for n, v in zip(naturales, df[nombre].tolist())]
+    return df
+
+
+def proteger_bienes_raices_arriendo(df, sal: str | None = None, entidades=frozenset()):
+    """Suprime rol y datos de arrendatarios personas, y agrega un id longitudinal del inmueble."""
+    columnas = set(getattr(df, "columns", []))
+    if not columnas:
+        return df
+    sal = sal_privada() if sal is None else sal
+    df = df.copy()
+    roles = df["rol"].tolist() if "rol" in columnas else [None] * len(df)
+    aseguradoras = df["rut_aseguradora"].tolist() if "rut_aseguradora" in columnas else [None] * len(df)
+    df["property_id"] = [property_id(rut, rol, sal) for rut, rol in zip(aseguradoras, roles)]
+    if "rol" in columnas:
+        df["rol"] = [None] * len(df)
+    if "rut_arrendatario_deudor" in columnas:
+        ruts = df["rut_arrendatario_deudor"].tolist()
+        personas = [cuerpo_rut(rut) is None or es_probable_persona_natural(rut, entidades) for rut in ruts]
+        df["rut_arrendatario_deudor"] = [None if p else rut for p, rut in zip(personas, ruts)]
+        if "nombre_arrendatario_deudor" in columnas:
+            nombres = df["nombre_arrendatario_deudor"].tolist()
+            df["nombre_arrendatario_deudor"] = [None if p else n for p, n in zip(personas, nombres)]
+    return df
+
+
+def proteger_contrapartes(df, entidades=frozenset()):
+    """Protege contrapartes naturales de B.14 sin afectar contrapartes jurídicas."""
+    columnas = set(getattr(df, "columns", []))
+    if not columnas or "rut_contraparte_nacional" not in columnas:
+        return df
+    df = df.copy()
+    ruts = df["rut_contraparte_nacional"].tolist()
+    naturales = [cuerpo_rut(rut) is not None and es_probable_persona_natural(rut, entidades)
+                 for rut in ruts]
+    df["contraparte_tipo"] = [TIPO_NATURAL if n else (TIPO_JURIDICA if cuerpo_rut(rut) else TIPO_SIN_RUT)
+                               for n, rut in zip(naturales, ruts)]
+    df["rut_contraparte_nacional"] = [None if n else rut for n, rut in zip(naturales, ruts)]
+    if "nombre_contraparte_garantia" in columnas:
+        df["nombre_contraparte_garantia"] = [None if n else nombre
+                                              for n, nombre in zip(naturales, df["nombre_contraparte_garantia"].tolist())]
+    return df
