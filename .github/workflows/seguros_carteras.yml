@@ -14,6 +14,11 @@ on:
       - .github/workflows/seguros_carteras.yml
       - seguros/scripts/actualizar_carteras.py
       - seguros/scripts/formato_1835.py
+      # La ficha y el inventario definen posiciones y columnas: si cambian, hay que volver a
+      # probar y publicar (B.6 y B.9–B.11 entraron por acá).
+      - seguros/scripts/ficha_1835.py
+      - seguros/scripts/inventario_1835.py
+      - seguros/fuentes/fichas_tecnicas_1835/
       # Módulos compartidos que importan el extractor: un cambio ahí debe volver a probar
       # y a publicar (en las corridas programadas no corre el job `pruebas` de web_audit).
       - pipelines/auto/estable.py
@@ -75,6 +80,8 @@ jobs:
       - name: Probar el lector con líneas reales de ambos formatos y la escritura estable
         run: |
           python -m seguros.tests.test_formato_1835
+          python -m seguros.tests.test_inventario_1835
+          python -m seguros.tests.test_registros_2024
           python -m unittest -v pipelines.auto.tests.test_estable
 
       # Revisa todos los meses pendientes sin escribir y anota los que tienen problemas, para

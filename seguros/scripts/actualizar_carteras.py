@@ -58,13 +58,19 @@ SALIDA = RAIZ / "docs" / "outputs" / "seguros"
 URL = "https://www.cmfchile.cl/institucional/estadisticas/merc_seguros/cartera_inversiones/dcisgv/descarga_cartera_inv.php"
 SECTORES = {"vida": "CSVID", "generales": "CSGEN"}
 TABLAS = ["renta_fija", "acciones", "fondos_mutuos", "bienes_raices", "extranjeros",
-          "derivados", "pactos", "control_inversiones"]
+          "derivados", "pactos", "control_inversiones",
+          # "Otros registros" del anexo 2024 (B.6 y B.9–B.11). Existen solo desde 2024-12.
+          "otras_inversiones", "tablas_descriptores", "tablas_desarrollo",
+          "flujos_activos_elegibles"]
 # Primer mes publicado por tabla. La ficha "v2016" es la más antigua que tenemos; si un mes
 # anterior no la cumple, la validación lo rechaza. Renta fija y bienes raíces pesan ~5 MB por
 # mes (detalle por instrumento), por eso parten más tarde. Para extender una tabla basta con
 # cambiar su fecha aquí: la próxima corrida completa solo lo que falta de esa tabla.
 DESDE = "2016-11"
-DESDE_TABLA = {"renta_fija": "2024-12", "bienes_raices": "2024-12"}
+DESDE_TABLA = {"renta_fija": "2024-12", "bienes_raices": "2024-12",
+               # Los registros que el anexo 2024 agregó no existen en el formato anterior.
+               "otras_inversiones": "2024-12", "tablas_descriptores": "2024-12",
+               "tablas_desarrollo": "2024-12", "flujos_activos_elegibles": "2024-12"}
 # Tablas grandes: un archivo por mes (se escribe una vez). Resto: un archivo por año.
 POR_MES = {"renta_fija", "bienes_raices"}
 # Orden dentro de cada archivo: el mismo instrumento queda en filas contiguas y comprime mejor.
@@ -74,8 +80,12 @@ ORDEN = {"renta_fija": ["tipo_instrumento", "nemotecnico", "serie", "fecha_compr
          "bienes_raices": ["property_id"],
          "extranjeros": ["tipo_registro", "codigo_individualizacion_o_nemotecnico"],
          "derivados": ["tipo_registro", "folio_operacion"], "pactos": ["folio_operacion"],
-         "control_inversiones": ["tipo_de_inversion"]}
-ARCHIVOS = set("iafbxpc")
+         "control_inversiones": ["tipo_de_inversion"],
+         "otras_inversiones": ["tipo_de_activo", "codigo_o_nombre_de_la_inversion"],
+         "tablas_descriptores": ["codigo_nemotecnico"],
+         "tablas_desarrollo": ["nemotecnico", "nro_cupon"],
+         "flujos_activos_elegibles": ["tipo_de_informacion", "tipo_instrumento"]}
+ARCHIVOS = set("iafbxpcodet")
 
 
 class NoPublicado(Exception):

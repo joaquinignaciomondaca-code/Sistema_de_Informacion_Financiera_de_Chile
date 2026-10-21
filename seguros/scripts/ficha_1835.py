@@ -50,17 +50,20 @@ FICHA = {
         "p": "B.7_Inversiones_e_Instrumentos_derivados_y_pactos.txt",
         "c": "B.8_Informacion_de_Control.txt",
     },
-    "v2024": {letra: "Anexos_Tecnicos_Circular_N1835.txt" for letra in "iafbxpc"},
+    "v2024": {letra: "Anexos_Tecnicos_Circular_N1835.txt" for letra in "iafbxpcodet"},
 }
 
-# Letra del archivo según el título de la sección en la ficha.
-LETRA = {"1": "i", "2": "a", "3": "f", "4": "b", "5": "x", "7": "p", "8": "c"}
+# Letra del archivo según el título de la sección en la ficha (B.1 -> i, B.2 -> a, ...).
+# B.9 a B.14 son "otros registros" y no tienen ficha suelta: están en el anexo 2024
+# (Anexos_Tecnicos_Circular_N1835.txt), que se lee completo desde 2024-12.
+LETRA = {"1": "i", "2": "a", "3": "f", "4": "b", "5": "x", "6": "o", "7": "p", "8": "c",
+         "9": "d", "10": "t", "11": "e", "12": "r", "13": "v", "14": "g"}
 
 # La ficha no es uniforme con los PICTURE: a veces los imprime con espacios
 # ("X (05)", "-9(03) V9 (04)"). Sin aceptarlos, campos como COBERTURA,
 # CRITERIO_VALORIZACION, ACTIVO_CALCE o TIR_COMPRA quedaban fuera del inventario
 # y todas las posiciones siguientes quedaban corridas.
-_PICT = r"(?:S|-)?9\s*\(\s*\d+\s*\)\s*(?:V9\s*\(\s*\d+\s*\))?|X\s*\(\s*\d+\s*\)"
+_PICT = r"(?:S|-)?9\s*\(\s*\d+\s*\)\s*(?:[vV]9\s*\(\s*\d+\s*\))?|X\s*\(\s*\d+\s*\)"
 _PICT_FIN = re.compile(r"\s(" + _PICT + r")\s*$")
 _ENCABEZADO = re.compile(r"^\s*CAMPO\s+DESCRIP", re.I)
 _SECCION = re.compile(r"^\s*B\.(\d+)\s+([A-ZÁÉÍÓÚÑ0-9°º.,\- ]{3,140})\s*$")
@@ -112,6 +115,7 @@ class Campo:
     grupo: str | None = None
     descripcion: str = ""
     renglon: int = 0
+    picture_linea: int = 0       # renglón del PICTURE (base 0), para reconstruir nombres
     ficha: str = ""
 
 
@@ -163,7 +167,7 @@ def _leer(ruta: Path) -> list[str]:
 def _picture(picture: str) -> tuple[int, str, int, bool]:
     """Largo, tipo, decimales y si lleva signo, según el PICTURE de la ficha."""
     p = re.sub(r"\s+", "", picture)
-    m = re.fullmatch(r"(S|-)?9\((\d+)\)(?:V9\((\d+)\))?", p)
+    m = re.fullmatch(r"(?i)(S|-)?9\((\d+)\)(?:V9\((\d+)\))?", p)
     if m:
         signo = bool(m.group(1))
         return (1 if signo else 0) + int(m.group(2)) + int(m.group(3) or 0), "n", int(m.group(3) or 0), signo
@@ -462,6 +466,7 @@ def parsear(ruta: Path, letras: set[str] | None = None) -> dict[tuple[str, str],
                 grupo=nombre_grupo,
                 descripcion=_descripcion(lineas, i + 1, descripcion),
                 renglon=i + 1,
+                picture_linea=renglon,
                 ficha=ruta.name,
             )
         )
@@ -484,7 +489,7 @@ def registros(formato: str, letras: set[str] | None = None) -> dict[tuple[str, s
 def principal(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Lee las fichas técnicas de la Circular 1835")
     ap.add_argument("--formato", choices=("v2016", "v2024"), default="v2016")
-    ap.add_argument("--archivo", help="letra del archivo (i, a, f, b, x, p, c)")
+    ap.add_argument("--archivo", help="letra del archivo (i, a, f, b, x, o, p, c, d, t, e)")
     ap.add_argument("--tipo", help="tipo de registro (1, 2, 3...)")
     ap.add_argument("--listar", action="store_true", help="resumen de largos por registro")
     args = ap.parse_args(argv)

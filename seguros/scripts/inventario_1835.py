@@ -40,6 +40,10 @@ DESTINO = {
     ("x", "4"): ("extranjeros", "bienes_raices"),
     ("x", "5"): ("extranjeros", "filiales"),
     ("c", "2"): ("control_inversiones", None),
+    ("o", "2"): ("otras_inversiones", None),
+    ("d", "2"): ("tablas_descriptores", None),
+    ("t", "2"): ("tablas_desarrollo", None),
+    ("e", "2"): ("flujos_activos_elegibles", None),
     ("p", "2"): ("derivados", "opcion"),
     ("p", "3"): ("derivados", "forward"),
     ("p", "4"): ("derivados", "futuro"),
@@ -85,6 +89,10 @@ REPARAR = (
 )
 _REPARAR = tuple((re.compile(p), r) for p, r in REPARAR)
 
+# Registros donde el nombre en la ficha se repara además en ``nombre_ficha`` (los que todavía no
+# tienen columnas publicadas): en el resto se conserva el texto tal como lo imprime el anexo.
+REPARAR_NOMBRE_FICHA = {"o"}
+
 # Un mismo campo, dos nombres: la ficha de 2024 renombra o trunca distinto que la de 2016.
 # Sin esto la tabla publicada tendría dos columnas para lo mismo (una nula en cada época).
 PARES = {
@@ -101,6 +109,16 @@ PARES = {
     ("p", "VALOR_RAZONABLE_DEL_CONTRATO_FUTURO_A_LA_FECHA_DE_INFORMAC_ION"):
         "VALOR_RAZONABLE_DEL_CONTRATO_FUTURO_A_LA_FECHA_DE_INFORMACION",
     ("p", "TASA_A_FUTURO_MERCADO"): "TASA_A_FUTURO_MERCADO_POSICION_LARGA",
+    # B.6 (Otras inversiones): la conversión del anexo 2024 cortó estos nombres a media
+    # palabra; el nombre completo está en la ficha, en el renglón del PICTURE o al lado.
+    ("o", "ACTIVO_EN_MARGEN_O_SUJETO_A"): "ACTIVO_EN_MARGEN_O_SUJETO_A_PACTO",
+    ("o", "METOD_CLASIF_VALO"): "METOD_CLASIF_VALORIZ_EEFF",
+    ("o", "CRITERIO_VALORIZAC"): "CRITERIO_VALORIZACION",
+    ("o", "MODELO_VALORACIO"): "MODELO_VALORACION",
+    ("o", "MODELO_PROPIO_DE_TERIORO"): "MODELO_PROPIO_DETERIORO",
+    ("o", "COLIGADA_FILIAL_INM_OB"): "COLIGADA_FILIAL_INMOB",
+    ("o", "DESCRIPCION_ACTIVO"): "DESCRIPCION_ACTIVOS",
+    ("o", "CLASIFICACION_DE_RI"): "CLASIFICACION_DE_RIESGO_PAIS",
 }
 
 
@@ -124,6 +142,14 @@ ALIAS = {
     ("p", "6", "ACTIVO_OBJETO", 2): "ACTIVO_OBJETO_VALOR_CONTABLE",
 }
 
+# Unidades que la ficha declara en un renglón que el lector no alcanzó a unir al campo, porque
+# el nombre está partido y la descripción sigue al trozo final. Se declaran acá para no dejar un
+# monto en M$ sin su sufijo (mismo criterio que REPARAR: corrección explícita y acotada).
+UNIDAD_CURADA = {
+    ("o", "2", "DEPRECIACION_ACUMULADA"): "(M$)",
+    ("o", "2", "VALOR_RAZONABLE"): "(M$)",
+}
+
 # Campos que no se publican: relleno, tipo de registro y el dígito verificador
 # (se publica junto al RUT, como ``97004000-5``).
 _OMITIR_NOMBRE = {"FILLER", "FLLER"}
@@ -142,13 +168,15 @@ def _reparar(nombre: str) -> str:
 _SIN_UNIDAD = re.compile(r"UNIDAD_MONETARIA|MONEDA|UNIDAD$|CODIGO|TIPO|FECHA|NOMBRE|PAIS")
 
 
-def _unidad(campo) -> str | None:
+def _unidad(campo, curada: str | None = None) -> str | None:
     """Unidad del campo: la anotada al lado del nombre o la que dice la descripción.
 
     Sólo aplica a los montos: los campos de texto (códigos, nombres) y los que la
     descripción menciona de paso ("en la unidad monetaria del instrumento") quedan sin
     sufijo, o terminarían llamándose ``unidad_monetaria_um``.
     """
+    if curada:
+        return curada
     if campo.unidad:
         return campo.unidad
     if campo.tipo != "n" or _SIN_UNIDAD.search(campo.nombre):
@@ -212,11 +240,17 @@ def _base(formato: str) -> dict[tuple[str, str], list[dict]]:
                 continue
             aparece = vistos[nombre] = vistos.get(nombre, 0) + 1
             nombre = ALIAS.get((clave[0], clave[1], nombre, aparece), nombre)
-            nombre = PARES.get((clave[0], nombre), nombre)
+            reparado = PARES.get((clave[0], nombre))
+            if reparado and clave[0] in REPARAR_NOMBRE_FICHA:
+                # B.6 no tiene historia publicada: se publica el nombre completo de la ficha y
+                # no el trozo que dejó la conversión del anexo.
+                campo.nombre_ficha = reparado
+            nombre = reparado or nombre
             campos.append({
                 "nombre": nombre,
                 "aparece": aparece,
                 "campo": campo,
+                "unidad_curada": UNIDAD_CURADA.get((clave[0], clave[1], nombre)),
                 "siguiente": registro.campos[n + 1] if n + 1 < len(registro.campos) else None,
             })
         salida[clave] = campos
@@ -236,7 +270,7 @@ def inventario(formato: str) -> dict[tuple[str, str], list[dict]]:
     for f in FORMATOS:
         for clave, campos in base[f].items():
             for c in campos:
-                unidad = _unidad(c["campo"])
+                unidad = _unidad(c["campo"], c.get("unidad_curada"))
                 if unidad:
                     unidades.setdefault((clave, c["nombre"], c["aparece"]), unidad)
     salida: dict[tuple[str, str], list[dict]] = {}

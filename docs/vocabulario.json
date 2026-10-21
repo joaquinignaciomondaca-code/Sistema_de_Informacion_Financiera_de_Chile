@@ -273,6 +273,42 @@
       "cobertura": "Un archivo por mes"
     },
     {
+      "id": "seguros_otras_inversiones",
+      "alias": [],
+      "nombre": "seguros.otras_inversiones",
+      "tipo": "otras_inversiones",
+      "sector": "seguros",
+      "descripcion": "Otras inversiones de la cartera: saldos en cuenta corriente y caja, inversiones mobiliarias, avances a tenedores de pólizas, préstamos y otras inversiones financieras que no caben en los archivos anteriores.",
+      "cobertura": "Un archivo por mes"
+    },
+    {
+      "id": "seguros_tablas_descriptores",
+      "alias": [],
+      "nombre": "seguros.tablas_descriptores",
+      "tipo": "tablas_descriptores",
+      "sector": "seguros",
+      "descripcion": "Descriptores de los instrumentos de la cartera: emisor, tipo de instrumento, fechas y tasas de emisión y descuento, número de flujos y opciones de prepago.",
+      "cobertura": "Un archivo por mes"
+    },
+    {
+      "id": "seguros_tablas_desarrollo",
+      "alias": [],
+      "nombre": "seguros.tablas_desarrollo",
+      "tipo": "tablas_desarrollo",
+      "sector": "seguros",
+      "descripcion": "Desarrollo de los flujos de cada instrumento: cupón, fecha de vencimiento, interés, amortización y saldo insoluto.",
+      "cobertura": "Un archivo por mes"
+    },
+    {
+      "id": "seguros_flujos_activos_elegibles",
+      "alias": [],
+      "nombre": "seguros.flujos_activos_elegibles",
+      "tipo": "flujos_activos_elegibles",
+      "sector": "seguros",
+      "descripcion": "Flujos de activos elegibles por tramo, para el cálculo del test de suficiencia de activos (circular aplicada y tipo de información).",
+      "cobertura": "Un archivo por mes"
+    },
+    {
       "id": "fi_lista_entidades",
       "alias": [
         "fi_maestro"
