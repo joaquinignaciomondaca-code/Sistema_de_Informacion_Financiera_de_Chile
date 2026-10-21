@@ -35,11 +35,14 @@ RUTA_INVENTARIO = Path(__file__).resolve().parents[1] / "fuentes" / "inventario_
 # Largo exacto de cada línea (todas las líneas de un archivo tienen el mismo largo).
 LARGO = {
     "v2016": {"i": 930, "a": 470, "f": 338, "b": 477, "x": 513, "p": 489, "c": 138},
-    "v2024": {"i": 970, "a": 572, "f": 361, "b": 506, "x": 611, "p": 587, "c": 138},
+    # B.9 (d), B.10 (t) y B.11 (e) suman lo mismo que su registro tipo 1: 108, 80 y 178.
+    "v2024": {"i": 970, "a": 572, "f": 361, "b": 506, "x": 611, "p": 587, "c": 138,
+              "o": 510, "d": 108, "t": 80, "e": 178, "r": 658, "v": 443, "g": 300},
 }
 
 # Tipo de registro de totales (cuenta las líneas de detalle) por archivo.
-TIPO_TOTAL = {"i": "3", "a": "3", "f": "3", "b": "3", "x": "6", "p": "7", "c": "3"}
+TIPO_TOTAL = {"i": "3", "a": "3", "f": "3", "b": "3", "x": "6", "p": "7", "c": "3",
+              "o": "3", "d": "3", "t": "3", "e": "3", "r": "3", "v": "3", "g": "3"}
 
 # Encabezado (registro tipo 1), igual en todos los archivos y formatos.
 ENCABEZADO = [("rut_aseguradora", 1, 10, "r", 0), ("nombre_aseguradora", 11, 60, "t", 0),
