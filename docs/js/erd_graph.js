@@ -2645,13 +2645,13 @@ class ERDGraph {
       "Etiqueta amarilla: unión no uno a uno · roja: sin coincidencias · sin etiqueta: 1:1 o no medido.",
     ];
     ctx.save();
-    ctx.font = "10px sans-serif";
+    ctx.font = "12px 'Schibsted Grotesk', sans-serif";
     ctx.fillStyle = "rgba(20, 24, 30, 0.85)";
-    const alto = lineas.length * 14 + 10;
+    const alto = lineas.length * 17 + 12;
     const ancho = Math.min(this.canvas.width - 16, Math.max(...lineas.map((l) => ctx.measureText(l).width)) + 16);
     ctx.fillRect(8, this.canvas.height - alto - 8, ancho, alto);
     ctx.fillStyle = "#c9d1d9";
-    lineas.forEach((l, i) => ctx.fillText(l, 16, this.canvas.height - alto - 8 + 16 + i * 14));
+    lineas.forEach((l, i) => ctx.fillText(l, 16, this.canvas.height - alto - 8 + 18 + i * 17));
     ctx.restore();
   }
 
@@ -2725,18 +2725,18 @@ class ERDGraph {
     const texto = cardinalidad === "sin coincidencias" ? "sin coincidencias" : cardinalidad;
     const color = cardinalidad === "sin coincidencias" ? "#d9534f" : "#e0a526";
     ctx.save();
-    ctx.font = "600 10px sans-serif";
+    ctx.font = "600 12px 'Schibsted Grotesk', sans-serif";
     const ancho = ctx.measureText(texto).width + 12;
     ctx.fillStyle = "rgba(20, 24, 30, 0.9)";
     ctx.strokeStyle = color;
     ctx.lineWidth = 1;
-    this.roundRect(ctx, x - ancho / 2, y - 22, ancho, 16, 4);
+    this.roundRect(ctx, x - ancho / 2, y - 24, ancho, 18, 4);
     ctx.fill();
     ctx.stroke();
     ctx.fillStyle = color;
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
-    ctx.fillText(texto, x, y - 14);
+    ctx.fillText(texto, x, y - 15);
     ctx.restore();
   }
 
@@ -2774,19 +2774,19 @@ class ERDGraph {
 
       // Título de la tabla
       ctx.fillStyle = "#FFFFFF";
-      ctx.font = "bold 11px Inter, -apple-system, BlinkMacSystemFont, sans-serif";
+      ctx.font = "bold 12px 'Schibsted Grotesk', Inter, -apple-system, BlinkMacSystemFont, sans-serif";
       ctx.fillText(t.name, t.x + 10, t.y + 18);
 
       // Badge de filas
       ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
-      ctx.font = "10px monospace";
+      ctx.font = "12px monospace";
       const badgeW = ctx.measureText(t.rows).width + 8;
-      ctx.fillRect(t.x + t.w - badgeW - 6, t.y + 6, badgeW, 16);
+      ctx.fillRect(t.x + t.w - badgeW - 6, t.y + 4, badgeW, 18);
       ctx.fillStyle = "#FFFFFF";
       ctx.fillText(t.rows, t.x + t.w - badgeW - 2, t.y + 18);
 
       // Columnas
-      ctx.font = "10px monospace";
+      ctx.font = "12px monospace";
       let colY = t.y + 46;
       const style = getComputedStyle(document.documentElement);
       const teal = style.getPropertyValue("--accent-teal").trim() || "#06B6D4";
