@@ -2294,9 +2294,16 @@ class ERDGraph {
 
   async cargarCardinalidad() {
     try {
-      const respuesta = await fetch("outputs/cardinalidad_relaciones.json", { cache: "force-cache" });
-      if (!respuesta.ok) throw new Error("HTTP " + respuesta.status);
-      const datos = await respuesta.json();
+      // El <head> ya dejó esta descarga en marcha (window.SIF_JSON); si no existe
+      // —navegador sin fetch o prueba en jsdom— se pide aquí como antes.
+      let datos;
+      if (window.SIF_JSON && window.SIF_JSON.cardinalidad) {
+        datos = await window.SIF_JSON.cardinalidad;
+      } else {
+        const respuesta = await fetch("outputs/cardinalidad_relaciones.json", { cache: "force-cache" });
+        if (!respuesta.ok) throw new Error("HTTP " + respuesta.status);
+        datos = await respuesta.json();
+      }
       this.cardinalidad = Object.fromEntries(
         datos.uniones.map((u) => [`${u.from}|${u.to}`, u])
       );

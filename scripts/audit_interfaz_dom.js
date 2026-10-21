@@ -121,6 +121,10 @@ function check(name, condition, extra) {
 }
 
 setTimeout(async () => {
+  // El arranque de la página se reparte en tareas (ver el script final de
+  // index.html). Se espera la señal explícita antes de mirar el DOM.
+  if (window.SIF_LISTO) await window.SIF_LISTO;
+
   const tabIds = ["tab-btn-info", "tab-btn-erd", "tab-btn-dict", "tab-btn-data", "tab-btn-sql", "tab-btn-downloads"];
   check("existen las 6 pestañas", tabIds.every((id) => document.getElementById(id)));
   check("la pestaña de normativa está retirada", !document.getElementById("tab-btn-normativa") && !document.getElementById("normativa-container"));

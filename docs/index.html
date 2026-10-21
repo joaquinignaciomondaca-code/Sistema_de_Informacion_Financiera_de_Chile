@@ -9,7 +9,29 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/app.css?v=fl-202610-2345-canvas">
+  <link rel="stylesheet" href="css/app.css?v=fl-202610-2400-rendimiento">
+
+  <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
+       Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
+       ejecuten los ~500 KB de scripts: en el informe de Lighthouse cada uno
+       llegaba a los 3,5 s por esa cadena. erd_graph.js y busqueda_pregunta.js
+       reutilizan estas promesas; si no hay fetch, cada uno cae a su propia
+       petición. -->
+  <script>
+    if (typeof fetch === "function") {
+      const pedir = (ruta) => fetch(ruta, { cache: "force-cache" }).then((r) => {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      });
+      window.SIF_JSON = {
+        cardinalidad: pedir("outputs/cardinalidad_relaciones.json"),
+        indice: pedir("outputs/indice_busqueda.json")
+      };
+      // Si alguna no se consume, que no quede un rechazo suelto en la consola.
+      window.SIF_JSON.cardinalidad.catch(() => {});
+      window.SIF_JSON.indice.catch(() => {});
+    }
+  </script>
   <!-- Arranque en frío: el motor pesa ~18 MB. Preanunciar los tres archivos hace
        que se descarguen en paralelo con la página, en vez de esperar a que el
        JavaScript los pida al final de la cadena de carga. -->
@@ -541,43 +563,56 @@
 </div> <!-- Cierre de app-layout -->
 
   <!-- Scripts de la Aplicación -->
-  <script src="js/data_bundles.js?v=fl-202610-2345-canvas"></script>
-  <script src="js/alcance.js?v=fl-202610-2345-canvas"></script>
-  <script src="js/chart_renderer.js?v=fl-202610-2345-canvas"></script>
-  <script src="js/erd_graph.js?v=fl-202610-2345-canvas"></script>
-  <script src="js/sql_guard.js?v=fl-202610-2345-canvas"></script>
-  <script src="js/duckdb_client.js?v=fl-202610-2345-canvas"></script>
-  <script src="js/chat_terminal.js?v=fl-202610-2345-canvas"></script>
-  <script src="js/busqueda_pregunta.js?v=fl-202610-2345-canvas"></script>
-  <script src="js/sidebar.js?v=fl-202610-2345-canvas"></script>
-  <script src="js/ux_shell.js?v=fl-202610-2345-canvas"></script>
-  <script src="js/creditos.js?v=fl-202610-2345-canvas"></script>
-  <script src="js/theme_switcher.js?v=fl-202610-2345-canvas"></script>
-  <script src="js/data_dictionary.js?v=fl-202610-2345-canvas"></script>
-  <script src="js/data_viewer.js?v=fl-202610-2345-canvas"></script>
-  <script src="js/jszip.min.js"></script>
-  <script src="js/xlsx.full.min.js"></script>
-  <script src="js/diccionario_seguros.js?v=fl-202610-2345-canvas"></script>
-  <script src="js/download_utils.js?v=fl-202610-2345-canvas"></script>
-  <script src="js/download_catalog.js?v=fl-202610-2345-canvas"></script>
-  <script src="js/downloads_panel.js?v=fl-202610-2345-canvas"></script>
-  <script src="js/portada.js?v=fl-202610-2345-canvas"></script>
+  <script src="js/data_bundles.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/alcance.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/chart_renderer.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/erd_graph.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/sql_guard.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/duckdb_client.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/chat_terminal.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/sidebar.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/ux_shell.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/creditos.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/theme_switcher.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/data_dictionary.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/data_viewer.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/download_utils.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/download_catalog.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/downloads_panel.js?v=fl-202610-2400-rendimiento" defer></script>
+  <script src="js/portada.js?v=fl-202610-2400-rendimiento" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // Inicializar el Mapa Relacional (Canvas ERD)
-      window.erdInstance = new window.ERDGraph("erd-canvas");
+      // El arranque se reparte en tareas cortas: una sola tarea larga es
+      // exactamente lo que mide el Total Blocking Time. El orden visual no cambia.
+      const enTarea = (fn) => setTimeout(fn, 0);
 
-      // Inicializar el Chat / Terminal SQL
+      // 1) Lo que hace usable la página de inmediato: explorador y terminal.
+      window.SidebarNav = new window.SidebarController();
       window.ChatTerminal = new window.ChatTerminalController();
 
-      // Inicializar la Barra Lateral Jerárquica por Industria
-      window.SidebarNav = new window.SidebarController();
+      // 2) El resto va en tareas aparte, para que el navegador pueda pintar y
+      //    atender clics entre medio.
+      const listo = new Promise((resolver) => {
+        enTarea(() => {
+          // Mapa Relacional: vive en una pestaña oculta al cargar (canvas 1x1),
+          // así que construirlo aquí no compite con el primer pintado.
+          window.erdInstance = new window.ERDGraph("erd-canvas");
 
-      // Inicializar Diccionario de Datos
-      if (window.DataDictionary) {
-        window.DataDictionary.init();
-      }
+          // Diccionario: 67 fichas y ~1.100 columnas. Sólo se pinta si su pestaña
+          // está a la vista; si no, switchMainTab lo hace al abrirla.
+          const dict = document.getElementById("dict-container");
+          if (window.DataDictionary && dict &&
+              dict.style.display !== "none" && !dict.querySelector(".dict-table-name")) {
+            window.DataDictionary.init();
+          }
+          resolver(true);
+        });
+      });
+      // Señal de arranque completo, la usa la prueba de comportamiento del DOM.
+      window.SIF_LISTO = listo;
 
       // Conmutación de pestañas de la vista principal
       const TAB_REGISTRY = {

@@ -12,6 +12,36 @@ window.MFCDownload = (function () {
   const LIMITE_ZIP_XLSX = 150000;
   const LIMITE_EXCEL = 1048576;
 
+  /* SheetJS (284 KB) y JSZip (29 KB) sólo se usan al exportar. Se cargan la
+     primera vez que hacen falta: en el arranque de la página eran 313 KB de
+     JavaScript que el visitante no usa si no descarga nada. */
+  const LIBRERIAS = {
+    excel: { global: "XLSX", ruta: "js/xlsx.full.min.js" },
+    zip: { global: "JSZip", ruta: "js/jszip.min.js" }
+  };
+  const cargas = {};
+
+  function cargarLibreria(clave) {
+    const spec = LIBRERIAS[clave];
+    if (window[spec.global]) return Promise.resolve(window[spec.global]);
+    if (!cargas[clave]) {
+      cargas[clave] = new Promise((resolver, rechazar) => {
+        const etiqueta = document.createElement("script");
+        etiqueta.src = spec.ruta;
+        etiqueta.async = true;
+        etiqueta.onload = () => window[spec.global]
+          ? resolver(window[spec.global])
+          : rechazar(new Error("No se pudo inicializar " + spec.global + "."));
+        etiqueta.onerror = () => {
+          delete cargas[clave];
+          rechazar(new Error("No se pudo descargar " + spec.ruta + "."));
+        };
+        document.head.appendChild(etiqueta);
+      });
+    }
+    return cargas[clave];
+  }
+
   function numero(valor) {
     if (valor === null || valor === undefined || Number.isNaN(Number(valor))) return "—";
     return Number(valor).toLocaleString("es-CL");
@@ -90,7 +120,8 @@ window.MFCDownload = (function () {
   }
 
   async function empaquetar(filas, cols, { formato, nombre, limite, tamano, tabla }) {
-    if (!window.JSZip) throw new Error("No se pudo empaquetar el .ZIP (JSZip no está cargado).");
+    await cargarLibreria("zip");
+    if (formato !== "csv") await cargarLibreria("excel");
     const zip = new window.JSZip();
     const total = Math.ceil(filas.length / tamano);
     for (let parte = 0; parte < total; parte += 1) {
@@ -127,6 +158,7 @@ window.MFCDownload = (function () {
     // El diccionario (hoja extra del Excel) se busca por tabla: sólo las tablas de seguros
     // lo traen por ahora; en las demás la descarga queda igual que antes.
     const tabla = op.diccionario || null;
+    if (formato === "xlsx" && !window.XLSX) await cargarLibreria("excel");
     if (formato === "csv" && filas.length > LIMITE_ZIP_CSV && op.particionar !== false) {
       return empaquetar(filas, columnas, { formato, nombre, tamano: 150000, tabla });
     }
@@ -146,5 +178,5 @@ window.MFCDownload = (function () {
   }
 
   return { numero, bytes, textoCsv, blobCsv, hojaDiccionario, libroXlsx, descargar,
-           exportarFilas, marcaTiempo };
+           exportarFilas, marcaTiempo, cargarLibreria };
 })();
