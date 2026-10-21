@@ -64,7 +64,7 @@ Seis causas, no una:
 
 | Archivo | Cambio |
 |---|---|
-| `docs/index.html` | Los 19 `<script src>` llevan `defer`; fuera `xlsx.full.min.js` y `jszip.min.js`; bloque `window.SIF_JSON` en el `<head>` que pide los dos JSON en paralelo al parseo; arranque partido en dos tareas (`setTimeout(0)`) y señal `window.SIF_LISTO` |
+| `docs/index.html` | Los 19 `<script src>` llevan `defer`; fuera `xlsx.full.min.js` y `jszip.min.js`; bloque `window.SIF_JSON` en el `<head>` que pide los dos JSON en paralelo al parseo; arranque partido en dos tareas (`setTimeout(0)`) y señal `window.SIF_LISTO`; fuera los precargados de DuckDB; Google Fonts deja de bloquear el pintado; insignia «DuckDB-Wasm · bajo demanda»; `window.asegurarERD()` |
 | `docs/js/download_utils.js` | `cargarLibreria("excel" \| "zip")`: inyecta el `<script>` la primera vez, deduplica la promesa y reintenta si falla la red; `empaquetar()` y `exportarFilas(..., "xlsx")` la esperan |
 | `docs/js/erd_graph.js` | La cardinalidad sale de `window.SIF_JSON.cardinalidad` si está; si no, del `fetch` original |
 | `docs/js/busqueda_pregunta.js` | El índice sale de `window.SIF_JSON.indice` si está; si no, del `fetch` original |
@@ -74,8 +74,7 @@ Seis causas, no una:
 | `docs/js/ux_shell.js` | Clic en la insignia con el motor sin arrancar: lo inicia y lo dice |
 | `docs/js/sidebar.js` | `mapaERD()`: el explorador construye el mapa la primera vez que lo necesita, sin hacerlo al cargar |
 | `docs/css/app.css` | `tree-flash` anima `opacity` de una capa (compuesta) en vez de `background-color` |
-| `docs/index.html` | Fuera los tres precargados de DuckDB del `<head>`; Google Fonts deja de ser render-blocking; insignia inicial «DuckDB-Wasm · bajo demanda»; `window.asegurarERD()` |
-| `scripts/audit_interfaz_dom.js` | 78 → **82** comprobaciones: el mapa y el motor no se construyen al cargar, y el mapa sí al abrir su pestaña |
+| `scripts/audit_interfaz_dom.js` | 78 → **82** comprobaciones: ni el mapa ni el motor se construyen al cargar; abrir Mapa los construye y abrir Consultas arranca el motor |
 
 ### 3.1 Cuánto pesa menos el arranque
 
@@ -85,6 +84,7 @@ Seis causas, no una:
 | JS en disco al cargar | 2.196,6 KiB | 1.240,2 KiB |
 | De eso, comprimido (suma por archivo) | 559,7 KiB | 223,7 KiB |
 | ¿Bloquea el primer pintado? | sí, 21 peticiones | no: todos `defer` |
+| Peticiones del motor DuckDB al cargar | 3 archivos, 3.946,6 KiB | 0 hasta que se usa |
 
 Los 956,4 KiB que salieron del arranque son `xlsx.full.min.js` (861,1) y `jszip.min.js` (95,3).
 Ambos siguen en `docs/js/`: se cargan **sólo** cuando el usuario pide una descarga en Excel o un
@@ -103,8 +103,8 @@ consume la promesa sigue viendo la falla y cae al `fetch` propio.
 ### 3.3 Por qué dos tareas y no una
 
 `setTimeout(fn, 0)` no adelanta trabajo: lo **parte**. Entre la primera tarea (explorador y
-terminal, lo que el usuario ve y toca) y la segunda (grafo ERD y diccionario) el navegador puede
-pintar y atender un clic. El diccionario, además, ahora sólo se pinta si su pestaña está visible:
+terminal, lo que el usuario ve y toca) y la segunda (el diccionario, y sólo si su pestaña está
+visible) el navegador puede pintar y atender un clic. El diccionario, además, ahora sólo se pinta si su pestaña está visible:
 si el usuario nunca la abre, se ahorra el trabajo entero. `switchMainTab` lo pinta al abrirla, como
 ya hacía.
 
