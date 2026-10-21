@@ -109,15 +109,11 @@ jobs:
           MINUTOS: ${{ inputs.minutos }}
           PERIODOS: ${{ inputs.max_periodos }}
           FORZAR: ${{ inputs.forzar }}
-          COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
         run: |
           args=()
           if [ -n "${DESDE}" ]; then args+=(--desde "${DESDE}"); fi
           if [ -n "${HASTA}" ]; then args+=(--hasta "${HASTA}"); fi
           if [ "${FORZAR}" = "true" ]; then args+=(--forzar); fi
-          if [[ "${COMMIT_MESSAGE}" == "Audita archivos fuente Circular 1835"* ]]; then
-            args+=(--desde 2024-12 --hasta 2026-09 --auditar-archivos-fuente)
-          fi
           python -m seguros.scripts.actualizar_carteras --cache /tmp/cmf1835 \
             --minutos "${MINUTOS:-270}" --max-periodos "${PERIODOS:-0}" "${args[@]}"
 
