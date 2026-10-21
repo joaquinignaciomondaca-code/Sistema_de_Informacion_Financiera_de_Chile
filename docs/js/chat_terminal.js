@@ -245,7 +245,7 @@ class ChatTerminalController {
     const queries = this.getSavedQueries();
 
     if (queries.length === 0) {
-      listEl.innerHTML = `<li style="padding: 10px; font-size: 11px; color: var(--text-secondary); text-align: center;">No tienes consultas guardadas aún. Haz clic en "Guardar" en cualquier resultado.</li>`;
+      listEl.innerHTML = `<li style="padding: 10px; font-size: 12px; color: var(--text-secondary); text-align: center;">No tienes consultas guardadas aún. Haz clic en "Guardar" en cualquier resultado.</li>`;
       return;
     }
 
@@ -253,7 +253,7 @@ class ChatTerminalController {
       <li class="saved-item" data-index="${idx}">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <span class="saved-item-title">${this.escapeHtml(q.title)}</span>
-          <button class="delete-fav-btn" data-index="${idx}" style="background:transparent; border:none; color:#696E79; cursor:pointer; font-size:11px;" title="Eliminar">&times;</button>
+          <button class="delete-fav-btn" data-index="${idx}" style="background:transparent; border:none; color:#696E79; cursor:pointer; font-size: 12px;" title="Eliminar">&times;</button>
         </div>
         <span class="saved-item-sql">${this.escapeHtml(q.sql)}</span>
       </li>
