@@ -77,6 +77,13 @@ let fuente = fs.readFileSync(CLIENTE, "utf8");
 // Conteos esperados derivados del propio catálogo de vistas (no literales a mano).
 const N_VISTAS = (fuente.match(/\{\s*name:\s*"[a-z0-9_]+"\s*,\s*(?:file|manifest):/g) || []).length;
 const N_MANIFIESTOS = (fuente.match(/\{\s*name:\s*"[a-z0-9_]+"\s*,\s*manifest:/g) || []).length;
+const VISTAS_SIN_PARTICIONES = [...fuente.matchAll(/\{\s*name:\s*"([a-z0-9_]+)"\s*,\s*manifest:\s*"([^"]+)"/g)]
+  .filter(([, , manifest]) => {
+    const ruta = path.join(DOCS, manifest);
+    return fs.existsSync(ruta) && !(JSON.parse(fs.readFileSync(ruta, "utf8")).files || []).length;
+  })
+  .map(([, name]) => name);
+const N_VISTAS_PUBLICADAS = N_VISTAS - VISTAS_SIN_PARTICIONES.length;
 // No se instancia el motor de verdad: el script termina creando
 // window.DuckDBClient = new DuckDBClient(); y eso dispararía init() sobre
 // archivos de red. Se corta ahí y se recupera la clase para probarla.
@@ -99,8 +106,10 @@ vm.runInContext(fuente.slice(0, corte) + "\nglobalThis.__DuckDBClient = DuckDBCl
   // 1) Arranque completo con todos los manifiestos presentes.
   await cliente.registerSemanticViews();
   const principales = createdViews.filter((s) => s.includes("read_parquet"));
-  check(`se crean las ${N_VISTAS} vistas con read_parquet`, principales.length === N_VISTAS, `${principales.length}`);
-  check("no hay vistas no disponibles con manifiestos sanos", cliente.unavailableViews.length === 0,
+  check(`se crean las ${N_VISTAS_PUBLICADAS} vistas con particiones publicadas`, principales.length === N_VISTAS_PUBLICADAS, `${principales.length}`);
+  check("las vistas sin particiones se reportan explícitamente como no publicadas",
+    VISTAS_SIN_PARTICIONES.every((name) => cliente.unavailableViews.includes(name)) &&
+    cliente.unavailableViews.length === VISTAS_SIN_PARTICIONES.length,
     cliente.unavailableViews.join(", "));
   const alias = createdViews.length - principales.length;
   check("se crean los 19 alias de compatibilidad", alias === 19, `${alias}`);
@@ -144,15 +153,43 @@ vm.runInContext(fuente.slice(0, corte) + "\nglobalThis.__DuckDBClient = DuckDBCl
   contexto.console = { ...contexto.console, error: () => {} }; // el 404 es esperado
   await cliente2.registerSemanticViews();
   contexto.console = { ...contexto.console, error: errorReal };
-  check("un manifiestro 404 desactiva solo su vista",
-    cliente2.unavailableViews.length === 1 && cliente2.unavailableViews[0] === "fi_bienes_raices",
+  const noDisponiblesEsperadas = [...new Set([...VISTAS_SIN_PARTICIONES, "fi_bienes_raices"])].sort();
+  check("un manifiesto 404 desactiva solo su vista, además de las tablas sin filas",
+    JSON.stringify([...cliente2.unavailableViews].sort()) === JSON.stringify(noDisponiblesEsperadas),
     JSON.stringify(cliente2.unavailableViews));
   check("las demás vistas siguen creadas",
-    vistas3.filter((s) => s.includes("read_parquet")).length === N_VISTAS - 1,
+    vistas3.filter((s) => s.includes("read_parquet")).length === N_VISTAS - noDisponiblesEsperadas.length,
     `${vistas3.filter((s) => s.includes("read_parquet")).length}`);
   contexto.fetch = fetchReal;
 
-  // 4) enTandas respeta la concurrencia máxima.
+  // 4) Una consulta prepara solo la vista solicitada; una tabla sin datos
+  //    devuelve un mensaje explícito en vez de un error de catálogo engañoso.
+  const clienteLazy = Object.create(DuckDBClient.prototype);
+  clienteLazy.db = contexto.__dbStub;
+  clienteLazy.conn = contexto.__connStub;
+  clienteLazy.duckdb = protocolo;
+  clienteLazy.registeredFiles = new Set();
+  clienteLazy.queryQueue = Promise.resolve();
+  clienteLazy.unavailableViews = [];
+  clienteLazy.viewErrors = {};
+  clienteLazy.viewPromises = new Map();
+  clienteLazy.createdViews = new Set();
+  const antesLazy = createdViews.length;
+  await clienteLazy.ensureSemanticViewsForQuery("SELECT * FROM seguros_registros_tipo6 LIMIT 100");
+  const sqlLazy = createdViews.slice(antesLazy);
+  check("una consulta crea solo la vista tipo 6 que necesita",
+    sqlLazy.length === 1 && sqlLazy[0].includes("outputs/seguros/registros_tipo6/"),
+    `${sqlLazy.length} sentencia(s)`);
+  let errorSinDatos = "";
+  try {
+    await clienteLazy.ensureSemanticViewsForQuery("SELECT * FROM seguros_prestamos LIMIT 100");
+  } catch (err) { errorSinDatos = err.message; }
+  check("una vista con manifiesto vacío falla con causa explícita, no como tabla inexistente",
+    /seguros_prestamos.*No hay particiones publicadas/.test(errorSinDatos), errorSinDatos);
+  check("una tabla sin particiones no genera CREATE VIEW", createdViews.length === antesLazy + 1,
+    `${createdViews.length - antesLazy} sentencia(s)`);
+
+  // 5) enTandas respeta la concurrencia máxima.
   let activos = 0, maximo = 0;
   await cliente.enTandas([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 3, async () => {
     activos++; maximo = Math.max(maximo, activos);

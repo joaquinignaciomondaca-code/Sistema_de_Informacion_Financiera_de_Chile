@@ -212,6 +212,7 @@ class DataViewerController {
     this.isLoading = false;
     this.elapsedMs = 0;
     this.totalCount = 0;
+    this.loadRequestId = 0;
   }
 
   init() {
@@ -302,6 +303,8 @@ class DataViewerController {
   }
 
   async loadTable(viewName, displayName, limit = 100) {
+    const requestId = (this.loadRequestId || 0) + 1;
+    this.loadRequestId = requestId;
     this.currentView = viewName;
     this.currentDisplayName = displayName || viewName;
     const industry = this.sectorForView(viewName);
@@ -324,6 +327,9 @@ class DataViewerController {
       
       const sql = `SELECT * FROM ${this.currentView} LIMIT ${this.currentLimit};`;
       const res = await window.DuckDBClient.query(sql);
+      // Un clic posterior puede haber cambiado la selección mientras DuckDB
+      // preparaba la vista; una respuesta antigua nunca debe pisar la tabla nueva.
+      if (requestId !== this.loadRequestId) return;
 
       this.elapsedMs = (performance.now() - t0).toFixed(1);
       if (res && res.success) {
@@ -336,13 +342,16 @@ class DataViewerController {
         this.error = res ? res.error : "Error desconocido";
       }
     } catch (err) {
+      if (requestId !== this.loadRequestId) return;
       this.elapsedMs = (performance.now() - t0).toFixed(1);
       this.error = err.message;
       this.currentColumns = [];
       this.currentRows = [];
     } finally {
-      this.isLoading = false;
-      this.render();
+      if (requestId === this.loadRequestId) {
+        this.isLoading = false;
+        this.render();
+      }
     }
   }
 
