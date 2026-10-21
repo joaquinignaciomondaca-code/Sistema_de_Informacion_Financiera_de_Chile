@@ -70,6 +70,16 @@ const SEMANTIC_VIEWS = [
   { name: "seguros_tablas_descriptores", manifest: "outputs/seguros/tablas_descriptores/manifest.json" },
   { name: "seguros_tablas_desarrollo", manifest: "outputs/seguros/tablas_desarrollo/manifest.json" },
   { name: "seguros_flujos_activos_elegibles", manifest: "outputs/seguros/flujos_activos_elegibles/manifest.json" },
+  { name: "seguros_prestamos", manifest: "outputs/seguros/prestamos/manifest.json" },
+  { name: "seguros_bienes_raices_arriendo_morosidad", manifest: "outputs/seguros/bienes_raices_arriendo_morosidad/manifest.json" },
+  { name: "seguros_garantias_derivados", manifest: "outputs/seguros/garantias_derivados/manifest.json" },
+  { name: "seguros_renta_fija_relevante", manifest: "outputs/seguros/renta_fija_relevante/manifest.json" },
+  { name: "seguros_acciones_relevantes", manifest: "outputs/seguros/acciones_relevantes/manifest.json" },
+  { name: "seguros_bienes_raices_relevantes", manifest: "outputs/seguros/bienes_raices_relevantes/manifest.json" },
+  { name: "seguros_extranjeros_relevantes", manifest: "outputs/seguros/extranjeros_relevantes/manifest.json" },
+  { name: "seguros_derivados_relevantes", manifest: "outputs/seguros/derivados_relevantes/manifest.json" },
+  { name: "seguros_prestamos_relevantes", manifest: "outputs/seguros/prestamos_relevantes/manifest.json" },
+  { name: "seguros_bienes_raices_arriendo_morosidad_relevantes", manifest: "outputs/seguros/bienes_raices_arriendo_morosidad_relevantes/manifest.json" },
 
   // FONDOS DE INVERSIÓN. Cartera y pactos de los informes IFRS trimestrales de cada fondo (CMF);
   // se actualiza sola 3 veces al mes. Montos en miles de la moneda funcional de cada fondo.

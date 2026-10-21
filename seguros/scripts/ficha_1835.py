@@ -50,7 +50,7 @@ FICHA = {
         "p": "B.7_Inversiones_e_Instrumentos_derivados_y_pactos.txt",
         "c": "B.8_Informacion_de_Control.txt",
     },
-    "v2024": {letra: "Anexos_Tecnicos_Circular_N1835.txt" for letra in "iafbxpcodet"},
+    "v2024": {letra: "Anexos_Tecnicos_Circular_N1835.txt" for letra in "iafbxpcodetrvg"},
 }
 
 # Letra del archivo según el título de la sección en la ficha (B.1 -> i, B.2 -> a, ...).

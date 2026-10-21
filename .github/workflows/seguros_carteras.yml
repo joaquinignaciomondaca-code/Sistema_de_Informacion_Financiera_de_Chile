@@ -10,10 +10,19 @@ on:
   push:
     branches:
       - main
+      - arena/16880910-sistema-de-informacion-financi
     paths:
       - .github/workflows/seguros_carteras.yml
       - seguros/scripts/actualizar_carteras.py
       - seguros/scripts/formato_1835.py
+      - seguros/scripts/vistas_1835.py
+      - seguros/scripts/metadatos_web.py
+      - seguros/scripts/diccionario_1835.py
+      - docs/vocabulario.json
+      - docs/js/data_dictionary.js
+      - docs/js/data_viewer.js
+      - docs/js/sidebar.js
+      - docs/js/duckdb_client.js
       # La ficha y el inventario definen posiciones y columnas: si cambian, hay que volver a
       # probar y publicar (B.6 y B.9–B.11 entraron por acá).
       - seguros/scripts/ficha_1835.py
@@ -82,7 +91,8 @@ jobs:
           python -m seguros.tests.test_formato_1835
           python -m seguros.tests.test_inventario_1835
           python -m seguros.tests.test_registros_2024
-          python -m unittest -v pipelines.auto.tests.test_estable
+          python -m unittest -v seguros.tests.test_vistas_1835 pipelines.auto.tests.test_estable pipelines.auto.tests.test_privacidad
+          python -m seguros.scripts.diccionario_1835 --check
 
       # Revisa todos los meses pendientes sin escribir y anota los que tienen problemas, para
       # corregirlos juntos. Las descargas quedan en /tmp/cmf1835 y la publicación las reutiliza.

@@ -28,6 +28,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from seguros.scripts import formato_1835  # noqa: E402
+from seguros.scripts.vistas_1835 import RESUMENES_RELEVANTES  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parents[2]
 SALIDA_JS = RAIZ / "docs" / "js" / "diccionario_seguros.js"
@@ -133,6 +134,44 @@ PRIVACIDAD_WEB = {
             }],
         },
     },
+    "prestamos": {
+        "notas": {
+            "rut_deudor": "Se conserva la columna del registro, pero su valor se suprime para deudores "
+                         "personas naturales, para reducir el riesgo de identificación en la descarga masiva.",
+            "ver_deudor": "Se suprime junto con el RUT del deudor cuando este es persona natural.",
+            "razon_social_deudor": "Se suprime junto con los nombres del deudor cuando este es persona natural.",
+            "nombre_deudor": "Se suprime para deudores personas naturales; los campos se mantienen en el esquema.",
+            "primer_apellido_deudor": "Se suprime para deudores personas naturales; los campos se mantienen en el esquema.",
+            "segundo_apellido_deudor": "Se suprime para deudores personas naturales; los campos se mantienen en el esquema.",
+        }
+    },
+    "bienes_raices_arriendo_morosidad": {
+        "notas": {
+            "rol": "No se publica: identificador tributario del inmueble; se reemplaza por property_id.",
+            "rut_arrendatario_deudor": "Se suprime para personas naturales o cuando el RUT no permite "
+                                      "determinar con seguridad una entidad; la columna se conserva.",
+            "nombre_arrendatario_deudor": "Se suprime junto con el RUT cuando el arrendatario/deudor "
+                                           "es persona natural; la columna se conserva.",
+        },
+        "agrega": {
+            "rol": [{"columna": "property_id", "nombre_ficha": "", "tipo": "t", "decimales": 0,
+                     "unidad": None,
+                     "descripcion": "Seudónimo estable del inmueble, calculado desde rol y aseguradora "
+                                   "antes de suprimir el rol; permite seguimiento entre meses sin revelar el identificador."}],
+        },
+    },
+    "garantias_derivados": {
+        "notas": {
+            "rut_contraparte_nacional": "Se suprime cuando el RUT probablemente corresponde a una persona natural.",
+            "nombre_contraparte_garantia": "Se suprime con el RUT si la contraparte es una persona natural.",
+        },
+        "agrega": {
+            "rut_contraparte_nacional": [{"columna": "contraparte_tipo", "nombre_ficha": "", "tipo": "t",
+                                          "decimales": 0, "unidad": None,
+                                          "descripcion": "Clasificación de privacidad de la contraparte nacional: "
+                                                        "persona natural probable, persona jurídica o sin RUT."}],
+        },
+    },
 }
 
 
@@ -200,7 +239,15 @@ def genera(web: bool = False) -> dict:
         for reg in formato_1835.registros_inventario(formato).values():
             if reg["tabla"] not in tablas:
                 tablas.append(reg["tabla"])
-    return {t: filas(t, web) for t in tablas}
+    salida = {t: filas(t, web) for t in tablas}
+    if web:
+        for tabla_completa, (tabla_relevante, _titulo, columnas) in RESUMENES_RELEVANTES.items():
+            por_nombre = {f["columna"]: f for f in salida[tabla_completa]}
+            faltan = [c for c in columnas if c not in por_nombre]
+            if faltan:
+                raise ValueError(f"Diccionario web {tabla_relevante}: columnas sin documentación: {faltan}")
+            salida[tabla_relevante] = [por_nombre[c] for c in columnas]
+    return salida
 
 
 # ── Salidas ──────────────────────────────────────────────────────────────────────────
@@ -251,8 +298,8 @@ def _columna_js(fila: dict) -> str:
 def _actualiza_diccionario_web(texto: str, datos: dict) -> str:
     """Reemplaza el bloque de columnas de cada tabla de seguros en data_dictionary.js.
 
-    Las tablas que todavía no tienen entrada en la ficha web se saltan: el diccionario del
-    Excel las incluye igual, pero la web las publica cuando la tabla sale por primera vez.
+    Actualiza las columnas de las tablas ya catalogadas y crea las entradas de las tablas
+    nuevas de seguros con metadatos oficiales y la ficha de columnas completa.
     """
     pendientes = []
     for tabla, filas_ in datos.items():
@@ -263,8 +310,46 @@ def _actualiza_diccionario_web(texto: str, datos: dict) -> str:
         texto, n = patron.subn(lambda m: m.group(1) + nuevo, texto, count=1)
         if not n:
             pendientes.append(vista)
+        if tabla in {cfg[0] for cfg in RESUMENES_RELEVANTES.values()}:
+            patron_registros = re.compile(r'(id: "%s",.*?registros: ")[^"]*(")' % re.escape(vista), re.S)
+            texto = patron_registros.sub(lambda m: m.group(1) + "Campos relevantes · conserva las filas" + m.group(2), texto, count=1)
     if pendientes:
-        print("Sin entrada en la web todavía: " + ", ".join(pendientes))
+        from seguros.scripts import metadatos_web
+        vistas = []
+        for vista in pendientes:
+            tabla = vista.removeprefix("seguros_")
+            metadata = metadatos_web.TABLAS.get(tabla)
+            if metadata is None:
+                print(f"Sin metadatos para crear entrada del diccionario: {vista}")
+                continue
+            nombre, descripcion = metadata
+            desde = "Desde 2024-12" if tabla in {
+                "renta_fija", "bienes_raices", "prestamos", "bienes_raices_arriendo_morosidad",
+                "garantias_derivados", "renta_fija_relevante", "bienes_raices_relevantes",
+                "prestamos_relevantes", "bienes_raices_arriendo_morosidad_relevantes",
+            } else "Mensual"
+            registros = ("Campos relevantes · conserva las filas" if
+                         tabla in {cfg[0] for cfg in RESUMENES_RELEVANTES.values()} else "Un archivo por mes")
+            columnas = ",\n".join(_columna_js(f) for f in datos[tabla])
+            vistas.append(
+                "  {\n"
+                f'    id: "{vista}", name: "{nombre}", viewName: "{vista}",\n'
+                '    sector: "seguros", sectorLabel: "Seguros de Vida y Generales (CMF)",\n'
+                '    norma: "Circular CMF 1835",\n'
+                f'    corte: "{desde}", frescura: "Se actualiza sola 3 veces al mes",\n'
+                '    modo: "Automático · incremental, cada mes validado antes de publicarse",\n'
+                f'    ultimaActualizacion: "", registros: "{registros}",\n'
+                f'    descripcion: "{descripcion}",\n'
+                '    origen: "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835); ficha técnica oficial: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",\n'
+                f"    columnas: [\n{columnas}\n    ]\n"
+                "  }"
+            )
+        if vistas:
+            marcador = "\n];\n\n// La modalidad"
+            if marcador not in texto:
+                raise ValueError("No se encontró el cierre del arreglo del diccionario web")
+            insercion = ",\n".join(vistas)
+            texto = texto.replace(marcador, ",\n" + insercion + marcador, 1)
     return texto
 
 
