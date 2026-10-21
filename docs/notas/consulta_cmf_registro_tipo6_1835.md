@@ -1,6 +1,6 @@
 # Borrador de consulta técnica a CMF: tipo de registro 6 en B.11/B.14
 
-**Estado:** borrador preparado; no enviado.
+**Estado:** en pausa; no se requiere una consulta para incorporar los registros tipo 6 como datos de origen conservados y normalizados.
 
 **Asunto:** Circular 1835: aclaración de registros tipo 6 en archivos E (B.11) y G (B.14)
 

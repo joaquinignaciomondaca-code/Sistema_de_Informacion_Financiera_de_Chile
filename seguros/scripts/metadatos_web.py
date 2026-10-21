@@ -54,6 +54,8 @@ TABLAS = {
         "Detalle por inmueble, unidad o contrato: arriendos, recaudación, morosidad, reprogramaciones y saldos."),
     "garantias_derivados": ("B.14 GARANTÍAS EN INSTRUMENTOS DERIVADOS",
                             "Garantías en efectivo o instrumentos, recibidas u otorgadas, asociadas a derivados."),
+    "registros_tipo6": ("Registros tipo 6 de B.11 y B.14",
+                        "Líneas tipo 6 reportadas por la CMF en archivos B.11 (E) y B.14 (G). Se conserva íntegra cada línea, junto con período, sector, aseguradora y archivo de origen; los campos internos no se interpretan porque no están descritos en el anexo consultado."),
     "renta_fija_relevante": ("B.1 INSTRUMENTOS DE RENTA FIJA",
                              "Vista analítica de B.1 con identificación, vencimiento, magnitudes de costo y valor, "
                              "riesgo y representatividad. La tabla completa conserva todos los campos."),
@@ -82,7 +84,7 @@ _ORDEN_TABLAS = [
     "otras_inversiones", "derivados", "derivados_relevantes", "pactos", "control_inversiones",
     "tablas_descriptores", "tablas_desarrollo", "flujos_activos_elegibles", "prestamos",
     "prestamos_relevantes", "bienes_raices_arriendo_morosidad",
-    "bienes_raices_arriendo_morosidad_relevantes", "garantias_derivados",
+    "bienes_raices_arriendo_morosidad_relevantes", "garantias_derivados", "registros_tipo6",
 ]
 TABLAS = {tabla: TABLAS[tabla] for tabla in _ORDEN_TABLAS}
 
@@ -100,6 +102,10 @@ COLUMNAS_CONTROL = {
                         "(meses con al menos una fila en alguna tabla; no cuenta meses en que solo "
                         "envió archivos sin detalle).",
     "reporta_ultimo_mes": "Verdadero si aparece en el último mes publicado.",
+    "archivo_origen": "Nombre del archivo fuente publicado por la CMF.",
+    "tipo_archivo": "Sección del anexo a la que corresponde el archivo (B.11 o B.14).",
+    "largo_registro": "Longitud de la línea original, en caracteres.",
+    "registro_original": "Línea íntegra publicada por la CMF; sus posiciones internas se conservan sin interpretación.",
 }
 
 
