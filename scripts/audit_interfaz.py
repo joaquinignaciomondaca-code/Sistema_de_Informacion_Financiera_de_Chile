@@ -318,6 +318,10 @@ def audit_accesibilidad(html, css):
         print("  [OK] prefers-reduced-motion respetado")
     else:
         fail("app.css no respeta prefers-reduced-motion")
+    if re.search(r"transition:\s*all\b", css):
+        fail("app.css usa transition: all; hay que declarar qué propiedades cambian")
+    else:
+        print("  [OK] ninguna transición anima «all»")
 
 
 def audit_theme_tokens():
