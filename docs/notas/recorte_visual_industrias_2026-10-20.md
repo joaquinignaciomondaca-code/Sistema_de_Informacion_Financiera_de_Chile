@@ -116,6 +116,6 @@ publicación). Sin catálogo, la web vuelve a la navegación completa.
 cuatro bloques), `audit_interfaz_dom.js` (63 comprobaciones en DOM real, incluidas la
 portada, el explorador, el mapa, el diccionario, el visor y Descargas),
 `audit_web_full.py`, `audit_interfaz.py`, `audit_consultas_sugeridas.py --check`
-(153 consultas), `normalizar_vocabulario.py --check`, `build_download_catalog.py --check`
+(146 consultas sugeridas del explorador + 7 del terminal = 153), `normalizar_vocabulario.py --check`, `build_download_catalog.py --check`
 y las pruebas unitarias de FI, factoring y leasing y pipelines. `audit_rut_formatos.py`
 ya fallaba antes de este cambio (`seguros/acciones/2026.parquet`, RUT `1-9`).

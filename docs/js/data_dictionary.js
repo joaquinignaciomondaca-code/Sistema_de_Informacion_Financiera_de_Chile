@@ -2973,7 +2973,7 @@ class DataDictionaryController {
         <!-- Barra superior del diccionario -->
         <div class="dict-toolbar">
           <div class="dict-search-wrapper">
-            <input type="text" id="dict-search-input" class="dict-search-input" placeholder="Buscar columna, significado o criterio contable (ej: MtM, Neto, Bruto, TIR)..." value="${this.searchQuery}">
+            <input type="text" id="dict-search-input" class="dict-search-input" aria-label="Buscar en el diccionario de datos" placeholder="Buscar columna, significado o criterio contable (ej: MtM, Neto, Bruto, TIR)..." value="${this.searchQuery}">
           </div>
           <div class="dict-sector-filters">
             ${this.botonesFiltro()}

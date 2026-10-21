@@ -31,6 +31,8 @@ import pandas as pd
 import pyarrow as pa
 import pyarrow.parquet as pq
 
+from pipelines.auto.rut import con_puntos
+
 ROOT = Path(__file__).resolve().parents[2]
 XLSX = ROOT / "securitizadoras" / "fuentes" / "balances_patrimonios_separados.xlsx"
 HOJA = "Balance_por_cuenta"
@@ -52,15 +54,6 @@ COLUMNAS = ["archivo", "rut_administradora", "rut_completo", "nombre_administrad
 def fallar(msg: str) -> None:
     print(f"::error title=Balance patrimonios separados::{msg}", file=sys.stderr)
     raise SystemExit(1)
-
-
-def dv_m11(cuerpo: str) -> str:
-    suma, factor = 0, 2
-    for d in reversed(cuerpo):
-        suma += int(d) * factor
-        factor = 2 if factor == 7 else factor + 1
-    r = 11 - suma % 11
-    return "0" if r == 11 else "K" if r == 10 else str(r)
 
 
 def leer(xlsx: Path) -> pd.DataFrame:
@@ -107,7 +100,7 @@ def construir(cuentas: pd.DataFrame) -> pd.DataFrame:
 
     ident = pd.DataFrame({
         "rut_administradora": docs["entidad_rut"],
-        "rut_completo": [f"{r}-{dv_m11(r)}" for r in docs["entidad_rut"]],
+        "rut_completo": [con_puntos(r) for r in docs["entidad_rut"]],  # convención del proyecto (formato A)
         "nombre_administradora": docs["entidad_nombre"].str.replace("_", " ").str.strip(),
         "codigo_patrimonio": docs["patrimonio_codigo"].astype(str),
         "periodo": docs["periodo"].str[:4] + "-" + docs["periodo"].str[4:],
