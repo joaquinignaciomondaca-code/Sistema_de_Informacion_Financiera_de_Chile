@@ -95,6 +95,28 @@ jobs:
           python -m unittest -v seguros.tests.test_vistas_1835 seguros.tests.test_diagnostico_1835 pipelines.auto.tests.test_estable pipelines.auto.tests.test_privacidad
           python -m seguros.scripts.diccionario_1835 --check
 
+      # Prueba temporal y acotada para localizar la etapa de los timeouts CMF. Solo corre
+      # en un push con este mensaje; no guarda ni publica datos y limita la transferencia a 90 s.
+      - name: Diagnosticar conectividad con la CMF (solo lectura, temporal)
+        if: ${{ github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Diagnostica conectividad CMF') }}
+        run: |
+          set +e
+          base='https://www.cmfchile.cl/institucional/estadisticas/merc_seguros/cartera_inversiones/dcisgv/descarga_cartera_inv.php'
+          archi="${base}?tipoentidad=CSVID&fnAjax=archi&peri=202604"
+          descarga="${base}?tipoentidad=CSVID&fnAjax=descarga&peri=202604"
+          echo '=== Resolución, TLS y respuesta del endpoint archi ==='
+          curl -sS -L --connect-timeout 15 --max-time 30 -A 'Mozilla/5.0 (monitor-financiero-chile)' \
+            -o /tmp/cmf-archi.txt -w 'http=%{http_code} ip=%{remote_ip} dns_s=%{time_namelookup} connect_s=%{time_connect} tls_s=%{time_appconnect} ttfb_s=%{time_starttransfer} total_s=%{time_total} bytes=%{size_download}\n' "$archi"
+          echo "archi_curl_exit=$? body=$(cat /tmp/cmf-archi.txt 2>/dev/null)"
+          if [ "$(cat /tmp/cmf-archi.txt 2>/dev/null | tr -d '\r\n ')" = '1' ]; then
+            echo '=== Transferencia del ZIP (salida descartada, máximo 90 s) ==='
+            curl -sS -L --connect-timeout 15 --max-time 90 -A 'Mozilla/5.0 (monitor-financiero-chile)' \
+              -o /dev/null -w 'http=%{http_code} ip=%{remote_ip} dns_s=%{time_namelookup} connect_s=%{time_connect} tls_s=%{time_appconnect} ttfb_s=%{time_starttransfer} total_s=%{time_total} bytes=%{size_download}\n' "$descarga"
+            echo "download_curl_exit=$?"
+          else
+            echo 'Se omite el ZIP: archi no confirmó disponibilidad.'
+          fi
+
       # Revisa los meses pendientes sin escribir; informa conteos B.11–B.14 y separa errores fatales
       # de archivos excluidos con advertencia. Las descargas quedan en /tmp/cmf1835.
       - name: Diagnóstico de los meses pendientes (no escribe)
