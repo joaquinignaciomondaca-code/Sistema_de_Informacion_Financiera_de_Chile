@@ -295,6 +295,31 @@ def audit_ux_layer():
         print("  [OK] index.html carga ux_shell.js")
 
 
+def audit_accesibilidad(html, css):
+    print("\n--- 10. Teclado y movimiento: salto, foco y prefers-reduced-motion ---")
+    if 'class="skip-link"' in html and 'href="#main-content"' in html:
+        print("  [OK] enlace «Saltar al contenido principal»")
+    else:
+        fail("index.html no tiene el enlace de salto al contenido")
+    destino = re.search(r'<main[^>]*id="main-content"[^>]*>', html)
+    if destino and 'tabindex="-1"' in destino.group(0):
+        print("  [OK] el destino del salto es enfocable (tabindex=-1)")
+    else:
+        fail("el <main> no tiene id=main-content con tabindex=-1")
+    malas = []
+    for m in re.finditer(r'([^{}]*:focus-visible[^{}]*)\{([^{}]*)\}', css):
+        if re.search(r'outline:\s*none', m.group(2)):
+            malas.append(" ".join(m.group(1).split()))
+    if malas:
+        fail("reglas :focus-visible que anulan el anillo de foco: " + "; ".join(malas))
+    else:
+        print("  [OK] ninguna regla :focus-visible anula el anillo de foco")
+    if "prefers-reduced-motion: reduce" in css:
+        print("  [OK] prefers-reduced-motion respetado")
+    else:
+        fail("app.css no respeta prefers-reduced-motion")
+
+
 def audit_theme_tokens():
     print("\n--- 4. Temas: sin colores fijos fuera de la paleta ---")
     css = read("docs/css/app.css")
@@ -455,6 +480,7 @@ def main():
     audit_terminal(html)
     audit_ux_layer()
     audit_theme_tokens()
+    audit_accesibilidad(html, read("docs/css/app.css"))
     audit_engine()
     audit_normativa_retirada()
     audit_dead_classes()
