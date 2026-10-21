@@ -158,10 +158,10 @@ jobs:
                       if nombre is None:
                           raise FileNotFoundError(buscado)
                       raw_file = z.read(nombre)
-                  raw_lines = [b for b in raw_file.split(b"\\n") if b.strip(b"\\r\\x1a ")]
+                  raw_lines = [b for b in raw_file.split(b"\n") if b.strip(b"\r\x1a ")]
                   lines = []
                   for raw in raw_lines:
-                      raw = raw.rstrip(b"\\r")
+                      raw = raw.rstrip(b"\r")
                       try:
                           text = raw.decode("utf-8")
                       except UnicodeDecodeError:
