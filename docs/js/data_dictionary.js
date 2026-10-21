@@ -2751,6 +2751,33 @@ const DATA_DICTIONARY = [
       { name: "valor_razonable_activo_en_garantia_m_clp", type: "BIGINT", role: "Métrica", significado: "en efectivo constituido o recibido como garantía. Este monto deberá expresarse en M$ Corresponde informar la cuenta del Estado de Situación Financiera donde se registra la garantía en efectivo o en instrumentos, de acuerdo al código de la cuenta definido en la Circular N°2022 del 17.05.2011 y sus. Expresado en miles de pesos.", contable: "Valor razonable" },
       { name: "cuenta_eeff_de_registro_de_la_garantia", type: "BIGINT", role: "Métrica", significado: "5.11.30.00 Activos Financieros a Costo Amortizado, entonces se debe informar \"5113000\" (sin comillas). Para instrumentos recibidos en garantía que no cumplan las condiciones dispuestas en IFRS para ser registrados contablemente por la compañía, se deberá informar este campo con ceros (0). 199.", contable: "No aplica" }
     ]
+  },
+  {
+    id: "seguros_registros_tipo6",
+    name: "Registros tipo 6 de B.11 y B.14",
+    viewName: "seguros_registros_tipo6",
+    sector: "seguros",
+    sectorLabel: "Seguros de Vida y Generales (CMF)",
+    norma: "Circular CMF 1835",
+    corte: "Desde 2024-12",
+    frecuencia: "Mensual",
+    frescura: "Se actualiza sola 3 veces al mes",
+    modo: "Automático · incremental, cada mes validado antes de publicarse",
+    ultimaActualizacion: "2026-10-21",
+    registros: "Una fila por línea fuente tipo 6",
+    origen: "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835); archivos B.11 (E) y B.14 (G); ficha técnica oficial: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
+    descripcion: "Líneas tipo 6 reportadas por la CMF, normalizadas con contexto de período, compañía y archivo. Las posiciones internas se conservan sin asignarles un significado no documentado.",
+    columnas: [
+      { name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Mes de la cartera informada (AAAA-MM).", contable: "No aplica" },
+      { name: "sector", type: "VARCHAR", role: "Atributo", significado: "Sector de la compañía que reporta: vida o generales.", contable: "No aplica" },
+      { name: "rut_aseguradora", type: "VARCHAR", role: "FK", significado: "RUT de la compañía aseguradora asociada al archivo fuente.", contable: "No aplica" },
+      { name: "nombre_aseguradora", type: "VARCHAR", role: "Atributo", significado: "Nombre de la compañía tal como aparece en el encabezado o en sus otros archivos del período.", contable: "No aplica" },
+      { name: "archivo_origen", type: "VARCHAR", role: "Atributo", significado: "Nombre del archivo original de la CMF que contiene la línea.", contable: "No aplica" },
+      { name: "tipo_archivo", type: "VARCHAR", role: "Atributo", significado: "Sección técnica correspondiente al archivo: B.11 o B.14.", contable: "No aplica" },
+      { name: "tipo_registro", type: "VARCHAR", role: "Atributo", significado: "Tipo declarado en la primera posición de la línea fuente; en esta tabla es 6.", contable: "No aplica" },
+      { name: "largo_registro", type: "BIGINT", role: "Control", significado: "Longitud de la línea decodificada; debe concordar con la longitud fija del archivo fuente.", contable: "No aplica" },
+      { name: "registro_original", type: "VARCHAR", role: "Dato fuente", significado: "Línea completa tal como se decodificó del archivo fuente, incluidos los espacios de relleno; no se interpretan sus campos internos.", contable: "No aplica" }
+    ]
   }
 ];
 

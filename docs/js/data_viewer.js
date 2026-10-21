@@ -84,7 +84,8 @@ const DATA_VIEWER_CATALOG = [
       { id: "seguros_prestamos_relevantes", name: "B.12 PRÉSTAMOS", detalle: "Campos relevantes", descripcion: "Vista analítica de B.12 con condiciones, saldo, provisión y morosidad; no incluye identificadores personales de deudores." },
       { id: "seguros_bienes_raices_arriendo_morosidad", name: "B.13 BIENES RAICES EN ARRIENDO Y MOROSIDAD DE MUTUOS HIPOTECARIOS ENDOSABLES Y CONTRATOS DE LEASING", detalle: "Bienes raíces en arriendo y morosidad", descripcion: "Detalle por inmueble, unidad o contrato: arriendos, recaudación, morosidad, reprogramaciones y saldos." },
       { id: "seguros_bienes_raices_arriendo_morosidad_relevantes", name: "B.13 BIENES RAICES EN ARRIENDO Y MOROSIDAD DE MUTUOS HIPOTECARIOS ENDOSABLES Y CONTRATOS DE LEASING", detalle: "Campos relevantes", descripcion: "Vista analítica de B.13 con cobranza, mora, provisión, superficie y valorización; suprime identificadores personales." },
-      { id: "seguros_garantias_derivados", name: "B.14 GARANTÍAS EN INSTRUMENTOS DERIVADOS", detalle: "Garantías en instrumentos derivados", descripcion: "Garantías en efectivo o instrumentos, recibidas u otorgadas, asociadas a derivados." }
+      { id: "seguros_garantias_derivados", name: "B.14 GARANTÍAS EN INSTRUMENTOS DERIVADOS", detalle: "Garantías en instrumentos derivados", descripcion: "Garantías en efectivo o instrumentos, recibidas u otorgadas, asociadas a derivados." },
+      { id: "seguros_registros_tipo6", name: "Registros tipo 6 de B.11 y B.14", detalle: "Registros tipo 6", descripcion: "Líneas originales reportadas por la CMF, normalizadas por período, sector, aseguradora y archivo; sin atribuir significado no documentado a sus posiciones." }
     ]
   },
   {
