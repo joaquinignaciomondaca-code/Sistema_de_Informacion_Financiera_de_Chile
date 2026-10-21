@@ -98,7 +98,7 @@ jobs:
       # Prueba temporal y acotada para localizar la etapa de los timeouts CMF. Solo corre
       # en un push con este mensaje; no guarda ni publica datos y limita la transferencia a 90 s.
       - name: Diagnosticar conectividad con la CMF (solo lectura, temporal)
-        if: ${{ github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Diagnostica conectividad CMF') }}
+        if: ${{ github.event_name == 'push' && (startsWith(github.event.head_commit.message, 'Diagnostica conectividad CMF') || startsWith(github.event.head_commit.message, 'Expone métricas de la sonda CMF')) }}
         run: |
           set +e
           base='https://www.cmfchile.cl/institucional/estadisticas/merc_seguros/cartera_inversiones/dcisgv/descarga_cartera_inv.php'
