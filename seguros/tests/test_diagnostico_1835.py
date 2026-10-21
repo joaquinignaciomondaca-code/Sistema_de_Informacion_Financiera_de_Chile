@@ -1,8 +1,12 @@
-"""Regresión: el resumen del diagnóstico diferencia exclusiones de errores fatales."""
+"""Pruebas de auditoría de archivos fuente y de diagnóstico 1835."""
 import contextlib
 import io
+import json
 import os
+import tempfile
 import unittest
+import zipfile
+from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
@@ -10,6 +14,28 @@ from seguros.scripts import actualizar_carteras as ac
 
 
 class Diagnostico1835Test(unittest.TestCase):
+    def test_audita_prefijos_fuente_y_persiste_solo_conteos(self):
+        buf = io.BytesIO()
+        with zipfile.ZipFile(buf, "w") as z:
+            for nombre in ("e202412.empresa", "e202412.empresa2", "v202412.arriendo", "g202412.garantia"):
+                z.writestr(nombre, b"")
+        args = SimpleNamespace(zip_dir=None, cache=None)
+        control = {"aseguradoras": {}, "periodos": {"2024-12": {"registros": {}}}}
+        original_salida = ac.SALIDA
+        with tempfile.TemporaryDirectory() as tmp:
+            ac.SALIDA = Path(tmp)
+            try:
+                with patch.object(ac, "descargar", return_value=buf.getvalue()):
+                    with contextlib.redirect_stdout(io.StringIO()):
+                        rc = ac.auditar_archivos_fuente(control, ["2024-12"], args)
+                guardado = json.loads((Path(tmp) / "manifest.json").read_text())
+            finally:
+                ac.SALIDA = original_salida
+        self.assertEqual(rc, 0)
+        for sector in ("vida", "generales"):
+            self.assertEqual(guardado["periodos"]["2024-12"]["archivos_fuente_por_prefijo"][sector],
+                             {"e": 2, "r": 0, "v": 1, "g": 1})
+
     def test_reporta_archivos_excluidos_sin_declarar_periodo_fallido(self):
         salida = io.StringIO()
         args = SimpleNamespace(zip_dir=None, cache=None)

@@ -688,6 +688,34 @@ def contar_archivos_por_tipo(data: bytes) -> dict[str, int]:
     return conteos
 
 
+def auditar_archivos_fuente(control: dict, periodos: list[str], a) -> int:
+    """Guarda conteos de prefijos B.11–B.14 por sector, sin parsear ni publicar filas."""
+    letras = ("e", "r", "v", "g")
+    actualizados = 0
+    for periodo in periodos:
+        try:
+            datos = {sector: descargar(sector, periodo, a.zip_dir, a.cache) for sector in SECTORES}
+        except NoPublicado as exc:
+            print(f"{periodo}: auditoría detenida, ZIP fuente no publicado ({exc})")
+            break
+        conteos = {}
+        for sector, data in datos.items():
+            por_letra = contar_archivos_por_tipo(data)
+            conteos[sector] = {letra: por_letra[letra] for letra in letras}
+        info = control["periodos"].setdefault(periodo, {
+            "formato": formato_de(periodo), "companias": {}, "registros": {}, "avisos": 0
+        })
+        info["archivos_fuente_por_prefijo"] = conteos
+        actualizados += 1
+        print(f"{periodo}: B.11/e {conteos['vida']['e']}/{conteos['generales']['e']}; "
+              f"B.12/r {conteos['vida']['r']}/{conteos['generales']['r']}; "
+              f"B.13/v {conteos['vida']['v']}/{conteos['generales']['v']}; "
+              f"B.14/g {conteos['vida']['g']}/{conteos['generales']['g']} archivos (vida/generales)")
+    guardar_control(control)
+    print(f"Auditoría de archivos fuente: {actualizados}/{len(periodos)} períodos registrados.")
+    return 0 if actualizados == len(periodos) else 1
+
+
 def diagnostico(periodos: list[str], a) -> int:
     """Lee todos los meses sin escribir; distingue errores fatales de archivos excluidos."""
     malos, excluidos_total, revisados, sin_publicar = 0, 0, 0, 0
@@ -758,6 +786,8 @@ def main(argv=None) -> int:
     ap.add_argument("--cache", type=Path, default=None, help="guardar/reusar las descargas en esta carpeta")
     ap.add_argument("--diagnostico", action="store_true",
                     help="revisar todos los meses pendientes sin escribir nada y listar los problemas")
+    ap.add_argument("--auditar-archivos-fuente", action="store_true",
+                    help="contar prefijos B.11–B.14 de los ZIP CMF y guardar solo esos conteos en el manifiesto")
     ap.add_argument("--salida-github", default=os.environ.get("GITHUB_OUTPUT"))
     ap.add_argument("--solo-data-manifest", action="store_true",
                     help="solo recalcular las entradas de este sector en data_manifest.json")
@@ -780,6 +810,11 @@ def main(argv=None) -> int:
     control = cargar_control()
     hasta = a.hasta or ultimo_mes_cerrado()
     desde = min([a.desde] + list(DESDE_TABLA.values())) if a.desde == DESDE else a.desde
+    if a.auditar_archivos_fuente:
+        periodos = meses(desde, hasta)
+        if a.max_periodos > 0:
+            periodos = periodos[:a.max_periodos]
+        return auditar_archivos_fuente(control, periodos, a)
     derivables = backfill_vistas_existentes(control, escribir=not a.diagnostico) if not a.forzar else set()
     pendientes = []
     for p in meses(desde, hasta):
