@@ -113,7 +113,7 @@
           <span style="font-size: 10px; color: var(--accent-blue); font-weight: 600;">Chile</span>
         </div>
         <div class="sidebar-search-box">
-          <input type="text" id="sidebar-search" placeholder="Filtrar familia, subsector o tabla..." autocomplete="off">
+          <input type="text" id="sidebar-search" aria-label="Filtrar familia, subsector o tabla" placeholder="Filtrar familia, subsector o tabla..." autocomplete="off">
         </div>
       </div>
       <div class="sidebar-tree" id="sidebar-tree">
@@ -125,7 +125,7 @@
     <div class="sidebar-resizer" id="sidebar-resizer" title="Arrastra para ajustar el ancho del explorador"></div>
 
     <!-- Contenedor Principal en 2 Paneles Divididos -->
-    <div class="main-container">
+    <main class="main-container">
 
       <!-- PANEL SUPERIOR: MAPA RELACIONAL Y DICCIONARIO -->
       <div class="top-panel">
@@ -344,7 +344,7 @@
                     <li><strong>Núcleo:</strong> seguros, fondos mutuos y fondos de inversión.</li>
                     <li><strong>Instituciones:</strong> bancos, administradoras generales de fondos y corredoras de bolsa.</li>
                     <li><strong>Contexto:</strong> series macroeconómicas y de tasas del Banco Central.</li>
-                    <li><span data-alcance="visible.resumen">59 conjuntos visibles en la vista principal · 13,4 millones de registros (99,3 %)</span>: son los <strong>25 del núcleo</strong> más instituciones (bancos, AGF y corredoras) y contexto (series del Banco Central). Cuando una cifra diga «25 conjuntos» se refiere sólo al núcleo.</li>
+                    <li><span data-alcance="visible.resumen">59 conjuntos visibles en la vista principal · 13,4 millones de registros (99,3 % de los 13,5 millones publicados)</span>: son los <strong>25 del núcleo</strong> más instituciones (bancos, AGF y corredoras) y contexto (series del Banco Central). Cuando una cifra diga «25 conjuntos» se refiere sólo al núcleo.</li>
                   </ul>
                 </div>
                 <div class="info-scope-col">
@@ -537,7 +537,7 @@
       </div>
     </div>
 
-  </div> <!-- Cierre de main-container -->
+  </main> <!-- Cierre de main-container -->
 </div> <!-- Cierre de app-layout -->
 
   <!-- Scripts de la Aplicación -->
@@ -548,6 +548,7 @@
   <script src="js/sql_guard.js?v=fl-202610-212101-duckdb-lazy"></script>
   <script src="js/duckdb_client.js?v=fl-202610-212101-duckdb-lazy"></script>
   <script src="js/chat_terminal.js?v=fl-202610-212101-duckdb-lazy"></script>
+  <script src="js/busqueda_pregunta.js?v=fl-202610-212101-duckdb-lazy"></script>
   <script src="js/sidebar.js?v=fl-202610-212101-duckdb-lazy"></script>
   <script src="js/ux_shell.js?v=fl-202610-212101-duckdb-lazy"></script>
   <script src="js/creditos.js?v=fl-202610-212101-duckdb-lazy"></script>
