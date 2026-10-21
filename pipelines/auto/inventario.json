@@ -213,7 +213,19 @@
     "seguros_acciones": {
       "workflow": "seguros_carteras.yml"
     },
+    "seguros_acciones_relevantes": {
+      "workflow": "seguros_carteras.yml"
+    },
     "seguros_bienes_raices": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_bienes_raices_arriendo_morosidad": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_bienes_raices_arriendo_morosidad_relevantes": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_bienes_raices_relevantes": {
       "workflow": "seguros_carteras.yml"
     },
     "seguros_control_inversiones": {
@@ -222,19 +234,52 @@
     "seguros_derivados": {
       "workflow": "seguros_carteras.yml"
     },
+    "seguros_derivados_relevantes": {
+      "workflow": "seguros_carteras.yml"
+    },
     "seguros_extranjeros": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_extranjeros_relevantes": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_flujos_activos_elegibles": {
       "workflow": "seguros_carteras.yml"
     },
     "seguros_fondos_mutuos": {
       "workflow": "seguros_carteras.yml"
     },
+    "seguros_garantias_derivados": {
+      "workflow": "seguros_carteras.yml"
+    },
     "seguros_lista_entidades": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_otras_inversiones": {
       "workflow": "seguros_carteras.yml"
     },
     "seguros_pactos": {
       "workflow": "seguros_carteras.yml"
     },
+    "seguros_prestamos": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_prestamos_relevantes": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_registros_tipo6": {
+      "workflow": "seguros_carteras.yml"
+    },
     "seguros_renta_fija": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_renta_fija_relevante": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_tablas_desarrollo": {
+      "workflow": "seguros_carteras.yml"
+    },
+    "seguros_tablas_descriptores": {
       "workflow": "seguros_carteras.yml"
     },
     "sistemas_pago_lista_entidades": {
