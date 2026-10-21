@@ -41,7 +41,10 @@
   --header-border: rgba(var(--neutral-rgb), 0.18);
 
   --font-mono: 'JetBrains Mono', Consolas, "Courier New", monospace;
-  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  /* Grotesca editorial (diseñada para cabeceras de prensa) en la interfaz; JetBrains Mono
+     sigue a cargo del código y de las cifras alineadas. Inter queda sólo como respaldo
+     si la webfont no carga. */
+  --font-sans: 'Schibsted Grotesk', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   /* Tonos translúcidos derivados de la paleta activa */
   --accent-rgb: 59, 130, 246;
