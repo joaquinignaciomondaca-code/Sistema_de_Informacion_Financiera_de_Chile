@@ -10,6 +10,8 @@ Estamos validando los archivos mensuales de carteras de inversiones de compañí
 
 El Anexo Técnico que consultamos describe para B.11 y B.14 los registros de identificación (tipo 1), detalle (tipo 2) y totales (tipo 3), pero no especifica un tipo 6. Las líneas observadas tienen el largo fijo completo de sus archivos —178 caracteres para E y 300 para G—, de modo que no parecen truncamientos. El hallazgo se repitió en archivos generales de 2024-12 a 2025-03: cuatro archivos E y seis archivos G.
 
+Como comprobación adicional, el 21-10-2026 descargamos en modo de solo lectura el PDF disponible actualmente en la URL oficial indicada abajo, mediante GitHub Actions (run `39639786869`). El archivo descargado tuvo SHA-256 `16aed30312439a9d33abbe90efd863751e0a0cabc394d84d15640233382a1f71`, 1.659.958 bytes y 210 páginas; el servidor indicó `Last-Modified: Mon, 23 Dec 2024 10:21:14 GMT`. La extracción de B.11 y B.14 no encontró menciones a “registro tipo 6” en ninguna de las dos secciones. Esta verificación no contactó ni envió información a la CMF.
+
 Agradeceríamos confirmar:
 
 1. ¿Es válido el tipo de registro 6 en B.11 y/o B.14? ¿Desde qué período o versión de la especificación rige?
