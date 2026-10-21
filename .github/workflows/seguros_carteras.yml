@@ -95,6 +95,64 @@ jobs:
           python -m unittest -v seguros.tests.test_vistas_1835 seguros.tests.test_diagnostico_1835 pipelines.auto.tests.test_estable pipelines.auto.tests.test_privacidad
           python -m seguros.scripts.diccionario_1835 --check
 
+      # Sonda de solo lectura, habilitada únicamente por el mensaje de un commit temporal.
+      # No imprime valores: reporta hashes, tipos, largos y máscaras de caracteres de las líneas.
+      - name: Auditar layouts de excepciones residuales (solo lectura)
+        if: ${{ github.event_name == 'push' && startsWith(github.event.head_commit.message, 'Audita causas residuales Circular 1835') }}
+        run: |
+          python - <<'PY'
+          import collections, hashlib, io, zipfile
+          from seguros.scripts.actualizar_carteras import descargar
+
+          objetivos = [
+              ("vida", "2025-05", "a202505g.99017000", "largo"),
+              ("vida", "2025-05", "c202505v.99289000", "x"),
+              *(("vida", f"2026-{m:02d}", f"g2026{m:02d}v.76282191", "4") for m in range(4, 10)),
+          ]
+
+          def decodificar(raw):
+              try:
+                  return raw.decode("utf-8")
+              except UnicodeDecodeError:
+                  return raw.decode("latin-1")
+
+          def mascara(texto):
+              def clase(c):
+                  return "_" if c.isspace() else "9" if c.isdigit() else "A" if c.isalpha() else "."
+              clases = [clase(c) for c in texto]
+              spans, inicio = [], 0
+              for i in range(1, len(clases) + 1):
+                  if i == len(clases) or clases[i] != clases[inicio]:
+                      spans.append(f"{inicio + 1}-{i}:{clases[inicio]}x{i-inicio}")
+                      inicio = i
+              return ";".join(spans)
+
+          for sector, periodo, buscado, tipo_objetivo in objetivos:
+              data = descargar(sector, periodo, None)
+              with zipfile.ZipFile(io.BytesIO(data)) as z:
+                  nombre = next((n for n in z.namelist()
+                                 if n.rsplit("/", 1)[-1].lower() == buscado.lower()), None)
+                  if nombre is None:
+                      raise SystemExit(f"No se encontró el archivo esperado {buscado} en {periodo}")
+                  raw_file = z.read(nombre)
+              raw_lines = [x.rstrip(b"\r") for x in raw_file.split(b"\n") if x.strip(b"\r\x1a ")]
+              lines = [decodificar(x) for x in raw_lines]
+              tipos = collections.Counter(x[:1] for x in lines)
+              if tipo_objetivo == "largo":
+                  objetivo = [(i + 1, x, raw_lines[i]) for i, x in enumerate(lines) if len(x) != 572]
+              else:
+                  objetivo = [(i + 1, x, raw_lines[i]) for i, x in enumerate(lines) if x[:1] == tipo_objetivo]
+              print(f"::notice title=Auditoría de excepción::{periodo} {sector} {buscado}; "
+                    f"zip_sha256={hashlib.sha256(data).hexdigest()}; "
+                    f"member_sha256={hashlib.sha256(raw_file).hexdigest()}; "
+                    f"member_bytes={len(raw_file)}; líneas={len(lines)}; largos="
+                    f"{dict(collections.Counter(map(len, lines)))}; tipos={dict(tipos)}; "
+                    f"líneas_objetivo={len(objetivo)}")
+              for numero, texto, raw in objetivo:
+                  print(f"  línea={numero}; bytes={len(raw)}; chars={len(texto)}; "
+                        f"ascii={raw.isascii()}; máscara={mascara(texto)}")
+          PY
+
       # Revisa los meses pendientes sin escribir; informa conteos B.11–B.14 y separa errores fatales
       # de archivos excluidos con advertencia. Las descargas quedan en /tmp/cmf1835.
       - name: Diagnóstico de los meses pendientes (no escribe)

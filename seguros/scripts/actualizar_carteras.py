@@ -918,14 +918,11 @@ def main(argv=None) -> int:
         previo["registros"].update(conteo)
         # Las exclusiones de un archivo de compañía se registran también al reconstruir un
         # período ya existente (p. ej. al incorporar una tabla nueva), no sólo al primer proceso.
-        # Al reconstruir una fuente con tipo 6 ya soportado, quitar del historial esa antigua
-        # exclusión; otras alertas de archivo se conservan y siguen acumulándose.
-        anteriores = [x for x in previo.get("archivos_excluidos", [])
-                      if "tipo de registro '6' desconocido" not in x]
+        # Se vuelve a leer el ZIP completo al reconstruir un período; por tanto, la lista vigente
+        # reemplaza la histórica. Acumularla conserva alertas obsoletas y variantes duplicadas
+        # del mismo error (p. ej. el diagnóstico antiguo sin largo y el actual con largo).
         if excluidos:
-            anteriores = sorted(set(anteriores) | set(excluidos))
-        if anteriores:
-            previo["archivos_excluidos"] = anteriores
+            previo["archivos_excluidos"] = sorted(set(excluidos))
         else:
             previo.pop("archivos_excluidos", None)
         previo["avisos"] = len(avisos)
