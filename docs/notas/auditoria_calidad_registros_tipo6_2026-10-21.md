@@ -8,7 +8,7 @@
 
 La publicación de la tabla `registros_tipo6` y el reproceso histórico pasaron los controles de lectura, esquema Parquet, conteos y coherencia de manifiestos. Se conservaron los registros sin asignarles semántica no documentada y se reescribieron los cierres afectados para recuperar también los demás detalles de archivos que antes se excluían por el tipo 6.
 
-La auditoría detectó además una brecha de integración: el conjunto estaba en Parquet y en `data_manifest.json`, pero no figuraba inicialmente en el catálogo de descargas, en la lista de vistas DuckDB ni en todos los componentes de exploración/documentación. La brecha se corrigió en esta rama: se registró en vocabulario, vista DuckDB, catálogo de descargas, visor, consultas sugeridas, diccionario de columnas y diagrama ER. Esos cambios de interfaz quedan sujetos a la corrida de CI posterior al commit.
+La auditoría detectó además una brecha de integración: el conjunto estaba en Parquet y en `data_manifest.json`, pero no figuraba inicialmente en el catálogo de descargas, en la lista de vistas DuckDB ni en todos los componentes de exploración/documentación. La brecha se corrigió en esta rama: se registró en vocabulario, vista DuckDB, catálogo de descargas, visor, consultas sugeridas, diccionario de columnas y diagrama ER. La corrida posterior de CI **39650264525** pasó en 52 segundos, con 0 meses pendientes, 0 errores fatales y 0 archivos excluidos.
 
 **Estado global:** aprobado con observaciones y pendientes menores de linaje/versionado descritos abajo. No es una validación semántica del tipo 6 ni una certificación de la CMF.
 
