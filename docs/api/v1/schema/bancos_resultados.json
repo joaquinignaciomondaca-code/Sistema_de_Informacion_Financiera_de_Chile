@@ -34,13 +34,11 @@
   },
   {
    "nombre": "rut",
-   "sin_valores": true,
    "tipo": "VARCHAR",
    "tipo_ts": "string"
   },
   {
    "nombre": "razon_social",
-   "sin_valores": true,
    "tipo": "VARCHAR",
    "tipo_ts": "string"
   },

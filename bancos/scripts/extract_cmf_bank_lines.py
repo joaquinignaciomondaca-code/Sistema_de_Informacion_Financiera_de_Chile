@@ -154,8 +154,20 @@ def _file_kind_and_bank(filename: str, period: str) -> tuple[str, str] | None:
     return f"{match.group(1).upper()}{match.group(2)}", match.group(5)
 
 
-def extract_archive(blob: bytes, period: str, source_url: str = "") -> tuple[list[dict], dict]:
-    """Extract all institutions' B1/B2/R1 records from one CMF ZIP in memory."""
+def extract_archive(
+    blob: bytes,
+    period: str,
+    source_url: str = "",
+    entidades: dict[str, dict[str, str]] | None = None,
+) -> tuple[list[dict], dict]:
+    """Extract all institutions' B1/B2/R1 records from one CMF ZIP in memory.
+
+    `entidades` cruza el código de institución de la CMF con el RUT y la razón
+    social del maestro de bancos (`codigo_institucion -> {rut, razon_social}`).
+    Sin ese cruce las columnas `rut` y `razon_social` se publicaban a NULL en
+    todas las filas: filtrar o unir por RUT devolvía 0 filas **sin error**
+    (hallazgo 16 de `docs/notas/ruta_api_v1_2026-10-22.md`).
+    """
     period_label(period)
     if len(blob) > MAX_FILE:
         raise ValueError(f"CMF ZIP exceeds {MAX_FILE} bytes")
@@ -246,13 +258,14 @@ def extract_archive(blob: bytes, period: str, source_url: str = "") -> tuple[lis
                 account_occurrences[(bank_code, kind, account_code)] += 1
                 occurrence = account_occurrences[(bank_code, kind, account_code)]
                 model = TARGETS[kind]
+                entidad = (entidades or {}).get(bank_code) or {}
                 rows.append({
                     "id": f"{period}:{bank_code}:{model['modelo_cmf']}:{account_code}:{occurrence}",
                     "periodo": period,
                     "fecha_corte": month_end(period),
                     "codigo_institucion": bank_code,
-                    "rut": None,
-                    "razon_social": None,
+                    "rut": entidad.get("rut"),
+                    "razon_social": entidad.get("razon_social"),
                     "nombre_institucion_fuente": institution_name,
                     "tipo_estado": model["tipo_estado"],
                     "familia_archivo_fuente": kind,

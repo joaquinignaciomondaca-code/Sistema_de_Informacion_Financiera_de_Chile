@@ -76,7 +76,7 @@
    "criterio_contable": "No aplica",
    "nombre": "codigo_cmf",
    "rol": "Dimensión",
-   "significado": "Código institucional asignado por la CMF.",
+   "significado": "Código institucional de la CMF. En AGF la columna está vacía: el registro RGAGF no publica ese código, que sí existe para las CCAF emisoras.",
    "sin_valores": true,
    "tipo": "VARCHAR",
    "tipo_ts": "string"

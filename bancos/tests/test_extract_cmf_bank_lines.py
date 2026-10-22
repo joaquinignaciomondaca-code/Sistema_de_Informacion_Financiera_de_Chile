@@ -77,6 +77,24 @@ class ExtractCmfBankLinesTests(unittest.TestCase):
         self.assertEqual(individual["nivel_consolidacion"], "individual")
         self.assertEqual(individual["importes_fuente_decimal"][0], "-1")
 
+    def test_fills_rut_and_razon_social_from_entity_master(self):
+        # Hallazgo 16: sin este cruce las dos columnas salían a NULL en todas las
+        # filas y una consulta por RUT devolvía 0 filas sin error.
+        entidades = {
+            "001": {"rut": "97004000", "razon_social": "Banco de Chile"},
+            "009": {"rut": "97011000", "razon_social": "Banco Internacional"},
+        }
+        rows, _ = extract_archive(self.make_zip(), "2026-07", "", entidades=entidades)
+        bci = next(row for row in rows if row["codigo_institucion"] == "009")
+        chile = next(row for row in rows if row["codigo_institucion"] == "001")
+        self.assertEqual((bci["rut"], bci["razon_social"]), ("97011000", "Banco Internacional"))
+        self.assertEqual((chile["rut"], chile["razon_social"]), ("97004000", "Banco de Chile"))
+        self.assertTrue(all(row["rut"] for row in rows))
+
+    def test_without_entity_master_keeps_columns_in_null(self):
+        rows, _ = extract_archive(self.make_zip(), "2026-07", "")
+        self.assertTrue(all(row["rut"] is None and row["razon_social"] is None for row in rows))
+
     def test_rejects_missing_or_duplicate_source(self):
         with self.assertRaisesRegex(RuntimeError, "Incomplete or duplicate"):
             extract_archive(self.make_zip(missing={("009", "R1")}), "2026-07")

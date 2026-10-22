@@ -43,6 +43,7 @@ OUTPUT_ROOT = ROOT / "docs" / "outputs" / "bancos" / "cmf_b1_b2_r1"
 PARTITION_MANIFEST = OUTPUT_ROOT / "manifest.json"
 DATA_MANIFEST = ROOT / "data_manifest.json"
 DATASET_ID = "bancos_cmf_lineas"
+MAESTRO_BANCOS = ROOT / "docs" / "outputs" / "bancos" / "bancos_maestro.parquet"
 DATASET_NAME = "bancos.cmf_lineas_b1_b2_r1"
 SEED_PERIOD = "2026-07"
 BALANCE_SHEET = "Est. Situación Financ. Bancos"
@@ -285,6 +286,32 @@ def atomic_json(path: Path, payload: dict) -> None:
     os.replace(temp, path)
 
 
+def cargar_entidades() -> dict[str, dict[str, str]]:
+    """RUT y razón social por código de institución, desde el maestro de bancos.
+
+    Sin este cruce, `rut` y `razon_social` se publicaban a NULL en las 112
+    particiones de banca: una consulta por RUT devolvía 0 filas sin error
+    (hallazgo 16). Si el maestro no está, se sigue publicando (con NULL) pero se
+    avisa en el informe de la extracción.
+    """
+    if not MAESTRO_BANCOS.exists():
+        print(f"AVISO: no existe {MAESTRO_BANCOS.relative_to(ROOT)}; "
+              "rut y razon_social quedarán en NULL en esta partición")
+        return {}
+    try:
+        import pyarrow.parquet as pq
+    except ImportError as exc:  # pragma: no cover - depende del entorno
+        raise RuntimeError("pyarrow es obligatorio para leer el maestro de bancos") from exc
+    filas = pq.read_table(
+        MAESTRO_BANCOS, columns=["codigo_institucion", "rut", "razon_social"]
+    ).to_pylist()
+    return {
+        fila["codigo_institucion"]: {"rut": fila["rut"], "razon_social": fila["razon_social"]}
+        for fila in filas
+        if fila["codigo_institucion"] and fila["rut"]
+    }
+
+
 def publish_period(period: str, dry_run: bool = False) -> dict:
     period_label(period)
     if period > previous_month(date.today()):
@@ -302,7 +329,7 @@ def publish_period(period: str, dry_run: bool = False) -> dict:
     xlsx_data = fetch(xlsx_url, MAX_FILE)
     zip_hash = hashlib.sha256(zip_data).hexdigest()
     xlsx_hash = hashlib.sha256(xlsx_data).hexdigest()
-    rows, extraction = extract_archive(zip_data, period, zip_url)
+    rows, extraction = extract_archive(zip_data, period, zip_url, entidades=cargar_entidades())
     workbook_rows = read_workbook_rows_from_bytes(xlsx_data)
     validation = validate_release(rows, extraction, workbook_rows)
 
