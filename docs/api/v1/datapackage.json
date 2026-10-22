@@ -4,7 +4,7 @@
  "homepage": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile",
  "licenses": [
   {
-   "name": "Datos: uso condicionado por la fuente · Código: MIT",
+   "name": "Datos de fuentes públicas, con cita obligatoria · Código: MIT",
    "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
   }
  ],
@@ -18,7 +18,7 @@
    "hash": "e0317c4ad20ecde6a563770e3ae7c18a44de5194c21b2feb3c1b8b002f7224e5",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de SPensiones: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -61,10 +61,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "afp_maestro"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Superintendencia de Pensiones. Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "Lista vigente",
     "deriva_de": null,
@@ -72,9 +74,10 @@
     "extracted_at": "2026-09-28",
     "filas": 7,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "afp_maestro",
     "nivel": "registro",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 1825,
@@ -86,17 +89,15 @@
     "puente": "alias",
     "sector": "pensiones",
     "sql_view": "afp_lista_entidades",
-    "ultima_actualizacion": "2026-09-28"
+    "ultima_actualizacion": "2026-09-28",
+    "url_terminos": "https://www.spensiones.cl/portal/institucional/594/w3-article-5885.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
-     "title": "CMF — Comisión para el Mercado Financiero"
-    },
-    {
-     "path": "https://www.spensiones.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.spensiones.cl/portal/institucional/594/w3-article-5885.html",
+     "sif_cita": "Fuente: Superintendencia de Pensiones. Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de responsabilidades",
+     "sif_estado": "verificada",
      "title": "SPensiones — Superintendencia de Pensiones"
     }
    ],
@@ -109,7 +110,7 @@
    "hash": "dc6d0c2b55c01c99f15f3224887d6de372ad24d9b2e78e2c71cce3b4d7dbcfb5",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -233,8 +234,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2010-06 a 2026-06",
     "deriva_de": null,
@@ -242,9 +245,10 @@
     "extracted_at": null,
     "filas": 71423,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "agf_balance",
     "nivel": "secundario",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 15283,
@@ -352,12 +356,15 @@
     "puente": "directo",
     "sector": "agf",
     "sql_view": "agf_balance",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -370,7 +377,7 @@
    "hash": "eb8595fe5c3e87687f4767d008de5ca9fe09253d7649f08946306ae44bb02653",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -492,10 +499,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "agf_maestro"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "Oficial CMF 2026",
     "deriva_de": null,
@@ -503,9 +512,10 @@
     "extracted_at": "2026-09-23",
     "filas": 72,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "agf_maestro",
     "nivel": "secundario",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 17065,
@@ -517,12 +527,15 @@
     "puente": "alias",
     "sector": "agf",
     "sql_view": "agf_lista_entidades",
-    "ultima_actualizacion": "2026-09-23"
+    "ultima_actualizacion": "2026-09-23",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -535,7 +548,7 @@
    "hash": "8e2e1f6747d5542e1afa52ee890908d6c3c7dd9b9a4178c9cc198b6d661e8f82",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -661,8 +674,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2010-06 a 2026-06",
     "deriva_de": null,
@@ -670,9 +685,10 @@
     "extracted_at": null,
     "filas": 58216,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "agf_resultados",
     "nivel": "secundario",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 14420,
@@ -780,12 +796,15 @@
     "puente": "directo",
     "sector": "agf",
     "sql_view": "agf_resultados",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -798,7 +817,7 @@
    "hash": "7aaf77a42400011ce1449d836d18f16361c490ef2cba2d2fa3d96dc23f509ea0",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -1031,10 +1050,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "bancos_cmf_balance"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2022-01 a 2026-08",
     "deriva_de": "bancos_cmf_lineas",
@@ -1042,9 +1063,10 @@
     "extracted_at": "2026-10-01",
     "filas": 722931,
     "filtro": "familia_archivo_fuente IN ('B1', 'B2')",
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "bancos_cmf_lineas",
     "nivel": "secundario",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 443700,
@@ -1386,12 +1408,15 @@
     "puente": "origen_compartido",
     "sector": "bancos",
     "sql_view": "bancos_balance",
-    "ultima_actualizacion": "2026-10-01"
+    "ultima_actualizacion": "2026-10-01",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/portal/estadisticas/626/articles-113894_recurso_1.zip?ts=1790773409",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -1404,7 +1429,7 @@
    "hash": "982ac292b619896e9b2d5afb48d719675d8339f5cde0149be1d6381aedc9739a",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -1465,10 +1490,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "bancos_maestro"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "Códigos históricos y vigentes",
     "deriva_de": null,
@@ -1476,9 +1503,10 @@
     "extracted_at": "2026-09-28",
     "filas": 41,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "bancos_maestro",
     "nivel": "secundario",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 4668,
@@ -1490,12 +1518,15 @@
     "puente": "alias",
     "sector": "bancos",
     "sql_view": "bancos_lista_entidades",
-    "ultima_actualizacion": "2026-09-28"
+    "ultima_actualizacion": "2026-09-28",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -1508,7 +1539,7 @@
    "hash": "7aaf77a42400011ce1449d836d18f16361c490ef2cba2d2fa3d96dc23f509ea0",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -1741,10 +1772,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "bancos_cmf_resultados"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2022-01 a 2026-08",
     "deriva_de": "bancos_cmf_lineas",
@@ -1752,9 +1785,10 @@
     "extracted_at": "2026-10-01",
     "filas": 1240061,
     "filtro": "familia_archivo_fuente = 'R1'",
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "bancos_cmf_lineas",
     "nivel": "secundario",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 443700,
@@ -2096,12 +2130,15 @@
     "puente": "origen_compartido",
     "sector": "bancos",
     "sql_view": "bancos_resultados",
-    "ultima_actualizacion": "2026-10-01"
+    "ultima_actualizacion": "2026-10-01",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/portal/estadisticas/626/articles-113894_recurso_1.zip?ts=1790773409",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -2114,7 +2151,7 @@
    "hash": "c73f62bd80de90b3a560d5ce5f6586ee02e51150def805f142f47feb0ff5a727",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -2237,8 +2274,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2010-06 a 2026-06",
     "deriva_de": null,
@@ -2246,9 +2285,10 @@
     "extracted_at": null,
     "filas": 8043,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "ccaf_balance",
     "nivel": "archivo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 11918,
@@ -2356,12 +2396,15 @@
     "puente": "directo",
     "sector": "cajas_compensacion",
     "sql_view": "ccaf_balance",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -2374,7 +2417,7 @@
    "hash": "e5c09427b5651eba88d5c055c68e2505e4c53a8fbe54ffd974fb0dae563360de",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -2525,10 +2568,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "ccaf_maestro"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "Lista vigente",
     "deriva_de": null,
@@ -2536,9 +2581,10 @@
     "extracted_at": "2026-09-28",
     "filas": 6,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "ccaf_maestro",
     "nivel": "archivo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 17300,
@@ -2550,18 +2596,16 @@
     "puente": "alias",
     "sector": "cajas_compensacion",
     "sql_view": "ccaf_lista_entidades",
-    "ultima_actualizacion": "2026-09-28"
+    "ultima_actualizacion": "2026-09-28",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
-    },
-    {
-     "path": "https://www.suseso.cl",
-     "sif_estado": "pendiente",
-     "title": "SUSESO — Superintendencia de Seguridad Social"
     }
    ],
    "title": "ccaf.maestro"
@@ -2573,7 +2617,7 @@
    "hash": "81b244c41f81fbc078a2e0cff91098adf3ede7ee02bc8ba851c0394a10e937ef",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -2696,8 +2740,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2010-06 a 2026-06",
     "deriva_de": null,
@@ -2705,9 +2751,10 @@
     "extracted_at": null,
     "filas": 5506,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "ccaf_resultados",
     "nivel": "archivo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 11103,
@@ -2815,12 +2862,15 @@
     "puente": "directo",
     "sector": "cajas_compensacion",
     "sql_view": "ccaf_resultados",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -2833,7 +2883,7 @@
    "hash": "2b1695eec768f0d153a1c2c2ad55913b85690a2794ff095432a0b22ae262c95d",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -2924,10 +2974,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "cooperativas_maestro"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "Lista vigente",
     "deriva_de": null,
@@ -2935,9 +2987,10 @@
     "extracted_at": "2026-09-29",
     "filas": 7,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "cooperativas_lista_entidades",
     "nivel": "registro",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 4324,
@@ -2949,12 +3002,15 @@
     "puente": "directo",
     "sector": "cooperativas",
     "sql_view": "cooperativas_lista_entidades",
-    "ultima_actualizacion": "2026-09-29"
+    "ultima_actualizacion": "2026-09-29",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -2967,7 +3023,7 @@
    "hash": "8a163c4a0b62a177218cca31eb171db5d897a09a2fcda4b5fc5f917e988ee417",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -3076,18 +3132,21 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2010-12 a 2026-06",
     "deriva_de": null,
     "estado": "publicado",
-    "extracted_at": "2026-10-19",
+    "extracted_at": null,
     "filas": 107976,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "corredoras_bolsa_balance",
     "nivel": "secundario",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 20504,
@@ -3195,12 +3254,15 @@
     "puente": "directo",
     "sector": "corredoras_bolsa",
     "sql_view": "corredoras_bolsa_balance",
-    "ultima_actualizacion": "2026-10-19"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -3213,7 +3275,7 @@
    "hash": "d93f3023a4fb82268c3f45bf74f1dfe8cf0212347ea3c7e07a9ce892e5786f63",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -3274,10 +3336,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "corredoras_bolsa_maestro"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2014-03 a 2026-06",
     "deriva_de": null,
@@ -3285,9 +3349,10 @@
     "extracted_at": "2026-09-23",
     "filas": 120,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "corredoras_bolsa_maestro",
     "nivel": "secundario",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 9358,
@@ -3299,12 +3364,15 @@
     "puente": "alias",
     "sector": "corredoras_bolsa",
     "sql_view": "corredoras_bolsa_lista_entidades",
-    "ultima_actualizacion": "2026-09-23"
+    "ultima_actualizacion": "2026-09-23",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -3317,7 +3385,7 @@
    "hash": "6f21a2636a2d7b16baeb94a13a3174930cc43a4206bfcbd1d25843f44c04f903",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -3402,10 +3470,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "corredoras_bolsa_registro_universo"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2014-03 a 2026-06",
     "deriva_de": null,
@@ -3413,9 +3483,10 @@
     "extracted_at": "2026-09-29",
     "filas": 120,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "corredoras_bolsa_lista_entidades_registro",
     "nivel": "secundario",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 14484,
@@ -3427,12 +3498,15 @@
     "puente": "directo",
     "sector": "corredoras_bolsa",
     "sql_view": "corredoras_bolsa_lista_entidades_registro",
-    "ultima_actualizacion": "2026-09-29"
+    "ultima_actualizacion": "2026-09-29",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -3445,7 +3519,7 @@
    "hash": "f1c348cf739e19d6357332335bf4cea5a74fd1178a8d52666decfc74f7f3e493",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -3554,18 +3628,21 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2010-12 a 2026-06",
     "deriva_de": null,
     "estado": "publicado",
-    "extracted_at": "2026-10-19",
+    "extracted_at": null,
     "filas": 77705,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "corredoras_bolsa_resultados",
     "nivel": "secundario",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 17746,
@@ -3673,12 +3750,15 @@
     "puente": "directo",
     "sector": "corredoras_bolsa",
     "sql_view": "corredoras_bolsa_resultados",
-    "ultima_actualizacion": "2026-10-19"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -3691,7 +3771,7 @@
    "hash": "9fc005899b7a9ee5203123378ecdb72bef41c664650b4fc48af1080525a72769",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -3831,10 +3911,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "factoring_leasing_balance_serie_ifrs_cmf"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2009-03 a 2026-09",
     "deriva_de": null,
@@ -3842,9 +3924,10 @@
     "extracted_at": null,
     "filas": 30046,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "factoring_leasing_balance_serie_ifrs_cmf",
     "nivel": "archivo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 541040,
@@ -3856,12 +3939,15 @@
     "puente": "alias",
     "sector": "factoring_leasing",
     "sql_view": "factoring_leasing_balance",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php;",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -3874,7 +3960,7 @@
    "hash": "c4bea563b828f04cf0c7023f51eefadf3ac8542d3469d35dab6d178e0be26f5b",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -4047,10 +4133,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "factoring_leasing_maestro"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "Lista vigente",
     "deriva_de": null,
@@ -4058,9 +4146,10 @@
     "extracted_at": "2026-09-28",
     "filas": 32,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "factoring_leasing_maestro",
     "nivel": "archivo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 13989,
@@ -4072,12 +4161,15 @@
     "puente": "alias",
     "sector": "factoring_leasing",
     "sql_view": "factoring_leasing_lista_entidades",
-    "ultima_actualizacion": "2026-09-28"
+    "ultima_actualizacion": "2026-09-28",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -4090,7 +4182,7 @@
    "hash": "b06d465fad332452b79f068e8783d43bf9a25080bdb38ee22e732099e007047a",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -4233,10 +4325,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "factoring_leasing_resultados_serie_ifrs_cmf"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2009-03 a 2026-09",
     "deriva_de": null,
@@ -4244,9 +4338,10 @@
     "extracted_at": null,
     "filas": 22368,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "factoring_leasing_resultados_serie_ifrs_cmf",
     "nivel": "archivo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 334636,
@@ -4258,12 +4353,15 @@
     "puente": "alias",
     "sector": "factoring_leasing",
     "sql_view": "factoring_leasing_resultados",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php;",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -4276,7 +4374,7 @@
    "hash": "1788fd46353afa878f75e4f0f09db6e58f6ee2c1a35d2deaa650b62464de2d9e",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -4426,8 +4524,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2010-12 a 2025-12",
     "deriva_de": null,
@@ -4435,9 +4535,10 @@
     "extracted_at": "2026-10-01",
     "filas": 126256,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "ffmm_balance",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 63770,
@@ -4539,12 +4640,15 @@
     "puente": "directo",
     "sector": "ffmm",
     "sql_view": "ffmm_balance",
-    "ultima_actualizacion": "2026-10-01"
+    "ultima_actualizacion": "2026-10-01",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -4557,7 +4661,7 @@
    "hash": "dbd32c3ff74c2d94dd3118cca5eedc95b590c5df7220ab9fc50e53c5d4d7fe65",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -4748,8 +4852,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2001-01 a 2026-09",
     "deriva_de": null,
@@ -4757,9 +4863,10 @@
     "extracted_at": "2026-10-13",
     "filas": 1461253,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "ffmm_cartera_extranjera",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 491606,
@@ -4922,12 +5029,15 @@
     "sector": "ffmm",
     "sin_clave": "sin_clave",
     "sql_view": "ffmm_cartera_extranjera",
-    "ultima_actualizacion": "2026-10-13"
+    "ultima_actualizacion": "2026-10-13",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -4940,7 +5050,7 @@
    "hash": "1b2d563659ce801a74c84582edbd6ac47692e9e9edb7375c4d4f023b70bda9b0",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -5176,8 +5286,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2022-01 a 2026-09",
     "deriva_de": null,
@@ -5185,9 +5297,10 @@
     "extracted_at": "2026-10-13",
     "filas": 1590196,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "ffmm_cartera_nacional",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 385849,
@@ -5535,12 +5648,15 @@
     "puente": "directo",
     "sector": "ffmm",
     "sql_view": "ffmm_cartera_nacional",
-    "ultima_actualizacion": "2026-10-13"
+    "ultima_actualizacion": "2026-10-13",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -5553,7 +5669,7 @@
    "hash": "29ab9e63fab6eb582503cac3d844ca50843c7f3fc0cbf4fe44983485cbd98a8c",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -5678,8 +5794,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2001-01 a 2026-09",
     "deriva_de": null,
@@ -5687,9 +5805,10 @@
     "extracted_at": "2026-10-13",
     "filas": 282045,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "ffmm_futuros",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 36882,
@@ -5852,12 +5971,15 @@
     "sector": "ffmm",
     "sin_clave": "sin_clave",
     "sql_view": "ffmm_futuros",
-    "ultima_actualizacion": "2026-10-13"
+    "ultima_actualizacion": "2026-10-13",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -5870,7 +5992,7 @@
    "hash": "b2b5c3e225a371e529d0a2edf01cf8fec4bdc6c6944859040fa70469f83eb2d4",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -5925,10 +6047,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "ffmm_maestro"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2001-01 a 2026-09",
     "deriva_de": null,
@@ -5936,9 +6060,10 @@
     "extracted_at": "2026-10-13",
     "filas": 1334,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "ffmm_maestro",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 23962,
@@ -5950,12 +6075,15 @@
     "puente": "alias",
     "sector": "ffmm",
     "sql_view": "ffmm_lista_entidades",
-    "ultima_actualizacion": "2026-10-13"
+    "ultima_actualizacion": "2026-10-13",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -5968,7 +6096,7 @@
    "hash": "dfaf5fa13b7f5a6a77b1553390ad49e4b5072266817eea967091550855ebbba4",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -6123,8 +6251,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2001-01 a 2026-09",
     "deriva_de": null,
@@ -6132,9 +6262,10 @@
     "extracted_at": "2026-10-13",
     "filas": 5365,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "ffmm_opciones",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 18995,
@@ -6297,12 +6428,15 @@
     "sector": "ffmm",
     "sin_clave": "sin_clave",
     "sql_view": "ffmm_opciones",
-    "ultima_actualizacion": "2026-10-13"
+    "ultima_actualizacion": "2026-10-13",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/institucional/estadisticas/ffm_cartera.php",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -6315,7 +6449,7 @@
    "hash": "360924d06619d62e23bced1ee0d35de4595dd03b9f4ac923b4804b09bded565c",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -6465,8 +6599,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2010-12 a 2025-12",
     "deriva_de": null,
@@ -6474,9 +6610,10 @@
     "extracted_at": "2026-10-01",
     "filas": 149929,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "ffmm_resultados",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 68049,
@@ -6578,12 +6715,15 @@
     "puente": "directo",
     "sector": "ffmm",
     "sql_view": "ffmm_resultados",
-    "ultima_actualizacion": "2026-10-01"
+    "ultima_actualizacion": "2026-10-01",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&tipoentidad=RGFMU",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -6596,7 +6736,7 @@
    "hash": "445b2165e8bd2e57f3a118fb9ee6f6e82040caa7093f692d9f5879d554ef3569",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -6783,8 +6923,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2022-03 a 2026-06",
     "deriva_de": null,
@@ -6792,9 +6934,10 @@
     "extracted_at": "2026-10-02",
     "filas": 985908,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "fi_balance",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 156207,
@@ -6896,12 +7039,15 @@
     "puente": "directo",
     "sector": "fi",
     "sql_view": "fi_balance",
-    "ultima_actualizacion": "2026-10-02"
+    "ultima_actualizacion": "2026-10-02",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -6914,7 +7060,7 @@
    "hash": "3d58587994c0478354b55779323129708d8f939ff8d42b97d5434358210a526d",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -7023,8 +7169,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2020-03 a 2026-06",
     "deriva_de": null,
@@ -7032,9 +7180,10 @@
     "extracted_at": "2026-10-07",
     "filas": 0,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "fi_bienes_raices",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 2589,
@@ -7046,12 +7195,15 @@
     "puente": "directo",
     "sector": "fi",
     "sql_view": "fi_bienes_raices",
-    "ultima_actualizacion": "2026-10-07"
+    "ultima_actualizacion": "2026-10-07",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -7064,7 +7216,7 @@
    "hash": "2ae923f31537b24e8ddcab7ebc79fd0b98a181cda3d432021eff0f2bddc4cbf7",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -7230,8 +7382,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2020-03 a 2026-06",
     "deriva_de": null,
@@ -7239,9 +7393,10 @@
     "extracted_at": "2026-10-07",
     "filas": 76849,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "fi_cartera_extranjera",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 444925,
@@ -7290,12 +7445,15 @@
     "sector": "fi",
     "sin_clave": "sin_clave",
     "sql_view": "fi_cartera_extranjera",
-    "ultima_actualizacion": "2026-10-07"
+    "ultima_actualizacion": "2026-10-07",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -7308,7 +7466,7 @@
    "hash": "94f7ef51fce8c5f57a19cfa31ec467e127edde471027b0bdcc001b53decc5bb5",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -7493,8 +7651,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2020-03 a 2026-06",
     "deriva_de": null,
@@ -7502,9 +7662,10 @@
     "extracted_at": "2026-10-07",
     "filas": 933532,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "fi_cartera_nacional",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 306188,
@@ -7667,12 +7828,15 @@
     "sector": "fi",
     "sin_clave": "sin_clave",
     "sql_view": "fi_cartera_nacional",
-    "ultima_actualizacion": "2026-10-07"
+    "ultima_actualizacion": "2026-10-07",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -7685,7 +7849,7 @@
    "hash": "9ee89b917a00513cca9e9d92c371d6b38927018d109a8f39022f39b0f7fc8336",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -7803,8 +7967,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2020-03 a 2026-06",
     "deriva_de": null,
@@ -7812,9 +7978,10 @@
     "extracted_at": "2026-10-07",
     "filas": 13463,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "fi_futuros",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 57911,
@@ -7863,12 +8030,15 @@
     "sector": "fi",
     "sin_clave": "sin_clave",
     "sql_view": "fi_futuros",
-    "ultima_actualizacion": "2026-10-07"
+    "ultima_actualizacion": "2026-10-07",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -7881,7 +8051,7 @@
    "hash": "136531c282a0d494316ddf0d9ac32954ee8007b2fc138410e36c2ce43da76de2",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -7966,10 +8136,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "fi_maestro"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2020-03 a 2026-06",
     "deriva_de": null,
@@ -7977,9 +8149,10 @@
     "extracted_at": "2026-10-07",
     "filas": 1679,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "fi_maestro",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 44790,
@@ -7991,12 +8164,15 @@
     "puente": "alias",
     "sector": "fi",
     "sql_view": "fi_lista_entidades",
-    "ultima_actualizacion": "2026-10-07"
+    "ultima_actualizacion": "2026-10-07",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -8009,7 +8185,7 @@
    "hash": "3370aac87a207d331e6afb1f0c71241008558e7ac393d0c9665335aa62de271a",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -8147,8 +8323,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2020-03 a 2026-06",
     "deriva_de": null,
@@ -8156,9 +8334,10 @@
     "extracted_at": "2026-10-07",
     "filas": 10038,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "fi_metodo_participacion",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 38458,
@@ -8206,12 +8385,15 @@
     "puente": "directo",
     "sector": "fi",
     "sql_view": "fi_metodo_participacion",
-    "ultima_actualizacion": "2026-10-07"
+    "ultima_actualizacion": "2026-10-07",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -8224,7 +8406,7 @@
    "hash": "44b2d81e33138f7857c607e694ba6227b4ad729efe49f088aaa3f4d810483289",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -8378,8 +8560,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2020-03 a 2026-06",
     "deriva_de": null,
@@ -8387,9 +8571,10 @@
     "extracted_at": "2026-10-07",
     "filas": 307,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "fi_opciones",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 21883,
@@ -8437,12 +8622,15 @@
     "puente": "directo",
     "sector": "fi",
     "sql_view": "fi_opciones",
-    "ultima_actualizacion": "2026-10-07"
+    "ultima_actualizacion": "2026-10-07",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -8455,7 +8643,7 @@
    "hash": "2566f953e20d6c2937f1d93a7d65e763934536e6c3a2e1fdb36a891beef13b96",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -8587,8 +8775,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2012-03 a 2026-06",
     "deriva_de": null,
@@ -8596,9 +8786,10 @@
     "extracted_at": "2026-10-07",
     "filas": 1698,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "fi_pactos",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 5596,
@@ -8695,12 +8886,15 @@
     "sector": "fi",
     "sin_clave": "sin_clave",
     "sql_view": "fi_pactos",
-    "ultima_actualizacion": "2026-10-07"
+    "ultima_actualizacion": "2026-10-07",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -8713,7 +8907,7 @@
    "hash": "be06e454b3e49caff3d037e73336cabb3be61964fbef4ed9e4aca28b91eb1eab",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -8900,8 +9094,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2022-03 a 2026-06",
     "deriva_de": null,
@@ -8909,9 +9105,10 @@
     "extracted_at": "2026-10-02",
     "filas": 1164000,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "fi_resultados",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 129347,
@@ -9013,25 +9210,28 @@
     "puente": "directo",
     "sector": "fi",
     "sql_view": "fi_resultados",
-    "ultima_actualizacion": "2026-10-02"
+    "ultima_actualizacion": "2026-10-02",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
    "title": "fi.resultados"
   },
   {
-   "bytes": 39726,
-   "description": "Registro de Prestadores de Servicios Financieros (RPSF) de la CMF. Catálogo integral de las entidades FinTech que operan bajo el perímetro regulatorio de la Ley Fintec en Chile. Incluye personas jurídicas y naturales, estado de vigencia, número y fecha de inscripción oficial, código institucional CMF, datos de contacto y total de servicios autorizados.",
+   "bytes": 28848,
+   "description": "Registro de Prestadores de Servicios Financieros (RPSF) de la CMF. Catálogo integral de las entidades FinTech que operan bajo el perímetro regulatorio de la Ley Fintec en Chile. Incluye personas jurídicas y naturales, estado de vigencia, número y fecha de inscripción oficial, código institucional CMF y total de servicios autorizados.",
    "format": "parquet",
-   "hash": "902f9b8ce9d440e5e3b57089aa1c0a9e34a94e3941f1963ae6005b0f8af7c078",
+   "hash": "daf8c4668d50c9577125dbd6c271a77bf5ee6d7ffd2747a172bd5279a9d7c23b",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -9128,12 +9328,6 @@
       "type": "string"
      },
      {
-      "description": "Correo electrónico institucional de contacto.",
-      "name": "email_contacto",
-      "sif_rol": "Dimensión",
-      "type": "string"
-     },
-     {
       "description": "URL de la plataforma tecnológica o portal web.",
       "name": "sitio_web",
       "sif_rol": "Dimensión",
@@ -9156,10 +9350,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "fintech_rpsf_maestro"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "Catálogo Oficial Vigente CMF",
     "deriva_de": null,
@@ -9167,26 +9363,30 @@
     "extracted_at": "2026-09-23",
     "filas": 264,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "fintech_rpsf_maestro",
     "nivel": "registro",
+    "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 39726,
+      "bytes": 28848,
       "filas": 264,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fintech/fintech_rpsf_maestro.parquet",
-      "sha256": "53d5fd6b4301cee6dc899835f661fae7f1b270e0aaab993f5042ee3911521a19"
+      "sha256": "7824c8270b122211815ffb8482b4df5c2cad4d0e35178a212a81ebf0cc799f59"
      }
     ],
     "puente": "alias",
     "sector": "fintech",
     "sql_view": "fintech_rpsf_lista_entidades",
-    "ultima_actualizacion": "2026-09-23"
+    "ultima_actualizacion": "2026-09-23",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -9199,7 +9399,7 @@
    "hash": "1e1bca7087828e53a94eca7a03dc4bacd5aa9cdb660c4e8137c00bcf93047061",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -9242,8 +9442,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-10-22",
     "deriva_de": null,
@@ -9251,9 +9453,10 @@
     "extracted_at": null,
     "filas": 3261,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_cobre",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 33167,
@@ -9265,12 +9468,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_cobre",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -9283,7 +9489,7 @@
    "hash": "bec6340285a6ceac6b5d5b493624bd78d266b10cf6d78abee804e7ca748cf73c",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -9332,8 +9538,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-02 a 2026-10-20",
     "deriva_de": null,
@@ -9341,9 +9549,10 @@
     "extracted_at": null,
     "filas": 3172,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_curva_bonos_pesos",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 61487,
@@ -9355,12 +9564,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_curva_bonos_pesos",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -9373,7 +9585,7 @@
    "hash": "0d4696067b56ce118373bc6ecf570bff101678b3b5121da393acf2efeab8ea03",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -9440,8 +9652,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-02 a 2026-10-20",
     "deriva_de": null,
@@ -9449,9 +9663,10 @@
     "extracted_at": null,
     "filas": 3174,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_curva_bonos_uf",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 94190,
@@ -9463,12 +9678,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_curva_bonos_uf",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -9481,7 +9699,7 @@
    "hash": "3c22e1ed0ce5defd5c1b1e9319e0efe287caf418c0d429e96270eb90701dc81b",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -9518,8 +9736,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-01-01",
     "deriva_de": null,
@@ -9527,9 +9747,10 @@
     "extracted_at": null,
     "filas": 49,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_deuda_publica_pct_pib",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 3189,
@@ -9541,12 +9762,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_deuda_publica_pct_pib",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -9559,7 +9783,7 @@
    "hash": "79d7ddd9220e328508e9bbbda9ed0efb7cbb96eee3190f0db294219da4ccfcfc",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -9596,8 +9820,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-02 a 2026-10-22",
     "deriva_de": null,
@@ -9605,9 +9831,10 @@
     "extracted_at": null,
     "filas": 3189,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_dolar_observado",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 24704,
@@ -9619,12 +9846,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_dolar_observado",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -9637,7 +9867,7 @@
    "hash": "6d75c8cd17bb0e3c5aaf5ee4a27836af7ae9bf5e73de880b5dc31a7abcb1a61b",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -9674,8 +9904,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-02 a 2026-10-22",
     "deriva_de": null,
@@ -9683,9 +9915,10 @@
     "extracted_at": null,
     "filas": 3189,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_euro_observado",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 24525,
@@ -9697,12 +9930,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_euro_observado",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -9715,7 +9951,7 @@
    "hash": "9f40a8c4fa353a0806ee6526dc03a2c7a28a41325925a20496a6d7623716d907",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -9758,8 +9994,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-10-01",
     "deriva_de": null,
@@ -9767,9 +10005,10 @@
     "extracted_at": null,
     "filas": 154,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_expectativas_inflacion",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 4156,
@@ -9781,12 +10020,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_expectativas_inflacion",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -9799,7 +10041,7 @@
    "hash": "126a4acd5d66955dacdf84f058894a4c0d64a58490ebf2f863428f814d08cee9",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -9842,8 +10084,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-07 a 2026-10-22",
     "deriva_de": null,
@@ -9851,9 +10095,10 @@
     "extracted_at": null,
     "filas": 238,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_expectativas_operadores",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 5253,
@@ -9865,12 +10110,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_expectativas_operadores",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -9883,7 +10131,7 @@
    "hash": "353230f66555ea7955a8c517793526411b2d8df756cc8fc679affa5302bfc16a",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -9926,8 +10174,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-10-01",
     "deriva_de": null,
@@ -9935,9 +10185,10 @@
     "extracted_at": null,
     "filas": 154,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_expectativas_tpm",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 4075,
@@ -9949,12 +10200,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_expectativas_tpm",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -9967,7 +10221,7 @@
    "hash": "e0e58c4689cf16e73b362a0ec7cbc837c6767931704a601641ad2e2f6c3940af",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -10028,8 +10282,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-08-01",
     "deriva_de": null,
@@ -10037,9 +10293,10 @@
     "extracted_at": null,
     "filas": 152,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_imacec",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 12252,
@@ -10051,12 +10308,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_imacec",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -10069,7 +10329,7 @@
    "hash": "ee86b3ce1165b89f3df41d0cf1118f8dddf73b422a5fad6163834d3db1dc2157",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -10112,8 +10372,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": true,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-02 a 2026-10-20",
     "deriva_de": null,
@@ -10121,9 +10383,10 @@
     "extracted_at": null,
     "filas": 3078,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_inflacion_implicita",
     "nivel": "contexto",
+    "nota_adaptacion": "Adaptación de elaboración propia sobre series del Banco Central de Chile; la adaptación es propiedad y responsabilidad exclusiva de este proyecto. El cálculo consiste en diferencia propia entre el rendimiento del bono en pesos y el del bono en UF del mismo plazo, calculada sobre las curvas que publica el Banco Central.",
     "particiones": [
      {
       "bytes": 36810,
@@ -10135,12 +10398,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_inflacion_implicita",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -10153,7 +10419,7 @@
    "hash": "ae723e188bf1626cb6b3c1444e8b7ab641cfb1e6a9f40706e6a5bdbc61c94d20",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -10202,8 +10468,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-09-01",
     "deriva_de": null,
@@ -10211,9 +10479,10 @@
     "extracted_at": null,
     "filas": 153,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_inflacion_ipc",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 8220,
@@ -10225,12 +10494,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_inflacion_ipc",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -10243,7 +10515,7 @@
    "hash": "2a9fdb487a639f36743884b23f4ca0bc79cabef3483682bfafc725effd70a50b",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -10298,8 +10570,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-08-01",
     "deriva_de": null,
@@ -10307,9 +10581,10 @@
     "extracted_at": null,
     "filas": 152,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_mercado_laboral",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 10245,
@@ -10321,12 +10596,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_mercado_laboral",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -10339,7 +10617,7 @@
    "hash": "c3a7c0b765a9b2554178e785938ff232d725aa1f8d361cb51e55d07b9b2a9155",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -10382,8 +10660,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-02 a 2026-10-22",
     "deriva_de": null,
@@ -10391,9 +10671,10 @@
     "extracted_at": null,
     "filas": 3189,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_metales_preciosos",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 46863,
@@ -10405,12 +10686,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_metales_preciosos",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -10423,7 +10707,7 @@
    "hash": "778a2cfa4d4d8a128d7504e914ecc8ea8c8c829473cd4952c77311172f30f49b",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -10460,8 +10744,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-04-01",
     "deriva_de": null,
@@ -10469,9 +10755,10 @@
     "extracted_at": null,
     "filas": 50,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_pib_trimestral",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 3112,
@@ -10483,12 +10770,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_pib_trimestral",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -10501,7 +10791,7 @@
    "hash": "9be4643a882945db4290ffcb13b216d695787ce0c123b8590da2162955d54e22",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -10538,8 +10828,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-09-01",
     "deriva_de": null,
@@ -10547,9 +10839,10 @@
     "extracted_at": null,
     "filas": 153,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_reservas_internacionales",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 4379,
@@ -10561,12 +10854,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_reservas_internacionales",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -10579,7 +10875,7 @@
    "hash": "918b48053a71e42c92de2435d6f3721b32b9b26d96d56c765b0430cb8771c7e4",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -10670,8 +10966,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-10-22",
     "deriva_de": null,
@@ -10679,9 +10977,10 @@
     "extracted_at": "2026-10-21",
     "filas": 51,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_series_catalogo",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 10896,
@@ -10693,12 +10992,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_series_catalogo",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -10711,7 +11013,7 @@
    "hash": "34a3171c4810598e07e621c49b095e83e52010a0852b7f50004b91c3b474bff2",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -10772,8 +11074,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-02 a 2026-10-21",
     "deriva_de": null,
@@ -10781,9 +11085,10 @@
     "extracted_at": null,
     "filas": 3203,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_swaps_camara",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 79260,
@@ -10795,12 +11100,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_swaps_camara",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -10813,7 +11121,7 @@
    "hash": "ca661a07d7e51a8273d4bbcafc434895a3f650cc75b6638902933ea226321d2d",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -10850,8 +11158,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-10-20",
     "deriva_de": null,
@@ -10859,9 +11169,10 @@
     "extracted_at": null,
     "filas": 3328,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_tasa_referencia_fed",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 12212,
@@ -10873,12 +11184,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_tasa_referencia_fed",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -10891,7 +11205,7 @@
    "hash": "4f7ac6155c508a169e198d0352aa36028ed98f3e1dbabe7a050e8e52f79c3385",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -10934,8 +11248,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-02 a 2026-10-22",
     "deriva_de": null,
@@ -10943,9 +11259,10 @@
     "extracted_at": null,
     "filas": 3190,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_tasas_corto_plazo",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 13683,
@@ -10957,12 +11274,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_tasas_corto_plazo",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -10975,7 +11295,7 @@
    "hash": "ee21a7418ca18b471e67731828ae3036e5558efc96591bee33e14f39d19388b0",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -11024,8 +11344,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-02 a 2026-10-22",
     "deriva_de": null,
@@ -11033,9 +11355,10 @@
     "extracted_at": null,
     "filas": 3189,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_tipo_cambio_multilateral",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 42452,
@@ -11047,12 +11370,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_tipo_cambio_multilateral",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -11065,7 +11391,7 @@
    "hash": "94a46fd5763a9da7b237a566f0e8fa361c26fefa76f456dcb46192c32ba2b86e",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -11108,8 +11434,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-08-01",
     "deriva_de": null,
@@ -11117,9 +11445,10 @@
     "extracted_at": null,
     "filas": 152,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_tipo_cambio_real",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 6393,
@@ -11131,12 +11460,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_tipo_cambio_real",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -11149,7 +11481,7 @@
    "hash": "b6b184e4e87803d61cc232f0261dc773d250b4245cf4b636c6082b8e202fbf30",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -11186,8 +11518,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-10-22",
     "deriva_de": null,
@@ -11195,9 +11529,10 @@
     "extracted_at": null,
     "filas": 4678,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_uf",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 35365,
@@ -11209,12 +11544,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_uf",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -11227,7 +11565,7 @@
    "hash": "c708dd558a3a1febb82748b1e5e7f9b9ac348d6fa7dba20d957226845af53574",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de BCCh: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -11264,8 +11602,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-10-01",
     "deriva_de": null,
@@ -11273,9 +11613,10 @@
     "extracted_at": null,
     "filas": 154,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "macro_utm",
     "nivel": "contexto",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 3359,
@@ -11287,12 +11628,15 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_utm",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
    },
    "sources": [
     {
-     "path": "https://si3.bcentral.cl/SieteRestWS",
-     "sif_estado": "pendiente",
+     "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+     "sif_cita": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
+     "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+     "sif_estado": "verificada",
      "title": "BCCh — Banco Central de Chile"
     }
    ],
@@ -11305,7 +11649,7 @@
    "hash": "700e16f7ff43b5e8c0dcc5e203ad92ffeac243f2b8d91404db6e17d9f696c158",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -11394,8 +11738,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2014-12 a 2025-12 (diciembre; 2010–2013 sin datos)",
     "deriva_de": null,
@@ -11403,9 +11749,10 @@
     "extracted_at": "2026-09-28",
     "filas": 7962,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "patrimonios_separados_balance",
     "nivel": "archivo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 57297,
@@ -11417,12 +11764,15 @@
     "puente": "directo",
     "sector": "patrimonios_separados",
     "sql_view": "patrimonios_separados_balance",
-    "ultima_actualizacion": "2026-09-28"
+    "ultima_actualizacion": "2026-09-28",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -11435,7 +11785,7 @@
    "hash": "ccdf35fd60b7b0d83a2376ffce12b0e5fb7e53a61a475a806099e046d39fde1c",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -11514,10 +11864,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "patrimonios_separados_maestro"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "Lista vigente",
     "deriva_de": null,
@@ -11525,9 +11877,10 @@
     "extracted_at": "2026-09-28",
     "filas": 19,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "patrimonios_separados_maestro",
     "nivel": "archivo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 7945,
@@ -11539,12 +11892,15 @@
     "puente": "alias",
     "sector": "patrimonios_separados",
     "sql_view": "patrimonios_separados_lista_entidades",
-    "ultima_actualizacion": "2026-09-28"
+    "ultima_actualizacion": "2026-09-28",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -11557,7 +11913,7 @@
    "hash": "b4f513b7a0d21f1023363da09d1c7b835fabc5a466ba533be083d23e05e757ff",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -11684,8 +12040,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2009-12 a 2026-06",
     "deriva_de": null,
@@ -11693,9 +12051,10 @@
     "extracted_at": null,
     "filas": 13679,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "securitizadoras_balance",
     "nivel": "archivo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 9312,
@@ -11809,12 +12168,15 @@
     "puente": "directo",
     "sector": "securitizadoras",
     "sql_view": "securitizadoras_balance",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -11827,7 +12189,7 @@
    "hash": "b1dd4e01935d2d07490f377c54e6191f3a1b1133e1aa52ebf1a18cfc62a901f5",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -11894,10 +12256,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "securitizadoras_maestro"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2026-06",
     "deriva_de": null,
@@ -11905,9 +12269,10 @@
     "extracted_at": "2026-09-23",
     "filas": 16,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "securitizadoras_maestro",
     "nivel": "archivo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 4346,
@@ -11919,12 +12284,15 @@
     "puente": "alias",
     "sector": "securitizadoras",
     "sql_view": "securitizadoras_lista_entidades",
-    "ultima_actualizacion": "2026-09-23"
+    "ultima_actualizacion": "2026-09-23",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -11937,7 +12305,7 @@
    "hash": "5e7b3572f4e8095754dfb045c5ec1f9a50fe1d0944ba141eed600b2e61398468",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -12067,8 +12435,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2009-12 a 2026-06",
     "deriva_de": null,
@@ -12076,9 +12446,10 @@
     "extracted_at": null,
     "filas": 12290,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "securitizadoras_resultados",
     "nivel": "archivo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 8984,
@@ -12192,12 +12563,15 @@
     "puente": "directo",
     "sector": "securitizadoras",
     "sql_view": "securitizadoras_resultados",
-    "ultima_actualizacion": "2026-10-22"
+    "ultima_actualizacion": "2026-10-22",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -12210,7 +12584,7 @@
    "hash": "d916825a3e2421699b34ec3c272a207f93266228f452ca8636aae578b9b6a98e",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -12437,13 +12811,13 @@
       "type": "number"
      },
      {
-      "description": "Corresponde informar el patrimonio contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros periodos, se debe informar el patrimonio contable de la filial del trimestre anterior al periodo informado. Expresado en miles de pesos.",
+      "description": "Corresponde informar el patrimonio contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros períodos, se debe informar el patrimonio contable de la filial del trimestre anterior al período informado. Expresado en miles de pesos.",
       "name": "patrimonio_filial_m_clp",
       "sif_rol": "Métrica",
       "type": "integer"
      },
      {
-      "description": "Corresponde al resultado (utilidad o pérdida) contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros periodos se debe informar el resultado contable de la filial del trimestre anterior al periodo informado. Expresado en miles de pesos.",
+      "description": "Corresponde al resultado (utilidad o pérdida) contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros períodos se debe informar el resultado contable de la filial del trimestre anterior al período informado. Expresado en miles de pesos.",
       "name": "resultado_de_la_sociedad_filial_m_clp",
       "sif_rol": "Métrica",
       "type": "integer"
@@ -12588,8 +12962,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2016-11 a 2026-09",
     "deriva_de": null,
@@ -12597,9 +12973,10 @@
     "extracted_at": "2026-10-21",
     "filas": 109019,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_acciones",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 93032,
@@ -12671,12 +13048,15 @@
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_acciones",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -12689,7 +13069,7 @@
    "hash": "ac2d95acdcfd2d5c1d7951bac7b848a9a039966c0b0cd1fc9fca33f2c93b21ac",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -12831,8 +13211,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2016-11 a 2026-09",
     "deriva_de": "seguros_acciones",
@@ -12840,9 +13222,10 @@
     "extracted_at": null,
     "filas": 109019,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_acciones_relevantes",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 56522,
@@ -12914,12 +13297,15 @@
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_acciones_relevantes",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -12932,7 +13318,7 @@
    "hash": "16a294780aec1f7e9a72e0573843460af7c7a63866aafcbc6d4c9133d0e9cbe7",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -13326,8 +13712,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2024-12 a 2026-09",
     "deriva_de": null,
@@ -13335,9 +13723,10 @@
     "extracted_at": "2026-10-21",
     "filas": 760152,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_bienes_raices",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 1361045,
@@ -13475,12 +13864,15 @@
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_bienes_raices",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -13493,7 +13885,7 @@
    "hash": "77a90bc86fd9f29edcc362c20e44b0665338871afc68b66295697ab3d6a12a0d",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -13637,8 +14029,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2024-12 a 2026-09",
     "deriva_de": "seguros_bienes_raices",
@@ -13646,9 +14040,10 @@
     "extracted_at": null,
     "filas": 760152,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_bienes_raices_relevantes",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 882060,
@@ -13673,12 +14068,15 @@
     "sector": "seguros",
     "sin_clave": "sin_clave",
     "sql_view": "seguros_bienes_raices_relevantes",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -13691,7 +14089,7 @@
    "hash": "5694809f749e37a143d10bb38421f5d6ea3ef46eef796aa03f61ae8ed2556d69",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -13822,8 +14220,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2016-11 a 2026-09",
     "deriva_de": null,
@@ -13831,9 +14231,10 @@
     "extracted_at": "2026-10-21",
     "filas": 111410,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_control_inversiones",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 46189,
@@ -13905,12 +14306,15 @@
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_control_inversiones",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -13923,7 +14327,7 @@
    "hash": "b6c51ea6e0e78569f1cbe2bef143a09c42717413a7b056c3a4ce0330a3c60efc",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -14400,8 +14804,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2016-11 a 2026-09",
     "deriva_de": null,
@@ -14409,9 +14815,10 @@
     "extracted_at": "2026-10-21",
     "filas": 373469,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_derivados",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 277106,
@@ -14483,12 +14890,15 @@
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_derivados",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -14501,7 +14911,7 @@
    "hash": "1c0e0d12310c753baacd3cb21bdf7dbd0f1b1441cb735fc8b988021da3d73eb8",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -14678,8 +15088,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2016-11 a 2026-09",
     "deriva_de": "seguros_derivados",
@@ -14687,9 +15099,10 @@
     "extracted_at": null,
     "filas": 373469,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_derivados_relevantes",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 39471,
@@ -14761,12 +15174,15 @@
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_derivados_relevantes",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -14779,7 +15195,7 @@
    "hash": "dcbae1a5fa5c30f68e5bfd3dab42f1f1f2df18b7e7ad02d6fdecd635bd118bff",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -15336,7 +15752,7 @@
       "type": "number"
      },
      {
-      "description": "Corresponde informar el patrimonio contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros periodos se debe informar el patrimonio contable de la filial del trimestre anterior al periodo informado. Expresado en miles de pesos.",
+      "description": "Corresponde informar el patrimonio contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros períodos se debe informar el patrimonio contable de la filial del trimestre anterior al período informado. Expresado en miles de pesos.",
       "name": "patrimonio_filial_m_clp",
       "sif_rol": "Métrica",
       "type": "integer"
@@ -15491,8 +15907,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2016-11 a 2026-09",
     "deriva_de": null,
@@ -15500,9 +15918,10 @@
     "extracted_at": "2026-10-20 (ultima_actualizacion del manifiesto)",
     "filas": 471942,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_extranjeros",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 276865,
@@ -15574,12 +15993,15 @@
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_extranjeros",
-    "ultima_actualizacion": "2026-10-20"
+    "ultima_actualizacion": "2026-10-20",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -15592,7 +16014,7 @@
    "hash": "c66c4733317c05373a36a1089e6f367ec02c4e3867bce512160aa36e81e49cc4",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -15752,8 +16174,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2016-11 a 2026-09",
     "deriva_de": "seguros_extranjeros",
@@ -15761,9 +16185,10 @@
     "extracted_at": null,
     "filas": 471670,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_extranjeros_relevantes",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 46696,
@@ -15835,12 +16260,15 @@
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_extranjeros_relevantes",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -15853,7 +16281,7 @@
    "hash": "03f073fddd567e9c9040c22709e9714b8988a114b3b7b9f0f4016c9fd720e509",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -15987,8 +16415,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2024-12 a 2026-09",
     "deriva_de": null,
@@ -15996,9 +16426,10 @@
     "extracted_at": null,
     "filas": 4369,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_flujos_activos_elegibles",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 22600,
@@ -16022,12 +16453,15 @@
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_flujos_activos_elegibles",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -16040,7 +16474,7 @@
    "hash": "51352035a5998f06bcd19cbd32a81d914c951c851aa240d160a29b0e4e99a31c",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -16293,8 +16727,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2016-11 a 2026-09",
     "deriva_de": null,
@@ -16302,9 +16738,10 @@
     "extracted_at": "2026-10-21",
     "filas": 100472,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_fondos_mutuos",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 76395,
@@ -16376,12 +16813,15 @@
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_fondos_mutuos",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -16394,7 +16834,7 @@
    "hash": "ec99ca420a8ff1ef68612fb5d4cf375b1e55e5dbb8f83e304ba1f8cdf2baa36e",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -16575,8 +17015,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2024-12 a 2026-09",
     "deriva_de": null,
@@ -16584,9 +17026,10 @@
     "extracted_at": null,
     "filas": 6518,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_garantias_derivados",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 27139,
@@ -16610,12 +17053,15 @@
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_garantias_derivados",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -16628,7 +17074,7 @@
    "hash": "4ca17b42ba707601a7362c45357ead599f2921f9e6c8890f8cede285a9b81ee8",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -16690,10 +17136,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "seguros_maestro"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2016-11 a 2026-09",
     "deriva_de": null,
@@ -16701,9 +17149,10 @@
     "extracted_at": "2026-10-21",
     "filas": 84,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_maestro",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 6746,
@@ -16715,12 +17164,15 @@
     "puente": "alias",
     "sector": "seguros",
     "sql_view": "seguros_lista_entidades",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -16733,7 +17185,7 @@
    "hash": "5e0190b0a19d614fa7c80a0501dba4ab789eaa99a9e1720a080b3064b66dfc1c",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -16955,8 +17407,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2024-12 a 2026-09",
     "deriva_de": null,
@@ -16964,9 +17418,10 @@
     "extracted_at": null,
     "filas": 42494,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_otras_inversiones",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 68897,
@@ -16991,12 +17446,15 @@
     "sector": "seguros",
     "sin_clave": "fila_completa",
     "sql_view": "seguros_otras_inversiones",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -17009,7 +17467,7 @@
    "hash": "dafa26ce64fb4236b87ea138e6ca5581668d65540077af1a7a195f0a7f03c6f5",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -17230,8 +17688,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2016-11 a 2026-09",
     "deriva_de": null,
@@ -17239,9 +17699,10 @@
     "extracted_at": "2026-10-21",
     "filas": 11371,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_pactos",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 28234,
@@ -17313,12 +17774,15 @@
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_pactos",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -17331,7 +17795,7 @@
    "hash": "820d9c406e73e650946116c4ea688061c75f13936d0e3fb9baac0eff3815fd17",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -17406,8 +17870,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2024-12 a 2026-09",
     "deriva_de": null,
@@ -17415,9 +17881,10 @@
     "extracted_at": null,
     "filas": 66,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_registros_tipo6",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 7029,
@@ -17441,12 +17908,15 @@
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_registros_tipo6",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -17459,7 +17929,7 @@
    "hash": "db66b9ddae920de644a6fd5e3c82ca5b5c21837159d3cc80e52eba9f4821af1f",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -18147,8 +18617,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2024-12 a 2026-09",
     "deriva_de": null,
@@ -18156,9 +18628,10 @@
     "extracted_at": "2026-10-21",
     "filas": 2321911,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_renta_fija",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 10256294,
@@ -18296,12 +18769,15 @@
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_renta_fija",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -18314,7 +18790,7 @@
    "hash": "7fce408390296aab68bd2e645c1e98809bb150854cc4646c99d863ebd401c5bb",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -18473,8 +18949,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2024-12 a 2026-09",
     "deriva_de": "seguros_renta_fija",
@@ -18482,9 +18960,10 @@
     "extracted_at": null,
     "filas": 2321911,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_renta_fija_relevante",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 3653673,
@@ -18508,12 +18987,15 @@
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_renta_fija_relevante",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -18526,7 +19008,7 @@
    "hash": "77a958d1821e03da43cbae451dc11370262982daae7c3e0a2653ab23d1181a09",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -18610,8 +19092,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2024-12 a 2026-09",
     "deriva_de": null,
@@ -18619,9 +19103,10 @@
     "extracted_at": null,
     "filas": 2193981,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_tablas_desarrollo",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 533876,
@@ -18646,12 +19131,15 @@
     "sector": "seguros",
     "sin_clave": "sin_clave",
     "sql_view": "seguros_tablas_desarrollo",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -18664,7 +19152,7 @@
    "hash": "c4cd1812b0cea23e3c4bead728d6369f5ba6c0932cafe94f70a05dfeeba3f1e2",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -18813,8 +19301,10 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2024-12 a 2026-09",
     "deriva_de": null,
@@ -18822,9 +19312,10 @@
     "extracted_at": null,
     "filas": 9792,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "seguros_tablas_descriptores",
     "nivel": "nucleo",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 15851,
@@ -18848,12 +19339,15 @@
     "puente": "directo",
     "sector": "seguros",
     "sql_view": "seguros_tablas_descriptores",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-21",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -18866,7 +19360,7 @@
    "hash": "f9e187fc772dd775d7427526090be8872a6fe5f90760f2f1d2b7ce915a577155",
    "licenses": [
     {
-     "name": "Uso condicionado por la fuente",
+     "name": "Datos de CMF: citar la fuente",
      "path": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
     }
    ],
@@ -18969,10 +19463,12 @@
    },
    "scheme": "file",
    "sif": {
+    "adaptacion": false,
     "aliases": [
      "sistemas_pago_maestro"
     ],
     "api_version": "v1",
+    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "Lista vigente",
     "deriva_de": null,
@@ -18980,9 +19476,10 @@
     "extracted_at": "2026-09-28",
     "filas": 19,
     "filtro": null,
-    "licencia_estado": "pendiente",
+    "licencia_estado": "verificada",
     "manifest_id": "sistemas_pago_maestro",
     "nivel": "registro",
+    "nota_adaptacion": null,
     "particiones": [
      {
       "bytes": 12781,
@@ -18994,12 +19491,15 @@
     "puente": "alias",
     "sector": "sistemas_pago",
     "sql_view": "sistemas_pago_lista_entidades",
-    "ultima_actualizacion": "2026-09-28"
+    "ultima_actualizacion": "2026-09-28",
+    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
     {
-     "path": "https://www.cmfchile.cl",
-     "sif_estado": "pendiente",
+     "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+     "sif_cita": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+     "sif_documento": "Descargo de Responsabilidades",
+     "sif_estado": "verificada",
      "title": "CMF — Comisión para el Mercado Financiero"
     }
    ],
@@ -19017,7 +19517,7 @@
    "licencia": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md",
    "reconciliacion": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv"
   },
-  "data_release": "2026-10-22.7e99ccbc2a82",
+  "data_release": "2026-10-22.e21f39783464",
   "espejo": "https://sistema-de-informacion-financiera-de-chile-docs.vercel.app",
   "filas_unicas": 19777504,
   "identificador": {
@@ -19035,20 +19535,22 @@
  },
  "sources": [
   {
-   "path": "https://www.cmfchile.cl",
+   "path": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+   "sif_documento": "Descargo de Responsabilidades",
+   "sif_estado": "verificada",
    "title": "CMF — Comisión para el Mercado Financiero"
   },
   {
-   "path": "https://si3.bcentral.cl",
+   "path": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
+   "sif_documento": "Términos y Condiciones de Uso de la API BDE",
+   "sif_estado": "verificada",
    "title": "BCCh — Banco Central de Chile"
   },
   {
-   "path": "https://www.spensiones.cl",
+   "path": "https://www.spensiones.cl/portal/institucional/594/w3-article-5885.html",
+   "sif_documento": "Descargo de responsabilidades",
+   "sif_estado": "verificada",
    "title": "SPensiones — Superintendencia de Pensiones"
-  },
-  {
-   "path": "https://www.suseso.cl",
-   "title": "SUSESO — Superintendencia de Seguridad Social"
   }
  ],
  "title": "Sistema de Información Financiera de Chile",

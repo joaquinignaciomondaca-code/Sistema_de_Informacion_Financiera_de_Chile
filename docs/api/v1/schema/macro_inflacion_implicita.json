@@ -1,4 +1,6 @@
 {
+ "adaptacion": true,
+ "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
  "columnas": [
   {
    "criterio_contable": "No aplica",
@@ -36,11 +38,14 @@
  "contrato": "sif-api/esquema",
  "estado": "publicado",
  "foraneas": [],
+ "fuente": "BCCh",
  "id": "macro_inflacion_implicita",
+ "licencia_estado": "verificada",
  "primaryKey": [
   "fecha"
  ],
  "sector": "macro",
  "titulo": "macro.inflacion_implicita",
+ "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm",
  "version": "1.0.0"
 }

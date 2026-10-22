@@ -1856,7 +1856,7 @@
      "tipo": "VARCHAR"
     }
    ],
-   "corte": "2009-03 a 2026-06",
+   "corte": "2009-03 a 2026-09",
    "estado": "publicado",
    "filas": 30046,
    "manifest_id": "factoring_leasing_balance_serie_ifrs_cmf",
@@ -2197,7 +2197,7 @@
      "tipo": "VARCHAR"
     }
    ],
-   "corte": "2009-03 a 2026-06",
+   "corte": "2009-03 a 2026-09",
    "estado": "publicado",
    "filas": 22368,
    "manifest_id": "factoring_leasing_resultados_serie_ifrs_cmf",
@@ -4802,13 +4802,6 @@
     },
     {
      "criterio_contable": "No aplica",
-     "nombre": "email_contacto",
-     "rol": "Dimensión",
-     "significado": "Correo electrónico institucional de contacto.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
      "nombre": "sitio_web",
      "rol": "Dimensión",
      "significado": "URL de la plataforma tecnológica o portal web.",
@@ -4869,7 +4862,7 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-01 a 2026-10-21",
+   "corte": "2014-01-01 a 2026-10-22",
    "estado": "publicado",
    "filas": 3261,
    "manifest_id": "macro_cobre",
@@ -4918,7 +4911,7 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-19",
+   "corte": "2014-01-02 a 2026-10-20",
    "estado": "publicado",
    "filas": 3172,
    "manifest_id": "macro_curva_bonos_pesos",
@@ -4988,7 +4981,7 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-19",
+   "corte": "2014-01-02 a 2026-10-20",
    "estado": "publicado",
    "filas": 3174,
    "manifest_id": "macro_curva_bonos_uf",
@@ -5058,7 +5051,7 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-21",
+   "corte": "2014-01-02 a 2026-10-22",
    "estado": "publicado",
    "filas": 3189,
    "manifest_id": "macro_dolar_observado",
@@ -5093,7 +5086,7 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-21",
+   "corte": "2014-01-02 a 2026-10-22",
    "estado": "publicado",
    "filas": 3189,
    "manifest_id": "macro_euro_observado",
@@ -5177,7 +5170,7 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-07 a 2026-09-24",
+   "corte": "2014-01-07 a 2026-10-22",
    "estado": "publicado",
    "filas": 238,
    "manifest_id": "macro_expectativas_operadores",
@@ -5324,7 +5317,7 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-19",
+   "corte": "2014-01-02 a 2026-10-20",
    "estado": "publicado",
    "filas": 3078,
    "manifest_id": "macro_inflacion_implicita",
@@ -5471,7 +5464,7 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-21",
+   "corte": "2014-01-02 a 2026-10-22",
    "estado": "publicado",
    "filas": 3189,
    "manifest_id": "macro_metales_preciosos",
@@ -5639,7 +5632,7 @@
      "tipo": "VARCHAR"
     }
    ],
-   "corte": "2014-01-01 a 2026-10-21",
+   "corte": "2014-01-01 a 2026-10-22",
    "estado": "publicado",
    "filas": 51,
    "manifest_id": "macro_series_catalogo",
@@ -5702,7 +5695,7 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-20",
+   "corte": "2014-01-02 a 2026-10-21",
    "estado": "publicado",
    "filas": 3203,
    "manifest_id": "macro_swaps_camara",
@@ -5779,7 +5772,7 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-21",
+   "corte": "2014-01-02 a 2026-10-22",
    "estado": "publicado",
    "filas": 3190,
    "manifest_id": "macro_tasas_corto_plazo",
@@ -5828,7 +5821,7 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-21",
+   "corte": "2014-01-02 a 2026-10-22",
    "estado": "publicado",
    "filas": 3189,
    "manifest_id": "macro_tipo_cambio_multilateral",
@@ -5905,7 +5898,7 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-01 a 2026-10-21",
+   "corte": "2014-01-01 a 2026-10-22",
    "estado": "publicado",
    "filas": 4678,
    "manifest_id": "macro_uf",
@@ -6664,14 +6657,14 @@
      "criterio_contable": "No aplica",
      "nombre": "patrimonio_filial_m_clp",
      "rol": "Métrica",
-     "significado": "Corresponde informar el patrimonio contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros periodos, se debe informar el patrimonio contable de la filial del trimestre anterior al periodo informado. Expresado en miles de pesos.",
+     "significado": "Corresponde informar el patrimonio contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros períodos, se debe informar el patrimonio contable de la filial del trimestre anterior al período informado. Expresado en miles de pesos.",
      "tipo": "BIGINT"
     },
     {
      "criterio_contable": "No aplica",
      "nombre": "resultado_de_la_sociedad_filial_m_clp",
      "rol": "Métrica",
-     "significado": "Corresponde al resultado (utilidad o pérdida) contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros periodos se debe informar el resultado contable de la filial del trimestre anterior al periodo informado. Expresado en miles de pesos.",
+     "significado": "Corresponde al resultado (utilidad o pérdida) contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros períodos se debe informar el resultado contable de la filial del trimestre anterior al período informado. Expresado en miles de pesos.",
      "tipo": "BIGINT"
     },
     {
@@ -9005,7 +8998,7 @@
      "criterio_contable": "No aplica",
      "nombre": "patrimonio_filial_m_clp",
      "rol": "Métrica",
-     "significado": "Corresponde informar el patrimonio contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros periodos se debe informar el patrimonio contable de la filial del trimestre anterior al periodo informado. Expresado en miles de pesos.",
+     "significado": "Corresponde informar el patrimonio contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros períodos se debe informar el patrimonio contable de la filial del trimestre anterior al período informado. Expresado en miles de pesos.",
      "tipo": "BIGINT"
     },
     {
@@ -11823,7 +11816,7 @@
   }
  },
  "resumen": {
-  "columnas": 1509,
+  "columnas": 1508,
   "columnas_sin_documentar": 7,
   "columnas_sin_valores": 1,
   "con_esquema": 86,

@@ -6,8 +6,8 @@
  *
  *   #creditos-autor      → Información: quién construye esto, desde cuándo y
  *                          dónde está el código.
- *   #creditos-descargas  → Descargas: reproducibilidad y código, sobre el
- *                          catálogo.
+ *   #creditos-guia       → Guía: el método y los archivos auditables, en dos
+ *                          grupos (planilla y código).
  *
  * Regla de este módulo: en el sitio se escribe sólo lo que existe hoy. No hay
  * DOI, ni una versión congelada, ni una fecha de corte única. La cobertura no
@@ -129,9 +129,54 @@
         <p class="creditos-autor-rol">Proyecto de datos de punta a punta: extracción desde las fuentes oficiales,
         validación estadística y contable, publicación incremental, automatización y producto web.</p>
         <p class="creditos-autor-enlaces">
-          ${enlace(CREDITOS.github, "GitHub")} · ${enlace(CREDITOS.linkedin, "LinkedIn")}
+          ${enlace(CREDITOS.github, "GitHub")} · ${enlace(CREDITOS.linkedin, "LinkedIn")} ·
+          <a href="privacidad.html">Privacidad y datos personales</a>
         </p>
       </div>
+    `;
+  }
+
+  /* Fuentes, cita y condiciones de uso. Las tres fuentes autorizan la
+   * republicación con una sola condición: mencionarlas. La restricción de «uso
+   * exclusivo para fines de investigación» que pesa sobre la Base de Cartera de
+   * los Fondos de Pensiones no aparece aquí porque esa base no se publica. */
+  const FUENTES = [
+    {
+      sigla: "CMF",
+      nombre: "Comisión para el Mercado Financiero",
+      cita: "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+      url: "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
+    },
+    {
+      sigla: "BCCh",
+      nombre: "Banco Central de Chile",
+      cita: "Fuente: Banco Central de Chile (BDE). La información es propiedad del Banco Central de Chile.",
+      url: "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
+    },
+    {
+      sigla: "SPensiones",
+      nombre: "Superintendencia de Pensiones",
+      cita: "Fuente: Superintendencia de Pensiones. Reproducción autorizada citando la fuente.",
+      url: "https://www.spensiones.cl/portal/institucional/594/w3-article-5885.html"
+    }
+  ];
+
+  function htmlFuentes() {
+    return `
+      <section class="dl-fuentes" aria-labelledby="dl-fuentes-titulo">
+        <h3 id="dl-fuentes-titulo">Fuentes y condiciones de uso</h3>
+        <p class="dl-uso-nota">Cada conjunto declara su fuente y su cita en el catálogo de descargas.
+        Las tres fuentes autorizan la reproducción citándolas; ninguna exige autorización escrita.</p>
+        <ul class="dl-fuentes-lista">
+          ${FUENTES.map((f) => `<li>
+            <a href="${escapar(f.url)}" target="_blank" rel="noopener"><strong>${escapar(f.sigla)}</strong></a>
+            · ${escapar(f.nombre)}
+            <span class="dl-fuentes-cita">${escapar(f.cita)}</span>
+          </li>`).join("")}
+        </ul>
+        <p class="dl-uso-pie">Los datos personales que contienen algunos registros se tratan conforme a la
+        Ley 21.719: <a href="privacidad.html">aviso de privacidad y derechos</a>.</p>
+      </section>
     `;
   }
 
@@ -140,26 +185,19 @@
   function htmlGuia() {
     const R = CREDITOS.reproducibilidad;
     return `
-      <div class="dl-creditos-head">
-        <div>
-          <h3>Reproducibilidad y código</h3>
-          <p>Lo publicado se puede auditar: de dónde sale cada cifra, qué comprobaciones pasó y cómo
-          se regenera. Los archivos vienen en dos grupos porque no se consumen igual.</p>
-        </div>
-      </div>
       <div class="dl-usos">
         ${grupoUso("dl-uso-leer", "Para leer",
-          "Se abren en Excel, Numbers o cualquier hoja de cálculo.", R.leer)}
+          "CSV y Markdown: se abren en una hoja de cálculo o en un editor de texto.", R.leer)}
         ${grupoUso("dl-uso-maquinas", "Para programas y agentes de IA",
-          "JSON, hashes y el contrato: pensados para consumirse con código.", R.maquinas)}
+          "JSON, hashes y el contrato: se consumen desde código.", R.maquinas)}
       </div>
       <p class="dl-uso-pie">
-        Se regeneran con <code>scripts/construir_reproducibilidad.py</code>; el método completo
-        está en <a href="reproducibilidad/README.md">reproducibilidad/README.md</a> y el código en
-        ${enlace(CREDITOS.github, "GitHub")}.
-        ¿Un agente que no ejecuta código? También hay
-        <button type="button" class="dl-uso-enlace" data-ir-uso="agentes">SDK y servidor MCP</button>.
+        Se regeneran con <code>scripts/construir_reproducibilidad.py</code>. El método completo está en
+        <a href="reproducibilidad/README.md">reproducibilidad/README.md</a> y el código en
+        ${enlace(CREDITOS.github, "GitHub")}. Las instrucciones para agentes están en
+        <button type="button" class="dl-uso-enlace" data-ir-uso="agentes">la sub-pestaña «Para agentes de IA»</button>.
       </p>
+      ${htmlFuentes()}
     `;
   }
 

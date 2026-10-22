@@ -1,4 +1,6 @@
 {
+ "adaptacion": false,
+ "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
  "columnas": [
   {
    "criterio_contable": "No aplica",
@@ -276,7 +278,7 @@
    "criterio_contable": "No aplica",
    "nombre": "patrimonio_filial_m_clp",
    "rol": "Métrica",
-   "significado": "Corresponde informar el patrimonio contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros periodos, se debe informar el patrimonio contable de la filial del trimestre anterior al periodo informado. Expresado en miles de pesos.",
+   "significado": "Corresponde informar el patrimonio contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros períodos, se debe informar el patrimonio contable de la filial del trimestre anterior al período informado. Expresado en miles de pesos.",
    "tipo": "BIGINT",
    "tipo_ts": "integer"
   },
@@ -284,7 +286,7 @@
    "criterio_contable": "No aplica",
    "nombre": "resultado_de_la_sociedad_filial_m_clp",
    "rol": "Métrica",
-   "significado": "Corresponde al resultado (utilidad o pérdida) contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros periodos se debe informar el resultado contable de la filial del trimestre anterior al periodo informado. Expresado en miles de pesos.",
+   "significado": "Corresponde al resultado (utilidad o pérdida) contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros períodos se debe informar el resultado contable de la filial del trimestre anterior al período informado. Expresado en miles de pesos.",
    "tipo": "BIGINT",
    "tipo_ts": "integer"
   },
@@ -458,7 +460,9 @@
    "tasa": 1.0
   }
  ],
+ "fuente": "CMF",
  "id": "seguros_acciones",
+ "licencia_estado": "verificada",
  "primaryKey": [
   "valor_final_m_clp",
   "valor_razonable_m_clp",
@@ -477,5 +481,6 @@
  ],
  "sector": "seguros",
  "titulo": "B.2 ACCIONES DE SOCIEDADES ANÓNIMAS ABIERTAS, ACCIONES DE SOCIEDADES ANÓNIMAS CERRADAS Y CUOTAS DE FONDOS DE INVERSIÓN",
+ "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
  "version": "1.0.0"
 }
