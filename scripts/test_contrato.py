@@ -65,11 +65,10 @@ TOP5_HISTORICO = ["US", "LU", "IE", "BR", "GB"]
 # listan, se cuentan y se vigilan, porque un `WHERE rut = '97004000'` sobre una
 # columna así devuelve 0 filas **sin error**. Tarea 1d.8 de la ruta.
 COLUMNAS_VACIAS_CONOCIDAS = {
-    "bancos_balance.rut": "el extractor de banca escribe rut=None desde 2022-01 (1d.8)",
-    "bancos_balance.razon_social": "idem rut (1d.8)",
-    "bancos_resultados.rut": "idem (1d.8)",
-    "bancos_resultados.razon_social": "idem (1d.8)",
-    "agf_lista_entidades.codigo_cmf": "el maestro de AGF no trae el código CMF (1d.8)",
+    # El registro RGAGF de la CMF no publica un código institucional: la columna
+    # existe porque el maestro de entidades comparte plantilla con CCAF, donde sí
+    # hay código para las cajas emisoras. Se declara vacía en el diccionario.
+    "agf_lista_entidades.codigo_cmf": "la CMF no publica código institucional para AGF (1d.8.1)",
 }
 
 class Servidor:

@@ -448,16 +448,12 @@
     {
      "documentada": false,
      "nombre": "rut",
-     "sin_valores": true,
-     "tipo": "VARCHAR",
-     "tipo_fisico": "null"
+     "tipo": "VARCHAR"
     },
     {
      "documentada": false,
      "nombre": "razon_social",
-     "sin_valores": true,
-     "tipo": "VARCHAR",
-     "tipo_fisico": "null"
+     "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
@@ -716,16 +712,12 @@
     {
      "documentada": false,
      "nombre": "rut",
-     "sin_valores": true,
-     "tipo": "VARCHAR",
-     "tipo_fisico": "null"
+     "tipo": "VARCHAR"
     },
     {
      "documentada": false,
      "nombre": "razon_social",
-     "sin_valores": true,
-     "tipo": "VARCHAR",
-     "tipo_fisico": "null"
+     "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
@@ -11833,7 +11825,7 @@
  "resumen": {
   "columnas": 1509,
   "columnas_sin_documentar": 7,
-  "columnas_sin_valores": 5,
+  "columnas_sin_valores": 1,
   "con_esquema": 86,
   "filas_por_objeto": 21740484,
   "filas_unicas": 19777492,
