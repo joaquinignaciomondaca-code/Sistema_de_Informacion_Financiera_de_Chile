@@ -1,4 +1,6 @@
 {
+ "adaptacion": false,
+ "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
  "columnas": [
   {
    "criterio_contable": "No aplica",
@@ -82,11 +84,14 @@
    "tasa": 1.0
   }
  ],
+ "fuente": "CMF",
  "id": "seguros_registros_tipo6",
+ "licencia_estado": "verificada",
  "primaryKey": [
   "archivo_origen"
  ],
  "sector": "seguros",
  "titulo": "Registros tipo 6 de B.11 y B.14",
+ "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
  "version": "1.0.0"
 }

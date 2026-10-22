@@ -2,7 +2,7 @@
   "generado": "2026-10-22",
   "origen": "docs/js/data_dictionary.js (misma fuente que el diccionario de la web)",
   "tablas": 90,
-  "columnas": 1671,
+  "columnas": 1670,
   "datos": [
     {
       "id": "macro_tasas_corto_plazo",
@@ -2288,14 +2288,14 @@
           "name": "patrimonio_filial_m_clp",
           "type": "BIGINT",
           "role": "Métrica",
-          "significado": "Corresponde informar el patrimonio contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros periodos, se debe informar el patrimonio contable de la filial del trimestre anterior al periodo informado. Expresado en miles de pesos.",
+          "significado": "Corresponde informar el patrimonio contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros períodos, se debe informar el patrimonio contable de la filial del trimestre anterior al período informado. Expresado en miles de pesos.",
           "contable": "No aplica"
         },
         {
           "name": "resultado_de_la_sociedad_filial_m_clp",
           "type": "BIGINT",
           "role": "Métrica",
-          "significado": "Corresponde al resultado (utilidad o pérdida) contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros periodos se debe informar el resultado contable de la filial del trimestre anterior al periodo informado. Expresado en miles de pesos.",
+          "significado": "Corresponde al resultado (utilidad o pérdida) contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros períodos se debe informar el resultado contable de la filial del trimestre anterior al período informado. Expresado en miles de pesos.",
           "contable": "No aplica"
         },
         {
@@ -3760,7 +3760,7 @@
           "name": "patrimonio_filial_m_clp",
           "type": "BIGINT",
           "role": "Métrica",
-          "significado": "Corresponde informar el patrimonio contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros periodos se debe informar el patrimonio contable de la filial del trimestre anterior al periodo informado. Expresado en miles de pesos.",
+          "significado": "Corresponde informar el patrimonio contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros períodos se debe informar el patrimonio contable de la filial del trimestre anterior al período informado. Expresado en miles de pesos.",
           "contable": "No aplica"
         },
         {
@@ -8889,11 +8889,11 @@
       "sector": "factoring_leasing",
       "sectorLabel": "Factoring y Leasing (CMF)",
       "norma": "CMF IFRS TXT · extracción automática de cuentas ESF/ER",
-      "corte": "2009-03 a 2026-06 · 70 cierres",
+      "corte": "2009-03 a 2026-09 · 71 cierres",
       "frescura": "Serie de la fuente CMF; valores crudos, no validación integral",
       "modo": "Actions: descarga histórica incremental y publicación automática al completarse",
       "ultimaActualizacion": "2026-10-22",
-      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39726317201. 28/32 RUT del catálogo con datos en la fuente. Incluye cuentas repetidas y valores no enteros; no convertir, deduplicar ni sumar sin criterio. No cotejo integral de estados.",
+      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39821631671. 28/32 RUT del catálogo con datos en la fuente. Incluye cuentas repetidas y valores no enteros; no convertir, deduplicar ni sumar sin criterio. No cotejo integral de estados.",
       "columnas": [
         {
           "name": "periodo",
@@ -9033,17 +9033,17 @@
       "name": "factoring_leasing.balance",
       "viewName": "factoring_leasing_balance",
       "registros": "Serie IFRS · sin cotejo integral",
-      "descripcion": "Balance IFRS CMF · serie histórica. 30,046 filas de cuentas de estados ESF entre 2009-03 a 2026-06; no son estados agregados. Incluye 2,446 importes no enteros preservados como texto/null y 950 repeticiones de contexto conservadas. Monedas, taxonomías y tipos I/C permanecen separados; sin conversión, deduplicación ni suma. Cifras no cotejadas en su totalidad."
+      "descripcion": "Balance IFRS CMF · serie histórica. 30,046 filas de cuentas de estados ESF entre 2009-03 a 2026-09; no son estados agregados. Incluye 2,446 importes no enteros preservados como texto/null y 950 repeticiones de contexto conservadas. Monedas, taxonomías y tipos I/C permanecen separados; sin conversión, deduplicación ni suma. Cifras no cotejadas en su totalidad."
     },
     {
       "sector": "factoring_leasing",
       "sectorLabel": "Factoring y Leasing (CMF)",
       "norma": "CMF IFRS TXT · extracción automática de cuentas ESF/ER",
-      "corte": "2009-03 a 2026-06 · 70 cierres",
+      "corte": "2009-03 a 2026-09 · 71 cierres",
       "frescura": "Serie de la fuente CMF; valores crudos, no validación integral",
       "modo": "Actions: descarga histórica incremental y publicación automática al completarse",
       "ultimaActualizacion": "2026-10-22",
-      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39726317201. 28/32 RUT del catálogo con datos en la fuente. Incluye cuentas repetidas y valores no enteros; no convertir, deduplicar ni sumar sin criterio. No cotejo integral de estados.",
+      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39821631671. 28/32 RUT del catálogo con datos en la fuente. Incluye cuentas repetidas y valores no enteros; no convertir, deduplicar ni sumar sin criterio. No cotejo integral de estados.",
       "columnas": [
         {
           "name": "periodo",
@@ -9183,7 +9183,7 @@
       "name": "factoring_leasing.resultados",
       "viewName": "factoring_leasing_resultados",
       "registros": "Serie IFRS · sin cotejo integral",
-      "descripcion": "Resultados IFRS CMF · serie histórica. 22,368 filas de cuentas de estados ER entre 2009-03 a 2026-06; no son estados agregados. Incluye 2,446 importes no enteros preservados como texto/null y 950 repeticiones de contexto conservadas. Monedas, taxonomías y tipos I/C permanecen separados; sin conversión, deduplicación ni suma. Cifras no cotejadas en su totalidad."
+      "descripcion": "Resultados IFRS CMF · serie histórica. 22,368 filas de cuentas de estados ER entre 2009-03 a 2026-09; no son estados agregados. Incluye 2,446 importes no enteros preservados como texto/null y 950 repeticiones de contexto conservadas. Monedas, taxonomías y tipos I/C permanecen separados; sin conversión, deduplicación ni suma. Cifras no cotejadas en su totalidad."
     },
     {
       "id": "afp_lista_entidades",
@@ -10844,7 +10844,7 @@
       "modo": "Automático",
       "ultimaActualizacion": "2026-09-23",
       "registros": "Una fila por prestador",
-      "descripcion": "Registro de Prestadores de Servicios Financieros (RPSF) de la CMF. Catálogo integral de las entidades FinTech que operan bajo el perímetro regulatorio de la Ley Fintec en Chile. Incluye personas jurídicas y naturales, estado de vigencia, número y fecha de inscripción oficial, código institucional CMF, datos de contacto y total de servicios autorizados.",
+      "descripcion": "Registro de Prestadores de Servicios Financieros (RPSF) de la CMF. Catálogo integral de las entidades FinTech que operan bajo el perímetro regulatorio de la Ley Fintec en Chile. Incluye personas jurídicas y naturales, estado de vigencia, número y fecha de inscripción oficial, código institucional CMF y total de servicios autorizados.",
       "origen": "Comisión para el Mercado Financiero (CMF) — Registro de Prestadores de Servicios Financieros (RPSF).",
       "columnas": [
         {
@@ -10958,14 +10958,6 @@
           "significado": "Región administrativa chilena.",
           "contable": "No aplica",
           "interpretacion": "Jurisdicción geográfica."
-        },
-        {
-          "name": "email_contacto",
-          "type": "VARCHAR",
-          "role": "Dimensión",
-          "significado": "Correo electrónico institucional de contacto.",
-          "contable": "No aplica",
-          "interpretacion": "Canal oficial de comunicación corporativa."
         },
         {
           "name": "sitio_web",
@@ -11425,7 +11417,7 @@
           "name": "monto_pesos",
           "type": "BIGINT",
           "role": "Métrica",
-          "significado": "de Reajuste correspondiente al día de cierre de la información y Debe informarse el valor de la cuota, en la unidad de reajuste que se pactó el préstamo, que se cobrará por el préstamo de acuerdo a la tasa efectiva, moneda, reajustabilidad, plazo y periodo de pago de las cuotas.",
+          "significado": "de Reajuste correspondiente al día de cierre de la información y Debe informarse el valor de la cuota, en la unidad de reajuste que se pactó el préstamo, que se cobrará por el préstamo de acuerdo a la tasa efectiva, moneda, reajustabilidad, plazo y período de pago de las cuotas.",
           "contable": "No aplica"
         },
         {
@@ -11537,7 +11529,7 @@
           "name": "tasa_mora",
           "type": "DOUBLE",
           "role": "Métrica",
-          "significado": "Deberá informarse la tasa que se cobrará para el periodo de mora. Deberá informarse solo si el valor del campo TIPO_TASA_MORA es “1”, de lo contrario debe informarse en cero.",
+          "significado": "Deberá informarse la tasa que se cobrará para el período de mora. Deberá informarse solo si el valor del campo TIPO_TASA_MORA es “1”, de lo contrario debe informarse en cero.",
           "contable": "No aplica"
         },
         {
@@ -12860,7 +12852,7 @@
           "name": "monto_pesos",
           "type": "BIGINT",
           "role": "Métrica",
-          "significado": "de Reajuste correspondiente al día de cierre de la información y Debe informarse el valor de la cuota, en la unidad de reajuste que se pactó el préstamo, que se cobrará por el préstamo de acuerdo a la tasa efectiva, moneda, reajustabilidad, plazo y periodo de pago de las cuotas.",
+          "significado": "de Reajuste correspondiente al día de cierre de la información y Debe informarse el valor de la cuota, en la unidad de reajuste que se pactó el préstamo, que se cobrará por el préstamo de acuerdo a la tasa efectiva, moneda, reajustabilidad, plazo y período de pago de las cuotas.",
           "contable": "No aplica"
         },
         {
