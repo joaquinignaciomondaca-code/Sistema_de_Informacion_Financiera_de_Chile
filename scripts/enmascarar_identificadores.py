@@ -9,6 +9,9 @@ Dos reglas, sobre dos tablas concretas:
   2. `seguros.bienes_raices`: deja de publicar `ubicacion` (dirección exacta) y
      `rol` (identificador tributario del inmueble); agrega `property_id`, un
      seudónimo estable para seguir el mismo bien entre meses.
+  3. `fintech.rpsf_maestro`: retira `email_contacto`. El registro identifica al
+     prestador por RUT y razón social; el correo permite contactar a la persona
+     y 46 de los 264 correos publicados eran de dominios personales.
 
 No borra tablas, no cambia cantidades de filas ni montos: sólo protege
 identificadores exactos. La referencia a la fuente CMF se mantiene intacta.
@@ -37,6 +40,7 @@ DOCS_OUTPUTS = RAIZ / "docs" / "outputs"
 RUTAS = {
     "fi.cartera_nacional": DOCS_OUTPUTS / "fi" / "cartera_nacional",
     "seguros.bienes_raices": DOCS_OUTPUTS / "seguros" / "bienes_raices",
+    "fintech.rpsf_maestro": DOCS_OUTPUTS / "fintech",
 }
 
 
@@ -138,6 +142,24 @@ def procesar_bienes_raices(ruta: Path, apply: bool, sal: str) -> tuple[bool, str
 
 
 # ---------------------------------------------------------------------------
+# fintech.rpsf_maestro (contacto)
+# ---------------------------------------------------------------------------
+def procesar_fintech(ruta: Path, apply: bool) -> tuple[bool, str]:
+    tabla = pq.read_table(ruta)
+    retiradas = [c for c in privacidad.COLUMNAS_CONTACTO if c in tabla.column_names]
+    if not retiradas:
+        return False, "ya aplicado"
+    con_dato = sum(
+        1 for columna in retiradas
+        for valor in tabla.column(columna).to_pylist()
+        if valor is not None and str(valor).strip()
+    )
+    tabla = tabla.drop_columns(retiradas)
+    escribir(ruta, tabla, apply)
+    return True, f"{con_dato:,} contactos retirados ({', '.join(retiradas)})"
+
+
+# ---------------------------------------------------------------------------
 def main() -> int:
     parser = argparse.ArgumentParser(description="Aplica las reglas de privacidad a lo ya publicado.")
     parser.add_argument("--apply", action="store_true", help="escribe los Parquet (por omisión sólo informa)")
@@ -161,6 +183,8 @@ def main() -> int:
         for ruta in archivos:
             if nombre.endswith("cartera_nacional"):
                 cambio, detalle = procesar_cartera_nacional(ruta, entidades, args.apply)
+            elif nombre.startswith("fintech"):
+                cambio, detalle = procesar_fintech(ruta, args.apply)
             else:
                 cambio, detalle = procesar_bienes_raices(ruta, args.apply, sal)
             if cambio:

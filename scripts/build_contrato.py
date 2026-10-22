@@ -44,6 +44,7 @@ sys.path.insert(0, str(RAIZ))
 sys.path.insert(0, str(RAIZ / "scripts"))
 
 import audit_consultas_sugeridas as ac  # noqa: E402
+from pipelines.api import fuentes as F  # noqa: E402
 from pipelines.api import vistas as V  # noqa: E402
 
 VERSION = "1.0.0"
@@ -147,10 +148,17 @@ def construir_objetos(datos: dict, alias: dict[str, list[str]], base: str) -> tu
             if f["tipo"] == "fk" and f["objeto"] == nombre and f["destino"]
         ]
 
+        atribucion = F.atribucion_de(info.get("sector"), nombre)
+
         esquemas_por_id[nombre] = {
             "contrato": "sif-api/esquema",
             "version": VERSION,
             "id": nombre,
+            "fuente": atribucion["fuente"],
+            "atribucion": atribucion["cita"],
+            "url_terminos": atribucion["url_terminos"],
+            "licencia_estado": atribucion["estado"],
+            "adaptacion": atribucion["adaptacion"],
             "titulo": recon.get("nombre_visible") or nombre,
             "sector": info.get("sector"),
             "estado": recon.get("estado"),
@@ -186,6 +194,12 @@ def construir_objetos(datos: dict, alias: dict[str, list[str]], base: str) -> tu
             "frescura": tabla.get("frescura") or None,
             "ultima_actualizacion": tabla.get("ultima_actualizacion") or None,
             "descripcion": tabla.get("descripcion") or "",
+            "fuente": atribucion["fuente"],
+            "atribucion": atribucion["cita"],
+            "url_terminos": atribucion["url_terminos"],
+            "licencia_estado": atribucion["estado"],
+            "adaptacion": atribucion["adaptacion"],
+            "nota_adaptacion": atribucion.get("nota_adaptacion") or None,
             "primaryKey": pk,
             "esquema": f"{base.rstrip('/')}/api/v1/schema/{nombre}.json",
             "particiones_url": f"{base.rstrip('/')}/api/v1/partitions/{nombre}.json",
