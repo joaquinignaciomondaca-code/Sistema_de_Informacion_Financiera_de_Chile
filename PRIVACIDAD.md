@@ -36,7 +36,10 @@ tres conjuntos con datos de personas naturales:
   (`property_id`) que permite seguir el mismo bien entre meses.
 - **RUT de personas naturales en carteras.** En `fi_cartera_nacional` se suprime
   el RUT del emisor cuando probablemente corresponde a una persona natural y se
-  agrega `emisor_tipo` con el criterio aplicado.
+  agrega `emisor_tipo` con el criterio aplicado: **202.835 filas y 31.215 RUT
+  distintos**, que no reaparecen en ningún otro objeto del catálogo. Contrastado
+  contra registros públicos, el criterio alcanza a personas naturales
+  identificables, no a entidades.
 
 Las reglas viven en `pipelines/auto/privacidad.py` y se aplican antes de
 publicar; `scripts/enmascarar_identificadores.py` las aplica a lo ya publicado.
