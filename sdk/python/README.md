@@ -44,6 +44,41 @@ se crean ejecutando el `views.sql` publicado, con la base que use el cliente.
 (`slug` + 6 hex del SHA-1 de su SQL), así que un enlace o un ejemplo puede
 citarla sin copiar el SQL.
 
+## Servidor MCP (para agentes)
+
+Si el agente **no puede ejecutar código** —Claude Desktop, un asistente con
+`function calling`—, el mismo cliente se expone como servidor MCP:
+
+```bash
+pip install "sif-chile[mcp]"
+sif-mcp                     # servidor por stdio
+```
+
+```json
+{"mcpServers": {"sif-chile": {"command": "sif-mcp",
+                              "env": {"SIF_CHILE_BASE": "/ruta/a/docs"}}}}
+```
+
+Dos herramientas, no noventa: `sif_buscar` (descubre tabla y columnas con
+lenguaje natural) y `sif_ejecutar` (SQL de solo lectura). Las herramientas que ve
+el modelo ocupan **191 tokens**; el MCP de la CMF revisado en el estudio expone
+88 y cuesta ~37.000. Lo vigila `scripts/auditar_mcp.py`, que además levanta el
+servidor como lo haría un agente y responde la pregunta del README:
+
+```
+OK 2.1 herramientas · 2 herramientas: ['sif_buscar', 'sif_ejecutar']
+OK 2.2 presupuesto · 191 tokens de 1000 permitidos (764 caracteres)
+OK 2.3 descubrir · «dónde invierten fuera de Chile los fondos mutuos» → ['ffmm_cartera_extranjera', …]
+OK 2.3 responder · 5 filas; en cabeza ['US', 'LU', 'IE', 'BR', 'GB']
+OK 2.3 error útil · error con pista: Esa tabla o columna no existe…
+OK 2.3 solo lectura · el guardia rechaza DROP y responde con JSON
+```
+
+Las respuestas de las herramientas son JSON compacto y recortado (200 filas como
+máximo, 160 caracteres por celda) porque el recurso escaso es el contexto del
+modelo. Los errores vuelven como `{"error": …, "pista": …}`: un agente que recibe
+una excepción suele repetirla, uno que recibe una pista la corrige.
+
 ## Trabajar contra una copia local
 
 Útil para probar cambios del contrato sin publicar, o sin red:
