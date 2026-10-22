@@ -95,6 +95,44 @@ PREFIJO_SEUDONIMO = "EMI-"
 MODO_SUPRIMIR = "suprimir"
 MODO_PUBLICAR = "publicar"
 
+# Objetos donde el proyecto publica el RUT de personas naturales **a propósito**,
+# porque son registros de inscripción obligatoria en los que la persona actúa por
+# su rol y el RUT es parte del registro (Ley 21.521 y Ley 18.045).
+# Cualquier otro objeto que empiece a publicar RUT de personas hace fallar la
+# compuerta `scripts/auditar_personas_publicadas.py` hasta que la decisión quede
+# registrada aquí: así el criterio cubre las 90 tablas sin repetir la columna de
+# la regla en todas ellas.
+OBJETOS_CON_RUT_DE_PERSONAS = {
+    "fintech_rpsf_lista_entidades": "36 personas naturales inscritas en el RPSF (Ley 21.521)",
+    "corredoras_bolsa_lista_entidades": "11 corredores personas naturales (Ley 18.045)",
+    "corredoras_bolsa_lista_entidades_registro": "el mismo registro de corredores, en su versión larga",
+}
+
+# Entidades con RUT bajo el umbral que no están en el padrón de registros
+# publicados y que, sin embargo, son personas jurídicas (verificadas por nombre
+# en otra tabla del propio catálogo).
+RUT_ENTIDADES_FUERA_DEL_PADRON = {
+    "8053700": "LARRAIN VIAL S.A. CORREDORA DE BOLSA (fi.pactos)",
+}
+
+# Columnas donde los valores que el criterio marcaría son relleno o códigos del
+# origen, no RUT de personas: se documentan para que la compuerta no las
+# confunda con una fuga. Revisadas el 2026-10-22 contra la columna de nombre.
+COLUMNAS_CON_VALORES_ATIPICOS = {
+    ("seguros_extranjeros", "rut_administradora"): (
+        "valores de relleno del origen (12345612, 37373737, 888886) y códigos que no "
+        "son RUT; el valor 85874 corresponde a ALPINVEST PARTNERS INC"
+    ),
+    ("seguros_pactos", "nro_rut_activo_objeto"): (
+        "cuatro códigos de relleno (8888, 781245, 13131313, 34545555); el resto de la "
+        "columna son RUT de sociedades de 96/99 millones"
+    ),
+    ("seguros_acciones", "rut"): (
+        "el código '1' es un catálogo de aseguradora, no un RUT; 11479132 aparece sin "
+        "nombre asociado"
+    ),
+}
+
 # Bienes raíces: la dirección se llama «ubicacion» en el formato CMF vigente
 # desde 2024-12 y «direccion» en los archivos anteriores. El rol, igual en ambos.
 COLUMNAS_DIRECCION = ("ubicacion", "direccion", "domicilio")

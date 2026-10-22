@@ -6,7 +6,7 @@ cuáles se suprimen. Hasta ahora esa descripción se revisaba a mano: este scrip
 la convierte en una compuerta que lee los archivos servidos en `docs/outputs/`,
 no la intención del pipeline.
 
-Comprueba seis cosas:
+Comprueba siete cosas:
 
   1. `fintech_rpsf_lista_entidades`: 36 personas naturales de 264 filas y
      ninguna columna de correo.
@@ -14,10 +14,14 @@ Comprueba seis cosas:
   3. `seguros_bienes_raices`: `rol`, `ubicacion` y `arrendatario` vacíos en todas
      las filas; `comuna`, `ciudad` y `property_id` presentes; y los conteos de
      tasadores que declara el aviso.
-  4. `fi_cartera_nacional`: ningún RUT en las filas clasificadas como persona
-     natural probable y ninguna columna con el nombre del emisor.
+  4. `fi_cartera_nacional`: las filas de persona natural llevan el seudónimo
+     `EMI-…` en `rut_emisor` y la bandera `rut_omitido_por_ley` coincide con el
+     contenido; ninguna columna publica el nombre del emisor.
   5. `fi_bienes_raices`: publicada vacía, como se declara.
-  6. Los números escritos en `PRIVACIDAD.md` coinciden con lo medido, y el
+  6. El criterio de persona natural, aplicado a **todas** las columnas de RUT del
+     catálogo: un objeto que publique RUT de personas sin declararlo hace fallar
+     la compuerta.
+  7. Los números escritos en `PRIVACIDAD.md` coinciden con lo medido, y el
      catálogo sólo declara fuentes que efectivamente entregan datos.
 
 Uso:
@@ -34,6 +38,10 @@ from pathlib import Path
 import duckdb
 
 RAIZ = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(RAIZ))
+
+from pipelines.auto import privacidad  # noqa: E402
+
 DOCS = RAIZ / "docs"
 PRIVACIDAD = RAIZ / "PRIVACIDAD.md"
 CATALOGO = DOCS / "api" / "v1" / "catalog.json"
@@ -66,6 +74,32 @@ def parquet(con, ruta: str, vista: str) -> None:
 
 def columnas(con, vista: str) -> list[str]:
     return [fila[0] for fila in con.execute(f"DESCRIBE {vista}").fetchall()]
+
+
+def _particiones(con, objeto: str) -> bool:
+    """Registra el objeto como vista si tiene archivos publicados."""
+    ruta = DOCS / "api" / "v1" / "partitions" / f"{objeto}.json"
+    if not ruta.exists():
+        return False
+    partes = json.loads(ruta.read_text(encoding="utf-8"))["particiones"]
+    if not partes:
+        return False
+    glob = "['" + "','".join(f"docs/{p['archivo']}" for p in partes) + "']"
+    try:
+        con.execute(f"CREATE OR REPLACE VIEW {objeto} AS SELECT * FROM read_parquet({glob})")
+    except Exception:
+        return False
+    return True
+
+
+def _valores_atipicos(con, objeto: str, columna: str, entidades) -> set:
+    """Valores que el criterio marcaría en una columna ya declarada como relleno."""
+    if not _particiones(con, objeto) or columna not in columnas(con, objeto):
+        return set()
+    valores = [fila[0] for fila in con.execute(
+        f'SELECT DISTINCT CAST("{columna}" AS VARCHAR) FROM {objeto} WHERE "{columna}" IS NOT NULL'
+    ).fetchall()]
+    return {v for v in valores if privacidad.es_probable_persona_natural(v, entidades)}
 
 
 def main() -> int:
@@ -188,7 +222,47 @@ def main() -> int:
     if vacias:
         fallos.append(f"fi_bienes_raices: {vacias} filas; se declara vacía y oculta")
 
-    # --- 6 · El aviso dice lo mismo que los archivos ----------------------
+    # --- 6 · El criterio aplicado a todo el catálogo ----------------------
+    # La regla de privacidad no se repite en cada tabla: se comprueba sobre todas
+    # las columnas de RUT publicadas. Un objeto que empiece a publicar RUT de
+    # personas sin declararlo aquí hace fallar la compuerta.
+    entidades = privacidad.cargar_entidades_conocidas()
+    declarados = privacidad.OBJETOS_CON_RUT_DE_PERSONAS
+    excepciones = set(privacidad.RUT_ENTIDADES_FUERA_DEL_PADRON) | {
+        valor
+        for (objeto, columna) in privacidad.COLUMNAS_CON_VALORES_ATIPICOS
+        for valor in _valores_atipicos(con, objeto, columna, entidades)
+    }
+    escaneadas, hallazgos = 0, []
+    for objeto in sorted(p.stem for p in (DOCS / "api" / "v1" / "schema").glob("*.json")):
+        columnas_rut = [c["nombre"] for c in json.loads(
+            (DOCS / "api" / "v1" / "schema" / f"{objeto}.json").read_text(encoding="utf-8"))["columnas"]
+            if "rut" in c["nombre"].lower()]
+        if not columnas_rut or not _particiones(con, objeto):
+            continue
+        for columna in columnas_rut:
+            if columna not in columnas(con, objeto):
+                continue
+            escaneadas += 1
+            valores = [fila[0] for fila in con.execute(
+                f'SELECT DISTINCT CAST("{columna}" AS VARCHAR) FROM {objeto} WHERE "{columna}" IS NOT NULL'
+            ).fetchall()]
+            marcados = {v for v in valores
+                        if privacidad.es_probable_persona_natural(v, entidades) and v not in excepciones}
+            if marcados and objeto not in declarados:
+                hallazgos.append(f"{objeto}.{columna} ({len(marcados)} valores, ej. {sorted(marcados)[:3]})")
+    if hallazgos:
+        fallos.append(
+            "catálogo: publica RUT de posibles personas naturales en objetos no declarados: "
+            + "; ".join(hallazgos[:6])
+        )
+    notas.append(
+        f"catálogo: {escaneadas} columnas de RUT revisadas con el mismo criterio; "
+        f"{len(declarados)} objetos publican RUT de personas a propósito y "
+        f"{len(privacidad.COLUMNAS_CON_VALORES_ATIPICOS)} columnas tienen relleno del origen"
+    )
+
+    # --- 7 · El aviso dice lo mismo que los archivos ----------------------
     texto = PRIVACIDAD.read_text(encoding="utf-8")
     esperado = {
         "personas naturales del aviso": (r"(\d+) personas naturales", naturales),
