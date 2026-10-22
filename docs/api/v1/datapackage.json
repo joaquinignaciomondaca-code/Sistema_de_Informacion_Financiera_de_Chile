@@ -7460,10 +7460,10 @@
    "title": "fi.cartera_extranjera"
   },
   {
-   "bytes": 19761036,
+   "bytes": 21485858,
    "description": "Inversiones en instrumentos de emisores nacionales, instrumento por instrumento, al cierre de cada trimestre. Montos en miles de la moneda funcional del fondo.",
    "format": "parquet",
-   "hash": "94f7ef51fce8c5f57a19cfa31ec467e127edde471027b0bdcc001b53decc5bb5",
+   "hash": "b4257680afd2059d784ce991a2c61451636b5917f7fd85d42ad9b3ddebe6ca23",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -7524,6 +7524,12 @@
      {
       "description": "Nemotécnico del instrumento o contrato (en forwards, la palabra FORWARD; vacío si no aplica).",
       "name": "nemotecnico",
+      "sif_rol": "Atributo",
+      "type": "string"
+     },
+     {
+      "description": "Cuerpo del RUT del emisor (sin dígito verificador) cuando es una persona jurídica. Cuando el emisor es una persona natural, en su lugar va un seudónimo estable con prefijo «EMI-» que permite seguirla entre trimestres y fondos sin publicar su RUT; la columna rut_omitido_por_ley dice cuál de los dos casos es. Queda nulo si la fuente no informa RUT.",
+      "name": "rut_emisor",
       "sif_rol": "Atributo",
       "type": "string"
      },
@@ -7636,12 +7642,6 @@
       "type": "number"
      },
      {
-      "description": "Cuerpo del RUT del emisor (sin dígito verificador) cuando es una persona jurídica. Cuando el emisor es una persona natural, en su lugar va un seudónimo estable con prefijo «EMI-» que permite seguirla entre trimestres y fondos sin publicar su RUT; la columna rut_omitido_por_ley dice cuál de los dos casos es. Queda nulo si la fuente no informa RUT.",
-      "name": "rut_emisor",
-      "sif_rol": "Atributo",
-      "type": "string"
-     },
-     {
       "description": "Criterio aplicado sobre rut_emisor: «persona_juridica», «persona_natural_probable» (RUT suprimido por privacidad) o «sin_rut_informado». Regla y umbrales en pipelines/auto/privacidad.py.",
       "name": "emisor_tipo",
       "sif_rol": "Atributo",
@@ -7674,160 +7674,160 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 306188,
+      "bytes": 306842,
       "filas": 11630,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2020-03.parquet",
-      "sha256": "fdd501cde8620ce189eb9d9088ea7956482af560c1733c9be94e2e01792b926a"
+      "sha256": "d4de99ebd6f2b3cbcc87564ebb3e872048fc38cf4c477e7df4bb4c5f81985e27"
      },
      {
-      "bytes": 297600,
+      "bytes": 298496,
       "filas": 11205,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2020-06.parquet",
-      "sha256": "1059e3bc531adbfee6b63c90563a92afa28e48e1a3cbfc41a2113100cf1cff99"
+      "sha256": "7c9ec9a2396a732529379ebbe5ef4762ca6fbfedbeb42456969f6a423e7dd06e"
      },
      {
-      "bytes": 315623,
+      "bytes": 316315,
       "filas": 11856,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2020-09.parquet",
-      "sha256": "02f2c264dd69e0ed059d4073219477c8c2f24bf6d748a1f6bd63a11a7ec7e9b2"
+      "sha256": "fbd9c90d27005c3471d9360e3f39c0f0a9826d56fdce33a478bcd6f9b6c1287a"
      },
      {
-      "bytes": 400696,
+      "bytes": 401586,
       "filas": 16328,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2020-12.parquet",
-      "sha256": "9d4bd2171649cf0cbcb88fe9cad998869cb2ae220005a44405417a1df180ded7"
+      "sha256": "8185e92a2112e3db5cfa87f28e493371e5d2ddcb85f3ac2305fe6a271cddc1b5"
      },
      {
-      "bytes": 463758,
+      "bytes": 484670,
       "filas": 20471,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2021-03.parquet",
-      "sha256": "a086d7f26ddb2570b22b37e7eca5ad37a88f306b5ea545b3eeb2b9eb1694b0f2"
+      "sha256": "aad4d3d6783f97279daff11034a44075e5739014a55df9a2b15247c5806ce843"
      },
      {
-      "bytes": 585258,
+      "bytes": 619277,
       "filas": 27746,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2021-06.parquet",
-      "sha256": "79bc1262bf34b9cdc60cbfd840447d3fa0abfde179ec96c8a496becfbbed56cf"
+      "sha256": "3acfac088f47c61ca8900fd35c2d5662df063e28f78985d419c9330afe19952d"
      },
      {
-      "bytes": 652213,
+      "bytes": 705569,
       "filas": 31734,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2021-09.parquet",
-      "sha256": "0deab5a06502579b41e74a8414aa12055ae2a5b510ad75dd018c1f98bf92d80c"
+      "sha256": "13275cf09ff9c1718dfb3ee90b9cd9e414f6e3c7be461271262ae6dfdda33a2b"
      },
      {
-      "bytes": 714894,
+      "bytes": 790449,
       "filas": 36111,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2021-12.parquet",
-      "sha256": "8ee0742a25d77528dc932e48307b73f381e2f7d12ab880ac139f32fb30ddd335"
+      "sha256": "0a9098ecd47d5dd8945b4f4f41ca7c54e79b6e038a04bacb1fe47b31b2370713"
      },
      {
-      "bytes": 775326,
+      "bytes": 883145,
       "filas": 41004,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2022-03.parquet",
-      "sha256": "8fc4c873da5fbf4cfa1d42c3fef997af59ba21b81e579fe279f577bda3baa5d4"
+      "sha256": "05418441e66cf1fec016b83f836d2dc4812ecac5b4821286d355d778cfd1315b"
      },
      {
-      "bytes": 793391,
+      "bytes": 914345,
       "filas": 41774,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2022-06.parquet",
-      "sha256": "c698c20bad2e4e6834ca9707966e4987e9306ae88c7d1f5d9c200f56b6508602"
+      "sha256": "2054be286330bb827912c6e5e9a4a54dee6a2a20c6f559664d8968e88bc471d7"
      },
      {
-      "bytes": 743418,
+      "bytes": 863133,
       "filas": 38228,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2022-09.parquet",
-      "sha256": "cbaa6fe363087111c67394c2541cf746340fab1092d10d12726f0c74c0da306a"
+      "sha256": "12116dab0afee7709d83bdbfdaa6db14826d720c55caa7566a798e2b66f89cd8"
      },
      {
-      "bytes": 760468,
+      "bytes": 871386,
       "filas": 38203,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2022-12.parquet",
-      "sha256": "8ba4b9fae69935841412fd5469d0754f8e637d0d9f575de64048db870bb5cf6d"
+      "sha256": "30a6b82e335802581ec199ef7771e3e506e78f113f20af7c5025b671c6921a94"
      },
      {
-      "bytes": 851987,
+      "bytes": 968549,
       "filas": 42157,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2023-03.parquet",
-      "sha256": "a44da4cf8d6eab38ea62526d087c12a75b21b6bbaa2a31f0ccc79db0fdad6b79"
+      "sha256": "546bc05d5a952b2259d0914dd164ac7892857820f961a4e4b7fa18b826a00ce6"
      },
      {
-      "bytes": 858932,
+      "bytes": 966680,
       "filas": 41773,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2023-06.parquet",
-      "sha256": "6cdb6ccce7c7838b6f34fd18cfc4bf8626d4215ed37ab4eb26e2e8a8369b20f6"
+      "sha256": "13d698b0022a671cd454aacdf4fa22590837d15ad17bf27b7d0329bc49cbbcda"
      },
      {
-      "bytes": 855916,
+      "bytes": 951433,
       "filas": 39976,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2023-09.parquet",
-      "sha256": "eb809ccb3942c4bcbaa7dfaaacb86c9608c9771566cd8039802c5ae31cf95272"
+      "sha256": "697bd55b481df2f17e9eb752685b17836be66e07b6817bca4bad2f422a4fa69c"
      },
      {
-      "bytes": 920547,
+      "bytes": 1000752,
       "filas": 42895,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2023-12.parquet",
-      "sha256": "2c6a9c9d0e7da55b485c4b3a9294a6292de6aac8f814d0d7fa9ae8a1f0cd34d1"
+      "sha256": "3ed8c7be2e4ad737fe01a70808c67eb39873c0022a0bda772300d7ad5bdc62b8"
      },
      {
-      "bytes": 874599,
+      "bytes": 945833,
       "filas": 40431,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2024-03.parquet",
-      "sha256": "b20760d85fee707c667f80192482743f9cc4028d2b3db3c7bd02c59846e50e5e"
+      "sha256": "7578ccb779a289ff05ba3bd4e56eae3f9e6123d3d345598e8485d470e3d550c0"
      },
      {
-      "bytes": 928046,
+      "bytes": 996666,
       "filas": 42155,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2024-06.parquet",
-      "sha256": "c68588142a52bd40bb17766f74d1b17a5244a1d6a5774a6b0328a11828ef6c0d"
+      "sha256": "8d333c80bc75b9de5d20f14eb6b00817f84d6f343ee4f6edccb81da5ff69de84"
      },
      {
-      "bytes": 865031,
+      "bytes": 927637,
       "filas": 39477,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2024-09.parquet",
-      "sha256": "b7309517120677d0f6e60750f3a8cc18fe361d80d07b446f9f8a38a3e30fcb45"
+      "sha256": "9e15eb75fac7a5566975aac725fd5024565c530778022ce1642f97e43a84e0c6"
      },
      {
-      "bytes": 884053,
+      "bytes": 944522,
       "filas": 40890,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2024-12.parquet",
-      "sha256": "b02ec7d51f50a9d76359831ea6c62a7bf2e1ea562a8fe18716db3600cb8e9029"
+      "sha256": "7707409cca255c6cd2da67afa3d1b2830271a87eaf8d4f4b077b4e5de97ca06f"
      },
      {
-      "bytes": 933708,
+      "bytes": 1013082,
       "filas": 43098,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2025-03.parquet",
-      "sha256": "e0fe99feaea5e6888d219e27a7321951c257b0b900a0f8c650408423b8f710fe"
+      "sha256": "fea31e3424ec634d238fe450c4eeb830501cf758b6538c462949513a9a1e3e10"
      },
      {
-      "bytes": 947474,
+      "bytes": 1023748,
       "filas": 43525,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2025-06.parquet",
-      "sha256": "8e608264e77128a303809245303f3510ccde565fe5fc87a5ce1a00bde508e493"
+      "sha256": "177f8755d7847d3c169fab3317fcb0da95e5cf20d8c3270d410ad567cacb1fea"
      },
      {
-      "bytes": 1054787,
+      "bytes": 1126763,
       "filas": 51124,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2025-09.parquet",
-      "sha256": "1040ab426357dd31fc8f42e50fb7f0faa2f63b72a43d4d7cb1b08bff4d70c0c9"
+      "sha256": "23631e3fca9fba12c813a7aa5233e427a547a3f62afa38c6ddd2110b631eb544"
      },
      {
-      "bytes": 1059445,
+      "bytes": 1125528,
       "filas": 51527,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2025-12.parquet",
-      "sha256": "d27bf0dba7b5761f048c8adf2290929da6bd76fd9eccd11be965ee1ecc198b4a"
+      "sha256": "013c0f57e7cb0c5c167f9c02a9803bb36bc00d575a0e1584eced92e974f71c0b"
      },
      {
-      "bytes": 958637,
+      "bytes": 1019272,
       "filas": 43596,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2026-03.parquet",
-      "sha256": "7e7541d7bceb48dedd4316594ce3f4f56f913f355daac04b715b48e25f64343d"
+      "sha256": "83e0fd0c8d4c1ae53a501940f06a7ca1afc817196c8c32de7e07d22c4d76c077"
      },
      {
-      "bytes": 959041,
+      "bytes": 1020180,
       "filas": 44618,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_nacional/2026-06.parquet",
-      "sha256": "8aa43c49a715e58dae4bd486b01d0d31d78b138d9a55c987a91fd55513bb6e7d"
+      "sha256": "ea031e674adeb05dcd50615728ad55c86ef6026c7888f2a0ce18589008f5df6e"
      }
     ],
     "puente": "directo",
@@ -9489,10 +9489,10 @@
    "title": "macro.cobre"
   },
   {
-   "bytes": 61487,
+   "bytes": 61489,
    "description": "Curva de rendimiento de los bonos soberanos en pesos licitados por el BCCh (Bono Corto Plazo, BCP): tasa de interés de mercado secundario a 2, 5 y 10 años.",
    "format": "parquet",
-   "hash": "bec6340285a6ceac6b5d5b493624bd78d266b10cf6d78abee804e7ca748cf73c",
+   "hash": "5cf266ab7408aeb6738827c5457b128dd9841199337f7f922e98b625e575c1a8",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -9549,11 +9549,11 @@
     "api_version": "v1",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-10-20",
+    "corte": "2014-01-02 a 2026-10-21",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3172,
+    "filas": 3173,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_curva_bonos_pesos",
@@ -9561,10 +9561,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 61487,
-      "filas": 3172,
+      "bytes": 61489,
+      "filas": 3173,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_curva_bonos_pesos.parquet",
-      "sha256": "f3a8b40d20a1d9794d2758219e279beb6c5edcb355889dc95f1cc6476be86bf8"
+      "sha256": "921a6a9f9735dc4cdb31d30c5c59be486b965509344f2c84975b28e3fb682c9b"
      }
     ],
     "puente": "directo",
@@ -9585,10 +9585,10 @@
    "title": "macro.curva_bonos_pesos"
   },
   {
-   "bytes": 94190,
+   "bytes": 94203,
    "description": "Curva de rendimiento de los bonos soberanos en UF (BCU/BTU): tasa de interés de mercado secundario a 1, 2, 5, 10, 20 y 30 años.",
    "format": "parquet",
-   "hash": "0d4696067b56ce118373bc6ecf570bff101678b3b5121da393acf2efeab8ea03",
+   "hash": "c94fc97dabf3dacda212cfd0009e7d8abc9c8c6330aa72e5dbf989a27fa3634a",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -9663,11 +9663,11 @@
     "api_version": "v1",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-10-20",
+    "corte": "2014-01-02 a 2026-10-21",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3174,
+    "filas": 3175,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_curva_bonos_uf",
@@ -9675,10 +9675,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 94190,
-      "filas": 3174,
+      "bytes": 94203,
+      "filas": 3175,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_curva_bonos_uf.parquet",
-      "sha256": "1f4372a5bef20170ef5e9006b1113a3aa8b02c848e73f523cad8c0c6a252edc7"
+      "sha256": "c343cd24e7b5d635dbe11addac4ba412fa934db2d1a45c16315e766a02533262"
      }
     ],
     "puente": "directo",
@@ -10329,10 +10329,10 @@
    "title": "macro.imacec"
   },
   {
-   "bytes": 36810,
+   "bytes": 36816,
    "description": "Inflación implícita de las curvas soberanas (breakeven): diferencia entre el rendimiento del bono en pesos y el del bono en UF del mismo plazo. Calculada por SIF a partir de las curvas publicadas por el BCCh.",
    "format": "parquet",
-   "hash": "ee86b3ce1165b89f3df41d0cf1118f8dddf73b422a5fad6163834d3db1dc2157",
+   "hash": "653eb651213107283a7824ab9d042ac05d21ba8006c1a103ec5c09f26d3a7a5c",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -10383,11 +10383,11 @@
     "api_version": "v1",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-10-20",
+    "corte": "2014-01-02 a 2026-10-21",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3078,
+    "filas": 3079,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_inflacion_implicita",
@@ -10395,10 +10395,10 @@
     "nota_adaptacion": "Adaptación de elaboración propia sobre series del Banco Central de Chile; la adaptación es propiedad y responsabilidad exclusiva de este proyecto. El cálculo consiste en diferencia propia entre el rendimiento del bono en pesos y el del bono en UF del mismo plazo, calculada sobre las curvas que publica el Banco Central.",
     "particiones": [
      {
-      "bytes": 36810,
-      "filas": 3078,
+      "bytes": 36816,
+      "filas": 3079,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_inflacion_implicita.parquet",
-      "sha256": "383755a71474cb27383d4385f0ef78c9afb56e3b7a5ad9a51bb825dfcdf14a77"
+      "sha256": "d387c88ac7531e78737fcab8580fa0750b3617d3097fc59eac4c4d8141926751"
      }
     ],
     "puente": "directo",
@@ -10875,10 +10875,10 @@
    "title": "macro.reservas_internacionales"
   },
   {
-   "bytes": 10896,
+   "bytes": 10890,
    "description": "Catálogo de las series del Banco Central que alimentan las tablas macro: código SIETE, nombre, grupo, frecuencia, unidad, título oficial, cobertura y estado.",
    "format": "parquet",
-   "hash": "918b48053a71e42c92de2435d6f3721b32b9b26d96d56c765b0430cb8771c7e4",
+   "hash": "4912a715ad01681942ce91ecbca98575f7a15f62f04ac7a355af6f1a5aa266b5",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -10989,10 +10989,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 10896,
+      "bytes": 10890,
       "filas": 51,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_series_catalogo.parquet",
-      "sha256": "472bf789dbb785f65195e85308f0fd32eb6b953ce5410dfe5f40de5bd67504bf"
+      "sha256": "61a1cf8c888a1d216f81db347f4dca2553a7c75b8656eea315315490019329fa"
      }
     ],
     "puente": "directo",
@@ -11013,10 +11013,10 @@
    "title": "macro.series_catalogo"
   },
   {
-   "bytes": 79260,
+   "bytes": 79288,
    "description": "Tasa de swap promedio de cámara (SPC) del Banco Central: contratos en pesos a 90, 180 y 360 días y a 2 años, y contrato en UF a 1 año, en porcentaje.",
    "format": "parquet",
-   "hash": "34a3171c4810598e07e621c49b095e83e52010a0852b7f50004b91c3b474bff2",
+   "hash": "690a739d3de27adc7f932adc3694eff616bd81903a113452f67cc1e7658a934d",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -11085,11 +11085,11 @@
     "api_version": "v1",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-10-21",
+    "corte": "2014-01-02 a 2026-10-22",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3203,
+    "filas": 3204,
     "filtro": null,
     "licencia_estado": "verificada",
     "manifest_id": "macro_swaps_camara",
@@ -11097,10 +11097,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 79260,
-      "filas": 3203,
+      "bytes": 79288,
+      "filas": 3204,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_swaps_camara.parquet",
-      "sha256": "d66838966946a48f6b9f6b2cbafd1e28db5b723b261ff72e8d03f54e271997f6"
+      "sha256": "01f130e96a109ce80ef858c49901a73337620607d9601f4829ed313e89664d91"
      }
     ],
     "puente": "directo",
@@ -11205,10 +11205,10 @@
    "title": "macro.tasa_referencia_fed"
   },
   {
-   "bytes": 13683,
+   "bytes": 13681,
    "description": "Tasas de referencia de corto plazo de Chile: Tasa de Política Monetaria (TPM) del Banco Central y tasa promedio transada en el mercado interbancario (TIB), en porcentaje.",
    "format": "parquet",
-   "hash": "4f7ac6155c508a169e198d0352aa36028ed98f3e1dbabe7a050e8e52f79c3385",
+   "hash": "e18482b02114144dfe1e7085b3ad4c27f645d56a1a3f45780fa30546b6c9e684",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -11271,10 +11271,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 13683,
+      "bytes": 13681,
       "filas": 3190,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_tasas_corto_plazo.parquet",
-      "sha256": "c98d38c1628921cf549908bbe0eac550ae1861f78f24db1fef9da98ee2776d82"
+      "sha256": "0ee66a7ca4e383b3ba73c6ee471cbf718209aa7f57d9a15efd066bdeaa351347"
      }
     ],
     "puente": "directo",
@@ -19523,9 +19523,9 @@
    "licencia": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md",
    "reconciliacion": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv"
   },
-  "data_release": "2026-10-22.e21f39783464",
+  "data_release": "2026-10-22.750411f8a09a",
   "espejo": "https://sistema-de-informacion-financiera-de-chile-docs.vercel.app",
-  "filas_unicas": 19777504,
+  "filas_unicas": 19777508,
   "identificador": {
    "aliases": "los nombres heredados se publican por recurso en sif.aliases y no son identificadores",
    "regla": "el name del recurso es el nombre del objeto del contrato y el de su vista SQL (D2)",
