@@ -64,13 +64,21 @@ class ChatTerminalController {
       });
     });
 
-    // Cerrar modal de esquema
+    // Cerrar modal de esquema: botón y Escape, devolviendo el foco a donde estaba.
+    const cerrarEsquema = () => {
+      const modal = document.getElementById("schema-modal");
+      if (!modal || !modal.classList.contains("visible")) return;
+      modal.classList.remove("visible");
+      const previo = window.__focoAntesDelEsquema;
+      window.__focoAntesDelEsquema = null;
+      if (previo && typeof previo.focus === "function" && document.contains(previo)) previo.focus();
+    };
+    window.cerrarEsquema = cerrarEsquema;
     const closeBtn = document.getElementById("close-schema-modal");
-    if (closeBtn) {
-      closeBtn.addEventListener("click", () => {
-        document.getElementById("schema-modal").classList.remove("visible");
-      });
-    }
+    if (closeBtn) closeBtn.addEventListener("click", cerrarEsquema);
+    document.addEventListener("keydown", (evento) => {
+      if (evento.key === "Escape") cerrarEsquema();
+    });
 
     // Compartir Link directo por URL Hash
     const shareBtn = document.getElementById("btn-share-query");
@@ -245,7 +253,7 @@ class ChatTerminalController {
     const queries = this.getSavedQueries();
 
     if (queries.length === 0) {
-      listEl.innerHTML = `<li style="padding: 10px; font-size: 11px; color: var(--text-secondary); text-align: center;">No tienes consultas guardadas aún. Haz clic en "Guardar" en cualquier resultado.</li>`;
+      listEl.innerHTML = `<li style="padding: 10px; font-size: 12px; color: var(--text-secondary); text-align: center;">No tienes consultas guardadas aún. Haz clic en "Guardar" en cualquier resultado.</li>`;
       return;
     }
 
@@ -253,7 +261,7 @@ class ChatTerminalController {
       <li class="saved-item" data-index="${idx}">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <span class="saved-item-title">${this.escapeHtml(q.title)}</span>
-          <button class="delete-fav-btn" data-index="${idx}" style="background:transparent; border:none; color:#696E79; cursor:pointer; font-size:11px;" title="Eliminar">&times;</button>
+          <button class="delete-fav-btn" data-index="${idx}" style="background:transparent; border:none; color:#696E79; cursor:pointer; font-size: 12px;" title="Eliminar">&times;</button>
         </div>
         <span class="saved-item-sql">${this.escapeHtml(q.sql)}</span>
       </li>
@@ -412,8 +420,8 @@ class ChatTerminalController {
 
     this.resultsMap[queryId] = { query, result, sortCol: null, sortAsc: true };
 
-    let headersHtml = result.columns.map((col, idx) => 
-      `<th onclick="window.ChatTerminal.sortTable('${queryId}', ${idx})" title="Clic para ordenar">${this.escapeHtml(col)}<span class="sort-icon" id="sort_${queryId}_${idx}"></span></th>`
+    let headersHtml = result.columns.map((col, idx) =>
+      `<th scope="col" aria-sort="none"><button type="button" class="th-sort-btn" onclick="window.ChatTerminal.sortTable('${queryId}', ${idx})" title="Ordenar por ${this.escapeHtml(col)}">${this.escapeHtml(col)}<span class="sort-icon" id="sort_${queryId}_${idx}"></span></button></th>`
     ).join("");
 
     let rowsHtml = result.rows.map((row) => {
@@ -494,6 +502,7 @@ class ChatTerminalController {
 
     const ths = tableWrapper.querySelectorAll("th");
     ths.forEach((th, i) => {
+      th.setAttribute("aria-sort", i === colIdx ? (stored.sortAsc ? "ascending" : "descending") : "none");
       const icon = th.querySelector(".sort-icon");
       if (icon) {
         if (i === colIdx) {
@@ -621,8 +630,19 @@ class ChatTerminalController {
     if (el) el.remove();
   }
 
+  // Leer scrollHeight obliga a recalcular el layout en el acto (Lighthouse medía
+  // 72 ms de "forced reflow" en esta función). Se difiere al siguiente cuadro,
+  // se coalesce si llegan varios mensajes seguidos y se asigna un valor enorme:
+  // el navegador lo recorta al máximo real sin que haya que leer nada.
   scrollToBottom() {
-    this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
+    if (this._scrollPendiente) return;
+    this._scrollPendiente = true;
+    const ir = () => {
+      this._scrollPendiente = false;
+      if (this.messagesContainer) this.messagesContainer.scrollTop = 1e7;
+    };
+    if (typeof requestAnimationFrame === "function") requestAnimationFrame(ir);
+    else setTimeout(ir, 0);
   }
 
   // Sirve para texto y para valores de atributo (escapa también comillas).
