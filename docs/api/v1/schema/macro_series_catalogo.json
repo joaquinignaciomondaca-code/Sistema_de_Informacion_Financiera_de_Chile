@@ -1,0 +1,110 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "clave",
+   "rol": "PK",
+   "significado": "Identificador corto de la serie usado por el pipeline.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "serie_id",
+   "rol": "Atributo",
+   "significado": "Código oficial de la serie en la Base de Datos Estadísticos del BCCh.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre",
+   "rol": "Atributo",
+   "significado": "Nombre descriptivo de la serie.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "grupo",
+   "rol": "Atributo",
+   "significado": "Tema: Tasas, Tipo de cambio, Precios y reajustes, Actividad, Mercado laboral, Commodities, Sector externo, Fiscal o Expectativas.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidad",
+   "rol": "Atributo",
+   "significado": "Unidad de medida del valor.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "frecuencia",
+   "rol": "Atributo",
+   "significado": "Diaria, Mensual o Trimestral.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "titulo_bcch",
+   "rol": "Atributo",
+   "significado": "Título oficial entregado por la API del BCCh.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "primera_fecha",
+   "rol": "Fecha",
+   "significado": "Primera observación publicada.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "ultima_fecha",
+   "rol": "Fecha",
+   "significado": "Última observación publicada.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "observaciones",
+   "rol": "Métrica",
+   "significado": "Número de observaciones publicadas.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "estado",
+   "rol": "Atributo",
+   "significado": "ok, sin datos en el BCCh o el error de la última consulta.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "ultima_consulta_utc",
+   "rol": "Fecha",
+   "significado": "Momento de la última consulta a la API (UTC).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "macro_series_catalogo",
+ "primaryKey": [
+  "clave"
+ ],
+ "sector": "macro",
+ "titulo": "macro.series_catalogo",
+ "version": "1.0.0"
+}

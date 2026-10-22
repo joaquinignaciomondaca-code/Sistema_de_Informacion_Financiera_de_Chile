@@ -1,0 +1,314 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la cartera informada (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "Atributo",
+   "significado": "vida (archivos CSVID) o generales (CSGEN).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "FK",
+   "significado": "RUT de la compañía de seguros, con dígito verificador (une con seguros.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el encabezado del archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_administradora",
+   "rol": "Identificador",
+   "significado": "Se deberá informar el RUT de la administradora del fondo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "run",
+   "rol": "Identificador",
+   "significado": "Corresponde informar el RUN de cada fondo que forma parte de las inversiones de la compañía de acuerdo a codificación definida en SEIL, Codificación S.V.S., Fondos Mutuos.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_instrumento",
+   "rol": "Atributo",
+   "significado": "Este campo es obligatorio y se informará de acuerdo a la codificación definida en SEIL, Codificación S.V.S., Instrumentos.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nemotecnico",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el código nemotécnico de acuerdo a las instrucciones impartidas por Circular N° 1085 o la que la reemplace.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_fondo",
+   "rol": "Atributo",
+   "significado": "Se debe informar el tipo de fondo según la siguiente clasificación: IN : Inmobiliario. CA : Capital de Riesgo. IE : Infraestructura OT : Otros.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "serie",
+   "rol": "Atributo",
+   "significado": "Se debe informar la serie del fondo mutuo. Si el fondo mutuo posee una serie única de cuotas se debe informar UNICA.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidades",
+   "rol": "Métrica",
+   "significado": "Corresponde al número de cuotas propiedad de la entidad a la fecha de cierre del mes a que se refiere la información.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidad_monetaria",
+   "rol": "Atributo",
+   "significado": "Corresponde a la unidad monetaria o moneda en la que se contabiliza el fondo. Se informará de acuerdo a la codificación definida en SEIL, codificación S.V.S., Unidades Monetarias.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_cuota_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor de rescate de la cuota a la fecha de cierre del mes a que se refiere la información, expresados en pesos ($). Expresado en pesos.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_de_inversion_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor pagado por las cuotas, más las comisiones e impuestos (exceptos aquellos recuperables) contabilizado a la fecha de cierre del mes a que se refiere la información, expresado en pesos ($). Expresado en pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor razonable",
+   "nombre": "valor_razonable_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al producto del número de unidades por el valor de la cuota a la fecha de cierre del mes a que se refiere la información, en pesos ($). Expresado en pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Deterioro",
+   "nombre": "deterioro_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al deterioro de la inversión, según lo señalado en la Norma de Carácter General N°311, del 28.06.2011. Este monto deberá expresarse en pesos ($)”. Expresado en pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor contable informado",
+   "nombre": "valor_final_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor que tiene el instrumento a la fecha de cierre del mes a que se refiere la información, según lo establecido en Circular de Valorización de Inversiones vigente. Este monto se deberá expresar en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "prohibicion_o_gravamen",
+   "rol": "Atributo",
+   "significado": "Se deberá informar si las cuotas de fondos mutuos registrados se encuentran afectos a prohibición o gravamen. Se informará de acuerdo a la siguiente codificación: S : Si tiene prohibición N : No tiene prohibición.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_en_margen",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si uno o más títulos registrados (en caso de haber agrupado instrumentos con características idénticas) se encuentran otorgados como margen de las operaciones de derivado señaladas en el DFL Nº251.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidades_en_margen",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el número de cuotas de fondos que se encuentran otorgados como margen de las operaciones de derivados señaladas en el DFL Nº251.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_respalda_reserva_valor_de_fondo",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si uno o más títulos (en caso de haber agrupado instrumentos con características idénticas) registrados, se encuentran respaldando la reserva de valor del fondo señalada en el DFL Nº251.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_del_fondo",
+   "rol": "Atributo",
+   "significado": "Para instrumentos que estén asociados a fondos que respalden seguros de vida con cuenta de inversión, se debe informar el nombre del Fondo al cual pertenece. Se entenderá por fondo al tipo de plan o modalidades de inversión convenidos para los seguros con cuentas de inversión.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_cartera",
+   "rol": "Atributo",
+   "significado": "Para instrumentos que no respalden seguros de vida con cuenta de inversión, se debe informar la sub cartera que respalda, si corresponde. Para instrumentos que no respalden una sub cartera, se debe informar “NO APLICA”.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "custodia_inv",
+   "rol": "Atributo",
+   "significado": "Corresponde informar para cada instrumento, el tipo de custodia que presenta, de acuerdo a la siguiente codificación: CIA: Custodia en Compañía. DCV: Custodia en DCV, solo si la Cía. actuó como Depositante. EXT: Custodia en Otra entidad.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_custodio",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el nombre de la entidad que custodia la inversión en el evento que se informe en el campo CUSTODIA_INV, el código EXT (otra entidad de custodia). En caso de que no corresponda informar, se deberá llenar con espacios este campo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "susceptibles_de_custodia",
+   "rol": "Atributo",
+   "significado": "Se deberá informar si el instrumento es susceptible de ser custodiado de acuerdo a lo dispuesto en Circular N° 88 del Depósito Central de Valores S.A., y sus modificaciones posteriores, de acuerdo a la siguiente codificación: S: es susceptible de ser custodiado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "relacionado",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si el emisor del instrumento está relacionado con la compañía de seguros, de acuerdo a lo establecido en el artículo N°100 de la ley N°18.045 del 22.10.1981 y sus modificaciones. Se señalará de acuerdo a la siguiente codificación: RE : Relacionado NR : No Relacionado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "clasificacion_de_riesgo",
+   "rol": "Atributo",
+   "significado": "Se deberá informar la menor clasificación de riesgo vigente del instrumento a la fecha de cierre del mes a que se refiere la información. Si el instrumento no contara con clasificación de riesgo se debe informar S/C.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tsa",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si el instrumento está incluido en el Test de Suficiencia de Activos para el periodo informado, de acuerdo a la siguiente codificación: SI: el instrumento es utilizado para el análisis del Test de Suficiencia de Activos NO: el instrumento no es utilizado para el análisis del.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cobertura",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si el instrumento está cubierto por un Derivado y qué tipo de operación de acuerdo a la siguiente Codificación En el primer carácter de este campo se debe indicar: S, si el instrumento está cubierto por un Derivado N, si el instrumento no está cubierto En los caracteres 2 al 5.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "metod_clasif_valo",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la clasificación dada al instrumento en los.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "criterio_valorizaci",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si la inversión está valorizada a Valor.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "modelo_valoracion",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si la inversión está valorizada por la Compañía utilizando un Modelo Propio de valorización de acuerdo a la siguiente codificación: SI : Utiliza Modelo Propio. NO: No utiliza Modelo Propio.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Deterioro",
+   "nombre": "modelo_propio_deterioro",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si el Deterioro de la inversión se determinó usando una metodología propia o es una aplicación de la metodología definida en la NCG N° 311. Se informará de acuerdo a la siguiente codificación: SI : Método propio para estimar el deterioro. NO : Aplicación de la NCG N°311.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "simultanea",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si una o más cuotas de fondos registradas forman parte de una operación simultánea. Se informará de acuerdo a la siguiente codificación: CVS : Cuota de fondo afecta a operación simultánea. NVS : Cuota de fondo no afecta a operación simultánea.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "rut_aseguradora",
+   "destino": "seguros_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "seguros_fondos_mutuos",
+ "primaryKey": [
+  "valor_razonable_clp",
+  "valor_final_m_clp",
+  "valor_de_inversion_clp",
+  "unidades",
+  "valor_cuota_clp",
+  "deterioro_clp",
+  "nemotecnico",
+  "run",
+  "nombre_del_fondo",
+  "serie",
+  "periodo",
+  "nombre_aseguradora",
+  "nombre_cartera",
+  "rut_aseguradora",
+  "nombre_custodio"
+ ],
+ "sector": "seguros",
+ "titulo": "B.3 CUOTAS DE FONDOS MUTUOS",
+ "version": "1.0.0"
+}

@@ -1,0 +1,70 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha",
+   "rol": "PK",
+   "significado": "Primer día del mes al que corresponde el dato (AAAA-MM-01).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "imacec_empalmado_indice",
+   "rol": "Métrica",
+   "significado": "Imacec total, serie empalmada, índice 2018=100.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "imacec_no_minero_indice",
+   "rol": "Métrica",
+   "significado": "Imacec no minero (actividad sin minería), índice 2018=100.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "imacec_minero_indice",
+   "rol": "Métrica",
+   "significado": "Imacec minero, índice 2018=100.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "imacec_comercio_indice",
+   "rol": "Métrica",
+   "significado": "Imacec de comercio, índice 2018=100.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "imacec_servicios_indice",
+   "rol": "Métrica",
+   "significado": "Imacec de servicios, índice 2018=100.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "macro_imacec",
+ "primaryKey": [
+  "fecha"
+ ],
+ "sector": "macro",
+ "titulo": "macro.imacec",
+ "version": "1.0.0"
+}

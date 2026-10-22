@@ -1,0 +1,155 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut",
+   "rol": "PK",
+   "significado": "RUT tributario del prestador FinTech.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "dv",
+   "rol": "Dimensión",
+   "significado": "Dígito verificador oficial.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_completo",
+   "rol": "Dimensión",
+   "significado": "RUT en formato canónico con puntos y guion.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "razon_social",
+   "rol": "Dimensión",
+   "significado": "Razón social formal legal de la empresa FinTech.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_fantasia",
+   "rol": "Dimensión",
+   "significado": "Nombre comercial o marca operativa de la plataforma.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_persona",
+   "rol": "Dimensión",
+   "significado": "Clasificación: Persona Jurídica o Persona Natural.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "estado_vigencia",
+   "rol": "Dimensión",
+   "significado": "Condición operativa: Vigente o No Vigente.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_institucion_cmf",
+   "rol": "Dimensión",
+   "significado": "Código correlativo institucional asignado por CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "numero_inscripcion",
+   "rol": "Dimensión",
+   "significado": "Número correlativo de registro en el RPSF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_inscripcion",
+   "rol": "Dimensión",
+   "significado": "Fecha oficial de incorporación al RPSF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_cancelacion",
+   "rol": "Dimensión",
+   "significado": "Fecha de revocación o cancelación registral (si aplica).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "servicios_acreditados_total",
+   "rol": "Métrica",
+   "significado": "Cantidad total de servicios financieros tipificados que la entidad tiene autorizados o eximidos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "comuna",
+   "rol": "Dimensión",
+   "significado": "Comuna de la sede principal corporativa.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "region",
+   "rol": "Dimensión",
+   "significado": "Región administrativa chilena.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "email_contacto",
+   "rol": "Dimensión",
+   "significado": "Correo electrónico institucional de contacto.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sitio_web",
+   "rol": "Dimensión",
+   "significado": "URL de la plataforma tecnológica o portal web.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cmf_url",
+   "rol": "Dimensión",
+   "significado": "Enlace a la ficha institucional pública en el portal CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "nombre": "__index_level_0__",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "fintech_rpsf_lista_entidades",
+ "primaryKey": [
+  "rut"
+ ],
+ "sector": "fintech",
+ "titulo": "fintech.rpsf_maestro",
+ "version": "1.0.0"
+}

@@ -1,0 +1,78 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha",
+   "rol": "PK",
+   "significado": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rendimiento_bono_uf_1_ano_pct",
+   "rol": "Métrica",
+   "significado": "Tasa de mercado secundario del bono en UF a 1 año (BCU-1), en porcentaje anual sobre UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rendimiento_bono_uf_2_anos_pct",
+   "rol": "Métrica",
+   "significado": "Tasa de mercado secundario del bono en UF a 2 años (BCU-2), en porcentaje anual sobre UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rendimiento_bono_uf_5_anos_pct",
+   "rol": "Métrica",
+   "significado": "Tasa de mercado secundario del bono en UF a 5 años (BCU-5), en porcentaje anual sobre UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rendimiento_bono_uf_10_anos_pct",
+   "rol": "Métrica",
+   "significado": "Tasa de mercado secundario del bono en UF a 10 años (BCU-10), en porcentaje anual sobre UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rendimiento_bono_uf_20_anos_pct",
+   "rol": "Métrica",
+   "significado": "Tasa de mercado secundario del bono en UF a 20 años (BCU-20), en porcentaje anual sobre UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rendimiento_bono_uf_30_anos_pct",
+   "rol": "Métrica",
+   "significado": "Tasa de mercado secundario del bono en UF a 30 años (BCU-30), en porcentaje anual sobre UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "macro_curva_bonos_uf",
+ "primaryKey": [
+  "fecha"
+ ],
+ "sector": "macro",
+ "titulo": "macro.curva_bonos_uf",
+ "version": "1.0.0"
+}

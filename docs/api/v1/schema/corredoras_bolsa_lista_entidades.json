@@ -1,0 +1,70 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut",
+   "rol": "PK",
+   "significado": "Cuerpo del RUT del corredor de bolsa (sin dígito verificador); clave canónica para cruces relacionales.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_empresa",
+   "rol": "Dimensión",
+   "significado": "Razón social oficial inscrita en el Registro de Corredores de Bolsa de la CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_fantasia",
+   "rol": "Dimensión",
+   "significado": "Nombre de fantasía o marca comercial estándar de la corredora.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "estado_vigencia",
+   "rol": "Dimensión",
+   "significado": "Vigencia en el Registro de Corredores de Bolsa de la CMF ('Vigente' / 'No Vigente'); se actualiza sola 3 veces al mes (pipelines/entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_intermediario",
+   "rol": "Dimensión",
+   "significado": "Tipo de intermediario regulado ('CORREDOR DE BOLSA').",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "grupo_financiero",
+   "rol": "Dimensión",
+   "significado": "Conglomerado o matriz controladora de la corredora de bolsa.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_dv",
+   "rol": "Atributo",
+   "significado": "RUT con dígito verificador (cuerpo-DV, Módulo 11).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "corredoras_bolsa_lista_entidades",
+ "primaryKey": [
+  "rut"
+ ],
+ "sector": "corredoras_bolsa",
+ "titulo": "corredoras.maestro",
+ "version": "1.0.0"
+}

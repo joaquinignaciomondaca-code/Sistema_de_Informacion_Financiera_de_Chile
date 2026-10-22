@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "corredoras_bolsa_lista_entidades_registro",
+ "particiones": [
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet",
+   "bytes": 14484,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_registro_universo.parquet",
+   "periodo": "corredoras_bolsa_registro_universo",
+   "sha256": "bb22a40d5d128d46209c91b4092bed27bc0757b4ea2b72126ff233f059aa3943"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 14484,
+  "filas": 120
+ },
+ "version": "1.0.0"
+}

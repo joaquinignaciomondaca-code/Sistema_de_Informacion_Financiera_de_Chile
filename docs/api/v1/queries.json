@@ -1,0 +1,1889 @@
+{
+ "como_se_genera": "python3 scripts/build_contrato.py",
+ "consultas": [
+  {
+   "espera": {
+    "tablas": [
+     "seguros_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "companias-que-reportan-en-el-ultimo-mes-7ece34",
+   "origen": "explorador",
+   "sql": "SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo, meses_reportados FROM seguros_lista_entidades WHERE reporta_ultimo_mes ORDER BY sector, nombre_aseguradora;",
+   "titulo": "Compañías que reportan en el último mes"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "companias-que-dejaron-de-reportar-7577ed",
+   "origen": "explorador",
+   "sql": "SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo, ultimo_periodo FROM seguros_lista_entidades WHERE NOT reporta_ultimo_mes ORDER BY ultimo_periodo DESC;",
+   "titulo": "Compañías que dejaron de reportar"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "companias-que-empezaron-a-reportar-mas-recientem-28d7e4",
+   "origen": "explorador",
+   "sql": "SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo FROM seguros_lista_entidades ORDER BY primer_periodo DESC, nombre_aseguradora LIMIT 10;",
+   "titulo": "Compañías que empezaron a reportar más recientemente"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_renta_fija"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "renta-fija-por-tipo-de-instrumento-ultimo-mes-m-f646b2",
+   "origen": "explorador",
+   "sql": "SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija) GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 15;",
+   "titulo": "Renta fija por tipo de instrumento, último mes (M$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_renta_fija"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "instrumentos-de-renta-fija-con-mas-inversion-ult-46fffd",
+   "origen": "explorador",
+   "sql": "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija) GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;",
+   "titulo": "Instrumentos de renta fija con más inversión, último mes (M$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_acciones"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "acciones-con-mayor-inversion-ultimo-mes-m-f4f47b",
+   "origen": "explorador",
+   "sql": "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(unidades) AS unidades, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = (SELECT max(periodo) FROM seguros_acciones) GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;",
+   "titulo": "Acciones con mayor inversión, último mes (M$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_acciones"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "evolucion-de-la-inversion-en-acciones-por-sector-e3ef3e",
+   "origen": "explorador",
+   "sql": "SELECT periodo, sector, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones GROUP BY periodo, sector ORDER BY periodo DESC, sector LIMIT 24;",
+   "titulo": "Evolución de la inversión en acciones por sector (M$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_fondos_mutuos"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "fondos-mutuos-por-administradora-ultimo-mes-m-84000e",
+   "origen": "explorador",
+   "sql": "SELECT rut_administradora, count(*) AS inversiones, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_fondos_mutuos WHERE periodo = (SELECT max(periodo) FROM seguros_fondos_mutuos) GROUP BY rut_administradora ORDER BY valor_final_m_clp DESC LIMIT 10;",
+   "titulo": "Fondos mutuos por administradora, último mes (M$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_bienes_raices"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "bienes-raices-por-ciudad-ultimo-mes-m-a861f2",
+   "origen": "explorador",
+   "sql": "SELECT ciudad, count(*) AS inmuebles, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_bienes_raices WHERE periodo = (SELECT max(periodo) FROM seguros_bienes_raices) GROUP BY ciudad ORDER BY valor_final_m_clp DESC LIMIT 10;",
+   "titulo": "Bienes raíces por ciudad, último mes (M$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_otras_inversiones"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "otras-inversiones-por-tipo-de-instrumento-ultimo-5306cf",
+   "origen": "explorador",
+   "sql": "SELECT tipo_instrumento, count(*) AS inversiones, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_otras_inversiones WHERE periodo = (SELECT max(periodo) FROM seguros_otras_inversiones) GROUP BY tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 15;",
+   "titulo": "Otras inversiones por tipo de instrumento, último mes (M$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_extranjeros"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "inversiones-en-el-extranjero-por-pais-ultimo-mes-96a334",
+   "origen": "explorador",
+   "sql": "SELECT pais, tipo_registro, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_extranjeros WHERE periodo = (SELECT max(periodo) FROM seguros_extranjeros) GROUP BY pais, tipo_registro ORDER BY valor_final_m_clp DESC LIMIT 10;",
+   "titulo": "Inversiones en el extranjero por país, último mes (M$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_derivados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "derivados-por-tipo-y-sector-ultimo-mes-d009a2",
+   "origen": "explorador",
+   "sql": "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;",
+   "titulo": "Derivados por tipo y sector, último mes"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_derivados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "principales-contrapartes-de-derivados-ultimo-mes-0aecee",
+   "origen": "explorador",
+   "sql": "SELECT COALESCE(NULLIF(TRIM(nombre), ''), 'Sin nombre informado') AS contraparte, count(*) AS contratos, count(DISTINCT rut_aseguradora) AS aseguradoras FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY 1 ORDER BY contratos DESC LIMIT 10;",
+   "titulo": "Principales contrapartes de derivados, último mes"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_pactos"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "pactos-contrapartes-y-tasa-promedio-ultimo-mes-1cc5b8",
+   "origen": "explorador",
+   "sql": "SELECT COALESCE(NULLIF(TRIM(nombre), ''), 'Sin nombre informado') AS contraparte, count(*) AS pactos, AVG(tasa_pacto) AS tasa_pacto_promedio FROM seguros_pactos WHERE periodo = (SELECT max(periodo) FROM seguros_pactos) GROUP BY 1 ORDER BY pactos DESC LIMIT 10;",
+   "titulo": "Pactos: contrapartes y tasa promedio, último mes"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_garantias_derivados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "b-14-garantias-por-posicion-y-tipo-m-8f4af5",
+   "origen": "explorador",
+   "sql": "SELECT periodo, sector, posicion_compania, tipo_garantia, SUM(valor_razonable_activo_en_garantia_m_clp) AS valor_m_clp FROM seguros_garantias_derivados GROUP BY periodo, sector, posicion_compania, tipo_garantia ORDER BY periodo DESC LIMIT 50;",
+   "titulo": "B.14 Garantías por posición y tipo (M$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_registros_tipo6"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "registros-tipo-6-por-periodo-y-archivo-143fa9",
+   "origen": "explorador",
+   "sql": "SELECT periodo, tipo_archivo, sector, COUNT(*) AS registros, MIN(largo_registro) AS largo_minimo, MAX(largo_registro) AS largo_maximo FROM seguros_registros_tipo6 GROUP BY periodo, tipo_archivo, sector ORDER BY periodo DESC, tipo_archivo, sector LIMIT 66;",
+   "titulo": "Registros tipo 6 por periodo y archivo"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "fondos-que-reportan-en-el-ultimo-mes-9f4a5f",
+   "origen": "explorador",
+   "sql": "SELECT run_fondo, nombre_fondo, primer_periodo, meses_reportados FROM ffmm_lista_entidades WHERE reporta_ultimo_mes ORDER BY nombre_fondo;",
+   "titulo": "Fondos que reportan en el último mes"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "fondos-nuevos-primer-reporte-mas-reciente-402efd",
+   "origen": "explorador",
+   "sql": "SELECT run_fondo, nombre_fondo, primer_periodo FROM ffmm_lista_entidades ORDER BY primer_periodo DESC, nombre_fondo LIMIT 20;",
+   "titulo": "Fondos nuevos (primer reporte más reciente)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "fondos-que-dejaron-de-reportar-289026",
+   "origen": "explorador",
+   "sql": "SELECT run_fondo, nombre_fondo, primer_periodo, ultimo_periodo FROM ffmm_lista_entidades WHERE NOT reporta_ultimo_mes ORDER BY ultimo_periodo DESC LIMIT 20;",
+   "titulo": "Fondos que dejaron de reportar"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_cartera_nacional"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "cartera-nacional-por-tipo-de-instrumento-ultimo--2f4342",
+   "origen": "explorador",
+   "sql": "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional) GROUP BY tipo_instrumento ORDER BY valorizacion_miles_mf DESC LIMIT 15;",
+   "titulo": "Cartera nacional por tipo de instrumento, último mes"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_cartera_nacional"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "mayores-emisores-nacionales-ultimo-mes-a7c4a8",
+   "origen": "explorador",
+   "sql": "SELECT rut_emisor, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional) GROUP BY rut_emisor ORDER BY valorizacion_miles_mf DESC LIMIT 10;",
+   "titulo": "Mayores emisores nacionales, último mes"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_cartera_nacional"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "instrumentos-con-compromiso-o-en-garantia-ultimo-4d3b37",
+   "origen": "explorador",
+   "sql": "SELECT situacion_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional) GROUP BY situacion_instrumento ORDER BY situacion_instrumento;",
+   "titulo": "Instrumentos con compromiso o en garantía, último mes"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_cartera_extranjera"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "cartera-extranjera-por-pais-emisor-ultimo-mes-4da5d1",
+   "origen": "explorador",
+   "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;",
+   "titulo": "Cartera extranjera por país emisor, último mes"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_cartera_extranjera"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "fondos-con-inversion-extranjera-por-mes-db54f6",
+   "origen": "explorador",
+   "sql": "SELECT periodo, count(DISTINCT run_fondo) AS fondos, count(*) AS posiciones FROM ffmm_cartera_extranjera GROUP BY periodo ORDER BY periodo DESC LIMIT 24;",
+   "titulo": "Fondos con inversión extranjera por mes"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_futuros"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "forwards-y-futuros-por-activo-objeto-ultimo-mes-4f7ee8",
+   "origen": "explorador",
+   "sql": "SELECT activo_objeto, posicion, count(*) AS contratos, SUM(monto_comprometido_miles_mf) AS monto_comprometido_miles_mf FROM ffmm_futuros WHERE periodo = (SELECT max(periodo) FROM ffmm_futuros) GROUP BY activo_objeto, posicion ORDER BY contratos DESC LIMIT 15;",
+   "titulo": "Forwards y futuros por activo objeto, último mes"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_futuros"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "contratos-vigentes-por-mes-9057ae",
+   "origen": "explorador",
+   "sql": "SELECT periodo, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM ffmm_futuros GROUP BY periodo ORDER BY periodo DESC LIMIT 24;",
+   "titulo": "Contratos vigentes por mes"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_opciones"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "opciones-del-ultimo-mes-f81fac",
+   "origen": "explorador",
+   "sql": "SELECT run_fondo, nombre_fondo, activo_objeto, nemotecnico, tipo_opcion, fecha_expiracion, numero_contratos, precio_ejercicio, inversion_primas_miles_mf FROM ffmm_opciones WHERE periodo = (SELECT max(periodo) FROM ffmm_opciones) ORDER BY run_fondo;",
+   "titulo": "Opciones del último mes"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "mayores-fondos-en-pesos-por-activo-neto-ultimo-c-cc663c",
+   "origen": "explorador",
+   "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS activo_neto_mm, round(valor_anterior_miles_mf / 1e3, 1) AS activo_neto_anterior_mm FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY valor_miles_mf DESC LIMIT 20;",
+   "titulo": "Mayores fondos en pesos por activo neto, último cierre (MM$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "activo-neto-de-la-industria-en-pesos-por-cierre--985084",
+   "origen": "explorador",
+   "sql": "SELECT periodo, count(DISTINCT run_fondo) AS fondos, round(sum(valor_miles_mf) / 1e3, 0) AS activo_neto_mm FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' GROUP BY periodo ORDER BY periodo;",
+   "titulo": "Activo neto de la industria en pesos, por cierre (MM$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "fondos-que-informan-en-dolares-por-cierre-miles--588076",
+   "origen": "explorador",
+   "sql": "SELECT periodo, count(DISTINCT run_fondo) AS fondos, round(sum(valor_miles_mf), 0) AS activo_neto_miles_usd FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'USD' GROUP BY periodo ORDER BY periodo;",
+   "titulo": "Fondos que informan en dólares, por cierre (miles de US$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "balance-completo-del-mayor-fondo-en-pesos-ultimo-a74cb8",
+   "origen": "explorador",
+   "sql": "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf, valor_anterior_miles_mf FROM ffmm_balance WHERE run_fondo = (SELECT run_fondo FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY valor_miles_mf DESC LIMIT 1) AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY orden;",
+   "titulo": "Balance completo del mayor fondo en pesos, último cierre"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "mayores-utilidades-del-ultimo-ejercicio-fondos-e-19a6a2",
+   "origen": "explorador",
+   "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS utilidad_mm FROM ffmm_resultados WHERE codigo_cuenta = 'UtilidadPerdidaDeLaOperacionDespuesDeImpuesto' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;",
+   "titulo": "Mayores utilidades del último ejercicio, fondos en pesos (MM$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "comision-de-administracion-cobrada-por-ejercicio-2c5670",
+   "origen": "explorador",
+   "sql": "SELECT periodo, count(DISTINCT run_fondo) AS fondos, round(-sum(valor_miles_mf) / 1e3, 0) AS comisiones_mm FROM ffmm_resultados WHERE codigo_cuenta = 'ComisionDeAdministracion' AND moneda = 'CLP' GROUP BY periodo ORDER BY periodo;",
+   "titulo": "Comisión de administración cobrada, por ejercicio (MM$, fondos en pesos)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "fondos-con-perdida-en-cada-ejercicio-46d5f2",
+   "origen": "explorador",
+   "sql": "SELECT periodo, count(*) AS fondos, count(*) FILTER (WHERE valor_miles_mf < 0) AS con_perdida, round(100.0 * count(*) FILTER (WHERE valor_miles_mf < 0) / count(*), 1) AS pct_con_perdida FROM ffmm_resultados WHERE codigo_cuenta = 'UtilidadPerdidaDeLaOperacionDespuesDeImpuesto' GROUP BY periodo ORDER BY periodo;",
+   "titulo": "Fondos con pérdida en cada ejercicio"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_balance",
+     "ffmm_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "estado-de-resultados-del-mayor-fondo-en-pesos-ul-ce368f",
+   "origen": "explorador",
+   "sql": "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf, valor_anterior_miles_mf FROM ffmm_resultados WHERE run_fondo = (SELECT run_fondo FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY valor_miles_mf DESC LIMIT 1) AND periodo = (SELECT max(periodo) FROM ffmm_resultados) ORDER BY orden;",
+   "titulo": "Estado de resultados del mayor fondo en pesos, último ejercicio"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fi_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "fondos-que-reportan-cartera-en-el-ultimo-trimest-43ddd6",
+   "origen": "explorador",
+   "sql": "SELECT run_fondo, nombre_fondo, administradora, moneda_funcional, trimestres_con_cartera FROM fi_lista_entidades WHERE reporta_ultimo_periodo ORDER BY administradora, nombre_fondo;",
+   "titulo": "Fondos que reportan cartera en el último trimestre"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fi_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "fondos-por-administradora-vigentes-5c1235",
+   "origen": "explorador",
+   "sql": "SELECT administradora, count(*) AS fondos FROM fi_lista_entidades WHERE estado_vigencia = 'Vigente' GROUP BY administradora ORDER BY fondos DESC LIMIT 20;",
+   "titulo": "Fondos por administradora (vigentes)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fi_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "fondos-por-moneda-funcional-0e965e",
+   "origen": "explorador",
+   "sql": "SELECT moneda_funcional, count(*) AS fondos FROM fi_lista_entidades WHERE reporta_ultimo_periodo GROUP BY moneda_funcional ORDER BY fondos DESC;",
+   "titulo": "Fondos por moneda funcional"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fi_cartera_nacional"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "cartera-nacional-por-tipo-de-instrumento-ultimo--42e0ca",
+   "origen": "explorador",
+   "sql": "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM fi_cartera_nacional) GROUP BY tipo_instrumento ORDER BY posiciones DESC;",
+   "titulo": "Cartera nacional por tipo de instrumento, último trimestre"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fi_cartera_nacional"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "mayores-emisores-nacionales-ultimo-trimestre-d986ae",
+   "origen": "explorador",
+   "sql": "SELECT rut_emisor, count(DISTINCT run_fondo) AS fondos, count(*) AS posiciones FROM fi_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM fi_cartera_nacional) GROUP BY rut_emisor ORDER BY fondos DESC LIMIT 20;",
+   "titulo": "Mayores emisores nacionales, último trimestre"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fi_cartera_extranjera"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "cartera-extranjera-por-pais-emisor-ultimo-trimes-4b2670",
+   "origen": "explorador",
+   "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM fi_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM fi_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC;",
+   "titulo": "Cartera extranjera por país emisor, último trimestre"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fi_metodo_participacion"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "filiales-y-coligadas-metodo-de-la-participacion-24e071",
+   "origen": "explorador",
+   "sql": "SELECT periodo, count(DISTINCT run_fondo) AS fondos, count(*) AS inversiones FROM fi_metodo_participacion GROUP BY periodo ORDER BY periodo DESC LIMIT 12;",
+   "titulo": "Filiales y coligadas (método de la participación)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fi_futuros"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "forwards-y-futuros-por-activo-objeto-ultimo-trim-36c18d",
+   "origen": "explorador",
+   "sql": "SELECT activo_objeto, posicion, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM fi_futuros WHERE periodo = (SELECT max(periodo) FROM fi_futuros) GROUP BY activo_objeto, posicion ORDER BY contratos DESC LIMIT 20;",
+   "titulo": "Forwards y futuros por activo objeto, último trimestre"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fi_futuros"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "contrapartes-de-derivados-ultimo-trimestre-82913c",
+   "origen": "explorador",
+   "sql": "SELECT contraparte, count(*) AS contratos FROM fi_futuros WHERE periodo = (SELECT max(periodo) FROM fi_futuros) GROUP BY contraparte ORDER BY contratos DESC LIMIT 15;",
+   "titulo": "Contrapartes de derivados, último trimestre"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fi_opciones"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "opciones-por-trimestre-bfae94",
+   "origen": "explorador",
+   "sql": "SELECT periodo, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM fi_opciones GROUP BY periodo ORDER BY periodo DESC LIMIT 12;",
+   "titulo": "Opciones por trimestre"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fi_pactos"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "pactos-por-tipo-de-operacion-y-contraparte-ultim-47db60",
+   "origen": "explorador",
+   "sql": "SELECT tipo_operacion, contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_prom_pct FROM fi_pactos WHERE periodo = (SELECT max(periodo) FROM fi_pactos) GROUP BY tipo_operacion, contraparte ORDER BY pactos DESC LIMIT 20;",
+   "titulo": "Pactos por tipo de operación y contraparte, último trimestre"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fi_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "mayores-patrimonios-en-pesos-ultimo-cierre-mm-4df30e",
+   "origen": "explorador",
+   "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS patrimonio_mm FROM fi_balance WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'TotalPatrimonioNeto' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_balance) ORDER BY valor_miles_mf DESC LIMIT 20;",
+   "titulo": "Mayores patrimonios en pesos, último cierre (MM$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fi_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "balance-actual-del-mayor-fondo-en-pesos-ultimo-c-2ee7e1",
+   "origen": "explorador",
+   "sql": "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf FROM fi_balance WHERE contexto = 'PeriodoActual' AND periodo = (SELECT max(periodo) FROM fi_balance) AND run_fondo = (SELECT run_fondo FROM fi_balance WHERE contexto = 'PeriodoActual' AND moneda = 'CLP' AND codigo_cuenta = 'TotalPatrimonioNeto' AND periodo = (SELECT max(periodo) FROM fi_balance) ORDER BY valor_miles_mf DESC LIMIT 1) ORDER BY orden;",
+   "titulo": "Balance actual del mayor fondo en pesos, último cierre"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fi_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "cobertura-de-balances-por-cierre-y-contexto-a37a1b",
+   "origen": "explorador",
+   "sql": "SELECT periodo, contexto, moneda, count(DISTINCT run_fondo) AS fondos FROM fi_balance GROUP BY periodo, contexto, moneda ORDER BY periodo DESC, contexto, moneda;",
+   "titulo": "Cobertura de balances por cierre y contexto"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fi_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "mayores-resultados-acumulados-en-pesos-ultimo-ci-ec3f0d",
+   "origen": "explorador",
+   "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_mm FROM fi_resultados WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;",
+   "titulo": "Mayores resultados acumulados en pesos, último cierre (MM$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fi_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "resultado-solo-del-trimestre-en-pesos-segun-xml--c46755",
+   "origen": "explorador",
+   "sql": "SELECT periodo, run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_trimestre_mm, cotejo_ficha FROM fi_resultados WHERE contexto = 'TrimestreActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;",
+   "titulo": "Resultado SOLO del trimestre en pesos, según XML (MM$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fi_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "comisiones-acumuladas-por-cierre-y-moneda-sin-me-805f8e",
+   "origen": "explorador",
+   "sql": "SELECT periodo, moneda, count(DISTINCT run_fondo) AS fondos, -sum(valor_miles_mf) AS comision_miles_moneda FROM fi_resultados WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'ComisionDeAdministracion' GROUP BY periodo, moneda ORDER BY periodo DESC, moneda;",
+   "titulo": "Comisiones acumuladas por cierre y moneda, sin mezclar contextos"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "agf_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "catalogo-de-agf-vigentes-vs-canceladas-40705b",
+   "origen": "explorador",
+   "sql": "SELECT rut_completo, razon_social, estado_vigencia, grupo_controlador, fondos_inversion_administrados FROM agf_lista_entidades ORDER BY estado_vigencia, razon_social;",
+   "titulo": "Catálogo de AGF (Vigentes vs Canceladas)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "agf_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "ranking-de-agf-por-fondos-de-inversion-administr-502179",
+   "origen": "explorador",
+   "sql": "SELECT razon_social, grupo_controlador, fondos_inversion_administrados, cmf_url FROM agf_lista_entidades WHERE fondos_inversion_administrados > 0 ORDER BY fondos_inversion_administrados DESC LIMIT 15;",
+   "titulo": "Ranking de AGF por Fondos de Inversión Administrados"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "agf_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "agf-por-grupo-financiero-controlador-229478",
+   "origen": "explorador",
+   "sql": "SELECT grupo_controlador, count(*) as cantidad_agf, sum(fondos_inversion_administrados) as total_fondos FROM agf_lista_entidades WHERE estado_vigencia = 'Vigente' GROUP BY grupo_controlador ORDER BY total_fondos DESC;",
+   "titulo": "AGF por Grupo Financiero Controlador"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "agf_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "activos-pasivos-y-patrimonio-por-agf-ultimo-trim-195ff3",
+   "origen": "explorador",
+   "sql": "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM agf_balance WHERE periodo = (SELECT max(periodo) FROM agf_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;",
+   "titulo": "Activos, pasivos y patrimonio por AGF, último trimestre (MM$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "agf_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "evolucion-del-sector-activos-totales-por-trimest-266f13",
+   "origen": "explorador",
+   "sql": "SELECT periodo, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS activos_mm_clp FROM agf_balance WHERE cuenta = 'Total de activos' AND moneda = 'CLP' AND repeticion = 1 GROUP BY periodo ORDER BY periodo;",
+   "titulo": "Evolución del sector: activos totales por trimestre (MM$, CLP)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "agf_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "balance-completo-de-banchile-agf-ultimo-trimestr-22cbe4",
+   "origen": "explorador",
+   "sql": "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM agf_balance WHERE rut = '96767630' AND periodo = (SELECT max(periodo) FROM agf_balance WHERE rut = '96767630') ORDER BY tipo_balance, estado_financiero, orden;",
+   "titulo": "Balance completo de Banchile AGF, último trimestre"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "agf_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "ingresos-y-utilidad-por-agf-ejercicio-2025-mm-22d477",
+   "origen": "explorador",
+   "sql": "SELECT razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Ingresos de actividades ordinarias') / 1e6, 1) AS ingresos_mm, round(max(valor) FILTER (WHERE cuenta = 'Ganancia (pérdida)') / 1e6, 1) AS ganancia_mm FROM agf_resultados WHERE periodo = '2025-12' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 GROUP BY ALL ORDER BY ganancia_mm DESC NULLS LAST;",
+   "titulo": "Ingresos y utilidad por AGF, ejercicio 2025 (MM$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "agf_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "por-que-hay-que-filtrar-ganancia-perdida-aparece-8db310",
+   "origen": "explorador",
+   "sql": "SELECT estado_financiero, repeticion, count(*) AS filas, count(DISTINCT rut) AS entidades FROM agf_resultados WHERE periodo = '2025-12' AND cuenta = 'Ganancia (pérdida)' GROUP BY ALL ORDER BY estado_financiero, repeticion;",
+   "titulo": "Por qué hay que filtrar: «Ganancia (pérdida)» aparece varias veces"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "agf_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "utilidad-del-sector-por-ano-cierres-de-diciembre-d9fd92",
+   "origen": "explorador",
+   "sql": "SELECT left(periodo, 4) AS anio, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS ganancia_mm_clp FROM agf_resultados WHERE periodo LIKE '%-12' AND cuenta = 'Ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 AND moneda = 'CLP' GROUP BY 1 ORDER BY 1;",
+   "titulo": "Utilidad del sector por año (cierres de diciembre, MM$, CLP)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "agf_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "estado-de-resultados-completo-de-banchile-agf-ej-ef9a3d",
+   "origen": "explorador",
+   "sql": "SELECT tipo_balance, estado_financiero, orden, cuenta, valor FROM agf_resultados WHERE rut = '96767630' AND periodo = '2025-12' ORDER BY tipo_balance, estado_financiero, orden;",
+   "titulo": "Estado de resultados completo de Banchile AGF, ejercicio 2025"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "afp_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "identificacion-de-administradoras-f2fee2",
+   "origen": "explorador",
+   "sql": "SELECT rut_administradora, nombre_administradora, nombre_fantasia FROM afp_lista_entidades ORDER BY nombre_fantasia;",
+   "titulo": "Identificación de administradoras"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "bancos_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "bancos-comerciales-activos-6f9896",
+   "origen": "explorador",
+   "sql": "SELECT codigo_institucion, rut, nombre_fantasia, tipo_licencia, estado FROM bancos_lista_entidades WHERE estado = 'Activo' ORDER BY codigo_institucion;",
+   "titulo": "Bancos Comerciales Activos"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "bancos_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "historial-de-bancos-fusionados-cerrados-391a70",
+   "origen": "explorador",
+   "sql": "SELECT codigo_institucion, nombre_fantasia, razon_social, estado FROM bancos_lista_entidades WHERE estado != 'Activo' ORDER BY estado, nombre_fantasia;",
+   "titulo": "Historial de Bancos Fusionados / Cerrados"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "bancos_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "muestra-de-lineas-de-balance-b1-b2-sin-sumar-imp-1ec662",
+   "origen": "explorador",
+   "sql": "SELECT periodo, codigo_institucion, nombre_institucion_fuente, familia_archivo_fuente, modelo_cmf, codigo_cuenta, glosa_cuenta, rubro, linea, item, numero_fila_fuente, importes_fuente_raw FROM bancos_balance ORDER BY periodo DESC, codigo_institucion, familia_archivo_fuente, numero_fila_fuente LIMIT 100;",
+   "titulo": "Muestra de líneas de balance B1/B2 (sin sumar importes)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "bancos_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "cobertura-de-balance-por-periodo-y-modelo-764c5a",
+   "origen": "explorador",
+   "sql": "SELECT periodo, familia_archivo_fuente, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_balance GROUP BY periodo, familia_archivo_fuente, modelo_cmf ORDER BY periodo DESC, familia_archivo_fuente;",
+   "titulo": "Cobertura de balance por periodo y modelo"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "bancos_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "muestra-de-lineas-de-resultados-r1-sin-sumar-imp-7560b4",
+   "origen": "explorador",
+   "sql": "SELECT periodo, codigo_institucion, nombre_institucion_fuente, familia_archivo_fuente, modelo_cmf, codigo_cuenta, glosa_cuenta, rubro, linea, item, numero_fila_fuente, importes_fuente_raw FROM bancos_resultados ORDER BY periodo DESC, codigo_institucion, numero_fila_fuente LIMIT 100;",
+   "titulo": "Muestra de líneas de resultados R1 (sin sumar importes)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "bancos_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "cobertura-de-resultados-por-periodo-c6e2de",
+   "origen": "explorador",
+   "sql": "SELECT periodo, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_resultados GROUP BY periodo, modelo_cmf ORDER BY periodo DESC;",
+   "titulo": "Cobertura de resultados por periodo"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_tasas_corto_plazo"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "tpm-y-tasa-interbancaria-ultimos-60-dias-9bc7ba",
+   "origen": "explorador",
+   "sql": "SELECT fecha, tpm_pct, tib_promedio_pct, round(tib_promedio_pct - tpm_pct, 3) AS diferencia_tib_tpm FROM macro_tasas_corto_plazo ORDER BY fecha DESC LIMIT 60;",
+   "titulo": "TPM y tasa interbancaria: últimos 60 días"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_curva_bonos_pesos"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "curva-de-bonos-en-pesos-promedio-mensual-ultimos-5c9393",
+   "origen": "explorador",
+   "sql": "SELECT periodo, round(avg(rendimiento_bono_pesos_2_anos_pct), 3) AS bono_2_anos_pct, round(avg(rendimiento_bono_pesos_5_anos_pct), 3) AS bono_5_anos_pct, round(avg(rendimiento_bono_pesos_10_anos_pct), 3) AS bono_10_anos_pct FROM macro_curva_bonos_pesos GROUP BY periodo ORDER BY periodo DESC LIMIT 24;",
+   "titulo": "Curva de bonos en pesos: promedio mensual, últimos 24 meses"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_curva_bonos_uf"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "curva-de-bonos-en-uf-ultimo-dato-disponible-por--bce2e5",
+   "origen": "explorador",
+   "sql": "SELECT fecha, rendimiento_bono_uf_1_ano_pct, rendimiento_bono_uf_2_anos_pct, rendimiento_bono_uf_5_anos_pct, rendimiento_bono_uf_10_anos_pct, rendimiento_bono_uf_20_anos_pct, rendimiento_bono_uf_30_anos_pct FROM macro_curva_bonos_uf ORDER BY fecha DESC LIMIT 20;",
+   "titulo": "Curva de bonos en UF: último dato disponible por plazo"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_inflacion_implicita"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "inflacion-implicita-a-5-y-10-anos-promedio-mensu-f209af",
+   "origen": "explorador",
+   "sql": "SELECT periodo, round(avg(inflacion_implicita_5_anos_pct), 3) AS implicita_5_anos_pct, round(avg(inflacion_implicita_10_anos_pct), 3) AS implicita_10_anos_pct FROM macro_inflacion_implicita GROUP BY periodo ORDER BY periodo DESC LIMIT 24;",
+   "titulo": "Inflación implícita a 5 y 10 años: promedio mensual"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_swaps_camara"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "swaps-de-camara-en-pesos-curva-90-dias-a-2-anos-2758c5",
+   "origen": "explorador",
+   "sql": "SELECT fecha, swap_camara_pesos_90_dias_pct, swap_camara_pesos_180_dias_pct, swap_camara_pesos_360_dias_pct, swap_camara_pesos_2_anos_pct, swap_camara_uf_1_ano_pct FROM macro_swaps_camara ORDER BY fecha DESC LIMIT 30;",
+   "titulo": "Swaps de cámara en pesos: curva 90 días a 2 años"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_tasa_referencia_fed",
+     "macro_tasas_corto_plazo"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "tasa-de-la-fed-frente-a-la-tpm-de-chile-promedio-2698e8",
+   "origen": "explorador",
+   "sql": "SELECT f.periodo, round(avg(f.tasa_fed_funds_pct), 2) AS fed_funds_pct, round(avg(t.tpm_pct), 2) AS tpm_chile_pct FROM macro_tasa_referencia_fed f JOIN macro_tasas_corto_plazo t USING (periodo) GROUP BY f.periodo ORDER BY f.periodo DESC LIMIT 24;",
+   "titulo": "Tasa de la Fed frente a la TPM de Chile: promedio mensual"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_dolar_observado"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "dolar-observado-ultimos-30-dias-habiles-8be1d9",
+   "origen": "explorador",
+   "sql": "SELECT fecha, dolar_observado_clp_por_usd FROM macro_dolar_observado ORDER BY fecha DESC LIMIT 30;",
+   "titulo": "Dólar observado: últimos 30 días hábiles"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_dolar_observado"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "dolar-observado-por-mes-promedio-minimo-maximo-y-d9a9c1",
+   "origen": "explorador",
+   "sql": "SELECT periodo, round(avg(dolar_observado_clp_por_usd), 2) AS promedio_clp, min(dolar_observado_clp_por_usd) AS minimo_clp, max(dolar_observado_clp_por_usd) AS maximo_clp, arg_max(dolar_observado_clp_por_usd, fecha) AS cierre_clp FROM macro_dolar_observado GROUP BY periodo ORDER BY periodo DESC LIMIT 24;",
+   "titulo": "Dólar observado por mes: promedio, mínimo, máximo y cierre"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_dolar_observado",
+     "macro_euro_observado"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "dolar-y-euro-observados-en-la-misma-fecha-4b24d1",
+   "origen": "explorador",
+   "sql": "SELECT d.fecha, d.dolar_observado_clp_por_usd, e.euro_observado_clp_por_eur, round(e.euro_observado_clp_por_eur / d.dolar_observado_clp_por_usd, 4) AS euro_por_dolar FROM macro_dolar_observado d JOIN macro_euro_observado e USING (fecha) ORDER BY d.fecha DESC LIMIT 30;",
+   "titulo": "Dólar y euro observados en la misma fecha"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_tipo_cambio_real"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "tipo-de-cambio-real-tcr-general-y-tcr-5-8698f8",
+   "origen": "explorador",
+   "sql": "SELECT periodo, tipo_cambio_real_general_indice, tipo_cambio_real_5_monedas_indice FROM macro_tipo_cambio_real ORDER BY periodo DESC LIMIT 24;",
+   "titulo": "Tipo de cambio real: TCR general y TCR-5"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_uf"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "uf-valor-de-cierre-de-cada-mes-y-variacion-mensu-73d97c",
+   "origen": "explorador",
+   "sql": "SELECT periodo, uf_cierre_clp, round((uf_cierre_clp / lag(uf_cierre_clp) OVER (ORDER BY periodo) - 1) * 100, 2) AS uf_var_mensual_pct FROM (SELECT periodo, arg_max(uf_valor_clp, fecha) AS uf_cierre_clp FROM macro_uf GROUP BY periodo) ORDER BY periodo DESC LIMIT 24;",
+   "titulo": "UF: valor de cierre de cada mes y variación mensual"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_uf",
+     "macro_utm"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "uf-y-utm-vigentes-ultimo-valor-de-cada-mes-249a2e",
+   "origen": "explorador",
+   "sql": "SELECT u.periodo, arg_max(u.uf_valor_clp, u.fecha) AS uf_cierre_clp, max(t.utm_valor_clp) AS utm_valor_clp FROM macro_uf u LEFT JOIN macro_utm t USING (periodo) GROUP BY u.periodo ORDER BY u.periodo DESC LIMIT 24;",
+   "titulo": "UF y UTM vigentes: último valor de cada mes"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_inflacion_ipc"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "inflacion-ipc-indice-y-variaciones-mensual-y-anu-0eb407",
+   "origen": "explorador",
+   "sql": "SELECT periodo, ipc_indice, ipc_var_mensual_pct, ipc_var_anual_pct FROM macro_inflacion_ipc ORDER BY periodo DESC LIMIT 24;",
+   "titulo": "Inflación IPC: índice y variaciones mensual y anual"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_imacec"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "imacec-total-y-no-minero-con-variacion-anual-021cf9",
+   "origen": "explorador",
+   "sql": "SELECT periodo, imacec_empalmado_indice, round((imacec_empalmado_indice / lag(imacec_empalmado_indice, 12) OVER (ORDER BY periodo) - 1) * 100, 2) AS imacec_var_anual_pct, imacec_no_minero_indice, imacec_minero_indice FROM macro_imacec ORDER BY periodo DESC LIMIT 24;",
+   "titulo": "Imacec total y no minero con variación anual"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_imacec"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "imacec-por-sector-comercio-y-servicios-93197c",
+   "origen": "explorador",
+   "sql": "SELECT periodo, imacec_comercio_indice, imacec_servicios_indice, imacec_no_minero_indice FROM macro_imacec ORDER BY periodo DESC LIMIT 24;",
+   "titulo": "Imacec por sector: comercio y servicios"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_pib_trimestral"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "pib-trimestral-con-variacion-respecto-al-mismo-t-50c220",
+   "origen": "explorador",
+   "sql": "SELECT periodo, pib_encadenado_miles_mm_clp, round((pib_encadenado_miles_mm_clp / lag(pib_encadenado_miles_mm_clp, 4) OVER (ORDER BY periodo) - 1) * 100, 2) AS pib_var_anual_pct FROM macro_pib_trimestral ORDER BY periodo DESC LIMIT 20;",
+   "titulo": "PIB trimestral con variación respecto al mismo trimestre del año anterior"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_mercado_laboral"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "desocupacion-ocupados-y-fuerza-de-trabajo-ultimo-14474f",
+   "origen": "explorador",
+   "sql": "SELECT periodo, desocupacion_pct, ocupados_miles_personas, asalariados_miles_personas, fuerza_trabajo_miles_personas FROM macro_mercado_laboral ORDER BY periodo DESC LIMIT 24;",
+   "titulo": "Desocupación, ocupados y fuerza de trabajo: últimos 24 meses"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_mercado_laboral"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "participacion-de-asalariados-sobre-ocupados-46b8e7",
+   "origen": "explorador",
+   "sql": "SELECT periodo, round(asalariados_miles_personas / ocupados_miles_personas * 100, 2) AS asalariados_sobre_ocupados_pct, desocupacion_pct FROM macro_mercado_laboral ORDER BY periodo DESC LIMIT 24;",
+   "titulo": "Participación de asalariados sobre ocupados"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_cobre"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "cobre-precio-diario-bml-ultimos-30-dias-e5c8d9",
+   "origen": "explorador",
+   "sql": "SELECT fecha, cobre_refinado_usd_por_libra FROM macro_cobre WHERE cobre_refinado_usd_por_libra IS NOT NULL ORDER BY fecha DESC LIMIT 30;",
+   "titulo": "Cobre: precio diario BML, últimos 30 días"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_cobre"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "cobre-promedio-mensual-y-referencia-bcch-con-var-3d0bbf",
+   "origen": "explorador",
+   "sql": "SELECT periodo, promedio_diario_usd_lb, referencia_mensual_usd_lb, round((referencia_mensual_usd_lb / lag(referencia_mensual_usd_lb, 12) OVER (ORDER BY periodo) - 1) * 100, 2) AS referencia_var_anual_pct FROM (SELECT periodo, round(avg(cobre_refinado_usd_por_libra), 4) AS promedio_diario_usd_lb, max(cobre_referencial_mensual_usd_por_libra) AS referencia_mensual_usd_lb FROM macro_cobre GROUP BY periodo) ORDER BY periodo DESC LIMIT 24;",
+   "titulo": "Cobre: promedio mensual y referencia BCCh con variación anual"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_metales_preciosos"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "oro-y-plata-ultimos-30-dias-7e379f",
+   "origen": "explorador",
+   "sql": "SELECT fecha, oro_usd_por_onza_troy, plata_usd_por_onza_troy, round(oro_usd_por_onza_troy / plata_usd_por_onza_troy, 2) AS relacion_oro_plata FROM macro_metales_preciosos ORDER BY fecha DESC LIMIT 30;",
+   "titulo": "Oro y plata: últimos 30 días"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_reservas_internacionales"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "reservas-internacionales-ultimos-24-meses-d34a70",
+   "origen": "explorador",
+   "sql": "SELECT periodo, reservas_internacionales_millones_usd FROM macro_reservas_internacionales ORDER BY periodo DESC LIMIT 24;",
+   "titulo": "Reservas internacionales: últimos 24 meses"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_deuda_publica_pct_pib"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "deuda-publica-sobre-pib-serie-trimestral-7454d5",
+   "origen": "explorador",
+   "sql": "SELECT periodo, deuda_bruta_gobierno_central_pct_pib FROM macro_deuda_publica_pct_pib ORDER BY periodo DESC LIMIT 20;",
+   "titulo": "Deuda pública sobre PIB: serie trimestral"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_expectativas_inflacion",
+     "macro_inflacion_ipc"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "inflacion-anual-efectiva-frente-a-la-esperada-ee-c07925",
+   "origen": "explorador",
+   "sql": "SELECT i.periodo, i.ipc_var_anual_pct, e.expectativa_inflacion_ipc_11_meses_pct, e.expectativa_inflacion_ipc_23_meses_pct, round((e.expectativa_inflacion_ipc_11_meses_pct - 3.0) * 100, 0) AS desvio_11_meses_vs_meta_puntos_basicos FROM macro_inflacion_ipc i JOIN macro_expectativas_inflacion e USING (periodo) ORDER BY i.periodo DESC LIMIT 24;",
+   "titulo": "Inflación anual efectiva frente a la esperada (EEE)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_expectativas_tpm",
+     "macro_tasas_corto_plazo"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "tpm-efectiva-frente-a-la-esperada-por-la-eee-f1cccc",
+   "origen": "explorador",
+   "sql": "SELECT e.periodo, round(avg(t.tpm_pct), 2) AS tpm_pct, max(e.expectativa_tpm_11_meses_pct) AS expectativa_tpm_11_meses_pct, max(e.expectativa_tpm_23_meses_pct) AS expectativa_tpm_23_meses_pct FROM macro_expectativas_tpm e JOIN macro_tasas_corto_plazo t USING (periodo) GROUP BY e.periodo ORDER BY e.periodo DESC LIMIT 24;",
+   "titulo": "TPM efectiva frente a la esperada por la EEE"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_expectativas_operadores"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "encuesta-de-operadores-financieros-ultimas-20-en-aa63e2",
+   "origen": "explorador",
+   "sql": "SELECT fecha, expectativa_inflacion_12_meses_pct, expectativa_tpm_12_meses_pct FROM macro_expectativas_operadores ORDER BY fecha DESC LIMIT 20;",
+   "titulo": "Encuesta de Operadores Financieros: últimas 20 encuestas"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_series_catalogo"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "catalogo-series-frecuencia-unidad-y-ultima-fecha-4573aa",
+   "origen": "explorador",
+   "sql": "SELECT grupo, nombre, frecuencia, unidad, primera_fecha, ultima_fecha, observaciones, estado FROM macro_series_catalogo ORDER BY grupo, nombre;",
+   "titulo": "Catálogo: series, frecuencia, unidad y última fecha"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "macro_series_catalogo"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "estado-de-la-ultima-consulta-al-bcch-por-grupo-b5c6d8",
+   "origen": "explorador",
+   "sql": "SELECT grupo, count(*) AS series, sum(CASE WHEN estado = 'ok' THEN 1 ELSE 0 END) AS series_ok, max(ultima_fecha) AS dato_mas_reciente, max(ultima_consulta_utc) AS ultima_consulta_utc FROM macro_series_catalogo GROUP BY grupo ORDER BY grupo;",
+   "titulo": "Estado de la última consulta al BCCh por grupo"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "factoring_leasing_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "lista-por-segmento-y-licencia-catalogo-local-53671b",
+   "origen": "explorador",
+   "sql": "SELECT rut, razon_social, nombre_fantasia, segmento, tipo_licencia, grupo_controlador, vigente FROM factoring_leasing_lista_entidades ORDER BY vigente DESC, segmento, razon_social;",
+   "titulo": "Lista por segmento y licencia (catálogo local)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "factoring_leasing_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "estado-consignado-en-la-lista-e19e45",
+   "origen": "explorador",
+   "sql": "SELECT vigente, estado, count(*) as total_entidades, string_agg(nombre_fantasia, ', ') as instituciones FROM factoring_leasing_lista_entidades GROUP BY vigente, estado ORDER BY vigente DESC;",
+   "titulo": "Estado consignado en la lista"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "factoring_leasing_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "tipos-de-licencia-consignados-939dc6",
+   "origen": "explorador",
+   "sql": "SELECT tipo_licencia, count(*) as total, string_agg(nombre_fantasia, ', ') as instituciones FROM factoring_leasing_lista_entidades WHERE vigente = 1 GROUP BY tipo_licencia;",
+   "titulo": "Tipos de licencia consignados"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "factoring_leasing_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "segmentacion-por-linea-de-negocio-18540d",
+   "origen": "explorador",
+   "sql": "SELECT segmento, count(*) as entidades, sum(es_factoring) as con_factoring, sum(es_leasing_financiero) as con_leasing, sum(es_automotriz) as con_automotriz FROM factoring_leasing_lista_entidades WHERE vigente = 1 GROUP BY segmento;",
+   "titulo": "Segmentación por Línea de Negocio"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "factoring_leasing_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "cuentas-de-balance-cmf-primeros-500-42bcb3",
+   "origen": "explorador",
+   "sql": "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, orden, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_balance ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, orden LIMIT 500;",
+   "titulo": "Cuentas de balance CMF · primeros 500"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "factoring_leasing_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "cuentas-de-resultados-cmf-primeros-500-55ce02",
+   "origen": "explorador",
+   "sql": "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, orden, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_resultados ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, orden LIMIT 500;",
+   "titulo": "Cuentas de resultados CMF · primeros 500"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "factoring_leasing_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "utilidad-del-periodo-1-fila-por-estado-a1faed",
+   "origen": "explorador",
+   "sql": "SELECT periodo, rut, nombre_reportado, tipo_balance, estado_financiero, valor_archivo AS ganancia_perdida FROM factoring_leasing_resultados WHERE lower(cuenta) = 'ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion_contexto = 1 ORDER BY periodo DESC, rut;",
+   "titulo": "Utilidad del período · 1 fila por estado"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "factoring_leasing_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "donde-se-repite-ganancia-perdida-9a8785",
+   "origen": "explorador",
+   "sql": "SELECT estado_financiero, repeticion_contexto, count(*) AS filas, count(DISTINCT (periodo, rut, tipo_balance)) AS estados FROM factoring_leasing_resultados WHERE lower(cuenta) = 'ganancia (pérdida)' GROUP BY ALL ORDER BY estado_financiero, repeticion_contexto;",
+   "titulo": "Dónde se repite 'Ganancia (pérdida)'"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "corredoras_bolsa_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "catalogo-de-corredoras-vigentes-a8dbef",
+   "origen": "explorador",
+   "sql": "SELECT rut, nombre_empresa, nombre_fantasia, grupo_financiero, estado_vigencia FROM corredoras_bolsa_lista_entidades WHERE estado_vigencia = 'Vigente' ORDER BY nombre_empresa;",
+   "titulo": "Catálogo de Corredoras Vigentes"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "corredoras_bolsa_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "distribucion-por-conglomerado-6d2d35",
+   "origen": "explorador",
+   "sql": "SELECT grupo_financiero, count(*) as total_corredoras, sum(CASE WHEN estado_vigencia = 'Vigente' THEN 1 ELSE 0 END) as vigentes FROM corredoras_bolsa_lista_entidades GROUP BY grupo_financiero ORDER BY total_corredoras DESC;",
+   "titulo": "Distribución por Conglomerado"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "corredoras_bolsa_lista_entidades_registro"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "catalogo-de-corredoras-por-grupo-financiero-826952",
+   "origen": "explorador",
+   "sql": "SELECT rut, nombre_empresa, nombre_fantasia, grupo_financiero, estado_vigencia FROM corredoras_bolsa_lista_entidades_registro ORDER BY estado_vigencia DESC, grupo_financiero, nombre_empresa;",
+   "titulo": "Catálogo de Corredoras por Grupo Financiero"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "corredoras_bolsa_lista_entidades_registro"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "distribucion-de-corredoras-por-conglomerado-af4fec",
+   "origen": "explorador",
+   "sql": "SELECT grupo_financiero, count(*) as total_corredoras, sum(CASE WHEN estado_vigencia = 'Vigente' THEN 1 ELSE 0 END) as vigentes, string_agg(nombre_fantasia, ', ') as instituciones FROM corredoras_bolsa_lista_entidades_registro GROUP BY grupo_financiero ORDER BY total_corredoras DESC;",
+   "titulo": "Distribución de Corredoras por Conglomerado"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "corredoras_bolsa_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "activos-pasivos-y-patrimonio-por-intermediario-u-43eaf2",
+   "origen": "explorador",
+   "sql": "SELECT periodo, razon_social, tipo_intermediario, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '10.00.00') / 1e3, 1) AS activos_mm, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '21.00.00') / 1e3, 1) AS pasivos_mm, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '22.00.00') / 1e3, 1) AS patrimonio_mm FROM corredoras_bolsa_balance WHERE periodo = (SELECT max(periodo) FROM corredoras_bolsa_balance) GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;",
+   "titulo": "Activos, pasivos y patrimonio por intermediario, último trimestre (MM$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "corredoras_bolsa_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "evolucion-de-los-corredores-de-bolsa-activos-tot-2dea8f",
+   "origen": "explorador",
+   "sql": "SELECT periodo, count(DISTINCT rut) AS corredores, round(sum(valor_miles_clp) / 1e3, 1) AS activos_mm FROM corredoras_bolsa_balance WHERE codigo_fecu = '10.00.00' AND tipo_intermediario = 'corredor de bolsa' GROUP BY periodo ORDER BY periodo;",
+   "titulo": "Evolución de los corredores de bolsa: activos totales por trimestre (MM$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "corredoras_bolsa_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "balance-completo-de-banchile-corredores-ultimo-t-9045d7",
+   "origen": "explorador",
+   "sql": "SELECT periodo, seccion, codigo_fecu, nivel, cuenta, valor_miles_clp FROM corredoras_bolsa_balance WHERE rut = '96571220' AND periodo = (SELECT max(periodo) FROM corredoras_bolsa_balance) ORDER BY codigo_fecu;",
+   "titulo": "Balance completo de Banchile Corredores, último trimestre"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "corredoras_bolsa_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "resultado-del-ejercicio-por-intermediario-2025-m-50a3b4",
+   "origen": "explorador",
+   "sql": "SELECT razon_social, tipo_intermediario, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '30.00.00') / 1e3, 1) AS resultado_ejercicio_mm FROM corredoras_bolsa_resultados WHERE periodo = '2025-12' GROUP BY ALL ORDER BY resultado_ejercicio_mm DESC NULLS LAST;",
+   "titulo": "Resultado del ejercicio por intermediario, 2025 (MM$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "corredoras_bolsa_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "estructura-de-resultados-de-banchile-corredores--51bf0d",
+   "origen": "explorador",
+   "sql": "SELECT estado_financiero, seccion, codigo_fecu, nivel, cuenta, valor_miles_clp FROM corredoras_bolsa_resultados WHERE rut = '96571220' AND periodo = '2025-12' ORDER BY codigo_fecu;",
+   "titulo": "Estructura de resultados de Banchile Corredores, 2025"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "corredoras_bolsa_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "catalogo-de-cuentas-fecu-de-resultados-472c9e",
+   "origen": "explorador",
+   "sql": "SELECT codigo_fecu, any_value(cuenta) AS cuenta, any_value(seccion) AS seccion, count(*) AS filas FROM corredoras_bolsa_resultados GROUP BY codigo_fecu ORDER BY codigo_fecu;",
+   "titulo": "Catálogo de cuentas FECU de resultados"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "securitizadoras_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "catalogo-de-securitizadoras-vigentes-vs-historic-96787b",
+   "origen": "explorador",
+   "sql": "SELECT rut_completo, razon_social, estado_vigencia, lineas_deuda_registradas FROM securitizadoras_lista_entidades ORDER BY estado_vigencia, razon_social;",
+   "titulo": "Catálogo de Securitizadoras (Vigentes vs Históricas)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "securitizadoras_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "securitizadoras-con-emisiones-activas-cmf-52c2e1",
+   "origen": "explorador",
+   "sql": "SELECT razon_social, rut_completo, lineas_deuda_registradas, cmf_url FROM securitizadoras_lista_entidades WHERE lineas_deuda_registradas > 0 ORDER BY lineas_deuda_registradas DESC;",
+   "titulo": "Securitizadoras con Emisiones Activas CMF"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "securitizadoras_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "activos-pasivos-y-patrimonio-por-securitizadora--35b788",
+   "origen": "explorador",
+   "sql": "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM securitizadoras_balance WHERE periodo = (SELECT max(periodo) FROM securitizadoras_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;",
+   "titulo": "Activos, pasivos y patrimonio por securitizadora, último trimestre (MM$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "securitizadoras_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "evolucion-del-sector-activos-totales-por-trimest-c0d06c",
+   "origen": "explorador",
+   "sql": "SELECT periodo, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS activos_mm_clp FROM securitizadoras_balance WHERE cuenta = 'Total de activos' AND moneda = 'CLP' AND repeticion = 1 GROUP BY periodo ORDER BY periodo;",
+   "titulo": "Evolución del sector: activos totales por trimestre (MM$, CLP)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "securitizadoras_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "balance-completo-de-bci-securitizadora-ultimo-tr-f1004f",
+   "origen": "explorador",
+   "sql": "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM securitizadoras_balance WHERE rut = '96948880' AND periodo = (SELECT max(periodo) FROM securitizadoras_balance WHERE rut = '96948880') ORDER BY tipo_balance, estado_financiero, orden;",
+   "titulo": "Balance completo de BCI Securitizadora, último trimestre"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "securitizadoras_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "ingresos-y-utilidad-por-securitizadora-ejercicio-6670ee",
+   "origen": "explorador",
+   "sql": "SELECT razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Ingresos de actividades ordinarias') / 1e6, 1) AS ingresos_mm, round(max(valor) FILTER (WHERE cuenta = 'Ganancia (pérdida)') / 1e6, 1) AS ganancia_mm FROM securitizadoras_resultados WHERE periodo = '2025-12' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 GROUP BY ALL ORDER BY ganancia_mm DESC NULLS LAST;",
+   "titulo": "Ingresos y utilidad por securitizadora, ejercicio 2025 (MM$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "securitizadoras_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "por-que-hay-que-filtrar-ganancia-perdida-aparece-5f46a7",
+   "origen": "explorador",
+   "sql": "SELECT estado_financiero, repeticion, count(*) AS filas, count(DISTINCT rut) AS entidades FROM securitizadoras_resultados WHERE periodo = '2025-12' AND cuenta = 'Ganancia (pérdida)' GROUP BY ALL ORDER BY estado_financiero, repeticion;",
+   "titulo": "Por qué hay que filtrar: «Ganancia (pérdida)» aparece varias veces"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "securitizadoras_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "utilidad-del-sector-por-ano-cierres-de-diciembre-aca385",
+   "origen": "explorador",
+   "sql": "SELECT left(periodo, 4) AS anio, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS ganancia_mm_clp FROM securitizadoras_resultados WHERE periodo LIKE '%-12' AND cuenta = 'Ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 AND moneda = 'CLP' GROUP BY 1 ORDER BY 1;",
+   "titulo": "Utilidad del sector por año (cierres de diciembre, MM$, CLP)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "securitizadoras_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "estado-de-resultados-completo-de-bci-securitizad-204842",
+   "origen": "explorador",
+   "sql": "SELECT tipo_balance, estado_financiero, orden, cuenta, valor FROM securitizadoras_resultados WHERE rut = '96948880' AND periodo = '2025-12' ORDER BY tipo_balance, estado_financiero, orden;",
+   "titulo": "Estado de resultados completo de BCI Securitizadora, ejercicio 2025"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "patrimonios_separados_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "lineas-por-clase-de-colateral-00d0bd",
+   "origen": "explorador",
+   "sql": "SELECT clase_colateral_subyacente, count(*) as lineas, string_agg(razon_social_administradora, ', ') as administradoras FROM patrimonios_separados_lista_entidades GROUP BY clase_colateral_subyacente ORDER BY lineas DESC;",
+   "titulo": "Líneas por clase de colateral"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "patrimonios_separados_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "inscripciones-por-moneda-y-monto-7560ff",
+   "origen": "explorador",
+   "sql": "SELECT numero_inscripcion, fecha_inscripcion, razon_social_administradora, denominacion_emision, moneda, monto_inscrito, clase_colateral_subyacente FROM patrimonios_separados_lista_entidades ORDER BY fecha_inscripcion DESC;",
+   "titulo": "Inscripciones por moneda y monto"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "patrimonios_separados_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "cobertura-por-ano-20102013-sin-datos-396a2f",
+   "origen": "explorador",
+   "sql": "SELECT a.anio, count(DISTINCT b.archivo) AS balances, CASE WHEN a.anio < 2014 THEN 'Sin datos: la serie parte en diciembre de 2014' ELSE 'Cierre de diciembre' END AS nota FROM range(2010, 2026) a(anio) LEFT JOIN patrimonios_separados_balance b ON b.anio = a.anio GROUP BY a.anio ORDER BY a.anio;",
+   "titulo": "Cobertura por año (2010–2013 sin datos)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "patrimonios_separados_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "totales-por-patrimonio-diciembre-2025-717933",
+   "origen": "explorador",
+   "sql": "SELECT nombre_administradora, codigo_patrimonio, activos_m_clp, pasivos_m_clp, patrimonio_m_clp FROM (SELECT periodo, rut_administradora, nombre_administradora, codigo_patrimonio, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Activos') AS activos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria IN ('Total Pasivo Circulante', 'Total Pasivo No Circulante')) AS pasivos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Patrimonio (Excedente Acumulado)') AS patrimonio_m_clp FROM patrimonios_separados_balance GROUP BY ALL) WHERE periodo = '2025-12' ORDER BY activos_m_clp DESC;",
+   "titulo": "Totales por patrimonio, diciembre 2025"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "patrimonios_separados_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "agregado-del-sector-por-cierre-9af0b2",
+   "origen": "explorador",
+   "sql": "SELECT periodo, count(*) AS patrimonios, sum(activos_m_clp) AS activos_m_clp, sum(pasivos_m_clp) AS pasivos_m_clp, sum(patrimonio_m_clp) AS patrimonio_m_clp FROM (SELECT periodo, rut_administradora, nombre_administradora, codigo_patrimonio, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Activos') AS activos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria IN ('Total Pasivo Circulante', 'Total Pasivo No Circulante')) AS pasivos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Patrimonio (Excedente Acumulado)') AS patrimonio_m_clp FROM patrimonios_separados_balance GROUP BY ALL) GROUP BY periodo ORDER BY periodo;",
+   "titulo": "Agregado del sector por cierre"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "patrimonios_separados_balance",
+     "securitizadoras_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "por-securitizadora-diciembre-2025-dc0352",
+   "origen": "explorador",
+   "sql": "SELECT coalesce(s.razon_social, t.nombre_administradora) AS securitizadora, count(*) AS patrimonios, sum(t.activos_m_clp) AS activos_m_clp, sum(t.pasivos_m_clp) AS pasivos_m_clp, sum(t.patrimonio_m_clp) AS patrimonio_m_clp FROM (SELECT periodo, rut_administradora, nombre_administradora, codigo_patrimonio, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Activos') AS activos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria IN ('Total Pasivo Circulante', 'Total Pasivo No Circulante')) AS pasivos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Patrimonio (Excedente Acumulado)') AS patrimonio_m_clp FROM patrimonios_separados_balance GROUP BY ALL) t LEFT JOIN securitizadoras_lista_entidades s ON s.rut = t.rut_administradora WHERE t.periodo = '2025-12' GROUP BY ALL ORDER BY activos_m_clp DESC;",
+   "titulo": "Por securitizadora, diciembre 2025"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "patrimonios_separados_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "balance-completo-de-un-patrimonio-ca49f0",
+   "origen": "explorador",
+   "sql": "SELECT orden_en_balance, categoria, cuenta, monto_m_clp FROM patrimonios_separados_balance WHERE periodo = '2025-12' AND nombre_administradora = 'SECURITIZADORA SECURITY' AND codigo_patrimonio = (SELECT min(codigo_patrimonio) FROM patrimonios_separados_balance WHERE periodo = '2025-12' AND nombre_administradora = 'SECURITIZADORA SECURITY') ORDER BY orden_en_balance;",
+   "titulo": "Balance completo de un patrimonio"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "patrimonios_separados_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "pasivos-de-diciembre-2025-por-cuenta-b5848b",
+   "origen": "explorador",
+   "sql": "SELECT categoria, cuenta, sum(monto_m_clp) AS monto_m_clp, count(*) AS patrimonios FROM patrimonios_separados_balance WHERE categoria IN ('Pasivo Circulante', 'Pasivo No Circulante') AND periodo = '2025-12' GROUP BY ALL ORDER BY monto_m_clp DESC;",
+   "titulo": "Pasivos de diciembre 2025 por cuenta"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "patrimonios_separados_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "cuentas-mas-frecuentes-por-rubro-e91f21",
+   "origen": "explorador",
+   "sql": "SELECT categoria, cuenta, count(*) AS balances, sum(monto_m_clp) AS suma_m_clp FROM patrimonios_separados_balance WHERE categoria NOT LIKE 'Total%' GROUP BY ALL ORDER BY balances DESC LIMIT 30;",
+   "titulo": "Cuentas más frecuentes por rubro"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "cooperativas_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "directorio-de-cooperativas-fiscalizadas-8c031f",
+   "origen": "explorador",
+   "sql": "SELECT rut, nombre_empresa, nombre_fantasia, sede_matriz, region, estado_vigencia FROM cooperativas_lista_entidades ORDER BY nombre_fantasia;",
+   "titulo": "Directorio de Cooperativas Fiscalizadas"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "cooperativas_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "distribucion-regional-de-cooperativas-7bea03",
+   "origen": "explorador",
+   "sql": "SELECT region, count(*) as total_entidades, string_agg(nombre_fantasia, ', ') as instituciones FROM cooperativas_lista_entidades GROUP BY region ORDER BY total_entidades DESC;",
+   "titulo": "Distribución Regional de Cooperativas"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ccaf_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "catalogo-ccaf-vigentes-vs-absorbidas-a4c741",
+   "origen": "explorador",
+   "sql": "SELECT rut_completo, nombre_fantasia, estado_vigencia, regulador_mercado_valores, codigo_cmf, lineas_deuda_registradas FROM ccaf_lista_entidades ORDER BY estado_vigencia DESC, nombre_fantasia;",
+   "titulo": "Catálogo CCAF (Vigentes vs Absorbidas)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ccaf_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "ccaf-emisoras-de-bonos-publicos-cmf-cf538c",
+   "origen": "explorador",
+   "sql": "SELECT rut_completo, razon_social, codigo_cmf, lineas_deuda_registradas, cmf_url FROM ccaf_lista_entidades WHERE emisor_valores_cmf = true ORDER BY rut;",
+   "titulo": "CCAF Emisoras de Bonos Públicos CMF"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ccaf_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "ccaf-supervisadas-exclusivamente-por-suseso-881802",
+   "origen": "explorador",
+   "sql": "SELECT rut_completo, razon_social, domicilio_casa_matriz, suseso_url, observaciones FROM ccaf_lista_entidades WHERE emisor_valores_cmf = false AND estado_vigencia = 'Vigente';",
+   "titulo": "CCAF Supervisadas Exclusivamente por SUSESO"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ccaf_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "activos-pasivos-y-patrimonio-por-ccaf-ultimo-tri-54ae37",
+   "origen": "explorador",
+   "sql": "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM ccaf_balance WHERE periodo = (SELECT max(periodo) FROM ccaf_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;",
+   "titulo": "Activos, pasivos y patrimonio por CCAF, último trimestre (MM$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ccaf_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "evolucion-del-sector-activos-totales-por-trimest-6b53fd",
+   "origen": "explorador",
+   "sql": "SELECT periodo, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS activos_mm_clp FROM ccaf_balance WHERE cuenta = 'Total de activos' AND moneda = 'CLP' AND repeticion = 1 GROUP BY periodo ORDER BY periodo;",
+   "titulo": "Evolución del sector: activos totales por trimestre (MM$, CLP)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ccaf_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "balance-completo-de-ccaf-los-andes-ultimo-trimes-8b33d5",
+   "origen": "explorador",
+   "sql": "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM ccaf_balance WHERE rut = '81826800' AND periodo = (SELECT max(periodo) FROM ccaf_balance WHERE rut = '81826800') ORDER BY tipo_balance, estado_financiero, orden;",
+   "titulo": "Balance completo de CCAF Los Andes, último trimestre"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ccaf_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "ingresos-y-utilidad-por-ccaf-ejercicio-2025-mm-f6bd8a",
+   "origen": "explorador",
+   "sql": "SELECT razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Ingresos de actividades ordinarias') / 1e6, 1) AS ingresos_mm, round(max(valor) FILTER (WHERE cuenta = 'Ganancia (pérdida)') / 1e6, 1) AS ganancia_mm FROM ccaf_resultados WHERE periodo = '2025-12' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 GROUP BY ALL ORDER BY ganancia_mm DESC NULLS LAST;",
+   "titulo": "Ingresos y utilidad por CCAF, ejercicio 2025 (MM$)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ccaf_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "por-que-hay-que-filtrar-ganancia-perdida-aparece-d1555d",
+   "origen": "explorador",
+   "sql": "SELECT estado_financiero, repeticion, count(*) AS filas, count(DISTINCT rut) AS entidades FROM ccaf_resultados WHERE periodo = '2025-12' AND cuenta = 'Ganancia (pérdida)' GROUP BY ALL ORDER BY estado_financiero, repeticion;",
+   "titulo": "Por qué hay que filtrar: «Ganancia (pérdida)» aparece varias veces"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ccaf_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "utilidad-del-sector-por-ano-cierres-de-diciembre-fdb371",
+   "origen": "explorador",
+   "sql": "SELECT left(periodo, 4) AS anio, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS ganancia_mm_clp FROM ccaf_resultados WHERE periodo LIKE '%-12' AND cuenta = 'Ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 AND moneda = 'CLP' GROUP BY 1 ORDER BY 1;",
+   "titulo": "Utilidad del sector por año (cierres de diciembre, MM$, CLP)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ccaf_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "estado-de-resultados-completo-de-ccaf-los-andes--b8a726",
+   "origen": "explorador",
+   "sql": "SELECT tipo_balance, estado_financiero, orden, cuenta, valor FROM ccaf_resultados WHERE rut = '81826800' AND periodo = '2025-12' ORDER BY tipo_balance, estado_financiero, orden;",
+   "titulo": "Estado de resultados completo de CCAF Los Andes, ejercicio 2025"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "sistemas_pago_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "directorio-de-infraestructuras-0aae44",
+   "origen": "explorador",
+   "sql": "SELECT codigo_sistema, nombre_comercial, tipo_sistema, supervisor FROM sistemas_pago_lista_entidades ORDER BY codigo_sistema;",
+   "titulo": "Directorio de Infraestructuras"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "sistemas_pago_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "camaras-y-contrapartes-centrales-cb2f0d",
+   "origen": "explorador",
+   "sql": "SELECT codigo_sistema, razon_social, marco_legal FROM sistemas_pago_lista_entidades WHERE tipo_sistema LIKE '%Cámara%' OR tipo_sistema LIKE '%Contraparte%';",
+   "titulo": "Cámaras y Contrapartes Centrales"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fintech_rpsf_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "prestadores-vigentes-9a9994",
+   "origen": "explorador",
+   "sql": "SELECT rut_completo, razon_social, tipo_persona, servicios_acreditados_total FROM fintech_rpsf_lista_entidades WHERE estado_vigencia = 'Vigente' ORDER BY servicios_acreditados_total DESC, razon_social LIMIT 15;",
+   "titulo": "Prestadores Vigentes"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fintech_rpsf_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "distribucion-regional-28aee1",
+   "origen": "explorador",
+   "sql": "SELECT region, COUNT(*) AS total_entidades FROM fintech_rpsf_lista_entidades WHERE region != '' GROUP BY region ORDER BY total_entidades DESC;",
+   "titulo": "Distribución Regional"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_renta_fija"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "renta-fija-de-seguros-por-tipo-9cd525",
+   "origen": "terminal",
+   "sql": "SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija) GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 10;",
+   "titulo": "Renta fija de seguros por tipo"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_acciones"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "acciones-en-seguros-4057a4",
+   "origen": "terminal",
+   "sql": "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = (SELECT max(periodo) FROM seguros_acciones) GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;",
+   "titulo": "Acciones en seguros"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_derivados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "derivados-de-seguros-por-tipo-d009a2",
+   "origen": "terminal",
+   "sql": "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;",
+   "titulo": "Derivados de seguros por tipo"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_cartera_nacional"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "fondos-mutuos-cartera-nacional-por-tipo-2f4342",
+   "origen": "terminal",
+   "sql": "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional) GROUP BY tipo_instrumento ORDER BY valorizacion_miles_mf DESC LIMIT 15;",
+   "titulo": "Fondos mutuos: cartera nacional por tipo"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "ffmm_cartera_extranjera"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "fondos-mutuos-inversion-en-el-exterior-por-pais-4da5d1",
+   "origen": "terminal",
+   "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;",
+   "titulo": "Fondos mutuos: inversión en el exterior por país"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "fi_cartera_nacional"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "fondos-de-inversion-cartera-nacional-por-tipo-5230f0",
+   "origen": "terminal",
+   "sql": "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM fi_cartera_nacional) GROUP BY tipo_instrumento ORDER BY posiciones DESC LIMIT 15;",
+   "titulo": "Fondos de inversión: cartera nacional por tipo"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "aseguradoras-que-reportan-7ece34",
+   "origen": "terminal",
+   "sql": "SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo, meses_reportados FROM seguros_lista_entidades WHERE reporta_ultimo_mes ORDER BY sector, nombre_aseguradora;",
+   "titulo": "Aseguradoras que reportan"
+  }
+ ],
+ "contrato": "sif-api/consultas",
+ "generado": "2026-10-22",
+ "nota": "Salen de la propia web (sidebar.js e index.html); la auditoría las ejecuta contra los Parquet en cada CI.",
+ "total": 156,
+ "version": "1.0.0"
+}

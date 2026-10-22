@@ -1,0 +1,219 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut",
+   "rol": "PK",
+   "significado": "Cuerpo del RUT de la sociedad (sin dígito verificador), auditado bajo algoritmo Módulo 11.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_completo",
+   "rol": "Atributo",
+   "significado": "RUT institucional formateado con puntos y guion (XX.XXX.XXX-Y).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "razon_social",
+   "rol": "Atributo",
+   "significado": "Razón social formal de la compañía inscrita en el registro mercantil de la CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_fantasia",
+   "rol": "Atributo",
+   "significado": "Nombre comercial o marca de fantasía de la sociedad en el mercado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "nombre": "tipo_sociedad",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "segmento",
+   "rol": "Atributo",
+   "significado": "Segmentación funcional principal: Factoring, Leasing, Ambas o Automotriz.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "giro",
+   "rol": "Atributo",
+   "significado": "Descripción detallada del giro y líneas operativas declaradas ante la CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "registro_cmf",
+   "rol": "Atributo",
+   "significado": "Registro regulatorio CMF: Filial Bancaria LGB, Registro de Valores (RVEMI), o REEI.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_tipoentidad",
+   "rol": "Atributo",
+   "significado": "Código institucional en la taxonomía CMF: FASOC, LISOC, RVEMI.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_licencia",
+   "rol": "Atributo",
+   "significado": "Naturaleza jurídica y corporativa de la licencia de operación.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "vigencia_cmf",
+   "rol": "Atributo",
+   "significado": "Condición registral formal informada por la CMF (Vigente vs Cancelada / No Vigente).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "vigente",
+   "rol": "Métrica",
+   "significado": "Flag binario de vigencia operativa (1: Activo y Vigente, 0: Histórico o Cancelado).",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "estado",
+   "rol": "Atributo",
+   "significado": "Estado de la sociedad en la base de datos (Activo vs Histórico / Cancelado).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "es_factoring",
+   "rol": "Métrica",
+   "significado": "Indicador si la sociedad opera factoring comercial (1 / 0).",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "es_leasing_financiero",
+   "rol": "Métrica",
+   "significado": "Indicador si la sociedad ofrece leasing financiero de bienes de capital (1 / 0).",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "es_leasing_habitacional",
+   "rol": "Métrica",
+   "significado": "Indicador si opera bajo el régimen especial de Leasing Habitacional Ley 19.281 (1 / 0).",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "es_automotriz",
+   "rol": "Métrica",
+   "significado": "Indicador si está especializada en financiamiento automotriz (1 / 0).",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pertenece_a_banco",
+   "rol": "Atributo",
+   "significado": "Indicador si la entidad está ligada a un banco comercial (Sí / No).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "relacionada_banco",
+   "rol": "Métrica",
+   "significado": "Flag numérico de relación de propiedad o control con entidades bancarias (1 / 0).",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "filial_bancaria_lgb",
+   "rol": "Métrica",
+   "significado": "Flag específico si es filial bancaria formal regida por la Ley General de Bancos (1 / 0).",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "banco_relacionado",
+   "rol": "Atributo",
+   "significado": "Nombre de la institución bancaria relacionada o matriz.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "grupo_controlador",
+   "rol": "Atributo",
+   "significado": "Grupo financiero, banco matriz o conglomerado económico controlador.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "eeff_ifrs_en_cmf",
+   "rol": "Atributo",
+   "significado": "Tipo y régimen de estados financieros informados ante la CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fuente_eeff",
+   "rol": "Atributo",
+   "significado": "Ruta de extracción y acceso a los balances trimestrales oficiales.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "observaciones",
+   "rol": "Atributo",
+   "significado": "Notas técnicas, eventos societarios y particularidades regulatorias relevantes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_dv",
+   "rol": "Atributo",
+   "significado": "RUT con dígito verificador (cuerpo-DV, Módulo 11).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "factoring_leasing_lista_entidades",
+ "primaryKey": [
+  "rut"
+ ],
+ "sector": "factoring_leasing",
+ "titulo": "factoring_leasing.lista_entidades",
+ "version": "1.0.0"
+}

@@ -1,0 +1,176 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Dimensión",
+   "significado": "Cierre informado por CMF, AAAA-MM.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut",
+   "rol": "Dimensión",
+   "significado": "Cuerpo del RUT actual del catálogo (sin DV); la unión es por cuerpo y no certifica vigencia ni identidad histórica.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_reportado",
+   "rol": "Dimensión",
+   "significado": "Nombre reportado por CMF en ese periodo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "segmento_catalogo",
+   "rol": "Dimensión",
+   "significado": "Segmento consignado en el catálogo actual; puede incluir entidades mixtas/automotrices.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_catalogo",
+   "rol": "Dimensión",
+   "significado": "Nombre del catálogo actual; puede diferir del nombre histórico.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_balance",
+   "rol": "Dimensión",
+   "significado": "I individual / C consolidado. Se preservan separados; no sumar.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "moneda_archivo",
+   "rol": "Dimensión",
+   "significado": "Moneda original, sin conversión.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "orden",
+   "rol": "Dimensión",
+   "significado": "Posición de la cuenta dentro de su estado (sociedad, tipo de balance, moneda, taxonomía y estado), tal como viene en el archivo; permite leer el estado en el orden que lo presenta la sociedad. Mismo criterio que las series de AGF, securitizadoras y CCAF.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cuenta",
+   "rol": "Dimensión",
+   "significado": "Etiqueta literal de cuenta reportada.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_archivo",
+   "rol": "Métrica",
+   "significado": "Entero original cuando pudo leerse como entero; NULL para valores no enteros.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_texto_original",
+   "rol": "Métrica",
+   "significado": "Texto literal de la cifra, preservado siempre.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_es_entero",
+   "rol": "Dimensión",
+   "significado": "Control de interpretación numérica; false no significa cero.",
+   "tipo": "BOOLEAN",
+   "tipo_ts": "boolean"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "taxonomia",
+   "rol": "Dimensión",
+   "significado": "Código literal de taxonomía CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "estado_financiero",
+   "rol": "Dimensión",
+   "significado": "Código CMF del estado: ESF C/NC = situación financiera; ERFG = resultados por función; ERNG = resultados por naturaleza; ERI = resultado integral.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "repeticion_contexto",
+   "rol": "Dimensión",
+   "significado": "Ordinal de la misma etiqueta dentro del estado; se conserva sin sumar. En resultados, \"Ganancia (pérdida)\" aparece en ERFG/ERNG con ordinal 1 y 2 y otra vez al inicio de ERI, con el mismo valor: para la utilidad del periodo usar estado ERFG/ERNG y ordinal 1.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fuente_archivo",
+   "rol": "Dimensión",
+   "significado": "URL pública CMF que originó la fila.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sha256_archivo",
+   "rol": "Dimensión",
+   "significado": "Huella de la descarga usada.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "identidad_nombre_coincide_catalogo",
+   "rol": "Dimensión",
+   "significado": "Coincidencia de nombre normalizada; señal, no auditoría histórica.",
+   "tipo": "BOOLEAN",
+   "tipo_ts": "boolean"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_dv",
+   "rol": "Dimensión",
+   "significado": "RUT del catálogo con dígito verificador (cuerpo-DV).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "factoring_leasing_resultados",
+ "primaryKey": [
+  "valor_texto_original",
+  "valor_archivo",
+  "cuenta",
+  "periodo",
+  "fuente_archivo",
+  "sha256_archivo",
+  "nombre_reportado",
+  "rut",
+  "nombre_catalogo",
+  "rut_dv",
+  "orden"
+ ],
+ "sector": "factoring_leasing",
+ "titulo": "factoring_leasing.resultados_serie_ifrs_cmf",
+ "version": "1.0.0"
+}

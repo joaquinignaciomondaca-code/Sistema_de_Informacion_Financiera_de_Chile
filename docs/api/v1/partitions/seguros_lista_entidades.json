@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "seguros_lista_entidades",
+ "particiones": [
+  {
+   "archivo": "outputs/seguros/aseguradoras.parquet",
+   "bytes": 6746,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/aseguradoras.parquet",
+   "periodo": "aseguradoras",
+   "sha256": "5b18709671c65016a7cb2e3d7017e444d5d292d27e36b0066e543b2753bd29f3"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 6746,
+  "filas": 84
+ },
+ "version": "1.0.0"
+}

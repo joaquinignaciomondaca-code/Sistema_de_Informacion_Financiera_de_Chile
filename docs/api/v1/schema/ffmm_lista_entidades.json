@@ -1,0 +1,62 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "run_fondo",
+   "rol": "PK",
+   "significado": "RUN del fondo mutuo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_fondo",
+   "rol": "Atributo",
+   "significado": "Nombre del fondo en su último mes informado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "primer_periodo",
+   "rol": "Fecha",
+   "significado": "Primer mes en que el fondo informa cartera.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "ultimo_periodo",
+   "rol": "Fecha",
+   "significado": "Último mes en que informa cartera.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "meses_reportados",
+   "rol": "Métrica",
+   "significado": "Meses publicados en que aparece.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "reporta_ultimo_mes",
+   "rol": "Atributo",
+   "significado": "Verdadero si aparece en el último mes publicado.",
+   "tipo": "BOOLEAN",
+   "tipo_ts": "boolean"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "ffmm_lista_entidades",
+ "primaryKey": [
+  "run_fondo"
+ ],
+ "sector": "ffmm",
+ "titulo": "ffmm.lista_entidades",
+ "version": "1.0.0"
+}
