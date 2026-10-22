@@ -17,7 +17,7 @@
         href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
-  <link rel="stylesheet" href="css/app.css?v=fl-202610-2450-cabeceras">
+  <link rel="stylesheet" href="css/app.css?v=fl-202610-0157-redaccion">
 
   <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
        Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
@@ -342,10 +342,10 @@
                 <div class="info-section-kicker">CÓMO LEER LOS DATOS</div>
                 <h2>La fuente importa</h2>
                 <ul class="info-list">
-                  <li><strong>Período:</strong> cada tabla indica si es diaria, mensual, trimestral o histórica.</li>
+                  <li><strong>Frecuencia:</strong> cada tabla declara si es diaria, mensual, trimestral o un corte histórico.</li>
                   <li><strong>Unidades:</strong> los montos conservan la unidad informada por la fuente; no se convierten automáticamente.</li>
-                  <li><strong>Cobertura:</strong> que una entidad esté en una lista no garantiza que haya reportado en todos los períodos.</li>
-                  <li><strong>Estados IFRS:</strong> las AGF (y, en el archivo, securitizadoras y CCAF) usan el TXT oficial de estados financieros IFRS de la CMF; cubre a quienes aparecen reportando en cada corte.</li>
+                  <li><strong>Presencia:</strong> que una entidad esté en una lista no garantiza que haya reportado en todos los periodos.</li>
+                  <li><strong>Estados IFRS:</strong> las AGF (y, en el archivo, securitizadoras y CCAF) usan el TXT oficial de estados financieros IFRS de la CMF; cubre sólo a quienes aparecen reportando en cada corte.</li>
                   <li><strong>Trazabilidad:</strong> cada tabla declara su fuente, su archivo de origen y su manifiesto de publicación; los datos se muestran tal como los emite la fuente, sin reinterpretarlos.</li>
                 </ul>
               </div>
@@ -398,11 +398,11 @@
             <section class="info-block info-processing-block">
               <div class="info-section-kicker">MODALIDAD DE PROCESAMIENTO</div>
               <h2>La fuente determina la ruta</h2>
-              <p>La etiqueta de cada tabla describe cómo se extrae y publica la información. “Híbrido” no significa que el resultado sea una foto fija: indica que la fuente requiere curación o extracción inicial fuera del workflow programado, mientras que la validación, normalización y compilación posterior sí están versionadas y son reproducibles.</p>
+              <p>La etiqueta de cada tabla describe cómo se extrae y publica la información. “Híbrido” no significa que el resultado sea una foto fija: indica que la fuente requiere curación o extracción inicial fuera del flujo de trabajo programado, mientras que la validación, normalización y compilación posterior sí están versionadas y son reproducibles.</p>
               <div class="info-highlight-row">
                 <div class="info-highlight">
                   <strong>Automático</strong>
-                  <span>Extracción, validación y publicación ejecutadas por código y workflows programados.</span>
+                  <span>Extracción, validación y publicación ejecutadas por código y flujos de trabajo programados.</span>
                 </div>
                 <div class="info-highlight">
                   <strong>Híbrido</strong>
@@ -410,7 +410,7 @@
                 </div>
                 <div class="info-highlight">
                   <strong>Manual</strong>
-                  <span>Extracción, selección o transcripción que todavía requiere intervención y no cuenta con un compilador integrado.</span>
+                  <span>Extracción, selección o transcripción que todavía requiere intervención y no tiene un proceso de compilación automatizado.</span>
                 </div>
               </div>
             </section>
@@ -424,7 +424,7 @@
                   <ul class="info-list">
                     <li><strong>Los datos regulatorios son de sus fuentes oficiales:</strong> Comisión para el Mercado Financiero (CMF), Banco Central de Chile, Superintendencia de Pensiones y SUSESO. Cada tabla declara su origen, su archivo de origen y su norma.</li>
                     <li><strong>El SIF aporta</strong> extracción, normalización, validación, documentación y armonización. No genera los datos ni los modifica: los publica tal como los emite la fuente.</li>
-                    <li><strong>Al usar estos datos:</strong> indica la fuente oficial y la fecha en que los consultaste. Cada tabla tiene su propio periodo y su propia frecuencia, y se ven en el explorador, en el diccionario y en Descargas.</li>
+                    <li><strong>Al usar estos datos,</strong> indica la fuente oficial y la fecha en que los consultaste. Cada tabla tiene su propio periodo y su propia frecuencia, y se ven en el explorador, en el diccionario y en Descargas.</li>
                   </ul>
                 </div>
                 <div class="info-scope-col">
@@ -541,7 +541,7 @@
               <span><kbd>Enter</kbd> ejecuta</span>
               <span><kbd>Tab</kbd> completa nombres de tabla o palabras clave</span>
               <span><kbd>&uarr;</kbd><kbd>&darr;</kbd> historial</span>
-              <span><kbd>Alt</kbd>+<kbd>1</kbd>…<kbd>7</kbd> cambia de pestaña</span>
+              <span><kbd>Alt</kbd>+<kbd>1</kbd>…<kbd>6</kbd> cambia de pestaña</span>
             </div>
           </div>
         </div>
@@ -570,25 +570,25 @@
 </div> <!-- Cierre de app-layout -->
 
   <!-- Scripts de la Aplicación -->
-  <script src="js/data_bundles.js?v=fl-202610-2450-cabeceras" defer></script>
-  <script src="js/alcance.js?v=fl-202610-2450-cabeceras" defer></script>
-  <script src="js/chart_renderer.js?v=fl-202610-2450-cabeceras" defer></script>
-  <script src="js/erd_graph.js?v=fl-202610-2450-cabeceras" defer></script>
-  <script src="js/sql_guard.js?v=fl-202610-2450-cabeceras" defer></script>
-  <script src="js/duckdb_client.js?v=fl-202610-2450-cabeceras" defer></script>
-  <script src="js/chat_terminal.js?v=fl-202610-2450-cabeceras" defer></script>
-  <script src="js/busqueda_pregunta.js?v=fl-202610-2450-cabeceras" defer></script>
-  <script src="js/sidebar.js?v=fl-202610-2450-cabeceras" defer></script>
-  <script src="js/ux_shell.js?v=fl-202610-2450-cabeceras" defer></script>
-  <script src="js/creditos.js?v=fl-202610-2450-cabeceras" defer></script>
-  <script src="js/theme_switcher.js?v=fl-202610-2450-cabeceras" defer></script>
-  <script src="js/data_dictionary.js?v=fl-202610-2450-cabeceras" defer></script>
-  <script src="js/data_viewer.js?v=fl-202610-2450-cabeceras" defer></script>
-  <script src="js/diccionario_seguros.js?v=fl-202610-2450-cabeceras" defer></script>
-  <script src="js/download_utils.js?v=fl-202610-2450-cabeceras" defer></script>
-  <script src="js/download_catalog.js?v=fl-202610-2450-cabeceras" defer></script>
-  <script src="js/downloads_panel.js?v=fl-202610-2450-cabeceras" defer></script>
-  <script src="js/portada.js?v=fl-202610-2450-cabeceras" defer></script>
+  <script src="js/data_bundles.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/alcance.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/chart_renderer.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/erd_graph.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/sql_guard.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/duckdb_client.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/chat_terminal.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/sidebar.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/ux_shell.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/creditos.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/theme_switcher.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/data_dictionary.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/data_viewer.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/download_utils.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/download_catalog.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/downloads_panel.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/portada.js?v=fl-202610-0157-redaccion" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
