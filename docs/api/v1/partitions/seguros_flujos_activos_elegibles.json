@@ -1,0 +1,35 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "seguros_flujos_activos_elegibles",
+ "particiones": [
+  {
+   "archivo": "outputs/seguros/flujos_activos_elegibles/2024.parquet",
+   "bytes": 22600,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/flujos_activos_elegibles/2024.parquet",
+   "periodo": "2024",
+   "sha256": "877d02816f125333ab51d8a54a976983754970fad9a126c42c4ac43de5117fe9"
+  },
+  {
+   "archivo": "outputs/seguros/flujos_activos_elegibles/2025.parquet",
+   "bytes": 90080,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/flujos_activos_elegibles/2025.parquet",
+   "periodo": "2025",
+   "sha256": "db5795df90ac295722b7b0471b5892b856755b626f28972310b165547a7a419b"
+  },
+  {
+   "archivo": "outputs/seguros/flujos_activos_elegibles/2026.parquet",
+   "bytes": 64287,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/flujos_activos_elegibles/2026.parquet",
+   "periodo": "2026",
+   "sha256": "e5d093903e661ead820e3d357cd785c209f518cd1f7c53bc78820eb655531b9a"
+  }
+ ],
+ "total": {
+  "archivos": 3,
+  "bytes": 176967,
+  "filas": 4369
+ },
+ "version": "1.0.0"
+}

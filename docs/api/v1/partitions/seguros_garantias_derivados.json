@@ -1,0 +1,35 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "seguros_garantias_derivados",
+ "particiones": [
+  {
+   "archivo": "outputs/seguros/garantias_derivados/2024.parquet",
+   "bytes": 27139,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/garantias_derivados/2024.parquet",
+   "periodo": "2024",
+   "sha256": "5fb72d1189aeaaa9a5da551a91f5e521cb093a3ff59957a08fcb81cf4249832a"
+  },
+  {
+   "archivo": "outputs/seguros/garantias_derivados/2025.parquet",
+   "bytes": 89143,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/garantias_derivados/2025.parquet",
+   "periodo": "2025",
+   "sha256": "b253816eca046616801d815b6d02fe57d568337c8da5184423d74c5796fbe83c"
+  },
+  {
+   "archivo": "outputs/seguros/garantias_derivados/2026.parquet",
+   "bytes": 65354,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/garantias_derivados/2026.parquet",
+   "periodo": "2026",
+   "sha256": "ef64167081cb388972c0f73167f8b38ed3ec69e4e862d0fca1d2241ed43a6bbe"
+  }
+ ],
+ "total": {
+  "archivos": 3,
+  "bytes": 181636,
+  "filas": 6518
+ },
+ "version": "1.0.0"
+}

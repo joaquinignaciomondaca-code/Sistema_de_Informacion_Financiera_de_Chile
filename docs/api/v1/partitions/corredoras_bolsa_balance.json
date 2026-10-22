@@ -1,0 +1,133 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "corredoras_bolsa_balance",
+ "particiones": [
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2010.parquet",
+   "bytes": 20504,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_balance/2010.parquet",
+   "periodo": "2010",
+   "sha256": "76461c6b4d01f77a51c8d5006239b23d407c6635e6f771a5f259e43bc3cbc838"
+  },
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2011.parquet",
+   "bytes": 50061,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_balance/2011.parquet",
+   "periodo": "2011",
+   "sha256": "e527df78986c11752819b7010e73f32e38cf59b6022439489ab97bc21b8de213"
+  },
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2012.parquet",
+   "bytes": 49636,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_balance/2012.parquet",
+   "periodo": "2012",
+   "sha256": "af56dbfc3669150af2aa8b722d87146d758381a0131f07a70ae1f5bb3d1b9fe3"
+  },
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2013.parquet",
+   "bytes": 48801,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_balance/2013.parquet",
+   "periodo": "2013",
+   "sha256": "64d6d060b5b3cc9792885306ecd318514e5a2cc77d223571d52855502d8b528c"
+  },
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2014.parquet",
+   "bytes": 46946,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_balance/2014.parquet",
+   "periodo": "2014",
+   "sha256": "ff693896821652bd611dc031060220125f26b9337681901390d600d397c402e9"
+  },
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2015.parquet",
+   "bytes": 43985,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_balance/2015.parquet",
+   "periodo": "2015",
+   "sha256": "38e9d7a0281eb4c7bb5d80713cfb0d19c97cbd87758278516b94dd1df8812066"
+  },
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2016.parquet",
+   "bytes": 42306,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_balance/2016.parquet",
+   "periodo": "2016",
+   "sha256": "b19ab26afd1a03251439c679f62aadda4558f692112bb90282d15a11a85ce97c"
+  },
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2017.parquet",
+   "bytes": 40171,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_balance/2017.parquet",
+   "periodo": "2017",
+   "sha256": "9e4003ec3bb57952685877ea28ca63aafe8e5316c7c35df1f112358ec7e8d7a6"
+  },
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2018.parquet",
+   "bytes": 38969,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_balance/2018.parquet",
+   "periodo": "2018",
+   "sha256": "6b64fc250ab41dcf37721baa4d8e9d4494769d8d9f91b60673ee5f2563eaf9f2"
+  },
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2019.parquet",
+   "bytes": 37082,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_balance/2019.parquet",
+   "periodo": "2019",
+   "sha256": "74e1da3a3b9e304891bfe04249bfbca762c769245325ceb2772ac5f61a3a256c"
+  },
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2020.parquet",
+   "bytes": 35914,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_balance/2020.parquet",
+   "periodo": "2020",
+   "sha256": "561e13b1ee3db52199b24c5e2618068c0f08f8acde457454499983bcaa4b0394"
+  },
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2021.parquet",
+   "bytes": 35837,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_balance/2021.parquet",
+   "periodo": "2021",
+   "sha256": "2a59552e534d78f01989c37c0eb1e3c54df8cc4ee5880d288275d42d786bb1ab"
+  },
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2022.parquet",
+   "bytes": 35269,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_balance/2022.parquet",
+   "periodo": "2022",
+   "sha256": "b0c1dbb3b3a02328abb6cee353be9f568c32d0eb5bffc4d3b9e03bb85d4331fd"
+  },
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2023.parquet",
+   "bytes": 34611,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_balance/2023.parquet",
+   "periodo": "2023",
+   "sha256": "0b93eb0140791c8414bba4c01619c76fc67c3bf9aec37d41de37b3e0f6542726"
+  },
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2024.parquet",
+   "bytes": 33743,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_balance/2024.parquet",
+   "periodo": "2024",
+   "sha256": "4398c539858f7b34152cb055a3582dce71580c3fc656fb71bd8d54eb46adeb4c"
+  },
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2025.parquet",
+   "bytes": 33665,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_balance/2025.parquet",
+   "periodo": "2025",
+   "sha256": "c3330814abf06e65016564d2bd7cd44f398c03eaaee55ec1ebe345f7ee6ebe96"
+  },
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_balance/2026.parquet",
+   "bytes": 22012,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_balance/2026.parquet",
+   "periodo": "2026",
+   "sha256": "9d808ab366a6e2468352a6fc027e0025e9455b80085f12cd56014420ed797166"
+  }
+ ],
+ "total": {
+  "archivos": 17,
+  "bytes": 649512,
+  "filas": 107976
+ },
+ "version": "1.0.0"
+}

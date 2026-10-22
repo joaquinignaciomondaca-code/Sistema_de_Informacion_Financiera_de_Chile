@@ -207,6 +207,20 @@ jobs:
           done
           exit $(( c | a | d ))
 
+      - name: 'Contrato estático: catálogo, esquemas, particiones, consultas, OpenAPI y vistas'
+        run: |
+          set +e
+          python scripts/build_contrato.py --check > contrato.log 2>&1; c=$?
+          python scripts/auditar_contrato.py --check > contrato_audit.log 2>&1; a=$?
+          for par in "Contrato:contrato.log:$c" "Contrato (auditoría):contrato_audit.log:$a"; do
+            nombre=${par%%:*}; resto=${par#*:}; archivo=${resto%%:*}; codigo=${resto##*:}
+            if [ "$codigo" -eq 0 ]; then echo "::notice title=$nombre::$(tail -n 1 "$archivo")"
+            else
+              grep -h "\[FALLA\]\|CONTRATO" "$archivo" | head -8 | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=$nombre::$l"; done
+            fi
+          done
+          exit $(( c | a ))
+
       - name: 'Máquina limpia: un consumidor sin el repo descubre, lee el esquema y consulta'
         run: |
           set +e

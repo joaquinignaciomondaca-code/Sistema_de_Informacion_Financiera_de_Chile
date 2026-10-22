@@ -1,0 +1,188 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la cartera informada (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "Atributo",
+   "significado": "vida (archivos CSVID) o generales (CSGEN).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "FK",
+   "significado": "RUT de la compañía de seguros, con dígito verificador (une con seguros.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el encabezado del archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_del_emisor",
+   "rol": "Identificador",
+   "significado": "Se deberá informar el RUT del emisor de cada título que forma parte de las inversiones de la compañía. En el caso Instrumentos Financieros de Renta Fija de Emisores Extranjeros, se deberá llenar con cero.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_nemotecnico",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el código universal “ISIN” (International (Commitee On Uniform Securities Identification Procedures).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_instrumento",
+   "rol": "Atributo",
+   "significado": "Este campo es obligatorio y se informará de acuerdo a la codificación.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_emision",
+   "rol": "Fecha",
+   "significado": "Fecha de emisión del instrumento. Se deberá informar con el siguiente formato: AAAAMMDD.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_emision",
+   "rol": "Métrica",
+   "significado": "Tasa de emisión del instrumento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_descto",
+   "rol": "Métrica",
+   "significado": "Tasa efectiva de descuento para los días de referencia.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidad_monetaria",
+   "rol": "Atributo",
+   "significado": "Unidad monetaria en que se expresa el instrumento, de acuerdo a lo 155.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "dias_ref_tasa_dcto",
+   "rol": "Métrica",
+   "significado": "Corresponde a la cantidad de días base de descuento, sobre la cual 3 : mensual. 36 : año financiero (mes de 30 días). 365 : año completo (mes de 30 ó 31 días).",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tratamiento",
+   "rol": "Atributo",
+   "significado": "Instrumento con o sin cupones: SC : sin cupones CC : con cupones CV : cupones variables.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nro_flujos",
+   "rol": "Métrica",
+   "significado": "Corresponde al número de flujos que contiene el instrumento en cuestión.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "meses_entre_vencimiento",
+   "rol": "Métrica",
+   "significado": "Se debe informar el lapso de tiempo que debe transcurrir para el vencimiento de cada flujo, cupón o amortización; este lapso de tiempo está expresado en meses, por ejemplo, para las letras hipotecarias 3 significa que vence cada 3 meses (trimestral).",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Devengado",
+   "nombre": "tipo_interes",
+   "rol": "Atributo",
+   "significado": "Tipo de interés pactado: S : interés simple C : interés compuesto.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_nominales",
+   "rol": "Atributo",
+   "significado": "Si las unidades nominales están expresadas a fecha de emisión o a fecha de vencimiento: I : a fecha de emisión 156 F : a fecha de vencimiento.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "opcion_prepago",
+   "rol": "Atributo",
+   "significado": "Deberá señalar para el contrato de leasing si tiene o no opción de codificación: S : Si tiene N : No tiene En el caso de los instrumentos distintos de contratos de leasing, se llenará con espacios.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_opcion",
+   "rol": "Fecha",
+   "significado": "Corresponde señalar la fecha a partir de la cual en el contrato de leasing se puede ejercer la opción de prepago. Se deberá informar con el siguiente formato: AAAAMMDD. En el caso de los instrumentos distintos de contratos de leasing, se llenará con ceros.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "plazo_gracia",
+   "rol": "Métrica",
+   "significado": "Corresponde señalar los meses de gracia que tiene el pago del primer flujo del instrumento. Si no corresponde informar se llenará con ceros.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "rut_aseguradora",
+   "destino": "seguros_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "seguros_tablas_descriptores",
+ "primaryKey": [
+  "codigo_nemotecnico",
+  "fecha_emision",
+  "tasa_descto",
+  "tasa_emision",
+  "fecha_opcion",
+  "nro_flujos",
+  "rut_del_emisor",
+  "nombre_aseguradora",
+  "periodo"
+ ],
+ "sector": "seguros",
+ "titulo": "B.9 TABLAS DE DESCRIPTORES",
+ "version": "1.0.0"
+}

@@ -1,0 +1,63 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "fi_opciones",
+ "particiones": [
+  {
+   "archivo": "outputs/fi/opciones/2020.parquet",
+   "bytes": 21883,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/opciones/2020.parquet",
+   "periodo": "2020",
+   "sha256": "d8d6d12683d5212a3f24ae5003fccb422d126a389abf015f4e79020df0d82719"
+  },
+  {
+   "archivo": "outputs/fi/opciones/2021.parquet",
+   "bytes": 20901,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/opciones/2021.parquet",
+   "periodo": "2021",
+   "sha256": "2656d95aa5219c43c9ba3b865f1a6ff82374ff796a6877531179ebeb192a019f"
+  },
+  {
+   "archivo": "outputs/fi/opciones/2022.parquet",
+   "bytes": 15781,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/opciones/2022.parquet",
+   "periodo": "2022",
+   "sha256": "bbcdb9a118f3a2b4d9a51a490c80527acf5d5924a7caa3868696b4ecbe1d064d"
+  },
+  {
+   "archivo": "outputs/fi/opciones/2023.parquet",
+   "bytes": 14301,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/opciones/2023.parquet",
+   "periodo": "2023",
+   "sha256": "94bc2e3ad25212a7ade4ef90ac43ab3b468d263eb823cea6a3dfa50fe470acf8"
+  },
+  {
+   "archivo": "outputs/fi/opciones/2024.parquet",
+   "bytes": 14394,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/opciones/2024.parquet",
+   "periodo": "2024",
+   "sha256": "81230834fdeb037958682f9bc7dc2dd0be60decc773251bd70b815944b71cb2b"
+  },
+  {
+   "archivo": "outputs/fi/opciones/2025.parquet",
+   "bytes": 14023,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/opciones/2025.parquet",
+   "periodo": "2025",
+   "sha256": "8ba3230ea21a80b0b9038bca60b96b671d139740aabf1fb252b79865ed614d6f"
+  },
+  {
+   "archivo": "outputs/fi/opciones/2026.parquet",
+   "bytes": 14366,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/opciones/2026.parquet",
+   "periodo": "2026",
+   "sha256": "813f5b9ac73407e025d9d0cd7848ad36a88b0b03da3f21a7e6efe7fc40d9ace8"
+  }
+ ],
+ "total": {
+  "archivos": 7,
+  "bytes": 115649,
+  "filas": 307
+ },
+ "version": "1.0.0"
+}

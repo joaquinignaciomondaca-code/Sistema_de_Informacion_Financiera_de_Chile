@@ -1,0 +1,63 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "fi_cartera_extranjera",
+ "particiones": [
+  {
+   "archivo": "outputs/fi/cartera_extranjera/2020.parquet",
+   "bytes": 444925,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_extranjera/2020.parquet",
+   "periodo": "2020",
+   "sha256": "61b59c188c848989042b9f900297e74e6c478fe3f13dc4c24fb3f9cf522fa431"
+  },
+  {
+   "archivo": "outputs/fi/cartera_extranjera/2021.parquet",
+   "bytes": 489527,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_extranjera/2021.parquet",
+   "periodo": "2021",
+   "sha256": "95530533043338aca9a07b54abef55b425ff875c0aa3ffdb96ff711738c08a8f"
+  },
+  {
+   "archivo": "outputs/fi/cartera_extranjera/2022.parquet",
+   "bytes": 401088,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_extranjera/2022.parquet",
+   "periodo": "2022",
+   "sha256": "af75dc1959f12e41578898c09e0cf05eff4adf61fba10313f69be6d577a7c8cb"
+  },
+  {
+   "archivo": "outputs/fi/cartera_extranjera/2023.parquet",
+   "bytes": 353785,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_extranjera/2023.parquet",
+   "periodo": "2023",
+   "sha256": "c204504ac0065356bf956e2ab07643a4058fe999f4a9fb23bd8da6e54797b17f"
+  },
+  {
+   "archivo": "outputs/fi/cartera_extranjera/2024.parquet",
+   "bytes": 303376,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_extranjera/2024.parquet",
+   "periodo": "2024",
+   "sha256": "2afa2c5960fde2bbc9c800640fcd0636a30a89130085fb3950e90d1192c08f03"
+  },
+  {
+   "archivo": "outputs/fi/cartera_extranjera/2025.parquet",
+   "bytes": 261574,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_extranjera/2025.parquet",
+   "periodo": "2025",
+   "sha256": "25294427a489e66fda4c983449134d836c7b57d7f54c7dcb8d8c37705f89e379"
+  },
+  {
+   "archivo": "outputs/fi/cartera_extranjera/2026.parquet",
+   "bytes": 171369,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/cartera_extranjera/2026.parquet",
+   "periodo": "2026",
+   "sha256": "b61c988ca232e261024ccd0f3f4a7e6729e028712b417d5d0dd30be2a9f6a344"
+  }
+ ],
+ "total": {
+  "archivos": 7,
+  "bytes": 2425644,
+  "filas": 76849
+ },
+ "version": "1.0.0"
+}

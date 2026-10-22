@@ -1,0 +1,142 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Trimestre informado (AAAA-MM, cierre del trimestre).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut",
+   "rol": "FK",
+   "significado": "RUT de la sociedad sin dígito verificador (une con la lista de entidades del sector).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_dv",
+   "rol": "Atributo",
+   "significado": "RUT con dígito verificador.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "razon_social",
+   "rol": "Atributo",
+   "significado": "Nombre informado por la sociedad en el archivo del trimestre.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_balance",
+   "rol": "Atributo",
+   "significado": "individual o consolidado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "moneda",
+   "rol": "Atributo",
+   "significado": "Moneda de presentación (CLP o USD). Los montos no se convierten.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "estado_financiero",
+   "rol": "Atributo",
+   "significado": "Código CMF del estado: ESF C/NC (corriente/no corriente), ESF OL (orden de liquidez), ERFG (resultados por función), ERNG (por naturaleza), ERI (resultado integral, que vuelve a informar la ganancia del ejercicio).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "orden",
+   "rol": "Atributo",
+   "significado": "Posición de la cuenta dentro del estado, tal como viene en el archivo.",
+   "tipo": "INTEGER",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cuenta",
+   "rol": "Atributo",
+   "significado": "Nombre de la cuenta según la taxonomía IFRS de la CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Valor contable",
+   "nombre": "valor",
+   "rol": "Métrica",
+   "significado": "Monto en pesos (o dólares si moneda = USD), sin decimales. Los resultados son acumulados del ejercicio.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_no_numerico",
+   "rol": "Atributo",
+   "significado": "Texto original cuando la CMF publica un valor que no es un número entero (valor queda nulo).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "repeticion",
+   "rol": "Atributo",
+   "significado": "1 la primera vez que aparece la cuenta en el estado; 2 o más si la fuente la repite. Sumar sin filtrar repeticion = 1 cuenta dos veces la misma cifra.",
+   "tipo": "SMALLINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "taxonomia",
+   "rol": "Atributo",
+   "significado": "Taxonomía XBRL declarada en el archivo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "en_lista_entidades",
+   "rol": "Atributo",
+   "significado": "true si el RUT está en la lista de entidades del sector; false si fue reconocida por su nombre (entidad nueva).",
+   "tipo": "BOOLEAN",
+   "tipo_ts": "boolean"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "rut",
+   "destino": "securitizadoras_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "securitizadoras_resultados",
+ "primaryKey": [
+  "valor",
+  "valor_no_numerico",
+  "cuenta",
+  "periodo",
+  "orden",
+  "razon_social",
+  "rut",
+  "rut_dv",
+  "estado_financiero",
+  "repeticion",
+  "tipo_balance"
+ ],
+ "sector": "securitizadoras",
+ "titulo": "securitizadoras.resultados",
+ "version": "1.0.0"
+}

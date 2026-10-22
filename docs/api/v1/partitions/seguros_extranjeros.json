@@ -1,0 +1,91 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "seguros_extranjeros",
+ "particiones": [
+  {
+   "archivo": "outputs/seguros/extranjeros/2016.parquet",
+   "bytes": 276865,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros/2016.parquet",
+   "periodo": "2016",
+   "sha256": "28cac7835e8b8e610aefeba9acb0a372811a7f2474075656fd68eba98307cb41"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros/2017.parquet",
+   "bytes": 903160,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros/2017.parquet",
+   "periodo": "2017",
+   "sha256": "4ce5561a90da2036f67cb4fa187912c66229c7d6c73693114b8166d7a0669bb5"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros/2018.parquet",
+   "bytes": 985945,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros/2018.parquet",
+   "periodo": "2018",
+   "sha256": "29a9b8482e9c3ffd69398735bf40f1cb6a7220666336e665b50f0d56ecb5ff4b"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros/2019.parquet",
+   "bytes": 1035622,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros/2019.parquet",
+   "periodo": "2019",
+   "sha256": "72642a57d402bc3b071258679cc9dd05b48f7e84af8aac8574cd128fb0e30740"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros/2020.parquet",
+   "bytes": 1007865,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros/2020.parquet",
+   "periodo": "2020",
+   "sha256": "5430eb1b392451591298803069404b0f85c4de77ca829075db7ddaa26c5af5d1"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros/2021.parquet",
+   "bytes": 1006684,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros/2021.parquet",
+   "periodo": "2021",
+   "sha256": "b09ae2378d67a4bd5db01e6f82def48e866d6b093af18f7e3aacb5b93084d869"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros/2022.parquet",
+   "bytes": 1104769,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros/2022.parquet",
+   "periodo": "2022",
+   "sha256": "fd404eeb866a467b35f76913fe3a128a1cb5c7649ea080d1c0c8c3e3cad3fb88"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros/2023.parquet",
+   "bytes": 1363296,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros/2023.parquet",
+   "periodo": "2023",
+   "sha256": "2da284b8b4ea4d3ae75433e4ce2bcfe4a4711df6d0e2379ae97c58735d02c502"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros/2024.parquet",
+   "bytes": 1501546,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros/2024.parquet",
+   "periodo": "2024",
+   "sha256": "d7b57f303d57dea8ca61f823ad3c2683e09ea6f61b2972c5746254a595eeeca8"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros/2025.parquet",
+   "bytes": 1739755,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros/2025.parquet",
+   "periodo": "2025",
+   "sha256": "7a10cbe0721344978d03bfc936576b3e5f08fdb734185420da6bc3cd0258fa0e"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros/2026.parquet",
+   "bytes": 1563494,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros/2026.parquet",
+   "periodo": "2026",
+   "sha256": "f7f82b9ac76fa7fcca179fb6e023fbe0db35d8ed243d80814ca08d62b54ff7f7"
+  }
+ ],
+ "total": {
+  "archivos": 11,
+  "bytes": 12489001,
+  "filas": 471942
+ },
+ "version": "1.0.0"
+}

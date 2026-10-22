@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "fintech_rpsf_lista_entidades",
+ "particiones": [
+  {
+   "archivo": "outputs/fintech/fintech_rpsf_maestro.parquet",
+   "bytes": 39726,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fintech/fintech_rpsf_maestro.parquet",
+   "periodo": "fintech_rpsf_maestro",
+   "sha256": "53d5fd6b4301cee6dc899835f661fae7f1b270e0aaab993f5042ee3911521a19"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 39726,
+  "filas": 264
+ },
+ "version": "1.0.0"
+}

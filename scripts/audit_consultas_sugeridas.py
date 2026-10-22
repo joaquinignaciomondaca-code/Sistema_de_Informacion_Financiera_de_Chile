@@ -17,6 +17,10 @@ Uso:
 
 Requiere el paquete `duckdb`. Si no está instalado, la auditoría se salta con éxito
 para no romper entornos que no lo tengan.
+
+El parser de `SEMANTIC_VIEWS` y `LEGACY_VIEW_ALIASES` vive en
+`pipelines/api/vistas.py` desde la fase 1 de la API: lo comparten esta auditoría
+y el generador del contrato (`scripts/build_contrato.py`). Aquí sólo se importa.
 """
 from __future__ import annotations
 
@@ -27,6 +31,10 @@ import re
 import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+
+from pipelines.api import vistas as V  # noqa: E402
+
 RAIZ = Path(__file__).resolve().parent.parent
 DOCS = RAIZ / "docs"
 CLIENTE = DOCS / "js" / "duckdb_client.js"
@@ -35,60 +43,18 @@ INDEX = DOCS / "index.html"
 
 
 def _bloque(texto: str, marcador: str, apertura: str | None = None) -> str:
-    """Devuelve el cuerpo del array/objeto que sigue a `marcador`, equilibrando corchetes.
-
-    `apertura` fuerza el delimitador ("[" o "{"). Sin él se elige el que aparezca
-    primero en los 200 caracteres siguientes, que es lo correcto para un array
-    literal pero **no** para un objeto cuyos valores ya traen corchetes: en
-    `LEGACY_VIEW_ALIASES` el primer `[` es el de `["seguros_maestro"]`, así que el
-    bloque salía con un solo alias y la comprobación de compatibilidad no veía
-    ninguno de los 19 declarados.
-    """
-    i = texto.index(marcador)
-    if apertura:
-        i = texto.index(apertura, i)
-    else:
-        i = texto.index("[", i) if "[" in texto[i : i + 200] else texto.index("{", i)
-    apertura = texto[i]
-    cierre = "]" if apertura == "[" else "}"
-    nivel, j = 0, i
-    while j < len(texto):
-        if texto[j] == apertura:
-            nivel += 1
-        elif texto[j] == cierre:
-            nivel -= 1
-            if nivel == 0:
-                return texto[i : j + 1]
-        j += 1
-    raise ValueError(f"bloque no equilibrado para {marcador}")
+    """Compatibilidad: el parser se movió a pipelines/api/vistas.py."""
+    return V._bloque(texto, marcador, apertura)
 
 
 def vistas_semanticas() -> list[dict]:
-    """Extrae SEMANTIC_VIEWS de duckdb_client.js."""
-    txt = CLIENTE.read_text(encoding="utf-8")
-    bloque = _bloque(txt, "const SEMANTIC_VIEWS")
-    vistas = []
-    for m in re.finditer(r"\{([^{}]*)\}", bloque):
-        cuerpo = m.group(1)
-        nombre = re.search(r'name:\s*"([^"]+)"', cuerpo)
-        if not nombre:
-            continue
-        v = {"name": nombre.group(1)}
-        for clave in ("file", "manifest", "where"):
-            hit = re.search(rf'{clave}:\s*"([^"]+)"', cuerpo)
-            if hit:
-                v[clave] = hit.group(1)
-        vistas.append(v)
-    return vistas
+    """SEMANTIC_VIEWS, leídas desde pipelines/api/vistas.py."""
+    return V.vistas_semanticas()
 
 
 def alias_heredados() -> dict[str, list[str]]:
-    txt = CLIENTE.read_text(encoding="utf-8")
-    bloque = _bloque(txt, "const LEGACY_VIEW_ALIASES", apertura="{")
-    alias = {}
-    for m in re.finditer(r"(\w+):\s*\[([^\]]*)\]", bloque):
-        alias[m.group(1)] = re.findall(r'"([^"]+)"', m.group(2))
-    return alias
+    """LEGACY_VIEW_ALIASES (canónico → heredados), desde pipelines/api/vistas.py."""
+    return V.alias_heredados()
 
 
 def _desescapar(s: str) -> str:
@@ -122,17 +88,8 @@ def consultas_terminal() -> list[tuple[str, str]]:
 
 
 def ficheros_de(vista: dict) -> list[str]:
-    if "file" in vista:
-        ruta = DOCS / vista["file"]
-        return [str(ruta)] if ruta.exists() else []
-    if "manifest" in vista:
-        man = DOCS / vista["manifest"]
-        if not man.exists():
-            return []
-        datos = json.loads(man.read_text(encoding="utf-8"))
-        rutas = [DOCS / f for f in datos.get("files", [])]
-        return [str(p) for p in rutas if p.exists()]
-    return []
+    """Rutas locales del objeto (compatibilidad: se movió a pipelines/api/vistas.py)."""
+    return V.ficheros_de(vista)
 
 
 def registrar(con, vistas: list[dict], alias: dict[str, list[str]]) -> list[str]:

@@ -1,0 +1,100 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "numero_inscripcion",
+   "rol": "PK",
+   "significado": "Número oficial de inscripción en el Registro de Valores de la CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_inscripcion",
+   "rol": "Dimensión",
+   "significado": "Fecha de autorización e inscripción del título en la CMF (YYYY-MM-DD).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_administradora",
+   "rol": "FK",
+   "significado": "Cuerpo del RUT de la Sociedad Securitizadora (sin dígito verificador) que actúa como fiduciaria/gestora.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "razon_social_administradora",
+   "rol": "Dimensión",
+   "significado": "Razón social de la securitizadora emisora.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "denominacion_emision",
+   "rol": "Dimensión",
+   "significado": "Nombre descriptivo oficial de la emisión / línea de títulos de deuda.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_emision",
+   "rol": "Dimensión",
+   "significado": "Modalidad de inscripción (LINEA, SERIE).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "moneda",
+   "rol": "Dimensión",
+   "significado": "Moneda o unidad de indexación de la emisión (UF, PESOS DE CHILE, DOLAR).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Valor Nominal",
+   "nombre": "monto_inscrito",
+   "rol": "Métrica",
+   "significado": "Monto total autorizado e inscrito para la emisión en su moneda original.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_vencimiento",
+   "rol": "Dimensión",
+   "significado": "Fecha de vencimiento contractual final de la línea o serie (YYYY-MM-DD).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Cartera Cedida",
+   "nombre": "clase_colateral_subyacente",
+   "rol": "Dimensión",
+   "significado": "Clase de activo que nutre el patrimonio separado (Mutuos Hipotecarios, Factoring, Leasing, Automotriz).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "rut_administradora",
+   "destino": "patrimonios_separados_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "patrimonios_separados_lista_entidades",
+ "primaryKey": [
+  "numero_inscripcion"
+ ],
+ "sector": "patrimonios_separados",
+ "titulo": "patrimonios.emisiones_lineas",
+ "version": "1.0.0"
+}

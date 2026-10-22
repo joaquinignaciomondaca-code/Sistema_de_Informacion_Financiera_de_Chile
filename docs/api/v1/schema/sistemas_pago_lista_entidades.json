@@ -1,0 +1,126 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut",
+   "rol": "PK",
+   "significado": "RUT institucional sin dígito verificador.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "dv",
+   "rol": "Dimensión",
+   "significado": "Dígito verificador oficial verificado bajo Módulo 11.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_completo",
+   "rol": "Dimensión",
+   "significado": "RUT en formato canónico con puntos y guion.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_sistema",
+   "rol": "Dimensión",
+   "significado": "Sigla de identificación de mercado (LBTR, COMBANC, DCV, COMDER, CCLV, CCA, TRANSBANK, GETNET, KLAP, REDELCOM, BANCHILE-PAGOS, NEXUS).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "razon_social",
+   "rol": "Dimensión",
+   "significado": "Razón social jurídica inscrita en registros públicos.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_comercial",
+   "rol": "Dimensión",
+   "significado": "Marca o nombre de fantasía operativo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_sistema",
+   "rol": "Dimensión",
+   "significado": "Categoría de infraestructura: Liquidación Alto Valor, CCAV, CPBV, Contraparte Central, Custodia Centralizada u Operador Adquirente.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "marco_legal",
+   "rol": "Dimensión",
+   "significado": "Cuerpo normativo regulatorio aplicable.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "supervisor",
+   "rol": "Dimensión",
+   "significado": "Regulador sectorial (CMF / BCCh).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "estado_vigencia",
+   "rol": "Dimensión",
+   "significado": "Estado de operación: Vigente.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "domicilio_casa_matriz",
+   "rol": "Dimensión",
+   "significado": "Dirección legal de la sede principal corporativa.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "comuna",
+   "rol": "Dimensión",
+   "significado": "Comuna de la casa matriz.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "region",
+   "rol": "Dimensión",
+   "significado": "Región administrativa chilena.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cmf_url",
+   "rol": "Dimensión",
+   "significado": "Enlace web a la ficha institucional oficial en CMF o BCCh.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "sistemas_pago_lista_entidades",
+ "primaryKey": [
+  "rut"
+ ],
+ "sector": "sistemas_pago",
+ "titulo": "pagos.maestro_infraestructuras",
+ "version": "1.0.0"
+}

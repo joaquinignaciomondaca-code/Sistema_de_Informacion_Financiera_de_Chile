@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "fi_lista_entidades",
+ "particiones": [
+  {
+   "archivo": "outputs/fi/maestro_fondos_inversion.parquet",
+   "bytes": 44790,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/maestro_fondos_inversion.parquet",
+   "periodo": "maestro_fondos_inversion",
+   "sha256": "c2ba7dc258da24aff4277627953809ebfdf7a4b096c5cb9180d74ef909b8c751"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 44790,
+  "filas": 1679
+ },
+ "version": "1.0.0"
+}

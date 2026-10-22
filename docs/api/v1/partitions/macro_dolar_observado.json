@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "macro_dolar_observado",
+ "particiones": [
+  {
+   "archivo": "outputs/macro/macro_dolar_observado.parquet",
+   "bytes": 24700,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_dolar_observado.parquet",
+   "periodo": "macro_dolar_observado",
+   "sha256": "5309a2e8f36fe44b9c5926b52a638ae33c3318d5fa3e7647f050b978d0261adf"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 24700,
+  "filas": 3188
+ },
+ "version": "1.0.0"
+}

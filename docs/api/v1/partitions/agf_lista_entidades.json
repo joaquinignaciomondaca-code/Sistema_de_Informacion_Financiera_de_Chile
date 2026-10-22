@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "agf_lista_entidades",
+ "particiones": [
+  {
+   "archivo": "outputs/agf/agf_maestro.parquet",
+   "bytes": 17065,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_maestro.parquet",
+   "periodo": "agf_maestro",
+   "sha256": "5628ac8d8bfddcf04f3be01f37ea3e3548081b900aa8e6bbb02ac547195a3fa2"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 17065,
+  "filas": 72
+ },
+ "version": "1.0.0"
+}

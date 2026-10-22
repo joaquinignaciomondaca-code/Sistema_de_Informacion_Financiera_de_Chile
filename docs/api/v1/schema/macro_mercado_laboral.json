@@ -1,0 +1,62 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha",
+   "rol": "PK",
+   "significado": "Primer día del mes al que corresponde el dato (AAAA-MM-01).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "desocupacion_pct",
+   "rol": "Métrica",
+   "significado": "Tasa de desocupación nacional del trimestre móvil terminado en el mes, en porcentaje de la fuerza de trabajo.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "ocupados_miles_personas",
+   "rol": "Métrica",
+   "significado": "Personas ocupadas, en miles.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "asalariados_miles_personas",
+   "rol": "Métrica",
+   "significado": "Personas ocupadas como asalariadas, en miles.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fuerza_trabajo_miles_personas",
+   "rol": "Métrica",
+   "significado": "Fuerza de trabajo (ocupados más desocupados), en miles de personas.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "macro_mercado_laboral",
+ "primaryKey": [
+  "fecha"
+ ],
+ "sector": "macro",
+ "titulo": "macro.mercado_laboral",
+ "version": "1.0.0"
+}

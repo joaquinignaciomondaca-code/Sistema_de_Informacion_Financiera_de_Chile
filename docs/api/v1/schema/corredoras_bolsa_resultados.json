@@ -1,0 +1,112 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "PK",
+   "significado": "Trimestre informado (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut",
+   "rol": "PK",
+   "significado": "RUT sin dígito verificador (une con corredoras.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_dv",
+   "rol": "Atributo",
+   "significado": "RUT con dígito verificador.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "razon_social",
+   "rol": "Atributo",
+   "significado": "Nombre del intermediario en el archivo del trimestre.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_intermediario",
+   "rol": "Atributo",
+   "significado": "corredor de bolsa o agente de valores.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "estado_financiero",
+   "rol": "Atributo",
+   "significado": "Estado de situación financiera, Estado de resultados u Otros resultados integrales.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "seccion",
+   "rol": "Atributo",
+   "significado": "Agrupación de la cuenta en el informe (Activos, Pasivos, Resultado por intermediación, etc.).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_fecu",
+   "rol": "PK",
+   "significado": "Código de la cuenta en el plan FECU IFRS de intermediarios (10.00.00 total activos, 21.00.00 total pasivos, 22.00.00 patrimonio, 30.00.00 resultado del ejercicio).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cuenta",
+   "rol": "Atributo",
+   "significado": "Nombre de la cuenta.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nivel",
+   "rol": "Atributo",
+   "significado": "Nivel jerárquico de la cuenta en el informe (1 = cuenta principal).",
+   "tipo": "TINYINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor contable",
+   "nombre": "valor_miles_clp",
+   "rol": "Métrica",
+   "significado": "Monto en miles de pesos, moneda corriente del cierre. Resultados acumulados del ejercicio.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "en_lista_entidades",
+   "rol": "Atributo",
+   "significado": "true si el RUT está en la lista de entidades del sector.",
+   "tipo": "BOOLEAN",
+   "tipo_ts": "boolean"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "corredoras_bolsa_resultados",
+ "primaryKey": [
+  "periodo",
+  "rut",
+  "codigo_fecu"
+ ],
+ "sector": "corredoras_bolsa",
+ "titulo": "corredoras.resultados",
+ "version": "1.0.0"
+}

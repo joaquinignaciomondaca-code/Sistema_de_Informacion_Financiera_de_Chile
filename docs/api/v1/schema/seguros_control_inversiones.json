@@ -1,0 +1,152 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la cartera informada (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "Atributo",
+   "significado": "vida (archivos CSVID) o generales (CSGEN).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "FK",
+   "significado": "RUT de la compañía de seguros, con dígito verificador (une con seguros.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el encabezado del archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_de_inversion",
+   "rol": "Atributo",
+   "significado": "Corresponderá a la letra con la cual se clasifica la inversión. Se informará de acuerdo a la codificación definida en SEIL, Codificación S.V.S., Tipo de Inversión.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Valor contable informado",
+   "nombre": "valor_final_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor que tienen los instrumentos a la fecha de cierre del mes a que se refiere la información, según lo establecido en Circular de Valorización de Inversiones vigente. Este monto se deberá expresar en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "inversiones_representativas_de_rt_pr_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor de las inversiones que la Compañía considera para respaldar reservas técnicas y patrimonio de riesgo, de acuerdo a los límites señalados en el DFL N°251 expresados en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "inversiones_no_representativas_de_rt_pr_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor de las inversiones que la Compañía no considera para respaldar reservas técnicas y patrimonio de riesgo, expresados en miles de pesos (M$). Al respecto, sólo para los derivados pasivos la información debe presentarse con signo negativo. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Costo amortizado",
+   "nombre": "total_costo_amortizado_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor que tienen los instrumentos a la fecha del cierre del mes a que se refiere la información, y que están clasificados como “CA” (Costo Amortizado) en el campo METOD_CLASIF_VALORIZ_EEFF de los archivos anteriores de esta circular. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor razonable",
+   "nombre": "total_valor_razonable_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor que tienen los instrumentos a la fecha del cierre del mes a que se refiere la información, y que están clasificados como “VR” (Valor Razonable) en el campo METOD_CLASIF_VALORIZ_EEFF de los archivos anteriores de esta circular. Este monto deberá expresarse en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "total_efectivo_equivalente_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor que tienen los instrumentos a la fecha del cierre del mes a que se refiere la información, y que están clasificados como “EE” (Efectivo Equivalente) en el campo METOD_CLASIF_VALORIZ_EEFF de los archivos anteriores de esta circular. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "total_instrumento_s_cui_apv_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor que tienen los instrumentos a la fecha del cierre del mes a que se refiere la información, y que NO están clasificados como “VIDA” o “GRAL” en el campo ACTIVO_RESPALDA_RESERVA_VALOR_DEL_FONDO de los archivos anteriores de esta circular. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "total_inst_otras_clasif_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor que tienen los instrumentos a la fecha del cierre del mes a que se refiere la información, y que están clasificados como “OTRCLA” (Otra Clasificación dentro de los Estados de Situación Financiera) en el campo METOD_CLASIF_VALORIZ_EEFF de los archivos anteriores de esta. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "total_soc_filiales_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el monto que tiene invertido a la fecha del cierre del mes a que se refiere la información y que corresponde a las Participaciones y Acciones en Sociedades Filiales. Adicionalmente, se deberá incluir en este campo el monto final invertido en acciones de Sociedades Filiales. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "total_coligadas_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el monto que tiene invertido a la fecha del cierre del mes a que se refiere la información y que corresponde a las Participaciones y Acciones en Sociedades Coligadas. Adicionalmente, se deberá incluir en este campo el monto final invertido en acciones de Sociedades Coligadas. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "rut_aseguradora",
+   "destino": "seguros_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "seguros_control_inversiones",
+ "primaryKey": [
+  "valor_final_m_clp",
+  "inversiones_representativas_de_rt_pr_m_clp",
+  "total_valor_razonable_m_clp",
+  "total_costo_amortizado_m_clp",
+  "inversiones_no_representativas_de_rt_pr_m_clp",
+  "total_inst_otras_clasif_m_clp",
+  "total_efectivo_equivalente_m_clp",
+  "total_instrumento_s_cui_apv_m_clp",
+  "total_coligadas_m_clp",
+  "total_soc_filiales_m_clp",
+  "nombre_aseguradora",
+  "periodo",
+  "tipo_de_inversion"
+ ],
+ "sector": "seguros",
+ "titulo": "B.8 INFORMACION DE CONTROL",
+ "version": "1.0.0"
+}

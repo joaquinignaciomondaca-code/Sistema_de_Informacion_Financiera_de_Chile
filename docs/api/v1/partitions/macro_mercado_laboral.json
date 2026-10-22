@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "macro_mercado_laboral",
+ "particiones": [
+  {
+   "archivo": "outputs/macro/macro_mercado_laboral.parquet",
+   "bytes": 10245,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_mercado_laboral.parquet",
+   "periodo": "macro_mercado_laboral",
+   "sha256": "8e0ceb9d753a649f1b588f77b4b0776c711572c11fcb7424a474707c2b2d61be"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 10245,
+  "filas": 152
+ },
+ "version": "1.0.0"
+}

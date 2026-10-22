@@ -1,0 +1,91 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "seguros_control_inversiones",
+ "particiones": [
+  {
+   "archivo": "outputs/seguros/control_inversiones/2016.parquet",
+   "bytes": 46189,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/control_inversiones/2016.parquet",
+   "periodo": "2016",
+   "sha256": "a4c75638afd3bc1cd1600b2030e81772625da006f62cc6a9aa3fcc6730c99a8a"
+  },
+  {
+   "archivo": "outputs/seguros/control_inversiones/2017.parquet",
+   "bytes": 191009,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/control_inversiones/2017.parquet",
+   "periodo": "2017",
+   "sha256": "11880d4f19567849947245b30d01618d9ecab790042324482ece4f3a3f183966"
+  },
+  {
+   "archivo": "outputs/seguros/control_inversiones/2018.parquet",
+   "bytes": 194689,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/control_inversiones/2018.parquet",
+   "periodo": "2018",
+   "sha256": "57c39329f8c89dcc3079f5bf33b7dad6f5666d3465b2b61d316795780dbefb1e"
+  },
+  {
+   "archivo": "outputs/seguros/control_inversiones/2019.parquet",
+   "bytes": 187449,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/control_inversiones/2019.parquet",
+   "periodo": "2019",
+   "sha256": "2d56d40f2f261ca6699939b2ea91fdce26bfe19359077290bff2c9c467f88a3b"
+  },
+  {
+   "archivo": "outputs/seguros/control_inversiones/2020.parquet",
+   "bytes": 189864,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/control_inversiones/2020.parquet",
+   "periodo": "2020",
+   "sha256": "d2452bfdffc498079d0d8baf5d1b60e3e63b70d6c8818004614fe796b425f9cc"
+  },
+  {
+   "archivo": "outputs/seguros/control_inversiones/2021.parquet",
+   "bytes": 191533,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/control_inversiones/2021.parquet",
+   "periodo": "2021",
+   "sha256": "6784a24da06a2af51a06c764851bd708d99e72cbc29e88c7c308da94bfa3e347"
+  },
+  {
+   "archivo": "outputs/seguros/control_inversiones/2022.parquet",
+   "bytes": 189913,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/control_inversiones/2022.parquet",
+   "periodo": "2022",
+   "sha256": "694b643fd785490d71b61f0613c0392d23a38ba00255562230d70dbd9b22c8fa"
+  },
+  {
+   "archivo": "outputs/seguros/control_inversiones/2023.parquet",
+   "bytes": 188546,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/control_inversiones/2023.parquet",
+   "periodo": "2023",
+   "sha256": "d0dfa16669992a2a4bd235f1769eca9959e390ff05f07b29db5546d2e59bbe1a"
+  },
+  {
+   "archivo": "outputs/seguros/control_inversiones/2024.parquet",
+   "bytes": 188072,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/control_inversiones/2024.parquet",
+   "periodo": "2024",
+   "sha256": "9b2048664da82e8716556631573a75d27629154993a6cebb7669e6ff36b5345d"
+  },
+  {
+   "archivo": "outputs/seguros/control_inversiones/2025.parquet",
+   "bytes": 188804,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/control_inversiones/2025.parquet",
+   "periodo": "2025",
+   "sha256": "c950b16127effa4083a4f26d804514fee3e42cc29374232f0decb005200c9fce"
+  },
+  {
+   "archivo": "outputs/seguros/control_inversiones/2026.parquet",
+   "bytes": 141038,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/control_inversiones/2026.parquet",
+   "periodo": "2026",
+   "sha256": "9cc961b37c2993054bc09701d18720b1380138cad52926af98f9747ba9dd089c"
+  }
+ ],
+ "total": {
+  "archivos": 11,
+  "bytes": 1897106,
+  "filas": 111410
+ },
+ "version": "1.0.0"
+}
