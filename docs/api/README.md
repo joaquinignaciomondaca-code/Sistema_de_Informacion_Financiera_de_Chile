@@ -126,11 +126,17 @@ sus particiones, y el conjunto de todos ellos produce el `data_release`
 
 ### URLs
 
-El descriptor publica **URLs absolutas** del sitio
-(`https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/`)
-porque `frictionless` rechaza las rutas con `..` («path is not safe»). Esa base
-es la que usa el README y sigue marcada **provisional**: la URL canónica es la
-tarea 0.1, aún sin decidir.
+El descriptor publica **URLs absolutas** del sitio canónico:
+
+```
+https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/
+```
+
+Por dos motivos: `frictionless` rechaza las rutas con `..` («path is not safe»),
+y un consumidor remoto necesita una dirección completa. **Decisión D1**: Pages
+publica la API y Vercel **redirige `/api/*` a Pages con un 307** (temporal a
+propósito, para que revertirlo siga siendo posible). El visor sigue viviendo en
+Vercel sin cambios.
 
 ## Claves
 
@@ -171,6 +177,24 @@ se baja su Parquet y lo consulta. 8 pasos, 0 fallos, ~5 s.
 No reproduce el CDN de GitHub Pages (el sandbox no sale a internet), pero sí el
 protocolo, el formato y los archivos que sirve.
 
+## Alcance del servicio
+
+**Best effort, sin SLA.** Este contrato describe datos públicos que publica un
+tercero y que se normalizan y se republican; no hay compromiso de
+disponibilidad, latencia ni corrección en un plazo. La API **no** es un servicio
+de consulta: no hay `/query`, no hay JSON por fila y no hay autenticación. Lo
+que hay son archivos Parquet en una URL estable y un descriptor que dice cómo
+leerlos. Si algo falta, se arregla en el siguiente release, y cada release queda
+identificado por su hash.
+
+## Retención
+
+**El hash identifica, no recupera.** Cada edición queda en el historial de git y
+el sitio sirve siempre la última versión publicada; no hay archivo histórico
+público de Parquet. Un `data_release` permite comprobar que dos descargas son la
+misma, no volver a una anterior. Si necesitas una serie congelada, descarga y
+guarda el release que estás usando.
+
 ## Lo que todavía no es
 
 - No hay **URL canónica** decidida (tarea 0.1 de la ruta): los archivos viven
@@ -179,5 +203,5 @@ protocolo, el formato y los archivos que sirve.
   la materia prima de esos pasos: sin tipos reales no hay cliente que valga.
 - **No hay una licencia de datos verificada** (`DATA_LICENSE.md`): los 86
   recursos declaran `pendiente`, no MIT. La MIT es del código.
-- **La URL canónica sigue sin decidirse** (0.1): el descriptor publica la del
-  README marcada como provisional.
+- **D2 sin cerrar**: el identificador es el nombre del objeto del contrato, pero
+  la decisión formal sigue pendiente (ver `docs/notas/decisiones_api_v1_2026-10-22.md`).
