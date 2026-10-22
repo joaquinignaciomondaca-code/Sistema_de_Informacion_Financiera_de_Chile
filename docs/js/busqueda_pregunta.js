@@ -160,9 +160,14 @@
 
     let indice;
     try {
-      const respuesta = await fetch(RUTA_INDICE, { cache: "force-cache" });
-      if (!respuesta.ok) throw new Error("HTTP " + respuesta.status);
-      indice = await respuesta.json();
+      // Descarga ya iniciada por el <head> (window.SIF_JSON); si no está, se pide aquí.
+      if (window.SIF_JSON && window.SIF_JSON.indice) {
+        indice = await window.SIF_JSON.indice;
+      } else {
+        const respuesta = await fetch(RUTA_INDICE, { cache: "force-cache" });
+        if (!respuesta.ok) throw new Error("HTTP " + respuesta.status);
+        indice = await respuesta.json();
+      }
     } catch (e) {
       estado.textContent = "No se pudo cargar el índice de búsqueda (" + e.message + "). El filtro por nombre de tabla sigue disponible.";
       entrada.disabled = true;

@@ -1,0 +1,180 @@
+[
+  {
+    "verdict": "rejected",
+    "fingerprint": "clickjacking-sin-accion",
+    "title": "El sitio podría enmarcarse para accionar la interfaz de un visitante",
+    "description": "Se propuso que la ausencia de frame-ancestors permitiera UI redress sobre acciones del sitio.",
+    "claimed_root_cause": "El despliegue no declaraba frame-ancestors ni X-Frame-Options.",
+    "trace": [
+      {
+        "kind": "entrypoint",
+        "file": "docs/index.html",
+        "line": 1,
+        "scope": "documento servido",
+        "description": "la página podía cargarse en un iframe ajeno"
+      },
+      {
+        "kind": "sink",
+        "file": "docs/js/chat_terminal.js",
+        "line": 304,
+        "scope": "guardado de consultas",
+        "description": "única acción persistente: escribe en localStorage del propio visitante"
+      }
+    ],
+    "evidence": [
+      {
+        "file": "vercel.json",
+        "line": 29,
+        "description": "CSP con frame-ancestors 'none'"
+      },
+      {
+        "file": "vercel.json",
+        "line": 26,
+        "description": "X-Frame-Options: DENY"
+      },
+      {
+        "file": "docs/index.html",
+        "line": 1,
+        "description": "no hay formularios ni autenticación en la página"
+      }
+    ],
+    "reason": "No hay acción con efecto de seguridad que redirigir: sin cuentas, sin sesiones y sin escritura en servidor, un clic enmarcado sólo afecta al visitante que ya está usando el sitio. El endurecimiento se aplicó igual porque es barato, pero no constituye una vulnerabilidad demostrable."
+  },
+  {
+    "verdict": "rejected",
+    "fingerprint": "malware-duckdb-1.29.2",
+    "title": "El aviso de malware de DuckDB alcanzaría al motor del sitio",
+    "description": "El aviso GHSA-w62p-hx95-gf2c reporta que @duckdb/duckdb-wasm 1.29.2 se publicó comprometido con malware; se evaluó si el sitio ejecuta esa versión.",
+    "claimed_root_cause": "Dependencia del motor DuckDB-Wasm potencialmente comprometida.",
+    "trace": [
+      {
+        "kind": "entrypoint",
+        "file": "docs/js/duckdb_client.js",
+        "line": 5,
+        "scope": "versión fijada",
+        "description": "DUCKDB_VERSION selecciona el módulo local y el respaldo"
+      },
+      {
+        "kind": "sink",
+        "file": "docs/vendor/duckdb/manifiesto.json",
+        "line": 1,
+        "scope": "artefacto ejecutado",
+        "description": "el manifiesto fija los bytes que el navegador ejecuta"
+      }
+    ],
+    "evidence": [
+      {
+        "file": "docs/js/duckdb_client.js",
+        "line": 5,
+        "description": "DUCKDB_VERSION = \"1.28.0\", fuera del rango afectado (= 1.29.2)"
+      },
+      {
+        "file": "docs/vendor/duckdb/manifiesto.json",
+        "line": 1,
+        "description": "SHA-256 de los tres archivos, verificado en CI"
+      },
+      {
+        "file": "scripts/audit_vendor_duckdb.py",
+        "line": 34,
+        "description": "la compuerta compara bytes y versión"
+      }
+    ],
+    "reason": "La versión ejecutada es 1.28.0 y el aviso sólo afecta a 1.29.2; además los bytes están fijados por huella, de modo que un reemplazo por la versión comprometida fallaría el CI antes de publicarse."
+  },
+  {
+    "verdict": "rejected",
+    "fingerprint": "xss-feed-normativa",
+    "title": "El feed CMF podría inyectar marcado en el monitor normativo",
+    "description": "Se propuso que un feed externo (outputs/normativa_cmf/feed.json) llegara sin escapar a los innerHTML del monitor y permitiera ejecutar HTML en el origen del sitio.",
+    "claimed_root_cause": "Campos del feed interpolados directamente en plantillas innerHTML.",
+    "trace": [
+      {
+        "kind": "entrypoint",
+        "file": "docs/js/normativa_monitor.js",
+        "line": 192,
+        "scope": "respuesta del feed CMF",
+        "description": "fetch del JSON publicado en el propio origen"
+      },
+      {
+        "kind": "propagation",
+        "file": "docs/js/normativa_monitor.js",
+        "line": 435,
+        "scope": "renderEvent",
+        "description": "la tarjeta se arma con los campos del evento"
+      },
+      {
+        "kind": "sink",
+        "file": "docs/js/normativa_monitor.js",
+        "line": 422,
+        "scope": "innerHTML del listado",
+        "description": "las tarjetas se insertan en el DOM"
+      }
+    ],
+    "evidence": [
+      {
+        "file": "docs/js/normativa_monitor.js",
+        "line": 48,
+        "description": "escapeHtml escapa & < > \" ' en todo valor"
+      },
+      {
+        "file": "docs/js/normativa_monitor.js",
+        "line": 8,
+        "description": "isOfficialCmfUrl exige https://www.cmfchile.cl/ antes de usar una URL del feed"
+      },
+      {
+        "file": "docs/js/normativa_monitor.js",
+        "line": 495,
+        "description": "título, resumen, citas, normas y etiquetas pasan por escapeHtml"
+      }
+    ],
+    "reason": "Cada campo que llega al sumidero está escapado y los href exigen una allowlist de origen; además el feed se publica desde el propio repositorio, no desde un tercero en tiempo de ejecución. No hay fuente controlable que alcance el sumidero."
+  },
+  {
+    "verdict": "rejected",
+    "fingerprint": "xss-hash-sql",
+    "title": "Un enlace #sql= podría ejecutar HTML en el navegador de quien lo abre",
+    "description": "Se propuso que el fragmento de URL con una consulta SQL se renderizara como HTML y permitiera inyectar marcado.",
+    "claimed_root_cause": "Uso de location.hash sin sanear antes de insertarlo en el DOM.",
+    "trace": [
+      {
+        "kind": "entrypoint",
+        "file": "docs/js/chat_terminal.js",
+        "line": 119,
+        "scope": "fragmento de URL",
+        "description": "checkUrlHash lee location.hash"
+      },
+      {
+        "kind": "propagation",
+        "file": "docs/js/chat_terminal.js",
+        "line": 131,
+        "scope": "mensaje del sistema",
+        "description": "el SQL se muestra recortado en un aviso"
+      },
+      {
+        "kind": "sink",
+        "file": "docs/js/chat_terminal.js",
+        "line": 125,
+        "scope": "textarea de la consola",
+        "description": "el SQL termina en input.value, no en HTML"
+      }
+    ],
+    "evidence": [
+      {
+        "file": "docs/js/chat_terminal.js",
+        "line": 125,
+        "description": "asignación a input.value (texto, no HTML)"
+      },
+      {
+        "file": "docs/js/chat_terminal.js",
+        "line": 131,
+        "description": "el aviso interpola escapeHtml(sql)"
+      },
+      {
+        "file": "docs/js/sql_guard.js",
+        "line": 105,
+        "description": "validar() limita la consulta a lectura"
+      }
+    ],
+    "reason": "No existe sumidero HTML para el valor: se asigna a un textarea y se repite escapado. Aun si se ejecutara, la guardia de solo lectura impide escrituras y no hay canal de exfiltración: el impacto sería el del propio visitante sobre datos públicos."
+  }
+]

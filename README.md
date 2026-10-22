@@ -321,8 +321,9 @@ redistribuirlos verifica las condiciones de reutilización de cada fuente.
   extracción, normalización, validación, documentación y armonización.
 - Es un proyecto independiente: no tiene respaldo ni aval de la CMF ni del
   Banco Central de Chile.
-- La cobertura 2001–2026 es el máximo entre tablas, no una cobertura homogénea:
-  cada tabla tiene su propio inicio y su propia frecuencia.
+- La extensión de la serie de tiempo de cada tabla dependerá de cada fuente de
+  origen; es por ello que no hay homogeneización generalizada de periodos entre
+  todas las tablas.
 - Los montos conservan la unidad y el criterio de valorización de la fuente; no
   se convierten ni se reexpresan.
 - La extracción y la validación son automáticas, así que la base puede contener

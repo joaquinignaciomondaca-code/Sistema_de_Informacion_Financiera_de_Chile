@@ -85,7 +85,7 @@ const DATA_VIEWER_CATALOG = [
       { id: "seguros_bienes_raices_arriendo_morosidad", name: "B.13 BIENES RAICES EN ARRIENDO Y MOROSIDAD DE MUTUOS HIPOTECARIOS ENDOSABLES Y CONTRATOS DE LEASING", detalle: "Bienes raíces en arriendo y morosidad", descripcion: "Detalle por inmueble, unidad o contrato: arriendos, recaudación, morosidad, reprogramaciones y saldos." },
       { id: "seguros_bienes_raices_arriendo_morosidad_relevantes", name: "B.13 BIENES RAICES EN ARRIENDO Y MOROSIDAD DE MUTUOS HIPOTECARIOS ENDOSABLES Y CONTRATOS DE LEASING", detalle: "Campos relevantes", descripcion: "Vista analítica de B.13 con cobranza, mora, provisión, superficie y valorización; suprime identificadores personales." },
       { id: "seguros_garantias_derivados", name: "B.14 GARANTÍAS EN INSTRUMENTOS DERIVADOS", detalle: "Garantías en instrumentos derivados", descripcion: "Garantías en efectivo o instrumentos, recibidas u otorgadas, asociadas a derivados." },
-      { id: "seguros_registros_tipo6", name: "Registros tipo 6 de B.11 y B.14", detalle: "Registros tipo 6", descripcion: "Líneas originales reportadas por la CMF, normalizadas por período, sector, aseguradora y archivo; sin atribuir significado no documentado a sus posiciones." }
+      { id: "seguros_registros_tipo6", name: "Registros tipo 6 de B.11 y B.14", detalle: "Registros tipo 6", descripcion: "Líneas originales reportadas por la CMF, normalizadas por periodo, sector, aseguradora y archivo; sin atribuir significado no documentado a sus posiciones." }
     ]
   },
   {
@@ -493,6 +493,8 @@ class DataViewerController {
   updateSortIcons(activeIdx) {
     const ths = this.container.querySelectorAll(".dv-table th");
     ths.forEach((th, i) => {
+      const activa = this.sortCol === this.currentColumns[i];
+      th.setAttribute("aria-sort", activa ? (this.sortAsc ? "ascending" : "descending") : "none");
       const icon = th.querySelector(".dv-sort-icon");
       if (icon) {
         if (i === activeIdx) {
@@ -533,11 +535,17 @@ class DataViewerController {
 
     const rows = this.getFilteredRows();
     const mode = this.modeForView();
-    const headersHtml = this.currentColumns.map((col, idx) => `
-      <th onclick="window.DataViewer.sortTable(${idx})" title="Ordenar por ${dvEscapar(col)}">
-        ${dvEscapar(col)}<span class="dv-sort-icon" id="dv_sort_${idx}"></span>
+    const headersHtml = this.currentColumns.map((col, idx) => {
+      const activa = this.sortCol === col;
+      const orden = activa ? (this.sortAsc ? "ascending" : "descending") : "none";
+      return `
+      <th scope="col" aria-sort="${orden}">
+        <button type="button" class="th-sort-btn" onclick="window.DataViewer.sortTable(${idx})" title="Ordenar por ${dvEscapar(col)}">
+          ${dvEscapar(col)}<span class="dv-sort-icon" id="dv_sort_${idx}"></span>
+        </button>
       </th>
-    `).join("");
+    `;
+    }).join("");
 
     const rowsHtml = rows.map(r => {
       const cells = this.currentColumns.map(col => {
