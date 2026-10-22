@@ -1,0 +1,38 @@
+{
+  "run_id": "sif-chile-run-1",
+  "repo": "joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile",
+  "target": "/home/user/Sistema_de_Informacion_Financiera_de_Chile",
+  "source_ref": {
+    "commit": "d3dac31",
+    "dirty": false
+  },
+  "profile": "quick",
+  "scope_paths": [
+    "docs/index.html",
+    "docs/js",
+    "docs/css/app.css",
+    "docs/vendor/duckdb",
+    "vercel.json",
+    "docs/vercel.json",
+    ".github/workflows"
+  ],
+  "budget": null,
+  "execution_policy": "sandboxed-source-and-local-only",
+  "companion_files": [
+    "CLIENT-SIDE.md",
+    "SUPPLY-CHAIN-AND-RELEASE.md"
+  ],
+  "prior_runs": [],
+  "shared_file_owners": {
+    "run-metadata.json": "parent",
+    "architecture.md": "parent",
+    "coverage-ledger.json": "parent",
+    "findings.json": "parent",
+    "REPORT.md": "parent",
+    "FINDINGS-DETAIL.md": "parent",
+    "NEEDS-VALIDATION.md": "parent"
+  },
+  "run_status": "incomplete",
+  "incomplete_reason": "single_agent_no_independent_verifier",
+  "note": "Ejecutado por un solo agente: no hubo subagentes cazadores ni verificadores independientes, así que la validación adversarial de la fase 3 no se cumplió. La cobertura es parcial y así se reporta."
+}
