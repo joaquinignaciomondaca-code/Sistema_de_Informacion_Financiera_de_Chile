@@ -13,6 +13,7 @@ el usuario descarga.
 | `v1/datapackage.json` | El **Data Package**: 86 recursos con ruta, tamaño, SHA-256, esquema y `primaryKey`, legible por cualquier herramienta Frictionless. |
 | `reglas.json` | Las comprobaciones con su nivel (invariante / expectativa / informativo) y las excepciones declaradas con su motivo. Hoy: **0 excepciones**. |
 | `prueba_maquina_limpia.log` | Evidencia de que un consumidor **sin el repo** descubre el catálogo, lee el esquema y consulta por HTTP. |
+| `test_contrato.log` | Evidencia del test de contrato: 908 rutas sin 404, esquema = `DESCRIBE` real, 105 vistas, 156 consultas, 728 hashes y cobertura manifiesto ↔ catálogo. Incluye su autoprueba en negativo. |
 | `v1/catalog.json` | El índice de los 90 objetos: estado, filas, bytes, clave, corte y a dónde ir por más detalle. |
 | `v1/schema/{id}.json` | Columnas, tipos, significado y clave de cada objeto. |
 | `v1/partitions/{id}.json` | Los archivos que componen el objeto, con período y SHA-256. |
@@ -33,6 +34,7 @@ python3 scripts/probar_maquina_limpia.py  # consumidor sin el repo  (~5 s)
 python3 scripts/build_contrato.py         # catálogo, esquemas, particiones, consultas, OpenAPI y vistas
 python3 scripts/auditar_contrato.py       # audita el contrato     (~1 s)
 python3 scripts/probar_ejemplos.py        # ejemplos de Python y JS (~2 s)
+python3 scripts/test_contrato.py --autoprueba  # test del consumidor (~7 s)
 ```
 
 Y el CI falla si quedan desactualizados (`--check` en cada uno) o si algo del
@@ -248,6 +250,24 @@ lee el catálogo del contrato, el esquema por su ruta y crea las 105 vistas de
 
 No reproduce el CDN de GitHub Pages (el sandbox no sale a internet), pero sí el
 protocolo, el formato y los archivos que sirve.
+
+## Lo que el test de contrato tolera, y por qué
+
+`scripts/test_contrato.py` falla si el contrato promete algo que no está, pero hay
+dos cosas que hoy se toleran **nombrándolas** en el código, no en silencio:
+
+- **Cinco columnas declaradas sin un solo valor** (`bancos_balance.rut`,
+  `bancos_balance.razon_social`, `bancos_resultados.rut`,
+  `bancos_resultados.razon_social`, `agf_lista_entidades.codigo_cmf`). El esquema
+  las declara VARCHAR y los datos las tipan `NULL`; un `WHERE rut = …` devuelve 0
+  filas sin error. Están en `COLUMNAS_VACIAS_CONOCIDAS` con su motivo y la tarea
+  1d.8 de la ruta las repara.
+- **Cobertura del manifiesto**: los 110 archivos de `bancos_balance` y
+  `bancos_resultados` se cubren por `bancos_cmf_lineas`, y las 4 filas de objetos
+  vacíos se admiten porque su estado es `vacio`.
+
+Si aparece otra columna muerta u otra fila huérfana, el test falla: la lista es
+cerrada, no una amnistía.
 
 ## Alcance del servicio
 
