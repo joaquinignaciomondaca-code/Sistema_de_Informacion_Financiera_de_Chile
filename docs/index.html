@@ -17,7 +17,7 @@
         href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
-  <link rel="stylesheet" href="css/app.css?v=fl-202610-30046-22512">
+  <link rel="stylesheet" href="css/app.css?v=fl-202610-30046-23005">
 
   <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
        Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
@@ -159,6 +159,16 @@
     <!-- Contenedor Principal en 2 Paneles Divididos -->
     <main class="main-container" id="main-content" tabindex="-1">
 
+      <!-- Aviso para teléfonos: se cierra y no vuelve a aparecer en este navegador.
+           El CSS lo oculta por encima de 900 px, así que en escritorio no existe. -->
+      <div class="aviso-movil" id="aviso-movil" role="region" aria-label="Recomendación de uso en teléfono" hidden>
+        <div class="aviso-movil-texto">
+          <strong>Este sitio está pensado para un computador.</strong>
+          <span>El explorador, las consultas SQL y el mapa relacional necesitan una pantalla más grande. En el teléfono puedes leer y descargar, pero la experiencia completa se ve en un PC.</span>
+        </div>
+        <button type="button" class="aviso-movil-cerrar" id="aviso-movil-cerrar">Entendido</button>
+      </div>
+
       <!-- PANEL SUPERIOR: MAPA RELACIONAL Y DICCIONARIO -->
       <div class="top-panel">
         <div class="panel-header">
@@ -233,8 +243,8 @@
               <p class="info-lead">Las carteras y los estados financieros de los grandes inversionistas institucionales de Chile —compañías de seguros, fondos mutuos y fondos de inversión—, tal como los reportan a la CMF, junto con las instituciones que los rodean y las series del Banco Central como contexto. Todo consultable con SQL en tu navegador.</p>
               <div class="info-hero-stats" aria-label="Cifras del núcleo de esta edición">
                 <div class="info-stat"><b data-alcance="nucleo.sectores">3</b><span>sectores de inversión institucional</span></div>
-                <div class="info-stat" title="Conjuntos del núcleo: seguros, fondos mutuos y fondos de inversión. La vista principal muestra 59 porque suma instituciones y contexto."><b data-alcance="nucleo.conjuntos">25</b><span>conjuntos del núcleo</span></div>
-                <div class="info-stat"><b data-alcance="nucleo.filas">11,1 millones</b><span>de registros</span></div>
+                <div class="info-stat" title="Conjuntos del núcleo: seguros, fondos mutuos y fondos de inversión. La vista principal muestra 74 porque suma instituciones y contexto."><b data-alcance="nucleo.conjuntos">40</b><span>conjuntos del núcleo</span></div>
+                <div class="info-stat" title="Una fila es lo que la fuente reporta para una entidad en un periodo. Una misma entidad aparece en varias tablas y periodos: la suma de filas no cuenta entidades."><b data-alcance="nucleo.filas">17,4 millones</b><span>de filas</span></div>
                 <div class="info-stat" title="Comisión para el Mercado Financiero, Banco Central de Chile, Superintendencia de Pensiones y SUSESO."><b>4</b><span>fuentes oficiales</span></div>
               </div>
               <div class="info-hero-tags">
@@ -305,17 +315,17 @@
                 <button type="button" class="info-strip-item" data-portada="explorar" data-sector="bancos">
                   <span class="info-strip-name">Bancos</span>
                   <span class="info-strip-text">Balance B1/B2 y resultados R1 de la CMF, con las líneas y el orden de la fuente.</span>
-                  <span class="info-strip-meta" data-alcance="sector.bancos.resumen">3 conjuntos · 2,0 M registros · 2022–2026</span>
+                  <span class="info-strip-meta" data-alcance="sector.bancos.resumen">3 conjuntos · 2,0 M filas · 2022–2026</span>
                 </button>
                 <button type="button" class="info-strip-item" data-portada="explorar" data-sector="agf">
                   <span class="info-strip-name">Administradoras generales de fondos</span>
                   <span class="info-strip-text">Las sociedades que administran los fondos: balance y resultados IFRS.</span>
-                  <span class="info-strip-meta" data-alcance="sector.agf.resumen">3 conjuntos · 130 mil registros · 2010–2026</span>
+                  <span class="info-strip-meta" data-alcance="sector.agf.resumen">3 conjuntos · 129.711 filas · 2010–2026</span>
                 </button>
                 <button type="button" class="info-strip-item" data-portada="explorar" data-sector="corredoras_bolsa">
                   <span class="info-strip-name">Corredoras de bolsa</span>
                   <span class="info-strip-text">Corredores y agentes de valores: lista de entidades y FECU IFRS.</span>
-                  <span class="info-strip-meta" data-alcance="sector.corredoras_bolsa.resumen">4 conjuntos · 186 mil registros · 2010–2026</span>
+                  <span class="info-strip-meta" data-alcance="sector.corredoras_bolsa.resumen">4 conjuntos · 185.921 filas · 2010–2026</span>
                 </button>
               </div>
             </section>
@@ -339,7 +349,7 @@
 
             <p class="info-archive-link">
               <button type="button" class="info-link-btn" data-portada="archivo">Archivo y registros complementarios</button>
-              <span data-alcance="fuera.resumen">7 industrias · 15 conjuntos · 0,7 % de los registros</span>: siguen publicados, consultables y descargables.
+              <span data-alcance="fuera.resumen">7 industrias · 15 conjuntos · 0,5 % de las filas</span>: siguen publicados, consultables y descargables.
               <button type="button" class="info-link-btn info-link-btn-muted" data-portada="alcance">Qué incluye esta edición</button>
             </p>
 
@@ -380,7 +390,7 @@
                     <li><strong>Núcleo:</strong> seguros, fondos mutuos y fondos de inversión.</li>
                     <li><strong>Instituciones:</strong> bancos, administradoras generales de fondos y corredoras de bolsa.</li>
                     <li><strong>Contexto:</strong> series macroeconómicas y de tasas del Banco Central.</li>
-                    <li><span data-alcance="visible.resumen">59 conjuntos visibles en la vista principal · 13,4 millones de registros (99,3 % de los 13,5 millones publicados)</span>: son los <strong>25 del núcleo</strong> más instituciones (bancos, AGF y corredoras) y contexto (series del Banco Central). Cuando una cifra diga «25 conjuntos» se refiere sólo al núcleo.</li>
+                    <li><span data-alcance="visible.resumen">74 conjuntos visibles en la vista principal · 19,7 millones de filas (99,5 % de los 19,8 millones publicados)</span>: son los <strong>25 del núcleo</strong> más instituciones (bancos, AGF y corredoras) y contexto (series del Banco Central). Cuando una cifra diga «40 conjuntos» se refiere sólo al núcleo.</li>
                   </ul>
                 </div>
                 <div class="info-scope-col">
@@ -585,6 +595,11 @@
               </tbody>
             </table>
 
+            <p class="uso-note">Una <strong>fila</strong> es lo que la fuente reporta para una entidad en un
+            periodo: una posición de una cartera, un estado financiero, un dato de una serie. Una misma entidad
+            aparece en varias tablas y periodos, así que la suma de filas del sitio no es la cantidad de entidades
+            ni de compañías.</p>
+
             <div class="uso-tabs" role="tablist" aria-label="Instrucciones de uso">
               <button type="button" class="uso-tab active" role="tab" id="uso-tab-humanos" aria-selected="true" aria-controls="uso-panel-humanos" data-uso-tab="humanos">Para personas</button>
               <button type="button" class="uso-tab" role="tab" id="uso-tab-agentes" aria-selected="false" aria-controls="uso-panel-agentes" data-uso-tab="agentes">Para agentes de IA</button>
@@ -767,26 +782,26 @@ sif-mcp                       # stdio
 </div> <!-- Cierre de app-layout -->
 
   <!-- Scripts de la Aplicación -->
-  <script src="js/data_bundles.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/alcance.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/chart_renderer.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/erd_graph.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/sql_guard.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/duckdb_client.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/chat_terminal.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/busqueda_pregunta.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/sidebar.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/ux_shell.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/creditos.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/theme_switcher.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/data_dictionary.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/data_viewer.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/diccionario_seguros.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/download_utils.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/download_catalog.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/downloads_panel.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/portada.js?v=fl-202610-30046-22512" defer></script>
-  <script src="js/como_usar.js?v=fl-202610-30046-22512" defer></script>
+  <script src="js/data_bundles.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/alcance.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/chart_renderer.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/erd_graph.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/sql_guard.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/duckdb_client.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/chat_terminal.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/sidebar.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/ux_shell.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/creditos.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/theme_switcher.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/data_dictionary.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/data_viewer.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/download_utils.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/download_catalog.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/downloads_panel.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/portada.js?v=fl-202610-30046-23005" defer></script>
+  <script src="js/como_usar.js?v=fl-202610-30046-23005" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {

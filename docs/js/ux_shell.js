@@ -253,10 +253,49 @@
     }
   }
 
+  /* Aviso de teléfono: el sitio se pensó para un computador. Se muestra sólo
+   * por debajo de 900 px —la misma consulta que usa el CSS— y sólo si la
+   * persona no lo cerró antes. El descarte se guarda en el navegador; si el
+   * almacenamiento está bloqueado, el aviso vuelve, que es el lado seguro. */
+  const CLAVE_AVISO_MOVIL = "sif-aviso-movil-cerrado";
+
+  function initAvisoMovil() {
+    const aviso = document.getElementById("aviso-movil");
+    if (!aviso) return;
+    const movil = window.matchMedia ? window.matchMedia("(max-width: 900px)") : null;
+    const boton = document.getElementById("aviso-movil-cerrar");
+    let cerrado = false;
+    try {
+      cerrado = window.localStorage.getItem(CLAVE_AVISO_MOVIL) === "1";
+    } catch (error) {
+      cerrado = false;
+    }
+    const sincronizar = () => {
+      aviso.hidden = cerrado || !(movil && movil.matches);
+    };
+    if (boton) {
+      boton.addEventListener("click", () => {
+        cerrado = true;
+        try {
+          window.localStorage.setItem(CLAVE_AVISO_MOVIL, "1");
+        } catch (error) {
+          /* almacenamiento bloqueado: el aviso se cierra igual en esta visita */
+        }
+        sincronizar();
+        // El botón desaparece con el aviso: el foco no debe quedar en el vacío.
+        const principal = document.getElementById("main-content");
+        if (principal && !aviso.contains(document.activeElement)) principal.focus();
+      });
+    }
+    if (movil && movil.addEventListener) movil.addEventListener("change", sincronizar);
+    sincronizar();
+  }
+
   function boot() {
     initShortcuts();
     initEngineStatus();
     initCabecera();
+    initAvisoMovil();
   }
 
   if (document.readyState === "loading") {
