@@ -127,19 +127,51 @@ def main() -> int:
     # --- 4 · Cartera nacional de fondos de inversión -----------------------
     parquet(con, str(DOCS / "outputs/fi/cartera_nacional/*.parquet"), "cartera_fi")
     cols = columnas(con, "cartera_fi")
-    if "emisor_tipo" not in cols:
-        fallos.append("cartera_fi: falta emisor_tipo, el criterio de supresión no es auditable")
+    faltantes_control = [c for c in ("emisor_tipo", "emisor_id", "rut_omitido_por_ley") if c not in cols]
+    if faltantes_control:
+        fallos.append(
+            "cartera_fi: faltan " + ", ".join(faltantes_control) +
+            "; el criterio de supresión deja de ser auditable y el emisor deja de ser seguible"
+        )
     else:
-        fugas = con.execute(
+        suprimidas, publicadas, sin_id = con.execute(
+            """SELECT
+                 count(*) FILTER (WHERE rut_omitido_por_ley),
+                 count(*) FILTER (WHERE NOT rut_omitido_por_ley
+                                    AND emisor_tipo = 'persona_natural_probable'),
+                 count(*) FILTER (WHERE emisor_id IS NULL AND emisor_tipo <> 'sin_rut_informado')
+               FROM cartera_fi"""
+        ).fetchone()
+        # Las dos caras de la misma moneda: si la bandera dice «omitido», el RUT
+        # no puede estar; si dice «publicado», el RUT tiene que estar.
+        inconsistentes = con.execute(
             """SELECT count(*) FROM cartera_fi
-               WHERE emisor_tipo = 'persona_natural_probable' AND rut_emisor IS NOT NULL"""
+               WHERE (rut_omitido_por_ley AND rut_emisor IS NOT NULL)
+                  OR (NOT rut_omitido_por_ley AND emisor_tipo <> 'sin_rut_informado'
+                      AND rut_emisor IS NULL)
+                  OR (rut_omitido_por_ley AND emisor_tipo <> 'persona_natural_probable')"""
         ).fetchone()[0]
-        suprimidas = con.execute(
-            "SELECT count(*) FROM cartera_fi WHERE emisor_tipo = 'persona_natural_probable'"
-        ).fetchone()[0]
-        if fugas:
-            fallos.append(f"cartera_fi: {fugas} filas de persona natural probable conservan rut_emisor")
-        notas.append(f"cartera_fi: {suprimidas} filas de persona natural probable, todas sin RUT")
+        if inconsistentes:
+            fallos.append(
+                f"cartera_fi: {inconsistentes} filas donde rut_omitido_por_ley no coincide con rut_emisor"
+            )
+        if sin_id:
+            fallos.append(f"cartera_fi: {sin_id} filas con RUT conocido y sin emisor_id")
+        if suprimidas and publicadas:
+            fallos.append(
+                f"cartera_fi: mezcla los dos modos ({suprimidas} filas con RUT omitido y "
+                f"{publicadas} con RUT publicado); el modo debe ser único por publicación"
+            )
+        modo = "RUT omitido" if suprimidas else "RUT publicado"
+        notas.append(
+            f"cartera_fi: {suprimidas:,} filas de persona natural con RUT omitido y "
+            f"{publicadas:,} con RUT publicado (modo {modo}); emisor_id en todas las filas "
+            "con emisor conocido"
+        )
+        texto_privacidad = PRIVACIDAD.read_text(encoding="utf-8")
+        for termino in ("emisor_id", "rut_omitido_por_ley"):
+            if termino not in texto_privacidad:
+                fallos.append(f"aviso: el aviso de privacidad no menciona {termino}")
     if any("nombre" in c.lower() and "emisor" in c.lower() for c in cols):
         fallos.append("cartera_fi: publica el nombre del emisor, que acompañaría al RUT suprimido")
 

@@ -7646,6 +7646,18 @@
       "name": "emisor_tipo",
       "sif_rol": "Atributo",
       "type": "string"
+     },
+     {
+      "description": "Seudónimo estable del emisor (EMI-…), igual para el mismo emisor en cualquier trimestre y fondo: permite sumar su exposición, seguir su serie y medir concentración sin publicar el RUT de una persona natural. Es seudonimización (art. 2 letra l de la Ley 21.719), no anonimización: el vínculo con el RUT vive en una tabla privada que no se publica.",
+      "name": "emisor_id",
+      "sif_rol": "Atributo",
+      "type": "string"
+     },
+     {
+      "description": "Verdadero cuando el RUT de la fila se retiró por la regla de privacidad y falso cuando se publica tal cual. Cambiar de criterio es configuración (variable SIF_PUBLICAR_RUT_EMISOR), no una edición de código.",
+      "name": "rut_omitido_por_ley",
+      "sif_rol": "Atributo",
+      "type": "boolean"
      }
     ]
    },

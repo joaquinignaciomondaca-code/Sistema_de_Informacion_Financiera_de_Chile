@@ -75,6 +75,20 @@ TIPO_JURIDICA = "persona_juridica"
 TIPO_NATURAL = "persona_natural_probable"
 TIPO_SIN_RUT = "sin_rut_informado"
 
+# Columnas que acompañan a `rut_emisor` en `fi.cartera_nacional`:
+#   emisor_id            seudónimo estable del emisor, sirve para seguirlo entre
+#                        trimestres y fondos sin publicar el RUT de una persona.
+#   rut_omitido_por_ley  verdadero cuando el RUT se retiró por la regla de esta
+#                        módulo; falso cuando el RUT se publica tal cual.
+# No se llama «anonimizado» a propósito: el artículo 2 letra k de la Ley 21.719
+# reserva esa palabra para la anonimización irreversible, y aquí el vínculo con
+# el RUT existe en una tabla privada (es seudonimización, art. 2 letra l).
+COLUMNA_EMISOR_ID = "emisor_id"
+COLUMNA_RUT_OMITIDO = "rut_omitido_por_ley"
+
+MODO_SUPRIMIR = "suprimir"
+MODO_PUBLICAR = "publicar"
+
 # Bienes raíces: la dirección se llama «ubicacion» en el formato CMF vigente
 # desde 2024-12 y «direccion» en los archivos anteriores. El rol, igual en ambos.
 COLUMNAS_DIRECCION = ("ubicacion", "direccion", "domicilio")
@@ -256,14 +270,59 @@ def retirar_contacto(df, columnas=COLUMNAS_CONTACTO):
 # ---------------------------------------------------------------------------
 # Helpers sobre DataFrames (pandas es opcional: se importa al usarlos)
 # ---------------------------------------------------------------------------
-def proteger_cartera_nacional(df, entidades=frozenset(), columna: str = "rut_emisor"):
-    """Suprime el RUT del emisor y agrega `emisor_tipo` a un DataFrame."""
+def emisor_id(valor, sal: str = "") -> str | None:
+    """Seudónimo estable de un emisor, derivado de su RUT.
+
+    Es el mismo para el mismo RUT en cualquier tabla, fondo, trimestre o corrida,
+    así que permite seguir al emisor en el tiempo sin publicar su RUT. Con `sal`
+    vacía el cálculo es reproducible por cualquiera (útil para auditar); para la
+    versión pública conviene fijar `SIF_PRIV_SALT`, igual que `property_id`.
+    """
+    cuerpo = cuerpo_rut(valor)
+    if cuerpo is None:
+        return None
+    base = f"{sal}|{cuerpo}".encode("utf-8")
+    return "EMI-" + hashlib.sha256(base).hexdigest()[:12]
+
+
+def modo_publicacion_rut() -> str:
+    """Modo vigente para `fi.cartera_nacional.rut_emisor`.
+
+    `SIF_PUBLICAR_RUT_EMISOR=publicar` repone el RUT de las personas naturales;
+    cualquier otro valor (o ninguno) deja el modo prudente, que lo omite. El
+    cambio de modo es deliberado y queda registrado en `rut_omitido_por_ley`.
+    """
+    valor = (os.environ.get("SIF_PUBLICAR_RUT_EMISOR") or MODO_SUPRIMIR).strip().lower()
+    if valor not in (MODO_SUPRIMIR, MODO_PUBLICAR):
+        raise ValueError(
+            f"SIF_PUBLICAR_RUT_EMISOR={valor!r} no es válido: usar {MODO_SUPRIMIR!r} o {MODO_PUBLICAR!r}"
+        )
+    return valor
+
+
+def proteger_cartera_nacional(df, entidades=frozenset(), columna: str = "rut_emisor",
+                              modo: str | None = None, sal: str | None = None):
+    """Aplica la regla del RUT del emisor y deja las columnas que la documentan.
+
+    Agrega `emisor_tipo` (criterio aplicado), `emisor_id` (seudónimo estable del
+    emisor) y `rut_omitido_por_ley` (verdadero sólo si el RUT se retiró). El modo
+    se lee de `SIF_PUBLICAR_RUT_EMISOR` salvo que se pase explícito, para que
+    publicar o dejar de publicar los RUT sea un cambio de configuración y no una
+    edición de código.
+    """
     if columna not in getattr(df, "columns", []):
         return df
-    enmascarados, tipos = enmascarar_columna(df[columna].tolist(), entidades)
+    modo = modo_publicacion_rut() if modo is None else modo
+    sal = sal_privada() if sal is None else sal
+    origen = df[columna].tolist()
+    enmascarados, tipos = enmascarar_columna(origen, entidades)
     df = df.copy()
-    df[columna] = enmascarados
+    df[columna] = origen if modo == MODO_PUBLICAR else enmascarados
     df["emisor_tipo"] = tipos
+    df[COLUMNA_EMISOR_ID] = [emisor_id(valor, sal) for valor in origen]
+    df[COLUMNA_RUT_OMITIDO] = [
+        tipo == TIPO_NATURAL and modo == MODO_SUPRIMIR for tipo in tipos
+    ]
     return df
 
 

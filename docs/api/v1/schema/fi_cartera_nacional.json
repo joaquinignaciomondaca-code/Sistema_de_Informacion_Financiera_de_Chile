@@ -193,6 +193,22 @@
    "significado": "Criterio aplicado sobre rut_emisor: «persona_juridica», «persona_natural_probable» (RUT suprimido por privacidad) o «sin_rut_informado». Regla y umbrales en pipelines/auto/privacidad.py.",
    "tipo": "VARCHAR",
    "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "emisor_id",
+   "rol": "Atributo",
+   "significado": "Seudónimo estable del emisor (EMI-…), igual para el mismo emisor en cualquier trimestre y fondo: permite sumar su exposición, seguir su serie y medir concentración sin publicar el RUT de una persona natural. Es seudonimización (art. 2 letra l de la Ley 21.719), no anonimización: el vínculo con el RUT vive en una tabla privada que no se publica.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_omitido_por_ley",
+   "rol": "Atributo",
+   "significado": "Verdadero cuando el RUT de la fila se retiró por la regla de privacidad y falso cuando se publica tal cual. Cambiar de criterio es configuración (variable SIF_PUBLICAR_RUT_EMISOR), no una edición de código.",
+   "tipo": "BOOLEAN",
+   "tipo_ts": "boolean"
   }
  ],
  "contrato": "sif-api/esquema",
