@@ -117,8 +117,16 @@ def main() -> int:
     print("Hash:   sha256 verificado archivo por archivo")
 
     # 3. Muestra con datos reales -------------------------------------------
+    # frictionless lee Parquet a través de pandas: sin él, la muestra no se
+    # puede hacer y se dice, en vez de dar la validación por buena.
+    try:
+        import pandas  # noqa: F401
+        hay_pandas = True
+    except ImportError:
+        hay_pandas = False
+        print("AVISO: sin pandas, frictionless no abre los Parquet; se omite la muestra")
     abiertos = 0
-    for r in recursos[: args.muestra]:
+    for r in (recursos[: args.muestra] if hay_pandas else []):
         desc = por_nombre[r.name]
         p = (desc["sif"]["particiones"] or [{}])[0]
         archivo = local(p.get("path", ""))
