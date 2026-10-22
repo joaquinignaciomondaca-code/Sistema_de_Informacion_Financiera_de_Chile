@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "updated_at": "2026-10-22",
   "total_tables": 89,
-  "total_records": 19777504,
+  "total_records": 19777508,
   "classification": {
     "automatico": "Extracción, validación y publicación ejecutadas por código y workflows programados (APIs, scrapers y normalizadores)",
     "hibrido": "Extracción o curación inicial asistida desde fuentes no estructuradas, seguida de validación, normalización y publicación reproducibles mediante código; puede ejecutarse fuera de Actions",
@@ -36,6 +36,22 @@
       }
     },
     {
+      "id": "agf_balance",
+      "name": "agf.balance",
+      "view_name": "agf_balance",
+      "sector": "agf",
+      "sector_label": "Administradoras Generales de Fondos",
+      "norma": "IFRS · archivo TXT de estados financieros CMF",
+      "corte": "2010-06 a 2026-06",
+      "frescura": "Último trimestre publicado: 2026-06",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-22",
+      "file_parquet": "outputs/agf/agf_balance/manifest.json",
+      "registros_reales": 71423,
+      "descripcion": "Estado de situación financiera (ESF) de cada administradora general de fondos, cuenta por cuenta, tal como lo publica la CMF. Montos en unidades de la moneda informada (CLP o USD), sin conversión.",
+      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+    },
+    {
       "id": "agf_maestro",
       "name": "agf.maestro",
       "view_name": "agf_maestro",
@@ -60,6 +76,22 @@
         "fecha_extraccion": "2026-09-23",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
+    },
+    {
+      "id": "agf_resultados",
+      "name": "agf.resultados",
+      "view_name": "agf_resultados",
+      "sector": "agf",
+      "sector_label": "Administradoras Generales de Fondos",
+      "norma": "IFRS · archivo TXT de estados financieros CMF",
+      "corte": "2010-06 a 2026-06",
+      "frescura": "Último trimestre publicado: 2026-06",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-22",
+      "file_parquet": "outputs/agf/agf_resultados/manifest.json",
+      "registros_reales": 58216,
+      "descripcion": "Estado de resultados (ER, por función o naturaleza e integral) de cada administradora general de fondos, cuenta por cuenta. Montos acumulados del ejercicio a la fecha del trimestre, en unidades de la moneda informada.",
+      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
     },
     {
       "id": "bancos_cmf_lineas",
@@ -115,6 +147,22 @@
       }
     },
     {
+      "id": "ccaf_balance",
+      "name": "ccaf.balance",
+      "view_name": "ccaf_balance",
+      "sector": "cajas_compensacion",
+      "sector_label": "Cajas de Compensación",
+      "norma": "IFRS · archivo TXT de estados financieros CMF",
+      "corte": "2010-06 a 2026-06",
+      "frescura": "Último trimestre publicado: 2026-06",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-22",
+      "file_parquet": "outputs/cajas_compensacion/ccaf_balance/manifest.json",
+      "registros_reales": 8043,
+      "descripcion": "Estado de situación financiera (ESF) de cada caja de compensación de asignación familiar, cuenta por cuenta, tal como lo publica la CMF. Montos en unidades de la moneda informada (CLP o USD), sin conversión.",
+      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+    },
+    {
       "id": "ccaf_maestro",
       "name": "ccaf.maestro",
       "view_name": "ccaf_maestro",
@@ -141,6 +189,22 @@
       }
     },
     {
+      "id": "ccaf_resultados",
+      "name": "ccaf.resultados",
+      "view_name": "ccaf_resultados",
+      "sector": "cajas_compensacion",
+      "sector_label": "Cajas de Compensación",
+      "norma": "IFRS · archivo TXT de estados financieros CMF",
+      "corte": "2010-06 a 2026-06",
+      "frescura": "Último trimestre publicado: 2026-06",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-22",
+      "file_parquet": "outputs/cajas_compensacion/ccaf_resultados/manifest.json",
+      "registros_reales": 5506,
+      "descripcion": "Estado de resultados (ER, por función o naturaleza e integral) de cada caja de compensación de asignación familiar, cuenta por cuenta. Montos acumulados del ejercicio a la fecha del trimestre, en unidades de la moneda informada.",
+      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+    },
+    {
       "id": "cooperativas_lista_entidades",
       "name": "cooperativas.lista_entidades",
       "view_name": "cooperativas_lista_entidades",
@@ -165,6 +229,22 @@
         "fecha_extraccion": "2026-09-29",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
+    },
+    {
+      "id": "corredoras_bolsa_balance",
+      "name": "corredoras.balance",
+      "view_name": "corredoras_bolsa_balance",
+      "sector": "corredoras_bolsa",
+      "sector_label": "Corredoras de Bolsa",
+      "norma": "IFRS · FECU intermediarios CMF",
+      "corte": "2010-12 a 2026-06",
+      "frescura": "Último trimestre publicado: 2026-06",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-22",
+      "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_balance/manifest.json",
+      "registros_reales": 107976,
+      "descripcion": "Estado de situación financiera de cada corredor de bolsa y agente de valores, cuenta FECU por cuenta, al cierre de cada trimestre. Miles de pesos.",
+      "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/"
     },
     {
       "id": "corredoras_bolsa_lista_entidades_registro",
@@ -219,6 +299,38 @@
       }
     },
     {
+      "id": "corredoras_bolsa_resultados",
+      "name": "corredoras.resultados",
+      "view_name": "corredoras_bolsa_resultados",
+      "sector": "corredoras_bolsa",
+      "sector_label": "Corredoras de Bolsa",
+      "norma": "IFRS · FECU intermediarios CMF",
+      "corte": "2010-12 a 2026-06",
+      "frescura": "Último trimestre publicado: 2026-06",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-22",
+      "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/manifest.json",
+      "registros_reales": 77705,
+      "descripcion": "Estado de resultados y resultados integrales de cada corredor de bolsa y agente de valores, acumulados del ejercicio al cierre de cada trimestre, cuenta FECU por cuenta. Miles de pesos.",
+      "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/"
+    },
+    {
+      "id": "factoring_leasing_balance_serie_ifrs_cmf",
+      "name": "factoring_leasing.balance_serie_ifrs_cmf",
+      "view_name": "factoring_leasing_balance_serie_ifrs_cmf",
+      "sector": "factoring_leasing",
+      "sector_label": "Factoring & Leasing",
+      "norma": "CMF IFRS TXT · extracción de cuentas ESF/ER",
+      "corte": "2009-03 a 2026-09",
+      "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
+      "modo": "Automático · Actions publica solo al completar todos los cierres CMF",
+      "ultima_actualizacion": "2026-10-22",
+      "file_parquet": "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
+      "registros_reales": 30046,
+      "descripcion": "30,046 filas de cuentas ESF; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
+      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39821631671. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
+    },
+    {
       "id": "factoring_leasing_maestro",
       "name": "factoring_leasing.lista_entidades",
       "view_name": "factoring_leasing_maestro",
@@ -243,6 +355,22 @@
         "fecha_extraccion": "2026-09-28",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
+    },
+    {
+      "id": "factoring_leasing_resultados_serie_ifrs_cmf",
+      "name": "factoring_leasing.resultados_serie_ifrs_cmf",
+      "view_name": "factoring_leasing_resultados_serie_ifrs_cmf",
+      "sector": "factoring_leasing",
+      "sector_label": "Factoring & Leasing",
+      "norma": "CMF IFRS TXT · extracción de cuentas ESF/ER",
+      "corte": "2009-03 a 2026-09",
+      "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
+      "modo": "Automático · Actions publica solo al completar todos los cierres CMF",
+      "ultima_actualizacion": "2026-10-22",
+      "file_parquet": "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
+      "registros_reales": 22368,
+      "descripcion": "22,368 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
+      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39821631671. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
     },
     {
       "id": "ffmm_balance",
@@ -739,9 +867,9 @@
       "modo": "Automático · diario, incremental",
       "ultima_actualizacion": "2026-10-22",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "corte": "2014-01-02 a 2026-10-20",
+      "corte": "2014-01-02 a 2026-10-21",
       "file_parquet": "outputs/macro/macro_curva_bonos_pesos.parquet",
-      "registros_reales": 3172,
+      "registros_reales": 3173,
       "descripcion": "Curva de rendimiento de los bonos soberanos en pesos licitados por el BCCh (Bono Corto Plazo, BCP): tasa de interés de mercado secundario a 2, 5 y 10 años."
     },
     {
@@ -755,9 +883,9 @@
       "modo": "Automático · diario, incremental",
       "ultima_actualizacion": "2026-10-22",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "corte": "2014-01-02 a 2026-10-20",
+      "corte": "2014-01-02 a 2026-10-21",
       "file_parquet": "outputs/macro/macro_curva_bonos_uf.parquet",
-      "registros_reales": 3174,
+      "registros_reales": 3175,
       "descripcion": "Curva de rendimiento de los bonos soberanos en UF (BCU/BTU): tasa de interés de mercado secundario a 1, 2, 5, 10, 20 y 30 años."
     },
     {
@@ -883,9 +1011,9 @@
       "modo": "Automático · diario, incremental",
       "ultima_actualizacion": "2026-10-22",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "corte": "2014-01-02 a 2026-10-20",
+      "corte": "2014-01-02 a 2026-10-21",
       "file_parquet": "outputs/macro/macro_inflacion_implicita.parquet",
-      "registros_reales": 3078,
+      "registros_reales": 3079,
       "descripcion": "Inflación implícita de las curvas soberanas (breakeven): diferencia entre el rendimiento del bono en pesos y el del bono en UF del mismo plazo. Calculada por SIF a partir de las curvas publicadas por el BCCh."
     },
     {
@@ -1005,9 +1133,9 @@
       "modo": "Automático · diario, incremental",
       "ultima_actualizacion": "2026-10-22",
       "origen": "Banco Central de Chile — Base de Datos Estadísticos (API REST SIETE, https://si3.bcentral.cl/SieteRestWS).",
-      "corte": "2014-01-02 a 2026-10-21",
+      "corte": "2014-01-02 a 2026-10-22",
       "file_parquet": "outputs/macro/macro_swaps_camara.parquet",
-      "registros_reales": 3203,
+      "registros_reales": 3204,
       "descripcion": "Tasa de swap promedio de cámara (SPC) del Banco Central: contratos en pesos a 90, 180 y 360 días y a 2 años, y contrato en UF a 1 año, en porcentaje."
     },
     {
@@ -1159,6 +1287,22 @@
       }
     },
     {
+      "id": "securitizadoras_balance",
+      "name": "securitizadoras.balance",
+      "view_name": "securitizadoras_balance",
+      "sector": "securitizadoras",
+      "sector_label": "Securitizadoras",
+      "norma": "IFRS · archivo TXT de estados financieros CMF",
+      "corte": "2009-12 a 2026-06",
+      "frescura": "Último trimestre publicado: 2026-06",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-22",
+      "file_parquet": "outputs/securitizadoras/securitizadoras_balance/manifest.json",
+      "registros_reales": 13679,
+      "descripcion": "Estado de situación financiera (ESF) de cada sociedad securitizadora, cuenta por cuenta, tal como lo publica la CMF. Montos en unidades de la moneda informada (CLP o USD), sin conversión.",
+      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+    },
+    {
       "id": "securitizadoras_maestro",
       "name": "securitizadoras.maestro",
       "view_name": "securitizadoras_maestro",
@@ -1183,6 +1327,22 @@
         "fecha_extraccion": "2026-09-23",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
+    },
+    {
+      "id": "securitizadoras_resultados",
+      "name": "securitizadoras.resultados",
+      "view_name": "securitizadoras_resultados",
+      "sector": "securitizadoras",
+      "sector_label": "Securitizadoras",
+      "norma": "IFRS · archivo TXT de estados financieros CMF",
+      "corte": "2009-12 a 2026-06",
+      "frescura": "Último trimestre publicado: 2026-06",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-22",
+      "file_parquet": "outputs/securitizadoras/securitizadoras_resultados/manifest.json",
+      "registros_reales": 12290,
+      "descripcion": "Estado de resultados (ER, por función o naturaleza e integral) de cada sociedad securitizadora, cuenta por cuenta. Montos acumulados del ejercicio a la fecha del trimestre, en unidades de la moneda informada.",
+      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
     },
     {
       "id": "seguros_acciones",
@@ -1683,166 +1843,6 @@
         "fecha_extraccion": "2026-09-28",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
-    },
-    {
-      "id": "factoring_leasing_balance_serie_ifrs_cmf",
-      "name": "factoring_leasing.balance_serie_ifrs_cmf",
-      "view_name": "factoring_leasing_balance_serie_ifrs_cmf",
-      "sector": "factoring_leasing",
-      "sector_label": "Factoring & Leasing",
-      "norma": "CMF IFRS TXT · extracción de cuentas ESF/ER",
-      "corte": "2009-03 a 2026-09",
-      "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
-      "modo": "Automático · Actions publica solo al completar todos los cierres CMF",
-      "ultima_actualizacion": "2026-10-22",
-      "file_parquet": "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
-      "registros_reales": 30046,
-      "descripcion": "30,046 filas de cuentas ESF; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
-      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39821631671. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
-    },
-    {
-      "id": "factoring_leasing_resultados_serie_ifrs_cmf",
-      "name": "factoring_leasing.resultados_serie_ifrs_cmf",
-      "view_name": "factoring_leasing_resultados_serie_ifrs_cmf",
-      "sector": "factoring_leasing",
-      "sector_label": "Factoring & Leasing",
-      "norma": "CMF IFRS TXT · extracción de cuentas ESF/ER",
-      "corte": "2009-03 a 2026-09",
-      "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
-      "modo": "Automático · Actions publica solo al completar todos los cierres CMF",
-      "ultima_actualizacion": "2026-10-22",
-      "file_parquet": "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
-      "registros_reales": 22368,
-      "descripcion": "22,368 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
-      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39821631671. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
-    },
-    {
-      "id": "agf_balance",
-      "name": "agf.balance",
-      "view_name": "agf_balance",
-      "sector": "agf",
-      "sector_label": "Administradoras Generales de Fondos",
-      "norma": "IFRS · archivo TXT de estados financieros CMF",
-      "corte": "2010-06 a 2026-06",
-      "frescura": "Último trimestre publicado: 2026-06",
-      "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-22",
-      "file_parquet": "outputs/agf/agf_balance/manifest.json",
-      "registros_reales": 71423,
-      "descripcion": "Estado de situación financiera (ESF) de cada administradora general de fondos, cuenta por cuenta, tal como lo publica la CMF. Montos en unidades de la moneda informada (CLP o USD), sin conversión.",
-      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
-    },
-    {
-      "id": "agf_resultados",
-      "name": "agf.resultados",
-      "view_name": "agf_resultados",
-      "sector": "agf",
-      "sector_label": "Administradoras Generales de Fondos",
-      "norma": "IFRS · archivo TXT de estados financieros CMF",
-      "corte": "2010-06 a 2026-06",
-      "frescura": "Último trimestre publicado: 2026-06",
-      "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-22",
-      "file_parquet": "outputs/agf/agf_resultados/manifest.json",
-      "registros_reales": 58216,
-      "descripcion": "Estado de resultados (ER, por función o naturaleza e integral) de cada administradora general de fondos, cuenta por cuenta. Montos acumulados del ejercicio a la fecha del trimestre, en unidades de la moneda informada.",
-      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
-    },
-    {
-      "id": "securitizadoras_balance",
-      "name": "securitizadoras.balance",
-      "view_name": "securitizadoras_balance",
-      "sector": "securitizadoras",
-      "sector_label": "Securitizadoras",
-      "norma": "IFRS · archivo TXT de estados financieros CMF",
-      "corte": "2009-12 a 2026-06",
-      "frescura": "Último trimestre publicado: 2026-06",
-      "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-22",
-      "file_parquet": "outputs/securitizadoras/securitizadoras_balance/manifest.json",
-      "registros_reales": 13679,
-      "descripcion": "Estado de situación financiera (ESF) de cada sociedad securitizadora, cuenta por cuenta, tal como lo publica la CMF. Montos en unidades de la moneda informada (CLP o USD), sin conversión.",
-      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
-    },
-    {
-      "id": "securitizadoras_resultados",
-      "name": "securitizadoras.resultados",
-      "view_name": "securitizadoras_resultados",
-      "sector": "securitizadoras",
-      "sector_label": "Securitizadoras",
-      "norma": "IFRS · archivo TXT de estados financieros CMF",
-      "corte": "2009-12 a 2026-06",
-      "frescura": "Último trimestre publicado: 2026-06",
-      "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-22",
-      "file_parquet": "outputs/securitizadoras/securitizadoras_resultados/manifest.json",
-      "registros_reales": 12290,
-      "descripcion": "Estado de resultados (ER, por función o naturaleza e integral) de cada sociedad securitizadora, cuenta por cuenta. Montos acumulados del ejercicio a la fecha del trimestre, en unidades de la moneda informada.",
-      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
-    },
-    {
-      "id": "ccaf_balance",
-      "name": "ccaf.balance",
-      "view_name": "ccaf_balance",
-      "sector": "cajas_compensacion",
-      "sector_label": "Cajas de Compensación",
-      "norma": "IFRS · archivo TXT de estados financieros CMF",
-      "corte": "2010-06 a 2026-06",
-      "frescura": "Último trimestre publicado: 2026-06",
-      "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-22",
-      "file_parquet": "outputs/cajas_compensacion/ccaf_balance/manifest.json",
-      "registros_reales": 8043,
-      "descripcion": "Estado de situación financiera (ESF) de cada caja de compensación de asignación familiar, cuenta por cuenta, tal como lo publica la CMF. Montos en unidades de la moneda informada (CLP o USD), sin conversión.",
-      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
-    },
-    {
-      "id": "ccaf_resultados",
-      "name": "ccaf.resultados",
-      "view_name": "ccaf_resultados",
-      "sector": "cajas_compensacion",
-      "sector_label": "Cajas de Compensación",
-      "norma": "IFRS · archivo TXT de estados financieros CMF",
-      "corte": "2010-06 a 2026-06",
-      "frescura": "Último trimestre publicado: 2026-06",
-      "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-22",
-      "file_parquet": "outputs/cajas_compensacion/ccaf_resultados/manifest.json",
-      "registros_reales": 5506,
-      "descripcion": "Estado de resultados (ER, por función o naturaleza e integral) de cada caja de compensación de asignación familiar, cuenta por cuenta. Montos acumulados del ejercicio a la fecha del trimestre, en unidades de la moneda informada.",
-      "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
-    },
-    {
-      "id": "corredoras_bolsa_balance",
-      "name": "corredoras.balance",
-      "view_name": "corredoras_bolsa_balance",
-      "sector": "corredoras_bolsa",
-      "sector_label": "Corredoras de Bolsa",
-      "norma": "IFRS · FECU intermediarios CMF",
-      "corte": "2010-12 a 2026-06",
-      "frescura": "Último trimestre publicado: 2026-06",
-      "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-22",
-      "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_balance/manifest.json",
-      "registros_reales": 107976,
-      "descripcion": "Estado de situación financiera de cada corredor de bolsa y agente de valores, cuenta FECU por cuenta, al cierre de cada trimestre. Miles de pesos.",
-      "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/"
-    },
-    {
-      "id": "corredoras_bolsa_resultados",
-      "name": "corredoras.resultados",
-      "view_name": "corredoras_bolsa_resultados",
-      "sector": "corredoras_bolsa",
-      "sector_label": "Corredoras de Bolsa",
-      "norma": "IFRS · FECU intermediarios CMF",
-      "corte": "2010-12 a 2026-06",
-      "frescura": "Último trimestre publicado: 2026-06",
-      "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-22",
-      "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/manifest.json",
-      "registros_reales": 77705,
-      "descripcion": "Estado de resultados y resultados integrales de cada corredor de bolsa y agente de valores, acumulados del ejercicio al cierre de cada trimestre, cuenta FECU por cuenta. Miles de pesos.",
-      "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/"
     }
   ]
 }
