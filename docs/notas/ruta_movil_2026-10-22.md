@@ -50,6 +50,10 @@ para que se puedan volver a comprobar en cada integración:
   o escalan tarjetas.
 - [x] **M6 · Mapa táctil.** `erd_graph.js` pasa a Pointer Events: arrastre con un
   dedo, pellizco de dos dedos para ampliar y `click` suprimido después de arrastrar.
+- [x] **M8 · Aviso de uso.** En pantalla pequeña aparece una tarjeta que
+  recomienda usar un computador (el explorador, las consultas SQL y el mapa
+  necesitan más ancho); se cierra con un botón de 44 px y el descarte se guarda
+  en el navegador. Por encima de 900 px no existe: el estilo base la oculta.
 - [x] **M7 · Compuertas.** `scripts/audit_movil.py` (doce reglas, con autoprueba) y
   `scripts/audit_movil_dom.js` (comportamiento del cajón en jsdom) corren en
   `web_audit.yml`, después del paso que instala jsdom.
@@ -64,8 +68,8 @@ node scripts/audit_interfaz_dom.js            # las 90 comprobaciones de siempre
 python3 scripts/audit_interfaz.py             # estructura, temas y motor
 ```
 
-Resultado de la última ejecución (2026-10-22): `audit_movil.py` 12/12 reglas en
-verde y su autoprueba 9/9 mutaciones detectadas; `audit_movil_dom.js` 11/11
+Resultado de la última ejecución (2026-10-22): `audit_movil.py` 13/13 reglas en
+verde y su autoprueba 10/10 mutaciones detectadas; `audit_movil_dom.js` 15/15
 comprobaciones OK; `audit_interfaz_dom.js` 90/90; `audit_interfaz.py` interfaz
 coherente; `audit_web_full.py` todas las secciones operativas.
 

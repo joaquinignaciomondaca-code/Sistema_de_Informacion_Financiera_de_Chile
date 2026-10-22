@@ -6073,3 +6073,68 @@ body {
     flex: 0 0 auto;
   }
 }
+
+/* --- 7. Aviso de teléfono ---------------------------------------------------
+   El sitio se pensó para un computador: siete pestañas, un explorador de 320 px
+   y el motor SQL en el cliente. En un teléfono se puede leer y descargar, pero
+   no trabajar cómodo, así que se avisa una vez y se deja cerrar. El JS lo
+   muestra sólo por debajo de 900 px y recuerda el descarte; aquí sólo se
+   define cómo se ve. */
+.aviso-movil {
+  display: none;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 10px 12px 0;
+  padding: 12px 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+}
+
+/* `hidden` gana siempre: sin esto, el `display: flex` del media query lo
+   mostraría igual y el botón de cerrar no serviría de nada. */
+.aviso-movil[hidden] {
+  display: none;
+}
+
+.aviso-movil-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.aviso-movil-texto strong {
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.aviso-movil-cerrar {
+  flex: none;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.aviso-movil-cerrar:focus-visible {
+  outline: 2px solid var(--accent-mint-text);
+  outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+  .aviso-movil {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2px;
+  }
+}
