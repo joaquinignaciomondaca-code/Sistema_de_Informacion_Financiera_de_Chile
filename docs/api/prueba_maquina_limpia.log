@@ -1,9 +1,9 @@
-# Prueba de máquina limpia · 2026-10-22T07:02:07
+# Prueba de máquina limpia · 2026-10-22T07:06:16
 
 $ python3 -m venv /tmp/sif-maquina-limpia/venv
 $ /tmp/sif-maquina-limpia/venv/bin/pip install --quiet duckdb   # el cliente sólo necesita un motor
-$ python3 -m http.server 52883 --directory docs   # sirve el sitio, como en producción
-$ cd /tmp/sif-maquina-limpia/cliente && /tmp/sif-maquina-limpia/venv/bin/python /tmp/sif-maquina-limpia/cliente.py http://127.0.0.1:52883 /tmp/sif-maquina-limpia/cliente   # otro intérprete, sin el repo
+$ python3 -m http.server 41655 --directory docs   # sirve el sitio, como en producción
+$ cd /tmp/sif-maquina-limpia/cliente && /tmp/sif-maquina-limpia/venv/bin/python /tmp/sif-maquina-limpia/cliente.py http://127.0.0.1:41655 /tmp/sif-maquina-limpia/cliente   # otro intérprete, sin el repo
 
 OK   sin el repo en sys.path: ninguno
 OK   descubrir el Data Package: 86 recursos
@@ -18,5 +18,5 @@ OK   bajar las vistas: 105 CREATE VIEW
 OK   esquema declarado = esquema real: sin discrepancias
 [{"paso": "sin el repo en sys.path", "ok": true, "detalle": "ninguno"}, {"paso": "descubrir el Data Package", "ok": true, "detalle": "86 recursos"}, {"paso": "leer el esquema", "ok": true, "detalle": "7 columnas"}, {"paso": "clave declarada", "ok": true, "detalle": "['sector', 'rut_aseguradora']"}, {"paso": "resolver la URL publica", "ok": true, "detalle": "<sitio local>/outputs/seguros/aseguradoras.parquet"}, {"paso": "consultar los datos", "ok": true, "detalle": "84 filas (declara 84)"}, {"paso": "consulta de negocio", "ok": true, "detalle": "[('vida', 44), ('generales', 40)]"}, {"paso": "descubrir el catalogo", "ok": true, "detalle": "90 objetos, 156 consultas"}, {"paso": "leer el esquema por contrato", "ok": true, "detalle": "7 columnas, pk ['sector', 'rut_aseguradora']"}, {"paso": "bajar las vistas", "ok": true, "detalle": "105 CREATE VIEW"}, {"paso": "esquema declarado = esquema real", "ok": true, "detalle": "sin discrepancias"}]
 
-Duración: 0.6 s · pasos: 11 · fallos: 0
+Duración: 0.7 s · pasos: 11 · fallos: 0
 MÁQUINA LIMPIA: el consumidor descubre, lee el esquema y consulta sin tener el repo
