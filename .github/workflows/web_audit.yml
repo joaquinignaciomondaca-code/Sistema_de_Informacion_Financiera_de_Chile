@@ -172,6 +172,20 @@ jobs:
           echo "::notice title=RUT::$(tail -n 1 rut.log)"
           exit $n
 
+      # El diccionario de seguros se genera desde las fichas de la CMF y se sirve
+      # en docs/js. Si alguien cambia la fuente (o las fichas) y no regenera, el
+      # flujo de seguros falla recién en su próximo disparo —que puede ser en tres
+      # días— y el publicador se queda sin correr. Esto lo detecta en el PR.
+      - name: 'Diccionarios de seguros al día: fichas de la CMF → docs/js'
+        run: |
+          set +e
+          python -m seguros.scripts.diccionario_1835 --check > diccionario.log 2>&1; n=$?
+          if [ "$n" -ne 0 ]; then
+            grep -h -E "DESACTUALIZADO|Ejecuta" diccionario.log | head -6 | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=Diccionarios::$l"; done
+          fi
+          echo "::notice title=Diccionarios::$(tail -n 1 diccionario.log)"
+          exit $n
+
       - name: Auditar las consultas sugeridas contra los Parquet
         run: |
           python -m pip install --disable-pip-version-check duckdb
