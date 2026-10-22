@@ -8,9 +8,10 @@
 
 Dos piezas del plan se ejecutaron sin cambiar la regla de publicación:
 
-1. **`emisor_id`** — seudónimo estable del emisor (`EMI-…`), calculado desde el RUT original, que
-   permite seguir a la misma contraparte entre trimestres y fondos sin publicar su RUT. Resuelve el
-   problema analítico que motivaba publicar el RUT.
+1. **`emisor_id`** — seudónimo estable (`EMI-…`), calculado desde el RUT original, que reemplaza al
+   RUT omitido y permite seguir a la misma contraparte entre trimestres y fondos sin publicarlo.
+   Resuelve el problema analítico que motivaba publicar el RUT. Es nulo en las personas jurídicas,
+   que conservan su RUT publicado como clave.
 2. **`rut_omitido_por_ley`** — booleano por fila: verdadero si el RUT se retiró, falso si se publica.
 3. **Interruptor de publicación** — `SIF_PUBLICAR_RUT_EMISOR=publicar` repone los RUT; el valor por
    omisión (`suprimir`) mantiene la regla. La compuerta de privacidad rechaza una publicación que

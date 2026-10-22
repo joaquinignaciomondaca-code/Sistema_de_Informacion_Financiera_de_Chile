@@ -104,12 +104,14 @@
       reaparecen en ningún otro objeto del catálogo. Contrastado con registros públicos, el criterio
       alcanza a personas naturales identificables, no a entidades.</li>
       <li><strong>Seguir al emisor sin publicar su RUT.</strong> La misma tabla publica
-      <code>emisor_id</code>, un seudónimo estable (<code>EMI-…</code>) que es igual para el mismo emisor
-      en cualquier trimestre y fondo, de modo que se puede sumar su exposición, seguir su serie y medir
-      concentración sin revelar su RUT. La columna <code>rut_omitido_por_ley</code> declara, fila por
-      fila, si el RUT se retiró (verdadero) o se publica (falso). <code>emisor_id</code> es
-      seudonimización, no anonimización: el vínculo con el RUT vive en una tabla privada que no se
-      publica.</li>
+      <code>rut_omitido_por_ley</code>, que declara fila por fila si el RUT se retiró (verdadero) o se
+      publica (falso), y <code>emisor_id</code>, un seudónimo estable (<code>EMI-…</code>) que reemplaza
+      al RUT omitido: es el mismo para la misma persona en cualquier trimestre y fondo, de modo que se
+      puede sumar su exposición, seguir su serie y medir concentración sin revelar su RUT. En las
+      personas jurídicas <code>emisor_id</code> es nulo, porque su RUT publicado ya es la clave; para
+      agrupar por emisor sin distinguir el tipo basta <code>COALESCE(rut_emisor, emisor_id)</code>.
+      <code>emisor_id</code> es seudonimización, no anonimización: el vínculo con el RUT vive en una
+      tabla privada que no se publica.</li>
     </ul>
     <p>Las reglas viven en <code>pipelines/auto/privacidad.py</code> y se aplican antes de publicar;
     <code>scripts/enmascarar_identificadores.py</code> las aplica a lo ya publicado.</p>

@@ -111,15 +111,18 @@ def procesar_cartera_nacional(ruta: Path, entidades: set, apply: bool) -> tuple[
     sal = privacidad.sal_privada()
     tabla = con_columna(tabla, "rut_emisor", rut if modo == privacidad.MODO_PUBLICAR else enmascarados)
     tabla = con_columna(tabla, "emisor_tipo", tipos)
-    ids = [privacidad.emisor_id(valor, sal) for valor in rut]
+    omitidos = [tipo == privacidad.TIPO_NATURAL and modo == privacidad.MODO_SUPRIMIR
+                for tipo in tipos]
+    # El seudónimo sólo existe donde falta el RUT: en la persona jurídica la clave
+    # es el propio RUT publicado. Si la fila ya venía suprimida, su id se hereda,
+    # porque el RUT que lo originó ya no está en el archivo.
+    ids = [privacidad.emisor_id(valor, sal) if omitido else None
+           for valor, omitido in zip(rut, omitidos)]
     if previos_id:
-        # El seudónimo de una fila suprimida solo existe en el archivo: se hereda.
-        ids = [previo if nuevo is None and previo else nuevo
-               for nuevo, previo in zip(ids, previos_id)]
+        ids = [previo if nuevo is None and omitido and previo else nuevo
+               for nuevo, omitido, previo in zip(ids, omitidos, previos_id)]
     tabla = con_columna(tabla, privacidad.COLUMNA_EMISOR_ID, ids)
-    tabla = con_columna(tabla, privacidad.COLUMNA_RUT_OMITIDO,
-                        [tipo == privacidad.TIPO_NATURAL and modo == privacidad.MODO_SUPRIMIR
-                         for tipo in tipos], tipo=pa.bool_())
+    tabla = con_columna(tabla, privacidad.COLUMNA_RUT_OMITIDO, omitidos, tipo=pa.bool_())
     escribir(ruta, tabla, apply)
     verbo = "publicados" if modo == privacidad.MODO_PUBLICAR else "suprimidos"
     return True, f"{suprimidos:,} RUT {verbo} de {len(rut):,} filas (modo {modo})"
