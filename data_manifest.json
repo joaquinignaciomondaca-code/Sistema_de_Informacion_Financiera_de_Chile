@@ -271,32 +271,6 @@
       }
     },
     {
-      "id": "factoring_leasing_balance_serie_ifrs_cmf",
-      "name": "factoring_leasing.balance_serie_ifrs_cmf",
-      "view_name": "factoring_leasing_balance_serie_ifrs_cmf",
-      "sector": "factoring_leasing",
-      "sector_label": "Factoring & Leasing",
-      "norma": "CMF IFRS TXT · extracción de cuentas ESF/ER",
-      "corte": "2009-03 a 2026-06",
-      "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
-      "modo": "Automático · Actions publica solo al completar todos los cierres CMF",
-      "ultima_actualizacion": "2026-10-20",
-      "file_parquet": "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
-      "registros_reales": 30046,
-      "descripcion": "30,046 filas de cuentas ESF; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
-      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39380070665. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias.",
-      "metadatos": {
-        "fuente": "CMF, estados financieros IFRS (TXT), extracción de cuentas ESF; corrida de Actions 39380070665",
-        "unidad": "Importes en la moneda informada; importes no enteros preservados",
-        "escala": "unidades (sin reescalado)",
-        "moneda": "Monedas separadas según la fuente; sin conversión",
-        "criterio_contable": "Cuentas ESF tal como vienen en la fuente; taxonomías y tipo I/C separados; sin deduplicación ni suma",
-        "cobertura": "2009-03 a 2026-06; 30.046 filas de cuentas ESF; 28 de 32 RUT del catálogo con datos",
-        "fecha_extraccion": "2026-10-20",
-        "estado_qa": "Observación abierta: 4 de 32 RUT del catálogo sin datos publicados; las cifras no están cotejadas en su totalidad (según la descripción de la tabla). Revisar el JSON acompañante de advertencias. Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20)."
-      }
-    },
-    {
       "id": "factoring_leasing_maestro",
       "name": "factoring_leasing.lista_entidades",
       "view_name": "factoring_leasing_maestro",
@@ -320,32 +294,6 @@
         "cobertura": "Lista vigente al 2026-09-28; 32 sociedades de factoring, leasing y financiamiento automotriz",
         "fecha_extraccion": "2026-09-28",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
-      }
-    },
-    {
-      "id": "factoring_leasing_resultados_serie_ifrs_cmf",
-      "name": "factoring_leasing.resultados_serie_ifrs_cmf",
-      "view_name": "factoring_leasing_resultados_serie_ifrs_cmf",
-      "sector": "factoring_leasing",
-      "sector_label": "Factoring & Leasing",
-      "norma": "CMF IFRS TXT · extracción de cuentas ESF/ER",
-      "corte": "2009-03 a 2026-06",
-      "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
-      "modo": "Automático · Actions publica solo al completar todos los cierres CMF",
-      "ultima_actualizacion": "2026-10-20",
-      "file_parquet": "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
-      "registros_reales": 22368,
-      "descripcion": "22,368 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
-      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39380070665. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias.",
-      "metadatos": {
-        "fuente": "CMF, estados financieros IFRS (TXT), extracción de cuentas ER; corrida de Actions 39380070665",
-        "unidad": "Importes en la moneda informada; importes no enteros preservados",
-        "escala": "unidades (sin reescalado)",
-        "moneda": "Monedas separadas según la fuente; sin conversión",
-        "criterio_contable": "Cuentas ER tal como vienen en la fuente; taxonomías y tipo I/C separados; sin deduplicación ni suma",
-        "cobertura": "2009-03 a 2026-06; 22.368 filas de cuentas ER; 28 de 32 RUT del catálogo con datos",
-        "fecha_extraccion": "2026-10-20",
-        "estado_qa": "Observación abierta: 4 de 32 RUT del catálogo sin datos publicados; las cifras no están cotejadas en su totalidad (según la descripción de la tabla). Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20)."
       }
     },
     {
@@ -1883,6 +1831,38 @@
       "registros_reales": 5506,
       "descripcion": "Estado de resultados (ER, por función o naturaleza e integral) de cada caja de compensación de asignación familiar, cuenta por cuenta. Montos acumulados del ejercicio a la fecha del trimestre, en unidades de la moneda informada.",
       "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+    },
+    {
+      "id": "factoring_leasing_balance_serie_ifrs_cmf",
+      "name": "factoring_leasing.balance_serie_ifrs_cmf",
+      "view_name": "factoring_leasing_balance_serie_ifrs_cmf",
+      "sector": "factoring_leasing",
+      "sector_label": "Factoring & Leasing",
+      "norma": "CMF IFRS TXT · extracción de cuentas ESF/ER",
+      "corte": "2009-03 a 2026-06",
+      "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
+      "modo": "Automático · Actions publica solo al completar todos los cierres CMF",
+      "ultima_actualizacion": "2026-10-22",
+      "file_parquet": "outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
+      "registros_reales": 30046,
+      "descripcion": "30,046 filas de cuentas ESF; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
+      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39726317201. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
+    },
+    {
+      "id": "factoring_leasing_resultados_serie_ifrs_cmf",
+      "name": "factoring_leasing.resultados_serie_ifrs_cmf",
+      "view_name": "factoring_leasing_resultados_serie_ifrs_cmf",
+      "sector": "factoring_leasing",
+      "sector_label": "Factoring & Leasing",
+      "norma": "CMF IFRS TXT · extracción de cuentas ESF/ER",
+      "corte": "2009-03 a 2026-06",
+      "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
+      "modo": "Automático · Actions publica solo al completar todos los cierres CMF",
+      "ultima_actualizacion": "2026-10-22",
+      "file_parquet": "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
+      "registros_reales": 22368,
+      "descripcion": "22,368 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
+      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39726317201. 28/32 RUT del catálogo con datos; revisar metadata JSON acompañante para faltantes y advertencias."
     }
   ]
 }
