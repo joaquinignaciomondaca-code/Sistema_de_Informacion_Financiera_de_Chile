@@ -28,6 +28,7 @@ on:
       - 'scripts/audit_*.py'
       - 'scripts/audit_*.js'
       - 'scripts/probar_ejemplos.py'
+      - 'scripts/test_contrato.py'
       - 'sdk/**'
       - 'examples/**'
       - 'scripts/normalizar_vocabulario.py'
@@ -223,6 +224,16 @@ jobs:
             fi
           done
           exit $(( c | a ))
+
+      - name: 'Test de contrato: rutas, esquemas, vistas, consultas, hashes y cobertura (y autoprueba)'
+        run: |
+          set +e
+          python scripts/test_contrato.py --check --autoprueba > contrato_test.log 2>&1; n=$?
+          grep -h -E "^(OK|FALLA|AVISO)" contrato_test.log | sed 's/%/%25/g' | while IFS= read -r l; do echo "::notice title=Test de contrato::$l"; done
+          if [ "$n" -ne 0 ]; then
+            grep -h "^FALLA" contrato_test.log | head -8 | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=Test de contrato::$l"; done
+          fi
+          exit $n
 
       - name: 'Máquina limpia: un consumidor sin el repo descubre, lee el esquema y consulta'
         run: |
