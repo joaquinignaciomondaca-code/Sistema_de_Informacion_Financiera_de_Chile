@@ -111,6 +111,10 @@
       seudónimo se confunda con un RUT. Es seudonimización, no anonimización: el vínculo con el RUT
       vive en una tabla privada que no se publica.</li>
     </ul>
+    <p>El criterio de persona natural se aplica a las <strong>94 columnas de RUT</strong> del catálogo,
+    no sólo a la cartera de fondos: la compuerta de privacidad falla si algún objeto empieza a publicar
+    RUT de personas sin que la decisión esté declarada. La columna <code>rut_omitido_por_ley</code> sólo
+    existe donde hay algo que omitir; repetirla en las demás tablas la dejaría constante en falso.</p>
     <p>Las reglas viven en <code>pipelines/auto/privacidad.py</code> y se aplican antes de publicar;
     <code>scripts/enmascarar_identificadores.py</code> las aplica a lo ya publicado.</p>
 
