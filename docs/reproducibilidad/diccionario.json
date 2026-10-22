@@ -9417,14 +9417,14 @@
         },
         {
           "name": "numero_fila_fuente",
-          "type": "INTEGER",
+          "type": "BIGINT",
           "role": "Orden",
           "significado": "Posición física original en el TXT; independiente de rubro, línea e ítem.",
           "contable": "No aplica"
         },
         {
           "name": "ocurrencia_codigo_cuenta",
-          "type": "INTEGER",
+          "type": "BIGINT",
           "role": "Atributo",
           "significado": "Desempate cuando una cuenta aparece repetida dentro del mismo archivo.",
           "contable": "No aplica"
@@ -9608,14 +9608,14 @@
         },
         {
           "name": "numero_fila_fuente",
-          "type": "INTEGER",
+          "type": "BIGINT",
           "role": "Orden",
           "significado": "Posición física original en el TXT; independiente de rubro, línea e ítem.",
           "contable": "No aplica"
         },
         {
           "name": "ocurrencia_codigo_cuenta",
-          "type": "INTEGER",
+          "type": "BIGINT",
           "role": "Atributo",
           "significado": "Desempate cuando una cuenta aparece repetida dentro del mismo archivo.",
           "contable": "No aplica"
@@ -9783,7 +9783,7 @@
         },
         {
           "name": "vigente",
-          "type": "INTEGER",
+          "type": "BIGINT",
           "role": "Métrica",
           "significado": "Flag binario de vigencia operativa (1: Activo y Vigente, 0: Histórico o Cancelado).",
           "contable": "No aplica",
@@ -9799,7 +9799,7 @@
         },
         {
           "name": "es_factoring",
-          "type": "INTEGER",
+          "type": "BIGINT",
           "role": "Métrica",
           "significado": "Indicador si la sociedad opera factoring comercial (1 / 0).",
           "contable": "No aplica",
@@ -9807,7 +9807,7 @@
         },
         {
           "name": "es_leasing_financiero",
-          "type": "INTEGER",
+          "type": "BIGINT",
           "role": "Métrica",
           "significado": "Indicador si la sociedad ofrece leasing financiero de bienes de capital (1 / 0).",
           "contable": "No aplica",
@@ -9815,7 +9815,7 @@
         },
         {
           "name": "es_leasing_habitacional",
-          "type": "INTEGER",
+          "type": "BIGINT",
           "role": "Métrica",
           "significado": "Indicador si opera bajo el régimen especial de Leasing Habitacional Ley 19.281 (1 / 0).",
           "contable": "No aplica",
@@ -9823,7 +9823,7 @@
         },
         {
           "name": "es_automotriz",
-          "type": "INTEGER",
+          "type": "BIGINT",
           "role": "Métrica",
           "significado": "Indicador si está especializada en financiamiento automotriz (1 / 0).",
           "contable": "No aplica",
@@ -9839,7 +9839,7 @@
         },
         {
           "name": "relacionada_banco",
-          "type": "INTEGER",
+          "type": "BIGINT",
           "role": "Métrica",
           "significado": "Flag numérico de relación de propiedad o control con entidades bancarias (1 / 0).",
           "contable": "No aplica",
@@ -9847,7 +9847,7 @@
         },
         {
           "name": "filial_bancaria_lgb",
-          "type": "INTEGER",
+          "type": "BIGINT",
           "role": "Métrica",
           "significado": "Flag específico si es filial bancaria formal regida por la Ley General de Bancos (1 / 0).",
           "contable": "No aplica",
