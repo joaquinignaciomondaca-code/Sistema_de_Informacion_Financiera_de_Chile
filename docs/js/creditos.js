@@ -135,16 +135,16 @@
     `;
   }
 
-  /* ── Reproducibilidad y código: pestaña Descargas ──────────────────────── */
+  /* ── Reproducibilidad y código: pestaña Guía ──────────────────────────── */
 
-  function htmlDescargas() {
+  function htmlGuia() {
     const R = CREDITOS.reproducibilidad;
     return `
       <div class="dl-creditos-head">
         <div>
           <h3>Reproducibilidad y código</h3>
-          <p>Lo publicado se puede auditar. Los archivos vienen en dos grupos porque no se
-          consumen igual: unos se abren en una planilla, otros los lee un programa.</p>
+          <p>Lo publicado se puede auditar: de dónde sale cada cifra, qué comprobaciones pasó y cómo
+          se regenera. Los archivos vienen en dos grupos porque no se consumen igual.</p>
         </div>
       </div>
       <div class="dl-usos">
@@ -163,34 +163,45 @@
     `;
   }
 
-  /* El bloque de Descargas remite a las instrucciones para agentes, que viven
-   * en otra pestaña y en otra sub-pestaña. Se navega por código en vez de con un
-   * ancla: un `href="#…"` no cambia de pestaña y el visitante aterrizaría en el
-   * mismo sitio sin entender por qué. */
-  function llevarAUso(agentes) {
-    if (window.switchMainTab) window.switchMainTab("info");
-    const seccion = document.getElementById("info-como-usar");
-    if (seccion) {
-      if (window.SIFComoUsar && typeof window.SIFComoUsar.activar === "function") {
-        window.SIFComoUsar.activar(agentes ? 1 : 0, false);
-      }
-      // `scrollIntoView` no existe en todos los entornos (jsdom, por ejemplo).
-      if (typeof seccion.scrollIntoView === "function") {
-        seccion.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
+  /* La guía vive en su propia pestaña. Desde Descargas se llega con un puntero:
+   * quien está eligiendo un archivo necesita saber dónde está el método, no
+   * leerlo entero aquí. Un `href="#…"` no cambia de pestaña, así que la
+   * navegación se hace por código. */
+  function irA(pestana) {
+    if (window.switchMainTab) window.switchMainTab(pestana);
+  }
+
+  function htmlPuntero() {
+    return `
+      <span class="dl-puntero-texto">El método, los diccionarios y el contrato de la API están en la
+      pestaña <strong>Guía</strong>, con instrucciones para personas y para agentes.</span>
+      <button type="button" class="dl-puntero-btn" data-ir-guia="1">Abrir la guía</button>
+    `;
   }
 
   function pintar() {
     const autor = document.getElementById("creditos-autor");
-    const descargas = document.getElementById("creditos-descargas");
+    const guia = document.getElementById("creditos-guia");
+    const puntero = document.getElementById("creditos-puntero");
     if (autor) autor.innerHTML = htmlAutor();
-    if (descargas) {
-      descargas.innerHTML = htmlDescargas();
-      const boton = descargas.querySelector("[data-ir-uso]");
+    if (guia) {
+      guia.innerHTML = htmlGuia();
+      const boton = guia.querySelector("[data-ir-uso]");
       if (boton) {
-        boton.addEventListener("click", () => llevarAUso(boton.dataset.irUso === "agentes"));
+        boton.addEventListener("click", () => {
+          const seccion = document.getElementById("guia-como-usar");
+          irA("guia");
+          if (window.SIFComoUsar) window.SIFComoUsar.activar(1, false);
+          if (seccion && typeof seccion.scrollIntoView === "function") {
+            seccion.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
       }
+    }
+    if (puntero) {
+      puntero.innerHTML = htmlPuntero();
+      const boton = puntero.querySelector("[data-ir-guia]");
+      if (boton) boton.addEventListener("click", () => irA("guia"));
     }
   }
 

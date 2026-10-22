@@ -5494,3 +5494,73 @@ kbd {
 @media (max-width: 900px) {
   .uso-cols { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* ============================================================================
+   PESTAÑA GUÍA (2026-10-22)
+   El contenido de «cómo usar» dejó de vivir dentro de Información y Descargas:
+   tiene pestaña propia, con las instrucciones para personas, para agentes y los
+   archivos auditables. Aquí sólo lo que es suyo; las tarjetas de archivo
+   (.dl-uso*) se comparten con el puntero de Descargas.
+   ============================================================================ */
+
+.guia-hero {
+  display: block;
+  padding: 22px 26px 20px;
+}
+
+.guia-title {
+  margin: 6px 0 0;
+  color: var(--text-primary);
+  font-size: clamp(20px, 2.4vw, 26px);
+  letter-spacing: -0.3px;
+}
+
+.guia-hero .info-lead { max-width: 980px; }
+
+/* Puntero de Descargas hacia la Guía: una línea, no un bloque de enlaces. */
+.dl-guia-puntero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-secondary);
+}
+
+.dl-puntero-texto {
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.dl-puntero-texto strong { color: var(--text-primary); }
+
+.dl-puntero-btn {
+  flex: 0 0 auto;
+  padding: 6px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  background: var(--bg-tertiary);
+  color: var(--accent-mint-text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.dl-puntero-btn:hover {
+  border-color: var(--accent-mint-text);
+  background: var(--accent-mint-dim);
+}
+
+.dl-puntero-btn:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+@media (max-width: 720px) {
+  .dl-guia-puntero { flex-direction: column; align-items: flex-start; }
+}
