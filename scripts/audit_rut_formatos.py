@@ -42,6 +42,19 @@ RE_RUN = re.compile(r"^\d{4,8}(-[\dKk])?$")  # RUNs de fondo, con o sin DV
 RE_PH = re.compile(r"^\d{1,3}(-[\dKk])?$")  # placeholder numérico corto del origen ('0', '1', '90', '1-9') con o sin DV
 
 
+def _es_columna_rut(nombre, incluir_dv: bool = False) -> bool:
+    """Columnas bajo la convención de RUT, con cualquier prefijo admitido.
+
+    `nro_rut*` es el nombre que usa la ficha de la CMF para el RUT del emisor
+    (Circular 1835, campo tipo "r": 9 cifras de cuerpo + DV). Antes esta familia
+    se quedaba fuera del guardián y el defecto pasaba en verde.
+    """
+    n = str(nombre)
+    if incluir_dv and n == "dv":
+        return True
+    return n.startswith("rut") or n.startswith("nro_rut") or n.startswith("run_")
+
+
 def _check_valor(nombre: str, v) -> str | None:
     """Devuelve un mensaje de error (o None) para un valor de la columna."""
     if v is None:
@@ -59,11 +72,11 @@ def _check_valor(nombre: str, v) -> str | None:
             return None
         return f"valor no reconocido: {s!r}"
     c, dv = n
-    if nombre == "rut":
+    if nombre in ("rut", "nro_rut"):
         if RE_A.match(s):
-            return f"rut con puntos: {s!r} (debe ser cuerpo)"
+            return f"{nombre} con puntos: {s!r} (debe ser cuerpo)"
         if RE_B.match(s):
-            return f"rut con DV: {s!r} (el DV va en rut_dv)"
+            return f"{nombre} con DV: {s!r} (el DV va en {nombre}_dv)"
         return None
     if nombre == "rut_dv" or nombre.endswith("_dv"):
         if RE_A.match(s):
@@ -84,7 +97,7 @@ def _check_valor(nombre: str, v) -> str | None:
 
 
 def _fam_rut(cols) -> set[str]:
-    return {c for c in cols if c == "dv" or str(c).startswith("rut") or str(c).startswith("run")}
+    return {c for c in cols if _es_columna_rut(c, incluir_dv=True)}
 
 
 def auditar_parquet(ruta: Path) -> list[str]:
@@ -92,7 +105,7 @@ def auditar_parquet(ruta: Path) -> list[str]:
     errores: list[str] = []
     t = pq.read_table(ruta)
     for f in t.schema:
-        if not (f.name.startswith("rut") or f.name.startswith("run_")):
+        if not _es_columna_rut(f.name):
             continue
         if str(f.type) not in ("string", "large_string"):
             continue  # numérico = cuerpo (C) o nulo: fuera de la auditoría de texto
@@ -130,7 +143,7 @@ def auditar_json(ruta: Path) -> list[str]:
         return []
     errores: list[str] = []
     for nombre in datos[0]:
-        if not (str(nombre).startswith("rut") or str(nombre).startswith("run_")):
+        if not _es_columna_rut(nombre):
             continue
         if nombre in ("rut_cuerpo", "rut_formateado"):
             errores.append(f"columna retirada presente: {nombre}")

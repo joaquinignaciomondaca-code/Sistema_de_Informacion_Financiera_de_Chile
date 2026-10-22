@@ -531,6 +531,20 @@ def audit_cabeceras():
             fail(f"la CSP del despliegue no incluye {directiva}")
     if not any(clave not in generales for clave in esperadas) and all(d in politica for d in ("frame-ancestors 'none'", "object-src 'none'", "base-uri 'self'")):
         print(f"  [OK] {len(esperadas) + 1} cabeceras en las dos copias de vercel.json, con CSP mínima")
+    # Decisión D1: GitHub Pages publica la API y Vercel la redirige. Si alguien
+    # quita el redirect, Vercel serviría una copia con otro origen y la URL
+    # canónica dejaría de ser única.
+    API_CANONICA = "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/"
+    redirecciones = config.get("redirects") or []
+    api = next((r for r in redirecciones if r.get("source") == "/api/(.*)"), None)
+    if api is None:
+        fail("vercel.json no redirige /api/* a la URL canónica (decisión D1)")
+    elif not str(api.get("destination", "")).startswith(API_CANONICA):
+        fail(f"el redirect de /api/* no apunta a Pages: {api.get('destination')}")
+    elif api.get("permanent"):
+        fail("el redirect de /api/* es permanente: quedaría cacheado en los clientes y no se podría revertir")
+    else:
+        print("  [OK] /api/* en Vercel redirige (307) a la URL canónica de Pages")
 
 
 def main():

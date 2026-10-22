@@ -10,6 +10,8 @@ env/
 *.csv
 # Excepción: los artefactos de reproducibilidad del sitio son chicos y se publican
 !docs/reproducibilidad/*.csv
+# Excepción: el contrato de la API (tabla de reconciliación) se versiona con el código
+!docs/api/*.csv
 docs/outputs/**/*.csv
 seguros/circular_1835_cartera/outputs/**/*.csv
 
@@ -42,3 +44,8 @@ node_modules/
 
 # Snapshots académicos locales (se construyen, no se versionan)
 snapshot/
+
+# Las excepciones de arriba quedan anuladas por los patrones que vienen después
+# (*.log, *.csv), así que la evidencia que sí se publica va al final.
+# Evidencia de la prueba de máquina limpia (tarea 1a.8).
+!docs/api/prueba_maquina_limpia.log
