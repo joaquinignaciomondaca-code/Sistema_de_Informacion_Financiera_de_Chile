@@ -25,15 +25,64 @@
     github: "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile",
     linkedin: "https://www.linkedin.com/in/joaqu%C3%ADnmondaca/",
 
-    // Archivos generados por scripts/construir_reproducibilidad.py
-    reproducibilidad: [
-      { archivo: "reproducibilidad/diccionario.csv", texto: "Diccionario de datos (CSV)" },
-      { archivo: "reproducibilidad/diccionario.json", texto: "Diccionario de datos (JSON)" },
-      { archivo: "reproducibilidad/inventario_fuentes.csv", texto: "Inventario de archivos con SHA-256" },
-      { archivo: "reproducibilidad/cobertura_por_periodo.csv", texto: "Cobertura por periodo y tabla" },
-      { archivo: "reproducibilidad/validacion_resumen.csv", texto: "Resultados de validación" },
-      { archivo: "reproducibilidad/README.md", texto: "Qué es cada archivo y cómo se genera" }
-    ]
+    // Archivos generados por scripts/construir_reproducibilidad.py.
+    // Van en dos grupos porque no se consumen igual: los CSV se abren en una
+    // planilla y el JSON y los hashes los lee un script. Mezclarlos en una sola
+    // lista de enlaces dejaba al visitante sin saber cuál le servía.
+    reproducibilidad: {
+      leer: [
+        {
+          archivo: "reproducibilidad/diccionario.csv",
+          nombre: "Diccionario de datos",
+          detalle: "Qué significa cada columna, en qué unidad y con qué criterio contable.",
+          formato: "CSV"
+        },
+        {
+          archivo: "reproducibilidad/cobertura_por_periodo.csv",
+          nombre: "Cobertura por periodo y tabla",
+          detalle: "Hasta qué mes llega cada conjunto, sin suponerlo por el resto.",
+          formato: "CSV"
+        },
+        {
+          archivo: "reproducibilidad/validacion_resumen.csv",
+          nombre: "Resultados de validación",
+          detalle: "Qué comprobaciones pasó cada conjunto y con qué tolerancia.",
+          formato: "CSV"
+        },
+        {
+          archivo: "reproducibilidad/README.md",
+          nombre: "Qué es cada archivo",
+          detalle: "El método: de dónde sale cada cifra y cómo se regenera.",
+          formato: "MD"
+        }
+      ],
+      maquinas: [
+        {
+          archivo: "reproducibilidad/diccionario.json",
+          nombre: "Diccionario de datos",
+          detalle: "El mismo diccionario, con tipos, para leerlo desde código.",
+          formato: "JSON"
+        },
+        {
+          archivo: "reproducibilidad/inventario_fuentes.csv",
+          nombre: "Inventario con SHA-256",
+          detalle: "Cada archivo publicado con su hash, para verificar una descarga.",
+          formato: "CSV"
+        },
+        {
+          archivo: "api/v1/catalog.json",
+          nombre: "Contrato de la API",
+          detalle: "Los objetos publicados con filas, corte, clave y ruta a su esquema.",
+          formato: "JSON"
+        },
+        {
+          archivo: "llms.txt",
+          nombre: "Guía para agentes",
+          detalle: "Qué hay, cómo se consulta y qué no suponer, en una página.",
+          formato: "TXT"
+        }
+      ]
+    }
   };
 
   function escapar(texto) {
@@ -48,10 +97,25 @@
     return `<a href="${escapar(href)}" target="_blank" rel="noopener noreferrer">${escapar(texto)}</a>`;
   }
 
-  function enlacesReproducibilidad() {
-    return CREDITOS.reproducibilidad
-      .map((r) => `<li><a class="creditos-link" href="${escapar(r.archivo)}" download>${escapar(r.texto)}</a></li>`)
-      .join("");
+  function itemUso(r) {
+    return `<li>
+        <a class="dl-uso-item" href="${escapar(r.archivo)}" download>
+          <span class="dl-uso-texto">
+            <span class="dl-uso-nombre">${escapar(r.nombre)}</span>
+            <span class="dl-uso-detalle">${escapar(r.detalle)}</span>
+          </span>
+          <span class="dl-chip">${escapar(r.formato)}</span>
+        </a>
+      </li>`;
+  }
+
+  function grupoUso(id, titulo, nota, items) {
+    return `
+      <section class="dl-uso" aria-labelledby="${id}">
+        <h4 id="${id}">${escapar(titulo)}</h4>
+        <p class="dl-uso-nota">${escapar(nota)}</p>
+        <ul class="dl-creditos-archivos dl-uso-list">${items.map(itemUso).join("")}</ul>
+      </section>`;
   }
 
   /* ── Autoría: pestaña Información ──────────────────────────────────────── */
@@ -71,29 +135,74 @@
     `;
   }
 
-  /* ── Reproducibilidad y código: pestaña Descargas ──────────────────────── */
+  /* ── Reproducibilidad y código: pestaña Guía ──────────────────────────── */
 
-  function htmlDescargas() {
+  function htmlGuia() {
+    const R = CREDITOS.reproducibilidad;
     return `
       <div class="dl-creditos-head">
         <div>
           <h3>Reproducibilidad y código</h3>
-          <p>Lo publicado se puede auditar: diccionario de datos, inventario con SHA-256, cobertura por
-          periodo y resultados de validación. El periodo de cada conjunto está en su ficha de descarga.</p>
+          <p>Lo publicado se puede auditar: de dónde sale cada cifra, qué comprobaciones pasó y cómo
+          se regenera. Los archivos vienen en dos grupos porque no se consumen igual.</p>
         </div>
       </div>
-      <div class="dl-creditos-enlaces">
-        ${enlace(CREDITOS.github, "Código y metodología")}
+      <div class="dl-usos">
+        ${grupoUso("dl-uso-leer", "Para leer",
+          "Se abren en Excel, Numbers o cualquier hoja de cálculo.", R.leer)}
+        ${grupoUso("dl-uso-maquinas", "Para programas y agentes de IA",
+          "JSON, hashes y el contrato: pensados para consumirse con código.", R.maquinas)}
       </div>
-      <ul class="dl-creditos-archivos">${enlacesReproducibilidad()}</ul>
+      <p class="dl-uso-pie">
+        Se regeneran con <code>scripts/construir_reproducibilidad.py</code>; el método completo
+        está en <a href="reproducibilidad/README.md">reproducibilidad/README.md</a> y el código en
+        ${enlace(CREDITOS.github, "GitHub")}.
+        ¿Un agente que no ejecuta código? También hay
+        <button type="button" class="dl-uso-enlace" data-ir-uso="agentes">SDK y servidor MCP</button>.
+      </p>
+    `;
+  }
+
+  /* La guía vive en su propia pestaña. Desde Descargas se llega con un puntero:
+   * quien está eligiendo un archivo necesita saber dónde está el método, no
+   * leerlo entero aquí. Un `href="#…"` no cambia de pestaña, así que la
+   * navegación se hace por código. */
+  function irA(pestana) {
+    if (window.switchMainTab) window.switchMainTab(pestana);
+  }
+
+  function htmlPuntero() {
+    return `
+      <span class="dl-puntero-texto">El método, los diccionarios y el contrato de la API están en la
+      pestaña <strong>Guía</strong>, con instrucciones para personas y para agentes.</span>
+      <button type="button" class="dl-puntero-btn" data-ir-guia="1">Abrir la guía</button>
     `;
   }
 
   function pintar() {
     const autor = document.getElementById("creditos-autor");
-    const descargas = document.getElementById("creditos-descargas");
+    const guia = document.getElementById("creditos-guia");
+    const puntero = document.getElementById("creditos-puntero");
     if (autor) autor.innerHTML = htmlAutor();
-    if (descargas) descargas.innerHTML = htmlDescargas();
+    if (guia) {
+      guia.innerHTML = htmlGuia();
+      const boton = guia.querySelector("[data-ir-uso]");
+      if (boton) {
+        boton.addEventListener("click", () => {
+          const seccion = document.getElementById("guia-como-usar");
+          irA("guia");
+          if (window.SIFComoUsar) window.SIFComoUsar.activar(1, false);
+          if (seccion && typeof seccion.scrollIntoView === "function") {
+            seccion.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        });
+      }
+    }
+    if (puntero) {
+      puntero.innerHTML = htmlPuntero();
+      const boton = puntero.querySelector("[data-ir-guia]");
+      if (boton) boton.addEventListener("click", () => irA("guia"));
+    }
   }
 
   global.SIFCreditos = { datos: CREDITOS, pintar };

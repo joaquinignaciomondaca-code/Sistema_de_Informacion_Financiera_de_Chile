@@ -1,4 +1,4 @@
-# Test de contrato · 2026-10-22T07:50:43
+# Test de contrato · 2026-10-22T17:33:33
 
 OK    1d.1 rutas · 908 rutas por HTTP, 0 × 404 (0.6 s)
 OK    1d.2 esquema · 1509 columnas comparadas con DESCRIBE
@@ -10,5 +10,5 @@ OK    1d.6 bytes y sha256 · 728 archivos verificados y 1 descargado por HTTP
 OK    1d.7 cobertura · 728 archivos y 89 filas del manifiesto encajan con los 90 objetos (110 de banca vía bancos_cmf_lineas, 4 objetos vacíos declarados)
 AVISO 1d.2 · 1 columnas declaradas sin un solo valor (toleradas por estar declaradas): agf_lista_entidades.codigo_cmf
 
-Duración: 3.3 s · comprobaciones: 8 · fallos: 0
+Duración: 3.2 s · comprobaciones: 8 · fallos: 0
 TEST DE CONTRATO: lo publicado cumple lo que promete
