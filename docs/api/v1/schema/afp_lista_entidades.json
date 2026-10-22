@@ -1,4 +1,6 @@
 {
+ "adaptacion": false,
+ "atribucion": "Fuente: Superintendencia de Pensiones. Reproducción autorizada citando la fuente.",
  "columnas": [
   {
    "criterio_contable": "No aplica",
@@ -36,11 +38,14 @@
  "contrato": "sif-api/esquema",
  "estado": "publicado",
  "foraneas": [],
+ "fuente": "SPensiones",
  "id": "afp_lista_entidades",
+ "licencia_estado": "verificada",
  "primaryKey": [
   "id"
  ],
  "sector": "pensiones",
  "titulo": "afp.lista_administradoras",
+ "url_terminos": "https://www.spensiones.cl/portal/institucional/594/w3-article-5885.html",
  "version": "1.0.0"
 }

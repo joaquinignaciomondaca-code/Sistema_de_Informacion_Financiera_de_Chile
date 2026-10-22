@@ -116,17 +116,30 @@ La ley entra en vigencia el **1 de diciembre de 2026**, es decir en 40 días. Ha
 
 Un sexto punto, menor pero de cumplimiento: el límite de 5 series por segundo del BCCh frente a `max_workers=6`.
 
-## 5. Ruta propuesta
+## 5. Ruta ejecutada el 2026-10-22
 
-- [ ] **5.1 · Atribución por recurso.** Añadir `fuente`, `fuente_url` y `atribucion` a los 90 objetos de `catalog.json`, `datapackage.json` y `schema/*.json`, y mostrarlos en la web. Regenerar el contrato.
-- [ ] **5.2 · Adaptaciones.** Marcar `macro_inflacion_implicita` (y cualquier otro cálculo) con `es_adaptacion: true` y la nota de propiedad del Banco.
-- [ ] **5.3 · Minimización.** Retirar `email_contacto` de `fintech_rpsf_lista_entidades`; decidir si se conserva con máscara. Requiere regenerar catálogo, esquema, particiones y resultados.
-- [ ] **5.4 · Aviso de privacidad y derechos.** Página propia en el sitio (política, base de licitud, fuente, plazo, canal ARCOP) y archivo `PRIVACIDAD.md` enlazado desde la Guía. Sin esto, la publicación de las 36 personas naturales y los 11 corredores queda sin el deber de transparencia del art. 14 ter.
-- [ ] **5.5 · `DATA_LICENSE.md` corregido.** CMF y BCCh en `verificada` con la cita textual y la URL; SPensiones en `verificada` solo para el listado de AFP, con el bloqueo del BDP documentado; SUSESO retirada de la tabla y anotada como enlace, no como fuente de datos.
-- [ ] **5.6 · Límite del BCCh.** `max_workers=4` en `macro/scripts/series_bcch.py`.
-- [ ] **5.7 · Registro de tratamiento.** Documento interno con finalidades, base de licitud, categorías, destinatarios y plazo, para poder acreditarlo ante la Agencia.
+- [x] **5.1 · Atribución por recurso.** Añadir `fuente`, `fuente_url` y `atribucion` a los 90 objetos de `catalog.json`, `datapackage.json` y `schema/*.json`, y mostrarlos en la web. Regenerar el contrato.
+- [x] **5.2 · Adaptaciones.** Marcar `macro_inflacion_implicita` (y cualquier otro cálculo) con `es_adaptacion: true` y la nota de propiedad del Banco.
+- [x] **5.3 · Minimización.** Retirar `email_contacto` de `fintech_rpsf_lista_entidades`; decidir si se conserva con máscara. Requiere regenerar catálogo, esquema, particiones y resultados.
+- [x] **5.4 · Aviso de privacidad y derechos.** Página propia en el sitio (política, base de licitud, fuente, plazo, canal ARCOP) y archivo `PRIVACIDAD.md` enlazado desde la Guía. Sin esto, la publicación de las 36 personas naturales y los 11 corredores queda sin el deber de transparencia del art. 14 ter.
+- [x] **5.5 · `DATA_LICENSE.md` corregido.** CMF y BCCh en `verificada` con la cita textual y la URL; SPensiones en `verificada` solo para el listado de AFP, con el bloqueo del BDP documentado; SUSESO retirada de la tabla y anotada como enlace, no como fuente de datos.
+- [x] **5.6 · Límite del BCCh.** `max_workers=4` en `macro/scripts/series_bcch.py`.
+- [x] **5.7 · Registro de tratamiento.** Documento interno con finalidades, base de licitud, categorías, destinatarios y plazo, para poder acreditarlo ante la Agencia.
 
-Los pasos 5.1 y 5.2 son los que cierran la condición de las fuentes; 5.3, 5.4 y 5.7 son los que cierran el riesgo de la Ley 21.719; 5.5 y 5.6 son correcciones de exactitud.
+Los pasos 5.1 y 5.2 cierran la condición de las fuentes; 5.3, 5.4 y 5.7 cierran el
+riesgo de la Ley 21.719; 5.5 y 5.6 son correcciones de exactitud.
+
+**Qué cambió, en concreto:**
+
+| Paso | Implementación |
+|---|---|
+| 5.1 | `pipelines/api/fuentes.py` define fuente, cita, URL del documento y estado; `build_contrato.py` los publica en `catalog.json` y en cada `schema/*.json`; `build_api.py` en `sources[].sif_cita` y `sif.atribucion`; `build_download_catalog.py` en el catálogo de descargas, y la web los muestra en cada tarjeta y en la Guía |
+| 5.2 | `macro_inflacion_implicita` se publica con `adaptacion: true` y `nota_adaptacion` |
+| 5.3 | `privacidad.retirar_contacto()` y el publicador de fintech dejan de escribir `email_contacto`; `enmascarar_identificadores.py --apply` la retiró de lo publicado (253 direcciones). Quedan 0 referencias en el contrato |
+| 5.4 | `PRIVACIDAD.md` y `docs/privacidad.html`, enlazados desde Información, la Guía y la nota de uso |
+| 5.5 | `DATA_LICENSE.md` reescrito: CMF, BCCh y SPensiones en `verificada` con cita textual y URL; SUSESO retirada como fuente |
+| 5.6 | `series_bcch.py` con `max_workers=4` y el motivo escrito en el código |
+| 5.7 | Registro de actividades de tratamiento en el apartado 9 de `PRIVACIDAD.md` y en la página del sitio |
 
 ## 6. Lo que no se publica y no debe publicarse
 

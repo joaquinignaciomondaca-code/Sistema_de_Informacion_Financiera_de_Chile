@@ -1,4 +1,6 @@
 {
+ "adaptacion": false,
+ "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
  "columnas": [
   {
    "criterio_contable": "No aplica",
@@ -98,7 +100,9 @@
    "tasa": 0.5473
   }
  ],
+ "fuente": "CMF",
  "id": "patrimonios_separados_balance",
+ "licencia_estado": "verificada",
  "primaryKey": [
   "archivo",
   "codigo_patrimonio",
@@ -108,5 +112,6 @@
  ],
  "sector": "patrimonios_separados",
  "titulo": "patrimonios_separados.balance",
+ "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
  "version": "1.0.0"
 }

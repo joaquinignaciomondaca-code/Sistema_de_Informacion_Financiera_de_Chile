@@ -1,4 +1,6 @@
 {
+ "adaptacion": false,
+ "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
  "columnas": [
   {
    "criterio_contable": "No aplica",
@@ -178,7 +180,9 @@
    "tasa": 1.0
   }
  ],
+ "fuente": "CMF",
  "id": "fi_opciones",
+ "licencia_estado": "verificada",
  "primaryKey": [
   "valor_mercado_unitario_prima",
   "inversion_primas_miles_mf",
@@ -187,5 +191,6 @@
  ],
  "sector": "fi",
  "titulo": "fi.opciones",
+ "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
  "version": "1.0.0"
 }
