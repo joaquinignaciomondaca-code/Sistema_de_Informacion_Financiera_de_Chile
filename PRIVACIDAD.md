@@ -50,13 +50,18 @@ de un nemotécnico. Por eso la tabla publica dos columnas que acompañan a
 
 | Columna | Tipo | Qué contiene |
 |---|---|---|
-| `emisor_id` | texto | Seudónimo estable del emisor (`EMI-…`), igual para el mismo emisor en cualquier trimestre y fondo. Permite sumar su exposición, seguir su serie y medir concentración sin publicar su RUT |
 | `rut_omitido_por_ley` | booleano | Verdadero cuando el RUT de esa fila se retiró por esta regla; falso cuando el RUT se publica tal cual |
+| `emisor_id` | texto | Seudónimo estable (`EMI-…`) que **reemplaza al RUT omitido**: igual para la misma persona en cualquier trimestre y fondo, permite sumar su exposición, seguir su serie y medir concentración sin publicar su RUT. Es **nulo cuando el RUT se publica**, es decir en todas las personas jurídicas: ahí el RUT ya es la clave |
+
+Las dos columnas se complementan: `emisor_id` no es nulo exactamente cuando
+`rut_omitido_por_ley` es verdadero (202.835 filas, 31.215 seudónimos). Para
+agrupar por emisor sin mirar de qué tipo es, basta `COALESCE(rut_emisor, emisor_id)`;
+la compuerta de privacidad verifica esa correspondencia.
 
 `emisor_id` es un seudónimo, no una anonimización: el vínculo con el RUT existe en
 una tabla privada que no se publica, y el artículo 2 letra k de la Ley 21.719
 reserva la palabra «anonimización» para el procedimiento irreversible. Por eso la
-segunda columna se llama `rut_omitido_por_ley` y no `anonimizado_por_ley`.
+bandera se llama `rut_omitido_por_ley` y no `anonimizado_por_ley`.
 
 **Cambiar de criterio es una decisión de configuración, no de código.** La variable
 de entorno `SIF_PUBLICAR_RUT_EMISOR` admite dos valores: `suprimir` (por omisión,
