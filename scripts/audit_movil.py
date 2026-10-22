@@ -24,6 +24,8 @@ Qué comprueba:
   10. El mapa relacional escucha Pointer Events y acepta pellizco.
   11. La cabecera publica su altura real en `--sif-header-h`.
   12. Elegir una tabla cierra el cajón.
+  13. El aviso de «esto se ve mejor en un computador» existe, se cierra y sólo
+      aparece en pantalla pequeña.
 
 Uso:
     python3 scripts/audit_movil.py                 # informe y código de salida
@@ -43,7 +45,7 @@ ERD = RAIZ / "docs" / "js" / "erd_graph.js"
 SIDEBAR = RAIZ / "docs" / "js" / "sidebar.js"
 SHELL = RAIZ / "docs" / "js" / "ux_shell.js"
 
-TOTAL = 12
+TOTAL = 13
 
 
 # ---------------------------------------------------------------------------
@@ -239,6 +241,27 @@ def comprobar(css_texto: str, html_texto: str, erd_texto: str,
     if "if (this.esMovil()) this.cerrarCajon();" not in sidebar_texto:
         fallos.append("12 cajón: elegir una tabla no lo cierra")
 
+    # 13 · aviso de teléfono
+    if 'id="aviso-movil"' not in html_texto:
+        fallos.append("13 aviso: falta el aviso que recomienda usar un computador")
+    elif 'id="aviso-movil-cerrar"' not in html_texto:
+        fallos.append("13 aviso: no se puede cerrar")
+    if "aviso-movil" not in shell_texto or "initAvisoMovil" not in shell_texto:
+        fallos.append("13 aviso: el JS no lo muestra ni recuerda el descarte")
+    if "sif-aviso-movil-cerrado" not in shell_texto:
+        fallos.append("13 aviso: el descarte no se guarda en el navegador")
+    # El valor base es el de fuera de todo media query, no el último del archivo.
+    oculto_base = None
+    for cond, sel, prop, v in lista:
+        if sel == ".aviso-movil" and prop == "display" and not cond:
+            oculto_base = v
+    if oculto_base != "none":
+        fallos.append("13 aviso: se muestra también en escritorio; el estilo base debe ocultarlo")
+    visible = [v for cond, sel, p, v in lista
+               if sel == ".aviso-movil" and p == "display" and cumple(cond, 900)]
+    if "flex" not in visible:
+        fallos.append("13 aviso: no aparece en pantalla pequeña")
+
     return fallos, avisos
 
 
@@ -259,6 +282,7 @@ def autoprueba(textos: dict[str, str]) -> int:
         ("7 tabla", {"html": re.sub(r' data-label="[^"]*"', "", textos["html"])}),
         ("9 táctil", {"css": caso.replace("@media (pointer: coarse)", "@media (pointer: none)")}),
         ("10 mapa", {"erd": textos["erd"].replace('addEventListener("pointerdown"', 'addEventListener("mousedown"')}),
+        ("13 aviso", {"html": textos["html"].replace('id="aviso-movil-cerrar"', 'id="aviso-movil-ok"')}),
     ]
     fallos_prueba = []
     for esperada, cambio in mutaciones:

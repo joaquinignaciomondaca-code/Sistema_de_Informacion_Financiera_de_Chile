@@ -170,6 +170,22 @@ async function correr() {
   check("el explorador fuera de pantalla no recibe foco (inert)",
     sidebar.getAttribute("aria-hidden") === "true");
 
+  // Aviso de teléfono: aparece, se cierra y el descarte queda guardado.
+  const aviso = document.getElementById("aviso-movil");
+  const cerrarAviso = document.getElementById("aviso-movil-cerrar");
+  check("el aviso de computador aparece en un teléfono", aviso && aviso.hidden === false);
+  if (aviso && cerrarAviso) {
+    cerrarAviso.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+    await esperar(20);
+    check("el aviso se cierra con su botón", aviso.hidden === true);
+    check("el descarte se recuerda en el navegador",
+      window.localStorage.getItem("sif-aviso-movil-cerrado") === "1");
+    check("al cerrarlo el foco no queda en el vacío",
+      document.activeElement === document.getElementById("main-content"));
+  } else {
+    check("el aviso se cierra con su botón", false, "falta el aviso o su botón");
+  }
+
   const fallos = resultados.filter((r) => !r.ok);
   for (const r of resultados) {
     console.log(`${r.ok ? "OK  " : "FALLA"}  ${r.nombre}${r.extra ? "  -> " + r.extra : ""}`);
