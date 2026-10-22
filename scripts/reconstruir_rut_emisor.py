@@ -1,24 +1,19 @@
-"""Reconstruye `emisor_id` y `rut_omitido_por_ley` en fi.cartera_nacional.
+"""Reconstruye la columna `rut_emisor` de fi.cartera_nacional.
 
-El RUT de las personas naturales se suprimió en el commit `3b88beb` y desde
-entonces no está en el Parquet publicado. Por eso el seudónimo del emisor no se
-puede recalcular desde el archivo publicada: el RUT ya no existe ahí. Este script
-lee la versión **anterior** al commit de privacidad desde el historial de git, la
-cruza fila por fila con la versión publicada y escribe las dos columnas que
-faltan, sin tocar `rut_emisor` ni `emisor_tipo`:
+La regla es una sola columna: el RUT del emisor si es una persona jurídica y un
+seudónimo estable `EMI-…` en su lugar si es una persona natural. El RUT de esas
+personas se suprimió en el commit `3b88beb` y desde entonces no está en el
+Parquet publicado, así que el seudónimo no se puede recalcular desde el archivo:
+este script lee la versión **anterior** al commit de privacidad desde el historial
+de git, la cruza fila por fila con la versión publicada y escribe:
 
-  emisor_id            seudónimo que reemplaza al RUT omitido (EMI-…), calculado
-                       desde el RUT original. Permite seguir a esa persona natural
-                       entre trimestres y fondos sin publicar su RUT. Queda nulo en
-                       las personas jurídicas, que conservan su RUT publicado.
-  rut_omitido_por_ley  verdadero cuando el RUT de esa fila se retiró por la regla
-                       y falso cuando se publica tal cual.
+  rut_emisor            el RUT original, o el seudónimo EMI-… si esa fila se omitió
+  rut_omitido_por_ley   verdadero cuando rut_emisor trae el seudónimo
 
-Se ejecuta una sola vez (es idempotente: si las columnas ya están completas, no
-reescribe). Uso:
+Es idempotente: si las columnas ya están como deben, no reescribe. Uso:
 
-    python scripts/reconstruir_emisor_id.py            # informa
-    python scripts/reconstruir_emisor_id.py --apply    # escribe
+    python scripts/reconstruir_rut_emisor.py            # informa
+    python scripts/reconstruir_rut_emisor.py --apply    # escribe
 
 Si el entorno define `SIF_PRIV_SALT`, el seudónimo deja de ser reproducible por
 terceros; sin la variable queda determinista, igual que `property_id`.
@@ -81,34 +76,46 @@ def procesar(ruta: Path, apply: bool) -> tuple[bool, str]:
     # El RUT publicado, cuando existe, tiene que ser el mismo del histórico:
     # si no, el archivo se regeneró desde otra fuente y no corresponde cruzarlo.
     distintos = sum(1 for actual, original in zip(rut_publicado, rut_original)
-                    if actual is not None and str(actual) != str(original))
+                    if actual is not None and not privacidad.es_seudonimo(actual)
+                    and str(actual) != str(original))
     if distintos:
         return False, f"{distintos:,} RUT publicados no coinciden con el histórico"
 
     omitidos = [
-        original is not None and actual is None
-        and tipo == privacidad.TIPO_NATURAL
+        original is not None and tipo == privacidad.TIPO_NATURAL
+        and (actual is None or privacidad.es_seudonimo(actual))
         for actual, original, tipo in zip(rut_publicado, rut_original, tipos)
     ]
-    emitidos = [
-        privacidad.emisor_id(valor, privacidad.sal_privada()) if omitido else None
+    seudonimos = [
+        privacidad.seudonimo_emisor(valor, privacidad.sal_privada()) if omitido else None
         for valor, omitido in zip(rut_original, omitidos)
     ]
 
-    previos = (publicado.column(privacidad.COLUMNA_EMISOR_ID).to_pylist()
-               if privacidad.COLUMNA_EMISOR_ID in nombres else None)
-    if previos == emitidos and privacidad.COLUMNA_RUT_OMITIDO in nombres:
+    # Una sola columna de identificador: el RUT si se publica, el seudónimo si no.
+    valores = [seudonimo if omitido else original
+               for seudonimo, original, omitido in zip(seudonimos, rut_original, omitidos)]
+    # La columna conserva el lugar que tenía en el esquema del publicador, para que
+    # un archivo reconstruido y uno generado desde la fuente sean idénticos.
+    posicion = list(historico.column_names).index("rut_emisor")
+    previos = publicado.column("rut_emisor").to_pylist()
+    ya_listo = (previos == valores and privacidad.COLUMNA_RUT_OMITIDO in nombres
+                and "emisor_id" not in nombres
+                and list(nombres).index("rut_emisor") == posicion)
+    if ya_listo:
         return False, "ya aplicado"
 
     tabla = publicado
-    for nombre in (privacidad.COLUMNA_EMISOR_ID, privacidad.COLUMNA_RUT_OMITIDO):
+    for nombre in ("rut_emisor", privacidad.COLUMNA_RUT_OMITIDO, "emisor_id"):
         if nombre in tabla.column_names:
             tabla = tabla.drop_columns([nombre])
-    tabla = tabla.append_column(privacidad.COLUMNA_EMISOR_ID, pa.array(emitidos, type=pa.string()))
+    tabla = tabla.append_column("rut_emisor", pa.array(valores, type=pa.string()))
     tabla = tabla.append_column(privacidad.COLUMNA_RUT_OMITIDO, pa.array(omitidos, type=pa.bool_()))
+    orden = [c for c in tabla.column_names if c != "rut_emisor"]
+    orden.insert(posicion, "rut_emisor")
+    tabla = tabla.select(orden)
     escribir(ruta, tabla) if apply else None
-    return True, (f"{sum(omitidos):,} filas con RUT omitido y emisor_id · "
-                  f"{sum(1 for v in emitidos if v):,} seudónimos")
+    return True, (f"{sum(omitidos):,} filas con seudónimo · "
+                  f"{sum(1 for v in valores if v):,} identificadores")
 
 
 def main() -> int:
