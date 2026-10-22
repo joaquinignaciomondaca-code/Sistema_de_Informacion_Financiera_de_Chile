@@ -231,9 +231,32 @@
     }
   }
 
+  /* La cabecera tiene alto variable (título largo, tipografía del sistema,
+   * botón de 44 px en celular). El cajón del explorador y el fondo oscurecido
+   * necesitan saber dónde empieza, así que se publica como variable CSS en vez
+   * de repetir el 45 px mágico en tres reglas. */
+  function medirCabecera() {
+    const cabecera = document.querySelector("header");
+    if (!cabecera) return;
+    const alto = Math.round(cabecera.getBoundingClientRect().height);
+    if (alto > 0) {
+      document.documentElement.style.setProperty("--sif-header-h", alto + "px");
+    }
+  }
+
+  function initCabecera() {
+    medirCabecera();
+    window.addEventListener("resize", medirCabecera);
+    window.addEventListener("orientationchange", () => setTimeout(medirCabecera, 150));
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(medirCabecera).catch(() => {});
+    }
+  }
+
   function boot() {
     initShortcuts();
     initEngineStatus();
+    initCabecera();
   }
 
   if (document.readyState === "loading") {

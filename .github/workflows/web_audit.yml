@@ -369,6 +369,23 @@ jobs:
           echo "::notice title=XSS celdas::$(tail -n 1 xss.log)"
           exit $n
 
+      # El teléfono es la pantalla más común y la única que no se puede revisar
+      # a ojo en este entorno: no hay navegador en el runner. Estas dos compuertas
+      # convierten la ruta de `docs/notas/ruta_movil_2026-10-22.md` en reglas que
+      # se ejecutan solas. La primera lee CSS, marcado y eventos; la segunda —con
+      # jsdom, instalado en el paso anterior— toca el cajón del explorador.
+      - name: Auditar la interfaz en pantalla pequeña
+        run: |
+          set +e
+          python scripts/audit_movil.py --autoprueba > movil_auto.log 2>&1; n0=$?
+          python scripts/audit_movil.py > movil.log 2>&1; n=$?
+          node scripts/audit_movil_dom.js > movil_dom.log 2>&1; n2=$?
+          grep -h -E "^(FALLA|\[FALLA\])" movil_auto.log movil.log movil_dom.log | head -12 \
+            | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Móvil::$linea"; done
+          echo "::notice title=Móvil::$(tail -n 1 movil.log)"
+          echo "::notice title=Móvil (cajón)::$(tail -n 1 movil_dom.log)"
+          exit $(( n0 || n || n2 ))
+
   # R no está instalado en el entorno de desarrollo, así que el ejemplo de R se
   # verifica aquí o no se anuncia. Job aparte: si el intérprete o el paquete
   # duckdb fallan, la auditoría del sitio no arrastra el fallo, pero el check
