@@ -134,12 +134,12 @@ def main() -> int:
             "; el criterio de supresión deja de ser auditable y el emisor deja de ser seguible"
         )
     else:
-        suprimidas, publicadas, sin_id = con.execute(
+        suprimidas, publicadas, con_id = con.execute(
             """SELECT
                  count(*) FILTER (WHERE rut_omitido_por_ley),
                  count(*) FILTER (WHERE NOT rut_omitido_por_ley
                                     AND emisor_tipo = 'persona_natural_probable'),
-                 count(*) FILTER (WHERE emisor_id IS NULL AND emisor_tipo <> 'sin_rut_informado')
+                 count(*) FILTER (WHERE emisor_id IS NOT NULL)
                FROM cartera_fi"""
         ).fetchone()
         # Las dos caras de la misma moneda: si la bandera dice «omitido», el RUT
@@ -155,8 +155,16 @@ def main() -> int:
             fallos.append(
                 f"cartera_fi: {inconsistentes} filas donde rut_omitido_por_ley no coincide con rut_emisor"
             )
-        if sin_id:
-            fallos.append(f"cartera_fi: {sin_id} filas con RUT conocido y sin emisor_id")
+        # El seudónimo reemplaza al RUT omitido y sólo a él: en la persona jurídica
+        # la clave es el RUT publicado, así que un emisor_id ahí sería redundante.
+        desalineados = con.execute(
+            """SELECT count(*) FROM cartera_fi
+               WHERE (emisor_id IS NOT NULL) <> rut_omitido_por_ley"""
+        ).fetchone()[0]
+        if desalineados:
+            fallos.append(
+                f"cartera_fi: {desalineados} filas donde emisor_id no coincide con rut_omitido_por_ley"
+            )
         if suprimidas and publicadas:
             fallos.append(
                 f"cartera_fi: mezcla los dos modos ({suprimidas} filas con RUT omitido y "
@@ -164,9 +172,9 @@ def main() -> int:
             )
         modo = "RUT omitido" if suprimidas else "RUT publicado"
         notas.append(
-            f"cartera_fi: {suprimidas:,} filas de persona natural con RUT omitido y "
-            f"{publicadas:,} con RUT publicado (modo {modo}); emisor_id en todas las filas "
-            "con emisor conocido"
+            f"cartera_fi: {suprimidas:,} filas de persona natural con RUT omitido y emisor_id "
+            f"({con_id:,} seudónimos); {publicadas:,} con RUT publicado (modo {modo}); las "
+            "personas jurídicas conservan su RUT y no llevan seudónimo"
         )
         texto_privacidad = PRIVACIDAD.read_text(encoding="utf-8")
         for termino in ("emisor_id", "rut_omitido_por_ley"):

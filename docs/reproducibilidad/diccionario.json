@@ -6676,7 +6676,7 @@
           "name": "emisor_id",
           "type": "VARCHAR",
           "role": "Atributo",
-          "significado": "Seudónimo estable del emisor (EMI-…), igual para el mismo emisor en cualquier trimestre y fondo: permite sumar su exposición, seguir su serie y medir concentración sin publicar el RUT de una persona natural. Es seudonimización, no anonimización: el vínculo con el RUT vive en una tabla privada que no se publica.",
+          "significado": "Seudónimo estable (EMI-…) que reemplaza al RUT omitido de una persona natural: es igual para el mismo emisor en cualquier trimestre y fondo, así que permite sumar su exposición, seguir su serie y medir concentración sin publicar su RUT. Es nulo cuando el RUT se publica (personas jurídicas), porque ahí el RUT ya es la clave del emisor. Es seudonimización (art. 2 letra l de la Ley 21.719), no anonimización: el vínculo con el RUT vive en una tabla privada que no se publica.",
           "contable": "No aplica"
         },
         {

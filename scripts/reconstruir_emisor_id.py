@@ -7,9 +7,10 @@ lee la versión **anterior** al commit de privacidad desde el historial de git, 
 cruza fila por fila con la versión publicada y escribe las dos columnas que
 faltan, sin tocar `rut_emisor` ni `emisor_tipo`:
 
-  emisor_id            seudónimo estable del emisor (EMI-…), calculado desde el
-                       RUT original. Permite seguir al emisor entre trimestres y
-                       fondos sin publicar el RUT de una persona natural.
+  emisor_id            seudónimo que reemplaza al RUT omitido (EMI-…), calculado
+                       desde el RUT original. Permite seguir a esa persona natural
+                       entre trimestres y fondos sin publicar su RUT. Queda nulo en
+                       las personas jurídicas, que conservan su RUT publicado.
   rut_omitido_por_ley  verdadero cuando el RUT de esa fila se retiró por la regla
                        y falso cuando se publica tal cual.
 
@@ -84,11 +85,14 @@ def procesar(ruta: Path, apply: bool) -> tuple[bool, str]:
     if distintos:
         return False, f"{distintos:,} RUT publicados no coinciden con el histórico"
 
-    emitidos = [privacidad.emisor_id(valor, privacidad.sal_privada()) for valor in rut_original]
     omitidos = [
         original is not None and actual is None
         and tipo == privacidad.TIPO_NATURAL
         for actual, original, tipo in zip(rut_publicado, rut_original, tipos)
+    ]
+    emitidos = [
+        privacidad.emisor_id(valor, privacidad.sal_privada()) if omitido else None
+        for valor, omitido in zip(rut_original, omitidos)
     ]
 
     previos = (publicado.column(privacidad.COLUMNA_EMISOR_ID).to_pylist()
@@ -103,8 +107,8 @@ def procesar(ruta: Path, apply: bool) -> tuple[bool, str]:
     tabla = tabla.append_column(privacidad.COLUMNA_EMISOR_ID, pa.array(emitidos, type=pa.string()))
     tabla = tabla.append_column(privacidad.COLUMNA_RUT_OMITIDO, pa.array(omitidos, type=pa.bool_()))
     escribir(ruta, tabla) if apply else None
-    return True, (f"{sum(omitidos):,} filas con RUT omitido · "
-                  f"{sum(1 for v in emitidos if v):,} con emisor_id")
+    return True, (f"{sum(omitidos):,} filas con RUT omitido y emisor_id · "
+                  f"{sum(1 for v in emitidos if v):,} seudónimos")
 
 
 def main() -> int:

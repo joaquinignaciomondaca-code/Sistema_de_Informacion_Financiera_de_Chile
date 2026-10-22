@@ -139,15 +139,22 @@ class DataFrameTest(unittest.TestCase):
         fuera = privacidad.proteger_cartera_nacional(df, {"76015592"}, modo="suprimir")
         self.assertEqual(fuera["rut_omitido_por_ley"].tolist(), [False, True, False])
         self.assertTrue(self.pd.isna(fuera["rut_emisor"].tolist()[1]))
-        # El id del emisor sobrevive a la supresión: es la clave de seguimiento.
-        self.assertTrue(all(isinstance(v, str) and v.startswith("EMI-")
-                            for v in fuera["emisor_id"].tolist()[:2]))
-        self.assertTrue(self.pd.isna(fuera["emisor_id"].tolist()[2]))
+        # El id reemplaza al RUT omitido y sólo a él: la persona jurídica conserva
+        # su RUT publicado y no lleva seudónimo.
+        ids = fuera["emisor_id"].tolist()
+        self.assertTrue(self.pd.isna(ids[0]), "la persona jurídica no debe llevar emisor_id")
+        self.assertTrue(isinstance(ids[1], str) and ids[1].startswith("EMI-"))
+        self.assertTrue(self.pd.isna(ids[2]))
+        # Invariante: hay emisor_id exactamente donde el RUT se omitió.
+        self.assertEqual([v is not None and not self.pd.isna(v) for v in ids],
+                         fuera["rut_omitido_por_ley"].tolist())
 
         dentro = privacidad.proteger_cartera_nacional(df, {"76015592"}, modo="publicar")
         self.assertEqual(dentro["rut_omitido_por_ley"].tolist(), [False, False, False])
         self.assertEqual(dentro["rut_emisor"].tolist()[1], "15273263")
         self.assertEqual(dentro["emisor_tipo"].tolist()[1], privacidad.TIPO_NATURAL)
+        # Si el RUT se publica, el seudónimo sobra y no se emite.
+        self.assertTrue(all(self.pd.isna(v) for v in dentro["emisor_id"].tolist()))
 
     def test_modo_por_variable_de_entorno(self):
         import os
