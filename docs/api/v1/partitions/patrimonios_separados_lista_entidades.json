@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "patrimonios_separados_lista_entidades",
+ "particiones": [
+  {
+   "archivo": "outputs/securitizadoras/patrimonios_separados_maestro.parquet",
+   "bytes": 7945,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/patrimonios_separados_maestro.parquet",
+   "periodo": "patrimonios_separados_maestro",
+   "sha256": "14177f9652c142815190a3aa8934872abc23630d14c8a8d46f4c533ded3e3134"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 7945,
+  "filas": 19
+ },
+ "version": "1.0.0"
+}

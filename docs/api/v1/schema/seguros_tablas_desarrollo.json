@@ -1,0 +1,106 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la cartera informada (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "Atributo",
+   "significado": "vida (archivos CSVID) o generales (CSGEN).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "FK",
+   "significado": "RUT de la compañía de seguros, con dígito verificador (une con seguros.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el encabezado del archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_del_emisor",
+   "rol": "Identificador",
+   "significado": "Se deberá informar el RUT del emisor de cada título que forma parte de las inversiones de la compañía. En el caso Instrumentos Financieros de Renta Fija de Emisores Extranjeros, se deberá llenar con cero.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nemotecnico",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el código universal “ISIN” (International Securities Identification Number), a falta de éste, el código “CUSIP” (Commitee On Uniform Securities Identification Procedures).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nro_cupon",
+   "rol": "Métrica",
+   "significado": "Corresponde presentar el número del cupón o flujo. Debe ser un correlativo que comienza en 001.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_vcto_cupon",
+   "rol": "Fecha",
+   "significado": "Corresponde presentar la fecha exacta de vencimiento o corte de.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Devengado",
+   "nombre": "interes",
+   "rol": "Métrica",
+   "significado": "Corresponde al interés que paga cada flujo.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "amortizacion",
+   "rol": "Métrica",
+   "significado": "Se deberá señalar la amortización del capital que corresponde a cada flujo que se está informando y que rebaje el saldo insoluto.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "saldo_insoluto",
+   "rol": "Métrica",
+   "significado": "Indica el capital que le resta al instrumento por amortizar, este valor comienza en 100 y debe quedar en cero. Para los contratos de leasing que tengan opción de compra el último registro de cada tabla deberá contener en este campo, la opción de compra.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "rut_aseguradora",
+   "destino": "seguros_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "seguros_tablas_desarrollo",
+ "primaryKey": [],
+ "sector": "seguros",
+ "titulo": "B.10 TABLAS DE DESARROLLO",
+ "version": "1.0.0"
+}

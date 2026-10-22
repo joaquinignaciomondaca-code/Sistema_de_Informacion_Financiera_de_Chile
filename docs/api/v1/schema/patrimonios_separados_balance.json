@@ -1,0 +1,112 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "archivo",
+   "rol": "PK",
+   "significado": "PDF de estados financieros de donde sale el balance.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_administradora",
+   "rol": "FK",
+   "significado": "Cuerpo del RUT de la securitizadora (8 dígitos, sin DV).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_completo",
+   "rol": "Atributo",
+   "significado": "RUT con puntos, guión y dígito verificador (módulo 11).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_administradora",
+   "rol": "Dimensión",
+   "significado": "Securitizadora que administra el patrimonio.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_patrimonio",
+   "rol": "PK",
+   "significado": "Código del patrimonio separado según el nombre del PDF (p. ej. BTRA15, PS13).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Corte",
+   "nombre": "periodo",
+   "rol": "PK",
+   "significado": "Cierre del balance, AAAA-MM (siempre diciembre).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "anio",
+   "rol": "Dimensión",
+   "significado": "Año del cierre.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "orden_en_balance",
+   "rol": "PK",
+   "significado": "Posición de la cuenta en el balance impreso.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Clasificación del balance",
+   "nombre": "categoria",
+   "rol": "Dimensión",
+   "significado": "Rubro: Activo Circulante, Activo No Circulante, Pasivo Circulante, Pasivo No Circulante, Patrimonio (Excedente Acumulado), o una línea Total ….",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Glosa",
+   "nombre": "cuenta",
+   "rol": "PK",
+   "significado": "Nombre de la cuenta, copiado del balance.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "M$",
+   "nombre": "monto_m_clp",
+   "rol": "Métrica",
+   "significado": "Monto impreso en miles de pesos (M$), con su signo.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "rut_administradora",
+   "destino": "patrimonios_separados_lista_entidades",
+   "tasa": 0.5473
+  }
+ ],
+ "id": "patrimonios_separados_balance",
+ "primaryKey": [
+  "archivo",
+  "codigo_patrimonio",
+  "periodo",
+  "orden_en_balance",
+  "cuenta"
+ ],
+ "sector": "patrimonios_separados",
+ "titulo": "patrimonios_separados.balance",
+ "version": "1.0.0"
+}

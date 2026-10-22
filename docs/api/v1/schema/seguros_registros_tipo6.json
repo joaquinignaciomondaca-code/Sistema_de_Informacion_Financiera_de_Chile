@@ -1,0 +1,92 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la cartera informada (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "Atributo",
+   "significado": "Sector de la compañía que reporta: vida o generales.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "FK",
+   "significado": "RUT de la compañía aseguradora asociada al archivo fuente.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el encabezado o en sus otros archivos del periodo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "archivo_origen",
+   "rol": "Atributo",
+   "significado": "Nombre del archivo original de la CMF que contiene la línea.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_archivo",
+   "rol": "Atributo",
+   "significado": "Sección técnica correspondiente al archivo: B.11 o B.14.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_registro",
+   "rol": "Atributo",
+   "significado": "Tipo declarado en la primera posición de la línea fuente; en esta tabla es 6.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "largo_registro",
+   "rol": "Control",
+   "significado": "Longitud de la línea decodificada; debe concordar con la longitud fija del archivo fuente.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "registro_original",
+   "rol": "Dato fuente",
+   "significado": "Línea completa tal como se decodificó del archivo fuente, incluidos los espacios de relleno; no se interpretan sus campos internos.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "rut_aseguradora",
+   "destino": "seguros_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "seguros_registros_tipo6",
+ "primaryKey": [
+  "archivo_origen"
+ ],
+ "sector": "seguros",
+ "titulo": "Registros tipo 6 de B.11 y B.14",
+ "version": "1.0.0"
+}

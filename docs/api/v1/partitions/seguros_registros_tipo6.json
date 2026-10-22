@@ -1,0 +1,35 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "seguros_registros_tipo6",
+ "particiones": [
+  {
+   "archivo": "outputs/seguros/registros_tipo6/2024.parquet",
+   "bytes": 7029,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/registros_tipo6/2024.parquet",
+   "periodo": "2024",
+   "sha256": "a8cee40aee17befb9dddee52880309ee25febf9dec00268ca10897b4ddd59149"
+  },
+  {
+   "archivo": "outputs/seguros/registros_tipo6/2025.parquet",
+   "bytes": 7215,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/registros_tipo6/2025.parquet",
+   "periodo": "2025",
+   "sha256": "ac10eaf50935328af47764cab84dfe80c4f704488b276adbc5fc622782223c25"
+  },
+  {
+   "archivo": "outputs/seguros/registros_tipo6/2026.parquet",
+   "bytes": 7167,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/registros_tipo6/2026.parquet",
+   "periodo": "2026",
+   "sha256": "f566fab199a13396a578a13e38a80fdb7ffc75f0ab7a0210b0bf835353d85510"
+  }
+ ],
+ "total": {
+  "archivos": 3,
+  "bytes": 21411,
+  "filas": 66
+ },
+ "version": "1.0.0"
+}

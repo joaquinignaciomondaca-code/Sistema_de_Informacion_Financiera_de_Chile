@@ -1,0 +1,168 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "seguros_renta_fija",
+ "particiones": [
+  {
+   "archivo": "outputs/seguros/renta_fija/2024-12.parquet",
+   "bytes": 10256294,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2024-12.parquet",
+   "periodo": "2024-12",
+   "sha256": "02c060e7a3a4bffe9701ebbfb3e5792d437636e46a3b02cae8f769aa3df2231f"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2025-01.parquet",
+   "bytes": 10263047,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2025-01.parquet",
+   "periodo": "2025-01",
+   "sha256": "7136da834298c9c8e2492d6f4d29ce6c89975d36cca1168fc73d60bb62bccd68"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2025-02.parquet",
+   "bytes": 10295460,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2025-02.parquet",
+   "periodo": "2025-02",
+   "sha256": "0510d9f2755deb00622d00e3542fe80eb609d5c7a544fcde2c18f0fbbab013ce"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2025-03.parquet",
+   "bytes": 10420648,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2025-03.parquet",
+   "periodo": "2025-03",
+   "sha256": "257c9c332359e502f600ca4878ee42c2b9981d6e8e1cb3999883b173ff64f6f3"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2025-04.parquet",
+   "bytes": 10404709,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2025-04.parquet",
+   "periodo": "2025-04",
+   "sha256": "757fc4906819f8f531ec291b40ff41429b44819e06583fee6007f907fa1cccda"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2025-05.parquet",
+   "bytes": 10416424,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2025-05.parquet",
+   "periodo": "2025-05",
+   "sha256": "1688aeee460a1f1e5d475cf259d9b695bccf96f2fa0d290cd8f75d239955eddd"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2025-06.parquet",
+   "bytes": 10477835,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2025-06.parquet",
+   "periodo": "2025-06",
+   "sha256": "94f2607fc7f72e34556c333e1ef5dd957cb1612d2afe95f865a0778eb813ed2f"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2025-07.parquet",
+   "bytes": 10484982,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2025-07.parquet",
+   "periodo": "2025-07",
+   "sha256": "db2be98ab2c35b901c1383bae45aac3de230df3bb987baa8d30c898872821af0"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2025-08.parquet",
+   "bytes": 10536141,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2025-08.parquet",
+   "periodo": "2025-08",
+   "sha256": "9f130ec5a98b42ea979abcaf85d426846f28b06db743a1e243e4ad7644463986"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2025-09.parquet",
+   "bytes": 10549040,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2025-09.parquet",
+   "periodo": "2025-09",
+   "sha256": "fa770348d8a9f30d6ec8c1ec8741797dfbfa853d9522ff1541ff5f5e854b1d99"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2025-10.parquet",
+   "bytes": 10549703,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2025-10.parquet",
+   "periodo": "2025-10",
+   "sha256": "d92657797577815f23af014518ecfb05cacb63e36d1f2430c3bd63377da10a84"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2025-11.parquet",
+   "bytes": 10609004,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2025-11.parquet",
+   "periodo": "2025-11",
+   "sha256": "454166ba0657c9e4b0cc52d18af62a323d91c2fe218ede0f7d98cf6326472ee1"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2025-12.parquet",
+   "bytes": 10641306,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2025-12.parquet",
+   "periodo": "2025-12",
+   "sha256": "2ff17f9ef1a22c5ac21f6fbf3da69ee8fc7c374dcd22ad1511b0d1475c0e76f1"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2026-01.parquet",
+   "bytes": 10691034,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-01.parquet",
+   "periodo": "2026-01",
+   "sha256": "7e18dbb0e67b690a43f9c3d6f6c502beff59eac00f1ce73b8c30b9e8b8546d17"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2026-02.parquet",
+   "bytes": 10695002,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-02.parquet",
+   "periodo": "2026-02",
+   "sha256": "32fe6d45cfa1496aaa3767c43e92196c8bd4f7d6116594fbaec9a1c2d9e159da"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2026-03.parquet",
+   "bytes": 10693658,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-03.parquet",
+   "periodo": "2026-03",
+   "sha256": "3743b2e0417ad65a2463f53445d3b37f23e21f435af46fa6ef7ff6caef62ffb2"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2026-04.parquet",
+   "bytes": 10685738,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-04.parquet",
+   "periodo": "2026-04",
+   "sha256": "74fc56edc75c37b6c0f3bc2c46ae5758b054b277b7269e0616e39cc3b07c20a1"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2026-05.parquet",
+   "bytes": 10692110,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-05.parquet",
+   "periodo": "2026-05",
+   "sha256": "2eca38246f9ef5797bce1bb446e98df5772c7eb6061a032911c2e765315e812a"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2026-06.parquet",
+   "bytes": 10670771,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-06.parquet",
+   "periodo": "2026-06",
+   "sha256": "1f38041d1e20052d5d19969f73700eec71d643a7e894ae0f80ec38181dadd312"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2026-07.parquet",
+   "bytes": 10668436,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-07.parquet",
+   "periodo": "2026-07",
+   "sha256": "d34a7112b49cc6a25f2a0c19ba7d9c02851edb1f094380cafb0e6d19a12de7ef"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2026-08.parquet",
+   "bytes": 10641047,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-08.parquet",
+   "periodo": "2026-08",
+   "sha256": "e2db53241a0da4368c3208a3965489d70e8c9435a8df8db0e367bc812e8300a0"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija/2026-09.parquet",
+   "bytes": 10621493,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija/2026-09.parquet",
+   "periodo": "2026-09",
+   "sha256": "d0aea4fa655894069f2251e334883b049d7588268af4d1f3bf7ff6f868de36bd"
+  }
+ ],
+ "total": {
+  "archivos": 22,
+  "bytes": 231963882,
+  "filas": 2321911
+ },
+ "version": "1.0.0"
+}

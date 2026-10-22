@@ -1,0 +1,133 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "agf_resultados",
+ "particiones": [
+  {
+   "archivo": "outputs/agf/agf_resultados/2010.parquet",
+   "bytes": 14420,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_resultados/2010.parquet",
+   "periodo": "2010",
+   "sha256": "815818bd897e72f9145b0e3b9a5fca1168a5d08649c780890f94f9bc11e5fe97"
+  },
+  {
+   "archivo": "outputs/agf/agf_resultados/2011.parquet",
+   "bytes": 23341,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_resultados/2011.parquet",
+   "periodo": "2011",
+   "sha256": "7c94b131520db6e69ad58710375b05c6a48a3f0ccf4a7edf6456d94cb0b75f17"
+  },
+  {
+   "archivo": "outputs/agf/agf_resultados/2012.parquet",
+   "bytes": 24069,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_resultados/2012.parquet",
+   "periodo": "2012",
+   "sha256": "da5a0ef96a10944cf1a1014daf1b58e6d88a17792202617139dc0ef41c846ffe"
+  },
+  {
+   "archivo": "outputs/agf/agf_resultados/2013.parquet",
+   "bytes": 22327,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_resultados/2013.parquet",
+   "periodo": "2013",
+   "sha256": "b366d93c17ae32f455867249d9207e0733152747fbad88887a0f0967c19266db"
+  },
+  {
+   "archivo": "outputs/agf/agf_resultados/2014.parquet",
+   "bytes": 22716,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_resultados/2014.parquet",
+   "periodo": "2014",
+   "sha256": "398d5951d44ab2cf7a47368eddb697822e42081661ab151adace4777fd580e43"
+  },
+  {
+   "archivo": "outputs/agf/agf_resultados/2015.parquet",
+   "bytes": 24608,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_resultados/2015.parquet",
+   "periodo": "2015",
+   "sha256": "10c5098a29510cfafa12ccdd75d694df3514a95734808456b6aff15adeac59e6"
+  },
+  {
+   "archivo": "outputs/agf/agf_resultados/2016.parquet",
+   "bytes": 26915,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_resultados/2016.parquet",
+   "periodo": "2016",
+   "sha256": "b629fddd3010f585c37f7400628dde0004d20d3fa225575dbac417e919705dcf"
+  },
+  {
+   "archivo": "outputs/agf/agf_resultados/2017.parquet",
+   "bytes": 27306,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_resultados/2017.parquet",
+   "periodo": "2017",
+   "sha256": "f898882edcd446036c02bc8c5dd1712e488088254d7540029334cab108621037"
+  },
+  {
+   "archivo": "outputs/agf/agf_resultados/2018.parquet",
+   "bytes": 28081,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_resultados/2018.parquet",
+   "periodo": "2018",
+   "sha256": "1a4aec613919df7b3eae0df7afbc5ab2270b973f8166199324eee06658128a36"
+  },
+  {
+   "archivo": "outputs/agf/agf_resultados/2019.parquet",
+   "bytes": 28621,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_resultados/2019.parquet",
+   "periodo": "2019",
+   "sha256": "4a1480be63774be2647d59e641b7d7364af31c049930ed3a2c816ce189d9cca5"
+  },
+  {
+   "archivo": "outputs/agf/agf_resultados/2020.parquet",
+   "bytes": 28800,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_resultados/2020.parquet",
+   "periodo": "2020",
+   "sha256": "2214bb5989e0a85d57a4f14cb9f9e2bd2b0813ef5eca32485d20c699e5ff33db"
+  },
+  {
+   "archivo": "outputs/agf/agf_resultados/2021.parquet",
+   "bytes": 29481,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_resultados/2021.parquet",
+   "periodo": "2021",
+   "sha256": "2cab66924603cfb71f885eca54684edd9ad168b68e890a46bd85a8acd4c9dc25"
+  },
+  {
+   "archivo": "outputs/agf/agf_resultados/2022.parquet",
+   "bytes": 30233,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_resultados/2022.parquet",
+   "periodo": "2022",
+   "sha256": "b876a82f6e676d506328b3a8265c7a7aa5b389327edefe609aa48f51f06f2451"
+  },
+  {
+   "archivo": "outputs/agf/agf_resultados/2023.parquet",
+   "bytes": 31010,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_resultados/2023.parquet",
+   "periodo": "2023",
+   "sha256": "b1481fd5fb3b5d4173d9a77ddf4ff62dbf81ae281c16823e5c58c388d5d83846"
+  },
+  {
+   "archivo": "outputs/agf/agf_resultados/2024.parquet",
+   "bytes": 30717,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_resultados/2024.parquet",
+   "periodo": "2024",
+   "sha256": "7ead5bcb72dddf3a896cda76b7c1c285b9a71336bbe4852f3485ec5c8218870e"
+  },
+  {
+   "archivo": "outputs/agf/agf_resultados/2025.parquet",
+   "bytes": 30375,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_resultados/2025.parquet",
+   "periodo": "2025",
+   "sha256": "4a4c171a815ab13b35707697b30582a49d9e040ceb6b0860c4e6cd2619845230"
+  },
+  {
+   "archivo": "outputs/agf/agf_resultados/2026.parquet",
+   "bytes": 21244,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/agf/agf_resultados/2026.parquet",
+   "periodo": "2026",
+   "sha256": "f300ccff7f78fcc70e62cc3f038d60ad1fdbc4686f07cf2ab34a4e320ede26b4"
+  }
+ ],
+ "total": {
+  "archivos": 17,
+  "bytes": 444264,
+  "filas": 58216
+ },
+ "version": "1.0.0"
+}

@@ -1,0 +1,290 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la cartera informada (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "Atributo",
+   "significado": "vida (archivos CSVID) o generales (CSGEN).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "FK",
+   "significado": "RUT de la compañía de seguros, con dígito verificador (une con seguros.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el encabezado del archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_o_nombre_de_la_inversion",
+   "rol": "Atributo",
+   "significado": "Se deberá informar el nombre que identifica a cada inversión. En el caso de las cuentas corrientes, será el nombre que identifica al en SEIL, Codificación CMF, Códigos Circular 1835, Bancos. Para el caso de caja, el nombre será de CAJA. Para las inversiones mobiliarias será MOBILIARIA.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nemotecnico",
+   "rol": "Atributo",
+   "significado": "En el caso de otras inversiones financieras se debe informar el código nemotécnico de acuerdo a las instrucciones impartidas por Circular N° 1085 o la que la reemplace.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pais",
+   "rol": "Atributo",
+   "significado": "Corresponde señalar el país donde fue emitido el instrumento o se encuentra ubicada la inversión. Se informará de acuerdo a la codificación consignada en SEIL, Codificación CMF, Códigos de países.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_instrumento",
+   "rol": "Atributo",
+   "significado": "Este campo es obligatorio y se informará de acuerdo a la codificación.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidad_monetaria",
+   "rol": "Atributo",
+   "significado": "Corresponde a la unidad monetaria o moneda en la cual está codificación definida en SEIL, codificación CMF, Unidades Monetarias.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Costo",
+   "nombre": "valor_costo_actualizado_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde señalar el valor de adquisición más su correspondiente mes a que se refiere la información, en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "depreciacion_acumulada_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde señalar el monto de la depreciación acumulada a. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor razonable",
+   "nombre": "valor_razonable_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor de mercado del instrumento a la fecha de la Para las inversiones que no se transen en un mercado primario o secundario, se deberá informar una estimación del valor de mercado realizada por la compañía. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Deterioro",
+   "nombre": "deterioro_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al deterioro de la inversión, según lo señalado en la Norma de Carácter General N°311, del 28.06.2011. Este monto deberá expresarse en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor contable informado",
+   "nombre": "valor_final_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor que tiene el instrumento a la fecha de cierre del mes a que se refiere la información, según lo establecido en Circular de Valorización de Inversiones vigente. Este monto se deberá expresar en miles de pesos (M$). 103. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "prohibicion",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si la inversión registrada se encuentra afecta a prohibición o gravámenes, etc.; señaladas en el DFL Nº251. Se informará de acuerdo a la siguiente codificación: S : Si tiene prohibición N : No tiene prohibición.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "clasificacion_de_riesgo",
+   "rol": "Atributo",
+   "significado": "Se deberá informar la menor clasificación de riesgo vigente del información. Si el instrumento no contara con clasificación de riesgo se debe informar S/C.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_respalda_reserva_valor_de_fondo",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si uno o más títulos (en caso de haber encuentran respaldando la reserva de valor del fondo señalada en el Se informará de acuerdo a la valorización que tengan los títulos, según Circular N°1360 y posteriores modificaciones, con un código de cinco letras formado de la siguiente.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_del_fondo",
+   "rol": "Atributo",
+   "significado": "Para instrumentos que estén asociados a fondos que respalden del Fondo al cual pertenece. Se entenderá por fondo al tipo de plan o modalidades de inversión convenidos para los seguros con cuentas de inversión.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_cartera",
+   "rol": "Atributo",
+   "significado": "Para instrumentos que no respalden seguros de vida con cuenta de inversión, se debe informar la sub cartera que respalda, si corresponde. Para instrumentos que no respalden una sub cartera, se debe informar “NO APLICA”.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "custodia_inv",
+   "rol": "Atributo",
+   "significado": "Corresponde informar para cada instrumento, el tipo de custodia que presenta, de acuerdo a la siguiente codificación: CIA : Custodia en Compañía. DCV : Custodia en DCV, solo si la Cía. actuó como Depositante. EXT : Custodia en Otra entidad. Si no corresponde informar se llenará con espacios.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_custodio",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el nombre de la entidad que custodia la CUSTODIA_INV, el código EXT (otra entidad de custodia). En caso de que no corresponda informar, se deberá llenar con espacios este campo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "susceptibles_de_custodia",
+   "rol": "Atributo",
+   "significado": "Se deberá informar si el instrumento es susceptible de ser Central de Valores S.A., y sus modificaciones posteriores, de acuerdo a la siguiente codificación: S: es susceptible de ser custodiado. N: no es susceptible de ser custodiado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_en_margen_o_sujeto_a_pacto",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si uno o más títulos registrados (en caso de sido entregados como margen en las operaciones de derivados encuentran sujetos a pacto, de acuerdo a lo señalado en la Circular de Valorización de Inversiones.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tsa",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si el instrumento está incluido en el Test de Suficiencia de Activos para el periodo informado, de acuerdo a la siguiente codificación: SI: el instrumento es utilizado para el análisis del Test de Suficiencia de Activos NO: el instrumento no es utilizado para el análisis del.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "metod_clasif_valoriz_eeff",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la clasificación dada al instrumento en los.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "criterio_valorizacion",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si la inversión está valorizada a Valor.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "modelo_valoracion",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si la inversión está valorizada por la Compañía.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Deterioro",
+   "nombre": "modelo_propio_deterioro",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si el Deterioro de la inversión se determinó usando una metodología propia o es una aplicación de la metodología definida en la NCG N° 311. Se informará de acuerdo a la siguiente codificación: SI : Método propio para estimar el deterioro. NO : Aplicación de la NCG N°311.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_de_informe",
+   "rol": "Fecha",
+   "significado": "Corresponde a la expresión numérica de la fecha en que se envió Informe Descriptivo y de Riesgo de la inversión a la CMF. Se deberá informar con el siguiente formato: AAAAMMDD Si no corresponde informar se llenará con ceros.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_de_activo",
+   "rol": "Atributo",
+   "significado": "Identificar la clase de activo del N°7 de la NCG 152. Si no corresponde informar se llenará con espacios.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "coligada_filial_inmob",
+   "rol": "Atributo",
+   "significado": "Para los instrumentos de tipo PSCO y PSFI se debe indicar si la sociedad es inmobiliaria o no, de acuerdo con la siguiente codificación: S : Instrumento de tipo PSCO o PSFI corresponde a sociedad inmobiliaria. N : Instrumento de tipo PSCO o PSFI no corresponde a sociedad inmobiliaria.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "descripcion_activos",
+   "rol": "Atributo",
+   "significado": "Especificar las características del activo del N°7 de la NCG152.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "clasificacion_de_riesgo_pais",
+   "rol": "Atributo",
+   "significado": "Los activos o instrumentos financieros extranjeros del N°7 de la NCG.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "regulador",
+   "rol": "Atributo",
+   "significado": "Los activos o instrumentos financieros extranjeros del N°7 de la NCG 152, deberán indicar organismo supervisor del mercado financiero del emisor o administrador de la inversión del N°7 de la NCG 152. Si no corresponde informar se llenará con espacios. 107.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "rut_aseguradora",
+   "destino": "seguros_lista_entidades",
+   "tasa": 0.9987
+  }
+ ],
+ "id": "seguros_otras_inversiones",
+ "primaryKey": [],
+ "sector": "seguros",
+ "titulo": "B.6 OTRAS INVERSIONES",
+ "version": "1.0.0"
+}

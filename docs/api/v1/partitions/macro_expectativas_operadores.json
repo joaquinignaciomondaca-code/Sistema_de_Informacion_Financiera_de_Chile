@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "macro_expectativas_operadores",
+ "particiones": [
+  {
+   "archivo": "outputs/macro/macro_expectativas_operadores.parquet",
+   "bytes": 5251,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_expectativas_operadores.parquet",
+   "periodo": "macro_expectativas_operadores",
+   "sha256": "d2193e285eeb156c9fbdda8e9efecbbf115f0baac83471ca0ee0084eaeda2a7f"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 5251,
+  "filas": 237
+ },
+ "version": "1.0.0"
+}

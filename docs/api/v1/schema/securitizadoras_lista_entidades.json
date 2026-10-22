@@ -1,0 +1,78 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut",
+   "rol": "PK",
+   "significado": "Rol Único Tributario del intermediario securitizador (sin DV).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "dv",
+   "rol": "Dimensión",
+   "significado": "Dígito verificador oficial validado bajo algoritmo Módulo 11.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_completo",
+   "rol": "Dimensión",
+   "significado": "RUT formal con puntos, guión y dígito verificador (ej: 97.004.000-5).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "razon_social",
+   "rol": "Dimensión",
+   "significado": "Razón social legal inscrita en el registro de valores de la CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "estado_vigencia",
+   "rol": "Dimensión",
+   "significado": "Estado de supervisión CMF: VIGENTE o NO VIGENTE / EN LIQUIDACION.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_entidad_cmf",
+   "rol": "Dimensión",
+   "significado": "Código de fiscalizado CMF (RGSEC: Registro de Sociedades Securitizadoras).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "lineas_deuda_registradas",
+   "rol": "Métrica",
+   "significado": "Número de líneas y programas de bonos securitizados inscritos ante CMF.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cmf_url",
+   "rol": "Dimensión",
+   "significado": "Enlace URL directo a la ficha corporativa de la entidad en el portal CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "securitizadoras_lista_entidades",
+ "primaryKey": [
+  "rut"
+ ],
+ "sector": "securitizadoras",
+ "titulo": "securitizadoras.maestro",
+ "version": "1.0.0"
+}

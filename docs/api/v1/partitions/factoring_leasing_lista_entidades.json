@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "factoring_leasing_lista_entidades",
+ "particiones": [
+  {
+   "archivo": "outputs/factoring_leasing/factoring_leasing_maestro.parquet",
+   "bytes": 13989,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/factoring_leasing/factoring_leasing_maestro.parquet",
+   "periodo": "factoring_leasing_maestro",
+   "sha256": "d91c219c74b2bcd0d3de15cc1f3c9c1d685e8047c32448d70a48f4244b5215a8"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 13989,
+  "filas": 32
+ },
+ "version": "1.0.0"
+}

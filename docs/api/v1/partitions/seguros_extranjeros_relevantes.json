@@ -1,0 +1,91 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "derivado",
+ "filtro": null,
+ "id": "seguros_extranjeros_relevantes",
+ "particiones": [
+  {
+   "archivo": "outputs/seguros/extranjeros_relevantes/2016.parquet",
+   "bytes": 46696,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros_relevantes/2016.parquet",
+   "periodo": "2016",
+   "sha256": "4f606fc7ec871c7d3242423b4884953c7cfe15a3c001453d17e7e47e5e7f2b18"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros_relevantes/2017.parquet",
+   "bytes": 221998,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros_relevantes/2017.parquet",
+   "periodo": "2017",
+   "sha256": "68c19592e1c6244eb0482391dfcc3fc424503e7a4cee6a3f675434c85bfc272f"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros_relevantes/2018.parquet",
+   "bytes": 240360,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros_relevantes/2018.parquet",
+   "periodo": "2018",
+   "sha256": "92cd9f5a4e9e73711934d8cb53b962e9dcfd30025c2c5314243d611b4b01897b"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros_relevantes/2019.parquet",
+   "bytes": 251088,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros_relevantes/2019.parquet",
+   "periodo": "2019",
+   "sha256": "305caec3166b137f1c174efb6a88a6eb7b41cbb7316b44d233e9fc5975a7958c"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros_relevantes/2020.parquet",
+   "bytes": 230750,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros_relevantes/2020.parquet",
+   "periodo": "2020",
+   "sha256": "b4446f15033d01ab067cf1fb49d3155767e90c0bdece26787836e8f70026d099"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros_relevantes/2021.parquet",
+   "bytes": 225915,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros_relevantes/2021.parquet",
+   "periodo": "2021",
+   "sha256": "dfc00f53340adc8ec8ed258173511785788ec447117cb364c959a6882af3b6a1"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros_relevantes/2022.parquet",
+   "bytes": 249468,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros_relevantes/2022.parquet",
+   "periodo": "2022",
+   "sha256": "331980af03f02fa2d49f64b5f3958128ec9bbbf13826fc1124bdc37acb260c45"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros_relevantes/2023.parquet",
+   "bytes": 315520,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros_relevantes/2023.parquet",
+   "periodo": "2023",
+   "sha256": "d28100a4389b2c2240c0e06acc88fd8a6af8db569042f5526a1537338b543b74"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros_relevantes/2024.parquet",
+   "bytes": 429339,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros_relevantes/2024.parquet",
+   "periodo": "2024",
+   "sha256": "5aced1ed45c49294b0d5e5b951c8e3db26daf99496c4aef035a89a4300c4a994"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros_relevantes/2025.parquet",
+   "bytes": 892769,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros_relevantes/2025.parquet",
+   "periodo": "2025",
+   "sha256": "0eaf04078a91b918dbe984b393c117f529616c77e1d0fa43e35d494d49f6c3a6"
+  },
+  {
+   "archivo": "outputs/seguros/extranjeros_relevantes/2026.parquet",
+   "bytes": 759652,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/extranjeros_relevantes/2026.parquet",
+   "periodo": "2026",
+   "sha256": "7a34639ed7af5a5958fec36efb7ed1562d6ad71ade47a11356a3ead7fa9394e5"
+  }
+ ],
+ "total": {
+  "archivos": 11,
+  "bytes": 3863555,
+  "filas": 471670
+ },
+ "version": "1.0.0"
+}

@@ -1,0 +1,35 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "derivado",
+ "filtro": null,
+ "id": "seguros_bienes_raices_relevantes",
+ "particiones": [
+  {
+   "archivo": "outputs/seguros/bienes_raices_relevantes/2024.parquet",
+   "bytes": 882060,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices_relevantes/2024.parquet",
+   "periodo": "2024",
+   "sha256": "30c45e1dcf36adb6179b0fe797a0b43f79e4d75acf9a71fad75c8c1f55117e9f"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices_relevantes/2025.parquet",
+   "bytes": 4998006,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices_relevantes/2025.parquet",
+   "periodo": "2025",
+   "sha256": "f000a9e2011f7e82c54dd7d8a5524f8fc474b44b97ddc8df95aa6eb8dad9bd09"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices_relevantes/2026.parquet",
+   "bytes": 4128252,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices_relevantes/2026.parquet",
+   "periodo": "2026",
+   "sha256": "d86055e924191191501f9154a9f5814b13251cca5b81f0f35a42c95b8d1126ae"
+  }
+ ],
+ "total": {
+  "archivos": 3,
+  "bytes": 10008318,
+  "filas": 760152
+ },
+ "version": "1.0.0"
+}
