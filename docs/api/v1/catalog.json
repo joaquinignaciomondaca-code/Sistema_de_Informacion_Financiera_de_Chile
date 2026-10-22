@@ -3,7 +3,7 @@
  "base": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile",
  "como_se_genera": "python3 scripts/build_contrato.py",
  "contrato": "sif-api/catalogo",
- "data_release": "2026-10-22.ab30d7509464",
+ "data_release": "2026-10-22.fd12b283f0c1",
  "generado": "2026-10-22",
  "objetos": [
   {
@@ -114,7 +114,7 @@
    "aliases": [
     "bancos_cmf_balance"
    ],
-   "bytes": 22576802,
+   "bytes": 24638276,
    "corte": "2022-01 a 2026-08",
    "deriva_de": "bancos_cmf_lineas",
    "descripcion": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Campos monetarios originales sin reinterpretación; revisar tipo_linea antes de agregar cuentas jerárquicas.",
@@ -163,7 +163,7 @@
    "aliases": [
     "bancos_cmf_resultados"
    ],
-   "bytes": 22576802,
+   "bytes": 24638276,
    "corte": "2022-01 a 2026-08",
    "deriva_de": "bancos_cmf_lineas",
    "descripcion": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Campos monetarios originales sin reinterpretación; revisar tipo_linea antes de agregar cuentas jerárquicas.",
@@ -2281,7 +2281,7 @@
  },
  "totales": {
   "alias": 19,
-  "bytes": 517178496,
+  "bytes": 521301444,
   "con_datos": 86,
   "consultas": 156,
   "derivados": 7,
