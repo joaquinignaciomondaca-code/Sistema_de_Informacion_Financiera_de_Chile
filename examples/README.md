@@ -27,8 +27,20 @@ Contra una copia local, sin red:
 
 ```bash
 SIF_CHILE_BASE=docs python3 examples/python/01_ffmm_extranjero.py
-SIF_CHILE_BASE=docs node examples/javascript/catalogo.mjs
+SIF_CHILE_BASE=docs Rscript examples/r/01_basico.R
 ```
 
-Los tres primeros corren en CI (`scripts/probar_ejemplos.py` para Python y
-JavaScript; el trabajo `r_ejemplos` de `web_audit.yml` para R).
+DuckDB pide `httpfs` la primera vez que lee una URL y lo deja instalado; si el
+entorno no tiene salida a internet, `SIF_CHILE_BASE` con una copia local evita
+la descarga.
+
+### Verificación
+
+| Ejemplo | Dónde se comprueba |
+|---|---|
+| Python (01, 02) y JavaScript | `scripts/probar_ejemplos.py`, paso «Ejemplos reproducibles» de `web_audit.yml`; corrida local: 3/3 en 1,4 s |
+| R | trabajo `r_ejemplos` de `web_audit.yml` (1m10s): `setup-r` con binarios de P3M y el ejemplo contra `docs/` |
+
+R está **verificado en CI y solo en CI**: no hay intérprete de R en el entorno de
+desarrollo, así que si ese job se cae, el ejemplo deja de estar soportado en la
+práctica y hay que mirarlo antes de anunciarlo.
