@@ -256,6 +256,12 @@ def construir() -> dict:
         "sif": {
             "api_version": API_VERSION,
             "data_release": data_release,
+            "versionado": {
+                "regla": "semver; un dato nuevo NO sube la versión (eso es data_release)",
+                "mayor": "se rompe un cliente: quitar o renombrar recurso o columna, cambiar un tipo",
+                "menor": "se puede ignorar: añadir recurso, columna al final o campo sif.*",
+                "parche": "sólo datos: corrige valores sin tocar el esquema",
+            },
             "contrato": {
                 "reconciliacion": SITIO + "api/reconciliacion.csv",
                 "esquemas": SITIO + "api/esquemas.json",
@@ -266,7 +272,8 @@ def construir() -> dict:
             "objetos_sin_archivo": esquemas["resumen"]["sin_esquema"],
             "filas_unicas": esquemas["resumen"]["filas_unicas"],
             "base_url": SITIO,
-            "base_url_estado": "provisional: es la del README; la canónica está pendiente (tarea 0.1)",
+            "base_url_estado": "decidida (D1): Pages publica la API; Vercel redirige /api/* aquí con un 307",
+            "espejo": "https://sistema-de-informacion-financiera-de-chile-docs.vercel.app",
         },
         "resources": recursos,
     }

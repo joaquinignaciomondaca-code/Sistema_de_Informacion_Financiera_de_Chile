@@ -1,15 +1,39 @@
 # Decisiones pendientes de la API v1 (D1–D4)
 
-Estado: **propuesta**, no decisión. Cada una trae la recomendación, el motivo y
-lo que cuesta cambiarla después. La Fase 0 no se puede cerrar sin esto porque
-fija nombres y URLs que el descriptor ya usa de forma provisional.
+Estado: **D1 y D3 decididas e implementadas; D2 revisada con datos y pendiente
+de visto bueno; D4 es consecuencia de D3.** Cada una trae el motivo y lo que
+cuesta cambiarla después.
+
+| Decisión | Estado | Qué fija |
+|---|---|---|
+| D1 · URL canónica | **decidida** | Pages publica, Vercel redirige `/api/*` (307) |
+| D2 · identificador | revisada, sin cerrar | `name` = objeto del contrato; 15 alias en `sif.aliases[]` |
+| D3 · versionado | **decidida** | semver; un dato nuevo no sube versión |
+| D4 · campos de edición | derivada de D3 | seis campos con responsable claro |
 
 ---
 
-## D1 · URL canónica (tarea 0.1)
+## D1 · URL canónica (tarea 0.1) — **DECIDIDA: ambas, con redirect**
 
-**Recomendación: GitHub Pages es la canónica; Vercel queda como espejo del
-visor, sin anunciarse como API.**
+**Decisión del dueño (2026-10-22): GitHub Pages publica; Vercel redirige
+`/api/*` a Pages con un 307.** Se mantienen los dos despliegues, pero con un
+solo origen para el contrato.
+
+Implementado en `vercel.json` y `docs/vercel.json` (idénticos):
+
+```json
+"redirects": [{ "source": "/api/(.*)",
+                "destination": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/$1",
+                "permanent": false }]
+```
+
+`permanent: false` (307) a propósito: un 308 lo cachearían los clientes y
+revertir la decisión dejaría de ser posible. `scripts/audit_interfaz.py` ahora
+comprueba que el redirect existe, apunta a Pages y **no** es permanente.
+
+La recomendación anterior era sólo Pages; queda aquí como referencia de por qué
+se eligió el espejo: cuesta una regla y evita que quien tenga la URL de Vercel
+guardada reciba un contrato con otro origen.
 
 ```
 https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/
@@ -39,8 +63,31 @@ alguien hubiera fijado la URL de Vercel en su código.
 
 ## D2 · Identificador canónico (tarea 0.2)
 
-**Recomendación: `name` = el `view_name` actual. Un solo identificador en v1,
-con los 15 alias heredados publicados en `sif.aliases[]`.**
+**Revisado el 2026-10-22 con datos, a pedido del dueño. Sigue como
+recomendación, pendiente de su visto bueno.**
+
+**Recomendación: `name` = el nombre del objeto del contrato (`SEMANTIC_VIEWS`),
+que en 75 de los 90 casos coincide con el `view_name` del manifiesto. Un solo
+identificador en v1; los alias van en `sif.aliases[]`.**
+
+Lo que se midió antes de recomendarlo:
+
+| Hecho | Número | Qué implica |
+|---|---|---|
+| Alias declarados en el cliente | **19** | son los nombres que hay que arrastrar |
+| Consultas sugeridas que usan un alias | **0 de 156** | nadie depende de los nombres viejos: la deuda es teórica |
+| Consultas que usan el canónico | 75 de 76 tablas | el nombre canónico ya es el de uso real |
+| Objetos cuyo `view_name` del manifiesto es el canónico | **75 de 90** | 73 directos + 2 de origen compartido |
+| Objetos que son alias de otra fila del manifiesto | **15** | ahí `view_name` (manifiesto) ≠ nombre del contrato |
+
+El punto fino que hay que dejar dicho en la decisión: **`view_name` del
+manifiesto no es el mismo campo que el nombre del objeto**. En los 15 alias,
+`seguros_maestro` es la fila del manifiesto y `seguros_lista_entidades` el
+objeto que se publica. Si `name` fuera «el `view_name`» sin más, 15 recursos
+saldrían con el nombre viejo.
+
+Ninguna de las tres opciones rompe las consultas actuales, porque ninguna usa
+alias. La diferencia está en qué nombre ve el descriptor.
 
 - El cliente escribe `FROM seguros_renta_fija`; el descriptor dice
   `"name": "seguros_renta_fija"`. Nada que traducir.
@@ -62,9 +109,11 @@ v1 fija `sif.sql_view` y `sif.aliases[]` desde el principio: permite separar
 
 ---
 
-## D3 · Versionado del contrato (tarea 0.3)
+## D3 · Versionado del contrato (tarea 0.3) — **DECIDIDA: semver**
 
-**Recomendación: `/api/v1/` en la ruta y semver en `version`, con esta regla:**
+**Decisión del dueño (2026-10-22): `/api/v1/` en la ruta y semver en
+`version`.** La regla quedó escrita en el descriptor (`sif.versionado`) y es la
+siguiente:
 
 | Cambio | Versión | Ejemplo |
 |---|---|---|
