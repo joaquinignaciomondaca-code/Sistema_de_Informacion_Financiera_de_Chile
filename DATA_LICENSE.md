@@ -53,8 +53,10 @@ de este proyecto.
 ## Datos personales
 
 El proyecto publica datos de personas naturales en tres conjuntos: 36 personas
-naturales del registro fintech, 11 corredores inscritos a nombre de persona y 233
-tasadores. El tratamiento, la base de licitud, los derechos del titular y el
+naturales del registro fintech, 11 corredores inscritos a nombre de persona y 317
+nombres de tasadores (233 en la primera tasación y 263 en la segunda; la fuente
+mezcla personas naturales y sociedades tasadoras y no permite separarlas con
+certeza). El tratamiento, la base de licitud, los derechos del titular y el
 registro de actividades están en [`PRIVACIDAD.md`](../PRIVACIDAD.md). Las reglas
 técnicas de minimización viven en
 [`pipelines/auto/privacidad.py`](../pipelines/auto/privacidad.py).
