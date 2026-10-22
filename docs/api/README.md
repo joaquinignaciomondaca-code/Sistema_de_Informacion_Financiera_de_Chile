@@ -11,7 +11,8 @@ el usuario descarga.
 | `esquemas.json` | Qué columnas y qué tipos tiene cada objeto, con el significado del diccionario editorial cuando existe. |
 | `claves.csv` | Qué combinación de columnas identifica una fila (verificada sobre **todas** las filas) y qué claves foráneas cierran contra su lista de entidades. |
 | `v1/datapackage.json` | El **Data Package**: 86 recursos con ruta, tamaño, SHA-256, esquema y `primaryKey`, legible por cualquier herramienta Frictionless. |
-| `reglas.json` | Las comprobaciones con su nivel (invariante / expectativa / informativo) y las excepciones declaradas con su motivo. |
+| `reglas.json` | Las comprobaciones con su nivel (invariante / expectativa / informativo) y las excepciones declaradas con su motivo. Hoy: **0 excepciones**. |
+| `prueba_maquina_limpia.log` | Evidencia de que un consumidor **sin el repo** descubre el catálogo, lee el esquema y consulta por HTTP. |
 
 Se regeneran con:
 
@@ -21,6 +22,7 @@ python3 scripts/build_esquemas.py         # docs/api/esquemas.json
 python3 scripts/verificar_claves.py       # docs/api/claves.csv      (~60 s)
 python3 scripts/build_api.py              # docs/api/v1/datapackage.json
 python3 scripts/auditar_datapackage.py    # valida el descriptor    (~12 s)
+python3 scripts/probar_maquina_limpia.py  # consumidor sin el repo  (~5 s)
 ```
 
 Y el CI falla si quedan desactualizados (`--check` en cada uno) o si algo del
@@ -112,10 +114,11 @@ Un recurso por objeto (86), con las particiones en `path` y el detalle en
 mano—, y los tipos se traducen a Table Schema (`VARCHAR` → `string`,
 `BIGINT` → `integer`, `DOUBLE` → `number`).
 
-`primaryKey` **sólo aparece cuando está probada** sobre todas las filas: 68 de
-86 recursos. Los 18 restantes no la llevan porque la clave declarada no era
-única (8) o porque la tabla publica filas idénticas (9) o la fila entera es la
-única garantía (1). Prometer una clave falsa es peor que no tener ninguna.
+`primaryKey` **sólo aparece cuando está probada** sobre todas las filas: 76 de
+86 recursos. Los 10 restantes no la llevan porque la tabla publica filas
+idénticas (9) o porque la fila entera es la única garantía (1). Prometer una
+clave falsa es peor que no tener ninguna; las 8 que la tenían mal se
+corrigieron en la tarea 1a.9.
 
 El `hash` de cada recurso es el SHA-256 de la concatenación de los SHA-256 de
 sus particiones, y el conjunto de todos ellos produce el `data_release`
@@ -133,14 +136,40 @@ tarea 0.1, aún sin decidir.
 
 `claves.csv` responde dos preguntas sobre las filas publicadas:
 
-- **PK**: 40 claves declaradas se verifican tal cual; 28 se proponen porque el
+- **PK**: 48 claves declaradas se verifican tal cual; 28 se proponen porque el
   diccionario no las traía y la búsqueda encontró una combinación única; 1 sólo
   se sostiene con la fila completa; 9 tablas publican filas idénticas y no
-  pueden tener clave; y 8 claves **declaradas no son únicas** → están en
-  `reglas.json` como excepciones con su motivo y su salida (tarea 1a.9).
-- **FK**: 40 relaciones cierran; 3 tienen huérfanas (corredoras de bolsa 17,4 %,
-  patrimonios separados 45,3 %); 6 no tienen destino porque el sector no
-  publica lista de entidades con esa columna.
+  pueden tener clave. **Ninguna clave declarada es falsa.**
+- **FK**: 36 relaciones cierran; 1 tiene huérfanas (patrimonios separados
+  45,3 %); 6 no tienen destino porque el sector no publica lista de entidades
+  con esa columna.
+
+### Lo que encontró la verificación (tarea 1a.9)
+
+Las 8 claves declaradas que no eran únicas tenían el mismo vicio: **la clave
+natural omitía una dimensión**.
+
+| Objeto | Declaraba | Clave real | Qué faltaba |
+|---|---|---|---|
+| `corredoras_bolsa_balance` / `_resultados` | `codigo_fecu` | `periodo + rut + codigo_fecu` | el periodo y la entidad |
+| `ffmm_balance` / `_resultados` | `orden + codigo_cuenta` | `periodo + run_fondo + codigo_cuenta` | el periodo y el fondo |
+| `fi_balance` / `_resultados` | `periodo + contexto + codigo_cuenta` | `+ run_fondo` | el fondo de inversión |
+| `patrimonios_separados_balance` | `archivo` | `periodo + codigo_patrimonio + cuenta + archivo + orden_en_balance` | todo menos el archivo |
+| `seguros_lista_entidades` | `rut_aseguradora` | `sector + rut_aseguradora` | el sector |
+
+El caso de seguros no era un dato sucio: la misma aseguradora tiene registro de
+**vida** y de **generales**, así que `sector + rut` da 84 de 84.
+
+## Prueba de máquina limpia
+
+`scripts/probar_maquina_limpia.py` comprueba lo que de verdad importa de un
+contrato: que sirva a quien **no tiene el repo**. Levanta el sitio con
+`http.server`, y en un **venv aparte**, desde un directorio temporal y sin
+`PYTHONPATH`, un cliente descarga el descriptor, lee el esquema de un recurso,
+se baja su Parquet y lo consulta. 8 pasos, 0 fallos, ~5 s.
+
+No reproduce el CDN de GitHub Pages (el sandbox no sale a internet), pero sí el
+protocolo, el formato y los archivos que sirve.
 
 ## Lo que todavía no es
 
