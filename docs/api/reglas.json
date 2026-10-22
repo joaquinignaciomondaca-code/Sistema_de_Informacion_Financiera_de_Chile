@@ -1,0 +1,158 @@
+{
+ "version": "v1",
+ "actualizado": "2026-10-22",
+ "que_es": "Las comprobaciones del contrato de la API, con el nivel de control de cada una. El nivel decide qué pasa cuando falla.",
+ "niveles": {
+  "invariante": "Rompe el build. El contrato promete algo que los datos no cumplen, o el descriptor se quedó atrás: no se puede publicar.",
+  "expectativa": "Avisa y se registra, pero no rompe el build. Es deuda conocida y contada; si empeora, se ve en el número.",
+  "informativo": "Sólo se registra. Sirve para que el cliente sepa qué hay, no para bloquear."
+ },
+ "reglas": [
+  {
+   "id": "contrato.reconciliacion",
+   "nivel": "invariante",
+   "comando": "python3 scripts/build_reconciliacion.py --check",
+   "que": "Cada objeto del contrato tiene fila en el manifiesto y estado; ningún objeto ni fila queda sin pareja.",
+   "estado": "ok",
+   "evidencia": "90 objetos · 89 filas del manifiesto · 0 sin estado"
+  },
+  {
+   "id": "contrato.esquemas",
+   "nivel": "invariante",
+   "comando": "python3 scripts/build_esquemas.py --check",
+   "que": "Toda tabla publicada declara sus columnas y tipos reales, y las particiones de un objeto comparten esquema.",
+   "estado": "ok",
+   "evidencia": "89/89 tablas del manifiesto · 1.509 columnas · 0 derivas entre particiones"
+  },
+  {
+   "id": "contrato.datapackage",
+   "nivel": "invariante",
+   "comando": "python3 scripts/build_api.py --check",
+   "que": "El descriptor versionado corresponde a los archivos y esquemas actuales.",
+   "estado": "ok",
+   "evidencia": "86 recursos · 728 particiones · 517,2 MB"
+  },
+  {
+   "id": "contrato.datapackage_auditoria",
+   "nivel": "invariante",
+   "comando": "python3 scripts/auditar_datapackage.py --check",
+   "que": "El descriptor se carga con frictionless, sus hashes coinciden con los archivos y el esquema declarado encaja con los datos reales.",
+   "estado": "ok",
+   "evidencia": "11,5 s · 728 hashes verificados · 86 recursos abiertos sin red"
+  },
+  {
+   "id": "claves.pk_declarada",
+   "nivel": "invariante",
+   "comando": "python3 scripts/verificar_claves.py --check",
+   "que": "Una clave primaria declarada en el diccionario es única sobre todas las filas publicadas. Las 8 que no lo son están en `excepciones`, con su motivo: una rotura nueva falla.",
+   "estado": "excepciones",
+   "evidencia": "40 verificadas · 8 excepciones declaradas"
+  },
+  {
+   "id": "claves.filas_repetidas",
+   "nivel": "expectativa",
+   "comando": "python3 scripts/verificar_claves.py",
+   "que": "Filas idénticas publicadas: el objeto no puede llevar `primaryKey` en el descriptor. Se cuentan para no crecer en silencio.",
+   "estado": "deuda",
+   "evidencia": "9 objetos · 22.521 filas idénticas de 7,5 M revisadas"
+  },
+  {
+   "id": "claves.fk_huerfanas",
+   "nivel": "expectativa",
+   "comando": "python3 scripts/verificar_claves.py --umbral-fk 0.90",
+   "que": "Tasa de coincidencia de cada clave foránea contra su lista de entidades. Por debajo del umbral, avisa con el número de huérfanas.",
+   "estado": "deuda",
+   "evidencia": "40 ok · 3 con huérfanas (corredoras 17,4 % · patrimonios 45,3 %)"
+  },
+  {
+   "id": "datos.columnas_vacias",
+   "nivel": "informativo",
+   "comando": "python3 scripts/build_esquemas.py --check",
+   "que": "Columnas sin ningún valor en ninguna partición, publicadas con el tipo prometido y marcadas `sin_valores`.",
+   "estado": "conocido",
+   "evidencia": "5 columnas · tarea 0b.6.1"
+  },
+  {
+   "id": "datos.columnas_sin_documentar",
+   "nivel": "informativo",
+   "comando": "python3 scripts/build_esquemas.py --check",
+   "que": "Columnas con tipo pero sin significado en el diccionario editorial.",
+   "estado": "conocido",
+   "evidencia": "7 columnas en 5 objetos"
+  },
+  {
+   "id": "licencia.pendiente",
+   "nivel": "informativo",
+   "comando": "python3 scripts/build_api.py --check",
+   "que": "Recursos cuyos datos vienen de terceros y cuya licencia de redistribución no está verificada. Se publica `pendiente`, nunca una licencia inventada.",
+   "estado": "pendiente",
+   "evidencia": "86/86 recursos · DATA_LICENSE.md"
+  }
+ ],
+ "excepciones": [
+  {
+   "regla": "claves.pk_declarada",
+   "objeto": "corredoras_bolsa_balance",
+   "clave_declarada": "codigo_fecu",
+   "clave_verificada": "valor_miles_clp + rut + rut_dv + razon_social + periodo + codigo_fecu",
+   "motivo": "La clave declarada identifica la cuenta, no la fila: falta el periodo y el monto la desempata. El diccionario está mal, el dato es coherente.",
+   "salida": "corregir la PK del diccionario (tarea 1a.9)"
+  },
+  {
+   "regla": "claves.pk_declarada",
+   "objeto": "corredoras_bolsa_resultados",
+   "clave_declarada": "codigo_fecu",
+   "clave_verificada": "valor_miles_clp + rut + rut_dv + razon_social + periodo + codigo_fecu",
+   "motivo": "Ídem: la clave declarada omite el periodo.",
+   "salida": "corregir la PK del diccionario (tarea 1a.9)"
+  },
+  {
+   "regla": "claves.pk_declarada",
+   "objeto": "ffmm_balance",
+   "clave_declarada": "orden + codigo_cuenta",
+   "clave_verificada": "no hay clave corta: sólo la fila completa",
+   "motivo": "Falta el fondo (run_fondo) y el periodo en la clave declarada.",
+   "salida": "corregir la PK del diccionario (tarea 1a.9)"
+  },
+  {
+   "regla": "claves.pk_declarada",
+   "objeto": "ffmm_resultados",
+   "clave_declarada": "orden + codigo_cuenta",
+   "clave_verificada": "valor_miles_mf + valor_anterior_miles_mf + ... + periodo + orden",
+   "motivo": "Falta el fondo y el periodo en la clave declarada.",
+   "salida": "corregir la PK del diccionario (tarea 1a.9)"
+  },
+  {
+   "regla": "claves.pk_declarada",
+   "objeto": "fi_balance",
+   "clave_declarada": "periodo + contexto + codigo_cuenta",
+   "clave_verificada": "no hay clave corta: sólo la fila completa",
+   "motivo": "Falta el fondo de inversión (run_fondo): la tabla publica todos los fondos juntos.",
+   "salida": "corregir la PK del diccionario (tarea 1a.9)"
+  },
+  {
+   "regla": "claves.pk_declarada",
+   "objeto": "fi_resultados",
+   "clave_declarada": "periodo + contexto + codigo_cuenta",
+   "clave_verificada": "no hay clave corta: sólo la fila completa",
+   "motivo": "Ídem: falta el fondo de inversión.",
+   "salida": "corregir la PK del diccionario (tarea 1a.9)"
+  },
+  {
+   "regla": "claves.pk_declarada",
+   "objeto": "patrimonios_separados_balance",
+   "clave_declarada": "archivo",
+   "clave_verificada": "monto_m_clp + archivo + cuenta + codigo_patrimonio + orden_en_balance",
+   "motivo": "`archivo` no identifica la fila: cada archivo trae muchas cuentas.",
+   "salida": "corregir la PK del diccionario (tarea 1a.9)"
+  },
+  {
+   "regla": "claves.pk_declarada",
+   "objeto": "seguros_lista_entidades",
+   "clave_declarada": "rut_aseguradora",
+   "clave_verificada": "nombre_aseguradora + rut_aseguradora + meses_reportados",
+   "motivo": "4 filas comparten RUT: el mismo RUT aparece con otro nombre o con otro corte. Es un dato a revisar, no sólo un error de diccionario.",
+   "salida": "revisar las 4 filas duplicadas y decidir si se colapsan (tarea 1a.9)"
+  }
+ ]
+}
