@@ -210,13 +210,39 @@ Nueve rutas, todas GET y todas reales: los cinco documentos del contrato, el CSV
 de reconciliación, el de claves y los Parquet del sitio. **No hay `/query` ni
 JSON por fila**; si algún día se añade, será una versión mayor (decisión D3).
 
+## SDK de Python
+
+`sdk/python/` es el paquete `sif-chile`: lee el catálogo publicado, ejecuta el
+`views.sql` con la base que se le pida y consulta con DuckDB. No tiene listas
+propias: lo que el contrato publica es lo que el cliente conoce.
+
+```bash
+pip install -e sdk/python          # o: pip install "sif-chile[pandas] @ git+…@main#subdirectory=sdk/python"
+```
+
+```python
+import sif_chile
+
+sif = sif_chile.connect()                       # sitio publicado
+sif = sif_chile.connect(base="/ruta/a/docs")    # copia local, sin red
+sif.tablas()                                    # los 90 objetos
+sif.esquema("seguros_renta_fija")               # columnas y tipos reales
+sif.sql("SELECT count(*) FROM bancos_balance").fetchone()
+```
+
+Detalle y tabla de métodos: `sdk/python/README.md`. Los tests
+(`python3 -m unittest discover -s sdk/python/tests -t sdk/python`) no usan red:
+corren contra la copia del repo, y `web_audit.yml` los ejecuta en cada push.
+
 ## Prueba de máquina limpia
 
 `scripts/probar_maquina_limpia.py` comprueba lo que de verdad importa de un
 contrato: que sirva a quien **no tiene el repo**. Levanta el sitio con
 `http.server`, y en un **venv aparte**, desde un directorio temporal y sin
 `PYTHONPATH`, un cliente descarga el descriptor, lee el esquema de un recurso,
-se baja su Parquet y lo consulta. 8 pasos, 0 fallos, ~5 s.
+se baja su Parquet y lo consulta. 11 pasos, 0 fallos, ~0,6 s. Desde 1.7 también
+lee el catálogo del contrato, el esquema por su ruta y crea las 105 vistas de
+`views.sql` contra la copia local.
 
 No reproduce el CDN de GitHub Pages (el sandbox no sale a internet), pero sí el
 protocolo, el formato y los archivos que sirve.
@@ -241,11 +267,13 @@ guarda el release que estás usando.
 
 ## Lo que todavía no es
 
-- No hay **URL canónica** decidida (tarea 0.1 de la ruta): los archivos viven
-  en el repo y en el sitio, pero la API aún no anuncia una dirección estable.
-- No hay **OpenAPI**, **SDK** ni **ejemplos** (fases 1 a 1d). Este contrato es
-  la materia prima de esos pasos: sin tipos reales no hay cliente que valga.
+- No hay **ejemplos reproducibles** todavía (fase 1c): el SDK existe, pero
+  Python es el único lenguaje con cliente propio. R y JavaScript usan DuckDB
+  directamente.
+- No hay **test de contrato en CI** (fase 1d): hoy la compuerta es
+  `scripts/auditar_contrato.py`, que corre contra los archivos, no contra el
+  sitio publicado.
 - **No hay una licencia de datos verificada** (`DATA_LICENSE.md`): los 86
   recursos declaran `pendiente`, no MIT. La MIT es del código.
-- **D2 sin cerrar**: el identificador es el nombre del objeto del contrato, pero
-  la decisión formal sigue pendiente (ver `docs/notas/decisiones_api_v1_2026-10-22.md`).
+- No hay **SQL remoto ni MCP** (fases 2 y 3, opcionales y con decisión aparte):
+  quien quiera consultar tiene que descargar los Parquet.
