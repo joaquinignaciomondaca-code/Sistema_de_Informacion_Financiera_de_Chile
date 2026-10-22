@@ -183,9 +183,10 @@ Se aplican las reglas de `pipelines/auto/privacidad.py`:
   documentación y armonización: no genera ni modifica los datos.
 - **Proyecto independiente:** no tiene respaldo ni aval de la CMF ni del Banco
   Central de Chile.
-- **Cobertura 2001–{cita['corte'][:4]}:** es el máximo entre tablas, no una
-  cobertura homogénea. Cada tabla tiene su propio inicio y su propia frecuencia;
-  revise `documentacion/cobertura_por_periodo.csv` antes de comparar periodos.
+- **Cobertura:** la extensión de la serie de tiempo de cada tabla dependerá de
+  cada fuente de origen; es por ello que no hay homogeneización generalizada de
+  periodos entre todas las tablas. Revise
+  `documentacion/cobertura_por_periodo.csv` antes de comparar periodos.
 - **Unidades:** los montos conservan la unidad y el criterio de valorización de
   la fuente. No se convierten ni se reexpresan.
 - **No incluye carteras de AFP** ni una capa armonizada para investigación: esto
