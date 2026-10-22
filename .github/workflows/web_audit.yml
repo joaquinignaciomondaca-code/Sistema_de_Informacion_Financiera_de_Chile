@@ -188,13 +188,18 @@ jobs:
       - name: 'Claves y Data Package: PK verificadas, FK medidas y descriptor válido'
         run: |
           python -m pip install --disable-pip-version-check frictionless
+          python -c "import duckdb, pyarrow, frictionless; print('duckdb', duckdb.__version__, '· pyarrow', pyarrow.__version__, '· frictionless', frictionless.__version__)"
           set +e
           python scripts/verificar_claves.py --check > claves.log 2>&1; c=$?
-          grep -hE "^(  \[INVARIANTE\]|CLAVES|  PK:|  FK:)" claves.log | head -20
           python scripts/build_api.py --check > api.log 2>&1; a=$?
-          cat api.log
           python scripts/auditar_datapackage.py --check > dp.log 2>&1; d=$?
-          cat dp.log
+          # Los logs del runner no siempre se pueden recuperar desde fuera, así
+          # que el detalle se imprime aquí.
+          for par in "Claves:claves.log:$c" "Data Package:api.log:$a" "Auditoría:dp.log:$d"; do
+            nombre=${par%%:*}; resto=${par#*:}; archivo=${resto%%:*}; codigo=${resto##*:}
+            if [ "$codigo" -eq 0 ]; then echo "::notice title=$nombre::$(tail -n 2 "$archivo" | head -1)"
+            else echo "::error title=$nombre::falló"; tail -n 25 "$archivo"; fi
+          done
           exit $(( c | a | d ))
 
       - name: Prueba del cliente DuckDB (registro de vistas sin navegador)
