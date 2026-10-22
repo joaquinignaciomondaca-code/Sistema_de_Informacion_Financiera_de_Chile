@@ -20,6 +20,13 @@ on:
       - 'docs/outputs/**'
       - 'data_manifest.json'
   workflow_dispatch:
+  # Los flujos de datos empujan con el GITHUB_TOKEN del propio Actions, y esos
+  # push no disparan otros workflows (regla anti-recursión de GitHub). El 22 de
+  # octubre los flujos publicaron corredoras y IFRS y este flujo no se ejecutó
+  # ni una vez: el contrato siguió viejo y la auditoría falló en el PR siguiente.
+  # El cron no depende del push, así que recoge cualquier deriva cada dos horas.
+  schedule:
+    - cron: '23 */2 * * *'
 
 permissions:
   contents: write

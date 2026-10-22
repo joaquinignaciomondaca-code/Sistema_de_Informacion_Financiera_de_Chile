@@ -20,6 +20,13 @@ import pyarrow as pa
 import pyarrow.parquet as pq
 from bs4 import BeautifulSoup
 
+# Reglas de privacidad de la capa pública (mismo módulo que usan los demás
+# publicadores): el correo de contacto no se publica.
+RAIZ_REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+if RAIZ_REPO not in sys.path:
+    sys.path.insert(0, RAIZ_REPO)
+from pipelines.auto import privacidad  # noqa: E402
+
 def calcular_dv(rut_num: int) -> str:
     s = str(rut_num).strip()
     suma = 0
@@ -101,7 +108,6 @@ def fetch_entity_metadata(rut_str: str) -> dict:
         "numero_inscripcion": "",
         "fecha_inscripcion": "",
         "fecha_cancelacion": "",
-        "email_contacto": "",
         "comuna": "",
         "region": "",
         "sitio_web": "",
@@ -128,8 +134,6 @@ def fetch_entity_metadata(rut_str: str) -> dict:
                     meta["fecha_inscripcion"] = v
                 elif "fecha de cancelación" in k or "fecha de cancelacion" in k:
                     meta["fecha_cancelacion"] = v
-                elif "e-mail" in k or "correo" in k:
-                    meta["email_contacto"] = v
                 elif "comuna" in k:
                     meta["comuna"] = v if v != "---" else ""
                 elif "región" in k or "region" in k:
@@ -203,7 +207,6 @@ def main():
         num_insc = m.get("numero_inscripcion", "")
         fec_insc = m.get("fecha_inscripcion", "")
         fec_canc = m.get("fecha_cancelacion", "")
-        email = m.get("email_contacto", "")
         comuna = m.get("comuna", "")
         region = m.get("region", "")
         sitio_web = m.get("sitio_web", "")
@@ -260,13 +263,14 @@ def main():
             "servicios_acreditados_total": servicios_activos,
             "comuna": comuna,
             "region": region,
-            "email_contacto": email,
             "sitio_web": sitio_web,
             "cmf_url": cmf_url
         })
 
     # Guardar fintech_rpsf_maestro
-    df_maestro = pd.DataFrame(maestro_rows).sort_values("rut", ascending=True)
+    df_maestro = privacidad.retirar_contacto(
+        pd.DataFrame(maestro_rows).sort_values("rut", ascending=True)
+    )
     pq_maestro = os.path.join(out_dir, "fintech_rpsf_maestro.parquet")
     js_maestro = os.path.join(out_dir, "fintech_rpsf_maestro.json")
     table_m = pa.Table.from_pandas(df_maestro)

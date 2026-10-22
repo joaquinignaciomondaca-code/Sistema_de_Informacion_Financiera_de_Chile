@@ -1,4 +1,6 @@
 {
+ "adaptacion": false,
+ "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
  "columnas": [
   {
    "criterio_contable": "No aplica",
@@ -180,11 +182,14 @@
  "contrato": "sif-api/esquema",
  "estado": "publicado",
  "foraneas": [],
+ "fuente": "CMF",
  "id": "ccaf_lista_entidades",
+ "licencia_estado": "verificada",
  "primaryKey": [
   "rut"
  ],
  "sector": "cajas_compensacion",
  "titulo": "ccaf.maestro",
+ "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
  "version": "1.0.0"
 }

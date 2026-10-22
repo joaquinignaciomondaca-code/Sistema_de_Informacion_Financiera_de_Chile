@@ -490,8 +490,8 @@ setTimeout(async () => {
     (textoSitio.match(/\[Conjunto de datos\]|@misc\{|\bpendiente\b|en preparación/gi) || []).join(", "));
   check("autoría: no hay una fecha de corte global",
     !/datos al \d{4}-\d{2}/i.test(textoSitio) && !/fecha de corte:/i.test(textoSitio));
-  check("reproducibilidad: el bloque de la Guía sobrevive a que Descargas se redibuje",
-    /Reproducibilidad y código/.test(creditosGuia.textContent));
+  check("manuales: el bloque de la Guía sobrevive a que Descargas se redibuje",
+    Boolean(creditosGuia.querySelector(".dl-usos")) && /Para leer/.test(creditosGuia.textContent));
   check("descargas: remite a la Guía en vez de repetir la lista de archivos",
     /Guía/.test(creditosPuntero.textContent) && creditosPuntero.querySelector("[data-ir-guia]"));
   const archivosRepo = [...document.querySelectorAll("#creditos-guia .dl-creditos-archivos a")]
@@ -522,7 +522,7 @@ setTimeout(async () => {
     enlacesMaquina.join(", "));
   const irAgentes = document.querySelector("#creditos-guia [data-ir-uso]");
   if (irAgentes) irAgentes.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
-  check("guía: «SDK y servidor MCP» abre la sub-pestaña de agentes",
+  check("guía: el enlace a las instrucciones de agentes abre esa sub-pestaña",
     Boolean(irAgentes)
     && document.getElementById("guia-container").style.display !== "none"
     && document.getElementById("uso-panel-agentes").hidden === false

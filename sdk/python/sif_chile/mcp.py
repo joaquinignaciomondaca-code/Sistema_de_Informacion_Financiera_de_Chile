@@ -6,7 +6,7 @@ estudio lo midió en 88 herramientas ≈ 37.000 tokens, y por eso ofrece un modo
 código con 2 y ~736. Aquí nace directamente así: `sif_buscar` descubre y
 `sif_ejecutar` consulta; el catálogo de 90 objetos se busca, no se inyecta.
 
-    pip install "sif-chile[mcp]"
+    pip install mcp
     sif-mcp                       # servidor por stdio, como lo arranca un cliente
 
 En un cliente MCP (Claude Desktop, por ejemplo):
@@ -69,7 +69,7 @@ def main() -> int:
     try:
         servidor = crear_servidor()
     except ImportError:
-        print("Falta el SDK de MCP. Instálalo con: pip install 'sif-chile[mcp]'",
+        print("Falta el SDK de MCP. Instálalo con: pip install mcp",
               file=sys.stderr)
         return 2
     servidor.run("stdio")

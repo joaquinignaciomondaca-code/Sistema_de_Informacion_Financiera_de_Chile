@@ -25,7 +25,15 @@ concentraban ese riesgo y este módulo los trata:
    negativo (publicar el RUT de una persona). La regla se aplica a toda la tabla,
    sin excepciones por fondo o por periodo.
 
-2. `seguros.bienes_raices`: dirección exacta y rol
+2. `fintech.rpsf_maestro.email_contacto`
+   El Registro de Prestadores de Servicios Financieros identifica al prestador
+   por RUT y razón social; el correo no es un dato registral y sí permite
+   contactar a la persona. 46 de los 264 correos publicados eran de dominios
+   personales (gmail, hotmail, outlook, yahoo) y 36 filas corresponden a
+   personas naturales. Se retira la columna completa en vez de enmascararla:
+   enmascarar deja la ilusión de que el dato se publica y no reduce el riesgo.
+
+3. `seguros.bienes_raices`: dirección exacta y rol
    La dirección y el rol tributario de un inmueble permiten ubicar una propiedad
    y, con ella, a sus ocupantes. No se publican. Se conservan `comuna` y `ciudad`
    (el nivel geográfico con valor analítico) y se agrega `property_id`, un
@@ -71,6 +79,17 @@ TIPO_SIN_RUT = "sin_rut_informado"
 # desde 2024-12 y «direccion» en los archivos anteriores. El rol, igual en ambos.
 COLUMNAS_DIRECCION = ("ubicacion", "direccion", "domicilio")
 COLUMNAS_RETIRADAS = ("rol",) + COLUMNAS_DIRECCION
+
+# Columnas de contacto personal que no se publican en ninguna tabla. El correo
+# institucional de una entidad no es un dato registral y, cuando el titular es
+# una persona natural, es dato personal sin finalidad analítica.
+COLUMNAS_CONTACTO = (
+    "email_contacto",
+    "correo_contacto",
+    "email",
+    "telefono_contacto",
+    "celular",
+)
 
 
 # ---------------------------------------------------------------------------
@@ -216,6 +235,22 @@ def property_id(rut_aseguradora, rol, sal: str = "") -> str | None:
 def sal_privada() -> str:
     """Sal opcional para los seudónimos (variable de entorno SIF_PRIV_SALT)."""
     return os.environ.get("SIF_PRIV_SALT", "")
+
+
+# ---------------------------------------------------------------------------
+# Contacto: minimización
+# ---------------------------------------------------------------------------
+def retirar_contacto(df, columnas=COLUMNAS_CONTACTO):
+    """Quita del DataFrame las columnas de contacto personal.
+
+    Se aplica antes de publicar. Devuelve el mismo DataFrame sin cambios si no
+    hay ninguna de esas columnas, para que la regla sea idempotente y no obligue
+    a tocar los publicadores que no manejan contacto.
+    """
+    presentes = [c for c in columnas if c in getattr(df, "columns", [])]
+    if not presentes:
+        return df
+    return df.drop(columns=presentes)
 
 
 # ---------------------------------------------------------------------------

@@ -3,13 +3,15 @@
  "base": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile",
  "como_se_genera": "python3 scripts/build_contrato.py",
  "contrato": "sif-api/catalogo",
- "data_release": "2026-10-22.7e99ccbc2a82",
+ "data_release": "2026-10-22.e21f39783464",
  "generado": "2026-10-22",
  "objetos": [
   {
+   "adaptacion": false,
    "aliases": [
     "afp_maestro"
    ],
+   "atribucion": "Fuente: Superintendencia de Pensiones. Reproducción autorizada citando la fuente.",
    "bytes": 1825,
    "corte": "Lista vigente",
    "deriva_de": null,
@@ -18,8 +20,11 @@
    "estado": "publicado",
    "filas": 7,
    "frescura": "Se actualiza sola 3 veces al mes (días 10, 20 y 28)",
+   "fuente": "SPensiones",
    "id": "afp_lista_entidades",
+   "licencia_estado": "verificada",
    "nivel": "registro",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/afp_lista_entidades.json",
    "primaryKey": [
@@ -28,10 +33,13 @@
    "sector": "pensiones",
    "sql_view": "afp_lista_entidades",
    "titulo": "afp.lista_administradoras",
-   "ultima_actualizacion": "2026-09-28"
+   "ultima_actualizacion": "2026-09-28",
+   "url_terminos": "https://www.spensiones.cl/portal/institucional/594/w3-article-5885.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 563363,
    "corte": "2010-06 a 2026-06",
    "deriva_de": null,
@@ -40,8 +48,11 @@
    "estado": "publicado",
    "filas": 71423,
    "frescura": "Último trimestre publicado: 2026-06",
+   "fuente": "CMF",
    "id": "agf_balance",
+   "licencia_estado": "verificada",
    "nivel": "secundario",
+   "nota_adaptacion": null,
    "particiones": 17,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/agf_balance.json",
    "primaryKey": [
@@ -55,12 +66,15 @@
    "sector": "agf",
    "sql_view": "agf_balance",
    "titulo": "agf.balance",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [
     "agf_maestro"
    ],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 17065,
    "corte": "Oficial CMF 2026",
    "deriva_de": null,
@@ -69,8 +83,11 @@
    "estado": "publicado",
    "filas": 72,
    "frescura": "Catálogo Vigente",
+   "fuente": "CMF",
    "id": "agf_lista_entidades",
+   "licencia_estado": "verificada",
    "nivel": "secundario",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/agf_lista_entidades.json",
    "primaryKey": [
@@ -79,10 +96,13 @@
    "sector": "agf",
    "sql_view": "agf_lista_entidades",
    "titulo": "agf.maestro",
-   "ultima_actualizacion": "2026-09-23"
+   "ultima_actualizacion": "2026-09-23",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 444264,
    "corte": "2010-06 a 2026-06",
    "deriva_de": null,
@@ -91,8 +111,11 @@
    "estado": "publicado",
    "filas": 58216,
    "frescura": "Último trimestre publicado: 2026-06",
+   "fuente": "CMF",
    "id": "agf_resultados",
+   "licencia_estado": "verificada",
    "nivel": "secundario",
+   "nota_adaptacion": null,
    "particiones": 17,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/agf_resultados.json",
    "primaryKey": [
@@ -108,12 +131,15 @@
    "sector": "agf",
    "sql_view": "agf_resultados",
    "titulo": "agf.resultados",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [
     "bancos_cmf_balance"
    ],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 24638276,
    "corte": "2022-01 a 2026-08",
    "deriva_de": "bancos_cmf_lineas",
@@ -122,8 +148,11 @@
    "estado": "derivado",
    "filas": 722931,
    "frescura": "Actualización mensual validada contra reporte CMF",
+   "fuente": "CMF",
    "id": "bancos_balance",
+   "licencia_estado": "verificada",
    "nivel": "secundario",
+   "nota_adaptacion": null,
    "particiones": 56,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/bancos_balance.json",
    "primaryKey": [
@@ -133,12 +162,15 @@
    "sector": "bancos",
    "sql_view": "bancos_balance",
    "titulo": "bancos.cmf_lineas_b1_b2_r1",
-   "ultima_actualizacion": "2026-10-01"
+   "ultima_actualizacion": "2026-10-01",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [
     "bancos_maestro"
    ],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 4668,
    "corte": "Códigos históricos y vigentes",
    "deriva_de": null,
@@ -147,8 +179,11 @@
    "estado": "publicado",
    "filas": 41,
    "frescura": "Se actualiza sola 3 veces al mes (días 10, 20 y 28)",
+   "fuente": "CMF",
    "id": "bancos_lista_entidades",
+   "licencia_estado": "verificada",
    "nivel": "secundario",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/bancos_lista_entidades.json",
    "primaryKey": [
@@ -157,12 +192,15 @@
    "sector": "bancos",
    "sql_view": "bancos_lista_entidades",
    "titulo": "bancos.lista_instituciones",
-   "ultima_actualizacion": "2026-09-28"
+   "ultima_actualizacion": "2026-09-28",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [
     "bancos_cmf_resultados"
    ],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 24638276,
    "corte": "2022-01 a 2026-08",
    "deriva_de": "bancos_cmf_lineas",
@@ -171,8 +209,11 @@
    "estado": "derivado",
    "filas": 1240061,
    "frescura": "Actualización mensual validada contra reporte CMF",
+   "fuente": "CMF",
    "id": "bancos_resultados",
+   "licencia_estado": "verificada",
    "nivel": "secundario",
+   "nota_adaptacion": null,
    "particiones": 56,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/bancos_resultados.json",
    "primaryKey": [
@@ -182,10 +223,13 @@
    "sector": "bancos",
    "sql_view": "bancos_resultados",
    "titulo": "bancos.cmf_lineas_b1_b2_r1",
-   "ultima_actualizacion": "2026-10-01"
+   "ultima_actualizacion": "2026-10-01",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 215099,
    "corte": "2010-06 a 2026-06",
    "deriva_de": null,
@@ -194,8 +238,11 @@
    "estado": "publicado",
    "filas": 8043,
    "frescura": "Último trimestre publicado: 2026-06",
+   "fuente": "CMF",
    "id": "ccaf_balance",
+   "licencia_estado": "verificada",
    "nivel": "archivo",
+   "nota_adaptacion": null,
    "particiones": 17,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/ccaf_balance.json",
    "primaryKey": [
@@ -208,12 +255,15 @@
    "sector": "cajas_compensacion",
    "sql_view": "ccaf_balance",
    "titulo": "ccaf.balance",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [
     "ccaf_maestro"
    ],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 17300,
    "corte": "Lista vigente",
    "deriva_de": null,
@@ -222,8 +272,11 @@
    "estado": "publicado",
    "filas": 6,
    "frescura": "Se actualiza sola 3 veces al mes (días 2, 12 y 22)",
+   "fuente": "CMF",
    "id": "ccaf_lista_entidades",
+   "licencia_estado": "verificada",
    "nivel": "archivo",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/ccaf_lista_entidades.json",
    "primaryKey": [
@@ -232,10 +285,13 @@
    "sector": "cajas_compensacion",
    "sql_view": "ccaf_lista_entidades",
    "titulo": "ccaf.maestro",
-   "ultima_actualizacion": "2026-09-28"
+   "ultima_actualizacion": "2026-09-28",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 192163,
    "corte": "2010-06 a 2026-06",
    "deriva_de": null,
@@ -244,8 +300,11 @@
    "estado": "publicado",
    "filas": 5506,
    "frescura": "Último trimestre publicado: 2026-06",
+   "fuente": "CMF",
    "id": "ccaf_resultados",
+   "licencia_estado": "verificada",
    "nivel": "archivo",
+   "nota_adaptacion": null,
    "particiones": 17,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/ccaf_resultados.json",
    "primaryKey": [
@@ -258,12 +317,15 @@
    "sector": "cajas_compensacion",
    "sql_view": "ccaf_resultados",
    "titulo": "ccaf.resultados",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [
     "cooperativas_maestro"
    ],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 4324,
    "corte": "Lista vigente",
    "deriva_de": null,
@@ -272,8 +334,11 @@
    "estado": "publicado",
    "filas": 7,
    "frescura": "Se actualiza sola 3 veces al mes (días 10, 20 y 28)",
+   "fuente": "CMF",
    "id": "cooperativas_lista_entidades",
+   "licencia_estado": "verificada",
    "nivel": "registro",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/cooperativas_lista_entidades.json",
    "primaryKey": [
@@ -282,10 +347,13 @@
    "sector": "cooperativas",
    "sql_view": "cooperativas_lista_entidades",
    "titulo": "cooperativas.lista_entidades",
-   "ultima_actualizacion": "2026-09-29"
+   "ultima_actualizacion": "2026-09-29",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 649512,
    "corte": "2010-12 a 2026-06",
    "deriva_de": null,
@@ -294,8 +362,11 @@
    "estado": "publicado",
    "filas": 107976,
    "frescura": "Último trimestre publicado: 2026-06",
+   "fuente": "CMF",
    "id": "corredoras_bolsa_balance",
+   "licencia_estado": "verificada",
    "nivel": "secundario",
+   "nota_adaptacion": null,
    "particiones": 17,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/corredoras_bolsa_balance.json",
    "primaryKey": [
@@ -306,12 +377,15 @@
    "sector": "corredoras_bolsa",
    "sql_view": "corredoras_bolsa_balance",
    "titulo": "corredoras.balance",
-   "ultima_actualizacion": "2026-10-19"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [
     "corredoras_bolsa_maestro"
    ],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 9358,
    "corte": "2014-03 a 2026-06",
    "deriva_de": null,
@@ -320,8 +394,11 @@
    "estado": "publicado",
    "filas": 120,
    "frescura": "Al día (Trimestral)",
+   "fuente": "CMF",
    "id": "corredoras_bolsa_lista_entidades",
+   "licencia_estado": "verificada",
    "nivel": "secundario",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/corredoras_bolsa_lista_entidades.json",
    "primaryKey": [
@@ -330,12 +407,15 @@
    "sector": "corredoras_bolsa",
    "sql_view": "corredoras_bolsa_lista_entidades",
    "titulo": "corredoras.maestro",
-   "ultima_actualizacion": "2026-09-23"
+   "ultima_actualizacion": "2026-09-23",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [
     "corredoras_bolsa_registro_universo"
    ],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 14484,
    "corte": "2014-03 a 2026-06",
    "deriva_de": null,
@@ -344,8 +424,11 @@
    "estado": "publicado",
    "filas": 120,
    "frescura": "Al día (Trimestral)",
+   "fuente": "CMF",
    "id": "corredoras_bolsa_lista_entidades_registro",
+   "licencia_estado": "verificada",
    "nivel": "secundario",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/corredoras_bolsa_lista_entidades_registro.json",
    "primaryKey": [
@@ -354,10 +437,13 @@
    "sector": "corredoras_bolsa",
    "sql_view": "corredoras_bolsa_lista_entidades_registro",
    "titulo": "corredoras.lista_entidades_registro",
-   "ultima_actualizacion": "2026-09-29"
+   "ultima_actualizacion": "2026-09-29",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 520983,
    "corte": "2010-12 a 2026-06",
    "deriva_de": null,
@@ -366,8 +452,11 @@
    "estado": "publicado",
    "filas": 77705,
    "frescura": "Último trimestre publicado: 2026-06",
+   "fuente": "CMF",
    "id": "corredoras_bolsa_resultados",
+   "licencia_estado": "verificada",
    "nivel": "secundario",
+   "nota_adaptacion": null,
    "particiones": 17,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/corredoras_bolsa_resultados.json",
    "primaryKey": [
@@ -378,12 +467,15 @@
    "sector": "corredoras_bolsa",
    "sql_view": "corredoras_bolsa_resultados",
    "titulo": "corredoras.resultados",
-   "ultima_actualizacion": "2026-10-19"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [
     "factoring_leasing_balance_serie_ifrs_cmf"
    ],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 541040,
    "corte": "2009-03 a 2026-09",
    "deriva_de": null,
@@ -392,8 +484,11 @@
    "estado": "publicado",
    "filas": 30046,
    "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
+   "fuente": "CMF",
    "id": "factoring_leasing_balance",
+   "licencia_estado": "verificada",
    "nivel": "archivo",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/factoring_leasing_balance.json",
    "primaryKey": [
@@ -409,12 +504,15 @@
    "sector": "factoring_leasing",
    "sql_view": "factoring_leasing_balance",
    "titulo": "factoring_leasing.balance_serie_ifrs_cmf",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [
     "factoring_leasing_maestro"
    ],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 13989,
    "corte": "Lista vigente",
    "deriva_de": null,
@@ -423,8 +521,11 @@
    "estado": "publicado",
    "filas": 32,
    "frescura": "Se actualiza sola 3 veces al mes (días 2, 12 y 22)",
+   "fuente": "CMF",
    "id": "factoring_leasing_lista_entidades",
+   "licencia_estado": "verificada",
    "nivel": "archivo",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/factoring_leasing_lista_entidades.json",
    "primaryKey": [
@@ -433,12 +534,15 @@
    "sector": "factoring_leasing",
    "sql_view": "factoring_leasing_lista_entidades",
    "titulo": "factoring_leasing.lista_entidades",
-   "ultima_actualizacion": "2026-09-28"
+   "ultima_actualizacion": "2026-09-28",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [
     "factoring_leasing_resultados_serie_ifrs_cmf"
    ],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 334636,
    "corte": "2009-03 a 2026-09",
    "deriva_de": null,
@@ -447,8 +551,11 @@
    "estado": "publicado",
    "filas": 22368,
    "frescura": "Serie completa del índice consultado; extracción literal, no cotejo integral",
+   "fuente": "CMF",
    "id": "factoring_leasing_resultados",
+   "licencia_estado": "verificada",
    "nivel": "archivo",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/factoring_leasing_resultados.json",
    "primaryKey": [
@@ -467,10 +574,13 @@
    "sector": "factoring_leasing",
    "sql_view": "factoring_leasing_resultados",
    "titulo": "factoring_leasing.resultados_serie_ifrs_cmf",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 1389152,
    "corte": "2010-12 a 2025-12",
    "deriva_de": null,
@@ -479,8 +589,11 @@
    "estado": "publicado",
    "filas": 126256,
    "frescura": "Último cierre publicado: 2025-12",
+   "fuente": "CMF",
    "id": "ffmm_balance",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 16,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/ffmm_balance.json",
    "primaryKey": [
@@ -491,10 +604,13 @@
    "sector": "ffmm",
    "sql_view": "ffmm_balance",
    "titulo": "ffmm.balance",
-   "ultima_actualizacion": "2026-10-01"
+   "ultima_actualizacion": "2026-10-01",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 25649282,
    "corte": "2001-01 a 2026-09",
    "deriva_de": null,
@@ -503,18 +619,24 @@
    "estado": "publicado",
    "filas": 1461253,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "ffmm_cartera_extranjera",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 26,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/ffmm_cartera_extranjera.json",
    "primaryKey": [],
    "sector": "ffmm",
    "sql_view": "ffmm_cartera_extranjera",
    "titulo": "ffmm.cartera_extranjera",
-   "ultima_actualizacion": "2026-10-13"
+   "ultima_actualizacion": "2026-10-13",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 26094085,
    "corte": "2022-01 a 2026-09",
    "deriva_de": null,
@@ -523,8 +645,11 @@
    "estado": "publicado",
    "filas": 1590196,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "ffmm_cartera_nacional",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 57,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/ffmm_cartera_nacional.json",
    "primaryKey": [
@@ -544,10 +669,13 @@
    "sector": "ffmm",
    "sql_view": "ffmm_cartera_nacional",
    "titulo": "ffmm.cartera_nacional",
-   "ultima_actualizacion": "2026-10-13"
+   "ultima_actualizacion": "2026-10-13",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 3649115,
    "corte": "2001-01 a 2026-09",
    "deriva_de": null,
@@ -556,20 +684,26 @@
    "estado": "publicado",
    "filas": 282045,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "ffmm_futuros",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 26,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/ffmm_futuros.json",
    "primaryKey": [],
    "sector": "ffmm",
    "sql_view": "ffmm_futuros",
    "titulo": "ffmm.futuros_forwards",
-   "ultima_actualizacion": "2026-10-13"
+   "ultima_actualizacion": "2026-10-13",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [
     "ffmm_maestro"
    ],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 23962,
    "corte": "2001-01 a 2026-09",
    "deriva_de": null,
@@ -578,8 +712,11 @@
    "estado": "publicado",
    "filas": 1334,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "ffmm_lista_entidades",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/ffmm_lista_entidades.json",
    "primaryKey": [
@@ -588,10 +725,13 @@
    "sector": "ffmm",
    "sql_view": "ffmm_lista_entidades",
    "titulo": "ffmm.lista_entidades",
-   "ultima_actualizacion": "2026-10-13"
+   "ultima_actualizacion": "2026-10-13",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 535816,
    "corte": "2001-01 a 2026-09",
    "deriva_de": null,
@@ -600,18 +740,24 @@
    "estado": "publicado",
    "filas": 5365,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "ffmm_opciones",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 26,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/ffmm_opciones.json",
    "primaryKey": [],
    "sector": "ffmm",
    "sql_view": "ffmm_opciones",
    "titulo": "ffmm.opciones",
-   "ultima_actualizacion": "2026-10-13"
+   "ultima_actualizacion": "2026-10-13",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 1539346,
    "corte": "2010-12 a 2025-12",
    "deriva_de": null,
@@ -620,8 +766,11 @@
    "estado": "publicado",
    "filas": 149929,
    "frescura": "Último cierre publicado: 2025-12",
+   "fuente": "CMF",
    "id": "ffmm_resultados",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 16,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/ffmm_resultados.json",
    "primaryKey": [
@@ -632,10 +781,13 @@
    "sector": "ffmm",
    "sql_view": "ffmm_resultados",
    "titulo": "ffmm.resultados",
-   "ultima_actualizacion": "2026-10-01"
+   "ultima_actualizacion": "2026-10-01",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 2771203,
    "corte": "2022-03 a 2026-06",
    "deriva_de": null,
@@ -644,8 +796,11 @@
    "estado": "publicado",
    "filas": 985908,
    "frescura": "Último cierre: 2026-06",
+   "fuente": "CMF",
    "id": "fi_balance",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 16,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/fi_balance.json",
    "primaryKey": [
@@ -657,10 +812,13 @@
    "sector": "fi",
    "sql_view": "fi_balance",
    "titulo": "fi.balance",
-   "ultima_actualizacion": "2026-10-02"
+   "ultima_actualizacion": "2026-10-02",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 2589,
    "corte": "2020-03 a 2026-06",
    "deriva_de": null,
@@ -669,8 +827,11 @@
    "estado": "publicado",
    "filas": 0,
    "frescura": "Último trimestre publicado: 2026-06",
+   "fuente": "CMF",
    "id": "fi_bienes_raices",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/fi_bienes_raices.json",
    "primaryKey": [
@@ -679,10 +840,13 @@
    "sector": "fi",
    "sql_view": "fi_bienes_raices",
    "titulo": "fi.bienes_raices",
-   "ultima_actualizacion": "2026-10-07"
+   "ultima_actualizacion": "2026-10-07",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 2425644,
    "corte": "2020-03 a 2026-06",
    "deriva_de": null,
@@ -691,18 +855,24 @@
    "estado": "publicado",
    "filas": 76849,
    "frescura": "Último trimestre publicado: 2026-06",
+   "fuente": "CMF",
    "id": "fi_cartera_extranjera",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 7,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/fi_cartera_extranjera.json",
    "primaryKey": [],
    "sector": "fi",
    "sql_view": "fi_cartera_extranjera",
    "titulo": "fi.cartera_extranjera",
-   "ultima_actualizacion": "2026-10-07"
+   "ultima_actualizacion": "2026-10-07",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 19761036,
    "corte": "2020-03 a 2026-06",
    "deriva_de": null,
@@ -711,18 +881,24 @@
    "estado": "publicado",
    "filas": 933532,
    "frescura": "Último trimestre publicado: 2026-06",
+   "fuente": "CMF",
    "id": "fi_cartera_nacional",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 26,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/fi_cartera_nacional.json",
    "primaryKey": [],
    "sector": "fi",
    "sql_view": "fi_cartera_nacional",
    "titulo": "fi.cartera_nacional",
-   "ultima_actualizacion": "2026-10-07"
+   "ultima_actualizacion": "2026-10-07",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 356558,
    "corte": "2020-03 a 2026-06",
    "deriva_de": null,
@@ -731,20 +907,26 @@
    "estado": "publicado",
    "filas": 13463,
    "frescura": "Último trimestre publicado: 2026-06",
+   "fuente": "CMF",
    "id": "fi_futuros",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 7,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/fi_futuros.json",
    "primaryKey": [],
    "sector": "fi",
    "sql_view": "fi_futuros",
    "titulo": "fi.futuros_forwards",
-   "ultima_actualizacion": "2026-10-07"
+   "ultima_actualizacion": "2026-10-07",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [
     "fi_maestro"
    ],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 44790,
    "corte": "2020-03 a 2026-06",
    "deriva_de": null,
@@ -753,8 +935,11 @@
    "estado": "publicado",
    "filas": 1679,
    "frescura": "Último trimestre publicado: 2026-06",
+   "fuente": "CMF",
    "id": "fi_lista_entidades",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/fi_lista_entidades.json",
    "primaryKey": [
@@ -763,10 +948,13 @@
    "sector": "fi",
    "sql_view": "fi_lista_entidades",
    "titulo": "fi.lista_entidades",
-   "ultima_actualizacion": "2026-10-07"
+   "ultima_actualizacion": "2026-10-07",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 325115,
    "corte": "2020-03 a 2026-06",
    "deriva_de": null,
@@ -775,8 +963,11 @@
    "estado": "publicado",
    "filas": 10038,
    "frescura": "Último trimestre publicado: 2026-06",
+   "fuente": "CMF",
    "id": "fi_metodo_participacion",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 7,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/fi_metodo_participacion.json",
    "primaryKey": [
@@ -796,10 +987,13 @@
    "sector": "fi",
    "sql_view": "fi_metodo_participacion",
    "titulo": "fi.metodo_participacion",
-   "ultima_actualizacion": "2026-10-07"
+   "ultima_actualizacion": "2026-10-07",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 115649,
    "corte": "2020-03 a 2026-06",
    "deriva_de": null,
@@ -808,8 +1002,11 @@
    "estado": "publicado",
    "filas": 307,
    "frescura": "Último trimestre publicado: 2026-06",
+   "fuente": "CMF",
    "id": "fi_opciones",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 7,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/fi_opciones.json",
    "primaryKey": [
@@ -821,10 +1018,13 @@
    "sector": "fi",
    "sql_view": "fi_opciones",
    "titulo": "fi.opciones",
-   "ultima_actualizacion": "2026-10-07"
+   "ultima_actualizacion": "2026-10-07",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 204649,
    "corte": "2012-03 a 2026-06",
    "deriva_de": null,
@@ -833,18 +1033,24 @@
    "estado": "publicado",
    "filas": 1698,
    "frescura": "Último trimestre publicado: 2026-06",
+   "fuente": "CMF",
    "id": "fi_pactos",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 15,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/fi_pactos.json",
    "primaryKey": [],
    "sector": "fi",
    "sql_view": "fi_pactos",
    "titulo": "fi.pactos",
-   "ultima_actualizacion": "2026-10-07"
+   "ultima_actualizacion": "2026-10-07",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 2903107,
    "corte": "2022-03 a 2026-06",
    "deriva_de": null,
@@ -853,8 +1059,11 @@
    "estado": "publicado",
    "filas": 1164000,
    "frescura": "Último cierre: 2026-06",
+   "fuente": "CMF",
    "id": "fi_resultados",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 16,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/fi_resultados.json",
    "primaryKey": [
@@ -866,22 +1075,28 @@
    "sector": "fi",
    "sql_view": "fi_resultados",
    "titulo": "fi.resultados",
-   "ultima_actualizacion": "2026-10-02"
+   "ultima_actualizacion": "2026-10-02",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [
     "fintech_rpsf_maestro"
    ],
-   "bytes": 39726,
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+   "bytes": 28848,
    "corte": "Catálogo Oficial Vigente CMF",
    "deriva_de": null,
-   "descripcion": "Registro de Prestadores de Servicios Financieros (RPSF) de la CMF. Catálogo integral de las entidades FinTech que operan bajo el perímetro regulatorio de la Ley Fintec en Chile. Incluye personas jurídicas y naturales, estado de vigencia, número y fecha de inscripción oficial, código institucional CMF, datos de contacto y total de servicios autorizados.",
+   "descripcion": "Registro de Prestadores de Servicios Financieros (RPSF) de la CMF. Catálogo integral de las entidades FinTech que operan bajo el perímetro regulatorio de la Ley Fintec en Chile. Incluye personas jurídicas y naturales, estado de vigencia, número y fecha de inscripción oficial, código institucional CMF y total de servicios autorizados.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/schema/fintech_rpsf_lista_entidades.json",
    "estado": "publicado",
    "filas": 264,
    "frescura": "Actualización Continua / Eventos Registrales CMF",
+   "fuente": "CMF",
    "id": "fintech_rpsf_lista_entidades",
+   "licencia_estado": "verificada",
    "nivel": "registro",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/fintech_rpsf_lista_entidades.json",
    "primaryKey": [
@@ -890,10 +1105,13 @@
    "sector": "fintech",
    "sql_view": "fintech_rpsf_lista_entidades",
    "titulo": "fintech.rpsf_maestro",
-   "ultima_actualizacion": "2026-09-23"
+   "ultima_actualizacion": "2026-09-23",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 33167,
    "corte": "2014-01-01 a 2026-10-22",
    "deriva_de": null,
@@ -902,8 +1120,11 @@
    "estado": "publicado",
    "filas": 3261,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_cobre",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_cobre.json",
    "primaryKey": [
@@ -912,10 +1133,13 @@
    "sector": "macro",
    "sql_view": "macro_cobre",
    "titulo": "macro.cobre",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 61487,
    "corte": "2014-01-02 a 2026-10-20",
    "deriva_de": null,
@@ -924,8 +1148,11 @@
    "estado": "publicado",
    "filas": 3172,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_curva_bonos_pesos",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_curva_bonos_pesos.json",
    "primaryKey": [
@@ -934,10 +1161,13 @@
    "sector": "macro",
    "sql_view": "macro_curva_bonos_pesos",
    "titulo": "macro.curva_bonos_pesos",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 94190,
    "corte": "2014-01-02 a 2026-10-20",
    "deriva_de": null,
@@ -946,8 +1176,11 @@
    "estado": "publicado",
    "filas": 3174,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_curva_bonos_uf",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_curva_bonos_uf.json",
    "primaryKey": [
@@ -956,10 +1189,13 @@
    "sector": "macro",
    "sql_view": "macro_curva_bonos_uf",
    "titulo": "macro.curva_bonos_uf",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 3189,
    "corte": "2014-01-01 a 2026-01-01",
    "deriva_de": null,
@@ -968,8 +1204,11 @@
    "estado": "publicado",
    "filas": 49,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_deuda_publica_pct_pib",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_deuda_publica_pct_pib.json",
    "primaryKey": [
@@ -978,10 +1217,13 @@
    "sector": "macro",
    "sql_view": "macro_deuda_publica_pct_pib",
    "titulo": "macro.deuda_publica_pct_pib",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 24704,
    "corte": "2014-01-02 a 2026-10-22",
    "deriva_de": null,
@@ -990,8 +1232,11 @@
    "estado": "publicado",
    "filas": 3189,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_dolar_observado",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_dolar_observado.json",
    "primaryKey": [
@@ -1000,10 +1245,13 @@
    "sector": "macro",
    "sql_view": "macro_dolar_observado",
    "titulo": "macro.dolar_observado",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 24525,
    "corte": "2014-01-02 a 2026-10-22",
    "deriva_de": null,
@@ -1012,8 +1260,11 @@
    "estado": "publicado",
    "filas": 3189,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_euro_observado",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_euro_observado.json",
    "primaryKey": [
@@ -1022,10 +1273,13 @@
    "sector": "macro",
    "sql_view": "macro_euro_observado",
    "titulo": "macro.euro_observado",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 4156,
    "corte": "2014-01-01 a 2026-10-01",
    "deriva_de": null,
@@ -1034,8 +1288,11 @@
    "estado": "publicado",
    "filas": 154,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_expectativas_inflacion",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_expectativas_inflacion.json",
    "primaryKey": [
@@ -1044,10 +1301,13 @@
    "sector": "macro",
    "sql_view": "macro_expectativas_inflacion",
    "titulo": "macro.expectativas_inflacion",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 5253,
    "corte": "2014-01-07 a 2026-10-22",
    "deriva_de": null,
@@ -1056,8 +1316,11 @@
    "estado": "publicado",
    "filas": 238,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_expectativas_operadores",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_expectativas_operadores.json",
    "primaryKey": [
@@ -1066,10 +1329,13 @@
    "sector": "macro",
    "sql_view": "macro_expectativas_operadores",
    "titulo": "macro.expectativas_operadores",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 4075,
    "corte": "2014-01-01 a 2026-10-01",
    "deriva_de": null,
@@ -1078,8 +1344,11 @@
    "estado": "publicado",
    "filas": 154,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_expectativas_tpm",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_expectativas_tpm.json",
    "primaryKey": [
@@ -1088,10 +1357,13 @@
    "sector": "macro",
    "sql_view": "macro_expectativas_tpm",
    "titulo": "macro.expectativas_tpm",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 12252,
    "corte": "2014-01-01 a 2026-08-01",
    "deriva_de": null,
@@ -1100,8 +1372,11 @@
    "estado": "publicado",
    "filas": 152,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_imacec",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_imacec.json",
    "primaryKey": [
@@ -1110,10 +1385,13 @@
    "sector": "macro",
    "sql_view": "macro_imacec",
    "titulo": "macro.imacec",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": true,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 36810,
    "corte": "2014-01-02 a 2026-10-20",
    "deriva_de": null,
@@ -1122,8 +1400,11 @@
    "estado": "publicado",
    "filas": 3078,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_inflacion_implicita",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": "Adaptación de elaboración propia sobre series del Banco Central de Chile; la adaptación es propiedad y responsabilidad exclusiva de este proyecto. El cálculo consiste en diferencia propia entre el rendimiento del bono en pesos y el del bono en UF del mismo plazo, calculada sobre las curvas que publica el Banco Central.",
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_inflacion_implicita.json",
    "primaryKey": [
@@ -1132,10 +1413,13 @@
    "sector": "macro",
    "sql_view": "macro_inflacion_implicita",
    "titulo": "macro.inflacion_implicita",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 8220,
    "corte": "2014-01-01 a 2026-09-01",
    "deriva_de": null,
@@ -1144,8 +1428,11 @@
    "estado": "publicado",
    "filas": 153,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_inflacion_ipc",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_inflacion_ipc.json",
    "primaryKey": [
@@ -1154,10 +1441,13 @@
    "sector": "macro",
    "sql_view": "macro_inflacion_ipc",
    "titulo": "macro.inflacion_ipc",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 10245,
    "corte": "2014-01-01 a 2026-08-01",
    "deriva_de": null,
@@ -1166,8 +1456,11 @@
    "estado": "publicado",
    "filas": 152,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_mercado_laboral",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_mercado_laboral.json",
    "primaryKey": [
@@ -1176,10 +1469,13 @@
    "sector": "macro",
    "sql_view": "macro_mercado_laboral",
    "titulo": "macro.mercado_laboral",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 46863,
    "corte": "2014-01-02 a 2026-10-22",
    "deriva_de": null,
@@ -1188,8 +1484,11 @@
    "estado": "publicado",
    "filas": 3189,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_metales_preciosos",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_metales_preciosos.json",
    "primaryKey": [
@@ -1198,10 +1497,13 @@
    "sector": "macro",
    "sql_view": "macro_metales_preciosos",
    "titulo": "macro.metales_preciosos",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 3112,
    "corte": "2014-01-01 a 2026-04-01",
    "deriva_de": null,
@@ -1210,8 +1512,11 @@
    "estado": "publicado",
    "filas": 50,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_pib_trimestral",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_pib_trimestral.json",
    "primaryKey": [
@@ -1220,10 +1525,13 @@
    "sector": "macro",
    "sql_view": "macro_pib_trimestral",
    "titulo": "macro.pib_trimestral",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 4379,
    "corte": "2014-01-01 a 2026-09-01",
    "deriva_de": null,
@@ -1232,8 +1540,11 @@
    "estado": "publicado",
    "filas": 153,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_reservas_internacionales",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_reservas_internacionales.json",
    "primaryKey": [
@@ -1242,10 +1553,13 @@
    "sector": "macro",
    "sql_view": "macro_reservas_internacionales",
    "titulo": "macro.reservas_internacionales",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 10896,
    "corte": "2014-01-01 a 2026-10-22",
    "deriva_de": null,
@@ -1254,8 +1568,11 @@
    "estado": "publicado",
    "filas": 51,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_series_catalogo",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_series_catalogo.json",
    "primaryKey": [
@@ -1264,10 +1581,13 @@
    "sector": "macro",
    "sql_view": "macro_series_catalogo",
    "titulo": "macro.series_catalogo",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 79260,
    "corte": "2014-01-02 a 2026-10-21",
    "deriva_de": null,
@@ -1276,8 +1596,11 @@
    "estado": "publicado",
    "filas": 3203,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_swaps_camara",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_swaps_camara.json",
    "primaryKey": [
@@ -1286,10 +1609,13 @@
    "sector": "macro",
    "sql_view": "macro_swaps_camara",
    "titulo": "macro.swaps_camara",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 12212,
    "corte": "2014-01-01 a 2026-10-20",
    "deriva_de": null,
@@ -1298,8 +1624,11 @@
    "estado": "publicado",
    "filas": 3328,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_tasa_referencia_fed",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_tasa_referencia_fed.json",
    "primaryKey": [
@@ -1308,10 +1637,13 @@
    "sector": "macro",
    "sql_view": "macro_tasa_referencia_fed",
    "titulo": "macro.tasa_referencia_fed",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 13683,
    "corte": "2014-01-02 a 2026-10-22",
    "deriva_de": null,
@@ -1320,8 +1652,11 @@
    "estado": "publicado",
    "filas": 3190,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_tasas_corto_plazo",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_tasas_corto_plazo.json",
    "primaryKey": [
@@ -1330,10 +1665,13 @@
    "sector": "macro",
    "sql_view": "macro_tasas_corto_plazo",
    "titulo": "macro.tasas_corto_plazo",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 42452,
    "corte": "2014-01-02 a 2026-10-22",
    "deriva_de": null,
@@ -1342,8 +1680,11 @@
    "estado": "publicado",
    "filas": 3189,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_tipo_cambio_multilateral",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_tipo_cambio_multilateral.json",
    "primaryKey": [
@@ -1352,10 +1693,13 @@
    "sector": "macro",
    "sql_view": "macro_tipo_cambio_multilateral",
    "titulo": "macro.tipo_cambio_multilateral",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 6393,
    "corte": "2014-01-01 a 2026-08-01",
    "deriva_de": null,
@@ -1364,8 +1708,11 @@
    "estado": "publicado",
    "filas": 152,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_tipo_cambio_real",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_tipo_cambio_real.json",
    "primaryKey": [
@@ -1374,10 +1721,13 @@
    "sector": "macro",
    "sql_view": "macro_tipo_cambio_real",
    "titulo": "macro.tipo_cambio_real",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 35365,
    "corte": "2014-01-01 a 2026-10-22",
    "deriva_de": null,
@@ -1386,8 +1736,11 @@
    "estado": "publicado",
    "filas": 4678,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_uf",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_uf.json",
    "primaryKey": [
@@ -1396,10 +1749,13 @@
    "sector": "macro",
    "sql_view": "macro_uf",
    "titulo": "macro.uf",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
    "bytes": 3359,
    "corte": "2014-01-01 a 2026-10-01",
    "deriva_de": null,
@@ -1408,8 +1764,11 @@
    "estado": "publicado",
    "filas": 154,
    "frescura": "Se actualiza sola a diario",
+   "fuente": "BCCh",
    "id": "macro_utm",
+   "licencia_estado": "verificada",
    "nivel": "contexto",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/macro_utm.json",
    "primaryKey": [
@@ -1418,10 +1777,13 @@
    "sector": "macro",
    "sql_view": "macro_utm",
    "titulo": "macro.utm",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 57297,
    "corte": "2014-12 a 2025-12 (diciembre; 2010–2013 sin datos)",
    "deriva_de": null,
@@ -1430,8 +1792,11 @@
    "estado": "publicado",
    "filas": 7962,
    "frescura": "Anual, cierre de diciembre",
+   "fuente": "CMF",
    "id": "patrimonios_separados_balance",
+   "licencia_estado": "verificada",
    "nivel": "archivo",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/patrimonios_separados_balance.json",
    "primaryKey": [
@@ -1444,12 +1809,15 @@
    "sector": "patrimonios_separados",
    "sql_view": "patrimonios_separados_balance",
    "titulo": "patrimonios_separados.balance",
-   "ultima_actualizacion": "2026-09-28"
+   "ultima_actualizacion": "2026-09-28",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [
     "patrimonios_separados_maestro"
    ],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 7945,
    "corte": "Lista vigente",
    "deriva_de": null,
@@ -1458,8 +1826,11 @@
    "estado": "publicado",
    "filas": 19,
    "frescura": "Se actualiza sola 3 veces al mes (días 10, 20 y 28)",
+   "fuente": "CMF",
    "id": "patrimonios_separados_lista_entidades",
+   "licencia_estado": "verificada",
    "nivel": "archivo",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/patrimonios_separados_lista_entidades.json",
    "primaryKey": [
@@ -1468,10 +1839,13 @@
    "sector": "patrimonios_separados",
    "sql_view": "patrimonios_separados_lista_entidades",
    "titulo": "patrimonios.emisiones_lineas",
-   "ultima_actualizacion": "2026-09-28"
+   "ultima_actualizacion": "2026-09-28",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 240718,
    "corte": "2009-12 a 2026-06",
    "deriva_de": null,
@@ -1480,8 +1854,11 @@
    "estado": "publicado",
    "filas": 13679,
    "frescura": "Último trimestre publicado: 2026-06",
+   "fuente": "CMF",
    "id": "securitizadoras_balance",
+   "licencia_estado": "verificada",
    "nivel": "archivo",
+   "nota_adaptacion": null,
    "particiones": 18,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/securitizadoras_balance.json",
    "primaryKey": [
@@ -1497,12 +1874,15 @@
    "sector": "securitizadoras",
    "sql_view": "securitizadoras_balance",
    "titulo": "securitizadoras.balance",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [
     "securitizadoras_maestro"
    ],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 4346,
    "corte": "2026-06",
    "deriva_de": null,
@@ -1511,8 +1891,11 @@
    "estado": "publicado",
    "filas": 16,
    "frescura": "Mensual / Registros CMF",
+   "fuente": "CMF",
    "id": "securitizadoras_lista_entidades",
+   "licencia_estado": "verificada",
    "nivel": "archivo",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/securitizadoras_lista_entidades.json",
    "primaryKey": [
@@ -1521,10 +1904,13 @@
    "sector": "securitizadoras",
    "sql_view": "securitizadoras_lista_entidades",
    "titulo": "securitizadoras.maestro",
-   "ultima_actualizacion": "2026-09-23"
+   "ultima_actualizacion": "2026-09-23",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 225853,
    "corte": "2009-12 a 2026-06",
    "deriva_de": null,
@@ -1533,8 +1919,11 @@
    "estado": "publicado",
    "filas": 12290,
    "frescura": "Último trimestre publicado: 2026-06",
+   "fuente": "CMF",
    "id": "securitizadoras_resultados",
+   "licencia_estado": "verificada",
    "nivel": "archivo",
+   "nota_adaptacion": null,
    "particiones": 18,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/securitizadoras_resultados.json",
    "primaryKey": [
@@ -1553,10 +1942,13 @@
    "sector": "securitizadoras",
    "sql_view": "securitizadoras_resultados",
    "titulo": "securitizadoras.resultados",
-   "ultima_actualizacion": "2026-10-22"
+   "ultima_actualizacion": "2026-10-22",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 2892559,
    "corte": "2016-11 a 2026-09",
    "deriva_de": null,
@@ -1565,8 +1957,11 @@
    "estado": "publicado",
    "filas": 109019,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_acciones",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 11,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_acciones.json",
    "primaryKey": [
@@ -1588,10 +1983,13 @@
    "sector": "seguros",
    "sql_view": "seguros_acciones",
    "titulo": "B.2 ACCIONES DE SOCIEDADES ANÓNIMAS ABIERTAS, ACCIONES DE SOCIEDADES ANÓNIMAS CERRADAS Y CUOTAS DE FONDOS DE INVERSIÓN",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 2067139,
    "corte": "2016-11 a 2026-09",
    "deriva_de": "seguros_acciones",
@@ -1600,8 +1998,11 @@
    "estado": "derivado",
    "filas": 109019,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_acciones_relevantes",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 11,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_acciones_relevantes.json",
    "primaryKey": [
@@ -1621,10 +2022,13 @@
    "sector": "seguros",
    "sql_view": "seguros_acciones_relevantes",
    "titulo": "B.2 ACCIONES DE SOCIEDADES ANÓNIMAS ABIERTAS, ACCIONES DE SOCIEDADES ANÓNIMAS CERRADAS Y CUOTAS DE FONDOS DE INVERSIÓN",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 33571939,
    "corte": "2024-12 a 2026-09",
    "deriva_de": null,
@@ -1633,8 +2037,11 @@
    "estado": "publicado",
    "filas": 760152,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_bienes_raices",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 22,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_bienes_raices.json",
    "primaryKey": [
@@ -1655,10 +2062,13 @@
    "sector": "seguros",
    "sql_view": "seguros_bienes_raices",
    "titulo": "B.4 BIENES RAICES",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 0,
    "corte": "2024-12 a 2026-09",
    "deriva_de": null,
@@ -1667,18 +2077,24 @@
    "estado": "vacio",
    "filas": 0,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_bienes_raices_arriendo_morosidad",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 0,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_bienes_raices_arriendo_morosidad.json",
    "primaryKey": [],
    "sector": "seguros",
    "sql_view": "seguros_bienes_raices_arriendo_morosidad",
    "titulo": "B.13 BIENES RAICES EN ARRIENDO Y MOROSIDAD DE MUTUOS HIPOTECARIOS ENDOSABLES Y CONTRATOS DE LEASING",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 0,
    "corte": "2024-12 a 2026-09",
    "deriva_de": "seguros_bienes_raices_arriendo_morosidad",
@@ -1687,18 +2103,24 @@
    "estado": "vacio",
    "filas": 0,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_bienes_raices_arriendo_morosidad_relevantes",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 0,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_bienes_raices_arriendo_morosidad_relevantes.json",
    "primaryKey": [],
    "sector": "seguros",
    "sql_view": "seguros_bienes_raices_arriendo_morosidad_relevantes",
    "titulo": "B.13 BIENES RAICES EN ARRIENDO Y MOROSIDAD DE MUTUOS HIPOTECARIOS ENDOSABLES Y CONTRATOS DE LEASING",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 10008318,
    "corte": "2024-12 a 2026-09",
    "deriva_de": "seguros_bienes_raices",
@@ -1707,18 +2129,24 @@
    "estado": "derivado",
    "filas": 760152,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_bienes_raices_relevantes",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 3,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_bienes_raices_relevantes.json",
    "primaryKey": [],
    "sector": "seguros",
    "sql_view": "seguros_bienes_raices_relevantes",
    "titulo": "B.4 BIENES RAICES",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 1897106,
    "corte": "2016-11 a 2026-09",
    "deriva_de": null,
@@ -1727,8 +2155,11 @@
    "estado": "publicado",
    "filas": 111410,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_control_inversiones",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 11,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_control_inversiones.json",
    "primaryKey": [
@@ -1749,10 +2180,13 @@
    "sector": "seguros",
    "sql_view": "seguros_control_inversiones",
    "titulo": "B.8 INFORMACION DE CONTROL",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 13900098,
    "corte": "2016-11 a 2026-09",
    "deriva_de": null,
@@ -1761,8 +2195,11 @@
    "estado": "publicado",
    "filas": 373469,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_derivados",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 11,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_derivados.json",
    "primaryKey": [
@@ -1782,10 +2219,13 @@
    "sector": "seguros",
    "sql_view": "seguros_derivados",
    "titulo": "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 3185304,
    "corte": "2016-11 a 2026-09",
    "deriva_de": "seguros_derivados",
@@ -1794,8 +2234,11 @@
    "estado": "derivado",
    "filas": 373469,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_derivados_relevantes",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 11,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_derivados_relevantes.json",
    "primaryKey": [
@@ -1815,10 +2258,13 @@
    "sector": "seguros",
    "sql_view": "seguros_derivados_relevantes",
    "titulo": "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 12489001,
    "corte": "2016-11 a 2026-09",
    "deriva_de": null,
@@ -1827,8 +2273,11 @@
    "estado": "publicado",
    "filas": 471942,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_extranjeros",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 11,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_extranjeros.json",
    "primaryKey": [
@@ -1848,10 +2297,13 @@
    "sector": "seguros",
    "sql_view": "seguros_extranjeros",
    "titulo": "seguros.extranjeros",
-   "ultima_actualizacion": "2026-10-20"
+   "ultima_actualizacion": "2026-10-20",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 3863555,
    "corte": "2016-11 a 2026-09",
    "deriva_de": "seguros_extranjeros",
@@ -1860,8 +2312,11 @@
    "estado": "derivado",
    "filas": 471670,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_extranjeros_relevantes",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 11,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_extranjeros_relevantes.json",
    "primaryKey": [
@@ -1881,10 +2336,13 @@
    "sector": "seguros",
    "sql_view": "seguros_extranjeros_relevantes",
    "titulo": "B.5 INVERSIONES EN EL EXTRANJERO",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 176967,
    "corte": "2024-12 a 2026-09",
    "deriva_de": null,
@@ -1893,8 +2351,11 @@
    "estado": "publicado",
    "filas": 4369,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_flujos_activos_elegibles",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 3,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_flujos_activos_elegibles.json",
    "primaryKey": [
@@ -1914,10 +2375,13 @@
    "sector": "seguros",
    "sql_view": "seguros_flujos_activos_elegibles",
    "titulo": "B.11 FLUJOS DE ACTIVOS ELEGIBLES",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 3058243,
    "corte": "2016-11 a 2026-09",
    "deriva_de": null,
@@ -1926,8 +2390,11 @@
    "estado": "publicado",
    "filas": 100472,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_fondos_mutuos",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 11,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_fondos_mutuos.json",
    "primaryKey": [
@@ -1950,10 +2417,13 @@
    "sector": "seguros",
    "sql_view": "seguros_fondos_mutuos",
    "titulo": "B.3 CUOTAS DE FONDOS MUTUOS",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 181636,
    "corte": "2024-12 a 2026-09",
    "deriva_de": null,
@@ -1962,8 +2432,11 @@
    "estado": "publicado",
    "filas": 6518,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_garantias_derivados",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 3,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_garantias_derivados.json",
    "primaryKey": [
@@ -1983,12 +2456,15 @@
    "sector": "seguros",
    "sql_view": "seguros_garantias_derivados",
    "titulo": "B.14 GARANTÍAS EN INSTRUMENTOS DERIVADOS",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [
     "seguros_maestro"
    ],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 6746,
    "corte": "2016-11 a 2026-09",
    "deriva_de": null,
@@ -1997,8 +2473,11 @@
    "estado": "publicado",
    "filas": 84,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_lista_entidades",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_lista_entidades.json",
    "primaryKey": [
@@ -2008,10 +2487,13 @@
    "sector": "seguros",
    "sql_view": "seguros_lista_entidades",
    "titulo": "seguros.lista_entidades",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 706186,
    "corte": "2024-12 a 2026-09",
    "deriva_de": null,
@@ -2020,18 +2502,24 @@
    "estado": "publicado",
    "filas": 42494,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_otras_inversiones",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 3,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_otras_inversiones.json",
    "primaryKey": [],
    "sector": "seguros",
    "sql_view": "seguros_otras_inversiones",
    "titulo": "B.6 OTRAS INVERSIONES",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 628453,
    "corte": "2016-11 a 2026-09",
    "deriva_de": null,
@@ -2040,8 +2528,11 @@
    "estado": "publicado",
    "filas": 11371,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_pactos",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 11,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_pactos.json",
    "primaryKey": [
@@ -2062,10 +2553,13 @@
    "sector": "seguros",
    "sql_view": "seguros_pactos",
    "titulo": "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 0,
    "corte": "2024-12 a 2026-09",
    "deriva_de": null,
@@ -2074,18 +2568,24 @@
    "estado": "vacio",
    "filas": 0,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_prestamos",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 0,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_prestamos.json",
    "primaryKey": [],
    "sector": "seguros",
    "sql_view": "seguros_prestamos",
    "titulo": "B.12 PRÉSTAMOS",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 0,
    "corte": "2024-12 a 2026-09",
    "deriva_de": "seguros_prestamos",
@@ -2094,18 +2594,24 @@
    "estado": "vacio",
    "filas": 0,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_prestamos_relevantes",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 0,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_prestamos_relevantes.json",
    "primaryKey": [],
    "sector": "seguros",
    "sql_view": "seguros_prestamos_relevantes",
    "titulo": "B.12 PRÉSTAMOS",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 21411,
    "corte": "2024-12 a 2026-09",
    "deriva_de": null,
@@ -2114,8 +2620,11 @@
    "estado": "publicado",
    "filas": 66,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_registros_tipo6",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 3,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_registros_tipo6.json",
    "primaryKey": [
@@ -2124,10 +2633,13 @@
    "sector": "seguros",
    "sql_view": "seguros_registros_tipo6",
    "titulo": "Registros tipo 6 de B.11 y B.14",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 231963882,
    "corte": "2024-12 a 2026-09",
    "deriva_de": null,
@@ -2136,8 +2648,11 @@
    "estado": "publicado",
    "filas": 2321911,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_renta_fija",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 22,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_renta_fija.json",
    "primaryKey": [
@@ -2160,10 +2675,13 @@
    "sector": "seguros",
    "sql_view": "seguros_renta_fija",
    "titulo": "B.1 INSTRUMENTOS DE RENTA FIJA",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 43814005,
    "corte": "2024-12 a 2026-09",
    "deriva_de": "seguros_renta_fija",
@@ -2172,8 +2690,11 @@
    "estado": "derivado",
    "filas": 2321911,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_renta_fija_relevante",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 3,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_renta_fija_relevante.json",
    "primaryKey": [
@@ -2194,10 +2715,13 @@
    "sector": "seguros",
    "sql_view": "seguros_renta_fija_relevante",
    "titulo": "B.1 INSTRUMENTOS DE RENTA FIJA",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 14947138,
    "corte": "2024-12 a 2026-09",
    "deriva_de": null,
@@ -2206,18 +2730,24 @@
    "estado": "publicado",
    "filas": 2193981,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_tablas_desarrollo",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 3,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_tablas_desarrollo.json",
    "primaryKey": [],
    "sector": "seguros",
    "sql_view": "seguros_tablas_desarrollo",
    "titulo": "B.10 TABLAS DE DESARROLLO",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 141189,
    "corte": "2024-12 a 2026-09",
    "deriva_de": null,
@@ -2226,8 +2756,11 @@
    "estado": "publicado",
    "filas": 9792,
    "frescura": "Último mes publicado: 2026-09",
+   "fuente": "CMF",
    "id": "seguros_tablas_descriptores",
+   "licencia_estado": "verificada",
    "nivel": "nucleo",
+   "nota_adaptacion": null,
    "particiones": 3,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/seguros_tablas_descriptores.json",
    "primaryKey": [
@@ -2244,12 +2777,15 @@
    "sector": "seguros",
    "sql_view": "seguros_tablas_descriptores",
    "titulo": "B.9 TABLAS DE DESCRIPTORES",
-   "ultima_actualizacion": "2026-10-21"
+   "ultima_actualizacion": "2026-10-21",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
   {
+   "adaptacion": false,
    "aliases": [
     "sistemas_pago_maestro"
    ],
+   "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
    "bytes": 12781,
    "corte": "Lista vigente",
    "deriva_de": null,
@@ -2258,8 +2794,11 @@
    "estado": "publicado",
    "filas": 19,
    "frescura": "Se actualiza sola 3 veces al mes (días 10, 20 y 28)",
+   "fuente": "CMF",
    "id": "sistemas_pago_lista_entidades",
+   "licencia_estado": "verificada",
    "nivel": "registro",
+   "nota_adaptacion": null,
    "particiones": 1,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/sistemas_pago_lista_entidades.json",
    "primaryKey": [
@@ -2268,7 +2807,8 @@
    "sector": "sistemas_pago",
    "sql_view": "sistemas_pago_lista_entidades",
    "titulo": "pagos.maestro_infraestructuras",
-   "ultima_actualizacion": "2026-09-28"
+   "ultima_actualizacion": "2026-09-28",
+   "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   }
  ],
  "rutas": {
@@ -2282,7 +2822,7 @@
  },
  "totales": {
   "alias": 19,
-  "bytes": 521301511,
+  "bytes": 521290633,
   "con_datos": 86,
   "consultas": 156,
   "derivados": 7,

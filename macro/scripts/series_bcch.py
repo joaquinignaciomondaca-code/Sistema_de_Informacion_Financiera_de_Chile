@@ -290,7 +290,11 @@ def main(argv=None) -> int:
 
     df, fallas, nuevas_obs = previo.copy(), [], 0
     ahora = datetime.now(timezone.utc).isoformat(timespec="seconds")
-    with ThreadPoolExecutor(max_workers=6) as ex:
+    # Los términos de la API permiten «un máximo de 5 series simultáneas por
+    # segundo (correspondientes a 5 consultas a la API), por cuenta habilitada».
+    # Se deja un margen: 4 hilos simultáneos con la espera entre reintentos ya
+    # incluida. Subir esto es incumplir la condición de uso, no una optimización.
+    with ThreadPoolExecutor(max_workers=4) as ex:
         for c, desde, res, err in ex.map(bajar, cats):
             info = control["series"].setdefault(c["clave"], {})
             info["serie_id"], info["ultima_consulta_utc"] = c["serie_id"], ahora
