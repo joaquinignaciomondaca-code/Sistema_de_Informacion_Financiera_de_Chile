@@ -1,9 +1,9 @@
-# Prueba de máquina limpia · 2026-10-22T05:29:18
+# Prueba de máquina limpia · 2026-10-22T05:52:30
 
 $ python3 -m venv /tmp/sif-maquina-limpia/venv
 $ /tmp/sif-maquina-limpia/venv/bin/pip install --quiet duckdb   # el cliente sólo necesita un motor
-$ python3 -m http.server 48305 --directory docs   # sirve el sitio, como en producción
-$ cd /tmp/sif-maquina-limpia/cliente && /tmp/sif-maquina-limpia/venv/bin/python /tmp/sif-maquina-limpia/cliente.py http://127.0.0.1:48305 /tmp/sif-maquina-limpia/cliente   # otro intérprete, sin el repo
+$ python3 -m http.server 59193 --directory docs   # sirve el sitio, como en producción
+$ cd /tmp/sif-maquina-limpia/cliente && /tmp/sif-maquina-limpia/venv/bin/python /tmp/sif-maquina-limpia/cliente.py http://127.0.0.1:59193 /tmp/sif-maquina-limpia/cliente   # otro intérprete, sin el repo
 
 OK   sin el repo en sys.path: ninguno
 OK   descubrir el Data Package: 86 recursos
