@@ -19,6 +19,7 @@ el usuario descarga.
 | `v1/queries.json` | Las 156 consultas de la web, con **id estable** y la expectativa declarada. |
 | `v1/openapi.json` | **Sólo** las 9 rutas GET que existen. |
 | `v1/views.sql` | Las 105 vistas SQL (90 objetos + 19 alias), ejecutables tal cual. |
+| `llms.txt` | La puerta de entrada para un agente: qué hay, cómo se consulta, qué no suponer. Sus cifras y rutas se auditan como el resto. |
 
 Se regeneran con:
 
@@ -31,6 +32,7 @@ python3 scripts/auditar_datapackage.py    # valida el descriptor    (~12 s)
 python3 scripts/probar_maquina_limpia.py  # consumidor sin el repo  (~5 s)
 python3 scripts/build_contrato.py         # catálogo, esquemas, particiones, consultas, OpenAPI y vistas
 python3 scripts/auditar_contrato.py       # audita el contrato     (~1 s)
+python3 scripts/probar_ejemplos.py        # ejemplos de Python y JS (~2 s)
 ```
 
 Y el CI falla si quedan desactualizados (`--check` en cada uno) o si algo del

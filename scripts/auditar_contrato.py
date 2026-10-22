@@ -15,6 +15,8 @@ Comprueba que lo publicado y lo que dicen los documentos sean lo mismo, y que
   5. **Vistas**: se ejecuta `views.sql` sustituyendo la base por la copia local
      de `docs/` (el sandbox no tiene salida al sitio) y se comprueba que crea
      las 105 vistas y que **cada objeto con datos responde a un `count(*)`**.
+  6. **`llms.txt`**: las cifras que le dice a un agente (objetos, consultas) son
+     las del catálogo, y ninguna de sus rutas da 404.
 
 Uso:
     python3 scripts/auditar_contrato.py            # informe (~10 s)
@@ -180,6 +182,26 @@ def main() -> int:
     if paquete["sif"]["data_release"] != catalogo["data_release"]:
         problemas.append("el data_release del catálogo y del Data Package no coinciden")
     print(f"Release: {catalogo['data_release']} en catálogo y Data Package")
+
+    # 7. El llms.txt no puede mentirle a un agente -------------------------
+    llms = DOCS / "llms.txt"
+    if not llms.exists():
+        problemas.append("falta docs/llms.txt, la puerta de entrada para agentes")
+    else:
+        texto = llms.read_text(encoding="utf-8")
+        cifras = {"objetos": len(objetos), "consultas": consultas["total"]}
+        for nombre, esperado in cifras.items():
+            hallada = re.search(rf"\b(\d+) {nombre}\b", texto)
+            if not hallada:
+                problemas.append(f"llms.txt no dice cuántos {nombre} hay")
+            elif int(hallada.group(1)) != esperado:
+                problemas.append(f"llms.txt dice {hallada.group(1)} {nombre} y hay {esperado}")
+        enlaces = set(re.findall(re.escape(BASE) + r"(/api/v1/[\w./-]+)", texto))
+        rotos = [r for r in enlaces if not (DOCS / r.lstrip("/")).exists()]
+        for r in rotos:
+            problemas.append(f"llms.txt enlaza a una ruta que no existe: {r}")
+        print(f"llms.txt: {len(cifras)} cifras y {len(enlaces)} rutas de api/v1 comprobadas"
+              f"{'' if not rotos else f', {len(rotos)} rotas'}")
 
     duracion = time.time() - t0
     for p in problemas[:20]:

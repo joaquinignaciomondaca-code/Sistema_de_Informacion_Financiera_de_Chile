@@ -94,13 +94,18 @@ ORDER BY s.aseguradoras + f.fondos_mutuos DESC;
 
 | emisor | aseguradoras | fondos_mutuos |
 |---|---:|---:|
-| Banco de Credito e Inversiones | 57 | 205 |
-| Banco Santander-Chile | 51 | 199 |
-| Banco Itau Chile | 52 | 194 |
-| Banco de Chile | 60 | 179 |
-| Scotiabank Chile | 51 | 167 |
-| Banco BICE | 50 | 161 |
-| Banco del Estado de Chile | 53 | 145 |
+| Banco de Credito e Inversiones | 57 | 200 |
+| Banco Santander-Chile | 51 | 198 |
+| Banco de Chile | 59 | 176 |
+| Banco Itau Chile | 50 | 176 |
+| Scotiabank Chile | 52 | 164 |
+| Banco BICE | 47 | 158 |
+| Banco del Estado de Chile | 54 | 151 |
+
+*(Período 2026-09, leído el 2026-10-22. Estos conteos cambian cuando la CMF
+republica un cierre o el pipeline reprocesa una cartera —pasó entre el 20 y el 22
+de octubre—, así que [el ejemplo que lo ejecuta](examples/python/02_cruce_tres_industrias.py)
+comprueba el conjunto y un umbral, no las cifras.)*
 
 Tres industrias cruzadas en 50 ms, en el navegador, con `JOIN`s directos: el RUT está homologado a toda la base bajo una convención canónica (sección 4).
 
@@ -219,6 +224,8 @@ sif.sql("SELECT count(*) FROM bancos_balance").fetchone()
 ```
 
 Las 105 vistas salen del `views.sql` publicado, así que el cliente no lleva su propia lista de tablas. Detalle en [`sdk/python/README.md`](sdk/python/README.md) y en [`docs/api/README.md`](docs/api/README.md).
+
+Hay ejemplos ejecutables en Python, R y JavaScript, y una guía para agentes con [`llms.txt`](docs/llms.txt): ver [`examples/`](examples/README.md).
 
 ---
 
