@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aviso de privacidad — Sistema de Información Financiera de Chile</title>
+  <meta name="description" content="Qué datos personales publica el Sistema de Información Financiera de Chile, con qué base de licitud y cómo ejercer los derechos de la Ley 21.719.">
+  <link rel="icon" type="image/svg+xml" href="assets/logo_sif_isotipo.svg">
+  <link rel="stylesheet" href="css/app.css">
+  <style>
+    .legal-page {
+      max-width: 78ch;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+      color: var(--text-primary, #E5E7EB);
+      background: var(--bg-primary, #121316);
+      min-height: 100vh;
+      line-height: 1.65;
+      font-size: 15px;
+    }
+    .legal-page h1 { font-size: 30px; line-height: 1.25; margin: 0 0 8px; }
+    .legal-page h2 { font-size: 19px; margin: 34px 0 10px; }
+    .legal-page h3 { font-size: 16px; margin: 24px 0 8px; }
+    .legal-page p, .legal-page li { color: var(--text-secondary, #9CA3AF); }
+    .legal-page strong { color: var(--text-primary, #E5E7EB); }
+    .legal-page a { color: var(--accent-mint-text, #55A0F8); }
+    .legal-page table { width: 100%; border-collapse: collapse; margin: 12px 0 18px; font-size: 13px; }
+    .legal-page th, .legal-page td {
+      text-align: left; vertical-align: top; padding: 8px 10px;
+      border-bottom: 1px solid var(--border-color, rgba(255,255,255,.15));
+    }
+    .legal-page th { color: var(--text-primary, #E5E7EB); font-weight: 600; }
+    .legal-page code {
+      font-family: "JetBrains Mono", ui-monospace, monospace;
+      font-size: .92em; color: var(--text-primary, #E5E7EB);
+    }
+    .legal-meta { font-size: 13px; color: var(--text-muted, #828996); margin-bottom: 26px; }
+    .legal-volver {
+      display: inline-block; margin-bottom: 26px; font-size: 13px;
+      text-decoration: none; border-bottom: 1px solid currentColor;
+    }
+    .legal-page ol, .legal-page ul { padding-left: 22px; }
+    .legal-page li { margin: 6px 0; }
+  </style>
+</head>
+<body>
+  <main class="legal-page">
+    <a class="legal-volver" href="index.html">← Volver al sitio</a>
+    <h1>Aviso de privacidad y tratamiento de datos personales</h1>
+    <p class="legal-meta">
+      Responsable: Joaquín Mondaca, responsable del proyecto Sistema de Información Financiera de Chile ·
+      Versión 1.0 · 22 de octubre de 2026 ·
+      Norma aplicable: Ley 21.719, vigente desde el 1 de diciembre de 2026
+    </p>
+
+    <p>Este documento cumple el deber de información y transparencia del artículo 14 ter de la
+    Ley 21.719 y sirve de registro de las actividades de tratamiento. Se aplica a los datos
+    publicados en el sitio y en la API del proyecto. La versión completa está en
+    <a href="https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/PRIVACIDAD.md">PRIVACIDAD.md</a>.</p>
+
+    <h2>1. Qué datos personales se publican</h2>
+    <p>El proyecto publica datos de organismos públicos chilenos. La mayoría corresponde a personas
+    jurídicas, que no son objeto de la ley. Estos son los tres conjuntos con datos de personas naturales:</p>
+    <table>
+      <thead>
+        <tr><th>Conjunto</th><th>Personas</th><th>Datos</th><th>Origen</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>fintech_rpsf_lista_entidades</code></td>
+          <td>36 personas naturales, de 264 prestadores</td>
+          <td>RUT, nombre o razón social, comuna, región, sitio web, estado de vigencia</td>
+          <td>Registro de Prestadores de Servicios Financieros de la CMF (Ley 21.521)</td>
+        </tr>
+        <tr>
+          <td><code>corredoras_bolsa_lista_entidades</code></td>
+          <td>11 corredores inscritos a nombre de persona natural, de 120</td>
+          <td>RUT, nombre, estado de vigencia</td>
+          <td>Registro de corredores de bolsa de la CMF (Ley 18.045)</td>
+        </tr>
+        <tr>
+          <td><code>seguros_bienes_raices</code></td>
+          <td>233 tasadores</td>
+          <td>Nombre del tasador, tal como consta en la Circular 1835</td>
+          <td>Declaración de cartera de las aseguradoras a la CMF</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>2. Qué datos personales no se publican</h2>
+    <ul>
+      <li><strong>Correos de contacto.</strong> La columna <code>email_contacto</code> de
+      <code>fintech_rpsf_lista_entidades</code> se retiró el 22 de octubre de 2026. Contenía 253
+      direcciones, 46 de ellas en dominios personales, y no aportaba al fin del conjunto.</li>
+      <li><strong>Deudores y asegurados.</strong> <code>nombre_deudor</code>, <code>rut_deudor</code> y
+      <code>rut_deudor_sindicado</code> están vacías en las 2.321.911 filas de
+      <code>seguros_renta_fija</code>: nunca se poblaron desde la fuente.</li>
+      <li><strong>Direcciones y roles de inmuebles.</strong> <code>seguros_bienes_raices</code> no publica
+      dirección exacta ni rol; publica comuna, ciudad y un seudónimo estable (<code>property_id</code>)
+      que permite seguir el mismo bien entre meses.</li>
+      <li><strong>RUT de personas naturales en carteras.</strong> En <code>fi_cartera_nacional</code> se
+      suprime el RUT del emisor cuando probablemente corresponde a una persona natural y se agrega
+      <code>emisor_tipo</code> con el criterio aplicado.</li>
+    </ul>
+    <p>Las reglas viven en <code>pipelines/auto/privacidad.py</code> y se aplican antes de publicar;
+    <code>scripts/enmascarar_identificadores.py</code> las aplica a lo ya publicado.</p>
+
+    <h2>3. Base de licitud</h2>
+    <p>Los datos provienen de <strong>fuentes de acceso público</strong> en el sentido del artículo 2
+    letra i) de la ley: registros que la ley obliga a mantener y que cualquiera puede consultar. Ese
+    mismo artículo dispone que el tratamiento de datos de fuentes de acceso público queda sujeto a la ley.</p>
+    <p>La base de licitud es el <strong>interés legítimo</strong> del artículo 13 letra d): reutilizar
+    información de registros públicos para dar transparencia al mercado financiero chileno y permitir
+    análisis estadístico reproducible. El proyecto no persigue fines comerciales, no vende datos y no
+    elabora perfiles.</p>
+    <p>Cuando un titular ejerce oposición, el proyecto evalúa la solicitud considerando que el artículo 7
+    letra v) exceptúa la supresión cuando el tratamiento es necesario para fines históricos, estadísticos
+    o científicos de interés público, y que el artículo 8 letra c) regula la oposición sobre datos de
+    fuente de acceso público. La respuesta se funda y se entrega por escrito.</p>
+
+    <h2>4. Derechos del titular</h2>
+    <p>Cualquier persona puede solicitar <strong>acceso, rectificación, supresión, oposición y
+    portabilidad</strong> sobre sus datos, y el <strong>bloqueo temporal</strong> mientras se resuelve una
+    solicitud de rectificación, supresión u oposición.</p>
+    <ol>
+      <li>Abrir un issue en el <a href="https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/issues">repositorio</a>
+      con el título «Derechos Ley 21.719».</li>
+      <li>Indicar el derecho que se ejerce y el conjunto de datos afectado. Para acceso basta
+      individualizarse; para oposición hay que señalar la causal.</li>
+      <li>El proyecto acusa recibo y responde por el mismo medio dentro de <strong>30 días
+      corridos</strong>, prorrogables por una vez por otros 30. El bloqueo temporal se responde dentro de
+      <strong>2 días hábiles</strong>.</li>
+    </ol>
+    <p>Si la solicitud se rechaza o no se responde en plazo, el titular puede reclamar ante la Agencia de
+    Protección de Datos Personales.</p>
+
+    <h2>5. Conservación y actualización</h2>
+    <p>Los datos se publican mientras la fuente los publique. Las particiones históricas se conservan
+    para que un análisis pueda reproducirse: esa conservación se ampara en los fines estadísticos y
+    científicos del artículo 7 letra v). Una rectificación u oposición se aplica a partir de la
+    publicación siguiente y se documenta en el historial del repositorio, que es público.</p>
+
+    <h2>6. Destinatarios y encargados</h2>
+    <p>No hay cesión ni comunicación de datos a terceros. El sitio se aloja en GitHub Pages y su espejo
+    en Vercel, que actúan como encargados del alojamiento sin acceso a una base distinta de la publicada.</p>
+
+    <h2>7. Seguridad y decisiones automatizadas</h2>
+    <p>El repositorio no contiene credenciales, cada archivo se publica con su <code>sha256</code> y su
+    tamaño, y la integridad se verifica en cada integración continua. Una vulneración que afecte derechos
+    de titulares se reportará a la Agencia por el medio más expedito, conforme al artículo 14 sexies.
+    No se toman decisiones automatizadas ni se elaboran perfiles con datos personales.</p>
+
+    <h2>8. Registro de actividades de tratamiento</h2>
+    <table>
+      <thead>
+        <tr><th>Finalidad</th><th>Titulares</th><th>Datos</th><th>Base</th><th>Plazo</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Publicar el registro de prestadores fintech</td>
+          <td>Personas naturales inscritas en el RPSF</td>
+          <td>RUT, nombre, comuna, región, sitio web</td>
+          <td>Interés legítimo (art. 13 d)</td>
+          <td>Mientras la fuente lo publique</td>
+        </tr>
+        <tr>
+          <td>Publicar el registro de corredores de bolsa</td>
+          <td>Personas naturales inscritas como corredores</td>
+          <td>RUT, nombre</td>
+          <td>Interés legítimo (art. 13 d)</td>
+          <td>Mientras la fuente lo publique</td>
+        </tr>
+        <tr>
+          <td>Publicar la nómina de tasadores</td>
+          <td>Tasadores personas naturales</td>
+          <td>Nombre</td>
+          <td>Interés legítimo (art. 13 d)</td>
+          <td>Mientras la fuente lo publique</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>9. Cambios</h2>
+    <p>Cada cambio de este documento sube la versión y queda registrado en el historial del repositorio.
+    La fecha de la primera versión es el 22 de octubre de 2026.</p>
+  </main>
+</body>
+</html>
