@@ -3082,7 +3082,7 @@
     "corte": "2010-12 a 2026-06",
     "deriva_de": null,
     "estado": "publicado",
-    "extracted_at": "2026-10-19",
+    "extracted_at": null,
     "filas": 107976,
     "filtro": null,
     "licencia_estado": "pendiente",
@@ -3195,7 +3195,7 @@
     "puente": "directo",
     "sector": "corredoras_bolsa",
     "sql_view": "corredoras_bolsa_balance",
-    "ultima_actualizacion": "2026-10-19"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -3560,7 +3560,7 @@
     "corte": "2010-12 a 2026-06",
     "deriva_de": null,
     "estado": "publicado",
-    "extracted_at": "2026-10-19",
+    "extracted_at": null,
     "filas": 77705,
     "filtro": null,
     "licencia_estado": "pendiente",
@@ -3673,7 +3673,7 @@
     "puente": "directo",
     "sector": "corredoras_bolsa",
     "sql_view": "corredoras_bolsa_resultados",
-    "ultima_actualizacion": "2026-10-19"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
