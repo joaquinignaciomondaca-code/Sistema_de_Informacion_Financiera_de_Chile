@@ -34,10 +34,21 @@ SIDEBAR = DOCS / "js" / "sidebar.js"
 INDEX = DOCS / "index.html"
 
 
-def _bloque(texto: str, marcador: str) -> str:
-    """Devuelve el cuerpo del array/objeto que sigue a `marcador`, equilibrando corchetes."""
+def _bloque(texto: str, marcador: str, apertura: str | None = None) -> str:
+    """Devuelve el cuerpo del array/objeto que sigue a `marcador`, equilibrando corchetes.
+
+    `apertura` fuerza el delimitador ("[" o "{"). Sin él se elige el que aparezca
+    primero en los 200 caracteres siguientes, que es lo correcto para un array
+    literal pero **no** para un objeto cuyos valores ya traen corchetes: en
+    `LEGACY_VIEW_ALIASES` el primer `[` es el de `["seguros_maestro"]`, así que el
+    bloque salía con un solo alias y la comprobación de compatibilidad no veía
+    ninguno de los 19 declarados.
+    """
     i = texto.index(marcador)
-    i = texto.index("[", i) if "[" in texto[i : i + 200] else texto.index("{", i)
+    if apertura:
+        i = texto.index(apertura, i)
+    else:
+        i = texto.index("[", i) if "[" in texto[i : i + 200] else texto.index("{", i)
     apertura = texto[i]
     cierre = "]" if apertura == "[" else "}"
     nivel, j = 0, i
@@ -73,7 +84,7 @@ def vistas_semanticas() -> list[dict]:
 
 def alias_heredados() -> dict[str, list[str]]:
     txt = CLIENTE.read_text(encoding="utf-8")
-    bloque = _bloque(txt, "const LEGACY_VIEW_ALIASES")
+    bloque = _bloque(txt, "const LEGACY_VIEW_ALIASES", apertura="{")
     alias = {}
     for m in re.finditer(r"(\w+):\s*\[([^\]]*)\]", bloque):
         alias[m.group(1)] = re.findall(r'"([^"]+)"', m.group(2))

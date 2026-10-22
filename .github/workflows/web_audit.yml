@@ -176,6 +176,45 @@ jobs:
           grep -h -E "Consultas sugeridas|OK|VACIA|ERROR" consultas.log | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::notice title=Consultas sugeridas::$linea"; done
           exit $n
 
+      - name: 'Contrato de la API: reconciliación y esquemas al día'
+        run: |
+          set +e
+          python scripts/build_reconciliacion.py --check > recon.log 2>&1; r=$?
+          cat recon.log
+          python scripts/build_esquemas.py --check > esquemas.log 2>&1; e=$?
+          cat esquemas.log
+          exit $(( r | e ))
+
+      - name: 'Claves y Data Package: PK verificadas, FK medidas y descriptor válido'
+        run: |
+          # frictionless abre Parquet a través de pandas; sin él la muestra no corre.
+          python -m pip install --disable-pip-version-check frictionless pandas
+          python -c "import duckdb, pyarrow, frictionless; print('duckdb', duckdb.__version__, '· pyarrow', pyarrow.__version__, '· frictionless', frictionless.__version__)"
+          set +e
+          python scripts/verificar_claves.py --check > claves.log 2>&1; c=$?
+          python scripts/build_api.py --check > api.log 2>&1; a=$?
+          python scripts/auditar_datapackage.py --check > dp.log 2>&1; d=$?
+          # Los logs del runner no siempre se pueden recuperar desde fuera, así
+          # que el detalle se imprime aquí.
+          for par in "Claves:claves.log:$c" "Data Package:api.log:$a" "Auditoría:dp.log:$d"; do
+            nombre=${par%%:*}; resto=${par#*:}; archivo=${resto%%:*}; codigo=${resto##*:}
+            if [ "$codigo" -eq 0 ]; then echo "::notice title=$nombre::$(tail -n 2 "$archivo" | head -1)"
+            else
+              # La anotación es lo único que se puede leer desde fuera del runner.
+              grep -h "\[FALLA\]\|ERROR" "$archivo" | head -6 | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=$nombre::$l"; done
+              echo "::error title=$nombre::falló (código $codigo)"
+            fi
+          done
+          exit $(( c | a | d ))
+
+      - name: 'Máquina limpia: un consumidor sin el repo descubre, lee el esquema y consulta'
+        run: |
+          set +e
+          python scripts/probar_maquina_limpia.py --check > limpia.log 2>&1; n=$?
+          grep -E "^(OK|FALLA|MÁQUINA|Duración|  \[FALLA\])" limpia.log | sed 's/%/%25/g' | while IFS= read -r l; do echo "::notice title=Máquina limpia::$l"; done
+          [ "$n" -ne 0 ] && echo "::error title=Máquina limpia::falló (ver docs/api/prueba_maquina_limpia.log)"
+          exit $n
+
       - name: Prueba del cliente DuckDB (registro de vistas sin navegador)
         run: |
           set +e

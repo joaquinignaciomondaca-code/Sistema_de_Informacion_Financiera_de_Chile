@@ -1,0 +1,131 @@
+objeto,tipo,columnas,destino,filas,distintas,sobrantes,tasa,declarada,nivel,estado,detalle
+afp_lista_entidades,pk,id,,7,7,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+agf_balance,pk,valor + razon_social + cuenta + rut + rut_dv + periodo,,71423,71423,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+agf_balance,fk,rut,agf_lista_entidades,71423,,0,1.0000,si,invariante,ok,"tipos distintos en la columna (VARCHAR aquí, BIGINT en el destino): el join exige cast"
+agf_lista_entidades,pk,rut,,72,72,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+agf_resultados,pk,valor + valor_no_numerico + cuenta + razon_social + rut + rut_dv + periodo + orden,,58216,58216,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+agf_resultados,fk,rut,agf_lista_entidades,58216,,0,1.0000,si,invariante,ok,"tipos distintos en la columna (VARCHAR aquí, BIGINT en el destino): el join exige cast"
+bancos_balance,pk,id + codigo_cuenta,,722931,722931,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+bancos_balance,fk,codigo_institucion,bancos_lista_entidades,722931,,0,1.0000,si,invariante,ok,
+bancos_lista_entidades,pk,codigo_institucion,,41,41,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+bancos_resultados,pk,id + codigo_cuenta,,1240061,1240061,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+bancos_resultados,fk,codigo_institucion,bancos_lista_entidades,1240061,,0,1.0000,si,invariante,ok,
+ccaf_balance,pk,valor + cuenta + periodo + orden + rut,,8043,8043,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+ccaf_balance,fk,rut,,8043,,,,si,informativo,sin_destino,ningún objeto lista_entidades publica esa columna
+ccaf_lista_entidades,pk,rut,,6,6,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+ccaf_resultados,pk,valor + periodo + cuenta + orden + rut,,5506,5506,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+ccaf_resultados,fk,rut,,5506,,,,si,informativo,sin_destino,ningún objeto lista_entidades publica esa columna
+cooperativas_lista_entidades,pk,rut,,7,7,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+corredoras_bolsa_balance,pk,periodo + rut + codigo_fecu,,107976,107976,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+corredoras_bolsa_lista_entidades,pk,rut,,120,120,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+corredoras_bolsa_lista_entidades_registro,pk,rut,,120,120,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+corredoras_bolsa_resultados,pk,periodo + rut + codigo_fecu,,77705,77705,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+factoring_leasing_balance,pk,valor_archivo + valor_texto_original + cuenta + periodo + fuente_archivo + sha256_archivo + orden + nombre_reportado,,30046,30046,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+factoring_leasing_lista_entidades,pk,rut,,32,32,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+factoring_leasing_resultados,pk,valor_texto_original + valor_archivo + cuenta + periodo + fuente_archivo + sha256_archivo + nombre_reportado + rut + nombre_catalogo + rut_dv + orden,,22368,22368,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+ffmm_balance,pk,periodo + run_fondo + codigo_cuenta,,126256,126256,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+ffmm_balance,fk,rut_agf,,126256,,,,si,informativo,sin_destino,ningún objeto lista_entidades publica esa columna
+ffmm_cartera_extranjera,pk,,,1461253,1445843,15410,,no,expectativa,sin_clave,ninguna combinación es única: hay filas idénticas publicadas
+ffmm_cartera_extranjera,fk,run_fondo,ffmm_lista_entidades,1461253,,0,1.0000,si,invariante,ok,
+ffmm_cartera_nacional,pk,valorizacion_miles_mf + cantidad_unidades + pct_activo_emisor + valor_relevante + pct_activo_fondo + nemotecnico + pct_capital_emisor + tir_pct + fecha_vencimiento + rut_emisor + run_fondo + nombre_fondo,,1590196,1590196,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+ffmm_cartera_nacional,fk,run_fondo,ffmm_lista_entidades,1590196,,0,1.0000,si,invariante,ok,
+ffmm_futuros,pk,,,282045,268107,13938,,no,expectativa,sin_clave,ninguna combinación es única: hay filas idénticas publicadas
+ffmm_futuros,fk,run_fondo,ffmm_lista_entidades,282045,,0,1.0000,si,invariante,ok,
+ffmm_lista_entidades,pk,run_fondo,,1334,1334,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+ffmm_opciones,pk,,,5365,5291,74,,no,expectativa,sin_clave,ninguna combinación es única: hay filas idénticas publicadas
+ffmm_opciones,fk,run_fondo,ffmm_lista_entidades,5365,,0,1.0000,si,invariante,ok,
+ffmm_resultados,pk,periodo + run_fondo + codigo_cuenta,,149929,149929,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+ffmm_resultados,fk,rut_agf,,149929,,,,si,informativo,sin_destino,ningún objeto lista_entidades publica esa columna
+fi_balance,pk,periodo + run_fondo + contexto + codigo_cuenta,,985908,985908,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+fi_balance,fk,rut_agf,,985908,,,,si,informativo,sin_destino,ningún objeto lista_entidades publica esa columna
+fi_bienes_raices,pk,periodo,,0,0,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+fi_bienes_raices,fk,run_fondo,fi_lista_entidades,0,,,,si,informativo,sin_datos,el objeto no publica filas: la relación no se puede medir
+fi_cartera_extranjera,pk,,,76849,76043,806,,no,expectativa,sin_clave,ninguna combinación es única: hay filas idénticas publicadas
+fi_cartera_extranjera,fk,run_fondo,fi_lista_entidades,76849,,0,1.0000,si,invariante,ok,
+fi_cartera_nacional,pk,,,933532,922499,11033,,no,expectativa,sin_clave,ninguna combinación es única: hay filas idénticas publicadas
+fi_cartera_nacional,fk,run_fondo,fi_lista_entidades,933532,,0,1.0000,si,invariante,ok,
+fi_futuros,pk,,,13463,13454,9,,no,expectativa,sin_clave,ninguna combinación es única: hay filas idénticas publicadas
+fi_futuros,fk,run_fondo,fi_lista_entidades,13463,,0,1.0000,si,invariante,ok,
+fi_lista_entidades,pk,run_fondo,,1679,1679,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+fi_metodo_participacion,pk,pct_activo_fondo + valor_cierre_miles_mf + patrimonio_emisor_miles_mf + cantidad_unidades + nombre_emisor + rut_emisor + pct_capital_emisor + run_fondo + provision_deterioro_miles_mf + plusvalia_miles_mf + isin + periodo,,10038,10038,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+fi_metodo_participacion,fk,run_fondo,fi_lista_entidades,10038,,0,1.0000,si,invariante,ok,
+fi_opciones,pk,valor_mercado_unitario_prima + inversion_primas_miles_mf + valorizacion_precio_ejercicio_miles_mf + precio_ejercicio,,307,307,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+fi_opciones,fk,run_fondo,fi_lista_entidades,307,,0,1.0000,si,invariante,ok,
+fi_pactos,pk,,,1698,1686,12,,no,expectativa,sin_clave,ninguna combinación es única: hay filas idénticas publicadas
+fi_pactos,fk,run_fondo,fi_lista_entidades,1698,,0,1.0000,si,invariante,ok,
+fi_resultados,pk,periodo + run_fondo + contexto + codigo_cuenta,,1164000,1164000,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+fi_resultados,fk,rut_agf,,1164000,,,,si,informativo,sin_destino,ningún objeto lista_entidades publica esa columna
+fintech_rpsf_lista_entidades,pk,rut,,264,264,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_cobre,pk,fecha,,3260,3260,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_curva_bonos_pesos,pk,fecha,,3171,3171,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_curva_bonos_uf,pk,fecha,,3173,3173,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_deuda_publica_pct_pib,pk,fecha,,49,49,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_dolar_observado,pk,fecha,,3188,3188,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_euro_observado,pk,fecha,,3188,3188,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_expectativas_inflacion,pk,fecha,,154,154,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_expectativas_operadores,pk,fecha,,237,237,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_expectativas_tpm,pk,fecha,,154,154,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_imacec,pk,fecha,,152,152,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_inflacion_implicita,pk,fecha,,3077,3077,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_inflacion_ipc,pk,fecha,,153,153,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_mercado_laboral,pk,fecha,,152,152,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_metales_preciosos,pk,fecha,,3188,3188,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_pib_trimestral,pk,fecha,,50,50,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_reservas_internacionales,pk,fecha,,153,153,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_series_catalogo,pk,clave,,51,51,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_swaps_camara,pk,fecha,,3202,3202,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_tasa_referencia_fed,pk,fecha,,3328,3328,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_tasas_corto_plazo,pk,fecha,,3189,3189,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_tipo_cambio_multilateral,pk,fecha,,3188,3188,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_tipo_cambio_real,pk,fecha,,152,152,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_uf,pk,fecha,,4677,4677,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_utm,pk,fecha,,154,154,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+patrimonios_separados_balance,pk,archivo + codigo_patrimonio + periodo + orden_en_balance + cuenta,,7962,7962,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+patrimonios_separados_balance,fk,rut_administradora,patrimonios_separados_lista_entidades,7962,,3604,0.5473,si,expectativa,huerfanas,3604 valores sin pareja en el destino
+patrimonios_separados_lista_entidades,pk,numero_inscripcion,,19,19,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+patrimonios_separados_lista_entidades,fk,rut_administradora,patrimonios_separados_lista_entidades,19,,0,1.0000,si,invariante,ok,
+securitizadoras_balance,pk,valor + cuenta + periodo + orden + razon_social + rut + rut_dv + tipo_balance,,13679,13679,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+securitizadoras_balance,fk,rut,securitizadoras_lista_entidades,13679,,0,1.0000,si,invariante,ok,
+securitizadoras_lista_entidades,pk,rut,,16,16,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+securitizadoras_resultados,pk,valor + valor_no_numerico + cuenta + periodo + orden + razon_social + rut + rut_dv + estado_financiero + repeticion + tipo_balance,,12290,12290,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+securitizadoras_resultados,fk,rut,securitizadoras_lista_entidades,12290,,0,1.0000,si,invariante,ok,
+seguros_acciones,pk,valor_final_m_clp + valor_razonable_m_clp + valor_bolsa_clp + valor_libro_clp + valor_costo_clp + unidades + deterioro_m_clp + cuotas_suscritas + porcentaje_participacion + nemotecnico + pres_bursatil + patrimonio_filial_m_clp + periodo + nombre_aseguradora,,109019,109019,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+seguros_acciones,fk,rut_aseguradora,seguros_lista_entidades,109019,,0,1.0000,si,invariante,ok,
+seguros_acciones_relevantes,pk,valor_final_m_clp + valor_razonable_m_clp + valor_bolsa_clp + valor_costo_clp + unidades + valor_libro_clp + deterioro_m_clp + nemotecnico + periodo + serie + nombre_aseguradora + rut_aseguradora,,109019,109019,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+seguros_acciones_relevantes,fk,rut_aseguradora,seguros_lista_entidades,109019,,0,1.0000,si,invariante,ok,
+seguros_bienes_raices,pk,tasacion_1_m_clp + tasacion_2_m_clp + costo_corregido_y_depreciado_m_clp + valor_final_m_clp + costo_actualizado_m_clp + depreciacion_acumulada_m_clp + property_id + valor_tasacion_construccion_m2_uf + deterioro_m_clp + valor_tasacion_terreno_m2_uf + codigo_nemotecnico + copropietaria + periodo,,760152,760152,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+seguros_bienes_raices,fk,rut_aseguradora,seguros_lista_entidades,760152,,0,1.0000,si,invariante,ok,
+seguros_bienes_raices_relevantes,pk,,,760152,760014,138,,no,expectativa,sin_clave,ninguna combinación es única: hay filas idénticas publicadas
+seguros_bienes_raices_relevantes,fk,rut_aseguradora,seguros_lista_entidades,760152,,0,1.0000,si,invariante,ok,
+seguros_control_inversiones,pk,valor_final_m_clp + inversiones_representativas_de_rt_pr_m_clp + total_valor_razonable_m_clp + total_costo_amortizado_m_clp + inversiones_no_representativas_de_rt_pr_m_clp + total_inst_otras_clasif_m_clp + total_efectivo_equivalente_m_clp + total_instrumento_s_cui_apv_m_clp + total_coligadas_m_clp + total_soc_filiales_m_clp + nombre_aseguradora + periodo + tipo_de_inversion,,111410,111410,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+seguros_control_inversiones,fk,rut_aseguradora,seguros_lista_entidades,111410,,0,1.0000,si,invariante,ok,
+seguros_derivados,pk,efecto_en_resultados_realizados_m_clp + valor_presente_posicion_larga_m_clp + monto_activo_m_clp + valor_razonable_del_contrato_a_la_fecha_de_la_informacion_m + valor_presente_posicion_corta_m_clp + monto_pasivo_m_clp + valor_razonable_del_contrato_a_la_fecha_de_la_informacion + valor_razonable_del_contrato_a_la_fecha_de_la_informacion_ec + valor_razonable_del_activo_objeto_a_la_fecha_de_la_informacion_m_clp + nocional_posicion_larga_monto + monto_activos_en_margen_m_clp + nocional_posicion_corta_monto_m_clp,,373469,373469,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+seguros_derivados,fk,rut_aseguradora,seguros_lista_entidades,373469,,0,1.0000,si,invariante,ok,
+seguros_derivados_relevantes,pk,valor_razonable_m_clp + nocional_posicion_larga_monto + valor_presente_posicion_larga_m_clp + valor_presente_posicion_corta_m_clp + nocional_posicion_corta_monto_m_clp + folio_operacion + activo_objeto_posicion_larga_nocional + fecha_de_vencimiento_del_contrato + activo_objeto_posicion_corta_nocional + fecha_de_la_operacion + periodo + nombre_aseguradora,,373469,373469,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+seguros_derivados_relevantes,fk,rut_aseguradora,seguros_lista_entidades,373469,,0,1.0000,si,invariante,ok,
+seguros_extranjeros,pk,valor_final_m_clp + valor_razonable_m_clp + valor_presente_tir_de_compra_m_clp + unidades + tir_mercado + valor_libro_m_clp + valor_compra_clp + valor_bursatil_m_clp + valor_cuota + deterioro_m_clp + valor_bursatil_unitario + folio_operacion,,471942,471942,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+seguros_extranjeros,fk,rut_aseguradora,seguros_lista_entidades,471942,,0,1.0000,si,invariante,ok,
+seguros_extranjeros_relevantes,pk,valor_final_m_clp + valor_razonable_m_clp + deterioro_m_clp + valor_compra_clp + codigo_individualizacion_o_nemotecnico + duracion + valor_nominal + plazo_al_vencimiento + costo_historico_m_clp + periodo + pais + nombre_aseguradora,,471670,471670,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+seguros_extranjeros_relevantes,fk,rut_aseguradora,seguros_lista_entidades,471670,,0,1.0000,si,invariante,ok,
+seguros_flujos_activos_elegibles,pk,tramo_1_uf + tramo_2_uf + tramo_3_uf + tramo_4_uf + tramo_5_uf + tramo_6_uf + tramo_7_uf + tramo_8_uf + tramo_9_uf + tramo_10_uf + tipo_instrumento + periodo,,4369,4369,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+seguros_flujos_activos_elegibles,fk,rut_aseguradora,seguros_lista_entidades,4369,,0,1.0000,si,invariante,ok,
+seguros_fondos_mutuos,pk,valor_razonable_clp + valor_final_m_clp + valor_de_inversion_clp + unidades + valor_cuota_clp + deterioro_clp + nemotecnico + run + nombre_del_fondo + serie + periodo + nombre_aseguradora + nombre_cartera + rut_aseguradora + nombre_custodio,,100472,100472,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+seguros_fondos_mutuos,fk,rut_aseguradora,seguros_lista_entidades,100472,,0,1.0000,si,invariante,ok,
+seguros_garantias_derivados,pk,valor_razonable_activo_en_garantia_m_clp + valor_razonable_activo_en_garantia_um + valor_contable_activo_en_garantia_m_clp + valor_contable_activo_en_garantia_um + identificador_garantia + valor_nominal_instrumento_en_garantia + codigo_identificacion_instrumento_en_garantia + folio_instrumento_en_garantia + nombre_contraparte_garantia + lei_contraparte_extranjera + periodo + nombre_aseguradora,,6518,6518,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+seguros_garantias_derivados,fk,rut_aseguradora,seguros_lista_entidades,6518,,0,1.0000,si,invariante,ok,
+seguros_lista_entidades,pk,sector + rut_aseguradora,,84,84,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+seguros_otras_inversiones,pk,fila completa,,42494,42494,0,,no,informativo,fila_completa,no hay clave corta; la única garantía de unicidad es la fila entera
+seguros_otras_inversiones,fk,rut_aseguradora,seguros_lista_entidades,42494,,55,0.9987,si,invariante,ok,
+seguros_pactos,pk,valorizacion_de_pacto_a_la_fecha_de_cierre_m_clp + valor_de_mercado_a_la_fecha_de_informacion + activo_objeto_valor_contable + interes_devengado_del_pacto_m + valor_pactado + valor_inicial_um + valor_de_mercado_a_la_fecha_de_suscripcion_monto + tasa_o_precio_de_mercado + tir_compra + folio_operacion + valor_nominal + fecha_de_vencimiento_del_contrato + item_operacion,,11371,11371,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+seguros_pactos,fk,rut_aseguradora,seguros_lista_entidades,11371,,0,1.0000,si,invariante,ok,
+seguros_registros_tipo6,pk,archivo_origen,,66,66,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+seguros_registros_tipo6,fk,rut_aseguradora,seguros_lista_entidades,66,,0,1.0000,si,invariante,ok,
+seguros_renta_fija,pk,costo_amortizado_clp + costo_amortizado_um + valor_razonable_clp + saldo_insoluto_deuda_um + valor_nominal_vigente + deterioro_clp + deuda_garantia_informacion + valor_final_m_clp + valor_comercial_m_clp + saldo_insoluto_deuda_m_clp + valor_compra_clp + porcentaje_valor_par + item_operacion + folio_operacion + periodo,,2321911,2321911,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+seguros_renta_fija,fk,rut_aseguradora,seguros_lista_entidades,2321911,,0,1.0000,si,invariante,ok,
+seguros_renta_fija_relevante,pk,costo_amortizado_clp + valor_razonable_clp + valor_nominal_vigente + deterioro_clp + valor_final_m_clp + nemotecnico + folio_operacion + serie + fecha_compra + fecha_vencimiento + item_operacion + nombre_aseguradora + periodo,,2321911,2321911,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+seguros_renta_fija_relevante,fk,rut_aseguradora,seguros_lista_entidades,2321911,,0,1.0000,si,invariante,ok,
+seguros_tablas_desarrollo,pk,,,2193981,2186937,7044,,no,expectativa,sin_clave,ninguna combinación es única: hay filas idénticas publicadas
+seguros_tablas_desarrollo,fk,rut_aseguradora,seguros_lista_entidades,2193981,,0,1.0000,si,invariante,ok,
+seguros_tablas_descriptores,pk,codigo_nemotecnico + fecha_emision + tasa_descto + tasa_emision + fecha_opcion + nro_flujos + rut_del_emisor + nombre_aseguradora + periodo,,9792,9792,0,,no,informativo,propuesta,clave mínima encontrada; el diccionario no la declaraba
+seguros_tablas_descriptores,fk,rut_aseguradora,seguros_lista_entidades,9792,,0,1.0000,si,invariante,ok,
+sistemas_pago_lista_entidades,pk,rut,,19,19,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
