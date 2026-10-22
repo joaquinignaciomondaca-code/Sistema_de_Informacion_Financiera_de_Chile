@@ -111,8 +111,7 @@ class Sif:
             import duckdb
         except ImportError as exc:  # pragma: no cover - depende del entorno
             raise ImportError(
-                "Falta duckdb. Instálalo con: pip install sif-chile[duckdb] "
-                "o pip install duckdb"
+                "Falta duckdb, la dependencia del SDK. Instálalo con: pip install duckdb"
             ) from exc
 
         con = duckdb.connect()
@@ -309,7 +308,7 @@ def _materializar(con: Any, consulta: str, formato: str | None = None) -> Any:
         if _hay_pandas():
             return con.sql(consulta).df()
         if formato == "pandas":
-            raise ImportError("Falta pandas: pip install 'sif-chile[pandas]'")
+            raise ImportError("Falta pandas. Instálalo con: pip install pandas")
     # DuckDB renombró el método en la 2.0; se prueban los dos nombres para no
     # atarse a una versión concreta.
     rel = con.sql(consulta)
@@ -319,7 +318,7 @@ def _materializar(con: Any, consulta: str, formato: str | None = None) -> Any:
             return metodo()
     raise ImportError(
         "Para materializar filas hace falta pandas o pyarrow: "
-        "pip install 'sif-chile[pandas]' o pip install pyarrow. "
+        "pip install pandas o pip install pyarrow. "
         "Mientras tanto, `sif.sql(consulta).fetchall()` devuelve tuplas."
     )
 

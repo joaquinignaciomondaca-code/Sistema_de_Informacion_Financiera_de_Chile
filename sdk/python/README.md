@@ -50,7 +50,7 @@ Si el agente **no puede ejecutar código** —Claude Desktop, un asistente con
 `function calling`—, el mismo cliente se expone como servidor MCP:
 
 ```bash
-pip install "sif-chile[mcp]"
+pip install "sif-chile[mcp] @ git+https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile@main#subdirectory=sdk/python"
 sif-mcp                     # servidor por stdio
 ```
 
