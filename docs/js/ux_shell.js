@@ -73,6 +73,13 @@
     if (badge) {
       badge.addEventListener("click", () => {
         const client = window.DuckDBClient;
+        if (client && !client.initPromise && typeof client.ensureStarted === "function") {
+          // El motor arranca bajo demanda: este clic es una petición explícita.
+          if (typeof window.switchMainTab === "function") window.switchMainTab("sql");
+          client.ensureStarted();
+          toast("Cargando DuckDB-Wasm… (wasm de 3,8 MB, sólo esta vez)", "info");
+          return;
+        }
         if (client && client.engineAvailable) {
           if (typeof window.switchMainTab === "function") window.switchMainTab("sql");
           toast("Motor DuckDB activo: " + (client.engineSourceLabel || client.engineSource), "ok");

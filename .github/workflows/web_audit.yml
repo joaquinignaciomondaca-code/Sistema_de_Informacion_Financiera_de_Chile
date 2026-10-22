@@ -5,6 +5,12 @@ name: Auditoría de la web (catálogo vs Parquet) y de la automatización
 # Los resultados se publican como anotaciones (los logs de Actions no se
 # pueden descargar desde el entorno de trabajo).
 #
+# Compuerta de diseño (paso «Diseño: anti-patrones de interfaz»): el detector
+# determinista de Impeccable corre sobre docs/ sin LLM ni API key. El sitio está
+# hoy en cero hallazgos, así que cualquier hallazgo nuevo falla el paso. La
+# versión del detector va fijada para que una regla nueva no aparezca sola.
+# Contexto y criterios: docs/notas/diseno_detector_2026-10-21.md.
+#
 # Guardián de automatización (scripts/audit_automatizacion.py, inventario en
 # pipelines/auto/inventario.json):
 #   * en cada push: toda tabla de data_manifest.json debe tener un workflow con horario que
@@ -56,6 +62,85 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
+
+      - name: Caché del detector de diseño
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ~/.impeccable/bin
+          key: impeccable-4.7.0
+
+      # Compuerta de diseño: 61 reglas deterministas sobre docs/ (sin LLM ni API key).
+      # Hoy está en cero hallazgos, así que cualquier hallazgo nuevo falla el paso.
+      # La versión va fijada a propósito: el detector es determinista y así una regla
+      # nueva no puede aparecer en un push sin que alguien suba esta línea a mano.
+      # --github no emite anotaciones en la 4.7.0 (probado con GITHUB_ACTIONS=true),
+      # así que se generan desde el JSON. GitHub muestra 10 anotaciones de cada tipo
+      # por paso; el resto queda en el log y se resume en el ::notice final.
+      - name: 'Diseño: anti-patrones de interfaz (detector determinista)'
+        run: |
+          set +e
+          # Una ruta inexistente no es un error para el detector: devuelve 0 con cero
+          # archivos escaneados. Sin esta comprobación, mover o renombrar docs/ apagaría
+          # la compuerta en silencio.
+          for objetivo in docs/index.html docs/css/app.css; do
+            if [ ! -f "$objetivo" ]; then
+              echo "::error title=Diseño::falta $objetivo; el detector no tendría qué escanear"
+              exit 1
+            fi
+          done
+          # Los artefactos van al directorio temporal del runner, no a la raíz del
+          # repositorio (donde quedarían como archivos sin versionar).
+          export SALIDA="${RUNNER_TEMP:-/tmp}/diseno"
+          correr() {
+            DO_NOT_TRACK=1 IMPECCABLE_NO_TELEMETRY=1 \
+              npx -y impeccable@4.7.0 detect --no-config --json docs/ > "$SALIDA.json" 2> "$SALIDA.log"
+          }
+          correr; n=$?
+          # 1 = no pudo escanear (red, binario). Un fallo de infraestructura no debe
+          # confundirse con un hallazgo: se reintenta una vez y, si persiste, falla
+          # con mensaje explícito en vez de dejar la compuerta apagada en silencio.
+          if [ $n -eq 1 ]; then
+            echo "::warning title=Diseño::el detector no pudo escanear (reintentando una vez)"
+            sleep 5
+            correr; n=$?
+          fi
+          if [ $n -eq 1 ]; then
+            tail -n 3 "$SALIDA.log" | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=Diseño:::$l"; done
+            exit 1
+          fi
+          node -e '
+            const fs = require("fs");
+            const raiz = (process.env.GITHUB_WORKSPACE || "") + "/";
+            const hallazgos = JSON.parse(fs.readFileSync(process.env.SALIDA + ".json", "utf8"));
+            for (const h of hallazgos.slice(0, 10)) {
+              const archivo = String(h.file).replace(raiz, "");
+              const donde = h.line > 0 ? ` file=${archivo},line=${h.line}` : ` file=${archivo}`;
+              const texto = `${h.antipattern}: ${h.snippet || ""}`.replace(/%/g, "%25");
+              console.log(`::error title=Diseño ${h.antipattern}${donde}::${texto}`);
+            }
+            const resumen = `${hallazgos.length} hallazgo(s) en docs/ · reglas y guía en docs/notas/diseno_detector_2026-10-21.md`;
+            console.log(hallazgos.length ? `::error title=Diseño::${resumen}` : `::notice title=Diseño::${resumen}`);
+          '
+          # Un JSON ilegible no debe confundirse con "sin hallazgos": si node falla,
+          # el paso falla aunque el detector haya salido con 0.
+          leible=$?
+          if [ $leible -ne 0 ]; then
+            echo "::error title=Diseño::no se pudo leer el JSON del detector"
+            tail -n 3 "$SALIDA.log" | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=Diseño:::$l"; done
+            exit 1
+          fi
+          exit $n
+
+      - name: El motor DuckDB vendorizado es el que se revisó (huellas)
+        run: |
+          set +e
+          python scripts/audit_vendor_duckdb.py > motor.log 2>&1; n=$?
+          grep -h "^FALLA" motor.log | head -10 | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=Motor DuckDB::$l"; done
+          echo "::notice title=Motor DuckDB::$(tail -n 1 motor.log)"
+          exit $n
+
       - name: Auditar navegación y catálogo web
         run: |
           set +e
@@ -97,6 +182,14 @@ jobs:
           node scripts/audit_duckdb_client.js > cliente.log 2>&1; n=$?
           grep -h "^FALLA" cliente.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Cliente DuckDB::$linea"; done
           echo "::notice title=Cliente DuckDB::$(tail -n 1 cliente.log)"
+          exit $n
+
+      - name: El motor DuckDB no arranca al cargar (bajo demanda)
+        run: |
+          set +e
+          node scripts/audit_arranque_motor.js > arranque.log 2>&1; n=$?
+          grep -h "^FALLA" arranque.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Arranque del motor::$linea"; done
+          echo "::notice title=Arranque del motor::$(tail -n 1 arranque.log)"
           exit $n
 
       - name: La consola SQL es de solo lectura (guardia)

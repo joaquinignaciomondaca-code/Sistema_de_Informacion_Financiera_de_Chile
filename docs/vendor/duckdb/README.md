@@ -64,6 +64,20 @@ grep -cE 'from"[^"./][^"]*"' docs/vendor/duckdb/duckdb-browser.mjs   # debe dar 
 python3 scripts/audit_interfaz.py                                    # guardián automático
 ```
 
+Y registrar las huellas nuevas: el `.wasm` y el worker se ejecutan desde el
+propio origen, así que su contenido es parte del artefacto revisado.
+
+```bash
+python3 scripts/audit_vendor_duckdb.py --actualizar   # reescribe manifiesto.json
+python3 scripts/audit_vendor_duckdb.py                # verifica (esto corre en CI)
+```
+
+`manifiesto.json` guarda versión, tamaño y SHA-256 de los tres archivos. El CI
+falla si cambian sin que el manifiesto se actualice, si aparece un archivo del
+motor que nadie declaró o si `DUCKDB_VERSION` deja de coincidir con la versión
+registrada. Actualizar las huellas es una decisión consciente: se hace después
+de revisar el bundle, no para silenciar la compuerta.
+
 `scripts/audit_interfaz.py` falla si el bundle local vuelve a traer imports sin
 resolver, de modo que este error no puede repetirse en silencio.
 

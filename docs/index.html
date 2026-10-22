@@ -8,20 +8,49 @@
   <link rel="apple-touch-icon" href="assets/logo_sif_isotipo.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/app.css?v=fl-202610-212101-duckdb-lazy">
-  <!-- Arranque en frío: el motor pesa ~18 MB. Preanunciar los tres archivos hace
-       que se descarguen en paralelo con la página, en vez de esperar a que el
-       JavaScript los pida al final de la cadena de carga. -->
-  <!-- DuckDB hace fetch() con credenciales same-origin. El atributo
-       crossorigin hace que el preload use el mismo modo de credenciales y que
-       el navegador pueda reutilizarlo (sin la advertencia "preload ... not
-       used" en Vercel). -->
-  <link rel="modulepreload" href="vendor/duckdb/duckdb-browser.mjs" crossorigin="anonymous">
-  <link rel="preload" href="vendor/duckdb/duckdb-eh.wasm" as="fetch" crossorigin="anonymous">
-  <link rel="preload" href="vendor/duckdb/duckdb-browser-eh.worker.js" as="fetch" crossorigin="anonymous">
+  <!-- La hoja de Google Fonts se pedía como <link rel="stylesheet"> y entraba en
+       la cadena que bloquea el primer pintado (260 ms en el informe). Ahora se
+       precarga y se aplica al terminar: deja de ser render-blocking y los textos
+       se pintan con la fuente de reserva hasta que llega, igual que ya hacía
+       font-display=swap. El <noscript> conserva el comportamiento sin JS. -->
+  <link rel="preload" as="style"
+        href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
+  <link rel="stylesheet" href="css/app.css?v=fl-202610-0157-redaccion">
+
+  <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
+       Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
+       ejecuten los ~500 KB de scripts: en el informe de Lighthouse cada uno
+       llegaba a los 3,5 s por esa cadena. erd_graph.js y busqueda_pregunta.js
+       reutilizan estas promesas; si no hay fetch, cada uno cae a su propia
+       petición. -->
+  <script>
+    if (typeof fetch === "function") {
+      const pedir = (ruta) => fetch(ruta, { cache: "force-cache" }).then((r) => {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      });
+      window.SIF_JSON = {
+        cardinalidad: pedir("outputs/cardinalidad_relaciones.json"),
+        indice: pedir("outputs/indice_busqueda.json")
+      };
+      // Si alguna no se consume, que no quede un rechazo suelto en la consola.
+      window.SIF_JSON.cardinalidad.catch(() => {});
+      window.SIF_JSON.indice.catch(() => {});
+    }
+  </script>
+  <!-- El motor DuckDB (wasm de 3,8 MB + worker de 68 KB) ya no se precarga en el
+       <head>: el informe lo contaba entero en el peso de la página aunque el
+       visitante nunca abriera Consultas o Datos. Ahora el arranque lo pide
+       duckdb_client.js la primera vez que se necesita (pestaña SQL, pestaña de
+       datos o una descarga con motor); ver ensureStarted(). -->
 </head>
 <body>
+
+  <!-- Primer elemento tabulable: con 90 tablas en el explorador, un usuario de
+       teclado necesita saltarse la barra y el árbol para llegar al panel. -->
+  <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
 
   <!-- Geometría del logotipo SIF, definida una sola vez y reutilizada con <use>
        en dos tamaños: recortada al símbolo y las siglas en la barra superior
@@ -82,7 +111,7 @@
       </div>
     </div>
     <div class="header-badges">
-      <button type="button" class="badge" id="engine-badge" title="Estado del motor SQL en el navegador">Inicializando DuckDB…</button>
+      <button type="button" class="badge" id="engine-badge" title="El motor SQL (DuckDB-Wasm) se carga al abrir Consultas o Datos">DuckDB-Wasm · bajo demanda</button>
       <div class="theme-dropdown-container" id="theme-dropdown-container">
         <button type="button" class="theme-dropdown-btn" id="theme-dropdown-btn" aria-expanded="false" title="Seleccionar paleta de colores">
           <span class="theme-palette-icon">
@@ -110,7 +139,7 @@
       <div class="sidebar-top">
         <div class="sidebar-heading">
           <span class="sidebar-title">Industrias Financieras</span>
-          <span style="font-size: 10px; color: var(--accent-blue); font-weight: 600;">Chile</span>
+          <span style="font-size: 12px; color: var(--accent-blue-text); font-weight: 600;">Chile</span>
         </div>
         <div class="sidebar-search-box">
           <input type="text" id="sidebar-search" aria-label="Filtrar familia, subsector o tabla" placeholder="Filtrar familia, subsector o tabla..." autocomplete="off">
@@ -125,7 +154,7 @@
     <div class="sidebar-resizer" id="sidebar-resizer" title="Arrastra para ajustar el ancho del explorador"></div>
 
     <!-- Contenedor Principal en 2 Paneles Divididos -->
-    <main class="main-container">
+    <main class="main-container" id="main-content" tabindex="-1">
 
       <!-- PANEL SUPERIOR: MAPA RELACIONAL Y DICCIONARIO -->
       <div class="top-panel">
@@ -313,10 +342,10 @@
                 <div class="info-section-kicker">CÓMO LEER LOS DATOS</div>
                 <h2>La fuente importa</h2>
                 <ul class="info-list">
-                  <li><strong>Período:</strong> cada tabla indica si es diaria, mensual, trimestral o histórica.</li>
+                  <li><strong>Frecuencia:</strong> cada tabla declara si es diaria, mensual, trimestral o un corte histórico.</li>
                   <li><strong>Unidades:</strong> los montos conservan la unidad informada por la fuente; no se convierten automáticamente.</li>
-                  <li><strong>Cobertura:</strong> que una entidad esté en una lista no garantiza que haya reportado en todos los períodos.</li>
-                  <li><strong>Estados IFRS:</strong> las AGF (y, en el archivo, securitizadoras y CCAF) usan el TXT oficial de estados financieros IFRS de la CMF; cubre a quienes aparecen reportando en cada corte.</li>
+                  <li><strong>Presencia:</strong> que una entidad esté en una lista no garantiza que haya reportado en todos los periodos.</li>
+                  <li><strong>Estados IFRS:</strong> las AGF (y, en el archivo, securitizadoras y CCAF) usan el TXT oficial de estados financieros IFRS de la CMF; cubre sólo a quienes aparecen reportando en cada corte.</li>
                   <li><strong>Trazabilidad:</strong> cada tabla declara su fuente, su archivo de origen y su manifiesto de publicación; los datos se muestran tal como los emite la fuente, sin reinterpretarlos.</li>
                 </ul>
               </div>
@@ -369,11 +398,11 @@
             <section class="info-block info-processing-block">
               <div class="info-section-kicker">MODALIDAD DE PROCESAMIENTO</div>
               <h2>La fuente determina la ruta</h2>
-              <p>La etiqueta de cada tabla describe cómo se extrae y publica la información. “Híbrido” no significa que el resultado sea una foto fija: indica que la fuente requiere curación o extracción inicial fuera del workflow programado, mientras que la validación, normalización y compilación posterior sí están versionadas y son reproducibles.</p>
+              <p>La etiqueta de cada tabla describe cómo se extrae y publica la información. “Híbrido” no significa que el resultado sea una foto fija: indica que la fuente requiere curación o extracción inicial fuera del flujo de trabajo programado, mientras que la validación, normalización y compilación posterior sí están versionadas y son reproducibles.</p>
               <div class="info-highlight-row">
                 <div class="info-highlight">
                   <strong>Automático</strong>
-                  <span>Extracción, validación y publicación ejecutadas por código y workflows programados.</span>
+                  <span>Extracción, validación y publicación ejecutadas por código y flujos de trabajo programados.</span>
                 </div>
                 <div class="info-highlight">
                   <strong>Híbrido</strong>
@@ -381,7 +410,7 @@
                 </div>
                 <div class="info-highlight">
                   <strong>Manual</strong>
-                  <span>Extracción, selección o transcripción que todavía requiere intervención y no cuenta con un compilador integrado.</span>
+                  <span>Extracción, selección o transcripción que todavía requiere intervención y no tiene un proceso de compilación automatizado.</span>
                 </div>
               </div>
             </section>
@@ -395,7 +424,7 @@
                   <ul class="info-list">
                     <li><strong>Los datos regulatorios son de sus fuentes oficiales:</strong> Comisión para el Mercado Financiero (CMF), Banco Central de Chile, Superintendencia de Pensiones y SUSESO. Cada tabla declara su origen, su archivo de origen y su norma.</li>
                     <li><strong>El SIF aporta</strong> extracción, normalización, validación, documentación y armonización. No genera los datos ni los modifica: los publica tal como los emite la fuente.</li>
-                    <li><strong>Al usar estos datos:</strong> indica la fuente oficial y la fecha en que los consultaste. Cada tabla tiene su propio periodo y su propia frecuencia, y se ven en el explorador, en el diccionario y en Descargas.</li>
+                    <li><strong>Al usar estos datos,</strong> indica la fuente oficial y la fecha en que los consultaste. Cada tabla tiene su propio periodo y su propia frecuencia, y se ven en el explorador, en el diccionario y en Descargas.</li>
                   </ul>
                 </div>
                 <div class="info-scope-col">
@@ -409,7 +438,7 @@
                 <div class="info-scope-col">
                   <h3>Limitaciones</h3>
                   <ul class="info-list">
-                    <li><strong>Cobertura 2001–2026:</strong> es el máximo entre tablas, no una cobertura homogénea. Cada tabla tiene su propio inicio, su propia frecuencia y sus propios vacíos.</li>
+                    <li><strong>Cobertura:</strong> la extensión de la serie de tiempo de cada tabla dependerá de cada fuente de origen; es por ello que no hay homogeneización generalizada de periodos entre todas las tablas.</li>
                     <li><strong>Unidades:</strong> los montos conservan la unidad y el criterio de valorización de la fuente (miles de pesos, UF, porcentajes, valor razonable, costo amortizado); no se convierten ni se reexpresan.</li>
                     <li><strong>Fondos de pensiones:</strong> esta edición no publica carteras de AFP; de las AFP sólo está el registro de administradoras.</li>
                     <li><strong>Puede haber errores:</strong> la extracción, la normalización y la validación son automáticas y ningún control lo detecta todo. Usa la base con criterio y haz las verificaciones propias que consideres necesarias antes de publicar una cifra.</li>
@@ -512,7 +541,7 @@
               <span><kbd>Enter</kbd> ejecuta</span>
               <span><kbd>Tab</kbd> completa nombres de tabla o palabras clave</span>
               <span><kbd>&uarr;</kbd><kbd>&darr;</kbd> historial</span>
-              <span><kbd>Alt</kbd>+<kbd>1</kbd>…<kbd>7</kbd> cambia de pestaña</span>
+              <span><kbd>Alt</kbd>+<kbd>1</kbd>…<kbd>6</kbd> cambia de pestaña</span>
             </div>
           </div>
         </div>
@@ -528,10 +557,10 @@
       </div>
 
       <!-- Modal Flotante de Esquema / Columnas -->
-      <div class="schema-modal" id="schema-modal">
+      <div class="schema-modal" id="schema-modal" role="dialog" aria-labelledby="modal-table-name">
         <div class="schema-title">
           <span id="modal-table-name">Tabla</span>
-          <button id="close-schema-modal" style="background:transparent; border:none; color:#8b949e; cursor:pointer; font-size:16px;">&times;</button>
+          <button id="close-schema-modal" type="button" aria-label="Cerrar el esquema de la tabla" style="background:transparent; border:none; color:#8b949e; cursor:pointer; font-size:16px;">&times;</button>
         </div>
         <ul class="schema-list" id="modal-columns-list"></ul>
       </div>
@@ -541,43 +570,67 @@
 </div> <!-- Cierre de app-layout -->
 
   <!-- Scripts de la Aplicación -->
-  <script src="js/data_bundles.js?v=fl-202610-212101-duckdb-lazy"></script>
-  <script src="js/alcance.js?v=fl-202610-212101-duckdb-lazy"></script>
-  <script src="js/chart_renderer.js?v=fl-202610-212101-duckdb-lazy"></script>
-  <script src="js/erd_graph.js?v=fl-202610-212101-duckdb-lazy"></script>
-  <script src="js/sql_guard.js?v=fl-202610-212101-duckdb-lazy"></script>
-  <script src="js/duckdb_client.js?v=fl-202610-212101-duckdb-lazy"></script>
-  <script src="js/chat_terminal.js?v=fl-202610-212101-duckdb-lazy"></script>
-  <script src="js/busqueda_pregunta.js?v=fl-202610-212101-duckdb-lazy"></script>
-  <script src="js/sidebar.js?v=fl-202610-212101-duckdb-lazy"></script>
-  <script src="js/ux_shell.js?v=fl-202610-212101-duckdb-lazy"></script>
-  <script src="js/creditos.js?v=fl-202610-212101-duckdb-lazy"></script>
-  <script src="js/theme_switcher.js?v=fl-202610-212101-duckdb-lazy"></script>
-  <script src="js/data_dictionary.js?v=fl-202610-212101-duckdb-lazy"></script>
-  <script src="js/data_viewer.js?v=fl-202610-212101-duckdb-lazy"></script>
-  <script src="js/jszip.min.js"></script>
-  <script src="js/xlsx.full.min.js"></script>
-  <script src="js/diccionario_seguros.js?v=fl-202610-212101-duckdb-lazy"></script>
-  <script src="js/download_utils.js?v=fl-202610-212101-duckdb-lazy"></script>
-  <script src="js/download_catalog.js?v=fl-202610-212101-duckdb-lazy"></script>
-  <script src="js/downloads_panel.js?v=fl-202610-212101-duckdb-lazy"></script>
-  <script src="js/portada.js?v=fl-202610-212101-duckdb-lazy"></script>
+  <script src="js/data_bundles.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/alcance.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/chart_renderer.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/erd_graph.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/sql_guard.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/duckdb_client.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/chat_terminal.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/sidebar.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/ux_shell.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/creditos.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/theme_switcher.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/data_dictionary.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/data_viewer.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/download_utils.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/download_catalog.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/downloads_panel.js?v=fl-202610-0157-redaccion" defer></script>
+  <script src="js/portada.js?v=fl-202610-0157-redaccion" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
-      // Inicializar el Mapa Relacional (Canvas ERD)
-      window.erdInstance = new window.ERDGraph("erd-canvas");
+      // El arranque se reparte en tareas cortas: una sola tarea larga es
+      // exactamente lo que mide el Total Blocking Time. El orden visual no cambia.
+      const enTarea = (fn) => setTimeout(fn, 0);
 
-      // Inicializar el Chat / Terminal SQL
+      // 1) Lo que hace usable la página de inmediato: explorador y terminal.
+      window.SidebarNav = new window.SidebarController();
       window.ChatTerminal = new window.ChatTerminalController();
 
-      // Inicializar la Barra Lateral Jerárquica por Industria
-      window.SidebarNav = new window.SidebarController();
+      // 2) El resto va en tareas aparte, para que el navegador pueda pintar y
+      //    atender clics entre medio.
+      //
+      //    El Mapa Relacional NO se construye aquí: su constructor lee la
+      //    geometría del canvas (offsetWidth/Height) y el informe de Lighthouse
+      //    atribuía a esa llamada 80 ms de reflujo forzado en una pestaña que
+      //    además está oculta al cargar. Se construye la primera vez que se abre
+      //    su pestaña (window.asegurarERD, más abajo).
+      const listo = new Promise((resolver) => {
+        enTarea(() => {
+          // Diccionario: 67 fichas y ~1.100 columnas. Sólo se pinta si su pestaña
+          // está a la vista; si no, switchMainTab lo hace al abrirla.
+          const dict = document.getElementById("dict-container");
+          if (window.DataDictionary && dict &&
+              dict.style.display !== "none" && !dict.querySelector(".dict-table-name")) {
+            window.DataDictionary.init();
+          }
+          resolver(true);
+        });
+      });
+      // Señal de arranque completo, la usa la prueba de comportamiento del DOM.
+      window.SIF_LISTO = listo;
 
-      // Inicializar Diccionario de Datos
-      if (window.DataDictionary) {
-        window.DataDictionary.init();
-      }
+      // El mapa se construye una sola vez, cuando hace falta. Se llama desde
+      // switchMainTab("erd") y desde la portada; si ya existe, no hace nada.
+      window.asegurarERD = function () {
+        if (!window.erdInstance && window.ERDGraph) {
+          window.erdInstance = new window.ERDGraph("erd-canvas");
+        }
+        return window.erdInstance;
+      };
 
       // Conmutación de pestañas de la vista principal
       const TAB_REGISTRY = {
@@ -607,7 +660,17 @@
         if (zoomControls) zoomControls.style.display = target === "erd" ? "flex" : "none";
         if (erdControls) erdControls.style.display = target === "erd" ? "flex" : "none";
 
+        // El canvas ya tiene su tamaño definitivo (se acaba de mostrar), así que
+        // construirlo aquí no fuerza un reflujo sobre una pestaña oculta.
+        if (target === "erd") window.asegurarERD();
         if (target === "erd" && window.erdInstance) window.erdInstance.resize();
+
+        // El motor DuckDB pesa varios MB. Sólo se levanta cuando el visitante
+        // entra a Consultas o a Datos; ahí query() lo espera y el badge avisa.
+        if ((target === "sql" || target === "data") &&
+            window.DuckDBClient && typeof window.DuckDBClient.ensureStarted === "function") {
+          window.DuckDBClient.ensureStarted();
+        }
         if (target === "dict" && window.DataDictionary) window.DataDictionary.render();
         if (target === "data" && window.DataViewer) {
           if (!window.DataViewer.currentRows || window.DataViewer.currentRows.length === 0) window.DataViewer.init();

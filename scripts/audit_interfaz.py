@@ -160,7 +160,8 @@ def audit_cache():
     if len(etiquetas) != 1:
         fail(f"assets locales con {len(etiquetas)} etiquetas distintas: {', '.join(sorted(etiquetas))}")
         return
-    print(f"  [OK] Los 15 archivos locales usan la versión {etiquetas.pop()}")
+    cuantos = len(re.findall(r'(?:src|href)="(?:css|js)/[^"?]+\?v=', texto))
+    print(f"  [OK] Los {cuantos} archivos locales usan la versión {etiquetas.pop()}")
 
 
 def audit_vocabulario():
@@ -293,6 +294,54 @@ def audit_ux_layer():
         fail("index.html no carga ux_shell.js con versión")
     else:
         print("  [OK] index.html carga ux_shell.js")
+
+
+def audit_accesibilidad(html, css):
+    print("\n--- 10. Teclado y movimiento: salto, foco y prefers-reduced-motion ---")
+    if 'class="skip-link"' in html and 'href="#main-content"' in html:
+        print("  [OK] enlace «Saltar al contenido principal»")
+    else:
+        fail("index.html no tiene el enlace de salto al contenido")
+    destino = re.search(r'<main[^>]*id="main-content"[^>]*>', html)
+    if destino and 'tabindex="-1"' in destino.group(0):
+        print("  [OK] el destino del salto es enfocable (tabindex=-1)")
+    else:
+        fail("el <main> no tiene id=main-content con tabindex=-1")
+    malas = []
+    for m in re.finditer(r'([^{}]*:focus-visible[^{}]*)\{([^{}]*)\}', css):
+        if re.search(r'outline:\s*none', m.group(2)):
+            malas.append(" ".join(m.group(1).split()))
+    if malas:
+        fail("reglas :focus-visible que anulan el anillo de foco: " + "; ".join(malas))
+    else:
+        print("  [OK] ninguna regla :focus-visible anula el anillo de foco")
+    if "prefers-reduced-motion: reduce" in css:
+        print("  [OK] prefers-reduced-motion respetado")
+    else:
+        fail("app.css no respeta prefers-reduced-motion")
+    if re.search(r"transition:\s*all\b", css):
+        fail("app.css usa transition: all; hay que declarar qué propiedades cambian")
+    else:
+        print("  [OK] ninguna transición anima «all»")
+    # Tablas ordenables: el control debe ser un botón dentro del <th>, con scope
+    # y aria-sort, no un onclick sobre la celda de encabezado.
+    for archivo in ("docs/js/data_viewer.js", "docs/js/chat_terminal.js"):
+        fuente = read(archivo)
+        if 'scope="col"' in fuente and "th-sort-btn" in fuente and "aria-sort" in fuente:
+            print(f"  [OK] {archivo.split('/')[-1]}: encabezados ordenables con botón y aria-sort")
+        else:
+            fail(f"{archivo} no expone encabezados ordenables accesibles")
+    # El esquema del mapa es un diálogo con nombre, cierre por Escape y retorno de foco.
+    modal = re.search(r'<div class="schema-modal"[^>]*>', html)
+    if modal and 'role="dialog"' in modal.group(0) and 'aria-labelledby="modal-table-name"' in modal.group(0):
+        print("  [OK] el esquema del mapa es un diálogo con nombre")
+    else:
+        fail("el esquema del mapa no tiene role=dialog ni aria-labelledby")
+    terminal = read("docs/js/chat_terminal.js")
+    if "cerrarEsquema" in terminal and '"Escape"' in terminal and "__focoAntesDelEsquema" in terminal:
+        print("  [OK] el esquema se cierra con Escape y devuelve el foco")
+    else:
+        fail("el esquema no cierra con Escape ni devuelve el foco")
 
 
 def audit_theme_tokens():
@@ -446,6 +495,44 @@ def audit_control_chars():
         print(f"  [OK] {len(revisar)} archivos de texto sin caracteres de control sueltos")
 
 
+def audit_cabeceras():
+    """El despliegue declara cabeceras de seguridad y las dos copias coinciden."""
+    print("\n--- 11. Cabeceras de seguridad del despliegue ---")
+    try:
+        raiz = read("vercel.json")
+        docs = read("docs/vercel.json")
+    except FileNotFoundError:
+        fail("falta vercel.json (o su copia en docs/): el despliegue no declara cabeceras")
+        return
+    if raiz != docs:
+        fail("vercel.json y docs/vercel.json difieren; el despliegue no es el mismo según la raíz")
+    config = json.loads(raiz)
+    reglas = config.get("headers", [])
+    if not any(regla.get("source") == "/outputs/(.*).parquet" for regla in reglas):
+        fail("vercel.json perdió la regla de caché de los Parquet")
+    generales = {}
+    for regla in reglas:
+        if regla.get("source") == "/(.*)":
+            for cabecera in regla.get("headers", []):
+                generales[cabecera.get("key")] = cabecera.get("value")
+    esperadas = {
+        "X-Content-Type-Options": "nosniff",
+        "Referrer-Policy": "strict-origin-when-cross-origin",
+        "X-Frame-Options": "DENY",
+        "Permissions-Policy": "camera=(), microphone=(), geolocation=(), payment=(), usb=()",
+        "Cross-Origin-Opener-Policy": "same-origin",
+    }
+    for clave, valor in esperadas.items():
+        if generales.get(clave) != valor:
+            fail(f"vercel.json no declara {clave}: {valor}")
+    politica = generales.get("Content-Security-Policy", "")
+    for directiva in ("frame-ancestors 'none'", "object-src 'none'", "base-uri 'self'"):
+        if directiva not in politica:
+            fail(f"la CSP del despliegue no incluye {directiva}")
+    if not any(clave not in generales for clave in esperadas) and all(d in politica for d in ("frame-ancestors 'none'", "object-src 'none'", "base-uri 'self'")):
+        print(f"  [OK] {len(esperadas) + 1} cabeceras en las dos copias de vercel.json, con CSP mínima")
+
+
 def main():
     html = read("docs/index.html")
     audit_tabs(html)
@@ -455,11 +542,13 @@ def main():
     audit_terminal(html)
     audit_ux_layer()
     audit_theme_tokens()
+    audit_accesibilidad(html, read("docs/css/app.css"))
     audit_engine()
     audit_normativa_retirada()
     audit_dead_classes()
     audit_control_chars()
     audit_header_compaction(html, read("docs/css/app.css"))
+    audit_cabeceras()
 
     print("\n" + "=" * 75)
     if errors:

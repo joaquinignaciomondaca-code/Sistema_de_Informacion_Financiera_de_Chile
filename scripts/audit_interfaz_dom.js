@@ -121,6 +121,16 @@ function check(name, condition, extra) {
 }
 
 setTimeout(async () => {
+  // El arranque de la página se reparte en tareas (ver el script final de
+  // index.html). Se espera la señal explícita antes de mirar el DOM.
+  if (window.SIF_LISTO) await window.SIF_LISTO;
+
+  // Arranque bajo demanda: ni el mapa relacional (canvas) ni el motor DuckDB
+  // (wasm de 3,8 MB) deben construirse con la página.
+  check("el mapa relacional no se construye al cargar", !window.erdInstance);
+  check("el motor DuckDB no arranca al cargar",
+    window.DuckDBClient && window.DuckDBClient.initPromise === null);
+
   const tabIds = ["tab-btn-info", "tab-btn-erd", "tab-btn-dict", "tab-btn-data", "tab-btn-sql", "tab-btn-downloads"];
   check("existen las 6 pestañas", tabIds.every((id) => document.getElementById(id)));
   check("la pestaña de normativa está retirada", !document.getElementById("tab-btn-normativa") && !document.getElementById("normativa-container"));
@@ -223,7 +233,15 @@ setTimeout(async () => {
   check("hay descarga de lo que está en pantalla",
     Boolean(contexto.querySelector('[data-action="pantalla"][data-fmt="csv"]')));
 
-  // Con el motor caído, CSV/Excel avisan en vez de fallar en silencio.
+  // Con el motor caído, CSV/Excel avisan en vez de fallar en silencio. El motor
+  // arranca bajo demanda, así que aquí se simula el estado final de un arranque
+  // que no pudo completarse (antes ese estado llegaba solo porque el motor se
+  // inicializaba al cargar la página).
+  if (window.DuckDBClient) {
+    window.DuckDBClient.initPromise = Promise.resolve();
+    window.DuckDBClient.engineAvailable = false;
+    window.DownloadsPanel.refrescarEstadoMotor();
+  }
   check("sin motor, CSV y Excel quedan marcados como no disponibles",
     document.querySelectorAll("#downloads-container .dl-btn-motor.dl-btn-off").length > 0);
 
@@ -238,7 +256,16 @@ setTimeout(async () => {
     check("SQL lleva la tabla a Consultas SQL", false, "sin botón SQL");
   }
 
+  // Se deja el motor sin arrancar otra vez para comprobar el cableado real:
+  // abrir Consultas debe disparar ensureStarted() (el estado «sin motor» que se
+  // simuló más arriba no es el de una página recién cargada).
+  if (window.DuckDBClient) {
+    window.DuckDBClient.initPromise = null;
+    window.DuckDBClient.engineAvailable = false;
+  }
   window.switchMainTab("sql");
+  check("abrir Consultas arranca el motor bajo demanda",
+    Boolean(window.DuckDBClient && window.DuckDBClient.initPromise));
   check("pestaña SQL activa y visible",
     document.getElementById("sql-container").style.display === "flex" &&
     document.getElementById("tab-btn-sql").getAttribute("aria-selected") === "true");
@@ -246,6 +273,7 @@ setTimeout(async () => {
     document.getElementById("info-container").style.display === "none" &&
     document.getElementById("downloads-container").style.display === "none");
   window.switchMainTab("erd");
+  check("abrir Mapa construye el mapa relacional", Boolean(window.erdInstance));
   check("mapa: filtros y zoom visibles",
     document.getElementById("erd-controls-group").style.display === "flex" &&
     document.querySelector(".zoom-controls").style.display === "flex");
@@ -471,7 +499,7 @@ setTimeout(async () => {
   check("fuentes y limitaciones: la sección declara respaldo, AFP y cobertura",
     /sin respaldo|respaldo oficial/i.test(document.body.textContent) &&
     /AFP/.test(document.querySelector(".info-fuentes").textContent) &&
-    /cobertura homogénea/i.test(document.querySelector(".info-fuentes").textContent));
+    /homogeneización generalizada/i.test(document.querySelector(".info-fuentes").textContent));
 
   window.switchMainTab("info");
   document.querySelector('.info-core-card[data-sector="ffmm"] [data-portada="explorar"]')

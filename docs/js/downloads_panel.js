@@ -594,7 +594,10 @@ class DownloadsPanelController {
   refrescarEstadoMotor() {
     if (!this.controles) return;
     const motor = window.DuckDBClient;
-    const disponible = Boolean(motor && motor.engineAvailable);
+    // El motor arranca bajo demanda: mientras no se haya pedido, los botones no
+    // son "no disponibles", son "arrancables" al primer clic.
+    const arrancable = Boolean(motor && !motor.initPromise && typeof motor.ensureStarted === "function");
+    const disponible = Boolean(motor && (motor.engineAvailable || arrancable));
     const sinPublicar = (motor && Array.isArray(motor.unavailableViews)) ? motor.unavailableViews : [];
     this.container.querySelectorAll(".dl-btn-motor").forEach((boton) => {
       const item = this.item(boton.dataset.id);
@@ -696,7 +699,16 @@ class DownloadsPanelController {
     const item = this.item(id);
     if (!item) return;
     const motor = window.DuckDBClient;
-    if (!motor || typeof motor.query !== "function" || !motor.engineAvailable) {
+    if (!motor || typeof motor.query !== "function") {
+      this.avisar("El motor de consulta no está disponible en este navegador. Puedes bajar el Parquet original o exportar lo que ves en pantalla.");
+      return;
+    }
+    // Primera descarga con motor: se levanta aquí y se avisa en el botón.
+    if (!motor.engineAvailable && typeof motor.ensureStarted === "function") {
+      this.avisar("Cargando el motor de consulta en tu navegador…", 6000);
+      await motor.ensureStarted();
+    }
+    if (!motor.engineAvailable) {
       this.avisar("El motor de consulta no está disponible en este navegador. Puedes bajar el Parquet original o exportar lo que ves en pantalla.");
       return;
     }

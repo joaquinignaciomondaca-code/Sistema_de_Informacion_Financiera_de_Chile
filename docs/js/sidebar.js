@@ -21,8 +21,8 @@ const EXPLORER_TREE = [
     type: "group",
     label: "COMPAÑIAS DE SEGUROS (CMF)",
     badges: [
-      { type: "entities", text: "Vida y Generales", title: "Compañías de seguros de vida y generales que informan su cartera a la CMF (Circular 1835)" },
-      { type: "data", text: "Actualización automática", title: "Se actualiza sola 3 veces al mes; cada mes se valida antes de publicarse" }
+      { type: "entities", text: "Vida y generales", title: "Compañías de seguros de vida y generales que informan su cartera a la CMF (Circular 1835)" },
+      { type: "data", text: "Mensual · 2016–2026", title: "Cartera mensual validada: se actualiza sola 3 veces al mes y cada mes se valida antes de publicarse" }
     ],
     status: "active",
     children: [
@@ -113,7 +113,7 @@ const EXPLORER_TREE = [
             sector: "seguros",
             chips: [
               { label: "B.14 Garantías por posición y tipo (M$)", query: "SELECT periodo, sector, posicion_compania, tipo_garantia, SUM(valor_razonable_activo_en_garantia_m_clp) AS valor_m_clp FROM seguros_garantias_derivados GROUP BY periodo, sector, posicion_compania, tipo_garantia ORDER BY periodo DESC LIMIT 50;" },
-              { label: "Registros tipo 6 por período y archivo", query: "SELECT periodo, tipo_archivo, sector, COUNT(*) AS registros, MIN(largo_registro) AS largo_minimo, MAX(largo_registro) AS largo_maximo FROM seguros_registros_tipo6 GROUP BY periodo, tipo_archivo, sector ORDER BY periodo DESC, tipo_archivo, sector LIMIT 66;" }
+              { label: "Registros tipo 6 por periodo y archivo", query: "SELECT periodo, tipo_archivo, sector, COUNT(*) AS registros, MIN(largo_registro) AS largo_minimo, MAX(largo_registro) AS largo_maximo FROM seguros_registros_tipo6 GROUP BY periodo, tipo_archivo, sector ORDER BY periodo DESC, tipo_archivo, sector LIMIT 66;" }
             ],
             tables: [
               { id: "seguros_prestamos", name: "B.12 PRÉSTAMOS", rows: "Mensual · desde 2024-12", file: "", files: ["outputs/seguros/prestamos/manifest.json"] },
@@ -133,7 +133,8 @@ const EXPLORER_TREE = [
     type: "group",
     label: "FONDOS MUTUOS Y DE INVERSIÓN (CMF / LEY 20.712)",
     badges: [
-      { type: "entities", text: "FFMM · FI", title: "Fondos mutuos y fondos de inversión regidos por la Ley Única de Fondos. Sus administradoras (AGF) son unidades jurídicas y contables distintas: están en «Instituciones y estados financieros»" }
+      { type: "entities", text: "Fondos mutuos y de inversión", title: "Fondos regidos por la Ley Única de Fondos. Sus administradoras (AGF) son unidades jurídicas y contables distintas: están en «Instituciones y estados financieros»" },
+      { type: "data", text: "Mensual y trimestral · 2001–2026", title: "Los fondos mutuos informan cartera mensual (2001–2026) y los de inversión trimestral (2012–2026): cada tabla declara su propio periodo" }
     ],
     status: "active",
     children: [
@@ -379,8 +380,8 @@ const EXPLORER_TREE = [
     type: "group",
     label: "ADMINISTRADORAS GENERALES DE FONDOS (CMF)",
     badges: [
-      { type: "entities", text: "Administran FFMM y FI", title: "Sociedades que administran los fondos mutuos y de inversión: unidades jurídicas y contables distintas de los fondos" },
-      { type: "data", text: "IFRS trimestral", title: "Balance y estado de resultados IFRS de cada administradora, desde el TXT trimestral de la CMF" }
+      { type: "entities", text: "Administran los fondos", title: "Sociedades que administran los fondos mutuos y de inversión: unidades jurídicas y contables distintas de los fondos" },
+      { type: "data", text: "Trimestral · 2010–2026", title: "Balance y estado de resultados de cada administradora desde el TXT trimestral de la CMF (estados financieros IFRS)" }
     ],
     status: "active",
     children: [
@@ -451,7 +452,8 @@ const EXPLORER_TREE = [
     type: "group",
     label: "FONDOS DE PENSIONES (SPENSIONES)",
     badges: [
-      { type: "entities", text: "7 Entidades", title: "Lista local de AFP; verificar identidad y vigencia contra la SP" }
+      { type: "entities", text: "7 administradoras", title: "Lista local de AFP; verificar identidad y vigencia contra la Superintendencia de Pensiones" },
+      { type: "data", text: "Sólo registro de entidades", title: "Esta edición no publica carteras de fondos de pensiones: de las AFP sólo está el registro de administradoras" }
     ],
     status: "active",
     children: [
@@ -485,8 +487,8 @@ const EXPLORER_TREE = [
     type: "group",
     label: "BANCA Y ESTADOS FINANCIEROS CMF",
     badges: [
-      { type: "entities", text: "40 códigos", title: "Catálogo histórico de instituciones; requiere validación independiente" },
-      { type: "data", text: "B1/B2/R1 mensual", title: "Cada período se incorpora solo si el gate de validación CMF pasa" }
+      { type: "entities", text: "40 instituciones", title: "Catálogo histórico de instituciones bancarias; requiere validación independiente" },
+      { type: "data", text: "Mensual · 2022–2026", title: "Balance (B1/B2) y resultados (R1) mensuales de la CMF. Cada periodo se incorpora solo si el gate de validación CMF pasa" }
     ],
     status: "por_auditar",
     open: true,
@@ -526,7 +528,7 @@ const EXPLORER_TREE = [
             open: false,
             chips: [
               { label: "Muestra de líneas de balance B1/B2 (sin sumar importes)", query: "SELECT periodo, codigo_institucion, nombre_institucion_fuente, familia_archivo_fuente, modelo_cmf, codigo_cuenta, glosa_cuenta, rubro, linea, item, numero_fila_fuente, importes_fuente_raw FROM bancos_balance ORDER BY periodo DESC, codigo_institucion, familia_archivo_fuente, numero_fila_fuente LIMIT 100;" },
-              { label: "Cobertura de balance por período y modelo", query: "SELECT periodo, familia_archivo_fuente, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_balance GROUP BY periodo, familia_archivo_fuente, modelo_cmf ORDER BY periodo DESC, familia_archivo_fuente;" }
+              { label: "Cobertura de balance por periodo y modelo", query: "SELECT periodo, familia_archivo_fuente, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_balance GROUP BY periodo, familia_archivo_fuente, modelo_cmf ORDER BY periodo DESC, familia_archivo_fuente;" }
             ],
             tables: [
               { id: "bancos_balance", name: "bancos.balance", rows: "B1/B2 · importes fuente", file: "", files: ["outputs/bancos/cmf_b1_b2_r1/manifest.json"] }
@@ -543,7 +545,7 @@ const EXPLORER_TREE = [
             open: false,
             chips: [
               { label: "Muestra de líneas de resultados R1 (sin sumar importes)", query: "SELECT periodo, codigo_institucion, nombre_institucion_fuente, familia_archivo_fuente, modelo_cmf, codigo_cuenta, glosa_cuenta, rubro, linea, item, numero_fila_fuente, importes_fuente_raw FROM bancos_resultados ORDER BY periodo DESC, codigo_institucion, numero_fila_fuente LIMIT 100;" },
-              { label: "Cobertura de resultados por período", query: "SELECT periodo, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_resultados GROUP BY periodo, modelo_cmf ORDER BY periodo DESC;" }
+              { label: "Cobertura de resultados por periodo", query: "SELECT periodo, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_resultados GROUP BY periodo, modelo_cmf ORDER BY periodo DESC;" }
             ],
             tables: [
               { id: "bancos_resultados", name: "bancos.resultados", rows: "R1 · importes fuente", file: "", files: ["outputs/bancos/cmf_b1_b2_r1/manifest.json"] }
@@ -559,8 +561,8 @@ const EXPLORER_TREE = [
     type: "group",
     label: "MACROECONOMÍA Y TASAS (BCCh)",
     badges: [
-      { type: "data", text: "24 tablas · 4 bloques", title: "23 tablas por indicador económico, en la frecuencia en que lo publica el Banco Central (diaria, mensual o trimestral), más el catálogo de series; agrupadas en tasas y curvas, tipo de cambio, actividad y precios y expectativas" },
-      { type: "data", text: "2014 → 2026", title: "Cobertura de las series: desde 2014 hasta la última publicación del BCCh" }
+      { type: "data", text: "24 tablas", title: "23 tablas por indicador económico, en la frecuencia en que lo publica el Banco Central (diaria, mensual o trimestral), más el catálogo de series; agrupadas en tasas y curvas, tipo de cambio, actividad y precios y expectativas" },
+      { type: "data", text: "Diaria, mensual y trimestral · 2014–2026", title: "Cada serie está en la frecuencia en que la publica el Banco Central. Cobertura: desde 2014 hasta la última publicación" }
     ],
     status: "active",
     children: [
@@ -697,7 +699,8 @@ const EXPLORER_TREE = [
     type: "group",
     label: "FACTORING & LEASING (CMF / NBFI)",
     badges: [
-      { type: "entities", text: "32 Entidades", title: "Lista de 32 entidades de Factoring y Leasing" }
+      { type: "entities", text: "32 entidades", title: "Lista de 32 entidades de factoring y leasing" },
+      { type: "data", text: "Trimestral · 2009–2026", title: "Balance y resultados IFRS de la serie CMF: 70 cierres trimestrales, de 2009-03 a 2026-06" }
     ],
     status: "active",
     children: [
@@ -740,7 +743,7 @@ const EXPLORER_TREE = [
             label: "Resultados · Serie CMF (2009-03–2026-06)", badge: "70 cierres · 28 RUT", badgeType: "data", status: "active",
             sector: "factoring_leasing",
             chips: [{ label: "Cuentas de resultados CMF · primeros 500", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, moneda_archivo, orden, cuenta, valor_archivo, valor_texto_original, valor_es_entero, taxonomia, estado_financiero, repeticion_contexto FROM factoring_leasing_resultados ORDER BY periodo DESC, rut, tipo_balance, estado_financiero, orden LIMIT 500;" },
-                    { label: "Utilidad del período · 1 fila por estado", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, estado_financiero, valor_archivo AS ganancia_perdida FROM factoring_leasing_resultados WHERE lower(cuenta) = 'ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion_contexto = 1 ORDER BY periodo DESC, rut;" },
+                    { label: "Utilidad del periodo · 1 fila por estado", query: "SELECT periodo, rut, nombre_reportado, tipo_balance, estado_financiero, valor_archivo AS ganancia_perdida FROM factoring_leasing_resultados WHERE lower(cuenta) = 'ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion_contexto = 1 ORDER BY periodo DESC, rut;" },
                     { label: "Dónde se repite 'Ganancia (pérdida)'", query: "SELECT estado_financiero, repeticion_contexto, count(*) AS filas, count(DISTINCT (periodo, rut, tipo_balance)) AS estados FROM factoring_leasing_resultados WHERE lower(cuenta) = 'ganancia (pérdida)' GROUP BY ALL ORDER BY estado_financiero, repeticion_contexto;" }],
             tables: [{ id: "factoring_leasing_resultados", name: "factoring_leasing.resultados",
                        rows: "Serie IFRS · sin cotejo integral",
@@ -756,8 +759,8 @@ const EXPLORER_TREE = [
     type: "group",
     label: "CORREDORAS DE BOLSA (CMF)",
     badges: [
-      { type: "entities", text: "120 Entidades", title: "Intermediarios de valores supervisados por la CMF (24 vigentes + 96 históricas)" },
-      { type: "data", text: "63 trimestres", title: "Balance y resultados FECU IFRS de corredores de bolsa y agentes de valores, archivo trimestral CMF. Se actualiza solo 3 veces al mes" }
+      { type: "entities", text: "120 entidades", title: "Intermediarios de valores supervisados por la CMF (24 vigentes + 96 históricas)" },
+      { type: "data", text: "Trimestral · 2010–2026", title: "Balance y resultados FECU IFRS de corredores de bolsa y agentes de valores, archivo trimestral CMF (63 trimestres). Se actualiza solo 3 veces al mes" }
     ],
     status: "active",
     children: [
@@ -842,8 +845,8 @@ const EXPLORER_TREE = [
     type: "group",
     label: "SECURITIZACIÓN (CMF / LEY 18.045)",
     badges: [
-      { type: "entities", text: "16 Gestoras", title: "Sociedades securitizadoras y sus patrimonios separados son entidades distintas" },
-      { type: "data", text: "358 balances", title: "Balances de diciembre 2014–2025 de patrimonios separados. De 2010 a 2013 no hay datos. Los balances de las gestoras son otra serie" }
+      { type: "entities", text: "16 gestoras", title: "Sociedades securitizadoras y sus patrimonios separados son entidades distintas" },
+      { type: "data", text: "Anual · 2009–2026", title: "Balances de diciembre 2014–2025 de patrimonios separados (de 2010 a 2013 no hay datos); los balances de las gestoras son otra serie, anual 2009–2026" }
     ],
     status: "active",
     children: [
@@ -958,7 +961,8 @@ const EXPLORER_TREE = [
     type: "group",
     label: "COOPERATIVAS DE AHORRO Y CRÉDITO (CMF)",
     badges: [
-      { type: "entities", text: "7 Entidades", title: "Cooperativas de ahorro y crédito supervisadas por la CMF" }
+      { type: "entities", text: "7 entidades", title: "Cooperativas de ahorro y crédito supervisadas por la CMF" },
+      { type: "data", text: "Sólo registro de entidades", title: "Sólo su lista de entidades (identidad y vigencia); sin estados financieros ni carteras" }
     ],
     status: "active",
     children: [
@@ -993,8 +997,8 @@ const EXPLORER_TREE = [
     type: "group",
     label: "CAJAS DE COMPENSACION (CCAF / SUSESO - CMF)",
     badges: [
-      { type: "entities", text: "6 Entidades", title: "Los Andes, La Araucana, Los Héroes, Caja 18 (y 2 históricas)" },
-      { type: "data", text: "65 trimestres", title: "Balance y resultados IFRS de las cajas que envían estados financieros XBRL a la CMF (archivo TXT trimestral CMF). Se actualiza solo 3 veces al mes" }
+      { type: "entities", text: "6 entidades", title: "Los Andes, La Araucana, Los Héroes, Caja 18 (y 2 históricas)" },
+      { type: "data", text: "Trimestral · 2010–2026", title: "Balance y resultados IFRS de las cajas que envían estados financieros XBRL a la CMF (archivo TXT trimestral CMF, 65 trimestres). Se actualiza solo 3 veces al mes" }
     ],
     status: "active",
     children: [
@@ -1065,7 +1069,8 @@ const EXPLORER_TREE = [
     type: "group",
     label: "SISTEMAS DE PAGO (BCCh / CMF)",
     badges: [
-      { type: "entities", text: "12 Entidades", title: "Infraestructuras críticas de liquidación, custodia, compensación y adquirencia" }
+      { type: "entities", text: "12 entidades", title: "Infraestructuras críticas de liquidación, custodia, compensación y adquirencia" },
+      { type: "data", text: "Sólo registro de entidades", title: "Sólo su lista de entidades (identidad y vigencia)" }
     ],
     status: "active",
     children: [
@@ -1100,7 +1105,8 @@ const EXPLORER_TREE = [
     type: "group",
     label: "FINTECH & FINANZAS ABIERTAS (LEY N° 21.521 / CMF)",
     badges: [
-      { type: "entities", text: "262 Entidades", title: "Entidades inscritas en el Registro de Prestadores de Servicios Financieros CMF" }
+      { type: "entities", text: "262 entidades", title: "Entidades inscritas en el Registro de Prestadores de Servicios Financieros CMF" },
+      { type: "data", text: "Sólo registro de entidades", title: "Sólo su lista de entidades (identidad y vigencia)" }
     ],
     status: "active",
     children: [
@@ -1140,6 +1146,15 @@ function escapeAttr(texto) {
     .replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 }
 
+/* El mapa relacional se construye la primera vez que se necesita (window.asegurarERD,
+   en index.html). Las llamadas del explorador —enfocar un sector, abrir el esquema de
+   una tabla— lo crean si aún no existe, para que el mapa refleje la selección cuando
+   el visitante abra su pestaña. Al cargar la página no se construye. */
+function mapaERD() {
+  if (typeof window.asegurarERD === "function") return window.asegurarERD();
+  return window.erdInstance || null;
+}
+
 class SidebarController {
   constructor() {
     this.sidebar = document.getElementById("sidebar");
@@ -1164,9 +1179,8 @@ class SidebarController {
       this.toggleBtn.addEventListener("click", () => {
         this.sidebar.classList.toggle("collapsed");
         setTimeout(() => {
-          if (window.erdInstance) {
-            window.erdInstance.resize();
-          }
+          const erd = mapaERD();
+          if (erd) erd.resize();
         }, 300);
       });
     }
@@ -1203,9 +1217,8 @@ class SidebarController {
       const newWidth = Math.min(Math.max(startWidth + (e.clientX - startX), 220), 550);
       sidebar.style.width = `${newWidth}px`;
       sidebar.style.minWidth = `${newWidth}px`;
-      if (window.erdInstance) {
-        window.erdInstance.resize();
-      }
+      const erd = mapaERD();
+      if (erd) erd.resize();
     });
 
     document.addEventListener("mouseup", () => {
@@ -1214,9 +1227,8 @@ class SidebarController {
         resizer.classList.remove("resizing");
         document.body.style.cursor = "";
         document.body.style.userSelect = "";
-        if (window.erdInstance) {
-          window.erdInstance.resize();
-        }
+        const erd = mapaERD();
+        if (erd) erd.resize();
       }
     });
   }
@@ -1533,7 +1545,8 @@ class SidebarController {
         if (this.searchInput) this.searchInput.value = "";
         this.render();
         this.setActiveSector(sec.sector, source);
-        if (window.erdInstance) window.erdInstance.focusSector(sec.sector);
+        const erdSec = mapaERD();
+        if (erdSec) erdSec.focusSector(sec.sector);
         if (this.breadcrumbEl) this.breadcrumbEl.textContent = this.describeLocation(sec.sector, "");
         const nodo = this.treeContainer ? this.treeContainer.querySelector(`[data-node-id="${sec.id}"]`) : null;
         if (nodo) {
@@ -1561,7 +1574,7 @@ class SidebarController {
   mostrarBarra() {
     if (this.sidebar && this.sidebar.classList.contains("collapsed")) {
       this.sidebar.classList.remove("collapsed");
-      setTimeout(() => { if (window.erdInstance) window.erdInstance.resize(); }, 300);
+      setTimeout(() => { const erd = mapaERD(); if (erd) erd.resize(); }, 300);
     }
   }
 
@@ -1630,7 +1643,8 @@ class SidebarController {
         this.setActiveSector("todos", "all-industries");
         document.querySelectorAll(".tree-row").forEach((r) => r.classList.remove("selected"));
         if (this.breadcrumbEl) this.breadcrumbEl.textContent = "Vista principal";
-        if (window.erdInstance) window.erdInstance.focusSector("todos");
+        const erdTodos = mapaERD();
+        if (erdTodos) erdTodos.focusSector("todos");
         if (window.ChatTerminal) {
           window.ChatTerminal.restoreDefaultChips();
           window.ChatTerminal.addSystemMessage("Vista restablecida: vista principal (núcleo, instituciones y contexto).");
@@ -1660,8 +1674,9 @@ class SidebarController {
 
         const sector = row.dataset.sector;
         if (sector) this.setActiveSector(sector, "sector");
-        if (sector && window.erdInstance) {
-          window.erdInstance.focusSector(sector);
+        if (sector) {
+          const erd = mapaERD();
+          if (erd) erd.focusSector(sector);
         }
       });
     });
@@ -1716,10 +1731,11 @@ class SidebarController {
       btn.addEventListener("click", (e) => {
         e.stopPropagation();
         const tableId = e.currentTarget.dataset.tableId;
-        if (window.erdInstance) {
-          const node = window.erdInstance.tables.find((t) => t.id === tableId || t.name === tableId);
+        const erd = mapaERD();
+        if (erd) {
+          const node = erd.tables.find((t) => t.id === tableId || t.name === tableId);
           if (node) {
-            window.erdInstance.showSchemaModal(node);
+            erd.showSchemaModal(node);
           }
         }
       });
@@ -1814,8 +1830,9 @@ class SidebarController {
       this.breadcrumbEl.textContent = `${this.prefijoNivel(sector)}${targetSectorName} \u203a ${targetCirc.label}`;
     }
 
-    if (window.erdInstance) {
-      window.erdInstance.focusSector(sector);
+    const erdCircular = mapaERD();
+    if (erdCircular) {
+      erdCircular.focusSector(sector);
     }
 
     const chips = this.chipsDeCarpeta(circId) || targetCirc.chips;
@@ -1848,8 +1865,9 @@ class SidebarController {
     }
 
     // Enfocar y centrar la tabla en el Canvas ERD
-    if (window.erdInstance) {
-      window.erdInstance.focusTable(tableId);
+    const erdTabla = mapaERD();
+    if (erdTabla) {
+      erdTabla.focusTable(tableId);
     }
 
     // Sincronizar con el Visor de Datos

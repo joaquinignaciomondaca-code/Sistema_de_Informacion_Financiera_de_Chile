@@ -252,7 +252,22 @@ class DuckDBClient {
     // consultas concurrentes; mantener una cola aquí evita que los mensajes
     // Thrift se intercalen y terminen en TProtocolException: Invalid data.
     this.queryQueue = Promise.resolve();
-    this.initPromise = this.init();
+    // El motor NO arranca aquí: el wasm pesa 3,8 MB y la mayoría de las visitas
+    // no abre Consultas ni Datos. Se levanta en ensureStarted(), la primera vez
+    // que una consulta o una pestaña lo necesitan (ver también index.html).
+    this.initPromise = null;
+  }
+
+  // Arranque perezoso e idempotente del motor. Devuelve la misma promesa en
+  // llamadas sucesivas, así que la pestaña SQL, el visor de datos y una descarga
+  // con motor comparten un solo arranque.
+  ensureStarted() {
+    if (!this.initPromise) {
+      const badge = document.getElementById("engine-badge");
+      if (badge) badge.textContent = "Inicializando DuckDB…";
+      this.initPromise = this.init();
+    }
+    return this.initPromise;
   }
 
   // Monta worker, base y conexión a partir de un bundle ya resuelto.
@@ -735,7 +750,7 @@ class DuckDBClient {
   }
 
   async query(sql) {
-    await this.initPromise;
+    await this.ensureStarted();
     const t0 = performance.now();
 
     if (!this.engineAvailable || !this.conn) {
