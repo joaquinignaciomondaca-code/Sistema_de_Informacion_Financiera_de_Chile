@@ -40,6 +40,22 @@ Schema de 300 KB.
 - **No cita cifras sin `data_release`.** El release identifica la edición; sin él
   una cifra no es reproducible.
 
+## Si el agente no puede ejecutar código
+
+Todo lo anterior supone un agente que corre Python. Cuando no puede —Claude
+Desktop, un asistente con `function calling`—, el mismo contenido se sirve como
+**servidor MCP en modo código**:
+
+```bash
+pip install "sif-chile[mcp]" && sif-mcp
+```
+
+Dos herramientas (`sif_buscar`, `sif_ejecutar`) que cuestan **191 tokens** de
+contexto; el MCP de la CMF revisado en el estudio expone 88 y cuesta ~37.000.
+La compuerta `scripts/auditar_mcp.py` levanta el servidor como lo haría un agente
+y responde, con dos llamadas, la pregunta de este mismo documento. Detalle en
+[`../../sdk/python/README.md`](../../sdk/python/README.md).
+
 ## Prueba de extremo a extremo
 
 La ruta deja para la fase 2 (opcional) un MCP en modo código con dos

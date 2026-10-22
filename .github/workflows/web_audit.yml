@@ -29,6 +29,7 @@ on:
       - 'scripts/audit_*.js'
       - 'scripts/probar_ejemplos.py'
       - 'scripts/test_contrato.py'
+      - 'scripts/auditar_mcp.py'
       - 'sdk/**'
       - 'examples/**'
       - 'scripts/normalizar_vocabulario.py'
@@ -257,6 +258,17 @@ jobs:
             grep -h -E "^(FAIL|ERROR):" sdk.log | head -5 | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=SDK de Python::$l"; done
           fi
           exit $(( i | t ))
+
+      - name: 'Servidor MCP: dos herramientas, presupuesto de contexto y la pregunta del README'
+        run: |
+          python -m pip install --disable-pip-version-check "mcp>=2"
+          set +e
+          python scripts/auditar_mcp.py --check > mcp.log 2>&1; n=$?
+          grep -h -E "^(OK|FALLA)" mcp.log | sed 's/%/%25/g' | while IFS= read -r l; do echo "::notice title=MCP::$l"; done
+          if [ "$n" -ne 0 ]; then
+            grep -h -E "^(FALLA|\[FALLA\])" mcp.log | head -6 | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=MCP::$l"; done
+          fi
+          exit $n
 
       - name: 'Ejemplos reproducibles: Python sin red y JavaScript con fetch'
         run: |
