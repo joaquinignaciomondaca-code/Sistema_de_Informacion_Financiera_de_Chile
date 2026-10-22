@@ -106,6 +106,15 @@ La base invocable es **interés legítimo** (art. 13 d) —reutilizar informaci�
 
 La ley entra en vigencia el **1 de diciembre de 2026**, es decir en 40 días. Hay un proyecto para postergarla al 1 de diciembre de 2027 (boletín 18.623-07), en primer trámite: **no es ley** y no corresponde planificar sobre él.
 
+### 3.3 ¿La supresión protege personas reales?
+
+`fi.cartera_nacional` suprime `rut_emisor` cuando el RUT es menor a 50.000.000 y no figura en el padrón de 3.280 entidades conocidas. Conviene medir si ese criterio alcanza a personas naturales efectivas o solo a un subconjunto estadístico.
+
+- **Volumen suprimido.** Contrastando la versión publicada con la anterior al commit `3b88beb`, desaparecen **202.835 filas y 31.215 RUT distintos**, en 28 fondos. Son el 0,18 % del monto con emisor identificado (795.356 miles de la moneda funcional frente a 287.712.924). Por instrumento: 202.437 filas en «otros títulos de deuda nacional», 208 en mutuos hipotecarios y 186 en «otros títulos».
+- **Control de fuga.** Ninguno de esos 31.215 RUT aparece en los **55 objetos publicados que tienen alguna columna de RUT** (cruce sobre todo el catálogo, 0 coincidencias). La supresión es consistente: no queda identificado en otra tabla.
+- **Verificación nominal externa.** El registro público de solicitantes de certificados de cumplimiento de obligaciones laborales y previsionales de la Dirección del Trabajo (formulario F30-1, año 2024) publica RUT con el nombre de la persona o empresa solicitante. Al menos uno de los RUT suprimidos aparece ahí como **persona natural identificada con nombres y apellidos**, con el mismo dígito verificador que calcula el propio pipeline. Por minimización no se reproduce aquí el nombre ni el RUT, ni se incorporan a ninguna tabla.
+- **Conclusión.** La regla no suprime «probables personas» en abstracto: suprime personas naturales reales, cuya identidad el proyecto puede verificar pero no publica. El criterio se mantiene sin cambios; cualquier modificación es una decisión de publicación que corresponde al responsable del repositorio.
+
 ## 4. Los cinco defectos concretos
 
 1. **La atribución no está implementada en el contrato.** `catalog.json` no tiene campo de fuente en ninguno de los 90 objetos (`fuente`, `url_fuente` o `norma`), y `datapackage.json` declara una licencia genérica. La condición de la CMF y del BCCh es «mencionar la fuente»: hoy solo se cumple en texto de la web, no en el dato que consume una API o un agente.
