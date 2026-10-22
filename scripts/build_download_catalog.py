@@ -35,6 +35,8 @@ except Exception:  # pragma: no cover - entorno sin pyarrow
     pq = None
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, ROOT)
+from pipelines.api import fuentes as F  # noqa: E402
 DOCS = os.path.join(ROOT, "docs")
 DUCKDB_JS = os.path.join(DOCS, "js", "duckdb_client.js")
 VOCAB_JSON = os.path.join(DOCS, "vocabulario.json")
@@ -342,6 +344,7 @@ def build() -> dict:
                 # Sin pyarrow: se hereda el conteo del catálogo vigente para que
                 # --check siga siendo útil (detecta cambios de rutas, pesos y nombres).
                 filas = filas_heredadas(previo, vid)
+        atribucion = F.atribucion_de(sector_clave, vid)
         item = {
             "id": vid,
             "nombre": ficha["nombre"],
@@ -350,6 +353,10 @@ def build() -> dict:
             "cobertura": ficha.get("cobertura", ""),
             "grupo": grupo,
             "sector": sector_corto(vocab, sector_clave),
+            "fuente": atribucion["fuente"],
+            "atribucion": atribucion["cita"],
+            "url_terminos": atribucion["url_terminos"],
+            "adaptacion": atribucion["adaptacion"],
             "filas": filas,
             "filasReales": filas is not None,
             "bytes": sum(a["bytes"] for a in archivos),
