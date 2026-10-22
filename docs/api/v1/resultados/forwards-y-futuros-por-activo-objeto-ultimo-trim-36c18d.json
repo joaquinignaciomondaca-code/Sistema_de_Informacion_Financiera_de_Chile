@@ -1,0 +1,141 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "forwards-y-futuros-por-activo-objeto-ultimo-trim-36c18d",
+ "titulo": "Forwards y futuros por activo objeto, último trimestre",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "activo_objeto",
+  "posicion",
+  "contratos",
+  "fondos"
+ ],
+ "filas": 20,
+ "truncado": false,
+ "datos": [
+  [
+   "$$",
+   "C",
+   14,
+   2
+  ],
+  [
+   "$$",
+   "V",
+   15,
+   2
+  ],
+  [
+   "BRL",
+   "C",
+   17,
+   1
+  ],
+  [
+   "BRL",
+   "V",
+   12,
+   1
+  ],
+  [
+   "BTP0600433",
+   "C",
+   7,
+   3
+  ],
+  [
+   "CLF",
+   "C",
+   10,
+   2
+  ],
+  [
+   "CLF",
+   "V",
+   8,
+   1
+  ],
+  [
+   "CLP",
+   "C",
+   38,
+   6
+  ],
+  [
+   "CLP",
+   "V",
+   51,
+   2
+  ],
+  [
+   "COP",
+   "C",
+   16,
+   3
+  ],
+  [
+   "Dolar",
+   "V",
+   22,
+   4
+  ],
+  [
+   "ICP",
+   "V",
+   6,
+   2
+  ],
+  [
+   "MONEDA",
+   "V",
+   53,
+   8
+  ],
+  [
+   "MXN",
+   "C",
+   17,
+   1
+  ],
+  [
+   "PEN",
+   "C",
+   7,
+   2
+  ],
+  [
+   "PROM",
+   "C",
+   29,
+   6
+  ],
+  [
+   "PROM",
+   "V",
+   96,
+   11
+  ],
+  [
+   "UF",
+   "C",
+   37,
+   5
+  ],
+  [
+   "UF",
+   "V",
+   26,
+   4
+  ],
+  [
+   "USD",
+   "V",
+   59,
+   8
+  ]
+ ],
+ "sql": "SELECT activo_objeto, posicion, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM fi_futuros WHERE periodo = (SELECT max(periodo) FROM fi_futuros) GROUP BY activo_objeto, posicion ORDER BY contratos DESC LIMIT 20;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

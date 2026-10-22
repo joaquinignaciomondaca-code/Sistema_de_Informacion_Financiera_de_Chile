@@ -1,0 +1,60 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "activos-pasivos-y-patrimonio-por-ccaf-ultimo-tri-54ae37",
+ "titulo": "Activos, pasivos y patrimonio por CCAF, último trimestre (MM$)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "periodo",
+  "razon_social",
+  "tipo_balance",
+  "moneda",
+  "activos_mm",
+  "pasivos_mm",
+  "patrimonio_mm"
+ ],
+ "filas": 4,
+ "truncado": false,
+ "datos": [
+  [
+   "2026-06",
+   "CAJA DE COMPENSACION DE ASIGNACION FAMILIAR 18 DE SEPTIEMBRE",
+   "individual",
+   "CLP",
+   325052.4,
+   209027.4,
+   116025.0
+  ],
+  [
+   "2026-06",
+   "CAJA DE COMPENSACION DE ASIGNACION FAMILIAR DE LOS ANDES",
+   "consolidado",
+   "CLP",
+   3568488.0,
+   2484704.4,
+   1083783.7
+  ],
+  [
+   "2026-06",
+   "CAJA DE COMPENSACION DE ASIGNACION FAMILIAR LA ARAUCANA",
+   "consolidado",
+   "CLP",
+   729399.8,
+   460934.2,
+   268465.6
+  ],
+  [
+   "2026-06",
+   "CAJA DE COMPENSACION DE ASIGNACION FAMILIAR LOS HEROES",
+   "consolidado",
+   "CLP",
+   780471.9,
+   474993.6,
+   305478.3
+  ]
+ ],
+ "sql": "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM ccaf_balance WHERE periodo = (SELECT max(periodo) FROM ccaf_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

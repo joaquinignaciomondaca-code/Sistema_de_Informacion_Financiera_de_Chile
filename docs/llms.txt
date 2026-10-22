@@ -3,15 +3,16 @@
 > Datos financieros públicos de Chile —bancos, aseguradoras, fondos mutuos, AGF,
 > securitizadoras, cooperativas, fintech, pagos, macro— normalizados en 90 objetos
 > Parquet, con RUT canónico, esquema verificado y un contrato estático que se puede
-> leer sin clonar el repositorio. Sin servidor de consulta, sin autenticación, sin
-> clave de API: los archivos se leen por HTTP.
+> leer sin clonar el repositorio. Sin autenticación, sin clave de API: los archivos
+> se leen por HTTP. Las 156 consultas del sitio vienen además con su resultado ya
+> calculado, para quien sólo necesita el número.
 
 Base: `https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile`
 
 ## Contrato
 
 - [catalog.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/catalog.json): los 90 objetos con `id`, `sector`, `estado` (`publicado` o `vacio`), `filas`, `bytes`, `primaryKey`, `corte` y las rutas absolutas a sus esquemas y particiones. Es la puerta de entrada.
-- [openapi.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/openapi.json): 9 rutas GET, todas archivos estáticos. No existe `/query`.
+- [openapi.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/openapi.json): 11 rutas GET, todas archivos estáticos. No existe `/query`.
 - [datapackage.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/datapackage.json): los 86 objetos con datos como Data Package (Frictionless), con `bytes` y `sha256` por archivo.
 - [reconciliacion.csv](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv): nombre del objeto, familia y fuente en el sitio.
 - [claves.csv](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/claves.csv): claves primarias verificadas y foráneas medidas.
@@ -19,12 +20,13 @@ Base: `https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Finan
 ## Consultas
 
 - [queries.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/queries.json): 156 consultas SQL de ejemplo. Cada una trae `id` estable (`slug-del-título` + 6 hex del SHA-1 de su SQL), `titulo`, `sql` y las tablas que usa. **El id no cambia mientras el SQL no cambie**: sirve para citar una consulta sin copiar el SQL.
+- [resultados/index.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/resultados/index.json): esas 156 consultas ya ejecutadas, con `filas`, `columnas`, tope de 500 filas, `sha256` y la URL de cada resultado. Si sólo necesitas el número, pide `resultados/{id}.json` y no bajes 500 MB: cada archivo trae `datos`, el `sql` que los produjo y el `data_release`.
 
 ## Datos
 
 - [views.sql](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/views.sql): `SET VARIABLE sif_base = '<base>';` y 105 `CREATE OR REPLACE VIEW` sobre `read_parquet(getvariable('sif_base') || '/outputs/…')`. Cambiar esa línea apunta todo a un espejo o a una copia local. Los 4 objetos vacíos no crean vista.
 - `schema/{id}.json` y `partitions/{id}.json`: columnas con tipo y rol, clave primaria, y los archivos con período, filas, bytes y `sha256`.
-- Los Parquet están en `/outputs/…` del mismo sitio y aceptan peticiones HTTP Range
+- Los Parquet están en `/outputs/…` del mismo sitio y aceptan peticiones HTTP Range.
 
 ## Reglas para un agente
 
@@ -34,6 +36,7 @@ Base: `https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Finan
 4. El último período publicado de un objeto es `max(periodo)`; no lo supongas.
 5. Verifica lo que descargues con el `sha256` declarado en `partitions/{id}.json`.
 6. Si necesitas una serie congelada, guarda el `data_release` que estás usando: el hash identifica, no recupera.
+7. No inventes tablas ni columnas: si algo falla, vuelve al esquema del objeto o a `resultados/index.json`, que trae el SQL que sí funciona.
 
 ## Servidor MCP (si no puedes ejecutar código)
 
@@ -46,7 +49,7 @@ es lo mismo, con menos piezas.
 
 - Best effort, sin SLA; los datos son de la CMF y de otros organismos públicos y se republican normalizados.
 - La licencia de datos está pendiente (`DATA_LICENSE.md`); el código es MIT.
-- No hay consulta remota ni MCP: el cliente pone el motor.
+- No hay SQL arbitrario por HTTP: los resultados publicados son los de las 156 consultas del catálogo, y cualquier otra consulta la ejecuta tu motor sobre los Parquet. Un servidor DuckDB compartido (Quack) está documentado pero **no desplegado**: implica una máquina, un certificado y un costo que este proyecto estático no tiene.
 
 ## Más
 

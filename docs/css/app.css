@@ -5267,3 +5267,119 @@ kbd {
   .info-scope-grid { grid-template-columns: minmax(0, 1fr); }
   .info-hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* --- Cómo usar: dos puertas, la misma cifra --------------------------------
+   Pestañas dentro de la pestaña Información. Se usan botones con role="tab"
+   porque el patrón ya está resuelto en el panel superior: lo que cambia es el
+   alcance (dos audiencias), no el comportamiento. */
+.info-uso-lead {
+  max-width: 980px;
+  margin-top: 8px;
+  color: var(--text-secondary);
+  font-size: 12.5px;
+  line-height: 1.65;
+}
+
+.uso-tabs {
+  display: inline-flex;
+  gap: 4px;
+  margin-top: 14px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 9px;
+  background: var(--bg-secondary);
+}
+
+.uso-tab {
+  padding: 7px 14px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  cursor: pointer;
+}
+
+.uso-tab:hover { color: var(--text-primary); }
+
+.uso-tab.active {
+  background: var(--accent-mint-dim);
+  color: var(--accent-mint-text);
+}
+
+.uso-tab:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+.uso-panel { margin-top: 14px; }
+
+.uso-panel:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 4px;
+  border-radius: 9px;
+}
+
+.uso-cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.uso-card {
+  padding: 15px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 9px;
+  background: var(--bg-secondary);
+}
+
+.uso-card-wide { margin-top: 10px; }
+
+.uso-card h3 {
+  margin: 0 0 4px;
+  color: var(--text-primary);
+  font-size: 13px;
+  letter-spacing: -0.1px;
+}
+
+.uso-card h3 code { font-size: 12px; }
+
+.uso-text {
+  margin-top: 6px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.uso-note {
+  margin-top: 9px;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.uso-code {
+  margin-top: 10px;
+  padding: 11px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 7px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.55;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+.uso-code code { font-family: inherit; }
+
+.uso-card .info-list { margin-top: 8px; }
+
+@media (max-width: 900px) {
+  .uso-cols { grid-template-columns: minmax(0, 1fr); }
+}

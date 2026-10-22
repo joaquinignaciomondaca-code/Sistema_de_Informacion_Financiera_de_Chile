@@ -1,0 +1,165 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "tpm-efectiva-frente-a-la-esperada-por-la-eee-f1cccc",
+ "titulo": "TPM efectiva frente a la esperada por la EEE",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "periodo",
+  "tpm_pct",
+  "expectativa_tpm_11_meses_pct",
+  "expectativa_tpm_23_meses_pct"
+ ],
+ "filas": 24,
+ "truncado": false,
+ "datos": [
+  [
+   "2024-11",
+   5.25,
+   4.5,
+   4.0
+  ],
+  [
+   "2024-12",
+   5.15,
+   4.5,
+   4.0
+  ],
+  [
+   "2025-01",
+   5.0,
+   4.5,
+   4.25
+  ],
+  [
+   "2025-02",
+   5.0,
+   4.5,
+   4.25
+  ],
+  [
+   "2025-03",
+   5.0,
+   4.5,
+   4.25
+  ],
+  [
+   "2025-04",
+   5.0,
+   4.5,
+   4.25
+  ],
+  [
+   "2025-05",
+   5.0,
+   4.25,
+   4.25
+  ],
+  [
+   "2025-06",
+   5.0,
+   4.25,
+   4.25
+  ],
+  [
+   "2025-07",
+   4.98,
+   4.25,
+   4.25
+  ],
+  [
+   "2025-08",
+   4.75,
+   4.25,
+   4.0
+  ],
+  [
+   "2025-09",
+   4.75,
+   4.25,
+   4.0
+  ],
+  [
+   "2025-10",
+   4.75,
+   4.25,
+   4.25
+  ],
+  [
+   "2025-11",
+   4.75,
+   4.25,
+   4.25
+  ],
+  [
+   "2025-12",
+   4.64,
+   4.25,
+   4.25
+  ],
+  [
+   "2026-01",
+   4.5,
+   4.25,
+   4.25
+  ],
+  [
+   "2026-02",
+   4.5,
+   4.25,
+   4.25
+  ],
+  [
+   "2026-03",
+   4.5,
+   4.25,
+   4.25
+  ],
+  [
+   "2026-04",
+   4.5,
+   4.5,
+   4.25
+  ],
+  [
+   "2026-05",
+   4.5,
+   4.5,
+   4.25
+  ],
+  [
+   "2026-06",
+   4.5,
+   4.25,
+   4.25
+  ],
+  [
+   "2026-07",
+   4.5,
+   4.25,
+   4.25
+  ],
+  [
+   "2026-08",
+   4.5,
+   4.25,
+   4.25
+  ],
+  [
+   "2026-09",
+   4.5,
+   4.5,
+   4.25
+  ],
+  [
+   "2026-10",
+   4.5,
+   4.5,
+   4.5
+  ]
+ ],
+ "sql": "SELECT e.periodo, round(avg(t.tpm_pct), 2) AS tpm_pct, max(e.expectativa_tpm_11_meses_pct) AS expectativa_tpm_11_meses_pct, max(e.expectativa_tpm_23_meses_pct) AS expectativa_tpm_23_meses_pct FROM macro_expectativas_tpm e JOIN macro_tasas_corto_plazo t USING (periodo) GROUP BY e.periodo ORDER BY e.periodo DESC LIMIT 24;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

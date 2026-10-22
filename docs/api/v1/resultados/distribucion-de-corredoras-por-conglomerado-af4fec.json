@@ -1,0 +1,171 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "distribucion-de-corredoras-por-conglomerado-af4fec",
+ "titulo": "Distribución de Corredoras por Conglomerado",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "grupo_financiero",
+  "total_corredoras",
+  "vigentes",
+  "instituciones"
+ ],
+ "filas": 25,
+ "truncado": false,
+ "datos": [
+  [
+   "BTG Pactual",
+   1,
+   1,
+   "BTG PACTUAL CHILE"
+  ],
+  [
+   "BancoEstado",
+   1,
+   1,
+   "BANCOESTADO"
+  ],
+  [
+   "Bank of America / Merrill Lynch",
+   1,
+   1,
+   "MERRILL LYNCH"
+  ],
+  [
+   "Credicorp Capital",
+   1,
+   1,
+   "CREDICORP CAPITAL"
+  ],
+  [
+   "EuroAmerica",
+   1,
+   1,
+   "EUROAMERICA"
+  ],
+  [
+   "Grupo BCI / Yarur",
+   1,
+   1,
+   "BCI"
+  ],
+  [
+   "Grupo BICE / Matte",
+   1,
+   1,
+   "BICE INVERSIONES"
+  ],
+  [
+   "Grupo Banco de Chile / Quinenco",
+   1,
+   1,
+   "BANCHILE"
+  ],
+  [
+   "Grupo Consorcio",
+   1,
+   1,
+   "CONSORCIO"
+  ],
+  [
+   "Grupo Santander",
+   2,
+   1,
+   "SANTANDER, SANTANDER INVESTMENT"
+  ],
+  [
+   "Grupo Security",
+   1,
+   1,
+   "VALORES SECURITY,"
+  ],
+  [
+   "Grupo Sura",
+   1,
+   1,
+   "CORREDORES DE BOLSA SURA"
+  ],
+  [
+   "Independiente / No Conglomerado",
+   91,
+   1,
+   "FINANZAS Y NEGOCIOS, ABN AMRO (CHILE), ADMINISTRADORA NACIONAL DE INVERSIONES, ALFA, ALFREDO EYZAGUIRRE Y COMPAÃIA,, B Y C, BANDESARROLLO, BANEDWARDS, BANGLOBAL, BANOSORNO, BRANCHI BRANCHI PABLO, BRAUN , PASCAL Y COMPAÃIA, CARLOS ARENAS, CARLOS F. MARIN ORREGO, CARLOS F. MARIN ORREGO Y COMPAÃIA, CORR DE BOLSAS DE VALORES, CB, CELSIUS, CHASE MANHATTAN, CHG, CHICAGO CONTINENTAL, CHILE MARKET, CHILE MARKET S.A, CITI ACCIVAL, CITICORP CHILE DE VALORES, CLARO, OVALLE Y CIA, CMB CHILE, COPINVEST, COVARRUBIAS Y COMPAÃIA,, CRUZ DEL SUR, DE LA CERDA Y HATTON S.A, DEUTSCHE SECURITIES, DRESDNER LATEINAMERIKA, DUPOL, EDWARDS, HEARN Y COMPAÃIA,, ENRIQUE Y NELSON LAVIN Y COMPAÃIA,, ESSEX, ETCHEGARAY GIL TOMAS, ETCHEGARAY, EUGENIO BLANCO, EUROVALORES, EYZAGUIRRE BALMACEDA RAFAEL GONZALO, FINANZAS, INVERSIONES Y CORRETAJES, FIT RESEARCH, FORTEZA Y COMPAÃIA,, GARCIA Y COMPAÃIA, HERNAN SANCHEZ Y COMPAÃIA Y OSCAR MOORE, IGUALT PEREZ MARIO, IHNEN EBENSPERGER JORGE, INTERMARKETS, INTERNATIONALE NEDERLANDEN, INTERVALORES, INVERCHILE, INVERLINK, INVERSIONES OF AMERICA, JAIME VIAL ROZAS, JOSE HERNAN OVALLE, JULIO URETA Y COMPAÃIA,, LAVIN, LIRA Y CIA.,, MCC, MIDWAY GUARANTY, MIGUEL PRIETO, MOLINA  Y SWETT, MOLINA LEIVA ALFONSO, MOLINA Y CASTRO, NEXT, OCHAGAVIA Y COMPAÃIA,, OHIGGINS, OVALLE NORDENFLYCHT JOSE HERNAN, PALMA Y COMPAÃIA, CORRREDORES DE BOLSA, PALMA Y SCHIFFRIN Y COMPAÃIA,, PENTA, PRIETO,WALKER,NAVARRO, RAIMUNDO SERRANO MC AULIFFE, RAIMUNDO SERRANO MC AULIFFE, ROMERO NEUMANN LAURA ALICIA, RUSSELL Y PEREZ, SERGIO CONTRERAS Y COMPAÃIA,, SOCIMER, STF CAPITAL, TRANSCORP,, UGARTE Y COMPAÃIA, VALDIVIESO Y VALDIVIESO Y COMPAÃIA, VALENZUELA LAFOURCADE LUIS ARTURO, VALENZUELA LAFOURCADE, VALORES BURSATILES CONCEPCION, VALORES, VARAS SERRANO DANIEL, VENTURA COLODRO Y COMPAÃIA, CORREDOES DE BOLSA, YRARRAZAVAL Y COMPAÃIA,, ZURICH"
+  ],
+  [
+   "Itau Corpbanca / Itau Unibanco",
+   2,
+   1,
+   "ITAU, ITAU BBA"
+  ],
+  [
+   "J.P. Morgan",
+   1,
+   1,
+   "J.P. MORGAN"
+  ],
+  [
+   "LarrainVial",
+   3,
+   1,
+   "LARRAIN VIAL, JAIME LARRAIN Y COMPAÃIA, VALDES LARRAIN ANIBAL"
+  ],
+  [
+   "MBI Inversiones",
+   1,
+   1,
+   "MBI"
+  ],
+  [
+   "Moneda Asset Management / Patria",
+   1,
+   1,
+   "MONEDA"
+  ],
+  [
+   "Nevasa",
+   1,
+   1,
+   "NEVASA,"
+  ],
+  [
+   "Renta 4 Espana",
+   1,
+   1,
+   "RENTA 4"
+  ],
+  [
+   "Santander / Ex-Santiago",
+   1,
+   0,
+   "SANTIAGO"
+  ],
+  [
+   "Scotiabank Chile",
+   2,
+   1,
+   "SCOTIA CHILE, SCOTIA CHILE"
+  ],
+  [
+   "Tanner Servicios Financieros",
+   1,
+   1,
+   "TANNER"
+  ],
+  [
+   "Vantrust Capital",
+   1,
+   1,
+   "VANTRUST CAPITAL"
+  ],
+  [
+   "Vector Capital",
+   1,
+   1,
+   "VECTOR CAPITAL"
+  ]
+ ],
+ "sql": "SELECT grupo_financiero, count(*) as total_corredoras, sum(CASE WHEN estado_vigencia = 'Vigente' THEN 1 ELSE 0 END) as vigentes, string_agg(nombre_fantasia, ', ') as instituciones FROM corredoras_bolsa_lista_entidades_registro GROUP BY grupo_financiero ORDER BY total_corredoras DESC;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

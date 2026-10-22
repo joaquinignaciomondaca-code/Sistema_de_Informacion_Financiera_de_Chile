@@ -547,6 +547,39 @@ def audit_cabeceras():
         print("  [OK] /api/* en Vercel redirige (307) a la URL canónica de Pages")
 
 
+def audit_como_usar(html, css):
+    """La sección «Cómo usar»: dos pestañas, dos audiencias, cero enlaces muertos."""
+    print("\n--- 12. Cómo usar: pestañas de personas y de agentes ---")
+    if 'id="info-como-usar"' not in html:
+        fail("index.html no tiene la sección «Cómo usar» (id=info-como-usar)")
+        return
+    botones = []
+    for etiqueta in re.findall(r'<button[^>]*data-uso-tab="([\w-]+)"[^>]*>', html):
+        bloque = re.search(r'<button[^>]*data-uso-tab="' + re.escape(etiqueta) + r'"[^>]*>', html)
+        controles = re.search(r'aria-controls="([\w-]+)"', bloque.group(0)) if bloque else None
+        if controles:
+            botones.append((etiqueta, controles.group(1)))
+    if len(botones) != 2:
+        fail(f"«Cómo usar» tiene {len(botones)} pestañas y se esperaban 2")
+        return
+    for etiqueta, panel in botones:
+        if f'id="{panel}"' not in html:
+            fail(f"la pestaña {etiqueta} apunta a un panel que no existe: {panel}")
+        else:
+            print(f"  [OK] pestaña {etiqueta} → {panel}")
+    if "js/como_usar.js?v=" not in html:
+        fail("index.html no carga js/como_usar.js con versión")
+    else:
+        print("  [OK] index.html carga como_usar.js con versión")
+    for clave in ("191 tokens", "156", "sif-mcp"):
+        if clave not in html:
+            fail(f"«Cómo usar» no menciona «{clave}», que es lo que promete la entrega")
+    for clase in (".uso-tabs", ".uso-tab", ".uso-panel", ".uso-code"):
+        if clase not in css:
+            fail(f"app.css no define {clase}, que usa la sección «Cómo usar»")
+    print("  [OK] las clases de la sección existen en app.css")
+
+
 def main():
     html = read("docs/index.html")
     audit_tabs(html)
@@ -563,6 +596,7 @@ def main():
     audit_control_chars()
     audit_header_compaction(html, read("docs/css/app.css"))
     audit_cabeceras()
+    audit_como_usar(html, read("docs/css/app.css"))
 
     print("\n" + "=" * 75)
     if errors:

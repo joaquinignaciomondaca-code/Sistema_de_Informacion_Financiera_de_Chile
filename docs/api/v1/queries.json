@@ -296,9 +296,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "forwards-y-futuros-por-activo-objeto-ultimo-mes-4f7ee8",
+   "id": "forwards-y-futuros-por-activo-objeto-ultimo-mes-72d79a",
    "origen": "explorador",
-   "sql": "SELECT activo_objeto, posicion, count(*) AS contratos, SUM(monto_comprometido_miles_mf) AS monto_comprometido_miles_mf FROM ffmm_futuros WHERE periodo = (SELECT max(periodo) FROM ffmm_futuros) GROUP BY activo_objeto, posicion ORDER BY contratos DESC LIMIT 15;",
+   "sql": "SELECT activo_objeto, posicion, count(*) AS contratos, SUM(monto_comprometido_miles_mf) AS monto_comprometido_miles_mf FROM ffmm_futuros WHERE periodo = (SELECT max(periodo) FROM ffmm_futuros) GROUP BY activo_objeto, posicion ORDER BY contratos DESC, activo_objeto, posicion LIMIT 15;",
    "titulo": "Forwards y futuros por activo objeto, último mes"
   },
   {
@@ -525,9 +525,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "contrapartes-de-derivados-ultimo-trimestre-82913c",
+   "id": "contrapartes-de-derivados-ultimo-trimestre-61d701",
    "origen": "explorador",
-   "sql": "SELECT contraparte, count(*) AS contratos FROM fi_futuros WHERE periodo = (SELECT max(periodo) FROM fi_futuros) GROUP BY contraparte ORDER BY contratos DESC LIMIT 15;",
+   "sql": "SELECT contraparte, count(*) AS contratos FROM fi_futuros WHERE periodo = (SELECT max(periodo) FROM fi_futuros) GROUP BY contraparte ORDER BY contratos DESC, contraparte LIMIT 15;",
    "titulo": "Contrapartes de derivados, último trimestre"
   },
   {
@@ -1599,9 +1599,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "cuentas-mas-frecuentes-por-rubro-e91f21",
+   "id": "cuentas-mas-frecuentes-por-rubro-747b5d",
    "origen": "explorador",
-   "sql": "SELECT categoria, cuenta, count(*) AS balances, sum(monto_m_clp) AS suma_m_clp FROM patrimonios_separados_balance WHERE categoria NOT LIKE 'Total%' GROUP BY ALL ORDER BY balances DESC LIMIT 30;",
+   "sql": "SELECT categoria, cuenta, count(*) AS balances, sum(monto_m_clp) AS suma_m_clp FROM patrimonios_separados_balance WHERE categoria NOT LIKE 'Total%' GROUP BY ALL ORDER BY balances DESC, categoria, cuenta LIMIT 30;",
    "titulo": "Cuentas más frecuentes por rubro"
   },
   {

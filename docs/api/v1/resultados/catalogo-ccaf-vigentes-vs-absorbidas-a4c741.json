@@ -1,0 +1,71 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "catalogo-ccaf-vigentes-vs-absorbidas-a4c741",
+ "titulo": "Catálogo CCAF (Vigentes vs Absorbidas)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "rut_completo",
+  "nombre_fantasia",
+  "estado_vigencia",
+  "regulador_mercado_valores",
+  "codigo_cmf",
+  "lineas_deuda_registradas"
+ ],
+ "filas": 6,
+ "truncado": false,
+ "datos": [
+  [
+   "70.014.300-7",
+   "CCAF JAVIERA CARRERA",
+   "Absorbida",
+   "No Aplica (Supervisión Exclusiva SUSESO)",
+   null,
+   false
+  ],
+  [
+   "70.016.160-9",
+   "CCAF LA ARAUCANA",
+   "Vigente",
+   "CMF (Emisor de Bonos)",
+   "2574",
+   true
+  ],
+  [
+   "70.016.330-K",
+   "CCAF LOS HEROES",
+   "Vigente",
+   "CMF (Emisor de Bonos)",
+   "1011",
+   true
+  ],
+  [
+   "70.017.000-4",
+   "CCAF GABRIELA MISTRAL",
+   "Absorbida",
+   "No Aplica (Supervisión Exclusiva SUSESO)",
+   null,
+   false
+  ],
+  [
+   "81.826.800-9",
+   "CCAF LOS ANDES / CAJA LOS ANDES",
+   "Vigente",
+   "CMF (Emisor de Bonos)",
+   "1009",
+   true
+  ],
+  [
+   "82.606.800-0",
+   "CCAF 18 DE SEPTIEMBRE / CAJA 18",
+   "Vigente",
+   "No Aplica (Supervisión Exclusiva SUSESO)",
+   null,
+   false
+  ]
+ ],
+ "sql": "SELECT rut_completo, nombre_fantasia, estado_vigencia, regulador_mercado_valores, codigo_cmf, lineas_deuda_registradas FROM ccaf_lista_entidades ORDER BY estado_vigencia DESC, nombre_fantasia;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

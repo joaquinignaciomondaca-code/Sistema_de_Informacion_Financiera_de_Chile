@@ -1,0 +1,190 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "catalogo-de-corredoras-vigentes-a8dbef",
+ "titulo": "Catálogo de Corredoras Vigentes",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "rut",
+  "nombre_empresa",
+  "nombre_fantasia",
+  "grupo_financiero",
+  "estado_vigencia"
+ ],
+ "filas": 24,
+ "truncado": false,
+ "datos": [
+  [
+   "76011193",
+   "CORREDORES DE BOLSA SURA S.A.",
+   "CORREDORES DE BOLSA SURA",
+   "Grupo Sura",
+   "Vigente"
+  ],
+  [
+   "76109764",
+   "J.P. MORGAN CORREDORES DE BOLSA SPA",
+   "J.P. MORGAN",
+   "J.P. Morgan",
+   "Vigente"
+  ],
+  [
+   "76513680",
+   "VECTOR CAPITAL CORREDORES DE BOLSA SPA",
+   "VECTOR CAPITAL",
+   "Vector Capital",
+   "Vigente"
+  ],
+  [
+   "76529250",
+   "RENTA 4 CORREDORES DE BOLSA S.A.",
+   "RENTA 4",
+   "Renta 4 Espana",
+   "Vigente"
+  ],
+  [
+   "76547150",
+   "VANTRUST CAPITAL CORREDORES DE BOLSA S.A.",
+   "VANTRUST CAPITAL",
+   "Vantrust Capital",
+   "Vigente"
+  ],
+  [
+   "76615490",
+   "MONEDA CORREDORES DE BOLSA LIMITADA",
+   "MONEDA",
+   "Moneda Asset Management / Patria",
+   "Vigente"
+  ],
+  [
+   "79532990",
+   "BICE INVERSIONES CORREDORES DE BOLSA S.A.",
+   "BICE INVERSIONES",
+   "Grupo BICE / Matte",
+   "Vigente"
+  ],
+  [
+   "80537000",
+   "LARRAIN VIAL S.A. CORREDORA DE BOLSA",
+   "LARRAIN VIAL",
+   "LarrainVial",
+   "Vigente"
+  ],
+  [
+   "80962600",
+   "TANNER CORREDORES DE BOLSA S.A.",
+   "TANNER",
+   "Tanner Servicios Financieros",
+   "Vigente"
+  ],
+  [
+   "80993900",
+   "MERRILL LYNCH CORREDORES DE BOLSA SPA",
+   "MERRILL LYNCH",
+   "Bank of America / Merrill Lynch",
+   "Vigente"
+  ],
+  [
+   "84177300",
+   "BTG PACTUAL CHILE S.A. CORREDORES DE BOLSA",
+   "BTG PACTUAL CHILE",
+   "BTG Pactual",
+   "Vigente"
+  ],
+  [
+   "95319000",
+   "FINANZAS Y NEGOCIOS S.A. CORREDORES DE BOLSA",
+   "FINANZAS Y NEGOCIOS",
+   "Independiente / No Conglomerado",
+   "Vigente"
+  ],
+  [
+   "96489000",
+   "CREDICORP CAPITAL CORREDORES DE BOLSA SPA",
+   "CREDICORP CAPITAL",
+   "Credicorp Capital",
+   "Vigente"
+  ],
+  [
+   "96515580",
+   "VALORES SECURITY S.A., CORREDORES DE BOLSA",
+   "VALORES SECURITY,",
+   "Grupo Security",
+   "Vigente"
+  ],
+  [
+   "96519800",
+   "BCI CORREDOR DE BOLSA S.A.",
+   "BCI",
+   "Grupo BCI / Yarur",
+   "Vigente"
+  ],
+  [
+   "96535720",
+   "SCOTIA CORREDORA DE BOLSA CHILE LIMITADA",
+   "SCOTIA CHILE",
+   "Scotiabank Chile",
+   "Vigente"
+  ],
+  [
+   "96564330",
+   "BANCOESTADO S.A. CORREDORES DE BOLSA",
+   "BANCOESTADO",
+   "BancoEstado",
+   "Vigente"
+  ],
+  [
+   "96571220",
+   "BANCHILE CORREDORES DE BOLSA S.A.",
+   "BANCHILE",
+   "Grupo Banco de Chile / Quinenco",
+   "Vigente"
+  ],
+  [
+   "96586750",
+   "NEVASA S.A., CORREDORES DE BOLSA",
+   "NEVASA,",
+   "Nevasa",
+   "Vigente"
+  ],
+  [
+   "96665450",
+   "ITAU CORREDORES DE BOLSA LIMITADA",
+   "ITAU",
+   "Itau Corpbanca / Itau Unibanco",
+   "Vigente"
+  ],
+  [
+   "96683200",
+   "SANTANDER CORREDORES DE BOLSA LIMITADA",
+   "SANTANDER",
+   "Grupo Santander",
+   "Vigente"
+  ],
+  [
+   "96772490",
+   "CONSORCIO CORREDORES DE BOLSA S.A.",
+   "CONSORCIO",
+   "Grupo Consorcio",
+   "Vigente"
+  ],
+  [
+   "96899230",
+   "EUROAMERICA CORREDORES DE BOLSA S.A.",
+   "EUROAMERICA",
+   "EuroAmerica",
+   "Vigente"
+  ],
+  [
+   "96921130",
+   "MBI CORREDORES DE BOLSA S.A.",
+   "MBI",
+   "MBI Inversiones",
+   "Vigente"
+  ]
+ ],
+ "sql": "SELECT rut, nombre_empresa, nombre_fantasia, grupo_financiero, estado_vigencia FROM corredoras_bolsa_lista_entidades WHERE estado_vigencia = 'Vigente' ORDER BY nombre_empresa;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}
