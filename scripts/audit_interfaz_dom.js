@@ -499,7 +499,7 @@ setTimeout(async () => {
   check("fuentes y limitaciones: la sección declara respaldo, AFP y cobertura",
     /sin respaldo|respaldo oficial/i.test(document.body.textContent) &&
     /AFP/.test(document.querySelector(".info-fuentes").textContent) &&
-    /cobertura homogénea/i.test(document.querySelector(".info-fuentes").textContent));
+    /homogeneización generalizada/i.test(document.querySelector(".info-fuentes").textContent));
 
   window.switchMainTab("info");
   document.querySelector('.info-core-card[data-sector="ffmm"] [data-portada="explorar"]')
