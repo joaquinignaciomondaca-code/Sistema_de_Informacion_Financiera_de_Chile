@@ -201,6 +201,25 @@ python3 -m scripts.preview_no_cache --port 8000     # sirve docs/ sin caché, co
 
 El servidor local responde `206 Partial Content` igual que GitHub Pages, así que DuckDB-Wasm lee sólo el pie y los grupos de fila que necesita en vez de bajar archivos completos.
 
+### Consumirlo desde Python
+
+El sitio publica además un **contrato estático** (`docs/api/v1/`) y un SDK que lo lee, para quien no quiere abrir el navegador:
+
+```bash
+pip install -e sdk/python   # paquete `sif-chile`, DuckDB + pyarrow
+```
+
+```python
+import sif_chile
+
+sif = sif_chile.connect()                    # o connect(base="/ruta/a/docs") sin red
+sif.buscar("seguros renta")                  # qué hay, sin saberse los nombres
+sif.esquema("seguros_renta_fija")            # columnas y tipos reales
+sif.sql("SELECT count(*) FROM bancos_balance").fetchone()
+```
+
+Las 105 vistas salen del `views.sql` publicado, así que el cliente no lleva su propia lista de tablas. Detalle en [`sdk/python/README.md`](sdk/python/README.md) y en [`docs/api/README.md`](docs/api/README.md).
+
 ---
 
 ## 6. Se mantiene solo
