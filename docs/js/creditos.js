@@ -6,8 +6,8 @@
  *
  *   #creditos-autor      → Información: quién construye esto, desde cuándo y
  *                          dónde está el código.
- *   #creditos-descargas  → Descargas: reproducibilidad y código, sobre el
- *                          catálogo.
+ *   #creditos-guia       → Guía: el método y los archivos auditables, en dos
+ *                          grupos (planilla y código).
  *
  * Regla de este módulo: en el sitio se escribe sólo lo que existe hoy. No hay
  * DOI, ni una versión congelada, ni una fecha de corte única. La cobertura no
@@ -140,25 +140,17 @@
   function htmlGuia() {
     const R = CREDITOS.reproducibilidad;
     return `
-      <div class="dl-creditos-head">
-        <div>
-          <h3>Reproducibilidad y código</h3>
-          <p>Lo publicado se puede auditar: de dónde sale cada cifra, qué comprobaciones pasó y cómo
-          se regenera. Los archivos vienen en dos grupos porque no se consumen igual.</p>
-        </div>
-      </div>
       <div class="dl-usos">
         ${grupoUso("dl-uso-leer", "Para leer",
-          "Se abren en Excel, Numbers o cualquier hoja de cálculo.", R.leer)}
+          "CSV y Markdown: se abren en una hoja de cálculo o en un editor de texto.", R.leer)}
         ${grupoUso("dl-uso-maquinas", "Para programas y agentes de IA",
-          "JSON, hashes y el contrato: pensados para consumirse con código.", R.maquinas)}
+          "JSON, hashes y el contrato: se consumen desde código.", R.maquinas)}
       </div>
       <p class="dl-uso-pie">
-        Se regeneran con <code>scripts/construir_reproducibilidad.py</code>; el método completo
-        está en <a href="reproducibilidad/README.md">reproducibilidad/README.md</a> y el código en
-        ${enlace(CREDITOS.github, "GitHub")}.
-        ¿Un agente que no ejecuta código? También hay
-        <button type="button" class="dl-uso-enlace" data-ir-uso="agentes">SDK y servidor MCP</button>.
+        Se regeneran con <code>scripts/construir_reproducibilidad.py</code>. El método completo está en
+        <a href="reproducibilidad/README.md">reproducibilidad/README.md</a> y el código en
+        ${enlace(CREDITOS.github, "GitHub")}. Las instrucciones para agentes están en
+        <button type="button" class="dl-uso-enlace" data-ir-uso="agentes">la sub-pestaña «Para agentes de IA»</button>.
       </p>
     `;
   }

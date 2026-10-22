@@ -17,7 +17,7 @@ proceso aparte, por stdio, con el SDK oficial de MCP):
     python3 scripts/auditar_mcp.py            # informe
     python3 scripts/auditar_mcp.py --check    # exit 1 si algo falla
 
-Requiere `pip install 'sif-chile[mcp]'`. Deja la evidencia en `docs/api/mcp.log`.
+Requiere `pip install mcp`. Deja la evidencia en `docs/api/mcp.log`.
 """
 from __future__ import annotations
 
@@ -137,7 +137,7 @@ def main() -> int:
     try:
         checks = asyncio.run(correr())
     except ImportError as exc:
-        print(f"Falta el SDK de MCP: {exc}. Instala con: pip install 'sif-chile[mcp]'")
+        print(f"Falta el SDK de MCP: {exc}. Instala con: pip install mcp")
         return 2
     except Exception as exc:  # noqa: BLE001
         print(f"[FALLA] no se pudo hablar con el servidor: {type(exc).__name__}: {exc}")

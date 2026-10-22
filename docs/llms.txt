@@ -11,7 +11,7 @@ Base: `https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Finan
 
 ## Contrato
 
-- [catalog.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/catalog.json): los 90 objetos con `id`, `sector`, `estado` (`publicado` o `vacio`), `filas`, `bytes`, `primaryKey`, `corte` y las rutas absolutas a sus esquemas y particiones. Es la puerta de entrada.
+- [catalog.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/catalog.json): los 90 objetos con `id`, `sector`, `estado` (`publicado` o `vacio`), `filas`, `bytes`, `primaryKey`, `corte` y las rutas absolutas a sus esquemas y particiones. Es el punto de partida.
 - [openapi.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/openapi.json): 11 rutas GET, todas archivos estáticos. No existe `/query`.
 - [datapackage.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/datapackage.json): los 86 objetos con datos como Data Package (Frictionless), con `bytes` y `sha256` por archivo.
 - [reconciliacion.csv](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv): nombre del objeto, familia y fuente en el sitio.
@@ -31,7 +31,7 @@ Base: `https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Finan
 ## Reglas para un agente
 
 1. Lee `catalog.json` una vez (90 entradas) y quédate con los `id` que necesites; no hace falta recorrer los 180 documentos de esquema.
-2. Para consultar, ejecuta `views.sql` con DuckDB y escribe SQL estándar. En Python, `pip install sif-chile` da `connect()`, `buscar(texto)`, `esquema(id)`, `sql(...)` y `descargar(id)`.
+2. Para consultar, ejecuta `views.sql` con DuckDB y escribe SQL estándar. En Python, el SDK se instala desde el repositorio (no está en PyPI): `pip install "sif-chile @ git+https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile@main#subdirectory=sdk/python"`, y da `connect()`, `buscar(texto)`, `esquema(id)`, `sql(...)` y `descargar(id)`.
 3. Filtra siempre por `periodo` (texto `AAAA-MM`) antes de agregar: hay hasta 12 años por tabla.
 4. El último período publicado de un objeto es `max(periodo)`; no lo supongas.
 5. Verifica lo que descargues con el `sha256` declarado en `partitions/{id}.json`.
@@ -40,7 +40,7 @@ Base: `https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Finan
 
 ## Servidor MCP (si no puedes ejecutar código)
 
-`pip install "sif-chile[mcp]"` y `sif-mcp`: dos herramientas, `sif_buscar`
+`pip install "sif-chile[mcp] @ git+https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile@main#subdirectory=sdk/python"` y `sif-mcp`: dos herramientas, `sif_buscar`
 (descubre tabla y columnas) y `sif_ejecutar` (SQL de solo lectura). 191 tokens de
 contexto en total. Si puedes ejecutar código, te basta `views.sql` y este archivo:
 es lo mismo, con menos piezas.
