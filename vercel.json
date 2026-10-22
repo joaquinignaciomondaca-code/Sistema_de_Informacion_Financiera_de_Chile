@@ -39,5 +39,12 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/$1",
+      "permanent": false
+    }
   ]
 }

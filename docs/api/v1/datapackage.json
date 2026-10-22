@@ -18803,7 +18803,7 @@
  "sif": {
   "api_version": "v1",
   "base_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/",
-  "base_url_estado": "provisional: es la del README; la canónica está pendiente (tarea 0.1)",
+  "base_url_estado": "decidida (D1): Pages publica la API; Vercel redirige /api/* aquí con un 307",
   "contrato": {
    "claves": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/claves.csv",
    "datapackage": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/datapackage.json",
@@ -18812,8 +18812,15 @@
    "reconciliacion": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv"
   },
   "data_release": "2026-10-21.dd49f53bf82b",
+  "espejo": "https://sistema-de-informacion-financiera-de-chile-docs.vercel.app",
   "filas_unicas": 19777492,
-  "objetos_sin_archivo": 4
+  "objetos_sin_archivo": 4,
+  "versionado": {
+   "mayor": "se rompe un cliente: quitar o renombrar recurso o columna, cambiar un tipo",
+   "menor": "se puede ignorar: añadir recurso, columna al final o campo sif.*",
+   "parche": "sólo datos: corrige valores sin tocar el esquema",
+   "regla": "semver; un dato nuevo NO sube la versión (eso es data_release)"
+  }
  },
  "sources": [
   {
