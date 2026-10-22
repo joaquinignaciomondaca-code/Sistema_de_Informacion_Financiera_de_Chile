@@ -3717,6 +3717,13 @@
     },
     {
      "criterio_contable": "No aplica",
+     "nombre": "rut_emisor",
+     "rol": "Atributo",
+     "significado": "Cuerpo del RUT del emisor (sin dígito verificador) cuando es una persona jurídica. Cuando el emisor es una persona natural, en su lugar va un seudónimo estable con prefijo «EMI-» que permite seguirla entre trimestres y fondos sin publicar su RUT; la columna rut_omitido_por_ley dice cuál de los dos casos es. Queda nulo si la fuente no informa RUT.",
+     "tipo": "VARCHAR"
+    },
+    {
+     "criterio_contable": "No aplica",
      "nombre": "pais_emisor",
      "rol": "Atributo",
      "significado": "Código del país del emisor.",
@@ -3843,13 +3850,6 @@
     },
     {
      "criterio_contable": "No aplica",
-     "nombre": "rut_emisor",
-     "rol": "Atributo",
-     "significado": "Cuerpo del RUT del emisor (sin dígito verificador) cuando es una persona jurídica. Cuando el emisor es una persona natural, en su lugar va un seudónimo estable con prefijo «EMI-» que permite seguirla entre trimestres y fondos sin publicar su RUT; la columna rut_omitido_por_ley dice cuál de los dos casos es. Queda nulo si la fuente no informa RUT.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
      "nombre": "emisor_tipo",
      "rol": "Atributo",
      "significado": "Criterio aplicado sobre rut_emisor: «persona_juridica», «persona_natural_probable» (RUT suprimido por privacidad) o «sin_rut_informado». Regla y umbrales en pipelines/auto/privacidad.py.",
@@ -3860,8 +3860,7 @@
      "nombre": "rut_omitido_por_ley",
      "rol": "Atributo",
      "significado": "Verdadero cuando rut_emisor trae el seudónimo de una persona natural en lugar de su RUT, y falso cuando trae un RUT publicado. Cambiar de criterio es configuración (variable SIF_PUBLICAR_RUT_EMISOR), no una edición de código.",
-     "tipo": "BOOLEAN",
-     "tipo_ts": "boolean"
+     "tipo": "BOOLEAN"
     }
    ],
    "corte": "2020-03 a 2026-06",
@@ -4921,7 +4920,7 @@
    ],
    "corte": "2014-01-02 a 2026-10-20",
    "estado": "publicado",
-   "filas": 3172,
+   "filas": 3173,
    "manifest_id": "macro_curva_bonos_pesos",
    "nivel": "contexto",
    "nombre_visible": "macro.curva_bonos_pesos",
@@ -4991,7 +4990,7 @@
    ],
    "corte": "2014-01-02 a 2026-10-20",
    "estado": "publicado",
-   "filas": 3174,
+   "filas": 3175,
    "manifest_id": "macro_curva_bonos_uf",
    "nivel": "contexto",
    "nombre_visible": "macro.curva_bonos_uf",
@@ -5327,7 +5326,7 @@
    ],
    "corte": "2014-01-02 a 2026-10-20",
    "estado": "publicado",
-   "filas": 3078,
+   "filas": 3079,
    "manifest_id": "macro_inflacion_implicita",
    "nivel": "contexto",
    "nombre_visible": "macro.inflacion_implicita",
@@ -5705,7 +5704,7 @@
    ],
    "corte": "2014-01-02 a 2026-10-21",
    "estado": "publicado",
-   "filas": 3203,
+   "filas": 3204,
    "manifest_id": "macro_swaps_camara",
    "nivel": "contexto",
    "nombre_visible": "macro.swaps_camara",
@@ -11824,12 +11823,12 @@
   }
  },
  "resumen": {
-  "columnas": 1508,
+  "columnas": 1509,
   "columnas_sin_documentar": 7,
   "columnas_sin_valores": 1,
   "con_esquema": 86,
-  "filas_por_objeto": 21740496,
-  "filas_unicas": 19777504,
+  "filas_por_objeto": 21740500,
+  "filas_unicas": 19777508,
   "objetos": 90,
   "sin_esquema": 4,
   "tablas_manifiesto": 89,

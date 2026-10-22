@@ -36,6 +36,14 @@
   },
   {
    "criterio_contable": "No aplica",
+   "nombre": "rut_emisor",
+   "rol": "Atributo",
+   "significado": "Cuerpo del RUT del emisor (sin dígito verificador) cuando es una persona jurídica. Cuando el emisor es una persona natural, en su lugar va un seudónimo estable con prefijo «EMI-» que permite seguirla entre trimestres y fondos sin publicar su RUT; la columna rut_omitido_por_ley dice cuál de los dos casos es. Queda nulo si la fuente no informa RUT.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
    "nombre": "pais_emisor",
    "rol": "Atributo",
    "significado": "Código del país del emisor.",
@@ -177,14 +185,6 @@
    "significado": "Inversión como % del activo total del fondo.",
    "tipo": "DOUBLE",
    "tipo_ts": "number"
-  },
-  {
-   "criterio_contable": "No aplica",
-   "nombre": "rut_emisor",
-   "rol": "Atributo",
-   "significado": "Cuerpo del RUT del emisor (sin dígito verificador) cuando es una persona jurídica. Cuando el emisor es una persona natural, en su lugar va un seudónimo estable con prefijo «EMI-» que permite seguirla entre trimestres y fondos sin publicar su RUT; la columna rut_omitido_por_ley dice cuál de los dos casos es. Queda nulo si la fuente no informa RUT.",
-   "tipo": "VARCHAR",
-   "tipo_ts": "string"
   },
   {
    "criterio_contable": "No aplica",
