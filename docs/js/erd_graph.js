@@ -511,7 +511,6 @@ const ERD_TABLES = [
       { name: "nemotecnico", type: "VARCHAR" },
       { name: "rut_emisor", type: "VARCHAR" },
       { name: "emisor_tipo", type: "VARCHAR" },
-      { name: "emisor_id", type: "VARCHAR" },
       { name: "rut_omitido_por_ley", type: "BOOLEAN" },
       { name: "tipo_instrumento", type: "VARCHAR" },
       { name: "valorizacion_miles_mf", type: "DOUBLE" }

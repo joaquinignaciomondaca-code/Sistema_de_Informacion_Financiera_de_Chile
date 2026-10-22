@@ -2,7 +2,7 @@
   "generado": "2026-10-22",
   "origen": "docs/js/data_dictionary.js (misma fuente que el diccionario de la web)",
   "tablas": 90,
-  "columnas": 1672,
+  "columnas": 1671,
   "datos": [
     {
       "id": "macro_tasas_corto_plazo",
@@ -6536,7 +6536,7 @@
           "name": "rut_emisor",
           "type": "VARCHAR",
           "role": "Atributo",
-          "significado": "Cuerpo del RUT del emisor (sin dígito verificador). Nulo cuando probablemente corresponde a una persona natural (mutuos hipotecarios, pagarés y otros instrumentos de deuda): ese identificador no se publica. Ver emisor_tipo.",
+          "significado": "Cuerpo del RUT del emisor (sin dígito verificador) cuando es una persona jurídica. Cuando el emisor es una persona natural, en su lugar va un seudónimo estable con prefijo «EMI-» que permite seguirla entre trimestres y fondos sin publicar su RUT; la columna rut_omitido_por_ley dice cuál de los dos casos es. Queda nulo si la fuente no informa RUT.",
           "contable": "No aplica"
         },
         {
@@ -6673,17 +6673,10 @@
           "contable": "No aplica"
         },
         {
-          "name": "emisor_id",
-          "type": "VARCHAR",
-          "role": "Atributo",
-          "significado": "Seudónimo estable (EMI-…) que reemplaza al RUT omitido de una persona natural: es igual para el mismo emisor en cualquier trimestre y fondo, así que permite sumar su exposición, seguir su serie y medir concentración sin publicar su RUT. Es nulo cuando el RUT se publica (personas jurídicas), porque ahí el RUT ya es la clave del emisor. Es seudonimización (art. 2 letra l de la Ley 21.719), no anonimización: el vínculo con el RUT vive en una tabla privada que no se publica.",
-          "contable": "No aplica"
-        },
-        {
           "name": "rut_omitido_por_ley",
           "type": "BOOLEAN",
           "role": "Atributo",
-          "significado": "Verdadero cuando el RUT de la fila se retiró por la regla de privacidad y falso cuando se publica tal cual. Cambiar de criterio es configuración (variable SIF_PUBLICAR_RUT_EMISOR), no una edición de código.",
+          "significado": "Verdadero cuando rut_emisor trae el seudónimo de una persona natural en lugar de su RUT, y falso cuando trae un RUT publicado. Cambiar de criterio es configuración (variable SIF_PUBLICAR_RUT_EMISOR), no una edición de código.",
           "contable": "No aplica"
         }
       ]

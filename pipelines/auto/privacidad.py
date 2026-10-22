@@ -75,20 +75,22 @@ TIPO_JURIDICA = "persona_juridica"
 TIPO_NATURAL = "persona_natural_probable"
 TIPO_SIN_RUT = "sin_rut_informado"
 
-# Columnas que acompañan a `rut_emisor` en `fi.cartera_nacional`:
-#   emisor_id            seudónimo estable del emisor, y sólo para la persona
-#                        natural cuyo RUT se omite: reemplaza al identificador que
-#                        falta, para poder seguirla entre trimestres y fondos.
-#                        En las personas jurídicas queda nulo, porque ahí el RUT
-#                        publicado ya es la clave.
-#   rut_omitido_por_ley  verdadero cuando el RUT se retiró por la regla de este
-#                        módulo; falso cuando el RUT se publica tal cual. Es
-#                        siempre cierto exactamente cuando `emisor_id` no es nulo.
+# `fi.cartera_nacional` publica **una sola columna de identificador**, `rut_emisor`:
+#   * persona jurídica  → su RUT, tal como lo publica la CMF;
+#   * persona natural   → un seudónimo estable `EMI-…` que la reemplaza, para poder
+#                         seguirla entre trimestres y fondos sin publicar su RUT;
+#   * sin RUT informado → nulo.
+# La columna `rut_omitido_por_ley` (booleano) dice cuál de los dos casos es: es
+# verdadera exactamente cuando `rut_emisor` contiene un seudónimo y no un RUT.
+#
+# El prefijo `EMI-` no es decorativo: impide que un seudónimo se confunda con un
+# RUT al leer la columna, al hacer un JOIN o al exportar a CSV.
+#
 # No se llama «anonimizado» a propósito: el artículo 2 letra k de la Ley 21.719
 # reserva esa palabra para la anonimización irreversible, y aquí el vínculo con
 # el RUT existe en una tabla privada (es seudonimización, art. 2 letra l).
-COLUMNA_EMISOR_ID = "emisor_id"
 COLUMNA_RUT_OMITIDO = "rut_omitido_por_ley"
+PREFIJO_SEUDONIMO = "EMI-"
 
 MODO_SUPRIMIR = "suprimir"
 MODO_PUBLICAR = "publicar"
@@ -274,7 +276,7 @@ def retirar_contacto(df, columnas=COLUMNAS_CONTACTO):
 # ---------------------------------------------------------------------------
 # Helpers sobre DataFrames (pandas es opcional: se importa al usarlos)
 # ---------------------------------------------------------------------------
-def emisor_id(valor, sal: str = "") -> str | None:
+def seudonimo_emisor(valor, sal: str = "") -> str | None:
     """Seudónimo estable de un emisor, derivado de su RUT.
 
     Es el mismo para el mismo RUT en cualquier tabla, fondo, trimestre o corrida,
@@ -287,6 +289,11 @@ def emisor_id(valor, sal: str = "") -> str | None:
         return None
     base = f"{sal}|{cuerpo}".encode("utf-8")
     return "EMI-" + hashlib.sha256(base).hexdigest()[:12]
+
+
+def es_seudonimo(valor) -> bool:
+    """¿El valor de `rut_emisor` es un seudónimo y no un RUT?"""
+    return isinstance(valor, str) and valor.startswith(PREFIJO_SEUDONIMO)
 
 
 def modo_publicacion_rut() -> str:
@@ -308,12 +315,13 @@ def proteger_cartera_nacional(df, entidades=frozenset(), columna: str = "rut_emi
                               modo: str | None = None, sal: str | None = None):
     """Aplica la regla del RUT del emisor y deja las columnas que la documentan.
 
-    Agrega `emisor_tipo` (criterio aplicado), `rut_omitido_por_ley` (verdadero
-    sólo si el RUT se retiró) y `emisor_id` (seudónimo que reemplaza al RUT
-    omitido; nulo cuando el RUT se publica). El modo
-    se lee de `SIF_PUBLICAR_RUT_EMISOR` salvo que se pase explícito, para que
-    publicar o dejar de publicar los RUT sea un cambio de configuración y no una
-    edición de código.
+    En `rut_emisor` queda el RUT de las personas jurídicas y, en lugar del RUT de
+    las personas naturales, un seudónimo estable `EMI-…` que permite seguirlas en
+    el tiempo. Agrega `emisor_tipo` (criterio aplicado) y `rut_omitido_por_ley`
+    (verdadero sólo cuando `rut_emisor` trae un seudónimo). El modo se lee de
+    `SIF_PUBLICAR_RUT_EMISOR` salvo que se pase explícito, para que publicar o
+    dejar de publicar los RUT sea un cambio de configuración y no una edición de
+    código.
     """
     if columna not in getattr(df, "columns", []):
         return df
@@ -322,17 +330,17 @@ def proteger_cartera_nacional(df, entidades=frozenset(), columna: str = "rut_emi
     origen = df[columna].tolist()
     enmascarados, tipos = enmascarar_columna(origen, entidades)
     df = df.copy()
-    df[columna] = origen if modo == MODO_PUBLICAR else enmascarados
     df["emisor_tipo"] = tipos
-    # El seudónimo reemplaza a un identificador que no se publica: por eso sólo
-    # se emite para la persona natural cuyo RUT se omite. En la persona jurídica
-    # el RUT publicado ya es la clave estable y un id paralelo sería redundante.
+    # Una sola columna de identificador: el RUT si se publica y el seudónimo si
+    # no. En la persona jurídica no hay nada que sustituir, porque su RUT ya es
+    # la clave estable.
     omitidos = [tipo == TIPO_NATURAL and modo == MODO_SUPRIMIR for tipo in tipos]
-    df[COLUMNA_RUT_OMITIDO] = omitidos
-    df[COLUMNA_EMISOR_ID] = [
-        emisor_id(valor, sal) if omitido else None
+    df[columna] = [
+        seudonimo_emisor(valor, sal) if omitido
+        else (str(valor).strip() if cuerpo_rut(valor) is not None else None)
         for valor, omitido in zip(origen, omitidos)
     ]
+    df[COLUMNA_RUT_OMITIDO] = omitidos
     return df
 
 
