@@ -44,3 +44,8 @@ node_modules/
 
 # Snapshots académicos locales (se construyen, no se versionan)
 snapshot/
+
+# Las excepciones de arriba quedan anuladas por los patrones que vienen después
+# (*.log, *.csv), así que la evidencia que sí se publica va al final.
+# Evidencia de la prueba de máquina limpia (tarea 1a.8).
+!docs/api/prueba_maquina_limpia.log
