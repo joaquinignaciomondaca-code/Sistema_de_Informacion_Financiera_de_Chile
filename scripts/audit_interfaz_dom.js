@@ -492,6 +492,34 @@ setTimeout(async () => {
   check("reproducibilidad: todos los archivos enlazados existen en el disco",
     archivosRepo.length > 0 && archivosRepo.every((href) => fs.existsSync(path.join(DOCS, href))),
     archivosRepo.filter((href) => !fs.existsSync(path.join(DOCS, href))).join(", "));
+  // El bloque de reproducibilidad separa dos audiencias: lo que se abre en una
+  // planilla y lo que consume código. Mezclados en una lista, el visitante no
+  // sabía cuál de los seis enlaces le servía.
+  const gruposUso = [...document.querySelectorAll("#creditos-descargas .dl-uso")];
+  check("reproducibilidad: separa «para leer» de «para programas y agentes»",
+    gruposUso.length === 2
+    && /Para leer/.test(gruposUso[0].querySelector("h4").textContent)
+    && /Para programas y agentes/.test(gruposUso[1].querySelector("h4").textContent),
+    gruposUso.map((g) => g.querySelector("h4").textContent).join(" | "));
+  check("reproducibilidad: cada archivo declara su formato a la vista",
+    [...document.querySelectorAll("#creditos-descargas .dl-uso-item")].length >= 6
+    && [...document.querySelectorAll("#creditos-descargas .dl-uso-item")]
+      .every((a) => ["CSV", "JSON", "TXT", "MD"].includes((a.querySelector(".dl-chip").textContent || "").trim())),
+    [...document.querySelectorAll("#creditos-descargas .dl-chip")].map((c) => c.textContent).join(" "));
+  const enlacesMaquina = gruposUso.length === 2
+    ? [...gruposUso[1].querySelectorAll("a")].map((a) => a.getAttribute("href")) : [];
+  check("reproducibilidad: el grupo de máquinas incluye el contrato y la guía para agentes",
+    enlacesMaquina.includes("api/v1/catalog.json") && enlacesMaquina.includes("llms.txt"),
+    enlacesMaquina.join(", "));
+  const irAgentes = document.querySelector("#creditos-descargas [data-ir-uso]");
+  if (irAgentes) irAgentes.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  check("reproducibilidad: «SDK y servidor MCP» abre la sub-pestaña de agentes",
+    Boolean(irAgentes)
+    && document.getElementById("info-container").style.display !== "none"
+    && document.getElementById("uso-panel-agentes").hidden === false
+    && document.getElementById("uso-panel-humanos").hidden === true);
+  window.switchMainTab("info");
+
   check("la web advierte que la base puede tener errores y pide verificar",
     /Puede haber errores/.test(document.querySelector(".info-fuentes").textContent) &&
     /puede contener errores/.test(document.querySelector(".info-note").textContent) &&
