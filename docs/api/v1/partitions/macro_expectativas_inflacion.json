@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "macro_expectativas_inflacion",
+ "particiones": [
+  {
+   "archivo": "outputs/macro/macro_expectativas_inflacion.parquet",
+   "bytes": 4156,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_expectativas_inflacion.parquet",
+   "periodo": "macro_expectativas_inflacion",
+   "sha256": "d8327ca161d5732e17960d44a9e37be51d12425a4a78a42c82df7fbd02b70a99"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 4156,
+  "filas": 154
+ },
+ "version": "1.0.0"
+}

@@ -1,0 +1,71 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "PK",
+   "significado": "vida o generales.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "PK",
+   "significado": "Cuerpo del RUT de la compañía de seguros (sin dígito verificador); une con seguros.lista_entidades.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "primer_periodo",
+   "rol": "Fecha",
+   "significado": "Primer mes en que la compañía aparece en los archivos publicados.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "ultimo_periodo",
+   "rol": "Fecha",
+   "significado": "Último mes en que la compañía aparece.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "meses_reportados",
+   "rol": "Métrica",
+   "significado": "Número de meses publicados en que aparece.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "reporta_ultimo_mes",
+   "rol": "Atributo",
+   "significado": "Verdadero si aparece en el último mes publicado.",
+   "tipo": "BOOLEAN",
+   "tipo_ts": "boolean"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "seguros_lista_entidades",
+ "primaryKey": [
+  "sector",
+  "rut_aseguradora"
+ ],
+ "sector": "seguros",
+ "titulo": "seguros.lista_entidades",
+ "version": "1.0.0"
+}

@@ -1,0 +1,35 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "derivado",
+ "filtro": null,
+ "id": "seguros_renta_fija_relevante",
+ "particiones": [
+  {
+   "archivo": "outputs/seguros/renta_fija_relevante/2024.parquet",
+   "bytes": 3653673,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija_relevante/2024.parquet",
+   "periodo": "2024",
+   "sha256": "83d425895e1077dfe3c64fd7cf9fa9aa0241983628d777b0b842e04427b7bfe5"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija_relevante/2025.parquet",
+   "bytes": 22823879,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija_relevante/2025.parquet",
+   "periodo": "2025",
+   "sha256": "59d7e84800fc88bd8f4349699dfb0232f27a3a96bbb8a8d196b46fa7d5aa6455"
+  },
+  {
+   "archivo": "outputs/seguros/renta_fija_relevante/2026.parquet",
+   "bytes": 17336453,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/renta_fija_relevante/2026.parquet",
+   "periodo": "2026",
+   "sha256": "1920333d29c2c7574f281f4254e03cae7336e3f4693e3b3b21522196dc7ecf35"
+  }
+ ],
+ "total": {
+  "archivos": 3,
+  "bytes": 43814005,
+  "filas": 2321911
+ },
+ "version": "1.0.0"
+}

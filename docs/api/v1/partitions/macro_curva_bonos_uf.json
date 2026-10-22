@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "macro_curva_bonos_uf",
+ "particiones": [
+  {
+   "archivo": "outputs/macro/macro_curva_bonos_uf.parquet",
+   "bytes": 94177,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_curva_bonos_uf.parquet",
+   "periodo": "macro_curva_bonos_uf",
+   "sha256": "94a1acf23475991870a680bc3f1649ea5f898e7943bbbeb8e73e6449587ff093"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 94177,
+  "filas": 3173
+ },
+ "version": "1.0.0"
+}

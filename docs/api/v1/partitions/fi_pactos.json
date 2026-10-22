@@ -1,0 +1,119 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "fi_pactos",
+ "particiones": [
+  {
+   "archivo": "outputs/fi/pactos/2012.parquet",
+   "bytes": 5596,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/pactos/2012.parquet",
+   "periodo": "2012",
+   "sha256": "ce6753309a70db294caaa593bcc6fc568541bb473077cf339ffdacf58d5a37d1"
+  },
+  {
+   "archivo": "outputs/fi/pactos/2013.parquet",
+   "bytes": 6862,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/pactos/2013.parquet",
+   "periodo": "2013",
+   "sha256": "0f9b150b050175d9edd2356e849459ee655a1d10ed752835aa14cdc124c16448"
+  },
+  {
+   "archivo": "outputs/fi/pactos/2014.parquet",
+   "bytes": 9973,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/pactos/2014.parquet",
+   "periodo": "2014",
+   "sha256": "7b0f2baa4f34100028c6f83b3464b41d2b4e20f70ee8c50e730ef2b694a91310"
+  },
+  {
+   "archivo": "outputs/fi/pactos/2015.parquet",
+   "bytes": 17942,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/pactos/2015.parquet",
+   "periodo": "2015",
+   "sha256": "7113eb7d3f5bfe4f649618371bccbf3de19dc0899f57142c57fa561f52760fad"
+  },
+  {
+   "archivo": "outputs/fi/pactos/2016.parquet",
+   "bytes": 15160,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/pactos/2016.parquet",
+   "periodo": "2016",
+   "sha256": "99a6e97ad71ed27cf0a7c85718ac9f8790dc6c9a0ecad42010750cf719f28de6"
+  },
+  {
+   "archivo": "outputs/fi/pactos/2017.parquet",
+   "bytes": 14633,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/pactos/2017.parquet",
+   "periodo": "2017",
+   "sha256": "117e15d50dac994f357ab48f0daa803249ffe51e021374825ee4d47cece08716"
+  },
+  {
+   "archivo": "outputs/fi/pactos/2018.parquet",
+   "bytes": 13789,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/pactos/2018.parquet",
+   "periodo": "2018",
+   "sha256": "48cde616e2ae0eac7168cdf52dde89a841aecd36a583c76897b88cd2bcf58035"
+  },
+  {
+   "archivo": "outputs/fi/pactos/2019.parquet",
+   "bytes": 15720,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/pactos/2019.parquet",
+   "periodo": "2019",
+   "sha256": "e5a00edf5077c013bd7005e2344fa55b185c6fb265e42c5c6b536768980d4383"
+  },
+  {
+   "archivo": "outputs/fi/pactos/2020.parquet",
+   "bytes": 14610,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/pactos/2020.parquet",
+   "periodo": "2020",
+   "sha256": "9abb0d0548abe7c807ebb4fc83b868801e1178957deb030b498a419745920612"
+  },
+  {
+   "archivo": "outputs/fi/pactos/2021.parquet",
+   "bytes": 15371,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/pactos/2021.parquet",
+   "periodo": "2021",
+   "sha256": "b3d6a6d6880f19ffc8eacfd5aa1140a065a7c6bd97f8d93c74462693cad7c3ec"
+  },
+  {
+   "archivo": "outputs/fi/pactos/2022.parquet",
+   "bytes": 14597,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/pactos/2022.parquet",
+   "periodo": "2022",
+   "sha256": "14690b52dec72812ae8ce68240baa3780cfd87e15c2c9aeb08183b6e039110f5"
+  },
+  {
+   "archivo": "outputs/fi/pactos/2023.parquet",
+   "bytes": 15300,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/pactos/2023.parquet",
+   "periodo": "2023",
+   "sha256": "921163ec1e3f5c7c1f55350715c4b95434f87696f2c4fcb3aec777d4b6e331f0"
+  },
+  {
+   "archivo": "outputs/fi/pactos/2024.parquet",
+   "bytes": 15107,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/pactos/2024.parquet",
+   "periodo": "2024",
+   "sha256": "6b97fabfad58d0908999f6d8ad8789352911644bb5990a99ce6975f8829f4a73"
+  },
+  {
+   "archivo": "outputs/fi/pactos/2025.parquet",
+   "bytes": 15858,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/pactos/2025.parquet",
+   "periodo": "2025",
+   "sha256": "7ca3e729963a9b7c4ada8367fd1437d05db6d90dc1f3399539c736e9b2da0286"
+  },
+  {
+   "archivo": "outputs/fi/pactos/2026.parquet",
+   "bytes": 14131,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/pactos/2026.parquet",
+   "periodo": "2026",
+   "sha256": "6bd60de5c80825d06974a99a5621d3dabe94194df9416992df78b33307c227c4"
+  }
+ ],
+ "total": {
+  "archivos": 15,
+  "bytes": 204649,
+  "filas": 1698
+ },
+ "version": "1.0.0"
+}

@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "macro_inflacion_ipc",
+ "particiones": [
+  {
+   "archivo": "outputs/macro/macro_inflacion_ipc.parquet",
+   "bytes": 8220,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_inflacion_ipc.parquet",
+   "periodo": "macro_inflacion_ipc",
+   "sha256": "6036776f64e279495617cb60fd5124712eb3d6a2f66295914def18ea43c3c144"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 8220,
+  "filas": 153
+ },
+ "version": "1.0.0"
+}

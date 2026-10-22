@@ -1,0 +1,481 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la cartera informada (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "Atributo",
+   "significado": "vida (archivos CSVID) o generales (CSGEN).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "FK",
+   "significado": "RUT de la compañía de seguros, con dígito verificador (une con seguros.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el encabezado del archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut",
+   "rol": "Identificador",
+   "significado": "Se deberá informar el RUT del emisor de cada título, o el RUT de la administradora del fondo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "run",
+   "rol": "Identificador",
+   "significado": "Se deberá informar el RUN del fondo que forma parte de las inversiones de cada compañía, de acuerdo a la codificación definida en SEIL, codificación S.V.S., Fondos de Inversión. Para el caso de acciones de sociedades anónimas se informara con ceros.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_instrumento",
+   "rol": "Atributo",
+   "significado": "Este campo es obligatorio y se informará de acuerdo a la codificación definida en SEIL, codificación S.V.S., Instrumentos.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nemotecnico",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el código nemotécnico, de acuerdo a las instrucciones impartidas por Circular N° 1085 o la que la reemplace, utilizado para identificar el instrumento cuando se trate de acciones nacionales transadas en el mercado nacional o cuotas de fondos.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "serie",
+   "rol": "Atributo",
+   "significado": "Se deberá informar la serie del instrumento cuando corresponda.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidades",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el número de acciones o cuotas, propiedad de la entidad a la fecha de cierre del mes a que se refiere la información, agrupando todas las compras correspondientes al mismo emisor, fondo de inversión y serie, cuando corresponda.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pres_bursatil",
+   "rol": "Métrica",
+   "significado": "Corresponde informar la presencia bursátil de la acción o fondo, propiedad de la compañía, a la fecha de cierre del mes a que se refiere la información. Si no cuenta con presencia bursátil, se informará con ceros (0).",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "Costo",
+   "nombre": "valor_costo_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al precio pagado por las acciones o por las cuotas de fondos de inversión, más los gastos asociados, tales como comisiones e impuestos (exceptos aquellos recuperables), a la fecha de cierre del mes a que se refiere la información. Este monto se deberá expresar en pesos ($). Expresado en pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_libro_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor libro unitario de una acción o al valor contable unitario de la cuota, por el número de UNIDADES. Expresado en pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor de mercado bruto",
+   "nombre": "valor_bolsa_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor bolsa de la cuota o de la acción definido en Circular de Valorización, multiplicado por el número de UNIDADES, este monto se deberá expresar en pesos ($). Para el caso de sociedades anónimas cerradas o cuotas de fondos que no tengan valor bolsa, se deberá informar con ceros. Expresado en pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor razonable",
+   "nombre": "valor_razonable_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor de mercado del instrumento a la fecha de la información. Se debe presentar en M$. Para las inversiones que no se transen en un mercado primario o secundario, se deberá informar una estimación del valor de mercado realizada por la compañía. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Deterioro",
+   "nombre": "deterioro_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al deterioro de la inversión, según lo señalado en la Norma de Carácter General N°311, del 28.06.2011. Este monto deberá expresarse en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "provision_voluntaria_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde a la provisión voluntaria que pueden efectuar las entidades aseguradoras o reaseguradoras de acuerdo a lo indicado en la Circular de Valorización de Inversiones, en pesos ($). Expresado en pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor contable informado",
+   "nombre": "valor_final_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor que tiene el instrumento a la fecha de cierre del mes a que se refiere la información, según lo establecido en Circular de Valorización de Inversiones vigente. Este monto se deberá expresar en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidad_monetaria",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la unidad monetaria o moneda de origen de la acción o cuota. Se informará de acuerdo a la codificación definida en SEIL.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "ajuste_a_valor_economico",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si la valorización de la cuota del fondo es ajustada a valor económico. Se informará de acuerdo a la siguiente codificación: S : Ajustado N : No ajustado Si no corresponde informar, se llenará con espacios.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "prohibicion",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si los títulos registrados se encuentran afectos a prohibiciones, gravámenes u otros impedimentos señalados en el DFL Nº251. Se informará de acuerdo a la siguiente codificación: S : Si tiene prohibición. N : No tiene prohibición.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_en_margen",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si uno o más títulos registrados (en caso de haber agrupado instrumentos con características idénticas) se encuentran otorgados como margen de las operaciones de derivado señaladas en el DFL Nº251.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidades_en_margen",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el número de acciones o cuotas de fondos que se encuentran otorgados como margen de las operaciones de derivados señaladas en el DFL Nº251.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "accion_en_prestamo",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si una o más acciones registradas se encuentran, prestadas por la compañía, en operaciones de venta corta. Se informará de acuerdo a la siguiente codificación: S : acción afecta a préstamo por operación de venta corta.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidades_en_prestamo",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el número de acciones prestadas por la compañía, en operaciones de venta corta.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_respalda_reserva_valor_de_fondo",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si uno o más títulos (en caso de haber agrupado instrumentos con características idénticas) registrados, se encuentran respaldando la reserva de valor del fondo señalada en el DFL Nº251.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_del_fondo",
+   "rol": "Atributo",
+   "significado": "Para instrumentos que estén asociados a fondos que respalden seguros de vida con cuenta de inversión, se debe informar el nombre del Fondo al cual pertenece. Se entenderá por fondo al tipo de plan o modalidades de inversión convenidos para los seguros con cuentas de inversión.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_cartera",
+   "rol": "Atributo",
+   "significado": "Para instrumentos que no respalden seguros de vida con cuenta de inversión, se debe informar la sub cartera que respalda, si corresponde. Para instrumentos que no respalden una sub cartera, se debe informar “NO APLICA”.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "custodia_inv",
+   "rol": "Atributo",
+   "significado": "Corresponde informar para cada instrumento, el tipo de custodia que presenta, de acuerdo a la siguiente codificación: CIA : Custodia en Compañía. DCV : Custodia en DCV, solo si la Cía. actuó como Depositante. EXT : Custodia en Otra entidad.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_custodio",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el nombre de la entidad que custodia la inversión en el evento que se informe en el campo CUSTODIA_INV, el código EXT (otra entidad de custodia). En caso de que no corresponda informar, se deberá llenar con espacios este campo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "susceptibles_de_custodia",
+   "rol": "Atributo",
+   "significado": "Se deberá informar si el instrumento es susceptible de ser custodiado de acuerdo a lo dispuesto en Circular N° 88 del Depósito Central de Valores S.A., y sus modificaciones posteriores, de acuerdo a la siguiente codificación: S: es susceptible de ser custodiado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "relacionado",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si el emisor del instrumento está relacionado con la compañía de seguros, de acuerdo a lo establecido en el artículo N°100 de la ley N°18.045 del 22.10.1981 y sus modificaciones. Se señalará de acuerdo a la siguiente codificación: RE : Relacionado NR : No Relacionado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "filial_coligada",
+   "rol": "Atributo",
+   "significado": "Se debe informar si la inversión informada corresponde a una empresa Filial o Coligada de acuerdo a la circular 2022, utilizando la siguiente codificación: FI: Empresa Filial CO: Empresa Coligada NA: Empresa que no es Filial o Coligada.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "participacion_porcentual",
+   "rol": "Métrica",
+   "significado": "Corresponde señalar el porcentaje de participación de la compañía en la sociedad filial a la fecha de cierre del mes al que se refiere la información.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "patrimonio_filial_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el patrimonio contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros periodos, se debe informar el patrimonio contable de la filial del trimestre anterior al periodo informado. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "resultado_de_la_sociedad_filial_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al resultado (utilidad o pérdida) contable de la filial a la fecha de cierre de los estados financieros para los meses de marzo, junio, septiembre y diciembre. Para los otros periodos se debe informar el resultado contable de la filial del trimestre anterior al periodo informado. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "clasificacion_de_riesgo",
+   "rol": "Atributo",
+   "significado": "Se deberá informar la menor clasificación de riesgo vigente del instrumento a la fecha de cierre del mes a que se refiere la información. Si el instrumento no contara con clasificación de riesgo se debe informar S/C.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "simultanea",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si una o más acciones registradas forman parte de una operación simultánea de acciones. Se informará de acuerdo a la siguiente codificación: CVS : acción afecta a operación simultánea. NVS : acción no afecta a operación simultánea.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tsa",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si el instrumento está incluido en el Test de Suficiencia de Activos para el periodo informado, de acuerdo a la siguiente codificación: SI: el instrumento es utilizado para el análisis del Test de Suficiencia de Activos NO: el instrumento no es utilizado para el análisis del.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cobertura",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si el instrumento está cubierto por un Derivado y qué tipo de operación de acuerdo a la siguiente Codificación En el primer carácter de este campo se debe indicar: S, si el instrumento está cubierto por un Derivado N, si el instrumento no está cubierto En los caracteres 2 al 5.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "metod_clasif_valo",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la clasificación dada al instrumento en los.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "criterio_valorizaci",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si la inversión está valorizada a Valor.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "modelo_valoracion",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si la inversión está valorizada por la Compañía utilizando un Modelo Propio de valorización de acuerdo a la siguiente codificación: SI : Utiliza Modelo Propio. NO: No utiliza Modelo Propio.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Deterioro",
+   "nombre": "modelo_propio_deterioro",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si el Deterioro de la inversión se determinó usando una metodología propia o es una aplicación de la metodología definida en la NCG N° 311. Se informará de acuerdo a la siguiente codificación: SI : Método propio para estimar el deterioro. NO : Aplicación de la NCG N°311.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_fondo",
+   "rol": "Atributo",
+   "significado": "Para los fondos de inversiones corresponde informar el tipo de fondo según la siguiente clasificación: IN : Inmobiliario. CR : Capital de Riesgo. IE : Infraestructura OT : Otros. Para las acciones se deberá informar: AC.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_fondo_p",
+   "rol": "Identificador",
+   "significado": "Para instrumentos de tipo CFIP y CFIPOIND, se debe informar el 31 Para instrumentos distintos a CFIP y CFIPOIND, se debe completar este campo con ceros.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_fondo_p",
+   "rol": "Atributo",
+   "significado": "Para instrumentos de tipo CFIP y CFIPOIND, se debe informar el nombre del Fondo al cual pertenece. Para instrumentos distintos a CFIP y CFIPOIND, se debe informar “NO APLICA”.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_actividad_economica",
+   "rol": "Métrica",
+   "significado": "Se deberá informar para todos los instrumentos (acciones), la codificación designada por el Servicio Impuestos Internos para la actividad económica principal del emisor. Para fondos, se informará con ceros (0).",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "efecto_patrimonio",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si una inversión, es valorizada a Valor razonable (VR) con cambios en otro resultado integral: SI: Con cambios en otro resultado integral. NO: Sin cambios en otro resultado integral.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "subyacente",
+   "rol": "Atributo",
+   "significado": "Corresponde informar los activos subyacentes de los fondos de inversión. Solo se informarán los tipos de activos cuya participación en la cartera de inversiones del fondo sea superior o igual al 10%.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "segmento_fondo",
+   "rol": "Atributo",
+   "significado": "Para los fondos de inversiones corresponde informar el segmento del fondo según la siguiente clasificación: 01: Accionarios; Fondos cuyas inversiones en al menos un 70% sean acciones de sociedades anónimas abiertas nacionales o extranjeras. 02: Capital Privado;",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_inmobiliario",
+   "rol": "Atributo",
+   "significado": "Corresponde informar, para inversiones en fondos con riesgo subyacente de tipo inmobiliario, el tipo de inversión inmobiliaria según la siguiente clasificación: 01: Renta Habitacional (Residencial): Corresponden a aquellos fondos que tienen por objetivo principal invertir en bienes raíces.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cuotas_suscritas",
+   "rol": "Métrica",
+   "significado": "Para los fondos de inversiones corresponde informar el número de cuotas suscritas y pagadas del fondo de inversión. Para acciones, se deberá completar con ceros.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "porcentaje_participacion",
+   "rol": "Métrica",
+   "significado": "Corresponde Informar el porcentaje de participación de la compañía respecto a las cuotas suscritas y pagadas del fondo de inversión. Para acciones, se deberá completar con ceros.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "desarrollo_avance",
+   "rol": "Atributo",
+   "significado": "Para el caso de TIPO_INMOBILIARIO 04, 05, 06 y 07, se debe.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_gestion",
+   "rol": "Atributo",
+   "significado": "Para el caso de TIPO_INMOBILIARIO 04, 05, 06 y 07, se debe indicar el tipo de gestión, de acuerdo a lo siguiente: A: Compañía es responsable de gestionar el proyecto y contrata directamente a una constructora para su desarrollo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "rut_aseguradora",
+   "destino": "seguros_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "seguros_acciones",
+ "primaryKey": [
+  "valor_final_m_clp",
+  "valor_razonable_m_clp",
+  "valor_bolsa_clp",
+  "valor_libro_clp",
+  "valor_costo_clp",
+  "unidades",
+  "deterioro_m_clp",
+  "cuotas_suscritas",
+  "porcentaje_participacion",
+  "nemotecnico",
+  "pres_bursatil",
+  "patrimonio_filial_m_clp",
+  "periodo",
+  "nombre_aseguradora"
+ ],
+ "sector": "seguros",
+ "titulo": "B.2 ACCIONES DE SOCIEDADES ANÓNIMAS ABIERTAS, ACCIONES DE SOCIEDADES ANÓNIMAS CERRADAS Y CUOTAS DE FONDOS DE INVERSIÓN",
+ "version": "1.0.0"
+}

@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "macro_reservas_internacionales",
+ "particiones": [
+  {
+   "archivo": "outputs/macro/macro_reservas_internacionales.parquet",
+   "bytes": 4379,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_reservas_internacionales.parquet",
+   "periodo": "macro_reservas_internacionales",
+   "sha256": "bc645e20b3764fa8ea3e959925fa0f73a5dadb17f6850bdd809f2323c0bde9eb"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 4379,
+  "filas": 153
+ },
+ "version": "1.0.0"
+}

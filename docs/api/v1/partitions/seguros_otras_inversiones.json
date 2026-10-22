@@ -1,0 +1,35 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "seguros_otras_inversiones",
+ "particiones": [
+  {
+   "archivo": "outputs/seguros/otras_inversiones/2024.parquet",
+   "bytes": 68897,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/otras_inversiones/2024.parquet",
+   "periodo": "2024",
+   "sha256": "314af7a4c0192b9dfc9e5758d6c7951e27dd9b0fb06a6f9640a47aa8543d4412"
+  },
+  {
+   "archivo": "outputs/seguros/otras_inversiones/2025.parquet",
+   "bytes": 357035,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/otras_inversiones/2025.parquet",
+   "periodo": "2025",
+   "sha256": "8584f0a18ca65241269aeba97da13b8a4adf986d6aec4f922a3674209b520d3c"
+  },
+  {
+   "archivo": "outputs/seguros/otras_inversiones/2026.parquet",
+   "bytes": 280254,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/otras_inversiones/2026.parquet",
+   "periodo": "2026",
+   "sha256": "37a4acfe20533d2743280c5e437954b7d038ea617c6b5943ac3c71f910cdcbe7"
+  }
+ ],
+ "total": {
+  "archivos": 3,
+  "bytes": 706186,
+  "filas": 42494
+ },
+ "version": "1.0.0"
+}

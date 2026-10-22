@@ -1,0 +1,140 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "securitizadoras_resultados",
+ "particiones": [
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_resultados/2009.parquet",
+   "bytes": 8984,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_resultados/2009.parquet",
+   "periodo": "2009",
+   "sha256": "c83fb1608c86c4fd9c2a23a06c73121171f8a600d48abcf0834d82a1971c8c68"
+  },
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_resultados/2010.parquet",
+   "bytes": 13339,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_resultados/2010.parquet",
+   "periodo": "2010",
+   "sha256": "bdd67c0f4fae941f94567ffdc8fb58fcea4eebb8eb5e183db6879c36ef794034"
+  },
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_resultados/2011.parquet",
+   "bytes": 13470,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_resultados/2011.parquet",
+   "periodo": "2011",
+   "sha256": "9f913ad83b04c513cb2940999058ef5f49166e96abaa99b616e6224dd6011c7c"
+  },
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_resultados/2012.parquet",
+   "bytes": 12937,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_resultados/2012.parquet",
+   "periodo": "2012",
+   "sha256": "66876c3b71f879ed07189466e637ab3fcb7f749f8df42cbe88193ef233dd64e0"
+  },
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_resultados/2013.parquet",
+   "bytes": 12640,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_resultados/2013.parquet",
+   "periodo": "2013",
+   "sha256": "4878486ef7d23649f32b063a8c4c1de9ff52f47ef0fd9dc3baf533ed8832acdc"
+  },
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_resultados/2014.parquet",
+   "bytes": 12722,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_resultados/2014.parquet",
+   "periodo": "2014",
+   "sha256": "99da74c1ef9270a0e00ad5294c8fb33414853ed9eaec0ebca382dc02f6151dde"
+  },
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_resultados/2015.parquet",
+   "bytes": 12705,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_resultados/2015.parquet",
+   "periodo": "2015",
+   "sha256": "a9502e436a03262da058dff9df428b92bcc5a95c3894f737032aca8ed208a165"
+  },
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_resultados/2016.parquet",
+   "bytes": 12692,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_resultados/2016.parquet",
+   "periodo": "2016",
+   "sha256": "3126b997ae24646cf60b84f559f7b2a771f9c18237b3222613e412d4a975c1b5"
+  },
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_resultados/2017.parquet",
+   "bytes": 12560,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_resultados/2017.parquet",
+   "periodo": "2017",
+   "sha256": "5ffd671566258d7f0f6eb3888150d55f40d77698067b2b7f68adaebc9ffd0119"
+  },
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_resultados/2018.parquet",
+   "bytes": 12516,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_resultados/2018.parquet",
+   "periodo": "2018",
+   "sha256": "afeddc10a558579ae55b9db7636d53150f11d181f17844fa3c072a8a3e8d508a"
+  },
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_resultados/2019.parquet",
+   "bytes": 12918,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_resultados/2019.parquet",
+   "periodo": "2019",
+   "sha256": "743167788372caf8062c36ebac55b75848d7a0408ceb01ad05758e18f72d8c8c"
+  },
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_resultados/2020.parquet",
+   "bytes": 13005,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_resultados/2020.parquet",
+   "periodo": "2020",
+   "sha256": "db70a89fad6b75bd4cac3e4950ebf0416ac295ec7e12461a5a2a2e8f3b05a3d6"
+  },
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_resultados/2021.parquet",
+   "bytes": 12862,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_resultados/2021.parquet",
+   "periodo": "2021",
+   "sha256": "764df6fe979c61f7a0d4736b92825dbd1d189f3fd27de3c9198433630d33bc08"
+  },
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_resultados/2022.parquet",
+   "bytes": 12862,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_resultados/2022.parquet",
+   "periodo": "2022",
+   "sha256": "a1def81391cddc5e25323f52ff01f8a23b3ed7e180f44a51cac5b418cc22a5ab"
+  },
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_resultados/2023.parquet",
+   "bytes": 12766,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_resultados/2023.parquet",
+   "periodo": "2023",
+   "sha256": "6f1db0023d9610daddbd5a7e182de459a878320ecfa06be74996ff9731f4148b"
+  },
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_resultados/2024.parquet",
+   "bytes": 13048,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_resultados/2024.parquet",
+   "periodo": "2024",
+   "sha256": "48d8bc7c923be8ddb9f1429ce1c27180c594555babca306126009407e9667c85"
+  },
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_resultados/2025.parquet",
+   "bytes": 12653,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_resultados/2025.parquet",
+   "periodo": "2025",
+   "sha256": "b3e012c89366a5a9ac37ad6fdd0d2bcdfe8be337e1d84057907607dd2938a528"
+  },
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_resultados/2026.parquet",
+   "bytes": 11174,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_resultados/2026.parquet",
+   "periodo": "2026",
+   "sha256": "fd8e1539c233ae706bb8c37d2a794952c8d2295f250c6d50b7c02a92506be179"
+  }
+ ],
+ "total": {
+  "archivos": 18,
+  "bytes": 225853,
+  "filas": 12290
+ },
+ "version": "1.0.0"
+}

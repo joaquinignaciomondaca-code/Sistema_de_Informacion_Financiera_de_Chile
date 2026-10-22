@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "macro_pib_trimestral",
+ "particiones": [
+  {
+   "archivo": "outputs/macro/macro_pib_trimestral.parquet",
+   "bytes": 3112,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_pib_trimestral.parquet",
+   "periodo": "macro_pib_trimestral",
+   "sha256": "838f6132618f21d855f046565bca2caf045f93e7d20098aabb58a17628366fcf"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 3112,
+  "filas": 50
+ },
+ "version": "1.0.0"
+}
