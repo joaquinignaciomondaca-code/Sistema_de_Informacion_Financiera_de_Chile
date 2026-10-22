@@ -1,4 +1,7 @@
-# Contrato de la API pública (v1, en construcción)
+# Contrato de la API pública (v1)
+
+**v1 completa** (2026-10-22): contrato estático, SDK de Python, ejemplos en
+Python/R/JavaScript y test de contrato en CI.
 
 Lo que hay aquí es el **contrato estático** de la API: cinco archivos generados
 desde los datos publicados, versionados junto al código y verificados en cada
