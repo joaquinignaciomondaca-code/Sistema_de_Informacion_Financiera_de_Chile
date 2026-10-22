@@ -131,8 +131,13 @@ setTimeout(async () => {
   check("el motor DuckDB no arranca al cargar",
     window.DuckDBClient && window.DuckDBClient.initPromise === null);
 
-  const tabIds = ["tab-btn-info", "tab-btn-erd", "tab-btn-dict", "tab-btn-data", "tab-btn-sql", "tab-btn-downloads"];
-  check("existen las 6 pestañas", tabIds.every((id) => document.getElementById(id)));
+  const tabIds = ["tab-btn-info", "tab-btn-erd", "tab-btn-dict", "tab-btn-data", "tab-btn-sql",
+    "tab-btn-downloads", "tab-btn-guia"];
+  check("existen las 7 pestañas", tabIds.every((id) => document.getElementById(id)),
+    tabIds.filter((id) => !document.getElementById(id)).join(", "));
+  check("la pestaña Guía arranca oculta y no roba el foco a Información",
+    document.getElementById("guia-container").style.display === "none"
+    && document.getElementById("info-container").style.display !== "none");
   check("la pestaña de normativa está retirada", !document.getElementById("tab-btn-normativa") && !document.getElementById("normativa-container"));
   check("cada pestaña apunta a un panel existente", tabIds.every((id) => {
     const controls = document.getElementById(id).getAttribute("aria-controls");
@@ -462,7 +467,8 @@ setTimeout(async () => {
   // DOI, versión congelada ni una fecha de corte única: la cobertura no es
   // homogénea y cada tabla declara su periodo. Estos checks cuidan esa frontera.
   const creditosAutor = document.getElementById("creditos-autor");
-  const creditosDl = document.getElementById("creditos-descargas");
+  const creditosGuia = document.getElementById("creditos-guia");
+  const creditosPuntero = document.getElementById("creditos-puntero");
   check("autoría: el bloque de autoría se pinta en Información",
     /Quién construye esto/.test(creditosAutor.textContent) && /Joaquín Mondaca/.test(creditosAutor.textContent));
   check("autoría: declara cuándo partió el proyecto",
@@ -472,9 +478,10 @@ setTimeout(async () => {
     && !document.getElementById("cita-descargas"));
   // El chequeo se acota a Información y Descargas: en el Diccionario la palabra
   // «pendiente» aparece describiendo columnas de las fuentes, y eso es legítimo.
-  const textoSitio = creditosAutor.textContent + " " + creditosDl.textContent + " "
+  const textoSitio = creditosAutor.textContent + " " + creditosGuia.textContent + " "
     + document.getElementById("info-container").textContent + " "
-    + document.getElementById("downloads-container").textContent;
+    + document.getElementById("downloads-container").textContent + " "
+    + document.getElementById("guia-container").textContent;
   check("autoría: el sitio no menciona DOI, versión congelada ni snapshot",
     !/\bDOI\b|versión congelada|snapshot/i.test(textoSitio),
     (textoSitio.match(/\bDOI\b|versión congelada|snapshot/gi) || []).join(", "));
@@ -483,15 +490,56 @@ setTimeout(async () => {
     (textoSitio.match(/\[Conjunto de datos\]|@misc\{|\bpendiente\b|en preparación/gi) || []).join(", "));
   check("autoría: no hay una fecha de corte global",
     !/datos al \d{4}-\d{2}/i.test(textoSitio) && !/fecha de corte:/i.test(textoSitio));
-  check("reproducibilidad: el bloque de Descargas sobrevive a que el panel se redibuje",
-    /Reproducibilidad y código/.test(creditosDl.textContent));
-  const archivosRepo = [...document.querySelectorAll("#creditos-descargas .dl-creditos-archivos a")]
+  check("reproducibilidad: el bloque de la Guía sobrevive a que Descargas se redibuje",
+    /Reproducibilidad y código/.test(creditosGuia.textContent));
+  check("descargas: remite a la Guía en vez de repetir la lista de archivos",
+    /Guía/.test(creditosPuntero.textContent) && creditosPuntero.querySelector("[data-ir-guia]"));
+  const archivosRepo = [...document.querySelectorAll("#creditos-guia .dl-creditos-archivos a")]
     .map((a) => a.getAttribute("href"));
   check("reproducibilidad: hay enlaces a los archivos planos", archivosRepo.length > 0,
     archivosRepo.length + " enlaces");
   check("reproducibilidad: todos los archivos enlazados existen en el disco",
     archivosRepo.length > 0 && archivosRepo.every((href) => fs.existsSync(path.join(DOCS, href))),
     archivosRepo.filter((href) => !fs.existsSync(path.join(DOCS, href))).join(", "));
+  // El bloque de reproducibilidad separa dos audiencias: lo que se abre en una
+  // planilla y lo que consume código. Mezclados en una lista, el visitante no
+  // sabía cuál de los seis enlaces le servía.
+  const gruposUso = [...document.querySelectorAll("#creditos-guia .dl-uso")];
+  check("reproducibilidad: separa «para leer» de «para programas y agentes»",
+    gruposUso.length === 2
+    && /Para leer/.test(gruposUso[0].querySelector("h4").textContent)
+    && /Para programas y agentes/.test(gruposUso[1].querySelector("h4").textContent),
+    gruposUso.map((g) => g.querySelector("h4").textContent).join(" | "));
+  check("reproducibilidad: cada archivo declara su formato a la vista",
+    [...document.querySelectorAll("#creditos-guia .dl-uso-item")].length >= 6
+    && [...document.querySelectorAll("#creditos-guia .dl-uso-item")]
+      .every((a) => ["CSV", "JSON", "TXT", "MD"].includes((a.querySelector(".dl-chip").textContent || "").trim())),
+    [...document.querySelectorAll("#creditos-guia .dl-chip")].map((c) => c.textContent).join(" "));
+  const enlacesMaquina = gruposUso.length === 2
+    ? [...gruposUso[1].querySelectorAll("a")].map((a) => a.getAttribute("href")) : [];
+  check("reproducibilidad: el grupo de máquinas incluye el contrato y la guía para agentes",
+    enlacesMaquina.includes("api/v1/catalog.json") && enlacesMaquina.includes("llms.txt"),
+    enlacesMaquina.join(", "));
+  const irAgentes = document.querySelector("#creditos-guia [data-ir-uso]");
+  if (irAgentes) irAgentes.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  check("guía: «SDK y servidor MCP» abre la sub-pestaña de agentes",
+    Boolean(irAgentes)
+    && document.getElementById("guia-container").style.display !== "none"
+    && document.getElementById("uso-panel-agentes").hidden === false
+    && document.getElementById("uso-panel-humanos").hidden === true);
+
+  // El puntero de Descargas tiene que llevar a la Guía, no dejar al visitante
+  // en la misma pestaña: es el enlace que faltaba entre las dos secciones.
+  document.querySelector("#creditos-puntero [data-ir-guia]")
+    .dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  check("descargas: «Abrir la guía» cambia a la pestaña Guía",
+    document.getElementById("guia-container").style.display !== "none"
+    && document.getElementById("downloads-container").style.display === "none");
+  check("la Guía ya no vive dentro de Información",
+    !document.getElementById("info-container").querySelector("#guia-como-usar")
+    && !document.getElementById("downloads-container").querySelector("#guia-como-usar"));
+  window.switchMainTab("info");
+
   check("la web advierte que la base puede tener errores y pide verificar",
     /Puede haber errores/.test(document.querySelector(".info-fuentes").textContent) &&
     /puede contener errores/.test(document.querySelector(".info-note").textContent) &&

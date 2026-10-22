@@ -1,6 +1,6 @@
-# Ejemplos reproducibles · 2026-10-22T07:50:46
+# Ejemplos reproducibles · 2026-10-22T17:33:37
 
-$ python3 -m http.server 35197 --directory docs   # para el ejemplo de JavaScript
+$ python3 -m http.server 59229 --directory docs   # para el ejemplo de JavaScript
 $ /usr/bin/python3 examples/python/01_ffmm_extranjero.py
 OK    python/01_ffmm_extranjero.py · 0.3 s · OK · 2,514 posiciones en 22 países, 2026-09
 $ /usr/bin/python3 examples/python/02_cruce_tres_industrias.py

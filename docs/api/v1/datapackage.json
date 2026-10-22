@@ -3688,7 +3688,7 @@
    "bytes": 541040,
    "description": "30,046 filas de cuentas ESF; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
    "format": "parquet",
-   "hash": "26d58c4a4ab0a84cc26f5f502f56639359220069b14bfbbbd3dbb977de2fbbd9",
+   "hash": "9fc005899b7a9ee5203123378ecdb72bef41c664650b4fc48af1080525a72769",
    "licenses": [
     {
      "name": "Uso condicionado por la fuente",
@@ -3836,7 +3836,7 @@
     ],
     "api_version": "v1",
     "clave_origen": "propuesta",
-    "corte": "2009-03 a 2026-06",
+    "corte": "2009-03 a 2026-09",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
@@ -3850,7 +3850,7 @@
       "bytes": 541040,
       "filas": 30046,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
-      "sha256": "feaf3624de918e370c589862920169f8c03411359c5beac58bd4ec1327d2d0a2"
+      "sha256": "14fe7a3f1d4fa9f80aec6d1c7c77b8ffaa2acc1ccabf329edc42babdaed5851f"
      }
     ],
     "puente": "alias",
@@ -4087,7 +4087,7 @@
    "bytes": 334636,
    "description": "22,368 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
    "format": "parquet",
-   "hash": "2c73f35ac696fddf6a85b78327a19da3dd4304743079cbb68e9ce626180f0778",
+   "hash": "b06d465fad332452b79f068e8783d43bf9a25080bdb38ee22e732099e007047a",
    "licenses": [
     {
      "name": "Uso condicionado por la fuente",
@@ -4238,7 +4238,7 @@
     ],
     "api_version": "v1",
     "clave_origen": "propuesta",
-    "corte": "2009-03 a 2026-06",
+    "corte": "2009-03 a 2026-09",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
@@ -4252,7 +4252,7 @@
       "bytes": 334636,
       "filas": 22368,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
-      "sha256": "f93c336545609812e9af5e44f087790b20de4adb79002c18de79dbb959c580b9"
+      "sha256": "84f35da31f4279c6533664bf068def3de19eae7c584607c92c4296002a34b294"
      }
     ],
     "puente": "alias",
@@ -9193,10 +9193,10 @@
    "title": "fintech.rpsf_maestro"
   },
   {
-   "bytes": 33162,
+   "bytes": 33167,
    "description": "Precio del cobre refinado en dólares por libra: cotización diaria de la Bolsa de Metales de Londres (BML) y valor referencial mensual publicado por el BCCh (la referencia mensual aparece en la fila del primer día de su mes).",
    "format": "parquet",
-   "hash": "c986f921a310e8e692fb0f074c1559c5305af57622f1808b16b11c22d61b74c6",
+   "hash": "1e1bca7087828e53a94eca7a03dc4bacd5aa9cdb660c4e8137c00bcf93047061",
    "licenses": [
     {
      "name": "Uso condicionado por la fuente",
@@ -9245,27 +9245,27 @@
     "aliases": [],
     "api_version": "v1",
     "clave_origen": "declarada",
-    "corte": "2014-01-01 a 2026-10-21",
+    "corte": "2014-01-01 a 2026-10-22",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3260,
+    "filas": 3261,
     "filtro": null,
     "licencia_estado": "pendiente",
     "manifest_id": "macro_cobre",
     "nivel": "contexto",
     "particiones": [
      {
-      "bytes": 33162,
-      "filas": 3260,
+      "bytes": 33167,
+      "filas": 3261,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_cobre.parquet",
-      "sha256": "ff17c032f70a401f227008baf25dec7fd6e64a2a4a58766fb8df4676fe224fbe"
+      "sha256": "e786b28bb1fb33f8a9b0a0b6a1a3abf89b89d04ae78dd31241f1f29d420f2852"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_cobre",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -9277,10 +9277,10 @@
    "title": "macro.cobre"
   },
   {
-   "bytes": 61485,
+   "bytes": 61487,
    "description": "Curva de rendimiento de los bonos soberanos en pesos licitados por el BCCh (Bono Corto Plazo, BCP): tasa de interés de mercado secundario a 2, 5 y 10 años.",
    "format": "parquet",
-   "hash": "7d1def2a619b38252cbd23ac72595573aab1fd8e3cd26235182f26e525dbed99",
+   "hash": "bec6340285a6ceac6b5d5b493624bd78d266b10cf6d78abee804e7ca748cf73c",
    "licenses": [
     {
      "name": "Uso condicionado por la fuente",
@@ -9335,27 +9335,27 @@
     "aliases": [],
     "api_version": "v1",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-10-19",
+    "corte": "2014-01-02 a 2026-10-20",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3171,
+    "filas": 3172,
     "filtro": null,
     "licencia_estado": "pendiente",
     "manifest_id": "macro_curva_bonos_pesos",
     "nivel": "contexto",
     "particiones": [
      {
-      "bytes": 61485,
-      "filas": 3171,
+      "bytes": 61487,
+      "filas": 3172,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_curva_bonos_pesos.parquet",
-      "sha256": "79286b5f06ac1e39af77b85cfe05edd6c4b6f3601db64aa5b0e047c783bb6e86"
+      "sha256": "f3a8b40d20a1d9794d2758219e279beb6c5edcb355889dc95f1cc6476be86bf8"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_curva_bonos_pesos",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -9367,10 +9367,10 @@
    "title": "macro.curva_bonos_pesos"
   },
   {
-   "bytes": 94177,
+   "bytes": 94190,
    "description": "Curva de rendimiento de los bonos soberanos en UF (BCU/BTU): tasa de interés de mercado secundario a 1, 2, 5, 10, 20 y 30 años.",
    "format": "parquet",
-   "hash": "265c34904b81606ad8fc31ad54493aa7ee8b807c11681b96a19ea687c5440cc0",
+   "hash": "0d4696067b56ce118373bc6ecf570bff101678b3b5121da393acf2efeab8ea03",
    "licenses": [
     {
      "name": "Uso condicionado por la fuente",
@@ -9443,27 +9443,27 @@
     "aliases": [],
     "api_version": "v1",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-10-19",
+    "corte": "2014-01-02 a 2026-10-20",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3173,
+    "filas": 3174,
     "filtro": null,
     "licencia_estado": "pendiente",
     "manifest_id": "macro_curva_bonos_uf",
     "nivel": "contexto",
     "particiones": [
      {
-      "bytes": 94177,
-      "filas": 3173,
+      "bytes": 94190,
+      "filas": 3174,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_curva_bonos_uf.parquet",
-      "sha256": "94a1acf23475991870a680bc3f1649ea5f898e7943bbbeb8e73e6449587ff093"
+      "sha256": "1f4372a5bef20170ef5e9006b1113a3aa8b02c848e73f523cad8c0c6a252edc7"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_curva_bonos_uf",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -9541,7 +9541,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_deuda_publica_pct_pib",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -9553,10 +9553,10 @@
    "title": "macro.deuda_publica_pct_pib"
   },
   {
-   "bytes": 24700,
+   "bytes": 24704,
    "description": "Dólar observado: tipo de cambio nominal del dólar de los Estados Unidos en pesos chilenos (CLP por USD), según el Banco Central.",
    "format": "parquet",
-   "hash": "c2e797dfae71885ff92381d62ac4f5e845738ef2e20e08311541170b76fed20b",
+   "hash": "79d7ddd9220e328508e9bbbda9ed0efb7cbb96eee3190f0db294219da4ccfcfc",
    "licenses": [
     {
      "name": "Uso condicionado por la fuente",
@@ -9599,27 +9599,27 @@
     "aliases": [],
     "api_version": "v1",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-10-21",
+    "corte": "2014-01-02 a 2026-10-22",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3188,
+    "filas": 3189,
     "filtro": null,
     "licencia_estado": "pendiente",
     "manifest_id": "macro_dolar_observado",
     "nivel": "contexto",
     "particiones": [
      {
-      "bytes": 24700,
-      "filas": 3188,
+      "bytes": 24704,
+      "filas": 3189,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_dolar_observado.parquet",
-      "sha256": "5309a2e8f36fe44b9c5926b52a638ae33c3318d5fa3e7647f050b978d0261adf"
+      "sha256": "48ec273ff2002935aa218bc72be5d0810166b4d3c52dcdcdc55ca059f0eecc71"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_dolar_observado",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -9631,10 +9631,10 @@
    "title": "macro.dolar_observado"
   },
   {
-   "bytes": 24521,
+   "bytes": 24525,
    "description": "Euro observado: tipo de cambio nominal del euro en pesos chilenos (CLP por EUR), según el Banco Central.",
    "format": "parquet",
-   "hash": "1f82e2c3fd39f62710ec1f113df6e2f51b5b44b98d968983878e8642507cb749",
+   "hash": "6d75c8cd17bb0e3c5aaf5ee4a27836af7ae9bf5e73de880b5dc31a7abcb1a61b",
    "licenses": [
     {
      "name": "Uso condicionado por la fuente",
@@ -9677,27 +9677,27 @@
     "aliases": [],
     "api_version": "v1",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-10-21",
+    "corte": "2014-01-02 a 2026-10-22",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3188,
+    "filas": 3189,
     "filtro": null,
     "licencia_estado": "pendiente",
     "manifest_id": "macro_euro_observado",
     "nivel": "contexto",
     "particiones": [
      {
-      "bytes": 24521,
-      "filas": 3188,
+      "bytes": 24525,
+      "filas": 3189,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_euro_observado.parquet",
-      "sha256": "3a8e8a4552e45f870b0b171f2bb1d36765f4f91a7360419a768787fb2c59e302"
+      "sha256": "f358a84d4e61381ad7145316d978ca41b3d8275295f2d1f1f4b97bd2bb51885c"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_euro_observado",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -9781,7 +9781,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_expectativas_inflacion",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -9793,10 +9793,10 @@
    "title": "macro.expectativas_inflacion"
   },
   {
-   "bytes": 5251,
+   "bytes": 5253,
    "description": "Evolución diaria de la Encuesta de Operadores Financieros (EOF) del Banco Central: expectativa de inflación (variación del IPC) y de TPM para los 12 meses siguientes, en porcentaje.",
    "format": "parquet",
-   "hash": "2e5ee71de4c99191bfafec9f5d47819b227a1c81484a5f1be9621896af09d139",
+   "hash": "126a4acd5d66955dacdf84f058894a4c0d64a58490ebf2f863428f814d08cee9",
    "licenses": [
     {
      "name": "Uso condicionado por la fuente",
@@ -9845,27 +9845,27 @@
     "aliases": [],
     "api_version": "v1",
     "clave_origen": "declarada",
-    "corte": "2014-01-07 a 2026-09-24",
+    "corte": "2014-01-07 a 2026-10-22",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 237,
+    "filas": 238,
     "filtro": null,
     "licencia_estado": "pendiente",
     "manifest_id": "macro_expectativas_operadores",
     "nivel": "contexto",
     "particiones": [
      {
-      "bytes": 5251,
-      "filas": 237,
+      "bytes": 5253,
+      "filas": 238,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_expectativas_operadores.parquet",
-      "sha256": "d2193e285eeb156c9fbdda8e9efecbbf115f0baac83471ca0ee0084eaeda2a7f"
+      "sha256": "aedfba570ffda8b711d4901650abccf30242f54355aa6f8e96bf9f1b63b27009"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_expectativas_operadores",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -9949,7 +9949,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_expectativas_tpm",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -10051,7 +10051,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_imacec",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -10063,10 +10063,10 @@
    "title": "macro.imacec"
   },
   {
-   "bytes": 36812,
+   "bytes": 36810,
    "description": "Inflación implícita de las curvas soberanas (breakeven): diferencia entre el rendimiento del bono en pesos y el del bono en UF del mismo plazo. Calculada por SIF a partir de las curvas publicadas por el BCCh.",
    "format": "parquet",
-   "hash": "043fe79e84e7b11d097c214e6e9930fdffbd2975364f97e60a202d2368bec2d7",
+   "hash": "ee86b3ce1165b89f3df41d0cf1118f8dddf73b422a5fad6163834d3db1dc2157",
    "licenses": [
     {
      "name": "Uso condicionado por la fuente",
@@ -10115,27 +10115,27 @@
     "aliases": [],
     "api_version": "v1",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-10-19",
+    "corte": "2014-01-02 a 2026-10-20",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3077,
+    "filas": 3078,
     "filtro": null,
     "licencia_estado": "pendiente",
     "manifest_id": "macro_inflacion_implicita",
     "nivel": "contexto",
     "particiones": [
      {
-      "bytes": 36812,
-      "filas": 3077,
+      "bytes": 36810,
+      "filas": 3078,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_inflacion_implicita.parquet",
-      "sha256": "3a3e9e0f52625494a12b5905eb28944b65cf7c78f9133e961c47aa2f75484733"
+      "sha256": "383755a71474cb27383d4385f0ef78c9afb56e3b7a5ad9a51bb825dfcdf14a77"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_inflacion_implicita",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -10225,7 +10225,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_inflacion_ipc",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -10321,7 +10321,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_mercado_laboral",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -10333,10 +10333,10 @@
    "title": "macro.mercado_laboral"
   },
   {
-   "bytes": 46850,
+   "bytes": 46863,
    "description": "Precios de los metales preciosos en dólares por onza troy: oro y plata, según el Banco Central.",
    "format": "parquet",
-   "hash": "e534c061ca69d74a07c1adf01c298ae5fdc4dc3292cae993053d52549d8cc27c",
+   "hash": "c3a7c0b765a9b2554178e785938ff232d725aa1f8d361cb51e55d07b9b2a9155",
    "licenses": [
     {
      "name": "Uso condicionado por la fuente",
@@ -10385,27 +10385,27 @@
     "aliases": [],
     "api_version": "v1",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-10-21",
+    "corte": "2014-01-02 a 2026-10-22",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3188,
+    "filas": 3189,
     "filtro": null,
     "licencia_estado": "pendiente",
     "manifest_id": "macro_metales_preciosos",
     "nivel": "contexto",
     "particiones": [
      {
-      "bytes": 46850,
-      "filas": 3188,
+      "bytes": 46863,
+      "filas": 3189,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_metales_preciosos.parquet",
-      "sha256": "ab0f4309faae61db52f2dd13a58cff5446074fbae9ef7a624a300c26e4d3fc59"
+      "sha256": "8b9e55073570870bcb4fa061b8ce0777a8d6eaf79d62c9825378260257c974bf"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_metales_preciosos",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -10483,7 +10483,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_pib_trimestral",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -10561,7 +10561,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_reservas_internacionales",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -10573,10 +10573,10 @@
    "title": "macro.reservas_internacionales"
   },
   {
-   "bytes": 10897,
+   "bytes": 10896,
    "description": "Catálogo de las series del Banco Central que alimentan las tablas macro: código SIETE, nombre, grupo, frecuencia, unidad, título oficial, cobertura y estado.",
    "format": "parquet",
-   "hash": "8a55be1afcfa542f1cf419c22f0a0927fdcc656ece06a849b2d957643a683b65",
+   "hash": "918b48053a71e42c92de2435d6f3721b32b9b26d96d56c765b0430cb8771c7e4",
    "licenses": [
     {
      "name": "Uso condicionado por la fuente",
@@ -10673,7 +10673,7 @@
     "aliases": [],
     "api_version": "v1",
     "clave_origen": "declarada",
-    "corte": "2014-01-01 a 2026-10-21",
+    "corte": "2014-01-01 a 2026-10-22",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": "2026-10-21",
@@ -10684,16 +10684,16 @@
     "nivel": "contexto",
     "particiones": [
      {
-      "bytes": 10897,
+      "bytes": 10896,
       "filas": 51,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_series_catalogo.parquet",
-      "sha256": "bfed83b805117b5122a3a8085ec51213f1624177c300aeefcda3f7d178da43b4"
+      "sha256": "472bf789dbb785f65195e85308f0fd32eb6b953ce5410dfe5f40de5bd67504bf"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_series_catalogo",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -10705,10 +10705,10 @@
    "title": "macro.series_catalogo"
   },
   {
-   "bytes": 79248,
+   "bytes": 79260,
    "description": "Tasa de swap promedio de cámara (SPC) del Banco Central: contratos en pesos a 90, 180 y 360 días y a 2 años, y contrato en UF a 1 año, en porcentaje.",
    "format": "parquet",
-   "hash": "5de295916ebfb6b5abd2252f3d98af87a456df0a9dcecd5bc7cb6bf784d682c5",
+   "hash": "34a3171c4810598e07e621c49b095e83e52010a0852b7f50004b91c3b474bff2",
    "licenses": [
     {
      "name": "Uso condicionado por la fuente",
@@ -10775,27 +10775,27 @@
     "aliases": [],
     "api_version": "v1",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-10-20",
+    "corte": "2014-01-02 a 2026-10-21",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3202,
+    "filas": 3203,
     "filtro": null,
     "licencia_estado": "pendiente",
     "manifest_id": "macro_swaps_camara",
     "nivel": "contexto",
     "particiones": [
      {
-      "bytes": 79248,
-      "filas": 3202,
+      "bytes": 79260,
+      "filas": 3203,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_swaps_camara.parquet",
-      "sha256": "68bac2f24a39e05bd5e76dbb3876f0812963b96cb5f23666937b68ef15630b93"
+      "sha256": "d66838966946a48f6b9f6b2cbafd1e28db5b723b261ff72e8d03f54e271997f6"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_swaps_camara",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -10873,7 +10873,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_tasa_referencia_fed",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -10885,10 +10885,10 @@
    "title": "macro.tasa_referencia_fed"
   },
   {
-   "bytes": 13680,
+   "bytes": 13683,
    "description": "Tasas de referencia de corto plazo de Chile: Tasa de Política Monetaria (TPM) del Banco Central y tasa promedio transada en el mercado interbancario (TIB), en porcentaje.",
    "format": "parquet",
-   "hash": "e803f792caea7701a9c5c464157cf420d2fcd4522c20cda7252d1d8f686cedb0",
+   "hash": "4f7ac6155c508a169e198d0352aa36028ed98f3e1dbabe7a050e8e52f79c3385",
    "licenses": [
     {
      "name": "Uso condicionado por la fuente",
@@ -10937,27 +10937,27 @@
     "aliases": [],
     "api_version": "v1",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-10-21",
+    "corte": "2014-01-02 a 2026-10-22",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3189,
+    "filas": 3190,
     "filtro": null,
     "licencia_estado": "pendiente",
     "manifest_id": "macro_tasas_corto_plazo",
     "nivel": "contexto",
     "particiones": [
      {
-      "bytes": 13680,
-      "filas": 3189,
+      "bytes": 13683,
+      "filas": 3190,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_tasas_corto_plazo.parquet",
-      "sha256": "03df5fa098f1c2ca61de63ad3666b9d23f577a8718363eeb8b894860505442f1"
+      "sha256": "c98d38c1628921cf549908bbe0eac550ae1861f78f24db1fef9da98ee2776d82"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_tasas_corto_plazo",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -10969,10 +10969,10 @@
    "title": "macro.tasas_corto_plazo"
   },
   {
-   "bytes": 42447,
+   "bytes": 42452,
    "description": "Índices de tipo de cambio nominal multilateral del Banco Central: TCM, TCM-5 (monedas de Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro) y TCM-X.",
    "format": "parquet",
-   "hash": "b018b20d3dc803ec3b4030d20fd42ae0742606963bbd68d3309bfe32000faecb",
+   "hash": "ee21a7418ca18b471e67731828ae3036e5558efc96591bee33e14f39d19388b0",
    "licenses": [
     {
      "name": "Uso condicionado por la fuente",
@@ -11027,27 +11027,27 @@
     "aliases": [],
     "api_version": "v1",
     "clave_origen": "declarada",
-    "corte": "2014-01-02 a 2026-10-21",
+    "corte": "2014-01-02 a 2026-10-22",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 3188,
+    "filas": 3189,
     "filtro": null,
     "licencia_estado": "pendiente",
     "manifest_id": "macro_tipo_cambio_multilateral",
     "nivel": "contexto",
     "particiones": [
      {
-      "bytes": 42447,
-      "filas": 3188,
+      "bytes": 42452,
+      "filas": 3189,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_tipo_cambio_multilateral.parquet",
-      "sha256": "1d646850f16d7ff6179245b98c604f0e9185f065a5bfcf6b9e38c0d9061357fe"
+      "sha256": "40e66fc067ffadd672f08cf6dc974ebc7fa961afe7de4a3331538fa69ff79f9f"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_tipo_cambio_multilateral",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -11131,7 +11131,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_tipo_cambio_real",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -11143,10 +11143,10 @@
    "title": "macro.tipo_cambio_real"
   },
   {
-   "bytes": 35358,
+   "bytes": 35365,
    "description": "Valor diario de la Unidad de Fomento (UF) en pesos chilenos, según el Banco Central.",
    "format": "parquet",
-   "hash": "879631dfb84e8af6f4fdea9c133e1dbbdd330e0e9766da02333985206b573ee7",
+   "hash": "b6b184e4e87803d61cc232f0261dc773d250b4245cf4b636c6082b8e202fbf30",
    "licenses": [
     {
      "name": "Uso condicionado por la fuente",
@@ -11189,27 +11189,27 @@
     "aliases": [],
     "api_version": "v1",
     "clave_origen": "declarada",
-    "corte": "2014-01-01 a 2026-10-21",
+    "corte": "2014-01-01 a 2026-10-22",
     "deriva_de": null,
     "estado": "publicado",
     "extracted_at": null,
-    "filas": 4677,
+    "filas": 4678,
     "filtro": null,
     "licencia_estado": "pendiente",
     "manifest_id": "macro_uf",
     "nivel": "contexto",
     "particiones": [
      {
-      "bytes": 35358,
-      "filas": 4677,
+      "bytes": 35365,
+      "filas": 4678,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_uf.parquet",
-      "sha256": "29bd04e5d32f8d2d8a0275fda175d53f1d0dfc3736c9ac3fe39c1e934b4be6bf"
+      "sha256": "82161d0c36bc9793751b8c98c28a45d196e11d9c7a1d69d115ca8961c87b4c4c"
      }
     ],
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_uf",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -11287,7 +11287,7 @@
     "puente": "directo",
     "sector": "macro",
     "sql_view": "macro_utm",
-    "ultima_actualizacion": "2026-10-21"
+    "ultima_actualizacion": "2026-10-22"
    },
    "sources": [
     {
@@ -19017,9 +19017,9 @@
    "licencia": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md",
    "reconciliacion": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv"
   },
-  "data_release": "2026-10-22.fd12b283f0c1",
+  "data_release": "2026-10-22.7e99ccbc2a82",
   "espejo": "https://sistema-de-informacion-financiera-de-chile-docs.vercel.app",
-  "filas_unicas": 19777492,
+  "filas_unicas": 19777504,
   "identificador": {
    "aliases": "los nombres heredados se publican por recurso en sif.aliases y no son identificadores",
    "regla": "el name del recurso es el nombre del objeto del contrato y el de su vista SQL (D2)",

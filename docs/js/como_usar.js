@@ -44,14 +44,27 @@
     });
   });
 
-  /* Enlace directo: #como-usar-agentes abre esa pestaña. Sirve para mandar a
-   * alguien (o a un agente) exactamente a las instrucciones que necesita. */
+  /* Enlace directo: #como-usar-agentes abre la Guía en esa sub-pestaña. Sirve
+   * para mandar a alguien (o a un agente) exactamente a las instrucciones que
+   * necesita, sin obligarle a buscar la pestaña. */
   var hash = (window.location.hash || "").replace("#", "");
   var pedido = hash.indexOf("como-usar-") === 0 ? hash.slice("como-usar-".length) : null;
   var inicial = botones.findIndex(function (boton) {
     return boton.getAttribute("data-uso-tab") === pedido;
   });
   activar(inicial >= 0 ? inicial : 0, false);
+
+  /* El cambio de pestaña se hace al final de la carga, no aquí: `switchMainTab`
+   * lo define el script en línea de index.html y, según el orden en que el
+   * navegador ejecute los diferidos, puede no existir todavía. Al llegar a
+   * `load` existe seguro, y este enlace gana a la pestaña recordada. */
+  if (pedido || hash === "guia") {
+    var entrar = function () {
+      if (typeof window.switchMainTab === "function") window.switchMainTab("guia");
+    };
+    if (document.readyState === "complete") entrar();
+    else window.addEventListener("load", entrar);
+  }
 
   window.SIFComoUsar = { activar: activar };
 })();

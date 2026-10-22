@@ -8,7 +8,7 @@
  *   3. Reflejar el estado del motor DuckDB en la pestaña "Consultas SQL".
  *   4. Puente hacia la pestaña "Descargas": cualquier vista del sistema puede
  *      pedir que se abra con su tabla ya seleccionada.
- *   5. Atajos de teclado: Alt+1..6 cambia de pestaña, "/" enfoca la búsqueda.
+ *   5. Atajos de teclado: Alt+1..7 cambia de pestaña, "/" enfoca la búsqueda.
  *
  * No consulta datos, no publica nada y no modifica los pipelines.
  */
@@ -16,7 +16,7 @@
   "use strict";
 
   const TAB_KEY = "sif.ui.tab";
-  const VALID_TABS = ["info", "erd", "dict", "data", "sql", "downloads"];
+  const VALID_TABS = ["info", "erd", "dict", "data", "sql", "downloads", "guia"];
   let toastHost = null;
 
   // Pestaña inicial: un enlace compartido (#sql=...) siempre abre el terminal;
@@ -199,7 +199,7 @@
       const el = event.target;
       const typing = el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.isContentEditable);
 
-      // Alt+1..6: cambiar de pestaña sin tocar el mouse.
+      // Alt+1..7: cambiar de pestaña sin tocar el mouse.
       if (event.altKey && !event.ctrlKey && !event.metaKey && !typing) {
         const index = parseInt(event.key, 10);
         if (index >= 1 && index <= VALID_TABS.length) {
