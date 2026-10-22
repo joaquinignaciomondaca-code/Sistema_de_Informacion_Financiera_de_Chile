@@ -1,0 +1,190 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "estado-de-resultados-completo-de-banchile-agf-ej-ef9a3d",
+ "titulo": "Estado de resultados completo de Banchile AGF, ejercicio 2025",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "tipo_balance",
+  "estado_financiero",
+  "orden",
+  "cuenta",
+  "valor"
+ ],
+ "filas": 24,
+ "truncado": false,
+ "datos": [
+  [
+   "individual",
+   "ERFG",
+   1,
+   "Ingresos de actividades ordinarias",
+   173494296000
+  ],
+  [
+   "individual",
+   "ERFG",
+   2,
+   "Costo de ventas",
+   627389000
+  ],
+  [
+   "individual",
+   "ERFG",
+   3,
+   "Ganancia bruta",
+   172866907000
+  ],
+  [
+   "individual",
+   "ERFG",
+   4,
+   "Gastos de administración",
+   109451151000
+  ],
+  [
+   "individual",
+   "ERFG",
+   5,
+   "Otras ganancias (pérdidas)",
+   -68713000
+  ],
+  [
+   "individual",
+   "ERFG",
+   6,
+   "Ganancias (pérdidas) de actividades operacionales",
+   63347043000
+  ],
+  [
+   "individual",
+   "ERFG",
+   7,
+   "Ingresos financieros",
+   2703565000
+  ],
+  [
+   "individual",
+   "ERFG",
+   8,
+   "Costos financieros",
+   811369000
+  ],
+  [
+   "individual",
+   "ERFG",
+   9,
+   "Deterioro de valor de ganancias y reversión de pérdidas por deterioro de valor (pérdidas por deterioro de valor) determinado de acuerdo con la NIIF 9",
+   855392000
+  ],
+  [
+   "individual",
+   "ERFG",
+   10,
+   "Ganancias (pérdidas) de cambio en moneda extranjera",
+   -222432000
+  ],
+  [
+   "individual",
+   "ERFG",
+   11,
+   "Resultados por unidades de reajuste",
+   181710000
+  ],
+  [
+   "individual",
+   "ERFG",
+   12,
+   "Ganancia (pérdida), antes de impuestos",
+   64343125000
+  ],
+  [
+   "individual",
+   "ERFG",
+   13,
+   "Gasto por impuestos a las ganancias",
+   16965815000
+  ],
+  [
+   "individual",
+   "ERFG",
+   14,
+   "Ganancia (pérdida) procedente de operaciones continuadas",
+   47377310000
+  ],
+  [
+   "individual",
+   "ERFG",
+   15,
+   "Ganancia (pérdida)",
+   47377310000
+  ],
+  [
+   "individual",
+   "ERFG",
+   16,
+   "Ganancia (pérdida), atribuible a los propietarios de la controladora",
+   47377310000
+  ],
+  [
+   "individual",
+   "ERFG",
+   17,
+   "Ganancia (pérdida)",
+   47377310000
+  ],
+  [
+   "individual",
+   "ERFG",
+   18,
+   "Ganancia (pérdida) por acción básica en operaciones continuadas",
+   null
+  ],
+  [
+   "individual",
+   "ERFG",
+   19,
+   "Ganancia (pérdida) por acción básica",
+   null
+  ],
+  [
+   "individual",
+   "ERFG",
+   20,
+   "Ganancias (pérdida) diluida por acción procedente de operaciones continuadas",
+   null
+  ],
+  [
+   "individual",
+   "ERFG",
+   21,
+   "Ganancias (pérdida) diluida por acción",
+   null
+  ],
+  [
+   "individual",
+   "ERI",
+   1,
+   "Ganancia (pérdida)",
+   47377310000
+  ],
+  [
+   "individual",
+   "ERI",
+   2,
+   "Resultado integral total",
+   47377310000
+  ],
+  [
+   "individual",
+   "ERI",
+   3,
+   "Resultado integral atribuible a los propietarios de la controladora",
+   47377310000
+  ]
+ ],
+ "sql": "SELECT tipo_balance, estado_financiero, orden, cuenta, valor FROM agf_resultados WHERE rut = '96767630' AND periodo = '2025-12' ORDER BY tipo_balance, estado_financiero, orden;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

@@ -1,0 +1,120 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "encuesta-de-operadores-financieros-ultimas-20-en-aa63e2",
+ "titulo": "Encuesta de Operadores Financieros: últimas 20 encuestas",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "fecha",
+  "expectativa_inflacion_12_meses_pct",
+  "expectativa_tpm_12_meses_pct"
+ ],
+ "filas": 20,
+ "truncado": false,
+ "datos": [
+  [
+   "2025-07-24",
+   3.3,
+   4.25
+  ],
+  [
+   "2025-08-18",
+   3.05,
+   4.25
+  ],
+  [
+   "2025-09-04",
+   3.0,
+   4.25
+  ],
+  [
+   "2025-09-30",
+   3.2,
+   4.25
+  ],
+  [
+   "2025-10-23",
+   3.1,
+   4.25
+  ],
+  [
+   "2025-11-17",
+   3.1,
+   4.25
+  ],
+  [
+   "2025-12-11",
+   3.0,
+   4.25
+  ],
+  [
+   "2026-01-07",
+   2.9,
+   4.25
+  ],
+  [
+   "2026-01-22",
+   2.9,
+   4.25
+  ],
+  [
+   "2026-02-11",
+   2.9,
+   4.25
+  ],
+  [
+   "2026-03-19",
+   3.5,
+   4.25
+  ],
+  [
+   "2026-04-08",
+   4.9,
+   4.625
+  ],
+  [
+   "2026-04-23",
+   4.0,
+   4.5
+  ],
+  [
+   "2026-05-14",
+   3.4,
+   4.5
+  ],
+  [
+   "2026-06-11",
+   3.1,
+   4.5
+  ],
+  [
+   "2026-07-02",
+   2.6,
+   4.25
+  ],
+  [
+   "2026-07-23",
+   3.0,
+   4.5
+  ],
+  [
+   "2026-08-12",
+   3.2,
+   4.5
+  ],
+  [
+   "2026-09-03",
+   3.3,
+   4.5
+  ],
+  [
+   "2026-09-24",
+   3.5,
+   4.5
+  ]
+ ],
+ "sql": "SELECT fecha, expectativa_inflacion_12_meses_pct, expectativa_tpm_12_meses_pct FROM macro_expectativas_operadores ORDER BY fecha DESC LIMIT 20;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

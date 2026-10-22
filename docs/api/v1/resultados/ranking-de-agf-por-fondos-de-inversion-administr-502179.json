@@ -1,0 +1,111 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "ranking-de-agf-por-fondos-de-inversion-administr-502179",
+ "titulo": "Ranking de AGF por Fondos de Inversión Administrados",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "razon_social",
+  "grupo_controlador",
+  "fondos_inversion_administrados",
+  "cmf_url"
+ ],
+ "filas": 15,
+ "truncado": false,
+ "datos": [
+  [
+   "AMERIS CAPITAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Ameris Capital",
+   51,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=76503273&tipoentidad=RGAMA&vig=VI&pestania=1"
+  ],
+  [
+   "BANCHILE ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Banco de Chile / Quiñenco",
+   41,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=96767630&tipoentidad=RACRT&vig=VI&pestania=1"
+  ],
+  [
+   "BCI ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   null,
+   26,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=96530900&tipoentidad=RGAGF&vig=VI&control=svs&pestania=1"
+  ],
+  [
+   "BICE INVERSIONES ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Grupo BICE / Matte",
+   68,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=96514410&tipoentidad=RGAGF&vig=VI&pestania=1"
+  ],
+  [
+   "BTG PACTUAL CHILE S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "BTG Pactual",
+   58,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=96966250&tipoentidad=RGAMA&vig=VI&pestania=1"
+  ],
+  [
+   "CREDICORP CAPITAL ASSET MANAGEMENT S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "Credicorp Capital",
+   40,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=99549940&tipoentidad=RGAGF&vig=VI&pestania=1"
+  ],
+  [
+   "FALCOM ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Independiente / No Bancario",
+   26,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=76507811&tipoentidad=RACRT&vig=VI&pestania=1"
+  ],
+  [
+   "HMC S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "Independiente / No Bancario",
+   35,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=76034728&tipoentidad=RACRT&vig=VI&pestania=1"
+  ],
+  [
+   "LARRAIN VIAL ACTIVOS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "Grupo LarrainVial",
+   73,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=76081215&tipoentidad=RGAGF&vig=VI&pestania=1"
+  ],
+  [
+   "MBI ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Independiente / No Bancario",
+   27,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=99543100&tipoentidad=RACRT&vig=VI&pestania=1"
+  ],
+  [
+   "MONEDA PATRIA S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "Moneda Asset Management / Patria",
+   53,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=96684990&tipoentidad=RACRT&vig=VI&pestania=1"
+  ],
+  [
+   "PICTON ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Independiente / No Bancario",
+   54,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=76202136&tipoentidad=RGAMA&vig=VI&pestania=1"
+  ],
+  [
+   "SINGULAR ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Independiente / No Bancario",
+   34,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=76917333&tipoentidad=RACRT&vig=VI&pestania=1"
+  ],
+  [
+   "VINCI COMPASS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "Compass Group",
+   78,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=96804330&tipoentidad=RACRT&vig=VI&pestania=1"
+  ],
+  [
+   "VOLCOMCAPITAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Independiente / No Bancario",
+   56,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=76493189&tipoentidad=RACRT&vig=VI&pestania=1"
+  ]
+ ],
+ "sql": "SELECT razon_social, grupo_controlador, fondos_inversion_administrados, cmf_url FROM agf_lista_entidades WHERE fondos_inversion_administrados > 0 ORDER BY fondos_inversion_administrados DESC LIMIT 15;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

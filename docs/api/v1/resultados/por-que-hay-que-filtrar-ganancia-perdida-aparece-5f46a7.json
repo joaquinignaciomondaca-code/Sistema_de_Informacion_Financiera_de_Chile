@@ -1,0 +1,51 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "por-que-hay-que-filtrar-ganancia-perdida-aparece-5f46a7",
+ "titulo": "Por qué hay que filtrar: «Ganancia (pérdida)» aparece varias veces",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "estado_financiero",
+  "repeticion",
+  "filas",
+  "entidades"
+ ],
+ "filas": 5,
+ "truncado": false,
+ "datos": [
+  [
+   "ERFG",
+   1,
+   7,
+   7
+  ],
+  [
+   "ERFG",
+   2,
+   7,
+   7
+  ],
+  [
+   "ERI",
+   1,
+   9,
+   9
+  ],
+  [
+   "ERNG",
+   1,
+   2,
+   2
+  ],
+  [
+   "ERNG",
+   2,
+   2,
+   2
+  ]
+ ],
+ "sql": "SELECT estado_financiero, repeticion, count(*) AS filas, count(DISTINCT rut) AS entidades FROM securitizadoras_resultados WHERE periodo = '2025-12' AND cuenta = 'Ganancia (pérdida)' GROUP BY ALL ORDER BY estado_financiero, repeticion;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

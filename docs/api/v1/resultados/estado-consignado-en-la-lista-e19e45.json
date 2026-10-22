@@ -1,0 +1,33 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "estado-consignado-en-la-lista-e19e45",
+ "titulo": "Estado consignado en la lista",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "vigente",
+  "estado",
+  "total_entidades",
+  "instituciones"
+ ],
+ "filas": 2,
+ "truncado": false,
+ "datos": [
+  [
+   0,
+   "Histórico / Cancelado",
+   6,
+   "CONCRECES LEASING, MERCANTIL, VIVE LEASING (HLC), INTERFACTOR, LATAM TRADE, SMB FACTORING"
+  ],
+  [
+   1,
+   "Activo",
+   26,
+   "AUTOFIN, BANDESARROLLO LEASING, BCI FACTORING, BICE FACTORING, FINANCIA CAPITAL, COVAL, EUROCAPITAL, FACTORING SECURITY, FACTOTAL, FORUM, GAMA, GM FINANCIAL, GLOBAL SOLUCIONES, INCOFIN, PENTA FINANCIERO, PRIMUS CAPITAL, SANTANDER CONSUMER, SCOTIA AZUL LEASING, PROGRESO, ST CAPITAL, TANNER, UNIDAD LEASING, LEASING URBANO S.A., CASAPRONTA LEASING S.A., AUSTRAL LEASING HABITACIONAL S.A., VIVEPROPIO LEASING S.A."
+  ]
+ ],
+ "sql": "SELECT vigente, estado, count(*) as total_entidades, string_agg(nombre_fantasia, ', ') as instituciones FROM factoring_leasing_lista_entidades GROUP BY vigente, estado ORDER BY vigente DESC;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

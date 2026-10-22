@@ -1,0 +1,120 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "mayores-patrimonios-en-pesos-ultimo-cierre-mm-4df30e",
+ "titulo": "Mayores patrimonios en pesos, último cierre (MM$)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "run_fondo",
+  "nombre_fondo",
+  "patrimonio_mm"
+ ],
+ "filas": 20,
+ "truncado": false,
+ "datos": [
+  [
+   "10725",
+   "CFIATELCO-E",
+   485358.7
+  ],
+  [
+   "7002",
+   "CFINCIMENT",
+   362316.0
+  ],
+  [
+   "7010",
+   "Fondo Pionero",
+   723386.0
+  ],
+  [
+   "7014",
+   "FONDO DE INVERSIÓN RENTAS INMOBILIARIAS",
+   637967.8
+  ],
+  [
+   "7031",
+   "CFICGSCH-I",
+   316588.1
+  ],
+  [
+   "7099",
+   "Fondo Moneda Renta CLP",
+   999630.3
+  ],
+  [
+   "7184",
+   "CFIBPDCCHA",
+   296985.1
+  ],
+  [
+   "7210",
+   "FONDO DE INVERSION LARRAINVIAL DEUDA CHILE",
+   346275.8
+  ],
+  [
+   "7224",
+   "CFIBTGRCA",
+   363996.6
+  ],
+  [
+   "9069",
+   "FONDO DE INVERSIÓN ASSET RENTAS RESIDENCIALES",
+   320403.0
+  ],
+  [
+   "9082",
+   "FONDO DE INVERSION ACTIVA DEUDA HIPOTECARIA CON SUBSIDIO HABITACIONAL II",
+   346328.5
+  ],
+  [
+   "9194",
+   "CFIFALCTAC",
+   403770.8
+  ],
+  [
+   "9202",
+   "MBI DEUDA TOTAL FONDO DE INVERSION",
+   262666.2
+  ],
+  [
+   "9212",
+   "FONDO MONEDA DEUDA CHILE FONDO DE INVERSION",
+   527039.1
+  ],
+  [
+   "9252",
+   "FI BANCHILE DEUDA CHILENA",
+   1011922.9
+  ],
+  [
+   "9289",
+   "CFIFALCFIW",
+   561570.9
+  ],
+  [
+   "9332",
+   "FI BANCHILE MARKETPLUS GLOBAL",
+   299581.8
+  ],
+  [
+   "9368",
+   "CFIBPBIM-E",
+   496383.3
+  ],
+  [
+   "9705",
+   "FONDO DE INVERSIÓN ETF SINGULAR CHILE CORPORATIVO",
+   289983.3
+  ],
+  [
+   "9743",
+   "FONDO DE INVERSION CMB-LV INFRAESTRUCTURA III",
+   308453.0
+  ]
+ ],
+ "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS patrimonio_mm FROM fi_balance WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'TotalPatrimonioNeto' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_balance) ORDER BY valor_miles_mf DESC LIMIT 20;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

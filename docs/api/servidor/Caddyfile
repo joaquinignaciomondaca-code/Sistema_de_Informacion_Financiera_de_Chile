@@ -1,0 +1,15 @@
+# TLS automático y un techo de tamaño de respuesta. Ajustar el dominio.
+sif.example.com {
+	reverse_proxy 127.0.0.1:9494 {
+		# Quack responde en streaming; sin límite de tiempo agresivo.
+		transport http {
+			read_timeout 5m
+			write_timeout 5m
+		}
+	}
+	encode zstd gzip
+	log {
+		output file /var/log/caddy/quack.log
+		format json
+	}
+}

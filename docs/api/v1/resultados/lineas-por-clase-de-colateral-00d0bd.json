@@ -1,0 +1,40 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "lineas-por-clase-de-colateral-00d0bd",
+ "titulo": "Líneas por clase de colateral",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "clase_colateral_subyacente",
+  "lineas",
+  "administradoras"
+ ],
+ "filas": 4,
+ "truncado": false,
+ "datos": [
+  [
+   "Cartera Comercial / Factoring",
+   5,
+   "VOLCOM SECURITIZADORA S.A., BCI SECURITIZADORA S.A., VOLCOM SECURITIZADORA S.A., BCI SECURITIZADORA S.A., BCI SECURITIZADORA S.A."
+  ],
+  [
+   "Contratos de Leasing / Automotriz",
+   9,
+   "EF SECURITIZADORA S.A., EF SECURITIZADORA S.A., EF SECURITIZADORA S.A., EF SECURITIZADORA S.A., EF SECURITIZADORA S.A., EF SECURITIZADORA S.A., EF SECURITIZADORA S.A., EF SECURITIZADORA S.A., EF SECURITIZADORA S.A."
+  ],
+  [
+   "Mutuos Hipotecarios y Créditos Comerciales",
+   4,
+   "SECURITIZADORA SECURITY S.A., SECURITIZADORA SECURITY S.A., SECURITIZADORA SECURITY S.A., SECURITIZADORA SUDAMERICANA S.A."
+  ],
+  [
+   null,
+   1,
+   "SECURITIZADORA SECURITY S.A."
+  ]
+ ],
+ "sql": "SELECT clase_colateral_subyacente, count(*) as lineas, string_agg(razon_social_administradora, ', ') as administradoras FROM patrimonios_separados_lista_entidades GROUP BY clase_colateral_subyacente ORDER BY lineas DESC;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

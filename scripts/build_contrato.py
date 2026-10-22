@@ -11,6 +11,8 @@ el repo:
     docs/api/v1/queries.json            las 156 consultas de la web, con id estable
     docs/api/v1/openapi.json            sólo las rutas GET que existen de verdad
     docs/api/v1/views.sql               las 109 vistas (90 objetos + 19 alias)
+    docs/api/v1/resultados/{id}.json    lo que devuelve cada consulta (fase 3); lo
+                                        escribe build_resultados.py, que corre después
 
 Todo se deriva de lo ya verificado —esquemas, reconciliación, claves y
 manifiesto— y la URL base se publica como `{{BASE}}`: ese marcador lo sustituye
@@ -236,7 +238,8 @@ def construir_consultas(catalogo: list[dict]) -> dict:
     }
 
 
-def construir_openapi(catalogo: list[dict], n_consultas: int, base: str) -> dict:
+def construir_openapi(catalogo: list[dict], n_consultas: int, base: str,
+                      ids_consultas: list[str] | None = None) -> dict:
     """Sólo las rutas GET que existen de verdad. Nada inventado."""
 
     def json_resp(descripcion: str) -> dict:
@@ -265,6 +268,17 @@ def construir_openapi(catalogo: list[dict], n_consultas: int, base: str) -> dict
         "/api/v1/queries.json": {
             "get": {"operationId": "getConsultas", "summary": f"Las {n_consultas} consultas de la web, con id estable",
                     "tags": ["consultas"], "responses": json_resp("Consultas")}},
+        "/api/v1/resultados/index.json": {
+            "get": {"operationId": "getResultadosIndice",
+                    "summary": f"El resultado ya calculado de las {n_consultas} consultas",
+                    "tags": ["consultas"], "responses": json_resp("Índice de resultados")}},
+        "/api/v1/resultados/{id}.json": {
+            "get": {"operationId": "getResultado",
+                    "summary": "Columnas, filas y el SQL de una consulta publicada",
+                    "tags": ["consultas"],
+                    "parameters": [{"name": "id", "in": "path", "required": True,
+                                    "schema": {"type": "string", "enum": ids_consultas or []}}],
+                    "responses": json_resp("Resultado de la consulta")}},
         "/api/v1/views.sql": {
             "get": {"operationId": "getVistas", "summary": "DDL de las 109 vistas (90 objetos + 19 alias)",
                     "tags": ["contrato"],
@@ -293,7 +307,9 @@ def construir_openapi(catalogo: list[dict], n_consultas: int, base: str) -> dict
             "summary": "Contrato estático sobre Parquet públicos; sin /query ni JSON por fila.",
             "description": (
                 "API de solo lectura sobre archivos estáticos. Las rutas listadas son las que "
-                "existen: no hay endpoint de consulta, ni autenticación, ni SLA."
+                "existen: no hay endpoint de consulta ad-hoc, ni autenticación, ni SLA. "
+                "Las 156 consultas del catálogo sí vienen con su resultado ya calculado, "
+                "en /api/v1/resultados/."
             ),
             "license": {"name": "Datos: uso condicionado por la fuente · Código: MIT",
                         "url": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"},
@@ -366,7 +382,8 @@ def main() -> int:
     alias = ac.alias_heredados()
     catalogo, esquemas, particiones, hashes = construir_objetos(datos, alias, args.base)
     consultas = construir_consultas(catalogo)
-    openapi = construir_openapi(catalogo, consultas["total"], args.base)
+    openapi = construir_openapi(catalogo, consultas["total"], args.base,
+                                [c["id"] for c in consultas["consultas"]])
     vistas_sql = construir_vistas(catalogo, alias, args.base)
 
     huella = hashlib.sha256("".join(sorted(hashes)).encode()).hexdigest()[:12]
@@ -394,6 +411,7 @@ def main() -> int:
         },
         "rutas": {
             "datapackage": f"{args.base}/api/v1/datapackage.json",
+            "resultados": f"{args.base}/api/v1/resultados/index.json",
             "esquema": f"{args.base}/api/v1/schema/{{id}}.json",
             "particiones": f"{args.base}/api/v1/partitions/{{id}}.json",
             "consultas": f"{args.base}/api/v1/queries.json",

@@ -1,0 +1,35 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "fondos-por-moneda-funcional-0e965e",
+ "titulo": "Fondos por moneda funcional",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "moneda_funcional",
+  "fondos"
+ ],
+ "filas": 4,
+ "truncado": false,
+ "datos": [
+  [
+   "$$",
+   390
+  ],
+  [
+   "COP",
+   1
+  ],
+  [
+   "EUR",
+   49
+  ],
+  [
+   "PROM",
+   464
+  ]
+ ],
+ "sql": "SELECT moneda_funcional, count(*) AS fondos FROM fi_lista_entidades WHERE reporta_ultimo_periodo GROUP BY moneda_funcional ORDER BY fondos DESC;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

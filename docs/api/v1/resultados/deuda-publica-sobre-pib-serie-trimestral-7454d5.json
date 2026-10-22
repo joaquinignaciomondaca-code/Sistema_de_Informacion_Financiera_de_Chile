@@ -1,0 +1,99 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "deuda-publica-sobre-pib-serie-trimestral-7454d5",
+ "titulo": "Deuda pública sobre PIB: serie trimestral",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "periodo",
+  "deuda_bruta_gobierno_central_pct_pib"
+ ],
+ "filas": 20,
+ "truncado": false,
+ "datos": [
+  [
+   "2021-04",
+   33.08466789116
+  ],
+  [
+   "2021-07",
+   36.083763305854
+  ],
+  [
+   "2021-10",
+   36.425970419793
+  ],
+  [
+   "2022-01",
+   36.196446056427
+  ],
+  [
+   "2022-04",
+   39.129597061725
+  ],
+  [
+   "2022-07",
+   39.229677540995
+  ],
+  [
+   "2022-10",
+   37.795664601118
+  ],
+  [
+   "2023-01",
+   36.026421297562
+  ],
+  [
+   "2023-04",
+   36.887421294898
+  ],
+  [
+   "2023-07",
+   38.763346300986
+  ],
+  [
+   "2023-10",
+   39.413395906209
+  ],
+  [
+   "2024-01",
+   41.56442667646
+  ],
+  [
+   "2024-04",
+   41.573413208634
+  ],
+  [
+   "2024-07",
+   42.35166324092
+  ],
+  [
+   "2024-10",
+   41.650002351288
+  ],
+  [
+   "2025-01",
+   41.682953388111
+  ],
+  [
+   "2025-04",
+   42.795509119884
+  ],
+  [
+   "2025-07",
+   43.250796696947
+  ],
+  [
+   "2025-10",
+   41.536317774764
+  ],
+  [
+   "2026-01",
+   42.5161472120403
+  ]
+ ],
+ "sql": "SELECT periodo, deuda_bruta_gobierno_central_pct_pib FROM macro_deuda_publica_pct_pib ORDER BY periodo DESC LIMIT 20;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

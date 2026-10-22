@@ -1,0 +1,162 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "bancos-comerciales-activos-6f9896",
+ "titulo": "Bancos Comerciales Activos",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "codigo_institucion",
+  "rut",
+  "nombre_fantasia",
+  "tipo_licencia",
+  "estado"
+ ],
+ "filas": 20,
+ "truncado": false,
+ "datos": [
+  [
+   "001",
+   "97004000",
+   "BANCO DE CHILE",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "009",
+   "97011000",
+   "BANCO INTERNACIONAL",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "012",
+   "97030000",
+   "BANCOESTADO",
+   "Banca Estatal",
+   "Activo"
+  ],
+  [
+   "014",
+   "97018000",
+   "SCOTIABANK CHILE",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "016",
+   "97006000",
+   "BCI",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "028",
+   "97080000",
+   "BANCO BICE",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "031",
+   "97951000",
+   "HSBC BANK",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "037",
+   "97036000",
+   "BANCO SANTANDER",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "039",
+   "97023000",
+   "ITAU CHILE",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "041",
+   "97043000",
+   "JP MORGAN",
+   "Agencia Bancaria Extranjera",
+   "Activo"
+  ],
+  [
+   "051",
+   "96509660",
+   "BANCO FALABELLA",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "053",
+   "97947000",
+   "BANCO RIPLEY",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "055",
+   "99500410",
+   "BANCO CONSORCIO",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "059",
+   "76362099",
+   "BTG PACTUAL",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "060",
+   "59203500",
+   "CHINA CONSTRUCTION BANK",
+   "Agencia Bancaria Extranjera",
+   "Activo"
+  ],
+  [
+   "061",
+   "59238930",
+   "BANK OF CHINA",
+   "Agencia Bancaria Extranjera",
+   "Activo"
+  ],
+  [
+   "062",
+   "77844703",
+   "TANNER BANCO DIGITAL",
+   "Banca Digital",
+   "Activo"
+  ],
+  [
+   "816",
+   "97006816",
+   "BCI USA / MIAMI",
+   "Filial Bancaria Extranjera",
+   "Activo"
+  ],
+  [
+   "916",
+   "97006916",
+   "CITY NATIONAL BANK",
+   "Filial Bancaria Extranjera",
+   "Activo"
+  ],
+  [
+   "sin_codigo_76632789",
+   "76632789",
+   "TENPO BANK CHILE",
+   "Banca Comercial",
+   "Activo"
+  ]
+ ],
+ "sql": "SELECT codigo_institucion, rut, nombre_fantasia, tipo_licencia, estado FROM bancos_lista_entidades WHERE estado = 'Activo' ORDER BY codigo_institucion;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}
