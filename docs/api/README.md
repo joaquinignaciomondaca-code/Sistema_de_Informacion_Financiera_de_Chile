@@ -47,6 +47,12 @@ python3 scripts/auditar_mcp.py            # servidor MCP y presupuesto (~2 s)
 Y el CI falla si quedan desactualizados (`--check` en cada uno) o si algo del
 contrato deja de cumplirse.
 
+Como los datos cambian solos, el flujo **«Contrato derivado»**
+(`.github/workflows/contrato_publicado.yml`) regenera estos archivos cuando un
+publicador deja filas nuevas bajo `docs/outputs/`. Sin él, cada actualización
+diaria del Banco Central obligaba a regenerar a mano: el contrato quedaba con un
+`data_release` viejo y la auditoría fallaba en el siguiente push.
+
 ## `reconciliacion.csv`
 
 Cruza los tres niveles que hasta ahora nadie había cruzado —objeto del

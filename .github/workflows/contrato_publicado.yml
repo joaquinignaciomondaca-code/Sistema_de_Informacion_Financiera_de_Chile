@@ -1,0 +1,84 @@
+name: Contrato derivado (esquemas, catálogo y resultados)
+
+# Cuando un flujo de datos publica filas nuevas, los artefactos que se derivan de
+# ellas se quedan atrás y `web_audit` falla en el siguiente push con «esquemas.json
+# está desactualizado». Pasó el 2026-10-22: la serie diaria del Banco Central sumó
+# 12 filas y el contrato quedó con un `data_release` viejo durante un día.
+#
+# Este flujo cierra el hueco en un solo sitio, en vez de repetir cuatro pasos en
+# cada uno de los doce publicadores: si cambió algo bajo `docs/outputs/`, se
+# regeneran los artefactos derivados y se publican si hay diferencia real.
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/outputs/**'
+      - 'data_manifest.json'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: contrato-derivado
+  cancel-in-progress: false
+
+jobs:
+  refrescar:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: python -m pip install --disable-pip-version-check duckdb pyarrow
+
+      # El orden importa: los esquemas alimentan el catálogo, el catálogo alimenta
+      # el Data Package y los resultados se calculan sobre las vistas publicadas.
+      - name: Regenerar los artefactos derivados
+        run: |
+          python scripts/build_esquemas.py
+          python scripts/build_contrato.py
+          python scripts/build_api.py
+          python scripts/build_resultados.py
+          python scripts/build_download_catalog.py
+
+      - name: Confirmar que quedaron al día
+        run: |
+          python scripts/build_esquemas.py --check
+          python scripts/build_contrato.py --check
+          python scripts/auditar_contrato.py --check
+          python scripts/build_resultados.py --check
+
+      - name: Publicar si hay diferencia
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/api docs/js/download_catalog.js
+          if git diff --cached --quiet; then
+            echo "::notice title=Contrato derivado::sin cambios; los artefactos ya reflejaban los datos publicados"
+            exit 0
+          fi
+          git commit -m "Contrato derivado: esquemas, catálogo y resultados de los datos publicados"
+          # Varias publicaciones compiten por la misma rama: se reintenta sobre la
+          # cabeza nueva, como hacen los flujos de datos.
+          for i in 1 2 3 4 5; do
+            if git push origin HEAD:main; then
+              echo "::notice title=Contrato derivado::publicado en main"
+              exit 0
+            fi
+            echo "Push rechazado (intento ${i}/5): se reintenta sobre la cabeza nueva."
+            git fetch origin main
+            git rebase FETCH_HEAD || { git rebase --abort; exit 1; }
+            sleep $(( 10 + RANDOM % 20 ))
+          done
+          echo "::error title=Contrato derivado::no se pudo publicar tras 5 intentos"
+          exit 1
