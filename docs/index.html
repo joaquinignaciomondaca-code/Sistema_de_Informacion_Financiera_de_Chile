@@ -698,9 +698,10 @@ for objeto in sif.buscar("fondos mutuos")[:3]:
 sif-mcp                       # stdio
 
 {"mcpServers": {"sif-chile": {"command": "sif-mcp"}}}</code></pre>
-                  <p class="uso-note">Las respuestas se recortan a 200 filas y 160 caracteres por celda. La definición
-                  de las dos herramientas ocupa 191 tokens de contexto, medidos por
-                  <code>scripts/auditar_mcp.py</code> en cada integración.</p>
+                  <p class="uso-note">Las respuestas se recortan a 50 filas por defecto y 200 como máximo, con
+                  160 caracteres por celda, y declaran si quedaron truncadas. La definición de las dos herramientas
+                  ocupa 191 tokens de contexto, medidos por <code>scripts/auditar_mcp.py</code> en cada
+                  integración.</p>
                 </div>
               </div>
 
