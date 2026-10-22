@@ -198,7 +198,11 @@ jobs:
           for par in "Claves:claves.log:$c" "Data Package:api.log:$a" "Auditoría:dp.log:$d"; do
             nombre=${par%%:*}; resto=${par#*:}; archivo=${resto%%:*}; codigo=${resto##*:}
             if [ "$codigo" -eq 0 ]; then echo "::notice title=$nombre::$(tail -n 2 "$archivo" | head -1)"
-            else echo "::error title=$nombre::falló"; tail -n 25 "$archivo"; fi
+            else
+              # La anotación es lo único que se puede leer desde fuera del runner.
+              grep -h "\[FALLA\]\|ERROR" "$archivo" | head -6 | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=$nombre::$l"; done
+              echo "::error title=$nombre::falló (código $codigo)"
+            fi
           done
           exit $(( c | a | d ))
 
