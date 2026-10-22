@@ -395,7 +395,7 @@
           emptyTitle = `Sin publicaciones clasificadas para ${SECTOR_LABELS[this.activeSector] || this.activeSector}`;
           emptyText = `El filtro sigue la selección del explorador y muestra las publicaciones clasificadas para esa industria. Las publicaciones sin industria asignada no se mezclan en esta vista; las marcas de revisión indican qué datos requieren confirmación.${context ? ` ${context}.` : ""}`;
         } else {
-          emptyTitle = "No hay publicaciones en el período cargado";
+          emptyTitle = "No hay publicaciones en el periodo cargado";
           emptyText = "El listado oficial CMF no contiene publicaciones dentro de la ventana consultada.";
         }
         timeline.innerHTML = `<div class="normativa-empty" role="status">

@@ -2653,7 +2653,7 @@ class ERDGraph {
     const hay = medidas.some((u) => u.cardinalidad && u.cardinalidad !== "1:1" && u.cardinalidad !== "no medido");
     if (!hay) return;
     const lineas = [
-      "1:N = un registro de la izquierda tiene varios a la derecha: filtre por período antes de sumar o unir.",
+      "1:N = un registro de la izquierda tiene varios a la derecha: filtre por periodo antes de sumar o unir.",
       "Etiqueta amarilla: unión no uno a uno · roja: sin coincidencias · sin etiqueta: 1:1 o no medido.",
     ];
     ctx.save();
