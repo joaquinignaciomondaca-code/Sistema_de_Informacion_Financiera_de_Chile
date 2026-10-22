@@ -27,7 +27,7 @@ El primer artefacto de extracción produce ambas familias en un JSONL común de 
 | `periodo`, `fecha_corte` | Mes informado y último día del mes. |
 | `codigo_institucion` | Código leído del encabezado y del nombre del archivo CMF. |
 | `nombre_institucion_fuente` | Texto del encabezado original. |
-| `rut`, `razon_social` | Enriquecer desde el maestro solo cuando el cruce de identidad esté validado; no inferir el RUT desde el nombre. |
+| `rut`, `razon_social` | Se completan desde el maestro de bancos por `codigo_institucion` (el código viene en el nombre del archivo y en la cabecera). No se infiere el RUT desde el nombre. |
 | `tipo_estado` | `balance` o `resultados`. |
 | `familia_archivo_fuente`, `modelo_cmf` | B1/MB1, B2/MB2 o R1/MR1. |
 | `nivel_consolidacion` | `consolidado_global` o `individual`. |
@@ -68,4 +68,5 @@ Lo anterior describe la fase de muestra de revisión (julio de 2026). Era una co
 - **Resuelto:** (1) significado de los cuatro importes y (4) tratamiento temporal de R1; ver «Importes».
 - **B2 no es un balance individual completo.** El manual de la CMF llama MB2 al balance individual, pero lo publicado trae solo unas 8 cuentas por banco y mes (adeudado por bancos y colocaciones comerciales, de vivienda y de consumo; 144 filas B2 frente a 12.762 de B1 en julio de 2026). No usarlo para reconstruir el balance individual.
 - **Código 999.** `TOTAL SISTEMA FINANCIERO` viene como una institución más: al sumar sobre `codigo_institucion` hay que excluirlo o se duplica el sistema.
-- **Pendiente:** (2) contrastar la regla total/subtotal/detalle (`tipo_linea`) con el plan de cuentas; (3) el cruce a RUT: `rut` y `razon_social` salen nulos en lo publicado (no se infieren desde el nombre), así que unir con `bancos_lista_entidades` exige pasar por `codigo_institucion`.
+- **Resuelto 2026-10-22:** (3) el cruce a RUT. `rut` y `razon_social` se publicaban nulos desde 2022-01 (una consulta por RUT devolvía 0 filas sin error, hallazgo 16 de la ruta de la API); ahora el extractor los toma del maestro de bancos y `bancos/scripts/completar_entidades.py` reparó las 56 particiones publicadas.
+- **Pendiente:** (2) contrastar la regla total/subtotal/detalle (`tipo_linea`) con el plan de cuentas.

@@ -237,7 +237,7 @@
      "criterio_contable": "No aplica",
      "nombre": "codigo_cmf",
      "rol": "Dimensión",
-     "significado": "Código institucional asignado por la CMF.",
+     "significado": "Código institucional de la CMF. En AGF la columna está vacía: el registro RGAGF no publica ese código, que sí existe para las CCAF emisoras.",
      "sin_valores": true,
      "tipo": "VARCHAR",
      "tipo_fisico": "null"
@@ -448,16 +448,12 @@
     {
      "documentada": false,
      "nombre": "rut",
-     "sin_valores": true,
-     "tipo": "VARCHAR",
-     "tipo_fisico": "null"
+     "tipo": "VARCHAR"
     },
     {
      "documentada": false,
      "nombre": "razon_social",
-     "sin_valores": true,
-     "tipo": "VARCHAR",
-     "tipo_fisico": "null"
+     "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
@@ -716,16 +712,12 @@
     {
      "documentada": false,
      "nombre": "rut",
-     "sin_valores": true,
-     "tipo": "VARCHAR",
-     "tipo_fisico": "null"
+     "tipo": "VARCHAR"
     },
     {
      "documentada": false,
      "nombre": "razon_social",
-     "sin_valores": true,
-     "tipo": "VARCHAR",
-     "tipo_fisico": "null"
+     "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
@@ -1748,7 +1740,7 @@
      "criterio_contable": "No aplica",
      "nombre": "nombre_reportado",
      "rol": "Dimensión",
-     "significado": "Nombre reportado por CMF en ese periodo.",
+     "significado": "Nombre reportado por CMF en ese período.",
      "tipo": "VARCHAR"
     },
     {
@@ -1832,7 +1824,7 @@
      "criterio_contable": "No aplica",
      "nombre": "repeticion_contexto",
      "rol": "Dimensión",
-     "significado": "Ordinal de la misma etiqueta dentro del estado; se conserva sin sumar. En resultados, \"Ganancia (pérdida)\" aparece en ERFG/ERNG con ordinal 1 y 2 y otra vez al inicio de ERI, con el mismo valor: para la utilidad del periodo usar estado ERFG/ERNG y ordinal 1.",
+     "significado": "Ordinal de la misma etiqueta dentro del estado; se conserva sin sumar. En resultados, \"Ganancia (pérdida)\" aparece en ERFG/ERNG con ordinal 1 y 2 y otra vez al inicio de ERI, con el mismo valor: para la utilidad del período usar estado ERFG/ERNG y ordinal 1.",
      "tipo": "BIGINT"
     },
     {
@@ -2089,7 +2081,7 @@
      "criterio_contable": "No aplica",
      "nombre": "nombre_reportado",
      "rol": "Dimensión",
-     "significado": "Nombre reportado por CMF en ese periodo.",
+     "significado": "Nombre reportado por CMF en ese período.",
      "tipo": "VARCHAR"
     },
     {
@@ -2173,7 +2165,7 @@
      "criterio_contable": "No aplica",
      "nombre": "repeticion_contexto",
      "rol": "Dimensión",
-     "significado": "Ordinal de la misma etiqueta dentro del estado; se conserva sin sumar. En resultados, \"Ganancia (pérdida)\" aparece en ERFG/ERNG con ordinal 1 y 2 y otra vez al inicio de ERI, con el mismo valor: para la utilidad del periodo usar estado ERFG/ERNG y ordinal 1.",
+     "significado": "Ordinal de la misma etiqueta dentro del estado; se conserva sin sumar. En resultados, \"Ganancia (pérdida)\" aparece en ERFG/ERNG con ordinal 1 y 2 y otra vez al inicio de ERI, con el mismo valor: para la utilidad del período usar estado ERFG/ERNG y ordinal 1.",
      "tipo": "BIGINT"
     },
     {
@@ -11833,7 +11825,7 @@
  "resumen": {
   "columnas": 1509,
   "columnas_sin_documentar": 7,
-  "columnas_sin_valores": 5,
+  "columnas_sin_valores": 1,
   "con_esquema": 86,
   "filas_por_objeto": 21740484,
   "filas_unicas": 19777492,
