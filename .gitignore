@@ -10,6 +10,8 @@ env/
 *.csv
 # Excepción: los artefactos de reproducibilidad del sitio son chicos y se publican
 !docs/reproducibilidad/*.csv
+# Excepción: el contrato de la API (tabla de reconciliación) se versiona con el código
+!docs/api/*.csv
 docs/outputs/**/*.csv
 seguros/circular_1835_cartera/outputs/**/*.csv
 

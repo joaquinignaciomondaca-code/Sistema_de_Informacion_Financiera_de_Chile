@@ -15,6 +15,10 @@ Reglas de normalización (idempotentes):
      4-5 cifras quedan en B (la fuente no trae puntos para RUN).
   6. `rut_<entidad>` (FK) → C.
   7. `run_*` y columnas numéricas (int64 ya es el cuerpo) → sin cambios.
+  8. `nro_rut` → C, con el DV en `nro_rut_dv` (B). La ficha de la CMF lo declara
+     como campo tipo "r" de 10 caracteres: 9 cifras de cuerpo + DV, cero a la
+     izquierda incluido. `nro_rut_<algo>` (FK, p. ej. `nro_rut_activo_objeto`)
+     → C, igual que `rut_<entidad>`.
 """
 from __future__ import annotations
 
@@ -115,6 +119,12 @@ def _op_de(nombre: str) -> tuple[str | None, None]:
         return "cuerpo", None  # el paso especial (cuerpo + rut_dv) va en normalizar_registro
     if nombre == "rut_dv" or nombre.endswith("_dv"):
         return "con_dv", None
+    # Nombre de la ficha CMF para el RUT del emisor (B.1, B.7…): mismo trato que
+    # `rut`, incluido el paso especial que emite `nro_rut_dv`.
+    if nombre == "nro_rut":
+        return "cuerpo", None
+    if nombre.startswith("nro_rut_"):
+        return "cuerpo", None
     if nombre == "rut_formateado":
         return "con_puntos", None
     if nombre.endswith("_completo"):
@@ -152,6 +162,15 @@ def normalizar_registro(reg: dict) -> tuple[dict, list[str]]:
                 reg["rut_dv"] = con_dv(reg["rut"])
             reg["rut"] = cuerpo(reg["rut"])
             cambios.append("rut→C (+rut_dv)")
+
+    # 2b. nro_rut A/B → nro_rut C + nro_rut_dv B (mismo trato que `rut`)
+    if "nro_rut" in reg and reg["nro_rut"] is not None:
+        f = formato(reg["nro_rut"])
+        if f in ("A", "B"):
+            if "nro_rut_dv" not in reg:
+                reg["nro_rut_dv"] = con_dv(reg["nro_rut"])
+            reg["nro_rut"] = cuerpo(reg["nro_rut"])
+            cambios.append("nro_rut→C (+nro_rut_dv)")
 
     # 3. rut_cuerpo + rut → rut C, rut_dv (si la anterior traía DV), sin rut_cuerpo
     if "rut_cuerpo" in reg and "rut" in reg:
@@ -225,11 +244,11 @@ def normalizar_tabla(t) -> tuple["pa.Table", set[str]]:  # noqa: F821
             nuevos = [cuerpo(v) if m else v for m, v in zip(mask, vals)]
             t = t.set_column(nombres.index("rut"), "rut", pa.array(nuevos, type=pa.string()))
             nombres = list(t.column_names)
-            if "rut_dv" in nombres and _es_str("rut_dv"):
-                dv_vals = t["rut_dv"].to_pylist()
+            if "rut_dv" in nombres:
+                prev_dv = t["rut_dv"].to_pylist()
                 nuevos_dv = [
-                    con_dv(v) if (m and (d is None or d != con_dv(v))) else d
-                    for m, v, d in zip(mask, vals, dv_vals)
+                    con_dv(v) if m else (p if p not in (None, "") else None)
+                    for m, v, p in zip(mask, vals, prev_dv)
                 ]
                 t = t.set_column(nombres.index("rut_dv"), "rut_dv", pa.array(nuevos_dv, type=pa.string()))
             else:
@@ -237,6 +256,27 @@ def normalizar_tabla(t) -> tuple["pa.Table", set[str]]:  # noqa: F821
                     [con_dv(v) if m else None for m, v in zip(mask, vals)], type=pa.string()))
                 nombres = list(t.column_names)
             cambios.add("rut→C (+rut_dv)")
+
+    # 2b. nro_rut A/B → nro_rut C (+nro_rut_dv B)
+    if "nro_rut" in nombres and _es_str("nro_rut"):
+        vals = t["nro_rut"].to_pylist()
+        mask = [v is not None and formato(v) in ("A", "B") for v in vals]
+        if any(mask):
+            nuevos = [cuerpo(v) if m else v for m, v in zip(mask, vals)]
+            t = t.set_column(nombres.index("nro_rut"), "nro_rut", pa.array(nuevos, type=pa.string()))
+            nombres = list(t.column_names)
+            if "nro_rut_dv" in nombres:
+                prev_dv = t["nro_rut_dv"].to_pylist()
+                nuevos_dv = [
+                    con_dv(v) if m else (p if p not in (None, "") else None)
+                    for m, v, p in zip(mask, vals, prev_dv)
+                ]
+                t = t.set_column(nombres.index("nro_rut_dv"), "nro_rut_dv", pa.array(nuevos_dv, type=pa.string()))
+            else:
+                t = t.append_column("nro_rut_dv", pa.array(
+                    [con_dv(v) if m else None for m, v in zip(mask, vals)], type=pa.string()))
+                nombres = list(t.column_names)
+            cambios.add("nro_rut→C (+nro_rut_dv)")
 
     # 3. rut_cuerpo junto a rut → se retira (rut toma su valor)
     if "rut_cuerpo" in nombres and "rut" in nombres:
@@ -252,7 +292,7 @@ def normalizar_tabla(t) -> tuple["pa.Table", set[str]]:  # noqa: F821
     # 4. restantes: FK→C, *_dv→B, *_completo→A
     for k in list(t.column_names):
         op, _ = _op_de(k)
-        if op is None or k in ("rut", "rut_cuerpo", "rut_formateado"):
+        if op is None or k in ("rut", "rut_cuerpo", "rut_formateado", "nro_rut"):
             continue
         if not _es_str(k):
             continue  # numérico (int64 = cuerpo) o nulo: fuera de la convención de texto

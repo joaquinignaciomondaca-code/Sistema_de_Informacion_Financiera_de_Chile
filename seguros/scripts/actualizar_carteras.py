@@ -426,6 +426,16 @@ def esquema(tabla: str) -> pa.Schema:
                     # esquema. Los nombres con sentidos distintos (texto vs número) se separan
                     # en el inventario, no aquí.
                     cols[c] = _mas_ancho(cols.get(c), _tipo_arrow(tipo, dec))
+        # El RUT del emisor llega en la ficha como campo "r" (cuerpo + DV). Se publica
+        # bajo la convención de la casa: `nro_rut` = cuerpo y `nro_rut_dv` = cuerpo-DV,
+        # igual que `rut`/`rut_dv` en el resto de la base.
+        if "nro_rut" in cols and "nro_rut_dv" not in cols:
+            con_dv = {}
+            for c, tipo in cols.items():
+                con_dv[c] = tipo
+                if c == "nro_rut":
+                    con_dv["nro_rut_dv"] = pa.string()
+            cols = con_dv
         if tabla in {"bienes_raices", "bienes_raices_arriendo_morosidad"}:
             # Rol y dirección se suprimen; el seudónimo permite seguimiento longitudinal.
             cols["property_id"] = pa.string()
