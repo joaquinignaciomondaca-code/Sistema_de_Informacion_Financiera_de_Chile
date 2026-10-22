@@ -1,0 +1,48 @@
+# Sistema de Información Financiera de Chile
+
+> Datos financieros públicos de Chile —bancos, aseguradoras, fondos mutuos, AGF,
+> securitizadoras, cooperativas, fintech, pagos, macro— normalizados en 90 objetos
+> Parquet, con RUT canónico, esquema verificado y un contrato estático que se puede
+> leer sin clonar el repositorio. Sin servidor de consulta, sin autenticación, sin
+> clave de API: los archivos se leen por HTTP.
+
+Base: `https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile`
+
+## Contrato
+
+- [catalog.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/catalog.json): los 90 objetos con `id`, `sector`, `estado` (`publicado` o `vacio`), `filas`, `bytes`, `primaryKey`, `corte` y las rutas absolutas a sus esquemas y particiones. Es la puerta de entrada.
+- [openapi.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/openapi.json): 9 rutas GET, todas archivos estáticos. No existe `/query`.
+- [datapackage.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/datapackage.json): los 86 objetos con datos como Data Package (Frictionless), con `bytes` y `sha256` por archivo.
+- [reconciliacion.csv](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv): nombre del objeto, familia y fuente en el sitio.
+- [claves.csv](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/claves.csv): claves primarias verificadas y foráneas medidas.
+
+## Consultas
+
+- [queries.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/queries.json): 156 consultas SQL de ejemplo. Cada una trae `id` estable (`slug-del-título` + 6 hex del SHA-1 de su SQL), `titulo`, `sql` y las tablas que usa. **El id no cambia mientras el SQL no cambie**: sirve para citar una consulta sin copiar el SQL.
+
+## Datos
+
+- [views.sql](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/views.sql): `SET VARIABLE sif_base = '<base>';` y 105 `CREATE OR REPLACE VIEW` sobre `read_parquet(getvariable('sif_base') || '/outputs/…')`. Cambiar esa línea apunta todo a un espejo o a una copia local. Los 4 objetos vacíos no crean vista.
+- `schema/{id}.json` y `partitions/{id}.json`: columnas con tipo y rol, clave primaria, y los archivos con período, filas, bytes y `sha256`.
+- Los Parquet están en `/outputs/…` del mismo sitio y aceptan peticiones HTTP Range
+
+## Reglas para un agente
+
+1. Lee `catalog.json` una vez (90 entradas) y quédate con los `id` que necesites; no hace falta recorrer los 180 documentos de esquema.
+2. Para consultar, ejecuta `views.sql` con DuckDB y escribe SQL estándar. En Python, `pip install sif-chile` da `connect()`, `buscar(texto)`, `esquema(id)`, `sql(...)` y `descargar(id)`.
+3. Filtra siempre por `periodo` (texto `AAAA-MM`) antes de agregar: hay hasta 12 años por tabla.
+4. El último período publicado de un objeto es `max(periodo)`; no lo supongas.
+5. Verifica lo que descargues con el `sha256` declarado en `partitions/{id}.json`.
+6. Si necesitas una serie congelada, guarda el `data_release` que estás usando: el hash identifica, no recupera.
+
+## Límites
+
+- Best effort, sin SLA; los datos son de la CMF y de otros organismos públicos y se republican normalizados.
+- La licencia de datos está pendiente (`DATA_LICENSE.md`); el código es MIT.
+- No hay consulta remota ni MCP: el cliente pone el motor.
+
+## Más
+
+- [README](https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile#readme)
+- [Contrato explicado](https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/docs/api/README.md)
+- [Ejemplos reproducibles](https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/tree/main/examples)
