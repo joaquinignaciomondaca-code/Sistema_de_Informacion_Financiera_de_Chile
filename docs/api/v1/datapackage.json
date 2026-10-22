@@ -437,7 +437,7 @@
       "type": "string"
      },
      {
-      "description": "Código institucional asignado por la CMF.",
+      "description": "Código institucional de la CMF. En AGF la columna está vacía: el registro RGAGF no publica ese código, que sí existe para las CCAF emisoras.",
       "name": "codigo_cmf",
       "sif_rol": "Dimensión",
       "sif_sin_valores": true,
@@ -3716,7 +3716,7 @@
       "type": "string"
      },
      {
-      "description": "Nombre reportado por CMF en ese periodo.",
+      "description": "Nombre reportado por CMF en ese período.",
       "name": "nombre_reportado",
       "sif_rol": "Dimensión",
       "type": "string"
@@ -3788,7 +3788,7 @@
       "type": "string"
      },
      {
-      "description": "Ordinal de la misma etiqueta dentro del estado; se conserva sin sumar. En resultados, \"Ganancia (pérdida)\" aparece en ERFG/ERNG con ordinal 1 y 2 y otra vez al inicio de ERI, con el mismo valor: para la utilidad del periodo usar estado ERFG/ERNG y ordinal 1.",
+      "description": "Ordinal de la misma etiqueta dentro del estado; se conserva sin sumar. En resultados, \"Ganancia (pérdida)\" aparece en ERFG/ERNG con ordinal 1 y 2 y otra vez al inicio de ERI, con el mismo valor: para la utilidad del período usar estado ERFG/ERNG y ordinal 1.",
       "name": "repeticion_contexto",
       "sif_rol": "Dimensión",
       "type": "integer"
@@ -4115,7 +4115,7 @@
       "type": "string"
      },
      {
-      "description": "Nombre reportado por CMF en ese periodo.",
+      "description": "Nombre reportado por CMF en ese período.",
       "name": "nombre_reportado",
       "sif_rol": "Dimensión",
       "type": "string"
@@ -4187,7 +4187,7 @@
       "type": "string"
      },
      {
-      "description": "Ordinal de la misma etiqueta dentro del estado; se conserva sin sumar. En resultados, \"Ganancia (pérdida)\" aparece en ERFG/ERNG con ordinal 1 y 2 y otra vez al inicio de ERI, con el mismo valor: para la utilidad del periodo usar estado ERFG/ERNG y ordinal 1.",
+      "description": "Ordinal de la misma etiqueta dentro del estado; se conserva sin sumar. En resultados, \"Ganancia (pérdida)\" aparece en ERFG/ERNG con ordinal 1 y 2 y otra vez al inicio de ERI, con el mismo valor: para la utilidad del período usar estado ERFG/ERNG y ordinal 1.",
       "name": "repeticion_contexto",
       "sif_rol": "Dimensión",
       "type": "integer"
