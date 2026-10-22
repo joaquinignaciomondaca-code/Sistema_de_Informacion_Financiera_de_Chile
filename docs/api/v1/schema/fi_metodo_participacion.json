@@ -1,0 +1,167 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Trimestre informado (AAAA-MM, mes de cierre: 03, 06, 09 o 12).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "run_fondo",
+   "rol": "FK",
+   "significado": "RUN del fondo de inversión (une con fi.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "isin",
+   "rol": "Atributo",
+   "significado": "Código ISIN o CUSIP del instrumento (vacío si no aplica).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_emisor",
+   "rol": "Atributo",
+   "significado": "Nombre del emisor (vacío si no aplica).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_emisor",
+   "rol": "Atributo",
+   "significado": "Cuerpo del RUT del emisor (sin dígito verificador).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pais_emisor",
+   "rol": "Atributo",
+   "significado": "Código del país del emisor.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_instrumento",
+   "rol": "Atributo",
+   "significado": "Tipo de instrumento según la codificación SEIL de la CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "situacion_instrumento",
+   "rol": "Atributo",
+   "significado": "1 sin restricción; 2 con compromiso (pacto); 3 en garantía de derivados o venta corta; 4 otra restricción; 5 préstamo para venta corta.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cantidad_unidades",
+   "rol": "Métrica",
+   "significado": "Unidades nominales (deuda) o número de unidades (capitalización).",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pct_capital_emisor",
+   "rol": "Métrica",
+   "significado": "% del capital del emisor que posee el fondo (acciones y cuotas; 0 en deuda).",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "patrimonio_emisor_miles_mf",
+   "rol": "Métrica",
+   "significado": "Patrimonio de la sociedad participada, en miles de la moneda funcional del fondo.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "Valor Razonable / MtM",
+   "nombre": "valor_cierre_miles_mf",
+   "rol": "Métrica",
+   "significado": "Valor contable al cierre, en miles de la moneda funcional del fondo.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "provision_deterioro_miles_mf",
+   "rol": "Métrica",
+   "significado": "Provisión por deterioro, en miles de la moneda funcional del fondo.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "plusvalia_miles_mf",
+   "rol": "Métrica",
+   "significado": "Plusvalía de la inversión, en miles de la moneda funcional del fondo.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "moneda_liquidacion",
+   "rol": "Atributo",
+   "significado": "Moneda de liquidación (codificación SEIL; $$ pesos, PROM dólar, UF, etc.).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pais_transaccion",
+   "rol": "Atributo",
+   "significado": "País donde se adquirió el instrumento.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pct_activo_fondo",
+   "rol": "Métrica",
+   "significado": "Inversión como % del activo total del fondo.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "run_fondo",
+   "destino": "fi_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "fi_metodo_participacion",
+ "primaryKey": [
+  "pct_activo_fondo",
+  "valor_cierre_miles_mf",
+  "patrimonio_emisor_miles_mf",
+  "cantidad_unidades",
+  "nombre_emisor",
+  "rut_emisor",
+  "pct_capital_emisor",
+  "run_fondo",
+  "provision_deterioro_miles_mf",
+  "plusvalia_miles_mf",
+  "isin",
+  "periodo"
+ ],
+ "sector": "fi",
+ "titulo": "fi.metodo_participacion",
+ "version": "1.0.0"
+}

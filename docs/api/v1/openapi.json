@@ -1,0 +1,437 @@
+{
+ "info": {
+  "description": "API de solo lectura sobre archivos estáticos. Las rutas listadas son las que existen: no hay endpoint de consulta, ni autenticación, ni SLA.",
+  "license": {
+   "name": "Datos: uso condicionado por la fuente · Código: MIT",
+   "url": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
+  },
+  "summary": "Contrato estático sobre Parquet públicos; sin /query ni JSON por fila.",
+  "title": "Sistema de Información Financiera de Chile",
+  "version": "1.0.0"
+ },
+ "openapi": "3.1.0",
+ "paths": {
+  "/api/claves.csv": {
+   "get": {
+    "operationId": "getClaves",
+    "responses": {
+     "200": {
+      "content": {
+       "text/csv": {
+        "schema": {
+         "type": "string"
+        }
+       }
+      },
+      "description": "CSV"
+     }
+    },
+    "summary": "Claves primarias y foráneas verificadas",
+    "tags": [
+     "contrato"
+    ]
+   }
+  },
+  "/api/reconciliacion.csv": {
+   "get": {
+    "operationId": "getReconciliacion",
+    "responses": {
+     "200": {
+      "content": {
+       "text/csv": {
+        "schema": {
+         "type": "string"
+        }
+       }
+      },
+      "description": "CSV"
+     }
+    },
+    "summary": "Objeto ↔ manifiesto ↔ dataset",
+    "tags": [
+     "contrato"
+    ]
+   }
+  },
+  "/api/v1/catalog.json": {
+   "get": {
+    "operationId": "getCatalogo",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      },
+      "description": "Catálogo"
+     }
+    },
+    "summary": "Índice de los 90 objetos del contrato",
+    "tags": [
+     "contrato"
+    ]
+   }
+  },
+  "/api/v1/datapackage.json": {
+   "get": {
+    "operationId": "getDatapackage",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      },
+      "description": "Descriptor Frictionless"
+     }
+    },
+    "summary": "Data Package con los 86 conjuntos",
+    "tags": [
+     "contrato"
+    ]
+   }
+  },
+  "/api/v1/partitions/{id}.json": {
+   "get": {
+    "operationId": "getParticiones",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "enum": [
+        "afp_lista_entidades",
+        "agf_balance",
+        "agf_lista_entidades",
+        "agf_resultados",
+        "bancos_balance",
+        "bancos_lista_entidades",
+        "bancos_resultados",
+        "ccaf_balance",
+        "ccaf_lista_entidades",
+        "ccaf_resultados",
+        "cooperativas_lista_entidades",
+        "corredoras_bolsa_balance",
+        "corredoras_bolsa_lista_entidades",
+        "corredoras_bolsa_lista_entidades_registro",
+        "corredoras_bolsa_resultados",
+        "factoring_leasing_balance",
+        "factoring_leasing_lista_entidades",
+        "factoring_leasing_resultados",
+        "ffmm_balance",
+        "ffmm_cartera_extranjera",
+        "ffmm_cartera_nacional",
+        "ffmm_futuros",
+        "ffmm_lista_entidades",
+        "ffmm_opciones",
+        "ffmm_resultados",
+        "fi_balance",
+        "fi_bienes_raices",
+        "fi_cartera_extranjera",
+        "fi_cartera_nacional",
+        "fi_futuros",
+        "fi_lista_entidades",
+        "fi_metodo_participacion",
+        "fi_opciones",
+        "fi_pactos",
+        "fi_resultados",
+        "fintech_rpsf_lista_entidades",
+        "macro_cobre",
+        "macro_curva_bonos_pesos",
+        "macro_curva_bonos_uf",
+        "macro_deuda_publica_pct_pib",
+        "macro_dolar_observado",
+        "macro_euro_observado",
+        "macro_expectativas_inflacion",
+        "macro_expectativas_operadores",
+        "macro_expectativas_tpm",
+        "macro_imacec",
+        "macro_inflacion_implicita",
+        "macro_inflacion_ipc",
+        "macro_mercado_laboral",
+        "macro_metales_preciosos",
+        "macro_pib_trimestral",
+        "macro_reservas_internacionales",
+        "macro_series_catalogo",
+        "macro_swaps_camara",
+        "macro_tasa_referencia_fed",
+        "macro_tasas_corto_plazo",
+        "macro_tipo_cambio_multilateral",
+        "macro_tipo_cambio_real",
+        "macro_uf",
+        "macro_utm",
+        "patrimonios_separados_balance",
+        "patrimonios_separados_lista_entidades",
+        "securitizadoras_balance",
+        "securitizadoras_lista_entidades",
+        "securitizadoras_resultados",
+        "seguros_acciones",
+        "seguros_acciones_relevantes",
+        "seguros_bienes_raices",
+        "seguros_bienes_raices_arriendo_morosidad",
+        "seguros_bienes_raices_arriendo_morosidad_relevantes",
+        "seguros_bienes_raices_relevantes",
+        "seguros_control_inversiones",
+        "seguros_derivados",
+        "seguros_derivados_relevantes",
+        "seguros_extranjeros",
+        "seguros_extranjeros_relevantes",
+        "seguros_flujos_activos_elegibles",
+        "seguros_fondos_mutuos",
+        "seguros_garantias_derivados",
+        "seguros_lista_entidades",
+        "seguros_otras_inversiones",
+        "seguros_pactos",
+        "seguros_prestamos",
+        "seguros_prestamos_relevantes",
+        "seguros_registros_tipo6",
+        "seguros_renta_fija",
+        "seguros_renta_fija_relevante",
+        "seguros_tablas_desarrollo",
+        "seguros_tablas_descriptores",
+        "sistemas_pago_lista_entidades"
+       ],
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      },
+      "description": "Particiones y sus hashes"
+     }
+    },
+    "summary": "Archivos que componen un objeto",
+    "tags": [
+     "contrato"
+    ]
+   }
+  },
+  "/api/v1/queries.json": {
+   "get": {
+    "operationId": "getConsultas",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      },
+      "description": "Consultas"
+     }
+    },
+    "summary": "Las 156 consultas de la web, con id estable",
+    "tags": [
+     "consultas"
+    ]
+   }
+  },
+  "/api/v1/schema/{id}.json": {
+   "get": {
+    "operationId": "getEsquema",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "enum": [
+        "afp_lista_entidades",
+        "agf_balance",
+        "agf_lista_entidades",
+        "agf_resultados",
+        "bancos_balance",
+        "bancos_lista_entidades",
+        "bancos_resultados",
+        "ccaf_balance",
+        "ccaf_lista_entidades",
+        "ccaf_resultados",
+        "cooperativas_lista_entidades",
+        "corredoras_bolsa_balance",
+        "corredoras_bolsa_lista_entidades",
+        "corredoras_bolsa_lista_entidades_registro",
+        "corredoras_bolsa_resultados",
+        "factoring_leasing_balance",
+        "factoring_leasing_lista_entidades",
+        "factoring_leasing_resultados",
+        "ffmm_balance",
+        "ffmm_cartera_extranjera",
+        "ffmm_cartera_nacional",
+        "ffmm_futuros",
+        "ffmm_lista_entidades",
+        "ffmm_opciones",
+        "ffmm_resultados",
+        "fi_balance",
+        "fi_bienes_raices",
+        "fi_cartera_extranjera",
+        "fi_cartera_nacional",
+        "fi_futuros",
+        "fi_lista_entidades",
+        "fi_metodo_participacion",
+        "fi_opciones",
+        "fi_pactos",
+        "fi_resultados",
+        "fintech_rpsf_lista_entidades",
+        "macro_cobre",
+        "macro_curva_bonos_pesos",
+        "macro_curva_bonos_uf",
+        "macro_deuda_publica_pct_pib",
+        "macro_dolar_observado",
+        "macro_euro_observado",
+        "macro_expectativas_inflacion",
+        "macro_expectativas_operadores",
+        "macro_expectativas_tpm",
+        "macro_imacec",
+        "macro_inflacion_implicita",
+        "macro_inflacion_ipc",
+        "macro_mercado_laboral",
+        "macro_metales_preciosos",
+        "macro_pib_trimestral",
+        "macro_reservas_internacionales",
+        "macro_series_catalogo",
+        "macro_swaps_camara",
+        "macro_tasa_referencia_fed",
+        "macro_tasas_corto_plazo",
+        "macro_tipo_cambio_multilateral",
+        "macro_tipo_cambio_real",
+        "macro_uf",
+        "macro_utm",
+        "patrimonios_separados_balance",
+        "patrimonios_separados_lista_entidades",
+        "securitizadoras_balance",
+        "securitizadoras_lista_entidades",
+        "securitizadoras_resultados",
+        "seguros_acciones",
+        "seguros_acciones_relevantes",
+        "seguros_bienes_raices",
+        "seguros_bienes_raices_arriendo_morosidad",
+        "seguros_bienes_raices_arriendo_morosidad_relevantes",
+        "seguros_bienes_raices_relevantes",
+        "seguros_control_inversiones",
+        "seguros_derivados",
+        "seguros_derivados_relevantes",
+        "seguros_extranjeros",
+        "seguros_extranjeros_relevantes",
+        "seguros_flujos_activos_elegibles",
+        "seguros_fondos_mutuos",
+        "seguros_garantias_derivados",
+        "seguros_lista_entidades",
+        "seguros_otras_inversiones",
+        "seguros_pactos",
+        "seguros_prestamos",
+        "seguros_prestamos_relevantes",
+        "seguros_registros_tipo6",
+        "seguros_renta_fija",
+        "seguros_renta_fija_relevante",
+        "seguros_tablas_desarrollo",
+        "seguros_tablas_descriptores",
+        "sistemas_pago_lista_entidades"
+       ],
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      },
+      "description": "Esquema del objeto"
+     }
+    },
+    "summary": "Columnas y tipos de un objeto",
+    "tags": [
+     "contrato"
+    ]
+   }
+  },
+  "/api/v1/views.sql": {
+   "get": {
+    "operationId": "getVistas",
+    "responses": {
+     "200": {
+      "content": {
+       "text/plain": {
+        "schema": {
+         "type": "string"
+        }
+       }
+      },
+      "description": "SQL"
+     }
+    },
+    "summary": "DDL de las 109 vistas (90 objetos + 19 alias)",
+    "tags": [
+     "contrato"
+    ]
+   }
+  },
+  "/outputs/{ruta}": {
+   "get": {
+    "operationId": "getParquet",
+    "parameters": [
+     {
+      "example": "seguros/aseguradoras.parquet",
+      "in": "path",
+      "name": "ruta",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/vnd.apache.parquet": {
+        "schema": {
+         "format": "binary",
+         "type": "string"
+        }
+       }
+      },
+      "description": "Parquet"
+     }
+    },
+    "summary": "Los Parquet publicados del sitio",
+    "tags": [
+     "datos"
+    ]
+   }
+  }
+ },
+ "servers": [
+  {
+   "description": "URL canónica (decisión D1)",
+   "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile"
+  }
+ ],
+ "tags": [
+  {
+   "name": "contrato"
+  },
+  {
+   "name": "consultas"
+  },
+  {
+   "name": "datos"
+  }
+ ]
+}

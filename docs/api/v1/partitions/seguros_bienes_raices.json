@@ -1,0 +1,168 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "seguros_bienes_raices",
+ "particiones": [
+  {
+   "archivo": "outputs/seguros/bienes_raices/2024-12.parquet",
+   "bytes": 1361045,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2024-12.parquet",
+   "periodo": "2024-12",
+   "sha256": "27fa9611a3ca71f9b88f81d0f6cdb1b0536fcefa7a5ed631f9eef43794e8633e"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2025-01.parquet",
+   "bytes": 1444758,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2025-01.parquet",
+   "periodo": "2025-01",
+   "sha256": "6fcbe6025ba76a7f251f5e892ff4a2f43e87395c9b3199d3a2c22d72f116fc24"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2025-02.parquet",
+   "bytes": 1464705,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2025-02.parquet",
+   "periodo": "2025-02",
+   "sha256": "e5ef2ce819007591d246559c40cb43345a0c748aad4213a95d739706790dcee9"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2025-03.parquet",
+   "bytes": 1489671,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2025-03.parquet",
+   "periodo": "2025-03",
+   "sha256": "9c754189f3ef49dcaf7079a39e1cd365c5e63add5d34b3f329f5c804afe6fe52"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2025-04.parquet",
+   "bytes": 1497634,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2025-04.parquet",
+   "periodo": "2025-04",
+   "sha256": "83f99fc3caf8d7c1429ba648c508b3971e084c3a6d6089d02799499845de3728"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2025-05.parquet",
+   "bytes": 1540935,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2025-05.parquet",
+   "periodo": "2025-05",
+   "sha256": "489a75ec48d134afbb03595fa2ef98e9c2c1423aae95e0881c41d1483eb555d4"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2025-06.parquet",
+   "bytes": 1516505,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2025-06.parquet",
+   "periodo": "2025-06",
+   "sha256": "2571a7cc677f082ebd42f9101623b6e0872523be7999273a633bf31e8b778b66"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2025-07.parquet",
+   "bytes": 1518410,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2025-07.parquet",
+   "periodo": "2025-07",
+   "sha256": "ab4d0d9192084c5fb5b4d965912d480a6aba8a9f58d689e4be88614be16951ce"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2025-08.parquet",
+   "bytes": 1557725,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2025-08.parquet",
+   "periodo": "2025-08",
+   "sha256": "d220fc29d4ec36967d047a3363ff49024590e298a2a487e3e998c7fbbf7c39d7"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2025-09.parquet",
+   "bytes": 1527494,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2025-09.parquet",
+   "periodo": "2025-09",
+   "sha256": "33eeeea213ca37b1f5a6b9e7607a99737a028b1cae4a5772669fd05ca1cff363"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2025-10.parquet",
+   "bytes": 1519005,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2025-10.parquet",
+   "periodo": "2025-10",
+   "sha256": "f373b68058b326084a738bbe04f4a2cd151962119cc15494546e05973f78d0e0"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2025-11.parquet",
+   "bytes": 1514695,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2025-11.parquet",
+   "periodo": "2025-11",
+   "sha256": "dc39b544a824c9fc6cb533b02d4d19c359bf0332ec10602093dfb6ea37227e41"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2025-12.parquet",
+   "bytes": 1514873,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2025-12.parquet",
+   "periodo": "2025-12",
+   "sha256": "4e0e72712aca26de098e481f7920d00fc698409abeb13feaebb965c83ac99ee2"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2026-01.parquet",
+   "bytes": 1535469,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-01.parquet",
+   "periodo": "2026-01",
+   "sha256": "6b14a56cccae976ea57dbd9be72e8b11f39d73043b735f3bf5f83a40cdb23c84"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2026-02.parquet",
+   "bytes": 1538990,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-02.parquet",
+   "periodo": "2026-02",
+   "sha256": "06e47fd35b081dadd069f4af8303c47841b7f21b753cc07c42c914587a3e5ce8"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2026-03.parquet",
+   "bytes": 1564171,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-03.parquet",
+   "periodo": "2026-03",
+   "sha256": "df75b9918c93fab3ea687a82efc5a1a340a4a0b296d5f07f6ff6813a68a37291"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2026-04.parquet",
+   "bytes": 1562349,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-04.parquet",
+   "periodo": "2026-04",
+   "sha256": "a4d936450726dc96df8a8e164e81c9ab541170032934f75ebc907c42cc5a2d05"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2026-05.parquet",
+   "bytes": 1564289,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-05.parquet",
+   "periodo": "2026-05",
+   "sha256": "017daa3f32ae716fdd534efcba5972c927c498a74beb5998080f88c3916c7bba"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2026-06.parquet",
+   "bytes": 1561556,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-06.parquet",
+   "periodo": "2026-06",
+   "sha256": "53e35a38b5c14f40975ee05ff5715742e6f80587c8ec46d229ae26aa20ea509f"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2026-07.parquet",
+   "bytes": 1597640,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-07.parquet",
+   "periodo": "2026-07",
+   "sha256": "b07763270bdb900d7feaea8074e2f2bbeb0fcd003a72a2ab5b912ff8a3a50984"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2026-08.parquet",
+   "bytes": 1591774,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-08.parquet",
+   "periodo": "2026-08",
+   "sha256": "92224182c2fbf0766cdb5efe320d24d09e5f7651efd64d669a5cc450560a1263"
+  },
+  {
+   "archivo": "outputs/seguros/bienes_raices/2026-09.parquet",
+   "bytes": 1588246,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/bienes_raices/2026-09.parquet",
+   "periodo": "2026-09",
+   "sha256": "0622029c36bbffaaba25802d33893e8a8da66e03c9bca0397b9139acbc18c066"
+  }
+ ],
+ "total": {
+  "archivos": 22,
+  "bytes": 33571939,
+  "filas": 760152
+ },
+ "version": "1.0.0"
+}

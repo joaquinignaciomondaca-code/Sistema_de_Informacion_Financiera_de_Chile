@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "macro_tasas_corto_plazo",
+ "particiones": [
+  {
+   "archivo": "outputs/macro/macro_tasas_corto_plazo.parquet",
+   "bytes": 13680,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_tasas_corto_plazo.parquet",
+   "periodo": "macro_tasas_corto_plazo",
+   "sha256": "03df5fa098f1c2ca61de63ad3666b9d23f577a8718363eeb8b894860505442f1"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 13680,
+  "filas": 3189
+ },
+ "version": "1.0.0"
+}

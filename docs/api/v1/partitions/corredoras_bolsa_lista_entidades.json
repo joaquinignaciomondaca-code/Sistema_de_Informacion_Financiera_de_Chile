@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "corredoras_bolsa_lista_entidades",
+ "particiones": [
+  {
+   "archivo": "outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet",
+   "bytes": 9358,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/corredoras_bolsa/corredoras_bolsa_maestro.parquet",
+   "periodo": "corredoras_bolsa_maestro",
+   "sha256": "6158ea019f0ab4f77a569d394bb96860060180b61ad67a6918139e34794d5aca"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 9358,
+  "filas": 120
+ },
+ "version": "1.0.0"
+}

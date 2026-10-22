@@ -1,0 +1,63 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "fi_futuros",
+ "particiones": [
+  {
+   "archivo": "outputs/fi/futuros_forwards/2020.parquet",
+   "bytes": 57911,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/futuros_forwards/2020.parquet",
+   "periodo": "2020",
+   "sha256": "7fc3bf0da60033675f3cc2b8adc805c3c19fd15241a1bf99c77da3a3c8bfe69b"
+  },
+  {
+   "archivo": "outputs/fi/futuros_forwards/2021.parquet",
+   "bytes": 62347,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/futuros_forwards/2021.parquet",
+   "periodo": "2021",
+   "sha256": "c539e9a343fa8131e241fda76707de3c63be15ade22de5e7cc4b6b9fb2eb8c16"
+  },
+  {
+   "archivo": "outputs/fi/futuros_forwards/2022.parquet",
+   "bytes": 50466,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/futuros_forwards/2022.parquet",
+   "periodo": "2022",
+   "sha256": "bc0543779583304119f2469f4eb5cc0bf3f21773c02abc3adbcfb117bf0a2476"
+  },
+  {
+   "archivo": "outputs/fi/futuros_forwards/2023.parquet",
+   "bytes": 49768,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/futuros_forwards/2023.parquet",
+   "periodo": "2023",
+   "sha256": "11c4af7ff539d7ccc253238f7539b71d875c52cc61982885f9a9a90868a457c5"
+  },
+  {
+   "archivo": "outputs/fi/futuros_forwards/2024.parquet",
+   "bytes": 49767,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/futuros_forwards/2024.parquet",
+   "periodo": "2024",
+   "sha256": "38f3c1c89ebecbf8800663fc86453055613c35fe28a1ddd4516085ba4bf9288a"
+  },
+  {
+   "archivo": "outputs/fi/futuros_forwards/2025.parquet",
+   "bytes": 52804,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/futuros_forwards/2025.parquet",
+   "periodo": "2025",
+   "sha256": "013be544da81af595f68de38162860779a7363607b69a60db23bd84ee2f49355"
+  },
+  {
+   "archivo": "outputs/fi/futuros_forwards/2026.parquet",
+   "bytes": 33495,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/futuros_forwards/2026.parquet",
+   "periodo": "2026",
+   "sha256": "2d28d41ef4616c81bf9adc124ce891d85875153951aae25e4fdc14dd7f48d4c9"
+  }
+ ],
+ "total": {
+  "archivos": 7,
+  "bytes": 356558,
+  "filas": 13463
+ },
+ "version": "1.0.0"
+}

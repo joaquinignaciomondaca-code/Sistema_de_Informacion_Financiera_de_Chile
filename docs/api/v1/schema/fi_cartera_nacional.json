@@ -1,0 +1,210 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Trimestre informado (AAAA-MM, mes de cierre: 03, 06, 09 o 12).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "run_fondo",
+   "rol": "FK",
+   "significado": "RUN del fondo de inversión (une con fi.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "clasificacion_esf",
+   "rol": "Atributo",
+   "significado": "Clasificación del instrumento en el estado de situación financiera del fondo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nemotecnico",
+   "rol": "Atributo",
+   "significado": "Nemotécnico del instrumento o contrato (en forwards, la palabra FORWARD; vacío si no aplica).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pais_emisor",
+   "rol": "Atributo",
+   "significado": "Código del país del emisor.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_instrumento",
+   "rol": "Atributo",
+   "significado": "Tipo de instrumento según la codificación SEIL de la CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_vencimiento",
+   "rol": "Fecha",
+   "significado": "Fecha de vencimiento (AAAA-MM-DD; vacío si no aplica).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "situacion_instrumento",
+   "rol": "Atributo",
+   "significado": "1 sin restricción; 2 con compromiso (pacto); 3 en garantía de derivados o venta corta; 4 otra restricción; 5 préstamo para venta corta.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "clasificacion_riesgo",
+   "rol": "Atributo",
+   "significado": "Menor categoría de riesgo (AAA … E, N-1 … N-5; NA si no aplica).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_grupo_empresarial",
+   "rol": "Atributo",
+   "significado": "Código del grupo empresarial del emisor (0000 si no pertenece a uno).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cantidad_unidades",
+   "rol": "Métrica",
+   "significado": "Unidades nominales (deuda) o número de unidades (capitalización).",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_unidades",
+   "rol": "Atributo",
+   "significado": "Moneda o unidad de reajuste de la cantidad de unidades.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tir_valor_par_precio",
+   "rol": "Métrica",
+   "significado": "TIR, % del valor par o precio usado para valorizar, según el código de valorización.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_valorizacion",
+   "rol": "Atributo",
+   "significado": "1 TIR; 2 % del valor par; 3 valor relevante.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "base_tasa_dias",
+   "rol": "Atributo",
+   "significado": "Días que cubre la tasa (30, 360, 365; 0 si no aplica).",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_interes",
+   "rol": "Atributo",
+   "significado": "NL nominal lineal; NC nominal compuesto; RL real lineal; RC real compuesto; NA no aplica.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Valor Razonable / MtM",
+   "nombre": "valorizacion_miles_mf",
+   "rol": "Métrica",
+   "significado": "Valorización al cierre, en miles de la moneda funcional del fondo.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "moneda_liquidacion",
+   "rol": "Atributo",
+   "significado": "Moneda de liquidación (codificación SEIL; $$ pesos, PROM dólar, UF, etc.).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pais_transaccion",
+   "rol": "Atributo",
+   "significado": "País donde se adquirió el instrumento.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pct_capital_emisor",
+   "rol": "Métrica",
+   "significado": "% del capital del emisor que posee el fondo (acciones y cuotas; 0 en deuda).",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pct_activo_emisor",
+   "rol": "Métrica",
+   "significado": "Inversión como % del activo total del emisor.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pct_activo_fondo",
+   "rol": "Métrica",
+   "significado": "Inversión como % del activo total del fondo.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_emisor",
+   "rol": "Atributo",
+   "significado": "Cuerpo del RUT del emisor (sin dígito verificador). Nulo cuando probablemente corresponde a una persona natural (mutuos hipotecarios, pagarés y otros instrumentos de deuda): ese identificador no se publica. Ver emisor_tipo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "emisor_tipo",
+   "rol": "Atributo",
+   "significado": "Criterio aplicado sobre rut_emisor: «persona_juridica», «persona_natural_probable» (RUT suprimido por privacidad) o «sin_rut_informado». Regla y umbrales en pipelines/auto/privacidad.py.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "run_fondo",
+   "destino": "fi_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "fi_cartera_nacional",
+ "primaryKey": [],
+ "sector": "fi",
+ "titulo": "fi.cartera_nacional",
+ "version": "1.0.0"
+}

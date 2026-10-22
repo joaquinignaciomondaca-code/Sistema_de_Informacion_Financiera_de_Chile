@@ -1,0 +1,167 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la cartera informada (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "Atributo",
+   "significado": "vida (archivos CSVID) o generales (CSGEN).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "FK",
+   "significado": "RUT de la compañía de seguros, con dígito verificador (une con seguros.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el encabezado del archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_instrumento",
+   "rol": "Atributo",
+   "significado": "Este campo es obligatorio y se informará de acuerdo a la codificación definida en SEIL, codificación S.V.S., Instrumentos.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nemotecnico",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el código nemotécnico, de acuerdo a las instrucciones impartidas por Circular N° 1085 o la que la reemplace, utilizado para identificar el instrumento cuando se trate de acciones nacionales transadas en el mercado nacional o cuotas de fondos.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "serie",
+   "rol": "Atributo",
+   "significado": "Se deberá informar la serie del instrumento cuando corresponda.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidad_monetaria",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la unidad monetaria o moneda de origen de la acción o cuota. Se informará de acuerdo a la codificación definida en SEIL.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidades",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el número de acciones o cuotas, propiedad de la entidad a la fecha de cierre del mes a que se refiere la información, agrupando todas las compras correspondientes al mismo emisor, fondo de inversión y serie, cuando corresponda.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "Costo",
+   "nombre": "valor_costo_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al precio pagado por las acciones o por las cuotas de fondos de inversión, más los gastos asociados, tales como comisiones e impuestos (exceptos aquellos recuperables), a la fecha de cierre del mes a que se refiere la información. Este monto se deberá expresar en pesos ($). Expresado en pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_libro_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor libro unitario de una acción o al valor contable unitario de la cuota, por el número de UNIDADES. Expresado en pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor de mercado bruto",
+   "nombre": "valor_bolsa_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor bolsa de la cuota o de la acción definido en Circular de Valorización, multiplicado por el número de UNIDADES, este monto se deberá expresar en pesos ($). Para el caso de sociedades anónimas cerradas o cuotas de fondos que no tengan valor bolsa, se deberá informar con ceros. Expresado en pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor razonable",
+   "nombre": "valor_razonable_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor de mercado del instrumento a la fecha de la información. Se debe presentar en M$. Para las inversiones que no se transen en un mercado primario o secundario, se deberá informar una estimación del valor de mercado realizada por la compañía. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Deterioro",
+   "nombre": "deterioro_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al deterioro de la inversión, según lo señalado en la Norma de Carácter General N°311, del 28.06.2011. Este monto deberá expresarse en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor contable informado",
+   "nombre": "valor_final_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor que tiene el instrumento a la fecha de cierre del mes a que se refiere la información, según lo establecido en Circular de Valorización de Inversiones vigente. Este monto se deberá expresar en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "clasificacion_de_riesgo",
+   "rol": "Atributo",
+   "significado": "Se deberá informar la menor clasificación de riesgo vigente del instrumento a la fecha de cierre del mes a que se refiere la información. Si el instrumento no contara con clasificación de riesgo se debe informar S/C.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "relacionado",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si el emisor del instrumento está relacionado con la compañía de seguros, de acuerdo a lo establecido en el artículo N°100 de la ley N°18.045 del 22.10.1981 y sus modificaciones. Se señalará de acuerdo a la siguiente codificación: RE : Relacionado NR : No Relacionado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "derivado",
+ "foraneas": [
+  {
+   "columna": "rut_aseguradora",
+   "destino": "seguros_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "seguros_acciones_relevantes",
+ "primaryKey": [
+  "valor_final_m_clp",
+  "valor_razonable_m_clp",
+  "valor_bolsa_clp",
+  "valor_costo_clp",
+  "unidades",
+  "valor_libro_clp",
+  "deterioro_m_clp",
+  "nemotecnico",
+  "periodo",
+  "serie",
+  "nombre_aseguradora",
+  "rut_aseguradora"
+ ],
+ "sector": "seguros",
+ "titulo": "B.2 ACCIONES DE SOCIEDADES ANÓNIMAS ABIERTAS, ACCIONES DE SOCIEDADES ANÓNIMAS CERRADAS Y CUOTAS DE FONDOS DE INVERSIÓN",
+ "version": "1.0.0"
+}

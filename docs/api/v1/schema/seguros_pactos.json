@@ -1,0 +1,272 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la cartera informada (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "Atributo",
+   "significado": "vida (archivos CSVID) o generales (CSGEN).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "FK",
+   "significado": "RUT de la compañía de seguros, con dígito verificador (une con seguros.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el encabezado del archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_operacion",
+   "rol": "Atributo",
+   "significado": "Código que identifica las operaciones informadas por la compañía, deben informarse todas las operaciones vigentes a la fecha de presentación de la información.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "folio_operacion",
+   "rol": "Métrica",
+   "significado": "En el caso que la operación corresponda a una retroventa, se debe indicar el número de la papeleta de la mesa de dinero de la compañía, donde se registra la operación subyacente al pacto. Para otro tipo de pacto se debe informar el folio de la operación de pacto.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "item_operacion",
+   "rol": "Métrica",
+   "significado": "Secuencia dentro del folio de la operación. No pueden existir dos operaciones con igual folio e ítem operación.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_de_la_operacion",
+   "rol": "Fecha",
+   "significado": "Corresponde informar la fecha de inicio del contrato de pacto con el siguiente formato: AAAAMMDD.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_de_vencimiento_del_contrato",
+   "rol": "Fecha",
+   "significado": "Corresponde informar la fecha de vencimiento del contrato de pacto con el siguiente formato: AAAAMMDD.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_pacto",
+   "rol": "Métrica",
+   "significado": "Corresponde informar la tasa a la cual fue realizado el pacto, indicada en el contrato de pacto.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el nombre o razón social de la contraparte del pacto. Para el caso de las operaciones realizadas con bancos nacionales se informará de acuerdo a codificación definida en SEIL, Codificación SVS, Códigos Circular 1835, Códigos de Bancos, Nombre del Banco para C.1835.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nacionalidad",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la nacionalidad de la contraparte del pacto, de acuerdo a la codificación definida en SEIL, Codificación SVS, Países.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "relacionado",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si la contraparte del pacto de la operación está relacionada con la compañía de seguros, de acuerdo a lo establecido en el artículo N°100 de la ley N°18.045 del 22.10.1981 y modificaciones. Se señalará de acuerdo a la siguiente codificación: RE : Relacionado NR : No Relacionado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_objeto",
+   "rol": "Atributo",
+   "significado": "Instrumento subyacente al pacto. En el caso de tratarse de un.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "serie_activo_objeto",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la serie del instrumento subyacente al pacto cuando corresponda.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nro_rut_activo_objeto",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el Rut del emisor del instrumento subyacente.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_nominal",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el valor nominal del instrumento subyacente a la fecha de presentación de la información. Se entiende por “nominal” los nominales comprados originalmente menos las ventas realizadas sobre este título.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tir_compra",
+   "rol": "Métrica",
+   "significado": "Corresponde a la tasa anual de descuento utilizada para determinar el precio del instrumento subyacente al momento de la compra.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_emision",
+   "rol": "Métrica",
+   "significado": "Corresponde a la tasa a la cual fue emitido el instrumento subyacente.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_objeto_valor_contable",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor contable del instrumento subyacente al pacto.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "moneda",
+   "rol": "Atributo",
+   "significado": "Corresponde a la moneda en la cual está denominado el instrumento subyacente el pacto, cuando corresponda. Se informará de acuerdo a la codificación definida en el sitio web de esta Superintendencia en el módulo SEIL, Codificación SVS, Unidades Monetarias.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_o_precio_de_mercado",
+   "rol": "Métrica",
+   "significado": "Tasa de mercado del instrumento subyacente al pacto, a la fecha de valorización.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_de_mercado_a_la_fecha_de_suscripcion_monto",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el monto del valor de mercado, del activo objeto a la fecha de suscripción del pacto.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_inicial_um",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor invertido en la operación, indicado en el contrato de pacto, expresado en la moneda del pacto.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_pactado",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor del pacto al vencimiento, acordado en el contrato de pacto, expresado en la moneda del pacto.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "Devengado",
+   "nombre": "interes_devengado_del_pacto_m",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el interés que resulte de aplicar la tasa implícita entre el valor de compra del activo objeto y el monto a recibir por el cumplimiento del compromiso de venta, en proporción.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valorizacion_de_pacto_a_la_fecha_de_cierre_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el valor en que se encuentra contabilizado el pacto, de acuerdo a las instrucciones de circular sobre valorización de esta Superintendencia, a la fecha de cierre del mes a que se refiere la información, expresado en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_de_mercado_a_la_fecha_de_informacion",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el monto del valor de mercado, del activo subyacente del pacto, a la fecha de información.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tsa",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si el instrumento está incluido en el Test de Suficiencia de Activos para el periodo informado, de acuerdo a la siguiente codificación: SI: el instrumento es utilizado para el análisis del Test de Suficiencia de Activos NO: el instrumento no es utilizado para el análisis del.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "metod_clasif_valo",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la clasificación dada al instrumento en los.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "rut_aseguradora",
+   "destino": "seguros_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "seguros_pactos",
+ "primaryKey": [
+  "valorizacion_de_pacto_a_la_fecha_de_cierre_m_clp",
+  "valor_de_mercado_a_la_fecha_de_informacion",
+  "activo_objeto_valor_contable",
+  "interes_devengado_del_pacto_m",
+  "valor_pactado",
+  "valor_inicial_um",
+  "valor_de_mercado_a_la_fecha_de_suscripcion_monto",
+  "tasa_o_precio_de_mercado",
+  "tir_compra",
+  "folio_operacion",
+  "valor_nominal",
+  "fecha_de_vencimiento_del_contrato",
+  "item_operacion"
+ ],
+ "sector": "seguros",
+ "titulo": "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS",
+ "version": "1.0.0"
+}

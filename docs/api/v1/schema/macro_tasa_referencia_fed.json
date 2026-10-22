@@ -1,0 +1,38 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha",
+   "rol": "PK",
+   "significado": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_fed_funds_pct",
+   "rol": "Métrica",
+   "significado": "Tasa efectiva de fondos federales de la Reserva Federal de los Estados Unidos del día, en porcentaje anual.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "macro_tasa_referencia_fed",
+ "primaryKey": [
+  "fecha"
+ ],
+ "sector": "macro",
+ "titulo": "macro.tasa_referencia_fed",
+ "version": "1.0.0"
+}

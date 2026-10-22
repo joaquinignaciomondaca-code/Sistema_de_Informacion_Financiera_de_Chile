@@ -1,0 +1,170 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes informado (AAAA-MM), cartera al último día del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "run_fondo",
+   "rol": "FK",
+   "significado": "RUN del fondo mutuo (une con ffmm.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_fondo",
+   "rol": "Atributo",
+   "significado": "Nombre del fondo en el archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_objeto",
+   "rol": "Atributo",
+   "significado": "Activo objeto del contrato.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nemotecnico",
+   "rol": "Atributo",
+   "significado": "Nemotécnico del instrumento o contrato (en forwards, la palabra FORWARD).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "forma_ejercicio",
+   "rol": "Atributo",
+   "significado": "A americana; E europea.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_expiracion",
+   "rol": "Fecha",
+   "significado": "Último día en que la opción puede ejercerse.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "moneda_liquidacion",
+   "rol": "Atributo",
+   "significado": "Moneda de liquidación (codificación SEIL; $$ pesos, PROM dólar, UF, etc.).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pais",
+   "rol": "Atributo",
+   "significado": "País donde se suscribió el contrato.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_opcion",
+   "rol": "Atributo",
+   "significado": "C derecho a comprar; V derecho a vender.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_mercado_unitario_prima",
+   "rol": "Métrica",
+   "significado": "Valor de mercado unitario de la prima.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "numero_contratos",
+   "rol": "Métrica",
+   "significado": "Número de contratos de la misma serie.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "precio_ejercicio",
+   "rol": "Métrica",
+   "significado": "Precio de ejercicio.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_mercado_activo_objeto",
+   "rol": "Métrica",
+   "significado": "Precio de mercado del activo objeto.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidades_activo_objeto",
+   "rol": "Métrica",
+   "significado": "Unidades del activo objeto que se pueden comprar o vender.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "Valor Razonable / MtM",
+   "nombre": "inversion_primas_miles_mf",
+   "rol": "Métrica",
+   "significado": "Inversión en primas, en miles de la moneda funcional del fondo.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "Valor Razonable / MtM",
+   "nombre": "valorizacion_precio_ejercicio_miles_mf",
+   "rol": "Métrica",
+   "significado": "Unidades del activo objeto valorizadas a precio de ejercicio, en miles de la moneda funcional.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "Valor Razonable / MtM",
+   "nombre": "valorizacion_mercado_miles_mf",
+   "rol": "Métrica",
+   "significado": "Valor de mercado, en miles de la moneda funcional del fondo.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pct_primas_activo_fondo",
+   "rol": "Métrica",
+   "significado": "Inversión en primas como % del activo total del fondo.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "run_fondo",
+   "destino": "ffmm_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "ffmm_opciones",
+ "primaryKey": [],
+ "sector": "ffmm",
+ "titulo": "ffmm.opciones",
+ "version": "1.0.0"
+}

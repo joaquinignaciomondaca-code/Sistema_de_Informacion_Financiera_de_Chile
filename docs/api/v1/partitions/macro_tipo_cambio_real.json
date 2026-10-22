@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "macro_tipo_cambio_real",
+ "particiones": [
+  {
+   "archivo": "outputs/macro/macro_tipo_cambio_real.parquet",
+   "bytes": 6393,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_tipo_cambio_real.parquet",
+   "periodo": "macro_tipo_cambio_real",
+   "sha256": "a2ca61df5ce09806bc27d2636ce819498f63a5f4c1cd8c11ee7c4a7d50e0b4f0"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 6393,
+  "filas": 152
+ },
+ "version": "1.0.0"
+}

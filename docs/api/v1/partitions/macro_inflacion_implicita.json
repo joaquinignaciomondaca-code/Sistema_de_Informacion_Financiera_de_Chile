@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "macro_inflacion_implicita",
+ "particiones": [
+  {
+   "archivo": "outputs/macro/macro_inflacion_implicita.parquet",
+   "bytes": 36812,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_inflacion_implicita.parquet",
+   "periodo": "macro_inflacion_implicita",
+   "sha256": "3a3e9e0f52625494a12b5905eb28944b65cf7c78f9133e961c47aa2f75484733"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 36812,
+  "filas": 3077
+ },
+ "version": "1.0.0"
+}

@@ -1,0 +1,190 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut",
+   "rol": "PK",
+   "significado": "Rol Único Tributario numérico de la Caja de Compensación.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "dv",
+   "rol": "Dimensión",
+   "significado": "Dígito verificador del RUT según algoritmo Módulo 11.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_completo",
+   "rol": "Dimensión",
+   "significado": "RUT formateado con separadores de miles y guion (ej: 81.826.800-9).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "razon_social",
+   "rol": "Dimensión",
+   "significado": "Nombre legal formal de la Corporación de Derecho Privado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_fantasia",
+   "rol": "Dimensión",
+   "significado": "Nombre comercial o de fantasía (Los Andes, La Araucana, Los Héroes, Caja 18).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_entidad",
+   "rol": "Dimensión",
+   "significado": "Clasificación institucional: Caja de Compensación de Asignación Familiar.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "marco_legal",
+   "rol": "Dimensión",
+   "significado": "Normativa habilitante: Ley N° 18.833 (Estatuto General de CCAF).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "naturaleza_juridica",
+   "rol": "Dimensión",
+   "significado": "Corporación de Derecho Privado sin fines de lucro.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "regulador_primario",
+   "rol": "Dimensión",
+   "significado": "Organismo supervisor técnico principal: SUSESO.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "regulador_mercado_valores",
+   "rol": "Dimensión",
+   "significado": "Supervisión de oferta pública de valores: 'CMF (Emisor de Bonos)' o 'No Aplica (Supervisión Exclusiva SUSESO)'.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "emisor_valores_cmf",
+   "rol": "Dimensión",
+   "significado": "Indica si la Caja está registrada como Emisor de Valores (RVEMI) en la CMF.",
+   "tipo": "BOOLEAN",
+   "tipo_ts": "boolean"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_cmf",
+   "rol": "Dimensión",
+   "significado": "Código institucional en la base de datos de la CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "estado_vigencia",
+   "rol": "Dimensión",
+   "significado": "Condición operativa: 'Vigente' (4 entidades) o 'Absorbida' (2 entidades históricas).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "ano_fundacion",
+   "rol": "Dimensión",
+   "significado": "Año de inicio de actividades institucionales.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "domicilio_casa_matriz",
+   "rol": "Dimensión",
+   "significado": "Dirección de la sede central corporativa.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "comuna",
+   "rol": "Dimensión",
+   "significado": "Comuna de la sede central.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "region",
+   "rol": "Dimensión",
+   "significado": "Región administrativa chilena.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sitio_web",
+   "rol": "Dimensión",
+   "significado": "Portal institucional oficial en internet.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cmf_url",
+   "rol": "Dimensión",
+   "significado": "Enlace directo al expediente del emisor en el portal de la CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "suseso_url",
+   "rol": "Dimensión",
+   "significado": "Enlace oficial a la sección de estados financieros de la SUSESO.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "lineas_deuda_registradas",
+   "rol": "Dimensión",
+   "significado": "Indica si posee líneas de bonos corporativos vigentes o registradas en la CMF.",
+   "tipo": "BOOLEAN",
+   "tipo_ts": "boolean"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "observaciones",
+   "rol": "Dimensión",
+   "significado": "Notas regulatorias, prestaciones sociales y alcance institucional.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "ccaf_lista_entidades",
+ "primaryKey": [
+  "rut"
+ ],
+ "sector": "cajas_compensacion",
+ "titulo": "ccaf.maestro",
+ "version": "1.0.0"
+}

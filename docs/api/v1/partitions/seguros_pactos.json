@@ -1,0 +1,91 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "seguros_pactos",
+ "particiones": [
+  {
+   "archivo": "outputs/seguros/pactos/2016.parquet",
+   "bytes": 28234,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/pactos/2016.parquet",
+   "periodo": "2016",
+   "sha256": "2d8981c5973e40b4a9b9ea240b19f1991c948f389f2a0b2c3f61e6ddcf22b4f2"
+  },
+  {
+   "archivo": "outputs/seguros/pactos/2017.parquet",
+   "bytes": 60021,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/pactos/2017.parquet",
+   "periodo": "2017",
+   "sha256": "a97eccbcb7d79ef0f355290f1847032207e69d5c355c153c17474709ad25180b"
+  },
+  {
+   "archivo": "outputs/seguros/pactos/2018.parquet",
+   "bytes": 50584,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/pactos/2018.parquet",
+   "periodo": "2018",
+   "sha256": "4b212414fdc31f2706d12bab0642f54ce3b4a8cebba3307620afeefc1301a577"
+  },
+  {
+   "archivo": "outputs/seguros/pactos/2019.parquet",
+   "bytes": 36104,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/pactos/2019.parquet",
+   "periodo": "2019",
+   "sha256": "cdbe37155962119573a2bed401fa6aa49d20b28e184acd762eca7764069e9d0a"
+  },
+  {
+   "archivo": "outputs/seguros/pactos/2020.parquet",
+   "bytes": 39653,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/pactos/2020.parquet",
+   "periodo": "2020",
+   "sha256": "746018328093a9e7ca11d2619383aacc605c7bc14b5cb2f6733329e128902a6e"
+  },
+  {
+   "archivo": "outputs/seguros/pactos/2021.parquet",
+   "bytes": 50587,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/pactos/2021.parquet",
+   "periodo": "2021",
+   "sha256": "cbfcdd8160e3867ad0fdee55d2222405ca1665eca76b11f9fe564594527f4458"
+  },
+  {
+   "archivo": "outputs/seguros/pactos/2022.parquet",
+   "bytes": 56719,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/pactos/2022.parquet",
+   "periodo": "2022",
+   "sha256": "57425d1342af3799423f864bb8ddd0e25facbd89804e2c8f121db18f890ead04"
+  },
+  {
+   "archivo": "outputs/seguros/pactos/2023.parquet",
+   "bytes": 58043,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/pactos/2023.parquet",
+   "periodo": "2023",
+   "sha256": "1d586bf672ee8ce90ed38296c19587114976704f91c1ae2650ef9642cfcc8828"
+  },
+  {
+   "archivo": "outputs/seguros/pactos/2024.parquet",
+   "bytes": 90148,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/pactos/2024.parquet",
+   "periodo": "2024",
+   "sha256": "fce5364bf0b9c3996f8e289296bc8447af1e798a8c4c259ae928ad7ecd4ed87b"
+  },
+  {
+   "archivo": "outputs/seguros/pactos/2025.parquet",
+   "bytes": 79279,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/pactos/2025.parquet",
+   "periodo": "2025",
+   "sha256": "1755d72509fcb11443c16a5adfdb424bf31b23c96507315afe4086b67539e79d"
+  },
+  {
+   "archivo": "outputs/seguros/pactos/2026.parquet",
+   "bytes": 79081,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/pactos/2026.parquet",
+   "periodo": "2026",
+   "sha256": "463c4a24074f4ee1ba7403818a6eeadffa780e6b7097e0d8b20d1b9fb2220890"
+  }
+ ],
+ "total": {
+  "archivos": 11,
+  "bytes": 628453,
+  "filas": 11371
+ },
+ "version": "1.0.0"
+}

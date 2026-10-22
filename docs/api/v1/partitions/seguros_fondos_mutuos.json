@@ -1,0 +1,91 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "seguros_fondos_mutuos",
+ "particiones": [
+  {
+   "archivo": "outputs/seguros/fondos_mutuos/2016.parquet",
+   "bytes": 76395,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/fondos_mutuos/2016.parquet",
+   "periodo": "2016",
+   "sha256": "3abaefd153ec8234a89436e1190dfe8d53db21f6d15b990427f8f5b3a1433ef9"
+  },
+  {
+   "archivo": "outputs/seguros/fondos_mutuos/2017.parquet",
+   "bytes": 313803,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/fondos_mutuos/2017.parquet",
+   "periodo": "2017",
+   "sha256": "1e7d7f93f9b36dc7fb06b916e628e7ca606e76ce1695453f13ab47837c3a9706"
+  },
+  {
+   "archivo": "outputs/seguros/fondos_mutuos/2018.parquet",
+   "bytes": 349961,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/fondos_mutuos/2018.parquet",
+   "periodo": "2018",
+   "sha256": "55fef154f67feb957486f73de1bac0bc2c3a8663a5c809bf624baf581ec816ae"
+  },
+  {
+   "archivo": "outputs/seguros/fondos_mutuos/2019.parquet",
+   "bytes": 322295,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/fondos_mutuos/2019.parquet",
+   "periodo": "2019",
+   "sha256": "718fab23e585c48547f74dde9f62dbe3af59027f5eeea6aa3e4f0891a4c3d119"
+  },
+  {
+   "archivo": "outputs/seguros/fondos_mutuos/2020.parquet",
+   "bytes": 346013,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/fondos_mutuos/2020.parquet",
+   "periodo": "2020",
+   "sha256": "d3571dc5a0c1ebcfa3d4a19b59b51d4152502e03a4fec2b9b07e243ee75e3d91"
+  },
+  {
+   "archivo": "outputs/seguros/fondos_mutuos/2021.parquet",
+   "bytes": 326685,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/fondos_mutuos/2021.parquet",
+   "periodo": "2021",
+   "sha256": "8f94edb3d4c6dd7648942829d2fb63057ab76abe0fb1ddfc4320fe01605a52b2"
+  },
+  {
+   "archivo": "outputs/seguros/fondos_mutuos/2022.parquet",
+   "bytes": 311962,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/fondos_mutuos/2022.parquet",
+   "periodo": "2022",
+   "sha256": "86bb2ac0225bb9ddc6c05c6e8f11404af39d55235c9a1c55a4b52672974d68e9"
+  },
+  {
+   "archivo": "outputs/seguros/fondos_mutuos/2023.parquet",
+   "bytes": 285500,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/fondos_mutuos/2023.parquet",
+   "periodo": "2023",
+   "sha256": "6159b99e53bda3e019599dec0dcb78ea002962dc18301f49ee4b52be083b9d56"
+  },
+  {
+   "archivo": "outputs/seguros/fondos_mutuos/2024.parquet",
+   "bytes": 279814,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/fondos_mutuos/2024.parquet",
+   "periodo": "2024",
+   "sha256": "b49f6fe019c4c89713b33334c847be95edb302854cb72f5745cd6921433a132d"
+  },
+  {
+   "archivo": "outputs/seguros/fondos_mutuos/2025.parquet",
+   "bytes": 266714,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/fondos_mutuos/2025.parquet",
+   "periodo": "2025",
+   "sha256": "1edbb3a62bd94df97e0ec2652647e4e00eaef8ca5741b2086cc55eb6678c452e"
+  },
+  {
+   "archivo": "outputs/seguros/fondos_mutuos/2026.parquet",
+   "bytes": 179101,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/fondos_mutuos/2026.parquet",
+   "periodo": "2026",
+   "sha256": "c680ff43e56ec7e4587613067db0b5cf6b9ac59d477825b4559798e249a619df"
+  }
+ ],
+ "total": {
+  "archivos": 11,
+  "bytes": 3058243,
+  "filas": 100472
+ },
+ "version": "1.0.0"
+}

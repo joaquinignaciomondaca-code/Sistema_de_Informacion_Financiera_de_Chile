@@ -1,0 +1,614 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la cartera informada (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "Atributo",
+   "significado": "vida (archivos CSVID) o generales (CSGEN).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "FK",
+   "significado": "RUT de la compañía de seguros, con dígito verificador (une con seguros.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el encabezado del archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_registro",
+   "rol": "Atributo",
+   "significado": "Subtipo de registro dentro del archivo (por ejemplo forward, swap o deuda).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "objetivo_contrato",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el objetivo del contrato derivado, de acuerdo a lo señalado en la NCG N°200 de fecha 07.08.2006. Se señalará de acuerdo a la siguiente codificación: INV : Inversión CBE : Cobertura de riesgos financieros.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_operacion",
+   "rol": "Atributo",
+   "significado": "Código que identifica las operaciones informadas por la compañía, deben informarse todas las operaciones vigentes a la fecha de presentación de la información.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "folio_operacion",
+   "rol": "Métrica",
+   "significado": "Corresponde al número de la papeleta de la mesa de dinero de la compañía, donde se registra la compra del instrumento derivado. En caso de no poder obtener este número se deberá asociar al documento contable que respalda la compra del instrumento.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "item_operacion",
+   "rol": "Métrica",
+   "significado": "Secuencia del instrumento derivado dentro del folio de la operación. No pueden existir dos instrumentos derivados con igual folio e ítem operación.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_de_la_operacion",
+   "rol": "Fecha",
+   "significado": "Corresponde informar la fecha de inicio del contrato con el siguiente formato: AAAAMMDD.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_de_vencimiento_del_contrato",
+   "rol": "Fecha",
+   "significado": "Corresponde informar la fecha de término del contrato con el siguiente formato: AAAAMMDD.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el nombre o razón social de la contraparte de la operación. Para el caso de las operaciones realizadas con bancos nacionales se informará de acuerdo a codificación definida en SEIL, Codificación SVS, Códigos Circular 1835, Códigos de Bancos, Nombre del Banco para C.1835.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nacionalidad",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la nacionalidad de la contraparte de la operación, de acuerdo a la codificación definida en SEIL, Codificación SVS, Países.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "relacionado",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si la contraparte de la operación está relacionada con la compañía de seguros, de acuerdo a lo establecido en el artículo N°100 de la ley N°18.045 del 22.10.1981 y modificaciones. Se señalará de acuerdo a la siguiente codificación: RE : Relacionado NR : No Relacionado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "clasificacion_de_riesgo",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la menor clasificación de riesgo vigente de la contraparte de la operación. Si la contraparte no contara con clasificación de riesgo se debe informar S/C.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_objeto_posicion_larga",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el activo objeto para opciones con posición larga, para opciones con posición corta indicar NO APLICA.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_objeto_posicion_corta",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el activo objeto para opciones con posición.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_objeto_unidades",
+   "rol": "Métrica",
+   "significado": "Corresponde al número de unidades del activo subyacente de cada.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "moneda",
+   "rol": "Atributo",
+   "significado": "Corresponde a la moneda en la cual está denominado el derivado, cuando corresponda. Se informará de acuerdo a la codificación definida en el sitio web de esta Superintendencia en el módulo SEIL, Codificación SVS, Unidad Monetaria. De no existir, se deberá consultar a esta Superintendencia.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "precio_de_ejercicio",
+   "rol": "Métrica",
+   "significado": "Precio de intercambio a futuro fijado en el contrato, por una unidad del activo subyacente. Debe ser expresado en la moneda en la cual está denominado el derivado.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "precio_spot_del_activo_subyacente",
+   "rol": "Métrica",
+   "significado": "Corresponde al precio de cierre observado del activo subyacente a la opción, a la fecha de la información. En caso de Opción sobre moneda, corresponde al valor de la moneda en el mercado contado a la fecha de información.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "prima_de_la_opcion_monto",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el valor pagado o recibido por la suscripción de la opción.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "prima_de_la_opcion_moneda",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la moneda en que se encuentra expresada la prima de la opción, de acuerdo a la codificación definida en SEIL, Codificación SVS, Unidades Monetarias.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Valor razonable",
+   "nombre": "valor_razonable_del_activo_objeto_a_la_fecha_de_informacion_monto",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el precio spot del activo objeto a la fecha de información multiplicado por el número de unidades del activo subyacente de cada contrato (M$).",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "numero_de_contratos",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el número de contratos comprados o vendidos en cada operación.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor razonable",
+   "nombre": "valor_razonable_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor razonable de la opción, a la fecha de cierre del mes a que se refiere la información (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "origen_de_la_informacion",
+   "rol": "Atributo",
+   "significado": "Corresponde a la fuente de donde se obtuvieron los datos para valorizar el contrato.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_respalda_reserva_valor_de_fondo",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si uno o más títulos (en caso de haber agrupado instrumentos con características idénticas) registrados, se encuentran respaldando la reserva de valor del fondo señalada en el DFL Nº251.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_del_fondo",
+   "rol": "Atributo",
+   "significado": "Para instrumentos que estén asociados a fondos que respalden seguros de vida con cuenta de inversión, se debe informar el nombre del Fondo al cual pertenece. Se entenderá por fondo al tipo de plan o modalidades de inversión convenidos para los seguros con cuentas de inversión.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_cartera",
+   "rol": "Atributo",
+   "significado": "Para instrumentos que no respalden seguros de vida con cuenta de inversión, se debe informar la sub cartera que respalda, si corresponde. Para instrumentos que no respalden una sub cartera, se debe informar “NO APLICA”.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "monto_activos_en_margen_m_clp",
+   "rol": "Métrica",
+   "significado": "Se deberá informar el valor final, a la fecha de información, de los activos entregados como margen en la operación, expresado en miles de pesos (M$). Si para la operación no es necesario dejar activos en margen indicar cero. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "monto_activo_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el monto contabilizado en activos producto de este contrato, es decir, el producto entre el valor de la opción a la fecha de la información y el número de contratos. Este monto se deberá expresar en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "monto_pasivo_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el monto contabilizado en pasivos producto de este contrato, es decir, el producto entre el valor de la opción a la fecha de la información y el número de contratos. Este monto se deberá expresar en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "efecto_en_resultados_realizados_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el efecto realizado en los resultados de las operaciones a la fecha de los estados financieros. Este monto se deberá expresar en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tsa",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si el instrumento está incluido en el Test de Suficiencia de Activos para el periodo informado, de acuerdo a la siguiente codificación: SI: el instrumento es utilizado para el análisis del Test de Suficiencia de Activos NO: el instrumento no es utilizado para el análisis del.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "metod_clasif_valo",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la clasificación dada al instrumento en los.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_objeto_posicion_larga_unidades",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el número de unidades del activo subyacente en el cual esta expresada la posición larga de cada contrato.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_objeto_posicion_corta_unidades",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el número de unidades del activo subyacente en el cual esta expresada la posición corta de cada contrato.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "precio_forward_contrato",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el precio a futuro establecido en el contrato. En caso de un forward de moneda corresponde informar el valor al cual será intercambiada la moneda de acuerdo a la posición que tenga la compañía en el contrato.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_de_mercado_del_activo_objeto_a_la_fecha_de_informacion_monto",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el precio spot del activo objeto a la fecha de información multiplicado por el número de unidades del activo subyacente de cada contrato (M$).",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "precio_forward_mercado",
+   "rol": "Métrica",
+   "significado": "Precio forward de mercado a la fecha de valorización, para un contrato de similares características al valorizado, entendiéndose por características del contrato, el activo subyacente y la fecha que le resta al vencimiento desde la fecha de valorización.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_descuento_de_flujos",
+   "rol": "Métrica",
+   "significado": "Corresponde a la tasa de interés real anual de mercado para operaciones similares a plazos equivalentes a la madurez del contrato o a la Tir de compra para los derivados que cubren activos acogidos a la Circular N° 1512.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "Valor razonable",
+   "nombre": "valor_razonable_del_contrato_a_la_fecha_de_la_informacion",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor que presenta el contrato forward a la fecha de información, que se define como el valor actual de la diferencia entre el precio forward de mercado para un contrato de similares características menos el precio forward fijado en el contrato, multiplicado por los nominales del.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "precio_futuro_de_mercado_al_inicio_de_la_operacion",
+   "rol": "Métrica",
+   "significado": "Corresponde al precio futuro de mercado del contrato a la fecha de cierre del trimestre anterior; o bien, a la fecha de inicio de la operación si es que ésta se efectúo durante el trimestre que se está informando.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "precio_futuro_de_mercado_a_la_fecha_de_informacion",
+   "rol": "Métrica",
+   "significado": "Corresponde al precio futuro de mercado a la fecha de información, para un contrato de idénticas características. Este debe ser expresado de acuerdo a la moneda extranjera establecida por contrato a ser entregada o recibida en una fecha futura.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "Valor razonable",
+   "nombre": "valor_razonable_del_contrato_futuro_a_la_fecha_de_informacion",
+   "rol": "Métrica",
+   "significado": "Para aquellos Futuros que no tengan compensación diaria se debe informar el valor neto de la posición del futuro, el cual corresponde a la diferencia entre los montos contabilizados en activos y pasivos producto de este contrato, a la fecha de cierre en miles de pesos (M$).",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_objeto_posicion_larga_nocional",
+   "rol": "Métrica",
+   "significado": "Corresponde al Valor nocional establecido por contrato, que será recibido en una fecha futura por la compañía.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_objeto_posicion_corta_nocional",
+   "rol": "Métrica",
+   "significado": "Corresponde al Valor nocional establecido por contrato, que será entregado en una fecha futura por la compañía.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "moneda_posicion_larga",
+   "rol": "Atributo",
+   "significado": "Corresponde a la moneda en la cual está expresada la posición larga en el contrato swap, es decir la moneda en que está denominada la tasa o el nocional, que debe ser recibido en una fecha futura, cuando corresponda.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "moneda_posicion_corta",
+   "rol": "Atributo",
+   "significado": "Corresponde a la moneda en la cual está expresada la posición corta en el contrato swap, es decir la moneda en que está denominada la tasa o el nocional, que debe ser entregado en una fecha futura, cuando corresponda.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_a_futuro_contrato_posicion_larga",
+   "rol": "Atributo",
+   "significado": "Corresponde a la tasa a futuro establecida en el contrato swap la cual generará los flujos a ser recibidos en una fecha futura, cuando corresponda. Ej.: Fija 8,5%, Libor, etc.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_a_futuro_contrato_posicion_corta",
+   "rol": "Atributo",
+   "significado": "Corresponde a la tasa a futuro establecida en el contrato swap la cual generará los flujos a ser entregados en una fecha futura, cuando corresponda. Ej: Fija 7,4%, Libor, etc.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "t_c_futuro_contrato",
+   "rol": "Métrica",
+   "significado": "Corresponde al tipo de cambio a futuro establecido en el contrato swap y deberá ser expresado de acuerdo a la moneda extranjera establecida por contrato a ser entregada o recibida en una fecha futura.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_a_futuro_mercado_posicion_larga",
+   "rol": "Métrica",
+   "significado": "Corresponde a la tasa de interés única, que aplicada a cada flujo del swap de la posición larga, genera el mismo valor presente que al valorizar cada flujo usando la estructura cero cupón de mercado a la fecha.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_a_futuro_mercado_posicion_corta",
+   "rol": "Métrica",
+   "significado": "Corresponde a la tasa de interés única, que aplicada a cada flujo del swap de la posición corta, genera el mismo valor presente que al valorizar cada flujo usando la estructura cero cupón de mercado a la fecha.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_de_cambio_me",
+   "rol": "Métrica",
+   "significado": "Tipo de cambio spot de mercado a la fecha de valorización.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_presente_posicion_larga_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor actual de los flujos a recibir descontados a la tasa de mercado posición larga o a Tir de compra según corresponda. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_presente_posicion_corta_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor actual de los flujos a entregar descontados a la tasa de mercado posición corta o a Tir de compra según corresponda. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor razonable",
+   "nombre": "valor_razonable_del_activo_objeto_a_la_fecha_de_la_informacion_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde informar, en caso de: Swaps de monedas: el valor de mercado de la moneda multiplicada por los nominales del contrato Swaps de tasa de interés: el valor presente del nocional o de referencia del contrato Swaps sobre instrumento de renta fija: el número de unidades del instrumento o. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor razonable",
+   "nombre": "valor_razonable_del_contrato_a_la_fecha_de_la_informacion_m",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor razonable que presenta el contrato swap, o uno de similares características, a la fecha de información. En el caso de derivados que cubran activos acogidos a la Circular N°1.512, corresponde al valor del contrato utilizando la TIR de compra.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_contrato",
+   "rol": "Métrica",
+   "significado": "Se debe informar el tipo de subyacente sobre el cual está realizado el contrato, de acuerdo con la siguiente codificación: 01: Tasas de interés o inflación 02: Monedas extranjeras 110 03: Acciones o Índices Accionarios.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_contraparte_nacional",
+   "rol": "Identificador",
+   "significado": "informa sólo para contrapartes nacionales. En caso de contrapartes extranjeras, se deberá informar con ceros (0). Dígito verificador del RUT de la contraparte. Este campo se informa.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "lei_contraparte_extranjera",
+   "rol": "Identificador",
+   "significado": "En caso de contrapartes nacionales, o contrapartes extranjeras que no tuvieran código LEI, se deberá informar con espacios.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_contraparte",
+   "rol": "Métrica",
+   "significado": "Se debe informar el tipo de contraparte de acuerdo con la siguiente codificación: 01: ECC (entidades de contraparte central) nacional 02: Banco nacional 03: Otras autorizadas CMF nacional 04: ECC (entidades de contraparte central) en el exterior 05: Banco exterior 06: Otras en el exterior.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cm_compensacion_bilateral",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si el contrato de derivado se ampara bajo un Central de Chile, de acuerdo con la siguiente codificación: SI: El contrato ha sido celebrado bajo el amparo de un contrato marco de compensación bilateral de aquellos reconocidos por el Banco Central de Chile.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_documentacion",
+   "rol": "Métrica",
+   "significado": "Se debe indicar el tipo de contrato marco bajo el cual se ampara la.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "anexo_garantia",
+   "rol": "Atributo",
+   "significado": "Para el caso de que el contrato de derivados haya sido celebrado bajo el amparo de un contrato marco, corresponde informar si dicho contrato marco cuenta con anexo de garantías, según la siguiente codificación: SI: El contrato marco cuenta con anexo de garantías NO: El contrato marco no cuenta con.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "identificador_garantia",
+   "rol": "Atributo",
+   "significado": "Sólo se debe informar el identificador para instrumentos derivados que posean márgenes de variación. En caso de que no corresponda informar un código, se deberá completar con espacios.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nocional_posicion_larga_monto",
+   "rol": "Métrica",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nocional_posicion_corta_monto_m_clp",
+   "rol": "Métrica",
+   "significado": "contrato, expresado en M$, a la fecha de la información. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor razonable",
+   "nombre": "valor_razonable_del_contrato_a_la_fecha_de_la_informacion_ec",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor que presenta el contrato forward a la fecha de el precio forward de mercado para un contrato de similares características menos el precio forward fijado en el contrato, a comprar o vender. (M$).",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_a_futuro_contrato_posicion_larga_ec",
+   "rol": "Métrica",
+   "significado": "Corresponde informar si la tasa de interés del contrato es fija o 02: Flotante.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_a_futuro_contrato_posicion_corta_ec",
+   "rol": "Métrica",
+   "significado": "Corresponde informar si la tasa de interés del contrato es fija o 02: Flotante.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "rut_aseguradora",
+   "destino": "seguros_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "seguros_derivados",
+ "primaryKey": [
+  "efecto_en_resultados_realizados_m_clp",
+  "valor_presente_posicion_larga_m_clp",
+  "monto_activo_m_clp",
+  "valor_razonable_del_contrato_a_la_fecha_de_la_informacion_m",
+  "valor_presente_posicion_corta_m_clp",
+  "monto_pasivo_m_clp",
+  "valor_razonable_del_contrato_a_la_fecha_de_la_informacion",
+  "valor_razonable_del_contrato_a_la_fecha_de_la_informacion_ec",
+  "valor_razonable_del_activo_objeto_a_la_fecha_de_la_informacion_m_clp",
+  "nocional_posicion_larga_monto",
+  "monto_activos_en_margen_m_clp",
+  "nocional_posicion_corta_monto_m_clp"
+ ],
+ "sector": "seguros",
+ "titulo": "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS",
+ "version": "1.0.0"
+}

@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "macro_expectativas_tpm",
+ "particiones": [
+  {
+   "archivo": "outputs/macro/macro_expectativas_tpm.parquet",
+   "bytes": 4075,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_expectativas_tpm.parquet",
+   "periodo": "macro_expectativas_tpm",
+   "sha256": "5805f85896caa22c61caf52c6dde4173f90332faa3be69d9a9de10f833a39f76"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 4075,
+  "filas": 154
+ },
+ "version": "1.0.0"
+}

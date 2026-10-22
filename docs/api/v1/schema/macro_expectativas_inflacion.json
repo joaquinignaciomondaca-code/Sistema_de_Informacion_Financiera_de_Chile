@@ -1,0 +1,46 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha",
+   "rol": "PK",
+   "significado": "Primer día del mes al que corresponde el dato (AAAA-MM-01).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "expectativa_inflacion_ipc_11_meses_pct",
+   "rol": "Métrica",
+   "significado": "Mediana de la EEE para la variación anual del IPC dentro de 11 meses, en porcentaje.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "expectativa_inflacion_ipc_23_meses_pct",
+   "rol": "Métrica",
+   "significado": "Mediana de la EEE para la variación anual del IPC dentro de 23 meses, en porcentaje.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "macro_expectativas_inflacion",
+ "primaryKey": [
+  "fecha"
+ ],
+ "sector": "macro",
+ "titulo": "macro.expectativas_inflacion",
+ "version": "1.0.0"
+}

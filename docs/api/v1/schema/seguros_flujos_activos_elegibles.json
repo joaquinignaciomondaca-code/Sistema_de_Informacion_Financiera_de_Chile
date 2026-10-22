@@ -1,0 +1,167 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la cartera informada (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "Atributo",
+   "significado": "vida (archivos CSVID) o generales (CSGEN).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "FK",
+   "significado": "RUT de la compañía de seguros, con dígito verificador (une con seguros.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el encabezado del archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "circular_aplicada",
+   "rol": "Métrica",
+   "significado": "Corresponde informar qué Circular se aplicó para el cálculo de los obligatorio y no se debe informar ceros. Se informará, por ejemplo, de la siguiente manera: Circular Nº1512 : 1512.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_de_informacion",
+   "rol": "Atributo",
+   "significado": "Corresponde al flujo de activo por instrumento. Informándose de la Flujo de Activos Elegibles :FAC.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_instrumento",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el nombre abreviado de cada instrumento que informará de acuerdo a la codificación definida en SEIL, codificación CMF, Instrumentos.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tramo_1_uf",
+   "rol": "Métrica",
+   "significado": "Corresponde al tramo en el tiempo, definido en Circular de Calce, para la medición de calce entre activos y pasivos. Se informarán los flujos de cada instrumento (FAC) que posea la compañía que clasifique en el tramo 1, expresado en unidades de fomento (UF). Expresado en UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tramo_2_uf",
+   "rol": "Métrica",
+   "significado": "Corresponde al tramo en el tiempo, definido en Circular de Calce, para la medición de calce entre activos y pasivos. Se informarán los flujos de cada instrumento (FAC) que posea la compañía que clasifique en el tramo 2, expresado en unidades de fomento (UF). Expresado en UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tramo_3_uf",
+   "rol": "Métrica",
+   "significado": "Corresponde al tramo en el tiempo, definido en Circular de Calce, para la medición de calce entre activos y pasivos. Se informarán los flujos de cada instrumento (FAC) que posea la compañía que clasifique en el tramo 3, expresado en unidades de fomento (UF). Expresado en UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tramo_4_uf",
+   "rol": "Métrica",
+   "significado": "Corresponde al tramo en el tiempo, definido en Circular de Calce, para la medición de calce entre activos y pasivos. Se informarán los flujos de cada instrumento (FAC) que posea la compañía que clasifique en el tramo 4, expresado en unidades de fomento (UF). Expresado en UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tramo_5_uf",
+   "rol": "Métrica",
+   "significado": "Corresponde al tramo en el tiempo, definido en Circular de Calce, para la medición de calce entre activos y pasivos. Se informarán los 165 flujos de cada instrumento (FAC) que posea la compañía que clasifique en el tramo 5, expresado en unidades de fomento (UF). Expresado en UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tramo_6_uf",
+   "rol": "Métrica",
+   "significado": "Corresponde al tramo en el tiempo, definido en Circular de Calce, para la medición de calce entre activos y pasivos. Se informarán los flujos de cada instrumento (FAC) que posea la compañía que clasifique en el tramo 6, expresado en unidades de fomento (UF). Expresado en UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tramo_7_uf",
+   "rol": "Métrica",
+   "significado": "Corresponde al tramo en el tiempo, definido en Circular de Calce, para la medición de calce entre activos y pasivos. Se informarán los flujos de cada instrumento (FAC) que posea la compañía que clasifique en el tramo 7, expresado en unidades de fomento (UF). Expresado en UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tramo_8_uf",
+   "rol": "Métrica",
+   "significado": "Corresponde al tramo en el tiempo, definido en Circular de Calce, para la medición de calce entre activos y pasivos. Se informarán los flujos de cada instrumento (FAC) que posea la compañía que clasifique en el tramo 8, expresado en unidades de fomento (UF). Expresado en UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tramo_9_uf",
+   "rol": "Métrica",
+   "significado": "Corresponde al tramo en el tiempo, definido en Circular de Calce, para la medición de calce entre activos y pasivos. Se informarán los flujos de cada instrumento (FAC) que posea la compañía que clasifique en el tramo 9, expresado en unidades de fomento (UF). Expresado en UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tramo_10_uf",
+   "rol": "Métrica",
+   "significado": "Corresponde al tramo en el tiempo, definido en Circular de Calce, para la medición de calce entre activos y pasivos. Se informarán los flujos de cada instrumento (FAC) que posea la compañía que clasifique en el tramo 10, expresado en unidades de fomento (UF). Expresado en UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "rut_aseguradora",
+   "destino": "seguros_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "seguros_flujos_activos_elegibles",
+ "primaryKey": [
+  "tramo_1_uf",
+  "tramo_2_uf",
+  "tramo_3_uf",
+  "tramo_4_uf",
+  "tramo_5_uf",
+  "tramo_6_uf",
+  "tramo_7_uf",
+  "tramo_8_uf",
+  "tramo_9_uf",
+  "tramo_10_uf",
+  "tipo_instrumento",
+  "periodo"
+ ],
+ "sector": "seguros",
+ "titulo": "B.11 FLUJOS DE ACTIVOS ELEGIBLES",
+ "version": "1.0.0"
+}

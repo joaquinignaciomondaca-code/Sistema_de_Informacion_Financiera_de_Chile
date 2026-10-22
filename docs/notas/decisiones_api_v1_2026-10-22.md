@@ -1,13 +1,12 @@
 # Decisiones pendientes de la API v1 (D1–D4)
 
-Estado: **D1 y D3 decididas e implementadas; D2 revisada con datos y pendiente
-de visto bueno; D4 es consecuencia de D3.** Cada una trae el motivo y lo que
+Estado: **D1, D2 y D3 decididas e implementadas; D4 es consecuencia de D3.** Cada una trae el motivo y lo que
 cuesta cambiarla después.
 
 | Decisión | Estado | Qué fija |
 |---|---|---|
 | D1 · URL canónica | **decidida** | Pages publica, Vercel redirige `/api/*` (307) |
-| D2 · identificador | revisada, sin cerrar | `name` = objeto del contrato; 15 alias en `sif.aliases[]` |
+| D2 · identificador | **decidida** | `name` = objeto del contrato; los 19 alias en `sif.aliases` |
 | D3 · versionado | **decidida** | semver; un dato nuevo no sube versión |
 | D4 · campos de edición | derivada de D3 | seis campos con responsable claro |
 
@@ -63,8 +62,7 @@ alguien hubiera fijado la URL de Vercel en su código.
 
 ## D2 · Identificador canónico (tarea 0.2)
 
-**Revisado el 2026-10-22 con datos, a pedido del dueño. Sigue como
-recomendación, pendiente de su visto bueno.**
+**DECIDIDA el 2026-10-22: el dueño aprobó la recomendación.**
 
 **Recomendación: `name` = el nombre del objeto del contrato (`SEMANTIC_VIEWS`),
 que en 75 de los 90 casos coincide con el `view_name` del manifiesto. Un solo
@@ -86,8 +84,13 @@ manifiesto no es el mismo campo que el nombre del objeto**. En los 15 alias,
 objeto que se publica. Si `name` fuera «el `view_name`» sin más, 15 recursos
 saldrían con el nombre viejo.
 
-Ninguna de las tres opciones rompe las consultas actuales, porque ninguna usa
-alias. La diferencia está en qué nombre ve el descriptor.
+Ninguna de las tres opciones rompía las consultas actuales, porque ninguna usa
+alias. La diferencia estaba en qué nombre ve el descriptor.
+
+**Implementado:** cada recurso del Data Package publica `sif.sql_view` (el
+nombre que se escribe en el `FROM`) y `sif.aliases` (los nombres heredados).
+El catálogo del contrato usa el mismo criterio, y `views.sql` crea las dos: la
+vista canónica y un alias por cada nombre viejo.
 
 - El cliente escribe `FROM seguros_renta_fija`; el descriptor dice
   `"name": "seguros_renta_fija"`. Nada que traducir.

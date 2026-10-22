@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "sistemas_pago_lista_entidades",
+ "particiones": [
+  {
+   "archivo": "outputs/sistemas_pago/sistemas_pago_maestro.parquet",
+   "bytes": 12781,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/sistemas_pago/sistemas_pago_maestro.parquet",
+   "periodo": "sistemas_pago_maestro",
+   "sha256": "ab0fe2454150c99bd98d8b97ac772811ec15453f24dd75f1fcb0bdcff48ecddf"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 12781,
+  "filas": 19
+ },
+ "version": "1.0.0"
+}

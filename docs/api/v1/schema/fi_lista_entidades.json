@@ -1,0 +1,102 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "run_fondo",
+   "rol": "PK",
+   "significado": "RUN del fondo (sin dígito verificador).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_fondo_dv",
+   "rol": "Atributo",
+   "significado": "RUN con dígito verificador.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_fondo",
+   "rol": "Atributo",
+   "significado": "Nombre del fondo en el registro CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "administradora",
+   "rol": "Atributo",
+   "significado": "Administradora general de fondos (une por nombre con agf.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_entidad",
+   "rol": "Atributo",
+   "significado": "FIRES fondo de inversión rescatable; FINRE no rescatable.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "estado_vigencia",
+   "rol": "Atributo",
+   "significado": "Vigente / No Vigente según el registro CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "moneda_funcional",
+   "rol": "Atributo",
+   "significado": "Moneda funcional del fondo (en la que se expresan sus montos _miles_mf), leída del informe de pactos.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "primer_periodo_cartera",
+   "rol": "Fecha",
+   "significado": "Primer trimestre con cartera publicada (desde 2020-03).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "ultimo_periodo_cartera",
+   "rol": "Fecha",
+   "significado": "Último trimestre con cartera publicada.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "trimestres_con_cartera",
+   "rol": "Métrica",
+   "significado": "Trimestres con cartera publicada.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "reporta_ultimo_periodo",
+   "rol": "Atributo",
+   "significado": "Verdadero si el fondo tiene cartera en el último trimestre publicado.",
+   "tipo": "BOOLEAN",
+   "tipo_ts": "boolean"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "fi_lista_entidades",
+ "primaryKey": [
+  "run_fondo"
+ ],
+ "sector": "fi",
+ "titulo": "fi.lista_entidades",
+ "version": "1.0.0"
+}

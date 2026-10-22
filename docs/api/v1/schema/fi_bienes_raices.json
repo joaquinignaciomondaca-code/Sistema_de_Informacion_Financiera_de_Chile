@@ -1,0 +1,140 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Trimestre informado (AAAA-MM, mes de cierre: 03, 06, 09 o 12).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "run_fondo",
+   "rol": "FK",
+   "significado": "RUN del fondo de inversión (une con fi.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "domicilio",
+   "rol": "Atributo",
+   "significado": "Dirección del inmueble.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "comuna",
+   "rol": "Atributo",
+   "significado": "Comuna del inmueble.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "ciudad",
+   "rol": "Atributo",
+   "significado": "Ciudad del inmueble.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "region",
+   "rol": "Atributo",
+   "significado": "Región del inmueble.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pais",
+   "rol": "Atributo",
+   "significado": "Código del país.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_bien_raiz",
+   "rol": "Atributo",
+   "significado": "Tipo de bien raíz según la CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pct_comunidad",
+   "rol": "Métrica",
+   "significado": "Porcentaje de propiedad cuando el inmueble está en comunidad.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "destino",
+   "rol": "Atributo",
+   "significado": "Destino o uso del inmueble.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_renta",
+   "rol": "Atributo",
+   "significado": "Tipo de renta que genera.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "prohibiciones_garantias",
+   "rol": "Atributo",
+   "significado": "Prohibiciones o garantías que pesan sobre el inmueble.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Valor Razonable / MtM",
+   "nombre": "valor_cierre_miles_mf",
+   "rol": "Métrica",
+   "significado": "Valor contable al cierre, en miles de la moneda funcional del fondo.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "ajustes_prohibiciones_miles_mf",
+   "rol": "Métrica",
+   "significado": "Ajustes y prohibiciones, en miles de la moneda funcional del fondo.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pct_activo_fondo",
+   "rol": "Métrica",
+   "significado": "Inversión como % del activo total del fondo.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "run_fondo",
+   "destino": "fi_lista_entidades",
+   "tasa": 0.0
+  }
+ ],
+ "id": "fi_bienes_raices",
+ "primaryKey": [
+  "periodo"
+ ],
+ "sector": "fi",
+ "titulo": "fi.bienes_raices",
+ "version": "1.0.0"
+}

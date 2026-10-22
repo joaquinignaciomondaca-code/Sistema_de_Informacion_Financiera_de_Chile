@@ -1,0 +1,91 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "derivado",
+ "filtro": null,
+ "id": "seguros_derivados_relevantes",
+ "particiones": [
+  {
+   "archivo": "outputs/seguros/derivados_relevantes/2016.parquet",
+   "bytes": 39471,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados_relevantes/2016.parquet",
+   "periodo": "2016",
+   "sha256": "b65a198fda9a8b8aeb24c91e6ebaa510729143855f25ef5ff2e6a316419690e2"
+  },
+  {
+   "archivo": "outputs/seguros/derivados_relevantes/2017.parquet",
+   "bytes": 162084,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados_relevantes/2017.parquet",
+   "periodo": "2017",
+   "sha256": "649ad11567c313ebf5497bd880de3954f461d3529c845578af544350851f2d93"
+  },
+  {
+   "archivo": "outputs/seguros/derivados_relevantes/2018.parquet",
+   "bytes": 169520,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados_relevantes/2018.parquet",
+   "periodo": "2018",
+   "sha256": "a1c1f86a5ec1a70e3907e1f4fd7befb9af7e35b2b4e1dd00b2ddcf116308203d"
+  },
+  {
+   "archivo": "outputs/seguros/derivados_relevantes/2019.parquet",
+   "bytes": 176515,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados_relevantes/2019.parquet",
+   "periodo": "2019",
+   "sha256": "fdfd93bc524aededa015f426886e57c601f4c49e840c9fed3d832db6cbb60539"
+  },
+  {
+   "archivo": "outputs/seguros/derivados_relevantes/2020.parquet",
+   "bytes": 166926,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados_relevantes/2020.parquet",
+   "periodo": "2020",
+   "sha256": "3cde22c78221edb615925bb7b96b3ee1ec51d55fb7c864dc31f48e71a55f90f4"
+  },
+  {
+   "archivo": "outputs/seguros/derivados_relevantes/2021.parquet",
+   "bytes": 166408,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados_relevantes/2021.parquet",
+   "periodo": "2021",
+   "sha256": "577e706fc6a4993419f02ef3780860424e3d9dedfda22b456946b1e9b2ed24df"
+  },
+  {
+   "archivo": "outputs/seguros/derivados_relevantes/2022.parquet",
+   "bytes": 171120,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados_relevantes/2022.parquet",
+   "periodo": "2022",
+   "sha256": "f8e6130e6396032ecfd02552786e17e898101184633b6c2d000458d499f8cf70"
+  },
+  {
+   "archivo": "outputs/seguros/derivados_relevantes/2023.parquet",
+   "bytes": 190353,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados_relevantes/2023.parquet",
+   "periodo": "2023",
+   "sha256": "9b470e34a322f36593d7eae9a38fe69fa27e0c30197edf6d66d8789c6d0c9c97"
+  },
+  {
+   "archivo": "outputs/seguros/derivados_relevantes/2024.parquet",
+   "bytes": 318201,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados_relevantes/2024.parquet",
+   "periodo": "2024",
+   "sha256": "4e66b695ce30e7430b659550fe3b59550a29e7ff39cfc274556c2707c7497c50"
+  },
+  {
+   "archivo": "outputs/seguros/derivados_relevantes/2025.parquet",
+   "bytes": 866075,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados_relevantes/2025.parquet",
+   "periodo": "2025",
+   "sha256": "aee1e160cab92d033c6ff6af2fe60f7abf47b98b97d102f5ce2d2575c607a66f"
+  },
+  {
+   "archivo": "outputs/seguros/derivados_relevantes/2026.parquet",
+   "bytes": 758631,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados_relevantes/2026.parquet",
+   "periodo": "2026",
+   "sha256": "8e68748afe57c3413577811c0464ef3025ef7c8e482c3a9bb69612f095da67a0"
+  }
+ ],
+ "total": {
+  "archivos": 11,
+  "bytes": 3185304,
+  "filas": 373469
+ },
+ "version": "1.0.0"
+}

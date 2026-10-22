@@ -1,0 +1,133 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "ccaf_balance",
+ "particiones": [
+  {
+   "archivo": "outputs/cajas_compensacion/ccaf_balance/2010.parquet",
+   "bytes": 11918,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cajas_compensacion/ccaf_balance/2010.parquet",
+   "periodo": "2010",
+   "sha256": "e06725e37f0f23f4ca14668c141ea58c9cce8ab2cdae877b00f7427e7aacdac0"
+  },
+  {
+   "archivo": "outputs/cajas_compensacion/ccaf_balance/2011.parquet",
+   "bytes": 12623,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cajas_compensacion/ccaf_balance/2011.parquet",
+   "periodo": "2011",
+   "sha256": "9fe1fa0fd7ab70feb1275a7a2844056ee06f8f5d56508bc98581ae691d50c732"
+  },
+  {
+   "archivo": "outputs/cajas_compensacion/ccaf_balance/2012.parquet",
+   "bytes": 12258,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cajas_compensacion/ccaf_balance/2012.parquet",
+   "periodo": "2012",
+   "sha256": "dd408a3f129d77abb0ea373144a067b3315dea8d8325d9f82817c77eb2b75f2f"
+  },
+  {
+   "archivo": "outputs/cajas_compensacion/ccaf_balance/2013.parquet",
+   "bytes": 12175,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cajas_compensacion/ccaf_balance/2013.parquet",
+   "periodo": "2013",
+   "sha256": "fcd399b7fc0cde44b142cf602a728c700979341ce96580f03eef708900795219"
+  },
+  {
+   "archivo": "outputs/cajas_compensacion/ccaf_balance/2014.parquet",
+   "bytes": 12232,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cajas_compensacion/ccaf_balance/2014.parquet",
+   "periodo": "2014",
+   "sha256": "e671151ed6b3ddf4450860997cdf3b131328aa1f102dbbebdadb51494e93aa36"
+  },
+  {
+   "archivo": "outputs/cajas_compensacion/ccaf_balance/2015.parquet",
+   "bytes": 12305,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cajas_compensacion/ccaf_balance/2015.parquet",
+   "periodo": "2015",
+   "sha256": "63afdeaf141a397ba4cb4f30f8a5fb20bef6c3a1dca0c7209af99de454d158b3"
+  },
+  {
+   "archivo": "outputs/cajas_compensacion/ccaf_balance/2016.parquet",
+   "bytes": 12368,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cajas_compensacion/ccaf_balance/2016.parquet",
+   "periodo": "2016",
+   "sha256": "99c5ef6c1fe2793f51c70878dc653ac35bfa951a155e531060f3e486175389ca"
+  },
+  {
+   "archivo": "outputs/cajas_compensacion/ccaf_balance/2017.parquet",
+   "bytes": 12258,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cajas_compensacion/ccaf_balance/2017.parquet",
+   "periodo": "2017",
+   "sha256": "eadcd31cb6f9cad1f0c98c3b61bca2f6070c142da7285a986ce0cf19fdb4c3ba"
+  },
+  {
+   "archivo": "outputs/cajas_compensacion/ccaf_balance/2018.parquet",
+   "bytes": 12323,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cajas_compensacion/ccaf_balance/2018.parquet",
+   "periodo": "2018",
+   "sha256": "751c5e7b1ea04f247fe357a1edacf07b46cae38f4eca179bbbd41b87ff39083d"
+  },
+  {
+   "archivo": "outputs/cajas_compensacion/ccaf_balance/2019.parquet",
+   "bytes": 12804,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cajas_compensacion/ccaf_balance/2019.parquet",
+   "periodo": "2019",
+   "sha256": "58a743513174c480742f505015300f2042e4d8f97a5cc2ebd5b0002efc7ea625"
+  },
+  {
+   "archivo": "outputs/cajas_compensacion/ccaf_balance/2020.parquet",
+   "bytes": 13333,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cajas_compensacion/ccaf_balance/2020.parquet",
+   "periodo": "2020",
+   "sha256": "c1479463ad5c01a57e3bc0665dff430729363148c51249187d5efd24eedcd4b8"
+  },
+  {
+   "archivo": "outputs/cajas_compensacion/ccaf_balance/2021.parquet",
+   "bytes": 13452,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cajas_compensacion/ccaf_balance/2021.parquet",
+   "periodo": "2021",
+   "sha256": "f40527afa5aa9d2fbb1736caeff13e01164ae3b4fcff7a2bd930d3ce356dd7cb"
+  },
+  {
+   "archivo": "outputs/cajas_compensacion/ccaf_balance/2022.parquet",
+   "bytes": 13466,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cajas_compensacion/ccaf_balance/2022.parquet",
+   "periodo": "2022",
+   "sha256": "7514a2290c1bb0b020b26adf5d5baedae4f7a6b51b08a7b9eb2178f71876f168"
+  },
+  {
+   "archivo": "outputs/cajas_compensacion/ccaf_balance/2023.parquet",
+   "bytes": 13470,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cajas_compensacion/ccaf_balance/2023.parquet",
+   "periodo": "2023",
+   "sha256": "891d7cb85a05abebe3127e17e9a4a6588332140b996d35ac5eb0fb9f32a750b0"
+  },
+  {
+   "archivo": "outputs/cajas_compensacion/ccaf_balance/2024.parquet",
+   "bytes": 13309,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cajas_compensacion/ccaf_balance/2024.parquet",
+   "periodo": "2024",
+   "sha256": "7c8a6e0a36cc775ecaf2a4ead7c7cdca9503fe43585ac7eca148554db5746feb"
+  },
+  {
+   "archivo": "outputs/cajas_compensacion/ccaf_balance/2025.parquet",
+   "bytes": 13289,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cajas_compensacion/ccaf_balance/2025.parquet",
+   "periodo": "2025",
+   "sha256": "d668774b69b70fa69175f71db93ba0e6f299dd40e9d0dc3894dac816424fad5a"
+  },
+  {
+   "archivo": "outputs/cajas_compensacion/ccaf_balance/2026.parquet",
+   "bytes": 11516,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cajas_compensacion/ccaf_balance/2026.parquet",
+   "periodo": "2026",
+   "sha256": "a3a67016d543ef88f6afeac4b4d09aa1122327e25be8af8d66a63534fd34e441"
+  }
+ ],
+ "total": {
+  "archivos": 17,
+  "bytes": 215099,
+  "filas": 8043
+ },
+ "version": "1.0.0"
+}

@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "securitizadoras_lista_entidades",
+ "particiones": [
+  {
+   "archivo": "outputs/securitizadoras/securitizadoras_maestro.parquet",
+   "bytes": 4346,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/securitizadoras_maestro.parquet",
+   "periodo": "securitizadoras_maestro",
+   "sha256": "8e427b61e65a96acb4861e73cfa61dda4939426af89c492a8d835175c9454b92"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 4346,
+  "filas": 16
+ },
+ "version": "1.0.0"
+}

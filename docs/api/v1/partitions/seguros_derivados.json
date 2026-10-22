@@ -1,0 +1,91 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "seguros_derivados",
+ "particiones": [
+  {
+   "archivo": "outputs/seguros/derivados/2016.parquet",
+   "bytes": 277106,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados/2016.parquet",
+   "periodo": "2016",
+   "sha256": "2cb9a4dbeb890785627e96dd8a6f995a17e348e5dbfc1143191a63e549267e6e"
+  },
+  {
+   "archivo": "outputs/seguros/derivados/2017.parquet",
+   "bytes": 1035246,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados/2017.parquet",
+   "periodo": "2017",
+   "sha256": "f4122fe33cba0977c686b1ad7084ec9b4721a6d94e1a4f7f4420fd42fa8d02b9"
+  },
+  {
+   "archivo": "outputs/seguros/derivados/2018.parquet",
+   "bytes": 1120448,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados/2018.parquet",
+   "periodo": "2018",
+   "sha256": "bb1710ea97dffa4214703ba6af94ae03923ec0def06da2994d34b83f6c9e3c96"
+  },
+  {
+   "archivo": "outputs/seguros/derivados/2019.parquet",
+   "bytes": 1053564,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados/2019.parquet",
+   "periodo": "2019",
+   "sha256": "52879ac52890a9a96f30e388ff20170b8c3d9c08f85675f42e3f32ecefbbcb63"
+  },
+  {
+   "archivo": "outputs/seguros/derivados/2020.parquet",
+   "bytes": 1083612,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados/2020.parquet",
+   "periodo": "2020",
+   "sha256": "0613e27d40b91d0d832f3e5e0a5fb02f3888225e3ea7def62adf0c58595ede39"
+  },
+  {
+   "archivo": "outputs/seguros/derivados/2021.parquet",
+   "bytes": 1113190,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados/2021.parquet",
+   "periodo": "2021",
+   "sha256": "3bb94db875ab3208a2223836a9b00d71e5be5476ae41e0a4ddd50c0e04ed59bc"
+  },
+  {
+   "archivo": "outputs/seguros/derivados/2022.parquet",
+   "bytes": 1079244,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados/2022.parquet",
+   "periodo": "2022",
+   "sha256": "022c2a9b7a2ecd229e6f8b176717ecfe68b473b0937ab1ffc1b8d77a9721e0f6"
+  },
+  {
+   "archivo": "outputs/seguros/derivados/2023.parquet",
+   "bytes": 1131558,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados/2023.parquet",
+   "periodo": "2023",
+   "sha256": "c1b925af4642145a29bfc9a350e07626f0d34a33ee3fc0443bf9cfe3b387d11f"
+  },
+  {
+   "archivo": "outputs/seguros/derivados/2024.parquet",
+   "bytes": 1461231,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados/2024.parquet",
+   "periodo": "2024",
+   "sha256": "198f2ca551daf9fc97362fa8d603435092dc518c1e3282afa9fcdba090637d47"
+  },
+  {
+   "archivo": "outputs/seguros/derivados/2025.parquet",
+   "bytes": 2458706,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados/2025.parquet",
+   "periodo": "2025",
+   "sha256": "791e5b791bd2afe7b9a9e7b2392805d5e8456b214b9f1fb668dd96907b2f748d"
+  },
+  {
+   "archivo": "outputs/seguros/derivados/2026.parquet",
+   "bytes": 2086193,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/derivados/2026.parquet",
+   "periodo": "2026",
+   "sha256": "1fed51676b0fb816dc254a28380b155e7e697d25fbd018349b13c8f34c89c1bf"
+  }
+ ],
+ "total": {
+  "archivos": 11,
+  "bytes": 13900098,
+  "filas": 373469
+ },
+ "version": "1.0.0"
+}

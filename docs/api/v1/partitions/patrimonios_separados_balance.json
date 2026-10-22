@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "patrimonios_separados_balance",
+ "particiones": [
+  {
+   "archivo": "outputs/securitizadoras/patrimonios_separados_balance.parquet",
+   "bytes": 57297,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/securitizadoras/patrimonios_separados_balance.parquet",
+   "periodo": "patrimonios_separados_balance",
+   "sha256": "f6359445296fa738b8b5ffd5f3c88e4e5828a3d34c27b5a0992a74600e0288b7"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 57297,
+  "filas": 7962
+ },
+ "version": "1.0.0"
+}

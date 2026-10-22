@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "macro_cobre",
+ "particiones": [
+  {
+   "archivo": "outputs/macro/macro_cobre.parquet",
+   "bytes": 33162,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_cobre.parquet",
+   "periodo": "macro_cobre",
+   "sha256": "ff17c032f70a401f227008baf25dec7fd6e64a2a4a58766fb8df4676fe224fbe"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 33162,
+  "filas": 3260
+ },
+ "version": "1.0.0"
+}

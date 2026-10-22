@@ -1,0 +1,191 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la cartera informada (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "Atributo",
+   "significado": "vida (archivos CSVID) o generales (CSGEN).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "FK",
+   "significado": "RUT de la compañía de seguros, con dígito verificador (une con seguros.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el encabezado del archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_registro",
+   "rol": "Atributo",
+   "significado": "Subtipo de registro dentro del archivo (por ejemplo forward, swap o deuda).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_instrumento",
+   "rol": "Atributo",
+   "significado": "Este campo es obligatorio y se informará de acuerdo a la codificación definida en SEIL, Codificación S.V.S., Instrumentos.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_individualizacion_o_nemotecnico",
+   "rol": "Atributo",
+   "significado": "Corresponde obligatoriamente informar el código universal “ISIN” (International Securities Identification Number), a falta de éste, el código “CUSIP” (Commitee On Uniform Securities Identification Procedures). De no existir los anteriores, se deberá consultar a esta Superintendencia.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pais",
+   "rol": "Atributo",
+   "significado": "Corresponde señalar el país donde se emitió el instrumento. Se informará de acuerdo a la codificación definida en SEIL, Codificación S.V.S., Países.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "moneda",
+   "rol": "Atributo",
+   "significado": "Corresponde señalar la moneda en la cual está expresado el valor nominal. Se informara de acuerdo a la codificación definida en SEIL, Codificación S.V.S., Unidades Monetarias.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_nominal",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el valor nominal vigente del instrumento a la fecha de cierre del mes a que se refiere la información. Es decir, los nominales comprados originalmente menos las ventas realizadas sobre el mismo título.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "Costo",
+   "nombre": "valor_compra_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el valor al cual la entidad aseguradora o reaseguradora adquirió el instrumento. Este monto deberá expresarse en pesos ($) a la paridad del tipo de cambio de cierre de la moneda de emisión. Expresado en pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor razonable",
+   "nombre": "valor_razonable_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor total de los flujos futuros del instrumento actualizados a la TIR de mercado. Este monto deberá expresarse en miles de pesos (M$) a la paridad del tipo de cambio de cierre de la moneda de emisión. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Deterioro",
+   "nombre": "deterioro_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al deterioro de la inversión, según lo señalado en la Norma de Carácter General N°311, del 28.06.2011. Este monto deberá expresarse en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor contable informado",
+   "nombre": "valor_final_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor que tiene el instrumento a la fecha de cierre del mes a que se refiere la información, según lo establecido en Circular de Valorización de Inversiones vigente. Este monto se deberá expresar en miles de pesos (M$) a la paridad del tipo de cambio de cierre de la moneda de emisión. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Costo",
+   "nombre": "costo_historico_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor de compra promedio ponderado de las acciones, expresado en miles de pesos (M$). Esta información para las cuotas de fondos será llenada con ceros (0). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_contable_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al costo histórico menos depreciación acumulada, en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "plazo_al_vencimiento",
+   "rol": "Métrica",
+   "significado": "Se deberá informar los meses restantes al vencimiento del instrumento a contar de la fecha de información.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "duracion",
+   "rol": "Métrica",
+   "significado": "Corresponde al promedio ponderado en años de los vencimientos de sus flujos de caja, donde los ponderadores son el valor presente de cada flujo como una proporción del precio del instrumento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "clasificacion_de_riesgo",
+   "rol": "Atributo",
+   "significado": "Se deberá informar la menor clasificación de riesgo vigente del instrumento a la fecha de cierre del mes a que se refiere la información. Si el instrumento no contara con clasificación de riesgo se debe informar S/C.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "relacionado",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si el emisor del instrumento está relacionado con la compañía de seguros, de acuerdo a lo establecido en el artículo N°100 de la ley N°18.045 del 22.10.1981 y sus modificaciones. Se señalará de acuerdo a la siguiente codificación: RE : Relacionado NR : No Relacionado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "derivado",
+ "foraneas": [
+  {
+   "columna": "rut_aseguradora",
+   "destino": "seguros_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "seguros_extranjeros_relevantes",
+ "primaryKey": [
+  "valor_final_m_clp",
+  "valor_razonable_m_clp",
+  "deterioro_m_clp",
+  "valor_compra_clp",
+  "codigo_individualizacion_o_nemotecnico",
+  "duracion",
+  "valor_nominal",
+  "plazo_al_vencimiento",
+  "costo_historico_m_clp",
+  "periodo",
+  "pais",
+  "nombre_aseguradora"
+ ],
+ "sector": "seguros",
+ "titulo": "B.5 INVERSIONES EN EL EXTRANJERO",
+ "version": "1.0.0"
+}
