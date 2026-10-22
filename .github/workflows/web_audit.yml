@@ -229,6 +229,21 @@ jobs:
           [ "$n" -ne 0 ] && echo "::error title=Máquina limpia::falló (ver docs/api/prueba_maquina_limpia.log)"
           exit $n
 
+      - name: 'SDK de Python: se instala en limpio y pasa sus tests sin red'
+        run: |
+          set +e
+          python -m pip install --disable-pip-version-check -e sdk/python > sdk.log 2>&1; i=$?
+          python -m unittest discover -s sdk/python/tests -t sdk/python >> sdk.log 2>&1; t=$?
+          if [ "$i" -ne 0 ]; then
+            grep -h -E "ERROR|error:" sdk.log | head -5 | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=SDK de Python::$l"; done
+          fi
+          if [ "$t" -eq 0 ]; then
+            echo "::notice title=SDK de Python::$(grep -E '^(OK|Ran )' sdk.log | tr '\n' ' ')"
+          else
+            grep -h -E "^(FAIL|ERROR):" sdk.log | head -5 | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=SDK de Python::$l"; done
+          fi
+          exit $(( i | t ))
+
       - name: Prueba del cliente DuckDB (registro de vistas sin navegador)
         run: |
           set +e

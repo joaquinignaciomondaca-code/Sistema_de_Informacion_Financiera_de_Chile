@@ -49,3 +49,8 @@ snapshot/
 # (*.log, *.csv), así que la evidencia que sí se publica va al final.
 # Evidencia de la prueba de máquina limpia (tarea 1a.8).
 !docs/api/prueba_maquina_limpia.log
+
+# Paquete de Python: lo generado al instalar en modo editable
+*.egg-info/
+build/
+dist/

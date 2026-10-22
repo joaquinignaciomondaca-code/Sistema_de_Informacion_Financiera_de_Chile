@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sif-chile"
+version = "0.1.0"
+description = "SDK de Python para el Sistema de Información Financiera de Chile: datos financieros chilenos en Parquet, con contrato verificado."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Joaquín Mondaca" }]
+keywords = ["chile", "finanzas", "cmf", "datos abiertos", "parquet", "duckdb"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Topic :: Office/Business :: Financial",
+]
+dependencies = ["duckdb>=1.1", "pyarrow>=14"]
+
+[project.optional-dependencies]
+pandas = ["pandas>=2.0"]
+dev = ["pandas>=2.0", "pytest>=8"]
+
+[project.urls]
+Homepage = "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/"
+Repository = "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile"
+
+[tool.setuptools]
+packages = ["sif_chile"]
