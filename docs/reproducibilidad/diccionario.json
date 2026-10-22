@@ -1231,7 +1231,7 @@
         {
           "name": "sector",
           "type": "VARCHAR",
-          "role": "Atributo",
+          "role": "PK",
           "significado": "vida o generales.",
           "contable": "No aplica"
         },
@@ -6211,14 +6211,14 @@
         {
           "name": "periodo",
           "type": "VARCHAR",
-          "role": "Fecha",
+          "role": "PK",
           "significado": "Trimestre informado (AAAA-MM).",
           "contable": "No aplica"
         },
         {
           "name": "rut",
           "type": "VARCHAR",
-          "role": "FK",
+          "role": "PK",
           "significado": "RUT sin dígito verificador (une con corredoras.lista_entidades).",
           "contable": "No aplica"
         },
@@ -6312,14 +6312,14 @@
         {
           "name": "periodo",
           "type": "VARCHAR",
-          "role": "Fecha",
+          "role": "PK",
           "significado": "Trimestre informado (AAAA-MM).",
           "contable": "No aplica"
         },
         {
           "name": "rut",
           "type": "VARCHAR",
-          "role": "FK",
+          "role": "PK",
           "significado": "RUT sin dígito verificador (une con corredoras.lista_entidades).",
           "contable": "No aplica"
         },
@@ -8222,7 +8222,7 @@
         {
           "name": "run_fondo",
           "type": "VARCHAR",
-          "role": "FK",
+          "role": "PK",
           "significado": "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
           "contable": "No aplica"
         },
@@ -8416,7 +8416,7 @@
         {
           "name": "run_fondo",
           "type": "VARCHAR",
-          "role": "FK",
+          "role": "PK",
           "significado": "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
           "contable": "No aplica"
         },
@@ -8602,14 +8602,14 @@
         {
           "name": "periodo",
           "type": "VARCHAR",
-          "role": "Fecha",
+          "role": "PK",
           "significado": "Cierre del ejercicio (AAAA-12): estados al 31 de diciembre.",
           "contable": "No aplica"
         },
         {
           "name": "run_fondo",
           "type": "VARCHAR",
-          "role": "FK",
+          "role": "PK",
           "significado": "RUN del fondo sin dígito verificador (une con ffmm.lista_entidades).",
           "contable": "No aplica"
         },
@@ -8672,7 +8672,7 @@
         {
           "name": "orden",
           "type": "INTEGER",
-          "role": "PK",
+          "role": "Orden",
           "significado": "Número de línea del balance como lo presenta la CMF (1 a 16). Es fijo por cuenta: la 8 es siempre el total activo y la 16 el activo neto.",
           "contable": "No aplica"
         },
@@ -8753,14 +8753,14 @@
         {
           "name": "periodo",
           "type": "VARCHAR",
-          "role": "Fecha",
+          "role": "PK",
           "significado": "Cierre del ejercicio (AAAA-12): estados al 31 de diciembre.",
           "contable": "No aplica"
         },
         {
           "name": "run_fondo",
           "type": "VARCHAR",
-          "role": "FK",
+          "role": "PK",
           "significado": "RUN del fondo sin dígito verificador (une con ffmm.lista_entidades).",
           "contable": "No aplica"
         },
@@ -8823,7 +8823,7 @@
         {
           "name": "orden",
           "type": "INTEGER",
-          "role": "PK",
+          "role": "Orden",
           "significado": "Número de línea del estado de resultados como lo presenta la CMF (1 a 19). Es fijo por cuenta: la 8 es siempre el total de ingresos y la 14 la utilidad antes de impuesto.",
           "contable": "No aplica"
         },
@@ -10302,7 +10302,7 @@
         {
           "name": "codigo_patrimonio",
           "type": "VARCHAR",
-          "role": "Dimensión",
+          "role": "PK",
           "significado": "Código del patrimonio separado según el nombre del PDF (p. ej. BTRA15, PS13).",
           "contable": "No aplica",
           "interpretacion": "No siempre coincide con el número de inscripción de la lista de emisiones."
@@ -10310,7 +10310,7 @@
         {
           "name": "periodo",
           "type": "VARCHAR",
-          "role": "Dimensión",
+          "role": "PK",
           "significado": "Cierre del balance, AAAA-MM (siempre diciembre).",
           "contable": "Corte",
           "interpretacion": "Cierre anual."
@@ -10326,7 +10326,7 @@
         {
           "name": "orden_en_balance",
           "type": "BIGINT",
-          "role": "Atributo",
+          "role": "PK",
           "significado": "Posición de la cuenta en el balance impreso.",
           "contable": "No aplica",
           "interpretacion": "Ordena como en el PDF."
@@ -10342,7 +10342,7 @@
         {
           "name": "cuenta",
           "type": "VARCHAR",
-          "role": "Dimensión",
+          "role": "PK",
           "significado": "Nombre de la cuenta, copiado del balance.",
           "contable": "Glosa",
           "interpretacion": "No se renombró."

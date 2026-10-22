@@ -207,6 +207,14 @@ jobs:
           done
           exit $(( c | a | d ))
 
+      - name: 'Máquina limpia: un consumidor sin el repo descubre, lee el esquema y consulta'
+        run: |
+          set +e
+          python scripts/probar_maquina_limpia.py --check > limpia.log 2>&1; n=$?
+          grep -E "^(OK|FALLA|MÁQUINA|Duración|  \[FALLA\])" limpia.log | sed 's/%/%25/g' | while IFS= read -r l; do echo "::notice title=Máquina limpia::$l"; done
+          [ "$n" -ne 0 ] && echo "::error title=Máquina limpia::falló (ver docs/api/prueba_maquina_limpia.log)"
+          exit $n
+
       - name: Prueba del cliente DuckDB (registro de vistas sin navegador)
         run: |
           set +e

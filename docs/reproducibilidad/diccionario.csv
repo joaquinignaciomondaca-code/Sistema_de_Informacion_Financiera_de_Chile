@@ -110,7 +110,7 @@ macro.series_catalogo,macro_series_catalogo,macro,Estadísticas oficiales BCCh,u
 macro.series_catalogo,macro_series_catalogo,macro,Estadísticas oficiales BCCh,observaciones,BIGINT,Métrica,Número de observaciones publicadas.,No aplica
 macro.series_catalogo,macro_series_catalogo,macro,Estadísticas oficiales BCCh,estado,VARCHAR,Atributo,"ok, sin datos en el BCCh o el error de la última consulta.",No aplica
 macro.series_catalogo,macro_series_catalogo,macro,Estadísticas oficiales BCCh,ultima_consulta_utc,VARCHAR,Fecha,Momento de la última consulta a la API (UTC).,No aplica
-seguros.lista_entidades,seguros_lista_entidades,seguros,Circular CMF 1835,sector,VARCHAR,Atributo,vida o generales.,No aplica
+seguros.lista_entidades,seguros_lista_entidades,seguros,Circular CMF 1835,sector,VARCHAR,PK,vida o generales.,No aplica
 seguros.lista_entidades,seguros_lista_entidades,seguros,Circular CMF 1835,rut_aseguradora,VARCHAR,PK,Cuerpo del RUT de la compañía de seguros (sin dígito verificador); une con seguros.lista_entidades.,No aplica
 seguros.lista_entidades,seguros_lista_entidades,seguros,Circular CMF 1835,nombre_aseguradora,VARCHAR,Atributo,Nombre de la compañía tal como aparece en el archivo del mes.,No aplica
 seguros.lista_entidades,seguros_lista_entidades,seguros,Circular CMF 1835,primer_periodo,VARCHAR,Fecha,Primer mes en que la compañía aparece en los archivos publicados.,No aplica
@@ -772,8 +772,8 @@ ccaf.resultados,ccaf_resultados,cajas_compensacion,IFRS · CMF,valor_no_numerico
 ccaf.resultados,ccaf_resultados,cajas_compensacion,IFRS · CMF,repeticion,SMALLINT,Atributo,1 la primera vez que aparece la cuenta en el estado; 2 o más si la fuente la repite. Sumar sin filtrar repeticion = 1 cuenta dos veces la misma cifra.,No aplica
 ccaf.resultados,ccaf_resultados,cajas_compensacion,IFRS · CMF,taxonomia,VARCHAR,Atributo,Taxonomía XBRL declarada en el archivo.,No aplica
 ccaf.resultados,ccaf_resultados,cajas_compensacion,IFRS · CMF,en_lista_entidades,BOOLEAN,Atributo,true si el RUT está en la lista de entidades del sector; false si fue reconocida por su nombre (entidad nueva).,No aplica
-corredoras.balance,corredoras_bolsa_balance,corredoras_bolsa,FECU IFRS intermediarios · CMF,periodo,VARCHAR,Fecha,Trimestre informado (AAAA-MM).,No aplica
-corredoras.balance,corredoras_bolsa_balance,corredoras_bolsa,FECU IFRS intermediarios · CMF,rut,VARCHAR,FK,RUT sin dígito verificador (une con corredoras.lista_entidades).,No aplica
+corredoras.balance,corredoras_bolsa_balance,corredoras_bolsa,FECU IFRS intermediarios · CMF,periodo,VARCHAR,PK,Trimestre informado (AAAA-MM).,No aplica
+corredoras.balance,corredoras_bolsa_balance,corredoras_bolsa,FECU IFRS intermediarios · CMF,rut,VARCHAR,PK,RUT sin dígito verificador (une con corredoras.lista_entidades).,No aplica
 corredoras.balance,corredoras_bolsa_balance,corredoras_bolsa,FECU IFRS intermediarios · CMF,rut_dv,VARCHAR,Atributo,RUT con dígito verificador.,No aplica
 corredoras.balance,corredoras_bolsa_balance,corredoras_bolsa,FECU IFRS intermediarios · CMF,razon_social,VARCHAR,Atributo,Nombre del intermediario en el archivo del trimestre.,No aplica
 corredoras.balance,corredoras_bolsa_balance,corredoras_bolsa,FECU IFRS intermediarios · CMF,tipo_intermediario,VARCHAR,Atributo,corredor de bolsa o agente de valores.,No aplica
@@ -784,8 +784,8 @@ corredoras.balance,corredoras_bolsa_balance,corredoras_bolsa,FECU IFRS intermedi
 corredoras.balance,corredoras_bolsa_balance,corredoras_bolsa,FECU IFRS intermediarios · CMF,nivel,TINYINT,Atributo,Nivel jerárquico de la cuenta en el informe (1 = cuenta principal).,No aplica
 corredoras.balance,corredoras_bolsa_balance,corredoras_bolsa,FECU IFRS intermediarios · CMF,valor_miles_clp,BIGINT,Métrica,"Monto en miles de pesos, moneda corriente del cierre. Resultados acumulados del ejercicio.",Valor contable
 corredoras.balance,corredoras_bolsa_balance,corredoras_bolsa,FECU IFRS intermediarios · CMF,en_lista_entidades,BOOLEAN,Atributo,true si el RUT está en la lista de entidades del sector.,No aplica
-corredoras.resultados,corredoras_bolsa_resultados,corredoras_bolsa,FECU IFRS intermediarios · CMF,periodo,VARCHAR,Fecha,Trimestre informado (AAAA-MM).,No aplica
-corredoras.resultados,corredoras_bolsa_resultados,corredoras_bolsa,FECU IFRS intermediarios · CMF,rut,VARCHAR,FK,RUT sin dígito verificador (une con corredoras.lista_entidades).,No aplica
+corredoras.resultados,corredoras_bolsa_resultados,corredoras_bolsa,FECU IFRS intermediarios · CMF,periodo,VARCHAR,PK,Trimestre informado (AAAA-MM).,No aplica
+corredoras.resultados,corredoras_bolsa_resultados,corredoras_bolsa,FECU IFRS intermediarios · CMF,rut,VARCHAR,PK,RUT sin dígito verificador (une con corredoras.lista_entidades).,No aplica
 corredoras.resultados,corredoras_bolsa_resultados,corredoras_bolsa,FECU IFRS intermediarios · CMF,rut_dv,VARCHAR,Atributo,RUT con dígito verificador.,No aplica
 corredoras.resultados,corredoras_bolsa_resultados,corredoras_bolsa,FECU IFRS intermediarios · CMF,razon_social,VARCHAR,Atributo,Nombre del intermediario en el archivo del trimestre.,No aplica
 corredoras.resultados,corredoras_bolsa_resultados,corredoras_bolsa,FECU IFRS intermediarios · CMF,tipo_intermediario,VARCHAR,Atributo,corredor de bolsa o agente de valores.,No aplica
@@ -1025,7 +1025,7 @@ ffmm.opciones,ffmm_opciones,ffmm,Circular CMF 1333,valorizacion_precio_ejercicio
 ffmm.opciones,ffmm_opciones,ffmm,Circular CMF 1333,valorizacion_mercado_miles_mf,DOUBLE,Métrica,"Valor de mercado, en miles de la moneda funcional del fondo.",Valor Razonable / MtM
 ffmm.opciones,ffmm_opciones,ffmm,Circular CMF 1333,pct_primas_activo_fondo,DOUBLE,Métrica,Inversión en primas como % del activo total del fondo.,No aplica
 fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),periodo,VARCHAR,PK,Cierre del archivo AAAA-MM. En comparativos no es la fecha de la cifra: usar fecha_fin_contexto.,No aplica
-fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),run_fondo,VARCHAR,FK,"RUN del fondo, sin DV; une directamente con fi.lista_entidades.",No aplica
+fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),run_fondo,VARCHAR,PK,"RUN del fondo, sin DV; une directamente con fi.lista_entidades.",No aplica
 fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),run_fondo_dv,VARCHAR,Atributo,RUN con DV módulo 11. El DV recibido se conserva separado.,No aplica
 fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),dv_fondo_fuente,VARCHAR,Dato fuente,Dígito verificador literal del XML; las discrepancias quedan como aviso.,No aplica
 fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),nombre_fondo,VARCHAR,Dimensión,Nombre reportado en el XML; puede ser abreviado y diferir del maestro.,No aplica
@@ -1050,7 +1050,7 @@ fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),enviado_cmf,VARCHA
 fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),sha256_archivo,VARCHAR,Dato fuente,SHA-256 de los bytes originales del XML descargado.,No aplica
 fi.balance,fi_balance,fi,IFRS · XML CMF FIEF (Circular 1998),cotejo_ficha,VARCHAR,Atributo,"coincide = importe cotejado exactamente con su concepto y columna HTML. sin_columna = contexto del XML no expuesto por la ficha (por ejemplo trimestres en el cierre anual), validado contablemente pero no cotejable allí.",No aplica
 fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),periodo,VARCHAR,PK,Cierre del archivo AAAA-MM. En comparativos no es la fecha de la cifra: usar fecha_fin_contexto.,No aplica
-fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),run_fondo,VARCHAR,FK,"RUN del fondo, sin DV; une directamente con fi.lista_entidades.",No aplica
+fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),run_fondo,VARCHAR,PK,"RUN del fondo, sin DV; une directamente con fi.lista_entidades.",No aplica
 fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),run_fondo_dv,VARCHAR,Atributo,RUN con DV módulo 11. El DV recibido se conserva separado.,No aplica
 fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),dv_fondo_fuente,VARCHAR,Dato fuente,Dígito verificador literal del XML; las discrepancias quedan como aviso.,No aplica
 fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),nombre_fondo,VARCHAR,Dimensión,Nombre reportado en el XML; puede ser abreviado y diferir del maestro.,No aplica
@@ -1074,8 +1074,8 @@ fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),fuente_archi
 fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),enviado_cmf,VARCHAR,Fecha,"Fecha/hora de envío leída del nombre del archivo; hora local declarada, sin inventar zona.",No aplica
 fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),sha256_archivo,VARCHAR,Dato fuente,SHA-256 de los bytes originales del XML descargado.,No aplica
 fi.resultados,fi_resultados,fi,IFRS · XML CMF FIEF (Circular 1998),cotejo_ficha,VARCHAR,Atributo,"coincide = importe cotejado exactamente con su concepto y columna HTML. sin_columna = contexto del XML no expuesto por la ficha (por ejemplo trimestres en el cierre anual), validado contablemente pero no cotejable allí.",No aplica
-ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),periodo,VARCHAR,Fecha,Cierre del ejercicio (AAAA-12): estados al 31 de diciembre.,No aplica
-ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),run_fondo,VARCHAR,FK,RUN del fondo sin dígito verificador (une con ffmm.lista_entidades).,No aplica
+ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),periodo,VARCHAR,PK,Cierre del ejercicio (AAAA-12): estados al 31 de diciembre.,No aplica
+ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),run_fondo,VARCHAR,PK,RUN del fondo sin dígito verificador (une con ffmm.lista_entidades).,No aplica
 ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),run_fondo_dv,VARCHAR,Atributo,RUN del fondo con dígito verificador.,No aplica
 ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),nombre_fondo,VARCHAR,Atributo,Nombre del fondo en el archivo de ese año.,No aplica
 ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),rut_agf,VARCHAR,FK,RUT de la administradora sin dígito verificador (une con agf.lista_entidades).,No aplica
@@ -1084,7 +1084,7 @@ ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),moneda,VARCHAR,At
 ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),moneda_cmf,VARCHAR,Atributo,"Código de moneda tal como lo informa la CMF ($$ = pesos, PROM = dólares, EUR = euros).",No aplica
 ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),seccion,VARCHAR,Atributo,"Agrupación de la línea: ACTIVO, PASIVO o ACTIVO NETO.",No aplica
 ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),tipo_linea,VARCHAR,Atributo,detalle o total. Los totales ya suman sus detalles: no sumarlos juntos.,No aplica
-ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),orden,INTEGER,PK,Número de línea del balance como lo presenta la CMF (1 a 16). Es fijo por cuenta: la 8 es siempre el total activo y la 16 el activo neto.,No aplica
+ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),orden,INTEGER,Orden,Número de línea del balance como lo presenta la CMF (1 a 16). Es fijo por cuenta: la 8 es siempre el total activo y la 16 el activo neto.,No aplica
 ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),codigo_cuenta,VARCHAR,PK,"Código de la cuenta en el XML de la CMF (por ejemplo TotalActivo, TotalPasivo, ActivoNetoAtribuibleALosParticipes).",No aplica
 ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),cuenta,VARCHAR,Atributo,Nombre de la línea del estado financiero.,No aplica
 ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),nota,VARCHAR,Atributo,"Número de la nota de los estados financieros que respalda la línea, si el fondo la informa.",No aplica
@@ -1093,8 +1093,8 @@ ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),valor_anterior_mi
 ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),fuente_archivo,VARCHAR,Atributo,Nombre del XML de la CMF del que sale la fila.,No aplica
 ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),enviado_cmf,VARCHAR,Atributo,Fecha y hora en que el fondo envió el archivo a la CMF (sale del nombre del archivo).,No aplica
 ffmm.balance,ffmm_balance,ffmm,IFRS · XML CMF (Circular 1997),sha256_archivo,VARCHAR,Atributo,"Huella SHA-256 del XML, para detectar reenvíos.",No aplica
-ffmm.resultados,ffmm_resultados,ffmm,IFRS · XML CMF (Circular 1997),periodo,VARCHAR,Fecha,Cierre del ejercicio (AAAA-12): estados al 31 de diciembre.,No aplica
-ffmm.resultados,ffmm_resultados,ffmm,IFRS · XML CMF (Circular 1997),run_fondo,VARCHAR,FK,RUN del fondo sin dígito verificador (une con ffmm.lista_entidades).,No aplica
+ffmm.resultados,ffmm_resultados,ffmm,IFRS · XML CMF (Circular 1997),periodo,VARCHAR,PK,Cierre del ejercicio (AAAA-12): estados al 31 de diciembre.,No aplica
+ffmm.resultados,ffmm_resultados,ffmm,IFRS · XML CMF (Circular 1997),run_fondo,VARCHAR,PK,RUN del fondo sin dígito verificador (une con ffmm.lista_entidades).,No aplica
 ffmm.resultados,ffmm_resultados,ffmm,IFRS · XML CMF (Circular 1997),run_fondo_dv,VARCHAR,Atributo,RUN del fondo con dígito verificador.,No aplica
 ffmm.resultados,ffmm_resultados,ffmm,IFRS · XML CMF (Circular 1997),nombre_fondo,VARCHAR,Atributo,Nombre del fondo en el archivo de ese año.,No aplica
 ffmm.resultados,ffmm_resultados,ffmm,IFRS · XML CMF (Circular 1997),rut_agf,VARCHAR,FK,RUT de la administradora sin dígito verificador (une con agf.lista_entidades).,No aplica
@@ -1103,7 +1103,7 @@ ffmm.resultados,ffmm_resultados,ffmm,IFRS · XML CMF (Circular 1997),moneda,VARC
 ffmm.resultados,ffmm_resultados,ffmm,IFRS · XML CMF (Circular 1997),moneda_cmf,VARCHAR,Atributo,"Código de moneda tal como lo informa la CMF ($$ = pesos, PROM = dólares, EUR = euros).",No aplica
 ffmm.resultados,ffmm_resultados,ffmm,IFRS · XML CMF (Circular 1997),seccion,VARCHAR,Atributo,"Agrupación de la línea: INGRESOS/PÉRDIDAS DE LA OPERACIÓN, GASTOS o RESULTADO.",No aplica
 ffmm.resultados,ffmm_resultados,ffmm,IFRS · XML CMF (Circular 1997),tipo_linea,VARCHAR,Atributo,detalle o total. Los totales ya suman sus detalles: no sumarlos juntos.,No aplica
-ffmm.resultados,ffmm_resultados,ffmm,IFRS · XML CMF (Circular 1997),orden,INTEGER,PK,Número de línea del estado de resultados como lo presenta la CMF (1 a 19). Es fijo por cuenta: la 8 es siempre el total de ingresos y la 14 la utilidad antes de impuesto.,No aplica
+ffmm.resultados,ffmm_resultados,ffmm,IFRS · XML CMF (Circular 1997),orden,INTEGER,Orden,Número de línea del estado de resultados como lo presenta la CMF (1 a 19). Es fijo por cuenta: la 8 es siempre el total de ingresos y la 14 la utilidad antes de impuesto.,No aplica
 ffmm.resultados,ffmm_resultados,ffmm,IFRS · XML CMF (Circular 1997),codigo_cuenta,VARCHAR,PK,"Código de la cuenta en el XML de la CMF (por ejemplo TotalIngresosPerdidasNetosDeLaOperacion, ComisionDeAdministracion).",No aplica
 ffmm.resultados,ffmm_resultados,ffmm,IFRS · XML CMF (Circular 1997),cuenta,VARCHAR,Atributo,Nombre de la línea del estado financiero.,No aplica
 ffmm.resultados,ffmm_resultados,ffmm,IFRS · XML CMF (Circular 1997),nota,VARCHAR,Atributo,"Número de la nota de los estados financieros que respalda la línea, si el fondo la informa.",No aplica
@@ -1276,12 +1276,12 @@ patrimonios_separados.balance,patrimonios_separados_balance,patrimonios_separado
 patrimonios_separados.balance,patrimonios_separados_balance,patrimonios_separados,Balance general del patrimonio separado (estados financieros publicados en la CMF),rut_administradora,VARCHAR,FK,"Cuerpo del RUT de la securitizadora (8 dígitos, sin DV).",No aplica
 patrimonios_separados.balance,patrimonios_separados_balance,patrimonios_separados,Balance general del patrimonio separado (estados financieros publicados en la CMF),rut_completo,VARCHAR,Atributo,"RUT con puntos, guión y dígito verificador (módulo 11).",No aplica
 patrimonios_separados.balance,patrimonios_separados_balance,patrimonios_separados,Balance general del patrimonio separado (estados financieros publicados en la CMF),nombre_administradora,VARCHAR,Dimensión,Securitizadora que administra el patrimonio.,No aplica
-patrimonios_separados.balance,patrimonios_separados_balance,patrimonios_separados,Balance general del patrimonio separado (estados financieros publicados en la CMF),codigo_patrimonio,VARCHAR,Dimensión,"Código del patrimonio separado según el nombre del PDF (p. ej. BTRA15, PS13).",No aplica
-patrimonios_separados.balance,patrimonios_separados_balance,patrimonios_separados,Balance general del patrimonio separado (estados financieros publicados en la CMF),periodo,VARCHAR,Dimensión,"Cierre del balance, AAAA-MM (siempre diciembre).",Corte
+patrimonios_separados.balance,patrimonios_separados_balance,patrimonios_separados,Balance general del patrimonio separado (estados financieros publicados en la CMF),codigo_patrimonio,VARCHAR,PK,"Código del patrimonio separado según el nombre del PDF (p. ej. BTRA15, PS13).",No aplica
+patrimonios_separados.balance,patrimonios_separados_balance,patrimonios_separados,Balance general del patrimonio separado (estados financieros publicados en la CMF),periodo,VARCHAR,PK,"Cierre del balance, AAAA-MM (siempre diciembre).",Corte
 patrimonios_separados.balance,patrimonios_separados_balance,patrimonios_separados,Balance general del patrimonio separado (estados financieros publicados en la CMF),anio,BIGINT,Dimensión,Año del cierre.,No aplica
-patrimonios_separados.balance,patrimonios_separados_balance,patrimonios_separados,Balance general del patrimonio separado (estados financieros publicados en la CMF),orden_en_balance,BIGINT,Atributo,Posición de la cuenta en el balance impreso.,No aplica
+patrimonios_separados.balance,patrimonios_separados_balance,patrimonios_separados,Balance general del patrimonio separado (estados financieros publicados en la CMF),orden_en_balance,BIGINT,PK,Posición de la cuenta en el balance impreso.,No aplica
 patrimonios_separados.balance,patrimonios_separados_balance,patrimonios_separados,Balance general del patrimonio separado (estados financieros publicados en la CMF),categoria,VARCHAR,Dimensión,"Rubro: Activo Circulante, Activo No Circulante, Pasivo Circulante, Pasivo No Circulante, Patrimonio (Excedente Acumulado), o una línea Total ….",Clasificación del balance
-patrimonios_separados.balance,patrimonios_separados_balance,patrimonios_separados,Balance general del patrimonio separado (estados financieros publicados en la CMF),cuenta,VARCHAR,Dimensión,"Nombre de la cuenta, copiado del balance.",Glosa
+patrimonios_separados.balance,patrimonios_separados_balance,patrimonios_separados,Balance general del patrimonio separado (estados financieros publicados en la CMF),cuenta,VARCHAR,PK,"Nombre de la cuenta, copiado del balance.",Glosa
 patrimonios_separados.balance,patrimonios_separados_balance,patrimonios_separados,Balance general del patrimonio separado (estados financieros publicados en la CMF),monto_m_clp,BIGINT,Métrica,"Monto impreso en miles de pesos (M$), con su signo.",M$
 ccaf.lista_entidades,ccaf_lista_entidades,cajas_compensacion,SUSESO (Ley N° 18.833) / CMF (Ley N° 18.045 Emisores RVEMI),rut,BIGINT,PK,Rol Único Tributario numérico de la Caja de Compensación.,No aplica
 ccaf.lista_entidades,ccaf_lista_entidades,cajas_compensacion,SUSESO (Ley N° 18.833) / CMF (Ley N° 18.045 Emisores RVEMI),dv,VARCHAR,Dimensión,Dígito verificador del RUT según algoritmo Módulo 11.,No aplica

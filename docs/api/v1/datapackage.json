@@ -2966,13 +2966,13 @@
      {
       "description": "Trimestre informado (AAAA-MM).",
       "name": "periodo",
-      "sif_rol": "Fecha",
+      "sif_rol": "PK",
       "type": "string"
      },
      {
       "description": "RUT sin dígito verificador (une con corredoras.lista_entidades).",
       "name": "rut",
-      "sif_rol": "FK",
+      "sif_rol": "PK",
       "type": "string"
      },
      {
@@ -3035,12 +3035,17 @@
       "sif_rol": "Atributo",
       "type": "boolean"
      }
+    ],
+    "primaryKey": [
+     "periodo",
+     "rut",
+     "codigo_fecu"
     ]
    },
    "scheme": "file",
    "sif": {
     "api_version": "v1",
-    "clave_origen": null,
+    "clave_origen": "declarada",
     "corte": "2010-12 a 2026-06",
     "deriva_de": null,
     "estado": "publicado",
@@ -3156,7 +3161,6 @@
     ],
     "puente": "directo",
     "sector": "corredoras_bolsa",
-    "sin_clave": "falla",
     "ultima_actualizacion": "2026-10-19"
    },
    "sources": [
@@ -3430,13 +3434,13 @@
      {
       "description": "Trimestre informado (AAAA-MM).",
       "name": "periodo",
-      "sif_rol": "Fecha",
+      "sif_rol": "PK",
       "type": "string"
      },
      {
       "description": "RUT sin dígito verificador (une con corredoras.lista_entidades).",
       "name": "rut",
-      "sif_rol": "FK",
+      "sif_rol": "PK",
       "type": "string"
      },
      {
@@ -3499,12 +3503,17 @@
       "sif_rol": "Atributo",
       "type": "boolean"
      }
+    ],
+    "primaryKey": [
+     "periodo",
+     "rut",
+     "codigo_fecu"
     ]
    },
    "scheme": "file",
    "sif": {
     "api_version": "v1",
-    "clave_origen": null,
+    "clave_origen": "declarada",
     "corte": "2010-12 a 2026-06",
     "deriva_de": null,
     "estado": "publicado",
@@ -3620,7 +3629,6 @@
     ],
     "puente": "directo",
     "sector": "corredoras_bolsa",
-    "sin_clave": "falla",
     "ultima_actualizacion": "2026-10-19"
    },
    "sources": [
@@ -4242,13 +4250,13 @@
      {
       "description": "Cierre del ejercicio (AAAA-12): estados al 31 de diciembre.",
       "name": "periodo",
-      "sif_rol": "Fecha",
+      "sif_rol": "PK",
       "type": "string"
      },
      {
       "description": "RUN del fondo sin dígito verificador (une con ffmm.lista_entidades).",
       "name": "run_fondo",
-      "sif_rol": "FK",
+      "sif_rol": "PK",
       "type": "string"
      },
      {
@@ -4302,7 +4310,7 @@
      {
       "description": "Número de línea del balance como lo presenta la CMF (1 a 16). Es fijo por cuenta: la 8 es siempre el total activo y la 16 el activo neto.",
       "name": "orden",
-      "sif_rol": "PK",
+      "sif_rol": "Orden",
       "type": "integer"
      },
      {
@@ -4353,12 +4361,17 @@
       "sif_rol": "Atributo",
       "type": "string"
      }
+    ],
+    "primaryKey": [
+     "periodo",
+     "run_fondo",
+     "codigo_cuenta"
     ]
    },
    "scheme": "file",
    "sif": {
     "api_version": "v1",
-    "clave_origen": null,
+    "clave_origen": "declarada",
     "corte": "2010-12 a 2025-12",
     "deriva_de": null,
     "estado": "publicado",
@@ -4468,7 +4481,6 @@
     ],
     "puente": "directo",
     "sector": "ffmm",
-    "sin_clave": "falla",
     "ultima_actualizacion": "2026-10-01"
    },
    "sources": [
@@ -6263,13 +6275,13 @@
      {
       "description": "Cierre del ejercicio (AAAA-12): estados al 31 de diciembre.",
       "name": "periodo",
-      "sif_rol": "Fecha",
+      "sif_rol": "PK",
       "type": "string"
      },
      {
       "description": "RUN del fondo sin dígito verificador (une con ffmm.lista_entidades).",
       "name": "run_fondo",
-      "sif_rol": "FK",
+      "sif_rol": "PK",
       "type": "string"
      },
      {
@@ -6323,7 +6335,7 @@
      {
       "description": "Número de línea del estado de resultados como lo presenta la CMF (1 a 19). Es fijo por cuenta: la 8 es siempre el total de ingresos y la 14 la utilidad antes de impuesto.",
       "name": "orden",
-      "sif_rol": "PK",
+      "sif_rol": "Orden",
       "type": "integer"
      },
      {
@@ -6374,12 +6386,17 @@
       "sif_rol": "Atributo",
       "type": "string"
      }
+    ],
+    "primaryKey": [
+     "periodo",
+     "run_fondo",
+     "codigo_cuenta"
     ]
    },
    "scheme": "file",
    "sif": {
     "api_version": "v1",
-    "clave_origen": null,
+    "clave_origen": "declarada",
     "corte": "2010-12 a 2025-12",
     "deriva_de": null,
     "estado": "publicado",
@@ -6489,7 +6506,6 @@
     ],
     "puente": "directo",
     "sector": "ffmm",
-    "sin_clave": "falla",
     "ultima_actualizacion": "2026-10-01"
    },
    "sources": [
@@ -6544,7 +6560,7 @@
      {
       "description": "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
       "name": "run_fondo",
-      "sif_rol": "FK",
+      "sif_rol": "PK",
       "type": "string"
      },
      {
@@ -6685,12 +6701,18 @@
       "sif_rol": "Atributo",
       "type": "string"
      }
+    ],
+    "primaryKey": [
+     "periodo",
+     "run_fondo",
+     "contexto",
+     "codigo_cuenta"
     ]
    },
    "scheme": "file",
    "sif": {
     "api_version": "v1",
-    "clave_origen": null,
+    "clave_origen": "declarada",
     "corte": "2022-03 a 2026-06",
     "deriva_de": null,
     "estado": "publicado",
@@ -6800,7 +6822,6 @@
     ],
     "puente": "directo",
     "sector": "fi",
-    "sin_clave": "falla",
     "ultima_actualizacion": "2026-10-02"
    },
    "sources": [
@@ -8636,7 +8657,7 @@
      {
       "description": "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
       "name": "run_fondo",
-      "sif_rol": "FK",
+      "sif_rol": "PK",
       "type": "string"
      },
      {
@@ -8777,12 +8798,18 @@
       "sif_rol": "Atributo",
       "type": "string"
      }
+    ],
+    "primaryKey": [
+     "periodo",
+     "run_fondo",
+     "contexto",
+     "codigo_cuenta"
     ]
    },
    "scheme": "file",
    "sif": {
     "api_version": "v1",
-    "clave_origen": null,
+    "clave_origen": "declarada",
     "corte": "2022-03 a 2026-06",
     "deriva_de": null,
     "estado": "publicado",
@@ -8892,7 +8919,6 @@
     ],
     "puente": "directo",
     "sector": "fi",
-    "sin_clave": "falla",
     "ultima_actualizacion": "2026-10-02"
    },
    "sources": [
@@ -11172,13 +11198,13 @@
      {
       "description": "Código del patrimonio separado según el nombre del PDF (p. ej. BTRA15, PS13).",
       "name": "codigo_patrimonio",
-      "sif_rol": "Dimensión",
+      "sif_rol": "PK",
       "type": "string"
      },
      {
       "description": "Cierre del balance, AAAA-MM (siempre diciembre).",
       "name": "periodo",
-      "sif_rol": "Dimensión",
+      "sif_rol": "PK",
       "type": "string"
      },
      {
@@ -11190,7 +11216,7 @@
      {
       "description": "Posición de la cuenta en el balance impreso.",
       "name": "orden_en_balance",
-      "sif_rol": "Atributo",
+      "sif_rol": "PK",
       "type": "integer"
      },
      {
@@ -11202,7 +11228,7 @@
      {
       "description": "Nombre de la cuenta, copiado del balance.",
       "name": "cuenta",
-      "sif_rol": "Dimensión",
+      "sif_rol": "PK",
       "type": "string"
      },
      {
@@ -11211,12 +11237,19 @@
       "sif_rol": "Métrica",
       "type": "integer"
      }
+    ],
+    "primaryKey": [
+     "archivo",
+     "codigo_patrimonio",
+     "periodo",
+     "orden_en_balance",
+     "cuenta"
     ]
    },
    "scheme": "file",
    "sif": {
     "api_version": "v1",
-    "clave_origen": null,
+    "clave_origen": "declarada",
     "corte": "2014-12 a 2025-12 (diciembre; 2010–2013 sin datos)",
     "deriva_de": null,
     "estado": "publicado",
@@ -11236,7 +11269,6 @@
     ],
     "puente": "directo",
     "sector": "patrimonios_separados",
-    "sin_clave": "falla",
     "ultima_actualizacion": "2026-09-28"
    },
    "sources": [
@@ -16427,7 +16459,7 @@
      {
       "description": "vida o generales.",
       "name": "sector",
-      "sif_rol": "Atributo",
+      "sif_rol": "PK",
       "type": "string"
      },
      {
@@ -16466,12 +16498,16 @@
       "sif_rol": "Atributo",
       "type": "boolean"
      }
+    ],
+    "primaryKey": [
+     "sector",
+     "rut_aseguradora"
     ]
    },
    "scheme": "file",
    "sif": {
     "api_version": "v1",
-    "clave_origen": null,
+    "clave_origen": "declarada",
     "corte": "2016-11 a 2026-09",
     "deriva_de": null,
     "estado": "publicado",
@@ -16491,7 +16527,6 @@
     ],
     "puente": "alias",
     "sector": "seguros",
-    "sin_clave": "falla",
     "ultima_actualizacion": "2026-10-21"
    },
    "sources": [
