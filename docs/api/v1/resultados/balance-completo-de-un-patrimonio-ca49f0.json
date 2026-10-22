@@ -1,0 +1,249 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "balance-completo-de-un-patrimonio-ca49f0",
+ "titulo": "Balance completo de un patrimonio",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "orden_en_balance",
+  "categoria",
+  "cuenta",
+  "monto_m_clp"
+ ],
+ "filas": 38,
+ "truncado": false,
+ "datos": [
+  [
+   1,
+   "Activo Circulante",
+   "Disponible",
+   289779
+  ],
+  [
+   2,
+   "Activo Circulante",
+   "Valores negociables",
+   51885
+  ],
+  [
+   3,
+   "Activo Circulante",
+   "Activo securitizado (corto plazo )",
+   406144
+  ],
+  [
+   4,
+   "Activo Circulante",
+   "Provisiones (corto/plazo) activo securitizado (menos)",
+   0
+  ],
+  [
+   5,
+   "Activo Circulante",
+   "Otros activos circulantes",
+   149744
+  ],
+  [
+   6,
+   "Total Activo Circulante",
+   "TOTAL ACTIVOS CIRCULANTES",
+   897552
+  ],
+  [
+   7,
+   "Activo No Circulante",
+   "Activo securitizado largo plazo",
+   1939
+  ],
+  [
+   8,
+   "Activo No Circulante",
+   "Provisiones (largo plazo) activo securitizado (menos)",
+   0
+  ],
+  [
+   9,
+   "Activo No Circulante",
+   "Menor valor en colocación de títulos de deuda",
+   0
+  ],
+  [
+   10,
+   "Activo No Circulante",
+   "Mayor valor en colocación de títulos de deuda (menos)",
+   0
+  ],
+  [
+   11,
+   "Activo No Circulante",
+   "Gastos de colocación",
+   0
+  ],
+  [
+   12,
+   "Activo No Circulante",
+   "Otros activos",
+   0
+  ],
+  [
+   13,
+   "Total Activo No Circulante",
+   "TOTAL OTROS ACTIVOS",
+   1939
+  ],
+  [
+   14,
+   "Total Activos",
+   "TOTAL ACTIVOS",
+   899491
+  ],
+  [
+   15,
+   "Pasivo Circulante",
+   "Remuneración por pagar por administración y custodia",
+   10130
+  ],
+  [
+   16,
+   "Pasivo Circulante",
+   "Remuneración por pagar por clasificación de riesgo",
+   5959
+  ],
+  [
+   17,
+   "Pasivo Circulante",
+   "Remuneración por pagar por auditoria externa",
+   1600
+  ],
+  [
+   18,
+   "Pasivo Circulante",
+   "Remuneración por pagar al banco pagador",
+   591
+  ],
+  [
+   19,
+   "Pasivo Circulante",
+   "Remuneración por pagar al representante tenedores de bonos",
+   1773
+  ],
+  [
+   20,
+   "Pasivo Circulante",
+   "Excedentes por pagar",
+   0
+  ],
+  [
+   21,
+   "Pasivo Circulante",
+   "Obligaciones por prepagos",
+   17601
+  ],
+  [
+   22,
+   "Pasivo Circulante",
+   "Obligaciones por saldo precios (corto plazo)",
+   0
+  ],
+  [
+   23,
+   "Pasivo Circulante",
+   "Obligaciones por sobrecolateralización (corto plazo)",
+   0
+  ],
+  [
+   24,
+   "Pasivo Circulante",
+   "Otros acreedores (corto plazo)",
+   16021
+  ],
+  [
+   25,
+   "Pasivo Circulante",
+   "Obligaciones por títulos de deuda de securitización (corto plazo)",
+   7040686
+  ],
+  [
+   26,
+   "Total Pasivo Circulante",
+   "TOTAL PASIVOS CIRCULANTES",
+   7094361
+  ],
+  [
+   27,
+   "Pasivo No Circulante",
+   "Obligaciones por títulos deuda de securitización (largo plazo)",
+   0
+  ],
+  [
+   28,
+   "Pasivo No Circulante",
+   "Obligaciones por saldo precio (largo plazo)",
+   0
+  ],
+  [
+   29,
+   "Pasivo No Circulante",
+   "Obligaciones por sobrecolateralización (largo plazo)",
+   0
+  ],
+  [
+   30,
+   "Pasivo No Circulante",
+   "Otros acreedores (largo plazo)",
+   0
+  ],
+  [
+   31,
+   "Total Pasivo No Circulante",
+   "TOTAL PASIVOS A LARGO PLAZO",
+   0
+  ],
+  [
+   32,
+   "Patrimonio (Excedente Acumulado)",
+   "Excedentes obligatorios fin ejercicio anterior",
+   -5795674
+  ],
+  [
+   33,
+   "Patrimonio (Excedente Acumulado)",
+   "Fondos excedentes voluntarios fin ejercicio anterior",
+   0
+  ],
+  [
+   34,
+   "Patrimonio (Excedente Acumulado)",
+   "Excedentes del ejercicio (déficit)",
+   -399196
+  ],
+  [
+   35,
+   "Patrimonio (Excedente Acumulado)",
+   "Retiros de excedentes (menos)",
+   0
+  ],
+  [
+   36,
+   "Patrimonio (Excedente Acumulado)",
+   "Aportes adicionales (más)",
+   0
+  ],
+  [
+   37,
+   "Total Patrimonio (Excedente Acumulado)",
+   "TOTAL EXCEDENTES (DEFICIT)  ACUMULADO",
+   -6194870
+  ],
+  [
+   38,
+   "Total Pasivos",
+   "TOTAL PASIVOS",
+   899491
+  ]
+ ],
+ "sql": "SELECT orden_en_balance, categoria, cuenta, monto_m_clp FROM patrimonios_separados_balance WHERE periodo = '2025-12' AND nombre_administradora = 'SECURITIZADORA SECURITY' AND codigo_patrimonio = (SELECT min(codigo_patrimonio) FROM patrimonios_separados_balance WHERE periodo = '2025-12' AND nombre_administradora = 'SECURITIZADORA SECURITY') ORDER BY orden_en_balance;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

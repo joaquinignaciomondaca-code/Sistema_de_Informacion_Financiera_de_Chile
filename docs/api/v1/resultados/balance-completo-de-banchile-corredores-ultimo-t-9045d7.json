@@ -1,0 +1,343 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "balance-completo-de-banchile-corredores-ultimo-t-9045d7",
+ "titulo": "Balance completo de Banchile Corredores, último trimestre",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "periodo",
+  "seccion",
+  "codigo_fecu",
+  "nivel",
+  "cuenta",
+  "valor_miles_clp"
+ ],
+ "filas": 40,
+ "truncado": false,
+ "datos": [
+  [
+   "2026-06",
+   "Activos",
+   "10.00.00",
+   1,
+   "Total Activos",
+   1241990001
+  ],
+  [
+   "2026-06",
+   "Activos",
+   "11.01.00",
+   1,
+   "Efectivo y efectivo equivalente",
+   59037458
+  ],
+  [
+   "2026-06",
+   "Activos",
+   "11.02.00",
+   1,
+   "Instrumentos financieros",
+   344806918
+  ],
+  [
+   "2026-06",
+   "Activos",
+   "11.02.10",
+   2,
+   "A valor razonable - Cartera propia disponible",
+   69208668
+  ],
+  [
+   "2026-06",
+   "Activos",
+   "11.02.11",
+   3,
+   "Renta variable (IRV)",
+   4352392
+  ],
+  [
+   "2026-06",
+   "Activos",
+   "11.02.12",
+   3,
+   "Renta fija e Intermediación Financiera (IRF e IIF)",
+   64856276
+  ],
+  [
+   "2026-06",
+   "Activos",
+   "11.02.20",
+   2,
+   "A valor razonable - Cartera propia comprometida",
+   178791152
+  ],
+  [
+   "2026-06",
+   "Activos",
+   "11.02.22",
+   3,
+   "Renta fija e Intermediación Financiera",
+   178791152
+  ],
+  [
+   "2026-06",
+   "Activos",
+   "11.02.30",
+   2,
+   "A valor razonable - Instrumentos financieros derivados",
+   10259793
+  ],
+  [
+   "2026-06",
+   "Activos",
+   "11.02.60",
+   2,
+   "A costo amortizado - Operaciones de financiamiento",
+   86547305
+  ],
+  [
+   "2026-06",
+   "Activos",
+   "11.02.61",
+   3,
+   "Operaciones de compra con retroventa sobre IRV",
+   86262655
+  ],
+  [
+   "2026-06",
+   "Activos",
+   "11.02.63",
+   3,
+   "Otras",
+   284650
+  ],
+  [
+   "2026-06",
+   "Activos",
+   "11.03.00",
+   1,
+   "Deudores por intermediación",
+   586805819
+  ],
+  [
+   "2026-06",
+   "Activos",
+   "11.04.00",
+   1,
+   "Cuentas por cobrar por operaciones de cartera propia",
+   47652434
+  ],
+  [
+   "2026-06",
+   "Activos",
+   "11.06.00",
+   1,
+   "Otras cuentas por cobrar",
+   174297084
+  ],
+  [
+   "2026-06",
+   "Activos",
+   "11.09.00",
+   1,
+   "Inversiones en sociedades",
+   10869245
+  ],
+  [
+   "2026-06",
+   "Activos",
+   "11.10.00",
+   1,
+   "Intangibles",
+   8047142
+  ],
+  [
+   "2026-06",
+   "Activos",
+   "11.11.00",
+   1,
+   "Propiedades, planta y equipo",
+   6713154
+  ],
+  [
+   "2026-06",
+   "Activos",
+   "11.12.00",
+   1,
+   "Otros activos",
+   3760747
+  ],
+  [
+   "2026-06",
+   "Pasivos",
+   "21.00.00",
+   2,
+   "Total Pasivos",
+   1048893536
+  ],
+  [
+   "2026-06",
+   "Pasivos",
+   "21.01.00",
+   2,
+   "Pasivos financieros",
+   183387682
+  ],
+  [
+   "2026-06",
+   "Pasivos",
+   "21.01.10",
+   3,
+   "A valor razonable",
+   1333915
+  ],
+  [
+   "2026-06",
+   "Pasivos",
+   "21.01.20",
+   3,
+   "A valor razonable - Instrumentos financieros derivados",
+   7743640
+  ],
+  [
+   "2026-06",
+   "Pasivos",
+   "21.01.30",
+   3,
+   "Obligaciones por financiamiento",
+   165983420
+  ],
+  [
+   "2026-06",
+   "Pasivos",
+   "21.01.32",
+   4,
+   "Operaciones de venta con retrocompra sobre IRF e IIF",
+   165802271
+  ],
+  [
+   "2026-06",
+   "Pasivos",
+   "21.01.33",
+   4,
+   "Otras",
+   181149
+  ],
+  [
+   "2026-06",
+   "Pasivos",
+   "21.01.40",
+   3,
+   "Obligaciones con bancos e instituciones financieras",
+   8326707
+  ],
+  [
+   "2026-06",
+   "Pasivos",
+   "21.02.00",
+   2,
+   "Acreedores por intermediación",
+   587464592
+  ],
+  [
+   "2026-06",
+   "Pasivos",
+   "21.03.00",
+   2,
+   "Cuentas por pagar por operaciones de cartera propia",
+   37682369
+  ],
+  [
+   "2026-06",
+   "Pasivos",
+   "21.05.00",
+   2,
+   "Otras cuentas por pagar",
+   222474322
+  ],
+  [
+   "2026-06",
+   "Pasivos",
+   "21.06.00",
+   2,
+   "Provisiones",
+   9816000
+  ],
+  [
+   "2026-06",
+   "Pasivos",
+   "21.07.00",
+   2,
+   "Impuestos por pagar",
+   173118
+  ],
+  [
+   "2026-06",
+   "Pasivos",
+   "21.08.00",
+   2,
+   "Impuestos diferidos",
+   2348585
+  ],
+  [
+   "2026-06",
+   "Pasivos",
+   "21.09.00",
+   2,
+   "Otros pasivos",
+   5546868
+  ],
+  [
+   "2026-06",
+   "Patrimonio",
+   "20.00.00",
+   1,
+   "Total Pasivos y Patrimonio",
+   1241990001
+  ],
+  [
+   "2026-06",
+   "Patrimonio",
+   "22.00.00",
+   2,
+   "Total Patrimonio",
+   193096465
+  ],
+  [
+   "2026-06",
+   "Patrimonio",
+   "22.01.00",
+   2,
+   "Capital",
+   62149705
+  ],
+  [
+   "2026-06",
+   "Patrimonio",
+   "22.02.00",
+   2,
+   "Reservas",
+   7210610
+  ],
+  [
+   "2026-06",
+   "Patrimonio",
+   "22.03.00",
+   2,
+   "Resultados acumulados",
+   99895616
+  ],
+  [
+   "2026-06",
+   "Patrimonio",
+   "22.04.00",
+   2,
+   "Resultado del ejercicio",
+   23840534
+  ]
+ ],
+ "sql": "SELECT periodo, seccion, codigo_fecu, nivel, cuenta, valor_miles_clp FROM corredoras_bolsa_balance WHERE rut = '96571220' AND periodo = (SELECT max(periodo) FROM corredoras_bolsa_balance) ORDER BY codigo_fecu;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

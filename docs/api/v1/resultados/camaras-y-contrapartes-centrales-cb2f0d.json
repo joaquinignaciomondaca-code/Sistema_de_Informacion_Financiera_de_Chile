@@ -1,0 +1,40 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "camaras-y-contrapartes-centrales-cb2f0d",
+ "titulo": "Cámaras y Contrapartes Centrales",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "codigo_sistema",
+  "razon_social",
+  "marco_legal"
+ ],
+ "filas": 4,
+ "truncado": false,
+ "datos": [
+  [
+   "CCA",
+   "CENTRO DE COMPENSACION AUTOMATIZADO S.A.",
+   "Compendio de Normas Financieras BCCh Cap. III.H.2 / DFL 3 Ley General de Bancos"
+  ],
+  [
+   "CCLV",
+   "CCLV, CONTRAPARTE CENTRAL S.A.",
+   "Ley N° 20.345 / Ley N° 18.045 de Mercado de Valores"
+  ],
+  [
+   "COMBANC",
+   "SOCIEDAD OPERADORA DE LA CÁMARA DE COMPENSACIÓN DE PAGOS DE ALTO VALOR S.A. (COMBANC)",
+   "Ley General de Bancos (DFL 3) / Compendio Normas Financieras BCCh Cap. III.H.1"
+  ],
+  [
+   "COMDER",
+   "COMDER, CONTRAPARTE CENTRAL S.A.",
+   "Ley N° 20.345 sobre Sistemas de Compensación y Liquidación de Instrumentos Financieros"
+  ]
+ ],
+ "sql": "SELECT codigo_sistema, razon_social, marco_legal FROM sistemas_pago_lista_entidades WHERE tipo_sistema LIKE '%Cámara%' OR tipo_sistema LIKE '%Contraparte%';",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

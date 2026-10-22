@@ -1,0 +1,117 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "catalogo-de-securitizadoras-vigentes-vs-historic-96787b",
+ "titulo": "Catálogo de Securitizadoras (Vigentes vs Históricas)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "rut_completo",
+  "razon_social",
+  "estado_vigencia",
+  "lineas_deuda_registradas"
+ ],
+ "filas": 16,
+ "truncado": false,
+ "datos": [
+  [
+   "76.965.774-6",
+   "VOLCOM SECURITIZADORA S.A.",
+   "VIGENTE",
+   2
+  ],
+  [
+   "77.677.546-0",
+   "AMERIS SECURITIZADORA S.A.",
+   "VIGENTE",
+   0
+  ],
+  [
+   "79.558.200-2",
+   "FINTESA SECURITIZADORA S.A.",
+   "NO VIGENTE / EN LIQUIDACION",
+   0
+  ],
+  [
+   "96.761.720-2",
+   "CB SECURITIZADORA S.A.",
+   "NO VIGENTE / EN LIQUIDACION",
+   0
+  ],
+  [
+   "96.765.170-2",
+   "TRANSA SECURITIZADORA S.A.",
+   "VIGENTE",
+   0
+  ],
+  [
+   "96.777.130-9",
+   "SECURITIZADORA LA CONSTRUCCION S.A.",
+   "NO VIGENTE / EN LIQUIDACION",
+   0
+  ],
+  [
+   "96.785.590-1",
+   "SANTANDER S.A. SOCIEDAD SECURITIZADORA",
+   "VIGENTE",
+   0
+  ],
+  [
+   "96.819.300-7",
+   "SECURITIZADORA BICE S.A.",
+   "VIGENTE",
+   0
+  ],
+  [
+   "96.847.360-3",
+   "SECURITIZADORA SECURITY S.A.",
+   "VIGENTE",
+   3
+  ],
+  [
+   "96.876.290-7",
+   "SECURITIZADORA CHILE MAE S.A.",
+   "NO VIGENTE / EN LIQUIDACION",
+   0
+  ],
+  [
+   "96.912.880-2",
+   "CREDICORP CAPITAL S.A. SECURITIZADORA",
+   "NO VIGENTE / EN LIQUIDACION",
+   0
+  ],
+  [
+   "96.932.010-K",
+   "BANCHILE SECURITIZADORA S.A. EN LIQUIDACIÓN",
+   "NO VIGENTE / EN LIQUIDACION",
+   0
+  ],
+  [
+   "96.948.880-9",
+   "BCI SECURITIZADORA S.A.",
+   "VIGENTE",
+   3
+  ],
+  [
+   "96.971.830-8",
+   "EF SECURITIZADORA S.A.",
+   "VIGENTE",
+   9
+  ],
+  [
+   "96.972.780-3",
+   "SECURITIZADORA SUDAMERICANA S.A.",
+   "VIGENTE",
+   1
+  ],
+  [
+   "99.551.980-1",
+   "SECURITIZADORA EXPEDITA S.A.",
+   "NO VIGENTE / EN LIQUIDACION",
+   0
+  ]
+ ],
+ "sql": "SELECT rut_completo, razon_social, estado_vigencia, lineas_deuda_registradas FROM securitizadoras_lista_entidades ORDER BY estado_vigencia, razon_social;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

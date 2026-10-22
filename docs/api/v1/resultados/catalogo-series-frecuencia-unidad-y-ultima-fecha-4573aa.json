@@ -1,0 +1,535 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "catalogo-series-frecuencia-unidad-y-ultima-fecha-4573aa",
+ "titulo": "Catálogo: series, frecuencia, unidad y última fecha",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "grupo",
+  "nombre",
+  "frecuencia",
+  "unidad",
+  "primera_fecha",
+  "ultima_fecha",
+  "observaciones",
+  "estado"
+ ],
+ "filas": 51,
+ "truncado": false,
+ "datos": [
+  [
+   "Actividad",
+   "Imacec comercio",
+   "Mensual",
+   "Índice 2018=100",
+   "2014-01-01",
+   "2026-08-01",
+   152,
+   "ok"
+  ],
+  [
+   "Actividad",
+   "Imacec empalmado",
+   "Mensual",
+   "Índice 2018=100",
+   "2014-01-01",
+   "2026-08-01",
+   152,
+   "ok"
+  ],
+  [
+   "Actividad",
+   "Imacec minería",
+   "Mensual",
+   "Índice 2018=100",
+   "2014-01-01",
+   "2026-08-01",
+   152,
+   "ok"
+  ],
+  [
+   "Actividad",
+   "Imacec no minero",
+   "Mensual",
+   "Índice 2018=100",
+   "2014-01-01",
+   "2026-08-01",
+   152,
+   "ok"
+  ],
+  [
+   "Actividad",
+   "Imacec servicios",
+   "Mensual",
+   "Índice 2018=100",
+   "2014-01-01",
+   "2026-08-01",
+   152,
+   "ok"
+  ],
+  [
+   "Actividad",
+   "PIB trimestral (volumen)",
+   "Trimestral",
+   "Miles de millones CLP encadenados",
+   "2014-01-01",
+   "2026-04-01",
+   50,
+   "ok"
+  ],
+  [
+   "Commodities",
+   "Cobre refinado BML (diario)",
+   "Diaria",
+   "USD por libra",
+   "2014-01-02",
+   "2026-10-21",
+   3188,
+   "ok"
+  ],
+  [
+   "Commodities",
+   "Cobre refinado BML (mensual)",
+   "Mensual",
+   "USD por libra",
+   "2014-01-01",
+   "2026-09-01",
+   153,
+   "ok"
+  ],
+  [
+   "Commodities",
+   "Oro",
+   "Diaria",
+   "USD por onza troy",
+   "2014-01-02",
+   "2026-10-21",
+   3188,
+   "ok"
+  ],
+  [
+   "Commodities",
+   "Plata",
+   "Diaria",
+   "USD por onza troy",
+   "2014-01-02",
+   "2026-10-21",
+   3188,
+   "ok"
+  ],
+  [
+   "Expectativas",
+   "Encuesta de expectativas (EEE): TPM a 11 meses",
+   "Mensual",
+   "%",
+   "2014-01-01",
+   "2026-10-01",
+   154,
+   "ok"
+  ],
+  [
+   "Expectativas",
+   "Encuesta de expectativas (EEE): TPM a 23 meses",
+   "Mensual",
+   "%",
+   "2014-01-01",
+   "2026-10-01",
+   154,
+   "ok"
+  ],
+  [
+   "Expectativas",
+   "Encuesta de expectativas (EEE): inflación a 11 meses",
+   "Mensual",
+   "%",
+   "2014-01-01",
+   "2026-10-01",
+   154,
+   "ok"
+  ],
+  [
+   "Expectativas",
+   "Encuesta de expectativas (EEE): inflación a 23 meses",
+   "Mensual",
+   "%",
+   "2014-01-01",
+   "2026-10-01",
+   154,
+   "ok"
+  ],
+  [
+   "Expectativas",
+   "Encuesta de operadores financieros (EOF): TPM a 12 meses",
+   "Diaria",
+   "%",
+   "2014-01-07",
+   "2026-09-24",
+   237,
+   "ok"
+  ],
+  [
+   "Expectativas",
+   "Encuesta de operadores financieros (EOF): inflación a 12 meses",
+   "Diaria",
+   "%",
+   "2014-01-07",
+   "2026-09-24",
+   237,
+   "ok"
+  ],
+  [
+   "Fiscal",
+   "Deuda bruta del Gobierno Central",
+   "Trimestral",
+   "% del PIB",
+   "2014-01-01",
+   "2026-01-01",
+   49,
+   "ok"
+  ],
+  [
+   "Mercado laboral",
+   "Asalariados",
+   "Mensual",
+   "Miles de personas",
+   "2014-01-01",
+   "2026-08-01",
+   152,
+   "ok"
+  ],
+  [
+   "Mercado laboral",
+   "Fuerza de trabajo",
+   "Mensual",
+   "Miles de personas",
+   "2014-01-01",
+   "2026-08-01",
+   152,
+   "ok"
+  ],
+  [
+   "Mercado laboral",
+   "Ocupados",
+   "Mensual",
+   "Miles de personas",
+   "2014-01-01",
+   "2026-08-01",
+   152,
+   "ok"
+  ],
+  [
+   "Mercado laboral",
+   "Tasa de desocupación nacional",
+   "Mensual",
+   "%",
+   "2014-01-01",
+   "2026-08-01",
+   152,
+   "ok"
+  ],
+  [
+   "Precios y reajustes",
+   "IPC general",
+   "Mensual",
+   "Índice 2023=100",
+   "2014-01-01",
+   "2026-09-01",
+   153,
+   "ok"
+  ],
+  [
+   "Precios y reajustes",
+   "IPC, variación en 12 meses",
+   "Mensual",
+   "%",
+   "2014-01-01",
+   "2026-09-01",
+   153,
+   "ok"
+  ],
+  [
+   "Precios y reajustes",
+   "IPC, variación mensual",
+   "Mensual",
+   "%",
+   "2014-01-01",
+   "2026-09-01",
+   153,
+   "ok"
+  ],
+  [
+   "Precios y reajustes",
+   "Unidad de fomento",
+   "Diaria",
+   "CLP",
+   "2014-01-01",
+   "2026-10-21",
+   4677,
+   "ok"
+  ],
+  [
+   "Precios y reajustes",
+   "Unidad tributaria mensual",
+   "Mensual",
+   "CLP",
+   "2014-01-01",
+   "2026-10-01",
+   154,
+   "ok"
+  ],
+  [
+   "Sector externo",
+   "Reservas internacionales",
+   "Mensual",
+   "Millones de USD",
+   "2014-01-01",
+   "2026-09-01",
+   153,
+   "ok"
+  ],
+  [
+   "Sector externo",
+   "Tasa de política monetaria de EE.UU.",
+   "Diaria",
+   "%",
+   "2014-01-01",
+   "2026-10-20",
+   3328,
+   "ok"
+  ],
+  [
+   "Tasas",
+   "Bonos en UF 1 año (BCU/BTU)",
+   "Diaria",
+   "%",
+   "2014-01-02",
+   "2025-12-26",
+   1620,
+   "ok"
+  ],
+  [
+   "Tasas",
+   "Bonos en UF 10 años (BCU/BTU)",
+   "Diaria",
+   "%",
+   "2014-01-02",
+   "2026-10-19",
+   2832,
+   "ok"
+  ],
+  [
+   "Tasas",
+   "Bonos en UF 2 años (BCU/BTU)",
+   "Diaria",
+   "%",
+   "2014-01-02",
+   "2026-10-19",
+   2111,
+   "ok"
+  ],
+  [
+   "Tasas",
+   "Bonos en UF 20 años (BCU/BTU)",
+   "Diaria",
+   "%",
+   "2014-01-02",
+   "2026-08-18",
+   1904,
+   "ok"
+  ],
+  [
+   "Tasas",
+   "Bonos en UF 30 años (BCU/BTU)",
+   "Diaria",
+   "%",
+   "2014-01-02",
+   "2026-10-15",
+   1957,
+   "ok"
+  ],
+  [
+   "Tasas",
+   "Bonos en UF 5 años (BCU/BTU)",
+   "Diaria",
+   "%",
+   "2014-01-03",
+   "2026-10-19",
+   2814,
+   "ok"
+  ],
+  [
+   "Tasas",
+   "Bonos en pesos 10 años (BCP/BTP)",
+   "Diaria",
+   "%",
+   "2014-01-02",
+   "2026-10-16",
+   2963,
+   "ok"
+  ],
+  [
+   "Tasas",
+   "Bonos en pesos 2 años (BCP/BTP)",
+   "Diaria",
+   "%",
+   "2014-01-02",
+   "2026-10-16",
+   2107,
+   "ok"
+  ],
+  [
+   "Tasas",
+   "Bonos en pesos 5 años (BCP/BTP)",
+   "Diaria",
+   "%",
+   "2014-01-08",
+   "2026-10-19",
+   2787,
+   "ok"
+  ],
+  [
+   "Tasas",
+   "Swap promedio cámara UF 1 año",
+   "Diaria",
+   "%",
+   "2014-01-02",
+   "2026-10-20",
+   3201,
+   "ok"
+  ],
+  [
+   "Tasas",
+   "Swap promedio cámara pesos 180 días",
+   "Diaria",
+   "%",
+   "2014-01-02",
+   "2026-10-20",
+   3184,
+   "ok"
+  ],
+  [
+   "Tasas",
+   "Swap promedio cámara pesos 2 años",
+   "Diaria",
+   "%",
+   "2014-01-02",
+   "2026-10-20",
+   3201,
+   "ok"
+  ],
+  [
+   "Tasas",
+   "Swap promedio cámara pesos 360 días",
+   "Diaria",
+   "%",
+   "2014-01-02",
+   "2026-10-20",
+   3184,
+   "ok"
+  ],
+  [
+   "Tasas",
+   "Swap promedio cámara pesos 90 días",
+   "Diaria",
+   "%",
+   "2014-01-02",
+   "2026-10-20",
+   3182,
+   "ok"
+  ],
+  [
+   "Tasas",
+   "Tasa de política monetaria (diaria)",
+   "Diaria",
+   "%",
+   "2014-01-02",
+   "2026-10-21",
+   3189,
+   "ok"
+  ],
+  [
+   "Tasas",
+   "Tasa interbancaria promedio (diaria)",
+   "Diaria",
+   "%",
+   "2014-01-02",
+   "2026-10-20",
+   2713,
+   "ok"
+  ],
+  [
+   "Tipo de cambio",
+   "Dólar observado",
+   "Diaria",
+   "CLP por USD",
+   "2014-01-02",
+   "2026-10-21",
+   3188,
+   "ok"
+  ],
+  [
+   "Tipo de cambio",
+   "Euro observado",
+   "Diaria",
+   "CLP por EUR",
+   "2014-01-02",
+   "2026-10-21",
+   3188,
+   "ok"
+  ],
+  [
+   "Tipo de cambio",
+   "Tipo de cambio multilateral (TCM)",
+   "Diaria",
+   "Índice",
+   "2014-01-02",
+   "2026-10-21",
+   3188,
+   "ok"
+  ],
+  [
+   "Tipo de cambio",
+   "Tipo de cambio multilateral 5 monedas (TCM-5)",
+   "Diaria",
+   "Índice",
+   "2014-01-02",
+   "2026-10-21",
+   3188,
+   "ok"
+  ],
+  [
+   "Tipo de cambio",
+   "Tipo de cambio multilateral sin EE.UU. (TCM-X)",
+   "Diaria",
+   "Índice",
+   "2014-01-02",
+   "2026-10-21",
+   3188,
+   "ok"
+  ],
+  [
+   "Tipo de cambio",
+   "Tipo de cambio real",
+   "Mensual",
+   "Índice",
+   "2014-01-01",
+   "2026-08-01",
+   152,
+   "ok"
+  ],
+  [
+   "Tipo de cambio",
+   "Tipo de cambio real 5 monedas",
+   "Mensual",
+   "Índice",
+   "2014-01-01",
+   "2026-08-01",
+   152,
+   "ok"
+  ]
+ ],
+ "sql": "SELECT grupo, nombre, frecuencia, unidad, primera_fecha, ultima_fecha, observaciones, estado FROM macro_series_catalogo ORDER BY grupo, nombre;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

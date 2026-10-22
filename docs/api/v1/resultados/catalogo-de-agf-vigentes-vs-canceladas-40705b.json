@@ -1,0 +1,526 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "catalogo-de-agf-vigentes-vs-canceladas-40705b",
+ "titulo": "Catálogo de AGF (Vigentes vs Canceladas)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "rut_completo",
+  "razon_social",
+  "estado_vigencia",
+  "grupo_controlador",
+  "fondos_inversion_administrados"
+ ],
+ "filas": 72,
+ "truncado": false,
+ "datos": [
+  [
+   "76.020.091-3",
+   "EQUITAS MANAGEMENT PARTNERS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "No Vigente / Cancelada",
+   null,
+   0
+  ],
+  [
+   "76.034.728-0",
+   "HMC S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "Vigente",
+   "Independiente / No Bancario",
+   35
+  ],
+  [
+   "76.036.521-1",
+   "ADMINISTRADORA GENERAL DE FONDOS SURA S.A.",
+   "Vigente",
+   "SURA Asset Management",
+   9
+  ],
+  [
+   "76.048.177-7",
+   "AURUS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "No Vigente / Cancelada",
+   null,
+   0
+  ],
+  [
+   "76.071.197-7",
+   "FYNSA ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   25
+  ],
+  [
+   "76.081.215-3",
+   "LARRAIN VIAL ACTIVOS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "Vigente",
+   "Grupo LarrainVial",
+   73
+  ],
+  [
+   "76.122.579-0",
+   "NEORENTAS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "Vigente",
+   "Independiente / No Bancario",
+   14
+  ],
+  [
+   "76.172.904-7",
+   "ASSET ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   11
+  ],
+  [
+   "76.173.632-9",
+   "SENSOR CAPITAL S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "Vigente",
+   "Independiente / No Bancario",
+   1
+  ],
+  [
+   "76.202.136-6",
+   "PICTON ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   54
+  ],
+  [
+   "76.336.511-5",
+   "FINASSET ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   5
+  ],
+  [
+   "76.429.904-3",
+   "VENTURANCE S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "Vigente",
+   "Independiente / No Bancario",
+   5
+  ],
+  [
+   "76.435.792-2",
+   "CAPITAL ADVISORS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   6
+  ],
+  [
+   "76.481.735-4",
+   "AZIMUT INVESTMENTS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "No Vigente / Cancelada",
+   "Independiente / No Bancario",
+   0
+  ],
+  [
+   "76.493.189-0",
+   "VOLCOMCAPITAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   56
+  ],
+  [
+   "76.503.272-5",
+   "LAB CAPITAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   8
+  ],
+  [
+   "76.503.273-3",
+   "AMERIS CAPITAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Ameris Capital",
+   51
+  ],
+  [
+   "76.507.811-3",
+   "FALCOM ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   26
+  ],
+  [
+   "76.543.031-3",
+   "FRONTAL TRUST ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   19
+  ],
+  [
+   "76.551.925-K",
+   "INVINSA ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   2
+  ],
+  [
+   "76.576.607-9",
+   "SARTOR ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   5
+  ],
+  [
+   "76.579.033-6",
+   "XLC ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   0
+  ],
+  [
+   "76.613.788-1",
+   "PATAGON LAND ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "No Vigente / Cancelada",
+   "Independiente / No Bancario",
+   0
+  ],
+  [
+   "76.620.928-9",
+   "TAURUS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   0
+  ],
+  [
+   "76.708.560-5",
+   "BCI ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "No Vigente / Cancelada",
+   "Grupo Bci / Yarur",
+   0
+  ],
+  [
+   "76.798.260-7",
+   "QUEST ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   5
+  ],
+  [
+   "76.800.115-4",
+   "INDEPENDENCIA INTERNACIONAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   5
+  ],
+  [
+   "76.810.627-4",
+   "FINTUAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   0
+  ],
+  [
+   "76.917.333-1",
+   "SINGULAR ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   34
+  ],
+  [
+   "76.930.595-5",
+   "VANTRUST CAPITAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   7
+  ],
+  [
+   "76.930.984-5",
+   "BANCO INTERNACIONAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   0
+  ],
+  [
+   "76.945.436-5",
+   "SRM ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "No Vigente / Cancelada",
+   "Independiente / No Bancario",
+   0
+  ],
+  [
+   "76.963.034-1",
+   "LINK CAPITAL PARTNERS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   21
+  ],
+  [
+   "77.057.272-K",
+   "SOYFOCUS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   0
+  ],
+  [
+   "77.244.875-9",
+   "PRUDENTIAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   1
+  ],
+  [
+   "77.324.967-9",
+   "AVANTE ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   3
+  ],
+  [
+   "77.333.224-K",
+   "ALZA ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   10
+  ],
+  [
+   "77.677.124-4",
+   "SIGMA ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   3
+  ],
+  [
+   "77.704.838-4",
+   "NVS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   11
+  ],
+  [
+   "77.750.920-9",
+   "ZURICH CHILE ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Zurich Financial Services",
+   7
+  ],
+  [
+   "91.999.000-7",
+   "PRINCIPAL ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Principal Financial Group",
+   13
+  ],
+  [
+   "96.513.630-4",
+   "CORPBANCA  ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "No Vigente / Cancelada",
+   "Independiente / No Bancario",
+   0
+  ],
+  [
+   "96.514.410-2",
+   "BICE INVERSIONES ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Grupo BICE / Matte",
+   68
+  ],
+  [
+   "96.530.900-4",
+   "BCI ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   null,
+   26
+  ],
+  [
+   "96.576.660-K",
+   "TOESCA S.A.  ADMINISTRADORA GENERAL DE FONDOS",
+   "Vigente",
+   "Toesca Asset Management",
+   23
+  ],
+  [
+   "96.601.710-4",
+   "CIMENTA S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "Vigente",
+   "Independiente / No Bancario",
+   1
+  ],
+  [
+   "96.613.580-8",
+   "BANEDWARDS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "No Vigente / Cancelada",
+   "Independiente / No Bancario",
+   0
+  ],
+  [
+   "96.632.170-9",
+   "PENTA LAS AMERICAS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   5
+  ],
+  [
+   "96.634.320-6",
+   "SCOTIA  ADMINISTRADORA GENERAL DE FONDOS CHILE S.A.",
+   "Vigente",
+   "Scotiabank",
+   0
+  ],
+  [
+   "96.639.280-0",
+   "ADMINISTRADORA GENERAL DE FONDOS  SECURITY S.A.",
+   "Vigente",
+   "Grupo Security",
+   0
+  ],
+  [
+   "96.667.040-1",
+   "SANTANDER ASSET MANAGEMENT S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "Vigente",
+   "Grupo Santander",
+   7
+  ],
+  [
+   "96.684.990-8",
+   "MONEDA PATRIA S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "Vigente",
+   "Moneda Asset Management / Patria",
+   53
+  ],
+  [
+   "96.690.790-8",
+   "CMB-PRIME ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   4
+  ],
+  [
+   "96.753.330-0",
+   "INDEPENDENCIA ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   2
+  ],
+  [
+   "96.767.630-6",
+   "BANCHILE ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Banco de Chile / Quiñenco",
+   41
+  ],
+  [
+   "96.788.500-2",
+   "BANDESARROLLO ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "No Vigente / Cancelada",
+   "Independiente / No Bancario",
+   0
+  ],
+  [
+   "96.804.330-7",
+   "VINCI COMPASS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "Vigente",
+   "Compass Group",
+   78
+  ],
+  [
+   "96.815.680-2",
+   "SCOTIA AZUL ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "No Vigente / Cancelada",
+   "Scotiabank",
+   0
+  ],
+  [
+   "96.836.390-5",
+   "BANCOESTADO S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "Vigente",
+   null,
+   0
+  ],
+  [
+   "96.930.850-9",
+   "CONSORCIO S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "No Vigente / Cancelada",
+   "Independiente / No Bancario",
+   0
+  ],
+  [
+   "96.939.000-0",
+   "INVERLINK  ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   0
+  ],
+  [
+   "96.955.500-K",
+   "LARRAINVIAL ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Grupo LarrainVial",
+   25
+  ],
+  [
+   "96.960.970-3",
+   "AMICORP ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   7
+  ],
+  [
+   "96.966.250-7",
+   "BTG PACTUAL CHILE S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "Vigente",
+   "BTG Pactual",
+   58
+  ],
+  [
+   "96.980.650-9",
+   "ITAU ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Itaú Corpbanca",
+   1
+  ],
+  [
+   "96.993.150-8",
+   "ECONSULT ADMINISTRADORA GENERAL DE FONDOS S.A., EN LIQUIDACIÓN",
+   "No Vigente / Cancelada",
+   "Independiente / No Bancario",
+   0
+  ],
+  [
+   "99.518.240-8",
+   "CUSSEN Y EDWARDS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "No Vigente / Cancelada",
+   "Independiente / No Bancario",
+   0
+  ],
+  [
+   "99.518.380-3",
+   "CRUZ DEL SUR ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "No Vigente / Cancelada",
+   "Independiente / No Bancario",
+   0
+  ],
+  [
+   "99.543.100-9",
+   "MBI ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "Vigente",
+   "Independiente / No Bancario",
+   27
+  ],
+  [
+   "99.549.940-1",
+   "CREDICORP CAPITAL ASSET MANAGEMENT S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "Vigente",
+   "Credicorp Capital",
+   40
+  ],
+  [
+   "99.558.780-7",
+   "PENTA ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "No Vigente / Cancelada",
+   "Independiente / No Bancario",
+   0
+  ],
+  [
+   "99.580.930-3",
+   "ZURICH ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "No Vigente / Cancelada",
+   "Zurich Financial Services",
+   0
+  ]
+ ],
+ "sql": "SELECT rut_completo, razon_social, estado_vigencia, grupo_controlador, fondos_inversion_administrados FROM agf_lista_entidades ORDER BY estado_vigencia, razon_social;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}
