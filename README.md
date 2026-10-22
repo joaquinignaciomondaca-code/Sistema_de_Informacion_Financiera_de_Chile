@@ -220,6 +220,8 @@ sif.sql("SELECT count(*) FROM bancos_balance").fetchone()
 
 Las 105 vistas salen del `views.sql` publicado, así que el cliente no lleva su propia lista de tablas. Detalle en [`sdk/python/README.md`](sdk/python/README.md) y en [`docs/api/README.md`](docs/api/README.md).
 
+Hay ejemplos ejecutables en Python, R y JavaScript, y una guía para agentes con [`llms.txt`](docs/llms.txt): ver [`examples/`](examples/README.md).
+
 ---
 
 ## 6. Se mantiene solo
