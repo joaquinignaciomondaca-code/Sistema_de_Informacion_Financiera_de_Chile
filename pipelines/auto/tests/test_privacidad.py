@@ -184,6 +184,31 @@ class DataFrameTest(unittest.TestCase):
         self.assertEqual(out.loc[1, "nombre_contraparte_garantia"], "EMPRESA")
         self.assertEqual(out.loc[0, "contraparte_tipo"], "persona_natural_probable")
 
+    def test_contacto_retira_la_columna_completa(self):
+        """El correo no se enmascara: se retira. Una columna a medias deja la
+        ilusión de que el dato se publica y no reduce el riesgo."""
+        df = self.pd.DataFrame({
+            "rut": ["76000001"], "razon_social": ["EMPRESA"],
+            "email_contacto": ["persona@gmail.com"],
+        })
+        out = privacidad.retirar_contacto(df)
+        self.assertNotIn("email_contacto", out.columns)
+        self.assertEqual(list(out.columns), ["rut", "razon_social"])
+
+    def test_contacto_es_idempotente_y_no_toca_tablas_sin_contacto(self):
+        df = self.pd.DataFrame({"rut": ["76000001"], "filas": [1]})
+        out = privacidad.retirar_contacto(df)
+        self.assertEqual(list(out.columns), ["rut", "filas"])
+        self.assertIs(out, df)
+
+    def test_contacto_retira_tambien_las_variantes_declaradas(self):
+        df = self.pd.DataFrame({
+            "rut": ["76000001"], "telefono_contacto": ["+56 9 1111 1111"],
+            "email": ["a@b.cl"], "nombre": ["EMPRESA"],
+        })
+        out = privacidad.retirar_contacto(df)
+        self.assertEqual(list(out.columns), ["rut", "nombre"])
+
 
 if __name__ == "__main__":
     unittest.main()
