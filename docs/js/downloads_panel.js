@@ -209,8 +209,8 @@ class DownloadsPanelController {
 
         <section class="dl-context" id="dl-context" hidden aria-live="polite"></section>
 
-        <!-- Reproducibilidad y código: lo pinta docs/js/creditos.js -->
-        <section class="dl-creditos" id="creditos-descargas" aria-labelledby="dl-title"></section>
+        <!-- Los manuales viven en la pestaña Guía; aquí queda el puntero. -->
+        <section class="dl-guia-puntero" id="creditos-puntero" aria-label="Manuales y archivos auditables"></section>
 
         <section class="dl-catalog" aria-labelledby="dl-title">
           <div class="dl-toolbar">
