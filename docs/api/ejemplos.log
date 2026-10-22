@@ -1,10 +1,10 @@
-# Ejemplos reproducibles · 2026-10-22T06:07:19
+# Ejemplos reproducibles · 2026-10-22T06:17:04
 
-$ python3 -m http.server 56613 --directory docs   # para el ejemplo de JavaScript
+$ python3 -m http.server 53339 --directory docs   # para el ejemplo de JavaScript
 $ /usr/bin/python3 examples/python/01_ffmm_extranjero.py
 OK    python/01_ffmm_extranjero.py · 0.3 s · OK · 2,514 posiciones en 22 países, 2026-09
 $ /usr/bin/python3 examples/python/02_cruce_tres_industrias.py
-OK    python/02_cruce_tres_industrias.py · 0.4 s ·      Banco de Credito e Inversiones: 57 aseguradoras y 200 fondos mutuos
+OK    python/02_cruce_tres_industrias.py · 0.5 s ·      Banco de Credito e Inversiones: 57 aseguradoras y 200 fondos mutuos
 $ node examples/javascript/catalogo.mjs
 OK    javascript/catalogo.mjs · 0.1 s · OK · catálogo coherente, 90 ids únicos y las rutas de afp_lista_entidades responden
 
