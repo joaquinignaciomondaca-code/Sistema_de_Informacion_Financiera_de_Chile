@@ -115,7 +115,7 @@ def sha256(ruta: Path) -> str:
 
 
 def ejecutar(raiz: Path, base: str) -> tuple[list[tuple[str, bool, str]], list[str]]:
-    """Corre las siete comprobaciones. Devuelve (resultados, avisos)."""
+    """Corre las ocho comprobaciones. Devuelve (resultados, avisos)."""
     import duckdb
 
     checks: list[tuple[str, bool, str]] = []
@@ -313,6 +313,42 @@ def ejecutar(raiz: Path, base: str) -> tuple[list[tuple[str, bool, str]], list[s
         avisos.append(f"1d.7 · el manifiesto declara {identificador} y no hay archivos publicados")
     for nombre in sorted(fuera_de_contrato)[:3]:
         avisos.append(f"1d.7 · la vista semántica {nombre} no está en el contrato")
+
+    # --- 1d.8 · atribución y condiciones de uso -----------------------------
+    # La condición de la CMF, del BCCh y de la SPensiones es citar. Un contrato
+    # que publica el dato sin la cita incumple esa condición, así que se
+    # comprueba objeto por objeto y también en el descriptor.
+    paquete = json.loads((v1 / "datapackage.json").read_text(encoding="utf-8"))
+    sin_cita = []
+    for objeto in objetos:
+        faltan = [c for c in ("fuente", "atribucion", "url_terminos", "licencia_estado", "adaptacion")
+                  if c not in objeto]
+        if faltan:
+            sin_cita.append(f"{objeto['id']}: faltan {', '.join(faltan)}")
+            continue
+        if not str(objeto["atribucion"]).strip() or not str(objeto["url_terminos"]).startswith("https://"):
+            sin_cita.append(f"{objeto['id']}: cita o URL de condiciones vacía")
+        if objeto["licencia_estado"] != "verificada":
+            sin_cita.append(f"{objeto['id']}: licencia_estado={objeto['licencia_estado']}")
+        esquema = json.loads((v1 / "schema" / f"{objeto['id']}.json").read_text(encoding="utf-8"))
+        if esquema.get("atribucion") != objeto["atribucion"]:
+            sin_cita.append(f"{objeto['id']}: el esquema no repite la misma cita")
+    for recurso in paquete.get("resources", []):
+        fuentes = recurso.get("sources") or []
+        if not fuentes or not all(f.get("sif_cita") for f in fuentes):
+            sin_cita.append(f"{recurso['name']}: sources sin sif_cita")
+        if recurso.get("sif", {}).get("licencia_estado") != "verificada":
+            sin_cita.append(f"{recurso['name']}: sif.licencia_estado distinto de verificada")
+    adaptaciones = [o["id"] for o in objetos if o.get("adaptacion")]
+    sin_nota = [i for i in adaptaciones
+                if not next(o for o in objetos if o["id"] == i).get("nota_adaptacion")]
+    anotar("1d.8 atribución", not sin_cita and not sin_nota,
+           f"{len(objetos)} objetos con fuente, cita y URL de condiciones; "
+           f"{len(adaptaciones)} adaptación(es) declarada(s)"
+           if not sin_cita and not sin_nota
+           else f"{len(sin_cita)} objetos sin cita completa, {len(sin_nota)} adaptaciones sin nota")
+    for m in sin_cita[:5]:
+        avisos.append(f"1d.8 · {m}")
 
     con.close()
     return checks, avisos

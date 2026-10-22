@@ -4681,6 +4681,47 @@ kbd {
   font-variant-numeric: tabular-nums;
 }
 
+/* Cita de la fuente por conjunto: la condición de CMF, BCCh y SPensiones es
+   mencionarla, y el lugar donde se elige el archivo es donde se necesita. */
+.dl-fuentes {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border-color);
+}
+
+.dl-fuentes-lista {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.dl-fuentes-lista li {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.dl-fuentes-cita {
+  display: block;
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.dl-fuente {
+  display: inline-block;
+  margin-top: 2px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-bottom: 1px dotted var(--border-strong, currentColor);
+}
+
+.dl-fuente:hover {
+  color: var(--accent, inherit);
+}
+
 .dl-tag {
   font-size: 12px;
   padding: 1px 7px;

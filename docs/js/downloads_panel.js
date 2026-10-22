@@ -354,6 +354,13 @@ class DownloadsPanelController {
     const etiquetas = [];
     if (item.detalle) etiquetas.push(`<span class="dl-tag" title="${this.escapar(item.descripcion || item.detalle)}">${this.escapar(item.detalle)}</span>`);
     if (item.unificado) etiquetas.push(`<span class="dl-tag dl-tag-info" title="Esta vista une varios archivos publicados y aplica un filtro; el Parquet original baja los archivos completos.">Serie unificada</span>`);
+    // Atribución: la condición de las tres fuentes es citarlas, así que la cita
+    // viaja con el botón de descarga, no en una página aparte que nadie abre.
+    const fuente = item.fuente
+      ? `<a class="dl-fuente" href="${this.escapar(item.url_terminos || "#")}" target="_blank" rel="noopener"
+            title="${this.escapar(item.atribucion || "")}">Fuente: ${this.escapar(item.fuente)}${
+              item.adaptacion ? " · adaptación propia" : ""}</a>`
+      : "";
     const A = this.alcance();
     const variante = A && item.varianteDe ? A.variante(item.id) : null;
     if (variante) etiquetas.push(`<span class="dl-tag dl-tag-variante" title="${this.escapar(variante.nota || "")}">Variante · ${this.escapar(variante.etiqueta || "")}</span>`);
@@ -383,6 +390,7 @@ class DownloadsPanelController {
           <div class="dl-item-detail" title="${this.escapar(item.descripcion || "")}">
             ${this.escapar(item.descripcion || "")}${item.descripcion ? " · " : ""}${filas} · ${archivos} · ${periodo}
           </div>
+          ${fuente}
         </div>
         <div class="dl-item-actions">
           ${this.selectorFrecuencia(item)}
