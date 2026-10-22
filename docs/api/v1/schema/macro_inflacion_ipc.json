@@ -1,0 +1,54 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha",
+   "rol": "PK",
+   "significado": "Primer día del mes al que corresponde el dato (AAAA-MM-01).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "ipc_indice",
+   "rol": "Métrica",
+   "significado": "Índice de Precios al Consumidor, serie empalmada base 2023=100.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "ipc_var_mensual_pct",
+   "rol": "Métrica",
+   "significado": "Variación del IPC respecto al mes anterior, en porcentaje.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "ipc_var_anual_pct",
+   "rol": "Métrica",
+   "significado": "Variación del IPC respecto al mismo mes del año anterior, en porcentaje (inflación anual).",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "macro_inflacion_ipc",
+ "primaryKey": [
+  "fecha"
+ ],
+ "sector": "macro",
+ "titulo": "macro.inflacion_ipc",
+ "version": "1.0.0"
+}

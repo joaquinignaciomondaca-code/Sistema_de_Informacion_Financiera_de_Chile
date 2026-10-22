@@ -1,0 +1,102 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut",
+   "rol": "PK",
+   "significado": "Cuerpo del RUT (sin dígito verificador), canónico bajo Módulo 11.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "dv",
+   "rol": "Dimensión",
+   "significado": "Dígito verificador canónico M11.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_empresa",
+   "rol": "Dimensión",
+   "significado": "Razón social oficial societaria.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_fantasia",
+   "rol": "Dimensión",
+   "significado": "Nombre comercial o de fantasía.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "estado_vigencia",
+   "rol": "Dimensión",
+   "significado": "Estado registral CMF ('Vigente' o 'No Vigente').",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_intermediario",
+   "rol": "Dimensión",
+   "significado": "Clasificación ('CORREDOR DE BOLSA').",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_entidad",
+   "rol": "Dimensión",
+   "significado": "Código regulatorio CMF ('COBOL').",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "grupo_financiero",
+   "rol": "Dimensión",
+   "significado": "Conglomerado o grupo financiero de pertenencia.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "row_id",
+   "rol": "Dimensión",
+   "significado": "Identificador de fila CMF para consulta de fichas y EEFF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "url_ficha_cmf",
+   "rol": "Dimensión",
+   "significado": "Enlace URL a la ficha institucional en la CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_dv",
+   "rol": "Atributo",
+   "significado": "RUT con dígito verificador (cuerpo-DV, Módulo 11).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "corredoras_bolsa_lista_entidades_registro",
+ "primaryKey": [
+  "rut"
+ ],
+ "sector": "corredoras_bolsa",
+ "titulo": "corredoras.lista_entidades_registro",
+ "version": "1.0.0"
+}

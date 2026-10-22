@@ -1,0 +1,46 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha",
+   "rol": "PK",
+   "significado": "Primer día del mes al que corresponde el dato (AAAA-MM-01).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_cambio_real_general_indice",
+   "rol": "Métrica",
+   "significado": "Índice de tipo de cambio real general (TCR), promedio 1986=100. Un valor mayor indica un peso más depreciado en términos reales.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_cambio_real_5_monedas_indice",
+   "rol": "Métrica",
+   "significado": "Índice de tipo de cambio real TCR-5 (monedas de Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro), promedio 1986=100.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "macro_tipo_cambio_real",
+ "primaryKey": [
+  "fecha"
+ ],
+ "sector": "macro",
+ "titulo": "macro.tipo_cambio_real",
+ "version": "1.0.0"
+}

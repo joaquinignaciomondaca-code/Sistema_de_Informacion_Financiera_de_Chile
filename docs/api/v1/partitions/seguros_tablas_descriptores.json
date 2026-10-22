@@ -1,0 +1,35 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "seguros_tablas_descriptores",
+ "particiones": [
+  {
+   "archivo": "outputs/seguros/tablas_descriptores/2024.parquet",
+   "bytes": 15851,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/tablas_descriptores/2024.parquet",
+   "periodo": "2024",
+   "sha256": "573e8c36c59d796e424b631eadc0c7f7aa59fa3b38e9732b240a2c1dcd898f4b"
+  },
+  {
+   "archivo": "outputs/seguros/tablas_descriptores/2025.parquet",
+   "bytes": 66371,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/tablas_descriptores/2025.parquet",
+   "periodo": "2025",
+   "sha256": "0d7c0c48383843aacc50b6dd455a09964977d6b8bbdf1d168e9884d044e70056"
+  },
+  {
+   "archivo": "outputs/seguros/tablas_descriptores/2026.parquet",
+   "bytes": 58967,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/seguros/tablas_descriptores/2026.parquet",
+   "periodo": "2026",
+   "sha256": "70ec57e96b73e0e1d949e89b590ee03df55b8da5b6c1dc69424cbe3702c183c3"
+  }
+ ],
+ "total": {
+  "archivos": 3,
+  "bytes": 141189,
+  "filas": 9792
+ },
+ "version": "1.0.0"
+}

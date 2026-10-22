@@ -1,0 +1,879 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la cartera informada (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "Atributo",
+   "significado": "vida (archivos CSVID) o generales (CSGEN).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "FK",
+   "significado": "RUT de la compañía de seguros, con dígito verificador (une con seguros.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el encabezado del archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_operacion",
+   "rol": "Atributo",
+   "significado": "Código que identifica la operación. Se informará de acuerdo a la siguiente codificación: CDT : Compra definitiva o a término. CRV : Compra con compromiso de retroventa.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "folio_operacion",
+   "rol": "Métrica",
+   "significado": "Corresponde al número de la papeleta de la mesa de dinero de la compañía, donde se registra la compra del instrumento. En caso de no poder obtener este número se deberá asociar al documento contable que respalda la compra del instrumento.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "item_operacion",
+   "rol": "Métrica",
+   "significado": "Secuencia del instrumento dentro del folio de la operación. No pueden existir dos instrumentos con igual folio e ítem operación.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_compra",
+   "rol": "Fecha",
+   "significado": "Corresponde a la expresión numérica de la fecha en la cual la entidad aseguradora o reaseguradora adquirió el instrumento, emitió o adquirió el leasing o realizó el pacto. Se deberá informar con el siguiente formato: AAAAMMDD.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_de_pago",
+   "rol": "Fecha",
+   "significado": "Corresponde a la expresión numérica de la fecha en la cual la entidad aseguradora o reaseguradora realizó la liquidación de la transacción. Se deberá informar con el siguiente formato: AAAAMMDD.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nro_rut",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el RUT del emisor de cada título que forme parte de las inversiones de la compañía. Es obligatorio y no puede informarse en ceros.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "nombre": "nro_rut_dv",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_instrumento",
+   "rol": "Atributo",
+   "significado": "Este campo es obligatorio y se informará de acuerdo a la codificación definida en SEIL, codificación S.V.S., Instrumentos.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nemotecnico",
+   "rol": "Atributo",
+   "significado": "Corresponde obligatoriamente informar el código nemotécnico de acuerdo a las instrucciones impartidas por Circular N° 1085 o la que la reemplace.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_emision",
+   "rol": "Fecha",
+   "significado": "Corresponde a la expresión numérica de la fecha desde la cual se inicia el devengamiento de intereses. En el caso de los Bonos de Reconocimiento corresponde a la expresión numérica de la fecha de afiliación.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "num_inscripcion",
+   "rol": "Métrica",
+   "significado": "En el caso de instrumentos inscritos en la S.V.S., corresponde informar el número de inscripción del título. En caso contrario, se llenará con ceros.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_inscripcion",
+   "rol": "Fecha",
+   "significado": "Corresponde a la expresión numérica de la fecha de inscripción del instrumento. Se deberá informar con el siguiente formato: AAAAMMDD. Si no corresponde informar, se llenará con ceros.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "serie",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la serie de cada instrumento cuando corresponda. En el caso de los instrumentos no seriados se deberá llenar con espacios.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pais",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el país donde se realizó la transacción del instrumento. Se informará de acuerdo a la codificación definida en el SEIL, Codificación S.V.S., Países. Si no corresponde informar, se llenará con espacios.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_nominal",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el valor nominal del instrumento a la fecha de cierre del mes a que se refiere la información. Es decir, los nominales comprados originalmente menos las ventas realizadas sobre el mismo título. No se deberán rebajar las amortizaciones del instrumento a la fecha de valorización.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_nominal_vigente",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el valor nominal vigente del instrumento a la fecha de cierre del mes a que se refiere la información. Se deberán rebajar las amortizaciones del instrumento a la fecha de valorización.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidad_monetaria",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la unidad monetaria o la moneda en la cual está expresado el valor nominal. Se informará de acuerdo a la codificación definida en SEIL, codificación S.V.S., Unidades Monetarias.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "prohibicion",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si uno o más títulos (en caso de haber agrupado instrumentos con características idénticas) registrados se encuentran afectos a prohibiciones, gravámenes u otros impedimentos señalados en el DFL Nº 251.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_en_margen",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si uno o más títulos registrados (en caso de haber agrupado instrumentos con características idénticas) se encuentran otorgados como margen de las operaciones de derivado señaladas en el DFL Nº251.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "instrumento_vencido",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si uno o más títulos (en caso de haber agrupado instrumentos con características idénticas) registrados, se encuentran vencidos a la fecha de cierre del mes a que se refiere la información, y no han sido cobrados; por ej.: BR vencido en proceso de cobranza al INP.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "opcion_de_prepago_o_rescate",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si tienen opción de prepago. Se informará de acuerdo a la siguiente codificación: S : con opción. N : sin opción.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_de_prepago",
+   "rol": "Fecha",
+   "significado": "Corresponde a la expresión numérica de la fecha de prepago de los instrumentos, si la tuvieren. Se deberá informar con el siguiente formato: AAAAMMDD Si no corresponde informar, se llenará con ceros.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_respalda_reserva_valor_de_fondo",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si uno o más títulos (en caso de haber agrupado instrumentos con características idénticas) registrados, se encuentran respaldando la reserva de valor del fondo señalada en el DFL Nº251.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_del_fondo",
+   "rol": "Atributo",
+   "significado": "Para instrumentos que estén asociados a fondos que respalden seguros de vida con cuenta de inversión, se debe informar el nombre del Fondo al cual pertenece. Se entenderá por fondo al tipo de plan o modalidades de inversión convenidos para los seguros con cuentas de inversión.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_cartera",
+   "rol": "Atributo",
+   "significado": "Para instrumentos que no respalden seguros de vida con cuenta de inversión, se debe informar la sub cartera que respalda, si corresponde. Para instrumentos que no respalden una sub cartera, se debe informar “NO APLICA”.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_calce",
+   "rol": "Atributo",
+   "significado": "Sólo las compañías de vida deben informar si el instrumento, cumple con los requisitos establecidos en circular N° 1512 y posteriores modificaciones y además si son considerados para los distintos tramos de calce.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "con_descriptor",
+   "rol": "Atributo",
+   "significado": "Corresponde a si el instrumento tiene o no descriptor y tabla de desarrollo. Se informara de acuerdo a la siguiente codificación: “S”: Tiene descriptor y tabla de desarrollo. “B”: Para Bonos de reconocimiento. “U”. Para instrumentos distintos a los anteriores.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "relacionado",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si el emisor del instrumento está relacionado con la compañía de seguros, de acuerdo a lo establecido en el artículo N°100 de la ley N°18.045 del 22.10.1981 y sus modificaciones.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "clasificacion_de_riesgo",
+   "rol": "Atributo",
+   "significado": "Se deberá informar la menor clasificación de riesgo vigente del instrumento a la fecha de cierre del mes a que se refiere la información. Si el instrumento no contara con clasificación de riesgo se debe informar S/C.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "clasificacion_inversion",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la clasificación asignada a la inversión de renta fija, de acuerdo a la siguiente codificación: D: Disponible para la venta M: Mantenida hasta el vencimiento.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_vencimiento",
+   "rol": "Fecha",
+   "significado": "Corresponde a la expresión numérica de la fecha en que el instrumento vence, es decir aquella del último cupón o pago único según corresponda. Se deberá informar con el siguiente formato: AAAAMMDD. Este campo debe ser informado para todos los instrumentos de este archivo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_emision",
+   "rol": "Métrica",
+   "significado": "Corresponde a la tasa con la cual fue emitido el instrumento y con la cual se construyen los flujos de la tabla de desarrollo. Para el caso de instrumentos de intermediación financiera como por ejemplo: depósitos, pagarés, u otros, se deberá informar la tasa que paga el instrumento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_base",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la forma de cálculo de intereses del título. Se informará de acuerdo a la codificación definida en SEIL, codificación SVS, Circular 1835, Forma de cálculo de intereses.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tsa",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si el instrumento está incluido en el Test de Suficiencia de Activo para el periodo informado, de acuerdo a la siguiente codificación: SI: el instrumento es utilizado para el análisis del Test de Suficiencia de Activos NO: el instrumento no es utilizado para el análisis del.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cobertura",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si el instrumento está cubierto por un Derivado y qué tipo de operación de acuerdo a la siguiente Codificación En el primer carácter de este campo se debe indicar: S, si el instrumento está cubierto por un Derivado N, si el instrumento no está cubierto En los caracteres 2 al 5.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "metod_clasif_valo",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la clasificación dada al instrumento en los.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "criterio_valorizaci",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si la inversión está valorizada a Valor.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "modelo_valoracion",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si la inversión está valorizada por la Compañía utilizando un Modelo Propio de valorización de acuerdo a la siguiente codificación: SI : Utiliza Modelo Propio. NO: No utiliza Modelo Propio.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Deterioro",
+   "nombre": "modelo_propio_deterioro",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si el Deterioro de la inversión se determinó usando una metodología propia o es una aplicación de la metodología definida en la NCG N° 311. Se informará de acuerdo a la siguiente codificación: SI : Método propio para estimar el deterioro. NO : Aplicación de la NCG N°311.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_actividad_economica",
+   "rol": "Métrica",
+   "significado": "Se deberá informar para todos los instrumentos, la codificación designada por el Servicio Impuestos Internos para la actividad económica principal del emisor.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "grupo_economico",
+   "rol": "Métrica",
+   "significado": "Se deberá informar el grupo económico al que pertenece el deudor, para los contratos de leasing, créditos sindicados, AFR y para cualquier otro activo expuesto al riesgo de crédito que no sea de oferta pública.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fuente_precios",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el nombre del proveedor del precio utilizado por la compañía para valorizar a valor razonable el instrumento.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_precio",
+   "rol": "Identificador",
+   "significado": "Corresponde informar el RUT del proveedor de precios utilizado por la compañía para valorizar a valor razonable el instrumento. Para proveedores que no cuenten con RUT, se deberá informar con ceros.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_nominales",
+   "rol": "Atributo",
+   "significado": "Corresponde a si las unidades nominales están expresadas a fecha de emisión o a fecha de vencimiento. Esto especifica la forma de obtener un valor par o presente (descontando o capitalizando). Se informará de acuerdo a la siguiente codificación: I : a fecha de emisión F : a fecha de vencimiento.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tratamiento",
+   "rol": "Atributo",
+   "significado": "Corresponde a la forma de descuento del valor de los flujos futuros (interés más amortización). Se deberá codificar de la siguiente manera: CC : Con cupones. Indica que se trata de un instrumento con flujos de vencimiento regulares. SC : Sin cupones. CV : Cupones variables.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_inicial_m_clp",
+   "rol": "Métrica",
+   "significado": "En este campo se registrará el monto que resulte menor entre el valor del instrumento subyacente, según circular de valorización vigente y el monto efectivamente pagado de acuerdo al contrato de pacto, expresado en M$. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_pactado",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor al vencimiento del pacto, acordado en el contrato de pacto, expresado en la moneda del pacto.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidad_monetaria_p",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la unidad monetaria o moneda en la cual está expresado el pacto. Se informará de acuerdo a la codificación definida en SEIL, codificación S.V.S., Unidades Monetarias.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_venc_pacto",
+   "rol": "Fecha",
+   "significado": "Corresponde informar la fecha de vencimiento del pacto. Se deberá informar con el siguiente formato: AAAAMMDD.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_pacto",
+   "rol": "Métrica",
+   "significado": "Corresponde informar la tasa a la cual fue realizado el pacto, indicada en el contrato de pacto.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasa_base_p",
+   "rol": "Atributo",
+   "significado": "Corresponde informa la forma de cálculo de intereses del título. Se informará de acuerdo a la codificación definida en SEIL, codificación SVS, Circular 1835, Forma de cálculo de intereses.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_nominales_p",
+   "rol": "Atributo",
+   "significado": "Corresponde a los tipos nominales en que está expresado el pacto: I : a fecha de emisión F : a fecha de vencimiento.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_pacto_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el valor en que se encuentra contabilizado el pacto, de acuerdo a las instrucciones de Circular sobre valorización vigente de esta Superintendencia, a la fecha de cierre del mes a que se refiere la información, expresado en M$. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_agente",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el código de la agencia que administra el mutuo hipotecario. Se informará de acuerdo a la codificación definida en SEIL, codificación S.V.S., Agencias Administradoras de Mutuos Hipotecarios. Para el caso de los Leasing, se llenará con espacios.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fin_1",
+   "rol": "Métrica",
+   "significado": "Corresponde indicar la finalidad del mutuo otorgado. Los códigos permitidos son: 10: Bien raíz habitacional - urbano 11: Bien raíz habitacional - no urbano 20: Bien raíz no habitacional - urbano 21: Bien raíz no habitacional - no urbano 30: Fines generales Para el caso de los Leasing, se llenará.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fin_2",
+   "rol": "Atributo",
+   "significado": "Se debe indicar para qué será utilizado el crédito. Los códigos permitidos son: A: Adquisición (bien raíz) C: Construcción (bien raíz) R: Reparación o Ampliación (bien raíz) F: Refinanciamiento (bien raíz o fines generales) P: Prepago (bien raíz o fines generales) O: Otro (fines generales) Debe.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_deudor",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si el deudor del mutuo o del leasing es persona natural o jurídica y si es persona relacionada o no a la compañía, de acuerdo a la siguiente codificación: A: persona natural no relacionada B: persona natural relacionada C: persona jurídica no relacionada D: persona jurídica.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_deudor",
+   "rol": "Identificador",
+   "significado": "Se debe informar el Rut del deudor del mutuo hipotecario endosable o del contrato de leasing según sea el caso.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_primer_dividendo",
+   "rol": "Fecha",
+   "significado": "Corresponde a la fecha de pago del primer dividendo en caso de mutuo y a la primera cuota en caso de leasing. Esta fecha será la que se considera como día de pago de los meses siguientes y será la que regirá para cualquier cálculo que haga la compañía.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "monto_dividendo_o_cuota_um",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el monto del dividendo mensual para los mutuos, y el monto de la cuota mensual para los leasing, expresados en la unidad de reajustabilidad del instrumento. Expresado en unidad monetaria del instrumento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "dividendo_o_cuota_final_um",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el monto del último dividendo mensual para los mutuos, y el monto de la última cuota mensual para los leasing, expresados en la unidad de reajustabilidad del instrumento. Expresado en unidad monetaria del instrumento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nro_dividendos_impagos_o_cuotas_impagas",
+   "rol": "Métrica",
+   "significado": "Corresponde al número de dividendos vencidos e impagos para los mutuos y al número de cuotas impagas para los leasings. Si las cantidades son menores a tres dígitos, se debe anteponer el dígito cero (0). Si no existen dividendos o cuotas impagas, se debe informar con ceros.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "dividendos_impagos_o_cuotas_impagas_um",
+   "rol": "Métrica",
+   "significado": "Corresponde a la sumatoria de los dividendos vencidos e impagos a la fecha de cierre del mes a que se refiere la información, expresada en la unidad de reajustabilidad del mutuo. Para el caso de los leasings, corresponde a la sumatoria del total de cuotas vencidas e impagas a la misma fecha. Expresado en unidad monetaria del instrumento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "dividendos_impagos_o_cuotas_impagas_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor en miles de pesos (M$) del total de dividendos vencidos e impagos para los mutuos y del total de cuotas vencidas e impagas para los leasing. Si no existen dividendos o cuotas impagas, se debe informar con ceros. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_comercial_um",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor comercial del bien hipotecado entregado en garantía, que equivale al valor de la última tasación vigente, expresado en la misma unidad de reajustabilidad del mutuo. Para los leasings, se llenará con ceros. Expresado en unidad monetaria del instrumento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_comercial_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor comercial en miles de pesos del bien hipotecado entregado en garantía, que equivale al valor de la última tasación vigente. Para los leasings, se llenará con ceros. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_tasacion",
+   "rol": "Fecha",
+   "significado": "Corresponde a la expresión numérica de la fecha en que se efectuó la última tasación del bien hipotecado entregado en garantía. Se deberá informar con el siguiente formato: AAAAMMDD. Para los leasings, se llenará con ceros.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "saldo_insoluto_deuda_um",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor presente de los flujos futuros de caja generados por el mutuo o contrato de leasing, descontados a la TIR de emisión, expresado en la unidad de reajustabilidad del instrumento a la fecha de cierre del mes a que se refiere la información. Expresado en unidad monetaria del instrumento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "saldo_insoluto_deuda_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor presente en miles de pesos de los flujos futuros de caja generados por el mutuo o contrato de leasing, descontados a la TIR de emisión, a la fecha de cierre del mes a que se refiere la información. Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "spread_a_la_emision",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor del spread de tasa calculado a la emisión del contrato de leasing, según lo indicado en la NCG N° 148. Para el caso de los Mutuos Hipotecarios, se llenará con ceros.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "endoso",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si el mutuo hipotecario cuenta o no con la anotación del endoso a favor de la compañía, al margen de la inscripción hipotecaria de propiedad que garantiza el mutuo, la cual es requisito necesario para poder utilizar el mutuo hipotecario como in versión representativa de.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "saldo_plazo_contrato",
+   "rol": "Métrica",
+   "significado": "Se deberá informar los meses restantes del contrato de leasing o mutuos hipotecarios a contar de la fecha de información.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_deudor_sindicado",
+   "rol": "Identificador",
+   "significado": "Se debe informar el RUT del deudor.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_deudor",
+   "rol": "Atributo",
+   "significado": "Se debe informar el nombre del deudor del crédito.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "porcentaje_participacion_compania",
+   "rol": "Métrica",
+   "significado": "Corresponde informar, qué porcentaje de participación le corresponde a la compañía en el capital otorgado.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "monto_total_prestamo_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al monto total del crédito otorgado por las entidades que participan en la colocación. Este monto se deberá expresar en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_lider",
+   "rol": "Identificador",
+   "significado": "Se deberá informar el RUT de líder o agente del crédito sindicado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_lider",
+   "rol": "Atributo",
+   "significado": "Se deberá informar el nombre del Líder o agente del crédito sindicado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "porcentaje_valor_par",
+   "rol": "Métrica",
+   "significado": "Corresponde al porcentaje de valor par al cual se adquirió el instrumento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "Costo",
+   "nombre": "valor_compra_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el valor al cual la entidad aseguradora o reaseguradora adquirió el instrumento. Este monto deberá expresarse en pesos ($). Expresado en pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Costo",
+   "nombre": "tir_sin_costo",
+   "rol": "Métrica",
+   "significado": "Corresponde informar la tasa de compra según lo definido en la 311, sin considerar los costos de adquisición del instrumento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tir_compra",
+   "rol": "Métrica",
+   "significado": "Corresponde informar la tasa de compra según lo definido en la NCG 311, esto es, la TIR de compra que incorpora los costos de adquisición. Tratándose de instrumentos adquiridos antes de 1 de enero de 2012, la TIR_COMPRA debe ser el mismo valor informado en la TIR_SIN_COSTO.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "Costo amortizado",
+   "nombre": "costo_amortizado_um",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el monto determinado según NCG 311 para aquellos instrumentos financieros clasificados como costo amortizado. En el caso de los contratos de leasing, se debe incluir el valor presente del contrato a TIR de compra. Este monto deberá expresarse en unidades monetarias originales. Expresado en unidad monetaria del instrumento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "Costo amortizado",
+   "nombre": "costo_amortizado_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el monto determinado según NCG 311 para aquellos instrumentos financieros clasificados como costo amortizado. En el caso de los contratos de leasing, se debe incluir el valor presente del contrato a TIR de compra. Este monto deberá expresarse en pesos ($). Expresado en pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tir_mercado",
+   "rol": "Métrica",
+   "significado": "Corresponde informar la tasa de mercado, utilizada para la valorización a la fecha de información, según lo indicado en la normativa de valorización.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "Valor razonable",
+   "nombre": "valor_razonable_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor total de los flujos futuros del instrumento actualizados a la TIR de mercado. Este monto deberá expresarse en pesos ($). Expresado en pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Deterioro",
+   "nombre": "deterioro_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al deterioro de la inversión, según lo señalado en la Norma de Carácter General N°311, del 28.06.2011. Este monto deberá expresarse en pesos ($). Expresado en pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor contable informado",
+   "nombre": "valor_final_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor que tiene el instrumento a la fecha de cierre del mes a que se refiere la información, según lo establecido en Circular de Valorización de Inversiones vigente. Este monto se deberá expresar en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "custodia_inv",
+   "rol": "Atributo",
+   "significado": "Corresponde informar para cada instrumento, el tipo de custodia que presenta, de acuerdo a la siguiente codificación: CIA : Custodia en Compañía. DCV: Custodia en DCV, solo si la Cía. actuó como Depositante. EXT : Custodia en Otra entidad.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_custodio",
+   "rol": "Atributo",
+   "significado": "Corresponde informar el nombre de la entidad que custodia la inversión en el evento que se informe en el campo CUSTODIA_INV, el código EXT (otra entidad de custodia). En caso de que no corresponda informar, se deberá llenar con espacios este campo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "susceptibles_de_custodia",
+   "rol": "Atributo",
+   "significado": "Se deberá informar si el instrumento es susceptible de ser custodiado de acuerdo a lo dispuesto en Circular N° 88 del Depósito Central de Valores S.A., y sus modificaciones posteriores, de acuerdo a la siguiente codificación: S: es susceptible de ser custodiado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "garantia_estatal",
+   "rol": "Atributo",
+   "significado": "Se deberá informar si el instrumento cuenta con garantía por parte del Estado hasta la total extinción del instrumento, en consonancia con lo señalado en la letra a) del N°1 del artículo 21 del DFL N° 251, de 1931.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "incremento_riesgo",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si la situación del riesgo crediticio del instrumento financiero se ha incrementado significativamente desde el reconocimiento inicial, según lo instruido en la materia por la NCG N°311 e IFRS 9: S : Si el riesgo crediticio del instrumento financiero SI se ha incrementado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "plazo_al_vencimiento",
+   "rol": "Métrica",
+   "significado": "Se deberá informar los meses restantes al vencimiento del instrumento a contar de la fecha de información.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "duracion",
+   "rol": "Métrica",
+   "significado": "Corresponde al promedio ponderado en años de los vencimientos de sus flujos de caja, donde los ponderadores son el valor presente de cada flujo como una proporción del precio del instrumento.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_amortizacion",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el tipo amortización del instrumento de renta fija, de acuerdo a la siguiente clasificación: 1: Cero 2: Francés 3: Bullet 16 4: Baloon 0: Otra.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "subyacente",
+   "rol": "Atributo",
+   "significado": "Se deberá informar, para los instrumentos tipo BS, el tipo de activo al que corresponde el/los subyacente(s) , de acuerdo a la siguiente Codificación: M: Mutuos Hipotecarios. C: Créditos de Consumo. L: Contratos de Leasing. T: Tarjetas de Crédito. X: Cuentas por Cobrar. A: Créditos Automotriz.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "efecto_patrimonio",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si una inversión, es valorizada a Valor razonable (VR) con cambios en otro resultado integral: SI: Con cambios en otro resultado integral. NO: Sin cambios en otro resultado integral. NA: Inversión valorizada a Costo Amortizado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fin_cleas",
+   "rol": "Atributo",
+   "significado": "Para el caso de leasing, se debe indicar si el financiamiento será utilizado para la construcción, de acuerdo a la siguiente codificación: S: Si N: No Para el caso de mutuos, completar con espacios.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "deuda_garantia_otorgamiento",
+   "rol": "Métrica",
+   "significado": "Se deberá informar la relación entre deuda y garantía del contrato de leasing o mutuo hipotecario a la fecha de otorgamiento. Por ejemplo, si para un registro el valor es 56,78%, se deberá informar 00567800.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "deuda_garantia_informacion",
+   "rol": "Métrica",
+   "significado": "Se deberá informar la relación entre deuda y garantía del contrato.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "clasificacion_bco_lider",
+   "rol": "Atributo",
+   "significado": "Se deberá informar si el Crédito Sindicado se encuentra o no en Cartera Normal, de acuerdo con la siguiente codificación: SI: el crédito sindicado se encuentra en Cartera Normal. NO: el crédito sindicado no se encuentra en Cartera Normal.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "rut_aseguradora",
+   "destino": "seguros_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "seguros_renta_fija",
+ "primaryKey": [
+  "costo_amortizado_clp",
+  "costo_amortizado_um",
+  "valor_razonable_clp",
+  "saldo_insoluto_deuda_um",
+  "valor_nominal_vigente",
+  "deterioro_clp",
+  "deuda_garantia_informacion",
+  "valor_final_m_clp",
+  "valor_comercial_m_clp",
+  "saldo_insoluto_deuda_m_clp",
+  "valor_compra_clp",
+  "porcentaje_valor_par",
+  "item_operacion",
+  "folio_operacion",
+  "periodo"
+ ],
+ "sector": "seguros",
+ "titulo": "B.1 INSTRUMENTOS DE RENTA FIJA",
+ "version": "1.0.0"
+}

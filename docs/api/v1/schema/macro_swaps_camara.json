@@ -1,0 +1,70 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha",
+   "rol": "PK",
+   "significado": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "swap_camara_pesos_90_dias_pct",
+   "rol": "Métrica",
+   "significado": "Tasa fija del swap promedio de cámara en pesos a 90 días, en porcentaje anual.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "swap_camara_pesos_180_dias_pct",
+   "rol": "Métrica",
+   "significado": "Tasa fija del swap promedio de cámara en pesos a 180 días, en porcentaje anual.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "swap_camara_pesos_360_dias_pct",
+   "rol": "Métrica",
+   "significado": "Tasa fija del swap promedio de cámara en pesos a 360 días, en porcentaje anual.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "swap_camara_pesos_2_anos_pct",
+   "rol": "Métrica",
+   "significado": "Tasa fija del swap promedio de cámara en pesos a 2 años, en porcentaje anual.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "swap_camara_uf_1_ano_pct",
+   "rol": "Métrica",
+   "significado": "Tasa fija del swap promedio de cámara en UF a 1 año, en porcentaje anual.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "macro_swaps_camara",
+ "primaryKey": [
+  "fecha"
+ ],
+ "sector": "macro",
+ "titulo": "macro.swaps_camara",
+ "version": "1.0.0"
+}

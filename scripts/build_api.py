@@ -48,6 +48,7 @@ V1 = API / "v1"
 sys.path.insert(0, str(RAIZ / "scripts"))
 
 import audit_consultas_sugeridas as ac  # noqa: E402
+from pipelines.api import vistas as V  # noqa: E402
 
 DESTINO = V1 / "datapackage.json"
 ESQUEMAS = API / "esquemas.json"
@@ -205,6 +206,12 @@ def construir() -> dict:
             "sources": fuentes,
             "licenses": [{"name": "Uso condicionado por la fuente", "path": _licencia()}],
             "sif": {
+                # Decisión D2: el identificador del recurso es el nombre del
+                # objeto del contrato (el que se escribe en el FROM). Los
+                # nombres heredados se publican aparte para que nadie los use
+                # en código nuevo, pero quien los tenga escritos siga entrando.
+                "sql_view": nombre,
+                "aliases": V.aliases_de(nombre),
                 "manifest_id": info.get("manifest_id"),
                 "sector": info.get("sector"),
                 "nivel": recon.get("nivel"),
@@ -255,6 +262,11 @@ def construir() -> dict:
         "sources": [{"title": t, "path": u} for t, u in FUENTES.values()],
         "sif": {
             "api_version": API_VERSION,
+            "identificador": {
+                "regla": "el name del recurso es el nombre del objeto del contrato y el de su vista SQL (D2)",
+                "aliases": "los nombres heredados se publican por recurso en sif.aliases y no son identificadores",
+                "total_alias": sum(len(V.aliases_de(n)) for n in objetos),
+            },
             "data_release": data_release,
             "versionado": {
                 "regla": "semver; un dato nuevo NO sube la versión (eso es data_release)",

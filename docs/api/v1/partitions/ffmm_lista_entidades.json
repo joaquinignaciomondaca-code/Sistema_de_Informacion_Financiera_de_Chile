@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "ffmm_lista_entidades",
+ "particiones": [
+  {
+   "archivo": "outputs/ffmm/maestro_fondos_mutuos.parquet",
+   "bytes": 23962,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/maestro_fondos_mutuos.parquet",
+   "periodo": "maestro_fondos_mutuos",
+   "sha256": "27d0d2d2af1104a7847e315af4fbe8e9855103c589a7bcde6e1485b10bdd4202"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 23962,
+  "filas": 1334
+ },
+ "version": "1.0.0"
+}

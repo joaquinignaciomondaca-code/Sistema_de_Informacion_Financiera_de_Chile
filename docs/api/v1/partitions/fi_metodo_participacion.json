@@ -1,0 +1,63 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "fi_metodo_participacion",
+ "particiones": [
+  {
+   "archivo": "outputs/fi/metodo_participacion/2020.parquet",
+   "bytes": 38458,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/metodo_participacion/2020.parquet",
+   "periodo": "2020",
+   "sha256": "b337c26169dbbe509701398ed2bdd04c115d35e410b104a5f291d2aa0d08f8e6"
+  },
+  {
+   "archivo": "outputs/fi/metodo_participacion/2021.parquet",
+   "bytes": 44600,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/metodo_participacion/2021.parquet",
+   "periodo": "2021",
+   "sha256": "0d25103966a70c9e2bb70b160201cd019e76f942d989a4c4fee7ae2126094c72"
+  },
+  {
+   "archivo": "outputs/fi/metodo_participacion/2022.parquet",
+   "bytes": 47756,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/metodo_participacion/2022.parquet",
+   "periodo": "2022",
+   "sha256": "f8fad43b295dd1a67b5da6c3dc8ddf752d561aa28dc6956a6a966dc27ba40001"
+  },
+  {
+   "archivo": "outputs/fi/metodo_participacion/2023.parquet",
+   "bytes": 50064,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/metodo_participacion/2023.parquet",
+   "periodo": "2023",
+   "sha256": "c1fa6a49384e33078ccef97e7c4447e303e8e0888f0e97e4fb0bbb75c05ac83b"
+  },
+  {
+   "archivo": "outputs/fi/metodo_participacion/2024.parquet",
+   "bytes": 53847,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/metodo_participacion/2024.parquet",
+   "periodo": "2024",
+   "sha256": "421581ef25083c3d3957fbbc53e35fbe2d17f3d2ae3a087422f2a7e05f20f18a"
+  },
+  {
+   "archivo": "outputs/fi/metodo_participacion/2025.parquet",
+   "bytes": 54690,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/metodo_participacion/2025.parquet",
+   "periodo": "2025",
+   "sha256": "c853c2e7d1ac00b0ac5de12baf8850abfb0f0a7c530d110b13229d8a0af4f0f2"
+  },
+  {
+   "archivo": "outputs/fi/metodo_participacion/2026.parquet",
+   "bytes": 35700,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/metodo_participacion/2026.parquet",
+   "periodo": "2026",
+   "sha256": "1240d797346fd30f6e13d66b374891fbb23fa638bd68c752200121fba3db9523"
+  }
+ ],
+ "total": {
+  "archivos": 7,
+  "bytes": 325115,
+  "filas": 10038
+ },
+ "version": "1.0.0"
+}

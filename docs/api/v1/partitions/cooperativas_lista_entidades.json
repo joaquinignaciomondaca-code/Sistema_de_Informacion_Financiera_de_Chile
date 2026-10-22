@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "cooperativas_lista_entidades",
+ "particiones": [
+  {
+   "archivo": "outputs/cooperativas/cooperativas_maestro.parquet",
+   "bytes": 4324,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cooperativas/cooperativas_maestro.parquet",
+   "periodo": "cooperativas_maestro",
+   "sha256": "23c33677a1d4e62af7452bd41d1ce380040f5cf6aaec641c57b9b05c2b6d311e"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 4324,
+  "filas": 7
+ },
+ "version": "1.0.0"
+}

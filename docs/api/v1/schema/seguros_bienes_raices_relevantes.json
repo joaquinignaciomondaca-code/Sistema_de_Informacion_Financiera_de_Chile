@@ -1,0 +1,186 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la cartera informada (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "Atributo",
+   "significado": "vida (archivos CSVID) o generales (CSGEN).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "FK",
+   "significado": "RUT de la compañía de seguros, con dígito verificador (une con seguros.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el encabezado del archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "property_id",
+   "rol": "Identificador",
+   "significado": "Seudónimo estable del bien raíz (BIEN-…), calculado desde el rol y la aseguradora antes de suprimirlos: permite seguir el mismo inmueble entre meses sin revelar su dirección ni su rol.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_de_inmueble",
+   "rol": "Atributo",
+   "significado": "Corresponde señalar si el bien raíz es urbano o no urbano. Se informará de acuerdo a la siguiente codificación: UR : Urbano NU : No Urbano.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_instrumento",
+   "rol": "Atributo",
+   "significado": "Este campo es obligatorio y se informará de acuerdo a la codificación definida en SEIL, Codificación S.V.S., Instrumentos. Para los bienes raíces dados en leasing, el tipo de instrumento será CLEAS.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "destino",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si el bien raíz es \"Habitacional\" o \"No Habitacional\", de acuerdo a las correspondientes autorizaciones municipales. Se informará de acuerdo a la siguiente codificación: HA : Habitacional NH : No Habitacional.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "uso",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar el uso que se le da al bien raíz, es decir si se arrienda con el fin de obtener una renta o es ocupado para desarrollar la actividad de seguros.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "comuna",
+   "rol": "Atributo",
+   "significado": "Corresponde señalar la comuna donde se ubica geográficamente el bien raíz, de acuerdo a listado de códigos establecidos en el módulo SEIL, codificación SVS, Comuna.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "ciudad",
+   "rol": "Atributo",
+   "significado": "Corresponderá señalar la ciudad en donde se encuentra el bien raíz.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "porcentaje_uso_propio",
+   "rol": "Métrica",
+   "significado": "Corresponde informar, cuando el uso es mixto, qué porcentaje del bien raíz está destinado para uso propio.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "monto_arriendo_uf",
+   "rol": "Métrica",
+   "significado": "Para los bienes raíces en arriendo, corresponde informar el monto de arriendo mensual expresado en UF. En caso de arriendos trimestrales, semestrales, anuales u otros deberán informarse el valor equivalente mensual de éstos. Expresado en UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "Costo",
+   "nombre": "costo_actualizado_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde señalar el valor de adquisición del bien raíz más su correspondiente revalorización a la fecha de cierre del mes a que se refiere la información, en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "depreciacion_acumulada_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde señalar el monto de depreciación acumulada a deducir del activo inmovilizado, en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasacion_1_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde señalar el valor según lo dispuesto en Norma de Carácter General Nº42 de esta Superintendencia o la que la reemplace; Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasacion_2_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde señalar el valor según lo dispuesto en Norma de Carácter General Nº42 de esta Superintendencia o la que la reemplace; Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Deterioro",
+   "nombre": "deterioro_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al deterioro de la inversión, según lo señalado en la Norma de Carácter General N°311, del 28.06.2011. Este monto deberá expresarse en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor contable informado",
+   "nombre": "valor_final_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor que tiene el bien raíz a la fecha de cierre del mes a que se refiere la información, según lo establecido en Circular de Valorización vigente, expresados en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "total_m2_terreno",
+   "rol": "Métrica",
+   "significado": "Para todos los bienes raíces informados, se deberá indicar el total de m2 del terreno. Para el caso de departamentos u oficinas en un edificio, se debe informar con ceros.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "total_m2_construccion",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el total de m2 construidos del bien raíz.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "derivado",
+ "foraneas": [
+  {
+   "columna": "rut_aseguradora",
+   "destino": "seguros_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "seguros_bienes_raices_relevantes",
+ "primaryKey": [],
+ "sector": "seguros",
+ "titulo": "B.4 BIENES RAICES",
+ "version": "1.0.0"
+}

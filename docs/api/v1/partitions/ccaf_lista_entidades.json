@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "ccaf_lista_entidades",
+ "particiones": [
+  {
+   "archivo": "outputs/cajas_compensacion/ccaf_maestro.parquet",
+   "bytes": 17300,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/cajas_compensacion/ccaf_maestro.parquet",
+   "periodo": "ccaf_maestro",
+   "sha256": "284a7804435a250ae5bbab2185309f17db931aaafe10b5537052b3d406676039"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 17300,
+  "filas": 6
+ },
+ "version": "1.0.0"
+}

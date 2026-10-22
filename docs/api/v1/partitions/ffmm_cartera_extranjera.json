@@ -1,0 +1,196 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "ffmm_cartera_extranjera",
+ "particiones": [
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2001.parquet",
+   "bytes": 491606,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2001.parquet",
+   "periodo": "2001",
+   "sha256": "a93d94dc64b1354ee43d20037720317820017665d2de36c5f77bdce307f94c9a"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2002.parquet",
+   "bytes": 463508,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2002.parquet",
+   "periodo": "2002",
+   "sha256": "6a2174e82158a58b46c8c8986f45c8526cf700e389fefcb972b7488a4d48d9b1"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2003.parquet",
+   "bytes": 499885,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2003.parquet",
+   "periodo": "2003",
+   "sha256": "8a174625068f39f9f788514649d3c866dac0fc8ec496da79b1a7a7ede4de4516"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2004.parquet",
+   "bytes": 573344,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2004.parquet",
+   "periodo": "2004",
+   "sha256": "dfbd5d3271c3f1d0fd7760d55af98b521c196f1c176aba9584ca85fbae52ad76"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2005.parquet",
+   "bytes": 673064,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2005.parquet",
+   "periodo": "2005",
+   "sha256": "933feacbe389be7d4435816d9bcfa1eb07ab9ce9b4f9e0e5de6fa3c18e8f40c1"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2006.parquet",
+   "bytes": 862170,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2006.parquet",
+   "periodo": "2006",
+   "sha256": "b5f740e492e2842675a3ed8f106cc9c2bbc8d91215777fac3755e3bfe7e7528d"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2007.parquet",
+   "bytes": 1149480,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2007.parquet",
+   "periodo": "2007",
+   "sha256": "84a76912a3716e6001984adba4cf376bb18516207e8ae334fd967c316f452115"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2008.parquet",
+   "bytes": 1131986,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2008.parquet",
+   "periodo": "2008",
+   "sha256": "a6b5f1657f6b78e722f2a15ec327122f24b2e35c571e930c884c245f22c63fb5"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2009.parquet",
+   "bytes": 1051343,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2009.parquet",
+   "periodo": "2009",
+   "sha256": "cce7928d64c5eb96e033fdc0a22ec9992855e5155104dd8ae002cbed414bf7e9"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2010.parquet",
+   "bytes": 1166557,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2010.parquet",
+   "periodo": "2010",
+   "sha256": "d6d07fda36d8b0721522c2da8ba88dc90724541e95bdf9fe1a1704c068dfc403"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2011.parquet",
+   "bytes": 1322978,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2011.parquet",
+   "periodo": "2011",
+   "sha256": "b8b1af43a2d999b0b4239a225f054c36f16c8f5a8248a81ddd9810516dd594d4"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2012.parquet",
+   "bytes": 1248947,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2012.parquet",
+   "periodo": "2012",
+   "sha256": "cfa81b6eae340f45b15bce6f8e7e7537a7627692aff9abd2796b0455dda77262"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2013.parquet",
+   "bytes": 1325865,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2013.parquet",
+   "periodo": "2013",
+   "sha256": "4839bff6155bc79a4a2c43b3da359dd155d16bcac11ed3768b9dabdcb5752188"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2014.parquet",
+   "bytes": 1231904,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2014.parquet",
+   "periodo": "2014",
+   "sha256": "d6ac5cc02cc359b7f132ebc141f9fe572ed9522f6d55818e618a177d6399fce9"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2015.parquet",
+   "bytes": 1222711,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2015.parquet",
+   "periodo": "2015",
+   "sha256": "a2a66b39626ed27a50e9b7e04bb5d1f44836df10659ae6673dfb82c7bdee3d4d"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2016.parquet",
+   "bytes": 1272361,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2016.parquet",
+   "periodo": "2016",
+   "sha256": "1355f3f19efccbb7aa073b26314eb8eec527350ffb0e9f57f6debd6c32191a20"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2017.parquet",
+   "bytes": 1279912,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2017.parquet",
+   "periodo": "2017",
+   "sha256": "afe9a872f26c5d9266f2ad18810deb99e7de7fd6fda5aaf044babb3673b8f17d"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2018.parquet",
+   "bytes": 1168512,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2018.parquet",
+   "periodo": "2018",
+   "sha256": "8746b1bc96b9b5a1564bc85a0ac0874241587f7d292c7c1e582935edd513cb4e"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2019.parquet",
+   "bytes": 1188118,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2019.parquet",
+   "periodo": "2019",
+   "sha256": "91bed710ab61bb04fe635267d312cbac5c03e7069a7589e059484e0473d2c58f"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2020.parquet",
+   "bytes": 1104164,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2020.parquet",
+   "periodo": "2020",
+   "sha256": "e1e19d03359e4ff96082b2e43848dfe566fc4786cf4d3d7ed5e82c01e8e43c19"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2021.parquet",
+   "bytes": 1146838,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2021.parquet",
+   "periodo": "2021",
+   "sha256": "7abe827d4ad7d85f41660d147359b098688061c8f6ae57edd78c27c2242a549d"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2022.parquet",
+   "bytes": 1012867,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2022.parquet",
+   "periodo": "2022",
+   "sha256": "87fee34c4e0858cc88ac8a53a46d3a765fdcb869c3838224fe35382ba1808252"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2023.parquet",
+   "bytes": 909850,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2023.parquet",
+   "periodo": "2023",
+   "sha256": "4cbbe7cfed8987b5d7892760630ba55c652451d82bfdf7fe5f1eb8d131731a21"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2024.parquet",
+   "bytes": 820562,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2024.parquet",
+   "periodo": "2024",
+   "sha256": "38d0b3539aa46c41ecc5924422dacb3ef23e58728b32e01d95ebc3b0dbdfd1bb"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2025.parquet",
+   "bytes": 796930,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2025.parquet",
+   "periodo": "2025",
+   "sha256": "81b45ae3ec7f7493aacc049b789c6e82f51ee0d741d677c5679a2c25878eae55"
+  },
+  {
+   "archivo": "outputs/ffmm/cartera_extranjera/2026.parquet",
+   "bytes": 533820,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/cartera_extranjera/2026.parquet",
+   "periodo": "2026",
+   "sha256": "ca698e2d9add08e92c2bedd1d6e8fb26a7f7bd3b9d1aa0c45ae0f96fd8033a0e"
+  }
+ ],
+ "total": {
+  "archivos": 26,
+  "bytes": 25649282,
+  "filas": 1461253
+ },
+ "version": "1.0.0"
+}

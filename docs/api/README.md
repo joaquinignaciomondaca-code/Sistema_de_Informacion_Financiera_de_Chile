@@ -13,6 +13,12 @@ el usuario descarga.
 | `v1/datapackage.json` | El **Data Package**: 86 recursos con ruta, tamaño, SHA-256, esquema y `primaryKey`, legible por cualquier herramienta Frictionless. |
 | `reglas.json` | Las comprobaciones con su nivel (invariante / expectativa / informativo) y las excepciones declaradas con su motivo. Hoy: **0 excepciones**. |
 | `prueba_maquina_limpia.log` | Evidencia de que un consumidor **sin el repo** descubre el catálogo, lee el esquema y consulta por HTTP. |
+| `v1/catalog.json` | El índice de los 90 objetos: estado, filas, bytes, clave, corte y a dónde ir por más detalle. |
+| `v1/schema/{id}.json` | Columnas, tipos, significado y clave de cada objeto. |
+| `v1/partitions/{id}.json` | Los archivos que componen el objeto, con período y SHA-256. |
+| `v1/queries.json` | Las 156 consultas de la web, con **id estable** y la expectativa declarada. |
+| `v1/openapi.json` | **Sólo** las 9 rutas GET que existen. |
+| `v1/views.sql` | Las 105 vistas SQL (90 objetos + 19 alias), ejecutables tal cual. |
 
 Se regeneran con:
 
@@ -23,6 +29,8 @@ python3 scripts/verificar_claves.py       # docs/api/claves.csv      (~60 s)
 python3 scripts/build_api.py              # docs/api/v1/datapackage.json
 python3 scripts/auditar_datapackage.py    # valida el descriptor    (~12 s)
 python3 scripts/probar_maquina_limpia.py  # consumidor sin el repo  (~5 s)
+python3 scripts/build_contrato.py         # catálogo, esquemas, particiones, consultas, OpenAPI y vistas
+python3 scripts/auditar_contrato.py       # audita el contrato     (~1 s)
 ```
 
 Y el CI falla si quedan desactualizados (`--check` en cada uno) o si algo del
@@ -165,6 +173,42 @@ natural omitía una dimensión**.
 
 El caso de seguros no era un dato sucio: la misma aseguradora tiene registro de
 **vida** y de **generales**, así que `sector + rut` da 84 de 84.
+
+## El contrato estático (`v1/`)
+
+`catalog.json` es la puerta de entrada: 90 objetos con `estado`, `filas`,
+`bytes`, `primaryKey` y las rutas a su esquema y sus particiones. Los 156
+`queries.json` traen **id estable** (`titulo-slug` + 6 hex del SQL): un id no
+cambia mientras el SQL no cambie, así que sirve para citar una consulta en un
+artículo o en una prueba.
+
+### `views.sql`
+
+Se ejecuta tal cual y crea las 105 vistas:
+
+```bash
+duckdb < v1/views.sql
+```
+
+La base de los archivos sale de una variable de sesión, así que **el mismo
+archivo** sirve para el sitio, para una copia local o para un espejo:
+
+```sql
+SET VARIABLE sif_base = 'https://…/Sistema_de_Informacion_Financiera_de_Chile';
+CREATE OR REPLACE VIEW "afp_lista_entidades" AS
+SELECT * FROM read_parquet(getvariable('sif_base') || '/outputs/pensiones/afp_maestro_administradoras.parquet');
+```
+
+Para trabajar contra una copia local, se cambia sólo esa línea
+(`SET VARIABLE sif_base = '/ruta/a/docs';`) y todo lo demás funciona igual. Los
+4 objetos vacíos **no** crean vista (no hay archivo); quedan listados como
+comentario al final, con su motivo.
+
+### `openapi.json`
+
+Nueve rutas, todas GET y todas reales: los cinco documentos del contrato, el CSV
+de reconciliación, el de claves y los Parquet del sitio. **No hay `/query` ni
+JSON por fila**; si algún día se añade, será una versión mayor (decisión D3).
 
 ## Prueba de máquina limpia
 

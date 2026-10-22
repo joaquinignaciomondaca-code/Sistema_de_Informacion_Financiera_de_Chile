@@ -1,0 +1,146 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Trimestre informado (AAAA-MM, mes de cierre: 03, 06, 09 o 12).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "run_fondo",
+   "rol": "FK",
+   "significado": "RUN del fondo de inversión (une con fi.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "clasificacion_esf",
+   "rol": "Atributo",
+   "significado": "Clasificación del instrumento en el estado de situación financiera del fondo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_objeto",
+   "rol": "Atributo",
+   "significado": "Activo objeto del contrato.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nemotecnico",
+   "rol": "Atributo",
+   "significado": "Nemotécnico del instrumento o contrato (en forwards, la palabra FORWARD; vacío si no aplica).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidad_cotizacion",
+   "rol": "Atributo",
+   "significado": "Unidad de cotización del contrato.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_inicio",
+   "rol": "Fecha",
+   "significado": "Fecha de inicio del contrato (AAAA-MM-DD).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_vencimiento",
+   "rol": "Fecha",
+   "significado": "Fecha de vencimiento (AAAA-MM-DD; vacío si no aplica).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "contraparte",
+   "rol": "Atributo",
+   "significado": "Nombre de la contraparte.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "moneda_liquidacion",
+   "rol": "Atributo",
+   "significado": "Moneda de liquidación (codificación SEIL; $$ pesos, PROM dólar, UF, etc.).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "pais",
+   "rol": "Atributo",
+   "significado": "Código del país.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "posicion",
+   "rol": "Atributo",
+   "significado": "Posición: compra o venta.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "unidades_nominales",
+   "rol": "Métrica",
+   "significado": "Unidades nominales totales del contrato.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "precio_futuro",
+   "rol": "Métrica",
+   "significado": "Precio futuro pactado.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "monto_comprometido_miles_mf",
+   "rol": "Métrica",
+   "significado": "Monto comprometido, en miles de la moneda funcional del fondo.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "Valor Razonable / MtM",
+   "nombre": "valor_mercado_miles_mf",
+   "rol": "Métrica",
+   "significado": "Valor de mercado del contrato, en miles de la moneda funcional del fondo.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "run_fondo",
+   "destino": "fi_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "fi_futuros",
+ "primaryKey": [],
+ "sector": "fi",
+ "titulo": "fi.futuros_forwards",
+ "version": "1.0.0"
+}

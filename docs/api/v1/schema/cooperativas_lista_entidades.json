@@ -1,0 +1,110 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut",
+   "rol": "PK",
+   "significado": "Cuerpo numérico del RUT (sin dígito verificador); clave canónica para cruces relacionales.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "dv",
+   "rol": "Dimensión",
+   "significado": "Dígito verificador oficial validado bajo algoritmo Módulo 11.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_empresa",
+   "rol": "Dimensión",
+   "significado": "Razón social corporativa completa inscrita en el registro CMF y DAES.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_fantasia",
+   "rol": "Dimensión",
+   "significado": "Nombre comercial o marca de atención pública de la cooperativa.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_institucion",
+   "rol": "Dimensión",
+   "significado": "Clasificación sectorial: Cooperativa de Ahorro y Crédito (CAC).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "regulador_principal",
+   "rol": "Dimensión",
+   "significado": "Ente regulador primario: CMF Chile.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sede_matriz",
+   "rol": "Dimensión",
+   "significado": "Ciudad sede de la casa matriz u oficinas centrales de la cooperativa.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "region",
+   "rol": "Dimensión",
+   "significado": "Región administrativa chilena donde radica la casa central.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "estado_vigencia",
+   "rol": "Dimensión",
+   "significado": "Condición operativa ante el regulador: VIGENTE.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_fundacion",
+   "rol": "Dimensión",
+   "significado": "Fecha fundacional histórica de la institución cooperativa.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "es_sistemica",
+   "rol": "Dimensión",
+   "significado": "Indicador de relevancia sistémica por activos o base de socios (>50% o supervisión CMF integral).",
+   "tipo": "BOOLEAN",
+   "tipo_ts": "boolean"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_dv",
+   "rol": "Atributo",
+   "significado": "RUT con dígito verificador (cuerpo-DV, Módulo 11).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "cooperativas_lista_entidades",
+ "primaryKey": [
+  "rut"
+ ],
+ "sector": "cooperativas",
+ "titulo": "cooperativas.lista_entidades",
+ "version": "1.0.0"
+}

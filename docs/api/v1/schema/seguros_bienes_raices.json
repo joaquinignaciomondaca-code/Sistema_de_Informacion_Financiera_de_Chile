@@ -1,0 +1,488 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha",
+   "significado": "Mes de la cartera informada (AAAA-MM).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "sector",
+   "rol": "Atributo",
+   "significado": "vida (archivos CSVID) o generales (CSGEN).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_aseguradora",
+   "rol": "FK",
+   "significado": "RUT de la compañía de seguros, con dígito verificador (une con seguros.lista_entidades).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_aseguradora",
+   "rol": "Atributo",
+   "significado": "Nombre de la compañía tal como aparece en el encabezado del archivo del mes.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rol",
+   "rol": "Identificador",
+   "significado": "No se publica: es el identificador tributario del inmueble. Para seguir el mismo bien entre meses se publica property_id, un seudónimo derivado de este campo. Ver pipelines/auto/privacidad.py.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "descripcion_del_inmueble_local",
+   "rol": "Atributo",
+   "significado": "Se indicará si es un local. S : Si N : No.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "descripcion_del_inmueble_oficina",
+   "rol": "Atributo",
+   "significado": "Se indicará si es una oficina. S : Si N : No.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "descripcion_del_inmueble_bodega",
+   "rol": "Atributo",
+   "significado": "Se indicará si es una bodega. S : Si N : No.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "descripcion_del_inmueble_estacionamiento",
+   "rol": "Atributo",
+   "significado": "Se indicará si es un estacionamiento. S : Si N : No.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "descripcion_del_inmueble_terreno",
+   "rol": "Atributo",
+   "significado": "Se indicará si es un terreno. S : Si N : No.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "descripcion_del_inmueble_casa",
+   "rol": "Atributo",
+   "significado": "Se indicará si es una casa. S : Si N : No.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "descripcion_del_inmueble_edificio",
+   "rol": "Atributo",
+   "significado": "Se indicará si es un edificio. S : Si N : No.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "descripcion_del_inmueble_piso_completo_de_edificio",
+   "rol": "Atributo",
+   "significado": "Se indicará si es un piso completo del edificio. S : Si N : No.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "descripcion_del_inmueble_piso_incompleto_de_edificio",
+   "rol": "Atributo",
+   "significado": "Se indicará si es un piso incompleto del edificio. S : Si N : No.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "descripcion_del_inmueble_departamento",
+   "rol": "Atributo",
+   "significado": "Se indicará si es un departamento. S : Si N : No.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "descripcion_del_inmueble_obra_en_construccion",
+   "rol": "Atributo",
+   "significado": "Se indicará si es una obra en construcción. S : Si N : No.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "descripcion_del_inmueble_otros",
+   "rol": "Atributo",
+   "significado": "Se indicará si es otros. S : Si N : No Ejemplos: 1. Si el bien raíz es una casa, se informará con una S en el campo CASA, y todos los otros campos deberán informarse con una N. 1.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_de_inmueble",
+   "rol": "Atributo",
+   "significado": "Corresponde señalar si el bien raíz es urbano o no urbano. Se informará de acuerdo a la siguiente codificación: UR : Urbano NU : No Urbano.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "destino",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar si el bien raíz es \"Habitacional\" o \"No Habitacional\", de acuerdo a las correspondientes autorizaciones municipales. Se informará de acuerdo a la siguiente codificación: HA : Habitacional NH : No Habitacional.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "uso",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar el uso que se le da al bien raíz, es decir si se arrienda con el fin de obtener una renta o es ocupado para desarrollar la actividad de seguros.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "porcentaje_uso_propio",
+   "rol": "Métrica",
+   "significado": "Corresponde informar, cuando el uso es mixto, qué porcentaje del bien raíz está destinado para uso propio.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_instrumento",
+   "rol": "Atributo",
+   "significado": "Este campo es obligatorio y se informará de acuerdo a la codificación definida en SEIL, Codificación S.V.S., Instrumentos. Para los bienes raíces dados en leasing, el tipo de instrumento será CLEAS.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_nemotecnico",
+   "rol": "Atributo",
+   "significado": "Corresponde informar, cuando sea un bien raíz dado en leasing, el código asignado por esta Superintendencia, según lo señalado en Anexo Nº1 de esta Circular, si no corresponde, se informará con espacios.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "arrendatario",
+   "rol": "Atributo",
+   "significado": "Corresponde informar la razón social o el nombre del arrendatario de la forma: apellido paterno, apellido materno y primer nombre. Se informará para los bienes raíces dado en arrendamiento, ya sea como leasing financiero u operacional o simple arrendamiento.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "relacionado",
+   "rol": "Atributo",
+   "significado": "En el caso que el bien raíz se encuentre arrendado, corresponde informar si el arrendatario está relacionado con la compañía de seguros, de acuerdo a lo establecido en el artículo N°100 de la ley N°18.045 del 22.10.1981 y sus modificaciones.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "saldo_plazo_arriendo",
+   "rol": "Métrica",
+   "significado": "Se deberá informar los meses restantes del contrato de arriendo a contar de la fecha de información. En el caso de los contratos de leasing, se debe indicar el plazo informado en el archivo B.1. En el caso de los bienes raíces de uso propio se debe informar en cero (0).",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "monto_arriendo_uf",
+   "rol": "Métrica",
+   "significado": "Para los bienes raíces en arriendo, corresponde informar el monto de arriendo mensual expresado en UF. En caso de arriendos trimestrales, semestrales, anuales u otros deberán informarse el valor equivalente mensual de éstos. Expresado en UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "ubicacion",
+   "rol": "Atributo",
+   "significado": "No se publica: la dirección exacta permite ubicar la propiedad y a sus ocupantes. Se conservan comuna, ciudad y property_id. (En los archivos anteriores al formato 2024-12 la misma columna se llama «direccion» y tampoco se publica.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "comuna",
+   "rol": "Atributo",
+   "significado": "Corresponde señalar la comuna donde se ubica geográficamente el bien raíz, de acuerdo a listado de códigos establecidos en el módulo SEIL, codificación SVS, Comuna.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "ciudad",
+   "rol": "Atributo",
+   "significado": "Corresponderá señalar la ciudad en donde se encuentra el bien raíz.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_de_compra",
+   "rol": "Fecha",
+   "significado": "Corresponderá señalar la fecha de adquisición del bien raíz. Se deberá informar con el siguiente formato: AAAAMMDD.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "compra_entidad_relacionada",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si el bien raíz fue adquirido a una entidad relacionada con la compañía de seguros, de acuerdo a lo establecido en las letras a) y b) del artículo N°100 de la ley N°18.045 de 22.10.1981.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Costo",
+   "nombre": "costo_actualizado_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde señalar el valor de adquisición del bien raíz más su correspondiente revalorización a la fecha de cierre del mes a que se refiere la información, en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "depreciacion_acumulada_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde señalar el monto de depreciación acumulada a deducir del activo inmovilizado, en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "plazo",
+   "rol": "Métrica",
+   "significado": "Se deberá informar los meses de vida útil restante del bien raíz.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Costo",
+   "nombre": "costo_corregido_y_depreciado_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde a la diferencia entre el costo actualizado del bien raíz y la depreciación acumulada, en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasacion_1_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde señalar el valor según lo dispuesto en Norma de Carácter General Nº42 de esta Superintendencia o la que la reemplace; Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tasacion_2_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde señalar el valor según lo dispuesto en Norma de Carácter General Nº42 de esta Superintendencia o la que la reemplace; Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_del_tasador_1",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar la razón social o el nombre del profesional que emitió el informe de tasación 1. En este último caso, se indicará: apellido paterno, apellido materno y primer nombre.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_del_tasador_2",
+   "rol": "Atributo",
+   "significado": "Corresponde indicar la razón social o el nombre del profesional que emitió el informe de tasación 2. En este último caso, se indicará: apellido paterno, apellido materno, y primer nombre.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_tasacion_1",
+   "rol": "Fecha",
+   "significado": "Corresponderá señalar la fecha en que se efectuó la tasación 1. Se deberá informar con el siguiente formato: AAAAMMDD.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_tasacion_2",
+   "rol": "Fecha",
+   "significado": "Corresponderá señalar la fecha en que se efectuó la tasación 2. Se deberá informar con el siguiente formato: AAAAMMDD.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Deterioro",
+   "nombre": "deterioro_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al deterioro de la inversión, según lo señalado en la Norma de Carácter General N°311, del 28.06.2011. Este monto deberá expresarse en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Valor contable informado",
+   "nombre": "valor_final_m_clp",
+   "rol": "Métrica",
+   "significado": "Corresponde al valor que tiene el bien raíz a la fecha de cierre del mes a que se refiere la información, según lo establecido en Circular de Valorización vigente, expresados en miles de pesos (M$). Expresado en miles de pesos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "copropietaria",
+   "rol": "Métrica",
+   "significado": "Corresponde informar si la compañía es copropietaria de un bien raíz, si lo fuera, en este campo deberá informar el porcentaje de propiedad de la compañía.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "prohibicion_o_gravamen",
+   "rol": "Atributo",
+   "significado": "Se deberá informar si los bienes raíces registrados se encuentran afectos a prohibiciones o gravámenes u otros impedimentos señalados en el Art 22 DFL N°251. Se informará de acuerdo a la siguiente codificación: S : Si tiene prohibición N : No tiene prohibición.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "activo_respalda_reserva_valor_de_fondo",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si uno o más títulos (en caso de haber agrupado instrumentos con características idénticas) registrados, se encuentran respaldando la reserva de valor del fondo señalada en el DFL Nº251.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_del_fondo",
+   "rol": "Atributo",
+   "significado": "Para instrumentos que estén asociados a fondos que respalden seguros de vida con cuenta de inversión, se debe informar el nombre del Fondo al cual pertenece. Se entenderá por fondo al tipo de plan o modalidades de inversión convenidos para los seguros con cuentas de inversión.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_cartera",
+   "rol": "Atributo",
+   "significado": "Para instrumentos que no respalden seguros de vida con cuenta de inversión, se debe informar la sub cartera que respalda, si corresponde. Para instrumentos que no respalden una sub cartera, se debe informar “NO APLICA”.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tsa",
+   "rol": "Atributo",
+   "significado": "Corresponde informar si el instrumento está incluido en el Test de Suficiencia de Activos para el periodo informado, de acuerdo a la siguiente codificación: SI: el instrumento es utilizado para el análisis del Test de Suficiencia de Activos NO: el instrumento no es utilizado para el análisis del.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "desarrollo_avance",
+   "rol": "Atributo",
+   "significado": "Para el caso de bienes raíces en construcción, se debe indicar el.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_gestion",
+   "rol": "Atributo",
+   "significado": "Para el caso de bienes raíces en construcción, se debe indicar el tipo de gestión, de acuerdo a lo siguiente: A: La compañía es responsable de gestionar el proyecto y contrata directamente a una constructora para su desarrollo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "total_m2_terreno",
+   "rol": "Métrica",
+   "significado": "Para todos los bienes raíces informados, se deberá indicar el total de m2 del terreno. Para el caso de departamentos u oficinas en un edificio, se debe informar con ceros.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "total_m2_construccion",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el total de m2 construidos del bien raíz.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_tasacion_terreno_m2_uf",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el valor en UF por metro cuadrado del terreno, obtenido a partir de la menor tasación de la propiedad. Si la tasación no presenta separada la valorización del terreno y la construcción, se debe informar con ceros. Expresado en UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "valor_tasacion_construccion_m2_uf",
+   "rol": "Métrica",
+   "significado": "Corresponde informar el valor en UF por metro cuadrado de la construcción, obtenido a partir de la menor tasación de la propiedad. Si la tasación no presenta separada la valorización del terreno y la construcción, se debe informar con ceros. Expresado en UF.",
+   "tipo": "DOUBLE",
+   "tipo_ts": "number"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "property_id",
+   "rol": "Identificador",
+   "significado": "Seudónimo estable del bien raíz (BIEN-…), calculado desde el rol y la aseguradora antes de suprimirlos: permite seguir el mismo inmueble entre meses sin revelar su dirección ni su rol.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [
+  {
+   "columna": "rut_aseguradora",
+   "destino": "seguros_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "id": "seguros_bienes_raices",
+ "primaryKey": [
+  "tasacion_1_m_clp",
+  "tasacion_2_m_clp",
+  "costo_corregido_y_depreciado_m_clp",
+  "valor_final_m_clp",
+  "costo_actualizado_m_clp",
+  "depreciacion_acumulada_m_clp",
+  "property_id",
+  "valor_tasacion_construccion_m2_uf",
+  "deterioro_m_clp",
+  "valor_tasacion_terreno_m2_uf",
+  "codigo_nemotecnico",
+  "copropietaria",
+  "periodo"
+ ],
+ "sector": "seguros",
+ "titulo": "B.4 BIENES RAICES",
+ "version": "1.0.0"
+}

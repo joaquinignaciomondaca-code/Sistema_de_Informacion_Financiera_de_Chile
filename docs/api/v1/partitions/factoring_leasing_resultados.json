@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "factoring_leasing_resultados",
+ "particiones": [
+  {
+   "archivo": "outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
+   "bytes": 334636,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
+   "periodo": "factoring_leasing_resultados_serie_ifrs_cmf",
+   "sha256": "f93c336545609812e9af5e44f087790b20de4adb79002c18de79dbb959c580b9"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 334636,
+  "filas": 22368
+ },
+ "version": "1.0.0"
+}

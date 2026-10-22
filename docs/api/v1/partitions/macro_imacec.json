@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "macro_imacec",
+ "particiones": [
+  {
+   "archivo": "outputs/macro/macro_imacec.parquet",
+   "bytes": 12252,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_imacec.parquet",
+   "periodo": "macro_imacec",
+   "sha256": "ac58ff721884ca7ed556ed05b66249ffd6ffd5d6527bc4aaf6d4e06aa45a6f53"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 12252,
+  "filas": 152
+ },
+ "version": "1.0.0"
+}

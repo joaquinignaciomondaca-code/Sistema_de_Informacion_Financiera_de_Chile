@@ -1,0 +1,196 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "ffmm_opciones",
+ "particiones": [
+  {
+   "archivo": "outputs/ffmm/opciones/2001.parquet",
+   "bytes": 18995,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2001.parquet",
+   "periodo": "2001",
+   "sha256": "c317d49af225aceb21519a1834a8ca2f095ec93e8c93946eaa197d9fa68823e8"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2002.parquet",
+   "bytes": 27721,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2002.parquet",
+   "periodo": "2002",
+   "sha256": "a9586872296ff596663ff5ccfc50128680c4f42b86b23908a8e5d34be0393750"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2003.parquet",
+   "bytes": 14006,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2003.parquet",
+   "periodo": "2003",
+   "sha256": "830981d689277aa9cbae2133aeb6991d517f3c5addd221d8769055fcd30ca3d4"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2004.parquet",
+   "bytes": 14174,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2004.parquet",
+   "periodo": "2004",
+   "sha256": "dedf8de174b1f059f519f93c1d8889a58a7a51ec2b233199373b84b24489ce8e"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2005.parquet",
+   "bytes": 17599,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2005.parquet",
+   "periodo": "2005",
+   "sha256": "0d552a04ed38da546429b394259f6cd00070beb8c1f8bacc7c9a52c97dccd08d"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2006.parquet",
+   "bytes": 24092,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2006.parquet",
+   "periodo": "2006",
+   "sha256": "9ce85e1213b6bcd2fe83596da8dae4bb249efc9e8307edc51f620073bb9fa569"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2007.parquet",
+   "bytes": 28136,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2007.parquet",
+   "periodo": "2007",
+   "sha256": "97823d7b7cfa72c2c8709c47f911cb75391d57cf37ab438378e79dab280d2faa"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2008.parquet",
+   "bytes": 32887,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2008.parquet",
+   "periodo": "2008",
+   "sha256": "ff6ff8361f7496263a9e6840f1f84a99ef8b3afa7fa769eafdbe8a2e5178f35a"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2009.parquet",
+   "bytes": 30073,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2009.parquet",
+   "periodo": "2009",
+   "sha256": "cfddf5510dc676738406d3b555e8e98a65e86e9db9f7e5ebc55f1c04b5f9a91e"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2010.parquet",
+   "bytes": 29118,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2010.parquet",
+   "periodo": "2010",
+   "sha256": "6dc6bbfadf15c5ab9639390c21cfea859f7dc75c2303b9bd17989dd26f41a1d6"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2011.parquet",
+   "bytes": 26332,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2011.parquet",
+   "periodo": "2011",
+   "sha256": "c42955c73dd2486ee679c9c4376f92838458fa074bf35d4c96108351d09c936a"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2012.parquet",
+   "bytes": 20964,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2012.parquet",
+   "periodo": "2012",
+   "sha256": "8fdee3ebd45a089ce361d4f395854430da346fae84a2c541dfda87c11c0ae084"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2013.parquet",
+   "bytes": 24859,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2013.parquet",
+   "periodo": "2013",
+   "sha256": "63b9a28371691d497b603670b235d03ffdf854c7163f901078062548506e99a1"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2014.parquet",
+   "bytes": 26750,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2014.parquet",
+   "periodo": "2014",
+   "sha256": "f73bb77ad2f014c9792a7510c4a4c8309e2ec0bdf6ac8cb960dfc3befce60a10"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2015.parquet",
+   "bytes": 26757,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2015.parquet",
+   "periodo": "2015",
+   "sha256": "7a4a7ae54b6ba8f2b7787566aa8189e2909b734e1887276b163ddc62aa56a81e"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2016.parquet",
+   "bytes": 22894,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2016.parquet",
+   "periodo": "2016",
+   "sha256": "0d0b13f396a496921f1d610ddcf1d7532123ad3e99f86484a8b602c4c3f617e6"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2017.parquet",
+   "bytes": 19577,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2017.parquet",
+   "periodo": "2017",
+   "sha256": "cfa4e0fe5965a733d4024cf993f72e59fd58fe0f4db6e401b321685773dc6ab9"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2018.parquet",
+   "bytes": 15944,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2018.parquet",
+   "periodo": "2018",
+   "sha256": "edcb92003c3e314f975173e87e3b84bf4168af0fd06c842d4f6e7dbf86a105d6"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2019.parquet",
+   "bytes": 15229,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2019.parquet",
+   "periodo": "2019",
+   "sha256": "cdb69ac71e9e1f5a5e682a9809ebc0bdea9b981306b8242466b049fb04c9fefd"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2020.parquet",
+   "bytes": 14694,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2020.parquet",
+   "periodo": "2020",
+   "sha256": "ba84da78d4a4720d76c94b20503ff4b6fa1ea9bd32e6f06ac804489ccc80c6a9"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2021.parquet",
+   "bytes": 14504,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2021.parquet",
+   "periodo": "2021",
+   "sha256": "46748ce46760375b53f4d0b37a6242ccea4f8d6c00b2ca2f221ab97acbb6ea42"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2022.parquet",
+   "bytes": 14060,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2022.parquet",
+   "periodo": "2022",
+   "sha256": "38290c8294d4c6a05ab55a7e26b536f9d8ac818a72740e9b866be40c55ed7f18"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2023.parquet",
+   "bytes": 14444,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2023.parquet",
+   "periodo": "2023",
+   "sha256": "7c60b805d3bf055c356b31c5563659cbbfdfb713e5e4f34ce59ccea537a0461f"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2024.parquet",
+   "bytes": 13384,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2024.parquet",
+   "periodo": "2024",
+   "sha256": "ba7dcf8043dc52155c0e4bff0af3968af66b82f74460afcf968c1d2c3dc534be"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2025.parquet",
+   "bytes": 13163,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2025.parquet",
+   "periodo": "2025",
+   "sha256": "f8217fbc3c89a6f28e2f8288fff0b1a300820202f6acfc7dd664d01cd6367af5"
+  },
+  {
+   "archivo": "outputs/ffmm/opciones/2026.parquet",
+   "bytes": 15460,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/opciones/2026.parquet",
+   "periodo": "2026",
+   "sha256": "77195602de8da41deb2fb7ae9491e59f032db1d6a547118e5e49107ecb6ed919"
+  }
+ ],
+ "total": {
+  "archivos": 26,
+  "bytes": 535816,
+  "filas": 5365
+ },
+ "version": "1.0.0"
+}

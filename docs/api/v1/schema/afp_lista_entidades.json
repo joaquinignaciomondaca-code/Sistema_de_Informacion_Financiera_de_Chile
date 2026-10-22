@@ -1,0 +1,46 @@
+{
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "id",
+   "rol": "PK",
+   "significado": "ID local de la administradora.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_administradora",
+   "rol": "Atributo",
+   "significado": "Cuerpo del RUT de la administradora (sin dígito verificador; Registro de Valores CMF para las altas automáticas).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_administradora",
+   "rol": "Atributo",
+   "significado": "Razón social de la administradora.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_fantasia",
+   "rol": "Atributo",
+   "significado": "Nombre comercial (AFP + nombre publicado por la Superintendencia).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "id": "afp_lista_entidades",
+ "primaryKey": [
+  "id"
+ ],
+ "sector": "pensiones",
+ "titulo": "afp.lista_administradoras",
+ "version": "1.0.0"
+}
