@@ -1,4 +1,6 @@
 {
+ "adaptacion": false,
+ "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
  "columnas": [
   {
    "criterio_contable": "No aplica",
@@ -146,7 +148,9 @@
    "tasa": 1.0
   }
  ],
+ "fuente": "CMF",
  "id": "fi_metodo_participacion",
+ "licencia_estado": "verificada",
  "primaryKey": [
   "pct_activo_fondo",
   "valor_cierre_miles_mf",
@@ -163,5 +167,6 @@
  ],
  "sector": "fi",
  "titulo": "fi.metodo_participacion",
+ "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
  "version": "1.0.0"
 }

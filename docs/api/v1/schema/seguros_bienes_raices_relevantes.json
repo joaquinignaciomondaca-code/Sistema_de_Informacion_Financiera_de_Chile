@@ -1,4 +1,6 @@
 {
+ "adaptacion": false,
+ "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
  "columnas": [
   {
    "criterio_contable": "No aplica",
@@ -178,9 +180,12 @@
    "tasa": 1.0
   }
  ],
+ "fuente": "CMF",
  "id": "seguros_bienes_raices_relevantes",
+ "licencia_estado": "verificada",
  "primaryKey": [],
  "sector": "seguros",
  "titulo": "B.4 BIENES RAICES",
+ "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
  "version": "1.0.0"
 }

@@ -1,4 +1,6 @@
 {
+ "adaptacion": false,
+ "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
  "columnas": [
   {
    "criterio_contable": "No aplica",
@@ -100,7 +102,9 @@
  "contrato": "sif-api/esquema",
  "estado": "publicado",
  "foraneas": [],
+ "fuente": "CMF",
  "id": "corredoras_bolsa_resultados",
+ "licencia_estado": "verificada",
  "primaryKey": [
   "periodo",
   "rut",
@@ -108,5 +112,6 @@
  ],
  "sector": "corredoras_bolsa",
  "titulo": "corredoras.resultados",
+ "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
  "version": "1.0.0"
 }

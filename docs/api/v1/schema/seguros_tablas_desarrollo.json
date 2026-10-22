@@ -1,4 +1,6 @@
 {
+ "adaptacion": false,
+ "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
  "columnas": [
   {
    "criterio_contable": "No aplica",
@@ -98,9 +100,12 @@
    "tasa": 1.0
   }
  ],
+ "fuente": "CMF",
  "id": "seguros_tablas_desarrollo",
+ "licencia_estado": "verificada",
  "primaryKey": [],
  "sector": "seguros",
  "titulo": "B.10 TABLAS DE DESARROLLO",
+ "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
  "version": "1.0.0"
 }

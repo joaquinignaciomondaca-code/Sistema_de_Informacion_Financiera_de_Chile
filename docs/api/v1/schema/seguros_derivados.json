@@ -1,4 +1,6 @@
 {
+ "adaptacion": false,
+ "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
  "columnas": [
   {
    "criterio_contable": "No aplica",
@@ -593,7 +595,9 @@
    "tasa": 1.0
   }
  ],
+ "fuente": "CMF",
  "id": "seguros_derivados",
+ "licencia_estado": "verificada",
  "primaryKey": [
   "efecto_en_resultados_realizados_m_clp",
   "valor_presente_posicion_larga_m_clp",
@@ -610,5 +614,6 @@
  ],
  "sector": "seguros",
  "titulo": "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS",
+ "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
  "version": "1.0.0"
 }
