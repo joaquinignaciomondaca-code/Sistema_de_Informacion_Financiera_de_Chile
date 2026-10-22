@@ -35,6 +35,13 @@ Base: `https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Finan
 5. Verifica lo que descargues con el `sha256` declarado en `partitions/{id}.json`.
 6. Si necesitas una serie congelada, guarda el `data_release` que estás usando: el hash identifica, no recupera.
 
+## Servidor MCP (si no puedes ejecutar código)
+
+`pip install "sif-chile[mcp]"` y `sif-mcp`: dos herramientas, `sif_buscar`
+(descubre tabla y columnas) y `sif_ejecutar` (SQL de solo lectura). 191 tokens de
+contexto en total. Si puedes ejecutar código, te basta `views.sql` y este archivo:
+es lo mismo, con menos piezas.
+
 ## Límites
 
 - Best effort, sin SLA; los datos son de la CMF y de otros organismos públicos y se republican normalizados.

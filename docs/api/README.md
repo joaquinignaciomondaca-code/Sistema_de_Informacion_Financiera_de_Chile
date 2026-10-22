@@ -16,6 +16,7 @@ el usuario descarga.
 | `v1/datapackage.json` | El **Data Package**: 86 recursos con ruta, tamaño, SHA-256, esquema y `primaryKey`, legible por cualquier herramienta Frictionless. |
 | `reglas.json` | Las comprobaciones con su nivel (invariante / expectativa / informativo) y las excepciones declaradas con su motivo. Hoy: **0 excepciones**. |
 | `prueba_maquina_limpia.log` | Evidencia de que un consumidor **sin el repo** descubre el catálogo, lee el esquema y consulta por HTTP. |
+| `mcp.log` | Evidencia del servidor MCP: dos herramientas, 191 tokens de contexto y la pregunta del README respondida con dos llamadas. |
 | `test_contrato.log` | Evidencia del test de contrato: 908 rutas sin 404, esquema = `DESCRIBE` real, 105 vistas, 156 consultas, 728 hashes y cobertura manifiesto ↔ catálogo. Incluye su autoprueba en negativo. |
 | `v1/catalog.json` | El índice de los 90 objetos: estado, filas, bytes, clave, corte y a dónde ir por más detalle. |
 | `v1/schema/{id}.json` | Columnas, tipos, significado y clave de cada objeto. |
@@ -38,6 +39,7 @@ python3 scripts/build_contrato.py         # catálogo, esquemas, particiones, co
 python3 scripts/auditar_contrato.py       # audita el contrato     (~1 s)
 python3 scripts/probar_ejemplos.py        # ejemplos de Python y JS (~2 s)
 python3 scripts/test_contrato.py --autoprueba  # test del consumidor (~7 s)
+python3 scripts/auditar_mcp.py            # servidor MCP y presupuesto (~2 s)
 ```
 
 Y el CI falla si quedan desactualizados (`--check` en cada uno) o si algo del
