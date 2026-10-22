@@ -176,6 +176,15 @@ jobs:
           grep -h -E "Consultas sugeridas|OK|VACIA|ERROR" consultas.log | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::notice title=Consultas sugeridas::$linea"; done
           exit $n
 
+      - name: 'Contrato de la API: reconciliación y esquemas al día'
+        run: |
+          set +e
+          python scripts/build_reconciliacion.py --check > recon.log 2>&1; r=$?
+          cat recon.log
+          python scripts/build_esquemas.py --check > esquemas.log 2>&1; e=$?
+          cat esquemas.log
+          exit $(( r | e ))
+
       - name: Prueba del cliente DuckDB (registro de vistas sin navegador)
         run: |
           set +e
