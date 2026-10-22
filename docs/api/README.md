@@ -335,8 +335,10 @@ guarda el release que estás usando.
 - No hay **servidor DuckDB compartido** (Quack): la receta está en
   [`servidor/README.md`](servidor/README.md), sin desplegar. Implica una máquina,
   un certificado y un costo mensual.
-- **No hay una licencia de datos verificada** (`DATA_LICENSE.md`): los 86
-  recursos declaran `pendiente`, no MIT. La MIT es del código.
+- **La licencia de datos está verificada por fuente** (`DATA_LICENSE.md`): CMF,
+  BCCh y SPensiones autorizan la republicación citándolas, y cada objeto publica
+  su `atribucion` en `catalog.json` y su `sources[].sif_cita` en el Data Package.
+  La MIT es del código, no de los datos.
 - La **misma consulta en R y en JavaScript** existe como ejemplo
   (`examples/`), pero sólo Python tiene cliente propio: R y JavaScript usan
   DuckDB directamente.

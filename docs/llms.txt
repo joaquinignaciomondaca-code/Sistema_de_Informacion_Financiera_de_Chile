@@ -11,7 +11,7 @@ Base: `https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Finan
 
 ## Contrato
 
-- [catalog.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/catalog.json): los 90 objetos con `id`, `sector`, `estado` (`publicado` o `vacio`), `filas`, `bytes`, `primaryKey`, `corte` y las rutas absolutas a sus esquemas y particiones. Es el punto de partida.
+- [catalog.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/catalog.json): los 90 objetos con `id`, `sector`, `estado` (`publicado` o `vacio`), `filas`, `bytes`, `primaryKey`, `corte`, `fuente` y `atribucion` (la cita que exige cada organismo), y las rutas absolutas a sus esquemas y particiones. Es el punto de partida.
 - [openapi.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/openapi.json): 11 rutas GET, todas archivos estáticos. No existe `/query`.
 - [datapackage.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/datapackage.json): los 86 objetos con datos como Data Package (Frictionless), con `bytes` y `sha256` por archivo.
 - [reconciliacion.csv](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv): nombre del objeto, familia y fuente en el sitio.
@@ -48,7 +48,7 @@ es lo mismo, con menos piezas.
 ## Límites
 
 - Best effort, sin SLA; los datos son de la CMF y de otros organismos públicos y se republican normalizados.
-- La licencia de datos está pendiente (`DATA_LICENSE.md`); el código es MIT.
+- Las tres fuentes autorizan la republicación citándolas; cada objeto declara su cita en `api/v1/catalog.json` (`atribucion`). Condiciones y datos personales en `DATA_LICENSE.md` y `PRIVACIDAD.md`; el código es MIT.
 - No hay SQL arbitrario por HTTP: los resultados publicados son los de las 156 consultas del catálogo, y cualquier otra consulta la ejecuta tu motor sobre los Parquet. Un servidor DuckDB compartido (Quack) está documentado pero **no desplegado**: implica una máquina, un certificado y un costo que este proyecto estático no tiene.
 
 ## Más

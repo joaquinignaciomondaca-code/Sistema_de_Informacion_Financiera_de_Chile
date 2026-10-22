@@ -21,8 +21,9 @@ Reglas:
     tener ninguna.
   * **Cada hash se calcula del archivo**, y su conjunto produce el
     `data_release`. Nada de fechas inventadas.
-  * **Ningún recurso declara una licencia que no esté comprobada**: los datos
-    son de terceros y `DATA_LICENSE.md` los deja en `pendiente`.
+  * **Cada recurso declara su fuente y su cita**, y ningún recurso afirma una
+    licencia que no esté comprobada: el estado y el texto salen de
+    `pipelines/api/fuentes.py`, que recoge el documento vigente de cada fuente.
 
 Genera `docs/api/v1/datapackage.json`.
 
@@ -37,7 +38,6 @@ import csv
 import hashlib
 import json
 import os
-import re
 import sys
 from pathlib import Path
 
@@ -48,6 +48,7 @@ V1 = API / "v1"
 sys.path.insert(0, str(RAIZ / "scripts"))
 
 import audit_consultas_sugeridas as ac  # noqa: E402
+from pipelines.api import fuentes as F  # noqa: E402
 from pipelines.api import vistas as V  # noqa: E402
 
 DESTINO = V1 / "datapackage.json"
@@ -78,12 +79,6 @@ TIPOS = {
     "TIMESTAMPTZ": "datetime",
 }
 
-FUENTES = {
-    "CMF": ("CMF — Comisión para el Mercado Financiero", "https://www.cmfchile.cl"),
-    "BCCh": ("BCCh — Banco Central de Chile", "https://si3.bcentral.cl"),
-    "SPensiones": ("SPensiones — Superintendencia de Pensiones", "https://www.spensiones.cl"),
-    "SUSESO": ("SUSESO — Superintendencia de Seguridad Social", "https://www.suseso.cl"),
-}
 
 
 def _url(ruta: Path) -> str:
@@ -101,21 +96,6 @@ def _url(ruta: Path) -> str:
 
 def _licencia() -> str:
     return f"{REPO}/blob/main/DATA_LICENSE.md"
-
-
-def agencias(origen: str) -> list[str]:
-    """Las fuentes que menciona el campo `origen` del manifiesto."""
-    dicho = origen.lower()
-    fuera = []
-    if "cmf" in dicho or "mercado financiero" in dicho:
-        fuera.append("CMF")
-    if "banco central" in dicho or "bcentral" in dicho:
-        fuera.append("BCCh")
-    if "pensiones" in dicho:
-        fuera.append("SPensiones")
-    if "suseso" in dicho or "seguridad social" in dicho:
-        fuera.append("SUSESO")
-    return fuera
 
 
 def sha256(ruta: Path) -> str:
@@ -184,12 +164,14 @@ def construir() -> dict:
 
         recon = reconciliacion.get(nombre, {})
         tabla = manifiesto.get(info.get("manifest_id") or "", {})
-        origen = tabla.get("origen", "")
-        urls = re.findall(r"https?://[^\s,)»]+", origen)
-        fuentes = [
-            {"title": FUENTES[a][0], "path": urls[0] if urls else FUENTES[a][1], "sif_estado": "pendiente"}
-            for a in agencias(origen)
-        ] or [{"title": "Origen no declarado", "sif_estado": "pendiente"}]
+        atribucion = F.atribucion_de(info.get("sector"), nombre)
+        fuentes = [{
+            "title": atribucion["titulo"],
+            "path": atribucion["url_terminos"],
+            "sif_estado": atribucion["estado"],
+            "sif_cita": atribucion["cita"],
+            "sif_documento": atribucion["documento"],
+        }]
 
         recurso = {
             "profile": "tabular-data-resource",
@@ -204,7 +186,10 @@ def construir() -> dict:
             "hash": hashlib.sha256("".join(p["sha256"] for p in particiones).encode()).hexdigest(),
             "schema": {"fields": campos_de(info["columnas"])},
             "sources": fuentes,
-            "licenses": [{"name": "Uso condicionado por la fuente", "path": _licencia()}],
+            "licenses": [{
+                "name": f"Datos de {atribucion['fuente']}: citar la fuente",
+                "path": _licencia(),
+            }],
             "sif": {
                 # Decisión D2: el identificador del recurso es el nombre del
                 # objeto del contrato (el que se escribe en el FROM). Los
@@ -224,7 +209,11 @@ def construir() -> dict:
                 "corte": tabla.get("corte"),
                 "ultima_actualizacion": tabla.get("ultima_actualizacion"),
                 "extracted_at": (tabla.get("metadatos") or {}).get("fecha_extraccion"),
-                "licencia_estado": "pendiente",
+                "licencia_estado": atribucion["estado"],
+                "atribucion": atribucion["cita"],
+                "url_terminos": atribucion["url_terminos"],
+                "adaptacion": atribucion["adaptacion"],
+                "nota_adaptacion": atribucion.get("nota_adaptacion"),
                 "api_version": API_VERSION,
             },
         }
@@ -258,8 +247,12 @@ def construir() -> dict:
         "version": VERSION_CONTRATO,
         "created": f"{fecha_datos}T00:00:00",
         "homepage": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile",
-        "licenses": [{"name": "Datos: uso condicionado por la fuente · Código: MIT", "path": _licencia()}],
-        "sources": [{"title": t, "path": u} for t, u in FUENTES.values()],
+        "licenses": [{"name": "Datos de fuentes públicas, con cita obligatoria · Código: MIT", "path": _licencia()}],
+        "sources": [
+            {"title": f["titulo"], "path": f["url_terminos"], "sif_estado": f["estado"],
+             "sif_documento": f["documento"]}
+            for f in F.FUENTES.values()
+        ],
         "sif": {
             "api_version": API_VERSION,
             "identificador": {

@@ -129,9 +129,54 @@
         <p class="creditos-autor-rol">Proyecto de datos de punta a punta: extracción desde las fuentes oficiales,
         validación estadística y contable, publicación incremental, automatización y producto web.</p>
         <p class="creditos-autor-enlaces">
-          ${enlace(CREDITOS.github, "GitHub")} · ${enlace(CREDITOS.linkedin, "LinkedIn")}
+          ${enlace(CREDITOS.github, "GitHub")} · ${enlace(CREDITOS.linkedin, "LinkedIn")} ·
+          <a href="privacidad.html">Privacidad y datos personales</a>
         </p>
       </div>
+    `;
+  }
+
+  /* Fuentes, cita y condiciones de uso. Las tres fuentes autorizan la
+   * republicación con una sola condición: mencionarlas. La restricción de «uso
+   * exclusivo para fines de investigación» que pesa sobre la Base de Cartera de
+   * los Fondos de Pensiones no aparece aquí porque esa base no se publica. */
+  const FUENTES = [
+    {
+      sigla: "CMF",
+      nombre: "Comisión para el Mercado Financiero",
+      cita: "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+      url: "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
+    },
+    {
+      sigla: "BCCh",
+      nombre: "Banco Central de Chile",
+      cita: "Fuente: Banco Central de Chile (BDE). La información es propiedad del Banco Central de Chile.",
+      url: "https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm"
+    },
+    {
+      sigla: "SPensiones",
+      nombre: "Superintendencia de Pensiones",
+      cita: "Fuente: Superintendencia de Pensiones. Reproducción autorizada citando la fuente.",
+      url: "https://www.spensiones.cl/portal/institucional/594/w3-article-5885.html"
+    }
+  ];
+
+  function htmlFuentes() {
+    return `
+      <section class="dl-fuentes" aria-labelledby="dl-fuentes-titulo">
+        <h3 id="dl-fuentes-titulo">Fuentes y condiciones de uso</h3>
+        <p class="dl-uso-nota">Cada conjunto declara su fuente y su cita en el catálogo de descargas.
+        Las tres fuentes autorizan la reproducción citándolas; ninguna exige autorización escrita.</p>
+        <ul class="dl-fuentes-lista">
+          ${FUENTES.map((f) => `<li>
+            <a href="${escapar(f.url)}" target="_blank" rel="noopener"><strong>${escapar(f.sigla)}</strong></a>
+            · ${escapar(f.nombre)}
+            <span class="dl-fuentes-cita">${escapar(f.cita)}</span>
+          </li>`).join("")}
+        </ul>
+        <p class="dl-uso-pie">Los datos personales que contienen algunos registros se tratan conforme a la
+        Ley 21.719: <a href="privacidad.html">aviso de privacidad y derechos</a>.</p>
+      </section>
     `;
   }
 
@@ -152,6 +197,7 @@
         ${enlace(CREDITOS.github, "GitHub")}. Las instrucciones para agentes están en
         <button type="button" class="dl-uso-enlace" data-ir-uso="agentes">la sub-pestaña «Para agentes de IA»</button>.
       </p>
+      ${htmlFuentes()}
     `;
   }
 
