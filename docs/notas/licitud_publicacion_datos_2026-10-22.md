@@ -115,6 +115,24 @@ La ley entra en vigencia el **1 de diciembre de 2026**, es decir en 40 días. Ha
 - **Verificación nominal externa.** El registro público de solicitantes de certificados de cumplimiento de obligaciones laborales y previsionales de la Dirección del Trabajo (formulario F30-1, año 2024) publica RUT con el nombre de la persona o empresa solicitante. Al menos uno de los RUT suprimidos aparece ahí como **persona natural identificada con nombres y apellidos**, con el mismo dígito verificador que calcula el propio pipeline. Por minimización no se reproduce aquí el nombre ni el RUT, ni se incorporan a ninguna tabla.
 - **Conclusión.** La regla no suprime «probables personas» en abstracto: suprime personas naturales reales, cuya identidad el proyecto puede verificar pero no publica. El criterio se mantiene sin cambios; cualquier modificación es una decisión de publicación que corresponde al responsable del repositorio.
 
+### 3.4 ¿Por qué la Dirección del Trabajo y la CMF publican lo que el proyecto omite?
+
+La asimetría que se percibe —un servicio público publica el RUT con nombre y apellido, el proyecto lo suprime— no está en el permiso, sino en el rol y en la finalidad. Son tres diferencias acumuladas.
+
+| Dimensión | Dirección del Trabajo | CMF | Este proyecto |
+|---|---|---|---|
+| Mandato | El registro existe porque el art. 183-C del Código del Trabajo obliga a mantenerlo público | Publica los informes IFRS porque es la supervisora y los fondos deben remitirlos | Ninguno: hace un tratamiento nuevo de datos ajenos |
+| Qué asocia al RUT | «Solicitó un certificado laboral»: acto administrativo, sin contenido financiero | El RUT del emisor, sin nombre, en una página HTML por fondo y trimestre | RUT + instrumento + monto + fondo + trimestre: un perfil financiero indexado |
+| Deber que carga | Responde por su registro | Responde por su registro | Responde por su propio tratamiento (art. 14 bis de la Ley 21.719, que alcanza a los datos resultantes de organizar o combinar fuentes públicas) |
+
+**Qué permite la ley vigente.** El artículo 4 de la Ley 19.628 exige ley o consentimiento, pero su inciso quinto exime de autorización el tratamiento de datos provenientes de fuentes accesibles al público «cuando sean de carácter económico, financiero, bancario o comercial». Eso cubre, en principio, la cartera de un fondo publicada por la CMF. En consecuencia: **publicar no sería hoy una infracción automática, y suprimir tampoco es una obligación legal**; es una decisión de prudencia.
+
+**Qué cambia el 1 de diciembre de 2026.** La Ley 21.719 sustituye esa lógica de exenciones por un régimen de principios: base de licitud (art. 13), finalidad, minimización (art. 14 quáter), transparencia (art. 14 ter) y seguridad. La base invocable pasaría a ser el interés legítimo, que exige ponderación y un aviso publicado. El régimen sancionatorio (arts. 34 bis a 35) fija hasta 5.000 UTM para infracciones leves, 10.000 para las graves —entre ellas tratar sin base de licitud— y 20.000 para las gravísimas.
+
+**Señal legislativa.** El Congreso ha presentado varios proyectos para restringir la publicación de datos de deudas de carácter económico o financiero (boletines 13897-03, 13695-03, 12924-03, 11841-03 y 11716-07). Ninguno es ley, pero la dirección es hacia restringir, no hacia ampliar.
+
+**Conclusión.** Publicar los RUT de personas naturales que actúan en el mercado por su rol —corredores de bolsa, tasadores, representantes de fintech— es defendible: el registro público existe precisamente para informar al mercado sobre ellas. Publicar los de contrapartes de pagarés y mutuos hipotecarios es lo discutible, y tampoco aporta al análisis: `emisor_tipo` conserva el conteo y el monto de esas filas.
+
 ## 4. Los cinco defectos concretos
 
 1. **La atribución no está implementada en el contrato.** `catalog.json` no tiene campo de fuente en ninguno de los 90 objetos (`fuente`, `url_fuente` o `norma`), y `datapackage.json` declara una licencia genérica. La condición de la CMF y del BCCh es «mencionar la fuente»: hoy solo se cumple en texto de la web, no en el dato que consume una API o un agente.
