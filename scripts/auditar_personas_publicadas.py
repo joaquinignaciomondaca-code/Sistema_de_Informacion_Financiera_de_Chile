@@ -127,26 +127,29 @@ def main() -> int:
     # --- 4 · Cartera nacional de fondos de inversión -----------------------
     parquet(con, str(DOCS / "outputs/fi/cartera_nacional/*.parquet"), "cartera_fi")
     cols = columnas(con, "cartera_fi")
-    faltantes_control = [c for c in ("emisor_tipo", "emisor_id", "rut_omitido_por_ley") if c not in cols]
+    faltantes_control = [c for c in ("emisor_tipo", "rut_omitido_por_ley") if c not in cols]
     if faltantes_control:
         fallos.append(
             "cartera_fi: faltan " + ", ".join(faltantes_control) +
             "; el criterio de supresión deja de ser auditable y el emisor deja de ser seguible"
         )
     else:
-        suprimidas, publicadas, con_id = con.execute(
+        suprimidas, publicadas, con_seudonimo, con_rut = con.execute(
             """SELECT
                  count(*) FILTER (WHERE rut_omitido_por_ley),
                  count(*) FILTER (WHERE NOT rut_omitido_por_ley
                                     AND emisor_tipo = 'persona_natural_probable'),
-                 count(*) FILTER (WHERE emisor_id IS NOT NULL)
+                 count(*) FILTER (WHERE rut_emisor LIKE 'EMI-%'),
+                 count(*) FILTER (WHERE rut_emisor NOT LIKE 'EMI-%' AND rut_emisor IS NOT NULL)
                FROM cartera_fi"""
         ).fetchone()
-        # Las dos caras de la misma moneda: si la bandera dice «omitido», el RUT
-        # no puede estar; si dice «publicado», el RUT tiene que estar.
+        # Una sola columna con dos contenidos: el RUT o el seudónimo. La bandera
+        # tiene que decir cuál es, y el seudónimo tiene que ser exactamente el que
+        # se emitió (prefijo EMI-), para que nadie lo confunda con un RUT.
         inconsistentes = con.execute(
             """SELECT count(*) FROM cartera_fi
-               WHERE (rut_omitido_por_ley AND rut_emisor IS NOT NULL)
+               WHERE (rut_omitido_por_ley AND (rut_emisor IS NULL OR rut_emisor NOT LIKE 'EMI-%'))
+                  OR (NOT rut_omitido_por_ley AND rut_emisor LIKE 'EMI-%')
                   OR (NOT rut_omitido_por_ley AND emisor_tipo <> 'sin_rut_informado'
                       AND rut_emisor IS NULL)
                   OR (rut_omitido_por_ley AND emisor_tipo <> 'persona_natural_probable')"""
@@ -155,15 +158,11 @@ def main() -> int:
             fallos.append(
                 f"cartera_fi: {inconsistentes} filas donde rut_omitido_por_ley no coincide con rut_emisor"
             )
-        # El seudónimo reemplaza al RUT omitido y sólo a él: en la persona jurídica
-        # la clave es el RUT publicado, así que un emisor_id ahí sería redundante.
-        desalineados = con.execute(
-            """SELECT count(*) FROM cartera_fi
-               WHERE (emisor_id IS NOT NULL) <> rut_omitido_por_ley"""
-        ).fetchone()[0]
-        if desalineados:
+        # El esquema anterior publicaba el seudónimo en una columna aparte; si
+        # reaparece, hay dos versiones de la regla circulando a la vez.
+        if "emisor_id" in cols:
             fallos.append(
-                f"cartera_fi: {desalineados} filas donde emisor_id no coincide con rut_omitido_por_ley"
+                "cartera_fi: conserva la columna emisor_id; el identificador va en rut_emisor"
             )
         if suprimidas and publicadas:
             fallos.append(
@@ -172,12 +171,12 @@ def main() -> int:
             )
         modo = "RUT omitido" if suprimidas else "RUT publicado"
         notas.append(
-            f"cartera_fi: {suprimidas:,} filas de persona natural con RUT omitido y emisor_id "
-            f"({con_id:,} seudónimos); {publicadas:,} con RUT publicado (modo {modo}); las "
-            "personas jurídicas conservan su RUT y no llevan seudónimo"
+            f"cartera_fi: {suprimidas:,} filas de persona natural con seudónimo EMI- en rut_emisor "
+            f"({con_seudonimo:,} filas) y {con_rut:,} con el RUT de una persona jurídica "
+            f"({publicadas:,} personas naturales con RUT publicado, modo {modo})"
         )
         texto_privacidad = PRIVACIDAD.read_text(encoding="utf-8")
-        for termino in ("emisor_id", "rut_omitido_por_ley"):
+        for termino in ("rut_omitido_por_ley", "EMI-"):
             if termino not in texto_privacidad:
                 fallos.append(f"aviso: el aviso de privacidad no menciona {termino}")
     if any("nombre" in c.lower() and "emisor" in c.lower() for c in cols):

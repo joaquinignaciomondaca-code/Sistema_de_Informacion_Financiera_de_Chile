@@ -41,37 +41,36 @@ tres conjuntos con datos de personas naturales:
   contra registros públicos, el criterio alcanza a personas naturales
   identificables, no a entidades.
 
-### 2.1 Seguimiento del emisor sin publicar su RUT
+### 2.1 Una sola columna de identificador
 
-Suprimir el RUT sin reemplazo habría roto el análisis: el nemotécnico identifica
-el instrumento, no al emisor, y 11.629 de los 31.215 emisores suprimidos usan más
-de un nemotécnico. Por eso la tabla publica dos columnas que acompañan a
-`rut_emisor`:
+`rut_emisor` no se vacía: se sustituye. Tiene dos contenidos posibles y una
+columna que dice cuál es:
 
-| Columna | Tipo | Qué contiene |
+| `rut_emisor` | `rut_omitido_por_ley` | Cuándo |
 |---|---|---|
-| `rut_omitido_por_ley` | booleano | Verdadero cuando el RUT de esa fila se retiró por esta regla; falso cuando el RUT se publica tal cual |
-| `emisor_id` | texto | Seudónimo estable (`EMI-…`) que **reemplaza al RUT omitido**: igual para la misma persona en cualquier trimestre y fondo, permite sumar su exposición, seguir su serie y medir concentración sin publicar su RUT. Es **nulo cuando el RUT se publica**, es decir en todas las personas jurídicas: ahí el RUT ya es la clave |
+| El RUT del emisor (cuerpo, sin dígito verificador) | falso | El emisor es una persona jurídica |
+| Un seudónimo estable con prefijo `EMI-` | verdadero | El emisor es una persona natural: su RUT no se publica |
+| Vacío | falso | La fuente no informa RUT |
 
-Las dos columnas se complementan: `emisor_id` no es nulo exactamente cuando
-`rut_omitido_por_ley` es verdadero (202.835 filas, 31.215 seudónimos). Para
-agrupar por emisor sin mirar de qué tipo es, basta `COALESCE(rut_emisor, emisor_id)`;
-la compuerta de privacidad verifica esa correspondencia.
+El seudónimo es el mismo para la misma persona en cualquier trimestre y fondo, así
+que se puede sumar su exposición, seguir su serie y medir concentración sin
+revelar su identidad. Agrupar por emisor, sea del tipo que sea, es una sola línea:
+`GROUP BY rut_emisor`.
 
-`emisor_id` es un seudónimo, no una anonimización: el vínculo con el RUT existe en
+El prefijo `EMI-` no es decorativo: evita que un seudónimo se confunda con un RUT
+al leer la columna, al hacer un `JOIN` o al exportar a CSV.
+
+El seudónimo no es una anonimización: el vínculo con el RUT vive en
 una tabla privada que no se publica, y el artículo 2 letra k de la Ley 21.719
 reserva la palabra «anonimización» para el procedimiento irreversible. Por eso la
 bandera se llama `rut_omitido_por_ley` y no `anonimizado_por_ley`.
 
-**Cambiar de criterio es una decisión de configuración, no de código.** La variable
-de entorno `SIF_PUBLICAR_RUT_EMISOR` admite dos valores: `suprimir` (por omisión,
-el modo descrito aquí) y `publicar`, que repone el RUT de las personas naturales y
-deja `rut_omitido_por_ley` en falso. La compuerta `scripts/auditar_personas_publicadas.py`
-verifica que la bandera y el contenido de `rut_emisor` coincidan, y rechaza una
-publicación que mezcle los dos modos.
-
-Las reglas viven en `pipelines/auto/privacidad.py` y se aplican antes de
-publicar; `scripts/enmascarar_identificadores.py` las aplica a lo ya publicado.
+**Cambiar de criterio es configuración, no código.** La variable de entorno
+`SIF_PUBLICAR_RUT_EMISOR` admite `suprimir` (por omisión, lo descrito aquí) y
+`publicar`, que repone el RUT de las personas naturales y deja la bandera en
+falso. La compuerta `scripts/auditar_personas_publicadas.py` verifica que la
+bandera y el contenido de `rut_emisor` coincidan, y rechaza una publicación que
+mezcle los dos modos.
 
 ## 3. Base de licitud
 

@@ -8,11 +8,12 @@
 
 Dos piezas del plan se ejecutaron sin cambiar la regla de publicación:
 
-1. **`emisor_id`** — seudónimo estable (`EMI-…`), calculado desde el RUT original, que reemplaza al
-   RUT omitido y permite seguir a la misma contraparte entre trimestres y fondos sin publicarlo.
-   Resuelve el problema analítico que motivaba publicar el RUT. Es nulo en las personas jurídicas,
-   que conservan su RUT publicado como clave.
-2. **`rut_omitido_por_ley`** — booleano por fila: verdadero si el RUT se retiró, falso si se publica.
+1. **Una sola columna de identificador** — `rut_emisor` conserva el RUT de las personas jurídicas
+   y, en lugar del RUT de una persona natural, publica un seudónimo estable `EMI-…` derivado de él.
+   Permite seguir a esa contraparte entre trimestres y fondos sin publicar su identidad, y resuelve
+   el problema analítico que motivaba publicar el RUT.
+2. **`rut_omitido_por_ley`** — booleano por fila: verdadero si `rut_emisor` trae el seudónimo, falso
+   si trae el RUT.
 3. **Interruptor de publicación** — `SIF_PUBLICAR_RUT_EMISOR=publicar` repone los RUT; el valor por
    omisión (`suprimir`) mantiene la regla. La compuerta de privacidad rechaza una publicación que
    mezcle los dos modos.
@@ -129,8 +130,8 @@ por las gravísimas. El riesgo no es teórico, pero recae sólo si la ponderaci�
 insuficiente, no por el hecho de publicar.
 
 **3.6. «El interés legítimo exige ponderación, no basta invocarlo.»**
-Cierto y es el nudo del asunto: finalidad legítima (sí), necesidad (discutible: el `emisor_id`
-seudónimo cubre casi todo el análisis) y proporcionalidad (la más débil). La publicación se
+Cierto y es el nudo del asunto: finalidad legítima (sí), necesidad (discutible: un seudónimo
+estable en `rut_emisor` cubre casi todo el análisis) y proporcionalidad (la más débil). La publicación se
 sostiene mejor si se acepta que la necesidad es parcial y se argumenta sobre interés público.
 
 ---
@@ -208,7 +209,7 @@ La última fila es la que no tiene solución técnica: el RUT, por definición, 
 5. ¿El deber del art. 14 bis —datos resultantes de organizar o combinar fuentes públicas— se
    satisface con medidas de seguridad, o exige no publicar?
 6. ¿Es preferible publicar el RUT con el nombre del emisor ausente, o un seudónimo estable
-   (`emisor_id`) que conserva todo el análisis y elimina el riesgo? ¿Qué se pierde en cada caso?
+   (un seudónimo estable en `rut_emisor`) que conserva todo el análisis y elimina el riesgo? ¿Qué se pierde en cada caso?
 
 ---
 
