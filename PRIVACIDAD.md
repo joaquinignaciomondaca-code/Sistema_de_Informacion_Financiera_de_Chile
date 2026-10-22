@@ -65,6 +65,14 @@ una tabla privada que no se publica, y el artículo 2 letra k de la Ley 21.719
 reserva la palabra «anonimización» para el procedimiento irreversible. Por eso la
 bandera se llama `rut_omitido_por_ley` y no `anonimizado_por_ley`.
 
+**El criterio cubre las 90 tablas, la columna sólo existe donde hay algo que
+omitir.** La compuerta aplica `es_probable_persona_natural` a las 94 columnas de
+RUT publicadas y falla si aparece un objeto que publique RUT de personas sin
+declararlo; los objetos donde eso es deliberado están en
+`privacidad.OBJETOS_CON_RUT_DE_PERSONAS` con su fundamento (RPSF y registro de
+corredores). `rut_omitido_por_ley` no se replica en las demás tablas porque sería
+constante en falso: una columna que ocupa espacio y no informa nada.
+
 **Cambiar de criterio es configuración, no código.** La variable de entorno
 `SIF_PUBLICAR_RUT_EMISOR` admite `suprimir` (por omisión, lo descrito aquí) y
 `publicar`, que repone el RUT de las personas naturales y deja la bandera en
