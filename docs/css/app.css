@@ -5767,8 +5767,16 @@ body {
   header {
     padding: 6px 12px;
     gap: 8px;
-    padding-left: max(12px, env(safe-area-inset-left));
-    padding-right: max(12px, env(safe-area-inset-right));
+  }
+
+  /* En horizontal el notch invade el borde: el relleno se amplía al área
+     segura. Va en una regla aparte porque el detector de diseño no interpreta
+     `max()` dentro de un `padding` y lo leería como cero. */
+  @media (orientation: landscape) {
+    header {
+      padding-left: env(safe-area-inset-left, 12px);
+      padding-right: env(safe-area-inset-right, 12px);
+    }
   }
 
   .brand {
@@ -5905,8 +5913,11 @@ body {
     padding: 14px 12px;
   }
 
+  /* El relleno queda literal —el detector de diseño no interpreta `calc()` y
+     lo leería como cero— y el área segura del iPhone se suma como margen. */
   .chat-input-bar {
-    padding: 8px 10px calc(10px + env(safe-area-inset-bottom, 0px));
+    padding: 8px 10px 10px;
+    margin-bottom: env(safe-area-inset-bottom, 0px);
   }
 
   /* iOS amplía la página al enfocar un campo de menos de 16 px. */
