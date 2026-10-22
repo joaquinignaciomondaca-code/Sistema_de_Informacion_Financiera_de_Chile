@@ -8892,8 +8892,8 @@
       "corte": "2009-03 a 2026-06 · 70 cierres",
       "frescura": "Serie de la fuente CMF; valores crudos, no validación integral",
       "modo": "Actions: descarga histórica incremental y publicación automática al completarse",
-      "ultimaActualizacion": "2026-10-20",
-      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39380070665. 28/32 RUT del catálogo con datos en la fuente. Incluye cuentas repetidas y valores no enteros; no convertir, deduplicar ni sumar sin criterio. No cotejo integral de estados.",
+      "ultimaActualizacion": "2026-10-22",
+      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39726317201. 28/32 RUT del catálogo con datos en la fuente. Incluye cuentas repetidas y valores no enteros; no convertir, deduplicar ni sumar sin criterio. No cotejo integral de estados.",
       "columnas": [
         {
           "name": "periodo",
@@ -8913,7 +8913,7 @@
           "name": "nombre_reportado",
           "type": "VARCHAR",
           "role": "Dimensión",
-          "significado": "Nombre reportado por CMF en ese periodo.",
+          "significado": "Nombre reportado por CMF en ese período.",
           "contable": "No aplica"
         },
         {
@@ -8997,7 +8997,7 @@
           "name": "repeticion_contexto",
           "type": "BIGINT",
           "role": "Dimensión",
-          "significado": "Ordinal de la misma etiqueta dentro del estado; se conserva sin sumar. En resultados, \"Ganancia (pérdida)\" aparece en ERFG/ERNG con ordinal 1 y 2 y otra vez al inicio de ERI, con el mismo valor: para la utilidad del periodo usar estado ERFG/ERNG y ordinal 1.",
+          "significado": "Ordinal de la misma etiqueta dentro del estado; se conserva sin sumar. En resultados, \"Ganancia (pérdida)\" aparece en ERFG/ERNG con ordinal 1 y 2 y otra vez al inicio de ERI, con el mismo valor: para la utilidad del período usar estado ERFG/ERNG y ordinal 1.",
           "contable": "No aplica"
         },
         {
@@ -9042,8 +9042,8 @@
       "corte": "2009-03 a 2026-06 · 70 cierres",
       "frescura": "Serie de la fuente CMF; valores crudos, no validación integral",
       "modo": "Actions: descarga histórica incremental y publicación automática al completarse",
-      "ultimaActualizacion": "2026-10-20",
-      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39380070665. 28/32 RUT del catálogo con datos en la fuente. Incluye cuentas repetidas y valores no enteros; no convertir, deduplicar ni sumar sin criterio. No cotejo integral de estados.",
+      "ultimaActualizacion": "2026-10-22",
+      "origen": "CMF https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php; corrida Actions 39726317201. 28/32 RUT del catálogo con datos en la fuente. Incluye cuentas repetidas y valores no enteros; no convertir, deduplicar ni sumar sin criterio. No cotejo integral de estados.",
       "columnas": [
         {
           "name": "periodo",
@@ -9063,7 +9063,7 @@
           "name": "nombre_reportado",
           "type": "VARCHAR",
           "role": "Dimensión",
-          "significado": "Nombre reportado por CMF en ese periodo.",
+          "significado": "Nombre reportado por CMF en ese período.",
           "contable": "No aplica"
         },
         {
@@ -9147,7 +9147,7 @@
           "name": "repeticion_contexto",
           "type": "BIGINT",
           "role": "Dimensión",
-          "significado": "Ordinal de la misma etiqueta dentro del estado; se conserva sin sumar. En resultados, \"Ganancia (pérdida)\" aparece en ERFG/ERNG con ordinal 1 y 2 y otra vez al inicio de ERI, con el mismo valor: para la utilidad del periodo usar estado ERFG/ERNG y ordinal 1.",
+          "significado": "Ordinal de la misma etiqueta dentro del estado; se conserva sin sumar. En resultados, \"Ganancia (pérdida)\" aparece en ERFG/ERNG con ordinal 1 y 2 y otra vez al inicio de ERI, con el mismo valor: para la utilidad del período usar estado ERFG/ERNG y ordinal 1.",
           "contable": "No aplica"
         },
         {
@@ -10641,9 +10641,9 @@
           "name": "codigo_cmf",
           "type": "VARCHAR",
           "role": "Dimensión",
-          "significado": "Código institucional asignado por la CMF.",
+          "significado": "Código institucional de la CMF. En AGF la columna está vacía: el registro RGAGF no publica ese código, que sí existe para las CCAF emisoras.",
           "contable": "No aplica",
-          "interpretacion": "Identificador técnico en los repositorios de información financiera de la CMF."
+          "interpretacion": "Identificador técnico en los repositorios de información financiera de la CMF; sin dato para las AGF."
         },
         {
           "name": "estado_vigencia",

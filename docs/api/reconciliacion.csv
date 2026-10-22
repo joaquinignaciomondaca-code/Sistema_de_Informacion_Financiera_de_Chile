@@ -1,22 +1,22 @@
 objeto,nombre_visible,manifest_id,puente,nivel,estado,motivo,deriva_de,particiones,filas,bytes,corte,ultima_actualizacion
 afp_lista_entidades,afp.lista_administradoras,afp_maestro,alias,registro,publicado,,,1,7,1825,Lista vigente,2026-09-28
-agf_balance,agf.balance,agf_balance,directo,secundario,publicado,,,17,71423,563363,2010-06 a 2026-06,2026-10-19
+agf_balance,agf.balance,agf_balance,directo,secundario,publicado,,,17,71423,563363,2010-06 a 2026-06,2026-10-22
 agf_lista_entidades,agf.maestro,agf_maestro,alias,secundario,publicado,,,1,72,17065,Oficial CMF 2026,2026-09-23
-agf_resultados,agf.resultados,agf_resultados,directo,secundario,publicado,,,17,58216,444264,2010-06 a 2026-06,2026-10-19
+agf_resultados,agf.resultados,agf_resultados,directo,secundario,publicado,,,17,58216,444264,2010-06 a 2026-06,2026-10-22
 bancos_balance,bancos.cmf_lineas_b1_b2_r1,bancos_cmf_lineas,origen_compartido,secundario,derivado,"vista sobre bancos_cmf_lineas con filtro familia_archivo_fuente IN ('B1', 'B2')",bancos_cmf_lineas,56,1962992,22576802,2022-01 a 2026-08,2026-10-01
 bancos_lista_entidades,bancos.lista_instituciones,bancos_maestro,alias,secundario,publicado,,,1,41,4668,Códigos históricos y vigentes,2026-09-28
 bancos_resultados,bancos.cmf_lineas_b1_b2_r1,bancos_cmf_lineas,origen_compartido,secundario,derivado,vista sobre bancos_cmf_lineas con filtro familia_archivo_fuente = 'R1',bancos_cmf_lineas,56,1962992,22576802,2022-01 a 2026-08,2026-10-01
-ccaf_balance,ccaf.balance,ccaf_balance,directo,archivo,publicado,,,17,8043,215099,2010-06 a 2026-06,2026-10-19
+ccaf_balance,ccaf.balance,ccaf_balance,directo,archivo,publicado,,,17,8043,215099,2010-06 a 2026-06,2026-10-22
 ccaf_lista_entidades,ccaf.maestro,ccaf_maestro,alias,archivo,publicado,,,1,6,17300,Lista vigente,2026-09-28
-ccaf_resultados,ccaf.resultados,ccaf_resultados,directo,archivo,publicado,,,17,5506,192163,2010-06 a 2026-06,2026-10-19
+ccaf_resultados,ccaf.resultados,ccaf_resultados,directo,archivo,publicado,,,17,5506,192163,2010-06 a 2026-06,2026-10-22
 cooperativas_lista_entidades,cooperativas.lista_entidades,cooperativas_lista_entidades,directo,registro,publicado,,,1,7,4324,Lista vigente,2026-09-29
 corredoras_bolsa_balance,corredoras.balance,corredoras_bolsa_balance,directo,secundario,publicado,,,17,107976,649512,2010-12 a 2026-06,2026-10-19
 corredoras_bolsa_lista_entidades,corredoras.maestro,corredoras_bolsa_maestro,alias,secundario,publicado,,,1,120,9358,2014-03 a 2026-06,2026-09-23
 corredoras_bolsa_lista_entidades_registro,corredoras.lista_entidades_registro,corredoras_bolsa_lista_entidades_registro,directo,secundario,publicado,,,1,120,14484,2014-03 a 2026-06,2026-09-29
 corredoras_bolsa_resultados,corredoras.resultados,corredoras_bolsa_resultados,directo,secundario,publicado,,,17,77705,520983,2010-12 a 2026-06,2026-10-19
-factoring_leasing_balance,factoring_leasing.balance_serie_ifrs_cmf,factoring_leasing_balance_serie_ifrs_cmf,alias,archivo,publicado,,,1,30046,541040,2009-03 a 2026-06,2026-10-20
+factoring_leasing_balance,factoring_leasing.balance_serie_ifrs_cmf,factoring_leasing_balance_serie_ifrs_cmf,alias,archivo,publicado,,,1,30046,541040,2009-03 a 2026-06,2026-10-22
 factoring_leasing_lista_entidades,factoring_leasing.lista_entidades,factoring_leasing_maestro,alias,archivo,publicado,,,1,32,13989,Lista vigente,2026-09-28
-factoring_leasing_resultados,factoring_leasing.resultados_serie_ifrs_cmf,factoring_leasing_resultados_serie_ifrs_cmf,alias,archivo,publicado,,,1,22368,334635,2009-03 a 2026-06,2026-10-20
+factoring_leasing_resultados,factoring_leasing.resultados_serie_ifrs_cmf,factoring_leasing_resultados_serie_ifrs_cmf,alias,archivo,publicado,,,1,22368,334636,2009-03 a 2026-06,2026-10-22
 ffmm_balance,ffmm.balance,ffmm_balance,directo,nucleo,publicado,,,16,126256,1389152,2010-12 a 2025-12,2026-10-01
 ffmm_cartera_extranjera,ffmm.cartera_extranjera,ffmm_cartera_extranjera,directo,nucleo,publicado,,,26,1461253,25649282,2001-01 a 2026-09,2026-10-13
 ffmm_cartera_nacional,ffmm.cartera_nacional,ffmm_cartera_nacional,directo,nucleo,publicado,,,57,1590196,26094085,2022-01 a 2026-09,2026-10-13
@@ -61,9 +61,9 @@ macro_uf,macro.uf,macro_uf,directo,contexto,publicado,,,1,4677,35358,2014-01-01 
 macro_utm,macro.utm,macro_utm,directo,contexto,publicado,,,1,154,3359,2014-01-01 a 2026-10-01,2026-10-21
 patrimonios_separados_balance,patrimonios_separados.balance,patrimonios_separados_balance,directo,archivo,publicado,,,1,7962,57297,2014-12 a 2025-12 (diciembre; 2010–2013 sin datos),2026-09-28
 patrimonios_separados_lista_entidades,patrimonios.emisiones_lineas,patrimonios_separados_maestro,alias,archivo,publicado,,,1,19,7945,Lista vigente,2026-09-28
-securitizadoras_balance,securitizadoras.balance,securitizadoras_balance,directo,archivo,publicado,,,18,13679,240718,2009-12 a 2026-06,2026-10-19
+securitizadoras_balance,securitizadoras.balance,securitizadoras_balance,directo,archivo,publicado,,,18,13679,240718,2009-12 a 2026-06,2026-10-22
 securitizadoras_lista_entidades,securitizadoras.maestro,securitizadoras_maestro,alias,archivo,publicado,,,1,16,4346,2026-06,2026-09-23
-securitizadoras_resultados,securitizadoras.resultados,securitizadoras_resultados,directo,archivo,publicado,,,18,12290,225853,2009-12 a 2026-06,2026-10-19
+securitizadoras_resultados,securitizadoras.resultados,securitizadoras_resultados,directo,archivo,publicado,,,18,12290,225853,2009-12 a 2026-06,2026-10-22
 seguros_acciones,"B.2 ACCIONES DE SOCIEDADES ANÓNIMAS ABIERTAS, ACCIONES DE SOCIEDADES ANÓNIMAS CERRADAS Y CUOTAS DE FONDOS DE INVERSIÓN",seguros_acciones,directo,nucleo,publicado,,,11,109019,2892559,2016-11 a 2026-09,2026-10-21
 seguros_acciones_relevantes,"B.2 ACCIONES DE SOCIEDADES ANÓNIMAS ABIERTAS, ACCIONES DE SOCIEDADES ANÓNIMAS CERRADAS Y CUOTAS DE FONDOS DE INVERSIÓN",seguros_acciones_relevantes,directo,nucleo,derivado,proyección de seguros_acciones,seguros_acciones,11,109019,2067139,2016-11 a 2026-09,2026-10-21
 seguros_bienes_raices,B.4 BIENES RAICES,seguros_bienes_raices,directo,nucleo,publicado,,,22,760152,33571939,2024-12 a 2026-09,2026-10-21
@@ -80,11 +80,11 @@ seguros_fondos_mutuos,B.3 CUOTAS DE FONDOS MUTUOS,seguros_fondos_mutuos,directo,
 seguros_garantias_derivados,B.14 GARANTÍAS EN INSTRUMENTOS DERIVADOS,seguros_garantias_derivados,directo,nucleo,publicado,,,3,6518,181636,2024-12 a 2026-09,2026-10-21
 seguros_lista_entidades,seguros.lista_entidades,seguros_maestro,alias,nucleo,publicado,,,1,84,6746,2016-11 a 2026-09,2026-10-21
 seguros_otras_inversiones,B.6 OTRAS INVERSIONES,seguros_otras_inversiones,directo,nucleo,publicado,,,3,42494,706186,2024-12 a 2026-09,2026-10-21
-seguros_pactos,B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS,seguros_pactos,directo,nucleo,publicado,,,11,11371,627503,2016-11 a 2026-09,2026-10-21
+seguros_pactos,B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS,seguros_pactos,directo,nucleo,publicado,,,11,11371,628453,2016-11 a 2026-09,2026-10-21
 seguros_prestamos,B.12 PRÉSTAMOS,seguros_prestamos,directo,nucleo,vacio,sin particiones publicadas (la CMF aún no entrega la tabla),,0,0,0,2024-12 a 2026-09,2026-10-21
 seguros_prestamos_relevantes,B.12 PRÉSTAMOS,seguros_prestamos_relevantes,directo,nucleo,vacio,sin particiones publicadas (la CMF aún no entrega la tabla),seguros_prestamos,0,0,0,2024-12 a 2026-09,2026-10-21
 seguros_registros_tipo6,Registros tipo 6 de B.11 y B.14,seguros_registros_tipo6,directo,nucleo,publicado,,,3,66,21411,2024-12 a 2026-09,2026-10-21
-seguros_renta_fija,B.1 INSTRUMENTOS DE RENTA FIJA,seguros_renta_fija,directo,nucleo,publicado,,,22,2321911,234880788,2024-12 a 2026-09,2026-10-21
+seguros_renta_fija,B.1 INSTRUMENTOS DE RENTA FIJA,seguros_renta_fija,directo,nucleo,publicado,,,22,2321911,231963882,2024-12 a 2026-09,2026-10-21
 seguros_renta_fija_relevante,B.1 INSTRUMENTOS DE RENTA FIJA,seguros_renta_fija_relevante,directo,nucleo,derivado,proyección de seguros_renta_fija,seguros_renta_fija,3,2321911,43814005,2024-12 a 2026-09,2026-10-21
 seguros_tablas_desarrollo,B.10 TABLAS DE DESARROLLO,seguros_tablas_desarrollo,directo,nucleo,publicado,,,3,2193981,14947138,2024-12 a 2026-09,2026-10-21
 seguros_tablas_descriptores,B.9 TABLAS DE DESCRIPTORES,seguros_tablas_descriptores,directo,nucleo,publicado,,,3,9792,141189,2024-12 a 2026-09,2026-10-21

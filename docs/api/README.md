@@ -259,12 +259,16 @@ protocolo, el formato y los archivos que sirve.
 `scripts/test_contrato.py` falla si el contrato promete algo que no está, pero hay
 dos cosas que hoy se toleran **nombrándolas** en el código, no en silencio:
 
-- **Cinco columnas declaradas sin un solo valor** (`bancos_balance.rut`,
-  `bancos_balance.razon_social`, `bancos_resultados.rut`,
-  `bancos_resultados.razon_social`, `agf_lista_entidades.codigo_cmf`). El esquema
-  las declara VARCHAR y los datos las tipan `NULL`; un `WHERE rut = …` devuelve 0
-  filas sin error. Están en `COLUMNAS_VACIAS_CONOCIDAS` con su motivo y la tarea
-  1d.8 de la ruta las repara.
+- **Una columna declarada sin un solo valor**: `agf_lista_entidades.codigo_cmf`.
+  El registro RGAGF de la CMF no publica código institucional para las AGF, así
+  que la columna hereda la plantilla del maestro de entidades y sale vacía. Está
+  en `COLUMNAS_VACIAS_CONOCIDAS` con su motivo, el diccionario de la web lo dice
+  al abrir la tabla, y el test falla si aparece otra.
+
+Las cuatro columnas de banca que estaban en esa situación (`rut` y
+`razon_social` en `bancos_balance` y `bancos_resultados`) **se repararon el
+2026-10-22**: un `WHERE rut = '97004000'` devolvía 0 filas sin error y ahora
+devuelve 40.123. Ver 1d.8 en la ruta.
 - **Cobertura del manifiesto**: los 110 archivos de `bancos_balance` y
   `bancos_resultados` se cubren por `bancos_cmf_lineas`, y las 4 filas de objetos
   vacíos se admiten porque su estado es `vacio`.
