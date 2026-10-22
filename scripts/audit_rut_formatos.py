@@ -40,6 +40,10 @@ DOCS = RAIZ / "docs" / "outputs"
 
 RE_RUN = re.compile(r"^\d{4,8}(-[\dKk])?$")  # RUNs de fondo, con o sin DV
 RE_PH = re.compile(r"^\d{1,3}(-[\dKk])?$")  # placeholder numérico corto del origen ('0', '1', '90', '1-9') con o sin DV
+# Seudónimo de emisor (privacidad.seudonimo_emisor): ocupa el lugar del RUT de una
+# persona natural en `fi.cartera_nacional.rut_emisor`. No es un RUT y no debe
+# confundirse con uno: el prefijo fijo y el largo hexadecimal lo distinguen.
+RE_SEUDONIMO = re.compile(r"^EMI-[0-9a-f]{12}$")
 
 
 def _es_columna_rut(nombre, incluir_dv: bool = False) -> bool:
@@ -61,6 +65,8 @@ def _check_valor(nombre: str, v) -> str | None:
         return None
     s = str(v).strip()
     if not s:
+        return None
+    if RE_SEUDONIMO.match(s):
         return None
     n = _norm(s)
     if n is None:
