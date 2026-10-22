@@ -130,7 +130,9 @@ def main() -> int:
     openapi = leer_json(V1 / "openapi.json")
     esperadas = {
         "/api/v1/datapackage.json", "/api/v1/catalog.json", "/api/v1/schema/{id}.json",
-        "/api/v1/partitions/{id}.json", "/api/v1/queries.json", "/api/v1/views.sql",
+        "/api/v1/partitions/{id}.json", "/api/v1/queries.json",
+        "/api/v1/resultados/index.json", "/api/v1/resultados/{id}.json",
+        "/api/v1/views.sql",
         "/api/reconciliacion.csv", "/api/claves.csv", "/outputs/{ruta}",
     }
     if set(openapi["paths"]) != esperadas:
@@ -140,11 +142,52 @@ def main() -> int:
         enum = openapi["paths"][ruta]["get"]["parameters"][0]["schema"]["enum"]
         if set(enum) != conocidos:
             problemas.append(f"{ruta}: el enum de ids no cubre los 90 objetos")
+    enum_consultas = openapi["paths"]["/api/v1/resultados/{id}.json"]["get"]["parameters"][0]["schema"]["enum"]
+    if set(enum_consultas) != vistos:
+        problemas.append("/api/v1/resultados/{id}.json: el enum no cubre las consultas")
     for ruta in openapi["paths"]:
         if ruta.startswith("/outputs") or ruta.startswith("/api/"):
             if "get" not in openapi["paths"][ruta]:
                 problemas.append(f"{ruta}: no declara GET")
     print(f"OpenAPI: {len(openapi['paths'])} rutas, todas con GET y los 90 ids")
+
+    # 4b. Resultados precalculados (fase 3) ---------------------------------
+    resultados = V1 / "resultados"
+    por_id = {c["id"]: c for c in consultas["consultas"]}
+    if not resultados.exists():
+        problemas.append("falta api/v1/resultados/: las 156 consultas vienen sin resultado")
+    else:
+        indice = leer_json(resultados / "index.json")
+        if indice.get("data_release") != catalogo["data_release"]:
+            problemas.append("resultados/index.json: data_release distinto del catálogo")
+        listados = {c["id"]: c for c in indice.get("consultas", [])}
+        if set(listados) != vistos:
+            problemas.append(f"resultados/index.json: {len(set(listados) ^ vistos)} consultas "
+                             f"sin resultado o de más")
+        sobrantes = {p.stem for p in resultados.glob("*.json")} - vistos - {"index"}
+        for nombre in sorted(sobrantes)[:5]:
+            problemas.append(f"resultados/{nombre}.json no corresponde a ninguna consulta")
+        for ident, c in por_id.items():
+            ruta = resultados / f"{ident}.json"
+            if not ruta.exists():
+                problemas.append(f"falta resultados/{ident}.json")
+                continue
+            crudo = ruta.read_bytes()
+            doc = json.loads(crudo)
+            if doc.get("sql", "").strip().rstrip(";") != c["sql"].strip().rstrip(";"):
+                problemas.append(f"resultados/{ident}.json: el SQL no es el de queries.json")
+            if doc.get("filas") != len(doc.get("datos", [])):
+                problemas.append(f"resultados/{ident}.json: `filas` no coincide con `datos`")
+            if doc.get("truncado") and doc.get("filas") != doc.get("max_filas"):
+                problemas.append(f"resultados/{ident}.json: truncado con menos filas que el tope")
+            if doc.get("data_release") != catalogo["data_release"]:
+                problemas.append(f"resultados/{ident}.json: data_release distinto del catálogo")
+            declarado = listados.get(ident, {})
+            if declarado.get("sha256") != hashlib.sha256(crudo).hexdigest():
+                problemas.append(f"resultados/{ident}.json: el sha256 del índice no coincide")
+            if declarado.get("filas") != doc.get("filas"):
+                problemas.append(f"resultados/{ident}.json: el índice declara otras filas")
+        print(f"Resultados: {len(por_id)} consultas con su JSON, SQL, tope y sha256 verificados")
 
     # 5. Vistas -------------------------------------------------------------
     sql = (V1 / "views.sql").read_text(encoding="utf-8")
@@ -210,7 +253,7 @@ def main() -> int:
     if problemas:
         print(f"CONTRATO-API: {len(problemas)} problema(s)")
         return 1
-    print("CONTRATO-API: catálogo, esquemas, particiones, consultas, OpenAPI y vistas coherentes")
+    print("CONTRATO-API: catálogo, esquemas, particiones, consultas, resultados, OpenAPI y vistas coherentes")
     return 0
 
 

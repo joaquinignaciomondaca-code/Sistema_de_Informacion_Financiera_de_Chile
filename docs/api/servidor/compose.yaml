@@ -1,0 +1,29 @@
+# Borrador, no verificado: ver README.md de esta carpeta.
+services:
+  quack:
+    build: .
+    restart: unless-stopped
+    environment:
+      SIF_QUACK_TOKEN: ${SIF_QUACK_TOKEN:?define un token largo y aleatorio}
+      SIF_CHILE_BASE: ${SIF_CHILE_BASE:-https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile}
+    ports:
+      - "127.0.0.1:9494:9494"   # sólo loopback: lo publica Caddy
+    read_only: true
+    tmpfs: [/tmp]
+    mem_limit: 2g
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on: [quack]
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+volumes:
+  caddy_data:
+  caddy_config:

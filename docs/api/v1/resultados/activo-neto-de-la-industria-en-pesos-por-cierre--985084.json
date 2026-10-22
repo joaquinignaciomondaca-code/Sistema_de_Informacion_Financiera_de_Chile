@@ -1,0 +1,100 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "activo-neto-de-la-industria-en-pesos-por-cierre--985084",
+ "titulo": "Activo neto de la industria en pesos, por cierre (MM$)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "periodo",
+  "fondos",
+  "activo_neto_mm"
+ ],
+ "filas": 16,
+ "truncado": false,
+ "datos": [
+  [
+   "2010-12",
+   386,
+   15696996.0
+  ],
+  [
+   "2011-12",
+   395,
+   15554438.0
+  ],
+  [
+   "2012-12",
+   422,
+   16300439.0
+  ],
+  [
+   "2013-12",
+   428,
+   18516448.0
+  ],
+  [
+   "2014-12",
+   431,
+   23969852.0
+  ],
+  [
+   "2015-12",
+   439,
+   25106768.0
+  ],
+  [
+   "2016-12",
+   424,
+   27143043.0
+  ],
+  [
+   "2017-12",
+   416,
+   30307167.0
+  ],
+  [
+   "2018-12",
+   398,
+   33871784.0
+  ],
+  [
+   "2019-12",
+   403,
+   39960886.0
+  ],
+  [
+   "2020-12",
+   390,
+   44720946.0
+  ],
+  [
+   "2021-12",
+   392,
+   43374156.0
+  ],
+  [
+   "2022-12",
+   447,
+   40218127.0
+  ],
+  [
+   "2023-12",
+   473,
+   50143439.0
+  ],
+  [
+   "2024-12",
+   410,
+   69275571.0
+  ],
+  [
+   "2025-12",
+   365,
+   79446918.0
+  ]
+ ],
+ "sql": "SELECT periodo, count(DISTINCT run_fondo) AS fondos, round(sum(valor_miles_mf) / 1e3, 0) AS activo_neto_mm FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' GROUP BY periodo ORDER BY periodo;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

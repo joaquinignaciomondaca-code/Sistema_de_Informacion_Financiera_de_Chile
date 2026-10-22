@@ -2277,6 +2277,7 @@
   "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/schema/{id}.json",
   "openapi": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/openapi.json",
   "particiones": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/{id}.json",
+  "resultados": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/resultados/index.json",
   "vistas": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/views.sql"
  },
  "totales": {

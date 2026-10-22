@@ -1,0 +1,35 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "distribucion-regional-de-cooperativas-7bea03",
+ "titulo": "Distribución Regional de Cooperativas",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "region",
+  "total_entidades",
+  "instituciones"
+ ],
+ "filas": 3,
+ "truncado": false,
+ "datos": [
+  [
+   "Región Metropolitana",
+   4,
+   "COOPEUCH, CAPUAL, DETACOOP, COOCRETAL"
+  ],
+  [
+   "Región de Valparaíso",
+   1,
+   "COONFIA"
+  ],
+  [
+   "Región del Maule",
+   2,
+   "ORIENCOOP, AHORROCOOP"
+  ]
+ ],
+ "sql": "SELECT region, count(*) as total_entidades, string_agg(nombre_fantasia, ', ') as instituciones FROM cooperativas_lista_entidades GROUP BY region ORDER BY total_entidades DESC;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

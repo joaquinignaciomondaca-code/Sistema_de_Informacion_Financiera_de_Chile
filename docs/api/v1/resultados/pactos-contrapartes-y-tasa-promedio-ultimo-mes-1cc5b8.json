@@ -1,0 +1,60 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "pactos-contrapartes-y-tasa-promedio-ultimo-mes-1cc5b8",
+ "titulo": "Pactos: contrapartes y tasa promedio, último mes",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "contraparte",
+  "pactos",
+  "tasa_pacto_promedio"
+ ],
+ "filas": 8,
+ "truncado": false,
+ "datos": [
+  [
+   "BANCO BTG PACTUAL CHILE",
+   10,
+   0.44000000000000006
+  ],
+  [
+   "BANCO ITAU CHILE",
+   5,
+   5.04
+  ],
+  [
+   "BANCO SANTANDER ESPANA",
+   37,
+   0.551351351351351
+  ],
+  [
+   "BBVA ESPA#A",
+   25,
+   4.831999999999998
+  ],
+  [
+   "CONSORCIO CORREDORES DE BOLSA S.A.",
+   3,
+   0.4000000000000001
+  ],
+  [
+   "ITAU CORPBANCA",
+   58,
+   0.41344827586206906
+  ],
+  [
+   "SCOTIABANK",
+   30,
+   0.4100000000000001
+  ],
+  [
+   "SCOTIABANK CHILE",
+   50,
+   0.41359999999999997
+  ]
+ ],
+ "sql": "SELECT COALESCE(NULLIF(TRIM(nombre), ''), 'Sin nombre informado') AS contraparte, count(*) AS pactos, AVG(tasa_pacto) AS tasa_pacto_promedio FROM seguros_pactos WHERE periodo = (SELECT max(periodo) FROM seguros_pactos) GROUP BY 1 ORDER BY pactos DESC LIMIT 10;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}
