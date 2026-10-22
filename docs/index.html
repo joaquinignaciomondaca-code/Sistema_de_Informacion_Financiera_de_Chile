@@ -363,6 +363,111 @@
               </div>
             </section>
 
+            <section class="info-block info-uso" id="info-como-usar">
+              <div class="info-section-kicker">CÓMO USAR ESTOS DATOS</div>
+              <h2>El mismo dato, para personas y para agentes</h2>
+              <p class="info-uso-lead">Todo lo publicado se puede mirar sin instalar nada, bajar en un enlace o consultar con código. Elige la puerta: las dos llevan al mismo número y al mismo <code>data_release</code>.</p>
+
+              <div class="uso-tabs" role="tablist" aria-label="Instrucciones de uso">
+                <button type="button" class="uso-tab active" role="tab" id="uso-tab-humanos" aria-selected="true" aria-controls="uso-panel-humanos" data-uso-tab="humanos">Para personas</button>
+                <button type="button" class="uso-tab" role="tab" id="uso-tab-agentes" aria-selected="false" aria-controls="uso-panel-agentes" data-uso-tab="agentes">Para agentes de IA</button>
+              </div>
+
+              <div class="uso-panel" id="uso-panel-humanos" role="tabpanel" aria-labelledby="uso-tab-humanos" tabindex="0">
+                <div class="uso-cols">
+                  <div class="uso-card">
+                    <h3>Mirar, sin instalar nada</h3>
+                    <ul class="info-list">
+                      <li><strong>Consultas SQL:</strong> el motor corre en tu navegador sobre los Parquet publicados; <kbd>Enter</kbd> ejecuta y <kbd>Tab</kbd> completa nombres de tabla.</li>
+                      <li><strong>Visor y diccionario:</strong> filas reales y el significado de cada columna, con su rol y su criterio contable.</li>
+                      <li><strong>Descargas:</strong> Parquet original, CSV o Excel, con filas, periodo y peso a la vista antes de bajar.</li>
+                      <li><strong>Atajos:</strong> <kbd>Alt</kbd>+<kbd>1</kbd>…<kbd>6</kbd> cambia de pestaña y <kbd>/</kbd> enfoca la búsqueda del explorador.</li>
+                    </ul>
+                  </div>
+                  <div class="uso-card">
+                    <h3>El dato en un enlace</h3>
+                    <p class="uso-text">Si sólo necesitas el número, no bajes 500 MB: las <strong>156 consultas del sitio</strong> vienen con su resultado ya calculado, en JSON, con el SQL a la vista y su <code>data_release</code>.</p>
+                    <pre class="uso-code"><code># el índice: qué consultas hay y cuántas filas trae cada una
+curl -s https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/resultados/index.json
+
+# una consulta concreta (cartera de FFMM en el exterior)
+curl -s .../api/v1/resultados/cartera-extranjera-por-pais-emisor-ultimo-mes-4da5d1.json</code></pre>
+                    <p class="uso-note">Cada archivo trae <code>columnas</code>, <code>filas</code>, <code>datos</code>, el <code>sql</code> que lo produjo y el tope de 500 filas. Es la vía más rápida para una planilla, para R o para un agente que no ejecuta código.</p>
+                  </div>
+                </div>
+
+                <div class="uso-card uso-card-wide">
+                  <h3>Con código</h3>
+                  <pre class="uso-code"><code>pip install sif-chile
+</code></pre>
+                  <pre class="uso-code"><code>import sif_chile
+
+sif = sif_chile.connect()                     # lee el contrato publicado
+sif.tablas()[:3]                              # qué hay
+sif.esquema("ffmm_cartera_extranjera")        # columnas y tipos
+sif.sql("SELECT pais_emisor, count(*) n FROM ffmm_cartera_extranjera "
+        "WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera) "
+        "GROUP BY 1 ORDER BY n DESC").fetchall()</code></pre>
+                  <p class="uso-text">Los ejemplos ejecutables están en el repositorio y se prueban en cada integración: <code>examples/python</code> (dos), <code>examples/r/01_basico.R</code> y <code>examples/javascript/catalogo.mjs</code>. La API completa, con esquema y hashes, está en <code>api/v1/catalog.json</code>; el catálogo legible, en <code>api/README.md</code>.</p>
+                  <p class="uso-note">Al citar una cifra, incluye el <code>data_release</code> que la acompaña (<code>2026-10-22.fd12b283f0c1</code>): identifica la edición exacta de los datos, que cambian aunque el contrato no.</p>
+                </div>
+              </div>
+
+              <div class="uso-panel" id="uso-panel-agentes" role="tabpanel" aria-labelledby="uso-tab-agentes" tabindex="0" hidden>
+                <div class="uso-cols">
+                  <div class="uso-card">
+                    <h3>Empieza por <code>llms.txt</code></h3>
+                    <p class="uso-text">Una página con la forma del dato y los enlaces que importan, sin ruido de interfaz. Es el punto de entrada pensado para que un modelo decida si el dato le sirve antes de gastar contexto.</p>
+                    <pre class="uso-code"><code>https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/llms.txt</code></pre>
+                    <p class="uso-note">Si el agente puede ejecutar código, con <code>views.sql</code> y los Parquet ya tiene todo: 105 vistas, 90 objetos y el diccionario de columnas.</p>
+                  </div>
+                  <div class="uso-card">
+                    <h3>El contrato, sin adivinar</h3>
+                    <ul class="info-list">
+                      <li><code>api/v1/catalog.json</code>: los 90 objetos con estado, filas, corte y clave.</li>
+                      <li><code>api/v1/schema/{id}.json</code>: columnas, tipos y significado de cada una.</li>
+                      <li><code>api/v1/queries.json</code>: las 156 consultas con id estable y SQL exacto.</li>
+                      <li><code>api/v1/resultados/index.json</code>: el resultado ya calculado de cada una.</li>
+                    </ul>
+                    <p class="uso-note">Un agente que inventa columnas falla; uno que lee el esquema, no. El <code>data_release</code> va en cada archivo para que la respuesta sea citable.</p>
+                  </div>
+                </div>
+
+                <div class="uso-cols">
+                  <div class="uso-card">
+                    <h3>SDK de Python</h3>
+                    <pre class="uso-code"><code>pip install sif-chile
+
+import sif_chile
+sif = sif_chile.connect()
+for objeto in sif.buscar("fondos mutuos"):
+    print(objeto["id"], objeto["filas"], objeto["corte"])</code></pre>
+                    <p class="uso-note">Sólo lectura por diseño (<code>sif.guardia</code>) y sin dependencias de agente.</p>
+                  </div>
+                  <div class="uso-card">
+                    <h3>Servidor MCP</h3>
+                    <p class="uso-text">Si el agente no ejecuta código, el mismo contenido se sirve por MCP en <strong>modo código</strong>: dos herramientas y el catálogo que se busca, no 90 fichas en el contexto.</p>
+                    <pre class="uso-code"><code>pip install "sif-chile[mcp]"
+sif-mcp                       # stdio
+
+{"mcpServers": {"sif-chile": {"command": "sif-mcp"}}}</code></pre>
+                    <p class="uso-note"><code>sif_buscar</code> descubre tabla y columnas; <code>sif_ejecutar</code> corre SQL de solo lectura. Lo que ve el modelo ocupa <strong>191 tokens</strong>; un catálogo de 88 herramientas cuesta ~37.000.</p>
+                  </div>
+                </div>
+
+                <div class="uso-card uso-card-wide">
+                  <h3>Cuatro reglas que evitan respuestas falsas</h3>
+                  <ul class="info-list">
+                    <li><strong>Filtra por <code>periodo</code></strong> (<code>AAAA-MM</code>) antes de agregar, y usa <code>max(periodo)</code> para el último dato publicado: no lo supongas.</li>
+                    <li><strong>El RUT va sin dígito verificador</strong> en <code>rut</code>; si existe, el DV está aparte en <code>rut_dv</code>.</li>
+                    <li><strong>Los montos conservan la unidad de la fuente</strong>: no se convierten ni se normalizan a pesos de hoy.</li>
+                    <li><strong>No inventes tablas ni columnas</strong>: si una consulta falla, vuelve a <code>sif_buscar</code> o al esquema antes de reintentar.</li>
+                  </ul>
+                  <p class="uso-note">Detalle y límites: <code>api/README.md</code>, <code>examples/agent/README.md</code> y la nota de decisiones del contrato.</p>
+                </div>
+              </div>
+            </section>
+
             <section class="info-block info-scope" id="info-alcance">
               <div class="info-section-kicker">ALCANCE DE ESTA EDICIÓN</div>
               <h2>Qué incluye y qué no</h2>
@@ -589,6 +694,7 @@
   <script src="js/download_catalog.js?v=fl-202606-30046-22368" defer></script>
   <script src="js/downloads_panel.js?v=fl-202606-30046-22368" defer></script>
   <script src="js/portada.js?v=fl-202606-30046-22368" defer></script>
+  <script src="js/como_usar.js?v=fl-202606-30046-22368" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {

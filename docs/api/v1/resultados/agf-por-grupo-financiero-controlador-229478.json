@@ -1,0 +1,110 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "agf-por-grupo-financiero-controlador-229478",
+ "titulo": "AGF por Grupo Financiero Controlador",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "grupo_controlador",
+  "cantidad_agf",
+  "total_fondos"
+ ],
+ "filas": 18,
+ "truncado": false,
+ "datos": [
+  [
+   "Ameris Capital",
+   1,
+   51
+  ],
+  [
+   "BTG Pactual",
+   1,
+   58
+  ],
+  [
+   "Banco de Chile / Quiñenco",
+   1,
+   41
+  ],
+  [
+   "Compass Group",
+   1,
+   78
+  ],
+  [
+   "Credicorp Capital",
+   1,
+   40
+  ],
+  [
+   "Grupo BICE / Matte",
+   1,
+   68
+  ],
+  [
+   "Grupo LarrainVial",
+   2,
+   98
+  ],
+  [
+   "Grupo Santander",
+   1,
+   7
+  ],
+  [
+   "Grupo Security",
+   1,
+   0
+  ],
+  [
+   "Independiente / No Bancario",
+   37,
+   418
+  ],
+  [
+   "Itaú Corpbanca",
+   1,
+   1
+  ],
+  [
+   "Moneda Asset Management / Patria",
+   1,
+   53
+  ],
+  [
+   "Principal Financial Group",
+   1,
+   13
+  ],
+  [
+   "SURA Asset Management",
+   1,
+   9
+  ],
+  [
+   "Scotiabank",
+   1,
+   0
+  ],
+  [
+   "Toesca Asset Management",
+   1,
+   23
+  ],
+  [
+   "Zurich Financial Services",
+   1,
+   7
+  ],
+  [
+   null,
+   2,
+   26
+  ]
+ ],
+ "sql": "SELECT grupo_controlador, count(*) as cantidad_agf, sum(fondos_inversion_administrados) as total_fondos FROM agf_lista_entidades WHERE estado_vigencia = 'Vigente' GROUP BY grupo_controlador ORDER BY total_fondos DESC;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

@@ -1,0 +1,35 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "distribucion-regional-28aee1",
+ "titulo": "Distribución Regional",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "region",
+  "total_entidades"
+ ],
+ "filas": 4,
+ "truncado": false,
+ "datos": [
+  [
+   "DE LA ARAUCANÃA",
+   1
+  ],
+  [
+   "DE VALPARAÃSO",
+   6
+  ],
+  [
+   "DEL BÃO BÃO",
+   2
+  ],
+  [
+   "METROPOLITANA",
+   67
+  ]
+ ],
+ "sql": "SELECT region, COUNT(*) AS total_entidades FROM fintech_rpsf_lista_entidades WHERE region != '' GROUP BY region ORDER BY total_entidades DESC;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

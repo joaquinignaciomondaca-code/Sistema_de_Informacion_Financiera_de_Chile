@@ -1,0 +1,4023 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "utilidad-del-periodo-1-fila-por-estado-a1faed",
+ "titulo": "Utilidad del período · 1 fila por estado",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "periodo",
+  "rut",
+  "nombre_reportado",
+  "tipo_balance",
+  "estado_financiero",
+  "ganancia_perdida"
+ ],
+ "filas": 500,
+ "truncado": true,
+ "datos": [
+  [
+   "2009-03",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   271288000
+  ],
+  [
+   "2014-03",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   573224000
+  ],
+  [
+   "2014-03",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   418583000
+  ],
+  [
+   "2014-03",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   2299513000
+  ],
+  [
+   "2014-03",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   801814000
+  ],
+  [
+   "2014-03",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   1779461770
+  ],
+  [
+   "2014-03",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   1955174000
+  ],
+  [
+   "2014-03",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   4702272000
+  ],
+  [
+   "2014-03",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   7946689000
+  ],
+  [
+   "2014-03",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   150665000
+  ],
+  [
+   "2014-03",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   9807000
+  ],
+  [
+   "2014-03",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   1303315000
+  ],
+  [
+   "2014-03",
+   "99501480",
+   "PENTA FINANCIERO S.A.",
+   "I",
+   "ERFG",
+   693347000
+  ],
+  [
+   "2014-03",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   54030000
+  ],
+  [
+   "2014-03",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   15488000
+  ],
+  [
+   "2014-03",
+   "99595990",
+   "FIRST FACTORS S.A.",
+   "C",
+   "ERFG",
+   -100925000
+  ],
+  [
+   "2014-06",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   995210000
+  ],
+  [
+   "2014-06",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   771722000
+  ],
+  [
+   "2014-06",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   4758268000
+  ],
+  [
+   "2014-06",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   1498240000
+  ],
+  [
+   "2014-06",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   3528796000
+  ],
+  [
+   "2014-06",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   3752126000
+  ],
+  [
+   "2014-06",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   12342961000
+  ],
+  [
+   "2014-06",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   17068412000
+  ],
+  [
+   "2014-06",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   406053000
+  ],
+  [
+   "2014-06",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   46772000
+  ],
+  [
+   "2014-06",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   2759470000
+  ],
+  [
+   "2014-06",
+   "99501480",
+   "PENTA FINANCIERO S.A.",
+   "I",
+   "ERFG",
+   1365540000
+  ],
+  [
+   "2014-06",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   102877000
+  ],
+  [
+   "2014-06",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   664424000
+  ],
+  [
+   "2014-06",
+   "99595990",
+   "FIRST FACTORS S.A.",
+   "C",
+   "ERFG",
+   -199274000
+  ],
+  [
+   "2014-09",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   1138573000
+  ],
+  [
+   "2014-09",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   1220909000
+  ],
+  [
+   "2014-09",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   6528556000
+  ],
+  [
+   "2014-09",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   2235948000
+  ],
+  [
+   "2014-09",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   5580187000
+  ],
+  [
+   "2014-09",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   5202504000
+  ],
+  [
+   "2014-09",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   18691703000
+  ],
+  [
+   "2014-09",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   25269618000
+  ],
+  [
+   "2014-09",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   501437000
+  ],
+  [
+   "2014-09",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   134493000
+  ],
+  [
+   "2014-09",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   4248522000
+  ],
+  [
+   "2014-09",
+   "99501480",
+   "PENTA FINANCIERO S.A.",
+   "I",
+   "ERFG",
+   1869658000
+  ],
+  [
+   "2014-09",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   140538000
+  ],
+  [
+   "2014-09",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   933522000
+  ],
+  [
+   "2014-09",
+   "99595990",
+   "FIRST FACTORS S.A.",
+   "C",
+   "ERFG",
+   -304368000
+  ],
+  [
+   "2014-12",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   1261021000
+  ],
+  [
+   "2014-12",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   1641375000
+  ],
+  [
+   "2014-12",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   9030190000
+  ],
+  [
+   "2014-12",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   3310063000
+  ],
+  [
+   "2014-12",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   7444481000
+  ],
+  [
+   "2014-12",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   6955980000
+  ],
+  [
+   "2014-12",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   26088968000
+  ],
+  [
+   "2014-12",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   34056238000
+  ],
+  [
+   "2014-12",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   861127000
+  ],
+  [
+   "2014-12",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   203220000
+  ],
+  [
+   "2014-12",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   5209904000
+  ],
+  [
+   "2014-12",
+   "99501480",
+   "PENTA FINANCIERO S.A.",
+   "I",
+   "ERFG",
+   1899195000
+  ],
+  [
+   "2014-12",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   232663000
+  ],
+  [
+   "2014-12",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   1192271000
+  ],
+  [
+   "2014-12",
+   "99569200",
+   "FACTORING MERCANTIL S.A.",
+   "I",
+   "ERFG",
+   412956000
+  ],
+  [
+   "2014-12",
+   "99595990",
+   "FIRST FACTORS S.A.",
+   "C",
+   "ERFG",
+   -202655000
+  ],
+  [
+   "2015-03",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   268915000
+  ],
+  [
+   "2015-03",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   311107000
+  ],
+  [
+   "2015-03",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   1969832000
+  ],
+  [
+   "2015-03",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   699282000
+  ],
+  [
+   "2015-03",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   1811544000
+  ],
+  [
+   "2015-03",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   1210022000
+  ],
+  [
+   "2015-03",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   4551811000
+  ],
+  [
+   "2015-03",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   8205183000
+  ],
+  [
+   "2015-03",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   342172000
+  ],
+  [
+   "2015-03",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   68331000
+  ],
+  [
+   "2015-03",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   904793000
+  ],
+  [
+   "2015-03",
+   "99501480",
+   "PENTA FINANCIERO S.A.",
+   "I",
+   "ERFG",
+   349581000
+  ],
+  [
+   "2015-03",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   71202000
+  ],
+  [
+   "2015-03",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   89654000
+  ],
+  [
+   "2015-03",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   -3162000
+  ],
+  [
+   "2015-06",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   339034000
+  ],
+  [
+   "2015-06",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   611102000
+  ],
+  [
+   "2015-06",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   4664471000
+  ],
+  [
+   "2015-06",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   1308521000
+  ],
+  [
+   "2015-06",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   3613189000
+  ],
+  [
+   "2015-06",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   2551628000
+  ],
+  [
+   "2015-06",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   8531169000
+  ],
+  [
+   "2015-06",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   17923636000
+  ],
+  [
+   "2015-06",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   518661000
+  ],
+  [
+   "2015-06",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   162598000
+  ],
+  [
+   "2015-06",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   2479238000
+  ],
+  [
+   "2015-06",
+   "99501480",
+   "PENTA FINANCIERO S.A.",
+   "I",
+   "ERFG",
+   674947000
+  ],
+  [
+   "2015-06",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   136728000
+  ],
+  [
+   "2015-06",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   308654000
+  ],
+  [
+   "2015-06",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   -26003000
+  ],
+  [
+   "2015-09",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   579546000
+  ],
+  [
+   "2015-09",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   919644000
+  ],
+  [
+   "2015-09",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   6450084000
+  ],
+  [
+   "2015-09",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   2335559000
+  ],
+  [
+   "2015-09",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   5256171000
+  ],
+  [
+   "2015-09",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   3829901000
+  ],
+  [
+   "2015-09",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   14088604000
+  ],
+  [
+   "2015-09",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   28130183000
+  ],
+  [
+   "2015-09",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   880596000
+  ],
+  [
+   "2015-09",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   312085000
+  ],
+  [
+   "2015-09",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   3850962000
+  ],
+  [
+   "2015-09",
+   "99501480",
+   "PENTA FINANCIERO S.A.",
+   "I",
+   "ERFG",
+   923738000
+  ],
+  [
+   "2015-09",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   197794000
+  ],
+  [
+   "2015-09",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   478320000
+  ],
+  [
+   "2015-09",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   -25489000
+  ],
+  [
+   "2015-12",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   851342000
+  ],
+  [
+   "2015-12",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   1436002000
+  ],
+  [
+   "2015-12",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   7703088000
+  ],
+  [
+   "2015-12",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   3624038000
+  ],
+  [
+   "2015-12",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   7001877000
+  ],
+  [
+   "2015-12",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   5023275000
+  ],
+  [
+   "2015-12",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   20313490000
+  ],
+  [
+   "2015-12",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   38904839000
+  ],
+  [
+   "2015-12",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   783972000
+  ],
+  [
+   "2015-12",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   491164000
+  ],
+  [
+   "2015-12",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   5090964000
+  ],
+  [
+   "2015-12",
+   "99501480",
+   "PENTA FINANCIERO S.A.",
+   "I",
+   "ERFG",
+   1513483000
+  ],
+  [
+   "2015-12",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   245163000
+  ],
+  [
+   "2015-12",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   1109354000
+  ],
+  [
+   "2015-12",
+   "99569200",
+   "FACTORING MERCANTIL S.A.",
+   "I",
+   "ERFG",
+   382044000
+  ],
+  [
+   "2015-12",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   158968000
+  ],
+  [
+   "2016-03",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   226710000
+  ],
+  [
+   "2016-03",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   351237000
+  ],
+  [
+   "2016-03",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   1775664000
+  ],
+  [
+   "2016-03",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   854566000
+  ],
+  [
+   "2016-03",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   1700395000
+  ],
+  [
+   "2016-03",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   1202947000
+  ],
+  [
+   "2016-03",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   5502430000
+  ],
+  [
+   "2016-03",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   12074930000
+  ],
+  [
+   "2016-03",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   178473000
+  ],
+  [
+   "2016-03",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   178052000
+  ],
+  [
+   "2016-03",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   1014752000
+  ],
+  [
+   "2016-03",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   40383000
+  ],
+  [
+   "2016-03",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   263664000
+  ],
+  [
+   "2016-03",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   20343000
+  ],
+  [
+   "2016-06",
+   "76002293",
+   "SANTANDER CONSUMER CHILE S.A.",
+   "I",
+   "ERFG",
+   5308821000
+  ],
+  [
+   "2016-06",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   375656000
+  ],
+  [
+   "2016-06",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   656748000
+  ],
+  [
+   "2016-06",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   3826419000
+  ],
+  [
+   "2016-06",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   1534829000
+  ],
+  [
+   "2016-06",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   3580441000
+  ],
+  [
+   "2016-06",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   2249985000
+  ],
+  [
+   "2016-06",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   10657948000
+  ],
+  [
+   "2016-06",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   23284564000
+  ],
+  [
+   "2016-06",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   284300000
+  ],
+  [
+   "2016-06",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   274752000
+  ],
+  [
+   "2016-06",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   2233603000
+  ],
+  [
+   "2016-06",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   91825000
+  ],
+  [
+   "2016-06",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   561144000
+  ],
+  [
+   "2016-06",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   -41688000
+  ],
+  [
+   "2016-09",
+   "76002293",
+   "SANTANDER CONSUMER CHILE S.A.",
+   "I",
+   "ERFG",
+   7380850000
+  ],
+  [
+   "2016-09",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   550668000
+  ],
+  [
+   "2016-09",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   803632000
+  ],
+  [
+   "2016-09",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   6935435000
+  ],
+  [
+   "2016-09",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   2329315000
+  ],
+  [
+   "2016-09",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   5430012000
+  ],
+  [
+   "2016-09",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   3265294000
+  ],
+  [
+   "2016-09",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   15694061000
+  ],
+  [
+   "2016-09",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   34468284000
+  ],
+  [
+   "2016-09",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   450808000
+  ],
+  [
+   "2016-09",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   451485000
+  ],
+  [
+   "2016-09",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   3305039000
+  ],
+  [
+   "2016-09",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   133725000
+  ],
+  [
+   "2016-09",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   720714000
+  ],
+  [
+   "2016-09",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   -85621000
+  ],
+  [
+   "2016-12",
+   "76002293",
+   "SANTANDER CONSUMER CHILE S.A.",
+   "I",
+   "ERFG",
+   8378235000
+  ],
+  [
+   "2016-12",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   765242000
+  ],
+  [
+   "2016-12",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   1052128000
+  ],
+  [
+   "2016-12",
+   "94050000",
+   "GENERAL MOTORS FINANCIAL CHILE S.A.",
+   "C",
+   "ERFG",
+   9303107000
+  ],
+  [
+   "2016-12",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   3643436000
+  ],
+  [
+   "2016-12",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   7303333000
+  ],
+  [
+   "2016-12",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   4424663000
+  ],
+  [
+   "2016-12",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   22347088000
+  ],
+  [
+   "2016-12",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   44802390000
+  ],
+  [
+   "2016-12",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   676051000
+  ],
+  [
+   "2016-12",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   573480000
+  ],
+  [
+   "2016-12",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   4468590000
+  ],
+  [
+   "2016-12",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   193365000
+  ],
+  [
+   "2016-12",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   1076223000
+  ],
+  [
+   "2016-12",
+   "99569200",
+   "FACTORING MERCANTIL S.A.",
+   "I",
+   "ERFG",
+   43522000
+  ],
+  [
+   "2016-12",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   65881000
+  ],
+  [
+   "2017-03",
+   "76002293",
+   "SANTANDER CONSUMER CHILE S.A.",
+   "I",
+   "ERFG",
+   3165455000
+  ],
+  [
+   "2017-03",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   223873000
+  ],
+  [
+   "2017-03",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   308503000
+  ],
+  [
+   "2017-03",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   2141921000
+  ],
+  [
+   "2017-03",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   733964000
+  ],
+  [
+   "2017-03",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   1855184000
+  ],
+  [
+   "2017-03",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   1031490000
+  ],
+  [
+   "2017-03",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   4225842000
+  ],
+  [
+   "2017-03",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   12014572000
+  ],
+  [
+   "2017-03",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   127147000
+  ],
+  [
+   "2017-03",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   241487000
+  ],
+  [
+   "2017-03",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   1252756000
+  ],
+  [
+   "2017-03",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   76883000
+  ],
+  [
+   "2017-03",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   179531000
+  ],
+  [
+   "2017-03",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   33303000
+  ],
+  [
+   "2017-06",
+   "76002293",
+   "SANTANDER CONSUMER CHILE S.A.",
+   "I",
+   "ERFG",
+   6174228000
+  ],
+  [
+   "2017-06",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   465377000
+  ],
+  [
+   "2017-06",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   610088000
+  ],
+  [
+   "2017-06",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   3944173000
+  ],
+  [
+   "2017-06",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   1488159000
+  ],
+  [
+   "2017-06",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   3747877000
+  ],
+  [
+   "2017-06",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   2131631000
+  ],
+  [
+   "2017-06",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   11118833000
+  ],
+  [
+   "2017-06",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   23698195000
+  ],
+  [
+   "2017-06",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   204295000
+  ],
+  [
+   "2017-06",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   347054000
+  ],
+  [
+   "2017-06",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   2484186000
+  ],
+  [
+   "2017-06",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   140176000
+  ],
+  [
+   "2017-06",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   239929000
+  ],
+  [
+   "2017-06",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   -38256000
+  ],
+  [
+   "2017-09",
+   "76002293",
+   "SANTANDER CONSUMER CHILE S.A.",
+   "I",
+   "ERFG",
+   9954231000
+  ],
+  [
+   "2017-09",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   852292000
+  ],
+  [
+   "2017-09",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   891183000
+  ],
+  [
+   "2017-09",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   5212967000
+  ],
+  [
+   "2017-09",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   2510173000
+  ],
+  [
+   "2017-09",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   5577587000
+  ],
+  [
+   "2017-09",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   3354450000
+  ],
+  [
+   "2017-09",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   16914762000
+  ],
+  [
+   "2017-09",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   35771726000
+  ],
+  [
+   "2017-09",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   346501000
+  ],
+  [
+   "2017-09",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   557319000
+  ],
+  [
+   "2017-09",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   3712149000
+  ],
+  [
+   "2017-09",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   200271000
+  ],
+  [
+   "2017-09",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   540092000
+  ],
+  [
+   "2017-09",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   -21098000
+  ],
+  [
+   "2017-12",
+   "76002293",
+   "SANTANDER CONSUMER CHILE S.A.",
+   "I",
+   "ERFG",
+   12621748000
+  ],
+  [
+   "2017-12",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   1384739000
+  ],
+  [
+   "2017-12",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   1306156000
+  ],
+  [
+   "2017-12",
+   "94050000",
+   "GENERAL MOTORS FINANCIAL CHILE S.A.",
+   "C",
+   "ERFG",
+   6889886000
+  ],
+  [
+   "2017-12",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   3835294000
+  ],
+  [
+   "2017-12",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   7501997000
+  ],
+  [
+   "2017-12",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   4370421000
+  ],
+  [
+   "2017-12",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   25319150000
+  ],
+  [
+   "2017-12",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   45060595000
+  ],
+  [
+   "2017-12",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   362394000
+  ],
+  [
+   "2017-12",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   713624000
+  ],
+  [
+   "2017-12",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   4871813000
+  ],
+  [
+   "2017-12",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   280974000
+  ],
+  [
+   "2017-12",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   578395000
+  ],
+  [
+   "2017-12",
+   "99569200",
+   "FACTORING MERCANTIL S.A.",
+   "I",
+   "ERFG",
+   148818000
+  ],
+  [
+   "2017-12",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   7191000
+  ],
+  [
+   "2018-03",
+   "76002293",
+   "SANTANDER CONSUMER CHILE S.A.",
+   "I",
+   "ERFG",
+   2269878000
+  ],
+  [
+   "2018-03",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   483727000
+  ],
+  [
+   "2018-03",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   621840000
+  ],
+  [
+   "2018-03",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   1845940000
+  ],
+  [
+   "2018-03",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   1210589000
+  ],
+  [
+   "2018-03",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   2024970000
+  ],
+  [
+   "2018-03",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   1202471000
+  ],
+  [
+   "2018-03",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   5369778000
+  ],
+  [
+   "2018-03",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   12179221000
+  ],
+  [
+   "2018-03",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   4806000
+  ],
+  [
+   "2018-03",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   285054000
+  ],
+  [
+   "2018-03",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   918691000
+  ],
+  [
+   "2018-03",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   53565000
+  ],
+  [
+   "2018-03",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   163449000
+  ],
+  [
+   "2018-03",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   256225000
+  ],
+  [
+   "2018-06",
+   "76002293",
+   "SANTANDER CONSUMER CHILE S.A.",
+   "I",
+   "ERFG",
+   5609675000
+  ],
+  [
+   "2018-06",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   1165678000
+  ],
+  [
+   "2018-06",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   1071178000
+  ],
+  [
+   "2018-06",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   3617359000
+  ],
+  [
+   "2018-06",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   2206217000
+  ],
+  [
+   "2018-06",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   4059396000
+  ],
+  [
+   "2018-06",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   2586371000
+  ],
+  [
+   "2018-06",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   13974652000
+  ],
+  [
+   "2018-06",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   26471336000
+  ],
+  [
+   "2018-06",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   129062000
+  ],
+  [
+   "2018-06",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   540214000
+  ],
+  [
+   "2018-06",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   1841994000
+  ],
+  [
+   "2018-06",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   154666000
+  ],
+  [
+   "2018-06",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   414141000
+  ],
+  [
+   "2018-06",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   286267000
+  ],
+  [
+   "2018-09",
+   "76002293",
+   "SANTANDER CONSUMER CHILE S.A.",
+   "I",
+   "ERFG",
+   8727739000
+  ],
+  [
+   "2018-09",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   1674204000
+  ],
+  [
+   "2018-09",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   1474457000
+  ],
+  [
+   "2018-09",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   5162476000
+  ],
+  [
+   "2018-09",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   3121358000
+  ],
+  [
+   "2018-09",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   6018957000
+  ],
+  [
+   "2018-09",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   3831266000
+  ],
+  [
+   "2018-09",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   20711604000
+  ],
+  [
+   "2018-09",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   38534121000
+  ],
+  [
+   "2018-09",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   77367000
+  ],
+  [
+   "2018-09",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   813642000
+  ],
+  [
+   "2018-09",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   2630536000
+  ],
+  [
+   "2018-09",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   271898000
+  ],
+  [
+   "2018-09",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   945909000
+  ],
+  [
+   "2018-09",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   337678000
+  ],
+  [
+   "2018-12",
+   "76002293",
+   "SANTANDER CONSUMER CHILE S.A.",
+   "I",
+   "ERFG",
+   10996100000
+  ],
+  [
+   "2018-12",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   2054584000
+  ],
+  [
+   "2018-12",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   2016686000
+  ],
+  [
+   "2018-12",
+   "94050000",
+   "GENERAL MOTORS FINANCIAL CHILE S.A.",
+   "C",
+   "ERFG",
+   6276585000
+  ],
+  [
+   "2018-12",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   4310231000
+  ],
+  [
+   "2018-12",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   8155050000
+  ],
+  [
+   "2018-12",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   5407825000
+  ],
+  [
+   "2018-12",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   29737829000
+  ],
+  [
+   "2018-12",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   55075161000
+  ],
+  [
+   "2018-12",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   667686000
+  ],
+  [
+   "2018-12",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   1001535000
+  ],
+  [
+   "2018-12",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   3807939000
+  ],
+  [
+   "2018-12",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   402021000
+  ],
+  [
+   "2018-12",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   1261243000
+  ],
+  [
+   "2018-12",
+   "99569200",
+   "FACTORING MERCANTIL S.A.",
+   "I",
+   "ERFG",
+   263409000
+  ],
+  [
+   "2018-12",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   -784161000
+  ],
+  [
+   "2019-03",
+   "76002293",
+   "SANTANDER CONSUMER FINANCE LIMITADA",
+   "I",
+   "ERFG",
+   3673992000
+  ],
+  [
+   "2019-03",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   458875000
+  ],
+  [
+   "2019-03",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   464297000
+  ],
+  [
+   "2019-03",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   995886000
+  ],
+  [
+   "2019-03",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   1015070000
+  ],
+  [
+   "2019-03",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   2185555000
+  ],
+  [
+   "2019-03",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   1617712000
+  ],
+  [
+   "2019-03",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   6351620000
+  ],
+  [
+   "2019-03",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   12632578000
+  ],
+  [
+   "2019-03",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   -294517000
+  ],
+  [
+   "2019-03",
+   "96809970",
+   "UNIDAD LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   233669000
+  ],
+  [
+   "2019-03",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   1401366000
+  ],
+  [
+   "2019-03",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   90456000
+  ],
+  [
+   "2019-03",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   736716000
+  ],
+  [
+   "2019-06",
+   "76002293",
+   "SANTANDER CONSUMER FINANCE LIMITADA",
+   "I",
+   "ERFG",
+   6820320000
+  ],
+  [
+   "2019-06",
+   "76139506",
+   "AUTOFIN S.A.",
+   "C",
+   "ERFG",
+   2439466000
+  ],
+  [
+   "2019-06",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   992254000
+  ],
+  [
+   "2019-06",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   1041025000
+  ],
+  [
+   "2019-06",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   3245557000
+  ],
+  [
+   "2019-06",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   2044317000
+  ],
+  [
+   "2019-06",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   4447430000
+  ],
+  [
+   "2019-06",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   3062260000
+  ],
+  [
+   "2019-06",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   14965025000
+  ],
+  [
+   "2019-06",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   25511915000
+  ],
+  [
+   "2019-06",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   45525000
+  ],
+  [
+   "2019-06",
+   "96809970",
+   "UNIDAD LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   541993000
+  ],
+  [
+   "2019-06",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   2853009000
+  ],
+  [
+   "2019-06",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   186614000
+  ],
+  [
+   "2019-06",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   1604857000
+  ],
+  [
+   "2019-09",
+   "76002293",
+   "SANTANDER CONSUMER FINANCE LIMITADA",
+   "I",
+   "ERFG",
+   8344516000
+  ],
+  [
+   "2019-09",
+   "76139506",
+   "AUTOFIN S.A.",
+   "C",
+   "ERFG",
+   3709338000
+  ],
+  [
+   "2019-09",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   1498208000
+  ],
+  [
+   "2019-09",
+   "77356020",
+   "COMERCIAL DE VALORES FACTORING SPA",
+   "I",
+   "ERFG",
+   1988195000
+  ],
+  [
+   "2019-09",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   1681720000
+  ],
+  [
+   "2019-09",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   3840440000
+  ],
+  [
+   "2019-09",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   3182150000
+  ],
+  [
+   "2019-09",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   6818316000
+  ],
+  [
+   "2019-09",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   4539359000
+  ],
+  [
+   "2019-09",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   25334219000
+  ],
+  [
+   "2019-09",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   36520538000
+  ],
+  [
+   "2019-09",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   -77068000
+  ],
+  [
+   "2019-09",
+   "96809970",
+   "UNIDAD LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   1127906000
+  ],
+  [
+   "2019-09",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   4230059000
+  ],
+  [
+   "2019-09",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   270510000
+  ],
+  [
+   "2019-09",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   2498661000
+  ],
+  [
+   "2019-12",
+   "76002293",
+   "SANTANDER CONSUMER FINANCE LIMITADA",
+   "C",
+   "ERFG",
+   12140637000
+  ],
+  [
+   "2019-12",
+   "76139506",
+   "AUTOFIN S.A.",
+   "C",
+   "ERFG",
+   3767653000
+  ],
+  [
+   "2019-12",
+   "76360977",
+   "PRIMUS CAPITAL S.A.",
+   "C",
+   "ERFG",
+   8431953000
+  ],
+  [
+   "2019-12",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   2070866000
+  ],
+  [
+   "2019-12",
+   "77048001",
+   "LEASING URBANO S.A.",
+   "I",
+   "ERNG",
+   -67931000
+  ],
+  [
+   "2019-12",
+   "77356020",
+   "COMERCIAL DE VALORES FACTORING SPA",
+   "C",
+   "ERFG",
+   2429432000
+  ],
+  [
+   "2019-12",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   2208499000
+  ],
+  [
+   "2019-12",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   3784814000
+  ],
+  [
+   "2019-12",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   4509552000
+  ],
+  [
+   "2019-12",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   9170926000
+  ],
+  [
+   "2019-12",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   5930374000
+  ],
+  [
+   "2019-12",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   32597362000
+  ],
+  [
+   "2019-12",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   43019349000
+  ],
+  [
+   "2019-12",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   169369000
+  ],
+  [
+   "2019-12",
+   "96809970",
+   "UNIDAD LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   1254233000
+  ],
+  [
+   "2019-12",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   5499922000
+  ],
+  [
+   "2019-12",
+   "99501480",
+   "PENTA FINANCIERO S.A.",
+   "C",
+   "ERFG",
+   5298128000
+  ],
+  [
+   "2019-12",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   390084000
+  ],
+  [
+   "2019-12",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   3274834000
+  ],
+  [
+   "2019-12",
+   "99569200",
+   "FACTORING MERCANTIL S.A.",
+   "I",
+   "ERFG",
+   172878000
+  ],
+  [
+   "2019-12",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   944146000
+  ],
+  [
+   "2020-03",
+   "76002293",
+   "SANTANDER CONSUMER FINANCE LIMITADA",
+   "C",
+   "ERFG",
+   2149734000
+  ],
+  [
+   "2020-03",
+   "76139506",
+   "AUTOFIN S.A.",
+   "C",
+   "ERFG",
+   265275000
+  ],
+  [
+   "2020-03",
+   "76360977",
+   "PRIMUS CAPITAL S.A.",
+   "C",
+   "ERFG",
+   1737792000
+  ],
+  [
+   "2020-03",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   503563000
+  ],
+  [
+   "2020-03",
+   "77048001",
+   "LEASING URBANO S.A.",
+   "I",
+   "ERNG",
+   -15645000
+  ],
+  [
+   "2020-03",
+   "77356020",
+   "COMERCIAL DE VALORES FACTORING SPA",
+   "C",
+   "ERFG",
+   685697000
+  ],
+  [
+   "2020-03",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   641324000
+  ],
+  [
+   "2020-03",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   570994000
+  ],
+  [
+   "2020-03",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   1255542000
+  ],
+  [
+   "2020-03",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   2862320000
+  ],
+  [
+   "2020-03",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   1406963000
+  ],
+  [
+   "2020-03",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   5383217000
+  ],
+  [
+   "2020-03",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   5857252000
+  ],
+  [
+   "2020-03",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   385114000
+  ],
+  [
+   "2020-03",
+   "96809970",
+   "UNIDAD DE LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   675425000
+  ],
+  [
+   "2020-03",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   1380221000
+  ],
+  [
+   "2020-03",
+   "99501480",
+   "PENTA FINANCIERO S.A.",
+   "C",
+   "ERFG",
+   1237308000
+  ],
+  [
+   "2020-03",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   50154000
+  ],
+  [
+   "2020-03",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   1079702000
+  ],
+  [
+   "2020-03",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   -62555000
+  ],
+  [
+   "2020-06",
+   "76002293",
+   "SANTANDER CONSUMER FINANCE LIMITADA",
+   "C",
+   "ERFG",
+   3406465000
+  ],
+  [
+   "2020-06",
+   "76139506",
+   "AUTOFIN S.A.",
+   "C",
+   "ERFG",
+   129114000
+  ],
+  [
+   "2020-06",
+   "76360977",
+   "PRIMUS CAPITAL S.A.",
+   "C",
+   "ERFG",
+   4041522000
+  ],
+  [
+   "2020-06",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   693669000
+  ],
+  [
+   "2020-06",
+   "77048001",
+   "LEASING URBANO S.A.",
+   "I",
+   "ERNG",
+   3819000
+  ],
+  [
+   "2020-06",
+   "77356020",
+   "COMERCIAL DE VALORES FACTORING SPA",
+   "C",
+   "ERFG",
+   1106063000
+  ],
+  [
+   "2020-06",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   1344398000
+  ],
+  [
+   "2020-06",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   -3000656000
+  ],
+  [
+   "2020-06",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   1879705000
+  ],
+  [
+   "2020-06",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   5567929000
+  ],
+  [
+   "2020-06",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   3077988000
+  ],
+  [
+   "2020-06",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   10453141000
+  ],
+  [
+   "2020-06",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   6441388000
+  ],
+  [
+   "2020-06",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   276323000
+  ],
+  [
+   "2020-06",
+   "96809970",
+   "UNIDAD LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   985520000
+  ],
+  [
+   "2020-06",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   2369672000
+  ],
+  [
+   "2020-06",
+   "99501480",
+   "PENTA FINANCIERO S.A.",
+   "C",
+   "ERFG",
+   2607823000
+  ],
+  [
+   "2020-06",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   51264000
+  ],
+  [
+   "2020-06",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   1122021000
+  ],
+  [
+   "2020-06",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   -764402000
+  ],
+  [
+   "2020-09",
+   "76002293",
+   "SANTANDER CONSUMER FINANCE LIMITADA",
+   "C",
+   "ERFG",
+   6325604000
+  ],
+  [
+   "2020-09",
+   "76139506",
+   "AUTOFIN S.A.",
+   "C",
+   "ERFG",
+   958033000
+  ],
+  [
+   "2020-09",
+   "76238714",
+   "GAMA SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   1773346000
+  ],
+  [
+   "2020-09",
+   "76360977",
+   "PRIMUS CAPITAL S.A.",
+   "C",
+   "ERFG",
+   5885844000
+  ],
+  [
+   "2020-09",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   765685000
+  ],
+  [
+   "2020-09",
+   "77048001",
+   "LEASING URBANO S.A.",
+   "I",
+   "ERNG",
+   10535000
+  ],
+  [
+   "2020-09",
+   "77356020",
+   "COMERCIAL DE VALORES FACTORING SPA",
+   "C",
+   "ERFG",
+   1658842000
+  ],
+  [
+   "2020-09",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   1864472000
+  ],
+  [
+   "2020-09",
+   "94050000",
+   "GENERAL MOTORS FINANCIAL CHILE S.A.",
+   "C",
+   "ERFG",
+   3094242000
+  ],
+  [
+   "2020-09",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   2203434000
+  ],
+  [
+   "2020-09",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   7400131000
+  ],
+  [
+   "2020-09",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   4949137000
+  ],
+  [
+   "2020-09",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   18829974000
+  ],
+  [
+   "2020-09",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   16828192000
+  ],
+  [
+   "2020-09",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   549353000
+  ],
+  [
+   "2020-09",
+   "96809970",
+   "UNIDAD LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   1269917000
+  ],
+  [
+   "2020-09",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   3397946000
+  ],
+  [
+   "2020-09",
+   "99501480",
+   "PENTA FINANCIERO S.A.",
+   "C",
+   "ERFG",
+   3819595000
+  ],
+  [
+   "2020-09",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   69234000
+  ],
+  [
+   "2020-09",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   1176116000
+  ],
+  [
+   "2020-09",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   -638731000
+  ],
+  [
+   "2020-12",
+   "76002293",
+   "SANTANDER CONSUMER FINANCE LIMITADA",
+   "C",
+   "ERFG",
+   11815549000
+  ],
+  [
+   "2020-12",
+   "76120857",
+   "GLOBAL SOLUCIONES FINANCIERAS S.A.",
+   "C",
+   "ERFG",
+   -396131000
+  ],
+  [
+   "2020-12",
+   "76139506",
+   "AUTOFIN S.A.",
+   "C",
+   "ERFG",
+   1241193000
+  ],
+  [
+   "2020-12",
+   "76238714",
+   "GAMA SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   2836779000
+  ],
+  [
+   "2020-12",
+   "76360977",
+   "PRIMUS CAPITAL S.A.",
+   "C",
+   "ERFG",
+   7490396000
+  ],
+  [
+   "2020-12",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   1073947000
+  ],
+  [
+   "2020-12",
+   "77048001",
+   "LEASING URBANO S.A.",
+   "I",
+   "ERNG",
+   19007000
+  ],
+  [
+   "2020-12",
+   "77356020",
+   "COMERCIAL DE VALORES FACTORING SPA",
+   "C",
+   "ERFG",
+   2212662000
+  ],
+  [
+   "2020-12",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   2470812000
+  ],
+  [
+   "2020-12",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   4679387000
+  ],
+  [
+   "2020-12",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   2732311000
+  ],
+  [
+   "2020-12",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   9471438000
+  ],
+  [
+   "2020-12",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   6519788000
+  ],
+  [
+   "2020-12",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   27510940000
+  ],
+  [
+   "2020-12",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   23598186000
+  ],
+  [
+   "2020-12",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   810500000
+  ],
+  [
+   "2020-12",
+   "96809970",
+   "UNIDAD LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   1475253000
+  ],
+  [
+   "2020-12",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   4594907000
+  ],
+  [
+   "2020-12",
+   "99501480",
+   "PENTA FINANCIERO S.A.",
+   "C",
+   "ERFG",
+   5209509000
+  ],
+  [
+   "2020-12",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   145753000
+  ],
+  [
+   "2020-12",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   1325791000
+  ],
+  [
+   "2020-12",
+   "99569200",
+   "FACTORING MERCANTIL S.A.",
+   "I",
+   "ERFG",
+   86004000
+  ],
+  [
+   "2020-12",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   -757982000
+  ],
+  [
+   "2021-03",
+   "76002293",
+   "SANTANDER CONSUMER FINANCE LIMITADA",
+   "C",
+   "ERFG",
+   4579348000
+  ],
+  [
+   "2021-03",
+   "76120857",
+   "GLOBAL SOLUCIONES FINANCIERAS S.A.",
+   "C",
+   "ERFG",
+   434487000
+  ],
+  [
+   "2021-03",
+   "76139506",
+   "AUTOFIN S.A.",
+   "C",
+   "ERFG",
+   1357483000
+  ],
+  [
+   "2021-03",
+   "76238714",
+   "GAMA SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   1831959000
+  ],
+  [
+   "2021-03",
+   "76360977",
+   "PRIMUS CAPITAL S.A.",
+   "C",
+   "ERFG",
+   2414343000
+  ],
+  [
+   "2021-03",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   160784000
+  ],
+  [
+   "2021-03",
+   "77048001",
+   "LEASING URBANO S.A.",
+   "I",
+   "ERNG",
+   -18390000
+  ],
+  [
+   "2021-03",
+   "77356020",
+   "COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA",
+   "C",
+   "ERFG",
+   456425000
+  ],
+  [
+   "2021-03",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   710416000
+  ],
+  [
+   "2021-03",
+   "94050000",
+   "GENERAL MOTORS FINANCIAL CHILE S.A.",
+   "C",
+   "ERFG",
+   4579312000
+  ],
+  [
+   "2021-03",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERNG",
+   596236000
+  ],
+  [
+   "2021-03",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   2374193000
+  ],
+  [
+   "2021-03",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   1393214000
+  ],
+  [
+   "2021-03",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   9095997000
+  ],
+  [
+   "2021-03",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   10340641000
+  ],
+  [
+   "2021-03",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   608623000
+  ],
+  [
+   "2021-03",
+   "96809970",
+   "UNIDAD LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   843730000
+  ],
+  [
+   "2021-03",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   827035000
+  ],
+  [
+   "2021-03",
+   "99501480",
+   "PENTA FINANCIERO S.A.",
+   "C",
+   "ERFG",
+   2399839000
+  ],
+  [
+   "2021-03",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   63712000
+  ],
+  [
+   "2021-03",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   362153000
+  ],
+  [
+   "2021-03",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   104061000
+  ],
+  [
+   "2021-06",
+   "76002293",
+   "SANTANDER CONSUMER FINANCE LIMITADA",
+   "C",
+   "ERFG",
+   9136549000
+  ],
+  [
+   "2021-06",
+   "76120857",
+   "GLOBAL SOLUCIONES FINANCIERAS S.A.",
+   "C",
+   "ERFG",
+   289095000
+  ],
+  [
+   "2021-06",
+   "76139506",
+   "AUTOFIN S.A.",
+   "C",
+   "ERFG",
+   2071647000
+  ],
+  [
+   "2021-06",
+   "76238714",
+   "GAMA SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   3562514000
+  ],
+  [
+   "2021-06",
+   "76360977",
+   "PRIMUS CAPITAL S.A.",
+   "C",
+   "ERFG",
+   4564152000
+  ],
+  [
+   "2021-06",
+   "76381570",
+   "INTERFACTOR S.A.",
+   "C",
+   "ERFG",
+   283579000
+  ],
+  [
+   "2021-06",
+   "77048001",
+   "LEASING URBANO S.A.",
+   "I",
+   "ERNG",
+   -26299000
+  ],
+  [
+   "2021-06",
+   "77356020",
+   "COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA",
+   "C",
+   "ERFG",
+   1136207000
+  ],
+  [
+   "2021-06",
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "I",
+   "ERFG",
+   1469490000
+  ],
+  [
+   "2021-06",
+   "94050000",
+   "GMAC COMERCIAL AUTOMOTRIZ CHILE S.A.",
+   "C",
+   "ERFG",
+   10847565000
+  ],
+  [
+   "2021-06",
+   "96626570",
+   "INCOFIN S.A.",
+   "C",
+   "ERFG",
+   1392086000
+  ],
+  [
+   "2021-06",
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "I",
+   "ERFG",
+   4784343000
+  ],
+  [
+   "2021-06",
+   "96660790",
+   "FACTOTAL S.A.",
+   "C",
+   "ERFG",
+   3004004000
+  ],
+  [
+   "2021-06",
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   20425353000
+  ],
+  [
+   "2021-06",
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "C",
+   "ERFG",
+   23861389000
+  ],
+  [
+   "2021-06",
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "I",
+   "ERFG",
+   1076322000
+  ],
+  [
+   "2021-06",
+   "96809970",
+   "UNIDAD LEASING HABITACIONAL S.A.",
+   "I",
+   "ERFG",
+   1058536000
+  ],
+  [
+   "2021-06",
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "C",
+   "ERFG",
+   2003828000
+  ],
+  [
+   "2021-06",
+   "99501480",
+   "PENTA FINANCIERO S.A.",
+   "C",
+   "ERFG",
+   4636471000
+  ],
+  [
+   "2021-06",
+   "99513410",
+   "SMB FACTORING S.A.",
+   "I",
+   "ERFG",
+   133193000
+  ],
+  [
+   "2021-06",
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A.",
+   "I",
+   "ERFG",
+   354049000
+  ],
+  [
+   "2021-06",
+   "99595990",
+   "LATAM FACTORS S.A.",
+   "C",
+   "ERFG",
+   -515140000
+  ],
+  [
+   "2021-09",
+   "76002293",
+   "SANTANDER CONSUMER FINANCE LIMITADA",
+   "C",
+   "ERFG",
+   14854345000
+  ]
+ ],
+ "sql": "SELECT periodo, rut, nombre_reportado, tipo_balance, estado_financiero, valor_archivo AS ganancia_perdida FROM factoring_leasing_resultados WHERE lower(cuenta) = 'ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion_contexto = 1 ORDER BY periodo DESC, rut;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

@@ -1,0 +1,120 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "mayores-utilidades-del-ultimo-ejercicio-fondos-e-19a6a2",
+ "titulo": "Mayores utilidades del último ejercicio, fondos en pesos (MM$)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "run_fondo",
+  "nombre_fondo",
+  "utilidad_mm"
+ ],
+ "filas": 20,
+ "truncado": false,
+ "datos": [
+  [
+   "10519",
+   "FM BANCHILE PORTAFOLIO AHORRO CORTO PLAZ",
+   90724.0
+  ],
+  [
+   "8026",
+   "FM BANCHILE CAPITAL FINANCIERO",
+   166004.2
+  ],
+  [
+   "8049",
+   "FONDO MUTUO SCOTIA MONEY MARKET",
+   81338.3
+  ],
+  [
+   "8057",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   166486.8
+  ],
+  [
+   "8107",
+   "FONDO MUTUO BCI COMPETITIVO",
+   91994.8
+  ],
+  [
+   "8125",
+   "FM BANCHILE ESTRATEGICO",
+   79235.7
+  ],
+  [
+   "8127",
+   "FM BANCHILE UTILIDADES",
+   89798.6
+  ],
+  [
+   "8319",
+   "FONDO MUTUO SOLVENTE BANCO ESTADO",
+   86976.8
+  ],
+  [
+   "8320",
+   "FONDO MUTUO CONVENIENCIA BANCOESTADO",
+   105294.5
+  ],
+  [
+   "8372",
+   "FONDO MUTUO SANTANDER ACCIONES SELECTAS CHILE",
+   60621.9
+  ],
+  [
+   "8380",
+   "FM BANCHILE SELECCION ACCIONES CHILENAS",
+   93073.0
+  ],
+  [
+   "8615",
+   "FONDO MUTUO SANTANDER RENTA CORTO PLAZO",
+   63544.9
+  ],
+  [
+   "8723",
+   "FONDO MUTUO LARRAINVIAL ENFOQUE",
+   114915.7
+  ],
+  [
+   "8872",
+   "FONDO MUTUO LARRAINVIAL ACCIONES NACIONALES",
+   68590.8
+  ],
+  [
+   "8898",
+   "FONDO MUTUO BTG PACTUAL CHILE ACCION",
+   85437.7
+  ],
+  [
+   "9022",
+   "FM BANCHILE CAPITAL EMPRESARIAL",
+   114962.5
+  ],
+  [
+   "9034",
+   "FONDO MUTUO SANTANDER RENTA SELECTA CHILE",
+   91973.6
+  ],
+  [
+   "9043",
+   "FM BANCHILE PORTAFOLIO MODERADO LARGO PL",
+   77008.3
+  ],
+  [
+   "9222",
+   "FONDO MUTUO SANTANDER AHORRO MEDIANO PLAZO",
+   81460.1
+  ],
+  [
+   "9489",
+   "FM BANCHILE RENTA VARIABLE NACIONAL",
+   65240.7
+  ]
+ ],
+ "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS utilidad_mm FROM ffmm_resultados WHERE codigo_cuenta = 'UtilidadPerdidaDeLaOperacionDespuesDeImpuesto' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

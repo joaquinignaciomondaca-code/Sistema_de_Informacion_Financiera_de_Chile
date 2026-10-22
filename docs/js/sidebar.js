@@ -190,7 +190,7 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "ffmm",
             chips: [
-              { label: "Forwards y futuros por activo objeto, último mes", query: "SELECT activo_objeto, posicion, count(*) AS contratos, SUM(monto_comprometido_miles_mf) AS monto_comprometido_miles_mf FROM ffmm_futuros WHERE periodo = (SELECT max(periodo) FROM ffmm_futuros) GROUP BY activo_objeto, posicion ORDER BY contratos DESC LIMIT 15;" },
+              { label: "Forwards y futuros por activo objeto, último mes", query: "SELECT activo_objeto, posicion, count(*) AS contratos, SUM(monto_comprometido_miles_mf) AS monto_comprometido_miles_mf FROM ffmm_futuros WHERE periodo = (SELECT max(periodo) FROM ffmm_futuros) GROUP BY activo_objeto, posicion ORDER BY contratos DESC, activo_objeto, posicion LIMIT 15;" },
               { label: "Contratos vigentes por mes", query: "SELECT periodo, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM ffmm_futuros GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
               { label: "Opciones del último mes", query: "SELECT run_fondo, nombre_fondo, activo_objeto, nemotecnico, tipo_opcion, fecha_expiracion, numero_contratos, precio_ejercicio, inversion_primas_miles_mf FROM ffmm_opciones WHERE periodo = (SELECT max(periodo) FROM ffmm_opciones) ORDER BY run_fondo;" }
             ],
@@ -291,7 +291,7 @@ const EXPLORER_TREE = [
             sector: "fi",
             chips: [
               { label: "Forwards y futuros por activo objeto, último trimestre", query: "SELECT activo_objeto, posicion, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM fi_futuros WHERE periodo = (SELECT max(periodo) FROM fi_futuros) GROUP BY activo_objeto, posicion ORDER BY contratos DESC LIMIT 20;" },
-              { label: "Contrapartes de derivados, último trimestre", query: "SELECT contraparte, count(*) AS contratos FROM fi_futuros WHERE periodo = (SELECT max(periodo) FROM fi_futuros) GROUP BY contraparte ORDER BY contratos DESC LIMIT 15;" },
+              { label: "Contrapartes de derivados, último trimestre", query: "SELECT contraparte, count(*) AS contratos FROM fi_futuros WHERE periodo = (SELECT max(periodo) FROM fi_futuros) GROUP BY contraparte ORDER BY contratos DESC, contraparte LIMIT 15;" },
               { label: "Opciones por trimestre", query: "SELECT periodo, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM fi_opciones GROUP BY periodo ORDER BY periodo DESC LIMIT 12;" },
               { label: "Pactos por tipo de operación y contraparte, último trimestre", query: "SELECT tipo_operacion, contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_prom_pct FROM fi_pactos WHERE periodo = (SELECT max(periodo) FROM fi_pactos) GROUP BY tipo_operacion, contraparte ORDER BY pactos DESC LIMIT 20;" }
             ],
@@ -946,7 +946,7 @@ const EXPLORER_TREE = [
               { label: "Por securitizadora, diciembre 2025", query: "SELECT coalesce(s.razon_social, t.nombre_administradora) AS securitizadora, count(*) AS patrimonios, sum(t.activos_m_clp) AS activos_m_clp, sum(t.pasivos_m_clp) AS pasivos_m_clp, sum(t.patrimonio_m_clp) AS patrimonio_m_clp FROM (SELECT periodo, rut_administradora, nombre_administradora, codigo_patrimonio, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Activos') AS activos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria IN ('Total Pasivo Circulante', 'Total Pasivo No Circulante')) AS pasivos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Patrimonio (Excedente Acumulado)') AS patrimonio_m_clp FROM patrimonios_separados_balance GROUP BY ALL) t LEFT JOIN securitizadoras_lista_entidades s ON s.rut = t.rut_administradora WHERE t.periodo = '2025-12' GROUP BY ALL ORDER BY activos_m_clp DESC;" },
               { label: "Balance completo de un patrimonio", query: "SELECT orden_en_balance, categoria, cuenta, monto_m_clp FROM patrimonios_separados_balance WHERE periodo = '2025-12' AND nombre_administradora = 'SECURITIZADORA SECURITY' AND codigo_patrimonio = (SELECT min(codigo_patrimonio) FROM patrimonios_separados_balance WHERE periodo = '2025-12' AND nombre_administradora = 'SECURITIZADORA SECURITY') ORDER BY orden_en_balance;" },
               { label: "Pasivos de diciembre 2025 por cuenta", query: "SELECT categoria, cuenta, sum(monto_m_clp) AS monto_m_clp, count(*) AS patrimonios FROM patrimonios_separados_balance WHERE categoria IN ('Pasivo Circulante', 'Pasivo No Circulante') AND periodo = '2025-12' GROUP BY ALL ORDER BY monto_m_clp DESC;" },
-              { label: "Cuentas más frecuentes por rubro", query: "SELECT categoria, cuenta, count(*) AS balances, sum(monto_m_clp) AS suma_m_clp FROM patrimonios_separados_balance WHERE categoria NOT LIKE 'Total%' GROUP BY ALL ORDER BY balances DESC LIMIT 30;" }
+              { label: "Cuentas más frecuentes por rubro", query: "SELECT categoria, cuenta, count(*) AS balances, sum(monto_m_clp) AS suma_m_clp FROM patrimonios_separados_balance WHERE categoria NOT LIKE 'Total%' GROUP BY ALL ORDER BY balances DESC, categoria, cuenta LIMIT 30;" }
             ],
             tables: [
               { id: "patrimonios_separados_balance", name: "patrimonios_separados.balance", rows: "Balance", file: "outputs/securitizadoras/patrimonios_separados_balance.parquet" }
