@@ -77,7 +77,7 @@ La Ley 21.719 protege a **personas naturales**, no a personas jurídicas. De los
 |---|---|---|---|
 | `fintech_rpsf_lista_entidades` | 264 | 226 personas jurídicas, **36 personas naturales** y 2 sin tipo. Las 36 llevan RUT+DV, razón social (nombre de la persona), email, comuna, región y sitio web. **46 correos en dominios personales** (gmail, hotmail, outlook, yahoo). | Publicable en su núcleo registral; el **email no es necesario** para el fin del dataset |
 | `corredoras_bolsa_lista_entidades` | 120 | **11 corredores de bolsa inscritos a nombre de persona natural**, con RUT+DV y nombre (p. ej. `BRANCHI BRANCHI PABLO`, `1347879-1`; `ETCHEGARAY GIL TOMAS`, `1571295-3`) | Datos de un registro público obligatorio (Ley 18.045); sin datos de contacto. Publicable |
-| `seguros_bienes_raices` | 760.152 | `nombre_del_tasador_1/2`: **233 tasadores distintos**, varios personas naturales | Nombres de peritos tal como constan en la Circular 1835; sin RUT ni contacto. Publicable |
+| `seguros_bienes_raices` | 760.152 | `nombre_del_tasador_1/2`: **317 nombres distintos** (233 en la tasación 1 y 263 en la 2), entre personas naturales y sociedades tasadoras | Nombres de peritos tal como constan en la Circular 1835; sin RUT ni contacto. Publicable |
 
 **Lo que se revisó y no es dato personal publicado:**
 
