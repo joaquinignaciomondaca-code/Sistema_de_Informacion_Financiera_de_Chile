@@ -167,32 +167,6 @@
       }
     },
     {
-      "id": "corredoras_bolsa_balance",
-      "name": "corredoras.balance",
-      "view_name": "corredoras_bolsa_balance",
-      "sector": "corredoras_bolsa",
-      "sector_label": "Corredoras de Bolsa",
-      "norma": "IFRS · FECU intermediarios CMF",
-      "corte": "2010-12 a 2026-06",
-      "frescura": "Último trimestre publicado: 2026-06",
-      "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-19",
-      "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_balance/manifest.json",
-      "registros_reales": 107976,
-      "descripcion": "Estado de situación financiera de cada corredor de bolsa y agente de valores, cuenta FECU por cuenta, al cierre de cada trimestre. Miles de pesos.",
-      "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/",
-      "metadatos": {
-        "fuente": "CMF, estadísticas de estados financieros IFRS de intermediarios de valores (FECU), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/",
-        "unidad": "Miles de pesos",
-        "escala": "miles (M$)",
-        "moneda": "CLP",
-        "criterio_contable": "Estado de situación financiera FECU por cuenta, al cierre de cada trimestre",
-        "cobertura": "2010-12 a 2026-06 (trimestral); 107.976 filas",
-        "fecha_extraccion": "2026-10-19",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
-      }
-    },
-    {
       "id": "corredoras_bolsa_lista_entidades_registro",
       "name": "corredoras.lista_entidades_registro",
       "view_name": "corredoras_bolsa_lista_entidades_registro",
@@ -241,32 +215,6 @@
         "criterio_contable": "No aplica",
         "cobertura": "2014-03 a 2026-06; 120 entidades; clasificación por conglomerado financiero",
         "fecha_extraccion": "2026-09-23",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
-      }
-    },
-    {
-      "id": "corredoras_bolsa_resultados",
-      "name": "corredoras.resultados",
-      "view_name": "corredoras_bolsa_resultados",
-      "sector": "corredoras_bolsa",
-      "sector_label": "Corredoras de Bolsa",
-      "norma": "IFRS · FECU intermediarios CMF",
-      "corte": "2010-12 a 2026-06",
-      "frescura": "Último trimestre publicado: 2026-06",
-      "modo": "Automático · 3 veces al mes, incremental",
-      "ultima_actualizacion": "2026-10-19",
-      "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/manifest.json",
-      "registros_reales": 77705,
-      "descripcion": "Estado de resultados y resultados integrales de cada corredor de bolsa y agente de valores, acumulados del ejercicio al cierre de cada trimestre, cuenta FECU por cuenta. Miles de pesos.",
-      "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/",
-      "metadatos": {
-        "fuente": "CMF, estadísticas de estados financieros IFRS de intermediarios de valores (FECU)",
-        "unidad": "Miles de pesos (acumulado del ejercicio a la fecha del trimestre)",
-        "escala": "miles (M$)",
-        "moneda": "CLP",
-        "criterio_contable": "Estado de resultados y resultados integrales FECU por cuenta",
-        "cobertura": "2010-12 a 2026-06 (acumulado trimestral); 77.705 filas",
-        "fecha_extraccion": "2026-10-19",
         "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
       }
     },
@@ -1863,6 +1811,38 @@
       "registros_reales": 5506,
       "descripcion": "Estado de resultados (ER, por función o naturaleza e integral) de cada caja de compensación de asignación familiar, cuenta por cuenta. Montos acumulados del ejercicio a la fecha del trimestre, en unidades de la moneda informada.",
       "origen": "CMF — Estados financieros bajo estándar IFRS (TXT trimestral con todas las sociedades que envían estados financieros XBRL): https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php"
+    },
+    {
+      "id": "corredoras_bolsa_balance",
+      "name": "corredoras.balance",
+      "view_name": "corredoras_bolsa_balance",
+      "sector": "corredoras_bolsa",
+      "sector_label": "Corredoras de Bolsa",
+      "norma": "IFRS · FECU intermediarios CMF",
+      "corte": "2010-12 a 2026-06",
+      "frescura": "Último trimestre publicado: 2026-06",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-22",
+      "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_balance/manifest.json",
+      "registros_reales": 107976,
+      "descripcion": "Estado de situación financiera de cada corredor de bolsa y agente de valores, cuenta FECU por cuenta, al cierre de cada trimestre. Miles de pesos.",
+      "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/"
+    },
+    {
+      "id": "corredoras_bolsa_resultados",
+      "name": "corredoras.resultados",
+      "view_name": "corredoras_bolsa_resultados",
+      "sector": "corredoras_bolsa",
+      "sector_label": "Corredoras de Bolsa",
+      "norma": "IFRS · FECU intermediarios CMF",
+      "corte": "2010-12 a 2026-06",
+      "frescura": "Último trimestre publicado: 2026-06",
+      "modo": "Automático · 3 veces al mes, incremental",
+      "ultima_actualizacion": "2026-10-22",
+      "file_parquet": "outputs/corredoras_bolsa/corredoras_bolsa_resultados/manifest.json",
+      "registros_reales": 77705,
+      "descripcion": "Estado de resultados y resultados integrales de cada corredor de bolsa y agente de valores, acumulados del ejercicio al cierre de cada trimestre, cuenta FECU por cuenta. Miles de pesos.",
+      "origen": "CMF — Estadísticas de estados financieros IFRS de intermediarios de valores (corredores de bolsa y agentes de valores), https://www.cmfchile.cl/institucional/estadisticas/merc_valores/intermediarios_fecu_ifrs/"
     }
   ]
 }
