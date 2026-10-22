@@ -5,8 +5,9 @@
 Comprueba, sin navegador ni red, las invariantes de estructura y de temas que el
 rediseño del 2026-09-28 introdujo y que son fáciles de romper sin darse cuenta:
 
-  1. index.html: siete pestañas con role="tab", aria-controls apuntando a un id real
-     y un único panel por pestaña.
+  1. index.html: siete pestañas con role="tab" —Información, Mapa, Diccionario, Visor,
+     Consultas SQL, Descargas y Guía—, aria-controls apuntando a un id real y un
+     único panel por pestaña.
   2. Terminal SQL: contenedor propio dentro del panel principal y todos sus
      componentes presentes; sin restos del panel inferior ni del divisor.
   3. Capa de experiencia (ux_shell.js): pestaña recordada, avisos, atajos y
@@ -35,6 +36,7 @@ TABS = {
     "tab-btn-data": "data-viewer-container",
     "tab-btn-sql": "sql-container",
     "tab-btn-downloads": "downloads-container",
+    "tab-btn-guia": "guia-container",
 }
 
 # Colores fijos que rompen una u otra paleta cuando quedan fuera de los bloques
@@ -246,7 +248,7 @@ def audit_terminal(html):
 
 
 def audit_header_compaction(html, css):
-    """La cabecera del panel debe caber con las seis pestañas.
+    """La cabecera del panel debe caber con las siete pestañas.
 
     Se han cortado dos veces por no contemplar que el panel es la ventana menos
     la barra lateral. Las pestañas van sin iconos y el contexto se comprime por
@@ -550,9 +552,20 @@ def audit_cabeceras():
 def audit_como_usar(html, css):
     """La sección «Cómo usar»: dos pestañas, dos audiencias, cero enlaces muertos."""
     print("\n--- 12. Cómo usar: pestañas de personas y de agentes ---")
-    if 'id="info-como-usar"' not in html:
-        fail("index.html no tiene la sección «Cómo usar» (id=info-como-usar)")
+    if 'id="guia-como-usar"' not in html:
+        fail("index.html no tiene la sección «Cómo usar» (id=guia-como-usar)")
         return
+    # El panel se delimita por el comentario que abre el siguiente, no por una
+    # cuenta de </div>: el contenido tiene paneles anidados y la primera versión
+    # de esta comprobación se cortaba a la mitad.
+    inicio = html.find('id="guia-container"')
+    fin = html.find("<!-- Descargas:", inicio)
+    panel = html[inicio:fin] if (inicio != -1 and fin != -1) else ""
+    faltan = [m for m in ('id="guia-como-usar"', 'id="creditos-guia"') if m not in panel]
+    if faltan:
+        fail(f"la pestaña Guía no contiene {', '.join(faltan)}")
+    else:
+        print("  [OK] la pestaña Guía contiene las instrucciones y los manuales")
     botones = []
     for etiqueta in re.findall(r'<button[^>]*data-uso-tab="([\w-]+)"[^>]*>', html):
         bloque = re.search(r'<button[^>]*data-uso-tab="' + re.escape(etiqueta) + r'"[^>]*>', html)
@@ -578,6 +591,15 @@ def audit_como_usar(html, css):
         if clase not in css:
             fail(f"app.css no define {clase}, que usa la sección «Cómo usar»")
     print("  [OK] las clases de la sección existen en app.css")
+
+    # El enlace directo (#como-usar-agentes) tiene que abrir la pestaña Guía, y
+    # hacerlo en `load`: `switchMainTab` lo define un script en línea y el orden
+    # respecto a los diferidos no está garantizado.
+    guion = read("docs/js/como_usar.js")
+    if 'window.addEventListener("load", entrar)' not in guion:
+        fail("como_usar.js no espera a `load` para cambiar de pestaña: el enlace directo puede fallar")
+    else:
+        print("  [OK] el enlace directo abre la Guía al terminar la carga")
 
 
 def main():
