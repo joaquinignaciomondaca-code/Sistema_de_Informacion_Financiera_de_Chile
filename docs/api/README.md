@@ -22,7 +22,8 @@ el usuario descarga.
 | `v1/schema/{id}.json` | Columnas, tipos, significado y clave de cada objeto. |
 | `v1/partitions/{id}.json` | Los archivos que componen el objeto, con período y SHA-256. |
 | `v1/queries.json` | Las 156 consultas de la web, con **id estable** y la expectativa declarada. |
-| `v1/openapi.json` | **Sólo** las 9 rutas GET que existen. |
+| `v1/resultados/index.json` | El resultado ya calculado de las 156 consultas: filas, columnas, tope, `sha256` y URL de cada uno. Para quien necesita el número y no los 500 MB. |
+| `v1/openapi.json` | **Sólo** las 11 rutas GET que existen. |
 | `v1/views.sql` | Las 105 vistas SQL (90 objetos + 19 alias), ejecutables tal cual. |
 | `llms.txt` | La puerta de entrada para un agente: qué hay, cómo se consulta, qué no suponer. Sus cifras y rutas se auditan como el resto. |
 
@@ -36,6 +37,7 @@ python3 scripts/build_api.py              # docs/api/v1/datapackage.json
 python3 scripts/auditar_datapackage.py    # valida el descriptor    (~12 s)
 python3 scripts/probar_maquina_limpia.py  # consumidor sin el repo  (~5 s)
 python3 scripts/build_contrato.py         # catálogo, esquemas, particiones, consultas, OpenAPI y vistas
+python3 scripts/build_resultados.py       # resultado de las 156 consultas (~2 s)
 python3 scripts/auditar_contrato.py       # audita el contrato     (~1 s)
 python3 scripts/probar_ejemplos.py        # ejemplos de Python y JS (~2 s)
 python3 scripts/test_contrato.py --autoprueba  # test del consumidor (~7 s)
@@ -213,11 +215,35 @@ Para trabajar contra una copia local, se cambia sólo esa línea
 4 objetos vacíos **no** crean vista (no hay archivo); quedan listados como
 comentario al final, con su motivo.
 
+### `resultados/` · el número, sin bajar los Parquet
+
+La fase 3 pedía SQL remoto. Un servidor DuckDB (Quack) no cabe en este
+despliegue: GitHub Pages sirve archivos y no ejecuta procesos, y Actions no
+recibe tráfico entrante. Lo que sí cabe se hace en el build: **las 156 consultas
+del catálogo se ejecutan** contra los mismos Parquet que publica el sitio y cada
+una queda como archivo.
+
+```
+v1/resultados/index.json                                   qué hay y cuánto pesa
+v1/resultados/cartera-extranjera-por-pais-emisor-…json     columnas, filas, datos, sql
+```
+
+Cada resultado lleva `data_release`, el `sql` que lo produjo, `max_filas` (500),
+`truncado` y `filas`. La salida se ordena con `ORDER BY ALL` para que el archivo
+no cambie cuando el dato no cambia, y `build_resultados.py --check` falla si
+quedó atrasado. **No es SQL arbitrario**: es el catálogo publicado, con su SQL a
+la vista para poder reproducirlo o discutirlo.
+
+La receta para levantar un servidor Quack propio —con TLS, token y cuotas— está
+en [`servidor/README.md`](servidor/README.md). No está desplegada, y el motivo
+está escrito ahí: cuesta una máquina y un certificado que hoy nadie pidió.
+
 ### `openapi.json`
 
-Nueve rutas, todas GET y todas reales: los cinco documentos del contrato, el CSV
-de reconciliación, el de claves y los Parquet del sitio. **No hay `/query` ni
-JSON por fila**; si algún día se añade, será una versión mayor (decisión D3).
+Once rutas, todas GET y todas reales: los cinco documentos del contrato, el
+índice de resultados —y cada resultado—, el CSV de reconciliación, el de claves y
+los Parquet del sitio. **No hay `/query` ni SQL arbitrario por HTTP**; si algún
+día se añade, será una versión mayor (decisión D3).
 
 ## SDK de Python
 
@@ -283,9 +309,9 @@ cerrada, no una amnistía.
 **Best effort, sin SLA.** Este contrato describe datos públicos que publica un
 tercero y que se normalizan y se republican; no hay compromiso de
 disponibilidad, latencia ni corrección en un plazo. La API **no** es un servicio
-de consulta: no hay `/query`, no hay JSON por fila y no hay autenticación. Lo
-que hay son archivos Parquet en una URL estable y un descriptor que dice cómo
-leerlos. Si algo falta, se arregla en el siguiente release, y cada release queda
+de consulta: no hay `/query`, no hay SQL arbitrario y no hay autenticación. Lo
+que hay son archivos Parquet en una URL estable, un descriptor que dice cómo
+leerlos y el resultado de las 156 consultas del catálogo ya calculado. Si algo falta, se arregla en el siguiente release, y cada release queda
 identificado por su hash.
 
 ## Retención
@@ -298,13 +324,13 @@ guarda el release que estás usando.
 
 ## Lo que todavía no es
 
-- No hay **ejemplos reproducibles** todavía (fase 1c): el SDK existe, pero
-  Python es el único lenguaje con cliente propio. R y JavaScript usan DuckDB
-  directamente.
-- No hay **test de contrato en CI** (fase 1d): hoy la compuerta es
-  `scripts/auditar_contrato.py`, que corre contra los archivos, no contra el
-  sitio publicado.
+- No hay **SQL arbitrario por HTTP**: quien necesite una consulta distinta a las
+  156 publicadas ejecuta el motor en su máquina (SDK, `views.sql` o DuckDB).
+- No hay **servidor DuckDB compartido** (Quack): la receta está en
+  [`servidor/README.md`](servidor/README.md), sin desplegar. Implica una máquina,
+  un certificado y un costo mensual.
 - **No hay una licencia de datos verificada** (`DATA_LICENSE.md`): los 86
   recursos declaran `pendiente`, no MIT. La MIT es del código.
-- No hay **SQL remoto ni MCP** (fases 2 y 3, opcionales y con decisión aparte):
-  quien quiera consultar tiene que descargar los Parquet.
+- La **misma consulta en R y en JavaScript** existe como ejemplo
+  (`examples/`), pero sólo Python tiene cliente propio: R y JavaScript usan
+  DuckDB directamente.

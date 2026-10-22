@@ -1,0 +1,57 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "donde-se-repite-ganancia-perdida-9a8785",
+ "titulo": "Dónde se repite 'Ganancia (pérdida)'",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "estado_financiero",
+  "repeticion_contexto",
+  "filas",
+  "estados"
+ ],
+ "filas": 6,
+ "truncado": false,
+ "datos": [
+  [
+   "ERFG",
+   1,
+   920,
+   920
+  ],
+  [
+   "ERFG",
+   2,
+   920,
+   920
+  ],
+  [
+   "ERFG",
+   3,
+   1,
+   1
+  ],
+  [
+   "ERI",
+   1,
+   947,
+   947
+  ],
+  [
+   "ERNG",
+   1,
+   28,
+   28
+  ],
+  [
+   "ERNG",
+   2,
+   28,
+   28
+  ]
+ ],
+ "sql": "SELECT estado_financiero, repeticion_contexto, count(*) AS filas, count(DISTINCT (periodo, rut, tipo_balance)) AS estados FROM factoring_leasing_resultados WHERE lower(cuenta) = 'ganancia (pérdida)' GROUP BY ALL ORDER BY estado_financiero, repeticion_contexto;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

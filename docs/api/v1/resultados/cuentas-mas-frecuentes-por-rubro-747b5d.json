@@ -1,0 +1,201 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "cuentas-mas-frecuentes-por-rubro-747b5d",
+ "titulo": "Cuentas más frecuentes por rubro",
+ "origen": "explorador",
+ "data_release": "2026-10-22.fd12b283f0c1",
+ "generado": "2026-10-22",
+ "max_filas": 500,
+ "columnas": [
+  "categoria",
+  "cuenta",
+  "balances",
+  "suma_m_clp"
+ ],
+ "filas": 30,
+ "truncado": false,
+ "datos": [
+  [
+   "Activo Circulante",
+   "Activo securitizado (corto plazo )",
+   109,
+   188220590
+  ],
+  [
+   "Activo Circulante",
+   "Activo securitizado (corto plazo)",
+   113,
+   184311266
+  ],
+  [
+   "Activo Circulante",
+   "Activo securitizado corto plazo",
+   87,
+   2820253943
+  ],
+  [
+   "Activo Circulante",
+   "Disponible",
+   346,
+   137617503
+  ],
+  [
+   "Activo Circulante",
+   "Otros Activos Circulantes",
+   94,
+   122536677
+  ],
+  [
+   "Activo Circulante",
+   "Otros activos circulantes",
+   236,
+   318529074
+  ],
+  [
+   "Activo Circulante",
+   "Provisiones (corto plazo) activo securitizado (menos)",
+   136,
+   -179797847
+  ],
+  [
+   "Activo Circulante",
+   "Valores negociables",
+   216,
+   166385791
+  ],
+  [
+   "Activo No Circulante",
+   "Activo securitizado largo plazo",
+   223,
+   2288071100
+  ],
+  [
+   "Activo No Circulante",
+   "Menor valor en colocación de títulos de deuda",
+   122,
+   55206429
+  ],
+  [
+   "Pasivo Circulante",
+   "Obligaciones por prepagos",
+   176,
+   104079802
+  ],
+  [
+   "Pasivo Circulante",
+   "Obligaciones por títulos de deuda de securitización (corto plazo)",
+   223,
+   462508453
+  ],
+  [
+   "Pasivo Circulante",
+   "Otros acreedores",
+   59,
+   157052973
+  ],
+  [
+   "Pasivo Circulante",
+   "Otros acreedores (corto plazo)",
+   270,
+   497676287
+  ],
+  [
+   "Pasivo Circulante",
+   "Remuneraciones por pagar al banco pagador",
+   105,
+   635900
+  ],
+  [
+   "Pasivo Circulante",
+   "Remuneraciones por pagar al representante tenedores de bonos",
+   102,
+   945059
+  ],
+  [
+   "Pasivo Circulante",
+   "Remuneraciones por pagar por administración y custodia",
+   99,
+   1208632
+  ],
+  [
+   "Pasivo Circulante",
+   "Remuneraciones por pagar por auditoría externa",
+   61,
+   105181
+  ],
+  [
+   "Pasivo Circulante",
+   "Remuneraciones por pagar por clasificación de riesgo",
+   59,
+   173679
+  ],
+  [
+   "Pasivo Circulante",
+   "Remuneración por pagar al banco pagador",
+   101,
+   69379
+  ],
+  [
+   "Pasivo Circulante",
+   "Remuneración por pagar al representante tenedores de bonos",
+   112,
+   284496
+  ],
+  [
+   "Pasivo Circulante",
+   "Remuneración por pagar por administración y custodia",
+   118,
+   2447185
+  ],
+  [
+   "Pasivo Circulante",
+   "Remuneración por pagar por auditoria externa",
+   89,
+   57777
+  ],
+  [
+   "Pasivo Circulante",
+   "Remuneración por pagar por clasificación de riesgo",
+   81,
+   445747
+  ],
+  [
+   "Pasivo No Circulante",
+   "Obligaciones por títulos de deuda de securitización",
+   58,
+   1660862890
+  ],
+  [
+   "Pasivo No Circulante",
+   "Obligaciones por títulos de deuda de securitización (largo plazo)",
+   148,
+   2955296257
+  ],
+  [
+   "Pasivo No Circulante",
+   "Obligaciones por títulos deuda de securitización (largo plazo)",
+   88,
+   1555267690
+  ],
+  [
+   "Pasivo No Circulante",
+   "Otros acreedores (largo plazo)",
+   58,
+   60754263
+  ],
+  [
+   "Patrimonio (Excedente Acumulado)",
+   "Excedentes del ejercicio (déficit)",
+   96,
+   -23803660
+  ],
+  [
+   "Patrimonio (Excedente Acumulado)",
+   "Excedentes obligatorios fin ejercicio anterior",
+   116,
+   -512622742
+  ]
+ ],
+ "sql": "SELECT categoria, cuenta, count(*) AS balances, sum(monto_m_clp) AS suma_m_clp FROM patrimonios_separados_balance WHERE categoria NOT LIKE 'Total%' GROUP BY ALL ORDER BY balances DESC, categoria, cuenta LIMIT 30;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}
