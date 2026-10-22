@@ -1383,14 +1383,14 @@
     {
      "criterio_contable": "No aplica",
      "nombre": "periodo",
-     "rol": "Fecha",
+     "rol": "PK",
      "significado": "Trimestre informado (AAAA-MM).",
      "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
      "nombre": "rut",
-     "rol": "FK",
+     "rol": "PK",
      "significado": "RUT sin dígito verificador (une con corredoras.lista_entidades).",
      "tipo": "VARCHAR"
     },
@@ -1635,14 +1635,14 @@
     {
      "criterio_contable": "No aplica",
      "nombre": "periodo",
-     "rol": "Fecha",
+     "rol": "PK",
      "significado": "Trimestre informado (AAAA-MM).",
      "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
      "nombre": "rut",
-     "rol": "FK",
+     "rol": "PK",
      "significado": "RUT sin dígito verificador (une con corredoras.lista_entidades).",
      "tipo": "VARCHAR"
     },
@@ -2221,14 +2221,14 @@
     {
      "criterio_contable": "No aplica",
      "nombre": "periodo",
-     "rol": "Fecha",
+     "rol": "PK",
      "significado": "Cierre del ejercicio (AAAA-12): estados al 31 de diciembre.",
      "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
      "nombre": "run_fondo",
-     "rol": "FK",
+     "rol": "PK",
      "significado": "RUN del fondo sin dígito verificador (une con ffmm.lista_entidades).",
      "tipo": "VARCHAR"
     },
@@ -2291,7 +2291,7 @@
     {
      "criterio_contable": "No aplica",
      "nombre": "orden",
-     "rol": "PK",
+     "rol": "Orden",
      "significado": "Número de línea del balance como lo presenta la CMF (1 a 16). Es fijo por cuenta: la 8 es siempre el total activo y la 16 el activo neto.",
      "tipo": "INTEGER"
     },
@@ -3061,14 +3061,14 @@
     {
      "criterio_contable": "No aplica",
      "nombre": "periodo",
-     "rol": "Fecha",
+     "rol": "PK",
      "significado": "Cierre del ejercicio (AAAA-12): estados al 31 de diciembre.",
      "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
      "nombre": "run_fondo",
-     "rol": "FK",
+     "rol": "PK",
      "significado": "RUN del fondo sin dígito verificador (une con ffmm.lista_entidades).",
      "tipo": "VARCHAR"
     },
@@ -3131,7 +3131,7 @@
     {
      "criterio_contable": "No aplica",
      "nombre": "orden",
-     "rol": "PK",
+     "rol": "Orden",
      "significado": "Número de línea del estado de resultados como lo presenta la CMF (1 a 19). Es fijo por cuenta: la 8 es siempre el total de ingresos y la 14 la utilidad antes de impuesto.",
      "tipo": "INTEGER"
     },
@@ -3215,7 +3215,7 @@
     {
      "criterio_contable": "No aplica",
      "nombre": "run_fondo",
-     "rol": "FK",
+     "rol": "PK",
      "significado": "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
      "tipo": "VARCHAR"
     },
@@ -4531,7 +4531,7 @@
     {
      "criterio_contable": "No aplica",
      "nombre": "run_fondo",
-     "rol": "FK",
+     "rol": "PK",
      "significado": "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
      "tipo": "VARCHAR"
     },
@@ -5992,14 +5992,14 @@
     {
      "criterio_contable": "No aplica",
      "nombre": "codigo_patrimonio",
-     "rol": "Dimensión",
+     "rol": "PK",
      "significado": "Código del patrimonio separado según el nombre del PDF (p. ej. BTRA15, PS13).",
      "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "Corte",
      "nombre": "periodo",
-     "rol": "Dimensión",
+     "rol": "PK",
      "significado": "Cierre del balance, AAAA-MM (siempre diciembre).",
      "tipo": "VARCHAR"
     },
@@ -6013,7 +6013,7 @@
     {
      "criterio_contable": "No aplica",
      "nombre": "orden_en_balance",
-     "rol": "Atributo",
+     "rol": "PK",
      "significado": "Posición de la cuenta en el balance impreso.",
      "tipo": "BIGINT"
     },
@@ -6027,7 +6027,7 @@
     {
      "criterio_contable": "Glosa",
      "nombre": "cuenta",
-     "rol": "Dimensión",
+     "rol": "PK",
      "significado": "Nombre de la cuenta, copiado del balance.",
      "tipo": "VARCHAR"
     },
@@ -9921,7 +9921,7 @@
     {
      "criterio_contable": "No aplica",
      "nombre": "sector",
-     "rol": "Atributo",
+     "rol": "PK",
      "significado": "vida o generales.",
      "tipo": "VARCHAR"
     },

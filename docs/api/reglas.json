@@ -44,9 +44,9 @@
    "id": "claves.pk_declarada",
    "nivel": "invariante",
    "comando": "python3 scripts/verificar_claves.py --check",
-   "que": "Una clave primaria declarada en el diccionario es única sobre todas las filas publicadas. Las 8 que no lo son están en `excepciones`, con su motivo: una rotura nueva falla.",
-   "estado": "excepciones",
-   "evidencia": "40 verificadas · 8 excepciones declaradas"
+   "que": "Una clave primaria declarada en el diccionario es única sobre todas las filas publicadas. Sin excepciones: las 8 que fallaban se corrigieron en la tarea 1a.9.",
+   "estado": "ok",
+   "evidencia": "48 declaradas y verificadas · 0 excepciones"
   },
   {
    "id": "claves.filas_repetidas",
@@ -60,9 +60,9 @@
    "id": "claves.fk_huerfanas",
    "nivel": "expectativa",
    "comando": "python3 scripts/verificar_claves.py --umbral-fk 0.90",
-   "que": "Tasa de coincidencia de cada clave foránea contra su lista de entidades. Por debajo del umbral, avisa con el número de huérfanas.",
+   "que": "Tasa de coincidencia de cada clave foránea contra su lista de entidades. Por debajo del umbral, avisa con el número de huérfanas. Las columnas que pasaron a formar parte de una PK dejaron de contarse como FK.",
    "estado": "deuda",
-   "evidencia": "40 ok · 3 con huérfanas (corredoras 17,4 % · patrimonios 45,3 %)"
+   "evidencia": "36 ok · 1 con huérfanas (patrimonios separados 45,3 %) · 6 sin destino"
   },
   {
    "id": "datos.columnas_vacias",
@@ -89,70 +89,19 @@
    "evidencia": "86/86 recursos · DATA_LICENSE.md"
   }
  ],
- "excepciones": [
+ "excepciones": [],
+ "historial": [
   {
-   "regla": "claves.pk_declarada",
-   "objeto": "corredoras_bolsa_balance",
-   "clave_declarada": "codigo_fecu",
-   "clave_verificada": "valor_miles_clp + rut + rut_dv + razon_social + periodo + codigo_fecu",
-   "motivo": "La clave declarada identifica la cuenta, no la fila: falta el periodo y el monto la desempata. El diccionario está mal, el dato es coherente.",
-   "salida": "corregir la PK del diccionario (tarea 1a.9)"
-  },
-  {
-   "regla": "claves.pk_declarada",
-   "objeto": "corredoras_bolsa_resultados",
-   "clave_declarada": "codigo_fecu",
-   "clave_verificada": "valor_miles_clp + rut + rut_dv + razon_social + periodo + codigo_fecu",
-   "motivo": "Ídem: la clave declarada omite el periodo.",
-   "salida": "corregir la PK del diccionario (tarea 1a.9)"
-  },
-  {
-   "regla": "claves.pk_declarada",
-   "objeto": "ffmm_balance",
-   "clave_declarada": "orden + codigo_cuenta",
-   "clave_verificada": "no hay clave corta: sólo la fila completa",
-   "motivo": "Falta el fondo (run_fondo) y el periodo en la clave declarada.",
-   "salida": "corregir la PK del diccionario (tarea 1a.9)"
-  },
-  {
-   "regla": "claves.pk_declarada",
-   "objeto": "ffmm_resultados",
-   "clave_declarada": "orden + codigo_cuenta",
-   "clave_verificada": "valor_miles_mf + valor_anterior_miles_mf + ... + periodo + orden",
-   "motivo": "Falta el fondo y el periodo en la clave declarada.",
-   "salida": "corregir la PK del diccionario (tarea 1a.9)"
-  },
-  {
-   "regla": "claves.pk_declarada",
-   "objeto": "fi_balance",
-   "clave_declarada": "periodo + contexto + codigo_cuenta",
-   "clave_verificada": "no hay clave corta: sólo la fila completa",
-   "motivo": "Falta el fondo de inversión (run_fondo): la tabla publica todos los fondos juntos.",
-   "salida": "corregir la PK del diccionario (tarea 1a.9)"
-  },
-  {
-   "regla": "claves.pk_declarada",
-   "objeto": "fi_resultados",
-   "clave_declarada": "periodo + contexto + codigo_cuenta",
-   "clave_verificada": "no hay clave corta: sólo la fila completa",
-   "motivo": "Ídem: falta el fondo de inversión.",
-   "salida": "corregir la PK del diccionario (tarea 1a.9)"
-  },
-  {
-   "regla": "claves.pk_declarada",
-   "objeto": "patrimonios_separados_balance",
-   "clave_declarada": "archivo",
-   "clave_verificada": "monto_m_clp + archivo + cuenta + codigo_patrimonio + orden_en_balance",
-   "motivo": "`archivo` no identifica la fila: cada archivo trae muchas cuentas.",
-   "salida": "corregir la PK del diccionario (tarea 1a.9)"
-  },
-  {
-   "regla": "claves.pk_declarada",
-   "objeto": "seguros_lista_entidades",
-   "clave_declarada": "rut_aseguradora",
-   "clave_verificada": "nombre_aseguradora + rut_aseguradora + meses_reportados",
-   "motivo": "4 filas comparten RUT: el mismo RUT aparece con otro nombre o con otro corte. Es un dato a revisar, no sólo un error de diccionario.",
-   "salida": "revisar las 4 filas duplicadas y decidir si se colapsan (tarea 1a.9)"
+   "fecha": "2026-10-22",
+   "tarea": "1a.9",
+   "que": "Se corrigieron las 8 claves primarias declaradas que no eran únicas: la natural omitía el periodo, el fondo o el sector. La lista de excepciones queda vacía y la regla pasa a invariante pura.",
+   "detalle": [
+    "corredoras_bolsa_balance y _resultados: codigo_fecu → periodo + rut + codigo_fecu",
+    "ffmm_balance y _resultados: orden + codigo_cuenta → periodo + run_fondo + codigo_cuenta",
+    "fi_balance y _resultados: periodo + contexto + codigo_cuenta → periodo + contexto + run_fondo + codigo_cuenta",
+    "patrimonios_separados_balance: archivo → periodo + codigo_patrimonio + cuenta + archivo + orden_en_balance",
+    "seguros_lista_entidades: rut_aseguradora → sector + rut_aseguradora (no eran RUT repetidos: la misma aseguradora tiene registro de vida y de generales)"
+   ]
   }
  ]
 }
