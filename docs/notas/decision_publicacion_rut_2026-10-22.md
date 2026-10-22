@@ -4,6 +4,21 @@
 **Objeto:** reponer `rut_emisor` para las 202.835 filas que hoy se publican sin identificador.
 **Fecha:** 2026-10-22. **Vigencia legal relevante:** 2026-12-01 (Ley 21.719).
 
+## 0 bis. Estado: lo que ya quedó implementado (2026-10-22)
+
+Dos piezas del plan se ejecutaron sin cambiar la regla de publicación:
+
+1. **`emisor_id`** — seudónimo estable del emisor (`EMI-…`), calculado desde el RUT original, que
+   permite seguir a la misma contraparte entre trimestres y fondos sin publicar su RUT. Resuelve el
+   problema analítico que motivaba publicar el RUT.
+2. **`rut_omitido_por_ley`** — booleano por fila: verdadero si el RUT se retiró, falso si se publica.
+3. **Interruptor de publicación** — `SIF_PUBLICAR_RUT_EMISOR=publicar` repone los RUT; el valor por
+   omisión (`suprimir`) mantiene la regla. La compuerta de privacidad rechaza una publicación que
+   mezcle los dos modos.
+
+Con eso, publicar los 31.215 RUT deja de ser un cambio de código y pasa a ser un cambio de
+configuración, reversible en una corrida. La decisión de fondo —si se activa— sigue abierta.
+
 ---
 
 ## 0. Qué se decide exactamente

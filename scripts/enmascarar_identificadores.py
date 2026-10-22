@@ -80,6 +80,15 @@ def procesar_cartera_nacional(ruta: Path, entidades: set, apply: bool) -> tuple[
 
     rut = tabla.column("rut_emisor").to_pylist()
     enmascarados, tipos = privacidad.enmascarar_columna(rut, entidades)
+    # Un RUT ya suprimido no se puede volver a clasificar: el recálculo diría
+    # «sin_rut_informado» y borraría la evidencia del criterio. Cuando la fila
+    # ya traía su tipo y su seudónimo, se conservan.
+    previos_tipo = tabla.column("emisor_tipo").to_pylist() if "emisor_tipo" in nombres else None
+    previos_id = (tabla.column(privacidad.COLUMNA_EMISOR_ID).to_pylist()
+                  if privacidad.COLUMNA_EMISOR_ID in nombres else None)
+    if previos_tipo and previos_id:
+        tipos = [previo if valor is None and previo == privacidad.TIPO_NATURAL else tipo
+                 for valor, previo, tipo in zip(rut, previos_tipo, tipos)]
     suprimidos = sum(1 for original, nuevo in zip(rut, enmascarados)
                      if privacidad.cuerpo_rut(original) is not None and nuevo is None)
     # «Ya aplicado» no se puede decidir comparando columnas recalculadas: una vez
@@ -87,14 +96,33 @@ def procesar_cartera_nacional(ruta: Path, entidades: set, apply: bool) -> tuple[
     # «sin_rut_informado». El criterio es: la columna que documenta la regla
     # existe y no queda ningún RUT que debiera suprimirse.
     pendientes = sum(1 for valor in rut if privacidad.es_probable_persona_natural(valor, entidades))
-    ya_listo = "emisor_tipo" in nombres and pendientes == 0
-    if ya_listo:
-        return False, "ya aplicado"
+    modo = privacidad.modo_publicacion_rut()
+    # Las tres columnas se escriben juntas: si falta cualquiera, el archivo se
+    # vuelve a procesar para completarlas (el relleno es idempotente).
+    completo = all(c in nombres for c in ("emisor_tipo", privacidad.COLUMNA_EMISOR_ID,
+                                          privacidad.COLUMNA_RUT_OMITIDO))
+    if completo and (pendientes == 0 or modo == privacidad.MODO_PUBLICAR):
+        return False, f"ya aplicado (modo {modo})"
 
-    tabla = con_columna(tabla, "rut_emisor", enmascarados)
+    if modo == privacidad.MODO_PUBLICAR and pendientes:
+        return False, (f"{pendientes:,} RUT ya suprimidos en el archivo publicado: el modo "
+                       "publicar exige reprocesar desde la fuente, no desde el Parquet")
+
+    sal = privacidad.sal_privada()
+    tabla = con_columna(tabla, "rut_emisor", rut if modo == privacidad.MODO_PUBLICAR else enmascarados)
     tabla = con_columna(tabla, "emisor_tipo", tipos)
+    ids = [privacidad.emisor_id(valor, sal) for valor in rut]
+    if previos_id:
+        # El seudónimo de una fila suprimida solo existe en el archivo: se hereda.
+        ids = [previo if nuevo is None and previo else nuevo
+               for nuevo, previo in zip(ids, previos_id)]
+    tabla = con_columna(tabla, privacidad.COLUMNA_EMISOR_ID, ids)
+    tabla = con_columna(tabla, privacidad.COLUMNA_RUT_OMITIDO,
+                        [tipo == privacidad.TIPO_NATURAL and modo == privacidad.MODO_SUPRIMIR
+                         for tipo in tipos], tipo=pa.bool_())
     escribir(ruta, tabla, apply)
-    return True, f"{suprimidos:,} RUT suprimidos de {len(rut):,} filas"
+    verbo = "publicados" if modo == privacidad.MODO_PUBLICAR else "suprimidos"
+    return True, f"{suprimidos:,} RUT {verbo} de {len(rut):,} filas (modo {modo})"
 
 
 # ---------------------------------------------------------------------------

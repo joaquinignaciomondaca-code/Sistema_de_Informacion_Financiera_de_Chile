@@ -41,6 +41,30 @@ tres conjuntos con datos de personas naturales:
   contra registros públicos, el criterio alcanza a personas naturales
   identificables, no a entidades.
 
+### 2.1 Seguimiento del emisor sin publicar su RUT
+
+Suprimir el RUT sin reemplazo habría roto el análisis: el nemotécnico identifica
+el instrumento, no al emisor, y 11.629 de los 31.215 emisores suprimidos usan más
+de un nemotécnico. Por eso la tabla publica dos columnas que acompañan a
+`rut_emisor`:
+
+| Columna | Tipo | Qué contiene |
+|---|---|---|
+| `emisor_id` | texto | Seudónimo estable del emisor (`EMI-…`), igual para el mismo emisor en cualquier trimestre y fondo. Permite sumar su exposición, seguir su serie y medir concentración sin publicar su RUT |
+| `rut_omitido_por_ley` | booleano | Verdadero cuando el RUT de esa fila se retiró por esta regla; falso cuando el RUT se publica tal cual |
+
+`emisor_id` es un seudónimo, no una anonimización: el vínculo con el RUT existe en
+una tabla privada que no se publica, y el artículo 2 letra k de la Ley 21.719
+reserva la palabra «anonimización» para el procedimiento irreversible. Por eso la
+segunda columna se llama `rut_omitido_por_ley` y no `anonimizado_por_ley`.
+
+**Cambiar de criterio es una decisión de configuración, no de código.** La variable
+de entorno `SIF_PUBLICAR_RUT_EMISOR` admite dos valores: `suprimir` (por omisión,
+el modo descrito aquí) y `publicar`, que repone el RUT de las personas naturales y
+deja `rut_omitido_por_ley` en falso. La compuerta `scripts/auditar_personas_publicadas.py`
+verifica que la bandera y el contenido de `rut_emisor` coincidan, y rechaza una
+publicación que mezcle los dos modos.
+
 Las reglas viven en `pipelines/auto/privacidad.py` y se aplican antes de
 publicar; `scripts/enmascarar_identificadores.py` las aplica a lo ya publicado.
 

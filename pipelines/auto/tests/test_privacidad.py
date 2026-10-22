@@ -124,6 +124,43 @@ class DataFrameTest(unittest.TestCase):
         self.assertEqual(out["emisor_tipo"].tolist(),
                          [privacidad.TIPO_JURIDICA, privacidad.TIPO_NATURAL, privacidad.TIPO_SIN_RUT])
 
+    def test_emisor_id_estable_y_opaco(self):
+        # Mismo RUT, mismo id: así se sigue al emisor entre trimestres y fondos.
+        self.assertEqual(privacidad.emisor_id("8674048"), privacidad.emisor_id("8674048"))
+        self.assertNotEqual(privacidad.emisor_id("8674048"), privacidad.emisor_id("8674049"))
+        self.assertIsNone(privacidad.emisor_id(None))
+        self.assertIsNone(privacidad.emisor_id(""))
+        # Con sal, el id deja de ser reproducible por terceros.
+        self.assertNotEqual(privacidad.emisor_id("8674048"),
+                            privacidad.emisor_id("8674048", "sal-privada"))
+
+    def test_banderas_de_la_regla(self):
+        df = self.pd.DataFrame({"rut_emisor": ["76015592", "15273263", None]})
+        fuera = privacidad.proteger_cartera_nacional(df, {"76015592"}, modo="suprimir")
+        self.assertEqual(fuera["rut_omitido_por_ley"].tolist(), [False, True, False])
+        self.assertTrue(self.pd.isna(fuera["rut_emisor"].tolist()[1]))
+        # El id del emisor sobrevive a la supresión: es la clave de seguimiento.
+        self.assertTrue(all(isinstance(v, str) and v.startswith("EMI-")
+                            for v in fuera["emisor_id"].tolist()[:2]))
+        self.assertTrue(self.pd.isna(fuera["emisor_id"].tolist()[2]))
+
+        dentro = privacidad.proteger_cartera_nacional(df, {"76015592"}, modo="publicar")
+        self.assertEqual(dentro["rut_omitido_por_ley"].tolist(), [False, False, False])
+        self.assertEqual(dentro["rut_emisor"].tolist()[1], "15273263")
+        self.assertEqual(dentro["emisor_tipo"].tolist()[1], privacidad.TIPO_NATURAL)
+
+    def test_modo_por_variable_de_entorno(self):
+        import os
+        from unittest import mock
+        with mock.patch.dict(os.environ, {}, clear=False):
+            os.environ.pop("SIF_PUBLICAR_RUT_EMISOR", None)
+            self.assertEqual(privacidad.modo_publicacion_rut(), privacidad.MODO_SUPRIMIR)
+            os.environ["SIF_PUBLICAR_RUT_EMISOR"] = "publicar"
+            self.assertEqual(privacidad.modo_publicacion_rut(), privacidad.MODO_PUBLICAR)
+            os.environ["SIF_PUBLICAR_RUT_EMISOR"] = "otra-cosa"
+            with self.assertRaises(ValueError):
+                privacidad.modo_publicacion_rut()
+
     def test_proteger_bienes_raices_quita_direccion_y_rol(self):
         df = self.pd.DataFrame({
             "rut_aseguradora": ["76015592", "76015592"],
