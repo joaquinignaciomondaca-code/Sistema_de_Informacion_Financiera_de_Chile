@@ -343,6 +343,26 @@ class DataViewerController {
     return `<div class="scope-banner" role="note"><b>${dvEscapar(nivel ? nivel.etiqueta : "Archivo")}</b><span>${dvEscapar(A.aviso(sector))}</span></div>`;
   }
 
+  // Aviso de duplicados de la tabla abierta. Sale de js/estado_claves.js,
+  // generado desde claves.csv: si la clave no es única, sumar la columna tal
+  // como viene sobreestima, y hay que decirlo aquí, donde se consulta.
+  avisoClaves() {
+    const datos = window.ESTADO_CLAVES && window.ESTADO_CLAVES.objetos;
+    const clave = datos && datos[this.currentView];
+    if (!clave || !clave.sobrantes) return "";
+    const num = (n) => Number(n).toLocaleString("es-CL");
+    // Un porcentaje pequeño no se redondea a cero: hay duplicados igual.
+    const pct = Number(clave.pct_repetidas);
+    const pctTexto = (pct > 0 && pct < 0.1 ? pct.toFixed(3) : pct.toFixed(1)).replace(".", ",");
+    let texto = `Esta tabla contiene filas duplicadas de origen: ${num(clave.sobrantes)} ` +
+      `de ${num(clave.filas)} filas (${pctTexto} %). No sumes sin agrupar.`;
+    if (clave.ejemplo) {
+      texto += ` En ${clave.ejemplo.periodo}, sumar ${clave.ejemplo.columna} sin agrupar ` +
+        `sobreestima ${num(clave.ejemplo.pct)} %.`;
+    }
+    return `<div class="scope-banner scope-banner-claves" role="note"><b>Filas repetidas</b><span>${dvEscapar(texto)}</span></div>`;
+  }
+
   modeForView() {
     const table = (window.SIFDataDictionary || []).find((item) => item.id === this.currentView);
     const modo = table && table.modo ? table.modo : "Automático";
@@ -764,6 +784,7 @@ class DataViewerController {
         </div>
 
         ${this.avisoAlcance()}
+        ${this.avisoClaves()}
 
         <!-- Tabla de datos scrollable -->
         <div class="dv-table-container">

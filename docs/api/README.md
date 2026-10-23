@@ -149,11 +149,16 @@ mano—, y los tipos se traducen a Table Schema (`VARCHAR` → `string`,
 idénticas: no hay combinación de columnas que distinga una fila de otra. Prometer
 una clave falsa es peor que no tener ninguna.
 
+En `catalog.json` y en cada `schema/{id}.json`, la ausencia de clave se publica
+como `"primaryKey": null` —nunca `[]`, que se leería como una clave de cero
+columnas—. Son 27 objetos: los 13 que perdieron una clave falsa, los 13 que nunca
+la tuvieron y `fi_bienes_raices`, que no publica filas.
+
 El 2026-10-23 se corrigieron **13 claves que se habían dado por buenas sin serlo**
 (`ffmm_cartera_nacional` entre ellas, con 160.564 filas repetidas): un error de
 `scripts/verificar_claves.py` marcaba las repeticiones con una comparación de
 tuplas que DuckDB no evalúa fila a fila, y el vacío se leía como «no hay
-duplicados». Ver `docs/notas/claves_duplicados_2026-10-23.md`.
+duplicados». Ver [`docs/notas/claves_duplicados_2026-10-23.md`](../notas/claves_duplicados_2026-10-23.md).
 
 El `hash` de cada recurso es el SHA-256 de la concatenación de los SHA-256 de
 sus particiones, y el conjunto de todos ellos produce el `data_release`
