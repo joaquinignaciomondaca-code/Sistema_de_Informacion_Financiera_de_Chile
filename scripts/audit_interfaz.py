@@ -584,7 +584,7 @@ def audit_como_usar(html, css):
         fail("index.html no carga js/como_usar.js con versión")
     else:
         print("  [OK] index.html carga como_usar.js con versión")
-    for clave in ("191 tokens", "156", "sif-mcp"):
+    for clave in ("191 tokens", "159", "sif-mcp"):
         if clave not in html:
             fail(f"«Cómo usar» no menciona «{clave}», que es lo que promete la entrega")
     for clase in (".uso-tabs", ".uso-tab", ".uso-panel", ".uso-code"):

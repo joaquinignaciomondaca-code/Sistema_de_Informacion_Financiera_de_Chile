@@ -322,7 +322,7 @@ def construir_openapi(catalogo: list[dict], n_consultas: int, base: str,
             "description": (
                 "API de solo lectura sobre archivos estáticos. Las rutas listadas son las que "
                 "existen: no hay endpoint de consulta ad-hoc, ni autenticación, ni SLA. "
-                "Las 156 consultas del catálogo sí vienen con su resultado ya calculado, "
+                f"Las {n_consultas} consultas del catálogo sí vienen con su resultado ya calculado, "
                 "en /api/v1/resultados/."
             ),
             "license": {"name": "Datos: uso condicionado por la fuente · Código: MIT",
