@@ -86,18 +86,60 @@ y 1 clave sobre una tabla vacía—. Objetos sin `primaryKey`: de 14 a **27**. R
 Data Package con clave: de 76 a **63**. Objetos declarados «sin clave» en `claves.csv`:
 de 9 a **22**. No cambia ni una fila ni una columna publicada.
 
-## 5. Lo que queda, y por qué no se tocó aquí
+## 5. Lo que se resolvió después de esta nota
 
-1. **Estado de la clave en el Diccionario**, con el número de filas repetidas por tabla
-   («publica 160.564 filas idénticas: no sumes sin agrupar»). Es la parte útil de la
-   crítica: el dato hoy está en `claves.csv`, que casi nadie lee.
-2. **Claves de medidas.** `seguros_renta_fija` y otras cinco publican claves compuestas
-   sólo por importes. Son únicas y por eso se publican, pero no identifican una posición.
-   Requiere una decisión de vocabulario (¿una clave así se llama clave?).
-3. **Vitrina social**: `meta description`, `og:`, `twitter:`, `canonical`, `robots.txt`,
-   `sitemap.xml`.
-4. **Hosts y base absoluta**: hoy `llms.txt` y `views.sql` apuntan a Pages y el espejo de
-   Vercel redirige. Un dominio propio con `canonical` resolvería ambos.
-5. **Canal de derechos**: hoy es un issue público. Es una decisión legal del responsable,
-   no técnica.
-6. **Párrafo único de conteo** para que 90/86/105/159/74 dejen de parecer contradictorios.
+Los tres primeros puntos de la lista original ya están en el sitio publicado:
+
+1. **Estado de la clave en el Diccionario.** `scripts/build_estado_claves.py` genera
+   `docs/js/estado_claves.js` desde `claves.csv` en el build —no se escribe a mano— y el
+   Diccionario y el visor lo muestran con el número: «publica 160.564 filas idénticas
+   (10,1 % de 1.590.196). No sumes sin agrupar. En 2026-09, sumar `valorizacion_miles_mf`
+   sin agrupar sobreestima 9,71 %». Cobertura completa: 90 objetos, 48 claves verificadas,
+   15 propuestas, 22 sin clave, 5 sin datos, 230.288 filas repetidas en el catálogo.
+2. **Claves de medidas.** Se distingue con `tipo_clave: "medidas"` cuando las medidas son
+   mayoría en la clave (por el rol del esquema, no por el tipo: un RUT es `BIGINT` y sí
+   identifica). Son tres: `fi_opciones`, `seguros_flujos_activos_elegibles` y
+   `seguros_renta_fija`; el texto lo dice —«sirve para deduplicar, no identifica una
+   posición»— y el badge aparece con borde punteado.
+3. **Vitrina social.** `scripts/build_metadatos.py` genera el `<head>` (description,
+   `og:`, `twitter:`, `canonical`, huella del PNG), `robots.txt` y `sitemap.xml`;
+   `scripts/build_og_image.py` compone `assets/og_sif_1200x630.png`. Los dos con `--check`
+   en CI. La descripción evita contar conjuntos a propósito: ver §6.
+
+## 6. Lo que sigue abierto
+
+1. **Hosts y base absoluta.** `llms.txt` y `views.sql` siguen apuntando a Pages. Las URLs
+   de `llms.txt` son absolutas porque el formato lo exige para un agente que lo lee por
+   HTTP; `views.sql` las concentra en una línea `SET VARIABLE sif_base`. Un dominio propio
+   con `canonical` lo resolvería, y es una decisión del responsable.
+2. **Canal de derechos.** Hoy es un issue público. Decisión legal, no técnica.
+3. **Párrafo único de conteo.** No está escrito, y no por falta de tiempo: las cifras
+   ciertas que hay hoy **no cuadran entre sí** y hay que decidir qué se cuenta antes de
+   redactarlo.
+
+   | Cifra | Qué cuenta | Dónde se ve |
+   |---|---|---|
+   | **90** | objetos del contrato | `catalog.json`, `views.sql` como base de las vistas |
+   | **89** | conjuntos que muestra el explorador | 74 en la vista principal + 15 en Archivo y registros |
+   | **86** | objetos con al menos un archivo publicado | `totales.con_datos` |
+   | **85** | objetos con filas | sumado: 19.777.517 |
+
+   La diferencia de uno, repetida en tres lugares, es `fi_bienes_raices`: publica
+   `docs/outputs/fi/bienes_raices/_vacio.parquet` —**0 filas**, con las 15 columnas del
+   esquema y 26 periodos declarados en su manifiesto—, así que el catálogo la da por
+   `estado: "publicado"` y cuenta en «con datos», mientras que el Diccionario dice «sin
+   filas publicadas» y el explorador la oculta. Ninguna de las dos afirmaciones es falsa
+   por separado; juntas, obligan a un lector a hacer la resta.
+
+   Hay dos salidas y ninguna es cosmética:
+
+   * **Retirar el archivo vacío**: `fi_bienes_raices` pasa a ser el quinto objeto `vacio`,
+     `con_datos` baja a 85, las vistas SQL a 104 y hay que regenerar el contrato. Es el
+     camino coherente con los otros cuatro vacíos, que no publican archivo.
+   * **Declarar el vacío en el contrato**: conservar el archivo y añadir `filas: 0` como
+     criterio explícito de «sin datos» en `totales`, con lo que los cuatro números de la
+     tabla pasan a tener nombre propio y se pueden explicar en una frase.
+
+   Mientras no se decida, el sitio no publica el párrafo: escribirlo con las cifras de hoy
+   obligaría a explicar la resta, y explicar lo que no se publica es justo lo que el sitio
+   no hace.
