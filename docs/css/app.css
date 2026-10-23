@@ -990,7 +990,10 @@ header {
   display: flex;
   align-items: center;
   gap: 6px;
-  height: 28px;
+  /* Alto mínimo, no alto fijo: el distintivo de la carpeta puede bajar a una
+     segunda línea y la fila tiene que crecer con él. Con `height: 28px` esa
+     segunda línea se pintaba sobre el renglón siguiente. */
+  min-height: 28px;
   padding-right: 10px;
   cursor: pointer;
   user-select: none;
@@ -1073,6 +1076,9 @@ header {
   padding: 1px 5px;
   border-radius: 3px;
   flex-shrink: 0;
+  /* Un distintivo largo («Derivados desde 2020-03 · pactos desde 2012-03») no
+     puede empujar la fila más allá del ancho del cajón: envuelve su propio texto. */
+  max-width: 100%;
 }
 
 .node-badge.badge-active {
@@ -1250,7 +1256,7 @@ header {
 }
 
 .tree-partition {
-  height: 25px;
+  min-height: 25px;
   background-color: rgba(var(--tint-rgb), 0.2);
 }
 
@@ -4315,6 +4321,11 @@ kbd {
 .tree-sector, .tree-circular { flex-wrap: wrap; row-gap: 3px; }
 .tree-sector .tree-label, .tree-circular .tree-label { flex: 1 1 120px; min-width: 120px; }
 
+/* Si el distintivo no cabe junto al nombre, baja a la segunda línea y se alinea
+   a la derecha de su fila; sin esto quedaba pegado al borde izquierdo y se leía
+   como una etiqueta suelta sobre la fila de abajo. */
+.tree-circular .node-badge { margin-left: auto; }
+
 /* La descarga vive en la cabecera del panel, junto a la barra de contexto: la
    barra cede espacio primero y desaparece cuando ya no cabe con las pestañas. */
 @media (max-width: 1439px) {
@@ -6029,15 +6040,17 @@ body {
   .normativa-pagination button,
   .badge,
   .chip,
-  .quick-chip {
+  .quick-chip,
+  .tool-btn {
     min-height: 44px;
   }
 
-  /* Las filas del árbol son densas a propósito: 40 px ya es un objetivo
-     cómodo y no convierte el explorador en una lista interminable. */
-  .tree-label,
-  .tree-table,
-  .tree-group > .tree-header,
+  /* Las filas del árbol son densas a propósito: 40 px ya es un objetivo cómodo y
+     no convierte el explorador en una lista interminable. El mínimo se pide a la
+     fila: con `min-height` en la etiqueta, ésta medía 40 px dentro de una caja de
+     28 y se derramaba sobre el renglón siguiente. */
+  .tree-row,
+  .tree-group-header,
   .dl-uso-item {
     min-height: 40px;
   }
