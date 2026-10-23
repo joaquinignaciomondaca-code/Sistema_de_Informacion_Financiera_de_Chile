@@ -1,6 +1,6 @@
 {
- "version": "v1",
- "actualizado": "2026-10-22",
+ "version": "v2",
+ "actualizado": "2026-10-23",
  "que_es": "Las comprobaciones del contrato de la API, con el nivel de control de cada una. El nivel decide qué pasa cuando falla.",
  "niveles": {
   "invariante": "Rompe el build. El contrato promete algo que los datos no cumplen, o el descriptor se quedó atrás: no se puede publicar.",
@@ -91,6 +91,18 @@
  ],
  "excepciones": [],
  "historial": [
+  {
+   "fecha": "2026-10-23",
+   "tarea": "claves",
+   "que": "Se retiraron 14 claves primarias que el contrato afirmaba sin que se cumplieran: 13 no eran únicas (había filas idénticas publicadas) y 1 se declaraba sobre una tabla vacía. La causa era un error de `scripts/verificar_claves.py`, no del dato.",
+   "detalle": [
+    "`(a, b, …) IN (SELECT a, b, …)` no compara fila a fila en DuckDB: con un NULL devuelve vacío y el vacío se leía como «sin repetidas».",
+    "El informe copiaba `filas` en la columna `distintas`, así que no podía contradecir a la clave.",
+    "Ahora la repetición se marca con una función de ventana y cada clave se vuelve a medir antes de publicarse.",
+    "`ffmm_cartera_nacional`: 1.590.196 filas, 1.429.632 distintas (160.564 repetidas). Las repeticiones vienen del TXT de la CMF: el extractor publica una fila por línea y no descartó ninguna (29.366 líneas, 29.366 filas en 2026-09).",
+    "Contrato 2.0.1: 63 de 86 recursos con primaryKey (antes 76); 27 objetos sin clave (antes 14)."
+   ]
+  },
   {
    "fecha": "2026-10-22",
    "tarea": "1a.9",

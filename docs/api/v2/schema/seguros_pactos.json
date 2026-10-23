@@ -255,23 +255,9 @@
  "fuente": "CMF",
  "id": "seguros_pactos",
  "licencia_estado": "verificada",
- "primaryKey": [
-  "valorizacion_de_pacto_a_la_fecha_de_cierre_m_clp",
-  "valor_de_mercado_a_la_fecha_de_informacion",
-  "activo_objeto_valor_contable",
-  "interes_devengado_del_pacto_m",
-  "valor_pactado",
-  "valor_inicial_um",
-  "valor_de_mercado_a_la_fecha_de_suscripcion_monto",
-  "tasa_o_precio_de_mercado",
-  "tir_compra",
-  "folio_operacion",
-  "valor_nominal",
-  "fecha_de_vencimiento_del_contrato",
-  "item_operacion"
- ],
+ "primaryKey": [],
  "sector": "seguros",
  "titulo": "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS",
  "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
- "version": "2.0.0"
+ "version": "2.0.1"
 }

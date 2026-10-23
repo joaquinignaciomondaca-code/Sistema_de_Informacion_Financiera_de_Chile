@@ -598,22 +598,9 @@
  "fuente": "CMF",
  "id": "seguros_derivados",
  "licencia_estado": "verificada",
- "primaryKey": [
-  "efecto_en_resultados_realizados_m_clp",
-  "valor_presente_posicion_larga_m_clp",
-  "monto_activo_m_clp",
-  "valor_razonable_del_contrato_a_la_fecha_de_la_informacion_m",
-  "valor_presente_posicion_corta_m_clp",
-  "monto_pasivo_m_clp",
-  "valor_razonable_del_contrato_a_la_fecha_de_la_informacion",
-  "valor_razonable_del_contrato_a_la_fecha_de_la_informacion_ec",
-  "valor_razonable_del_activo_objeto_a_la_fecha_de_la_informacion_m_clp",
-  "nocional_posicion_larga_monto",
-  "monto_activos_en_margen_m_clp",
-  "nocional_posicion_corta_monto_m_clp"
- ],
+ "primaryKey": [],
  "sector": "seguros",
  "titulo": "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS",
  "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
- "version": "2.0.0"
+ "version": "2.0.1"
 }

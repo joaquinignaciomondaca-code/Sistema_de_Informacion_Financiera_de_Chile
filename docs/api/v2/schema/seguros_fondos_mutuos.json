@@ -295,25 +295,9 @@
  "fuente": "CMF",
  "id": "seguros_fondos_mutuos",
  "licencia_estado": "verificada",
- "primaryKey": [
-  "valor_razonable_clp",
-  "valor_final_m_clp",
-  "valor_de_inversion_clp",
-  "unidades",
-  "valor_cuota_clp",
-  "deterioro_clp",
-  "nemotecnico",
-  "run",
-  "nombre_del_fondo",
-  "serie",
-  "periodo",
-  "nombre_aseguradora",
-  "nombre_cartera",
-  "rut_aseguradora",
-  "nombre_custodio"
- ],
+ "primaryKey": [],
  "sector": "seguros",
  "titulo": "B.3 CUOTAS DE FONDOS MUTUOS",
  "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
- "version": "2.0.0"
+ "version": "2.0.1"
 }

@@ -215,22 +215,9 @@
  "fuente": "CMF",
  "id": "ffmm_cartera_nacional",
  "licencia_estado": "verificada",
- "primaryKey": [
-  "valorizacion_miles_mf",
-  "cantidad_unidades",
-  "pct_activo_emisor",
-  "valor_relevante",
-  "pct_activo_fondo",
-  "nemotecnico",
-  "pct_capital_emisor",
-  "tir_pct",
-  "fecha_vencimiento",
-  "rut_emisor",
-  "run_fondo",
-  "nombre_fondo"
- ],
+ "primaryKey": [],
  "sector": "ffmm",
  "titulo": "ffmm.cartera_nacional",
  "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
- "version": "2.0.0"
+ "version": "2.0.1"
 }

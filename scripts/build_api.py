@@ -266,6 +266,9 @@ def construir() -> dict:
                 "mayor": "se rompe un cliente: quitar o renombrar recurso o columna, cambiar un tipo",
                 "menor": "se puede ignorar: añadir recurso, columna al final o campo sif.*",
                 "parche": "sólo datos: corrige valores sin tocar el esquema",
+                "correccion": ("una afirmación falsa del descriptor —por ejemplo una `primaryKey` "
+                               "que no se cumple— se retira en un parche: no cambia el dato, y "
+                               "quien la usaba para deduplicar debe agrupar por su cuenta"),
             },
             "contrato": {
                 "reconciliacion": SITIO + "api/reconciliacion.csv",
