@@ -6,15 +6,15 @@
  "particiones": [
   {
    "archivo": "outputs/bancos/bancos_maestro.parquet",
-   "bytes": 4668,
+   "bytes": 6501,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/bancos_maestro.parquet",
    "periodo": "bancos_maestro",
-   "sha256": "7d51685a5b5271d1f236663bf6e477e820bb6cb6696708eb7af8d43db1b23e55"
+   "sha256": "e95cac270ba231ff26a77d1a6c713dee2cb868c3c6ebfec612514a982c355a1c"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 4668,
+  "bytes": 6501,
   "filas": 41
  },
  "version": "1.0.0"

@@ -1,0 +1,105 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "total-de-activos-por-banco-ultimo-periodo-e55e00",
+ "titulo": "Total de activos por banco (último periodo)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.ce8f0befbcb2",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "codigo_institucion",
+  "nombre_institucion_fuente",
+  "importe_clp"
+ ],
+ "filas": 17,
+ "truncado": false,
+ "datos": [
+  [
+   "001",
+   "BANCO DE CHILE",
+   55804006014866
+  ],
+  [
+   "009",
+   "BANCO INTERNACIONAL",
+   6693863105386
+  ],
+  [
+   "012",
+   "BANCO DEL ESTADO DE CHILE",
+   60686733767800
+  ],
+  [
+   "014",
+   "SCOTIABANK CHILE",
+   44357478628116
+  ],
+  [
+   "016",
+   "BANCO DE CREDITO E INVERSIONES",
+   86558813882872
+  ],
+  [
+   "028",
+   "BANCO BICE",
+   22346953735043
+  ],
+  [
+   "031",
+   "HSBC BANK (CHILE)",
+   1752497095484
+  ],
+  [
+   "037",
+   "BANCO SANTANDER-CHILE",
+   71738399336873
+  ],
+  [
+   "039",
+   "BANCO ITAU CHILE",
+   49223814364316
+  ],
+  [
+   "041",
+   "JP MORGAN CHASE BANK N.A.",
+   1511895473894
+  ],
+  [
+   "051",
+   "BANCO FALABELLA",
+   8009334377830
+  ],
+  [
+   "053",
+   "BANCO RIPLEY",
+   1497399549063
+  ],
+  [
+   "055",
+   "BANCO CONSORCIO",
+   12089202752410
+  ],
+  [
+   "059",
+   "BANCO BTG PACTUAL CHILE",
+   8018692238735
+  ],
+  [
+   "060",
+   "CHINA CONSTRUCTION BANK",
+   331726399371
+  ],
+  [
+   "061",
+   "BANK OF CHINA, AGENCIA EN CHILE",
+   141589840577
+  ],
+  [
+   "062",
+   "TANNER BANCO DIGITAL",
+   1115973818859
+  ]
+ ],
+ "sql": "SELECT codigo_institucion, nombre_institucion_fuente, importe_clp FROM bancos_balance WHERE modelo_cmf = 'MB1' AND codigo_cuenta = '100000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_balance) ORDER BY importe_clp DESC;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

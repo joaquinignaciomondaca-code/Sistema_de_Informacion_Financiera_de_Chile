@@ -446,13 +446,17 @@
      "tipo": "VARCHAR"
     },
     {
-     "documentada": false,
+     "criterio_contable": "No aplica",
      "nombre": "rut",
+     "rol": "Atributo",
+     "significado": "RUT del banco como cuerpo sin dígito verificador (convención del proyecto); el DV está en bancos.lista_entidades.",
      "tipo": "VARCHAR"
     },
     {
-     "documentada": false,
+     "criterio_contable": "No aplica",
      "nombre": "razon_social",
+     "rol": "Atributo",
+     "significado": "Razón social tomada del maestro de bancos por código de institución, no del encabezado del archivo.",
      "tipo": "VARCHAR"
     },
     {
@@ -568,6 +572,20 @@
      "tipo": "VARCHAR[]"
     },
     {
+     "criterio_contable": "Total de la cuenta; sumar una cuenta padre con sus descendientes duplica el monto.",
+     "nombre": "importe_clp",
+     "rol": "Métrica",
+     "significado": "Importe de la cuenta en pesos: la suma de los cuatro componentes por moneda. Es la columna para sumar, graficar o comparar; `importes_fuente_raw` sigue ahí para ver el desglose.",
+     "tipo": "BIGINT"
+    },
+    {
+     "criterio_contable": "No aplica",
+     "nombre": "formato_monto_fuente",
+     "rol": "Atributo",
+     "significado": "Formato del archivo fuente en esa fila: `decimal_coma` (15 dígitos con coma decimal, hasta 2024-05) o `entero_15` (15 dígitos enteros, desde 2024-06). El importe es el mismo en pesos.",
+     "tipo": "VARCHAR"
+    },
+    {
      "criterio_contable": "No aplica",
      "nombre": "archivo_fuente",
      "rol": "Procedencia",
@@ -629,7 +647,7 @@
      "criterio_contable": "No aplica",
      "nombre": "rut",
      "rol": "Atributo",
-     "significado": "Cuerpo del RUT del catálogo local (sin dígito verificador), por cotejar.",
+     "significado": "Cuerpo del RUT (sin dígito verificador ni puntos), cotejado con el registro CMF.",
      "tipo": "VARCHAR"
     },
     {
@@ -650,21 +668,21 @@
      "criterio_contable": "No aplica",
      "nombre": "tipo_licencia",
      "rol": "Atributo",
-     "significado": "Clasificación local, no verificada.",
+     "significado": "Tipo de licencia del catálogo. Los agregados del sistema (900, 950, 960, 970, 980, 998 y 999) llevan «Agregado Sectorial»: no son bancos y no se suman con ellos.",
      "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
      "nombre": "estado",
      "rol": "Atributo",
-     "significado": "Estado local, no histórico por periodo.",
+     "significado": "Activo, Fusionado, Cerrado o Agregado. No es un estado histórico por periodo: dice cómo está la institución hoy.",
      "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
      "nombre": "rut_dv",
      "rol": "Atributo",
-     "significado": "RUT del catálogo con dígito verificador (cuerpo-DV).",
+     "significado": "RUT completo, cuerpo y dígito verificador, sin puntos: es el identificador que publica la CMF.",
      "tipo": "VARCHAR"
     }
    ],
@@ -710,13 +728,17 @@
      "tipo": "VARCHAR"
     },
     {
-     "documentada": false,
+     "criterio_contable": "No aplica",
      "nombre": "rut",
+     "rol": "Atributo",
+     "significado": "RUT del banco como cuerpo sin dígito verificador (convención del proyecto); el DV está en bancos.lista_entidades.",
      "tipo": "VARCHAR"
     },
     {
-     "documentada": false,
+     "criterio_contable": "No aplica",
      "nombre": "razon_social",
+     "rol": "Atributo",
+     "significado": "Razón social tomada del maestro de bancos por código de institución, no del encabezado del archivo.",
      "tipo": "VARCHAR"
     },
     {
@@ -830,6 +852,20 @@
      "rol": "Dato fuente",
      "significado": "Representación decimal exacta del importe, acumulado del ejercicio.",
      "tipo": "VARCHAR[]"
+    },
+    {
+     "criterio_contable": "Acumulado del ejercicio (de enero al mes informado); para el mes suelto se resta el mes anterior del mismo año.",
+     "nombre": "importe_clp",
+     "rol": "Métrica",
+     "significado": "Importe de la línea en pesos, listo para sumar o graficar: el mismo valor de `importes_fuente_decimal` ya convertido a número.",
+     "tipo": "BIGINT"
+    },
+    {
+     "criterio_contable": "No aplica",
+     "nombre": "formato_monto_fuente",
+     "rol": "Atributo",
+     "significado": "Formato del archivo fuente en esa fila: `decimal_coma` (15 dígitos con coma decimal, hasta 2024-05) o `entero_15` (15 dígitos enteros, desde 2024-06). El importe es el mismo en pesos.",
+     "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
@@ -11823,8 +11859,8 @@
   }
  },
  "resumen": {
-  "columnas": 1509,
-  "columnas_sin_documentar": 7,
+  "columnas": 1513,
+  "columnas_sin_documentar": 3,
   "columnas_sin_valores": 1,
   "con_esquema": 86,
   "filas_por_objeto": 21740500,

@@ -230,6 +230,28 @@ jobs:
           grep -h -E "Consultas sugeridas|OK|VACIA|ERROR" consultas.log | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::notice title=Consultas sugeridas::$linea"; done
           exit $n
 
+      # La sección de Banca fue la única que llegó al sitio con la ficha «Falta
+      # validar»: el catálogo de instituciones no tenía cotejo reproducible y los
+      # importes fuente se publicaban como texto de 15 dígitos. Estas tres
+      # compuertas cierran eso: los RUT cuadran con el registro de la CMF, el
+      # maestro tiene un solo formato de RUT y cada fila trae su importe en pesos.
+      - name: 'Banca: identidades cotejadas e importes normalizados'
+        run: |
+          set +e
+          python bancos/scripts/validar_identidades.py --check > identidades.log 2>&1; i=$?
+          python bancos/scripts/corregir_identidades.py --check > maestro_bancos.log 2>&1; c=$?
+          python bancos/scripts/normalizar_importes.py --check > importes_bancos.log 2>&1; n=$?
+          for par in "Identidades Banca:identidades.log:$i" "Maestro Banca:maestro_bancos.log:$c" "Importes Banca:importes_bancos.log:$n"; do
+            nombre=${par%%:*}; resto=${par#*:}; archivo=${resto%%:*}; codigo=${resto##*:}
+            if [ "$codigo" -eq 0 ]; then
+              echo "::notice title=$nombre::$(tail -n 1 "$archivo")"
+            else
+              grep -h -E "^(BANCA|FALLA|  ·)" "$archivo" | head -8 | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=$nombre::$l"; done
+              echo "::error title=$nombre::falló (código $codigo)"
+            fi
+          done
+          exit $(( i | c | n ))
+
       - name: 'Contrato de la API: reconciliación y esquemas al día'
         run: |
           set +e
@@ -484,6 +506,7 @@ jobs:
           bancos.tests.test_extract_cmf_bank_lines
           bancos.tests.test_publish_cmf_bank_period
           bancos.tests.test_bank_master_identity
+          bancos.tests.test_importes_normalizados
           # Solo se probaban dentro de su propio publicador (o nunca, en el caso de macro): en un
           # PR no corrían, que es cuando todavía se puede corregir el cambio.
           macro.tests.test_series_bcch
