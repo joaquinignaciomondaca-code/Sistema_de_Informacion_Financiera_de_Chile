@@ -1,6 +1,12 @@
 # P3 · API pública documentada y ejemplos reproducibles — estudio de factibilidad
 
 **Fecha:** 2026-10-22
+
+> **Estado (2026-10-23).** El contrato vigente es **2.0.0** y se publica en
+> `docs/api/v2/`. Esta nota se escribió cuando la ruta era `api/v1/`: las rutas de
+> archivo y de URL se actualizaron para que los comandos sigan funcionando, y las
+> referencias a «v1» como nombre de la fase se conservan como se escribieron.
+
 **Pregunta:** qué tan factible es añadir una API pública documentada, ejemplos
 reproducibles y consumo desde Python, R, aplicaciones y agentes de IA.
 **Método:** no es una opinión. Se midió el repositorio tal como está publicado hoy
@@ -102,14 +108,14 @@ Todo generado desde una sola fuente (`data_manifest.json`, `download_catalog.js`
 `SEMANTIC_VIEWS`, `diccionario.json`), sin tocar los Parquet:
 
 ```
-docs/api/v1/catalog.json          # 89 tablas: id canónico, nombre, sector, nivel,
+docs/api/v2/catalog.json          # 89 tablas: id canónico, nombre, sector, nivel,
                                   # filas, bytes, particiones, corte, frescura  (26 KB medidos)
-docs/api/v1/schema/{id}.json      # columnas con tipo, rol, significado             (283 KB medidos)
-docs/api/v1/partitions/{id}.json  # lista de Parquet + total de filas + periodos   (desde los 53 manifiestos)
-docs/api/v1/queries.json          # 149 consultas con id estable, título y SQL     (48 KB medidos)
-docs/api/v1/datapackage.json      # estándar Data Package: recursos, esquema, PK/FK, hashes
-docs/api/v1/openapi.json          # OpenAPI 3.1 sobre esas rutas estáticas (son GET, sin parámetros)
-docs/api/v1/llms.txt              # guía de 40 líneas para agentes (patrón owid/etl)
+docs/api/v2/schema/{id}.json      # columnas con tipo, rol, significado             (283 KB medidos)
+docs/api/v2/partitions/{id}.json  # lista de Parquet + total de filas + periodos   (desde los 53 manifiestos)
+docs/api/v2/queries.json          # 149 consultas con id estable, título y SQL     (48 KB medidos)
+docs/api/v2/datapackage.json      # estándar Data Package: recursos, esquema, PK/FK, hashes
+docs/api/v2/openapi.json          # OpenAPI 3.1 sobre esas rutas estáticas (son GET, sin parámetros)
+docs/api/v2/llms.txt              # guía de 40 líneas para agentes (patrón owid/etl)
 skills/sif/SKILL.md               # skill de agente: cuándo usar SIF y cómo consultar
 catalog/views.sql                 # DDL de las 90 vistas, generado                (42 KB medidos)
 sdk/python/sif_chile/__init__.py  # connect(), tables(), view(), download()
@@ -145,7 +151,7 @@ dbGetQuery(con, "SELECT count(*) FROM seguros_renta_fija")
 
 ```js
 // Aplicación — el catálogo es JSON plano, el dato es Parquet por Range
-const cat = await (await fetch(`${BASE}/api/v1/catalog.json`)).json();
+const cat = await (await fetch(`${BASE}/api/v2/catalog.json`)).json();
 const vista = cat.tablas.find(t => t.id === "ffmm_cartera_extranjera");
 ```
 
@@ -230,7 +236,7 @@ publica tipos reales. Añadir al CI: toda tabla del catálogo debe tener esquema
 - `docs/vercel.json` (y `vercel.json`) fijan `Cache-Control: no-store` para
   `outputs/*.parquet`. Sirve para el visor, es **contraproducente** para una API
   (impide caché de CDN y de cliente). Si se publica la API, separar rutas:
-  `/api/v1/**` con `max-age=300`, Parquet con `no-store` sólo donde haga falta.
+  `/api/v2/**` con `max-age=300`, Parquet con `no-store` sólo donde haga falta.
 - `X-Frame-Options: DENY` y CSP están bien y no afectan a consumidores HTTP.
 
 ### 4.5 Ancho de banda: 223 descargas del núcleo al mes
@@ -263,7 +269,7 @@ bytes, N vistas de metadatos.
 
 Hoy los nombres de vista cambian y se conservan con `LEGACY_VIEW_ALIASES`;
 `docs/vocabulario.json` registra `nombres_retirados`. Eso es buena disciplina
-interna, pero una API pública exige además: versión en la URL (`/api/v1/`),
+interna, pero una API pública exige además: versión en la URL (`/api/v2/`),
 política de deprecación (p. ej. 6 meses), `CHANGELOG` de contrato y fecha de
 corte por tabla (ya está en `corte`/`ultima_actualizacion`). Coste: 1 día de
 redacción; coste de no hacerlo: cada renombre rompe a terceros sin aviso.
@@ -310,7 +316,7 @@ compatibilidad.
 |---|---|---|---|
 | **0 · Decisiones** | Un `docs/api/README.md` con: id canónico, alias, semver, política de deprecación, licencia de datos, "sin SLA / best effort" | 4 | 5 decisiones escritas y aprobadas |
 | **0b · Higiene de datos** | `nro_rut`/`nro_rut_dv` normalizados; guardián ampliado a `nro_rut*`; esquema para las 89 tablas | 8 | `audit_rut_formatos.py` verde **y** la consulta del README devuelve >0 filas |
-| **1 · Contrato estático** | `docs/api/v1/{catalog,schema,partitions,queries,openapi,llms}.` + `catalog/views.sql` generados por `scripts/build_api.py` | 10 | catálogo cubre 89/89 tablas con esquema; `views.sql` crea las 90 vistas sin error |
+| **1 · Contrato estático** | `docs/api/v2/{catalog,schema,partitions,queries,openapi,llms}.` + `catalog/views.sql` generados por `scripts/build_api.py` | 10 | catálogo cubre 89/89 tablas con esquema; `views.sql` crea las 90 vistas sin error |
 | **1a · Data Package** | `datapackage.json` generado (recursos, esquema, PK/FK, hash) validado con `frictionless validate` | 6 | `frictionless validate` en verde; 89 recursos, 0 claves huérfanas |
 | **1b · SDK Python** | `sif_chile` (connect/tables/view/download), reutilizando el parser de `SEMANTIC_VIEWS` | 10 | `pip install -e .` y el snippet de §3 corre en máquina limpia |
 | **1c · Ejemplos** | `examples/python`, `examples/r`, `examples/javascript`, `examples/agent` (con `llms.txt`) | 8 | cada ejemplo corre contra la URL publicada y no contra `localhost` |
@@ -571,7 +577,7 @@ Consecuencias para la propuesta:
 | DDL de las 90 vistas | `SEMANTIC_VIEWS` de SIF | Generar `views.sql` (42 KB) |
 | Guía para agentes | `owid` `llms.txt` + `catalogo-agentes.md` de mcp-cmf | 40 líneas + reglas (RUT, paginación, periodos) |
 | SQL remoto (si se quiere) | Quack de DuckDB 2.0 | Servidor, TLS y cuotas |
-| Versionado y deprecación | ninguno de los anteriores | Propio: `/v1/`, política de 6 meses |
+| Versionado y deprecación | ninguno de los anteriores | Propio: `/v2/`, política de 6 meses |
 
 Lo que se descarta tras la revisión: escribir un OpenAPI a mano para endpoints
 que no existen (se genera desde el catálogo o no se publica), duplicar bytes por
