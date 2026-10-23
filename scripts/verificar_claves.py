@@ -112,49 +112,84 @@ def distintos(con, vista: str, columnas: list[str]) -> int:
     return con.execute(f"SELECT count(*) FROM (SELECT DISTINCT {cols} FROM {vista})").fetchone()[0]
 
 
+def es_unica(con, vista: str, columnas: list[str], filas: int) -> bool:
+    """¿La combinación es única sobre la vista publicada?
+
+    Siempre se mide con `DISTINCT` sobre todas las filas: es la única respuesta
+    que se puede creer. Toda salida de `buscar_clave` pasa por aquí antes de
+    darse por buena.
+    """
+    return distintos(con, vista, columnas) == filas
+
+
 def buscar_clave(con, vista: str, columnas: list[str], filas: int, limite: int = 12) -> tuple[list[str], bool]:
     """Combinación mínima de columnas única. Devuelve (columnas, es_unica).
 
     Primero prueba acumulando las más selectivas (un id suele bastar). Si con
     las 12 primeras no alcanza, sigue sólo con las filas que chocan —que son
-    pocas— añadiendo la columna que más las separa. Cada paso usa una tabla
-    temporal nueva: reemplazar la anterior mientras se lee devuelve vacío y
-    daría por buena una clave falsa.
+    pocas— añadiendo la columna que más las separa.
+
+    Dos precauciones que costaron caro:
+
+      * `(a, b) IN (SELECT a, b …)` **no** compara fila a fila en DuckDB: la
+        tupla se lee como un valor compuesto y el resultado no es el de un
+        `EXISTS`. Marcar las filas repetidas se hace con una función de ventana,
+        que agrupa igual que `DISTINCT`.
+      * Cada paso usa una tabla temporal nueva (reemplazar la anterior mientras
+        se lee devuelve vacío y daría por buena una clave falsa) y, aun así, la
+        respuesta se vuelve a medir contra la vista completa.
     """
+    # Medir cuesta: cada `DISTINCT` recorre todas las filas. Se recuerda lo ya
+    # contado para no repetir una combinación dentro del mismo objeto.
+    medido: dict[tuple[str, ...], int] = {}
+
+    def distintas(cols: list[str]) -> int:
+        llave = tuple(cols)
+        if llave not in medido:
+            medido[llave] = distintos(con, vista, cols)
+        return medido[llave]
+
+    def unica(cols: list[str]) -> bool:
+        return distintas(cols) == filas
+
     orden = sorted(columnas, key=lambda c: -selectividad(con, vista, [c])[c])
     elegidas: list[str] = []
     for col in orden[:limite]:
         elegidas.append(col)
-        if distintos(con, vista, elegidas) == filas:
+        if unica(elegidas):
             return elegidas, True
 
     fuente = vista
     for intento in range(len(orden)):
-        clave = ", ".join(elegidas)
+        clave = ", ".join(f'"{c}"' for c in elegidas)
+        propias = ", ".join(f'"{c}"' for c in columnas)
         nueva = f"_dup_{intento}"
+        # `SELECT *` arrastraría `_n` a la tabla siguiente, así que se listan las
+        # columnas del objeto y la repetición se marca con una ventana.
         con.execute(
-            f"CREATE OR REPLACE TEMP TABLE {nueva} AS SELECT * FROM {fuente} "
-            f"WHERE ({clave}) IN (SELECT {clave} FROM {fuente} GROUP BY {clave} HAVING count(*) > 1)"
+            f"CREATE OR REPLACE TEMP TABLE {nueva} AS SELECT {propias} FROM ("
+            f"  SELECT {propias}, count(*) OVER (PARTITION BY {clave}) AS _n FROM {fuente}"
+            f") WHERE _n > 1"
         )
         total = con.execute(f"SELECT count(*) FROM {nueva}").fetchone()[0]
         if total == 0:
-            return elegidas, True
+            return elegidas, unica(elegidas)
         fuente = nueva
         mejor, mejor_n = None, 0
         for col in [c for c in orden if c not in elegidas]:
-            prueba = ", ".join(elegidas + [col])
+            prueba = ", ".join(f'"{c}"' for c in elegidas + [col])
             n = con.execute(f"SELECT count(*) FROM (SELECT DISTINCT {prueba} FROM {fuente})").fetchone()[0]
             if n == total:  # esa columna sola desempata las repetidas
-                return elegidas + [col], True
+                return elegidas + [col], unica(elegidas + [col])
             if n > mejor_n:
                 mejor, mejor_n = col, n
         if mejor is None:
             break
         elegidas.append(mejor)
-        if distintos(con, vista, elegidas) == filas:
+        if unica(elegidas):
             return elegidas, True
 
-    if distintos(con, vista, columnas) == filas:
+    if unica(columnas):
         return columnas, True  # no hay clave corta: sólo la fila completa
     return elegidas, False
 
@@ -213,7 +248,18 @@ def main() -> int:
         # --- clave primaria -------------------------------------------------
         declarada = pk_roles.get(nombre, [])
         propias = [c for c in declarada if c in columnas]
-        if propias:
+        if filas == 0:
+            # Un objeto sin filas no tiene clave que verificar: cualquier columna
+            # es «única» sobre el vacío. Publicarla sería prometer una clave que
+            # nunca se probó sobre un dato (le pasó a `fi_bienes_raices`).
+            filas_salida.append({
+                "objeto": nombre, "tipo": "pk", "columnas": "", "destino": "",
+                "filas": 0, "distintas": 0, "sobrantes": 0, "tasa": "",
+                "declarada": "si" if propias else "no", "nivel": "informativo",
+                "estado": "sin_datos",
+                "detalle": "el objeto no publica filas: no hay clave que se pueda verificar",
+            })
+        elif propias:
             unicas = distintos(con, vista, propias)
             if unicas == filas:
                 filas_salida.append({
@@ -242,9 +288,12 @@ def main() -> int:
         else:
             clave, unica = buscar_clave(con, vista, columnas, filas)
             if unica and len(clave) < len(columnas):
+                # `distintas` se mide: antes se copiaba `filas`, de modo que el
+                # informe no podía contradecir a la clave aunque la clave fuera falsa.
+                medidas = distintos(con, vista, clave)
                 filas_salida.append({
                     "objeto": nombre, "tipo": "pk", "columnas": " + ".join(clave),
-                    "destino": "", "filas": filas, "distintas": filas, "sobrantes": 0,
+                    "destino": "", "filas": filas, "distintas": medidas, "sobrantes": filas - medidas,
                     "tasa": "", "declarada": "no", "nivel": "informativo", "estado": "propuesta",
                     "detalle": "clave mínima encontrada; el diccionario no la declaraba",
                 })
