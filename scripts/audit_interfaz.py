@@ -713,6 +713,63 @@ def audit_estado_claves(html, css):
     print("  [OK] Diccionario y visor muestran el estado con sus estilos")
 
 
+def audit_vitrina(html):
+    """La portada se puede compartir y rastrear: metadatos, robots y sitemap."""
+    print("\n--- 16. Vitrina: metadatos sociales, robots y sitemap ---")
+    requeridas = {
+        'name="description"': "falta la meta description",
+        'rel="canonical"': "falta el canonical",
+        'property="og:title"': "falta og:title",
+        'property="og:description"': "falta og:description",
+        'property="og:url"': "falta og:url",
+        'property="og:image"': "falta og:image",
+        'property="og:image:width" content="1200"': "el og:image no declara 1200 de ancho",
+        'property="og:image:height" content="630"': "el og:image no declara 630 de alto",
+        'property="og:image:alt"': "falta el texto alternativo del og:image",
+        'name="twitter:card" content="summary_large_image"': "falta twitter:card",
+        'name="twitter:image"': "falta twitter:image",
+    }
+    for marca, error in requeridas.items():
+        if marca not in html:
+            fail(error)
+    if "SEO:INICIO" not in html:
+        fail("el bloque de metadatos no lleva la marca de generado (SEO:INICIO)")
+    # Una sola descripción y un solo canonical: duplicarlos los vuelve ambiguos.
+    for etiqueta in ("name=\"description\"", 'rel="canonical"'):
+        if html.count(etiqueta) != 1:
+            fail(f"{etiqueta} aparece {html.count(etiqueta)} veces y debe aparecer una")
+
+    imagen = os.path.join(ROOT, "docs/assets/og_sif_1200x630.png")
+    if not os.path.exists(imagen):
+        fail("falta assets/og_sif_1200x630.png (genérala con scripts/build_og_image.py)")
+    else:
+        with open(imagen, "rb") as fh:
+            cabecera = fh.read(33)
+        if cabecera[:8] != b"\x89PNG\r\n\x1a\n":
+            fail("og:image no es un PNG")
+        else:
+            ancho = int.from_bytes(cabecera[16:20], "big")
+            alto = int.from_bytes(cabecera[20:24], "big")
+            if (ancho, alto) != (1200, 630):
+                fail(f"og:image mide {ancho}×{alto} y debe medir 1200×630")
+            else:
+                peso = os.path.getsize(imagen) // 1024
+                print(f"  [OK] og:image es un PNG de {ancho}×{alto} ({peso} KB)")
+
+    for nombre in ("robots.txt", "sitemap.xml"):
+        ruta = os.path.join(ROOT, "docs", nombre)
+        if not os.path.exists(ruta):
+            fail(f"falta docs/{nombre}")
+    robots = read("docs/robots.txt") if os.path.exists(os.path.join(ROOT, "docs/robots.txt")) else ""
+    if "Sitemap:" not in robots:
+        fail("robots.txt no apunta al sitemap")
+    sitemap = read("docs/sitemap.xml") if os.path.exists(os.path.join(ROOT, "docs/sitemap.xml")) else ""
+    if "<urlset" not in sitemap or "/privacidad.html" not in sitemap:
+        fail("sitemap.xml no declara las dos páginas del sitio")
+    if not errors:
+        print("  [OK] metadatos sociales completos, robots.txt y sitemap.xml con las dos páginas")
+
+
 def main():
     html = read("docs/index.html")
     audit_tabs(html)
@@ -733,6 +790,7 @@ def main():
     audit_privacidad(html, read("docs/css/app.css"))
     audit_alcance_publicado(html)
     audit_estado_claves(html, read("docs/css/app.css"))
+    audit_vitrina(html)
 
     print("\n" + "=" * 75)
     if errors:
