@@ -602,6 +602,67 @@ def audit_como_usar(html, css):
         print("  [OK] el enlace directo abre la Guía al terminar la carga")
 
 
+def audit_privacidad(html, css):
+    """El aviso de privacidad se lee completo y habla de lo que sí se publica."""
+    print("\n--- 13. Aviso de privacidad: desplazamiento y contenido ---")
+    try:
+        pagina = read("docs/privacidad.html")
+    except FileNotFoundError:
+        fail("falta docs/privacidad.html y el sitio lo enlaza desde index.html")
+        return
+    if 'href="privacidad.html"' not in html:
+        fail("index.html no enlaza el aviso de privacidad")
+    # app.css fija body{height:100vh;overflow:hidden} para la aplicación de una
+    # sola pantalla. Si el aviso hereda esas dos reglas, la rueda del ratón no
+    # desplaza y el documento queda cortado: tiene que revertirlas explícitamente.
+    estilo = pagina.split("</style>")[0]
+    if "overflow-y: auto" not in estilo or re.search(r"body\s*\{[^}]*(?<![\w-])height:\s*100vh", estilo):
+        fail("privacidad.html no revierte el alto fijo y el desborde oculto de app.css: la página no se desplaza")
+    elif "overflow: hidden" not in css:
+        fail("app.css ya no esconde el desborde; revisar la regla de privacidad.html")
+    else:
+        print("  [OK] el aviso revierte el alto fijo del cuerpo y se puede desplazar")
+    # El aviso describe lo publicado: los tres conjuntos con personas y el
+    # tratamiento de identificadores, no una lista de lo que falta.
+    for termino in ("fintech_rpsf_lista_entidades", "corredoras_bolsa_lista_entidades",
+                    "seguros_bienes_raices", "rut_omitido_por_ley", "property_id"):
+        if termino not in pagina:
+            fail(f"el aviso de privacidad no menciona {termino}, que sí se publica")
+    titulos = re.findall(r"<h2>(.*?)</h2>", pagina, re.S)
+    negativos = [t for t in titulos if re.search(r"\bno\b", t, re.I)]
+    if negativos:
+        fail("el aviso de privacidad tiene secciones enunciadas por lo que no se publica: "
+             + " · ".join(x.strip() for x in negativos))
+    else:
+        print(f"  [OK] el aviso enuncia sus {len(titulos)} secciones por el tratamiento que aplica")
+
+
+def audit_alcance_publicado(html):
+    """El alcance de la edición se cuenta por lo publicado, no por lo ausente."""
+    print("\n--- 14. Alcance de la edición: sólo lo publicado ---")
+    if 'id="info-alcance"' not in html:
+        fail("index.html no tiene el bloque de alcance (id=info-alcance)")
+        return
+    inicio = html.find('id="info-alcance"')
+    fin = html.find("</section>", inicio)
+    bloque = html[inicio:fin] if inicio != -1 and fin != -1 else ""
+    if not bloque:
+        fail("el bloque de alcance no se pudo delimitar")
+        return
+    for frase in ("No incluye", "no se publica", "no se publicó", "queda fuera de esta edición"):
+        if frase in bloque:
+            fail(f"el alcance de la edición se enuncia por lo ausente («{frase}»)")
+    h2 = re.search(r"<h2>(.*?)</h2>", bloque, re.S)
+    if h2 and re.search(r"qué no|lo que no", h2.group(1), re.I):
+        fail(f"el título del alcance habla de lo que no se publica: {h2.group(1).strip()}")
+    sectores = set(re.findall(r"sector\.([a-z_]+)\.", bloque))
+    incluye = set(re.findall(r"<strong>([^<]{3,60})</strong>", bloque))
+    if len(incluye) < 5:
+        fail("el alcance enumera menos de cinco grupos publicados")
+    else:
+        print(f"  [OK] el alcance describe {len(incluye)} grupos publicados y no nombra ausencias")
+
+
 def main():
     html = read("docs/index.html")
     audit_tabs(html)
@@ -619,6 +680,8 @@ def main():
     audit_header_compaction(html, read("docs/css/app.css"))
     audit_cabeceras()
     audit_como_usar(html, read("docs/css/app.css"))
+    audit_privacidad(html, read("docs/css/app.css"))
+    audit_alcance_publicado(html)
 
     print("\n" + "=" * 75)
     if errors:
