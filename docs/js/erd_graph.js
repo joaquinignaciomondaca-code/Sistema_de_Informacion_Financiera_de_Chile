@@ -587,8 +587,7 @@ const ERD_TABLES = [
     rows: "7 administradoras",
     file: "outputs/pensiones/afp_maestro_administradoras.parquet",
     cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_administradora", type: "VARCHAR" },
+      { name: "rut_administradora", pk: true, type: "VARCHAR" },
       { name: "nombre_administradora", type: "VARCHAR" },
       { name: "nombre_fantasia", type: "VARCHAR" }
     ]

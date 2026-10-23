@@ -273,7 +273,7 @@ def registros_publicados(cfg, periodo, control):
                     "moneda": f["moneda"],
                     "moneda_cmf": f["moneda_cmf"],
                     "archivo": f["fuente_archivo"],
-                    "sha256": f["sha256_archivo"],
+                    "sha256": f.get("sha256_archivo"),
                     "enviado": f["enviado_cmf"],
                     "contextos": {},
                     "tablas": {"balance": {}, "resultados": {}},
