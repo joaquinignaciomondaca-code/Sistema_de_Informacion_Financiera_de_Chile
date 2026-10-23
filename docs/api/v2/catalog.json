@@ -3,7 +3,7 @@
  "base": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile",
  "como_se_genera": "python3 scripts/build_contrato.py",
  "contrato": "sif-api/catalogo",
- "data_release": "2026-10-22.9c002673eed5",
+ "data_release": "2026-10-22.5027fd71cbd7",
  "generado": "2026-10-23",
  "objetos": [
   {
@@ -480,7 +480,7 @@
     "factoring_leasing_balance_serie_ifrs_cmf"
    ],
    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-   "bytes": 387698,
+   "bytes": 534722,
    "corte": "2009-03 a 2026-09",
    "deriva_de": null,
    "descripcion": "30,046 filas de cuentas ESF; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
@@ -546,7 +546,7 @@
     "factoring_leasing_resultados_serie_ifrs_cmf"
    ],
    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-   "bytes": 242250,
+   "bytes": 331229,
    "corte": "2009-03 a 2026-09",
    "deriva_de": null,
    "descripcion": "22,368 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
@@ -2824,7 +2824,7 @@
  },
  "totales": {
   "alias": 19,
-  "bytes": 505202508,
+  "bytes": 505438511,
   "con_datos": 86,
   "consultas": 159,
   "derivados": 7,
