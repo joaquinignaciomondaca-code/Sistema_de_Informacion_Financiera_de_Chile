@@ -8,15 +8,17 @@ Comprueba que lo publicado y lo que dicen los documentos sean lo mismo, y que
      claves: mismos 90 objetos, misma clave primaria, mismos archivos.
   2. **Archivos**: cada ruta del catálogo existe, pesa lo declarado y tiene el
      SHA-256 declarado.
-  3. **Consultas**: 156, ids únicos, y toda tabla que mencionan existe en el
+  3. **Consultas**: 159, ids únicos, y toda tabla que mencionan existe en el
      catálogo (por nombre o por alias).
-  4. **OpenAPI**: las 9 rutas son las que existen; el `enum` de ids cubre los 90
+  4. **OpenAPI**: las 11 rutas son las que existen; el `enum` de ids cubre los 90
      objetos.
   5. **Vistas**: se ejecuta `views.sql` sustituyendo la base por la copia local
      de `docs/` (el sandbox no tiene salida al sitio) y se comprueba que crea
      las 105 vistas y que **cada objeto con datos responde a un `count(*)`**.
   6. **`llms.txt`**: las cifras que le dice a un agente (objetos, consultas) son
      las del catálogo, y ninguna de sus rutas da 404.
+  7. **Una sola versión**: las nueve piezas del contrato declaran la misma
+     versión semver y la misma `api_version` que la carpeta.
 
 Uso:
     python3 scripts/auditar_contrato.py            # informe (~10 s)
@@ -35,8 +37,11 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 DOCS = RAIZ / "docs"
-V2 = DOCS / "api" / "v2"
-sys.path.insert(0, str(RAIZ))
+sys.path.insert(0, str(RAIZ / "scripts"))
+
+from version_contrato import API_VERSION, VERSION_CONTRATO  # noqa: E402
+
+V2 = DOCS / "api" / API_VERSION
 
 BASE = "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile"
 
@@ -155,7 +160,7 @@ def main() -> int:
     resultados = V2 / "resultados"
     por_id = {c["id"]: c for c in consultas["consultas"]}
     if not resultados.exists():
-        problemas.append("falta api/v2/resultados/: las 156 consultas vienen sin resultado")
+        problemas.append("falta api/v2/resultados/: las 159 consultas vienen sin resultado")
     else:
         indice = leer_json(resultados / "index.json")
         if indice.get("data_release") != catalogo["data_release"]:
@@ -225,6 +230,45 @@ def main() -> int:
     if paquete["sif"]["data_release"] != catalogo["data_release"]:
         problemas.append("el data_release del catálogo y del Data Package no coinciden")
     print(f"Release: {catalogo['data_release']} en catálogo y Data Package")
+
+    # 6b. Una sola versión: la que dice `scripts/version_contrato.py` ------
+    # El 2026-10-23 el Data Package decía 2.0.0 y el catálogo, los esquemas, las
+    # particiones, las consultas, el OpenAPI y los resultados seguían en 1.0.0:
+    # el contrato se contradecía. Esta comprobación lo impide.
+    piezas = {
+        "catalog.json": catalogo,
+        "openapi.json": openapi,
+        "queries.json": consultas,
+        "resultados/index.json": leer_json(resultados / "index.json")
+        if resultados.exists() else {},
+        "datapackage.json": paquete,
+    }
+    for objeto in objetos[:90]:
+        piezas[f"schema/{objeto['id']}.json"] = leer_json(V2 / "schema" / f"{objeto['id']}.json")
+        piezas[f"partitions/{objeto['id']}.json"] = leer_json(V2 / "partitions" / f"{objeto['id']}.json")
+    def version_de(nombre: str, doc: dict):
+        # OpenAPI declara la versión en `info.version`, como manda el estándar.
+        if nombre == "openapi.json":
+            return (doc.get("info") or {}).get("version")
+        return doc.get("version")
+
+    desalineadas = sorted(n for n, d in piezas.items() if version_de(n, d) != VERSION_CONTRATO)
+    for nombre in desalineadas[:6]:
+        problemas.append(f"{nombre}: declara la versión {version_de(nombre, piezas[nombre])} "
+                         f"y el contrato es {VERSION_CONTRATO}")
+    if len(desalineadas) > 6:
+        problemas.append(f"… y {len(desalineadas) - 6} piezas más con otra versión")
+    if V2.name != API_VERSION:
+        problemas.append(f"la carpeta del contrato es api/{V2.name} y API_VERSION dice {API_VERSION}")
+    for nombre in ("catalog.json", "datapackage.json"):
+        declarada = (paquete["sif"].get("api_version") if nombre == "datapackage.json"
+                     else piezas[nombre].get("api_version"))
+        if declarada != API_VERSION:
+            problemas.append(f"{nombre}: api_version {declarada} ≠ {API_VERSION}")
+    if esquemas.get("version") != API_VERSION:
+        problemas.append(f"esquemas.json: version {esquemas.get('version')} ≠ {API_VERSION}")
+    print(f"Versión: {len(piezas)} piezas en {VERSION_CONTRATO} (api/{API_VERSION})"
+          f"{'' if not desalineadas else f', {len(desalineadas)} desalineadas'}")
 
     # 7. El llms.txt no puede mentirle a un agente -------------------------
     llms = DOCS / "llms.txt"

@@ -3603,10 +3603,10 @@
    "title": "corredoras.resultados"
   },
   {
-   "bytes": 387698,
+   "bytes": 534722,
    "description": "30,046 filas de cuentas ESF; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
    "format": "parquet",
-   "hash": "b9baced4cc39d41803db922088b15a2b86595ef7790c1a9c8196b9bc9265434a",
+   "hash": "74f6b20e91e2687ee2c83a3944bd43f67a22cc33f5a605e3a651bd8f5a458ed2",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -3761,10 +3761,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 387698,
+      "bytes": 534722,
       "filas": 30046,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
-      "sha256": "707047504155fd65d879be5f25f685919b6e719f8b38c7948232380da8246d23"
+      "sha256": "975fe1b1071d256a8fffa2067cd5bbd2fa22b23809f53f4394260efa2323d085"
      }
     ],
     "puente": "alias",
@@ -4007,10 +4007,10 @@
    "title": "factoring_leasing.lista_entidades"
   },
   {
-   "bytes": 242250,
+   "bytes": 331229,
    "description": "22,368 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
    "format": "parquet",
-   "hash": "bb3f24409c318abcdf5bcb758a3aa2952447834e0eb3abb271d47f91e590b321",
+   "hash": "0d2467deeff3e1aedd2c035ef9c90dd8758d09d1400e7cd82ee98d465dfa1ede",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -4168,10 +4168,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 242250,
+      "bytes": 331229,
       "filas": 22368,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
-      "sha256": "23962408e4c6063ad0c115ccf5378fbcf35630fa0579293c3e612d53f524b9d8"
+      "sha256": "0eb019cb70f9eae970593e38a9a1181dbf49fb83527696abf79db36bf02e4fe7"
      }
     ],
     "puente": "alias",
@@ -19323,7 +19323,7 @@
    "licencia": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md",
    "reconciliacion": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv"
   },
-  "data_release": "2026-10-22.9c002673eed5",
+  "data_release": "2026-10-22.5027fd71cbd7",
   "espejo": "https://sistema-de-informacion-financiera-de-chile-docs.vercel.app",
   "filas_unicas": 19777508,
   "identificador": {
