@@ -111,6 +111,13 @@ class PublishBackfillTests(unittest.TestCase):
             self.assertEqual(len(balance), 3)  # repetición explícita, no suma ni deduplicación
             self.assertEqual(len(results), 4)  # dos resultados por período, incluso texto no entero
             self.assertEqual(str(balance['valor_archivo'].dtype), 'Int64')
+            # El archivo publicado lleva sólo las columnas del esquema: `sha256_archivo`
+            # es control interno del pipeline y no viaja en la fila.
+            from pipelines.esquema_publicado import columnas_publicadas
+            self.assertEqual(list(balance.columns), columnas_publicadas(publish.BALANCE))
+            self.assertEqual(list(results.columns), columnas_publicadas(publish.RESULTS))
+            self.assertNotIn('sha256_archivo', balance.columns)
+            self.assertNotIn('sha256_archivo', results.columns)
             self.assertEqual(balance['valor_archivo'].iloc[0], 123456789)
             self.assertEqual(balance['repeticion_contexto'].max(), 2)
             self.assertIn('NO_APLICA', set(results['valor_texto_original']))
@@ -155,6 +162,19 @@ class PublishBackfillTests(unittest.TestCase):
             import subprocess
             for file in ['duckdb_client.js','sidebar.js','data_viewer.js','data_dictionary.js']:
                 subprocess.run(['node','-c',str(docs/'js'/file)],check=True,capture_output=True,text=True)
+
+    def test_el_diccionario_documenta_exactamente_las_columnas_publicadas(self):
+        """`DOC_COLUMNS` y el esquema publicado no pueden separarse.
+
+        El recorte del 2026-10-23 sacó `sha256_archivo` del Parquet; la lista del
+        diccionario quedó sin ella, pero el publicador seguía escribiéndola. Esta
+        prueba ata las dos listas para que no vuelvan a divergir.
+        """
+        from pipelines.esquema_publicado import columnas_publicadas
+        for conjunto in (publish.BALANCE, publish.RESULTS):
+            documentadas = [nombre for nombre, _tipo in publish.DOC_COLUMNS]
+            self.assertEqual(sorted(documentadas), sorted(columnas_publicadas(conjunto)))
+            self.assertNotIn('sha256_archivo', documentadas)
 
     def test_unchanged_daily_run_does_not_churn_publication_metadata(self):
         with tempfile.TemporaryDirectory() as tmp:

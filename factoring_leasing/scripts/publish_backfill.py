@@ -34,6 +34,7 @@ ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from pipelines.auto import cuadratura  # noqa: E402
 from pipelines.auto.rut import normalizar_dataframe  # noqa: E402
+from pipelines.esquema_publicado import columnas_publicadas  # noqa: E402
 
 DATA = ROOT / '.local-data' / 'factoring_leasing_serie'
 DOCS = ROOT / 'docs'
@@ -103,9 +104,17 @@ def file_sha256(path):
     return digest.hexdigest()
 
 
-def atomic_parquet(frame, path):
+def atomic_parquet(frame, path, conjunto):
     # Convención de RUT (pipelines/auto/rut.py): `rut` = cuerpo, `rut_dv` = con DV.
     frame = normalizar_dataframe(frame)
+    # El archivo publicado lleva sólo el dato: `pipelines/esquema_publicado.py` fija
+    # las columnas. `sha256_archivo` es control interno del pipeline y no se publica
+    # (viajaba en cada fila del mismo cierre).
+    publicadas = columnas_publicadas(conjunto)
+    faltantes = [columna for columna in publicadas if columna not in frame.columns]
+    if faltantes:
+        raise KeyError(f'{conjunto}: faltan columnas publicadas en el frame: ' + ', '.join(faltantes))
+    frame = frame[publicadas]
     path.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.NamedTemporaryFile(dir=path.parent, suffix='.parquet', delete=False) as tmp:
         temp = Path(tmp.name)
@@ -492,8 +501,8 @@ def publish(out=DATA, docs=DOCS, run_id='local'):
     summary['fuente_indice'] = summary.get('fuente_indice', 'https://www.cmfchile.cl/institucional/estadisticas/estadisticas_ifrs.php')
     balance_path = docs / 'outputs' / 'factoring_leasing' / f'{BALANCE}.parquet'
     results_path = docs / 'outputs' / 'factoring_leasing' / f'{RESULTS}.parquet'
-    atomic_parquet(balance, balance_path)
-    atomic_parquet(results, results_path)
+    atomic_parquet(balance, balance_path, BALANCE)
+    atomic_parquet(results, results_path, RESULTS)
     meta = {
         'estado': 'serie_completa_del_indice_no_cotejo_integral',
         'fuente_indice': summary['fuente_indice'], 'run_actions': str(run_id),
