@@ -911,22 +911,9 @@
  "fuente": "CMF",
  "id": "seguros_extranjeros",
  "licencia_estado": "verificada",
- "primaryKey": [
-  "valor_final_m_clp",
-  "valor_razonable_m_clp",
-  "valor_presente_tir_de_compra_m_clp",
-  "unidades",
-  "tir_mercado",
-  "valor_libro_m_clp",
-  "valor_compra_clp",
-  "valor_bursatil_m_clp",
-  "valor_cuota",
-  "deterioro_m_clp",
-  "valor_bursatil_unitario",
-  "folio_operacion"
- ],
+ "primaryKey": null,
  "sector": "seguros",
  "titulo": "seguros.extranjeros",
  "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
- "version": "2.0.0"
+ "version": "2.0.1"
 }

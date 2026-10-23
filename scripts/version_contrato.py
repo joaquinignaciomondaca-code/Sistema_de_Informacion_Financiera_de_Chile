@@ -17,10 +17,12 @@ recurso o una columna, cambiar un tipo); menor = añadir recurso, columna o camp
 """
 from __future__ import annotations
 
-# semver del contrato. Sube a 2.0.0 el 2026-10-23: el recorte de columnas
-# publicado en `pipelines/esquema_publicado.py` quita columnas que un cliente
-# podía leer, y eso es un cambio mayor.
-VERSION_CONTRATO = "2.0.0"
+# semver del contrato.
+#   2.0.0 · 2026-10-23 · recorte de columnas publicadas: quitar columnas rompe clientes.
+#   2.0.1 · 2026-10-23 · corrección: el descriptor deja de afirmar 13 claves primarias
+#           que no eran únicas (bug de `verificar_claves.py`). No cambia ni una fila
+#           ni una columna publicada; sólo se retira una promesa falsa.
+VERSION_CONTRATO = "2.0.1"
 
 # Carpeta y `api_version` de todas las piezas. Cambia sólo con una versión mayor.
 API_VERSION = "v2"

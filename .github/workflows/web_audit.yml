@@ -283,6 +283,23 @@ jobs:
           done
           exit $(( c | a | d ))
 
+      - name: 'Diccionario: el estado de las claves se deriva de claves.csv'
+        run: |
+          set +e
+          python scripts/build_estado_claves.py --check > estado_claves.log 2>&1; n=$?
+          cat estado_claves.log
+          if [ "$n" -ne 0 ]; then
+            echo "::error title=Diccionario::estado_claves.js no coincide con claves.csv; ejecuta scripts/build_estado_claves.py"
+          else
+            echo "::notice title=Diccionario::$(tail -n 1 estado_claves.log)"
+          fi
+          exit $n
+
+      - name: 'Claves: la búsqueda no puede inventar una clave única (autoprueba)'
+        run: |
+          python -m pip install --disable-pip-version-check duckdb >/dev/null 2>&1
+          python -m unittest -v pipelines.auto.tests.test_claves
+
       - name: 'Contrato estático: catálogo, esquemas, particiones, consultas, OpenAPI y vistas'
         run: |
           set +e

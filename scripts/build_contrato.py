@@ -141,7 +141,10 @@ def construir_objetos(datos: dict, alias: dict[str, list[str]], base: str) -> tu
                 campo["sin_valores"] = True
             columnas.append(campo)
 
-        pk = []
+        # `None` es «no hay clave única medida»; `[]` sería «clave de cero
+        # columnas», que no significa lo mismo y un consumidor puede leer como
+        # verdad. Sólo se publica una lista cuando la medición la respalda.
+        pk = None
         if clave and clave["estado"] in ("ok", "propuesta") and clave["columnas"]:
             pk = [c.strip() for c in clave["columnas"].split("+")]
 

@@ -151,22 +151,9 @@
  "fuente": "CMF",
  "id": "seguros_acciones_relevantes",
  "licencia_estado": "verificada",
- "primaryKey": [
-  "valor_final_m_clp",
-  "valor_razonable_m_clp",
-  "valor_bolsa_clp",
-  "valor_costo_clp",
-  "unidades",
-  "valor_libro_clp",
-  "deterioro_m_clp",
-  "nemotecnico",
-  "periodo",
-  "serie",
-  "nombre_aseguradora",
-  "rut_aseguradora"
- ],
+ "primaryKey": null,
  "sector": "seguros",
  "titulo": "B.2 ACCIONES DE SOCIEDADES ANÓNIMAS ABIERTAS, ACCIONES DE SOCIEDADES ANÓNIMAS CERRADAS Y CUOTAS DE FONDOS DE INVERSIÓN",
  "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
- "version": "2.0.0"
+ "version": "2.0.1"
 }

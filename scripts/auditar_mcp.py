@@ -122,6 +122,20 @@ async def correr() -> list[tuple[str, bool, str]]:
             checks.append(("2.3 solo lectura", bool(bloqueado.get("error")),
                            "el guardia rechaza DROP y responde con JSON"))
 
+            # --- 2.4 · la ficha de un objeto sin clave ----------------------
+            # La 2.0.1 publica `primaryKey: null` en 27 objetos. La herramienta
+            # no puede romperse ni devolver una clave inventada: `pk` va en null.
+            sin_clave = json.loads(texto(await sesion.call_tool(
+                "sif_buscar", {"texto": "cartera nacional de fondos mutuos", "limite": 3})))
+            ficha = next((o for o in sin_clave.get("objetos", [])
+                          if o.get("id") == "ffmm_cartera_nacional"), None)
+            checks.append((
+                "2.4 sin clave",
+                ficha is not None and ficha.get("pk") is None and "pk" in ficha,
+                "ffmm_cartera_nacional llega con pk null (antes afirmaba una clave falsa)"
+                if ficha else "la búsqueda no devolvió ffmm_cartera_nacional",
+            ))
+
             duracion = time.time() - inicio
             checks.append(("2.3 llamadas", True, f"5 llamadas en {duracion:.2f} s"))
     return checks
