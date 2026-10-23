@@ -45,7 +45,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "identifica",
-   "texto": "Clave propuesta: 6 columnas, única sobre 71.423 filas. El diccionario no la declaraba."
+   "texto": "Clave propuesta: 6 columnas, única sobre 71.423 filas. No estaba declarada: se midió sobre los datos publicados."
   },
   "agf_lista_entidades": {
    "estado": "ok",
@@ -57,8 +57,8 @@ window.ESTADO_CLAVES = {
     "rut"
    ],
    "declarada": true,
-   "tipo_clave": "medidas",
-   "texto": "Clave verificada: rut — única sobre 72 filas. Compuesta sobre todo por importes: sirve para deduplicar, no identifica una posición."
+   "tipo_clave": "identifica",
+   "texto": "Clave verificada: rut — única sobre 72 filas."
   },
   "agf_resultados": {
    "estado": "propuesta",
@@ -78,7 +78,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "identifica",
-   "texto": "Clave propuesta: 8 columnas, única sobre 58.216 filas. El diccionario no la declaraba."
+   "texto": "Clave propuesta: 8 columnas, única sobre 58.216 filas. No estaba declarada: se midió sobre los datos publicados."
   },
   "bancos_balance": {
    "estado": "ok",
@@ -140,7 +140,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "identifica",
-   "texto": "Clave propuesta: 5 columnas, única sobre 8.043 filas. El diccionario no la declaraba."
+   "texto": "Clave propuesta: 5 columnas, única sobre 8.043 filas. No estaba declarada: se midió sobre los datos publicados."
   },
   "ccaf_lista_entidades": {
    "estado": "ok",
@@ -152,8 +152,8 @@ window.ESTADO_CLAVES = {
     "rut"
    ],
    "declarada": true,
-   "tipo_clave": "medidas",
-   "texto": "Clave verificada: rut — única sobre 6 filas. Compuesta sobre todo por importes: sirve para deduplicar, no identifica una posición."
+   "tipo_clave": "identifica",
+   "texto": "Clave verificada: rut — única sobre 6 filas."
   },
   "ccaf_resultados": {
    "estado": "propuesta",
@@ -170,7 +170,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "identifica",
-   "texto": "Clave propuesta: 5 columnas, única sobre 5.506 filas. El diccionario no la declaraba."
+   "texto": "Clave propuesta: 5 columnas, única sobre 5.506 filas. No estaba declarada: se midió sobre los datos publicados."
   },
   "cooperativas_lista_entidades": {
    "estado": "ok",
@@ -258,7 +258,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "identifica",
-   "texto": "Clave propuesta: 7 columnas, única sobre 30.046 filas. El diccionario no la declaraba."
+   "texto": "Clave propuesta: 7 columnas, única sobre 30.046 filas. No estaba declarada: se midió sobre los datos publicados."
   },
   "factoring_leasing_lista_entidades": {
    "estado": "ok",
@@ -293,7 +293,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "identifica",
-   "texto": "Clave propuesta: 10 columnas, única sobre 22.368 filas. El diccionario no la declaraba."
+   "texto": "Clave propuesta: 10 columnas, única sobre 22.368 filas. No estaba declarada: se midió sobre los datos publicados."
   },
   "ffmm_balance": {
    "estado": "ok",
@@ -497,7 +497,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "identifica",
-   "texto": "Clave propuesta: 12 columnas, única sobre 10.038 filas. El diccionario no la declaraba."
+   "texto": "Clave propuesta: 12 columnas, única sobre 10.038 filas. No estaba declarada: se midió sobre los datos publicados."
   },
   "fi_opciones": {
    "estado": "propuesta",
@@ -513,7 +513,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "medidas",
-   "texto": "Clave propuesta: 4 columnas, única sobre 307 filas. El diccionario no la declaraba. Compuesta sobre todo por importes: sirve para deduplicar, no identifica una posición."
+   "texto": "Clave propuesta: 4 columnas, única sobre 307 filas. No estaba declarada: se midió sobre los datos publicados. Compuesta sobre todo por importes: sirve para deduplicar, no identifica una posición."
   },
   "fi_pactos": {
    "estado": "sin_clave",
@@ -551,8 +551,8 @@ window.ESTADO_CLAVES = {
     "rut"
    ],
    "declarada": true,
-   "tipo_clave": "medidas",
-   "texto": "Clave verificada: rut — única sobre 264 filas. Compuesta sobre todo por importes: sirve para deduplicar, no identifica una posición."
+   "tipo_clave": "identifica",
+   "texto": "Clave verificada: rut — única sobre 264 filas."
   },
   "macro_cobre": {
    "estado": "ok",
@@ -914,7 +914,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "identifica",
-   "texto": "Clave propuesta: 8 columnas, única sobre 13.679 filas. El diccionario no la declaraba."
+   "texto": "Clave propuesta: 8 columnas, única sobre 13.679 filas. No estaba declarada: se midió sobre los datos publicados."
   },
   "securitizadoras_lista_entidades": {
    "estado": "ok",
@@ -950,7 +950,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "identifica",
-   "texto": "Clave propuesta: 11 columnas, única sobre 12.290 filas. El diccionario no la declaraba."
+   "texto": "Clave propuesta: 11 columnas, única sobre 12.290 filas. No estaba declarada: se midió sobre los datos publicados."
   },
   "seguros_acciones": {
    "estado": "sin_clave",
@@ -1091,7 +1091,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "medidas",
-   "texto": "Clave propuesta: 12 columnas, única sobre 4.369 filas. El diccionario no la declaraba. Compuesta sobre todo por importes: sirve para deduplicar, no identifica una posición."
+   "texto": "Clave propuesta: 12 columnas, única sobre 4.369 filas. No estaba declarada: se midió sobre los datos publicados. Compuesta sobre todo por importes: sirve para deduplicar, no identifica una posición."
   },
   "seguros_fondos_mutuos": {
    "estado": "sin_clave",
@@ -1178,7 +1178,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "identifica",
-   "texto": "Clave propuesta: 1 columnas, única sobre 66 filas. El diccionario no la declaraba."
+   "texto": "Clave propuesta: 1 columnas, única sobre 66 filas. No estaba declarada: se midió sobre los datos publicados."
   },
   "seguros_renta_fija": {
    "estado": "propuesta",
@@ -1205,7 +1205,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "medidas",
-   "texto": "Clave propuesta: 15 columnas, única sobre 2.321.911 filas. El diccionario no la declaraba. Compuesta sobre todo por importes: sirve para deduplicar, no identifica una posición."
+   "texto": "Clave propuesta: 15 columnas, única sobre 2.321.911 filas. No estaba declarada: se midió sobre los datos publicados. Compuesta sobre todo por importes: sirve para deduplicar, no identifica una posición."
   },
   "seguros_renta_fija_relevante": {
    "estado": "propuesta",
@@ -1230,7 +1230,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "identifica",
-   "texto": "Clave propuesta: 13 columnas, única sobre 2.321.911 filas. El diccionario no la declaraba."
+   "texto": "Clave propuesta: 13 columnas, única sobre 2.321.911 filas. No estaba declarada: se midió sobre los datos publicados."
   },
   "seguros_tablas_desarrollo": {
    "estado": "sin_clave",
@@ -1261,7 +1261,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": false,
    "tipo_clave": "identifica",
-   "texto": "Clave propuesta: 9 columnas, única sobre 9.792 filas. El diccionario no la declaraba."
+   "texto": "Clave propuesta: 9 columnas, única sobre 9.792 filas. No estaba declarada: se midió sobre los datos publicados."
   },
   "sistemas_pago_lista_entidades": {
    "estado": "ok",
@@ -1273,8 +1273,8 @@ window.ESTADO_CLAVES = {
     "rut"
    ],
    "declarada": true,
-   "tipo_clave": "medidas",
-   "texto": "Clave verificada: rut — única sobre 19 filas. Compuesta sobre todo por importes: sirve para deduplicar, no identifica una posición."
+   "tipo_clave": "identifica",
+   "texto": "Clave verificada: rut — única sobre 19 filas."
   }
  }
 };

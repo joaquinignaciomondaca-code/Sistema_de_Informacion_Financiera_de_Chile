@@ -167,7 +167,9 @@ def construir() -> dict:
         sobrantes = int(fila["sobrantes"]) if fila["sobrantes"] else 0
         pct = round(sobrantes / filas * 100, 4) if filas else 0.0
         columnas = [c.strip() for c in fila["columnas"].split("+")] if fila["columnas"] else []
-        tipos = {c["nombre"]: c.get("tipo") for c in esquemas.get(nombre, {}).get("columnas", [])}
+        columnas_esquema = esquemas.get(nombre, {}).get("columnas", [])
+        tipos = {c["nombre"]: c.get("tipo") for c in columnas_esquema}
+        roles = {c["nombre"]: c.get("rol") for c in columnas_esquema}
 
         entrada: dict = {
             "estado": estado,
@@ -182,10 +184,16 @@ def construir() -> dict:
         # ¿La clave identifica una entidad o sólo sirve para deduplicar?
         if estado in ("ok", "propuesta") and columnas:
             # Una clave de 15 columnas donde 14 son importes no identifica una
-            # posición: deduplica. Se marca cuando los importes son la mayoría
-            # (la columna de periodo, si está, no cambia la naturaleza).
-            numericas = sum(1 for c in columnas if tipos.get(c) in NUMERICO)
-            entrada["tipo_clave"] = "medidas" if numericas / len(columnas) >= 0.7 else "identifica"
+            # posición: deduplica. Se marca cuando las medidas son la mayoría.
+            # El rol manda sobre el tipo: un RUT es BIGINT y sí identifica
+            # (`agf_lista_entidades` se marcaba como «sólo importes» por esto).
+            def es_medida(col: str) -> bool:
+                rol = (roles.get(col) or "").lower()
+                if rol:
+                    return rol.startswith("métrica") or rol.startswith("metrica")
+                return tipos.get(col) in NUMERICO
+            medidas = sum(1 for c in columnas if es_medida(c))
+            entrada["tipo_clave"] = "medidas" if medidas / len(columnas) >= 0.7 else "identifica"
 
         if estado == "sin_datos":
             entrada["texto"] = "Sin filas publicadas: no hay clave que verificar."
@@ -205,7 +213,7 @@ def construir() -> dict:
         elif estado == "propuesta":
             entrada["texto"] = (
                 f"Clave propuesta: {len(columnas)} columnas, única sobre {miles(filas)} filas. "
-                "El diccionario no la declaraba."
+                "No estaba declarada: se midió sobre los datos publicados."
             )
         else:
             entrada["texto"] = (
