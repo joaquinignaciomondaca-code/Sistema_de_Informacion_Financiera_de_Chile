@@ -359,6 +359,42 @@ class ListingRetryTests(unittest.TestCase):
         self.assertEqual([c.args[0] for c in sleep.call_args_list], [10])
         parse.assert_called_once_with(buena.text)
 
+    def test_la_pagina_de_error_de_la_cmf_queda_descrita(self):
+        # Lo que devolvió la CMF el 2026-10-23 a las 23:33 UTC: 200 y su propio
+        # error de PHP. El mensaje tiene que decirlo, no dejarlo en «no se pudo».
+        sesion = Mock()
+        respuesta = Mock()
+        respuesta.status_code = 200
+        respuesta.raise_for_status.return_value = None
+        respuesta.text = ("ERROR Linea 387 Archivo /web/SVS_website/institucional/"
+                          "legislacion_normativa/normativa2.php")
+        sesion.get.return_value = respuesta
+
+        with patch("pipelines.normativa_cmf.pipeline.time.sleep"):
+            with self.assertRaises(pipeline.SourceUnavailable) as capturado:
+                pipeline.fetch_listing(datetime(2026, 10, 1).date(), session=sesion)
+
+        mensaje = str(capturado.exception)
+        self.assertIn("página de error", mensaje)
+        self.assertIn("Linea 387", mensaje)
+
+    def test_una_pagina_sin_filas_pero_distinta_se_describe_igual(self):
+        sesion = Mock()
+        respuesta = Mock()
+        respuesta.status_code = 200
+        respuesta.raise_for_status.return_value = None
+        respuesta.text = "<html><body><h1>Sitio en mantención</h1></body></html>"
+        sesion.get.return_value = respuesta
+
+        with patch("pipelines.normativa_cmf.pipeline.time.sleep"):
+            with self.assertRaises(pipeline.SourceUnavailable) as capturado:
+                pipeline.fetch_listing(datetime(2026, 10, 1).date(), session=sesion)
+
+        mensaje = str(capturado.exception)
+        self.assertIn("HTTP 200", mensaje)
+        self.assertIn("sin filas reconocibles", mensaje)
+        self.assertIn("mantención", mensaje)
+
     def test_en_actions_el_fallo_de_origen_se_anota(self):
         with (
             patch("pipelines.normativa_cmf.pipeline.run_pipeline",

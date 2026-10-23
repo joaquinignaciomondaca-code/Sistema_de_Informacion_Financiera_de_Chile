@@ -49,17 +49,38 @@ El comportamiento era correcto; la resiliencia, escasa. Tres cambios:
 2. **Anotación en Actions** cuando el origen no responde:
    `::error title=CMF no disponible::… No se publicó nada: el feed conserva la
    última revisión válida.` El aspa roja dice qué pasó sin abrir el registro.
-3. **Tres pruebas nuevas** (`ListingRetryTests`): que se reintenta cuatro veces
-   con espera creciente y se falla cerrado; que un intento posterior que sí
-   responde devuelve las filas; y que en Actions el fallo de origen queda
-   anotado. Se comprobó la mutación: volver a `attempts=3` con esperas de 5 y
-   10 segundos rompe dos de las tres.
+3. **Cinco pruebas nuevas** (`ListingRetryTests`): que se reintenta cuatro
+   veces con espera creciente y se falla cerrado; que un intento posterior que
+   sí responde devuelve las filas; que la página de error de la CMF queda
+   descrita; que una página distinta sin filas también; y que en Actions el
+   fallo de origen queda anotado. Se comprobó la mutación: volver a
+   `attempts=3` con esperas de 5 y 10 segundos rompe dos pruebas, y quitar la
+   descripción de la respuesta rompe otras dos.
 
-## 4. Lo que queda
+## 4. Qué devolvía la CMF
 
-La corrida no se puede repetir desde el agente (la API responde 403 a
-`rerun` y a `workflow_dispatch`). La siguiente corrida programada —o un
-relanzamiento manual desde Actions— confirmará si la caída fue pasajera. Si
-vuelve a fallar con el mismo mensaje, el problema es del listado de la CMF
-(cambio de HTML o bloqueo), no de la red, y habrá que revisar
-`parse_listing`.
+La corrida siguiente a la mezcla del arreglo (`1c74153`, 23:33 UTC) volvió a
+fallar: los cuatro intentos, repartidos en 70 s, dieron `SourceUnavailable`.
+Eso ya descarta la caída pasajera: el origen responde, pero no con el listado.
+Consultado a través de un lector público, el 23 de octubre a las 23:40 UTC el
+listado devuelve **HTTP 200 con la propia página de error de la CMF**:
+
+```
+ERROR Linea 387 Archivo /web/SVS_website/institucional/legislacion_normativa/normativa2.php
+```
+
+No es un cambio de HTML ni un bloqueo: es un error de la aplicación de la CMF.
+El repositorio no tiene nada que corregir ahí. Lo que sí se corrigió es que
+ahora el mensaje lo diga —`HTTP 200, la CMF devuelve su página de error:
+«ERROR Linea 387…»`— en vez de dejar «no se pudo validar» y parecer un fallo
+propio.
+
+## 5. Lo que queda
+
+El monitor seguirá en rojo mientras la CMF no arregle su página, y **eso es lo
+correcto**: el guardián no publica «sin novedades» cuando no pudo leer el
+listado. `last_checked_at` conserva la última revisión válida y la web no
+afirma nada nuevo. Cuando la CMF responda, la corrida siguiente publica sola.
+
+No se puede relanzar desde el agente: la API responde 403 a `rerun` y a
+`workflow_dispatch`.
