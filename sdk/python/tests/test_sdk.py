@@ -55,7 +55,11 @@ class Contrato(unittest.TestCase):
 
     def test_las_consultas_publicadas_corren(self):
         consultas = self.sif.consultas()
-        self.assertEqual(len(consultas), 156)
+        # El catálogo crece con el sitio; lo que no puede pasar es que falte una
+        # consulta o que el número publicado en el gesto no cuadre con él.
+        publicado = json.loads((DOCS / "api" / "v1" / "queries.json").read_text(encoding="utf-8"))
+        self.assertEqual(len(consultas), publicado["total"])
+        self.assertGreaterEqual(len(consultas), 156)
         primera = consultas[0]
         filas = self.sif.consulta(primera["id"], limite=2).fetchall()
         self.assertLessEqual(len(filas), 2)
