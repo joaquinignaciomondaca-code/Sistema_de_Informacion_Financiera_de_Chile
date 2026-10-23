@@ -3095,6 +3095,13 @@ header {
   color: var(--accent-blue-text);
 }
 
+/* Botón que alterna entre las columnas que describen el dato y las técnicas. */
+.dv-cols-btn.active {
+  border-color: var(--accent-mint);
+  color: var(--accent-mint-text);
+  background: var(--accent-mint-dim);
+}
+
 .dv-table-container {
   flex: 1;
   min-width: 0;

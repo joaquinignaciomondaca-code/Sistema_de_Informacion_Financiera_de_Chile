@@ -197,6 +197,56 @@ const DATA_VIEWER_CATALOG = [
   }
 ];
 
+// Columnas que no se muestran por defecto en la tabla: identificadores sintéticos, hashes,
+// rutas y URLs de la fuente y campos que repiten otro que sí se muestra. No se eliminan:
+// siguen en el Parquet, en el contrato y en la vista SQL, y el botón «Todas las columnas»
+// las devuelve a la tabla.
+const DV_COLUMNAS_TECNICAS = [
+  /^id$/,
+  /sha256/i,
+  /^fuente_url_/,
+  /^archivo_fuente$/,
+  /^numero_fila_fuente$/,
+  /^ocurrencia_codigo_cuenta$/,
+  /^unidad_monto$/,
+  /^importes_fuente_decimal$/,
+  /^formato_monto_fuente$/
+];
+
+// Orden editorial de las columnas por vista: primero lo que describe el dato que se quiere
+// transmitir (periodo, institución, cuenta, importe) y después el perímetro y la
+// procedencia. `ocultas` son columnas redundantes para leer el estado financiero.
+const DV_PRESENTACION_VISTAS = {
+  bancos_balance: {
+    orden: [
+      "periodo", "codigo_institucion", "rut", "razon_social",
+      "codigo_cuenta", "glosa_cuenta", "tipo_linea", "importe_clp",
+      "importes_fuente_raw", "familia_archivo_fuente", "modelo_cmf", "nivel_consolidacion"
+    ],
+    // fecha_corte se deriva del periodo; rubro, línea e ítem, de codigo_cuenta;
+    // nombre_institucion_fuente repite razon_social y tipo_estado es constante en la vista.
+    ocultas: ["fecha_corte", "rubro", "linea", "item", "nombre_institucion_fuente", "tipo_estado"],
+    // El TXT de la CMF no trae las líneas en el orden del estado: se ordenan al cargar
+    // por institución y código de cuenta (jerárquico) para que la tabla se lea como el
+    // balance. Ocultas sus columnas, el orden sigue siendo el del estado.
+    ordenFilas: ["codigo_institucion", "codigo_cuenta"]
+  },
+  bancos_resultados: {
+    orden: [
+      "periodo", "codigo_institucion", "rut", "razon_social",
+      "codigo_cuenta", "glosa_cuenta", "tipo_linea", "importe_clp",
+      "importes_fuente_raw", "familia_archivo_fuente", "modelo_cmf", "nivel_consolidacion"
+    ],
+    // fecha_corte se deriva del periodo; rubro, línea e ítem, de codigo_cuenta;
+    // nombre_institucion_fuente repite razon_social y tipo_estado es constante en la vista.
+    ocultas: ["fecha_corte", "rubro", "linea", "item", "nombre_institucion_fuente", "tipo_estado"],
+    // El TXT de la CMF no trae las líneas en el orden del estado: se ordenan al cargar
+    // por institución y código de cuenta (jerárquico) para que la tabla se lea como el
+    // balance. Ocultas sus columnas, el orden sigue siendo el del estado.
+    ordenFilas: ["codigo_institucion", "codigo_cuenta"]
+  }
+};
+
 class DataViewerController {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
@@ -206,6 +256,8 @@ class DataViewerController {
     this.currentLimit = 100;
     this.currentRows = [];
     this.currentColumns = [];
+    this.columnasMostradas = [];
+    this.mostrarTodasLasColumnas = false;
     this.filterText = "";
     this.sortCol = null;
     this.sortAsc = true;
@@ -336,6 +388,7 @@ class DataViewerController {
         this.currentColumns = res.columns || [];
         this.currentRows = res.rows || [];
         this.totalCount = res.count || this.currentRows.length;
+        this.ordenarFilasEditorial();
       } else {
         this.currentColumns = [];
         this.currentRows = [];
@@ -366,7 +419,8 @@ class DataViewerController {
   }
 
   sortTable(colIdx) {
-    const colName = this.currentColumns[colIdx];
+    const mostradas = this.columnasMostradas.length ? this.columnasMostradas : this.currentColumns;
+    const colName = mostradas[colIdx];
     if (!colName) return;
 
     if (this.sortCol === colName) {
@@ -397,7 +451,13 @@ class DataViewerController {
     if (val === null || val === undefined) return '<span class="cell-null">—</span>';
     // Las columnas de importes fuente llegan como lista: mostrarlas separadas se
     // lee mejor que el volcado crudo del arreglo.
-    if (Array.isArray(val)) return dvEscapar(val.join(" · "));
+    // Desglose por moneda: cada componente se muestra como importe legible, en el mismo
+    // orden que trae la fuente.
+    if (Array.isArray(val)) {
+      return dvEscapar(val.map((v) => (/^\d+$/.test(String(v))
+        ? Number(v).toLocaleString("es-CL", { maximumFractionDigits: 0 })
+        : String(v))).join(" · "));
+    }
     if (typeof val !== "number") return dvEscapar(val);
 
     const lower = colName.toLowerCase();
@@ -468,6 +528,53 @@ class DataViewerController {
     URL.revokeObjectURL(url);
   }
 
+  // Columnas que se pintan en la tabla, en orden editorial: primero las que describen el
+  // dato, después el resto tal como llega de la vista. Las técnicas y las redundantes
+  // quedan disponibles con «Todas las columnas», nunca se eliminan del resultado.
+  presentacionColumnas() {
+    const pres = DV_PRESENTACION_VISTAS[this.currentView] || {};
+    const orden = pres.orden || [];
+    const redundantes = pres.ocultas || [];
+    const original = this.currentColumns.indexOf.bind(this.currentColumns);
+    const prioridad = (col) => {
+      const i = orden.indexOf(col);
+      return i >= 0 ? i : orden.length + original(col);
+    };
+    const todas = this.currentColumns.slice().sort((a, b) => prioridad(a) - prioridad(b));
+    const esTecnica = (col) => redundantes.includes(col) || DV_COLUMNAS_TECNICAS.some((re) => re.test(col));
+    return {
+      principales: todas.filter((col) => !esTecnica(col)),
+      tecnicas: todas.filter(esTecnica),
+      todas
+    };
+  }
+
+  // Orden editorial de las filas cargadas: sólo actúa cuando la vista lo declara.
+  ordenarFilasEditorial() {
+    const pres = DV_PRESENTACION_VISTAS[this.currentView] || {};
+    const claves = pres.ordenFilas || [];
+    if (!claves.length) return;
+    this.currentRows.sort((a, b) => {
+      for (const clave of claves) {
+        const va = a[clave];
+        const vb = b[clave];
+        const vacioA = va === null || va === undefined;
+        const vacioB = vb === null || vb === undefined;
+        if (vacioA && vacioB) continue;
+        if (vacioA) return 1;
+        if (vacioB) return -1;
+        const cmp = String(va).localeCompare(String(vb), "es", { numeric: true });
+        if (cmp !== 0) return cmp;
+      }
+      return 0;
+    });
+  }
+
+  alternarColumnas() {
+    this.mostrarTodasLasColumnas = !this.mostrarTodasLasColumnas;
+    this.render();
+  }
+
   getFilteredRows() {
     if (!this.filterText) return this.currentRows;
     return this.currentRows.filter(r => 
@@ -480,8 +587,9 @@ class DataViewerController {
     if (!tbody) return;
 
     const rows = this.getFilteredRows();
+    const mostradas = this.columnasMostradas.length ? this.columnasMostradas : this.currentColumns;
     tbody.innerHTML = rows.map(r => {
-      const cells = this.currentColumns.map(col => {
+      const cells = mostradas.map(col => {
         const raw = r[col];
         const formatted = this.formatCell(col, raw);
         const isNum = typeof raw === "number";
@@ -494,14 +602,17 @@ class DataViewerController {
 
     const countInfo = this.container.querySelector(".dv-count-info");
     if (countInfo) {
-      countInfo.textContent = `${rows.length} de ${this.currentRows.length} fila(s) · ${this.currentColumns.length} columnas`;
+      const visibles = mostradas.length;
+      countInfo.textContent = `${rows.length} de ${this.currentRows.length} fila(s) · ` +
+        (visibles < this.currentColumns.length ? `${visibles} de ${this.currentColumns.length} columnas` : `${visibles} columnas`);
     }
   }
 
   updateSortIcons(activeIdx) {
     const ths = this.container.querySelectorAll(".dv-table th");
     ths.forEach((th, i) => {
-      const activa = this.sortCol === this.currentColumns[i];
+      const mostradas = this.columnasMostradas.length ? this.columnasMostradas : this.currentColumns;
+      const activa = this.sortCol === mostradas[i];
       th.setAttribute("aria-sort", activa ? (this.sortAsc ? "ascending" : "descending") : "none");
       const icon = th.querySelector(".dv-sort-icon");
       if (icon) {
@@ -543,7 +654,10 @@ class DataViewerController {
 
     const rows = this.getFilteredRows();
     const mode = this.modeForView();
-    const headersHtml = this.currentColumns.map((col, idx) => {
+    const presentacion = this.presentacionColumnas();
+    const mostradas = this.mostrarTodasLasColumnas ? presentacion.todas : presentacion.principales;
+    this.columnasMostradas = mostradas;
+    const headersHtml = mostradas.map((col, idx) => {
       const activa = this.sortCol === col;
       const orden = activa ? (this.sortAsc ? "ascending" : "descending") : "none";
       return `
@@ -556,7 +670,7 @@ class DataViewerController {
     }).join("");
 
     const rowsHtml = rows.map(r => {
-      const cells = this.currentColumns.map(col => {
+      const cells = mostradas.map(col => {
         const raw = r[col];
         const formatted = this.formatCell(col, raw);
         const isNum = typeof raw === "number";
@@ -590,7 +704,7 @@ class DataViewerController {
             <span class="dv-badge-mode mode-${mode.className}" title="${dvEscapar(mode.title)}">${dvEscapar(mode.label)}</span>
             <span class="dv-badge-update" title="Fecha de última actualización del pipeline">Actualizado: 2026-09-23</span>
             <span class="dv-meta-timing"><b>${this.elapsedMs} ms</b></span>
-            <span class="dv-count-info">${rows.length} fila(s) · ${this.currentColumns.length} columnas</span>
+            <span class="dv-count-info">${rows.length} fila(s) · ${mostradas.length}${mostradas.length < this.currentColumns.length ? ` de ${this.currentColumns.length}` : ""} columnas</span>
             <span class="dv-scroll-tag" title="Usa la barra de desplazamiento horizontal para explorar todas las columnas">Desplaza ↔</span>
           </div>
           
@@ -607,6 +721,16 @@ class DataViewerController {
               <button class="dv-limit-btn ${this.currentLimit === 500 ? 'active' : ''}" onclick="window.DataViewer.setLimit(500)">500</button>
             </div>
 
+            <button class="dv-export-btn dv-cols-btn ${this.mostrarTodasLasColumnas ? "active" : ""}"
+                    onclick="window.DataViewer.alternarColumnas()"
+                    title="${this.mostrarTodasLasColumnas
+                      ? "Volver a las columnas que describen el dato; el resto sigue en el Parquet y en la vista SQL"
+                      : "Mostrar también las columnas técnicas: identificadores internos, hashes, rutas y URLs de la fuente"}">
+              ${this.mostrarTodasLasColumnas
+                ? `Columnas del dato (${presentacion.principales.length})`
+                : `Todas las columnas (${presentacion.todas.length})`}
+            </button>
+
             <button class="dv-export-btn" onclick="window.DataViewer.openExportModal()" title="Abrir la pestaña Descargas con esta tabla seleccionada (Parquet, CSV, Excel)">
               Descargar datos
             </button>
@@ -617,7 +741,7 @@ class DataViewerController {
 
         <!-- Tabla de datos scrollable -->
         <div class="dv-table-container">
-          ${this.currentColumns.length > 0 ? `
+          ${mostradas.length > 0 ? `
             <table class="dv-table">
               <thead><tr>${headersHtml}</tr></thead>
               <tbody>${rowsHtml}</tbody>

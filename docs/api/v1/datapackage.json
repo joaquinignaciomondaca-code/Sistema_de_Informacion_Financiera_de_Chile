@@ -1060,8 +1060,8 @@
      }
     ],
     "primaryKey": [
-     "id",
-     "codigo_cuenta"
+     "codigo_cuenta",
+     "id"
     ]
    },
    "scheme": "file",
@@ -1798,8 +1798,8 @@
      }
     ],
     "primaryKey": [
-     "id",
-     "codigo_cuenta"
+     "codigo_cuenta",
+     "id"
     ]
    },
    "scheme": "file",

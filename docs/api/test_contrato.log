@@ -1,16 +1,15 @@
-# Test de contrato · 2026-10-22T23:55:14
+# Test de contrato · 2026-10-23T02:49:05
 
 OK    1d.1 rutas · 908 rutas por HTTP, 0 × 404 (0.7 s)
-OK    1d.2 esquema · 1509 columnas comparadas con DESCRIBE
+OK    1d.2 esquema · 1513 columnas comparadas con DESCRIBE
 OK    1d.3 views.sql · 105 vistas creadas, 4 objetos vacíos sin vista y con su motivo escrito
-OK    1d.4 consultas · las 156 consultas corren y devuelven filas
+OK    1d.4 consultas · las 159 consultas corren y devuelven filas
 OK    1d.5 README · cruce · 15 emisores, todos del catálogo de bancos
 OK    1d.5 README · 2026-09 · top 5 del período fijado: ['US', 'LU', 'IE', 'BR', 'GB']
 OK    1d.6 bytes y sha256 · 728 archivos verificados y 1 descargado por HTTP
 OK    1d.7 cobertura · 728 archivos y 89 filas del manifiesto encajan con los 90 objetos (110 de banca vía bancos_cmf_lineas, 4 objetos vacíos declarados)
 OK    1d.8 atribución · 90 objetos con fuente, cita y URL de condiciones; 1 adaptación(es) declarada(s)
 AVISO 1d.2 · 1 columnas declaradas sin un solo valor (toleradas por estar declaradas): agf_lista_entidades.codigo_cmf
-OK    autoprueba · con una columna renombrada y un SHA-256 alterado, el test detecta ['1d.2 esquema', '1d.6 bytes y sha256']
 
-Duración: 7.0 s · comprobaciones: 9 · fallos: 0
+Duración: 4.1 s · comprobaciones: 9 · fallos: 0
 TEST DE CONTRATO: lo publicado cumple lo que promete

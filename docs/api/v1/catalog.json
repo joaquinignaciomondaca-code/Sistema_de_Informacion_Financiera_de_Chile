@@ -156,8 +156,8 @@
    "particiones": 56,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/bancos_balance.json",
    "primaryKey": [
-    "id",
-    "codigo_cuenta"
+    "codigo_cuenta",
+    "id"
    ],
    "sector": "bancos",
    "sql_view": "bancos_balance",
@@ -217,8 +217,8 @@
    "particiones": 56,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/bancos_resultados.json",
    "primaryKey": [
-    "id",
-    "codigo_cuenta"
+    "codigo_cuenta",
+    "id"
    ],
    "sector": "bancos",
    "sql_view": "bancos_resultados",
