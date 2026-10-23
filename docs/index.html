@@ -589,7 +589,7 @@
                 <tr><td data-label="">Ver una tabla y sus filas</td><td data-label="Usa"><strong>Visor de datos</strong>: elige el conjunto en el explorador.</td></tr>
                 <tr><td data-label="">Escribir una consulta SQL</td><td data-label="Usa"><strong>Consultas SQL</strong>: el motor corre en tu navegador sobre los Parquet publicados.</td></tr>
                 <tr><td data-label="">Descargar los datos</td><td data-label="Usa"><strong>Descargas</strong>: Parquet, CSV o Excel, con filas, periodo y peso a la vista.</td></tr>
-                <tr><td data-label="">Una cifra sin descargar el conjunto</td><td data-label="Usa"><code>api/v1/resultados/{id}.json</code>, con las 156 consultas ya ejecutadas.</td></tr>
+                <tr><td data-label="">Una cifra sin descargar el conjunto</td><td data-label="Usa"><code>api/v1/resultados/{id}.json</code>, con las 159 consultas ya ejecutadas.</td></tr>
                 <tr><td data-label="">Programar en Python o R</td><td data-label="Usa">SDK de Python, o <code>views.sql</code> y DuckDB sobre los Parquet.</td></tr>
                 <tr><td data-label="">Consultar desde un agente de IA</td><td data-label="Usa"><code>llms.txt</code> para el contrato y el servidor MCP para las consultas.</td></tr>
               </tbody>
@@ -629,13 +629,13 @@
 
               <div class="uso-card uso-card-wide">
                 <h3>Obtener una cifra por URL</h3>
-                <p class="uso-text">Las 156 consultas del sitio se publican con su resultado calculado. Cada archivo
+                <p class="uso-text">Las 159 consultas del sitio se publican con su resultado calculado. Cada archivo
                 trae <code>columnas</code>, <code>filas</code>, <code>datos</code>, el <code>sql</code> que lo produjo,
                 el tope de 500 filas y el <code>data_release</code>. Es la vía indicada para una planilla, para R o para
                 un cliente que no ejecuta SQL.</p>
                 <pre class="uso-code"><code>BASE=https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile
 
-# Índice: las 156 consultas, con filas y URL de cada resultado
+# Índice: las 159 consultas, con filas y URL de cada resultado
 curl -s "$BASE/api/v1/resultados/index.json"
 
 # Un resultado concreto
@@ -688,7 +688,7 @@ sif.sql("SELECT count(*) FROM seguros_renta_fija").fetchone() # una tupla; la ci
                   <ul class="info-list">
                     <li><code>api/v1/catalog.json</code>: los 90 objetos con estado, filas, corte y clave primaria.</li>
                     <li><code>api/v1/schema/{id}.json</code>: columnas, tipos, rol y significado.</li>
-                    <li><code>api/v1/queries.json</code>: las 156 consultas con id estable y SQL exacto.</li>
+                    <li><code>api/v1/queries.json</code>: las 159 consultas con id estable y SQL exacto.</li>
                     <li><code>api/v1/resultados/index.json</code>: el resultado calculado de cada consulta.</li>
                     <li><code>api/v1/partitions/{id}.json</code>: archivos, filas y <code>sha256</code>.</li>
                   </ul>
