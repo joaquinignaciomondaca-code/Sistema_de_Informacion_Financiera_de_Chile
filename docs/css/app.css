@@ -2096,16 +2096,6 @@ header {
   margin-top: 18px;
 }
 
-.info-tag-link {
-  text-decoration: none;
-  border-style: dashed;
-}
-
-.info-tag-link b { color: var(--text-bright); font-variant-numeric: tabular-nums; }
-
-.info-tag-link:hover,
-.info-tag-link:focus-visible { border-color: var(--accent-mint); color: var(--text-bright); }
-
 .info-tag {
   display: inline-flex;
   align-items: center;
@@ -2143,6 +2133,38 @@ header {
 .info-calidad-stats {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: 14px;
+}
+
+/* La explicación va en llano y el registro técnico queda plegado: quien entra
+   por primera vez no necesita la consulta para entender la advertencia. */
+.info-calidad-detalle {
+  margin-top: 12px;
+}
+
+.info-calidad-detalle > summary {
+  padding: 8px 0;
+  color: var(--accent-blue-text);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.info-calidad-detalle > summary:hover,
+.info-calidad-detalle > summary:focus-visible {
+  color: var(--text-bright);
+}
+
+.info-calidad-detalle > summary:focus-visible {
+  outline: 2px solid var(--accent-mint);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.info-calidad-detalle[open] > summary { margin-bottom: 2px; }
+
+.info-calidad-detalle-cuerpo {
+  display: flex;
+  flex-direction: column;
 }
 
 .info-calidad-grid {
@@ -5244,6 +5266,21 @@ kbd {
 }
 
 .info-stat span { color: var(--text-secondary); font-size: 12px; line-height: 1.35; }
+
+/* Cifras del núcleo bajo el título de su sección: el héroe habla del catálogo
+   completo y estas del núcleo, para que no haya dos totales compitiendo en la
+   misma pantalla. */
+.info-nucleo-cifras {
+  margin-top: 6px;
+  color: var(--text-muted);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.info-nucleo-cifras b {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
 
 .info-core-grid {
   display: grid;
