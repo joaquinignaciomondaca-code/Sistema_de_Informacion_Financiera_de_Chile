@@ -8,7 +8,7 @@ es estática sobre `docs/css/app.css`, `docs/index.html` y los módulos JS que
 generan marcado, y se cierra con dos compuertas nuevas que codifican las reglas
 para que se puedan volver a comprobar en cada integración:
 
-- `scripts/audit_movil.py` — doce reglas sobre CSS, marcado y eventos, con una
+- `scripts/audit_movil.py` — catorce reglas sobre CSS, marcado y eventos, con una
   autoprueba (`--autoprueba`) que rompe el diseño a propósito para confirmar que
   cada regla lo detecta.
 - `scripts/audit_movil_dom.js` — con jsdom y una consulta de medios de 900 px
@@ -54,7 +54,7 @@ para que se puedan volver a comprobar en cada integración:
   recomienda usar un computador (el explorador, las consultas SQL y el mapa
   necesitan más ancho); se cierra con un botón de 44 px y el descarte se guarda
   en el navegador. Por encima de 900 px no existe: el estilo base la oculta.
-- [x] **M7 · Compuertas.** `scripts/audit_movil.py` (doce reglas, con autoprueba) y
+- [x] **M7 · Compuertas.** `scripts/audit_movil.py` (catorce reglas, con autoprueba) y
   `scripts/audit_movil_dom.js` (comportamiento del cajón en jsdom) corren en
   `web_audit.yml`, después del paso que instala jsdom.
 
@@ -68,10 +68,15 @@ node scripts/audit_interfaz_dom.js            # las 90 comprobaciones de siempre
 python3 scripts/audit_interfaz.py             # estructura, temas y motor
 ```
 
-Resultado de la última ejecución (2026-10-22): `audit_movil.py` 13/13 reglas en
-verde y su autoprueba 10/10 mutaciones detectadas; `audit_movil_dom.js` 15/15
+Resultado de la última ejecución (2026-10-22): `audit_movil.py` 14/14 reglas en
+verde y su autoprueba 11/11 mutaciones detectadas; `audit_movil_dom.js` 15/15
 comprobaciones OK; `audit_interfaz_dom.js` 90/90; `audit_interfaz.py` interfaz
 coherente; `audit_web_full.py` todas las secciones operativas.
+
+La regla 14 se agregó al corregir los solapes del explorador que se vieron en una
+captura de teléfono: las filas del árbol fijaban su alto y el distintivo de la
+carpeta se dibujaba encima del renglón siguiente. Detalle en
+`docs/notas/diseno_explorador_sin_solapes_2026-10-22.md`.
 
 La compuerta no sustituye probar en un teléfono real: cubre lo que se puede
 afirmar sin navegador (reglas de CSS presentes, marcado, eventos táctiles y
