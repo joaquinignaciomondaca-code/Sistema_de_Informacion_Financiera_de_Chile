@@ -23,6 +23,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import math
 import sys
 from pathlib import Path
 
@@ -61,9 +62,18 @@ def descripcion(d: dict) -> str:
     # Sin contar conjuntos a propósito: la portada publica «74 conjuntos
     # visibles» y el contrato 86 con datos, y las dos cifras son ciertas pero
     # juntas se leen como una contradicción en un resultado de búsqueda.
-    millones = f"{d['filas'] / 1_000_000:.1f}".replace(".", ",")
+    # La cifra se trunca hacia abajo y se declara aproximada: «19,8 millones»
+    # prometía 19.800.000 filas cuando hay 19.777.517. Misma regla que
+    # docs/js/alcance.js (dos cifras significativas, nunca al alza).
+    millones = d["filas"] / 1_000_000
+    cifra = math.floor(millones) if millones >= 10 else math.floor(millones * 10) / 10
+    if millones >= 10:
+        legible = f"{cifra}"
+    else:
+        legible = f"{cifra:.1f}".replace(".", ",")
+    aproximada = "más de " if d["filas"] > cifra * 1_000_000 else ""
     texto = ("Datos financieros públicos de Chile —bancos, seguros, fondos, "
-             f"cooperativas, fintech y macro—: {millones} millones de filas en "
+             f"cooperativas, fintech y macro—: {aproximada}{legible} millones de filas en "
              "Parquet y SQL, sin registro.")
     if len(texto) > 160:
         raise SystemExit(f"la meta description tiene {len(texto)} caracteres; el tope es 160")

@@ -142,29 +142,55 @@
   }
 
   // ── Formato es-CL ────────────────────────────────────────────────────────
+  //
+  // Regla de las cifras: se truncan hacia abajo, nunca se redondean al alza, y
+  // cuando queda resto se antepone «más de». Decir «19,8 millones» cuando hay
+  // 19.777.517 filas es una promesa que el dato no cumple; «más de 19 millones»
+  // sí. La precisión es de dos cifras significativas: 19.777.517 → 19;
+  // 4.312.000 → 4,3; 185.921 → 185 mil.
   function numero(n) {
     return Number(n || 0).toLocaleString("es-CL");
   }
 
-  // 11063323 -> "11,1 millones"; 129711 -> "129.711".
+  // Corta en `decimales` sin redondear.
+  function truncar(v, decimales) {
+    const factor = Math.pow(10, decimales);
+    return Math.floor(Number(v) * factor) / factor;
+  }
+
+  // Dos cifras significativas hacia abajo, en millones: 19,7 · 19 · 4,3 · 0,9.
+  function millonesTruncados(millones) {
+    return millones >= 10 ? truncar(millones, 0) : truncar(millones, 1);
+  }
+
+  function conAproximacion(texto, hayResto) {
+    return hayResto ? "más de " + texto : texto;
+  }
+
+  // 19.777.517 -> "más de 19 millones"; 2.000.000 -> "2 millones"; 129.711 -> "129.711".
   function millones(n) {
     const v = Number(n || 0);
+    if (v < 1e6) return numero(v);
+    const cifra = millonesTruncados(v / 1e6);
+    return conAproximacion(numero(cifra) + " millones", v > cifra * 1e6);
+  }
+
+  // Versión corta para etiquetas: "más de 4,3 M", "más de 185 mil", "296".
+  function compacto(n) {
+    const v = Number(n || 0);
     if (v >= 1e6) {
-      return (v / 1e6).toLocaleString("es-CL", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + " millones";
+      const cifra = millonesTruncados(v / 1e6);
+      return conAproximacion(numero(cifra) + " M", v > cifra * 1e6);
+    }
+    if (v >= 1e4) {
+      const miles = truncar(v / 1e3, 0);
+      return conAproximacion(numero(miles) + " mil", v > miles * 1e3);
     }
     return numero(v);
   }
 
-  // Versión corta para etiquetas: "4,3 M", "185 mil", "296".
-  function compacto(n) {
-    const v = Number(n || 0);
-    if (v >= 1e6) return (v / 1e6).toLocaleString("es-CL", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + " M";
-    if (v >= 1e4) return Math.round(v / 1e3).toLocaleString("es-CL") + " mil";
-    return numero(v);
-  }
-
   function porcentaje(p) {
-    return Number(p || 0).toLocaleString("es-CL", { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + " %";
+    return numero(truncar(Number(p || 0), 1)) + " %";
   }
 
   // {desde: "2001-01", hasta: "2026-09"} -> "2001–2026".
@@ -197,6 +223,7 @@
     orden,
     rangoNivel,
     numero,
+    truncar,
     millones,
     compacto,
     porcentaje,

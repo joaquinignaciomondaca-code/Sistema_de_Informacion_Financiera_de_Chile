@@ -142,9 +142,25 @@ Reglas que el CI verifica:
    = 1.962.992, las filas del dataset.
 6. **Los 4 objetos sin dato no desaparecen**: se publican con `estado: "vacio"`,
    `columnas: []` y `motivo_sin_esquema`.
+7. **«Tiene archivo» y «tiene filas» son cosas distintas.** `fi_bienes_raices`
+   publica su esquema con un Parquet vacío (0 filas y las 15 columnas) para que
+   la vista SQL exista: cuenta en `totales.con_datos` (86) y no en
+   `totales.con_filas` (85). Los dos números van con nombre propio para que
+   nadie tenga que restarlos a mano.
 
 Estado actual: 86 objetos con esquema, 1.474 columnas (3 sin documentar en el
-diccionario, 1 sin valores en origen), 19.777.508 filas únicas.
+diccionario, 1 sin valores en origen) y más de 19 millones de filas únicas. La
+cifra exacta está en `catalog.json` y cambia con cada serie diaria: escribirla
+como un número exacto aquí la deja falsa en un día.
+
+Las cuatro cifras que se leen en el sitio, con su nombre:
+
+| Cifra | Campo del contrato | Qué cuenta |
+|---|---|---|
+| 90 | `totales.objetos` | objetos del contrato |
+| 89 | — | conjuntos del explorador: 74 visibles + 15 en archivo y registros |
+| 86 | `totales.con_datos` | objetos con al menos un archivo publicado |
+| 85 | `totales.con_filas` | objetos con filas (suman las 19.777.517) |
 
 ## `v2/datapackage.json`
 
@@ -163,6 +179,13 @@ como `"primaryKey": null` —nunca `[]`, que se leería como una clave de cero
 columnas—. Son 27 objetos: los 13 que perdieron una clave falsa, los 13 que nunca
 la tuvieron y `fi_bienes_raices`, que no publica filas.
 
+El descriptor pasa a **2.0.1** en ese mismo cambio: retirar una afirmación falsa
+es una corrección, no una funcionalidad nueva, pero sí cambia lo que el
+descriptor dice, así que se versiona.
+
+Y a **2.1.0** al añadir `totales.con_filas`: un campo nuevo es un cambio menor,
+no rompe a ningún cliente y no toca ni una fila ni una columna.
+
 El 2026-10-23 se corrigieron **13 claves que se habían dado por buenas sin serlo**
 (`ffmm_cartera_nacional` entre ellas, con 160.564 filas repetidas): un error de
 `scripts/verificar_claves.py` marcaba las repeticiones con una comparación de
@@ -170,8 +193,9 @@ tuplas que DuckDB no evalúa fila a fila, y el vacío se leía como «no hay
 duplicados». Ver [`docs/notas/claves_duplicados_2026-10-23.md`](../notas/claves_duplicados_2026-10-23.md).
 
 El `hash` de cada recurso es el SHA-256 de la concatenación de los SHA-256 de
-sus particiones, y el conjunto de todos ellos produce el `data_release`
-(`2026-10-23.a0734ca242e6`): no es una fecha elegida a mano, es el contenido.
+sus particiones, y el conjunto de todos ellos produce el `data_release`: no es
+una fecha elegida a mano, es el contenido. El vigente se lee en `catalog.json`
+—no se copia aquí, porque cambia con cada serie diaria—.
 
 ### URLs
 
