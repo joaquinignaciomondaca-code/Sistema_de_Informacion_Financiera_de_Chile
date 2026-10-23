@@ -363,6 +363,22 @@ class DataViewerController {
     return `<div class="scope-banner scope-banner-claves" role="note"><b>Filas repetidas</b><span>${dvEscapar(texto)}</span></div>`;
   }
 
+  // Fecha de la última actualización de la tabla abierta. La barra llevaba
+  // «Actualizado: 2026-09-23» escrito a mano desde el primer día: no cambiaba
+  // nunca y no era la fecha de nada. Ahora sale del diccionario o del catálogo
+  // de descargas, y si no hay fecha el distintivo no se pinta.
+  actualizado() {
+    const tabla = (window.SIFDataDictionary || []).find((item) => item.id === this.currentView);
+    if (tabla && tabla.ultimaActualizacion) return String(tabla.ultimaActualizacion).slice(0, 10);
+    const catalogo = window.DOWNLOAD_CATALOG;
+    const grupos = (catalogo && catalogo.grupos) || [];
+    for (const grupo of grupos) {
+      const item = (grupo.items || []).find((i) => i.id === this.currentView);
+      if (item && item.actualizado) return String(item.actualizado).slice(0, 10);
+    }
+    return "";
+  }
+
   modeForView() {
     const table = (window.SIFDataDictionary || []).find((item) => item.id === this.currentView);
     const modo = table && table.modo ? table.modo : "Automático";
@@ -748,7 +764,7 @@ class DataViewerController {
             </select>
             <span class="dv-badge-view">Vista: <code>${dvEscapar(this.currentView)}</code></span>
             <span class="dv-badge-mode mode-${mode.className}" title="${dvEscapar(mode.title)}">${dvEscapar(mode.label)}</span>
-            <span class="dv-badge-update" title="Fecha de última actualización del pipeline">Actualizado: 2026-09-23</span>
+            ${this.actualizado() ? `<span class="dv-badge-update" title="Fecha de última actualización del pipeline">Actualizado: ${dvEscapar(this.actualizado())}</span>` : ""}
             <span class="dv-meta-timing"><b>${this.elapsedMs} ms</b></span>
             <span class="dv-count-info">${rows.length} fila(s) · ${mostradas.length}${mostradas.length < this.currentColumns.length ? ` de ${this.currentColumns.length}` : ""} columnas</span>
             <span class="dv-scroll-tag" title="Usa la barra de desplazamiento horizontal para explorar todas las columnas">Desplaza ↔</span>

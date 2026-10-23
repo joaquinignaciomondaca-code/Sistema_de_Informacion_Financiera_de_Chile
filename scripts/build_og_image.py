@@ -14,6 +14,8 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import json
+import math
 import sys
 from pathlib import Path
 
@@ -21,6 +23,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 RAIZ = Path(__file__).resolve().parents[1]
 DESTINO = RAIZ / "docs" / "assets" / "og_sif_1200x630.png"
+CATALOGO = RAIZ / "docs" / "api" / "v2" / "catalog.json"
 
 ANCHO, ALTO = 1200, 630
 NAVY = (18, 54, 106)
@@ -50,6 +53,21 @@ ENLACES = [
 TURQUESA_EN = {6, 7, 10, 12}
 
 
+def cifras() -> str:
+    """«90 objetos · más de 19 millones de filas», leído del contrato publicado.
+
+    Estaba escrito a mano («90 objetos · 19,8 millones de filas») y la imagen se
+    quedaba atrás en cada publicación: la tarjeta social prometía más filas de
+    las que hay. Se trunca hacia abajo, como el resto del sitio.
+    """
+    totales = json.loads(CATALOGO.read_text(encoding="utf-8"))["totales"]
+    millones = totales["filas"] / 1_000_000
+    cifra = math.floor(millones) if millones >= 10 else math.floor(millones * 10) / 10
+    legible = f"{cifra}" if millones >= 10 else f"{cifra:.1f}".replace(".", ",")
+    aproximada = "más de " if totales["filas"] > cifra * 1_000_000 else ""
+    return f"{totales['objetos']} objetos · {aproximada}{legible} millones de filas"
+
+
 def dibujar() -> Image.Image:
     img = Image.new("RGB", (ANCHO, ALTO), NAVY)
     d = ImageDraw.Draw(img)
@@ -76,7 +94,7 @@ def dibujar() -> Image.Image:
 
     # Cifras: las del contrato publicado, sin adornos.
     d.line([x, 322, x + 660, 322], fill=(58, 92, 140), width=3)
-    d.text((x, 344), "90 objetos · 19,8 millones de filas", font=fuente("DejaVuSans-Bold.ttf", 32), fill=TURQUESA)
+    d.text((x, 344), cifras(), font=fuente("DejaVuSans-Bold.ttf", 32), fill=TURQUESA)
     d.text((x, 394), "Bancos, seguros, fondos, cooperativas,", font=fuente("DejaVuSans.ttf", 27), fill=(200, 212, 226))
     d.text((x, 430), "fintech y macro, en Parquet y SQL", font=fuente("DejaVuSans.ttf", 27), fill=(200, 212, 226))
 
