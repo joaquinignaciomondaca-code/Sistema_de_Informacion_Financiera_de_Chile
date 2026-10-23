@@ -162,7 +162,8 @@ assert.deepEqual(Array.from(Object.keys(bundleContext.window.DATA_BUNDLES)
   .filter(k => k.startsWith('afp_') || k.startsWith('bancos_')).sort()),
   ['afp_lista_entidades', 'bancos_lista_entidades']);
 const afpKeys = Object.keys(bundleContext.window.DATA_BUNDLES.afp_lista_entidades[0]).sort();
-assert.deepEqual(afpKeys, ['id', 'nombre_administradora', 'nombre_fantasia', 'rut_administradora']);
+// La lista de AFP publica identidad, no un id sintético: la clave es el RUT.
+assert.deepEqual(afpKeys, ['nombre_administradora', 'nombre_fantasia', 'rut_administradora']);
 
 // --- Vocabulario canónico (docs/vocabulario.json) ----------------------------
 // Cada sector abre con una carpeta "Lista de Entidades" (badge de tipo entities)

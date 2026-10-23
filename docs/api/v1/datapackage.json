@@ -12,10 +12,10 @@
  "profile": "tabular-data-package",
  "resources": [
   {
-   "bytes": 1825,
+   "bytes": 2880,
    "description": "Administradoras de fondos de pensiones: RUT, razón social y nombre de fantasía. Sin cifras.",
    "format": "parquet",
-   "hash": "e0317c4ad20ecde6a563770e3ae7c18a44de5194c21b2feb3c1b8b002f7224e5",
+   "hash": "63ca95e60444931d8b30126acb6bb4209b8882e4b7ef760e5b8a3c018539c8c0",
    "licenses": [
     {
      "name": "Datos de SPensiones: citar la fuente",
@@ -31,15 +31,9 @@
    "schema": {
     "fields": [
      {
-      "description": "ID local de la administradora.",
-      "name": "id",
-      "sif_rol": "PK",
-      "type": "string"
-     },
-     {
       "description": "Cuerpo del RUT de la administradora (sin dígito verificador; Registro de Valores CMF para las altas automáticas).",
       "name": "rut_administradora",
-      "sif_rol": "Atributo",
+      "sif_rol": "PK",
       "type": "string"
      },
      {
@@ -56,7 +50,7 @@
      }
     ],
     "primaryKey": [
-     "id"
+     "rut_administradora"
     ]
    },
    "scheme": "file",
@@ -80,10 +74,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 1825,
+      "bytes": 2880,
       "filas": 7,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/pensiones/afp_maestro_administradoras.parquet",
-      "sha256": "c019198982b38813482bf9b95ff9f1918e63de1c6aa361000c3b5c7e04bb0669"
+      "sha256": "29889b0a8e7ada93f7939bd267ccc30e4b5243bdb6b8631a2035de4d895a5a4a"
      }
     ],
     "puente": "alias",
@@ -3609,10 +3603,10 @@
    "title": "corredoras.resultados"
   },
   {
-   "bytes": 541040,
+   "bytes": 387698,
    "description": "30,046 filas de cuentas ESF; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
    "format": "parquet",
-   "hash": "9fc005899b7a9ee5203123378ecdb72bef41c664650b4fc48af1080525a72769",
+   "hash": "b9baced4cc39d41803db922088b15a2b86595ef7790c1a9c8196b9bc9265434a",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -3724,12 +3718,6 @@
       "type": "string"
      },
      {
-      "description": "Huella de la descarga usada.",
-      "name": "sha256_archivo",
-      "sif_rol": "Dimensión",
-      "type": "string"
-     },
-     {
       "description": "Coincidencia de nombre normalizada; señal, no auditoría histórica.",
       "name": "identidad_nombre_coincide_catalogo",
       "sif_rol": "Dimensión",
@@ -3748,7 +3736,6 @@
      "cuenta",
      "periodo",
      "fuente_archivo",
-     "sha256_archivo",
      "orden",
      "nombre_reportado"
     ]
@@ -3774,10 +3761,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 541040,
+      "bytes": 387698,
       "filas": 30046,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
-      "sha256": "14fe7a3f1d4fa9f80aec6d1c7c77b8ffaa2acc1ccabf329edc42babdaed5851f"
+      "sha256": "707047504155fd65d879be5f25f685919b6e719f8b38c7948232380da8246d23"
      }
     ],
     "puente": "alias",
@@ -4020,10 +4007,10 @@
    "title": "factoring_leasing.lista_entidades"
   },
   {
-   "bytes": 334636,
+   "bytes": 242250,
    "description": "22,368 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
    "format": "parquet",
-   "hash": "b06d465fad332452b79f068e8783d43bf9a25080bdb38ee22e732099e007047a",
+   "hash": "bb3f24409c318abcdf5bcb758a3aa2952447834e0eb3abb271d47f91e590b321",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -4135,12 +4122,6 @@
       "type": "string"
      },
      {
-      "description": "Huella de la descarga usada.",
-      "name": "sha256_archivo",
-      "sif_rol": "Dimensión",
-      "type": "string"
-     },
-     {
       "description": "Coincidencia de nombre normalizada; señal, no auditoría histórica.",
       "name": "identidad_nombre_coincide_catalogo",
       "sif_rol": "Dimensión",
@@ -4159,7 +4140,6 @@
      "cuenta",
      "periodo",
      "fuente_archivo",
-     "sha256_archivo",
      "nombre_reportado",
      "rut",
      "nombre_catalogo",
@@ -4188,10 +4168,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 334636,
+      "bytes": 242250,
       "filas": 22368,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
-      "sha256": "84f35da31f4279c6533664bf068def3de19eae7c584607c92c4296002a34b294"
+      "sha256": "23962408e4c6063ad0c115ccf5378fbcf35630fa0579293c3e612d53f524b9d8"
      }
     ],
     "puente": "alias",
@@ -4212,10 +4192,10 @@
    "title": "factoring_leasing.resultados_serie_ifrs_cmf"
   },
   {
-   "bytes": 1389152,
+   "bytes": 1079340,
    "description": "Estado de situación financiera de cada fondo mutuo —vigente o extinto— al 31 de diciembre de cada año, línea por línea (16 líneas), con el comparativo del año anterior. Miles de la moneda del fondo (pesos, dólares o euros).",
    "format": "parquet",
-   "hash": "1788fd46353afa878f75e4f0f09db6e58f6ee2c1a35d2deaa650b62464de2d9e",
+   "hash": "388c50c3f66ccd69a5125e7df63a9afbe1c814c3a2ca30038bb68621cd4464e3",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -4352,12 +4332,6 @@
       "name": "enviado_cmf",
       "sif_rol": "Atributo",
       "type": "string"
-     },
-     {
-      "description": "Huella SHA-256 del XML, para detectar reenvíos.",
-      "name": "sha256_archivo",
-      "sif_rol": "Atributo",
-      "type": "string"
      }
     ],
     "primaryKey": [
@@ -4385,100 +4359,100 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 63770,
+      "bytes": 45286,
       "filas": 7520,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_balance/2010.parquet",
-      "sha256": "a4f69be83dc12722f268b875b235139b7aeb8784a435051383f9cc91eff60b33"
+      "sha256": "667f750d97bbd2d41ab8ed6825c48378d166471c61f11b9c7c7b7f943b32c0cf"
      },
      {
-      "bytes": 83867,
+      "bytes": 64811,
       "filas": 7760,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_balance/2011.parquet",
-      "sha256": "32c8500270f561b487ac01d51b11ed4dfc4d4f4cc0748d2769a6d2c7bf511672"
+      "sha256": "2f57ed06640be4a92efb471219ac094c771cdd9ff21c01c991dd3e13ba765cb8"
      },
      {
-      "bytes": 86486,
+      "bytes": 66568,
       "filas": 8112,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_balance/2012.parquet",
-      "sha256": "3b13e00acf5f1b81fbc1edba91c21fba641762f77a571a436ecd60400c69ca80"
+      "sha256": "29d4c9f30cbb25cffae42c1d75a0eb0ed8052de31d005b78db8cee6c25b2ceef"
      },
      {
-      "bytes": 87767,
+      "bytes": 67885,
       "filas": 8096,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_balance/2013.parquet",
-      "sha256": "2e0467ce5c377f9fdf205b2f1c38ccc4cbbf8dcce47660fa84f3c50f71f0d98c"
+      "sha256": "6fe7471e76086e9d3ee046ec0b3eaf8d5656ecb30189b47e3daec8ccc5fa629d"
      },
      {
-      "bytes": 90388,
+      "bytes": 70143,
       "filas": 8240,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_balance/2014.parquet",
-      "sha256": "c9bb58032c38657fe65ce60302bdd60041e95889c5b1fa92b2c8c40e52af9bd9"
+      "sha256": "c957363fa6ddd9dad8b96f43db693aeebb752a0ba5a581a45cb28f5e3dab6ba5"
      },
      {
-      "bytes": 90285,
+      "bytes": 70143,
       "filas": 8208,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_balance/2015.parquet",
-      "sha256": "fe91b868f59e6dd7a6e611cef84a476db30a48e5c4613609fe69de484e8cea50"
+      "sha256": "d4b0f50c8dab5c21cd7e780ba4f63d67ebd2fce0e1819e7c0702b5c9b446cc93"
      },
      {
-      "bytes": 88523,
+      "bytes": 68902,
       "filas": 8000,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_balance/2016.parquet",
-      "sha256": "18fdc4cedee4e769fb885f36eb3927c7be2f2d8f279d35ee18a22e00cac0313f"
+      "sha256": "d711c4e4c552dfe0408e7e4506f4e19e7637c1c5667553491375d0cc54ad51eb"
      },
      {
-      "bytes": 87642,
+      "bytes": 68436,
       "filas": 7824,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_balance/2017.parquet",
-      "sha256": "8e955f5418b7bca2f329c700e3b513bb28045b208feee15a22b62b57a6b6a376"
+      "sha256": "7b6bd7201d90b9c05caa34ef5824b778af1fca47f6ebd0851f1014d4049c7324"
      },
      {
-      "bytes": 84992,
+      "bytes": 66686,
       "filas": 7456,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_balance/2018.parquet",
-      "sha256": "5a21ed8fce205bf9ebff58cc11ef3090268ed9d20f741618cdc928ab6985d781"
+      "sha256": "cc2fb5849229962ba2e9bed2d4ae5e984e4987713b265ea55dc9694cb177d738"
      },
      {
-      "bytes": 86508,
+      "bytes": 68001,
       "filas": 7536,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_balance/2019.parquet",
-      "sha256": "091d0dc2068cc4627e9e39b020dc9208e99942911dc56d5a92e8400fb2a42a56"
+      "sha256": "0518bcbb79b3f7dfe69cf6b5f6186fc16345867ae1131552daac48b59c992d0a"
      },
      {
-      "bytes": 84732,
+      "bytes": 66725,
       "filas": 7328,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_balance/2020.parquet",
-      "sha256": "d9da567c864180b1dd062707a498ec30bc5f5d2d6fc497070aa1010dea1915b3"
+      "sha256": "05d6c80ece8c98e4ed0fa1b83962bd628e5a6e403277b0352a6d034cb029b9bf"
      },
      {
-      "bytes": 86392,
+      "bytes": 67880,
       "filas": 7536,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_balance/2021.parquet",
-      "sha256": "8e52fd2060fd0f853fa1606cd3df75a3f19ffd73047eb282ead13570f14db64e"
+      "sha256": "534cbbdbe812d3bbd77965d9f953fb324abeaec2ef4166a43ebd0bfb8a64e8b7"
      },
      {
-      "bytes": 94252,
+      "bytes": 73354,
       "filas": 8560,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_balance/2022.parquet",
-      "sha256": "37c24be1a73504e96c24e8b4e343ec72fd8d783b83f73ecd0c6a3ef7fd0a59ef"
+      "sha256": "48bd79bf979420efe53a84460681a200e0f951e7db6612cb47d8fff357ca505b"
      },
      {
-      "bytes": 98742,
+      "bytes": 76799,
       "filas": 8976,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_balance/2023.parquet",
-      "sha256": "0529e5f5f61968d272be15979e9d81c277f72e83d416aa566cfc7496801c5ab6"
+      "sha256": "6d372820b8bae0c2e0a9ae672a8c8fd132251dd5d189314d5eadb8f8db3eaa16"
      },
      {
-      "bytes": 90703,
+      "bytes": 71254,
       "filas": 7920,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_balance/2024.parquet",
-      "sha256": "d1ea6668a8175393886ba7e268de9774900184b64624e1afcc41ea9ecd1c3b99"
+      "sha256": "2fadbf4fda55bc380e7b9e48b0ed6f32aea1cea95cb972a7f1a3f3b24ab78cfe"
      },
      {
-      "bytes": 84103,
+      "bytes": 66467,
       "filas": 7184,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_balance/2025.parquet",
-      "sha256": "2df6ccd16247187dc3f2a56135ce7edfa0b5c654af5bba79f81acc2c5939a32f"
+      "sha256": "6fb994fd391b4391a05c9e96be647d25bde034428b55140ee66df40641b600f0"
      }
     ],
     "puente": "directo",
@@ -6287,10 +6261,10 @@
    "title": "ffmm.opciones"
   },
   {
-   "bytes": 1539346,
+   "bytes": 1229489,
    "description": "Estado de resultados integrales de cada fondo mutuo —vigente o extinto— del ejercicio completo, línea por línea (19 líneas), con el comparativo del año anterior. Miles de la moneda del fondo (pesos, dólares o euros).",
    "format": "parquet",
-   "hash": "360924d06619d62e23bced1ee0d35de4595dd03b9f4ac923b4804b09bded565c",
+   "hash": "fb09b56b46106e625dc7e01da064115c1c3913c236800a5542837b946e13e4b5",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -6427,12 +6401,6 @@
       "name": "enviado_cmf",
       "sif_rol": "Atributo",
       "type": "string"
-     },
-     {
-      "description": "Huella SHA-256 del XML, para detectar reenvíos.",
-      "name": "sha256_archivo",
-      "sif_rol": "Atributo",
-      "type": "string"
      }
     ],
     "primaryKey": [
@@ -6460,100 +6428,100 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 68049,
+      "bytes": 49562,
       "filas": 8930,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_resultados/2010.parquet",
-      "sha256": "2bb29538db1b648b551eb0d863aa5cb76ec7aabe43af8f60efa14469f22d216f"
+      "sha256": "7b5fbaa0c358cbfb0c1e1e356fd057a13c4336e5c73b28e8294720e27fb7878d"
      },
      {
-      "bytes": 92498,
+      "bytes": 73438,
       "filas": 9215,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_resultados/2011.parquet",
-      "sha256": "b792b55c66989e6c67c85558499174d479a23434f823301d252ce63941f6f972"
+      "sha256": "4ea8d29a22a5c79d6add774414027ec9c0a7ef1b5bca5856e3f13f3505b331df"
      },
      {
-      "bytes": 96559,
+      "bytes": 76637,
       "filas": 9633,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_resultados/2012.parquet",
-      "sha256": "fffd6d82d41ffca63d12047548606f3dac62a650e46662d6cbbc39d81634266e"
+      "sha256": "739973b00c3c4dd25ffdc4892a0cd25392b88ba324c805458b7e7feb2c7ddc38"
      },
      {
-      "bytes": 97096,
+      "bytes": 77211,
       "filas": 9614,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_resultados/2013.parquet",
-      "sha256": "f39f41a0415ce68617c29fdcdc48be83f38d7e2a6ce549ecb0be49d280b7f510"
+      "sha256": "9e9d8aefd94dadc24dbadee1b3804526a13909b0af30c2b4162a054421319e8c"
      },
      {
-      "bytes": 99999,
+      "bytes": 79754,
       "filas": 9785,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_resultados/2014.parquet",
-      "sha256": "c935c378047feb866eec47039cad516495a5e7818237fe9d7d2e16e12592f1f5"
+      "sha256": "c1240c743e8004e9f4e15beb45855fd962f9b8bf3b0e442a6e8b8a80fb6cc071"
      },
      {
-      "bytes": 99956,
+      "bytes": 79814,
       "filas": 9747,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_resultados/2015.parquet",
-      "sha256": "e9b10402caf0202ab18af688c985bb1b9aa3755f4308951a48d97da827e9cf07"
+      "sha256": "42f68ed0150396f33c5d17c130ea25c09974271570164ce1e8a5d11d5a5bd0b2"
      },
      {
-      "bytes": 98420,
+      "bytes": 78796,
       "filas": 9500,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_resultados/2016.parquet",
-      "sha256": "4d39a00f4115c0cb6ee4206cc759353ad2252a26130296d103294f127b81d218"
+      "sha256": "d8ec7719e53646670833fcd71579da9dca93ee5a1211d474b093cd9ee95c3cf4"
      },
      {
-      "bytes": 98038,
+      "bytes": 78827,
       "filas": 9291,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_resultados/2017.parquet",
-      "sha256": "69800e4389be4c29090f0468aaf64820b2c6b81e4d15b8a03fb44a5853476beb"
+      "sha256": "5948d85f9b8a9da9b83ba3a7bf657f5c663c1f53066ae7a0eba2ce9064e69665"
      },
      {
-      "bytes": 93896,
+      "bytes": 75586,
       "filas": 8854,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_resultados/2018.parquet",
-      "sha256": "080c97b1d003155d3680b99a12c9076e34cac82be947823c0a2198094fec754e"
+      "sha256": "1bbdb4798e50705bd340695570e77a49d0456c03defd811093dff07168ba9c7e"
      },
      {
-      "bytes": 95708,
+      "bytes": 77198,
       "filas": 8949,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_resultados/2019.parquet",
-      "sha256": "71fcc43c4198809311276813c971fc7570e58457b9975c97e5ea5e7a1ce3317b"
+      "sha256": "fcd2bb6fc4357a887cfe058dee55be9387b9763e81a35461302b226482f015b5"
      },
      {
-      "bytes": 93421,
+      "bytes": 75409,
       "filas": 8702,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_resultados/2020.parquet",
-      "sha256": "92f2425cdc0f668b01281da2d355d35491b953f2c8da9ee343574a3a4e47f433"
+      "sha256": "c93079989210495562825553927ce225be7ed316668dbeec2df34d4e90644af0"
      },
      {
-      "bytes": 93749,
+      "bytes": 75234,
       "filas": 8949,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_resultados/2021.parquet",
-      "sha256": "81c2c5904d8671ad809c34e39ad457267380bebb5e4fafb3b80bff2391a5db5c"
+      "sha256": "3f74b8502209be3fab7fc135152be5ec903c3cbbadaf3fd378e2f1a48c13a4e8"
      },
      {
-      "bytes": 104642,
+      "bytes": 83744,
       "filas": 10165,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_resultados/2022.parquet",
-      "sha256": "332c2c3277abe8e5581a99251c26b5bae29192ede01a1d9195f0dd194f15601e"
+      "sha256": "696cb48cd13680da3e91ca9819754a4873b06d59008de07c726eb3805b2493f4"
      },
      {
-      "bytes": 110596,
+      "bytes": 88653,
       "filas": 10659,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_resultados/2023.parquet",
-      "sha256": "3e0e3ce26f61d68c452ecd351c32eb87396ba63b623739f2888d9add00396c34"
+      "sha256": "bc54b227ffb6decca287ac15be988532c5906bd8ce560013a381542cacb6d7db"
      },
      {
-      "bytes": 102671,
+      "bytes": 83217,
       "filas": 9405,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_resultados/2024.parquet",
-      "sha256": "1a4fb7de08e6410fd97fe1403876acd9b01c5ba5553deaa050544fef84ce9948"
+      "sha256": "ab89eb0ad7d195857ed34f643796eee0ac1b009897301eefb43d7b57d6db2dd8"
      },
      {
-      "bytes": 94048,
+      "bytes": 76409,
       "filas": 8531,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/ffmm/ffmm_resultados/2025.parquet",
-      "sha256": "7e43aa95430003339327dd7b3650b0020261a233a495fedd169f55396c3283d0"
+      "sha256": "3a38edeec38ce9c9b802455ce5bfabb39eb3d1e1fc52e5723dd8a40a67739a0d"
      }
     ],
     "puente": "directo",
@@ -6574,10 +6542,10 @@
    "title": "ffmm.resultados"
   },
   {
-   "bytes": 2771203,
+   "bytes": 2402485,
    "description": "Estado de situación financiera de fondos de inversión FIRES/FINRE, cuenta por cuenta (42 líneas por contexto). TotalPasivo de la fuente incluye patrimonio: el pasivo exigible es TotalPasivoCorriente + TotalPasivoNoCorriente. Miles de la moneda de presentación, sin conversión. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
    "format": "parquet",
-   "hash": "445b2165e8bd2e57f3a118fb9ee6f6e82040caa7093f692d9f5879d554ef3569",
+   "hash": "8bfceddc8228967a624bd7773eba08006a20bc74f837c5072cfd78dfc04aaa8b",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -6746,12 +6714,6 @@
       "type": "string"
      },
      {
-      "description": "SHA-256 de los bytes originales del XML descargado.",
-      "name": "sha256_archivo",
-      "sif_rol": "Dato fuente",
-      "type": "string"
-     },
-     {
       "description": "coincide = importe cotejado exactamente con su concepto y columna HTML. sin_columna = contexto del XML no expuesto por la ficha (por ejemplo trimestres en el cierre anual), validado contablemente pero no cotejable allí.",
       "name": "cotejo_ficha",
       "sif_rol": "Atributo",
@@ -6784,100 +6746,100 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 156207,
+      "bytes": 134904,
       "filas": 56490,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2022-03.parquet",
-      "sha256": "85ab0368c24e51abe484aa5ece1cbc6729efd04fef11b15d2498d15134e5cb1c"
+      "sha256": "9feb2c37c69d94fb7c48e0a018d1bc92e186926fc35b31437f3fe9eb1cc25668"
      },
      {
-      "bytes": 158818,
+      "bytes": 136957,
       "filas": 58590,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2022-06.parquet",
-      "sha256": "3ef521a0b3426fecb307b0e5d0c19e542d5fe382bd4d1c7d3f13847870b95339"
+      "sha256": "e3e8b6253f553e42f5e7dc907dbe493f11b921ecb94fd9845f73fc894bed9dde"
      },
      {
-      "bytes": 162049,
+      "bytes": 141421,
       "filas": 60186,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2022-09.parquet",
-      "sha256": "50dfc6fe1f0d25943045e27e926b93a51ba2945830b36a8d5a02014ee0df37b9"
+      "sha256": "163607d8fbe8e89051117fae5355c0608aac4a8ad94406c9155406395e0b3aa8"
      },
      {
-      "bytes": 159947,
+      "bytes": 137767,
       "filas": 57120,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2022-12.parquet",
-      "sha256": "ff09039d331323f7d1a88dbe50eeacf6d7a8f65a9a708f47df74ba3c77af8a22"
+      "sha256": "a92e557e8e900d891ef029f1b30bd7f324bdef3d284c784088bc66df0ebf57a0"
      },
      {
-      "bytes": 167888,
+      "bytes": 144625,
       "filas": 59934,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2023-03.parquet",
-      "sha256": "d5b98b281a1f46670d8d371ac740721e729a8e4fc07b1c322c2ef96c15e73a6a"
+      "sha256": "c4807ca936600ff3a283572d30bd5c9a4b8da40ee955617682e94f5479f93ef3"
      },
      {
-      "bytes": 168240,
+      "bytes": 144702,
       "filas": 59892,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2023-09.parquet",
-      "sha256": "7bd9783d73b07298999b20e445886889c385a132ec41b1c16fa0b864be71dbee"
+      "sha256": "a18afb3990ba4e440f86ec8fee7a3279b275fd78dae88f5051e86d4aed9a39b0"
      },
      {
-      "bytes": 168489,
+      "bytes": 144490,
       "filas": 58800,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2023-12.parquet",
-      "sha256": "47b51fe894c7bd9b05c4bbcd228889d30255172d3f376f451c73c22471895571"
+      "sha256": "ddae37b89747ae33cd0f6862144feba4252effc441b6b2ea865ffcdebfb03369"
      },
      {
-      "bytes": 172921,
+      "bytes": 151134,
       "filas": 60648,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2024-03.parquet",
-      "sha256": "7b3c8efd0ce70ff7e3155d008eb80f81de86b1986e0d24a0bdb9f176634f0c86"
+      "sha256": "91c21599dcd80555eb37db5fcf3565b45eeb74aeaee99dd281369e7c7d2ae359"
      },
      {
-      "bytes": 175619,
+      "bytes": 153356,
       "filas": 61572,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2024-06.parquet",
-      "sha256": "1f08b9401cba5b7b15fbb0ee617eec3e0b238bb9887b64b2af8ff93875f756ae"
+      "sha256": "563c176d960a41cf5ac44733ee8a3364f5f2f846f4e1f5bcb899769b746a2d95"
      },
      {
-      "bytes": 178043,
+      "bytes": 155044,
       "filas": 62916,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2024-09.parquet",
-      "sha256": "f025e11027bc880ad0d71a11ad962b643961880f390dc1a15f1f787d40d778c3"
+      "sha256": "39b45398d6dc6007df904cbbc79feb9896efa8d55f1d49d22d7ec4836998e4ec"
      },
      {
-      "bytes": 175268,
+      "bytes": 152093,
       "filas": 61152,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2024-12.parquet",
-      "sha256": "6005234adbc4b9217266ccbafd64b0f7b0cd53aa2d22e028d65dc8d88456439b"
+      "sha256": "cb2c1fbfc2d7348f3ecd5be08a21fde5407d6a7c35b1049ff0ec7c61cbec076f"
      },
      {
-      "bytes": 183408,
+      "bytes": 159637,
       "filas": 65268,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2025-06.parquet",
-      "sha256": "6302ae0761ecbbf98ec4224b2894e33a30d22c7dfb7ef1be9ea81bd078918beb"
+      "sha256": "398679161bbd04456f65d2a705332d7df450cf9fcae2f203e65da7b4d146eead"
      },
      {
-      "bytes": 185179,
+      "bytes": 160857,
       "filas": 66024,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2025-09.parquet",
-      "sha256": "5678af22cd5bd91e508007387949632b500016dbb4a3c3207b909b0d6db1ea73"
+      "sha256": "3fb5b4b5508e09bf7554f5559f6130217ae9f0099fcc455d258e25326462c4f3"
      },
      {
-      "bytes": 180229,
+      "bytes": 156099,
       "filas": 62790,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2025-12.parquet",
-      "sha256": "279f7e88284a60237ffe8cf14a3230a824d018adfc47625d793ad81b169a83ef"
+      "sha256": "06efcf102d85e3f8ba4655a8174cf6c5eb29ba3e163d04f944f83491972d97d0"
      },
      {
-      "bytes": 189042,
+      "bytes": 164509,
       "filas": 67662,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2026-03.parquet",
-      "sha256": "143d6842289d1abc8e4c0836c565319fc7fb0e548b1338541fad591641933846"
+      "sha256": "95c708290c10fc066bb9e1c54a89ef40de03569a38670d3ec4ac234d3b258d23"
      },
      {
-      "bytes": 189856,
+      "bytes": 164890,
       "filas": 66864,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_balance/2026-06.parquet",
-      "sha256": "82d04dc42cbe32e5b51eb2399763531309596ef0d9ccf73e92fa45f76a6408e3"
+      "sha256": "3f1e1b1ff18d642c5c4f1682565113af0ce19ae0aeadb00a14eb1d3b26a0222b"
      }
     ],
     "puente": "directo",
@@ -8751,10 +8713,10 @@
    "title": "fi.pactos"
   },
   {
-   "bytes": 2903107,
+   "bytes": 2536368,
    "description": "Estado de resultados integrales de fondos de inversión FIRES/FINRE, cuenta por cuenta (30 líneas por contexto). Se separan acumulado del ejercicio, trimestre y sus comparativos; no se suman entre sí. Miles de la moneda de presentación, gastos con signo original. Solo se publican contextos completos y que cuadran. Los contextos adicionales rechazados/ausentes se declaran en el manifiesto, no se rellenan con ceros.",
    "format": "parquet",
-   "hash": "be06e454b3e49caff3d037e73336cabb3be61964fbef4ed9e4aca28b91eb1eab",
+   "hash": "9baee422206c0a7e6a05585064e9798e152114caa4a1a41ad2ac52c56050b93f",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -8923,12 +8885,6 @@
       "type": "string"
      },
      {
-      "description": "SHA-256 de los bytes originales del XML descargado.",
-      "name": "sha256_archivo",
-      "sif_rol": "Dato fuente",
-      "type": "string"
-     },
-     {
       "description": "coincide = importe cotejado exactamente con su concepto y columna HTML. sin_columna = contexto del XML no expuesto por la ficha (por ejemplo trimestres en el cierre anual), validado contablemente pero no cotejable allí.",
       "name": "cotejo_ficha",
       "sif_rol": "Atributo",
@@ -8961,100 +8917,100 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 129347,
+      "bytes": 104080,
       "filas": 44820,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2022-03.parquet",
-      "sha256": "c85962ea4a8d04b8589839c87e59dd8debd54486e1a34b0fc2fc14a43aaa64ee"
+      "sha256": "9b3c7d7fae15e9629a8dcdc74e3bc06335915ff5434ea48d930a009e149fb7c6"
      },
      {
-      "bytes": 181484,
+      "bytes": 162859,
       "filas": 78420,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2022-06.parquet",
-      "sha256": "9e00d307f25fc6118afb6f038cc272ff50dbb184da580a398cfbea2962361606"
+      "sha256": "fc6b34ef79a04292b0a95d7ad8ba9eff8370656e0a481d8becb24ab4462ca640"
      },
      {
-      "bytes": 190726,
+      "bytes": 173652,
       "filas": 81150,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2022-09.parquet",
-      "sha256": "a0c8bb39bb3c7ab912b7513f5a4ba31396de485d5022993700c900fc92047a26"
+      "sha256": "824a453de46c0df8e29ccf84d537a2c3427e0bc197dfa133a33c4641aa77f5ce"
      },
      {
-      "bytes": 150385,
+      "bytes": 127568,
       "filas": 53610,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2022-12.parquet",
-      "sha256": "7652b8cb532bb98d5d360a9dd2e82e44fc85d27711cc24ca12e6948ec3ef7267"
+      "sha256": "3e8afb4d26c5919ade846429c43d09d0fc7f7266fd8ccac230fffa3e2994be80"
      },
      {
-      "bytes": 141338,
+      "bytes": 113658,
       "filas": 48480,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2023-03.parquet",
-      "sha256": "0cee463896546264256a7045e634c0acadc78206e2cb177e87e9378b631cec89"
+      "sha256": "9b6e41722588cff2c83917177eb1901ca4b256235325d574552330cdb87695f1"
      },
      {
-      "bytes": 203269,
+      "bytes": 185519,
       "filas": 84900,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2023-09.parquet",
-      "sha256": "4266f071b0e6c2a7d5bb83e7763d372c237b97f07610f7a75bf35289e5424b76"
+      "sha256": "1076ab61c0f14fed50de15292d73e3674a3125506f42961cf5d98ec3f0b22eef"
      },
      {
-      "bytes": 164632,
+      "bytes": 142678,
       "filas": 60480,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2023-12.parquet",
-      "sha256": "a0bd45cc0d7c7a430ad2aa2e5e8bc72953d277760bfa20b67754d1ec1fab6bdb"
+      "sha256": "e186ad198a6cafce371a3a175e6e86e4685e1e4d3239b8b70d99c92af6cffe57"
      },
      {
-      "bytes": 146137,
+      "bytes": 117367,
       "filas": 50490,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2024-03.parquet",
-      "sha256": "5b4ad380532b601307856995af031d920242bf341b94b4cc636b84dca74fa247"
+      "sha256": "5cfc937b4db18ac9661a83e5fd67e6ee6d33c202e98baafa7bd11a03531500ca"
      },
      {
-      "bytes": 207006,
+      "bytes": 188637,
       "filas": 89790,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2024-06.parquet",
-      "sha256": "3a323246a9da4c68b50c7156471b370218e34b3854ea79e8a22106442a0a9169"
+      "sha256": "1129d20b24195eb0545910ba157d296736ed7a8b09b8ec4158ab26638f5f8c34"
      },
      {
-      "bytes": 215122,
+      "bytes": 195419,
       "filas": 92070,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2024-09.parquet",
-      "sha256": "c783ead4b28aecd9d9953313bf14027088c66f0e61cb8669016b1e8c469dc8b0"
+      "sha256": "0248edd4d1ceab138037cf0ac05bc0df148249397653bc18af4db6071687a9c7"
      },
      {
-      "bytes": 171333,
+      "bytes": 144334,
       "filas": 66720,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2024-12.parquet",
-      "sha256": "b3f5214160306a03b77bf468f1c5cce39f8db9baf8dfc7eed47199a60d6e5a69"
+      "sha256": "8e486e23a4d45119e72046f4c665407a6716696b7a9d6a111143536ead89dcf9"
      },
      {
-      "bytes": 216524,
+      "bytes": 196803,
       "filas": 94290,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2025-06.parquet",
-      "sha256": "b06ff54618a0144b4434a7706b61982a0659024104fa8cee3ba40652c2e21d92"
+      "sha256": "3550f999c96ae79d687c493f55b3158210513f5af4761decd4ff451726008d58"
      },
      {
-      "bytes": 225124,
+      "bytes": 204211,
       "filas": 96360,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2025-09.parquet",
-      "sha256": "1b1d7380376c8d45f646d7ca38d36e71b087b672b3f26a289fd53eff3c1340b2"
+      "sha256": "b0456f4042349d579c4eca8691b8ec1f6691e60ceb459a59c1c1dc1ce021e989"
      },
      {
-      "bytes": 176189,
+      "bytes": 148287,
       "filas": 68160,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2025-12.parquet",
-      "sha256": "88e1637404ace102418b434b981b5b40e5331431da317afe6a711083d6374b48"
+      "sha256": "60bdab7f053c6960471d9d43c08bfc594c75527dd8f1f9caf46848c80152fda1"
      },
      {
-      "bytes": 159832,
+      "bytes": 127519,
       "filas": 56400,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2026-03.parquet",
-      "sha256": "8b05b5775432534e0f141278152a1adb94c52dd05ec10e4996b4ae4b49047e78"
+      "sha256": "5a3f42706a4be60206c06cb3cee59dde3f65738085bc7b7eda5ec63d7e4782b8"
      },
      {
-      "bytes": 224659,
+      "bytes": 203777,
       "filas": 97860,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2026-06.parquet",
-      "sha256": "eec5474565ccadea8e747fd9b6e72bb325a4e8a0f5656e77529cb59dfd30822f"
+      "sha256": "dc0e3c89e5c5c73de6d694c1f78af9bd008dd27bb4de8ee2e2e52bdde5f97867"
      }
     ],
     "puente": "directo",
@@ -19367,7 +19323,7 @@
    "licencia": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md",
    "reconciliacion": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv"
   },
-  "data_release": "2026-10-22.4c4ee99027d6",
+  "data_release": "2026-10-22.9c002673eed5",
   "espejo": "https://sistema-de-informacion-financiera-de-chile-docs.vercel.app",
   "filas_unicas": 19777508,
   "identificador": {

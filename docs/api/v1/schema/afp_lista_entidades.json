@@ -4,16 +4,8 @@
  "columnas": [
   {
    "criterio_contable": "No aplica",
-   "nombre": "id",
-   "rol": "PK",
-   "significado": "ID local de la administradora.",
-   "tipo": "VARCHAR",
-   "tipo_ts": "string"
-  },
-  {
-   "criterio_contable": "No aplica",
    "nombre": "rut_administradora",
-   "rol": "Atributo",
+   "rol": "PK",
    "significado": "Cuerpo del RUT de la administradora (sin dígito verificador; Registro de Valores CMF para las altas automáticas).",
    "tipo": "VARCHAR",
    "tipo_ts": "string"
@@ -42,7 +34,7 @@
  "id": "afp_lista_entidades",
  "licencia_estado": "verificada",
  "primaryKey": [
-  "id"
+  "rut_administradora"
  ],
  "sector": "pensiones",
  "titulo": "afp.lista_administradoras",

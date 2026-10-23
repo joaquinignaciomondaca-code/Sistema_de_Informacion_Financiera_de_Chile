@@ -90,7 +90,6 @@ DOC_COLUMNS = [
     ('estado_financiero', 'VARCHAR'),
     ('repeticion_contexto', 'BIGINT'),
     ('fuente_archivo', 'VARCHAR'),
-    ('sha256_archivo', 'VARCHAR'),
     ('identidad_nombre_coincide_catalogo', 'BOOLEAN'),
     ('rut_dv', 'VARCHAR'),
 ]
@@ -248,7 +247,7 @@ def dictionary_block(meta, run_id, vocab):
                                 '"Ganancia (pérdida)" aparece en ERFG/ERNG con ordinal 1 y 2 y otra vez al inicio de ERI, '
                                 'con el mismo valor: para la utilidad del período usar estado ERFG/ERNG y ordinal 1.'),
         'fuente_archivo': 'URL pública CMF que originó la fila.',
-        'sha256_archivo': 'Huella de la descarga usada.',
+        'sha256_archivo': 'Huella de la descarga usada (control interno; no se publica).',
         'identidad_nombre_coincide_catalogo': 'Coincidencia de nombre normalizada; señal, no auditoría histórica.',
     }
     stage_desc = {name: desc for name, _typ, desc in TABLE_COLUMNS}

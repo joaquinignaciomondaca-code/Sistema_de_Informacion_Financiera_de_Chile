@@ -2,7 +2,7 @@
   "generado": "2026-10-23",
   "origen": "docs/js/data_dictionary.js (misma fuente que el diccionario de la web)",
   "tablas": 90,
-  "columnas": 1647,
+  "columnas": 1640,
   "datos": [
     {
       "id": "macro_tasas_corto_plazo",
@@ -8381,13 +8381,6 @@
           "contable": "No aplica"
         },
         {
-          "name": "sha256_archivo",
-          "type": "VARCHAR",
-          "role": "Dato fuente",
-          "significado": "SHA-256 de los bytes originales del XML descargado.",
-          "contable": "No aplica"
-        },
-        {
           "name": "cotejo_ficha",
           "type": "VARCHAR",
           "role": "Atributo",
@@ -8575,13 +8568,6 @@
           "contable": "No aplica"
         },
         {
-          "name": "sha256_archivo",
-          "type": "VARCHAR",
-          "role": "Dato fuente",
-          "significado": "SHA-256 de los bytes originales del XML descargado.",
-          "contable": "No aplica"
-        },
-        {
           "name": "cotejo_ficha",
           "type": "VARCHAR",
           "role": "Atributo",
@@ -8731,13 +8717,6 @@
           "role": "Atributo",
           "significado": "Fecha y hora en que el fondo envió el archivo a la CMF (sale del nombre del archivo).",
           "contable": "No aplica"
-        },
-        {
-          "name": "sha256_archivo",
-          "type": "VARCHAR",
-          "role": "Atributo",
-          "significado": "Huella SHA-256 del XML, para detectar reenvíos.",
-          "contable": "No aplica"
         }
       ]
     },
@@ -8882,13 +8861,6 @@
           "role": "Atributo",
           "significado": "Fecha y hora en que el fondo envió el archivo a la CMF (sale del nombre del archivo).",
           "contable": "No aplica"
-        },
-        {
-          "name": "sha256_archivo",
-          "type": "VARCHAR",
-          "role": "Atributo",
-          "significado": "Huella SHA-256 del XML, para detectar reenvíos.",
-          "contable": "No aplica"
         }
       ]
     },
@@ -9012,13 +8984,6 @@
           "type": "VARCHAR",
           "role": "Dimensión",
           "significado": "URL pública CMF que originó la fila.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "sha256_archivo",
-          "type": "VARCHAR",
-          "role": "Dimensión",
-          "significado": "Huella de la descarga usada.",
           "contable": "No aplica"
         },
         {
@@ -9165,13 +9130,6 @@
           "contable": "No aplica"
         },
         {
-          "name": "sha256_archivo",
-          "type": "VARCHAR",
-          "role": "Dimensión",
-          "significado": "Huella de la descarga usada.",
-          "contable": "No aplica"
-        },
-        {
           "name": "identidad_nombre_coincide_catalogo",
           "type": "BOOLEAN",
           "role": "Dimensión",
@@ -9208,16 +9166,9 @@
       "origen": "Altas: AFP con valor cuota publicado a diario por la Superintendencia de Pensiones (vcfAFP.php), con el RUT del Registro de Valores CMF (RVEMI). pipelines/entidades/actualizar_listas.py.",
       "columnas": [
         {
-          "name": "id",
-          "type": "VARCHAR",
-          "role": "PK",
-          "significado": "ID local de la administradora.",
-          "contable": "No aplica"
-        },
-        {
           "name": "rut_administradora",
           "type": "VARCHAR",
-          "role": "Atributo",
+          "role": "PK",
           "significado": "Cuerpo del RUT de la administradora (sin dígito verificador; Registro de Valores CMF para las altas automáticas).",
           "contable": "No aplica"
         },

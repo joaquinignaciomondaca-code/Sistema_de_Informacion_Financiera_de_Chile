@@ -188,14 +188,6 @@
   },
   {
    "criterio_contable": "No aplica",
-   "nombre": "sha256_archivo",
-   "rol": "Dato fuente",
-   "significado": "SHA-256 de los bytes originales del XML descargado.",
-   "tipo": "VARCHAR",
-   "tipo_ts": "string"
-  },
-  {
-   "criterio_contable": "No aplica",
    "nombre": "cotejo_ficha",
    "rol": "Atributo",
    "significado": "coincide = importe cotejado exactamente con su concepto y columna HTML. sin_columna = contexto del XML no expuesto por la ficha (por ejemplo trimestres en el cierre anual), validado contablemente pero no cotejable allí.",

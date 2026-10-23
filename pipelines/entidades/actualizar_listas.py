@@ -354,8 +354,8 @@ def procesar_afp(hoy: str) -> list[dict]:
         rut = next(((c, d, nom) for c, (d, nom) in emisores.items()
                     if _norm(nom).startswith(f"ADMINISTRADORA DE FONDOS DE PENSIONES {n}")), None)
         c, d, razon = rut if rut else ("", "", f"ADMINISTRADORA DE FONDOS DE PENSIONES {n}")
-        fila = {"id": f"afp_{c}_{d}" if c else f"afp_{n.lower().replace(' ', '_')}",
-                "rut_administradora": puntos(c, d) if c else "", "nombre_administradora": razon,
+        # Sin `id`: la clave del catálogo es el RUT de la administradora.
+        fila = {"rut_administradora": puntos(c, d) if c else "", "nombre_administradora": razon,
                 "nombre_fantasia": "AFP " + n.title()}
         filas.append(fila)
         eventos.append({"fecha": hoy, "sector": "afp", "lista": AFP_BASE, "rut": fila["rut_administradora"],

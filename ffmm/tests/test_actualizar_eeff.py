@@ -181,7 +181,8 @@ class TestPublicacion(Escenario):
         self.assertEqual(f8011[0]["run_fondo_dv"], "8011-K")
         self.assertEqual(f8011[0]["rut_agf"], "91999000")
         self.assertEqual(f8011[0]["enviado_cmf"], "2026-03-30 11:09:24")
-        self.assertEqual(len(f8011[0]["sha256_archivo"]), 64)
+        # La huella del XML no se publica: es control del pipeline, no del dato.
+        self.assertNotIn("sha256_archivo", f8011[0])
 
     def test_moneda_y_escala_por_fondo(self):
         self.correr()
