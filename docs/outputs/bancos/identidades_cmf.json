@@ -1,0 +1,403 @@
+{
+ "fecha": "2026-10-23",
+ "fuente": "CMF — registro BANCO (consulta de entidades fiscalizadas)",
+ "url": "https://www.cmfchile.cl/institucional/mercados/consulta.php?mercado=B&entidad=BANCO",
+ "resumen": {
+  "filas": 41,
+  "por_cotejo": {
+   "agregado_sectorial": 7,
+   "cotejado": 30,
+   "declarado": 4
+  }
+ },
+ "filas": [
+  {
+   "codigo_institucion": "001",
+   "rut": "97004000-5",
+   "razon_social": "Banco de Chile",
+   "estado": "Activo",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO DE CHILE",
+   "vigencia_cmf": "Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "009",
+   "rut": "97011000-3",
+   "razon_social": "Banco Internacional",
+   "estado": "Activo",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO INTERNACIONAL",
+   "vigencia_cmf": "Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "012",
+   "rut": "97030000-7",
+   "razon_social": "Banco del Estado de Chile",
+   "estado": "Activo",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO DEL ESTADO DE CHILE",
+   "vigencia_cmf": "Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "014",
+   "rut": "97018000-1",
+   "razon_social": "Scotiabank Chile",
+   "estado": "Activo",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "SCOTIABANK CHILE",
+   "vigencia_cmf": "Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "016",
+   "rut": "97006000-6",
+   "razon_social": "Banco de Credito e Inversiones",
+   "estado": "Activo",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO DE CREDITO E INVERSIONES",
+   "vigencia_cmf": "Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "017",
+   "rut": "97003000-K",
+   "razon_social": "Banco do Brasil S.A.",
+   "estado": "Cerrado",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO DO BRASIL S.A.",
+   "vigencia_cmf": "No Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "027",
+   "rut": "97022000-3",
+   "razon_social": "CorpBanca",
+   "estado": "Fusionado",
+   "cotejo": "declarado",
+   "detalle": "CorpBanca: absorbido por Banco Itaú Chile (97023000-9); la CMF ya no publica su RUT y el código 027 sigue en los archivos históricos."
+  },
+  {
+   "codigo_institucion": "028",
+   "rut": "97080000-K",
+   "razon_social": "Banco BICE",
+   "estado": "Activo",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO BICE",
+   "vigencia_cmf": "Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "031",
+   "rut": "97951000-4",
+   "razon_social": "HSBC Bank (Chile)",
+   "estado": "Activo",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "HSBC BANK (CHILE)",
+   "vigencia_cmf": "Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "037",
+   "rut": "97036000-K",
+   "razon_social": "Banco Santander-Chile",
+   "estado": "Activo",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO SANTANDER-CHILE",
+   "vigencia_cmf": "Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "039",
+   "rut": "97023000-9",
+   "razon_social": "Banco Itau Chile",
+   "estado": "Activo",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO ITAÚ CHILE",
+   "vigencia_cmf": "Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "041",
+   "rut": "97043000-8",
+   "razon_social": "JP Morgan Chase Bank N.A.",
+   "estado": "Activo",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "JP MORGAN CHASE BANK, N. A.",
+   "vigencia_cmf": "Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "043",
+   "rut": "59002030-3",
+   "razon_social": "Banco de la Nacion Argentina",
+   "estado": "Cerrado",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO DE LA NACION ARGENTINA",
+   "vigencia_cmf": "No Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "045",
+   "rut": "59002220-9",
+   "razon_social": "The Bank of Tokyo-Mitsubishi UFJ Ltd.",
+   "estado": "Cerrado",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "THE BANK OF TOKYO-MITSUBISHI UFJ, LTD",
+   "vigencia_cmf": "No Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "046",
+   "rut": "97919000-K",
+   "razon_social": "The Royal Bank of Scotland (Chile)",
+   "estado": "Cerrado",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO SUDAMERICANO (ANTES THE ROYAL BANK OF SCOTLAND (CHILE))",
+   "vigencia_cmf": "No Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "049",
+   "rut": "97053000-2",
+   "razon_social": "Banco Security",
+   "estado": "Fusionado",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO SECURITY",
+   "vigencia_cmf": "No Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "051",
+   "rut": "96509660-4",
+   "razon_social": "Banco Falabella",
+   "estado": "Activo",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO FALABELLA",
+   "vigencia_cmf": "Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "052",
+   "rut": "96929050-2",
+   "razon_social": "Deutsche Bank (Chile)",
+   "estado": "Cerrado",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "DEUTSCHE BANK CHILE",
+   "vigencia_cmf": "No Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "053",
+   "rut": "97947000-2",
+   "razon_social": "Banco Ripley",
+   "estado": "Activo",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO RIPLEY",
+   "vigencia_cmf": "Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "054",
+   "rut": "97949000-3",
+   "razon_social": "Rabobank Chile",
+   "estado": "Cerrado",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "RABOBANK CHILE (EX HNS BANCO)",
+   "vigencia_cmf": "No Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "055",
+   "rut": "99500410-0",
+   "razon_social": "Banco Consorcio",
+   "estado": "Activo",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO CONSORCIO",
+   "vigencia_cmf": "Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "056",
+   "rut": "97952000-K",
+   "razon_social": "Banco Penta",
+   "estado": "Cerrado",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO PENTA",
+   "vigencia_cmf": "No Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "057",
+   "rut": "99565970-0",
+   "razon_social": "Banco Paris",
+   "estado": "Cerrado",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO PARIS",
+   "vigencia_cmf": "No Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "058",
+   "rut": "59141000-8",
+   "razon_social": "DnB NOR Bank ASA",
+   "estado": "Cerrado",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "DNB NOR BANK ASA",
+   "vigencia_cmf": "No Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "059",
+   "rut": "76362099-9",
+   "razon_social": "Banco BTG Pactual Chile",
+   "estado": "Activo",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO BTG PACTUAL CHILE",
+   "vigencia_cmf": "Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "060",
+   "rut": "59203500-6",
+   "razon_social": "China Construction Bank",
+   "estado": "Activo",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "CHINA CONSTRUCTION BANK, AGENCIA EN CHILE",
+   "vigencia_cmf": "Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "061",
+   "rut": "59238930-4",
+   "razon_social": "Bank of China, Agencia en Chile",
+   "estado": "Activo",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANK OF CHINA, AGENCIA EN CHILE",
+   "vigencia_cmf": "Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "062",
+   "rut": "77844703-7",
+   "razon_social": "Tanner Banco Digital",
+   "estado": "Activo",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "TANNER BANCO DIGITAL",
+   "vigencia_cmf": "Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "504",
+   "rut": "97032000-8",
+   "razon_social": "Banco Bilbao Vizcaya Argentaria (BBVA)",
+   "estado": "Fusionado",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO BILBAO VIZCAYA ARGENTARIA, CHILE (BBVA)",
+   "vigencia_cmf": "No Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "507",
+   "rut": "97051000-1",
+   "razon_social": "Banco del Desarrollo",
+   "estado": "Fusionado",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "BANCO DEL DESARROLLO",
+   "vigencia_cmf": "No Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  },
+  {
+   "codigo_institucion": "816",
+   "rut": "97006816-3",
+   "razon_social": "BCI Financial Group Inc and Subsidiaries",
+   "estado": "Activo",
+   "cotejo": "declarado",
+   "detalle": "BCI Financial Group Inc and Subsidiaries: filial en el exterior; el registro BANCO sólo lista bancos establecidos en Chile."
+  },
+  {
+   "codigo_institucion": "900",
+   "rut": "99999900-K",
+   "razon_social": "Total Bancos",
+   "estado": "Agregado",
+   "cotejo": "agregado_sectorial",
+   "detalle": "No es una entidad de la CMF: total publicado por la fuente."
+  },
+  {
+   "codigo_institucion": "916",
+   "rut": "97006916-K",
+   "razon_social": "City National Bank of Florida",
+   "estado": "Activo",
+   "cotejo": "declarado",
+   "detalle": "City National Bank of Florida: filial en el exterior; el registro BANCO sólo lista bancos establecidos en Chile."
+  },
+  {
+   "codigo_institucion": "927",
+   "rut": "97022927-2",
+   "razon_social": "CorpBanca Colombia",
+   "estado": "Fusionado",
+   "cotejo": "declarado",
+   "detalle": "CorpBanca Colombia: filial en el exterior; el registro BANCO sólo lista bancos establecidos en Chile."
+  },
+  {
+   "codigo_institucion": "950",
+   "rut": "99999950-6",
+   "razon_social": "Total Bancos Nacionales",
+   "estado": "Agregado",
+   "cotejo": "agregado_sectorial",
+   "detalle": "No es una entidad de la CMF: total publicado por la fuente."
+  },
+  {
+   "codigo_institucion": "960",
+   "rut": "99999960-3",
+   "razon_social": "Total Bancos Extranjeros",
+   "estado": "Agregado",
+   "cotejo": "agregado_sectorial",
+   "detalle": "No es una entidad de la CMF: total publicado por la fuente."
+  },
+  {
+   "codigo_institucion": "970",
+   "rut": "99999970-0",
+   "razon_social": "Total Bancos Establecidos en Chile",
+   "estado": "Agregado",
+   "cotejo": "agregado_sectorial",
+   "detalle": "No es una entidad de la CMF: total publicado por la fuente."
+  },
+  {
+   "codigo_institucion": "980",
+   "rut": "99999980-8",
+   "razon_social": "Total Sucursales Bancos Extranjeros",
+   "estado": "Agregado",
+   "cotejo": "agregado_sectorial",
+   "detalle": "No es una entidad de la CMF: total publicado por la fuente."
+  },
+  {
+   "codigo_institucion": "998",
+   "rut": "99999998-0",
+   "razon_social": "Total Sistema Financiero Chile",
+   "estado": "Agregado",
+   "cotejo": "agregado_sectorial",
+   "detalle": "No es una entidad de la CMF: total publicado por la fuente."
+  },
+  {
+   "codigo_institucion": "999",
+   "rut": "99999999-9",
+   "razon_social": "Total Sistema Financiero",
+   "estado": "Agregado",
+   "cotejo": "agregado_sectorial",
+   "detalle": "No es una entidad de la CMF: total publicado por la fuente."
+  },
+  {
+   "codigo_institucion": "sin_codigo_76632789",
+   "rut": "76632789-3",
+   "razon_social": "TENPO BANK CHILE",
+   "estado": "Activo",
+   "cotejo": "cotejado",
+   "razon_social_cmf": "TENPO BANK CHILE",
+   "vigencia_cmf": "Vigente",
+   "detalle": "RUT y vigencia coinciden con el registro."
+  }
+ ]
+}

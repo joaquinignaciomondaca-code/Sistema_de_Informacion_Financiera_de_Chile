@@ -1,0 +1,141 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "fondos-que-dejaron-de-reportar-289026",
+ "titulo": "Fondos que dejaron de reportar",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "run_fondo",
+  "nombre_fondo",
+  "primer_periodo",
+  "ultimo_periodo"
+ ],
+ "filas": 20,
+ "truncado": false,
+ "datos": [
+  [
+   "10245",
+   "SI RENTA MP",
+   "2022-10",
+   "2026-03"
+  ],
+  [
+   "10275",
+   "EQUILIBRIO",
+   "2022-06",
+   "2026-08"
+  ],
+  [
+   "10562",
+   "FFMM RENTA UF",
+   "2024-01",
+   "2026-03"
+  ],
+  [
+   "10599",
+   "EST UF VII",
+   "2024-03",
+   "2026-03"
+  ],
+  [
+   "10638",
+   "EST USD II",
+   "2024-07",
+   "2026-06"
+  ],
+  [
+   "10661",
+   "ESTRUCT. DEUDA UF II",
+   "2024-08",
+   "2026-03"
+  ],
+  [
+   "10665",
+   "EST UF VIII",
+   "2024-08",
+   "2026-08"
+  ],
+  [
+   "10782",
+   "REND CONSERVADOR",
+   "2025-10",
+   "2026-08"
+  ],
+  [
+   "8076",
+   "ACCIONES CHILENAS",
+   "2001-01",
+   "2026-07"
+  ],
+  [
+   "8159",
+   "GO ASIA EMERGENTE",
+   "2001-01",
+   "2026-04"
+  ],
+  [
+   "8172",
+   "CA DEFENSIVA DÓLAR",
+   "2001-01",
+   "2026-06"
+  ],
+  [
+   "8358",
+   "RENTA NOMINAL",
+   "2005-02",
+   "2026-08"
+  ],
+  [
+   "8488",
+   "GO SELECTAS USA",
+   "2007-01",
+   "2026-06"
+  ],
+  [
+   "8575",
+   "BTG BRASIL",
+   "2008-01",
+   "2026-06"
+  ],
+  [
+   "8776",
+   "RENTA INTERNACIONAL",
+   "2010-03",
+   "2026-04"
+  ],
+  [
+   "8912",
+   "INDEX FUND S&P IPSA",
+   "2012-01",
+   "2026-08"
+  ],
+  [
+   "8948",
+   "SMALL CAP LATAM",
+   "2012-12",
+   "2026-04"
+  ],
+  [
+   "9072",
+   "DEUDA CHILENA",
+   "2014-08",
+   "2026-05"
+  ],
+  [
+   "9251",
+   "FI CC DEUDA CORP IG",
+   "2021-11",
+   "2026-05"
+  ],
+  [
+   "9490",
+   "SANTANDER DEUDADÓLAR",
+   "2017-11",
+   "2026-07"
+  ]
+ ],
+ "sql": "SELECT run_fondo, nombre_fondo, primer_periodo, ultimo_periodo FROM ffmm_lista_entidades WHERE NOT reporta_ultimo_mes ORDER BY ultimo_periodo DESC LIMIT 20;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

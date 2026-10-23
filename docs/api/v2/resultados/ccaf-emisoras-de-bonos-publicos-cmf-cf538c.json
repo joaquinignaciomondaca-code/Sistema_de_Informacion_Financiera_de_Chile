@@ -1,0 +1,43 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "ccaf-emisoras-de-bonos-publicos-cmf-cf538c",
+ "titulo": "CCAF Emisoras de Bonos Públicos CMF",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "rut_completo",
+  "razon_social",
+  "codigo_cmf",
+  "lineas_deuda_registradas",
+  "cmf_url"
+ ],
+ "filas": 3,
+ "truncado": false,
+ "datos": [
+  [
+   "70.016.160-9",
+   "CAJA DE COMPENSACION DE ASIGNACION FAMILIAR LA ARAUCANA",
+   "2574",
+   true,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=70016160&grupo=&tipoentidad=RVEMI&row=&vig=VI&control=svs&pestania=1"
+  ],
+  [
+   "70.016.330-K",
+   "CAJA DE COMPENSACION DE ASIGNACION FAMILIAR LOS HEROES",
+   "1011",
+   true,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=70016330&grupo=&tipoentidad=RVEMI&row=&vig=VI&control=svs&pestania=1"
+  ],
+  [
+   "81.826.800-9",
+   "CAJA DE COMPENSACION DE ASIGNACION FAMILIAR DE LOS ANDES",
+   "1009",
+   true,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?mercado=V&rut=81826800&grupo=&tipoentidad=RVEMI&row=&vig=VI&control=svs&pestania=1"
+  ]
+ ],
+ "sql": "SELECT rut_completo, razon_social, codigo_cmf, lineas_deuda_registradas, cmf_url FROM ccaf_lista_entidades WHERE emisor_valores_cmf = true ORDER BY rut;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

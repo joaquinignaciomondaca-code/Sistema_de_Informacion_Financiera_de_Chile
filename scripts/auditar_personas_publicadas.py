@@ -44,7 +44,7 @@ from pipelines.auto import privacidad  # noqa: E402
 
 DOCS = RAIZ / "docs"
 PRIVACIDAD = RAIZ / "PRIVACIDAD.md"
-CATALOGO = DOCS / "api" / "v1" / "catalog.json"
+CATALOGO = DOCS / "api" / "v2" / "catalog.json"
 
 # Palabras que delatan a una sociedad. Sirven para separar, en las nóminas
 # publicadas, los nombres de personas de las razones sociales. No es una
@@ -78,7 +78,7 @@ def columnas(con, vista: str) -> list[str]:
 
 def _particiones(con, objeto: str) -> bool:
     """Registra el objeto como vista si tiene archivos publicados."""
-    ruta = DOCS / "api" / "v1" / "partitions" / f"{objeto}.json"
+    ruta = DOCS / "api" / "v2" / "partitions" / f"{objeto}.json"
     if not ruta.exists():
         return False
     partes = json.loads(ruta.read_text(encoding="utf-8"))["particiones"]
@@ -234,9 +234,9 @@ def main() -> int:
         for valor in _valores_atipicos(con, objeto, columna, entidades)
     }
     escaneadas, hallazgos = 0, []
-    for objeto in sorted(p.stem for p in (DOCS / "api" / "v1" / "schema").glob("*.json")):
+    for objeto in sorted(p.stem for p in (DOCS / "api" / "v2" / "schema").glob("*.json")):
         columnas_rut = [c["nombre"] for c in json.loads(
-            (DOCS / "api" / "v1" / "schema" / f"{objeto}.json").read_text(encoding="utf-8"))["columnas"]
+            (DOCS / "api" / "v2" / "schema" / f"{objeto}.json").read_text(encoding="utf-8"))["columnas"]
             if "rut" in c["nombre"].lower()]
         if not columnas_rut or not _particiones(con, objeto):
             continue

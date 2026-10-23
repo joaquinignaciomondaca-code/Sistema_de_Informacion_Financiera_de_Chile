@@ -1,0 +1,312 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "lista-por-segmento-y-licencia-catalogo-local-53671b",
+ "titulo": "Lista por segmento y licencia (catálogo local)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "rut",
+  "razon_social",
+  "nombre_fantasia",
+  "segmento",
+  "tipo_licencia",
+  "grupo_controlador",
+  "vigente"
+ ],
+ "filas": 32,
+ "truncado": false,
+ "datos": [
+  [
+   "76002293",
+   "SANTANDER CONSUMER FINANCE LIMITADA",
+   "SANTANDER CONSUMER",
+   "Automotriz",
+   "Filial bancaria (Banco Santander-Chile) emisora de valores",
+   "Banco Santander-Chile",
+   1
+  ],
+  [
+   "76120857",
+   "GLOBAL SOLUCIONES FINANCIERAS S.A.",
+   "GLOBAL SOLUCIONES",
+   "Leasing",
+   "Independiente emisora de valores",
+   "Global",
+   1
+  ],
+  [
+   "76139506",
+   "AUTOFIN S.A.",
+   "AUTOFIN",
+   "Automotriz",
+   "Independiente emisora de valores",
+   "Autofin",
+   1
+  ],
+  [
+   "76197101",
+   "CBP FINANCIA CAPITAL FACTORING S.A.",
+   "FINANCIA CAPITAL",
+   "Factoring",
+   "Independiente emisora de valores",
+   "Financia Capital",
+   1
+  ],
+  [
+   "76238714",
+   "GAMA SERVICIOS FINANCIEROS S.A.",
+   "GAMA",
+   "Leasing",
+   "Independiente emisora de valores",
+   "Gama Leasing",
+   1
+  ],
+  [
+   "76360977",
+   "PRIMUS CAPITAL S.A.",
+   "PRIMUS CAPITAL",
+   "Ambas",
+   "Independiente emisora de valores",
+   "Independiente",
+   1
+  ],
+  [
+   "76381570",
+   "INTERFACTOR S.A.",
+   "INTERFACTOR",
+   "Factoring",
+   "Independiente",
+   "Independiente",
+   0
+  ],
+  [
+   "76555835",
+   "ST CAPITAL SPA",
+   "ST CAPITAL",
+   "Factoring",
+   "Independiente emisora de valores",
+   "ST Capital",
+   1
+  ],
+  [
+   "76562786",
+   "BICE FACTORING S.A.",
+   "BICE FACTORING",
+   "Factoring",
+   "Filial bancaria",
+   "Banco BICE",
+   1
+  ],
+  [
+   "77048001",
+   "LEASING URBANO S.A.",
+   "LEASING URBANO S.A.",
+   "Leasing",
+   null,
+   null,
+   1
+  ],
+  [
+   "77356020",
+   "COMERCIAL DE VALORES SERVICIOS FINANCIEROS SPA",
+   "COVAL",
+   "Ambas",
+   "Independiente emisora de valores",
+   "Grupo Abumohor (Inversiones Nevada)",
+   1
+  ],
+  [
+   "77700553",
+   "CASAPRONTA LEASING S.A.",
+   "CASAPRONTA LEASING S.A.",
+   "Leasing",
+   null,
+   null,
+   1
+  ],
+  [
+   "77765012",
+   "AUSTRAL LEASING HABITACIONAL S.A.",
+   "AUSTRAL LEASING HABITACIONAL S.A.",
+   "Leasing",
+   null,
+   null,
+   1
+  ],
+  [
+   "78366474",
+   "VIVEPROPIO LEASING S.A.",
+   "VIVEPROPIO LEASING S.A.",
+   "Leasing",
+   null,
+   null,
+   1
+  ],
+  [
+   "90146000",
+   "SERVICIOS FINANCIEROS PROGRESO S.A.",
+   "PROGRESO",
+   "Ambas",
+   "Independiente emisora de valores",
+   "Progreso",
+   1
+  ],
+  [
+   "94050000",
+   "GENERAL MOTORS FINANCIAL CHILE S.A.",
+   "GM FINANCIAL",
+   "Leasing",
+   "Independiente emisora de valores",
+   "General Motors Financial (EE.UU.)",
+   1
+  ],
+  [
+   "96611310",
+   "BANDESARROLLO SOCIEDAD DE LEASING INMOBILIARIO S.A",
+   "BANDESARROLLO LEASING",
+   "Leasing",
+   "Filial bancaria",
+   "Scotiabank Chile (ex Banco del Desarrollo)",
+   1
+  ],
+  [
+   "96626570",
+   "INCOFIN S.A.",
+   "INCOFIN",
+   "Ambas",
+   "Independiente emisora de valores",
+   "Independiente",
+   1
+  ],
+  [
+   "96655860",
+   "FACTORING SECURITY S.A.",
+   "FACTORING SECURITY",
+   "Factoring",
+   "Filial de grupo financiero emisora de valores (no filial bancaria directa)",
+   "Grupo Security (integrado a Bicecorp)",
+   1
+  ],
+  [
+   "96660790",
+   "FACTOTAL S.A.",
+   "FACTOTAL",
+   "Ambas",
+   "Independiente emisora de valores",
+   "Independiente (fam. Zunino)",
+   1
+  ],
+  [
+   "96667560",
+   "TANNER SERVICIOS FINANCIEROS S.A.",
+   "TANNER",
+   "Ambas",
+   "Independiente emisora de valores",
+   "Grupo Massu (75.58%)",
+   1
+  ],
+  [
+   "96678790",
+   "FORUM SERVICIOS FINANCIEROS S.A.",
+   "FORUM",
+   "Leasing",
+   "Independiente emisora de valores (controlada por banco extranjero sin licencia local)",
+   "Grupo BBVA (España)",
+   1
+  ],
+  [
+   "96720830",
+   "BCI FACTORING S.A.",
+   "BCI FACTORING",
+   "Factoring",
+   "Filial bancaria",
+   "Banco BCI",
+   1
+  ],
+  [
+   "96784400",
+   "CONCRECES LEASING S.A.",
+   "CONCRECES LEASING",
+   "Leasing",
+   "Independiente",
+   "Concreces (La Serena)",
+   0
+  ],
+  [
+   "96805850",
+   "SCOTIA AZUL SOCIEDAD DE LEASING INMOBILIARIO S.A.",
+   "SCOTIA AZUL LEASING",
+   "Leasing",
+   "Filial bancaria",
+   "Scotiabank Chile (ex BBVA)",
+   1
+  ],
+  [
+   "96809970",
+   "UNIDAD LEASING HABITACIONAL S.A.",
+   "UNIDAD LEASING",
+   "Leasing",
+   "Independiente emisora de valores",
+   "Independiente",
+   1
+  ],
+  [
+   "96861280",
+   "EUROCAPITAL S.A.",
+   "EUROCAPITAL",
+   "Ambas",
+   "Independiente emisora de valores",
+   "Eurocapital",
+   1
+  ],
+  [
+   "99501480",
+   "PENTA FINANCIERO S.A.",
+   "PENTA FINANCIERO",
+   "Ambas",
+   "Independiente emisora de valores",
+   "Empresas Penta",
+   1
+  ],
+  [
+   "99513410",
+   "SMB FACTORING S.A.",
+   "SMB FACTORING",
+   "Factoring",
+   "Independiente",
+   "SMB",
+   0
+  ],
+  [
+   "99566540",
+   "HIPOTECARIA LA CONSTRUCCION LEASING S.A. (HLC / VIVE LEASING)",
+   "VIVE LEASING (HLC)",
+   "Leasing",
+   "Independiente",
+   "CChC",
+   0
+  ],
+  [
+   "99569200",
+   "FACTORING MERCANTIL S.A.",
+   "MERCANTIL",
+   "Factoring",
+   "Independiente",
+   "Mercantil",
+   0
+  ],
+  [
+   "99595990",
+   "LATAM TRADE CAPITAL S.A.",
+   "LATAM TRADE",
+   "Factoring",
+   "Independiente",
+   "Latam Trade",
+   0
+  ]
+ ],
+ "sql": "SELECT rut, razon_social, nombre_fantasia, segmento, tipo_licencia, grupo_controlador, vigente FROM factoring_leasing_lista_entidades ORDER BY vigente DESC, segmento, razon_social;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

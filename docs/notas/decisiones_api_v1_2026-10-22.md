@@ -1,5 +1,10 @@
 # Decisiones pendientes de la API v1 (D1–D4)
 
+> **Estado (2026-10-23).** El contrato vigente es **2.0.0** y se publica en
+> `docs/api/v2/`. Esta nota se escribió cuando la ruta era `api/v1/`: las rutas de
+> archivo y de URL se actualizaron para que los comandos sigan funcionando, y las
+> referencias a «v1» como nombre de la fase se conservan como se escribieron.
+
 Estado: **D1, D2 y D3 decididas e implementadas; D4 es consecuencia de D3.** Cada una trae el motivo y lo que
 cuesta cambiarla después.
 
@@ -116,7 +121,9 @@ v1 fija `sif.sql_view` y `sif.aliases[]` desde el principio: permite separar
 
 **Decisión del dueño (2026-10-22): `/api/v1/` en la ruta y semver en
 `version`.** La regla quedó escrita en el descriptor (`sif.versionado`) y es la
-siguiente:
+siguiente (hoy la ruta es **`/api/v2/`** y la versión **2.0.0**: el recorte de
+columnas del 2026-10-23 quitó columnas publicadas, que esta misma tabla clasifica
+como cambio mayor):
 
 | Cambio | Versión | Ejemplo |
 |---|---|---|

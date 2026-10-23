@@ -1,7 +1,7 @@
 """Cliente del Sistema de Información Financiera de Chile.
 
 Todo lo que sabe este cliente lo aprende del contrato publicado
-(`docs/api/v1/`): el catálogo de objetos, sus esquemas y sus particiones. No hay
+(`docs/api/v2/`): el catálogo de objetos, sus esquemas y sus particiones. No hay
 listas escritas a mano, así que si el contrato cambia, el cliente cambia.
 
     import sif_chile
@@ -86,7 +86,7 @@ class Sif:
     @property
     def catalogo(self) -> dict:
         if self._catalogo is None:
-            self._catalogo = self._json("api/v1/catalog.json")
+            self._catalogo = self._json("api/v2/catalog.json")
             self._por_id = {o["id"]: o for o in self._catalogo["objetos"]}
             self._por_alias = {
                 a: o["id"] for o in self._catalogo["objetos"] for a in o.get("aliases") or []
@@ -127,7 +127,7 @@ class Sif:
                 pass
         # El DDL publicado es la única fuente de las vistas: si el contrato
         # añade un objeto, el cliente lo tiene sin actualizar el paquete.
-        ddl = self._leer("api/v1/views.sql").decode("utf-8")
+        ddl = self._leer("api/v2/views.sql").decode("utf-8")
         ddl = self._reescribir_base(ddl)
         con.execute(ddl)
         self._con = con
@@ -197,17 +197,17 @@ class Sif:
     def esquema(self, nombre: str) -> dict:
         """Columnas, tipos, clave primaria y foráneas de un objeto."""
         ident = self._objeto(nombre)["id"]
-        return self._json(f"api/v1/schema/{ident}.json")
+        return self._json(f"api/v2/schema/{ident}.json")
 
     def particiones(self, nombre: str) -> dict:
         """Los archivos que componen el objeto, con período y hash."""
         ident = self._objeto(nombre)["id"]
-        return self._json(f"api/v1/partitions/{ident}.json")
+        return self._json(f"api/v2/partitions/{ident}.json")
 
     def consultas(self) -> list[dict]:
         """Las consultas de ejemplo del sitio, con su id estable."""
         if self._consultas is None:
-            self._consultas = self._json("api/v1/queries.json")
+            self._consultas = self._json("api/v2/queries.json")
         return self._consultas["consultas"]
 
     # ------------------------------------------------------------------ #

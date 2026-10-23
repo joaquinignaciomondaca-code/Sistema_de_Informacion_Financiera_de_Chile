@@ -1,0 +1,393 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "ingresos-y-utilidad-por-agf-ejercicio-2025-mm-22d477",
+ "titulo": "Ingresos y utilidad por AGF, ejercicio 2025 (MM$)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "razon_social",
+  "tipo_balance",
+  "moneda",
+  "ingresos_mm",
+  "ganancia_mm"
+ ],
+ "filas": 53,
+ "truncado": false,
+ "datos": [
+  [
+   "ADMINISTRADORA GENERAL DE FONDOS  SECURITY S.A.",
+   "individual",
+   "CLP",
+   37824.0,
+   12558.3
+  ],
+  [
+   "ADMINISTRADORA GENERAL DE FONDOS SURA S.A.",
+   "individual",
+   "CLP",
+   37052.9,
+   4939.1
+  ],
+  [
+   "ALZA ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   968.5,
+   113.0
+  ],
+  [
+   "AMERIS CAPITAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   7081.1,
+   233.2
+  ],
+  [
+   "AMICORP ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   218.7,
+   33.8
+  ],
+  [
+   "ASSET ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   4816.2,
+   1886.3
+  ],
+  [
+   "AVANTE ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   444.5,
+   -98.8
+  ],
+  [
+   "BANCHILE ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   173494.3,
+   47377.3
+  ],
+  [
+   "BANCO INTERNACIONAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   658.4,
+   76.9
+  ],
+  [
+   "BANCOESTADO S.A. ADMINISTRADORA  GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   40376.5,
+   19505.8
+  ],
+  [
+   "BCI ASSET MANAGEMENT ADMINISTRADORA  GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   82542.7,
+   43583.6
+  ],
+  [
+   "BICE INVERSIONES ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   44308.5,
+   13964.0
+  ],
+  [
+   "BTG PACTUAL CHILE S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   41068.0,
+   11786.4
+  ],
+  [
+   "CAPITAL ADVISORS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   2521.8,
+   331.6
+  ],
+  [
+   "CIMENTA S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   4379.2,
+   826.3
+  ],
+  [
+   "CMB-PRIME ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   3747.6,
+   1518.4
+  ],
+  [
+   "CREDICORP CAPITAL ASSET MANAGEMENT S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   18508.0,
+   2488.4
+  ],
+  [
+   "FALCOM ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   51681.5,
+   33399.4
+  ],
+  [
+   "FINASSET ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   354.7,
+   175.7
+  ],
+  [
+   "FINTUAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   11446.1,
+   1829.4
+  ],
+  [
+   "FRONTAL TRUST ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   5356.6,
+   243.4
+  ],
+  [
+   "FYNSA ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   4537.8,
+   639.2
+  ],
+  [
+   "HMC S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   2581.9,
+   -115.5
+  ],
+  [
+   "INDEPENDENCIA ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   8688.9,
+   2888.5
+  ],
+  [
+   "INDEPENDENCIA INTERNACIONAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   1321.9,
+   11.8
+  ],
+  [
+   "INVINSA ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   162.5,
+   -343.1
+  ],
+  [
+   "ITAU ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   31742.1,
+   19270.3
+  ],
+  [
+   "LAB CAPITAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   2570.8,
+   592.3
+  ],
+  [
+   "LARRAIN VIAL ACTIVOS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   14538.9,
+   -363.9
+  ],
+  [
+   "LARRAINVIAL ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   65428.4,
+   11500.9
+  ],
+  [
+   "LINK CAPITAL PARTNERS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "consolidado",
+   "CLP",
+   4668.8,
+   1003.0
+  ],
+  [
+   "MBI ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   9018.1,
+   2615.2
+  ],
+  [
+   "MONEDA S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   48839.6,
+   4881.8
+  ],
+  [
+   "NEORENTAS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   2580.5,
+   1396.3
+  ],
+  [
+   "NVS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   2099.1,
+   173.7
+  ],
+  [
+   "PENTA LAS AMERICAS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   2579.4,
+   831.6
+  ],
+  [
+   "PICTON ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   10206.2,
+   4223.6
+  ],
+  [
+   "PRINCIPAL ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   36882.3,
+   2727.3
+  ],
+  [
+   "PRUDENTIAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   764.8,
+   -3111.8
+  ],
+  [
+   "QUEST ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   2579.4,
+   92.3
+  ],
+  [
+   "SANTANDER ASSET MANAGEMENT S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   126608.9,
+   18976.1
+  ],
+  [
+   "SCOTIA  ADMINISTRADORA GENERAL DE FONDOS CHILE S.A.",
+   "individual",
+   "CLP",
+   24300.9,
+   16284.7
+  ],
+  [
+   "SENSOR CAPITAL S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   258.5,
+   91.9
+  ],
+  [
+   "SIGMA ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   247.6,
+   40.3
+  ],
+  [
+   "SINGULAR ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   3354.7,
+   375.7
+  ],
+  [
+   "SOYFOCUS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   1150.2,
+   89.6
+  ],
+  [
+   "TOESCA S.A.  ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   10514.6,
+   1715.9
+  ],
+  [
+   "VANTRUST CAPITAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   457.6,
+   -76.6
+  ],
+  [
+   "VENTURANCE S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   1030.8,
+   332.0
+  ],
+  [
+   "VINCI COMPASS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   10888.5,
+   698.6
+  ],
+  [
+   "VOLCOMCAPITAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   3920.8,
+   -45.2
+  ],
+  [
+   "XLC ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   1561.5,
+   788.5
+  ],
+  [
+   "ZURICH CHILE ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   18854.6,
+   5927.3
+  ]
+ ],
+ "sql": "SELECT razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Ingresos de actividades ordinarias') / 1e6, 1) AS ingresos_mm, round(max(valor) FILTER (WHERE cuenta = 'Ganancia (pérdida)') / 1e6, 1) AS ganancia_mm FROM agf_resultados WHERE periodo = '2025-12' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 GROUP BY ALL ORDER BY ganancia_mm DESC NULLS LAST;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

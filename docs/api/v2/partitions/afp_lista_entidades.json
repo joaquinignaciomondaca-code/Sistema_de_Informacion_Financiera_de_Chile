@@ -1,0 +1,21 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "afp_lista_entidades",
+ "particiones": [
+  {
+   "archivo": "outputs/pensiones/afp_maestro_administradoras.parquet",
+   "bytes": 2880,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/pensiones/afp_maestro_administradoras.parquet",
+   "periodo": "afp_maestro_administradoras",
+   "sha256": "29889b0a8e7ada93f7939bd267ccc30e4b5243bdb6b8631a2035de4d895a5a4a"
+  }
+ ],
+ "total": {
+  "archivos": 1,
+  "bytes": 2880,
+  "filas": 7
+ },
+ "version": "1.0.0"
+}

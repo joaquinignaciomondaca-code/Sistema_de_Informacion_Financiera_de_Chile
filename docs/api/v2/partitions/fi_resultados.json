@@ -1,0 +1,126 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "publicado",
+ "filtro": null,
+ "id": "fi_resultados",
+ "particiones": [
+  {
+   "archivo": "outputs/fi/fi_resultados/2022-03.parquet",
+   "bytes": 104080,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2022-03.parquet",
+   "periodo": "2022-03",
+   "sha256": "9b3c7d7fae15e9629a8dcdc74e3bc06335915ff5434ea48d930a009e149fb7c6"
+  },
+  {
+   "archivo": "outputs/fi/fi_resultados/2022-06.parquet",
+   "bytes": 162859,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2022-06.parquet",
+   "periodo": "2022-06",
+   "sha256": "fc6b34ef79a04292b0a95d7ad8ba9eff8370656e0a481d8becb24ab4462ca640"
+  },
+  {
+   "archivo": "outputs/fi/fi_resultados/2022-09.parquet",
+   "bytes": 173652,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2022-09.parquet",
+   "periodo": "2022-09",
+   "sha256": "824a453de46c0df8e29ccf84d537a2c3427e0bc197dfa133a33c4641aa77f5ce"
+  },
+  {
+   "archivo": "outputs/fi/fi_resultados/2022-12.parquet",
+   "bytes": 127568,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2022-12.parquet",
+   "periodo": "2022-12",
+   "sha256": "3e8afb4d26c5919ade846429c43d09d0fc7f7266fd8ccac230fffa3e2994be80"
+  },
+  {
+   "archivo": "outputs/fi/fi_resultados/2023-03.parquet",
+   "bytes": 113658,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2023-03.parquet",
+   "periodo": "2023-03",
+   "sha256": "9b6e41722588cff2c83917177eb1901ca4b256235325d574552330cdb87695f1"
+  },
+  {
+   "archivo": "outputs/fi/fi_resultados/2023-09.parquet",
+   "bytes": 185519,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2023-09.parquet",
+   "periodo": "2023-09",
+   "sha256": "1076ab61c0f14fed50de15292d73e3674a3125506f42961cf5d98ec3f0b22eef"
+  },
+  {
+   "archivo": "outputs/fi/fi_resultados/2023-12.parquet",
+   "bytes": 142678,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2023-12.parquet",
+   "periodo": "2023-12",
+   "sha256": "e186ad198a6cafce371a3a175e6e86e4685e1e4d3239b8b70d99c92af6cffe57"
+  },
+  {
+   "archivo": "outputs/fi/fi_resultados/2024-03.parquet",
+   "bytes": 117367,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2024-03.parquet",
+   "periodo": "2024-03",
+   "sha256": "5cfc937b4db18ac9661a83e5fd67e6ee6d33c202e98baafa7bd11a03531500ca"
+  },
+  {
+   "archivo": "outputs/fi/fi_resultados/2024-06.parquet",
+   "bytes": 188637,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2024-06.parquet",
+   "periodo": "2024-06",
+   "sha256": "1129d20b24195eb0545910ba157d296736ed7a8b09b8ec4158ab26638f5f8c34"
+  },
+  {
+   "archivo": "outputs/fi/fi_resultados/2024-09.parquet",
+   "bytes": 195419,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2024-09.parquet",
+   "periodo": "2024-09",
+   "sha256": "0248edd4d1ceab138037cf0ac05bc0df148249397653bc18af4db6071687a9c7"
+  },
+  {
+   "archivo": "outputs/fi/fi_resultados/2024-12.parquet",
+   "bytes": 144334,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2024-12.parquet",
+   "periodo": "2024-12",
+   "sha256": "8e486e23a4d45119e72046f4c665407a6716696b7a9d6a111143536ead89dcf9"
+  },
+  {
+   "archivo": "outputs/fi/fi_resultados/2025-06.parquet",
+   "bytes": 196803,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2025-06.parquet",
+   "periodo": "2025-06",
+   "sha256": "3550f999c96ae79d687c493f55b3158210513f5af4761decd4ff451726008d58"
+  },
+  {
+   "archivo": "outputs/fi/fi_resultados/2025-09.parquet",
+   "bytes": 204211,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2025-09.parquet",
+   "periodo": "2025-09",
+   "sha256": "b0456f4042349d579c4eca8691b8ec1f6691e60ceb459a59c1c1dc1ce021e989"
+  },
+  {
+   "archivo": "outputs/fi/fi_resultados/2025-12.parquet",
+   "bytes": 148287,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2025-12.parquet",
+   "periodo": "2025-12",
+   "sha256": "60bdab7f053c6960471d9d43c08bfc594c75527dd8f1f9caf46848c80152fda1"
+  },
+  {
+   "archivo": "outputs/fi/fi_resultados/2026-03.parquet",
+   "bytes": 127519,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2026-03.parquet",
+   "periodo": "2026-03",
+   "sha256": "5a3f42706a4be60206c06cb3cee59dde3f65738085bc7b7eda5ec63d7e4782b8"
+  },
+  {
+   "archivo": "outputs/fi/fi_resultados/2026-06.parquet",
+   "bytes": 203777,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/fi_resultados/2026-06.parquet",
+   "periodo": "2026-06",
+   "sha256": "dc0e3c89e5c5c73de6d694c1f78af9bd008dd27bb4de8ee2e2e52bdde5f97867"
+  }
+ ],
+ "total": {
+  "archivos": 16,
+  "bytes": 2536368,
+  "filas": 1164000
+ },
+ "version": "1.0.0"
+}

@@ -2,7 +2,7 @@
 
 Cliente mínimo sobre el **contrato estático** del Sistema de Información
 Financiera de Chile. No hay servidor: el SDK lee el catálogo publicado
-(`docs/api/v1/`) y ejecuta SQL con DuckDB directamente sobre los Parquet,
+(`docs/api/v2/`) y ejecuta SQL con DuckDB directamente sobre los Parquet,
 sean del sitio o de una copia local.
 
 ```bash
@@ -35,7 +35,7 @@ se crean ejecutando el `views.sql` publicado, con la base que use el cliente.
 | `tabla(nombre)` | una entrada del catálogo; acepta alias heredados |
 | `esquema(nombre)` | columnas, tipos, clave primaria y foráneas |
 | `particiones(nombre)` | archivos, filas, bytes y SHA-256 |
-| `consultas()` · `consulta(id)` | las 156 consultas publicadas, con id estable |
+| `consultas()` · `consulta(id)` | las consultas publicadas, con id estable |
 | `read_table(nombre, limite=None)` | DataFrame (o tabla de Arrow) |
 | `sql(consulta, limite=None)` | resultado de DuckDB de una consulta de lectura |
 | `descargar(nombre, destino=None)` | los Parquet del objeto, con hash verificado |

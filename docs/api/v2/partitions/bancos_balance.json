@@ -1,0 +1,406 @@
+{
+ "contrato": "sif-api/particiones",
+ "estado": "derivado",
+ "filtro": "familia_archivo_fuente IN ('B1', 'B2')",
+ "id": "bancos_balance",
+ "particiones": [
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2022-01/lineas.parquet",
+   "bytes": 295684,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2022-01/lineas.parquet",
+   "periodo": "2022-01",
+   "sha256": "b602b1292bab5de2aa68a640769e04e6a0cd0bb996f4337797c261901ad47b53"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2022-02/lineas.parquet",
+   "bytes": 298467,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2022-02/lineas.parquet",
+   "periodo": "2022-02",
+   "sha256": "6be1f5a953879cc8d901a4e09086f921da9d58e31993ce36c3511419ae8a6527"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2022-03/lineas.parquet",
+   "bytes": 301937,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2022-03/lineas.parquet",
+   "periodo": "2022-03",
+   "sha256": "af071ae16a6e4ee9051e0b94374f3e0ff9d78541f9839d882c9068070b139a82"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2022-04/lineas.parquet",
+   "bytes": 303266,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2022-04/lineas.parquet",
+   "periodo": "2022-04",
+   "sha256": "960ed927b74927845fb25817e2625ee7bb4c3e14cf972c75bebbfcc5c1509ea3"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2022-05/lineas.parquet",
+   "bytes": 304718,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2022-05/lineas.parquet",
+   "periodo": "2022-05",
+   "sha256": "e3b53316450ef847cdd0aff60ee29aec4f5d0c09def2831d3a49a0c92094f656"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2022-06/lineas.parquet",
+   "bytes": 306197,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2022-06/lineas.parquet",
+   "periodo": "2022-06",
+   "sha256": "3d87462321abaab8a9bbab00c2970951c13143c638218cb9ab698324d7b698c5"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2022-07/lineas.parquet",
+   "bytes": 308245,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2022-07/lineas.parquet",
+   "periodo": "2022-07",
+   "sha256": "8ebc399181d1451a577a164904141c1a6024735ddde021018df3f7280f8c741e"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2022-08/lineas.parquet",
+   "bytes": 308843,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2022-08/lineas.parquet",
+   "periodo": "2022-08",
+   "sha256": "34f38788524bfa1dde75001c256f11e191b79162c4d9cd5bb100ae05f9e052be"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2022-09/lineas.parquet",
+   "bytes": 309876,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2022-09/lineas.parquet",
+   "periodo": "2022-09",
+   "sha256": "a610803524be939f06c73b924e5c0873cad242812cbf2f4449bd70ad61e0f0f2"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2022-10/lineas.parquet",
+   "bytes": 310924,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2022-10/lineas.parquet",
+   "periodo": "2022-10",
+   "sha256": "127500db250f9df39044208730c39608fdc122025276d130ad6c37645a82ac19"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2022-11/lineas.parquet",
+   "bytes": 311461,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2022-11/lineas.parquet",
+   "periodo": "2022-11",
+   "sha256": "d62df475cee8b488f8db7f588ca0a63e7aeb0c7355bf979ef3902a960cfab933"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2022-12/lineas.parquet",
+   "bytes": 312307,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2022-12/lineas.parquet",
+   "periodo": "2022-12",
+   "sha256": "3b2a0ba6708762ff9dba05b4d9b05f2e78674ed0195da546d2ff27fd1583b2be"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2023-01/lineas.parquet",
+   "bytes": 301775,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2023-01/lineas.parquet",
+   "periodo": "2023-01",
+   "sha256": "f7298b8a3019e9813e989a47f0ce74766c3bf8cf41080a5588df51cd9345ad9b"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2023-02/lineas.parquet",
+   "bytes": 304881,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2023-02/lineas.parquet",
+   "periodo": "2023-02",
+   "sha256": "6c086bd2da2adef5e44fb1a48881a83c2e4069e33c468ebfd50e1c447e012bd0"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2023-03/lineas.parquet",
+   "bytes": 306654,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2023-03/lineas.parquet",
+   "periodo": "2023-03",
+   "sha256": "756ae27557017455f6bdfa11c60f8df395a94097042abe8a6f08910795477c87"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2023-04/lineas.parquet",
+   "bytes": 307581,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2023-04/lineas.parquet",
+   "periodo": "2023-04",
+   "sha256": "fa8ad5f75c383803dba2cf935b00dcfee9d393ba4deccf7fd28e86b4b8c42855"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2023-05/lineas.parquet",
+   "bytes": 309225,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2023-05/lineas.parquet",
+   "periodo": "2023-05",
+   "sha256": "a641e82b8fdd24706163e6c0347692eca1c1f39c5d6183f1bbbdca0703b51f8c"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2023-06/lineas.parquet",
+   "bytes": 310279,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2023-06/lineas.parquet",
+   "periodo": "2023-06",
+   "sha256": "f918a3f5c96922499ea03ecf3432b3476d4ccd0dcdf7f1e776b51f1b2687ea3c"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2023-07/lineas.parquet",
+   "bytes": 310999,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2023-07/lineas.parquet",
+   "periodo": "2023-07",
+   "sha256": "f30a85e596d2809e3d848eab5eab91cb002740daf21b9dfb89a2ca8e28a100c9"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2023-08/lineas.parquet",
+   "bytes": 313365,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2023-08/lineas.parquet",
+   "periodo": "2023-08",
+   "sha256": "47aac58b719d782577f239730c7580835be34761006eb69c34156acaf01155bb"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2023-09/lineas.parquet",
+   "bytes": 313944,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2023-09/lineas.parquet",
+   "periodo": "2023-09",
+   "sha256": "9370617a2ae430405fb0e4c8643fc59a48f7b24d2c78fbd7d356062b6efac4d3"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2023-10/lineas.parquet",
+   "bytes": 314466,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2023-10/lineas.parquet",
+   "periodo": "2023-10",
+   "sha256": "e99ae56dcdaf0bd0db9c7903f857611682628918ed79bcfe61b96b9a5f4da6a0"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2023-11/lineas.parquet",
+   "bytes": 315608,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2023-11/lineas.parquet",
+   "periodo": "2023-11",
+   "sha256": "140952705537de960870c1a1f38852b10e792124f2dbbfcc538143ce6801c251"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2023-12/lineas.parquet",
+   "bytes": 316095,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2023-12/lineas.parquet",
+   "periodo": "2023-12",
+   "sha256": "93f6434c3c0a125e94f0534f1149cf5538a59ab20ae1d40c84f636c65843cbd6"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2024-01/lineas.parquet",
+   "bytes": 305232,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2024-01/lineas.parquet",
+   "periodo": "2024-01",
+   "sha256": "32ac99b1c87990e0d48d966ca560026009390734a2c0213d3c337e295dfff23a"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2024-02/lineas.parquet",
+   "bytes": 308891,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2024-02/lineas.parquet",
+   "periodo": "2024-02",
+   "sha256": "5428b63c52245549df7ae5b3b498ac21efc16f1f1eb62cf2fddf730b987147c8"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2024-03/lineas.parquet",
+   "bytes": 310707,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2024-03/lineas.parquet",
+   "periodo": "2024-03",
+   "sha256": "2022d3a2b251c9b2267f466e41cbc2503202675e87df55e08518546180d30d51"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2024-04/lineas.parquet",
+   "bytes": 312059,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2024-04/lineas.parquet",
+   "periodo": "2024-04",
+   "sha256": "738bcbbb1150826bf4c71a8239fae6f372c940464a5d84ca7331c16be9bd99f6"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2024-05/lineas.parquet",
+   "bytes": 312810,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2024-05/lineas.parquet",
+   "periodo": "2024-05",
+   "sha256": "f808e71b118c44145f1184744350ad3e0656101bdd226743b1af3e278f3ebff0"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2024-06/lineas.parquet",
+   "bytes": 282565,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2024-06/lineas.parquet",
+   "periodo": "2024-06",
+   "sha256": "08096eba51aff4e9aee389e1ea95fa9a6104ab54e4838b9279ba2d56944a01df"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2024-07/lineas.parquet",
+   "bytes": 282677,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2024-07/lineas.parquet",
+   "periodo": "2024-07",
+   "sha256": "f7d087345e7cc1c89ef80e3e5280c838ed8126ecb016c98090411079de5df271"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2024-08/lineas.parquet",
+   "bytes": 282901,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2024-08/lineas.parquet",
+   "periodo": "2024-08",
+   "sha256": "4588d0b004edf374a0175c666bcf4b090ed47151419ab18d13ed44981e0e6535"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2024-09/lineas.parquet",
+   "bytes": 283441,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2024-09/lineas.parquet",
+   "periodo": "2024-09",
+   "sha256": "acf266230a8d74233ea476b92fd4edd84652aeabe857dc3628179078acda0196"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2024-10/lineas.parquet",
+   "bytes": 285319,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2024-10/lineas.parquet",
+   "periodo": "2024-10",
+   "sha256": "e9b1fa04caceaedc3a3825256fa8be9236d11ee3c01ab6f46ae70eff52fdf0ec"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2024-11/lineas.parquet",
+   "bytes": 285208,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2024-11/lineas.parquet",
+   "periodo": "2024-11",
+   "sha256": "89c8dc6e6bc94528caa429716ca6a4a06f34c4fd6e4dd7837aa3b7bd172f46dc"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2024-12/lineas.parquet",
+   "bytes": 285784,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2024-12/lineas.parquet",
+   "periodo": "2024-12",
+   "sha256": "00af326f60061509a36042b3efb562214bb5d2cdfbb906b4e8dcd64175f3efdd"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2025-01/lineas.parquet",
+   "bytes": 274052,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2025-01/lineas.parquet",
+   "periodo": "2025-01",
+   "sha256": "f38c231658db71ccd09f713af870b02b68ba31ea41732631283d2c98857b6e31"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2025-02/lineas.parquet",
+   "bytes": 277678,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2025-02/lineas.parquet",
+   "periodo": "2025-02",
+   "sha256": "8e1256ff380a8155a3dd30bebefd5bb4baecd3576b1dceaf417226f92e510656"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2025-03/lineas.parquet",
+   "bytes": 280004,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2025-03/lineas.parquet",
+   "periodo": "2025-03",
+   "sha256": "b41451f75f10ac0fcf3af8eeda64243477f04b0a70f668d68588136bbfb9b846"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2025-04/lineas.parquet",
+   "bytes": 281909,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2025-04/lineas.parquet",
+   "periodo": "2025-04",
+   "sha256": "9729dee4572e57ab41fd266c37c1dbae99b287fb33eb231b5c8154c72916e909"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2025-05/lineas.parquet",
+   "bytes": 282637,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2025-05/lineas.parquet",
+   "periodo": "2025-05",
+   "sha256": "fd0f761cccfc925de63441f6da88920581083afe10cbef7620afe954b5a657e4"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2025-06/lineas.parquet",
+   "bytes": 282891,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2025-06/lineas.parquet",
+   "periodo": "2025-06",
+   "sha256": "04cfd7b277e8e8c3f3ed37810a60ccb8bde170bafbc8148879d1c5c2ef78bb08"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2025-07/lineas.parquet",
+   "bytes": 284416,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2025-07/lineas.parquet",
+   "periodo": "2025-07",
+   "sha256": "2f2a91c4ea545bdb320bf40c12de85b1d8482d1994e24d783db2b505e1d1be53"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2025-08/lineas.parquet",
+   "bytes": 285602,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2025-08/lineas.parquet",
+   "periodo": "2025-08",
+   "sha256": "e777266481b6daf4565370aae606af71adc2950dc50893f2bd8803a6068f38b2"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2025-09/lineas.parquet",
+   "bytes": 285680,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2025-09/lineas.parquet",
+   "periodo": "2025-09",
+   "sha256": "0d457ea6c8878c12dfcdd3c2fe5d6397a8c814d61f71abcfc7c401084bcb9b9b"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2025-10/lineas.parquet",
+   "bytes": 289746,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2025-10/lineas.parquet",
+   "periodo": "2025-10",
+   "sha256": "a2568aa129b6172f028329e1aa05ea9775a489f1ec0bbb5f04e8e5f3ed1154ad"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2025-11/lineas.parquet",
+   "bytes": 279386,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2025-11/lineas.parquet",
+   "periodo": "2025-11",
+   "sha256": "b4fdfd294506683804d97e87c8046a2a874d591297ef3f00628c9e2d6dc488a3"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2025-12/lineas.parquet",
+   "bytes": 280403,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2025-12/lineas.parquet",
+   "periodo": "2025-12",
+   "sha256": "d6fc7040f09826ab8a42167ed3514cc3062204e9bbdf851c6220941cfda57e47"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2026-01/lineas.parquet",
+   "bytes": 269292,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2026-01/lineas.parquet",
+   "periodo": "2026-01",
+   "sha256": "40195068c5216e6e2de80a6d2cc6ff757e4163da37a5dcfaf3b50cded769f026"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2026-02/lineas.parquet",
+   "bytes": 272497,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2026-02/lineas.parquet",
+   "periodo": "2026-02",
+   "sha256": "0c6635c1a0205c5e446c9f6f78245c6dd8fa533e3174ba9c6a89460cf4717af8"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2026-03/lineas.parquet",
+   "bytes": 275088,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2026-03/lineas.parquet",
+   "periodo": "2026-03",
+   "sha256": "0f024336bf0cc6db79edbb65aa8b2831c39c26ec500500279d483b091592095a"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2026-04/lineas.parquet",
+   "bytes": 276818,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2026-04/lineas.parquet",
+   "periodo": "2026-04",
+   "sha256": "4fa09ae080557b509c5ab7bc334dfd450d74b0ff1364bf907b8d4002e545301c"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2026-05/lineas.parquet",
+   "bytes": 278195,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2026-05/lineas.parquet",
+   "periodo": "2026-05",
+   "sha256": "e9d1f0e02a1ee901e0c2d8dd2ba5a86d38d90bf629fc8714a66df38aa2e63ec3"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2026-06/lineas.parquet",
+   "bytes": 279090,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2026-06/lineas.parquet",
+   "periodo": "2026-06",
+   "sha256": "0a5bdc6442051685ece069fabb6fb15b03d2c3208a045cafdc03e865abe96735"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2026-07/lineas.parquet",
+   "bytes": 280381,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2026-07/lineas.parquet",
+   "periodo": "2026-07",
+   "sha256": "3ae87cf588b25990f3101c23a0b916aa46c3e00e54a58a6b20c190d6cb491d2e"
+  },
+  {
+   "archivo": "outputs/bancos/cmf_b1_b2_r1/2026-08/lineas.parquet",
+   "bytes": 280609,
+   "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/bancos/cmf_b1_b2_r1/2026-08/lineas.parquet",
+   "periodo": "2026-08",
+   "sha256": "766dc932b240ab20427b29a745b26bd1dd0dc75e3cf88bf6b39af81749a43695"
+  }
+ ],
+ "total": {
+  "archivos": 56,
+  "bytes": 16530765,
+  "filas": 722931
+ },
+ "version": "1.0.0"
+}

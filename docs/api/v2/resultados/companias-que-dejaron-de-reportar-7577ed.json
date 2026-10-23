@@ -1,0 +1,148 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "companias-que-dejaron-de-reportar-7577ed",
+ "titulo": "Compañías que dejaron de reportar",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "sector",
+  "rut_aseguradora",
+  "nombre_aseguradora",
+  "primer_periodo",
+  "ultimo_periodo"
+ ],
+ "filas": 18,
+ "truncado": false,
+ "datos": [
+  [
+   "generales",
+   "76079624",
+   "HDI GARANTIA Y CREDITO",
+   "2016-11",
+   "2023-07"
+  ],
+  [
+   "generales",
+   "76479498",
+   "BBVA SEGUROS GENERALES S.A.",
+   "2016-11",
+   "2017-03"
+  ],
+  [
+   "generales",
+   "76620816",
+   "SEGCHILE SEGUROS GENERALES S.A.",
+   "2017-01",
+   "2021-09"
+  ],
+  [
+   "generales",
+   "96642610",
+   "CHUBB DE CHILE COMPANIA DE SEGUROS GENERALES S.A.",
+   "2016-11",
+   "2017-12"
+  ],
+  [
+   "generales",
+   "96683120",
+   "CIA. DE SEGUROS GENERALES PENTA SEGUROS S.A.",
+   "2016-11",
+   "2017-06"
+  ],
+  [
+   "generales",
+   "96917990",
+   "BANCHILE SEGUROS DE VIDA S.A.",
+   "2018-02",
+   "2019-09"
+  ],
+  [
+   "generales",
+   "99196000",
+   "COMPA#IA DE SEGUROS DE GENERALES HUELEN S.A.",
+   "2016-11",
+   "2022-12"
+  ],
+  [
+   "generales",
+   "99231000",
+   "HDI SEGUROS S.A.",
+   "2016-11",
+   "2024-10"
+  ],
+  [
+   "vida",
+   "109681296",
+   "0PENTA VIDA",
+   "2018-01",
+   "2018-01"
+  ],
+  [
+   "vida",
+   "76072304",
+   "CompaNia de Seguros Corpseguros S.A.",
+   "2016-11",
+   "2019-05"
+  ],
+  [
+   "vida",
+   "76092587",
+   "RIGEL SEGUROS DE VIDA SA",
+   "2016-11",
+   "2021-03"
+  ],
+  [
+   "vida",
+   "76948367",
+   "BICE SEGUROS DE VIDA S.A.",
+   "2018-12",
+   "2020-01"
+  ],
+  [
+   "vida",
+   "96687900",
+   "OHIO NATIONAL SEGUROS DE VIDA S.A.",
+   "2016-11",
+   "2025-07"
+  ],
+  [
+   "vida",
+   "96917990",
+   "BANCHILE SEGUROS DE VIDA S.A.",
+   "2016-11",
+   "2021-09"
+  ],
+  [
+   "vida",
+   "96933770",
+   "CARDIF SEGUROS RENTAS VITALICIAS S.A.",
+   "2016-11",
+   "2020-11"
+  ],
+  [
+   "vida",
+   "99027000",
+   "CAJA REASEGURADORA DE CHILE S.A.",
+   "2016-11",
+   "2025-03"
+  ],
+  [
+   "vida",
+   "99196000",
+   "COMPA#IA DE SEGUROS DE VIDA HUELEN S.A.",
+   "2016-11",
+   "2022-12"
+  ],
+  [
+   "vida",
+   "99301000",
+   "SEGUROS VIDA SECURITY PREVISION S.A",
+   "2016-11",
+   "2025-12"
+  ]
+ ],
+ "sql": "SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo, ultimo_periodo FROM seguros_lista_entidades WHERE NOT reporta_ultimo_mes ORDER BY ultimo_periodo DESC;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

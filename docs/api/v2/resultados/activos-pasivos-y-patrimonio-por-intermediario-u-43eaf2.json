@@ -1,0 +1,287 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "activos-pasivos-y-patrimonio-por-intermediario-u-43eaf2",
+ "titulo": "Activos, pasivos y patrimonio por intermediario, último trimestre (MM$)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "periodo",
+  "razon_social",
+  "tipo_intermediario",
+  "activos_mm",
+  "pasivos_mm",
+  "patrimonio_mm"
+ ],
+ "filas": 33,
+ "truncado": false,
+ "datos": [
+  [
+   "2026-06",
+   "AFEX AGENTES DE VALORES LIMITADA",
+   "agente de valores",
+   11109.2,
+   7330.8,
+   3778.4
+  ],
+  [
+   "2026-06",
+   "AMM AGENCIA DE VALORES SPA",
+   "agente de valores",
+   3008.9,
+   259.8,
+   2749.1
+  ],
+  [
+   "2026-06",
+   "BANCHILE CORREDORES DE BOLSA S.A.",
+   "corredor de bolsa",
+   1241990.0,
+   1048893.5,
+   193096.5
+  ],
+  [
+   "2026-06",
+   "BANCOESTADO S.A. CORREDORES DE BOLSA",
+   "corredor de bolsa",
+   684567.1,
+   572544.6,
+   112022.5
+  ],
+  [
+   "2026-06",
+   "BCI CORREDOR DE BOLSA S.A.",
+   "corredor de bolsa",
+   876951.5,
+   787356.7,
+   89594.8
+  ],
+  [
+   "2026-06",
+   "BICE AGENTE DE VALORES LIMITADA",
+   "agente de valores",
+   217273.4,
+   127574.1,
+   89699.3
+  ],
+  [
+   "2026-06",
+   "BICE INVERSIONES CORREDORES DE BOLSA S.A.",
+   "corredor de bolsa",
+   131250.8,
+   79393.5,
+   51857.3
+  ],
+  [
+   "2026-06",
+   "BTG PACTUAL CHILE S.A. CORREDORES DE BOLSA",
+   "corredor de bolsa",
+   405713.5,
+   310382.8,
+   95330.7
+  ],
+  [
+   "2026-06",
+   "CONSORCIO CORREDORES DE BOLSA S.A.",
+   "corredor de bolsa",
+   639501.9,
+   547265.5,
+   92236.4
+  ],
+  [
+   "2026-06",
+   "CORREDORES DE BOLSA SURA S.A.",
+   "corredor de bolsa",
+   45211.0,
+   25399.5,
+   19811.6
+  ],
+  [
+   "2026-06",
+   "CREDICORP CAPITAL CORREDORES DE BOLSA SPA",
+   "corredor de bolsa",
+   327057.4,
+   298373.9,
+   28683.5
+  ],
+  [
+   "2026-06",
+   "CREDIT SUISSE AGENCIA DE VALORES (CHILE) LIMITADA",
+   "agente de valores",
+   7762.6,
+   544.2,
+   7218.4
+  ],
+  [
+   "2026-06",
+   "EUROAMERICA CORREDORES DE BOLSA S.A.",
+   "corredor de bolsa",
+   133395.1,
+   110250.4,
+   23144.7
+  ],
+  [
+   "2026-06",
+   "FINANZAS Y NEGOCIOS S.A. CORREDORES DE BOLSA",
+   "corredor de bolsa",
+   40887.2,
+   34941.5,
+   5945.8
+  ],
+  [
+   "2026-06",
+   "GFI BROKERS (CHILE)  AGENTES DE VALORES SPA.",
+   "agente de valores",
+   6808.5,
+   1148.0,
+   5660.5
+  ],
+  [
+   "2026-06",
+   "ITAU CORREDORES DE BOLSA LIMITADA",
+   "corredor de bolsa",
+   327760.0,
+   270990.6,
+   56769.4
+  ],
+  [
+   "2026-06",
+   "J.P. MORGAN CORREDORES DE BOLSA SPA",
+   "corredor de bolsa",
+   81215.7,
+   30527.9,
+   50687.8
+  ],
+  [
+   "2026-06",
+   "LARRAIN VIAL S.A. CORREDORA DE BOLSA",
+   "corredor de bolsa",
+   937173.8,
+   790202.0,
+   146971.8
+  ],
+  [
+   "2026-06",
+   "MBI CORREDORES DE BOLSA S.A.",
+   "corredor de bolsa",
+   234542.7,
+   148065.7,
+   86477.0
+  ],
+  [
+   "2026-06",
+   "MERRILL LYNCH CORREDORES DE BOLSA SPA",
+   "corredor de bolsa",
+   93276.6,
+   50456.3,
+   42820.3
+  ],
+  [
+   "2026-06",
+   "MONEDA CORREDORES DE BOLSA LIMITADA",
+   "corredor de bolsa",
+   39943.3,
+   25182.7,
+   14760.6
+  ],
+  [
+   "2026-06",
+   "NEVASA S.A., CORREDORES DE BOLSA",
+   "corredor de bolsa",
+   38338.6,
+   30917.3,
+   7421.3
+  ],
+  [
+   "2026-06",
+   "PLUSKAPITAL AGENTE DE VALORES SPA",
+   "agente de valores",
+   2019.6,
+   1216.1,
+   803.5
+  ],
+  [
+   "2026-06",
+   "PRINCIPAL AGENCIA DE VALORES S.A.",
+   "agente de valores",
+   4604.5,
+   63.0,
+   4541.4
+  ],
+  [
+   "2026-06",
+   "RENTA 4 CORREDORES DE BOLSA S.A.",
+   "corredor de bolsa",
+   60865.9,
+   47721.6,
+   13144.3
+  ],
+  [
+   "2026-06",
+   "SANTANDER CORREDORES DE BOLSA LIMITADA",
+   "corredor de bolsa",
+   141273.8,
+   74292.8,
+   66981.0
+  ],
+  [
+   "2026-06",
+   "SCOTIA CORREDORA DE BOLSA CHILE LIMITADA",
+   "corredor de bolsa",
+   507819.3,
+   385541.3,
+   122278.0
+  ],
+  [
+   "2026-06",
+   "TANNER CORREDORES DE BOLSA S.A.",
+   "corredor de bolsa",
+   238993.8,
+   197819.0,
+   41174.7
+  ],
+  [
+   "2026-06",
+   "VALORES SECURITY S.A., CORREDORES DE BOLSA",
+   "corredor de bolsa",
+   113617.0,
+   65329.1,
+   48287.9
+  ],
+  [
+   "2026-06",
+   "VANTRUST CAPITAL CORREDORES DE BOLSA S.A.",
+   "corredor de bolsa",
+   54514.3,
+   44981.2,
+   9533.1
+  ],
+  [
+   "2026-06",
+   "VECTOR CAPITAL CORREDORES DE BOLSA SPA",
+   "corredor de bolsa",
+   85649.0,
+   77057.3,
+   8591.7
+  ],
+  [
+   "2026-06",
+   "VECTORGLOBAL WMG  AGENCIA DE VALORES SPA",
+   "agente de valores",
+   525.0,
+   67.6,
+   457.3
+  ],
+  [
+   "2026-06",
+   "XTB AGENTE DE VALORES SPA",
+   "agente de valores",
+   19421.3,
+   17460.5,
+   1960.8
+  ]
+ ],
+ "sql": "SELECT periodo, razon_social, tipo_intermediario, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '10.00.00') / 1e3, 1) AS activos_mm, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '21.00.00') / 1e3, 1) AS pasivos_mm, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '22.00.00') / 1e3, 1) AS patrimonio_mm FROM corredoras_bolsa_balance WHERE periodo = (SELECT max(periodo) FROM corredoras_bolsa_balance) GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

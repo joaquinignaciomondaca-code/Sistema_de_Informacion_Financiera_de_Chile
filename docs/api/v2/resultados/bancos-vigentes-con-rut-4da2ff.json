@@ -1,0 +1,183 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "bancos-vigentes-con-rut-4da2ff",
+ "titulo": "Bancos vigentes con RUT",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "codigo_institucion",
+  "rut_completo",
+  "nombre_fantasia",
+  "razon_social",
+  "tipo_licencia",
+  "estado"
+ ],
+ "filas": 20,
+ "truncado": false,
+ "datos": [
+  [
+   "001",
+   "97004000-5",
+   "BANCO DE CHILE",
+   "Banco de Chile",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "009",
+   "97011000-3",
+   "BANCO INTERNACIONAL",
+   "Banco Internacional",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "012",
+   "97030000-7",
+   "BANCOESTADO",
+   "Banco del Estado de Chile",
+   "Banca Estatal",
+   "Activo"
+  ],
+  [
+   "014",
+   "97018000-1",
+   "SCOTIABANK CHILE",
+   "Scotiabank Chile",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "016",
+   "97006000-6",
+   "BCI",
+   "Banco de Credito e Inversiones",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "028",
+   "97080000-K",
+   "BANCO BICE",
+   "Banco BICE",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "031",
+   "97951000-4",
+   "HSBC BANK",
+   "HSBC Bank (Chile)",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "037",
+   "97036000-K",
+   "BANCO SANTANDER",
+   "Banco Santander-Chile",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "039",
+   "97023000-9",
+   "ITAU CHILE",
+   "Banco Itau Chile",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "041",
+   "97043000-8",
+   "JP MORGAN",
+   "JP Morgan Chase Bank N.A.",
+   "Agencia Bancaria Extranjera",
+   "Activo"
+  ],
+  [
+   "051",
+   "96509660-4",
+   "BANCO FALABELLA",
+   "Banco Falabella",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "053",
+   "97947000-2",
+   "BANCO RIPLEY",
+   "Banco Ripley",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "055",
+   "99500410-0",
+   "BANCO CONSORCIO",
+   "Banco Consorcio",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "059",
+   "76362099-9",
+   "BTG PACTUAL",
+   "Banco BTG Pactual Chile",
+   "Banca Comercial",
+   "Activo"
+  ],
+  [
+   "060",
+   "59203500-6",
+   "CHINA CONSTRUCTION BANK",
+   "China Construction Bank",
+   "Agencia Bancaria Extranjera",
+   "Activo"
+  ],
+  [
+   "061",
+   "59238930-4",
+   "BANK OF CHINA",
+   "Bank of China, Agencia en Chile",
+   "Agencia Bancaria Extranjera",
+   "Activo"
+  ],
+  [
+   "062",
+   "77844703-7",
+   "TANNER BANCO DIGITAL",
+   "Tanner Banco Digital",
+   "Banca Digital",
+   "Activo"
+  ],
+  [
+   "816",
+   "97006816-3",
+   "BCI USA / MIAMI",
+   "BCI Financial Group Inc and Subsidiaries",
+   "Filial Bancaria Extranjera",
+   "Activo"
+  ],
+  [
+   "916",
+   "97006916-K",
+   "CITY NATIONAL BANK",
+   "City National Bank of Florida",
+   "Filial Bancaria Extranjera",
+   "Activo"
+  ],
+  [
+   "sin_codigo_76632789",
+   "76632789-3",
+   "TENPO BANK CHILE",
+   "TENPO BANK CHILE",
+   "Banca Comercial",
+   "Activo"
+  ]
+ ],
+ "sql": "SELECT codigo_institucion, rut_dv AS rut_completo, nombre_fantasia, razon_social, tipo_licencia, estado FROM bancos_lista_entidades WHERE estado = 'Activo' ORDER BY codigo_institucion;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

@@ -1,0 +1,148 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "estado-de-resultados-completo-de-bci-securitizad-204842",
+ "titulo": "Estado de resultados completo de BCI Securitizadora, ejercicio 2025",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "tipo_balance",
+  "estado_financiero",
+  "orden",
+  "cuenta",
+  "valor"
+ ],
+ "filas": 18,
+ "truncado": false,
+ "datos": [
+  [
+   "individual",
+   "ERFG",
+   1,
+   "Ingresos de actividades ordinarias",
+   597792000
+  ],
+  [
+   "individual",
+   "ERFG",
+   2,
+   "Costo de ventas",
+   17799000
+  ],
+  [
+   "individual",
+   "ERFG",
+   3,
+   "Ganancia bruta",
+   579993000
+  ],
+  [
+   "individual",
+   "ERFG",
+   4,
+   "Gastos de administración",
+   520336000
+  ],
+  [
+   "individual",
+   "ERFG",
+   5,
+   "Ganancias (pérdidas) de actividades operacionales",
+   59657000
+  ],
+  [
+   "individual",
+   "ERFG",
+   6,
+   "Ingresos financieros",
+   112156000
+  ],
+  [
+   "individual",
+   "ERFG",
+   7,
+   "Resultados por unidades de reajuste",
+   72000
+  ],
+  [
+   "individual",
+   "ERFG",
+   8,
+   "Ganancia (pérdida), antes de impuestos",
+   171885000
+  ],
+  [
+   "individual",
+   "ERFG",
+   9,
+   "Gasto por impuestos a las ganancias",
+   42667000
+  ],
+  [
+   "individual",
+   "ERFG",
+   10,
+   "Ganancia (pérdida) procedente de operaciones continuadas",
+   129218000
+  ],
+  [
+   "individual",
+   "ERFG",
+   11,
+   "Ganancia (pérdida)",
+   129218000
+  ],
+  [
+   "individual",
+   "ERFG",
+   12,
+   "Ganancia (pérdida), atribuible a los propietarios de la controladora",
+   129218000
+  ],
+  [
+   "individual",
+   "ERFG",
+   13,
+   "Ganancia (pérdida)",
+   129218000
+  ],
+  [
+   "individual",
+   "ERFG",
+   14,
+   "Ganancia (pérdida) por acción básica en operaciones continuadas",
+   129218
+  ],
+  [
+   "individual",
+   "ERFG",
+   15,
+   "Ganancia (pérdida) por acción básica",
+   129218
+  ],
+  [
+   "individual",
+   "ERI",
+   1,
+   "Ganancia (pérdida)",
+   129218000
+  ],
+  [
+   "individual",
+   "ERI",
+   2,
+   "Resultado integral total",
+   129218000
+  ],
+  [
+   "individual",
+   "ERI",
+   3,
+   "Resultado integral atribuible a los propietarios de la controladora",
+   129218000
+  ]
+ ],
+ "sql": "SELECT tipo_balance, estado_financiero, orden, cuenta, valor FROM securitizadoras_resultados WHERE rut = '96948880' AND periodo = '2025-12' ORDER BY tipo_balance, estado_financiero, orden;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

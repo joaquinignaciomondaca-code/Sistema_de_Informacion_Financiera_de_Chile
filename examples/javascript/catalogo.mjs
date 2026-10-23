@@ -27,8 +27,8 @@ async function json(ruta) {
   return respuesta.json();
 }
 
-const catalogo = await json("api/v1/catalog.json");
-const consultas = await json("api/v1/queries.json");
+const catalogo = await json("api/v2/catalog.json");
+const consultas = await json("api/v2/queries.json");
 
 const objetos = catalogo.objetos ?? [];
 const ids = new Set(objetos.map((o) => o.id));

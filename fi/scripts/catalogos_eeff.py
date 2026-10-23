@@ -118,10 +118,6 @@ DEFINICIONES = {
         "Fecha",
         "Fecha/hora de envío leída del nombre del archivo; hora local declarada, sin inventar zona.",
     ),
-    "sha256_archivo": (
-        "Dato fuente",
-        "SHA-256 de los bytes originales del XML descargado.",
-    ),
     "cotejo_ficha": (
         "Atributo",
         "coincide = importe cotejado exactamente con su concepto y columna HTML. sin_columna = contexto del XML no expuesto por la ficha (por ejemplo trimestres en el cierre anual), validado contablemente pero no cotejable allí.",

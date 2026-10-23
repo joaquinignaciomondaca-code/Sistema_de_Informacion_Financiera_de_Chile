@@ -1,0 +1,185 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "resultado-del-ejercicio-por-intermediario-2025-m-50a3b4",
+ "titulo": "Resultado del ejercicio por intermediario, 2025 (MM$)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "razon_social",
+  "tipo_intermediario",
+  "resultado_ejercicio_mm"
+ ],
+ "filas": 33,
+ "truncado": false,
+ "datos": [
+  [
+   "AFEX AGENTES DE VALORES LIMITADA",
+   "agente de valores",
+   1269.6
+  ],
+  [
+   "AMM AGENCIA DE VALORES SPA",
+   "agente de valores",
+   224.5
+  ],
+  [
+   "BANCHILE CORREDORES DE BOLSA S.A.",
+   "corredor de bolsa",
+   37523.9
+  ],
+  [
+   "BANCOESTADO S.A. CORREDORES DE BOLSA",
+   "corredor de bolsa",
+   12132.5
+  ],
+  [
+   "BCI CORREDOR DE BOLSA S.A.",
+   "corredor de bolsa",
+   14651.5
+  ],
+  [
+   "BICE AGENTE DE VALORES LIMITADA",
+   "agente de valores",
+   3885.2
+  ],
+  [
+   "BICE INVERSIONES CORREDORES DE BOLSA S.A.",
+   "corredor de bolsa",
+   8558.2
+  ],
+  [
+   "BTG PACTUAL CHILE S.A. CORREDORES DE BOLSA",
+   "corredor de bolsa",
+   9452.1
+  ],
+  [
+   "CONSORCIO CORREDORES DE BOLSA S.A.",
+   "corredor de bolsa",
+   14056.8
+  ],
+  [
+   "CORREDORES DE BOLSA SURA S.A.",
+   "corredor de bolsa",
+   2240.7
+  ],
+  [
+   "CREDICORP CAPITAL CORREDORES DE BOLSA SPA",
+   "corredor de bolsa",
+   631.3
+  ],
+  [
+   "CREDIT SUISSE AGENCIA DE VALORES (CHILE) LIMITADA",
+   "agente de valores",
+   293.0
+  ],
+  [
+   "DUPOL S.A. CORREDORES DE BOLSA",
+   "corredor de bolsa",
+   -114.3
+  ],
+  [
+   "EUROAMERICA CORREDORES DE BOLSA S.A.",
+   "corredor de bolsa",
+   2914.7
+  ],
+  [
+   "FINANZAS Y NEGOCIOS S.A. CORREDORES DE BOLSA",
+   "corredor de bolsa",
+   151.1
+  ],
+  [
+   "GFI BROKERS (CHILE)  AGENTES DE VALORES SPA.",
+   "agente de valores",
+   612.7
+  ],
+  [
+   "ITAU CORREDORES DE BOLSA LIMITADA",
+   "corredor de bolsa",
+   4347.8
+  ],
+  [
+   "J.P. MORGAN CORREDORES DE BOLSA SPA",
+   "corredor de bolsa",
+   2862.1
+  ],
+  [
+   "LARRAIN VIAL S.A. CORREDORA DE BOLSA",
+   "corredor de bolsa",
+   14462.3
+  ],
+  [
+   "MBI CORREDORES DE BOLSA S.A.",
+   "corredor de bolsa",
+   22513.3
+  ],
+  [
+   "MERRILL LYNCH CORREDORES DE BOLSA SPA",
+   "corredor de bolsa",
+   921.2
+  ],
+  [
+   "MONEDA CORREDORES DE BOLSA LIMITADA",
+   "corredor de bolsa",
+   1121.8
+  ],
+  [
+   "NEVASA S.A., CORREDORES DE BOLSA",
+   "corredor de bolsa",
+   -1200.9
+  ],
+  [
+   "PLUSKAPITAL AGENTE DE VALORES SPA",
+   "agente de valores",
+   147.8
+  ],
+  [
+   "RENTA 4 CORREDORES DE BOLSA S.A.",
+   "corredor de bolsa",
+   1720.9
+  ],
+  [
+   "SANTANDER CORREDORES DE BOLSA LIMITADA",
+   "corredor de bolsa",
+   3570.9
+  ],
+  [
+   "SCOTIA CORREDORA DE BOLSA CHILE LIMITADA",
+   "corredor de bolsa",
+   9448.7
+  ],
+  [
+   "TANNER CORREDORES DE BOLSA S.A.",
+   "corredor de bolsa",
+   1760.1
+  ],
+  [
+   "VALORES SECURITY S.A., CORREDORES DE BOLSA",
+   "corredor de bolsa",
+   1845.4
+  ],
+  [
+   "VANTRUST CAPITAL CORREDORES DE BOLSA S.A.",
+   "corredor de bolsa",
+   1217.9
+  ],
+  [
+   "VECTOR CAPITAL CORREDORES DE BOLSA SPA",
+   "corredor de bolsa",
+   2221.1
+  ],
+  [
+   "VECTORGLOBAL WMG  AGENCIA DE VALORES SPA",
+   "agente de valores",
+   88.4
+  ],
+  [
+   "XTB AGENTE DE VALORES SPA",
+   "agente de valores",
+   386.6
+  ]
+ ],
+ "sql": "SELECT razon_social, tipo_intermediario, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '30.00.00') / 1e3, 1) AS resultado_ejercicio_mm FROM corredoras_bolsa_resultados WHERE periodo = '2025-12' GROUP BY ALL ORDER BY resultado_ejercicio_mm DESC NULLS LAST;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

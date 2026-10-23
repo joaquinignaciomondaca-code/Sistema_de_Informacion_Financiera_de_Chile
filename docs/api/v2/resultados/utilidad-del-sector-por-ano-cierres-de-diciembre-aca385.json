@@ -1,0 +1,100 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "utilidad-del-sector-por-ano-cierres-de-diciembre-aca385",
+ "titulo": "Utilidad del sector por año (cierres de diciembre, MM$, CLP)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "anio",
+  "entidades",
+  "ganancia_mm_clp"
+ ],
+ "filas": 16,
+ "truncado": false,
+ "datos": [
+  [
+   "2010",
+   11,
+   -199.9
+  ],
+  [
+   "2011",
+   10,
+   -437.2
+  ],
+  [
+   "2012",
+   10,
+   -193.6
+  ],
+  [
+   "2013",
+   10,
+   -660.3
+  ],
+  [
+   "2014",
+   10,
+   -35.7
+  ],
+  [
+   "2015",
+   10,
+   -125.8
+  ],
+  [
+   "2016",
+   10,
+   -402.7
+  ],
+  [
+   "2017",
+   9,
+   1064.2
+  ],
+  [
+   "2018",
+   10,
+   1985.8
+  ],
+  [
+   "2019",
+   10,
+   1064.0
+  ],
+  [
+   "2020",
+   10,
+   759.9
+  ],
+  [
+   "2021",
+   10,
+   1110.4
+  ],
+  [
+   "2022",
+   10,
+   1082.0
+  ],
+  [
+   "2023",
+   10,
+   -3.6
+  ],
+  [
+   "2024",
+   10,
+   1521.4
+  ],
+  [
+   "2025",
+   9,
+   882.8
+  ]
+ ],
+ "sql": "SELECT left(periodo, 4) AS anio, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS ganancia_mm_clp FROM securitizadoras_resultados WHERE periodo LIKE '%-12' AND cuenta = 'Ganancia (pérdida)' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 AND moneda = 'CLP' GROUP BY 1 ORDER BY 1;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

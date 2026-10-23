@@ -1,0 +1,81 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "acciones-con-mayor-inversion-ultimo-mes-m-f4f47b",
+ "titulo": "Acciones con mayor inversión, último mes (M$)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "nemotecnico",
+  "aseguradoras",
+  "unidades",
+  "valor_final_m_clp"
+ ],
+ "filas": 10,
+ "truncado": false,
+ "datos": [
+  [
+   "CFIADCSU-E",
+   4,
+   1829145.0,
+   68525284
+  ],
+  [
+   "CFIAINFA-E",
+   3,
+   63750000.0,
+   80319010
+  ],
+  [
+   "CFIAMRCI-E",
+   5,
+   66336210.0,
+   73991751
+  ],
+  [
+   "CFIARR",
+   14,
+   3331579.0,
+   232537909
+  ],
+  [
+   "CFICLI3A-E",
+   4,
+   2437259.0,
+   74015746
+  ],
+  [
+   "CFIFTIAA-E",
+   5,
+   4695341.0,
+   129656948
+  ],
+  [
+   "CFINFGLB-E",
+   3,
+   1883056.0,
+   80148281
+  ],
+  [
+   "CFINRENTAS",
+   8,
+   34491174.0,
+   74192358
+  ],
+  [
+   "CFIPIONERO",
+   5,
+   7108151.0,
+   115049458
+  ],
+  [
+   "QUINENCO",
+   6,
+   31154321.0,
+   149616757
+  ]
+ ],
+ "sql": "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(unidades) AS unidades, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = (SELECT max(periodo) FROM seguros_acciones) GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

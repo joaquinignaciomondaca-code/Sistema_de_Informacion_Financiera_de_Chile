@@ -103,9 +103,8 @@ class CorridaTest(unittest.TestCase):
             self.assertTrue(ctl["periodos"]["2026-06"]["sha256_parquet"])
             for t in ("balance", "resultados"):
                 fs = pq.read_table(cfg.docs / f"fi_{t}/2026-06.parquet").to_pylist()
-                self.assertTrue(
-                    all(f["sha256_archivo"] == registro()["sha256"] for f in fs)
-                )
+                # La huella del XML ya no viaja en la fila publicada.
+                self.assertFalse(any("sha256_archivo" in f for f in fs))
                 self.assertTrue(all(type(f["valor_miles_mf"]) is int for f in fs))
             man = json.loads((cfg.raiz / "data_manifest.json").read_text())
             self.assertEqual(man["total_records"], 17 + 84 + 120)

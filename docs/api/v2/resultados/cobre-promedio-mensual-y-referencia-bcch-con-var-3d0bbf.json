@@ -1,0 +1,165 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "cobre-promedio-mensual-y-referencia-bcch-con-var-3d0bbf",
+ "titulo": "Cobre: promedio mensual y referencia BCCh con variación anual",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "periodo",
+  "promedio_diario_usd_lb",
+  "referencia_mensual_usd_lb",
+  "referencia_var_anual_pct"
+ ],
+ "filas": 24,
+ "truncado": false,
+ "datos": [
+  [
+   "2024-11",
+   4.1323,
+   4.11626039861745,
+   11.02
+  ],
+  [
+   "2024-12",
+   4.0513,
+   4.04583556349847,
+   6.26
+  ],
+  [
+   "2025-01",
+   4.07,
+   4.07216209596212,
+   7.59
+  ],
+  [
+   "2025-02",
+   4.2148,
+   4.23168165035244,
+   12.25
+  ],
+  [
+   "2025-03",
+   4.4013,
+   4.41394435322187,
+   12.16
+  ],
+  [
+   "2025-04",
+   4.1795,
+   4.16948499061063,
+   -3.06
+  ],
+  [
+   "2025-05",
+   4.3188,
+   4.32264063648157,
+   -5.92
+  ],
+  [
+   "2025-06",
+   4.4404,
+   4.46051473723363,
+   1.99
+  ],
+  [
+   "2025-07",
+   4.4552,
+   4.43533125890176,
+   4.09
+  ],
+  [
+   "2025-08",
+   4.3792,
+   4.37528916547977,
+   7.61
+  ],
+  [
+   "2025-09",
+   4.5141,
+   4.51448775752737,
+   7.54
+  ],
+  [
+   "2025-10",
+   4.839,
+   4.85163883118179,
+   12.13
+  ],
+  [
+   "2025-11",
+   4.9008,
+   4.89915722437427,
+   19.02
+  ],
+  [
+   "2025-12",
+   5.2824,
+   5.35411544846731,
+   32.34
+  ],
+  [
+   "2026-01",
+   5.8615,
+   5.93702316045396,
+   45.8
+  ],
+  [
+   "2026-02",
+   5.8761,
+   5.88211573876677,
+   39.0
+  ],
+  [
+   "2026-03",
+   5.7269,
+   5.66944870317787,
+   28.44
+  ],
+  [
+   "2026-04",
+   5.8291,
+   5.84743856084042,
+   40.24
+  ],
+  [
+   "2026-05",
+   6.1098,
+   6.12673839482541,
+   41.74
+  ],
+  [
+   "2026-06",
+   6.166,
+   6.15721530241039,
+   38.04
+  ],
+  [
+   "2026-07",
+   6.1209,
+   6.13492121091163,
+   38.32
+  ],
+  [
+   "2026-08",
+   6.4744,
+   6.51060046629351,
+   48.8
+  ],
+  [
+   "2026-09",
+   6.5637,
+   6.56956300859105,
+   45.52
+  ],
+  [
+   "2026-10",
+   6.5774,
+   null,
+   null
+  ]
+ ],
+ "sql": "SELECT periodo, promedio_diario_usd_lb, referencia_mensual_usd_lb, round((referencia_mensual_usd_lb / lag(referencia_mensual_usd_lb, 12) OVER (ORDER BY periodo) - 1) * 100, 2) AS referencia_var_anual_pct FROM (SELECT periodo, round(avg(cobre_refinado_usd_por_libra), 4) AS promedio_diario_usd_lb, max(cobre_referencial_mensual_usd_por_libra) AS referencia_mensual_usd_lb FROM macro_cobre GROUP BY periodo) ORDER BY periodo DESC LIMIT 24;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

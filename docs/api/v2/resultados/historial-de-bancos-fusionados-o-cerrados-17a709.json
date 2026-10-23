@@ -1,0 +1,120 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "historial-de-bancos-fusionados-o-cerrados-17a709",
+ "titulo": "Historial de bancos fusionados o cerrados",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "codigo_institucion",
+  "rut_completo",
+  "nombre_fantasia",
+  "razon_social",
+  "estado"
+ ],
+ "filas": 14,
+ "truncado": false,
+ "datos": [
+  [
+   "017",
+   "97003000-K",
+   "BANCO DO BRASIL",
+   "Banco do Brasil S.A.",
+   "Cerrado"
+  ],
+  [
+   "027",
+   "97022000-3",
+   "CORPBANCA",
+   "CorpBanca",
+   "Fusionado"
+  ],
+  [
+   "043",
+   "59002030-3",
+   "BANCO NACION ARGENTINA",
+   "Banco de la Nacion Argentina",
+   "Cerrado"
+  ],
+  [
+   "045",
+   "59002220-9",
+   "MUFG BANK",
+   "The Bank of Tokyo-Mitsubishi UFJ Ltd.",
+   "Cerrado"
+  ],
+  [
+   "046",
+   "97919000-K",
+   "RBS CHILE",
+   "The Royal Bank of Scotland (Chile)",
+   "Cerrado"
+  ],
+  [
+   "049",
+   "97053000-2",
+   "BANCO SECURITY",
+   "Banco Security",
+   "Fusionado"
+  ],
+  [
+   "052",
+   "96929050-2",
+   "DEUTSCHE BANK",
+   "Deutsche Bank (Chile)",
+   "Cerrado"
+  ],
+  [
+   "054",
+   "97949000-3",
+   "RABOBANK CHILE",
+   "Rabobank Chile",
+   "Cerrado"
+  ],
+  [
+   "056",
+   "97952000-K",
+   "BANCO PENTA",
+   "Banco Penta",
+   "Cerrado"
+  ],
+  [
+   "057",
+   "99565970-0",
+   "BANCO PARIS",
+   "Banco Paris",
+   "Cerrado"
+  ],
+  [
+   "058",
+   "59141000-8",
+   "DNB NOR BANK",
+   "DnB NOR Bank ASA",
+   "Cerrado"
+  ],
+  [
+   "504",
+   "97032000-8",
+   "BBVA CHILE",
+   "Banco Bilbao Vizcaya Argentaria (BBVA)",
+   "Fusionado"
+  ],
+  [
+   "507",
+   "97051000-1",
+   "BANCO DEL DESARROLLO",
+   "Banco del Desarrollo",
+   "Fusionado"
+  ],
+  [
+   "927",
+   "97022927-2",
+   "CORPBANCA COLOMBIA",
+   "CorpBanca Colombia",
+   "Fusionado"
+  ]
+ ],
+ "sql": "SELECT codigo_institucion, rut_dv AS rut_completo, nombre_fantasia, razon_social, estado FROM bancos_lista_entidades WHERE estado IN ('Fusionado', 'Cerrado') ORDER BY estado, nombre_fantasia;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

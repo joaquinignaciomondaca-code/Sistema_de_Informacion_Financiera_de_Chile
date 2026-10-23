@@ -32,12 +32,12 @@ class Contrato(unittest.TestCase):
         cls.sif.cerrar()
 
     def test_lee_el_catalogo_publicado(self):
-        catalogo = json.loads((DOCS / "api" / "v1" / "catalog.json").read_text(encoding="utf-8"))
+        catalogo = json.loads((DOCS / "api" / "v2" / "catalog.json").read_text(encoding="utf-8"))
         self.assertEqual(len(self.sif.tablas()), catalogo["totales"]["objetos"])
         self.assertEqual(len(self.sif.tablas()), 90)
 
     def test_esquema_coincide_con_el_archivo(self):
-        doc = json.loads((DOCS / "api" / "v1" / "schema" / "bancos_balance.json").read_text(encoding="utf-8"))
+        doc = json.loads((DOCS / "api" / "v2" / "schema" / "bancos_balance.json").read_text(encoding="utf-8"))
         leido = self.sif.esquema("bancos_balance")
         self.assertEqual([c["nombre"] for c in leido["columnas"]],
                          [c["nombre"] for c in doc["columnas"]])
@@ -55,7 +55,11 @@ class Contrato(unittest.TestCase):
 
     def test_las_consultas_publicadas_corren(self):
         consultas = self.sif.consultas()
-        self.assertEqual(len(consultas), 156)
+        # El catálogo crece con el sitio; lo que no puede pasar es que falte una
+        # consulta o que el número publicado en el gesto no cuadre con él.
+        publicado = json.loads((DOCS / "api" / "v2" / "queries.json").read_text(encoding="utf-8"))
+        self.assertEqual(len(consultas), publicado["total"])
+        self.assertGreaterEqual(len(consultas), 156)
         primera = consultas[0]
         filas = self.sif.consulta(primera["id"], limite=2).fetchall()
         self.assertLessEqual(len(filas), 2)

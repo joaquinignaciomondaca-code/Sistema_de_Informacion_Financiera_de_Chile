@@ -1,0 +1,50 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "ingresos-y-utilidad-por-ccaf-ejercicio-2025-mm-f6bd8a",
+ "titulo": "Ingresos y utilidad por CCAF, ejercicio 2025 (MM$)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "razon_social",
+  "tipo_balance",
+  "moneda",
+  "ingresos_mm",
+  "ganancia_mm"
+ ],
+ "filas": 4,
+ "truncado": false,
+ "datos": [
+  [
+   "CAJA DE COMPENSACION DE ASIGNACION FAMILIAR 18 DE SEPTIEMBRE",
+   "individual",
+   "CLP",
+   13807.4,
+   10079.4
+  ],
+  [
+   "CAJA DE COMPENSACION DE ASIGNACION FAMILIAR DE LOS ANDES",
+   "consolidado",
+   "CLP",
+   79421.0,
+   112317.3
+  ],
+  [
+   "CAJA DE COMPENSACION DE ASIGNACION FAMILIAR LA ARAUCANA",
+   "consolidado",
+   "CLP",
+   4056.8,
+   15326.0
+  ],
+  [
+   "CAJA DE COMPENSACION DE ASIGNACION FAMILIAR LOS HEROES",
+   "consolidado",
+   "CLP",
+   48889.9,
+   13055.5
+  ]
+ ],
+ "sql": "SELECT razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Ingresos de actividades ordinarias') / 1e6, 1) AS ingresos_mm, round(max(valor) FILTER (WHERE cuenta = 'Ganancia (pérdida)') / 1e6, 1) AS ganancia_mm FROM ccaf_resultados WHERE periodo = '2025-12' AND estado_financiero IN ('ERFG', 'ERNG') AND repeticion = 1 GROUP BY ALL ORDER BY ganancia_mm DESC NULLS LAST;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

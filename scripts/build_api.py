@@ -25,7 +25,7 @@ Reglas:
     licencia que no esté comprobada: el estado y el texto salen de
     `pipelines/api/fuentes.py`, que recoge el documento vigente de cada fuente.
 
-Genera `docs/api/v1/datapackage.json`.
+Genera `docs/api/v2/datapackage.json`.
 
 Uso:
     python3 scripts/build_api.py                 # escribe el descriptor
@@ -44,14 +44,14 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parent.parent
 DOCS = RAIZ / "docs"
 API = DOCS / "api"
-V1 = API / "v1"
+V2 = API / "v2"
 sys.path.insert(0, str(RAIZ / "scripts"))
 
 import audit_consultas_sugeridas as ac  # noqa: E402
 from pipelines.api import fuentes as F  # noqa: E402
 from pipelines.api import vistas as V  # noqa: E402
 
-DESTINO = V1 / "datapackage.json"
+DESTINO = V2 / "datapackage.json"
 ESQUEMAS = API / "esquemas.json"
 CLAVES = API / "claves.csv"
 RECONCILIACION = API / "reconciliacion.csv"
@@ -61,8 +61,10 @@ RECONCILIACION = API / "reconciliacion.csv"
 SITIO = "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/"
 REPO = "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile"
 
-API_VERSION = "v1"
-VERSION_CONTRATO = "1.0.0"  # semver del descriptor; la regla está en la ruta (0.3)
+API_VERSION = "v2"
+# semver del descriptor; la regla está en la ruta (0.3). Sube a 2.0.0 por el recorte de
+# columnas publicado en `pipelines/esquema_publicado.py`: quitar columnas rompe clientes.
+VERSION_CONTRATO = "2.0.0"
 
 TIPOS = {
     "VARCHAR": "string",
@@ -271,7 +273,7 @@ def construir() -> dict:
                 "reconciliacion": SITIO + "api/reconciliacion.csv",
                 "esquemas": SITIO + "api/esquemas.json",
                 "claves": SITIO + "api/claves.csv",
-                "datapackage": SITIO + "api/v1/datapackage.json",
+                "datapackage": SITIO + "api/v2/datapackage.json",
                 "licencia": _licencia(),
             },
             "objetos_sin_archivo": esquemas["resumen"]["sin_esquema"],
@@ -319,7 +321,7 @@ def main() -> int:
             return 1
         actual = json.loads(DESTINO.read_text(encoding="utf-8"))
         if comparable(actual) != comparable(doc):
-            print("ERROR: docs/api/v1/datapackage.json está desactualizado; ejecuta scripts/build_api.py")
+            print("ERROR: docs/api/v2/datapackage.json está desactualizado; ejecuta scripts/build_api.py")
             antes = {r["name"]: r for r in actual["resources"]}
             ahora = {r["name"]: r for r in recursos}
             for nombre in sorted(set(antes) | set(ahora)):
@@ -335,7 +337,7 @@ def main() -> int:
         print("DATAPACKAGE: descriptor al día")
         return 0
 
-    V1.mkdir(parents=True, exist_ok=True)
+    V2.mkdir(parents=True, exist_ok=True)
     DESTINO.write_text(json.dumps(doc, ensure_ascii=False, indent=1, sort_keys=True) + "\n", encoding="utf-8")
     print(f"Escrito en {DESTINO.relative_to(RAIZ)}")
     return 0

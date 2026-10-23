@@ -1,0 +1,140 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "uf-valor-de-cierre-de-cada-mes-y-variacion-mensu-73d97c",
+ "titulo": "UF: valor de cierre de cada mes y variación mensual",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "periodo",
+  "uf_cierre_clp",
+  "uf_var_mensual_pct"
+ ],
+ "filas": 24,
+ "truncado": false,
+ "datos": [
+  [
+   "2024-11",
+   38247.92,
+   0.73
+  ],
+  [
+   "2024-12",
+   38416.69,
+   0.44
+  ],
+  [
+   "2025-01",
+   38384.41,
+   -0.08
+  ],
+  [
+   "2025-02",
+   38647.94,
+   0.69
+  ],
+  [
+   "2025-03",
+   38894.11,
+   0.64
+  ],
+  [
+   "2025-04",
+   39075.41,
+   0.47
+  ],
+  [
+   "2025-05",
+   39189.45,
+   0.29
+  ],
+  [
+   "2025-06",
+   39267.07,
+   0.2
+  ],
+  [
+   "2025-07",
+   39179.01,
+   -0.22
+  ],
+  [
+   "2025-08",
+   39383.07,
+   0.52
+  ],
+  [
+   "2025-09",
+   39485.65,
+   0.26
+  ],
+  [
+   "2025-10",
+   39597.67,
+   0.28
+  ],
+  [
+   "2025-11",
+   39643.59,
+   0.12
+  ],
+  [
+   "2025-12",
+   39727.96,
+   0.21
+  ],
+  [
+   "2026-01",
+   39706.07,
+   -0.06
+  ],
+  [
+   "2026-02",
+   39790.63,
+   0.21
+  ],
+  [
+   "2026-03",
+   39841.72,
+   0.13
+  ],
+  [
+   "2026-04",
+   40120.2,
+   0.7
+  ],
+  [
+   "2026-05",
+   40610.69,
+   1.22
+  ],
+  [
+   "2026-06",
+   40820.31,
+   0.52
+  ],
+  [
+   "2026-07",
+   40844.79,
+   0.06
+  ],
+  [
+   "2026-08",
+   40873.77,
+   0.07
+  ],
+  [
+   "2026-09",
+   41057.2,
+   0.45
+  ],
+  [
+   "2026-10",
+   41199.85,
+   0.35
+  ]
+ ],
+ "sql": "SELECT periodo, uf_cierre_clp, round((uf_cierre_clp / lag(uf_cierre_clp) OVER (ORDER BY periodo) - 1) * 100, 2) AS uf_var_mensual_pct FROM (SELECT periodo, arg_max(uf_valor_clp, fecha) AS uf_cierre_clp FROM macro_uf GROUP BY periodo) ORDER BY periodo DESC LIMIT 24;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

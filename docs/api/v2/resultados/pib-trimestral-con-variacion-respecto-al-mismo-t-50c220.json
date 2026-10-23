@@ -1,0 +1,120 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "pib-trimestral-con-variacion-respecto-al-mismo-t-50c220",
+ "titulo": "PIB trimestral con variación respecto al mismo trimestre del año anterior",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "periodo",
+  "pib_encadenado_miles_mm_clp",
+  "pib_var_anual_pct"
+ ],
+ "filas": 20,
+ "truncado": false,
+ "datos": [
+  [
+   "2021-07",
+   49073.008855048,
+   16.24
+  ],
+  [
+   "2021-10",
+   54330.435499408,
+   11.67
+  ],
+  [
+   "2022-01",
+   49984.222355769,
+   5.96
+  ],
+  [
+   "2022-04",
+   50978.12278253,
+   4.76
+  ],
+  [
+   "2022-07",
+   49140.099184588,
+   0.14
+  ],
+  [
+   "2022-10",
+   53247.496366149,
+   -1.99
+  ],
+  [
+   "2023-01",
+   49960.565598692,
+   -0.05
+  ],
+  [
+   "2023-04",
+   50794.447589188,
+   -0.36
+  ],
+  [
+   "2023-07",
+   49817.537792389,
+   1.38
+  ],
+  [
+   "2023-10",
+   54154.119302239,
+   1.7
+  ],
+  [
+   "2024-01",
+   51699.146361444,
+   3.48
+  ],
+  [
+   "2024-04",
+   51390.6737201,
+   1.17
+  ],
+  [
+   "2024-07",
+   51006.888611019,
+   2.39
+  ],
+  [
+   "2024-10",
+   56372.803406628,
+   4.1
+  ],
+  [
+   "2025-01",
+   53212.50642563,
+   2.93
+  ],
+  [
+   "2025-04",
+   53309.877468848,
+   3.73
+  ],
+  [
+   "2025-07",
+   51876.344987102,
+   1.7
+  ],
+  [
+   "2025-10",
+   57246.764686601,
+   1.55
+  ],
+  [
+   "2026-01",
+   53040.1206256171,
+   -0.32
+  ],
+  [
+   "2026-04",
+   53210.5539973709,
+   -0.19
+  ]
+ ],
+ "sql": "SELECT periodo, pib_encadenado_miles_mm_clp, round((pib_encadenado_miles_mm_clp / lag(pib_encadenado_miles_mm_clp, 4) OVER (ORDER BY periodo) - 1) * 100, 2) AS pib_var_anual_pct FROM macro_pib_trimestral ORDER BY periodo DESC LIMIT 20;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

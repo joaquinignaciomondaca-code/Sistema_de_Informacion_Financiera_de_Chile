@@ -1,0 +1,80 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "filiales-y-coligadas-metodo-de-la-participacion-24e071",
+ "titulo": "Filiales y coligadas (método de la participación)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "periodo",
+  "fondos",
+  "inversiones"
+ ],
+ "filas": 12,
+ "truncado": false,
+ "datos": [
+  [
+   "2023-09",
+   180,
+   398
+  ],
+  [
+   "2023-12",
+   187,
+   410
+  ],
+  [
+   "2024-03",
+   191,
+   419
+  ],
+  [
+   "2024-06",
+   198,
+   428
+  ],
+  [
+   "2024-09",
+   205,
+   446
+  ],
+  [
+   "2024-12",
+   203,
+   448
+  ],
+  [
+   "2025-03",
+   208,
+   450
+  ],
+  [
+   "2025-06",
+   207,
+   454
+  ],
+  [
+   "2025-09",
+   208,
+   463
+  ],
+  [
+   "2025-12",
+   208,
+   452
+  ],
+  [
+   "2026-03",
+   211,
+   461
+  ],
+  [
+   "2026-06",
+   214,
+   460
+  ]
+ ],
+ "sql": "SELECT periodo, count(DISTINCT run_fondo) AS fondos, count(*) AS inversiones FROM fi_metodo_participacion GROUP BY periodo ORDER BY periodo DESC LIMIT 12;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

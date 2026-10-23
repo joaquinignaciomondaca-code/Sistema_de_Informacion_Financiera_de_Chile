@@ -5,13 +5,13 @@ El Data Package de la 1a dice «estos 86 conjuntos existen y así se leen». Est
 paso añade lo que un cliente necesita para **descubrir y consultar** sin abrir
 el repo:
 
-    docs/api/v1/catalog.json            el índice: 90 objetos con estado, tamaño y clave
-    docs/api/v1/schema/{id}.json        columnas y tipos de cada objeto
-    docs/api/v1/partitions/{id}.json    qué archivos lo componen, con su hash
-    docs/api/v1/queries.json            las 156 consultas de la web, con id estable
-    docs/api/v1/openapi.json            sólo las rutas GET que existen de verdad
-    docs/api/v1/views.sql               las 109 vistas (90 objetos + 19 alias)
-    docs/api/v1/resultados/{id}.json    lo que devuelve cada consulta (fase 3); lo
+    docs/api/v2/catalog.json            el índice: 90 objetos con estado, tamaño y clave
+    docs/api/v2/schema/{id}.json        columnas y tipos de cada objeto
+    docs/api/v2/partitions/{id}.json    qué archivos lo componen, con su hash
+    docs/api/v2/queries.json            las 156 consultas de la web, con id estable
+    docs/api/v2/openapi.json            sólo las rutas GET que existen de verdad
+    docs/api/v2/views.sql               las 109 vistas (90 objetos + 19 alias)
+    docs/api/v2/resultados/{id}.json    lo que devuelve cada consulta (fase 3); lo
                                         escribe build_resultados.py, que corre después
 
 Todo se deriva de lo ya verificado —esquemas, reconciliación, claves y
@@ -39,7 +39,7 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parent.parent
 DOCS = RAIZ / "docs"
 API = DOCS / "api"
-V1 = API / "v1"
+V2 = API / "v2"
 sys.path.insert(0, str(RAIZ))
 sys.path.insert(0, str(RAIZ / "scripts"))
 
@@ -201,8 +201,8 @@ def construir_objetos(datos: dict, alias: dict[str, list[str]], base: str) -> tu
             "adaptacion": atribucion["adaptacion"],
             "nota_adaptacion": atribucion.get("nota_adaptacion") or None,
             "primaryKey": pk,
-            "esquema": f"{base.rstrip('/')}/api/v1/schema/{nombre}.json",
-            "particiones_url": f"{base.rstrip('/')}/api/v1/partitions/{nombre}.json",
+            "esquema": f"{base.rstrip('/')}/api/v2/schema/{nombre}.json",
+            "particiones_url": f"{base.rstrip('/')}/api/v2/partitions/{nombre}.json",
         })
 
     return catalogo, esquemas_por_id, particiones_por_id, hashes
@@ -261,39 +261,39 @@ def construir_openapi(catalogo: list[dict], n_consultas: int, base: str,
                         "content": {"application/json": {"schema": {"type": "object"}}}}}
 
     rutas = {
-        "/api/v1/datapackage.json": {
+        "/api/v2/datapackage.json": {
             "get": {"operationId": "getDatapackage", "summary": "Data Package con los 86 conjuntos",
                     "tags": ["contrato"], "responses": json_resp("Descriptor Frictionless")}},
-        "/api/v1/catalog.json": {
+        "/api/v2/catalog.json": {
             "get": {"operationId": "getCatalogo", "summary": "Índice de los 90 objetos del contrato",
                     "tags": ["contrato"], "responses": json_resp("Catálogo")}},
-        "/api/v1/schema/{id}.json": {
+        "/api/v2/schema/{id}.json": {
             "get": {"operationId": "getEsquema", "summary": "Columnas y tipos de un objeto",
                     "tags": ["contrato"],
                     "parameters": [{"name": "id", "in": "path", "required": True,
                                     "schema": {"type": "string", "enum": [o["id"] for o in catalogo]}}],
                     "responses": json_resp("Esquema del objeto")}},
-        "/api/v1/partitions/{id}.json": {
+        "/api/v2/partitions/{id}.json": {
             "get": {"operationId": "getParticiones", "summary": "Archivos que componen un objeto",
                     "tags": ["contrato"],
                     "parameters": [{"name": "id", "in": "path", "required": True,
                                     "schema": {"type": "string", "enum": [o["id"] for o in catalogo]}}],
                     "responses": json_resp("Particiones y sus hashes")}},
-        "/api/v1/queries.json": {
+        "/api/v2/queries.json": {
             "get": {"operationId": "getConsultas", "summary": f"Las {n_consultas} consultas de la web, con id estable",
                     "tags": ["consultas"], "responses": json_resp("Consultas")}},
-        "/api/v1/resultados/index.json": {
+        "/api/v2/resultados/index.json": {
             "get": {"operationId": "getResultadosIndice",
                     "summary": f"El resultado ya calculado de las {n_consultas} consultas",
                     "tags": ["consultas"], "responses": json_resp("Índice de resultados")}},
-        "/api/v1/resultados/{id}.json": {
+        "/api/v2/resultados/{id}.json": {
             "get": {"operationId": "getResultado",
                     "summary": "Columnas, filas y el SQL de una consulta publicada",
                     "tags": ["consultas"],
                     "parameters": [{"name": "id", "in": "path", "required": True,
                                     "schema": {"type": "string", "enum": ids_consultas or []}}],
                     "responses": json_resp("Resultado de la consulta")}},
-        "/api/v1/views.sql": {
+        "/api/v2/views.sql": {
             "get": {"operationId": "getVistas", "summary": "DDL de las 109 vistas (90 objetos + 19 alias)",
                     "tags": ["contrato"],
                     "responses": {"200": {"description": "SQL", "content": {"text/plain": {"schema": {"type": "string"}}}}}}},
@@ -322,8 +322,8 @@ def construir_openapi(catalogo: list[dict], n_consultas: int, base: str,
             "description": (
                 "API de solo lectura sobre archivos estáticos. Las rutas listadas son las que "
                 "existen: no hay endpoint de consulta ad-hoc, ni autenticación, ni SLA. "
-                "Las 156 consultas del catálogo sí vienen con su resultado ya calculado, "
-                "en /api/v1/resultados/."
+                f"Las {n_consultas} consultas del catálogo sí vienen con su resultado ya calculado, "
+                "en /api/v2/resultados/."
             ),
             "license": {"name": "Datos: uso condicionado por la fuente · Código: MIT",
                         "url": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"},
@@ -408,7 +408,7 @@ def main() -> int:
     doc_catalogo = {
         "contrato": "sif-api/catalogo",
         "version": VERSION,
-        "api_version": "v1",
+        "api_version": "v2",
         "data_release": data_release,
         "generado": date.today().isoformat(),
         "como_se_genera": "python3 scripts/build_contrato.py",
@@ -424,13 +424,13 @@ def main() -> int:
             "bytes": sum(o["bytes"] for o in catalogo),
         },
         "rutas": {
-            "datapackage": f"{args.base}/api/v1/datapackage.json",
-            "resultados": f"{args.base}/api/v1/resultados/index.json",
-            "esquema": f"{args.base}/api/v1/schema/{{id}}.json",
-            "particiones": f"{args.base}/api/v1/partitions/{{id}}.json",
-            "consultas": f"{args.base}/api/v1/queries.json",
-            "vistas": f"{args.base}/api/v1/views.sql",
-            "openapi": f"{args.base}/api/v1/openapi.json",
+            "datapackage": f"{args.base}/api/v2/datapackage.json",
+            "resultados": f"{args.base}/api/v2/resultados/index.json",
+            "esquema": f"{args.base}/api/v2/schema/{{id}}.json",
+            "particiones": f"{args.base}/api/v2/partitions/{{id}}.json",
+            "consultas": f"{args.base}/api/v2/queries.json",
+            "vistas": f"{args.base}/api/v2/views.sql",
+            "openapi": f"{args.base}/api/v2/openapi.json",
         },
         "objetos": catalogo,
     }
@@ -443,7 +443,7 @@ def main() -> int:
             "openapi.json": openapi,
         }
         for nombre, doc in esperados.items():
-            ruta = V1 / nombre
+            ruta = V2 / nombre
             if not ruta.exists():
                 problemas.append(f"falta {ruta.relative_to(RAIZ)}")
                 continue
@@ -451,11 +451,11 @@ def main() -> int:
             if comparable(actual) != comparable(doc):
                 problemas.append(f"{ruta.relative_to(RAIZ)} está desactualizado")
         for nombre in [o["id"] for o in catalogo]:
-            if not (V1 / "schema" / f"{nombre}.json").exists():
+            if not (V2 / "schema" / f"{nombre}.json").exists():
                 problemas.append(f"falta schema/{nombre}.json")
-            if not (V1 / "partitions" / f"{nombre}.json").exists():
+            if not (V2 / "partitions" / f"{nombre}.json").exists():
                 problemas.append(f"falta partitions/{nombre}.json")
-        if not (V1 / "views.sql").exists():
+        if not (V2 / "views.sql").exists():
             problemas.append("falta views.sql")
         print(f"Objetos: {len(catalogo)} · esquemas: {len(esquemas)} · particiones: {len(particiones)}")
         print(f"Consultas: {consultas['total']} · rutas OpenAPI: {len(openapi['paths'])}")
@@ -467,14 +467,14 @@ def main() -> int:
         print("CONTRATO: al día")
         return 0
 
-    escribir_json(V1 / "catalog.json", doc_catalogo)
-    escribir_json(V1 / "queries.json", consultas)
-    escribir_json(V1 / "openapi.json", openapi)
+    escribir_json(V2 / "catalog.json", doc_catalogo)
+    escribir_json(V2 / "queries.json", consultas)
+    escribir_json(V2 / "openapi.json", openapi)
     for nombre, doc in esquemas.items():
-        escribir_json(V1 / "schema" / f"{nombre}.json", doc)
+        escribir_json(V2 / "schema" / f"{nombre}.json", doc)
     for nombre, doc in particiones.items():
-        escribir_json(V1 / "partitions" / f"{nombre}.json", doc)
-    (V1 / "views.sql").write_text(vistas_sql, encoding="utf-8")
+        escribir_json(V2 / "partitions" / f"{nombre}.json", doc)
+    (V2 / "views.sql").write_text(vistas_sql, encoding="utf-8")
 
     total = doc_catalogo["totales"]
     print(f"Objetos: {total['objetos']} ({total['con_datos']} con datos · {total['vacios']} vacíos · "
@@ -483,7 +483,7 @@ def main() -> int:
     print(f"Esquemas: {len(esquemas)} archivos · particiones: {len(particiones)} archivos · "
           f"{sum(len(p['particiones']) for p in particiones.values())} archivos listados")
     print(f"Filas: {total['filas']:,}".replace(",", ".") + f" · data_release: {data_release}")
-    print(f"Escrito en {V1.relative_to(RAIZ)}/")
+    print(f"Escrito en {V2.relative_to(RAIZ)}/")
     return 0
 
 

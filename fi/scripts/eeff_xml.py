@@ -795,7 +795,6 @@ COLUMNAS = (
     "valor_miles_mf",
     "fuente_archivo",
     "enviado_cmf",
-    "sha256_archivo",
     "cotejo_ficha",
 )
 
@@ -837,7 +836,6 @@ def filas(reg: dict) -> dict[str, list[dict]]:
                         "valor_miles_mf": cuentas[codigo],
                         "fuente_archivo": reg["archivo"],
                         "enviado_cmf": reg.get("enviado"),
-                        "sha256_archivo": reg["sha256"],
                         "cotejo_ficha": "coincide"
                         if reg.get("cotejo", {})
                         .get("cuentas", {})

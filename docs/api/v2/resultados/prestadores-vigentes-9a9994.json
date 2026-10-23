@@ -1,0 +1,111 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "prestadores-vigentes-9a9994",
+ "titulo": "Prestadores Vigentes",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "rut_completo",
+  "razon_social",
+  "tipo_persona",
+  "servicios_acreditados_total"
+ ],
+ "filas": 15,
+ "truncado": false,
+ "datos": [
+  [
+   "76.063.084-5",
+   "B & A GESTION DE ACTIVOS SPA",
+   "Persona Jurídica",
+   2
+  ],
+  [
+   "76.245.696-6",
+   "AAM S.A. ADMINISTRADORA DE ACTIVOS",
+   "Persona Jurídica",
+   1
+  ],
+  [
+   "76.329.243-6",
+   "LATIN TRUST SPA",
+   "Persona Jurídica",
+   2
+  ],
+  [
+   "76.367.483-5",
+   "PATRIMORE S.A.",
+   "Persona Jurídica",
+   2
+  ],
+  [
+   "76.517.731-6",
+   "ABAQUS SPA",
+   "Persona Jurídica",
+   2
+  ],
+  [
+   "76.595.426-6",
+   "ASESORIAS E INVERSIONES PARTNERS ADVISERS SPA",
+   "Persona Jurídica",
+   2
+  ],
+  [
+   "76.934.640-6",
+   "ADDWISE S.A.",
+   "Persona Jurídica",
+   1
+  ],
+  [
+   "76.969.638-5",
+   "RACIONAL SPA",
+   "Persona Jurídica",
+   2
+  ],
+  [
+   "77.180.644-9",
+   "BITSAFVE SPA",
+   "Persona Jurídica",
+   2
+  ],
+  [
+   "77.680.942-K",
+   "ACTIVA INVERSION SPA",
+   "Persona Jurídica",
+   1
+  ],
+  [
+   "77.700.687-8",
+   "AD CAPITAL ASESORIAS DE INVERSION E INMOBILIARIAS LIMITADA",
+   "Persona Jurídica",
+   1
+  ],
+  [
+   "77.818.696-9",
+   "XIM ASESORIAS SPA",
+   "Persona Jurídica",
+   2
+  ],
+  [
+   "77.927.438-1",
+   "GREY CAPITAL ASESORES DE INVERSIÓN SPA",
+   "Persona Jurídica",
+   2
+  ],
+  [
+   "78.066.394-4",
+   "ASESORES DE INVERSION VALCAPITAL LIMITADA",
+   "Persona Jurídica",
+   2
+  ],
+  [
+   "78.076.117-2",
+   "125 GLOBAL INVESTMENTS SPA",
+   "Persona Jurídica",
+   1
+  ]
+ ],
+ "sql": "SELECT rut_completo, razon_social, tipo_persona, servicios_acreditados_total FROM fintech_rpsf_lista_entidades WHERE estado_vigencia = 'Vigente' ORDER BY servicios_acreditados_total DESC, razon_social LIMIT 15;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

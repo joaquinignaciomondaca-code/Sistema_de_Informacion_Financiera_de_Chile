@@ -487,10 +487,10 @@ const EXPLORER_TREE = [
     type: "group",
     label: "BANCA Y ESTADOS FINANCIEROS CMF",
     badges: [
-      { type: "entities", text: "40 instituciones", title: "Catálogo histórico de instituciones bancarias; requiere validación independiente" },
+      { type: "entities", text: "41 instituciones · 20 vigentes", title: "Catálogo cotejado con el registro de bancos de la CMF: 30 instituciones identificadas por RUT, 7 agregados sectoriales y 4 filiales declaradas como excepción" },
       { type: "data", text: "Mensual · 2022–2026", title: "Balance (B1/B2) y resultados (R1) mensuales de la CMF. Cada periodo se incorpora solo si el gate de validación CMF pasa" }
     ],
-    status: "por_auditar",
+    status: "active",
     open: true,
     children: [
       {
@@ -504,14 +504,15 @@ const EXPLORER_TREE = [
             id: "cat_bancos_lista_entidades",
             type: "circular",
             label: "Lista de Entidades",
-            badge: "40 códigos · Falta validar",
+            badge: "41 códigos · Cotejado con CMF",
             badgeType: "entities",
-            status: "por_auditar",
+            status: "active",
             sector: "bancos",
             open: false,
             chips: [
-              { label: "Bancos Comerciales Activos", query: "SELECT codigo_institucion, rut, nombre_fantasia, tipo_licencia, estado FROM bancos_lista_entidades WHERE estado = 'Activo' ORDER BY codigo_institucion;" },
-              { label: "Historial de Bancos Fusionados / Cerrados", query: "SELECT codigo_institucion, nombre_fantasia, razon_social, estado FROM bancos_lista_entidades WHERE estado != 'Activo' ORDER BY estado, nombre_fantasia;" }
+              { label: "Bancos vigentes con RUT", query: "SELECT codigo_institucion, rut_dv AS rut_completo, nombre_fantasia, razon_social, tipo_licencia, estado FROM bancos_lista_entidades WHERE estado = 'Activo' ORDER BY codigo_institucion;" },
+              { label: "Historial de bancos fusionados o cerrados", query: "SELECT codigo_institucion, rut_dv AS rut_completo, nombre_fantasia, razon_social, estado FROM bancos_lista_entidades WHERE estado IN ('Fusionado', 'Cerrado') ORDER BY estado, nombre_fantasia;" },
+              { label: "Agregados sectoriales de la CMF", query: "SELECT codigo_institucion, razon_social, tipo_licencia, estado FROM bancos_lista_entidades WHERE tipo_licencia = 'Agregado Sectorial' ORDER BY codigo_institucion;" }
             ],
             tables: [
               { id: "bancos_lista_entidades", name: "bancos.lista_entidades", rows: "Una fila por institución y agregado", file: "outputs/bancos/bancos_maestro.parquet" }
@@ -527,11 +528,12 @@ const EXPLORER_TREE = [
             sector: "bancos",
             open: false,
             chips: [
-              { label: "Muestra de líneas de balance B1/B2 (sin sumar importes)", query: "SELECT periodo, codigo_institucion, nombre_institucion_fuente, familia_archivo_fuente, modelo_cmf, codigo_cuenta, glosa_cuenta, rubro, linea, item, numero_fila_fuente, importes_fuente_raw FROM bancos_balance ORDER BY periodo DESC, codigo_institucion, familia_archivo_fuente, numero_fila_fuente LIMIT 100;" },
+              { label: "Total de activos por banco (último periodo)", query: "SELECT codigo_institucion, razon_social, importe_clp FROM bancos_balance WHERE modelo_cmf = 'MB1' AND codigo_cuenta = '100000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_balance) ORDER BY importe_clp DESC;" },
+              { label: "Muestra de líneas de balance B1/B2", query: "SELECT periodo, codigo_institucion, razon_social, familia_archivo_fuente, codigo_cuenta, glosa_cuenta, tipo_linea, importe_clp, importes_fuente_raw, numero_fila_fuente FROM bancos_balance ORDER BY periodo DESC, codigo_institucion, familia_archivo_fuente, numero_fila_fuente LIMIT 100;" },
               { label: "Cobertura de balance por periodo y modelo", query: "SELECT periodo, familia_archivo_fuente, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_balance GROUP BY periodo, familia_archivo_fuente, modelo_cmf ORDER BY periodo DESC, familia_archivo_fuente;" }
             ],
             tables: [
-              { id: "bancos_balance", name: "bancos.balance", rows: "B1/B2 · importes fuente", file: "", files: ["outputs/bancos/cmf_b1_b2_r1/manifest.json"] }
+              { id: "bancos_balance", name: "bancos.balance", rows: "B1/B2 · importe_clp y desglose por moneda", file: "", files: ["outputs/bancos/cmf_b1_b2_r1/manifest.json"] }
             ]
           },
           {
@@ -544,11 +546,12 @@ const EXPLORER_TREE = [
             sector: "bancos",
             open: false,
             chips: [
-              { label: "Muestra de líneas de resultados R1 (sin sumar importes)", query: "SELECT periodo, codigo_institucion, nombre_institucion_fuente, familia_archivo_fuente, modelo_cmf, codigo_cuenta, glosa_cuenta, rubro, linea, item, numero_fila_fuente, importes_fuente_raw FROM bancos_resultados ORDER BY periodo DESC, codigo_institucion, numero_fila_fuente LIMIT 100;" },
+              { label: "Utilidad del ejercicio por banco (último periodo)", query: "SELECT codigo_institucion, razon_social, importe_clp FROM bancos_resultados WHERE codigo_cuenta = '590000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_resultados) ORDER BY importe_clp DESC;" },
+              { label: "Muestra de líneas de resultados R1", query: "SELECT periodo, codigo_institucion, razon_social, codigo_cuenta, glosa_cuenta, tipo_linea, importe_clp, importes_fuente_raw, numero_fila_fuente FROM bancos_resultados ORDER BY periodo DESC, codigo_institucion, numero_fila_fuente LIMIT 100;" },
               { label: "Cobertura de resultados por periodo", query: "SELECT periodo, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_resultados GROUP BY periodo, modelo_cmf ORDER BY periodo DESC;" }
             ],
             tables: [
-              { id: "bancos_resultados", name: "bancos.resultados", rows: "R1 · importes fuente", file: "", files: ["outputs/bancos/cmf_b1_b2_r1/manifest.json"] }
+              { id: "bancos_resultados", name: "bancos.resultados", rows: "R1 · importe_clp (acumulado del ejercicio)", file: "", files: ["outputs/bancos/cmf_b1_b2_r1/manifest.json"] }
             ]
           }
         ]

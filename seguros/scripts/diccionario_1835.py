@@ -116,13 +116,13 @@ def _unidad(campo: dict) -> str | None:
 PRIVACIDAD_WEB = {
     "bienes_raices": {
         "notas": {
-            "rol": "No se publica: es el identificador tributario del inmueble. Para seguir el mismo "
-                   "bien entre meses se publica property_id, un seudónimo derivado de este campo. Ver "
-                   "pipelines/auto/privacidad.py.",
-            "ubicacion": "No se publica: la dirección exacta permite ubicar la propiedad y a sus "
-                         "ocupantes. Se conservan comuna, ciudad y property_id. (En los archivos "
-                         "anteriores al formato 2024-12 la misma columna se llama «direccion» y tampoco "
-                         "se publica.",
+            "rol": "Columna reservada del formato CMF: viaja vacía porque el rol del inmueble se "
+                   "suprime por privacidad. Para seguir el mismo bien entre meses se publica "
+                   "property_id, un seudónimo derivado de este campo. Ver pipelines/auto/privacidad.py.",
+            "ubicacion": "Columna reservada del formato CMF: viaja vacía porque la dirección exacta "
+                         "permite ubicar la propiedad y a sus ocupantes. Se publican comuna, ciudad y "
+                         "property_id. (En los archivos anteriores al formato 2024-12 la misma columna "
+                         "se llama «direccion» y también viaja vacía.",
         },
         "agrega": {
             "rol": [{

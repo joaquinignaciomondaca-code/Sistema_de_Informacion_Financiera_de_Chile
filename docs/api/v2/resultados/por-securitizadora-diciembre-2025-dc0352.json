@@ -1,0 +1,64 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "por-securitizadora-diciembre-2025-dc0352",
+ "titulo": "Por securitizadora, diciembre 2025",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "securitizadora",
+  "patrimonios",
+  "activos_m_clp",
+  "pasivos_m_clp",
+  "patrimonio_m_clp"
+ ],
+ "filas": 6,
+ "truncado": false,
+ "datos": [
+  [
+   "BCI SECURITIZADORA S.A.",
+   3,
+   402557898,
+   383246778,
+   19311120
+  ],
+  [
+   "EF SECURITIZADORA S.A.",
+   8,
+   632700395,
+   797118207,
+   -164417812
+  ],
+  [
+   "SECURITIZADORA BICE S.A.",
+   3,
+   5274745,
+   46390797,
+   -41116052
+  ],
+  [
+   "SECURITIZADORA SECURITY S.A.",
+   10,
+   288009164,
+   312932099,
+   -24922934
+  ],
+  [
+   "SECURITIZADORA SUDAMERICANA S.A.",
+   1,
+   2289641,
+   22027927,
+   -19738286
+  ],
+  [
+   "VOLCOM SECURITIZADORA S.A.",
+   3,
+   216005783,
+   213676194,
+   2329589
+  ]
+ ],
+ "sql": "SELECT coalesce(s.razon_social, t.nombre_administradora) AS securitizadora, count(*) AS patrimonios, sum(t.activos_m_clp) AS activos_m_clp, sum(t.pasivos_m_clp) AS pasivos_m_clp, sum(t.patrimonio_m_clp) AS patrimonio_m_clp FROM (SELECT periodo, rut_administradora, nombre_administradora, codigo_patrimonio, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Activos') AS activos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria IN ('Total Pasivo Circulante', 'Total Pasivo No Circulante')) AS pasivos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Patrimonio (Excedente Acumulado)') AS patrimonio_m_clp FROM patrimonios_separados_balance GROUP BY ALL) t LEFT JOIN securitizadoras_lista_entidades s ON s.rut = t.rut_administradora WHERE t.periodo = '2025-12' GROUP BY ALL ORDER BY activos_m_clp DESC;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

@@ -1,0 +1,162 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "resultado-solo-del-trimestre-en-pesos-segun-xml--c46755",
+ "titulo": "Resultado SOLO del trimestre en pesos, según XML (MM$)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "periodo",
+  "run_fondo",
+  "nombre_fondo",
+  "resultado_trimestre_mm",
+  "cotejo_ficha"
+ ],
+ "filas": 20,
+ "truncado": false,
+ "datos": [
+  [
+   "2026-06",
+   "10022",
+   "FONDO DE INVERSIÓN OUTDOORS",
+   5980.5,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "10581",
+   "CFIDHSI",
+   5024.2,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "7010",
+   "Fondo Pionero",
+   20434.3,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "7014",
+   "FONDO DE INVERSIÓN RENTAS INMOBILIARIAS",
+   22118.9,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "7099",
+   "Fondo Moneda Renta CLP",
+   24739.9,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "7219",
+   "LV - PATIO RENTA INMOBILIARIA I FONDO DE INVERSION",
+   8185.9,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "7224",
+   "CFIBTGRCA",
+   12997.2,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "9069",
+   "FONDO DE INVERSIÓN ASSET RENTAS RESIDENCIALES",
+   9402.0,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "9082",
+   "FONDO DE INVERSION ACTIVA DEUDA HIPOTECARIA CON SUBSIDIO HABITACIONAL II",
+   11280.9,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "9212",
+   "FONDO MONEDA DEUDA CHILE FONDO DE INVERSION",
+   7566.3,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "9252",
+   "FI BANCHILE DEUDA CHILENA",
+   8938.1,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "9273",
+   "CFIWEG-1",
+   4929.5,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "9289",
+   "CFIFALCFIW",
+   8946.6,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "9332",
+   "FI BANCHILE MARKETPLUS GLOBAL",
+   40594.9,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "9333",
+   "FI BANCHILE MARKETPLUS ESTADOS UNIDOS",
+   16599.2,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "9661",
+   "FI BANCHILE MARKETPLUS EMERGENTE",
+   10984.5,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "9689",
+   "CFIAMRCA-E",
+   7090.6,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "9802",
+   "CFICDIMUPF",
+   9342.4,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "9818",
+   "CFIMHEI-E",
+   5101.5,
+   "coincide"
+  ],
+  [
+   "2026-06",
+   "9969",
+   "BICE ALTERNATIVOS FONDO DE INVERSION",
+   6669.5,
+   "coincide"
+  ]
+ ],
+ "sql": "SELECT periodo, run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_trimestre_mm, cotejo_ficha FROM fi_resultados WHERE contexto = 'TrimestreActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}
