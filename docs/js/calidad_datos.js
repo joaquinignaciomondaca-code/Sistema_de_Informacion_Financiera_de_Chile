@@ -81,6 +81,9 @@
     ].join("\n");
   }
 
+  // El gráfico vive dentro de un plegable: cerrado no tiene ancho y el lienzo
+  // saldría vacío. Por eso no se llama al cargar, sino la primera vez que se
+  // abre el bloque (ver `init`).
   function grafico(estado) {
     const contenedor = document.getElementById("calidad-chart");
     if (!contenedor || !window.ChartRenderer) return;
@@ -114,7 +117,24 @@
     if (codigo && peor) {
       codigo.textContent = consulta(peor.id, peor.datos.ejemplo && peor.datos.ejemplo.periodo);
     }
-    grafico(estado);
+    // El registro técnico está plegado por defecto: el gráfico se pinta la
+    // primera vez que se abre, cuando el contenedor ya tiene ancho.
+    const detalles = raiz.querySelector("details");
+    const lienzo = document.getElementById("calidad-chart");
+    if (detalles && lienzo) {
+      let pintado = false;
+      detalles.addEventListener("toggle", () => {
+        if (!detalles.open || pintado) return;
+        pintado = true;
+        grafico(estado);
+      });
+      if (detalles.open) {
+        pintado = true;
+        grafico(estado);
+      }
+    } else {
+      grafico(estado);
+    }
 
     const boton = raiz.querySelector("[data-calidad-ejecutar]");
     if (boton) {
