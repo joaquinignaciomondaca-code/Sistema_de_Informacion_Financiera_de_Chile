@@ -283,6 +283,18 @@ jobs:
           done
           exit $(( c | a | d ))
 
+      - name: 'Vitrina: metadatos sociales, robots y sitemap derivados del catálogo'
+        run: |
+          set +e
+          python scripts/build_metadatos.py --check > vitrina.log 2>&1; v=$?
+          cat vitrina.log
+          if [ "$v" -ne 0 ]; then
+            echo "::error title=Vitrina::index.html, robots.txt o sitemap.xml no coinciden con el catálogo publicado"
+          else
+            echo "::notice title=Vitrina::$(tail -n 1 vitrina.log)"
+          fi
+          exit $v
+
       - name: 'Diccionario: el estado de las claves se deriva de claves.csv'
         run: |
           set +e
