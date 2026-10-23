@@ -2997,7 +2997,7 @@ class DataDictionaryController {
                     <span class="freshness-dot"></span>
                     ${table.frescura}
                   </span>
-                  <span class="dict-update-badge" title="Fecha de última actualización">Actualizado: ${table.ultimaActualizacion || '2026-09-23'}</span>
+                  ${table.ultimaActualizacion ? `<span class="dict-update-badge" title="Fecha de última actualización">Actualizado: ${table.ultimaActualizacion}</span>` : ""}
                   <span class="dict-rows-badge">${table.registros}</span>
                 </div>
               </div>

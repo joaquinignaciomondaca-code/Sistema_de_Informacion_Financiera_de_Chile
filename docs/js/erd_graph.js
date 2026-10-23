@@ -458,8 +458,10 @@ const ERD_TABLES = [
     name: "ffmm.resultados",
     sector: "ffmm",
     color: "var(--accent-mint)",
+    // Estaba en (1340, 1099) y quedaba debajo de las dos tarjetas de seguros
+    // que llegan hasta x=1540. Baja al hueco libre bajo esa rejilla.
     x: 1340,
-    y: 1099,
+    y: 1630,
     w: 240,
     h: 184,
     rows: "Un archivo por año",
@@ -2159,8 +2161,11 @@ const ERD_TABLES = [
     name: "Registros tipo 6 de B.11 y B.14",
     sector: "seguros",
     color: "var(--accent-mint)",
-    x: 1280,
-    y: 1080,
+    // Estaba en (1280, 1080), la misma coordenada que `seguros_acciones_relevantes`:
+    // dos tarjetas dibujadas una sobre otra, con los títulos cruzándose. Se mueve
+    // a la franja libre entre el bloque de seguros y el de fondos de inversión.
+    x: 1580,
+    y: 1120,
     w: 300,
     h: 230,
     rows: "Mensual · desde 2024-12",
@@ -2716,7 +2721,9 @@ class ERDGraph {
 
     ctx.restore();
 
-    // 4. Leyenda de cardinalidad (fuera de la transformación: queda fija en la esquina)
+    // 4. Nombre completo del nodo bajo el puntero y leyenda de cardinalidad:
+    //    los dos van fuera de la transformación, fijos en la esquina.
+    this.drawTooltip(ctx);
     this.drawLeyendaCardinalidad(ctx);
   }
 
@@ -2825,11 +2832,34 @@ class ERDGraph {
     ctx.restore();
   }
 
+  /**
+   * Recorta un texto al ancho disponible y le añade «…».
+   *
+   * En el mapa los nodos miden 240–300 px y hay títulos de 118 caracteres
+   * («B.2 ACCIONES DE SOCIEDADES ANÓNIMAS ABIERTAS, …»): sin recorte, el texto
+   * se salía de la tarjeta y se dibujaba encima de los nodos vecinos. Se mide
+   * con la fuente ya puesta en el contexto.
+   */
+  recortar(ctx, texto, ancho) {
+    const cadena = String(texto == null ? "" : texto);
+    if (ancho <= 0) return "";
+    if (ctx.measureText(cadena).width <= ancho) return cadena;
+    const puntos = "\u2026";
+    let corte = cadena.length;
+    while (corte > 0 && ctx.measureText(cadena.slice(0, corte) + puntos).width > ancho) {
+      corte -= 1;
+    }
+    return corte > 0 ? cadena.slice(0, corte).trimEnd() + puntos : puntos;
+  }
+
   drawNodes(ctx) {
     const style = getComputedStyle(document.documentElement);
     const bgCard = style.getPropertyValue('--bg-secondary').trim() || "#132D46";
     const accent = style.getPropertyValue('--accent-mint').trim() || "#01C38D";
     const borderColor = style.getPropertyValue('--border-color').trim() || "rgba(105, 110, 121, 0.4)";
+    const teal = style.getPropertyValue("--accent-teal").trim() || "#06B6D4";
+    const textSecondary = style.getPropertyValue("--text-secondary").trim() || "#9CA3AF";
+    const textMuted = style.getPropertyValue("--text-muted").trim() || "#6B7280";
 
     this.tables.forEach((t) => {
       if (!this.matchesFilter(t)) return;
@@ -2851,49 +2881,118 @@ class ERDGraph {
       ctx.stroke();
       ctx.restore();
 
-      // Barra de Cabecera con Color Temático
+      // A partir de aquí todo se dibuja recortado a la tarjeta: es la garantía
+      // de que nada pueda volver a salirse, aunque el título cambie mañana.
       ctx.save();
+      this.roundRect(ctx, t.x, t.y, t.w, t.h, 8);
+      ctx.clip();
+
+      // Cabecera: el título ocupa la primera línea y, si no cabe junto a la
+      // insignia de la derecha, la insignia baja a una segunda línea.
+      const ALTO_TITULO = 28;
+      const insignia = String(t.rows || "");
+      const FUENTE_TITULO = "bold 12px 'Schibsted Grotesk', Inter, -apple-system, BlinkMacSystemFont, sans-serif";
+      ctx.font = FUENTE_TITULO;
+      const anchoTituloEntero = ctx.measureText(t.name).width;
+      ctx.font = "12px monospace";
+      const anchoInsignia = insignia ? ctx.measureText(insignia).width + 14 : 0;
+      // La insignia comparte la cabecera con el título sólo si le deja al menos
+      // 110 px de título. Antes se dibujaba siempre, y en los títulos largos
+      // quedaban las dos cosas encimadas.
+      const cabeInsigniaAlLado = anchoInsignia > 0 &&
+        (t.w - 20 - anchoInsignia) >= Math.min(anchoTituloEntero, 110);
+      const ALTO_CABECERA = cabeInsigniaAlLado ? ALTO_TITULO : (insignia ? ALTO_TITULO + 16 : ALTO_TITULO);
+
       ctx.fillStyle = this.resolveColor(t.color, accent);
-      this.roundRectTop(ctx, t.x, t.y, t.w, 28, 8);
+      this.roundRectTop(ctx, t.x, t.y, t.w, ALTO_CABECERA, 8);
       ctx.fill();
 
-      // Título de la tabla
+      // Título
       ctx.fillStyle = "#FFFFFF";
-      ctx.font = "bold 12px 'Schibsted Grotesk', Inter, -apple-system, BlinkMacSystemFont, sans-serif";
-      ctx.fillText(t.name, t.x + 10, t.y + 18);
+      ctx.font = FUENTE_TITULO;
+      const anchoTitulo = t.w - 20 - (cabeInsigniaAlLado ? anchoInsignia : 0);
+      ctx.fillText(this.recortar(ctx, t.name, anchoTitulo), t.x + 10, t.y + 18);
 
-      // Badge de filas
-      ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
-      ctx.font = "12px monospace";
-      const badgeW = ctx.measureText(t.rows).width + 8;
-      ctx.fillRect(t.x + t.w - badgeW - 6, t.y + 4, badgeW, 18);
-      ctx.fillStyle = "#FFFFFF";
-      ctx.fillText(t.rows, t.x + t.w - badgeW - 2, t.y + 18);
+      // Insignia: a la derecha del título si cabe; si no, en su propia línea.
+      if (insignia) {
+        ctx.font = "12px monospace";
+        if (cabeInsigniaAlLado) {
+          const anchoBadge = ctx.measureText(insignia).width + 8;
+          ctx.fillStyle = "rgba(0, 0, 0, 0.3)";
+          ctx.fillRect(t.x + t.w - anchoBadge - 6, t.y + 4, anchoBadge, 18);
+          ctx.fillStyle = "#FFFFFF";
+          ctx.fillText(insignia, t.x + t.w - anchoBadge - 2, t.y + 18);
+        } else {
+          ctx.fillStyle = "rgba(255, 255, 255, 0.82)";
+          ctx.font = "11px monospace";
+          ctx.fillText(this.recortar(ctx, insignia, t.w - 20), t.x + 10, t.y + 34);
+        }
+      }
 
-      // Columnas
+      // Columnas. Cuántas caben se calcula con el alto real de la tarjeta: antes
+      // se dibujaban siempre cinco y en los nodos bajos la última línea se
+      // salía por el borde inferior.
+      const inicioColumnas = t.y + ALTO_CABECERA + 18;
+      const disponible = t.y + t.h - inicioColumnas - 10;
+      const caben = Math.max(1, Math.floor(disponible / 16));
+      const conNota = t.cols.length > Math.min(caben, 5);
+      const visibles = Math.min(t.cols.length, 5, conNota ? Math.max(1, caben - 1) : caben);
+
       ctx.font = "12px monospace";
-      let colY = t.y + 46;
-      const style = getComputedStyle(document.documentElement);
-      const teal = style.getPropertyValue("--accent-teal").trim() || "#06B6D4";
-      const textSecondary = style.getPropertyValue("--text-secondary").trim() || "#9CA3AF";
-      const textMuted = style.getPropertyValue("--text-muted").trim() || "#6B7280";
-      t.cols.slice(0, 5).forEach((col) => {
+      let colY = inicioColumnas + 8;
+      t.cols.slice(0, visibles).forEach((col) => {
         ctx.fillStyle = col.pk ? accent : col.fk ? teal : textSecondary;
-        const prefix = col.pk ? "PK " : col.fk ? "FK " : "   ";
-        ctx.fillText(prefix + col.name, t.x + 8, colY);
-
-        ctx.fillStyle = textMuted;
-        ctx.fillText(col.type, t.x + t.w - 55, colY);
+        const prefijo = col.pk ? "PK " : col.fk ? "FK " : "   ";
+        const anchoTipo = ctx.measureText(col.type || "").width;
+        const anchoNombre = t.w - 16 - anchoTipo - 10;
+        // Si el tipo deja el nombre sin sitio, se sacrifica el tipo: el nombre
+        // es lo que identifica la columna.
+        if (anchoNombre < 90) {
+          ctx.fillText(this.recortar(ctx, prefijo + col.name, t.w - 16), t.x + 8, colY);
+        } else {
+          ctx.fillText(this.recortar(ctx, prefijo + col.name, anchoNombre), t.x + 8, colY);
+          ctx.fillStyle = textMuted;
+          ctx.textAlign = "right";
+          ctx.fillText(col.type, t.x + t.w - 8, colY);
+          ctx.textAlign = "left";
+        }
         colY += 16;
       });
 
-      if (t.cols.length > 5) {
+      if (conNota) {
+        const restantes = t.cols.length - visibles;
         ctx.fillStyle = accent;
-        ctx.fillText(`+ ${t.cols.length - 5} columnas mas...`, t.x + 10, colY + 2);
+        ctx.font = "12px 'Schibsted Grotesk', sans-serif";
+        ctx.fillText(`+ ${restantes} columnas m\u00e1s\u2026`, t.x + 10, colY + 2);
       }
 
       ctx.restore();
     });
+  }
+
+  /**
+   * Nombre completo del nodo bajo el puntero, en pantalla.
+   *
+   * Los títulos largos se recortan en la tarjeta; esto devuelve el texto entero
+   * sin que se cruce con nada, y de paso recuerda la frecuencia del objeto.
+   */
+  drawTooltip(ctx) {
+    const t = this.hoveredNode;
+    if (!t || !this.matchesFilter(t)) return;
+    const texto = t.rows ? `${t.name} \u00b7 ${t.rows}` : t.name;
+    ctx.save();
+    ctx.font = "600 13px 'Schibsted Grotesk', Inter, sans-serif";
+    const ancho = Math.min(this.canvas.width - 24, ctx.measureText(texto).width + 24);
+    ctx.fillStyle = "rgba(10, 18, 28, 0.94)";
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.22)";
+    ctx.lineWidth = 1;
+    this.roundRect(ctx, 12, 12, ancho, 30, 6);
+    ctx.fill();
+    ctx.stroke();
+    ctx.fillStyle = "#F2F6FB";
+    ctx.textBaseline = "middle";
+    ctx.fillText(this.recortar(ctx, texto, ancho - 24), 24, 28);
+    ctx.restore();
   }
 
   roundRect(ctx, x, y, w, h, r) {
@@ -2925,3 +3024,5 @@ class ERDGraph {
 }
 
 window.ERDGraph = ERDGraph;
+// `recortar` no usa `this`: se expone para probarlo con un contexto falso.
+window.ERDTexto = { recortar: (ctx, texto, ancho) => ERDGraph.prototype.recortar.call(null, ctx, texto, ancho) };

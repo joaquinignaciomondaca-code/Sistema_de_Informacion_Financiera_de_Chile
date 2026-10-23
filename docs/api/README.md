@@ -144,9 +144,9 @@ Reglas que el CI verifica:
    `columnas: []` y `motivo_sin_esquema`.
 
 Estado actual: 86 objetos con esquema, 1.474 columnas (3 sin documentar en el
-diccionario, 1 sin valores en origen) y 19,8 millones de filas únicas. La cifra
-exacta de filas está en `catalog.json` y cambia con cada serie diaria: escribirla
-aquí a mano la deja falsa en un día.
+diccionario, 1 sin valores en origen) y más de 19 millones de filas únicas. La
+cifra exacta está en `catalog.json` y cambia con cada serie diaria: escribirla
+como un número exacto aquí la deja falsa en un día.
 
 ## `v2/datapackage.json`
 
