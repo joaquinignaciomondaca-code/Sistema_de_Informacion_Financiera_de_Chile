@@ -2,7 +2,7 @@
 # Lo mismo que examples/python/01_ffmm_extranjero.py, sin SDK propio.
 #
 # Solo dos paquetes: DBI y duckdb. El contrato se usa tal cual: se descarga
-# `api/v1/views.sql`, se cambia su única línea de configuración por la base que
+# `api/v2/views.sql`, se cambia su única línea de configuración por la base que
 # se quiera, se ejecutan las sentencias y las 105 vistas quedan disponibles.
 #
 #   Rscript examples/r/01_basico.R
@@ -31,7 +31,7 @@ leer <- function(relativa) {
 }
 
 # 1. El DDL publicado, con la base de este script.
-ddl <- leer("api/v1/views.sql")
+ddl <- leer("api/v2/views.sql")
 ddl <- sub("^SET VARIABLE sif_base.*$", sprintf("SET VARIABLE sif_base = '%s';", base), ddl)
 
 # 2. Una conexión en memoria y las vistas creadas.

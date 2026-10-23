@@ -1,0 +1,501 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "activos-pasivos-y-patrimonio-por-agf-ultimo-trim-195ff3",
+ "titulo": "Activos, pasivos y patrimonio por AGF, último trimestre (MM$)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "periodo",
+  "razon_social",
+  "tipo_balance",
+  "moneda",
+  "activos_mm",
+  "pasivos_mm",
+  "patrimonio_mm"
+ ],
+ "filas": 53,
+ "truncado": false,
+ "datos": [
+  [
+   "2026-06",
+   "ADMINISTRADORA GENERAL DE FONDOS  SECURITY S.A.",
+   "individual",
+   "CLP",
+   83778.5,
+   10932.8,
+   72845.8
+  ],
+  [
+   "2026-06",
+   "ADMINISTRADORA GENERAL DE FONDOS SURA S.A.",
+   "individual",
+   "CLP",
+   15186.4,
+   4705.5,
+   10480.9
+  ],
+  [
+   "2026-06",
+   "ALZA ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   563.6,
+   99.4,
+   464.2
+  ],
+  [
+   "2026-06",
+   "AMERIS CAPITAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   2676.9,
+   1034.1,
+   1642.9
+  ],
+  [
+   "2026-06",
+   "AMICORP ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   985.4,
+   87.4,
+   898.0
+  ],
+  [
+   "2026-06",
+   "ASSET ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   5603.5,
+   806.7,
+   4796.8
+  ],
+  [
+   "2026-06",
+   "AVANTE ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   529.0,
+   45.4,
+   483.6
+  ],
+  [
+   "2026-06",
+   "BANCHILE ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   53739.2,
+   17291.2,
+   36448.0
+  ],
+  [
+   "2026-06",
+   "BANCO INTERNACIONAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   1494.4,
+   194.4,
+   1300.0
+  ],
+  [
+   "2026-06",
+   "BANCOESTADO S.A. ADMINISTRADORA  GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   15631.5,
+   6950.0,
+   8681.5
+  ],
+  [
+   "2026-06",
+   "BCI ASSET MANAGEMENT ADMINISTRADORA  GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   216008.8,
+   50063.1,
+   165945.6
+  ],
+  [
+   "2026-06",
+   "BICE INVERSIONES ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   66682.0,
+   7986.1,
+   58695.9
+  ],
+  [
+   "2026-06",
+   "BTG PACTUAL CHILE S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   51429.1,
+   9255.1,
+   42173.9
+  ],
+  [
+   "2026-06",
+   "CAPITAL ADVISORS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   1452.7,
+   580.1,
+   872.6
+  ],
+  [
+   "2026-06",
+   "CIMENTA S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   3132.4,
+   783.3,
+   2349.1
+  ],
+  [
+   "2026-06",
+   "CMB-PRIME ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   1797.7,
+   730.9,
+   1066.8
+  ],
+  [
+   "2026-06",
+   "CREDICORP CAPITAL ASSET MANAGEMENT S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   7444.0,
+   3511.1,
+   3932.9
+  ],
+  [
+   "2026-06",
+   "FALCOM ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   10699.5,
+   2984.0,
+   7715.5
+  ],
+  [
+   "2026-06",
+   "FINASSET ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   521.6,
+   24.2,
+   497.4
+  ],
+  [
+   "2026-06",
+   "FINTUAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   7841.4,
+   808.7,
+   7032.7
+  ],
+  [
+   "2026-06",
+   "FRONTAL TRUST ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   4014.2,
+   1234.6,
+   2779.6
+  ],
+  [
+   "2026-06",
+   "FYNSA ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   1479.2,
+   511.2,
+   968.1
+  ],
+  [
+   "2026-06",
+   "HMC S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   1225.0,
+   457.0,
+   767.9
+  ],
+  [
+   "2026-06",
+   "INDEPENDENCIA ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   4279.0,
+   2748.0,
+   1531.0
+  ],
+  [
+   "2026-06",
+   "INDEPENDENCIA INTERNACIONAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   635.9,
+   146.5,
+   489.4
+  ],
+  [
+   "2026-06",
+   "INVINSA ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   737.6,
+   73.5,
+   664.1
+  ],
+  [
+   "2026-06",
+   "ITAU ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   38485.8,
+   24845.2,
+   13640.6
+  ],
+  [
+   "2026-06",
+   "LAB CAPITAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   2578.3,
+   1378.0,
+   1200.3
+  ],
+  [
+   "2026-06",
+   "LARRAIN VIAL ACTIVOS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   9910.6,
+   2872.8,
+   7037.8
+  ],
+  [
+   "2026-06",
+   "LARRAINVIAL ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   24985.4,
+   10301.1,
+   14684.4
+  ],
+  [
+   "2026-06",
+   "LINK CAPITAL PARTNERS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "consolidado",
+   "CLP",
+   3231.7,
+   1827.5,
+   1404.3
+  ],
+  [
+   "2026-06",
+   "MBI ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   2708.1,
+   1583.8,
+   1124.2
+  ],
+  [
+   "2026-06",
+   "MONEDA PATRIA S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   44704.0,
+   11353.2,
+   33350.8
+  ],
+  [
+   "2026-06",
+   "NEORENTAS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   7592.0,
+   212.3,
+   7379.7
+  ],
+  [
+   "2026-06",
+   "NVS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   732.8,
+   160.4,
+   572.4
+  ],
+  [
+   "2026-06",
+   "PENTA LAS AMERICAS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   1110.1,
+   534.6,
+   575.5
+  ],
+  [
+   "2026-06",
+   "PICTON ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   5947.9,
+   1966.7,
+   3981.2
+  ],
+  [
+   "2026-06",
+   "PRINCIPAL ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   19040.3,
+   7083.8,
+   11956.5
+  ],
+  [
+   "2026-06",
+   "PRUDENTIAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   9528.8,
+   3036.7,
+   6492.1
+  ],
+  [
+   "2026-06",
+   "QUEST ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   895.2,
+   266.9,
+   628.3
+  ],
+  [
+   "2026-06",
+   "SANTANDER ASSET MANAGEMENT S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   30707.7,
+   14901.6,
+   15806.2
+  ],
+  [
+   "2026-06",
+   "SCOTIA  ADMINISTRADORA GENERAL DE FONDOS CHILE S.A.",
+   "individual",
+   "CLP",
+   17577.4,
+   4991.2,
+   12586.2
+  ],
+  [
+   "2026-06",
+   "SENSOR CAPITAL S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   1493.2,
+   72.4,
+   1420.8
+  ],
+  [
+   "2026-06",
+   "SIGMA ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   498.1,
+   11.2,
+   486.9
+  ],
+  [
+   "2026-06",
+   "SINGULAR ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   3085.5,
+   713.1,
+   2372.4
+  ],
+  [
+   "2026-06",
+   "SOYFOCUS ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   1713.5,
+   353.7,
+   1359.8
+  ],
+  [
+   "2026-06",
+   "TOESCA S.A.  ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   21507.6,
+   5133.3,
+   16374.3
+  ],
+  [
+   "2026-06",
+   "VANTRUST CAPITAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   2940.9,
+   1870.0,
+   1070.9
+  ],
+  [
+   "2026-06",
+   "VENTURANCE S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   1700.7,
+   701.6,
+   999.1
+  ],
+  [
+   "2026-06",
+   "VINCI COMPASS S.A. ADMINISTRADORA GENERAL DE FONDOS",
+   "individual",
+   "CLP",
+   7939.7,
+   2610.1,
+   5329.6
+  ],
+  [
+   "2026-06",
+   "VOLCOMCAPITAL ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   2240.4,
+   888.5,
+   1351.9
+  ],
+  [
+   "2026-06",
+   "XLC ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   1963.9,
+   36.6,
+   1927.3
+  ],
+  [
+   "2026-06",
+   "ZURICH CHILE ASSET MANAGEMENT ADMINISTRADORA GENERAL DE FONDOS S.A.",
+   "individual",
+   "CLP",
+   10870.5,
+   3785.0,
+   7085.5
+  ]
+ ],
+ "sql": "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM agf_balance WHERE periodo = (SELECT max(periodo) FROM agf_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

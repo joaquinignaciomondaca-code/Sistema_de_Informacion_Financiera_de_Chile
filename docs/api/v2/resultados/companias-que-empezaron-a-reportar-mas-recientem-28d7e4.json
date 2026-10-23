@@ -1,0 +1,81 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "companias-que-empezaron-a-reportar-mas-recientem-28d7e4",
+ "titulo": "Compañías que empezaron a reportar más recientemente",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "sector",
+  "rut_aseguradora",
+  "nombre_aseguradora",
+  "primer_periodo"
+ ],
+ "filas": 10,
+ "truncado": false,
+ "datos": [
+  [
+   "generales",
+   "76981875",
+   "CONTEMPORA COMPANIA DE SEGUROS GENERALES S.A.",
+   "2019-03"
+  ],
+  [
+   "generales",
+   "77096952",
+   "FID CHILE SEGUROS GENERALES S.A.",
+   "2019-12"
+  ],
+  [
+   "generales",
+   "77591207",
+   "EVEREST",
+   "2022-06"
+  ],
+  [
+   "generales",
+   "78027718",
+   "LIBERTY MUTUAL SURETY SEGUROS CHILE S.A.",
+   "2024-12"
+  ],
+  [
+   "vida",
+   "76632384",
+   "AUGUSTAR SEGUROS DE VIDA S.A.",
+   "2024-09"
+  ],
+  [
+   "vida",
+   "76632553",
+   "UCCHRISTUS SEGUROS DE VIDA Y SALUD S.A",
+   "2024-09"
+  ],
+  [
+   "vida",
+   "76948367",
+   "BICE SEGUROS DE VIDA S.A.",
+   "2018-12"
+  ],
+  [
+   "vida",
+   "77205281",
+   "DIVINA PASTORA SEGUROS DE VIDA S.A.",
+   "2020-06"
+  ],
+  [
+   "vida",
+   "78340993",
+   "PRINCIPAL SEGUROS DE VIDA S.A.",
+   "2026-04"
+  ],
+  [
+   "vida",
+   "99225000",
+   "Chubb Seguros Chile S.A.",
+   "2026-03"
+  ]
+ ],
+ "sql": "SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo FROM seguros_lista_entidades ORDER BY primer_periodo DESC, nombre_aseguradora LIMIT 10;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

@@ -1,0 +1,2609 @@
+{
+ "contrato": "sif-api/resultados",
+ "version": "1.0.0",
+ "base": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "total": 159,
+ "filas": 6254,
+ "bytes": 825399,
+ "truncadas": 2,
+ "max_filas": 500,
+ "nota": "Resultados calculados en el build sobre el mismo Parquet que publica el sitio. No es SQL arbitrario: son las 156 consultas del catálogo, cada una con su SQL a la vista para poder reproducirla o discutirla.",
+ "como_se_genera": "python3 scripts/build_resultados.py",
+ "consultas": [
+  {
+   "id": "companias-que-reportan-en-el-ultimo-mes-7ece34",
+   "titulo": "Compañías que reportan en el último mes",
+   "origen": "explorador",
+   "filas": 66,
+   "columnas": [
+    "sector",
+    "rut_aseguradora",
+    "nombre_aseguradora",
+    "primer_periodo",
+    "meses_reportados"
+   ],
+   "truncado": false,
+   "bytes": 7240,
+   "sha256": "bff22a85e7b46b9de795ec459dff44e987078fff4009e511d45da1d0ce99e82e",
+   "url": "/api/v2/resultados/companias-que-reportan-en-el-ultimo-mes-7ece34.json"
+  },
+  {
+   "id": "companias-que-dejaron-de-reportar-7577ed",
+   "titulo": "Compañías que dejaron de reportar",
+   "origen": "explorador",
+   "filas": 18,
+   "columnas": [
+    "sector",
+    "rut_aseguradora",
+    "nombre_aseguradora",
+    "primer_periodo",
+    "ultimo_periodo"
+   ],
+   "truncado": false,
+   "bytes": 2504,
+   "sha256": "af7f9f3de3e61db2112393c3a63659f4d2d90039a77918b62a6d49445a9b1353",
+   "url": "/api/v2/resultados/companias-que-dejaron-de-reportar-7577ed.json"
+  },
+  {
+   "id": "companias-que-empezaron-a-reportar-mas-recientem-28d7e4",
+   "titulo": "Compañías que empezaron a reportar más recientemente",
+   "origen": "explorador",
+   "filas": 10,
+   "columnas": [
+    "sector",
+    "rut_aseguradora",
+    "nombre_aseguradora",
+    "primer_periodo"
+   ],
+   "truncado": false,
+   "bytes": 1531,
+   "sha256": "af22a98c5d9875f2826b5b966a7f3f487e498f28b40320706e6a92a62f9e7a0c",
+   "url": "/api/v2/resultados/companias-que-empezaron-a-reportar-mas-recientem-28d7e4.json"
+  },
+  {
+   "id": "renta-fija-por-tipo-de-instrumento-ultimo-mes-m-f646b2",
+   "titulo": "Renta fija por tipo de instrumento, último mes (M$)",
+   "origen": "explorador",
+   "filas": 15,
+   "columnas": [
+    "sector",
+    "tipo_instrumento",
+    "instrumentos",
+    "valor_final_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 1554,
+   "sha256": "3aaf5e9ac493c1cf86f561f5eaae1027241916057bea39f447015bd3237f53ae",
+   "url": "/api/v2/resultados/renta-fija-por-tipo-de-instrumento-ultimo-mes-m-f646b2.json"
+  },
+  {
+   "id": "instrumentos-de-renta-fija-con-mas-inversion-ult-46fffd",
+   "titulo": "Instrumentos de renta fija con más inversión, último mes (M$)",
+   "origen": "explorador",
+   "filas": 10,
+   "columnas": [
+    "nemotecnico",
+    "aseguradoras",
+    "valor_final_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 1202,
+   "sha256": "f1af3ef64955a6f7d85eddec3bc73f1ac43d3ce965c37e681b3b04c7e8e7c406",
+   "url": "/api/v2/resultados/instrumentos-de-renta-fija-con-mas-inversion-ult-46fffd.json"
+  },
+  {
+   "id": "acciones-con-mayor-inversion-ultimo-mes-m-f4f47b",
+   "titulo": "Acciones con mayor inversión, último mes (M$)",
+   "origen": "explorador",
+   "filas": 10,
+   "columnas": [
+    "nemotecnico",
+    "aseguradoras",
+    "unidades",
+    "valor_final_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 1349,
+   "sha256": "c3db9fc3b53d60f1c5f1eb281b43ce437b1c4b77c7f4749f475be52ae3eadc94",
+   "url": "/api/v2/resultados/acciones-con-mayor-inversion-ultimo-mes-m-f4f47b.json"
+  },
+  {
+   "id": "evolucion-de-la-inversion-en-acciones-por-sector-e3ef3e",
+   "titulo": "Evolución de la inversión en acciones por sector (M$)",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "sector",
+    "valor_final_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 1827,
+   "sha256": "3b3b4b94e7a1d9b9dd1b24f0c20d34765a744897e286722348befbe71e0c6e38",
+   "url": "/api/v2/resultados/evolucion-de-la-inversion-en-acciones-por-sector-e3ef3e.json"
+  },
+  {
+   "id": "fondos-mutuos-por-administradora-ultimo-mes-m-84000e",
+   "titulo": "Fondos mutuos por administradora, último mes (M$)",
+   "origen": "explorador",
+   "filas": 10,
+   "columnas": [
+    "rut_administradora",
+    "inversiones",
+    "valor_final_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 1178,
+   "sha256": "c2eefd203320f0db215ecbeea15008b945c2c429ba4e9c692955f201918223a7",
+   "url": "/api/v2/resultados/fondos-mutuos-por-administradora-ultimo-mes-m-84000e.json"
+  },
+  {
+   "id": "bienes-raices-por-ciudad-ultimo-mes-m-a861f2",
+   "titulo": "Bienes raíces por ciudad, último mes (M$)",
+   "origen": "explorador",
+   "filas": 10,
+   "columnas": [
+    "ciudad",
+    "inmuebles",
+    "valor_final_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 1146,
+   "sha256": "a352e74e3a9bdc1de73325b91beb3cd1eb3663b0b42b3e0c776f9e509477e199",
+   "url": "/api/v2/resultados/bienes-raices-por-ciudad-ultimo-mes-m-a861f2.json"
+  },
+  {
+   "id": "otras-inversiones-por-tipo-de-instrumento-ultimo-5306cf",
+   "titulo": "Otras inversiones por tipo de instrumento, último mes (M$)",
+   "origen": "explorador",
+   "filas": 15,
+   "columnas": [
+    "tipo_instrumento",
+    "inversiones",
+    "valor_final_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 1329,
+   "sha256": "a1a7239e88c3585d20c7832dd075539cbb17834c5603936547a223d0766b6702",
+   "url": "/api/v2/resultados/otras-inversiones-por-tipo-de-instrumento-ultimo-5306cf.json"
+  },
+  {
+   "id": "inversiones-en-el-extranjero-por-pais-ultimo-mes-96a334",
+   "titulo": "Inversiones en el extranjero por país, último mes (M$)",
+   "origen": "explorador",
+   "filas": 10,
+   "columnas": [
+    "pais",
+    "tipo_registro",
+    "instrumentos",
+    "valor_final_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 1302,
+   "sha256": "ea46209f552b88207a505275c973b3b81930bffd2d6a9539a3cc0529f561f339",
+   "url": "/api/v2/resultados/inversiones-en-el-extranjero-por-pais-ultimo-mes-96a334.json"
+  },
+  {
+   "id": "derivados-por-tipo-y-sector-ultimo-mes-d009a2",
+   "titulo": "Derivados por tipo y sector, último mes",
+   "origen": "explorador",
+   "filas": 6,
+   "columnas": [
+    "sector",
+    "tipo_registro",
+    "contratos",
+    "valor_razonable_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 1027,
+   "sha256": "d71e9e613ddec570940da2fbba6faada01510831b354b013de43c1a767df076e",
+   "url": "/api/v2/resultados/derivados-por-tipo-y-sector-ultimo-mes-d009a2.json"
+  },
+  {
+   "id": "principales-contrapartes-de-derivados-ultimo-mes-0aecee",
+   "titulo": "Principales contrapartes de derivados, último mes",
+   "origen": "explorador",
+   "filas": 10,
+   "columnas": [
+    "contraparte",
+    "contratos",
+    "aseguradoras"
+   ],
+   "truncado": false,
+   "bytes": 1207,
+   "sha256": "95fefdfaeda127e352fecc66d2979d195d6df805422ffd21802478987aefd7ff",
+   "url": "/api/v2/resultados/principales-contrapartes-de-derivados-ultimo-mes-0aecee.json"
+  },
+  {
+   "id": "pactos-contrapartes-y-tasa-promedio-ultimo-mes-1cc5b8",
+   "titulo": "Pactos: contrapartes y tasa promedio, último mes",
+   "origen": "explorador",
+   "filas": 8,
+   "columnas": [
+    "contraparte",
+    "pactos",
+    "tasa_pacto_promedio"
+   ],
+   "truncado": false,
+   "bytes": 1221,
+   "sha256": "81a4c6f90f919c35ab1fde1bdcb154aead410c475ddd279caac36f6452a1fa87",
+   "url": "/api/v2/resultados/pactos-contrapartes-y-tasa-promedio-ultimo-mes-1cc5b8.json"
+  },
+  {
+   "id": "b-14-garantias-por-posicion-y-tipo-m-8f4af5",
+   "titulo": "B.14 Garantías por posición y tipo (M$)",
+   "origen": "explorador",
+   "filas": 50,
+   "columnas": [
+    "periodo",
+    "sector",
+    "posicion_compania",
+    "tipo_garantia",
+    "valor_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 3989,
+   "sha256": "5bc45bd5edee2dba913f8f0d0a9f96c5aab595ca829cab8ee37d67ad94d3522e",
+   "url": "/api/v2/resultados/b-14-garantias-por-posicion-y-tipo-m-8f4af5.json"
+  },
+  {
+   "id": "registros-tipo-6-por-periodo-y-archivo-143fa9",
+   "titulo": "Registros tipo 6 por periodo y archivo",
+   "origen": "explorador",
+   "filas": 44,
+   "columnas": [
+    "periodo",
+    "tipo_archivo",
+    "sector",
+    "registros",
+    "largo_minimo",
+    "largo_maximo"
+   ],
+   "truncado": false,
+   "bytes": 3871,
+   "sha256": "d553d0791abb650b8d63d0f22dc9b734a81c8740eb82973862ef4f638e210793",
+   "url": "/api/v2/resultados/registros-tipo-6-por-periodo-y-archivo-143fa9.json"
+  },
+  {
+   "id": "fondos-que-reportan-en-el-ultimo-mes-9f4a5f",
+   "titulo": "Fondos que reportan en el último mes",
+   "origen": "explorador",
+   "filas": 438,
+   "columnas": [
+    "run_fondo",
+    "nombre_fondo",
+    "primer_periodo",
+    "meses_reportados"
+   ],
+   "truncado": false,
+   "bytes": 28187,
+   "sha256": "2c524bcbfa0ea6464a765371fb6b5c4e63dcb0001c2ab7c6a3d7efe2d5925354",
+   "url": "/api/v2/resultados/fondos-que-reportan-en-el-ultimo-mes-9f4a5f.json"
+  },
+  {
+   "id": "fondos-nuevos-primer-reporte-mas-reciente-402efd",
+   "titulo": "Fondos nuevos (primer reporte más reciente)",
+   "origen": "explorador",
+   "filas": 20,
+   "columnas": [
+    "run_fondo",
+    "nombre_fondo",
+    "primer_periodo"
+   ],
+   "truncado": false,
+   "bytes": 1714,
+   "sha256": "1b56e43f5c9d4c937ec4d7244b40f765f7b14d534324fcca482051e2bafd4ca4",
+   "url": "/api/v2/resultados/fondos-nuevos-primer-reporte-mas-reciente-402efd.json"
+  },
+  {
+   "id": "fondos-que-dejaron-de-reportar-289026",
+   "titulo": "Fondos que dejaron de reportar",
+   "origen": "explorador",
+   "filas": 20,
+   "columnas": [
+    "run_fondo",
+    "nombre_fondo",
+    "primer_periodo",
+    "ultimo_periodo"
+   ],
+   "truncado": false,
+   "bytes": 1997,
+   "sha256": "c76c2536ae2e333ee3f816b54758b72e83276d55f8eeb01dab28e95cd107b175",
+   "url": "/api/v2/resultados/fondos-que-dejaron-de-reportar-289026.json"
+  },
+  {
+   "id": "cartera-nacional-por-tipo-de-instrumento-ultimo--2f4342",
+   "titulo": "Cartera nacional por tipo de instrumento, último mes",
+   "origen": "explorador",
+   "filas": 15,
+   "columnas": [
+    "tipo_instrumento",
+    "posiciones",
+    "fondos",
+    "valorizacion_miles_mf"
+   ],
+   "truncado": false,
+   "bytes": 1555,
+   "sha256": "0f4545449fc72b250031da598081be0281c2d9bdc0453cff289a7458e9c91cb7",
+   "url": "/api/v2/resultados/cartera-nacional-por-tipo-de-instrumento-ultimo--2f4342.json"
+  },
+  {
+   "id": "mayores-emisores-nacionales-ultimo-mes-a7c4a8",
+   "titulo": "Mayores emisores nacionales, último mes",
+   "origen": "explorador",
+   "filas": 10,
+   "columnas": [
+    "rut_emisor",
+    "fondos",
+    "valorizacion_miles_mf"
+   ],
+   "truncado": false,
+   "bytes": 1201,
+   "sha256": "665a5675bb6cd11784b1c3b4e4d4954e1313484f27525751a57724df11016387",
+   "url": "/api/v2/resultados/mayores-emisores-nacionales-ultimo-mes-a7c4a8.json"
+  },
+  {
+   "id": "instrumentos-con-compromiso-o-en-garantia-ultimo-4d3b37",
+   "titulo": "Instrumentos con compromiso o en garantía, último mes",
+   "origen": "explorador",
+   "filas": 4,
+   "columnas": [
+    "situacion_instrumento",
+    "posiciones",
+    "fondos"
+   ],
+   "truncado": false,
+   "bytes": 846,
+   "sha256": "48832a8d102d9944cbc5574fec034b743b2da4c693081c972f6f2b8c0fc6e109",
+   "url": "/api/v2/resultados/instrumentos-con-compromiso-o-en-garantia-ultimo-4d3b37.json"
+  },
+  {
+   "id": "cartera-extranjera-por-pais-emisor-ultimo-mes-4da5d1",
+   "titulo": "Cartera extranjera por país emisor, último mes",
+   "origen": "explorador",
+   "filas": 15,
+   "columnas": [
+    "pais_emisor",
+    "posiciones",
+    "fondos"
+   ],
+   "truncado": false,
+   "bytes": 1150,
+   "sha256": "b1e14077e9906dcfeb7a771f77ca9356a1cc843889d22e21c8c4371d3016f8a3",
+   "url": "/api/v2/resultados/cartera-extranjera-por-pais-emisor-ultimo-mes-4da5d1.json"
+  },
+  {
+   "id": "fondos-con-inversion-extranjera-por-mes-db54f6",
+   "titulo": "Fondos con inversión extranjera por mes",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "fondos",
+    "posiciones"
+   ],
+   "truncado": false,
+   "bytes": 1531,
+   "sha256": "563589453032267a7dd2f275678f360052ad9836d23bc2101b70d94febb53eb5",
+   "url": "/api/v2/resultados/fondos-con-inversion-extranjera-por-mes-db54f6.json"
+  },
+  {
+   "id": "forwards-y-futuros-por-activo-objeto-ultimo-mes-72d79a",
+   "titulo": "Forwards y futuros por activo objeto, último mes",
+   "origen": "explorador",
+   "filas": 15,
+   "columnas": [
+    "activo_objeto",
+    "posicion",
+    "contratos",
+    "monto_comprometido_miles_mf"
+   ],
+   "truncado": false,
+   "bytes": 1529,
+   "sha256": "38c5696624282f7aee7106ef2105d537fa431f23ceabe7a26691a5c9d980cf26",
+   "url": "/api/v2/resultados/forwards-y-futuros-por-activo-objeto-ultimo-mes-72d79a.json"
+  },
+  {
+   "id": "contratos-vigentes-por-mes-9057ae",
+   "titulo": "Contratos vigentes por mes",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "contratos",
+    "fondos"
+   ],
+   "truncado": false,
+   "bytes": 1491,
+   "sha256": "14d649793f90fdb532412bad24dee09c25a4a641cad62f0f004afcfbd484aa44",
+   "url": "/api/v2/resultados/contratos-vigentes-por-mes-9057ae.json"
+  },
+  {
+   "id": "opciones-del-ultimo-mes-f81fac",
+   "titulo": "Opciones del último mes",
+   "origen": "explorador",
+   "filas": 18,
+   "columnas": [
+    "run_fondo",
+    "nombre_fondo",
+    "activo_objeto",
+    "nemotecnico",
+    "tipo_opcion",
+    "fecha_expiracion",
+    "numero_contratos",
+    "precio_ejercicio",
+    "inversion_primas_miles_mf"
+   ],
+   "truncado": false,
+   "bytes": 3161,
+   "sha256": "2d213bdab028a25edb1bfc1fabbe107d94e7a01de2bb737c2317e5fdf99dcf78",
+   "url": "/api/v2/resultados/opciones-del-ultimo-mes-f81fac.json"
+  },
+  {
+   "id": "mayores-fondos-en-pesos-por-activo-neto-ultimo-c-cc663c",
+   "titulo": "Mayores fondos en pesos por activo neto, último cierre (MM$)",
+   "origen": "explorador",
+   "filas": 20,
+   "columnas": [
+    "run_fondo",
+    "nombre_fondo",
+    "activo_neto_mm",
+    "activo_neto_anterior_mm"
+   ],
+   "truncado": false,
+   "bytes": 2554,
+   "sha256": "ddb51dce3eb01a97b8ee73afa74e68b6d01492d84496b1c16d5fad9404310f2f",
+   "url": "/api/v2/resultados/mayores-fondos-en-pesos-por-activo-neto-ultimo-c-cc663c.json"
+  },
+  {
+   "id": "activo-neto-de-la-industria-en-pesos-por-cierre--985084",
+   "titulo": "Activo neto de la industria en pesos, por cierre (MM$)",
+   "origen": "explorador",
+   "filas": 16,
+   "columnas": [
+    "periodo",
+    "fondos",
+    "activo_neto_mm"
+   ],
+   "truncado": false,
+   "bytes": 1426,
+   "sha256": "299ab08944ced38bf6e8b082bedb6cc34eb6d47e047df8587cce9ff928bfe368",
+   "url": "/api/v2/resultados/activo-neto-de-la-industria-en-pesos-por-cierre--985084.json"
+  },
+  {
+   "id": "fondos-que-informan-en-dolares-por-cierre-miles--588076",
+   "titulo": "Fondos que informan en dólares, por cierre (miles de US$)",
+   "origen": "explorador",
+   "filas": 16,
+   "columnas": [
+    "periodo",
+    "fondos",
+    "activo_neto_miles_usd"
+   ],
+   "truncado": false,
+   "bytes": 1375,
+   "sha256": "fa6d9893ef1bc87719e42428014c5f75c0462151858829f988258047a6bd07c0",
+   "url": "/api/v2/resultados/fondos-que-informan-en-dolares-por-cierre-miles--588076.json"
+  },
+  {
+   "id": "balance-completo-del-mayor-fondo-en-pesos-ultimo-a74cb8",
+   "titulo": "Balance completo del mayor fondo en pesos, último cierre",
+   "origen": "explorador",
+   "filas": 16,
+   "columnas": [
+    "periodo",
+    "nombre_fondo",
+    "orden",
+    "seccion",
+    "cuenta",
+    "valor_miles_mf",
+    "valor_anterior_miles_mf"
+   ],
+   "truncado": false,
+   "bytes": 3299,
+   "sha256": "71edd3f21a575ba183bc531195c9d99484cbdf44c9c02e27c94fae93d290c596",
+   "url": "/api/v2/resultados/balance-completo-del-mayor-fondo-en-pesos-ultimo-a74cb8.json"
+  },
+  {
+   "id": "mayores-utilidades-del-ultimo-ejercicio-fondos-e-19a6a2",
+   "titulo": "Mayores utilidades del último ejercicio, fondos en pesos (MM$)",
+   "origen": "explorador",
+   "filas": 20,
+   "columnas": [
+    "run_fondo",
+    "nombre_fondo",
+    "utilidad_mm"
+   ],
+   "truncado": false,
+   "bytes": 2230,
+   "sha256": "df03fffde6872b782b95a532cbbc565d684cb9c96a768b7dcc75092a021267e2",
+   "url": "/api/v2/resultados/mayores-utilidades-del-ultimo-ejercicio-fondos-e-19a6a2.json"
+  },
+  {
+   "id": "comision-de-administracion-cobrada-por-ejercicio-2c5670",
+   "titulo": "Comisión de administración cobrada, por ejercicio (MM$, fondos en pesos)",
+   "origen": "explorador",
+   "filas": 16,
+   "columnas": [
+    "periodo",
+    "fondos",
+    "comisiones_mm"
+   ],
+   "truncado": false,
+   "bytes": 1406,
+   "sha256": "10fd92423e6e84bf7c422b894bb5ebdc9b9e03517e0b913fec0e1f0da25d2d1e",
+   "url": "/api/v2/resultados/comision-de-administracion-cobrada-por-ejercicio-2c5670.json"
+  },
+  {
+   "id": "fondos-con-perdida-en-cada-ejercicio-46d5f2",
+   "titulo": "Fondos con pérdida en cada ejercicio",
+   "origen": "explorador",
+   "filas": 16,
+   "columnas": [
+    "periodo",
+    "fondos",
+    "con_perdida",
+    "pct_con_perdida"
+   ],
+   "truncado": false,
+   "bytes": 1508,
+   "sha256": "89b309f4e928bf0f95770f0b44e8231ff732a7f5d5f3c8a1f3e192d22d9097a4",
+   "url": "/api/v2/resultados/fondos-con-perdida-en-cada-ejercicio-46d5f2.json"
+  },
+  {
+   "id": "estado-de-resultados-del-mayor-fondo-en-pesos-ul-ce368f",
+   "titulo": "Estado de resultados del mayor fondo en pesos, último ejercicio",
+   "origen": "explorador",
+   "filas": 19,
+   "columnas": [
+    "periodo",
+    "nombre_fondo",
+    "orden",
+    "seccion",
+    "cuenta",
+    "valor_miles_mf",
+    "valor_anterior_miles_mf"
+   ],
+   "truncado": false,
+   "bytes": 4333,
+   "sha256": "2d649521c174905d9f253c59f9b95dac2f1561639c8e7e2d9deda18391c0b715",
+   "url": "/api/v2/resultados/estado-de-resultados-del-mayor-fondo-en-pesos-ul-ce368f.json"
+  },
+  {
+   "id": "fondos-que-reportan-cartera-en-el-ultimo-trimest-43ddd6",
+   "titulo": "Fondos que reportan cartera en el último trimestre",
+   "origen": "explorador",
+   "filas": 500,
+   "columnas": [
+    "run_fondo",
+    "nombre_fondo",
+    "administradora",
+    "moneda_funcional",
+    "trimestres_con_cartera"
+   ],
+   "truncado": true,
+   "bytes": 75956,
+   "sha256": "0c26eb7827842fc1c271b5e99d0145a9a0776aad54c1c5a5685533e1d4c6cb19",
+   "url": "/api/v2/resultados/fondos-que-reportan-cartera-en-el-ultimo-trimest-43ddd6.json"
+  },
+  {
+   "id": "fondos-por-administradora-vigentes-5c1235",
+   "titulo": "Fondos por administradora (vigentes)",
+   "origen": "explorador",
+   "filas": 20,
+   "columnas": [
+    "administradora",
+    "fondos"
+   ],
+   "truncado": false,
+   "bytes": 2062,
+   "sha256": "4964b985b1c4febe52b6f0cc5dceabdb85c2df452f0e73be5e05fd29b6282012",
+   "url": "/api/v2/resultados/fondos-por-administradora-vigentes-5c1235.json"
+  },
+  {
+   "id": "fondos-por-moneda-funcional-0e965e",
+   "titulo": "Fondos por moneda funcional",
+   "origen": "explorador",
+   "filas": 4,
+   "columnas": [
+    "moneda_funcional",
+    "fondos"
+   ],
+   "truncado": false,
+   "bytes": 654,
+   "sha256": "4c4c803d3e956d748cff86da9c7d04b7b81aaa4a422e6965d3287de4216540cf",
+   "url": "/api/v2/resultados/fondos-por-moneda-funcional-0e965e.json"
+  },
+  {
+   "id": "cartera-nacional-por-tipo-de-instrumento-ultimo--42e0ca",
+   "titulo": "Cartera nacional por tipo de instrumento, último trimestre",
+   "origen": "explorador",
+   "filas": 30,
+   "columnas": [
+    "tipo_instrumento",
+    "posiciones",
+    "fondos",
+    "valorizacion_miles_mf"
+   ],
+   "truncado": false,
+   "bytes": 2231,
+   "sha256": "50a7459689fe05914665f35aab17579ca5b9f1eeb5a02efe1ec1e65f57847b9e",
+   "url": "/api/v2/resultados/cartera-nacional-por-tipo-de-instrumento-ultimo--42e0ca.json"
+  },
+  {
+   "id": "mayores-emisores-nacionales-ultimo-trimestre-d986ae",
+   "titulo": "Mayores emisores nacionales, último trimestre",
+   "origen": "explorador",
+   "filas": 20,
+   "columnas": [
+    "rut_emisor",
+    "fondos",
+    "posiciones"
+   ],
+   "truncado": false,
+   "bytes": 1419,
+   "sha256": "c3b011b98016262b7ad003cb6b822c973dd0b0ec9700e2deff3a83a5ad628d86",
+   "url": "/api/v2/resultados/mayores-emisores-nacionales-ultimo-trimestre-d986ae.json"
+  },
+  {
+   "id": "cartera-extranjera-por-pais-emisor-ultimo-trimes-4b2670",
+   "titulo": "Cartera extranjera por país emisor, último trimestre",
+   "origen": "explorador",
+   "filas": 43,
+   "columnas": [
+    "pais_emisor",
+    "posiciones",
+    "fondos"
+   ],
+   "truncado": false,
+   "bytes": 1967,
+   "sha256": "b2a4a2a7eea776a4378ad7730809343db2e91c0b4aae70356d85d3a707fe35e7",
+   "url": "/api/v2/resultados/cartera-extranjera-por-pais-emisor-ultimo-trimes-4b2670.json"
+  },
+  {
+   "id": "filiales-y-coligadas-metodo-de-la-participacion-24e071",
+   "titulo": "Filiales y coligadas (método de la participación)",
+   "origen": "explorador",
+   "filas": 12,
+   "columnas": [
+    "periodo",
+    "fondos",
+    "inversiones"
+   ],
+   "truncado": false,
+   "bytes": 1072,
+   "sha256": "f76e0c5820cb58e3fed37c0d6c758574572ceafe85ebcbe5758048e28f728336",
+   "url": "/api/v2/resultados/filiales-y-coligadas-metodo-de-la-participacion-24e071.json"
+  },
+  {
+   "id": "forwards-y-futuros-por-activo-objeto-ultimo-trim-36c18d",
+   "titulo": "Forwards y futuros por activo objeto, último trimestre",
+   "origen": "explorador",
+   "filas": 20,
+   "columnas": [
+    "activo_objeto",
+    "posicion",
+    "contratos",
+    "fondos"
+   ],
+   "truncado": false,
+   "bytes": 1499,
+   "sha256": "fb1aaac328bd771bb0507577a50267a0cc11852d389b9fe6c20e797b32110027",
+   "url": "/api/v2/resultados/forwards-y-futuros-por-activo-objeto-ultimo-trim-36c18d.json"
+  },
+  {
+   "id": "contrapartes-de-derivados-ultimo-trimestre-61d701",
+   "titulo": "Contrapartes de derivados, último trimestre",
+   "origen": "explorador",
+   "filas": 15,
+   "columnas": [
+    "contraparte",
+    "contratos"
+   ],
+   "truncado": false,
+   "bytes": 1153,
+   "sha256": "0c45556f0c411ed027b8f7f2519fdb0f17166993210140db53921f2402d3d8ae",
+   "url": "/api/v2/resultados/contrapartes-de-derivados-ultimo-trimestre-61d701.json"
+  },
+  {
+   "id": "opciones-por-trimestre-bfae94",
+   "titulo": "Opciones por trimestre",
+   "origen": "explorador",
+   "filas": 12,
+   "columnas": [
+    "periodo",
+    "contratos",
+    "fondos"
+   ],
+   "truncado": false,
+   "bytes": 954,
+   "sha256": "2d16eca00080fecef3c1d25eb5b850c7c91c64c865e4c7194b05a8ef8de96f4f",
+   "url": "/api/v2/resultados/opciones-por-trimestre-bfae94.json"
+  },
+  {
+   "id": "pactos-por-tipo-de-operacion-y-contraparte-ultim-47db60",
+   "titulo": "Pactos por tipo de operación y contraparte, último trimestre",
+   "origen": "explorador",
+   "filas": 8,
+   "columnas": [
+    "tipo_operacion",
+    "contraparte",
+    "pactos",
+    "tasa_prom_pct"
+   ],
+   "truncado": false,
+   "bytes": 1315,
+   "sha256": "45651b8144f2a2c4d8d8ea414d856e6e3494fe9d4c6b2f3fa8f7fd2785b1fe41",
+   "url": "/api/v2/resultados/pactos-por-tipo-de-operacion-y-contraparte-ultim-47db60.json"
+  },
+  {
+   "id": "mayores-patrimonios-en-pesos-ultimo-cierre-mm-4df30e",
+   "titulo": "Mayores patrimonios en pesos, último cierre (MM$)",
+   "origen": "explorador",
+   "filas": 20,
+   "columnas": [
+    "run_fondo",
+    "nombre_fondo",
+    "patrimonio_mm"
+   ],
+   "truncado": false,
+   "bytes": 2072,
+   "sha256": "fe75c7ac24e99cd264e525080f7ee5421dce66d1a2566788b55e8be9a9a0b548",
+   "url": "/api/v2/resultados/mayores-patrimonios-en-pesos-ultimo-cierre-mm-4df30e.json"
+  },
+  {
+   "id": "balance-actual-del-mayor-fondo-en-pesos-ultimo-c-2ee7e1",
+   "titulo": "Balance actual del mayor fondo en pesos, último cierre",
+   "origen": "explorador",
+   "filas": 42,
+   "columnas": [
+    "periodo",
+    "nombre_fondo",
+    "orden",
+    "seccion",
+    "cuenta",
+    "valor_miles_mf"
+   ],
+   "truncado": false,
+   "bytes": 6539,
+   "sha256": "b2ba7fc977dea1a1bc9d29a687997b80aead7c74b253be9453a0bcb1488eec24",
+   "url": "/api/v2/resultados/balance-actual-del-mayor-fondo-en-pesos-ultimo-c-2ee7e1.json"
+  },
+  {
+   "id": "cobertura-de-balances-por-cierre-y-contexto-a37a1b",
+   "titulo": "Cobertura de balances por cierre y contexto",
+   "origen": "explorador",
+   "filas": 136,
+   "columnas": [
+    "periodo",
+    "contexto",
+    "moneda",
+    "fondos"
+   ],
+   "truncado": false,
+   "bytes": 9557,
+   "sha256": "1c64f03ecdc9e9cda24f4e290268702dcd220d2dbdbdc19467bb644bbbf34b57",
+   "url": "/api/v2/resultados/cobertura-de-balances-por-cierre-y-contexto-a37a1b.json"
+  },
+  {
+   "id": "mayores-resultados-acumulados-en-pesos-ultimo-ci-ec3f0d",
+   "titulo": "Mayores resultados acumulados en pesos, último cierre (MM$)",
+   "origen": "explorador",
+   "filas": 20,
+   "columnas": [
+    "run_fondo",
+    "nombre_fondo",
+    "resultado_mm"
+   ],
+   "truncado": false,
+   "bytes": 2132,
+   "sha256": "ea902ccf94bd29392b5247fdf0138772f7d3266aed79e30e444a4e03c6be097e",
+   "url": "/api/v2/resultados/mayores-resultados-acumulados-en-pesos-ultimo-ci-ec3f0d.json"
+  },
+  {
+   "id": "resultado-solo-del-trimestre-en-pesos-segun-xml--c46755",
+   "titulo": "Resultado SOLO del trimestre en pesos, según XML (MM$)",
+   "origen": "explorador",
+   "filas": 20,
+   "columnas": [
+    "periodo",
+    "run_fondo",
+    "nombre_fondo",
+    "resultado_trimestre_mm",
+    "cotejo_ficha"
+   ],
+   "truncado": false,
+   "bytes": 2705,
+   "sha256": "624746a4c3f99dcc40ced44e9ed4de36e5a93f7bde181d1a832b91b229f2ce83",
+   "url": "/api/v2/resultados/resultado-solo-del-trimestre-en-pesos-segun-xml--c46755.json"
+  },
+  {
+   "id": "comisiones-acumuladas-por-cierre-y-moneda-sin-me-805f8e",
+   "titulo": "Comisiones acumuladas por cierre y moneda, sin mezclar contextos",
+   "origen": "explorador",
+   "filas": 48,
+   "columnas": [
+    "periodo",
+    "moneda",
+    "fondos",
+    "comision_miles_moneda"
+   ],
+   "truncado": false,
+   "bytes": 3177,
+   "sha256": "485f41ab82f4d2cf163bcd8879a3c7a4c05b06e3a601439848223eed86d65e81",
+   "url": "/api/v2/resultados/comisiones-acumuladas-por-cierre-y-moneda-sin-me-805f8e.json"
+  },
+  {
+   "id": "catalogo-de-agf-vigentes-vs-canceladas-40705b",
+   "titulo": "Catálogo de AGF (Vigentes vs Canceladas)",
+   "origen": "explorador",
+   "filas": 72,
+   "columnas": [
+    "rut_completo",
+    "razon_social",
+    "estado_vigencia",
+    "grupo_controlador",
+    "fondos_inversion_administrados"
+   ],
+   "truncado": false,
+   "bytes": 10623,
+   "sha256": "6925d1168c73da189aecb59eefd4744e8fe1eabea3f7f6d09ba243bee0a862ea",
+   "url": "/api/v2/resultados/catalogo-de-agf-vigentes-vs-canceladas-40705b.json"
+  },
+  {
+   "id": "ranking-de-agf-por-fondos-de-inversion-administr-502179",
+   "titulo": "Ranking de AGF por Fondos de Inversión Administrados",
+   "origen": "explorador",
+   "filas": 15,
+   "columnas": [
+    "razon_social",
+    "grupo_controlador",
+    "fondos_inversion_administrados",
+    "cmf_url"
+   ],
+   "truncado": false,
+   "bytes": 4113,
+   "sha256": "9e5bef7dd256683ab3aaa9385ea91c5b1724e4cf1dee281e9dc3f2e78245d719",
+   "url": "/api/v2/resultados/ranking-de-agf-por-fondos-de-inversion-administr-502179.json"
+  },
+  {
+   "id": "agf-por-grupo-financiero-controlador-229478",
+   "titulo": "AGF por Grupo Financiero Controlador",
+   "origen": "explorador",
+   "filas": 18,
+   "columnas": [
+    "grupo_controlador",
+    "cantidad_agf",
+    "total_fondos"
+   ],
+   "truncado": false,
+   "bytes": 1495,
+   "sha256": "fff19827ce2de633d539dfb452e0a6fd50e2180580ccb9ebb5ff18a58f80de96",
+   "url": "/api/v2/resultados/agf-por-grupo-financiero-controlador-229478.json"
+  },
+  {
+   "id": "activos-pasivos-y-patrimonio-por-agf-ultimo-trim-195ff3",
+   "titulo": "Activos, pasivos y patrimonio por AGF, último trimestre (MM$)",
+   "origen": "explorador",
+   "filas": 53,
+   "columnas": [
+    "periodo",
+    "razon_social",
+    "tipo_balance",
+    "moneda",
+    "activos_mm",
+    "pasivos_mm",
+    "patrimonio_mm"
+   ],
+   "truncado": false,
+   "bytes": 8363,
+   "sha256": "214a691c84d20fe426323fe587b4e7dbb986f399068310f229fc2204d9afb86e",
+   "url": "/api/v2/resultados/activos-pasivos-y-patrimonio-por-agf-ultimo-trim-195ff3.json"
+  },
+  {
+   "id": "evolucion-del-sector-activos-totales-por-trimest-266f13",
+   "titulo": "Evolución del sector: activos totales por trimestre (MM$, CLP)",
+   "origen": "explorador",
+   "filas": 65,
+   "columnas": [
+    "periodo",
+    "entidades",
+    "activos_mm_clp"
+   ],
+   "truncado": false,
+   "bytes": 3426,
+   "sha256": "88772c3c222fa41f1130b609abfa1deba23b4d9aab25f37ed63bd1ff2d1e2a61",
+   "url": "/api/v2/resultados/evolucion-del-sector-activos-totales-por-trimest-266f13.json"
+  },
+  {
+   "id": "balance-completo-de-banchile-agf-ultimo-trimestr-22cbe4",
+   "titulo": "Balance completo de Banchile AGF, último trimestre",
+   "origen": "explorador",
+   "filas": 23,
+   "columnas": [
+    "periodo",
+    "tipo_balance",
+    "estado_financiero",
+    "orden",
+    "cuenta",
+    "valor"
+   ],
+   "truncado": false,
+   "bytes": 3311,
+   "sha256": "65bac204016877a000b0f3012e75913c1c5567073c91a9bf64e675a42e43103c",
+   "url": "/api/v2/resultados/balance-completo-de-banchile-agf-ultimo-trimestr-22cbe4.json"
+  },
+  {
+   "id": "ingresos-y-utilidad-por-agf-ejercicio-2025-mm-22d477",
+   "titulo": "Ingresos y utilidad por AGF, ejercicio 2025 (MM$)",
+   "origen": "explorador",
+   "filas": 53,
+   "columnas": [
+    "razon_social",
+    "tipo_balance",
+    "moneda",
+    "ingresos_mm",
+    "ganancia_mm"
+   ],
+   "truncado": false,
+   "bytes": 6940,
+   "sha256": "7d3f728446b8c101bd185324dd51a39f330eb5c97efebd7521974f225725e29f",
+   "url": "/api/v2/resultados/ingresos-y-utilidad-por-agf-ejercicio-2025-mm-22d477.json"
+  },
+  {
+   "id": "por-que-hay-que-filtrar-ganancia-perdida-aparece-8db310",
+   "titulo": "Por qué hay que filtrar: «Ganancia (pérdida)» aparece varias veces",
+   "origen": "explorador",
+   "filas": 5,
+   "columnas": [
+    "estado_financiero",
+    "repeticion",
+    "filas",
+    "entidades"
+   ],
+   "truncado": false,
+   "bytes": 917,
+   "sha256": "cf26ba1d21cae2478317f33c8bed04890c3d8f03ea2e510ea7082c5319738dd4",
+   "url": "/api/v2/resultados/por-que-hay-que-filtrar-ganancia-perdida-aparece-8db310.json"
+  },
+  {
+   "id": "utilidad-del-sector-por-ano-cierres-de-diciembre-d9fd92",
+   "titulo": "Utilidad del sector por año (cierres de diciembre, MM$, CLP)",
+   "origen": "explorador",
+   "filas": 16,
+   "columnas": [
+    "anio",
+    "entidades",
+    "ganancia_mm_clp"
+   ],
+   "truncado": false,
+   "bytes": 1393,
+   "sha256": "c0acf8646412fe66e6f98bf9c57cd117eec54c928efc508b8cc56c0c84dc3a51",
+   "url": "/api/v2/resultados/utilidad-del-sector-por-ano-cierres-de-diciembre-d9fd92.json"
+  },
+  {
+   "id": "estado-de-resultados-completo-de-banchile-agf-ej-ef9a3d",
+   "titulo": "Estado de resultados completo de Banchile AGF, ejercicio 2025",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "tipo_balance",
+    "estado_financiero",
+    "orden",
+    "cuenta",
+    "valor"
+   ],
+   "truncado": false,
+   "bytes": 3227,
+   "sha256": "069e71b4c8228212908678a5891cec7d8eeb81c86d7cf941d5ad44ddff6a0246",
+   "url": "/api/v2/resultados/estado-de-resultados-completo-de-banchile-agf-ej-ef9a3d.json"
+  },
+  {
+   "id": "identificacion-de-administradoras-f2fee2",
+   "titulo": "Identificación de administradoras",
+   "origen": "explorador",
+   "filas": 7,
+   "columnas": [
+    "rut_administradora",
+    "nombre_administradora",
+    "nombre_fantasia"
+   ],
+   "truncado": false,
+   "bytes": 1254,
+   "sha256": "bfa434373e3c152eb4f803faa8313d4ed8b784be50b675a2edd13f802224805f",
+   "url": "/api/v2/resultados/identificacion-de-administradoras-f2fee2.json"
+  },
+  {
+   "id": "bancos-vigentes-con-rut-4da2ff",
+   "titulo": "Bancos vigentes con RUT",
+   "origen": "explorador",
+   "filas": 20,
+   "columnas": [
+    "codigo_institucion",
+    "rut_completo",
+    "nombre_fantasia",
+    "razon_social",
+    "tipo_licencia",
+    "estado"
+   ],
+   "truncado": false,
+   "bytes": 3105,
+   "sha256": "633bf47c69e6f899dc902efb76258768c1700f21b17c754cab8b9b849baae0fa",
+   "url": "/api/v2/resultados/bancos-vigentes-con-rut-4da2ff.json"
+  },
+  {
+   "id": "historial-de-bancos-fusionados-o-cerrados-17a709",
+   "titulo": "Historial de bancos fusionados o cerrados",
+   "origen": "explorador",
+   "filas": 14,
+   "columnas": [
+    "codigo_institucion",
+    "rut_completo",
+    "nombre_fantasia",
+    "razon_social",
+    "estado"
+   ],
+   "truncado": false,
+   "bytes": 2058,
+   "sha256": "3f890c7d3561e3b54e9378fdc93ac295d010ed73c3b0ad88a4111b21319774d6",
+   "url": "/api/v2/resultados/historial-de-bancos-fusionados-o-cerrados-17a709.json"
+  },
+  {
+   "id": "agregados-sectoriales-de-la-cmf-65e87f",
+   "titulo": "Agregados sectoriales de la CMF",
+   "origen": "explorador",
+   "filas": 7,
+   "columnas": [
+    "codigo_institucion",
+    "razon_social",
+    "tipo_licencia",
+    "estado"
+   ],
+   "truncado": false,
+   "bytes": 1255,
+   "sha256": "9dd1f68405b06aa902e2ea6c3ae72cbbde4f96ad2e64f7494bd9af4aa58e3774",
+   "url": "/api/v2/resultados/agregados-sectoriales-de-la-cmf-65e87f.json"
+  },
+  {
+   "id": "total-de-activos-por-banco-ultimo-periodo-8feb88",
+   "titulo": "Total de activos por banco (último periodo)",
+   "origen": "explorador",
+   "filas": 17,
+   "columnas": [
+    "codigo_institucion",
+    "razon_social",
+    "importe_clp"
+   ],
+   "truncado": false,
+   "bytes": 1779,
+   "sha256": "3a69f1d87c0da329950384d56caf14ea44e93335d6f7611442ad68f281fdf166",
+   "url": "/api/v2/resultados/total-de-activos-por-banco-ultimo-periodo-8feb88.json"
+  },
+  {
+   "id": "muestra-de-lineas-de-balance-b1-b2-142f86",
+   "titulo": "Muestra de líneas de balance B1/B2",
+   "origen": "explorador",
+   "filas": 100,
+   "columnas": [
+    "periodo",
+    "codigo_institucion",
+    "razon_social",
+    "familia_archivo_fuente",
+    "codigo_cuenta",
+    "glosa_cuenta",
+    "tipo_linea",
+    "importe_clp",
+    "importes_fuente_raw",
+    "numero_fila_fuente"
+   ],
+   "truncado": false,
+   "bytes": 27001,
+   "sha256": "c7b57853a4b6e9ee969df6d6665d9a708ae9eec4238d40390e3a00039b4c9604",
+   "url": "/api/v2/resultados/muestra-de-lineas-de-balance-b1-b2-142f86.json"
+  },
+  {
+   "id": "cobertura-de-balance-por-periodo-y-modelo-764c5a",
+   "titulo": "Cobertura de balance por periodo y modelo",
+   "origen": "explorador",
+   "filas": 112,
+   "columnas": [
+    "periodo",
+    "familia_archivo_fuente",
+    "modelo_cmf",
+    "filas",
+    "instituciones"
+   ],
+   "truncado": false,
+   "bytes": 7118,
+   "sha256": "188a86b2eb9c27a855c63acc3f2c0a07fe72a527e646ef3a867ede99320c15e7",
+   "url": "/api/v2/resultados/cobertura-de-balance-por-periodo-y-modelo-764c5a.json"
+  },
+  {
+   "id": "utilidad-del-ejercicio-por-banco-ultimo-periodo-c2ba60",
+   "titulo": "Utilidad del ejercicio por banco (último periodo)",
+   "origen": "explorador",
+   "filas": 17,
+   "columnas": [
+    "codigo_institucion",
+    "razon_social",
+    "importe_clp"
+   ],
+   "truncado": false,
+   "bytes": 1741,
+   "sha256": "9156c66e9c08864fc74ff1bce897da849aa05294137a99860497b2f1c6971b93",
+   "url": "/api/v2/resultados/utilidad-del-ejercicio-por-banco-ultimo-periodo-c2ba60.json"
+  },
+  {
+   "id": "muestra-de-lineas-de-resultados-r1-2a300a",
+   "titulo": "Muestra de líneas de resultados R1",
+   "origen": "explorador",
+   "filas": 100,
+   "columnas": [
+    "periodo",
+    "codigo_institucion",
+    "razon_social",
+    "codigo_cuenta",
+    "glosa_cuenta",
+    "tipo_linea",
+    "importe_clp",
+    "importes_fuente_raw",
+    "numero_fila_fuente"
+   ],
+   "truncado": false,
+   "bytes": 19268,
+   "sha256": "774c169decf16fe81e44475b179385af7ccec9ac1d5a32c53d95ec66acff19ba",
+   "url": "/api/v2/resultados/muestra-de-lineas-de-resultados-r1-2a300a.json"
+  },
+  {
+   "id": "cobertura-de-resultados-por-periodo-c6e2de",
+   "titulo": "Cobertura de resultados por periodo",
+   "origen": "explorador",
+   "filas": 56,
+   "columnas": [
+    "periodo",
+    "modelo_cmf",
+    "filas",
+    "instituciones"
+   ],
+   "truncado": false,
+   "bytes": 3368,
+   "sha256": "e64ad28abf773c3d83534f419fece3b1b27af5afb4adc36aea1d0c02e7bf01af",
+   "url": "/api/v2/resultados/cobertura-de-resultados-por-periodo-c6e2de.json"
+  },
+  {
+   "id": "tpm-y-tasa-interbancaria-ultimos-60-dias-9bc7ba",
+   "titulo": "TPM y tasa interbancaria: últimos 60 días",
+   "origen": "explorador",
+   "filas": 60,
+   "columnas": [
+    "fecha",
+    "tpm_pct",
+    "tib_promedio_pct",
+    "diferencia_tib_tpm"
+   ],
+   "truncado": false,
+   "bytes": 3581,
+   "sha256": "47e629ee148de860200843d780ddecfbfb017eeb48f7a3aa7888f0b0cea4fc25",
+   "url": "/api/v2/resultados/tpm-y-tasa-interbancaria-ultimos-60-dias-9bc7ba.json"
+  },
+  {
+   "id": "curva-de-bonos-en-pesos-promedio-mensual-ultimos-5c9393",
+   "titulo": "Curva de bonos en pesos: promedio mensual, últimos 24 meses",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "bono_2_anos_pct",
+    "bono_5_anos_pct",
+    "bono_10_anos_pct"
+   ],
+   "truncado": false,
+   "bytes": 2043,
+   "sha256": "cb6dc7193cd94c386b4d8f19b4efe8f1d7f90798d503b2dcd229f7428e2b75dd",
+   "url": "/api/v2/resultados/curva-de-bonos-en-pesos-promedio-mensual-ultimos-5c9393.json"
+  },
+  {
+   "id": "curva-de-bonos-en-uf-ultimo-dato-disponible-por--bce2e5",
+   "titulo": "Curva de bonos en UF: último dato disponible por plazo",
+   "origen": "explorador",
+   "filas": 20,
+   "columnas": [
+    "fecha",
+    "rendimiento_bono_uf_1_ano_pct",
+    "rendimiento_bono_uf_2_anos_pct",
+    "rendimiento_bono_uf_5_anos_pct",
+    "rendimiento_bono_uf_10_anos_pct",
+    "rendimiento_bono_uf_20_anos_pct",
+    "rendimiento_bono_uf_30_anos_pct"
+   ],
+   "truncado": false,
+   "bytes": 2485,
+   "sha256": "fabcac88b4dfe5f2d86203397e4a9c8db66e9779dea389b43c57ca8dbfa614fc",
+   "url": "/api/v2/resultados/curva-de-bonos-en-uf-ultimo-dato-disponible-por--bce2e5.json"
+  },
+  {
+   "id": "inflacion-implicita-a-5-y-10-anos-promedio-mensu-f209af",
+   "titulo": "Inflación implícita a 5 y 10 años: promedio mensual",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "implicita_5_anos_pct",
+    "implicita_10_anos_pct"
+   ],
+   "truncado": false,
+   "bytes": 1733,
+   "sha256": "28adbceb17af814c62fae8aacee0168e9a8bec120f323923153587f35c051ec5",
+   "url": "/api/v2/resultados/inflacion-implicita-a-5-y-10-anos-promedio-mensu-f209af.json"
+  },
+  {
+   "id": "swaps-de-camara-en-pesos-curva-90-dias-a-2-anos-2758c5",
+   "titulo": "Swaps de cámara en pesos: curva 90 días a 2 años",
+   "origen": "explorador",
+   "filas": 30,
+   "columnas": [
+    "fecha",
+    "swap_camara_pesos_90_dias_pct",
+    "swap_camara_pesos_180_dias_pct",
+    "swap_camara_pesos_360_dias_pct",
+    "swap_camara_pesos_2_anos_pct",
+    "swap_camara_uf_1_ano_pct"
+   ],
+   "truncado": false,
+   "bytes": 4371,
+   "sha256": "20b781bd10ac9593c08714f04de05e8d96e71b6f2367542d49ee2f8ca1d6eacd",
+   "url": "/api/v2/resultados/swaps-de-camara-en-pesos-curva-90-dias-a-2-anos-2758c5.json"
+  },
+  {
+   "id": "tasa-de-la-fed-frente-a-la-tpm-de-chile-promedio-2698e8",
+   "titulo": "Tasa de la Fed frente a la TPM de Chile: promedio mensual",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "fed_funds_pct",
+    "tpm_chile_pct"
+   ],
+   "truncado": false,
+   "bytes": 1657,
+   "sha256": "5f290761f123edd9b7bb3da70f9e03e4cb706748ab4ab89b2ae8e1fea8858881",
+   "url": "/api/v2/resultados/tasa-de-la-fed-frente-a-la-tpm-de-chile-promedio-2698e8.json"
+  },
+  {
+   "id": "dolar-observado-ultimos-30-dias-habiles-8be1d9",
+   "titulo": "Dólar observado: últimos 30 días hábiles",
+   "origen": "explorador",
+   "filas": 30,
+   "columnas": [
+    "fecha",
+    "dolar_observado_clp_por_usd"
+   ],
+   "truncado": false,
+   "bytes": 1623,
+   "sha256": "a179835a48f6b116d1b0ae43b0de66bc0ee07bf26c792a7f4a321479ce17984c",
+   "url": "/api/v2/resultados/dolar-observado-ultimos-30-dias-habiles-8be1d9.json"
+  },
+  {
+   "id": "dolar-observado-por-mes-promedio-minimo-maximo-y-d9a9c1",
+   "titulo": "Dólar observado por mes: promedio, mínimo, máximo y cierre",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "promedio_clp",
+    "minimo_clp",
+    "maximo_clp",
+    "cierre_clp"
+   ],
+   "truncado": false,
+   "bytes": 2394,
+   "sha256": "a3e83ffa5b1b274d31cabff27fb9539fdf964de155038da3290b53a3b670a7ef",
+   "url": "/api/v2/resultados/dolar-observado-por-mes-promedio-minimo-maximo-y-d9a9c1.json"
+  },
+  {
+   "id": "dolar-y-euro-observados-en-la-misma-fecha-4b24d1",
+   "titulo": "Dólar y euro observados en la misma fecha",
+   "origen": "explorador",
+   "filas": 30,
+   "columnas": [
+    "fecha",
+    "dolar_observado_clp_por_usd",
+    "euro_observado_clp_por_eur",
+    "euro_por_dolar"
+   ],
+   "truncado": false,
+   "bytes": 2529,
+   "sha256": "ebe6b331bef8cc86f4d2c18777a72654fb5ca926aa484c46b561fd4f8ff1a08a",
+   "url": "/api/v2/resultados/dolar-y-euro-observados-en-la-misma-fecha-4b24d1.json"
+  },
+  {
+   "id": "tipo-de-cambio-real-tcr-general-y-tcr-5-8698f8",
+   "titulo": "Tipo de cambio real: TCR general y TCR-5",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "tipo_cambio_real_general_indice",
+    "tipo_cambio_real_5_monedas_indice"
+   ],
+   "truncado": false,
+   "bytes": 2160,
+   "sha256": "09181e9e4acb6ec248cbd456af37e19f74b5644b2292b07a4491084c21cce7ee",
+   "url": "/api/v2/resultados/tipo-de-cambio-real-tcr-general-y-tcr-5-8698f8.json"
+  },
+  {
+   "id": "uf-valor-de-cierre-de-cada-mes-y-variacion-mensu-73d97c",
+   "titulo": "UF: valor de cierre de cada mes y variación mensual",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "uf_cierre_clp",
+    "uf_var_mensual_pct"
+   ],
+   "truncado": false,
+   "bytes": 1798,
+   "sha256": "bb753c23dfe2654b0cdb7d5c18c74ded026d54526de4df3bfe29e63fcf418a12",
+   "url": "/api/v2/resultados/uf-valor-de-cierre-de-cada-mes-y-variacion-mensu-73d97c.json"
+  },
+  {
+   "id": "uf-y-utm-vigentes-ultimo-valor-de-cada-mes-249a2e",
+   "titulo": "UF y UTM vigentes: último valor de cada mes",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "uf_cierre_clp",
+    "utm_valor_clp"
+   ],
+   "truncado": false,
+   "bytes": 1798,
+   "sha256": "0e7629cc4d5e6a324fc57992a453e222eb3dad5f247ad068b13801b5eee076e1",
+   "url": "/api/v2/resultados/uf-y-utm-vigentes-ultimo-valor-de-cada-mes-249a2e.json"
+  },
+  {
+   "id": "inflacion-ipc-indice-y-variaciones-mensual-y-anu-0eb407",
+   "titulo": "Inflación IPC: índice y variaciones mensual y anual",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "ipc_indice",
+    "ipc_var_mensual_pct",
+    "ipc_var_anual_pct"
+   ],
+   "truncado": false,
+   "bytes": 2549,
+   "sha256": "ff3ee1c6cf7904b79ce5b50d363b2b4443512d1e145c27c3e779ae934a1f5e7a",
+   "url": "/api/v2/resultados/inflacion-ipc-indice-y-variaciones-mensual-y-anu-0eb407.json"
+  },
+  {
+   "id": "imacec-total-y-no-minero-con-variacion-anual-021cf9",
+   "titulo": "Imacec total y no minero con variación anual",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "imacec_empalmado_indice",
+    "imacec_var_anual_pct",
+    "imacec_no_minero_indice",
+    "imacec_minero_indice"
+   ],
+   "truncado": false,
+   "bytes": 2992,
+   "sha256": "b5ea23993e61ca1fc5e5dc05ea1ff95ef9691c9c38c6f88fdfab0e02bb30628e",
+   "url": "/api/v2/resultados/imacec-total-y-no-minero-con-variacion-anual-021cf9.json"
+  },
+  {
+   "id": "imacec-por-sector-comercio-y-servicios-93197c",
+   "titulo": "Imacec por sector: comercio y servicios",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "imacec_comercio_indice",
+    "imacec_servicios_indice",
+    "imacec_no_minero_indice"
+   ],
+   "truncado": false,
+   "bytes": 2606,
+   "sha256": "2ee6d00bf148fe4a945039478d86f45c31aeee6106bb409ab9266e3418e1a626",
+   "url": "/api/v2/resultados/imacec-por-sector-comercio-y-servicios-93197c.json"
+  },
+  {
+   "id": "pib-trimestral-con-variacion-respecto-al-mismo-t-50c220",
+   "titulo": "PIB trimestral con variación respecto al mismo trimestre del año anterior",
+   "origen": "explorador",
+   "filas": 20,
+   "columnas": [
+    "periodo",
+    "pib_encadenado_miles_mm_clp",
+    "pib_var_anual_pct"
+   ],
+   "truncado": false,
+   "bytes": 1771,
+   "sha256": "177f314cdcd34c386137a341425cb894e0f2a11a2b8efb285cd2261ebd3630b5",
+   "url": "/api/v2/resultados/pib-trimestral-con-variacion-respecto-al-mismo-t-50c220.json"
+  },
+  {
+   "id": "desocupacion-ocupados-y-fuerza-de-trabajo-ultimo-14474f",
+   "titulo": "Desocupación, ocupados y fuerza de trabajo: últimos 24 meses",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "desocupacion_pct",
+    "ocupados_miles_personas",
+    "asalariados_miles_personas",
+    "fuerza_trabajo_miles_personas"
+   ],
+   "truncado": false,
+   "bytes": 3193,
+   "sha256": "1254084defd40b0bf60ec2e97a6c099a70bf0da79ab193c31f907226f0c3d67b",
+   "url": "/api/v2/resultados/desocupacion-ocupados-y-fuerza-de-trabajo-ultimo-14474f.json"
+  },
+  {
+   "id": "participacion-de-asalariados-sobre-ocupados-46b8e7",
+   "titulo": "Participación de asalariados sobre ocupados",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "asalariados_sobre_ocupados_pct",
+    "desocupacion_pct"
+   ],
+   "truncado": false,
+   "bytes": 1920,
+   "sha256": "a02c176b719151b609a7904c7fc31acb8eba925bb7dadf550a423b8268ccef2d",
+   "url": "/api/v2/resultados/participacion-de-asalariados-sobre-ocupados-46b8e7.json"
+  },
+  {
+   "id": "cobre-precio-diario-bml-ultimos-30-dias-e5c8d9",
+   "titulo": "Cobre: precio diario BML, últimos 30 días",
+   "origen": "explorador",
+   "filas": 30,
+   "columnas": [
+    "fecha",
+    "cobre_refinado_usd_por_libra"
+   ],
+   "truncado": false,
+   "bytes": 1664,
+   "sha256": "5627987828ad3e6f6d5046fbf34c6c863695e638ec36cf18153790a224cef79d",
+   "url": "/api/v2/resultados/cobre-precio-diario-bml-ultimos-30-dias-e5c8d9.json"
+  },
+  {
+   "id": "cobre-promedio-mensual-y-referencia-bcch-con-var-3d0bbf",
+   "titulo": "Cobre: promedio mensual y referencia BCCh con variación anual",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "promedio_diario_usd_lb",
+    "referencia_mensual_usd_lb",
+    "referencia_var_anual_pct"
+   ],
+   "truncado": false,
+   "bytes": 2481,
+   "sha256": "8f92f4b0be7e900822e4f97c1ff85a3e7c681cf6ee3ae81422ab4e2f147e4a68",
+   "url": "/api/v2/resultados/cobre-promedio-mensual-y-referencia-bcch-con-var-3d0bbf.json"
+  },
+  {
+   "id": "oro-y-plata-ultimos-30-dias-7e379f",
+   "titulo": "Oro y plata: últimos 30 días",
+   "origen": "explorador",
+   "filas": 30,
+   "columnas": [
+    "fecha",
+    "oro_usd_por_onza_troy",
+    "plata_usd_por_onza_troy",
+    "relacion_oro_plata"
+   ],
+   "truncado": false,
+   "bytes": 2482,
+   "sha256": "9a0828464d9770e4094307bf5544c890091230f669916cf0068285b8089b50a4",
+   "url": "/api/v2/resultados/oro-y-plata-ultimos-30-dias-7e379f.json"
+  },
+  {
+   "id": "reservas-internacionales-ultimos-24-meses-d34a70",
+   "titulo": "Reservas internacionales: últimos 24 meses",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "reservas_internacionales_millones_usd"
+   ],
+   "truncado": false,
+   "bytes": 1522,
+   "sha256": "0fb486528a731e19fcfb0e44aaa9497ba17aaca9f6bedf8261bb98df12487544",
+   "url": "/api/v2/resultados/reservas-internacionales-ultimos-24-meses-d34a70.json"
+  },
+  {
+   "id": "deuda-publica-sobre-pib-serie-trimestral-7454d5",
+   "titulo": "Deuda pública sobre PIB: serie trimestral",
+   "origen": "explorador",
+   "filas": 20,
+   "columnas": [
+    "periodo",
+    "deuda_bruta_gobierno_central_pct_pib"
+   ],
+   "truncado": false,
+   "bytes": 1414,
+   "sha256": "c0513371c15db76f51bcba4dbb7fdb58a67e38810989d3736141979294b04f28",
+   "url": "/api/v2/resultados/deuda-publica-sobre-pib-serie-trimestral-7454d5.json"
+  },
+  {
+   "id": "inflacion-anual-efectiva-frente-a-la-esperada-ee-c07925",
+   "titulo": "Inflación anual efectiva frente a la esperada (EEE)",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "ipc_var_anual_pct",
+    "expectativa_inflacion_ipc_11_meses_pct",
+    "expectativa_inflacion_ipc_23_meses_pct",
+    "desvio_11_meses_vs_meta_puntos_basicos"
+   ],
+   "truncado": false,
+   "bytes": 2550,
+   "sha256": "6cd6ea35102b370343ac852e85e5c90ec9fd0b236a563883a01af70f9f689849",
+   "url": "/api/v2/resultados/inflacion-anual-efectiva-frente-a-la-esperada-ee-c07925.json"
+  },
+  {
+   "id": "tpm-efectiva-frente-a-la-esperada-por-la-eee-f1cccc",
+   "titulo": "TPM efectiva frente a la esperada por la EEE",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "periodo",
+    "tpm_pct",
+    "expectativa_tpm_11_meses_pct",
+    "expectativa_tpm_23_meses_pct"
+   ],
+   "truncado": false,
+   "bytes": 1970,
+   "sha256": "f257f2038b034361fb4cae7911b8cc5d94aea7f9206989819e3a66b637ab9483",
+   "url": "/api/v2/resultados/tpm-efectiva-frente-a-la-esperada-por-la-eee-f1cccc.json"
+  },
+  {
+   "id": "encuesta-de-operadores-financieros-ultimas-20-en-aa63e2",
+   "titulo": "Encuesta de Operadores Financieros: últimas 20 encuestas",
+   "origen": "explorador",
+   "filas": 20,
+   "columnas": [
+    "fecha",
+    "expectativa_inflacion_12_meses_pct",
+    "expectativa_tpm_12_meses_pct"
+   ],
+   "truncado": false,
+   "bytes": 1489,
+   "sha256": "a97e96b8d958c2be1ebe6cecbee6f4ebf91208f33980881e52123508e2589810",
+   "url": "/api/v2/resultados/encuesta-de-operadores-financieros-ultimas-20-en-aa63e2.json"
+  },
+  {
+   "id": "catalogo-series-frecuencia-unidad-y-ultima-fecha-4573aa",
+   "titulo": "Catálogo: series, frecuencia, unidad y última fecha",
+   "origen": "explorador",
+   "filas": 51,
+   "columnas": [
+    "grupo",
+    "nombre",
+    "frecuencia",
+    "unidad",
+    "primera_fecha",
+    "ultima_fecha",
+    "observaciones",
+    "estado"
+   ],
+   "truncado": false,
+   "bytes": 7838,
+   "sha256": "f24e92fdad2bd8411f9cafa6e6c9d052e2581648f08dd66da537db3b31477cde",
+   "url": "/api/v2/resultados/catalogo-series-frecuencia-unidad-y-ultima-fecha-4573aa.json"
+  },
+  {
+   "id": "estado-de-la-ultima-consulta-al-bcch-por-grupo-b5c6d8",
+   "titulo": "Estado de la última consulta al BCCh por grupo",
+   "origen": "explorador",
+   "filas": 9,
+   "columnas": [
+    "grupo",
+    "series",
+    "series_ok",
+    "dato_mas_reciente",
+    "ultima_consulta_utc"
+   ],
+   "truncado": false,
+   "bytes": 1531,
+   "sha256": "4ed2d862b0536e4e4218c9369a7b2d1bdf3575975ec2fca22122b566c1e8757c",
+   "url": "/api/v2/resultados/estado-de-la-ultima-consulta-al-bcch-por-grupo-b5c6d8.json"
+  },
+  {
+   "id": "lista-por-segmento-y-licencia-catalogo-local-53671b",
+   "titulo": "Lista por segmento y licencia (catálogo local)",
+   "origen": "explorador",
+   "filas": 32,
+   "columnas": [
+    "rut",
+    "razon_social",
+    "nombre_fantasia",
+    "segmento",
+    "tipo_licencia",
+    "grupo_controlador",
+    "vigente"
+   ],
+   "truncado": false,
+   "bytes": 5622,
+   "sha256": "f8ed34a19be86c3b5aae6080013c9800384976143bf4ab99f80e0ff67650f217",
+   "url": "/api/v2/resultados/lista-por-segmento-y-licencia-catalogo-local-53671b.json"
+  },
+  {
+   "id": "estado-consignado-en-la-lista-e19e45",
+   "titulo": "Estado consignado en la lista",
+   "origen": "explorador",
+   "filas": 2,
+   "columnas": [
+    "vigente",
+    "estado",
+    "total_entidades",
+    "instituciones"
+   ],
+   "truncado": false,
+   "bytes": 1231,
+   "sha256": "1f99a9351e6893fc5b206247e0112c43169659ef2b5f21f5252f397953f02890",
+   "url": "/api/v2/resultados/estado-consignado-en-la-lista-e19e45.json"
+  },
+  {
+   "id": "tipos-de-licencia-consignados-939dc6",
+   "titulo": "Tipos de licencia consignados",
+   "origen": "explorador",
+   "filas": 6,
+   "columnas": [
+    "tipo_licencia",
+    "total",
+    "instituciones"
+   ],
+   "truncado": false,
+   "bytes": 1436,
+   "sha256": "251bf87fc331e484ae648d09d2d7627402ce6f287a904291d270f98e32afb062",
+   "url": "/api/v2/resultados/tipos-de-licencia-consignados-939dc6.json"
+  },
+  {
+   "id": "segmentacion-por-linea-de-negocio-18540d",
+   "titulo": "Segmentación por Línea de Negocio",
+   "origen": "explorador",
+   "filas": 4,
+   "columnas": [
+    "segmento",
+    "entidades",
+    "con_factoring",
+    "con_leasing",
+    "con_automotriz"
+   ],
+   "truncado": false,
+   "bytes": 893,
+   "sha256": "65986f356f04e25a2bcf7527be31bd19e110b77154282a95c82ebf2a6b2ab865",
+   "url": "/api/v2/resultados/segmentacion-por-linea-de-negocio-18540d.json"
+  },
+  {
+   "id": "cuentas-de-balance-cmf-primeros-500-42bcb3",
+   "titulo": "Cuentas de balance CMF · primeros 500",
+   "origen": "explorador",
+   "filas": 500,
+   "columnas": [
+    "periodo",
+    "rut",
+    "nombre_reportado",
+    "tipo_balance",
+    "moneda_archivo",
+    "orden",
+    "cuenta",
+    "valor_archivo",
+    "valor_texto_original",
+    "valor_es_entero",
+    "taxonomia",
+    "estado_financiero",
+    "repeticion_contexto"
+   ],
+   "truncado": false,
+   "bytes": 112550,
+   "sha256": "d08e41d08d6378d7ffd976dd6bbdf534e8bc8a5c45b570b0eca577c8999ae4f5",
+   "url": "/api/v2/resultados/cuentas-de-balance-cmf-primeros-500-42bcb3.json"
+  },
+  {
+   "id": "cuentas-de-resultados-cmf-primeros-500-55ce02",
+   "titulo": "Cuentas de resultados CMF · primeros 500",
+   "origen": "explorador",
+   "filas": 500,
+   "columnas": [
+    "periodo",
+    "rut",
+    "nombre_reportado",
+    "tipo_balance",
+    "moneda_archivo",
+    "orden",
+    "cuenta",
+    "valor_archivo",
+    "valor_texto_original",
+    "valor_es_entero",
+    "taxonomia",
+    "estado_financiero",
+    "repeticion_contexto"
+   ],
+   "truncado": false,
+   "bytes": 109374,
+   "sha256": "b411059c3f31e54b6c4ab4d032b9af97d274639557bccfbca81d56448e4c1695",
+   "url": "/api/v2/resultados/cuentas-de-resultados-cmf-primeros-500-55ce02.json"
+  },
+  {
+   "id": "utilidad-del-periodo-1-fila-por-estado-a1faed",
+   "titulo": "Utilidad del período · 1 fila por estado",
+   "origen": "explorador",
+   "filas": 500,
+   "columnas": [
+    "periodo",
+    "rut",
+    "nombre_reportado",
+    "tipo_balance",
+    "estado_financiero",
+    "ganancia_perdida"
+   ],
+   "truncado": true,
+   "bytes": 52103,
+   "sha256": "a2456dd0b7544a389259272886510dad523a97912de37b61b09af3b8421ae708",
+   "url": "/api/v2/resultados/utilidad-del-periodo-1-fila-por-estado-a1faed.json"
+  },
+  {
+   "id": "donde-se-repite-ganancia-perdida-9a8785",
+   "titulo": "Dónde se repite 'Ganancia (pérdida)'",
+   "origen": "explorador",
+   "filas": 6,
+   "columnas": [
+    "estado_financiero",
+    "repeticion_contexto",
+    "filas",
+    "estados"
+   ],
+   "truncado": false,
+   "bytes": 961,
+   "sha256": "ab84cf62fa5bf13211888a48c49c51bc515408d3aca3c4b1dc90583799995f08",
+   "url": "/api/v2/resultados/donde-se-repite-ganancia-perdida-9a8785.json"
+  },
+  {
+   "id": "catalogo-de-corredoras-vigentes-a8dbef",
+   "titulo": "Catálogo de Corredoras Vigentes",
+   "origen": "explorador",
+   "filas": 24,
+   "columnas": [
+    "rut",
+    "nombre_empresa",
+    "nombre_fantasia",
+    "grupo_financiero",
+    "estado_vigencia"
+   ],
+   "truncado": false,
+   "bytes": 3602,
+   "sha256": "7889be771ad5954e8f9c0ab40687657aeb947f5f02a5e61afcb1996823d2f04a",
+   "url": "/api/v2/resultados/catalogo-de-corredoras-vigentes-a8dbef.json"
+  },
+  {
+   "id": "distribucion-por-conglomerado-6d2d35",
+   "titulo": "Distribución por Conglomerado",
+   "origen": "explorador",
+   "filas": 25,
+   "columnas": [
+    "grupo_financiero",
+    "total_corredoras",
+    "vigentes"
+   ],
+   "truncado": false,
+   "bytes": 1786,
+   "sha256": "2c0c0195f5d937095e01038188d363be8728cad143702ad11085f9fc8f037503",
+   "url": "/api/v2/resultados/distribucion-por-conglomerado-6d2d35.json"
+  },
+  {
+   "id": "catalogo-de-corredoras-por-grupo-financiero-826952",
+   "titulo": "Catálogo de Corredoras por Grupo Financiero",
+   "origen": "explorador",
+   "filas": 120,
+   "columnas": [
+    "rut",
+    "nombre_empresa",
+    "nombre_fantasia",
+    "grupo_financiero",
+    "estado_vigencia"
+   ],
+   "truncado": false,
+   "bytes": 18028,
+   "sha256": "69b0ccc1b2aea481df84903d3c43d96208c2383dba3c7e13258ff5b8a0f8a982",
+   "url": "/api/v2/resultados/catalogo-de-corredoras-por-grupo-financiero-826952.json"
+  },
+  {
+   "id": "distribucion-de-corredoras-por-conglomerado-af4fec",
+   "titulo": "Distribución de Corredoras por Conglomerado",
+   "origen": "explorador",
+   "filas": 25,
+   "columnas": [
+    "grupo_financiero",
+    "total_corredoras",
+    "vigentes",
+    "instituciones"
+   ],
+   "truncado": false,
+   "bytes": 4317,
+   "sha256": "bc49d92e693ef47a0c8e4b932fcd64dd543a7b6aa895f56a44a5be7bc726b032",
+   "url": "/api/v2/resultados/distribucion-de-corredoras-por-conglomerado-af4fec.json"
+  },
+  {
+   "id": "activos-pasivos-y-patrimonio-por-intermediario-u-43eaf2",
+   "titulo": "Activos, pasivos y patrimonio por intermediario, último trimestre (MM$)",
+   "origen": "explorador",
+   "filas": 33,
+   "columnas": [
+    "periodo",
+    "razon_social",
+    "tipo_intermediario",
+    "activos_mm",
+    "pasivos_mm",
+    "patrimonio_mm"
+   ],
+   "truncado": false,
+   "bytes": 5134,
+   "sha256": "ddf3ca24f3ae6153c09b329b662d84eddbe8d474a40652fd9287dac8958f71e9",
+   "url": "/api/v2/resultados/activos-pasivos-y-patrimonio-por-intermediario-u-43eaf2.json"
+  },
+  {
+   "id": "evolucion-de-los-corredores-de-bolsa-activos-tot-2dea8f",
+   "titulo": "Evolución de los corredores de bolsa: activos totales por trimestre (MM$)",
+   "origen": "explorador",
+   "filas": 63,
+   "columnas": [
+    "periodo",
+    "corredores",
+    "activos_mm"
+   ],
+   "truncado": false,
+   "bytes": 3440,
+   "sha256": "29f8ed537a9f54200a2a3bfa632ad44a518bd98e366e8086e072c10566a6fe32",
+   "url": "/api/v2/resultados/evolucion-de-los-corredores-de-bolsa-activos-tot-2dea8f.json"
+  },
+  {
+   "id": "balance-completo-de-banchile-corredores-ultimo-t-9045d7",
+   "titulo": "Balance completo de Banchile Corredores, último trimestre",
+   "origen": "explorador",
+   "filas": 40,
+   "columnas": [
+    "periodo",
+    "seccion",
+    "codigo_fecu",
+    "nivel",
+    "cuenta",
+    "valor_miles_clp"
+   ],
+   "truncado": false,
+   "bytes": 4937,
+   "sha256": "d4de1e248b64a401d1d09b8c836189c163c087073376d92b0e4ebe18ae65e6c9",
+   "url": "/api/v2/resultados/balance-completo-de-banchile-corredores-ultimo-t-9045d7.json"
+  },
+  {
+   "id": "resultado-del-ejercicio-por-intermediario-2025-m-50a3b4",
+   "titulo": "Resultado del ejercicio por intermediario, 2025 (MM$)",
+   "origen": "explorador",
+   "filas": 33,
+   "columnas": [
+    "razon_social",
+    "tipo_intermediario",
+    "resultado_ejercicio_mm"
+   ],
+   "truncado": false,
+   "bytes": 3574,
+   "sha256": "c88666deaa1836ce169a92d36810a7753eaf8dab3d9f20af3640f3385c2de0df",
+   "url": "/api/v2/resultados/resultado-del-ejercicio-por-intermediario-2025-m-50a3b4.json"
+  },
+  {
+   "id": "estructura-de-resultados-de-banchile-corredores--51bf0d",
+   "titulo": "Estructura de resultados de Banchile Corredores, 2025",
+   "origen": "explorador",
+   "filas": 30,
+   "columnas": [
+    "estado_financiero",
+    "seccion",
+    "codigo_fecu",
+    "nivel",
+    "cuenta",
+    "valor_miles_clp"
+   ],
+   "truncado": false,
+   "bytes": 5345,
+   "sha256": "f552876e3f32ce26ed36814b1dc04cc311803a8b25f6505b10123fd90a45b7cc",
+   "url": "/api/v2/resultados/estructura-de-resultados-de-banchile-corredores--51bf0d.json"
+  },
+  {
+   "id": "catalogo-de-cuentas-fecu-de-resultados-472c9e",
+   "titulo": "Catálogo de cuentas FECU de resultados",
+   "origen": "explorador",
+   "filas": 36,
+   "columnas": [
+    "codigo_fecu",
+    "cuenta",
+    "seccion",
+    "filas"
+   ],
+   "truncado": false,
+   "bytes": 4930,
+   "sha256": "52ebae3b3231d0cde5737d359ba18766564ee9bbb653599cdfc3442400cd62e6",
+   "url": "/api/v2/resultados/catalogo-de-cuentas-fecu-de-resultados-472c9e.json"
+  },
+  {
+   "id": "catalogo-de-securitizadoras-vigentes-vs-historic-96787b",
+   "titulo": "Catálogo de Securitizadoras (Vigentes vs Históricas)",
+   "origen": "explorador",
+   "filas": 16,
+   "columnas": [
+    "rut_completo",
+    "razon_social",
+    "estado_vigencia",
+    "lineas_deuda_registradas"
+   ],
+   "truncado": false,
+   "bytes": 2135,
+   "sha256": "45980d011dcb74276ac5e4ddfa911d5127aded1d51985ff7672783c63972ae17",
+   "url": "/api/v2/resultados/catalogo-de-securitizadoras-vigentes-vs-historic-96787b.json"
+  },
+  {
+   "id": "securitizadoras-con-emisiones-activas-cmf-52c2e1",
+   "titulo": "Securitizadoras con Emisiones Activas CMF",
+   "origen": "explorador",
+   "filas": 5,
+   "columnas": [
+    "razon_social",
+    "rut_completo",
+    "lineas_deuda_registradas",
+    "cmf_url"
+   ],
+   "truncado": false,
+   "bytes": 1903,
+   "sha256": "7cd8ef73710e02cf51668974b396f5c1c149d6846533a0348a1ecad675372d08",
+   "url": "/api/v2/resultados/securitizadoras-con-emisiones-activas-cmf-52c2e1.json"
+  },
+  {
+   "id": "activos-pasivos-y-patrimonio-por-securitizadora--35b788",
+   "titulo": "Activos, pasivos y patrimonio por securitizadora, último trimestre (MM$)",
+   "origen": "explorador",
+   "filas": 9,
+   "columnas": [
+    "periodo",
+    "razon_social",
+    "tipo_balance",
+    "moneda",
+    "activos_mm",
+    "pasivos_mm",
+    "patrimonio_mm"
+   ],
+   "truncado": false,
+   "bytes": 2053,
+   "sha256": "de8aaf9ca1ce381dd2839a27f9c23ef97a64bc9b473ecd4eb1071d4e9cea53c1",
+   "url": "/api/v2/resultados/activos-pasivos-y-patrimonio-por-securitizadora--35b788.json"
+  },
+  {
+   "id": "evolucion-del-sector-activos-totales-por-trimest-c0d06c",
+   "titulo": "Evolución del sector: activos totales por trimestre (MM$, CLP)",
+   "origen": "explorador",
+   "filas": 65,
+   "columnas": [
+    "periodo",
+    "entidades",
+    "activos_mm_clp"
+   ],
+   "truncado": false,
+   "bytes": 3374,
+   "sha256": "78b8b9157b0b850664ad146e73d6f516c53b73e96321b7a69b7b1989a6185aa3",
+   "url": "/api/v2/resultados/evolucion-del-sector-activos-totales-por-trimest-c0d06c.json"
+  },
+  {
+   "id": "balance-completo-de-bci-securitizadora-ultimo-tr-f1004f",
+   "titulo": "Balance completo de BCI Securitizadora, último trimestre",
+   "origen": "explorador",
+   "filas": 20,
+   "columnas": [
+    "periodo",
+    "tipo_balance",
+    "estado_financiero",
+    "orden",
+    "cuenta",
+    "valor"
+   ],
+   "truncado": false,
+   "bytes": 3345,
+   "sha256": "a5f19cadc50f8641ff856b9c203290cbb20250343981bc695a1499ff09a32ccd",
+   "url": "/api/v2/resultados/balance-completo-de-bci-securitizadora-ultimo-tr-f1004f.json"
+  },
+  {
+   "id": "ingresos-y-utilidad-por-securitizadora-ejercicio-6670ee",
+   "titulo": "Ingresos y utilidad por securitizadora, ejercicio 2025 (MM$)",
+   "origen": "explorador",
+   "filas": 9,
+   "columnas": [
+    "razon_social",
+    "tipo_balance",
+    "moneda",
+    "ingresos_mm",
+    "ganancia_mm"
+   ],
+   "truncado": false,
+   "bytes": 1714,
+   "sha256": "09a4c7e63da55806c600d5d7d3d8e2b28f5631882b1933abb69312c07387d373",
+   "url": "/api/v2/resultados/ingresos-y-utilidad-por-securitizadora-ejercicio-6670ee.json"
+  },
+  {
+   "id": "por-que-hay-que-filtrar-ganancia-perdida-aparece-5f46a7",
+   "titulo": "Por qué hay que filtrar: «Ganancia (pérdida)» aparece varias veces",
+   "origen": "explorador",
+   "filas": 5,
+   "columnas": [
+    "estado_financiero",
+    "repeticion",
+    "filas",
+    "entidades"
+   ],
+   "truncado": false,
+   "bytes": 923,
+   "sha256": "96659899893ed9c0bd7fb9531703778af7cf5a2be945e1dd443a0719eca885bc",
+   "url": "/api/v2/resultados/por-que-hay-que-filtrar-ganancia-perdida-aparece-5f46a7.json"
+  },
+  {
+   "id": "utilidad-del-sector-por-ano-cierres-de-diciembre-aca385",
+   "titulo": "Utilidad del sector por año (cierres de diciembre, MM$, CLP)",
+   "origen": "explorador",
+   "filas": 16,
+   "columnas": [
+    "anio",
+    "entidades",
+    "ganancia_mm_clp"
+   ],
+   "truncado": false,
+   "bytes": 1370,
+   "sha256": "d8b217c7ed2361f660efe9ea95a8adb34974357afc837e033cd299acb53e4bcf",
+   "url": "/api/v2/resultados/utilidad-del-sector-por-ano-cierres-de-diciembre-aca385.json"
+  },
+  {
+   "id": "estado-de-resultados-completo-de-bci-securitizad-204842",
+   "titulo": "Estado de resultados completo de BCI Securitizadora, ejercicio 2025",
+   "origen": "explorador",
+   "filas": 18,
+   "columnas": [
+    "tipo_balance",
+    "estado_financiero",
+    "orden",
+    "cuenta",
+    "valor"
+   ],
+   "truncado": false,
+   "bytes": 2470,
+   "sha256": "d3c3191b3fb55e57d9e638374cdd01c22dd349663f2fc08ac3b102f1d48d7576",
+   "url": "/api/v2/resultados/estado-de-resultados-completo-de-bci-securitizad-204842.json"
+  },
+  {
+   "id": "lineas-por-clase-de-colateral-00d0bd",
+   "titulo": "Líneas por clase de colateral",
+   "origen": "explorador",
+   "filas": 4,
+   "columnas": [
+    "clase_colateral_subyacente",
+    "lineas",
+    "administradoras"
+   ],
+   "truncado": false,
+   "bytes": 1377,
+   "sha256": "7bd387f40a9f6eeff59a4b7b608acdb166d7077cd54438103f2a2ba1b24df45f",
+   "url": "/api/v2/resultados/lineas-por-clase-de-colateral-00d0bd.json"
+  },
+  {
+   "id": "inscripciones-por-moneda-y-monto-7560ff",
+   "titulo": "Inscripciones por moneda y monto",
+   "origen": "explorador",
+   "filas": 19,
+   "columnas": [
+    "numero_inscripcion",
+    "fecha_inscripcion",
+    "razon_social_administradora",
+    "denominacion_emision",
+    "moneda",
+    "monto_inscrito",
+    "clase_colateral_subyacente"
+   ],
+   "truncado": false,
+   "bytes": 4335,
+   "sha256": "b7426798205303a5babffffff8be8f1d9808342c3dbb1c0961d5775481b6e52c",
+   "url": "/api/v2/resultados/inscripciones-por-moneda-y-monto-7560ff.json"
+  },
+  {
+   "id": "cobertura-por-ano-20102013-sin-datos-396a2f",
+   "titulo": "Cobertura por año (2010–2013 sin datos)",
+   "origen": "explorador",
+   "filas": 16,
+   "columnas": [
+    "anio",
+    "balances",
+    "nota"
+   ],
+   "truncado": false,
+   "bytes": 1633,
+   "sha256": "e8bd2ee2ef5e050cd7b413fdd3e473cd6b0a526cc6614e7111885fb7f6677d4c",
+   "url": "/api/v2/resultados/cobertura-por-ano-20102013-sin-datos-396a2f.json"
+  },
+  {
+   "id": "totales-por-patrimonio-diciembre-2025-717933",
+   "titulo": "Totales por patrimonio, diciembre 2025",
+   "origen": "explorador",
+   "filas": 28,
+   "columnas": [
+    "nombre_administradora",
+    "codigo_patrimonio",
+    "activos_m_clp",
+    "pasivos_m_clp",
+    "patrimonio_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 3552,
+   "sha256": "4783192a4ce96c9b3e122502979a54b941444480a621a7014ba5f6055ce95dbc",
+   "url": "/api/v2/resultados/totales-por-patrimonio-diciembre-2025-717933.json"
+  },
+  {
+   "id": "agregado-del-sector-por-cierre-9af0b2",
+   "titulo": "Agregado del sector por cierre",
+   "origen": "explorador",
+   "filas": 12,
+   "columnas": [
+    "periodo",
+    "patrimonios",
+    "activos_m_clp",
+    "pasivos_m_clp",
+    "patrimonio_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 1962,
+   "sha256": "b3373cc419df7cc31da38006fdbf36b90de68bd27e1bacaf0e83b4a09d4edb9c",
+   "url": "/api/v2/resultados/agregado-del-sector-por-cierre-9af0b2.json"
+  },
+  {
+   "id": "por-securitizadora-diciembre-2025-dc0352",
+   "titulo": "Por securitizadora, diciembre 2025",
+   "origen": "explorador",
+   "filas": 6,
+   "columnas": [
+    "securitizadora",
+    "patrimonios",
+    "activos_m_clp",
+    "pasivos_m_clp",
+    "patrimonio_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 1818,
+   "sha256": "cbed986df0363c6f6f5360c3a43871f9984fb519aaf84b7ba5ec7795977fc9fa",
+   "url": "/api/v2/resultados/por-securitizadora-diciembre-2025-dc0352.json"
+  },
+  {
+   "id": "balance-completo-de-un-patrimonio-ca49f0",
+   "titulo": "Balance completo de un patrimonio",
+   "origen": "explorador",
+   "filas": 38,
+   "columnas": [
+    "orden_en_balance",
+    "categoria",
+    "cuenta",
+    "monto_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 4419,
+   "sha256": "66037835437a94cf0314b0d5adfce899cf868f675ad158aa5694b8da7c5f235c",
+   "url": "/api/v2/resultados/balance-completo-de-un-patrimonio-ca49f0.json"
+  },
+  {
+   "id": "pasivos-de-diciembre-2025-por-cuenta-b5848b",
+   "titulo": "Pasivos de diciembre 2025 por cuenta",
+   "origen": "explorador",
+   "filas": 50,
+   "columnas": [
+    "categoria",
+    "cuenta",
+    "monto_m_clp",
+    "patrimonios"
+   ],
+   "truncado": false,
+   "bytes": 5893,
+   "sha256": "45b6b35a07eda90c795f267dc3c6c406e8339ca23b1ab90954f8c40f26cc14a7",
+   "url": "/api/v2/resultados/pasivos-de-diciembre-2025-por-cuenta-b5848b.json"
+  },
+  {
+   "id": "cuentas-mas-frecuentes-por-rubro-747b5d",
+   "titulo": "Cuentas más frecuentes por rubro",
+   "origen": "explorador",
+   "filas": 30,
+   "columnas": [
+    "categoria",
+    "cuenta",
+    "balances",
+    "suma_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 3744,
+   "sha256": "3b9e0e6f813423d2477e5465770e989c2a4eb271339950411390ba8a899017a7",
+   "url": "/api/v2/resultados/cuentas-mas-frecuentes-por-rubro-747b5d.json"
+  },
+  {
+   "id": "directorio-de-cooperativas-fiscalizadas-8c031f",
+   "titulo": "Directorio de Cooperativas Fiscalizadas",
+   "origen": "explorador",
+   "filas": 7,
+   "columnas": [
+    "rut",
+    "nombre_empresa",
+    "nombre_fantasia",
+    "sede_matriz",
+    "region",
+    "estado_vigencia"
+   ],
+   "truncado": false,
+   "bytes": 1755,
+   "sha256": "a53529b108b7df894bb0dfa311402e7f123427f869d98c262f46216f8f794661",
+   "url": "/api/v2/resultados/directorio-de-cooperativas-fiscalizadas-8c031f.json"
+  },
+  {
+   "id": "distribucion-regional-de-cooperativas-7bea03",
+   "titulo": "Distribución Regional de Cooperativas",
+   "origen": "explorador",
+   "filas": 3,
+   "columnas": [
+    "region",
+    "total_entidades",
+    "instituciones"
+   ],
+   "truncado": false,
+   "bytes": 832,
+   "sha256": "5f5b4084fb712fd8a8fd4a73e207740093e5f29cdd2e773806908947b0470387",
+   "url": "/api/v2/resultados/distribucion-regional-de-cooperativas-7bea03.json"
+  },
+  {
+   "id": "catalogo-ccaf-vigentes-vs-absorbidas-a4c741",
+   "titulo": "Catálogo CCAF (Vigentes vs Absorbidas)",
+   "origen": "explorador",
+   "filas": 6,
+   "columnas": [
+    "rut_completo",
+    "nombre_fantasia",
+    "estado_vigencia",
+    "regulador_mercado_valores",
+    "codigo_cmf",
+    "lineas_deuda_registradas"
+   ],
+   "truncado": false,
+   "bytes": 1496,
+   "sha256": "c5c9e99cb8998d2e56da1b84e5b91ab8049a4d76ea9a4eaed98d1bde19373b76",
+   "url": "/api/v2/resultados/catalogo-ccaf-vigentes-vs-absorbidas-a4c741.json"
+  },
+  {
+   "id": "ccaf-emisoras-de-bonos-publicos-cmf-cf538c",
+   "titulo": "CCAF Emisoras de Bonos Públicos CMF",
+   "origen": "explorador",
+   "filas": 3,
+   "columnas": [
+    "rut_completo",
+    "razon_social",
+    "codigo_cmf",
+    "lineas_deuda_registradas",
+    "cmf_url"
+   ],
+   "truncado": false,
+   "bytes": 1410,
+   "sha256": "498a67c470e93498f247552fedeb7dc2dbcce4c3b1da73bfd9e2661c5d4f1f86",
+   "url": "/api/v2/resultados/ccaf-emisoras-de-bonos-publicos-cmf-cf538c.json"
+  },
+  {
+   "id": "ccaf-supervisadas-exclusivamente-por-suseso-881802",
+   "titulo": "CCAF Supervisadas Exclusivamente por SUSESO",
+   "origen": "explorador",
+   "filas": 1,
+   "columnas": [
+    "rut_completo",
+    "razon_social",
+    "domicilio_casa_matriz",
+    "suseso_url",
+    "observaciones"
+   ],
+   "truncado": false,
+   "bytes": 1056,
+   "sha256": "1c951e15035c05f5397b4977b5c4939990b3b1c06287a0274d71c73682325a94",
+   "url": "/api/v2/resultados/ccaf-supervisadas-exclusivamente-por-suseso-881802.json"
+  },
+  {
+   "id": "activos-pasivos-y-patrimonio-por-ccaf-ultimo-tri-54ae37",
+   "titulo": "Activos, pasivos y patrimonio por CCAF, último trimestre (MM$)",
+   "origen": "explorador",
+   "filas": 4,
+   "columnas": [
+    "periodo",
+    "razon_social",
+    "tipo_balance",
+    "moneda",
+    "activos_mm",
+    "pasivos_mm",
+    "patrimonio_mm"
+   ],
+   "truncado": false,
+   "bytes": 1606,
+   "sha256": "5b80d1869a5e404367854b0529b6c4eee206c525dca3ee2bdb2b4805458b1db9",
+   "url": "/api/v2/resultados/activos-pasivos-y-patrimonio-por-ccaf-ultimo-tri-54ae37.json"
+  },
+  {
+   "id": "evolucion-del-sector-activos-totales-por-trimest-6b53fd",
+   "titulo": "Evolución del sector: activos totales por trimestre (MM$, CLP)",
+   "origen": "explorador",
+   "filas": 65,
+   "columnas": [
+    "periodo",
+    "entidades",
+    "activos_mm_clp"
+   ],
+   "truncado": false,
+   "bytes": 3430,
+   "sha256": "f33e803943c7084808a7806406939a5c19570f7449127ddf3cde5958b2400bf1",
+   "url": "/api/v2/resultados/evolucion-del-sector-activos-totales-por-trimest-6b53fd.json"
+  },
+  {
+   "id": "balance-completo-de-ccaf-los-andes-ultimo-trimes-8b33d5",
+   "titulo": "Balance completo de CCAF Los Andes, último trimestre",
+   "origen": "explorador",
+   "filas": 37,
+   "columnas": [
+    "periodo",
+    "tipo_balance",
+    "estado_financiero",
+    "orden",
+    "cuenta",
+    "valor"
+   ],
+   "truncado": false,
+   "bytes": 5631,
+   "sha256": "fe7bf6acc2158f353e2de4195737a273bb76be219ab60b8ac5728cac8cc0dc99",
+   "url": "/api/v2/resultados/balance-completo-de-ccaf-los-andes-ultimo-trimes-8b33d5.json"
+  },
+  {
+   "id": "ingresos-y-utilidad-por-ccaf-ejercicio-2025-mm-f6bd8a",
+   "titulo": "Ingresos y utilidad por CCAF, ejercicio 2025 (MM$)",
+   "origen": "explorador",
+   "filas": 4,
+   "columnas": [
+    "razon_social",
+    "tipo_balance",
+    "moneda",
+    "ingresos_mm",
+    "ganancia_mm"
+   ],
+   "truncado": false,
+   "bytes": 1384,
+   "sha256": "fa9c97d547f17ff3b5888955171861f75ab05a67beb78432553066514c86562d",
+   "url": "/api/v2/resultados/ingresos-y-utilidad-por-ccaf-ejercicio-2025-mm-f6bd8a.json"
+  },
+  {
+   "id": "por-que-hay-que-filtrar-ganancia-perdida-aparece-d1555d",
+   "titulo": "Por qué hay que filtrar: «Ganancia (pérdida)» aparece varias veces",
+   "origen": "explorador",
+   "filas": 3,
+   "columnas": [
+    "estado_financiero",
+    "repeticion",
+    "filas",
+    "entidades"
+   ],
+   "truncado": false,
+   "bytes": 838,
+   "sha256": "36b02bee4a83f88de559295604ad3f00ef79715ca903e040152a5c01b4916c6f",
+   "url": "/api/v2/resultados/por-que-hay-que-filtrar-ganancia-perdida-aparece-d1555d.json"
+  },
+  {
+   "id": "utilidad-del-sector-por-ano-cierres-de-diciembre-fdb371",
+   "titulo": "Utilidad del sector por año (cierres de diciembre, MM$, CLP)",
+   "origen": "explorador",
+   "filas": 16,
+   "columnas": [
+    "anio",
+    "entidades",
+    "ganancia_mm_clp"
+   ],
+   "truncado": false,
+   "bytes": 1366,
+   "sha256": "b0083db1ae27f9a1e7cf52813496c6091c8b004d63b85d3cb64aee9b2b02f5c1",
+   "url": "/api/v2/resultados/utilidad-del-sector-por-ano-cierres-de-diciembre-fdb371.json"
+  },
+  {
+   "id": "estado-de-resultados-completo-de-ccaf-los-andes--b8a726",
+   "titulo": "Estado de resultados completo de CCAF Los Andes, ejercicio 2025",
+   "origen": "explorador",
+   "filas": 25,
+   "columnas": [
+    "tipo_balance",
+    "estado_financiero",
+    "orden",
+    "cuenta",
+    "valor"
+   ],
+   "truncado": false,
+   "bytes": 3429,
+   "sha256": "925b3c2a55e16dc125b309970cbb11123637cff55058571138a1ec835a31b389",
+   "url": "/api/v2/resultados/estado-de-resultados-completo-de-ccaf-los-andes--b8a726.json"
+  },
+  {
+   "id": "directorio-de-infraestructuras-0aae44",
+   "titulo": "Directorio de Infraestructuras",
+   "origen": "explorador",
+   "filas": 19,
+   "columnas": [
+    "codigo_sistema",
+    "nombre_comercial",
+    "tipo_sistema",
+    "supervisor"
+   ],
+   "truncado": false,
+   "bytes": 2858,
+   "sha256": "3c13f20fe31fd9fabed556115bef62a3749a9e9727e2fa35797d0f350915321d",
+   "url": "/api/v2/resultados/directorio-de-infraestructuras-0aae44.json"
+  },
+  {
+   "id": "camaras-y-contrapartes-centrales-cb2f0d",
+   "titulo": "Cámaras y Contrapartes Centrales",
+   "origen": "explorador",
+   "filas": 4,
+   "columnas": [
+    "codigo_sistema",
+    "razon_social",
+    "marco_legal"
+   ],
+   "truncado": false,
+   "bytes": 1222,
+   "sha256": "bbfa517579a2b98c7119f4217fc86a29f05e237dc43c8fe30ec9b5adff878f3c",
+   "url": "/api/v2/resultados/camaras-y-contrapartes-centrales-cb2f0d.json"
+  },
+  {
+   "id": "prestadores-vigentes-9a9994",
+   "titulo": "Prestadores Vigentes",
+   "origen": "explorador",
+   "filas": 15,
+   "columnas": [
+    "rut_completo",
+    "razon_social",
+    "tipo_persona",
+    "servicios_acreditados_total"
+   ],
+   "truncado": false,
+   "bytes": 2002,
+   "sha256": "8b8d0b8ae24621bd5cf883c23cfae7af8da904de65dcbe1ee7b83a5fa7d43b36",
+   "url": "/api/v2/resultados/prestadores-vigentes-9a9994.json"
+  },
+  {
+   "id": "distribucion-regional-28aee1",
+   "titulo": "Distribución Regional",
+   "origen": "explorador",
+   "filas": 4,
+   "columnas": [
+    "region",
+    "total_entidades"
+   ],
+   "truncado": false,
+   "bytes": 688,
+   "sha256": "ca1f6f05a1167bf0a4a2359b243b2289a96ab1a667dddecc4ac4fa64a909ad34",
+   "url": "/api/v2/resultados/distribucion-regional-28aee1.json"
+  },
+  {
+   "id": "renta-fija-de-seguros-por-tipo-9cd525",
+   "titulo": "Renta fija de seguros por tipo",
+   "origen": "terminal",
+   "filas": 10,
+   "columnas": [
+    "sector",
+    "tipo_instrumento",
+    "instrumentos",
+    "valor_final_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 1253,
+   "sha256": "f62c4170bfa8209f1c1e32be764b8cb0943d2d25de4462dbee9553c360524659",
+   "url": "/api/v2/resultados/renta-fija-de-seguros-por-tipo-9cd525.json"
+  },
+  {
+   "id": "acciones-en-seguros-4057a4",
+   "titulo": "Acciones en seguros",
+   "origen": "terminal",
+   "filas": 10,
+   "columnas": [
+    "nemotecnico",
+    "aseguradoras",
+    "valor_final_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 1112,
+   "sha256": "e870b41d50cfac285bb6ba1dfb1cc16b70d10e5a1f5eaf82c596f311bf5f7396",
+   "url": "/api/v2/resultados/acciones-en-seguros-4057a4.json"
+  },
+  {
+   "id": "derivados-de-seguros-por-tipo-d009a2",
+   "titulo": "Derivados de seguros por tipo",
+   "origen": "terminal",
+   "filas": 6,
+   "columnas": [
+    "sector",
+    "tipo_registro",
+    "contratos",
+    "valor_razonable_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 1005,
+   "sha256": "ef1fa7c6561b59624f50a489671d2f6ea1df1d8076161b289c037cf8641de127",
+   "url": "/api/v2/resultados/derivados-de-seguros-por-tipo-d009a2.json"
+  },
+  {
+   "id": "fondos-mutuos-cartera-nacional-por-tipo-2f4342",
+   "titulo": "Fondos mutuos: cartera nacional por tipo",
+   "origen": "terminal",
+   "filas": 15,
+   "columnas": [
+    "tipo_instrumento",
+    "posiciones",
+    "fondos",
+    "valorizacion_miles_mf"
+   ],
+   "truncado": false,
+   "bytes": 1531,
+   "sha256": "f193c860107e0682a34d9d76dc6f9ee3a35587491bd203f473e697d4673bcb2e",
+   "url": "/api/v2/resultados/fondos-mutuos-cartera-nacional-por-tipo-2f4342.json"
+  },
+  {
+   "id": "fondos-mutuos-inversion-en-el-exterior-por-pais-4da5d1",
+   "titulo": "Fondos mutuos: inversión en el exterior por país",
+   "origen": "terminal",
+   "filas": 15,
+   "columnas": [
+    "pais_emisor",
+    "posiciones",
+    "fondos"
+   ],
+   "truncado": false,
+   "bytes": 1152,
+   "sha256": "29d2c225ed9285cff10a1d4fa8aa93f66641d57c42988d42c18bc92e85ba1efc",
+   "url": "/api/v2/resultados/fondos-mutuos-inversion-en-el-exterior-por-pais-4da5d1.json"
+  },
+  {
+   "id": "fondos-de-inversion-cartera-nacional-por-tipo-5230f0",
+   "titulo": "Fondos de inversión: cartera nacional por tipo",
+   "origen": "terminal",
+   "filas": 15,
+   "columnas": [
+    "tipo_instrumento",
+    "posiciones",
+    "fondos",
+    "valorizacion_miles_mf"
+   ],
+   "truncado": false,
+   "bytes": 1520,
+   "sha256": "eddd49ef4478b2174b07465319a4639bf8115356beaa1290e9d4d33f27a258e2",
+   "url": "/api/v2/resultados/fondos-de-inversion-cartera-nacional-por-tipo-5230f0.json"
+  },
+  {
+   "id": "aseguradoras-que-reportan-7ece34",
+   "titulo": "Aseguradoras que reportan",
+   "origen": "terminal",
+   "filas": 66,
+   "columnas": [
+    "sector",
+    "rut_aseguradora",
+    "nombre_aseguradora",
+    "primer_periodo",
+    "meses_reportados"
+   ],
+   "truncado": false,
+   "bytes": 7207,
+   "sha256": "cf6a21ed58aa542f4f2cd2f538c891137f9190946da5ac4e6272bcbb33deb51a",
+   "url": "/api/v2/resultados/aseguradoras-que-reportan-7ece34.json"
+  }
+ ]
+}

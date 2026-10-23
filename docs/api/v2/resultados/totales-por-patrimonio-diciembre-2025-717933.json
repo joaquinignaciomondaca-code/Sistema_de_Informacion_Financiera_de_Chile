@@ -1,0 +1,218 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "totales-por-patrimonio-diciembre-2025-717933",
+ "titulo": "Totales por patrimonio, diciembre 2025",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "nombre_administradora",
+  "codigo_patrimonio",
+  "activos_m_clp",
+  "pasivos_m_clp",
+  "patrimonio_m_clp"
+ ],
+ "filas": 28,
+ "truncado": false,
+ "datos": [
+  [
+   "BCI SECURITIZADORA",
+   "Patrimonio_Separado_N35",
+   58250886,
+   52516399,
+   5734487
+  ],
+  [
+   "BCI SECURITIZADORA",
+   "Patrimonio_Separado_N36",
+   247640937,
+   233785321,
+   13855616
+  ],
+  [
+   "BCI SECURITIZADORA",
+   "Patrimonio_Separado_N39",
+   96666075,
+   96945058,
+   -278983
+  ],
+  [
+   "EF SECURITIZADORA",
+   "EEFF_PS7",
+   32293189,
+   31232258,
+   1060931
+  ],
+  [
+   "EF SECURITIZADORA",
+   "PS10",
+   147523328,
+   152561268,
+   -5037940
+  ],
+  [
+   "EF SECURITIZADORA",
+   "PS11",
+   246558078,
+   393373173,
+   -146815095
+  ],
+  [
+   "EF SECURITIZADORA",
+   "PS12",
+   43652685,
+   56274356,
+   -12621671
+  ],
+  [
+   "EF SECURITIZADORA",
+   "PS13",
+   16624735,
+   17990229,
+   -1365494
+  ],
+  [
+   "EF SECURITIZADORA",
+   "PS14",
+   40961693,
+   40370295,
+   591398
+  ],
+  [
+   "EF SECURITIZADORA",
+   "PS15",
+   46133751,
+   46173782,
+   -40031
+  ],
+  [
+   "EF SECURITIZADORA",
+   "PS16",
+   58952936,
+   59142846,
+   -189910
+  ],
+  [
+   "SECURITIZADORA BICE",
+   "Ps_12",
+   1882558,
+   34755812,
+   -32873254
+  ],
+  [
+   "SECURITIZADORA BICE",
+   "Ps_21",
+   1558993,
+   6742427,
+   -5183434
+  ],
+  [
+   "SECURITIZADORA BICE",
+   "Ps_6",
+   1833194,
+   4892558,
+   -3059364
+  ],
+  [
+   "SECURITIZADORA SECURITY",
+   "PS_10",
+   899491,
+   7094361,
+   -6194870
+  ],
+  [
+   "SECURITIZADORA SECURITY",
+   "PS_13",
+   4476066,
+   7492929,
+   -3016863
+  ],
+  [
+   "SECURITIZADORA SECURITY",
+   "PS_14",
+   80978171,
+   83092306,
+   -2114134
+  ],
+  [
+   "SECURITIZADORA SECURITY",
+   "PS_15",
+   28300082,
+   28505466,
+   -205384
+  ],
+  [
+   "SECURITIZADORA SECURITY",
+   "PS_16",
+   20469467,
+   17814940,
+   2654527
+  ],
+  [
+   "SECURITIZADORA SECURITY",
+   "PS_17",
+   59812363,
+   58289324,
+   1523039
+  ],
+  [
+   "SECURITIZADORA SECURITY",
+   "PS_18",
+   83535875,
+   83385286,
+   150589
+  ],
+  [
+   "SECURITIZADORA SECURITY",
+   "PS_5",
+   377263,
+   2041778,
+   -1664515
+  ],
+  [
+   "SECURITIZADORA SECURITY",
+   "PS_9",
+   6832344,
+   11945836,
+   -5113492
+  ],
+  [
+   "SECURITIZADORA SECURITY",
+   "Ps_6",
+   2328042,
+   13269873,
+   -10941831
+  ],
+  [
+   "SECURITIZADORA SUDAMERICANA",
+   "Patrimonio_Separado_N_2",
+   2289641,
+   22027927,
+   -19738286
+  ],
+  [
+   "VOLCOM SECURITIZADORA",
+   "BVOLS",
+   96197132,
+   94302765,
+   1894367
+  ],
+  [
+   "VOLCOM SECURITIZADORA",
+   "BVOLS3",
+   69810079,
+   69454371,
+   355708
+  ],
+  [
+   "VOLCOM SECURITIZADORA",
+   "BVOLS4",
+   49998572,
+   49919058,
+   79514
+  ]
+ ],
+ "sql": "SELECT nombre_administradora, codigo_patrimonio, activos_m_clp, pasivos_m_clp, patrimonio_m_clp FROM (SELECT periodo, rut_administradora, nombre_administradora, codigo_patrimonio, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Activos') AS activos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria IN ('Total Pasivo Circulante', 'Total Pasivo No Circulante')) AS pasivos_m_clp, sum(monto_m_clp) FILTER (WHERE categoria = 'Total Patrimonio (Excedente Acumulado)') AS patrimonio_m_clp FROM patrimonios_separados_balance GROUP BY ALL) WHERE periodo = '2025-12' ORDER BY activos_m_clp DESC;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

@@ -1,0 +1,100 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "fondos-que-informan-en-dolares-por-cierre-miles--588076",
+ "titulo": "Fondos que informan en dólares, por cierre (miles de US$)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "periodo",
+  "fondos",
+  "activo_neto_miles_usd"
+ ],
+ "filas": 16,
+ "truncado": false,
+ "datos": [
+  [
+   "2010-12",
+   81,
+   4625075
+  ],
+  [
+   "2011-12",
+   87,
+   3433951
+  ],
+  [
+   "2012-12",
+   82,
+   3811750
+  ],
+  [
+   "2013-12",
+   75,
+   4004389
+  ],
+  [
+   "2014-12",
+   81,
+   4627053
+  ],
+  [
+   "2015-12",
+   72,
+   4427212
+  ],
+  [
+   "2016-12",
+   74,
+   5690611
+  ],
+  [
+   "2017-12",
+   72,
+   5472516
+  ],
+  [
+   "2018-12",
+   68,
+   3939810
+  ],
+  [
+   "2019-12",
+   68,
+   6022586
+  ],
+  [
+   "2020-12",
+   68,
+   8584222
+  ],
+  [
+   "2021-12",
+   79,
+   8888223
+  ],
+  [
+   "2022-12",
+   88,
+   7964454
+  ],
+  [
+   "2023-12",
+   88,
+   8321263
+  ],
+  [
+   "2024-12",
+   85,
+   9096213
+  ],
+  [
+   "2025-12",
+   84,
+   10568337
+  ]
+ ],
+ "sql": "SELECT periodo, count(DISTINCT run_fondo) AS fondos, round(sum(valor_miles_mf), 0) AS activo_neto_miles_usd FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'USD' GROUP BY periodo ORDER BY periodo;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

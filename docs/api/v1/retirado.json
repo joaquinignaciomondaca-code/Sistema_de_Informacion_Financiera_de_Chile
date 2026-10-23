@@ -1,0 +1,8 @@
+{
+  "api_version": "v1",
+  "estado": "retirado",
+  "retirado_el": "2026-10-23",
+  "motivo": "El contrato 2.0.0 recorta las columnas de control interno que viajaban en cada fila; quitar columnas es un cambio mayor.",
+  "vigente": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/datapackage.json",
+  "catalogo": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/catalog.json"
+}

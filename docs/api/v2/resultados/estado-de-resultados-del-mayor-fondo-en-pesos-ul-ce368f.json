@@ -1,0 +1,195 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "estado-de-resultados-del-mayor-fondo-en-pesos-ul-ce368f",
+ "titulo": "Estado de resultados del mayor fondo en pesos, último ejercicio",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "periodo",
+  "nombre_fondo",
+  "orden",
+  "seccion",
+  "cuenta",
+  "valor_miles_mf",
+  "valor_anterior_miles_mf"
+ ],
+ "filas": 19,
+ "truncado": false,
+ "datos": [
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   1,
+   "INGRESOS/PÉRDIDAS DE LA OPERACIÓN",
+   "Intereses y reajustes",
+   201495636,
+   302936605
+  ],
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   2,
+   "INGRESOS/PÉRDIDAS DE LA OPERACIÓN",
+   "Ingresos por dividendos",
+   0,
+   0
+  ],
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   3,
+   "INGRESOS/PÉRDIDAS DE LA OPERACIÓN",
+   "Diferencias de cambio netas sobre activos financieros a costo amortizado",
+   170125,
+   2622365
+  ],
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   4,
+   "INGRESOS/PÉRDIDAS DE LA OPERACIÓN",
+   "Diferencias de cambio netas sobre efectivo y efectivo equivalente",
+   0,
+   0
+  ],
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   5,
+   "INGRESOS/PÉRDIDAS DE LA OPERACIÓN",
+   "Cambios netos en valor razonable de activos financieros y pasivos financieros a valor razonable con efecto en resultados",
+   0,
+   0
+  ],
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   6,
+   "INGRESOS/PÉRDIDAS DE LA OPERACIÓN",
+   "Resultado en venta de instrumentos financieros",
+   1577114,
+   1417870
+  ],
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   7,
+   "INGRESOS/PÉRDIDAS DE LA OPERACIÓN",
+   "Otros",
+   144475,
+   38936
+  ],
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   8,
+   "INGRESOS/PÉRDIDAS DE LA OPERACIÓN",
+   "Total ingresos/(pérdidas) netos de la operación",
+   203387350,
+   307015776
+  ],
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   9,
+   "GASTOS",
+   "Comisión de administración",
+   -36469789,
+   -40224766
+  ],
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   10,
+   "GASTOS",
+   "Honorarios por custodia y administración",
+   0,
+   0
+  ],
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   11,
+   "GASTOS",
+   "Costos de transacción",
+   0,
+   0
+  ],
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   12,
+   "GASTOS",
+   "Otros gastos de operación",
+   -430743,
+   0
+  ],
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   13,
+   "GASTOS",
+   "Total gastos de operación",
+   -36900532,
+   -40224766
+  ],
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   14,
+   "RESULTADO",
+   "Utilidad/(pérdida) de la operación antes de impuesto",
+   166486818,
+   266791010
+  ],
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   15,
+   "RESULTADO",
+   "Impuestos a las ganancias por inversiones en el exterior",
+   0,
+   0
+  ],
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   16,
+   "RESULTADO",
+   "Utilidad/(pérdida) de la operación después de impuesto",
+   166486818,
+   266791010
+  ],
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   17,
+   "RESULTADO",
+   "Aumento/(disminución) de activo neto atribuible a partícipes originadas por actividades de la operación antes de distribución de beneficios",
+   166486818,
+   266791010
+  ],
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   18,
+   "RESULTADO",
+   "Distribución de beneficios",
+   0,
+   0
+  ],
+  [
+   "2025-12",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   19,
+   "RESULTADO",
+   "Aumento/(disminución) de activo neto atribuible a partícipes originadas por actividades de la operación después de distribución de beneficios",
+   166486818,
+   266791010
+  ]
+ ],
+ "sql": "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf, valor_anterior_miles_mf FROM ffmm_resultados WHERE run_fondo = (SELECT run_fondo FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY valor_miles_mf DESC LIMIT 1) AND periodo = (SELECT max(periodo) FROM ffmm_resultados) ORDER BY orden;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

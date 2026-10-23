@@ -3007,6 +3007,20 @@ header {
   font-family: var(--font-mono);
 }
 
+/* Segunda línea de una cabecera: qué es cada casilla de una columna compuesta. */
+.dv-th-sub {
+  display: block;
+  margin-top: 2px;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--text-muted);
+  text-transform: none;
+  letter-spacing: 0;
+  max-width: 220px;
+  white-space: normal;
+}
+
 .dv-scroll-tag {
   font-size: 12px;
   color: var(--accent-mint-text);
@@ -3093,6 +3107,13 @@ header {
 .dv-export-btn:hover {
   border-color: var(--accent-blue);
   color: var(--accent-blue-text);
+}
+
+/* Botón que alterna entre las columnas que describen el dato y las técnicas. */
+.dv-cols-btn.active {
+  border-color: var(--accent-mint);
+  color: var(--accent-mint-text);
+  background: var(--accent-mint-dim);
 }
 
 .dv-table-container {

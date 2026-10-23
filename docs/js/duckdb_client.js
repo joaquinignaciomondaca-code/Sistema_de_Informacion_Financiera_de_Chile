@@ -465,7 +465,7 @@ class DuckDBClient {
       badge.textContent = "DuckDB-Wasm activo";
       badge.classList.add("live");
     } else if (this.engineAvailable) {
-      badge.textContent = `DuckDB activo · ${this.unavailableViews.length} sin publicar`;
+      badge.textContent = `DuckDB activo · ${this.unavailableViews.length} vista(s) sin cargar`;
       badge.classList.add("offline");
       badge.title = this.unavailableViews.join(", ");
     } else {

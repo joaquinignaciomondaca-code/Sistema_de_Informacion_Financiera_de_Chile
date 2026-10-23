@@ -1,0 +1,650 @@
+{
+ "info": {
+  "description": "API de solo lectura sobre archivos estáticos. Las rutas listadas son las que existen: no hay endpoint de consulta ad-hoc, ni autenticación, ni SLA. Las 159 consultas del catálogo sí vienen con su resultado ya calculado, en /api/v2/resultados/.",
+  "license": {
+   "name": "Datos: uso condicionado por la fuente · Código: MIT",
+   "url": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
+  },
+  "summary": "Contrato estático sobre Parquet públicos; sin /query ni JSON por fila.",
+  "title": "Sistema de Información Financiera de Chile",
+  "version": "1.0.0"
+ },
+ "openapi": "3.1.0",
+ "paths": {
+  "/api/claves.csv": {
+   "get": {
+    "operationId": "getClaves",
+    "responses": {
+     "200": {
+      "content": {
+       "text/csv": {
+        "schema": {
+         "type": "string"
+        }
+       }
+      },
+      "description": "CSV"
+     }
+    },
+    "summary": "Claves primarias y foráneas verificadas",
+    "tags": [
+     "contrato"
+    ]
+   }
+  },
+  "/api/reconciliacion.csv": {
+   "get": {
+    "operationId": "getReconciliacion",
+    "responses": {
+     "200": {
+      "content": {
+       "text/csv": {
+        "schema": {
+         "type": "string"
+        }
+       }
+      },
+      "description": "CSV"
+     }
+    },
+    "summary": "Objeto ↔ manifiesto ↔ dataset",
+    "tags": [
+     "contrato"
+    ]
+   }
+  },
+  "/api/v2/catalog.json": {
+   "get": {
+    "operationId": "getCatalogo",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      },
+      "description": "Catálogo"
+     }
+    },
+    "summary": "Índice de los 90 objetos del contrato",
+    "tags": [
+     "contrato"
+    ]
+   }
+  },
+  "/api/v2/datapackage.json": {
+   "get": {
+    "operationId": "getDatapackage",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      },
+      "description": "Descriptor Frictionless"
+     }
+    },
+    "summary": "Data Package con los 86 conjuntos",
+    "tags": [
+     "contrato"
+    ]
+   }
+  },
+  "/api/v2/partitions/{id}.json": {
+   "get": {
+    "operationId": "getParticiones",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "enum": [
+        "afp_lista_entidades",
+        "agf_balance",
+        "agf_lista_entidades",
+        "agf_resultados",
+        "bancos_balance",
+        "bancos_lista_entidades",
+        "bancos_resultados",
+        "ccaf_balance",
+        "ccaf_lista_entidades",
+        "ccaf_resultados",
+        "cooperativas_lista_entidades",
+        "corredoras_bolsa_balance",
+        "corredoras_bolsa_lista_entidades",
+        "corredoras_bolsa_lista_entidades_registro",
+        "corredoras_bolsa_resultados",
+        "factoring_leasing_balance",
+        "factoring_leasing_lista_entidades",
+        "factoring_leasing_resultados",
+        "ffmm_balance",
+        "ffmm_cartera_extranjera",
+        "ffmm_cartera_nacional",
+        "ffmm_futuros",
+        "ffmm_lista_entidades",
+        "ffmm_opciones",
+        "ffmm_resultados",
+        "fi_balance",
+        "fi_bienes_raices",
+        "fi_cartera_extranjera",
+        "fi_cartera_nacional",
+        "fi_futuros",
+        "fi_lista_entidades",
+        "fi_metodo_participacion",
+        "fi_opciones",
+        "fi_pactos",
+        "fi_resultados",
+        "fintech_rpsf_lista_entidades",
+        "macro_cobre",
+        "macro_curva_bonos_pesos",
+        "macro_curva_bonos_uf",
+        "macro_deuda_publica_pct_pib",
+        "macro_dolar_observado",
+        "macro_euro_observado",
+        "macro_expectativas_inflacion",
+        "macro_expectativas_operadores",
+        "macro_expectativas_tpm",
+        "macro_imacec",
+        "macro_inflacion_implicita",
+        "macro_inflacion_ipc",
+        "macro_mercado_laboral",
+        "macro_metales_preciosos",
+        "macro_pib_trimestral",
+        "macro_reservas_internacionales",
+        "macro_series_catalogo",
+        "macro_swaps_camara",
+        "macro_tasa_referencia_fed",
+        "macro_tasas_corto_plazo",
+        "macro_tipo_cambio_multilateral",
+        "macro_tipo_cambio_real",
+        "macro_uf",
+        "macro_utm",
+        "patrimonios_separados_balance",
+        "patrimonios_separados_lista_entidades",
+        "securitizadoras_balance",
+        "securitizadoras_lista_entidades",
+        "securitizadoras_resultados",
+        "seguros_acciones",
+        "seguros_acciones_relevantes",
+        "seguros_bienes_raices",
+        "seguros_bienes_raices_arriendo_morosidad",
+        "seguros_bienes_raices_arriendo_morosidad_relevantes",
+        "seguros_bienes_raices_relevantes",
+        "seguros_control_inversiones",
+        "seguros_derivados",
+        "seguros_derivados_relevantes",
+        "seguros_extranjeros",
+        "seguros_extranjeros_relevantes",
+        "seguros_flujos_activos_elegibles",
+        "seguros_fondos_mutuos",
+        "seguros_garantias_derivados",
+        "seguros_lista_entidades",
+        "seguros_otras_inversiones",
+        "seguros_pactos",
+        "seguros_prestamos",
+        "seguros_prestamos_relevantes",
+        "seguros_registros_tipo6",
+        "seguros_renta_fija",
+        "seguros_renta_fija_relevante",
+        "seguros_tablas_desarrollo",
+        "seguros_tablas_descriptores",
+        "sistemas_pago_lista_entidades"
+       ],
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      },
+      "description": "Particiones y sus hashes"
+     }
+    },
+    "summary": "Archivos que componen un objeto",
+    "tags": [
+     "contrato"
+    ]
+   }
+  },
+  "/api/v2/queries.json": {
+   "get": {
+    "operationId": "getConsultas",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      },
+      "description": "Consultas"
+     }
+    },
+    "summary": "Las 159 consultas de la web, con id estable",
+    "tags": [
+     "consultas"
+    ]
+   }
+  },
+  "/api/v2/resultados/index.json": {
+   "get": {
+    "operationId": "getResultadosIndice",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      },
+      "description": "Índice de resultados"
+     }
+    },
+    "summary": "El resultado ya calculado de las 159 consultas",
+    "tags": [
+     "consultas"
+    ]
+   }
+  },
+  "/api/v2/resultados/{id}.json": {
+   "get": {
+    "operationId": "getResultado",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "enum": [
+        "companias-que-reportan-en-el-ultimo-mes-7ece34",
+        "companias-que-dejaron-de-reportar-7577ed",
+        "companias-que-empezaron-a-reportar-mas-recientem-28d7e4",
+        "renta-fija-por-tipo-de-instrumento-ultimo-mes-m-f646b2",
+        "instrumentos-de-renta-fija-con-mas-inversion-ult-46fffd",
+        "acciones-con-mayor-inversion-ultimo-mes-m-f4f47b",
+        "evolucion-de-la-inversion-en-acciones-por-sector-e3ef3e",
+        "fondos-mutuos-por-administradora-ultimo-mes-m-84000e",
+        "bienes-raices-por-ciudad-ultimo-mes-m-a861f2",
+        "otras-inversiones-por-tipo-de-instrumento-ultimo-5306cf",
+        "inversiones-en-el-extranjero-por-pais-ultimo-mes-96a334",
+        "derivados-por-tipo-y-sector-ultimo-mes-d009a2",
+        "principales-contrapartes-de-derivados-ultimo-mes-0aecee",
+        "pactos-contrapartes-y-tasa-promedio-ultimo-mes-1cc5b8",
+        "b-14-garantias-por-posicion-y-tipo-m-8f4af5",
+        "registros-tipo-6-por-periodo-y-archivo-143fa9",
+        "fondos-que-reportan-en-el-ultimo-mes-9f4a5f",
+        "fondos-nuevos-primer-reporte-mas-reciente-402efd",
+        "fondos-que-dejaron-de-reportar-289026",
+        "cartera-nacional-por-tipo-de-instrumento-ultimo--2f4342",
+        "mayores-emisores-nacionales-ultimo-mes-a7c4a8",
+        "instrumentos-con-compromiso-o-en-garantia-ultimo-4d3b37",
+        "cartera-extranjera-por-pais-emisor-ultimo-mes-4da5d1",
+        "fondos-con-inversion-extranjera-por-mes-db54f6",
+        "forwards-y-futuros-por-activo-objeto-ultimo-mes-72d79a",
+        "contratos-vigentes-por-mes-9057ae",
+        "opciones-del-ultimo-mes-f81fac",
+        "mayores-fondos-en-pesos-por-activo-neto-ultimo-c-cc663c",
+        "activo-neto-de-la-industria-en-pesos-por-cierre--985084",
+        "fondos-que-informan-en-dolares-por-cierre-miles--588076",
+        "balance-completo-del-mayor-fondo-en-pesos-ultimo-a74cb8",
+        "mayores-utilidades-del-ultimo-ejercicio-fondos-e-19a6a2",
+        "comision-de-administracion-cobrada-por-ejercicio-2c5670",
+        "fondos-con-perdida-en-cada-ejercicio-46d5f2",
+        "estado-de-resultados-del-mayor-fondo-en-pesos-ul-ce368f",
+        "fondos-que-reportan-cartera-en-el-ultimo-trimest-43ddd6",
+        "fondos-por-administradora-vigentes-5c1235",
+        "fondos-por-moneda-funcional-0e965e",
+        "cartera-nacional-por-tipo-de-instrumento-ultimo--42e0ca",
+        "mayores-emisores-nacionales-ultimo-trimestre-d986ae",
+        "cartera-extranjera-por-pais-emisor-ultimo-trimes-4b2670",
+        "filiales-y-coligadas-metodo-de-la-participacion-24e071",
+        "forwards-y-futuros-por-activo-objeto-ultimo-trim-36c18d",
+        "contrapartes-de-derivados-ultimo-trimestre-61d701",
+        "opciones-por-trimestre-bfae94",
+        "pactos-por-tipo-de-operacion-y-contraparte-ultim-47db60",
+        "mayores-patrimonios-en-pesos-ultimo-cierre-mm-4df30e",
+        "balance-actual-del-mayor-fondo-en-pesos-ultimo-c-2ee7e1",
+        "cobertura-de-balances-por-cierre-y-contexto-a37a1b",
+        "mayores-resultados-acumulados-en-pesos-ultimo-ci-ec3f0d",
+        "resultado-solo-del-trimestre-en-pesos-segun-xml--c46755",
+        "comisiones-acumuladas-por-cierre-y-moneda-sin-me-805f8e",
+        "catalogo-de-agf-vigentes-vs-canceladas-40705b",
+        "ranking-de-agf-por-fondos-de-inversion-administr-502179",
+        "agf-por-grupo-financiero-controlador-229478",
+        "activos-pasivos-y-patrimonio-por-agf-ultimo-trim-195ff3",
+        "evolucion-del-sector-activos-totales-por-trimest-266f13",
+        "balance-completo-de-banchile-agf-ultimo-trimestr-22cbe4",
+        "ingresos-y-utilidad-por-agf-ejercicio-2025-mm-22d477",
+        "por-que-hay-que-filtrar-ganancia-perdida-aparece-8db310",
+        "utilidad-del-sector-por-ano-cierres-de-diciembre-d9fd92",
+        "estado-de-resultados-completo-de-banchile-agf-ej-ef9a3d",
+        "identificacion-de-administradoras-f2fee2",
+        "bancos-vigentes-con-rut-4da2ff",
+        "historial-de-bancos-fusionados-o-cerrados-17a709",
+        "agregados-sectoriales-de-la-cmf-65e87f",
+        "total-de-activos-por-banco-ultimo-periodo-8feb88",
+        "muestra-de-lineas-de-balance-b1-b2-142f86",
+        "cobertura-de-balance-por-periodo-y-modelo-764c5a",
+        "utilidad-del-ejercicio-por-banco-ultimo-periodo-c2ba60",
+        "muestra-de-lineas-de-resultados-r1-2a300a",
+        "cobertura-de-resultados-por-periodo-c6e2de",
+        "tpm-y-tasa-interbancaria-ultimos-60-dias-9bc7ba",
+        "curva-de-bonos-en-pesos-promedio-mensual-ultimos-5c9393",
+        "curva-de-bonos-en-uf-ultimo-dato-disponible-por--bce2e5",
+        "inflacion-implicita-a-5-y-10-anos-promedio-mensu-f209af",
+        "swaps-de-camara-en-pesos-curva-90-dias-a-2-anos-2758c5",
+        "tasa-de-la-fed-frente-a-la-tpm-de-chile-promedio-2698e8",
+        "dolar-observado-ultimos-30-dias-habiles-8be1d9",
+        "dolar-observado-por-mes-promedio-minimo-maximo-y-d9a9c1",
+        "dolar-y-euro-observados-en-la-misma-fecha-4b24d1",
+        "tipo-de-cambio-real-tcr-general-y-tcr-5-8698f8",
+        "uf-valor-de-cierre-de-cada-mes-y-variacion-mensu-73d97c",
+        "uf-y-utm-vigentes-ultimo-valor-de-cada-mes-249a2e",
+        "inflacion-ipc-indice-y-variaciones-mensual-y-anu-0eb407",
+        "imacec-total-y-no-minero-con-variacion-anual-021cf9",
+        "imacec-por-sector-comercio-y-servicios-93197c",
+        "pib-trimestral-con-variacion-respecto-al-mismo-t-50c220",
+        "desocupacion-ocupados-y-fuerza-de-trabajo-ultimo-14474f",
+        "participacion-de-asalariados-sobre-ocupados-46b8e7",
+        "cobre-precio-diario-bml-ultimos-30-dias-e5c8d9",
+        "cobre-promedio-mensual-y-referencia-bcch-con-var-3d0bbf",
+        "oro-y-plata-ultimos-30-dias-7e379f",
+        "reservas-internacionales-ultimos-24-meses-d34a70",
+        "deuda-publica-sobre-pib-serie-trimestral-7454d5",
+        "inflacion-anual-efectiva-frente-a-la-esperada-ee-c07925",
+        "tpm-efectiva-frente-a-la-esperada-por-la-eee-f1cccc",
+        "encuesta-de-operadores-financieros-ultimas-20-en-aa63e2",
+        "catalogo-series-frecuencia-unidad-y-ultima-fecha-4573aa",
+        "estado-de-la-ultima-consulta-al-bcch-por-grupo-b5c6d8",
+        "lista-por-segmento-y-licencia-catalogo-local-53671b",
+        "estado-consignado-en-la-lista-e19e45",
+        "tipos-de-licencia-consignados-939dc6",
+        "segmentacion-por-linea-de-negocio-18540d",
+        "cuentas-de-balance-cmf-primeros-500-42bcb3",
+        "cuentas-de-resultados-cmf-primeros-500-55ce02",
+        "utilidad-del-periodo-1-fila-por-estado-a1faed",
+        "donde-se-repite-ganancia-perdida-9a8785",
+        "catalogo-de-corredoras-vigentes-a8dbef",
+        "distribucion-por-conglomerado-6d2d35",
+        "catalogo-de-corredoras-por-grupo-financiero-826952",
+        "distribucion-de-corredoras-por-conglomerado-af4fec",
+        "activos-pasivos-y-patrimonio-por-intermediario-u-43eaf2",
+        "evolucion-de-los-corredores-de-bolsa-activos-tot-2dea8f",
+        "balance-completo-de-banchile-corredores-ultimo-t-9045d7",
+        "resultado-del-ejercicio-por-intermediario-2025-m-50a3b4",
+        "estructura-de-resultados-de-banchile-corredores--51bf0d",
+        "catalogo-de-cuentas-fecu-de-resultados-472c9e",
+        "catalogo-de-securitizadoras-vigentes-vs-historic-96787b",
+        "securitizadoras-con-emisiones-activas-cmf-52c2e1",
+        "activos-pasivos-y-patrimonio-por-securitizadora--35b788",
+        "evolucion-del-sector-activos-totales-por-trimest-c0d06c",
+        "balance-completo-de-bci-securitizadora-ultimo-tr-f1004f",
+        "ingresos-y-utilidad-por-securitizadora-ejercicio-6670ee",
+        "por-que-hay-que-filtrar-ganancia-perdida-aparece-5f46a7",
+        "utilidad-del-sector-por-ano-cierres-de-diciembre-aca385",
+        "estado-de-resultados-completo-de-bci-securitizad-204842",
+        "lineas-por-clase-de-colateral-00d0bd",
+        "inscripciones-por-moneda-y-monto-7560ff",
+        "cobertura-por-ano-20102013-sin-datos-396a2f",
+        "totales-por-patrimonio-diciembre-2025-717933",
+        "agregado-del-sector-por-cierre-9af0b2",
+        "por-securitizadora-diciembre-2025-dc0352",
+        "balance-completo-de-un-patrimonio-ca49f0",
+        "pasivos-de-diciembre-2025-por-cuenta-b5848b",
+        "cuentas-mas-frecuentes-por-rubro-747b5d",
+        "directorio-de-cooperativas-fiscalizadas-8c031f",
+        "distribucion-regional-de-cooperativas-7bea03",
+        "catalogo-ccaf-vigentes-vs-absorbidas-a4c741",
+        "ccaf-emisoras-de-bonos-publicos-cmf-cf538c",
+        "ccaf-supervisadas-exclusivamente-por-suseso-881802",
+        "activos-pasivos-y-patrimonio-por-ccaf-ultimo-tri-54ae37",
+        "evolucion-del-sector-activos-totales-por-trimest-6b53fd",
+        "balance-completo-de-ccaf-los-andes-ultimo-trimes-8b33d5",
+        "ingresos-y-utilidad-por-ccaf-ejercicio-2025-mm-f6bd8a",
+        "por-que-hay-que-filtrar-ganancia-perdida-aparece-d1555d",
+        "utilidad-del-sector-por-ano-cierres-de-diciembre-fdb371",
+        "estado-de-resultados-completo-de-ccaf-los-andes--b8a726",
+        "directorio-de-infraestructuras-0aae44",
+        "camaras-y-contrapartes-centrales-cb2f0d",
+        "prestadores-vigentes-9a9994",
+        "distribucion-regional-28aee1",
+        "renta-fija-de-seguros-por-tipo-9cd525",
+        "acciones-en-seguros-4057a4",
+        "derivados-de-seguros-por-tipo-d009a2",
+        "fondos-mutuos-cartera-nacional-por-tipo-2f4342",
+        "fondos-mutuos-inversion-en-el-exterior-por-pais-4da5d1",
+        "fondos-de-inversion-cartera-nacional-por-tipo-5230f0",
+        "aseguradoras-que-reportan-7ece34"
+       ],
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      },
+      "description": "Resultado de la consulta"
+     }
+    },
+    "summary": "Columnas, filas y el SQL de una consulta publicada",
+    "tags": [
+     "consultas"
+    ]
+   }
+  },
+  "/api/v2/schema/{id}.json": {
+   "get": {
+    "operationId": "getEsquema",
+    "parameters": [
+     {
+      "in": "path",
+      "name": "id",
+      "required": true,
+      "schema": {
+       "enum": [
+        "afp_lista_entidades",
+        "agf_balance",
+        "agf_lista_entidades",
+        "agf_resultados",
+        "bancos_balance",
+        "bancos_lista_entidades",
+        "bancos_resultados",
+        "ccaf_balance",
+        "ccaf_lista_entidades",
+        "ccaf_resultados",
+        "cooperativas_lista_entidades",
+        "corredoras_bolsa_balance",
+        "corredoras_bolsa_lista_entidades",
+        "corredoras_bolsa_lista_entidades_registro",
+        "corredoras_bolsa_resultados",
+        "factoring_leasing_balance",
+        "factoring_leasing_lista_entidades",
+        "factoring_leasing_resultados",
+        "ffmm_balance",
+        "ffmm_cartera_extranjera",
+        "ffmm_cartera_nacional",
+        "ffmm_futuros",
+        "ffmm_lista_entidades",
+        "ffmm_opciones",
+        "ffmm_resultados",
+        "fi_balance",
+        "fi_bienes_raices",
+        "fi_cartera_extranjera",
+        "fi_cartera_nacional",
+        "fi_futuros",
+        "fi_lista_entidades",
+        "fi_metodo_participacion",
+        "fi_opciones",
+        "fi_pactos",
+        "fi_resultados",
+        "fintech_rpsf_lista_entidades",
+        "macro_cobre",
+        "macro_curva_bonos_pesos",
+        "macro_curva_bonos_uf",
+        "macro_deuda_publica_pct_pib",
+        "macro_dolar_observado",
+        "macro_euro_observado",
+        "macro_expectativas_inflacion",
+        "macro_expectativas_operadores",
+        "macro_expectativas_tpm",
+        "macro_imacec",
+        "macro_inflacion_implicita",
+        "macro_inflacion_ipc",
+        "macro_mercado_laboral",
+        "macro_metales_preciosos",
+        "macro_pib_trimestral",
+        "macro_reservas_internacionales",
+        "macro_series_catalogo",
+        "macro_swaps_camara",
+        "macro_tasa_referencia_fed",
+        "macro_tasas_corto_plazo",
+        "macro_tipo_cambio_multilateral",
+        "macro_tipo_cambio_real",
+        "macro_uf",
+        "macro_utm",
+        "patrimonios_separados_balance",
+        "patrimonios_separados_lista_entidades",
+        "securitizadoras_balance",
+        "securitizadoras_lista_entidades",
+        "securitizadoras_resultados",
+        "seguros_acciones",
+        "seguros_acciones_relevantes",
+        "seguros_bienes_raices",
+        "seguros_bienes_raices_arriendo_morosidad",
+        "seguros_bienes_raices_arriendo_morosidad_relevantes",
+        "seguros_bienes_raices_relevantes",
+        "seguros_control_inversiones",
+        "seguros_derivados",
+        "seguros_derivados_relevantes",
+        "seguros_extranjeros",
+        "seguros_extranjeros_relevantes",
+        "seguros_flujos_activos_elegibles",
+        "seguros_fondos_mutuos",
+        "seguros_garantias_derivados",
+        "seguros_lista_entidades",
+        "seguros_otras_inversiones",
+        "seguros_pactos",
+        "seguros_prestamos",
+        "seguros_prestamos_relevantes",
+        "seguros_registros_tipo6",
+        "seguros_renta_fija",
+        "seguros_renta_fija_relevante",
+        "seguros_tablas_desarrollo",
+        "seguros_tablas_descriptores",
+        "sistemas_pago_lista_entidades"
+       ],
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "object"
+        }
+       }
+      },
+      "description": "Esquema del objeto"
+     }
+    },
+    "summary": "Columnas y tipos de un objeto",
+    "tags": [
+     "contrato"
+    ]
+   }
+  },
+  "/api/v2/views.sql": {
+   "get": {
+    "operationId": "getVistas",
+    "responses": {
+     "200": {
+      "content": {
+       "text/plain": {
+        "schema": {
+         "type": "string"
+        }
+       }
+      },
+      "description": "SQL"
+     }
+    },
+    "summary": "DDL de las 109 vistas (90 objetos + 19 alias)",
+    "tags": [
+     "contrato"
+    ]
+   }
+  },
+  "/outputs/{ruta}": {
+   "get": {
+    "operationId": "getParquet",
+    "parameters": [
+     {
+      "example": "seguros/aseguradoras.parquet",
+      "in": "path",
+      "name": "ruta",
+      "required": true,
+      "schema": {
+       "type": "string"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/vnd.apache.parquet": {
+        "schema": {
+         "format": "binary",
+         "type": "string"
+        }
+       }
+      },
+      "description": "Parquet"
+     }
+    },
+    "summary": "Los Parquet publicados del sitio",
+    "tags": [
+     "datos"
+    ]
+   }
+  }
+ },
+ "servers": [
+  {
+   "description": "URL canónica (decisión D1)",
+   "url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile"
+  }
+ ],
+ "tags": [
+  {
+   "name": "contrato"
+  },
+  {
+   "name": "consultas"
+  },
+  {
+   "name": "datos"
+  }
+ ]
+}

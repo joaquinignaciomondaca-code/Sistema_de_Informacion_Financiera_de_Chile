@@ -50,7 +50,7 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 DOCS = RAIZ / "docs"
-V1 = DOCS / "api" / "v1"
+V2 = DOCS / "api" / "v2"
 LOG = DOCS / "api" / "test_contrato.log"
 sys.path.insert(0, str(RAIZ))
 
@@ -120,8 +120,8 @@ def ejecutar(raiz: Path, base: str) -> tuple[list[tuple[str, bool, str]], list[s
 
     checks: list[tuple[str, bool, str]] = []
     avisos: list[str] = []
-    v1 = raiz / "api" / "v1"
-    catalogo = json.loads((v1 / "catalog.json").read_text(encoding="utf-8"))
+    v2 = raiz / "api" / "v2"
+    catalogo = json.loads((v2 / "catalog.json").read_text(encoding="utf-8"))
     objetos = catalogo["objetos"]
 
     def anotar(codigo: str, ok: bool, detalle: str) -> None:
@@ -135,7 +135,7 @@ def ejecutar(raiz: Path, base: str) -> tuple[list[tuple[str, bool, str]], list[s
             revisadas += 1
             if estado(ruta.replace("https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile", base)) != 200:
                 rotas += 1
-        for parte in json.loads((v1 / "partitions" / f"{objeto['id']}.json").read_text(encoding="utf-8"))["particiones"]:
+        for parte in json.loads((v2 / "partitions" / f"{objeto['id']}.json").read_text(encoding="utf-8"))["particiones"]:
             revisadas += 1
             if estado(f"{base}/{parte['archivo']}") != 200:
                 rotas += 1
@@ -146,8 +146,8 @@ def ejecutar(raiz: Path, base: str) -> tuple[list[tuple[str, bool, str]], list[s
     malas = []
     vacias = []
     for objeto in objetos:
-        documento = json.loads((v1 / "schema" / f"{objeto['id']}.json").read_text(encoding="utf-8"))
-        partes = json.loads((v1 / "partitions" / f"{objeto['id']}.json").read_text(encoding="utf-8"))["particiones"]
+        documento = json.loads((v2 / "schema" / f"{objeto['id']}.json").read_text(encoding="utf-8"))
+        partes = json.loads((v2 / "partitions" / f"{objeto['id']}.json").read_text(encoding="utf-8"))["particiones"]
         if not partes:
             continue
         real = {r[0]: r[1] for r in con.execute(
@@ -165,7 +165,7 @@ def ejecutar(raiz: Path, base: str) -> tuple[list[tuple[str, bool, str]], list[s
         for columna in sorted(set(real) - set(declarado)):
             malas.append(f"{objeto['id']}.{columna}: está en la base y no en el esquema")
     total_columnas = sum(
-        len(json.loads((v1 / "schema" / f"{o['id']}.json").read_text(encoding="utf-8"))["columnas"])
+        len(json.loads((v2 / "schema" / f"{o['id']}.json").read_text(encoding="utf-8"))["columnas"])
         for o in objetos)
     anotar("1d.2 esquema", not malas,
            f"{total_columnas} columnas comparadas con DESCRIBE"
@@ -177,7 +177,7 @@ def ejecutar(raiz: Path, base: str) -> tuple[list[tuple[str, bool, str]], list[s
                       f"(toleradas por estar declaradas): {', '.join(sorted(vacias))}")
 
     # --- 1d.3 · views.sql ---------------------------------------------------
-    with urllib.request.urlopen(f"{base}/api/v1/views.sql", timeout=30) as r:
+    with urllib.request.urlopen(f"{base}/api/v2/views.sql", timeout=30) as r:
         ddl = r.read().decode("utf-8")
     local = ddl.replace("https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile",
                         str(raiz.resolve()))
@@ -194,7 +194,7 @@ def ejecutar(raiz: Path, base: str) -> tuple[list[tuple[str, bool, str]], list[s
            if ok_views else f"{len(creadas)} vs {len(esperadas)} esperadas; vacíos comentados: {len(comentados)}/{len(vacios)}")
 
     # --- 1d.4 · consultas publicadas ---------------------------------------
-    consultas = json.loads((v1 / "queries.json").read_text(encoding="utf-8"))["consultas"]
+    consultas = json.loads((v2 / "queries.json").read_text(encoding="utf-8"))["consultas"]
     vacias_declaradas = {o["id"] for o in vacios}
     fallidas = []
     sin_filas = []
@@ -243,7 +243,7 @@ def ejecutar(raiz: Path, base: str) -> tuple[list[tuple[str, bool, str]], list[s
     # --- 1d.6 · bytes y sha256 ---------------------------------------------
     declarados = []
     for objeto in objetos:
-        for parte in json.loads((v1 / "partitions" / f"{objeto['id']}.json").read_text(encoding="utf-8"))["particiones"]:
+        for parte in json.loads((v2 / "partitions" / f"{objeto['id']}.json").read_text(encoding="utf-8"))["particiones"]:
             declarados.append((objeto["id"], parte))
     discrepancias = []
     for identificador, parte in declarados:
@@ -285,7 +285,7 @@ def ejecutar(raiz: Path, base: str) -> tuple[list[tuple[str, bool, str]], list[s
                 if ruta == prefijo or (prefijo.endswith("/") and ruta.startswith(prefijo))]
 
     archivos = [(o["id"], p["archivo"]) for o in objetos
-                for p in json.loads((v1 / "partitions" / f"{o['id']}.json").read_text(encoding="utf-8"))["particiones"]]
+                for p in json.loads((v2 / "partitions" / f"{o['id']}.json").read_text(encoding="utf-8"))["particiones"]]
     # Los dos objetos de banca salen del dataset CMF, cuya fila del manifiesto
     # apunta acertadamente al maestro de entidades y no a las líneas.
     derivados_banca = {o["id"] for o in objetos if o.get("deriva_de") == "bancos_cmf_lineas"}
@@ -318,7 +318,7 @@ def ejecutar(raiz: Path, base: str) -> tuple[list[tuple[str, bool, str]], list[s
     # La condición de la CMF, del BCCh y de la SPensiones es citar. Un contrato
     # que publica el dato sin la cita incumple esa condición, así que se
     # comprueba objeto por objeto y también en el descriptor.
-    paquete = json.loads((v1 / "datapackage.json").read_text(encoding="utf-8"))
+    paquete = json.loads((v2 / "datapackage.json").read_text(encoding="utf-8"))
     sin_cita = []
     for objeto in objetos:
         faltan = [c for c in ("fuente", "atribucion", "url_terminos", "licencia_estado", "adaptacion")
@@ -330,7 +330,7 @@ def ejecutar(raiz: Path, base: str) -> tuple[list[tuple[str, bool, str]], list[s
             sin_cita.append(f"{objeto['id']}: cita o URL de condiciones vacía")
         if objeto["licencia_estado"] != "verificada":
             sin_cita.append(f"{objeto['id']}: licencia_estado={objeto['licencia_estado']}")
-        esquema = json.loads((v1 / "schema" / f"{objeto['id']}.json").read_text(encoding="utf-8"))
+        esquema = json.loads((v2 / "schema" / f"{objeto['id']}.json").read_text(encoding="utf-8"))
         if esquema.get("atribucion") != objeto["atribucion"]:
             sin_cita.append(f"{objeto['id']}: el esquema no repite la misma cita")
     for recurso in paquete.get("resources", []):
@@ -363,18 +363,18 @@ def copia_con_defectos(destino: Path) -> Path:
         (destino / entrada.name).symlink_to(entrada.resolve(), target_is_directory=entrada.is_dir())
     (destino / "api").mkdir()
     for entrada in (DOCS / "api").iterdir():
-        if entrada.name == "v1":
-            shutil.copytree(entrada, destino / "api" / "v1")
+        if entrada.name == "v2":
+            shutil.copytree(entrada, destino / "api" / "v2")
         else:
             (destino / "api" / entrada.name).symlink_to(entrada.resolve(), target_is_directory=entrada.is_dir())
 
     # a) una columna renombrada en el esquema declarado
-    esquema = destino / "api" / "v1" / "schema" / "bancos_balance.json"
+    esquema = destino / "api" / "v2" / "schema" / "bancos_balance.json"
     documento = json.loads(esquema.read_text(encoding="utf-8"))
     documento["columnas"][3]["nombre"] = "codigo_institucion_renombrado"
     esquema.write_text(json.dumps(documento, ensure_ascii=False, indent=1), encoding="utf-8")
     # b) un SHA-256 que no es el del archivo
-    particiones = destino / "api" / "v1" / "partitions" / "afp_lista_entidades.json"
+    particiones = destino / "api" / "v2" / "partitions" / "afp_lista_entidades.json"
     documento = json.loads(particiones.read_text(encoding="utf-8"))
     documento["particiones"][0]["sha256"] = "0" * 64
     particiones.write_text(json.dumps(documento, ensure_ascii=False, indent=1), encoding="utf-8")

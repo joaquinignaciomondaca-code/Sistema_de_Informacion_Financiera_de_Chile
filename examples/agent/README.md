@@ -8,8 +8,8 @@ documentos** y SQL.
 | Paso | Qué pide | Para qué |
 |---|---|---|
 | 1 | [`llms.txt`](../../docs/llms.txt) | ~800 palabras: qué hay, dónde está, cómo se consulta y qué no se debe suponer |
-| 2 | [`api/v1/catalog.json`](../../docs/api/v1/catalog.json) | los 90 objetos, con estado, filas, clave primaria y rutas |
-| 3 | [`api/v1/queries.json`](../../docs/api/v1/queries.json) | 156 consultas de ejemplo con id estable: el agente puede citar una en vez de inventarla |
+| 2 | [`api/v2/catalog.json`](../../docs/api/v2/catalog.json) | los 90 objetos, con estado, filas, clave primaria y rutas |
+| 3 | [`api/v2/queries.json`](../../docs/api/v2/queries.json) | 156 consultas de ejemplo con id estable: el agente puede citar una en vez de inventarla |
 
 ```text
 usuario  ¿Dónde invierten fuera de Chile los fondos mutuos?

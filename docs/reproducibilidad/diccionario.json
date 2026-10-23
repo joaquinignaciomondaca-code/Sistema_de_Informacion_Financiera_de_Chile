@@ -1,8 +1,8 @@
 {
-  "generado": "2026-10-22",
+  "generado": "2026-10-23",
   "origen": "docs/js/data_dictionary.js (misma fuente que el diccionario de la web)",
   "tablas": 90,
-  "columnas": 1671,
+  "columnas": 1640,
   "datos": [
     {
       "id": "macro_tasas_corto_plazo",
@@ -2749,7 +2749,7 @@
           "name": "rol",
           "type": "VARCHAR",
           "role": "Identificador",
-          "significado": "No se publica: es el identificador tributario del inmueble. Para seguir el mismo bien entre meses se publica property_id, un seudónimo derivado de este campo. Ver pipelines/auto/privacidad.py.",
+          "significado": "Columna reservada del formato CMF: viaja vacía porque el rol del inmueble se suprime por privacidad. Para seguir el mismo bien entre meses se publica property_id, un seudónimo derivado de este campo. Ver pipelines/auto/privacidad.py.",
           "contable": "No aplica"
         },
         {
@@ -2917,7 +2917,7 @@
           "name": "ubicacion",
           "type": "VARCHAR",
           "role": "Atributo",
-          "significado": "No se publica: la dirección exacta permite ubicar la propiedad y a sus ocupantes. Se conservan comuna, ciudad y property_id. (En los archivos anteriores al formato 2024-12 la misma columna se llama «direccion» y tampoco se publica.",
+          "significado": "Columna reservada del formato CMF: viaja vacía porque la dirección exacta permite ubicar la propiedad y a sus ocupantes. Se publican comuna, ciudad y property_id. (En los archivos anteriores al formato 2024-12 la misma columna se llama «direccion» y también viaja vacía.",
           "contable": "No aplica"
         },
         {
@@ -8381,13 +8381,6 @@
           "contable": "No aplica"
         },
         {
-          "name": "sha256_archivo",
-          "type": "VARCHAR",
-          "role": "Dato fuente",
-          "significado": "SHA-256 de los bytes originales del XML descargado.",
-          "contable": "No aplica"
-        },
-        {
           "name": "cotejo_ficha",
           "type": "VARCHAR",
           "role": "Atributo",
@@ -8575,13 +8568,6 @@
           "contable": "No aplica"
         },
         {
-          "name": "sha256_archivo",
-          "type": "VARCHAR",
-          "role": "Dato fuente",
-          "significado": "SHA-256 de los bytes originales del XML descargado.",
-          "contable": "No aplica"
-        },
-        {
           "name": "cotejo_ficha",
           "type": "VARCHAR",
           "role": "Atributo",
@@ -8731,13 +8717,6 @@
           "role": "Atributo",
           "significado": "Fecha y hora en que el fondo envió el archivo a la CMF (sale del nombre del archivo).",
           "contable": "No aplica"
-        },
-        {
-          "name": "sha256_archivo",
-          "type": "VARCHAR",
-          "role": "Atributo",
-          "significado": "Huella SHA-256 del XML, para detectar reenvíos.",
-          "contable": "No aplica"
         }
       ]
     },
@@ -8882,13 +8861,6 @@
           "role": "Atributo",
           "significado": "Fecha y hora en que el fondo envió el archivo a la CMF (sale del nombre del archivo).",
           "contable": "No aplica"
-        },
-        {
-          "name": "sha256_archivo",
-          "type": "VARCHAR",
-          "role": "Atributo",
-          "significado": "Huella SHA-256 del XML, para detectar reenvíos.",
-          "contable": "No aplica"
         }
       ]
     },
@@ -9012,13 +8984,6 @@
           "type": "VARCHAR",
           "role": "Dimensión",
           "significado": "URL pública CMF que originó la fila.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "sha256_archivo",
-          "type": "VARCHAR",
-          "role": "Dimensión",
-          "significado": "Huella de la descarga usada.",
           "contable": "No aplica"
         },
         {
@@ -9165,13 +9130,6 @@
           "contable": "No aplica"
         },
         {
-          "name": "sha256_archivo",
-          "type": "VARCHAR",
-          "role": "Dimensión",
-          "significado": "Huella de la descarga usada.",
-          "contable": "No aplica"
-        },
-        {
           "name": "identidad_nombre_coincide_catalogo",
           "type": "BOOLEAN",
           "role": "Dimensión",
@@ -9208,16 +9166,9 @@
       "origen": "Altas: AFP con valor cuota publicado a diario por la Superintendencia de Pensiones (vcfAFP.php), con el RUT del Registro de Valores CMF (RVEMI). pipelines/entidades/actualizar_listas.py.",
       "columnas": [
         {
-          "name": "id",
-          "type": "VARCHAR",
-          "role": "PK",
-          "significado": "ID local de la administradora.",
-          "contable": "No aplica"
-        },
-        {
           "name": "rut_administradora",
           "type": "VARCHAR",
-          "role": "Atributo",
+          "role": "PK",
           "significado": "Cuerpo del RUT de la administradora (sin dígito verificador; Registro de Valores CMF para las altas automáticas).",
           "contable": "No aplica"
         },
@@ -9249,8 +9200,8 @@
       "modo": "Automático",
       "ultimaActualizacion": "2026-09-28",
       "registros": "Una fila por institución y agregado",
-      "descripcion": "Códigos de institución de los archivos bancarios CMF: bancos vigentes, históricos (fusionados o cerrados), filiales en el exterior y agregados del sistema. No equivale al número de bancos activos. RUT de los bancos activos cotejados con el registro CMF.",
-      "origen": "Registro CMF de bancos (consulta.php?mercado=B&entidad=BANCO): alta de bancos nuevos y paso de «Activo» a «No vigente». Códigos históricos y agregados: lista original. pipelines/entidades/actualizar_listas.py.",
+      "descripcion": "Códigos de institución de los archivos bancarios CMF: bancos vigentes, históricos (fusionados o cerrados), filiales en el exterior y agregados del sistema. No equivale al número de bancos activos: son 41 códigos y 20 están vigentes. El RUT de las 41 filas está cotejado con el registro de bancos de la CMF: 30 coinciden, 7 son agregados sectoriales sin RUT propio y 4 se declaran como excepción (027, 816, 916 y 927).",
+      "origen": "Registro CMF de bancos (consulta.php?mercado=B&entidad=BANCO) y su copia fechada en docs/outputs/bancos/registro_cmf_banco.json: alta de bancos nuevos y paso de «Activo» a «No vigente». El cotejo fila a fila lo hace bancos/scripts/validar_identidades.py, que corre sin red contra esa copia y deja el resultado en docs/outputs/bancos/identidades_cmf.json.",
       "columnas": [
         {
           "name": "codigo_institucion",
@@ -9263,14 +9214,14 @@
           "name": "rut",
           "type": "VARCHAR",
           "role": "Atributo",
-          "significado": "Cuerpo del RUT del catálogo local (sin dígito verificador), por cotejar.",
+          "significado": "Cuerpo del RUT (sin dígito verificador ni puntos), cotejado con el registro CMF.",
           "contable": "No aplica"
         },
         {
           "name": "rut_dv",
           "type": "VARCHAR",
           "role": "Atributo",
-          "significado": "RUT del catálogo con dígito verificador (cuerpo-DV).",
+          "significado": "RUT completo, cuerpo y dígito verificador, sin puntos: es el identificador que publica la CMF.",
           "contable": "No aplica"
         },
         {
@@ -9291,14 +9242,14 @@
           "name": "tipo_licencia",
           "type": "VARCHAR",
           "role": "Atributo",
-          "significado": "Clasificación local, no verificada.",
+          "significado": "Tipo de licencia del catálogo. Los agregados del sistema (900, 950, 960, 970, 980, 998 y 999) llevan «Agregado Sectorial»: no son bancos y no se suman con ellos.",
           "contable": "No aplica"
         },
         {
           "name": "estado",
           "type": "VARCHAR",
           "role": "Atributo",
-          "significado": "Estado local, no histórico por periodo.",
+          "significado": "Activo, Fusionado, Cerrado o Agregado. No es un estado histórico por periodo: dice cómo está la institución hoy.",
           "contable": "No aplica"
         }
       ]
@@ -9310,74 +9261,39 @@
       "sector": "bancos",
       "sectorLabel": "Banca (CMF)",
       "norma": "CMF — Manual del Sistema de Información para bancos (B1/MB1 y B2/MB2)",
-      "corte": "Periodos mensuales validados desde 2026-07",
+      "corte": "2022-01 a 2026-08 · 56 meses validados",
       "frescura": "Publicación automática después del gate mensual",
       "modo": "Automático con validación de cobertura y cotejo CMF",
-      "registros": "B1/B2 · importes fuente",
-      "descripcion": "Filas fuente de estados de situación financiera B1 (consolidado) y B2 (individual). La fila física permanece en numero_fila_fuente, separada de rubro/línea/ítem. Cada línea trae cuatro importes en pesos, uno por tipo de moneda (ver importes_fuente_raw): para el total de la cuenta hay que sumarlos, no hay total precalculado. B2 trae solo unas 8 cuentas por banco y mes (adeudado por bancos y colocaciones comerciales, de vivienda y de consumo): no es un balance individual completo. La institución 999 es el total del sistema financiero: no se suma con los bancos. B1 y B2 son perímetros distintos: no se suman entre sí, ni una cuenta padre con sus descendientes.",
-      "origen": "CMF — ZIP TXT mensual y XLSX de reporte mensual. Cada partición registra URL y SHA-256 de ambas fuentes en la fila y en su informe de validación.",
+      "registros": "B1/B2 · importe_clp y desglose por moneda",
+      "descripcion": "Filas fuente de estados de situación financiera B1 (consolidado) y B2 (individual). La fila física del TXT permanece en numero_fila_fuente. Cada línea trae cuatro importes en pesos, uno por tipo de moneda (ver importes_fuente_raw) y `importe_clp` con el total de la cuenta ya sumado. B2 trae solo unas 8 cuentas por banco y mes (adeudado por bancos y colocaciones comerciales, de vivienda y de consumo): no es un balance individual completo. La institución 999 es el total del sistema financiero: no se suma con los bancos. B1 y B2 son perímetros distintos: no se suman entre sí, ni una cuenta padre con sus descendientes.",
+      "origen": "CMF — ZIP TXT mensual y XLSX de reporte mensual. Cada partición registra la URL y el SHA-256 de ambas fuentes en su manifiesto y en su informe de validación; no se repiten fila a fila.",
       "columnas": [
-        {
-          "name": "id",
-          "type": "VARCHAR",
-          "role": "PK",
-          "significado": "Clave determinística compuesta por periodo, institución, modelo, cuenta y ocurrencia dentro del archivo.",
-          "contable": "No aplica"
-        },
         {
           "name": "periodo",
           "type": "VARCHAR",
-          "role": "Fecha",
+          "role": "Fecha · PK parcial",
           "significado": "Periodo mensual del archivo CMF en formato YYYY-MM.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "fecha_corte",
-          "type": "DATE",
-          "role": "Fecha",
-          "significado": "Último día calendario del mes informado.",
           "contable": "No aplica"
         },
         {
           "name": "codigo_institucion",
           "type": "VARCHAR",
-          "role": "FK",
+          "role": "FK · PK parcial",
           "significado": "Código CMF del encabezado y del nombre de archivo. El 999 es el total del sistema financiero (no un banco): excluirlo al sumar instituciones.",
           "contable": "No aplica"
         },
         {
-          "name": "nombre_institucion_fuente",
+          "name": "rut",
           "type": "VARCHAR",
           "role": "Atributo",
-          "significado": "Nombre literal del encabezado CMF; el RUT no se infiere.",
+          "significado": "RUT del banco como cuerpo sin dígito verificador (convención del proyecto); el DV está en bancos.lista_entidades.",
           "contable": "No aplica"
         },
         {
-          "name": "tipo_estado",
+          "name": "razon_social",
           "type": "VARCHAR",
           "role": "Atributo",
-          "significado": "balance o resultados según familia de archivo.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "familia_archivo_fuente",
-          "type": "VARCHAR",
-          "role": "Atributo",
-          "significado": "B1, B2 o R1.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "modelo_cmf",
-          "type": "VARCHAR",
-          "role": "Atributo",
-          "significado": "MB1 consolidado, MB2 individual o MR1 consolidado.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "nivel_consolidacion",
-          "type": "VARCHAR",
-          "role": "Atributo",
-          "significado": "Perímetro informado por la fuente, no inferido del nombre.",
+          "significado": "Razón social tomada del maestro de bancos por código de institución, no del encabezado del archivo.",
           "contable": "No aplica"
         },
         {
@@ -9385,27 +9301,6 @@
           "type": "VARCHAR",
           "role": "PK parcial",
           "significado": "Código de cuenta tal como aparece en el TXT CMF.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "rubro",
-          "type": "VARCHAR",
-          "role": "Clasificación",
-          "significado": "Nivel jerárquico del modelo de cuentas CMF.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "linea",
-          "type": "VARCHAR",
-          "role": "Clasificación",
-          "significado": "Nivel jerárquico del modelo; no representa el número físico de fila.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "item",
-          "type": "VARCHAR",
-          "role": "Clasificación",
-          "significado": "Nivel jerárquico del modelo de cuentas CMF.",
           "contable": "No aplica"
         },
         {
@@ -9423,25 +9318,11 @@
           "contable": "No aplica"
         },
         {
-          "name": "numero_fila_fuente",
+          "name": "importe_clp",
           "type": "BIGINT",
-          "role": "Orden",
-          "significado": "Posición física original en el TXT; independiente de rubro, línea e ítem.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "ocurrencia_codigo_cuenta",
-          "type": "BIGINT",
-          "role": "Atributo",
-          "significado": "Desempate cuando una cuenta aparece repetida dentro del mismo archivo.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "unidad_monto",
-          "type": "VARCHAR",
-          "role": "Atributo",
-          "significado": "Unidad literal controlada por el extractor; no valida la semántica de cada componente B1/B2.",
-          "contable": "No aplica"
+          "role": "Métrica",
+          "significado": "Importe de la cuenta en pesos: la suma de los cuatro componentes por moneda. Es la columna para sumar, graficar o comparar; `importes_fuente_raw` sigue ahí para ver el desglose.",
+          "contable": "Total de la cuenta; sumar una cuenta padre con sus descendientes duplica el monto."
         },
         {
           "name": "importes_fuente_raw",
@@ -9451,45 +9332,31 @@
           "contable": "La suma de los cuatro es el total de la cuenta (activos = pasivos + patrimonio al sumarlos, en 989 de 991 balances banco-mes publicados, con diferencia máxima de $1)"
         },
         {
-          "name": "importes_fuente_decimal",
-          "type": "VARCHAR[]",
-          "role": "Dato fuente",
-          "significado": "Representación decimal exacta de los cuatro importes, en el mismo orden que importes_fuente_raw.",
-          "contable": "La suma de los cuatro es el total de la cuenta"
-        },
-        {
-          "name": "archivo_fuente",
+          "name": "familia_archivo_fuente",
           "type": "VARCHAR",
-          "role": "Procedencia",
-          "significado": "Ruta del miembro TXT dentro del ZIP oficial.",
+          "role": "Atributo",
+          "significado": "B1, B2 o R1.",
           "contable": "No aplica"
         },
         {
-          "name": "fuente_url_zip",
+          "name": "modelo_cmf",
           "type": "VARCHAR",
-          "role": "Procedencia",
-          "significado": "URL oficial del ZIP procesado.",
+          "role": "PK parcial",
+          "significado": "MB1 consolidado, MB2 individual o MR1 consolidado.",
           "contable": "No aplica"
         },
         {
-          "name": "sha256_zip",
+          "name": "nivel_consolidacion",
           "type": "VARCHAR",
-          "role": "Procedencia",
-          "significado": "Hash de integridad del ZIP oficial.",
+          "role": "Atributo",
+          "significado": "Perímetro informado por la fuente, no inferido del nombre.",
           "contable": "No aplica"
         },
         {
-          "name": "fuente_url_xlsx_cotejo",
-          "type": "VARCHAR",
-          "role": "Procedencia",
-          "significado": "URL del reporte XLSX utilizado en el gate.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "sha256_xlsx_cotejo",
-          "type": "VARCHAR",
-          "role": "Procedencia",
-          "significado": "Hash del XLSX utilizado en el gate.",
+          "name": "numero_fila_fuente",
+          "type": "BIGINT",
+          "role": "Orden",
+          "significado": "Posición física original en el TXT; independiente de rubro, línea e ítem.",
           "contable": "No aplica"
         }
       ]
@@ -9501,74 +9368,39 @@
       "sector": "bancos",
       "sectorLabel": "Banca (CMF)",
       "norma": "CMF — Manual del Sistema de Información para bancos (R1/MR1)",
-      "corte": "Periodos mensuales validados desde 2026-07",
+      "corte": "2022-01 a 2026-08 · 56 meses validados",
       "frescura": "Publicación automática después del gate mensual",
       "modo": "Automático con validación de cobertura y cotejo CMF",
-      "registros": "R1 · importes fuente",
-      "descripcion": "Filas fuente del estado de resultados R1 consolidado. Conserva la fila física en numero_fila_fuente, separada de rubro/línea/ítem. El importe, en pesos, es el ACUMULADO DEL EJERCICIO (de enero al mes informado; vuelve a empezar en enero): para el resultado de un mes hay que restar el del mes anterior del mismo año. La publicación no deriva acumulados ni métricas. La institución 999 es el total del sistema financiero: no se suma con los bancos.",
-      "origen": "CMF — ZIP TXT mensual y XLSX de reporte mensual. Cada partición registra URL y SHA-256 de ambas fuentes en la fila y en su informe de validación.",
+      "registros": "R1 · importe_clp (acumulado del ejercicio)",
+      "descripcion": "Filas fuente del estado de resultados R1 consolidado. Conserva la fila física del TXT en numero_fila_fuente. El importe, en pesos, es el ACUMULADO DEL EJERCICIO (de enero al mes informado; vuelve a empezar en enero): para el resultado de un mes hay que restar el del mes anterior del mismo año. `importe_clp` trae ese importe como número, listo para sumar o graficar. La institución 999 es el total del sistema financiero: no se suma con los bancos.",
+      "origen": "CMF — ZIP TXT mensual y XLSX de reporte mensual. Cada partición registra la URL y el SHA-256 de ambas fuentes en su manifiesto y en su informe de validación; no se repiten fila a fila.",
       "columnas": [
-        {
-          "name": "id",
-          "type": "VARCHAR",
-          "role": "PK",
-          "significado": "Clave determinística compuesta por periodo, institución, modelo, cuenta y ocurrencia dentro del archivo.",
-          "contable": "No aplica"
-        },
         {
           "name": "periodo",
           "type": "VARCHAR",
-          "role": "Fecha",
+          "role": "Fecha · PK parcial",
           "significado": "Periodo mensual del archivo CMF en formato YYYY-MM.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "fecha_corte",
-          "type": "DATE",
-          "role": "Fecha",
-          "significado": "Último día calendario del mes informado.",
           "contable": "No aplica"
         },
         {
           "name": "codigo_institucion",
           "type": "VARCHAR",
-          "role": "FK",
+          "role": "FK · PK parcial",
           "significado": "Código CMF del encabezado y del nombre de archivo. El 999 es el total del sistema financiero (no un banco): excluirlo al sumar instituciones.",
           "contable": "No aplica"
         },
         {
-          "name": "nombre_institucion_fuente",
+          "name": "rut",
           "type": "VARCHAR",
           "role": "Atributo",
-          "significado": "Nombre literal del encabezado CMF; el RUT no se infiere.",
+          "significado": "RUT del banco como cuerpo sin dígito verificador (convención del proyecto); el DV está en bancos.lista_entidades.",
           "contable": "No aplica"
         },
         {
-          "name": "tipo_estado",
+          "name": "razon_social",
           "type": "VARCHAR",
           "role": "Atributo",
-          "significado": "balance o resultados según familia de archivo.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "familia_archivo_fuente",
-          "type": "VARCHAR",
-          "role": "Atributo",
-          "significado": "B1, B2 o R1.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "modelo_cmf",
-          "type": "VARCHAR",
-          "role": "Atributo",
-          "significado": "MB1 consolidado, MB2 individual o MR1 consolidado.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "nivel_consolidacion",
-          "type": "VARCHAR",
-          "role": "Atributo",
-          "significado": "Perímetro informado por la fuente, no inferido del nombre.",
+          "significado": "Razón social tomada del maestro de bancos por código de institución, no del encabezado del archivo.",
           "contable": "No aplica"
         },
         {
@@ -9576,27 +9408,6 @@
           "type": "VARCHAR",
           "role": "PK parcial",
           "significado": "Código de cuenta tal como aparece en el TXT CMF.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "rubro",
-          "type": "VARCHAR",
-          "role": "Clasificación",
-          "significado": "Nivel jerárquico del modelo de cuentas CMF.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "linea",
-          "type": "VARCHAR",
-          "role": "Clasificación",
-          "significado": "Nivel jerárquico del modelo; no representa el número físico de fila.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "item",
-          "type": "VARCHAR",
-          "role": "Clasificación",
-          "significado": "Nivel jerárquico del modelo de cuentas CMF.",
           "contable": "No aplica"
         },
         {
@@ -9614,25 +9425,11 @@
           "contable": "No aplica"
         },
         {
-          "name": "numero_fila_fuente",
+          "name": "importe_clp",
           "type": "BIGINT",
-          "role": "Orden",
-          "significado": "Posición física original en el TXT; independiente de rubro, línea e ítem.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "ocurrencia_codigo_cuenta",
-          "type": "BIGINT",
-          "role": "Atributo",
-          "significado": "Desempate cuando una cuenta aparece repetida dentro del mismo archivo.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "unidad_monto",
-          "type": "VARCHAR",
-          "role": "Atributo",
-          "significado": "Unidad literal controlada por el extractor; no valida la semántica de cada componente B1/B2.",
-          "contable": "No aplica"
+          "role": "Métrica",
+          "significado": "Importe de la línea en pesos, listo para sumar o graficar: el mismo valor de `importes_fuente_decimal` ya convertido a número.",
+          "contable": "Acumulado del ejercicio (de enero al mes informado); para el mes suelto se resta el mes anterior del mismo año."
         },
         {
           "name": "importes_fuente_raw",
@@ -9642,45 +9439,31 @@
           "contable": "Acumulado del ejercicio (de enero al mes informado)"
         },
         {
-          "name": "importes_fuente_decimal",
-          "type": "VARCHAR[]",
-          "role": "Dato fuente",
-          "significado": "Representación decimal exacta del importe, acumulado del ejercicio.",
-          "contable": "Acumulado del ejercicio (de enero al mes informado)"
-        },
-        {
-          "name": "archivo_fuente",
+          "name": "familia_archivo_fuente",
           "type": "VARCHAR",
-          "role": "Procedencia",
-          "significado": "Ruta del miembro TXT dentro del ZIP oficial.",
+          "role": "Atributo",
+          "significado": "B1, B2 o R1.",
           "contable": "No aplica"
         },
         {
-          "name": "fuente_url_zip",
+          "name": "modelo_cmf",
           "type": "VARCHAR",
-          "role": "Procedencia",
-          "significado": "URL oficial del ZIP procesado.",
+          "role": "PK parcial",
+          "significado": "MB1 consolidado, MB2 individual o MR1 consolidado.",
           "contable": "No aplica"
         },
         {
-          "name": "sha256_zip",
+          "name": "nivel_consolidacion",
           "type": "VARCHAR",
-          "role": "Procedencia",
-          "significado": "Hash de integridad del ZIP oficial.",
+          "role": "Atributo",
+          "significado": "Perímetro informado por la fuente, no inferido del nombre.",
           "contable": "No aplica"
         },
         {
-          "name": "fuente_url_xlsx_cotejo",
-          "type": "VARCHAR",
-          "role": "Procedencia",
-          "significado": "URL del reporte XLSX utilizado en el gate.",
-          "contable": "No aplica"
-        },
-        {
-          "name": "sha256_xlsx_cotejo",
-          "type": "VARCHAR",
-          "role": "Procedencia",
-          "significado": "Hash del XLSX utilizado en el gate.",
+          "name": "numero_fila_fuente",
+          "type": "BIGINT",
+          "role": "Orden",
+          "significado": "Posición física original en el TXT; independiente de rubro, línea e ítem.",
           "contable": "No aplica"
         }
       ]
@@ -13351,7 +13134,7 @@
       "frescura": "Se actualiza sola 3 veces al mes",
       "modo": "Automático · incremental, cada mes validado antes de publicarse",
       "ultimaActualizacion": "2026-10-21",
-      "registros": "Una fila por línea fuente tipo 6",
+      "registros": "Mensual · desde 2024-12",
       "origen": "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835); archivos B.11 (E) y B.14 (G); ficha técnica oficial: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
       "descripcion": "Líneas tipo 6 reportadas por la CMF, normalizadas con contexto de periodo, compañía y archivo. Las posiciones internas se conservan sin asignarles un significado no documentado.",
       "columnas": [

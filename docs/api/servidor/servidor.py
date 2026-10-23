@@ -27,7 +27,7 @@ BASE = os.environ.get(
 ).rstrip("/")
 BIND = os.environ.get("SIF_QUACK_BIND", "127.0.0.1:9494")
 TOKEN = os.environ.get("SIF_QUACK_TOKEN") or secrets.token_urlsafe(32)
-VISTAS = f"{BASE}/api/v1/views.sql"
+VISTAS = f"{BASE}/api/v2/views.sql"
 
 
 def main() -> int:

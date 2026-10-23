@@ -18,15 +18,8 @@
    "columnas": [
     {
      "criterio_contable": "No aplica",
-     "nombre": "id",
-     "rol": "PK",
-     "significado": "ID local de la administradora.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
      "nombre": "rut_administradora",
-     "rol": "Atributo",
+     "rol": "PK",
      "significado": "Cuerpo del RUT de la administradora (sin dígito verificador; Registro de Valores CMF para las altas automáticas).",
      "tipo": "VARCHAR"
     },
@@ -419,75 +412,30 @@
    "columnas": [
     {
      "criterio_contable": "No aplica",
-     "nombre": "id",
-     "rol": "PK",
-     "significado": "Clave determinística compuesta por periodo, institución, modelo, cuenta y ocurrencia dentro del archivo.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
      "nombre": "periodo",
-     "rol": "Fecha",
+     "rol": "Fecha · PK parcial",
      "significado": "Periodo mensual del archivo CMF en formato YYYY-MM.",
      "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
-     "nombre": "fecha_corte",
-     "rol": "Fecha",
-     "significado": "Último día calendario del mes informado.",
-     "tipo": "DATE"
-    },
-    {
-     "criterio_contable": "No aplica",
      "nombre": "codigo_institucion",
-     "rol": "FK",
+     "rol": "FK · PK parcial",
      "significado": "Código CMF del encabezado y del nombre de archivo. El 999 es el total del sistema financiero (no un banco): excluirlo al sumar instituciones.",
      "tipo": "VARCHAR"
     },
     {
-     "documentada": false,
+     "criterio_contable": "No aplica",
      "nombre": "rut",
+     "rol": "Atributo",
+     "significado": "RUT del banco como cuerpo sin dígito verificador (convención del proyecto); el DV está en bancos.lista_entidades.",
      "tipo": "VARCHAR"
     },
     {
-     "documentada": false,
+     "criterio_contable": "No aplica",
      "nombre": "razon_social",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "nombre_institucion_fuente",
      "rol": "Atributo",
-     "significado": "Nombre literal del encabezado CMF; el RUT no se infiere.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "tipo_estado",
-     "rol": "Atributo",
-     "significado": "balance o resultados según familia de archivo.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "familia_archivo_fuente",
-     "rol": "Atributo",
-     "significado": "B1, B2 o R1.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "modelo_cmf",
-     "rol": "Atributo",
-     "significado": "MB1 consolidado, MB2 individual o MR1 consolidado.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "nivel_consolidacion",
-     "rol": "Atributo",
-     "significado": "Perímetro informado por la fuente, no inferido del nombre.",
+     "significado": "Razón social tomada del maestro de bancos por código de institución, no del encabezado del archivo.",
      "tipo": "VARCHAR"
     },
     {
@@ -495,27 +443,6 @@
      "nombre": "codigo_cuenta",
      "rol": "PK parcial",
      "significado": "Código de cuenta tal como aparece en el TXT CMF.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "rubro",
-     "rol": "Clasificación",
-     "significado": "Nivel jerárquico del modelo de cuentas CMF.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "linea",
-     "rol": "Clasificación",
-     "significado": "Nivel jerárquico del modelo; no representa el número físico de fila.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "item",
-     "rol": "Clasificación",
-     "significado": "Nivel jerárquico del modelo de cuentas CMF.",
      "tipo": "VARCHAR"
     },
     {
@@ -533,25 +460,11 @@
      "tipo": "VARCHAR"
     },
     {
-     "criterio_contable": "No aplica",
-     "nombre": "numero_fila_fuente",
-     "rol": "Orden",
-     "significado": "Posición física original en el TXT; independiente de rubro, línea e ítem.",
+     "criterio_contable": "Total de la cuenta; sumar una cuenta padre con sus descendientes duplica el monto.",
+     "nombre": "importe_clp",
+     "rol": "Métrica",
+     "significado": "Importe de la cuenta en pesos: la suma de los cuatro componentes por moneda. Es la columna para sumar, graficar o comparar; `importes_fuente_raw` sigue ahí para ver el desglose.",
      "tipo": "BIGINT"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "ocurrencia_codigo_cuenta",
-     "rol": "Atributo",
-     "significado": "Desempate cuando una cuenta aparece repetida dentro del mismo archivo.",
-     "tipo": "BIGINT"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "unidad_monto",
-     "rol": "Atributo",
-     "significado": "Unidad literal controlada por el extractor; no valida la semántica de cada componente B1/B2.",
-     "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "La suma de los cuatro es el total de la cuenta (activos = pasivos + patrimonio al sumarlos, en 989 de 991 balances banco-mes publicados, con diferencia máxima de $1)",
@@ -561,46 +474,32 @@
      "tipo": "VARCHAR[]"
     },
     {
-     "criterio_contable": "La suma de los cuatro es el total de la cuenta",
-     "nombre": "importes_fuente_decimal",
-     "rol": "Dato fuente",
-     "significado": "Representación decimal exacta de los cuatro importes, en el mismo orden que importes_fuente_raw.",
-     "tipo": "VARCHAR[]"
-    },
-    {
      "criterio_contable": "No aplica",
-     "nombre": "archivo_fuente",
-     "rol": "Procedencia",
-     "significado": "Ruta del miembro TXT dentro del ZIP oficial.",
+     "nombre": "familia_archivo_fuente",
+     "rol": "Atributo",
+     "significado": "B1, B2 o R1.",
      "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
-     "nombre": "fuente_url_zip",
-     "rol": "Procedencia",
-     "significado": "URL oficial del ZIP procesado.",
+     "nombre": "modelo_cmf",
+     "rol": "PK parcial",
+     "significado": "MB1 consolidado, MB2 individual o MR1 consolidado.",
      "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
-     "nombre": "sha256_zip",
-     "rol": "Procedencia",
-     "significado": "Hash de integridad del ZIP oficial.",
+     "nombre": "nivel_consolidacion",
+     "rol": "Atributo",
+     "significado": "Perímetro informado por la fuente, no inferido del nombre.",
      "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
-     "nombre": "fuente_url_xlsx_cotejo",
-     "rol": "Procedencia",
-     "significado": "URL del reporte XLSX utilizado en el gate.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "sha256_xlsx_cotejo",
-     "rol": "Procedencia",
-     "significado": "Hash del XLSX utilizado en el gate.",
-     "tipo": "VARCHAR"
+     "nombre": "numero_fila_fuente",
+     "rol": "Orden",
+     "significado": "Posición física original en el TXT; independiente de rubro, línea e ítem.",
+     "tipo": "BIGINT"
     }
    ],
    "corte": "2022-01 a 2026-08",
@@ -629,7 +528,7 @@
      "criterio_contable": "No aplica",
      "nombre": "rut",
      "rol": "Atributo",
-     "significado": "Cuerpo del RUT del catálogo local (sin dígito verificador), por cotejar.",
+     "significado": "Cuerpo del RUT (sin dígito verificador ni puntos), cotejado con el registro CMF.",
      "tipo": "VARCHAR"
     },
     {
@@ -650,21 +549,21 @@
      "criterio_contable": "No aplica",
      "nombre": "tipo_licencia",
      "rol": "Atributo",
-     "significado": "Clasificación local, no verificada.",
+     "significado": "Tipo de licencia del catálogo. Los agregados del sistema (900, 950, 960, 970, 980, 998 y 999) llevan «Agregado Sectorial»: no son bancos y no se suman con ellos.",
      "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
      "nombre": "estado",
      "rol": "Atributo",
-     "significado": "Estado local, no histórico por periodo.",
+     "significado": "Activo, Fusionado, Cerrado o Agregado. No es un estado histórico por periodo: dice cómo está la institución hoy.",
      "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
      "nombre": "rut_dv",
      "rol": "Atributo",
-     "significado": "RUT del catálogo con dígito verificador (cuerpo-DV).",
+     "significado": "RUT completo, cuerpo y dígito verificador, sin puntos: es el identificador que publica la CMF.",
      "tipo": "VARCHAR"
     }
    ],
@@ -683,75 +582,30 @@
    "columnas": [
     {
      "criterio_contable": "No aplica",
-     "nombre": "id",
-     "rol": "PK",
-     "significado": "Clave determinística compuesta por periodo, institución, modelo, cuenta y ocurrencia dentro del archivo.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
      "nombre": "periodo",
-     "rol": "Fecha",
+     "rol": "Fecha · PK parcial",
      "significado": "Periodo mensual del archivo CMF en formato YYYY-MM.",
      "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
-     "nombre": "fecha_corte",
-     "rol": "Fecha",
-     "significado": "Último día calendario del mes informado.",
-     "tipo": "DATE"
-    },
-    {
-     "criterio_contable": "No aplica",
      "nombre": "codigo_institucion",
-     "rol": "FK",
+     "rol": "FK · PK parcial",
      "significado": "Código CMF del encabezado y del nombre de archivo. El 999 es el total del sistema financiero (no un banco): excluirlo al sumar instituciones.",
      "tipo": "VARCHAR"
     },
     {
-     "documentada": false,
+     "criterio_contable": "No aplica",
      "nombre": "rut",
+     "rol": "Atributo",
+     "significado": "RUT del banco como cuerpo sin dígito verificador (convención del proyecto); el DV está en bancos.lista_entidades.",
      "tipo": "VARCHAR"
     },
     {
-     "documentada": false,
+     "criterio_contable": "No aplica",
      "nombre": "razon_social",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "nombre_institucion_fuente",
      "rol": "Atributo",
-     "significado": "Nombre literal del encabezado CMF; el RUT no se infiere.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "tipo_estado",
-     "rol": "Atributo",
-     "significado": "balance o resultados según familia de archivo.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "familia_archivo_fuente",
-     "rol": "Atributo",
-     "significado": "B1, B2 o R1.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "modelo_cmf",
-     "rol": "Atributo",
-     "significado": "MB1 consolidado, MB2 individual o MR1 consolidado.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "nivel_consolidacion",
-     "rol": "Atributo",
-     "significado": "Perímetro informado por la fuente, no inferido del nombre.",
+     "significado": "Razón social tomada del maestro de bancos por código de institución, no del encabezado del archivo.",
      "tipo": "VARCHAR"
     },
     {
@@ -759,27 +613,6 @@
      "nombre": "codigo_cuenta",
      "rol": "PK parcial",
      "significado": "Código de cuenta tal como aparece en el TXT CMF.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "rubro",
-     "rol": "Clasificación",
-     "significado": "Nivel jerárquico del modelo de cuentas CMF.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "linea",
-     "rol": "Clasificación",
-     "significado": "Nivel jerárquico del modelo; no representa el número físico de fila.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "item",
-     "rol": "Clasificación",
-     "significado": "Nivel jerárquico del modelo de cuentas CMF.",
      "tipo": "VARCHAR"
     },
     {
@@ -797,25 +630,11 @@
      "tipo": "VARCHAR"
     },
     {
-     "criterio_contable": "No aplica",
-     "nombre": "numero_fila_fuente",
-     "rol": "Orden",
-     "significado": "Posición física original en el TXT; independiente de rubro, línea e ítem.",
+     "criterio_contable": "Acumulado del ejercicio (de enero al mes informado); para el mes suelto se resta el mes anterior del mismo año.",
+     "nombre": "importe_clp",
+     "rol": "Métrica",
+     "significado": "Importe de la línea en pesos, listo para sumar o graficar: el mismo valor de `importes_fuente_decimal` ya convertido a número.",
      "tipo": "BIGINT"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "ocurrencia_codigo_cuenta",
-     "rol": "Atributo",
-     "significado": "Desempate cuando una cuenta aparece repetida dentro del mismo archivo.",
-     "tipo": "BIGINT"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "unidad_monto",
-     "rol": "Atributo",
-     "significado": "Unidad literal controlada por el extractor; no valida la semántica de cada componente B1/B2.",
-     "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "Acumulado del ejercicio (de enero al mes informado)",
@@ -825,46 +644,32 @@
      "tipo": "VARCHAR[]"
     },
     {
-     "criterio_contable": "Acumulado del ejercicio (de enero al mes informado)",
-     "nombre": "importes_fuente_decimal",
-     "rol": "Dato fuente",
-     "significado": "Representación decimal exacta del importe, acumulado del ejercicio.",
-     "tipo": "VARCHAR[]"
-    },
-    {
      "criterio_contable": "No aplica",
-     "nombre": "archivo_fuente",
-     "rol": "Procedencia",
-     "significado": "Ruta del miembro TXT dentro del ZIP oficial.",
+     "nombre": "familia_archivo_fuente",
+     "rol": "Atributo",
+     "significado": "B1, B2 o R1.",
      "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
-     "nombre": "fuente_url_zip",
-     "rol": "Procedencia",
-     "significado": "URL oficial del ZIP procesado.",
+     "nombre": "modelo_cmf",
+     "rol": "PK parcial",
+     "significado": "MB1 consolidado, MB2 individual o MR1 consolidado.",
      "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
-     "nombre": "sha256_zip",
-     "rol": "Procedencia",
-     "significado": "Hash de integridad del ZIP oficial.",
+     "nombre": "nivel_consolidacion",
+     "rol": "Atributo",
+     "significado": "Perímetro informado por la fuente, no inferido del nombre.",
      "tipo": "VARCHAR"
     },
     {
      "criterio_contable": "No aplica",
-     "nombre": "fuente_url_xlsx_cotejo",
-     "rol": "Procedencia",
-     "significado": "URL del reporte XLSX utilizado en el gate.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "sha256_xlsx_cotejo",
-     "rol": "Procedencia",
-     "significado": "Hash del XLSX utilizado en el gate.",
-     "tipo": "VARCHAR"
+     "nombre": "numero_fila_fuente",
+     "rol": "Orden",
+     "significado": "Posición física original en el TXT; independiente de rubro, línea e ítem.",
+     "tipo": "BIGINT"
     }
    ],
    "corte": "2022-01 a 2026-08",
@@ -1836,13 +1641,6 @@
     },
     {
      "criterio_contable": "No aplica",
-     "nombre": "sha256_archivo",
-     "rol": "Dimensión",
-     "significado": "Huella de la descarga usada.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
      "nombre": "identidad_nombre_coincide_catalogo",
      "rol": "Dimensión",
      "significado": "Coincidencia de nombre normalizada; señal, no auditoría histórica.",
@@ -2177,13 +1975,6 @@
     },
     {
      "criterio_contable": "No aplica",
-     "nombre": "sha256_archivo",
-     "rol": "Dimensión",
-     "significado": "Huella de la descarga usada.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
      "nombre": "identidad_nombre_coincide_catalogo",
      "rol": "Dimensión",
      "significado": "Coincidencia de nombre normalizada; señal, no auditoría histórica.",
@@ -2334,13 +2125,6 @@
      "nombre": "enviado_cmf",
      "rol": "Atributo",
      "significado": "Fecha y hora en que el fondo envió el archivo a la CMF (sale del nombre del archivo).",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "sha256_archivo",
-     "rol": "Atributo",
-     "significado": "Huella SHA-256 del XML, para detectar reenvíos.",
      "tipo": "VARCHAR"
     }
    ],
@@ -3175,13 +2959,6 @@
      "rol": "Atributo",
      "significado": "Fecha y hora en que el fondo envió el archivo a la CMF (sale del nombre del archivo).",
      "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "sha256_archivo",
-     "rol": "Atributo",
-     "significado": "Huella SHA-256 del XML, para detectar reenvíos.",
-     "tipo": "VARCHAR"
     }
    ],
    "corte": "2010-12 a 2025-12",
@@ -3356,13 +3133,6 @@
      "nombre": "enviado_cmf",
      "rol": "Fecha",
      "significado": "Fecha/hora de envío leída del nombre del archivo; hora local declarada, sin inventar zona.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "sha256_archivo",
-     "rol": "Dato fuente",
-     "significado": "SHA-256 de los bytes originales del XML descargado.",
      "tipo": "VARCHAR"
     },
     {
@@ -4683,13 +4453,6 @@
     },
     {
      "criterio_contable": "No aplica",
-     "nombre": "sha256_archivo",
-     "rol": "Dato fuente",
-     "significado": "SHA-256 de los bytes originales del XML descargado.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
      "nombre": "cotejo_ficha",
      "rol": "Atributo",
      "significado": "coincide = importe cotejado exactamente con su concepto y columna HTML. sin_columna = contexto del XML no expuesto por la ficha (por ejemplo trimestres en el cierre anual), validado contablemente pero no cotejable allí.",
@@ -4918,7 +4681,7 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-20",
+   "corte": "2014-01-02 a 2026-10-21",
    "estado": "publicado",
    "filas": 3173,
    "manifest_id": "macro_curva_bonos_pesos",
@@ -4988,7 +4751,7 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-20",
+   "corte": "2014-01-02 a 2026-10-21",
    "estado": "publicado",
    "filas": 3175,
    "manifest_id": "macro_curva_bonos_uf",
@@ -5324,7 +5087,7 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-20",
+   "corte": "2014-01-02 a 2026-10-21",
    "estado": "publicado",
    "filas": 3079,
    "manifest_id": "macro_inflacion_implicita",
@@ -5702,7 +5465,7 @@
      "tipo": "DOUBLE"
     }
    ],
-   "corte": "2014-01-02 a 2026-10-21",
+   "corte": "2014-01-02 a 2026-10-22",
    "estado": "publicado",
    "filas": 3204,
    "manifest_id": "macro_swaps_camara",
@@ -6993,7 +6756,7 @@
      "criterio_contable": "No aplica",
      "nombre": "rol",
      "rol": "Identificador",
-     "significado": "No se publica: es el identificador tributario del inmueble. Para seguir el mismo bien entre meses se publica property_id, un seudónimo derivado de este campo. Ver pipelines/auto/privacidad.py.",
+     "significado": "Columna reservada del formato CMF: viaja vacía porque el rol del inmueble se suprime por privacidad. Para seguir el mismo bien entre meses se publica property_id, un seudónimo derivado de este campo. Ver pipelines/auto/privacidad.py.",
      "tipo": "VARCHAR"
     },
     {
@@ -7154,7 +6917,7 @@
      "criterio_contable": "No aplica",
      "nombre": "ubicacion",
      "rol": "Atributo",
-     "significado": "No se publica: la dirección exacta permite ubicar la propiedad y a sus ocupantes. Se conservan comuna, ciudad y property_id. (En los archivos anteriores al formato 2024-12 la misma columna se llama «direccion» y tampoco se publica.",
+     "significado": "Columna reservada del formato CMF: viaja vacía porque la dirección exacta permite ubicar la propiedad y a sus ocupantes. Se publican comuna, ciudad y property_id. (En los archivos anteriores al formato 2024-12 la misma columna se llama «direccion» y también viaja vacía.",
      "tipo": "VARCHAR"
     },
     {
@@ -11823,8 +11586,8 @@
   }
  },
  "resumen": {
-  "columnas": 1509,
-  "columnas_sin_documentar": 7,
+  "columnas": 1474,
+  "columnas_sin_documentar": 3,
   "columnas_sin_valores": 1,
   "con_esquema": 86,
   "filas_por_objeto": 21740500,
@@ -11835,5 +11598,5 @@
   "tablas_manifiesto_cubiertas": 89
  },
  "tipo_de_dato": "Tipos de DuckDB; el diccionario editorial sólo añade significado.",
- "version": "v1"
+ "version": "v2"
 }

@@ -69,7 +69,7 @@ const DATA_VIEWER_CATALOG = [
       { id: "seguros_acciones_relevantes", name: "B.2 ACCIONES DE SOCIEDADES ANÓNIMAS ABIERTAS, ACCIONES DE SOCIEDADES ANÓNIMAS CERRADAS Y CUOTAS DE FONDOS DE INVERSIÓN", detalle: "Campos relevantes", descripcion: "Vista analítica de B.2 con identificación del instrumento, unidades, valorización, deterioro y riesgo. La tabla completa conserva todos los campos." },
       { id: "seguros_fondos_mutuos", name: "B.3 CUOTAS DE FONDOS MUTUOS", detalle: "Fondos mutuos", descripcion: "Cuotas de fondos mutuos nacionales." },
       { id: "seguros_bienes_raices", name: "B.4 BIENES RAICES", detalle: "Bienes raíces", descripcion: "Bienes raíces por rol: dirección, arriendo, costo, depreciación, tasaciones y valor final." },
-      { id: "seguros_bienes_raices_relevantes", name: "B.4 BIENES RAICES", detalle: "Campos relevantes", descripcion: "Vista analítica de B.4 con ubicación geográfica general, superficie y valorización; no incluye rol ni dirección exacta." },
+      { id: "seguros_bienes_raices_relevantes", name: "B.4 BIENES RAICES", detalle: "Campos relevantes", descripcion: "Vista analítica de B.4 con ubicación geográfica general, superficie, valorización y property_id para seguir el inmueble entre meses." },
       { id: "seguros_extranjeros", name: "B.5 INVERSIONES EN EL EXTRANJERO", detalle: "Inversiones en el exterior", descripcion: "Inversiones en el extranjero: deuda (tipo_registro = 'deuda'), acciones y fondos (tipo_registro = 'acciones_y_fondos'), bienes raíces (tipo_registro = 'bienes_raices') y filiales (tipo_registro = 'filiales')." },
       { id: "seguros_extranjeros_relevantes", name: "B.5 INVERSIONES EN EL EXTRANJERO", detalle: "Campos relevantes", descripcion: "Vista analítica de B.5 con país, instrumento, moneda, vencimiento y valorización." },
       { id: "seguros_otras_inversiones", name: "B.6 OTRAS INVERSIONES", detalle: "Otras inversiones", descripcion: "Otras inversiones de la cartera: saldos en cuenta corriente y caja, inversiones mobiliarias, avances a tenedores de pólizas, préstamos y otras inversiones financieras que no caben en los archivos anteriores." },
@@ -81,7 +81,7 @@ const DATA_VIEWER_CATALOG = [
       { id: "seguros_tablas_desarrollo", name: "B.10 TABLAS DE DESARROLLO", detalle: "Desarrollo de flujos", descripcion: "Desarrollo de los flujos de cada instrumento: cupón, fecha de vencimiento, interés, amortización y saldo insoluto." },
       { id: "seguros_flujos_activos_elegibles", name: "B.11 FLUJOS DE ACTIVOS ELEGIBLES", detalle: "Flujos de activos elegibles", descripcion: "Flujos de activos elegibles por tramo, para el cálculo del test de suficiencia de activos (circular aplicada y tipo de información)." },
       { id: "seguros_prestamos", name: "B.12 PRÉSTAMOS", detalle: "Préstamos", descripcion: "Préstamos informados por las compañías, con características del deudor, condiciones financieras, saldo, provisiones y morosidad." },
-      { id: "seguros_prestamos_relevantes", name: "B.12 PRÉSTAMOS", detalle: "Campos relevantes", descripcion: "Vista analítica de B.12 con condiciones, saldo, provisión y morosidad; no incluye identificadores personales de deudores." },
+      { id: "seguros_prestamos_relevantes", name: "B.12 PRÉSTAMOS", detalle: "Campos relevantes", descripcion: "Vista analítica de B.12 con condiciones, saldo, provisión y morosidad por instrumento y aseguradora." },
       { id: "seguros_bienes_raices_arriendo_morosidad", name: "B.13 BIENES RAICES EN ARRIENDO Y MOROSIDAD DE MUTUOS HIPOTECARIOS ENDOSABLES Y CONTRATOS DE LEASING", detalle: "Bienes raíces en arriendo y morosidad", descripcion: "Detalle por inmueble, unidad o contrato: arriendos, recaudación, morosidad, reprogramaciones y saldos." },
       { id: "seguros_bienes_raices_arriendo_morosidad_relevantes", name: "B.13 BIENES RAICES EN ARRIENDO Y MOROSIDAD DE MUTUOS HIPOTECARIOS ENDOSABLES Y CONTRATOS DE LEASING", detalle: "Campos relevantes", descripcion: "Vista analítica de B.13 con cobranza, mora, provisión, superficie y valorización; suprime identificadores personales." },
       { id: "seguros_garantias_derivados", name: "B.14 GARANTÍAS EN INSTRUMENTOS DERIVADOS", detalle: "Garantías en instrumentos derivados", descripcion: "Garantías en efectivo o instrumentos, recibidas u otorgadas, asociadas a derivados." },
@@ -197,6 +197,57 @@ const DATA_VIEWER_CATALOG = [
   }
 ];
 
+// Columnas que no se muestran por defecto en la tabla: identificadores sintéticos, hashes,
+// rutas y URLs de la fuente y campos que repiten otro que sí se muestra. No se eliminan:
+// siguen en el Parquet, en el contrato y en la vista SQL, y el botón «Todas las columnas»
+// las devuelve a la tabla.
+const DV_COLUMNAS_TECNICAS = [
+  /^id$/,
+  /sha256/i,
+  /^fuente_url_/,
+  /^archivo_fuente$/,
+  /^numero_fila_fuente$/,
+  /^ocurrencia_codigo_cuenta$/,
+  /^unidad_monto$/,
+  /^importes_fuente_decimal$/,
+  /^formato_monto_fuente$/
+];
+
+// Segunda línea de la cabecera: dice qué es cada casilla de una columna compuesta.
+const DV_SUBETIQUETAS = {
+  importes_fuente_raw: "nacional · reajustable IPC · reajustable por tipo de cambio · extranjera",
+  importe_clp: "suma de los cuatro componentes"
+};
+
+// Orden editorial de las columnas por vista: primero lo que describe el dato que se quiere
+// transmitir (periodo, institución, cuenta, importe) y después el perímetro y la
+// procedencia. `ocultas` nombra columnas de la vista que no aportan a la lectura; hoy
+// ninguna de Banca las necesita, porque el archivo publicado ya viene recortado.
+const DV_PRESENTACION_VISTAS = {
+  bancos_balance: {
+    orden: [
+      "periodo", "codigo_institucion", "rut", "razon_social",
+      "codigo_cuenta", "glosa_cuenta", "tipo_linea", "importe_clp",
+      "importes_fuente_raw", "familia_archivo_fuente", "modelo_cmf", "nivel_consolidacion"
+    ],
+    // El TXT de la CMF no trae las líneas en el orden del estado: se ordenan al cargar
+    // por institución y código de cuenta (jerárquico) para que la tabla se lea como el
+    // balance. Ocultas sus columnas, el orden sigue siendo el del estado.
+    ordenFilas: ["codigo_institucion", "codigo_cuenta"]
+  },
+  bancos_resultados: {
+    orden: [
+      "periodo", "codigo_institucion", "rut", "razon_social",
+      "codigo_cuenta", "glosa_cuenta", "tipo_linea", "importe_clp",
+      "importes_fuente_raw", "familia_archivo_fuente", "modelo_cmf", "nivel_consolidacion"
+    ],
+    // El TXT de la CMF no trae las líneas en el orden del estado: se ordenan al cargar
+    // por institución y código de cuenta (jerárquico) para que la tabla se lea como el
+    // balance. Ocultas sus columnas, el orden sigue siendo el del estado.
+    ordenFilas: ["codigo_institucion", "codigo_cuenta"]
+  }
+};
+
 class DataViewerController {
   constructor(containerId) {
     this.container = document.getElementById(containerId);
@@ -206,6 +257,8 @@ class DataViewerController {
     this.currentLimit = 100;
     this.currentRows = [];
     this.currentColumns = [];
+    this.columnasMostradas = [];
+    this.mostrarTodasLasColumnas = false;
     this.filterText = "";
     this.sortCol = null;
     this.sortAsc = true;
@@ -336,6 +389,7 @@ class DataViewerController {
         this.currentColumns = res.columns || [];
         this.currentRows = res.rows || [];
         this.totalCount = res.count || this.currentRows.length;
+        this.ordenarFilasEditorial();
       } else {
         this.currentColumns = [];
         this.currentRows = [];
@@ -366,7 +420,8 @@ class DataViewerController {
   }
 
   sortTable(colIdx) {
-    const colName = this.currentColumns[colIdx];
+    const mostradas = this.columnasMostradas.length ? this.columnasMostradas : this.currentColumns;
+    const colName = mostradas[colIdx];
     if (!colName) return;
 
     if (this.sortCol === colName) {
@@ -393,11 +448,48 @@ class DataViewerController {
     this.updateSortIcons(colIdx);
   }
 
+  // Los importes por moneda llegan como lista o como el texto JSON de esa lista,
+  // según los devuelva el motor: se aceptan las dos formas.
+  componentesMonto(val) {
+    if (Array.isArray(val)) return val;
+    if (typeof val !== "string") return null;
+    const texto = val.trim();
+    if (!/^\[.*\]$/.test(texto)) return null;
+    // Los importes de hasta 2024-05 traen coma decimal («26458735676131,00»), así que
+    // la coma también separa componentes: un trozo de dos dígitos es la parte decimal
+    // del anterior, no un importe nuevo.
+    const partes = [];
+    for (const trozo of texto.slice(1, -1).replace(/"/g, "").split(",")) {
+      const limpio = trozo.trim();
+      if (limpio === "") continue;
+      if (/^\d{2}$/.test(limpio) && partes.length > 0) partes[partes.length - 1] += "," + limpio;
+      else partes.push(limpio);
+    }
+    return partes;
+  }
+
+  // Importe de un componente: entero de 15 dígitos o, hasta 2024-05, con coma decimal.
+  formatearComponente(valor) {
+    const texto = String(valor).trim();
+    const normalizado = texto.replace(/\./g, "").replace(",", ".");
+    if (!/^-?\d+(\.\d+)?$/.test(normalizado)) return dvEscapar(texto);
+    return Number(normalizado).toLocaleString("es-CL", { maximumFractionDigits: 0 });
+  }
+
   formatCell(colName, val) {
     if (val === null || val === undefined) return '<span class="cell-null">—</span>';
+    // Desglose por moneda: los cuatro componentes se leen como importes separados,
+    // en el mismo orden que trae la fuente, en vez del volcado del arreglo.
+    const componentes = this.componentesMonto(val);
+    if (componentes) return dvEscapar(componentes.map((c) => this.formatearComponente(c)).join(" · "));
     if (typeof val !== "number") return dvEscapar(val);
 
     const lower = colName.toLowerCase();
+    // Importe en pesos ya normalizado: número entero y con separador de miles.
+    // Va antes que las reglas de millones para que `importe_clp` no se rotule «M».
+    if (lower === "importe_clp" || lower.endsWith("_clp")) {
+      return "$" + val.toLocaleString("es-CL", { maximumFractionDigits: 0 });
+    }
     if (lower.includes("_pct") || lower.includes("tasa") || lower.includes("tir") || lower.includes("presencia")) {
       return val.toLocaleString("es-CL", { minimumFractionDigits: 2, maximumFractionDigits: 4 }) + " %";
     }
@@ -460,6 +552,53 @@ class DataViewerController {
     URL.revokeObjectURL(url);
   }
 
+  // Columnas que se pintan en la tabla, en orden editorial: primero las que describen el
+  // dato, después el resto tal como llega de la vista. Las técnicas y las redundantes
+  // quedan disponibles con «Todas las columnas», nunca se eliminan del resultado.
+  presentacionColumnas() {
+    const pres = DV_PRESENTACION_VISTAS[this.currentView] || {};
+    const orden = pres.orden || [];
+    const redundantes = pres.ocultas || [];
+    const original = this.currentColumns.indexOf.bind(this.currentColumns);
+    const prioridad = (col) => {
+      const i = orden.indexOf(col);
+      return i >= 0 ? i : orden.length + original(col);
+    };
+    const todas = this.currentColumns.slice().sort((a, b) => prioridad(a) - prioridad(b));
+    const esTecnica = (col) => redundantes.includes(col) || DV_COLUMNAS_TECNICAS.some((re) => re.test(col));
+    return {
+      principales: todas.filter((col) => !esTecnica(col)),
+      tecnicas: todas.filter(esTecnica),
+      todas
+    };
+  }
+
+  // Orden editorial de las filas cargadas: sólo actúa cuando la vista lo declara.
+  ordenarFilasEditorial() {
+    const pres = DV_PRESENTACION_VISTAS[this.currentView] || {};
+    const claves = pres.ordenFilas || [];
+    if (!claves.length) return;
+    this.currentRows.sort((a, b) => {
+      for (const clave of claves) {
+        const va = a[clave];
+        const vb = b[clave];
+        const vacioA = va === null || va === undefined;
+        const vacioB = vb === null || vb === undefined;
+        if (vacioA && vacioB) continue;
+        if (vacioA) return 1;
+        if (vacioB) return -1;
+        const cmp = String(va).localeCompare(String(vb), "es", { numeric: true });
+        if (cmp !== 0) return cmp;
+      }
+      return 0;
+    });
+  }
+
+  alternarColumnas() {
+    this.mostrarTodasLasColumnas = !this.mostrarTodasLasColumnas;
+    this.render();
+  }
+
   getFilteredRows() {
     if (!this.filterText) return this.currentRows;
     return this.currentRows.filter(r => 
@@ -472,8 +611,9 @@ class DataViewerController {
     if (!tbody) return;
 
     const rows = this.getFilteredRows();
+    const mostradas = this.columnasMostradas.length ? this.columnasMostradas : this.currentColumns;
     tbody.innerHTML = rows.map(r => {
-      const cells = this.currentColumns.map(col => {
+      const cells = mostradas.map(col => {
         const raw = r[col];
         const formatted = this.formatCell(col, raw);
         const isNum = typeof raw === "number";
@@ -486,14 +626,17 @@ class DataViewerController {
 
     const countInfo = this.container.querySelector(".dv-count-info");
     if (countInfo) {
-      countInfo.textContent = `${rows.length} de ${this.currentRows.length} fila(s) · ${this.currentColumns.length} columnas`;
+      const visibles = mostradas.length;
+      countInfo.textContent = `${rows.length} de ${this.currentRows.length} fila(s) · ` +
+        (visibles < this.currentColumns.length ? `${visibles} de ${this.currentColumns.length} columnas` : `${visibles} columnas`);
     }
   }
 
   updateSortIcons(activeIdx) {
     const ths = this.container.querySelectorAll(".dv-table th");
     ths.forEach((th, i) => {
-      const activa = this.sortCol === this.currentColumns[i];
+      const mostradas = this.columnasMostradas.length ? this.columnasMostradas : this.currentColumns;
+      const activa = this.sortCol === mostradas[i];
       th.setAttribute("aria-sort", activa ? (this.sortAsc ? "ascending" : "descending") : "none");
       const icon = th.querySelector(".dv-sort-icon");
       if (icon) {
@@ -535,20 +678,25 @@ class DataViewerController {
 
     const rows = this.getFilteredRows();
     const mode = this.modeForView();
-    const headersHtml = this.currentColumns.map((col, idx) => {
+    const presentacion = this.presentacionColumnas();
+    const mostradas = this.mostrarTodasLasColumnas ? presentacion.todas : presentacion.principales;
+    this.columnasMostradas = mostradas;
+    const headersHtml = mostradas.map((col, idx) => {
       const activa = this.sortCol === col;
       const orden = activa ? (this.sortAsc ? "ascending" : "descending") : "none";
+      const subetiqueta = DV_SUBETIQUETAS[col];
       return `
       <th scope="col" aria-sort="${orden}">
         <button type="button" class="th-sort-btn" onclick="window.DataViewer.sortTable(${idx})" title="Ordenar por ${dvEscapar(col)}">
           ${dvEscapar(col)}<span class="dv-sort-icon" id="dv_sort_${idx}"></span>
         </button>
+        ${subetiqueta ? `<span class="dv-th-sub">${dvEscapar(subetiqueta)}</span>` : ""}
       </th>
     `;
     }).join("");
 
     const rowsHtml = rows.map(r => {
-      const cells = this.currentColumns.map(col => {
+      const cells = mostradas.map(col => {
         const raw = r[col];
         const formatted = this.formatCell(col, raw);
         const isNum = typeof raw === "number";
@@ -582,7 +730,7 @@ class DataViewerController {
             <span class="dv-badge-mode mode-${mode.className}" title="${dvEscapar(mode.title)}">${dvEscapar(mode.label)}</span>
             <span class="dv-badge-update" title="Fecha de última actualización del pipeline">Actualizado: 2026-09-23</span>
             <span class="dv-meta-timing"><b>${this.elapsedMs} ms</b></span>
-            <span class="dv-count-info">${rows.length} fila(s) · ${this.currentColumns.length} columnas</span>
+            <span class="dv-count-info">${rows.length} fila(s) · ${mostradas.length}${mostradas.length < this.currentColumns.length ? ` de ${this.currentColumns.length}` : ""} columnas</span>
             <span class="dv-scroll-tag" title="Usa la barra de desplazamiento horizontal para explorar todas las columnas">Desplaza ↔</span>
           </div>
           
@@ -599,6 +747,16 @@ class DataViewerController {
               <button class="dv-limit-btn ${this.currentLimit === 500 ? 'active' : ''}" onclick="window.DataViewer.setLimit(500)">500</button>
             </div>
 
+            <button class="dv-export-btn dv-cols-btn ${this.mostrarTodasLasColumnas ? "active" : ""}"
+                    onclick="window.DataViewer.alternarColumnas()"
+                    title="${this.mostrarTodasLasColumnas
+                      ? "Volver a las columnas que describen el dato; el resto sigue en el Parquet y en la vista SQL"
+                      : "Mostrar también las columnas técnicas: identificadores internos, hashes, rutas y URLs de la fuente"}">
+              ${this.mostrarTodasLasColumnas
+                ? `Columnas del dato (${presentacion.principales.length})`
+                : `Todas las columnas (${presentacion.todas.length})`}
+            </button>
+
             <button class="dv-export-btn" onclick="window.DataViewer.openExportModal()" title="Abrir la pestaña Descargas con esta tabla seleccionada (Parquet, CSV, Excel)">
               Descargar datos
             </button>
@@ -609,7 +767,7 @@ class DataViewerController {
 
         <!-- Tabla de datos scrollable -->
         <div class="dv-table-container">
-          ${this.currentColumns.length > 0 ? `
+          ${mostradas.length > 0 ? `
             <table class="dv-table">
               <thead><tr>${headersHtml}</tr></thead>
               <tbody>${rowsHtml}</tbody>
