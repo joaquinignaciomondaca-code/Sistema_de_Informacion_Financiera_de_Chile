@@ -92,12 +92,14 @@
     // Sin canvas 2D (navegadores antiguos, pruebas con jsdom) el bloque se queda
     // con las cifras y la consulta: el gráfico es un adorno, no la prueba.
     try {
+      // El lienzo se muestra antes de medirse: con `hidden` el contenedor mide
+      // cero, el gráfico caería al ancho mínimo de 320 px y no llenaría la caja.
+      contenedor.hidden = false;
       const renderer = new window.ChartRenderer(contenedor);
       renderer.setData(
         ["objeto", "sobrantes"],
         top.map((o) => ({ objeto: o.id, sobrantes: o.sobrantes }))
       );
-      contenedor.hidden = false;
     } catch (error) {
       if (window.console && console.warn) console.warn('calidad: sin gráfico', error);
       contenedor.hidden = true;
@@ -107,6 +109,9 @@
   function init() {
     const raiz = document.querySelector(".info-calidad");
     if (!raiz) return;
+    // Idempotente: si la página vuelve a pedir la inicialización, no se
+    // duplican los manejadores ni se reconstruye el gráfico.
+    if (raiz.dataset.calidadListo === "1") return;
     const estado = datos();
     if (!estado) return;
 
@@ -135,6 +140,8 @@
     } else {
       grafico(estado);
     }
+
+    raiz.dataset.calidadListo = "1";
 
     const boton = raiz.querySelector("[data-calidad-ejecutar]");
     if (boton) {
