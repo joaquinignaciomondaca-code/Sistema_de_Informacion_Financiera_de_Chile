@@ -3,7 +3,7 @@
 <!-- Generado por scripts/build_indice_notas.py. No editar a mano:
      --check falla si no coincide con las notas de la carpeta. -->
 
-Las 60 notas de esta carpeta. Cada una registra una decisión, una
+Las 61 notas de esta carpeta. Cada una registra una decisión, una
 medición o una corrección, con la fecha en que se hizo y el motivo. Se citan
 desde el código, la web y las respuestas a las revisiones externas, así que
 están escritas para poder verificarse: qué se afirmó, contra qué se contrastó
@@ -22,6 +22,7 @@ Para añadir una: crea `AAAA-MM-DD_tema.md` con un `# Título` y ejecuta
 - [La portada muestra lo que el proyecto mide](portada_calidad_2026-10-23.md) — una revisión externa del sitio desplegado dijo que la capa técnica ya
 - [Mapa relacional, cifras y contrato: lo que se corrigió el 2026-10-23](mapa_cifras_2026-10-23.md) — tres defectos vistos en pantalla —los títulos del mapa relacional se
 - [Claves primarias: el defecto del 2026-10-23 y su corrección](claves_duplicados_2026-10-23.md) — scripts/verificarclaves.py, docs/api/claves.csv y el contrato docs/api/v2/.
+- [El monitor normativo se cayó por el origen, no por el repositorio](ci_normativa_origen_caido_2026-10-23.md) — la corrida [40038135849](https://github.com/joaquinignaciomondaca-code/SistemadeInformacionFinancieradeChile/actions/runs/40038135849),
 - [Ruta de optimización para celulares — 2026-10-22](ruta_movil_2026-10-22.md) — que el sitio sea usable con una mano en un teléfono de 360–430 px, sin
 - [Ruta de implementación — API pública SIF v1](ruta_api_v1_2026-10-22.md) — [apipublicafactibilidad2026-10-22.md](apipublicafactibilidad2026-10-22.md)
 - [¿Se pueden publicar estos datos?](licitud_publicacion_datos_2026-10-22.md)
