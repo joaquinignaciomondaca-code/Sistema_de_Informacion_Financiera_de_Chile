@@ -1,0 +1,100 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "cobertura-por-ano-20102013-sin-datos-396a2f",
+ "titulo": "Cobertura por año (2010–2013 sin datos)",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "anio",
+  "balances",
+  "nota"
+ ],
+ "filas": 16,
+ "truncado": false,
+ "datos": [
+  [
+   2010,
+   0,
+   "Sin datos: la serie parte en diciembre de 2014"
+  ],
+  [
+   2011,
+   0,
+   "Sin datos: la serie parte en diciembre de 2014"
+  ],
+  [
+   2012,
+   0,
+   "Sin datos: la serie parte en diciembre de 2014"
+  ],
+  [
+   2013,
+   0,
+   "Sin datos: la serie parte en diciembre de 2014"
+  ],
+  [
+   2014,
+   41,
+   "Cierre de diciembre"
+  ],
+  [
+   2015,
+   39,
+   "Cierre de diciembre"
+  ],
+  [
+   2016,
+   39,
+   "Cierre de diciembre"
+  ],
+  [
+   2017,
+   32,
+   "Cierre de diciembre"
+  ],
+  [
+   2018,
+   34,
+   "Cierre de diciembre"
+  ],
+  [
+   2019,
+   25,
+   "Cierre de diciembre"
+  ],
+  [
+   2020,
+   30,
+   "Cierre de diciembre"
+  ],
+  [
+   2021,
+   24,
+   "Cierre de diciembre"
+  ],
+  [
+   2022,
+   25,
+   "Cierre de diciembre"
+  ],
+  [
+   2023,
+   19,
+   "Cierre de diciembre"
+  ],
+  [
+   2024,
+   22,
+   "Cierre de diciembre"
+  ],
+  [
+   2025,
+   28,
+   "Cierre de diciembre"
+  ]
+ ],
+ "sql": "SELECT a.anio, count(DISTINCT b.archivo) AS balances, CASE WHEN a.anio < 2014 THEN 'Sin datos: la serie parte en diciembre de 2014' ELSE 'Cierre de diciembre' END AS nota FROM range(2010, 2026) a(anio) LEFT JOIN patrimonios_separados_balance b ON b.anio = a.anio GROUP BY a.anio ORDER BY a.anio;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

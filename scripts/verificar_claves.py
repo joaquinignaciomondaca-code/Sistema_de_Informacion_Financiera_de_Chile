@@ -66,9 +66,12 @@ def cargar_roles() -> tuple[dict[str, list[str]], dict[str, list[str]]]:
         return pk, fk
     with DICCIONARIO.open(encoding="utf-8", newline="") as fh:
         for fila in csv.DictReader(fh):
-            if fila["rol"] in ("PK", "PK parcial"):
+            # Una columna puede tener más de un rol («FK · PK parcial» en una clave
+            # compuesta formada con una clave foránea), así que se leen todos.
+            roles = [r.strip() for r in fila["rol"].split("·")]
+            if any(r in ("PK", "PK parcial") for r in roles):
                 pk.setdefault(fila["vista"], []).append(fila["columna"])
-            elif fila["rol"] == "FK":
+            if "FK" in roles:
                 fk.setdefault(fila["vista"], []).append(fila["columna"])
     return pk, fk
 

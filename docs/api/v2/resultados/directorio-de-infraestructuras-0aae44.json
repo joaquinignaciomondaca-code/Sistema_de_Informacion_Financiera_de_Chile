@@ -1,0 +1,135 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "directorio-de-infraestructuras-0aae44",
+ "titulo": "Directorio de Infraestructuras",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "codigo_sistema",
+  "nombre_comercial",
+  "tipo_sistema",
+  "supervisor"
+ ],
+ "filas": 19,
+ "truncado": false,
+ "datos": [
+  [
+   "",
+   "BAASKIT PAGOS S.A.",
+   "Operador de Tarjetas de Pago",
+   "CMF"
+  ],
+  [
+   "",
+   "ISWITCH S.A.",
+   "Operador de Tarjetas de Pago",
+   "CMF"
+  ],
+  [
+   "",
+   "KUSHKI OPERADORA S.A.",
+   "Operador de Tarjetas de Pago",
+   "CMF"
+  ],
+  [
+   "",
+   "MERCADO PAGO OPERADORA S.A.",
+   "Operador de Tarjetas de Pago",
+   "CMF"
+  ],
+  [
+   "",
+   "PAGOS Y SERVICIOS S.A.",
+   "Operador de Tarjetas de Pago",
+   "CMF"
+  ],
+  [
+   "",
+   "RED GLOBAL S.A.",
+   "Operador de Tarjetas de Pago",
+   "CMF"
+  ],
+  [
+   "",
+   "SUMUP CHILE PAYMENTS S.A.",
+   "Operador de Tarjetas de Pago",
+   "CMF"
+  ],
+  [
+   "BANCHILE-PAGOS",
+   "Banchile Pagos",
+   "Operador de Tarjetas de Pago y Switch Transaccional",
+   "CMF / BCCh"
+  ],
+  [
+   "CCA",
+   "CCA (Cámara de Pagos de Bajo Valor y Transferencias TEF)",
+   "Cámara de Compensación de Pagos de Bajo Valor (CPBV)",
+   "BCCh / CMF"
+  ],
+  [
+   "CCLV",
+   "CCLV (Contraparte Central de Valores Bolsa de Comercio)",
+   "Contraparte Central de Valores Bursátiles y Repos",
+   "CMF / BCCh"
+  ],
+  [
+   "COMBANC",
+   "Combanc (Cámara de Pagos de Alto Valor)",
+   "Cámara de Compensación de Alto Valor (CCAV)",
+   "BCCh / CMF"
+  ],
+  [
+   "COMDER",
+   "ComDer (Cámara de Compensación y Contraparte Central Derivados)",
+   "Contraparte Central de Derivados Financieros OTC",
+   "CMF / BCCh"
+  ],
+  [
+   "DCV",
+   "Depósito Central de Valores (DCV)",
+   "Depósito, Custodia y Liquidación Centralizada de Valores",
+   "CMF / BCCh"
+  ],
+  [
+   "GETNET",
+   "Getnet Santander",
+   "Operador Adquirente de Tarjetas de Pago",
+   "CMF / BCCh"
+  ],
+  [
+   "KLAP",
+   "Klap (ex Multicaja)",
+   "Operador Adquirente y Red de Pagos Minoristas",
+   "CMF / BCCh"
+  ],
+  [
+   "LBTR-BCCH",
+   "Sistema LBTR (Liquidación Bruta en Tiempo Real)",
+   "Alto Valor y Liquidación Bruta en Tiempo Real",
+   "Banco Central de Chile (BCCh)"
+  ],
+  [
+   "NEXUS",
+   "Nexus (Procesador Interbancario)",
+   "Sociedad de Apoyo al Giro / Procesador de Tarjetas",
+   "CMF / BCCh"
+  ],
+  [
+   "REDELCOM",
+   "Redelcom (Mercado Pago Point)",
+   "Operador Adquirente de Terminales POS",
+   "CMF / BCCh"
+  ],
+  [
+   "TRANSBANK",
+   "Transbank (Webpay, Redcompra, POS)",
+   "Operador de Tarjetas de Pago y Switch Transaccional",
+   "CMF / BCCh"
+  ]
+ ],
+ "sql": "SELECT codigo_sistema, nombre_comercial, tipo_sistema, supervisor FROM sistemas_pago_lista_entidades ORDER BY codigo_sistema;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

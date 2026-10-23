@@ -1,0 +1,197 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "estado-de-resultados-completo-de-ccaf-los-andes--b8a726",
+ "titulo": "Estado de resultados completo de CCAF Los Andes, ejercicio 2025",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "tipo_balance",
+  "estado_financiero",
+  "orden",
+  "cuenta",
+  "valor"
+ ],
+ "filas": 25,
+ "truncado": false,
+ "datos": [
+  [
+   "consolidado",
+   "ERI",
+   1,
+   "Ganancia (pérdida)",
+   112317276000
+  ],
+  [
+   "consolidado",
+   "ERI",
+   2,
+   "Ganancias (pérdidas) por coberturas de flujos de efectivo, antes de impuestos",
+   -31161448000
+  ],
+  [
+   "consolidado",
+   "ERI",
+   3,
+   "Otro resultado integral, antes de impuestos, coberturas del flujo de efectivo",
+   -31161448000
+  ],
+  [
+   "consolidado",
+   "ERI",
+   4,
+   "Total otro resultado integral que se reclasificará al resultado del periodo, antes de impuestos",
+   -31161448000
+  ],
+  [
+   "consolidado",
+   "ERI",
+   5,
+   "Otros componentes de otro resultado integral, antes de impuestos",
+   -31161448000
+  ],
+  [
+   "consolidado",
+   "ERI",
+   6,
+   "Total otro resultado integral",
+   -31161448000
+  ],
+  [
+   "consolidado",
+   "ERI",
+   7,
+   "Resultado integral total",
+   81155828000
+  ],
+  [
+   "consolidado",
+   "ERI",
+   8,
+   "Resultado integral atribuible a los propietarios de la controladora",
+   81155828000
+  ],
+  [
+   "consolidado",
+   "ERNG",
+   1,
+   "Ingresos de actividades ordinarias",
+   79421000000
+  ],
+  [
+   "consolidado",
+   "ERNG",
+   2,
+   "Otros ingresos",
+   6804456000
+  ],
+  [
+   "consolidado",
+   "ERNG",
+   3,
+   "Materias primas y consumibles utilizados",
+   2318434000
+  ],
+  [
+   "consolidado",
+   "ERNG",
+   4,
+   "Gastos por beneficios a los empleados",
+   116741810000
+  ],
+  [
+   "consolidado",
+   "ERNG",
+   5,
+   "Gasto por depreciación y amortización",
+   22848307000
+  ],
+  [
+   "consolidado",
+   "ERNG",
+   6,
+   "Pérdidas por deterioro de valor (reversiones de pérdidas por deterioro de valor) reconocidas en el resultado del periodo",
+   1754835000
+  ],
+  [
+   "consolidado",
+   "ERNG",
+   7,
+   "Otros gastos, por naturaleza",
+   158973221000
+  ],
+  [
+   "consolidado",
+   "ERNG",
+   8,
+   "Otras ganancias (pérdidas)",
+   -1655183000
+  ],
+  [
+   "consolidado",
+   "ERNG",
+   9,
+   "Ganancias (pérdidas) de actividades operacionales",
+   102550346000
+  ],
+  [
+   "consolidado",
+   "ERNG",
+   10,
+   "Ingresos financieros",
+   8480089000
+  ],
+  [
+   "consolidado",
+   "ERNG",
+   11,
+   "Costos financieros",
+   1780897000
+  ],
+  [
+   "consolidado",
+   "ERNG",
+   12,
+   "Resultados por unidades de reajuste",
+   -505974000
+  ],
+  [
+   "consolidado",
+   "ERNG",
+   13,
+   "Ganancia (pérdida), antes de impuestos",
+   108743564000
+  ],
+  [
+   "consolidado",
+   "ERNG",
+   14,
+   "Gasto por impuestos a las ganancias",
+   -3573712000
+  ],
+  [
+   "consolidado",
+   "ERNG",
+   15,
+   "Ganancia (pérdida) procedente de operaciones continuadas",
+   112317276000
+  ],
+  [
+   "consolidado",
+   "ERNG",
+   16,
+   "Ganancia (pérdida)",
+   112317276000
+  ],
+  [
+   "consolidado",
+   "ERNG",
+   17,
+   "Ganancia (pérdida)",
+   112317276000
+  ]
+ ],
+ "sql": "SELECT tipo_balance, estado_financiero, orden, cuenta, valor FROM ccaf_resultados WHERE rut = '81826800' AND periodo = '2025-12' ORDER BY tipo_balance, estado_financiero, orden;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

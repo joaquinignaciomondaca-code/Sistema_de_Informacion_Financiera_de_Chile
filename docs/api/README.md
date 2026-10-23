@@ -1,4 +1,9 @@
-# Contrato de la API pública (v1)
+# Contrato de la API pública (v2)
+
+**v2** (2026-10-23): recorta las columnas de control interno que viajaban en cada
+fila (huellas, rutas y URLs de la fuente, claves sintéticas). Quitar columnas
+rompe clientes, así que es un cambio **mayor**: el descriptor pasa a `2.0.0` y la
+carpeta a `api/v2/`. El contrato 1.x queda retirado, con un aviso en `api/v1/`.
 
 **v1 completa** (2026-10-22): contrato estático, SDK de Python, ejemplos en
 Python/R/JavaScript y test de contrato en CI.
@@ -13,18 +18,18 @@ el usuario descarga.
 | `reconciliacion.csv` | Qué objeto consume el cliente, con qué datos se sirve y en qué estado está (publicado, derivado o vacío). |
 | `esquemas.json` | Qué columnas y qué tipos tiene cada objeto, con el significado del diccionario editorial cuando existe. |
 | `claves.csv` | Qué combinación de columnas identifica una fila (verificada sobre **todas** las filas) y qué claves foráneas cierran contra su lista de entidades. |
-| `v1/datapackage.json` | El **Data Package**: 86 recursos con ruta, tamaño, SHA-256, esquema y `primaryKey`, legible por cualquier herramienta Frictionless. |
+| `v2/datapackage.json` | El **Data Package**: 86 recursos con ruta, tamaño, SHA-256, esquema y `primaryKey`, legible por cualquier herramienta Frictionless. |
 | `reglas.json` | Las comprobaciones con su nivel (invariante / expectativa / informativo) y las excepciones declaradas con su motivo. Hoy: **0 excepciones**. |
 | `prueba_maquina_limpia.log` | Evidencia de que un consumidor **sin el repo** descubre el catálogo, lee el esquema y consulta por HTTP. |
 | `mcp.log` | Evidencia del servidor MCP: dos herramientas, 191 tokens de contexto y la pregunta del README respondida con dos llamadas. |
-| `test_contrato.log` | Evidencia del test de contrato: 908 rutas sin 404, esquema = `DESCRIBE` real, 105 vistas, 156 consultas, 728 hashes y cobertura manifiesto ↔ catálogo. Incluye su autoprueba en negativo. |
-| `v1/catalog.json` | El índice de los 90 objetos: estado, filas, bytes, clave, corte y a dónde ir por más detalle. |
-| `v1/schema/{id}.json` | Columnas, tipos, significado y clave de cada objeto. |
-| `v1/partitions/{id}.json` | Los archivos que componen el objeto, con período y SHA-256. |
-| `v1/queries.json` | Las 156 consultas de la web, con **id estable** y la expectativa declarada. |
-| `v1/resultados/index.json` | El resultado ya calculado de las 156 consultas: filas, columnas, tope, `sha256` y URL de cada uno. Para quien necesita el número y no los 500 MB. |
-| `v1/openapi.json` | **Sólo** las 11 rutas GET que existen. |
-| `v1/views.sql` | Las 105 vistas SQL (90 objetos + 19 alias), ejecutables tal cual. |
+| `test_contrato.log` | Evidencia del test de contrato: 908 rutas sin 404, esquema = `DESCRIBE` real, 105 vistas, 159 consultas, 728 hashes y cobertura manifiesto ↔ catálogo. Incluye su autoprueba en negativo. |
+| `v2/catalog.json` | El índice de los 90 objetos: estado, filas, bytes, clave, corte y a dónde ir por más detalle. |
+| `v2/schema/{id}.json` | Columnas, tipos, significado y clave de cada objeto. |
+| `v2/partitions/{id}.json` | Los archivos que componen el objeto, con período y SHA-256. |
+| `v2/queries.json` | Las 159 consultas de la web, con **id estable** y la expectativa declarada. |
+| `v2/resultados/index.json` | El resultado ya calculado de las 159 consultas: filas, columnas, tope, `sha256` y URL de cada uno. Para quien necesita el número y no los 500 MB. |
+| `v2/openapi.json` | **Sólo** las 11 rutas GET que existen. |
+| `v2/views.sql` | Las 105 vistas SQL (90 objetos + 19 alias), ejecutables tal cual. |
 | `llms.txt` | La puerta de entrada para un agente: qué hay, cómo se consulta, qué no suponer. Sus cifras y rutas se auditan como el resto. |
 
 Se regeneran con:
@@ -33,11 +38,11 @@ Se regeneran con:
 python3 scripts/build_reconciliacion.py   # docs/api/reconciliacion.csv
 python3 scripts/build_esquemas.py         # docs/api/esquemas.json
 python3 scripts/verificar_claves.py       # docs/api/claves.csv      (~60 s)
-python3 scripts/build_api.py              # docs/api/v1/datapackage.json
+python3 scripts/build_api.py              # docs/api/v2/datapackage.json
 python3 scripts/auditar_datapackage.py    # valida el descriptor    (~12 s)
 python3 scripts/probar_maquina_limpia.py  # consumidor sin el repo  (~5 s)
 python3 scripts/build_contrato.py         # catálogo, esquemas, particiones, consultas, OpenAPI y vistas
-python3 scripts/build_resultados.py       # resultado de las 156 consultas (~2 s)
+python3 scripts/build_resultados.py       # resultado de las 159 consultas (~2 s)
 python3 scripts/auditar_contrato.py       # audita el contrato     (~1 s)
 python3 scripts/probar_ejemplos.py        # ejemplos de Python y JS (~2 s)
 python3 scripts/test_contrato.py --autoprueba  # test del consumidor (~7 s)
@@ -82,8 +87,8 @@ de origen compartido.
 ```jsonc
 {
   "contrato": "sif-api/esquemas",
-  "version": "v1",
-  "resumen": { "objetos": 90, "con_esquema": 86, "filas_unicas": 19777492, ... },
+  "version": "v2",
+  "resumen": { "objetos": 90, "con_esquema": 86, "filas_unicas": 19777508, ... },
   "objetos": {
     "bancos_balance": {
       "manifest_id": "bancos_cmf_lineas",
@@ -129,10 +134,10 @@ Reglas que el CI verifica:
 6. **Los 4 objetos sin dato no desaparecen**: se publican con `estado: "vacio"`,
    `columnas: []` y `motivo_sin_esquema`.
 
-Estado actual: 86 objetos con esquema, 1.509 columnas (7 sin documentar en el
-diccionario, 5 sin valores en origen), 19.777.492 filas únicas.
+Estado actual: 86 objetos con esquema, 1.474 columnas (3 sin documentar en el
+diccionario, 1 sin valores en origen), 19.777.508 filas únicas.
 
-## `v1/datapackage.json`
+## `v2/datapackage.json`
 
 Un recurso por objeto (86), con las particiones en `path` y el detalle en
 `sif.particiones`. Los campos salen de `esquemas.json` —no hay ni uno escrito a
@@ -191,7 +196,7 @@ natural omitía una dimensión**.
 El caso de seguros no era un dato sucio: la misma aseguradora tiene registro de
 **vida** y de **generales**, así que `sector + rut` da 84 de 84.
 
-## El contrato estático (`v1/`)
+## El contrato estático (`v2/`)
 
 `catalog.json` es la puerta de entrada: 90 objetos con `estado`, `filas`,
 `bytes`, `primaryKey` y las rutas a su esquema y sus particiones. Los 156
@@ -204,7 +209,7 @@ artículo o en una prueba.
 Se ejecuta tal cual y crea las 105 vistas:
 
 ```bash
-duckdb < v1/views.sql
+duckdb < v2/views.sql
 ```
 
 La base de los archivos sale de una variable de sesión, así que **el mismo
@@ -225,13 +230,13 @@ comentario al final, con su motivo.
 
 La fase 3 pedía SQL remoto. Un servidor DuckDB (Quack) no cabe en este
 despliegue: GitHub Pages sirve archivos y no ejecuta procesos, y Actions no
-recibe tráfico entrante. Lo que sí cabe se hace en el build: **las 156 consultas
+recibe tráfico entrante. Lo que sí cabe se hace en el build: **las 159 consultas
 del catálogo se ejecutan** contra los mismos Parquet que publica el sitio y cada
 una queda como archivo.
 
 ```
-v1/resultados/index.json                                   qué hay y cuánto pesa
-v1/resultados/cartera-extranjera-por-pais-emisor-…json     columnas, filas, datos, sql
+v2/resultados/index.json                                   qué hay y cuánto pesa
+v2/resultados/cartera-extranjera-por-pais-emisor-…json     columnas, filas, datos, sql
 ```
 
 Cada resultado lleva `data_release`, el `sql` que lo produjo, `max_filas` (500),
@@ -317,7 +322,7 @@ tercero y que se normalizan y se republican; no hay compromiso de
 disponibilidad, latencia ni corrección en un plazo. La API **no** es un servicio
 de consulta: no hay `/query`, no hay SQL arbitrario y no hay autenticación. Lo
 que hay son archivos Parquet en una URL estable, un descriptor que dice cómo
-leerlos y el resultado de las 156 consultas del catálogo ya calculado. Si algo falta, se arregla en el siguiente release, y cada release queda
+leerlos y el resultado de las 159 consultas del catálogo ya calculado. Si algo falta, se arregla en el siguiente release, y cada release queda
 identificado por su hash.
 
 ## Retención
@@ -331,7 +336,7 @@ guarda el release que estás usando.
 ## Lo que todavía no es
 
 - No hay **SQL arbitrario por HTTP**: quien necesite una consulta distinta a las
-  156 publicadas ejecuta el motor en su máquina (SDK, `views.sql` o DuckDB).
+  159 publicadas ejecuta el motor en su máquina (SDK, `views.sql` o DuckDB).
 - No hay **servidor DuckDB compartido** (Quack): la receta está en
   [`servidor/README.md`](servidor/README.md), sin desplegar. Implica una máquina,
   un certificado y un costo mensual.

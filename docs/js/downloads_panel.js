@@ -180,13 +180,8 @@ class DownloadsPanelController {
             <div class="dl-stat"><b>${window.MFCDownload.numero(this.catalogo.conjuntos)}</b><span>conjuntos</span></div>
             <div class="dl-stat"><b>${window.MFCDownload.numero(this.catalogo.filas)}</b><span>filas</span></div>
             <div class="dl-stat"><b>${window.MFCDownload.bytes(this.catalogo.bytes)}</b><span>Parquet</span></div>`;
-    const ocultas = A ? Object.keys(A.datos().tablas_ocultas || {}) : [];
-    const ocultasHtml = ocultas.length
-      ? `<span><b>No listadas:</b> ${ocultas.map((id) => {
-          const item = this.item(id);
-          return `<code>${this.escapar(item ? item.nombre : id)}</code>`;
-        }).join(", ")}, porque la fuente aún no publica datos (0 filas). Su vista SQL sigue disponible.</span>`
-      : "";
+    // El panel lista lo publicado y sólo lo publicado: las tablas sin filas en la
+    // fuente no se nombran aquí, porque no hay nada que descargar de ellas.
 
     this.container.innerHTML = `
       <div class="dl-shell">
@@ -244,7 +239,7 @@ class DownloadsPanelController {
           <span><b>Parquet</b> es el archivo tal como se publica: liviano, sin truncamientos y listo para Python, DuckDB, Power BI o R.
           <b>CSV</b> y <b>Excel</b> se generan en tu navegador a partir de la vista publicada; si el volumen supera las 250.000 filas se entrega un .ZIP
           con partes manejables. Los conteos de filas provienen de los manifiestos publicados junto a los datos.</span>
-          ${ocultasHtml}
+          
         </footer>
       </div>
     `;

@@ -1,0 +1,132 @@
+{
+ "adaptacion": false,
+ "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "Fecha · PK parcial",
+   "significado": "Periodo mensual del archivo CMF en formato YYYY-MM.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_institucion",
+   "rol": "FK · PK parcial",
+   "significado": "Código CMF del encabezado y del nombre de archivo. El 999 es el total del sistema financiero (no un banco): excluirlo al sumar instituciones.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut",
+   "rol": "Atributo",
+   "significado": "RUT del banco como cuerpo sin dígito verificador (convención del proyecto); el DV está en bancos.lista_entidades.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "razon_social",
+   "rol": "Atributo",
+   "significado": "Razón social tomada del maestro de bancos por código de institución, no del encabezado del archivo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_cuenta",
+   "rol": "PK parcial",
+   "significado": "Código de cuenta tal como aparece en el TXT CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "glosa_cuenta",
+   "rol": "Atributo",
+   "significado": "Descripción obtenida del modelo CMF incluido en el ZIP del periodo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_linea",
+   "rol": "Atributo",
+   "significado": "Clasificación técnica auxiliar; no sustituye la definición normativa del modelo.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Acumulado del ejercicio (de enero al mes informado); para el mes suelto se resta el mes anterior del mismo año.",
+   "nombre": "importe_clp",
+   "rol": "Métrica",
+   "significado": "Importe de la línea en pesos, listo para sumar o graficar: el mismo valor de `importes_fuente_decimal` ya convertido a número.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "Acumulado del ejercicio (de enero al mes informado)",
+   "nombre": "importes_fuente_raw",
+   "rol": "Dato fuente",
+   "significado": "Un único importe en pesos, con ceros a la izquierda y sin transformar.",
+   "tipo": "VARCHAR[]",
+   "tipo_ts": "array"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "familia_archivo_fuente",
+   "rol": "Atributo",
+   "significado": "B1, B2 o R1.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "modelo_cmf",
+   "rol": "PK parcial",
+   "significado": "MB1 consolidado, MB2 individual o MR1 consolidado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nivel_consolidacion",
+   "rol": "Atributo",
+   "significado": "Perímetro informado por la fuente, no inferido del nombre.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "numero_fila_fuente",
+   "rol": "Orden",
+   "significado": "Posición física original en el TXT; independiente de rubro, línea e ítem.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "derivado",
+ "foraneas": [
+  {
+   "columna": "codigo_institucion",
+   "destino": "bancos_lista_entidades",
+   "tasa": 1.0
+  }
+ ],
+ "fuente": "CMF",
+ "id": "bancos_resultados",
+ "licencia_estado": "verificada",
+ "primaryKey": [
+  "periodo",
+  "codigo_institucion",
+  "codigo_cuenta",
+  "modelo_cmf"
+ ],
+ "sector": "bancos",
+ "titulo": "bancos.cmf_lineas_b1_b2_r1",
+ "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+ "version": "1.0.0"
+}

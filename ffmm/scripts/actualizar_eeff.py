@@ -102,7 +102,7 @@ ESQUEMA = pa.schema([
     ("moneda", pa.string()), ("moneda_cmf", pa.string()), ("seccion", pa.string()), ("tipo_linea", pa.string()),
     ("orden", pa.int32()), ("codigo_cuenta", pa.string()), ("cuenta", pa.string()), ("nota", pa.string()),
     ("valor_miles_mf", pa.int64()), ("valor_anterior_miles_mf", pa.int64()),
-    ("fuente_archivo", pa.string()), ("enviado_cmf", pa.string()), ("sha256_archivo", pa.string()),
+    ("fuente_archivo", pa.string()), ("enviado_cmf", pa.string()),
 ])
 assert tuple(ESQUEMA.names) == eeff_xml.COLUMNAS
 
@@ -230,7 +230,7 @@ def registros_publicados() -> dict[tuple[str, int], dict]:
                 k = (f["run_fondo"], int(f["periodo"][:4]))
                 r = reg.setdefault(k, {
                     "run": k[0], "anio": k[1], "estado": "ok", "revisado": "0000-00-00",
-                    "archivo": f["fuente_archivo"], "sha256": f["sha256_archivo"], "enviado": f["enviado_cmf"],
+                    "archivo": f["fuente_archivo"], "sha256": f.get("sha256_archivo"), "enviado": f["enviado_cmf"],
                     "run_dv": f["run_fondo_dv"], "nombre": f["nombre_fondo"] or "", "rut_agf": f["rut_agf"] or "",
                     "agf": f["razon_social_agf"] or "", "moneda_cmf": f["moneda_cmf"], "moneda": f["moneda"],
                     "actual": {}, "anterior": {}, "notas": {}, "avisos": []})

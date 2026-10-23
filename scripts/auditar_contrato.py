@@ -35,7 +35,7 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 DOCS = RAIZ / "docs"
-V1 = DOCS / "api" / "v1"
+V2 = DOCS / "api" / "v2"
 sys.path.insert(0, str(RAIZ))
 
 BASE = "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile"
@@ -60,7 +60,7 @@ def main() -> int:
 
     t0 = time.time()
     problemas: list[str] = []
-    catalogo = leer_json(V1 / "catalog.json")
+    catalogo = leer_json(V2 / "catalog.json")
     objetos = catalogo["objetos"]
     ids = [o["id"] for o in objetos]
 
@@ -84,16 +84,16 @@ def main() -> int:
                     if verificada.get("columnas") and verificada.get("estado") in ("ok", "propuesta") else [])
         if declarada != esperada:
             problemas.append(f"{objeto['id']}: primaryKey del catálogo {declarada} ≠ verificada {esperada}")
-        if not (V1 / "schema" / f"{objeto['id']}.json").exists():
+        if not (V2 / "schema" / f"{objeto['id']}.json").exists():
             problemas.append(f"falta schema/{objeto['id']}.json")
-        if not (V1 / "partitions" / f"{objeto['id']}.json").exists():
+        if not (V2 / "partitions" / f"{objeto['id']}.json").exists():
             problemas.append(f"falta partitions/{objeto['id']}.json")
     print(f"Coherencia: {len(objetos)} objetos en catálogo, esquemas y reconciliación")
 
     # 2. Archivos -----------------------------------------------------------
     archivos = 0
     for nombre in ids:
-        doc = leer_json(V1 / "partitions" / f"{nombre}.json")
+        doc = leer_json(V2 / "partitions" / f"{nombre}.json")
         for parte in doc["particiones"]:
             archivo = DOCS / parte["archivo"]
             if not archivo.exists():
@@ -107,7 +107,7 @@ def main() -> int:
     print(f"Archivos: {archivos} particiones con tamaño y hash verificados")
 
     # 3. Consultas ----------------------------------------------------------
-    consultas = leer_json(V1 / "queries.json")
+    consultas = leer_json(V2 / "queries.json")
     alias = {a: o["id"] for o in objetos for a in o["aliases"]}
     conocidos = set(ids)
     vistos = set()
@@ -127,24 +127,24 @@ def main() -> int:
     print(f"Consultas: {consultas['total']} con id único y tablas del catálogo")
 
     # 4. OpenAPI ------------------------------------------------------------
-    openapi = leer_json(V1 / "openapi.json")
+    openapi = leer_json(V2 / "openapi.json")
     esperadas = {
-        "/api/v1/datapackage.json", "/api/v1/catalog.json", "/api/v1/schema/{id}.json",
-        "/api/v1/partitions/{id}.json", "/api/v1/queries.json",
-        "/api/v1/resultados/index.json", "/api/v1/resultados/{id}.json",
-        "/api/v1/views.sql",
+        "/api/v2/datapackage.json", "/api/v2/catalog.json", "/api/v2/schema/{id}.json",
+        "/api/v2/partitions/{id}.json", "/api/v2/queries.json",
+        "/api/v2/resultados/index.json", "/api/v2/resultados/{id}.json",
+        "/api/v2/views.sql",
         "/api/reconciliacion.csv", "/api/claves.csv", "/outputs/{ruta}",
     }
     if set(openapi["paths"]) != esperadas:
         problemas.append(f"OpenAPI publica rutas que no existen o le faltan: "
                          f"{sorted(set(openapi['paths']) ^ esperadas)}")
-    for ruta in ("/api/v1/schema/{id}.json", "/api/v1/partitions/{id}.json"):
+    for ruta in ("/api/v2/schema/{id}.json", "/api/v2/partitions/{id}.json"):
         enum = openapi["paths"][ruta]["get"]["parameters"][0]["schema"]["enum"]
         if set(enum) != conocidos:
             problemas.append(f"{ruta}: el enum de ids no cubre los 90 objetos")
-    enum_consultas = openapi["paths"]["/api/v1/resultados/{id}.json"]["get"]["parameters"][0]["schema"]["enum"]
+    enum_consultas = openapi["paths"]["/api/v2/resultados/{id}.json"]["get"]["parameters"][0]["schema"]["enum"]
     if set(enum_consultas) != vistos:
-        problemas.append("/api/v1/resultados/{id}.json: el enum no cubre las consultas")
+        problemas.append("/api/v2/resultados/{id}.json: el enum no cubre las consultas")
     for ruta in openapi["paths"]:
         if ruta.startswith("/outputs") or ruta.startswith("/api/"):
             if "get" not in openapi["paths"][ruta]:
@@ -152,10 +152,10 @@ def main() -> int:
     print(f"OpenAPI: {len(openapi['paths'])} rutas, todas con GET y los 90 ids")
 
     # 4b. Resultados precalculados (fase 3) ---------------------------------
-    resultados = V1 / "resultados"
+    resultados = V2 / "resultados"
     por_id = {c["id"]: c for c in consultas["consultas"]}
     if not resultados.exists():
-        problemas.append("falta api/v1/resultados/: las 156 consultas vienen sin resultado")
+        problemas.append("falta api/v2/resultados/: las 156 consultas vienen sin resultado")
     else:
         indice = leer_json(resultados / "index.json")
         if indice.get("data_release") != catalogo["data_release"]:
@@ -190,7 +190,7 @@ def main() -> int:
         print(f"Resultados: {len(por_id)} consultas con su JSON, SQL, tope y sha256 verificados")
 
     # 5. Vistas -------------------------------------------------------------
-    sql = (V1 / "views.sql").read_text(encoding="utf-8")
+    sql = (V2 / "views.sql").read_text(encoding="utf-8")
     if f"'{BASE}'" not in sql:
         problemas.append("views.sql no usa la URL canónica de la decisión D1")
     vistas = 0
@@ -221,7 +221,7 @@ def main() -> int:
     print(f"Vistas: {vistas} creadas desde views.sql con la base local, todas responden")
 
     # 6. El release tiene que ser el mismo que el del Data Package ----------
-    paquete = leer_json(V1 / "datapackage.json")
+    paquete = leer_json(V2 / "datapackage.json")
     if paquete["sif"]["data_release"] != catalogo["data_release"]:
         problemas.append("el data_release del catálogo y del Data Package no coinciden")
     print(f"Release: {catalogo['data_release']} en catálogo y Data Package")
@@ -239,11 +239,11 @@ def main() -> int:
                 problemas.append(f"llms.txt no dice cuántos {nombre} hay")
             elif int(hallada.group(1)) != esperado:
                 problemas.append(f"llms.txt dice {hallada.group(1)} {nombre} y hay {esperado}")
-        enlaces = set(re.findall(re.escape(BASE) + r"(/api/v1/[\w./-]+)", texto))
+        enlaces = set(re.findall(re.escape(BASE) + r"(/api/v2/[\w./-]+)", texto))
         rotos = [r for r in enlaces if not (DOCS / r.lstrip("/")).exists()]
         for r in rotos:
             problemas.append(f"llms.txt enlaza a una ruta que no existe: {r}")
-        print(f"llms.txt: {len(cifras)} cifras y {len(enlaces)} rutas de api/v1 comprobadas"
+        print(f"llms.txt: {len(cifras)} cifras y {len(enlaces)} rutas de api/v2 comprobadas"
               f"{'' if not rotos else f', {len(rotos)} rotas'}")
 
     duracion = time.time() - t0

@@ -587,8 +587,7 @@ const ERD_TABLES = [
     rows: "7 administradoras",
     file: "outputs/pensiones/afp_maestro_administradoras.parquet",
     cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "rut_administradora", type: "VARCHAR" },
+      { name: "rut_administradora", pk: true, type: "VARCHAR" },
       { name: "nombre_administradora", type: "VARCHAR" },
       { name: "nombre_fantasia", type: "VARCHAR" }
     ]
@@ -602,7 +601,7 @@ const ERD_TABLES = [
     y: -80,
     w: 240,
     h: 160,
-    rows: "40 instituciones",
+    rows: "41 instituciones · 20 vigentes",
     file: "outputs/bancos/bancos_maestro.parquet",
     cols: [
       { name: "codigo_institucion", pk: true, type: "VARCHAR" },
@@ -625,23 +624,19 @@ const ERD_TABLES = [
     rows: "CMF B1/B2 validados",
     file: "outputs/bancos/cmf_b1_b2_r1/manifest.json",
     cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "codigo_institucion", type: "VARCHAR" },
-      { name: "nombre_institucion_fuente", type: "VARCHAR" },
-      { name: "familia_archivo_fuente", type: "VARCHAR" },
-      { name: "modelo_cmf", type: "VARCHAR" },
-      { name: "nivel_consolidacion", type: "VARCHAR" },
-      { name: "codigo_cuenta", type: "VARCHAR" },
-      { name: "rubro", type: "VARCHAR" },
-      { name: "linea", type: "VARCHAR" },
-      { name: "item", type: "VARCHAR" },
+      { name: "periodo", pk: true, type: "VARCHAR" },
+      { name: "codigo_institucion", pk: true, type: "VARCHAR" },
+      { name: "rut", type: "VARCHAR" },
+      { name: "razon_social", type: "VARCHAR" },
+      { name: "codigo_cuenta", pk: true, type: "VARCHAR" },
       { name: "glosa_cuenta", type: "VARCHAR" },
-      { name: "numero_fila_fuente", type: "INTEGER" },
+      { name: "tipo_linea", type: "VARCHAR" },
+      { name: "importe_clp", type: "BIGINT" },
       { name: "importes_fuente_raw", type: "VARCHAR[]" },
-      { name: "importes_fuente_decimal", type: "VARCHAR[]" },
-      { name: "fuente_url_zip", type: "VARCHAR" },
-      { name: "sha256_zip", type: "VARCHAR" }
+      { name: "familia_archivo_fuente", type: "VARCHAR" },
+      { name: "modelo_cmf", pk: true, type: "VARCHAR" },
+      { name: "nivel_consolidacion", type: "VARCHAR" },
+      { name: "numero_fila_fuente", type: "BIGINT" }
     ]
   },
   {
@@ -656,23 +651,19 @@ const ERD_TABLES = [
     rows: "CMF R1 validado",
     file: "outputs/bancos/cmf_b1_b2_r1/manifest.json",
     cols: [
-      { name: "id", pk: true, type: "VARCHAR" },
-      { name: "periodo", type: "VARCHAR" },
-      { name: "codigo_institucion", type: "VARCHAR" },
-      { name: "nombre_institucion_fuente", type: "VARCHAR" },
-      { name: "familia_archivo_fuente", type: "VARCHAR" },
-      { name: "modelo_cmf", type: "VARCHAR" },
-      { name: "nivel_consolidacion", type: "VARCHAR" },
-      { name: "codigo_cuenta", type: "VARCHAR" },
-      { name: "rubro", type: "VARCHAR" },
-      { name: "linea", type: "VARCHAR" },
-      { name: "item", type: "VARCHAR" },
+      { name: "periodo", pk: true, type: "VARCHAR" },
+      { name: "codigo_institucion", pk: true, type: "VARCHAR" },
+      { name: "rut", type: "VARCHAR" },
+      { name: "razon_social", type: "VARCHAR" },
+      { name: "codigo_cuenta", pk: true, type: "VARCHAR" },
       { name: "glosa_cuenta", type: "VARCHAR" },
-      { name: "numero_fila_fuente", type: "INTEGER" },
+      { name: "tipo_linea", type: "VARCHAR" },
+      { name: "importe_clp", type: "BIGINT" },
       { name: "importes_fuente_raw", type: "VARCHAR[]" },
-      { name: "importes_fuente_decimal", type: "VARCHAR[]" },
-      { name: "fuente_url_zip", type: "VARCHAR" },
-      { name: "sha256_zip", type: "VARCHAR" }
+      { name: "familia_archivo_fuente", type: "VARCHAR" },
+      { name: "modelo_cmf", pk: true, type: "VARCHAR" },
+      { name: "nivel_consolidacion", type: "VARCHAR" },
+      { name: "numero_fila_fuente", type: "BIGINT" }
     ]
   },
   // <macro:inicio>

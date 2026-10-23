@@ -367,8 +367,13 @@ setTimeout(async () => {
     Array.from(document.querySelectorAll(".info-core-card")).map((c) => c.dataset.sector).join(",") === "seguros,ffmm,fi");
   check("la portada ya no anuncia 15 industrias",
     !/15 industrias/.test(document.getElementById("info-container").textContent));
-  check("el alcance dice que no hay carteras AFP",
-    /Carteras de los fondos de pensiones \(AFP\)/.test(document.getElementById("info-alcance").textContent));
+  // El alcance se cuenta por lo publicado: si vuelve a enunciarse por lo que
+  // falta, la sección deja de describir el catálogo y pasa a disculparse.
+  const textoAlcance = document.getElementById("info-alcance").textContent;
+  check("el alcance enumera lo publicado y no nombra ausencias",
+    !/no incluye|no se publica|no publicó|no publica/i.test(textoAlcance) &&
+    document.querySelectorAll("#info-alcance .info-list strong").length >= 6,
+    textoAlcance.slice(0, 80));
 
   const archivoNav = document.querySelector("#sidebar-tree .tree-archive");
   check("explorador: el archivo está al final y plegado",
@@ -447,6 +452,100 @@ setTimeout(async () => {
     /^Seguros/.test(grupos[0].etiqueta) && grupos.some((g) => /^Archivo · /.test(g.etiqueta)) &&
     !grupos.some((g) => g.tablas.some((t) => t.id === "fi_bienes_raices")), grupos.slice(0, 3).map((g) => g.etiqueta).join(" | "));
 
+  // Columnas del visor: un estado financiero se lee como el estado (periodo, institución,
+  // cuenta, importe), no como el volcado técnico del archivo de origen. Las columnas
+  // técnicas no se borran: quedan tras el botón «Todas las columnas».
+  // Las 13 columnas que publica `bancos_cmf_lineas` desde el recorte de esquema.
+  const COLUMNAS_BALANCE = [
+    "periodo", "codigo_institucion", "rut", "razon_social", "codigo_cuenta",
+    "glosa_cuenta", "tipo_linea", "importe_clp", "importes_fuente_raw",
+    "familia_archivo_fuente", "modelo_cmf", "nivel_consolidacion", "numero_fila_fuente"
+  ];
+  // El nombre de la columna está en el botón de orden; la subetiqueta va aparte.
+  const cabecerasVisor = () => [...document.querySelectorAll("#data-viewer-container .dv-table th .th-sort-btn")]
+    .map((b) => b.textContent.trim());
+  window.DataViewer.currentView = "bancos_balance";
+  window.DataViewer.currentColumns = COLUMNAS_BALANCE.slice();
+  // Fila real: 2022-01, Banco de Chile, TOTAL ACTIVOS. El desglose por moneda llega
+  // como el texto JSON de la lista (así lo devuelve el motor), no como arreglo.
+  window.DataViewer.currentRows = [{
+    periodo: "2022-01", codigo_institucion: "001", rut: "97004000", razon_social: "Banco de Chile",
+    codigo_cuenta: "100000000", glosa_cuenta: "TOTAL ACTIVOS", tipo_linea: "total",
+    importe_clp: 50164403436446,
+    importes_fuente_raw: "[26458735676131,00,18194231752989,00,0086353276604,00,5425082730722,00]",
+    familia_archivo_fuente: "B1", modelo_cmf: "MB1", nivel_consolidacion: "consolidado_global",
+    numero_fila_fuente: 3
+  }];
+  window.DataViewer.mostrarTodasLasColumnas = false;
+  window.DataViewer.render();
+  check("visor: el balance abre por periodo, institución, cuenta e importe",
+    cabecerasVisor().slice(0, 8).join(",") ===
+      "periodo,codigo_institucion,rut,razon_social,codigo_cuenta,glosa_cuenta,tipo_linea,importe_clp",
+    cabecerasVisor().slice(0, 8).join(","));
+  check("visor: la traza a la línea del TXT no ocupa la tabla",
+    cabecerasVisor().length === 12 && !cabecerasVisor().includes("numero_fila_fuente"),
+    cabecerasVisor().join(","));
+  const botonColumnas = document.querySelector("#data-viewer-container .dv-cols-btn");
+  check("visor: hay un botón que ofrece las columnas restantes",
+    Boolean(botonColumnas) && /Todas las columnas \(13\)/.test(botonColumnas.textContent) &&
+    /window\.DataViewer\.alternarColumnas\(\)/.test(botonColumnas.getAttribute("onclick")));
+  // jsdom en modo "outside-only" no ejecuta los onclick en línea: se llama al método
+  // que el botón invoca y se comprueba aparte que el botón lo tenga enlazado.
+  window.DataViewer.alternarColumnas();
+  check("visor: el botón devuelve las 13 columnas en el mismo orden editorial",
+    cabecerasVisor().length === COLUMNAS_BALANCE.length &&
+    cabecerasVisor().slice(0, 2).join(",") === "periodo,codigo_institucion" &&
+    cabecerasVisor().slice(-1).join(",") === "numero_fila_fuente",
+    cabecerasVisor().length + " columnas");
+  window.DataViewer.alternarColumnas();
+  check("visor: se vuelve a las columnas del dato",
+    cabecerasVisor().length === 12 && /Columnas del dato|Todas las columnas/.test(
+      document.querySelector("#data-viewer-container .dv-cols-btn").textContent));
+  const filaTexto = () => document.querySelector("#data-viewer-container .dv-table tbody tr").textContent;
+  check("visor: el desglose por moneda se muestra como importe legible",
+    /26\.458\.735\.676\.131 · 18\.194\.231\.752\.989 · 86\.353\.276\.604 · 5\.425\.082\.730\.722/.test(filaTexto()) &&
+    !/\[/.test(filaTexto()), filaTexto().slice(0, 160));
+  check("visor: la cabecera dice qué es cada componente del desglose",
+    /nacional · reajustable IPC · reajustable por tipo de cambio · extranjera/.test(
+      document.querySelector("#data-viewer-container .dv-table th:nth-child(9)").textContent),
+    (document.querySelector("#data-viewer-container .dv-table th:nth-child(9) .dv-th-sub") || {}).textContent);
+  // El desglose que se muestra tiene que sumar el importe publicado en la misma fila.
+  const celdasFila = [...document.querySelectorAll("#data-viewer-container .dv-table tbody tr td")];
+  const sumaComponentes = celdasFila[8].textContent.split("·")
+    .map((v) => Number(v.replace(/\./g, "").replace(/\s/g, "")))
+    .reduce((a, b) => a + b, 0);
+  const importePublicado = Number(celdasFila[7].textContent.replace(/[^\d]/g, ""));
+  check("visor: los cuatro componentes suman el importe en pesos de la fila",
+    sumaComponentes === importePublicado && importePublicado === 50164403436446,
+    `${sumaComponentes} vs ${importePublicado}`);
+
+  // El TXT de la CMF no trae las líneas en el orden del estado: al cargar, la tabla
+  // se ordena por institución y código de cuenta.
+  const clienteOrden = window.DuckDBClient;
+  const sidebarOrden = window.SidebarNav;
+  const filaBalance = (institucion, cuenta) => ({
+    id: institucion + "-" + cuenta, periodo: "2026-08", codigo_institucion: institucion,
+    rut: "97004000", razon_social: "Banco " + institucion, codigo_cuenta: cuenta,
+    glosa_cuenta: "cuenta " + cuenta, tipo_linea: "total", importe_clp: 1,
+    importes_fuente_raw: ["0", "0", "0", "1"], familia_archivo_fuente: "B1", modelo_cmf: "MB1",
+    nivel_consolidacion: "consolidado"
+  });
+  window.SidebarNav = null;
+  window.DuckDBClient = {
+    query: async () => ({
+      success: true, count: 3, columns: COLUMNAS_BALANCE.slice(),
+      rows: [filaBalance("001", "411000000"), filaBalance("002", "105000000"),
+        filaBalance("001", "100000000")]
+    })
+  };
+  await window.DataViewer.loadTable("bancos_balance", "bancos.balance", 100);
+  const ordenCargado = window.DataViewer.currentRows
+    .map((r) => r.codigo_institucion + ":" + r.codigo_cuenta).join(",");
+  check("visor: el balance se carga en el orden del estado (institución y cuenta)",
+    ordenCargado === "001:100000000,001:411000000,002:105000000", ordenCargado);
+  window.DuckDBClient = clienteOrden;
+  window.SidebarNav = sidebarOrden;
+
   window.switchMainTab("downloads");
   const itemsDl = () => Array.from(document.querySelectorAll("#downloads-container .dl-item"));
   const visiblesDl = () => itemsDl().filter((i) => !i.hidden);
@@ -518,7 +617,7 @@ setTimeout(async () => {
   const enlacesMaquina = gruposUso.length === 2
     ? [...gruposUso[1].querySelectorAll("a")].map((a) => a.getAttribute("href")) : [];
   check("reproducibilidad: el grupo de máquinas incluye el contrato y la guía para agentes",
-    enlacesMaquina.includes("api/v1/catalog.json") && enlacesMaquina.includes("llms.txt"),
+    enlacesMaquina.includes("api/v2/catalog.json") && enlacesMaquina.includes("llms.txt"),
     enlacesMaquina.join(", "));
   const irAgentes = document.querySelector("#creditos-guia [data-ir-uso]");
   if (irAgentes) irAgentes.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
@@ -544,9 +643,9 @@ setTimeout(async () => {
     /Puede haber errores/.test(document.querySelector(".info-fuentes").textContent) &&
     /puede contener errores/.test(document.querySelector(".info-note").textContent) &&
     /verificaciones/.test(document.getElementById("downloads-container").textContent));
-  check("fuentes y limitaciones: la sección declara respaldo, AFP y cobertura",
+  check("fuentes y limitaciones: la sección declara respaldo y cobertura",
     /sin respaldo|respaldo oficial/i.test(document.body.textContent) &&
-    /AFP/.test(document.querySelector(".info-fuentes").textContent) &&
+    /fuentes oficiales/i.test(document.querySelector(".info-fuentes").textContent) &&
     /homogeneización generalizada/i.test(document.querySelector(".info-fuentes").textContent));
 
   window.switchMainTab("info");

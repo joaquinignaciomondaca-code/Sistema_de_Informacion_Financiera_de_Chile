@@ -1,0 +1,75 @@
+{
+ "adaptacion": false,
+ "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_institucion",
+   "rol": "PK",
+   "significado": "Código del catálogo local.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut",
+   "rol": "Atributo",
+   "significado": "Cuerpo del RUT (sin dígito verificador ni puntos), cotejado con el registro CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "razon_social",
+   "rol": "Atributo",
+   "significado": "Nombre consignado localmente.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_fantasia",
+   "rol": "Atributo",
+   "significado": "Nombre abreviado consignado localmente.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_licencia",
+   "rol": "Atributo",
+   "significado": "Tipo de licencia del catálogo. Los agregados del sistema (900, 950, 960, 970, 980, 998 y 999) llevan «Agregado Sectorial»: no son bancos y no se suman con ellos.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "estado",
+   "rol": "Atributo",
+   "significado": "Activo, Fusionado, Cerrado o Agregado. No es un estado histórico por periodo: dice cómo está la institución hoy.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_dv",
+   "rol": "Atributo",
+   "significado": "RUT completo, cuerpo y dígito verificador, sin puntos: es el identificador que publica la CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "fuente": "CMF",
+ "id": "bancos_lista_entidades",
+ "licencia_estado": "verificada",
+ "primaryKey": [
+  "codigo_institucion"
+ ],
+ "sector": "bancos",
+ "titulo": "bancos.lista_instituciones",
+ "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+ "version": "1.0.0"
+}

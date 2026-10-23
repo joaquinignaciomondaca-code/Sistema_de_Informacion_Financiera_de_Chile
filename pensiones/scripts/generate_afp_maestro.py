@@ -14,16 +14,18 @@ from pipelines.auto import bundles  # noqa: E402
 from pipelines.auto.rut import normalizar_dataframe  # noqa: E402
 
 # Catálogo local conservado únicamente para identificación, sin métricas sintéticas.
+# La clave es el RUT de la administradora: el `id` que se publicaba antes era ese mismo
+# RUT con puntos cambiados por guiones bajos, así que no agregaba nada al archivo.
 AFP_DATA = [
-    ("afp_98000100_8", "98.000.100-8", "ADMINISTRADORA DE FONDOS DE PENSIONES HABITAT S.A.", "AFP Habitat"),
-    ("afp_76265736_8", "76.265.736-8", "ADMINISTRADORA DE FONDOS DE PENSIONES PROVIDA S.A.", "AFP Provida"),
-    ("afp_98000000_1", "98.000.000-1", "ADMINISTRADORA DE FONDOS DE PENSIONES CAPITAL S.A.", "AFP Capital"),
-    ("afp_76240079_0", "76.240.079-0", "ADMINISTRADORA DE FONDOS DE PENSIONES CUPRUM S.A.", "AFP Cuprum"),
-    ("afp_76762250_3", "76.762.250-3", "ADMINISTRADORA DE FONDOS DE PENSIONES MODELO S.A.", "AFP Modelo"),
-    ("afp_98001200_k", "98.001.200-K", "ADMINISTRADORA DE FONDOS DE PENSIONES PLANVITAL S.A.", "AFP Planvital"),
-    ("afp_76960424_3", "76.960.424-3", "ADMINISTRADORA DE FONDOS DE PENSIONES UNO S.A.", "AFP Uno"),
+    ("98.000.100-8", "ADMINISTRADORA DE FONDOS DE PENSIONES HABITAT S.A.", "AFP Habitat"),
+    ("76.265.736-8", "ADMINISTRADORA DE FONDOS DE PENSIONES PROVIDA S.A.", "AFP Provida"),
+    ("98.000.000-1", "ADMINISTRADORA DE FONDOS DE PENSIONES CAPITAL S.A.", "AFP Capital"),
+    ("76.240.079-0", "ADMINISTRADORA DE FONDOS DE PENSIONES CUPRUM S.A.", "AFP Cuprum"),
+    ("76.762.250-3", "ADMINISTRADORA DE FONDOS DE PENSIONES MODELO S.A.", "AFP Modelo"),
+    ("98.001.200-K", "ADMINISTRADORA DE FONDOS DE PENSIONES PLANVITAL S.A.", "AFP Planvital"),
+    ("76.960.424-3", "ADMINISTRADORA DE FONDOS DE PENSIONES UNO S.A.", "AFP Uno"),
 ]
-COLUMNS = ["id", "rut_administradora", "nombre_administradora", "nombre_fantasia"]
+COLUMNS = ["rut_administradora", "nombre_administradora", "nombre_fantasia"]
 
 def main():
     df = pd.DataFrame(AFP_DATA, columns=COLUMNS)

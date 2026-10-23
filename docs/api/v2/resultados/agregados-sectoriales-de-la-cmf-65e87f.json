@@ -1,0 +1,63 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "agregados-sectoriales-de-la-cmf-65e87f",
+ "titulo": "Agregados sectoriales de la CMF",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "codigo_institucion",
+  "razon_social",
+  "tipo_licencia",
+  "estado"
+ ],
+ "filas": 7,
+ "truncado": false,
+ "datos": [
+  [
+   "900",
+   "Total Bancos",
+   "Agregado Sectorial",
+   "Agregado"
+  ],
+  [
+   "950",
+   "Total Bancos Nacionales",
+   "Agregado Sectorial",
+   "Agregado"
+  ],
+  [
+   "960",
+   "Total Bancos Extranjeros",
+   "Agregado Sectorial",
+   "Agregado"
+  ],
+  [
+   "970",
+   "Total Bancos Establecidos en Chile",
+   "Agregado Sectorial",
+   "Agregado"
+  ],
+  [
+   "980",
+   "Total Sucursales Bancos Extranjeros",
+   "Agregado Sectorial",
+   "Agregado"
+  ],
+  [
+   "998",
+   "Total Sistema Financiero Chile",
+   "Agregado Sectorial",
+   "Agregado"
+  ],
+  [
+   "999",
+   "Total Sistema Financiero",
+   "Agregado Sectorial",
+   "Agregado"
+  ]
+ ],
+ "sql": "SELECT codigo_institucion, razon_social, tipo_licencia, estado FROM bancos_lista_entidades WHERE tipo_licencia = 'Agregado Sectorial' ORDER BY codigo_institucion;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

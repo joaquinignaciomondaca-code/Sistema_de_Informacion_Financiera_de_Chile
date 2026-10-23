@@ -1,0 +1,214 @@
+{
+ "adaptacion": false,
+ "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
+ "columnas": [
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "periodo",
+   "rol": "PK",
+   "significado": "Cierre del archivo AAAA-MM. En comparativos no es la fecha de la cifra: usar fecha_fin_contexto.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "run_fondo",
+   "rol": "PK",
+   "significado": "RUN del fondo, sin DV; une directamente con fi.lista_entidades.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "run_fondo_dv",
+   "rol": "Atributo",
+   "significado": "RUN con DV módulo 11. El DV recibido se conserva separado.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "dv_fondo_fuente",
+   "rol": "Dato fuente",
+   "significado": "Dígito verificador literal del XML; las discrepancias quedan como aviso.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nombre_fondo",
+   "rol": "Dimensión",
+   "significado": "Nombre reportado en el XML; puede ser abreviado y diferir del maestro.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_entidad",
+   "rol": "Dimensión",
+   "significado": "FIRES rescatable / FINRE no rescatable, según registro CMF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "rut_agf",
+   "rol": "FK",
+   "significado": "RUT de la administradora reportada, sin DV; une con agf.lista_entidades.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "razon_social_agf",
+   "rol": "Dimensión",
+   "significado": "Nombre de administradora declarado en este envío.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "moneda",
+   "rol": "Dimensión",
+   "significado": "Moneda de presentación: CLP, USD, EUR o COP; no sumar monedas distintas.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "moneda_cmf",
+   "rol": "Dato fuente",
+   "significado": "Código CMF literal ($$ pesos, PROM dólar, EUR euro, COP peso colombiano).",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "contexto",
+   "rol": "PK",
+   "significado": "Contexto original. PeriodoActual = saldo/acumulado actual; PeriodoAnualAnterior = balance al diciembre anterior; PeriodoAnterior = acumulado comparable; TrimestreActual/TrimestreAnterior = solo el trimestre. SaldoInicialTerceraColumna = apertura IFRS cuando se informa. Filtrar el contexto antes de agregar.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_inicio_contexto",
+   "rol": "Fecha",
+   "significado": "Inicio declarado del contexto. Para el saldo de apertura, la única fecha del XML.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fecha_fin_contexto",
+   "rol": "Fecha",
+   "significado": "Corte/fin declarado de las cifras; en apertura es el mismo instante de FechaInicio.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_periodo",
+   "rol": "Dimensión",
+   "significado": "saldo, acumulado o trimestre; evita confundir stocks y flujos.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "seccion",
+   "rol": "Dimensión",
+   "significado": "Rubro del estado: corriente/no corriente, patrimonio, ingresos, gastos u otros integrales.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "tipo_linea",
+   "rol": "Dimensión",
+   "significado": "detalle o total. No sumar detalles con sus totales.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "orden",
+   "rol": "Atributo",
+   "significado": "Orden de presentación de la cuenta en la ficha CMF, dentro de cada tabla/contexto.",
+   "tipo": "INTEGER",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "codigo_cuenta",
+   "rol": "PK",
+   "significado": "Código FIEF literal. La clave de fila es periodo + run_fondo + contexto + codigo_cuenta.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cuenta",
+   "rol": "Dimensión",
+   "significado": "Glosa del modelo CMF. TotalPasivo se explicita como pasivo más patrimonio.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "nota",
+   "rol": "Atributo",
+   "significado": "Referencia a nota del XML, si existe. No se extrae su texto PDF.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "Valor contable",
+   "nombre": "valor_miles_mf",
+   "rol": "Métrica",
+   "significado": "Entero exacto del XML, en miles de su moneda. No convertido, redondeado ni rellenado. No sumar contextos.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "fuente_archivo",
+   "rol": "Dato fuente",
+   "significado": "Nombre del FIEF original; la URL se reconstruye con RUN, periodo y la ruta CMF fiifr/xml.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "enviado_cmf",
+   "rol": "Fecha",
+   "significado": "Fecha/hora de envío leída del nombre del archivo; hora local declarada, sin inventar zona.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "cotejo_ficha",
+   "rol": "Atributo",
+   "significado": "coincide = importe cotejado exactamente con su concepto y columna HTML. sin_columna = contexto del XML no expuesto por la ficha (por ejemplo trimestres en el cierre anual), validado contablemente pero no cotejable allí.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
+  }
+ ],
+ "contrato": "sif-api/esquema",
+ "estado": "publicado",
+ "foraneas": [],
+ "fuente": "CMF",
+ "id": "fi_resultados",
+ "licencia_estado": "verificada",
+ "primaryKey": [
+  "periodo",
+  "run_fondo",
+  "contexto",
+  "codigo_cuenta"
+ ],
+ "sector": "fi",
+ "titulo": "fi.resultados",
+ "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
+ "version": "1.0.0"
+}

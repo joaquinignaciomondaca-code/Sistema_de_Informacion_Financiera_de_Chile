@@ -1,0 +1,145 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "distribucion-por-conglomerado-6d2d35",
+ "titulo": "Distribución por Conglomerado",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "grupo_financiero",
+  "total_corredoras",
+  "vigentes"
+ ],
+ "filas": 25,
+ "truncado": false,
+ "datos": [
+  [
+   "BTG Pactual",
+   1,
+   1
+  ],
+  [
+   "BancoEstado",
+   1,
+   1
+  ],
+  [
+   "Bank of America / Merrill Lynch",
+   1,
+   1
+  ],
+  [
+   "Credicorp Capital",
+   1,
+   1
+  ],
+  [
+   "EuroAmerica",
+   1,
+   1
+  ],
+  [
+   "Grupo BCI / Yarur",
+   1,
+   1
+  ],
+  [
+   "Grupo BICE / Matte",
+   1,
+   1
+  ],
+  [
+   "Grupo Banco de Chile / Quinenco",
+   1,
+   1
+  ],
+  [
+   "Grupo Consorcio",
+   1,
+   1
+  ],
+  [
+   "Grupo Santander",
+   2,
+   1
+  ],
+  [
+   "Grupo Security",
+   1,
+   1
+  ],
+  [
+   "Grupo Sura",
+   1,
+   1
+  ],
+  [
+   "Independiente / No Conglomerado",
+   91,
+   1
+  ],
+  [
+   "Itau Corpbanca / Itau Unibanco",
+   2,
+   1
+  ],
+  [
+   "J.P. Morgan",
+   1,
+   1
+  ],
+  [
+   "LarrainVial",
+   3,
+   1
+  ],
+  [
+   "MBI Inversiones",
+   1,
+   1
+  ],
+  [
+   "Moneda Asset Management / Patria",
+   1,
+   1
+  ],
+  [
+   "Nevasa",
+   1,
+   1
+  ],
+  [
+   "Renta 4 Espana",
+   1,
+   1
+  ],
+  [
+   "Santander / Ex-Santiago",
+   1,
+   0
+  ],
+  [
+   "Scotiabank Chile",
+   2,
+   1
+  ],
+  [
+   "Tanner Servicios Financieros",
+   1,
+   1
+  ],
+  [
+   "Vantrust Capital",
+   1,
+   1
+  ],
+  [
+   "Vector Capital",
+   1,
+   1
+  ]
+ ],
+ "sql": "SELECT grupo_financiero, count(*) as total_corredoras, sum(CASE WHEN estado_vigencia = 'Vigente' THEN 1 ELSE 0 END) as vigentes FROM corredoras_bolsa_lista_entidades GROUP BY grupo_financiero ORDER BY total_corredoras DESC;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

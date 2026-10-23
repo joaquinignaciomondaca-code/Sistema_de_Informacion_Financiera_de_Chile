@@ -1,0 +1,51 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "securitizadoras-con-emisiones-activas-cmf-52c2e1",
+ "titulo": "Securitizadoras con Emisiones Activas CMF",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "razon_social",
+  "rut_completo",
+  "lineas_deuda_registradas",
+  "cmf_url"
+ ],
+ "filas": 5,
+ "truncado": false,
+ "datos": [
+  [
+   "BCI SECURITIZADORA S.A.",
+   "96.948.880-9",
+   3,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?_=1&auth=&send=&mercado=V&rut=96948880&grupo=&tipoentidad=RGSEC&vig=VI&row=AAAwy2ACTAAAAWeAAZ&control=svs&pestania=1"
+  ],
+  [
+   "EF SECURITIZADORA S.A.",
+   "96.971.830-8",
+   9,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?_=1&auth=&send=&mercado=V&rut=96971830&grupo=&tipoentidad=RGSEC&vig=VI&row=AAAwy2ACTAAABywAAK&control=svs&pestania=1"
+  ],
+  [
+   "SECURITIZADORA SECURITY S.A.",
+   "96.847.360-3",
+   3,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?_=1&auth=&send=&mercado=V&rut=96847360&grupo=&tipoentidad=RGSEC&vig=VI&row=AAAwy2ACTAAABy9AAD&control=svs&pestania=1"
+  ],
+  [
+   "SECURITIZADORA SUDAMERICANA S.A.",
+   "96.972.780-3",
+   1,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?_=1&auth=&send=&mercado=V&rut=96972780&grupo=&tipoentidad=RGSEC&vig=VI&row=AAAwy2ACTAAABy+AAE&control=svs&pestania=1"
+  ],
+  [
+   "VOLCOM SECURITIZADORA S.A.",
+   "76.965.774-6",
+   2,
+   "https://www.cmfchile.cl/institucional/mercados/entidad.php?_=1&auth=&send=&mercado=V&rut=76965774&grupo=&tipoentidad=RGSEC&vig=VI&row=AAAwy2ACTAAAAQnAAH&control=svs&pestania=1"
+  ]
+ ],
+ "sql": "SELECT razon_social, rut_completo, lineas_deuda_registradas, cmf_url FROM securitizadoras_lista_entidades WHERE lineas_deuda_registradas > 0 ORDER BY lineas_deuda_registradas DESC;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

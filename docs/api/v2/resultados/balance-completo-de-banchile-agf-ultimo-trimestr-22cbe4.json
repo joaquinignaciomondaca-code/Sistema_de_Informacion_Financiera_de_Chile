@@ -1,0 +1,207 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "balance-completo-de-banchile-agf-ultimo-trimestr-22cbe4",
+ "titulo": "Balance completo de Banchile AGF, último trimestre",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "periodo",
+  "tipo_balance",
+  "estado_financiero",
+  "orden",
+  "cuenta",
+  "valor"
+ ],
+ "filas": 23,
+ "truncado": false,
+ "datos": [
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   1,
+   "Efectivo y equivalentes al efectivo",
+   1117105000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   2,
+   "Cuentas por cobrar a entidades relacionadas",
+   71690000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   3,
+   "Otros activos no financieros",
+   1149770000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   4,
+   "Deudores comerciales y otras cuentas por cobrar",
+   2384632000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   5,
+   "Otros activos financieros",
+   39900000000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   6,
+   "Activos intangibles distintos de la plusvalía",
+   7693567000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   7,
+   "Propiedades, planta y equipo",
+   410138000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   8,
+   "Activos por derecho de uso",
+   1012333000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   9,
+   "Total de activos",
+   53739235000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   10,
+   "Pasivos por impuestos corrientes",
+   314668000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   11,
+   "Otros pasivos no financieros",
+   2901374000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   12,
+   "Cuentas por pagar comerciales y otras cuentas por pagar",
+   492198000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   13,
+   "Pasivo por impuestos diferidos",
+   858342000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   14,
+   "Pasivos por arrendamientos",
+   1053857000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   15,
+   "Provisiones por beneficios a los empleados",
+   1545465000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   16,
+   "Otras provisiones",
+   10125308000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   17,
+   "Total de pasivos",
+   17291212000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   18,
+   "Capital emitido y pagado",
+   4223808000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   19,
+   "Ganancias (pérdidas) acumuladas",
+   32127067000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   20,
+   "Otras reservas",
+   97148000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   21,
+   "Patrimonio atribuible a los propietarios de la controladora",
+   36448023000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   22,
+   "Patrimonio total",
+   36448023000
+  ],
+  [
+   "2026-06",
+   "individual",
+   "ESF OL",
+   23,
+   "Total de patrimonio y pasivos",
+   53739235000
+  ]
+ ],
+ "sql": "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM agf_balance WHERE rut = '96767630' AND periodo = (SELECT max(periodo) FROM agf_balance WHERE rut = '96767630') ORDER BY tipo_balance, estado_financiero, orden;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

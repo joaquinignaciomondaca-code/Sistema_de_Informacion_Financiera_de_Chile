@@ -1,0 +1,79 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "contrapartes-de-derivados-ultimo-trimestre-61d701",
+ "titulo": "Contrapartes de derivados, último trimestre",
+ "origen": "explorador",
+ "data_release": "2026-10-22.9c002673eed5",
+ "generado": "2026-10-23",
+ "max_filas": 500,
+ "columnas": [
+  "contraparte",
+  "contratos"
+ ],
+ "filas": 15,
+ "truncado": false,
+ "datos": [
+  [
+   "BANCO BICE",
+   30
+  ],
+  [
+   "BANCO CHILE",
+   12
+  ],
+  [
+   "BANCO DE CREDITO E INVERSIONES",
+   18
+  ],
+  [
+   "BANCO SANTANDER",
+   14
+  ],
+  [
+   "BANCO SCOTIABANK",
+   55
+  ],
+  [
+   "BANK OF AMERICA ML",
+   52
+  ],
+  [
+   "BICE",
+   27
+  ],
+  [
+   "BNP PARIBAS",
+   12
+  ],
+  [
+   "BTGPACTUAL",
+   13
+  ],
+  [
+   "Banco Santander Chile",
+   23
+  ],
+  [
+   "GOLDMAN SACHS",
+   82
+  ],
+  [
+   "Hsbc Bank (Chile)",
+   17
+  ],
+  [
+   "ITAU",
+   17
+  ],
+  [
+   "JP MORGAN BANK",
+   15
+  ],
+  [
+   "SCOTIABANK",
+   20
+  ]
+ ],
+ "sql": "SELECT contraparte, count(*) AS contratos FROM fi_futuros WHERE periodo = (SELECT max(periodo) FROM fi_futuros) GROUP BY contraparte ORDER BY contratos DESC, contraparte LIMIT 15;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

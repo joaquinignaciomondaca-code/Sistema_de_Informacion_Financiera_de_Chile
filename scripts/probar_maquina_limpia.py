@@ -72,7 +72,7 @@ proyecto = [p for p in sys.path if "Sistema_de_Informacion_Financiera" in p]
 paso("sin el repo en sys.path", not proyecto, f"{proyecto or 'ninguno'}")
 
 # 1. Descubrir el catálogo por HTTP.
-with urllib.request.urlopen(base + "/api/v1/datapackage.json", timeout=30) as r:
+with urllib.request.urlopen(base + "/api/v2/datapackage.json", timeout=30) as r:
     paquete = json.load(r)
 recursos = {x["name"]: x for x in paquete["resources"]}
 paso("descubrir el Data Package", len(recursos) == 86, f"{len(recursos)} recursos")
@@ -104,15 +104,15 @@ por_sector = con.execute(
 paso("consulta de negocio", sum(n for _, n in por_sector) == 84, str(por_sector))
 
 # 5. El contrato estático: catálogo y vista SQL, sin haber visto el repo.
-with urllib.request.urlopen(base + "/api/v1/catalog.json", timeout=30) as r:
+with urllib.request.urlopen(base + "/api/v2/catalog.json", timeout=30) as r:
     catalogo = json.load(r)
 paso("descubrir el catalogo", catalogo["totales"]["objetos"] == 90,
      f"{catalogo['totales']['objetos']} objetos, {catalogo['totales']['consultas']} consultas")
-with urllib.request.urlopen(base + "/api/v1/schema/seguros_lista_entidades.json", timeout=30) as r:
+with urllib.request.urlopen(base + "/api/v2/schema/seguros_lista_entidades.json", timeout=30) as r:
     esquema = json.load(r)
 paso("leer el esquema por contrato", len(esquema["columnas"]) == 7,
      f"{len(esquema['columnas'])} columnas, pk {esquema['primaryKey']}")
-with urllib.request.urlopen(base + "/api/v1/views.sql", timeout=30) as r:
+with urllib.request.urlopen(base + "/api/v2/views.sql", timeout=30) as r:
     ddl = r.read().decode()
 vistas = [l for l in ddl.splitlines() if l.startswith("CREATE OR REPLACE VIEW")]
 paso("bajar las vistas", len(vistas) == 105, f"{len(vistas)} CREATE VIEW")
