@@ -3007,6 +3007,20 @@ header {
   font-family: var(--font-mono);
 }
 
+/* Segunda línea de una cabecera: qué es cada casilla de una columna compuesta. */
+.dv-th-sub {
+  display: block;
+  margin-top: 2px;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--text-muted);
+  text-transform: none;
+  letter-spacing: 0;
+  max-width: 220px;
+  white-space: normal;
+}
+
 .dv-scroll-tag {
   font-size: 12px;
   color: var(--accent-mint-text);

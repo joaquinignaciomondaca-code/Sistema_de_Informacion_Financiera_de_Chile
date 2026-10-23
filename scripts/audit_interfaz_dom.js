@@ -463,20 +463,24 @@ setTimeout(async () => {
     "importes_fuente_raw", "importes_fuente_decimal", "importe_clp", "formato_monto_fuente",
     "archivo_fuente", "fuente_url_zip", "sha256_zip", "fuente_url_xlsx_cotejo", "sha256_xlsx_cotejo"
   ];
-  const cabecerasVisor = () => [...document.querySelectorAll("#data-viewer-container .dv-table th")]
-    .map((th) => th.textContent.trim());
+  // El nombre de la columna está en el botón de orden; la subetiqueta va aparte.
+  const cabecerasVisor = () => [...document.querySelectorAll("#data-viewer-container .dv-table th .th-sort-btn")]
+    .map((b) => b.textContent.trim());
   window.DataViewer.currentView = "bancos_balance";
   window.DataViewer.currentColumns = COLUMNAS_BALANCE.slice();
+  // Fila real: 2022-01, Banco de Chile, TOTAL ACTIVOS. El desglose por moneda llega
+  // como el texto JSON de la lista (así lo devuelve el motor), no como arreglo.
   window.DataViewer.currentRows = [{
-    id: "x", periodo: "2026-08", fecha_corte: "2026-08-31", codigo_institucion: "001",
+    id: "x", periodo: "2022-01", fecha_corte: "2022-01-31", codigo_institucion: "001",
     rut: "97004000", razon_social: "Banco de Chile", nombre_institucion_fuente: "BANCO DE CHILE",
     tipo_estado: "balance", familia_archivo_fuente: "B1", modelo_cmf: "MB1",
-    nivel_consolidacion: "consolidado", codigo_cuenta: "100000000", rubro: "10000", linea: "00",
+    nivel_consolidacion: "consolidado_global", codigo_cuenta: "100000000", rubro: "10000", linea: "00",
     item: "00", glosa_cuenta: "TOTAL ACTIVOS", tipo_linea: "total", numero_fila_fuente: 3,
     ocurrencia_codigo_cuenta: 0, unidad_monto: "pesos_clp",
-    importes_fuente_raw: ["0", "0", "0", "55804006014866"],
-    importes_fuente_decimal: ["0", "0", "0", "55804006014866"], importe_clp: 55804006014866,
-    formato_monto_fuente: "entero_15", archivo_fuente: "B1/2026-08.txt",
+    importes_fuente_raw: "[26458735676131,00,18194231752989,00,0086353276604,00,5425082730722,00]",
+    importes_fuente_decimal: "[26458735676131.00,18194231752989.00,8635327660.4,5425082730722.00]",
+    importe_clp: 50164403436446,
+    formato_monto_fuente: "decimal_coma", archivo_fuente: "B1/2022-01.txt",
     fuente_url_zip: "https://www.cmfchile.cl/x.zip", sha256_zip: "0".repeat(64),
     fuente_url_xlsx_cotejo: "https://www.cmfchile.cl/x.xlsx", sha256_xlsx_cotejo: "1".repeat(64)
   }];
@@ -507,9 +511,23 @@ setTimeout(async () => {
   check("visor: se vuelve a las columnas del dato",
     cabecerasVisor().length === 12 && /Columnas del dato|Todas las columnas/.test(
       document.querySelector("#data-viewer-container .dv-cols-btn").textContent));
+  const filaTexto = () => document.querySelector("#data-viewer-container .dv-table tbody tr").textContent;
   check("visor: el desglose por moneda se muestra como importe legible",
-    /55\.804\.006\.014\.866/.test(document.querySelector("#data-viewer-container .dv-table tbody td[data-copy]").parentElement.textContent),
-    document.querySelector("#data-viewer-container .dv-table tbody tr").textContent.slice(0, 120));
+    /26\.458\.735\.676\.131 · 18\.194\.231\.752\.989 · 86\.353\.276\.604 · 5\.425\.082\.730\.722/.test(filaTexto()) &&
+    !/\[/.test(filaTexto()), filaTexto().slice(0, 160));
+  check("visor: la cabecera dice qué es cada componente del desglose",
+    /nacional · reajustable IPC · reajustable por tipo de cambio · extranjera/.test(
+      document.querySelector("#data-viewer-container .dv-table th:nth-child(9)").textContent),
+    (document.querySelector("#data-viewer-container .dv-table th:nth-child(9) .dv-th-sub") || {}).textContent);
+  // El desglose que se muestra tiene que sumar el importe publicado en la misma fila.
+  const celdasFila = [...document.querySelectorAll("#data-viewer-container .dv-table tbody tr td")];
+  const sumaComponentes = celdasFila[8].textContent.split("·")
+    .map((v) => Number(v.replace(/\./g, "").replace(/\s/g, "")))
+    .reduce((a, b) => a + b, 0);
+  const importePublicado = Number(celdasFila[7].textContent.replace(/[^\d]/g, ""));
+  check("visor: los cuatro componentes suman el importe en pesos de la fila",
+    sumaComponentes === importePublicado && importePublicado === 50164403436446,
+    `${sumaComponentes} vs ${importePublicado}`);
 
   // El TXT de la CMF no trae las líneas en el orden del estado: al cargar, la tabla
   // se ordena por institución y código de cuenta.
