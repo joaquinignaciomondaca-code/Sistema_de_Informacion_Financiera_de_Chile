@@ -20,6 +20,7 @@ rediseño del 2026-09-28 introdujo y que son fáciles de romper sin darse cuenta
 
 Uso: python scripts/audit_interfaz.py
 """
+import csv
 import json
 import os
 import re
@@ -663,6 +664,55 @@ def audit_alcance_publicado(html):
         print(f"  [OK] el alcance describe {len(incluye)} grupos publicados y no nombra ausencias")
 
 
+def audit_estado_claves(html, css):
+    """El estado de clave llega a la web desde claves.csv, y cubre todo el catálogo."""
+    print("\n--- 15. Estado de las claves en el Diccionario y el visor ---")
+    if "js/estado_claves.js?v=" not in html:
+        fail("index.html no carga js/estado_claves.js con versión")
+        return
+    ruta = os.path.join(ROOT, "docs/js/estado_claves.js")
+    if not os.path.exists(ruta):
+        fail("falta docs/js/estado_claves.js (genéralo con scripts/build_estado_claves.py)")
+        return
+    texto = open(ruta, encoding="utf-8").read()
+    if "GENERADO por scripts/build_estado_claves.py" not in texto:
+        fail("estado_claves.js no declara su origen; ¿se editó a mano?")
+        return
+    doc = json.loads(texto[texto.index("{"):texto.rindex(";")])
+    objetos = doc["objetos"]
+    resumen = doc["resumen"]
+    if resumen["sin_verificar"]:
+        fail(f"{resumen['sin_verificar']} objetos publicados sin verificación de clave")
+    catalogo = json.loads(read("docs/api/v2/catalog.json"))
+    ids = {o["id"] for o in catalogo["objetos"]}
+    faltan = sorted(ids - set(objetos))
+    if faltan:
+        fail(f"el estado de claves no cubre {len(faltan)} objetos del catálogo: {', '.join(faltan[:5])}")
+        return
+    # De claves.csv se toman las claves primarias medidas; las tablas vacías no
+    # tienen fila que medir y el catálogo las aporta como "sin datos".
+    medidas = {
+        f["objeto"]
+        for f in csv.DictReader(open(os.path.join(ROOT, "docs/api/claves.csv"), encoding="utf-8"))
+        if f["tipo"] == "pk" and f["estado"] != "sin_datos"
+    }
+    con_datos = {o for o, d in objetos.items() if d["estado"] != "sin_datos"}
+    if medidas != con_datos:
+        fail("los objetos de estado_claves.js no coinciden con las claves primarias de claves.csv")
+        return
+    print(f"  [OK] {len(objetos)} objetos con estado de clave, todos derivados de claves.csv")
+    print(f"  [OK] {resumen['verificadas']} verificadas · {resumen['propuestas']} propuestas · "
+          f"{resumen['sin_clave']} sin clave · {resumen['sin_datos']} sin datos")
+    for clase in (".dict-key-box", ".dict-key-badge", ".scope-banner-claves"):
+        if clase not in css:
+            fail(f"falta el estilo {clase} en app.css")
+    if 'avisoClaves' not in read("docs/js/data_dictionary.js"):
+        fail("el Diccionario no pinta el estado de la clave")
+    if 'avisoClaves' not in read("docs/js/data_viewer.js"):
+        fail("el visor no avisa de las filas repetidas")
+    print("  [OK] Diccionario y visor muestran el estado con sus estilos")
+
+
 def main():
     html = read("docs/index.html")
     audit_tabs(html)
@@ -682,6 +732,7 @@ def main():
     audit_como_usar(html, read("docs/css/app.css"))
     audit_privacidad(html, read("docs/css/app.css"))
     audit_alcance_publicado(html)
+    audit_estado_claves(html, read("docs/css/app.css"))
 
     print("\n" + "=" * 75)
     if errors:

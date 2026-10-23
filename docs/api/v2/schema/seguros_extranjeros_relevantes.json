@@ -175,22 +175,9 @@
  "fuente": "CMF",
  "id": "seguros_extranjeros_relevantes",
  "licencia_estado": "verificada",
- "primaryKey": [
-  "valor_final_m_clp",
-  "valor_razonable_m_clp",
-  "deterioro_m_clp",
-  "valor_compra_clp",
-  "codigo_individualizacion_o_nemotecnico",
-  "duracion",
-  "valor_nominal",
-  "plazo_al_vencimiento",
-  "costo_historico_m_clp",
-  "periodo",
-  "pais",
-  "nombre_aseguradora"
- ],
+ "primaryKey": null,
  "sector": "seguros",
  "titulo": "B.5 INVERSIONES EN EL EXTRANJERO",
  "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
- "version": "2.0.0"
+ "version": "2.0.1"
 }

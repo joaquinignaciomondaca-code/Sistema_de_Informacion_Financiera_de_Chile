@@ -214,22 +214,9 @@
  "fuente": "CMF",
  "id": "seguros_garantias_derivados",
  "licencia_estado": "verificada",
- "primaryKey": [
-  "valor_razonable_activo_en_garantia_m_clp",
-  "valor_razonable_activo_en_garantia_um",
-  "valor_contable_activo_en_garantia_m_clp",
-  "valor_contable_activo_en_garantia_um",
-  "identificador_garantia",
-  "valor_nominal_instrumento_en_garantia",
-  "codigo_identificacion_instrumento_en_garantia",
-  "folio_instrumento_en_garantia",
-  "nombre_contraparte_garantia",
-  "lei_contraparte_extranjera",
-  "periodo",
-  "nombre_aseguradora"
- ],
+ "primaryKey": null,
  "sector": "seguros",
  "titulo": "B.14 GARANTÍAS EN INSTRUMENTOS DERIVADOS",
  "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
- "version": "2.0.0"
+ "version": "2.0.1"
 }

@@ -5086,20 +5086,6 @@
       "sif_rol": "Métrica",
       "type": "number"
      }
-    ],
-    "primaryKey": [
-     "valorizacion_miles_mf",
-     "cantidad_unidades",
-     "pct_activo_emisor",
-     "valor_relevante",
-     "pct_activo_fondo",
-     "nemotecnico",
-     "pct_capital_emisor",
-     "tir_pct",
-     "fecha_vencimiento",
-     "rut_emisor",
-     "run_fondo",
-     "nombre_fondo"
     ]
    },
    "scheme": "file",
@@ -5108,7 +5094,7 @@
     "aliases": [],
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-    "clave_origen": "propuesta",
+    "clave_origen": null,
     "corte": "2022-01 a 2026-09",
     "deriva_de": null,
     "estado": "publicado",
@@ -5465,6 +5451,7 @@
     ],
     "puente": "directo",
     "sector": "ffmm",
+    "sin_clave": "sin_clave",
     "sql_view": "ffmm_cartera_nacional",
     "ultima_actualizacion": "2026-10-13",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
@@ -6968,9 +6955,6 @@
       "sif_rol": "Métrica",
       "type": "number"
      }
-    ],
-    "primaryKey": [
-     "periodo"
     ]
    },
    "scheme": "file",
@@ -6979,7 +6963,7 @@
     "aliases": [],
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-    "clave_origen": "propuesta",
+    "clave_origen": null,
     "corte": "2020-03 a 2026-06",
     "deriva_de": null,
     "estado": "publicado",
@@ -7000,6 +6984,7 @@
     ],
     "puente": "directo",
     "sector": "fi",
+    "sin_clave": "sin_datos",
     "sql_view": "fi_bienes_raices",
     "ultima_actualizacion": "2026-10-07",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
@@ -12748,22 +12733,6 @@
       "sif_rol": "Atributo",
       "type": "string"
      }
-    ],
-    "primaryKey": [
-     "valor_final_m_clp",
-     "valor_razonable_m_clp",
-     "valor_bolsa_clp",
-     "valor_libro_clp",
-     "valor_costo_clp",
-     "unidades",
-     "deterioro_m_clp",
-     "cuotas_suscritas",
-     "porcentaje_participacion",
-     "nemotecnico",
-     "pres_bursatil",
-     "patrimonio_filial_m_clp",
-     "periodo",
-     "nombre_aseguradora"
     ]
    },
    "scheme": "file",
@@ -12772,7 +12741,7 @@
     "aliases": [],
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-    "clave_origen": "propuesta",
+    "clave_origen": null,
     "corte": "2016-11 a 2026-09",
     "deriva_de": null,
     "estado": "publicado",
@@ -12853,6 +12822,7 @@
     ],
     "puente": "directo",
     "sector": "seguros",
+    "sin_clave": "sin_clave",
     "sql_view": "seguros_acciones",
     "ultima_actualizacion": "2026-10-21",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
@@ -12999,20 +12969,6 @@
       "sif_rol": "Atributo",
       "type": "string"
      }
-    ],
-    "primaryKey": [
-     "valor_final_m_clp",
-     "valor_razonable_m_clp",
-     "valor_bolsa_clp",
-     "valor_costo_clp",
-     "unidades",
-     "valor_libro_clp",
-     "deterioro_m_clp",
-     "nemotecnico",
-     "periodo",
-     "serie",
-     "nombre_aseguradora",
-     "rut_aseguradora"
     ]
    },
    "scheme": "file",
@@ -13021,7 +12977,7 @@
     "aliases": [],
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-    "clave_origen": "propuesta",
+    "clave_origen": null,
     "corte": "2016-11 a 2026-09",
     "deriva_de": "seguros_acciones",
     "estado": "derivado",
@@ -13102,6 +13058,7 @@
     ],
     "puente": "directo",
     "sector": "seguros",
+    "sin_clave": "sin_clave",
     "sql_view": "seguros_acciones_relevantes",
     "ultima_actualizacion": "2026-10-21",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
@@ -13499,21 +13456,6 @@
       "sif_rol": "Identificador",
       "type": "string"
      }
-    ],
-    "primaryKey": [
-     "tasacion_1_m_clp",
-     "tasacion_2_m_clp",
-     "costo_corregido_y_depreciado_m_clp",
-     "valor_final_m_clp",
-     "costo_actualizado_m_clp",
-     "depreciacion_acumulada_m_clp",
-     "property_id",
-     "valor_tasacion_construccion_m2_uf",
-     "deterioro_m_clp",
-     "valor_tasacion_terreno_m2_uf",
-     "codigo_nemotecnico",
-     "copropietaria",
-     "periodo"
     ]
    },
    "scheme": "file",
@@ -13522,7 +13464,7 @@
     "aliases": [],
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-    "clave_origen": "propuesta",
+    "clave_origen": null,
     "corte": "2024-12 a 2026-09",
     "deriva_de": null,
     "estado": "publicado",
@@ -13669,6 +13611,7 @@
     ],
     "puente": "directo",
     "sector": "seguros",
+    "sin_clave": "sin_clave",
     "sql_view": "seguros_bienes_raices",
     "ultima_actualizacion": "2026-10-21",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
@@ -14007,21 +13950,6 @@
       "sif_rol": "Métrica",
       "type": "integer"
      }
-    ],
-    "primaryKey": [
-     "valor_final_m_clp",
-     "inversiones_representativas_de_rt_pr_m_clp",
-     "total_valor_razonable_m_clp",
-     "total_costo_amortizado_m_clp",
-     "inversiones_no_representativas_de_rt_pr_m_clp",
-     "total_inst_otras_clasif_m_clp",
-     "total_efectivo_equivalente_m_clp",
-     "total_instrumento_s_cui_apv_m_clp",
-     "total_coligadas_m_clp",
-     "total_soc_filiales_m_clp",
-     "nombre_aseguradora",
-     "periodo",
-     "tipo_de_inversion"
     ]
    },
    "scheme": "file",
@@ -14030,7 +13958,7 @@
     "aliases": [],
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-    "clave_origen": "propuesta",
+    "clave_origen": null,
     "corte": "2016-11 a 2026-09",
     "deriva_de": null,
     "estado": "publicado",
@@ -14111,6 +14039,7 @@
     ],
     "puente": "directo",
     "sector": "seguros",
+    "sin_clave": "sin_clave",
     "sql_view": "seguros_control_inversiones",
     "ultima_actualizacion": "2026-10-21",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
@@ -14592,20 +14521,6 @@
       "sif_rol": "Métrica",
       "type": "integer"
      }
-    ],
-    "primaryKey": [
-     "efecto_en_resultados_realizados_m_clp",
-     "valor_presente_posicion_larga_m_clp",
-     "monto_activo_m_clp",
-     "valor_razonable_del_contrato_a_la_fecha_de_la_informacion_m",
-     "valor_presente_posicion_corta_m_clp",
-     "monto_pasivo_m_clp",
-     "valor_razonable_del_contrato_a_la_fecha_de_la_informacion",
-     "valor_razonable_del_contrato_a_la_fecha_de_la_informacion_ec",
-     "valor_razonable_del_activo_objeto_a_la_fecha_de_la_informacion_m_clp",
-     "nocional_posicion_larga_monto",
-     "monto_activos_en_margen_m_clp",
-     "nocional_posicion_corta_monto_m_clp"
     ]
    },
    "scheme": "file",
@@ -14614,7 +14529,7 @@
     "aliases": [],
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-    "clave_origen": "propuesta",
+    "clave_origen": null,
     "corte": "2016-11 a 2026-09",
     "deriva_de": null,
     "estado": "publicado",
@@ -14695,6 +14610,7 @@
     ],
     "puente": "directo",
     "sector": "seguros",
+    "sin_clave": "sin_clave",
     "sql_view": "seguros_derivados",
     "ultima_actualizacion": "2026-10-21",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
@@ -14876,20 +14792,6 @@
       "sif_rol": "Atributo",
       "type": "string"
      }
-    ],
-    "primaryKey": [
-     "valor_razonable_m_clp",
-     "nocional_posicion_larga_monto",
-     "valor_presente_posicion_larga_m_clp",
-     "valor_presente_posicion_corta_m_clp",
-     "nocional_posicion_corta_monto_m_clp",
-     "folio_operacion",
-     "activo_objeto_posicion_larga_nocional",
-     "fecha_de_vencimiento_del_contrato",
-     "activo_objeto_posicion_corta_nocional",
-     "fecha_de_la_operacion",
-     "periodo",
-     "nombre_aseguradora"
     ]
    },
    "scheme": "file",
@@ -14898,7 +14800,7 @@
     "aliases": [],
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-    "clave_origen": "propuesta",
+    "clave_origen": null,
     "corte": "2016-11 a 2026-09",
     "deriva_de": "seguros_derivados",
     "estado": "derivado",
@@ -14979,6 +14881,7 @@
     ],
     "puente": "directo",
     "sector": "seguros",
+    "sin_clave": "sin_clave",
     "sql_view": "seguros_derivados_relevantes",
     "ultima_actualizacion": "2026-10-21",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
@@ -15695,20 +15598,6 @@
       "sif_rol": "Métrica",
       "type": "number"
      }
-    ],
-    "primaryKey": [
-     "valor_final_m_clp",
-     "valor_razonable_m_clp",
-     "valor_presente_tir_de_compra_m_clp",
-     "unidades",
-     "tir_mercado",
-     "valor_libro_m_clp",
-     "valor_compra_clp",
-     "valor_bursatil_m_clp",
-     "valor_cuota",
-     "deterioro_m_clp",
-     "valor_bursatil_unitario",
-     "folio_operacion"
     ]
    },
    "scheme": "file",
@@ -15717,7 +15606,7 @@
     "aliases": [],
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-    "clave_origen": "propuesta",
+    "clave_origen": null,
     "corte": "2016-11 a 2026-09",
     "deriva_de": null,
     "estado": "publicado",
@@ -15798,6 +15687,7 @@
     ],
     "puente": "directo",
     "sector": "seguros",
+    "sin_clave": "sin_clave",
     "sql_view": "seguros_extranjeros",
     "ultima_actualizacion": "2026-10-20",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
@@ -15962,20 +15852,6 @@
       "sif_rol": "Atributo",
       "type": "string"
      }
-    ],
-    "primaryKey": [
-     "valor_final_m_clp",
-     "valor_razonable_m_clp",
-     "deterioro_m_clp",
-     "valor_compra_clp",
-     "codigo_individualizacion_o_nemotecnico",
-     "duracion",
-     "valor_nominal",
-     "plazo_al_vencimiento",
-     "costo_historico_m_clp",
-     "periodo",
-     "pais",
-     "nombre_aseguradora"
     ]
    },
    "scheme": "file",
@@ -15984,7 +15860,7 @@
     "aliases": [],
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-    "clave_origen": "propuesta",
+    "clave_origen": null,
     "corte": "2016-11 a 2026-09",
     "deriva_de": "seguros_extranjeros",
     "estado": "derivado",
@@ -16065,6 +15941,7 @@
     ],
     "puente": "directo",
     "sector": "seguros",
+    "sin_clave": "sin_clave",
     "sql_view": "seguros_extranjeros_relevantes",
     "ultima_actualizacion": "2026-10-21",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
@@ -16512,23 +16389,6 @@
       "sif_rol": "Atributo",
       "type": "string"
      }
-    ],
-    "primaryKey": [
-     "valor_razonable_clp",
-     "valor_final_m_clp",
-     "valor_de_inversion_clp",
-     "unidades",
-     "valor_cuota_clp",
-     "deterioro_clp",
-     "nemotecnico",
-     "run",
-     "nombre_del_fondo",
-     "serie",
-     "periodo",
-     "nombre_aseguradora",
-     "nombre_cartera",
-     "rut_aseguradora",
-     "nombre_custodio"
     ]
    },
    "scheme": "file",
@@ -16537,7 +16397,7 @@
     "aliases": [],
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-    "clave_origen": "propuesta",
+    "clave_origen": null,
     "corte": "2016-11 a 2026-09",
     "deriva_de": null,
     "estado": "publicado",
@@ -16618,6 +16478,7 @@
     ],
     "puente": "directo",
     "sector": "seguros",
+    "sin_clave": "sin_clave",
     "sql_view": "seguros_fondos_mutuos",
     "ultima_actualizacion": "2026-10-21",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
@@ -16803,20 +16664,6 @@
       "sif_rol": "Atributo",
       "type": "string"
      }
-    ],
-    "primaryKey": [
-     "valor_razonable_activo_en_garantia_m_clp",
-     "valor_razonable_activo_en_garantia_um",
-     "valor_contable_activo_en_garantia_m_clp",
-     "valor_contable_activo_en_garantia_um",
-     "identificador_garantia",
-     "valor_nominal_instrumento_en_garantia",
-     "codigo_identificacion_instrumento_en_garantia",
-     "folio_instrumento_en_garantia",
-     "nombre_contraparte_garantia",
-     "lei_contraparte_extranjera",
-     "periodo",
-     "nombre_aseguradora"
     ]
    },
    "scheme": "file",
@@ -16825,7 +16672,7 @@
     "aliases": [],
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-    "clave_origen": "propuesta",
+    "clave_origen": null,
     "corte": "2024-12 a 2026-09",
     "deriva_de": null,
     "estado": "publicado",
@@ -16858,6 +16705,7 @@
     ],
     "puente": "directo",
     "sector": "seguros",
+    "sin_clave": "sin_clave",
     "sql_view": "seguros_garantias_derivados",
     "ultima_actualizacion": "2026-10-21",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
@@ -17250,7 +17098,7 @@
     ],
     "puente": "directo",
     "sector": "seguros",
-    "sin_clave": "fila_completa",
+    "sin_clave": "sin_clave",
     "sql_view": "seguros_otras_inversiones",
     "ultima_actualizacion": "2026-10-21",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
@@ -17475,21 +17323,6 @@
       "sif_rol": "Atributo",
       "type": "string"
      }
-    ],
-    "primaryKey": [
-     "valorizacion_de_pacto_a_la_fecha_de_cierre_m_clp",
-     "valor_de_mercado_a_la_fecha_de_informacion",
-     "activo_objeto_valor_contable",
-     "interes_devengado_del_pacto_m",
-     "valor_pactado",
-     "valor_inicial_um",
-     "valor_de_mercado_a_la_fecha_de_suscripcion_monto",
-     "tasa_o_precio_de_mercado",
-     "tir_compra",
-     "folio_operacion",
-     "valor_nominal",
-     "fecha_de_vencimiento_del_contrato",
-     "item_operacion"
     ]
    },
    "scheme": "file",
@@ -17498,7 +17331,7 @@
     "aliases": [],
     "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-    "clave_origen": "propuesta",
+    "clave_origen": null,
     "corte": "2016-11 a 2026-09",
     "deriva_de": null,
     "estado": "publicado",
@@ -17579,6 +17412,7 @@
     ],
     "puente": "directo",
     "sector": "seguros",
+    "sin_clave": "sin_clave",
     "sql_view": "seguros_pactos",
     "ultima_actualizacion": "2026-10-21",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
@@ -19333,6 +19167,7 @@
   },
   "objetos_sin_archivo": 4,
   "versionado": {
+   "correccion": "una afirmación falsa del descriptor —por ejemplo una `primaryKey` que no se cumple— se retira en un parche: no cambia el dato, y quien la usaba para deduplicar debe agrupar por su cuenta",
    "mayor": "se rompe un cliente: quitar o renombrar recurso o columna, cambiar un tipo",
    "menor": "se puede ignorar: añadir recurso, columna al final o campo sif.*",
    "parche": "sólo datos: corrige valores sin tocar el esquema",
@@ -19360,5 +19195,5 @@
   }
  ],
  "title": "Sistema de Información Financiera de Chile",
- "version": "2.0.0"
+ "version": "2.0.1"
 }
