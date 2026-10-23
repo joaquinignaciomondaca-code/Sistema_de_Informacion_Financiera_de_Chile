@@ -421,7 +421,13 @@ def main() -> int:
         "base": args.base,
         "totales": {
             "objetos": len(catalogo),
+            # `con_datos` = tiene al menos un archivo publicado. No es lo mismo que
+            # tener filas: `fi_bienes_raices` publica el esquema con un Parquet vacío
+            # (0 filas) para que la vista SQL exista, así que cuenta en uno y no en el
+            # otro. Los dos números van con nombre propio para que nadie tenga que
+            # restarlos a mano (90 · 89 · 86 · 85).
             "con_datos": sum(1 for o in catalogo if o["particiones"]),
+            "con_filas": sum(1 for o in catalogo if o["filas"]),
             "vacios": sum(1 for o in catalogo if o["estado"] == "vacio"),
             "derivados": sum(1 for o in catalogo if o["estado"] == "derivado"),
             "alias": sum(len(o["aliases"]) for o in catalogo),

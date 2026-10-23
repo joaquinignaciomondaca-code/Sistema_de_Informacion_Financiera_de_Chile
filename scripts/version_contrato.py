@@ -22,7 +22,9 @@ from __future__ import annotations
 #   2.0.1 · 2026-10-23 · corrección: el descriptor deja de afirmar 13 claves primarias
 #           que no eran únicas (bug de `verificar_claves.py`). No cambia ni una fila
 #           ni una columna publicada; sólo se retira una promesa falsa.
-VERSION_CONTRATO = "2.0.1"
+#   2.1.0 · 2026-10-23 · campo nuevo `totales.con_filas` (objetos con filas), que
+#           separa «tiene archivo» de «tiene datos»: 86 y 85 dejan de confundirse.
+VERSION_CONTRATO = "2.1.0"
 
 # Carpeta y `api_version` de todas las piezas. Cambia sólo con una versión mayor.
 API_VERSION = "v2"

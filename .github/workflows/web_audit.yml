@@ -460,6 +460,22 @@ jobs:
           echo "::notice title=DOM::$(tail -n 1 dom.log)"
           exit $n
 
+      - name: 'Mapa relacional: los títulos caben y ninguna tarjeta se solapa'
+        run: |
+          set +e
+          node scripts/audit_erd_visual.js > erd.log 2>&1; n=$?
+          grep -h -E "\[FALLA\]" erd.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Mapa relacional::$linea"; done
+          echo "::notice title=Mapa relacional::$(tail -n 1 erd.log)"
+          exit $n
+
+      - name: Cifras de portada truncadas hacia abajo y respaldos al día
+        run: |
+          set +e
+          node scripts/audit_cifras.js > cifras.log 2>&1; n=$?
+          grep -h -E "\[FALLA\]" cifras.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Cifras::$linea"; done
+          echo "::notice title=Cifras::$(tail -n 1 cifras.log)"
+          exit $n
+
       - name: Celdas y alias hostiles no ejecutan código (jsdom)
         run: |
           set +e
