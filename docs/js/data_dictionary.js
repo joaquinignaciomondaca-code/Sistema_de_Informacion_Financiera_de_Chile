@@ -2885,6 +2885,43 @@ class DataDictionaryController {
       </div>`;
   }
 
+  // Estado de la clave de la tabla. Sale de `docs/js/estado_claves.js`, que se
+  // genera desde `docs/api/claves.csv` (medido sobre todas las filas publicadas):
+  // no se escribe aquí a mano para que no pueda quedar desfasado.
+  avisoClaves(table) {
+    const datos = window.ESTADO_CLAVES && window.ESTADO_CLAVES.objetos;
+    const clave = datos && (datos[table.viewName] || datos[table.id]);
+    if (!clave) return "";
+    const clases = {
+      ok: "clave-ok",
+      propuesta: "clave-propuesta",
+      sin_clave: "clave-sin",
+      sin_verificar: "clave-sin",
+      sin_datos: "clave-sin-datos",
+    };
+    const etiquetas = {
+      ok: "Clave verificada",
+      propuesta: "Clave propuesta",
+      sin_clave: "Sin clave",
+      sin_verificar: "Sin verificación",
+      sin_datos: "Sin datos",
+    };
+    const tipo = clave.tipo_clave === "medidas" ? "clave-medidas" : "";
+    return `
+      <div class="dict-key-box ${clases[clave.estado] || ""} ${tipo}" data-estado-clave="${clave.estado}">
+        <span class="dict-key-badge">${etiquetas[clave.estado] || clave.estado}</span>
+        <span class="dict-key-text">${this.escaparClave(clave.texto)}</span>
+      </div>`;
+  }
+
+  escaparClave(texto) {
+    return String(texto)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/`([^`]+)`/g, "<code>$1</code>");
+  }
+
   init() {
     if (!this.container) return;
     this.render();
@@ -2966,6 +3003,7 @@ class DataDictionaryController {
               </div>
               <p class="dict-table-desc">${table.descripcion}</p>
               ${this.avisoAlcance(table)}
+              ${this.avisoClaves(table)}
               ${table.advertencia ? `
                 <div class="dict-warning-box">
                   <span class="dict-warning-badge">Sin auditar</span>

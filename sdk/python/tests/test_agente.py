@@ -46,6 +46,24 @@ class Agente(unittest.TestCase):
         # Compacta: la ficha entera de una tabla tiene que caber en un contexto.
         self.assertLess(len(json.dumps(objeto, ensure_ascii=False)), 2_000)
 
+    def test_una_ficha_sin_clave_publica_pk_nulo(self):
+        """La 2.0.1 retiró la clave de 27 objetos: `pk` tiene que ser `null`.
+
+        Si el campo se omitiera, un consumidor no distinguiría «no hay clave» de
+        «esta versión no lo dice»; y si viniera como lista vacía, `",".join` y
+        `pk[0]` fallarían igual. Se fija el contrato: el campo existe y es null.
+        """
+        objetos = self.buscar("cartera nacional de fondos mutuos", limite=3)["objetos"]
+        ficha = next(o for o in objetos if o["id"] == "ffmm_cartera_nacional")
+        self.assertIn("pk", ficha)
+        self.assertIsNone(ficha["pk"])
+        self.assertEqual(ficha["filas"], 1_590_196)
+
+    def test_una_ficha_con_clave_sigue_trayendo_la_clave(self):
+        objetos = self.buscar("unidad de fomento", limite=3)["objetos"]
+        con_clave = [o for o in objetos if o["pk"]]
+        self.assertTrue(con_clave, f"ninguna ficha trajo pk: {[o['id'] for o in objetos]}")
+
     def test_sin_coincidencias_da_una_pista(self):
         resultado = self.buscar("xilofón")
         self.assertEqual(resultado["objetos"], [])
