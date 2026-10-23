@@ -367,8 +367,13 @@ setTimeout(async () => {
     Array.from(document.querySelectorAll(".info-core-card")).map((c) => c.dataset.sector).join(",") === "seguros,ffmm,fi");
   check("la portada ya no anuncia 15 industrias",
     !/15 industrias/.test(document.getElementById("info-container").textContent));
-  check("el alcance dice que no hay carteras AFP",
-    /Carteras de los fondos de pensiones \(AFP\)/.test(document.getElementById("info-alcance").textContent));
+  // El alcance se cuenta por lo publicado: si vuelve a enunciarse por lo que
+  // falta, la sección deja de describir el catálogo y pasa a disculparse.
+  const textoAlcance = document.getElementById("info-alcance").textContent;
+  check("el alcance enumera lo publicado y no nombra ausencias",
+    !/no incluye|no se publica|no publicó|no publica/i.test(textoAlcance) &&
+    document.querySelectorAll("#info-alcance .info-list strong").length >= 6,
+    textoAlcance.slice(0, 80));
 
   const archivoNav = document.querySelector("#sidebar-tree .tree-archive");
   check("explorador: el archivo está al final y plegado",
@@ -544,9 +549,9 @@ setTimeout(async () => {
     /Puede haber errores/.test(document.querySelector(".info-fuentes").textContent) &&
     /puede contener errores/.test(document.querySelector(".info-note").textContent) &&
     /verificaciones/.test(document.getElementById("downloads-container").textContent));
-  check("fuentes y limitaciones: la sección declara respaldo, AFP y cobertura",
+  check("fuentes y limitaciones: la sección declara respaldo y cobertura",
     /sin respaldo|respaldo oficial/i.test(document.body.textContent) &&
-    /AFP/.test(document.querySelector(".info-fuentes").textContent) &&
+    /fuentes oficiales/i.test(document.querySelector(".info-fuentes").textContent) &&
     /homogeneización generalizada/i.test(document.querySelector(".info-fuentes").textContent));
 
   window.switchMainTab("info");

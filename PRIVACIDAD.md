@@ -23,23 +23,29 @@ tres conjuntos con datos de personas naturales:
 | `corredoras_bolsa_lista_entidades` | 11 corredores inscritos a nombre de persona natural (de 120) | RUT, nombre, estado de vigencia | Registro de corredores de bolsa de la CMF (Ley 18.045) |
 | `seguros_bienes_raices` | 317 nombres de tasadores (233 en la tasación 1 y 263 en la tasación 2) | Nombre del tasador 1 y 2, tal como consta en la Circular 1835; la fuente mezcla personas naturales y sociedades tasadoras | Declaración de cartera de las aseguradoras a la CMF |
 
-## 2. Qué datos personales no se publican
+## 2. Cómo se tratan los identificadores
 
-- **Correos de contacto.** La columna `email_contacto` de `fintech_rpsf_lista_entidades`
-  se retiró el 22 de octubre de 2026. Contenía 253 direcciones, 46 de ellas en
-  dominios personales. No es un dato registral y no aporta al fin del conjunto.
-- **Deudores y asegurados.** Las columnas `nombre_deudor`, `rut_deudor` y
-  `rut_deudor_sindicado` están vacías en las 2.321.911 filas de
-  `seguros_renta_fija`: nunca se poblaron desde la fuente.
-- **Direcciones y roles de inmuebles.** `seguros_bienes_raices` no publica
-  dirección exacta ni rol; publica `comuna`, `ciudad` y un seudónimo estable
-  (`property_id`) que permite seguir el mismo bien entre meses.
-- **RUT de personas naturales en carteras.** En `fi_cartera_nacional` se suprime
-  el RUT del emisor cuando probablemente corresponde a una persona natural y se
-  agrega `emisor_tipo` con el criterio aplicado: **202.835 filas y 31.215 RUT
-  distintos**, que no reaparecen en ningún otro objeto del catálogo. Contrastado
-  contra registros públicos, el criterio alcanza a personas naturales
-  identificables, no a entidades.
+Los tres conjuntos del punto anterior se publican con identificadores que permiten
+citar y cruzar a la persona sin exponer más de lo que la fuente ya informa.
+
+- **Emisores de cartera (`fi_cartera_nacional`).** `rut_emisor` trae el RUT cuando
+  el emisor es una persona jurídica y un seudónimo estable con prefijo `EMI-`
+  cuando es una persona natural: se puede sumar su exposición, seguir su serie y
+  medir concentración sin revelar su identidad. `rut_omitido_por_ley` indica cuál
+  de los dos casos es y `emisor_tipo` publica el criterio aplicado: **202.835
+  filas y 31.215 identificadores distintos**, que no reaparecen en ningún otro
+  objeto del catálogo. Contrastado contra registros públicos, el criterio alcanza
+  a personas naturales identificables, no a entidades. Es seudonimización, no
+  anonimización: el vínculo con el RUT vive en una tabla privada del repositorio.
+- **Inmuebles (`seguros_bienes_raices`).** Se publican `comuna`, `ciudad` y un
+  seudónimo estable (`property_id`) que permite seguir el mismo bien entre meses;
+  el rol y la dirección exacta quedan suprimidos por privacidad.
+- **Tasadores (`seguros_bienes_raices`).** Se publica el nombre del tasador tal
+  como consta en la Circular 1835, con la aseguradora y el periodo que lo
+  declaran.
+- **Cartera de seguros (`seguros_renta_fija`).** Se publica por instrumento y
+  aseguradora; las columnas reservadas a deudores y asegurados no llevan valores
+  en ninguna de sus 2.321.911 filas.
 
 ### 2.1 Una sola columna de identificador
 
