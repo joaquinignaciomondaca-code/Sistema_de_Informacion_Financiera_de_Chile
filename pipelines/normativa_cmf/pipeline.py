@@ -327,6 +327,21 @@ def listing_params(start_date: date) -> dict[str, str]:
     }
 
 
+def describir_listado(texto: str, status: int) -> str:
+    """Qué devolvió la CMF cuando el listado no se pudo interpretar.
+
+    El 2026-10-23 la CMF respondió 200 con su propia página de error
+    («ERROR Linea 387 Archivo /web/SVS_website/…»). Sin esta pista el registro
+    sólo decía «no se pudo validar» y el fallo parecía del repositorio.
+    """
+    limpio = " ".join((texto or "").split())
+    if not limpio:
+        return f"HTTP {status}, respuesta vacía"
+    if limpio.startswith("ERROR") or "ERROR Linea" in limpio[:200]:
+        return f"HTTP {status}, la CMF devuelve su página de error: «{limpio[:160]}»"
+    return f"HTTP {status}, {len(texto or '')} caracteres sin filas reconocibles: «{limpio[:160]}»"
+
+
 def fetch_listing(start_date: date, *, attempts: int = 4, session: requests.Session | None = None) -> list[dict[str, Any]]:
     client = session or requests.Session()
     headers = {
@@ -335,6 +350,7 @@ def fetch_listing(start_date: date, *, attempts: int = 4, session: requests.Sess
         "Accept-Language": "es-CL,es;q=0.9,en;q=0.5",
     }
     last_error: Exception | None = None
+    detalle = ""
     for attempt in range(1, max(1, attempts) + 1):
         try:
             response = client.get(
@@ -344,19 +360,25 @@ def fetch_listing(start_date: date, *, attempts: int = 4, session: requests.Sess
                 timeout=(15, 90),
             )
             response.raise_for_status()
-            rows = parse_listing(response.text)
+            try:
+                rows = parse_listing(response.text)
+            except SourceUnavailable:
+                detalle = describir_listado(response.text, response.status_code)
+                raise
             LOGGER.info("CMF respondió; filas documentales detectadas: %d", len(rows))
             return rows
         except (requests.RequestException, SourceUnavailable) as exc:
             last_error = exc
-            LOGGER.warning("Consulta CMF intento %d/%d falló: %s", attempt, attempts, type(exc).__name__)
+            LOGGER.warning("Consulta CMF intento %d/%d falló: %s%s", attempt, attempts, type(exc).__name__,
+                           f" · {detalle}" if detalle else "")
             if attempt < attempts:
                 # Ventana de reintento de ~70 s: el 2026-10-23 el listado falló tres
                 # veces en 16 s y la corrida quedó en rojo por una caída pasajera.
                 # Sigue fallando cerrado: si el origen no responde, no se publica nada.
                 time.sleep(min(10 * 2 ** (attempt - 1), 60))
     raise SourceUnavailable(
-        f"No se pudo validar el listado CMF luego de {attempts} intentos."
+        f"No se pudo validar el listado CMF luego de {attempts} intentos"
+        + (f" ({detalle})." if detalle else ".")
     ) from last_error
 
 
