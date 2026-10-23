@@ -3,7 +3,7 @@
  "id": "deuda-publica-sobre-pib-serie-trimestral-7454d5",
  "titulo": "Deuda pública sobre PIB: serie trimestral",
  "origen": "explorador",
- "data_release": "2026-10-23.a0734ca242e6",
+ "data_release": "2026-10-23.12612e963628",
  "generado": "2026-10-23",
  "max_filas": 500,
  "columnas": [
@@ -13,10 +13,6 @@
  "filas": 20,
  "truncado": false,
  "datos": [
-  [
-   "2021-04",
-   33.08466789116
-  ],
   [
    "2021-07",
    36.083763305854
@@ -71,27 +67,31 @@
   ],
   [
    "2024-10",
-   41.650002351288
+   41.6500023512887
   ],
   [
    "2025-01",
-   41.682953388111
+   41.6829533881118
   ],
   [
    "2025-04",
-   42.795509119884
+   42.7955091198845
   ],
   [
    "2025-07",
-   43.250796696947
+   43.2507966969473
   ],
   [
    "2025-10",
-   41.536317774764
+   41.5363177747641
   ],
   [
    "2026-01",
-   42.5161472120403
+   42.4109538956251
+  ],
+  [
+   "2026-04",
+   43.0189404159746
   ]
  ],
  "sql": "SELECT periodo, deuda_bruta_gobierno_central_pct_pib FROM macro_deuda_publica_pct_pib ORDER BY periodo DESC LIMIT 20;",

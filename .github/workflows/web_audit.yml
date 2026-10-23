@@ -283,6 +283,18 @@ jobs:
           done
           exit $(( c | a | d ))
 
+      - name: 'Vitrina: metadatos sociales, robots y sitemap derivados del catálogo'
+        run: |
+          set +e
+          python scripts/build_metadatos.py --check > vitrina.log 2>&1; v=$?
+          cat vitrina.log
+          if [ "$v" -ne 0 ]; then
+            echo "::error title=Vitrina::index.html, robots.txt o sitemap.xml no coinciden con el catálogo publicado"
+          else
+            echo "::notice title=Vitrina::$(tail -n 1 vitrina.log)"
+          fi
+          exit $v
+
       - name: 'Diccionario: el estado de las claves se deriva de claves.csv'
         run: |
           set +e
@@ -460,19 +472,40 @@ jobs:
   # verifica aquí o no se anuncia. Job aparte: si el intérprete o el paquete
   # duckdb fallan, la auditoría del sitio no arrastra el fallo, pero el check
   # queda en rojo igual.
+  # Este job compila `duckdb` desde fuente si no encuentra el binario, y eso
+  # pasa del presupuesto de cualquier job: el 2026-10-23 tardó 40 minutos y el
+  # runner lo canceló, dejando el PR en rojo por una causa ajena al cambio.
+  #
+  # Se fija la imagen en 22.04 —donde el repositorio público de Posit sí tiene
+  # binarios de `duckdb`— y se declara el repositorio binario y el User-Agent
+  # que exige para servir binarios en vez de fuentes. Si aun así no hubiera
+  # binario, el paso falla en 15 minutos con el motivo, en vez de agotar el job.
   r_ejemplos:
     if: github.event_name != 'schedule'
-    runs-on: ubuntu-latest
-    timeout-minutes: 40
+    runs-on: ubuntu-22.04
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: r-lib/actions/setup-r@v2
         with:
-          # Repositorio con binarios para la distro del runner: duckdb desde
-          # fuente tarda muchísimo más que el presupuesto de este job.
           use-public-rspm: true
-      - name: 'R: DBI y duckdb'
-        run: Rscript -e 'install.packages(c("DBI", "duckdb"))'
+      - name: 'R: DBI y duckdb (binario, no fuente)'
+        run: |
+          timeout 900 Rscript -e '
+            options(
+              repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/jammy/latest"),
+              HTTPUserAgent = sprintf("R/%s R (%s)", getRversion(),
+                                      paste(getRversion(), R.version["platform"],
+                                            R.version["arch"], R.version["os"]))
+            )
+            install.packages(c("DBI", "duckdb"))
+            library(duckdb)
+            cat("duckdb", as.character(packageVersion("duckdb")), "\n")
+          ' 2>&1 | tee r_install.log
+          if grep -qi "compil" r_install.log; then
+            echo "::error title=R::se fue a compilar duckdb desde fuente; el binario no llegó"
+            exit 1
+          fi
       - name: 'R: el ejemplo corre contra la copia del repo'
         run: |
           set +e
