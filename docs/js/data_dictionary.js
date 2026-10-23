@@ -2490,7 +2490,7 @@ const DATA_DICTIONARY = [
     norma: "Circular CMF 1835",
     corte: "Desde 2024-12", frescura: "Se actualiza sola 3 veces al mes",
     modo: "Automático · incremental, cada mes validado antes de publicarse",
-    ultimaActualizacion: "", registros: "Vista de campos relevantes · desde 2024-12",
+    ultimaActualizacion: "", registros: "Campos relevantes · conserva las filas",
     descripcion: "Vista analítica de B.1 con identificación, vencimiento, magnitudes de costo y valor, riesgo y representatividad. La tabla completa conserva todos los campos.",
     origen: "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835); ficha técnica oficial: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
     columnas: [
@@ -2523,7 +2523,7 @@ const DATA_DICTIONARY = [
     norma: "Circular CMF 1835",
     corte: "Mensual", frescura: "Se actualiza sola 3 veces al mes",
     modo: "Automático · incremental, cada mes validado antes de publicarse",
-    ultimaActualizacion: "", registros: "Vista de campos relevantes · desde 2016-11",
+    ultimaActualizacion: "", registros: "Campos relevantes · conserva las filas",
     descripcion: "Vista analítica de B.2 con identificación del instrumento, unidades, valorización, deterioro y riesgo. La tabla completa conserva todos los campos.",
     origen: "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835); ficha técnica oficial: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
     columnas: [
@@ -2552,7 +2552,7 @@ const DATA_DICTIONARY = [
     norma: "Circular CMF 1835",
     corte: "Desde 2024-12", frescura: "Se actualiza sola 3 veces al mes",
     modo: "Automático · incremental, cada mes validado antes de publicarse",
-    ultimaActualizacion: "", registros: "Vista de campos relevantes · desde 2024-12",
+    ultimaActualizacion: "", registros: "Campos relevantes · conserva las filas",
     descripcion: "Vista analítica de B.4 con ubicación geográfica general, superficie y valorización; no incluye rol ni dirección exacta.",
     origen: "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835); ficha técnica oficial: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
     columnas: [
@@ -2585,7 +2585,7 @@ const DATA_DICTIONARY = [
     norma: "Circular CMF 1835",
     corte: "Mensual", frescura: "Se actualiza sola 3 veces al mes",
     modo: "Automático · incremental, cada mes validado antes de publicarse",
-    ultimaActualizacion: "", registros: "Vista de campos relevantes · desde 2016-11",
+    ultimaActualizacion: "", registros: "Campos relevantes · conserva las filas",
     descripcion: "Vista analítica de B.5 con país, instrumento, moneda, vencimiento y valorización.",
     origen: "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835); ficha técnica oficial: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
     columnas: [
@@ -2617,7 +2617,7 @@ const DATA_DICTIONARY = [
     norma: "Circular CMF 1835",
     corte: "Mensual", frescura: "Se actualiza sola 3 veces al mes",
     modo: "Automático · incremental, cada mes validado antes de publicarse",
-    ultimaActualizacion: "", registros: "Vista de campos relevantes · desde 2016-11",
+    ultimaActualizacion: "", registros: "Campos relevantes · conserva las filas",
     descripcion: "Vista analítica de derivados con tipo, vencimiento, nocionales y valores razonables.",
     origen: "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835); ficha técnica oficial: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
     columnas: [
@@ -2652,7 +2652,7 @@ const DATA_DICTIONARY = [
     norma: "Circular CMF 1835",
     corte: "Desde 2024-12", frescura: "Se actualiza sola 3 veces al mes",
     modo: "Automático · incremental, cada mes validado antes de publicarse",
-    ultimaActualizacion: "", registros: "Vista de campos relevantes · desde 2024-12",
+    ultimaActualizacion: "", registros: "Campos relevantes · conserva las filas",
     descripcion: "Vista analítica de B.12 con condiciones, saldo, provisión y morosidad; no incluye identificadores personales de deudores.",
     origen: "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835); ficha técnica oficial: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
     columnas: [
@@ -2693,7 +2693,7 @@ const DATA_DICTIONARY = [
     norma: "Circular CMF 1835",
     corte: "Desde 2024-12", frescura: "Se actualiza sola 3 veces al mes",
     modo: "Automático · incremental, cada mes validado antes de publicarse",
-    ultimaActualizacion: "", registros: "Vista de campos relevantes · desde 2024-12",
+    ultimaActualizacion: "", registros: "Campos relevantes · conserva las filas",
     descripcion: "Vista analítica de B.13 con cobranza, mora, provisión, superficie y valorización; suprime identificadores personales.",
     origen: "CMF — Cartera de inversiones de las compañías de seguros (Circular 1835); ficha técnica oficial: https://www.cmfchile.cl/sitio/seil/software-manual/sgsci/Anexos_Tecnicos_Circular_N1835.pdf",
     columnas: [
