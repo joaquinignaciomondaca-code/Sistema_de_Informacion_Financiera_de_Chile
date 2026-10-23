@@ -44,7 +44,7 @@ function cargar() {
   };
   contexto.globalThis = contexto;
   vm.createContext(contexto);
-  for (const archivo of ["download_catalog.js", "alcance.js", "portada.js"]) {
+  for (const archivo of ["download_catalog.js", "estado_claves.js", "alcance.js", "portada.js"]) {
     const ruta = path.join(RAIZ, "docs", "js", archivo);
     vm.runInContext(fs.readFileSync(ruta, "utf8"), contexto, { filename: archivo });
   }
@@ -153,6 +153,52 @@ function main() {
     if (Number(totalFila[2].replace(/\./g, "")) !== filas) {
       fallos.push(`README: la tabla suma ${totalFila[2]} filas y el catálogo ${filas}`);
     }
+  }
+
+  // 5. Las cifras del bloque de calidad del dato ------------------------------
+  // Van escritas en el HTML como respaldo sin JavaScript; el módulo
+  // `calidad_datos.js` las repinta desde `estado_claves.js`. Si el CSV cambia y
+  // el respaldo no, quien entre sin JavaScript lee una cifra vieja.
+  const estado = contexto.window.ESTADO_CLAVES;
+  if (!estado) {
+    fallos.push("no se pudo cargar docs/js/estado_claves.js");
+  } else {
+    const ranking = Object.keys(estado.objetos)
+      .map((id) => ({ id, sobrantes: Number(estado.objetos[id].sobrantes) || 0, datos: estado.objetos[id] }))
+      .filter((o) => o.sobrantes > 0)
+      .sort((a, b) => b.sobrantes - a.sobrantes);
+    const peor = ranking.find((o) => o.datos.ejemplo) || ranking[0] || null;
+    const cifra = (n) => A.numero(n);
+    const pct = (n) => Number(n).toFixed(1).replace(".", ",") + " %";
+    const esperado = {
+      repetidas: cifra(estado.resumen.filas_repetidas),
+      objetos: `${estado.resumen.con_repetidas} de ${estado.resumen.objetos}`,
+      peor: peor ? cifra(peor.sobrantes) : null,
+      "peor-objeto": peor ? peor.id : null,
+      "peor-pct": peor ? pct(peor.datos.pct_repetidas) : null,
+      sobreestima: peor && peor.datos.ejemplo ? pct(peor.datos.ejemplo.pct) : null,
+      "ejemplo-periodo": peor && peor.datos.ejemplo ? peor.datos.ejemplo.periodo : null,
+    };
+    // Toda la página, no sólo el bloque: la etiqueta de la primera pantalla repite
+    // una de estas cifras y también tiene que cuadrar.
+    const marcasCalidad = [...html.matchAll(/data-calidad="([^"]+)"[^>]*>([^<]*)</g)];
+    console.log(`Cifras del bloque de calidad: ${marcasCalidad.length}`);
+    if (marcasCalidad.length < 8) {
+      fallos.push(`la portada tiene ${marcasCalidad.length} cifras de calidad y se esperaban 8`);
+    }
+    let desfasadasCalidad = 0;
+    for (const [, clave, textoHtml] of marcasCalidad) {
+      const valor = esperado[clave];
+      if (valor == null) {
+        fallos.push(`data-calidad="${clave}" no tiene valor calculado`);
+        continue;
+      }
+      if (textoHtml.trim() !== valor) {
+        fallos.push(`data-calidad="${clave}": el HTML dice «${textoHtml.trim()}» y el dato es «${valor}»`);
+        desfasadasCalidad += 1;
+      }
+    }
+    console.log(`  desfasadas: ${desfasadasCalidad}`);
   }
 
   if (fallos.length) {

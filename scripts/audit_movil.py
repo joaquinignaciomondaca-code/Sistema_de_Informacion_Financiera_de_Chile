@@ -24,8 +24,8 @@ Qué comprueba:
   10. El mapa relacional escucha Pointer Events y acepta pellizco.
   11. La cabecera publica su altura real en `--sif-header-h`.
   12. Elegir una tabla cierra el cajón.
-  13. El aviso de «esto se ve mejor en un computador» existe, se cierra y sólo
-      aparece en pantalla pequeña.
+  13. El aviso de «esto se ve mejor en un computador» existe, flota como tarjeta,
+      se cierra por botón, aspa y Escape, y sólo aparece en pantalla pequeña.
   14. Las filas del árbol crecen cuando su contenido ocupa dos líneas: ningún
       renglón fija su alto, la etiqueta no lleva alto propio y la barra del
       explorador alcanza el objetivo táctil.
@@ -264,6 +264,25 @@ def comprobar(css_texto: str, html_texto: str, erd_texto: str,
                if sel == ".aviso-movil" and p == "display" and cumple(cond, 900)]
     if "flex" not in visible:
         fallos.append("13 aviso: no aparece en pantalla pequeña")
+    # Es una tarjeta flotante, no un bloque del flujo: si vuelve a `static`
+    # empuja el contenido y deja de leerse como algo que se puede cerrar.
+    posicion = [v for cond, sel, p, v in lista
+                if sel == ".aviso-movil" and p == "position" and not cond]
+    if posicion != ["fixed"]:
+        fallos.append("13 aviso: no flota; debe ser position: fixed")
+    if not any(sel == ".aviso-movil" and p == "bottom" and "safe-area-inset-bottom" in v
+               for cond, sel, p, v in lista):
+        fallos.append("13 aviso: no respeta el área segura del teléfono")
+    if 'id="aviso-movil-aspa"' not in html_texto:
+        fallos.append("13 aviso: no tiene aspa de cierre")
+    # Se mira dentro de la función, no en todo el archivo: `ux_shell.js` usa
+    # Escape también para otras cosas y la comprobación debe hablar del aviso.
+    inicio_aviso = shell_texto.find("function initAvisoMovil")
+    cuerpo_aviso = shell_texto[inicio_aviso:inicio_aviso + 3000] if inicio_aviso != -1 else ""
+    if '"Escape"' not in cuerpo_aviso:
+        fallos.append("13 aviso: Escape no lo cierra")
+    if "contains(document.activeElement)" not in cuerpo_aviso:
+        fallos.append("13 aviso: Escape lo cierra aunque el foco esté fuera")
 
     # 14 · filas del árbol que crecen
     # Con `height: 28px` el distintivo de una carpeta bajaba a la segunda línea y
@@ -310,7 +329,10 @@ def autoprueba(textos: dict[str, str]) -> int:
         ("7 tabla", {"html": re.sub(r' data-label="[^"]*"', "", textos["html"])}),
         ("9 táctil", {"css": caso.replace("@media (pointer: coarse)", "@media (pointer: none)")}),
         ("10 mapa", {"erd": textos["erd"].replace('addEventListener("pointerdown"', 'addEventListener("mousedown"')}),
-        ("13 aviso", {"html": textos["html"].replace('id="aviso-movil-cerrar"', 'id="aviso-movil-ok"')}),
+        ("13 aviso", {"html": textos["html"].replace('id="aviso-movil-aspa"', 'id="aviso-movil-x"')}),
+        ("13 aviso", {"shell": textos["shell"].replace('if (!aviso.contains(document.activeElement)) return;', '')}),
+        ("13 aviso", {"css": caso.replace("  display: none;\n  position: fixed;\n  left: 12px;",
+                                          "  display: none;\n  position: static;\n  left: 12px;")}),
         ("14 filas", {"css": caso.replace("  min-height: 28px;\n  padding-right: 10px;",
                                           "  height: 28px;\n  padding-right: 10px;")}),
     ]
