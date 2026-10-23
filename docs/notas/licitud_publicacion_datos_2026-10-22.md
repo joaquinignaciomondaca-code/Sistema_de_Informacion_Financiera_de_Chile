@@ -1,11 +1,16 @@
 # ¿Se pueden publicar estos datos?
 
+> **Estado (2026-10-23).** El contrato vigente es **2.0.0** y se publica en
+> `docs/api/v2/`. Esta nota se escribió cuando la ruta era `api/v1/`: las rutas de
+> archivo y de URL se actualizaron para que los comandos sigan funcionando, y las
+> referencias a «v1» como nombre de la fase se conservan como se escribieron.
+
 **Revisión de condiciones de uso de las fuentes y de la Ley 21.719 sobre los datos ya publicados**
 
 | | |
 |---|---|
 | **Fecha** | 2026-10-22 |
-| **Objeto revisado** | Los 90 objetos de `docs/api/v1/` y las tablas de `docs/outputs/` que los alimentan |
+| **Objeto revisado** | Los 90 objetos de `docs/api/v2/` y las tablas de `docs/outputs/` que los alimentan |
 | **Método** | Texto vigente de cada fuente (citado abajo) cruzado con consultas sobre los Parquet publicados, no con una opinión general |
 | **Naturaleza** | Análisis operativo de cumplimiento. No sustituye la revisión de un abogado antes del 1 de diciembre de 2026 |
 
