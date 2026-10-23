@@ -297,7 +297,20 @@ jobs:
           done
           exit $(( c | a ))
 
-      - name: 'Resultados precalculados: las 156 consultas con su JSON al día (fase 3)'
+      - name: 'Columnas publicadas: el archivo descargable no lleva columnas internas'
+        run: |
+          # `pipelines/esquema_publicado.py` fija qué columnas viajan en el Parquet.
+          # Las de control (huellas, rutas de origen, claves sintéticas) se siguen
+          # calculando para verificar, pero no se publican.
+          set +e
+          python scripts/verificar_columnas_publicadas.py --check > columnas.log 2>&1; c=$?
+          cat columnas.log
+          if [ "$c" -ne 0 ]; then
+            grep -h "\[FALLA\]" columnas.log | head -6 | sed 's/%/%25/g' | while IFS= read -r l; do echo "::error title=Columnas publicadas::$l"; done
+          fi
+          exit $c
+
+      - name: 'Resultados precalculados: las 159 consultas con su JSON al día (fase 3)'
         run: |
           set +e
           python scripts/build_resultados.py --check > resultados.log 2>&1; n=$?

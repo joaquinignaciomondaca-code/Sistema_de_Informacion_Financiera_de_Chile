@@ -80,8 +80,8 @@ condición y no añaden ninguna licencia nueva.
 
 ## Cómo citar
 
-Cada conjunto publicado declara su cita en `api/v1/catalog.json`
-(`atribucion`), en `api/v1/datapackage.json` (`sources[].sif_cita`) y en el
+Cada conjunto publicado declara su cita en `api/v2/catalog.json`
+(`atribucion`), en `api/v2/datapackage.json` (`sources[].sif_cita`) y en el
 catálogo de descargas del sitio. La forma general:
 
 > Fuente: [organismo]. Datos obtenidos de [URL del documento de condiciones],

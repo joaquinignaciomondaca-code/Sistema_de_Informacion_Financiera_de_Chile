@@ -2,7 +2,7 @@
 
 Cliente mínimo sobre el **contrato estático** del Sistema de Información
 Financiera de Chile. No hay servidor: el SDK lee el catálogo publicado
-(`docs/api/v1/`) y ejecuta SQL con DuckDB directamente sobre los Parquet,
+(`docs/api/v2/`) y ejecuta SQL con DuckDB directamente sobre los Parquet,
 sean del sitio o de una copia local.
 
 ```bash

@@ -7,8 +7,8 @@ ejecuta procesos; Actions no recibe tráfico entrante. Así que la fase 3 se
 resuelve donde sí cabe: se calculan las consultas **en el build** y cada una se
 publica como un archivo.
 
-    docs/api/v1/resultados/{id}.json      columnas, filas y el SQL que las produjo
-    docs/api/v1/resultados/index.json     qué hay, cuántas filas y cuánto pesa
+    docs/api/v2/resultados/{id}.json      columnas, filas y el SQL que las produjo
+    docs/api/v2/resultados/index.json     qué hay, cuántas filas y cuánto pesa
 
 Con eso, quien no quiere bajar 500 MB de Parquet (una planilla, un R, un agente
 sin DuckDB) obtiene el número con un `curl` a una URL estable, y el resultado
@@ -32,8 +32,8 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 DOCS = RAIZ / "docs"
-V1 = DOCS / "api" / "v1"
-SALIDA = V1 / "resultados"
+V2 = DOCS / "api" / "v2"
+SALIDA = V2 / "resultados"
 
 BASE = "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile"
 # Tope de filas por resultado: el mismo criterio que el servidor MCP. Una
@@ -53,7 +53,7 @@ def _json(valor):
 def _conectar():
     import duckdb
 
-    sql = (V1 / "views.sql").read_text(encoding="utf-8")
+    sql = (V2 / "views.sql").read_text(encoding="utf-8")
     con = duckdb.connect()
     con.execute(sql.replace(f"'{BASE}'", f"'{DOCS}'"))
     return con
@@ -79,8 +79,8 @@ def _consulta(con, c: dict) -> dict:
 
 def construir() -> tuple[dict[str, str], dict]:
     """Devuelve `{nombre: contenido}` y el índice. Determinista, sin `now()`."""
-    catalogo = json.loads((V1 / "catalog.json").read_text(encoding="utf-8"))
-    consultas = json.loads((V1 / "queries.json").read_text(encoding="utf-8"))["consultas"]
+    catalogo = json.loads((V2 / "catalog.json").read_text(encoding="utf-8"))
+    consultas = json.loads((V2 / "queries.json").read_text(encoding="utf-8"))["consultas"]
     con = _conectar()
     archivos: dict[str, str] = {}
     indice = []
@@ -109,7 +109,7 @@ def construir() -> tuple[dict[str, str], dict]:
             "truncado": cuerpo["truncado"],
             "bytes": len(texto.encode("utf-8")),
             "sha256": hashlib.sha256(texto.encode("utf-8")).hexdigest(),
-            "url": f"/api/v1/resultados/{c['id']}.json",
+            "url": f"/api/v2/resultados/{c['id']}.json",
         })
 
     resumen = {

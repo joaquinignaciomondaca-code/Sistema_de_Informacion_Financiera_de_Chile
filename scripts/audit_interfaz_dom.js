@@ -617,7 +617,7 @@ setTimeout(async () => {
   const enlacesMaquina = gruposUso.length === 2
     ? [...gruposUso[1].querySelectorAll("a")].map((a) => a.getAttribute("href")) : [];
   check("reproducibilidad: el grupo de máquinas incluye el contrato y la guía para agentes",
-    enlacesMaquina.includes("api/v1/catalog.json") && enlacesMaquina.includes("llms.txt"),
+    enlacesMaquina.includes("api/v2/catalog.json") && enlacesMaquina.includes("llms.txt"),
     enlacesMaquina.join(", "));
   const irAgentes = document.querySelector("#creditos-guia [data-ir-uso]");
   if (irAgentes) irAgentes.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));

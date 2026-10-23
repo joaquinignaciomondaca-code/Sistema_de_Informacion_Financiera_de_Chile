@@ -17,7 +17,7 @@
         href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
-  <link rel="stylesheet" href="css/app.css?v=fl-202610-2224-desglose-por-moneda">
+  <link rel="stylesheet" href="css/app.css?v=fl-202610-2304-recorte-columnas">
 
   <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
        Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
@@ -587,7 +587,7 @@
                 <tr><td data-label="">Ver una tabla y sus filas</td><td data-label="Usa"><strong>Visor de datos</strong>: elige el conjunto en el explorador.</td></tr>
                 <tr><td data-label="">Escribir una consulta SQL</td><td data-label="Usa"><strong>Consultas SQL</strong>: el motor corre en tu navegador sobre los Parquet publicados.</td></tr>
                 <tr><td data-label="">Descargar los datos</td><td data-label="Usa"><strong>Descargas</strong>: Parquet, CSV o Excel, con filas, periodo y peso a la vista.</td></tr>
-                <tr><td data-label="">Una cifra sin descargar el conjunto</td><td data-label="Usa"><code>api/v1/resultados/{id}.json</code>, con las 159 consultas ya ejecutadas.</td></tr>
+                <tr><td data-label="">Una cifra sin descargar el conjunto</td><td data-label="Usa"><code>api/v2/resultados/{id}.json</code>, con las 159 consultas ya ejecutadas.</td></tr>
                 <tr><td data-label="">Programar en Python o R</td><td data-label="Usa">SDK de Python, o <code>views.sql</code> y DuckDB sobre los Parquet.</td></tr>
                 <tr><td data-label="">Consultar desde un agente de IA</td><td data-label="Usa"><code>llms.txt</code> para el contrato y el servidor MCP para las consultas.</td></tr>
               </tbody>
@@ -634,13 +634,13 @@
                 <pre class="uso-code"><code>BASE=https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile
 
 # Índice: las 159 consultas, con filas y URL de cada resultado
-curl -s "$BASE/api/v1/resultados/index.json"
+curl -s "$BASE/api/v2/resultados/index.json"
 
 # Un resultado concreto
-curl -s "$BASE/api/v1/resultados/cartera-extranjera-por-pais-emisor-ultimo-mes-4da5d1.json"
+curl -s "$BASE/api/v2/resultados/cartera-extranjera-por-pais-emisor-ultimo-mes-4da5d1.json"
 
 # El sello de la edición que estás citando
-curl -s "$BASE/api/v1/catalog.json" | python3 -c 'import json,sys; print(json.load(sys.stdin)["data_release"])'</code></pre>
+curl -s "$BASE/api/v2/catalog.json" | python3 -c 'import json,sys; print(json.load(sys.stdin)["data_release"])'</code></pre>
                 <p class="uso-note">El catálogo y el índice de resultados declaran el mismo <code>data_release</code>:
                 si alguno no coincide con el del archivo, la copia está desactualizada.</p>
               </div>
@@ -684,11 +684,11 @@ sif.sql("SELECT count(*) FROM seguros_renta_fija").fetchone() # una tupla; la ci
                 <div class="uso-card">
                   <h3>Contrato, esquemas y resultados</h3>
                   <ul class="info-list">
-                    <li><code>api/v1/catalog.json</code>: los 90 objetos con estado, filas, corte y clave primaria.</li>
-                    <li><code>api/v1/schema/{id}.json</code>: columnas, tipos, rol y significado.</li>
-                    <li><code>api/v1/queries.json</code>: las 159 consultas con id estable y SQL exacto.</li>
-                    <li><code>api/v1/resultados/index.json</code>: el resultado calculado de cada consulta.</li>
-                    <li><code>api/v1/partitions/{id}.json</code>: archivos, filas y <code>sha256</code>.</li>
+                    <li><code>api/v2/catalog.json</code>: los 90 objetos con estado, filas, corte y clave primaria.</li>
+                    <li><code>api/v2/schema/{id}.json</code>: columnas, tipos, rol y significado.</li>
+                    <li><code>api/v2/queries.json</code>: las 159 consultas con id estable y SQL exacto.</li>
+                    <li><code>api/v2/resultados/index.json</code>: el resultado calculado de cada consulta.</li>
+                    <li><code>api/v2/partitions/{id}.json</code>: archivos, filas y <code>sha256</code>.</li>
                   </ul>
                   <p class="uso-note">Los nombres de columna no se adivinan: el esquema del objeto es la referencia. El
                   <code>data_release</code> de cada archivo permite citar la respuesta.</p>
@@ -780,26 +780,26 @@ sif-mcp                       # stdio
 </div> <!-- Cierre de app-layout -->
 
   <!-- Scripts de la Aplicación -->
-  <script src="js/data_bundles.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/alcance.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/chart_renderer.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/erd_graph.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/sql_guard.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/duckdb_client.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/chat_terminal.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/busqueda_pregunta.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/sidebar.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/ux_shell.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/creditos.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/theme_switcher.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/data_dictionary.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/data_viewer.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/diccionario_seguros.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/download_utils.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/download_catalog.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/downloads_panel.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/portada.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
-  <script src="js/como_usar.js?v=fl-202610-2224-desglose-por-moneda" defer></script>
+  <script src="js/data_bundles.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/alcance.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/chart_renderer.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/erd_graph.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/sql_guard.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/duckdb_client.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/chat_terminal.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/sidebar.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/ux_shell.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/creditos.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/theme_switcher.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/data_dictionary.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/data_viewer.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/download_utils.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/download_catalog.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/downloads_panel.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/portada.js?v=fl-202610-2304-recorte-columnas" defer></script>
+  <script src="js/como_usar.js?v=fl-202610-2304-recorte-columnas" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
