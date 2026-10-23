@@ -18,6 +18,9 @@ Es incremental: sólo descarga los meses que faltan en el manifest.
 | `scripts/publish_cmf_bank_period.py` | descarga el paquete mensual CMF, extrae, valida y publica un período |
 | `scripts/extract_cmf_bank_lines.py` | parser de líneas B1/B2/R1 |
 | `scripts/inspect_cmf_bank_sample.py` | lectura/validación del ZIP CMF (usado por los dos anteriores) |
+| `scripts/normalizar_importes.py` | agrega `importe_clp` y `formato_monto_fuente` a las particiones publicadas (`--check`) |
+| `scripts/validar_identidades.py` | coteja el maestro contra el registro BANCO de la CMF (`--descargar` / `--check`) |
+| `scripts/corregir_identidades.py` | aplica los RUT del registro CMF y fija el formato único del maestro (`--check`) |
 | `tests/` | tests de los tres scripts + identidad del maestro |
 
 **Retirado (2026-09-28):** el laboratorio REPO (pactos/préstamos de valores), los derivados OTC BCCh,
