@@ -5,24 +5,24 @@
 # Sistema de Información Financiera de Chile (SIF)
 
 **25 años del sistema financiero chileno, consultables con SQL desde el navegador.**
-Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Central, la Superintendencia de Pensiones y la SUSESO: **15 industrias, 75 tablas y 13,5 millones de filas** desde enero de 2001. Sin backend, sin base de datos, sin servidores — el dato viaja como Parquet estático y el motor corre en el cliente.
+Extrae, valida y publica lo que las entidades reportan a la CMF, el Banco Central, la Superintendencia de Pensiones y la SUSESO: **15 industrias, 90 objetos y más de 19 millones de filas** desde enero de 2001. Sin backend, sin base de datos, sin servidores — el dato viaja como Parquet estático y el motor corre en el cliente.
 
-**En la web, el foco es la inversión institucional:** seguros, fondos mutuos y fondos de inversión (**25 conjuntos del núcleo**, 11,1 millones de filas, 2001 → 2026 —la vista principal suma 59 porque agrega instituciones y contexto—), con bancos, AGF y corredoras como instituciones y las series del Banco Central como contexto. Factoring y leasing, securitización y cajas de compensación quedan en un archivo congelado, y AFP, cooperativas, sistemas de pago y fintech como registro de entidades: siguen publicados, consultables y descargables, sólo que fuera del camino ([alcance de la edición](docs/notas/recorte_visual_industrias_2026-10-20.md)).
+**En la web, el foco es la inversión institucional:** seguros, fondos mutuos y fondos de inversión (**40 conjuntos del núcleo**, más de 17 millones de filas, 2001 → 2026 —la vista principal suma 74 porque agrega instituciones y contexto—), con bancos, AGF y corredoras como instituciones y las series del Banco Central como contexto. Factoring y leasing, securitización y cajas de compensación quedan en un archivo congelado, y AFP, cooperativas, sistemas de pago y fintech como registro de entidades: siguen publicados, consultables y descargables, sólo que fuera del camino ([alcance de la edición](docs/notas/recorte_visual_industrias_2026-10-20.md)).
 
 **▶ [Abrir el sistema](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/)** — sin instalar nada, las consultas corren en tu navegador.
 
 ![Python 3.11](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)
 ![DuckDB-Wasm 1.28.0](https://img.shields.io/badge/DuckDB--Wasm-1.28.0-FFF000?logo=duckdb&logoColor=black)
 ![Sin backend](https://img.shields.io/badge/backend-ninguno-2ea44f)
-![Datos](https://img.shields.io/badge/datos-75%20tablas%20%C2%B7%2013%2C5%20M%20filas-blue)
-![Serie](https://img.shields.io/badge/serie-2001--01%20%E2%86%92%202026--08-informational)
+![Datos](https://img.shields.io/badge/datos-90%20objetos%20%C2%B7%20m%C3%A1s%20de%2019%20M%20filas-blue)
+![Serie](https://img.shields.io/badge/serie-2001--01%20%E2%86%92%202026--09-informational)
 
 | En números | |
 |---|---|
-| Historia cubierta | **25 años** · 2001-01 → 2026-08 |
+| Historia cubierta | **25 años** · 2001-01 → 2026-09 |
 | Industrias supervisadas | **15** (CMF · BCCh · SPensiones · SUSESO) |
-| Tablas publicadas | **75** Parquet · 13.483.676 filas (manifiesto al 2026-10-20) · 258 MB en 632 archivos |
-| Consultas sugeridas listas para usar | **146** |
+| Objetos publicados | **90** (86 con archivo, 85 con filas) · más de 19 millones de filas · 482 MB en 728 archivos |
+| Consultas sugeridas listas para usar | **159** |
 | Actualización | **16 workflows** en GitHub Actions (15 con horario; 1 solo por evento) |
 | Verificación | **7 suites** de auditoría + **440** pruebas unitarias (97 de FI) |
 
@@ -125,28 +125,28 @@ releer cierres históricos porque la CMF rechazó parte de las descargas; el úl
 siguen en 2026-06. Seis documentos y los contextos adicionales defectuosos se excluyen con motivo
 explícito. [Fuente, controles y ejecución](fi/README.md).
 
-*Cifras del manifiesto 2026-10-07; cada serie muestra su propio último período publicado.*
+*Cifras del catálogo publicado (`docs/api/v2/catalog.json`); cada serie muestra su propio último período publicado.*
 
 | Industria | Tablas | Filas | Serie | Fuente |
 |---|---:|---:|---|---|
-| Seguros de Vida y Generales | 9 | 4.103.093 | 2016-11 → 2026-08 | CMF · Circular 1835 |
-| Fondos Mutuos | 7 | 3.582.929 | Carteras 2001-01 → 2026-08; EEFF 2010-12 → 2025-12 | CMF · Circulares 1333 y 1997 |
-| Fondos de Inversión | 10 | 3.187.492 | Carteras 2020-03 → 2026-06; pactos 2012-03 → 2026-06; EEFF 2022-03 → 2026-06 (16 cierres, backfill parcial) | CMF · LUF / Circular 1998 · XML FIEF |
+| Seguros de Vida y Generales | 24 | 10.553.271 | 2016-11 → 2026-08 | CMF · Circular 1835 |
+| Fondos Mutuos | 7 | 3.616.378 | Carteras 2001-01 → 2026-08; EEFF 2010-12 → 2025-12 | CMF · Circulares 1333 y 1997 |
+| Fondos de Inversión | 9 | 3.187.474 | Carteras 2020-03 → 2026-06; pactos 2012-03 → 2026-06; EEFF 2022-03 → 2026-06 (16 cierres, backfill parcial) | CMF · LUF / Circular 1998 · XML FIEF |
 | Corredoras de Bolsa | 4 | 185.921 | 2010-12 → 2026-06 | CMF · FECU IFRS |
 | Administradoras Generales de Fondos | 3 | 129.711 | 2010-06 → 2026-06 | CMF · IFRS |
-| Macroeconomía y Tasas | 24 | 41.306 | diaria / mensual / trimestral | BCCh |
+| Macroeconomía y Tasas | 24 | 41.465 | diaria / mensual / trimestral | BCCh |
 | Factoring y Leasing | 3 | 52.446 | 2009-03 → 2026-06 | CMF · IFRS |
 | Sociedades Securitizadoras | 3 | 25.985 | 2009-12 → 2026-06 | CMF · IFRS |
 | Cajas de Compensación | 3 | 13.555 | 2010-06 → 2026-06 | CMF · TXT IFRS (XBRL) |
 | Patrimonios Separados | 2 | 7.981 | dic. 2014 → 2025 | CMF · PDF de estados financieros |
-| Banca | 3 | 41 · 1,96 M † | 2022-01 → 2026-08 | CMF · B1/B2/R1 |
-| FinTech | 1 | 263 | registro vigente | CMF · Ley 21.521 (RPSF) |
+| Banca | 3 | 1,96 M † | 2022-01 → 2026-08 | CMF · B1/B2/R1 |
+| FinTech | 1 | 264 | registro vigente | CMF · Ley 21.521 (RPSF) |
 | Sistemas de Pago | 1 | 19 | registro vigente | BCCh / CMF |
 | Fondos de Pensiones | 1 | 7 | registro vigente | SPensiones · D.L. 3.500 |
 | Cooperativas de Ahorro y Crédito | 1 | 7 | registro vigente | CMF |
-| **Total** | **75** | **13.483.676** | **2001 → 2026** | |
+| **Total** | **89** | **19.777.517** | **2001 → 2026** | |
 
-† En banca, *balance* y *resultados* son vistas filtradas sobre las mismas 56 particiones mensuales: B1 y B2 (722.931 filas) y R1 (1.240.061), sin solape. Por eso se cuentan como **un solo dataset** (1.962.992 filas) detrás de ambas vistas. El total del catálogo (75 salidas; 13.483.676 filas) cuenta esas particiones una sola vez. Las 75 salidas incluyen la tabla oculta `fi.bienes_raices`, que no figura en la vista principal; la vista principal muestra 59 conjuntos con 13.383.401 filas (99,3 %) y el archivo más el registro complementario suman 100.263 (0,7 %).
+† En banca, *balance* y *resultados* son vistas filtradas sobre las mismas particiones mensuales: B1 y B2 (722.931 filas) y R1 (1.240.061), sin solape. Por eso se cuentan como **un solo dataset** (1.962.992 filas) detrás de ambas vistas, y el total del catálogo lo cuenta una sola vez: **90 objetos y 19.777.517 filas**. La tabla de arriba suma 89 porque no incluye `fi_bienes_raices` —la tabla oculta, que publica su esquema con 0 filas—; la vista principal muestra 74 conjuntos con 19.677.253 filas (99,5 %) y el archivo más el registro complementario suman 100.264 (0,5 %).
 
 ### Operaciones REPO (pactos): cobertura vigente
 
@@ -190,10 +190,10 @@ Aplicación estática de siete pestañas, sin framework y sin build:
 | **Diccionario** | Campo por campo: rol (PK, FK, dimensión, métrica), definición y criterio contable. |
 | **Visor de datos** | Consulta tabular con filtro, orden y copia de celdas. |
 | **Consultas SQL** | Terminal con autocompletado, historial, favoritos y enlaces compartibles. |
-| **Descargas** | Los 75 conjuntos con filas, período y peso, en Parquet, CSV y Excel; el núcleo primero y el archivo al final, plegado. |
+| **Descargas** | Todos los conjuntos publicados, con filas, período y peso, en Parquet, CSV y Excel; el núcleo primero y el archivo al final, plegado. |
 | **Normativa CMF** | Seguimiento de la normativa publicada por la CMF (ver §7.6). |
 
-El **explorador jerárquico** organiza 13 familias → 15 sectores → 43 carpetas temáticas → 75 tablas, con consultas sugeridas en cada carpeta, ordenadas por nivel: núcleo, instituciones y contexto arriba; el archivo congelado y el registro complementario al final, plegados. El nivel de cada sector es una bandera en `docs/vocabulario.json` (`alcance`): cambiarla y regenerar el catálogo revierte o ajusta el recorte sin tocar datos. El motor DuckDB-Wasm 1.28.0 va **embebido en el propio sitio** (`docs/vendor/duckdb/`), así que las consultas funcionan aunque la red del visitante bloquee los CDN públicos.
+El **explorador jerárquico** organiza 15 sectores → carpetas temáticas → 89 tablas visibles (90 objetos en el catálogo), con consultas sugeridas en cada carpeta, ordenadas por nivel: núcleo, instituciones y contexto arriba; el archivo congelado y el registro complementario al final, plegados. El nivel de cada sector es una bandera en `docs/vocabulario.json` (`alcance`): cambiarla y regenerar el catálogo revierte o ajusta el recorte sin tocar datos. El motor DuckDB-Wasm 1.28.0 va **embebido en el propio sitio** (`docs/vendor/duckdb/`), así que las consultas funcionan aunque la red del visitante bloquee los CDN públicos.
 
 ### Verlo funcionando
 
@@ -320,7 +320,7 @@ en el explorador, en el diccionario y en Descargas.
 | Qué necesitas | Dónde |
 |---|---|
 | Auditar la base | `docs/reproducibilidad/`: diccionario CSV/JSON, inventario de archivos con SHA-256, cobertura por periodo y resumen de validación. Se regeneran con `python3 scripts/construir_reproducibilidad.py` |
-| Armar una copia local con hashes | `python3 scripts/construir_snapshot_academico.py --zip`: junta los 25 conjuntos del núcleo en una carpeta con `README.md`, `CHANGELOG.md` y el inventario SHA-256. Es una herramienta local; no hay copia publicada |
+| Armar una copia local con hashes | `python3 scripts/construir_snapshot_academico.py --zip`: junta los 40 conjuntos del núcleo en una carpeta con `README.md`, `CHANGELOG.md` y el inventario SHA-256. Es una herramienta local; no hay copia publicada |
 | Fuentes, licencia y limitaciones | sección *Fuentes, licencia y limitaciones* de la web y `docs/notas/version_academica_y_privacidad_2026-10-20.md` |
 | Criterio de privacidad | `pipelines/auto/privacidad.py` (RUT de personas naturales en `fi.cartera_nacional`; dirección y rol en `seguros.bienes_raices`) |
 
