@@ -12,7 +12,7 @@ la interfaz.
 
 | Archivo | Qué trae |
 |---|---|
-| `diccionario.csv` | Cada columna de cada tabla: tipo, rol, significado y criterio contable (1670 columnas en 90 tablas). |
+| `diccionario.csv` | Cada columna de cada tabla: tipo, rol, significado y criterio contable (1671 columnas en 90 tablas). |
 | `diccionario.json` | Lo mismo, en JSON, para cargarlo con pandas o DuckDB. |
 | `inventario_fuentes.csv` | Todos los Parquet y manifiestos publicados, con peso y SHA-256. Permite verificar que una copia descargada no fue alterada. |
 | `cobertura_por_periodo.csv` | Registros por tabla y periodo, según los manifiestos publicados. |

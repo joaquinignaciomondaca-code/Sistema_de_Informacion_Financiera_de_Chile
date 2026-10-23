@@ -77,7 +77,7 @@ La Ley 21.719 protege a **personas naturales**, no a personas jurídicas. De los
 |---|---|---|---|
 | `fintech_rpsf_lista_entidades` | 264 | 226 personas jurídicas, **36 personas naturales** y 2 sin tipo. Las 36 llevan RUT+DV, razón social (nombre de la persona), email, comuna, región y sitio web. **46 correos en dominios personales** (gmail, hotmail, outlook, yahoo). | Publicable en su núcleo registral; el **email no es necesario** para el fin del dataset |
 | `corredoras_bolsa_lista_entidades` | 120 | **11 corredores de bolsa inscritos a nombre de persona natural**, con RUT+DV y nombre (p. ej. `BRANCHI BRANCHI PABLO`, `1347879-1`; `ETCHEGARAY GIL TOMAS`, `1571295-3`) | Datos de un registro público obligatorio (Ley 18.045); sin datos de contacto. Publicable |
-| `seguros_bienes_raices` | 760.152 | `nombre_del_tasador_1/2`: **233 tasadores distintos**, varios personas naturales | Nombres de peritos tal como constan en la Circular 1835; sin RUT ni contacto. Publicable |
+| `seguros_bienes_raices` | 760.152 | `nombre_del_tasador_1/2`: **317 nombres distintos** (233 en la tasación 1 y 263 en la 2), entre personas naturales y sociedades tasadoras | Nombres de peritos tal como constan en la Circular 1835; sin RUT ni contacto. Publicable |
 
 **Lo que se revisó y no es dato personal publicado:**
 
@@ -105,6 +105,33 @@ La base invocable es **interés legítimo** (art. 13 d) —reutilizar informaci�
 | Reportar vulneraciones | art. 14 sexies | Sin procedimiento |
 
 La ley entra en vigencia el **1 de diciembre de 2026**, es decir en 40 días. Hay un proyecto para postergarla al 1 de diciembre de 2027 (boletín 18.623-07), en primer trámite: **no es ley** y no corresponde planificar sobre él.
+
+### 3.3 ¿La supresión protege personas reales?
+
+`fi.cartera_nacional` suprime `rut_emisor` cuando el RUT es menor a 50.000.000 y no figura en el padrón de 3.280 entidades conocidas. Conviene medir si ese criterio alcanza a personas naturales efectivas o solo a un subconjunto estadístico.
+
+- **Volumen suprimido.** Contrastando la versión publicada con la anterior al commit `3b88beb`, desaparecen **202.835 filas y 31.215 RUT distintos**, en 28 fondos. Son el 0,28 % del monto del objeto (795.356 miles de la moneda funcional frente a 288.512.050). Por instrumento: 202.437 filas en «otros títulos de deuda nacional», 208 en mutuos hipotecarios y 186 en «otros títulos».
+- **Control de fuga.** Ninguno de esos 31.215 RUT aparece en los **55 objetos publicados que tienen alguna columna de RUT** (cruce sobre todo el catálogo, 0 coincidencias). La supresión es consistente: no queda identificado en otra tabla.
+- **Verificación nominal externa.** El registro público de solicitantes de certificados de cumplimiento de obligaciones laborales y previsionales de la Dirección del Trabajo (formulario F30-1, año 2024) publica RUT con el nombre de la persona o empresa solicitante. Al menos uno de los RUT suprimidos aparece ahí como **persona natural identificada con nombres y apellidos**, con el mismo dígito verificador que calcula el propio pipeline. Por minimización no se reproduce aquí el nombre ni el RUT, ni se incorporan a ninguna tabla.
+- **Conclusión.** La regla no suprime «probables personas» en abstracto: suprime personas naturales reales, cuya identidad el proyecto puede verificar pero no publica. El criterio se mantiene sin cambios; cualquier modificación es una decisión de publicación que corresponde al responsable del repositorio.
+
+### 3.4 ¿Por qué la Dirección del Trabajo y la CMF publican lo que el proyecto omite?
+
+La asimetría que se percibe —un servicio público publica el RUT con nombre y apellido, el proyecto lo suprime— no está en el permiso, sino en el rol y en la finalidad. Son tres diferencias acumuladas.
+
+| Dimensión | Dirección del Trabajo | CMF | Este proyecto |
+|---|---|---|---|
+| Mandato | El registro existe porque el art. 183-C del Código del Trabajo obliga a mantenerlo público | Publica los informes IFRS porque es la supervisora y los fondos deben remitirlos | Ninguno: hace un tratamiento nuevo de datos ajenos |
+| Qué asocia al RUT | «Solicitó un certificado laboral»: acto administrativo, sin contenido financiero | El RUT del emisor, sin nombre, en una página HTML por fondo y trimestre | RUT + instrumento + monto + fondo + trimestre: un perfil financiero indexado |
+| Deber que carga | Responde por su registro | Responde por su registro | Responde por su propio tratamiento (art. 14 bis de la Ley 21.719, que alcanza a los datos resultantes de organizar o combinar fuentes públicas) |
+
+**Qué permite la ley vigente.** El artículo 4 de la Ley 19.628 exige ley o consentimiento, pero su inciso quinto exime de autorización el tratamiento de datos provenientes de fuentes accesibles al público «cuando sean de carácter económico, financiero, bancario o comercial». Eso cubre, en principio, la cartera de un fondo publicada por la CMF. En consecuencia: **publicar no sería hoy una infracción automática, y suprimir tampoco es una obligación legal**; es una decisión de prudencia.
+
+**Qué cambia el 1 de diciembre de 2026.** La Ley 21.719 sustituye esa lógica de exenciones por un régimen de principios: base de licitud (art. 13), finalidad, minimización (art. 14 quáter), transparencia (art. 14 ter) y seguridad. La base invocable pasaría a ser el interés legítimo, que exige ponderación y un aviso publicado. El régimen sancionatorio (arts. 34 bis a 35) fija hasta 5.000 UTM para infracciones leves, 10.000 para las graves —entre ellas tratar sin base de licitud— y 20.000 para las gravísimas.
+
+**Señal legislativa.** El Congreso ha presentado varios proyectos para restringir la publicación de datos de deudas de carácter económico o financiero (boletines 13897-03, 13695-03, 12924-03, 11841-03 y 11716-07). Ninguno es ley, pero la dirección es hacia restringir, no hacia ampliar.
+
+**Conclusión.** Publicar los RUT de personas naturales que actúan en el mercado por su rol —corredores de bolsa, tasadores, representantes de fintech— es defendible: el registro público existe precisamente para informar al mercado sobre ellas. Publicar los de contrapartes de pagarés y mutuos hipotecarios es lo discutible, y tampoco aporta al análisis: `emisor_tipo` conserva el conteo y el monto de esas filas.
 
 ## 4. Los cinco defectos concretos
 

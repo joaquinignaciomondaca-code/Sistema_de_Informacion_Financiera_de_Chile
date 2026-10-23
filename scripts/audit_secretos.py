@@ -76,6 +76,25 @@ NOMBRE_RELEVANTE = re.compile(r"(pass|clave|contrase|token|secret|apikey|api_key
 # clave; los tokens reales (hex, base64, url-safe) no usan esos caracteres.
 PROSA = re.compile(r"[\s()\[\]{}<>,;]")
 
+# Nombres de preferencias guardadas en el navegador, del tipo
+# `const CLAVE_AVISO_MOVIL = "sif-aviso-movil-cerrado"` en docs/js/ux_shell.js:
+# palabras en minúsculas separadas por guiones, sin entropía. Una credencial real
+# mezcla mayúsculas, dígitos y signos, o es hexadecimal larga; un slug legible es
+# un identificador del proyecto, aunque la constante se llame «clave».
+SLUG = re.compile(r"^[a-z0-9]+(?:[-_.][a-z0-9]+)+$")
+VOCAL = re.compile(r"[aeiou]")
+
+
+def es_nombre_de_preferencia(valor: str) -> bool:
+    """Slug legible (`sif-aviso-movil-cerrado`), no una clave.
+
+    Se exige que cada segmento tenga vocal: así `sk-live-9f2b7c` sigue siendo
+    sospechoso, porque un segmento aleatorio no se lee como una palabra.
+    """
+    return bool(SLUG.match(valor)) and all(
+        VOCAL.search(parte) for parte in re.split(r"[-_.]", valor) if parte
+    )
+
 
 def es_superficial() -> bool:
     resultado = subprocess.run(["git", "rev-parse", "--is-shallow-repository"],
@@ -146,8 +165,8 @@ def main() -> int:
                 normalizado = re.sub(r"[\s\-.]+", "_", valor)
                 if MARCADOR.search(normalizado) or valor.isupper():
                     destino = marcadores
-                elif IDENTIFICADOR.match(valor) or len(valor) < 12:
-                    ignorados += 1        # id del proyecto o valor corto: no es clave
+                elif IDENTIFICADOR.match(valor) or es_nombre_de_preferencia(valor) or len(valor) < 12:
+                    ignorados += 1        # id del proyecto, slug o valor corto: no es clave
                     continue
                 else:
                     destino = candidatos

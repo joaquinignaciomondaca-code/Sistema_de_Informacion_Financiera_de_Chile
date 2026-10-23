@@ -21,7 +21,7 @@ tres conjuntos con datos de personas naturales:
 |---|---|---|---|
 | `fintech_rpsf_lista_entidades` | 36 personas naturales (de 264 prestadores) | RUT, nombre o razón social, comuna, región, sitio web, estado de vigencia | Registro de Prestadores de Servicios Financieros de la CMF (Ley 21.521) |
 | `corredoras_bolsa_lista_entidades` | 11 corredores inscritos a nombre de persona natural (de 120) | RUT, nombre, estado de vigencia | Registro de corredores de bolsa de la CMF (Ley 18.045) |
-| `seguros_bienes_raices` | 233 tasadores | Nombre del tasador, tal como consta en la Circular 1835 | Declaración de cartera de las aseguradoras a la CMF |
+| `seguros_bienes_raices` | 317 nombres de tasadores (233 en la tasación 1 y 263 en la tasación 2) | Nombre del tasador 1 y 2, tal como consta en la Circular 1835; la fuente mezcla personas naturales y sociedades tasadoras | Declaración de cartera de las aseguradoras a la CMF |
 
 ## 2. Qué datos personales no se publican
 
@@ -36,10 +36,49 @@ tres conjuntos con datos de personas naturales:
   (`property_id`) que permite seguir el mismo bien entre meses.
 - **RUT de personas naturales en carteras.** En `fi_cartera_nacional` se suprime
   el RUT del emisor cuando probablemente corresponde a una persona natural y se
-  agrega `emisor_tipo` con el criterio aplicado.
+  agrega `emisor_tipo` con el criterio aplicado: **202.835 filas y 31.215 RUT
+  distintos**, que no reaparecen en ningún otro objeto del catálogo. Contrastado
+  contra registros públicos, el criterio alcanza a personas naturales
+  identificables, no a entidades.
 
-Las reglas viven en `pipelines/auto/privacidad.py` y se aplican antes de
-publicar; `scripts/enmascarar_identificadores.py` las aplica a lo ya publicado.
+### 2.1 Una sola columna de identificador
+
+`rut_emisor` no se vacía: se sustituye. Tiene dos contenidos posibles y una
+columna que dice cuál es:
+
+| `rut_emisor` | `rut_omitido_por_ley` | Cuándo |
+|---|---|---|
+| El RUT del emisor (cuerpo, sin dígito verificador) | falso | El emisor es una persona jurídica |
+| Un seudónimo estable con prefijo `EMI-` | verdadero | El emisor es una persona natural: su RUT no se publica |
+| Vacío | falso | La fuente no informa RUT |
+
+El seudónimo es el mismo para la misma persona en cualquier trimestre y fondo, así
+que se puede sumar su exposición, seguir su serie y medir concentración sin
+revelar su identidad. Agrupar por emisor, sea del tipo que sea, es una sola línea:
+`GROUP BY rut_emisor`.
+
+El prefijo `EMI-` no es decorativo: evita que un seudónimo se confunda con un RUT
+al leer la columna, al hacer un `JOIN` o al exportar a CSV.
+
+El seudónimo no es una anonimización: el vínculo con el RUT vive en
+una tabla privada que no se publica, y el artículo 2 letra k de la Ley 21.719
+reserva la palabra «anonimización» para el procedimiento irreversible. Por eso la
+bandera se llama `rut_omitido_por_ley` y no `anonimizado_por_ley`.
+
+**El criterio cubre las 90 tablas, la columna sólo existe donde hay algo que
+omitir.** La compuerta aplica `es_probable_persona_natural` a las 94 columnas de
+RUT publicadas y falla si aparece un objeto que publique RUT de personas sin
+declararlo; los objetos donde eso es deliberado están en
+`privacidad.OBJETOS_CON_RUT_DE_PERSONAS` con su fundamento (RPSF y registro de
+corredores). `rut_omitido_por_ley` no se replica en las demás tablas porque sería
+constante en falso: una columna que ocupa espacio y no informa nada.
+
+**Cambiar de criterio es configuración, no código.** La variable de entorno
+`SIF_PUBLICAR_RUT_EMISOR` admite `suprimir` (por omisión, lo descrito aquí) y
+`publicar`, que repone el RUT de las personas naturales y deja la bandera en
+falso. La compuerta `scripts/auditar_personas_publicadas.py` verifica que la
+bandera y el contenido de `rut_emisor` coincidan, y rechaza una publicación que
+mezcle los dos modos.
 
 ## 3. Base de licitud
 
