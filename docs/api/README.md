@@ -144,15 +144,25 @@ Un recurso por objeto (86), con las particiones en `path` y el detalle en
 mano—, y los tipos se traducen a Table Schema (`VARCHAR` → `string`,
 `BIGINT` → `integer`, `DOUBLE` → `number`).
 
-`primaryKey` **sólo aparece cuando está probada** sobre todas las filas: 76 de
-86 recursos. Los 10 restantes no la llevan porque la tabla publica filas
-idénticas (9) o porque la fila entera es la única garantía (1). Prometer una
-clave falsa es peor que no tener ninguna; las 8 que la tenían mal se
-corrigieron en la tarea 1a.9.
+`primaryKey` **sólo aparece cuando está probada** sobre todas las filas: 63 de
+86 recursos. Los 23 restantes no la llevan porque la tabla publica filas
+idénticas: no hay combinación de columnas que distinga una fila de otra. Prometer
+una clave falsa es peor que no tener ninguna.
+
+En `catalog.json` y en cada `schema/{id}.json`, la ausencia de clave se publica
+como `"primaryKey": null` —nunca `[]`, que se leería como una clave de cero
+columnas—. Son 27 objetos: los 13 que perdieron una clave falsa, los 13 que nunca
+la tuvieron y `fi_bienes_raices`, que no publica filas.
+
+El 2026-10-23 se corrigieron **13 claves que se habían dado por buenas sin serlo**
+(`ffmm_cartera_nacional` entre ellas, con 160.564 filas repetidas): un error de
+`scripts/verificar_claves.py` marcaba las repeticiones con una comparación de
+tuplas que DuckDB no evalúa fila a fila, y el vacío se leía como «no hay
+duplicados». Ver [`docs/notas/claves_duplicados_2026-10-23.md`](../notas/claves_duplicados_2026-10-23.md).
 
 El `hash` de cada recurso es el SHA-256 de la concatenación de los SHA-256 de
 sus particiones, y el conjunto de todos ellos produce el `data_release`
-(`2026-10-21.dd49f53bf82b`): no es una fecha elegida a mano, es el contenido.
+(`2026-10-23.a0734ca242e6`): no es una fecha elegida a mano, es el contenido.
 
 ### URLs
 

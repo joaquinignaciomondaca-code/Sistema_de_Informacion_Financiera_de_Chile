@@ -82,18 +82,29 @@ def main() -> int:
         problemas.append("el catálogo y docs/api/esquemas.json no tienen los mismos objetos")
     if set(ids) != set(reconciliacion):
         problemas.append("el catálogo y la reconciliación no tienen los mismos objetos")
+    sin_clave = 0
     for objeto in objetos:
+        # La ausencia de clave se publica como `null`; una lista vacía se leería
+        # como una clave de cero columnas y es lo que la 2.0.0 dejó pasar.
+        if objeto.get("primaryKey") == []:
+            problemas.append(f"{objeto['id']}: primaryKey es [] y debe ser null cuando no hay clave")
         declarada = objeto.get("primaryKey") or []
         verificada = claves.get(objeto["id"], {})
         esperada = ([c.strip() for c in verificada["columnas"].split("+")]
                     if verificada.get("columnas") and verificada.get("estado") in ("ok", "propuesta") else [])
         if declarada != esperada:
             problemas.append(f"{objeto['id']}: primaryKey del catálogo {declarada} ≠ verificada {esperada}")
+        if not declarada:
+            sin_clave += 1
+        esquema = leer_json(V2 / "schema" / f"{objeto['id']}.json")
+        if esquema.get("primaryKey") != objeto.get("primaryKey"):
+            problemas.append(f"{objeto['id']}: primaryKey del esquema ≠ la del catálogo")
         if not (V2 / "schema" / f"{objeto['id']}.json").exists():
             problemas.append(f"falta schema/{objeto['id']}.json")
         if not (V2 / "partitions" / f"{objeto['id']}.json").exists():
             problemas.append(f"falta partitions/{objeto['id']}.json")
-    print(f"Coherencia: {len(objetos)} objetos en catálogo, esquemas y reconciliación")
+    print(f"Coherencia: {len(objetos)} objetos en catálogo, esquemas y reconciliación · "
+          f"{sin_clave} con primaryKey null")
 
     # 2. Archivos -----------------------------------------------------------
     archivos = 0
