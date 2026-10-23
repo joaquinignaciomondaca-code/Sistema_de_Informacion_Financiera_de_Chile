@@ -3,7 +3,7 @@
  "base": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile",
  "como_se_genera": "python3 scripts/build_contrato.py",
  "contrato": "sif-api/catalogo",
- "data_release": "2026-10-22.750411f8a09a",
+ "data_release": "2026-10-22.ce8f0befbcb2",
  "generado": "2026-10-23",
  "objetos": [
   {
@@ -140,10 +140,10 @@
     "bancos_cmf_balance"
    ],
    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-   "bytes": 24638276,
+   "bytes": 29459107,
    "corte": "2022-01 a 2026-08",
    "deriva_de": "bancos_cmf_lineas",
-   "descripcion": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Campos monetarios originales sin reinterpretación; revisar tipo_linea antes de agregar cuentas jerárquicas.",
+   "descripcion": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Conserva los campos monetarios originales y agrega `importe_clp`, el importe en pesos con el que se suma y se lee cada línea.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/schema/bancos_balance.json",
    "estado": "derivado",
    "filas": 722931,
@@ -171,7 +171,7 @@
     "bancos_maestro"
    ],
    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-   "bytes": 4668,
+   "bytes": 6501,
    "corte": "Códigos históricos y vigentes",
    "deriva_de": null,
    "descripcion": "Códigos de institución de los archivos bancarios CMF: bancos vigentes, históricos (fusionados o cerrados), filiales en el exterior y agregados del sistema. No equivale al número de bancos activos. RUT de los bancos activos cotejados con el registro CMF.",
@@ -201,10 +201,10 @@
     "bancos_cmf_resultados"
    ],
    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-   "bytes": 24638276,
+   "bytes": 29459107,
    "corte": "2022-01 a 2026-08",
    "deriva_de": "bancos_cmf_lineas",
-   "descripcion": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Campos monetarios originales sin reinterpretación; revisar tipo_linea antes de agregar cuentas jerárquicas.",
+   "descripcion": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Conserva los campos monetarios originales y agrega `importe_clp`, el importe en pesos con el que se suma y se lee cada línea.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/schema/bancos_resultados.json",
    "estado": "derivado",
    "filas": 1240061,
@@ -2822,9 +2822,9 @@
  },
  "totales": {
   "alias": 19,
-  "bytes": 523015496,
+  "bytes": 532658991,
   "con_datos": 86,
-  "consultas": 156,
+  "consultas": 159,
   "derivados": 7,
   "filas": 19777508,
   "objetos": 90,

@@ -64,6 +64,26 @@ def parse_amount(value: str) -> str:
     return format(amount, "f")
 
 
+def importe_normalizado(exactos: list[str], raw: list[str]) -> dict:
+    """Monto legible en pesos a partir de los importes exactos de la fila.
+
+    R1 trae un importe (acumulado del ejercicio); B1/B2 traen cuatro, uno por
+    moneda, y **su suma es el total de la cuenta** (Manual del Sistema de
+    Información de la CMF, MB1/MB2). El archivo fuente no publica fracciones de
+    peso: en las 4.131.785 cifras de las 56 particiones publicadas el valor
+    decimal siempre termina en ",00", así que el entero es exacto.
+
+    `formato_monto_fuente` deja dicho de qué mitad de la serie viene la cifra:
+    hasta 2024-05 el archivo escribe la coma decimal (`26458735676131,00`) y
+    desde 2024-06 escribe el entero de 15 dígitos (`025258284006864`).
+    """
+    total = sum(Decimal(valor) for valor in exactos)
+    return {
+        "importe_clp": int(total),
+        "formato_monto_fuente": "decimal_coma" if any("," in v for v in raw) else "entero_15",
+    }
+
+
 def decode_text(data: bytes) -> str:
     try:
         return data.decode("utf-8-sig")
@@ -282,6 +302,7 @@ def extract_archive(
                     "unidad_monto": "pesos_clp",
                     "importes_fuente_raw": raw_amounts,
                     "importes_fuente_decimal": exact_amounts,
+                    **importe_normalizado(exact_amounts, raw_amounts),
                     "archivo_fuente": info.filename,
                 })
                 code_counts[account_code] += 1

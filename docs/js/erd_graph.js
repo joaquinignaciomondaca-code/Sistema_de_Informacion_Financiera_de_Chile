@@ -602,7 +602,7 @@ const ERD_TABLES = [
     y: -80,
     w: 240,
     h: 160,
-    rows: "40 instituciones",
+    rows: "41 instituciones · 20 vigentes",
     file: "outputs/bancos/bancos_maestro.parquet",
     cols: [
       { name: "codigo_institucion", pk: true, type: "VARCHAR" },

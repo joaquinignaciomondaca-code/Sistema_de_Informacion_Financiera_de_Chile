@@ -107,17 +107,17 @@
       "file_parquet": "outputs/bancos/cmf_b1_b2_r1/2026-08/lineas.parquet",
       "files_manifest": "outputs/bancos/cmf_b1_b2_r1/manifest.json",
       "registros_reales": 1962992,
-      "descripcion": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Campos monetarios originales sin reinterpretación; revisar tipo_linea antes de agregar cuentas jerárquicas.",
+      "descripcion": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Conserva los campos monetarios originales y agrega `importe_clp`, el importe en pesos con el que se suma y se lee cada línea.",
       "origen": "https://www.cmfchile.cl/portal/estadisticas/626/articles-113894_recurso_1.zip?ts=1790773409",
       "metadatos": {
         "fuente": "CMF, Manual del Sistema de Información para bancos (B1/MB1, B2/MB2, R1/MR1), archivos ZIP publicados por la CMF",
-        "unidad": "Campos monetarios en su unidad original; no se reinterpretan",
-        "escala": "Por confirmar por campo (revisar tipo_linea)",
-        "moneda": "Por confirmar (la moneda de cada campo depende de la línea)",
-        "criterio_contable": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado, sin agregación jerárquica (revisar tipo_linea antes de agregar)",
+        "unidad": "Pesos chilenos (CLP) en `importe_clp`; `importes_fuente_raw` conserva el texto original de 15 dígitos",
+        "escala": "Unidad 1 (pesos). El archivo fuente escribe 15 dígitos con ceros a la izquierda y, hasta 2024-05, con coma decimal; el formato de cada fila queda en `formato_monto_fuente`",
+        "moneda": "CLP. En B1/B2 los cuatro componentes distinguen moneda no reajustable, reajustable por IPC, reajustable por tipo de cambio y extranjera",
+        "criterio_contable": "Filas fuente sin agregación jerárquica (revisar tipo_linea antes de agregar). `importe_clp` es la suma de los cuatro componentes en B1/B2 y el acumulado del ejercicio en R1",
         "cobertura": "2022-01 a 2026-08; 1.962.992 filas en 56 particiones",
         "fecha_extraccion": "2026-10-01",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría. No está expuesta como vista SQL en el motor."
+        "estado_qa": "`importe_clp` y `formato_monto_fuente` verificados contra los importes exactos en las 56 particiones (0 diferencias, 2026-10-23); identidades cotejadas con el registro BANCO de la CMF (30 cotejadas, 7 agregados sectoriales, 4 declaradas). Publicada en el sitio como `bancos_balance` y `bancos_resultados`."
       }
     },
     {

@@ -585,8 +585,8 @@
       "nombre": "bancos.balance",
       "tipo": "balance",
       "sector": "bancos",
-      "descripcion": "Balance B1/B2 de la CMF, con las líneas contables tal como se publican.",
-      "cobertura": "B1/B2 · importes fuente"
+      "descripcion": "Balance B1/B2 de la CMF, con las líneas contables tal como se publican y el total de cada cuenta en importe_clp.",
+      "cobertura": "B1/B2 · importe_clp y desglose por moneda"
     },
     {
       "id": "bancos_resultados",
@@ -596,8 +596,8 @@
       "nombre": "bancos.resultados",
       "tipo": "resultados",
       "sector": "bancos",
-      "descripcion": "Estado de resultados R1 de la CMF, con las líneas tal como se publican.",
-      "cobertura": "R1 · importes fuente"
+      "descripcion": "Estado de resultados R1 de la CMF, con las líneas tal como se publican. importe_clp trae el acumulado del ejercicio listo para sumar.",
+      "cobertura": "R1 · importe_clp (acumulado del ejercicio)"
     },
     {
       "id": "factoring_leasing_lista_entidades",

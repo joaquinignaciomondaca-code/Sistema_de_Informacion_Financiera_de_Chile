@@ -39,8 +39,8 @@ El primer artefacto de extracción produce ambas familias en un JSONL común de 
 
 ### Importes
 
-- B1/B2: la extracción conserva el arreglo `importes_fuente_raw` y su representación decimal exacta (`importes_fuente_decimal`), sin columnas semánticas ni total precalculado. **Significado (resuelto 2026-10-01):** los cuatro importes son, en el orden del archivo, el monto en moneda chilena no reajustable, en moneda reajustable por IPC, en moneda reajustable por tipo de cambio y en moneda extranjera (Manual del Sistema de Información de la CMF, archivos MB1 y MB2, Circular 2.295/2021), en pesos. **Su suma es el total de la cuenta**: sumando los cuatro, `TOTAL ACTIVOS` = `TOTAL PASIVOS Y PATRIMONIO` en 989 de los 991 balances banco-mes publicados (diferencia máxima $1); columna por columna no cuadra, como corresponde (la diferencia por moneda es la posición neta del banco).
-- R1: un único importe en pesos. **Es el acumulado del ejercicio** (de enero al mes informado), no el flujo del mes (resuelto 2026-10-01): crece mes a mes dentro del año en el 97,2 % de los 759 pares de meses consecutivos de bancos con utilidad anual positiva, y se reinicia en enero en 69 de 69 casos (el total del sistema, código 999, pasa de enero a diciembre multiplicado por 13–17). Para el resultado de un mes hay que restar el mes anterior del mismo año.
+- B1/B2: la extracción conserva el arreglo `importes_fuente_raw`, su representación decimal exacta (`importes_fuente_decimal`) y agrega `importe_clp` con el total de la cuenta ya sumado (ver «Importes normalizados»). **Significado (resuelto 2026-10-01):** los cuatro importes son, en el orden del archivo, el monto en moneda chilena no reajustable, en moneda reajustable por IPC, en moneda reajustable por tipo de cambio y en moneda extranjera (Manual del Sistema de Información de la CMF, archivos MB1 y MB2, Circular 2.295/2021), en pesos. **Su suma es el total de la cuenta**: sumando los cuatro, `TOTAL ACTIVOS` = `TOTAL PASIVOS Y PATRIMONIO` en 989 de los 991 balances banco-mes publicados (diferencia máxima $1); columna por columna no cuadra, como corresponde (la diferencia por moneda es la posición neta del banco).
+- R1: un único importe en pesos, que se publica además como número en `importe_clp`. **Es el acumulado del ejercicio** (de enero al mes informado), no el flujo del mes (resuelto 2026-10-01): crece mes a mes dentro del año en el 97,2 % de los 759 pares de meses consecutivos de bancos con utilidad anual positiva, y se reinicia en enero en 69 de 69 casos (el total del sistema, código 999, pasa de enero a diciembre multiplicado por 13–17). Para el resultado de un mes hay que restar el mes anterior del mismo año.
 - En la capa curada, renombrar las medidas con significado oficial y mantener también una representación fiel al dato fuente.
 
 ## Totales, subtotales y análisis
@@ -70,3 +70,52 @@ Lo anterior describe la fase de muestra de revisión (julio de 2026). Era una co
 - **Código 999.** `TOTAL SISTEMA FINANCIERO` viene como una institución más: al sumar sobre `codigo_institucion` hay que excluirlo o se duplica el sistema.
 - **Resuelto 2026-10-22:** (3) el cruce a RUT. `rut` y `razon_social` se publicaban nulos desde 2022-01 (una consulta por RUT devolvía 0 filas sin error, hallazgo 16 de la ruta de la API); ahora el extractor los toma del maestro de bancos y `bancos/scripts/completar_entidades.py` reparó las 56 particiones publicadas.
 - **Pendiente:** (2) contrastar la regla total/subtotal/detalle (`tipo_linea`) con el plan de cuentas.
+
+## Importes normalizados (2026-10-23)
+
+La sección de Banca llegó al sitio con un defecto de lectura: el Visor mostraba
+`001345990724750` (el campo del archivo CMF, 15 dígitos con ceros a la
+izquierda y a veces con coma decimal) porque no había ninguna columna numérica
+que sumar ni formatear. Se agregaron **dos columnas**, sin tocar el grano ni las
+columnas de origen:
+
+| Columna | Tipo | Contenido |
+|---|---|---|
+| `importe_clp` | `BIGINT` | En R1, el importe en pesos. En B1/B2, la suma de los cuatro componentes por moneda, es decir, el total de la cuenta. |
+| `formato_monto_fuente` | `VARCHAR` | `decimal_coma` (15 dígitos con coma decimal, 2022-01 → 2024-05) o `entero_15` (15 dígitos enteros, 2024-06 → 2026-08). |
+
+- **Cómo se calcula.** `importe_clp` = suma exacta con `Decimal` de
+  `importes_fuente_decimal`; nunca se reinterpreta el texto crudo. Los
+  4.131.785 valores de la serie no tienen centavos, así que la conversión a
+  entero es exacta.
+- **Relleno de lo publicado.** `bancos/scripts/normalizar_importes.py` agrega
+  las columnas a las particiones existentes en un archivo temporal, verifica
+  filas y valores y recién entonces reemplaza. Resultado: **56 particiones,
+  1.962.992 filas, 0 importes incorrectos**; una segunda corrida reescribe 0.
+  `--check` recorre todas las particiones sin red.
+- **Extractor.** `bancos/scripts/extract_cmf_bank_lines.py` calcula las dos
+  columnas al extraer, de modo que las particiones nuevas ya nacen legibles.
+- **Ejemplos verificados.** R1 2024-06, cuenta `411000000` (INGRESOS POR
+  INTERESES), Banco de Chile: `1542552118136` (`entero_15`). B1 2022-01,
+  `TOTAL ACTIVOS`: `50164403436446` (`decimal_coma`), suma de
+  `26.458.735.676.131,00` + `18.194.231.752.989,00` + `86.353.276.604,00` +
+  `5.425.082.730.722,00`.
+- **Lo que no cambia.** `importes_fuente_raw` e `importes_fuente_decimal` siguen
+  publicadas: son la representación fiel del archivo, y el marcador de formato
+  existe para no perder de vista qué mitad de la serie usa coma decimal.
+
+## Identidades cotejadas (2026-10-23)
+
+El maestro dejó de estar «pendiente de validación»:
+
+- `bancos/scripts/validar_identidades.py` compara las 41 filas contra
+  `docs/outputs/bancos/registro_cmf_banco.json` (copia fechada del registro
+  BANCO de la CMF, vigentes y no vigentes). Resultado: **30 cotejadas, 7
+  agregados sectoriales, 4 declaradas** (027, 816, 916 y 927). Cero filas fuera
+  del registro.
+- `bancos/scripts/corregir_identidades.py` aplicó los **9 RUT** que no existían
+  en el registro y fija el formato único del maestro: `rut_dv` sin puntos e
+  igual a `rut` más el dígito verificador. `--check` falla si reaparece un punto
+  o un RUT conocido por la CMF.
+- `--check` de ambos scripts corre **sin red** sobre la copia publicada, así que
+  la compuerta es reproducible en cualquier máquina y en CI.

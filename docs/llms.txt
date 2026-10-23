@@ -4,7 +4,7 @@
 > securitizadoras, cooperativas, fintech, pagos, macro— normalizados en 90 objetos
 > Parquet, con RUT canónico, esquema verificado y un contrato estático que se puede
 > leer sin clonar el repositorio. Sin autenticación, sin clave de API: los archivos
-> se leen por HTTP. Las 156 consultas del sitio vienen además con su resultado ya
+> se leen por HTTP. Las 159 consultas del sitio vienen además con su resultado ya
 > calculado, para quien sólo necesita el número.
 
 Base: `https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile`
@@ -19,8 +19,8 @@ Base: `https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Finan
 
 ## Consultas
 
-- [queries.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/queries.json): 156 consultas SQL de ejemplo. Cada una trae `id` estable (`slug-del-título` + 6 hex del SHA-1 de su SQL), `titulo`, `sql` y las tablas que usa. **El id no cambia mientras el SQL no cambie**: sirve para citar una consulta sin copiar el SQL.
-- [resultados/index.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/resultados/index.json): esas 156 consultas ya ejecutadas, con `filas`, `columnas`, tope de 500 filas, `sha256` y la URL de cada resultado. Si sólo necesitas el número, pide `resultados/{id}.json` y no bajes 500 MB: cada archivo trae `datos`, el `sql` que los produjo y el `data_release`.
+- [queries.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/queries.json): 159 consultas SQL de ejemplo. Cada una trae `id` estable (`slug-del-título` + 6 hex del SHA-1 de su SQL), `titulo`, `sql` y las tablas que usa. **El id no cambia mientras el SQL no cambie**: sirve para citar una consulta sin copiar el SQL.
+- [resultados/index.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/resultados/index.json): esas 159 consultas ya ejecutadas, con `filas`, `columnas`, tope de 500 filas, `sha256` y la URL de cada resultado. Si sólo necesitas el número, pide `resultados/{id}.json` y no bajes 500 MB: cada archivo trae `datos`, el `sql` que los produjo y el `data_release`.
 
 ## Datos
 
@@ -49,7 +49,7 @@ es lo mismo, con menos piezas.
 
 - Best effort, sin SLA; los datos son de la CMF y de otros organismos públicos y se republican normalizados.
 - Las tres fuentes autorizan la republicación citándolas; cada objeto declara su cita en `api/v1/catalog.json` (`atribucion`). Condiciones y datos personales en `DATA_LICENSE.md` y `PRIVACIDAD.md`; el código es MIT.
-- No hay SQL arbitrario por HTTP: los resultados publicados son los de las 156 consultas del catálogo, y cualquier otra consulta la ejecuta tu motor sobre los Parquet. Un servidor DuckDB compartido (Quack) está documentado pero **no desplegado**: implica una máquina, un certificado y un costo que este proyecto estático no tiene.
+- No hay SQL arbitrario por HTTP: los resultados publicados son los de las 159 consultas del catálogo, y cualquier otra consulta la ejecuta tu motor sobre los Parquet. Un servidor DuckDB compartido (Quack) está documentado pero **no desplegado**: implica una máquina, un certificado y un costo que este proyecto estático no tiene.
 
 ## Más
 

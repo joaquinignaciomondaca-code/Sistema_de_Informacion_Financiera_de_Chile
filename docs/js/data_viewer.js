@@ -395,9 +395,17 @@ class DataViewerController {
 
   formatCell(colName, val) {
     if (val === null || val === undefined) return '<span class="cell-null">—</span>';
+    // Las columnas de importes fuente llegan como lista: mostrarlas separadas se
+    // lee mejor que el volcado crudo del arreglo.
+    if (Array.isArray(val)) return dvEscapar(val.join(" · "));
     if (typeof val !== "number") return dvEscapar(val);
 
     const lower = colName.toLowerCase();
+    // Importe en pesos ya normalizado: número entero y con separador de miles.
+    // Va antes que las reglas de millones para que `importe_clp` no se rotule «M».
+    if (lower === "importe_clp" || lower.endsWith("_clp")) {
+      return "$" + val.toLocaleString("es-CL", { maximumFractionDigits: 0 });
+    }
     if (lower.includes("_pct") || lower.includes("tasa") || lower.includes("tir") || lower.includes("presencia")) {
       return val.toLocaleString("es-CL", { minimumFractionDigits: 2, maximumFractionDigits: 4 }) + " %";
     }

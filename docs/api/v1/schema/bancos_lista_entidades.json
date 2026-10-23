@@ -14,7 +14,7 @@
    "criterio_contable": "No aplica",
    "nombre": "rut",
    "rol": "Atributo",
-   "significado": "Cuerpo del RUT del catálogo local (sin dígito verificador), por cotejar.",
+   "significado": "Cuerpo del RUT (sin dígito verificador ni puntos), cotejado con el registro CMF.",
    "tipo": "VARCHAR",
    "tipo_ts": "string"
   },
@@ -38,7 +38,7 @@
    "criterio_contable": "No aplica",
    "nombre": "tipo_licencia",
    "rol": "Atributo",
-   "significado": "Clasificación local, no verificada.",
+   "significado": "Tipo de licencia del catálogo. Los agregados del sistema (900, 950, 960, 970, 980, 998 y 999) llevan «Agregado Sectorial»: no son bancos y no se suman con ellos.",
    "tipo": "VARCHAR",
    "tipo_ts": "string"
   },
@@ -46,7 +46,7 @@
    "criterio_contable": "No aplica",
    "nombre": "estado",
    "rol": "Atributo",
-   "significado": "Estado local, no histórico por periodo.",
+   "significado": "Activo, Fusionado, Cerrado o Agregado. No es un estado histórico por periodo: dice cómo está la institución hoy.",
    "tipo": "VARCHAR",
    "tipo_ts": "string"
   },
@@ -54,7 +54,7 @@
    "criterio_contable": "No aplica",
    "nombre": "rut_dv",
    "rol": "Atributo",
-   "significado": "RUT del catálogo con dígito verificador (cuerpo-DV).",
+   "significado": "RUT completo, cuerpo y dígito verificador, sin puntos: es el identificador que publica la CMF.",
    "tipo": "VARCHAR",
    "tipo_ts": "string"
   }

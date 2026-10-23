@@ -765,10 +765,10 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "bancos-comerciales-activos-6f9896",
+   "id": "bancos-vigentes-con-rut-4da2ff",
    "origen": "explorador",
-   "sql": "SELECT codigo_institucion, rut, nombre_fantasia, tipo_licencia, estado FROM bancos_lista_entidades WHERE estado = 'Activo' ORDER BY codigo_institucion;",
-   "titulo": "Bancos Comerciales Activos"
+   "sql": "SELECT codigo_institucion, rut_dv AS rut_completo, nombre_fantasia, razon_social, tipo_licencia, estado FROM bancos_lista_entidades WHERE estado = 'Activo' ORDER BY codigo_institucion;",
+   "titulo": "Bancos vigentes con RUT"
   },
   {
    "espera": {
@@ -777,10 +777,22 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "historial-de-bancos-fusionados-cerrados-391a70",
+   "id": "historial-de-bancos-fusionados-o-cerrados-17a709",
    "origen": "explorador",
-   "sql": "SELECT codigo_institucion, nombre_fantasia, razon_social, estado FROM bancos_lista_entidades WHERE estado != 'Activo' ORDER BY estado, nombre_fantasia;",
-   "titulo": "Historial de Bancos Fusionados / Cerrados"
+   "sql": "SELECT codigo_institucion, rut_dv AS rut_completo, nombre_fantasia, razon_social, estado FROM bancos_lista_entidades WHERE estado IN ('Fusionado', 'Cerrado') ORDER BY estado, nombre_fantasia;",
+   "titulo": "Historial de bancos fusionados o cerrados"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "bancos_lista_entidades"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "agregados-sectoriales-de-la-cmf-65e87f",
+   "origen": "explorador",
+   "sql": "SELECT codigo_institucion, razon_social, tipo_licencia, estado FROM bancos_lista_entidades WHERE tipo_licencia = 'Agregado Sectorial' ORDER BY codigo_institucion;",
+   "titulo": "Agregados sectoriales de la CMF"
   },
   {
    "espera": {
@@ -789,10 +801,22 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "muestra-de-lineas-de-balance-b1-b2-sin-sumar-imp-1ec662",
+   "id": "total-de-activos-por-banco-ultimo-periodo-e55e00",
    "origen": "explorador",
-   "sql": "SELECT periodo, codigo_institucion, nombre_institucion_fuente, familia_archivo_fuente, modelo_cmf, codigo_cuenta, glosa_cuenta, rubro, linea, item, numero_fila_fuente, importes_fuente_raw FROM bancos_balance ORDER BY periodo DESC, codigo_institucion, familia_archivo_fuente, numero_fila_fuente LIMIT 100;",
-   "titulo": "Muestra de líneas de balance B1/B2 (sin sumar importes)"
+   "sql": "SELECT codigo_institucion, nombre_institucion_fuente, importe_clp FROM bancos_balance WHERE modelo_cmf = 'MB1' AND codigo_cuenta = '100000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_balance) ORDER BY importe_clp DESC;",
+   "titulo": "Total de activos por banco (último periodo)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "bancos_balance"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "muestra-de-lineas-de-balance-b1-b2-29bae7",
+   "origen": "explorador",
+   "sql": "SELECT periodo, codigo_institucion, nombre_institucion_fuente, familia_archivo_fuente, codigo_cuenta, glosa_cuenta, importe_clp, formato_monto_fuente, importes_fuente_raw, numero_fila_fuente FROM bancos_balance ORDER BY periodo DESC, codigo_institucion, familia_archivo_fuente, numero_fila_fuente LIMIT 100;",
+   "titulo": "Muestra de líneas de balance B1/B2"
   },
   {
    "espera": {
@@ -813,10 +837,22 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "muestra-de-lineas-de-resultados-r1-sin-sumar-imp-7560b4",
+   "id": "utilidad-del-ejercicio-por-banco-ultimo-periodo-7a75f4",
    "origen": "explorador",
-   "sql": "SELECT periodo, codigo_institucion, nombre_institucion_fuente, familia_archivo_fuente, modelo_cmf, codigo_cuenta, glosa_cuenta, rubro, linea, item, numero_fila_fuente, importes_fuente_raw FROM bancos_resultados ORDER BY periodo DESC, codigo_institucion, numero_fila_fuente LIMIT 100;",
-   "titulo": "Muestra de líneas de resultados R1 (sin sumar importes)"
+   "sql": "SELECT codigo_institucion, nombre_institucion_fuente, importe_clp FROM bancos_resultados WHERE codigo_cuenta = '590000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_resultados) ORDER BY importe_clp DESC;",
+   "titulo": "Utilidad del ejercicio por banco (último periodo)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "bancos_resultados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "muestra-de-lineas-de-resultados-r1-1c6b1f",
+   "origen": "explorador",
+   "sql": "SELECT periodo, codigo_institucion, nombre_institucion_fuente, codigo_cuenta, glosa_cuenta, importe_clp, formato_monto_fuente, importes_fuente_raw, numero_fila_fuente FROM bancos_resultados ORDER BY periodo DESC, codigo_institucion, numero_fila_fuente LIMIT 100;",
+   "titulo": "Muestra de líneas de resultados R1"
   },
   {
    "espera": {
@@ -1884,6 +1920,6 @@
  "contrato": "sif-api/consultas",
  "generado": "2026-10-23",
  "nota": "Salen de la propia web (sidebar.js e index.html); la auditoría las ejecuta contra los Parquet en cada CI.",
- "total": 156,
+ "total": 159,
  "version": "1.0.0"
 }

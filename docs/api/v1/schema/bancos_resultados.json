@@ -35,12 +35,18 @@
    "tipo_ts": "string"
   },
   {
+   "criterio_contable": "No aplica",
    "nombre": "rut",
+   "rol": "Atributo",
+   "significado": "RUT del banco como cuerpo sin dígito verificador (convención del proyecto); el DV está en bancos.lista_entidades.",
    "tipo": "VARCHAR",
    "tipo_ts": "string"
   },
   {
+   "criterio_contable": "No aplica",
    "nombre": "razon_social",
+   "rol": "Atributo",
+   "significado": "Razón social tomada del maestro de bancos por código de institución, no del encabezado del archivo.",
    "tipo": "VARCHAR",
    "tipo_ts": "string"
   },
@@ -171,6 +177,22 @@
    "significado": "Representación decimal exacta del importe, acumulado del ejercicio.",
    "tipo": "VARCHAR[]",
    "tipo_ts": "array"
+  },
+  {
+   "criterio_contable": "Acumulado del ejercicio (de enero al mes informado); para el mes suelto se resta el mes anterior del mismo año.",
+   "nombre": "importe_clp",
+   "rol": "Métrica",
+   "significado": "Importe de la línea en pesos, listo para sumar o graficar: el mismo valor de `importes_fuente_decimal` ya convertido a número.",
+   "tipo": "BIGINT",
+   "tipo_ts": "integer"
+  },
+  {
+   "criterio_contable": "No aplica",
+   "nombre": "formato_monto_fuente",
+   "rol": "Atributo",
+   "significado": "Formato del archivo fuente en esa fila: `decimal_coma` (15 dígitos con coma decimal, hasta 2024-05) o `entero_15` (15 dígitos enteros, desde 2024-06). El importe es el mismo en pesos.",
+   "tipo": "VARCHAR",
+   "tipo_ts": "string"
   },
   {
    "criterio_contable": "No aplica",
