@@ -301,6 +301,27 @@ def main() -> int:
         print(f"llms.txt: {len(cifras)} cifras y {len(enlaces)} rutas de api/v2 comprobadas"
               f"{'' if not rotos else f', {len(rotos)} rotas'}")
 
+    # 8. Ninguna pieza escribe a mano lo que cambia con cada publicación ------
+    # El 2026-10-23 el README del contrato publicaba `19.777.508 filas` y un
+    # `data_release` que ya no existían: el corte macro del día los había
+    # dejado atrás. Un número escrito a mano en la documentación es una
+    # afirmación que caduca sola, así que se prohíbe en las piezas que se leen
+    # como contrato (las notas fechadas sí pueden citar cifras: son historia).
+    release = catalogo.get("data_release", "")
+    piezas = [DOCS / "api" / "README.md", DOCS / "llms.txt", DOCS / "README.md"]
+    fijados = 0
+    for pieza in piezas:
+        if not pieza.exists():
+            continue
+        texto = pieza.read_text(encoding="utf-8")
+        for hallada in re.findall(r"\b20\d{2}-\d{2}-\d{2}\.[0-9a-f]{12}\b", texto):
+            if hallada != release:
+                problemas.append(f"{pieza.relative_to(DOCS)} fija a mano un data_release "
+                                 f"que ya no es el vigente ({hallada})")
+                fijados += 1
+    if not fijados:
+        print("Documentación: ninguna pieza fija a mano el data_release vigente")
+
     duracion = time.time() - t0
     for p in problemas[:20]:
         print(f"  [FALLA] {p}")
