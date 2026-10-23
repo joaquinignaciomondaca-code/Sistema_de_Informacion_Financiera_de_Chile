@@ -26,16 +26,24 @@ DOCS = RAIZ / "docs"
 
 
 def particiones(tabla: dict) -> list[Path]:
-    """Archivos Parquet del conjunto, según su manifiesto de particiones."""
-    manifiesto = tabla.get("files_manifest")
+    """Archivos Parquet del conjunto, según su manifiesto de particiones.
+
+    En `data_manifest.json` el manifiesto del conjunto puede venir en `files_manifest`
+    o, para las series por año o por mes, en `file_parquet` apuntando a un JSON.
+    """
     archivos: list[Path] = []
-    if manifiesto:
-        ruta = DOCS / manifiesto
-        if ruta.is_file():
+    candidatos = [tabla.get("files_manifest"), tabla.get("file_parquet")]
+    for candidato in candidatos:
+        if not candidato:
+            continue
+        ruta = DOCS / candidato
+        if ruta.suffix == ".json" and ruta.is_file():
             datos = json.loads(ruta.read_text(encoding="utf-8"))
             archivos = [DOCS / f for f in datos.get("files", [])]
-    if not archivos and tabla.get("file_parquet"):
-        archivos = [DOCS / tabla["file_parquet"]]
+        elif ruta.suffix == ".parquet":
+            archivos = [ruta]
+        if archivos:
+            break
     return [a for a in archivos if a.is_file()]
 
 

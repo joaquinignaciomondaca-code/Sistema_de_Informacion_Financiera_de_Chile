@@ -45,7 +45,6 @@ def verificar_filas(tabla, filas):
             "moneda_cmf",
             "tipo_entidad",
             "fuente_archivo",
-            "sha256_archivo",
             "fecha_inicio_contexto",
             "fecha_fin_contexto",
             "tipo_periodo",
@@ -95,8 +94,9 @@ def verificar_filas(tabla, filas):
             errores.append(f"{tabla}/{etiqueta}: tipo de fondo inválido")
         if not xml.ARCHIVO_RE.fullmatch(r.get("fuente_archivo") or ""):
             errores.append(f"{tabla}/{etiqueta}: falta archivo FIEF válido")
-        sha = r.get("sha256_archivo") or ""
-        if len(sha) != 64 or any(c not in "0123456789abcdef" for c in sha):
+        # La huella del XML ya no se publica; si un archivo viejo la trae, se valida.
+        sha = r.get("sha256_archivo")
+        if sha is not None and (len(sha) != 64 or any(c not in "0123456789abcdef" for c in sha)):
             errores.append(f"{tabla}/{etiqueta}: SHA-256 inválido")
         tipop = (
             "saldo"

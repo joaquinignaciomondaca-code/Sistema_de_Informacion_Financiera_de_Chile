@@ -145,14 +145,6 @@
    "significado": "Fecha y hora en que el fondo envió el archivo a la CMF (sale del nombre del archivo).",
    "tipo": "VARCHAR",
    "tipo_ts": "string"
-  },
-  {
-   "criterio_contable": "No aplica",
-   "nombre": "sha256_archivo",
-   "rol": "Atributo",
-   "significado": "Huella SHA-256 del XML, para detectar reenvíos.",
-   "tipo": "VARCHAR",
-   "tipo_ts": "string"
   }
  ],
  "contrato": "sif-api/esquema",

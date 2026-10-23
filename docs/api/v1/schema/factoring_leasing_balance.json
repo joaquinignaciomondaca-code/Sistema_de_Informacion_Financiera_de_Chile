@@ -132,14 +132,6 @@
   },
   {
    "criterio_contable": "No aplica",
-   "nombre": "sha256_archivo",
-   "rol": "Dimensión",
-   "significado": "Huella de la descarga usada.",
-   "tipo": "VARCHAR",
-   "tipo_ts": "string"
-  },
-  {
-   "criterio_contable": "No aplica",
    "nombre": "identidad_nombre_coincide_catalogo",
    "rol": "Dimensión",
    "significado": "Coincidencia de nombre normalizada; señal, no auditoría histórica.",
@@ -167,7 +159,6 @@
   "cuenta",
   "periodo",
   "fuente_archivo",
-  "sha256_archivo",
   "orden",
   "nombre_reportado"
  ],

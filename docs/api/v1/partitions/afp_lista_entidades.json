@@ -6,15 +6,15 @@
  "particiones": [
   {
    "archivo": "outputs/pensiones/afp_maestro_administradoras.parquet",
-   "bytes": 1825,
+   "bytes": 2880,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/pensiones/afp_maestro_administradoras.parquet",
    "periodo": "afp_maestro_administradoras",
-   "sha256": "c019198982b38813482bf9b95ff9f1918e63de1c6aa361000c3b5c7e04bb0669"
+   "sha256": "29889b0a8e7ada93f7939bd267ccc30e4b5243bdb6b8631a2035de4d895a5a4a"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 1825,
+  "bytes": 2880,
   "filas": 7
  },
  "version": "1.0.0"

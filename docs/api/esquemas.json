@@ -18,15 +18,8 @@
    "columnas": [
     {
      "criterio_contable": "No aplica",
-     "nombre": "id",
-     "rol": "PK",
-     "significado": "ID local de la administradora.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
      "nombre": "rut_administradora",
-     "rol": "Atributo",
+     "rol": "PK",
      "significado": "Cuerpo del RUT de la administradora (sin dígito verificador; Registro de Valores CMF para las altas automáticas).",
      "tipo": "VARCHAR"
     },
@@ -1648,13 +1641,6 @@
     },
     {
      "criterio_contable": "No aplica",
-     "nombre": "sha256_archivo",
-     "rol": "Dimensión",
-     "significado": "Huella de la descarga usada.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
      "nombre": "identidad_nombre_coincide_catalogo",
      "rol": "Dimensión",
      "significado": "Coincidencia de nombre normalizada; señal, no auditoría histórica.",
@@ -1989,13 +1975,6 @@
     },
     {
      "criterio_contable": "No aplica",
-     "nombre": "sha256_archivo",
-     "rol": "Dimensión",
-     "significado": "Huella de la descarga usada.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
      "nombre": "identidad_nombre_coincide_catalogo",
      "rol": "Dimensión",
      "significado": "Coincidencia de nombre normalizada; señal, no auditoría histórica.",
@@ -2146,13 +2125,6 @@
      "nombre": "enviado_cmf",
      "rol": "Atributo",
      "significado": "Fecha y hora en que el fondo envió el archivo a la CMF (sale del nombre del archivo).",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "sha256_archivo",
-     "rol": "Atributo",
-     "significado": "Huella SHA-256 del XML, para detectar reenvíos.",
      "tipo": "VARCHAR"
     }
    ],
@@ -2987,13 +2959,6 @@
      "rol": "Atributo",
      "significado": "Fecha y hora en que el fondo envió el archivo a la CMF (sale del nombre del archivo).",
      "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "sha256_archivo",
-     "rol": "Atributo",
-     "significado": "Huella SHA-256 del XML, para detectar reenvíos.",
-     "tipo": "VARCHAR"
     }
    ],
    "corte": "2010-12 a 2025-12",
@@ -3168,13 +3133,6 @@
      "nombre": "enviado_cmf",
      "rol": "Fecha",
      "significado": "Fecha/hora de envío leída del nombre del archivo; hora local declarada, sin inventar zona.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "sha256_archivo",
-     "rol": "Dato fuente",
-     "significado": "SHA-256 de los bytes originales del XML descargado.",
      "tipo": "VARCHAR"
     },
     {
@@ -4491,13 +4449,6 @@
      "nombre": "enviado_cmf",
      "rol": "Fecha",
      "significado": "Fecha/hora de envío leída del nombre del archivo; hora local declarada, sin inventar zona.",
-     "tipo": "VARCHAR"
-    },
-    {
-     "criterio_contable": "No aplica",
-     "nombre": "sha256_archivo",
-     "rol": "Dato fuente",
-     "significado": "SHA-256 de los bytes originales del XML descargado.",
      "tipo": "VARCHAR"
     },
     {
@@ -11635,7 +11586,7 @@
   }
  },
  "resumen": {
-  "columnas": 1481,
+  "columnas": 1474,
   "columnas_sin_documentar": 3,
   "columnas_sin_valores": 1,
   "con_esquema": 86,

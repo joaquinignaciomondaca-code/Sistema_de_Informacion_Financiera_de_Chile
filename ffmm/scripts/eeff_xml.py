@@ -304,9 +304,11 @@ def extraer(raiz: ET.Element, run: str, anio: int) -> dict:
 # Filas publicadas
 # ---------------------------------------------------------------------------
 
+# `sha256_archivo` no se publica: la huella del XML de origen sirve al pipeline para
+# detectar reediciones, no al lector del dato, y se repite en cada línea del cierre.
 COLUMNAS = ("periodo", "run_fondo", "run_fondo_dv", "nombre_fondo", "rut_agf", "razon_social_agf", "moneda",
             "moneda_cmf", "seccion", "tipo_linea", "orden", "codigo_cuenta", "cuenta", "nota", "valor_miles_mf",
-            "valor_anterior_miles_mf", "fuente_archivo", "enviado_cmf", "sha256_archivo")
+            "valor_anterior_miles_mf", "fuente_archivo", "enviado_cmf")
 
 
 def filas(reg: dict) -> dict[str, list[dict]]:
@@ -320,6 +322,6 @@ def filas(reg: dict) -> dict[str, list[dict]]:
             "seccion": seccion, "tipo_linea": tipo, "orden": orden, "codigo_cuenta": codigo, "cuenta": cuenta,
             "nota": (reg.get("notas") or {}).get(codigo), "valor_miles_mf": reg["actual"][codigo],
             "valor_anterior_miles_mf": (reg.get("anterior") or {}).get(codigo),
-            "fuente_archivo": reg["archivo"], "enviado_cmf": reg.get("enviado"), "sha256_archivo": reg["sha256"],
+            "fuente_archivo": reg["archivo"], "enviado_cmf": reg.get("enviado"),
         } for orden, codigo, cuenta, seccion, tipo in lineas]
     return out
