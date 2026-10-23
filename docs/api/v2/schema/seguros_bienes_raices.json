@@ -471,23 +471,9 @@
  "fuente": "CMF",
  "id": "seguros_bienes_raices",
  "licencia_estado": "verificada",
- "primaryKey": [
-  "tasacion_1_m_clp",
-  "tasacion_2_m_clp",
-  "costo_corregido_y_depreciado_m_clp",
-  "valor_final_m_clp",
-  "costo_actualizado_m_clp",
-  "depreciacion_acumulada_m_clp",
-  "property_id",
-  "valor_tasacion_construccion_m2_uf",
-  "deterioro_m_clp",
-  "valor_tasacion_terreno_m2_uf",
-  "codigo_nemotecnico",
-  "copropietaria",
-  "periodo"
- ],
+ "primaryKey": [],
  "sector": "seguros",
  "titulo": "B.4 BIENES RAICES",
  "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
- "version": "2.0.0"
+ "version": "2.0.1"
 }

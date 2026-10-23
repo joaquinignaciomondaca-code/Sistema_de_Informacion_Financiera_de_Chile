@@ -135,23 +135,9 @@
  "fuente": "CMF",
  "id": "seguros_control_inversiones",
  "licencia_estado": "verificada",
- "primaryKey": [
-  "valor_final_m_clp",
-  "inversiones_representativas_de_rt_pr_m_clp",
-  "total_valor_razonable_m_clp",
-  "total_costo_amortizado_m_clp",
-  "inversiones_no_representativas_de_rt_pr_m_clp",
-  "total_inst_otras_clasif_m_clp",
-  "total_efectivo_equivalente_m_clp",
-  "total_instrumento_s_cui_apv_m_clp",
-  "total_coligadas_m_clp",
-  "total_soc_filiales_m_clp",
-  "nombre_aseguradora",
-  "periodo",
-  "tipo_de_inversion"
- ],
+ "primaryKey": [],
  "sector": "seguros",
  "titulo": "B.8 INFORMACION DE CONTROL",
  "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html",
- "version": "2.0.0"
+ "version": "2.0.1"
 }
