@@ -99,7 +99,12 @@ check("el aspa tiene nombre accesible", /id="aviso-movil-aspa"[^>]*aria-label="[
 for (const [nombre, accion] of [
   ["«Entendido»", (w) => w.document.getElementById("aviso-movil-cerrar").click()],
   ["el aspa", (w) => w.document.getElementById("aviso-movil-aspa").click()],
-  ["Escape", (w) => w.document.dispatchEvent(new w.KeyboardEvent("keydown", { key: "Escape", bubbles: true }))],
+  ["Escape", (w) => {
+    // Escape sólo cierra la tarjeta si el foco está dentro: un Escape suelto es
+    // del explorador o de un modal y no debe llevarse el aviso por delante.
+    w.document.getElementById("aviso-movil-aspa").focus();
+    w.document.dispatchEvent(new w.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+  }],
 ]) {
   const { w, aviso } = montar({ ancho: 390 });
   accion(w);
@@ -109,7 +114,15 @@ for (const [nombre, accion] of [
     !w.document.body.classList.contains("sif-aviso-movil"));
 }
 
-// 5. Un descarte anterior se respeta ---------------------------------------
+// 5. Un Escape ajeno no se lleva la tarjeta ---------------------------------
+{
+  const { w, aviso } = montar({ ancho: 390 });
+  w.document.getElementById("main-content").focus();
+  w.document.dispatchEvent(new w.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+  check("un Escape con el foco fuera no cierra el aviso", aviso.hidden === false);
+}
+
+// 6. Un descarte anterior se respeta ---------------------------------------
 {
   const { aviso } = montar({ ancho: 390, descartado: true });
   check("si ya se cerró antes, no vuelve a aparecer", aviso.hidden === true);
