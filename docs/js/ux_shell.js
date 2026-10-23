@@ -302,7 +302,8 @@
       } catch (error) {
         /* almacenamiento bloqueado: se cierra igual en esta visita */
       }
-      const teniaFoco = aviso.contains(document.activeElement);
+      const activo = document.activeElement;
+      const teniaFoco = aviso.contains(activo) || !activo || activo === document.body;
       sincronizar();
       // El botón desaparece con el aviso: el foco no debe quedar en el vacío.
       if (teniaFoco) {
@@ -314,14 +315,14 @@
     if (boton) boton.addEventListener("click", cerrar);
     if (aspa) aspa.addEventListener("click", cerrar);
 
-    // Escape cierra mientras la tarjeta esté a la vista. Va en el documento y no
-    // en la tarjeta porque el foco suele estar en otra parte de la página.
+    // Escape cierra la tarjeta sólo si el foco está dentro de ella. Un Escape
+    // suelto pertenece a lo que el usuario esté usando —el explorador, un
+    // modal—: cerrar el aviso por un Escape ajeno sería quitarlo sin querer.
     document.addEventListener("keydown", (evento) => {
-      if (aviso.hidden) return;
-      if (evento.key === "Escape") {
-        evento.preventDefault();
-        cerrar();
-      }
+      if (aviso.hidden || evento.key !== "Escape") return;
+      if (!aviso.contains(document.activeElement)) return;
+      evento.preventDefault();
+      cerrar();
     });
 
     if (movil && movil.addEventListener) movil.addEventListener("change", sincronizar);
