@@ -1,5 +1,5 @@
 {
- "created": "2026-10-22T00:00:00",
+ "created": "2026-10-23T00:00:00",
  "description": "Datos financieros chilenos normalizados a Parquet desde fuentes públicas (CMF y Banco Central de Chile, entre otras), con esquema verificado y claves comprobadas sobre todas las filas publicadas.",
  "homepage": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile",
  "licenses": [
@@ -3603,10 +3603,10 @@
    "title": "corredoras.resultados"
   },
   {
-   "bytes": 534722,
+   "bytes": 536619,
    "description": "30,046 filas de cuentas ESF; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
    "format": "parquet",
-   "hash": "74f6b20e91e2687ee2c83a3944bd43f67a22cc33f5a605e3a651bd8f5a458ed2",
+   "hash": "37738f6e6c2d0c49941a5e9014ca983a2f5c2dc6cc675cdc5ff875989d2af5b0",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -3761,16 +3761,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 534722,
+      "bytes": 536619,
       "filas": 30046,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/factoring_leasing/factoring_leasing_balance_serie_ifrs_cmf.parquet",
-      "sha256": "975fe1b1071d256a8fffa2067cd5bbd2fa22b23809f53f4394260efa2323d085"
+      "sha256": "2b5c11c70f05d17eb2b595f6ad4b26575c003d47bcedd146f01cda3d610f1568"
      }
     ],
     "puente": "alias",
     "sector": "factoring_leasing",
     "sql_view": "factoring_leasing_balance",
-    "ultima_actualizacion": "2026-10-22",
+    "ultima_actualizacion": "2026-10-23",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -4007,10 +4007,10 @@
    "title": "factoring_leasing.lista_entidades"
   },
   {
-   "bytes": 331229,
+   "bytes": 330215,
    "description": "22,368 filas de cuentas ER; no son estados agregados. Monedas, taxonomías y tipo I/C separados; importes no enteros y repeticiones preservados. Sin conversión, deduplicación ni suma; cifras no cotejadas en su totalidad.",
    "format": "parquet",
-   "hash": "0d2467deeff3e1aedd2c035ef9c90dd8758d09d1400e7cd82ee98d465dfa1ede",
+   "hash": "a5c3d1ad4e3f79dad61bea940dc390d3d4cabbee92215d99da381deb6ee02776",
    "licenses": [
     {
      "name": "Datos de CMF: citar la fuente",
@@ -4168,16 +4168,16 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 331229,
+      "bytes": 330215,
       "filas": 22368,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/factoring_leasing/factoring_leasing_resultados_serie_ifrs_cmf.parquet",
-      "sha256": "0eb019cb70f9eae970593e38a9a1181dbf49fb83527696abf79db36bf02e4fe7"
+      "sha256": "45ff7f0f99e71295d07640597ea31de5acfadf4a5ac208d0e327d581cc63ed29"
      }
     ],
     "puente": "alias",
     "sector": "factoring_leasing",
     "sql_view": "factoring_leasing_resultados",
-    "ultima_actualizacion": "2026-10-22",
+    "ultima_actualizacion": "2026-10-23",
     "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
    },
    "sources": [
@@ -19323,7 +19323,7 @@
    "licencia": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md",
    "reconciliacion": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv"
   },
-  "data_release": "2026-10-22.5027fd71cbd7",
+  "data_release": "2026-10-23.a0734ca242e6",
   "espejo": "https://sistema-de-informacion-financiera-de-chile-docs.vercel.app",
   "filas_unicas": 19777508,
   "identificador": {
