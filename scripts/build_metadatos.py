@@ -58,9 +58,13 @@ def datos() -> dict:
 
 def descripcion(d: dict) -> str:
     """La frase que se lee en un resultado de búsqueda (≤ 160 caracteres)."""
-    texto = (f"{d['con_datos']} conjuntos de datos financieros públicos de Chile "
-             f"—bancos, seguros, fondos, cooperativas, fintech y macro—, "
-             f"{miles(d['filas'])} filas en Parquet, sin registro.")
+    # Sin contar conjuntos a propósito: la portada publica «74 conjuntos
+    # visibles» y el contrato 86 con datos, y las dos cifras son ciertas pero
+    # juntas se leen como una contradicción en un resultado de búsqueda.
+    millones = f"{d['filas'] / 1_000_000:.1f}".replace(".", ",")
+    texto = ("Datos financieros públicos de Chile —bancos, seguros, fondos, "
+             f"cooperativas, fintech y macro—: {millones} millones de filas en "
+             "Parquet y SQL, sin registro.")
     if len(texto) > 160:
         raise SystemExit(f"la meta description tiene {len(texto)} caracteres; el tope es 160")
     return texto
@@ -87,7 +91,7 @@ def bloque(d: dict, imagen_sha: str) -> str:
         '  <meta property="og:image:width" content="1200">',
         '  <meta property="og:image:height" content="630">',
         '  <meta property="og:image:alt" content="SIF — Sistema de Información Financiera de Chile: '
-        f'{d["objetos"]} objetos y {miles(d["filas"])} filas de datos financieros públicos.">',
+        f'{d["objetos"]} objetos con datos financieros públicos de Chile.">',
         f'  <meta property="og:image:secure_url" content="{img}">',
         # Huella del archivo: si la imagen cambia y no se regenera esto, --check lo dice.
         f'  <meta name="sif:og-image-sha256" content="{imagen_sha}">',
