@@ -47,7 +47,16 @@ python3 scripts/auditar_contrato.py       # audita el contrato     (~1 s)
 python3 scripts/probar_ejemplos.py        # ejemplos de Python y JS (~2 s)
 python3 scripts/test_contrato.py --autoprueba  # test del consumidor (~7 s)
 python3 scripts/auditar_mcp.py            # servidor MCP y presupuesto (~2 s)
+python3 scripts/build_estado_claves.py    # docs/js/estado_claves.js (Diccionario y visor)
+python3 scripts/build_og_image.py         # assets/og_sif_1200x630.png   (tarjeta social)
+python3 scripts/build_metadatos.py        # <head> social, robots.txt y sitemap.xml
+python3 scripts/construir_reproducibilidad.py  # docs/reproducibilidad/
 ```
+
+Los tres últimos existen para que la web no repita a mano lo que ya está medido:
+el estado de la clave de cada tabla sale de `claves.csv`, y la descripción y las
+cifras de la tarjeta social salen de `catalog.json`. Si se escribieran a mano,
+en dos releases dirían otra cosa.
 
 Y el CI falla si quedan desactualizados (`--check` en cada uno) o si algo del
 contrato deja de cumplirse.
