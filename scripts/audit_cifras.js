@@ -125,6 +125,36 @@ function main() {
     fallos.push(`millones(2.000.000) = «${A.millones(2_000_000)}»: una cifra exacta no lleva «más de»`);
   }
 
+  // 4. El README del repositorio tampoco puede prometer más de lo que hay -----
+  // El 2026-10-23 decía «75 tablas y 13,5 millones de filas» con 90 objetos y
+  // 19.777.517 filas: seis millones de filas de diferencia en la portada del
+  // repositorio. Las cifras del README se corrigen contra el catálogo y esta
+  // comprobación impide que vuelvan a quedarse atrás.
+  const readme = fs.readFileSync(path.join(RAIZ, "README.md"), "utf8");
+  const promesas = [...readme.matchAll(/(\d[\d.]*(?:,\d+)?)\s*(millones|M|mil)?\s*(?:de\s+)?filas/g)];
+  for (const [texto, cifra, escala] of promesas) {
+    const limpio = cifra.replace(/\./g, "").replace(",", ".");
+    const valor = escala === "millones" || escala === "M" ? parseFloat(limpio) * 1e6
+      : escala === "mil" ? parseFloat(limpio) * 1e3
+      : parseFloat(limpio);
+    if (Number.isFinite(valor) && valor > total) {
+      fallos.push(`README: «${texto}» declara ${valor} filas y el catálogo tiene ${total}`);
+    }
+  }
+  const totalFila = readme.match(/\|\s*\*\*Total\*\*\s*\|\s*\*\*(\d+)\*\*\s*\|\s*\*\*([\d.]+)\*\*/);
+  if (!totalFila) {
+    fallos.push("README: no se encontró la fila Total de la tabla de industrias");
+  } else {
+    const objetos = catalogo.alcance.orden.reduce((n, k) => n + catalogo.alcance.sectores[k].conjuntos, 0);
+    const filas = catalogo.alcance.orden.reduce((n, k) => n + catalogo.alcance.sectores[k].filas, 0);
+    if (Number(totalFila[1]) !== objetos) {
+      fallos.push(`README: la tabla suma ${totalFila[1]} objetos y el catálogo ${objetos}`);
+    }
+    if (Number(totalFila[2].replace(/\./g, "")) !== filas) {
+      fallos.push(`README: la tabla suma ${totalFila[2]} filas y el catálogo ${filas}`);
+    }
+  }
+
   if (fallos.length) {
     console.log("\nFALLOS:");
     fallos.forEach((f) => console.log(`  [FALLA] ${f}`));
@@ -136,7 +166,7 @@ function main() {
     `visible ${A.millones(catalogo.alcance.visible.filas)}`,
     `núcleo ${A.millones(catalogo.alcance.niveles.find((n) => n.id === "nucleo").filas)}`,
   ];
-  console.log(`\nCIFRAS: ${marcas.length} respaldos al día y ninguna cifra redondea al alza (${cifras.join(" · ")})`);
+  console.log(`\nCIFRAS: ${marcas.length} respaldos al día, el README cuadra con el catálogo y ninguna cifra redondea al alza (${cifras.join(" · ")})`);
   return 0;
 }
 

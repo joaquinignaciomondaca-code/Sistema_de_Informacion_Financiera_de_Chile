@@ -156,15 +156,27 @@ def audit_descargas(html):
 
 
 def audit_cache():
-    """Todos los archivos locales comparten una sola etiqueta de versión."""
+    """Todos los archivos locales comparten una sola etiqueta de versión.
+
+    Subirla es un paso manual y se olvidó una vez (2026-10-23: el mapa y las
+    cifras nuevos quedaron publicados detrás de la etiqueta anterior, y quien
+    hubiera entrado antes seguía viendo el JavaScript viejo). El chequeo vive en
+    `scripts/subir_etiqueta.py --check`, que además dice cuál es la etiqueta y
+    cuántos activos la llevan.
+    """
     print("\n--- 1d. Caché de los archivos locales ---")
-    texto = read("docs/index.html")
-    etiquetas = set(re.findall(r'(?:src|href)="(?:css|js)/[^"?]+\?v=([^"]+)"', texto))
-    if len(etiquetas) != 1:
-        fail(f"assets locales con {len(etiquetas)} etiquetas distintas: {', '.join(sorted(etiquetas))}")
+    check = subprocess.run(
+        [sys.executable, os.path.join(ROOT, "scripts/subir_etiqueta.py"), "--check"],
+        capture_output=True, text=True, cwd=ROOT)
+    salida = check.stdout.strip().splitlines()
+    if check.returncode == 0:
+        print(f"  [OK] {salida[-1]}")
         return
-    cuantos = len(re.findall(r'(?:src|href)="(?:css|js)/[^"?]+\?v=', texto))
-    print(f"  [OK] Los {cuantos} archivos locales usan la versión {etiquetas.pop()}")
+    for linea in salida:
+        if "[FALLA]" in linea:
+            fail(linea.strip())
+    if not any("[FALLA]" in linea for linea in salida):
+        fail("no se pudo comprobar la etiqueta de los activos")
 
 
 def audit_vocabulario():
