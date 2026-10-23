@@ -101,6 +101,19 @@ Los tres primeros puntos de la lista original ya están en el sitio publicado:
    identifica). Son tres: `fi_opciones`, `seguros_flujos_activos_elegibles` y
    `seguros_renta_fija`; el texto lo dice —«sirve para deduplicar, no identifica una
    posición»— y el badge aparece con borde punteado.
+7. **El párrafo de conteo, escrito al fin.** Las cuatro cifras ya no se restan a
+   mano porque cada una tiene nombre en el contrato: **90** objetos
+   (`totales.objetos`), **89** conjuntos en el explorador (74 visibles + 15 en
+   archivo y registro), **86** objetos con archivo publicado
+   (`totales.con_datos`) y **85** objetos con filas (`totales.con_filas`, campo
+   nuevo del contrato 2.1.0). La diferencia de uno es `fi_bienes_raices`, y la
+   decisión es **conservar su archivo vacío y declararlo**: la vista SQL
+   `fi_bienes_raices` se construye sobre ese Parquet, así que retirarlo dejaría
+   una vista rota o inexistente; y publicar el esquema con 0 filas es más
+   honesto que esconder que la fuente no ha informado cartera de bienes raíces
+   en seis años. El sitio no lo explica con una resta: dice «más de 19 millones
+   de filas» y el catálogo dice cuántos objetos tienen filas.
+
 3. **Vitrina social.** `scripts/build_metadatos.py` genera el `<head>` (description,
    `og:`, `twitter:`, `canonical`, huella del PNG), `robots.txt` y `sitemap.xml`;
    `scripts/build_og_image.py` compone `assets/og_sif_1200x630.png`. Los dos con `--check`
@@ -113,33 +126,4 @@ Los tres primeros puntos de la lista original ya están en el sitio publicado:
    HTTP; `views.sql` las concentra en una línea `SET VARIABLE sif_base`. Un dominio propio
    con `canonical` lo resolvería, y es una decisión del responsable.
 2. **Canal de derechos.** Hoy es un issue público. Decisión legal, no técnica.
-3. **Párrafo único de conteo.** No está escrito, y no por falta de tiempo: las cifras
-   ciertas que hay hoy **no cuadran entre sí** y hay que decidir qué se cuenta antes de
-   redactarlo.
-
-   | Cifra | Qué cuenta | Dónde se ve |
-   |---|---|---|
-   | **90** | objetos del contrato | `catalog.json`, `views.sql` como base de las vistas |
-   | **89** | conjuntos que muestra el explorador | 74 en la vista principal + 15 en Archivo y registros |
-   | **86** | objetos con al menos un archivo publicado | `totales.con_datos` |
-   | **85** | objetos con filas | sumado: 19.777.517 |
-
-   La diferencia de uno, repetida en tres lugares, es `fi_bienes_raices`: publica
-   `docs/outputs/fi/bienes_raices/_vacio.parquet` —**0 filas**, con las 15 columnas del
-   esquema y 26 periodos declarados en su manifiesto—, así que el catálogo la da por
-   `estado: "publicado"` y cuenta en «con datos», mientras que el Diccionario dice «sin
-   filas publicadas» y el explorador la oculta. Ninguna de las dos afirmaciones es falsa
-   por separado; juntas, obligan a un lector a hacer la resta.
-
-   Hay dos salidas y ninguna es cosmética:
-
-   * **Retirar el archivo vacío**: `fi_bienes_raices` pasa a ser el quinto objeto `vacio`,
-     `con_datos` baja a 85, las vistas SQL a 104 y hay que regenerar el contrato. Es el
-     camino coherente con los otros cuatro vacíos, que no publican archivo.
-   * **Declarar el vacío en el contrato**: conservar el archivo y añadir `filas: 0` como
-     criterio explícito de «sin datos» en `totales`, con lo que los cuatro números de la
-     tabla pasan a tener nombre propio y se pueden explicar en una frase.
-
-   Mientras no se decida, el sitio no publica el párrafo: escribirlo con las cifras de hoy
-   obligaría a explicar la resta, y explicar lo que no se publica es justo lo que el sitio
-   no hace.
+3. ~~**Párrafo único de conteo.**~~ Resuelto en §5.7.
