@@ -316,6 +316,63 @@ class EvidenceValidationTests(unittest.TestCase):
         self.assertTrue(analysis["needs_human_review"])
 
 
+class ListingRetryTests(unittest.TestCase):
+    """El origen puede caerse sin que el repositorio tenga nada roto.
+
+    El 2026-10-23 el listado de la CMF falló tres veces en 16 s y la corrida
+    quedó en rojo por una caída pasajera. Ahora la ventana de reintento es de
+    ~70 s, el fallo se anota con su causa y, pase lo que pase, no se publica un
+    «sin novedades» falso.
+    """
+
+    def test_reintenta_con_espera_creciente_y_falla_cerrado(self):
+        sesion = Mock()
+        respuesta = Mock()
+        respuesta.raise_for_status.side_effect = pipeline.requests.HTTPError("503")
+        sesion.get.return_value = respuesta
+
+        with patch("pipelines.normativa_cmf.pipeline.time.sleep") as sleep:
+            with self.assertRaises(pipeline.SourceUnavailable):
+                pipeline.fetch_listing(datetime(2026, 10, 1).date(), session=sesion)
+
+        self.assertEqual(sesion.get.call_count, 4)
+        self.assertEqual([c.args[0] for c in sleep.call_args_list], [10, 20, 40])
+
+    def test_se_recupera_cuando_un_intento_posterior_responde(self):
+        sesion = Mock()
+        caida = Mock()
+        caida.raise_for_status.side_effect = pipeline.requests.HTTPError("503")
+        buena = Mock()
+        buena.raise_for_status.return_value = None
+        buena.text = "<html></html>"
+        sesion.get.side_effect = [caida, buena]
+        filas = [{"id": "cmf-1", "title": "Circular N°1"}]
+
+        with (
+            patch("pipelines.normativa_cmf.pipeline.parse_listing", return_value=filas) as parse,
+            patch("pipelines.normativa_cmf.pipeline.time.sleep") as sleep,
+        ):
+            resultado = pipeline.fetch_listing(datetime(2026, 10, 1).date(), session=sesion)
+
+        self.assertEqual(resultado, filas)
+        self.assertEqual(sesion.get.call_count, 2)
+        self.assertEqual([c.args[0] for c in sleep.call_args_list], [10])
+        parse.assert_called_once_with(buena.text)
+
+    def test_en_actions_el_fallo_de_origen_se_anota(self):
+        with (
+            patch("pipelines.normativa_cmf.pipeline.run_pipeline",
+                  side_effect=pipeline.SourceUnavailable("No se pudo validar el listado CMF")),
+            patch.dict("os.environ", {"GITHUB_ACTIONS": "true"}),
+            patch("sys.stdout", new_callable=__import__("io").StringIO) as salida,
+        ):
+            codigo = pipeline.main([])
+
+        self.assertEqual(codigo, 1)
+        self.assertIn("::error title=CMF no disponible::", salida.getvalue())
+        self.assertIn("conserva la última revisión válida", salida.getvalue())
+
+
 class PdfExtractionTests(unittest.TestCase):
     def test_extracts_native_text_with_page_number(self):
         import fitz

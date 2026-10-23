@@ -327,7 +327,7 @@ def listing_params(start_date: date) -> dict[str, str]:
     }
 
 
-def fetch_listing(start_date: date, *, attempts: int = 3, session: requests.Session | None = None) -> list[dict[str, Any]]:
+def fetch_listing(start_date: date, *, attempts: int = 4, session: requests.Session | None = None) -> list[dict[str, Any]]:
     client = session or requests.Session()
     headers = {
         "User-Agent": USER_AGENT,
@@ -351,7 +351,10 @@ def fetch_listing(start_date: date, *, attempts: int = 3, session: requests.Sess
             last_error = exc
             LOGGER.warning("Consulta CMF intento %d/%d falló: %s", attempt, attempts, type(exc).__name__)
             if attempt < attempts:
-                time.sleep(min(5 * attempt, 15))
+                # Ventana de reintento de ~70 s: el 2026-10-23 el listado falló tres
+                # veces en 16 s y la corrida quedó en rojo por una caída pasajera.
+                # Sigue fallando cerrado: si el origen no responde, no se publica nada.
+                time.sleep(min(10 * 2 ** (attempt - 1), 60))
     raise SourceUnavailable(
         f"No se pudo validar el listado CMF luego de {attempts} intentos."
     ) from last_error
@@ -1246,6 +1249,15 @@ def main(argv: list[str] | None = None) -> int:
         )
     except (SourceUnavailable, requests.RequestException) as exc:
         LOGGER.error("Actualización cancelada sin publicar falsos 'sin novedades': %s", exc)
+        # En Actions la anotación hace legible el aspa roja sin abrir el registro:
+        # el fallo es de origen, no del repositorio, y el feed conserva su última
+        # revisión válida.
+        if os.environ.get("GITHUB_ACTIONS"):
+            print(
+                "::error title=CMF no disponible::"
+                f"{exc} No se publicó nada: el feed conserva la última revisión válida.",
+                flush=True,
+            )
         return 1
     return 0
 
