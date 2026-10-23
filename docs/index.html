@@ -46,7 +46,7 @@
         href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
-  <link rel="stylesheet" href="css/app.css?v=fl-20261023-2009-mapa-y-cifras">
+  <link rel="stylesheet" href="css/app.css?v=fl-20261023-2049-calidad-del-dato">
 
   <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
        Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
@@ -273,13 +273,14 @@
               <div class="info-hero-stats" aria-label="Cifras del núcleo de esta edición">
                 <div class="info-stat"><b data-alcance="nucleo.sectores">3</b><span>sectores de inversión institucional</span></div>
                 <div class="info-stat" title="Conjuntos del núcleo: seguros, fondos mutuos y fondos de inversión. La vista principal muestra 74 porque suma instituciones y contexto."><b data-alcance="nucleo.conjuntos">40</b><span>conjuntos del núcleo</span></div>
-                <div class="info-stat" title="Una fila es lo que la fuente reporta para una entidad en un periodo. Una misma entidad aparece en varias tablas y periodos: la suma de filas no cuenta entidades."><b data-alcance="nucleo.filas">más de 17 millones</b><span>de filas</span></div>
+                <div class="info-stat" title="Una fila es lo que la fuente reporta para una entidad en un periodo. Una misma entidad aparece en varias tablas y periodos: la suma de filas no cuenta entidades."><b data-alcance="nucleo.filas">más de 17 millones</b><span>de filas del núcleo</span></div>
                 <div class="info-stat" title="CMF (65 conjuntos), Banco Central de Chile (24) y Superintendencia de Pensiones (1). La SUSESO no entrega datos: aparece como regulador y enlace en el catálogo de cajas de compensación."><b>3</b><span>fuentes de datos</span></div>
               </div>
               <div class="info-hero-tags">
                 <span class="info-tag">Fuentes oficiales</span>
                 <span class="info-tag">Consultas SQL en el navegador</span>
                 <span class="info-tag">Parquet descargable</span>
+                <a class="info-tag info-tag-link" href="#calidad-titulo" title="Filas que la fuente publica repetidas: súmalas agrupando o la cifra se infla">Calidad medida: <b data-calidad="repetidas">230.288</b> filas repetidas en origen</a>
               </div>
             </section>
 
@@ -381,6 +382,34 @@
               <span data-alcance="fuera.resumen">7 industrias · 15 conjuntos · 0,5 % de las filas</span>: siguen publicados, consultables y descargables.
               <button type="button" class="info-link-btn info-link-btn-muted" data-portada="alcance">Qué publica esta edición</button>
             </p>
+
+            <section class="info-block info-calidad" aria-labelledby="calidad-titulo">
+              <div class="info-section-kicker">CALIDAD DEL DATO</div>
+              <h2 id="calidad-titulo">La fuente repite filas, y conviene saberlo antes de sumar</h2>
+              <p>En los archivos que las entidades envían a la CMF hay posiciones informadas más de una vez: la misma fila, con los mismos valores, en el mismo período. El sitio las publica tal como llegan —no las borra— y las mide sobre todas las filas para que nadie sume de más. <strong data-calidad="repetidas">230.288</strong> filas del catálogo son idénticas a otra fila del mismo objeto.</p>
+              <div class="info-hero-stats info-calidad-stats">
+                <div class="info-stat"><b data-calidad="repetidas">230.288</b><span>filas idénticas publicadas</span></div>
+                <div class="info-stat"><b data-calidad="objetos">22 de 90</b><span>objetos afectados</span></div>
+                <div class="info-stat" title="ffmm_cartera_nacional: la tabla con más filas repetidas del catálogo"><b data-calidad="peor">160.564</b><span>en un solo objeto: <code data-calidad="peor-objeto">ffmm_cartera_nacional</code> (<span data-calidad="peor-pct">10,1 %</span>)</span></div>
+                <div class="info-stat" title="Diferencia medida entre sumar la columna con las filas repetidas y sumarla sobre las filas distintas"><b data-calidad="sobreestima">9,7 %</b><span>de sobreestimación si sumas sin agrupar (<span data-calidad="ejemplo-periodo">2026-09</span>)</span></div>
+              </div>
+              <div class="info-calidad-grid">
+                <figure class="info-calidad-figure">
+                  <div id="calidad-chart" class="calidad-chart" hidden></div>
+                  <figcaption>Los seis objetos con más filas idénticas. Pasa el puntero por una barra para ver el conteo exacto.</figcaption>
+                </figure>
+                <div class="info-calidad-sql">
+                  <p>No hay que creerle a esta página: la medición se reproduce en la terminal, sobre los datos publicados.</p>
+                  <pre class="info-calidad-code"><code data-calidad-sql>-- ffmm_cartera_nacional, 2026-09: filas publicadas frente a filas distintas
+WITH crudo AS (SELECT * FROM ffmm_cartera_nacional WHERE periodo = '2026-09'),
+     mes   AS (SELECT DISTINCT * FROM crudo)
+SELECT (SELECT count(*) FROM crudo) AS filas,
+       (SELECT count(*) FROM mes)   AS distintas;</code></pre>
+                  <button type="button" class="info-calidad-run" data-calidad-ejecutar>Ejecutar en la terminal SQL</button>
+                </div>
+              </div>
+              <p class="info-calidad-foot">La medición completa —objeto por objeto, con el porcentaje y el ejemplo— está en el <a href="#dict-container" data-calidad-dict>Diccionario</a> y en <code>docs/api/claves.csv</code>. El criterio y las decisiones de publicación están en <a href="https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/docs/notas/claves_duplicados_2026-10-23.md" rel="noopener">la nota de claves</a>.</p>
+            </section>
 
             <section class="info-two-columns">
               <div class="info-block info-block-compact">
@@ -813,27 +842,28 @@ sif-mcp                       # stdio
        `python3 scripts/subir_etiqueta.py <motivo>` cuando cambia cualquier js/css:
        GitHub Pages cachea 10 minutos y, sin etiqueta nueva, quien ya entró sigue
        ejecutando el código viejo. `scripts/audit_interfaz.py` lo comprueba. -->
-  <script src="js/data_bundles.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/alcance.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/chart_renderer.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/erd_graph.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/sql_guard.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/duckdb_client.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/chat_terminal.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/busqueda_pregunta.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/sidebar.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/ux_shell.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/creditos.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/theme_switcher.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/estado_claves.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/data_dictionary.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/data_viewer.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/diccionario_seguros.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/download_utils.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/download_catalog.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/downloads_panel.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/portada.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/como_usar.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
+  <script src="js/data_bundles.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/alcance.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/chart_renderer.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/erd_graph.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/sql_guard.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/duckdb_client.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/chat_terminal.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/sidebar.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/ux_shell.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/creditos.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/theme_switcher.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/estado_claves.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/data_dictionary.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/data_viewer.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/download_utils.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/download_catalog.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/downloads_panel.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/portada.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/calidad_datos.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/como_usar.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {

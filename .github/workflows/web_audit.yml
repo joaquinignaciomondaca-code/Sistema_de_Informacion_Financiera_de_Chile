@@ -460,6 +460,13 @@ jobs:
           echo "::notice title=DOM::$(tail -n 1 dom.log)"
           exit $n
 
+      - name: 'Índice de notas: la puerta de entrada no puede quedarse atrás'
+        run: |
+          set +e
+          python3 scripts/build_indice_notas.py --check > notas.log 2>&1; n=$?
+          grep -h -E "INDICE-NOTAS" notas.log | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Índice de notas::$linea"; done
+          exit $n
+
       - name: 'Mapa relacional: los títulos caben y ninguna tarjeta se solapa'
         run: |
           set +e
