@@ -2,7 +2,8 @@
 
 **Fecha:** 2026-10-23
 **Alcance:** `scripts/verificar_claves.py`, `docs/api/claves.csv` y el contrato `docs/api/v2/`.
-**Estado:** corregido en la versión 2.0.1 del contrato; publicado en 2.0.0 hasta el
+**Estado:** corregido en la versión 2.0.1 del contrato (hoy el contrato va en 2.1.0,
+que sólo añade `totales.con_filas`); publicado en 2.0.0 hasta el
 despliegue.
 
 ---
