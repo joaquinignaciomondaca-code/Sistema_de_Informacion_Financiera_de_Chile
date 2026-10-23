@@ -8,9 +8,9 @@ el repo:
     docs/api/v2/catalog.json            el índice: 90 objetos con estado, tamaño y clave
     docs/api/v2/schema/{id}.json        columnas y tipos de cada objeto
     docs/api/v2/partitions/{id}.json    qué archivos lo componen, con su hash
-    docs/api/v2/queries.json            las 156 consultas de la web, con id estable
+    docs/api/v2/queries.json            las 159 consultas de la web, con id estable
     docs/api/v2/openapi.json            sólo las rutas GET que existen de verdad
-    docs/api/v2/views.sql               las 109 vistas (90 objetos + 19 alias)
+    docs/api/v2/views.sql               las 105 vistas (86 con datos + 19 alias)
     docs/api/v2/resultados/{id}.json    lo que devuelve cada consulta (fase 3); lo
                                         escribe build_resultados.py, que corre después
 
@@ -39,15 +39,18 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parent.parent
 DOCS = RAIZ / "docs"
 API = DOCS / "api"
-V2 = API / "v2"
 sys.path.insert(0, str(RAIZ))
 sys.path.insert(0, str(RAIZ / "scripts"))
+
+from version_contrato import API_VERSION, VERSION_CONTRATO  # noqa: E402
+
+V2 = API / API_VERSION
 
 import audit_consultas_sugeridas as ac  # noqa: E402
 from pipelines.api import fuentes as F  # noqa: E402
 from pipelines.api import vistas as V  # noqa: E402
 
-VERSION = "1.0.0"
+VERSION = VERSION_CONTRATO
 # Decisión D1: la API se publica en GitHub Pages y Vercel redirige /api/* allí.
 # Todo el contrato usa esta base absoluta; `--base` existe para generar una
 # copia apuntando a un espejo o a una ruta local.
@@ -294,7 +297,7 @@ def construir_openapi(catalogo: list[dict], n_consultas: int, base: str,
                                     "schema": {"type": "string", "enum": ids_consultas or []}}],
                     "responses": json_resp("Resultado de la consulta")}},
         "/api/v2/views.sql": {
-            "get": {"operationId": "getVistas", "summary": "DDL de las 109 vistas (90 objetos + 19 alias)",
+            "get": {"operationId": "getVistas", "summary": "DDL de las 105 vistas (86 con datos + 19 alias)",
                     "tags": ["contrato"],
                     "responses": {"200": {"description": "SQL", "content": {"text/plain": {"schema": {"type": "string"}}}}}}},
         "/api/reconciliacion.csv": {
@@ -408,7 +411,7 @@ def main() -> int:
     doc_catalogo = {
         "contrato": "sif-api/catalogo",
         "version": VERSION,
-        "api_version": "v2",
+        "api_version": API_VERSION,
         "data_release": data_release,
         "generado": date.today().isoformat(),
         "como_se_genera": "python3 scripts/build_contrato.py",

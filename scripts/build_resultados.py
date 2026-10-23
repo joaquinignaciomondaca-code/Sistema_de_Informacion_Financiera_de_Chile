@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Publica el resultado de las 156 consultas como JSON estático (fase 3 de la ruta).
+"""Publica el resultado de las 159 consultas como JSON estático (fase 3 de la ruta).
 
 El SQL remoto de verdad —un DuckDB servido con Quack— necesita una máquina que
 atienda conexiones, y este sitio es estático: GitHub Pages sirve archivos y no
@@ -14,10 +14,10 @@ Con eso, quien no quiere bajar 500 MB de Parquet (una planilla, un R, un agente
 sin DuckDB) obtiene el número con un `curl` a una URL estable, y el resultado
 lleva dentro su `data_release` para poder citarlo.
 
-Medido sobre la edición 2026-10-22: 156 consultas en 2,1 s y ~700 KB en total.
+Medido sobre la edición 2026-10-23: 159 consultas en ~2 s y ~806 KB en total.
 
 Uso:
-    python3 scripts/build_resultados.py             # escribe los 156 archivos
+    python3 scripts/build_resultados.py             # escribe los 159 archivos
     python3 scripts/build_resultados.py --check     # falla si están atrasados
 """
 from __future__ import annotations
@@ -32,7 +32,11 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 DOCS = RAIZ / "docs"
-V2 = DOCS / "api" / "v2"
+sys.path.insert(0, str(RAIZ / "scripts"))
+
+from version_contrato import API_VERSION, VERSION_CONTRATO  # noqa: E402
+
+V2 = DOCS / "api" / API_VERSION
 SALIDA = V2 / "resultados"
 
 BASE = "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile"
@@ -114,7 +118,7 @@ def construir() -> tuple[dict[str, str], dict]:
 
     resumen = {
         "contrato": "sif-api/resultados",
-        "version": "1.0.0",
+        "version": VERSION_CONTRATO,
         "base": BASE,
         "data_release": catalogo["data_release"],
         "generado": catalogo["generado"],
@@ -124,7 +128,7 @@ def construir() -> tuple[dict[str, str], dict]:
         "truncadas": sum(1 for i in indice if i["truncado"]),
         "max_filas": MAX_FILAS,
         "nota": ("Resultados calculados en el build sobre el mismo Parquet que publica el "
-                 "sitio. No es SQL arbitrario: son las 156 consultas del catálogo, cada una "
+                 "sitio. No es SQL arbitrario: son las 159 consultas del catálogo, cada una "
                  "con su SQL a la vista para poder reproducirla o discutirla."),
         "como_se_genera": "python3 scripts/build_resultados.py",
         "consultas": indice,
