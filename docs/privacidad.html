@@ -80,7 +80,7 @@
         </tr>
         <tr>
           <td><code>seguros_bienes_raices</code></td>
-          <td>233 tasadores</td>
+          <td>317 nombres de tasadores (233 en la tasación 1 y 263 en la 2)</td>
           <td>Nombre del tasador, tal como consta en la Circular 1835</td>
           <td>Declaración de cartera de las aseguradoras a la CMF</td>
         </tr>
@@ -100,8 +100,21 @@
       que permite seguir el mismo bien entre meses.</li>
       <li><strong>RUT de personas naturales en carteras.</strong> En <code>fi_cartera_nacional</code> se
       suprime el RUT del emisor cuando probablemente corresponde a una persona natural y se agrega
-      <code>emisor_tipo</code> con el criterio aplicado.</li>
+      <code>emisor_tipo</code> con el criterio aplicado: 202.835 filas y 31.215 RUT distintos, que no
+      reaparecen en ningún otro objeto del catálogo. Contrastado con registros públicos, el criterio
+      alcanza a personas naturales identificables, no a entidades.</li>
+      <li><strong>Seguir al emisor sin publicar su RUT.</strong> <code>rut_emisor</code> no se vacía:
+      se sustituye. Trae el RUT cuando el emisor es una persona jurídica y un seudónimo estable con
+      prefijo <code>EMI-</code> cuando es una persona natural, de modo que se puede sumar su
+      exposición, seguir su serie y medir concentración sin revelar su identidad. La columna
+      <code>rut_omitido_por_ley</code> dice cuál de los dos casos es, y el prefijo impide que un
+      seudónimo se confunda con un RUT. Es seudonimización, no anonimización: el vínculo con el RUT
+      vive en una tabla privada que no se publica.</li>
     </ul>
+    <p>El criterio de persona natural se aplica a las <strong>94 columnas de RUT</strong> del catálogo,
+    no sólo a la cartera de fondos: la compuerta de privacidad falla si algún objeto empieza a publicar
+    RUT de personas sin que la decisión esté declarada. La columna <code>rut_omitido_por_ley</code> sólo
+    existe donde hay algo que omitir; repetirla en las demás tablas la dejaría constante en falso.</p>
     <p>Las reglas viven en <code>pipelines/auto/privacidad.py</code> y se aplican antes de publicar;
     <code>scripts/enmascarar_identificadores.py</code> las aplica a lo ya publicado.</p>
 

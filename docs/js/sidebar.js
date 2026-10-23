@@ -1162,6 +1162,11 @@ class SidebarController {
     this.searchInput = document.getElementById("sidebar-search");
     this.toggleBtn = document.getElementById("toggle-sidebar");
     this.breadcrumbEl = document.getElementById("erd-breadcrumb");
+    // En celular el explorador no cabe al lado del contenido: pasa a ser un
+    // cajón superpuesto que arranca cerrado. `movil` es la misma consulta que
+    // usa el CSS (900 px) para que no se desincronicen.
+    this.movil = window.matchMedia ? window.matchMedia("(max-width: 900px)") : null;
+    this.backdrop = document.getElementById("sidebar-backdrop");
 
     this.selectedTableId = "seguros_lista_entidades";
     this.activeSector = "seguros";
@@ -1174,15 +1179,74 @@ class SidebarController {
     this.initEvents();
   }
 
+  esMovil() {
+    return Boolean(this.movil && this.movil.matches);
+  }
+
+  /* Refleja el estado del cajón en el fondo, en el botón y en el resto del
+   * layout. Es el único lugar que toca las tres cosas: antes cada quien
+   * agregaba o quitaba `collapsed` por su cuenta. */
+  sincronizarCajon() {
+    const abierto = !this.sidebar.classList.contains("collapsed");
+    if (this.backdrop) this.backdrop.hidden = !(this.movil && this.movil.matches && abierto);
+    if (this.toggleBtn) this.toggleBtn.setAttribute("aria-expanded", String(abierto));
+    // Fuera de pantalla el árbol no debe recibir el foco del teclado: `inert`
+    // lo saca del recorrido sin ocultarlo del lector de pantalla cuando está
+    // abierto. Se aplica sólo en celular; en escritorio la barra es visible.
+    const inerte = this.esMovil() && !abierto;
+    this.sidebar.setAttribute("aria-hidden", String(inerte));
+    if ("inert" in this.sidebar) this.sidebar.inert = inerte;
+  }
+
+  abrirCajon() {
+    this.sidebar.classList.remove("collapsed");
+    this.sincronizarCajon();
+    setTimeout(() => {
+      const erd = mapaERD();
+      if (erd) erd.resize();
+    }, 300);
+  }
+
+  cerrarCajon() {
+    this.sidebar.classList.add("collapsed");
+    this.sincronizarCajon();
+    setTimeout(() => {
+      const erd = mapaERD();
+      if (erd) erd.resize();
+    }, 300);
+  }
+
   initEvents() {
+    if (this.esMovil()) this.sidebar.classList.add("collapsed");
+    this.sincronizarCajon();
+
     if (this.toggleBtn) {
       this.toggleBtn.addEventListener("click", () => {
-        this.sidebar.classList.toggle("collapsed");
-        setTimeout(() => {
-          const erd = mapaERD();
-          if (erd) erd.resize();
-        }, 300);
+        if (this.sidebar.classList.contains("collapsed")) this.abrirCajon();
+        else this.cerrarCajon();
       });
+    }
+
+    if (this.backdrop) {
+      this.backdrop.addEventListener("click", () => this.cerrarCajon());
+    }
+
+    // Escape cierra el cajón: en un teléfono con teclado externo, y en el
+    // emulador, es la salida que la gente espera.
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && this.esMovil() && !this.sidebar.classList.contains("collapsed")) {
+        this.cerrarCajon();
+      }
+    });
+
+    if (this.movil) {
+      const alCambiar = () => {
+        if (this.esMovil()) this.sidebar.classList.add("collapsed");
+        else this.sidebar.classList.remove("collapsed");
+        this.sincronizarCajon();
+      };
+      if (this.movil.addEventListener) this.movil.addEventListener("change", alCambiar);
+      else if (this.movil.addListener) this.movil.addListener(alCambiar);
     }
 
     if (this.searchInput) {
@@ -1573,8 +1637,7 @@ class SidebarController {
 
   mostrarBarra() {
     if (this.sidebar && this.sidebar.classList.contains("collapsed")) {
-      this.sidebar.classList.remove("collapsed");
-      setTimeout(() => { const erd = mapaERD(); if (erd) erd.resize(); }, 300);
+      this.abrirCajon();
     }
   }
 
@@ -1852,6 +1915,10 @@ class SidebarController {
   onTableSelect(tableId, tableName, file, sector) {
     this.selectedTableId = tableId;
     this.setActiveSector(sector, "table");
+
+    // En celular el árbol tapa el contenido: al elegir una tabla se cierra para
+    // que la selección se vea en el visor.
+    if (this.esMovil()) this.cerrarCajon();
 
     // Actualizar clase seleccionada en la fila del arbol
     document.querySelectorAll(".tree-table").forEach((el) => {

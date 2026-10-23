@@ -182,7 +182,12 @@ def esquema(tabla: str) -> pa.Schema:
     if tabla in TABLAS_CON_EMISOR_PROTEGIDO:
         # «emisor_tipo» documenta el criterio aplicado sobre rut_emisor
         # (persona_juridica / persona_natural_probable / sin_rut_informado).
+        # «rut_omitido_por_ley» distingue los dos contenidos de rut_emisor: el RUT
+        # de una persona jurídica y el seudónimo «EMI-…» que reemplaza al de una
+        # persona natural. Ambas columnas las agrega
+        # privacidad.proteger_cartera_nacional.
         cols.append(("emisor_tipo", pa.string()))
+        cols.append((privacidad.COLUMNA_RUT_OMITIDO, pa.bool_()))
     return pa.schema(cols)
 
 

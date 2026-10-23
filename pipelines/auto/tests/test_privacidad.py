@@ -115,14 +115,64 @@ class DataFrameTest(unittest.TestCase):
     def test_proteger_cartera_nacional(self):
         df = self.pd.DataFrame({"rut_emisor": ["76015592", "15273263", None], "periodo": ["2026-06"] * 3})
         out = privacidad.proteger_cartera_nacional(df, {"76015592"})
-        # pandas representa el valor suprimido como NaN; al escribir el Parquet
-        # vuelve a ser nulo, porque el esquema declara la columna como string.
+        # El RUT suprimido se sustituye por el seudónimo del emisor; el valor
+        # vacío sigue siendo nulo.
         rut = out["rut_emisor"].tolist()
         self.assertEqual(rut[0], "76015592")
-        self.assertTrue(self.pd.isna(rut[1]), f"se esperaba RUT suprimido, llegó {rut[1]!r}")
+        self.assertTrue(privacidad.es_seudonimo(rut[1]), f"se esperaba un EMI-, llegó {rut[1]!r}")
         self.assertTrue(self.pd.isna(rut[2]), f"se esperaba nulo, llegó {rut[2]!r}")
         self.assertEqual(out["emisor_tipo"].tolist(),
                          [privacidad.TIPO_JURIDICA, privacidad.TIPO_NATURAL, privacidad.TIPO_SIN_RUT])
+
+    def test_seudonimo_estable_y_opaco(self):
+        # Mismo RUT, mismo id: así se sigue al emisor entre trimestres y fondos.
+        self.assertEqual(privacidad.seudonimo_emisor("8674048"), privacidad.seudonimo_emisor("8674048"))
+        self.assertNotEqual(privacidad.seudonimo_emisor("8674048"), privacidad.seudonimo_emisor("8674049"))
+        self.assertIsNone(privacidad.seudonimo_emisor(None))
+        self.assertIsNone(privacidad.seudonimo_emisor(""))
+        # Con sal, el id deja de ser reproducible por terceros.
+        self.assertNotEqual(privacidad.seudonimo_emisor("8674048"),
+                            privacidad.seudonimo_emisor("8674048", "sal-privada"))
+
+    def test_un_solo_identificador_en_rut_emisor(self):
+        df = self.pd.DataFrame({"rut_emisor": ["76015592", "15273263", None]})
+        fuera = privacidad.proteger_cartera_nacional(df, {"76015592"}, modo="suprimir")
+        rut = fuera["rut_emisor"].tolist()
+        # La persona jurídica conserva su RUT; la natural recibe un seudónimo con
+        # prefijo, para que no se confunda con un RUT; sin RUT queda nulo.
+        self.assertEqual(rut[0], "76015592")
+        self.assertTrue(privacidad.es_seudonimo(rut[1]), f"se esperaba un EMI-, llegó {rut[1]!r}")
+        self.assertTrue(self.pd.isna(rut[2]))
+        # Invariante: la bandera dice exactamente cuál de los dos contenidos es.
+        self.assertEqual([privacidad.es_seudonimo(v) for v in rut],
+                         fuera["rut_omitido_por_ley"].tolist())
+        self.assertEqual(fuera["emisor_tipo"].tolist(),
+                         [privacidad.TIPO_JURIDICA, privacidad.TIPO_NATURAL, privacidad.TIPO_SIN_RUT])
+        # Una sola columna: no se publica un identificador paralelo.
+        self.assertNotIn("emisor_id", fuera.columns)
+
+        dentro = privacidad.proteger_cartera_nacional(df, {"76015592"}, modo="publicar")
+        self.assertEqual(dentro["rut_emisor"].tolist()[:2], ["76015592", "15273263"])
+        self.assertEqual(dentro["rut_omitido_por_ley"].tolist(), [False, False, False])
+
+    def test_el_seudonimo_es_estable_entre_corridas(self):
+        unico = self.pd.DataFrame({"rut_emisor": ["15273263"]})
+        otro = self.pd.DataFrame({"rut_emisor": ["15273263", "15273263"]})
+        a = privacidad.proteger_cartera_nacional(unico, set())["rut_emisor"].tolist()[0]
+        b = privacidad.proteger_cartera_nacional(otro, set())["rut_emisor"].tolist()[0]
+        self.assertEqual(a, b)
+
+    def test_modo_por_variable_de_entorno(self):
+        import os
+        from unittest import mock
+        with mock.patch.dict(os.environ, {}, clear=False):
+            os.environ.pop("SIF_PUBLICAR_RUT_EMISOR", None)
+            self.assertEqual(privacidad.modo_publicacion_rut(), privacidad.MODO_SUPRIMIR)
+            os.environ["SIF_PUBLICAR_RUT_EMISOR"] = "publicar"
+            self.assertEqual(privacidad.modo_publicacion_rut(), privacidad.MODO_PUBLICAR)
+            os.environ["SIF_PUBLICAR_RUT_EMISOR"] = "otra-cosa"
+            with self.assertRaises(ValueError):
+                privacidad.modo_publicacion_rut()
 
     def test_proteger_bienes_raices_quita_direccion_y_rol(self):
         df = self.pd.DataFrame({

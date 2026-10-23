@@ -511,6 +511,7 @@ const ERD_TABLES = [
       { name: "nemotecnico", type: "VARCHAR" },
       { name: "rut_emisor", type: "VARCHAR" },
       { name: "emisor_tipo", type: "VARCHAR" },
+      { name: "rut_omitido_por_ley", type: "BOOLEAN" },
       { name: "tipo_instrumento", type: "VARCHAR" },
       { name: "valorizacion_miles_mf", type: "DOUBLE" }
     ]
@@ -2339,8 +2340,37 @@ class ERDGraph {
       this.zoom(zoomFactor, e.clientX, e.clientY);
     });
 
-    // Mouse events para Pan y Arrastre de Nodos
-    this.canvas.addEventListener("mousedown", (e) => {
+    /* Pan, arrastre de nodos y pellizco.
+     *
+     * Antes sólo había mousedown/mousemove/wheel: en un teléfono el mapa no se
+     * podía mover ni ampliar, que es justo lo que se hace con un grafo. Se usan
+     * Pointer Events, que cubren ratón, dedo y lápiz con el mismo código, y se
+     * añade el pellizco de dos dedos. El arrastre con ratón mantiene su
+     * comportamiento: los botones laterales no cuentan.
+     */
+    const punteros = new Map();
+    let pellizco = null;
+
+    const distancia = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
+    const medio = (a, b) => ({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
+
+    this.canvas.addEventListener("pointerdown", (e) => {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      if (this.canvas.setPointerCapture) {
+        try { this.canvas.setPointerCapture(e.pointerId); } catch (_) { /* puntero ya liberado */ }
+      }
+      punteros.set(e.pointerId, { x: e.clientX, y: e.clientY });
+      this.arrastro = false;
+      this.downAt = { x: e.clientX, y: e.clientY };
+
+      if (punteros.size === 2) {
+        const [a, b] = Array.from(punteros.values());
+        pellizco = { distancia: distancia(a, b), medio: medio(a, b) };
+        this.isDragging = false;
+        this.activeNode = null;
+        return;
+      }
+
       const pos = this.getCanvasCoords(e);
       this.activeNode = this.getNodeAt(pos.x, pos.y);
 
@@ -2355,9 +2385,45 @@ class ERDGraph {
       }
     });
 
-    this.canvas.addEventListener("mousemove", (e) => {
-      const pos = this.getCanvasCoords(e);
+    this.canvas.addEventListener("pointermove", (e) => {
+      const puntero = punteros.get(e.pointerId);
+      if (!puntero) {
+        // Sin puntero activo sólo hay hover, y el hover es cosa del ratón.
+        if (e.pointerType !== "mouse") return;
+        const pos = this.getCanvasCoords(e);
+        const hover = this.getNodeAt(pos.x, pos.y);
+        if (hover !== this.hoveredNode) {
+          this.hoveredNode = hover;
+          this.canvas.style.cursor = hover ? "pointer" : "grab";
+          this.render();
+        }
+        return;
+      }
 
+      puntero.x = e.clientX;
+      puntero.y = e.clientY;
+
+      if (punteros.size === 2 && pellizco) {
+        const [a, b] = Array.from(punteros.values());
+        const ahora = medio(a, b);
+        const factor = distancia(a, b) / (pellizco.distancia || 1);
+        if (Number.isFinite(factor) && factor > 0) {
+          this.zoom(factor, ahora.x, ahora.y);
+        }
+        // El punto medio también desplaza: pellizcar y arrastrar a la vez.
+        this.offsetX += ahora.x - pellizco.medio.x;
+        this.offsetY += ahora.y - pellizco.medio.y;
+        pellizco = { distancia: distancia(a, b), medio: ahora };
+        this.render();
+        return;
+      }
+
+      // 6 px de tolerancia: el temblor del dedo no debe anular el toque.
+      if (this.downAt && Math.hypot(e.clientX - this.downAt.x, e.clientY - this.downAt.y) > 6) {
+        this.arrastro = true;
+      }
+
+      const pos = this.getCanvasCoords(e);
       if (this.activeNode) {
         this.activeNode.x = pos.x - this.activeNode._dragOffset.x;
         this.activeNode.y = pos.y - this.activeNode._dragOffset.y;
@@ -2366,23 +2432,39 @@ class ERDGraph {
         this.offsetX = e.clientX - this.dragStart.x;
         this.offsetY = e.clientY - this.dragStart.y;
         this.render();
-      } else {
-        const hover = this.getNodeAt(pos.x, pos.y);
-        if (hover !== this.hoveredNode) {
-          this.hoveredNode = hover;
-          this.canvas.style.cursor = hover ? "pointer" : "grab";
-          this.render();
-        }
       }
     });
 
-    window.addEventListener("mouseup", () => {
-      this.isDragging = false;
-      this.activeNode = null;
+    const soltar = (e) => {
+      punteros.delete(e.pointerId);
+      if (this.canvas.releasePointerCapture) {
+        try { this.canvas.releasePointerCapture(e.pointerId); } catch (_) { /* ya liberado */ }
+      }
+      if (punteros.size < 2) pellizco = null;
+      if (punteros.size === 0) {
+        this.isDragging = false;
+        this.activeNode = null;
+      }
+    };
+
+    this.canvas.addEventListener("pointerup", soltar);
+    this.canvas.addEventListener("pointercancel", soltar);
+    this.canvas.addEventListener("pointerleave", (e) => {
+      if (e.pointerType === "mouse" && punteros.size === 0) {
+        this.hoveredNode = null;
+        this.canvas.style.cursor = "grab";
+        this.render();
+      }
     });
 
-    // Clic en tabla -> Seleccionar para consulta
+    // Clic en tabla -> Seleccionar para consulta. Después de arrastrar, el
+    // navegador igual dispara `click`: se descarta para no cambiar de tabla sin
+    // querer al mover el mapa con el dedo.
     this.canvas.addEventListener("click", (e) => {
+      if (this.arrastro) {
+        this.arrastro = false;
+        return;
+      }
       const pos = this.getCanvasCoords(e);
       const clickedNode = this.getNodeAt(pos.x, pos.y);
       if (clickedNode) {

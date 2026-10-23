@@ -26,6 +26,17 @@ exigen autorización escrita ni limitan el uso a fines de investigación.
 | **BCCh** — Banco Central de Chile | 24 | Series macro: dólar, cobre, tasas, curvas de bonos, deuda pública, expectativas de inflación | [Términos y Condiciones de la API BDE](https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm): «Está permitido consultar, reproducir, difundir, publicar o adaptar la información contenida en la BDE, mencionando en todo momento que ella es propiedad del Banco» | Citar que la información es propiedad del Banco; declarar las adaptaciones; máximo 5 series por segundo | `verificada` |
 | **SPensiones** — Superintendencia de Pensiones | 1 | Listado de administradoras de fondos de pensiones (7 filas de identidad) | [Descargo de responsabilidades](https://www.spensiones.cl/portal/institucional/594/w3-article-5885.html): «autoriza la utilización o reproducción total o parcial de la información contenida en este sitio, en citas o comentarios indicando su fuente» | Mencionar la fuente | `verificada` |
 
+### Alcance de la autorización de la CMF
+
+El descargo de la CMF autoriza la «reproducción total o parcial» de la
+información de su sitio citando la fuente; no limita el volumen, el formato ni
+el número de descargas. Sobre esa base se republican archivos regulatorios
+completos —la cartera mensual de seguros de la Circular 1835, por ejemplo— en
+Parquet, CSV y Excel. Esta es la lectura del proyecto y no constituye una
+opinión jurídica: si la fuente cambiara sus términos o exigiera una autorización
+previa para la redistribución masiva, el objeto afectado se retiraría o se
+restringiría su descarga.
+
 ### Lo que no se publica, y por qué
 
 - **Base de Cartera de los Fondos de Pensiones (SPensiones).** Su manual declara:
@@ -53,8 +64,10 @@ de este proyecto.
 ## Datos personales
 
 El proyecto publica datos de personas naturales en tres conjuntos: 36 personas
-naturales del registro fintech, 11 corredores inscritos a nombre de persona y 233
-tasadores. El tratamiento, la base de licitud, los derechos del titular y el
+naturales del registro fintech, 11 corredores inscritos a nombre de persona y 317
+nombres de tasadores (233 en la primera tasación y 263 en la segunda; la fuente
+mezcla personas naturales y sociedades tasadoras y no permite separarlas con
+certeza). El tratamiento, la base de licitud, los derechos del titular y el
 registro de actividades están en [`PRIVACIDAD.md`](../PRIVACIDAD.md). Las reglas
 técnicas de minimización viven en
 [`pipelines/auto/privacidad.py`](../pipelines/auto/privacidad.py).
