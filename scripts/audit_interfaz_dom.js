@@ -685,8 +685,21 @@ setTimeout(async () => {
   const lienzoCalidad = document.getElementById("calidad-chart");
   check("calidad: el gráfico no se construye con el plegable cerrado",
     lienzoCalidad.hidden === true && !lienzoCalidad.querySelector("canvas"));
+  // El lienzo tiene que estar visible cuando el renderizador mide el ancho:
+  // oculto mide cero y el gráfico cae al mínimo de 320 px, sin llenar la caja.
+  const ChartReal = window.ChartRenderer;
+  let pintados = 0;
+  let ocultosAlMedir = 0;
+  window.ChartRenderer = function (contenedor, opciones) {
+    pintados += 1;
+    if (document.getElementById("calidad-chart").hidden) ocultosAlMedir += 1;
+    return new ChartReal(contenedor, opciones);
+  };
   detalleCalidad.open = true;
   detalleCalidad.dispatchEvent(new window.Event("toggle"));
+  window.ChartRenderer = ChartReal;
+  check("calidad: el gráfico se pinta una sola vez y con el lienzo ya visible",
+    pintados === 1 && ocultosAlMedir === 0, `pintados=${pintados}, ocultos=${ocultosAlMedir}`);
   check("calidad: al abrir el plegable aparecen el gráfico y la consulta",
     lienzoCalidad.hidden === false && Boolean(lienzoCalidad.querySelector("canvas"))
     && Boolean(detalleCalidad.querySelector("[data-calidad-sql]"))
