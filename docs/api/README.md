@@ -144,7 +144,9 @@ Reglas que el CI verifica:
    `columnas: []` y `motivo_sin_esquema`.
 
 Estado actual: 86 objetos con esquema, 1.474 columnas (3 sin documentar en el
-diccionario, 1 sin valores en origen), 19.777.508 filas únicas.
+diccionario, 1 sin valores en origen) y 19,8 millones de filas únicas. La cifra
+exacta de filas está en `catalog.json` y cambia con cada serie diaria: escribirla
+aquí a mano la deja falsa en un día.
 
 ## `v2/datapackage.json`
 
@@ -163,6 +165,10 @@ como `"primaryKey": null` —nunca `[]`, que se leería como una clave de cero
 columnas—. Son 27 objetos: los 13 que perdieron una clave falsa, los 13 que nunca
 la tuvieron y `fi_bienes_raices`, que no publica filas.
 
+El descriptor pasa a **2.0.1** en ese mismo cambio: retirar una afirmación falsa
+es una corrección, no una funcionalidad nueva, pero sí cambia lo que el
+descriptor dice, así que se versiona.
+
 El 2026-10-23 se corrigieron **13 claves que se habían dado por buenas sin serlo**
 (`ffmm_cartera_nacional` entre ellas, con 160.564 filas repetidas): un error de
 `scripts/verificar_claves.py` marcaba las repeticiones con una comparación de
@@ -170,8 +176,9 @@ tuplas que DuckDB no evalúa fila a fila, y el vacío se leía como «no hay
 duplicados». Ver [`docs/notas/claves_duplicados_2026-10-23.md`](../notas/claves_duplicados_2026-10-23.md).
 
 El `hash` de cada recurso es el SHA-256 de la concatenación de los SHA-256 de
-sus particiones, y el conjunto de todos ellos produce el `data_release`
-(`2026-10-23.a0734ca242e6`): no es una fecha elegida a mano, es el contenido.
+sus particiones, y el conjunto de todos ellos produce el `data_release`: no es
+una fecha elegida a mano, es el contenido. El vigente se lee en `catalog.json`
+—no se copia aquí, porque cambia con cada serie diaria—.
 
 ### URLs
 
