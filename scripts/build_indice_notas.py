@@ -66,7 +66,10 @@ def entradas() -> list[dict]:
     for ruta in sorted(NOTAS.iterdir()):
         if ruta.name == "README.md" or not ruta.is_file():
             continue
-        if ruta.suffix not in {".md", ".json"}:
+        # Sólo notas. La carpeta guarda además JSON de auditorías, que son
+        # evidencia de una corrida, no una nota: no tienen título ni resumen y
+        # contarlos como notas inflaba el índice («63 notas» con 59 archivos).
+        if ruta.suffix != ".md":
             continue
         titulo, resumen = titulo_y_resumen(ruta)
         m = FECHA.search(ruta.name)
