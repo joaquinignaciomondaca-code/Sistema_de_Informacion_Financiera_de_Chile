@@ -40,18 +40,32 @@ vez que se abre (`toggle`), y una sola vez. Las cifras del plegable se pintan
 igual que antes desde `js/estado_claves.js`, de modo que con JavaScript
 desactivado se lee el valor del HTML y nunca un cero.
 
-## 3. Verificación
+## 3. Un defecto que apareció al revisar el despliegue
 
-`scripts/audit_interfaz_dom.js` suma cinco comprobaciones (104 en total):
+El gráfico no se pintaba con el ancho correcto: `grafico()` llamaba a
+`setData` y sólo después quitaba el atributo `hidden` del contenedor. Con
+`display: none` la caja mide cero, `ChartRenderer.resize()` cae al mínimo de
+320 px y el lienzo quedaba más angosto que su columna, desbordando en alto.
+Ahora el contenedor se muestra antes de medir. Además `init()` es idempotente:
+si la página vuelve a pedir la inicialización no se duplican los manejadores ni
+se construye el gráfico dos veces.
+
+## 4. Verificación
+
+`scripts/audit_interfaz_dom.js` suma seis comprobaciones (105 en total):
 
 - el registro técnico arranca plegado;
 - la explicación está en llano, lleva el número y no cita SQL;
 - la advertencia y el enlace al Diccionario quedan a la vista;
 - el gráfico no se construye con el plegable cerrado;
+- el gráfico se pinta una sola vez, y el lienzo ya está visible cuando se mide
+  el ancho (con `pintados` y `ocultos` en el detalle de la prueba);
 - al abrirlo aparecen el gráfico y la consulta, y las cifras siguen medidas.
 
-Se comprobó que la prueba falla con la avería correspondiente: abrir el
-plegable por defecto rompe la comprobación del plegado y la del gráfico. El
+Se comprobó que la prueba falla con cada avería: abrir el plegable por defecto
+rompe la comprobación del plegado y la del gráfico; mostrar el lienzo después
+de medirlo la deja en `ocultos=1`; y quitar la guarda de `init()` la deja en
+`pintados=2`. El
 resto de la batería quedó en verde: `audit_interfaz.py`, `audit_movil.py`
 (14/14, autoprueba de 13 mutaciones), `audit_movil_dom.js` (15/15),
 `audit_aviso_movil.js` (23) y `audit_cifras.js` (21 respaldos, 8 cifras de
