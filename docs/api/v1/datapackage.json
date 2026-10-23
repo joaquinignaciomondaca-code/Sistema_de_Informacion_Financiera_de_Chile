@@ -812,7 +812,7 @@
   },
   {
    "bytes": 29459107,
-   "description": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Campos monetarios originales sin reinterpretación; revisar tipo_linea antes de agregar cuentas jerárquicas.",
+   "description": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Conserva los campos monetarios originales y agrega `importe_clp`, el importe en pesos con el que se suma y se lee cada línea.",
    "format": "parquet",
    "hash": "41979a2cd0011a23aa62b61731908c4c8aad1d1b6871880acfb9e3d6427d4838",
    "licenses": [
@@ -1464,7 +1464,7 @@
       "type": "string"
      },
      {
-      "description": "Cuerpo del RUT del catálogo local (sin dígito verificador), por cotejar.",
+      "description": "Cuerpo del RUT (sin dígito verificador ni puntos), cotejado con el registro CMF.",
       "name": "rut",
       "sif_rol": "Atributo",
       "type": "string"
@@ -1482,19 +1482,19 @@
       "type": "string"
      },
      {
-      "description": "Clasificación local, no verificada.",
+      "description": "Tipo de licencia del catálogo. Los agregados del sistema (900, 950, 960, 970, 980, 998 y 999) llevan «Agregado Sectorial»: no son bancos y no se suman con ellos.",
       "name": "tipo_licencia",
       "sif_rol": "Atributo",
       "type": "string"
      },
      {
-      "description": "Estado local, no histórico por periodo.",
+      "description": "Activo, Fusionado, Cerrado o Agregado. No es un estado histórico por periodo: dice cómo está la institución hoy.",
       "name": "estado",
       "sif_rol": "Atributo",
       "type": "string"
      },
      {
-      "description": "RUT del catálogo con dígito verificador (cuerpo-DV).",
+      "description": "RUT completo, cuerpo y dígito verificador, sin puntos: es el identificador que publica la CMF.",
       "name": "rut_dv",
       "sif_rol": "Atributo",
       "type": "string"
@@ -1550,7 +1550,7 @@
   },
   {
    "bytes": 29459107,
-   "description": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Campos monetarios originales sin reinterpretación; revisar tipo_linea antes de agregar cuentas jerárquicas.",
+   "description": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Conserva los campos monetarios originales y agrega `importe_clp`, el importe en pesos con el que se suma y se lee cada línea.",
    "format": "parquet",
    "hash": "41979a2cd0011a23aa62b61731908c4c8aad1d1b6871880acfb9e3d6427d4838",
    "licenses": [
