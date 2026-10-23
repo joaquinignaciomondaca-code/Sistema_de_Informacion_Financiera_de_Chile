@@ -221,7 +221,7 @@ def construir() -> dict:
 
     return {
         "contrato": "sif-api/esquemas",
-        "version": "v1",
+        "version": "v2",
         "generado": date.today().isoformat(),
         "como_se_genera": "python3 scripts/build_esquemas.py",
         "tipo_de_dato": "Tipos de DuckDB; el diccionario editorial sólo añade significado.",

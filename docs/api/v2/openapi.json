@@ -1,6 +1,6 @@
 {
  "info": {
-  "description": "API de solo lectura sobre archivos estáticos. Las rutas listadas son las que existen: no hay endpoint de consulta ad-hoc, ni autenticación, ni SLA. Las 159 consultas del catálogo sí vienen con su resultado ya calculado, en /api/v1/resultados/.",
+  "description": "API de solo lectura sobre archivos estáticos. Las rutas listadas son las que existen: no hay endpoint de consulta ad-hoc, ni autenticación, ni SLA. Las 159 consultas del catálogo sí vienen con su resultado ya calculado, en /api/v2/resultados/.",
   "license": {
    "name": "Datos: uso condicionado por la fuente · Código: MIT",
    "url": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md"
@@ -53,7 +53,7 @@
     ]
    }
   },
-  "/api/v1/catalog.json": {
+  "/api/v2/catalog.json": {
    "get": {
     "operationId": "getCatalogo",
     "responses": {
@@ -74,7 +74,7 @@
     ]
    }
   },
-  "/api/v1/datapackage.json": {
+  "/api/v2/datapackage.json": {
    "get": {
     "operationId": "getDatapackage",
     "responses": {
@@ -95,7 +95,7 @@
     ]
    }
   },
-  "/api/v1/partitions/{id}.json": {
+  "/api/v2/partitions/{id}.json": {
    "get": {
     "operationId": "getParticiones",
     "parameters": [
@@ -218,7 +218,7 @@
     ]
    }
   },
-  "/api/v1/queries.json": {
+  "/api/v2/queries.json": {
    "get": {
     "operationId": "getConsultas",
     "responses": {
@@ -239,7 +239,7 @@
     ]
    }
   },
-  "/api/v1/resultados/index.json": {
+  "/api/v2/resultados/index.json": {
    "get": {
     "operationId": "getResultadosIndice",
     "responses": {
@@ -260,7 +260,7 @@
     ]
    }
   },
-  "/api/v1/resultados/{id}.json": {
+  "/api/v2/resultados/{id}.json": {
    "get": {
     "operationId": "getResultado",
     "parameters": [
@@ -452,7 +452,7 @@
     ]
    }
   },
-  "/api/v1/schema/{id}.json": {
+  "/api/v2/schema/{id}.json": {
    "get": {
     "operationId": "getEsquema",
     "parameters": [
@@ -575,7 +575,7 @@
     ]
    }
   },
-  "/api/v1/views.sql": {
+  "/api/v2/views.sql": {
    "get": {
     "operationId": "getVistas",
     "responses": {

@@ -11,20 +11,20 @@ Base: `https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Finan
 
 ## Contrato
 
-- [catalog.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/catalog.json): los 90 objetos con `id`, `sector`, `estado` (`publicado` o `vacio`), `filas`, `bytes`, `primaryKey`, `corte`, `fuente` y `atribucion` (la cita que exige cada organismo), y las rutas absolutas a sus esquemas y particiones. Es el punto de partida.
-- [openapi.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/openapi.json): 11 rutas GET, todas archivos estáticos. No existe `/query`.
-- [datapackage.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/datapackage.json): los 86 objetos con datos como Data Package (Frictionless), con `bytes` y `sha256` por archivo.
+- [catalog.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/catalog.json): los 90 objetos con `id`, `sector`, `estado` (`publicado` o `vacio`), `filas`, `bytes`, `primaryKey`, `corte`, `fuente` y `atribucion` (la cita que exige cada organismo), y las rutas absolutas a sus esquemas y particiones. Es el punto de partida.
+- [openapi.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/openapi.json): 11 rutas GET, todas archivos estáticos. No existe `/query`.
+- [datapackage.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/datapackage.json): los 86 objetos con datos como Data Package (Frictionless), con `bytes` y `sha256` por archivo.
 - [reconciliacion.csv](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv): nombre del objeto, familia y fuente en el sitio.
 - [claves.csv](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/claves.csv): claves primarias verificadas y foráneas medidas.
 
 ## Consultas
 
-- [queries.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/queries.json): 159 consultas SQL de ejemplo. Cada una trae `id` estable (`slug-del-título` + 6 hex del SHA-1 de su SQL), `titulo`, `sql` y las tablas que usa. **El id no cambia mientras el SQL no cambie**: sirve para citar una consulta sin copiar el SQL.
-- [resultados/index.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/resultados/index.json): esas 159 consultas ya ejecutadas, con `filas`, `columnas`, tope de 500 filas, `sha256` y la URL de cada resultado. Si sólo necesitas el número, pide `resultados/{id}.json` y no bajes 500 MB: cada archivo trae `datos`, el `sql` que los produjo y el `data_release`.
+- [queries.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/queries.json): 159 consultas SQL de ejemplo. Cada una trae `id` estable (`slug-del-título` + 6 hex del SHA-1 de su SQL), `titulo`, `sql` y las tablas que usa. **El id no cambia mientras el SQL no cambie**: sirve para citar una consulta sin copiar el SQL.
+- [resultados/index.json](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/resultados/index.json): esas 159 consultas ya ejecutadas, con `filas`, `columnas`, tope de 500 filas, `sha256` y la URL de cada resultado. Si sólo necesitas el número, pide `resultados/{id}.json` y no bajes 500 MB: cada archivo trae `datos`, el `sql` que los produjo y el `data_release`.
 
 ## Datos
 
-- [views.sql](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/views.sql): `SET VARIABLE sif_base = '<base>';` y 105 `CREATE OR REPLACE VIEW` sobre `read_parquet(getvariable('sif_base') || '/outputs/…')`. Cambiar esa línea apunta todo a un espejo o a una copia local. Los 4 objetos vacíos no crean vista.
+- [views.sql](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/views.sql): `SET VARIABLE sif_base = '<base>';` y 105 `CREATE OR REPLACE VIEW` sobre `read_parquet(getvariable('sif_base') || '/outputs/…')`. Cambiar esa línea apunta todo a un espejo o a una copia local. Los 4 objetos vacíos no crean vista.
 - `schema/{id}.json` y `partitions/{id}.json`: columnas con tipo y rol, clave primaria, y los archivos con período, filas, bytes y `sha256`.
 - Los Parquet están en `/outputs/…` del mismo sitio y aceptan peticiones HTTP Range.
 
@@ -48,7 +48,7 @@ es lo mismo, con menos piezas.
 ## Límites
 
 - Best effort, sin SLA; los datos son de la CMF y de otros organismos públicos y se republican normalizados.
-- Las tres fuentes autorizan la republicación citándolas; cada objeto declara su cita en `api/v1/catalog.json` (`atribucion`). Condiciones y datos personales en `DATA_LICENSE.md` y `PRIVACIDAD.md`; el código es MIT.
+- Las tres fuentes autorizan la republicación citándolas; cada objeto declara su cita en `api/v2/catalog.json` (`atribucion`). Condiciones y datos personales en `DATA_LICENSE.md` y `PRIVACIDAD.md`; el código es MIT.
 - No hay SQL arbitrario por HTTP: los resultados publicados son los de las 159 consultas del catálogo, y cualquier otra consulta la ejecuta tu motor sobre los Parquet. Un servidor DuckDB compartido (Quack) está documentado pero **no desplegado**: implica una máquina, un certificado y un costo que este proyecto estático no tiene.
 
 ## Más
