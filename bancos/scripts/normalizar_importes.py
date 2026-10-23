@@ -1,28 +1,22 @@
 #!/usr/bin/env python3
-"""Agrega `importe_clp` y `formato_monto_fuente` a las particiones de banca publicadas.
+"""Calcula y verifica `importe_clp` en las particiones de banca publicadas.
 
-Motivo: `bancos.balance` y `bancos.resultados` sólo publicaban los arreglos del
-extractor (`importes_fuente_raw`, `importes_fuente_decimal`). En el Visor eso se
-lee como `001345990724750` —el código del archivo CMF con ceros a la izquierda—
-y no hay ninguna columna numérica que se pueda sumar. La ficha de R1 decía «sin
-sumar importes» porque, literalmente, no había qué sumar.
+`bancos.balance` y `bancos.resultados` publican el importe de cada línea en pesos,
+en una columna numérica que se puede sumar, y el desglose por moneda tal como lo
+entrega la CMF (`importes_fuente_raw`). El importe es la suma de ese desglose:
 
-Las dos columnas nuevas:
+  * en B1/B2, la suma de los cuatro componentes por moneda, que es el total de la
+    cuenta según el Manual del Sistema de Información de la CMF (MB1/MB2);
+  * en R1, el único importe que trae el archivo, acumulado del ejercicio.
 
-  * `importe_clp` (`BIGINT`, pesos): el importe de R1 —acumulado del ejercicio—
-    o, en B1/B2, la suma de los cuatro componentes por moneda, que es el total de
-    la cuenta según el Manual del Sistema de Información de la CMF (MB1/MB2).
-  * `formato_monto_fuente`: `decimal_coma` hasta 2024-05 (`26458735676131,00`) y
-    `entero_15` desde 2024-06 (`025258284006864`). El archivo fuente cambió de
-    formato a mitad de la serie y el publicado mezcla los dos.
+El archivo de origen cambia de formato a mitad de la serie —hasta 2024-05 escribe
+la coma decimal (`26458735676131,00`) y desde 2024-06 el entero de 15 dígitos
+(`025258284006864`)— y el publicado mezcla los dos; la columna se calcula aceptando
+las dos formas. El archivo no publica fracciones de peso: si alguna vez lo hiciera,
+el script lo detecta y falla en vez de redondear en silencio.
 
-El cálculo no necesita la CMF: `importes_fuente_decimal` ya trae cada cifra
-exacta. Es idempotente, escribe en temporal, verifica filas y columnas antes de
-reemplazar y conserva el orden de las columnas (las nuevas quedan junto a los
-importes de los que se derivan).
-
-    python3 bancos/scripts/normalizar_importes.py            # agrega las columnas
-    python3 bancos/scripts/normalizar_importes.py --check    # exit 1 si falta alguna
+    python3 bancos/scripts/normalizar_importes.py            # agrega la columna si falta
+    python3 bancos/scripts/normalizar_importes.py --check    # exit 1 si falta o no cuadra
 """
 from __future__ import annotations
 
@@ -30,7 +24,7 @@ import argparse
 import json
 import os
 import sys
-from decimal import Decimal
+from decimal import Decimal, InvalidOperation
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -38,46 +32,50 @@ sys.path.insert(0, str(ROOT))
 
 SALIDA = ROOT / "docs" / "outputs" / "bancos" / "cmf_b1_b2_r1"
 COLUMNA_IMPORTE = "importe_clp"
-COLUMNA_FORMATO = "formato_monto_fuente"
-# Se insertan justo después de `importes_fuente_decimal`, que es su origen.
-ANCLA = "importes_fuente_decimal"
+COLUMNA_DESGLOSE = "importes_fuente_raw"
 
 
 def particiones() -> list[Path]:
     return sorted(SALIDA.glob("*/lineas.parquet"))
 
 
-def calcular(exactos: list[str], raw: list[str]) -> tuple[int, str]:
-    total = sum(Decimal(valor) for valor in exactos)
-    return int(total), "decimal_coma" if any("," in v for v in raw) else "entero_15"
+def componente(valor: str) -> Decimal:
+    """Importe de un componente del archivo CMF: entero de 15 dígitos o con coma."""
+    texto = str(valor).strip()
+    try:
+        return Decimal(texto.replace(",", "."))
+    except InvalidOperation as exc:
+        raise ValueError(f"importe fuente ilegible: {texto!r}") from exc
+
+
+def calcular(raw: list[str]) -> tuple[int, int]:
+    """(importe en pesos, componentes con fracción de peso)."""
+    valores = [componente(v) for v in raw]
+    fraccionarios = sum(1 for v in valores if v != v.to_integral_value())
+    return int(sum(valores)), fraccionarios
 
 
 def completar(archivo: Path) -> tuple[bool, int, int]:
-    """Devuelve (cambió, filas, filas con centavos descartados)."""
+    """Agrega `importe_clp` si falta. Devuelve (cambió, filas, fraccionarios)."""
     import pyarrow as pa
     import pyarrow.parquet as pq
 
     tabla = pq.read_table(archivo)
-    if COLUMNA_IMPORTE in tabla.column_names and COLUMNA_FORMATO in tabla.column_names:
+    if COLUMNA_IMPORTE in tabla.column_names:
         return False, tabla.num_rows, 0
 
-    importes, formatos, con_centavos = [], [], 0
-    for exactos, raw in zip(tabla.column("importes_fuente_decimal").to_pylist(),
-                            tabla.column("importes_fuente_raw").to_pylist()):
-        importe, formato = calcular(exactos, raw)
-        # El archivo fuente no publica fracciones de peso; si alguna vez lo hace,
-        # `int(total)` las descartaría en silencio y hay que enterarse.
-        if any(Decimal(v) != Decimal(v).to_integral_value() for v in exactos):
-            con_centavos += 1
+    importes, fraccionarios = [], 0
+    for raw in tabla.column(COLUMNA_DESGLOSE).to_pylist():
+        importe, con_fraccion = calcular(raw)
         importes.append(importe)
-        formatos.append(formato)
+        fraccionarios += con_fraccion
 
-    ancla = tabla.schema.get_field_index(ANCLA)
-    nueva = tabla
-    nueva = nueva.add_column(ancla + 1, pa.field(COLUMNA_IMPORTE, pa.int64(), nullable=True),
-                             pa.array(importes, type=pa.int64()))
-    nueva = nueva.add_column(ancla + 2, pa.field(COLUMNA_FORMATO, pa.string(), nullable=True),
-                             pa.array(formatos, type=pa.string()))
+    ancla = tabla.schema.get_field_index(COLUMNA_DESGLOSE)
+    nueva = tabla.add_column(
+        ancla + 1,
+        pa.field(COLUMNA_IMPORTE, pa.int64(), nullable=True),
+        pa.array(importes, type=pa.int64()),
+    )
 
     temporal = archivo.with_suffix(".parquet.tmp")
     pq.write_table(nueva, temporal, compression="zstd", version="2.6")
@@ -86,21 +84,23 @@ def completar(archivo: Path) -> tuple[bool, int, int]:
         temporal.unlink(missing_ok=True)
         raise RuntimeError(f"{archivo}: el Parquet temporal no conserva filas ni columnas")
     os.replace(temporal, archivo)
-    return True, tabla.num_rows, con_centavos
+    return True, tabla.num_rows, fraccionarios
 
 
-def inspeccionar(archivo: Path) -> tuple[int, int]:
-    """(filas, filas con un importe que no cuadra con los importes exactos)."""
+def inspeccionar(archivo: Path) -> tuple[int, int, int]:
+    """(filas, importes que no cuadran, componentes con fracción de peso)."""
     import pyarrow.parquet as pq
 
-    columnas = [ANCLA, "importes_fuente_raw", COLUMNA_IMPORTE, COLUMNA_FORMATO]
+    columnas = [COLUMNA_DESGLOSE, COLUMNA_IMPORTE]
     tabla = pq.read_table(archivo, columns=columnas)
     malas = 0
-    for exactos, raw, importe, formato in zip(*(tabla.column(c).to_pylist() for c in columnas)):
-        esperado, esperado_formato = calcular(exactos, raw)
-        if importe != esperado or formato != esperado_formato:
+    fraccionarios = 0
+    for raw, importe in zip(*(tabla.column(c).to_pylist() for c in columnas)):
+        esperado, con_fraccion = calcular(raw)
+        fraccionarios += con_fraccion
+        if importe != esperado:
             malas += 1
-    return tabla.num_rows, malas
+    return tabla.num_rows, malas, fraccionarios
 
 
 def main() -> int:
@@ -116,32 +116,35 @@ def main() -> int:
     reescritas = 0
     filas = 0
     malas = 0
-    centavos = 0
+    fraccionarios = 0
     for archivo in archivos:
         if args.check:
-            n, incorrectas = inspeccionar(archivo)
-            malas += incorrectas
+            n, incorrectas, con_fraccion = inspeccionar(archivo)
         else:
-            cambio, n, descartados = completar(archivo)
+            cambio, _, _ = completar(archivo)
             reescritas += int(cambio)
-            centavos += descartados
-            n, incorrectas = inspeccionar(archivo)
-            malas += incorrectas
+            n, incorrectas, con_fraccion = inspeccionar(archivo)
+        malas += incorrectas
+        fraccionarios += con_fraccion
         filas += n
 
-    resumen = {"particiones": len(archivos), "filas": filas,
-               "reescritas": reescritas, "filas_con_importe_incorrecto": malas}
-    if centavos:
-        resumen["filas_con_centavos"] = centavos
+    resumen = {
+        "particiones": len(archivos),
+        "filas": filas,
+        "reescritas": reescritas,
+        "filas_con_importe_incorrecto": malas,
+    }
+    if fraccionarios:
+        resumen["componentes_con_centavos"] = fraccionarios
     print(json.dumps(resumen, ensure_ascii=False, indent=1))
 
     if malas:
-        print("BANCA: hay filas cuyo `importe_clp` no coincide con `importes_fuente_decimal`")
+        print("BANCA: hay filas cuyo `importe_clp` no coincide con `importes_fuente_raw`")
         return 1
-    if centavos:
+    if fraccionarios:
         print("BANCA: hay importes con fracciones de peso; `importe_clp` las descarta y hay que revisarlo")
         return 1
-    print("BANCA: `importe_clp` y `formato_monto_fuente` cuadran en todas las particiones")
+    print("BANCA: `importe_clp` cuadra con `importes_fuente_raw` en todas las particiones")
     return 0
 
 

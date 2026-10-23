@@ -1,14 +1,14 @@
 {
  "contrato": "sif-api/resultado",
- "id": "utilidad-del-ejercicio-por-banco-ultimo-periodo-7a75f4",
+ "id": "utilidad-del-ejercicio-por-banco-ultimo-periodo-c2ba60",
  "titulo": "Utilidad del ejercicio por banco (último periodo)",
  "origen": "explorador",
- "data_release": "2026-10-22.ce8f0befbcb2",
+ "data_release": "2026-10-22.4c4ee99027d6",
  "generado": "2026-10-23",
  "max_filas": 500,
  "columnas": [
   "codigo_institucion",
-  "nombre_institucion_fuente",
+  "razon_social",
   "importe_clp"
  ],
  "filas": 17,
@@ -16,90 +16,90 @@
  "datos": [
   [
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    837847306494
   ],
   [
    "009",
-   "BANCO INTERNACIONAL",
+   "Banco Internacional",
    50221149766
   ],
   [
    "012",
-   "BANCO DEL ESTADO DE CHILE",
+   "Banco del Estado de Chile",
    372228622725
   ],
   [
    "014",
-   "SCOTIABANK CHILE",
+   "Scotiabank Chile",
    330415583530
   ],
   [
    "016",
-   "BANCO DE CREDITO E INVERSIONES",
+   "Banco de Credito e Inversiones",
    790794354420
   ],
   [
    "028",
-   "BANCO BICE",
+   "Banco BICE",
    189713753510
   ],
   [
    "031",
-   "HSBC BANK (CHILE)",
+   "HSBC Bank (Chile)",
    21658312521
   ],
   [
    "037",
-   "BANCO SANTANDER-CHILE",
+   "Banco Santander-Chile",
    825693747056
   ],
   [
    "039",
-   "BANCO ITAU CHILE",
+   "Banco Itau Chile",
    112844720862
   ],
   [
    "041",
-   "JP MORGAN CHASE BANK N.A.",
+   "JP Morgan Chase Bank N.A.",
    38380354454
   ],
   [
    "051",
-   "BANCO FALABELLA",
+   "Banco Falabella",
    262646059246
   ],
   [
    "053",
-   "BANCO RIPLEY",
+   "Banco Ripley",
    27835985661
   ],
   [
    "055",
-   "BANCO CONSORCIO",
+   "Banco Consorcio",
    68347252019
   ],
   [
    "059",
-   "BANCO BTG PACTUAL CHILE",
+   "Banco BTG Pactual Chile",
    88736147050
   ],
   [
    "060",
-   "CHINA CONSTRUCTION BANK",
+   "China Construction Bank",
    3356086228
   ],
   [
    "061",
-   "BANK OF CHINA, AGENCIA EN CHILE",
+   "Bank of China, Agencia en Chile",
    2807316786
   ],
   [
    "062",
-   "TANNER BANCO DIGITAL",
+   "Tanner Banco Digital",
    -13154396027
   ]
  ],
- "sql": "SELECT codigo_institucion, nombre_institucion_fuente, importe_clp FROM bancos_resultados WHERE codigo_cuenta = '590000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_resultados) ORDER BY importe_clp DESC;",
+ "sql": "SELECT codigo_institucion, razon_social, importe_clp FROM bancos_resultados WHERE codigo_cuenta = '590000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_resultados) ORDER BY importe_clp DESC;",
  "como_se_genera": "python3 scripts/build_resultados.py"
 }

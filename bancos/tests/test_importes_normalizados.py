@@ -4,7 +4,8 @@ Cubre las tres piezas que se agregaron para que el Visor muestre un monto y no
 el campo crudo del archivo CMF:
 
   * `importe_normalizado` del extractor y `calcular` del normalizador tienen que
-    dar el mismo número y el mismo marcador de formato;
+    dar el mismo número (el normalizador lo recalcula desde `importes_fuente_raw`,
+    que es la única columna de importes que se publica);
   * el maestro publica un único formato de RUT (`rut_dv` = `rut`-DV, sin puntos);
   * el cotejo publicado no deja ninguna fila fuera del registro de la CMF.
 """
@@ -46,7 +47,7 @@ class ImporteNormalizadoTests(unittest.TestCase):
                     importe_normalizado(exactos, raw),
                     {"importe_clp": importe, "formato_monto_fuente": formato},
                 )
-                self.assertEqual(calcular(exactos, raw), (importe, formato))
+                self.assertEqual(calcular(raw)[0], importe)
 
     def test_los_ceros_a_la_izquierda_no_cambian_el_monto(self):
         # `001542552118136` es $1.542.552.118.136, no 154.255.211.813.600.

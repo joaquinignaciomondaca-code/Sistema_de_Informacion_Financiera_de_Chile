@@ -1,14 +1,14 @@
 {
  "contrato": "sif-api/resultado",
- "id": "total-de-activos-por-banco-ultimo-periodo-e55e00",
+ "id": "total-de-activos-por-banco-ultimo-periodo-8feb88",
  "titulo": "Total de activos por banco (último periodo)",
  "origen": "explorador",
- "data_release": "2026-10-22.ce8f0befbcb2",
+ "data_release": "2026-10-22.4c4ee99027d6",
  "generado": "2026-10-23",
  "max_filas": 500,
  "columnas": [
   "codigo_institucion",
-  "nombre_institucion_fuente",
+  "razon_social",
   "importe_clp"
  ],
  "filas": 17,
@@ -16,90 +16,90 @@
  "datos": [
   [
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    55804006014866
   ],
   [
    "009",
-   "BANCO INTERNACIONAL",
+   "Banco Internacional",
    6693863105386
   ],
   [
    "012",
-   "BANCO DEL ESTADO DE CHILE",
+   "Banco del Estado de Chile",
    60686733767800
   ],
   [
    "014",
-   "SCOTIABANK CHILE",
+   "Scotiabank Chile",
    44357478628116
   ],
   [
    "016",
-   "BANCO DE CREDITO E INVERSIONES",
+   "Banco de Credito e Inversiones",
    86558813882872
   ],
   [
    "028",
-   "BANCO BICE",
+   "Banco BICE",
    22346953735043
   ],
   [
    "031",
-   "HSBC BANK (CHILE)",
+   "HSBC Bank (Chile)",
    1752497095484
   ],
   [
    "037",
-   "BANCO SANTANDER-CHILE",
+   "Banco Santander-Chile",
    71738399336873
   ],
   [
    "039",
-   "BANCO ITAU CHILE",
+   "Banco Itau Chile",
    49223814364316
   ],
   [
    "041",
-   "JP MORGAN CHASE BANK N.A.",
+   "JP Morgan Chase Bank N.A.",
    1511895473894
   ],
   [
    "051",
-   "BANCO FALABELLA",
+   "Banco Falabella",
    8009334377830
   ],
   [
    "053",
-   "BANCO RIPLEY",
+   "Banco Ripley",
    1497399549063
   ],
   [
    "055",
-   "BANCO CONSORCIO",
+   "Banco Consorcio",
    12089202752410
   ],
   [
    "059",
-   "BANCO BTG PACTUAL CHILE",
+   "Banco BTG Pactual Chile",
    8018692238735
   ],
   [
    "060",
-   "CHINA CONSTRUCTION BANK",
+   "China Construction Bank",
    331726399371
   ],
   [
    "061",
-   "BANK OF CHINA, AGENCIA EN CHILE",
+   "Bank of China, Agencia en Chile",
    141589840577
   ],
   [
    "062",
-   "TANNER BANCO DIGITAL",
+   "Tanner Banco Digital",
    1115973818859
   ]
  ],
- "sql": "SELECT codigo_institucion, nombre_institucion_fuente, importe_clp FROM bancos_balance WHERE modelo_cmf = 'MB1' AND codigo_cuenta = '100000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_balance) ORDER BY importe_clp DESC;",
+ "sql": "SELECT codigo_institucion, razon_social, importe_clp FROM bancos_balance WHERE modelo_cmf = 'MB1' AND codigo_cuenta = '100000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_balance) ORDER BY importe_clp DESC;",
  "como_se_genera": "python3 scripts/build_resultados.py"
 }

@@ -801,9 +801,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "total-de-activos-por-banco-ultimo-periodo-e55e00",
+   "id": "total-de-activos-por-banco-ultimo-periodo-8feb88",
    "origen": "explorador",
-   "sql": "SELECT codigo_institucion, nombre_institucion_fuente, importe_clp FROM bancos_balance WHERE modelo_cmf = 'MB1' AND codigo_cuenta = '100000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_balance) ORDER BY importe_clp DESC;",
+   "sql": "SELECT codigo_institucion, razon_social, importe_clp FROM bancos_balance WHERE modelo_cmf = 'MB1' AND codigo_cuenta = '100000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_balance) ORDER BY importe_clp DESC;",
    "titulo": "Total de activos por banco (último periodo)"
   },
   {
@@ -813,9 +813,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "muestra-de-lineas-de-balance-b1-b2-29bae7",
+   "id": "muestra-de-lineas-de-balance-b1-b2-142f86",
    "origen": "explorador",
-   "sql": "SELECT periodo, codigo_institucion, nombre_institucion_fuente, familia_archivo_fuente, codigo_cuenta, glosa_cuenta, importe_clp, formato_monto_fuente, importes_fuente_raw, numero_fila_fuente FROM bancos_balance ORDER BY periodo DESC, codigo_institucion, familia_archivo_fuente, numero_fila_fuente LIMIT 100;",
+   "sql": "SELECT periodo, codigo_institucion, razon_social, familia_archivo_fuente, codigo_cuenta, glosa_cuenta, tipo_linea, importe_clp, importes_fuente_raw, numero_fila_fuente FROM bancos_balance ORDER BY periodo DESC, codigo_institucion, familia_archivo_fuente, numero_fila_fuente LIMIT 100;",
    "titulo": "Muestra de líneas de balance B1/B2"
   },
   {
@@ -837,9 +837,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "utilidad-del-ejercicio-por-banco-ultimo-periodo-7a75f4",
+   "id": "utilidad-del-ejercicio-por-banco-ultimo-periodo-c2ba60",
    "origen": "explorador",
-   "sql": "SELECT codigo_institucion, nombre_institucion_fuente, importe_clp FROM bancos_resultados WHERE codigo_cuenta = '590000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_resultados) ORDER BY importe_clp DESC;",
+   "sql": "SELECT codigo_institucion, razon_social, importe_clp FROM bancos_resultados WHERE codigo_cuenta = '590000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_resultados) ORDER BY importe_clp DESC;",
    "titulo": "Utilidad del ejercicio por banco (último periodo)"
   },
   {
@@ -849,9 +849,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "muestra-de-lineas-de-resultados-r1-1c6b1f",
+   "id": "muestra-de-lineas-de-resultados-r1-2a300a",
    "origen": "explorador",
-   "sql": "SELECT periodo, codigo_institucion, nombre_institucion_fuente, codigo_cuenta, glosa_cuenta, importe_clp, formato_monto_fuente, importes_fuente_raw, numero_fila_fuente FROM bancos_resultados ORDER BY periodo DESC, codigo_institucion, numero_fila_fuente LIMIT 100;",
+   "sql": "SELECT periodo, codigo_institucion, razon_social, codigo_cuenta, glosa_cuenta, tipo_linea, importe_clp, importes_fuente_raw, numero_fila_fuente FROM bancos_resultados ORDER BY periodo DESC, codigo_institucion, numero_fila_fuente LIMIT 100;",
    "titulo": "Muestra de líneas de resultados R1"
   },
   {

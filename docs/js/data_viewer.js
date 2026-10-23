@@ -221,7 +221,8 @@ const DV_SUBETIQUETAS = {
 
 // Orden editorial de las columnas por vista: primero lo que describe el dato que se quiere
 // transmitir (periodo, institución, cuenta, importe) y después el perímetro y la
-// procedencia. `ocultas` son columnas redundantes para leer el estado financiero.
+// procedencia. `ocultas` nombra columnas de la vista que no aportan a la lectura; hoy
+// ninguna de Banca las necesita, porque el archivo publicado ya viene recortado.
 const DV_PRESENTACION_VISTAS = {
   bancos_balance: {
     orden: [
@@ -229,9 +230,6 @@ const DV_PRESENTACION_VISTAS = {
       "codigo_cuenta", "glosa_cuenta", "tipo_linea", "importe_clp",
       "importes_fuente_raw", "familia_archivo_fuente", "modelo_cmf", "nivel_consolidacion"
     ],
-    // fecha_corte se deriva del periodo; rubro, línea e ítem, de codigo_cuenta;
-    // nombre_institucion_fuente repite razon_social y tipo_estado es constante en la vista.
-    ocultas: ["fecha_corte", "rubro", "linea", "item", "nombre_institucion_fuente", "tipo_estado"],
     // El TXT de la CMF no trae las líneas en el orden del estado: se ordenan al cargar
     // por institución y código de cuenta (jerárquico) para que la tabla se lea como el
     // balance. Ocultas sus columnas, el orden sigue siendo el del estado.
@@ -243,9 +241,6 @@ const DV_PRESENTACION_VISTAS = {
       "codigo_cuenta", "glosa_cuenta", "tipo_linea", "importe_clp",
       "importes_fuente_raw", "familia_archivo_fuente", "modelo_cmf", "nivel_consolidacion"
     ],
-    // fecha_corte se deriva del periodo; rubro, línea e ítem, de codigo_cuenta;
-    // nombre_institucion_fuente repite razon_social y tipo_estado es constante en la vista.
-    ocultas: ["fecha_corte", "rubro", "linea", "item", "nombre_institucion_fuente", "tipo_estado"],
     // El TXT de la CMF no trae las líneas en el orden del estado: se ordenan al cargar
     // por institución y código de cuenta (jerárquico) para que la tabla se lea como el
     // balance. Ocultas sus columnas, el orden sigue siendo el del estado.
