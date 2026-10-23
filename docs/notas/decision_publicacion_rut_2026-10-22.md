@@ -4,6 +4,11 @@
 **Objeto:** reponer `rut_emisor` para las 202.835 filas que hoy se publican sin identificador.
 **Fecha:** 2026-10-22. **Vigencia legal relevante:** 2026-12-01 (Ley 21.719).
 
+> **Estado (2026-10-23).** El contrato vigente es **2.0.0** y se publica en
+> `docs/api/v2/`. Esta nota se escribió cuando la ruta era `api/v1/`: las rutas de
+> archivo y de URL se actualizaron para que los comandos sigan funcionando, y las
+> referencias a «v1» como nombre de la fase se conservan como se escribieron.
+
 ## 0 bis. Estado: lo que ya quedó implementado (2026-10-22)
 
 Dos piezas del plan se ejecutaron sin cambiar la regla de publicación:
@@ -172,7 +177,7 @@ Sin estas seis, la publicación es difícil de defender. Con ellas, es defendibl
 - [ ] **Compuerta:** `scripts/auditar_personas_publicadas.py` cambia su bloque 4: en vez de exigir
       cero RUT de persona, exige que el aviso declare la publicación, que exista la lista de
       exclusiones y que `emisor_tipo` cuadre con `rut_emisor`.
-- [ ] **Contrato:** `docs/api/v1/schema/fi_cartera_nacional.json`, `datapackage.json`,
+- [ ] **Contrato:** `docs/api/v2/schema/fi_cartera_nacional.json`, `datapackage.json`,
       `queries.json`, `views.sql` y el diccionario con el nuevo significado de la columna.
 - [ ] **Guía:** sección «si eres titular de un RUT publicado», con el enlace al canal.
 - [ ] **Ejemplos:** uno reproducible que siga un emisor entre trimestres, usando el RUT como clave.
