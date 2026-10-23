@@ -2127,6 +2127,146 @@ header {
   line-height: 1.65;
 }
 
+/* Calidad del dato publicado: cifras, gráfico y la consulta que las reproduce.
+   Va antes de «cómo leer los datos» porque es la advertencia más importante de
+   la portada: sin agrupar, sumar sobreestima. */
+.info-calidad-stats {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 14px;
+}
+
+/* La explicación va en llano y el registro técnico queda plegado: quien entra
+   por primera vez no necesita la consulta para entender la advertencia. */
+.info-calidad-detalle {
+  margin-top: 12px;
+}
+
+.info-calidad-detalle > summary {
+  padding: 8px 0;
+  color: var(--accent-blue-text);
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.info-calidad-detalle > summary:hover,
+.info-calidad-detalle > summary:focus-visible {
+  color: var(--text-bright);
+}
+
+.info-calidad-detalle > summary:focus-visible {
+  outline: 2px solid var(--accent-mint);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.info-calidad-detalle[open] > summary { margin-bottom: 2px; }
+
+.info-calidad-detalle-cuerpo {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-calidad-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 12px;
+  margin-top: 14px;
+  align-items: stretch;
+}
+
+.info-calidad-figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 9px;
+  background: var(--bg-secondary);
+}
+
+.info-calidad-figure figcaption {
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.calidad-chart {
+  width: 100%;
+  height: 210px;
+  display: flex;
+}
+
+.calidad-chart[hidden] { display: none; }
+
+.calidad-chart canvas { width: 100%; height: 100%; display: block; }
+
+.info-calidad-sql {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 9px;
+  background: var(--bg-secondary);
+}
+
+.info-calidad-sql p {
+  color: var(--text-secondary);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+.info-calidad-code {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 7px;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(var(--neutral-rgb), 0.18);
+  overflow-x: auto;
+  color: var(--text-primary);
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre;
+}
+
+.info-calidad-run {
+  align-self: flex-start;
+  min-height: 36px;
+  padding: 8px 14px;
+  border: 1px solid rgba(var(--accent-rgb), 0.45);
+  border-radius: 7px;
+  background: rgba(var(--accent-rgb), 0.12);
+  color: var(--text-bright);
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.info-calidad-run:hover,
+.info-calidad-run:focus-visible {
+  border-color: var(--accent-mint);
+  background: rgba(var(--accent-rgb), 0.2);
+}
+
+.info-calidad-foot {
+  max-width: 980px;
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.info-calidad-foot a { color: var(--accent-blue-text); }
+
+@media (max-width: 900px) {
+  .info-calidad-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .info-calidad-grid { grid-template-columns: minmax(0, 1fr); }
+  .info-calidad-run { min-height: 44px; }
+}
+
 .info-highlight-row {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -5127,6 +5267,21 @@ kbd {
 
 .info-stat span { color: var(--text-secondary); font-size: 12px; line-height: 1.35; }
 
+/* Cifras del núcleo bajo el título de su sección: el héroe habla del catálogo
+   completo y estas del núcleo, para que no haya dos totales compitiendo en la
+   misma pantalla. */
+.info-nucleo-cifras {
+  margin-top: 6px;
+  color: var(--text-muted);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.info-nucleo-cifras b {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
 .info-core-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -6111,19 +6266,29 @@ body {
 /* --- 7. Aviso de teléfono ---------------------------------------------------
    El sitio se pensó para un computador: siete pestañas, un explorador de 320 px
    y el motor SQL en el cliente. En un teléfono se puede leer y descargar, pero
-   no trabajar cómodo, así que se avisa una vez y se deja cerrar. El JS lo
-   muestra sólo por debajo de 900 px y recuerda el descarte; aquí sólo se
-   define cómo se ve. */
+   no trabajar cómodo, así que se avisa una vez y se deja cerrar.
+
+   Es una tarjeta flotante —`position: fixed` abajo, centrada— y no un bloque
+   del flujo: antes empujaba el contenido hacia abajo y se leía como parte de la
+   página, no como un aviso que se puede quitar. Se cierra con «Entendido», con
+   el aspa o con Escape, y el descarte se recuerda. */
 .aviso-movil {
   display: none;
-  align-items: flex-start;
-  gap: 12px;
-  margin: 10px 12px 0;
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+  z-index: 210;
+  width: auto;
+  max-width: 420px;
+  margin: 0 auto;
   padding: 12px 14px;
-  background: var(--bg-secondary);
+  flex-direction: column;
+  gap: 8px;
+  background: var(--panel-elevated, var(--bg-secondary));
   border: 1px solid var(--border-color);
-  border-radius: 10px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+  border-radius: 12px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.45);
 }
 
 /* `hidden` gana siempre: sin esto, el `display: flex` del media query lo
@@ -6132,24 +6297,62 @@ body {
   display: none;
 }
 
-.aviso-movil-texto {
+.aviso-movil-cabecera {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.aviso-movil-cabecera strong {
+  flex: 1 1 auto;
   min-width: 0;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--text-primary);
+}
+
+.aviso-movil-aspa {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: -4px -6px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-secondary);
+  cursor: pointer;
+}
+
+.aviso-movil-aspa svg {
+  width: 13px;
+  height: 13px;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  fill: none;
+}
+
+.aviso-movil-aspa:hover,
+.aviso-movil-aspa:focus-visible {
+  background: rgba(var(--neutral-rgb), 0.14);
+  color: var(--text-primary);
+}
+
+.aviso-movil-texto {
+  min-width: 0;
+  margin: 0;
   font-size: 13px;
   line-height: 1.45;
   color: var(--text-secondary);
 }
 
-.aviso-movil-texto strong {
-  font-size: 13px;
-  color: var(--text-primary);
-}
-
 .aviso-movil-cerrar {
-  flex: none;
-  min-height: 44px;
+  align-self: flex-start;
+  min-height: 40px;
   padding: 0 16px;
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -6160,7 +6363,12 @@ body {
   cursor: pointer;
 }
 
-.aviso-movil-cerrar:focus-visible {
+.aviso-movil-cerrar:hover {
+  border-color: var(--accent-mint);
+}
+
+.aviso-movil-cerrar:focus-visible,
+.aviso-movil-aspa:focus-visible {
   outline: 2px solid var(--accent-mint-text);
   outline-offset: 2px;
 }
@@ -6168,9 +6376,29 @@ body {
 @media (max-width: 900px) {
   .aviso-movil {
     display: flex;
-    flex-wrap: wrap;
-    margin-bottom: 2px;
+    animation: aviso-movil-entra 180ms ease-out;
   }
+  .aviso-movil-cerrar {
+    min-height: 44px;
+  }
+}
+
+/* Con la tarjeta flotando abajo, los avisos breves (toasts) se suben para no
+   quedar debajo. El alto lo publica el JS en `--sif-aviso-alto`. */
+@media (max-width: 900px) {
+  body.sif-aviso-movil .toast-host,
+  body.sif-aviso-movil .mfc-toast {
+    bottom: calc(var(--sif-aviso-alto, 150px) + 12px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@keyframes aviso-movil-entra {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aviso-movil { animation: none; }
 }
 
 /* --- Diccionario: estado de la clave de cada tabla ---

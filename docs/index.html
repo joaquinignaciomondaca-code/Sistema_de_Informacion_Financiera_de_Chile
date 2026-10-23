@@ -46,7 +46,7 @@
         href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
-  <link rel="stylesheet" href="css/app.css?v=fl-20261023-2009-mapa-y-cifras">
+  <link rel="stylesheet" href="css/app.css?v=fl-20261023-2145-portada-registro">
 
   <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
        Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
@@ -188,16 +188,6 @@
     <!-- Contenedor Principal en 2 Paneles Divididos -->
     <main class="main-container" id="main-content" tabindex="-1">
 
-      <!-- Aviso para teléfonos: se cierra y no vuelve a aparecer en este navegador.
-           El CSS lo oculta por encima de 900 px, así que en escritorio no existe. -->
-      <div class="aviso-movil" id="aviso-movil" role="region" aria-label="Recomendación de uso en teléfono" hidden>
-        <div class="aviso-movil-texto">
-          <strong>Este sitio está pensado para un computador.</strong>
-          <span>El explorador, las consultas SQL y el mapa relacional necesitan una pantalla más grande. En el teléfono puedes leer y descargar, pero la experiencia completa se ve en un PC.</span>
-        </div>
-        <button type="button" class="aviso-movil-cerrar" id="aviso-movil-cerrar">Entendido</button>
-      </div>
-
       <!-- PANEL SUPERIOR: MAPA RELACIONAL Y DICCIONARIO -->
       <div class="top-panel">
         <div class="panel-header">
@@ -269,23 +259,24 @@
                   <use href="#sif-lockup"/>
                 </svg>
               </h1>
-              <p class="info-lead">Las carteras y los estados financieros de los grandes inversionistas institucionales de Chile —compañías de seguros, fondos mutuos y fondos de inversión—, tal como los reportan a la CMF, junto con las instituciones que los rodean y las series del Banco Central como contexto. Todo consultable con SQL en tu navegador.</p>
-              <div class="info-hero-stats" aria-label="Cifras del núcleo de esta edición">
-                <div class="info-stat"><b data-alcance="nucleo.sectores">3</b><span>sectores de inversión institucional</span></div>
-                <div class="info-stat" title="Conjuntos del núcleo: seguros, fondos mutuos y fondos de inversión. La vista principal muestra 74 porque suma instituciones y contexto."><b data-alcance="nucleo.conjuntos">40</b><span>conjuntos del núcleo</span></div>
-                <div class="info-stat" title="Una fila es lo que la fuente reporta para una entidad en un periodo. Una misma entidad aparece en varias tablas y periodos: la suma de filas no cuenta entidades."><b data-alcance="nucleo.filas">más de 17 millones</b><span>de filas</span></div>
-                <div class="info-stat" title="CMF (65 conjuntos), Banco Central de Chile (24) y Superintendencia de Pensiones (1). La SUSESO no entrega datos: aparece como regulador y enlace en el catálogo de cajas de compensación."><b>3</b><span>fuentes de datos</span></div>
+              <p class="info-lead">Carteras y estados financieros de los inversionistas institucionales chilenos —aseguradoras, fondos mutuos y fondos de inversión—, junto a la banca y las series del Banco Central. Datos de la CMF, el Banco Central y la Superintendencia de Pensiones, consultables con SQL en el navegador y descargables en Parquet, CSV o Excel.</p>
+              <div class="info-hero-stats" aria-label="Cifras de la edición publicada">
+                <div class="info-stat" title="Comisión para el Mercado Financiero, Banco Central de Chile y Superintendencia de Pensiones. La SUSESO figura como regulador y enlace; sus datos de cajas de compensación provienen de la CMF."><b>3</b><span>fuentes oficiales</span></div>
+                <div class="info-stat" title="Núcleo, instituciones y contexto. El archivo congelado y los registros complementarios añaden 15 tablas más, que se consultan y descargan igual."><b data-alcance="visible.conjuntos">74</b><span>tablas en la vista principal</span></div>
+                <div class="info-stat" title="Una fila es lo que la fuente reporta para una entidad en un periodo. Una misma entidad aparece en varias tablas y periodos: la suma de filas no cuenta entidades."><b data-alcance="visible.filas">más de 19 millones</b><span>de filas</span></div>
+                <div class="info-stat" title="Primer y último período publicado en el catálogo; cada tabla declara el suyo."><b data-alcance="visible.periodo">2001–2026</b><span>de cobertura</span></div>
               </div>
               <div class="info-hero-tags">
-                <span class="info-tag">Fuentes oficiales</span>
                 <span class="info-tag">Consultas SQL en el navegador</span>
-                <span class="info-tag">Parquet descargable</span>
+                <span class="info-tag">Parquet, CSV y Excel</span>
+                <span class="info-tag">Sin registro</span>
               </div>
             </section>
 
             <section class="info-block">
               <div class="info-section-kicker">NÚCLEO · INVERSIÓN INSTITUCIONAL</div>
               <h2>Tres sectores, de la cartera al estado financiero</h2>
+              <p class="info-nucleo-cifras"><b data-alcance="nucleo.conjuntos">40</b> conjuntos en <b data-alcance="nucleo.sectores">3</b> sectores · <b data-alcance="nucleo.filas">más de 17 millones</b> de filas</p>
               <div class="info-core-grid">
                 <article class="info-core-card" data-sector="seguros">
                   <div class="info-core-head">
@@ -364,7 +355,7 @@
               <div class="info-context">
                 <div class="info-context-text">
                   <h3>Macroeconomía y tasas (BCCh)</h3>
-                  <p>Series del Banco Central para leer las carteras: no es una industria, es el telón de fondo. <span data-alcance="sector.macro.conjuntos">24</span> tablas agrupadas en cuatro bloques.</p>
+                  <p>Series del Banco Central para leer las carteras: contexto macroeconómico, no una industria. <span data-alcance="sector.macro.conjuntos">24</span> tablas agrupadas en cuatro bloques.</p>
                 </div>
                 <ul class="info-context-blocks">
                   <li>Tasas y curvas</li>
@@ -381,6 +372,40 @@
               <span data-alcance="fuera.resumen">7 industrias · 15 conjuntos · 0,5 % de las filas</span>: siguen publicados, consultables y descargables.
               <button type="button" class="info-link-btn info-link-btn-muted" data-portada="alcance">Qué publica esta edición</button>
             </p>
+
+            <section class="info-block info-calidad" aria-labelledby="calidad-titulo">
+              <div class="info-section-kicker">CALIDAD DEL DATO</div>
+              <h2 id="calidad-titulo">La fuente repite filas en algunos meses</h2>
+              <p>En los archivos que las entidades remiten a la CMF hay posiciones informadas más de una vez: la misma fila, con los mismos valores, en el mismo período. El sitio las publica tal como llegan y mide cuántas son —<strong data-calidad="repetidas">230.288</strong> filas del catálogo son idénticas a otra fila del mismo objeto— para que una suma sin agrupar no sobreestime sin aviso.</p>
+              <p class="info-calidad-foot">El detalle objeto por objeto, con su porcentaje, está en el <a href="#dict-container" data-calidad-dict>Diccionario</a>.</p>
+              <details class="info-calidad-detalle">
+                <summary>Detalle técnico y verificación</summary>
+                <div class="info-calidad-detalle-cuerpo">
+                  <div class="info-hero-stats info-calidad-stats">
+                    <div class="info-stat"><b data-calidad="repetidas">230.288</b><span>filas idénticas publicadas</span></div>
+                    <div class="info-stat"><b data-calidad="objetos">22 de 90</b><span>objetos afectados</span></div>
+                    <div class="info-stat" title="ffmm_cartera_nacional: la tabla con más filas repetidas del catálogo"><b data-calidad="peor">160.564</b><span>en un solo objeto: <code data-calidad="peor-objeto">ffmm_cartera_nacional</code> (<span data-calidad="peor-pct">10,1 %</span>)</span></div>
+                    <div class="info-stat" title="Diferencia medida entre sumar la columna con las filas repetidas y sumarla sobre las filas distintas"><b data-calidad="sobreestima">9,7 %</b><span>de sobreestimación si sumas sin agrupar (<span data-calidad="ejemplo-periodo">2026-09</span>)</span></div>
+                  </div>
+                  <div class="info-calidad-grid">
+                    <figure class="info-calidad-figure">
+                      <div id="calidad-chart" class="calidad-chart" hidden></div>
+                      <figcaption>Los seis objetos con más filas idénticas. El conteo exacto aparece al pasar el puntero sobre cada barra.</figcaption>
+                    </figure>
+                    <div class="info-calidad-sql">
+                      <p>La medición es reproducible: esta consulta se ejecuta sobre los datos publicados, sin ningún cálculo previo de la página.</p>
+                      <pre class="info-calidad-code"><code data-calidad-sql>-- ffmm_cartera_nacional, 2026-09: filas publicadas frente a filas distintas
+WITH crudo AS (SELECT * FROM ffmm_cartera_nacional WHERE periodo = '2026-09'),
+     mes   AS (SELECT DISTINCT * FROM crudo)
+SELECT (SELECT count(*) FROM crudo) AS filas,
+       (SELECT count(*) FROM mes)   AS distintas;</code></pre>
+                      <button type="button" class="info-calidad-run" data-calidad-ejecutar>Ejecutar en la terminal SQL</button>
+                    </div>
+                  </div>
+                  <p class="info-calidad-foot">Puedes comprobarlo: ejecuta la consulta en la terminal SQL. El criterio y las decisiones de publicación están en <a href="https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/docs/notas/claves_duplicados_2026-10-23.md" rel="noopener">la nota de claves</a>.</p>
+                </div>
+              </details>
+            </section>
 
             <section class="info-two-columns">
               <div class="info-block info-block-compact">
@@ -410,8 +435,8 @@
 
 
             <section class="info-block info-scope" id="info-alcance">
-              <div class="info-section-kicker">LO QUE PUBLICA ESTA EDICIÓN</div>
-              <h2>Tres niveles y un archivo, todos consultables</h2>
+              <div class="info-section-kicker">ALCANCE</div>
+              <h2>Qué incluye cada grupo</h2>
               <div class="info-scope-grid">
                 <div class="info-scope-col">
                   <h3>Núcleo · inversión institucional</h3>
@@ -437,13 +462,13 @@
                   </ul>
                 </div>
               </div>
-              <p class="info-scope-foot"><span data-alcance="visible.resumen">74 conjuntos · más de 19 millones de filas (99,5 %)</span>. Todo se consulta en el explorador, se ejecuta en la terminal SQL y se baja desde <strong>Descargas</strong>, en Parquet, CSV o Excel.</p>
+              <p class="info-scope-foot"><span data-alcance="visible.resumen">74 conjuntos · más de 19 millones de filas (99,5 %)</span> del catálogo publicado.</p>
             </section>
 
             <section class="info-block info-processing-block">
               <div class="info-section-kicker">MODALIDAD DE PROCESAMIENTO</div>
               <h2>La fuente determina la ruta</h2>
-              <p>La etiqueta de cada tabla describe cómo se extrae y publica la información. “Híbrido” no significa que el resultado sea una foto fija: indica que la fuente requiere curación o extracción inicial fuera del flujo de trabajo programado, mientras que la validación, normalización y compilación posterior sí están versionadas y son reproducibles.</p>
+              <p>Cada tabla declara con qué ruta se extrae y publica. La modalidad describe el primer paso —la obtención en origen—; la validación, la normalización y la compilación posteriores están versionadas y son reproducibles en los tres casos.</p>
               <div class="info-highlight-row">
                 <div class="info-highlight">
                   <strong>Automático</strong>
@@ -808,32 +833,49 @@ sif-mcp                       # stdio
   </main> <!-- Cierre de main-container -->
 </div> <!-- Cierre de app-layout -->
 
+  <!-- Aviso para teléfonos: tarjeta flotante que se cierra y no vuelve en este
+       navegador. Vive fuera de `.app-layout` a propósito: es `position: fixed`
+       y ningún contenedor con `overflow: hidden` debe recortarla. El CSS la
+       oculta también por encima de 900 px, así que en escritorio no existe. -->
+  <aside class="aviso-movil" id="aviso-movil" role="dialog" aria-modal="false"
+         aria-labelledby="aviso-movil-titulo" aria-describedby="aviso-movil-texto" hidden>
+    <div class="aviso-movil-cabecera">
+      <strong id="aviso-movil-titulo">Este sitio está pensado para un computador.</strong>
+      <button type="button" class="aviso-movil-aspa" id="aviso-movil-aspa" aria-label="Cerrar el aviso">
+        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 3l10 10M13 3L3 13" /></svg>
+      </button>
+    </div>
+    <p class="aviso-movil-texto" id="aviso-movil-texto">El explorador, las consultas SQL y el mapa relacional necesitan una pantalla más grande. En el teléfono puedes leer y descargar, pero la experiencia completa se ve en un PC.</p>
+    <button type="button" class="aviso-movil-cerrar" id="aviso-movil-cerrar">Entendido</button>
+  </aside>
+
   <!-- Scripts de la Aplicación.
        La etiqueta ?v= de los 22 activos locales se sube con
        `python3 scripts/subir_etiqueta.py <motivo>` cuando cambia cualquier js/css:
        GitHub Pages cachea 10 minutos y, sin etiqueta nueva, quien ya entró sigue
        ejecutando el código viejo. `scripts/audit_interfaz.py` lo comprueba. -->
-  <script src="js/data_bundles.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/alcance.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/chart_renderer.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/erd_graph.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/sql_guard.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/duckdb_client.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/chat_terminal.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/busqueda_pregunta.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/sidebar.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/ux_shell.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/creditos.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/theme_switcher.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/estado_claves.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/data_dictionary.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/data_viewer.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/diccionario_seguros.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/download_utils.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/download_catalog.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/downloads_panel.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/portada.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
-  <script src="js/como_usar.js?v=fl-20261023-2009-mapa-y-cifras" defer></script>
+  <script src="js/data_bundles.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/alcance.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/chart_renderer.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/erd_graph.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/sql_guard.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/duckdb_client.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/chat_terminal.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/sidebar.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/ux_shell.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/creditos.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/theme_switcher.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/estado_claves.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/data_dictionary.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/data_viewer.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/download_utils.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/download_catalog.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/downloads_panel.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/portada.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/calidad_datos.js?v=fl-20261023-2145-portada-registro" defer></script>
+  <script src="js/como_usar.js?v=fl-20261023-2145-portada-registro" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {

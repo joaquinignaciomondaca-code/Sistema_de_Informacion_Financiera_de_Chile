@@ -319,6 +319,7 @@ en el explorador, en el diccionario y en Descargas.
 
 | Qué necesitas | Dónde |
 |---|---|
+| Decisiones, mediciones y auditorías | [Índice de notas](docs/notas/README.md): las 61 notas de `docs/notas/`, agrupadas por mes, con su resumen. Se genera con `python3 scripts/build_indice_notas.py` |
 | Auditar la base | `docs/reproducibilidad/`: diccionario CSV/JSON, inventario de archivos con SHA-256, cobertura por periodo y resumen de validación. Se regeneran con `python3 scripts/construir_reproducibilidad.py` |
 | Armar una copia local con hashes | `python3 scripts/construir_snapshot_academico.py --zip`: junta los 40 conjuntos del núcleo en una carpeta con `README.md`, `CHANGELOG.md` y el inventario SHA-256. Es una herramienta local; no hay copia publicada |
 | Fuentes, licencia y limitaciones | sección *Fuentes, licencia y limitaciones* de la web y `docs/notas/version_academica_y_privacidad_2026-10-20.md` |

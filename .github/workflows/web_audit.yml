@@ -460,6 +460,21 @@ jobs:
           echo "::notice title=DOM::$(tail -n 1 dom.log)"
           exit $n
 
+      - name: 'Aviso de teléfono: flota, se cierra por las tres vías y lo recuerda'
+        run: |
+          set +e
+          node scripts/audit_aviso_movil.js > aviso.log 2>&1; n=$?
+          grep -h -E "^FALLA" aviso.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Aviso de teléfono::$linea"; done
+          echo "::notice title=Aviso de teléfono::$(tail -n 1 aviso.log)"
+          exit $n
+
+      - name: 'Índice de notas: la puerta de entrada no puede quedarse atrás'
+        run: |
+          set +e
+          python3 scripts/build_indice_notas.py --check > notas.log 2>&1; n=$?
+          grep -h -E "INDICE-NOTAS" notas.log | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Índice de notas::$linea"; done
+          exit $n
+
       - name: 'Mapa relacional: los títulos caben y ninguna tarjeta se solapa'
         run: |
           set +e

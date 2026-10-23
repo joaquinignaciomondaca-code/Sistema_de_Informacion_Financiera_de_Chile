@@ -667,6 +667,31 @@ setTimeout(async () => {
   check("portada: el enlace discreto abre el archivo del explorador",
     document.querySelector("#sidebar-tree .tree-archive").classList.contains("open"));
 
+  // Calidad del dato: la explicación queda a la vista y el registro técnico
+  // (cifras, gráfico y consulta) nace plegado. El gráfico se pinta al abrirlo:
+  // cerrado no tiene ancho y el lienzo saldría vacío.
+  window.switchMainTab("info");
+  const calidad = document.querySelector(".info-calidad");
+  const detalleCalidad = calidad.querySelector("details.info-calidad-detalle");
+  const explicacion = calidad.querySelector(":scope > p");
+  check("calidad: el registro técnico arranca plegado",
+    Boolean(detalleCalidad) && detalleCalidad.open === false);
+  check("calidad: la explicación está en llano y lleva el número",
+    /filas del catálogo son idénticas/.test(explicacion.textContent)
+    && !/WITH crudo|count\(\*\)/.test(explicacion.textContent));
+  check("calidad: la advertencia y el enlace al Diccionario quedan a la vista",
+    Boolean(calidad.querySelector("h2")) &&
+    Boolean(calidad.querySelector(":scope > p.info-calidad-foot a[href='#dict-container']")));
+  const lienzoCalidad = document.getElementById("calidad-chart");
+  check("calidad: el gráfico no se construye con el plegable cerrado",
+    lienzoCalidad.hidden === true && !lienzoCalidad.querySelector("canvas"));
+  detalleCalidad.open = true;
+  detalleCalidad.dispatchEvent(new window.Event("toggle"));
+  check("calidad: al abrir el plegable aparecen el gráfico y la consulta",
+    lienzoCalidad.hidden === false && Boolean(lienzoCalidad.querySelector("canvas"))
+    && Boolean(detalleCalidad.querySelector("[data-calidad-sql]"))
+    && /230\.288/.test(detalleCalidad.textContent));
+
   const fallos = results.filter((r) => !r.ok);
   for (const r of results) console.log(`${r.ok ? "OK  " : "FALLA"}  ${r.name}${r.extra ? "  -> " + r.extra : ""}`);
   if (errors.length) {
