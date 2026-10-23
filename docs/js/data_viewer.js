@@ -213,6 +213,12 @@ const DV_COLUMNAS_TECNICAS = [
   /^formato_monto_fuente$/
 ];
 
+// Segunda línea de la cabecera: dice qué es cada casilla de una columna compuesta.
+const DV_SUBETIQUETAS = {
+  importes_fuente_raw: "nacional · reajustable IPC · reajustable por tipo de cambio · extranjera",
+  importe_clp: "suma de los cuatro componentes"
+};
+
 // Orden editorial de las columnas por vista: primero lo que describe el dato que se quiere
 // transmitir (periodo, institución, cuenta, importe) y después el perímetro y la
 // procedencia. `ocultas` son columnas redundantes para leer el estado financiero.
@@ -447,17 +453,40 @@ class DataViewerController {
     this.updateSortIcons(colIdx);
   }
 
+  // Los importes por moneda llegan como lista o como el texto JSON de esa lista,
+  // según los devuelva el motor: se aceptan las dos formas.
+  componentesMonto(val) {
+    if (Array.isArray(val)) return val;
+    if (typeof val !== "string") return null;
+    const texto = val.trim();
+    if (!/^\[.*\]$/.test(texto)) return null;
+    // Los importes de hasta 2024-05 traen coma decimal («26458735676131,00»), así que
+    // la coma también separa componentes: un trozo de dos dígitos es la parte decimal
+    // del anterior, no un importe nuevo.
+    const partes = [];
+    for (const trozo of texto.slice(1, -1).replace(/"/g, "").split(",")) {
+      const limpio = trozo.trim();
+      if (limpio === "") continue;
+      if (/^\d{2}$/.test(limpio) && partes.length > 0) partes[partes.length - 1] += "," + limpio;
+      else partes.push(limpio);
+    }
+    return partes;
+  }
+
+  // Importe de un componente: entero de 15 dígitos o, hasta 2024-05, con coma decimal.
+  formatearComponente(valor) {
+    const texto = String(valor).trim();
+    const normalizado = texto.replace(/\./g, "").replace(",", ".");
+    if (!/^-?\d+(\.\d+)?$/.test(normalizado)) return dvEscapar(texto);
+    return Number(normalizado).toLocaleString("es-CL", { maximumFractionDigits: 0 });
+  }
+
   formatCell(colName, val) {
     if (val === null || val === undefined) return '<span class="cell-null">—</span>';
-    // Las columnas de importes fuente llegan como lista: mostrarlas separadas se
-    // lee mejor que el volcado crudo del arreglo.
-    // Desglose por moneda: cada componente se muestra como importe legible, en el mismo
-    // orden que trae la fuente.
-    if (Array.isArray(val)) {
-      return dvEscapar(val.map((v) => (/^\d+$/.test(String(v))
-        ? Number(v).toLocaleString("es-CL", { maximumFractionDigits: 0 })
-        : String(v))).join(" · "));
-    }
+    // Desglose por moneda: los cuatro componentes se leen como importes separados,
+    // en el mismo orden que trae la fuente, en vez del volcado del arreglo.
+    const componentes = this.componentesMonto(val);
+    if (componentes) return dvEscapar(componentes.map((c) => this.formatearComponente(c)).join(" · "));
     if (typeof val !== "number") return dvEscapar(val);
 
     const lower = colName.toLowerCase();
@@ -660,11 +689,13 @@ class DataViewerController {
     const headersHtml = mostradas.map((col, idx) => {
       const activa = this.sortCol === col;
       const orden = activa ? (this.sortAsc ? "ascending" : "descending") : "none";
+      const subetiqueta = DV_SUBETIQUETAS[col];
       return `
       <th scope="col" aria-sort="${orden}">
         <button type="button" class="th-sort-btn" onclick="window.DataViewer.sortTable(${idx})" title="Ordenar por ${dvEscapar(col)}">
           ${dvEscapar(col)}<span class="dv-sort-icon" id="dv_sort_${idx}"></span>
         </button>
+        ${subetiqueta ? `<span class="dv-th-sub">${dvEscapar(subetiqueta)}</span>` : ""}
       </th>
     `;
     }).join("");
