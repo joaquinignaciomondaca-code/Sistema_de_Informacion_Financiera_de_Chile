@@ -3,7 +3,7 @@
 <!-- Generado por scripts/build_indice_notas.py. No editar a mano:
      --check falla si no coincide con las notas de la carpeta. -->
 
-Las 63 notas de esta carpeta. Cada una registra una decisión, una
+Las 60 notas de esta carpeta. Cada una registra una decisión, una
 medición o una corrección, con la fecha en que se hizo y el motivo. Se citan
 desde el código, la web y las respuestas a las revisiones externas, así que
 están escritas para poder verificarse: qué se afirmó, contra qué se contrastó
@@ -17,6 +17,7 @@ Para añadir una: crea `AAAA-MM-DD_tema.md` con un `# Título` y ejecuta
 
 - [Banca: valores normalizados y maestro validado — 2026-10-23](ruta_banca_valores_2026-10-23.md) — Dos cosas en la sección «Banca y estados financieros CMF»:
 - [Revisión externa del 2026-10-23: qué aguanta y qué no](revision_externa_2026-10-23.md) — una revisión externa del sitio afirmó que ffmmcarteranacional publica
+- [La repetición no es ocasional: se midió período por período](repeticion_por_periodo_2026-10-23.md) — una revisión externa señaló que el titular de la portada decía
 - [La portada, escrita para quien entra por primera vez](portada_registro_2026-10-23.md) — revisión de la portada «de cara a una persona que entra a la
 - [La portada muestra lo que el proyecto mide](portada_calidad_2026-10-23.md) — una revisión externa del sitio desplegado dijo que la capa técnica ya
 - [Mapa relacional, cifras y contrato: lo que se corrigió el 2026-10-23](mapa_cifras_2026-10-23.md) — tres defectos vistos en pantalla —los títulos del mapa relacional se
@@ -37,9 +38,6 @@ Para añadir una: crea `AAAA-MM-DD_tema.md` con un `# Título` y ejecuta
 - [Evaluación de Hallmark — 2026-10-21](evaluacion_hallmark_2026-10-21.md) — revisar <https://github.com/Nutlope/hallmark> y decidir si sirve para este proyecto.
 - [Evaluación de ECC — 2026-10-21](evaluacion_ecc_2026-10-21.md) — revisar <https://github.com/affaan-m/ECC> y decidir si sirve para este proyecto.
 - [Diseño: cierre de los hallazgos del detector — 2026-10-21](diseno_detector_2026-10-21.md) — 73 hallazgos primarios tras la corrección de contraste y tipografía
-- [corrida security audit skill 2026-10-21 metadatos](corrida_security_audit_skill_2026-10-21_metadatos.json)
-- [corrida security audit skill 2026-10-21 findings](corrida_security_audit_skill_2026-10-21_findings.json)
-- [corrida security audit skill 2026-10-21 cobertura](corrida_security_audit_skill_2026-10-21_cobertura.json)
 - [Corrida completa de `security-audit-skill` — 2026-10-21](corrida_security_audit_skill_2026-10-21.md) — ejecutar de verdad la skill cloudflare/security-audit-skill sobre el sitio, no
 - [Contraste y piso tipográfico — 2026-10-21](contraste_y_tipografia_2026-10-21.md) — aplicar las correcciones que salieron de la evaluación de Impeccable
 - [Circular 1835 completa y vistas analíticas — 2026-10-21](circular_1835_extendida_2026-10-21.md) — El catálogo y el extractor ahora cubren los registros B.1–B.14 del anexo técnico, en el orden del manual.
@@ -60,7 +58,6 @@ Para añadir una: crea `AAAA-MM-DD_tema.md` con un `# Título` y ejecuta
 - [Auditoría de calidad de datos FI — 2026-10-07](auditoria_calidad_fi_2026-10-07.md) — Revisión local de los extractores fi/scripts/actualizarcarteras.py y fi/scripts/eeffxml.py,
 - [Revisión de la extracción de balance y estado de resultados por industria](revision_extraccion_eeff_industrias_2026-10-01.md) — Fecha: 2026-10-01 · Alcance: la lógica que convierte las fuentes de la CMF en las tablas
 - [Revisión de cobertura de fondos de inversión — 2026-06](revision_cobertura_fi_2026-10-01.md) — no falta una categoría completa.
-- [revision cobertura fi 2026-10-01](revision_cobertura_fi_2026-10-01.json)
 - [Balance y estado de resultados de fondos mutuos (FFMM): cómo obtenerlos del XML de la CMF](ffmm_estados_financieros_xml_2026-10-01.md) — IMPLEMENTADO y publicado el 2026-10-01 (ffmmbalance y ffmmresultados, workflow ffmmeeff.yml,
 
 ## septiembre de 2026

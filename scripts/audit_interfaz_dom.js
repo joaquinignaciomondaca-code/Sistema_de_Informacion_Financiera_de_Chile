@@ -676,8 +676,17 @@ setTimeout(async () => {
   const explicacion = calidad.querySelector(":scope > p");
   check("calidad: el registro técnico arranca plegado",
     Boolean(detalleCalidad) && detalleCalidad.open === false);
-  check("calidad: la explicación está en llano y lleva el número",
-    /filas del catálogo son idénticas/.test(explicacion.textContent)
+  // El titular lleva las cifras y ellas salen del catálogo: si alguien las
+  // escribe a mano, audit_cifras.js falla; y no puede afirmar una periodicidad
+  // («en algunos meses») que el catálogo no mide.
+  const titularCalidad = calidad.querySelector("h2");
+  check("calidad: el titular lleva sus dos cifras como datos medidos",
+    titularCalidad.querySelectorAll("[data-calidad]").length === 2
+    && /230\.288/.test(titularCalidad.textContent)
+    && /22 de 90/.test(titularCalidad.textContent)
+    && !/algunos meses/.test(titularCalidad.textContent));
+  check("calidad: la explicación está en llano y no cita SQL",
+    explicacion.textContent.trim().split(/[.!?]/).filter(Boolean).length <= 2
     && !/WITH crudo|count\(\*\)/.test(explicacion.textContent));
   check("calidad: la advertencia y el enlace al Diccionario quedan a la vista",
     Boolean(calidad.querySelector("h2")) &&
