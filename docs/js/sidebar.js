@@ -528,8 +528,8 @@ const EXPLORER_TREE = [
             sector: "bancos",
             open: false,
             chips: [
-              { label: "Total de activos por banco (último periodo)", query: "SELECT codigo_institucion, nombre_institucion_fuente, importe_clp FROM bancos_balance WHERE modelo_cmf = 'MB1' AND codigo_cuenta = '100000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_balance) ORDER BY importe_clp DESC;" },
-              { label: "Muestra de líneas de balance B1/B2", query: "SELECT periodo, codigo_institucion, nombre_institucion_fuente, familia_archivo_fuente, codigo_cuenta, glosa_cuenta, importe_clp, formato_monto_fuente, importes_fuente_raw, numero_fila_fuente FROM bancos_balance ORDER BY periodo DESC, codigo_institucion, familia_archivo_fuente, numero_fila_fuente LIMIT 100;" },
+              { label: "Total de activos por banco (último periodo)", query: "SELECT codigo_institucion, razon_social, importe_clp FROM bancos_balance WHERE modelo_cmf = 'MB1' AND codigo_cuenta = '100000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_balance) ORDER BY importe_clp DESC;" },
+              { label: "Muestra de líneas de balance B1/B2", query: "SELECT periodo, codigo_institucion, razon_social, familia_archivo_fuente, codigo_cuenta, glosa_cuenta, tipo_linea, importe_clp, importes_fuente_raw, numero_fila_fuente FROM bancos_balance ORDER BY periodo DESC, codigo_institucion, familia_archivo_fuente, numero_fila_fuente LIMIT 100;" },
               { label: "Cobertura de balance por periodo y modelo", query: "SELECT periodo, familia_archivo_fuente, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_balance GROUP BY periodo, familia_archivo_fuente, modelo_cmf ORDER BY periodo DESC, familia_archivo_fuente;" }
             ],
             tables: [
@@ -546,8 +546,8 @@ const EXPLORER_TREE = [
             sector: "bancos",
             open: false,
             chips: [
-              { label: "Utilidad del ejercicio por banco (último periodo)", query: "SELECT codigo_institucion, nombre_institucion_fuente, importe_clp FROM bancos_resultados WHERE codigo_cuenta = '590000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_resultados) ORDER BY importe_clp DESC;" },
-              { label: "Muestra de líneas de resultados R1", query: "SELECT periodo, codigo_institucion, nombre_institucion_fuente, codigo_cuenta, glosa_cuenta, importe_clp, formato_monto_fuente, importes_fuente_raw, numero_fila_fuente FROM bancos_resultados ORDER BY periodo DESC, codigo_institucion, numero_fila_fuente LIMIT 100;" },
+              { label: "Utilidad del ejercicio por banco (último periodo)", query: "SELECT codigo_institucion, razon_social, importe_clp FROM bancos_resultados WHERE codigo_cuenta = '590000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_resultados) ORDER BY importe_clp DESC;" },
+              { label: "Muestra de líneas de resultados R1", query: "SELECT periodo, codigo_institucion, razon_social, codigo_cuenta, glosa_cuenta, tipo_linea, importe_clp, importes_fuente_raw, numero_fila_fuente FROM bancos_resultados ORDER BY periodo DESC, codigo_institucion, numero_fila_fuente LIMIT 100;" },
               { label: "Cobertura de resultados por periodo", query: "SELECT periodo, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_resultados GROUP BY periodo, modelo_cmf ORDER BY periodo DESC;" }
             ],
             tables: [

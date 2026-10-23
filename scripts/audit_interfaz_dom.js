@@ -455,13 +455,11 @@ setTimeout(async () => {
   // Columnas del visor: un estado financiero se lee como el estado (periodo, institución,
   // cuenta, importe), no como el volcado técnico del archivo de origen. Las columnas
   // técnicas no se borran: quedan tras el botón «Todas las columnas».
+  // Las 13 columnas que publica `bancos_cmf_lineas` desde el recorte de esquema.
   const COLUMNAS_BALANCE = [
-    "id", "periodo", "fecha_corte", "codigo_institucion", "rut", "razon_social",
-    "nombre_institucion_fuente", "tipo_estado", "familia_archivo_fuente", "modelo_cmf",
-    "nivel_consolidacion", "codigo_cuenta", "rubro", "linea", "item", "glosa_cuenta",
-    "tipo_linea", "numero_fila_fuente", "ocurrencia_codigo_cuenta", "unidad_monto",
-    "importes_fuente_raw", "importes_fuente_decimal", "importe_clp", "formato_monto_fuente",
-    "archivo_fuente", "fuente_url_zip", "sha256_zip", "fuente_url_xlsx_cotejo", "sha256_xlsx_cotejo"
+    "periodo", "codigo_institucion", "rut", "razon_social", "codigo_cuenta",
+    "glosa_cuenta", "tipo_linea", "importe_clp", "importes_fuente_raw",
+    "familia_archivo_fuente", "modelo_cmf", "nivel_consolidacion", "numero_fila_fuente"
   ];
   // El nombre de la columna está en el botón de orden; la subetiqueta va aparte.
   const cabecerasVisor = () => [...document.querySelectorAll("#data-viewer-container .dv-table th .th-sort-btn")]
@@ -471,18 +469,12 @@ setTimeout(async () => {
   // Fila real: 2022-01, Banco de Chile, TOTAL ACTIVOS. El desglose por moneda llega
   // como el texto JSON de la lista (así lo devuelve el motor), no como arreglo.
   window.DataViewer.currentRows = [{
-    id: "x", periodo: "2022-01", fecha_corte: "2022-01-31", codigo_institucion: "001",
-    rut: "97004000", razon_social: "Banco de Chile", nombre_institucion_fuente: "BANCO DE CHILE",
-    tipo_estado: "balance", familia_archivo_fuente: "B1", modelo_cmf: "MB1",
-    nivel_consolidacion: "consolidado_global", codigo_cuenta: "100000000", rubro: "10000", linea: "00",
-    item: "00", glosa_cuenta: "TOTAL ACTIVOS", tipo_linea: "total", numero_fila_fuente: 3,
-    ocurrencia_codigo_cuenta: 0, unidad_monto: "pesos_clp",
-    importes_fuente_raw: "[26458735676131,00,18194231752989,00,0086353276604,00,5425082730722,00]",
-    importes_fuente_decimal: "[26458735676131.00,18194231752989.00,8635327660.4,5425082730722.00]",
+    periodo: "2022-01", codigo_institucion: "001", rut: "97004000", razon_social: "Banco de Chile",
+    codigo_cuenta: "100000000", glosa_cuenta: "TOTAL ACTIVOS", tipo_linea: "total",
     importe_clp: 50164403436446,
-    formato_monto_fuente: "decimal_coma", archivo_fuente: "B1/2022-01.txt",
-    fuente_url_zip: "https://www.cmfchile.cl/x.zip", sha256_zip: "0".repeat(64),
-    fuente_url_xlsx_cotejo: "https://www.cmfchile.cl/x.xlsx", sha256_xlsx_cotejo: "1".repeat(64)
+    importes_fuente_raw: "[26458735676131,00,18194231752989,00,0086353276604,00,5425082730722,00]",
+    familia_archivo_fuente: "B1", modelo_cmf: "MB1", nivel_consolidacion: "consolidado_global",
+    numero_fila_fuente: 3
   }];
   window.DataViewer.mostrarTodasLasColumnas = false;
   window.DataViewer.render();
@@ -490,22 +482,20 @@ setTimeout(async () => {
     cabecerasVisor().slice(0, 8).join(",") ===
       "periodo,codigo_institucion,rut,razon_social,codigo_cuenta,glosa_cuenta,tipo_linea,importe_clp",
     cabecerasVisor().slice(0, 8).join(","));
-  check("visor: las columnas técnicas y las derivadas no ocupan la tabla",
-    cabecerasVisor().length === 12 &&
-    !cabecerasVisor().some((c) => ["id", "sha256_zip", "fuente_url_zip", "archivo_fuente", "rubro",
-      "linea", "item", "fecha_corte", "tipo_estado", "unidad_monto", "importes_fuente_decimal"]
-      .includes(c)), cabecerasVisor().join(","));
+  check("visor: la traza a la línea del TXT no ocupa la tabla",
+    cabecerasVisor().length === 12 && !cabecerasVisor().includes("numero_fila_fuente"),
+    cabecerasVisor().join(","));
   const botonColumnas = document.querySelector("#data-viewer-container .dv-cols-btn");
   check("visor: hay un botón que ofrece las columnas restantes",
-    Boolean(botonColumnas) && /Todas las columnas \(29\)/.test(botonColumnas.textContent) &&
+    Boolean(botonColumnas) && /Todas las columnas \(13\)/.test(botonColumnas.textContent) &&
     /window\.DataViewer\.alternarColumnas\(\)/.test(botonColumnas.getAttribute("onclick")));
   // jsdom en modo "outside-only" no ejecuta los onclick en línea: se llama al método
   // que el botón invoca y se comprueba aparte que el botón lo tenga enlazado.
   window.DataViewer.alternarColumnas();
-  check("visor: el botón devuelve las 29 columnas en el mismo orden editorial",
+  check("visor: el botón devuelve las 13 columnas en el mismo orden editorial",
     cabecerasVisor().length === COLUMNAS_BALANCE.length &&
     cabecerasVisor().slice(0, 2).join(",") === "periodo,codigo_institucion" &&
-    cabecerasVisor().slice(-2).join(",") === "fuente_url_xlsx_cotejo,sha256_xlsx_cotejo",
+    cabecerasVisor().slice(-1).join(",") === "numero_fila_fuente",
     cabecerasVisor().length + " columnas");
   window.DataViewer.alternarColumnas();
   check("visor: se vuelve a las columnas del dato",
