@@ -3,7 +3,7 @@
 <!-- Generado por scripts/build_indice_notas.py. No editar a mano:
      --check falla si no coincide con las notas de la carpeta. -->
 
-Las 62 notas de esta carpeta. Cada una registra una decisión, una
+Las 63 notas de esta carpeta. Cada una registra una decisión, una
 medición o una corrección, con la fecha en que se hizo y el motivo. Se citan
 desde el código, la web y las respuestas a las revisiones externas, así que
 están escritas para poder verificarse: qué se afirmó, contra qué se contrastó
@@ -17,6 +17,7 @@ Para añadir una: crea `AAAA-MM-DD_tema.md` con un `# Título` y ejecuta
 
 - [Banca: valores normalizados y maestro validado — 2026-10-23](ruta_banca_valores_2026-10-23.md) — Dos cosas en la sección «Banca y estados financieros CMF»:
 - [Revisión externa del 2026-10-23: qué aguanta y qué no](revision_externa_2026-10-23.md) — una revisión externa del sitio afirmó que ffmmcarteranacional publica
+- [La portada, escrita para quien entra por primera vez](portada_registro_2026-10-23.md) — revisión de la portada «de cara a una persona que entra a la
 - [La portada muestra lo que el proyecto mide](portada_calidad_2026-10-23.md) — una revisión externa del sitio desplegado dijo que la capa técnica ya
 - [Mapa relacional, cifras y contrato: lo que se corrigió el 2026-10-23](mapa_cifras_2026-10-23.md) — tres defectos vistos en pantalla —los títulos del mapa relacional se
 - [Claves primarias: el defecto del 2026-10-23 y su corrección](claves_duplicados_2026-10-23.md) — scripts/verificarclaves.py, docs/api/claves.csv y el contrato docs/api/v2/.
