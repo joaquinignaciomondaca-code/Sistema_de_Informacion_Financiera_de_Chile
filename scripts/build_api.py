@@ -44,8 +44,11 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parent.parent
 DOCS = RAIZ / "docs"
 API = DOCS / "api"
-V2 = API / "v2"
 sys.path.insert(0, str(RAIZ / "scripts"))
+
+from version_contrato import API_VERSION, VERSION_CONTRATO  # noqa: E402
+
+V2 = API / API_VERSION
 
 import audit_consultas_sugeridas as ac  # noqa: E402
 from pipelines.api import fuentes as F  # noqa: E402
@@ -60,11 +63,6 @@ RECONCILIACION = API / "reconciliacion.csv"
 # (tarea 0.1) sigue abierta: hasta entonces el descriptor la marca provisional.
 SITIO = "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/"
 REPO = "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile"
-
-API_VERSION = "v2"
-# semver del descriptor; la regla está en la ruta (0.3). Sube a 2.0.0 por el recorte de
-# columnas publicado en `pipelines/esquema_publicado.py`: quitar columnas rompe clientes.
-VERSION_CONTRATO = "2.0.0"
 
 TIPOS = {
     "VARCHAR": "string",

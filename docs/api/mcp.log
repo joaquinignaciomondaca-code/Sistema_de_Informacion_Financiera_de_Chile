@@ -1,4 +1,4 @@
-# Servidor MCP · 2026-10-23T04:10:11
+# Servidor MCP · 2026-10-23T04:57:17
 
 OK    2.1 herramientas · 2 herramientas: ['sif_buscar', 'sif_ejecutar']
 OK    2.2 presupuesto · 191 tokens de 1000 permitidos (764 caracteres; 88 herramientas ≈ 37.000)
@@ -6,7 +6,7 @@ OK    2.3 descubrir · «dónde invierten fuera de Chile los fondos mutuos» →
 OK    2.3 responder · 5 filas; en cabeza ['US', 'LU', 'IE', 'BR', 'GB'] (se esperaba ['IE', 'LU', 'US'])
 OK    2.3 error útil · error con pista: Esa tabla o columna no existe en el contrato: búscala con si
 OK    2.3 solo lectura · el guardia rechaza DROP y responde con JSON
-OK    2.3 llamadas · 5 llamadas en 0.30 s
+OK    2.3 llamadas · 5 llamadas en 0.41 s
 
-Duración: 1.8 s · comprobaciones: 7 · fallos: 0
+Duración: 1.9 s · comprobaciones: 7 · fallos: 0
 MCP: dos herramientas, presupuesto de contexto y pregunta del README en verde
