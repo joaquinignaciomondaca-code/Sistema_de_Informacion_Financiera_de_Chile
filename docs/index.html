@@ -46,7 +46,7 @@
         href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
-  <link rel="stylesheet" href="css/app.css?v=fl-20261023-2049-calidad-del-dato">
+  <link rel="stylesheet" href="css/app.css?v=fl-20261023-2115-aviso-emergente">
 
   <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
        Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
@@ -187,16 +187,6 @@
 
     <!-- Contenedor Principal en 2 Paneles Divididos -->
     <main class="main-container" id="main-content" tabindex="-1">
-
-      <!-- Aviso para teléfonos: se cierra y no vuelve a aparecer en este navegador.
-           El CSS lo oculta por encima de 900 px, así que en escritorio no existe. -->
-      <div class="aviso-movil" id="aviso-movil" role="region" aria-label="Recomendación de uso en teléfono" hidden>
-        <div class="aviso-movil-texto">
-          <strong>Este sitio está pensado para un computador.</strong>
-          <span>El explorador, las consultas SQL y el mapa relacional necesitan una pantalla más grande. En el teléfono puedes leer y descargar, pero la experiencia completa se ve en un PC.</span>
-        </div>
-        <button type="button" class="aviso-movil-cerrar" id="aviso-movil-cerrar">Entendido</button>
-      </div>
 
       <!-- PANEL SUPERIOR: MAPA RELACIONAL Y DICCIONARIO -->
       <div class="top-panel">
@@ -837,33 +827,49 @@ sif-mcp                       # stdio
   </main> <!-- Cierre de main-container -->
 </div> <!-- Cierre de app-layout -->
 
+  <!-- Aviso para teléfonos: tarjeta flotante que se cierra y no vuelve en este
+       navegador. Vive fuera de `.app-layout` a propósito: es `position: fixed`
+       y ningún contenedor con `overflow: hidden` debe recortarla. El CSS la
+       oculta también por encima de 900 px, así que en escritorio no existe. -->
+  <aside class="aviso-movil" id="aviso-movil" role="dialog" aria-modal="false"
+         aria-labelledby="aviso-movil-titulo" aria-describedby="aviso-movil-texto" hidden>
+    <div class="aviso-movil-cabecera">
+      <strong id="aviso-movil-titulo">Este sitio está pensado para un computador.</strong>
+      <button type="button" class="aviso-movil-aspa" id="aviso-movil-aspa" aria-label="Cerrar el aviso">
+        <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 3l10 10M13 3L3 13" /></svg>
+      </button>
+    </div>
+    <p class="aviso-movil-texto" id="aviso-movil-texto">El explorador, las consultas SQL y el mapa relacional necesitan una pantalla más grande. En el teléfono puedes leer y descargar, pero la experiencia completa se ve en un PC.</p>
+    <button type="button" class="aviso-movil-cerrar" id="aviso-movil-cerrar">Entendido</button>
+  </aside>
+
   <!-- Scripts de la Aplicación.
        La etiqueta ?v= de los 22 activos locales se sube con
        `python3 scripts/subir_etiqueta.py <motivo>` cuando cambia cualquier js/css:
        GitHub Pages cachea 10 minutos y, sin etiqueta nueva, quien ya entró sigue
        ejecutando el código viejo. `scripts/audit_interfaz.py` lo comprueba. -->
-  <script src="js/data_bundles.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/alcance.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/chart_renderer.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/erd_graph.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/sql_guard.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/duckdb_client.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/chat_terminal.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/busqueda_pregunta.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/sidebar.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/ux_shell.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/creditos.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/theme_switcher.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/estado_claves.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/data_dictionary.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/data_viewer.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/diccionario_seguros.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/download_utils.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/download_catalog.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/downloads_panel.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/portada.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/calidad_datos.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
-  <script src="js/como_usar.js?v=fl-20261023-2049-calidad-del-dato" defer></script>
+  <script src="js/data_bundles.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/alcance.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/chart_renderer.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/erd_graph.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/sql_guard.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/duckdb_client.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/chat_terminal.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/sidebar.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/ux_shell.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/creditos.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/theme_switcher.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/estado_claves.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/data_dictionary.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/data_viewer.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/download_utils.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/download_catalog.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/downloads_panel.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/portada.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/calidad_datos.js?v=fl-20261023-2115-aviso-emergente" defer></script>
+  <script src="js/como_usar.js?v=fl-20261023-2115-aviso-emergente" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
