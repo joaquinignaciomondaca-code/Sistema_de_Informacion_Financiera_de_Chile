@@ -6,16 +6,16 @@
  "particiones": [
   {
    "archivo": "outputs/macro/macro_deuda_publica_pct_pib.parquet",
-   "bytes": 3189,
+   "bytes": 3180,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_deuda_publica_pct_pib.parquet",
    "periodo": "macro_deuda_publica_pct_pib",
-   "sha256": "a110f12233db85ddec49e3275765b43bb417f74816cbee8cb86bc0ded7b31d16"
+   "sha256": "8d8e4fb003369b4518009b14797cf811587f2ec2b587fe481e8f737bbd194778"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 3189,
-  "filas": 49
+  "bytes": 3180,
+  "filas": 50
  },
  "version": "2.0.1"
 }

@@ -6,16 +6,16 @@
  "particiones": [
   {
    "archivo": "outputs/macro/macro_euro_observado.parquet",
-   "bytes": 24525,
+   "bytes": 24530,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_euro_observado.parquet",
    "periodo": "macro_euro_observado",
-   "sha256": "f358a84d4e61381ad7145316d978ca41b3d8275295f2d1f1f4b97bd2bb51885c"
+   "sha256": "4d0ac58591178dd413552fda9df2bdd13c52a29e2585cd7abd1d16c7c173afdb"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 24525,
-  "filas": 3189
+  "bytes": 24530,
+  "filas": 3190
  },
  "version": "2.0.1"
 }
