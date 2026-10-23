@@ -1,6 +1,6 @@
 {
  "contrato": "sif-api/resultados",
- "version": "1.0.0",
+ "version": "2.0.0",
  "base": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile",
  "data_release": "2026-10-22.9c002673eed5",
  "generado": "2026-10-23",
@@ -9,7 +9,7 @@
  "bytes": 825399,
  "truncadas": 2,
  "max_filas": 500,
- "nota": "Resultados calculados en el build sobre el mismo Parquet que publica el sitio. No es SQL arbitrario: son las 156 consultas del catálogo, cada una con su SQL a la vista para poder reproducirla o discutirla.",
+ "nota": "Resultados calculados en el build sobre el mismo Parquet que publica el sitio. No es SQL arbitrario: son las 159 consultas del catálogo, cada una con su SQL a la vista para poder reproducirla o discutirla.",
  "como_se_genera": "python3 scripts/build_resultados.py",
  "consultas": [
   {
