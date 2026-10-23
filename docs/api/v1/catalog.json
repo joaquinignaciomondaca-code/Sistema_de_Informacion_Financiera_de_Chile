@@ -3,7 +3,7 @@
  "base": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile",
  "como_se_genera": "python3 scripts/build_contrato.py",
  "contrato": "sif-api/catalogo",
- "data_release": "2026-10-22.ce8f0befbcb2",
+ "data_release": "2026-10-22.4c4ee99027d6",
  "generado": "2026-10-23",
  "objetos": [
   {
@@ -140,7 +140,7 @@
     "bancos_cmf_balance"
    ],
    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-   "bytes": 29459107,
+   "bytes": 16530765,
    "corte": "2022-01 a 2026-08",
    "deriva_de": "bancos_cmf_lineas",
    "descripcion": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Conserva los campos monetarios originales y agrega `importe_clp`, el importe en pesos con el que se suma y se lee cada línea.",
@@ -156,8 +156,10 @@
    "particiones": 56,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/bancos_balance.json",
    "primaryKey": [
+    "periodo",
+    "codigo_institucion",
     "codigo_cuenta",
-    "id"
+    "modelo_cmf"
    ],
    "sector": "bancos",
    "sql_view": "bancos_balance",
@@ -201,7 +203,7 @@
     "bancos_cmf_resultados"
    ],
    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-   "bytes": 29459107,
+   "bytes": 16530765,
    "corte": "2022-01 a 2026-08",
    "deriva_de": "bancos_cmf_lineas",
    "descripcion": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Conserva los campos monetarios originales y agrega `importe_clp`, el importe en pesos con el que se suma y se lee cada línea.",
@@ -217,8 +219,10 @@
    "particiones": 56,
    "particiones_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/partitions/bancos_resultados.json",
    "primaryKey": [
+    "periodo",
+    "codigo_institucion",
     "codigo_cuenta",
-    "id"
+    "modelo_cmf"
    ],
    "sector": "bancos",
    "sql_view": "bancos_resultados",
@@ -2822,7 +2826,7 @@
  },
  "totales": {
   "alias": 19,
-  "bytes": 532658991,
+  "bytes": 506802307,
   "con_datos": 86,
   "consultas": 159,
   "derivados": 7,

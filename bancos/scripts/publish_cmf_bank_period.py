@@ -37,6 +37,7 @@ from bancos.scripts.inspect_cmf_bank_sample import (
     find_source,
     period_label,
 )
+from pipelines.esquema_publicado import proyectar
 
 ROOT = Path(__file__).resolve().parents[2]
 OUTPUT_ROOT = ROOT / "docs" / "outputs" / "bancos" / "cmf_b1_b2_r1"
@@ -358,7 +359,10 @@ def publish_period(period: str, dry_run: bool = False) -> dict:
         import pyarrow.parquet as pq
     except ImportError as exc:
         raise RuntimeError("pyarrow es obligatorio para crear las particiones Parquet") from exc
-    table = pa.Table.from_pylist(rows)
+    # La fila completa se usa para validar (cotejo con el XLSX, suma por moneda,
+    # ocurrencia de cuentas) y para reproducir la partición; se publica sólo el
+    # esquema declarado en pipelines/esquema_publicado.py.
+    table = pa.Table.from_pylist(proyectar(rows, DATASET_ID))
     period_dir.mkdir(parents=True, exist_ok=False)
     temp_parquet = period_dir / "lineas.parquet.tmp"
     old_partition_manifest = PARTITION_MANIFEST.read_bytes() if PARTITION_MANIFEST.exists() else None

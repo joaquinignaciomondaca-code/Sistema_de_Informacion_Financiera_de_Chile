@@ -1,19 +1,19 @@
 {
  "contrato": "sif-api/resultado",
- "id": "muestra-de-lineas-de-resultados-r1-1c6b1f",
+ "id": "muestra-de-lineas-de-resultados-r1-2a300a",
  "titulo": "Muestra de líneas de resultados R1",
  "origen": "explorador",
- "data_release": "2026-10-22.ce8f0befbcb2",
+ "data_release": "2026-10-22.4c4ee99027d6",
  "generado": "2026-10-23",
  "max_filas": 500,
  "columnas": [
   "periodo",
   "codigo_institucion",
-  "nombre_institucion_fuente",
+  "razon_social",
   "codigo_cuenta",
   "glosa_cuenta",
+  "tipo_linea",
   "importe_clp",
-  "formato_monto_fuente",
   "importes_fuente_raw",
   "numero_fila_fuente"
  ],
@@ -23,11 +23,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411000000",
    "INGRESOS POR INTERESES",
+   "subtotal",
    1850110655859,
-   "entero_15",
    [
     "001850110655859"
    ],
@@ -36,11 +36,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411100000",
    "ACTIVOS FINANCIEROS A COSTO AMORTIZADO",
+   "subtotal",
    1753546122092,
-   "entero_15",
    [
     "001753546122092"
    ],
@@ -49,11 +49,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411150000",
    "Derechos por pactos de retroventa y prestamos de valores",
+   "subtotal",
    4193577117,
-   "entero_15",
    [
     "000004193577117"
    ],
@@ -62,11 +62,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411150100",
    "Operaciones con bancos del país",
+   "subtotal",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -75,11 +75,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411150101",
    "Contratos de retroventa con otros bancos",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -88,11 +88,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411150102",
    "Contratos de retroventa con Banco Central de Chile",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -101,11 +101,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411150103",
    "Derechos por préstamos de valores",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -114,11 +114,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411150200",
    "Operaciones con bancos del exterior",
+   "subtotal",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -127,11 +127,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411150201",
    "Contratos de retroventa con otros bancos",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -140,11 +140,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411150202",
    "Contratos de retroventa con Bancos Centrales del exterior",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -153,11 +153,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411150203",
    "Derechos por préstamos de valores",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -166,11 +166,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411150300",
    "Operaciones con otras entidades en el país",
+   "subtotal",
    4193577117,
-   "entero_15",
    [
     "000004193577117"
    ],
@@ -179,11 +179,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411150301",
    "Contratos de retroventa",
+   "detalle",
    4193577117,
-   "entero_15",
    [
     "000004193577117"
    ],
@@ -192,11 +192,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411150302",
    "Derechos por préstamos de valores",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -205,11 +205,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411150400",
    "Operaciones con otras entidades en el exterior",
+   "subtotal",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -218,11 +218,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411150401",
    "Contratos de retroventa",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -231,11 +231,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411150402",
    "Derechos por préstamos de valores",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -244,11 +244,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411200000",
    "Instrumentos financieros de deuda",
+   "subtotal",
    7651633220,
-   "entero_15",
    [
     "000007651633220"
    ],
@@ -257,11 +257,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411200100",
    "Del Estado y Banco Central de Chile",
+   "subtotal",
    7651633220,
-   "entero_15",
    [
     "000007651633220"
    ],
@@ -270,11 +270,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411200101",
    "Instrumentos financieros de deuda del Banco Central de Chile",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -283,11 +283,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411200102",
    "Bonos y pagarés de la Tesorería General de la República",
+   "detalle",
    7651633220,
-   "entero_15",
    [
     "000007651633220"
    ],
@@ -296,11 +296,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411200109",
    "Otros instrumentos financieros de deuda fiscales",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -309,11 +309,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411200200",
    "Otros instrumentos financieros de deuda emitidos en el país",
+   "subtotal",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -322,11 +322,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411200201",
    "Instrumentos financieros de deuda de otros bancos del país",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -335,11 +335,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411200202",
    "Bonos y efectos de comercio de empresas del país",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -348,11 +348,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411200209",
    "Otros instrumentos financieros de deuda emitidos en el país",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -361,11 +361,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411200300",
    "Instrumentos financieros de deuda emitidos en el exterior",
+   "subtotal",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -374,11 +374,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411200301",
    "Instrumentos financieros de deuda de Bancos Centrales en el exterior",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -387,11 +387,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411200302",
    "Instrumentos financieros de deuda de Gobiernos extranjeros y entidades fiscales en el exterior",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -400,11 +400,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411200303",
    "Instrumentos financieros de deuda de otros bancos en el exterior",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -413,11 +413,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411200304",
    "Bonos y efectos de comercio de empresas en el exterior",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -426,11 +426,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411200309",
    "Otros instrumentos financieros de deuda emitidos en el exterior",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -439,11 +439,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250000",
    "Adeudado por bancos",
+   "subtotal",
    18164719699,
-   "entero_15",
    [
     "000018164719699"
    ],
@@ -452,11 +452,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250100",
    "Bancos del país",
+   "subtotal",
    523760224,
-   "entero_15",
    [
     "000000523760224"
    ],
@@ -465,11 +465,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250101",
    "Préstamos interbancarios de liquidez",
+   "detalle",
    523750000,
-   "entero_15",
    [
     "000000523750000"
    ],
@@ -478,11 +478,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250102",
    "Préstamos interbancarios comerciales",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -491,11 +491,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250103",
    "Sobregiros en cuentas corrientes",
+   "detalle",
    10224,
-   "entero_15",
    [
     "000000000010224"
    ],
@@ -504,11 +504,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250104",
    "Créditos comercio exterior exportaciones chilenas",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -517,11 +517,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250105",
    "Créditos comercio exterior importaciones chilenas",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -530,11 +530,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250106",
    "Créditos comercio exterior entre terceros países",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -543,11 +543,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250107",
    "Depósitos no transferibles en bancos del país",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -556,11 +556,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250190",
    "Otras acreencias con bancos del país",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -569,11 +569,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250200",
    "Bancos del exterior",
+   "subtotal",
    7014958527,
-   "entero_15",
    [
     "000007014958527"
    ],
@@ -582,11 +582,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250201",
    "Préstamos interbancarios de liquidez",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -595,11 +595,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250202",
    "Préstamos interbancarios comerciales",
+   "detalle",
    6456781764,
-   "entero_15",
    [
     "000006456781764"
    ],
@@ -608,11 +608,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250203",
    "Sobregiros en cuentas corrientes",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -621,11 +621,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250204",
    "Créditos comercio exterior exportaciones chilenas",
+   "detalle",
    558176763,
-   "entero_15",
    [
     "000000558176763"
    ],
@@ -634,11 +634,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250205",
    "Créditos comercio exterior importaciones chilenas",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -647,11 +647,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250206",
    "Créditos comercio exterior entre terceros países",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -660,11 +660,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250207",
    "Depósitos en cuenta corriente en bancos del exterior por operaciones de derivados",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -673,11 +673,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250208",
    "Otros depósitos no transferibles en bancos del exterior",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -686,11 +686,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250290",
    "Otras acreencias con bancos del exterior",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -699,11 +699,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250300",
    "Banco Central de Chile",
+   "subtotal",
    10626000948,
-   "entero_15",
    [
     "000010626000948"
    ],
@@ -712,11 +712,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250301",
    "Depósitos en cuenta corriente del Banco Central de Chile por operaciones de derivados con COMDER",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -725,11 +725,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250302",
    "Otros depósitos en el Banco Central de Chile no disponibles",
+   "detalle",
    10626000948,
-   "entero_15",
    [
     "000010626000948"
    ],
@@ -738,11 +738,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250309",
    "Otras acreencias con el Banco Central de Chile",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -751,11 +751,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250400",
    "Bancos Centrales del exterior",
+   "subtotal",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -764,11 +764,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250401",
    "Depósitos en cuenta corriente de Bancos Centrales del exterior por operaciones de derivados",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -777,11 +777,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250402",
    "Otros depósitos en Bancos Centrales del exterior no disponibles",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -790,11 +790,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411250409",
    "Otras acreencias con Bancos Centrales del exterior",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -803,11 +803,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280000",
    "Colocaciones comerciales",
+   "subtotal",
    813665194251,
-   "entero_15",
    [
     "000813665194251"
    ],
@@ -816,11 +816,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280100",
    "Préstamos comerciales",
+   "subtotal",
    602480840124,
-   "entero_15",
    [
     "000602480840124"
    ],
@@ -829,11 +829,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280101",
    "Préstamos en el país",
+   "detalle",
    520539076035,
-   "entero_15",
    [
     "000520539076035"
    ],
@@ -842,11 +842,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280102",
    "Préstamos en el exterior",
+   "detalle",
    344992107,
-   "entero_15",
    [
     "000000344992107"
    ],
@@ -855,11 +855,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280103",
    "Créditos para infraestructura escolar Ley N° 20.845",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -868,11 +868,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280104",
    "Préstamos con letras de crédito para fines generales",
+   "detalle",
    546827,
-   "entero_15",
    [
     "000000000546827"
    ],
@@ -881,11 +881,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280105",
    "Préstamos con mutuos hipotecarios endosables para fines generales",
+   "detalle",
    5486083,
-   "entero_15",
    [
     "000000005486083"
    ],
@@ -894,11 +894,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280106",
    "Préstamos con mutuos hipotecarios no endosables para fines generales",
+   "detalle",
    81590739072,
-   "entero_15",
    [
     "000081590739072"
    ],
@@ -907,11 +907,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280200",
    "Créditos de comercio exterior",
+   "subtotal",
    49525205467,
-   "entero_15",
    [
     "000049525205467"
    ],
@@ -920,11 +920,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280201",
    "Acreditivos negociados a plazo de exportaciones chilenas",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -933,11 +933,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280202",
    "Otros créditos para exportaciones chilenas",
+   "detalle",
    28506139485,
-   "entero_15",
    [
     "000028506139485"
    ],
@@ -946,11 +946,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280203",
    "Acreditivos negociados a plazo de importaciones chilenas",
+   "detalle",
    12596389,
-   "entero_15",
    [
     "000000012596389"
    ],
@@ -959,11 +959,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280204",
    "Otros créditos para importaciones chilenas",
+   "detalle",
    21006382688,
-   "entero_15",
    [
     "000021006382688"
    ],
@@ -972,11 +972,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280205",
    "Acreditivos negociados a plazo de operaciones entre terceros países",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -985,11 +985,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280209",
    "Otros créditos para operaciones entre terceros países",
+   "detalle",
    86905,
-   "entero_15",
    [
     "000000000086905"
    ],
@@ -998,11 +998,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280300",
    "Deudores en cuentas corrientes",
+   "detalle",
    25222885981,
-   "entero_15",
    [
     "000025222885981"
    ],
@@ -1011,11 +1011,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280400",
    "Deudores por tarjetas de crédito",
+   "detalle",
    8570202752,
-   "entero_15",
    [
     "000008570202752"
    ],
@@ -1024,11 +1024,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280500",
    "Operaciones de factoraje",
+   "subtotal",
    27806869471,
-   "entero_15",
    [
     "000027806869471"
    ],
@@ -1037,11 +1037,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280501",
    "Factoring con responsabilidad",
+   "detalle",
    12755385259,
-   "entero_15",
    [
     "000012755385259"
    ],
@@ -1050,11 +1050,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280502",
    "Factoring sin responsabilidad",
+   "detalle",
    15051484212,
-   "entero_15",
    [
     "000015051484212"
    ],
@@ -1063,11 +1063,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280600",
    "Operaciones de leasing financiero comercial",
+   "subtotal",
    98327913830,
-   "entero_15",
    [
     "000098327913830"
    ],
@@ -1076,11 +1076,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280601",
    "Leasing por bienes inmobiliarios",
+   "detalle",
    35754691469,
-   "entero_15",
    [
     "000035754691469"
    ],
@@ -1089,11 +1089,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280602",
    "Leasing por bienes no inmobiliarios",
+   "detalle",
    62573222361,
-   "entero_15",
    [
     "000062573222361"
    ],
@@ -1102,11 +1102,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280700",
    "Préstamos estudiantiles",
+   "subtotal",
    1594254792,
-   "entero_15",
    [
     "000001594254792"
    ],
@@ -1115,11 +1115,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280701",
    "Créditos para estudios superiores Ley N° 20.027",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -1128,11 +1128,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280702",
    "Créditos con garantía CORFO",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -1141,11 +1141,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280709",
    "Otros créditos para estudios superiores",
+   "detalle",
    1594254792,
-   "entero_15",
    [
     "000001594254792"
    ],
@@ -1154,11 +1154,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280900",
    "Otros créditos y cuentas por cobrar",
+   "subtotal",
    137021834,
-   "entero_15",
    [
     "000000137021834"
    ],
@@ -1167,11 +1167,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280901",
    "Deudores por pago de obligaciones avaladas",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -1180,11 +1180,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280902",
    "Deudores por boletas de garantía pagadas",
+   "detalle",
    137021834,
-   "entero_15",
    [
     "000000137021834"
    ],
@@ -1193,11 +1193,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411280990",
    "Otras cuentas por cobrar",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -1206,11 +1206,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411350000",
    "Colocaciones para vivienda",
+   "subtotal",
    322594907857,
-   "entero_15",
    [
     "000322594907857"
    ],
@@ -1219,11 +1219,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411350100",
    "Préstamos con letras de crédito para vivienda",
+   "detalle",
    23273424,
-   "entero_15",
    [
     "000000023273424"
    ],
@@ -1232,11 +1232,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411350200",
    "Préstamos con mutuos hipotecarios endosable",
+   "detalle",
    230162079,
-   "entero_15",
    [
     "000000230162079"
    ],
@@ -1245,11 +1245,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411350300",
    "Préstamos con mutuos financiados con bonos hipotecarios",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -1258,11 +1258,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411350400",
    "Otros créditos con mutuos para vivienda",
+   "subtotal",
    320091618004,
-   "entero_15",
    [
     "000320091618004"
    ],
@@ -1271,11 +1271,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411350401",
    "Otros créditos con mutuos no endosables para vivienda",
+   "detalle",
    3569400881,
-   "entero_15",
    [
     "000003569400881"
    ],
@@ -1284,11 +1284,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411350402",
    "Otros créditos con mutuos para vivienda",
+   "detalle",
    316522217123,
-   "entero_15",
    [
     "000316522217123"
    ],
@@ -1297,11 +1297,11 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411350500",
    "Operaciones de leasing financiero para vivienda",
+   "detalle",
    0,
-   "entero_15",
    [
     "000000000000000"
    ],
@@ -1310,17 +1310,17 @@
   [
    "2026-08",
    "001",
-   "BANCO DE CHILE",
+   "Banco de Chile",
    "411350900",
    "Otros créditos y cuentas por cobrar",
+   "subtotal",
    2249854350,
-   "entero_15",
    [
     "000002249854350"
    ],
    101
   ]
  ],
- "sql": "SELECT periodo, codigo_institucion, nombre_institucion_fuente, codigo_cuenta, glosa_cuenta, importe_clp, formato_monto_fuente, importes_fuente_raw, numero_fila_fuente FROM bancos_resultados ORDER BY periodo DESC, codigo_institucion, numero_fila_fuente LIMIT 100;",
+ "sql": "SELECT periodo, codigo_institucion, razon_social, codigo_cuenta, glosa_cuenta, tipo_linea, importe_clp, importes_fuente_raw, numero_fila_fuente FROM bancos_resultados ORDER BY periodo DESC, codigo_institucion, numero_fila_fuente LIMIT 100;",
  "como_se_genera": "python3 scripts/build_resultados.py"
 }
