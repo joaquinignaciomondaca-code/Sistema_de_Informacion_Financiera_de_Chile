@@ -17,7 +17,7 @@
         href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
-  <link rel="stylesheet" href="css/app.css?v=fl-202610-2223-importe-clp-banca">
+  <link rel="stylesheet" href="css/app.css?v=fl-202610-2224-alcance-y-privacidad">
 
   <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
        Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
@@ -350,7 +350,7 @@
             <p class="info-archive-link">
               <button type="button" class="info-link-btn" data-portada="archivo">Archivo y registros complementarios</button>
               <span data-alcance="fuera.resumen">7 industrias · 15 conjuntos · 0,5 % de las filas</span>: siguen publicados, consultables y descargables.
-              <button type="button" class="info-link-btn info-link-btn-muted" data-portada="alcance">Qué incluye esta edición</button>
+              <button type="button" class="info-link-btn info-link-btn-muted" data-portada="alcance">Qué publica esta edición</button>
             </p>
 
             <section class="info-two-columns">
@@ -381,35 +381,34 @@
 
 
             <section class="info-block info-scope" id="info-alcance">
-              <div class="info-section-kicker">ALCANCE DE ESTA EDICIÓN</div>
-              <h2>Qué incluye y qué no</h2>
+              <div class="info-section-kicker">LO QUE PUBLICA ESTA EDICIÓN</div>
+              <h2>Tres niveles y un archivo, todos consultables</h2>
               <div class="info-scope-grid">
                 <div class="info-scope-col">
-                  <h3>Incluye</h3>
+                  <h3>Núcleo · inversión institucional</h3>
                   <ul class="info-list">
-                    <li><strong>Núcleo:</strong> seguros, fondos mutuos y fondos de inversión.</li>
-                    <li><strong>Instituciones:</strong> bancos, administradoras generales de fondos y corredoras de bolsa.</li>
-                    <li><strong>Contexto:</strong> series macroeconómicas y de tasas del Banco Central.</li>
-                    <li><span data-alcance="visible.resumen">74 conjuntos visibles en la vista principal · 19,7 millones de filas (99,5 % de los 19,8 millones publicados)</span>: son los <strong>25 del núcleo</strong> más instituciones (bancos, AGF y corredoras) y contexto (series del Banco Central). Cuando una cifra diga «40 conjuntos» se refiere sólo al núcleo.</li>
+                    <li><strong>Seguros de vida y generales:</strong> cartera del mes, una fila por instrumento o inmueble.</li>
+                    <li><strong>Fondos mutuos:</strong> cartera de la Circular 1333 y estados financieros IFRS.</li>
+                    <li><strong>Fondos de inversión:</strong> cartera trimestral, pactos y estados financieros IFRS.</li>
                   </ul>
                 </div>
                 <div class="info-scope-col">
-                  <h3>Fuera del foco, pero publicado</h3>
+                  <h3>Instituciones</h3>
                   <ul class="info-list">
-                    <li><strong>Archivo congelado:</strong> factoring y leasing, securitización (securitizadoras y patrimonios separados) y cajas de compensación. Siguen consultables y descargables; no amplían su cobertura en esta edición.</li>
-                    <li><strong>Registro complementario de entidades:</strong> AFP, cooperativas, sistemas de pago y fintech, sólo con su lista de entidades (identidad y vigencia).</li>
+                    <li><strong>Banca:</strong> balance B1/B2 y resultados R1 de la CMF, 2022-01 a 2026-08, con el importe de cada cuenta en pesos.</li>
+                    <li><strong>Administradoras generales de fondos y corredoras de bolsa:</strong> estados financieros IFRS y registro de entidades.</li>
                   </ul>
                 </div>
                 <div class="info-scope-col">
-                  <h3>No incluye</h3>
+                  <h3>Contexto y archivo</h3>
                   <ul class="info-list">
-                    <li><strong>Carteras de los fondos de pensiones (AFP):</strong> esta edición no las publica; de las AFP sólo está el registro de administradoras.</li>
-                    <li>Carteras ni estados financieros de cooperativas, sistemas de pago o fintech.</li>
-                    <li><code>fi.bienes_raices</code> se oculta mientras la fuente no publique datos (0 filas); su vista SQL sigue disponible.</li>
+                    <li><strong>Macroeconomía y tasas del Banco Central:</strong> tasas y curvas, tipo de cambio, UF y UTM, actividad, precios y expectativas.</li>
+                    <li><strong>Archivo:</strong> factoring y leasing, securitizadoras, patrimonios separados y cajas de compensación, con sus estados financieros.</li>
+                    <li><strong>Registros de entidades:</strong> AFP, cooperativas, sistemas de pago y fintech, con identidad y vigencia.</li>
                   </ul>
                 </div>
               </div>
-              <p class="info-scope-foot">El recorte es visual: ninguna tabla, archivo, dirección de descarga ni vista SQL se eliminó, así que los enlaces y las consultas guardadas siguen funcionando.</p>
+              <p class="info-scope-foot"><span data-alcance="visible.resumen">74 conjuntos visibles en la vista principal · 19,7 millones de filas (99,5 % de los 19,8 millones publicados)</span>. Todo se consulta en el explorador, se ejecuta en la terminal SQL y se baja desde <strong>Descargas</strong>, en Parquet, CSV o Excel.</p>
             </section>
 
             <section class="info-block info-processing-block">
@@ -459,7 +458,7 @@
                     <li><strong>Unidades:</strong> los montos conservan la unidad y el criterio de valorización de la fuente (miles de pesos, UF, porcentajes, valor razonable, costo amortizado); no se convierten ni se reexpresan.</li>
                     <li><strong>Fondos de pensiones:</strong> esta edición no publica carteras de AFP; de las AFP sólo está el registro de administradoras.</li>
                     <li><strong>Puede haber errores:</strong> la extracción, la normalización y la validación son automáticas y ningún control lo detecta todo. Usa la base con criterio y haz las verificaciones propias que consideres necesarias antes de publicar una cifra.</li>
-                    <li><strong>Identificadores protegidos:</strong> en <code>fi.cartera_nacional</code> se suprime <code>rut_emisor</code> cuando probablemente corresponde a una persona natural, y en <code>seguros.bienes_raices</code> no se publican la dirección exacta ni el rol del inmueble (se conservan comuna, ciudad y un <code>property_id</code> estable). La referencia a la fuente CMF se mantiene en ambos casos.</li>
+                    <li><strong>Identificadores:</strong> en <code>fi.cartera_nacional</code>, <code>rut_emisor</code> identifica al emisor con su RUT o con un seudónimo estable <code>EMI-…</code> cuando es persona natural; <code>seguros.bienes_raices</code> publica comuna, ciudad y un <code>property_id</code> estable por inmueble. El detalle está en el <a href="privacidad.html">aviso de privacidad</a>.</li>
                   </ul>
                 </div>
               </div>
@@ -782,26 +781,26 @@ sif-mcp                       # stdio
 </div> <!-- Cierre de app-layout -->
 
   <!-- Scripts de la Aplicación -->
-  <script src="js/data_bundles.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/alcance.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/chart_renderer.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/erd_graph.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/sql_guard.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/duckdb_client.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/chat_terminal.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/busqueda_pregunta.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/sidebar.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/ux_shell.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/creditos.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/theme_switcher.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/data_dictionary.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/data_viewer.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/diccionario_seguros.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/download_utils.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/download_catalog.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/downloads_panel.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/portada.js?v=fl-202610-2223-importe-clp-banca" defer></script>
-  <script src="js/como_usar.js?v=fl-202610-2223-importe-clp-banca" defer></script>
+  <script src="js/data_bundles.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/alcance.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/chart_renderer.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/erd_graph.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/sql_guard.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/duckdb_client.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/chat_terminal.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/sidebar.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/ux_shell.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/creditos.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/theme_switcher.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/data_dictionary.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/data_viewer.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/download_utils.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/download_catalog.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/downloads_panel.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/portada.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
+  <script src="js/como_usar.js?v=fl-202610-2224-alcance-y-privacidad" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {

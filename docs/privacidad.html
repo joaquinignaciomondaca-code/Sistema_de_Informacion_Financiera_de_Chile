@@ -41,6 +41,27 @@
     }
     .legal-page ol, .legal-page ul { padding-left: 22px; }
     .legal-page li { margin: 6px 0; }
+
+    /* app.css fija el alto de la ventana y esconde el desborde porque la portada
+       es una aplicación de una sola pantalla. Este documento es una página larga:
+       si hereda esas dos reglas, la rueda del ratón no desplaza nada y el texto
+       queda cortado. Se revierten aquí, sólo para esta página. */
+    @media (max-width: 640px) {
+      .legal-page { padding: 24px 16px 64px; font-size: 14px; }
+      .legal-page h1 { font-size: 24px; }
+      .legal-page table { display: block; overflow-x: auto; }
+    }
+
+    html { height: auto; }
+    /* `html body` gana a cualquier regla `body` de app.css, sin depender del
+       orden de carga. */
+    html body {
+      height: auto;
+      min-height: 100vh;
+      display: block;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
   </style>
 </head>
 <body>
@@ -87,30 +108,28 @@
       </tbody>
     </table>
 
-    <h2>2. Qué datos personales no se publican</h2>
+    <h2>2. Cómo se tratan los identificadores</h2>
+    <p>Los tres conjuntos anteriores se publican con identificadores que permiten citar y cruzar a la
+    persona sin exponer más de lo que la fuente ya informa. El detalle de cada tratamiento:</p>
     <ul>
-      <li><strong>Correos de contacto.</strong> La columna <code>email_contacto</code> de
-      <code>fintech_rpsf_lista_entidades</code> se retiró el 22 de octubre de 2026. Contenía 253
-      direcciones, 46 de ellas en dominios personales, y no aportaba al fin del conjunto.</li>
-      <li><strong>Deudores y asegurados.</strong> <code>nombre_deudor</code>, <code>rut_deudor</code> y
-      <code>rut_deudor_sindicado</code> están vacías en las 2.321.911 filas de
-      <code>seguros_renta_fija</code>: nunca se poblaron desde la fuente.</li>
-      <li><strong>Direcciones y roles de inmuebles.</strong> <code>seguros_bienes_raices</code> no publica
-      dirección exacta ni rol; publica comuna, ciudad y un seudónimo estable (<code>property_id</code>)
-      que permite seguir el mismo bien entre meses.</li>
-      <li><strong>RUT de personas naturales en carteras.</strong> En <code>fi_cartera_nacional</code> se
-      suprime el RUT del emisor cuando probablemente corresponde a una persona natural y se agrega
-      <code>emisor_tipo</code> con el criterio aplicado: 202.835 filas y 31.215 RUT distintos, que no
-      reaparecen en ningún otro objeto del catálogo. Contrastado con registros públicos, el criterio
-      alcanza a personas naturales identificables, no a entidades.</li>
-      <li><strong>Seguir al emisor sin publicar su RUT.</strong> <code>rut_emisor</code> no se vacía:
-      se sustituye. Trae el RUT cuando el emisor es una persona jurídica y un seudónimo estable con
-      prefijo <code>EMI-</code> cuando es una persona natural, de modo que se puede sumar su
+      <li><strong>Emisores de cartera (<code>fi_cartera_nacional</code>).</strong> La columna
+      <code>rut_emisor</code> trae el RUT cuando el emisor es una persona jurídica y un seudónimo
+      estable con prefijo <code>EMI-</code> cuando es una persona natural: se puede sumar su
       exposición, seguir su serie y medir concentración sin revelar su identidad. La columna
-      <code>rut_omitido_por_ley</code> dice cuál de los dos casos es, y el prefijo impide que un
-      seudónimo se confunda con un RUT. Es seudonimización, no anonimización: el vínculo con el RUT
-      vive en una tabla privada que no se publica.</li>
+      <code>rut_omitido_por_ley</code> indica cuál de los dos casos es, y el prefijo impide que un
+      seudónimo se confunda con un RUT. Son 202.835 filas y 31.215 identificadores, que no reaparecen
+      en ningún otro objeto del catálogo; <code>emisor_tipo</code> publica el criterio aplicado.
+      Es seudonimización, no anonimización: el vínculo con el RUT vive en una tabla privada del
+      repositorio.</li>
+      <li><strong>Inmuebles (<code>seguros_bienes_raices</code>).</strong> Se publican comuna, ciudad y
+      un seudónimo estable (<code>property_id</code>) que permite seguir el mismo bien entre meses; el
+      rol y la dirección exacta quedan suprimidos por privacidad.</li>
+      <li><strong>Tasadores (<code>seguros_bienes_raices</code>).</strong> Se publica el nombre del
+      tasador tal como consta en la Circular 1835, con la aseguradora y el periodo que lo declaran.</li>
     </ul>
+    <p><code>seguros_renta_fija</code> se publica sin identificadores de deudores ni de asegurados: la
+    fuente informa la cartera por instrumento, y las columnas reservadas a esas personas no llevan
+    valores en ninguna de sus 2.321.911 filas.</p>
     <p>El criterio de persona natural se aplica a las <strong>94 columnas de RUT</strong> del catálogo,
     no sólo a la cartera de fondos: la compuerta de privacidad falla si algún objeto empieza a publicar
     RUT de personas sin que la decisión esté declarada. La columna <code>rut_omitido_por_ley</code> sólo
