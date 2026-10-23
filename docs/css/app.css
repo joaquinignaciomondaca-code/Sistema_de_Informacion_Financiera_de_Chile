@@ -2096,6 +2096,16 @@ header {
   margin-top: 18px;
 }
 
+.info-tag-link {
+  text-decoration: none;
+  border-style: dashed;
+}
+
+.info-tag-link b { color: var(--text-bright); font-variant-numeric: tabular-nums; }
+
+.info-tag-link:hover,
+.info-tag-link:focus-visible { border-color: var(--accent-mint); color: var(--text-bright); }
+
 .info-tag {
   display: inline-flex;
   align-items: center;
@@ -2125,6 +2135,114 @@ header {
   color: var(--text-secondary);
   font-size: 12.5px;
   line-height: 1.65;
+}
+
+/* Calidad del dato publicado: cifras, gráfico y la consulta que las reproduce.
+   Va antes de «cómo leer los datos» porque es la advertencia más importante de
+   la portada: sin agrupar, sumar sobreestima. */
+.info-calidad-stats {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: 14px;
+}
+
+.info-calidad-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 12px;
+  margin-top: 14px;
+  align-items: stretch;
+}
+
+.info-calidad-figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 9px;
+  background: var(--bg-secondary);
+}
+
+.info-calidad-figure figcaption {
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.calidad-chart {
+  width: 100%;
+  height: 210px;
+  display: flex;
+}
+
+.calidad-chart[hidden] { display: none; }
+
+.calidad-chart canvas { width: 100%; height: 100%; display: block; }
+
+.info-calidad-sql {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 9px;
+  background: var(--bg-secondary);
+}
+
+.info-calidad-sql p {
+  color: var(--text-secondary);
+  font-size: 12.5px;
+  line-height: 1.55;
+}
+
+.info-calidad-code {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 7px;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(var(--neutral-rgb), 0.18);
+  overflow-x: auto;
+  color: var(--text-primary);
+  font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+  line-height: 1.5;
+  white-space: pre;
+}
+
+.info-calidad-run {
+  align-self: flex-start;
+  min-height: 36px;
+  padding: 8px 14px;
+  border: 1px solid rgba(var(--accent-rgb), 0.45);
+  border-radius: 7px;
+  background: rgba(var(--accent-rgb), 0.12);
+  color: var(--text-bright);
+  font: inherit;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+.info-calidad-run:hover,
+.info-calidad-run:focus-visible {
+  border-color: var(--accent-mint);
+  background: rgba(var(--accent-rgb), 0.2);
+}
+
+.info-calidad-foot {
+  max-width: 980px;
+  margin-top: 10px;
+  color: var(--text-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.info-calidad-foot a { color: var(--accent-blue-text); }
+
+@media (max-width: 900px) {
+  .info-calidad-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .info-calidad-grid { grid-template-columns: minmax(0, 1fr); }
+  .info-calidad-run { min-height: 44px; }
 }
 
 .info-highlight-row {
