@@ -38,7 +38,7 @@ concurrency:
 jobs:
   refrescar:
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
         with:
@@ -60,22 +60,45 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # El orden importa: los esquemas alimentan el catálogo, el catálogo
-          # alimenta el Data Package y los resultados se calculan sobre las vistas.
+          # El orden importa y es el mismo de docs/api/README.md: la
+          # reconciliación nombra, las claves miden, los esquemas describen el
+          # catálogo, el catálogo alimenta el Data Package y los resultados se
+          # calculan sobre las vistas. Al final, lo que la web muestra derivado
+          # de esas cifras: el estado de las claves y los metadatos sociales.
+          #
+          # El 2026-10-23 este flujo dejó fuera `claves.csv` y `esquemas.json`
+          # respecto del corte macro y `audit` falló en main. La cadena se corre
+          # entera y se comprueba entera antes de publicar.
           for i in 1 2 3 4 5; do
             git fetch origin main
             git reset --hard FETCH_HEAD
+            python scripts/build_reconciliacion.py
+            python scripts/verificar_claves.py
             python scripts/build_esquemas.py
-            python scripts/build_contrato.py
             python scripts/build_api.py
+            python scripts/build_contrato.py
             python scripts/build_resultados.py
             python scripts/build_download_catalog.py
-            git add docs/api docs/js/download_catalog.js
+            python scripts/build_estado_claves.py
+            python scripts/build_metadatos.py
+            python scripts/construir_reproducibilidad.py
+            git add docs/api docs/js/download_catalog.js docs/js/estado_claves.js \
+                    docs/index.html docs/privacidad.html docs/robots.txt docs/sitemap.xml \
+                    docs/reproducibilidad
             if git diff --cached --quiet; then
               echo "::notice title=Contrato derivado::sin cambios; los artefactos ya reflejaban los datos publicados"
               exit 0
             fi
             git commit -m "Contrato derivado: esquemas, catálogo y resultados de los datos publicados"
+            # Si la cadena quedó a medias, no se publica: se prefiere un push
+            # fallido y visible a dejar main con las compuertas en rojo.
+            python scripts/build_esquemas.py --check
+            python scripts/build_reconciliacion.py --check
+            python scripts/build_api.py --check
+            python scripts/build_contrato.py --check
+            python scripts/build_estado_claves.py --check
+            python scripts/build_metadatos.py --check
+            python scripts/construir_reproducibilidad.py --check
             python scripts/auditar_contrato.py --check
             if git push origin HEAD:main; then
               echo "::notice title=Contrato derivado::publicado en main"
