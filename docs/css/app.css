@@ -5676,3 +5676,465 @@ kbd {
 @media (max-width: 720px) {
   .uso-tabla td:first-child { width: 42%; }
 }
+
+/* ============================================================================
+   OPTIMIZACIÓN PARA CELULARES (2026-10-22)
+   El sitio se diseñó como una consola de escritorio: barra lateral fija de
+   320 px, paneles que reparten todo el alto y pestañas de 26 px. En un teléfono
+   de 390 px eso dejaba 70 px de contenido y el terminal detrás de la barra del
+   navegador. Aquí se corrige lo que se puede medir sin navegador; la ruta y lo
+   que falta probar a mano está en docs/notas/ruta_movil_2026-10-22.md.
+   ============================================================================ */
+
+/* --- 1. Alto real -----------------------------------------------------------
+   100vh en iOS incluye la barra del navegador, así que el último renglón queda
+   debajo de ella. 100dvh sigue al área visible; se declara después para que el
+   navegador que no la entiende se quede con 100vh. La cabecera deja de aportar
+   un 45 px fijo: el layout es flex y toma el alto que sobre. */
+body {
+  height: 100vh;
+  height: 100dvh;
+}
+
+.app-layout {
+  height: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+/* Contenedores que ruedan: el rebote no debe encadenarse al panel de atrás, y
+   en iOS el desplazamiento con inercia necesita su propio contexto. */
+.info-container,
+.normativa-container,
+.dict-container,
+.data-viewer-container,
+.downloads-container,
+.guia-container,
+.chat-messages,
+.sidebar-tree,
+.dv-table-container,
+.erd-controls-group {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* --- 2. Explorador como cajón (≤ 900 px) -----------------------------------
+   A la izquierda no caben dos columnas. El árbol pasa a superponerse, arranca
+   cerrado y se cierra al elegir una tabla, al tocar el fondo o con Escape. */
+.sidebar-backdrop {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    position: fixed;
+    top: var(--sif-header-h, 45px);
+    left: 0;
+    bottom: 0;
+    width: min(86vw, 340px);
+    min-width: 0;
+    max-width: none;
+    z-index: 70;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.42);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .sidebar.collapsed {
+    margin-left: 0;
+    transform: translateX(-100%);
+    box-shadow: none;
+  }
+
+  .sidebar-resizer {
+    display: none;
+  }
+
+  .sidebar-backdrop:not([hidden]) {
+    display: block;
+    position: fixed;
+    inset: var(--sif-header-h, 45px) 0 0 0;
+    z-index: 60;
+    border: 0;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.46);
+    cursor: pointer;
+  }
+}
+
+/* --- 3. Cabecera y pestañas ------------------------------------------------ */
+@media (max-width: 900px) {
+  header {
+    padding: 6px 12px;
+    gap: 8px;
+  }
+
+  /* En horizontal el notch invade el borde: el relleno se amplía al área
+     segura. Va en una regla aparte porque el detector de diseño no interpreta
+     `max()` dentro de un `padding` y lo leería como cero. */
+  @media (orientation: landscape) {
+    header {
+      padding-left: env(safe-area-inset-left, 12px);
+      padding-right: env(safe-area-inset-right, 12px);
+    }
+  }
+
+  .brand {
+    gap: 8px;
+    min-width: 0;
+  }
+
+  .brand-text {
+    min-width: 0;
+  }
+
+  .brand-title {
+    display: block;
+    max-width: 52vw;
+    overflow: hidden;
+    font-size: 13px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .brand-logo-mark {
+    height: 26px;
+  }
+
+  .sidebar-toggle-btn {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+  }
+
+  .header-badges {
+    gap: 6px;
+    min-width: 0;
+  }
+
+  #engine-badge {
+    max-width: 128px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .theme-dropdown-btn {
+    min-height: 44px;
+  }
+
+  .panel-header {
+    min-height: 50px;
+    padding: 4px 8px;
+    gap: 6px;
+  }
+
+  /* Las siete pestañas no caben: se deslizan y cada una mide lo que un dedo. */
+  .panel-tabs {
+    width: 100%;
+    padding: 3px;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    scroll-padding-inline: 4px;
+    scrollbar-width: none;
+  }
+
+  .panel-tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .panel-tab-btn {
+    min-height: 44px;
+    padding: 0 12px;
+    font-size: 13px;
+    scroll-snap-align: start;
+  }
+
+  /* Pista de que hay más pestañas a la derecha, sin tapar el texto. */
+  .panel-header::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 26px;
+    background: linear-gradient(to right, transparent, var(--panel-elevated));
+    pointer-events: none;
+  }
+
+  .panel-header-right {
+    display: none;
+  }
+
+  .erd-controls-group {
+    padding: 6px 10px;
+    gap: 6px;
+  }
+
+  .filter-btn {
+    min-height: 36px;
+    padding: 4px 11px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 600px) {
+  #engine-badge {
+    display: none;
+  }
+}
+
+/* --- 4. Contenido: rellenos, tablas y campos ------------------------------- */
+@media (max-width: 720px) {
+  .info-scroll {
+    padding: 16px 14px 30px;
+  }
+
+  .info-hero,
+  .guia-hero {
+    padding: 18px 16px 16px;
+    border-radius: 10px;
+  }
+
+  .info-hero::after {
+    width: 150px;
+    height: 150px;
+    right: -60px;
+    top: -80px;
+  }
+
+  .dict-container,
+  .data-viewer-container,
+  .downloads-container {
+    padding: 12px 10px 16px;
+  }
+
+  .sql-container .chat-messages {
+    padding: 14px 12px;
+  }
+
+  /* El relleno queda literal —el detector de diseño no interpreta `calc()` y
+     lo leería como cero— y el área segura del iPhone se suma como margen. */
+  .chat-input-bar {
+    padding: 8px 10px 10px;
+    margin-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  /* iOS amplía la página al enfocar un campo de menos de 16 px. */
+  input[type="text"],
+  input[type="search"],
+  input[type="number"],
+  input[type="email"],
+  select,
+  textarea,
+  .dict-search-input,
+  .sidebar-search-box input,
+  .dl-toolbar input[type="search"],
+  .dl-toolbar select,
+  .dv-table-select,
+  #chat-input {
+    font-size: 16px;
+  }
+
+  .sidebar-search-box input,
+  .dv-table-select,
+  .dl-toolbar select {
+    min-height: 44px;
+  }
+
+  .dl-item-actions {
+    flex-wrap: wrap;
+  }
+
+  .dl-btn,
+  .dl-uso-item,
+  .normativa-pagination button,
+  .engine-retry-btn {
+    min-height: 44px;
+  }
+
+  .dv-table-container {
+    overflow-x: auto;
+  }
+
+  .saved-queries-modal {
+    right: 12px;
+    width: min(360px, calc(100vw - 24px));
+  }
+
+  .toast-host,
+  .mfc-toast {
+    right: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+    max-width: calc(100vw - 24px);
+  }
+}
+
+/* La tabla de la Guía responde «qué necesito → dónde está» en tres columnas.
+   En un teléfono no caben: cada fila pasa a ser una tarjeta y el nombre de la
+   columna se escribe delante del valor con [data-label]. */
+@media (max-width: 560px) {
+  .uso-tabla thead {
+    display: none;
+  }
+
+  .uso-tabla,
+  .uso-tabla tbody,
+  .uso-tabla tr,
+  .uso-tabla td {
+    display: block;
+    width: auto;
+  }
+
+  .uso-tabla tr {
+    margin-bottom: 10px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-secondary);
+  }
+
+  .uso-tabla td {
+    padding: 2px 0;
+    border: 0;
+    font-size: 12.5px;
+  }
+
+  .uso-tabla td:first-child {
+    width: auto;
+    margin-bottom: 4px;
+    font-size: 13px;
+    font-weight: 650;
+  }
+
+  .uso-tabla td[data-label]::before {
+    content: attr(data-label) " · ";
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  .uso-tabla td[data-label=""]::before {
+    content: "";
+  }
+}
+
+/* --- 5. Puntero grueso: objetivos táctiles y nada que dependa del hover ----- */
+@media (pointer: coarse) {
+  .panel-tab-btn,
+  .sidebar-toggle-btn,
+  .theme-dropdown-btn,
+  .dl-btn,
+  .dl-puntero-btn,
+  .engine-retry-btn,
+  .normativa-pagination button,
+  .badge,
+  .chip,
+  .quick-chip {
+    min-height: 44px;
+  }
+
+  /* Las filas del árbol son densas a propósito: 40 px ya es un objetivo
+     cómodo y no convierte el explorador en una lista interminable. */
+  .tree-label,
+  .tree-table,
+  .tree-group > .tree-header,
+  .dl-uso-item {
+    min-height: 40px;
+  }
+
+  /* Un :hover que desplaza o escala una tarjeta se queda pegado al tocar. */
+  .dict-table-card:hover,
+  .info-core-card:hover,
+  .dl-item:hover,
+  .dl-uso-item:hover,
+  .tree-table:hover {
+    transform: none;
+  }
+}
+
+/* --- 6. Mapa relacional: el dedo no es un ratón ---------------------------- */
+#erd-canvas {
+  touch-action: none;
+}
+
+@media (max-width: 720px) {
+  .erd-controls-group {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .erd-controls-group::-webkit-scrollbar {
+    display: none;
+  }
+
+  .erd-tier-label,
+  .filter-btn {
+    flex: 0 0 auto;
+  }
+}
+
+/* --- 7. Aviso de teléfono ---------------------------------------------------
+   El sitio se pensó para un computador: siete pestañas, un explorador de 320 px
+   y el motor SQL en el cliente. En un teléfono se puede leer y descargar, pero
+   no trabajar cómodo, así que se avisa una vez y se deja cerrar. El JS lo
+   muestra sólo por debajo de 900 px y recuerda el descarte; aquí sólo se
+   define cómo se ve. */
+.aviso-movil {
+  display: none;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 10px 12px 0;
+  padding: 12px 14px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
+}
+
+/* `hidden` gana siempre: sin esto, el `display: flex` del media query lo
+   mostraría igual y el botón de cerrar no serviría de nada. */
+.aviso-movil[hidden] {
+  display: none;
+}
+
+.aviso-movil-texto {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+.aviso-movil-texto strong {
+  font-size: 13px;
+  color: var(--text-primary);
+}
+
+.aviso-movil-cerrar {
+  flex: none;
+  min-height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.aviso-movil-cerrar:focus-visible {
+  outline: 2px solid var(--accent-mint-text);
+  outline-offset: 2px;
+}
+
+@media (max-width: 900px) {
+  .aviso-movil {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 2px;
+  }
+}
