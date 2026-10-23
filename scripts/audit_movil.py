@@ -275,8 +275,14 @@ def comprobar(css_texto: str, html_texto: str, erd_texto: str,
         fallos.append("13 aviso: no respeta el área segura del teléfono")
     if 'id="aviso-movil-aspa"' not in html_texto:
         fallos.append("13 aviso: no tiene aspa de cierre")
-    if 'key === "Escape"' not in shell_texto:
+    # Se mira dentro de la función, no en todo el archivo: `ux_shell.js` usa
+    # Escape también para otras cosas y la comprobación debe hablar del aviso.
+    inicio_aviso = shell_texto.find("function initAvisoMovil")
+    cuerpo_aviso = shell_texto[inicio_aviso:inicio_aviso + 3000] if inicio_aviso != -1 else ""
+    if '"Escape"' not in cuerpo_aviso:
         fallos.append("13 aviso: Escape no lo cierra")
+    if "contains(document.activeElement)" not in cuerpo_aviso:
+        fallos.append("13 aviso: Escape lo cierra aunque el foco esté fuera")
 
     # 14 · filas del árbol que crecen
     # Con `height: 28px` el distintivo de una carpeta bajaba a la segunda línea y
@@ -323,7 +329,8 @@ def autoprueba(textos: dict[str, str]) -> int:
         ("7 tabla", {"html": re.sub(r' data-label="[^"]*"', "", textos["html"])}),
         ("9 táctil", {"css": caso.replace("@media (pointer: coarse)", "@media (pointer: none)")}),
         ("10 mapa", {"erd": textos["erd"].replace('addEventListener("pointerdown"', 'addEventListener("mousedown"')}),
-        ("13 aviso", {"html": textos["html"].replace('id="aviso-movil-cerrar"', 'id="aviso-movil-ok"')}),
+        ("13 aviso", {"html": textos["html"].replace('id="aviso-movil-aspa"', 'id="aviso-movil-x"')}),
+        ("13 aviso", {"shell": textos["shell"].replace('if (!aviso.contains(document.activeElement)) return;', '')}),
         ("13 aviso", {"css": caso.replace("  display: none;\n  position: fixed;\n  left: 12px;",
                                           "  display: none;\n  position: static;\n  left: 12px;")}),
         ("14 filas", {"css": caso.replace("  min-height: 28px;\n  padding-right: 10px;",
