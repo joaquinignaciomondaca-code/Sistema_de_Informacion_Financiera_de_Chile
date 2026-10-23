@@ -3024,5 +3024,3 @@ class ERDGraph {
 }
 
 window.ERDGraph = ERDGraph;
-// `recortar` no usa `this`: se expone para probarlo con un contexto falso.
-window.ERDTexto = { recortar: (ctx, texto, ancho) => ERDGraph.prototype.recortar.call(null, ctx, texto, ancho) };
