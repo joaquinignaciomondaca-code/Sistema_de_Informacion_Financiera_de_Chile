@@ -47,6 +47,8 @@ RAIZ = Path(__file__).resolve().parent.parent
 DOCS = RAIZ / "docs"
 sys.path.insert(0, str(RAIZ / "scripts"))
 
+from version_contrato import API_VERSION  # noqa: E402
+
 import audit_consultas_sugeridas as ac  # noqa: E402
 
 DESTINO = DOCS / "api" / "esquemas.json"
@@ -221,7 +223,7 @@ def construir() -> dict:
 
     return {
         "contrato": "sif-api/esquemas",
-        "version": "v2",
+        "version": API_VERSION,
         "generado": date.today().isoformat(),
         "como_se_genera": "python3 scripts/build_esquemas.py",
         "tipo_de_dato": "Tipos de DuckDB; el diccionario editorial sólo añade significado.",
