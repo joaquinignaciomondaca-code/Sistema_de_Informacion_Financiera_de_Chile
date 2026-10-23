@@ -248,8 +248,8 @@
  "id": "bancos_resultados",
  "licencia_estado": "verificada",
  "primaryKey": [
-  "id",
-  "codigo_cuenta"
+  "codigo_cuenta",
+  "id"
  ],
  "sector": "bancos",
  "titulo": "bancos.cmf_lineas_b1_b2_r1",
