@@ -32,7 +32,7 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 DOCS = RAIZ / "docs"
-DESCRIPTOR = DOCS / "api" / "v1" / "datapackage.json"
+DESCRIPTOR = DOCS / "api" / "v2" / "datapackage.json"
 ESQUEMAS = DOCS / "api" / "esquemas.json"
 
 

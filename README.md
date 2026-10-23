@@ -208,7 +208,7 @@ El servidor local responde `206 Partial Content` igual que GitHub Pages, así qu
 
 ### Consumirlo desde Python
 
-El sitio publica además un **contrato estático** (`docs/api/v1/`) y un SDK que lo lee, para quien no quiere abrir el navegador:
+El sitio publica además un **contrato estático** (`docs/api/v2/`) y un SDK que lo lee, para quien no quiere abrir el navegador:
 
 ```bash
 pip install -e sdk/python   # paquete `sif-chile`, DuckDB + pyarrow

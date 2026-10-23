@@ -91,6 +91,6 @@ filas = con.execute("""
 
 Nada de lo publicado cambia: el servidor es **otra forma de leer** los mismos
 Parquet. Si algún día se despliega, se añaden tres cosas fuera del contrato
-estático —una ruta `/api/v1/servidor.json` que anuncie el host, el token pedido
+estático —una ruta `/api/v2/servidor.json` que anuncie el host, el token pedido
 por un formulario y un SLA escrito— y eso sí obliga a revisar las frases que hoy
 dicen «sin servidor de consulta» en `README.md`, `llms.txt` y `openapi.json`.

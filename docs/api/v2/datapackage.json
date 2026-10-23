@@ -59,7 +59,7 @@
     "aliases": [
      "afp_maestro"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Superintendencia de Pensiones. Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "Lista vigente",
@@ -230,7 +230,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2010-06 a 2026-06",
@@ -497,7 +497,7 @@
     "aliases": [
      "agf_maestro"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "Oficial CMF 2026",
@@ -670,7 +670,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2010-06 a 2026-06",
@@ -970,7 +970,7 @@
     "aliases": [
      "bancos_cmf_balance"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2022-01 a 2026-08",
@@ -1410,7 +1410,7 @@
     "aliases": [
      "bancos_maestro"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "Códigos históricos y vigentes",
@@ -1614,7 +1614,7 @@
     "aliases": [
      "bancos_cmf_resultados"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2022-01 a 2026-08",
@@ -2114,7 +2114,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2010-06 a 2026-06",
@@ -2410,7 +2410,7 @@
     "aliases": [
      "ccaf_maestro"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "Lista vigente",
@@ -2580,7 +2580,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2010-06 a 2026-06",
@@ -2816,7 +2816,7 @@
     "aliases": [
      "cooperativas_maestro"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "Lista vigente",
@@ -2972,7 +2972,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2010-12 a 2026-06",
@@ -3178,7 +3178,7 @@
     "aliases": [
      "corredoras_bolsa_maestro"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2014-03 a 2026-06",
@@ -3312,7 +3312,7 @@
     "aliases": [
      "corredoras_bolsa_registro_universo"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2014-03 a 2026-06",
@@ -3468,7 +3468,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2010-12 a 2026-06",
@@ -3746,7 +3746,7 @@
     "aliases": [
      "factoring_leasing_balance_serie_ifrs_cmf"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2009-03 a 2026-09",
@@ -3968,7 +3968,7 @@
     "aliases": [
      "factoring_leasing_maestro"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "Lista vigente",
@@ -4153,7 +4153,7 @@
     "aliases": [
      "factoring_leasing_resultados_serie_ifrs_cmf"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2009-03 a 2026-09",
@@ -4344,7 +4344,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2010-12 a 2025-12",
@@ -4672,7 +4672,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2001-01 a 2026-09",
@@ -5106,7 +5106,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2022-01 a 2026-09",
@@ -5614,7 +5614,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2001-01 a 2026-09",
@@ -5869,7 +5869,7 @@
     "aliases": [
      "ffmm_maestro"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2001-01 a 2026-09",
@@ -6071,7 +6071,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2001-01 a 2026-09",
@@ -6413,7 +6413,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2010-12 a 2025-12",
@@ -6731,7 +6731,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2022-03 a 2026-06",
@@ -6977,7 +6977,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2020-03 a 2026-06",
@@ -7190,7 +7190,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2020-03 a 2026-06",
@@ -7465,7 +7465,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2020-03 a 2026-06",
@@ -7781,7 +7781,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2020-03 a 2026-06",
@@ -7952,7 +7952,7 @@
     "aliases": [
      "fi_maestro"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2020-03 a 2026-06",
@@ -8137,7 +8137,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2020-03 a 2026-06",
@@ -8374,7 +8374,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2020-03 a 2026-06",
@@ -8589,7 +8589,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2012-03 a 2026-06",
@@ -8902,7 +8902,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2022-03 a 2026-06",
@@ -9160,7 +9160,7 @@
     "aliases": [
      "fintech_rpsf_maestro"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "Catálogo Oficial Vigente CMF",
@@ -9250,7 +9250,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-10-22",
@@ -9346,7 +9346,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-02 a 2026-10-21",
@@ -9460,7 +9460,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-02 a 2026-10-21",
@@ -9544,7 +9544,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-01-01",
@@ -9628,7 +9628,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-02 a 2026-10-22",
@@ -9712,7 +9712,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-02 a 2026-10-22",
@@ -9802,7 +9802,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-10-01",
@@ -9892,7 +9892,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-07 a 2026-10-22",
@@ -9982,7 +9982,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-10-01",
@@ -10090,7 +10090,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-08-01",
@@ -10180,7 +10180,7 @@
    "sif": {
     "adaptacion": true,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-02 a 2026-10-21",
@@ -10276,7 +10276,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-09-01",
@@ -10378,7 +10378,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-08-01",
@@ -10468,7 +10468,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-02 a 2026-10-22",
@@ -10552,7 +10552,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-04-01",
@@ -10636,7 +10636,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-09-01",
@@ -10774,7 +10774,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-10-22",
@@ -10882,7 +10882,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-02 a 2026-10-22",
@@ -10966,7 +10966,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-10-20",
@@ -11056,7 +11056,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-02 a 2026-10-22",
@@ -11152,7 +11152,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-02 a 2026-10-22",
@@ -11242,7 +11242,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-08-01",
@@ -11326,7 +11326,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-10-22",
@@ -11410,7 +11410,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
     "clave_origen": "declarada",
     "corte": "2014-01-01 a 2026-10-01",
@@ -11546,7 +11546,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2014-12 a 2025-12 (diciembre; 2010–2013 sin datos)",
@@ -11674,7 +11674,7 @@
     "aliases": [
      "patrimonios_separados_maestro"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "Lista vigente",
@@ -11848,7 +11848,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2009-12 a 2026-06",
@@ -12066,7 +12066,7 @@
     "aliases": [
      "securitizadoras_maestro"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2026-06",
@@ -12243,7 +12243,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2009-12 a 2026-06",
@@ -12770,7 +12770,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2016-11 a 2026-09",
@@ -13019,7 +13019,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2016-11 a 2026-09",
@@ -13520,7 +13520,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2024-12 a 2026-09",
@@ -13837,7 +13837,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2024-12 a 2026-09",
@@ -14028,7 +14028,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2016-11 a 2026-09",
@@ -14612,7 +14612,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2016-11 a 2026-09",
@@ -14896,7 +14896,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2016-11 a 2026-09",
@@ -15715,7 +15715,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2016-11 a 2026-09",
@@ -15982,7 +15982,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2016-11 a 2026-09",
@@ -16223,7 +16223,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2024-12 a 2026-09",
@@ -16535,7 +16535,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2016-11 a 2026-09",
@@ -16823,7 +16823,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2024-12 a 2026-09",
@@ -16946,7 +16946,7 @@
     "aliases": [
      "seguros_maestro"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "2016-11 a 2026-09",
@@ -17215,7 +17215,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2024-12 a 2026-09",
@@ -17496,7 +17496,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2016-11 a 2026-09",
@@ -17678,7 +17678,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2024-12 a 2026-09",
@@ -18425,7 +18425,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2024-12 a 2026-09",
@@ -18757,7 +18757,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2024-12 a 2026-09",
@@ -18900,7 +18900,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": null,
     "corte": "2024-12 a 2026-09",
@@ -19109,7 +19109,7 @@
    "sif": {
     "adaptacion": false,
     "aliases": [],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "propuesta",
     "corte": "2024-12 a 2026-09",
@@ -19273,7 +19273,7 @@
     "aliases": [
      "sistemas_pago_maestro"
     ],
-    "api_version": "v1",
+    "api_version": "v2",
     "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
     "clave_origen": "declarada",
     "corte": "Lista vigente",
@@ -19313,12 +19313,12 @@
   }
  ],
  "sif": {
-  "api_version": "v1",
+  "api_version": "v2",
   "base_url": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/",
   "base_url_estado": "decidida (D1): Pages publica la API; Vercel redirige /api/* aquí con un 307",
   "contrato": {
    "claves": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/claves.csv",
-   "datapackage": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v1/datapackage.json",
+   "datapackage": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/datapackage.json",
    "esquemas": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/esquemas.json",
    "licencia": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md",
    "reconciliacion": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv"
@@ -19360,5 +19360,5 @@
   }
  ],
  "title": "Sistema de Información Financiera de Chile",
- "version": "1.0.0"
+ "version": "2.0.0"
 }

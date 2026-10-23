@@ -70,7 +70,7 @@
           formato: "CSV"
         },
         {
-          archivo: "api/v1/catalog.json",
+          archivo: "api/v2/catalog.json",
           nombre: "Contrato de la API",
           detalle: "Los objetos publicados con filas, corte, clave y ruta a su esquema.",
           formato: "JSON"
