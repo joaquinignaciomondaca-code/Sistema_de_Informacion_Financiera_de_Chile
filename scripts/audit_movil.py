@@ -26,6 +26,9 @@ Qué comprueba:
   12. Elegir una tabla cierra el cajón.
   13. El aviso de «esto se ve mejor en un computador» existe, se cierra y sólo
       aparece en pantalla pequeña.
+  14. Las filas del árbol crecen cuando su contenido ocupa dos líneas: ningún
+      renglón fija su alto, la etiqueta no lleva alto propio y la barra del
+      explorador alcanza el objetivo táctil.
 
 Uso:
     python3 scripts/audit_movil.py                 # informe y código de salida
@@ -45,7 +48,7 @@ ERD = RAIZ / "docs" / "js" / "erd_graph.js"
 SIDEBAR = RAIZ / "docs" / "js" / "sidebar.js"
 SHELL = RAIZ / "docs" / "js" / "ux_shell.js"
 
-TOTAL = 13
+TOTAL = 14
 
 
 # ---------------------------------------------------------------------------
@@ -262,6 +265,31 @@ def comprobar(css_texto: str, html_texto: str, erd_texto: str,
     if "flex" not in visible:
         fallos.append("13 aviso: no aparece en pantalla pequeña")
 
+    # 14 · filas del árbol que crecen
+    # Con `height: 28px` el distintivo de una carpeta bajaba a la segunda línea y
+    # se pintaba sobre el renglón siguiente; con `min-height` en la etiqueta, ésta
+    # se derramaba fuera de la caja. La fila fija el mínimo, no el alto.
+    for cond, sel, prop, v in lista:
+        if sel in (".tree-row", ".tree-partition") and prop == "height" and px(v) is not None:
+            fallos.append(f"14 filas: {sel} fija su alto en {v}; el contenido de dos líneas se sale de la caja")
+    for cond, sel, prop, v in lista:
+        alto = px(v)
+        if sel == ".tree-label" and prop == "min-height" and alto is not None and alto >= 32:
+            fallos.append(f"14 filas: .tree-label lleva min-height: {v}; el alto se pide a la fila, no a la etiqueta")
+    # `pointer: coarse` no es una condición de ancho, así que no pasa por
+    # `cumple()`: se acepta tal cual, igual que en la regla 9.
+    def en_movil(cond: str) -> bool:
+        return "pointer: coarse" in cond or cumple(cond, 900)
+
+    alto_fila = [px(v) for cond, sel, prop, v in lista
+                 if sel == ".tree-row" and prop == "min-height" and en_movil(cond)]
+    if not alto_fila or max(a for a in alto_fila if a) < 40:
+        fallos.append("14 filas: la fila del árbol no alcanza 40 px con el dedo")
+    alto_barra = [px(v) for cond, sel, prop, v in lista
+                  if sel == ".tool-btn" and prop == "min-height" and en_movil(cond)]
+    if not alto_barra or max(a for a in alto_barra if a) < 44:
+        fallos.append("14 filas: los botones del explorador no alcanzan 44 px con el dedo")
+
     return fallos, avisos
 
 
@@ -283,6 +311,8 @@ def autoprueba(textos: dict[str, str]) -> int:
         ("9 táctil", {"css": caso.replace("@media (pointer: coarse)", "@media (pointer: none)")}),
         ("10 mapa", {"erd": textos["erd"].replace('addEventListener("pointerdown"', 'addEventListener("mousedown"')}),
         ("13 aviso", {"html": textos["html"].replace('id="aviso-movil-cerrar"', 'id="aviso-movil-ok"')}),
+        ("14 filas", {"css": caso.replace("  min-height: 28px;\n  padding-right: 10px;",
+                                          "  height: 28px;\n  padding-right: 10px;")}),
     ]
     fallos_prueba = []
     for esperada, cambio in mutaciones:
