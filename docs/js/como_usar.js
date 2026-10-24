@@ -29,7 +29,12 @@
     });
     if (enfocar && botones[indice]) botones[indice].focus();
     if (botones[indice] && botones[indice].getAttribute("data-uso-tab") === "sumar" && window.SIFCalidad && typeof window.SIFCalidad.pintarGrafico === "function") {
-      window.SIFCalidad.pintarGrafico();
+      // El contenedor del gráfico está oculto hasta ahora: necesita un frame
+      // para que el navegador le asigne ancho real. Sin esto el renderer
+      // cae al mínimo (320×260) y el gráfico no llena la tarjeta.
+      window.requestAnimationFrame(function () {
+        window.SIFCalidad.pintarGrafico();
+      });
     }
   }
 
@@ -37,7 +42,9 @@
     boton.addEventListener("click", function () {
       activar(i, false);
       if (boton.getAttribute("data-uso-tab") === "sumar" && window.SIFCalidad && typeof window.SIFCalidad.pintarGrafico === "function") {
-        window.SIFCalidad.pintarGrafico();
+        window.requestAnimationFrame(function () {
+          window.SIFCalidad.pintarGrafico();
+        });
       }
     });
     boton.addEventListener("keydown", function (evento) {
