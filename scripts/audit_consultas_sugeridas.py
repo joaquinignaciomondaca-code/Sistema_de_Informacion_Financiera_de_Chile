@@ -88,14 +88,19 @@ def consultas_terminal() -> list[tuple[str, str]]:
 
 
 def ficheros_de(vista: dict) -> list[str]:
-    """Rutas locales del objeto (compatibilidad: se movió a pipelines/api/vistas.py)."""
+    """Rutas de descarga del objeto, leídas desde pipelines/api/vistas.py."""
     return V.ficheros_de(vista)
+
+
+def ficheros_sql_de(vista: dict) -> list[str]:
+    """Fuente que usa la web al registrar la vista SQL."""
+    return V.ficheros_sql_de(vista)
 
 
 def registrar(con, vistas: list[dict], alias: dict[str, list[str]]) -> list[str]:
     sin_datos = []
     for v in vistas:
-        ficheros = ficheros_de(v)
+        ficheros = ficheros_sql_de(v)
         if not ficheros:
             sin_datos.append(v["name"])
             continue
