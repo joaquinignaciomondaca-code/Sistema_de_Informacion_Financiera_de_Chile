@@ -1871,27 +1871,29 @@
   },
   {
    "espera": {
-    "tablas": [
-     "seguros_derivados"
-    ],
-    "tipo": "no_vacia"
+    "tablas": [],
+    "tipo": "no_vacia",
+    "vistas_auxiliares": [
+     "seguros_derivados_ultimo_periodo"
+    ]
    },
-   "id": "derivados-de-seguros-por-tipo-d009a2",
+   "id": "derivados-de-seguros-por-tipo-ultimo-periodo-e523ca",
    "origen": "terminal",
-   "sql": "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;",
-   "titulo": "Derivados de seguros por tipo"
+   "sql": "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados_ultimo_periodo WHERE periodo = (SELECT max(periodo) FROM seguros_derivados_ultimo_periodo) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;",
+   "titulo": "Derivados de seguros por tipo (último período)"
   },
   {
    "espera": {
-    "tablas": [
-     "ffmm_cartera_extranjera"
-    ],
-    "tipo": "no_vacia"
+    "tablas": [],
+    "tipo": "no_vacia",
+    "vistas_auxiliares": [
+     "ffmm_cartera_extranjera_ultimo_periodo"
+    ]
    },
-   "id": "fondos-mutuos-inversion-en-el-exterior-por-pais-4da5d1",
+   "id": "cartera-extranjera-ffmm-por-pais-ultimo-periodo-f7045c",
    "origen": "terminal",
-   "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;",
-   "titulo": "Fondos mutuos: inversión en el exterior por país"
+   "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera_ultimo_periodo WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera_ultimo_periodo) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;",
+   "titulo": "Cartera extranjera FFMM por país (último período)"
   },
   {
    "espera": {

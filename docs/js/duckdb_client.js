@@ -189,12 +189,26 @@ const SEMANTIC_VIEWS = [
 // catálogo ni sustituyen vistas semánticas completas; cada una declara
 // explícitamente el subconjunto de datos que puede responder.
 const QUICK_QUERY_VIEWS = [
-  // El chip «Renta fija de seguros (último período)» solo consulta el último
-  // mes. Toma directamente esa partición del manifiesto para no abrir los 22
-  // Parquet históricos de seguros_renta_fija; la vista canónica sigue completa.
+  // El chip «Renta fija de seguros (último período)» sólo consulta el último
+  // mes; toma esa partición, no los 22 Parquet históricos. La vista canónica
+  // sigue completa.
   {
     name: "seguros_renta_fija_ultimo_periodo",
     sourceManifest: "outputs/seguros/renta_fija/manifest.json",
+    latestManifestFile: true
+  },
+  // La CMF publica derivados en Parquet anuales: se elige el año que contiene
+  // el último mes, no se cargan los once archivos históricos.
+  {
+    name: "seguros_derivados_ultimo_periodo",
+    sourceManifest: "outputs/seguros/derivados/manifest.json",
+    latestManifestFile: true
+  },
+  // FFMM extranjero también está particionado por año; sólo se consulta el
+  // Parquet del año más reciente y se conserva completa la vista canónica.
+  {
+    name: "ffmm_cartera_extranjera_ultimo_periodo",
+    sourceManifest: "outputs/ffmm/cartera_extranjera/manifest.json",
     latestManifestFile: true
   },
 ];
@@ -588,15 +602,24 @@ class DuckDBClient {
       if (view.latestManifestFile) {
         // Las vistas auxiliares de un chip pueden limitarse a la última
         // partición publicada sin cambiar el objeto semántico completo.
-        const monthlyFiles = (Array.isArray(manifest.files) ? manifest.files : [])
+        const periods = (Array.isArray(manifest.periodos) ? manifest.periodos : [])
+          .filter((period) => typeof period === "string" && /^\d{4}-\d{2}$/.test(period))
+          .sort();
+        const latestPeriod = periods[periods.length - 1];
+        const latestYear = latestPeriod && latestPeriod.slice(0, 4);
+        const candidates = (Array.isArray(manifest.files) ? manifest.files : [])
           .map((file) => {
-            const match = typeof file === "string" && file.match(/(?:^|\/)(\d{4}-\d{2})(?=\.parquet$)/);
-            return match ? { file, period: match[1] } : null;
+            if (typeof file !== "string") return null;
+            const monthly = file.match(/(?:^|\/)(\d{4}-\d{2})(?=\.parquet$)/);
+            if (monthly && monthly[1] === latestPeriod) return { file, priority: 2 };
+            const yearly = file.match(/(?:^|\/)(\d{4})(?=\.parquet$)/);
+            if (yearly && yearly[1] === latestYear) return { file, priority: 1 };
+            return null;
           })
           .filter(Boolean)
-          .sort((a, b) => a.period.localeCompare(b.period));
-        const latest = monthlyFiles[monthlyFiles.length - 1];
-        if (!latest) throw new Error(`No hay particiones mensuales publicadas para ${view.name}`);
+          .sort((a, b) => b.priority - a.priority || a.file.localeCompare(b.file));
+        const latest = candidates[0];
+        if (!latest) throw new Error(`No hay una partición para el último período de ${view.name}`);
         files = [latest.file];
       } else {
         files = manifest.files;
@@ -650,7 +673,8 @@ class DuckDBClient {
       ? `read_parquet('${safePath(files[0])}')`
       : `read_parquet([${files.map((f) => `'${safePath(f)}'`).join(", ")}])`;
     const filter = view.where ? ` WHERE ${view.where}` : "";
-    await this.runQuerySerial(`CREATE OR REPLACE VIEW ${view.name} AS SELECT * FROM ${source}${filter};`);
+    const scope = QUICK_QUERY_VIEWS.some((item) => item.name === view.name) ? "TEMP " : "";
+    await this.runQuerySerial(`CREATE OR REPLACE ${scope}VIEW ${view.name} AS SELECT * FROM ${source}${filter};`);
     // Alias de compatibilidad: un nombre viejo nunca debe ocultar un error,
     // pero tampoco debe dejar sin datos a quien ya guardó una consulta.
     for (const alias of (LEGACY_VIEW_ALIASES[view.name] || [])) {
