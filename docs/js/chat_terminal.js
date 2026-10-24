@@ -156,21 +156,26 @@ class ChatTerminalController {
     if (window.MFCUI) window.MFCUI.toast("Conversación limpia. Las consultas guardadas siguen disponibles.", "info");
   }
 
-  // Autocompletado con Tab sobre los nombres de las vistas publicadas y palabras clave SQL.
+  // Autocompletado con Tab sobre las vistas publicadas, auxiliares y palabras clave SQL.
   completionCandidates() {
-    // Los nombres se toman del catálogo de vistas (duckdb_client.js) y, como
-    // respaldo, de las tablas ya dibujadas en el explorador: así el autocompletado
-    // no depende del orden de carga de los scripts.
+    // Los nombres se toman del contrato y de las fuentes auxiliares declaradas
+    // en duckdb_client.js; como respaldo están las tablas ya dibujadas en el
+    // explorador, sin depender del orden de carga de los scripts.
     const views = (typeof SEMANTIC_VIEWS !== "undefined" && Array.isArray(SEMANTIC_VIEWS))
       ? SEMANTIC_VIEWS.map((v) => v.name)
       : [];
+    const quickViews = Array.isArray(window.SIF_QUICK_QUERY_VIEW_NAMES)
+      ? window.SIF_QUICK_QUERY_VIEW_NAMES
+      : ((typeof QUICK_QUERY_VIEWS !== "undefined" && Array.isArray(QUICK_QUERY_VIEWS))
+        ? QUICK_QUERY_VIEWS.map((v) => v.name)
+        : []);
     const domViews = Array.from(document.querySelectorAll(".tree-table"))
       .map((el) => el.dataset.tableId)
       .filter(Boolean);
     const keywords = ["SELECT", "FROM", "WHERE", "GROUP BY", "ORDER BY", "LIMIT", "HAVING",
       "JOIN", "LEFT JOIN", "AS", "DESC", "ASC", "DISTINCT", "COUNT", "SUM", "AVG", "MIN", "MAX",
       "AND", "OR", "NOT", "IN", "LIKE", "BETWEEN", "WITH", "UNION", "NULL", "CAST", "ROUND"];
-    return Array.from(new Set(views.concat(domViews, keywords)));
+    return Array.from(new Set(views.concat(quickViews, domViews, keywords)));
   }
 
   completeInput() {
