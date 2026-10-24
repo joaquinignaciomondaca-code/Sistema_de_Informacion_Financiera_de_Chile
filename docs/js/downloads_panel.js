@@ -348,7 +348,12 @@ class DownloadsPanelController {
     const periodo = item.periodo ? `${item.periodo.desde} → ${item.periodo.hasta}` : "sin desglose por periodo";
     const etiquetas = [];
     if (item.detalle) etiquetas.push(`<span class="dl-tag" title="${this.escapar(item.descripcion || item.detalle)}">${this.escapar(item.detalle)}</span>`);
-    if (item.unificado) etiquetas.push(`<span class="dl-tag dl-tag-info" title="Esta vista une varios archivos publicados y aplica un filtro; el Parquet original baja los archivos completos.">Serie unificada</span>`);
+    if (item.unificado) {
+      const tituloFiltro = item.descargaFiltrada
+        ? "Cada Parquet descargable ya contiene sólo las familias declaradas en el catálogo; filas de la vista y descarga coinciden."
+        : "Esta vista une varios archivos publicados y aplica un filtro; revisa el alcance de los archivos fuente.";
+      etiquetas.push(`<span class="dl-tag dl-tag-info" title="${this.escapar(tituloFiltro)}">${item.descargaFiltrada ? "Parquet filtrado" : "Serie unificada"}</span>`);
+    }
     // Atribución: la condición de las tres fuentes es citarlas, así que la cita
     // viaja con el botón de descarga, no en una página aparte que nadie abre.
     const fuente = item.fuente

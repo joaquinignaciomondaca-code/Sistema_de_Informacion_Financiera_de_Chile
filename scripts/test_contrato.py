@@ -286,8 +286,10 @@ def ejecutar(raiz: Path, base: str) -> tuple[list[tuple[str, bool, str]], list[s
 
     archivos = [(o["id"], p["archivo"]) for o in objetos
                 for p in json.loads((v2 / "partitions" / f"{o['id']}.json").read_text(encoding="utf-8"))["particiones"]]
-    # Los dos objetos de banca salen del dataset CMF, cuya fila del manifiesto
-    # apunta acertadamente al maestro de entidades y no a las líneas.
+    # Los objetos derivados pueden publicar archivos materializados en rutas
+    # distintas de las de su fuente. En banca, los Parquet B1/B2 y R1 se separan
+    # desde bancos_cmf_lineas y ya tienen manifiestos de descarga propios.
+    fuentes_con_objetos_derivados = {o.get("deriva_de") for o in objetos if o.get("deriva_de")}
     derivados_banca = {o["id"] for o in objetos if o.get("deriva_de") == "bancos_cmf_lineas"}
     sin_fila = [(i, a) for i, a in archivos if not quien_lo_produce(a) and i not in derivados_banca]
     cubiertas_banca = sum(1 for i, a in archivos if i in derivados_banca and not quien_lo_produce(a))
@@ -296,6 +298,8 @@ def ejecutar(raiz: Path, base: str) -> tuple[list[tuple[str, bool, str]], list[s
     for identificador, prefijo in cobertura:
         if any(a == prefijo or (prefijo.endswith("/") and a.startswith(prefijo)) for _, a in archivos):
             continue
+        if identificador in fuentes_con_objetos_derivados:
+            continue  # la fuente original se conserva y sus vistas pueden publicarse materializadas
         if estado_objeto.get(identificador) != "vacio":  # los 4 vacíos declaran que lo están
             sin_datos.append(identificador)
 

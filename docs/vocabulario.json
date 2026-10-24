@@ -585,8 +585,8 @@
       "nombre": "bancos.balance",
       "tipo": "balance",
       "sector": "bancos",
-      "descripcion": "Balance B1/B2 de la CMF, con las líneas contables tal como se publican y el total de cada cuenta en importe_clp.",
-      "cobertura": "B1/B2 · importe_clp y desglose por moneda"
+      "descripcion": "Sólo filas B1 consolidado y B2 individual de la CMF; excluye R1 (estado de resultados). Las descargas Parquet de este objeto también contienen exclusivamente B1/B2. Líneas contables tal como se publican, con el total de cada cuenta en importe_clp.",
+      "cobertura": "Sólo B1/B2 · Parquet filtrado · importe_clp y desglose por moneda"
     },
     {
       "id": "bancos_resultados",
@@ -596,8 +596,8 @@
       "nombre": "bancos.resultados",
       "tipo": "resultados",
       "sector": "bancos",
-      "descripcion": "Estado de resultados R1 de la CMF, con las líneas tal como se publican. importe_clp trae el acumulado del ejercicio listo para sumar.",
-      "cobertura": "R1 · importe_clp (acumulado del ejercicio)"
+      "descripcion": "Sólo filas R1 (estado de resultados) de la CMF; excluye B1 y B2. Las descargas Parquet de este objeto también contienen exclusivamente R1. Líneas tal como se publican; importe_clp trae el acumulado del ejercicio.",
+      "cobertura": "Sólo R1 · Parquet filtrado · importe_clp (acumulado del ejercicio)"
     },
     {
       "id": "factoring_leasing_lista_entidades",

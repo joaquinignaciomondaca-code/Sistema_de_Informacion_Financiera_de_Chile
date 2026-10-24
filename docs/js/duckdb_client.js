@@ -113,8 +113,8 @@ const SEMANTIC_VIEWS = [
 
   // BANCA: catálogo institucional y líneas CMF publicadas solo tras pasar el gate mensual.
   { name: "bancos_lista_entidades", file: "outputs/bancos/bancos_maestro.parquet" },
-  { name: "bancos_balance", manifest: "outputs/bancos/cmf_b1_b2_r1/manifest.json", where: "familia_archivo_fuente IN ('B1', 'B2')" },
-  { name: "bancos_resultados", manifest: "outputs/bancos/cmf_b1_b2_r1/manifest.json", where: "familia_archivo_fuente = 'R1'" },
+  { name: "bancos_balance", manifest: "outputs/bancos/balance_b1_b2/manifest.json", where: "familia_archivo_fuente IN ('B1', 'B2')" },
+  { name: "bancos_resultados", manifest: "outputs/bancos/resultados_r1/manifest.json", where: "familia_archivo_fuente = 'R1'" },
 
   // MACROECONOMÍA & TASAS (BCCh SIETE)
   // <macro:inicio>

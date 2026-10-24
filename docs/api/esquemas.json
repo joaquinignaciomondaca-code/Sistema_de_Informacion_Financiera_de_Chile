@@ -408,7 +408,7 @@
    "sector": "agf"
   },
   "bancos_balance": {
-   "archivo": "outputs/bancos/cmf_b1_b2_r1/2022-01/lineas.parquet",
+   "archivo": "outputs/bancos/balance_b1_b2/2022-01/lineas.parquet",
    "columnas": [
     {
      "criterio_contable": "No aplica",
@@ -442,7 +442,7 @@
      "criterio_contable": "No aplica",
      "nombre": "codigo_cuenta",
      "rol": "PK parcial",
-     "significado": "Código de cuenta tal como aparece en el TXT CMF (9 dígitos): rubro (positions 1-2), línea (positions 3-5) e ítem (positions 6-9). Ejemplo: 105000200 = rubro 10 (activos), línea 500, ítem 0200. Los totales del rubro llevan línea 000 e ítem 0000 (ej. 100000000 = TOTAL ACTIVOS). No sumar líneas padre con descendientes.",
+     "significado": "Código de cuenta tal como aparece en el TXT CMF.",
      "tipo": "VARCHAR"
     },
     {
@@ -477,7 +477,7 @@
      "criterio_contable": "No aplica",
      "nombre": "familia_archivo_fuente",
      "rol": "Atributo",
-     "significado": "B1, B2 o R1.",
+     "significado": "Sólo B1 o B2 en este objeto.",
      "tipo": "VARCHAR"
     },
     {
@@ -505,7 +505,6 @@
    "corte": "2022-01 a 2026-08",
    "estado": "derivado",
    "filas": 722931,
-   "filas_dataset": 1962992,
    "filtro": "familia_archivo_fuente IN ('B1', 'B2')",
    "manifest_id": "bancos_cmf_lineas",
    "nivel": "secundario",
@@ -578,7 +577,7 @@
    "sector": "bancos"
   },
   "bancos_resultados": {
-   "archivo": "outputs/bancos/cmf_b1_b2_r1/2022-01/lineas.parquet",
+   "archivo": "outputs/bancos/resultados_r1/2022-01/lineas.parquet",
    "columnas": [
     {
      "criterio_contable": "No aplica",
@@ -612,7 +611,7 @@
      "criterio_contable": "No aplica",
      "nombre": "codigo_cuenta",
      "rol": "PK parcial",
-     "significado": "Código de cuenta tal como aparece en el TXT CMF (9 dígitos): rubro (positions 1-2), línea (positions 3-5) e ítem (positions 6-9). Ejemplo: 105000200 = rubro 10 (activos), línea 500, ítem 0200. Los totales del rubro llevan línea 000 e ítem 0000 (ej. 100000000 = TOTAL ACTIVOS). No sumar líneas padre con descendientes.",
+     "significado": "Código de cuenta tal como aparece en el TXT CMF.",
      "tipo": "VARCHAR"
     },
     {
@@ -647,7 +646,7 @@
      "criterio_contable": "No aplica",
      "nombre": "familia_archivo_fuente",
      "rol": "Atributo",
-     "significado": "B1, B2 o R1.",
+     "significado": "Sólo R1 en este objeto.",
      "tipo": "VARCHAR"
     },
     {
@@ -675,7 +674,6 @@
    "corte": "2022-01 a 2026-08",
    "estado": "derivado",
    "filas": 1240061,
-   "filas_dataset": 1962992,
    "filtro": "familia_archivo_fuente = 'R1'",
    "manifest_id": "bancos_cmf_lineas",
    "nivel": "secundario",
@@ -11590,7 +11588,7 @@
   "columnas_sin_documentar": 3,
   "columnas_sin_valores": 1,
   "con_esquema": 86,
-  "filas_por_objeto": 21740509,
+  "filas_por_objeto": 19777517,
   "filas_unicas": 19777517,
   "objetos": 90,
   "sin_esquema": 4,
