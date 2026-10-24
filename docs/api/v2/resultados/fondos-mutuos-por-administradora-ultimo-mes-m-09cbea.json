@@ -1,0 +1,70 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "fondos-mutuos-por-administradora-ultimo-mes-m-09cbea",
+ "titulo": "Fondos mutuos por administradora, último mes (M$)",
+ "origen": "explorador",
+ "data_release": "2026-10-23.12612e963628",
+ "generado": "2026-10-24",
+ "max_filas": 500,
+ "columnas": [
+  "rut_administradora",
+  "inversiones",
+  "valor_final_m_clp"
+ ],
+ "filas": 10,
+ "truncado": false,
+ "datos": [
+  [
+   "76036521",
+   22,
+   670932019
+  ],
+  [
+   "77750920",
+   110,
+   429256796
+  ],
+  [
+   "91999000",
+   46,
+   220528875
+  ],
+  [
+   "96514410",
+   82,
+   267086802
+  ],
+  [
+   "96530900",
+   69,
+   57680557
+  ],
+  [
+   "96634320",
+   18,
+   69066541
+  ],
+  [
+   "96667040",
+   53,
+   112482049
+  ],
+  [
+   "96767630",
+   30,
+   104827270
+  ],
+  [
+   "96955500",
+   128,
+   1202257535
+  ],
+  [
+   "96980650",
+   21,
+   90241697
+  ]
+ ],
+ "sql": "SELECT rut_administradora, count(*) AS inversiones, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_fondos_mutuos WHERE periodo = '2026-09' GROUP BY rut_administradora ORDER BY valor_final_m_clp DESC LIMIT 10;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

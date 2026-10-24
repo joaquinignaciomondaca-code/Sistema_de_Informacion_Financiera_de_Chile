@@ -1,0 +1,105 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "total-de-activos-por-banco-ultimo-periodo-dd61ba",
+ "titulo": "Total de activos por banco (último periodo)",
+ "origen": "explorador",
+ "data_release": "2026-10-23.12612e963628",
+ "generado": "2026-10-24",
+ "max_filas": 500,
+ "columnas": [
+  "codigo_institucion",
+  "razon_social",
+  "importe_clp"
+ ],
+ "filas": 17,
+ "truncado": false,
+ "datos": [
+  [
+   "001",
+   "Banco de Chile",
+   55804006014866
+  ],
+  [
+   "009",
+   "Banco Internacional",
+   6693863105386
+  ],
+  [
+   "012",
+   "Banco del Estado de Chile",
+   60686733767800
+  ],
+  [
+   "014",
+   "Scotiabank Chile",
+   44357478628116
+  ],
+  [
+   "016",
+   "Banco de Credito e Inversiones",
+   86558813882872
+  ],
+  [
+   "028",
+   "Banco BICE",
+   22346953735043
+  ],
+  [
+   "031",
+   "HSBC Bank (Chile)",
+   1752497095484
+  ],
+  [
+   "037",
+   "Banco Santander-Chile",
+   71738399336873
+  ],
+  [
+   "039",
+   "Banco Itau Chile",
+   49223814364316
+  ],
+  [
+   "041",
+   "JP Morgan Chase Bank N.A.",
+   1511895473894
+  ],
+  [
+   "051",
+   "Banco Falabella",
+   8009334377830
+  ],
+  [
+   "053",
+   "Banco Ripley",
+   1497399549063
+  ],
+  [
+   "055",
+   "Banco Consorcio",
+   12089202752410
+  ],
+  [
+   "059",
+   "Banco BTG Pactual Chile",
+   8018692238735
+  ],
+  [
+   "060",
+   "China Construction Bank",
+   331726399371
+  ],
+  [
+   "061",
+   "Bank of China, Agencia en Chile",
+   141589840577
+  ],
+  [
+   "062",
+   "Tanner Banco Digital",
+   1115973818859
+  ]
+ ],
+ "sql": "SELECT codigo_institucion, razon_social, importe_clp FROM bancos_balance WHERE modelo_cmf = 'MB1' AND codigo_cuenta = '100000000' AND codigo_institucion <> '999' AND periodo = '2026-08' ORDER BY importe_clp DESC;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}
