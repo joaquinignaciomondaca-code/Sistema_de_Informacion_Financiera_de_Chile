@@ -10,7 +10,7 @@ el repo:
     docs/api/v2/partitions/{id}.json    qué archivos lo componen, con su hash
     docs/api/v2/queries.json            las 159 consultas de la web, con id estable
     docs/api/v2/openapi.json            sólo las rutas GET que existen de verdad
-    docs/api/v2/views.sql               las 105 vistas (86 con datos + 19 alias)
+    docs/api/v2/views.sql               las 105 vistas de catálogo (86 con datos + 19 alias) y auxiliares temporales SQL-only
     docs/api/v2/resultados/{id}.json    lo que devuelve cada consulta (fase 3); lo
                                         escribe build_resultados.py, que corre después
 
@@ -230,6 +230,7 @@ def construir_objetos(datos: dict, alias: dict[str, list[str]], base: str) -> tu
 def construir_consultas(catalogo: list[dict]) -> dict:
     conocidos = {o["id"] for o in catalogo}
     alias = {a: o["id"] for o in catalogo for a in o["aliases"]}
+    auxiliares = {v["name"] for v in V.vistas_sql_auxiliares()}
     consultas, vistos = [], set()
 
     fuentes = [("explorador", t, s) for t, s in ac.consultas_sugeridas()]
@@ -242,22 +243,23 @@ def construir_consultas(catalogo: list[dict]) -> dict:
         while ident in vistos:
             ident, n = f"{base}-{n}", n + 1
         vistos.add(ident)
-        tablas = sorted({
-            alias.get(t.lower(), t.lower())
-            for t in re.findall(r"\b(?:FROM|JOIN)\s+([a-zA-Z_][\w]*)", sql)
-            if alias.get(t.lower(), t.lower()) in conocidos
-        })
+        referencias = {t.lower() for t in re.findall(
+            r"\b(?:FROM|JOIN)\s+([a-zA-Z_][\w]*)", sql)}
+        tablas = sorted({alias.get(t, t) for t in referencias
+                         if alias.get(t, t) in conocidos})
+        auxiliares_usadas = sorted(referencias & auxiliares)
+        # La expectativa es de forma, no un número fijo: una consulta puede
+        # devolver filas distintas en publicaciones futuras. Las auxiliares
+        # se registran aparte para no confundirlas con objetos del catálogo.
+        expectativa = {"tipo": "no_vacia", "tablas": tablas}
+        if auxiliares_usadas:
+            expectativa["vistas_auxiliares"] = auxiliares_usadas
         consultas.append({
             "id": ident,
             "titulo": titulo,
             "origen": origen,
             "sql": sql.strip(),
-            "espera": {
-                # La expectativa es de forma, no un número fijo: una consulta
-                # que devuelve filas hoy puede devolver otras mañana.
-                "tipo": "no_vacia",
-                "tablas": tablas,
-            },
+            "espera": expectativa,
         })
 
     return {
@@ -313,7 +315,7 @@ def construir_openapi(catalogo: list[dict], n_consultas: int, base: str,
                                     "schema": {"type": "string", "enum": ids_consultas or []}}],
                     "responses": json_resp("Resultado de la consulta")}},
         "/api/v2/views.sql": {
-            "get": {"operationId": "getVistas", "summary": "DDL de las 105 vistas (86 con datos + 19 alias)",
+            "get": {"operationId": "getVistas", "summary": "DDL de las 105 vistas de catálogo (86 con datos + 19 alias) y vistas auxiliares temporales SQL-only",
                     "tags": ["contrato"],
                     "responses": {"200": {"description": "SQL", "content": {"text/plain": {"schema": {"type": "string"}}}}}}},
         "/api/reconciliacion.csv": {
@@ -355,11 +357,14 @@ def construir_openapi(catalogo: list[dict], n_consultas: int, base: str,
 
 def construir_vistas(catalogo: list[dict], alias: dict[str, list[str]], base: str) -> str:
     vistas = {v["name"]: v for v in ac.vistas_semanticas()}
+    auxiliares = V.vistas_sql_auxiliares()
     lineas = [
         "-- Vistas del contrato — generado por scripts/build_contrato.py",
-        f"-- {sum(1 for o in catalogo if o['particiones'])} vistas con datos + "
+        f"-- {sum(1 for o in catalogo if o['particiones'])} vistas de catálogo con datos + "
         f"{sum(len(o['aliases']) for o in catalogo)} alias = "
-        f"{sum(1 for o in catalogo if o['particiones']) + sum(len(o['aliases']) for o in catalogo)} objetos SQL.",
+        f"{sum(1 for o in catalogo if o['particiones']) + sum(len(o['aliases']) for o in catalogo)} objetos SQL canónicos.",
+        "-- Las auxiliares temporales del terminal se declaran aparte: no son objetos del catálogo ni descargas.",
+
         "--",
         "-- Uso remoto:   duckdb < views.sql",
         "-- Uso local:    cambie la línea siguiente por la ruta de su copia de docs/",
@@ -387,6 +392,17 @@ def construir_vistas(catalogo: list[dict], alias: dict[str, list[str]], base: st
                       f"SELECT * FROM read_parquet({argumento}{solo}){filtro};")
         for viejo in objeto["aliases"]:
             lineas.append(f'CREATE OR REPLACE VIEW "{viejo}" AS SELECT * FROM "{objeto["id"]}";')
+    for auxiliar in auxiliares:
+        rutas = [f"getvariable('sif_base') || '/{rel}'" for rel in V.rutas_sql_relativas(auxiliar)]
+        if not rutas:
+            lineas.append(f"-- Auxiliar no disponible: {auxiliar['name']}")
+            continue
+        argumento = rutas[0] if len(rutas) == 1 else "[" + ", ".join(rutas) + "]"
+        solo = "" if len(rutas) == 1 else ", union_by_name=true"
+        lineas.append("")
+        lineas.append("-- Auxiliar temporal para una consulta sugerida, sólo usa la partición más reciente y no es descargable.")
+        lineas.append(f'CREATE OR REPLACE TEMP VIEW "{auxiliar["name"]}" AS')
+        lineas.append(f"SELECT * FROM read_parquet({argumento}{solo});")
     if vacias:
         lineas.append("")
         lineas.append("-- Objetos publicados sin filas (la fuente no entrega la tabla): "

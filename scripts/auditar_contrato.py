@@ -14,7 +14,8 @@ Comprueba que lo publicado y lo que dicen los documentos sean lo mismo, y que
      objetos.
   5. **Vistas**: se ejecuta `views.sql` sustituyendo la base por la copia local
      de `docs/` (el sandbox no tiene salida al sitio) y se comprueba que crea
-     las 105 vistas y que **cada objeto con datos responde a un `count(*)`**.
+     las 105 vistas de catálogo y las auxiliares temporales, y que **cada objeto
+     con datos responde a un `count(*)`**.
   6. **`llms.txt`**: las cifras que le dice a un agente (objetos, consultas) son
      las del catálogo, y ninguna de sus rutas da 404.
   7. **Una sola versión**: las nueve piezas del contrato declaran la misma
@@ -37,6 +38,7 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 DOCS = RAIZ / "docs"
+sys.path.insert(0, str(RAIZ))
 sys.path.insert(0, str(RAIZ / "scripts"))
 
 from version_contrato import API_VERSION, VERSION_CONTRATO  # noqa: E402
@@ -126,6 +128,8 @@ def main() -> int:
     consultas = leer_json(V2 / "queries.json")
     alias = {a: o["id"] for o in objetos for a in o["aliases"]}
     conocidos = set(ids)
+    from pipelines.api.vistas import vistas_sql_auxiliares
+    auxiliares_sql = {v["name"] for v in vistas_sql_auxiliares()}
     vistos = set()
     for c in consultas["consultas"]:
         if c["id"] in vistos:
@@ -137,9 +141,15 @@ def main() -> int:
             if tabla not in conocidos:
                 problemas.append(f"{c['id']}: usa {tabla}, que no está en el catálogo")
         crudo = {t.lower() for t in re.findall(r"\b(?:FROM|JOIN)\s+([a-zA-Z_]\w*)", c["sql"])}
+        auxiliares_declaradas = set(c["espera"].get("vistas_auxiliares", []))
         for tabla in crudo:
-            if tabla not in conocidos and tabla not in alias and tabla != "range":
+            if tabla in auxiliares_sql and tabla not in auxiliares_declaradas:
+                problemas.append(f"{c['id']}: no declara la fuente auxiliar {tabla}")
+            elif tabla not in conocidos and tabla not in alias and tabla not in auxiliares_sql and tabla != "range":
                 problemas.append(f"{c['id']}: menciona «{tabla}», que no existe")
+        for tabla in auxiliares_declaradas:
+            if tabla not in auxiliares_sql:
+                problemas.append(f"{c['id']}: declara la fuente auxiliar desconocida {tabla}")
     print(f"Consultas: {consultas['total']} con id único y tablas del catálogo")
 
     # 4. OpenAPI ------------------------------------------------------------
@@ -210,6 +220,7 @@ def main() -> int:
     if f"'{BASE}'" not in sql:
         problemas.append("views.sql no usa la URL canónica de la decisión D1")
     vistas = 0
+    auxiliares: set[str] = set()
     try:
         import duckdb
 
@@ -219,7 +230,9 @@ def main() -> int:
         vistas = con.execute("SELECT count(*) FROM duckdb_views() WHERE NOT internal").fetchone()[0]
         con_creadas = {r[0] for r in con.execute(
             "SELECT view_name FROM duckdb_views() WHERE NOT internal").fetchall()}
-        esperadas_vistas = {o["id"] for o in objetos if o["particiones"]} | set(alias)
+        from pipelines.api.vistas import vistas_sql_auxiliares
+        auxiliares = {v["name"] for v in vistas_sql_auxiliares()}
+        esperadas_vistas = {o["id"] for o in objetos if o["particiones"]} | set(alias) | auxiliares
         if con_creadas != esperadas_vistas:
             problemas.append(f"views.sql crea {len(con_creadas)} vistas y se esperaban "
                              f"{len(esperadas_vistas)}")
@@ -234,7 +247,8 @@ def main() -> int:
         con.close()
     except ImportError:
         print("AVISO: sin duckdb no se ejecutan las vistas")
-    print(f"Vistas: {vistas} creadas desde views.sql con la base local, todas responden")
+    print(f"Vistas: {vistas - len(auxiliares)} de catálogo + {len(auxiliares)} temporales, "
+          "creadas desde views.sql con la base local, todas responden")
 
     # 6. El release tiene que ser el mismo que el del Data Package ----------
     paquete = leer_json(V2 / "datapackage.json")
