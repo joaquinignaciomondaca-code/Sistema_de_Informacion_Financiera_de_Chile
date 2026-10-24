@@ -303,6 +303,11 @@ setTimeout(async () => {
   input.selectionStart = input.selectionEnd = input.value.length;
   window.ChatTerminal.completeInput();
   check("Tab completa nombres de vista", input.value.startsWith("SELECT * FROM seguros_"), input.value);
+  input.value = "SELECT * FROM ffmm_cartera_extranjera_ultima";
+  input.selectionStart = input.selectionEnd = input.value.length;
+  window.ChatTerminal.completeInput();
+  check("Tab ofrece las vistas auxiliares SQL-only",
+    input.value === "SELECT * FROM ffmm_cartera_extranjera_ultima_particion", input.value);
 
   const antes = document.querySelectorAll("#chat-messages .message").length;
   window.ChatTerminal.clearTerminal();

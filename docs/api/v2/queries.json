@@ -1874,12 +1874,12 @@
     "tablas": [],
     "tipo": "no_vacia",
     "vistas_auxiliares": [
-     "seguros_derivados_ultimo_periodo"
+     "seguros_derivados_ultima_particion"
     ]
    },
-   "id": "derivados-de-seguros-por-tipo-ultimo-periodo-e523ca",
+   "id": "derivados-de-seguros-por-tipo-ultimo-periodo-d13424",
    "origen": "terminal",
-   "sql": "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados_ultimo_periodo WHERE periodo = (SELECT max(periodo) FROM seguros_derivados_ultimo_periodo) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;",
+   "sql": "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados_ultima_particion WHERE periodo = (SELECT max(periodo) FROM seguros_derivados_ultima_particion) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;",
    "titulo": "Derivados de seguros por tipo (último período)"
   },
   {
@@ -1887,25 +1887,26 @@
     "tablas": [],
     "tipo": "no_vacia",
     "vistas_auxiliares": [
-     "ffmm_cartera_extranjera_ultimo_periodo"
+     "ffmm_cartera_extranjera_ultima_particion"
     ]
    },
-   "id": "cartera-extranjera-ffmm-por-pais-ultimo-periodo-f7045c",
+   "id": "cartera-extranjera-ffmm-por-pais-ultimo-periodo-59d7b8",
    "origen": "terminal",
-   "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera_ultimo_periodo WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera_ultimo_periodo) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;",
+   "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera_ultima_particion WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera_ultima_particion) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;",
    "titulo": "Cartera extranjera FFMM por país (último período)"
   },
   {
    "espera": {
-    "tablas": [
-     "fi_cartera_nacional"
-    ],
-    "tipo": "no_vacia"
+    "tablas": [],
+    "tipo": "no_vacia",
+    "vistas_auxiliares": [
+     "fi_cartera_nacional_ultimo_periodo"
+    ]
    },
-   "id": "fondos-de-inversion-cartera-nacional-por-tipo-90ffb4",
+   "id": "fondos-de-inversion-cartera-nacional-por-tipo-ul-8e14eb",
    "origen": "terminal",
-   "sql": "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional WHERE periodo = '2026-06' GROUP BY tipo_instrumento ORDER BY posiciones DESC LIMIT 15;",
-   "titulo": "Fondos de inversión: cartera nacional por tipo"
+   "sql": "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional_ultimo_periodo WHERE periodo = (SELECT max(periodo) FROM fi_cartera_nacional_ultimo_periodo) GROUP BY tipo_instrumento ORDER BY posiciones DESC LIMIT 15;",
+   "titulo": "Fondos de inversión: cartera nacional por tipo (último período)"
   },
   {
    "espera": {
