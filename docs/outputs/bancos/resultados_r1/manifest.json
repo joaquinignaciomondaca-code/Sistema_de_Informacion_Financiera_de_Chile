@@ -1,0 +1,463 @@
+{
+  "dataset": "bancos_resultados",
+  "description": "Particiones Parquet descargables filtradas exclusivamente a las familias R1.",
+  "source_manifest": "outputs/bancos/cmf_b1_b2_r1/manifest.json",
+  "familias_archivo_fuente": [
+    "R1"
+  ],
+  "updated_at": "2026-10-01",
+  "periods": [
+    {
+      "period": "2022-01",
+      "file": "outputs/bancos/resultados_r1/2022-01/lineas.parquet",
+      "records": 22122,
+      "bytes": 135025,
+      "sha256": "55ae90ea7c44f657aafb21ea2e4724adee8d8b0701a917370720ad807f935f15"
+    },
+    {
+      "period": "2022-02",
+      "file": "outputs/bancos/resultados_r1/2022-02/lineas.parquet",
+      "records": 22122,
+      "bytes": 138754,
+      "sha256": "38abcb9674107e70359f638b07a223627653e0685f9cba0986ee6b4189759771"
+    },
+    {
+      "period": "2022-03",
+      "file": "outputs/bancos/resultados_r1/2022-03/lineas.parquet",
+      "records": 22122,
+      "bytes": 141470,
+      "sha256": "a45a45b60f9ff077401174ae367a006a84e576aa7e3f836d05300d42d347c3f0"
+    },
+    {
+      "period": "2022-04",
+      "file": "outputs/bancos/resultados_r1/2022-04/lineas.parquet",
+      "records": 22122,
+      "bytes": 142790,
+      "sha256": "871b74aef0a2f0034b46c795f001b67d9b53cef7703d1116255eacc2968a2412"
+    },
+    {
+      "period": "2022-05",
+      "file": "outputs/bancos/resultados_r1/2022-05/lineas.parquet",
+      "records": 22122,
+      "bytes": 143963,
+      "sha256": "b61b438640dee867b4ba7287704a542c053f50715a3b2e12e080a6c65e54e43a"
+    },
+    {
+      "period": "2022-06",
+      "file": "outputs/bancos/resultados_r1/2022-06/lineas.parquet",
+      "records": 22122,
+      "bytes": 144920,
+      "sha256": "a4943a2663450ad8225db362a699ac1dd7e1bcc6d0a9185ad3fff0217b155966"
+    },
+    {
+      "period": "2022-07",
+      "file": "outputs/bancos/resultados_r1/2022-07/lineas.parquet",
+      "records": 22122,
+      "bytes": 146371,
+      "sha256": "ba45b9f12452c86465abe7c5d8ca5512ff5cc5094a6415ec16c763664217f4b7"
+    },
+    {
+      "period": "2022-08",
+      "file": "outputs/bancos/resultados_r1/2022-08/lineas.parquet",
+      "records": 22122,
+      "bytes": 146720,
+      "sha256": "b838aab456587bd7c66ac20427d63f3ef0dfa073ae41f398fbf73a8f3d766678"
+    },
+    {
+      "period": "2022-09",
+      "file": "outputs/bancos/resultados_r1/2022-09/lineas.parquet",
+      "records": 22122,
+      "bytes": 147904,
+      "sha256": "7f71eba8d747e601ae2235796f3efc48aaa12cb931728a9b00b1387b0755a016"
+    },
+    {
+      "period": "2022-10",
+      "file": "outputs/bancos/resultados_r1/2022-10/lineas.parquet",
+      "records": 22122,
+      "bytes": 148389,
+      "sha256": "f903bcbb0d24a7c0cd9dd30fcf7154037aa1e914e953b8fe44a00e0c71e52e2b"
+    },
+    {
+      "period": "2022-11",
+      "file": "outputs/bancos/resultados_r1/2022-11/lineas.parquet",
+      "records": 22122,
+      "bytes": 149071,
+      "sha256": "9d990bdb7196dca9f6d0058ad92892717aa6d4b029806ad338e1522d634a448c"
+    },
+    {
+      "period": "2022-12",
+      "file": "outputs/bancos/resultados_r1/2022-12/lineas.parquet",
+      "records": 22122,
+      "bytes": 149990,
+      "sha256": "83803cf7a2ba06774d57b70714580485b7c9dd2d8f1dcdd9800f8d9ec4963e59"
+    },
+    {
+      "period": "2023-01",
+      "file": "outputs/bancos/resultados_r1/2023-01/lineas.parquet",
+      "records": 22122,
+      "bytes": 138298,
+      "sha256": "6d7145c0225d8ddfe1bfb97f1e5adf765836bec5780d2e5a803b96f92f2d1149"
+    },
+    {
+      "period": "2023-02",
+      "file": "outputs/bancos/resultados_r1/2023-02/lineas.parquet",
+      "records": 22122,
+      "bytes": 141314,
+      "sha256": "22f61ff33af3cfd4014a7789d3757e31b1605de02929fde414a6eaf83ebb1581"
+    },
+    {
+      "period": "2023-03",
+      "file": "outputs/bancos/resultados_r1/2023-03/lineas.parquet",
+      "records": 22122,
+      "bytes": 143469,
+      "sha256": "2cfef3f058db0d1f9b273a39c9749322ceae1b21979443f4098c300c7898fbf3"
+    },
+    {
+      "period": "2023-04",
+      "file": "outputs/bancos/resultados_r1/2023-04/lineas.parquet",
+      "records": 22122,
+      "bytes": 144904,
+      "sha256": "4c9eb9f463a4a0137a63a515d255ff2afdd54611d972542d764c9b703fe94da8"
+    },
+    {
+      "period": "2023-05",
+      "file": "outputs/bancos/resultados_r1/2023-05/lineas.parquet",
+      "records": 22122,
+      "bytes": 146170,
+      "sha256": "e45085bf2b04b983e8b7bc83091aa347937dd91eb16bfae5e9d53ed0808ccab7"
+    },
+    {
+      "period": "2023-06",
+      "file": "outputs/bancos/resultados_r1/2023-06/lineas.parquet",
+      "records": 22122,
+      "bytes": 147409,
+      "sha256": "93fa9c97f1b482953bf576564a6d6cb7cd71d3aff6276637a63b366373b04871"
+    },
+    {
+      "period": "2023-07",
+      "file": "outputs/bancos/resultados_r1/2023-07/lineas.parquet",
+      "records": 22122,
+      "bytes": 148167,
+      "sha256": "0ab138b27a7755a0141ea7c70f57dbaabeff59c9aff3116310c1edb58e84a8db"
+    },
+    {
+      "period": "2023-08",
+      "file": "outputs/bancos/resultados_r1/2023-08/lineas.parquet",
+      "records": 22122,
+      "bytes": 149399,
+      "sha256": "4ee2694356115232afee8e51a5117defc52e06febe8670d22a508fd783ac744a"
+    },
+    {
+      "period": "2023-09",
+      "file": "outputs/bancos/resultados_r1/2023-09/lineas.parquet",
+      "records": 22122,
+      "bytes": 149937,
+      "sha256": "16135bbb3a769603b1626c88b92267645a034fa98a988110e16f75c65fe84bec"
+    },
+    {
+      "period": "2023-10",
+      "file": "outputs/bancos/resultados_r1/2023-10/lineas.parquet",
+      "records": 22122,
+      "bytes": 150231,
+      "sha256": "55f5a78087bb65cedadc9e8b66efc00d0a260a90437135e44520ec5264a3cde5"
+    },
+    {
+      "period": "2023-11",
+      "file": "outputs/bancos/resultados_r1/2023-11/lineas.parquet",
+      "records": 22122,
+      "bytes": 151133,
+      "sha256": "6fe4a9399e18ccf1e288dc675cbe0d17c3e82b9fd1f19320a1ce927ddd71cf46"
+    },
+    {
+      "period": "2023-12",
+      "file": "outputs/bancos/resultados_r1/2023-12/lineas.parquet",
+      "records": 22122,
+      "bytes": 152139,
+      "sha256": "fe43b80b24ca3a1b8eaafa1d2d74cfe83834ece5310f3aae51d0098e4fad60d2"
+    },
+    {
+      "period": "2024-01",
+      "file": "outputs/bancos/resultados_r1/2024-01/lineas.parquet",
+      "records": 22122,
+      "bytes": 139910,
+      "sha256": "941fd8f8e7690d4b735aaad5af4016395f0ac4d05b31259b01e854ac2d5a97a5"
+    },
+    {
+      "period": "2024-02",
+      "file": "outputs/bancos/resultados_r1/2024-02/lineas.parquet",
+      "records": 22122,
+      "bytes": 143243,
+      "sha256": "30653a2f81c51b3ad6034549228cd5778dfd3fd0726fb9efe019c336549f7275"
+    },
+    {
+      "period": "2024-03",
+      "file": "outputs/bancos/resultados_r1/2024-03/lineas.parquet",
+      "records": 22122,
+      "bytes": 145352,
+      "sha256": "062deac764a03cb9675fda4e7f4ab01bf4deef4691d9012035d9fc41bb186a22"
+    },
+    {
+      "period": "2024-04",
+      "file": "outputs/bancos/resultados_r1/2024-04/lineas.parquet",
+      "records": 22122,
+      "bytes": 147017,
+      "sha256": "992e8227f1fd406f68f0124d55e04dd7fd9cd9f7681c348b2251ab266761a999"
+    },
+    {
+      "period": "2024-05",
+      "file": "outputs/bancos/resultados_r1/2024-05/lineas.parquet",
+      "records": 22122,
+      "bytes": 147760,
+      "sha256": "8704406fc7aae7aaed5de4cacabeb994395f17a3c4eea7f4e2f0efdcbb2d3ca9"
+    },
+    {
+      "period": "2024-06",
+      "file": "outputs/bancos/resultados_r1/2024-06/lineas.parquet",
+      "records": 22122,
+      "bytes": 149729,
+      "sha256": "879939e0b312a6715c06019320f1e946685f2e99d92a9c7e1a1c9bcbe06e2213"
+    },
+    {
+      "period": "2024-07",
+      "file": "outputs/bancos/resultados_r1/2024-07/lineas.parquet",
+      "records": 22122,
+      "bytes": 150480,
+      "sha256": "db580510d94a8b0e1fce33fe388aff45caca5c026f8dc0fc8b13af45c197a4d3"
+    },
+    {
+      "period": "2024-08",
+      "file": "outputs/bancos/resultados_r1/2024-08/lineas.parquet",
+      "records": 22122,
+      "bytes": 150948,
+      "sha256": "8f1162f1350e1e8abd266932bd212a37985343bb76fbcfa6cef314c1b58e389b"
+    },
+    {
+      "period": "2024-09",
+      "file": "outputs/bancos/resultados_r1/2024-09/lineas.parquet",
+      "records": 22122,
+      "bytes": 151477,
+      "sha256": "36c08bf37303058cfbe04fbbc565eb8ab35221736f2233a4beeb8c315930fc13"
+    },
+    {
+      "period": "2024-10",
+      "file": "outputs/bancos/resultados_r1/2024-10/lineas.parquet",
+      "records": 22122,
+      "bytes": 152285,
+      "sha256": "2991ffac9159069dc2bd292aadf911d24c780b65abe9dcbc658b696412c323d8"
+    },
+    {
+      "period": "2024-11",
+      "file": "outputs/bancos/resultados_r1/2024-11/lineas.parquet",
+      "records": 22122,
+      "bytes": 153083,
+      "sha256": "c75a775a44b3d3e58765772b2f64c73c34082a88f2647884b4cfb91520554919"
+    },
+    {
+      "period": "2024-12",
+      "file": "outputs/bancos/resultados_r1/2024-12/lineas.parquet",
+      "records": 22122,
+      "bytes": 153555,
+      "sha256": "2fc886ec417ea0eb16907b7e7e808d52edee5c05c6a949c5e4878af8b92b1cc8"
+    },
+    {
+      "period": "2025-01",
+      "file": "outputs/bancos/resultados_r1/2025-01/lineas.parquet",
+      "records": 22122,
+      "bytes": 140480,
+      "sha256": "2b3ec04bf0bd6d913858ae67862651da27cff943f3ed61a19fe4e2d84832aa8c"
+    },
+    {
+      "period": "2025-02",
+      "file": "outputs/bancos/resultados_r1/2025-02/lineas.parquet",
+      "records": 22122,
+      "bytes": 144192,
+      "sha256": "0fe1f0594302ee6516b0c44233f918e9c4e3a31b8ffb16171ad4e1f92aab469b"
+    },
+    {
+      "period": "2025-03",
+      "file": "outputs/bancos/resultados_r1/2025-03/lineas.parquet",
+      "records": 22122,
+      "bytes": 146441,
+      "sha256": "ce616ce3c260f2f5f435cad65370658d135f43a94cfdce9f5d58a29107da3e8b"
+    },
+    {
+      "period": "2025-04",
+      "file": "outputs/bancos/resultados_r1/2025-04/lineas.parquet",
+      "records": 22122,
+      "bytes": 147869,
+      "sha256": "da37a600a4e1937ac75e724f1ea275981eff7a31576af806cc56e3b9b8c21945"
+    },
+    {
+      "period": "2025-05",
+      "file": "outputs/bancos/resultados_r1/2025-05/lineas.parquet",
+      "records": 22122,
+      "bytes": 148863,
+      "sha256": "32ca0751f376cb4a78216efde8544668e8ad744a264d95c7e679f1688a6c65f4"
+    },
+    {
+      "period": "2025-06",
+      "file": "outputs/bancos/resultados_r1/2025-06/lineas.parquet",
+      "records": 22122,
+      "bytes": 149826,
+      "sha256": "51ecc678f2b58dd924be25743686d7458bd5b739b8b608f23b7c8321d1830a77"
+    },
+    {
+      "period": "2025-07",
+      "file": "outputs/bancos/resultados_r1/2025-07/lineas.parquet",
+      "records": 22122,
+      "bytes": 150838,
+      "sha256": "83cbf76e6cbf33fd2c19d8ff3e83a5d0232fd8bfb4de1c3b993547dc16c32a27"
+    },
+    {
+      "period": "2025-08",
+      "file": "outputs/bancos/resultados_r1/2025-08/lineas.parquet",
+      "records": 22122,
+      "bytes": 151605,
+      "sha256": "a2503eab13a5bfe645dead9cc5446b5486d4cadf0e777dabd34e3dc95defae78"
+    },
+    {
+      "period": "2025-09",
+      "file": "outputs/bancos/resultados_r1/2025-09/lineas.parquet",
+      "records": 22122,
+      "bytes": 152029,
+      "sha256": "f391b931014e761dd3a50241ca7f550dd09e6b28a9677d31bd0837c9840be968"
+    },
+    {
+      "period": "2025-10",
+      "file": "outputs/bancos/resultados_r1/2025-10/lineas.parquet",
+      "records": 23351,
+      "bytes": 154214,
+      "sha256": "beaa7d600ea7ca591ee06f73f9da2f62d81b7578d29a50b8cd3640bc9149e32c"
+    },
+    {
+      "period": "2025-11",
+      "file": "outputs/bancos/resultados_r1/2025-11/lineas.parquet",
+      "records": 22122,
+      "bytes": 149370,
+      "sha256": "9a6df6759042a6be1924427677511d48e47576f2ed498a6dbdb435a5e3baacde"
+    },
+    {
+      "period": "2025-12",
+      "file": "outputs/bancos/resultados_r1/2025-12/lineas.parquet",
+      "records": 22122,
+      "bytes": 150283,
+      "sha256": "7594349731ba4d1c00ab34d769540d5f3b8dc22cf850f40b453a17c6ed645fa5"
+    },
+    {
+      "period": "2026-01",
+      "file": "outputs/bancos/resultados_r1/2026-01/lineas.parquet",
+      "records": 22122,
+      "bytes": 138377,
+      "sha256": "bb8e9f138f0b25fadb7551488ba1bd5b2c216ccbc798bedb14eec2b2453cc6b1"
+    },
+    {
+      "period": "2026-02",
+      "file": "outputs/bancos/resultados_r1/2026-02/lineas.parquet",
+      "records": 22122,
+      "bytes": 141633,
+      "sha256": "3458720b717f61ecabdfe56cf98e6976f64eb3669d6016747081ab4447f3fdf4"
+    },
+    {
+      "period": "2026-03",
+      "file": "outputs/bancos/resultados_r1/2026-03/lineas.parquet",
+      "records": 22122,
+      "bytes": 143939,
+      "sha256": "389a45c0eea2f9f3488660f9fae68279f4b71aa264633ee0fb2895c008a1d0e2"
+    },
+    {
+      "period": "2026-04",
+      "file": "outputs/bancos/resultados_r1/2026-04/lineas.parquet",
+      "records": 22122,
+      "bytes": 146124,
+      "sha256": "09bfe458dbcf218fe3ace1c51fe519c08b16d8c26c75f9949f93bf0250e98c50"
+    },
+    {
+      "period": "2026-05",
+      "file": "outputs/bancos/resultados_r1/2026-05/lineas.parquet",
+      "records": 22122,
+      "bytes": 147192,
+      "sha256": "338eddae13f90bccd1ebbeba8af25fd1aeede8fef0632c07cd5ea0b2c74a2ad6"
+    },
+    {
+      "period": "2026-06",
+      "file": "outputs/bancos/resultados_r1/2026-06/lineas.parquet",
+      "records": 22122,
+      "bytes": 148125,
+      "sha256": "852e584c10e6ab60deaa4f970682f137630b01ef40c1d7528939a8c66117c6c1"
+    },
+    {
+      "period": "2026-07",
+      "file": "outputs/bancos/resultados_r1/2026-07/lineas.parquet",
+      "records": 22122,
+      "bytes": 149175,
+      "sha256": "a24ac852082b12fb58cc2c2efd68c67f59c74a1d3a63d0ef7599851cc733acc7"
+    },
+    {
+      "period": "2026-08",
+      "file": "outputs/bancos/resultados_r1/2026-08/lineas.parquet",
+      "records": 22122,
+      "bytes": 149837,
+      "sha256": "50138833d1b09034f17d4f4d0c0c6f9765f9eb29b379672eb032a7ad3ce52eb0"
+    }
+  ],
+  "files": [
+    "outputs/bancos/resultados_r1/2022-01/lineas.parquet",
+    "outputs/bancos/resultados_r1/2022-02/lineas.parquet",
+    "outputs/bancos/resultados_r1/2022-03/lineas.parquet",
+    "outputs/bancos/resultados_r1/2022-04/lineas.parquet",
+    "outputs/bancos/resultados_r1/2022-05/lineas.parquet",
+    "outputs/bancos/resultados_r1/2022-06/lineas.parquet",
+    "outputs/bancos/resultados_r1/2022-07/lineas.parquet",
+    "outputs/bancos/resultados_r1/2022-08/lineas.parquet",
+    "outputs/bancos/resultados_r1/2022-09/lineas.parquet",
+    "outputs/bancos/resultados_r1/2022-10/lineas.parquet",
+    "outputs/bancos/resultados_r1/2022-11/lineas.parquet",
+    "outputs/bancos/resultados_r1/2022-12/lineas.parquet",
+    "outputs/bancos/resultados_r1/2023-01/lineas.parquet",
+    "outputs/bancos/resultados_r1/2023-02/lineas.parquet",
+    "outputs/bancos/resultados_r1/2023-03/lineas.parquet",
+    "outputs/bancos/resultados_r1/2023-04/lineas.parquet",
+    "outputs/bancos/resultados_r1/2023-05/lineas.parquet",
+    "outputs/bancos/resultados_r1/2023-06/lineas.parquet",
+    "outputs/bancos/resultados_r1/2023-07/lineas.parquet",
+    "outputs/bancos/resultados_r1/2023-08/lineas.parquet",
+    "outputs/bancos/resultados_r1/2023-09/lineas.parquet",
+    "outputs/bancos/resultados_r1/2023-10/lineas.parquet",
+    "outputs/bancos/resultados_r1/2023-11/lineas.parquet",
+    "outputs/bancos/resultados_r1/2023-12/lineas.parquet",
+    "outputs/bancos/resultados_r1/2024-01/lineas.parquet",
+    "outputs/bancos/resultados_r1/2024-02/lineas.parquet",
+    "outputs/bancos/resultados_r1/2024-03/lineas.parquet",
+    "outputs/bancos/resultados_r1/2024-04/lineas.parquet",
+    "outputs/bancos/resultados_r1/2024-05/lineas.parquet",
+    "outputs/bancos/resultados_r1/2024-06/lineas.parquet",
+    "outputs/bancos/resultados_r1/2024-07/lineas.parquet",
+    "outputs/bancos/resultados_r1/2024-08/lineas.parquet",
+    "outputs/bancos/resultados_r1/2024-09/lineas.parquet",
+    "outputs/bancos/resultados_r1/2024-10/lineas.parquet",
+    "outputs/bancos/resultados_r1/2024-11/lineas.parquet",
+    "outputs/bancos/resultados_r1/2024-12/lineas.parquet",
+    "outputs/bancos/resultados_r1/2025-01/lineas.parquet",
+    "outputs/bancos/resultados_r1/2025-02/lineas.parquet",
+    "outputs/bancos/resultados_r1/2025-03/lineas.parquet",
+    "outputs/bancos/resultados_r1/2025-04/lineas.parquet",
+    "outputs/bancos/resultados_r1/2025-05/lineas.parquet",
+    "outputs/bancos/resultados_r1/2025-06/lineas.parquet",
+    "outputs/bancos/resultados_r1/2025-07/lineas.parquet",
+    "outputs/bancos/resultados_r1/2025-08/lineas.parquet",
+    "outputs/bancos/resultados_r1/2025-09/lineas.parquet",
+    "outputs/bancos/resultados_r1/2025-10/lineas.parquet",
+    "outputs/bancos/resultados_r1/2025-11/lineas.parquet",
+    "outputs/bancos/resultados_r1/2025-12/lineas.parquet",
+    "outputs/bancos/resultados_r1/2026-01/lineas.parquet",
+    "outputs/bancos/resultados_r1/2026-02/lineas.parquet",
+    "outputs/bancos/resultados_r1/2026-03/lineas.parquet",
+    "outputs/bancos/resultados_r1/2026-04/lineas.parquet",
+    "outputs/bancos/resultados_r1/2026-05/lineas.parquet",
+    "outputs/bancos/resultados_r1/2026-06/lineas.parquet",
+    "outputs/bancos/resultados_r1/2026-07/lineas.parquet",
+    "outputs/bancos/resultados_r1/2026-08/lineas.parquet"
+  ],
+  "total_records": 1240061,
+  "total_bytes": 8233188
+}

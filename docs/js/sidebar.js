@@ -533,7 +533,7 @@ const EXPLORER_TREE = [
               { label: "Cobertura de balance por periodo y modelo", query: "SELECT periodo, familia_archivo_fuente, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_balance GROUP BY periodo, familia_archivo_fuente, modelo_cmf ORDER BY periodo DESC, familia_archivo_fuente;" }
             ],
             tables: [
-              { id: "bancos_balance", name: "bancos.balance", rows: "B1/B2 · importe_clp y desglose por moneda", file: "", files: ["outputs/bancos/cmf_b1_b2_r1/manifest.json"] }
+              { id: "bancos_balance", name: "bancos.balance", rows: "Sólo B1/B2 · Parquet filtrado · importe_clp y desglose por moneda", file: "", files: ["outputs/bancos/balance_b1_b2/manifest.json"] }
             ]
           },
           {
@@ -551,7 +551,7 @@ const EXPLORER_TREE = [
               { label: "Cobertura de resultados por periodo", query: "SELECT periodo, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_resultados GROUP BY periodo, modelo_cmf ORDER BY periodo DESC;" }
             ],
             tables: [
-              { id: "bancos_resultados", name: "bancos.resultados", rows: "R1 · importe_clp (acumulado del ejercicio)", file: "", files: ["outputs/bancos/cmf_b1_b2_r1/manifest.json"] }
+              { id: "bancos_resultados", name: "bancos.resultados", rows: "Sólo R1 · Parquet filtrado · importe_clp (acumulado del ejercicio)", file: "", files: ["outputs/bancos/resultados_r1/manifest.json"] }
             ]
           }
         ]

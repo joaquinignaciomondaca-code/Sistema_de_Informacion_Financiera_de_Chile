@@ -3,7 +3,7 @@
  "id": "inflacion-implicita-a-5-y-10-anos-promedio-mensu-f209af",
  "titulo": "Inflación implícita a 5 y 10 años: promedio mensual",
  "origen": "explorador",
- "data_release": "2026-10-23.12612e963628",
+ "data_release": "2026-10-24.1681bebfe7ef",
  "generado": "2026-10-24",
  "max_filas": 500,
  "columnas": [
@@ -131,8 +131,8 @@
   ],
   [
    "2026-10",
-   3.368,
-   3.335
+   3.367,
+   3.334
   ]
  ],
  "sql": "SELECT periodo, round(avg(inflacion_implicita_5_anos_pct), 3) AS implicita_5_anos_pct, round(avg(inflacion_implicita_10_anos_pct), 3) AS implicita_10_anos_pct FROM macro_inflacion_implicita GROUP BY periodo ORDER BY periodo DESC LIMIT 24;",
