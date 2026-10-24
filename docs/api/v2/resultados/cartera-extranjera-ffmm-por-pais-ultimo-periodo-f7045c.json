@@ -1,7 +1,7 @@
 {
  "contrato": "sif-api/resultado",
- "id": "fondos-mutuos-inversion-en-el-exterior-por-pais-4da5d1",
- "titulo": "Fondos mutuos: inversión en el exterior por país",
+ "id": "cartera-extranjera-ffmm-por-pais-ultimo-periodo-f7045c",
+ "titulo": "Cartera extranjera FFMM por país (último período)",
  "origen": "terminal",
  "data_release": "2026-10-24.1681bebfe7ef",
  "generado": "2026-10-24",
@@ -90,6 +90,6 @@
    146
   ]
  ],
- "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;",
+ "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera_ultimo_periodo WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera_ultimo_periodo) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;",
  "como_se_genera": "python3 scripts/build_resultados.py"
 }
