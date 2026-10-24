@@ -259,9 +259,9 @@
                   <use href="#sif-lockup"/>
                 </svg>
               </h1>
-              <p class="info-lead">Carteras y estados financieros de los inversionistas institucionales chilenos —aseguradoras, fondos mutuos y fondos de inversión—, junto a la banca y las series del Banco Central. Datos de la CMF, el Banco Central y la Superintendencia de Pensiones, consultables con SQL en el navegador y descargables en Parquet, CSV o Excel.</p>
+              <p class="info-lead">Carteras y balances que aseguradoras, fondos mutuos y fondos de inversión reportan a la CMF, más la banca y las series del Banco Central.</p>
               <div class="info-hero-stats" aria-label="Cifras de la edición publicada">
-                <div class="info-stat" title="Comisión para el Mercado Financiero, Banco Central de Chile y Superintendencia de Pensiones. La SUSESO figura como regulador y enlace; sus datos de cajas de compensación provienen de la CMF."><b>3</b><span>fuentes oficiales</span></div>
+                <div class="info-stat" title="Comisión para el Mercado Financiero, Banco Central de Chile y Superintendencia de Pensiones. La SUSESO figura como regulador y enlace; sus datos de cajas de compensación provienen de la CMF."><b data-fuentes="oficiales">3</b><span>fuentes oficiales</span></div>
                 <div class="info-stat" title="Núcleo, instituciones y contexto. El archivo congelado y los registros complementarios añaden 15 tablas más, que se consultan y descargan igual."><b data-alcance="visible.conjuntos">74</b><span>tablas en la vista principal</span></div>
                 <div class="info-stat" title="Una fila es lo que la fuente reporta para una entidad en un periodo. Una misma entidad aparece en varias tablas y periodos: la suma de filas no cuenta entidades."><b data-alcance="visible.filas">más de 19 millones</b><span>de filas</span></div>
                 <div class="info-stat" title="Primer y último período publicado en el catálogo; cada tabla declara el suyo."><b data-alcance="visible.periodo">2001–2026</b><span>de cobertura</span></div>
@@ -374,37 +374,11 @@
             </p>
 
             <section class="info-block info-calidad" aria-labelledby="calidad-titulo">
-              <div class="info-section-kicker">CALIDAD DEL DATO</div>
-              <h2 id="calidad-titulo">La fuente repite filas: <strong data-calidad="repetidas">230.288</strong> en <strong data-calidad="objetos">22 de 90</strong> objetos</h2>
-              <p>Son posiciones informadas más de una vez —la misma fila, con los mismos valores, en el mismo período—. Se publican tal como llegan y se miden para que una suma sin agrupar no sobreestime.</p>
-              <p class="info-calidad-foot">El detalle objeto por objeto, con su porcentaje, está en el <a href="#dict-container" data-calidad-dict>Diccionario</a>.</p>
-              <details class="info-calidad-detalle">
-                <summary>Detalle técnico y verificación</summary>
-                <div class="info-calidad-detalle-cuerpo">
-                  <div class="info-hero-stats info-calidad-stats">
-                    <div class="info-stat"><b data-calidad="repetidas">230.288</b><span>filas idénticas publicadas</span></div>
-                    <div class="info-stat"><b data-calidad="objetos">22 de 90</b><span>objetos afectados</span></div>
-                    <div class="info-stat" title="ffmm_cartera_nacional: la tabla con más filas repetidas del catálogo"><b data-calidad="peor">160.564</b><span>en un solo objeto: <code data-calidad="peor-objeto">ffmm_cartera_nacional</code> (<span data-calidad="peor-pct">10,1 %</span>)</span></div>
-                    <div class="info-stat" title="Diferencia medida entre sumar la columna con las filas repetidas y sumarla sobre las filas distintas"><b data-calidad="sobreestima">9,7 %</b><span>de sobreestimación si sumas sin agrupar (<span data-calidad="ejemplo-periodo">2026-09</span>)</span></div>
-                  </div>
-                  <div class="info-calidad-grid">
-                    <figure class="info-calidad-figure">
-                      <div id="calidad-chart" class="calidad-chart" hidden></div>
-                      <figcaption>Los seis objetos con más filas idénticas. El conteo exacto aparece al pasar el puntero sobre cada barra.</figcaption>
-                    </figure>
-                    <div class="info-calidad-sql">
-                      <p>La medición es reproducible: esta consulta se ejecuta sobre los datos publicados, sin ningún cálculo previo de la página.</p>
-                      <pre class="info-calidad-code"><code data-calidad-sql>-- ffmm_cartera_nacional, 2026-09: filas publicadas frente a filas distintas
-WITH crudo AS (SELECT * FROM ffmm_cartera_nacional WHERE periodo = '2026-09'),
-     mes   AS (SELECT DISTINCT * FROM crudo)
-SELECT (SELECT count(*) FROM crudo) AS filas,
-       (SELECT count(*) FROM mes)   AS distintas;</code></pre>
-                      <button type="button" class="info-calidad-run" data-calidad-ejecutar>Ejecutar en la terminal SQL</button>
-                    </div>
-                  </div>
-                  <p class="info-calidad-foot">Puedes comprobarlo: ejecuta la consulta en la terminal SQL. El criterio y las decisiones de publicación están en <a href="https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/docs/notas/claves_duplicados_2026-10-23.md" rel="noopener">la nota de claves</a>.</p>
-                </div>
-              </details>
+              <div class="info-section-kicker">LO QUE LA FUENTE REPITE</div>
+              <h2 id="calidad-titulo">Los archivos que las entidades envían a la CMF repiten filas: <b data-calidad="repetidas">230.288</b> de <b data-alcance="visible.filas">más de 19 millones</b> de filas (más de <b data-calidad="pct-repetidas">1,1 %</b>), en <b data-calidad="objetos">22 de 90</b> objetos.</h2>
+              <p>Se publican tal como llegan; el visor lo advierte al abrir la tabla y la Guía explica cómo sumar sin sobreestimar.</p>
+              <p class="info-calidad-foot">El detalle objeto por objeto está en <a href="#guia-como-sumar">la Guía</a>.</p>
+              
             </section>
 
             <section class="info-two-columns">
@@ -437,52 +411,16 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
             <section class="info-block info-scope" id="info-alcance">
               <div class="info-section-kicker">ALCANCE</div>
               <h2>Qué incluye cada grupo</h2>
-              <div class="info-scope-grid">
-                <div class="info-scope-col">
-                  <h3>Núcleo · inversión institucional</h3>
-                  <ul class="info-list">
-                    <li><strong>Seguros de vida y generales:</strong> cartera del mes, una fila por instrumento o inmueble.</li>
-                    <li><strong>Fondos mutuos:</strong> cartera de la Circular 1333 y estados financieros IFRS.</li>
-                    <li><strong>Fondos de inversión:</strong> cartera trimestral, pactos y estados financieros IFRS.</li>
-                  </ul>
-                </div>
-                <div class="info-scope-col">
-                  <h3>Instituciones</h3>
-                  <ul class="info-list">
-                    <li><strong>Banca:</strong> balance B1/B2 y resultados R1 de la CMF, 2022-01 a 2026-08, con el importe de cada cuenta en pesos.</li>
-                    <li><strong>Administradoras generales de fondos y corredoras de bolsa:</strong> estados financieros IFRS y registro de entidades.</li>
-                  </ul>
-                </div>
-                <div class="info-scope-col">
-                  <h3>Contexto y archivo</h3>
-                  <ul class="info-list">
-                    <li><strong>Macroeconomía y tasas del Banco Central:</strong> tasas y curvas, tipo de cambio, UF y UTM, actividad, precios y expectativas.</li>
-                    <li><strong>Archivo:</strong> factoring y leasing, securitizadoras, patrimonios separados y cajas de compensación, con sus estados financieros.</li>
-                    <li><strong>Registros de entidades:</strong> AFP, cooperativas, sistemas de pago y fintech, con identidad y vigencia.</li>
-                  </ul>
-                </div>
-              </div>
+              <p><strong>Núcleo · inversión institucional:</strong> carteras y estados financieros de aseguradoras, fondos mutuos y fondos de inversión (CMF).</p>
+              <p><strong>Instituciones y contexto:</strong> banca, administradoras de fondos y corredoras de bolsa, más las series del Banco Central.</p>
+              <p><strong>Archivo y registros:</strong> factoring y leasing, securitización, patrimonios separados y cajas de compensación siguen publicados; AFP, cooperativas, sistemas de pago y fintech figuran como listas de entidades.</p>
               <p class="info-scope-foot"><span data-alcance="visible.resumen">74 conjuntos · más de 19 millones de filas (99,5 %)</span> del catálogo publicado.</p>
             </section>
 
             <section class="info-block info-processing-block">
               <div class="info-section-kicker">MODALIDAD DE PROCESAMIENTO</div>
-              <h2>La fuente determina la ruta</h2>
-              <p>Cada tabla declara con qué ruta se extrae y publica. La modalidad describe el primer paso —la obtención en origen—; la validación, la normalización y la compilación posteriores están versionadas y son reproducibles en los tres casos.</p>
-              <div class="info-highlight-row">
-                <div class="info-highlight">
-                  <strong>Automático</strong>
-                  <span>Extracción, validación y publicación ejecutadas por código y flujos de trabajo programados.</span>
-                </div>
-                <div class="info-highlight">
-                  <strong>Híbrido</strong>
-                  <span>Fuente PDF o no estructurada con intervención inicial; el procesamiento y el QA posteriores se ejecutan mediante código local reproducible.</span>
-                </div>
-                <div class="info-highlight">
-                  <strong>Manual</strong>
-                  <span>Extracción, selección o transcripción que todavía requiere intervención y no tiene un proceso de compilación automatizado.</span>
-                </div>
-              </div>
+              <h2>Cada tabla declara cómo se obtiene</h2>
+              <p><b data-modo="auto">89</b> de las <b data-modo="total">90</b> tablas se extraen, validan y publican por código y flujos programados; <b data-modo="hybrid">1</b>, el balance de patrimonios separados (en el archivo), es híbrida: su extracción inicial depende de la fuente, y su validación, normalización y compilación son reproducibles. Ninguna tabla es manual hoy.</p>
             </section>
 
             <section class="info-block info-fuentes">
@@ -492,26 +430,27 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
                 <div class="info-scope-col">
                   <h3>Fuentes</h3>
                   <ul class="info-list">
-                    <li><strong>Los datos son de tres fuentes oficiales:</strong> Comisión para el Mercado Financiero (CMF, 65 conjuntos), Banco Central de Chile (24) y Superintendencia de Pensiones (1). La SUSESO no entrega datos: figura como regulador y enlace en el catálogo de cajas de compensación, cuyos estados financieros provienen de la CMF. Cada tabla declara su origen, su archivo y su norma.</li>
-                    <li><strong>El SIF aporta</strong> extracción, normalización, validación, documentación y armonización. No genera los datos ni los modifica: los publica tal como los emite la fuente.</li>
-                    <li><strong>Al usar estos datos,</strong> indica la fuente oficial y la fecha en que los consultaste. Cada tabla tiene su propio periodo y su propia frecuencia, y se ven en el explorador, en el diccionario y en Descargas.</li>
+                    <li><strong>Los datos son de tres fuentes oficiales:</strong> la Comisión para el Mercado Financiero (CMF), el Banco Central de Chile y la Superintendencia de Pensiones.</li>
+                    <li><strong>La SUSESO no entrega datos:</strong> figura como regulador y enlace en el catálogo de cajas de compensación, cuyos estados financieros provienen de la CMF.</li>
+                    <li><strong>El SIF extrae, normaliza, valida y documenta:</strong> no genera ni modifica los datos, los publica tal como los emite la fuente.</li>
+                    <li><strong>Al citar:</strong> indica la fuente oficial y la fecha de la consulta; cada tabla declara su propio periodo y frecuencia.</li>
                   </ul>
                 </div>
                 <div class="info-scope-col">
                   <h3>Licencia y respaldo</h3>
                   <ul class="info-list">
                     <li><strong>Código:</strong> MIT (ver <code>LICENSE</code> en el repositorio).</li>
-                    <li><strong>Datos:</strong> pertenecen a sus fuentes oficiales y se republican sin alterar su contenido; verifica las condiciones de reutilización de cada fuente antes de redistribuirlos.</li>
-                    <li><strong>Sin respaldo oficial:</strong> este es un proyecto independiente. No tiene respaldo, patrocinio ni aval de la CMF, del Banco Central de Chile ni de ningún otro organismo.</li>
+                    <li><strong>Datos:</strong> pertenecen a sus fuentes oficiales y se republican sin alterar; verifica las condiciones de reutilización de cada fuente.</li>
+                    <li><strong>Sin respaldo oficial:</strong> proyecto independiente, sin respaldo, patrocinio ni aval de la CMF, del Banco Central de Chile ni de ningún otro organismo.</li>
                   </ul>
                 </div>
                 <div class="info-scope-col">
                   <h3>Limitaciones</h3>
                   <ul class="info-list">
-                    <li><strong>Cobertura:</strong> la extensión de la serie de tiempo de cada tabla dependerá de cada fuente de origen; es por ello que no hay homogeneización generalizada de periodos entre todas las tablas.</li>
-                    <li><strong>Unidades:</strong> los montos conservan la unidad y el criterio de valorización de la fuente (miles de pesos, UF, porcentajes, valor razonable, costo amortizado); no se convierten ni se reexpresan.</li>
-                    <li><strong>Puede haber errores:</strong> la extracción, la normalización y la validación son automáticas y ningún control lo detecta todo. Usa la base con criterio y haz las verificaciones propias que consideres necesarias antes de publicar una cifra.</li>
-                    <li><strong>Identificadores:</strong> en <code>fi.cartera_nacional</code>, <code>rut_emisor</code> identifica al emisor con su RUT o con un seudónimo estable <code>EMI-…</code> cuando es persona natural; <code>seguros.bienes_raices</code> publica comuna, ciudad y un <code>property_id</code> estable por inmueble. El detalle está en el <a href="privacidad.html">aviso de privacidad</a>.</li>
+                    <li><strong>Cobertura:</strong> cada tabla declara su propio periodo; no hay homogeneización generalizada de periodos.</li>
+                    <li><strong>Unidades:</strong> los montos conservan la unidad y valorización de la fuente; no se convierten.</li>
+                    <li><strong>Puede haber errores:</strong> la extracción, normalización y validación son automáticas; verifica antes de publicar una cifra.</li>
+                    <li><strong>Identificadores:</strong> en <code>fi.cartera_nacional</code>, <code>rut_emisor</code> va con el RUT del emisor o un seudónimo <code>EMI-…</code> para personas naturales; <code>seguros.bienes_raices</code> publica comuna y ciudad con <code>property_id</code> estable. Detalle: <a href="privacidad.html">aviso de privacidad</a>.</li>
                   </ul>
                 </div>
               </div>
@@ -524,6 +463,7 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
               <span class="info-note-mark">i</span>
               <p>Este sistema es una herramienta de exploración y análisis de información pública. No constituye recomendación de inversión. Revisa siempre la fuente, el periodo, la unidad y las notas de cobertura antes de interpretar una cifra: los procesos son automáticos y la base puede contener errores.</p>
             </section>
+            <p class="info-foot"><a href="https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/docs/notas/README.md" rel="noopener">Decisiones y auditorías</a> — notas técnicas, criterios de publicación y auditorías de calidad del dato.</p>
           </div>
         </div>
 
@@ -655,6 +595,7 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
             <div class="uso-tabs" role="tablist" aria-label="Instrucciones de uso">
               <button type="button" class="uso-tab active" role="tab" id="uso-tab-humanos" aria-selected="true" aria-controls="uso-panel-humanos" data-uso-tab="humanos">Para personas</button>
               <button type="button" class="uso-tab" role="tab" id="uso-tab-agentes" aria-selected="false" aria-controls="uso-panel-agentes" data-uso-tab="agentes">Para agentes de IA</button>
+              <button type="button" class="uso-tab" role="tab" id="uso-tab-sumar" aria-selected="false" aria-controls="uso-panel-sumar" data-uso-tab="sumar">Cómo sumar sin sobreestimar</button>
             </div>
 
             <div class="uso-panel" id="uso-panel-humanos" role="tabpanel" aria-labelledby="uso-tab-humanos" tabindex="0">
@@ -796,6 +737,22 @@ sif-mcp                       # stdio
                 <p class="uso-note">Contrato explicado: <code>api/README.md</code>. Ejemplos para agentes:
                 <code>examples/agent/README.md</code>. Sin SLA: los datos provienen de las fuentes oficiales y se
                 republican normalizados.</p>
+              </div>
+            </div>
+            <div class="uso-panel" id="uso-panel-sumar" role="tabpanel" aria-labelledby="uso-tab-sumar" tabindex="0" hidden>
+              <div class="uso-cols">
+                <div class="uso-card uso-card-wide">
+                  <h3>Cómo sumar sin sobreestimar</h3>
+                  <p>Algunas tablas publican la misma fila más de una vez. Sumar una columna sin agrupar cuenta esas filas dos veces y sobreestima el total. El sitio mide la repetición objeto por objeto: <b data-calidad="repetidas">230.288</b> filas repetidas de <b data-alcance="visible.filas">más de 19 millones</b> (más de <b data-calidad="pct-repetidas">1,1 %</b>), en <b data-calidad="objetos">22 de 90</b> objetos; el caso más grave es <b data-calidad="peor-objeto">ffmm_cartera_nacional</b> con <b data-calidad="peor">160.564</b> (<b data-calidad="peor-pct">10,1 %</b>). En <span data-calidad="ejemplo-periodo">2026-09</span>, sumar sin agrupar sobreestima <b data-calidad="sobreestima">9,7 %</b>.</p>
+                  <p>El criterio y las decisiones de publicación están en <a href="https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/docs/notas/claves_duplicados_2026-10-23.md" rel="noopener">la nota de claves duplicadas</a>.</p>
+                  <p>La medición es reproducible: esta consulta se ejecuta sobre los datos publicados, sin ningún cálculo previo de la página.</p>
+                  <pre class="uso-code"><code data-calidad-sql>-- ffmm_cartera_nacional, 2026-09: filas publicadas frente a filas distintas
+WITH crudo AS (SELECT * FROM ffmm_cartera_nacional WHERE periodo = '2026-09'),
+     mes   AS (SELECT DISTINCT * FROM crudo)
+SELECT (SELECT count(*) FROM crudo) AS filas,
+       (SELECT count(*) FROM mes)   AS distintas;</code></pre>
+                  <div id="calidad-chart" class="calidad-chart" hidden></div>
+                </div>
               </div>
             </div>
           </section>

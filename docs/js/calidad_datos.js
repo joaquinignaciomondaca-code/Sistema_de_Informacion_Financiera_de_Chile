@@ -58,6 +58,13 @@
         ? Number(peor.datos.pct_repetidas).toFixed(1).replace(".", ",") + " %" : null,
       sobreestima: peor && peor.datos.ejemplo && peor.datos.ejemplo.pct
         ? Number(peor.datos.ejemplo.pct).toFixed(1).replace(".", ",") + " %" : null,
+      "pct-repetidas": (function () {
+        const rep = Number(resumen.filas_repetidas || 0);
+        const tot = window.DOWNLOAD_CATALOG && window.DOWNLOAD_CATALOG.filas ? Number(window.DOWNLOAD_CATALOG.filas) : 0;
+        if (!rep || !tot) return null;
+        const pct = Math.floor(rep / tot * 1000) / 10;
+        return pct.toFixed(1).replace(".", ",") + " %";
+      })(),
       "ejemplo-periodo": peor && peor.datos.ejemplo ? peor.datos.ejemplo.periodo : null,
       "ejemplo-columna": peor && peor.datos.ejemplo ? peor.datos.ejemplo.columna : null,
     };
@@ -106,57 +113,48 @@
     }
   }
 
-  function init() {
-    const raiz = document.querySelector(".info-calidad");
-    if (!raiz) return;
-    // Idempotente: si la página vuelve a pedir la inicialización, no se
-    // duplican los manejadores ni se reconstruye el gráfico.
-    if (raiz.dataset.calidadListo === "1") return;
+  var pintado = false;
+  function pintarGrafico() {
+    if (pintado) return;
     const estado = datos();
     if (!estado) return;
+    pintado = true;
+    grafico(estado);
+  }
 
-    pintarCifras(raiz, estado);
-    const peor = peorEjemplo(estado);
+  function init() {
+    document.querySelectorAll(".info-calidad, #uso-panel-sumar").forEach(function (raiz) {
+      if (raiz.dataset.calidadListo === "1") return;
+      const estado = datos();
+      if (!estado) return;
 
-    const codigo = raiz.querySelector("[data-calidad-sql]");
-    if (codigo && peor) {
-      codigo.textContent = consulta(peor.id, peor.datos.ejemplo && peor.datos.ejemplo.periodo);
-    }
-    // El registro técnico está plegado por defecto: el gráfico se pinta la
-    // primera vez que se abre, cuando el contenedor ya tiene ancho.
-    const detalles = raiz.querySelector("details");
-    const lienzo = document.getElementById("calidad-chart");
-    if (detalles && lienzo) {
-      let pintado = false;
-      detalles.addEventListener("toggle", () => {
-        if (!detalles.open || pintado) return;
-        pintado = true;
-        grafico(estado);
-      });
-      if (detalles.open) {
-        pintado = true;
-        grafico(estado);
+      pintarCifras(raiz, estado);
+      const peor = peorEjemplo(estado);
+
+      const codigo = raiz.querySelector("[data-calidad-sql]");
+      if (codigo && peor) {
+        codigo.textContent = consulta(peor.id, peor.datos.ejemplo && peor.datos.ejemplo.periodo);
       }
-    } else {
-      grafico(estado);
-    }
-
-    raiz.dataset.calidadListo = "1";
-
-    const boton = raiz.querySelector("[data-calidad-ejecutar]");
-    if (boton) {
-      boton.addEventListener("click", () => {
-        if (typeof window.switchMainTab === "function") window.switchMainTab("sql");
-        const terminal = window.ChatTerminal;
-        if (!terminal || !peor) return;
-        const sql = consulta(peor.id, peor.datos.ejemplo && peor.datos.ejemplo.periodo);
-        if (typeof terminal.setQueryInput === "function") {
-          terminal.setQueryInput(sql.split("\n").filter((l) => !l.trim().startsWith("--")).join("\n"), peor.id);
-        } else if (terminal.input) {
-          terminal.input.value = sql;
-        }
-      });
-    }
+      const boton = raiz.querySelector("[data-calidad-ejecutar]");
+      if (boton) {
+        boton.addEventListener("click", () => {
+          if (typeof window.switchMainTab === "function") window.switchMainTab("sql");
+          const terminal = window.ChatTerminal;
+          if (!terminal || !peor) return;
+          const sql = consulta(peor.id, peor.datos.ejemplo && peor.datos.ejemplo.periodo);
+          if (typeof terminal.setQueryInput === "function") {
+            terminal.setQueryInput(sql.split("\n").filter((l) => !l.trim().startsWith("--")).join("\n"), peor.id);
+          } else if (terminal.input) {
+            terminal.input.value = sql;
+          }
+        });
+      }
+      raiz.dataset.calidadListo = "1";
+    });
+    // El gráfico vive en la sub-pestaña de la Guía: un contenedor oculto mide
+    // cero y el lienzo saldría vacío, así que se pinta la primera vez que se
+    // activa «Cómo sumar sin sobreestimar» (ver como_usar.js).
+    window.SIFCalidad = { pintarGrafico: pintarGrafico };
   }
 
   if (document.readyState === "loading") {
