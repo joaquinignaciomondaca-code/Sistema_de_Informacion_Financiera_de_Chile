@@ -268,7 +268,7 @@
   function initAvisoMovil() {
     const aviso = document.getElementById("aviso-movil");
     if (!aviso) return;
-    const movil = window.matchMedia ? window.matchMedia("(max-width: 900px)") : null;
+    const movil = window.matchMedia ? window.matchMedia("(max-width: 600px)") : null;
     const boton = document.getElementById("aviso-movil-cerrar");
     const aspa = document.getElementById("aviso-movil-aspa");
     let cerrado = false;
