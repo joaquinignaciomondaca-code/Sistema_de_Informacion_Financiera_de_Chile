@@ -4,7 +4,7 @@
  *
  * `scripts/audit_movil.py` comprueba que las reglas de CSS y los manejadores
  * existan. Esto comprueba que funcionen: se carga la página con una consulta de
- * medios de 900 px activa —como en un teléfono— y se toca el botón, el fondo, la
+ * medios activa —como en un teléfono— y se toca el botón, el fondo, la
  * tecla Escape y una tabla del árbol.
  *
  * Uso:
@@ -78,13 +78,15 @@ const dom = new JSDOM(html, {
       set: () => true
     });
     window.HTMLCanvasElement.prototype.getContext = () => ctx;
-    // Teléfono: toda consulta de ancho pequeño responde que sí.
-    window.matchMedia = (consulta) => {
-      const pequeño = /max-width:\s*(\d+)px/.test(consulta);
-      const ancho = pequeño ? Number(consulta.match(/max-width:\s*(\d+)px/)[1]) : 9999;
-      const objeto = {
-        media: consulta,
-        matches: ancho >= 900,
+      // Teléfono: toda consulta de ancho pequeño responde que sí. El umbral
+      // de "pequeño" lo define el CSS del aviso móvil (ahora 600 px), no este
+      // test: cualquier max-width con valor positivo cuenta como teléfono.
+      window.matchMedia = (consulta) => {
+        const pequeño = /max-width:\s*(\d+)px/.test(consulta);
+        const ancho = pequeño ? Number(consulta.match(/max-width:\s*(\d+)px/)[1]) : 9999;
+        const objeto = {
+          media: consulta,
+          matches: ancho > 0,
         onchange: null,
         addListener: noop,
         removeListener: noop,
