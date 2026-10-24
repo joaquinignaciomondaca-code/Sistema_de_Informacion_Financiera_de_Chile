@@ -1,6 +1,6 @@
 {
  "contrato": "sif-api/resultado",
- "id": "cartera-extranjera-ffmm-por-pais-ultimo-periodo-f7045c",
+ "id": "cartera-extranjera-ffmm-por-pais-ultimo-periodo-59d7b8",
  "titulo": "Cartera extranjera FFMM por país (último período)",
  "origen": "terminal",
  "data_release": "2026-10-24.1681bebfe7ef",
@@ -90,6 +90,6 @@
    146
   ]
  ],
- "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera_ultimo_periodo WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera_ultimo_periodo) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;",
+ "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera_ultima_particion WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera_ultima_particion) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;",
  "como_se_genera": "python3 scripts/build_resultados.py"
 }

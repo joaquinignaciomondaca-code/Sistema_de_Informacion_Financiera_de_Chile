@@ -1,6 +1,6 @@
 {
  "contrato": "sif-api/resultado",
- "id": "derivados-de-seguros-por-tipo-ultimo-periodo-e523ca",
+ "id": "derivados-de-seguros-por-tipo-ultimo-periodo-d13424",
  "titulo": "Derivados de seguros por tipo (último período)",
  "origen": "terminal",
  "data_release": "2026-10-24.1681bebfe7ef",
@@ -52,6 +52,6 @@
    null
   ]
  ],
- "sql": "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados_ultimo_periodo WHERE periodo = (SELECT max(periodo) FROM seguros_derivados_ultimo_periodo) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;",
+ "sql": "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados_ultima_particion WHERE periodo = (SELECT max(periodo) FROM seguros_derivados_ultima_particion) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;",
  "como_se_genera": "python3 scripts/build_resultados.py"
 }
