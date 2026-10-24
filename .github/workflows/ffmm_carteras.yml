@@ -17,6 +17,7 @@ on:
       # y a publicar (en las corridas programadas no corre el job `pruebas` de web_audit).
       - pipelines/auto/estable.py
       - pipelines/auto/rut.py
+      - scripts/build_sql_compact_parquets.py
   workflow_dispatch:
     inputs:
       desde:
@@ -118,8 +119,9 @@ jobs:
               continue
             fi
             python -m ffmm.scripts.actualizar_carteras --solo-data-manifest
+            python scripts/build_sql_compact_parquets.py --only ffmm_cartera_nacional
             python scripts/build_download_catalog.py
-            git add data_manifest.json docs/js/download_catalog.js
+            git add data_manifest.json docs/js/download_catalog.js docs/outputs/sql_query/ffmm_cartera_nacional.parquet docs/outputs/sql_query/ffmm_cartera_nacional.manifest.json
             git diff --cached --quiet || git commit -m "FFMM: data_manifest"
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
             echo "Push rechazado (intento ${i}/8): otra corrida publicó primero."

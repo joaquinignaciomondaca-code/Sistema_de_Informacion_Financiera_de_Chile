@@ -1,0 +1,348 @@
+{
+  "format_version": 1,
+  "dataset": "bancos_balance",
+  "description": "Copia compacta SQL de bancos_balance: solo familias CMF B1 y B2; no es un archivo de descarga.",
+  "purpose": "SQL-only; no forma parte del catálogo de descargas",
+  "source_manifest": "outputs/bancos/balance_b1_b2/manifest.json",
+  "source_updated_at": "2026-10-01",
+  "source_files": [
+    {
+      "path": "outputs/bancos/balance_b1_b2/2022-01/lineas.parquet",
+      "records": 12888,
+      "sha256": "4d6985c1a25491beff0366f094c73fc8c8f6311bd26f23727f3d0b32b2d3f283"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2022-02/lineas.parquet",
+      "records": 12888,
+      "sha256": "0c53bffd8d67ddb89a7369c17fedbb99dfbedd3e3d9a6e9e303886260de2093c"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2022-03/lineas.parquet",
+      "records": 12888,
+      "sha256": "3a17a9bf9e32fbb3fbec7066fae99b2e61323031f9a9e7fe1c876fb60ea62665"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2022-04/lineas.parquet",
+      "records": 12888,
+      "sha256": "c165867f5baeae3e4b97250541dba297fad50c5c7bc4e8d2941150d585b83308"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2022-05/lineas.parquet",
+      "records": 12888,
+      "sha256": "e5ad98b37749ca3817c1bd21a2a565faf11471f73508c2f68101ece4d66f571e"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2022-06/lineas.parquet",
+      "records": 12888,
+      "sha256": "33478c55ed7360bef06d7a5a63f66f5b37d18ed750d9a0314e038e3fbb987fb2"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2022-07/lineas.parquet",
+      "records": 12888,
+      "sha256": "d938a8834e503aff60a43d1d3096be7bbb4b324f97625d4756b2e637c8176c53"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2022-08/lineas.parquet",
+      "records": 12888,
+      "sha256": "d47669f6bcb884aa10ad2f0fabfef64c1aa62876c1ea3bfa81967621122ede44"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2022-09/lineas.parquet",
+      "records": 12888,
+      "sha256": "dd2889e674510efae87913adaab188631fc6487c5125bd870fd5c24e7afe7545"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2022-10/lineas.parquet",
+      "records": 12888,
+      "sha256": "73a0a06f02502cf34a0e3480904d9ee266b67954f0543d0c05c1ef0c60cf6bf8"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2022-11/lineas.parquet",
+      "records": 12888,
+      "sha256": "9cdc6539ee738ff32059d8f2eab1d78a7a0447e8ccbcaf6eb1fd7d5cc65094af"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2022-12/lineas.parquet",
+      "records": 12888,
+      "sha256": "4f42b75c3bf113dc69b89202657ec2f10f18e882d9a043f0beda7ba878a52508"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2023-01/lineas.parquet",
+      "records": 12888,
+      "sha256": "1fdc62531d663cda13a3d133bc2b4823d4ac7981a47cb792c2a3513bde048f9e"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2023-02/lineas.parquet",
+      "records": 12888,
+      "sha256": "1d71088d9015d518d2449899b814d5fcedc639aab755ad2657d355e9ec30efd9"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2023-03/lineas.parquet",
+      "records": 12888,
+      "sha256": "60112ced7eaf3fc347a619cbad45c3970f6c72c329a9045168cde813fd517bab"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2023-04/lineas.parquet",
+      "records": 12888,
+      "sha256": "ef5f111e1be6d8c02107cfcf60fa40fe9d3ce5b6ac79f84e26b5b4840656c109"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2023-05/lineas.parquet",
+      "records": 12888,
+      "sha256": "0b1ea693c506c809e8f604c380fc0aaf0472fdd6487f12bbdbfb76edfe7b5097"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2023-06/lineas.parquet",
+      "records": 12888,
+      "sha256": "ee77f49337d7a0218575f927831c38ad6f6891fe1f6900dccc9b8430c9f3683e"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2023-07/lineas.parquet",
+      "records": 12888,
+      "sha256": "91faaa59b1146b3d7de5586f245035c501043f4a6d2ddf0db7a76d3edd17ea08"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2023-08/lineas.parquet",
+      "records": 12888,
+      "sha256": "59e5c29ce7024352992de8978e372fa047f7740a8f04c99ccd3999dc689cbd8c"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2023-09/lineas.parquet",
+      "records": 12888,
+      "sha256": "842ed173cf68eef13611bb3430e9d0eb6b2ffb0e7d5c2ca25b1b7ba8fe6c9c24"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2023-10/lineas.parquet",
+      "records": 12888,
+      "sha256": "46f5e810a648d87046e6c583cf54d82c6344b82af809edd3030c4e348a729ad3"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2023-11/lineas.parquet",
+      "records": 12888,
+      "sha256": "386328db8b58bfd844618fa5a5ee06b263029e32b31c54e9040b68e8335abd55"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2023-12/lineas.parquet",
+      "records": 12888,
+      "sha256": "06a0c51b974b6136f457b8be1100a3cbcfdd31ca3e53d3d3a54b0d2b939c7690"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2024-01/lineas.parquet",
+      "records": 12888,
+      "sha256": "a505deac9495510e2eebe9401bed5b7969e79340f039fa967082ae7d8eb54067"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2024-02/lineas.parquet",
+      "records": 12888,
+      "sha256": "27209ad6ce49a403faf423fb2ebbe9dc10232bd60cdfa0ab6457dfb1dbc27685"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2024-03/lineas.parquet",
+      "records": 12888,
+      "sha256": "97eff9eaab6da0608d809ae21fb184074f945be5d6e9f6182be4695695fc4145"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2024-04/lineas.parquet",
+      "records": 12888,
+      "sha256": "a10fb4de6ead4695a71b70e6899d51b217bc99d6d477bb2a7e7a764f28dd32e9"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2024-05/lineas.parquet",
+      "records": 12888,
+      "sha256": "efc59e49d66ad26680aabe4d6ceb78fe8e6c4167dc37a1b0f77c539c89923aea"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2024-06/lineas.parquet",
+      "records": 12906,
+      "sha256": "90d21e611997ea86a1646f3c1fad4ce8e7ed0ab9302b653efad1d6322e383bc9"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2024-07/lineas.parquet",
+      "records": 12906,
+      "sha256": "e85e3a343cb2a96847a5b3a82110f4a6c497fc25fad756fd879c2b7b0882c988"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2024-08/lineas.parquet",
+      "records": 12906,
+      "sha256": "e6046c717940d48e328df0b9d0211dd4a472652680c0fdaa60dfc524accc2ebc"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2024-09/lineas.parquet",
+      "records": 12906,
+      "sha256": "40c925a7406b4a612ae8232ead46404d517ecf4695fb27cd068cc63ffa96d889"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2024-10/lineas.parquet",
+      "records": 12906,
+      "sha256": "afddfcb1da141b8febb9f5d1f64649170dd8edc626113859b6473f3eae8176c2"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2024-11/lineas.parquet",
+      "records": 12906,
+      "sha256": "607f53afaefd7f60ec371fc16f4b5e6fad116d79cc18a904d7f76c41afcb9f53"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2024-12/lineas.parquet",
+      "records": 12906,
+      "sha256": "c96058422ae919e5b906e8e6b06d5b3fd0740236134aee025245e0791343d1af"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2025-01/lineas.parquet",
+      "records": 12906,
+      "sha256": "85939235a5ad15f0fa581de0b99ded816defa44c68f08e03bd8c8bcdfbb58a16"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2025-02/lineas.parquet",
+      "records": 12906,
+      "sha256": "b38d5e1ef627d8c195b3c355dd0e09a38f10d9264ab0abc314beb007d93d32df"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2025-03/lineas.parquet",
+      "records": 12906,
+      "sha256": "51b1d9106a4b77eeae78a737e23b37a861bf8f51f454ca324ec89968dc720d65"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2025-04/lineas.parquet",
+      "records": 12906,
+      "sha256": "4eeec67e6be525bd09fb1cba8adf98734ae51c5df0e878753e16d13c3dbd5d70"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2025-05/lineas.parquet",
+      "records": 12906,
+      "sha256": "fc7ddfa37ac9c47ed37e199d62df67decd1120d5404036d3dd3c42471691804b"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2025-06/lineas.parquet",
+      "records": 12906,
+      "sha256": "d238c432bb02fe6099822cac2aacc2322e0ce287ac4944a7c5224a9238fa669d"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2025-07/lineas.parquet",
+      "records": 12906,
+      "sha256": "431ac0f8b9d13f5b4f5525aa98c62a4e58a54a0ec0e1e4abd229c5effdb7e774"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2025-08/lineas.parquet",
+      "records": 12906,
+      "sha256": "dbe148fcf4d068802a33eeaa8e9fba24db0767beff6cbd0c79f416b85de60c23"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2025-09/lineas.parquet",
+      "records": 12906,
+      "sha256": "5d7347cf4541dc6d35abc6c75fad442f005ebc0fad7e364cd7788fca2c2a7bfb"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2025-10/lineas.parquet",
+      "records": 13623,
+      "sha256": "8c7973b8881615b432594f5bd115cb2744dcde52d7740ad498de41ad80dc00c5"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2025-11/lineas.parquet",
+      "records": 12906,
+      "sha256": "ebccaac2a0a253b7335436588d34e2eb0aac67f08f1d6264dd3dfd694d977c32"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2025-12/lineas.parquet",
+      "records": 12906,
+      "sha256": "6ec6ea5dd9acc73f63c0c8b7f27f09c19125110ae12ffeff96a4b9a5c29c3adf"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2026-01/lineas.parquet",
+      "records": 12906,
+      "sha256": "96580299b87384d5183350fd93af53d0ab24328ffd6ff536fd55f61e7ea09b7f"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2026-02/lineas.parquet",
+      "records": 12906,
+      "sha256": "05f86eed47fc2a90fcb51516e77f637159c54a55150feb362228030bb78b7fdd"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2026-03/lineas.parquet",
+      "records": 12906,
+      "sha256": "2fd0c1a64c510648286d2c4cdda460b63247bd4392bcae5f30309a94fac4f526"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2026-04/lineas.parquet",
+      "records": 12906,
+      "sha256": "a65f301217558aac88c2fc846026daae54d3d5bb5a2fc8d626ceea35ef54353c"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2026-05/lineas.parquet",
+      "records": 12906,
+      "sha256": "3a2c24f84d5ad0eb8ab1231a69e5b1e48777fd4591deb21d08f2a40afddb1cfa"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2026-06/lineas.parquet",
+      "records": 12906,
+      "sha256": "9230b1c801ea3d21f98560ab0ef6d8cb048bc8a6d5f976b7827ec1b41ed450de"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2026-07/lineas.parquet",
+      "records": 12906,
+      "sha256": "dfbe8173aa345143d0d12a3069e826834b3532349621ef727b2a00c2db570bd3"
+    },
+    {
+      "path": "outputs/bancos/balance_b1_b2/2026-08/lineas.parquet",
+      "records": 12906,
+      "sha256": "65639b71bf97f7bc922f0136ed223972c883e79344e2d1b681d7fcd464eb7852"
+    }
+  ],
+  "file": "outputs/sql_query/bancos_balance.parquet",
+  "records": 722931,
+  "bytes": 6969183,
+  "sha256": "f84793879723640e41fb7ba92a50bf2a86583209ac5f6b3943799086ce840f53",
+  "schema": [
+    {
+      "name": "periodo",
+      "type": "string"
+    },
+    {
+      "name": "codigo_institucion",
+      "type": "string"
+    },
+    {
+      "name": "rut",
+      "type": "string"
+    },
+    {
+      "name": "razon_social",
+      "type": "string"
+    },
+    {
+      "name": "codigo_cuenta",
+      "type": "string"
+    },
+    {
+      "name": "glosa_cuenta",
+      "type": "string"
+    },
+    {
+      "name": "tipo_linea",
+      "type": "string"
+    },
+    {
+      "name": "importe_clp",
+      "type": "int64"
+    },
+    {
+      "name": "importes_fuente_raw",
+      "type": "list<element: string>"
+    },
+    {
+      "name": "familia_archivo_fuente",
+      "type": "string"
+    },
+    {
+      "name": "modelo_cmf",
+      "type": "string"
+    },
+    {
+      "name": "nivel_consolidacion",
+      "type": "string"
+    },
+    {
+      "name": "numero_fila_fuente",
+      "type": "int64"
+    }
+  ]
+}

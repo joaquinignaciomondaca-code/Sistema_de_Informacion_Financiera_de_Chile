@@ -35,6 +35,8 @@ on:
       - 'scripts/normalizar_vocabulario.py'
       - 'scripts/build_download_catalog.py'
       - 'scripts/build_bancos_vistas.py'
+      - 'scripts/build_sql_compact_parquets.py'
+      - 'scripts/test_sql_compact_parquets.py'
       - 'pipelines/**'
       - 'factoring_leasing/**'
       - 'bancos/**'
@@ -227,6 +229,11 @@ jobs:
 
       - name: 'Banca: Parquet de descarga coinciden con filtros y manifiestos'
         run: python scripts/build_bancos_vistas.py --check
+
+      - name: 'SQL: pruebas y Parquet compactos sincronizados con las particiones'
+        run: |
+          python -m unittest scripts.test_sql_compact_parquets -v
+          python scripts/build_sql_compact_parquets.py --check
 
       - name: Auditar las consultas sugeridas contra los Parquet
         run: |

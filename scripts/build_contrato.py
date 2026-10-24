@@ -364,6 +364,7 @@ def construir_vistas(catalogo: list[dict], alias: dict[str, list[str]], base: st
         "-- Uso remoto:   duckdb < views.sql",
         "-- Uso local:    cambie la línea siguiente por la ruta de su copia de docs/",
         "--                (por ejemplo file:///home/yo/repo/docs) y ejecútelo igual.",
+        "-- Algunas vistas usan copias compactas SQL-only en outputs/sql_query/; no son descargas.",
         "",
         f"SET VARIABLE sif_base = '{base.rstrip('/')}';",
         "",
@@ -378,7 +379,7 @@ def construir_vistas(catalogo: list[dict], alias: dict[str, list[str]], base: st
         # Las rutas se construyen en la propia consulta con la variable de
         # sesión: así el mismo views.sql sirve para el sitio, para una copia
         # local o para un espejo, sin regenerarlo.
-        rutas = [f"getvariable('sif_base') || '/{rel}'" for rel in V.rutas_relativas(vista)]
+        rutas = [f"getvariable('sif_base') || '/{rel}'" for rel in V.rutas_sql_relativas(vista)]
         argumento = rutas[0] if len(rutas) == 1 else "[" + ", ".join(rutas) + "]"
         solo = "" if len(rutas) == 1 else ", union_by_name=true"
         filtro = f"\n  WHERE {vista['where']}" if vista.get("where") else ""
