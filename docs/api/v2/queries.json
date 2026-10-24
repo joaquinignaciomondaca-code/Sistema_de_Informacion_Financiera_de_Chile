@@ -1835,18 +1835,6 @@
   {
    "espera": {
     "tablas": [
-     "seguros_renta_fija"
-    ],
-    "tipo": "no_vacia"
-   },
-   "id": "renta-fija-de-seguros-por-tipo-16966b",
-   "origen": "terminal",
-   "sql": "SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = '2026-09' GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 10;",
-   "titulo": "Renta fija de seguros por tipo"
-  },
-  {
-   "espera": {
-    "tablas": [
      "seguros_acciones"
     ],
     "tipo": "no_vacia"
@@ -1859,18 +1847,6 @@
   {
    "espera": {
     "tablas": [
-     "seguros_derivados"
-    ],
-    "tipo": "no_vacia"
-   },
-   "id": "derivados-de-seguros-por-tipo-d009a2",
-   "origen": "terminal",
-   "sql": "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;",
-   "titulo": "Derivados de seguros por tipo"
-  },
-  {
-   "espera": {
-    "tablas": [
      "ffmm_cartera_nacional"
     ],
     "tipo": "no_vacia"
@@ -1879,6 +1855,31 @@
    "origen": "terminal",
    "sql": "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = '2026-09' GROUP BY tipo_instrumento ORDER BY valorizacion_miles_mf DESC LIMIT 15;",
    "titulo": "Fondos mutuos: cartera nacional por tipo"
+  },
+  {
+   "espera": {
+    "tablas": [],
+    "tipo": "no_vacia",
+    "vistas_auxiliares": [
+     "seguros_renta_fija_ultimo_periodo"
+    ]
+   },
+   "id": "renta-fija-de-seguros-ultimo-periodo-acf3bb",
+   "origen": "terminal",
+   "sql": "SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija_ultimo_periodo WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija_ultimo_periodo) GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 10;",
+   "titulo": "Renta fija de seguros (último período)"
+  },
+  {
+   "espera": {
+    "tablas": [
+     "seguros_derivados"
+    ],
+    "tipo": "no_vacia"
+   },
+   "id": "derivados-de-seguros-por-tipo-d009a2",
+   "origen": "terminal",
+   "sql": "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;",
+   "titulo": "Derivados de seguros por tipo"
   },
   {
    "espera": {

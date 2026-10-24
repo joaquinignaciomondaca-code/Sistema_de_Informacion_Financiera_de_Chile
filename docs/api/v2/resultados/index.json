@@ -6,7 +6,7 @@
  "generado": "2026-10-24",
  "total": 159,
  "filas": 6254,
- "bytes": 823934,
+ "bytes": 824016,
  "truncadas": 2,
  "max_filas": 500,
  "nota": "Resultados calculados en el build sobre el mismo Parquet que publica el sitio. No es SQL arbitrario: son las 159 consultas del catálogo, cada una con su SQL a la vista para poder reproducirla o discutirla.",
@@ -2495,22 +2495,6 @@
    "url": "/api/v2/resultados/distribucion-regional-28aee1.json"
   },
   {
-   "id": "renta-fija-de-seguros-por-tipo-16966b",
-   "titulo": "Renta fija de seguros por tipo",
-   "origen": "terminal",
-   "filas": 10,
-   "columnas": [
-    "sector",
-    "tipo_instrumento",
-    "instrumentos",
-    "valor_final_m_clp"
-   ],
-   "truncado": false,
-   "bytes": 1217,
-   "sha256": "3f25523f0b649fcb50a8a5e6a54233d87668b4ec3d0ea8da60f3a64a9981217f",
-   "url": "/api/v2/resultados/renta-fija-de-seguros-por-tipo-16966b.json"
-  },
-  {
    "id": "acciones-en-seguros-4057a4",
    "titulo": "Acciones en seguros",
    "origen": "terminal",
@@ -2524,22 +2508,6 @@
    "bytes": 1112,
    "sha256": "cd2633457e88a863af586dfdcbea2aeb97772f03f3a098e5d6dbc58b233065ad",
    "url": "/api/v2/resultados/acciones-en-seguros-4057a4.json"
-  },
-  {
-   "id": "derivados-de-seguros-por-tipo-d009a2",
-   "titulo": "Derivados de seguros por tipo",
-   "origen": "terminal",
-   "filas": 6,
-   "columnas": [
-    "sector",
-    "tipo_registro",
-    "contratos",
-    "valor_razonable_m_clp"
-   ],
-   "truncado": false,
-   "bytes": 1005,
-   "sha256": "d4c664d16fe0f7b5b5e990c16a92e821ff895378cebfb85b1c1545d2807b890a",
-   "url": "/api/v2/resultados/derivados-de-seguros-por-tipo-d009a2.json"
   },
   {
    "id": "fondos-mutuos-cartera-nacional-por-tipo-baa247",
@@ -2556,6 +2524,38 @@
    "bytes": 1492,
    "sha256": "a1683ac8144b262aeed3f50f14abbce43eafc8efaaabb1dd90282326f6c0c9b4",
    "url": "/api/v2/resultados/fondos-mutuos-cartera-nacional-por-tipo-baa247.json"
+  },
+  {
+   "id": "renta-fija-de-seguros-ultimo-periodo-acf3bb",
+   "titulo": "Renta fija de seguros (último período)",
+   "origen": "terminal",
+   "filas": 10,
+   "columnas": [
+    "sector",
+    "tipo_instrumento",
+    "instrumentos",
+    "valor_final_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 1299,
+   "sha256": "2dd63df6c53ab8c0dc0b8dc0842cf528da1bbe6a5434493dc6a5fd4342127375",
+   "url": "/api/v2/resultados/renta-fija-de-seguros-ultimo-periodo-acf3bb.json"
+  },
+  {
+   "id": "derivados-de-seguros-por-tipo-d009a2",
+   "titulo": "Derivados de seguros por tipo",
+   "origen": "terminal",
+   "filas": 6,
+   "columnas": [
+    "sector",
+    "tipo_registro",
+    "contratos",
+    "valor_razonable_m_clp"
+   ],
+   "truncado": false,
+   "bytes": 1005,
+   "sha256": "d4c664d16fe0f7b5b5e990c16a92e821ff895378cebfb85b1c1545d2807b890a",
+   "url": "/api/v2/resultados/derivados-de-seguros-por-tipo-d009a2.json"
   },
   {
    "id": "fondos-mutuos-inversion-en-el-exterior-por-pais-4da5d1",

@@ -77,6 +77,24 @@ def vistas_semanticas() -> list[dict]:
     return salida
 
 
+def vistas_sql_auxiliares() -> list[dict]:
+    """Vistas internas de consultas sugeridas, fuera del catálogo de objetos."""
+    texto = CLIENTE.read_text(encoding="utf-8")
+    bloque = _bloque(texto, "const QUICK_QUERY_VIEWS")
+    salida = []
+    for m in re.finditer(r"\{([^{}]*)\}", bloque):
+        cuerpo = m.group(1)
+        nombre = re.search(r'name:\s*"([^"]+)"', cuerpo)
+        manifiesto = re.search(r'sourceManifest:\s*"([^"]+)"', cuerpo)
+        if not nombre or not manifiesto:
+            continue
+        vista = {"name": nombre.group(1), "manifest": manifiesto.group(1)}
+        if re.search(r"latestManifestFile:\s*true", cuerpo):
+            vista["latestManifestFile"] = True
+        salida.append(vista)
+    return salida
+
+
 def alias_heredados() -> dict[str, list[str]]:
     """{nombre canónico: [nombres heredados]} desde LEGACY_VIEW_ALIASES."""
     texto = CLIENTE.read_text(encoding="utf-8")
@@ -120,6 +138,24 @@ def rutas_sql_relativas(vista: dict) -> list[str]:
     mantener ambas funciones separadas evita que el compacto SQL se cuele en el
     catálogo de descargas o cambie sus filtros y particiones.
     """
+    if vista.get("latestManifestFile") and vista.get("manifest"):
+        manifiesto = DOCS / vista["manifest"]
+        if not manifiesto.is_file():
+            return []
+        datos = json.loads(manifiesto.read_text(encoding="utf-8"))
+        base = Path(vista["manifest"]).parent
+        candidatos = []
+        for archivo in datos.get("files", []):
+            if not isinstance(archivo, str):
+                continue
+            periodo = re.search(r"(?:^|/)(\d{4}-\d{2})(?=\.parquet$)", archivo)
+            if not periodo:
+                continue
+            rel = archivo if (DOCS / archivo).is_file() else str(base / archivo)
+            if (DOCS / rel).is_file():
+                candidatos.append((periodo.group(1), Path(rel).as_posix()))
+        return [max(candidatos)[1]] if candidatos else []
+
     query_file = vista.get("queryFile")
     if query_file:
         ruta = Path(query_file)
