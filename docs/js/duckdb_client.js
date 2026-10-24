@@ -59,7 +59,7 @@ const SEMANTIC_VIEWS = [
   // cada tabla se publica en archivos por año o por mes listados en su manifiesto.
   { name: "seguros_lista_entidades", file: "outputs/seguros/aseguradoras.parquet" },
   { name: "seguros_renta_fija", manifest: "outputs/seguros/renta_fija/manifest.json" },
-  { name: "seguros_acciones", manifest: "outputs/seguros/acciones/manifest.json" },
+  { name: "seguros_acciones", manifest: "outputs/seguros/acciones/manifest.json", queryFile: "outputs/sql_query/seguros_acciones.parquet" },
   { name: "seguros_fondos_mutuos", manifest: "outputs/seguros/fondos_mutuos/manifest.json" },
   { name: "seguros_bienes_raices", manifest: "outputs/seguros/bienes_raices/manifest.json" },
   { name: "seguros_extranjeros", manifest: "outputs/seguros/extranjeros/manifest.json" },
@@ -101,7 +101,7 @@ const SEMANTIC_VIEWS = [
   // resultados anuales IFRS (XML de la Circular 1997, uno por fondo y año); se actualizan solos 3 veces al mes.
   // Montos en miles de la moneda funcional de cada fondo.
   { name: "ffmm_lista_entidades", file: "outputs/ffmm/maestro_fondos_mutuos.parquet" },
-  { name: "ffmm_cartera_nacional", manifest: "outputs/ffmm/cartera_nacional/manifest.json" },
+  { name: "ffmm_cartera_nacional", manifest: "outputs/ffmm/cartera_nacional/manifest.json", queryFile: "outputs/sql_query/ffmm_cartera_nacional.parquet" },
   { name: "ffmm_cartera_extranjera", manifest: "outputs/ffmm/cartera_extranjera/manifest.json" },
   { name: "ffmm_futuros", manifest: "outputs/ffmm/futuros_forwards/manifest.json" },
   { name: "ffmm_opciones", manifest: "outputs/ffmm/opciones/manifest.json" },
@@ -113,8 +113,8 @@ const SEMANTIC_VIEWS = [
 
   // BANCA: catálogo institucional y líneas CMF publicadas solo tras pasar el gate mensual.
   { name: "bancos_lista_entidades", file: "outputs/bancos/bancos_maestro.parquet" },
-  { name: "bancos_balance", manifest: "outputs/bancos/balance_b1_b2/manifest.json", where: "familia_archivo_fuente IN ('B1', 'B2')" },
-  { name: "bancos_resultados", manifest: "outputs/bancos/resultados_r1/manifest.json", where: "familia_archivo_fuente = 'R1'" },
+  { name: "bancos_balance", manifest: "outputs/bancos/balance_b1_b2/manifest.json", queryFile: "outputs/sql_query/bancos_balance.parquet", where: "familia_archivo_fuente IN ('B1', 'B2')" },
+  { name: "bancos_resultados", manifest: "outputs/bancos/resultados_r1/manifest.json", queryFile: "outputs/sql_query/bancos_resultados.parquet", where: "familia_archivo_fuente = 'R1'" },
 
   // MACROECONOMÍA & TASAS (BCCh SIETE)
   // <macro:inicio>
@@ -559,7 +559,12 @@ class DuckDBClient {
   // serie, el arranque pagaba un ida-y-vuelta de red por vista (30+ RTT).
   async prepararVista(view) {
     let files;
-    if (view.manifest) {
+    if (view.queryFile) {
+      // Algunas vistas usan una copia compacta SQL-only para reducir aperturas
+      // HTTP en frío. El manifiesto original sigue siendo la fuente del catálogo
+      // y de las descargas; queryFile no reemplaza ni altera esas particiones.
+      files = [view.queryFile];
+    } else if (view.manifest) {
       // no-store: el manifiesto es la lista de verdad de lo publicado; una
       // copia en caché haría que la vista no viera particiones nuevas.
       const response = await fetch(this.absoluteUrl(view.manifest), { cache: "no-store" });

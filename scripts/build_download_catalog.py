@@ -45,6 +45,7 @@ OUT_JS = os.path.join(DOCS, "js", "download_catalog.js")
 VIEW_RE = re.compile(
     r"\{\s*name:\s*\"(?P<name>[a-z0-9_]+)\"\s*,\s*"
     r"(?:(?P<kind>file|manifest):\s*\"(?P<path>[^\"]+)\")"
+    r"(?:\s*,\s*queryFile:\s*\"(?P<query_file>[^\"]+)\")?"
     r"(?:\s*,\s*where:\s*\"(?P<where>[^\"]*)\")?\s*\}",
 )
 

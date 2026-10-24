@@ -75,8 +75,11 @@ vm.createContext(contexto);
 
 let fuente = fs.readFileSync(CLIENTE, "utf8");
 // Conteos esperados derivados del propio catálogo de vistas (no literales a mano).
-const N_VISTAS = (fuente.match(/\{\s*name:\s*"[a-z0-9_]+"\s*,\s*(?:file|manifest):/g) || []).length;
-const N_MANIFIESTOS = (fuente.match(/\{\s*name:\s*"[a-z0-9_]+"\s*,\s*manifest:/g) || []).length;
+const DECLARACIONES = [...fuente.matchAll(/\{\s*name:\s*"[a-z0-9_]+"[^{}]*\}/g)].map(([declaracion]) => declaracion);
+const N_VISTAS = DECLARACIONES.filter((vista) => /\b(?:file|manifest):/.test(vista)).length;
+const N_MANIFIESTOS = DECLARACIONES.filter((vista) => /\bmanifest:/.test(vista)).length;
+const N_MANIFIESTOS_DIRECTOS = DECLARACIONES.filter((vista) => /\bmanifest:/.test(vista) && !/\bqueryFile:/.test(vista)).length;
+const VISTAS_SQL_COMPACTAS = DECLARACIONES.filter((vista) => /\bqueryFile:/.test(vista));
 const VISTAS_SIN_PARTICIONES = [...fuente.matchAll(/\{\s*name:\s*"([a-z0-9_]+)"\s*,\s*manifest:\s*"([^"]+)"/g)]
   .filter(([, , manifest]) => {
     const ruta = path.join(DOCS, manifest);
@@ -113,7 +116,16 @@ vm.runInContext(fuente.slice(0, corte) + "\nglobalThis.__DuckDBClient = DuckDBCl
     cliente.unavailableViews.join(", "));
   const alias = createdViews.length - principales.length;
   check("se crean los 19 alias de compatibilidad", alias === 19, `${alias}`);
-  check("los manifiestos se piden por red", fetchCalls.manifiestos >= N_MANIFIESTOS, `${fetchCalls.manifiestos}`);
+  check("las vistas particionadas usan su compacto SQL sin pedir sus manifiestos de descarga", fetchCalls.manifiestos === N_MANIFIESTOS_DIRECTOS, `${fetchCalls.manifiestos} solicitudes; ${N_MANIFIESTOS_DIRECTOS} vistas requieren manifiesto`);
+  check("los compactos SQL conservan los manifiestos particionados independientes para descargas",
+    N_MANIFIESTOS - N_MANIFIESTOS_DIRECTOS === VISTAS_SQL_COMPACTAS.length &&
+    VISTAS_SQL_COMPACTAS.every((vista) => vista.includes("manifest:")),
+    `${N_MANIFIESTOS - N_MANIFIESTOS_DIRECTOS} manifiestos compactados / ${VISTAS_SQL_COMPACTAS.length} compactos`);
+  const compactasEsperadas = ["bancos_balance", "bancos_resultados", "ffmm_cartera_nacional", "seguros_acciones"];
+  check("las cuatro vistas de alto costo usan los Parquet compactos SQL-only",
+    VISTAS_SQL_COMPACTAS.length === compactasEsperadas.length && compactasEsperadas.every((name) =>
+      principales.some((sql) => sql.includes(`outputs/sql_query/${name}.parquet`))),
+    `${VISTAS_SQL_COMPACTAS.length} compactos declarados`);
   // 2) El SQL de cada vista apunta a ficheros que existen en docs/.
   const rutasEnSql = new Set();
   for (const sql of principales) {

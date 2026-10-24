@@ -1,0 +1,295 @@
+{
+  "format_version": 1,
+  "dataset": "seguros_acciones",
+  "description": "Copia compacta SQL de acciones de aseguradoras; no es un archivo de descarga.",
+  "purpose": "SQL-only; no forma parte del catálogo de descargas",
+  "source_manifest": "outputs/seguros/acciones/manifest.json",
+  "source_updated_at": "2026-10-21T17:58:48+00:00",
+  "source_files": [
+    {
+      "path": "outputs/seguros/acciones/2016.parquet",
+      "records": 1919,
+      "sha256": "a903a1c87b2372b4a395e825d6d62fe92744623f3676b0bdd3420e98f39f71a9"
+    },
+    {
+      "path": "outputs/seguros/acciones/2017.parquet",
+      "records": 11701,
+      "sha256": "81b3ab36674fa12152b765bfe94207ce102dd03b07d37d19151568c833891389"
+    },
+    {
+      "path": "outputs/seguros/acciones/2018.parquet",
+      "records": 10843,
+      "sha256": "b56cae6ba01f9f4b4281acb5f1e889bbd81771ea4d04acc0419700a1de18a057"
+    },
+    {
+      "path": "outputs/seguros/acciones/2019.parquet",
+      "records": 9927,
+      "sha256": "230870341389bb3402da3e305061e02c716fe67910b402ad35178808c3498032"
+    },
+    {
+      "path": "outputs/seguros/acciones/2020.parquet",
+      "records": 10511,
+      "sha256": "8cc033234e46ae4cd75499e9bdd5e77c2edaf9c0ed946f96772a971c64fc6220"
+    },
+    {
+      "path": "outputs/seguros/acciones/2021.parquet",
+      "records": 11318,
+      "sha256": "94ddf0dc40d80dfc1841247852c20b303020af91a2d4329b231643ad5f45570d"
+    },
+    {
+      "path": "outputs/seguros/acciones/2022.parquet",
+      "records": 11430,
+      "sha256": "057994c7ce60dad8ce41366d1870d5b7d7ec861b3682d53f278a69f55f97d9b3"
+    },
+    {
+      "path": "outputs/seguros/acciones/2023.parquet",
+      "records": 11024,
+      "sha256": "4cb1643dc92c0f065b3ccd3531756072b8c6d87a0231781843bd0560bbb517be"
+    },
+    {
+      "path": "outputs/seguros/acciones/2024.parquet",
+      "records": 11033,
+      "sha256": "44728330367b9bc266f30e9dacd955ecc5be263b32586e8ba3d636190fbb142f"
+    },
+    {
+      "path": "outputs/seguros/acciones/2025.parquet",
+      "records": 11005,
+      "sha256": "34ee8cba1a51554605fc22a976a2330490a117f572b190542b8aebf56f12c71d"
+    },
+    {
+      "path": "outputs/seguros/acciones/2026.parquet",
+      "records": 8308,
+      "sha256": "55094c6669c52a251c23ba9d2d9acda1346ff8176f75270978ac72510b847418"
+    }
+  ],
+  "file": "outputs/sql_query/seguros_acciones.parquet",
+  "records": 109019,
+  "bytes": 2834967,
+  "sha256": "9562c2920b8bc812bd4313ca73143ec5a2101d805eac08cfa260ab451debbdd8",
+  "schema": [
+    {
+      "name": "periodo",
+      "type": "string"
+    },
+    {
+      "name": "sector",
+      "type": "string"
+    },
+    {
+      "name": "rut_aseguradora",
+      "type": "string"
+    },
+    {
+      "name": "nombre_aseguradora",
+      "type": "string"
+    },
+    {
+      "name": "rut",
+      "type": "string"
+    },
+    {
+      "name": "run",
+      "type": "string"
+    },
+    {
+      "name": "tipo_instrumento",
+      "type": "string"
+    },
+    {
+      "name": "nemotecnico",
+      "type": "string"
+    },
+    {
+      "name": "serie",
+      "type": "string"
+    },
+    {
+      "name": "unidades",
+      "type": "double"
+    },
+    {
+      "name": "pres_bursatil",
+      "type": "double"
+    },
+    {
+      "name": "valor_costo_clp",
+      "type": "int64"
+    },
+    {
+      "name": "valor_libro_clp",
+      "type": "int64"
+    },
+    {
+      "name": "valor_bolsa_clp",
+      "type": "int64"
+    },
+    {
+      "name": "valor_razonable_m_clp",
+      "type": "int64"
+    },
+    {
+      "name": "deterioro_m_clp",
+      "type": "int64"
+    },
+    {
+      "name": "provision_voluntaria_clp",
+      "type": "int64"
+    },
+    {
+      "name": "valor_final_m_clp",
+      "type": "int64"
+    },
+    {
+      "name": "unidad_monetaria",
+      "type": "string"
+    },
+    {
+      "name": "ajuste_a_valor_economico",
+      "type": "string"
+    },
+    {
+      "name": "prohibicion",
+      "type": "string"
+    },
+    {
+      "name": "activo_en_margen",
+      "type": "string"
+    },
+    {
+      "name": "unidades_en_margen",
+      "type": "double"
+    },
+    {
+      "name": "accion_en_prestamo",
+      "type": "string"
+    },
+    {
+      "name": "unidades_en_prestamo",
+      "type": "int64"
+    },
+    {
+      "name": "activo_respalda_reserva_valor_de_fondo",
+      "type": "string"
+    },
+    {
+      "name": "nombre_del_fondo",
+      "type": "string"
+    },
+    {
+      "name": "nombre_cartera",
+      "type": "string"
+    },
+    {
+      "name": "custodia_inv",
+      "type": "string"
+    },
+    {
+      "name": "nombre_custodio",
+      "type": "string"
+    },
+    {
+      "name": "susceptibles_de_custodia",
+      "type": "string"
+    },
+    {
+      "name": "relacionado",
+      "type": "string"
+    },
+    {
+      "name": "filial_coligada",
+      "type": "string"
+    },
+    {
+      "name": "participacion_porcentual",
+      "type": "double"
+    },
+    {
+      "name": "patrimonio_filial_m_clp",
+      "type": "int64"
+    },
+    {
+      "name": "resultado_de_la_sociedad_filial_m_clp",
+      "type": "int64"
+    },
+    {
+      "name": "clasificacion_de_riesgo",
+      "type": "string"
+    },
+    {
+      "name": "simultanea",
+      "type": "string"
+    },
+    {
+      "name": "tsa",
+      "type": "string"
+    },
+    {
+      "name": "cobertura",
+      "type": "string"
+    },
+    {
+      "name": "metod_clasif_valo",
+      "type": "string"
+    },
+    {
+      "name": "criterio_valorizaci",
+      "type": "string"
+    },
+    {
+      "name": "modelo_valoracion",
+      "type": "string"
+    },
+    {
+      "name": "modelo_propio_deterioro",
+      "type": "string"
+    },
+    {
+      "name": "tipo_fondo",
+      "type": "string"
+    },
+    {
+      "name": "rut_fondo_p",
+      "type": "string"
+    },
+    {
+      "name": "nombre_fondo_p",
+      "type": "string"
+    },
+    {
+      "name": "codigo_actividad_economica",
+      "type": "int64"
+    },
+    {
+      "name": "efecto_patrimonio",
+      "type": "string"
+    },
+    {
+      "name": "subyacente",
+      "type": "string"
+    },
+    {
+      "name": "segmento_fondo",
+      "type": "string"
+    },
+    {
+      "name": "tipo_inmobiliario",
+      "type": "string"
+    },
+    {
+      "name": "cuotas_suscritas",
+      "type": "int64"
+    },
+    {
+      "name": "porcentaje_participacion",
+      "type": "double"
+    },
+    {
+      "name": "desarrollo_avance",
+      "type": "string"
+    },
+    {
+      "name": "tipo_gestion",
+      "type": "string"
+    }
+  ]
+}
