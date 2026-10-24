@@ -46,7 +46,7 @@
         href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
-  <link rel="stylesheet" href="css/app.css?v=fl-20261024-1619-portada-premium-inicio-simple">
+  <link rel="stylesheet" href="css/app.css?v=fl-20261024-1624-portada-footer-armonizado">
 
   <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
        Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
@@ -391,14 +391,22 @@
             </details>
 
 
-            <!-- Autoría: se pinta con docs/js/creditos.js -->
-            <section class="info-block info-autor" id="creditos-autor"></section>
-
-            <section class="info-note">
-              <span class="info-note-mark">i</span>
-              <p>Este sistema es una herramienta de exploración y análisis de información pública. No constituye recomendación de inversión. Revisa siempre la fuente, el periodo, la unidad y las notas de cobertura antes de interpretar una cifra: los procesos son automáticos y la base puede contener errores.</p>
-            </section>
-            <p class="info-foot"><a href="https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/docs/notas/README.md" rel="noopener">Decisiones y auditorías</a> — notas técnicas, criterios de publicación y auditorías de calidad del dato.</p>
+            <footer class="info-endmatter" aria-label="Acerca del proyecto">
+              <div class="info-endmatter-grid">
+                <!-- Autoría: se pinta con docs/js/creditos.js -->
+                <section class="info-autor" id="creditos-autor"></section>
+                <div class="info-endmatter-aside">
+                  <section class="info-note" aria-label="Nota importante">
+                    <span class="info-note-mark" aria-hidden="true">i</span>
+                    <p>Herramienta de exploración; no constituye recomendación de inversión. Verifica fuente, periodo, unidad y cobertura: la publicación es automática y puede contener errores.</p>
+                  </section>
+                  <a class="info-foot" href="https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/docs/notas/README.md" rel="noopener">
+                    <span class="info-foot-copy"><strong>Decisiones y auditorías</strong><small>Notas técnicas, criterios de publicación y auditorías de calidad.</small></span>
+                    <span class="info-foot-arrow" aria-hidden="true">↗</span>
+                  </a>
+                </div>
+              </div>
+            </footer>
           </div>
         </div>
 
@@ -756,28 +764,28 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
        `python3 scripts/subir_etiqueta.py <motivo>` cuando cambia cualquier js/css:
        GitHub Pages cachea 10 minutos y, sin etiqueta nueva, quien ya entró sigue
        ejecutando el código viejo. `scripts/audit_interfaz.py` lo comprueba. -->
-  <script src="js/data_bundles.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/alcance.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/chart_renderer.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/erd_graph.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/sql_guard.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/duckdb_client.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/chat_terminal.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/busqueda_pregunta.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/sidebar.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/ux_shell.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/creditos.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/theme_switcher.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/estado_claves.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/data_dictionary.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/data_viewer.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/diccionario_seguros.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/download_utils.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/download_catalog.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/downloads_panel.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/portada.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/calidad_datos.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
-  <script src="js/como_usar.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/data_bundles.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/alcance.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/chart_renderer.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/erd_graph.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/sql_guard.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/duckdb_client.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/chat_terminal.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/sidebar.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/ux_shell.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/creditos.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/theme_switcher.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/estado_claves.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/data_dictionary.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/data_viewer.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/download_utils.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/download_catalog.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/downloads_panel.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/portada.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/calidad_datos.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
+  <script src="js/como_usar.js?v=fl-20261024-1624-portada-footer-armonizado" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
