@@ -59,7 +59,7 @@ def _bloque(texto: str, marcador: str, apertura: str | None = None) -> str:
 
 
 def vistas_semanticas() -> list[dict]:
-    """Extrae SEMANTIC_VIEWS de duckdb_client.js: name, file, manifest y where."""
+    """Extrae SEMANTIC_VIEWS de duckdb_client.js: file/manifest, queryFile y filtros."""
     texto = CLIENTE.read_text(encoding="utf-8")
     bloque = _bloque(texto, "const SEMANTIC_VIEWS")
     salida = []
@@ -69,7 +69,7 @@ def vistas_semanticas() -> list[dict]:
         if not nombre:
             continue
         vista = {"name": nombre.group(1)}
-        for clave in ("file", "manifest", "where"):
+        for clave in ("file", "manifest", "queryFile", "where"):
             hallado = re.search(rf'{clave}:\s*"([^"]+)"', cuerpo)
             if hallado:
                 vista[clave] = hallado.group(1)
@@ -113,6 +113,33 @@ def rutas_relativas(vista: dict) -> list[str]:
     return []
 
 
+def rutas_sql_relativas(vista: dict) -> list[str]:
+    """Rutas que debe leer la vista SQL (compacto si fue publicado y está presente).
+
+    ``rutas_relativas`` sigue describiendo los Parquet públicos/descargables;
+    mantener ambas funciones separadas evita que el compacto SQL se cuele en el
+    catálogo de descargas o cambie sus filtros y particiones.
+    """
+    query_file = vista.get("queryFile")
+    if query_file:
+        ruta = Path(query_file)
+        if ruta.is_absolute() or ".." in ruta.parts:
+            return []
+        return [ruta.as_posix()] if (DOCS / ruta).is_file() else []
+    return rutas_relativas(vista)
+
+
+def ficheros_sql_de(vista: dict) -> list[str]:
+    """Rutas locales para ejecutar la definición SQL de una vista."""
+    return [str(DOCS / rel) for rel in rutas_sql_relativas(vista)]
+
+
+def urls_sql_de(vista: dict, base: str = BASE) -> list[str]:
+    """URLs de la fuente elegida para SQL, usando el compacto cuando existe."""
+    limpia = base.rstrip("/")
+    return [f"{limpia}/{rel}" for rel in rutas_sql_relativas(vista)]
+
+
 def ficheros_de(vista: dict) -> list[str]:
     """Rutas locales de los Parquet del objeto (vacía si no hay nada publicado)."""
     return [str(DOCS / rel) for rel in rutas_relativas(vista)]
@@ -125,8 +152,8 @@ def urls_de(vista: dict, base: str = BASE) -> list[str]:
 
 
 def sql_de_vista(vista: dict, base: str = BASE, union: bool = True) -> str:
-    """CREATE VIEW del objeto contra sus archivos publicados."""
-    urls = urls_de(vista, base)
+    """CREATE VIEW del objeto contra la fuente SQL publicada."""
+    urls = urls_sql_de(vista, base)
     if not urls:
         return ""
     rutas = urls[0] if len(urls) == 1 else "[" + ", ".join(f"'{u}'" for u in urls) + "]"

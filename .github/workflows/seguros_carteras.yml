@@ -34,6 +34,7 @@ on:
       - pipelines/auto/estable.py
       - pipelines/auto/privacidad.py
       - pipelines/auto/rut.py
+      - scripts/build_sql_compact_parquets.py
   workflow_dispatch:
     inputs:
       desde:
@@ -146,8 +147,9 @@ jobs:
               continue
             fi
             python -m seguros.scripts.actualizar_carteras --solo-data-manifest
+            python scripts/build_sql_compact_parquets.py --only seguros_acciones
             python scripts/build_download_catalog.py
-            git add data_manifest.json docs/js/download_catalog.js
+            git add data_manifest.json docs/js/download_catalog.js docs/outputs/sql_query/seguros_acciones.parquet docs/outputs/sql_query/seguros_acciones.manifest.json
             git diff --cached --quiet || git commit -m "Seguros: data_manifest"
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
             echo "Push rechazado (intento ${i}/8): otra corrida publicó primero."
