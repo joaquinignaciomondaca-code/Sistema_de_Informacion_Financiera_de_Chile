@@ -579,6 +579,10 @@ setTimeout(async () => {
     /Sobre el autor/.test(creditosAutor.textContent) && /Joaquín Mondaca/.test(creditosAutor.textContent));
   check("autoría: declara cuándo partió el proyecto",
     /septiembre de 2026/.test(creditosAutor.textContent));
+  check("portada: autoría, nota y auditorías forman un remate visual único",
+    Boolean(document.querySelector(".info-endmatter-grid #creditos-autor"))
+    && Boolean(document.querySelector(".info-endmatter .info-note"))
+    && Boolean(document.querySelector(".info-endmatter a.info-foot .info-foot-copy small")));
   check("autoría: no queda ningún bloque de citación en el sitio",
     !document.getElementById("cita-info") && !document.getElementById("cita-autor")
     && !document.getElementById("cita-descargas"));
