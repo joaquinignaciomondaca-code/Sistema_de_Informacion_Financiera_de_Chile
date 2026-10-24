@@ -903,7 +903,7 @@
       "type": "string"
      },
      {
-      "description": "Código de cuenta tal como aparece en el TXT CMF (9 dígitos): rubro (positions 1-2), línea (positions 3-5) e ítem (positions 6-9). Ejemplo: 105000200 = rubro 10 (activos), línea 500, ítem 0200. Los totales del rubro llevan línea 000 e ítem 0000 (ej. 100000000 = TOTAL ACTIVOS). No sumar líneas padre con descendientes.",
+      "description": "Código de cuenta tal como aparece en el TXT CMF.",
       "name": "codigo_cuenta",
       "sif_rol": "PK parcial",
       "type": "string"
@@ -933,7 +933,7 @@
       "type": "array"
      },
      {
-      "description": "B1, B2 o R1.",
+      "description": "Sólo B1 o B2 en este objeto.",
       "name": "familia_archivo_fuente",
       "sif_rol": "Atributo",
       "type": "string"
@@ -1547,7 +1547,7 @@
       "type": "string"
      },
      {
-      "description": "Código de cuenta tal como aparece en el TXT CMF (9 dígitos): rubro (positions 1-2), línea (positions 3-5) e ítem (positions 6-9). Ejemplo: 105000200 = rubro 10 (activos), línea 500, ítem 0200. Los totales del rubro llevan línea 000 e ítem 0000 (ej. 100000000 = TOTAL ACTIVOS). No sumar líneas padre con descendientes.",
+      "description": "Código de cuenta tal como aparece en el TXT CMF.",
       "name": "codigo_cuenta",
       "sif_rol": "PK parcial",
       "type": "string"
@@ -1577,7 +1577,7 @@
       "type": "array"
      },
      {
-      "description": "B1, B2 o R1.",
+      "description": "Sólo R1 en este objeto.",
       "name": "familia_archivo_fuente",
       "sif_rol": "Atributo",
       "type": "string"
