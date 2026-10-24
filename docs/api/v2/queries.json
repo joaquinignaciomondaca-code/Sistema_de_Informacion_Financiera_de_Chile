@@ -693,9 +693,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "balance-completo-de-banchile-agf-ultimo-trimestr-af59a0",
+   "id": "balance-completo-de-banchile-agf-ultimo-trimestr-22cbe4",
    "origen": "explorador",
-   "sql": "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM agf_balance WHERE rut = '96767630' AND periodo = '2026' ORDER BY tipo_balance, estado_financiero, orden;",
+   "sql": "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM agf_balance WHERE rut = '96767630' AND periodo = (SELECT max(periodo) FROM agf_balance WHERE rut = '96767630') ORDER BY tipo_balance, estado_financiero, orden;",
    "titulo": "Balance completo de Banchile AGF, último trimestre"
   },
   {
@@ -1478,9 +1478,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "balance-completo-de-bci-securitizadora-ultimo-tr-d73c97",
+   "id": "balance-completo-de-bci-securitizadora-ultimo-tr-f1004f",
    "origen": "explorador",
-   "sql": "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM securitizadoras_balance WHERE rut = '96948880' AND periodo = '2026' ORDER BY tipo_balance, estado_financiero, orden;",
+   "sql": "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM securitizadoras_balance WHERE rut = '96948880' AND periodo = (SELECT max(periodo) FROM securitizadoras_balance WHERE rut = '96948880') ORDER BY tipo_balance, estado_financiero, orden;",
    "titulo": "Balance completo de BCI Securitizadora, último trimestre"
   },
   {
@@ -1731,9 +1731,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "balance-completo-de-ccaf-los-andes-ultimo-trimes-5b3141",
+   "id": "balance-completo-de-ccaf-los-andes-ultimo-trimes-8b33d5",
    "origen": "explorador",
-   "sql": "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM ccaf_balance WHERE rut = '81826800' AND periodo = '2026' ORDER BY tipo_balance, estado_financiero, orden;",
+   "sql": "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM ccaf_balance WHERE rut = '81826800' AND periodo = (SELECT max(periodo) FROM ccaf_balance WHERE rut = '81826800') ORDER BY tipo_balance, estado_financiero, orden;",
    "titulo": "Balance completo de CCAF Los Andes, último trimestre"
   },
   {
@@ -1851,9 +1851,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "acciones-en-seguros-b85634",
+   "id": "acciones-en-seguros-4057a4",
    "origen": "terminal",
-   "sql": "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = '2026' GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;",
+   "sql": "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = (SELECT max(periodo) FROM seguros_acciones) GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;",
    "titulo": "Acciones en seguros"
   },
   {
@@ -1863,9 +1863,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "derivados-de-seguros-por-tipo-010e2d",
+   "id": "derivados-de-seguros-por-tipo-d009a2",
    "origen": "terminal",
-   "sql": "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = '2026' GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;",
+   "sql": "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;",
    "titulo": "Derivados de seguros por tipo"
   },
   {
@@ -1887,9 +1887,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "fondos-mutuos-inversion-en-el-exterior-por-pais-0bfe76",
+   "id": "fondos-mutuos-inversion-en-el-exterior-por-pais-4da5d1",
    "origen": "terminal",
-   "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = '2026' GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;",
+   "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;",
    "titulo": "Fondos mutuos: inversión en el exterior por país"
   },
   {
