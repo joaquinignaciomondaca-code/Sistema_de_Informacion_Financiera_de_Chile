@@ -134,7 +134,7 @@ explícito. [Fuente, controles y ejecución](fi/README.md).
 | Fondos de Inversión | 9 | 3.187.474 | Carteras 2020-03 → 2026-06; pactos 2012-03 → 2026-06; EEFF 2022-03 → 2026-06 (16 cierres, backfill parcial) | CMF · LUF / Circular 1998 · XML FIEF |
 | Corredoras de Bolsa | 4 | 185.921 | 2010-12 → 2026-06 | CMF · FECU IFRS |
 | Administradoras Generales de Fondos | 3 | 129.711 | 2010-06 → 2026-06 | CMF · IFRS |
-| Macroeconomía y Tasas | 24 | 41.465 | diaria / mensual / trimestral | BCCh |
+| Macroeconomía y Tasas | 24 | 41.470 | diaria / mensual / trimestral | BCCh |
 | Factoring y Leasing | 3 | 52.446 | 2009-03 → 2026-06 | CMF · IFRS |
 | Sociedades Securitizadoras | 3 | 25.985 | 2009-12 → 2026-06 | CMF · IFRS |
 | Cajas de Compensación | 3 | 13.555 | 2010-06 → 2026-06 | CMF · TXT IFRS (XBRL) |
@@ -144,9 +144,9 @@ explícito. [Fuente, controles y ejecución](fi/README.md).
 | Sistemas de Pago | 1 | 19 | registro vigente | BCCh / CMF |
 | Fondos de Pensiones | 1 | 7 | registro vigente | SPensiones · D.L. 3.500 |
 | Cooperativas de Ahorro y Crédito | 1 | 7 | registro vigente | CMF |
-| **Total** | **89** | **19.777.517** | **2001 → 2026** | |
+| **Total** | **89** | **19.777.522** | **2001 → 2026** | |
 
-† En banca, *balance* y *resultados* son vistas filtradas sobre las mismas particiones mensuales: B1 y B2 (722.931 filas) y R1 (1.240.061), sin solape. Por eso se cuentan como **un solo dataset** (1.962.992 filas) detrás de ambas vistas, y el total del catálogo lo cuenta una sola vez: **90 objetos y 19.777.517 filas**. La tabla de arriba suma 89 porque no incluye `fi_bienes_raices` —la tabla oculta, que publica su esquema con 0 filas—; la vista principal muestra 74 conjuntos con 19.677.253 filas (99,5 %) y el archivo más el registro complementario suman 100.264 (0,5 %).
+† En banca, *balance* y *resultados* son vistas filtradas sobre las mismas particiones mensuales: B1 y B2 (722.931 filas) y R1 (1.240.061), sin solape. Por eso se cuentan como **un solo dataset** (1.962.992 filas) detrás de ambas vistas, y el total del catálogo lo cuenta una sola vez: **90 objetos y 19.777.522 filas**. La tabla de arriba suma 89 porque no incluye `fi_bienes_raices` —la tabla oculta, que publica su esquema con 0 filas—; la vista principal muestra 74 conjuntos con 19.677.258 filas (99,5 %) y el archivo más el registro complementario suman 100.264 (0,5 %).
 
 ### Operaciones REPO (pactos): cobertura vigente
 

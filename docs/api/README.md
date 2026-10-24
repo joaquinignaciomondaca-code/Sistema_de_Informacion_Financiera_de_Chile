@@ -160,7 +160,7 @@ Las cuatro cifras que se leen en el sitio, con su nombre:
 | 90 | `totales.objetos` | objetos del contrato |
 | 89 | — | conjuntos del explorador: 74 visibles + 15 en archivo y registros |
 | 86 | `totales.con_datos` | objetos con al menos un archivo publicado |
-| 85 | `totales.con_filas` | objetos con filas (suman las 19.777.517) |
+| 85 | `totales.con_filas` | objetos con filas (suman el total vigente del catálogo) |
 
 ## `v2/datapackage.json`
 
