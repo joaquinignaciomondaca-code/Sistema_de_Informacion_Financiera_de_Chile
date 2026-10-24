@@ -173,6 +173,12 @@ function main() {
     const esperado = {
       repetidas: cifra(estado.resumen.filas_repetidas),
       objetos: `${estado.resumen.con_repetidas} de ${estado.resumen.objetos}`,
+      "pct-repetidas": (function () {
+        const rep = Number(estado.resumen.filas_repetidas || 0);
+        const tot = catalogo.filas || 0;
+        if (!rep || !tot) return null;
+        return pct(Math.floor(rep / tot * 1000) / 10);
+      })(),
       peor: peor ? cifra(peor.sobrantes) : null,
       "peor-objeto": peor ? peor.id : null,
       "peor-pct": peor ? pct(peor.datos.pct_repetidas) : null,

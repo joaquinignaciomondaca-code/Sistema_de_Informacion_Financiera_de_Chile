@@ -98,10 +98,54 @@
     }
   }
 
+  function contarFuentes() {
+    const cat = window.DOWNLOAD_CATALOG;
+    if (!cat || !cat.grupos) return null;
+    const set = new Set();
+    cat.grupos.forEach(function (g) {
+      (g.items || []).forEach(function (i) { if (i.fuente) set.add(i.fuente); });
+    });
+    return set.size || null;
+  }
+
+  function pintarFuentes(raiz) {
+    const A = alcance();
+    const n = contarFuentes();
+    if (!A || n === null) return;
+    raiz.querySelectorAll("[data-fuentes]").forEach((el) => { el.textContent = A.numero(n); });
+  }
+
+  function modoClase(modo) {
+    const s = String(modo || "").toLowerCase();
+    if (s.startsWith("híbrido") || s.startsWith("hibrido")) return "hybrid";
+    if (s.startsWith("manual")) return "manual";
+    return "auto";
+  }
+
+  function contarModos() {
+    const D = window.SIFDataDictionary;
+    if (!D) return null;
+    const c = { auto: 0, hybrid: 0, manual: 0 };
+    D.forEach(function (t) { c[modoClase(t.modo)]++; });
+    return c;
+  }
+
+  function pintarModos(raiz) {
+    const A = alcance();
+    const c = contarModos();
+    if (!A || !c) return;
+    raiz.querySelectorAll('[data-modo="auto"]').forEach((el) => { el.textContent = A.numero(c.auto); });
+    raiz.querySelectorAll('[data-modo="hybrid"]').forEach((el) => { el.textContent = A.numero(c.hybrid); });
+    raiz.querySelectorAll('[data-modo="manual"]').forEach((el) => { el.textContent = A.numero(c.manual); });
+    raiz.querySelectorAll('[data-modo="total"]').forEach((el) => { el.textContent = A.numero(c.auto + c.hybrid + c.manual); });
+  }
+
   function init() {
     const raiz = document.getElementById("info-container");
     if (!raiz) return;
     pintarCifras(raiz);
+    pintarFuentes(raiz);
+    pintarModos(raiz);
     raiz.addEventListener("click", (event) => {
       const boton = event.target.closest("[data-portada]");
       if (boton) accion(boton);

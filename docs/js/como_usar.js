@@ -28,10 +28,18 @@
       if (paneles[i]) paneles[i].hidden = !activo;
     });
     if (enfocar && botones[indice]) botones[indice].focus();
+    if (botones[indice] && botones[indice].getAttribute("data-uso-tab") === "sumar" && window.SIFCalidad && typeof window.SIFCalidad.pintarGrafico === "function") {
+      window.SIFCalidad.pintarGrafico();
+    }
   }
 
   botones.forEach(function (boton, i) {
-    boton.addEventListener("click", function () { activar(i, false); });
+    boton.addEventListener("click", function () {
+      activar(i, false);
+      if (boton.getAttribute("data-uso-tab") === "sumar" && window.SIFCalidad && typeof window.SIFCalidad.pintarGrafico === "function") {
+        window.SIFCalidad.pintarGrafico();
+      }
+    });
     boton.addEventListener("keydown", function (evento) {
       var destino = null;
       if (evento.key === "ArrowRight" || evento.key === "ArrowDown") destino = (i + 1) % botones.length;
@@ -48,7 +56,12 @@
    * para mandar a alguien (o a un agente) exactamente a las instrucciones que
    * necesita, sin obligarle a buscar la pestaña. */
   var hash = (window.location.hash || "").replace("#", "");
-  var pedido = hash.indexOf("como-usar-") === 0 ? hash.slice("como-usar-".length) : null;
+  var pedido = null;
+  if (hash === "guia-como-sumar") {
+    pedido = "sumar";
+  } else if (hash.indexOf("como-usar-") === 0) {
+    pedido = hash.slice("como-usar-".length);
+  }
   var inicial = botones.findIndex(function (boton) {
     return boton.getAttribute("data-uso-tab") === pedido;
   });
