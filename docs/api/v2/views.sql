@@ -207,7 +207,7 @@ CREATE OR REPLACE VIEW "sistemas_pago_lista_entidades" AS
 SELECT * FROM read_parquet(getvariable('sif_base') || '/outputs/sistemas_pago/sistemas_pago_maestro.parquet');
 CREATE OR REPLACE VIEW "sistemas_pago_maestro" AS SELECT * FROM "sistemas_pago_lista_entidades";
 
--- Auxiliar temporal para una consulta sugerida; sólo usa la partición más reciente y no es descargable.
+-- Auxiliar temporal para una consulta sugerida, sólo usa la partición más reciente y no es descargable.
 CREATE OR REPLACE TEMP VIEW "seguros_renta_fija_ultimo_periodo" AS
 SELECT * FROM read_parquet(getvariable('sif_base') || '/outputs/seguros/renta_fija/2026-09.parquet');
 
