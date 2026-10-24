@@ -46,7 +46,7 @@
         href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
-  <link rel="stylesheet" href="css/app.css?v=fl-20261024-bancos-parquet-separados">
+  <link rel="stylesheet" href="css/app.css?v=fl-20261024-1619-portada-premium-inicio-simple">
 
   <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
        Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
@@ -249,166 +249,98 @@
         <!-- Información general del Monitor -->
         <div class="info-container" id="info-container">
           <div class="info-scroll">
-            <section class="info-hero">
-              <!-- El logotipo es el título de la portada: ya trae el nombre
-                   completo, así que reemplaza al <h1> de texto y a la línea
-                   superior (eyebrow) que lo repetía en versalitas. Mantiene la
-                   jerarquía porque sigue siendo el <h1> de la página. -->
-              <h1 class="info-hero-brand">
-                <svg class="info-hero-logo" viewBox="0 0 820 180" role="img" aria-label="SIF — Sistema de Información Financiera de Chile">
-                  <use href="#sif-lockup"/>
-                </svg>
-              </h1>
-              <p class="info-lead">Carteras y balances que aseguradoras, fondos mutuos y fondos de inversión reportan a la CMF, más la banca y las series del Banco Central.</p>
-              <div class="info-hero-stats" aria-label="Cifras de la edición publicada">
-                <div class="info-stat" title="Comisión para el Mercado Financiero, Banco Central de Chile y Superintendencia de Pensiones. La SUSESO figura como regulador y enlace; sus datos de cajas de compensación provienen de la CMF."><b data-fuentes="oficiales">3</b><span>fuentes oficiales</span></div>
-                <div class="info-stat" title="Núcleo, instituciones y contexto. El archivo congelado y los registros complementarios añaden 15 tablas más, que se consultan y descargan igual."><b data-alcance="visible.conjuntos">74</b><span>tablas del catálogo</span></div>
-                <div class="info-stat" title="Una fila es lo que la fuente reporta para una entidad en un periodo. Una misma entidad aparece en varias tablas y periodos: la suma de filas no cuenta entidades."><b data-alcance="visible.filas">más de 19 millones</b><span>de filas</span></div>
-                <div class="info-stat" title="Primer y último período publicado en el catálogo; cada tabla declara el suyo."><b data-alcance="visible.periodo">2001–2026</b><span>de cobertura</span></div>
+            <section class="info-hero info-hero-premium" aria-labelledby="home-title">
+              <div class="info-hero-copy">
+                <p class="info-eyebrow"><span class="info-eyebrow-dot" aria-hidden="true"></span>SIF · DATOS FINANCIEROS PÚBLICOS</p>
+                <h1 id="home-title" class="info-hero-title">El sistema financiero chileno,<br><span>abierto en datos.</span></h1>
+                <p class="info-lead">Carteras, estados financieros y series de mercado de fuentes oficiales, reunidos para explorar, consultar y descargar.</p>
+                <div class="info-hero-actions">
+                  <a class="info-hero-btn info-hero-btn-primary" href="#catalogo-principal">Explorar por sector <span aria-hidden="true">↘</span></a>
+                  <button type="button" class="info-hero-btn info-hero-btn-secondary" data-portada="descargas">Ver descargas <span aria-hidden="true">→</span></button>
+                </div>
+                <p class="info-hero-capabilities"><span>Parquet, CSV y Excel</span><i aria-hidden="true"></i><span>SQL en tu navegador</span><i aria-hidden="true"></i><span>Sin registro</span></p>
               </div>
-              <div class="info-hero-tags">
-                <span class="info-tag">Consultas SQL en el navegador</span>
-                <span class="info-tag">Parquet, CSV y Excel</span>
-                <span class="info-tag">Sin registro</span>
-              </div>
+              <aside class="info-hero-aside" aria-label="Alcance destacado del catálogo">
+                <div class="info-hero-aside-head"><span>EL CATÁLOGO, DE UN VISTAZO</span><span class="info-hero-live"><i aria-hidden="true"></i> Fuentes oficiales</span></div>
+                <div class="info-hero-stat-grid">
+                  <div class="info-hero-stat"><b data-alcance="visible.conjuntos">74</b><span>conjuntos principales</span></div>
+                  <div class="info-hero-stat"><b data-alcance="visible.filas">más de 19 millones</b><span>filas en conjuntos principales</span></div>
+                </div>
+                <div class="info-hero-network" aria-hidden="true">
+                  <svg viewBox="0 0 400 100" role="presentation" focusable="false">
+                    <path d="M65 50H165M235 50h100M165 50l35-28 35 28-35 28-35-28Z" />
+                    <circle cx="65" cy="50" r="7"/><circle cx="165" cy="50" r="5"/><circle cx="200" cy="22" r="5"/>
+                    <circle cx="235" cy="50" r="5"/><circle cx="200" cy="78" r="5"/><circle cx="335" cy="50" r="7"/>
+                  </svg>
+                  <div class="info-hero-network-labels"><span>Fuentes</span><b>SIF</b><span>Consulta</span></div>
+                </div>
+                <p class="info-hero-aside-foot">Un solo espacio para navegar datos financieros de Chile.</p>
+              </aside>
             </section>
 
-            <section class="info-block">
-              <div class="info-section-kicker">NÚCLEO · INVERSIÓN INSTITUCIONAL</div>
-              <h2>Tres sectores, de la cartera al estado financiero</h2>
-              <p class="info-nucleo-cifras"><b data-alcance="nucleo.conjuntos">40</b> conjuntos en <b data-alcance="nucleo.sectores">3</b> sectores · <b data-alcance="nucleo.filas">más de 17 millones</b> de filas</p>
+            <section class="info-block info-primary-block" id="catalogo-principal" aria-labelledby="catalogo-titulo">
+              <div class="info-block-heading">
+                <div>
+                  <div class="info-section-kicker">INVERSIÓN INSTITUCIONAL</div>
+                  <h2 id="catalogo-titulo">Explora por sector</h2>
+                  <p class="info-block-subtitle">Empieza por el mercado que buscas; cada conjunto conserva su frecuencia, periodo y unidad de origen.</p>
+                </div>
+                <p class="info-nucleo-cifras"><b data-alcance="nucleo.sectores">3</b> sectores <span aria-hidden="true">·</span> <b data-alcance="nucleo.conjuntos">40</b> conjuntos</p>
+              </div>
               <div class="info-core-grid">
                 <article class="info-core-card" data-sector="seguros">
-                  <div class="info-core-head">
-                    <span class="info-card-icon">SE</span>
-                    <div><h3>Seguros</h3><span class="info-core-source">CMF · Circular 1835</span></div>
-                  </div>
-                  <p>Cartera mensual validada de las compañías de seguros de vida y generales: renta fija, acciones, fondos mutuos, bienes raíces, inversiones en el exterior y derivados.</p>
-                  <dl class="info-core-stats">
-                    <div><dt>Conjuntos</dt><dd data-alcance="sector.seguros.conjuntos">24</dd></div>
-                    <div><dt>Registros</dt><dd data-alcance="sector.seguros.filas_cortas">más de 10 M</dd></div>
-                    <div><dt>Cobertura</dt><dd data-alcance="sector.seguros.periodo">2016–2026</dd></div>
-                  </dl>
-                  <div class="info-core-actions">
-                    <button type="button" class="info-core-btn" data-portada="explorar" data-sector="seguros">Ver tablas</button>
-                    <button type="button" class="info-core-btn info-core-btn-ghost" data-portada="descargas" data-sector="seguros">Descargar</button>
-                  </div>
+                  <div class="info-core-head"><span class="info-card-icon">SE</span><div><h3>Seguros</h3><span class="info-core-source">CMF · Circular 1835</span></div></div>
+                  <p>Carteras mensuales de renta fija, acciones, fondos, bienes raíces y derivados.</p>
+                  <p class="info-core-meta" data-alcance="sector.seguros.resumen">24 conjuntos · más de 10 M filas · 2016–2026</p>
+                  <div class="info-core-actions"><button type="button" class="info-core-btn" data-portada="explorar" data-sector="seguros">Explorar seguros <span aria-hidden="true">→</span></button></div>
                 </article>
                 <article class="info-core-card" data-sector="ffmm">
-                  <div class="info-core-head">
-                    <span class="info-card-icon">FM</span>
-                    <div><h3>Fondos mutuos</h3><span class="info-core-source">CMF · Circular 1333 · IFRS</span></div>
-                  </div>
-                  <p>Cartera nacional y extranjera de cada fondo por instrumento y emisor, futuros y forwards, y balance y resultados IFRS anuales.</p>
-                  <dl class="info-core-stats">
-                    <div><dt>Conjuntos</dt><dd data-alcance="sector.ffmm.conjuntos">7</dd></div>
-                    <div><dt>Registros</dt><dd data-alcance="sector.ffmm.filas_cortas">más de 3,6 M</dd></div>
-                    <div><dt>Cobertura</dt><dd data-alcance="sector.ffmm.periodo">2001–2026</dd></div>
-                  </dl>
-                  <div class="info-core-actions">
-                    <button type="button" class="info-core-btn" data-portada="explorar" data-sector="ffmm">Ver tablas</button>
-                    <button type="button" class="info-core-btn info-core-btn-ghost" data-portada="descargas" data-sector="ffmm">Descargar</button>
-                  </div>
+                  <div class="info-core-head"><span class="info-card-icon">FM</span><div><h3>Fondos mutuos</h3><span class="info-core-source">CMF · Circular 1333 · IFRS</span></div></div>
+                  <p>Carteras por instrumento y emisor, derivados y estados IFRS anuales.</p>
+                  <p class="info-core-meta" data-alcance="sector.ffmm.resumen">7 conjuntos · más de 3,6 M filas · 2001–2026</p>
+                  <div class="info-core-actions"><button type="button" class="info-core-btn" data-portada="explorar" data-sector="ffmm">Explorar fondos mutuos <span aria-hidden="true">→</span></button></div>
                 </article>
                 <article class="info-core-card" data-sector="fi">
-                  <div class="info-core-head">
-                    <span class="info-card-icon">FI</span>
-                    <div><h3>Fondos de inversión</h3><span class="info-core-source">CMF · Ley Única de Fondos · XML IFRS</span></div>
-                  </div>
-                  <p>Cartera nacional y extranjera trimestral, inversiones valorizadas por el método de la participación y balance y resultados trimestrales de cada fondo.</p>
-                  <dl class="info-core-stats">
-                    <div><dt>Conjuntos</dt><dd data-alcance="sector.fi.conjuntos">9</dd></div>
-                    <div><dt>Registros</dt><dd data-alcance="sector.fi.filas_cortas">más de 3,1 M</dd></div>
-                    <div><dt>Cobertura</dt><dd data-alcance="sector.fi.periodo">2012–2026</dd></div>
-                  </dl>
-                  <div class="info-core-actions">
-                    <button type="button" class="info-core-btn" data-portada="explorar" data-sector="fi">Ver tablas</button>
-                    <button type="button" class="info-core-btn info-core-btn-ghost" data-portada="descargas" data-sector="fi">Descargar</button>
-                  </div>
+                  <div class="info-core-head"><span class="info-card-icon">FI</span><div><h3>Fondos de inversión</h3><span class="info-core-source">CMF · Ley Única de Fondos · IFRS</span></div></div>
+                  <p>Carteras trimestrales, inversiones valorizadas y estados financieros por fondo.</p>
+                  <p class="info-core-meta" data-alcance="sector.fi.resumen">9 conjuntos · más de 3,1 M filas · 2012–2026</p>
+                  <div class="info-core-actions"><button type="button" class="info-core-btn" data-portada="explorar" data-sector="fi">Explorar fondos de inversión <span aria-hidden="true">→</span></button></div>
                 </article>
               </div>
             </section>
 
-            <section class="info-block">
-              <div class="info-section-kicker">INSTITUCIONES Y ESTADOS FINANCIEROS</div>
-              <div class="info-strip">
+            <section class="info-block info-secondary-block" aria-labelledby="otros-datos-titulo">
+              <div class="info-block-heading info-block-heading-compact">
+                <div><div class="info-section-kicker">INSTITUCIONES Y CONTEXTO</div><h2 id="otros-datos-titulo">Más datos para completar la mirada</h2></div>
+              </div>
+              <div class="info-strip info-strip-premium">
                 <button type="button" class="info-strip-item" data-portada="explorar" data-sector="bancos">
-                  <span class="info-strip-name">Bancos</span>
-                  <span class="info-strip-text">Balance B1/B2 y resultados R1 de la CMF, con las líneas y el orden de la fuente.</span>
-                  <span class="info-strip-meta" data-alcance="sector.bancos.resumen">3 conjuntos · más de 1,9 M filas · 2022–2026</span>
+                  <span class="info-strip-name">Bancos <span aria-hidden="true">↗</span></span><span class="info-strip-text">Balances B1/B2 y resultados R1 de la CMF.</span><span class="info-strip-meta" data-alcance="sector.bancos.resumen">3 conjuntos · más de 1,9 M filas · 2022–2026</span>
                 </button>
                 <button type="button" class="info-strip-item" data-portada="explorar" data-sector="agf">
-                  <span class="info-strip-name">Administradoras generales de fondos</span>
-                  <span class="info-strip-text">Las sociedades que administran los fondos: balance y resultados IFRS.</span>
-                  <span class="info-strip-meta" data-alcance="sector.agf.resumen">3 conjuntos · más de 129 mil filas · 2010–2026</span>
+                  <span class="info-strip-name">Administradoras de fondos <span aria-hidden="true">↗</span></span><span class="info-strip-text">Balances y resultados IFRS de las AGF.</span><span class="info-strip-meta" data-alcance="sector.agf.resumen">3 conjuntos · más de 129 mil filas · 2010–2026</span>
                 </button>
                 <button type="button" class="info-strip-item" data-portada="explorar" data-sector="corredoras_bolsa">
-                  <span class="info-strip-name">Corredoras de bolsa</span>
-                  <span class="info-strip-text">Corredores y agentes de valores: lista de entidades y FECU IFRS.</span>
-                  <span class="info-strip-meta" data-alcance="sector.corredoras_bolsa.resumen">4 conjuntos · más de 185 mil filas · 2010–2026</span>
+                  <span class="info-strip-name">Corredoras de bolsa <span aria-hidden="true">↗</span></span><span class="info-strip-text">Entidades y estados financieros FECU IFRS.</span><span class="info-strip-meta" data-alcance="sector.corredoras_bolsa.resumen">4 conjuntos · más de 185 mil filas · 2010–2026</span>
+                </button>
+                <button type="button" class="info-strip-item" data-portada="explorar" data-sector="macro">
+                  <span class="info-strip-name">Macroeconomía y tasas <span aria-hidden="true">↗</span></span><span class="info-strip-text">Series del Banco Central: tasas, precios, actividad y expectativas.</span><span class="info-strip-meta" data-alcance="sector.macro.resumen">24 conjuntos · más de 41 mil filas</span>
                 </button>
               </div>
             </section>
 
-            <section class="info-block">
-              <div class="info-section-kicker">CONTEXTO</div>
-              <div class="info-context">
-                <div class="info-context-text">
-                  <h3>Macroeconomía y tasas (BCCh)</h3>
-                  <p>Series del Banco Central para leer las carteras: contexto macroeconómico, no una industria. <span data-alcance="sector.macro.conjuntos">24</span> tablas agrupadas en cuatro bloques.</p>
-                </div>
-                <ul class="info-context-blocks">
-                  <li>Tasas y curvas</li>
-                  <li>Tipo de cambio, UF y UTM</li>
-                  <li>Actividad y precios</li>
-                  <li>Expectativas</li>
-                </ul>
-                <button type="button" class="info-core-btn info-core-btn-ghost" data-portada="explorar" data-sector="macro">Ver series</button>
-              </div>
-            </section>
-
-            <p class="info-archive-link">
-              <button type="button" class="info-link-btn" data-portada="archivo">Archivo y registros complementarios</button>
-              <span data-alcance="fuera.resumen">7 industrias · 15 conjuntos · 0,5 % de las filas</span>: siguen publicados, consultables y descargables.
-              <button type="button" class="info-link-btn info-link-btn-muted" data-portada="alcance">Qué publica esta edición</button>
+            <p class="info-archive-link info-archive-link-premium">
+              <span class="info-archive-mark" aria-hidden="true">+</span>
+              <span><strong>¿Buscas otra industria?</strong> El archivo y los registros complementarios siguen disponibles.</span>
+              <button type="button" class="info-link-btn" data-portada="archivo">Explorar archivo <span aria-hidden="true">→</span></button>
+              <span class="info-archive-meta" data-alcance="fuera.resumen">7 industrias · 15 conjuntos · 0,5 % de las filas</span>
+              <button type="button" class="info-link-btn info-link-btn-muted" data-portada="alcance">Fuentes y metodología</button>
             </p>
 
-            <section class="info-block info-calidad" aria-labelledby="calidad-titulo">
-              <div class="info-section-kicker">LO QUE LA FUENTE REPITE</div>
-              <h2 id="calidad-titulo">Los archivos que las entidades envían a la CMF repiten filas: <b data-calidad="repetidas">230.288</b> de <b data-alcance="visible.filas">más de 19 millones</b> de filas (más de <b data-calidad="pct-repetidas">1,1 %</b>), en <b data-calidad="objetos">22 de 90</b> objetos.</h2>
-              <p>Se publican tal como llegan; el visor lo advierte al abrir la tabla y la Guía explica cómo sumar sin sobreestimar.</p>
-              <p class="info-calidad-foot">El detalle objeto por objeto está en <a href="#guia-como-sumar">la Guía</a>.</p>
-              
-            </section>
-
-            <section class="info-two-columns">
-              <div class="info-block info-block-compact">
-                <div class="info-section-kicker">CÓMO LEER LOS DATOS</div>
-                <h2>La fuente importa</h2>
-                <ul class="info-list">
-                  <li><strong>Frecuencia:</strong> cada tabla declara si es diaria, mensual, trimestral o un corte histórico.</li>
-                  <li><strong>Unidades:</strong> los montos conservan la unidad informada por la fuente; no se convierten automáticamente.</li>
-                  <li><strong>Presencia:</strong> que una entidad esté en una lista no garantiza que haya reportado en todos los periodos.</li>
-                  <li><strong>Estados IFRS:</strong> las AGF (y, en el archivo, securitizadoras y CCAF) usan el TXT oficial de estados financieros IFRS de la CMF; cubre sólo a quienes aparecen reportando en cada corte.</li>
-                  <li><strong>Trazabilidad:</strong> cada tabla declara su fuente, su archivo de origen y su manifiesto de publicación; los datos se muestran tal como los emite la fuente, sin reinterpretarlos.</li>
-                </ul>
-              </div>
-              <div class="info-block info-block-compact">
-                <div class="info-section-kicker">HERRAMIENTAS</div>
-                <h2>Cómo explorar</h2>
-                <ul class="info-list">
-                  <li><strong>Explorador (izquierda):</strong> el núcleo arriba, luego instituciones y contexto; el archivo y los registros complementarios quedan al final, plegados. Elige industria, carpeta o tabla y el visor y el diccionario se sincronizan solos.</li>
-                  <li><strong>Pestañas:</strong> Información, Mapa relacional, Diccionario, Visor de datos, Consultas SQL y Descargas.</li>
-                  <li><strong>Diccionario:</strong> significado de cada columna, su rol (PK, FK, dimensión, métrica) y su criterio contable (MtM, costo amortizado, tasación).</li>
-                  <li><strong>Terminal SQL:</strong> consultas sobre las vistas publicadas, ejecutadas en tu navegador. <kbd>Enter</kbd> ejecuta, <kbd>Tab</kbd> completa nombres de tabla y <kbd>↑</kbd>/<kbd>↓</kbd> recuperan el historial.</li>
-                  <li><strong>Descarga:</strong> todo lo publicado vive en la pestaña <em>Descargas</em>: Parquet original, CSV o Excel, con filas, periodo y peso a la vista.</li>
-                  <li><strong>Atajos:</strong> <kbd>Alt</kbd>+<kbd>1</kbd>…<kbd>7</kbd> cambia de pestaña y <kbd>/</kbd> enfoca la búsqueda del explorador.</li>
-                </ul>
-              </div>
-            </section>
-
-
-            <section class="info-block info-scope" id="info-alcance">
+            <details class="info-disclosure">
+              <summary><span>Fuentes, alcance y metodología</span><span class="info-disclosure-hint">Detalles del catálogo y sus limitaciones</span></summary>
+              <div class="info-disclosure-content">
+                <section class="info-block info-scope" id="info-alcance">
               <div class="info-section-kicker">ALCANCE</div>
               <h2>Qué incluye cada grupo</h2>
               <p><strong>Núcleo · inversión institucional:</strong> carteras y estados financieros de aseguradoras, fondos mutuos y fondos de inversión (CMF).</p>
@@ -417,13 +349,13 @@
               <p class="info-scope-foot"><span data-alcance="visible.resumen">74 conjuntos · más de 19 millones de filas (99,5 %)</span> del catálogo publicado.</p>
             </section>
 
-            <section class="info-block info-processing-block">
+                <section class="info-block info-processing-block">
               <div class="info-section-kicker">MODALIDAD DE PROCESAMIENTO</div>
               <h2>Cada tabla declara cómo se obtiene</h2>
               <p><b data-modo="auto">89</b> de las <b data-modo="total">90</b> tablas se extraen, validan y publican por código y flujos programados; <b data-modo="hybrid">1</b>, el balance de patrimonios separados (en el archivo), es híbrida: su extracción inicial depende de la fuente, y su validación, normalización y compilación son reproducibles. Ninguna tabla es manual hoy.</p>
             </section>
 
-            <section class="info-block info-fuentes">
+                <section class="info-block info-fuentes">
               <div class="info-section-kicker">FUENTES, LICENCIA Y LIMITACIONES</div>
               <h2>Qué es de quién y qué no es</h2>
               <div class="info-scope-grid">
@@ -455,6 +387,9 @@
                 </div>
               </div>
             </section>
+              </div>
+            </details>
+
 
             <!-- Autoría: se pinta con docs/js/creditos.js -->
             <section class="info-block info-autor" id="creditos-autor"></section>
@@ -591,6 +526,16 @@
             periodo: una posición de una cartera, un estado financiero, un dato de una serie. Una misma entidad
             aparece en varias tablas y periodos, así que la suma de filas del sitio no es la cantidad de entidades
             ni de compañías.</p>
+
+            <details class="guia-lectura-details">
+              <summary>Antes de comparar o sumar una cifra</summary>
+              <ul class="info-list">
+                <li><strong>Periodo y frecuencia:</strong> cada conjunto declara su propio corte; una entidad en un directorio no necesariamente reportó en todos los periodos.</li>
+                <li><strong>Unidades:</strong> los montos conservan la unidad y valorización informadas por la fuente; no se convierten automáticamente.</li>
+                <li><strong>Estados IFRS:</strong> las AGF y, en el archivo, securitizadoras y CCAF usan el TXT oficial de la CMF; cada corte cubre sólo a quienes aparecen reportando.</li>
+                <li><strong>Trazabilidad:</strong> revisa la fuente, el archivo de origen, el periodo y el manifiesto de publicación antes de comparar.</li>
+              </ul>
+            </details>
 
             <div class="uso-tabs" role="tablist" aria-label="Instrucciones de uso">
               <button type="button" class="uso-tab active" role="tab" id="uso-tab-humanos" aria-selected="true" aria-controls="uso-panel-humanos" data-uso-tab="humanos">Para personas</button>
@@ -811,28 +756,28 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
        `python3 scripts/subir_etiqueta.py <motivo>` cuando cambia cualquier js/css:
        GitHub Pages cachea 10 minutos y, sin etiqueta nueva, quien ya entró sigue
        ejecutando el código viejo. `scripts/audit_interfaz.py` lo comprueba. -->
-  <script src="js/data_bundles.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/alcance.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/chart_renderer.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/erd_graph.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/sql_guard.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/duckdb_client.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/chat_terminal.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/busqueda_pregunta.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/sidebar.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/ux_shell.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/creditos.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/theme_switcher.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/estado_claves.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/data_dictionary.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/data_viewer.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/diccionario_seguros.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/download_utils.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/download_catalog.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/downloads_panel.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/portada.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/calidad_datos.js?v=fl-20261024-bancos-parquet-separados" defer></script>
-  <script src="js/como_usar.js?v=fl-20261024-bancos-parquet-separados" defer></script>
+  <script src="js/data_bundles.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/alcance.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/chart_renderer.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/erd_graph.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/sql_guard.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/duckdb_client.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/chat_terminal.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/sidebar.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/ux_shell.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/creditos.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/theme_switcher.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/estado_claves.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/data_dictionary.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/data_viewer.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/download_utils.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/download_catalog.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/downloads_panel.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/portada.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/calidad_datos.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
+  <script src="js/como_usar.js?v=fl-20261024-1619-portada-premium-inicio-simple" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {

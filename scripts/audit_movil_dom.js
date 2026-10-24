@@ -177,6 +177,7 @@ async function correr() {
   const cerrarAviso = document.getElementById("aviso-movil-cerrar");
   check("el aviso de computador aparece en un teléfono", aviso && aviso.hidden === false);
   if (aviso && cerrarAviso) {
+    cerrarAviso.focus(); // La activación accesible debe devolver el foco al contenido.
     cerrarAviso.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
     await esperar(20);
     check("el aviso se cierra con su botón", aviso.hidden === true);
