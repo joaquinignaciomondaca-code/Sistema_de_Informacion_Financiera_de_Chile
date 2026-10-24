@@ -15,7 +15,7 @@ auditoría empiece por lo que ya se sabe que está roto.
 | 1 | El RUT no está homologado **entre** industrias: conviven 3 formatos. Un `JOIN` entre sectores devuelve **0 filas en silencio** | 31 columnas inventariadas | [`rut_formatos_2026-09-29.md`](rut_formatos_2026-09-29.md) |
 | 2 | En `corredoras_bolsa`, `maestro.rut = balance.rut` da **0**; por `rut_dv` da 24. Falla **dentro** de una industria | verificado | ídem |
 | 3 | `agf_lista_entidades.fondos_inversion_administrados` = **0 en los 72 registros** | la consulta sugerida «Ranking de AGF…» devuelve tabla vacía | extractor de AGF |
-| 4 | `fi_bienes_raices` está **vacía**: su manifiesto apunta a `_vacio.parquet` (2.589 B, 0 filas) | la consulta sugerida «Bienes raíces por comuna» devuelve vacío | `outputs/fi/bienes_raices/` |
+| 4 | `fi_bienes_raices` está **vacía**: su manifiesto apunta a `vacio.parquet` (2.589 B, 0 filas) | la consulta sugerida «Bienes raíces por comuna» devuelve vacío | `outputs/fi/bienes_raices/` |
 | 5 | El catálogo de descargas **no cuenta** `bancos_balance` ni `bancos_resultados` (`filasReales: false`), y publica 8.942.793 filas cuando el total real es **10.870.757** | 1.927.964 filas sin contar | `scripts/build_download_catalog.py` |
 | 6 | `data_manifest.json` declara **49** tablas; el producto registra **52** | desalineado | `data_manifest.json` |
 | 7 | 10 workflows apuntan a la rama muerta `arena/01a0e952-monitor-financiero-chile` | | `.github/workflows/` |

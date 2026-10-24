@@ -110,5 +110,5 @@ La suite FI ejecutada en esta revisión terminó con **120 pruebas aprobadas** (
 `fi/tests/test_actualizar_carteras.py`, que incluyen las regresiones de decodificación, centinelas,
 grafías de contraparte y Parquet publicado) y `scripts/build_download_catalog.py --check` quedó al
 día tras regenerar el catálogo. La salida vacía de
-`bienes_raices/_vacio.parquet` se conserva como tabla sin filas publicadas; por sí sola no demuestra
+`bienes_raices/vacio.parquet` se conserva como tabla sin filas publicadas; por sí sola no demuestra
 exposición inmobiliaria igual a cero.

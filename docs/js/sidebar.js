@@ -58,14 +58,14 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "seguros",
             chips: [
-              { label: "Renta fija por tipo de instrumento, último mes (M$)", query: "SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija) GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 15;" },
-              { label: "Instrumentos de renta fija con más inversión, último mes (M$)", query: "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija) GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;" },
-              { label: "Acciones con mayor inversión, último mes (M$)", query: "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(unidades) AS unidades, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = (SELECT max(periodo) FROM seguros_acciones) GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;" },
+              { label: "Renta fija por tipo de instrumento, último mes (M$)", query: "SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = '2026-09' GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 15;" },
+              { label: "Instrumentos de renta fija con más inversión, último mes (M$)", query: "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = '2026-09' GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;" },
+              { label: "Acciones con mayor inversión, último mes (M$)", query: "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(unidades) AS unidades, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = '2026-09' GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;" },
               { label: "Evolución de la inversión en acciones por sector (M$)", query: "SELECT periodo, sector, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones GROUP BY periodo, sector ORDER BY periodo DESC, sector LIMIT 24;" },
-              { label: "Fondos mutuos por administradora, último mes (M$)", query: "SELECT rut_administradora, count(*) AS inversiones, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_fondos_mutuos WHERE periodo = (SELECT max(periodo) FROM seguros_fondos_mutuos) GROUP BY rut_administradora ORDER BY valor_final_m_clp DESC LIMIT 10;" },
-              { label: "Bienes raíces por ciudad, último mes (M$)", query: "SELECT ciudad, count(*) AS inmuebles, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_bienes_raices WHERE periodo = (SELECT max(periodo) FROM seguros_bienes_raices) GROUP BY ciudad ORDER BY valor_final_m_clp DESC LIMIT 10;" },
-              { label: "Otras inversiones por tipo de instrumento, último mes (M$)", query: "SELECT tipo_instrumento, count(*) AS inversiones, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_otras_inversiones WHERE periodo = (SELECT max(periodo) FROM seguros_otras_inversiones) GROUP BY tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 15;" },
-              { label: "Inversiones en el extranjero por país, último mes (M$)", query: "SELECT pais, tipo_registro, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_extranjeros WHERE periodo = (SELECT max(periodo) FROM seguros_extranjeros) GROUP BY pais, tipo_registro ORDER BY valor_final_m_clp DESC LIMIT 10;" }
+              { label: "Fondos mutuos por administradora, último mes (M$)", query: "SELECT rut_administradora, count(*) AS inversiones, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_fondos_mutuos WHERE periodo = '2026-09' GROUP BY rut_administradora ORDER BY valor_final_m_clp DESC LIMIT 10;" },
+              { label: "Bienes raíces por ciudad, último mes (M$)", query: "SELECT ciudad, count(*) AS inmuebles, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_bienes_raices WHERE periodo = '2026-09' GROUP BY ciudad ORDER BY valor_final_m_clp DESC LIMIT 10;" },
+              { label: "Otras inversiones por tipo de instrumento, último mes (M$)", query: "SELECT tipo_instrumento, count(*) AS inversiones, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_otras_inversiones WHERE periodo = '2026-09' GROUP BY tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 15;" },
+              { label: "Inversiones en el extranjero por país, último mes (M$)", query: "SELECT pais, tipo_registro, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_extranjeros WHERE periodo = '2026-09' GROUP BY pais, tipo_registro ORDER BY valor_final_m_clp DESC LIMIT 10;" }
             ],
             tables: [
               { id: "seguros_renta_fija", name: "B.1 INSTRUMENTOS DE RENTA FIJA", rows: "Mensual · desde 2024-12", file: "", files: ["outputs/seguros/renta_fija/manifest.json"] },
@@ -93,9 +93,9 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "seguros",
             chips: [
-              { label: "Derivados por tipo y sector, último mes", query: "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;" },
-              { label: "Principales contrapartes de derivados, último mes", query: "SELECT COALESCE(NULLIF(TRIM(nombre), ''), 'Sin nombre informado') AS contraparte, count(*) AS contratos, count(DISTINCT rut_aseguradora) AS aseguradoras FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY 1 ORDER BY contratos DESC LIMIT 10;" },
-              { label: "Pactos: contrapartes y tasa promedio, último mes", query: "SELECT COALESCE(NULLIF(TRIM(nombre), ''), 'Sin nombre informado') AS contraparte, count(*) AS pactos, AVG(tasa_pacto) AS tasa_pacto_promedio FROM seguros_pactos WHERE periodo = (SELECT max(periodo) FROM seguros_pactos) GROUP BY 1 ORDER BY pactos DESC LIMIT 10;" }
+              { label: "Derivados por tipo y sector, último mes", query: "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = '2026-09' GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;" },
+              { label: "Principales contrapartes de derivados, último mes", query: "SELECT COALESCE(NULLIF(TRIM(nombre), ''), 'Sin nombre informado') AS contraparte, count(*) AS contratos, count(DISTINCT rut_aseguradora) AS aseguradoras FROM seguros_derivados WHERE periodo = '2026-09' GROUP BY 1 ORDER BY contratos DESC LIMIT 10;" },
+              { label: "Pactos: contrapartes y tasa promedio, último mes", query: "SELECT COALESCE(NULLIF(TRIM(nombre), ''), 'Sin nombre informado') AS contraparte, count(*) AS pactos, AVG(tasa_pacto) AS tasa_pacto_promedio FROM seguros_pactos WHERE periodo = '2026-09' GROUP BY 1 ORDER BY pactos DESC LIMIT 10;" }
             ],
             tables: [
               { id: "seguros_derivados", name: "B.7 INVERSIONES EN INSTRUMENTOS DERIVADOS Y PACTOS", rows: "Mensual · desde 2016-11", file: "", files: ["outputs/seguros/derivados/manifest.json"] },
@@ -170,10 +170,10 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "ffmm",
             chips: [
-              { label: "Cartera nacional por tipo de instrumento, último mes", query: "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional) GROUP BY tipo_instrumento ORDER BY valorizacion_miles_mf DESC LIMIT 15;" },
-              { label: "Mayores emisores nacionales, último mes", query: "SELECT rut_emisor, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional) GROUP BY rut_emisor ORDER BY valorizacion_miles_mf DESC LIMIT 10;" },
-              { label: "Instrumentos con compromiso o en garantía, último mes", query: "SELECT situacion_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional) GROUP BY situacion_instrumento ORDER BY situacion_instrumento;" },
-              { label: "Cartera extranjera por país emisor, último mes", query: "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;" },
+              { label: "Cartera nacional por tipo de instrumento, último mes", query: "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = '2026-09' GROUP BY tipo_instrumento ORDER BY valorizacion_miles_mf DESC LIMIT 15;" },
+              { label: "Mayores emisores nacionales, último mes", query: "SELECT rut_emisor, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = '2026-09' GROUP BY rut_emisor ORDER BY valorizacion_miles_mf DESC LIMIT 10;" },
+              { label: "Instrumentos con compromiso o en garantía, último mes", query: "SELECT situacion_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_nacional WHERE periodo = '2026-09' GROUP BY situacion_instrumento ORDER BY situacion_instrumento;" },
+              { label: "Cartera extranjera por país emisor, último mes", query: "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = '2026-09' GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;" },
               { label: "Fondos con inversión extranjera por mes", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, count(*) AS posiciones FROM ffmm_cartera_extranjera GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" }
             ],
             tables: [
@@ -190,9 +190,9 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "ffmm",
             chips: [
-              { label: "Forwards y futuros por activo objeto, último mes", query: "SELECT activo_objeto, posicion, count(*) AS contratos, SUM(monto_comprometido_miles_mf) AS monto_comprometido_miles_mf FROM ffmm_futuros WHERE periodo = (SELECT max(periodo) FROM ffmm_futuros) GROUP BY activo_objeto, posicion ORDER BY contratos DESC, activo_objeto, posicion LIMIT 15;" },
+              { label: "Forwards y futuros por activo objeto, último mes", query: "SELECT activo_objeto, posicion, count(*) AS contratos, SUM(monto_comprometido_miles_mf) AS monto_comprometido_miles_mf FROM ffmm_futuros WHERE periodo = '2026-09' GROUP BY activo_objeto, posicion ORDER BY contratos DESC, activo_objeto, posicion LIMIT 15;" },
               { label: "Contratos vigentes por mes", query: "SELECT periodo, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM ffmm_futuros GROUP BY periodo ORDER BY periodo DESC LIMIT 24;" },
-              { label: "Opciones del último mes", query: "SELECT run_fondo, nombre_fondo, activo_objeto, nemotecnico, tipo_opcion, fecha_expiracion, numero_contratos, precio_ejercicio, inversion_primas_miles_mf FROM ffmm_opciones WHERE periodo = (SELECT max(periodo) FROM ffmm_opciones) ORDER BY run_fondo;" }
+              { label: "Opciones del último mes", query: "SELECT run_fondo, nombre_fondo, activo_objeto, nemotecnico, tipo_opcion, fecha_expiracion, numero_contratos, precio_ejercicio, inversion_primas_miles_mf FROM ffmm_opciones WHERE periodo = '2026-09' ORDER BY run_fondo;" }
             ],
             tables: [
               { id: "ffmm_futuros", name: "ffmm.futuros_forwards", rows: "Mensual", file: "", files: ["outputs/ffmm/futuros_forwards/manifest.json"] },
@@ -208,10 +208,10 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "ffmm",
             chips: [
-              { label: "Mayores fondos en pesos por activo neto, último cierre (MM$)", query: "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS activo_neto_mm, round(valor_anterior_miles_mf / 1e3, 1) AS activo_neto_anterior_mm FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY valor_miles_mf DESC LIMIT 20;" },
+              { label: "Mayores fondos en pesos por activo neto, último cierre (MM$)", query: "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS activo_neto_mm, round(valor_anterior_miles_mf / 1e3, 1) AS activo_neto_anterior_mm FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = '2025-12' ORDER BY valor_miles_mf DESC LIMIT 20;" },
               { label: "Activo neto de la industria en pesos, por cierre (MM$)", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, round(sum(valor_miles_mf) / 1e3, 0) AS activo_neto_mm FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' GROUP BY periodo ORDER BY periodo;" },
               { label: "Fondos que informan en dólares, por cierre (miles de US$)", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, round(sum(valor_miles_mf), 0) AS activo_neto_miles_usd FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'USD' GROUP BY periodo ORDER BY periodo;" },
-              { label: "Balance completo del mayor fondo en pesos, último cierre", query: "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf, valor_anterior_miles_mf FROM ffmm_balance WHERE run_fondo = (SELECT run_fondo FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY valor_miles_mf DESC LIMIT 1) AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY orden;" }
+              { label: "Balance completo del mayor fondo en pesos, último cierre", query: "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf, valor_anterior_miles_mf FROM ffmm_balance WHERE run_fondo = (SELECT run_fondo FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = '2025-12' ORDER BY valor_miles_mf DESC LIMIT 1) AND periodo = '2025-12' ORDER BY orden;" }
             ],
             tables: [
               { id: "ffmm_balance", name: "ffmm.balance", rows: "Anual", file: "", files: ["outputs/ffmm/ffmm_balance/manifest.json"] }
@@ -226,10 +226,10 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "ffmm",
             chips: [
-              { label: "Mayores utilidades del último ejercicio, fondos en pesos (MM$)", query: "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS utilidad_mm FROM ffmm_resultados WHERE codigo_cuenta = 'UtilidadPerdidaDeLaOperacionDespuesDeImpuesto' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;" },
+              { label: "Mayores utilidades del último ejercicio, fondos en pesos (MM$)", query: "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS utilidad_mm FROM ffmm_resultados WHERE codigo_cuenta = 'UtilidadPerdidaDeLaOperacionDespuesDeImpuesto' AND moneda = 'CLP' AND periodo = '2025-12' ORDER BY valor_miles_mf DESC LIMIT 20;" },
               { label: "Comisión de administración cobrada, por ejercicio (MM$, fondos en pesos)", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, round(-sum(valor_miles_mf) / 1e3, 0) AS comisiones_mm FROM ffmm_resultados WHERE codigo_cuenta = 'ComisionDeAdministracion' AND moneda = 'CLP' GROUP BY periodo ORDER BY periodo;" },
               { label: "Fondos con pérdida en cada ejercicio", query: "SELECT periodo, count(*) AS fondos, count(*) FILTER (WHERE valor_miles_mf < 0) AS con_perdida, round(100.0 * count(*) FILTER (WHERE valor_miles_mf < 0) / count(*), 1) AS pct_con_perdida FROM ffmm_resultados WHERE codigo_cuenta = 'UtilidadPerdidaDeLaOperacionDespuesDeImpuesto' GROUP BY periodo ORDER BY periodo;" },
-              { label: "Estado de resultados del mayor fondo en pesos, último ejercicio", query: "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf, valor_anterior_miles_mf FROM ffmm_resultados WHERE run_fondo = (SELECT run_fondo FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY valor_miles_mf DESC LIMIT 1) AND periodo = (SELECT max(periodo) FROM ffmm_resultados) ORDER BY orden;" }
+              { label: "Estado de resultados del mayor fondo en pesos, último ejercicio", query: "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf, valor_anterior_miles_mf FROM ffmm_resultados WHERE run_fondo = (SELECT run_fondo FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = '2025-12' ORDER BY valor_miles_mf DESC LIMIT 1) AND periodo = '2025-12' ORDER BY orden;" }
             ],
             tables: [
               { id: "ffmm_resultados", name: "ffmm.resultados", rows: "Anual", file: "", files: ["outputs/ffmm/ffmm_resultados/manifest.json"] }
@@ -269,9 +269,9 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "fi",
             chips: [
-              { label: "Cartera nacional por tipo de instrumento, último trimestre", query: "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM fi_cartera_nacional) GROUP BY tipo_instrumento ORDER BY posiciones DESC;" },
-              { label: "Mayores emisores nacionales, último trimestre", query: "SELECT rut_emisor, count(DISTINCT run_fondo) AS fondos, count(*) AS posiciones FROM fi_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM fi_cartera_nacional) GROUP BY rut_emisor ORDER BY fondos DESC LIMIT 20;" },
-              { label: "Cartera extranjera por país emisor, último trimestre", query: "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM fi_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM fi_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC;" },
+              { label: "Cartera nacional por tipo de instrumento, último trimestre", query: "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional WHERE periodo = '2026-06' GROUP BY tipo_instrumento ORDER BY posiciones DESC;" },
+              { label: "Mayores emisores nacionales, último trimestre", query: "SELECT rut_emisor, count(DISTINCT run_fondo) AS fondos, count(*) AS posiciones FROM fi_cartera_nacional WHERE periodo = '2026-06' GROUP BY rut_emisor ORDER BY fondos DESC LIMIT 20;" },
+              { label: "Cartera extranjera por país emisor, último trimestre", query: "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM fi_cartera_extranjera WHERE periodo = '2026-06' GROUP BY pais_emisor ORDER BY posiciones DESC;" },
               { label: "Filiales y coligadas (método de la participación)", query: "SELECT periodo, count(DISTINCT run_fondo) AS fondos, count(*) AS inversiones FROM fi_metodo_participacion GROUP BY periodo ORDER BY periodo DESC LIMIT 12;" }
             ],
             tables: [
@@ -290,10 +290,10 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "fi",
             chips: [
-              { label: "Forwards y futuros por activo objeto, último trimestre", query: "SELECT activo_objeto, posicion, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM fi_futuros WHERE periodo = (SELECT max(periodo) FROM fi_futuros) GROUP BY activo_objeto, posicion ORDER BY contratos DESC LIMIT 20;" },
-              { label: "Contrapartes de derivados, último trimestre", query: "SELECT contraparte, count(*) AS contratos FROM fi_futuros WHERE periodo = (SELECT max(periodo) FROM fi_futuros) GROUP BY contraparte ORDER BY contratos DESC, contraparte LIMIT 15;" },
+              { label: "Forwards y futuros por activo objeto, último trimestre", query: "SELECT activo_objeto, posicion, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM fi_futuros WHERE periodo = '2026-06' GROUP BY activo_objeto, posicion ORDER BY contratos DESC LIMIT 20;" },
+              { label: "Contrapartes de derivados, último trimestre", query: "SELECT contraparte, count(*) AS contratos FROM fi_futuros WHERE periodo = '2026-06' GROUP BY contraparte ORDER BY contratos DESC, contraparte LIMIT 15;" },
               { label: "Opciones por trimestre", query: "SELECT periodo, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM fi_opciones GROUP BY periodo ORDER BY periodo DESC LIMIT 12;" },
-              { label: "Pactos por tipo de operación y contraparte, último trimestre", query: "SELECT tipo_operacion, contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_prom_pct FROM fi_pactos WHERE periodo = (SELECT max(periodo) FROM fi_pactos) GROUP BY tipo_operacion, contraparte ORDER BY pactos DESC LIMIT 20;" }
+              { label: "Pactos por tipo de operación y contraparte, último trimestre", query: "SELECT tipo_operacion, contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_prom_pct FROM fi_pactos WHERE periodo = '2026-06' GROUP BY tipo_operacion, contraparte ORDER BY pactos DESC LIMIT 20;" }
             ],
             tables: [
               { id: "fi_futuros", name: "fi.futuros_forwards", rows: "Trimestral", file: "", files: ["outputs/fi/futuros_forwards/manifest.json"] },
@@ -313,11 +313,11 @@ const EXPLORER_TREE = [
   chips: [
     {
       label: "Mayores patrimonios en pesos, último cierre (MM$)",
-      query: "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS patrimonio_mm FROM fi_balance WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'TotalPatrimonioNeto' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_balance) ORDER BY valor_miles_mf DESC LIMIT 20;"
+      query: "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS patrimonio_mm FROM fi_balance WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'TotalPatrimonioNeto' AND moneda = 'CLP' AND periodo = '2026-06' ORDER BY valor_miles_mf DESC LIMIT 20;"
     },
     {
       label: "Balance actual del mayor fondo en pesos, último cierre",
-      query: "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf FROM fi_balance WHERE contexto = 'PeriodoActual' AND periodo = (SELECT max(periodo) FROM fi_balance) AND run_fondo = (SELECT run_fondo FROM fi_balance WHERE contexto = 'PeriodoActual' AND moneda = 'CLP' AND codigo_cuenta = 'TotalPatrimonioNeto' AND periodo = (SELECT max(periodo) FROM fi_balance) ORDER BY valor_miles_mf DESC LIMIT 1) ORDER BY orden;"
+      query: "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf FROM fi_balance WHERE contexto = 'PeriodoActual' AND periodo = '2026-06' AND run_fondo = (SELECT run_fondo FROM fi_balance WHERE contexto = 'PeriodoActual' AND moneda = 'CLP' AND codigo_cuenta = 'TotalPatrimonioNeto' AND periodo = '2026-06' ORDER BY valor_miles_mf DESC LIMIT 1) ORDER BY orden;"
     },
     {
       label: "Cobertura de balances por cierre y contexto",
@@ -347,11 +347,11 @@ const EXPLORER_TREE = [
   chips: [
     {
       label: "Mayores resultados acumulados en pesos, último cierre (MM$)",
-      query: "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_mm FROM fi_resultados WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;"
+      query: "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_mm FROM fi_resultados WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = '2026-06' ORDER BY valor_miles_mf DESC LIMIT 20;"
     },
     {
       label: "Resultado SOLO del trimestre en pesos, según XML (MM$)",
-      query: "SELECT periodo, run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_trimestre_mm, cotejo_ficha FROM fi_resultados WHERE contexto = 'TrimestreActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;"
+      query: "SELECT periodo, run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_trimestre_mm, cotejo_ficha FROM fi_resultados WHERE contexto = 'TrimestreActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = '2026-06' ORDER BY valor_miles_mf DESC LIMIT 20;"
     },
     {
       label: "Comisiones acumuladas por cierre y moneda, sin mezclar contextos",
@@ -417,7 +417,7 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "agf",
             chips: [
-              { label: "Activos, pasivos y patrimonio por AGF, último trimestre (MM$)", query: "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM agf_balance WHERE periodo = (SELECT max(periodo) FROM agf_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;" },
+              { label: "Activos, pasivos y patrimonio por AGF, último trimestre (MM$)", query: "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM agf_balance WHERE periodo = '2026-06' AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;" },
               { label: "Evolución del sector: activos totales por trimestre (MM$, CLP)", query: "SELECT periodo, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS activos_mm_clp FROM agf_balance WHERE cuenta = 'Total de activos' AND moneda = 'CLP' AND repeticion = 1 GROUP BY periodo ORDER BY periodo;" },
               { label: "Balance completo de Banchile AGF, último trimestre", query: "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM agf_balance WHERE rut = '96767630' AND periodo = (SELECT max(periodo) FROM agf_balance WHERE rut = '96767630') ORDER BY tipo_balance, estado_financiero, orden;" }
             ],
@@ -528,7 +528,7 @@ const EXPLORER_TREE = [
             sector: "bancos",
             open: false,
             chips: [
-              { label: "Total de activos por banco (último periodo)", query: "SELECT codigo_institucion, razon_social, importe_clp FROM bancos_balance WHERE modelo_cmf = 'MB1' AND codigo_cuenta = '100000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_balance) ORDER BY importe_clp DESC;" },
+              { label: "Total de activos por banco (último periodo)", query: "SELECT codigo_institucion, razon_social, importe_clp FROM bancos_balance WHERE modelo_cmf = 'MB1' AND codigo_cuenta = '100000000' AND codigo_institucion <> '999' AND periodo = '2026-08' ORDER BY importe_clp DESC;" },
               { label: "Muestra de líneas de balance B1/B2", query: "SELECT periodo, codigo_institucion, razon_social, familia_archivo_fuente, codigo_cuenta, glosa_cuenta, tipo_linea, importe_clp, importes_fuente_raw, numero_fila_fuente FROM bancos_balance ORDER BY periodo DESC, codigo_institucion, familia_archivo_fuente, numero_fila_fuente LIMIT 100;" },
               { label: "Cobertura de balance por periodo y modelo", query: "SELECT periodo, familia_archivo_fuente, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_balance GROUP BY periodo, familia_archivo_fuente, modelo_cmf ORDER BY periodo DESC, familia_archivo_fuente;" }
             ],
@@ -546,7 +546,7 @@ const EXPLORER_TREE = [
             sector: "bancos",
             open: false,
             chips: [
-              { label: "Utilidad del ejercicio por banco (último periodo)", query: "SELECT codigo_institucion, razon_social, importe_clp FROM bancos_resultados WHERE codigo_cuenta = '590000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_resultados) ORDER BY importe_clp DESC;" },
+              { label: "Utilidad del ejercicio por banco (último periodo)", query: "SELECT codigo_institucion, razon_social, importe_clp FROM bancos_resultados WHERE codigo_cuenta = '590000000' AND codigo_institucion <> '999' AND periodo = '2026-08' ORDER BY importe_clp DESC;" },
               { label: "Muestra de líneas de resultados R1", query: "SELECT periodo, codigo_institucion, razon_social, codigo_cuenta, glosa_cuenta, tipo_linea, importe_clp, importes_fuente_raw, numero_fila_fuente FROM bancos_resultados ORDER BY periodo DESC, codigo_institucion, numero_fila_fuente LIMIT 100;" },
               { label: "Cobertura de resultados por periodo", query: "SELECT periodo, modelo_cmf, count(*) AS filas, count(DISTINCT codigo_institucion) AS instituciones FROM bancos_resultados GROUP BY periodo, modelo_cmf ORDER BY periodo DESC;" }
             ],
@@ -814,9 +814,9 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "corredoras_bolsa",
             chips: [
-              { label: "Activos, pasivos y patrimonio por intermediario, último trimestre (MM$)", query: "SELECT periodo, razon_social, tipo_intermediario, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '10.00.00') / 1e3, 1) AS activos_mm, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '21.00.00') / 1e3, 1) AS pasivos_mm, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '22.00.00') / 1e3, 1) AS patrimonio_mm FROM corredoras_bolsa_balance WHERE periodo = (SELECT max(periodo) FROM corredoras_bolsa_balance) GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;" },
+              { label: "Activos, pasivos y patrimonio por intermediario, último trimestre (MM$)", query: "SELECT periodo, razon_social, tipo_intermediario, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '10.00.00') / 1e3, 1) AS activos_mm, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '21.00.00') / 1e3, 1) AS pasivos_mm, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '22.00.00') / 1e3, 1) AS patrimonio_mm FROM corredoras_bolsa_balance WHERE periodo = '2026-06' GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;" },
               { label: "Evolución de los corredores de bolsa: activos totales por trimestre (MM$)", query: "SELECT periodo, count(DISTINCT rut) AS corredores, round(sum(valor_miles_clp) / 1e3, 1) AS activos_mm FROM corredoras_bolsa_balance WHERE codigo_fecu = '10.00.00' AND tipo_intermediario = 'corredor de bolsa' GROUP BY periodo ORDER BY periodo;" },
-              { label: "Balance completo de Banchile Corredores, último trimestre", query: "SELECT periodo, seccion, codigo_fecu, nivel, cuenta, valor_miles_clp FROM corredoras_bolsa_balance WHERE rut = '96571220' AND periodo = (SELECT max(periodo) FROM corredoras_bolsa_balance) ORDER BY codigo_fecu;" }
+              { label: "Balance completo de Banchile Corredores, último trimestre", query: "SELECT periodo, seccion, codigo_fecu, nivel, cuenta, valor_miles_clp FROM corredoras_bolsa_balance WHERE rut = '96571220' AND periodo = '2026-06' ORDER BY codigo_fecu;" }
             ],
             tables: [
               { id: "corredoras_bolsa_balance", name: "corredoras.balance", rows: "FECU IFRS", file: "", files: ["outputs/corredoras_bolsa/corredoras_bolsa_balance/manifest.json"] }
@@ -884,7 +884,7 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "securitizadoras",
             chips: [
-              { label: "Activos, pasivos y patrimonio por securitizadora, último trimestre (MM$)", query: "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM securitizadoras_balance WHERE periodo = (SELECT max(periodo) FROM securitizadoras_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;" },
+              { label: "Activos, pasivos y patrimonio por securitizadora, último trimestre (MM$)", query: "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM securitizadoras_balance WHERE periodo = '2026-06' AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;" },
               { label: "Evolución del sector: activos totales por trimestre (MM$, CLP)", query: "SELECT periodo, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS activos_mm_clp FROM securitizadoras_balance WHERE cuenta = 'Total de activos' AND moneda = 'CLP' AND repeticion = 1 GROUP BY periodo ORDER BY periodo;" },
               { label: "Balance completo de BCI Securitizadora, último trimestre", query: "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM securitizadoras_balance WHERE rut = '96948880' AND periodo = (SELECT max(periodo) FROM securitizadoras_balance WHERE rut = '96948880') ORDER BY tipo_balance, estado_financiero, orden;" }
             ],
@@ -1037,7 +1037,7 @@ const EXPLORER_TREE = [
             status: "active",
             sector: "cajas_compensacion",
             chips: [
-              { label: "Activos, pasivos y patrimonio por CCAF, último trimestre (MM$)", query: "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM ccaf_balance WHERE periodo = (SELECT max(periodo) FROM ccaf_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;" },
+              { label: "Activos, pasivos y patrimonio por CCAF, último trimestre (MM$)", query: "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM ccaf_balance WHERE periodo = '2026-06' AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;" },
               { label: "Evolución del sector: activos totales por trimestre (MM$, CLP)", query: "SELECT periodo, count(DISTINCT rut) AS entidades, round(sum(valor) / 1e6, 1) AS activos_mm_clp FROM ccaf_balance WHERE cuenta = 'Total de activos' AND moneda = 'CLP' AND repeticion = 1 GROUP BY periodo ORDER BY periodo;" },
               { label: "Balance completo de CCAF Los Andes, último trimestre", query: "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM ccaf_balance WHERE rut = '81826800' AND periodo = (SELECT max(periodo) FROM ccaf_balance WHERE rut = '81826800') ORDER BY tipo_balance, estado_financiero, orden;" }
             ],
