@@ -210,7 +210,58 @@ vm.runInContext(fuente.slice(0, corte) + "\nglobalThis.__DuckDBClient = DuckDBCl
   });
   check("enTandas nunca supera la concurrencia máxima", maximo <= 3, `máximo ${maximo}`);
 
-  // 5) Las consultas sobre una misma conexión deben serializarse aunque
+  // 5b) Una consulta con muchas tablas no dispara más de cuatro preparaciones
+  //     remotas simultáneas desde una pestaña.
+  let vistasActivas = 0, maximoVistas = 0, vistasPreparadas = 0;
+  const clienteLimitado = Object.create(DuckDBClient.prototype);
+  clienteLimitado.ensureSemanticView = async () => {
+    vistasActivas++;
+    maximoVistas = Math.max(maximoVistas, vistasActivas);
+    await new Promise((r) => setTimeout(r, 2));
+    vistasActivas--;
+    vistasPreparadas++;
+  };
+  const nombresConsultaAmplia = ["macro_uf", "macro_utm", "macro_cobre", "macro_imacec", "macro_inflacion_ipc"];
+  await clienteLimitado.ensureSemanticViewsForQuery(`SELECT * FROM ${nombresConsultaAmplia.join(", ")}`);
+  check("la preparación de vistas en una consulta amplia está limitada a cuatro",
+    maximoVistas <= 4 && vistasPreparadas === nombresConsultaAmplia.length,
+    `máximo ${maximoVistas}; preparadas ${vistasPreparadas}`);
+
+  // 5c) Dos vistas de la misma partición/manifiesto comparten un solo GET.
+  const clienteManifiestos = Object.create(DuckDBClient.prototype);
+  clienteManifiestos.manifestPromises = new Map();
+  const antesManifiestos = fetchCalls.manifiestos;
+  const manifestCompartido = "outputs/ffmm/cartera_extranjera/manifest.json";
+  await Promise.all([
+    clienteManifiestos.prepararVista({ name: "vista_a", manifest: manifestCompartido }),
+    clienteManifiestos.prepararVista({ name: "vista_b", sourceManifest: manifestCompartido, latestManifestFile: true })
+  ]);
+  check("vistas que comparten manifiesto deduplican la petición HTTP",
+    fetchCalls.manifiestos - antesManifiestos === 1,
+    `${fetchCalls.manifiestos - antesManifiestos} GET`);
+  await clienteManifiestos.prepararVista({ name: "vista_reciente", manifest: manifestCompartido });
+  check("un manifiesto se vuelve a consultar en una preparación posterior",
+    fetchCalls.manifiestos - antesManifiestos === 2,
+    `${fetchCalls.manifiestos - antesManifiestos} GET`);
+
+  // 5d) Registros concurrentes del mismo Parquet se consolidan en una operación.
+  let registrosDuplicados = 0;
+  const clienteArchivos = Object.create(DuckDBClient.prototype);
+  clienteArchivos.registeredFiles = new Set();
+  clienteArchivos.fileRegistrationPromises = new Map();
+  clienteArchivos.duckdb = protocolo;
+  clienteArchivos.db = { registerFileURL: async () => {
+    registrosDuplicados++;
+    await new Promise((r) => setTimeout(r, 2));
+  } };
+  await Promise.all([
+    clienteArchivos.registerFile("outputs/macro/macro_uf.parquet"),
+    clienteArchivos.registerFile("outputs/macro/macro_uf.parquet")
+  ]);
+  check("el mismo Parquet no se registra dos veces en paralelo", registrosDuplicados === 1,
+    `${registrosDuplicados} registros`);
+
+  // 5e) Las consultas sobre una misma conexión deben serializarse aunque
   //    distintos componentes las disparen al mismo tiempo. Esto reproduce la
   //    condición que en el navegador producía TProtocolException: Invalid data.
   let consultasActivas = 0, maximoConsultas = 0;
