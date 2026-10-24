@@ -356,23 +356,28 @@ setTimeout(async () => {
   check("el catálogo trae el alcance editorial", Boolean(alcance && A && A.disponible()));
   const cifra = (ruta) => (document.querySelector(`[data-alcance="${ruta}"]`) || {}).textContent;
   const nucleo = alcance.niveles.find((n) => n.id === "nucleo");
-  check("la portada muestra las cifras del núcleo desde el catálogo",
-    cifra("nucleo.sectores") === "3" && cifra("nucleo.conjuntos") === String(nucleo.conjuntos) &&
-    /millones$/.test(cifra("nucleo.filas")),
-    [cifra("nucleo.sectores"), cifra("nucleo.conjuntos"), cifra("nucleo.filas")].join(" · "));
+  check("la portada muestra sólo los conteos esenciales del núcleo desde el catálogo",
+    cifra("nucleo.sectores") === "3" && cifra("nucleo.conjuntos") === String(nucleo.conjuntos)
+    && !document.querySelector(".info-nucleo-cifras [data-alcance='nucleo.filas']"),
+    [cifra("nucleo.sectores"), cifra("nucleo.conjuntos")].join(" · "));
   check("la portada no promete una cobertura global (cada tabla tiene su periodo)",
     !/cobertura máxima/.test(document.getElementById("info-container").textContent)
     && !/data-alcance="nucleo\.periodo"/.test(document.getElementById("info-container").innerHTML));
   check("la portada tiene tres tarjetas grandes: seguros, fondos mutuos y fondos de inversión",
     Array.from(document.querySelectorAll(".info-core-card")).map((c) => c.dataset.sector).join(",") === "seguros,ffmm,fi");
+  check("el inicio destaca la propuesta y ofrece explorar o ir a descargas",
+    /abierto en datos/.test(document.getElementById("home-title").textContent)
+    && Boolean(document.querySelector('.info-hero-btn[href="#catalogo-principal"]'))
+    && Boolean(document.querySelector('.info-hero-btn[data-portada="descargas"]')));
   check("la portada ya no anuncia 15 industrias",
     !/15 industrias/.test(document.getElementById("info-container").textContent));
-  // El alcance se cuenta por lo publicado: si vuelve a enunciarse por lo que
-  // falta, la sección deja de describir el catálogo y pasa a disculparse.
-  const textoAlcance = document.getElementById("info-alcance").textContent;
+  // El detalle de alcance y metodología se conserva, pero deja de competir
+  // con la navegación principal: aparece bajo una divulgación cerrada.
+  const alcanceDetalle = document.getElementById("info-alcance");
+  const textoAlcance = alcanceDetalle.textContent;
   const lineasAlcance = document.querySelectorAll("#info-alcance > p:not(.info-scope-foot)");
-  check("el alcance enumera lo publicado y no nombra ausencias",
-    lineasAlcance.length === 3 &&
+  check("el alcance completo queda disponible en detalles plegados y sólo enumera lo publicado",
+    alcanceDetalle.closest("details").open === false && lineasAlcance.length === 3 &&
     !/no incluye|no se publica|no publicó|no publica/i.test(textoAlcance) &&
     /más de 19 millones/.test(document.querySelector("#info-alcance .info-scope-foot").textContent),
     textoAlcance.slice(0, 80));
@@ -639,6 +644,13 @@ setTimeout(async () => {
   check("la Guía ya no vive dentro de Información",
     !document.getElementById("info-container").querySelector("#guia-como-usar")
     && !document.getElementById("downloads-container").querySelector("#guia-como-usar"));
+  const lecturaGuia = document.querySelector(".guia-lectura-details");
+  check("la Guía conserva la lectura de frecuencia, unidades, presencia y trazabilidad en un detalle plegado",
+    Boolean(lecturaGuia) && lecturaGuia.open === false
+    && /frecuencia/i.test(lecturaGuia.textContent)
+    && /unidades/i.test(lecturaGuia.textContent)
+    && /reportando/i.test(lecturaGuia.textContent)
+    && /manifiesto/i.test(lecturaGuia.textContent));
   window.switchMainTab("info");
 
   check("la web advierte que la base puede tener errores y pide verificar",
@@ -657,44 +669,34 @@ setTimeout(async () => {
     document.querySelector('[data-node-id="sector_ffmm"]').classList.contains("open") &&
     document.getElementById("erd-canvas").style.display === "block" && window.erdInstance.filter === "ffmm");
   window.switchMainTab("info");
-  document.querySelector('.info-core-card[data-sector="seguros"] [data-portada="descargas"]')
+  document.querySelector('.info-hero-btn-secondary[data-portada="descargas"]')
     .dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
-  check("portada: «Descargar» abre Descargas filtrada por el sector",
+  check("portada: la acción principal abre Descargas sin filtrar el catálogo",
     document.getElementById("downloads-container").style.display === "flex" &&
-    document.getElementById("dl-sector").value === "seguros" &&
-    visiblesDl().length > 0 && visiblesDl().every((i) => i.dataset.bloque === "seguros"));
+    document.getElementById("dl-sector").value === "todos" && visiblesDl().length > 0);
   window.DownloadsPanel.filtrarSector("todos");
   window.switchMainTab("info");
   document.querySelector('[data-portada="archivo"]').dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
   check("portada: el enlace discreto abre el archivo del explorador",
     document.querySelector("#sidebar-tree .tree-archive").classList.contains("open"));
+  document.querySelector('[data-portada="alcance"]').dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  check("portada: el enlace de metodología abre los detalles plegados",
+    document.querySelector(".info-disclosure").open === true);
 
-  // Calidad del dato: la explicación queda a la vista y el registro técnico
-  // (cifras, gráfico y consulta) nace plegado. El gráfico se pinta al abrirlo:
-  // cerrado no tiene ancho y el lienzo saldría vacío.
+  // El resumen de duplicados ya no ocupa la portada: la explicación completa,
+  // la medición reproducible y el código permanecen en la Guía.
   window.switchMainTab("info");
-  const calidad = document.querySelector(".info-calidad");
-  const explicacion = calidad.querySelector(":scope > p");
-  // El titular lleva las cifras y ellas salen del catálogo: si alguien las
-  // escribe a mano, audit_cifras.js falla; y no puede afirmar una periodicidad
-  // («en algunos meses») que el catálogo no mide.
-  const titularCalidad = calidad.querySelector("h2");
-  check("calidad: el titular lleva sus cifras como datos medidos",
-    Boolean(titularCalidad.querySelector('[data-calidad="repetidas"]'))
-    && /230\.288/.test(titularCalidad.textContent)
-    && /22 de 90/.test(titularCalidad.textContent)
-    && !/algunos meses/.test(titularCalidad.textContent));
-  check("calidad: la explicación está en llano y no cita SQL",
-    /^Se publican/.test(explicacion.textContent.trim())
-    && !/WITH crudo|count\(\*\)/.test(explicacion.textContent));
-  check("calidad: el enlace al detalle va a la Guía y no a un ancla sin ruta",
-    Boolean(calidad.querySelector("h2")) &&
-    Boolean(calidad.querySelector(":scope > p.info-calidad-foot a[href='#guia-como-sumar']")));
-  // El registro técnico (cifras, consulta reproducible y gráfico) vive ahora
-  // en la sub-pestaña «Cómo sumar sin sobreestimar» de la Guía.
+  const infoPortada = document.getElementById("info-container");
+  check("portada: la advertencia detallada de filas repetidas no desplaza la navegación",
+    !infoPortada.querySelector(".info-calidad") && !/LO QUE LA FUENTE REPITE/.test(infoPortada.textContent));
   const sumar = document.getElementById("guia-como-sumar");
-  check("calidad: la Guía aloja el registro técnico con la consulta reproducible",
-    Boolean(sumar) && Boolean(sumar.querySelector("[data-calidad-sql]"))
+  check("calidad: la Guía conserva las cifras medidas y el ejemplo",
+    Boolean(sumar.querySelector('[data-calidad="repetidas"]'))
+    && /230\.288/.test(sumar.textContent)
+    && /22 de 90/.test(sumar.textContent)
+    && /ffmm_cartera_nacional/.test(sumar.textContent));
+  check("calidad: la Guía mantiene la consulta y la nota de criterio reproducible",
+    Boolean(sumar.querySelector("[data-calidad-sql]"))
     && /claves_duplicados/.test(sumar.querySelector('a[href*="claves_duplicados"]').getAttribute("href")));
   check("calidad: el gráfico de la Guía arranca oculto y sin pintar",
     document.getElementById("calidad-chart").hidden === true
