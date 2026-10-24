@@ -139,13 +139,15 @@ def main() -> int:
 
     con = duckdb.connect()
     vistas = vistas_semanticas()
+    auxiliares = V.vistas_sql_auxiliares()
     alias = alias_heredados()
-    sin_datos = registrar(con, vistas, alias)
+    sin_datos = registrar(con, vistas + auxiliares, alias)
+    sin_datos_canonicas = [v["name"] for v in vistas if v["name"] in sin_datos]
 
     print(f"Vistas declaradas : {len(vistas)}")
-    print(f"Vistas registradas: {len(vistas) - len(sin_datos)}")
-    if sin_datos:
-        print(f"Vistas sin fichero: {len(sin_datos)} -> {', '.join(sorted(sin_datos))}")
+    print(f"Vistas registradas: {len(vistas) - len(sin_datos_canonicas)}")
+    if sin_datos_canonicas:
+        print(f"Vistas sin fichero: {len(sin_datos_canonicas)} -> {', '.join(sorted(sin_datos_canonicas))}")
 
     filas_por_vista = {}
     for v in vistas:

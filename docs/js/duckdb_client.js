@@ -185,6 +185,20 @@ const SEMANTIC_VIEWS = [
   { name: "fintech_rpsf_lista_entidades", file: "outputs/fintech/fintech_rpsf_maestro.parquet" },
 ];
 
+// Fuentes auxiliares para chips concretos del terminal. No son objetos del
+// catálogo ni sustituyen vistas semánticas completas; cada una declara
+// explícitamente el subconjunto de datos que puede responder.
+const QUICK_QUERY_VIEWS = [
+  // El chip «Renta fija de seguros (último período)» solo consulta el último
+  // mes. Toma directamente esa partición del manifiesto para no abrir los 22
+  // Parquet históricos de seguros_renta_fija; la vista canónica sigue completa.
+  {
+    name: "seguros_renta_fija_ultimo_periodo",
+    sourceManifest: "outputs/seguros/renta_fija/manifest.json",
+    latestManifestFile: true
+  },
+];
+
 // Tiempo máximo por intento de arranque. Sin límite, un worker o un .wasm que no
 // responde deja el motor "cargando" para siempre sin ningún mensaje (ver
 // docs/notas/diagnostico_motor_sql_2026-10-20.md).
@@ -564,15 +578,31 @@ class DuckDBClient {
       // HTTP en frío. El manifiesto original sigue siendo la fuente del catálogo
       // y de las descargas; queryFile no reemplaza ni altera esas particiones.
       files = [view.queryFile];
-    } else if (view.manifest) {
+    } else if (view.manifest || view.sourceManifest) {
       // no-store: el manifiesto es la lista de verdad de lo publicado; una
       // copia en caché haría que la vista no viera particiones nuevas.
-      const response = await fetch(this.absoluteUrl(view.manifest), { cache: "no-store" });
-      if (!response.ok) throw new Error(`Manifiesto HTTP ${response.status}: ${view.manifest}`);
+      const manifestPath = view.manifest || view.sourceManifest;
+      const response = await fetch(this.absoluteUrl(manifestPath), { cache: "no-store" });
+      if (!response.ok) throw new Error(`Manifiesto HTTP ${response.status}: ${manifestPath}`);
       const manifest = await response.json();
-      files = manifest.files;
-      if (!Array.isArray(files) || files.length === 0) {
-        throw new Error(`No hay particiones publicadas para ${view.name}`);
+      if (view.latestManifestFile) {
+        // Las vistas auxiliares de un chip pueden limitarse a la última
+        // partición publicada sin cambiar el objeto semántico completo.
+        const monthlyFiles = (Array.isArray(manifest.files) ? manifest.files : [])
+          .map((file) => {
+            const match = typeof file === "string" && file.match(/(?:^|\/)(\d{4}-\d{2})(?=\.parquet$)/);
+            return match ? { file, period: match[1] } : null;
+          })
+          .filter(Boolean)
+          .sort((a, b) => a.period.localeCompare(b.period));
+        const latest = monthlyFiles[monthlyFiles.length - 1];
+        if (!latest) throw new Error(`No hay particiones mensuales publicadas para ${view.name}`);
+        files = [latest.file];
+      } else {
+        files = manifest.files;
+        if (!Array.isArray(files) || files.length === 0) {
+          throw new Error(`No hay particiones publicadas para ${view.name}`);
+        }
       }
     } else {
       files = Array.isArray(view.file) ? view.file : [view.file];
@@ -637,12 +667,13 @@ class DuckDBClient {
   // alias históricos apuntan a su vista canónica.
   async ensureSemanticViewsForQuery(sql) {
     const texto = String(sql || "");
-    const porNombre = new Map(SEMANTIC_VIEWS.map((view) => [view.name, view]));
+    const fuentes = [...SEMANTIC_VIEWS, ...QUICK_QUERY_VIEWS];
+    const porNombre = new Map(fuentes.map((view) => [view.name, view]));
     const requeridas = new Set();
     // Los nombres proceden del catálogo estático y sólo contienen [a-z0-9_].
     const coincide = (nombre) => new RegExp(`(^|[^a-zA-Z0-9_])${nombre}([^a-zA-Z0-9_]|$)`, "i").test(texto);
 
-    for (const view of SEMANTIC_VIEWS) {
+    for (const view of fuentes) {
       if (coincide(view.name)) requeridas.add(view.name);
     }
     for (const [canonica, aliasList] of Object.entries(LEGACY_VIEW_ALIASES)) {
@@ -654,7 +685,7 @@ class DuckDBClient {
   }
 
   async ensureSemanticView(name) {
-    const view = SEMANTIC_VIEWS.find((item) => item.name === name);
+    const view = [...SEMANTIC_VIEWS, ...QUICK_QUERY_VIEWS].find((item) => item.name === name);
     if (!view) return;
     if (!this.viewPromises) this.viewPromises = new Map();
     if (!this.createdViews) this.createdViews = new Set();
