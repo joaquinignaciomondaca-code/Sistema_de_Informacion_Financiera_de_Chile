@@ -3,9 +3,9 @@ afp_lista_entidades,afp.lista_administradoras,afp_maestro,alias,registro,publica
 agf_balance,agf.balance,agf_balance,directo,secundario,publicado,,,17,71423,563363,2010-06 a 2026-06,2026-10-22
 agf_lista_entidades,agf.maestro,agf_maestro,alias,secundario,publicado,,,1,72,17065,Oficial CMF 2026,2026-09-23
 agf_resultados,agf.resultados,agf_resultados,directo,secundario,publicado,,,17,58216,444264,2010-06 a 2026-06,2026-10-22
-bancos_balance,bancos.cmf_lineas_b1_b2_r1,bancos_cmf_lineas,origen_compartido,secundario,derivado,"vista sobre bancos_cmf_lineas con filtro familia_archivo_fuente IN ('B1', 'B2')",bancos_cmf_lineas,56,722931,16530765,2022-01 a 2026-08,2026-10-01
+bancos_balance,bancos.cmf_lineas_b1_b2_r1,bancos_cmf_lineas,origen_compartido,secundario,derivado,"vista sobre bancos_cmf_lineas con filtro familia_archivo_fuente IN ('B1', 'B2')",bancos_cmf_lineas,56,722931,7054110,2022-01 a 2026-08,2026-10-01
 bancos_lista_entidades,bancos.lista_instituciones,bancos_maestro,alias,secundario,publicado,,,1,41,6501,Códigos históricos y vigentes,2026-09-28
-bancos_resultados,bancos.cmf_lineas_b1_b2_r1,bancos_cmf_lineas,origen_compartido,secundario,derivado,vista sobre bancos_cmf_lineas con filtro familia_archivo_fuente = 'R1',bancos_cmf_lineas,56,1240061,16530765,2022-01 a 2026-08,2026-10-01
+bancos_resultados,bancos.cmf_lineas_b1_b2_r1,bancos_cmf_lineas,origen_compartido,secundario,derivado,vista sobre bancos_cmf_lineas con filtro familia_archivo_fuente = 'R1',bancos_cmf_lineas,56,1240061,8233188,2022-01 a 2026-08,2026-10-01
 ccaf_balance,ccaf.balance,ccaf_balance,directo,archivo,publicado,,,17,8043,215099,2010-06 a 2026-06,2026-10-22
 ccaf_lista_entidades,ccaf.maestro,ccaf_maestro,alias,archivo,publicado,,,1,6,17300,Lista vigente,2026-09-28
 ccaf_resultados,ccaf.resultados,ccaf_resultados,directo,archivo,publicado,,,17,5506,192163,2010-06 a 2026-06,2026-10-22

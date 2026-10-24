@@ -34,6 +34,7 @@ on:
       - 'examples/**'
       - 'scripts/normalizar_vocabulario.py'
       - 'scripts/build_download_catalog.py'
+      - 'scripts/build_bancos_vistas.py'
       - 'pipelines/**'
       - 'factoring_leasing/**'
       - 'bancos/**'
@@ -220,6 +221,9 @@ jobs:
           fi
           echo "::notice title=Diccionarios::$(tail -n 1 diccionario.log)"
           exit $n
+
+      - name: 'Banca: Parquet de descarga coinciden con filtros y manifiestos'
+        run: python scripts/build_bancos_vistas.py --check
 
       - name: Auditar las consultas sugeridas contra los Parquet
         run: |

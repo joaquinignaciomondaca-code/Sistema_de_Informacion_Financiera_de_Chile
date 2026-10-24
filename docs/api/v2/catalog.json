@@ -3,7 +3,7 @@
  "base": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile",
  "como_se_genera": "python3 scripts/build_contrato.py",
  "contrato": "sif-api/catalogo",
- "data_release": "2026-10-23.12612e963628",
+ "data_release": "2026-10-23.fe292923e707",
  "generado": "2026-10-24",
  "objetos": [
   {
@@ -140,10 +140,10 @@
     "bancos_cmf_balance"
    ],
    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-   "bytes": 16530765,
+   "bytes": 7054110,
    "corte": "2022-01 a 2026-08",
    "deriva_de": "bancos_cmf_lineas",
-   "descripcion": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Conserva los campos monetarios originales y agrega `importe_clp`, el importe en pesos con el que se suma y se lee cada línea.",
+   "descripcion": "Sólo filas B1 consolidado y B2 individual de la CMF; excluye R1 (estado de resultados). Las descargas Parquet de este objeto también contienen exclusivamente B1/B2. Líneas contables tal como se publican, con el total de cada cuenta en importe_clp.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/bancos_balance.json",
    "estado": "derivado",
    "filas": 722931,
@@ -163,7 +163,7 @@
    ],
    "sector": "bancos",
    "sql_view": "bancos_balance",
-   "titulo": "bancos.cmf_lineas_b1_b2_r1",
+   "titulo": "Líneas de balance bancario CMF (B1/B2)",
    "ultima_actualizacion": "2026-10-01",
    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
@@ -203,10 +203,10 @@
     "bancos_cmf_resultados"
    ],
    "atribucion": "Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente.",
-   "bytes": 16530765,
+   "bytes": 8233188,
    "corte": "2022-01 a 2026-08",
    "deriva_de": "bancos_cmf_lineas",
-   "descripcion": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Conserva los campos monetarios originales y agrega `importe_clp`, el importe en pesos con el que se suma y se lee cada línea.",
+   "descripcion": "Sólo filas R1 (estado de resultados) de la CMF; excluye B1 y B2. Las descargas Parquet de este objeto también contienen exclusivamente R1. Líneas tal como se publican; importe_clp trae el acumulado del ejercicio.",
    "esquema": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/schema/bancos_resultados.json",
    "estado": "derivado",
    "filas": 1240061,
@@ -226,7 +226,7 @@
    ],
    "sector": "bancos",
    "sql_view": "bancos_resultados",
-   "titulo": "bancos.cmf_lineas_b1_b2_r1",
+   "titulo": "Líneas de resultados bancarios CMF (R1)",
    "ultima_actualizacion": "2026-10-01",
    "url_terminos": "https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html"
   },
@@ -2658,7 +2658,7 @@
  },
  "totales": {
   "alias": 19,
-  "bytes": 505439447,
+  "bytes": 487665215,
   "con_datos": 86,
   "con_filas": 85,
   "consultas": 159,

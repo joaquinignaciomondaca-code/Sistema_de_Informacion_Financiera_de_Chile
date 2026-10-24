@@ -9264,8 +9264,8 @@
       "corte": "2022-01 a 2026-08 · 56 meses validados",
       "frescura": "Publicación automática después del gate mensual",
       "modo": "Automático con validación de cobertura y cotejo CMF",
-      "registros": "B1/B2 · importe_clp y desglose por moneda",
-      "descripcion": "Filas fuente de estados de situación financiera B1 (consolidado) y B2 (individual). La fila física del TXT permanece en numero_fila_fuente. Cada línea trae cuatro importes en pesos, uno por tipo de moneda (ver importes_fuente_raw) y `importe_clp` con el total de la cuenta ya sumado. B2 trae solo unas 8 cuentas por banco y mes (adeudado por bancos y colocaciones comerciales, de vivienda y de consumo): no es un balance individual completo. La institución 999 es el total del sistema financiero: no se suma con los bancos. B1 y B2 son perímetros distintos: no se suman entre sí, ni una cuenta padre con sus descendientes.",
+      "registros": "Sólo B1/B2 · Parquet filtrado · importe_clp y desglose por moneda",
+      "descripcion": "Sólo filas B1 (consolidado) y B2 (individual); excluye R1. Las particiones Parquet descargables de este objeto también contienen exclusivamente B1/B2. Filas fuente de estados de situación financiera B1 (consolidado) y B2 (individual). La fila física del TXT permanece en numero_fila_fuente. Cada línea trae cuatro importes en pesos, uno por tipo de moneda (ver importes_fuente_raw) y `importe_clp` con el total de la cuenta ya sumado. B2 trae solo unas 8 cuentas por banco y mes (adeudado por bancos y colocaciones comerciales, de vivienda y de consumo): no es un balance individual completo. La institución 999 es el total del sistema financiero: no se suma con los bancos. B1 y B2 son perímetros distintos: no se suman entre sí, ni una cuenta padre con sus descendientes.",
       "origen": "CMF — ZIP TXT mensual y XLSX de reporte mensual. Cada partición registra la URL y el SHA-256 de ambas fuentes en su manifiesto y en su informe de validación; no se repiten fila a fila.",
       "columnas": [
         {
@@ -9335,7 +9335,7 @@
           "name": "familia_archivo_fuente",
           "type": "VARCHAR",
           "role": "Atributo",
-          "significado": "B1, B2 o R1.",
+          "significado": "Sólo B1 o B2 en este objeto.",
           "contable": "No aplica"
         },
         {
@@ -9371,8 +9371,8 @@
       "corte": "2022-01 a 2026-08 · 56 meses validados",
       "frescura": "Publicación automática después del gate mensual",
       "modo": "Automático con validación de cobertura y cotejo CMF",
-      "registros": "R1 · importe_clp (acumulado del ejercicio)",
-      "descripcion": "Filas fuente del estado de resultados R1 consolidado. Conserva la fila física del TXT en numero_fila_fuente. El importe, en pesos, es el ACUMULADO DEL EJERCICIO (de enero al mes informado; vuelve a empezar en enero): para el resultado de un mes hay que restar el del mes anterior del mismo año. `importe_clp` trae ese importe como número, listo para sumar o graficar. La institución 999 es el total del sistema financiero: no se suma con los bancos.",
+      "registros": "Sólo R1 · Parquet filtrado · importe_clp (acumulado del ejercicio)",
+      "descripcion": "Sólo filas R1; excluye B1 y B2. Las particiones Parquet descargables de este objeto también contienen exclusivamente R1. Filas fuente del estado de resultados R1 consolidado. Conserva la fila física del TXT en numero_fila_fuente. El importe, en pesos, es el ACUMULADO DEL EJERCICIO (de enero al mes informado; vuelve a empezar en enero): para el resultado de un mes hay que restar el del mes anterior del mismo año. `importe_clp` trae ese importe como número, listo para sumar o graficar. La institución 999 es el total del sistema financiero: no se suma con los bancos.",
       "origen": "CMF — ZIP TXT mensual y XLSX de reporte mensual. Cada partición registra la URL y el SHA-256 de ambas fuentes en su manifiesto y en su informe de validación; no se repiten fila a fila.",
       "columnas": [
         {
@@ -9442,7 +9442,7 @@
           "name": "familia_archivo_fuente",
           "type": "VARCHAR",
           "role": "Atributo",
-          "significado": "B1, B2 o R1.",
+          "significado": "Sólo R1 en este objeto.",
           "contable": "No aplica"
         },
         {
