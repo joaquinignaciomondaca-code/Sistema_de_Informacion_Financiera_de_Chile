@@ -193,7 +193,7 @@ Aplicación estática de siete pestañas, sin framework y sin build:
 | **Descargas** | Todos los conjuntos publicados, con filas, período y peso, en Parquet, CSV y Excel; el núcleo primero y el archivo al final, plegado. |
 | **Normativa CMF** | Seguimiento de la normativa publicada por la CMF (ver §7.6). |
 
-El **explorador jerárquico** organiza 15 sectores → carpetas temáticas → 89 tablas visibles (90 objetos en el catálogo), con consultas sugeridas en cada carpeta, ordenadas por nivel: núcleo, instituciones y contexto arriba; el archivo congelado y el registro complementario al final, plegados. El nivel de cada sector es una bandera en `docs/vocabulario.json` (`alcance`): cambiarla y regenerar el catálogo revierte o ajusta el recorte sin tocar datos. El motor DuckDB-Wasm 1.28.0 va **embebido en el propio sitio** (`docs/vendor/duckdb/`), así que las consultas funcionan aunque la red del visitante bloquee los CDN públicos.
+El **explorador jerárquico** organiza 15 sectores → carpetas temáticas → 89 tablas visibles (90 objetos en el catálogo), con consultas sugeridas en cada carpeta, ordenadas por nivel: núcleo, instituciones y contexto arriba; el archivo congelado y el registro complementario al final, plegados. El nivel de cada sector es una bandera en `docs/vocabulario.json` (`alcance`): cambiarla y regenerar el catálogo revierte o ajusta el recorte sin tocar datos. El motor DuckDB-Wasm 1.28.0 va **embebido en el propio sitio** (`docs/vendor/duckdb/`), así que las consultas funcionan aunque la red del visitante bloquee los CDN públicos. La preparación de datos remotos por pestaña está limitada y el control preventivo de tamaño del sitio está en [`docs/notas/capacidad_trafico.md`](docs/notas/capacidad_trafico.md).
 
 ### Verlo funcionando
 
