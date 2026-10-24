@@ -105,8 +105,9 @@ def registrar(con, vistas: list[dict], alias: dict[str, list[str]]) -> list[str]
             sin_datos.append(v["name"])
             continue
         filtro = f" WHERE {v['where']}" if "where" in v else ""
+        scope = "TEMP " if v.get("latestManifestFile") else ""
         con.execute(
-            f'CREATE OR REPLACE VIEW "{v["name"]}" AS '
+            f'CREATE OR REPLACE {scope}VIEW "{v["name"]}" AS '
             f"SELECT * FROM read_parquet({ficheros!r}, union_by_name=true){filtro}"
         )
         for viejo in alias.get(v["name"], []):

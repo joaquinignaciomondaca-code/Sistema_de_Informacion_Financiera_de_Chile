@@ -22,14 +22,14 @@ el usuario descarga.
 | `reglas.json` | Las comprobaciones con su nivel (invariante / expectativa / informativo) y las excepciones declaradas con su motivo. Hoy: **0 excepciones**. |
 | `prueba_maquina_limpia.log` | Evidencia de que un consumidor **sin el repo** descubre el catálogo, lee el esquema y consulta por HTTP. |
 | `mcp.log` | Evidencia del servidor MCP: dos herramientas, 191 tokens de contexto y la pregunta del README respondida con dos llamadas. |
-| `test_contrato.log` | Evidencia del test de contrato: 908 rutas sin 404, esquema = `DESCRIBE` real, 105 vistas de catálogo + 1 auxiliar temporal, 159 consultas, 728 hashes y cobertura manifiesto ↔ catálogo. Incluye su autoprueba en negativo. |
+| `test_contrato.log` | Evidencia del test de contrato: 908 rutas sin 404, esquema = `DESCRIBE` real, 105 vistas de catálogo + 3 auxiliares temporales, 159 consultas, 728 hashes y cobertura manifiesto ↔ catálogo. Incluye su autoprueba en negativo. |
 | `v2/catalog.json` | El índice de los 90 objetos: estado, filas, bytes, clave, corte y a dónde ir por más detalle. |
 | `v2/schema/{id}.json` | Columnas, tipos, significado y clave de cada objeto. |
 | `v2/partitions/{id}.json` | Los archivos que componen el objeto, con período y SHA-256. |
 | `v2/queries.json` | Las 159 consultas de la web, con **id estable** y la expectativa declarada. |
 | `v2/resultados/index.json` | El resultado ya calculado de las 159 consultas: filas, columnas, tope, `sha256` y URL de cada uno. Para quien necesita el número y no los 500 MB. |
 | `v2/openapi.json` | **Sólo** las 11 rutas GET que existen. |
-| `v2/views.sql` | Las 105 vistas SQL de catálogo (86 objetos con datos + 19 alias) y una vista temporal auxiliar para el chip de renta fija reciente; esta auxiliar no es objeto catalogado ni descarga. |
+| `v2/views.sql` | Las 105 vistas SQL de catálogo (86 objetos con datos + 19 alias) y tres vistas temporales para consultas de último período; no son objetos catalogados ni descargas. |
 | `llms.txt` | La puerta de entrada para un agente: qué hay, cómo se consulta, qué no suponer. Sus cifras y rutas se auditan como el resto. |
 
 Se regeneran con:
@@ -249,7 +249,7 @@ artículo o en una prueba.
 
 ### `views.sql`
 
-Se ejecuta tal cual y crea las 105 vistas de catálogo más una vista temporal auxiliar (no catalogada):
+Se ejecuta tal cual y crea las 105 vistas de catálogo más tres vistas temporales auxiliares (no catalogadas):
 
 ```bash
 duckdb < v2/views.sql
@@ -330,7 +330,7 @@ contrato: que sirva a quien **no tiene el repo**. Levanta el sitio con
 `http.server`, y en un **venv aparte**, desde un directorio temporal y sin
 `PYTHONPATH`, un cliente descarga el descriptor, lee el esquema de un recurso,
 se baja su Parquet y lo consulta. 11 pasos, 0 fallos, ~0,6 s. Desde 1.7 también
-lee el catálogo del contrato, el esquema por su ruta y ejecuta las 105 vistas de catálogo más la auxiliar temporal de
+lee el catálogo del contrato, el esquema por su ruta y ejecuta las 105 vistas de catálogo más las tres auxiliares temporales de
 `views.sql` contra la copia local.
 
 No reproduce el CDN de GitHub Pages (el sandbox no sale a internet), pero sí el

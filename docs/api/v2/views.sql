@@ -211,4 +211,12 @@ CREATE OR REPLACE VIEW "sistemas_pago_maestro" AS SELECT * FROM "sistemas_pago_l
 CREATE OR REPLACE TEMP VIEW "seguros_renta_fija_ultimo_periodo" AS
 SELECT * FROM read_parquet(getvariable('sif_base') || '/outputs/seguros/renta_fija/2026-09.parquet');
 
+-- Auxiliar temporal para una consulta sugerida, sólo usa la partición más reciente y no es descargable.
+CREATE OR REPLACE TEMP VIEW "seguros_derivados_ultimo_periodo" AS
+SELECT * FROM read_parquet(getvariable('sif_base') || '/outputs/seguros/derivados/2026.parquet');
+
+-- Auxiliar temporal para una consulta sugerida, sólo usa la partición más reciente y no es descargable.
+CREATE OR REPLACE TEMP VIEW "ffmm_cartera_extranjera_ultimo_periodo" AS
+SELECT * FROM read_parquet(getvariable('sif_base') || '/outputs/ffmm/cartera_extranjera/2026.parquet');
+
 -- Objetos publicados sin filas (la fuente no entrega la tabla): seguros_bienes_raices_arriendo_morosidad, seguros_bienes_raices_arriendo_morosidad_relevantes, seguros_prestamos, seguros_prestamos_relevantes
