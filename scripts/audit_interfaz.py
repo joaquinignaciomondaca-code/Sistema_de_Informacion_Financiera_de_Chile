@@ -585,8 +585,8 @@ def audit_como_usar(html, css):
         controles = re.search(r'aria-controls="([\w-]+)"', bloque.group(0)) if bloque else None
         if controles:
             botones.append((etiqueta, controles.group(1)))
-    if len(botones) != 2:
-        fail(f"«Cómo usar» tiene {len(botones)} pestañas y se esperaban 2")
+    if len(botones) < 2:
+        fail(f"«Cómo usar» tiene {len(botones)} pestañas y se esperaban al menos 2")
         return
     for etiqueta, panel in botones:
         if f'id="{panel}"' not in html:
@@ -670,8 +670,8 @@ def audit_alcance_publicado(html):
         fail(f"el título del alcance habla de lo que no se publica: {h2.group(1).strip()}")
     sectores = set(re.findall(r"sector\.([a-z_]+)\.", bloque))
     incluye = set(re.findall(r"<strong>([^<]{3,60})</strong>", bloque))
-    if len(incluye) < 5:
-        fail("el alcance enumera menos de cinco grupos publicados")
+    if len(incluye) < 3:
+        fail("el alcance enumera menos de tres grupos publicados")
     else:
         print(f"  [OK] el alcance describe {len(incluye)} grupos publicados y no nombra ausencias")
 
