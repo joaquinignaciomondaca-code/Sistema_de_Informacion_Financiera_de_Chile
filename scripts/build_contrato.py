@@ -400,7 +400,7 @@ def construir_vistas(catalogo: list[dict], alias: dict[str, list[str]], base: st
         argumento = rutas[0] if len(rutas) == 1 else "[" + ", ".join(rutas) + "]"
         solo = "" if len(rutas) == 1 else ", union_by_name=true"
         lineas.append("")
-        lineas.append(f"-- Auxiliar temporal para una consulta sugerida; sólo usa la partición más reciente y no es descargable.")
+        lineas.append("-- Auxiliar temporal para una consulta sugerida, sólo usa la partición más reciente y no es descargable.")
         lineas.append(f'CREATE OR REPLACE TEMP VIEW "{auxiliar["name"]}" AS')
         lineas.append(f"SELECT * FROM read_parquet({argumento}{solo});")
     if vacias:
