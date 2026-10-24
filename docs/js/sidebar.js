@@ -1824,25 +1824,18 @@ class SidebarController {
   }
 
   // Ruta legible de la ubicación actual, usada por la barra de contexto del panel.
+  // Muestra solo la industria (con su prefijo de nivel cuando aplica); el CSS
+  // del chip ya truncará con puntos suspensivos si no cabe en el recuadro.
   describeLocation(sector, tableName) {
     if (!sector || sector === "todos") return "Vista principal";
     const prefijo = this.prefijoNivel(sector);
     for (const grupo of EXPLORER_TREE) {
       for (const sec of grupo.children) {
         if (sec.sector !== sector) continue;
-        let circularLabel = "";
-        for (const circ of sec.children || []) {
-          const tablas = circ.tables || [];
-          if (tablas.some((t) => t.name === tableName || t.id === this.selectedTableId)) {
-            circularLabel = circ.label;
-            break;
-          }
-        }
-        const tablaCorta = tableName && tableName.includes(".") ? tableName.split(".").pop() : tableName;
-        return prefijo + [sec.label, circularLabel, tablaCorta].filter(Boolean).join(" \u203a ");
+        return prefijo + sec.label;
       }
     }
-    return tableName || sector;
+    return sector;
   }
 
   // "Archivo › " o "Registro › " para las industrias fuera del foco; vacío en el resto.

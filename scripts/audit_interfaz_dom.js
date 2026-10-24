@@ -295,8 +295,8 @@ setTimeout(async () => {
 
   const chip = document.getElementById("erd-breadcrumb");
   chip.textContent = window.SidebarNav.describeLocation("seguros", "seguros.lista_entidades");
-  check("barra de contexto describe la ubicación",
-    chip.textContent.includes("Seguros") && chip.textContent.includes("lista_entidades"), chip.textContent);
+  check("barra de contexto describe la ubicación (solo la industria, sin ruta de tabla)",
+    chip.textContent.includes("Seguros") && !chip.textContent.includes(" › "), chip.textContent);
 
   const input = document.getElementById("chat-input");
   input.value = "SELECT * FROM segur";
@@ -571,7 +571,7 @@ setTimeout(async () => {
   const creditosGuia = document.getElementById("creditos-guia");
   const creditosPuntero = document.getElementById("creditos-puntero");
   check("autoría: el bloque de autoría se pinta en Información",
-    /Quién construye esto/.test(creditosAutor.textContent) && /Joaquín Mondaca/.test(creditosAutor.textContent));
+    /Sobre el autor/.test(creditosAutor.textContent) && /Joaquín Mondaca/.test(creditosAutor.textContent));
   check("autoría: declara cuándo partió el proyecto",
     /septiembre de 2026/.test(creditosAutor.textContent));
   check("autoría: no queda ningún bloque de citación en el sitio",
