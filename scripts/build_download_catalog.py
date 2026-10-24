@@ -364,6 +364,7 @@ def build() -> dict:
             "archivosN": len(archivos),
             "periodo": {"desde": periodos[0], "hasta": periodos[-1]} if periodos else None,
             "unificado": bool(view["where"]),
+            "descargaFiltrada": vid in {"bancos_balance", "bancos_resultados"},
             "filasFuente": int(manifest_total) if manifest_total is not None else None,
             "actualizado": updated,
         }

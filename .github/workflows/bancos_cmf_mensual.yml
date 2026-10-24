@@ -14,6 +14,7 @@ on:
       - bancos/scripts/publish_cmf_bank_period.py
       - bancos/scripts/extract_cmf_bank_lines.py
       - bancos/scripts/inspect_cmf_bank_sample.py
+      - scripts/build_bancos_vistas.py
       - bancos/tests/test_publish_cmf_bank_period.py
   workflow_dispatch:
     inputs:
@@ -122,9 +123,11 @@ jobs:
               continue
             fi
             python -m bancos.scripts.publish_cmf_bank_period --solo-data-manifest
+            # Genera particiones descargables que materializan cada vista (B1/B2 y R1).
+            python scripts/build_bancos_vistas.py
             # El catálogo de Descargas (JS estático) se regenera sobre la versión final de la rama.
             python scripts/build_download_catalog.py
-            git add data_manifest.json docs/js/download_catalog.js
+            git add data_manifest.json docs/js/download_catalog.js docs/outputs/bancos/balance_b1_b2 docs/outputs/bancos/resultados_r1
             git diff --cached --quiet || git commit -m "Banca: data_manifest y catálogo de descargas"
             if git push origin "HEAD:${GITHUB_REF_NAME}"; then exit 0; fi
             echo "Push rechazado (intento ${intento}/8): otra corrida publicó primero."

@@ -408,7 +408,7 @@
    "sector": "agf"
   },
   "bancos_balance": {
-   "archivo": "outputs/bancos/cmf_b1_b2_r1/2022-01/lineas.parquet",
+   "archivo": "outputs/bancos/balance_b1_b2/2022-01/lineas.parquet",
    "columnas": [
     {
      "criterio_contable": "No aplica",
@@ -505,7 +505,6 @@
    "corte": "2022-01 a 2026-08",
    "estado": "derivado",
    "filas": 722931,
-   "filas_dataset": 1962992,
    "filtro": "familia_archivo_fuente IN ('B1', 'B2')",
    "manifest_id": "bancos_cmf_lineas",
    "nivel": "secundario",
@@ -578,7 +577,7 @@
    "sector": "bancos"
   },
   "bancos_resultados": {
-   "archivo": "outputs/bancos/cmf_b1_b2_r1/2022-01/lineas.parquet",
+   "archivo": "outputs/bancos/resultados_r1/2022-01/lineas.parquet",
    "columnas": [
     {
      "criterio_contable": "No aplica",
@@ -675,7 +674,6 @@
    "corte": "2022-01 a 2026-08",
    "estado": "derivado",
    "filas": 1240061,
-   "filas_dataset": 1962992,
    "filtro": "familia_archivo_fuente = 'R1'",
    "manifest_id": "bancos_cmf_lineas",
    "nivel": "secundario",
@@ -11590,7 +11588,7 @@
   "columnas_sin_documentar": 3,
   "columnas_sin_valores": 1,
   "con_esquema": 86,
-  "filas_por_objeto": 21740509,
+  "filas_por_objeto": 19777517,
   "filas_unicas": 19777517,
   "objetos": 90,
   "sin_esquema": 4,

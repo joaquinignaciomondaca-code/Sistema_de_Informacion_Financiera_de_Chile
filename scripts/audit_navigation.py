@@ -127,7 +127,10 @@ assert.deepEqual(Array.from(bancos.children[0].children, c => c.id),
 assert.equal(pensiones.status, 'active');
 for (const c of bancos.children[0].children.slice(1)) {
   assert.equal(c.status, 'active', 'carpeta CMF bancaria no activa: ' + c.id);
-  assert.deepEqual(Array.from(c.tables[0].files), ['outputs/bancos/cmf_b1_b2_r1/manifest.json']);
+  const expectedManifest = c.id === 'cat_bancos_balance'
+    ? 'outputs/bancos/balance_b1_b2/manifest.json'
+    : 'outputs/bancos/resultados_r1/manifest.json';
+  assert.deepEqual(Array.from(c.tables[0].files), [expectedManifest]);
 }
 assert.deepEqual(Array.from(viewer.find(g => g.group.startsWith('Fondos de Pensiones')).tables, t => t.id), ['afp_lista_entidades']);
 assert.deepEqual(Array.from(viewer.find(g => g.group.startsWith('Banca (CMF)')).tables, t => t.id),
