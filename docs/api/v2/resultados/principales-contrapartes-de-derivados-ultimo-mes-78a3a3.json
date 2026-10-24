@@ -1,0 +1,70 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "principales-contrapartes-de-derivados-ultimo-mes-78a3a3",
+ "titulo": "Principales contrapartes de derivados, último mes",
+ "origen": "explorador",
+ "data_release": "2026-10-23.12612e963628",
+ "generado": "2026-10-24",
+ "max_filas": 500,
+ "columnas": [
+  "contraparte",
+  "contratos",
+  "aseguradoras"
+ ],
+ "filas": 10,
+ "truncado": false,
+ "datos": [
+  [
+   "BANCO BBVA ESPAÑA",
+   207,
+   1
+  ],
+  [
+   "BANCO DE CHILE",
+   563,
+   11
+  ],
+  [
+   "BANCO ITAU CORPBANCA",
+   310,
+   3
+  ],
+  [
+   "BANCO SANTANDER CHILE",
+   600,
+   9
+  ],
+  [
+   "BANCO SANTANDER MADRID",
+   263,
+   1
+  ],
+  [
+   "BARCLAYS BANK PLC",
+   241,
+   4
+  ],
+  [
+   "CITIBANK N.A.",
+   402,
+   1
+  ],
+  [
+   "ITAU CORPBANCA",
+   197,
+   5
+  ],
+  [
+   "SCOTIABANK",
+   226,
+   7
+  ],
+  [
+   "SCOTIABANK CHILE",
+   381,
+   3
+  ]
+ ],
+ "sql": "SELECT COALESCE(NULLIF(TRIM(nombre), ''), 'Sin nombre informado') AS contraparte, count(*) AS contratos, count(DISTINCT rut_aseguradora) AS aseguradoras FROM seguros_derivados WHERE periodo = '2026-09' GROUP BY 1 ORDER BY contratos DESC LIMIT 10;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

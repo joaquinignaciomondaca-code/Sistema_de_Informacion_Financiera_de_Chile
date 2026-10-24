@@ -44,9 +44,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "renta-fija-por-tipo-de-instrumento-ultimo-mes-m-f646b2",
+   "id": "renta-fija-por-tipo-de-instrumento-ultimo-mes-m-1373a7",
    "origen": "explorador",
-   "sql": "SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija) GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 15;",
+   "sql": "SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = '2026-09' GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 15;",
    "titulo": "Renta fija por tipo de instrumento, último mes (M$)"
   },
   {
@@ -56,9 +56,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "instrumentos-de-renta-fija-con-mas-inversion-ult-46fffd",
+   "id": "instrumentos-de-renta-fija-con-mas-inversion-ult-28a38b",
    "origen": "explorador",
-   "sql": "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija) GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;",
+   "sql": "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = '2026-09' GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;",
    "titulo": "Instrumentos de renta fija con más inversión, último mes (M$)"
   },
   {
@@ -68,9 +68,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "acciones-con-mayor-inversion-ultimo-mes-m-f4f47b",
+   "id": "acciones-con-mayor-inversion-ultimo-mes-m-3ccad2",
    "origen": "explorador",
-   "sql": "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(unidades) AS unidades, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = (SELECT max(periodo) FROM seguros_acciones) GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;",
+   "sql": "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(unidades) AS unidades, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = '2026-09' GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;",
    "titulo": "Acciones con mayor inversión, último mes (M$)"
   },
   {
@@ -92,9 +92,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "fondos-mutuos-por-administradora-ultimo-mes-m-84000e",
+   "id": "fondos-mutuos-por-administradora-ultimo-mes-m-09cbea",
    "origen": "explorador",
-   "sql": "SELECT rut_administradora, count(*) AS inversiones, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_fondos_mutuos WHERE periodo = (SELECT max(periodo) FROM seguros_fondos_mutuos) GROUP BY rut_administradora ORDER BY valor_final_m_clp DESC LIMIT 10;",
+   "sql": "SELECT rut_administradora, count(*) AS inversiones, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_fondos_mutuos WHERE periodo = '2026-09' GROUP BY rut_administradora ORDER BY valor_final_m_clp DESC LIMIT 10;",
    "titulo": "Fondos mutuos por administradora, último mes (M$)"
   },
   {
@@ -104,9 +104,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "bienes-raices-por-ciudad-ultimo-mes-m-a861f2",
+   "id": "bienes-raices-por-ciudad-ultimo-mes-m-f260c4",
    "origen": "explorador",
-   "sql": "SELECT ciudad, count(*) AS inmuebles, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_bienes_raices WHERE periodo = (SELECT max(periodo) FROM seguros_bienes_raices) GROUP BY ciudad ORDER BY valor_final_m_clp DESC LIMIT 10;",
+   "sql": "SELECT ciudad, count(*) AS inmuebles, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_bienes_raices WHERE periodo = '2026-09' GROUP BY ciudad ORDER BY valor_final_m_clp DESC LIMIT 10;",
    "titulo": "Bienes raíces por ciudad, último mes (M$)"
   },
   {
@@ -116,9 +116,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "otras-inversiones-por-tipo-de-instrumento-ultimo-5306cf",
+   "id": "otras-inversiones-por-tipo-de-instrumento-ultimo-383e40",
    "origen": "explorador",
-   "sql": "SELECT tipo_instrumento, count(*) AS inversiones, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_otras_inversiones WHERE periodo = (SELECT max(periodo) FROM seguros_otras_inversiones) GROUP BY tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 15;",
+   "sql": "SELECT tipo_instrumento, count(*) AS inversiones, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_otras_inversiones WHERE periodo = '2026-09' GROUP BY tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 15;",
    "titulo": "Otras inversiones por tipo de instrumento, último mes (M$)"
   },
   {
@@ -128,9 +128,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "inversiones-en-el-extranjero-por-pais-ultimo-mes-96a334",
+   "id": "inversiones-en-el-extranjero-por-pais-ultimo-mes-8e4420",
    "origen": "explorador",
-   "sql": "SELECT pais, tipo_registro, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_extranjeros WHERE periodo = (SELECT max(periodo) FROM seguros_extranjeros) GROUP BY pais, tipo_registro ORDER BY valor_final_m_clp DESC LIMIT 10;",
+   "sql": "SELECT pais, tipo_registro, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_extranjeros WHERE periodo = '2026-09' GROUP BY pais, tipo_registro ORDER BY valor_final_m_clp DESC LIMIT 10;",
    "titulo": "Inversiones en el extranjero por país, último mes (M$)"
   },
   {
@@ -140,9 +140,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "derivados-por-tipo-y-sector-ultimo-mes-d009a2",
+   "id": "derivados-por-tipo-y-sector-ultimo-mes-b29724",
    "origen": "explorador",
-   "sql": "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;",
+   "sql": "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = '2026-09' GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;",
    "titulo": "Derivados por tipo y sector, último mes"
   },
   {
@@ -152,9 +152,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "principales-contrapartes-de-derivados-ultimo-mes-0aecee",
+   "id": "principales-contrapartes-de-derivados-ultimo-mes-78a3a3",
    "origen": "explorador",
-   "sql": "SELECT COALESCE(NULLIF(TRIM(nombre), ''), 'Sin nombre informado') AS contraparte, count(*) AS contratos, count(DISTINCT rut_aseguradora) AS aseguradoras FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY 1 ORDER BY contratos DESC LIMIT 10;",
+   "sql": "SELECT COALESCE(NULLIF(TRIM(nombre), ''), 'Sin nombre informado') AS contraparte, count(*) AS contratos, count(DISTINCT rut_aseguradora) AS aseguradoras FROM seguros_derivados WHERE periodo = '2026-09' GROUP BY 1 ORDER BY contratos DESC LIMIT 10;",
    "titulo": "Principales contrapartes de derivados, último mes"
   },
   {
@@ -164,9 +164,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "pactos-contrapartes-y-tasa-promedio-ultimo-mes-1cc5b8",
+   "id": "pactos-contrapartes-y-tasa-promedio-ultimo-mes-5e68eb",
    "origen": "explorador",
-   "sql": "SELECT COALESCE(NULLIF(TRIM(nombre), ''), 'Sin nombre informado') AS contraparte, count(*) AS pactos, AVG(tasa_pacto) AS tasa_pacto_promedio FROM seguros_pactos WHERE periodo = (SELECT max(periodo) FROM seguros_pactos) GROUP BY 1 ORDER BY pactos DESC LIMIT 10;",
+   "sql": "SELECT COALESCE(NULLIF(TRIM(nombre), ''), 'Sin nombre informado') AS contraparte, count(*) AS pactos, AVG(tasa_pacto) AS tasa_pacto_promedio FROM seguros_pactos WHERE periodo = '2026-09' GROUP BY 1 ORDER BY pactos DESC LIMIT 10;",
    "titulo": "Pactos: contrapartes y tasa promedio, último mes"
   },
   {
@@ -236,9 +236,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "cartera-nacional-por-tipo-de-instrumento-ultimo--2f4342",
+   "id": "cartera-nacional-por-tipo-de-instrumento-ultimo--baa247",
    "origen": "explorador",
-   "sql": "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional) GROUP BY tipo_instrumento ORDER BY valorizacion_miles_mf DESC LIMIT 15;",
+   "sql": "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = '2026-09' GROUP BY tipo_instrumento ORDER BY valorizacion_miles_mf DESC LIMIT 15;",
    "titulo": "Cartera nacional por tipo de instrumento, último mes"
   },
   {
@@ -248,9 +248,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "mayores-emisores-nacionales-ultimo-mes-a7c4a8",
+   "id": "mayores-emisores-nacionales-ultimo-mes-4fa894",
    "origen": "explorador",
-   "sql": "SELECT rut_emisor, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional) GROUP BY rut_emisor ORDER BY valorizacion_miles_mf DESC LIMIT 10;",
+   "sql": "SELECT rut_emisor, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = '2026-09' GROUP BY rut_emisor ORDER BY valorizacion_miles_mf DESC LIMIT 10;",
    "titulo": "Mayores emisores nacionales, último mes"
   },
   {
@@ -260,9 +260,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "instrumentos-con-compromiso-o-en-garantia-ultimo-4d3b37",
+   "id": "instrumentos-con-compromiso-o-en-garantia-ultimo-be7bf7",
    "origen": "explorador",
-   "sql": "SELECT situacion_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional) GROUP BY situacion_instrumento ORDER BY situacion_instrumento;",
+   "sql": "SELECT situacion_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_nacional WHERE periodo = '2026-09' GROUP BY situacion_instrumento ORDER BY situacion_instrumento;",
    "titulo": "Instrumentos con compromiso o en garantía, último mes"
   },
   {
@@ -272,9 +272,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "cartera-extranjera-por-pais-emisor-ultimo-mes-4da5d1",
+   "id": "cartera-extranjera-por-pais-emisor-ultimo-mes-ae95ac",
    "origen": "explorador",
-   "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;",
+   "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = '2026-09' GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;",
    "titulo": "Cartera extranjera por país emisor, último mes"
   },
   {
@@ -296,9 +296,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "forwards-y-futuros-por-activo-objeto-ultimo-mes-72d79a",
+   "id": "forwards-y-futuros-por-activo-objeto-ultimo-mes-7cfde7",
    "origen": "explorador",
-   "sql": "SELECT activo_objeto, posicion, count(*) AS contratos, SUM(monto_comprometido_miles_mf) AS monto_comprometido_miles_mf FROM ffmm_futuros WHERE periodo = (SELECT max(periodo) FROM ffmm_futuros) GROUP BY activo_objeto, posicion ORDER BY contratos DESC, activo_objeto, posicion LIMIT 15;",
+   "sql": "SELECT activo_objeto, posicion, count(*) AS contratos, SUM(monto_comprometido_miles_mf) AS monto_comprometido_miles_mf FROM ffmm_futuros WHERE periodo = '2026-09' GROUP BY activo_objeto, posicion ORDER BY contratos DESC, activo_objeto, posicion LIMIT 15;",
    "titulo": "Forwards y futuros por activo objeto, último mes"
   },
   {
@@ -320,9 +320,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "opciones-del-ultimo-mes-f81fac",
+   "id": "opciones-del-ultimo-mes-845434",
    "origen": "explorador",
-   "sql": "SELECT run_fondo, nombre_fondo, activo_objeto, nemotecnico, tipo_opcion, fecha_expiracion, numero_contratos, precio_ejercicio, inversion_primas_miles_mf FROM ffmm_opciones WHERE periodo = (SELECT max(periodo) FROM ffmm_opciones) ORDER BY run_fondo;",
+   "sql": "SELECT run_fondo, nombre_fondo, activo_objeto, nemotecnico, tipo_opcion, fecha_expiracion, numero_contratos, precio_ejercicio, inversion_primas_miles_mf FROM ffmm_opciones WHERE periodo = '2026-09' ORDER BY run_fondo;",
    "titulo": "Opciones del último mes"
   },
   {
@@ -332,9 +332,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "mayores-fondos-en-pesos-por-activo-neto-ultimo-c-cc663c",
+   "id": "mayores-fondos-en-pesos-por-activo-neto-ultimo-c-ffcbd6",
    "origen": "explorador",
-   "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS activo_neto_mm, round(valor_anterior_miles_mf / 1e3, 1) AS activo_neto_anterior_mm FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY valor_miles_mf DESC LIMIT 20;",
+   "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS activo_neto_mm, round(valor_anterior_miles_mf / 1e3, 1) AS activo_neto_anterior_mm FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = '2025-12' ORDER BY valor_miles_mf DESC LIMIT 20;",
    "titulo": "Mayores fondos en pesos por activo neto, último cierre (MM$)"
   },
   {
@@ -368,9 +368,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "balance-completo-del-mayor-fondo-en-pesos-ultimo-a74cb8",
+   "id": "balance-completo-del-mayor-fondo-en-pesos-ultimo-147ae5",
    "origen": "explorador",
-   "sql": "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf, valor_anterior_miles_mf FROM ffmm_balance WHERE run_fondo = (SELECT run_fondo FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY valor_miles_mf DESC LIMIT 1) AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY orden;",
+   "sql": "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf, valor_anterior_miles_mf FROM ffmm_balance WHERE run_fondo = (SELECT run_fondo FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = '2025-12' ORDER BY valor_miles_mf DESC LIMIT 1) AND periodo = '2025-12' ORDER BY orden;",
    "titulo": "Balance completo del mayor fondo en pesos, último cierre"
   },
   {
@@ -380,9 +380,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "mayores-utilidades-del-ultimo-ejercicio-fondos-e-19a6a2",
+   "id": "mayores-utilidades-del-ultimo-ejercicio-fondos-e-fde1b8",
    "origen": "explorador",
-   "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS utilidad_mm FROM ffmm_resultados WHERE codigo_cuenta = 'UtilidadPerdidaDeLaOperacionDespuesDeImpuesto' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;",
+   "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS utilidad_mm FROM ffmm_resultados WHERE codigo_cuenta = 'UtilidadPerdidaDeLaOperacionDespuesDeImpuesto' AND moneda = 'CLP' AND periodo = '2025-12' ORDER BY valor_miles_mf DESC LIMIT 20;",
    "titulo": "Mayores utilidades del último ejercicio, fondos en pesos (MM$)"
   },
   {
@@ -417,9 +417,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "estado-de-resultados-del-mayor-fondo-en-pesos-ul-ce368f",
+   "id": "estado-de-resultados-del-mayor-fondo-en-pesos-ul-11c66c",
    "origen": "explorador",
-   "sql": "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf, valor_anterior_miles_mf FROM ffmm_resultados WHERE run_fondo = (SELECT run_fondo FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM ffmm_balance) ORDER BY valor_miles_mf DESC LIMIT 1) AND periodo = (SELECT max(periodo) FROM ffmm_resultados) ORDER BY orden;",
+   "sql": "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf, valor_anterior_miles_mf FROM ffmm_resultados WHERE run_fondo = (SELECT run_fondo FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = '2025-12' ORDER BY valor_miles_mf DESC LIMIT 1) AND periodo = '2025-12' ORDER BY orden;",
    "titulo": "Estado de resultados del mayor fondo en pesos, último ejercicio"
   },
   {
@@ -465,9 +465,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "cartera-nacional-por-tipo-de-instrumento-ultimo--42e0ca",
+   "id": "cartera-nacional-por-tipo-de-instrumento-ultimo--9f57f6",
    "origen": "explorador",
-   "sql": "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM fi_cartera_nacional) GROUP BY tipo_instrumento ORDER BY posiciones DESC;",
+   "sql": "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional WHERE periodo = '2026-06' GROUP BY tipo_instrumento ORDER BY posiciones DESC;",
    "titulo": "Cartera nacional por tipo de instrumento, último trimestre"
   },
   {
@@ -477,9 +477,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "mayores-emisores-nacionales-ultimo-trimestre-d986ae",
+   "id": "mayores-emisores-nacionales-ultimo-trimestre-ed27b2",
    "origen": "explorador",
-   "sql": "SELECT rut_emisor, count(DISTINCT run_fondo) AS fondos, count(*) AS posiciones FROM fi_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM fi_cartera_nacional) GROUP BY rut_emisor ORDER BY fondos DESC LIMIT 20;",
+   "sql": "SELECT rut_emisor, count(DISTINCT run_fondo) AS fondos, count(*) AS posiciones FROM fi_cartera_nacional WHERE periodo = '2026-06' GROUP BY rut_emisor ORDER BY fondos DESC LIMIT 20;",
    "titulo": "Mayores emisores nacionales, último trimestre"
   },
   {
@@ -489,9 +489,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "cartera-extranjera-por-pais-emisor-ultimo-trimes-4b2670",
+   "id": "cartera-extranjera-por-pais-emisor-ultimo-trimes-9c339d",
    "origen": "explorador",
-   "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM fi_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM fi_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC;",
+   "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM fi_cartera_extranjera WHERE periodo = '2026-06' GROUP BY pais_emisor ORDER BY posiciones DESC;",
    "titulo": "Cartera extranjera por país emisor, último trimestre"
   },
   {
@@ -513,9 +513,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "forwards-y-futuros-por-activo-objeto-ultimo-trim-36c18d",
+   "id": "forwards-y-futuros-por-activo-objeto-ultimo-trim-23a13d",
    "origen": "explorador",
-   "sql": "SELECT activo_objeto, posicion, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM fi_futuros WHERE periodo = (SELECT max(periodo) FROM fi_futuros) GROUP BY activo_objeto, posicion ORDER BY contratos DESC LIMIT 20;",
+   "sql": "SELECT activo_objeto, posicion, count(*) AS contratos, count(DISTINCT run_fondo) AS fondos FROM fi_futuros WHERE periodo = '2026-06' GROUP BY activo_objeto, posicion ORDER BY contratos DESC LIMIT 20;",
    "titulo": "Forwards y futuros por activo objeto, último trimestre"
   },
   {
@@ -525,9 +525,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "contrapartes-de-derivados-ultimo-trimestre-61d701",
+   "id": "contrapartes-de-derivados-ultimo-trimestre-7d2cb1",
    "origen": "explorador",
-   "sql": "SELECT contraparte, count(*) AS contratos FROM fi_futuros WHERE periodo = (SELECT max(periodo) FROM fi_futuros) GROUP BY contraparte ORDER BY contratos DESC, contraparte LIMIT 15;",
+   "sql": "SELECT contraparte, count(*) AS contratos FROM fi_futuros WHERE periodo = '2026-06' GROUP BY contraparte ORDER BY contratos DESC, contraparte LIMIT 15;",
    "titulo": "Contrapartes de derivados, último trimestre"
   },
   {
@@ -549,9 +549,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "pactos-por-tipo-de-operacion-y-contraparte-ultim-47db60",
+   "id": "pactos-por-tipo-de-operacion-y-contraparte-ultim-ff7185",
    "origen": "explorador",
-   "sql": "SELECT tipo_operacion, contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_prom_pct FROM fi_pactos WHERE periodo = (SELECT max(periodo) FROM fi_pactos) GROUP BY tipo_operacion, contraparte ORDER BY pactos DESC LIMIT 20;",
+   "sql": "SELECT tipo_operacion, contraparte, count(*) AS pactos, AVG(tasa_pacto_pct) AS tasa_prom_pct FROM fi_pactos WHERE periodo = '2026-06' GROUP BY tipo_operacion, contraparte ORDER BY pactos DESC LIMIT 20;",
    "titulo": "Pactos por tipo de operación y contraparte, último trimestre"
   },
   {
@@ -561,9 +561,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "mayores-patrimonios-en-pesos-ultimo-cierre-mm-4df30e",
+   "id": "mayores-patrimonios-en-pesos-ultimo-cierre-mm-88c716",
    "origen": "explorador",
-   "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS patrimonio_mm FROM fi_balance WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'TotalPatrimonioNeto' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_balance) ORDER BY valor_miles_mf DESC LIMIT 20;",
+   "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS patrimonio_mm FROM fi_balance WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'TotalPatrimonioNeto' AND moneda = 'CLP' AND periodo = '2026-06' ORDER BY valor_miles_mf DESC LIMIT 20;",
    "titulo": "Mayores patrimonios en pesos, último cierre (MM$)"
   },
   {
@@ -573,9 +573,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "balance-actual-del-mayor-fondo-en-pesos-ultimo-c-2ee7e1",
+   "id": "balance-actual-del-mayor-fondo-en-pesos-ultimo-c-b09905",
    "origen": "explorador",
-   "sql": "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf FROM fi_balance WHERE contexto = 'PeriodoActual' AND periodo = (SELECT max(periodo) FROM fi_balance) AND run_fondo = (SELECT run_fondo FROM fi_balance WHERE contexto = 'PeriodoActual' AND moneda = 'CLP' AND codigo_cuenta = 'TotalPatrimonioNeto' AND periodo = (SELECT max(periodo) FROM fi_balance) ORDER BY valor_miles_mf DESC LIMIT 1) ORDER BY orden;",
+   "sql": "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf FROM fi_balance WHERE contexto = 'PeriodoActual' AND periodo = '2026-06' AND run_fondo = (SELECT run_fondo FROM fi_balance WHERE contexto = 'PeriodoActual' AND moneda = 'CLP' AND codigo_cuenta = 'TotalPatrimonioNeto' AND periodo = '2026-06' ORDER BY valor_miles_mf DESC LIMIT 1) ORDER BY orden;",
    "titulo": "Balance actual del mayor fondo en pesos, último cierre"
   },
   {
@@ -597,9 +597,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "mayores-resultados-acumulados-en-pesos-ultimo-ci-ec3f0d",
+   "id": "mayores-resultados-acumulados-en-pesos-ultimo-ci-836579",
    "origen": "explorador",
-   "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_mm FROM fi_resultados WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;",
+   "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_mm FROM fi_resultados WHERE contexto = 'PeriodoActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = '2026-06' ORDER BY valor_miles_mf DESC LIMIT 20;",
    "titulo": "Mayores resultados acumulados en pesos, último cierre (MM$)"
   },
   {
@@ -609,9 +609,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "resultado-solo-del-trimestre-en-pesos-segun-xml--c46755",
+   "id": "resultado-solo-del-trimestre-en-pesos-segun-xml--be25fe",
    "origen": "explorador",
-   "sql": "SELECT periodo, run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_trimestre_mm, cotejo_ficha FROM fi_resultados WHERE contexto = 'TrimestreActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = (SELECT max(periodo) FROM fi_resultados) ORDER BY valor_miles_mf DESC LIMIT 20;",
+   "sql": "SELECT periodo, run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS resultado_trimestre_mm, cotejo_ficha FROM fi_resultados WHERE contexto = 'TrimestreActual' AND codigo_cuenta = 'ResultadoDelEjercicio' AND moneda = 'CLP' AND periodo = '2026-06' ORDER BY valor_miles_mf DESC LIMIT 20;",
    "titulo": "Resultado SOLO del trimestre en pesos, según XML (MM$)"
   },
   {
@@ -669,9 +669,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "activos-pasivos-y-patrimonio-por-agf-ultimo-trim-195ff3",
+   "id": "activos-pasivos-y-patrimonio-por-agf-ultimo-trim-116d13",
    "origen": "explorador",
-   "sql": "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM agf_balance WHERE periodo = (SELECT max(periodo) FROM agf_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;",
+   "sql": "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM agf_balance WHERE periodo = '2026-06' AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;",
    "titulo": "Activos, pasivos y patrimonio por AGF, último trimestre (MM$)"
   },
   {
@@ -801,9 +801,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "total-de-activos-por-banco-ultimo-periodo-8feb88",
+   "id": "total-de-activos-por-banco-ultimo-periodo-dd61ba",
    "origen": "explorador",
-   "sql": "SELECT codigo_institucion, razon_social, importe_clp FROM bancos_balance WHERE modelo_cmf = 'MB1' AND codigo_cuenta = '100000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_balance) ORDER BY importe_clp DESC;",
+   "sql": "SELECT codigo_institucion, razon_social, importe_clp FROM bancos_balance WHERE modelo_cmf = 'MB1' AND codigo_cuenta = '100000000' AND codigo_institucion <> '999' AND periodo = '2026-08' ORDER BY importe_clp DESC;",
    "titulo": "Total de activos por banco (último periodo)"
   },
   {
@@ -837,9 +837,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "utilidad-del-ejercicio-por-banco-ultimo-periodo-c2ba60",
+   "id": "utilidad-del-ejercicio-por-banco-ultimo-periodo-c1244e",
    "origen": "explorador",
-   "sql": "SELECT codigo_institucion, razon_social, importe_clp FROM bancos_resultados WHERE codigo_cuenta = '590000000' AND codigo_institucion <> '999' AND periodo = (SELECT max(periodo) FROM bancos_resultados) ORDER BY importe_clp DESC;",
+   "sql": "SELECT codigo_institucion, razon_social, importe_clp FROM bancos_resultados WHERE codigo_cuenta = '590000000' AND codigo_institucion <> '999' AND periodo = '2026-08' ORDER BY importe_clp DESC;",
    "titulo": "Utilidad del ejercicio por banco (último periodo)"
   },
   {
@@ -1358,9 +1358,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "activos-pasivos-y-patrimonio-por-intermediario-u-43eaf2",
+   "id": "activos-pasivos-y-patrimonio-por-intermediario-u-7d28ba",
    "origen": "explorador",
-   "sql": "SELECT periodo, razon_social, tipo_intermediario, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '10.00.00') / 1e3, 1) AS activos_mm, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '21.00.00') / 1e3, 1) AS pasivos_mm, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '22.00.00') / 1e3, 1) AS patrimonio_mm FROM corredoras_bolsa_balance WHERE periodo = (SELECT max(periodo) FROM corredoras_bolsa_balance) GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;",
+   "sql": "SELECT periodo, razon_social, tipo_intermediario, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '10.00.00') / 1e3, 1) AS activos_mm, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '21.00.00') / 1e3, 1) AS pasivos_mm, round(max(valor_miles_clp) FILTER (WHERE codigo_fecu = '22.00.00') / 1e3, 1) AS patrimonio_mm FROM corredoras_bolsa_balance WHERE periodo = '2026-06' GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;",
    "titulo": "Activos, pasivos y patrimonio por intermediario, último trimestre (MM$)"
   },
   {
@@ -1382,9 +1382,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "balance-completo-de-banchile-corredores-ultimo-t-9045d7",
+   "id": "balance-completo-de-banchile-corredores-ultimo-t-31f63c",
    "origen": "explorador",
-   "sql": "SELECT periodo, seccion, codigo_fecu, nivel, cuenta, valor_miles_clp FROM corredoras_bolsa_balance WHERE rut = '96571220' AND periodo = (SELECT max(periodo) FROM corredoras_bolsa_balance) ORDER BY codigo_fecu;",
+   "sql": "SELECT periodo, seccion, codigo_fecu, nivel, cuenta, valor_miles_clp FROM corredoras_bolsa_balance WHERE rut = '96571220' AND periodo = '2026-06' ORDER BY codigo_fecu;",
    "titulo": "Balance completo de Banchile Corredores, último trimestre"
   },
   {
@@ -1454,9 +1454,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "activos-pasivos-y-patrimonio-por-securitizadora--35b788",
+   "id": "activos-pasivos-y-patrimonio-por-securitizadora--3cfaa0",
    "origen": "explorador",
-   "sql": "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM securitizadoras_balance WHERE periodo = (SELECT max(periodo) FROM securitizadoras_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;",
+   "sql": "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM securitizadoras_balance WHERE periodo = '2026-06' AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;",
    "titulo": "Activos, pasivos y patrimonio por securitizadora, último trimestre (MM$)"
   },
   {
@@ -1707,9 +1707,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "activos-pasivos-y-patrimonio-por-ccaf-ultimo-tri-54ae37",
+   "id": "activos-pasivos-y-patrimonio-por-ccaf-ultimo-tri-bca2ef",
    "origen": "explorador",
-   "sql": "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM ccaf_balance WHERE periodo = (SELECT max(periodo) FROM ccaf_balance) AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;",
+   "sql": "SELECT periodo, razon_social, tipo_balance, moneda, round(max(valor) FILTER (WHERE cuenta = 'Total de activos') / 1e6, 1) AS activos_mm, round(max(valor) FILTER (WHERE cuenta = 'Total de pasivos') / 1e6, 1) AS pasivos_mm, round(max(valor) FILTER (WHERE cuenta = 'Patrimonio total') / 1e6, 1) AS patrimonio_mm FROM ccaf_balance WHERE periodo = '2026-06' AND repeticion = 1 GROUP BY ALL ORDER BY activos_mm DESC NULLS LAST;",
    "titulo": "Activos, pasivos y patrimonio por CCAF, último trimestre (MM$)"
   },
   {
@@ -1918,7 +1918,7 @@
   }
  ],
  "contrato": "sif-api/consultas",
- "generado": "2026-10-23",
+ "generado": "2026-10-24",
  "nota": "Salen de la propia web (sidebar.js e index.html); la auditoría las ejecuta contra los Parquet en cada CI.",
  "total": 159,
  "version": "2.1.0"

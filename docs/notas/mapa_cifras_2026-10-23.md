@@ -52,7 +52,7 @@ publicados)» con 19.777.517 filas. Las dos cifras eran redondeos al alza.
 
 ## 3. `fi_bienes_raices`: se conserva el archivo vacío y se declara
 
-Publica `docs/outputs/fi/bienes_raices/_vacio.parquet` con **0 filas** y las 15
+Publica `docs/outputs/fi/bienes_raices/vacio.parquet` con **0 filas** y las 15
 columnas del esquema, porque la vista SQL se construye sobre ese archivo.
 Retirarlo dejaría la vista sin origen; y publicar el esquema con cero filas es más
 honesto que esconder que la fuente no informa cartera de bienes raíces desde

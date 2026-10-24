@@ -1,0 +1,359 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "balance-actual-del-mayor-fondo-en-pesos-ultimo-c-b09905",
+ "titulo": "Balance actual del mayor fondo en pesos, último cierre",
+ "origen": "explorador",
+ "data_release": "2026-10-23.12612e963628",
+ "generado": "2026-10-24",
+ "max_filas": 500,
+ "columnas": [
+  "periodo",
+  "nombre_fondo",
+  "orden",
+  "seccion",
+  "cuenta",
+  "valor_miles_mf"
+ ],
+ "filas": 42,
+ "truncado": false,
+ "datos": [
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   1,
+   "ACTIVO CORRIENTE",
+   "Efectivo y efectivo equivalente",
+   96244
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   2,
+   "ACTIVO CORRIENTE",
+   "Activos financieros a valor razonable con efecto en resultados",
+   1012368329
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   3,
+   "ACTIVO CORRIENTE",
+   "Activos financieros a valor razonable con efecto en otros resultados integrales",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   4,
+   "ACTIVO CORRIENTE",
+   "Activos financieros a valor razonable con efecto en resultados entregados en garantía",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   5,
+   "ACTIVO CORRIENTE",
+   "Activos financieros a costo amortizado",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   6,
+   "ACTIVO CORRIENTE",
+   "Cuentas y documentos por cobrar por operaciones",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   7,
+   "ACTIVO CORRIENTE",
+   "Otros documentos y cuentas por cobrar",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   8,
+   "ACTIVO CORRIENTE",
+   "Otros activos",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   9,
+   "ACTIVO CORRIENTE",
+   "Total activo corriente",
+   1012464573
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   10,
+   "ACTIVO NO CORRIENTE",
+   "Activos financieros a valor razonable con efecto en resultados",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   11,
+   "ACTIVO NO CORRIENTE",
+   "Activos financieros a valor razonable con efecto en otros resultados integrales",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   12,
+   "ACTIVO NO CORRIENTE",
+   "Activos financieros a costo amortizado",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   13,
+   "ACTIVO NO CORRIENTE",
+   "Cuentas y documentos por cobrar por operaciones",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   14,
+   "ACTIVO NO CORRIENTE",
+   "Otros documentos y cuentas por cobrar",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   15,
+   "ACTIVO NO CORRIENTE",
+   "Inversiones valorizadas por el método de la participación",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   16,
+   "ACTIVO NO CORRIENTE",
+   "Propiedades de inversión",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   17,
+   "ACTIVO NO CORRIENTE",
+   "Otros activos",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   18,
+   "ACTIVO NO CORRIENTE",
+   "Total activo no corriente",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   19,
+   "ACTIVO",
+   "Total activo",
+   1012464573
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   20,
+   "PASIVO CORRIENTE",
+   "Pasivos financieros a valor razonable con efecto en resultados",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   21,
+   "PASIVO CORRIENTE",
+   "Préstamos",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   22,
+   "PASIVO CORRIENTE",
+   "Otros pasivos financieros",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   23,
+   "PASIVO CORRIENTE",
+   "Cuentas y documentos por pagar por operaciones",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   24,
+   "PASIVO CORRIENTE",
+   "Remuneraciones sociedad administradora",
+   494174
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   25,
+   "PASIVO CORRIENTE",
+   "Otros documentos y cuentas por pagar",
+   34934
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   26,
+   "PASIVO CORRIENTE",
+   "Ingresos anticipados",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   27,
+   "PASIVO CORRIENTE",
+   "Otros pasivos",
+   12593
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   28,
+   "PASIVO CORRIENTE",
+   "Total pasivo corriente",
+   541701
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   29,
+   "PASIVO NO CORRIENTE",
+   "Préstamos",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   30,
+   "PASIVO NO CORRIENTE",
+   "Otros pasivos financieros",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   31,
+   "PASIVO NO CORRIENTE",
+   "Cuentas y documentos por pagar por operaciones",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   32,
+   "PASIVO NO CORRIENTE",
+   "Otros documentos y cuentas por pagar",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   33,
+   "PASIVO NO CORRIENTE",
+   "Ingresos anticipados",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   34,
+   "PASIVO NO CORRIENTE",
+   "Otros pasivos",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   35,
+   "PASIVO NO CORRIENTE",
+   "Total pasivo no corriente",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   36,
+   "PATRIMONIO NETO",
+   "Aportes",
+   924156653
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   37,
+   "PATRIMONIO NETO",
+   "Otras reservas",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   38,
+   "PATRIMONIO NETO",
+   "Resultados acumulados",
+   57364921
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   39,
+   "PATRIMONIO NETO",
+   "Resultado del ejercicio",
+   30401298
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   40,
+   "PATRIMONIO NETO",
+   "Dividendos provisorios",
+   0
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   41,
+   "PATRIMONIO NETO",
+   "Total patrimonio neto",
+   1011922872
+  ],
+  [
+   "2026-06",
+   "FI BANCHILE DEUDA CHILENA",
+   42,
+   "PASIVO Y PATRIMONIO",
+   "Total pasivo y patrimonio (TotalPasivo en la fuente)",
+   1012464573
+  ]
+ ],
+ "sql": "SELECT periodo, nombre_fondo, orden, seccion, cuenta, valor_miles_mf FROM fi_balance WHERE contexto = 'PeriodoActual' AND periodo = '2026-06' AND run_fondo = (SELECT run_fondo FROM fi_balance WHERE contexto = 'PeriodoActual' AND moneda = 'CLP' AND codigo_cuenta = 'TotalPatrimonioNeto' AND periodo = '2026-06' ORDER BY valor_miles_mf DESC LIMIT 1) ORDER BY orden;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

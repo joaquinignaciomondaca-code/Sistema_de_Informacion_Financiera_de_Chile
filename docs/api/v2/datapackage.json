@@ -6860,7 +6860,7 @@
    "mediatype": "application/vnd.apache.parquet",
    "name": "fi_bienes_raices",
    "path": [
-    "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/bienes_raices/_vacio.parquet"
+    "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/bienes_raices/vacio.parquet"
    ],
    "profile": "tabular-data-resource",
    "schema": {
@@ -6978,7 +6978,7 @@
      {
       "bytes": 2589,
       "filas": 0,
-      "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/bienes_raices/_vacio.parquet",
+      "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/fi/bienes_raices/vacio.parquet",
       "sha256": "0d0c3c1097032288e66623a87a2a402424d9381789ba5f54fc5cb406ad09a7ab"
      }
     ],

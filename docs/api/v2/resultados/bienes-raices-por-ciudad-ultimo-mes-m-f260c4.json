@@ -1,0 +1,70 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "bienes-raices-por-ciudad-ultimo-mes-m-f260c4",
+ "titulo": "Bienes raíces por ciudad, último mes (M$)",
+ "origen": "explorador",
+ "data_release": "2026-10-23.12612e963628",
+ "generado": "2026-10-24",
+ "max_filas": 500,
+ "columnas": [
+  "ciudad",
+  "inmuebles",
+  "valor_final_m_clp"
+ ],
+ "filas": 10,
+ "truncado": false,
+ "datos": [
+  [
+   "ANTOFAGASTA",
+   99,
+   341312609
+  ],
+  [
+   "COLINA",
+   313,
+   149540082
+  ],
+  [
+   "CONCEPCION",
+   723,
+   217085360
+  ],
+  [
+   "COQUIMBO",
+   409,
+   144266024
+  ],
+  [
+   "RANCAGUA",
+   349,
+   136322032
+  ],
+  [
+   "SAN BERNARDO",
+   515,
+   135523066
+  ],
+  [
+   "SANTIAGO",
+   23517,
+   8449451968
+  ],
+  [
+   "TALCA",
+   1070,
+   147303055
+  ],
+  [
+   "VALPARAISO",
+   261,
+   311406543
+  ],
+  [
+   "VINA DEL MAR",
+   214,
+   320546438
+  ]
+ ],
+ "sql": "SELECT ciudad, count(*) AS inmuebles, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_bienes_raices WHERE periodo = '2026-09' GROUP BY ciudad ORDER BY valor_final_m_clp DESC LIMIT 10;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}
