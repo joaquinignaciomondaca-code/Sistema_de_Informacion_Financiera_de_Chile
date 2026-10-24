@@ -56,6 +56,11 @@ VERSION = VERSION_CONTRATO
 # copia apuntando a un espejo o a una ruta local.
 BASE = "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile"
 
+TITULOS_BANCOS = {
+    "bancos_balance": "Líneas de balance bancario CMF (B1/B2)",
+    "bancos_resultados": "Líneas de resultados bancarios CMF (R1)",
+}
+
 TIPOS_TS = {
     "VARCHAR": "string", "VARCHAR[]": "array", "BIGINT": "integer", "INTEGER": "integer",
     "SMALLINT": "integer", "TINYINT": "integer", "DOUBLE": "number", "REAL": "number",
@@ -107,6 +112,8 @@ def cargar() -> dict:
 def construir_objetos(datos: dict, alias: dict[str, list[str]], base: str) -> tuple[list[dict], dict[str, dict], dict[str, dict], list[str]]:
     esquemas = datos["esquemas"]["objetos"]
     vistas = {v["name"]: v for v in ac.vistas_semanticas()}
+    fichas_vocabulario = json.loads((DOCS / "vocabulario.json").read_text(encoding="utf-8")).get("tablas", [])
+    descripciones_vocabulario = {f.get("id"): f.get("descripcion", "") for f in fichas_vocabulario}
     catalogo, esquemas_por_id, particiones_por_id = [], {}, {}
     hashes: list[str] = []
 
@@ -165,7 +172,7 @@ def construir_objetos(datos: dict, alias: dict[str, list[str]], base: str) -> tu
             "url_terminos": atribucion["url_terminos"],
             "licencia_estado": atribucion["estado"],
             "adaptacion": atribucion["adaptacion"],
-            "titulo": recon.get("nombre_visible") or nombre,
+            "titulo": TITULOS_BANCOS.get(nombre) or recon.get("nombre_visible") or nombre,
             "sector": info.get("sector"),
             "estado": recon.get("estado"),
             "primaryKey": pk,
@@ -186,7 +193,7 @@ def construir_objetos(datos: dict, alias: dict[str, list[str]], base: str) -> tu
 
         catalogo.append({
             "id": nombre,
-            "titulo": recon.get("nombre_visible") or nombre,
+            "titulo": TITULOS_BANCOS.get(nombre) or recon.get("nombre_visible") or nombre,
             "sql_view": nombre,
             "aliases": V.aliases_de(nombre, alias),
             "sector": info.get("sector"),
@@ -199,7 +206,13 @@ def construir_objetos(datos: dict, alias: dict[str, list[str]], base: str) -> tu
             "corte": tabla.get("corte") or recon.get("corte") or None,
             "frescura": tabla.get("frescura") or None,
             "ultima_actualizacion": tabla.get("ultima_actualizacion") or None,
-            "descripcion": tabla.get("descripcion") or "",
+            # Para banca, la ficha pública distingue la semántica del objeto y
+            # confirma que sus Parquet de descarga materializan el mismo filtro.
+            "descripcion": (
+                descripciones_vocabulario.get(nombre, "")
+                if nombre in {"bancos_balance", "bancos_resultados"}
+                else tabla.get("descripcion") or ""
+            ),
             "fuente": atribucion["fuente"],
             "atribucion": atribucion["cita"],
             "url_terminos": atribucion["url_terminos"],

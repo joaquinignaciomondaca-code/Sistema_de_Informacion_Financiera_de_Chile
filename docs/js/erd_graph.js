@@ -650,8 +650,8 @@ const ERD_TABLES = [
     y: 590,
     w: 280,
     h: 250,
-    rows: "CMF R1 validado",
-    file: "outputs/bancos/cmf_b1_b2_r1/manifest.json",
+    rows: "CMF R1 validado · descarga filtrada",
+    file: "outputs/bancos/resultados_r1/manifest.json",
     cols: [
       { name: "periodo", pk: true, type: "VARCHAR" },
       { name: "codigo_institucion", pk: true, type: "VARCHAR" },

@@ -34,6 +34,7 @@ on:
       - 'examples/**'
       - 'scripts/normalizar_vocabulario.py'
       - 'scripts/build_download_catalog.py'
+      - 'scripts/build_bancos_vistas.py'
       - 'pipelines/**'
       - 'factoring_leasing/**'
       - 'bancos/**'
@@ -56,7 +57,10 @@ jobs:
   audit:
     if: github.event_name != 'schedule'
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # La cadena completa (historial, Parquet, contrato, IFRS y DOM) superó el
+    # límite anterior de 20 minutos antes de poder terminar; deja margen para
+    # que el job alcance todas las compuertas en vez de cancelarse a mitad.
+    timeout-minutes: 30
     steps:
       # fetch-depth: 0 trae el historial completo: la auditoría de credenciales
       # revisa todos los blobs, no sólo el commit actual.
@@ -220,6 +224,9 @@ jobs:
           fi
           echo "::notice title=Diccionarios::$(tail -n 1 diccionario.log)"
           exit $n
+
+      - name: 'Banca: Parquet de descarga coinciden con filtros y manifiestos'
+        run: python scripts/build_bancos_vistas.py --check
 
       - name: Auditar las consultas sugeridas contra los Parquet
         run: |
