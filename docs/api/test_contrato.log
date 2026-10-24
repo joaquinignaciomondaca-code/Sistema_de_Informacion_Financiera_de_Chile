@@ -1,4 +1,4 @@
-# Test de contrato · 2026-10-24T06:28:00
+# Test de contrato · 2026-10-24T16:50:13
 
 OK    1d.1 rutas · 908 rutas por HTTP, 0 × 404 (0.9 s)
 OK    1d.2 esquema · 1474 columnas comparadas con DESCRIBE
@@ -12,5 +12,5 @@ OK    1d.8 atribución · 90 objetos con fuente, cita y URL de condiciones; 1 ad
 AVISO 1d.2 · 1 columnas declaradas sin un solo valor (toleradas por estar declaradas): agf_lista_entidades.codigo_cmf
 OK    autoprueba · con una columna renombrada y un SHA-256 alterado, el test detecta ['1d.2 esquema', '1d.6 bytes y sha256']
 
-Duración: 8.2 s · comprobaciones: 9 · fallos: 0
+Duración: 6.7 s · comprobaciones: 9 · fallos: 0
 TEST DE CONTRATO: lo publicado cumple lo que promete
