@@ -511,16 +511,16 @@
             <div class="chip" data-query="SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = '2026-09' GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 10;">
               Renta fija de seguros por tipo
             </div>
-            <div class="chip" data-query="SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = '2026' GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;">
+            <div class="chip" data-query="SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = (SELECT max(periodo) FROM seguros_acciones) GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;">
               Acciones en seguros
             </div>
-            <div class="chip" data-query="SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = '2026' GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;">
+            <div class="chip" data-query="SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;">
               Derivados de seguros por tipo
             </div>
             <div class="chip" data-query="SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = '2026-09' GROUP BY tipo_instrumento ORDER BY valorizacion_miles_mf DESC LIMIT 15;">
               Fondos mutuos: cartera nacional por tipo
             </div>
-            <div class="chip" data-query="SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = '2026' GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;">
+            <div class="chip" data-query="SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;">
               Fondos mutuos: inversión en el exterior por país
             </div>
             <div class="chip" data-query="SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional WHERE periodo = '2026-06' GROUP BY tipo_instrumento ORDER BY posiciones DESC LIMIT 15;">
