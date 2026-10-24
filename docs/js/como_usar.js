@@ -79,5 +79,26 @@
     else window.addEventListener("load", entrar);
   }
 
+  /* Enlaces directos tras la carga: si el hash apunta a «Cómo sumar» o a la
+   * Guía, se activa la sub-pestaña y se cambia a la pestaña Guía aunque la
+   * página ya estuviera cargada. Sin esto, clicar en el enlace no hace nada
+   * porque el hash se lee una sola vez al iniciar. */
+  window.addEventListener("hashchange", function () {
+    var hash = (window.location.hash || "").replace("#", "");
+    var pedido = null;
+    if (hash === "guia-como-sumar") {
+      pedido = "sumar";
+    }
+    var idx = pedido === null ? -1 : botones.findIndex(function (boton) {
+      return boton.getAttribute("data-uso-tab") === pedido;
+    });
+    if (idx >= 0) activar(idx, true);
+    if (typeof window.switchMainTab === "function") window.switchMainTab("guia");
+    if (hash === "guia-como-sumar") {
+      var destino = document.getElementById("guia-como-sumar");
+      if (destino) destino.scrollIntoView({ block: "nearest" });
+    }
+  });
+
   window.SIFComoUsar = { activar: activar };
 })();
