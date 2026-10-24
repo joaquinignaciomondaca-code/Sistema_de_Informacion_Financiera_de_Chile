@@ -89,8 +89,15 @@ def audit_duckdb_views(base_dir):
     for name, files in registered.items():
         for rel_file in files:
             views.append((name, rel_file))
+    # Los compactos SQL son fuentes privadas de lectura y no sustituyen las
+    # particiones que esta auditoría valida para catálogo/descargas.
+    sql_compacts = re.findall(
+        r'\{\s*name:\s*["\']([^"\']+)["\'][^{}]*?queryFile:\s*["\']([^"\']+)["\']',
+        code)
+    for name, rel_file in sql_compacts:
+        views.append((f"{name} (SQL compacto)", rel_file))
     print(f"Total vistas registradas en duckdb_client.js: {len(registered)} "
-          f"({len(views)} archivos Parquet)")
+          f"({len(views)} archivos Parquet, incluidas copias SQL compactas)")
 
     errors = 0
     total_filas = 0
