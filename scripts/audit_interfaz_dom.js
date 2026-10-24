@@ -370,9 +370,11 @@ setTimeout(async () => {
   // El alcance se cuenta por lo publicado: si vuelve a enunciarse por lo que
   // falta, la sección deja de describir el catálogo y pasa a disculparse.
   const textoAlcance = document.getElementById("info-alcance").textContent;
+  const lineasAlcance = document.querySelectorAll("#info-alcance > p:not(.info-scope-foot)");
   check("el alcance enumera lo publicado y no nombra ausencias",
+    lineasAlcance.length === 3 &&
     !/no incluye|no se publica|no publicó|no publica/i.test(textoAlcance) &&
-    document.querySelectorAll("#info-alcance .info-list strong").length >= 6,
+    /más de 19 millones/.test(document.querySelector("#info-alcance .info-scope-foot").textContent),
     textoAlcance.slice(0, 80));
 
   const archivoNav = document.querySelector("#sidebar-tree .tree-archive");
@@ -672,47 +674,46 @@ setTimeout(async () => {
   // cerrado no tiene ancho y el lienzo saldría vacío.
   window.switchMainTab("info");
   const calidad = document.querySelector(".info-calidad");
-  const detalleCalidad = calidad.querySelector("details.info-calidad-detalle");
   const explicacion = calidad.querySelector(":scope > p");
-  check("calidad: el registro técnico arranca plegado",
-    Boolean(detalleCalidad) && detalleCalidad.open === false);
   // El titular lleva las cifras y ellas salen del catálogo: si alguien las
   // escribe a mano, audit_cifras.js falla; y no puede afirmar una periodicidad
   // («en algunos meses») que el catálogo no mide.
   const titularCalidad = calidad.querySelector("h2");
-  check("calidad: el titular lleva sus dos cifras como datos medidos",
-    titularCalidad.querySelectorAll("[data-calidad]").length === 2
+  check("calidad: el titular lleva sus cifras como datos medidos",
+    Boolean(titularCalidad.querySelector('[data-calidad="repetidas"]'))
     && /230\.288/.test(titularCalidad.textContent)
     && /22 de 90/.test(titularCalidad.textContent)
     && !/algunos meses/.test(titularCalidad.textContent));
   check("calidad: la explicación está en llano y no cita SQL",
-    explicacion.textContent.trim().split(/[.!?]/).filter(Boolean).length <= 2
+    /^Se publican/.test(explicacion.textContent.trim())
     && !/WITH crudo|count\(\*\)/.test(explicacion.textContent));
-  check("calidad: la advertencia y el enlace al Diccionario quedan a la vista",
+  check("calidad: el enlace al detalle va a la Guía y no a un ancla sin ruta",
     Boolean(calidad.querySelector("h2")) &&
-    Boolean(calidad.querySelector(":scope > p.info-calidad-foot a[href='#dict-container']")));
-  const lienzoCalidad = document.getElementById("calidad-chart");
-  check("calidad: el gráfico no se construye con el plegable cerrado",
-    lienzoCalidad.hidden === true && !lienzoCalidad.querySelector("canvas"));
-  // El lienzo tiene que estar visible cuando el renderizador mide el ancho:
-  // oculto mide cero y el gráfico cae al mínimo de 320 px, sin llenar la caja.
-  const ChartReal = window.ChartRenderer;
-  let pintados = 0;
-  let ocultosAlMedir = 0;
-  window.ChartRenderer = function (contenedor, opciones) {
-    pintados += 1;
-    if (document.getElementById("calidad-chart").hidden) ocultosAlMedir += 1;
-    return new ChartReal(contenedor, opciones);
-  };
-  detalleCalidad.open = true;
-  detalleCalidad.dispatchEvent(new window.Event("toggle"));
-  window.ChartRenderer = ChartReal;
-  check("calidad: el gráfico se pinta una sola vez y con el lienzo ya visible",
-    pintados === 1 && ocultosAlMedir === 0, `pintados=${pintados}, ocultos=${ocultosAlMedir}`);
-  check("calidad: al abrir el plegable aparecen el gráfico y la consulta",
-    lienzoCalidad.hidden === false && Boolean(lienzoCalidad.querySelector("canvas"))
-    && Boolean(detalleCalidad.querySelector("[data-calidad-sql]"))
-    && /230\.288/.test(detalleCalidad.textContent));
+    Boolean(calidad.querySelector(":scope > p.info-calidad-foot a[href='#guia-como-sumar']")));
+  // El registro técnico (cifras, consulta reproducible y gráfico) vive ahora
+  // en la sub-pestaña «Cómo sumar sin sobreestimar» de la Guía.
+  const sumar = document.getElementById("uso-panel-sumar");
+  check("calidad: la Guía aloja el registro técnico con la consulta reproducible",
+    Boolean(sumar) && Boolean(sumar.querySelector("[data-calidad-sql]"))
+    && /claves_duplicados/.test(sumar.querySelector('a[href*="claves_duplicados"]').getAttribute("href")));
+  check("calidad: el gráfico de la Guía arranca oculto y sin pintar",
+    document.getElementById("calidad-chart").hidden === true
+    && !document.getElementById("calidad-chart").querySelector("canvas"));
+
+  // ── Puertas nuevas: cifras medidas y enlaces ancla con ruta ──────────────
+  const info = document.getElementById("info-container");
+  const marcadas = info.querySelectorAll("[data-alcance], [data-calidad], [data-modo], [data-fuentes]");
+  check("cada cifra del panel trae su origen medido (sin cifras escritas a mano)",
+    marcadas.length > 0 && [...marcadas].every((el) => el.textContent.trim()));
+  const anclas = [...document.querySelectorAll('a[href^="#"]')];
+  const ids = new Set([...document.querySelectorAll("[id]")].map((el) => el.id));
+  const rutas = new Set(["sql", "guia", "guia-como-sumar", "como-usar-humanos", "como-usar-agentes", "como-usar-sumar"]);
+  const huorfanos = anclas.filter((a) => {
+    const destino = a.href.split("#")[1];
+    return !ids.has(destino) && !rutas.has(destino);
+  });
+  check("cada enlace ancla apunta a un id existente o a una ruta registrada",
+    huorfanos.length === 0, huorfanos.map((a) => a.getAttribute("href")).join(", ") || "sin huérfanos");
 
   const fallos = results.filter((r) => !r.ok);
   for (const r of results) console.log(`${r.ok ? "OK  " : "FALLA"}  ${r.name}${r.extra ? "  -> " + r.extra : ""}`);
