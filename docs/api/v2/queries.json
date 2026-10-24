@@ -1839,9 +1839,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "renta-fija-de-seguros-por-tipo-9cd525",
+   "id": "renta-fija-de-seguros-por-tipo-16966b",
    "origen": "terminal",
-   "sql": "SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija) GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 10;",
+   "sql": "SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = '2026-09' GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 10;",
    "titulo": "Renta fija de seguros por tipo"
   },
   {
@@ -1851,9 +1851,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "acciones-en-seguros-4057a4",
+   "id": "acciones-en-seguros-b85634",
    "origen": "terminal",
-   "sql": "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = (SELECT max(periodo) FROM seguros_acciones) GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;",
+   "sql": "SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = '2026' GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;",
    "titulo": "Acciones en seguros"
   },
   {
@@ -1863,9 +1863,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "derivados-de-seguros-por-tipo-d009a2",
+   "id": "derivados-de-seguros-por-tipo-010e2d",
    "origen": "terminal",
-   "sql": "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;",
+   "sql": "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = '2026' GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;",
    "titulo": "Derivados de seguros por tipo"
   },
   {
@@ -1875,9 +1875,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "fondos-mutuos-cartera-nacional-por-tipo-2f4342",
+   "id": "fondos-mutuos-cartera-nacional-por-tipo-baa247",
    "origen": "terminal",
-   "sql": "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional) GROUP BY tipo_instrumento ORDER BY valorizacion_miles_mf DESC LIMIT 15;",
+   "sql": "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = '2026-09' GROUP BY tipo_instrumento ORDER BY valorizacion_miles_mf DESC LIMIT 15;",
    "titulo": "Fondos mutuos: cartera nacional por tipo"
   },
   {
@@ -1887,9 +1887,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "fondos-mutuos-inversion-en-el-exterior-por-pais-4da5d1",
+   "id": "fondos-mutuos-inversion-en-el-exterior-por-pais-0bfe76",
    "origen": "terminal",
-   "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;",
+   "sql": "SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = '2026' GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;",
    "titulo": "Fondos mutuos: inversión en el exterior por país"
   },
   {
@@ -1899,9 +1899,9 @@
     ],
     "tipo": "no_vacia"
    },
-   "id": "fondos-de-inversion-cartera-nacional-por-tipo-5230f0",
+   "id": "fondos-de-inversion-cartera-nacional-por-tipo-90ffb4",
    "origen": "terminal",
-   "sql": "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM fi_cartera_nacional) GROUP BY tipo_instrumento ORDER BY posiciones DESC LIMIT 15;",
+   "sql": "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional WHERE periodo = '2026-06' GROUP BY tipo_instrumento ORDER BY posiciones DESC LIMIT 15;",
    "titulo": "Fondos de inversión: cartera nacional por tipo"
   },
   {
