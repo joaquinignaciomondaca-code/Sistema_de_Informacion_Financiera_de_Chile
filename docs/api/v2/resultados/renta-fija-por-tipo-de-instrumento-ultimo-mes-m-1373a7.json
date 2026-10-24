@@ -1,0 +1,111 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "renta-fija-por-tipo-de-instrumento-ultimo-mes-m-1373a7",
+ "titulo": "Renta fija por tipo de instrumento, último mes (M$)",
+ "origen": "explorador",
+ "data_release": "2026-10-23.12612e963628",
+ "generado": "2026-10-24",
+ "max_filas": 500,
+ "columnas": [
+  "sector",
+  "tipo_instrumento",
+  "instrumentos",
+  "valor_final_m_clp"
+ ],
+ "filas": 15,
+ "truncado": false,
+ "datos": [
+  [
+   "generales",
+   "BB",
+   1222,
+   1153506066
+  ],
+  [
+   "generales",
+   "BE",
+   778,
+   543771007
+  ],
+  [
+   "vida",
+   "BB",
+   1656,
+   2738739678
+  ],
+  [
+   "vida",
+   "BBPNEE",
+   78,
+   312533874
+  ],
+  [
+   "vida",
+   "BE",
+   6581,
+   15855157414
+  ],
+  [
+   "vida",
+   "BEC",
+   167,
+   483392802
+  ],
+  [
+   "vida",
+   "BNEE",
+   1140,
+   3587280903
+  ],
+  [
+   "vida",
+   "BTP",
+   550,
+   677299571
+  ],
+  [
+   "vida",
+   "BTU",
+   700,
+   1511255482
+  ],
+  [
+   "vida",
+   "BU",
+   1752,
+   4260902766
+  ],
+  [
+   "vida",
+   "CLEAS",
+   12399,
+   6077559100
+  ],
+  [
+   "vida",
+   "CS",
+   612,
+   1390720134
+  ],
+  [
+   "vida",
+   "DPL",
+   83,
+   591982959
+  ],
+  [
+   "vida",
+   "MHA",
+   63544,
+   7769745874
+  ],
+  [
+   "vida",
+   "MHB",
+   8361,
+   1115709959
+  ]
+ ],
+ "sql": "SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = '2026-09' GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 15;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

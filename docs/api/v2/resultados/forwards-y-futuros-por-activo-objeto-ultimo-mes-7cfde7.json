@@ -1,0 +1,111 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "forwards-y-futuros-por-activo-objeto-ultimo-mes-7cfde7",
+ "titulo": "Forwards y futuros por activo objeto, último mes",
+ "origen": "explorador",
+ "data_release": "2026-10-23.12612e963628",
+ "generado": "2026-10-24",
+ "max_filas": 500,
+ "columnas": [
+  "activo_objeto",
+  "posicion",
+  "contratos",
+  "monto_comprometido_miles_mf"
+ ],
+ "filas": 15,
+ "truncado": false,
+ "datos": [
+  [
+   "$$",
+   "C",
+   139,
+   620900354.0
+  ],
+  [
+   "$$",
+   "V",
+   118,
+   545201022.0
+  ],
+  [
+   "BTP0581029",
+   "C",
+   4,
+   35167840.0
+  ],
+  [
+   "DOLAR",
+   "C",
+   8,
+   32966260.0
+  ],
+  [
+   "DOLAR",
+   "V",
+   130,
+   368525336.0
+  ],
+  [
+   "ESZ6 Index",
+   "C",
+   5,
+   54779896.0
+  ],
+  [
+   "EUR",
+   "C",
+   22,
+   40405773.0
+  ],
+  [
+   "EUR",
+   "V",
+   4,
+   3310440.0
+  ],
+  [
+   "NDX",
+   "C",
+   12,
+   12636110.0
+  ],
+  [
+   "PROM",
+   "C",
+   254,
+   234988066.0
+  ],
+  [
+   "PROM",
+   "V",
+   331,
+   941050908.0
+  ],
+  [
+   "SPX",
+   "C",
+   7,
+   9600310.0
+  ],
+  [
+   "UF",
+   "C",
+   172,
+   1977578274.0
+  ],
+  [
+   "UF",
+   "V",
+   302,
+   2721490155.0
+  ],
+  [
+   "USD",
+   "V",
+   13,
+   234707365.0
+  ]
+ ],
+ "sql": "SELECT activo_objeto, posicion, count(*) AS contratos, SUM(monto_comprometido_miles_mf) AS monto_comprometido_miles_mf FROM ffmm_futuros WHERE periodo = '2026-09' GROUP BY activo_objeto, posicion ORDER BY contratos DESC, activo_objeto, posicion LIMIT 15;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

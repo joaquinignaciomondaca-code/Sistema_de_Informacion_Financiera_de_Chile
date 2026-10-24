@@ -1,0 +1,57 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "derivados-por-tipo-y-sector-ultimo-mes-b29724",
+ "titulo": "Derivados por tipo y sector, último mes",
+ "origen": "explorador",
+ "data_release": "2026-10-23.12612e963628",
+ "generado": "2026-10-24",
+ "max_filas": 500,
+ "columnas": [
+  "sector",
+  "tipo_registro",
+  "contratos",
+  "valor_razonable_m_clp"
+ ],
+ "filas": 6,
+ "truncado": false,
+ "datos": [
+  [
+   "generales",
+   "forward",
+   18,
+   null
+  ],
+  [
+   "generales",
+   "swap",
+   13,
+   null
+  ],
+  [
+   "vida",
+   "forward",
+   1345,
+   null
+  ],
+  [
+   "vida",
+   "futuro",
+   4,
+   null
+  ],
+  [
+   "vida",
+   "opcion",
+   13,
+   -2100395
+  ],
+  [
+   "vida",
+   "swap",
+   4734,
+   null
+  ]
+ ],
+ "sql": "SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = '2026-09' GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}
