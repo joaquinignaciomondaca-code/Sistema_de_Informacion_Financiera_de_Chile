@@ -1,0 +1,105 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "utilidad-del-ejercicio-por-banco-ultimo-periodo-c1244e",
+ "titulo": "Utilidad del ejercicio por banco (último periodo)",
+ "origen": "explorador",
+ "data_release": "2026-10-23.12612e963628",
+ "generado": "2026-10-24",
+ "max_filas": 500,
+ "columnas": [
+  "codigo_institucion",
+  "razon_social",
+  "importe_clp"
+ ],
+ "filas": 17,
+ "truncado": false,
+ "datos": [
+  [
+   "001",
+   "Banco de Chile",
+   837847306494
+  ],
+  [
+   "009",
+   "Banco Internacional",
+   50221149766
+  ],
+  [
+   "012",
+   "Banco del Estado de Chile",
+   372228622725
+  ],
+  [
+   "014",
+   "Scotiabank Chile",
+   330415583530
+  ],
+  [
+   "016",
+   "Banco de Credito e Inversiones",
+   790794354420
+  ],
+  [
+   "028",
+   "Banco BICE",
+   189713753510
+  ],
+  [
+   "031",
+   "HSBC Bank (Chile)",
+   21658312521
+  ],
+  [
+   "037",
+   "Banco Santander-Chile",
+   825693747056
+  ],
+  [
+   "039",
+   "Banco Itau Chile",
+   112844720862
+  ],
+  [
+   "041",
+   "JP Morgan Chase Bank N.A.",
+   38380354454
+  ],
+  [
+   "051",
+   "Banco Falabella",
+   262646059246
+  ],
+  [
+   "053",
+   "Banco Ripley",
+   27835985661
+  ],
+  [
+   "055",
+   "Banco Consorcio",
+   68347252019
+  ],
+  [
+   "059",
+   "Banco BTG Pactual Chile",
+   88736147050
+  ],
+  [
+   "060",
+   "China Construction Bank",
+   3356086228
+  ],
+  [
+   "061",
+   "Bank of China, Agencia en Chile",
+   2807316786
+  ],
+  [
+   "062",
+   "Tanner Banco Digital",
+   -13154396027
+  ]
+ ],
+ "sql": "SELECT codigo_institucion, razon_social, importe_clp FROM bancos_resultados WHERE codigo_cuenta = '590000000' AND codigo_institucion <> '999' AND periodo = '2026-08' ORDER BY importe_clp DESC;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

@@ -1,0 +1,141 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "mayores-fondos-en-pesos-por-activo-neto-ultimo-c-ffcbd6",
+ "titulo": "Mayores fondos en pesos por activo neto, último cierre (MM$)",
+ "origen": "explorador",
+ "data_release": "2026-10-23.12612e963628",
+ "generado": "2026-10-24",
+ "max_filas": 500,
+ "columnas": [
+  "run_fondo",
+  "nombre_fondo",
+  "activo_neto_mm",
+  "activo_neto_anterior_mm"
+ ],
+ "filas": 20,
+ "truncado": false,
+ "datos": [
+  [
+   "10519",
+   "FM BANCHILE PORTAFOLIO AHORRO CORTO PLAZ",
+   2032319.9,
+   2060329.4
+  ],
+  [
+   "10520",
+   "FM BANCHILE PORTAFOLIO RETORNO MED PLAZ",
+   928406.3,
+   654051.1
+  ],
+  [
+   "8026",
+   "FM BANCHILE CAPITAL FINANCIERO",
+   3064484.7,
+   4070922.1
+  ],
+  [
+   "8049",
+   "FONDO MUTUO SCOTIA MONEY MARKET",
+   1345890.8,
+   1293618.7
+  ],
+  [
+   "8057",
+   "FONDO MUTUO SANTANDER MONEY MARKET",
+   3322540.8,
+   4483835.3
+  ],
+  [
+   "8100",
+   "Fondo BICE MANAGER",
+   940445.9,
+   887962.4
+  ],
+  [
+   "8107",
+   "FONDO MUTUO BCI COMPETITIVO",
+   2137283.7,
+   1782331.7
+  ],
+  [
+   "8125",
+   "FM BANCHILE ESTRATEGICO",
+   1276664.8,
+   1030238.4
+  ],
+  [
+   "8127",
+   "FM BANCHILE UTILIDADES",
+   1516713.6,
+   1663397.8
+  ],
+  [
+   "8141",
+   "Fondo Mutuo Bice Extra",
+   901408.0,
+   742048.8
+  ],
+  [
+   "8319",
+   "FONDO MUTUO SOLVENTE BANCO ESTADO",
+   1859163.8,
+   1728792.9
+  ],
+  [
+   "8320",
+   "FONDO MUTUO CONVENIENCIA BANCOESTADO",
+   2479295.6,
+   2259660.0
+  ],
+  [
+   "8338",
+   "FONDO MUTUO ITAU SELECT",
+   1267922.0,
+   1294392.2
+  ],
+  [
+   "8615",
+   "FONDO MUTUO SANTANDER RENTA CORTO PLAZO",
+   1942038.8,
+   1133977.6
+  ],
+  [
+   "8676",
+   "SURA RENTA BONOS",
+   1018667.5,
+   402948.3
+  ],
+  [
+   "8941",
+   "FONDO MUTUO BCI ESTRATEGIA UF HASTA 1 AÑO",
+   940398.6,
+   997802.9
+  ],
+  [
+   "9022",
+   "FM BANCHILE CAPITAL EMPRESARIAL",
+   2429957.0,
+   2705666.6
+  ],
+  [
+   "9034",
+   "FONDO MUTUO SANTANDER RENTA SELECTA CHILE",
+   1874095.5,
+   1070400.4
+  ],
+  [
+   "9222",
+   "FONDO MUTUO SANTANDER AHORRO MEDIANO PLAZO",
+   1509385.8,
+   1731992.5
+  ],
+  [
+   "9765",
+   "FONDO MUTUO BANCOESTADO MI FUTURO ACCESIBLE",
+   1204273.4,
+   862563.2
+  ]
+ ],
+ "sql": "SELECT run_fondo, nombre_fondo, round(valor_miles_mf / 1e3, 1) AS activo_neto_mm, round(valor_anterior_miles_mf / 1e3, 1) AS activo_neto_anterior_mm FROM ffmm_balance WHERE codigo_cuenta = 'ActivoNetoAtribuibleALosParticipes' AND moneda = 'CLP' AND periodo = '2025-12' ORDER BY valor_miles_mf DESC LIMIT 20;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}
