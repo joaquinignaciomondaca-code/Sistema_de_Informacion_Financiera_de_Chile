@@ -1,6 +1,6 @@
 {
  "contrato": "sif-api/resultado",
- "id": "renta-fija-de-seguros-por-tipo-9cd525",
+ "id": "renta-fija-de-seguros-por-tipo-16966b",
  "titulo": "Renta fija de seguros por tipo",
  "origen": "terminal",
  "data_release": "2026-10-23.12612e963628",
@@ -76,6 +76,6 @@
    1115709959
   ]
  ],
- "sql": "SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija) GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 10;",
+ "sql": "SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = '2026-09' GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 10;",
  "como_se_genera": "python3 scripts/build_resultados.py"
 }
