@@ -638,6 +638,36 @@ setTimeout(async () => {
     && document.getElementById("uso-panel-agentes").hidden === false
     && document.getElementById("uso-panel-humanos").hidden === true);
 
+  // Las rutas hash de la Guía deben funcionar incluso después de cargar, pero
+  // un ancla de Información o un enlace SQL no debe cambiar de pestaña.
+  window.location.hash = "#como-usar-humanos";
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  check("URL: #como-usar-humanos abre Guía y su panel de personas",
+    document.getElementById("guia-container").style.display !== "none"
+    && document.getElementById("uso-panel-humanos").hidden === false);
+  window.location.hash = "#como-usar-agentes";
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  check("URL: #como-usar-agentes abre la sub-pestaña de agentes",
+    document.getElementById("guia-container").style.display !== "none"
+    && document.getElementById("uso-panel-agentes").hidden === false);
+  window.location.hash = "#guia-como-sumar";
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  check("URL: #guia-como-sumar abre la Guía y selecciona el panel de sumas",
+    document.getElementById("guia-container").style.display !== "none"
+    && document.getElementById("guia-como-sumar").hidden === false);
+  window.switchMainTab("info");
+  window.location.hash = "#catalogo-principal";
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  check("URL: un ancla de la portada no salta a la Guía",
+    document.getElementById("info-container").style.display !== "none"
+    && document.getElementById("guia-container").style.display === "none");
+  window.location.hash = "#sql=SELECT%201";
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  check("URL: un hash de consulta SQL no es interceptado por la Guía",
+    document.getElementById("info-container").style.display !== "none"
+    && document.getElementById("guia-container").style.display === "none");
+  window.history.replaceState(null, "", window.location.pathname);
+
   // El puntero de Descargas tiene que llevar a la Guía, no dejar al visitante
   // en la misma pestaña: es el enlace que faltaba entre las dos secciones.
   document.querySelector("#creditos-puntero [data-ir-guia]")
@@ -672,6 +702,20 @@ setTimeout(async () => {
   check("portada: «Ver tablas» abre el sector en el explorador y en el mapa",
     document.querySelector('[data-node-id="sector_ffmm"]').classList.contains("open") &&
     document.getElementById("erd-canvas").style.display === "block" && window.erdInstance.filter === "ffmm");
+  const sectoresPortada = ["seguros", "ffmm", "fi", "bancos", "agf", "corredoras_bolsa", "macro"];
+  const accionesPortada = Array.from(document.querySelectorAll('[data-portada="explorar"][data-sector]'));
+  let todosLosSectoresAbren = accionesPortada.length === sectoresPortada.length;
+  for (const sector of sectoresPortada) {
+    const boton = accionesPortada.find((el) => el.dataset.sector === sector);
+    if (!boton) { todosLosSectoresAbren = false; continue; }
+    window.switchMainTab("info");
+    boton.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+    todosLosSectoresAbren = todosLosSectoresAbren
+      && window.erdInstance.filter === sector
+      && document.getElementById("erd-canvas").style.display === "block";
+  }
+  check("portada: los siete enlaces sectoriales abren el sector correcto en el mapa",
+    todosLosSectoresAbren, sectoresPortada.join(", "));
   window.switchMainTab("info");
   document.querySelector('.info-hero-btn-secondary[data-portada="descargas"]')
     .dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
