@@ -20,7 +20,8 @@ class ChartRenderer {
       textColor: theme.textColor,
       titleColor: theme.titleColor,
       fontFamily: "'Schibsted Grotesk', Inter, -apple-system, BlinkMacSystemFont, sans-serif",
-      monoFont: "JetBrains Mono, monospace"
+      monoFont: "JetBrains Mono, monospace",
+      horizontal: false
     }, options);
 
     this.canvas = document.createElement("canvas");
@@ -74,7 +75,7 @@ class ChartRenderer {
     const rect = this.container.getBoundingClientRect();
     const dpr = window.devicePixelRatio || 1;
     this.width = Math.max(rect.width, 320);
-    this.height = Math.max(rect.height || 260, 240);
+    this.height = Math.max(rect.height || (this.options.horizontal ? 200 : 260), this.options.horizontal ? 160 : 240);
 
     this.canvas.width = this.width * dpr;
     this.canvas.height = this.height * dpr;
@@ -155,6 +156,7 @@ class ChartRenderer {
     const ctx = this.ctx;
     const w = this.width;
     const h = this.height;
+    const horizontal = this.options.horizontal;
     ctx.clearRect(0, 0, w, h);
 
     if (!this.data || this.data.length === 0) {
@@ -165,8 +167,11 @@ class ChartRenderer {
       return;
     }
 
-    // left: 74 para que quepan las cifras del eje a 12 px monoespaciados.
-    const padding = { top: 35, right: 25, bottom: 48, left: 74 };
+    // Padding: en modo horizontal se necesita más espacio a la izquierda para
+    // las etiquetas de objeto; en modo vertical se necesita más abajo.
+    const padding = horizontal
+      ? { top: 22, right: 20, bottom: 30, left: 140 }
+      : { top: 35, right: 25, bottom: 48, left: 74 };
     const chartW = w - padding.left - padding.right;
     const chartH = h - padding.top - padding.bottom;
 
@@ -179,82 +184,141 @@ class ChartRenderer {
     ctx.fillStyle = this.options.titleColor;
     ctx.font = `bold 12px ${this.options.fontFamily}`;
     ctx.textAlign = "left";
-    ctx.fillText(`${this.valueCol.toUpperCase()} POR ${this.labelCol.toUpperCase()}`, padding.left, 20);
+    ctx.fillText(`${this.valueCol.toUpperCase()} POR ${this.labelCol.toUpperCase()}`, padding.left, 18);
     ctx.restore();
 
-    // Líneas de Cuadrícula Horizontal
+    // Líneas de Cuadrícula
     const gridSteps = 4;
     ctx.save();
     ctx.strokeStyle = this.options.gridColor;
     ctx.lineWidth = 1;
     ctx.setLineDash([3, 3]);
-    ctx.font = `12px ${this.options.monoFont}`;
+    ctx.font = `11px ${this.options.monoFont}`;
     ctx.fillStyle = this.options.textColor;
-    ctx.textAlign = "right";
 
-    for (let i = 0; i <= gridSteps; i++) {
-      const val = minVal + (range * i) / gridSteps;
-      const y = padding.top + chartH - (i / gridSteps) * chartH;
-      ctx.beginPath();
-      ctx.moveTo(padding.left, y);
-      ctx.lineTo(padding.left + chartW, y);
-      ctx.stroke();
+    if (horizontal) {
+      // Valores en el eje X (abajo), cuadrícula vertical
+      ctx.textAlign = "center";
+      for (let i = 0; i <= gridSteps; i++) {
+        const val = minVal + (range * i) / gridSteps;
+        const x = padding.left + (i / gridSteps) * chartW;
+        ctx.beginPath();
+        ctx.moveTo(x, padding.top);
+        ctx.lineTo(x, padding.top + chartH);
+        ctx.stroke();
 
-      let labelText = val >= 1e6 ? `${(val / 1e6).toFixed(1)}M` :
-                      val >= 1e3 ? `${(val / 1e3).toFixed(0)}k` :
-                      val.toFixed(val < 10 && val > 0 ? 2 : 0);
-      ctx.fillText(labelText, padding.left - 8, y + 3);
+        let labelText = val >= 1e6 ? `${(val / 1e6).toFixed(1)}M` :
+                        val >= 1e3 ? `${(val / 1e3).toFixed(0)}k` :
+                        val.toFixed(val < 10 && val > 0 ? 2 : 0);
+        ctx.fillText(labelText, x, padding.top + chartH + 15);
+      }
+    } else {
+      // Valores en el eje Y (izquierda), cuadrícula horizontal
+      ctx.textAlign = "right";
+      for (let i = 0; i <= gridSteps; i++) {
+        const val = minVal + (range * i) / gridSteps;
+        const y = padding.top + chartH - (i / gridSteps) * chartH;
+        ctx.beginPath();
+        ctx.moveTo(padding.left, y);
+        ctx.lineTo(padding.left + chartW, y);
+        ctx.stroke();
+
+        let labelText = val >= 1e6 ? `${(val / 1e6).toFixed(1)}M` :
+                        val >= 1e3 ? `${(val / 1e3).toFixed(0)}k` :
+                        val.toFixed(val < 10 && val > 0 ? 2 : 0);
+        ctx.fillText(labelText, padding.left - 8, y + 3);
+      }
     }
     ctx.restore();
 
     // Dibujar Barras
     this.bars = [];
     const n = this.data.length;
-    const barSpacing = Math.max(chartW / n, 20);
-    const barWidth = Math.min(barSpacing * 0.65, 45);
 
-    this.data.forEach((d, i) => {
-      const barH = ((d.value - minVal) / range) * chartH;
-      const x = padding.left + i * barSpacing + (barSpacing - barWidth) / 2;
-      const y = padding.top + chartH - barH;
-      const isHov = this.hoverIndex === i;
+    if (horizontal) {
+      // Barras horizontales: etiquetas en eje Y (izquierda, ancho completo)
+      const barHeight = chartH / n * 0.7;
+      const barSpacing = chartH / n;
 
-      this.bars.push({ x, y, w: barWidth, h: barH, data: d });
+      this.data.forEach((d, i) => {
+        const barW = ((d.value - minVal) / range) * chartW;
+        const x = padding.left;
+        const y = padding.top + i * barSpacing + (barSpacing - barHeight) / 2;
+        const isHov = this.hoverIndex === i;
 
-      // Sombra
-      ctx.save();
-      if (isHov) {
-        ctx.shadowColor = theme.shadowTint;
-        ctx.shadowBlur = 12;
-      }
+        this.bars.push({ x, y, w: Math.max(barW, 1), h: barHeight, data: d });
 
-      // Gradiente de Barra
-      const grad = ctx.createLinearGradient(x, y, x, y + barH);
-      grad.addColorStop(0, isHov ? this.options.barHoverColor : this.options.barColor);
-      grad.addColorStop(1, theme.accentTint);
-
-      ctx.fillStyle = grad;
-      this.roundRect(ctx, x, y, barWidth, Math.max(barH, 2), 4);
-      ctx.fill();
-      ctx.restore();
-
-      // Etiqueta del Eje X
-      ctx.save();
-      ctx.fillStyle = isHov ? theme.titleColor : this.options.textColor;
-      ctx.font = `${isHov ? "bold " : ""}12px ${this.options.fontFamily}`;
-      ctx.textAlign = "center";
-      // El recorte se mide contra el ancho real de la barra: a 12 px, cortar
-      // siempre a 8 caracteres dejaba etiquetas pisadas cuando hay muchas barras.
-      let shortLabel = d.label;
-      if (ctx.measureText(shortLabel).width > barWidth - 4) {
-        while (shortLabel.length > 1 && ctx.measureText(shortLabel + "…").width > barWidth - 4) {
-          shortLabel = shortLabel.slice(0, -1);
+        // Sombra
+        ctx.save();
+        if (isHov) {
+          ctx.shadowColor = theme.shadowTint;
+          ctx.shadowBlur = 12;
         }
-        shortLabel += "…";
-      }
-      ctx.fillText(shortLabel, x + barWidth / 2, padding.top + chartH + 16);
-      ctx.restore();
-    });
+
+        // Gradiente de Barra
+        const grad = ctx.createLinearGradient(x, y, x + barW, y);
+        grad.addColorStop(0, isHov ? this.options.barHoverColor : this.options.barColor);
+        grad.addColorStop(1, theme.accentTint);
+
+        ctx.fillStyle = grad;
+        this.roundRect(ctx, x, y, Math.max(barW, 2), barHeight, 4);
+        ctx.fill();
+        ctx.restore();
+
+        // Etiqueta del Eje Y (izquierda, ancho completo, alineada derecha)
+        ctx.save();
+        ctx.fillStyle = isHov ? theme.titleColor : this.options.textColor;
+        ctx.font = `${isHov ? "bold " : ""}11px ${this.options.fontFamily}`;
+        ctx.textAlign = "right";
+        ctx.fillText(d.label, padding.left - 10, y + barHeight / 2 + 4);
+        ctx.restore();
+      });
+    } else {
+      // Barras verticales: etiquetas en eje X (abajo, truncadas al ancho de la barra)
+      const barSpacing = Math.max(chartW / n, 20);
+      const barWidth = Math.min(barSpacing * 0.65, 45);
+
+      this.data.forEach((d, i) => {
+        const barH = ((d.value - minVal) / range) * chartH;
+        const x = padding.left + i * barSpacing + (barSpacing - barWidth) / 2;
+        const y = padding.top + chartH - barH;
+        const isHov = this.hoverIndex === i;
+
+        this.bars.push({ x, y, w: barWidth, h: barH, data: d });
+
+        // Sombra
+        ctx.save();
+        if (isHov) {
+          ctx.shadowColor = theme.shadowTint;
+          ctx.shadowBlur = 12;
+        }
+
+        // Gradiente de Barra
+        const grad = ctx.createLinearGradient(x, y, x, y + barH);
+        grad.addColorStop(0, isHov ? this.options.barHoverColor : this.options.barColor);
+        grad.addColorStop(1, theme.accentTint);
+
+        ctx.fillStyle = grad;
+        this.roundRect(ctx, x, y, barWidth, Math.max(barH, 2), 4);
+        ctx.fill();
+        ctx.restore();
+
+        // Etiqueta del Eje X
+        ctx.save();
+        ctx.fillStyle = isHov ? theme.titleColor : this.options.textColor;
+        ctx.font = `${isHov ? "bold " : ""}12px ${this.options.fontFamily}`;
+        ctx.textAlign = "center";
+        let shortLabel = d.label;
+        if (ctx.measureText(shortLabel).width > barWidth - 4) {
+          while (shortLabel.length > 1 && ctx.measureText(shortLabel + "…").width > barWidth - 4) {
+            shortLabel = shortLabel.slice(0, -1);
+          }
+          shortLabel += "…";
+        }
+        ctx.fillText(shortLabel, x + barWidth / 2, padding.top + chartH + 16);
+        ctx.restore();
+      });
+    }
 
     // Tooltip en Hover
     if (this.hoverIndex >= 0 && this.bars[this.hoverIndex]) {
@@ -266,20 +330,39 @@ class ChartRenderer {
       ctx.font = `bold 12px ${this.options.monoFont}`;
       const tipW = ctx.measureText(tipText).width + 16;
       const tipH = 26;
-      let tipX = b.x + b.w / 2 - tipW / 2;
-      tipX = Math.max(padding.left, Math.min(tipX, w - padding.right - tipW));
-      const tipY = Math.max(b.y - tipH - 8, padding.top);
 
-      ctx.fillStyle = theme.tooltipBg;
-      ctx.strokeStyle = this.options.barColor;
-      ctx.lineWidth = 1;
-      this.roundRect(ctx, tipX, tipY, tipW, tipH, 5);
-      ctx.fill();
-      ctx.stroke();
+      if (horizontal) {
+        let tipX = b.x + b.w + 10;
+        tipX = Math.min(tipX, w - tipW - 10);
+        tipX = Math.max(tipX, padding.left);
+        const tipY = Math.max(b.y - tipH / 2, padding.top);
 
-      ctx.fillStyle = theme.titleColor;
-      ctx.textAlign = "center";
-      ctx.fillText(tipText, tipX + tipW / 2, tipY + 18);
+        ctx.fillStyle = theme.tooltipBg;
+        ctx.strokeStyle = this.options.barColor;
+        ctx.lineWidth = 1;
+        this.roundRect(ctx, tipX, tipY, tipW, tipH, 5);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = theme.titleColor;
+        ctx.textAlign = "left";
+        ctx.fillText(tipText, tipX + 8, tipY + 18);
+      } else {
+        let tipX = b.x + b.w / 2 - tipW / 2;
+        tipX = Math.max(padding.left, Math.min(tipX, w - padding.right - tipW));
+        const tipY = Math.max(b.y - tipH - 8, padding.top);
+
+        ctx.fillStyle = theme.tooltipBg;
+        ctx.strokeStyle = this.options.barColor;
+        ctx.lineWidth = 1;
+        this.roundRect(ctx, tipX, tipY, tipW, tipH, 5);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = theme.titleColor;
+        ctx.textAlign = "center";
+        ctx.fillText(tipText, tipX + tipW / 2, tipY + 18);
+      }
       ctx.restore();
     }
   }
