@@ -1,0 +1,22 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "balance-completo-de-ccaf-los-andes-ultimo-trimes-5b3141",
+ "titulo": "Balance completo de CCAF Los Andes, último trimestre",
+ "origen": "explorador",
+ "data_release": "2026-10-23.12612e963628",
+ "generado": "2026-10-24",
+ "max_filas": 500,
+ "columnas": [
+  "periodo",
+  "tipo_balance",
+  "estado_financiero",
+  "orden",
+  "cuenta",
+  "valor"
+ ],
+ "filas": 0,
+ "truncado": false,
+ "datos": [],
+ "sql": "SELECT periodo, tipo_balance, estado_financiero, orden, cuenta, valor FROM ccaf_balance WHERE rut = '81826800' AND periodo = '2026' ORDER BY tipo_balance, estado_financiero, orden;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}

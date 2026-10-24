@@ -5,8 +5,8 @@
  "data_release": "2026-10-23.12612e963628",
  "generado": "2026-10-24",
  "total": 159,
- "filas": 6254,
- "bytes": 824045,
+ "filas": 6143,
+ "bytes": 812400,
  "truncadas": 2,
  "max_filas": 500,
  "nota": "Resultados calculados en el build sobre el mismo Parquet que publica el sitio. No es SQL arbitrario: son las 159 consultas del catálogo, cada una con su SQL a la vista para poder reproducirla o discutirla.",
@@ -918,10 +918,10 @@
    "url": "/api/v2/resultados/evolucion-del-sector-activos-totales-por-trimest-266f13.json"
   },
   {
-   "id": "balance-completo-de-banchile-agf-ultimo-trimestr-22cbe4",
+   "id": "balance-completo-de-banchile-agf-ultimo-trimestr-af59a0",
    "titulo": "Balance completo de Banchile AGF, último trimestre",
    "origen": "explorador",
-   "filas": 23,
+   "filas": 0,
    "columnas": [
     "periodo",
     "tipo_balance",
@@ -931,9 +931,9 @@
     "valor"
    ],
    "truncado": false,
-   "bytes": 3311,
-   "sha256": "3912242be1233ed13898e4c98afb121c39cf9fbade53c9f4bbbe9b019b590012",
-   "url": "/api/v2/resultados/balance-completo-de-banchile-agf-ultimo-trimestr-22cbe4.json"
+   "bytes": 686,
+   "sha256": "c797417eb366dcb217fa39f569edd93df307f86b46c620cdf62dccee3b441bd2",
+   "url": "/api/v2/resultados/balance-completo-de-banchile-agf-ultimo-trimestr-af59a0.json"
   },
   {
    "id": "ingresos-y-utilidad-por-agf-ejercicio-2025-mm-22d477",
@@ -2001,10 +2001,10 @@
    "url": "/api/v2/resultados/evolucion-del-sector-activos-totales-por-trimest-c0d06c.json"
   },
   {
-   "id": "balance-completo-de-bci-securitizadora-ultimo-tr-f1004f",
+   "id": "balance-completo-de-bci-securitizadora-ultimo-tr-d73c97",
    "titulo": "Balance completo de BCI Securitizadora, último trimestre",
    "origen": "explorador",
-   "filas": 20,
+   "filas": 0,
    "columnas": [
     "periodo",
     "tipo_balance",
@@ -2014,9 +2014,9 @@
     "valor"
    ],
    "truncado": false,
-   "bytes": 3345,
-   "sha256": "3a1466d55d76d8bc980e78865557c54ec20baf38f619488218708adeb5a4ae7b",
-   "url": "/api/v2/resultados/balance-completo-de-bci-securitizadora-ultimo-tr-f1004f.json"
+   "bytes": 704,
+   "sha256": "104c8942af1068055c5722845b45da18338dfdd3e0bcfcac9d46698543d3bea5",
+   "url": "/api/v2/resultados/balance-completo-de-bci-securitizadora-ultimo-tr-d73c97.json"
   },
   {
    "id": "ingresos-y-utilidad-por-securitizadora-ejercicio-6670ee",
@@ -2351,10 +2351,10 @@
    "url": "/api/v2/resultados/evolucion-del-sector-activos-totales-por-trimest-6b53fd.json"
   },
   {
-   "id": "balance-completo-de-ccaf-los-andes-ultimo-trimes-8b33d5",
+   "id": "balance-completo-de-ccaf-los-andes-ultimo-trimes-5b3141",
    "titulo": "Balance completo de CCAF Los Andes, último trimestre",
    "origen": "explorador",
-   "filas": 37,
+   "filas": 0,
    "columnas": [
     "periodo",
     "tipo_balance",
@@ -2364,9 +2364,9 @@
     "valor"
    ],
    "truncado": false,
-   "bytes": 5631,
-   "sha256": "7fd6cb836694f5596662b03afc2d1fdb607bb93933b69da8afaa9533a0a1b22e",
-   "url": "/api/v2/resultados/balance-completo-de-ccaf-los-andes-ultimo-trimes-8b33d5.json"
+   "bytes": 689,
+   "sha256": "7835750805528288de78ea06d5765302762fe62db6a17474226544e49e8ccb30",
+   "url": "/api/v2/resultados/balance-completo-de-ccaf-los-andes-ultimo-trimes-5b3141.json"
   },
   {
    "id": "ingresos-y-utilidad-por-ccaf-ejercicio-2025-mm-f6bd8a",
@@ -2495,7 +2495,7 @@
    "url": "/api/v2/resultados/distribucion-regional-28aee1.json"
   },
   {
-   "id": "renta-fija-de-seguros-por-tipo-9cd525",
+   "id": "renta-fija-de-seguros-por-tipo-16966b",
    "titulo": "Renta fija de seguros por tipo",
    "origen": "terminal",
    "filas": 10,
@@ -2506,30 +2506,30 @@
     "valor_final_m_clp"
    ],
    "truncado": false,
-   "bytes": 1253,
-   "sha256": "d69637a36be2bf5b423b0770f8f2a49eb8059b3f65c62c1c215e22628664ca5f",
-   "url": "/api/v2/resultados/renta-fija-de-seguros-por-tipo-9cd525.json"
+   "bytes": 1217,
+   "sha256": "87d04aa31f0406b6191b367dd6b8d2f17f6cac51f6e9ad442b3de0e08eab0366",
+   "url": "/api/v2/resultados/renta-fija-de-seguros-por-tipo-16966b.json"
   },
   {
-   "id": "acciones-en-seguros-4057a4",
+   "id": "acciones-en-seguros-b85634",
    "titulo": "Acciones en seguros",
    "origen": "terminal",
-   "filas": 10,
+   "filas": 0,
    "columnas": [
     "nemotecnico",
     "aseguradoras",
     "valor_final_m_clp"
    ],
    "truncado": false,
-   "bytes": 1112,
-   "sha256": "97d8942005d3330742e5b7bb8ddd61005eab8c0493f554bc634b56ff97961808",
-   "url": "/api/v2/resultados/acciones-en-seguros-4057a4.json"
+   "bytes": 634,
+   "sha256": "891a1db9dd094f384cca42b340331d63b2e58dbb806b97300beb11d50f7b82d5",
+   "url": "/api/v2/resultados/acciones-en-seguros-b85634.json"
   },
   {
-   "id": "derivados-de-seguros-por-tipo-d009a2",
+   "id": "derivados-de-seguros-por-tipo-010e2d",
    "titulo": "Derivados de seguros por tipo",
    "origen": "terminal",
-   "filas": 6,
+   "filas": 0,
    "columnas": [
     "sector",
     "tipo_registro",
@@ -2537,12 +2537,12 @@
     "valor_razonable_m_clp"
    ],
    "truncado": false,
-   "bytes": 1005,
-   "sha256": "990acd91fe02e66006cd74b7dd92bee63a957835f6a1bad9eb34099f43aa15e0",
-   "url": "/api/v2/resultados/derivados-de-seguros-por-tipo-d009a2.json"
+   "bytes": 663,
+   "sha256": "664123f3af429b820343501d14c03a79be891c6ff20cae948071d27f273fdd95",
+   "url": "/api/v2/resultados/derivados-de-seguros-por-tipo-010e2d.json"
   },
   {
-   "id": "fondos-mutuos-cartera-nacional-por-tipo-2f4342",
+   "id": "fondos-mutuos-cartera-nacional-por-tipo-baa247",
    "titulo": "Fondos mutuos: cartera nacional por tipo",
    "origen": "terminal",
    "filas": 15,
@@ -2553,27 +2553,27 @@
     "valorizacion_miles_mf"
    ],
    "truncado": false,
-   "bytes": 1531,
-   "sha256": "ffa474bdaab15582a1999293efc696aaeffe18d30c657854f50f7cbf67129c79",
-   "url": "/api/v2/resultados/fondos-mutuos-cartera-nacional-por-tipo-2f4342.json"
+   "bytes": 1492,
+   "sha256": "323bdc4ee559ad56e52b2c3da60a713de89e1a68f55dec6d25373e33bb02aae0",
+   "url": "/api/v2/resultados/fondos-mutuos-cartera-nacional-por-tipo-baa247.json"
   },
   {
-   "id": "fondos-mutuos-inversion-en-el-exterior-por-pais-4da5d1",
+   "id": "fondos-mutuos-inversion-en-el-exterior-por-pais-0bfe76",
    "titulo": "Fondos mutuos: inversión en el exterior por país",
    "origen": "terminal",
-   "filas": 15,
+   "filas": 0,
    "columnas": [
     "pais_emisor",
     "posiciones",
     "fondos"
    ],
    "truncado": false,
-   "bytes": 1152,
-   "sha256": "5bc1d35dcb220658a20035e47e02fe8afdb18de33974ad3755d2bb2fbaa2d33f",
-   "url": "/api/v2/resultados/fondos-mutuos-inversion-en-el-exterior-por-pais-4da5d1.json"
+   "bytes": 647,
+   "sha256": "b2274e95b63b4cb3ffc3812d620f9d8d8c13ed8048fd80d700334aad1a2323a9",
+   "url": "/api/v2/resultados/fondos-mutuos-inversion-en-el-exterior-por-pais-0bfe76.json"
   },
   {
-   "id": "fondos-de-inversion-cartera-nacional-por-tipo-5230f0",
+   "id": "fondos-de-inversion-cartera-nacional-por-tipo-90ffb4",
    "titulo": "Fondos de inversión: cartera nacional por tipo",
    "origen": "terminal",
    "filas": 15,
@@ -2584,9 +2584,9 @@
     "valorizacion_miles_mf"
    ],
    "truncado": false,
-   "bytes": 1520,
-   "sha256": "5f10ae1f241e5d3f4a9f02467dd307ae749942ae5aa644245ec8839bce17375b",
-   "url": "/api/v2/resultados/fondos-de-inversion-cartera-nacional-por-tipo-5230f0.json"
+   "bytes": 1483,
+   "sha256": "a569f0fe2f46466574312a04aa55963ccc5bbff9c32e38ea89e66eff96a07ca2",
+   "url": "/api/v2/resultados/fondos-de-inversion-cartera-nacional-por-tipo-90ffb4.json"
   },
   {
    "id": "aseguradoras-que-reportan-7ece34",
