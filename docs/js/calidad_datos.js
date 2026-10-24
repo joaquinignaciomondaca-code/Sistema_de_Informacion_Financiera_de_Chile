@@ -123,7 +123,7 @@
   }
 
   function init() {
-    document.querySelectorAll(".info-calidad, #uso-panel-sumar").forEach(function (raiz) {
+    document.querySelectorAll(".info-calidad, #guia-como-sumar").forEach(function (raiz) {
       if (raiz.dataset.calidadListo === "1") return;
       const estado = datos();
       if (!estado) return;
@@ -134,20 +134,6 @@
       const codigo = raiz.querySelector("[data-calidad-sql]");
       if (codigo && peor) {
         codigo.textContent = consulta(peor.id, peor.datos.ejemplo && peor.datos.ejemplo.periodo);
-      }
-      const boton = raiz.querySelector("[data-calidad-ejecutar]");
-      if (boton) {
-        boton.addEventListener("click", () => {
-          if (typeof window.switchMainTab === "function") window.switchMainTab("sql");
-          const terminal = window.ChatTerminal;
-          if (!terminal || !peor) return;
-          const sql = consulta(peor.id, peor.datos.ejemplo && peor.datos.ejemplo.periodo);
-          if (typeof terminal.setQueryInput === "function") {
-            terminal.setQueryInput(sql.split("\n").filter((l) => !l.trim().startsWith("--")).join("\n"), peor.id);
-          } else if (terminal.input) {
-            terminal.input.value = sql;
-          }
-        });
       }
       raiz.dataset.calidadListo = "1";
     });

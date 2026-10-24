@@ -217,7 +217,7 @@ def main() -> int:
         fallos.append("cartera_fi: publica el nombre del emisor, que acompañaría al RUT suprimido")
 
     # --- 5 · Fondos de inversión: bienes raíces vacío ----------------------
-    parquet(con, str(DOCS / "outputs/fi/bienes_raices/_vacio.parquet"), "fi_bienes_raices")
+    parquet(con, str(DOCS / "outputs/fi/bienes_raices/vacio.parquet"), "fi_bienes_raices")
     vacias = con.execute("SELECT count(*) FROM fi_bienes_raices").fetchone()[0]
     if vacias:
         fallos.append(f"fi_bienes_raices: {vacias} filas; se declara vacía y oculta")

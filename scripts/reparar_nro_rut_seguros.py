@@ -132,7 +132,7 @@ def main(argv: list[str] | None = None) -> int:
 
     import pyarrow.parquet as pq
 
-    rutas = sorted(p for p in SALIDA.rglob("*.parquet") if p.name != "_vacio.parquet")
+    rutas = sorted(p for p in SALIDA.rglob("*.parquet") if p.name != "vacio.parquet")
     objetivos, total_filas, bytes_antes = [], 0, 0
     for ruta in rutas:
         md = pq.ParquetFile(ruta).metadata

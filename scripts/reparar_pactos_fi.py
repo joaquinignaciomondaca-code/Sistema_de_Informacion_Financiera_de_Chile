@@ -101,7 +101,7 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--apply", action="store_true", help="escribe los Parquet (sin esto sólo informa el plan)")
     a = ap.parse_args(argv)
-    rutas = [r for r in sorted(DIR_PACTOS.glob("*.parquet")) if r.name != "_vacio.parquet"]
+    rutas = [r for r in sorted(DIR_PACTOS.glob("*.parquet")) if r.name != "vacio.parquet"]
     if not rutas:
         print(f"No hay Parquet de pactos en {DIR_PACTOS.relative_to(RAIZ)}.")
         return 0
