@@ -46,7 +46,7 @@
         href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
-  <link rel="stylesheet" href="css/app.css?v=fl-20261023-2253-titular-calidad">
+  <link rel="stylesheet" href="css/app.css?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales">
 
   <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
        Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
@@ -508,22 +508,22 @@
           <!-- Chips de consultas rápidas sugeridas -->
           <!-- Chips de consultas rápidas sugeridas: el núcleo (seguros, fondos mutuos y de inversión) -->
           <div class="quick-chips" aria-label="Consultas sugeridas">
-            <div class="chip" data-query="SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija) GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 10;">
+            <div class="chip" data-query="SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija WHERE periodo = '2026-09' GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 10;">
               Renta fija de seguros por tipo
             </div>
-            <div class="chip" data-query="SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = (SELECT max(periodo) FROM seguros_acciones) GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;">
+            <div class="chip" data-query="SELECT nemotecnico, count(DISTINCT rut_aseguradora) AS aseguradoras, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_acciones WHERE periodo = '2026' GROUP BY nemotecnico ORDER BY valor_final_m_clp DESC LIMIT 10;">
               Acciones en seguros
             </div>
-            <div class="chip" data-query="SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;">
+            <div class="chip" data-query="SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = '2026' GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;">
               Derivados de seguros por tipo
             </div>
-            <div class="chip" data-query="SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_nacional) GROUP BY tipo_instrumento ORDER BY valorizacion_miles_mf DESC LIMIT 15;">
+            <div class="chip" data-query="SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = '2026-09' GROUP BY tipo_instrumento ORDER BY valorizacion_miles_mf DESC LIMIT 15;">
               Fondos mutuos: cartera nacional por tipo
             </div>
-            <div class="chip" data-query="SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;">
+            <div class="chip" data-query="SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = '2026' GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;">
               Fondos mutuos: inversión en el exterior por país
             </div>
-            <div class="chip" data-query="SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional WHERE periodo = (SELECT max(periodo) FROM fi_cartera_nacional) GROUP BY tipo_instrumento ORDER BY posiciones DESC LIMIT 15;">
+            <div class="chip" data-query="SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional WHERE periodo = '2026-06' GROUP BY tipo_instrumento ORDER BY posiciones DESC LIMIT 15;">
               Fondos de inversión: cartera nacional por tipo
             </div>
             <div class="chip" data-query="SELECT sector, rut_aseguradora, nombre_aseguradora, primer_periodo, meses_reportados FROM seguros_lista_entidades WHERE reporta_ultimo_mes ORDER BY sector, nombre_aseguradora;">
@@ -811,28 +811,28 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
        `python3 scripts/subir_etiqueta.py <motivo>` cuando cambia cualquier js/css:
        GitHub Pages cachea 10 minutos y, sin etiqueta nueva, quien ya entró sigue
        ejecutando el código viejo. `scripts/audit_interfaz.py` lo comprueba. -->
-  <script src="js/data_bundles.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/alcance.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/chart_renderer.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/erd_graph.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/sql_guard.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/duckdb_client.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/chat_terminal.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/busqueda_pregunta.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/sidebar.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/ux_shell.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/creditos.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/theme_switcher.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/estado_claves.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/data_dictionary.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/data_viewer.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/diccionario_seguros.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/download_utils.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/download_catalog.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/downloads_panel.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/portada.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/calidad_datos.js?v=fl-20261023-2253-titular-calidad" defer></script>
-  <script src="js/como_usar.js?v=fl-20261023-2253-titular-calidad" defer></script>
+  <script src="js/data_bundles.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/alcance.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/chart_renderer.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/erd_graph.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/sql_guard.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/duckdb_client.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/chat_terminal.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/sidebar.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/ux_shell.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/creditos.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/theme_switcher.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/estado_claves.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/data_dictionary.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/data_viewer.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/download_utils.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/download_catalog.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/downloads_panel.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/portada.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/calidad_datos.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
+  <script src="js/como_usar.js?v=fl-20261024-0435-f2-barras-horizontales-f4-chips-literales" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {

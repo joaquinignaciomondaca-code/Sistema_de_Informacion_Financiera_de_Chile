@@ -102,7 +102,7 @@
       // El lienzo se muestra antes de medirse: con `hidden` el contenedor mide
       // cero, el gráfico caería al ancho mínimo de 320 px y no llenaría la caja.
       contenedor.hidden = false;
-      const renderer = new window.ChartRenderer(contenedor);
+      const renderer = new window.ChartRenderer(contenedor, { horizontal: true });
       renderer.setData(
         ["objeto", "sobrantes"],
         top.map((o) => ({
