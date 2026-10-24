@@ -1,7 +1,7 @@
 {
  "contrato": "sif-api/resultado",
- "id": "fondos-de-inversion-cartera-nacional-por-tipo-90ffb4",
- "titulo": "Fondos de inversión: cartera nacional por tipo",
+ "id": "fondos-de-inversion-cartera-nacional-por-tipo-ul-8e14eb",
+ "titulo": "Fondos de inversión: cartera nacional por tipo (último período)",
  "origen": "terminal",
  "data_release": "2026-10-24.1681bebfe7ef",
  "generado": "2026-10-24",
@@ -106,6 +106,6 @@
    655727785.0
   ]
  ],
- "sql": "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional WHERE periodo = '2026-06' GROUP BY tipo_instrumento ORDER BY posiciones DESC LIMIT 15;",
+ "sql": "SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional_ultimo_periodo WHERE periodo = (SELECT max(periodo) FROM fi_cartera_nacional_ultimo_periodo) GROUP BY tipo_instrumento ORDER BY posiciones DESC LIMIT 15;",
  "como_se_genera": "python3 scripts/build_resultados.py"
 }
