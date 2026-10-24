@@ -4,7 +4,7 @@
 -- Uso remoto:   duckdb < views.sql
 -- Uso local:    cambie la línea siguiente por la ruta de su copia de docs/
 --                (por ejemplo file:///home/yo/repo/docs) y ejecútelo igual.
--- Algunas vistas usan copias compactas SQL-only en outputs/sql_query/; no son descargas.
+-- Algunas vistas usan copias compactas SQL-only en outputs/sql_query/ y no se ofrecen para descarga.
 
 SET VARIABLE sif_base = 'https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile';
 
