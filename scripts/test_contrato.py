@@ -7,9 +7,9 @@ lo haría un tercero, y falla si el contrato promete algo que no está.
   1d.1  Las rutas del catálogo existen: 0 × 404 entre esquemas, particiones y
         los 728 Parquet.
   1d.2  El esquema declarado es el `DESCRIBE` real, columna y tipo.
-  1d.3  `views.sql` crea las 105 vistas y los 4 objetos vacíos no crean ninguna,
-        con su motivo escrito.
-  1d.4  Las 156 consultas publicadas corren y devuelven filas; el vacío solo se
+  1d.3  `views.sql` crea las 105 vistas de catálogo y las auxiliares temporales
+        de consultas; los 4 objetos vacíos no crean ninguna, con su motivo escrito.
+  1d.4  Las 159 consultas publicadas corren y devuelven filas; el vacío solo se
         admite si la tabla de la consulta está declarada vacía.
   1d.5  Los ejemplos del README siguen siendo ciertos: el cruce devuelve un
         subconjunto de `bancos_lista_entidades`, y el período histórico fijado
@@ -53,6 +53,7 @@ DOCS = RAIZ / "docs"
 V2 = DOCS / "api" / "v2"
 LOG = DOCS / "api" / "test_contrato.log"
 sys.path.insert(0, str(RAIZ))
+from pipelines.api.vistas import vistas_sql_auxiliares  # noqa: E402
 
 # 1d.5 · Expectativa histórica. Se fija el período y se comparan **conjuntos**,
 # no conteos: la CMF republica cierres y el pipeline reprocesa carteras, así que
@@ -186,11 +187,14 @@ def ejecutar(raiz: Path, base: str) -> tuple[list[tuple[str, bool, str]], list[s
         "SELECT view_name FROM duckdb_views() WHERE NOT internal").fetchall()}
     esperadas = {o["id"] for o in objetos if o["particiones"]}
     esperadas |= {a for o in objetos for a in (o.get("aliases") or [])}
+    auxiliares = {v["name"] for v in vistas_sql_auxiliares()}
+    esperadas |= auxiliares
     vacios = [o for o in objetos if not o["particiones"]]
     comentados = [o["id"] for o in vacios if o["id"] in ddl]
     ok_views = creadas == esperadas and len(comentados) == len(vacios) and not (set(comentados) & creadas)
     anotar("1d.3 views.sql", ok_views,
-           f"{len(creadas)} vistas creadas, {len(vacios)} objetos vacíos sin vista y con su motivo escrito"
+           f"{len(creadas) - len(auxiliares)} vistas de catálogo + {len(auxiliares)} auxiliares temporales, "
+           f"{len(vacios)} objetos vacíos sin vista y con su motivo escrito"
            if ok_views else f"{len(creadas)} vs {len(esperadas)} esperadas; vacíos comentados: {len(comentados)}/{len(vacios)}")
 
     # --- 1d.4 · consultas publicadas ---------------------------------------
@@ -204,8 +208,13 @@ def ejecutar(raiz: Path, base: str) -> tuple[list[tuple[str, bool, str]], list[s
         except Exception as exc:  # noqa: BLE001
             fallidas.append(f"{consulta['id']}: {str(exc).splitlines()[0][:70]}")
             continue
-        if not filas and not set(consulta["espera"]["tablas"]) <= vacias_declaradas:
-            sin_filas.append(consulta["id"])
+        if not filas:
+            tablas_esperadas = set(consulta["espera"]["tablas"])
+            # Sólo se tolera el vacío cuando todas las fuentes canónicas de la
+            # consulta están declaradas vacías; sin tabla catalogada (p. ej.
+            # una auxiliar SQL-only), el resultado debe tener filas.
+            if not tablas_esperadas or not tablas_esperadas <= vacias_declaradas:
+                sin_filas.append(consulta["id"])
     anotar("1d.4 consultas", not fallidas and not sin_filas,
            f"{len(consultas)} consultas ejecutadas, {len(fallidas)} con error y {len(sin_filas)} vacías sin motivo"
            if fallidas or sin_filas else f"las {len(consultas)} consultas corren y devuelven filas")
