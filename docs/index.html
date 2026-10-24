@@ -458,11 +458,11 @@
             <div class="chip" data-query="SELECT sector, tipo_instrumento, count(*) AS instrumentos, SUM(valor_final_m_clp) AS valor_final_m_clp FROM seguros_renta_fija_ultimo_periodo WHERE periodo = (SELECT max(periodo) FROM seguros_renta_fija_ultimo_periodo) GROUP BY sector, tipo_instrumento ORDER BY valor_final_m_clp DESC LIMIT 10;">
               Renta fija de seguros (último período)
             </div>
-            <div class="chip" data-query="SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados WHERE periodo = (SELECT max(periodo) FROM seguros_derivados) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;">
-              Derivados de seguros por tipo
+            <div class="chip" data-query="SELECT sector, tipo_registro, count(*) AS contratos, SUM(valor_razonable_m_clp) AS valor_razonable_m_clp FROM seguros_derivados_ultimo_periodo WHERE periodo = (SELECT max(periodo) FROM seguros_derivados_ultimo_periodo) GROUP BY sector, tipo_registro ORDER BY sector, contratos DESC;">
+              Derivados de seguros por tipo (último período)
             </div>
-            <div class="chip" data-query="SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;">
-              Fondos mutuos: inversión en el exterior por país
+            <div class="chip" data-query="SELECT pais_emisor, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos FROM ffmm_cartera_extranjera_ultimo_periodo WHERE periodo = (SELECT max(periodo) FROM ffmm_cartera_extranjera_ultimo_periodo) GROUP BY pais_emisor ORDER BY posiciones DESC LIMIT 15;">
+              Cartera extranjera FFMM por país (último período)
             </div>
             <div class="chip" data-query="SELECT tipo_instrumento, count(*) AS posiciones, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM fi_cartera_nacional WHERE periodo = '2026-06' GROUP BY tipo_instrumento ORDER BY posiciones DESC LIMIT 15;">
               Fondos de inversión: cartera nacional por tipo
@@ -604,7 +604,7 @@ sif.esquema("seguros_renta_fija")["columnas"][0]["nombre"]    # 'periodo'
 sif.buscar("fondos mutuos")[0]["id"]                          # 'ffmm_lista_entidades'
 sif.sql("SELECT count(*) FROM seguros_renta_fija").fetchone() # una tupla; la cifra cambia con cada publicación</code></pre>
                 <p class="uso-text">En R no hace falta SDK: con <code>DBI</code> y <code>duckdb</code>, el
-                <code>views.sql</code> publicado crea las 105 vistas de catálogo más una auxiliar temporal SQL-only
+                <code>views.sql</code> publicado crea las 105 vistas de catálogo más tres auxiliares temporales SQL-only
                 (<code>examples/r/01_basico.R</code>). En
                 JavaScript, <code>catalog.json</code> y <code>queries.json</code> son dos <code>fetch</code>
                 (<code>examples/javascript/catalogo.mjs</code>). Los tres ejemplos se ejecutan en cada integración del
@@ -626,7 +626,7 @@ sif.sql("SELECT count(*) FROM seguros_renta_fija").fetchone() # una tupla; la ci
                   descargarlo.</p>
                   <pre class="uso-code"><code>https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/llms.txt</code></pre>
                   <p class="uso-note">Si el agente puede ejecutar código, <code>llms.txt</code>, <code>views.sql</code>
-                  y los Parquet bastan: 105 vistas de catálogo (más una auxiliar temporal), 90 objetos y el diccionario de columnas.</p>
+                  y los Parquet bastan: 105 vistas de catálogo (más tres auxiliares temporales), 90 objetos y el diccionario de columnas.</p>
                 </div>
                 <div class="uso-card">
                   <h3>Contrato, esquemas y resultados</h3>

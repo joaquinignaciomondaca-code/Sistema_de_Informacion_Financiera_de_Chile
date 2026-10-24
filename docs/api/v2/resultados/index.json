@@ -6,7 +6,7 @@
  "generado": "2026-10-24",
  "total": 159,
  "filas": 6254,
- "bytes": 824016,
+ "bytes": 824112,
  "truncadas": 2,
  "max_filas": 500,
  "nota": "Resultados calculados en el build sobre el mismo Parquet que publica el sitio. No es SQL arbitrario: son las 159 consultas del catálogo, cada una con su SQL a la vista para poder reproducirla o discutirla.",
@@ -2542,8 +2542,8 @@
    "url": "/api/v2/resultados/renta-fija-de-seguros-ultimo-periodo-acf3bb.json"
   },
   {
-   "id": "derivados-de-seguros-por-tipo-d009a2",
-   "titulo": "Derivados de seguros por tipo",
+   "id": "derivados-de-seguros-por-tipo-ultimo-periodo-e523ca",
+   "titulo": "Derivados de seguros por tipo (último período)",
    "origen": "terminal",
    "filas": 6,
    "columnas": [
@@ -2553,13 +2553,13 @@
     "valor_razonable_m_clp"
    ],
    "truncado": false,
-   "bytes": 1005,
-   "sha256": "d4c664d16fe0f7b5b5e990c16a92e821ff895378cebfb85b1c1545d2807b890a",
-   "url": "/api/v2/resultados/derivados-de-seguros-por-tipo-d009a2.json"
+   "bytes": 1069,
+   "sha256": "bd7d22cf8c69b1c2a92f872484bb2488d683d33c742342061443ae82c7e59c90",
+   "url": "/api/v2/resultados/derivados-de-seguros-por-tipo-ultimo-periodo-e523ca.json"
   },
   {
-   "id": "fondos-mutuos-inversion-en-el-exterior-por-pais-4da5d1",
-   "titulo": "Fondos mutuos: inversión en el exterior por país",
+   "id": "cartera-extranjera-ffmm-por-pais-ultimo-periodo-f7045c",
+   "titulo": "Cartera extranjera FFMM por país (último período)",
    "origen": "terminal",
    "filas": 15,
    "columnas": [
@@ -2568,9 +2568,9 @@
     "fondos"
    ],
    "truncado": false,
-   "bytes": 1152,
-   "sha256": "1d8fbad9d19a61448232c06edd7c8d78a2b7e81be8710e9ef8a2e5563137efc3",
-   "url": "/api/v2/resultados/fondos-mutuos-inversion-en-el-exterior-por-pais-4da5d1.json"
+   "bytes": 1184,
+   "sha256": "f73e0baa3e35a78e6f8b75110ba4f0bdb59029940543a5a4f5e84b19c75d64b3",
+   "url": "/api/v2/resultados/cartera-extranjera-ffmm-por-pais-ultimo-periodo-f7045c.json"
   },
   {
    "id": "fondos-de-inversion-cartera-nacional-por-tipo-90ffb4",

@@ -1,7 +1,7 @@
 """Lectura del contrato de vistas de la web (base de la API, fase 1).
 
-Este módulo es el **único** lugar que sabe leer `SEMANTIC_VIEWS` y
-`LEGACY_VIEW_ALIASES` de `docs/js/duckdb_client.js`. Antes vivía dentro de
+Este módulo es el **único** lugar que sabe leer `SEMANTIC_VIEWS`,
+`QUICK_QUERY_VIEWS` y `LEGACY_VIEW_ALIASES` de `docs/js/duckdb_client.js`. Antes vivía dentro de
 `scripts/audit_consultas_sugeridas.py`; al construir el catálogo hacían falta
 las mismas funciones, así que se movieron aquí y la auditoría las importa en
 vez de tener una copia.
@@ -144,16 +144,24 @@ def rutas_sql_relativas(vista: dict) -> list[str]:
             return []
         datos = json.loads(manifiesto.read_text(encoding="utf-8"))
         base = Path(vista["manifest"]).parent
+        periodos = [p for p in datos.get("periodos", [])
+                    if isinstance(p, str) and re.fullmatch(r"\d{4}-\d{2}", p)]
+        ultimo_periodo = max(periodos) if periodos else None
+        ultimo_ano = ultimo_periodo[:4] if ultimo_periodo else None
         candidatos = []
         for archivo in datos.get("files", []):
             if not isinstance(archivo, str):
                 continue
-            periodo = re.search(r"(?:^|/)(\d{4}-\d{2})(?=\.parquet$)", archivo)
-            if not periodo:
+            mes = re.search(r"(?:^|/)(\d{4}-\d{2})(?=\.parquet$)", archivo)
+            ano = re.search(r"(?:^|/)(\d{4})(?=\.parquet$)", archivo)
+            prioridad = 2 if mes and mes.group(1) == ultimo_periodo else (
+                1 if ano and ano.group(1) == ultimo_ano else 0
+            )
+            if not prioridad:
                 continue
             rel = archivo if (DOCS / archivo).is_file() else str(base / archivo)
             if (DOCS / rel).is_file():
-                candidatos.append((periodo.group(1), Path(rel).as_posix()))
+                candidatos.append((prioridad, Path(rel).as_posix()))
         return [max(candidatos)[1]] if candidatos else []
 
     query_file = vista.get("queryFile")
