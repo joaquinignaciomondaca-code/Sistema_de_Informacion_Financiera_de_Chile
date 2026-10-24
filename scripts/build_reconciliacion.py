@@ -32,6 +32,8 @@ import json
 import sys
 from pathlib import Path
 
+import duckdb
+
 RAIZ = Path(__file__).resolve().parent.parent
 DOCS = RAIZ / "docs"
 sys.path.insert(0, str(RAIZ / "scripts"))
@@ -74,6 +76,27 @@ def cargar() -> tuple[list[dict], dict[str, dict], dict[str, dict], dict[str, li
 def filas_de(vista: dict) -> list[str]:
     """Rutas publicadas de una vista, resueltas contra docs/."""
     return [str(Path(p).relative_to(DOCS)) for p in ac.ficheros_de(vista)]
+
+
+def filas_filtradas(ficheros: list[Path], where: str | None) -> int:
+    """Cuenta filas de los Parquet aplicando `where` si existe.
+
+    Para objetos sobre dataset compartido (bancos B1/B2 vs R1), el conteo debe
+    ser el de la vista filtrada, no el total del archivo físico.
+    """
+    rutas_abs = [str(DOCS / f) for f in ficheros]
+    if not where:
+        total = 0
+        con = duckdb.connect()
+        for f in rutas_abs:
+            total += con.execute(f"SELECT count(*) FROM read_parquet('{f}')").fetchone()[0]
+        con.close()
+        return total
+    con = duckdb.connect()
+    rutas = json.dumps(rutas_abs)
+    n = con.execute(f"SELECT count(*) FROM read_parquet({rutas}) WHERE {where}").fetchone()[0]
+    con.close()
+    return n
 
 
 def construir() -> tuple[list[dict], list[str]]:
@@ -130,7 +153,7 @@ def construir() -> tuple[list[dict], list[str]]:
             "motivo": motivo,
             "deriva_de": DERIVADOS.get(objeto, fila.get("id", "") if puente == "origen_compartido" else ""),
             "particiones": len(rutas),
-            "filas": fila.get("registros_reales", item.get("filas", "")),
+            "filas": filas_filtradas([Path(p) for p in rutas], vista.get("where")) if rutas else 0,
             "bytes": item.get("bytes", ""),
             "corte": fila.get("corte", ""),
             "ultima_actualizacion": fila.get("ultima_actualizacion", ""),

@@ -98,6 +98,33 @@ def _licencia() -> str:
     return f"{REPO}/blob/main/DATA_LICENSE.md"
 
 
+def _descripcion_objeto(tabla: dict, info: dict, nombre: str) -> str:
+    """Descripción de un recurso del Data Package.
+
+    Para objetos sobre dataset compartido (bancos B1/B2 vs R1), la descripción
+    del manifiesto es la misma para ambos (habla del dataset físico completo),
+    así que se añade el filtro aplicado para distinguirlos.
+    """
+    base = tabla.get("descripcion") or ""
+    filtro = info.get("filtro")
+    if not filtro:
+        return base
+    # Traducir el filtro SQL a lenguaje legible
+    if "IN ('B1', 'B2')" in filtro:
+        especifica = " Sólo filas de los archivos B1 (consolidado) y B2 (individual); excluye R1 (estado de resultados)."
+    elif "= 'R1'" in filtro:
+        especifica = " Sólo filas del archivo R1 (estado de resultados); excluye B1 y B2."
+    elif "= 'B1'" in filtro:
+        especifica = " Sólo filas del archivo B1 (consolidado)."
+    elif "= 'B2'" in filtro:
+        especifica = " Sólo filas del archivo B2 (individual)."
+    else:
+        especifica = f" Filtro aplicado: {filtro}."
+    if base and especifica not in base:
+        return base + especifica
+    return base or especifica.strip()
+
+
 def sha256(ruta: Path) -> str:
     h = hashlib.sha256()
     with ruta.open("rb") as fh:
@@ -177,7 +204,7 @@ def construir() -> dict:
             "profile": "tabular-data-resource",
             "name": nombre,
             "title": recon.get("nombre_visible") or info.get("nombre_visible") or nombre,
-            "description": tabla.get("descripcion") or "",
+            "description": _descripcion_objeto(tabla, info, nombre),
             "path": [p["path"] for p in particiones],
             "scheme": "file",
             "format": "parquet",

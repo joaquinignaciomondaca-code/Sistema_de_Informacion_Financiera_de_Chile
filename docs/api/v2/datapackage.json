@@ -806,7 +806,7 @@
   },
   {
    "bytes": 16530765,
-   "description": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Conserva los campos monetarios originales y agrega `importe_clp`, el importe en pesos con el que se suma y se lee cada línea.",
+   "description": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Conserva los campos monetarios originales y agrega `importe_clp`, el importe en pesos con el que se suma y se lee cada línea. Sólo filas de los archivos B1 (consolidado) y B2 (individual); excluye R1 (estado de resultados).",
    "format": "parquet",
    "hash": "d9a98edc7829af1ef62ec77df7c5b8fb3a1f9be08a17acd6c2bd70320f133ea2",
    "licenses": [
@@ -903,7 +903,7 @@
       "type": "string"
      },
      {
-      "description": "Código de cuenta tal como aparece en el TXT CMF.",
+      "description": "Código de cuenta tal como aparece en el TXT CMF (9 dígitos): rubro (positions 1-2), línea (positions 3-5) e ítem (positions 6-9). Ejemplo: 105000200 = rubro 10 (activos), línea 500, ítem 0200. Los totales del rubro llevan línea 000 e ítem 0000 (ej. 100000000 = TOTAL ACTIVOS). No sumar líneas padre con descendientes.",
       "name": "codigo_cuenta",
       "sif_rol": "PK parcial",
       "type": "string"
@@ -1450,7 +1450,7 @@
   },
   {
    "bytes": 16530765,
-   "description": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Conserva los campos monetarios originales y agrega `importe_clp`, el importe en pesos con el que se suma y se lee cada línea.",
+   "description": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Conserva los campos monetarios originales y agrega `importe_clp`, el importe en pesos con el que se suma y se lee cada línea. Sólo filas del archivo R1 (estado de resultados); excluye B1 y B2.",
    "format": "parquet",
    "hash": "d9a98edc7829af1ef62ec77df7c5b8fb3a1f9be08a17acd6c2bd70320f133ea2",
    "licenses": [
@@ -1547,7 +1547,7 @@
       "type": "string"
      },
      {
-      "description": "Código de cuenta tal como aparece en el TXT CMF.",
+      "description": "Código de cuenta tal como aparece en el TXT CMF (9 dígitos): rubro (positions 1-2), línea (positions 3-5) e ítem (positions 6-9). Ejemplo: 105000200 = rubro 10 (activos), línea 500, ítem 0200. Los totales del rubro llevan línea 000 e ítem 0000 (ej. 100000000 = TOTAL ACTIVOS). No sumar líneas padre con descendientes.",
       "name": "codigo_cuenta",
       "sif_rol": "PK parcial",
       "type": "string"
