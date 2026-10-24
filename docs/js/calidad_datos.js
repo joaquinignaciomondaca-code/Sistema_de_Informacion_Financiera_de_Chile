@@ -105,7 +105,10 @@
       const renderer = new window.ChartRenderer(contenedor);
       renderer.setData(
         ["objeto", "sobrantes"],
-        top.map((o) => ({ objeto: o.id, sobrantes: o.sobrantes }))
+        top.map((o) => ({
+          objeto: o.id.length > 24 ? o.id.slice(0, 21) + "…" : o.id,
+          sobrantes: o.sobrantes,
+        }))
       );
     } catch (error) {
       if (window.console && console.warn) console.warn('calidad: sin gráfico', error);
