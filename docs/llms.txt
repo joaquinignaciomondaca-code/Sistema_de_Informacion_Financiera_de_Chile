@@ -24,7 +24,7 @@ Base: `https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Finan
 
 ## Datos
 
-- [views.sql](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/views.sql): `SET VARIABLE sif_base = '<base>';`, 105 vistas de catálogo y tres `TEMP VIEW` auxiliares para los chips de último período de renta fija, derivados de seguros y cartera extranjera de FFMM. Cada auxiliar lee sólo el archivo de la partición más reciente; no es objeto catalogado ni descarga. Cambiar esa línea apunta todo a un espejo o a una copia local. Los 4 objetos vacíos no crean vista.
+- [views.sql](https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/v2/views.sql): `SET VARIABLE sif_base = '<base>';`, 105 vistas de catálogo y cuatro `TEMP VIEW` auxiliares, fuera del catálogo y de las descargas. `seguros_renta_fija_ultimo_periodo` y `fi_cartera_nacional_ultimo_periodo` leen el archivo que contiene el último período. `seguros_derivados_ultima_particion` y `ffmm_cartera_extranjera_ultima_particion` leen el último archivo anual, que puede contener varios meses; sus chips filtran luego el período máximo. Cambiar esa línea apunta todo a un espejo o a una copia local. Los 4 objetos vacíos no crean vista.
 - `schema/{id}.json` y `partitions/{id}.json`: columnas con tipo y rol, clave primaria, y los archivos con período, filas, bytes y `sha256`.
 - Los Parquet están en `/outputs/…` del mismo sitio y aceptan peticiones HTTP Range.
 

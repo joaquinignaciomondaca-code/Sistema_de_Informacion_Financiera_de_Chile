@@ -197,21 +197,29 @@ const QUICK_QUERY_VIEWS = [
     sourceManifest: "outputs/seguros/renta_fija/manifest.json",
     latestManifestFile: true
   },
-  // La CMF publica derivados en Parquet anuales: se elige el año que contiene
-  // el último mes, no se cargan los once archivos históricos.
+  // Estos dos manifiestos particionan por año. La vista acota la lectura al
+  // archivo anual más reciente, que puede contener varios meses; el chip filtra
+  // el período máximo. El sufijo explicita que la vista no es un mes aislado.
   {
-    name: "seguros_derivados_ultimo_periodo",
+    name: "seguros_derivados_ultima_particion",
     sourceManifest: "outputs/seguros/derivados/manifest.json",
     latestManifestFile: true
   },
-  // FFMM extranjero también está particionado por año; sólo se consulta el
-  // Parquet del año más reciente y se conserva completa la vista canónica.
   {
-    name: "ffmm_cartera_extranjera_ultimo_periodo",
+    name: "ffmm_cartera_extranjera_ultima_particion",
     sourceManifest: "outputs/ffmm/cartera_extranjera/manifest.json",
     latestManifestFile: true
   },
+  // FI publica un Parquet por trimestre. El último archivo contiene el único
+  // período más reciente y permite responder ese chip sin abrir 26 archivos.
+  {
+    name: "fi_cartera_nacional_ultimo_periodo",
+    sourceManifest: "outputs/fi/cartera_nacional/manifest.json",
+    latestManifestFile: true
+  },
 ];
+// El autocompletado expone sólo los nombres, no el detalle de fuentes auxiliares.
+window.SIF_QUICK_QUERY_VIEW_NAMES = QUICK_QUERY_VIEWS.map((view) => view.name);
 
 // Tiempo máximo por intento de arranque. Sin límite, un worker o un .wasm que no
 // responde deja el motor "cargando" para siempre sin ningún mensaje (ver
