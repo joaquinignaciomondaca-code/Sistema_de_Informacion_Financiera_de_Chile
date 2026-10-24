@@ -6724,3 +6724,61 @@ body {
 @media (max-width: 720px) {
   .guia-lectura-details .info-list { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Remate de la portada: autoría, advertencia y auditorías en una sola unidad. */
+.info-endmatter {
+  margin-top: 30px;
+  padding: 23px 2px 5px;
+  border-top: 1px solid var(--border-color);
+}
+.info-endmatter-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
+  gap: clamp(20px, 4vw, 52px);
+  align-items: start;
+}
+.info-endmatter .info-autor { min-width: 0; margin: 0; }
+.info-endmatter .info-autor > .info-section-kicker { font-size: 10px; letter-spacing: 1.5px; }
+.info-endmatter .info-autor h2 { margin-top: 5px; font-size: 20px; letter-spacing: -0.45px; }
+.info-endmatter .creditos-autor { margin-top: 7px; }
+.info-endmatter .creditos-autor p { margin-bottom: 7px; font-size: 12px; line-height: 1.55; }
+.info-endmatter .creditos-autor p strong { font-size: 13px; }
+.info-endmatter .creditos-autor-enlaces { gap: 5px 9px; font-size: 11px; }
+.info-endmatter-aside { min-width: 0; }
+.info-endmatter .info-note {
+  gap: 10px;
+  margin: 0;
+  padding: 12px 13px;
+  border-color: rgba(var(--accent-rgb), 0.2);
+  border-radius: 9px;
+  background: rgba(var(--accent-rgb), 0.045);
+}
+.info-endmatter .info-note-mark { width: 18px; height: 18px; flex-basis: 18px; font-size: 11px; }
+.info-endmatter .info-note p { color: var(--text-secondary); font-size: 11px; line-height: 1.55; }
+.info-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 9px;
+  padding: 11px 13px;
+  border: 1px solid var(--border-color);
+  border-radius: 9px;
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: border-color 150ms ease, background 150ms ease;
+}
+.info-foot:hover { border-color: rgba(var(--accent-rgb), 0.45); background: var(--bg-tertiary); }
+.info-foot:focus-visible { outline: 2px solid var(--accent-mint); outline-offset: 3px; }
+.info-foot-copy { display: grid; gap: 3px; min-width: 0; }
+.info-foot-copy strong { color: var(--accent-mint-text); font-size: 11px; font-weight: 700; }
+.info-foot-copy small { color: var(--text-muted); font-size: 10px; line-height: 1.4; }
+.info-foot-arrow { flex: 0 0 auto; color: var(--accent-mint-text); font-size: 16px; }
+@media (max-width: 720px) {
+  .info-endmatter { margin-top: 23px; padding-top: 18px; }
+  .info-endmatter-grid { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .info-foot { transition: none; }
+}
