@@ -68,7 +68,7 @@ check("el CSS lo posiciona como flotante", /position:\s*fixed/.test(bloqueCss));
 check("el CSS lo ancla abajo con área segura", /bottom:\s*calc\([^)]*env\(safe-area-inset-bottom/.test(bloqueCss));
 check("el CSS lo oculta por defecto", /display:\s*none/.test(bloqueCss));
 check("el CSS lo muestra sólo en pantalla pequeña",
-  /@media \(max-width: 900px\)[\s\S]{0,200}\.aviso-movil\s*\{[\s\S]{0,80}display:\s*flex/.test(css));
+  /@media \(max-width: 600px\)[\s\S]{0,200}\.aviso-movil\s*\{[\s\S]{0,80}display:\s*flex/.test(css));
 check("el aviso vive fuera del layout",
   html.indexOf('class="aviso-movil"') > html.indexOf("</div> <!-- Cierre de app-layout -->"));
 check("tiene aspa además del botón", html.includes('id="aviso-movil-aspa"'));

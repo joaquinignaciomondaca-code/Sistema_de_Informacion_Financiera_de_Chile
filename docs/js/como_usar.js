@@ -93,17 +93,26 @@
   window.addEventListener("hashchange", function () {
     var hash = (window.location.hash || "").replace("#", "");
     var pedido = null;
-    if (hash === "guia-como-sumar") {
+    if (hash === "guia") {
+      pedido = "humanos";
+    } else if (hash === "guia-como-sumar") {
       pedido = "sumar";
+    } else if (hash.indexOf("como-usar-") === 0) {
+      pedido = hash.slice("como-usar-".length);
     }
+    // No secuestrar anclas locales del resto de Información ni hashes como
+    // #sql=...: sólo las rutas explícitas de la Guía cambian de pestaña.
     var idx = pedido === null ? -1 : botones.findIndex(function (boton) {
       return boton.getAttribute("data-uso-tab") === pedido;
     });
-    if (idx >= 0) activar(idx, true);
+    if (idx < 0) return;
+    activar(idx, true);
     if (typeof window.switchMainTab === "function") window.switchMainTab("guia");
-    if (hash === "guia-como-sumar") {
-      var destino = document.getElementById("guia-como-sumar");
-      if (destino) destino.scrollIntoView({ block: "nearest" });
+    var destino = document.getElementById(pedido === "sumar" ? "guia-como-sumar" : "guia-como-usar");
+    if (destino && typeof destino.scrollIntoView === "function") {
+      window.setTimeout(function () {
+        destino.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      }, 0);
     }
   });
 

@@ -187,12 +187,17 @@ def estatica() -> list[str]:
     return errores + alineacion_manifest(vistas)
 
 
-# Datasetes publicados que no tienen vista propia en el sitio: la misma
-# partición se consulta a través de varias vistas (bancos_balance y
-# bancos_resultados filtran la misma serie por familia de archivo fuente), de
-# modo que contarlos una vez es lo correcto.
+# Datasetes fuente publicados sin vista directa en el sitio. La fuente bancaria
+# completa se conserva como respaldo de extracción; las vistas semánticas y sus
+# descargas se materializan en particiones filtradas separadas.
 DATASETS_SIN_VISTA = {
-    "bancos_cmf_lineas": "misma partición de bancos_balance y bancos_resultados (contada una vez)",
+    "bancos_cmf_lineas": "fuente CMF completa; las vistas balance y resultados se publican en particiones filtradas propias",
+}
+# Los Parquet semánticos se materializan desde una fuente cruda común. Sus rutas
+# ya no son las del manifiesto fuente, pero siguen cubiertas por su publicación.
+VISTAS_DESDE_DATASET = {
+    "bancos_balance": "bancos_cmf_lineas",
+    "bancos_resultados": "bancos_cmf_lineas",
 }
 
 
@@ -254,7 +259,10 @@ def alineacion_manifest(vistas: dict[str, str]) -> list[str]:
             errores.append(f"data_manifest.json {t['id']}: no corresponde a ninguna vista del sitio")
     for vista, ruta in vistas.items():
         cubre = por_archivo.get(ruta)
-        if vista not in ids_manifiesto and cubre not in (vista, *DATASETS_SIN_VISTA):
+        fuente_compartida = VISTAS_DESDE_DATASET.get(vista)
+        if (vista not in ids_manifiesto
+                and cubre not in (vista, *DATASETS_SIN_VISTA)
+                and fuente_compartida not in ids_manifiesto):
             errores.append(f"vista {vista}: sin entrada en data_manifest.json (¿quién la cuenta?)")
     return errores
 

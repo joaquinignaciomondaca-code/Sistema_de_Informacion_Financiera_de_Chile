@@ -356,23 +356,28 @@ setTimeout(async () => {
   check("el catálogo trae el alcance editorial", Boolean(alcance && A && A.disponible()));
   const cifra = (ruta) => (document.querySelector(`[data-alcance="${ruta}"]`) || {}).textContent;
   const nucleo = alcance.niveles.find((n) => n.id === "nucleo");
-  check("la portada muestra las cifras del núcleo desde el catálogo",
-    cifra("nucleo.sectores") === "3" && cifra("nucleo.conjuntos") === String(nucleo.conjuntos) &&
-    /millones$/.test(cifra("nucleo.filas")),
-    [cifra("nucleo.sectores"), cifra("nucleo.conjuntos"), cifra("nucleo.filas")].join(" · "));
+  check("la portada muestra sólo los conteos esenciales del núcleo desde el catálogo",
+    cifra("nucleo.sectores") === "3" && cifra("nucleo.conjuntos") === String(nucleo.conjuntos)
+    && !document.querySelector(".info-nucleo-cifras [data-alcance='nucleo.filas']"),
+    [cifra("nucleo.sectores"), cifra("nucleo.conjuntos")].join(" · "));
   check("la portada no promete una cobertura global (cada tabla tiene su periodo)",
     !/cobertura máxima/.test(document.getElementById("info-container").textContent)
     && !/data-alcance="nucleo\.periodo"/.test(document.getElementById("info-container").innerHTML));
   check("la portada tiene tres tarjetas grandes: seguros, fondos mutuos y fondos de inversión",
     Array.from(document.querySelectorAll(".info-core-card")).map((c) => c.dataset.sector).join(",") === "seguros,ffmm,fi");
+  check("el inicio destaca la propuesta y ofrece explorar o ir a descargas",
+    /abierto en datos/.test(document.getElementById("home-title").textContent)
+    && Boolean(document.querySelector('.info-hero-btn[href="#catalogo-principal"]'))
+    && Boolean(document.querySelector('.info-hero-btn[data-portada="descargas"]')));
   check("la portada ya no anuncia 15 industrias",
     !/15 industrias/.test(document.getElementById("info-container").textContent));
-  // El alcance se cuenta por lo publicado: si vuelve a enunciarse por lo que
-  // falta, la sección deja de describir el catálogo y pasa a disculparse.
-  const textoAlcance = document.getElementById("info-alcance").textContent;
+  // El detalle de alcance y metodología se conserva, pero deja de competir
+  // con la navegación principal: aparece bajo una divulgación cerrada.
+  const alcanceDetalle = document.getElementById("info-alcance");
+  const textoAlcance = alcanceDetalle.textContent;
   const lineasAlcance = document.querySelectorAll("#info-alcance > p:not(.info-scope-foot)");
-  check("el alcance enumera lo publicado y no nombra ausencias",
-    lineasAlcance.length === 3 &&
+  check("el alcance completo queda disponible en detalles plegados y sólo enumera lo publicado",
+    alcanceDetalle.closest("details").open === false && lineasAlcance.length === 3 &&
     !/no incluye|no se publica|no publicó|no publica/i.test(textoAlcance) &&
     /más de 19 millones/.test(document.querySelector("#info-alcance .info-scope-foot").textContent),
     textoAlcance.slice(0, 80));
@@ -574,6 +579,10 @@ setTimeout(async () => {
     /Sobre el autor/.test(creditosAutor.textContent) && /Joaquín Mondaca/.test(creditosAutor.textContent));
   check("autoría: declara cuándo partió el proyecto",
     /septiembre de 2026/.test(creditosAutor.textContent));
+  check("portada: autoría, nota y auditorías forman un remate visual único",
+    Boolean(document.querySelector(".info-endmatter-grid #creditos-autor"))
+    && Boolean(document.querySelector(".info-endmatter .info-note"))
+    && Boolean(document.querySelector(".info-endmatter a.info-foot .info-foot-copy small")));
   check("autoría: no queda ningún bloque de citación en el sitio",
     !document.getElementById("cita-info") && !document.getElementById("cita-autor")
     && !document.getElementById("cita-descargas"));
@@ -629,6 +638,36 @@ setTimeout(async () => {
     && document.getElementById("uso-panel-agentes").hidden === false
     && document.getElementById("uso-panel-humanos").hidden === true);
 
+  // Las rutas hash de la Guía deben funcionar incluso después de cargar, pero
+  // un ancla de Información o un enlace SQL no debe cambiar de pestaña.
+  window.location.hash = "#como-usar-humanos";
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  check("URL: #como-usar-humanos abre Guía y su panel de personas",
+    document.getElementById("guia-container").style.display !== "none"
+    && document.getElementById("uso-panel-humanos").hidden === false);
+  window.location.hash = "#como-usar-agentes";
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  check("URL: #como-usar-agentes abre la sub-pestaña de agentes",
+    document.getElementById("guia-container").style.display !== "none"
+    && document.getElementById("uso-panel-agentes").hidden === false);
+  window.location.hash = "#guia-como-sumar";
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  check("URL: #guia-como-sumar abre la Guía y selecciona el panel de sumas",
+    document.getElementById("guia-container").style.display !== "none"
+    && document.getElementById("guia-como-sumar").hidden === false);
+  window.switchMainTab("info");
+  window.location.hash = "#catalogo-principal";
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  check("URL: un ancla de la portada no salta a la Guía",
+    document.getElementById("info-container").style.display !== "none"
+    && document.getElementById("guia-container").style.display === "none");
+  window.location.hash = "#sql=SELECT%201";
+  await new Promise((resolve) => setTimeout(resolve, 0));
+  check("URL: un hash de consulta SQL no es interceptado por la Guía",
+    document.getElementById("info-container").style.display !== "none"
+    && document.getElementById("guia-container").style.display === "none");
+  window.history.replaceState(null, "", window.location.pathname);
+
   // El puntero de Descargas tiene que llevar a la Guía, no dejar al visitante
   // en la misma pestaña: es el enlace que faltaba entre las dos secciones.
   document.querySelector("#creditos-puntero [data-ir-guia]")
@@ -639,6 +678,13 @@ setTimeout(async () => {
   check("la Guía ya no vive dentro de Información",
     !document.getElementById("info-container").querySelector("#guia-como-usar")
     && !document.getElementById("downloads-container").querySelector("#guia-como-usar"));
+  const lecturaGuia = document.querySelector(".guia-lectura-details");
+  check("la Guía conserva la lectura de frecuencia, unidades, presencia y trazabilidad en un detalle plegado",
+    Boolean(lecturaGuia) && lecturaGuia.open === false
+    && /frecuencia/i.test(lecturaGuia.textContent)
+    && /unidades/i.test(lecturaGuia.textContent)
+    && /reportando/i.test(lecturaGuia.textContent)
+    && /manifiesto/i.test(lecturaGuia.textContent));
   window.switchMainTab("info");
 
   check("la web advierte que la base puede tener errores y pide verificar",
@@ -656,45 +702,49 @@ setTimeout(async () => {
   check("portada: «Ver tablas» abre el sector en el explorador y en el mapa",
     document.querySelector('[data-node-id="sector_ffmm"]').classList.contains("open") &&
     document.getElementById("erd-canvas").style.display === "block" && window.erdInstance.filter === "ffmm");
+  const sectoresPortada = ["seguros", "ffmm", "fi", "bancos", "agf", "corredoras_bolsa", "macro"];
+  const accionesPortada = Array.from(document.querySelectorAll('[data-portada="explorar"][data-sector]'));
+  let todosLosSectoresAbren = accionesPortada.length === sectoresPortada.length;
+  for (const sector of sectoresPortada) {
+    const boton = accionesPortada.find((el) => el.dataset.sector === sector);
+    if (!boton) { todosLosSectoresAbren = false; continue; }
+    window.switchMainTab("info");
+    boton.dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+    todosLosSectoresAbren = todosLosSectoresAbren
+      && window.erdInstance.filter === sector
+      && document.getElementById("erd-canvas").style.display === "block";
+  }
+  check("portada: los siete enlaces sectoriales abren el sector correcto en el mapa",
+    todosLosSectoresAbren, sectoresPortada.join(", "));
   window.switchMainTab("info");
-  document.querySelector('.info-core-card[data-sector="seguros"] [data-portada="descargas"]')
+  document.querySelector('.info-hero-btn-secondary[data-portada="descargas"]')
     .dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
-  check("portada: «Descargar» abre Descargas filtrada por el sector",
+  check("portada: la acción principal abre Descargas sin filtrar el catálogo",
     document.getElementById("downloads-container").style.display === "flex" &&
-    document.getElementById("dl-sector").value === "seguros" &&
-    visiblesDl().length > 0 && visiblesDl().every((i) => i.dataset.bloque === "seguros"));
+    document.getElementById("dl-sector").value === "todos" && visiblesDl().length > 0);
   window.DownloadsPanel.filtrarSector("todos");
   window.switchMainTab("info");
   document.querySelector('[data-portada="archivo"]').dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
   check("portada: el enlace discreto abre el archivo del explorador",
     document.querySelector("#sidebar-tree .tree-archive").classList.contains("open"));
+  document.querySelector('[data-portada="alcance"]').dispatchEvent(new window.MouseEvent("click", { bubbles: true }));
+  check("portada: el enlace de metodología abre los detalles plegados",
+    document.querySelector(".info-disclosure").open === true);
 
-  // Calidad del dato: la explicación queda a la vista y el registro técnico
-  // (cifras, gráfico y consulta) nace plegado. El gráfico se pinta al abrirlo:
-  // cerrado no tiene ancho y el lienzo saldría vacío.
+  // El resumen de duplicados ya no ocupa la portada: la explicación completa,
+  // la medición reproducible y el código permanecen en la Guía.
   window.switchMainTab("info");
-  const calidad = document.querySelector(".info-calidad");
-  const explicacion = calidad.querySelector(":scope > p");
-  // El titular lleva las cifras y ellas salen del catálogo: si alguien las
-  // escribe a mano, audit_cifras.js falla; y no puede afirmar una periodicidad
-  // («en algunos meses») que el catálogo no mide.
-  const titularCalidad = calidad.querySelector("h2");
-  check("calidad: el titular lleva sus cifras como datos medidos",
-    Boolean(titularCalidad.querySelector('[data-calidad="repetidas"]'))
-    && /230\.288/.test(titularCalidad.textContent)
-    && /22 de 90/.test(titularCalidad.textContent)
-    && !/algunos meses/.test(titularCalidad.textContent));
-  check("calidad: la explicación está en llano y no cita SQL",
-    /^Se publican/.test(explicacion.textContent.trim())
-    && !/WITH crudo|count\(\*\)/.test(explicacion.textContent));
-  check("calidad: el enlace al detalle va a la Guía y no a un ancla sin ruta",
-    Boolean(calidad.querySelector("h2")) &&
-    Boolean(calidad.querySelector(":scope > p.info-calidad-foot a[href='#guia-como-sumar']")));
-  // El registro técnico (cifras, consulta reproducible y gráfico) vive ahora
-  // en la sub-pestaña «Cómo sumar sin sobreestimar» de la Guía.
+  const infoPortada = document.getElementById("info-container");
+  check("portada: la advertencia detallada de filas repetidas no desplaza la navegación",
+    !infoPortada.querySelector(".info-calidad") && !/LO QUE LA FUENTE REPITE/.test(infoPortada.textContent));
   const sumar = document.getElementById("guia-como-sumar");
-  check("calidad: la Guía aloja el registro técnico con la consulta reproducible",
-    Boolean(sumar) && Boolean(sumar.querySelector("[data-calidad-sql]"))
+  check("calidad: la Guía conserva las cifras medidas y el ejemplo",
+    Boolean(sumar.querySelector('[data-calidad="repetidas"]'))
+    && /230\.288/.test(sumar.textContent)
+    && /22 de 90/.test(sumar.textContent)
+    && /ffmm_cartera_nacional/.test(sumar.textContent));
+  check("calidad: la Guía mantiene la consulta y la nota de criterio reproducible",
+    Boolean(sumar.querySelector("[data-calidad-sql]"))
     && /claves_duplicados/.test(sumar.querySelector('a[href*="claves_duplicados"]').getAttribute("href")));
   check("calidad: el gráfico de la Guía arranca oculto y sin pintar",
     document.getElementById("calidad-chart").hidden === true

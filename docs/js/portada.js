@@ -82,9 +82,9 @@
       if (nav && typeof nav.revealSector === "function") nav.revealSector(sector, "portada");
       if (typeof window.switchMainTab === "function") window.switchMainTab("erd");
       if (window.erdInstance) window.erdInstance.focusSector(sector);
-    } else if (tipo === "descargas" && sector) {
+    } else if (tipo === "descargas") {
       if (typeof window.switchMainTab === "function") window.switchMainTab("downloads");
-      if (window.DownloadsPanel && typeof window.DownloadsPanel.filtrarSector === "function") {
+      if (sector && window.DownloadsPanel && typeof window.DownloadsPanel.filtrarSector === "function") {
         window.DownloadsPanel.filtrarSector(sector);
       }
     } else if (tipo === "archivo") {
@@ -94,7 +94,11 @@
       }
     } else if (tipo === "alcance") {
       const destino = document.getElementById("info-alcance");
-      if (destino && typeof destino.scrollIntoView === "function") destino.scrollIntoView({ block: "start", behavior: "smooth" });
+      const detalle = destino && destino.closest("details");
+      if (detalle) detalle.open = true;
+      if (destino && typeof destino.scrollIntoView === "function") {
+        window.setTimeout(() => destino.scrollIntoView({ block: "start", behavior: "smooth" }), 0);
+      }
     }
   }
 
