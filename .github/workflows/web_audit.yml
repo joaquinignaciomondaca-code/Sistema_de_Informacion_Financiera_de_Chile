@@ -72,6 +72,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: 'Capacidad: tamaño publicado y presupuesto de transferencia'
+        run: python scripts/audit_pages_capacity.py
       - run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
 
       - name: Caché del detector de diseño
