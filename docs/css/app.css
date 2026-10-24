@@ -6373,7 +6373,7 @@ body {
   outline-offset: 2px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 600px) {
   .aviso-movil {
     display: flex;
     animation: aviso-movil-entra 180ms ease-out;
@@ -6385,7 +6385,7 @@ body {
 
 /* Con la tarjeta flotando abajo, los avisos breves (toasts) se suben para no
    quedar debajo. El alto lo publica el JS en `--sif-aviso-alto`. */
-@media (max-width: 900px) {
+@media (max-width: 600px) {
   body.sif-aviso-movil .toast-host,
   body.sif-aviso-movil .mfc-toast {
     bottom: calc(var(--sif-aviso-alto, 150px) + 12px + env(safe-area-inset-bottom, 0px));
