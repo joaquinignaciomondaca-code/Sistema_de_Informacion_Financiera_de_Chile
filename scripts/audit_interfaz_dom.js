@@ -692,7 +692,7 @@ setTimeout(async () => {
     Boolean(calidad.querySelector(":scope > p.info-calidad-foot a[href='#guia-como-sumar']")));
   // El registro técnico (cifras, consulta reproducible y gráfico) vive ahora
   // en la sub-pestaña «Cómo sumar sin sobreestimar» de la Guía.
-  const sumar = document.getElementById("uso-panel-sumar");
+  const sumar = document.getElementById("guia-como-sumar");
   check("calidad: la Guía aloja el registro técnico con la consulta reproducible",
     Boolean(sumar) && Boolean(sumar.querySelector("[data-calidad-sql]"))
     && /claves_duplicados/.test(sumar.querySelector('a[href*="claves_duplicados"]').getAttribute("href")));
@@ -707,7 +707,7 @@ setTimeout(async () => {
     marcadas.length > 0 && [...marcadas].every((el) => el.textContent.trim()));
   const anclas = [...document.querySelectorAll('a[href^="#"]')];
   const ids = new Set([...document.querySelectorAll("[id]")].map((el) => el.id));
-  const rutas = new Set(["sql", "guia", "guia-como-sumar", "como-usar-humanos", "como-usar-agentes", "como-usar-sumar"]);
+  const rutas = new Set(["sql", "guia", "como-usar-humanos", "como-usar-agentes", "como-usar-sumar"]);
   const huorfanos = anclas.filter((a) => {
     const destino = a.href.split("#")[1];
     return !ids.has(destino) && !rutas.has(destino);

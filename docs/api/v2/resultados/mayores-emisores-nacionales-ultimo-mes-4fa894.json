@@ -1,0 +1,70 @@
+{
+ "contrato": "sif-api/resultado",
+ "id": "mayores-emisores-nacionales-ultimo-mes-4fa894",
+ "titulo": "Mayores emisores nacionales, último mes",
+ "origen": "explorador",
+ "data_release": "2026-10-23.12612e963628",
+ "generado": "2026-10-24",
+ "max_filas": 500,
+ "columnas": [
+  "rut_emisor",
+  "fondos",
+  "valorizacion_miles_mf"
+ ],
+ "filas": 10,
+ "truncado": false,
+ "datos": [
+  [
+   "60805000",
+   135,
+   5172227720.0
+  ],
+  [
+   "97004000",
+   176,
+   4990678072.0
+  ],
+  [
+   "97006000",
+   200,
+   5008625780.0
+  ],
+  [
+   "97018000",
+   164,
+   4804350284.0
+  ],
+  [
+   "97023000",
+   176,
+   4899078810.0
+  ],
+  [
+   "97029000",
+   152,
+   11835349085.0
+  ],
+  [
+   "97030000",
+   151,
+   1282731485.0
+  ],
+  [
+   "97036000",
+   198,
+   5684161787.0
+  ],
+  [
+   "97080000",
+   158,
+   5211800374.0
+  ],
+  [
+   "99500410",
+   135,
+   2354877915.0
+  ]
+ ],
+ "sql": "SELECT rut_emisor, count(DISTINCT run_fondo) AS fondos, SUM(valorizacion_miles_mf) AS valorizacion_miles_mf FROM ffmm_cartera_nacional WHERE periodo = '2026-09' GROUP BY rut_emisor ORDER BY valorizacion_miles_mf DESC LIMIT 10;",
+ "como_se_genera": "python3 scripts/build_resultados.py"
+}
