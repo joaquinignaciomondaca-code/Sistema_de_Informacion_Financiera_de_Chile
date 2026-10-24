@@ -140,7 +140,6 @@
     // El gráfico vive en la sub-pestaña de la Guía: un contenedor oculto mide
     // cero y el lienzo saldría vacío, así que se pinta la primera vez que se
     // activa «Cómo sumar sin sobreestimar» (ver como_usar.js).
-    window.SIFCalidad = { pintarGrafico: pintarGrafico };
   }
 
   if (document.readyState === "loading") {
@@ -150,5 +149,5 @@
   }
 
   // `init` se expone para poder probarlo sin esperar el evento del navegador.
-  window.SIFCalidad = { init, ranking: (estado) => ranking(estado || datos()), consulta, TOTAL_ETIQUETA };
+  window.SIFCalidad = { init, ranking: (estado) => ranking(estado || datos()), consulta, TOTAL_ETIQUETA, pintarGrafico };
 })();
