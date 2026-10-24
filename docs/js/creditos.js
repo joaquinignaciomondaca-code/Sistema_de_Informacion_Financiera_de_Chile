@@ -4,7 +4,7 @@
  *
  * Pinta dos bloques:
  *
- *   #creditos-autor      → Información: quién construye esto, desde cuándo y
+ *   #creditos-autor      → Información: sobre el autor, desde cuándo y
  *                          dónde está el código.
  *   #creditos-guia       → Guía: el método y los archivos auditables, en dos
  *                          grupos (planilla y código).
@@ -123,7 +123,7 @@
   function htmlAutor() {
     return `
       <div class="info-section-kicker">AUTORÍA</div>
-      <h2>Quién construye esto</h2>
+      <h2>Sobre el autor</h2>
       <div class="creditos-autor">
         <p><strong>${escapar(CREDITOS.autor)}</strong> · proyecto iniciado en ${escapar(CREDITOS.inicio)}</p>
         <p class="creditos-autor-rol">Proyecto de datos de punta a punta: extracción desde las fuentes oficiales,
