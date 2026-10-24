@@ -223,7 +223,7 @@ sif.esquema("seguros_renta_fija")            # columnas y tipos reales
 sif.sql("SELECT count(*) FROM bancos_balance").fetchone()
 ```
 
-Las 105 vistas de catálogo salen del `views.sql` publicado, junto con tres vistas temporales auxiliares para los chips de último período; no alteran el catálogo ni las descargas. Detalle en [`sdk/python/README.md`](sdk/python/README.md) y en [`docs/api/README.md`](docs/api/README.md).
+Las 105 vistas de catálogo salen del `views.sql` publicado, junto con vistas temporales SQL-only para chips rápidos: algunas exponen sólo el último período y otras la última partición disponible; no alteran el catálogo ni las descargas. Detalle en [`sdk/python/README.md`](sdk/python/README.md) y en [`docs/api/README.md`](docs/api/README.md).
 
 Hay ejemplos ejecutables en Python, R y JavaScript, y una guía para agentes con [`llms.txt`](docs/llms.txt): ver [`examples/`](examples/README.md).
 

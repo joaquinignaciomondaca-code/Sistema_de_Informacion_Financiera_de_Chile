@@ -6,7 +6,7 @@
  "generado": "2026-10-24",
  "total": 159,
  "filas": 6254,
- "bytes": 824112,
+ "bytes": 824209,
  "truncadas": 2,
  "max_filas": 500,
  "nota": "Resultados calculados en el build sobre el mismo Parquet que publica el sitio. No es SQL arbitrario: son las 159 consultas del catálogo, cada una con su SQL a la vista para poder reproducirla o discutirla.",
@@ -2542,7 +2542,7 @@
    "url": "/api/v2/resultados/renta-fija-de-seguros-ultimo-periodo-acf3bb.json"
   },
   {
-   "id": "derivados-de-seguros-por-tipo-ultimo-periodo-e523ca",
+   "id": "derivados-de-seguros-por-tipo-ultimo-periodo-d13424",
    "titulo": "Derivados de seguros por tipo (último período)",
    "origen": "terminal",
    "filas": 6,
@@ -2553,12 +2553,12 @@
     "valor_razonable_m_clp"
    ],
    "truncado": false,
-   "bytes": 1069,
-   "sha256": "bd7d22cf8c69b1c2a92f872484bb2488d683d33c742342061443ae82c7e59c90",
-   "url": "/api/v2/resultados/derivados-de-seguros-por-tipo-ultimo-periodo-e523ca.json"
+   "bytes": 1073,
+   "sha256": "a7f41777843a94841c06e50c0de2807d13d56d0dba47170b625dd9d84ac65aaf",
+   "url": "/api/v2/resultados/derivados-de-seguros-por-tipo-ultimo-periodo-d13424.json"
   },
   {
-   "id": "cartera-extranjera-ffmm-por-pais-ultimo-periodo-f7045c",
+   "id": "cartera-extranjera-ffmm-por-pais-ultimo-periodo-59d7b8",
    "titulo": "Cartera extranjera FFMM por país (último período)",
    "origen": "terminal",
    "filas": 15,
@@ -2568,13 +2568,13 @@
     "fondos"
    ],
    "truncado": false,
-   "bytes": 1184,
-   "sha256": "f73e0baa3e35a78e6f8b75110ba4f0bdb59029940543a5a4f5e84b19c75d64b3",
-   "url": "/api/v2/resultados/cartera-extranjera-ffmm-por-pais-ultimo-periodo-f7045c.json"
+   "bytes": 1188,
+   "sha256": "8d02d68f3da096806dd551f8e301960eb309b8c66f56775b8b0ec0a4d288b97a",
+   "url": "/api/v2/resultados/cartera-extranjera-ffmm-por-pais-ultimo-periodo-59d7b8.json"
   },
   {
-   "id": "fondos-de-inversion-cartera-nacional-por-tipo-90ffb4",
-   "titulo": "Fondos de inversión: cartera nacional por tipo",
+   "id": "fondos-de-inversion-cartera-nacional-por-tipo-ul-8e14eb",
+   "titulo": "Fondos de inversión: cartera nacional por tipo (último período)",
    "origen": "terminal",
    "filas": 15,
    "columnas": [
@@ -2584,9 +2584,9 @@
     "valorizacion_miles_mf"
    ],
    "truncado": false,
-   "bytes": 1483,
-   "sha256": "86bd1128db470a5979b9de691ea77b1e2ade34111547aac1790e6bddcb5c6176",
-   "url": "/api/v2/resultados/fondos-de-inversion-cartera-nacional-por-tipo-90ffb4.json"
+   "bytes": 1572,
+   "sha256": "cfde533f02e1e0ea1ab097f30c032090924a5e47a854d343ba2a8835e36f0bc0",
+   "url": "/api/v2/resultados/fondos-de-inversion-cartera-nacional-por-tipo-ul-8e14eb.json"
   },
   {
    "id": "aseguradoras-que-reportan-7ece34",
