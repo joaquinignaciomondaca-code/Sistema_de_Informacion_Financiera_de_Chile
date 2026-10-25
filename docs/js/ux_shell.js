@@ -65,6 +65,7 @@
     const errorEl = document.getElementById("sql-engine-error");
     const envEl = document.getElementById("sql-engine-env");
     const retryBtn = document.getElementById("btn-engine-retry");
+    const downloadsBtn = document.getElementById("btn-engine-downloads");
     const copyBtn = document.getElementById("btn-engine-copy");
     const badge = document.getElementById("engine-badge");
 
@@ -89,6 +90,14 @@
         if (alert && !alert.hidden && typeof alert.scrollIntoView === "function") {
           alert.scrollIntoView({ block: "nearest" });
         }
+      });
+    }
+
+    if (downloadsBtn) {
+      downloadsBtn.addEventListener("click", () => {
+        if (typeof window.switchMainTab === "function") window.switchMainTab("downloads");
+        const downloadsTab = document.getElementById("tab-btn-downloads");
+        if (downloadsTab && typeof downloadsTab.focus === "function") downloadsTab.focus();
       });
     }
 

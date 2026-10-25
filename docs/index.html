@@ -46,7 +46,7 @@
         href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
-  <link rel="stylesheet" href="css/app.css?v=fl-20261024-2212-chips-periodo-actual">
+  <link rel="stylesheet" href="css/app.css?v=fl-20261025-0748-contraste-semantico-translucido-aa">
 
   <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
        Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
@@ -191,7 +191,7 @@
       <!-- PANEL SUPERIOR: MAPA RELACIONAL Y DICCIONARIO -->
       <div class="top-panel">
         <div class="panel-header">
-          <div class="panel-tabs" role="tablist" aria-label="Vistas del sistema">
+          <div class="panel-tabs" role="tablist" aria-label="Vistas del sistema" aria-orientation="horizontal">
             <button role="tab" aria-selected="false" aria-controls="info-container" class="panel-tab-btn active" id="tab-btn-info" title="Información general: fuentes, cobertura y cómo usar el sistema">
               Información
             </button>
@@ -201,7 +201,7 @@
             <button role="tab" aria-selected="false" aria-controls="dict-container" class="panel-tab-btn" id="tab-btn-dict" title="Diccionario de datos: significado y criterio contable de cada columna">
               Diccionario
             </button>
-            <button role="tab" aria-selected="false" aria-controls="data-viewer-container" class="panel-tab-btn" id="tab-btn-data" title="Visor de datos: previsualiza filas reales de la tabla activa">
+            <button role="tab" aria-selected="false" aria-controls="data-viewer-container" class="panel-tab-btn" id="tab-btn-data" title="Visor de datos: muestra hasta 500 filas; Descargas ofrece el conjunto completo">
               Visor
             </button>
             <button role="tab" aria-selected="false" aria-controls="sql-container" class="panel-tab-btn" id="tab-btn-sql" title="Consultas SQL sobre las vistas publicadas, ejecutadas en tu navegador">
@@ -262,8 +262,8 @@
               <div class="info-hero-aside" role="group" aria-label="Alcance destacado del catálogo">
                 <div class="info-hero-aside-head"><span>EL CATÁLOGO, DE UN VISTAZO</span><span class="info-hero-live"><i aria-hidden="true"></i> Fuentes oficiales</span></div>
                 <div class="info-hero-stat-grid">
-                  <div class="info-hero-stat"><b data-alcance="visible.conjuntos">74</b><span>conjuntos principales</span></div>
-                  <div class="info-hero-stat"><b data-alcance="visible.filas">más de 19 millones</b><span>filas en conjuntos principales</span></div>
+                  <div class="info-hero-stat"><b data-alcance="visible.conjuntos">74</b><span>elementos visibles</span></div>
+                  <div class="info-hero-stat"><b data-alcance="visible.filas">más de 19 millones</b><span>filas en elementos visibles</span></div>
                 </div>
                 <div class="info-hero-network" aria-hidden="true">
                   <svg viewBox="0 0 400 100" role="presentation" focusable="false">
@@ -283,25 +283,25 @@
                   <h2 id="catalogo-titulo">Explora por sector</h2>
                   <p class="info-block-subtitle">Empieza por el mercado que buscas; cada conjunto conserva su frecuencia, periodo y unidad de origen.</p>
                 </div>
-                <p class="info-nucleo-cifras"><b data-alcance="nucleo.sectores">3</b> sectores <span aria-hidden="true">·</span> <b data-alcance="nucleo.conjuntos">40</b> conjuntos</p>
+                <p class="info-nucleo-cifras"><b data-alcance="nucleo.sectores">3</b> sectores <span aria-hidden="true">·</span> <b data-alcance="nucleo.conjuntos">40</b> elementos</p>
               </div>
               <div class="info-core-grid">
                 <article class="info-core-card" data-sector="seguros">
                   <div class="info-core-head"><span class="info-card-icon">SE</span><div><h3>Seguros</h3><span class="info-core-source">CMF · Circular 1835</span></div></div>
                   <p>Carteras mensuales de renta fija, acciones, fondos, bienes raíces y derivados.</p>
-                  <p class="info-core-meta" data-alcance="sector.seguros.resumen">24 conjuntos · más de 10 M filas · 2016–2026</p>
+                  <p class="info-core-meta" data-alcance="sector.seguros.resumen">24 elementos · más de 10 M filas · 2016–2026</p>
                   <div class="info-core-actions"><button type="button" class="info-core-btn" data-portada="explorar" data-sector="seguros">Explorar seguros <span aria-hidden="true">→</span></button></div>
                 </article>
                 <article class="info-core-card" data-sector="ffmm">
                   <div class="info-core-head"><span class="info-card-icon">FM</span><div><h3>Fondos mutuos</h3><span class="info-core-source">CMF · Circular 1333 · IFRS</span></div></div>
                   <p>Carteras por instrumento y emisor, derivados y estados IFRS anuales.</p>
-                  <p class="info-core-meta" data-alcance="sector.ffmm.resumen">7 conjuntos · más de 3,6 M filas · 2001–2026</p>
+                  <p class="info-core-meta" data-alcance="sector.ffmm.resumen">7 elementos · más de 3,6 M filas · 2001–2026</p>
                   <div class="info-core-actions"><button type="button" class="info-core-btn" data-portada="explorar" data-sector="ffmm">Explorar fondos mutuos <span aria-hidden="true">→</span></button></div>
                 </article>
                 <article class="info-core-card" data-sector="fi">
                   <div class="info-core-head"><span class="info-card-icon">FI</span><div><h3>Fondos de inversión</h3><span class="info-core-source">CMF · Ley Única de Fondos · IFRS</span></div></div>
                   <p>Carteras trimestrales, inversiones valorizadas y estados financieros por fondo.</p>
-                  <p class="info-core-meta" data-alcance="sector.fi.resumen">9 conjuntos · más de 3,1 M filas · 2012–2026</p>
+                  <p class="info-core-meta" data-alcance="sector.fi.resumen">9 elementos · más de 3,1 M filas · 2012–2026</p>
                   <div class="info-core-actions"><button type="button" class="info-core-btn" data-portada="explorar" data-sector="fi">Explorar fondos de inversión <span aria-hidden="true">→</span></button></div>
                 </article>
               </div>
@@ -313,16 +313,16 @@
               </div>
               <div class="info-strip info-strip-premium">
                 <button type="button" class="info-strip-item" data-portada="explorar" data-sector="bancos">
-                  <span class="info-strip-name">Bancos <span aria-hidden="true">↗</span></span><span class="info-strip-text">Balances B1/B2 y resultados R1 de la CMF.</span><span class="info-strip-meta" data-alcance="sector.bancos.resumen">3 conjuntos · más de 1,9 M filas · 2022–2026</span>
+                  <span class="info-strip-name">Bancos <span aria-hidden="true">↗</span></span><span class="info-strip-text">Balances B1/B2 y resultados R1 de la CMF.</span><span class="info-strip-meta" data-alcance="sector.bancos.resumen">3 elementos · más de 1,9 M filas · 2022–2026</span>
                 </button>
                 <button type="button" class="info-strip-item" data-portada="explorar" data-sector="agf">
-                  <span class="info-strip-name">Administradoras de fondos <span aria-hidden="true">↗</span></span><span class="info-strip-text">Balances y resultados IFRS de las AGF.</span><span class="info-strip-meta" data-alcance="sector.agf.resumen">3 conjuntos · más de 129 mil filas · 2010–2026</span>
+                  <span class="info-strip-name">Administradoras de fondos <span aria-hidden="true">↗</span></span><span class="info-strip-text">Balances y resultados IFRS de las AGF.</span><span class="info-strip-meta" data-alcance="sector.agf.resumen">3 elementos · más de 129 mil filas · 2010–2026</span>
                 </button>
                 <button type="button" class="info-strip-item" data-portada="explorar" data-sector="corredoras_bolsa">
-                  <span class="info-strip-name">Corredoras de bolsa <span aria-hidden="true">↗</span></span><span class="info-strip-text">Entidades y estados financieros FECU IFRS.</span><span class="info-strip-meta" data-alcance="sector.corredoras_bolsa.resumen">4 conjuntos · más de 185 mil filas · 2010–2026</span>
+                  <span class="info-strip-name">Corredoras de bolsa <span aria-hidden="true">↗</span></span><span class="info-strip-text">Entidades y estados financieros FECU IFRS.</span><span class="info-strip-meta" data-alcance="sector.corredoras_bolsa.resumen">4 elementos · más de 185 mil filas · 2010–2026</span>
                 </button>
                 <button type="button" class="info-strip-item" data-portada="explorar" data-sector="macro">
-                  <span class="info-strip-name">Macroeconomía y tasas <span aria-hidden="true">↗</span></span><span class="info-strip-text">Series del Banco Central: tasas, precios, actividad y expectativas.</span><span class="info-strip-meta" data-alcance="sector.macro.resumen">24 conjuntos · más de 41 mil filas</span>
+                  <span class="info-strip-name">Macroeconomía y tasas <span aria-hidden="true">↗</span></span><span class="info-strip-text">Series del Banco Central: tasas, precios, actividad y expectativas.</span><span class="info-strip-meta" data-alcance="sector.macro.resumen">24 elementos · más de 41 mil filas</span>
                 </button>
               </div>
             </section>
@@ -331,7 +331,7 @@
               <span class="info-archive-mark" aria-hidden="true">+</span>
               <span><strong>¿Buscas otra industria?</strong> El archivo y los registros complementarios siguen disponibles.</span>
               <button type="button" class="info-link-btn" data-portada="archivo">Explorar archivo <span aria-hidden="true">→</span></button>
-              <span class="info-archive-meta" data-alcance="fuera.resumen">7 industrias · 15 conjuntos · 0,5 % de las filas</span>
+              <span class="info-archive-meta" data-alcance="fuera.resumen">7 industrias · 15 elementos · 0,5 % de las filas</span>
               <button type="button" class="info-link-btn info-link-btn-muted" data-portada="alcance">Fuentes y metodología</button>
             </p>
 
@@ -344,13 +344,14 @@
               <p><strong>Núcleo · inversión institucional:</strong> carteras y estados financieros de aseguradoras, fondos mutuos y fondos de inversión (CMF).</p>
               <p><strong>Instituciones y contexto:</strong> banca, administradoras de fondos y corredoras de bolsa, más las series del Banco Central.</p>
               <p><strong>Archivo y registros:</strong> factoring y leasing, securitización, patrimonios separados y cajas de compensación siguen publicados; AFP, cooperativas, sistemas de pago y fintech figuran como listas de entidades.</p>
-              <p class="info-scope-foot"><span data-alcance="visible.resumen">74 conjuntos · más de 19 millones de filas (99,5 %)</span> del catálogo publicado.</p>
+              <p class="info-scope-foot"><span data-alcance="visible.resumen">74 elementos · más de 19 millones de filas (99,5 %)</span> del catálogo publicado.</p>
             </section>
 
                 <section class="info-block info-processing-block">
               <div class="info-section-kicker">MODALIDAD DE PROCESAMIENTO</div>
-              <h2>Cada tabla declara cómo se obtiene</h2>
-              <p><b data-modo="auto">89</b> de las <b data-modo="total">90</b> tablas se extraen, validan y publican por código y flujos programados; <b data-modo="hybrid">1</b>, el balance de patrimonios separados (en el archivo), es híbrida: su extracción inicial depende de la fuente, y su validación, normalización y compilación son reproducibles. Ninguna tabla es manual hoy.</p>
+              <h2>Cada objeto declara cómo se obtiene</h2>
+              <p>De los <b data-modo="total">90</b> objetos del diccionario, <b data-modo="auto">89</b> se extraen, validan y publican por código y flujos programados; <b data-modo="hybrid">1</b>, el balance de patrimonios separados (en el archivo), tiene extracción híbrida: parte de la fuente y su validación, normalización y compilación son reproducibles. Ningún objeto se transcribe manualmente hoy.</p>
+              <p>El manifiesto ETL registra 89 entradas de origen. Una de ellas, <code>bancos_cmf_lineas</code>, da lugar a dos objetos API con filtros y archivos separados: balances B1/B2 y resultados R1.</p>
             </section>
 
                 <section class="info-block info-fuentes">
@@ -360,9 +361,9 @@
                 <div class="info-scope-col">
                   <h3>Fuentes</h3>
                   <ul class="info-list">
-                    <li><strong>Los datos son de tres fuentes oficiales:</strong> la Comisión para el Mercado Financiero (CMF), el Banco Central de Chile y la Superintendencia de Pensiones.</li>
-                    <li><strong>La SUSESO no entrega datos:</strong> figura como regulador y enlace en el catálogo de cajas de compensación, cuyos estados financieros provienen de la CMF.</li>
-                    <li><strong>El SIF extrae, normaliza, valida y documenta:</strong> no genera ni modifica los datos, los publica tal como los emite la fuente.</li>
+                    <li><strong>Archivos financieros y series actuales:</strong> sus fuentes directas son la Comisión para el Mercado Financiero (CMF), el Banco Central de Chile y la Superintendencia de Pensiones.</li>
+                    <li><strong>Catálogo de cajas de compensación:</strong> el universo inicial de <code>ccaf.lista_entidades</code> se armó con la lista de SUSESO y el Registro de Valores de la CMF; las altas nuevas se incorporan desde el TXT IFRS de la CMF. Los balances y resultados CCAF también provienen de la CMF; el pipeline actual no consume los PDF financieros de SUSESO.</li>
+                    <li><strong>El SIF estructura, normaliza y valida archivos:</strong> consulta la procedencia y las notas disponibles por conjunto; algunas salidas incorporan transformaciones documentadas.</li>
                     <li><strong>Al citar:</strong> indica la fuente oficial y la fecha de la consulta; cada tabla declara su propio periodo y frecuencia.</li>
                   </ul>
                 </div>
@@ -438,9 +439,10 @@
               <strong>El motor SQL no pudo iniciarse en este navegador.</strong>
               <div id="sql-engine-error">Motivo no informado.</div>
               <div class="engine-alert-env" id="sql-engine-env"></div>
-              <div class="engine-alert-hint">El resto del sistema sigue navegable. Si el problema persiste, copia el diagnóstico y compártelo para revisarlo.</div>
+              <div class="engine-alert-hint">Para seguir sin SQL, abre Descargas y baja el Parquet original del conjunto. CSV y Excel requieren el motor. Si el problema persiste, copia el diagnóstico y compártelo para revisarlo.</div>
             </div>
             <div class="engine-alert-actions">
+              <button class="engine-retry-btn engine-downloads-btn" id="btn-engine-downloads" type="button" title="Abrir el catálogo y descargar el Parquet original">Abrir Descargas</button>
               <button class="engine-retry-btn" id="btn-engine-retry" type="button" title="Volver a intentar levantar DuckDB-Wasm">Reintentar</button>
               <button class="engine-retry-btn engine-copy-btn" id="btn-engine-copy" type="button" title="Copiar el informe técnico del fallo al portapapeles">Copiar diagnóstico</button>
             </div>
@@ -712,8 +714,7 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
             <section class="info-block info-uso" id="guia-manuales">
               <div class="info-section-kicker">MANUALES Y ARCHIVOS DE AUDITORÍA</div>
               <h2>Cómo se construyó cada cifra</h2>
-              <p class="info-uso-lead">Ocho archivos con el método, la cobertura y las comprobaciones. Están en dos
-              grupos porque no se consumen igual: unos se abren en una planilla y otros los lee un programa.</p>
+              <p class="info-uso-lead">Ocho archivos con definiciones, procedencia, cobertura y hashes para comprobar aspectos concretos de la publicación; no certifican la calidad semántica. Están en dos grupos: unos se abren en una planilla y otros los lee un programa.</p>
               <section class="dl-creditos" id="creditos-guia" aria-label="Manuales y archivos auditables"></section>
             </section>
           </div>
@@ -759,32 +760,32 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
   </aside>
 
   <!-- Scripts de la Aplicación.
-       La etiqueta ?v= de los 22 activos locales se sube con
+       La etiqueta ?v= de los 23 activos locales se sube con
        `python3 scripts/subir_etiqueta.py <motivo>` cuando cambia cualquier js/css:
        GitHub Pages cachea 10 minutos y, sin etiqueta nueva, quien ya entró sigue
        ejecutando el código viejo. `scripts/audit_interfaz.py` lo comprueba. -->
-  <script src="js/data_bundles.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/alcance.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/chart_renderer.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/erd_graph.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/sql_guard.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/duckdb_client.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/chat_terminal.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/busqueda_pregunta.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/sidebar.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/ux_shell.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/creditos.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/theme_switcher.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/estado_claves.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/data_dictionary.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/data_viewer.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/diccionario_seguros.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/download_utils.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/download_catalog.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/downloads_panel.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/portada.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/calidad_datos.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
-  <script src="js/como_usar.js?v=fl-20261024-2212-chips-periodo-actual" defer></script>
+  <script src="js/data_bundles.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/alcance.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/chart_renderer.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/erd_graph.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/sql_guard.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/duckdb_client.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/chat_terminal.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/sidebar.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/ux_shell.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/creditos.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/theme_switcher.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/estado_claves.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/data_dictionary.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/data_viewer.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/download_utils.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/download_catalog.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/downloads_panel.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/portada.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/calidad_datos.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/como_usar.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -851,6 +852,7 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
           if (btn) {
             btn.classList.toggle("active", isActive);
             btn.setAttribute("aria-selected", isActive ? "true" : "false");
+            btn.tabIndex = isActive ? 0 : -1;
           }
           if (panel) panel.style.display = isActive ? spec.display : "none";
         });
@@ -885,6 +887,29 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
         const btn = document.getElementById(TAB_REGISTRY[key].button);
         if (btn) btn.addEventListener("click", () => window.switchMainTab(key));
       });
+
+      // Patrón manual de pestañas: las flechas cambian el foco sin activar paneles.
+      // Así se puede explorar hasta SQL sin iniciar el motor hasta pulsar Enter/Espacio.
+      const panelTablist = document.querySelector('.panel-tabs[role="tablist"]');
+      if (panelTablist && panelTablist.dataset.sifKeyboardTabs !== "ready") {
+        panelTablist.dataset.sifKeyboardTabs = "ready";
+        panelTablist.addEventListener("keydown", (event) => {
+          const buttons = Object.keys(TAB_REGISTRY)
+            .map((key) => document.getElementById(TAB_REGISTRY[key].button))
+            .filter(Boolean);
+          const index = buttons.indexOf(document.activeElement);
+          if (index < 0 || !buttons.length) return;
+          let destination = null;
+          if (event.key === "ArrowRight") destination = (index + 1) % buttons.length;
+          else if (event.key === "ArrowLeft") destination = (index - 1 + buttons.length) % buttons.length;
+          else if (event.key === "Home") destination = 0;
+          else if (event.key === "End") destination = buttons.length - 1;
+          if (destination === null) return;
+          event.preventDefault();
+          buttons.forEach((button, i) => { button.tabIndex = i === destination ? 0 : -1; });
+          buttons[destination].focus();
+        });
+      }
 
       // Al cargar se respeta la última pestaña usada; si no hay ninguna, se abre Información.
       window.switchMainTab(window.MFCUI && window.MFCUI.initialTab ? window.MFCUI.initialTab() : "info");

@@ -806,7 +806,7 @@
   },
   {
    "bytes": 7054110,
-   "description": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Conserva los campos monetarios originales y agrega `importe_clp`, el importe en pesos con el que se suma y se lee cada línea. Sólo filas de los archivos B1 (consolidado) y B2 (individual); excluye R1 (estado de resultados).",
+   "description": "Conserva los campos monetarios originales y agrega `importe_clp`, el importe en pesos con el que se suma y se lee cada línea. Sólo filas de los archivos B1 (consolidado) y B2 (individual); excluye R1 (estado de resultados).",
    "format": "parquet",
    "hash": "6bfd20c8e3dd74cdda75bb871d33abd1afdfc4418da289d5802f711514d955fe",
    "licenses": [
@@ -1450,7 +1450,7 @@
   },
   {
    "bytes": 8233188,
-   "description": "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. Conserva los campos monetarios originales y agrega `importe_clp`, el importe en pesos con el que se suma y se lee cada línea. Sólo filas del archivo R1 (estado de resultados); excluye B1 y B2.",
+   "description": "Conserva los campos monetarios originales y agrega `importe_clp`, el importe en pesos con el que se suma y se lee cada línea. Sólo filas del archivo R1 (estado de resultados); excluye B1 y B2.",
    "format": "parquet",
    "hash": "9b43195ea0952904c457b69f77cfa82d0f577f5ddbe9cf87263ad194e1f8581f",
    "licenses": [
@@ -2431,6 +2431,40 @@
       "sha256": "284a7804435a250ae5bbab2185309f17db931aaafe10b5537052b3d406676039"
      }
     ],
+    "procedencia": {
+     "condiciones_reutilizacion": [
+      {
+       "alcance": "Condiciones de cita verificadas para la información CMF y las altas detectadas desde su TXT IFRS.",
+       "estado": "verificada",
+       "institucion": "CMF"
+      },
+      {
+       "alcance": "Aporta procedencia histórica/editorial del universo inicial; no se localizó ni revisó un documento oficial de condiciones aplicable en esta auditoría.",
+       "estado": "pendiente_verificacion",
+       "institucion": "SUSESO"
+      }
+     ],
+     "fuentes_directas_actuales": [
+      {
+       "alcance": "Uso exclusivo: detección e incorporación automática de nuevas CCAF; no reemplaza ni vuelve a descargar la lista base.",
+       "institucion": "CMF",
+       "recurso": "TXT IFRS trimestral de estados financieros"
+      }
+     ],
+     "procedencia_editorial": {
+      "mantenimiento": "La lista base está curada en ccaf/scripts/build_ccaf_maestro.py; las altas posteriores se incorporan automáticamente desde el TXT IFRS de la CMF.",
+      "universo_inicial": [
+       {
+        "institucion": "SUSESO",
+        "recurso": "Lista original de Cajas de Compensación"
+       },
+       {
+        "institucion": "CMF",
+        "recurso": "Registro de Valores"
+       }
+      ]
+     }
+    },
     "puente": "alias",
     "sector": "cajas_compensacion",
     "sql_view": "ccaf_lista_entidades",
@@ -19195,5 +19229,5 @@
   }
  ],
  "title": "Sistema de Información Financiera de Chile",
- "version": "2.1.0"
+ "version": "2.3.0"
 }

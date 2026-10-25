@@ -34,12 +34,13 @@ function check(nombre, ok, extra = "") {
 // --- Contexto emulado -------------------------------------------------------
 // fetch lee manifiestos del disco; todo lo que no existe responde 404 para
 // simular el servidor. document y window son lo justo para cargar el script.
-const fetchCalls = { manifiestos: 0, urls: [] };
-function emularFetch(url) {
+const fetchCalls = { manifiestos: 0, urls: [], opciones: [] };
+function emularFetch(url, opciones = {}) {
   const relativo = String(url).replace(/^.*?:\/\/[^/]+\//, "");
   fetchCalls.urls.push(relativo);
   if (relativo.endsWith(".json")) {
     fetchCalls.manifiestos++;
+    fetchCalls.opciones.push({ url: relativo, cache: opciones.cache || "" });
     const ruta = path.join(DOCS, relativo);
     if (fs.existsSync(ruta)) {
       return Promise.resolve({ ok: true, json: () => Promise.resolve(JSON.parse(fs.readFileSync(ruta, "utf8"))) });
@@ -59,7 +60,7 @@ const contexto = {
   WebAssembly: { validate: () => true },
   setTimeout, clearTimeout,
   CustomEvent: function (t, d) { this.type = t; this.detail = d && d.detail; },
-  fetch: (url) => emularFetch(url),
+  fetch: (url, opciones) => emularFetch(url, opciones),
   document: {
     baseURI: "https://sitio.local/",
     getElementById: () => null,
@@ -117,6 +118,9 @@ vm.runInContext(fuente.slice(0, corte) + "\nglobalThis.__DuckDBClient = DuckDBCl
   const alias = createdViews.length - principales.length;
   check("se crean los 19 alias de compatibilidad", alias === 19, `${alias}`);
   check("las vistas particionadas usan su compacto SQL sin pedir sus manifiestos de descarga", fetchCalls.manifiestos === N_MANIFIESTOS_DIRECTOS, `${fetchCalls.manifiestos} solicitudes; ${N_MANIFIESTOS_DIRECTOS} vistas requieren manifiesto`);
+  const manifiestosSinNoStore = fetchCalls.opciones.filter((opcion) => opcion.cache !== "no-store");
+  check("los manifiestos se solicitan con cache: no-store", fetchCalls.opciones.length === fetchCalls.manifiestos && manifiestosSinNoStore.length === 0,
+    manifiestosSinNoStore.slice(0, 3).map((opcion) => opcion.url).join(", "));
   check("los compactos SQL conservan los manifiestos particionados independientes para descargas",
     N_MANIFIESTOS - N_MANIFIESTOS_DIRECTOS === VISTAS_SQL_COMPACTAS.length &&
     VISTAS_SQL_COMPACTAS.every((vista) => vista.includes("manifest:")),
@@ -210,7 +214,58 @@ vm.runInContext(fuente.slice(0, corte) + "\nglobalThis.__DuckDBClient = DuckDBCl
   });
   check("enTandas nunca supera la concurrencia máxima", maximo <= 3, `máximo ${maximo}`);
 
-  // 5) Las consultas sobre una misma conexión deben serializarse aunque
+  // 5b) Una consulta con muchas tablas no dispara más de cuatro preparaciones
+  //     remotas simultáneas desde una pestaña.
+  let vistasActivas = 0, maximoVistas = 0, vistasPreparadas = 0;
+  const clienteLimitado = Object.create(DuckDBClient.prototype);
+  clienteLimitado.ensureSemanticView = async () => {
+    vistasActivas++;
+    maximoVistas = Math.max(maximoVistas, vistasActivas);
+    await new Promise((r) => setTimeout(r, 2));
+    vistasActivas--;
+    vistasPreparadas++;
+  };
+  const nombresConsultaAmplia = ["macro_uf", "macro_utm", "macro_cobre", "macro_imacec", "macro_inflacion_ipc"];
+  await clienteLimitado.ensureSemanticViewsForQuery(`SELECT * FROM ${nombresConsultaAmplia.join(", ")}`);
+  check("la preparación de vistas en una consulta amplia está limitada a cuatro",
+    maximoVistas <= 4 && vistasPreparadas === nombresConsultaAmplia.length,
+    `máximo ${maximoVistas}; preparadas ${vistasPreparadas}`);
+
+  // 5c) Dos vistas de la misma partición/manifiesto comparten un solo GET.
+  const clienteManifiestos = Object.create(DuckDBClient.prototype);
+  clienteManifiestos.manifestPromises = new Map();
+  const antesManifiestos = fetchCalls.manifiestos;
+  const manifestCompartido = "outputs/ffmm/cartera_extranjera/manifest.json";
+  await Promise.all([
+    clienteManifiestos.prepararVista({ name: "vista_a", manifest: manifestCompartido }),
+    clienteManifiestos.prepararVista({ name: "vista_b", sourceManifest: manifestCompartido, latestManifestFile: true })
+  ]);
+  check("vistas que comparten manifiesto deduplican la petición HTTP",
+    fetchCalls.manifiestos - antesManifiestos === 1,
+    `${fetchCalls.manifiestos - antesManifiestos} GET`);
+  await clienteManifiestos.prepararVista({ name: "vista_reciente", manifest: manifestCompartido });
+  check("un manifiesto se vuelve a consultar en una preparación posterior",
+    fetchCalls.manifiestos - antesManifiestos === 2,
+    `${fetchCalls.manifiestos - antesManifiestos} GET`);
+
+  // 5d) Registros concurrentes del mismo Parquet se consolidan en una operación.
+  let registrosDuplicados = 0;
+  const clienteArchivos = Object.create(DuckDBClient.prototype);
+  clienteArchivos.registeredFiles = new Set();
+  clienteArchivos.fileRegistrationPromises = new Map();
+  clienteArchivos.duckdb = protocolo;
+  clienteArchivos.db = { registerFileURL: async () => {
+    registrosDuplicados++;
+    await new Promise((r) => setTimeout(r, 2));
+  } };
+  await Promise.all([
+    clienteArchivos.registerFile("outputs/macro/macro_uf.parquet"),
+    clienteArchivos.registerFile("outputs/macro/macro_uf.parquet")
+  ]);
+  check("el mismo Parquet no se registra dos veces en paralelo", registrosDuplicados === 1,
+    `${registrosDuplicados} registros`);
+
+  // 5e) Las consultas sobre una misma conexión deben serializarse aunque
   //    distintos componentes las disparen al mismo tiempo. Esto reproduce la
   //    condición que en el navegador producía TProtocolException: Invalid data.
   let consultasActivas = 0, maximoConsultas = 0;

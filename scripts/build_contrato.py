@@ -191,7 +191,7 @@ def construir_objetos(datos: dict, alias: dict[str, list[str]], base: str) -> tu
                       "filas": info.get("filas")},
         }
 
-        catalogo.append({
+        ficha_catalogo = {
             "id": nombre,
             "titulo": TITULOS_BANCOS.get(nombre) or recon.get("nombre_visible") or nombre,
             "sql_view": nombre,
@@ -222,7 +222,11 @@ def construir_objetos(datos: dict, alias: dict[str, list[str]], base: str) -> tu
             "primaryKey": pk,
             "esquema": f"{base.rstrip('/')}/api/v2/schema/{nombre}.json",
             "particiones_url": f"{base.rstrip('/')}/api/v2/partitions/{nombre}.json",
-        })
+        }
+        procedencia = (tabla.get("metadatos") or {}).get("procedencia")
+        if procedencia:
+            ficha_catalogo["procedencia"] = procedencia
+        catalogo.append(ficha_catalogo)
 
     return catalogo, esquemas_por_id, particiones_por_id, hashes
 

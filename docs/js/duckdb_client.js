@@ -225,6 +225,9 @@ window.SIF_QUICK_QUERY_VIEW_NAMES = QUICK_QUERY_VIEWS.map((view) => view.name);
 // responde deja el motor "cargando" para siempre sin ningún mensaje (ver
 // docs/notas/diagnostico_motor_sql_2026-10-20.md).
 const DUCKDB_INIT_TIMEOUT_MS = 15000;
+// Cap por pestaña para evitar ráfagas de HEAD/Range al preparar consultas que
+// abarcan muchas particiones o vistas; los chips de una sola vista apenas cambian.
+const MAX_PREPARACIONES_REMOTAS = 4;
 
 // Texto legible de un error, aunque no sea un Error (p. ej. un Event del worker).
 function motivoDe(error) {
@@ -288,6 +291,10 @@ class DuckDBClient {
     // consultas concurrentes; mantener una cola aquí evita que los mensajes
     // Thrift se intercalen y terminen en TProtocolException: Invalid data.
     this.queryQueue = Promise.resolve();
+    // Deduplica la preparación de recursos compartidos dentro de esta pestaña:
+    // distintas vistas pueden apuntar al mismo manifiesto o Parquet.
+    this.manifestPromises = new Map();
+    this.fileRegistrationPromises = new Map();
     // El motor NO arranca aquí: el wasm pesa 3,8 MB y la mayoría de las visitas
     // no abre Consultas ni Datos. Se levanta en ensureStarted(), la primera vez
     // que una consulta o una pestaña lo necesitan (ver también index.html).
@@ -390,6 +397,8 @@ class DuckDBClient {
       this.viewPromises = new Map();
       this.createdViews = new Set();
       this.registeredFiles = new Set();
+      this.manifestPromises = new Map();
+      this.fileRegistrationPromises = new Map();
       this.db = null;
       this.conn = null;
 
@@ -578,21 +587,47 @@ class DuckDBClient {
   // (XHR síncrono) no deben reutilizarse de una carga anterior de la página.
   async registerFile(relativePath) {
     if (this.registeredFiles.has(relativePath)) return relativePath;
-    const base = this.absoluteUrl(relativePath);
-    const url = `${base}${base.includes("?") ? "&" : "?"}${this.sufijoAntiCache()}`;
-    await this.db.registerFileURL(
-      relativePath,
-      url,
-      this.duckdb.DuckDBDataProtocol.HTTP,
-      false
-    );
-    this.registeredFiles.add(relativePath);
-    return relativePath;
+    if (!this.fileRegistrationPromises) this.fileRegistrationPromises = new Map();
+    if (!this.fileRegistrationPromises.has(relativePath)) {
+      const base = this.absoluteUrl(relativePath);
+      const url = `${base}${base.includes("?") ? "&" : "?"}${this.sufijoAntiCache()}`;
+      const pending = (async () => {
+        await this.db.registerFileURL(
+          relativePath,
+          url,
+          this.duckdb.DuckDBDataProtocol.HTTP,
+          false
+        );
+        this.registeredFiles.add(relativePath);
+        return relativePath;
+      })().finally(() => this.fileRegistrationPromises.delete(relativePath));
+      this.fileRegistrationPromises.set(relativePath, pending);
+    }
+    return this.fileRegistrationPromises.get(relativePath);
+  }
+
+  // Deduplica descargas simultáneas del mismo manifiesto, pero no conserva la
+  // respuesta después: una preparación posterior vuelve a comprobar lo publicado.
+  cargarManifiesto(manifestPath) {
+    if (!this.manifestPromises) this.manifestPromises = new Map();
+    if (!this.manifestPromises.has(manifestPath)) {
+      const request = (async () => {
+        const response = await fetch(this.absoluteUrl(manifestPath), { cache: "no-store" });
+        if (!response.ok) throw new Error(`Manifiesto HTTP ${response.status}: ${manifestPath}`);
+        return response.json();
+      })();
+      const pending = request.finally(() => {
+        if (this.manifestPromises.get(manifestPath) === pending) {
+          this.manifestPromises.delete(manifestPath);
+        }
+      });
+      this.manifestPromises.set(manifestPath, pending);
+    }
+    return this.manifestPromises.get(manifestPath);
   }
 
   // Lista de archivos de una vista (manifiesto o fichero fijo). Se resuelve
-  // fuera de las vistas para poder pedir todos los manifiestos a la vez: en
-  // serie, el arranque pagaba un ida-y-vuelta de red por vista (30+ RTT).
+  // bajo demanda; no se solicitan manifiestos ni Parquet de vistas que nadie usa.
   async prepararVista(view) {
     let files;
     if (view.queryFile) {
@@ -601,12 +636,10 @@ class DuckDBClient {
       // y de las descargas; queryFile no reemplaza ni altera esas particiones.
       files = [view.queryFile];
     } else if (view.manifest || view.sourceManifest) {
-      // no-store: el manifiesto es la lista de verdad de lo publicado; una
-      // copia en caché haría que la vista no viera particiones nuevas.
+      // no-store en HTTP: el manifiesto es la lista vigente de lo publicado.
+      // La promesa en memoria evita repetir su GET dentro de esta pestaña.
       const manifestPath = view.manifest || view.sourceManifest;
-      const response = await fetch(this.absoluteUrl(manifestPath), { cache: "no-store" });
-      if (!response.ok) throw new Error(`Manifiesto HTTP ${response.status}: ${manifestPath}`);
-      const manifest = await response.json();
+      const manifest = await this.cargarManifiesto(manifestPath);
       if (view.latestManifestFile) {
         // Las vistas auxiliares de un chip pueden limitarse a la última
         // partición publicada sin cambiar el objeto semántico completo.
@@ -712,7 +745,11 @@ class DuckDBClient {
       if (aliasList.some(coincide) && porNombre.has(canonica)) requeridas.add(canonica);
     }
 
-    await Promise.all([...requeridas].map((name) => this.ensureSemanticView(name)));
+    await this.enTandas(
+      [...requeridas],
+      MAX_PREPARACIONES_REMOTAS,
+      (name) => this.ensureSemanticView(name)
+    );
     return requeridas.size;
   }
 
@@ -725,7 +762,11 @@ class DuckDBClient {
     if (!this.viewPromises.has(name)) {
       const pending = (async () => {
         const preparada = await this.prepararVista(view);
-        await Promise.all(preparada.files.map((file) => this.registerFile(file)));
+        await this.enTandas(
+          preparada.files,
+          MAX_PREPARACIONES_REMOTAS,
+          (file) => this.registerFile(file)
+        );
         await this.crearVista(preparada);
         this.createdViews.add(name);
         this.unavailableViews = this.unavailableViews.filter((item) => item !== name);
@@ -748,24 +789,23 @@ class DuckDBClient {
 
     // 1) Manifiestos y rutas, todo a la vez. El fallo de un manifiesto solo
     //    desactiva su vista, igual que antes.
-    const preparadas = await Promise.all(
-      SEMANTIC_VIEWS.map(async (view) => {
-        try {
-          const p = await this.prepararVista(view);
-          return { ok: true, ...p };
-        } catch (err) {
-          this.unavailableViews.push(view.name);
-          console.error(`[DuckDB-Wasm] Vista ${view.name} no disponible:`, err);
-          return { ok: false };
-        }
-      })
-    );
+    const preparadas = [];
+    await this.enTandas(SEMANTIC_VIEWS, MAX_PREPARACIONES_REMOTAS, async (view) => {
+      try {
+        const p = await this.prepararVista(view);
+        preparadas.push({ ok: true, ...p });
+      } catch (err) {
+        this.unavailableViews.push(view.name);
+        console.error(`[DuckDB-Wasm] Vista ${view.name} no disponible:`, err);
+        preparadas.push({ ok: false });
+      }
+    });
     const ok = preparadas.filter((p) => p.ok);
 
-    // 2) Todos los ficheros del sistema a la vez (registerFileURL es idempotente
-    //    y dos vistas pueden compartir particiones).
+    // 2) Registra los ficheros únicos en tandas acotadas; varias vistas pueden
+    //    compartir una partición y registerFile deduplica operaciones en vuelo.
     const todos = [...new Set(ok.flatMap((p) => p.files))];
-    await Promise.all(todos.map((file) => this.registerFile(file)));
+    await this.enTandas(todos, MAX_PREPARACIONES_REMOTAS, (file) => this.registerFile(file));
 
     // 3) La preparación puede seguir en tandas, pero runQuerySerial mantiene
     //    una sola consulta activa por conexión; así no se corrompe el protocolo

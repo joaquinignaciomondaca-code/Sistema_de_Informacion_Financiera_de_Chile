@@ -278,7 +278,7 @@ def main() -> int:
 
     print(f"Objetos: {res['objetos']} · con esquema: {res['con_esquema']} · sin datos: {res['sin_esquema']}")
     print(f"Columnas: {res['columnas']} · sin documentar: {res['columnas_sin_documentar']} · sin valores: {res['columnas_sin_valores']}")
-    print(f"Filas: {res['filas_unicas']:,} únicas ({res['filas_por_objeto']:,} contando alias)".replace(",", "."))
+    print(f"Filas en archivos únicos: {res['filas_unicas']:,} ({res['filas_por_objeto']:,} por objeto/vista)".replace(",", "."))
     print(f"Tablas del manifiesto cubiertas: {res['tablas_manifiesto_cubiertas']}/{res['tablas_manifiesto']}")
     for p in problemas:
         print(f"  [aviso] {p}")

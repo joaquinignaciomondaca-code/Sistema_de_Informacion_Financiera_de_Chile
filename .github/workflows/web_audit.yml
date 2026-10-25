@@ -27,6 +27,20 @@ on:
       - 'docs/**'
       - 'scripts/audit_*.py'
       - 'scripts/audit_*.js'
+      - 'scripts/lib/**'
+      - 'scripts/test_busqueda.js'
+      - 'scripts/test_busqueda_dom.js'
+      - 'scripts/generar_indice_busqueda.py'
+      - 'scripts/test_generar_indice_busqueda.py'
+      - 'scripts/build_metricas_publicadas.py'
+      - 'scripts/build_indice_notas.py'
+      - 'scripts/test_build_indice_notas.py'
+      - 'scripts/build_ficha_piloto.py'
+      - 'scripts/build_api.py'
+      - 'scripts/ficha_renderer.py'
+      - 'scripts/test_fichas_candidatas.py'
+      - 'scripts/test_fichas_sql_local.py'
+      - 'scripts/test_ficha_piloto_http.py'
       - 'scripts/probar_ejemplos.py'
       - 'scripts/test_contrato.py'
       - 'scripts/auditar_mcp.py'
@@ -72,6 +86,21 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: 'Contrato: manifiesto ETL, API y descargas comparten métricas'
+        run: python scripts/build_metricas_publicadas.py --check
+      - name: 'Capacidad: tamaño publicado, inventario y presupuesto de transferencia'
+        run: python scripts/audit_pages_capacity.py
+      - name: 'Ficha piloto: metadatos, procedencia, esquema y acciones relativas'
+        run: python scripts/build_ficha_piloto.py --check
+      - name: 'Ficha piloto: ruta, semántica, contraste y enlaces en ambos prefijos'
+        run: python scripts/test_ficha_piloto_http.py
+      - name: 'Fichas candidatas: contrato, acciones, enlaces y previsualización sin publicar'
+        run: python scripts/test_fichas_candidatas.py
+      - name: 'Búsqueda: metadatos alineados, índice sincronizado y ranking'
+        run: |
+          python -m unittest scripts.test_generar_indice_busqueda -v
+          python scripts/generar_indice_busqueda.py --check
+          node scripts/test_busqueda.js
       - run: python -m pip install --disable-pip-version-check pyarrow==21.0.0
 
       - name: Caché del detector de diseño
@@ -162,6 +191,12 @@ jobs:
           echo "::notice title=Auditoria web::navigation=$n1 audit_full=$n2 (0 = sin hallazgos)"
           exit $(( n1 || n2 ))
 
+      - name: 'Fuentes web: diccionario alineado con el catálogo API'
+        run: node scripts/audit_fuentes_publicadas.js --autoprueba
+
+      - name: 'Unidad de observación: inventario explícito sin inferencias'
+        run: node scripts/audit_unidad_observacion.js --autoprueba
+
       # El aviso de privacidad describe qué se publica y qué se suprime. Esta
       # compuerta lo contrasta con los Parquet servidos —no con el pipeline— y con
       # las cifras escritas en PRIVACIDAD.md, para que la descripción no se separe
@@ -244,6 +279,9 @@ jobs:
           grep -h -E "Consultas sugeridas|OK|VACIA|ERROR" consultas.log | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::notice title=Consultas sugeridas::$linea"; done
           exit $n
 
+      - name: 'Fichas: las consultas expuestas ejecutan en DuckDB local y respetan filtros'
+        run: python scripts/test_fichas_sql_local.py
+
       # La sección de Banca fue la única que llegó al sitio con la ficha «Falta
       # validar»: el catálogo de instituciones no tenía cotejo reproducible y los
       # importes fuente se publicaban como texto de 15 dígitos. Estas tres
@@ -325,6 +363,9 @@ jobs:
         run: |
           python -m pip install --disable-pip-version-check duckdb >/dev/null 2>&1
           python -m unittest -v pipelines.auto.tests.test_claves
+
+      - name: 'RUT: regresiones de transformación de nro_rut y preservación de otros campos'
+        run: python -m unittest -v pipelines.auto.tests.test_rut_nro_rut
 
       - name: 'Contrato estático: catálogo, esquemas, particiones, consultas, OpenAPI y vistas'
         run: |
@@ -470,9 +511,11 @@ jobs:
         run: |
           npm install --no-save --no-audit --no-fund jsdom
           node scripts/audit_interfaz_dom.js > dom.log 2>&1; n=$?
-          grep -h -E "^FALLA" dom.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=DOM::$linea"; done
+          node scripts/test_busqueda_dom.js > busqueda_dom.log 2>&1; b=$?
+          grep -h -E "^FALLA" dom.log busqueda_dom.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=DOM::$linea"; done
           echo "::notice title=DOM::$(tail -n 1 dom.log)"
-          exit $n
+          tail -n 2 busqueda_dom.log
+          exit $(( n | b ))
 
       - name: 'Aviso de teléfono: flota, se cierra por las tres vías y lo recuerda'
         run: |
@@ -481,6 +524,9 @@ jobs:
           grep -h -E "^FALLA" aviso.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Aviso de teléfono::$linea"; done
           echo "::notice title=Aviso de teléfono::$(tail -n 1 aviso.log)"
           exit $n
+
+      - name: 'Índice de notas: los resúmenes no anidan enlaces Markdown'
+        run: python3 scripts/test_build_indice_notas.py
 
       - name: 'Índice de notas: la puerta de entrada no puede quedarse atrás'
         run: |

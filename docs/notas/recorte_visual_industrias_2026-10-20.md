@@ -1,5 +1,7 @@
 # Recorte visual de industrias (2026-10-20)
 
+> **Snapshot histórico (2026-10-20).** Los conteos de 75 conjuntos y 146 consultas reflejan el alcance de ese corte, no el catálogo vigente. El rediseño visual y los datos excluidos del recorte se conservan como decisión histórica; las métricas actuales están en [`metricas_publicadas.json`](../metricas_publicadas.json).
+
 ## Decisión
 
 El sistema publica 15 industrias, 75 conjuntos y 13,5 millones de filas, pero el valor

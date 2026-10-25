@@ -438,6 +438,9 @@ class ChatTerminalController {
       }).join("");
       return `<tr>${cells}</tr>`;
     }).join("");
+    const emptyState = result.rows.length === 0
+      ? '<div class="query-empty-state" role="status">La consulta se ejecutó correctamente, pero no devolvió filas.</div>'
+      : "";
 
     const content = `
       <div class="query-meta">
@@ -452,6 +455,7 @@ class ChatTerminalController {
           <button class="action-btn" data-sql="${this.escapeHtml(query)}" onclick="navigator.clipboard.writeText(this.dataset.sql)">Copiar SQL</button>
         </div>
       </div>
+      ${emptyState}
       <div class="table-wrapper" id="${tableWrapperId}">
         <table class="results-table">
           <thead><tr>${headersHtml}</tr></thead>

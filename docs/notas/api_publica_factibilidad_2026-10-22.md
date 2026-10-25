@@ -5,7 +5,7 @@
 > **Estado (2026-10-23).** El contrato vigente es **2.0.0** y se publica en
 > `docs/api/v2/`. Esta nota se escribió cuando la ruta era `api/v1/`: las rutas de
 > archivo y de URL se actualizaron para que los comandos sigan funcionando, y las
-> referencias a «v1» como nombre de la fase se conservan como se escribieron.
+> referencias a «v1» como nombre de la fase se conservan como se escribieron. Los conteos de tablas, columnas, archivos y consultas del análisis son un snapshot de 2026-10-22; para el corte vigente usa `docs/metricas_publicadas.json` y `docs/api/v2/`.
 
 **Pregunta:** qué tan factible es añadir una API pública documentada, ejemplos
 reproducibles y consumo desde Python, R, aplicaciones y agentes de IA.
