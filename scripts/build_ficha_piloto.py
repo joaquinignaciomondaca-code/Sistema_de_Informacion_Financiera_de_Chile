@@ -238,7 +238,7 @@ def construir() -> str:
     .boton {{ display:inline-block; min-height:2.75rem; padding:.6rem .9rem; border:1px solid var(--enlace); border-radius:.35rem; background:var(--enlace); color:#fff; font-weight:650; text-decoration:none; }}
     .boton.secundario {{ background:var(--papel); color:var(--enlace); }}
     .nota {{ padding:.85rem 1rem; border-left:4px solid #a46a00; background:var(--aviso-fondo); color:#3b2b12; }}
-    .tabla-wrap {{ overflow-x:auto; border:1px solid var(--borde); background:var(--papel); }}
+    .tabla-wrap {{ box-sizing:border-box; overflow-x:auto; border:1px solid var(--borde); background:var(--papel); padding:6px; }}
     table {{ width:100%; border-collapse:collapse; }}
     th,td {{ padding:.65rem .75rem; border-bottom:1px solid #dce2e7; text-align:left; vertical-align:top; }}
     thead th {{ background:#edf1f4; }}
