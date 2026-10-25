@@ -1,9 +1,9 @@
 // GENERADO por scripts/build_estado_claves.py — no editar a mano.
 // Fuente: docs/api/claves.csv, medido sobre todas las filas publicadas.
-// data_release: 2026-10-24.1681bebfe7ef
+// data_release: 2026-10-25.fb9d60ca0bd3
 window.ESTADO_CLAVES = {
  "generado": "2026-10-25",
- "data_release": "2026-10-24.1681bebfe7ef",
+ "data_release": "2026-10-25.fb9d60ca0bd3",
  "como_se_genera": "python3 scripts/build_estado_claves.py",
  "resumen": {
   "objetos": 90,
@@ -842,8 +842,8 @@ window.ESTADO_CLAVES = {
   },
   "macro_uf": {
    "estado": "ok",
-   "filas": 4680,
-   "distintas": 4680,
+   "filas": 4681,
+   "distintas": 4681,
    "sobrantes": 0,
    "pct_repetidas": 0.0,
    "columnas": [
@@ -851,7 +851,7 @@ window.ESTADO_CLAVES = {
    ],
    "declarada": true,
    "tipo_clave": "identifica",
-   "texto": "Clave verificada: fecha — única sobre 4.680 filas."
+   "texto": "Clave verificada: fecha — única sobre 4.681 filas."
   },
   "macro_utm": {
    "estado": "ok",
