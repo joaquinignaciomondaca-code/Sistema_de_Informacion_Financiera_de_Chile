@@ -40,9 +40,22 @@ Aplicar estos criterios a **cada** decisión de producto, diseño, código y doc
 
 ### Estado real y experiencia actual
 - [ ] Recorrer el sitio desplegado como usuario, sin asumir que observaciones anteriores siguen vigentes.
-- [ ] Registrar rutas actuales de inicio, sectores, catálogo, búsqueda, ficha/visor, diccionario, SQL, descargas y documentación.
+- [x] Registrar las rutas y pantallas que existen hoy (inventario estático de código; falta validar la experiencia publicada en navegador).
+  - [x] `docs/index.html` concentra la aplicación principal en una sola página: Información, Mapa, Diccionario, Visor, Consultas SQL, Descargas y Guía; no hay páginas HTML individuales por conjunto.
+  - [x] `docs/privacidad.html` es la otra página HTML independiente encontrada.
+  - [x] La selección de tablas ocurre en el árbol lateral; la búsqueda y el cambio de pestañas son controles de la aplicación, no rutas nuevas.
+  - [x] El enlace profundo implementado es `#sql=<consulta codificada>`; no se encontró ruta `/datos/<id>/` ni parámetro de ficha `?tabla=<id>`.
+  - [x] En el repositorio, canonical/OG apuntan a GitHub Pages y `vercel.json` redirige `/api/*` hacia GitHub Pages. La API de GitHub reporta Pages `built` en modalidad `legacy`; falta comprobar en navegador qué URL recibe al usuario y el despliegue activo de Vercel.
 - [ ] Probar navegación, búsqueda, acceso directo, recarga, descarga y SQL en navegadores disponibles; separar defectos reproducidos de hipótesis.
-- [ ] Auditar el buscador actual: campos, ranking, acentos, sinónimos, errores de tipeo, móvil, latencia y peso.
+- [ ] Auditar el buscador actual: el inventario estático está hecho; falta evaluar relevancia y experiencia en navegador real.
+  - [x] El filtro del árbol busca nombre de tabla, familia/subsector y rótulos visibles; aplica coincidencia literal tras pasar a minúsculas, no búsqueda por columnas.
+  - [x] Hay un segundo buscador por pregunta/concepto; el índice mezcla términos curados, nombre/vista, descripción, nombres y significado de columnas. La selección reutiliza el filtro del árbol.
+  - [x] La búsqueda por pregunta normaliza mayúsculas y tildes, puntúa términos (frase curada > coincidencia de concepto/nombre/descripción > columnas), limita a ocho resultados y comunica el motivo cuando lo encuentra.
+  - [x] No hay tolerancia difusa a errores de tipeo: términos con errata pueden quedar sin resultados. El índice actual trae 90 entradas, se generó el 2026-10-22 y pesa 292.436 bytes sin compresión.
+  - [x] Corrida exploratoria local contra el índice vigente: consultas «uf», «inflación», «dólar», «TPM», «desempleo», «bonos», «cobre», «factoring», «bancos balance», «derivados», «Ley fintec» y «tipo de cambio» devolvieron resultados; «inflación» e «inflacion» dieron el mismo orden y una consulta aleatoria/una errata («inflasión») no devolvieron resultados. Esto comprueba ejecución, no certifica por sí solo relevancia.
+  - [ ] Comparar cada consulta de una batería de 15–20 con el objeto esperado y registrar falsos positivos/negativos; revisar especialmente ambigüedades y términos no cubiertos.
+  - [ ] Medir peso transferido/comprimido, latencia en navegador y comportamiento cuando falla la carga del índice.
+  - [ ] Probar el filtro y los resultados en móvil, teclado y tecnologías de asistencia; la inspección CSS no sustituye la prueba de uso.
 - [ ] Registrar qué tareas ya se resuelven bien y no deben duplicarse ni degradarse.
 
 ### Rutas, hosting y fuente de verdad
