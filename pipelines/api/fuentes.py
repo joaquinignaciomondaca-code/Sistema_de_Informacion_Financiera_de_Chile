@@ -1,15 +1,16 @@
 """Procedencia, atribución y condiciones de uso de las fuentes publicadas.
 
-Las tres fuentes que alimentan este sistema autorizan la republicación con una
-condición común: **citar**. No piden autorización escrita, ni limitan el uso a
-investigación. La única restricción fuerte detectada —«uso exclusivo para fines
-de investigación, se solicita no distribuir»— está en el manual de la Base de
-Cartera de los Fondos de Pensiones de la Superintendencia de Pensiones, y esa
-base no se publica.
+Las tres fuentes **operativas directas** cubiertas por este módulo son CMF,
+BCCh y SPensiones. Sus condiciones verificadas se resumen aquí para atribución
+de los objetos. No se deben extender esas conclusiones a fuentes históricas o
+editoriales que el pipeline no descarga; por ejemplo, el universo inicial de
+`ccaf_maestro` también conserva procedencia de una lista SUSESO, cuyas
+condiciones de reutilización no se verificaron en esta revisión.
 
-Este módulo centraliza el texto de la cita y el estado de la verificación para
-que el catálogo, el descriptor Data Package, los esquemas y el sitio digan lo
-mismo. Un texto escrito dos veces termina diciendo dos cosas.
+Este módulo centraliza el texto de la cita y el estado de verificación de esas
+fuentes para que el catálogo, el descriptor Data Package, los esquemas y el
+sitio digan lo mismo. La procedencia adicional de un objeto se documenta por
+separado en su manifiesto.
 
 Referencias verificadas el 2026-10-22:
 
@@ -33,10 +34,10 @@ Uso:
 """
 from __future__ import annotations
 
-# Fuente por sector del contrato. El manifiesto ya declara el origen de cada
-# tabla y coincide con este mapa en los 90 objetos (comprobado en la
-# regeneración del 2026-10-22); el mapa existe para no depender de una cadena de
-# texto libre cuando el manifiesto venga incompleto.
+# Fuente de atribución/condiciones por sector del contrato. No pretende agotar
+# la procedencia editorial de todos los datos: esa capa se conserva en el
+# manifiesto cuando aplica (por ejemplo, `ccaf_maestro`). El mapa evita depender
+# de una cadena de texto libre cuando faltan metadatos de atribución.
 SECTOR_FUENTE = {
     "macro": "BCCh",
     "pensiones": "SPensiones",

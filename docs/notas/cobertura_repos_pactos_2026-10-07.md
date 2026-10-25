@@ -1,5 +1,13 @@
 # Cobertura de operaciones REPO (pactos) — revisión 2026-10-07
 
+> **Estado actual, corte 2026-10-24.** Este addendum actualiza las cifras de cobertura; las tablas y corridas que siguen documentan el snapshot de 2026-10-07.
+>
+> - **Seguros (`seguros_pactos`)**: lectura DuckDB de `docs/outputs/seguros/pactos/*.parquet` confirma 11.371 filas, 2016-11–2026-09 y 218 filas en 2026-09. El manifiesto general de seguros se actualizó el 2026-10-21; el manifiesto específico de pactos tiene `updated_at=2026-10-16`.
+> - **Fondos de inversión (`fi_pactos`)**: siguen publicados 1.698 filas en 55 períodos con operaciones, 2012-03–2026-06; 2026-06 contiene 40 filas. Los dos cortes recientes, 2026-03 y 2026-06, siguen en estado cautelar.
+> - No hay una tabla independiente de pactos/REPO de fondos mutuos; no se interpreta como exposición cero.
+>
+> La comprobación ejecutable de los conteos actuales está en [`auditoria_fuentes_cifras_rediseno_2026-10-24.md`](auditoria_fuentes_cifras_rediseno_2026-10-24.md). La tabla siguiente conserva los valores históricos del corte de 2026-10-07.
+
 En esta nota, **REPO** significa operación de compra/venta con pacto; no repositorios de código.
 La revisión cruza los manifiestos publicados en `docs/outputs/`, las corridas programadas y el backfill histórico de pactos en GitHub Actions (2026-10-07).
 

@@ -6,6 +6,8 @@
 **Método:** cada afirmación se contrastó contra los Parquet publicados con DuckDB
 (no contra la documentación), y contra el código que genera cada artefacto.
 
+> **Snapshot histórico (2026-10-23).** La revisión describe hallazgos y estados de claves del corte de esa fecha. El estado vigente de PK/FK está en `docs/api/claves.csv` y su resumen actualizado en [`docs/api/README.md`](../api/README.md).
+
 ---
 
 ## 1. Veredicto por afirmación

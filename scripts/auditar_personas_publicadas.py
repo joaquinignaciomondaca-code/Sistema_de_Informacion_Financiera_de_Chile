@@ -59,8 +59,10 @@ MARCAS_SOCIEDAD = re.compile(
     re.I,
 )
 
-# Fuentes que el sistema declara. SUSESO no está: aparece como regulador en la
-# lista de cajas de compensación, pero los estados financieros vienen de la CMF.
+# Fuentes directas vigentes que el contrato asigna a los objetos publicados.
+# El campo `fuente` no reemplaza la procedencia histórica del catálogo CCAF:
+# data_manifest.json y ccaf/README.md registran su semilla desde listados SUSESO
+# y el Registro de Valores CMF; los estados financieros CCAF son de la CMF.
 FUENTES_ESPERADAS = {"CMF", "BCCh", "SPensiones"}
 
 
@@ -290,13 +292,17 @@ def main() -> int:
         fallos.append(f"catálogo: faltan fuentes verificadas: {', '.join(sorted(faltantes))}")
     notas.append("catálogo: fuentes " + ", ".join(fuentes))
 
-    # El sitio contaba a SUSESO entre las fuentes de datos, cuando sólo aparece
-    # como regulador en el catálogo de cajas de compensación.
+    # Separar las tres fuentes directas de archivos financieros/series del
+    # antecedente SUSESO que forma parte de la procedencia del catálogo CCAF.
     sitio = (DOCS / "index.html").read_text(encoding="utf-8")
-    if "SUSESO" in sitio and "SUSESO no entrega datos" not in sitio:
-        fallos.append("sitio: presenta a SUSESO como fuente de datos")
-    if "SUSESO no entrega datos" not in sitio:
-        fallos.append("sitio: no aclara que SUSESO no entrega datos")
+    if "SUSESO no entrega datos" in sitio:
+        fallos.append("sitio: conserva la afirmación absoluta incorrecta sobre SUSESO")
+    if "Archivos financieros y series actuales" not in sitio or "Superintendencia de Pensiones" not in sitio:
+        fallos.append("sitio: no identifica las tres fuentes directas actuales")
+    if "universo inicial" not in sitio or "lista de SUSESO" not in sitio or "Registro de Valores" not in sitio:
+        fallos.append("sitio: no explica la procedencia mixta del universo CCAF")
+    if "Los balances y resultados CCAF también provienen de la CMF" not in sitio:
+        fallos.append("sitio: no distingue la fuente de los estados financieros CCAF")
 
     print("Privacidad: lo que el aviso declara, comprobado sobre los Parquet publicados")
     if verbose:

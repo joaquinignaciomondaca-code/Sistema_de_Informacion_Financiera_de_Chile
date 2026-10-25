@@ -85,11 +85,77 @@
     return { puntos: Math.max(puntos, 0), motivos, columnas: [...new Set(colsCoincidentes)].slice(0, 3) };
   }
 
+  // El vocabulario se construye una vez por índice, no en cada pulsación. La
+  // corrección se limita a una edición, a palabras de 5+ letras y a candidatos
+  // únicos: evita «adivinar» siglas cortas o consultas ambiguas.
+  const VOCABULARIOS = new WeakMap();
+
+  function vocabulario(indice) {
+    if (VOCABULARIOS.has(indice)) return VOCABULARIOS.get(indice);
+    const palabras = new Set();
+    for (const tabla of indice.tablas || []) {
+      const campos = [tabla.nombre, tabla.vista, tabla.descripcion, ...(tabla.terminos || [])];
+      for (const columna of tabla.columnas || []) campos.push(columna.nombre, columna.significado);
+      for (const campo of campos) {
+        for (const palabra of tokens(campo)) {
+          if (palabra.length >= 5 && /^[a-z]+$/.test(palabra)) palabras.add(palabra);
+        }
+      }
+    }
+    const porLongitud = new Map();
+    for (const palabra of palabras) {
+      if (!porLongitud.has(palabra.length)) porLongitud.set(palabra.length, []);
+      porLongitud.get(palabra.length).push(palabra);
+    }
+    const resultado = { palabras, porLongitud };
+    VOCABULARIOS.set(indice, resultado);
+    return resultado;
+  }
+
+  // Distancia de edición acotada a una inserción, eliminación o sustitución.
+  function distanciaUnaEdicion(a, b) {
+    if (a === b) return true;
+    if (Math.abs(a.length - b.length) > 1) return false;
+    let i = 0, j = 0, diferencias = 0;
+    while (i < a.length && j < b.length) {
+      if (a[i] === b[j]) { i++; j++; continue; }
+      if (++diferencias > 1) return false;
+      if (a.length > b.length) i++;
+      else if (b.length > a.length) j++;
+      else { i++; j++; }
+    }
+    if (i < a.length || j < b.length) diferencias++;
+    return diferencias <= 1;
+  }
+
+  function corregirPalabras(indice, palabras) {
+    const vocab = vocabulario(indice);
+    const correcciones = [];
+    const corregidas = palabras.map((palabra) => {
+      if (vocab.palabras.has(palabra) || palabra.length < 5 || !/^[a-z]+$/.test(palabra)) return palabra;
+      const candidatas = [];
+      for (let largo = palabra.length - 1; largo <= palabra.length + 1; largo++) {
+        for (const candidata of vocab.porLongitud.get(largo) || []) {
+          if (distanciaUnaEdicion(palabra, candidata)) candidatas.push(candidata);
+        }
+      }
+      if (candidatas.length !== 1) return palabra;
+      correcciones.push({ original: palabra, corregida: candidatas[0] });
+      return candidatas[0];
+    });
+    return { palabras: corregidas, correcciones };
+  }
+
   function buscar(indice, consulta) {
-    const palabras = [...new Set(tokens(consulta))];
-    if (!palabras.length && !normalizar(consulta)) return [];
+    const originales = [...new Set(tokens(consulta))];
+    if (!originales.length && !normalizar(consulta)) return [];
+    const { palabras, correcciones } = corregirPalabras(indice, originales);
+    const mapaCorrecciones = new Map(correcciones.map((c) => [c.original, c.corregida]));
+    const consultaAjustada = correcciones.length
+      ? normalizar(consulta).split(" ").map((p) => mapaCorrecciones.get(p) || p).join(" ")
+      : consulta;
     return indice.tablas
-      .map((t) => ({ tabla: t, ...puntuar(t, consulta, palabras) }))
+      .map((t) => ({ tabla: t, ...puntuar(t, consultaAjustada, palabras), correcciones }))
       .filter((r) => r.puntos > 0)
       .sort((a, b) => b.puntos - a.puntos || a.tabla.nombre.localeCompare(b.tabla.nombre))
       .slice(0, MAX_RESULTADOS);
@@ -134,15 +200,27 @@
     lista.innerHTML = resultados.map((r, i) => {
       const t = r.tabla;
       const desc = (t.descripcion || "").length > 140 ? t.descripcion.slice(0, 137) + "…" : t.descripcion;
-      const motivo = r.motivos.length
-        ? `Coincide con: ${r.motivos.slice(0, 3).map(escapar).join(", ")}`
-        : (r.columnas.length ? `Columnas: ${r.columnas.map(escapar).join(", ")}` : "");
+      const motivos = [];
+      if (r.correcciones && r.correcciones.length) motivos.push("Coincidencia aproximada por escritura");
+      if (r.motivos.length) motivos.push(`Coincide con: ${r.motivos.slice(0, 3).map(escapar).join(", ")}`);
+      else if (r.columnas.length) motivos.push(`Columnas: ${r.columnas.map(escapar).join(", ")}`);
+      const motivo = motivos.join(" · ");
+      const formatos = Array.isArray(t.formatos) && t.formatos.length
+        ? t.formatos.map((formato) => formato === "PARQUET" ? "Parquet" : formato).join(", ")
+        : "sin archivo directo";
       return `<li class="pregunta-item">
         <button type="button" class="pregunta-boton" data-indice="${i}">
           <span class="pregunta-nombre">${escapar(t.nombre)}</span>
+          <span class="pregunta-identificador">ID: ${escapar(t.id)}</span>
           <span class="pregunta-sector">${escapar(t.sectorLabel)}</span>
+          <span class="pregunta-metadatos">
+            <span>Fuente: ${escapar(t.fuente)}</span>
+            <span>Cobertura: ${escapar(t.corte)}</span>
+            <span>Archivo: ${escapar(formatos)}</span>
+          </span>
           <span class="pregunta-desc">${escapar(desc)}</span>
           ${motivo ? `<span class="pregunta-motivo">${motivo}</span>` : ""}
+          <span class="pregunta-accion">Seleccionar en el explorador →</span>
         </button>
       </li>`;
     }).join("");
@@ -178,9 +256,38 @@
       pintar(buscar(indice, entrada.value), entrada.value, estado, lista);
     });
     entrada.addEventListener("keydown", (ev) => {
-      if (ev.key === "Enter") {
+      if (ev.key === "ArrowDown") {
+        const primero = lista.querySelector(".pregunta-boton");
+        if (primero) {
+          ev.preventDefault();
+          primero.focus();
+        }
+      } else if (ev.key === "Enter") {
         const primero = buscar(indice, entrada.value)[0];
         if (primero) elegir(primero.tabla);
+      }
+    });
+    lista.addEventListener("keydown", (ev) => {
+      const botones = [...lista.querySelectorAll(".pregunta-boton")];
+      const botonActual = ev.target.closest(".pregunta-boton");
+      const actual = botones.indexOf(botonActual);
+      if (actual < 0) return;
+      if (ev.key === "Escape") {
+        ev.preventDefault();
+        entrada.focus();
+      } else if (ev.key === "ArrowDown" && actual < botones.length - 1) {
+        ev.preventDefault();
+        botones[actual + 1].focus();
+      } else if (ev.key === "ArrowUp") {
+        ev.preventDefault();
+        if (actual > 0) botones[actual - 1].focus();
+        else entrada.focus();
+      } else if (ev.key === "Home") {
+        ev.preventDefault();
+        botones[0].focus();
+      } else if (ev.key === "End") {
+        ev.preventDefault();
+        botones[botones.length - 1].focus();
       }
     });
   }

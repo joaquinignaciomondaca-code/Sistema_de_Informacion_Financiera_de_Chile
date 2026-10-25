@@ -352,6 +352,31 @@ def ejecutar(raiz: Path, base: str) -> tuple[list[tuple[str, bool, str]], list[s
             sin_cita.append(f"{recurso['name']}: sources sin sif_cita")
         if recurso.get("sif", {}).get("licencia_estado") != "verificada":
             sin_cita.append(f"{recurso['name']}: sif.licencia_estado distinto de verificada")
+    ficha_ccaf = next((o for o in objetos if o["id"] == "ccaf_lista_entidades"), {})
+    recurso_ccaf = next((r for r in paquete.get("resources", []) if r.get("name") == "ccaf_lista_entidades"), {})
+    proc = ficha_ccaf.get("procedencia") or {}
+    proc_recurso = (recurso_ccaf.get("sif") or {}).get("procedencia")
+    fuentes_directas = proc.get("fuentes_directas_actuales") or []
+    procedencia_editorial = proc.get("procedencia_editorial") or {}
+    universo = procedencia_editorial.get("universo_inicial") or []
+    condiciones = {f.get("institucion"): f for f in proc.get("condiciones_reutilizacion", [])}
+    procedencia_ok = (
+        ficha_ccaf.get("fuente") == "CMF"
+        and len(fuentes_directas) == 1
+        and fuentes_directas[0].get("institucion") == "CMF"
+        and "TXT IFRS" in fuentes_directas[0].get("recurso", "")
+        and "uso exclusivo" in fuentes_directas[0].get("alcance", "").lower()
+        and {f.get("institucion") for f in universo} == {"SUSESO", "CMF"}
+        and any(f.get("recurso") == "Registro de Valores" for f in universo)
+        and condiciones.get("CMF", {}).get("estado") == "verificada"
+        and condiciones.get("SUSESO", {}).get("estado") == "pendiente_verificacion"
+        and recurso_ccaf.get("sif", {}).get("manifest_id") == "ccaf_maestro"
+        and proc_recurso == proc
+    )
+    anotar("1d.9 procedencia", procedencia_ok,
+           "ccaf_maestro separa fuentes, procedencia editorial y estado de condiciones por fuente"
+           if procedencia_ok else "procedencia o condiciones por fuente incompletas/desalineadas en catálogo/Data Package")
+
     adaptaciones = [o["id"] for o in objetos if o.get("adaptacion")]
     sin_nota = [i for i in adaptaciones
                 if not next(o for o in objetos if o["id"] == i).get("nota_adaptacion")]

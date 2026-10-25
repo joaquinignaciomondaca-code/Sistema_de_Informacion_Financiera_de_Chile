@@ -29,7 +29,9 @@
   /* Igual que --accent-mint-text: el azul #3B82F6 mide 4,46:1 sobre el panel
      elevado y no alcanza AA cuando se usa como color de TEXTO. */
   --accent-blue: #3B82F6;
-  --accent-blue-text: #55A0F8;
+  /* Sube ligeramente el tono para la insignia FK sobre el tinte informativo al 20 %.
+     #55A0F8 daba 4,43:1 en esa composición; este tono supera 4,5:1. */
+  --accent-blue-text: #5AA4F8;
   --accent-green: #10B981;
   --accent-green-rgb: 16, 185, 129;
   --accent-teal: #06B6D4;
@@ -59,6 +61,14 @@
   --violet-rgb: 167, 139, 250;
   --orange-rgb: 251, 146, 60;
   --red-rgb: 239, 68, 68;
+
+  /* Tonos de texto semántico: AA sobre superficies y tintes al 20 %. */
+  --accent-green-text: #28C08D;
+  --warn-text: #F59E0B;
+  --violet-text: #B39BFB;
+  --orange-text: #FB933D;
+  --teal-text: #17BBD7;
+  --red-text: #F47B7B;
 }
 
 [data-theme="swissborg"] {
@@ -71,19 +81,21 @@
   --border-focus: #01C38D;
   
   --text-primary: #FFFFFF;
-  --text-secondary: #8F95A3;
-  --text-muted: #8E929A;
+  --text-secondary: #A3AAB8;  /* mínimo 4,90:1 sobre --bg-tertiary */
+  --text-muted: #A5A9B0;       /* mínimo 4,85:1 sobre --bg-tertiary */
   --text-bright: #FFFFFF;
 
   --accent-mint: #01C38D;
   --accent-mint-hover: #02E2A4;
-  --accent-mint-text: var(--accent-mint);
+  /* El acento puro daba 3,90:1 sobre sus insignias seleccionadas translúcidas. */
+  --accent-mint-text: #42E0B2;
   --accent-mint-dim: rgba(1, 195, 141, 0.15);
   --accent-mint-glow: rgba(1, 195, 141, 0.45);
   --accent-contrast: #132D46;
 
   --accent-blue: #01C38D;
-  --accent-blue-text: var(--accent-blue);
+  /* Texto FK sobre fondo informativo al 20 %: contraste mínimo medido 4,88:1. */
+  --accent-blue-text: #42E0B2;
   --accent-green: #01C38D;
   --accent-green-rgb: 1, 195, 141;
   --accent-teal: #00ADB5;
@@ -107,6 +119,14 @@
   --violet-rgb: 129, 140, 248;
   --orange-rgb: 251, 146, 60;
   --red-rgb: 239, 68, 68;
+
+  /* Tonos de texto semántico: AA sobre superficies y tintes al 20 %. */
+  --accent-green-text: #61DAB8;
+  --warn-text: #E7C540;
+  --violet-text: #B6BCFB;
+  --orange-text: #FCB174;
+  --teal-text: #6FD1D5;
+  --red-text: #F69797;
 }
 
 [data-theme="bloomberg"] {
@@ -120,7 +140,7 @@
   
   --text-primary: #FFFFFF;
   --text-secondary: #A3A3A8;
-  --text-muted: #828287;
+  --text-muted: #98989D; /* mínimo 5,24:1 sobre --bg-tertiary */
   --text-bright: #FFFFFF;
 
   --accent-mint: #FF9900;
@@ -155,6 +175,14 @@
   --violet-rgb: 196, 181, 253;
   --orange-rgb: 253, 186, 116;
   --red-rgb: 248, 113, 113;
+
+  /* Tonos de texto semántico: AA sobre superficies y tintes al 20 %. */
+  --accent-green-text: #FF9900;
+  --warn-text: #FCD34D;
+  --violet-text: #C4B5FD;
+  --orange-text: #FDBA74;
+  --teal-text: #F59E0B;
+  --red-text: #F98B8B;
 }
 
 [data-theme="nord"] {
@@ -168,18 +196,21 @@
   
   --text-primary: #ECEFF4;
   --text-secondary: #D8DEE9;
-  --text-muted: #939DB0;
+  --text-muted: #A8B2C1; /* mínimo 4,70:1 sobre --bg-tertiary */
   --text-bright: #FFFFFF;
 
   --accent-mint: #88C0D0;
   --accent-mint-hover: #8FBCBB;
-  --accent-mint-text: var(--accent-mint);
+  /* El acento puro daba 3,82:1 sobre fondos de estado/selección translúcidos. */
+  --accent-mint-text: #B8D6DE;
   --accent-mint-dim: rgba(136, 192, 208, 0.15);
   --accent-mint-glow: rgba(136, 192, 208, 0.45);
   --accent-contrast: #1E222A;
 
   --accent-blue: #81A1C1;
-  --accent-blue-text: var(--accent-blue);
+  /* Tono de enlace/etiqueta: #81A1C1 daba 3,74:1 sobre --bg-tertiary y 3,53:1
+     en la insignia FK translúcida. #C0CDDD supera AA en ambas composiciones. */
+  --accent-blue-text: #C0CDDD;
   --accent-green: #A3BE8C;
   --accent-green-rgb: 163, 190, 140;
   --accent-teal: #88C0D0;
@@ -203,6 +234,14 @@
   --violet-rgb: 180, 142, 173;
   --orange-rgb: 208, 135, 112;
   --red-rgb: 191, 97, 106;
+
+  /* Tonos de texto semántico: AA sobre superficies y tintes al 20 %. */
+  --accent-green-text: #CAD9BC;
+  --warn-text: #F1D9AB;
+  --violet-text: #D9C6D6;
+  --orange-text: #E7C3B7;
+  --teal-text: #BADBE4;
+  --red-text: #E2B7BB;
 }
 
 [data-theme="midnight"] {
@@ -216,7 +255,7 @@
   
   --text-primary: #F8FAFC;
   --text-secondary: #94A3B8;
-  --text-muted: #748297;
+  --text-muted: #8D99AC; /* mínimo 5,07:1 sobre --bg-tertiary */
   --text-bright: #FFFFFF;
 
   --accent-mint: rgb(var(--info-rgb));
@@ -251,6 +290,14 @@
   --violet-rgb: 167, 139, 250;
   --orange-rgb: 251, 146, 60;
   --red-rgb: 244, 63, 94;
+
+  /* Tonos de texto semántico: AA sobre superficies y tintes al 20 %. */
+  --accent-green-text: #34D399;
+  --warn-text: #FBBF24;
+  --violet-text: #B8A1FB;
+  --orange-text: #FB9847;
+  --teal-text: #2DD4BF;
+  --red-text: #F87C91;
 }
 
 [data-theme="informe"] {
@@ -264,7 +311,7 @@
   
   --text-primary: #1F2937;
   --text-secondary: #4B5563;
-  --text-muted: #666A73;  /* 4,69:1 sobre la barra lateral #ECEFF1; antes 4,30 */
+  --text-muted: #60646D;  /* mínimo 4,79:1 sobre --bg-tertiary #E5E7EB; también supera AA en la barra */
   --text-bright: #111827;
 
   --accent-mint: #0B6F54;
@@ -275,7 +322,8 @@
   --accent-contrast: #FFFFFF;
 
   --accent-blue: #1657A8;
-  --accent-blue-text: var(--accent-blue);
+  /* La insignia FK usa fondo informativo al 20 %; texto medido en 5,25:1. */
+  --accent-blue-text: #124B8C;
   --accent-green: #0B6F54;
   --accent-green-rgb: 11, 111, 84;
   --accent-teal: #0E7490;
@@ -299,6 +347,14 @@
   --violet-rgb: 109, 40, 217;
   --orange-rgb: 194, 65, 12;
   --red-rgb: 220, 38, 38;
+
+  /* Tonos de texto semántico: AA sobre superficies y tintes al 20 %. */
+  --accent-green-text: #095E47;
+  --warn-text: #893F07;
+  --violet-text: #6324C6;
+  --orange-text: #943209;
+  --teal-text: #0B5B71;
+  --red-text: #9F1C1C;
 }
 
 /* Colores de marca del logotipo. Van en :root y no dentro de los bloques de
@@ -455,7 +511,7 @@ header {
 .badge.offline {
   background-color: rgba(var(--warn-rgb), 0.12);
   border-color: rgba(var(--warn-rgb), 0.45);
-  color: rgb(var(--warn-rgb));
+  color: var(--warn-text);
   display: flex;
   align-items: center;
   gap: 6px;
@@ -823,10 +879,40 @@ header {
 }
 
 .pregunta-sector,
-.pregunta-motivo {
+.pregunta-motivo,
+.pregunta-identificador {
   display: block;
   font-size: 12px;
   color: var(--text-muted);
+}
+
+.pregunta-identificador {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+
+.pregunta-metadatos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 10px;
+  margin-top: 3px;
+  color: var(--text-muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.pregunta-metadatos > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.pregunta-accion {
+  display: block;
+  margin-top: 4px;
+  color: var(--accent-mint-text);
+  font-size: 11px;
+  font-weight: 600;
 }
 
 .pregunta-desc {
@@ -1097,12 +1183,12 @@ header {
    Se marca en ámbar para que se lea como advertencia, no como dato firme. */
 .node-badge.badge-por-auditar {
   background-color: rgba(var(--warn-rgb), 0.16);
-  color: rgb(var(--warn-rgb));
+  color: var(--warn-text);
   border: 1px solid rgba(var(--warn-rgb), 0.4);
 }
 
 .tree-node.audit-pending-node > .tree-circular .tree-label {
-  color: rgb(var(--warn-rgb));
+  color: var(--warn-text);
 }
 
 .tree-node.audit-pending-node > .tree-circular {
@@ -1136,7 +1222,7 @@ header {
 .dict-warning-text {
   font-size: 12px;
   line-height: 1.45;
-  color: rgb(var(--warn-rgb));
+  color: var(--warn-text);
 }
 
 .tree-node.roadmap-node {
@@ -1557,6 +1643,16 @@ header {
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+.query-empty-state {
+  margin: 0 0 8px;
+  padding: 12px 14px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  font-size: 13px;
 }
 
 /* View Switch: Tabla vs Grafico */
@@ -2733,19 +2829,19 @@ header {
 }
 
 .dict-mode-badge.mode-auto {
-  color: rgb(var(--info-rgb));
+  color: var(--accent-blue-text);
   background: rgba(var(--info-rgb), 0.12);
   border: 1px solid rgba(var(--info-rgb), 0.3);
 }
 
 .dict-mode-badge.mode-manual {
-  color: rgb(var(--warn-rgb));
+  color: var(--warn-text);
   background: rgba(var(--warn-rgb), 0.12);
   border: 1px solid rgba(var(--warn-rgb), 0.3);
 }
 
 .dict-mode-badge.mode-hybrid {
-  color: rgb(var(--violet-rgb));
+  color: var(--violet-text);
   background: rgba(var(--violet-rgb), 0.12);
   border: 1px solid rgba(var(--violet-rgb), 0.3);
 }
@@ -2787,19 +2883,19 @@ header {
   align-items: center;
   gap: 5px;
   font-size: 12px;
-  color: var(--accent-green);
-  background: rgba(163, 190, 140, 0.12);
+  color: var(--accent-green-text);
+  background: rgba(var(--accent-green-rgb), 0.12);
   padding: 2px 8px;
   border-radius: 4px;
   font-family: var(--font-mono);
-  border: 1px solid rgba(163, 190, 140, 0.3);
+  border: 1px solid rgba(var(--accent-green-rgb), 0.3);
 }
 
 .freshness-dot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background-color: var(--accent-green);
+  background-color: var(--accent-mint);
   outline: 2px solid rgba(var(--accent-green-rgb), 0.35);
   outline-offset: 1px;
 }
@@ -2905,8 +3001,7 @@ header {
 }
 
 .dict-role-tag.pk {
-  /* 0.12 y no 0.20: sobre el tinte al 20 % el texto de acento bajaba a 4,3:1 en los
-     temas SwissBorg y Nord. Al 12 % queda en 4,97 y 4,90. */
+  /* Conserva un tinte discreto al 12 %; el texto usa su token accesible por paleta. */
   background: rgba(var(--accent-rgb), 0.12);
   color: var(--accent-mint-text);
   border: 1px solid var(--accent-mint);
@@ -2935,13 +3030,13 @@ header {
 
 .badge-acct-mtm {
   background: rgba(var(--violet-rgb), 0.16);
-  color: rgb(var(--violet-rgb));
+  color: var(--violet-text);
   border: 1px solid rgba(var(--violet-rgb), 0.4);
 }
 
 .badge-acct-bruto {
   background: rgba(var(--info-rgb), 0.16);
-  color: rgb(var(--info-rgb));
+  color: var(--accent-blue-text);
   border: 1px solid rgba(var(--info-rgb), 0.4);
 }
 
@@ -2953,19 +3048,19 @@ header {
 
 .badge-acct-amort {
   background: rgba(var(--warn-rgb), 0.16);
-  color: rgb(var(--warn-rgb));
+  color: var(--warn-text);
   border: 1px solid rgba(var(--warn-rgb), 0.4);
 }
 
 .badge-acct-tasacion {
   background: rgba(var(--orange-rgb), 0.16);
-  color: rgb(var(--orange-rgb));
+  color: var(--orange-text);
   border: 1px solid rgba(var(--orange-rgb), 0.4);
 }
 
 .badge-acct-pacto {
   background: rgba(var(--teal-rgb), 0.16);
-  color: rgb(var(--teal-rgb));
+  color: var(--teal-text);
   border: 1px solid rgba(var(--teal-rgb), 0.4);
 }
 
@@ -3108,19 +3203,19 @@ header {
 }
 
 .dv-badge-mode.mode-auto {
-  color: rgb(var(--info-rgb));
+  color: var(--accent-blue-text);
   background: rgba(var(--info-rgb), 0.12);
   border: 1px solid rgba(var(--info-rgb), 0.3);
 }
 
 .dv-badge-mode.mode-manual {
-  color: rgb(var(--warn-rgb));
+  color: var(--warn-text);
   background: rgba(var(--warn-rgb), 0.12);
   border: 1px solid rgba(var(--warn-rgb), 0.3);
 }
 
 .dv-badge-mode.mode-hybrid {
-  color: rgb(var(--violet-rgb));
+  color: var(--violet-text);
   background: rgba(var(--violet-rgb), 0.12);
   border: 1px solid rgba(var(--violet-rgb), 0.3);
 }
@@ -3145,6 +3240,13 @@ header {
   font-size: 12px;
   color: var(--text-muted);
   font-family: var(--font-mono);
+}
+
+.dv-sample-hint {
+  max-width: 300px;
+  font-size: 11px;
+  line-height: 1.3;
+  color: var(--text-muted);
 }
 
 /* Segunda línea de una cabecera: qué es cada casilla de una columna compuesta. */
@@ -3373,9 +3475,9 @@ header {
   overflow: auto;
   padding: 10px 12px;
   border-radius: 6px;
-  background-color: rgba(255, 107, 107, 0.08);
-  border: 1px solid rgba(255, 107, 107, 0.35);
-  color: var(--accent-red);
+  background-color: rgba(var(--red-rgb), 0.08);
+  border: 1px solid rgba(var(--red-rgb), 0.35);
+  color: var(--red-text);
   font-size: 12px;
   white-space: pre-wrap;
   word-break: break-word;
@@ -3801,13 +3903,13 @@ header {
 
 .normativa-badge-ok {
   border-color: rgba(70, 170, 120, 0.38);
-  color: var(--accent-green);
+  color: var(--accent-green-text);
 }
 
 .normativa-badge-pending,
 .normativa-badge-review {
   border-color: rgba(230, 180, 80, 0.48);
-  color: var(--accent-yellow);
+  color: var(--warn-text);
 }
 
 .normativa-badge-update {
@@ -3972,7 +4074,7 @@ header {
 }
 
 .normativa-review-summary > strong {
-  color: var(--accent-yellow);
+  color: var(--warn-text);
   font-size: 12px;
 }
 
@@ -4521,18 +4623,18 @@ kbd {
 .sql-engine-alert code {
   font-family: var(--font-mono);
   font-size: 12px;
-  color: rgb(var(--warn-rgb));
+  color: var(--warn-text);
   word-break: break-word;
 }
 
 .sql-engine-alert .engine-alert-body { flex: 1 1 auto; min-width: 0; }
-.sql-engine-alert strong { color: rgb(var(--warn-rgb)); }
+.sql-engine-alert strong { color: var(--warn-text); }
 
 .engine-retry-btn {
   flex-shrink: 0;
   background: transparent;
   border: 1px solid rgba(var(--warn-rgb), 0.6);
-  color: rgb(var(--warn-rgb));
+  color: var(--warn-text);
   font-family: var(--font-sans);
   font-size: 12px;
   font-weight: 600;
@@ -4544,6 +4646,11 @@ kbd {
 
 .engine-retry-btn:hover { background: rgba(var(--warn-rgb), 0.14); }
 .engine-retry-btn:disabled { opacity: 0.6; cursor: progress; }
+.engine-downloads-btn {
+  border-color: var(--accent-mint);
+  color: var(--accent-mint-text, var(--accent-mint));
+}
+.engine-downloads-btn:hover { background: var(--accent-mint-dim); }
 
 /* ============================================================================
    COMPRESIÓN DE LA CABECERA SEGÚN EL ANCHO REAL DEL PANEL (2026-09-28)
@@ -4904,7 +5011,7 @@ kbd {
   letter-spacing: 0.04em;
 }
 
-.dl-tag-info { border-color: rgba(var(--info-rgb), 0.6); color: rgb(var(--info-rgb)); }
+.dl-tag-info { border-color: rgba(var(--info-rgb), 0.6); color: var(--accent-blue-text); }
 
 .dl-item-actions { display: flex; gap: 6px; flex-wrap: wrap; justify-content: flex-end; align-items: center; }
 .dl-freq { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); }
@@ -5077,7 +5184,7 @@ kbd {
 }
 
 .tier-archivo .tree-tier-title,
-.tier-registro .tree-tier-title { color: rgb(var(--warn-rgb)); }
+.tier-registro .tree-tier-title { color: var(--warn-text); }
 
 .tier-registro .tree-tier-aviso { border-left-color: rgba(var(--neutral-rgb), 0.6); background: rgba(var(--neutral-rgb), 0.08); }
 .tier-registro .tree-tier-title { color: var(--text-secondary); }
@@ -5140,7 +5247,7 @@ kbd {
   text-transform: uppercase;
   letter-spacing: 0.4px;
   background-color: rgba(var(--warn-rgb), 0.12);
-  color: rgb(var(--warn-rgb));
+  color: var(--warn-text);
   border: 1px solid rgba(var(--warn-rgb), 0.35);
 }
 
@@ -5490,7 +5597,7 @@ kbd {
   padding: 1px 6px;
   border-radius: 3px;
   background: rgba(var(--warn-rgb), 0.16);
-  color: rgb(var(--warn-rgb));
+  color: var(--warn-text);
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 0.4px;
@@ -5515,7 +5622,7 @@ kbd {
   color: var(--text-secondary);
 }
 
-.scope-banner b { color: rgb(var(--warn-rgb)); font-weight: 700; }
+.scope-banner b { color: var(--warn-text); font-weight: 700; }
 
 /* --- Descargas: niveles y archivo plegado --- */
 .dl-tier { display: flex; flex-direction: column; gap: 14px; }
@@ -5596,9 +5703,9 @@ kbd {
 .dl-item-variante { padding-left: 34px; background: var(--bg-primary); }
 .dl-item-variante .dl-item-title code { color: var(--text-secondary); }
 .dl-tag-variante { border-style: dashed; }
-.dl-tag-fuera { border-color: rgba(var(--warn-rgb), 0.6); color: rgb(var(--warn-rgb)); }
+.dl-tag-fuera { border-color: rgba(var(--warn-rgb), 0.6); color: var(--warn-text); }
 .dl-stat-fuera b { color: var(--text-secondary); }
-.dl-context-aviso { font-size: 12px; color: rgb(var(--warn-rgb)); }
+.dl-context-aviso { font-size: 12px; color: var(--warn-text); }
 
 @media (max-width: 1100px) {
   .info-core-grid,
@@ -5780,7 +5887,7 @@ kbd {
 }
 
 .dl-puntero-btn:hover {
-  border-color: var(--accent-mint-text);
+  border-color: var(--accent-mint);
   background: var(--accent-mint-dim);
 }
 
@@ -6464,7 +6571,7 @@ body {
   background: rgba(var(--red-rgb), 0.06);
 }
 
-.scope-banner-claves b { color: rgb(var(--red-rgb)); }
+.scope-banner-claves b { color: var(--red-text); }
 
 /* --- Portada premium: primero descubrir, después consultar ----------------- */
 .info-scroll {

@@ -23,6 +23,7 @@ const Module = require("module");
 
 const ROOT = path.dirname(__dirname);
 const DOCS = path.join(ROOT, "docs");
+const metricasPublicadas = JSON.parse(fs.readFileSync(path.join(DOCS, "metricas_publicadas.json"), "utf8"));
 
 function loadJsdom() {
   const candidatos = [
@@ -102,6 +103,10 @@ const dom = new JSDOM(html, {
 
 const { window } = dom;
 const document = window.document;
+const alcancesFallback = Array.from(document.querySelectorAll("[data-alcance]"))
+  .map((el) => ({ ruta: el.dataset.alcance, texto: el.textContent.trim() }));
+const modosFallback = Array.from(document.querySelectorAll("#info-container [data-modo]"))
+  .map((el) => ({ modo: el.dataset.modo, texto: el.textContent.trim() }));
 
 // Ejecuta los scripts locales en el mismo orden que el navegador y luego el inline.
 const scripts = Array.from(document.querySelectorAll("script"));
@@ -130,6 +135,49 @@ setTimeout(async () => {
   check("el mapa relacional no se construye al cargar", !window.erdInstance);
   check("el motor DuckDB no arranca al cargar",
     window.DuckDBClient && window.DuckDBClient.initPromise === null);
+  check("el gráfico de la Guía arranca oculto y sin pintar",
+    document.getElementById("calidad-chart").hidden === true
+    && !document.getElementById("calidad-chart").querySelector("canvas"));
+
+  const principal = metricasPublicadas.fuentes.descargas.principal;
+  const alcanceInicialDatos = window.SIFAlcance && window.SIFAlcance.datos();
+  check("portada: los 74 elementos, filas y bytes visibles coinciden con el artefacto común",
+    Boolean(alcanceInicialDatos && alcanceInicialDatos.visible.conjuntos === principal.elementos
+      && alcanceInicialDatos.visible.filas === principal.filas
+      && alcanceInicialDatos.visible.bytes === principal.bytes
+      && window.SIFPortada.valor("visible.conjuntos") === String(principal.elementos)),
+    alcanceInicialDatos && alcanceInicialDatos.visible ? `${alcanceInicialDatos.visible.conjuntos} elementos · ${alcanceInicialDatos.visible.filas} filas · ${alcanceInicialDatos.visible.bytes} bytes` : "sin alcance");
+  const alcancesDesfasados = alcancesFallback.filter(({ ruta, texto }) =>
+    !window.SIFPortada || window.SIFPortada.valor(ruta) !== texto
+  );
+  check("los valores de respaldo data-alcance de la portada coinciden con el catálogo generado",
+    alcancesDesfasados.length === 0,
+    alcancesDesfasados.map((x) => `${x.ruta}: ${x.texto}`).join("; ") || `${alcancesFallback.length} valores alineados`);
+
+  const conteoModos = { auto: 0, hybrid: 0, manual: 0 };
+  (window.SIFDataDictionary || []).forEach((tabla) => {
+    const modo = String(tabla.modo || "").toLowerCase();
+    conteoModos[modo.startsWith("híbrido") || modo.startsWith("hibrido")
+      ? "hybrid" : modo.startsWith("manual") ? "manual" : "auto"]++;
+  });
+  const modosEsperados = {
+    auto: String(conteoModos.auto),
+    hybrid: String(conteoModos.hybrid),
+    manual: String(conteoModos.manual),
+    total: String((window.SIFDataDictionary || []).length),
+  };
+  const modosDesfasados = modosFallback.filter(({ modo, texto }) => texto !== modosEsperados[modo]);
+  const conteosContrato = metricasPublicadas.fuentes;
+  check("la metodología distingue 89 entradas ETL de 90 objetos; modos y respaldos coinciden",
+    (window.SIFDataDictionary || []).length === conteosContrato.api_v2.objetos
+      && conteosContrato.inventario_etl.tablas !== conteosContrato.api_v2.objetos
+      && conteosContrato.inventario_etl.tablas === 89
+      && conteosContrato.api_v2.objetos === 90
+      && conteoModos.auto === 89 && conteoModos.hybrid === 1 && conteoModos.manual === 0
+      && modosDesfasados.length === 0
+      && /89 entradas de origen/.test(document.querySelector(".info-processing-block").textContent)
+      && /bancos_cmf_lineas/.test(document.querySelector(".info-processing-block").textContent),
+    `ETL ${conteosContrato.inventario_etl.tablas} · objetos ${conteosContrato.api_v2.objetos} · automáticos ${conteoModos.auto} · híbridos ${conteoModos.hybrid}`);
 
   const tabIds = ["tab-btn-info", "tab-btn-erd", "tab-btn-dict", "tab-btn-data", "tab-btn-sql",
     "tab-btn-downloads", "tab-btn-guia"];
@@ -143,6 +191,46 @@ setTimeout(async () => {
     const controls = document.getElementById(id).getAttribute("aria-controls");
     return controls && document.getElementById(controls);
   }));
+  const pestañasPrincipales = tabIds.map((id) => document.getElementById(id));
+  const índiceSeleccionado = pestañasPrincipales.findIndex((boton) => boton.getAttribute("aria-selected") === "true");
+  const pestañaSeleccionada = pestañasPrincipales[índiceSeleccionado] || pestañasPrincipales[0];
+  check("el tablist principal mantiene una sola parada de tabulación",
+    índiceSeleccionado >= 0 && pestañasPrincipales.filter((boton) => boton.tabIndex === 0).length === 1 && pestañaSeleccionada.tabIndex === 0);
+  const moverConFlecha = (boton, key) => boton.dispatchEvent(new window.KeyboardEvent("keydown", { key, bubbles: true, cancelable: true }));
+  pestañaSeleccionada.focus();
+  moverConFlecha(pestañaSeleccionada, "ArrowRight");
+  const pestañaSiguiente = pestañasPrincipales[(índiceSeleccionado + 1) % pestañasPrincipales.length];
+  check("flecha derecha mueve el foco sin activar la pestaña ni arrancar SQL",
+    document.activeElement === pestañaSiguiente && pestañaSiguiente.tabIndex === 0 &&
+      pestañaSeleccionada.getAttribute("aria-selected") === "true" &&
+      window.DuckDBClient.initPromise === null);
+  moverConFlecha(pestañaSiguiente, "ArrowLeft");
+  check("flecha izquierda devuelve el foco al tab seleccionado",
+    document.activeElement === pestañaSeleccionada && pestañaSeleccionada.tabIndex === 0 &&
+      pestañaSeleccionada.getAttribute("aria-selected") === "true");
+  const índiceSql = tabIds.indexOf("tab-btn-sql");
+  let índiceFoco = índiceSeleccionado;
+  while (índiceFoco !== índiceSql) {
+    moverConFlecha(pestañasPrincipales[índiceFoco], "ArrowRight");
+    índiceFoco = (índiceFoco + 1) % pestañasPrincipales.length;
+  }
+  check("llegar a Consultas con flechas no activa el panel ni arranca DuckDB",
+    document.activeElement === pestañasPrincipales[índiceSql] &&
+      pestañasPrincipales[índiceSql].getAttribute("aria-selected") === "false" &&
+      document.getElementById("sql-container").style.display === "none" &&
+      window.DuckDBClient.initPromise === null);
+  while (índiceFoco !== índiceSeleccionado) {
+    moverConFlecha(pestañasPrincipales[índiceFoco], "ArrowLeft");
+    índiceFoco = (índiceFoco - 1 + pestañasPrincipales.length) % pestañasPrincipales.length;
+  }
+  moverConFlecha(pestañaSeleccionada, "End");
+  const ultimaPestaña = pestañasPrincipales[pestañasPrincipales.length - 1];
+  const finEnFoco = document.activeElement === ultimaPestaña &&
+    pestañaSeleccionada.getAttribute("aria-selected") === "true";
+  moverConFlecha(ultimaPestaña, "Home");
+  check("Home y End recorren el tablist sin cambiar la pestaña activa",
+    finEnFoco && document.activeElement === pestañasPrincipales[0] &&
+      pestañaSeleccionada.getAttribute("aria-selected") === "true");
 
   // Descargas: pestaña propia con catálogo publicado a la vista.
   check("no queda el botón de descarga en la cabecera del panel", !document.getElementById("tab-btn-export"));
@@ -182,6 +270,14 @@ setTimeout(async () => {
   buscador.dispatchEvent(new window.Event("input", { bubbles: true }));
 
   const selectorSector = document.getElementById("dl-sector");
+  const opcionesSector = Array.from(selectorSector.options).map((o) => o.value).filter((v) => v !== "todos").sort();
+  const ADescargas = window.SIFAlcance;
+  const sectoresCatalogados = [...new Set((window.DOWNLOAD_CATALOG.grupos || [])
+    .filter((g) => (g.items || []).some((item) => !item.oculto))
+    .map((g) => ADescargas.agrupacionDe(g.clave) || g.clave).filter(Boolean))].sort();
+  check("descargas: las opciones del filtro derivan de claves sectoriales del catálogo y agrupaciones declaradas",
+    opcionesSector.length > 0 && opcionesSector.join(",") === sectoresCatalogados.join(","),
+    `filtro=${opcionesSector.join(",")} · catálogo=${sectoresCatalogados.join(",")}`);
   const opcionSector = Array.from(selectorSector.options).find((o) => o.value !== "todos");
   selectorSector.value = opcionSector ? opcionSector.value : "todos";
   selectorSector.dispatchEvent(new window.Event("change", { bubbles: true }));
@@ -314,6 +410,58 @@ setTimeout(async () => {
   check("Limpiar deja sólo la bienvenida",
     antes > 0 && document.querySelectorAll("#chat-messages .message").length === 1);
 
+  // Estados de consulta: espera, éxito, error SQL y excepción deben diferenciarse.
+  const clienteQueryOriginal = window.DuckDBClient;
+  const inputConsulta = document.getElementById("chat-input");
+  const botonEjecutar = document.getElementById("send-btn");
+  const mensajesSql = document.getElementById("chat-messages");
+  check("SQL: el registro de mensajes anuncia cambios de estado", mensajesSql.getAttribute("aria-live") === "polite");
+  let resolverConsulta;
+  let sqlCapturado = "";
+  window.DuckDBClient = {
+    query(sql) {
+      sqlCapturado = sql;
+      return new Promise((resolve) => { resolverConsulta = resolve; });
+    }
+  };
+  inputConsulta.value = "SELECT 1 AS n";
+  const promesaSql = window.ChatTerminal.handleSend();
+  check("SQL: ejecución muestra estado en curso y bloquea el botón",
+    botonEjecutar.disabled && Array.from(mensajesSql.querySelectorAll(".message"))
+      .some((m) => /Ejecutando consulta con DuckDB-Wasm/.test(m.textContent)), sqlCapturado);
+  resolverConsulta({ success: true, columns: ["n"], rows: [{ n: 1 }], count: 1, elapsedMs: 2 });
+  await promesaSql;
+  const resultadoSql = mensajesSql.querySelector(".query-meta");
+  check("SQL: éxito muestra filas y una grilla de resultado",
+    Boolean(resultadoSql && /1 fila/.test(resultadoSql.textContent) && mensajesSql.querySelector(".results-table tbody tr")));
+  check("SQL: éxito retira el estado en curso y reactiva Ejecutar",
+    !botonEjecutar.disabled && !Array.from(mensajesSql.querySelectorAll(".message"))
+      .some((m) => /Ejecutando consulta con DuckDB-Wasm/.test(m.textContent)));
+
+  window.DuckDBClient = { query: async () => ({ success: true, columns: ["n"], rows: [], count: 0, elapsedMs: 1 }) };
+  inputConsulta.value = "SELECT n FROM t WHERE false";
+  await window.ChatTerminal.handleSend();
+  const vacioSql = mensajesSql.querySelector(".query-empty-state");
+  check("SQL: éxito sin filas se diferencia del error y explica el resultado",
+    Boolean(vacioSql && vacioSql.getAttribute("role") === "status" && /no devolvió filas/.test(vacioSql.textContent)));
+
+  window.DuckDBClient = { query: async () => ({ success: false, error: "Parser Error: sintaxis" }) };
+  inputConsulta.value = "SELEC FROM";
+  await window.ChatTerminal.handleSend();
+  const errorSql = mensajesSql.querySelector(".message:last-child");
+  check("SQL: error de consulta se distingue como Error SQL",
+    Boolean(errorSql && /\[Error SQL\]/.test(errorSql.textContent) && /Parser Error/.test(errorSql.textContent)));
+
+  window.DuckDBClient = { query: async () => { throw new Error("worker no disponible"); } };
+  inputConsulta.value = "SELECT 1";
+  await window.ChatTerminal.handleSend();
+  const excepcionSql = mensajesSql.querySelector(".message:last-child");
+  check("SQL: excepción del motor se distingue de un Error SQL",
+    Boolean(excepcionSql && /\[Excepción\]/.test(excepcionSql.textContent) && /worker no disponible/.test(excepcionSql.textContent)));
+  check("SQL: todos los finales de consulta devuelven el botón a estado listo", !botonEjecutar.disabled);
+  window.DuckDBClient = clienteQueryOriginal;
+  window.ChatTerminal.clearTerminal();
+
   // Motor caído: debe mostrarse el motivo del primer intento, el entorno y las
   // acciones de reintento y copia.
   window.dispatchEvent(new window.CustomEvent("duckdb-ready", {
@@ -336,6 +484,17 @@ setTimeout(async () => {
   const env = document.getElementById("sql-engine-env");
   check("se muestra el entorno sondado", /WebAssembly/.test(env.textContent) && /bloqueado/.test(env.textContent), env.textContent.replace(/\s+/g, " ").slice(0, 90));
   check("hay acción de copiar diagnóstico", Boolean(document.getElementById("btn-engine-copy")));
+  const descargasMotor = document.getElementById("btn-engine-downloads");
+  check("el fallo de DuckDB ofrece una alternativa y aclara los formatos",
+    Boolean(descargasMotor && /Abrir Descargas/.test(descargasMotor.textContent) &&
+      /Parquet original/.test(alert.textContent) && /CSV y Excel requieren el motor/.test(alert.textContent)));
+  if (descargasMotor) descargasMotor.click();
+  check("la alternativa abre Descargas, enfoca su pestaña y conserva el Parquet directo",
+    document.getElementById("downloads-container").style.display === "flex" &&
+      document.getElementById("tab-btn-downloads").getAttribute("aria-selected") === "true" &&
+      document.activeElement === document.getElementById("tab-btn-downloads") &&
+      Boolean(document.querySelector('#downloads-container a[download$=".parquet"]')));
+  window.switchMainTab("sql");
 
   // El badge del encabezado es un botón que lleva al diagnóstico.
   const badge = document.getElementById("engine-badge");
@@ -349,6 +508,9 @@ setTimeout(async () => {
     detail: { available: true, error: null, source: "local", sourceLabel: "copia local del repositorio", unavailableViews: [] }
   }));
   check("cuando el motor responde, el aviso desaparece", alert.hidden);
+  check("estado listo se anuncia en el punto de estado SQL",
+    document.getElementById("sql-engine-dot").classList.contains("ready") &&
+      /operativo/.test(document.getElementById("sql-engine-dot").title));
   check("la pista indica motor local",
     /navegador|local/i.test(document.getElementById("sql-engine-hint").textContent),
     document.getElementById("sql-engine-hint").textContent.slice(0, 70));
@@ -513,6 +675,25 @@ setTimeout(async () => {
   check("visor: se vuelve a las columnas del dato",
     cabecerasVisor().length === 12 && /Columnas del dato|Todas las columnas/.test(
       document.querySelector("#data-viewer-container .dv-cols-btn").textContent));
+  const contadorMuestra = document.querySelector("#data-viewer-container .dv-count-info");
+  const avisoMuestra = document.querySelector("#data-viewer-container .dv-sample-hint");
+  const limitesMuestra = Array.from(document.querySelectorAll("#data-viewer-container .dv-limit-btn"))
+    .map((b) => b.textContent.trim()).join(",");
+  check("visor: rotula las filas como muestra y no como total",
+    /Muestra: 1 fila/.test(contadorMuestra.textContent) && /no es el total/.test(contadorMuestra.title),
+    contadorMuestra.textContent);
+  check("visor: explica que filtro/orden solo cubren la muestra y deriva a Descargas",
+    /filtro y orden solo actúan aquí/.test(avisoMuestra.textContent) && /Descargas/.test(avisoMuestra.textContent),
+    avisoMuestra.textContent);
+  check("visor: los controles son topes, no páginas, de 50 a 500 filas",
+    /Máx\. filas/.test(document.querySelector("#data-viewer-container .dv-limit-label").textContent) &&
+      /no es paginación/.test(document.querySelector("#data-viewer-container .dv-limit-label").title) &&
+      limitesMuestra === "50,100,250,500",
+    limitesMuestra);
+  window.DataViewer.setFilter("banco");
+  check("visor: el filtro cuenta solo las filas de la muestra cargada",
+    /1 de 1 fila de muestra/.test(contadorMuestra.textContent), contadorMuestra.textContent);
+  window.DataViewer.setFilter("");
   const filaTexto = () => document.querySelector("#data-viewer-container .dv-table tbody tr").textContent;
   check("visor: el desglose por moneda se muestra como importe legible",
     /26\.458\.735\.676\.131 · 18\.194\.231\.752\.989 · 86\.353\.276\.604 · 5\.425\.082\.730\.722/.test(filaTexto()) &&
@@ -613,6 +794,23 @@ setTimeout(async () => {
     .map((a) => a.getAttribute("href"));
   check("reproducibilidad: hay enlaces a los archivos planos", archivosRepo.length > 0,
     archivosRepo.length + " enlaces");
+  const leadReproducibilidad = (document.querySelector("#guia-manuales .info-uso-lead")?.textContent || "").replace(/\s+/g, " ");
+  check("reproducibilidad: la Guía anuncia fuentes, cobertura y hashes, no una certificación general",
+    /Ocho archivos.*procedencia.*cobertura y hashes/i.test(leadReproducibilidad)
+      && /no certifican la calidad semántica/i.test(leadReproducibilidad)
+      && !/comprobaciones/.test(leadReproducibilidad));
+  const enlaceResumenValidacion = document.querySelector('#creditos-guia a[href="reproducibilidad/validacion_resumen.csv"]');
+  check("reproducibilidad: el resumen de validación se describe como metadatos, no como pruebas superadas",
+    Boolean(enlaceResumenValidacion)
+      && /Resumen de fuentes y cobertura/.test(enlaceResumenValidacion.textContent)
+      && /no es un informe de pruebas ni un sello de calidad/.test(enlaceResumenValidacion.textContent));
+  const readmeReproducibilidad = fs.readFileSync(path.join(DOCS, "reproducibilidad/README.md"), "utf8");
+  check("reproducibilidad: alcance separa metadatos, mediciones y snapshot local no publicado",
+    /no contiene resultados de pruebas, tolerancias ni una certificación de calidad/i.test(readmeReproducibilidad)
+      && /Ejecutarlo no publica el snapshot, no crea un DOI y no\s+garantiza recuperar archivos históricos/i.test(readmeReproducibilidad));
+  const inventarioReproducibilidad = fs.readFileSync(path.join(DOCS, "reproducibilidad/inventario_fuentes.csv"), "utf8");
+  check("reproducibilidad: el índice de búsqueda tiene su control propio y no causa un ciclo en el inventario",
+    !/^outputs\/indice_busqueda\.json,/m.test(inventarioReproducibilidad));
   check("reproducibilidad: todos los archivos enlazados existen en el disco",
     archivosRepo.length > 0 && archivosRepo.every((href) => fs.existsSync(path.join(DOCS, href))),
     archivosRepo.filter((href) => !fs.existsSync(path.join(DOCS, href))).join(", "));
@@ -751,10 +949,12 @@ setTimeout(async () => {
   check("calidad: la Guía mantiene la consulta y la nota de criterio reproducible",
     Boolean(sumar.querySelector("[data-calidad-sql]"))
     && /claves_duplicados/.test(sumar.querySelector('a[href*="claves_duplicados"]').getAttribute("href")));
-  check("calidad: el gráfico de la Guía arranca oculto y sin pintar",
-    document.getElementById("calidad-chart").hidden === true
-    && !document.getElementById("calidad-chart").querySelector("canvas"));
-
+  const valoresAgregadosCalidad = [...document.querySelectorAll("[data-calidad]")];
+  const consultasCalidad = [...document.querySelectorAll("[data-calidad-sql]")];
+  check("las cifras agregadas y la consulta de calidad siguen en la Guía, no como sustituto en otra pestaña",
+    valoresAgregadosCalidad.length > 0 && valoresAgregadosCalidad.every((el) => sumar.contains(el))
+      && consultasCalidad.length === 1 && sumar.contains(consultasCalidad[0])
+      && !infoPortada.querySelector(".info-calidad"));
   // ── Puertas nuevas: cifras medidas y enlaces ancla con ruta ──────────────
   const info = document.getElementById("info-container");
   const marcadas = info.querySelectorAll("[data-alcance], [data-calidad], [data-modo], [data-fuentes]");
