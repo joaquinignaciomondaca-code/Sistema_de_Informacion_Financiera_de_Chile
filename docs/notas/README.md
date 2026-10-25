@@ -3,7 +3,7 @@
 <!-- Generado por scripts/build_indice_notas.py. No editar a mano:
      --check falla si no coincide con las notas de la carpeta. -->
 
-Las 61 notas de esta carpeta. Cada una registra una decisión, una
+Las 63 notas de esta carpeta. Cada una registra una decisión, una
 medición o una corrección, con la fecha en que se hizo y el motivo. Se citan
 desde el código, la web y las respuestas a las revisiones externas, así que
 están escritas para poder verificarse: qué se afirmó, contra qué se contrastó
@@ -15,6 +15,7 @@ Para añadir una: crea `AAAA-MM-DD_tema.md` con un `# Título` y ejecuta
 
 ## octubre de 2026
 
+- [Checklist vivo del rediseño del SIF Chile](checklist_rediseno_sif_2026-10-24.md) — preparación y decisiones de alcance; no es autorización para rediseñar de una vez toda la web.
 - [Banca: valores normalizados y maestro validado — 2026-10-23](ruta_banca_valores_2026-10-23.md) — Dos cosas en la sección «Banca y estados financieros CMF»:
 - [Revisión externa del 2026-10-23: qué aguanta y qué no](revision_externa_2026-10-23.md) — una revisión externa del sitio afirmó que ffmmcarteranacional publica
 - [La repetición no es ocasional: se midió período por período](repeticion_por_periodo_2026-10-23.md) — una revisión externa señaló que el titular de la portada decía
@@ -79,6 +80,7 @@ Para añadir una: crea `AAAA-MM-DD_tema.md` con un `# Título` y ejecuta
 
 ## Sin fecha en el nombre
 
+- [Capacidad y tráfico del sitio](capacidad_trafico.md) — - El sitio y la API son archivos estáticos; DuckDB-Wasm procesa SQL en la pestaña del visitante.
 - [Borrador de consulta técnica a CMF: tipo de registro 6 en B.11/B.14](consulta_cmf_registro_tipo6_1835.md) — en pausa; no se requiere una consulta para incorporar los registros tipo 6 como datos de origen conservados y normalizados.
 - [Fuentes XML/XBRL por industria (auditoría y oportunidades)](fuentes_xml_por_industria.md) — Fecha de revisión: 2026-09-27
 - [Plan de revisión de las industrias restantes](plan_revision_otras_industrias.md) — Continuación del trabajo XML/XBRL.
