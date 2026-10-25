@@ -1,5 +1,7 @@
 # Mapa relacional, cifras y contrato: lo que se corrigió el 2026-10-23
 
+> **Snapshot histórico (2026-10-23).** Las mediciones de filas y fallos documentan el release revisado ese día; las cifras vigentes se regeneran desde el catálogo y están en [`metricas_publicadas.json`](../metricas_publicadas.json).
+
 **Fecha:** 2026-10-23
 **Motivo:** tres defectos vistos en pantalla —los títulos del mapa relacional se
 salían de su tarjeta, las cifras se redondeaban al alza y estaban escritas a

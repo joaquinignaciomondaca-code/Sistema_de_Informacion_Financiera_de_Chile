@@ -21,8 +21,8 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parents[3]
 WORKFLOWS = sorted((RAIZ / ".github" / "workflows").glob("*.yml"))
-COMPARTIDOS = ("data_manifest.json", "docs/index.html", "docs/js/")
-REGENERADORES = ("--solo-", "build_download_catalog.py")
+COMPARTIDOS = ("data_manifest.json", "docs/index.html", "docs/js/", "docs/metricas_publicadas.json")
+REGENERADORES = ("--solo-", "build_download_catalog.py", "build_metricas_publicadas.py")
 
 
 def logicas(texto: str) -> list[tuple[int, str]]:
@@ -91,6 +91,29 @@ class ContratoDePublicadoresTest(unittest.TestCase):
     def test_las_continuaciones_con_barra_se_unen(self):
         texto = "git add a.json \\\n        docs/js/x.js \\\n        data_manifest.json\necho listo\n"
         self.assertEqual([l for _p, l in logicas(texto)], ["git add a.json docs/js/x.js data_manifest.json", "echo listo"])
+
+    def test_el_contrato_derivado_regenera_y_verifica_los_indices_publicados(self):
+        flujo = (RAIZ / ".github" / "workflows" / "contrato_publicado.yml").read_text(encoding="utf-8")
+        self.assertIn("python scripts/generar_indice_busqueda.py", flujo)
+        self.assertIn("python scripts/generar_indice_busqueda.py --check", flujo)
+        self.assertIn("docs/outputs/indice_busqueda.json", flujo)
+        self.assertIn("python scripts/build_metricas_publicadas.py", flujo)
+        self.assertIn("python scripts/build_metricas_publicadas.py --check", flujo)
+        self.assertIn("docs/metricas_publicadas.json", flujo)
+        self.assertIn("python scripts/build_ficha_piloto.py", flujo)
+        self.assertIn("python scripts/build_ficha_piloto.py --check", flujo)
+        self.assertIn("      - 'scripts/build_ficha_piloto.py'", flujo)
+        self.assertIn("docs/datos", flujo)
+
+    def test_web_audit_reconcilia_las_metricas_publicadas(self):
+        flujo = (RAIZ / ".github" / "workflows" / "web_audit.yml").read_text(encoding="utf-8")
+        self.assertIn("python scripts/build_metricas_publicadas.py --check", flujo)
+        self.assertIn("scripts/build_metricas_publicadas.py", flujo)
+        self.assertIn("scripts/build_ficha_piloto.py", flujo)
+        self.assertIn("python scripts/build_ficha_piloto.py --check", flujo)
+        self.assertIn("scripts/test_ficha_piloto_http.py", flujo)
+        self.assertIn("python scripts/test_ficha_piloto_http.py", flujo)
+        self.assertIn("      - 'scripts/test_ficha_piloto_http.py'", flujo)
 
 
 

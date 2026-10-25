@@ -27,12 +27,12 @@
 
   function resumen(A, ambito, info) {
     if (ambito === "visible") {
-      return `${A.numero(info.conjuntos)} conjuntos · ${A.millones(info.filas)} de filas (${A.porcentaje(info.pct_filas)})`;
+      return `${A.numero(info.conjuntos)} elementos · ${A.millones(info.filas)} de filas (${A.porcentaje(info.pct_filas)})`;
     }
     if (ambito === "fuera") {
-      return `${industrias(A, info.sectores)} industrias · ${A.numero(info.conjuntos)} conjuntos · ${A.porcentaje(info.pct_filas)} de las filas`;
+      return `${industrias(A, info.sectores)} industrias · ${A.numero(info.conjuntos)} elementos · ${A.porcentaje(info.pct_filas)} de las filas`;
     }
-    const partes = [`${A.numero(info.conjuntos)} conjuntos`, `${A.compacto(info.filas)} filas`];
+    const partes = [`${A.numero(info.conjuntos)} elementos`, `${A.compacto(info.filas)} filas`];
     const periodo = A.periodo(info.periodo);
     if (periodo) partes.push(periodo);
     return partes.join(" · ");
