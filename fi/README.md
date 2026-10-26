@@ -18,7 +18,7 @@ con estados, **765** con ausencia explícita de información y **6** excluidos (
 descarga CMF, 1 moneda COP no expuesta en la ficha HTML). Para junio:
 
 - Balance: **66.864 filas**; resultados: **97.860 filas**.
-- Auditoría: **35.570 identidades**, cero fallas en la salida.
+- Auditoría del cierre 2026-06: **35.570 reglas contables validadas**, cero fallas.
 - Contextos excluidos con motivo: 253 de balance y 135 de resultados. No implican descartar
   el actual válido del fondo, ni se rellenan sus importes.
 

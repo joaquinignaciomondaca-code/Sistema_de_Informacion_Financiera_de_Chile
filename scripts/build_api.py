@@ -101,14 +101,21 @@ def _licencia() -> str:
 def _descripcion_objeto(tabla: dict, info: dict, nombre: str) -> str:
     """Descripción de un recurso del Data Package.
 
-    Para objetos sobre dataset compartido (bancos B1/B2 vs R1), la descripción
-    del manifiesto es la misma para ambos (habla del dataset físico completo),
-    así que se añade el filtro aplicado para distinguirlos.
+    Para objetos sobre un dataset compartido (bancos B1/B2 vs R1), se retira
+    del recurso la frase común que enumera todos los tipos de archivo; se conserva
+    el resto de la nota y se añade el alcance filtrado de cada vista.
     """
     base = tabla.get("descripcion") or ""
     filtro = info.get("filtro")
     if not filtro:
         return base
+    # El manifiesto de origen describe el Parquet común B1/B2/R1. No copiar esa
+    # frase en cada recurso filtrado: en el Data Package podría parecer que el
+    # archivo de balance también contiene R1 (o viceversa). Se conserva el resto
+    # de la nota editorial, incluidos los caveats de campos y agregación.
+    prefijo_compartido = "Filas fuente de B1 consolidado, B2 individual y R1 consolidado. "
+    if nombre in {"bancos_balance", "bancos_resultados"} and base.startswith(prefijo_compartido):
+        base = base[len(prefijo_compartido):]
     # Traducir el filtro SQL a lenguaje legible
     if "IN ('B1', 'B2')" in filtro:
         especifica = " Sólo filas de los archivos B1 (consolidado) y B2 (individual); excluye R1 (estado de resultados)."
@@ -244,6 +251,10 @@ def construir() -> dict:
                 "api_version": API_VERSION,
             },
         }
+
+        procedencia = (tabla.get("metadatos") or {}).get("procedencia")
+        if procedencia:
+            recurso["sif"]["procedencia"] = procedencia
 
         clave = claves.get(nombre)
         if clave and clave["estado"] in ("ok", "propuesta") and clave["columnas"]:

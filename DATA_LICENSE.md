@@ -7,22 +7,26 @@ se redistribuyen aquí.
 
 ## Código
 
-MIT. Ver [`LICENSE`](../LICENSE).
+MIT. Ver [`LICENSE`](LICENSE).
 
 ## Datos
 
-Los datos son de organismos públicos chilenos. Este proyecto los descarga, los
-normaliza y los republica en Parquet **sin alterar sus valores**, citando la
-fuente en cada recurso: el catálogo, el descriptor Data Package y el catálogo de
-descargas declaran la misma cita, que sale de una sola definición
-([`pipelines/api/fuentes.py`](../pipelines/api/fuentes.py)).
+Los datos proceden de organismos públicos chilenos. El proyecto descarga y
+normaliza fuentes directas, y también mantiene algunos catálogos editoriales con
+procedencia mixta. Las citas de fuente y las condiciones verificadas se derivan
+de [`pipelines/api/fuentes.py`](pipelines/api/fuentes.py) y se publican en el
+catálogo y el Data Package; eso no convierte la licencia MIT del código en una
+licencia de los datos.
 
-**Las tres fuentes autorizan la republicación con una condición: citarlas.** No
-exigen autorización escrita ni limitan el uso a fines de investigación.
+Para las **tres fuentes operativas directas** aquí documentadas (CMF, BCCh y
+SPensiones), los documentos citados permiten la reutilización bajo las
+condiciones indicadas en la tabla. Esto no resuelve automáticamente las
+condiciones de fuentes históricas/editoriales que hayan contribuido a un
+conjunto.
 
 | Fuente | Objetos | Qué publica aquí | Documento vigente | Condición | Estado |
 |---|---|---|---|---|---|
-| **CMF** — Comisión para el Mercado Financiero | 65 | Bancos, seguros (Circular 1835), fondos mutuos y de inversión, AGF, corredoras, securitizadoras, CCAF, factoring y leasing, patrimonios separados, cooperativas, fintech, sistemas de pago | [Descargo de Responsabilidades](https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html): «autoriza la reproducción total o parcial de la información contenida en este Website, siempre y cuando se mencione la fuente» | Mencionar la fuente | `verificada` |
+| **CMF** — Comisión para el Mercado Financiero | 65 objetos atribuidos | Bancos, seguros (Circular 1835), fondos mutuos y de inversión, AGF, corredoras, securitizadoras, CCAF, factoring y leasing, patrimonios separados, cooperativas, fintech y sistemas de pago. En `ccaf_maestro`, la entrada directa actual de CMF solo detecta altas; la procedencia del universo inicial también incluye SUSESO (ver abajo). | [Descargo de Responsabilidades](https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html): «autoriza la reproducción total o parcial de la información contenida en este Website, siempre y cuando se mencione la fuente» | Mencionar la fuente para información de CMF | `verificada` para la fuente CMF; no resuelve el insumo histórico SUSESO de `ccaf_maestro` |
 | **BCCh** — Banco Central de Chile | 24 | Series macro: dólar, cobre, tasas, curvas de bonos, deuda pública, expectativas de inflación | [Términos y Condiciones de la API BDE](https://si3.bcentral.cl/estadisticas/Principal1/Web_Services/terms_es.htm): «Está permitido consultar, reproducir, difundir, publicar o adaptar la información contenida en la BDE, mencionando en todo momento que ella es propiedad del Banco» | Citar que la información es propiedad del Banco; declarar las adaptaciones; máximo 5 series por segundo | `verificada` |
 | **SPensiones** — Superintendencia de Pensiones | 1 | Listado de administradoras de fondos de pensiones (7 filas de identidad) | [Descargo de responsabilidades](https://www.spensiones.cl/portal/institucional/594/w3-article-5885.html): «autoriza la utilización o reproducción total o parcial de la información contenida en este sitio, en citas o comentarios indicando su fuente» | Mencionar la fuente | `verificada` |
 
@@ -44,12 +48,19 @@ restringiría su descarga.
   distribuir esta información». Restringe el propósito y la distribución, con
   independencia de que haya o no ánimo de lucro, y choca con la licencia MIT del
   repositorio. El proyecto mantiene el bloqueo en
-  [`pensiones/config/publicacion_bdp.json`](../pensiones/config/publicacion_bdp.json)
+  [`pensiones/config/publicacion_bdp.json`](pensiones/config/publicacion_bdp.json)
   y no publica esa base ni derivados masivos.
-- **SUSESO.** No es fuente de ningún objeto publicado. `ccaf_balance` y
-  `ccaf_resultados` salen de los estados financieros IFRS que las CCAF envían a
-  la **CMF**; la lista de entidades es un catálogo curado con enlaces a ambos
-  reguladores. Sus condiciones de uso no aplican a lo publicado.
+- **SUSESO (procedencia histórica/editorial de `ccaf_maestro`).** `ccaf_balance`
+  y `ccaf_resultados` se extraen de estados IFRS enviados a la **CMF**, y el
+  pipeline actual no consume memorias ni estados financieros PDF de SUSESO. Sin
+  embargo, la lista inicial de `ccaf_maestro` está documentada como construida
+  también a partir de una lista de SUSESO. En esta revisión no se localizó ni
+  verificó un documento de condiciones de reutilización aplicable a ese insumo
+  histórico; por tanto, no se afirma que las condiciones de SUSESO sean
+  inaplicables. El catálogo marca su estado como `pendiente_verificacion` dentro
+  de `procedencia.condiciones_reutilizacion`. Esta cuestión queda abierta y
+  separada de la autorización CMF para los datos CMF y las altas detectadas en
+  el TXT IFRS.
 - **Identificadores de terceros** (CUSIP/FactSet) de los índices de cartera que
   publica la CMF.
 
@@ -68,9 +79,9 @@ naturales del registro fintech, 11 corredores inscritos a nombre de persona y 31
 nombres de tasadores (233 en la primera tasación y 263 en la segunda; la fuente
 mezcla personas naturales y sociedades tasadoras y no permite separarlas con
 certeza). El tratamiento, la base de licitud, los derechos del titular y el
-registro de actividades están en [`PRIVACIDAD.md`](../PRIVACIDAD.md). Las reglas
+registro de actividades están en [`PRIVACIDAD.md`](PRIVACIDAD.md). Las reglas
 técnicas de minimización viven en
-[`pipelines/auto/privacidad.py`](../pipelines/auto/privacidad.py).
+[`pipelines/auto/privacidad.py`](pipelines/auto/privacidad.py).
 
 ## Datos derivados
 
@@ -80,9 +91,9 @@ condición y no añaden ninguna licencia nueva.
 
 ## Cómo citar
 
-Cada conjunto publicado declara su cita en `api/v2/catalog.json`
-(`atribucion`), en `api/v2/datapackage.json` (`sources[].sif_cita`) y en el
-catálogo de descargas del sitio. La forma general:
+Cada conjunto publicado declara su cita en [`docs/api/v2/catalog.json`](docs/api/v2/catalog.json)
+(`atribucion`), en [`docs/api/v2/datapackage.json`](docs/api/v2/datapackage.json)
+(`sources[].sif_cita`) y en el catálogo de descargas del sitio. La forma general:
 
 > Fuente: [organismo]. Datos obtenidos de [URL del documento de condiciones],
 > consultados el [fecha]. Publicado por el Sistema de Información Financiera de

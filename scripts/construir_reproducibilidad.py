@@ -13,9 +13,10 @@ archivos planos, regenerables con un solo comando:
       usa el diccionario de la web (así no hay dos versiones que se separen).
 
   * `inventario_fuentes.csv`
-      Todos los archivos publicados (Parquet y manifiestos) con su peso y su
-      SHA-256. Sirve para verificar que lo descargado es exactamente lo que el
-      proyecto publicó, y para armar el inventario de una versión congelada.
+      Archivos Parquet y JSON de datos/metadata bajo `docs/outputs/`, con peso y
+      SHA-256. Omite índices de interfaz que tienen su propio generador y control.
+      El hash permite comparar una descarga con el artefacto inventariado, pero
+      no valida el significado de sus datos.
 
   * `cobertura_por_periodo.csv`
       Registros por tabla y periodo, según los manifiestos que se publican
@@ -23,12 +24,14 @@ archivos planos, regenerables con un solo comando:
       cuántos por mes o trimestre?».
 
   * `validacion_resumen.csv`
-      Una fila por tabla: fuente, norma, modalidad de procesamiento, último
-      periodo validado, cantidad de periodos, registros totales y ruta del
-      archivo publicado.
+      Una fila por objeto: fuente y otros metadatos declarados, modalidad,
+      periodo/cobertura, registros y ruta. No lista resultados de pruebas ni
+      tolerancias; es un resumen descriptivo, no un certificado de calidad.
 
-Nada de esto reemplaza las tablas fieles a la CMF: es la capa de documentación
-que permite citar y auditar la base.
+Estos artefactos documentan la publicación, pero no reemplazan los datos de las
+fuentes ni prueban por sí solos su validez semántica. Parte de los campos del
+diccionario y del manifiesto son metadatos editoriales curados; los conteos,
+hashes y cobertura se derivan de archivos/manifiestos según cada artefacto.
 
 Requisitos:
   * `node` (para volcar el diccionario tal como lo carga el navegador).
@@ -100,7 +103,7 @@ def csv_texto(encabezado: list[str], filas: list[list]) -> str:
 # 1. Diccionario de datos
 # ---------------------------------------------------------------------------
 def cargar_diccionario() -> list[dict]:
-    """Las 75 tablas documentadas, tal como las lee el diccionario de la web."""
+    """Las tablas documentadas, tal como las lee el diccionario de la web."""
     if not shutil.which("node"):
         print("  [aviso] sin node en el PATH: no se puede volcar el diccionario", file=sys.stderr)
         return []
@@ -177,6 +180,11 @@ def inventario() -> str:
                 continue
             ruta = os.path.join(actual, nombre)
             rel = os.path.relpath(ruta, DOCS).replace(os.sep, "/")
+            # El índice estático de búsqueda es un artefacto de interfaz, no una
+            # fuente de datos; tiene su propio builder/--check y debe quedar fuera
+            # para que su hash no dependa del orden entre ambos generadores.
+            if rel == "outputs/indice_busqueda.json":
+                continue
             partes = os.path.relpath(ruta, OUTPUTS).split(os.sep)
             sector = partes[0] if len(partes) > 1 else ""
             tabla = partes[1] if len(partes) > 2 else os.path.splitext(nombre)[0]
@@ -291,39 +299,47 @@ def validacion(tablas_diccionario: list[dict]) -> str:
 def readme(tablas: int, columnas: int) -> str:
     return f"""# Reproducibilidad
 
-Archivos planos para auditar y citar la base sin depender del JavaScript de la
-web. Se generan con:
+Archivos planos para consultar y auditar aspectos concretos de la publicación,
+sin depender del JavaScript de la web. Se generan con:
 
 ```
 python3 scripts/construir_reproducibilidad.py
 ```
 
-y se publican junto al sitio, así que lo que ves aquí es exactamente lo que usa
-la interfaz.
+Se publican junto al sitio, pero no todos son consumidos directamente por la
+interfaz. `diccionario.csv` y `diccionario.json` se derivan del mismo
+`docs/js/data_dictionary.js` que alimenta el Diccionario; los demás son artefactos
+complementarios para inspeccionar archivos y cobertura.
 
-| Archivo | Qué trae |
+| Archivo | Qué trae y de dónde sale |
 |---|---|
-| `diccionario.csv` | Cada columna de cada tabla: tipo, rol, significado y criterio contable ({columnas} columnas en {tablas} tablas). |
-| `diccionario.json` | Lo mismo, en JSON, para cargarlo con pandas o DuckDB. |
-| `inventario_fuentes.csv` | Todos los Parquet y manifiestos publicados, con peso y SHA-256. Permite verificar que una copia descargada no fue alterada. |
-| `cobertura_por_periodo.csv` | Registros por tabla y periodo, según los manifiestos publicados. |
-| `validacion_resumen.csv` | Una fila por tabla: fuente, norma, modalidad de procesamiento, rango cubierto, periodos, registros y archivo. |
+| `diccionario.csv` | Cada columna de cada tabla: tipo, rol, significado y criterio contable ({columnas} columnas en {tablas} tablas). Los campos descriptivos/editoriales proceden del diccionario mantenido en el repositorio. |
+| `diccionario.json` | El mismo contenido estructurado en JSON, para cargarlo con pandas o DuckDB. |
+| `inventario_fuentes.csv` | Ruta, tamaño y SHA-256 de los archivos Parquet/JSON de datos y metadata bajo `docs/outputs`; se incluye el conteo de filas cuando está disponible. Excluye `indice_busqueda.json`, que es un artefacto de interfaz con su propio control. |
+| `cobertura_por_periodo.csv` | Registros por tabla y periodo, leídos de los manifiestos de publicación. |
+| `validacion_resumen.csv` | Fuente, norma, modalidad, fecha/rango, periodos, registros y ruta por objeto. Combina metadatos del manifiesto/diccionario con conteos de manifiestos; **no contiene resultados de pruebas, tolerancias ni una certificación de calidad**. |
 
-## Cómo se verifica
+## Cómo se verifica un archivo
 
 1. Descarga un Parquet de la pestaña Descargas.
 2. Calcula su SHA-256: `sha256sum archivo.parquet` (o `shasum -a 256` en macOS).
 3. Compáralo con la columna `sha256` de `inventario_fuentes.csv` para esa ruta.
 
-Si coinciden, estás usando el mismo archivo que publica el proyecto.
+La coincidencia indica que el archivo coincide con el artefacto descrito en este
+inventario. No demuestra que su contenido sea semánticamente correcto ni que una
+versión anterior siga disponible en el hosting.
 
-## Alcance
+## Alcance y límites
 
-Estos archivos documentan la base tal como se publica: no son una capa
-armonizada para investigación. La versión congelada y citable —con DOI, fecha de
-corte y registro de cambios— se arma con `scripts/construir_snapshot_academico.py`
-y se deposita aparte; la referencia se publica en la sección *Citación y versión
-académica* de la web.
+Estos archivos documentan aspectos de la base publicada; no son una capa
+armonizada para investigación y sus controles no constituyen un sello general
+de calidad. Los campos editoriales (por ejemplo, significado, norma o modalidad)
+y las mediciones derivadas de manifiestos se distinguen por su fuente; no se
+debe inferir una propiedad no documentada a partir de filas o de una clave.
+
+`scripts/construir_snapshot_academico.py` puede armar una copia local con fecha,
+hashes y documentación. Ejecutarlo no publica el snapshot, no crea un DOI y no
+garantiza recuperar archivos históricos que no se hayan conservado aparte.
 """
 
 

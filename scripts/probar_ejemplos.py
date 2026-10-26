@@ -65,8 +65,10 @@ def main() -> int:
     entorno["SIF_CHILE_BASE"] = str(DOCS)
 
     pruebas = [
-        ("python/01_ffmm_extranjero.py", [sys.executable, "examples/python/01_ffmm_extranjero.py"]),
-        ("python/02_cruce_tres_industrias.py", [sys.executable, "examples/python/02_cruce_tres_industrias.py"]),
+        ("python/01_ffmm_extranjero.py", "python3 examples/python/01_ffmm_extranjero.py",
+         [sys.executable, "examples/python/01_ffmm_extranjero.py"]),
+        ("python/02_cruce_tres_industrias.py", "python3 examples/python/02_cruce_tres_industrias.py",
+         [sys.executable, "examples/python/02_cruce_tres_industrias.py"]),
     ]
 
     puerto = puerto_libre()
@@ -75,12 +77,13 @@ def main() -> int:
     httpd.daemon_threads = True
     threading.Thread(target=httpd.serve_forever, daemon=True).start()
     entorno_js = dict(entorno, SIF_CHILE_BASE=f"http://127.0.0.1:{puerto}")
-    pruebas.append(("javascript/catalogo.mjs", ["node", "examples/javascript/catalogo.mjs"]))
-    anotar(f"$ python3 -m http.server {puerto} --directory docs   # para el ejemplo de JavaScript")
+    pruebas.append(("javascript/catalogo.mjs", "node examples/javascript/catalogo.mjs",
+                    ["node", "examples/javascript/catalogo.mjs"]))
+    anotar("$ python3 -m http.server <puerto efímero> --directory docs   # para el ejemplo de JavaScript")
 
     fallos = 0
-    for i, (nombre, comando) in enumerate(pruebas):
-        anotar(f"$ {' '.join(comando)}")
+    for nombre, comando_visible, comando in pruebas:
+        anotar(f"$ {comando_visible}")
         ok, detalle, salida = ejecutar(nombre, comando, entorno_js if nombre.endswith(".mjs") else entorno)
         anotar(f"{'OK   ' if ok else 'FALLA'} {nombre} · {detalle}")
         if not ok:

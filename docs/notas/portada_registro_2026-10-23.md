@@ -1,5 +1,7 @@
 # La portada, escrita para quien entra por primera vez
 
+> **Snapshot histórico (2026-10-23).** Las cifras y el texto descritos reflejan la portada de esa fecha; la fuente vigente de alcance está en el catálogo y `docs/metricas_publicadas.json`.
+
 **Fecha:** 2026-10-23
 **Motivo:** revisión de la portada «de cara a una persona que entra a la
 página». La etiqueta «Calidad medida: 230.288 filas repetidas en origen», que

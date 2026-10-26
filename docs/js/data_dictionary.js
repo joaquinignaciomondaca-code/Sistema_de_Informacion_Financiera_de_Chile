@@ -2846,7 +2846,7 @@ class DataDictionaryController {
 
   botonesFiltro() {
     const boton = (sec, etiqueta, extra) =>
-      `<button class="dict-filter-btn ${extra || ""} ${this.currentSector === sec ? "active" : ""}" data-sec="${sec}">${etiqueta}</button>`;
+      `<button type="button" class="dict-filter-btn ${extra || ""} ${this.currentSector === sec ? "active" : ""}" data-sec="${sec}">${etiqueta}</button>`;
     let html = boton("principal", "Principal", "dict-filter-principal");
     DICT_FILTROS_PRINCIPALES.forEach((grupo) => {
       html += `<span class="dict-filter-sep" aria-hidden="true"></span>`;

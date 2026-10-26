@@ -19,6 +19,9 @@ on:
     paths:
       - 'docs/outputs/**'
       - 'data_manifest.json'
+      - 'scripts/build_metricas_publicadas.py'
+      - 'scripts/build_ficha_piloto.py'
+      - 'scripts/construir_reproducibilidad.py'
   workflow_dispatch:
   # Los flujos de datos empujan con el GITHUB_TOKEN del propio Actions, y esos
   # push no disparan otros workflows (regla anti-recursión de GitHub). El 22 de
@@ -64,7 +67,8 @@ jobs:
           # reconciliación nombra, las claves miden, los esquemas describen el
           # catálogo, el catálogo alimenta el Data Package y los resultados se
           # calculan sobre las vistas. Al final, lo que la web muestra derivado
-          # de esas cifras: el estado de las claves y los metadatos sociales.
+          # de esas cifras: estado de claves, metadatos sociales y reconciliación
+          # de métricas ETL/API/Descargas.
           #
           # El 2026-10-23 este flujo dejó fuera `claves.csv` y `esquemas.json`
           # respecto del corte macro y `audit` falló en main. La cadena se corre
@@ -77,14 +81,18 @@ jobs:
             python scripts/build_esquemas.py
             python scripts/build_api.py
             python scripts/build_contrato.py
+            python scripts/build_ficha_piloto.py
             python scripts/build_resultados.py
             python scripts/build_download_catalog.py
+            python scripts/build_metricas_publicadas.py
             python scripts/build_estado_claves.py
             python scripts/build_metadatos.py
             python scripts/construir_reproducibilidad.py
+            python scripts/generar_indice_busqueda.py
             git add docs/api docs/js/download_catalog.js docs/js/estado_claves.js \
+                    docs/metricas_publicadas.json docs/datos \
                     docs/index.html docs/privacidad.html docs/robots.txt docs/sitemap.xml \
-                    docs/reproducibilidad
+                    docs/reproducibilidad docs/outputs/indice_busqueda.json
             if git diff --cached --quiet; then
               echo "::notice title=Contrato derivado::sin cambios; los artefactos ya reflejaban los datos publicados"
               exit 0
@@ -96,9 +104,13 @@ jobs:
             python scripts/build_reconciliacion.py --check
             python scripts/build_api.py --check
             python scripts/build_contrato.py --check
+            python scripts/build_ficha_piloto.py --check
+            python scripts/build_download_catalog.py --check
+            python scripts/build_metricas_publicadas.py --check
             python scripts/build_estado_claves.py --check
             python scripts/build_metadatos.py --check
             python scripts/construir_reproducibilidad.py --check
+            python scripts/generar_indice_busqueda.py --check
             python scripts/auditar_contrato.py --check
             if git push origin HEAD:main; then
               echo "::notice title=Contrato derivado::publicado en main"

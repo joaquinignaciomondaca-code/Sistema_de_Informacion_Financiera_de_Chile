@@ -21,7 +21,9 @@ Uso:
   python -m macro.scripts.build_tablas_tematicas --check            # falla si los Parquet no están al día
 
 Nada publicado se borra: las 51 series del catálogo se reparten en las 23
-tablas sin perder observaciones (el generador lo verifica fila a fila).
+tablas sin perder observaciones (el generador lo verifica fila a fila). Si la
+entrada repite una clave `fecha + clave`, el proceso falla y pide revisar la
+fuente/ingesta: nunca elige una fila ni deduplica silenciosamente.
 """
 from __future__ import annotations
 
@@ -306,7 +308,18 @@ def cargar_series() -> pd.DataFrame:
     if not rutas:
         raise ValueError(f"No hay series publicadas en {CARPETA_SERIES}")
     df = pd.concat([pq.read_table(r).to_pandas() for r in rutas], ignore_index=True)
-    df = df.drop_duplicates(subset=["fecha", "clave"], keep="last")
+    clave = ["fecha", "clave"]
+    duplicadas = df.duplicated(subset=clave, keep=False)
+    if duplicadas.any():
+        muestra = (df.loc[duplicadas, clave + ["valor"]]
+                   .sort_values(clave, kind="stable")
+                   .head(5)
+                   .to_dict(orient="records"))
+        raise ValueError(
+            f"Hay {int(duplicadas.sum())} filas con claves fecha+clave repetidas en "
+            f"{CARPETA_SERIES}; no se deduplican automáticamente. Revisa la fuente "
+            f"y la ingesta antes de regenerar las tablas temáticas. Muestra: {muestra}"
+        )
     return df.sort_values(["fecha", "clave"], kind="stable").reset_index(drop=True)
 
 

@@ -164,7 +164,7 @@ Una fecha de inicio vacía significa **no informada**, no prueba que el fondo nu
 
 - **Corregido:** la extracción de EEFF toma `VI`/`NV` del padrón en vez de consultar siempre `VI`. Cambios de tipo o vigencia invalidan la caché pertinente; no se reutiliza el cotejo de una ficha distinta.
 - **Añadido:** revisor reproducible y workflow de solo lectura para los dos tipos, las cuatro listas, fechas de operación, altas y ambigüedades. Los originales comprimidos de las listas permiten reproducir el solapamiento del RUN 9251 y comprobar hashes sin red.
-- **Verificado:** 97 pruebas FI y 440 pruebas unitarias del repositorio aprobadas; 35.570 identidades de los datos publicados, sin fallas. Las cantidades publicadas siguen siendo 908 fondos, 66.864 filas de balance y 97.860 de resultados.
+- **Verificado:** 97 pruebas FI y 440 pruebas unitarias del repositorio aprobadas; 35.570 reglas contables del cierre 2026-06, sin fallas (el control del período registra `reglas_verificadas`). Las cantidades publicadas siguen siendo 908 fondos, 66.864 filas de balance y 97.860 de resultados.
 - **Pendiente:** sincronizar los RUN 10926, 10927 y 10928 en el maestro/censo local, completar la historia disponible y resolver las seis exclusiones de fuente. Las tres altas están identificadas en el diagnóstico, **no se presentan como ya incorporadas a los datos del sitio**.
 - No se interpretan los 48 inicios no informados como evidencia suficiente de que nunca hubo operaciones. Para estos fondos solo se confirmó que sus fichas, en ambos tipos, no enlazan FIEF para el cierre solicitado.
 

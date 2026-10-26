@@ -181,8 +181,9 @@ def main() -> int:
     puerto = puerto_libre()
     httpd = servidor(puerto)
     base = f"http://127.0.0.1:{puerto}"
-    anotar(f"$ python3 -m http.server {puerto} --directory docs   # sirve el sitio, como en producción")
-    anotar(f"$ cd {trabajo} && {python} {guion} {base} {trabajo}   # otro intérprete, sin el repo")
+    anotar("$ python3 -m http.server <puerto efímero> --directory docs   # sirve el sitio, como en producción")
+    anotar("$ cd <cliente externo> && <venv externo>/bin/python <cliente.py> "
+           "http://127.0.0.1:<puerto efímero> <cliente externo>   # sin el repo")
     anotar("")
 
     entorno = {k: v for k, v in os.environ.items() if k != "PYTHONPATH"}

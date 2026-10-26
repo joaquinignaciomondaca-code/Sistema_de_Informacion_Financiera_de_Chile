@@ -2,6 +2,8 @@
 
 Fecha: 2026-10-20.
 
+> **Snapshot histórico (2026-10-20).** Los conteos de tablas y consultas describen ese release; para métricas actuales consulta [`metricas_publicadas.json`](../metricas_publicadas.json).
+
 ## Qué había antes
 
 - El filtro de la barra lateral busca por nombre de tabla, familia o subsector.
@@ -37,7 +39,23 @@ El vocabulario canónico (`docs/vocabulario.json`) dice que las listas de entida
 
 Además, el diccionario tiene 75 tablas y el manifiesto 74. La diferencia es el efecto de `bancos_balance` y `bancos_resultados`, que existen como vistas en la web pero no como entradas separadas en el manifiesto.
 
-## Límites
+## Límites al 2026-10-20
 
 - La búsqueda es por palabras y sinónimos, no entiende preguntas complejas. Un concepto que no esté en `busqueda_sinonimos.json` depende de que aparezca en el nombre, la descripción o las columnas.
 - Un sinónimo nuevo se agrega en `docs/busqueda_sinonimos.json` y se regenera el índice con `python3 scripts/generar_indice_busqueda.py`.
+
+## Actualización 2026-10-24: ranking y erratas moderadas
+
+La propuesta de rediseño pidió auditar la búsqueda existente antes de sustituirla. La búsqueda actual se conserva; se corrigió un resultado de ranking y se añadió tolerancia acotada a errores de escritura, sin incorporar un motor ni una dependencia externa.
+
+- Una consulta `TPM` ahora prioriza `macro.tasas_corto_plazo`, que publica la tasa observada; `macro.expectativas_tpm` se mantiene como resultado apropiado al buscar «expectativas TPM».
+- Se corrige una sola edición (inserción, eliminación o sustitución) para tokens de al menos cinco letras y solo cuando existe un candidato único en el índice. No se adivinan siglas breves ni se fuerzan correcciones ambiguas.
+- Los resultados de esa ruta muestran «Coincidencia aproximada por escritura»; las coincidencias exactas conservan su ranking normal.
+- `scripts/test_busqueda.js` contiene 26 consultas de aceptación (IDs, conceptos, fuentes, sectores, tildes, resultados vacíos y tres erratas). El 2026-10-24 la batería termina con cero fallos.
+- Durante esta auditoría, el índice estaba desactualizado respecto al diccionario (el campo de origen `generado` decía 2026-10-22 y el diccionario 2026-10-24). Se regeneró; `scripts/generar_indice_busqueda.py --check` ahora compara el índice publicado con sus fuentes, y la batería/control quedaron añadidos a `web_audit.yml`.
+- El workflow `contrato_publicado.yml` ahora reconstruye ese índice al regenerar el diccionario y lo verifica antes del push automático; una prueba de `test_contrato_publicadores.py` protege ese paso.
+- Una prueba puntual con jsdom confirmó que al escribir «inflasión IPC» se muestra `macro.inflacion_ipc` junto con el texto «Coincidencia aproximada por escritura». Esto no reemplaza la prueba en navegador real.
+- Tamaño medido del índice actual: 290.571 bytes sin compresión y 47.529 bytes con gzip de nivel 6. No representa necesariamente los bytes transferidos por los hostings.
+- En la máquina de desarrollo (Node.js, VM, índice ya cargado), la consulta tuvo p50 8,68 ms y p95 9,21 ms después de calentar el vocabulario; la primera búsqueda fría midió 53,60 ms. No son mediciones de navegador ni de teléfono y falta repetirlas en dispositivos reales.
+
+**Pendiente:** probar el buscador en navegador real y móvil; medir la descarga comprimida y la latencia en esos entornos; comprobar estados de carga/error con interacción; decidir si «buscar por institución» significa fuente oficial, institución listada como fila o ambas. Hoy el índice busca metadatos de objetos y columnas, no recorre los valores de todas las filas para localizar una institución.

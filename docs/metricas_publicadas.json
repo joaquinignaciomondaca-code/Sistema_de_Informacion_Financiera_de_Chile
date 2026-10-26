@@ -1,0 +1,311 @@
+{
+  "alineacion": {
+    "archivos_unicos_api_descargas_iguales": true,
+    "balance_y_resultados_bancarios_usan_archivos_separados": true,
+    "bytes_api_descargas_iguales": true,
+    "filas_manifiesto_api_descargas_iguales": true,
+    "ids_api_descargas_iguales": true,
+    "particiones_rutas_y_conteos_iguales_por_objeto": true
+  },
+  "contrato": "sif/metricas-publicadas",
+  "data_release": "2026-10-25.fb9d60ca0bd3",
+  "definiciones": {
+    "alcance_principal": "Elementos en niveles visibles (núcleo, instituciones y contexto), según el alcance editorial de docs/vocabulario.json.",
+    "auxiliares_sql": "Parquet compactos que DuckDB usa para algunas consultas; son copias de lectura, no objetos adicionales ni filas únicas de cobertura.",
+    "bytes": "Suma de tamaños de las particiones incluidas en el contrato; no es el tamaño de todo docs/ ni de todos los Parquet físicos.",
+    "con_archivo": "Objetos API con una o más particiones publicadas; puede incluir un Parquet de cero filas.",
+    "con_filas": "Objetos API cuyo conteo de filas es mayor que cero.",
+    "elementos_descarga": "Elementos del catálogo de descargas, con IDs y archivos por objeto; las variantes se cuentan como elemento y se presentan junto a su objeto base.",
+    "filas_almacenadas_en_runtime": "Suma física de filas en los archivos API y auxiliares SQL; incluye copias/solapes y no debe leerse como cobertura única.",
+    "filas_por_objeto": "Suma de filas recibidas por objeto lógico. Puede contar de nuevo una ruta compartida entre vistas y no equivale a registros globalmente únicos.",
+    "filas_unicas_esquemas": "En esquemas.json, suma filas de cada ruta Parquet física distinta una sola vez; no deduplica filas con valores idénticos.",
+    "fuera_de_foco": "Elementos en niveles de archivo o registro; siguen publicados y disponibles según su ficha.",
+    "objetos_api": "Objetos lógicos de catalog.json. Incluyen vistas derivadas y nombres canónicos; una entrada ETL puede dar origen a más de un objeto.",
+    "ocultos": "Elementos retenidos en los contratos, pero fuera de la navegación por una razón editorial documentada.",
+    "por_sector": "Desglose de elementos no ocultos por sector. Filas y bytes son sumas por objeto, no registros globales únicos; período es el mínimo y máximo declarados en los cortes de API, no prueba continuidad temporal.",
+    "tablas_etl": "Entradas de data_manifest.json: unidades registradas por el pipeline de extracción; no equivalen a objetos lógicos de API ni a elementos de navegación."
+  },
+  "fuentes": {
+    "api_v2": {
+      "archivos_unicos": 728,
+      "artefacto": "api/v2/catalog.json",
+      "bytes": 487665291,
+      "con_archivo": 86,
+      "con_archivo_sin_filas": 1,
+      "con_filas": 85,
+      "consultas": 159,
+      "data_release": "2026-10-25.fb9d60ca0bd3",
+      "filas": 19777523,
+      "objetos": 90,
+      "particiones": 728,
+      "por_estado": {
+        "derivado": 7,
+        "publicado": 79,
+        "vacio": 4
+      },
+      "sin_archivo": 4
+    },
+    "auxiliares_sql": {
+      "archivos": 4,
+      "artefactos": "outputs/sql_query/*.manifest.json",
+      "bytes": 43916543,
+      "excluidos_de_totales_api_y_descargas": true,
+      "filas_materializadas": 3662207
+    },
+    "descargas": {
+      "archivos_unicos": 728,
+      "artefacto": "js/download_catalog.js",
+      "bytes_total": 487665291,
+      "elementos": 90,
+      "filas_total": 19777523,
+      "fuera_de_foco": {
+        "bytes": 1890377,
+        "elementos": 15,
+        "filas": 100264
+      },
+      "ocultos": {
+        "bytes": 2589,
+        "elementos": 1,
+        "filas": 0,
+        "ids": [
+          "fi_bienes_raices"
+        ]
+      },
+      "por_sector": {
+        "agf": {
+          "bytes": 1024692,
+          "elementos": 3,
+          "etiqueta": "Administradoras Generales de Fondos",
+          "filas": 129711,
+          "fuentes": [
+            "CMF"
+          ],
+          "nivel": "secundario",
+          "periodo": {
+            "desde": "2010-06",
+            "hasta": "2026-06"
+          }
+        },
+        "bancos": {
+          "bytes": 15293799,
+          "elementos": 3,
+          "etiqueta": "Banca",
+          "filas": 1963033,
+          "fuentes": [
+            "CMF"
+          ],
+          "nivel": "secundario",
+          "periodo": {
+            "desde": "2022-01",
+            "hasta": "2026-08"
+          }
+        },
+        "cajas_compensacion": {
+          "bytes": 424562,
+          "elementos": 3,
+          "etiqueta": "Cajas de Compensación",
+          "filas": 13555,
+          "fuentes": [
+            "CMF"
+          ],
+          "nivel": "archivo",
+          "periodo": {
+            "desde": "2010-06",
+            "hasta": "2026-06"
+          }
+        },
+        "cooperativas": {
+          "bytes": 4324,
+          "elementos": 1,
+          "etiqueta": "Cooperativas de Ahorro y Crédito",
+          "filas": 7,
+          "fuentes": [
+            "CMF"
+          ],
+          "nivel": "registro",
+          "periodo": null
+        },
+        "corredoras_bolsa": {
+          "bytes": 1194337,
+          "elementos": 4,
+          "etiqueta": "Corredoras de Bolsa",
+          "filas": 185921,
+          "fuentes": [
+            "CMF"
+          ],
+          "nivel": "secundario",
+          "periodo": {
+            "desde": "2010-12",
+            "hasta": "2026-06"
+          }
+        },
+        "factoring_leasing": {
+          "bytes": 880823,
+          "elementos": 3,
+          "etiqueta": "Factoring y Leasing",
+          "filas": 52446,
+          "fuentes": [
+            "CMF"
+          ],
+          "nivel": "archivo",
+          "periodo": {
+            "desde": "2009-03",
+            "hasta": "2026-09"
+          }
+        },
+        "ffmm": {
+          "bytes": 58261089,
+          "elementos": 7,
+          "etiqueta": "Fondos Mutuos",
+          "filas": 3616378,
+          "fuentes": [
+            "CMF"
+          ],
+          "nivel": "nucleo",
+          "periodo": {
+            "desde": "2001-01",
+            "hasta": "2026-09"
+          }
+        },
+        "fi": {
+          "bytes": 29897116,
+          "elementos": 9,
+          "etiqueta": "Fondos de Inversión",
+          "filas": 3187474,
+          "fuentes": [
+            "CMF"
+          ],
+          "nivel": "nucleo",
+          "periodo": {
+            "desde": "2012-03",
+            "hasta": "2026-06"
+          }
+        },
+        "fintech": {
+          "bytes": 28848,
+          "elementos": 1,
+          "etiqueta": "Fintech y Finanzas Abiertas",
+          "filas": 264,
+          "fuentes": [
+            "CMF"
+          ],
+          "nivel": "registro",
+          "periodo": null
+        },
+        "macro": {
+          "bytes": 580417,
+          "elementos": 24,
+          "etiqueta": "Macroeconomía y Tasas",
+          "filas": 41471,
+          "fuentes": [
+            "BCCh"
+          ],
+          "nivel": "contexto",
+          "periodo": {
+            "desde": "2014-01",
+            "hasta": "2026-10"
+          }
+        },
+        "patrimonios_separados": {
+          "bytes": 65242,
+          "elementos": 2,
+          "etiqueta": "Patrimonios Separados",
+          "filas": 7981,
+          "fuentes": [
+            "CMF"
+          ],
+          "nivel": "archivo",
+          "periodo": {
+            "desde": "2014-12",
+            "hasta": "2025-12"
+          }
+        },
+        "pensiones": {
+          "bytes": 2880,
+          "elementos": 1,
+          "etiqueta": "Fondos de Pensiones",
+          "filas": 7,
+          "fuentes": [
+            "SPensiones"
+          ],
+          "nivel": "registro",
+          "periodo": null
+        },
+        "securitizadoras": {
+          "bytes": 470917,
+          "elementos": 3,
+          "etiqueta": "Sociedades Securitizadoras",
+          "filas": 25985,
+          "fuentes": [
+            "CMF"
+          ],
+          "nivel": "archivo",
+          "periodo": {
+            "desde": "2009-12",
+            "hasta": "2026-06"
+          }
+        },
+        "seguros": {
+          "bytes": 379520875,
+          "elementos": 24,
+          "etiqueta": "Seguros de Vida y Generales",
+          "filas": 10553271,
+          "fuentes": [
+            "CMF"
+          ],
+          "nivel": "nucleo",
+          "periodo": {
+            "desde": "2016-11",
+            "hasta": "2026-09"
+          }
+        },
+        "sistemas_pago": {
+          "bytes": 12781,
+          "elementos": 1,
+          "etiqueta": "Sistemas de Pago",
+          "filas": 19,
+          "fuentes": [
+            "CMF"
+          ],
+          "nivel": "registro",
+          "periodo": null
+        }
+      },
+      "principal": {
+        "bytes": 485772325,
+        "elementos": 74,
+        "filas": 19677259
+      },
+      "variantes": 1
+    },
+    "inventario_etl": {
+      "artefacto": "data_manifest.json",
+      "filas": 19777523,
+      "tablas": 89
+    }
+  },
+  "lecturas_duckdb": {
+    "archivos_unicos": 732,
+    "bytes": 531581834,
+    "filas_almacenadas": 23439730,
+    "nota": "Suma archivos del contrato y copias compactas de consulta; contiene filas repetidas entre recursos y no representa cobertura única."
+  },
+  "puentes_reconciliacion": {
+    "alias": 15,
+    "directo": 73,
+    "origen_compartido": 2
+  },
+  "relacion_inventario_api": {
+    "explicacion": "bancos_cmf_lineas se publica como dos objetos lógicos, bancos_balance y bancos_resultados, con archivos filtrados distintos; los alias cambian nombres, no crean objetos adicionales.",
+    "objetos_api": 90,
+    "tablas_con_un_objeto": 88,
+    "tablas_etl": 89,
+    "tablas_que_se_dividen_en_varios_objetos": [
+      {
+        "objetos_api": 2,
+        "tabla_etl": "bancos_cmf_lineas"
+      }
+    ]
+  },
+  "version": "1.1.0"
+}

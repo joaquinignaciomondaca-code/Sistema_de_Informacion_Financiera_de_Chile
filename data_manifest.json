@@ -185,7 +185,41 @@
         "criterio_contable": "No aplica",
         "cobertura": "Lista vigente al 2026-09-28; 6 cajas de compensación (vigentes y absorbidas)",
         "fecha_extraccion": "2026-09-28",
-        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría."
+        "estado_qa": "Conteo de filas igual al manifiesto (verificar_parquet_manifiesto.py, 2026-10-20). Sin verificación de contenido en esta auditoría.",
+        "procedencia": {
+          "fuentes_directas_actuales": [
+            {
+              "institucion": "CMF",
+              "recurso": "TXT IFRS trimestral de estados financieros",
+              "alcance": "Uso exclusivo: detección e incorporación automática de nuevas CCAF; no reemplaza ni vuelve a descargar la lista base."
+            }
+          ],
+          "procedencia_editorial": {
+            "universo_inicial": [
+              {
+                "institucion": "SUSESO",
+                "recurso": "Lista original de Cajas de Compensación"
+              },
+              {
+                "institucion": "CMF",
+                "recurso": "Registro de Valores"
+              }
+            ],
+            "mantenimiento": "La lista base está curada en ccaf/scripts/build_ccaf_maestro.py; las altas posteriores se incorporan automáticamente desde el TXT IFRS de la CMF."
+          },
+          "condiciones_reutilizacion": [
+            {
+              "institucion": "CMF",
+              "estado": "verificada",
+              "alcance": "Condiciones de cita verificadas para la información CMF y las altas detectadas desde su TXT IFRS."
+            },
+            {
+              "institucion": "SUSESO",
+              "estado": "pendiente_verificacion",
+              "alcance": "Aporta procedencia histórica/editorial del universo inicial; no se localizó ni revisó un documento oficial de condiciones aplicable en esta auditoría."
+            }
+          ]
+        }
       }
     },
     {
