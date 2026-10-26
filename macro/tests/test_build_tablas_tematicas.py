@@ -234,6 +234,49 @@ class MetadatosWeb(unittest.TestCase):
         self.assertEqual(tabla["periodo"].tolist(), ["2026-10", "2026-10"])
         self.assertEqual(tabla["dolar_observado_clp_por_usd"].tolist(), [951.25, 948.50])
 
+    def test_otros_objetos_macro_conservan_fechas_y_pivote(self):
+        ids = (
+            "macro_euro_observado",
+            "macro_tipo_cambio_multilateral",
+            "macro_tipo_cambio_real",
+            "macro_metales_preciosos",
+            "macro_reservas_internacionales",
+            "macro_tasa_referencia_fed",
+            "macro_deuda_publica_pct_pib",
+            "macro_expectativas_inflacion",
+            "macro_expectativas_tpm",
+            "macro_expectativas_operadores",
+        )
+        fechas = {
+            "Diaria": ("2026-10-21", "2026-10-22"),
+            "Mensual": ("2026-08-01", "2026-09-01"),
+            "Trimestral": ("2026-01-01", "2026-04-01"),
+        }
+        for ident in ids:
+            with self.subTest(ident=ident):
+                spec = next(t for t in builder.TABLAS if t["id"] == ident)
+                fecha_1, fecha_2 = fechas[spec["frecuencia"]]
+                series = pd.DataFrame([
+                    {"fecha": fecha_1, "periodo": fecha_1[:7], "clave": key,
+                     "serie_id": f"source-{key}", "valor": 100.0 + indice}
+                    for indice, (key, _columna) in enumerate(spec["columnas"], start=1)
+                ] + [{
+                    "fecha": fecha_2, "periodo": fecha_2[:7],
+                    "clave": spec["columnas"][0][0],
+                    "serie_id": f"source-{spec['columnas'][0][0]}", "valor": 200.0,
+                }])
+
+                tabla = builder.construir_tabla(spec, series)
+
+                self.assertEqual(tabla["fecha"].tolist(), [fecha_1, fecha_2])
+                self.assertEqual(tabla["periodo"].tolist(), [fecha_1[:7], fecha_2[:7]])
+                for indice, (key, columna) in enumerate(spec["columnas"], start=1):
+                    self.assertEqual(tabla.loc[0, columna], 100.0 + indice)
+                    if key == spec["columnas"][0][0]:
+                        self.assertEqual(tabla.loc[1, columna], 200.0)
+                    else:
+                        self.assertTrue(pd.isna(tabla.loc[1, columna]))
+
     def test_swaps_camara_usa_union_de_fechas_sin_rellenar_series(self):
         spec = next(t for t in builder.TABLAS if t["id"] == "macro_swaps_camara")
         series = pd.DataFrame([
