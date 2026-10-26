@@ -78,7 +78,7 @@ macro_tasa_referencia_fed,pk,fecha,,3328,3328,0,,si,invariante,ok,la clave decla
 macro_tasas_corto_plazo,pk,fecha,,3191,3191,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_tipo_cambio_multilateral,pk,fecha,,3190,3190,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_tipo_cambio_real,pk,fecha,,153,153,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
-macro_uf,pk,fecha,,4680,4680,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
+macro_uf,pk,fecha,,4681,4681,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 macro_utm,pk,fecha,,154,154,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 patrimonios_separados_balance,pk,archivo + codigo_patrimonio + periodo + orden_en_balance + cuenta,,7962,7962,0,,si,invariante,ok,la clave declarada es única sobre todas las filas
 patrimonios_separados_balance,fk,rut_administradora,patrimonios_separados_lista_entidades,7962,,3604,0.5473,si,expectativa,huerfanas,3604 valores sin pareja en el destino

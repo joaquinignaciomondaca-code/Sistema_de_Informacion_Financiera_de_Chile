@@ -10,10 +10,10 @@ ccaf_balance,ccaf.balance,ccaf_balance,directo,archivo,publicado,,,17,8043,21509
 ccaf_lista_entidades,ccaf.maestro,ccaf_maestro,alias,archivo,publicado,,,1,6,17300,Lista vigente,2026-09-28
 ccaf_resultados,ccaf.resultados,ccaf_resultados,directo,archivo,publicado,,,17,5506,192163,2010-06 a 2026-06,2026-10-22
 cooperativas_lista_entidades,cooperativas.lista_entidades,cooperativas_lista_entidades,directo,registro,publicado,,,1,7,4324,Lista vigente,2026-09-29
-corredoras_bolsa_balance,corredoras.balance,corredoras_bolsa_balance,directo,secundario,publicado,,,17,107976,649512,2010-12 a 2026-06,2026-10-22
+corredoras_bolsa_balance,corredoras.balance,corredoras_bolsa_balance,directo,secundario,publicado,,,17,107976,649512,2010-12 a 2026-06,2026-10-25
 corredoras_bolsa_lista_entidades,corredoras.maestro,corredoras_bolsa_maestro,alias,secundario,publicado,,,1,120,9358,2014-03 a 2026-06,2026-09-23
 corredoras_bolsa_lista_entidades_registro,corredoras.lista_entidades_registro,corredoras_bolsa_lista_entidades_registro,directo,secundario,publicado,,,1,120,14484,2014-03 a 2026-06,2026-09-29
-corredoras_bolsa_resultados,corredoras.resultados,corredoras_bolsa_resultados,directo,secundario,publicado,,,17,77705,520983,2010-12 a 2026-06,2026-10-22
+corredoras_bolsa_resultados,corredoras.resultados,corredoras_bolsa_resultados,directo,secundario,publicado,,,17,77705,520983,2010-12 a 2026-06,2026-10-25
 factoring_leasing_balance,factoring_leasing.balance_serie_ifrs_cmf,factoring_leasing_balance_serie_ifrs_cmf,alias,archivo,publicado,,,1,30046,536619,2009-03 a 2026-09,2026-10-23
 factoring_leasing_lista_entidades,factoring_leasing.lista_entidades,factoring_leasing_maestro,alias,archivo,publicado,,,1,32,13989,Lista vigente,2026-09-28
 factoring_leasing_resultados,factoring_leasing.resultados_serie_ifrs_cmf,factoring_leasing_resultados_serie_ifrs_cmf,alias,archivo,publicado,,,1,22368,330215,2009-03 a 2026-09,2026-10-23
@@ -35,30 +35,30 @@ fi_opciones,fi.opciones,fi_opciones,directo,nucleo,publicado,,,7,307,115649,2020
 fi_pactos,fi.pactos,fi_pactos,directo,nucleo,publicado,,,15,1698,204649,2012-03 a 2026-06,2026-10-07
 fi_resultados,fi.resultados,fi_resultados,directo,nucleo,publicado,,,16,1164000,2536368,2022-03 a 2026-06,2026-10-02
 fintech_rpsf_lista_entidades,fintech.rpsf_maestro,fintech_rpsf_maestro,alias,registro,publicado,,,1,264,28848,Catálogo Oficial Vigente CMF,2026-09-23
-macro_cobre,macro.cobre,macro_cobre,directo,contexto,publicado,,,1,3262,33173,2014-01-01 a 2026-10-23,2026-10-24
-macro_curva_bonos_pesos,macro.curva_bonos_pesos,macro_curva_bonos_pesos,directo,contexto,publicado,,,1,3174,61489,2014-01-02 a 2026-10-22,2026-10-24
-macro_curva_bonos_uf,macro.curva_bonos_uf,macro_curva_bonos_uf,directo,contexto,publicado,,,1,3176,94217,2014-01-02 a 2026-10-22,2026-10-24
-macro_deuda_publica_pct_pib,macro.deuda_publica_pct_pib,macro_deuda_publica_pct_pib,directo,contexto,publicado,,,1,50,3180,2014-01-01 a 2026-04-01,2026-10-24
-macro_dolar_observado,macro.dolar_observado,macro_dolar_observado,directo,contexto,publicado,,,1,3190,24709,2014-01-02 a 2026-10-23,2026-10-24
-macro_euro_observado,macro.euro_observado,macro_euro_observado,directo,contexto,publicado,,,1,3190,24530,2014-01-02 a 2026-10-23,2026-10-24
-macro_expectativas_inflacion,macro.expectativas_inflacion,macro_expectativas_inflacion,directo,contexto,publicado,,,1,154,4156,2014-01-01 a 2026-10-01,2026-10-24
-macro_expectativas_operadores,macro.expectativas_operadores,macro_expectativas_operadores,directo,contexto,publicado,,,1,238,5253,2014-01-07 a 2026-10-22,2026-10-24
-macro_expectativas_tpm,macro.expectativas_tpm,macro_expectativas_tpm,directo,contexto,publicado,,,1,154,4075,2014-01-01 a 2026-10-01,2026-10-24
-macro_imacec,macro.imacec,macro_imacec,directo,contexto,publicado,,,1,152,12252,2014-01-01 a 2026-08-01,2026-10-24
-macro_inflacion_implicita,macro.inflacion_implicita,macro_inflacion_implicita,directo,contexto,publicado,,,1,3080,36816,2014-01-02 a 2026-10-22,2026-10-24
-macro_inflacion_ipc,macro.inflacion_ipc,macro_inflacion_ipc,directo,contexto,publicado,,,1,153,8220,2014-01-01 a 2026-09-01,2026-10-24
-macro_mercado_laboral,macro.mercado_laboral,macro_mercado_laboral,directo,contexto,publicado,,,1,152,10245,2014-01-01 a 2026-08-01,2026-10-24
-macro_metales_preciosos,macro.metales_preciosos,macro_metales_preciosos,directo,contexto,publicado,,,1,3190,46875,2014-01-02 a 2026-10-23,2026-10-24
-macro_pib_trimestral,macro.pib_trimestral,macro_pib_trimestral,directo,contexto,publicado,,,1,50,3112,2014-01-01 a 2026-04-01,2026-10-24
-macro_reservas_internacionales,macro.reservas_internacionales,macro_reservas_internacionales,directo,contexto,publicado,,,1,153,4379,2014-01-01 a 2026-09-01,2026-10-24
-macro_series_catalogo,macro.series_catalogo,macro_series_catalogo,directo,contexto,publicado,,,1,51,10895,2014-01-01 a 2026-10-24,2026-10-24
-macro_swaps_camara,macro.swaps_camara,macro_swaps_camara,directo,contexto,publicado,,,1,3205,79297,2014-01-02 a 2026-10-23,2026-10-24
-macro_tasa_referencia_fed,macro.tasa_referencia_fed,macro_tasa_referencia_fed,directo,contexto,publicado,,,1,3328,12212,2014-01-01 a 2026-10-20,2026-10-24
-macro_tasas_corto_plazo,macro.tasas_corto_plazo,macro_tasas_corto_plazo,directo,contexto,publicado,,,1,3191,13681,2014-01-02 a 2026-10-23,2026-10-24
-macro_tipo_cambio_multilateral,macro.tipo_cambio_multilateral,macro_tipo_cambio_multilateral,directo,contexto,publicado,,,1,3190,42462,2014-01-02 a 2026-10-23,2026-10-24
-macro_tipo_cambio_real,macro.tipo_cambio_real,macro_tipo_cambio_real,directo,contexto,publicado,,,1,153,6441,2014-01-01 a 2026-09-01,2026-10-24
-macro_uf,macro.uf,macro_uf,directo,contexto,publicado,,,1,4680,35374,2014-01-01 a 2026-10-24,2026-10-24
-macro_utm,macro.utm,macro_utm,directo,contexto,publicado,,,1,154,3359,2014-01-01 a 2026-10-01,2026-10-24
+macro_cobre,macro.cobre,macro_cobre,directo,contexto,publicado,,,1,3262,33173,2014-01-01 a 2026-10-23,2026-10-25
+macro_curva_bonos_pesos,macro.curva_bonos_pesos,macro_curva_bonos_pesos,directo,contexto,publicado,,,1,3174,61489,2014-01-02 a 2026-10-22,2026-10-25
+macro_curva_bonos_uf,macro.curva_bonos_uf,macro_curva_bonos_uf,directo,contexto,publicado,,,1,3176,94217,2014-01-02 a 2026-10-22,2026-10-25
+macro_deuda_publica_pct_pib,macro.deuda_publica_pct_pib,macro_deuda_publica_pct_pib,directo,contexto,publicado,,,1,50,3180,2014-01-01 a 2026-04-01,2026-10-25
+macro_dolar_observado,macro.dolar_observado,macro_dolar_observado,directo,contexto,publicado,,,1,3190,24709,2014-01-02 a 2026-10-23,2026-10-25
+macro_euro_observado,macro.euro_observado,macro_euro_observado,directo,contexto,publicado,,,1,3190,24530,2014-01-02 a 2026-10-23,2026-10-25
+macro_expectativas_inflacion,macro.expectativas_inflacion,macro_expectativas_inflacion,directo,contexto,publicado,,,1,154,4156,2014-01-01 a 2026-10-01,2026-10-25
+macro_expectativas_operadores,macro.expectativas_operadores,macro_expectativas_operadores,directo,contexto,publicado,,,1,238,5253,2014-01-07 a 2026-10-22,2026-10-25
+macro_expectativas_tpm,macro.expectativas_tpm,macro_expectativas_tpm,directo,contexto,publicado,,,1,154,4075,2014-01-01 a 2026-10-01,2026-10-25
+macro_imacec,macro.imacec,macro_imacec,directo,contexto,publicado,,,1,152,12252,2014-01-01 a 2026-08-01,2026-10-25
+macro_inflacion_implicita,macro.inflacion_implicita,macro_inflacion_implicita,directo,contexto,publicado,,,1,3080,36816,2014-01-02 a 2026-10-22,2026-10-25
+macro_inflacion_ipc,macro.inflacion_ipc,macro_inflacion_ipc,directo,contexto,publicado,,,1,153,8220,2014-01-01 a 2026-09-01,2026-10-25
+macro_mercado_laboral,macro.mercado_laboral,macro_mercado_laboral,directo,contexto,publicado,,,1,152,10245,2014-01-01 a 2026-08-01,2026-10-25
+macro_metales_preciosos,macro.metales_preciosos,macro_metales_preciosos,directo,contexto,publicado,,,1,3190,46875,2014-01-02 a 2026-10-23,2026-10-25
+macro_pib_trimestral,macro.pib_trimestral,macro_pib_trimestral,directo,contexto,publicado,,,1,50,3112,2014-01-01 a 2026-04-01,2026-10-25
+macro_reservas_internacionales,macro.reservas_internacionales,macro_reservas_internacionales,directo,contexto,publicado,,,1,153,4379,2014-01-01 a 2026-09-01,2026-10-25
+macro_series_catalogo,macro.series_catalogo,macro_series_catalogo,directo,contexto,publicado,,,1,51,10895,2014-01-01 a 2026-10-25,2026-10-25
+macro_swaps_camara,macro.swaps_camara,macro_swaps_camara,directo,contexto,publicado,,,1,3205,79297,2014-01-02 a 2026-10-23,2026-10-25
+macro_tasa_referencia_fed,macro.tasa_referencia_fed,macro_tasa_referencia_fed,directo,contexto,publicado,,,1,3328,12212,2014-01-01 a 2026-10-20,2026-10-25
+macro_tasas_corto_plazo,macro.tasas_corto_plazo,macro_tasas_corto_plazo,directo,contexto,publicado,,,1,3191,13681,2014-01-02 a 2026-10-23,2026-10-25
+macro_tipo_cambio_multilateral,macro.tipo_cambio_multilateral,macro_tipo_cambio_multilateral,directo,contexto,publicado,,,1,3190,42462,2014-01-02 a 2026-10-23,2026-10-25
+macro_tipo_cambio_real,macro.tipo_cambio_real,macro_tipo_cambio_real,directo,contexto,publicado,,,1,153,6441,2014-01-01 a 2026-09-01,2026-10-25
+macro_uf,macro.uf,macro_uf,directo,contexto,publicado,,,1,4681,35389,2014-01-01 a 2026-10-25,2026-10-25
+macro_utm,macro.utm,macro_utm,directo,contexto,publicado,,,1,154,3359,2014-01-01 a 2026-10-01,2026-10-25
 patrimonios_separados_balance,patrimonios_separados.balance,patrimonios_separados_balance,directo,archivo,publicado,,,1,7962,57297,2014-12 a 2025-12 (diciembre; 2010–2013 sin datos),2026-09-28
 patrimonios_separados_lista_entidades,patrimonios.emisiones_lineas,patrimonios_separados_maestro,alias,archivo,publicado,,,1,19,7945,Lista vigente,2026-09-28
 securitizadoras_balance,securitizadoras.balance,securitizadoras_balance,directo,archivo,publicado,,,18,13679,240718,2009-12 a 2026-06,2026-10-22
