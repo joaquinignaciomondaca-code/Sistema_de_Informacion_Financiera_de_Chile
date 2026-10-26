@@ -87,6 +87,16 @@ class MetadatosWeb(unittest.TestCase):
         self.assertIn("Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.", ficha)
         self.assertNotIn("día hábil publicado por el BCCh", ficha)
 
+    def test_fecha_mensual_se_rotula_como_inicio_del_mes(self):
+        spec = next(t for t in web_builder.TABLAS if t["id"] == "macro_utm")
+        ficha = web_builder.ficha(spec, {
+            "filas": 154,
+            "desde": "2014-01-01",
+            "hasta": "2026-10-01",
+            "ultima_actualizacion": "2026-10-26",
+        })
+        self.assertIn("Primer día del mes al que corresponde el dato (AAAA-MM-01).", ficha)
+
 
 if __name__ == "__main__":
     unittest.main()
