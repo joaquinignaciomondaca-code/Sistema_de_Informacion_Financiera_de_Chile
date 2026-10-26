@@ -140,6 +140,24 @@ class MetadatosWeb(unittest.TestCase):
         for indice, (_key, columna) in enumerate(spec["columnas"], start=1):
             self.assertEqual(tabla[columna].tolist(), [100.0 + indice, 110.0 + indice])
 
+    def test_ipc_alinea_indice_y_variaciones_mensuales(self):
+        spec = next(t for t in builder.TABLAS if t["id"] == "macro_inflacion_ipc")
+        keys = [key for key, _ in spec["columnas"]]
+        series = pd.DataFrame([
+            {"fecha": fecha, "periodo": fecha[:7], "clave": key,
+             "serie_id": f"source-{key}", "valor": base + indice}
+            for indice, key in enumerate(keys, start=1)
+            for fecha, base in (("2026-08-01", 100.0), ("2026-09-01", 101.0))
+        ])
+
+        tabla = builder.construir_tabla(spec, series)
+
+        self.assertEqual(tabla["fecha"].tolist(), ["2026-08-01", "2026-09-01"])
+        self.assertEqual(tabla["periodo"].tolist(), ["2026-08", "2026-09"])
+        self.assertEqual(len(tabla), 2)
+        for indice, (_key, columna) in enumerate(spec["columnas"], start=1):
+            self.assertEqual(tabla[columna].tolist(), [100.0 + indice, 101.0 + indice])
+
     def test_mercado_laboral_alinea_las_cuatro_metricas_mensuales(self):
         spec = next(t for t in builder.TABLAS if t["id"] == "macro_mercado_laboral")
         keys = [key for key, _ in spec["columnas"]]
