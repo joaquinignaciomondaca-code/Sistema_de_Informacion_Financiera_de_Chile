@@ -3,7 +3,7 @@
  "base": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile",
  "como_se_genera": "python3 scripts/build_contrato.py",
  "contrato": "sif-api/catalogo",
- "data_release": "2026-10-26.aedd3dc23729",
+ "data_release": "2026-10-26.b332bba5e1ca",
  "generado": "2026-10-26",
  "objetos": [
   {
@@ -1581,7 +1581,7 @@
    "adaptacion": false,
    "aliases": [],
    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
-   "bytes": 10887,
+   "bytes": 10888,
    "corte": "2014-01-01 a 2026-10-26",
    "deriva_de": null,
    "descripcion": "Catálogo de las series del Banco Central que alimentan las tablas macro: código SIETE, nombre, grupo, frecuencia, unidad, título oficial, cobertura y estado.",
@@ -1609,7 +1609,7 @@
    "adaptacion": false,
    "aliases": [],
    "atribucion": "Fuente: Banco Central de Chile (Base de Datos Estadísticos). La información es propiedad del Banco Central de Chile.",
-   "bytes": 79297,
+   "bytes": 79269,
    "corte": "2014-01-02 a 2026-10-23",
    "deriva_de": null,
    "descripcion": "Tasa de swap promedio de cámara (SPC) del Banco Central: contratos en pesos a 90, 180 y 360 días y a 2 años, y contrato en UF a 1 año, en porcentaje.",
@@ -2692,7 +2692,7 @@
  },
  "totales": {
   "alias": 19,
-  "bytes": 487665315,
+  "bytes": 487665288,
   "con_datos": 86,
   "con_filas": 85,
   "consultas": 159,

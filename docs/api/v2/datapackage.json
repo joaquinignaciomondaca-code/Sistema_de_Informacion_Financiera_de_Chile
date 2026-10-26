@@ -10694,10 +10694,10 @@
    "title": "macro.reservas_internacionales"
   },
   {
-   "bytes": 10887,
+   "bytes": 10888,
    "description": "Catálogo de las series del Banco Central que alimentan las tablas macro: código SIETE, nombre, grupo, frecuencia, unidad, título oficial, cobertura y estado.",
    "format": "parquet",
-   "hash": "7e5691dfcaf295132e32455f43279e9a89fcb044a5c3098adfd41be1b49a0057",
+   "hash": "5ed66e52e22880e5ca92190aefecd30b3ea569084d9914cde3a827c4be3ded41",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -10808,10 +10808,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 10887,
+      "bytes": 10888,
       "filas": 51,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_series_catalogo.parquet",
-      "sha256": "191ccaa2a05c6a316edf31ebd5fae12394f4b8167dc121ee2da380e6ae3788a2"
+      "sha256": "a659fca83a8804b95a08a66b81be20f42a4cda75a7e52d91f47d2d994c1bb747"
      }
     ],
     "puente": "directo",
@@ -10832,10 +10832,10 @@
    "title": "macro.series_catalogo"
   },
   {
-   "bytes": 79297,
+   "bytes": 79269,
    "description": "Tasa de swap promedio de cámara (SPC) del Banco Central: contratos en pesos a 90, 180 y 360 días y a 2 años, y contrato en UF a 1 año, en porcentaje.",
    "format": "parquet",
-   "hash": "1e91cc8b5bd599e1ca123df8d218bb47bf161f7d1afd599cd69328d77ce6fbe1",
+   "hash": "226ab0a008eae16ed99d2568560eb2de6e073f383ba6294811e3a45d345920a1",
    "licenses": [
     {
      "name": "Datos de BCCh: citar la fuente",
@@ -10916,10 +10916,10 @@
     "nota_adaptacion": null,
     "particiones": [
      {
-      "bytes": 79297,
+      "bytes": 79269,
       "filas": 3205,
       "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_swaps_camara.parquet",
-      "sha256": "4323067c681a361047dce91b503b1c4de7bb12e37f3957d149809aa043c7145d"
+      "sha256": "a4e24660148c73faaa1cea1da501cd9953bcd8f297b0ed0782b86f6fb4b37094"
      }
     ],
     "puente": "directo",
@@ -19191,7 +19191,7 @@
    "licencia": "https://github.com/joaquinignaciomondaca-code/Sistema_de_Informacion_Financiera_de_Chile/blob/main/DATA_LICENSE.md",
    "reconciliacion": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/api/reconciliacion.csv"
   },
-  "data_release": "2026-10-26.aedd3dc23729",
+  "data_release": "2026-10-26.b332bba5e1ca",
   "espejo": "https://sistema-de-informacion-financiera-de-chile-docs.vercel.app",
   "filas_unicas": 19777530,
   "identificador": {
