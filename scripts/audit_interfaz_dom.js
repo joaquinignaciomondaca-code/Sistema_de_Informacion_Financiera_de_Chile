@@ -446,6 +446,28 @@ setTimeout(async () => {
   check("mapa: filtros y zoom visibles",
     document.getElementById("erd-controls-group").style.display === "flex" &&
     document.querySelector(".zoom-controls").style.display === "flex");
+  const nodoEsquema = window.erdInstance.tables[0];
+  const modalEsquema = document.getElementById("schema-modal");
+  const botonCerrarEsquema = document.getElementById("close-schema-modal");
+  const disparadorEsquema = document.getElementById("btn-zoom-reset");
+  disparadorEsquema.focus();
+  window.erdInstance.showSchemaModal(nodoEsquema);
+  check("mapa: diálogo de esquema anuncia tabla y cierre accesible",
+    modalEsquema.getAttribute("role") === "dialog"
+      && modalEsquema.getAttribute("aria-labelledby") === "modal-table-name"
+      && document.getElementById("modal-table-name").textContent === nodoEsquema.name
+      && botonCerrarEsquema.getAttribute("aria-label") === "Cerrar el esquema de la tabla"
+      && botonCerrarEsquema.type === "button");
+  check("mapa: al abrir esquema el foco entra en Cerrar",
+    modalEsquema.classList.contains("visible") && document.activeElement === botonCerrarEsquema);
+  botonCerrarEsquema.click();
+  check("mapa: cerrar esquema con botón devuelve el foco",
+    !modalEsquema.classList.contains("visible") && document.activeElement === disparadorEsquema);
+  disparadorEsquema.focus();
+  window.erdInstance.showSchemaModal(nodoEsquema);
+  document.dispatchEvent(new window.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+  check("mapa: Escape cierra esquema y devuelve el foco",
+    !modalEsquema.classList.contains("visible") && document.activeElement === disparadorEsquema);
   window.switchMainTab("info");
   check("fuera del mapa: filtros y zoom ocultos",
     document.getElementById("erd-controls-group").style.display === "none" &&
