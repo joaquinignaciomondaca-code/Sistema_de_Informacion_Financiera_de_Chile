@@ -388,7 +388,7 @@ def ficha(spec: dict | None, m: dict) -> str:
         registros = f"{m['filas']} series"
     else:
         tid, nombre, frec, desc = spec["id"], spec["nombre"], spec["frecuencia"], spec["descripcion"]
-        fecha_sig = {"Diaria": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
+        fecha_sig = {"Diaria": "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.",
                      "Mensual": "Primer día del mes al que corresponde el dato (AAAA-MM-01).",
                      "Trimestral": "Primer día del trimestre al que corresponde el dato (AAAA-MM-01)."}[frec]
         cols = [f'      {{ name: "fecha", type: "VARCHAR", role: "PK", significado: {js_str(fecha_sig)}, contable: "No aplica" }}',
