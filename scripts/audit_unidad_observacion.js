@@ -95,7 +95,7 @@ function inventariar(api, manifiesto, diccionario) {
       id_manifest_coincidente: tabla?.id || "",
       coincidencia_manifest: tabla ? "unívoca_por_id_vista_o_alias" : "sin_match_unívoco",
       unidad_api_declarada: unidadApi,
-      unidad_manifest_declarada: unidadManifest,
+      metadatos_unidad_manifest_declarada: unidadManifest,
       registros_diccionario_web: typeof web.registros === "string" ? web.registros.trim() : "",
     };
   }).sort((a, b) => a.id.localeCompare(b.id));
@@ -122,7 +122,7 @@ function inventariar(api, manifiesto, diccionario) {
       id: tabla.id || "",
       vista: tabla.view_name || "",
       nombre: tabla.name || "",
-      unidad_manifest_declarada: typeof tabla?.metadatos?.unidad === "string"
+      metadatos_unidad_manifest_declarada: typeof tabla?.metadatos?.unidad === "string"
         ? tabla.metadatos.unidad.trim()
         : "",
     })),
@@ -185,9 +185,9 @@ function main() {
     + `${c.frecuencia_o_formato} descriptores de frecuencia/formato, `
     + `${c.alcance_o_transformacion} descriptores de alcance/transformación, `
     + `${c.sin_datos} vacíos y ${c.otros} otros; `
-    + `metadatos.unidad en ${resultado.unidadesManifest}/${resultado.tablasManifest} tablas ETL, `
+    + `metadatos.unidad declarado en ${resultado.unidadesManifest}/${resultado.tablasManifest} tablas ETL, `
     + `campo unidad en ${resultado.unidadApi}/${resultado.objetosApi} objetos API. `
-    + "La clasificación textual no verifica la unidad real de observación."
+    + "metadatos.unidad puede describir unidades de medida o 'No aplica'; no equivale necesariamente a unidad de observación. La clasificación textual no verifica esta última."
   );
   return 0;
 }
