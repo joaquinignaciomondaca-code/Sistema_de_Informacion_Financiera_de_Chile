@@ -118,7 +118,7 @@ republica un cierre o el pipeline reprocesa una cartera —pasó entre el 20 y e
 de octubre—, así que [el ejemplo que lo ejecuta](examples/python/02_cruce_tres_industrias.py)
 comprueba el conjunto y un umbral, no las cifras.)*
 
-Una consulta cruza el padrón de emisores bancarios con exposiciones de seguros y fondos mutuos mediante `JOIN`s directos: el RUT está homologado a toda la base bajo una convención canónica (sección 4).
+Una consulta cruza tres columnas preparadas para este caso: `bancos_lista_entidades.rut`, `seguros_renta_fija.nro_rut` y `ffmm_cartera_nacional.rut_emisor`. El cruce demuestra que esas columnas producen coincidencias en los cortes mostrados; no que todos los identificadores del catálogo sean intercambiables ni compartan una clave validada.
 
 La web publica **159 consultas sugeridas** organizadas por sector, para no partir de una pantalla en blanco. Cada resultado se ve como tabla o gráfico y se exporta a CSV, Excel o Parquet.
 
@@ -175,9 +175,9 @@ Las marcas de tiempo de los manifiestos (`updated_at`, `ultima_actualizacion`, `
 
 ## 4. Por qué confiar en la cifra
 
-Un dato financiero mal extraído es peor que no tener el dato. El sistema valida **antes** de publicar y se detiene si algo no cuadra:
+Un dato financiero mal extraído es peor que no tener el dato. Cada flujo aplica controles específicos antes de publicar; su alcance depende del sector y de la regla documentada:
 
-- **Identidad**: RUT validado con dígito verificador módulo 11 y homologado **a toda la base** bajo una convención canónica (cuerpo / cuerpo-DV / puntos, según la columna).
+- **Identificadores**: `pipelines/auto/rut.py` normaliza por nombres de columna reconocidos a formatos distintos (cuerpo, cuerpo-DV o puntos+DV). En destinos `*_dv`/`*_completo`, si la entrada parseable carece de DV, el código puede calcularlo con módulo 11. `rut` y `nro_rut` en formato cuerpo no añaden DV si la fuente no lo trae; si sí lo trae, lo separan en el campo auxiliar correspondiente. Un DV preexistente se conserva, no se valida de nuevo en este paso. `run_*` queda fuera. Compartir formato no demuestra que dos campos identifiquen la misma entidad ni que la regla abarque todos los identificadores del catálogo.
 - **Cuadraturas contables**: activos = pasivos + patrimonio. En los estados financieros IFRS de AGF, securitizadoras, cajas de compensación, factoring y leasing, corredoras y fondos mutuos (donde la identidad es activo − pasivo = activo neto atribuible a los partícipes) se verifica antes de publicar: un balance aislado que no cuadra queda registrado como aviso (en el manifiesto o en la metadata de la serie), y si la lectura falla en bloque (al menos 3 balances y más del 5 %) el trimestre no se publica. Banca cotea el total de activos contra el Excel de la CMF y fondos de inversión cuadra cada cartera con la fila TOTAL de la fuente. Patrimonios separados cuadra cada balance (±2 mil pesos) y sus subtotales al compilar el Parquet. Además, `scripts/auditar_eeff_ifrs.py` repasa en cada push y PR **toda la historia publicada** de AGF, securitizadoras, CCAF, factoring y leasing, corredores y fondos mutuos (hoy cuadran todos, con diferencias de hasta 1 mil pesos por redondeo).
 - **Cobertura mínima**: si un mes trae menos del 90 % de las entidades del mes anterior, no se publica. En los estados financieros, además, si casi ningún balance trae los tres totales reconocibles (cambiaron las glosas o los códigos), el trimestre tampoco se publica.
 - **Cierres reeditados**: la CMF reedita a veces cierres antiguos y lo avisa en su índice («actualizado: …»). Si la fecha es posterior a la última lectura, el trimestre se vuelve a leer y pasa las mismas compuertas; si no las cumple, se conserva lo publicado. (Corredores y agentes no la tienen: su informe no trae esa fecha. En fondos mutuos no hay índice con fecha: el nombre del XML lleva la fecha y hora de envío, así que cada corrida revisa las fichas de los dos últimos cierres y de 1/36 del resto —toda la historia una vez al año— y baja de nuevo solo los archivos cuyo nombre cambió.)
