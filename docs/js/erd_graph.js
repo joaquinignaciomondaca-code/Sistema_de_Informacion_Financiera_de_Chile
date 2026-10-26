@@ -2689,7 +2689,7 @@ class ERDGraph {
       modal.appendChild(actionContainer);
     }
     actionContainer.innerHTML = `
-      <button class="schema-open-btn" onclick="if(window.switchMainTab) window.switchMainTab('data'); if(window.DataViewer) window.DataViewer.loadTable('${node.id}', '${node.name}'); if(window.cerrarEsquema) window.cerrarEsquema();">
+      <button type="button" class="schema-open-btn" onclick="if(window.switchMainTab) window.switchMainTab('data'); if(window.DataViewer) window.DataViewer.loadTable('${node.id}', '${node.name}'); if(window.cerrarEsquema) window.cerrarEsquema();">
         Explorar datos de esta tabla &rarr;
       </button>
     `;

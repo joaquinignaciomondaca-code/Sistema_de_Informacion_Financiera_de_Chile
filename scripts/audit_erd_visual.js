@@ -24,6 +24,7 @@ const vm = require("vm");
 
 const RAIZ = path.resolve(__dirname, "..");
 const ARCHIVO = path.join(RAIZ, "docs", "js", "erd_graph.js");
+const ARCHIVO_CARDINALIDAD = path.join(RAIZ, "docs", "outputs", "cardinalidad_relaciones.json");
 
 // Anchos por carácter: aproximan las dos familias que usa el mapa. Lo que
 // importa es que sean constantes y parecidas a la realidad (monoespaciada
@@ -101,6 +102,10 @@ function cargar() {
       createElement: () => ({ style: {}, classList: { add() {}, remove() {} } }),
     },
     getComputedStyle: () => ({ getPropertyValue: () => "" }),
+    fetch: async (url) => {
+      if (url !== "outputs/cardinalidad_relaciones.json") return { ok: false, status: 404 };
+      return { ok: true, json: async () => JSON.parse(fs.readFileSync(ARCHIVO_CARDINALIDAD, "utf8")) };
+    },
     console,
     requestAnimationFrame: (f) => f(),
   };
@@ -111,7 +116,7 @@ function cargar() {
   return { contexto, ventana, canvas };
 }
 
-function main() {
+async function main() {
   const { contexto, canvas } = cargar();
   const fallos = [];
 
@@ -138,6 +143,30 @@ function main() {
   grafo.canvas = canvas;
   grafo.filter = "completo";           // todos los nodos a la vez
   grafo.matchesFilter = () => true;
+  await grafo.cargarCardinalidad();
+
+  // Las medidas tienen que pertenecer a un enlace real y las no 1:1 deben
+  // renderizar una advertencia; la prueba ejecuta el fetch local con fixture.
+  const enlaces = vm.runInContext("ERD_LINKS", contexto);
+  const clavesEnlaces = new Set(enlaces.map((e) => `${e.from}|${e.to}`));
+  const medidas = Object.values(grafo.cardinalidad);
+  const medidasHuérfanas = Object.keys(grafo.cardinalidad).filter((k) => !clavesEnlaces.has(k));
+  if (medidasHuérfanas.length) fallos.push(`medidas sin enlace en el mapa: ${medidasHuérfanas.join(", ")}`);
+  const esperadas = medidas.filter((m) => m.cardinalidad &&
+    m.cardinalidad !== "1:1" && m.cardinalidad !== "no medido")
+    .map((m) => m.cardinalidad).sort();
+  const contextoEnlaces = contextoFalso();
+  grafo.drawLinks(contextoEnlaces.ctx);
+  const actuales = contextoEnlaces.textos.map((t) => t.texto).sort();
+  if (JSON.stringify(actuales) !== JSON.stringify(esperadas)) {
+    fallos.push(`etiquetas de cardinalidad: esperadas ${esperadas.length}, dibujadas ${actuales.length}`);
+  }
+  const contextoLeyenda = contextoFalso();
+  grafo.drawLeyendaCardinalidad(contextoLeyenda.ctx);
+  if (contextoLeyenda.textos.length !== (esperadas.length ? 2 : 0)) {
+    fallos.push(`leyenda de cardinalidad: ${contextoLeyenda.textos.length} líneas`);
+  }
+  console.log(`  cardinalidad: ${medidas.length} medidas, ${esperadas.length} etiquetas, ${medidasHuérfanas.length} huérfanas`);
 
   const { ctx, textos } = contextoFalso();
   grafo.drawNodes(ctx);
@@ -199,4 +228,7 @@ function main() {
   return 0;
 }
 
-process.exit(main());
+main().then((codigo) => process.exit(codigo)).catch((error) => {
+  console.error(error.stack || error);
+  process.exit(1);
+});

@@ -219,6 +219,8 @@ def construir() -> str:
     body {{ margin:0; background:var(--fondo); color:var(--tinta); font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif; }}
     a {{ color:var(--enlace); text-underline-offset:.18em; }}
     a:focus-visible, summary:focus-visible {{ outline:3px solid #a44900; outline-offset:3px; border-radius:2px; }}
+    .skip-link {{ position:fixed; inset-block-start:.75rem; inset-inline-start:.75rem; z-index:10; transform:translateY(calc(-100% - 1rem)); padding:.55rem .8rem; border:2px solid #a44900; background:var(--papel); color:var(--enlace); font-weight:650; }}
+    .skip-link:focus {{ transform:translateY(0); }}
     .marco {{ width:min(100% - 2rem, 72rem); margin-inline:auto; }}
     header {{ padding:1.25rem 0; border-bottom:1px solid var(--borde); background:var(--papel); }}
     nav {{ font-size:.9rem; }}
@@ -253,10 +255,11 @@ def construir() -> str:
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
   <header>
     <div class="marco"><nav aria-label="Navegación de la ficha"><a href="{ruta_app}">Volver al sitio SIF Chile</a> <span aria-hidden="true">›</span> Ficha piloto</nav></div>
   </header>
-  <main class="marco">
+  <main class="marco" id="main-content" tabindex="-1">
     <p class="sobrelinea">{sector} · Ficha técnica piloto</p>
     <h1>{esc(titulo)}</h1>
     <p class="id">ID de API: <code>{id_visible}</code></p>
@@ -275,7 +278,7 @@ def construir() -> str:
       <div><dt>Clave primaria declarada</dt><dd><code>{primary}</code></dd></div>
     </dl>
 
-    <div class="acciones" aria-label="Acciones disponibles">
+    <div class="acciones" role="group" aria-label="Acciones disponibles">
       <a class="boton" href="{ruta_descarga}" download>Descargar Parquet</a>
       <a class="boton secundario" href="{ruta_esquema}">Ver esquema JSON</a>
       <a class="boton secundario" href="{ruta_particiones}">Ver rutas y hashes</a>

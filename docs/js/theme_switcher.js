@@ -1,7 +1,7 @@
 /**
  * Theme and Color Palette Switcher (Dropdown Swatch Selector)
  * Sistema de Información Financiera de Chile
- * Shows exclusively color swatches in a dropdown menu without text names.
+ * Displays color swatches while providing descriptive accessible names.
  */
 
 (function () {
@@ -13,26 +13,32 @@
   const PALETTES = [
     {
       id: "dark-ide",
+      label: "Oscuro con acento azul",
       colors: ["#121316", "#18191E", "#3B82F6", "#E5E7EB"]
     },
     {
       id: "swissborg",
+      label: "Oscuro con acento verde",
       colors: ["#191E29", "#132D46", "#01C38D", "#FFFFFF"]
     },
     {
       id: "bloomberg",
+      label: "Oscuro con acento naranja",
       colors: ["#0F0F10", "#1A1A1E", "#FF9900", "#FCD34D"]
     },
     {
       id: "nord",
+      label: "Oscuro azul grisáceo",
       colors: ["#242933", "#2E3440", "#88C0D0", "#ECEFF4"]
     },
     {
       id: "midnight",
+      label: "Oscuro azul profundo",
       colors: ["#0B1120", "#0F172A", "#38BDF8", "#F8FAFC"]
     },
     {
       id: "informe",
+      label: "Claro para informes",
       colors: ["#F5F6F8", "#FFFFFF", "#0B6F54", "#1657A8"]
     }
   ];
@@ -62,14 +68,12 @@
 
     updateTriggerPreview(themeName);
 
-    // Actualizar elementos activos en el menu desplegable
+    // Mantener una única opción visual y semánticamente seleccionada.
     const items = document.querySelectorAll(".theme-palette-item");
     items.forEach((item) => {
-      if (item.dataset.theme === themeName) {
-        item.classList.add("active");
-      } else {
-        item.classList.remove("active");
-      }
+      const selected = item.dataset.theme === themeName;
+      item.classList.toggle("active", selected);
+      item.setAttribute("aria-pressed", selected ? "true" : "false");
     });
 
     // Notificar al grafo relacional y componentes
@@ -85,19 +89,27 @@
     const menu = document.getElementById("theme-dropdown-menu");
 
     if (!container || !triggerBtn || !menu) return;
+    // La inicialización puede reintentarse al evaluar varias veces la vista;
+    // no duplicar botones ni listeners si el evento DOMContentLoaded se repite.
+    if (container.dataset.themeSwitcherInitialized === "true") return;
+    container.dataset.themeSwitcherInitialized = "true";
 
-    // Renderizar las opciones mostrando unicamente los 4 bloques de color
+    // Renderizar las opciones como botones de color con nombres distinguibles.
+    menu.setAttribute("role", "group");
+    menu.setAttribute("aria-label", "Paletas de colores");
+    triggerBtn.setAttribute("aria-controls", menu.id);
     menu.innerHTML = "";
     PALETTES.forEach((p) => {
       const itemBtn = document.createElement("button");
       itemBtn.type = "button";
       itemBtn.className = "theme-palette-item";
       itemBtn.dataset.theme = p.id;
-      itemBtn.setAttribute("aria-label", "Tema");
+      itemBtn.setAttribute("aria-label", `Paleta: ${p.label}`);
+      itemBtn.setAttribute("aria-pressed", "false");
 
       itemBtn.innerHTML = `
-        <span class="theme-item-indicator"></span>
-        <div class="theme-swatch-strip">
+        <span class="theme-item-indicator" aria-hidden="true"></span>
+        <div class="theme-swatch-strip" aria-hidden="true">
           ${p.colors.map((c) => `<span class="swatch-block" style="background:${c};"></span>`).join("")}
         </div>
       `;
@@ -107,6 +119,7 @@
         applyTheme(p.id);
         container.classList.remove("open");
         triggerBtn.setAttribute("aria-expanded", "false");
+        triggerBtn.focus();
       });
 
       menu.appendChild(itemBtn);
@@ -132,6 +145,7 @@
       if (e.key === "Escape" && container.classList.contains("open")) {
         container.classList.remove("open");
         triggerBtn.setAttribute("aria-expanded", "false");
+        triggerBtn.focus();
       }
     });
 

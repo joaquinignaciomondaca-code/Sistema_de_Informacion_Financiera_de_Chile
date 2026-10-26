@@ -249,6 +249,11 @@ def comprobar(css_texto: str, html_texto: str, erd_texto: str,
         fallos.append("13 aviso: falta el aviso que recomienda usar un computador")
     elif 'id="aviso-movil-cerrar"' not in html_texto:
         fallos.append("13 aviso: no se puede cerrar")
+    aviso_tag = re.search(r'<aside\b(?=[^>]*\bid="aviso-movil")[^>]*>', html_texto, re.S)
+    if not aviso_tag or re.search(r'\brole=|\baria-modal=', aviso_tag.group(0)):
+        fallos.append("13 aviso: usa aside complementario; no lo declara diálogo/modal")
+    elif not all(nombre in aviso_tag.group(0) for nombre in ('aria-labelledby=', 'aria-describedby=')):
+        fallos.append("13 aviso: la región complementaria debe tener nombre y descripción")
     if "aviso-movil" not in shell_texto or "initAvisoMovil" not in shell_texto:
         fallos.append("13 aviso: el JS no lo muestra ni recuerda el descarte")
     if "sif-aviso-movil-cerrado" not in shell_texto:
@@ -330,6 +335,7 @@ def autoprueba(textos: dict[str, str]) -> int:
         ("9 táctil", {"css": caso.replace("@media (pointer: coarse)", "@media (pointer: none)")}),
         ("10 mapa", {"erd": textos["erd"].replace('addEventListener("pointerdown"', 'addEventListener("mousedown"')}),
         ("13 aviso", {"html": textos["html"].replace('id="aviso-movil-aspa"', 'id="aviso-movil-x"')}),
+        ("13 aviso", {"html": textos["html"].replace('id="aviso-movil"', 'id="aviso-movil" role="dialog" aria-modal="false"')}),
         ("13 aviso", {"shell": textos["shell"].replace('if (!aviso.contains(document.activeElement)) return;', '')}),
         ("13 aviso", {"css": caso.replace("  display: none;\n  position: fixed;\n  left: 12px;",
                                           "  display: none;\n  position: static;\n  left: 12px;")}),

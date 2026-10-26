@@ -280,7 +280,7 @@ def audit_erd_graph(base_dir, registered_views):
 
 def main():
     print("===========================================================================")
-    print("AUDITORIA INTEGRAL DE LA APLICACION WEB Y SECCIONES (SIF CHILE)")
+    print("AUDITORIA ESTATICA DE ACTIVOS Y SECCIONES WEB (SIF CHILE)")
     print("===========================================================================")
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     
@@ -292,7 +292,8 @@ def main():
     audit_erd_graph(base_dir, registered_views)
 
     print("\n===========================================================================")
-    print("RESULTADO GLOBAL: TODAS LAS SECCIONES DE LA WEB ESTAN 100% OPERATIVAS")
+    print("RESUMEN: ESTRUCTURA, VISTAS Y REFERENCIAS LOCALES COHERENTES")
+    print("Alcance: verificación estática de artefactos; no valida navegador, usuarios ni hosting.")
     print("===========================================================================")
 
 if __name__ == "__main__":

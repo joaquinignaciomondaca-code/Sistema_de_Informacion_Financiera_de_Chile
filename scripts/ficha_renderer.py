@@ -285,6 +285,7 @@ def construir_ficha(id_api: str, verificar_hash: bool = True) -> str:
 :root {{ color-scheme:light; --tinta:#17212b; --secundario:#4b5967; --fondo:#f4f6f8; --papel:#fff; --borde:#cbd3db; --enlace:#075a84; --aviso-fondo:#fff4d6; }}
 * {{ box-sizing:border-box; }} body {{ margin:0; background:var(--fondo); color:var(--tinta); font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif; }}
 a {{ color:var(--enlace); text-underline-offset:.18em; }} a:focus-visible,summary:focus-visible {{ outline:3px solid #a44900; outline-offset:3px; border-radius:2px; }}
+.skip-link {{ position:absolute; z-index:5; top:.5rem; left:.5rem; padding:.65rem .85rem; border:1px solid var(--borde); border-radius:.35rem; background:var(--papel); color:var(--enlace); transform:translateY(-160%); }} .skip-link:focus {{ transform:translateY(0); }}
 .marco {{ width:min(100% - 2rem,72rem); margin-inline:auto; }} header {{ padding:1rem 0; border-bottom:1px solid var(--borde); background:var(--papel); }} main {{ padding:2rem 0 4rem; }}
 .sobrelinea {{ color:var(--secundario); font-size:.95rem; }} h1 {{ font-size:clamp(1.8rem,4vw,2.6rem); line-height:1.15; }} h2 {{ margin-top:2rem; font-size:1.35rem; }} code {{ font-family:ui-monospace,SFMono-Regular,Consolas,monospace; overflow-wrap:anywhere; }}
 .resumen {{ display:grid; grid-template-columns:repeat(auto-fit,minmax(9rem,1fr)); gap:.7rem 1.25rem; padding:1rem 0; border-block:1px solid var(--borde); }} .resumen div {{ min-width:0; }} dt {{ color:var(--secundario); font-size:.88rem; }} dd {{ margin:.1rem 0 0; font-weight:650; }}
@@ -292,11 +293,12 @@ a {{ color:var(--enlace); text-underline-offset:.18em; }} a:focus-visible,summar
 .nota {{ padding:.85rem 1rem; border-left:4px solid #a46a00; background:var(--aviso-fondo); color:#3b2b12; }} .tabla-wrap {{ box-sizing:border-box; overflow-x:auto; border:1px solid var(--borde); background:var(--papel); padding:6px; }} table {{ width:100%; border-collapse:collapse; }} th,td {{ padding:.6rem .7rem; border-bottom:1px solid #dce2e7; text-align:left; vertical-align:top; }} thead th {{ background:#edf1f4; }} details {{ margin:1rem 0; }} summary {{ cursor:pointer; font-weight:650; }} ol {{ padding-left:1.5rem; }}
 footer {{ border-top:1px solid var(--borde); padding:1rem 0 2rem; color:var(--secundario); font-size:.9rem; }} @media (max-width:38rem) {{ .marco {{ width:min(100% - 1.25rem,72rem); }} main {{ padding-top:1.25rem; }} .acciones {{ display:grid; }} .boton {{ text-align:center; }} th,td {{ padding:.5rem; }} }} @media(prefers-reduced-motion:reduce) {{ *,*::before,*::after {{ scroll-behavior:auto !important; }} }}
 </style></head><body>
+<a class="skip-link" href="#main-content">Saltar al contenido principal</a>
 <header><div class="marco"><nav aria-label="Navegación de la ficha"><a href="{_esc(rutas['inicio'])}">Volver al sitio SIF Chile</a> › Ficha piloto</nav></div></header>
-<main class="marco"><p class="sobrelinea">{_esc(grupo)} · Ficha técnica piloto</p><h1>{_esc(titulo)}</h1><p class="id">ID de API: <code>{_esc(id_api)}</code></p>
+<main id="main-content" class="marco" tabindex="-1"><p class="sobrelinea">{_esc(grupo)} · Ficha técnica piloto</p><h1>{_esc(titulo)}</h1><p class="id">ID de API: <code>{_esc(id_api)}</code></p>
 {f'<p>{_esc(descripcion)}</p>' if descripcion else ''}
 <dl class="resumen">{stats_html}</dl>
-<section class="acciones" aria-label="Acciones disponibles">{actions_html}</section>
+<section class="acciones" role="group" aria-label="Acciones disponibles">{actions_html}</section>
 {zero_note}
 {f'<p class="sobrelinea">Frescura declarada: {_esc(freshness)}</p>' if freshness else ''}
 {source_html}

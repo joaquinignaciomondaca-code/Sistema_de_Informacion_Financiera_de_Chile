@@ -130,6 +130,73 @@ setTimeout(async () => {
   // index.html). Se espera la señal explícita antes de mirar el DOM.
   if (window.SIF_LISTO) await window.SIF_LISTO;
 
+  const selectorPaletas = document.getElementById("theme-dropdown-btn");
+  const grupoPaletas = document.getElementById("theme-dropdown-menu");
+  const opcionesPaleta = Array.from(document.querySelectorAll(".theme-palette-item"));
+  const temaOriginal = window.MFCThemes.getCurrentTheme();
+  const nombresPaleta = opcionesPaleta.map((boton) => boton.getAttribute("aria-label"));
+  check("el selector de paletas identifica el grupo que controla",
+    selectorPaletas.getAttribute("aria-label") === "Seleccionar paleta de colores"
+      && selectorPaletas.getAttribute("aria-controls") === grupoPaletas.id
+      && grupoPaletas.getAttribute("role") === "group"
+      && grupoPaletas.getAttribute("aria-label") === "Paletas de colores");
+  check("las seis paletas tienen nombres accesibles únicos y descriptivos",
+    opcionesPaleta.length === 6
+      && nombresPaleta.every((nombre) => nombre && nombre.startsWith("Paleta: "))
+      && new Set(nombresPaleta).size === opcionesPaleta.length,
+    nombresPaleta.join("; "));
+  const paletasSeleccionadas = () => opcionesPaleta.filter((boton) => boton.getAttribute("aria-pressed") === "true");
+  check("una sola paleta declara su estado seleccionado y coincide con el tema activo",
+    paletasSeleccionadas().length === 1 && paletasSeleccionadas()[0].dataset.theme === temaOriginal);
+  selectorPaletas.click();
+  check("el selector refleja al abrirse su estado expandido",
+    selectorPaletas.getAttribute("aria-expanded") === "true" && document.getElementById("theme-dropdown-container").classList.contains("open"),
+    `aria-expanded=${selectorPaletas.getAttribute("aria-expanded")} · open=${document.getElementById("theme-dropdown-container").classList.contains("open")}`);
+  const paletaAlternativa = opcionesPaleta.find((boton) => boton.dataset.theme !== temaOriginal);
+  if (paletaAlternativa) {
+    paletaAlternativa.focus();
+    paletaAlternativa.click();
+  }
+  check("elegir una paleta actualiza selección, cierra el selector y devuelve el foco",
+    Boolean(paletaAlternativa)
+      && window.MFCThemes.getCurrentTheme() === paletaAlternativa.dataset.theme
+      && paletasSeleccionadas().length === 1
+      && paletasSeleccionadas()[0] === paletaAlternativa
+      && selectorPaletas.getAttribute("aria-expanded") === "false"
+      && !document.getElementById("theme-dropdown-container").classList.contains("open")
+      && document.activeElement === selectorPaletas);
+  selectorPaletas.click();
+  const opcionConFoco = opcionesPaleta[0];
+  opcionConFoco.focus();
+  opcionConFoco.dispatchEvent(new window.KeyboardEvent("keydown", { key: "Escape", bubbles: true }));
+  check("Escape cierra el selector y devuelve el foco al disparador",
+    selectorPaletas.getAttribute("aria-expanded") === "false"
+      && !document.getElementById("theme-dropdown-container").classList.contains("open")
+      && document.activeElement === selectorPaletas);
+  window.MFCThemes.applyTheme(temaOriginal);
+
+  const modalConsultas = document.getElementById("saved-queries-modal");
+  const abrirConsultas = document.getElementById("btn-show-favorites");
+  const cerrarConsultas = document.getElementById("close-fav-modal");
+  check("el cierre de consultas tiene nombre y el disparador controla el panel",
+    Boolean(cerrarConsultas)
+      && cerrarConsultas.getAttribute("aria-label") === "Cerrar consultas guardadas"
+      && Boolean(cerrarConsultas.querySelector('svg[aria-hidden="true"]'))
+      && !cerrarConsultas.textContent.trim()
+      && abrirConsultas.getAttribute("aria-controls") === modalConsultas.id
+      && abrirConsultas.getAttribute("aria-expanded") === "false");
+  window.ChatTerminal.toggleFavoritesModal();
+  const modalAbierto = modalConsultas.classList.contains("visible");
+  const estadoExpandidoAlAbrir = abrirConsultas.getAttribute("aria-expanded");
+  cerrarConsultas.focus();
+  cerrarConsultas.click();
+  check("el botón accesible cierra el panel, actualiza el estado y devuelve el foco",
+    modalAbierto
+      && estadoExpandidoAlAbrir === "true"
+      && !modalConsultas.classList.contains("visible")
+      && abrirConsultas.getAttribute("aria-expanded") === "false"
+      && document.activeElement === abrirConsultas);
+
   // Arranque bajo demanda: ni el mapa relacional (canvas) ni el motor DuckDB
   // (wasm de 3,8 MB) deben construirse con la página.
   check("el mapa relacional no se construye al cargar", !window.erdInstance);
