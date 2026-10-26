@@ -176,6 +176,27 @@ class MetadatosWeb(unittest.TestCase):
         self.assertEqual(tabla.loc[0, "tib_promedio_pct"], 4.61)
         self.assertTrue(pd.isna(tabla.loc[1, "tib_promedio_pct"]))
 
+    def test_curva_bonos_pesos_alinea_plazos_y_preserva_huecos(self):
+        spec = next(t for t in builder.TABLAS if t["id"] == "macro_curva_bonos_pesos")
+        series = pd.DataFrame([
+            {"fecha": "2026-10-21", "periodo": "2026-10", "clave": key,
+             "serie_id": f"source-{key}", "valor": valor}
+            for (key, _columna), valor in zip(spec["columnas"], (3.0, 3.2, 3.5))
+        ] + [
+            {"fecha": "2026-10-22", "periodo": "2026-10", "clave": "bcp_5y",
+             "serie_id": "source-bcp_5y", "valor": 3.25},
+            {"fecha": "2026-10-22", "periodo": "2026-10", "clave": "bcp_10y",
+             "serie_id": "source-bcp_10y", "valor": 3.55},
+        ])
+
+        tabla = builder.construir_tabla(spec, series)
+
+        self.assertEqual(tabla["fecha"].tolist(), ["2026-10-21", "2026-10-22"])
+        self.assertEqual(tabla.loc[0, "rendimiento_bono_pesos_2_anos_pct"], 3.0)
+        self.assertTrue(pd.isna(tabla.loc[1, "rendimiento_bono_pesos_2_anos_pct"]))
+        self.assertEqual(tabla["rendimiento_bono_pesos_5_anos_pct"].tolist(), [3.2, 3.25])
+        self.assertEqual(tabla["rendimiento_bono_pesos_10_anos_pct"].tolist(), [3.5, 3.55])
+
     def test_swaps_camara_usa_union_de_fechas_sin_rellenar_series(self):
         spec = next(t for t in builder.TABLAS if t["id"] == "macro_swaps_camara")
         series = pd.DataFrame([
