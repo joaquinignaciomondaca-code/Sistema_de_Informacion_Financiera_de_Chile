@@ -42,6 +42,7 @@ on:
       - 'scripts/ficha_renderer.py'
       - 'scripts/test_fichas_candidatas.py'
       - 'scripts/test_fichas_sql_local.py'
+      - 'scripts/test_audit_consultas_sensibles_repeticiones.py'
       - 'scripts/test_ficha_piloto_http.py'
       - 'scripts/probar_ejemplos.py'
       - 'scripts/test_contrato.py'
@@ -280,6 +281,11 @@ jobs:
           grep -h -E "^(FALLA|  ·)" consultas.log | head -10 | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::error title=Consultas sugeridas::$linea"; done
           grep -h -E "Consultas sugeridas|OK|VACIA|ERROR" consultas.log | sed 's/%/%25/g' | while IFS= read -r linea; do echo "::notice title=Consultas sugeridas::$linea"; done
           exit $n
+
+      - name: 'SQL: detectar consultas sugeridas sensibles a repeticiones exactas (sin deduplicar)'
+        run: |
+          python -m unittest scripts.test_audit_consultas_sensibles_repeticiones -v
+          python scripts/audit_consultas_sensibles_repeticiones.py --check
 
       - name: 'Fichas: las consultas expuestas ejecutan en DuckDB local y respetan filtros'
         run: python scripts/test_fichas_sql_local.py
@@ -671,6 +677,7 @@ jobs:
           macro.tests.test_series_bcch
           macro.tests.test_build_tablas_tematicas
           seguros.tests.test_formato_1835
+          seguros.tests.test_avisos_repeticiones
       - name: Fondos de inversión · XML original, cotejo, contextos y publicación
         run: python -m unittest discover -s fi/tests -v
       - name: Factoring y leasing · extracción y publicación
