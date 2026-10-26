@@ -185,18 +185,6 @@ setTimeout(async () => {
       && !cerrarConsultas.textContent.trim()
       && abrirConsultas.getAttribute("aria-controls") === modalConsultas.id
       && abrirConsultas.getAttribute("aria-expanded") === "false");
-  window.ChatTerminal.toggleFavoritesModal();
-  const modalAbierto = modalConsultas.classList.contains("visible");
-  const estadoExpandidoAlAbrir = abrirConsultas.getAttribute("aria-expanded");
-  cerrarConsultas.focus();
-  cerrarConsultas.click();
-  check("el botón accesible cierra el panel, actualiza el estado y devuelve el foco",
-    modalAbierto
-      && estadoExpandidoAlAbrir === "true"
-      && !modalConsultas.classList.contains("visible")
-      && abrirConsultas.getAttribute("aria-expanded") === "false"
-      && document.activeElement === abrirConsultas);
-
   // Arranque bajo demanda: ni el mapa relacional (canvas) ni el motor DuckDB
   // (wasm de 3,8 MB) deben construirse con la página.
   check("el mapa relacional no se construye al cargar", !window.erdInstance);
@@ -432,6 +420,19 @@ setTimeout(async () => {
     window.DuckDBClient.engineAvailable = false;
   }
   window.switchMainTab("sql");
+  // El disparador vive en el panel SQL: probar el retorno de foco con el panel
+  // visible reproduce el único recorrido real desde el que se puede abrirlo.
+  window.ChatTerminal.toggleFavoritesModal();
+  const modalAbierto = modalConsultas.classList.contains("visible");
+  const estadoExpandidoAlAbrir = abrirConsultas.getAttribute("aria-expanded");
+  cerrarConsultas.focus();
+  cerrarConsultas.click();
+  check("el botón accesible cierra el panel, actualiza el estado y devuelve el foco",
+    modalAbierto
+      && estadoExpandidoAlAbrir === "true"
+      && !modalConsultas.classList.contains("visible")
+      && abrirConsultas.getAttribute("aria-expanded") === "false"
+      && document.activeElement === abrirConsultas);
   check("abrir Consultas arranca el motor bajo demanda",
     Boolean(window.DuckDBClient && window.DuckDBClient.initPromise));
   check("pestaña SQL activa y visible",

@@ -11,7 +11,7 @@ Estas protecciones reducen ráfagas causadas por una consulta amplia de una pers
 
 ## Capacidad conocida y sus límites
 
-El catálogo API/Descargas suma **728 Parquet, 487.665.276 bytes (≈488 MB)**. El directorio físico `docs/outputs/` contiene **805 Parquet, 548.713.639 bytes (≈549 MB)**: 728 del catálogo/descargas, 4 auxiliares SQL, 69 archivos en manifiestos separados y 4 muestras/registros con referencias de mantenimiento. Las categorías son excluyentes y `scripts/audit_pages_capacity.py` falla si queda un archivo sin clasificar. Esto describe archivos disponibles en el árbol publicado, no solicitudes ni uso real.
+El catálogo API/Descargas suma **728 Parquet, 487.665.291 bytes (≈488 MB)**. El directorio físico `docs/outputs/` contiene **805 Parquet, 548.713.850 bytes (≈549 MB)**: 728 del catálogo/descargas, 4 auxiliares SQL, 69 archivos en manifiestos separados y 4 muestras/registros con referencias de mantenimiento. Cifras verificadas contra la publicación `data_release` `2026-10-25.fb9d60ca0bd3`. Las categorías son excluyentes y `scripts/audit_pages_capacity.py` falla si queda un archivo sin clasificar. Esto describe archivos disponibles en el árbol publicado, no solicitudes ni uso real.
 
 Si una aplicación descargara solo el conjunto completo del catálogo en cada visita, unas **205 transferencias completas** equivaldrían a 100 GB. El sitio normalmente lee sólo rangos y columnas requeridos, por lo que esa cuenta es un límite de referencia, no una estimación de visitas.
 

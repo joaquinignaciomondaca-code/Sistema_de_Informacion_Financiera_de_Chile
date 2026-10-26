@@ -3,7 +3,7 @@
 // data_release: 2026-10-25.fb9d60ca0bd3
 window.ESTADO_CLAVES = {
  "generado": "2026-10-25",
- "data_release": "2026-10-24.1681bebfe7ef",
+ "data_release": "2026-10-25.fb9d60ca0bd3",
  "como_se_genera": "python3 scripts/build_estado_claves.py",
  "resumen": {
   "objetos": 90,

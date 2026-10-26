@@ -1,4 +1,4 @@
-# Prueba de máquina limpia · 2026-10-25T22:38:51
+# Prueba de máquina limpia · 2026-10-25T23:01:24
 
 $ python3 -m http.server <puerto efímero> --directory docs   # sirve el sitio, como en producción
 $ cd <cliente externo> && <venv externo>/bin/python <cliente.py> http://127.0.0.1:<puerto efímero> <cliente externo>   # sin el repo
