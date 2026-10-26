@@ -60,6 +60,10 @@ def auditar_tabla_readme(
     sectores: dict[str, dict[str, Any]],
     consultas_total: int,
     fuentes_por_sector: dict[str, set[str]],
+    objetos_api: int,
+    filas_api: int,
+    principal: dict[str, int],
+    fuera: dict[str, int],
 ) -> list[str]:
     """Comprueba que las cifras y cortes de la tabla sectorial no se desactualicen."""
     ruta = ROOT / "README.md"
@@ -180,6 +184,45 @@ def auditar_tabla_readme(
     if total_readme != total_esperado:
         errores_readme.append(
             f"README.md: total sectorial {total_readme} no coincide con {total_esperado}"
+        )
+
+    resumen_api = re.search(
+        r"El catálogo API suma\s+([\d.]+)\s+objetos y\s+([\d.]+)\s+filas",
+        texto_readme,
+        re.IGNORECASE,
+    )
+    esperado_api = (objetos_api, filas_api)
+    declarado_api = (
+        tuple(int(re.sub(r"\D", "", valor)) for valor in resumen_api.groups())
+        if resumen_api else None
+    )
+    if declarado_api != esperado_api:
+        errores_readme.append(
+            f"README.md: resumen narrativo API {declarado_api} no coincide con {esperado_api}"
+        )
+
+    resumen_alcance = re.search(
+        r"De esos\s+([\d.]+)\s+elementos,\s+([\d.]+)\s+están en niveles principales\s+"
+        r"\(([\d.]+)\s+filas;[^)]*\)\s+y\s+([\d.]+)\s+en archivo/registro\s+"
+        r"\(([\d.]+);",
+        texto_readme,
+        re.IGNORECASE,
+    )
+    esperado_alcance = (
+        principal["conjuntos"] + fuera["conjuntos"],
+        principal["conjuntos"],
+        principal["filas"],
+        fuera["conjuntos"],
+        fuera["filas"],
+    )
+    declarado_alcance = (
+        tuple(int(re.sub(r"\D", "", valor)) for valor in resumen_alcance.groups())
+        if resumen_alcance else None
+    )
+    if declarado_alcance != esperado_alcance:
+        errores_readme.append(
+            f"README.md: resumen narrativo de Descargas {declarado_alcance} "
+            f"no coincide con {esperado_alcance}"
         )
     return errores_readme
 
@@ -604,6 +647,10 @@ def construir() -> dict[str, Any]:
             sectores_reportados,
             consultas_total,
             fuentes_para_readme(manifiesto, fuentes_por_sector),
+            len(objetos),
+            filas_api,
+            visible,
+            fuera,
         )
     )
     errores.extend(auditar_procedencia_y_modalidades_readme(manifiesto, api))
