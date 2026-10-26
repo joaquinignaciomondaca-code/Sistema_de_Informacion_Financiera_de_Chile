@@ -97,6 +97,31 @@ class MetadatosWeb(unittest.TestCase):
         })
         self.assertIn("Primer día del mes al que corresponde el dato (AAAA-MM-01).", ficha)
 
+    def test_fecha_trimestral_se_rotula_como_inicio_del_trimestre(self):
+        spec = next(t for t in web_builder.TABLAS if t["id"] == "macro_pib_trimestral")
+        ficha = web_builder.ficha(spec, {
+            "filas": 50,
+            "desde": "2014-01-01",
+            "hasta": "2026-04-01",
+            "ultima_actualizacion": "2026-10-26",
+        })
+        self.assertIn("Primer día del trimestre al que corresponde el dato (AAAA-MM-01).", ficha)
+
+    def test_pib_trimestral_conserva_observacion_de_cada_trimestre(self):
+        spec = next(t for t in builder.TABLAS if t["id"] == "macro_pib_trimestral")
+        series = pd.DataFrame([
+            {"fecha": "2026-01-01", "periodo": "2026-01", "clave": "pib",
+             "serie_id": "F032.PIB.FLU.R.CLP.EP18.Z.Z.0.T", "valor": 3200.0},
+            {"fecha": "2026-04-01", "periodo": "2026-04", "clave": "pib",
+             "serie_id": "F032.PIB.FLU.R.CLP.EP18.Z.Z.0.T", "valor": 3300.0},
+        ])
+
+        tabla = builder.construir_tabla(spec, series)
+
+        self.assertEqual(tabla["fecha"].tolist(), ["2026-01-01", "2026-04-01"])
+        self.assertEqual(tabla["periodo"].tolist(), ["2026-01", "2026-04"])
+        self.assertEqual(tabla["pib_encadenado_miles_mm_clp"].tolist(), [3200.0, 3300.0])
+
     def test_macro_cobre_une_observaciones_nativas_sin_rellenar_frecuencias(self):
         spec = next(t for t in builder.TABLAS if t["id"] == "macro_cobre")
         series = pd.DataFrame([
