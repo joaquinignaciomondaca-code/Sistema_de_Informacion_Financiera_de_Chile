@@ -114,6 +114,29 @@ class MetadatosWeb(unittest.TestCase):
         self.assertEqual(tabla.loc[1, "cobre_refinado_usd_por_libra"], 4.50)
         self.assertTrue(pd.isna(tabla.loc[1, "cobre_referencial_mensual_usd_por_libra"]))
 
+    def test_inflacion_implicita_usa_pares_en_la_misma_fecha(self):
+        spec = next(t for t in builder.TABLAS if t["id"] == "macro_inflacion_implicita")
+        series = pd.DataFrame([
+            {"fecha": "2026-01-02", "periodo": "2026-01", "clave": "bcp_5y",
+             "serie_id": "F022.BCLP.TIS.AN05.NO.Z.D", "valor": 3.81},
+            {"fecha": "2026-01-02", "periodo": "2026-01", "clave": "bcu_5y",
+             "serie_id": "F022.BUF.TIS.AN05.UF.Z.D", "valor": 1.806},
+            {"fecha": "2026-01-03", "periodo": "2026-01", "clave": "bcp_5y",
+             "serie_id": "F022.BCLP.TIS.AN05.NO.Z.D", "valor": 3.82},
+            {"fecha": "2026-01-04", "periodo": "2026-01", "clave": "bcp_10y",
+             "serie_id": "F022.BCLP.TIS.AN10.NO.Z.D", "valor": 4.20},
+            {"fecha": "2026-01-04", "periodo": "2026-01", "clave": "bcu_10y",
+             "serie_id": "F022.BUF.TIS.AN10.UF.Z.D", "valor": 1.7545},
+        ])
+
+        tabla = builder.construir_tabla(spec, series)
+
+        self.assertEqual(tabla["fecha"].tolist(), ["2026-01-02", "2026-01-04"])
+        self.assertEqual(tabla.loc[0, "inflacion_implicita_5_anos_pct"], 2.004)
+        self.assertTrue(pd.isna(tabla.loc[0, "inflacion_implicita_10_anos_pct"]))
+        self.assertTrue(pd.isna(tabla.loc[1, "inflacion_implicita_5_anos_pct"]))
+        self.assertEqual(tabla.loc[1, "inflacion_implicita_10_anos_pct"], 2.4455)
+
 
 if __name__ == "__main__":
     unittest.main()
