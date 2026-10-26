@@ -253,8 +253,7 @@ DETALLE = {  # etiqueta corta por tabla para el visor y el vocabulario
     "macro_series_catalogo": "Catálogo de series",
 }
 
-FRECUENCIA_FILA = {"Diaria": "día", "Mensual": "mes", "Trimestral": "trimestre"}
-FRECUENCIA_PLURAL = {"Diaria": "días", "Mensual": "meses", "Trimestral": "trimestres"}
+FRECUENCIA_LABEL = {"Diaria": "diaria", "Mensual": "mensual", "Trimestral": "trimestral"}
 COLOR = {"Diaria": "#E65100", "Mensual": "#F57C00", "Trimestral": "#FF9800"}
 
 
@@ -286,17 +285,15 @@ def leer_meta() -> dict[str, dict]:
 
 
 def badge_tabla(spec: dict | None, m: dict) -> str:
-    """Conteo real (badges y ERD)."""
-    if spec is None:
-        return f"{m['filas']} series"
-    return f"{fmt_es(m['filas'])} {FRECUENCIA_PLURAL[spec['frecuencia']]}"
+    """Conteo real de filas (badges y ERD), separado de la frecuencia."""
+    return f"{fmt_es(m['filas'])} filas"
 
 
 def cobertura_tabla(spec: dict | None) -> str:
     """Texto de cobertura del vocabulario (línea `rows` de la tarjeta)."""
     if spec is None:
         return "Una fila por serie"
-    return f"Una fila por {FRECUENCIA_FILA[spec['frecuencia']]}"
+    return f"Frecuencia {FRECUENCIA_LABEL[spec['frecuencia']]}"
 
 
 def spec_por_id() -> dict[str, dict]:
@@ -382,7 +379,6 @@ def ficha(spec: dict | None, m: dict, hoy: str) -> str:
         registros = f"{m['filas']} series"
     else:
         tid, nombre, frec, desc = spec["id"], spec["nombre"], spec["frecuencia"], spec["descripcion"]
-        unidad_fila = FRECUENCIA_FILA[frec]
         fecha_sig = {"Diaria": "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.",
                      "Mensual": "Primer día del mes al que corresponde el dato (AAAA-MM-01).",
                      "Trimestral": "Primer día del trimestre al que corresponde el dato (AAAA-MM-01)."}[frec]
@@ -390,7 +386,7 @@ def ficha(spec: dict | None, m: dict, hoy: str) -> str:
                 f'      {{ name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.", contable: "No aplica" }}']
         for c in columnas(spec):
             cols.append(f'      {{ name: {js_str(c)}, type: "DOUBLE", role: "Métrica", significado: {js_str(SIGNIFICADO[c])}, contable: "No aplica" }}')
-        registros = f"{fmt_es(m['filas'])} {FRECUENCIA_PLURAL[frec]}"
+        registros = f"{fmt_es(m['filas'])} filas"
     return "\n".join([
         "  {",
         f"    id: {js_str(tid)},",
@@ -488,7 +484,7 @@ def actualizar_vocabulario(check: bool) -> bool:
         v["tablas"].append({"id": spec["id"], "alias": [], "nombre": spec["nombre"],
                             "tipo": spec["nombre"].split(".", 1)[1], "sector": "macro",
                             "descripcion": spec["descripcion"],
-                            "cobertura": f"Una fila por {FRECUENCIA_FILA[spec['frecuencia']]}"})
+                            "cobertura": f"Frecuencia {FRECUENCIA_LABEL[spec['frecuencia']]}"})
     v["tablas"].append({"id": "macro_series_catalogo", "alias": [], "nombre": "macro.series_catalogo",
                         "tipo": "series_catalogo", "sector": "macro",
                         "descripcion": "Catálogo de las series del Banco Central que alimentan las tablas macro: código, nombre, unidad, frecuencia y cobertura.",

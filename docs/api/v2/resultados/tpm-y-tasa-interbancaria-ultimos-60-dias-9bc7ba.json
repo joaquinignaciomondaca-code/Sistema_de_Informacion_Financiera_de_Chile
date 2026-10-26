@@ -3,8 +3,8 @@
  "id": "tpm-y-tasa-interbancaria-ultimos-60-dias-9bc7ba",
  "titulo": "TPM y tasa interbancaria: últimos 60 días",
  "origen": "explorador",
- "data_release": "2026-10-25.fb9d60ca0bd3",
- "generado": "2026-10-25",
+ "data_release": "2026-10-26.aedd3dc23729",
+ "generado": "2026-10-26",
  "max_filas": 500,
  "columnas": [
   "fecha",
@@ -15,12 +15,6 @@
  "filas": 60,
  "truncado": false,
  "datos": [
-  [
-   "2026-07-30",
-   4.5,
-   4.5,
-   0.0
-  ],
   [
    "2026-07-31",
    4.5,
@@ -374,6 +368,12 @@
    4.5,
    4.5,
    0.0
+  ],
+  [
+   "2026-10-26",
+   4.5,
+   null,
+   null
   ]
  ],
  "sql": "SELECT fecha, tpm_pct, tib_promedio_pct, round(tib_promedio_pct - tpm_pct, 3) AS diferencia_tib_tpm FROM macro_tasas_corto_plazo ORDER BY fecha DESC LIMIT 60;",

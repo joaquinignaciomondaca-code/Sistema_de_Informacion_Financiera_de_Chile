@@ -6,16 +6,16 @@
  "particiones": [
   {
    "archivo": "outputs/macro/macro_tasas_corto_plazo.parquet",
-   "bytes": 13681,
+   "bytes": 13683,
    "path": "https://joaquinignaciomondaca-code.github.io/Sistema_de_Informacion_Financiera_de_Chile/outputs/macro/macro_tasas_corto_plazo.parquet",
    "periodo": "macro_tasas_corto_plazo",
-   "sha256": "02352c34f9c131b4d92475830d7ce34d10fe1591c9c4fe9aad1a382846ddf8a1"
+   "sha256": "68ead906776a9d6bcbfe26120956ae4c5665c5d09e2e64a3e83c8d99d7a681f0"
   }
  ],
  "total": {
   "archivos": 1,
-  "bytes": 13681,
-  "filas": 3191
+  "bytes": 13683,
+  "filas": 3192
  },
  "version": "2.3.0"
 }
