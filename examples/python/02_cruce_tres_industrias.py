@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """El caso que motiva el proyecto: un emisor visto desde tres industrias a la vez.
 
-Bancos, aseguradoras y fondos mutuos publican por separado y con identificadores
-distintos. El contrato normaliza el RUT, así que el cruce es un JOIN. Lo que se
-comprueba aquí es **de conjunto y de umbral**, no un número exacto: las carteras
-cambian cada mes y fijar «15 emisores» convertiría el ejemplo en una prueba que
-falla sola.
+Bancos, aseguradoras y fondos mutuos publican por separado. Este ejemplo cruza
+`bancos_lista_entidades.rut`, `seguros_renta_fija.nro_rut` y
+`ffmm_cartera_nacional.rut_emisor`, que se publican en formato de cuerpo para
+este JOIN; eso no vuelve intercambiables todos los identificadores del catálogo
+ni verifica los DV preexistentes. Lo que se comprueba aquí es **de conjunto y de
+umbral**, no un número exacto: las carteras cambian cada mes y fijar «15
+emisores» convertiría el ejemplo en una prueba que falla sola.
 
     python3 examples/python/02_cruce_tres_industrias.py
     SIF_CHILE_BASE=docs python3 examples/python/02_cruce_tres_industrias.py
