@@ -107,6 +107,8 @@ class ContratoDePublicadoresTest(unittest.TestCase):
         self.assertIn("docs/js/erd_graph.js", flujo)
         self.assertIn("docs/vocabulario.json", flujo)
         self.assertLess(flujo.index("python scripts/build_macro_web.py\n"),
+                        flujo.index("python scripts/build_esquemas.py\n"))
+        self.assertLess(flujo.index("python scripts/build_esquemas.py\n"),
                         flujo.index("python scripts/build_api.py\n"))
         self.assertIn("      - 'scripts/build_macro_web.py'", flujo)
         self.assertIn("      - 'macro/scripts/build_tablas_tematicas.py'", flujo)

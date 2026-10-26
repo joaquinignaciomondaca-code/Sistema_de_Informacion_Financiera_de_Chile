@@ -81,8 +81,9 @@ jobs:
             git reset --hard FETCH_HEAD
             python scripts/build_reconciliacion.py
             python scripts/verificar_claves.py
-            python scripts/build_esquemas.py
+            # El diccionario macro se genera antes de los esquemas, que lo leen para los significados.
             python scripts/build_macro_web.py
+            python scripts/build_esquemas.py
             python scripts/build_api.py
             python scripts/build_contrato.py
             python scripts/build_ficha_piloto.py
@@ -105,8 +106,8 @@ jobs:
             git commit -m "Contrato derivado: esquemas, catálogo y resultados de los datos publicados"
             # Si la cadena quedó a medias, no se publica: se prefiere un push
             # fallido y visible a dejar main con las compuertas en rojo.
-            python scripts/build_esquemas.py --check
             python scripts/build_macro_web.py --check
+            python scripts/build_esquemas.py --check
             python scripts/build_reconciliacion.py --check
             python scripts/build_api.py --check
             python scripts/build_contrato.py --check
