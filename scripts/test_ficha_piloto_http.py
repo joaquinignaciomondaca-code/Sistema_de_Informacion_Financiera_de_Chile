@@ -24,6 +24,9 @@ class Recolector(HTMLParser):
     def __init__(self) -> None:
         super().__init__()
         self.enlaces: list[str] = []
+        self.skip_links: list[str] = []
+        self.main_attrs: list[dict[str, str | None]] = []
+        self.action_groups: list[dict[str, str | None]] = []
         self.scripts = 0
         self.h1 = 0
         self.th_sin_scope = 0
@@ -32,7 +35,14 @@ class Recolector(HTMLParser):
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         atributos = dict(attrs)
         if tag == "a" and atributos.get("href"):
-            self.enlaces.append(str(atributos["href"]))
+            href = str(atributos["href"])
+            self.enlaces.append(href)
+            if "skip-link" in str(atributos.get("class", "")).split():
+                self.skip_links.append(href)
+        if tag == "main":
+            self.main_attrs.append(atributos)
+        if "acciones" in str(atributos.get("class", "")).split():
+            self.action_groups.append(atributos)
         if tag == "script":
             self.scripts += 1
         if tag == "h1":
@@ -62,9 +72,30 @@ def comprobar_accesibilidad_estatica(documento: str, parser: Recolector) -> floa
         raise SystemExit("La ficha necesita un H1 y encabezados de tabla con scope explícito")
     if not parser.viewport:
         raise SystemExit("Falta la meta viewport para diseño adaptable")
+    if parser.skip_links != ["#main-content"] or not parser.enlaces or parser.enlaces[0] != "#main-content":
+        raise SystemExit("El primer enlace debe permitir saltar directamente al contenido principal")
+    if (len(parser.main_attrs) != 1 or parser.main_attrs[0].get("id") != "main-content"
+            or parser.main_attrs[0].get("tabindex") != "-1"):
+        raise SystemExit("El enlace de salto debe llegar al único main enfocable")
+    if (len(parser.action_groups) != 1 or parser.action_groups[0].get("role") != "group"
+            or parser.action_groups[0].get("aria-label") != "Acciones disponibles"):
+        raise SystemExit("Las acciones de la ficha deben tener un grupo con nombre accesible")
     for regla in (":focus-visible", "@media (max-width:", "prefers-reduced-motion:reduce", "aria-label="):
         if regla not in documento:
             raise SystemExit(f"Falta una salvaguarda estática de accesibilidad/adaptación: {regla}")
+
+    # Estructura responsive verificable sin fingir un viewport renderizado:
+    # tabla desplazable, acciones apiladas y enlaces táctiles con altura mínima.
+    if not re.search(r"\.tabla-wrap\s*\{[^}]*overflow-x\s*:\s*auto", documento):
+        raise SystemExit("La tabla debe conservarse navegable con desplazamiento horizontal en móvil")
+    if not re.search(r"\.boton\s*\{[^}]*min-height\s*:\s*2\.75rem", documento):
+        raise SystemExit("Los enlaces de acción deben tener un área táctil mínima de 2.75rem")
+    inicio_movil = documento.find("@media (max-width:38rem)")
+    acciones_apiladas = documento.find(".acciones { display:grid; }", inicio_movil)
+    siguiente_media = documento.find("@media", inicio_movil + 1) if inicio_movil >= 0 else -1
+    if (inicio_movil < 0 or acciones_apiladas < inicio_movil
+            or (siguiente_media >= 0 and acciones_apiladas > siguiente_media)):
+        raise SystemExit("Las acciones deben apilarse bajo el breakpoint móvil declarado")
 
     raiz = re.search(r":root\s*\{([^}]+)\}", documento)
     if not raiz:
@@ -128,6 +159,8 @@ def main() -> int:
             internos = []
             externos = []
             for href in parser.enlaces:
+                if href.startswith("#"):
+                    continue
                 url = urljoin(base, href)
                 partes = urlsplit(url)
                 if partes.scheme in {"http", "https"} and partes.netloc != urlsplit(base).netloc:

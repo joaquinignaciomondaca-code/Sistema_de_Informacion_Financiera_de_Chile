@@ -664,6 +664,7 @@ jobs:
           # Solo se probaban dentro de su propio publicador (o nunca, en el caso de macro): en un
           # PR no corrían, que es cuando todavía se puede corregir el cambio.
           macro.tests.test_series_bcch
+          macro.tests.test_build_tablas_tematicas
           seguros.tests.test_formato_1835
       - name: Fondos de inversión · XML original, cotejo, contextos y publicación
         run: python -m unittest discover -s fi/tests -v

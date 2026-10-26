@@ -46,7 +46,7 @@
         href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
         onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"></noscript>
-  <link rel="stylesheet" href="css/app.css?v=fl-20261025-0748-contraste-semantico-translucido-aa">
+  <link rel="stylesheet" href="css/app.css?v=fl-20261025-2128-estado-aria-panel-guardadas">
 
   <!-- Arranque temprano de los dos JSON que necesita el render (2 KB y 34 KB).
        Se piden aquí, mientras se parsea el <head>, en vez de esperar a que se
@@ -123,7 +123,7 @@
   <!-- Header Superior -->
   <header>
     <div class="brand">
-      <button class="sidebar-toggle-btn" id="toggle-sidebar" title="Ocultar / Mostrar barra lateral">
+      <button type="button" class="sidebar-toggle-btn" id="toggle-sidebar" title="Ocultar / Mostrar barra lateral">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path fill-rule="evenodd" d="M1 2.75A.75.75 0 011.75 2h12.5a.75.75 0 010 1.5H1.75A.75.75 0 011 2.75zm0 5A.75.75 0 011.75 7h12.5a.75.75 0 010 1.5H1.75A.75.75 0 011 7.75zm0 5a.75.75 0 011.75-1.5h12.5a.75.75 0 010 1.5H1.75a.75.75 0 01-.75-.75z"/></svg>
       </button>
       <!-- Logotipo SIF recortado al símbolo de nodos y las siglas (viewBox
@@ -142,7 +142,7 @@
     <div class="header-badges">
       <button type="button" class="badge" id="engine-badge" title="El motor SQL (DuckDB-Wasm) se carga al abrir Consultas o Datos">DuckDB-Wasm · bajo demanda</button>
       <div class="theme-dropdown-container" id="theme-dropdown-container">
-        <button type="button" class="theme-dropdown-btn" id="theme-dropdown-btn" aria-expanded="false" title="Seleccionar paleta de colores">
+        <button type="button" class="theme-dropdown-btn" id="theme-dropdown-btn" aria-label="Seleccionar paleta de colores" aria-controls="theme-dropdown-menu" aria-expanded="false" title="Seleccionar paleta de colores">
           <span class="theme-palette-icon">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/>
@@ -155,7 +155,7 @@
           <div class="theme-swatch-strip" id="theme-trigger-swatch"></div>
           <span class="theme-dropdown-arrow">▾</span>
         </button>
-        <div class="theme-dropdown-menu" id="theme-dropdown-menu"></div>
+        <div class="theme-dropdown-menu" id="theme-dropdown-menu" role="group" aria-label="Paletas de colores"></div>
       </div>
     </div>
   </header>
@@ -192,25 +192,25 @@
       <div class="top-panel">
         <div class="panel-header">
           <div class="panel-tabs" role="tablist" aria-label="Vistas del sistema" aria-orientation="horizontal">
-            <button role="tab" aria-selected="false" aria-controls="info-container" class="panel-tab-btn active" id="tab-btn-info" title="Información general: fuentes, cobertura y cómo usar el sistema">
+            <button type="button" role="tab" aria-selected="false" aria-controls="info-container" class="panel-tab-btn active" id="tab-btn-info" title="Información general: fuentes, cobertura y cómo usar el sistema">
               Información
             </button>
-            <button role="tab" aria-selected="false" aria-controls="erd-canvas" class="panel-tab-btn" id="tab-btn-erd" title="Mapa relacional: diagrama entidad-relación de tablas y llaves">
+            <button type="button" role="tab" aria-selected="false" aria-controls="erd-canvas" class="panel-tab-btn" id="tab-btn-erd" title="Mapa relacional: diagrama entidad-relación de tablas y llaves">
               Mapa
             </button>
-            <button role="tab" aria-selected="false" aria-controls="dict-container" class="panel-tab-btn" id="tab-btn-dict" title="Diccionario de datos: significado y criterio contable de cada columna">
+            <button type="button" role="tab" aria-selected="false" aria-controls="dict-container" class="panel-tab-btn" id="tab-btn-dict" title="Diccionario de datos: significado y criterio contable de cada columna">
               Diccionario
             </button>
-            <button role="tab" aria-selected="false" aria-controls="data-viewer-container" class="panel-tab-btn" id="tab-btn-data" title="Visor de datos: muestra hasta 500 filas; Descargas ofrece el conjunto completo">
+            <button type="button" role="tab" aria-selected="false" aria-controls="data-viewer-container" class="panel-tab-btn" id="tab-btn-data" title="Visor de datos: muestra hasta 500 filas; Descargas ofrece el conjunto completo">
               Visor
             </button>
-            <button role="tab" aria-selected="false" aria-controls="sql-container" class="panel-tab-btn" id="tab-btn-sql" title="Consultas SQL sobre las vistas publicadas, ejecutadas en tu navegador">
+            <button type="button" role="tab" aria-selected="false" aria-controls="sql-container" class="panel-tab-btn" id="tab-btn-sql" title="Consultas SQL sobre las vistas publicadas, ejecutadas en tu navegador">
               Consultas SQL
             </button>
-            <button role="tab" aria-selected="false" aria-controls="downloads-container" class="panel-tab-btn" id="tab-btn-downloads" title="Descargas: catálogo publicado con filas, peso y periodo; Parquet original, CSV o Excel">
+            <button type="button" role="tab" aria-selected="false" aria-controls="downloads-container" class="panel-tab-btn" id="tab-btn-downloads" title="Descargas: catálogo publicado con filas, peso y periodo; Parquet original, CSV o Excel">
               Descargas
             </button>
-            <button role="tab" aria-selected="false" aria-controls="guia-container" class="panel-tab-btn" id="tab-btn-guia" title="Guía: cómo usar los datos desde el navegador, con código y desde un agente de IA; manuales y archivos auditables">
+            <button type="button" role="tab" aria-selected="false" aria-controls="guia-container" class="panel-tab-btn" id="tab-btn-guia" title="Guía: cómo usar los datos desde el navegador, con código y desde un agente de IA; manuales y archivos auditables">
               Guía
             </button>
           </div>
@@ -224,24 +224,24 @@
              El archivo y los registros complementarios quedan plegados detrás de su botón. -->
         <div class="erd-controls-group" id="erd-controls-group" style="display: none;">
             <span class="erd-tier-label" title="Núcleo · inversión institucional">Núcleo</span>
-            <button class="filter-btn active" data-filter="seguros">Seguros</button>
-            <button class="filter-btn" data-filter="ffmm">FFMM</button>
-            <button class="filter-btn" data-filter="fi">FFII</button>
+            <button type="button" class="filter-btn active" data-filter="seguros">Seguros</button>
+            <button type="button" class="filter-btn" data-filter="ffmm">FFMM</button>
+            <button type="button" class="filter-btn" data-filter="fi">FFII</button>
             <span class="erd-tier-label" title="Instituciones y estados financieros">Instituciones</span>
-            <button class="filter-btn" data-filter="bancos">Bancos</button>
-            <button class="filter-btn" data-filter="agf">AGF</button>
-            <button class="filter-btn" data-filter="corredoras_bolsa">Corredoras</button>
+            <button type="button" class="filter-btn" data-filter="bancos">Bancos</button>
+            <button type="button" class="filter-btn" data-filter="agf">AGF</button>
+            <button type="button" class="filter-btn" data-filter="corredoras_bolsa">Corredoras</button>
             <span class="erd-tier-label" title="Contexto macroeconómico">Contexto</span>
-            <button class="filter-btn" data-filter="macro">Macro</button>
+            <button type="button" class="filter-btn" data-filter="macro">Macro</button>
             <span class="erd-tier-sep" aria-hidden="true"></span>
-            <button class="filter-btn" data-filter="todos" title="Núcleo, instituciones y contexto en un solo mapa">Vista principal</button>
+            <button type="button" class="filter-btn" data-filter="todos" title="Núcleo, instituciones y contexto en un solo mapa">Vista principal</button>
             <button type="button" class="filter-toggle-btn" id="erd-archive-toggle" aria-expanded="false" aria-controls="erd-archive-filters" title="Industrias fuera del foco de esta edición: siguen publicadas, consultables y descargables">Archivo y registros</button>
             <span class="erd-archive-filters" id="erd-archive-filters" hidden>
-              <button class="filter-btn filter-btn-fuera" data-filter="factoring_leasing">Factoring &amp; Leasing</button>
-              <button class="filter-btn filter-btn-fuera" data-filter="securitizacion" title="Securitizadoras y patrimonios separados">Securitización</button>
-              <button class="filter-btn filter-btn-fuera" data-filter="cajas_compensacion">Cajas de Compensación</button>
-              <button class="filter-btn filter-btn-fuera" data-filter="registro" title="AFP, cooperativas, sistemas de pago y fintech: sólo listas de entidades">Registro de entidades</button>
-              <button class="filter-btn filter-btn-fuera" data-filter="completo" title="Todas las industrias, archivo incluido">Mapa completo</button>
+              <button type="button" class="filter-btn filter-btn-fuera" data-filter="factoring_leasing">Factoring &amp; Leasing</button>
+              <button type="button" class="filter-btn filter-btn-fuera" data-filter="securitizacion" title="Securitizadoras y patrimonios separados">Securitización</button>
+              <button type="button" class="filter-btn filter-btn-fuera" data-filter="cajas_compensacion">Cajas de Compensación</button>
+              <button type="button" class="filter-btn filter-btn-fuera" data-filter="registro" title="AFP, cooperativas, sistemas de pago y fintech: sólo listas de entidades">Registro de entidades</button>
+              <button type="button" class="filter-btn filter-btn-fuera" data-filter="completo" title="Todas las industrias, archivo incluido">Mapa completo</button>
             </span>
             <span class="erd-scope-note" id="erd-scope-note" role="status" hidden></span>
         </div>
@@ -725,9 +725,9 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
 
       <!-- Controles de Zoom en Esquina Inferior Derecha (+ / -) -->
       <div class="zoom-controls">
-        <button class="zoom-btn" id="btn-zoom-in" title="Acercar (+)">+</button>
-        <button class="zoom-btn" id="btn-zoom-out" title="Alejar (-)">−</button>
-        <button class="zoom-btn" id="btn-zoom-reset" title="Restablecer Vista" style="font-size: 13px;">⟲</button>
+        <button type="button" class="zoom-btn" id="btn-zoom-in" title="Acercar (+)">+</button>
+        <button type="button" class="zoom-btn" id="btn-zoom-out" title="Alejar (-)">−</button>
+        <button type="button" class="zoom-btn" id="btn-zoom-reset" title="Restablecer Vista" style="font-size: 13px;">⟲</button>
       </div>
 
       <!-- Modal Flotante de Esquema / Columnas -->
@@ -747,7 +747,7 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
        navegador. Vive fuera de `.app-layout` a propósito: es `position: fixed`
        y ningún contenedor con `overflow: hidden` debe recortarla. El CSS la
        oculta también por encima de 900 px, así que en escritorio no existe. -->
-  <aside class="aviso-movil" id="aviso-movil" role="dialog" aria-modal="false"
+  <aside class="aviso-movil" id="aviso-movil"
          aria-labelledby="aviso-movil-titulo" aria-describedby="aviso-movil-texto" hidden>
     <div class="aviso-movil-cabecera">
       <strong id="aviso-movil-titulo">Este sitio está pensado para un computador.</strong>
@@ -764,28 +764,28 @@ SELECT (SELECT count(*) FROM crudo) AS filas,
        `python3 scripts/subir_etiqueta.py <motivo>` cuando cambia cualquier js/css:
        GitHub Pages cachea 10 minutos y, sin etiqueta nueva, quien ya entró sigue
        ejecutando el código viejo. `scripts/audit_interfaz.py` lo comprueba. -->
-  <script src="js/data_bundles.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/alcance.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/chart_renderer.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/erd_graph.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/sql_guard.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/duckdb_client.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/chat_terminal.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/busqueda_pregunta.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/sidebar.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/ux_shell.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/creditos.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/theme_switcher.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/estado_claves.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/data_dictionary.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/data_viewer.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/diccionario_seguros.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/download_utils.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/download_catalog.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/downloads_panel.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/portada.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/calidad_datos.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
-  <script src="js/como_usar.js?v=fl-20261025-0748-contraste-semantico-translucido-aa" defer></script>
+  <script src="js/data_bundles.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/alcance.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/chart_renderer.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/erd_graph.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/sql_guard.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/duckdb_client.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/chat_terminal.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/busqueda_pregunta.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/sidebar.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/ux_shell.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/creditos.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/theme_switcher.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/estado_claves.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/data_dictionary.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/data_viewer.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/diccionario_seguros.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/download_utils.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/download_catalog.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/downloads_panel.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/portada.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/calidad_datos.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
+  <script src="js/como_usar.js?v=fl-20261025-2128-estado-aria-panel-guardadas" defer></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
