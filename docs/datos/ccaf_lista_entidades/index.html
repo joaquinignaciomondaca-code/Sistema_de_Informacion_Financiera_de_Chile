@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,follow">
+  <meta name="description" content="Ficha piloto de Lista de entidades de Cajas de Compensación. Metadatos, procedencia, condiciones declaradas y acceso a los archivos publicados.">
+  <title>Lista de entidades de Cajas de Compensación · SIF Chile</title>
+  <style>
+    :root { color-scheme: light; --tinta:#17212b; --secundario:#4b5967; --fondo:#f4f6f8; --papel:#fff; --borde:#cbd3db; --enlace:#075a84; --aviso:#754700; --aviso-fondo:#fff4d6; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--fondo); color:var(--tinta); font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif; }
+    a { color:var(--enlace); text-underline-offset:.18em; }
+    a:focus-visible, summary:focus-visible { outline:3px solid #a44900; outline-offset:3px; border-radius:2px; }
+    .skip-link { position:fixed; inset-block-start:.75rem; inset-inline-start:.75rem; z-index:10; transform:translateY(calc(-100% - 1rem)); padding:.55rem .8rem; border:2px solid #a44900; background:var(--papel); color:var(--enlace); font-weight:650; }
+    .skip-link:focus { transform:translateY(0); }
+    .marco { width:min(100% - 2rem, 72rem); margin-inline:auto; }
+    header { padding:1.25rem 0; border-bottom:1px solid var(--borde); background:var(--papel); }
+    nav { font-size:.9rem; }
+    main { padding-block:2rem 4rem; }
+    .sobrelinea { margin:.2rem 0; color:var(--secundario); font-size:.95rem; }
+    h1 { margin:.3rem 0 .5rem; font-size:clamp(1.8rem,4vw,2.6rem); line-height:1.15; }
+    h2 { margin:2rem 0 .6rem; font-size:1.35rem; line-height:1.25; }
+    h3 { margin:1.25rem 0 .4rem; font-size:1.05rem; }
+    p { max-width:76ch; }
+    code { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; overflow-wrap:anywhere; }
+    .id { display:inline-block; padding:.15rem .45rem; background:#e8edf1; border-radius:.25rem; }
+    .resumen { display:grid; grid-template-columns:repeat(auto-fit,minmax(9rem,1fr)); gap:.7rem 1.5rem; margin:1.4rem 0; padding:1rem 0; border-block:1px solid var(--borde); }
+    .resumen div { min-width:0; }
+    dt { color:var(--secundario); font-size:.88rem; }
+    dd { margin:.1rem 0 0; font-weight:650; }
+    .acciones { display:flex; flex-wrap:wrap; gap:.65rem; margin:1.25rem 0; }
+    .boton { display:inline-block; min-height:2.75rem; padding:.6rem .9rem; border:1px solid var(--enlace); border-radius:.35rem; background:var(--enlace); color:#fff; font-weight:650; text-decoration:none; }
+    .boton.secundario { background:var(--papel); color:var(--enlace); }
+    .nota { padding:.85rem 1rem; border-left:4px solid #a46a00; background:var(--aviso-fondo); color:#3b2b12; }
+    .tabla-wrap { box-sizing:border-box; overflow-x:auto; border:1px solid var(--borde); background:var(--papel); padding:6px; }
+    table { width:100%; border-collapse:collapse; }
+    th,td { padding:.65rem .75rem; border-bottom:1px solid #dce2e7; text-align:left; vertical-align:top; }
+    thead th { background:#edf1f4; }
+    tbody th { font-weight:650; }
+    .estado { display:inline-block; padding:.1rem .4rem; border:1px solid #8b6a2c; border-radius:.25rem; font-size:.88rem; white-space:nowrap; }
+    details { margin-top:1.25rem; }
+    summary { cursor:pointer; font-weight:650; }
+    pre { max-width:100%; overflow:auto; padding:1rem; border:1px solid var(--borde); background:var(--papel); }
+    footer { padding:1.25rem 0 2rem; border-top:1px solid var(--borde); color:var(--secundario); font-size:.9rem; }
+    @media (max-width:38rem) { .marco { width:min(100% - 1.25rem,72rem); } main { padding-top:1.35rem; } th,td { padding:.55rem; } .acciones { display:grid; } .boton { text-align:center; } }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
+  <header>
+    <div class="marco"><nav aria-label="Navegación de la ficha"><a href="../../index.html">Volver al sitio SIF Chile</a> <span aria-hidden="true">›</span> Ficha piloto</nav></div>
+  </header>
+  <main class="marco" id="main-content" tabindex="-1">
+    <p class="sobrelinea">Cajas de Compensación · Ficha técnica piloto</p>
+    <h1>Lista de entidades de Cajas de Compensación</h1>
+    <p class="id">ID de API: <code>ccaf_lista_entidades</code></p>
+    <p>Cajas de compensación de asignación familiar, vigentes y absorbidas, con marco legal, regulador y registro CMF. Una caja nueva se agrega cuando reporta estados financieros IFRS a la CMF.</p>
+
+    <dl class="resumen">
+      <div><dt>Registros</dt><dd>6</dd></div>
+      <div><dt>Archivos Parquet</dt><dd>1</dd></div>
+      <div><dt>Tamaño publicado</dt><dd>17.300 bytes</dd></div>
+      <div><dt>Columnas</dt><dd>22</dd></div>
+      <div><dt>Cobertura</dt><dd>Lista vigente</dd></div>
+      <div><dt>Extracción declarada</dt><dd>2026-09-28</dd></div>
+      <div><dt>Versión API</dt><dd>2.3.0</dd></div>
+      <div><dt>Identificador de publicación</dt><dd><code>2026-10-25.fb9d60ca0bd3</code></dd></div>
+      <div><dt>Unidad</dt><dd>No aplica: catálogo</dd></div>
+      <div><dt>Clave primaria declarada</dt><dd><code>rut</code></dd></div>
+    </dl>
+
+    <div class="acciones" role="group" aria-label="Acciones disponibles">
+      <a class="boton" href="../../outputs/cajas_compensacion/ccaf_maestro.parquet" download>Descargar Parquet</a>
+      <a class="boton secundario" href="../../api/v2/schema/ccaf_lista_entidades.json">Ver esquema JSON</a>
+      <a class="boton secundario" href="../../api/v2/partitions/ccaf_lista_entidades.json">Ver rutas y hashes</a>
+      <a class="boton secundario" href="../../api/v2/datapackage.json">Abrir Data Package</a>
+    </div>
+    <p class="sobrelinea">La fuente declara esta frescura: Se actualiza sola 3 veces al mes (días 2, 12 y 22). Lista vigente al 2026-09-28; 6 cajas de compensación (vigentes y absorbidas)</p>
+
+    <h2>Fuente y procedencia</h2>
+    <p><strong>Atribución del contrato:</strong> CMF. Fuente: Comisión para el Mercado Financiero (CMF). Reproducción autorizada citando la fuente. <a href="https://www.cmfchile.cl/portal/principal/623/w4-article-1833.html" target="_blank" rel="noopener noreferrer">Ver condiciones CMF</a>.</p>
+    <h3>Entrada directa actual</h3>
+    <div class="tabla-wrap"><table><thead><tr><th scope="col">Institución</th><th scope="col">Recurso</th><th scope="col">Alcance declarado</th></tr></thead><tbody><tr><th scope="row">CMF</th><td>TXT IFRS trimestral de estados financieros</td><td>Uso exclusivo: detección e incorporación automática de nuevas CCAF; no reemplaza ni vuelve a descargar la lista base.</td></tr></tbody></table></div>
+    <h3>Procedencia editorial del universo inicial</h3>
+    <div class="tabla-wrap"><table><thead><tr><th scope="col">Institución</th><th scope="col">Recurso de origen</th></tr></thead><tbody><tr><th scope="row">SUSESO</th><td>Lista original de Cajas de Compensación</td></tr>
+<tr><th scope="row">CMF</th><td>Registro de Valores</td></tr></tbody></table></div>
+    <p>La lista base está curada en ccaf/scripts/build_ccaf_maestro.py; las altas posteriores se incorporan automáticamente desde el TXT IFRS de la CMF.</p>
+
+    <h3>Condiciones de reutilización documentadas</h3>
+    <div class="tabla-wrap"><table><thead><tr><th scope="col">Fuente</th><th scope="col">Estado</th><th scope="col">Alcance</th></tr></thead><tbody><tr><th scope="row">CMF</th><td><span class="estado">Verificada</span></td><td>Condiciones de cita verificadas para la información CMF y las altas detectadas desde su TXT IFRS.</td></tr>
+<tr><th scope="row">SUSESO</th><td><span class="estado">Pendiente de verificación</span></td><td>Aporta procedencia histórica/editorial del universo inicial; no se localizó ni revisó un documento oficial de condiciones aplicable en esta auditoría.</td></tr></tbody></table></div>
+    <p class="nota"><strong>Pendiente:</strong> las condiciones de reutilización aplicables a la procedencia histórica SUSESO no se verificaron. La atribución CMF no resuelve ese punto; no se concluye aquí autorización ni prohibición.</p>
+
+    <h2>Esquema y consulta</h2>
+    <p>La tabla contiene 22 columnas; el esquema JSON enlazado arriba es la definición completa. La consulta se ejecuta en el navegador con el motor del sitio, no mediante SQL remoto.</p>
+    <pre><code>SELECT rut_completo, razon_social, estado_vigencia FROM ccaf_lista_entidades ORDER BY razon_social;</code></pre>
+    <p><a href="../../index.html#sql=SELECT%20rut_completo%2C%20razon_social%2C%20estado_vigencia%20FROM%20ccaf_lista_entidades%20ORDER%20BY%20razon_social%3B">Abrir esta consulta en el explorador; se ejecutará en tu navegador</a>.</p>
+    <details>
+      <summary>Ver las 22 columnas y sus definiciones</summary>
+      <div class="tabla-wrap"><table><thead><tr><th scope="col">Columna</th><th scope="col">Tipo</th><th scope="col">Significado</th></tr></thead><tbody><tr><th scope="row"><code>rut</code></th><td><code>BIGINT</code></td><td>Rol Único Tributario numérico de la Caja de Compensación.</td></tr>
+<tr><th scope="row"><code>dv</code></th><td><code>VARCHAR</code></td><td>Dígito verificador del RUT según algoritmo Módulo 11.</td></tr>
+<tr><th scope="row"><code>rut_completo</code></th><td><code>VARCHAR</code></td><td>RUT formateado con separadores de miles y guion (ej: 81.826.800-9).</td></tr>
+<tr><th scope="row"><code>razon_social</code></th><td><code>VARCHAR</code></td><td>Nombre legal formal de la Corporación de Derecho Privado.</td></tr>
+<tr><th scope="row"><code>nombre_fantasia</code></th><td><code>VARCHAR</code></td><td>Nombre comercial o de fantasía (Los Andes, La Araucana, Los Héroes, Caja 18).</td></tr>
+<tr><th scope="row"><code>tipo_entidad</code></th><td><code>VARCHAR</code></td><td>Clasificación institucional: Caja de Compensación de Asignación Familiar.</td></tr>
+<tr><th scope="row"><code>marco_legal</code></th><td><code>VARCHAR</code></td><td>Normativa habilitante: Ley N° 18.833 (Estatuto General de CCAF).</td></tr>
+<tr><th scope="row"><code>naturaleza_juridica</code></th><td><code>VARCHAR</code></td><td>Corporación de Derecho Privado sin fines de lucro.</td></tr>
+<tr><th scope="row"><code>regulador_primario</code></th><td><code>VARCHAR</code></td><td>Organismo supervisor técnico principal: SUSESO.</td></tr>
+<tr><th scope="row"><code>regulador_mercado_valores</code></th><td><code>VARCHAR</code></td><td>Supervisión de oferta pública de valores: &#x27;CMF (Emisor de Bonos)&#x27; o &#x27;No Aplica (Supervisión Exclusiva SUSESO)&#x27;.</td></tr>
+<tr><th scope="row"><code>emisor_valores_cmf</code></th><td><code>BOOLEAN</code></td><td>Indica si la Caja está registrada como Emisor de Valores (RVEMI) en la CMF.</td></tr>
+<tr><th scope="row"><code>codigo_cmf</code></th><td><code>VARCHAR</code></td><td>Código institucional en la base de datos de la CMF.</td></tr>
+<tr><th scope="row"><code>estado_vigencia</code></th><td><code>VARCHAR</code></td><td>Condición operativa: &#x27;Vigente&#x27; (4 entidades) o &#x27;Absorbida&#x27; (2 entidades históricas).</td></tr>
+<tr><th scope="row"><code>ano_fundacion</code></th><td><code>BIGINT</code></td><td>Año de inicio de actividades institucionales.</td></tr>
+<tr><th scope="row"><code>domicilio_casa_matriz</code></th><td><code>VARCHAR</code></td><td>Dirección de la sede central corporativa.</td></tr>
+<tr><th scope="row"><code>comuna</code></th><td><code>VARCHAR</code></td><td>Comuna de la sede central.</td></tr>
+<tr><th scope="row"><code>region</code></th><td><code>VARCHAR</code></td><td>Región administrativa chilena.</td></tr>
+<tr><th scope="row"><code>sitio_web</code></th><td><code>VARCHAR</code></td><td>Portal institucional oficial en internet.</td></tr>
+<tr><th scope="row"><code>cmf_url</code></th><td><code>VARCHAR</code></td><td>Enlace directo al expediente del emisor en el portal de la CMF.</td></tr>
+<tr><th scope="row"><code>suseso_url</code></th><td><code>VARCHAR</code></td><td>Enlace oficial a la sección de estados financieros de la SUSESO.</td></tr>
+<tr><th scope="row"><code>lineas_deuda_registradas</code></th><td><code>BOOLEAN</code></td><td>Indica si posee líneas de bonos corporativos vigentes o registradas en la CMF.</td></tr>
+<tr><th scope="row"><code>observaciones</code></th><td><code>VARCHAR</code></td><td>Notas regulatorias, prestaciones sociales y alcance institucional.</td></tr></tbody></table></div>
+    </details>
+
+    <h2>Integridad de la descarga</h2>
+    <p>SHA-256 de la partición publicada:</p>
+    <pre><code>284a7804435a250ae5bbab2185309f17db931aaafe10b5537052b3d406676039</code></pre>
+    <p>El hash verifica estos bytes y el identificador de publicación sitúa el contrato; ninguno promete que exista un archivo histórico recuperable.</p>
+  </main>
+  <footer><div class="marco">Ficha piloto no indexable. La licencia MIT cubre el código, no los datos de terceros; consulta las condiciones por fuente antes de reutilizar.</div></footer>
+</body>
+</html>

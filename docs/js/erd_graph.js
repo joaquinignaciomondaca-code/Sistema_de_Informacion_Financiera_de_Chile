@@ -2674,25 +2674,37 @@ class ERDGraph {
     if (!modal) return;
     document.getElementById("modal-table-name").textContent = node.name;
     const list = document.getElementById("modal-columns-list");
-    list.innerHTML = "";
+    list.replaceChildren();
     node.cols.forEach((col) => {
       const li = document.createElement("li");
-      li.innerHTML = `<span class="schema-col-name">${col.name}${col.pk ? " (PK)" : col.fk ? " (FK)" : ""}</span><span class="schema-col-type">${col.type}</span>`;
+      const nombre = document.createElement("span");
+      nombre.className = "schema-col-name";
+      nombre.textContent = `${String(col.name)}${col.pk ? " (PK)" : col.fk ? " (FK)" : ""}`;
+      const tipo = document.createElement("span");
+      tipo.className = "schema-col-type";
+      tipo.textContent = String(col.type);
+      li.append(nombre, tipo);
       list.appendChild(li);
     });
 
-    // Botón de acción rápida para abrir en el Visor de Datos
+    // La metadata del grafo no debe convertirse en marcado ni código ejecutable.
+    // Recrear el botón también evita acumular listeners al abrir distintos nodos.
     let actionContainer = modal.querySelector(".schema-modal-actions");
     if (!actionContainer) {
       actionContainer = document.createElement("div");
       actionContainer.className = "schema-modal-actions";
       modal.appendChild(actionContainer);
     }
-    actionContainer.innerHTML = `
-      <button class="schema-open-btn" onclick="if(window.switchMainTab) window.switchMainTab('data'); if(window.DataViewer) window.DataViewer.loadTable('${node.id}', '${node.name}'); if(window.cerrarEsquema) window.cerrarEsquema();">
-        Explorar datos de esta tabla &rarr;
-      </button>
-    `;
+    const abrirDatos = document.createElement("button");
+    abrirDatos.type = "button";
+    abrirDatos.className = "schema-open-btn";
+    abrirDatos.textContent = "Explorar datos de esta tabla →";
+    abrirDatos.addEventListener("click", () => {
+      if (window.switchMainTab) window.switchMainTab("data");
+      if (window.DataViewer) window.DataViewer.loadTable(node.id, node.name);
+      if (window.cerrarEsquema) window.cerrarEsquema();
+    });
+    actionContainer.replaceChildren(abrirDatos);
 
     // El esquema es un diálogo: se recuerda dónde estaba el foco para devolverlo
     // al cerrar y se entra en el propio diálogo (el botón de cerrar).

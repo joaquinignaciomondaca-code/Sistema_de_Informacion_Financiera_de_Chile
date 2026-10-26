@@ -374,7 +374,7 @@ class DownloadsPanelController {
       ? `<a class="dl-btn dl-btn-primary" data-action="parquet" data-id="${item.id}" href="${item.archivos[0].ruta}" download="${item.id}.parquet">
            Parquet · ${window.MFCDownload.bytes(item.bytes)}
          </a>`
-      : `<button class="dl-btn dl-btn-primary" data-action="files" data-id="${item.id}" aria-expanded="${this.abiertos.has(item.id) ? "true" : "false"}">
+      : `<button type="button" class="dl-btn dl-btn-primary" data-action="files" data-id="${item.id}" aria-expanded="${this.abiertos.has(item.id) ? "true" : "false"}">
            Archivos · ${window.MFCDownload.bytes(item.bytes)}
          </button>`;
 
@@ -395,9 +395,9 @@ class DownloadsPanelController {
         <div class="dl-item-actions">
           ${this.selectorFrecuencia(item)}
           ${botonParquet}
-          <button class="dl-btn dl-btn-motor" data-action="csv" data-id="${item.id}" title="Genera el CSV completo con el motor DuckDB del navegador">CSV</button>
-          <button class="dl-btn dl-btn-motor" data-action="xlsx" data-id="${item.id}" title="Genera un Excel (.xlsx) con el motor DuckDB del navegador">Excel</button>
-          <button class="dl-btn dl-btn-ghost" data-action="sql" data-id="${item.id}" title="Abrir esta tabla en Consultas SQL">SQL</button>
+          <button type="button" class="dl-btn dl-btn-motor" data-action="csv" data-id="${item.id}" title="Genera el CSV completo con el motor DuckDB del navegador">CSV</button>
+          <button type="button" class="dl-btn dl-btn-motor" data-action="xlsx" data-id="${item.id}" title="Genera un Excel (.xlsx) con el motor DuckDB del navegador">Excel</button>
+          <button type="button" class="dl-btn dl-btn-ghost" data-action="sql" data-id="${item.id}" title="Abrir esta tabla en Consultas SQL">SQL</button>
         </div>
         <div class="dl-files" data-files="${item.id}" ${this.abiertos.has(item.id) ? "" : "hidden"}>
           ${this.listaArchivos(item)}
@@ -463,10 +463,10 @@ class DownloadsPanelController {
           ${avisoFuera ? `<span class="dl-context-aviso">${this.escapar(avisoFuera)}</span>` : ""}
         </div>
         <div class="dl-context-actions">
-          <button class="dl-btn dl-btn-primary" data-action="pantalla" data-fmt="csv">Descargar pantalla · CSV</button>
-          <button class="dl-btn" data-action="pantalla" data-fmt="xlsx">Excel</button>
+          <button type="button" class="dl-btn dl-btn-primary" data-action="pantalla" data-fmt="csv">Descargar pantalla · CSV</button>
+          <button type="button" class="dl-btn" data-action="pantalla" data-fmt="xlsx">Excel</button>
           ${parquet}
-          ${item ? `<button class="dl-btn dl-btn-ghost" data-action="csv" data-id="${item.id}">Serie completa · CSV</button>` : ""}
+          ${item ? `<button type="button" class="dl-btn dl-btn-ghost" data-action="csv" data-id="${item.id}">Serie completa · CSV</button>` : ""}
         </div>
       </div>
     `;

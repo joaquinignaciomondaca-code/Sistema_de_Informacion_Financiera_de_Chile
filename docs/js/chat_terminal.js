@@ -220,7 +220,7 @@ class ChatTerminalController {
       modal.innerHTML = `
         <div class="saved-modal-header">
           <span>CONSULTAS GUARDADAS</span>
-          <button id="close-fav-modal" style="background:transparent; border:none; color:#8b949e; cursor:pointer; font-size:14px;">&times;</button>
+          <button type="button" id="close-fav-modal" aria-label="Cerrar consultas guardadas" style="background:transparent; border:none; color:#8b949e; cursor:pointer; font-size:14px;"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"></path></svg></button>
         </div>
         <ul class="saved-list" id="saved-queries-list"></ul>
       `;
@@ -230,8 +230,21 @@ class ChatTerminalController {
 
       const closeBtn = modal.querySelector("#close-fav-modal");
       if (closeBtn) {
-        closeBtn.addEventListener("click", () => modal.classList.remove("visible"));
+        closeBtn.addEventListener("click", () => {
+          modal.classList.remove("visible");
+          const triggerBtn = document.getElementById("btn-show-favorites");
+          if (triggerBtn) {
+            triggerBtn.setAttribute("aria-expanded", "false");
+            triggerBtn.focus();
+          }
+        });
       }
+    }
+
+    const triggerBtn = document.getElementById("btn-show-favorites");
+    if (triggerBtn) {
+      triggerBtn.setAttribute("aria-controls", modal.id);
+      triggerBtn.setAttribute("aria-expanded", modal.classList.contains("visible") ? "true" : "false");
     }
   }
 
@@ -239,6 +252,8 @@ class ChatTerminalController {
     const modal = document.getElementById("saved-queries-modal");
     if (!modal) return;
     const isVis = modal.classList.toggle("visible");
+    const triggerBtn = document.getElementById("btn-show-favorites");
+    if (triggerBtn) triggerBtn.setAttribute("aria-expanded", isVis ? "true" : "false");
     if (isVis) {
       this.renderFavoritesList();
     }
@@ -266,7 +281,7 @@ class ChatTerminalController {
       <li class="saved-item" data-index="${idx}">
         <div style="display: flex; justify-content: space-between; align-items: center;">
           <span class="saved-item-title">${this.escapeHtml(q.title)}</span>
-          <button class="delete-fav-btn" data-index="${idx}" style="background:transparent; border:none; color:#696E79; cursor:pointer; font-size: 12px;" title="Eliminar">&times;</button>
+          <button type="button" class="delete-fav-btn" data-index="${idx}" style="background:transparent; border:none; color:#696E79; cursor:pointer; font-size: 12px;" title="Eliminar">&times;</button>
         </div>
         <span class="saved-item-sql">${this.escapeHtml(q.sql)}</span>
       </li>
@@ -280,6 +295,8 @@ class ChatTerminalController {
         if (q) {
           this.input.value = q.sql;
           document.getElementById("saved-queries-modal").classList.remove("visible");
+          const triggerBtn = document.getElementById("btn-show-favorites");
+          if (triggerBtn) triggerBtn.setAttribute("aria-expanded", "false");
           this.handleSend();
         }
       });
@@ -438,20 +455,24 @@ class ChatTerminalController {
       }).join("");
       return `<tr>${cells}</tr>`;
     }).join("");
+    const emptyState = result.rows.length === 0
+      ? '<div class="query-empty-state" role="status">La consulta se ejecutó correctamente, pero no devolvió filas.</div>'
+      : "";
 
     const content = `
       <div class="query-meta">
         <span><b>${result.elapsedMs} ms</b> | ${result.count.toLocaleString()} fila(s)</span>
         <div class="actions">
           <div class="view-switch" id="switch_${queryId}">
-            <button class="view-btn active" onclick="window.ChatTerminal.switchView('${queryId}', 'table')">Tabla</button>
-            <button class="view-btn" onclick="window.ChatTerminal.switchView('${queryId}', 'chart')">Gráfico</button>
+            <button type="button" class="view-btn active" onclick="window.ChatTerminal.switchView('${queryId}', 'table')">Tabla</button>
+            <button type="button" class="view-btn" onclick="window.ChatTerminal.switchView('${queryId}', 'chart')">Gráfico</button>
           </div>
-          <button class="action-btn" onclick="window.ChatTerminal.exportCSV('${tableWrapperId}')">Exportar CSV</button>
-          <button class="action-btn" onclick="window.ChatTerminal.saveQuery('${queryId}')">Guardar</button>
-          <button class="action-btn" data-sql="${this.escapeHtml(query)}" onclick="navigator.clipboard.writeText(this.dataset.sql)">Copiar SQL</button>
+          <button type="button" class="action-btn" onclick="window.ChatTerminal.exportCSV('${tableWrapperId}')">Exportar CSV</button>
+          <button type="button" class="action-btn" onclick="window.ChatTerminal.saveQuery('${queryId}')">Guardar</button>
+          <button type="button" class="action-btn" data-sql="${this.escapeHtml(query)}" onclick="navigator.clipboard.writeText(this.dataset.sql)">Copiar SQL</button>
         </div>
       </div>
+      ${emptyState}
       <div class="table-wrapper" id="${tableWrapperId}">
         <table class="results-table">
           <thead><tr>${headersHtml}</tr></thead>

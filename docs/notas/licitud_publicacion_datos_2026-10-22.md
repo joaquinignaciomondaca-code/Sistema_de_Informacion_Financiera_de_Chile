@@ -4,6 +4,15 @@
 > `docs/api/v2/`. Esta nota se escribió cuando la ruta era `api/v1/`: las rutas de
 > archivo y de URL se actualizaron para que los comandos sigan funcionando, y las
 > referencias a «v1» como nombre de la fase se conservan como se escribieron.
+>
+> **Corrección posterior (2026-10-25):** la conclusión de §1 y §2.4 «SUSESO: 0 objetos,
+> 0 filas» quedó supersedida por la auditoría de procedencia CCAF. `ccaf_lista_entidades`
+> conserva el antecedente editorial de que su universo inicial se armó con la lista
+> SUSESO y el Registro de Valores CMF; las altas actuales se incorporan desde TXT IFRS
+> CMF. Las condiciones oficiales SUSESO aplicables a ese listado siguen
+> `pendiente_verificacion`: esta corrección no afirma autorización ni incompatibilidad.
+> Ver [`auditoria_fuentes_cifras_rediseno_2026-10-24.md`](auditoria_fuentes_cifras_rediseno_2026-10-24.md)
+> y [`checklist_rediseno_sif_2026-10-24.md`](checklist_rediseno_sif_2026-10-24.md).
 
 **Revisión de condiciones de uso de las fuentes y de la Ley 21.719 sobre los datos ya publicados**
 

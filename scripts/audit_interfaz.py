@@ -26,6 +26,7 @@ import os
 import re
 import subprocess
 import sys
+from html.parser import HTMLParser
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DOCS = os.path.join(ROOT, "docs")
@@ -245,7 +246,7 @@ def audit_terminal(html):
     required = [
         "chat-messages", "chat-input", "send-btn", "btn-clear-terminal",
         "btn-show-favorites", "btn-share-query", "sql-engine-dot", "sql-engine-alert",
-        "btn-engine-retry", "btn-engine-copy", "sql-engine-env", "quick-chips",
+        "btn-engine-retry", "btn-engine-copy", "btn-engine-downloads", "sql-engine-env", "quick-chips",
     ]
     missing = [rid for rid in required if f'id="{rid}"' not in html and f'class="{rid}"' not in html]
     if missing:
@@ -311,8 +312,228 @@ def audit_ux_layer():
         print("  [OK] index.html carga ux_shell.js")
 
 
+def audit_palette_focus_contrast(css):
+    """Comprueba que el anillo de foco destaque sobre las superficies comunes.
+
+    Es un guardián estático conservador de tokens (umbral 3:1 de contraste no
+    textual), no mide opacidad compuesta, estados renderizados ni la percepción
+    en un navegador real.
+    """
+    print("\n--- 4c. Contraste del anillo de foco (seis paletas) ---")
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    nombres = ["dark-ide", "swissborg", "bloomberg", "nord", "midnight", "informe"]
+    superficies = ("--bg-primary", "--bg-secondary", "--bg-tertiary", "--bg-sidebar", "--panel-elevated")
+    indicadores = ("--accent-mint", "--border-focus")
+    bloques = {}
+    for nombre in nombres:
+        patron = (r':root\s*,\s*\[data-theme="dark-ide"\]\s*\{([^}]*)\}' if nombre == "dark-ide"
+                  else rf'\[data-theme="{re.escape(nombre)}"\]\s*\{{([^}}]*)\}}')
+        encontrado = re.search(patron, css, flags=re.S)
+        if not encontrado:
+            fail(f"falta el bloque de paleta {nombre} para el anillo de foco")
+            continue
+        bloques[nombre] = dict(re.findall(r"(--[\w-]+)\s*:\s*([^;]+);", encontrado.group(1)))
+
+    def rgb(valor, paleta):
+        valor = valor.strip()
+        if valor.startswith("rgb(var("):
+            variable = re.fullmatch(r"rgb\(var\((--[\w-]+)\)\)", valor)
+            if not variable or variable.group(1) not in paleta:
+                return None
+            componentes = paleta[variable.group(1)].split(",")
+            if len(componentes) != 3:
+                return None
+            try:
+                return tuple(int(c.strip()) / 255 for c in componentes)
+            except ValueError:
+                return None
+        if not re.fullmatch(r"#[0-9a-fA-F]{6}", valor):
+            return None
+        return tuple(int(valor[i:i + 2], 16) / 255 for i in (1, 3, 5))
+
+    def luminancia(color):
+        lineal = [x / 12.92 if x <= 0.04045 else ((x + 0.055) / 1.055) ** 2.4 for x in color]
+        return 0.2126 * lineal[0] + 0.7152 * lineal[1] + 0.0722 * lineal[2]
+
+    for nombre in nombres:
+        paleta = bloques.get(nombre)
+        if not paleta:
+            continue
+        pares = []
+        for token in indicadores:
+            frente = rgb(paleta.get(token, ""), paleta)
+            if frente is None:
+                fail(f"{nombre}: {token} no es un color medible para el anillo de foco")
+                continue
+            for superficie in superficies:
+                fondo = rgb(paleta.get(superficie, ""), paleta)
+                if fondo is None:
+                    fail(f"{nombre}: {superficie} no es un color medible detrás del foco")
+                    continue
+                l1, l2 = luminancia(frente), luminancia(fondo)
+                contraste = (max(l1, l2) + 0.05) / (min(l1, l2) + 0.05)
+                pares.append((contraste, token, superficie))
+                if contraste < 3.0:
+                    fail(f"{nombre}: {token} sobre {superficie} mide {contraste:.2f}:1 (mínimo 3:1 para foco)")
+        if pares:
+            minimo = min(pares)
+            print(f"  [OK] {nombre}: mínimo {minimo[0]:.2f}:1 ({minimo[1]} sobre {minimo[2]})")
+
+
+def audit_button_types(html):
+    """Protege botones estáticos y las plantillas dinámicas que los generan."""
+    class ButtonParser(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.types = []
+
+        def handle_starttag(self, tag, attrs):
+            if tag.lower() == "button":
+                self.types.append(dict(attrs).get("type"))
+
+    parser = ButtonParser()
+    parser.feed(html)
+    tipos = list(parser.types)
+    estaticos = len(parser.types)
+    dinamicos = 0
+    creaciones = 0
+    creaciones_invalidas = []
+    carpeta = os.path.join(DOCS, "js")
+    for directorio, _, nombres in os.walk(carpeta):
+        for nombre in sorted(nombres):
+            if not nombre.endswith(".js"):
+                continue
+            ruta = os.path.join(directorio, nombre)
+            with open(ruta, encoding="utf-8") as archivo:
+                fuente = archivo.read()
+            fragmentos = ButtonParser()
+            fragmentos.feed(fuente)
+            tipos.extend(fragmentos.types)
+            dinamicos += len(fragmentos.types)
+            for match in re.finditer(
+                    r"\b(?:const|let|var)\s+(\w+)\s*=\s*document\.createElement\(\s*[\"']button[\"']\s*\)",
+                    fuente):
+                creaciones += 1
+                nombre_boton = re.escape(match.group(1))
+                inicializacion = fuente[match.end():match.end() + 600]
+                tiene_type = (
+                    re.search(rf"\b{nombre_boton}\.type\s*=\s*[\"'](?:button|submit|reset)[\"']", inicializacion)
+                    or re.search(rf"\b{nombre_boton}\.setAttribute\(\s*[\"']type[\"']\s*,\s*[\"'](?:button|submit|reset)[\"']", inicializacion)
+                )
+                if not tiene_type:
+                    creaciones_invalidas.append(f"{os.path.relpath(ruta, ROOT)}:{fuente.count(chr(10), 0, match.start()) + 1}")
+    faltantes = sum(tipo is None for tipo in tipos)
+    invalidos = sum(tipo is not None and tipo.lower() not in {"button", "submit", "reset"}
+                    for tipo in tipos)
+    if faltantes or invalidos or creaciones_invalidas:
+        fail(f"botones sin type explícito: {faltantes}; tipos no estándar: {invalidos}; "
+             f"createElement sin type: {len(creaciones_invalidas)} ({', '.join(creaciones_invalidas)})")
+    else:
+        print(f"  [OK] {estaticos} botones estáticos, {dinamicos} en plantillas JS y "
+              f"{creaciones} con createElement tienen type válido")
+
+
+def audit_skip_links():
+    """Las páginas publicadas permiten omitir navegación repetida por teclado."""
+    class PageParser(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.links = []
+            self.mains = []
+
+        def handle_starttag(self, tag, attrs):
+            atributos = dict(attrs)
+            if tag.lower() == "a":
+                self.links.append((atributos.get("href"), atributos.get("class", "")))
+            elif tag.lower() == "main":
+                self.mains.append(atributos)
+
+    paginas = (
+        "docs/index.html",
+        "docs/privacidad.html",
+        "docs/datos/ccaf_lista_entidades/index.html",
+    )
+    css_compartido = read("docs/css/app.css")
+    errores_antes = len(errors)
+    for ruta in paginas:
+        contenido = read(ruta)
+        parser = PageParser()
+        parser.feed(contenido)
+        saltos = [(href, clases) for href, clases in parser.links
+                  if "skip-link" in clases.split()]
+        if (saltos != [("#main-content", "skip-link")] or not parser.links
+                or parser.links[0] != ("#main-content", "skip-link")):
+            fail(f"{ruta}: falta el enlace de salto como primer enlace del documento")
+            continue
+        if (len(parser.mains) != 1 or parser.mains[0].get("id") != "main-content"
+                or parser.mains[0].get("tabindex") != "-1"):
+            fail(f"{ruta}: el enlace de salto no llega al único <main> enfocable")
+            continue
+        estilos = contenido if ruta == paginas[-1] else css_compartido
+        if ".skip-link:focus" not in estilos:
+            fail(f"{ruta}: el enlace de salto no tiene estado visible al recibir foco")
+            continue
+    if len(errors) == errores_antes:
+        print("  [OK] las 3 páginas ponen primero el enlace de salto al único <main> enfocable")
+
+
+def audit_details():
+    """Cada divulgación nativa debe empezar con su resumen, como exige HTML."""
+    class DetailsParser(HTMLParser):
+        void = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+
+        def __init__(self):
+            super().__init__()
+            self.stack = []
+            self.widgets = []
+
+        def handle_starttag(self, tag, attrs):
+            if tag == "details":
+                self.widgets.append({"line": self.getpos()[0], "children": [], "summary_text": ""})
+                self.stack.append((tag, len(self.widgets) - 1))
+                return
+            if self.stack and self.stack[-1][0] == "details":
+                self.widgets[self.stack[-1][1]]["children"].append(tag)
+                if tag == "summary":
+                    self.stack.append((tag, self.stack[-1][1]))
+                    return
+            if tag not in self.void:
+                self.stack.append((tag, None))
+
+        def handle_data(self, data):
+            for tag, index in reversed(self.stack):
+                if tag == "summary" and index is not None:
+                    self.widgets[index]["summary_text"] += data
+                    return
+
+        def handle_endtag(self, tag):
+            for index in range(len(self.stack) - 1, -1, -1):
+                if self.stack[index][0] == tag:
+                    self.stack = self.stack[:index]
+                    return
+
+    errores_antes = len(errors)
+    archivos = ("docs/index.html", "docs/privacidad.html", "docs/datos/ccaf_lista_entidades/index.html")
+    cantidad = 0
+    for archivo in archivos:
+        parser = DetailsParser()
+        parser.feed(read(archivo))
+        cantidad += len(parser.widgets)
+        for widget in parser.widgets:
+            children = widget["children"]
+            if not children or children[0] != "summary" or children.count("summary") != 1:
+                fail(f"{archivo}:{widget['line']}: cada <details> debe tener un único <summary> como primer hijo")
+            if not " ".join(widget["summary_text"].split()):
+                fail(f"{archivo}:{widget['line']}: el <summary> de <details> no tiene nombre visible")
+    if len(errors) == errores_antes:
+        print(f"  [OK] {cantidad} divulgaciones nativas tienen un <summary> único, primero y con texto")
+
+
 def audit_accesibilidad(html, css):
     print("\n--- 10. Teclado y movimiento: salto, foco y prefers-reduced-motion ---")
+    audit_button_types(html)
+    audit_skip_links()
+    audit_details()
     if 'class="skip-link"' in html and 'href="#main-content"' in html:
         print("  [OK] enlace «Saltar al contenido principal»")
     else:
@@ -334,6 +555,14 @@ def audit_accesibilidad(html, css):
         print("  [OK] prefers-reduced-motion respetado")
     else:
         fail("app.css no respeta prefers-reduced-motion")
+    tablist = re.search(r'<div class="panel-tabs"[^>]*role="tablist"[^>]*>', html)
+    if (tablist and 'aria-orientation="horizontal"' in tablist.group(0)
+            and 'panelTablist.addEventListener("keydown"' in html
+            and all(tecla in html for tecla in ('"ArrowRight"', '"ArrowLeft"', '"Home"', '"End"'))
+            and 'btn.tabIndex = isActive ? 0 : -1;' in html):
+        print("  [OK] pestañas principales: orientación horizontal, flechas/Home/End y roving tabindex")
+    else:
+        fail("las pestañas principales no tienen navegación de teclado horizontal completa")
     if re.search(r"transition:\s*all\b", css):
         fail("app.css usa transition: all; hay que declarar qué propiedades cambian")
     else:
@@ -384,7 +613,213 @@ def audit_theme_tokens():
     print("  [OK] Los seis semánticos están definidos en las seis paletas")
 
 
+def audit_palette_text_contrast():
+    """Contraste AA para texto normal, acentos y tintes translúcidos conocidos.
+
+    Se comprueban los tokens de texto normal, acento y semántica contra superficies
+    comunes, y sus composiciones translúcidas conocidas de estado/insignia sobre
+    esas superficies. Es una auditoría estática acotada: no equivale a revisar
+    cada selector, renderizado o lector de pantalla.
+    """
+    print("\n--- 4b. Contraste de texto y enlaces de las seis paletas (WCAG AA) ---")
+    css = re.sub(r"/\*.*?\*/", "", read("docs/css/app.css"), flags=re.S)
+    nombres = ["dark-ide", "swissborg", "bloomberg", "nord", "midnight", "informe"]
+    bloques = {}
+    for nombre in nombres:
+        if nombre == "dark-ide":
+            patron = r':root\s*,\s*\[data-theme="dark-ide"\]\s*\{([^}]*)\}'
+        else:
+            patron = rf'\[data-theme="{re.escape(nombre)}"\]\s*\{{([^}}]*)\}}'
+        encontrado = re.search(patron, css, flags=re.S)
+        if not encontrado:
+            fail(f"falta el bloque de paleta {nombre}")
+            continue
+        bloques[nombre] = dict(re.findall(r"(--[\w-]+)\s*:\s*([^;]+);", encontrado.group(1)))
+
+    def rgb(valor, paleta, profundidad=0):
+        """Resuelve colores hex, var(--token) y rgb(var(--token)) de cada tema."""
+        if profundidad > 5:
+            return None
+        valor = valor.strip()
+        alias = re.fullmatch(r"var\((--[\w-]+)\)", valor)
+        if alias:
+            return rgb(paleta.get(alias.group(1), ""), paleta, profundidad + 1)
+        rgb_variable = re.fullmatch(r"rgb\(var\((--[\w-]+)\)\)", valor)
+        if rgb_variable:
+            componentes = paleta.get(rgb_variable.group(1), "").split(",")
+            if len(componentes) == 3:
+                try:
+                    return tuple(int(c.strip()) / 255 for c in componentes)
+                except ValueError:
+                    return None
+        rgb_directo = re.fullmatch(r"rgb\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)", valor)
+        if rgb_directo:
+            return tuple(int(c) / 255 for c in rgb_directo.groups())
+        if not re.fullmatch(r"#[0-9a-fA-F]{6}", valor):
+            return None
+        return tuple(int(valor[i:i + 2], 16) / 255 for i in (1, 3, 5))
+
+    def rgba(valor, paleta, profundidad=0):
+        """Resuelve colores opacos y rgba(var(--rgb-token), alfa) de cada tema."""
+        if profundidad > 5:
+            return None
+        valor = valor.strip()
+        alias = re.fullmatch(r"var\((--[\w-]+)\)", valor)
+        if alias:
+            return rgba(paleta.get(alias.group(1), ""), paleta, profundidad + 1)
+        rgba_variable = re.fullmatch(r"rgba\(var\((--[\w-]+)\),\s*([\d.]+)\)", valor)
+        if rgba_variable:
+            componentes = paleta.get(rgba_variable.group(1), "").split(",")
+            if len(componentes) == 3:
+                try:
+                    return tuple(int(c.strip()) / 255 for c in componentes) + (float(rgba_variable.group(2)),)
+                except ValueError:
+                    return None
+        rgba_directo = re.fullmatch(r"rgba\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*,\s*([\d.]+)\s*\)", valor)
+        if rgba_directo:
+            return tuple(int(c) / 255 for c in rgba_directo.groups()[:3]) + (float(rgba_directo.group(4)),)
+        opaco = rgb(valor, paleta, profundidad + 1)
+        return opaco + (1.0,) if opaco is not None else None
+
+    def componer(primer_plano, fondo):
+        alfa = primer_plano[3]
+        return tuple(primer_plano[i] * alfa + fondo[i] * (1 - alfa) for i in range(3))
+
+    def luminancia(color):
+        lineal = [x / 12.92 if x <= 0.04045 else ((x + 0.055) / 1.055) ** 2.4 for x in color]
+        return 0.2126 * lineal[0] + 0.7152 * lineal[1] + 0.0722 * lineal[2]
+
+    def razon(primer_plano, fondo):
+        l1, l2 = luminancia(primer_plano), luminancia(fondo)
+        return (max(l1, l2) + 0.05) / (min(l1, l2) + 0.05)
+
+    # El enlace de salto usa estos tokens en todas las páginas que comparten
+    # app.css; mantener su contraste AA protegido en las seis paletas.
+    for nombre, paleta in bloques.items():
+        frente = rgb(paleta.get("--text-bright", ""), paleta)
+        fondo = rgb(paleta.get("--bg-secondary", ""), paleta)
+        if frente is None or fondo is None:
+            fail(f"{nombre}: no se puede medir el enlace de salto")
+            continue
+        valor = razon(frente, fondo)
+        if valor < 4.5:
+            fail(f"{nombre}: el enlace de salto mide {valor:.2f}:1 (mínimo 4.5:1)")
+        else:
+            print(f"  [OK] {nombre}: contraste del enlace de salto {valor:.2f}:1")
+
+    textos = (
+        "--text-primary", "--text-secondary", "--text-muted", "--accent-mint-text", "--accent-blue-text",
+        "--warn-text", "--violet-text", "--orange-text", "--teal-text", "--red-text", "--accent-green-text",
+    )
+    superficies = ("--bg-primary", "--bg-secondary", "--bg-tertiary", "--bg-sidebar", "--panel-elevated")
+    fondos_translucidos = (
+        ("--accent-mint-text", "--accent-mint-dim"),
+        ("--accent-blue-text", "rgba(var(--info-rgb), 0.2)"),
+        ("--warn-text", "rgba(var(--warn-rgb), 0.2)"),
+        ("--violet-text", "rgba(var(--violet-rgb), 0.2)"),
+        ("--orange-text", "rgba(var(--orange-rgb), 0.2)"),
+        ("--teal-text", "rgba(var(--teal-rgb), 0.2)"),
+        ("--red-text", "rgba(var(--red-rgb), 0.2)"),
+        ("--accent-green-text", "rgba(var(--accent-green-rgb), 0.2)"),
+    )
+
+    # Vincula los composites medidos con usos reales para que una deriva CSS no
+    # deje la compuerta aprobando tokens que ya no controlan las etiquetas.
+    reglas_compuestas = (
+        (".dict-role-tag.fk", r"color:\s*var\(--accent-blue-text\)", r"background:\s*rgba\(var\(--info-rgb\),\s*0\.2\)"),
+        (".dict-mode-badge.mode-auto", r"color:\s*var\(--accent-blue-text\)", r"background:\s*rgba\(var\(--info-rgb\),\s*0\.12\)"),
+        (".badge-acct-bruto", r"color:\s*var\(--accent-blue-text\)", r"background:\s*rgba\(var\(--info-rgb\),\s*0\.16\)"),
+        (".badge-acct-neto", r"color:\s*var\(--accent-mint-text\)", r"background:\s*var\(--accent-mint-dim\)"),
+        (".dict-role-tag.pk", r"color:\s*var\(--accent-mint-text\)", r"background:\s*rgba\(var\(--accent-rgb\),\s*0\.12\)"),
+        (".dict-mode-badge.mode-manual", r"color:\s*var\(--warn-text\)", r"background:\s*rgba\(var\(--warn-rgb\),\s*0\.12\)"),
+        (".dict-mode-badge.mode-hybrid", r"color:\s*var\(--violet-text\)", r"background:\s*rgba\(var\(--violet-rgb\),\s*0\.12\)"),
+        (".dv-badge-mode.mode-auto", r"color:\s*var\(--accent-blue-text\)", r"background:\s*rgba\(var\(--info-rgb\),\s*0\.12\)"),
+        (".dv-badge-mode.mode-manual", r"color:\s*var\(--warn-text\)", r"background:\s*rgba\(var\(--warn-rgb\),\s*0\.12\)"),
+        (".dv-badge-mode.mode-hybrid", r"color:\s*var\(--violet-text\)", r"background:\s*rgba\(var\(--violet-rgb\),\s*0\.12\)"),
+        (".badge.offline", r"color:\s*var\(--warn-text\)", r"background-color:\s*rgba\(var\(--warn-rgb\),\s*0\.12\)"),
+        (".badge-acct-mtm", r"color:\s*var\(--violet-text\)", r"background:\s*rgba\(var\(--violet-rgb\),\s*0\.16\)"),
+        (".badge-acct-amort", r"color:\s*var\(--warn-text\)", r"background:\s*rgba\(var\(--warn-rgb\),\s*0\.16\)"),
+        (".badge-acct-tasacion", r"color:\s*var\(--orange-text\)", r"background:\s*rgba\(var\(--orange-rgb\),\s*0\.16\)"),
+        (".badge-acct-pacto", r"color:\s*var\(--teal-text\)", r"background:\s*rgba\(var\(--teal-rgb\),\s*0\.16\)"),
+        (".dict-freshness-tag", r"color:\s*var\(--accent-green-text\)", r"background:\s*rgba\(var\(--accent-green-rgb\),\s*0\.12\)"),
+    )
+    for selector, patron_color, patron_fondo in reglas_compuestas:
+        regla = re.search(re.escape(selector) + r"\s*\{([^}]*)\}", css)
+        if not regla:
+            fail(f"falta la regla CSS compuesta {selector}")
+            continue
+        cuerpo = regla.group(1)
+        for etiqueta, patron in (("color", patron_color), ("fondo", patron_fondo)):
+            if not re.search(patron, cuerpo):
+                fail(f"{selector}: {etiqueta} ya no coincide con la pareja translúcida auditada")
+    regla_info_descargas = re.search(r"\.dl-tag-info\s*\{([^}]*)\}", css)
+    if not regla_info_descargas or not re.search(r"color:\s*var\(--accent-blue-text\)", regla_info_descargas.group(1)):
+        fail(".dl-tag-info debe usar --accent-blue-text para cumplir el contraste sólido auditado")
+    regla_error = re.search(r"\.dv-error-state pre\s*\{([^}]*)\}", css)
+    if not regla_error or not re.search(r"color:\s*var\(--red-text\)", regla_error.group(1)):
+        fail(".dv-error-state pre debe usar --red-text para mantener legible el texto de error")
+    regla_alcance_rojo = re.search(r"\.scope-banner-claves b\s*\{([^}]*)\}", css)
+    if not regla_alcance_rojo or not re.search(r"color:\s*var\(--red-text\)", regla_alcance_rojo.group(1)):
+        fail(".scope-banner-claves b debe usar --red-text para mantener legible el aviso")
+    patrones_texto_decorativo = (
+        r"(?<![-\w])color:\s*rgb\(var\(--(?:warn|info|violet|orange|teal|red)-rgb\)\)",
+        r"(?<![-\w])color:\s*var\(--accent-(?:mint|green|yellow|red)\)",
+    )
+    for patron in patrones_texto_decorativo:
+        if re.search(patron, css):
+            fail("queda color de texto semántico directo sin token de contraste")
+    for nombre in nombres:
+        paleta = bloques.get(nombre)
+        if not paleta:
+            continue
+        pares = []
+        for token_texto in textos:
+            for token_fondo in superficies:
+                primer_plano = rgb(paleta.get(token_texto, ""), paleta)
+                fondo = rgb(paleta.get(token_fondo, ""), paleta)
+                if primer_plano is None or fondo is None:
+                    fail(f"{nombre}: falta un color medible en {token_texto} o {token_fondo}")
+                    continue
+                contraste = razon(primer_plano, fondo)
+                pares.append((contraste, token_texto, token_fondo))
+                if contraste < 4.5:
+                    fail(f"{nombre}: {token_texto} sobre {token_fondo} mide {contraste:.2f}:1 (mínimo 4,5:1)")
+        if pares:
+            minimo = min(pares)
+            print(f"  [OK] {nombre}: mínimo sólido {minimo[0]:.2f}:1 ({minimo[1]} sobre {minimo[2]})")
+
+        pares_tinte = []
+        for token_texto, token_tinte in fondos_translucidos:
+            primer_plano = rgb(paleta.get(token_texto, ""), paleta)
+            tinte = rgba(paleta.get(token_tinte, token_tinte), paleta)
+            if primer_plano is None or tinte is None:
+                fail(f"{nombre}: falta un color medible en {token_texto} o {token_tinte}")
+                continue
+            for token_superficie in superficies:
+                superficie = rgb(paleta.get(token_superficie, ""), paleta)
+                if superficie is None:
+                    fail(f"{nombre}: falta un color medible en {token_superficie}")
+                    continue
+                compuesto = componer(tinte, superficie)
+                contraste = razon(primer_plano, compuesto)
+                pares_tinte.append((contraste, token_texto, token_tinte, token_superficie))
+                if contraste < 4.5:
+                    fail(
+                        f"{nombre}: {token_texto} sobre {token_tinte} compuesto en {token_superficie} "
+                        f"mide {contraste:.2f}:1 (mínimo 4,5:1)"
+                    )
+        for token_texto, token_tinte in fondos_translucidos:
+            medidas = [par for par in pares_tinte if par[1] == token_texto and par[2] == token_tinte]
+            if medidas:
+                minimo_tinte = min(medidas)
+                print(
+                    f"  [OK] {nombre}: {token_texto} sobre {token_tinte}, mínimo "
+                    f"{minimo_tinte[0]:.2f}:1 compuesto en {minimo_tinte[3]}"
+                )
+
+
 def audit_engine():
+
     print("\n--- 5. Motor DuckDB-Wasm ---")
     vendor = os.path.join(DOCS, "vendor", "duckdb")
     for name in ("duckdb-browser.mjs", "duckdb-browser-eh.worker.js", "duckdb-eh.wasm"):
@@ -635,6 +1070,16 @@ def audit_privacidad(html, css):
         fail("app.css ya no esconde el desborde; revisar la regla de privacidad.html")
     else:
         print("  [OK] el aviso revierte el alto fijo del cuerpo y se puede desplazar")
+    # Los encabezados de las tablas del aviso son columnas; decláralos para que
+    # lectores de pantalla puedan asociar cada celda con su encabezado.
+    th_attrs = re.findall(r"<th\b([^>]*)>", pagina, re.I)
+    sin_scope = [attrs for attrs in th_attrs
+                 if not re.search(r"\bscope\s*=\s*['\"]col['\"]", attrs, re.I)]
+    if not th_attrs or sin_scope:
+        fail(f"las tablas del aviso deben declarar scope=col en cada encabezado ({len(sin_scope)}/{len(th_attrs)} sin scope=col)")
+    else:
+        print(f"  [OK] {len(th_attrs)} encabezados de tabla declaran scope=col")
+
     # El aviso describe lo publicado: los tres conjuntos con personas y el
     # tratamiento de identificadores, no una lista de lo que falta.
     for termino in ("fintech_rpsf_lista_entidades", "corredoras_bolsa_lista_entidades",
@@ -791,6 +1236,8 @@ def main():
     audit_terminal(html)
     audit_ux_layer()
     audit_theme_tokens()
+    audit_palette_text_contrast()
+    audit_palette_focus_contrast(read("docs/css/app.css"))
     audit_accesibilidad(html, read("docs/css/app.css"))
     audit_engine()
     audit_normativa_retirada()

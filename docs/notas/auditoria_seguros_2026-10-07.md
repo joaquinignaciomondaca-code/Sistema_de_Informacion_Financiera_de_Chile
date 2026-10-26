@@ -1,5 +1,7 @@
 # Auditoría profunda de los datos de compañías de seguros (CMF, Circular 1835) — 2026-10-07
 
+> **Snapshot histórico (2026-10-07).** Las coberturas y cifras siguientes reflejan los archivos de ese corte; no describen la publicación actual. El corte vigente de `seguros_pactos` (2026-09, 11.371 filas) está en [`cobertura_repos_pactos_2026-10-07.md`](cobertura_repos_pactos_2026-10-07.md) y la evidencia general en [`auditoria_fuentes_cifras_rediseno_2026-10-24.md`](auditoria_fuentes_cifras_rediseno_2026-10-24.md).
+
 Objeto auditado: **todos los datos publicados del sector seguros** — las 8 tablas de
 `docs/outputs/seguros/` (`renta_fija`, `acciones`, `fondos_mutuos`, `bienes_raices`,
 `extranjeros`, `derivados`, `pactos`, `control_inversiones`), el maestro

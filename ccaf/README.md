@@ -40,6 +40,14 @@ sospechoso y no se agrega nada). El evento queda en `docs/outputs/entidades/nove
 | `ccaf_resultados` | El mismo archivo, estados `ER*` (`ERFG`, `ERNG`, `ERI`) | Importes **acumulados del ejercicio** a cada trimestre. |
 | `ccaf_maestro` | `ccaf/scripts/build_ccaf_maestro.py` + altas automáticas del flujo IFRS | Catálogo de las 6 cajas; valida el RUT con módulo 11. |
 
+En `ccaf_maestro`, las capas de fuente son distintas: la lista inicial se formó
+con la lista de SUSESO y el Registro de Valores de CMF; la entrada directa del
+flujo vigente es el TXT IFRS de CMF, usado **solo para detectar e incorporar
+altas**, no para reconstruir la lista completa en cada ejecución. Las fichas de
+API exponen esta separación en `procedencia`; `fuente`/`atribucion` se reservan
+para cita y condiciones de uso. La verificación de reutilización de la fuente
+histórica SUSESO sigue pendiente y se indica en `procedencia.condiciones_reutilizacion`; identificar el origen no equivale a autorizar su reutilización.
+
 Los flujos de efectivo (`EFMD`/`EFMI`) viajan en el mismo archivo y **no se publican**.
 
 Fuentes complementarias, no usadas por el pipeline: la ficha de cada entidad en la CMF

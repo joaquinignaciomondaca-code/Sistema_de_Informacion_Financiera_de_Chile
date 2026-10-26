@@ -10,6 +10,8 @@ cada cifra citada, incluidas las que la revisión daba por ausentes.
 
 ---
 
+> **Snapshot histórico (2026-10-23).** Las cifras de esta nota describen el corte auditado ese día, incluida la cantidad de notas indexadas entonces; no son métricas actuales del release 2026-10-24. El README ya evita fijar ese conteo manual.
+
 ## 1. Qué dijo la revisión, y qué resultó ser cierto
 
 | Afirmación | Verificación |

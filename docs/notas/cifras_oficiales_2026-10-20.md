@@ -1,10 +1,8 @@
-# Cifras oficiales del sitio — 2026-10-20
+# Cifras del sitio — foto histórica del 2026-10-20
 
-Única referencia para las cifras de portada, README y notas. Si una cifra cambia, se actualiza aquí
-primero y luego en los demás documentos. La portada calcula sus cifras desde el catálogo
-(`docs/js/alcance.js`); los textos fijos son el README y `docs/index.html`.
+**Estado: histórica, reemplazada para el corte actual.** Los valores que siguen documentan la edición y las discrepancias medidas el 2026-10-20; no deben usarse como cifras vigentes. Para el contraste del rediseño al 2026-10-24, ver [`auditoria_fuentes_cifras_rediseno_2026-10-24.md`](auditoria_fuentes_cifras_rediseno_2026-10-24.md). Las cifras de objetos, filas, bytes, consultas y `data_release` vigentes se leen de `docs/api/v2/catalog.json`; la portada calcula el alcance desde el catálogo y `docs/js/alcance.js`.
 
-## Fuente
+## Fuente — snapshot 2026-10-20
 
 - `data_manifest.json` (actualizado 2026-10-20): 74 tablas en el manifiesto, 13.483.676 registros.
 - Tabla oculta `fi.bienes_raices` (`fi_bienes_raices`): publicada, no figura en la vista principal.

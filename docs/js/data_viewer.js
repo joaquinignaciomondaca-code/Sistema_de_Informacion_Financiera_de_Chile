@@ -642,6 +642,12 @@ class DataViewerController {
     );
   }
 
+  resumenFilasMuestra(visible = this.getFilteredRows()) {
+    const total = this.currentRows.length;
+    if (this.filterText) return `${visible.length} de ${total} ${total === 1 ? "fila" : "filas"} de muestra`;
+    return `Muestra: ${total} ${total === 1 ? "fila" : "filas"}`;
+  }
+
   renderRowsOnly() {
     const tbody = this.container ? this.container.querySelector(".dv-table tbody") : null;
     if (!tbody) return;
@@ -663,7 +669,7 @@ class DataViewerController {
     const countInfo = this.container.querySelector(".dv-count-info");
     if (countInfo) {
       const visibles = mostradas.length;
-      countInfo.textContent = `${rows.length} de ${this.currentRows.length} fila(s) · ` +
+      countInfo.textContent = `${this.resumenFilasMuestra(rows)} · ` +
         (visibles < this.currentColumns.length ? `${visibles} de ${this.currentColumns.length} columnas` : `${visibles} columnas`);
     }
   }
@@ -766,7 +772,8 @@ class DataViewerController {
             <span class="dv-badge-mode mode-${mode.className}" title="${dvEscapar(mode.title)}">${dvEscapar(mode.label)}</span>
             ${this.actualizado() ? `<span class="dv-badge-update" title="Fecha de última actualización del pipeline">Actualizado: ${dvEscapar(this.actualizado())}</span>` : ""}
             <span class="dv-meta-timing"><b>${this.elapsedMs} ms</b></span>
-            <span class="dv-count-info">${rows.length} fila(s) · ${mostradas.length}${mostradas.length < this.currentColumns.length ? ` de ${this.currentColumns.length}` : ""} columnas</span>
+            <span class="dv-count-info" title="Filas cargadas por LIMIT en el visor; no es el total del conjunto.">${this.resumenFilasMuestra(rows)} · ${mostradas.length}${mostradas.length < this.currentColumns.length ? ` de ${this.currentColumns.length}` : ""} columnas</span>
+            <span class="dv-sample-hint">Muestra parcial: filtro y orden solo actúan aquí. Serie completa en Descargas.</span>
             <span class="dv-scroll-tag" title="Usa la barra de desplazamiento horizontal para explorar todas las columnas">Desplaza ↔</span>
           </div>
           
@@ -776,14 +783,14 @@ class DataViewerController {
             </div>
             
             <div class="dv-limit-group">
-              <span class="dv-limit-label">Filas:</span>
-              <button class="dv-limit-btn ${this.currentLimit === 50 ? 'active' : ''}" onclick="window.DataViewer.setLimit(50)">50</button>
-              <button class="dv-limit-btn ${this.currentLimit === 100 ? 'active' : ''}" onclick="window.DataViewer.setLimit(100)">100</button>
-              <button class="dv-limit-btn ${this.currentLimit === 250 ? 'active' : ''}" onclick="window.DataViewer.setLimit(250)">250</button>
-              <button class="dv-limit-btn ${this.currentLimit === 500 ? 'active' : ''}" onclick="window.DataViewer.setLimit(500)">500</button>
+              <span class="dv-limit-label" title="Tope de filas que muestra el visor; no es paginación">Máx. filas:</span>
+              <button type="button" class="dv-limit-btn ${this.currentLimit === 50 ? 'active' : ''}" onclick="window.DataViewer.setLimit(50)">50</button>
+              <button type="button" class="dv-limit-btn ${this.currentLimit === 100 ? 'active' : ''}" onclick="window.DataViewer.setLimit(100)">100</button>
+              <button type="button" class="dv-limit-btn ${this.currentLimit === 250 ? 'active' : ''}" onclick="window.DataViewer.setLimit(250)">250</button>
+              <button type="button" class="dv-limit-btn ${this.currentLimit === 500 ? 'active' : ''}" onclick="window.DataViewer.setLimit(500)">500</button>
             </div>
 
-            <button class="dv-export-btn dv-cols-btn ${this.mostrarTodasLasColumnas ? "active" : ""}"
+            <button type="button" class="dv-export-btn dv-cols-btn ${this.mostrarTodasLasColumnas ? "active" : ""}"
                     onclick="window.DataViewer.alternarColumnas()"
                     title="${this.mostrarTodasLasColumnas
                       ? "Volver a las columnas que describen el dato; el resto sigue en el Parquet y en la vista SQL"
@@ -793,7 +800,7 @@ class DataViewerController {
                 : `Todas las columnas (${presentacion.todas.length})`}
             </button>
 
-            <button class="dv-export-btn" onclick="window.DataViewer.openExportModal()" title="Abrir la pestaña Descargas con esta tabla seleccionada (Parquet, CSV, Excel)">
+            <button type="button" class="dv-export-btn" onclick="window.DataViewer.openExportModal()" title="Abrir la pestaña Descargas con esta tabla seleccionada (Parquet, CSV, Excel)">
               Descargar datos
             </button>
           </div>

@@ -24,7 +24,11 @@ from __future__ import annotations
 #           ni una columna publicada; sólo se retira una promesa falsa.
 #   2.1.0 · 2026-10-23 · campo nuevo `totales.con_filas` (objetos con filas), que
 #           separa «tiene archivo» de «tiene datos»: 86 y 85 dejan de confundirse.
-VERSION_CONTRATO = "2.1.0"
+#   2.2.0 · 2026-10-24 · procedencia estructurada de `ccaf_maestro`, que separa
+#           las entradas directas actuales del origen editorial del universo inicial.
+#   2.3.0 · 2026-10-24 · estado de revisión de reutilización por fuente dentro de
+#           la procedencia, para no presentar como verificada la condición SUSESO pendiente.
+VERSION_CONTRATO = "2.3.0"
 
 # Carpeta y `api_version` de todas las piezas. Cambia sólo con una versión mayor.
 API_VERSION = "v2"
