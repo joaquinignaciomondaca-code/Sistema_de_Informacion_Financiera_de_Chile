@@ -219,6 +219,21 @@ class MetadatosWeb(unittest.TestCase):
         for key in ("bcu_1y", "bcu_2y", "bcu_10y", "bcu_20y"):
             self.assertTrue(pd.isna(tabla.loc[1, columns[key]]))
 
+    def test_dolar_observado_conserva_valor_por_fecha_en_clp_por_usd(self):
+        spec = next(t for t in builder.TABLAS if t["id"] == "macro_dolar_observado")
+        series = pd.DataFrame([
+            {"fecha": "2026-10-23", "periodo": "2026-10", "clave": "usd_clp",
+             "serie_id": "F073.TCO.PRE.Z.D", "valor": 951.25},
+            {"fecha": "2026-10-26", "periodo": "2026-10", "clave": "usd_clp",
+             "serie_id": "F073.TCO.PRE.Z.D", "valor": 948.50},
+        ])
+
+        tabla = builder.construir_tabla(spec, series)
+
+        self.assertEqual(tabla["fecha"].tolist(), ["2026-10-23", "2026-10-26"])
+        self.assertEqual(tabla["periodo"].tolist(), ["2026-10", "2026-10"])
+        self.assertEqual(tabla["dolar_observado_clp_por_usd"].tolist(), [951.25, 948.50])
+
     def test_swaps_camara_usa_union_de_fechas_sin_rellenar_series(self):
         spec = next(t for t in builder.TABLAS if t["id"] == "macro_swaps_camara")
         series = pd.DataFrame([
