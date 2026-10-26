@@ -197,6 +197,28 @@ class MetadatosWeb(unittest.TestCase):
         self.assertEqual(tabla["rendimiento_bono_pesos_5_anos_pct"].tolist(), [3.2, 3.25])
         self.assertEqual(tabla["rendimiento_bono_pesos_10_anos_pct"].tolist(), [3.5, 3.55])
 
+    def test_curva_bonos_uf_usa_union_de_fechas_sin_arrastre(self):
+        spec = next(t for t in builder.TABLAS if t["id"] == "macro_curva_bonos_uf")
+        series = pd.DataFrame([
+            {"fecha": "2026-10-21", "periodo": "2026-10", "clave": key,
+             "serie_id": f"source-{key}", "valor": 2.0 + indice / 10}
+            for indice, (key, _columna) in enumerate(spec["columnas"], start=1)
+        ] + [
+            {"fecha": "2026-10-22", "periodo": "2026-10", "clave": "bcu_5y",
+             "serie_id": "source-bcu_5y", "valor": 3.5},
+            {"fecha": "2026-10-22", "periodo": "2026-10", "clave": "bcu_30y",
+             "serie_id": "source-bcu_30y", "valor": 4.0},
+        ])
+
+        tabla = builder.construir_tabla(spec, series)
+
+        self.assertEqual(tabla["fecha"].tolist(), ["2026-10-21", "2026-10-22"])
+        columns = dict(spec["columnas"])
+        self.assertEqual(tabla.loc[1, columns["bcu_5y"]], 3.5)
+        self.assertEqual(tabla.loc[1, columns["bcu_30y"]], 4.0)
+        for key in ("bcu_1y", "bcu_2y", "bcu_10y", "bcu_20y"):
+            self.assertTrue(pd.isna(tabla.loc[1, columns[key]]))
+
     def test_swaps_camara_usa_union_de_fechas_sin_rellenar_series(self):
         spec = next(t for t in builder.TABLAS if t["id"] == "macro_swaps_camara")
         series = pd.DataFrame([
