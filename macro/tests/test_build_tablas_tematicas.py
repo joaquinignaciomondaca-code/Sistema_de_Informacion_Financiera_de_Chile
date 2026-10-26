@@ -176,6 +176,24 @@ class MetadatosWeb(unittest.TestCase):
         self.assertEqual(tabla.loc[0, "tib_promedio_pct"], 4.61)
         self.assertTrue(pd.isna(tabla.loc[1, "tib_promedio_pct"]))
 
+    def test_swaps_camara_usa_union_de_fechas_sin_rellenar_series(self):
+        spec = next(t for t in builder.TABLAS if t["id"] == "macro_swaps_camara")
+        series = pd.DataFrame([
+            {"fecha": "2026-08-03", "periodo": "2026-08", "clave": key,
+             "serie_id": f"source-{key}", "valor": 4.0 + indice}
+            for indice, (key, _columna) in enumerate(spec["columnas"], start=1)
+        ] + [{
+            "fecha": "2026-08-04", "periodo": "2026-08", "clave": "spc_clp_90d",
+            "serie_id": "source-spc_clp_90d", "valor": 4.25,
+        }])
+
+        tabla = builder.construir_tabla(spec, series)
+
+        self.assertEqual(tabla["fecha"].tolist(), ["2026-08-03", "2026-08-04"])
+        self.assertEqual(tabla["swap_camara_pesos_90_dias_pct"].tolist(), [5.0, 4.25])
+        for _key, columna in spec["columnas"][1:]:
+            self.assertTrue(pd.isna(tabla.loc[1, columna]))
+
     def test_mercado_laboral_alinea_las_cuatro_metricas_mensuales(self):
         spec = next(t for t in builder.TABLAS if t["id"] == "macro_mercado_laboral")
         keys = [key for key, _ in spec["columnas"]]
