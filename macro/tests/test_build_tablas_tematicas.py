@@ -9,6 +9,7 @@ from unittest.mock import patch
 import pandas as pd
 
 from macro.scripts import build_tablas_tematicas as builder
+from scripts import build_macro_web as web_builder
 
 
 class CargaSeries(unittest.TestCase):
@@ -72,6 +73,19 @@ class CargaSeries(unittest.TestCase):
 
         with self.assertRaisesRegex(ValueError, "Hay 2 filas"):
             builder.cargar_series()
+
+
+class MetadatosWeb(unittest.TestCase):
+    def test_fecha_diaria_no_se_declara_como_dia_habil(self):
+        spec = next(t for t in web_builder.TABLAS if t["id"] == "macro_uf")
+        ficha = web_builder.ficha(spec, {
+            "filas": 4682,
+            "desde": "2014-01-01",
+            "hasta": "2026-10-26",
+            "ultima_actualizacion": "2026-10-26",
+        })
+        self.assertIn("Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.", ficha)
+        self.assertNotIn("día hábil publicado por el BCCh", ficha)
 
 
 if __name__ == "__main__":

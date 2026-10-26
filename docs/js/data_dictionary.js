@@ -30,7 +30,7 @@ const DATA_DICTIONARY = [
     origen: "Banco Central de Chile — Base de Datos Estadísticos, API REST SIETE (si3.bcentral.cl/SieteRestWS).",
     descripcion: "Tasas de referencia de corto plazo de Chile: Tasa de Política Monetaria (TPM) del Banco Central y tasa promedio transada en el mercado interbancario (TIB), en porcentaje.",
     columnas: [
-      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.", contable: "No aplica" },
+      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.", contable: "No aplica" },
       { name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.", contable: "No aplica" },
       { name: "tpm_pct", type: "DOUBLE", role: "Métrica", significado: "Tasa de Política Monetaria fijada por el Consejo del Banco Central, en porcentaje anual.", contable: "No aplica" },
       { name: "tib_promedio_pct", type: "DOUBLE", role: "Métrica", significado: "Tasa interbancaria promedio (TIB): tasa a la que los bancos se prestan a un día, en porcentaje anual.", contable: "No aplica" }
@@ -52,7 +52,7 @@ const DATA_DICTIONARY = [
     origen: "Banco Central de Chile — Base de Datos Estadísticos, API REST SIETE (si3.bcentral.cl/SieteRestWS).",
     descripcion: "Tasa de swap promedio de cámara (SPC) del Banco Central: contratos en pesos a 90, 180 y 360 días y a 2 años, y contrato en UF a 1 año, en porcentaje.",
     columnas: [
-      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.", contable: "No aplica" },
+      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.", contable: "No aplica" },
       { name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.", contable: "No aplica" },
       { name: "swap_camara_pesos_90_dias_pct", type: "DOUBLE", role: "Métrica", significado: "Tasa fija del swap promedio de cámara en pesos a 90 días, en porcentaje anual.", contable: "No aplica" },
       { name: "swap_camara_pesos_180_dias_pct", type: "DOUBLE", role: "Métrica", significado: "Tasa fija del swap promedio de cámara en pesos a 180 días, en porcentaje anual.", contable: "No aplica" },
@@ -77,7 +77,7 @@ const DATA_DICTIONARY = [
     origen: "Banco Central de Chile — Base de Datos Estadísticos, API REST SIETE (si3.bcentral.cl/SieteRestWS).",
     descripcion: "Curva de rendimiento de los bonos soberanos en pesos licitados por el BCCh (Bono Corto Plazo, BCP): tasa de interés de mercado secundario a 2, 5 y 10 años.",
     columnas: [
-      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.", contable: "No aplica" },
+      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.", contable: "No aplica" },
       { name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.", contable: "No aplica" },
       { name: "rendimiento_bono_pesos_2_anos_pct", type: "DOUBLE", role: "Métrica", significado: "Tasa de mercado secundario del bono del Banco Central en pesos a 2 años (BCP-2), en porcentaje anual.", contable: "No aplica" },
       { name: "rendimiento_bono_pesos_5_anos_pct", type: "DOUBLE", role: "Métrica", significado: "Tasa de mercado secundario del bono del Banco Central en pesos a 5 años (BCP-5), en porcentaje anual.", contable: "No aplica" },
@@ -100,7 +100,7 @@ const DATA_DICTIONARY = [
     origen: "Banco Central de Chile — Base de Datos Estadísticos, API REST SIETE (si3.bcentral.cl/SieteRestWS).",
     descripcion: "Curva de rendimiento de los bonos soberanos en UF (BCU/BTU): tasa de interés de mercado secundario a 1, 2, 5, 10, 20 y 30 años.",
     columnas: [
-      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.", contable: "No aplica" },
+      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.", contable: "No aplica" },
       { name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.", contable: "No aplica" },
       { name: "rendimiento_bono_uf_1_ano_pct", type: "DOUBLE", role: "Métrica", significado: "Tasa de mercado secundario del bono en UF a 1 año (BCU-1), en porcentaje anual sobre UF.", contable: "No aplica" },
       { name: "rendimiento_bono_uf_2_anos_pct", type: "DOUBLE", role: "Métrica", significado: "Tasa de mercado secundario del bono en UF a 2 años (BCU-2), en porcentaje anual sobre UF.", contable: "No aplica" },
@@ -126,7 +126,7 @@ const DATA_DICTIONARY = [
     origen: "Banco Central de Chile — Base de Datos Estadísticos, API REST SIETE (si3.bcentral.cl/SieteRestWS).",
     descripcion: "Inflación implícita de las curvas soberanas (breakeven): diferencia entre el rendimiento del bono en pesos y el del bono en UF del mismo plazo. Calculada por SIF a partir de las curvas publicadas por el BCCh.",
     columnas: [
-      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.", contable: "No aplica" },
+      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.", contable: "No aplica" },
       { name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.", contable: "No aplica" },
       { name: "inflacion_implicita_5_anos_pct", type: "DOUBLE", role: "Métrica", significado: "Rendimiento del bono en pesos a 5 años menos el del bono en UF a 5 años: inflación anual promedio que el mercado espera para ese plazo. Calculada por SIF.", contable: "No aplica" },
       { name: "inflacion_implicita_10_anos_pct", type: "DOUBLE", role: "Métrica", significado: "Rendimiento del bono en pesos a 10 años menos el del bono en UF a 10 años: inflación anual promedio que el mercado espera para ese plazo. Calculada por SIF.", contable: "No aplica" }
@@ -148,7 +148,7 @@ const DATA_DICTIONARY = [
     origen: "Banco Central de Chile — Base de Datos Estadísticos, API REST SIETE (si3.bcentral.cl/SieteRestWS).",
     descripcion: "Dólar observado: tipo de cambio nominal del dólar de los Estados Unidos en pesos chilenos (CLP por USD), según el Banco Central.",
     columnas: [
-      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.", contable: "No aplica" },
+      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.", contable: "No aplica" },
       { name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.", contable: "No aplica" },
       { name: "dolar_observado_clp_por_usd", type: "DOUBLE", role: "Métrica", significado: "Pesos chilenos por un dólar de los Estados Unidos (dólar observado publicado por el BCCh para el día).", contable: "No aplica" }
     ]
@@ -169,7 +169,7 @@ const DATA_DICTIONARY = [
     origen: "Banco Central de Chile — Base de Datos Estadísticos, API REST SIETE (si3.bcentral.cl/SieteRestWS).",
     descripcion: "Euro observado: tipo de cambio nominal del euro en pesos chilenos (CLP por EUR), según el Banco Central.",
     columnas: [
-      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.", contable: "No aplica" },
+      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.", contable: "No aplica" },
       { name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.", contable: "No aplica" },
       { name: "euro_observado_clp_por_eur", type: "DOUBLE", role: "Métrica", significado: "Pesos chilenos por un euro (euro observado publicado por el BCCh para el día).", contable: "No aplica" }
     ]
@@ -190,7 +190,7 @@ const DATA_DICTIONARY = [
     origen: "Banco Central de Chile — Base de Datos Estadísticos, API REST SIETE (si3.bcentral.cl/SieteRestWS).",
     descripcion: "Índices de tipo de cambio nominal multilateral del Banco Central: TCM, TCM-5 (monedas de Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro) y TCM-X.",
     columnas: [
-      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.", contable: "No aplica" },
+      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.", contable: "No aplica" },
       { name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.", contable: "No aplica" },
       { name: "tipo_cambio_nominal_multilateral_indice", type: "DOUBLE", role: "Métrica", significado: "Índice de tipo de cambio nominal multilateral (TCM): valor del peso frente a una canasta de monedas de socios comerciales.", contable: "No aplica" },
       { name: "tipo_cambio_nominal_multilateral_5_monedas_indice", type: "DOUBLE", role: "Métrica", significado: "Índice TCM-5: peso frente a las monedas de Estados Unidos, Japón, Reino Unido, Canadá y Zona Euro.", contable: "No aplica" },
@@ -235,7 +235,7 @@ const DATA_DICTIONARY = [
     origen: "Banco Central de Chile — Base de Datos Estadísticos, API REST SIETE (si3.bcentral.cl/SieteRestWS).",
     descripcion: "Valor diario de la Unidad de Fomento (UF) en pesos chilenos, según el Banco Central.",
     columnas: [
-      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.", contable: "No aplica" },
+      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.", contable: "No aplica" },
       { name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.", contable: "No aplica" },
       { name: "uf_valor_clp", type: "DOUBLE", role: "Métrica", significado: "Valor de la Unidad de Fomento del día, en pesos chilenos.", contable: "No aplica" }
     ]
@@ -370,7 +370,7 @@ const DATA_DICTIONARY = [
     origen: "Banco Central de Chile — Base de Datos Estadísticos, API REST SIETE (si3.bcentral.cl/SieteRestWS).",
     descripcion: "Precio del cobre refinado en dólares por libra: cotización diaria de la Bolsa de Metales de Londres (BML) y valor referencial mensual publicado por el BCCh (la referencia mensual aparece en la fila del primer día de su mes).",
     columnas: [
-      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.", contable: "No aplica" },
+      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.", contable: "No aplica" },
       { name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.", contable: "No aplica" },
       { name: "cobre_refinado_usd_por_libra", type: "DOUBLE", role: "Métrica", significado: "Precio del cobre refinado en la Bolsa de Metales de Londres del día, en dólares por libra.", contable: "No aplica" },
       { name: "cobre_referencial_mensual_usd_por_libra", type: "DOUBLE", role: "Métrica", significado: "Precio referencial mensual del cobre publicado por el BCCh, en dólares por libra. Aparece en la fila del primer día de cada mes.", contable: "No aplica" }
@@ -392,7 +392,7 @@ const DATA_DICTIONARY = [
     origen: "Banco Central de Chile — Base de Datos Estadísticos, API REST SIETE (si3.bcentral.cl/SieteRestWS).",
     descripcion: "Precios de los metales preciosos en dólares por onza troy: oro y plata, según el Banco Central.",
     columnas: [
-      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.", contable: "No aplica" },
+      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.", contable: "No aplica" },
       { name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.", contable: "No aplica" },
       { name: "oro_usd_por_onza_troy", type: "DOUBLE", role: "Métrica", significado: "Precio del oro del día, en dólares por onza troy.", contable: "No aplica" },
       { name: "plata_usd_por_onza_troy", type: "DOUBLE", role: "Métrica", significado: "Precio de la plata del día, en dólares por onza troy.", contable: "No aplica" }
@@ -435,7 +435,7 @@ const DATA_DICTIONARY = [
     origen: "Banco Central de Chile — Base de Datos Estadísticos, API REST SIETE (si3.bcentral.cl/SieteRestWS).",
     descripcion: "Tasa de interés de política monetaria de la Reserva Federal de los Estados Unidos (fed funds), en porcentaje.",
     columnas: [
-      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.", contable: "No aplica" },
+      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.", contable: "No aplica" },
       { name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.", contable: "No aplica" },
       { name: "tasa_fed_funds_pct", type: "DOUBLE", role: "Métrica", significado: "Tasa efectiva de fondos federales de la Reserva Federal de los Estados Unidos del día, en porcentaje anual.", contable: "No aplica" }
     ]
@@ -521,7 +521,7 @@ const DATA_DICTIONARY = [
     origen: "Banco Central de Chile — Base de Datos Estadísticos, API REST SIETE (si3.bcentral.cl/SieteRestWS).",
     descripcion: "Evolución diaria de la Encuesta de Operadores Financieros (EOF) del Banco Central: expectativa de inflación (variación del IPC) y de TPM para los 12 meses siguientes, en porcentaje.",
     columnas: [
-      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación (AAAA-MM-DD), día hábil publicado por el BCCh.", contable: "No aplica" },
+      { name: "fecha", type: "VARCHAR", role: "PK", significado: "Fecha de la observación diaria (AAAA-MM-DD) publicada por el BCCh.", contable: "No aplica" },
       { name: "periodo", type: "VARCHAR", role: "Fecha", significado: "Mes de la observación (AAAA-MM), útil para agrupar o cruzar con tablas mensuales.", contable: "No aplica" },
       { name: "expectativa_inflacion_12_meses_pct", type: "DOUBLE", role: "Métrica", significado: "Mediana de la Encuesta de Operadores Financieros para la inflación anual dentro de 12 meses, en porcentaje.", contable: "No aplica" },
       { name: "expectativa_tpm_12_meses_pct", type: "DOUBLE", role: "Métrica", significado: "Mediana de la Encuesta de Operadores Financieros para la TPM dentro de 12 meses, en porcentaje.", contable: "No aplica" }
