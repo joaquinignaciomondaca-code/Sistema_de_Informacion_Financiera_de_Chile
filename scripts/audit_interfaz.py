@@ -26,6 +26,7 @@ import os
 import re
 import subprocess
 import sys
+from html.parser import HTMLParser
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DOCS = os.path.join(ROOT, "docs")
@@ -379,8 +380,160 @@ def audit_palette_focus_contrast(css):
             print(f"  [OK] {nombre}: mínimo {minimo[0]:.2f}:1 ({minimo[1]} sobre {minimo[2]})")
 
 
+def audit_button_types(html):
+    """Protege botones estáticos y las plantillas dinámicas que los generan."""
+    class ButtonParser(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.types = []
+
+        def handle_starttag(self, tag, attrs):
+            if tag.lower() == "button":
+                self.types.append(dict(attrs).get("type"))
+
+    parser = ButtonParser()
+    parser.feed(html)
+    tipos = list(parser.types)
+    estaticos = len(parser.types)
+    dinamicos = 0
+    creaciones = 0
+    creaciones_invalidas = []
+    carpeta = os.path.join(DOCS, "js")
+    for directorio, _, nombres in os.walk(carpeta):
+        for nombre in sorted(nombres):
+            if not nombre.endswith(".js"):
+                continue
+            ruta = os.path.join(directorio, nombre)
+            with open(ruta, encoding="utf-8") as archivo:
+                fuente = archivo.read()
+            fragmentos = ButtonParser()
+            fragmentos.feed(fuente)
+            tipos.extend(fragmentos.types)
+            dinamicos += len(fragmentos.types)
+            for match in re.finditer(
+                    r"\b(?:const|let|var)\s+(\w+)\s*=\s*document\.createElement\(\s*[\"']button[\"']\s*\)",
+                    fuente):
+                creaciones += 1
+                nombre_boton = re.escape(match.group(1))
+                inicializacion = fuente[match.end():match.end() + 600]
+                tiene_type = (
+                    re.search(rf"\b{nombre_boton}\.type\s*=\s*[\"'](?:button|submit|reset)[\"']", inicializacion)
+                    or re.search(rf"\b{nombre_boton}\.setAttribute\(\s*[\"']type[\"']\s*,\s*[\"'](?:button|submit|reset)[\"']", inicializacion)
+                )
+                if not tiene_type:
+                    creaciones_invalidas.append(f"{os.path.relpath(ruta, ROOT)}:{fuente.count(chr(10), 0, match.start()) + 1}")
+    faltantes = sum(tipo is None for tipo in tipos)
+    invalidos = sum(tipo is not None and tipo.lower() not in {"button", "submit", "reset"}
+                    for tipo in tipos)
+    if faltantes or invalidos or creaciones_invalidas:
+        fail(f"botones sin type explícito: {faltantes}; tipos no estándar: {invalidos}; "
+             f"createElement sin type: {len(creaciones_invalidas)} ({', '.join(creaciones_invalidas)})")
+    else:
+        print(f"  [OK] {estaticos} botones estáticos, {dinamicos} en plantillas JS y "
+              f"{creaciones} con createElement tienen type válido")
+
+
+def audit_skip_links():
+    """Las páginas publicadas permiten omitir navegación repetida por teclado."""
+    class PageParser(HTMLParser):
+        def __init__(self):
+            super().__init__()
+            self.links = []
+            self.mains = []
+
+        def handle_starttag(self, tag, attrs):
+            atributos = dict(attrs)
+            if tag.lower() == "a":
+                self.links.append((atributos.get("href"), atributos.get("class", "")))
+            elif tag.lower() == "main":
+                self.mains.append(atributos)
+
+    paginas = (
+        "docs/index.html",
+        "docs/privacidad.html",
+        "docs/datos/ccaf_lista_entidades/index.html",
+    )
+    css_compartido = read("docs/css/app.css")
+    errores_antes = len(errors)
+    for ruta in paginas:
+        contenido = read(ruta)
+        parser = PageParser()
+        parser.feed(contenido)
+        saltos = [(href, clases) for href, clases in parser.links
+                  if "skip-link" in clases.split()]
+        if (saltos != [("#main-content", "skip-link")] or not parser.links
+                or parser.links[0] != ("#main-content", "skip-link")):
+            fail(f"{ruta}: falta el enlace de salto como primer enlace del documento")
+            continue
+        if (len(parser.mains) != 1 or parser.mains[0].get("id") != "main-content"
+                or parser.mains[0].get("tabindex") != "-1"):
+            fail(f"{ruta}: el enlace de salto no llega al único <main> enfocable")
+            continue
+        estilos = contenido if ruta == paginas[-1] else css_compartido
+        if ".skip-link:focus" not in estilos:
+            fail(f"{ruta}: el enlace de salto no tiene estado visible al recibir foco")
+            continue
+    if len(errors) == errores_antes:
+        print("  [OK] las 3 páginas ponen primero el enlace de salto al único <main> enfocable")
+
+
+def audit_details():
+    """Cada divulgación nativa debe empezar con su resumen, como exige HTML."""
+    class DetailsParser(HTMLParser):
+        void = {"area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "param", "source", "track", "wbr"}
+
+        def __init__(self):
+            super().__init__()
+            self.stack = []
+            self.widgets = []
+
+        def handle_starttag(self, tag, attrs):
+            if tag == "details":
+                self.widgets.append({"line": self.getpos()[0], "children": [], "summary_text": ""})
+                self.stack.append((tag, len(self.widgets) - 1))
+                return
+            if self.stack and self.stack[-1][0] == "details":
+                self.widgets[self.stack[-1][1]]["children"].append(tag)
+                if tag == "summary":
+                    self.stack.append((tag, self.stack[-1][1]))
+                    return
+            if tag not in self.void:
+                self.stack.append((tag, None))
+
+        def handle_data(self, data):
+            for tag, index in reversed(self.stack):
+                if tag == "summary" and index is not None:
+                    self.widgets[index]["summary_text"] += data
+                    return
+
+        def handle_endtag(self, tag):
+            for index in range(len(self.stack) - 1, -1, -1):
+                if self.stack[index][0] == tag:
+                    self.stack = self.stack[:index]
+                    return
+
+    errores_antes = len(errors)
+    archivos = ("docs/index.html", "docs/privacidad.html", "docs/datos/ccaf_lista_entidades/index.html")
+    cantidad = 0
+    for archivo in archivos:
+        parser = DetailsParser()
+        parser.feed(read(archivo))
+        cantidad += len(parser.widgets)
+        for widget in parser.widgets:
+            children = widget["children"]
+            if not children or children[0] != "summary" or children.count("summary") != 1:
+                fail(f"{archivo}:{widget['line']}: cada <details> debe tener un único <summary> como primer hijo")
+            if not " ".join(widget["summary_text"].split()):
+                fail(f"{archivo}:{widget['line']}: el <summary> de <details> no tiene nombre visible")
+    if len(errors) == errores_antes:
+        print(f"  [OK] {cantidad} divulgaciones nativas tienen un <summary> único, primero y con texto")
+
+
 def audit_accesibilidad(html, css):
     print("\n--- 10. Teclado y movimiento: salto, foco y prefers-reduced-motion ---")
+    audit_button_types(html)
+    audit_skip_links()
+    audit_details()
     if 'class="skip-link"' in html and 'href="#main-content"' in html:
         print("  [OK] enlace «Saltar al contenido principal»")
     else:
@@ -539,6 +692,20 @@ def audit_palette_text_contrast():
     def razon(primer_plano, fondo):
         l1, l2 = luminancia(primer_plano), luminancia(fondo)
         return (max(l1, l2) + 0.05) / (min(l1, l2) + 0.05)
+
+    # El enlace de salto usa estos tokens en todas las páginas que comparten
+    # app.css; mantener su contraste AA protegido en las seis paletas.
+    for nombre, paleta in bloques.items():
+        frente = rgb(paleta.get("--text-bright", ""), paleta)
+        fondo = rgb(paleta.get("--bg-secondary", ""), paleta)
+        if frente is None or fondo is None:
+            fail(f"{nombre}: no se puede medir el enlace de salto")
+            continue
+        valor = razon(frente, fondo)
+        if valor < 4.5:
+            fail(f"{nombre}: el enlace de salto mide {valor:.2f}:1 (mínimo 4.5:1)")
+        else:
+            print(f"  [OK] {nombre}: contraste del enlace de salto {valor:.2f}:1")
 
     textos = (
         "--text-primary", "--text-secondary", "--text-muted", "--accent-mint-text", "--accent-blue-text",
@@ -903,6 +1070,16 @@ def audit_privacidad(html, css):
         fail("app.css ya no esconde el desborde; revisar la regla de privacidad.html")
     else:
         print("  [OK] el aviso revierte el alto fijo del cuerpo y se puede desplazar")
+    # Los encabezados de las tablas del aviso son columnas; decláralos para que
+    # lectores de pantalla puedan asociar cada celda con su encabezado.
+    th_attrs = re.findall(r"<th\b([^>]*)>", pagina, re.I)
+    sin_scope = [attrs for attrs in th_attrs
+                 if not re.search(r"\bscope\s*=\s*['\"]col['\"]", attrs, re.I)]
+    if not th_attrs or sin_scope:
+        fail(f"las tablas del aviso deben declarar scope=col en cada encabezado ({len(sin_scope)}/{len(th_attrs)} sin scope=col)")
+    else:
+        print(f"  [OK] {len(th_attrs)} encabezados de tabla declaran scope=col")
+
     # El aviso describe lo publicado: los tres conjuntos con personas y el
     # tratamiento de identificadores, no una lista de lo que falta.
     for termino in ("fintech_rpsf_lista_entidades", "corredoras_bolsa_lista_entidades",

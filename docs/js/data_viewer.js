@@ -784,13 +784,13 @@ class DataViewerController {
             
             <div class="dv-limit-group">
               <span class="dv-limit-label" title="Tope de filas que muestra el visor; no es paginación">Máx. filas:</span>
-              <button class="dv-limit-btn ${this.currentLimit === 50 ? 'active' : ''}" onclick="window.DataViewer.setLimit(50)">50</button>
-              <button class="dv-limit-btn ${this.currentLimit === 100 ? 'active' : ''}" onclick="window.DataViewer.setLimit(100)">100</button>
-              <button class="dv-limit-btn ${this.currentLimit === 250 ? 'active' : ''}" onclick="window.DataViewer.setLimit(250)">250</button>
-              <button class="dv-limit-btn ${this.currentLimit === 500 ? 'active' : ''}" onclick="window.DataViewer.setLimit(500)">500</button>
+              <button type="button" class="dv-limit-btn ${this.currentLimit === 50 ? 'active' : ''}" onclick="window.DataViewer.setLimit(50)">50</button>
+              <button type="button" class="dv-limit-btn ${this.currentLimit === 100 ? 'active' : ''}" onclick="window.DataViewer.setLimit(100)">100</button>
+              <button type="button" class="dv-limit-btn ${this.currentLimit === 250 ? 'active' : ''}" onclick="window.DataViewer.setLimit(250)">250</button>
+              <button type="button" class="dv-limit-btn ${this.currentLimit === 500 ? 'active' : ''}" onclick="window.DataViewer.setLimit(500)">500</button>
             </div>
 
-            <button class="dv-export-btn dv-cols-btn ${this.mostrarTodasLasColumnas ? "active" : ""}"
+            <button type="button" class="dv-export-btn dv-cols-btn ${this.mostrarTodasLasColumnas ? "active" : ""}"
                     onclick="window.DataViewer.alternarColumnas()"
                     title="${this.mostrarTodasLasColumnas
                       ? "Volver a las columnas que describen el dato; el resto sigue en el Parquet y en la vista SQL"
@@ -800,7 +800,7 @@ class DataViewerController {
                 : `Todas las columnas (${presentacion.todas.length})`}
             </button>
 
-            <button class="dv-export-btn" onclick="window.DataViewer.openExportModal()" title="Abrir la pestaña Descargas con esta tabla seleccionada (Parquet, CSV, Excel)">
+            <button type="button" class="dv-export-btn" onclick="window.DataViewer.openExportModal()" title="Abrir la pestaña Descargas con esta tabla seleccionada (Parquet, CSV, Excel)">
               Descargar datos
             </button>
           </div>

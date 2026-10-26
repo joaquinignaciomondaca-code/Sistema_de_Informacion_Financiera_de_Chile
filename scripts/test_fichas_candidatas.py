@@ -35,6 +35,9 @@ class Recolector(HTMLParser):
         self.enlaces: list[str] = []
         self.descargas = 0
         self.href_descargas: list[str] = []
+        self.skip_links: list[str] = []
+        self.main_attrs: list[dict[str, str | None]] = []
+        self.action_groups: list[dict[str, str | None]] = []
         self.scripts = 0
         self.h1 = 0
         self.th_sin_scope = 0
@@ -43,10 +46,17 @@ class Recolector(HTMLParser):
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         a = dict(attrs)
         if tag == "a" and a.get("href"):
-            self.enlaces.append(str(a["href"]))
+            href = str(a["href"])
+            self.enlaces.append(href)
+            if "skip-link" in str(a.get("class", "")).split():
+                self.skip_links.append(href)
             if "download" in a:
                 self.descargas += 1
-                self.href_descargas.append(str(a["href"]))
+                self.href_descargas.append(href)
+        if tag == "main":
+            self.main_attrs.append(a)
+        if "acciones" in str(a.get("class", "")).split():
+            self.action_groups.append(a)
         if tag == "script":
             self.scripts += 1
         if tag == "h1":
@@ -223,6 +233,10 @@ def main() -> int:
 
         locales = 0
         for href in parser.enlaces:
+            # El destino del enlace de salto es un id del mismo documento,
+            # verificado por comprobar_accesibilidad_estatica, no un archivo.
+            if href == "#main-content":
+                continue
             url = urljoin(base, href)
             partes = urlsplit(url)
             if partes.netloc != urlsplit(host).netloc:

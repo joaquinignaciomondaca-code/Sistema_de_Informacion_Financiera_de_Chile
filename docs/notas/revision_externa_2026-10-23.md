@@ -27,26 +27,29 @@
 | Los dos hosts declaran el mismo `data_release` | **no verificable desde aquí** | el sitio respondía a esta sesión con `2026-10-22.9c002673eed5`; el valor citado (`2026-10-22.5027fd71…`) no coincide con ninguno de los releases generados en el repositorio |
 | «Demasiados totales distintos» (90 objetos, 105 vistas, 159 consultas, 86 recursos, 74 conjuntos…) | **cierta como observación editorial** | cada cifra es correcta y derivable, pero el sitio no tiene un párrafo único que diga cómo se cuenta |
 
-## 2. Los duplicados no son un defecto del pipeline
+## 2. Filas repetidas: presencia observada en la fuente, causa no determinada
 
-La hipótesis de la revisión era que la normalización perdió una columna. No es así:
+La hipótesis de la revisión era que la normalización perdió una columna. La evidencia de
+este corte no la confirma, pero tampoco explica por qué la fuente contiene filas iguales:
 
 - `ffmm/scripts/actualizar_carteras.py::leer()` produce **una fila por línea** del TXT de la
   CMF, sin deduplicar, y exige que el encabezado coincida **exactamente** con la lista de
   campos de la Circular 1333. Si la fuente trajera una columna más, el extractor fallaría
   en vez de ignorarla.
 - El manifiesto guarda, por periodo, cuántas filas se escribieron y cuántas líneas se
-  descartaron: 2026-09 → `registros: 29366`, `avisos: 0`. Es decir, el archivo de la CMF
-  tiene 29.366 líneas de datos y se publicaron 29.366 filas. **Las repeticiones vienen de
-  la fuente.**
-- Las repeticiones se concentran en renta fija (`BB` 519 grupos, `BE` 212, `BTU` 209,
-  `BTP` 204, `DPC` 200 en 2026-04) y todas tienen nemotécnico y RUT: no son filas vacías
-  ni de relleno.
+  descartaron: 2026-09 → `registros: 29366`, `avisos: 0`. El conteo declarado para ese
+  periodo coincide con las 29.366 filas publicadas; por sí solo no prueba igualdad de cada
+  campo ni determina la causa semántica de las filas repetidas.
+- La revisión del TXT de ese corte reportó multiplicidades en renta fija (`BB` 519 grupos,
+  `BE` 212, `BTU` 209, `BTP` 204, `DPC` 200 en 2026-04), con nemotécnico y RUT. La
+  formulación respaldada es **«repeticiones presentes en la fuente; causa no determinada»**;
+  no se las llama legítimas ni se les atribuye una causa sin evidencia.
 
-Conclusión: **el dato está bien copiado; lo que estaba mal era la afirmación de que una
-combinación de columnas identifica una fila**. Eso sí es un defecto nuestro, y grave:
-quien leyera `primaryKey` para deduplicar habría creído que no había nada que deduplicar,
-y cualquier `SUM(valorizacion_miles_mf)` cuenta esas líneas dos veces.
+Conclusión acotada: el extractor descrito no deduplica automáticamente y la medición
+corrigió la afirmación falsa de que la clave publicada era única. Eso no certifica el
+significado de cada repetición. Quien leyera `primaryKey` para deduplicar habría creído que
+no había filas repetidas, y una agregación como `SUM(valorizacion_miles_mf)` las contaría.
+La política de mitigación/limitación de ese riesgo sigue pendiente de decisión.
 
 ## 3. La causa: una comparación de tuplas que DuckDB no evalúa fila a fila
 
