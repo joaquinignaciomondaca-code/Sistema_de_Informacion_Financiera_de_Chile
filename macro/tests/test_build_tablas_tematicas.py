@@ -97,6 +97,23 @@ class MetadatosWeb(unittest.TestCase):
         })
         self.assertIn("Primer día del mes al que corresponde el dato (AAAA-MM-01).", ficha)
 
+    def test_macro_cobre_une_observaciones_nativas_sin_rellenar_frecuencias(self):
+        spec = next(t for t in builder.TABLAS if t["id"] == "macro_cobre")
+        series = pd.DataFrame([
+            {"fecha": "2026-01-01", "periodo": "2026-01", "clave": "cobre_mensual",
+             "serie_id": "F019.PPB.PRE.40.M", "valor": 4.25},
+            {"fecha": "2026-01-02", "periodo": "2026-01", "clave": "cobre_diario",
+             "serie_id": "F019.PPB.PRE.100.D", "valor": 4.50},
+        ])
+
+        tabla = builder.construir_tabla(spec, series)
+
+        self.assertEqual(tabla["fecha"].tolist(), ["2026-01-01", "2026-01-02"])
+        self.assertTrue(pd.isna(tabla.loc[0, "cobre_refinado_usd_por_libra"]))
+        self.assertEqual(tabla.loc[0, "cobre_referencial_mensual_usd_por_libra"], 4.25)
+        self.assertEqual(tabla.loc[1, "cobre_refinado_usd_por_libra"], 4.50)
+        self.assertTrue(pd.isna(tabla.loc[1, "cobre_referencial_mensual_usd_por_libra"]))
+
 
 if __name__ == "__main__":
     unittest.main()
