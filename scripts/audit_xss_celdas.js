@@ -1,12 +1,11 @@
 #!/usr/bin/env node
 /**
- * Prueba de regresión: los datos que llegan a una tabla (celdas de Parquet, alias de columna,
- * SQL del usuario) no pueden ejecutar código ni salirse de un atributo HTML.
+ * Prueba de regresión: datos de celdas/alias/SQL y metadata de nodos del mapa no pueden
+ * ejecutar código ni convertirse en marcado activo.
  *
- * Carga data_viewer.js y chat_terminal.js en jsdom con los manejadores inline ACTIVOS
- * (runScripts: "dangerously"), pinta filas con valores hostiles, hace clic en cada celda y
- * comprueba que (1) no se ejecutó nada, (2) no apareció ningún elemento inyectado y (3) el
- * valor que se copia al portapapeles es exactamente el original.
+ * Carga data_viewer.js, chat_terminal.js y erd_graph.js en jsdom con manejadores inline
+ * activos (runScripts: "dangerously"). Prueba valores hostiles del visor/SQL y metadata del
+ * modal de esquema; además verifica que el portapapeles conserve los valores originales.
  *
  * Uso: npm install jsdom && node scripts/audit_xss_celdas.js
  * Sin jsdom imprime un aviso y termina con código 0 (igual que audit_interfaz_dom.js).
@@ -89,7 +88,51 @@ async function main() {
     ok(JSON.stringify(w.__copiado) === JSON.stringify(HOSTILES.concat([SQL])), "terminal: lo copiado es el valor original");
   }
 
-  console.log(fallas.length ? `\n${fallas.length} comprobaciones fallaron` : `\nXSS en celdas: todas las comprobaciones OK`);
+  // --- Visor del esquema del mapa relacional ------------------------------
+  {
+    const w = ventana(`
+      <button id="opener" type="button">Abrir tabla</button>
+      <div class="schema-modal" id="schema-modal" role="dialog" aria-labelledby="modal-table-name">
+        <div class="schema-title">
+          <span id="modal-table-name">Tabla</span>
+          <button id="close-schema-modal" type="button" aria-label="Cerrar el esquema de la tabla">×</button>
+        </div>
+        <ul class="schema-list" id="modal-columns-list"></ul>
+      </div>
+    `);
+    w.__calls = [];
+    w.switchMainTab = (tab) => w.__calls.push(["tab", tab]);
+    w.DataViewer = { loadTable: (id, name) => w.__calls.push(["table", id, name]) };
+    w.cerrarEsquema = () => w.__calls.push(["close"]);
+    w.eval(fs.readFileSync(path.join(JS, "erd_graph.js"), "utf8"));
+
+    const hostileId = "tabla');window.__pwn=9;//";
+    const hostileName = '<b>Tabla</b>';
+    const hostileColumn = '<img src=x onerror=window.__pwn=10>';
+    const hostileType = '<svg onload=window.__pwn=11>';
+    w.ERDGraph.prototype.showSchemaModal.call({}, {
+      id: hostileId,
+      name: hostileName,
+      cols: [{ name: hostileColumn, type: hostileType }]
+    });
+    const modal = w.document.getElementById("schema-modal");
+    const button = modal.querySelector(".schema-open-btn");
+    ok(w.document.getElementById("modal-table-name").textContent === hostileName
+      && w.document.querySelector("#modal-columns-list .schema-col-name").textContent === hostileColumn
+      && w.document.querySelector("#modal-columns-list .schema-col-type").textContent === hostileType,
+    "mapa: nombre y metadatos del esquema se muestran como texto literal");
+    ok(modal.querySelectorAll("img,svg,b").length === 0,
+      "mapa: nombres de tabla/columna y tipos no inyectan elementos");
+    ok(Boolean(button) && button.type === "button" && !button.hasAttribute("onclick"),
+      "mapa: acción de explorar usa botón sin manejador HTML inline");
+    if (button) button.click();
+    ok(w.__pwn === 0, "mapa: datos del nodo no ejecutan código al abrir la tabla");
+    ok(JSON.stringify(w.__calls) === JSON.stringify([
+      ["tab", "data"], ["table", hostileId, hostileName], ["close"]
+    ]), "mapa: la acción conserva ID/nombre y navega en el orden esperado");
+  }
+
+  console.log(fallas.length ? `\n${fallas.length} comprobaciones fallaron` : `\nXSS DOM: todas las comprobaciones OK`);
   process.exit(fallas.length ? 1 : 0);
 }
 

@@ -29,6 +29,19 @@ MESES = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio",
          "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
 
 
+def limpiar_resumen(candidata: str) -> str:
+    """Deja texto plano y legible, sin anidar enlaces Markdown en el índice."""
+    candidata = re.sub(r"^\*\*[^*]+\*\*\s*", "", candidata)
+    candidata = re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", candidata)
+    candidata = re.sub(r"`([^`]*)`", r"\1", candidata)
+    candidata = re.sub(r"\*\*(.+?)\*\*|__(.+?)__", lambda m: m.group(1) or m.group(2), candidata)
+    candidata = re.sub(r"(?<!\w)\*(.+?)\*(?!\w)|(?<!\w)_(.+?)_(?!\w)", lambda m: m.group(1) or m.group(2), candidata)
+    # Los resúmenes son una sola línea; si la nota abre énfasis y lo cierra
+    # en la línea siguiente, quitar el delimitador huérfano tras el recorte.
+    candidata = re.sub(r"\*{1,2}", "", candidata)
+    return candidata.strip()
+
+
 def titulo_y_resumen(ruta: Path) -> tuple[str, str]:
     texto = ruta.read_text(encoding="utf-8", errors="replace")
     titulo = ""
@@ -44,8 +57,7 @@ def titulo_y_resumen(ruta: Path) -> tuple[str, str]:
                 break
             continue
         # La primera línea con contenido después del título es el resumen.
-        candidata = re.sub(r"^\*\*[^*]+\*\*\s*", "", limpia)
-        candidata = re.sub(r"[*_`]", "", candidata).strip()
+        candidata = limpiar_resumen(limpia)
         if candidata.startswith("|") or candidata.startswith(">"):
             continue
         # Una fecha sola no resume nada, y un «Estado:» pertenece a la nota, no al índice.

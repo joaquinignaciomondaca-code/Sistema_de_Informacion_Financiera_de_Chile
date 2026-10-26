@@ -1389,9 +1389,9 @@ class SidebarController {
       <div class="explorer-toolbar">
         <div class="toolbar-title">EXPLORADOR</div>
         <div class="toolbar-actions">
-          <button class="tool-btn" id="btn-expand-all" title="Expandir todo (el archivo sigue plegado)">Expandir</button>
-          <button class="tool-btn" id="btn-collapse-all" title="Colapsar todo">Colapsar</button>
-          <button class="tool-btn" id="btn-show-all" title="Vista principal: quita el filtro de industria (núcleo, instituciones y contexto)">Principal</button>
+          <button type="button" class="tool-btn" id="btn-expand-all" title="Expandir todo (el archivo sigue plegado)">Expandir</button>
+          <button type="button" class="tool-btn" id="btn-collapse-all" title="Colapsar todo">Colapsar</button>
+          <button type="button" class="tool-btn" id="btn-show-all" title="Vista principal: quita el filtro de industria (núcleo, instituciones y contexto)">Principal</button>
         </div>
       </div>
       <div class="tree-root">
@@ -1473,7 +1473,7 @@ class SidebarController {
             <span class="tree-label partition-label">${part.name}</span>
             <span class="table-rows-tag">${part.rows}</span>
             <div class="table-hover-actions">
-              <button class="table-action-btn run-btn" data-table-id="${part.id}" data-file="${part.file}" data-name="${tbl.name} (${part.name})" title="Consultar partición en DuckDB">▶ SQL</button>
+              <button type="button" class="table-action-btn run-btn" data-table-id="${part.id}" data-file="${part.file}" data-name="${tbl.name} (${part.name})" title="Consultar partición en DuckDB">▶ SQL</button>
             </div>
           </div>
         `;
@@ -1493,8 +1493,8 @@ class SidebarController {
           ${varianteTag}
           <span class="table-rows-tag"${tbl.nota ? ` title="${tbl.nota.replace(/"/g, "&quot;")}"` : ""}>${tbl.rows}</span>
           <div class="table-hover-actions">
-            <button class="table-action-btn run-btn" data-table-id="${tbl.id}" data-file="${tbl.file || ''}" data-name="${tbl.name}" title="Consultar en Terminal DuckDB">▶ SQL</button>
-            <button class="table-action-btn inspect-btn" data-table-id="${tbl.id}" title="Inspeccionar esquema">i</button>
+            <button type="button" class="table-action-btn run-btn" data-table-id="${tbl.id}" data-file="${tbl.file || ''}" data-name="${tbl.name}" title="Consultar en Terminal DuckDB">▶ SQL</button>
+            <button type="button" class="table-action-btn inspect-btn" data-table-id="${tbl.id}" title="Inspeccionar esquema">i</button>
           </div>
         </div>
         ${hasPartitions ? `<div class="table-partitions-children" id="${partKey}" style="display: ${isPartOpen ? 'block' : 'none'};">${partHtml}</div>` : ""}

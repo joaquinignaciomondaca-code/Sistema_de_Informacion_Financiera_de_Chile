@@ -45,8 +45,8 @@
         },
         {
           archivo: "reproducibilidad/validacion_resumen.csv",
-          nombre: "Resultados de validación",
-          detalle: "Qué comprobaciones pasó cada conjunto y con qué tolerancia.",
+          nombre: "Resumen de fuentes y cobertura",
+          detalle: "Fuente, modalidad, periodos y registros por objeto; no es un informe de pruebas ni un sello de calidad.",
           formato: "CSV"
         },
         {
