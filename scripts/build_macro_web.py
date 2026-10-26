@@ -3,7 +3,8 @@
 """Sincroniza la sección Macroeconomía (BCCh) de la web con las tablas temáticas.
 
 Fuente de verdad: macro/scripts/build_tablas_tematicas.TABLAS (id, nombre, frecuencia,
-descripción y columnas) + los Parquet publicados en docs/outputs/macro/ (filas y cortes).
+descripción y columnas), `data_manifest.json` (fecha de última actualización) y los
+Parquet publicados en docs/outputs/macro/ (filas y cortes).
 
 Reescribe, entre marcadores, el bloque macro de:
   docs/js/sidebar.js         árbol del explorador (carpetas por tema + consultas sugeridas)
@@ -23,7 +24,6 @@ import argparse
 import json
 import re
 import sys
-from datetime import date
 from pathlib import Path
 
 import pyarrow.parquet as pq
@@ -270,6 +270,8 @@ def columnas(spec: dict) -> list[str]:
 
 
 def leer_meta() -> dict[str, dict]:
+    manifiesto = json.loads((RAIZ / "data_manifest.json").read_text(encoding="utf-8"))
+    tablas_manifiesto = {t["id"]: t for t in manifiesto["tables"]}
     meta = {}
     for spec in TABLAS:
         ruta = SALIDA / f"{spec['id']}.parquet"
@@ -281,6 +283,13 @@ def leer_meta() -> dict[str, dict]:
         "desde": min(f for f in cat["primera_fecha"] if f),
         "hasta": max(f for f in cat["ultima_fecha"] if f),
     }
+
+    for tid, datos in meta.items():
+        tabla = tablas_manifiesto.get(tid)
+        actualizado = tabla.get("ultima_actualizacion") if tabla else None
+        if not actualizado or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", actualizado):
+            raise SystemExit(f"data_manifest.json: {tid} no declara ultima_actualizacion en formato AAAA-MM-DD")
+        datos["ultima_actualizacion"] = actualizado
     return meta
 
 
@@ -369,7 +378,7 @@ def bloque_viewer() -> str:
 
 
 # ----------------------------------------------------------------------------- diccionario
-def ficha(spec: dict | None, m: dict, hoy: str) -> str:
+def ficha(spec: dict | None, m: dict) -> str:
     if spec is None:
         tid, nombre, frec = "macro_series_catalogo", "macro.series_catalogo", "Catálogo"
         desc = ("Una fila por serie del Banco Central que alimenta las tablas macro: código SIETE, nombre, "
@@ -399,7 +408,7 @@ def ficha(spec: dict | None, m: dict, hoy: str) -> str:
         f"    frecuencia: {js_str(frec)},",
         '    frescura: "Se actualiza sola a diario",',
         '    modo: "Automático · diario, incremental (cada serie desde su último dato)",',
-        f"    ultimaActualizacion: {js_str(hoy)},",
+        f"    ultimaActualizacion: {js_str(m['ultima_actualizacion'])},",
         f"    registros: {js_str(registros)},",
         f"    origen: {js_str(ORIGEN)},",
         f"    descripcion: {js_str(desc)},",
@@ -410,9 +419,9 @@ def ficha(spec: dict | None, m: dict, hoy: str) -> str:
     ])
 
 
-def bloque_dictionary(meta: dict, hoy: str) -> str:
-    fichas = [ficha(s, meta[s["id"]], hoy) for s in TABLAS]
-    fichas.append(ficha(None, meta["macro_series_catalogo"], hoy))
+def bloque_dictionary(meta: dict) -> str:
+    fichas = [ficha(s, meta[s["id"]]) for s in TABLAS]
+    fichas.append(ficha(None, meta["macro_series_catalogo"]))
     return ",\n".join(fichas)
 
 
@@ -518,17 +527,10 @@ def main(argv=None) -> int:
     ap.add_argument("--check", action="store_true")
     a = ap.parse_args(argv)
     meta = leer_meta()
-    hoy = date.today().isoformat()
-    if a.check:
-        # En modo check no se altera la fecha para no producir falsos positivos.
-        dic = (DOCS / "js" / "data_dictionary.js").read_text(encoding="utf-8")
-        m = re.search(r'sector: "macro",\n.*?ultimaActualizacion: "(\d{4}-\d{2}-\d{2})"', dic, re.S)
-        if m:
-            hoy = m.group(1)
     cambios = {
         "sidebar.js": reemplazar(DOCS / "js" / "sidebar.js", "  // <macro:inicio>", "  // <macro:fin>", bloque_sidebar(meta), a.check),
         "data_viewer.js": reemplazar(DOCS / "js" / "data_viewer.js", "  // <macro:inicio>", "  // <macro:fin>", bloque_viewer(), a.check),
-        "data_dictionary.js": reemplazar(DOCS / "js" / "data_dictionary.js", "  // <macro:inicio>", "  // <macro:fin>", bloque_dictionary(meta, hoy), a.check),
+        "data_dictionary.js": reemplazar(DOCS / "js" / "data_dictionary.js", "  // <macro:inicio>", "  // <macro:fin>", bloque_dictionary(meta), a.check),
         "erd_graph.js (nodos)": reemplazar(DOCS / "js" / "erd_graph.js", "  // <macro:inicio>", "  // <macro:fin>", bloque_erd_nodes(meta), a.check),
         "erd_graph.js (enlaces)": reemplazar(DOCS / "js" / "erd_graph.js", "  // <macro-links:inicio>", "  // <macro-links:fin>", bloque_erd_links(), a.check),
         "duckdb_client.js": reemplazar(DOCS / "js" / "duckdb_client.js", "  // <macro:inicio>", "  // <macro:fin>", bloque_duckdb(), a.check),

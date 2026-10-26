@@ -33,6 +33,8 @@ on:
       - 'scripts/generar_indice_busqueda.py'
       - 'scripts/test_generar_indice_busqueda.py'
       - 'scripts/build_metricas_publicadas.py'
+      - 'scripts/build_macro_web.py'
+      - 'macro/scripts/build_tablas_tematicas.py'
       - 'scripts/build_indice_notas.py'
       - 'scripts/test_build_indice_notas.py'
       - 'scripts/build_ficha_piloto.py'
@@ -334,6 +336,9 @@ jobs:
             fi
           done
           exit $(( c | a | d ))
+
+      - name: 'Macro: diccionario, explorador y ERD al día con Parquet y manifiesto'
+        run: python scripts/build_macro_web.py --check
 
       - name: 'Vitrina: metadatos sociales, robots y sitemap derivados del catálogo'
         run: |
